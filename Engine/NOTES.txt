@@ -1,0 +1,12 @@
+TODO
++ imgui
++ TTransform  quaterion + translation + scale	
++ Manager
+- Techniques
+- Cargar meshes desde disco
+	- exportarlas desde max
+- Cargar texturas y usarlas
+- Resources -> expornenrlo en la ImGuoi
+
+
+- Input + Keyboard
