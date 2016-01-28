@@ -92,8 +92,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ai\aicontroller.cpp" />
-    <ClCompile Include="ai\aic_patrol.cpp" />
     <ClCompile Include="app_modules\imgui\imgui.cpp" />
     <ClCompile Include="camera\camera.cpp" />
     <ClCompile Include="game.cpp" />
@@ -118,8 +116,6 @@
     <ClInclude Include="..\bin\data\shaders\contants\ctes_camera.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_object.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h" />
-    <ClInclude Include="ai\aicontroller.h" />
-    <ClInclude Include="ai\aic_patrol.h" />
     <ClInclude Include="app_modules\app_module.h" />
     <ClInclude Include="app_modules\imgui\imgui.h" />
     <ClInclude Include="camera\camera.h" />
@@ -135,6 +131,7 @@
     <ClInclude Include="render\vertex_declarations.h" />
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="resources\resources_manager.h" />
+    <ClInclude Include="utils\data_provider.h" />
     <ClInclude Include="utils\utils.h" />
     <ClInclude Include="windows\app.h" />
   </ItemGroup>

@@ -10,6 +10,7 @@
 #include "imgui/imgui.h"
 
 CVertexShader vs;
+CVertexShader vs_uv;
 CPixelShader  ps;
 CCamera       camera;
 
@@ -49,6 +50,8 @@ bool CApp::start() {
   if (!vs.create("data/shaders/Tutorial02.fx", "VS", &vdecl_positions_color))
     return false;
   if (!ps.create("data/shaders/Tutorial02.fx", "PS"))
+    return false;
+  if (!vs_uv.create("data/shaders/Tutorial02.fx", "VS_UV", &vdecl_positions_uv))
     return false;
   if (!shader_ctes_camera.create())
     return false;
@@ -178,8 +181,6 @@ void CApp::render() {
   camera.setAspectRatio( (float)xres/(float)yres );
 
   shader_ctes_camera.activate(CTE_SHADER_CAMERA_SLOT);
-  //shader_ctes_camera.View = camera.getView();
-  //shader_ctes_camera.Projection = camera.getProjection();
   shader_ctes_camera.ViewProjection = camera.getViewProjection();
   shader_ctes_camera.uploadToGPU();
 
@@ -189,7 +190,6 @@ void CApp::render() {
   shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
   shader_ctes_object.World = MAT44::Identity;
   shader_ctes_object.uploadToGPU();
-  
   auto axis = Resources.get("axis.mesh")->as<CMesh>();
 
   axis->activateAndRender();
@@ -205,8 +205,17 @@ void CApp::render() {
   shader_ctes_object.uploadToGPU();
   axis->activateAndRender();
 
+  // el shader de pos + uv
+  shader_ctes_object.World = MAT44::Identity;
+  shader_ctes_object.uploadToGPU();
+  vs_uv.activate();
+  ps.activate();
+  Resources.get("meshes/Teapot001.mesh")->as<CMesh>()->activateAndRender();
+
   for (auto it : mod_update)
     it->render();
+
 }
+
 
 

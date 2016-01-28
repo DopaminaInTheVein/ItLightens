@@ -4,20 +4,36 @@
 #include "render/render.h"
 #include "resources/resource.h"
 
+struct CVertexDeclaration;
+
 class CMesh : public IResource {
 
-  ID3D11Buffer*           vb;
+  ID3D11Buffer*             vb;
+  ID3D11Buffer*             ib;
 
-  uint32_t                num_vertexs;
-  //uint32_t              num_indices;
-  uint32_t                num_bytes_per_vertex;
-  D3D_PRIMITIVE_TOPOLOGY  topology;
+  uint32_t                  num_vertexs;
+  uint32_t                  num_idxs;
+  uint32_t                  num_bytes_per_vertex;
+  uint32_t                  num_bytes_per_idx;
+  D3D_PRIMITIVE_TOPOLOGY    topology;
 
-  std::string             name;
+  const CVertexDeclaration* vtx_decl;
+
+  std::string               name;
 
 public:
 
-  CMesh() : vb(nullptr) { }
+  enum ePrimitiveType {
+    TRIANGLE_LIST = 2000
+  , LINE_LIST
+  };
+
+  enum eVertexDecl {
+    VTX_DECL_POSITION_UV = 1000
+  , VTX_DECL_POSITION_COLOR 
+  };
+
+  CMesh() : vb(nullptr), ib(nullptr), vtx_decl(nullptr){ }
   CMesh(const CMesh&) = delete;
   ~CMesh();
 
@@ -26,7 +42,11 @@ public:
       uint32_t new_num_vertexs
     , uint32_t new_num_bytes_per_vertex
     , const void* initial_vertex_data
-    , D3D_PRIMITIVE_TOPOLOGY  new_topology
+    , uint32_t new_num_idxs
+    , uint32_t new_num_bytes_per_index
+    , const void* initial_index_data
+    , eVertexDecl new_enum_vtx_decl
+    , ePrimitiveType new_topology
     );
   void activate() const;
   void render() const;

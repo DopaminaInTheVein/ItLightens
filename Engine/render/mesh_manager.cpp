@@ -2,6 +2,99 @@
 #include "resources/resources_manager.h"
 #include "render/mesh.h"
 
+bool meshLoader(CMesh* mesh, CDataProvider& dp) {
+
+  assert(dp.isValid());
+
+  struct TRiff {
+    uint32_t magic;
+    uint32_t num_bytes;
+  };
+
+  static const uint32_t magic_header = 0x44221100;
+  static const uint32_t magic_vtxs = 0x44221101;
+  static const uint32_t magic_idxs = 0x44221102;
+  static const uint32_t magic_mesh_end = 0x44221144;
+  static const uint32_t magic_terminator = 0x44222200;
+
+  struct THeader {
+    uint32_t version;
+    uint32_t num_vtxs;
+    uint32_t num_idxs;
+    uint32_t primitive_type;
+    uint32_t vertex_type;
+    uint32_t bytes_per_vtx;
+    uint32_t bytes_per_idx;
+    uint32_t num_range;
+    uint32_t the_magic_terminator;
+    bool isValid() const { 
+      return version == 1 && (the_magic_terminator == magic_terminator);
+     }
+  };
+
+  typedef std::vector< unsigned char > TBuffer;
+  THeader header;
+  TBuffer vtxs;
+  TBuffer idxs;
+
+  bool end_found = false;
+  while (!end_found) {
+    TRiff riff;
+    dp.read(riff);
+
+    switch (riff.magic) {
+
+    case magic_header:    // Magic header
+      dp.read(header);
+      assert(header.isValid());
+      break;
+
+    case magic_vtxs:
+      assert(riff.num_bytes == header.bytes_per_vtx * header.num_vtxs);
+      vtxs.resize(riff.num_bytes);
+      dp.readBytes(&vtxs[0], riff.num_bytes);
+      break;
+
+    case magic_idxs:
+      assert(riff.num_bytes == header.bytes_per_idx * header.num_idxs);
+      idxs.resize(riff.num_bytes);
+      dp.readBytes(&idxs[0], riff.num_bytes);
+      break;
+
+    case magic_mesh_end:
+      end_found = true;
+      break;
+
+    default:
+      fatal("Unknown riff code %08x reading mesh\n", riff.magic);
+      break;
+    }
+
+  }
+
+  // 
+
+
+  return mesh->create(
+    header.num_vtxs
+    , header.bytes_per_vtx
+    , &vtxs[0]
+    , header.num_idxs
+    , header.bytes_per_idx
+    , &idxs[0]
+    , (CMesh::eVertexDecl)header.vertex_type
+    , (CMesh::ePrimitiveType) header.primitive_type
+    );
+
+}
+
+
+
+
+
+
+
+
 // --------------------------------
 struct SimpleVertexColored
 {
@@ -40,8 +133,18 @@ bool createGridXZ(CMesh& mesh, int nsteps) {
     vtxs[k].set(VEC3(fit, 0, -fsteps), color); ++k;
   }
   assert(k == nvtxs);
-  return mesh.create(nvtxs, sizeof(SimpleVertexColored), &vtxs[0], D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+  return mesh.create(
+    nvtxs, 
+    sizeof(SimpleVertexColored), 
+    &vtxs[0], 
+    0, 0, nullptr,
+    CMesh::VTX_DECL_POSITION_COLOR,
+    CMesh::LINE_LIST
+    );
 }
+
+
+
 
 // ------------------------------------------
 template<>
@@ -60,7 +163,12 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
       { 0.0f, 0.0f, 0.0f,    0, 0, 1, 1 },    // Z+ x3
       { 0.0f, 0.0f, 3.0f,    0, 0, 1, 1 },
     };
-    if (!mesh->create(6, sizeof(SimpleVertexColored), vtxs_axis, D3D_PRIMITIVE_TOPOLOGY_LINELIST))
+    if (!mesh->create(6
+      , sizeof(SimpleVertexColored)
+      , vtxs_axis
+      , 0, 0, nullptr
+      , CMesh::VTX_DECL_POSITION_COLOR
+      , CMesh::LINE_LIST))
       return nullptr;
     return mesh;
   }
@@ -71,7 +179,13 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
     return mesh;
   }
 
-  fatal("Need to implement...");
-  return nullptr;
+  // ----------------------------------
+  // Try to load from disk
+  std::string full_path = "data/" + name;
+  CFileDataProvider fdp(full_path.c_str());
+  assert(fdp.isValid() || fatal("Can't open mesh file %s\n", full_path.c_str()));
+  bool is_ok = meshLoader(mesh, fdp);
+  assert(is_ok);
+  return mesh;
 }
 

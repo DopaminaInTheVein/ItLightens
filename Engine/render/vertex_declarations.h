@@ -19,6 +19,7 @@ struct CVertexDeclaration {
 
 extern CVertexDeclaration vdecl_positions;
 extern CVertexDeclaration vdecl_positions_color;
+extern CVertexDeclaration vdecl_positions_uv;
 
 #endif
 

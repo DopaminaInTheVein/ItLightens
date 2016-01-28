@@ -45,12 +45,6 @@
     <ClCompile Include="resources\resources_manager.cpp">
       <Filter>resources</Filter>
     </ClCompile>
-    <ClCompile Include="ai\aic_patrol.cpp">
-      <Filter>ai</Filter>
-    </ClCompile>
-    <ClCompile Include="ai\aicontroller.cpp">
-      <Filter>ai</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -111,11 +105,8 @@
     <ClInclude Include="resources\resource.h">
       <Filter>resources</Filter>
     </ClInclude>
-    <ClInclude Include="ai\aic_patrol.h">
-      <Filter>ai</Filter>
-    </ClInclude>
-    <ClInclude Include="ai\aicontroller.h">
-      <Filter>ai</Filter>
+    <ClInclude Include="utils\data_provider.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -148,9 +139,6 @@
     </Filter>
     <Filter Include="resources">
       <UniqueIdentifier>{90846d98-0941-418d-a528-2b382364908b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ai">
-      <UniqueIdentifier>{4731eaef-b041-42e9-8f17-751b8873707e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

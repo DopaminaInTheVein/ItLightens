@@ -2,9 +2,13 @@ TODO
 + imgui
 + TTransform  quaterion + translation + scale	
 + Manager
-- Techniques
 - Cargar meshes desde disco
-	- exportarlas desde max
+	+ exportarlas desde max
+	+ Vertex declaration con Pos + UV
+	- Crear index buffer para el CMesh
+	- Shader que use las pos
+
+- Techniques
 - Cargar texturas y usarlas
 - Resources -> expornenrlo en la ImGuoi
 
