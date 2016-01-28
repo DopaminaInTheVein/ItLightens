@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+      <ProjectConfiguration Include="Debug|x64">
+            <Configuration>Debug</Configuration>
+	          <Platform>x64</Platform>
+		      </ProjectConfiguration>
+		          <ProjectConfiguration Include="Release|x64">
+			        <Configuration>Release</Configuration>
+				      <Platform>x64</Platform>
+				          </ProjectConfiguration>
+					    </ItemGroup>
+					      <PropertyGroup Label="Globals">
+					          <ProjectGuid>{88CE4A41-2CA4-4E85-AD28-CA87769ACAAF}</ProjectGuid>
+						      <Keyword>Win32Proj</Keyword>
+						          <RootNamespace>Engine</RootNamespace>
+							      <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+							        </PropertyGroup>
+								  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+								    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+								        <ConfigurationType>Application</ConfigurationType>
+									    <UseDebugLibraries>true</UseDebugLibraries>
+									        <PlatformToolset>v140</PlatformToolset>
+										    <CharacterSet>MultiByte</CharacterSet>
+										      </PropertyGroup>
+										        <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+											    <ConfigurationType>Application</ConfigurationType>
+											        <UseDebugLibraries>false</UseDebugLibraries>
+												    <PlatformToolset>v140</PlatformToolset>
+												        <WholeProgramOptimization>true</WholeProgramOptimization>
+													    <CharacterSet>MultiByte</CharacterSet>
+													      </PropertyGroup>
+													        <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+														  <ImportGroup Label="ExtensionSettings">
+														    </ImportGroup>
+														      <ImportGroup Label="Shared">
+														        </ImportGroup>
+															  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+															      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+															        </ImportGroup>
+																  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+																      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+																        </ImportGroup>
+																	  <PropertyGroup Label="UserMacros" />
+																	    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+																	        <LinkIncremental>true</LinkIncremental>
+																		    <OutDir>..\bin\</OutDir>
+																		        <IntDir>..\build\$(Platform)\$(Configuration)\</IntDir>
+																			    <TargetName>$(ProjectName)d</TargetName>
+																			      </PropertyGroup>
+																			        <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+																				    <LinkIncremental>false</LinkIncremental>
+																				        <IntDir>..\build\$(Platform)\$(Configuration)\</IntDir>
+																					    <OutDir>..\bin\</OutDir>
+																					      </PropertyGroup>
+																					        <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+																						    <ClCompile>
+																						          <PrecompiledHeader>Use</PrecompiledHeader>
+																							        <WarningLevel>Level3</WarningLevel>
+																								      <Optimization>Disabled</Optimization>
+																								            <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+																									          <SDLCheck>true</SDLCheck>
+																										        <AdditionalIncludeDirectories>.;..\bin\data\shaders</AdditionalIncludeDirectories>
+																											      <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
+																											            <MultiProcessorCompilation>true</MultiProcessorCompilation>
+																												        </ClCompile>
+																													    <Link>
+																													          <SubSystem>Windows</SubSystem>
+																														        <GenerateDebugInformation>true</GenerateDebugInformation>
+																															      <AdditionalLibraryDirectories>$(ProjectDir)/libs/$(Configuration)</AdditionalLibraryDirectories>
+																															          </Link>
+																																    </ItemDefinitionGroup>
+																																      <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+																																          <ClCompile>
+																																	        <WarningLevel>Level3</WarningLevel>
+																																		      <PrecompiledHeader>Use</PrecompiledHeader>
+																																		            <Optimization>MaxSpeed</Optimization>
+																																			          <FunctionLevelLinking>true</FunctionLevelLinking>
+																																				        <IntrinsicFunctions>true</IntrinsicFunctions>
+																																					      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+																																					            <SDLCheck>true</SDLCheck>
+																																						          <AdditionalIncludeDirectories>.;..\bin\data\shaders</AdditionalIncludeDirectories>
+																																							        <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
+																																								      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+																																								          </ClCompile>
+																																									      <Link>
+																																									            <SubSystem>Windows</SubSystem>
+																																										          <EnableCOMDATFolding>true</EnableCOMDATFolding>
+																																											        <OptimizeReferences>true</OptimizeReferences>
+																																												      <GenerateDebugInformation>true</GenerateDebugInformation>
+																																												            <AdditionalLibraryDirectories>$(ProjectDir)/libs/$(Configuration)</AdditionalLibraryDirectories>
+																																													        </Link>
+																																														  </ItemDefinitionGroup>
+																																														    <ItemGroup>
+																																														        <ClCompile Include="app_modules\imgui\imgui.cpp" />
+																																															    <ClCompile Include="camera\camera.cpp" />
+																																															        <ClCompile Include="game.cpp" />
+																																																    <ClCompile Include="geometry\angular.cpp" />
+																																																        <ClCompile Include="geometry\SimpleMath.cpp" />
+																																																	    <ClCompile Include="geometry\transform.cpp" />
+																																																	        <ClCompile Include="main.cpp" />
+																																																		    <ClCompile Include="render\mesh.cpp" />
+																																																		        <ClCompile Include="render\mesh_manager.cpp" />
+																																																			    <ClCompile Include="render\render.cpp" />
+																																																			        <ClCompile Include="mcv_platform.cpp">
+																																																				      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+																																																				            <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+																																																					        </ClCompile>
+																																																						    <ClCompile Include="render\shaders.cpp" />
+																																																						        <ClCompile Include="render\vertex_declarations.cpp" />
+																																																							    <ClCompile Include="resources\resources_manager.cpp" />
+																																																							        <ClCompile Include="utils\utils.cpp" />
+																																																								    <ClCompile Include="windows\app.cpp" />
+																																																								      </ItemGroup>
+																																																								        <ItemGroup>
+																																																									    <ClInclude Include="..\bin\data\shaders\contants\ctes_camera.h" />
+																																																									        <ClInclude Include="..\bin\data\shaders\contants\ctes_object.h" />
+																																																										    <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h" />
+																																																										        <ClInclude Include="app_modules\app_module.h" />
+																																																											    <ClInclude Include="app_modules\imgui\imgui.h" />
+																																																											        <ClInclude Include="camera\camera.h" />
+																																																												    <ClInclude Include="geometry\angular.h" />
+																																																												        <ClInclude Include="geometry\geometry.h" />
+																																																													    <ClInclude Include="geometry\SimpleMath.h" />
+																																																													        <ClInclude Include="geometry\transform.h" />
+																																																														    <ClInclude Include="mcv_platform.h" />
+																																																														        <ClInclude Include="render\mesh.h" />
+																																																															    <ClInclude Include="render\render.h" />
+																																																															        <ClInclude Include="render\shaders.h" />
+																																																																    <ClInclude Include="render\shader_cte.h" />
+																																																																        <ClInclude Include="render\vertex_declarations.h" />
+																																																																	    <ClInclude Include="resources\resource.h" />
+																																																																	        <ClInclude Include="resources\resources_manager.h" />
+																																																																		    <ClInclude Include="utils\utils.h" />
+																																																																		        <ClInclude Include="windows\app.h" />
+																																																																			  </ItemGroup>
+																																																																			    <ItemGroup>
+																																																																			        <None Include="geometry\SimpleMath.inl" />
+																																																																				  </ItemGroup>
+																																																																				    <ItemGroup>
+																																																																				        <FxCompile Include="..\bin\data\shaders\Tutorial02.fx">
+																																																																					      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+																																																																					            <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+																																																																						        </FxCompile>
+																																																																							  </ItemGroup>
+																																																																							    <ItemGroup>
+																																																																							        <Text Include="NOTES.txt" />
+																																																																								  </ItemGroup>
+																																																																								    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+																																																																								      <ImportGroup Label="ExtensionTargets">
+																																																																								        </ImportGroup>
+																																																																									</Project>
