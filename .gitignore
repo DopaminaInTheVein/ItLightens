@@ -1,1 +1,3 @@
 build/*
+Engine/ipch/*
+Engine/Engine.VC.opendb
