@@ -94,10 +94,13 @@
   <ItemGroup>
     <ClCompile Include="app_modules\imgui\imgui.cpp" />
     <ClCompile Include="camera\camera.cpp" />
+    <ClCompile Include="entities\tentity.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="geometry\angular.cpp" />
     <ClCompile Include="geometry\SimpleMath.cpp" />
     <ClCompile Include="geometry\transform.cpp" />
+    <ClCompile Include="logic\aicontroller.cpp" />
+    <ClCompile Include="logic\aic_patrol.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="render\mesh.cpp" />
     <ClCompile Include="render\mesh_manager.cpp" />
@@ -119,10 +122,13 @@
     <ClInclude Include="app_modules\app_module.h" />
     <ClInclude Include="app_modules\imgui\imgui.h" />
     <ClInclude Include="camera\camera.h" />
+    <ClInclude Include="entities\tentity.h" />
     <ClInclude Include="geometry\angular.h" />
     <ClInclude Include="geometry\geometry.h" />
     <ClInclude Include="geometry\SimpleMath.h" />
     <ClInclude Include="geometry\transform.h" />
+    <ClInclude Include="logic\aicontroller.h" />
+    <ClInclude Include="logic\aic_patrol.h" />
     <ClInclude Include="mcv_platform.h" />
     <ClInclude Include="render\mesh.h" />
     <ClInclude Include="render\render.h" />

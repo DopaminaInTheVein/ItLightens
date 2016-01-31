@@ -8,24 +8,22 @@
 #include "camera/camera.h"
 #include "app_modules/app_module.h"
 #include "imgui/imgui.h"
+#include "logic/aicontroller.h"
+#include "logic/aic_patrol.h"
+#include "entities/tentity.h"
 
 CVertexShader vs;
 CVertexShader vs_uv;
 CPixelShader  ps;
 CCamera       camera;
 
+//AI controller
+aic_patrol aicp;
+
 #include "contants/ctes_camera.h"
 CShaderCte< TCteCamera > shader_ctes_camera;
 #include "contants/ctes_object.h"
 CShaderCte< TCteObject > shader_ctes_object;
-
-// --------------------------------
-struct TEntity {
-  CTransform   transform;
-  std::string  name;
-  //IResource*   mesh;
-  //const CMesh* mesh;
-};
 
 std::vector< TEntity > entities;
 
@@ -69,9 +67,14 @@ bool CApp::start() {
   }
 
 
-  entities.resize(2);
+  entities.resize(3);
   entities[0].transform.setPosition(VEC3(2.5f, 0, 0));
   entities[1].transform.setPosition(VEC3(2.5f, 0, 2.5f));
+
+  //Init AI controller 
+  TEntity patrol_entity;
+  entities[2] = patrol_entity;  
+  aicp.Init(&entities[2]);
 
   return true;
 }
@@ -100,6 +103,8 @@ void CApp::update(float elapsed) {
 
   for (auto it : mod_update )
     it->update(elapsed);
+
+  aicp.Recalc();
 
   Resources.renderUIDebug();
 
@@ -210,7 +215,7 @@ void CApp::render() {
   shader_ctes_object.uploadToGPU();
   vs_uv.activate();
   ps.activate();
-  Resources.get("meshes/Teapot001.mesh")->as<CMesh>()->activateAndRender();
+  //Resources.get("meshes/Teapot001.mesh")->as<CMesh>()->activateAndRender();
 
   for (auto it : mod_update)
     it->render();

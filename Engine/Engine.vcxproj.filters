@@ -45,6 +45,15 @@
     <ClCompile Include="resources\resources_manager.cpp">
       <Filter>resources</Filter>
     </ClCompile>
+    <ClCompile Include="logic\aic_patrol.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\aicontroller.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\tentity.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -108,6 +117,15 @@
     <ClInclude Include="utils\data_provider.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="logic\aic_patrol.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\aicontroller.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\tentity.h">
+      <Filter>entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -139,6 +157,12 @@
     </Filter>
     <Filter Include="resources">
       <UniqueIdentifier>{90846d98-0941-418d-a528-2b382364908b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic">
+      <UniqueIdentifier>{64860f38-2cd0-4f4a-9408-850fd105f988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="entities">
+      <UniqueIdentifier>{1fb720fd-0d6a-41d1-af2d-23c5f9b09095}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
