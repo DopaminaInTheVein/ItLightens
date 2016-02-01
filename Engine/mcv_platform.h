@@ -6,6 +6,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define _USE_MATH_DEFINES
 #define NOMINMAX
+#define _WIN32_WINNT      _WIN32_WINNT_WIN7
 
 #define SAFE_RELEASE(p)  if (p) p->Release(), p = nullptr
 

@@ -12,7 +12,7 @@ public:
     SAFE_RELEASE(constant_buffer);
   }
 
-  bool create() {
+  bool create(const char* name) {
     D3D11_BUFFER_DESC bd;
     memset(&bd, 0x00, sizeof(bd));
     // Create the constant buffer
@@ -23,6 +23,7 @@ public:
     HRESULT hr = Render.device->CreateBuffer(&bd, NULL, &constant_buffer);
     if (FAILED(hr))
       return false;
+    setDXName(constant_buffer, name);
     return true;
   }
 

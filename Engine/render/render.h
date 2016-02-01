@@ -3,8 +3,6 @@
 
 #include <d3d11.h>
 
-
-
 class CRender {
 	IDXGISwapChain*         swap_chain;
 	D3D_FEATURE_LEVEL       featureLevel;
@@ -26,6 +24,11 @@ public:
 
 extern CRender Render;
 //#define Render		CRender::get()
+
+#define setDXName(dx_obj,new_name) \
+        dx_obj->SetPrivateData(WKPDID_D3DDebugObjectName, (UINT)strlen(new_name), new_name);
+
+#include "gpu_trace.h"
 
 #endif
 

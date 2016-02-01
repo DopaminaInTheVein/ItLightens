@@ -13,10 +13,10 @@ public:
   enum eType {
     UNDEFINED
     , MESH
-    , SKIN_MESH
+    , PIXEL_SHADER
+    , VERTEX_SHADER
+    , TECHNIQUE
     , TEXTURE
-    , SHADER
-    , PATH
     , NUM_RESOURCES_TYPE
   };
   static const char* getTypeName(eType atype);
@@ -40,6 +40,10 @@ public:
         , getTypeOfResource<TObj>())
       );
     return static_cast<const TObj*>(this);
+  }
+
+  static const char* getDataPath() {
+    return "data/";
   }
 
 };

@@ -13,8 +13,10 @@ class CResourcesManager {
 public:
   CResourcesManager() { }
   void destroy() {
-    for (auto it : all)
+    for (auto it : all) {
+      it.second->destroy();
       delete it.second;
+    }
     all.clear();
   }
 

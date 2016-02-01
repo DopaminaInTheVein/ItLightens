@@ -9,13 +9,11 @@ IResource::eType getTypeOfResource<CMesh>() {
   return IResource::MESH;
 }
 
+//DEFINE_RESOURCE(CMesh, MESH, "Mesh");
+
 void CMesh::renderUIDebug() {
   ImGui::Text("# Vertexs: %d", num_vertexs);
   ImGui::Text("Bytes/Vertex: %d", num_bytes_per_vertex);
-}
-
-CMesh::~CMesh() {
-  destroy();
 }
 
 void CMesh::destroy() {
@@ -25,14 +23,14 @@ void CMesh::destroy() {
 
 bool CMesh::create(
   uint32_t new_num_vertexs
-  , uint32_t new_num_bytes_per_vertex
-  , const void* initial_vertex_data
-  , uint32_t new_num_idxs
-  , uint32_t new_num_bytes_per_idx
-  , const void* initial_index_data
-  , eVertexDecl new_enum_vtx_decl
-  , ePrimitiveType new_topology
-  ) {
+, uint32_t new_num_bytes_per_vertex
+, const void* initial_vertex_data
+, uint32_t new_num_idxs
+, uint32_t new_num_bytes_per_idx
+, const void* initial_index_data
+, eVertexDecl new_enum_vtx_decl
+, ePrimitiveType new_topology
+) {
   assert(vb == nullptr);
   assert(new_num_vertexs > 0);
   assert(new_num_bytes_per_vertex > 0);
@@ -78,6 +76,7 @@ bool CMesh::create(
   HRESULT hr = Render.device->CreateBuffer(&bd, &InitData, &vb);
   if (FAILED(hr))
     return false;
+  setDXName(vb, getName().c_str());
 
   // Index buffer
   if (num_idxs > 0) {
@@ -94,6 +93,9 @@ bool CMesh::create(
     hr = Render.device->CreateBuffer(&bd, &InitData, &ib);
     if (FAILED(hr))
       return false;
+
+    setDXName(ib, getName().c_str());
+
   }
 
   return true;

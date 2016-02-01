@@ -33,9 +33,13 @@ public:
   , VTX_DECL_POSITION_COLOR 
   };
 
-  CMesh() : vb(nullptr), ib(nullptr), vtx_decl(nullptr){ }
+  CMesh( const std::string& new_name) 
+    : vb(nullptr)
+    , ib(nullptr)
+    , vtx_decl(nullptr)
+    , name( new_name )
+  { }
   CMesh(const CMesh&) = delete;
-  ~CMesh();
 
   void destroy();
   bool create(

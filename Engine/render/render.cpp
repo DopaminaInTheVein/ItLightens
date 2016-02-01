@@ -2,6 +2,7 @@
 #include "windows/app.h"
 
 #pragma comment(lib, "d3d11.lib" )
+#pragma comment(lib, "d3d9.lib" )
 
 // The render global obj!
 CRender Render;

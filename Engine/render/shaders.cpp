@@ -2,8 +2,49 @@
 #include "shaders.h"
 #include "vertex_declarations.h"
 #include <d3dcompiler.h>
+#include "resources/resources_manager.h"
+#include "DirectXHelpers.h"
 
 #pragma comment(lib, "D3DCompiler.lib" )
+
+// ----------------------------------
+// name = solid_colored.vs
+template<> IResource::eType getTypeOfResource<CVertexShader>() { return IResource::VERTEX_SHADER; }
+template<>
+IResource* createObjFromName<CVertexShader>(const std::string& name) {
+
+  CVertexShader* vs = new CVertexShader;
+  
+  if (name == "solid_colored.vs") {
+    vs->create("data/shaders/Tutorial02.fx", "VS", &vdecl_positions_color);
+  }
+  else if (name == "textured_colored.vs") {
+    vs->create("data/shaders/Tutorial02.fx", "VS_UV", &vdecl_positions_uv);
+  }
+  else {
+    fatal("Unsupported vertex shader %s\n", name.c_str());
+  }
+  return vs;
+}
+
+// ----------------------------------
+// name = solid_colored.ps
+template<> IResource::eType getTypeOfResource<CPixelShader>() { return IResource::PIXEL_SHADER; }
+template<>
+IResource* createObjFromName<CPixelShader>(const std::string& name) {
+  CPixelShader* ps = new CPixelShader;
+  if (name == "solid_colored.ps") {
+    ps->create("data/shaders/Tutorial02.fx", "PS");
+  }
+  else if (name == "textured.ps") {
+    ps->create("data/shaders/Tutorial02.fx", "PSTextured");
+  }
+  else {
+    fatal("Unsupported pixel shader %s\n", name.c_str());
+  }
+  return ps;
+}
+
 
 //--------------------------------------------------------------------------------------
 // Helper for compiling shaders with D3DX11
@@ -73,6 +114,7 @@ bool CVertexShader::create(
   , const char* entry_point
   , const CVertexDeclaration* vtx_decl
   ) {
+  name = fx_filename;
   HRESULT hr;
 
   assert(fx_filename);
@@ -105,24 +147,29 @@ bool CVertexShader::create(
       , vtx_decl->name, entry_point, fx_filename);
     return false;
   }
+  setDXName(vertex_layout, vtx_decl->name);
+
+  std::string dx_name = entry_point + std::string("@") + fx_filename;
+  setDXName(vs, dx_name.c_str());
 
   return true;
 }
 
-void CVertexShader::activate() {
+void CVertexShader::activate() const {
   assert(vs);
   assert(vertex_layout);
   Render.ctx->VSSetShader(vs, NULL, 0);
   Render.ctx->IASetInputLayout(vertex_layout);
 }
 
-
-
 // --------------------------------------------
 bool CPixelShader::create(
   const char* fx_filename
   , const char* entry_point
   ) {
+
+  name = fx_filename; // entry_point + "@" + fx_filename;
+
   HRESULT hr;
 
   // Compilar shader
@@ -140,6 +187,9 @@ bool CPixelShader::create(
   if (FAILED(hr))
     return false;
 
+  std::string dx_name = entry_point + std::string("@") + fx_filename;
+  setDXName(ps, dx_name.c_str());
+
   return true;
 }
 
@@ -147,7 +197,7 @@ void CPixelShader::destroy() {
   SAFE_RELEASE(ps);
 }
 
-void CPixelShader::activate() {
+void CPixelShader::activate() const {
   assert(ps);
   Render.ctx->PSSetShader(ps, NULL, 0);
 }

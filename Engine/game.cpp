@@ -4,15 +4,18 @@
 #include "render/shaders.h"
 #include "render/vertex_declarations.h"
 #include "render/shader_cte.h"
+#include "render/technique.h"
+#include "render/texture.h"
 #include "resources/resources_manager.h"
 #include "camera/camera.h"
 #include "app_modules/app_module.h"
 #include "imgui/imgui.h"
 
-CVertexShader vs;
-CVertexShader vs_uv;
-CPixelShader  ps;
 CCamera       camera;
+
+const CRenderTechnique* tech_solid_colored = nullptr;
+const CRenderTechnique* tech_textured_colored = nullptr;
+const CTexture*         texture1 = nullptr;
 
 #include "contants/ctes_camera.h"
 CShaderCte< TCteCamera > shader_ctes_camera;
@@ -46,16 +49,13 @@ bool CApp::start() {
   mod_wnd_proc.push_back(imgui);
 
   // ----------------------------
+  tech_solid_colored = Resources.get("tech_solid_colored.tech")->as<CRenderTechnique>();
+  tech_textured_colored = Resources.get("tech_textured_colored.tech")->as<CRenderTechnique>();
+  texture1 = Resources.get("textures/wood_d.dds")->as<CTexture>();
 
-  if (!vs.create("data/shaders/Tutorial02.fx", "VS", &vdecl_positions_color))
+  if (!shader_ctes_camera.create("ctes_camera"))
     return false;
-  if (!ps.create("data/shaders/Tutorial02.fx", "PS"))
-    return false;
-  if (!vs_uv.create("data/shaders/Tutorial02.fx", "VS_UV", &vdecl_positions_uv))
-    return false;
-  if (!shader_ctes_camera.create())
-    return false;
-  if (!shader_ctes_object.create())
+  if (!shader_ctes_object.create("ctes_object"))
     return false;
 
   camera.lookAt(VEC3(-10, 10, 20)*0.7f, VEC3(0, 0, 0));
@@ -67,7 +67,6 @@ bool CApp::start() {
       return false;
     }
   }
-
 
   entities.resize(2);
   entities[0].transform.setPosition(VEC3(2.5f, 0, 0));
@@ -86,8 +85,6 @@ void CApp::stop() {
   Resources.destroy();
   shader_ctes_camera.destroy();
   shader_ctes_object.destroy();
-  ps.destroy();
-  vs.destroy();
 
   // Delete all modules
   for (auto m : all_modules)
@@ -172,48 +169,57 @@ void CApp::update(float elapsed) {
 
 // ----------------------------------
 void CApp::render() {
-  // To set a default and known Render State
-  Render.ctx->RSSetState(nullptr);
+  {
+    CTraceScoped scope("initFrame");
 
-	// Clear the back buffer 
-	float ClearColor[4] = { 0.3f, 0.3f, 0.3f, 1.0f }; // red,green,blue,alpha
-	Render.ctx->ClearRenderTargetView(Render.renderTargetView, ClearColor);
-  camera.setAspectRatio( (float)xres/(float)yres );
+    // To set a default and known Render State
+    Render.ctx->RSSetState(nullptr);
 
-  shader_ctes_camera.activate(CTE_SHADER_CAMERA_SLOT);
-  shader_ctes_camera.ViewProjection = camera.getViewProjection();
-  shader_ctes_camera.uploadToGPU();
+    // Clear the back buffer 
+    float ClearColor[4] = { 0.3f, 0.3f, 0.3f, 1.0f }; // red,green,blue,alpha
+    Render.ctx->ClearRenderTargetView(Render.renderTargetView, ClearColor);
+    camera.setAspectRatio((float)xres / (float)yres);
 
-  ps.activate();
-  vs.activate();
+    shader_ctes_camera.activate(CTE_SHADER_CAMERA_SLOT);
+    shader_ctes_camera.ViewProjection = camera.getViewProjection();
+    shader_ctes_camera.uploadToGPU();
 
-  shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
-  shader_ctes_object.World = MAT44::Identity;
-  shader_ctes_object.uploadToGPU();
-  auto axis = Resources.get("axis.mesh")->as<CMesh>();
+    tech_solid_colored->activate();
 
-  axis->activateAndRender();
-  Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
-
-  for (auto e : entities) {
-    shader_ctes_object.World = e.transform.asMatrix();
+    shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
+    shader_ctes_object.World = MAT44::Identity;
     shader_ctes_object.uploadToGPU();
+    auto axis = Resources.get("axis.mesh")->as<CMesh>();
+
     axis->activateAndRender();
+    Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
   }
 
-  shader_ctes_object.World = MAT44::CreateTranslation(VEC3(-1, 0, 0));
-  shader_ctes_object.uploadToGPU();
-  axis->activateAndRender();
+  {
+    CTraceScoped scope("entities");
+    auto axis = Resources.get("axis.mesh")->as<CMesh>();
+    for (auto e : entities) {
+      shader_ctes_object.World = e.transform.asMatrix();
+      shader_ctes_object.uploadToGPU();
+      axis->activateAndRender();
+    }
+  }
 
-  // el shader de pos + uv
-  shader_ctes_object.World = MAT44::Identity;
-  shader_ctes_object.uploadToGPU();
-  vs_uv.activate();
-  ps.activate();
-  Resources.get("meshes/Teapot001.mesh")->as<CMesh>()->activateAndRender();
+  {
+    CTraceScoped scope("textured obj");
+    // el shader de pos + uv
+    shader_ctes_object.World = MAT44::Identity;
+    shader_ctes_object.uploadToGPU();
 
-  for (auto it : mod_update)
+    texture1->activate(0);
+    tech_textured_colored->activate();
+    Resources.get("meshes/Teapot001.mesh")->as<CMesh>()->activateAndRender();
+  }
+
+  for (auto it : mod_update) {
+    CTraceScoped scope( it->getName() );
     it->render();
+  }
 
 }
 

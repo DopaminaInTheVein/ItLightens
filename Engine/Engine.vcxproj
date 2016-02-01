@@ -99,6 +99,7 @@
     <ClCompile Include="geometry\SimpleMath.cpp" />
     <ClCompile Include="geometry\transform.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="render\DDSTextureLoader.cpp" />
     <ClCompile Include="render\mesh.cpp" />
     <ClCompile Include="render\mesh_manager.cpp" />
     <ClCompile Include="render\render.cpp" />
@@ -107,6 +108,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="render\shaders.cpp" />
+    <ClCompile Include="render\technique.cpp" />
+    <ClCompile Include="render\texture.cpp" />
     <ClCompile Include="render\vertex_declarations.cpp" />
     <ClCompile Include="resources\resources_manager.cpp" />
     <ClCompile Include="utils\utils.cpp" />
@@ -124,10 +127,14 @@
     <ClInclude Include="geometry\SimpleMath.h" />
     <ClInclude Include="geometry\transform.h" />
     <ClInclude Include="mcv_platform.h" />
+    <ClInclude Include="render\DDSTextureLoader.h" />
+    <ClInclude Include="render\gpu_trace.h" />
     <ClInclude Include="render\mesh.h" />
     <ClInclude Include="render\render.h" />
     <ClInclude Include="render\shaders.h" />
     <ClInclude Include="render\shader_cte.h" />
+    <ClInclude Include="render\technique.h" />
+    <ClInclude Include="render\texture.h" />
     <ClInclude Include="render\vertex_declarations.h" />
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="resources\resources_manager.h" />

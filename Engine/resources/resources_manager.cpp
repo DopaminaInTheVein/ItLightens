@@ -2,25 +2,21 @@
 #include "resource.h"
 #include "resources_manager.h"
 #include "render/mesh.h"
+#include "render/technique.h"
+#include "render/texture.h"
 #include "imgui/imgui.h"
 
 CResourcesManager Resources;
 
-enum eType {
-  UNDEFINED
-  , MESH
-  , SKIN_MESH
-  , TEXTURE
-  , SHADER
-  , NUM_RESOURCES_TYPE
-};
+
 const char* IResource::getTypeName( IResource::eType atype ) {
   switch (atype) {
-  case UNDEFINED: return "undefined";
-  case MESH: return "Mesh";
-  case SKIN_MESH: return "SkinMesh";
-  case TEXTURE: return "Texture";
-  case SHADER: return "Shader";
+  case IResource::UNDEFINED: return "undefined";
+  case IResource::MESH:      return "Meshes";
+  case IResource::TECHNIQUE: return "Techniques";
+  case IResource::VERTEX_SHADER: return "VertexShaders";
+  case IResource::PIXEL_SHADER: return "PixelShaders";
+  case IResource::TEXTURE: return "Textures";
   }
   return "invalid";
 }
@@ -43,6 +39,18 @@ const IResource* CResourcesManager::get(const char* name) {
 
   if (ext == ".mesh") {
     new_obj = createObjFromName<CMesh>(name);
+  }
+  else if (ext == ".tech") {
+    new_obj = createObjFromName<CRenderTechnique>(name);
+  }
+  else if (ext == ".vs") {
+    new_obj = createObjFromName<CVertexShader>(name);
+  }
+  else if (ext == ".ps") {
+    new_obj = createObjFromName<CPixelShader>(name);
+  }
+  else if (ext == ".dds") {
+    new_obj = createObjFromName<CTexture>(name);
   }
   else {
     fatal("Invalid resource type %s at %s\n", ext.c_str(), name);

@@ -45,6 +45,15 @@
     <ClCompile Include="resources\resources_manager.cpp">
       <Filter>resources</Filter>
     </ClCompile>
+    <ClCompile Include="render\technique.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\texture.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\DDSTextureLoader.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -107,6 +116,18 @@
     </ClInclude>
     <ClInclude Include="utils\data_provider.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="render\technique.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\texture.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\DDSTextureLoader.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\gpu_trace.h">
+      <Filter>render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
