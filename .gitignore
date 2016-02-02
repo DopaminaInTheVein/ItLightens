@@ -1,3 +1,4 @@
 build/*
 Engine/ipch/*
 Engine/Engine.VC.opendb
+Engine/Engine.sdf
