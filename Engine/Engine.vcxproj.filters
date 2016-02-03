@@ -45,14 +45,23 @@
     <ClCompile Include="resources\resources_manager.cpp">
       <Filter>resources</Filter>
     </ClCompile>
+    <ClCompile Include="render\technique.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\texture.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\DDSTextureLoader.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\tentity.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
     <ClCompile Include="logic\aic_patrol.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="logic\aicontroller.cpp">
       <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="entities\tentity.cpp">
-      <Filter>entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,14 +126,26 @@
     <ClInclude Include="utils\data_provider.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="logic\aic_patrol.h">
-      <Filter>logic</Filter>
+    <ClInclude Include="render\technique.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\texture.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\DDSTextureLoader.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\gpu_trace.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\tentity.h">
+      <Filter>entities</Filter>
     </ClInclude>
     <ClInclude Include="logic\aicontroller.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="entities\tentity.h">
-      <Filter>entities</Filter>
+    <ClInclude Include="logic\aic_patrol.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,11 +179,11 @@
     <Filter Include="resources">
       <UniqueIdentifier>{90846d98-0941-418d-a528-2b382364908b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="logic">
-      <UniqueIdentifier>{64860f38-2cd0-4f4a-9408-850fd105f988}</UniqueIdentifier>
-    </Filter>
     <Filter Include="entities">
-      <UniqueIdentifier>{1fb720fd-0d6a-41d1-af2d-23c5f9b09095}</UniqueIdentifier>
+      <UniqueIdentifier>{ac0e0219-108b-4f2d-8ab1-bf3415d8fddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic">
+      <UniqueIdentifier>{b6362eac-d46c-4403-9eed-f2cef1019e19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

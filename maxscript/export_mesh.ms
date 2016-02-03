@@ -91,7 +91,7 @@ fn export_mesh given_obj = (
 	)
 	
 	-- Basic info
-	local vtx_type = 1001
+	local vtx_type = 1002
 	local channelA = 1
 	
 	local world_max_to_local_mcv = (inverse obj.transform) * ( rotateXMatrix -90)
@@ -109,14 +109,24 @@ fn export_mesh given_obj = (
 		local pos_idx = getFace obj face_id
 		local uv_A = meshop.getMapFace obj channelA face_id
 		
+		-- Returns an array of 3 entries, one Normal per each vertex
+		-- of the face
+		local world_normals = meshop.getFaceRNormals obj face_id
+		
 		--format "Face % %\n" face_id pos_idx
 		for vtx_id in #(1,3,2) do (
 			local world_pos = getVert obj pos_idx[vtx_id]
+			local world_normal = world_normals[ vtx_id ]
 			local pos =  world_pos * world_max_to_local_mcv
 			
-			local uvA = meshop.getMapVert obj channelA uv_A[vtx_id]
+			-- Multiply Just the the rotation, we don't want to translate
+			-- the normal directions
+			local normal = world_normal * world_max_to_local_mcv.rotationpart 
 			
-			local vtx = #(pos.x, pos.y, pos.z, uvA.x, uvA.y)
+			local uvA = meshop.getMapVert obj channelA uv_A[vtx_id]
+
+			-- 1-uvA.y because DX11 has the origin in the top, and gl&MAX in the bottom
+			local vtx = #(pos.x, pos.y, pos.z, normal.x, normal.y, normal.z, uvA.x, 1-uvA.y)
 			local idx = registerVertex all_vtxs vtx
 			append all_idxs idx
 			--format "  % % => %\n" pos uvA idx

@@ -134,8 +134,8 @@ bool createGridXZ(CMesh& mesh, int nsteps) {
   }
   assert(k == nvtxs);
   return mesh.create(
-    nvtxs, 
-    sizeof(SimpleVertexColored), 
+    (uint32_t)nvtxs,
+    (uint32_t)sizeof(SimpleVertexColored), 
     &vtxs[0], 
     0, 0, nullptr,
     CMesh::VTX_DECL_POSITION_COLOR,
@@ -150,7 +150,7 @@ bool createGridXZ(CMesh& mesh, int nsteps) {
 template<>
 IResource* createObjFromName<CMesh>(const std::string& name) {
 
-  CMesh* mesh = new CMesh;
+  CMesh* mesh = new CMesh(name);
 
   // ----------------------------------
   if (name == "axis.mesh") {
@@ -181,7 +181,7 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
 
   // ----------------------------------
   // Try to load from disk
-  std::string full_path = "data/" + name;
+  std::string full_path = IResource::getDataPath() + name;
   CFileDataProvider fdp(full_path.c_str());
   assert(fdp.isValid() || fatal("Can't open mesh file %s\n", full_path.c_str()));
   bool is_ok = meshLoader(mesh, fdp);

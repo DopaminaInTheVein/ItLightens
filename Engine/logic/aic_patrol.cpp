@@ -13,10 +13,10 @@ void aic_patrol::Init(TEntity* new_entity)
 	AddState("nextwpt",(statehandler)&aic_patrol::NextWptState);
 
 	//add point to wpts vector
-	wpts.push_back(VEC3(-5, 0, -5));
-	wpts.push_back(VEC3(-5, 0, 5));
-	wpts.push_back(VEC3(5, 0, 5));
-	wpts.push_back(VEC3(5, 0, -5));
+	wpts.push_back(VEC3(-9, 0, -9));
+	wpts.push_back(VEC3(-9, 0, 9));
+	wpts.push_back(VEC3(9, 0, 9));
+	wpts.push_back(VEC3(9, 0, -9));
 
 	curwpt = 0;
 

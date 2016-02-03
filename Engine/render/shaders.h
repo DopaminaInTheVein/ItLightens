@@ -1,10 +1,13 @@
 #ifndef INC_RENDER_SHADERS_H_
 #define INC_RENDER_SHADERS_H_
 
+#include "resources/resource.h"
+
 struct CVertexDeclaration;
 
 // ----------------------------------------------
-class CVertexShader {
+class CVertexShader : public IResource {
+  std::string           name;
   ID3D11VertexShader*   vs;
   ID3D11InputLayout*    vertex_layout;
 public:
@@ -14,12 +17,23 @@ public:
     , const char* entry_point
     , const CVertexDeclaration* vtx_decl
     );
-  void destroy();
-  void activate();
+  void destroy() override;
+  void activate() const;
+
+  const std::string& getName() const override {
+    return name;
+  }
+  bool isValid() const override {
+    return vs != nullptr;
+  }
+  eType getType() const override  {
+    return VERTEX_SHADER;
+  }
 };
 
 // ----------------------------------------------
-class CPixelShader {
+class CPixelShader : public IResource {
+  std::string          name;
   ID3D11PixelShader*   ps;
 public:
   CPixelShader() : ps(nullptr) { }
@@ -27,8 +41,19 @@ public:
   bool create(const char* fx_filename
     , const char* entry_point
     );
-  void destroy();
-  void activate();
+  void destroy() override; 
+  void activate() const;
+
+  const std::string& getName() const override {
+    return name;
+  }
+  bool isValid() const override {
+    return ps != nullptr;
+  }
+  eType getType() const override {
+    return PIXEL_SHADER;
+  }
+
 };
 
 
