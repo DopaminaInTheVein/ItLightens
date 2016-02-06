@@ -27,11 +27,15 @@ class aicontroller
 
 	public:
 		TEntity* entity;
+		TEntity* player;
 
 		void ChangeState(string);	// state we wish to go to
 		virtual void Init();	// resets the controller
 		void Recalc();	// recompute behaviour
 		void AddState(string,statehandler);
+		void setPlayer(TEntity* new_player) {
+			player = new_player;
+		}
 
 	};
 

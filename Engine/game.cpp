@@ -65,7 +65,7 @@ bool CApp::start() {
     }
   }
 
-  entities.resize(3);
+  entities.resize(4);
   entities[0].transform.setPosition(VEC3(2.5f, 0, 0));
   entities[1].transform.setPosition(VEC3(2.5f, 0, 2.5f));
 
@@ -73,6 +73,13 @@ bool CApp::start() {
   TEntity patrol_entity;
   entities[2] = patrol_entity;  
   aicp.Init(&entities[2]);
+
+  //Player
+  TEntity player;
+  player.transform.setPosition(VEC3(10.0f, 0, 10));
+  entities[3] = player;
+
+  aicp.setPlayer(&entities[3]);
 
   return true;
 }
@@ -100,7 +107,30 @@ void CApp::update(float elapsed) {
   for (auto it : mod_update )
     it->update(elapsed);
 
+  //Recalcular IA platrullero
   aicp.Recalc();
+
+  //Controles del player
+  VEC3 position = entities[3].transform.getPosition();
+
+  if (GetAsyncKeyState(VK_UP))
+  {
+	  position.z -= 0.01f;
+  }
+  else if(GetAsyncKeyState(VK_DOWN))
+  {
+	  position.z += 0.01f;
+  }
+  else if(GetAsyncKeyState(VK_LEFT))
+  {
+	  position.x -= 0.01f;
+  }
+  else if(GetAsyncKeyState(VK_RIGHT))
+  {
+	  position.x += 0.01f;
+  }
+
+  entities[3].transform.setPosition(position);
 
   Resources.renderUIDebug();
 
