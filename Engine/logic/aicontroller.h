@@ -9,6 +9,7 @@
 #include <map>
 
 #include "../entities/tentity.h"
+#include "sbb.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ class aicontroller
 	public:
 		TEntity* entity;
 		TEntity* player;
+		sbb* shared_board;
 
 		void ChangeState(string);	// state we wish to go to
 		virtual void Init();	// resets the controller
@@ -35,6 +37,9 @@ class aicontroller
 		void AddState(string,statehandler);
 		void setPlayer(TEntity* new_player) {
 			player = new_player;
+		}
+		void setSbb(sbb* new_shared_board) {
+			shared_board = new_shared_board;
 		}
 
 	};

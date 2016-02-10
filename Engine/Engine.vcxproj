@@ -101,6 +101,7 @@
     <ClCompile Include="geometry\transform.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
     <ClCompile Include="logic\aic_patrol.cpp" />
+    <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
     <ClCompile Include="render\mesh.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="geometry\transform.h" />
     <ClInclude Include="logic\aicontroller.h" />
     <ClInclude Include="logic\aic_patrol.h" />
+    <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
     <ClInclude Include="render\gpu_trace.h" />

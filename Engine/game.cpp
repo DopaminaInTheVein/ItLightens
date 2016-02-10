@@ -12,11 +12,15 @@
 #include "imgui/imgui.h"
 #include "logic/aicontroller.h"
 #include "logic/aic_patrol.h"
+#include "logic/sbb.h"
 #include "entities/tentity.h"
 
 CCamera       camera;
 //AI controller
 aic_patrol aicp;
+aic_patrol aicp2;
+// Sbb
+sbb shared_board;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
@@ -65,21 +69,31 @@ bool CApp::start() {
     }
   }
 
-  entities.resize(4);
+  entities.resize(5);
   entities[0].transform.setPosition(VEC3(2.5f, 0, 0));
   entities[1].transform.setPosition(VEC3(2.5f, 0, 2.5f));
 
   //Init AI controller 
+  shared_board.init();
+
   TEntity patrol_entity;
   entities[2] = patrol_entity;  
   aicp.Init(&entities[2]);
 
+  TEntity patrol_entity2;
+  entities[3] = patrol_entity2;
+  aicp2.Init(&entities[3]);
+
   //Player
   TEntity player;
   player.transform.setPosition(VEC3(10.0f, 0, 10));
-  entities[3] = player;
+  entities[4] = player;
 
-  aicp.setPlayer(&entities[3]);
+  aicp.setPlayer(&entities[4]);
+  aicp.setSbb(&shared_board);
+
+  aicp2.setPlayer(&entities[4]);
+  aicp2.setSbb(&shared_board);
 
   return true;
 }
@@ -109,9 +123,10 @@ void CApp::update(float elapsed) {
 
   //Recalcular IA platrullero
   aicp.Recalc();
+  aicp2.Recalc();
 
   //Controles del player
-  VEC3 position = entities[3].transform.getPosition();
+  VEC3 position = entities[4].transform.getPosition();
 
   if (GetAsyncKeyState(VK_UP))
   {
@@ -130,7 +145,7 @@ void CApp::update(float elapsed) {
 	  position.x += 0.01f;
   }
 
-  entities[3].transform.setPosition(position);
+  entities[4].transform.setPosition(position);
 
   Resources.renderUIDebug();
 

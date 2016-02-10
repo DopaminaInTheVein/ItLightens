@@ -63,6 +63,9 @@
     <ClCompile Include="logic\aicontroller.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="logic\sbb.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -145,6 +148,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\aic_patrol.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\sbb.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

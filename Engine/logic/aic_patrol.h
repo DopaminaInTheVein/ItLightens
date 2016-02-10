@@ -16,6 +16,7 @@ public:
 	void IdleState();
 	void SeekWptState();
 	void NextWptState();
+	void SelectRoleState();
 	void ChaseState();
 	void IdleWarState();
 	void CombatState();

@@ -16,6 +16,7 @@ void aic_patrol::Init(TEntity* new_entity)
 	AddState("combat", (statehandler)&aic_patrol::CombatState);
 	AddState("oleft", (statehandler)&aic_patrol::OLeftState);
 	AddState("oright", (statehandler)&aic_patrol::ORightState);
+	AddState("selectrole", (statehandler)&aic_patrol::SelectRoleState);
 
 	//add point to wpts vector
 	wpts.push_back(VEC3(-9, 0, -9));
@@ -28,7 +29,7 @@ void aic_patrol::Init(TEntity* new_entity)
 	idle_war_wait = 1000;
 	combat_wait = 2000;
 
-	entity->transform.setPosition(VEC3(10.0f, 0, 0));
+	entity->transform.setPosition(VEC3((float)(rand() % 10), 0, (float)(rand() % 10)));
 
 	// reset the state
 	ChangeState("idle");
@@ -51,7 +52,7 @@ void aic_patrol::SeekWptState()
 	float distance = (wpts[curwpt].x - entity->transform.getPosition().x) + (wpts[curwpt].z - entity->transform.getPosition().z);
 
 	if (entity->transform.isHalfConeVision(player->transform.getPosition(), deg2rad(70))) {
-		ChangeState("chase");
+		ChangeState("selectrole");
 	}
 	else if (abs(distance) > 0.5f) {
 		VEC3 front = entity->transform.getFront();
@@ -82,6 +83,22 @@ void aic_patrol::NextWptState()
 		entity->transform.setAngles(yaw + delta_yaw*0.005f, pitch);
 	}
 	else {
+		ChangeState("seekwpt");
+	}
+}
+
+// Selecting role
+void aic_patrol::SelectRoleState() {
+
+	int free_slots = shared_board->read("attacking_slots");
+
+	if (free_slots > 0) {
+		free_slots--;
+		shared_board->write("attacking_slots", free_slots);
+		ChangeState("chase");
+	}
+	else {
+		dbg("No hay slots vacíos, sigo patrullando!!");
 		ChangeState("seekwpt");
 	}
 }
