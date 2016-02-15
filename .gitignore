@@ -1,14 +1,8 @@
-<<<<<<< HEAD
 build/*
 Engine/ipch/*
 Engine/Engine.VC.opendb
 Engine/Engine.sdf
-=======
-build/
+Engine/.vs/Engine/v14/.suo
 bin/Engined.exe
 bin/Engined.ilk
-Engine/ipch/
-Engine/Engine.sdf
-Engine/.vs/Engine/v14/.suo
-Engine/Engine.VC.opendb
->>>>>>> develop
+
