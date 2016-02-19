@@ -1,0 +1,68 @@
+Handles
++ Messages
++ IO de components / Creacion de entidades desde disco
+	XML 
+		Expat
+
+- Controlador de camara
+- ZBuffers
+
+- ImGUI
+    - Listado de entities
+        - Listado de sus components
+        - Borrar component/Add component?
+
+- Prefabs
+- Hierarchies
+
+- Grupos de entities/Tags/Tags Managers
+- Tags from strings    // https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp
+
+- Exportador eficiente de maxscript
+- Exportador de escenas de maxscript
+- Exportador de materiales de maxsciprt
+
+- Modulo de IO
+- Modulo de Render 
+
+
+
+
+
+- Reflection de datos
+	TComp name 64
+
+
+TODO
++ imgui
++ TTransform  quaterion + translation + scale	
++ Manager
++ Cargar meshes desde disco
+	+ exportarlas desde max
+	+ Vertex declaration con Pos + UV
+	+ Crear index buffer para el CMesh
+	+ Shader que use las pos
++ Techniques
++ Cargar texturas y usarlas
+
+- Cargar una segunda textura 
+- Un shader que reciba 2 texturas y en el pixel shader
+  las multiplique
+
++ Exportar la Normal en el MAX
+  - Hacer una vdecl que la use
+  - Un vertex shader que la multiplique por la world
+  - Un pixel shader que la use para dar algo de iluminacion
+	L = normalize(1,1,1)
+	float diffuse = dot( N, L )
+
+- ImGui debug de textures + zoom segun sample de ImGuI
+- Imgui caja de filtrado
+- Imgui pedir reload de texturas
+
+/ Resources -> expornerlo en la ImGuoi
+
+- Optimizar el exportador para que vaya mas rapido
+
+
+- Input + Keyboard

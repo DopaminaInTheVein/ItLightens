@@ -1,0 +1,3 @@
+<material type="std" tech="agua">
+	<texture type="specular" name="wood_d.dds"/>
+</material>

@@ -1,0 +1,18 @@
+#ifndef INC_COMPONENT_BASE_H_
+#define INC_COMPONENT_BASE_H_
+
+class MKeyValue;
+
+struct TCompBase {
+  void render() {}
+  void update(float elapsed) {
+    (void)(elapsed);
+  }
+  bool load(MKeyValue& atts) {
+    (void)(atts);
+    return true;
+  }
+  void renderInMenu() {}
+};
+
+#endif

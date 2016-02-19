@@ -1,0 +1,5 @@
+<material type="std" tech="std">
+	<texture type="diffuse" name="wood_d.dds"/>
+	<texture type="specular" name="wood_d.dds"/>
+	<texture type="ambient" name="wood_d.dds"/>
+</material>

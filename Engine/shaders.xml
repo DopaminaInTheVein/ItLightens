@@ -1,0 +1,8 @@
+<techniques>
+<vs name="vs_for_solid"  fx_vs="...fx" vs_main="VS2" vs_decl="..."/>
+<ps name="ps_for_solid"  fx_ps="...fx" ps_main="PS"/>
+<ps name="ps2_for_solid"  fx_ps="...fx" ps_main="PS2"/>
+
+<tech name ="tech1" vs="vs_for_solid" ps="ps_for_solid" render/>
+<tech name ="tech1" vs="vs_for_solid" ps="ps2_for_solid"/>
+</techniques>
