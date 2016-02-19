@@ -18,4 +18,3 @@ public:
 extern TTagsManager tags_manager;
 
 #endif
-

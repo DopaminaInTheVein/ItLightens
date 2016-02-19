@@ -99,6 +99,9 @@
     <ClCompile Include="components\entity.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="logic\sbb.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -231,6 +234,9 @@
     <ClInclude Include="components\comp_render_mesh.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="logic\sbb.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -271,6 +277,9 @@
     </Filter>
     <Filter Include="expat">
       <UniqueIdentifier>{269512a1-bbd5-4af1-a1ba-e05207790f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic">
+      <UniqueIdentifier>{c4cefe0b-fafc-4e30-a6e2-9cc68d3649da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

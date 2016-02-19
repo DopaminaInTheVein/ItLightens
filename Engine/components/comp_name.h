@@ -11,6 +11,10 @@ struct TCompName : public TCompBase {
     strcpy(name, atts.getString("name", "no_name").c_str());
     return true;
   }
+
+  void renderInMenu() {
+	  ImGui::Text(name);
+  }
 };
 
 #endif

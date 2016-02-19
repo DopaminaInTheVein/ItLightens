@@ -14,11 +14,15 @@
     <life points="4"/>
     <camera znear="1" zfar="6" fov="45"/>
     <controller_3rd_person/>
+    <!--<nombre_IA_xml tag="ai"> -->
   </entity>
+  
+ 
   <entity>
     <tag name="target"/>
     <transform pos="1 0 1"/>
     <name name="peter"/>
-    <render_mesh name="muroA.render_mesh"/>
+   <!-- <render_mesh name="muroA.render_mesh"/> -->
   </entity>
+ 
 </entities>

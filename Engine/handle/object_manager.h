@@ -99,6 +99,14 @@ public:
   }
 
   // -------------------------
+  void initAll() override {
+	  auto o = objs;
+	  for (size_t i = 0; i<num_objs_used; ++i, ++o) {
+		  o->init();
+	  }
+  }
+
+  // -------------------------
   void renderInMenu( CHandle h ) override {
     auto obj = getAddrFromHandle(h);
     if (!obj)

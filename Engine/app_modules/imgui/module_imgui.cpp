@@ -1,53 +1,78 @@
 #include "mcv_platform.h"
 #include "module_imgui.h"
 #include "windows/app.h"
-
+#include "resources/resources_manager.h"
 // ImGui LIB headers
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui.h"
 #pragma comment(lib, "imgui.lib" )
 
+#include "handle\object_manager.h"
+#include "components\entity.h"
+
 bool CImGuiModule::start() {
-  CApp& app = CApp::get();
-  return ImGui_ImplDX11_Init(app.getHWnd(), Render.device, Render.ctx);
+	CApp& app = CApp::get();
+	return ImGui_ImplDX11_Init(app.getHWnd(), Render.device, Render.ctx);
 }
 
 void CImGuiModule::stop() {
-  ImGui_ImplDX11_Shutdown();
+	ImGui_ImplDX11_Shutdown();
 }
 
 void CImGuiModule::update(float dt) {
-  ImGui_ImplDX11_NewFrame();
+	ImGui_ImplDX11_NewFrame();
 
-  // 1. Show a simple window
-  // Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appears in a window automatically called "Debug"
-  {
-    static bool show_another_window = false;
-    static ImVec4 clear_col = ImColor(114, 144, 154);
-    static float f = 0.0f;
-    ImGui::Text("Hello, world!");
-    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-    ImGui::ColorEdit3("clear color", (float*)&clear_col);
-    if (ImGui::Button("Another Window")) show_another_window ^= 1;
-    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	ImGuiWindowFlags window_flags = 0;
+	window_flags |= ImGuiWindowFlags_MenuBar;
+	bool menu = true;
+	ImGui::Begin("Debug UI", &menu, ImVec2(512, 512), -1.0f, window_flags);
+	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 
-    if (show_another_window)
-    {
-      ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiSetCond_FirstUseEver);
-      ImGui::Begin("Another Window", &show_another_window);
-      ImGui::Text("Hello");
-      ImGui::End();
-    }
-  }
+	if (ImGui::BeginMenuBar())
+	{
+		if (ImGui::BeginMenu("Console Debug"))
+		{
+			//ImGui::MenuItem("Log", NULL, Debug->getStatus()); TODO
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
 
+	ImGui::Button("PAUSE BUTTON - TODO");
+	ImGui::SameLine();
+	ImGui::Button("RESUME BUTTON - TODO");
+	ImGui::Separator();
+
+	if (ImGui::CollapsingHeader("General Info")) {
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	}
+	if (ImGui::CollapsingHeader("Resources")) {
+		Resources.renderUIDebug();
+	}
+
+	if (ImGui::CollapsingHeader("Entities")) {
+		getHandleManager<CEntity>()->onAll(&CEntity::renderInMenu);
+	}
+
+	if (ImGui::CollapsingHeader("IA")) {
+		ImGui::Text("Application IA - TODO");
+	}
+
+	if (ImGui::CollapsingHeader("SELECTED ENTITY")) {
+		ImGui::Text("Application SELECTED ENTITY - TODO");
+
+	}if (ImGui::CollapsingHeader("Entity by Tag")) {
+		ImGui::Text("Application ENTITY TAG - TODO");
+	}
+
+	ImGui::End();
 }
 
 void CImGuiModule::render() {
-  ImGui::Render();
-}
- 
-bool CImGuiModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-  return ImGui_ImplDX11_WndProcHandler(hWnd, message, wParam, lParam) ? true : false;
+	ImGui::Render();
 }
 
+bool CImGuiModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+	return ImGui_ImplDX11_WndProcHandler(hWnd, message, wParam, lParam) ? true : false;
+}
 

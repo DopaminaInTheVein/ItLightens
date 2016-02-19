@@ -126,6 +126,7 @@
     <ClCompile Include="geometry\transform.cpp" />
     <ClCompile Include="handle\handle.cpp" />
     <ClCompile Include="handle\handle_manager.cpp" />
+    <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
     <ClCompile Include="render\mesh.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="handle\handle_manager.h" />
     <ClInclude Include="handle\msgs.h" />
     <ClInclude Include="handle\object_manager.h" />
+    <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
     <ClInclude Include="render\gpu_trace.h" />

@@ -14,6 +14,9 @@ DECL_OBJ_MANAGER("transform", TCompTransform);
 DECL_OBJ_MANAGER("camera", TCompCamera);
 DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
 
+
+//DECL_OBJ_MANAGER("nombre_IA_xml", NameClass):
+
 DECL_OBJ_MANAGER("life", TCompLife);
 
 // The global dict of all msgs
@@ -33,6 +36,7 @@ bool CEntitiesModule::start() {
 
   getHandleManager<TCompLife>()->init(nmax);
 
+
   SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
   SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
   SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
@@ -51,19 +55,26 @@ bool CEntitiesModule::start() {
   }
 
 
+  //getHandleManager<NameClass>()->initAll();
+
   return true;
 }
 
 void CEntitiesModule::stop() {
 }
 
+
 void CEntitiesModule::update(float dt) {
 
-  getHandleManager<TCompController3rdPerson>()->updateAll( dt );
-  getHandleManager<TCompCamera>()->updateAll( dt );
-  
-  // Show a menu to modify any entity
-  renderInMenu();
+	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+	getHandleManager<TCompCamera>()->updateAll(dt);
+
+
+	//getHandleManager<NameClass>()->updateAll( dt );
+
+
+	// Show a menu to modify any entity
+	//renderInMenu();
 }
 
 void CEntitiesModule::render() {
@@ -72,7 +83,8 @@ void CEntitiesModule::render() {
   // manager->renderAll()
   getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
   getHandleManager<TCompCamera>()->onAll( &TCompCamera::render );
-  //getHandleManager<TCompLife>()->renderAll();
+
+  //getHandleManager<NameClass>()->renderAll();
 }
 
 void CEntitiesModule::renderInMenu() {

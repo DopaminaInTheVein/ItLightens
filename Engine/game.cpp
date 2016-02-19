@@ -11,6 +11,13 @@
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
 
+
+#include "logic/sbb.h"
+#include "handle/object_manager.h"
+#include "components/comp_transform.h"
+#include "components/entity_tags.h"
+#include "components/entity.h"
+
 CCamera       camera;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
@@ -89,11 +96,10 @@ void CApp::update(float elapsed) {
   for (auto it : mod_update )
     it->update(elapsed);
 
-  Resources.renderUIDebug();
-
   static float ctime = 0.f;
   ctime += elapsed* 0.01f;
  // camera.lookAt(VEC3(sin(ctime), 1.f, cos(ctime))*4, VEC3(0, 0, 0));
+
 }
 
 // ----------------------------------

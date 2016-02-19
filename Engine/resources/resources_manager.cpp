@@ -63,8 +63,6 @@ const IResource* CResourcesManager::get(const char* name) {
 // -------------------------------------
 void CResourcesManager::renderUIDebug() {
 
-  ImGui::Begin("Resources");
-
   // Para cada tipo
   for (int i = IResource::UNDEFINED+1; i < IResource::NUM_RESOURCES_TYPE; ++i) {
     auto res_type = (IResource::eType)(i);
@@ -84,6 +82,5 @@ void CResourcesManager::renderUIDebug() {
       ImGui::TreePop();
     }
   }
-  ImGui::End();
 }
 

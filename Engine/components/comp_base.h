@@ -5,6 +5,7 @@ class MKeyValue;
 
 struct TCompBase {
   void render() {}
+  void init() {}
   void update(float elapsed) {
     (void)(elapsed);
   }
