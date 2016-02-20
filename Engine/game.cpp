@@ -10,6 +10,7 @@
 #include "camera/camera.h"
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
+#include "input\input.h"
 
 
 #include "logic/sbb.h"
@@ -19,6 +20,7 @@
 #include "components/entity.h"
 
 CCamera       camera;
+CInput        input;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
@@ -33,6 +35,9 @@ CShaderCte< TCteObject > shader_ctes_object;
 #include "app_modules/entities.h"
 
 bool CApp::start() {
+
+   //init input controller
+   input.Initialize(CApp::getHInstance(), CApp::getHWnd(), 800, 600);
 
   // imgui must be the first to update and the last to render
   auto imgui = new CImGuiModule;
@@ -76,6 +81,9 @@ bool CApp::start() {
 // ----------------------------------
 void CApp::stop() {
 
+  // Stop input
+  input.Shutdown();
+
   // Stop modules
   for (auto it = mod_init_order.rbegin(); it != mod_init_order.rend(); ++it) 
     (*it)->stop();
@@ -92,6 +100,35 @@ void CApp::stop() {
 
 // ----------------------------------
 void CApp::update(float elapsed) {
+
+	// Update input
+	input.Frame();
+
+	if (input.IsUpPressed())
+	{
+		dbg("ARRIBA!\n");
+	}
+	if (input.IsDownPressed())
+	{
+		dbg("ABAJO!\n");
+	}
+	if (input.IsLeftPressed())
+	{
+		dbg("IZQUIERDA!\n");
+	}
+	if (input.IsRightPressed())
+	{
+		dbg("DERECHA!\n");
+	}
+	if (input.IsSpacePressed()) {
+		dbg("SALTO!\n");
+	}
+	if (input.IsLeftClickPressed()) {
+		dbg("ACCION!\n");
+	}
+	if (input.IsRightClickPressed()) {
+		dbg("POSESION!\n");
+	}
 
   for (auto it : mod_update )
     it->update(elapsed);

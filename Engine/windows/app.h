@@ -19,6 +19,7 @@ public:
 
   bool createWindow(HINSTANCE new_hInstance, int nCmdShow);
   void mainLoop();
+  HINSTANCE getHInstance() { return hInstance; }
   HWND getHWnd() { return hWnd; }
   bool start();
   void stop();
