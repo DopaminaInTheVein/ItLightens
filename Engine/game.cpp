@@ -14,6 +14,7 @@
 #include "logic/aic_patrol.h"
 #include "logic/sbb.h"
 #include "entities/tentity.h"
+#include "logic/bt_soldier.h"
 
 CCamera       camera;
 //AI controller
@@ -21,6 +22,8 @@ aic_patrol aicp;
 aic_patrol aicp2;
 // Sbb
 sbb shared_board;
+// BT
+bt_soldier bs1;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
@@ -69,7 +72,7 @@ bool CApp::start() {
     }
   }
 
-  entities.resize(5);
+  entities.resize(6);
   entities[0].transform.setPosition(VEC3(2.5f, 0, 0));
   entities[1].transform.setPosition(VEC3(2.5f, 0, 2.5f));
 
@@ -94,6 +97,11 @@ bool CApp::start() {
 
   aicp2.setPlayer(&entities[4]);
   aicp2.setSbb(&shared_board);
+
+  TEntity bt_patrol;
+  entities[5] = bt_patrol;
+  bs1.create(&entities[5]);
+  bs1.setPlayer(&entities[4]);
 
   return true;
 }

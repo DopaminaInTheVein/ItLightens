@@ -52,7 +52,7 @@ void aic_patrol::SeekWptState()
 	float distance = (wpts[curwpt].x - entity->transform.getPosition().x) + (wpts[curwpt].z - entity->transform.getPosition().z);
 
 	if (entity->transform.isHalfConeVision(player->transform.getPosition(), deg2rad(70))) {
-		ChangeState("selectrole");
+		ChangeState("chase");
 	}
 	else if (abs(distance) > 0.5f) {
 		VEC3 front = entity->transform.getFront();

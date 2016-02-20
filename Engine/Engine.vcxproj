@@ -101,6 +101,9 @@
     <ClCompile Include="geometry\transform.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
     <ClCompile Include="logic\aic_patrol.cpp" />
+    <ClCompile Include="logic\bt.cpp" />
+    <ClCompile Include="logic\btnode.cpp" />
+    <ClCompile Include="logic\bt_soldier.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
@@ -133,6 +136,9 @@
     <ClInclude Include="geometry\transform.h" />
     <ClInclude Include="logic\aicontroller.h" />
     <ClInclude Include="logic\aic_patrol.h" />
+    <ClInclude Include="logic\bt.h" />
+    <ClInclude Include="logic\btnode.h" />
+    <ClInclude Include="logic\bt_soldier.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
