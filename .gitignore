@@ -2,8 +2,8 @@ build/
 bin/Engined.exe
 bin/Engined.ilk
 bin/Engined.pdb
+bin/imgui.ini
 Engine/ipch/
 Engine/Engine.sdf
 Engine/.vs/Engine/v14/.suo
 Engine/Engine.VC.opendb
-bin/Engined.pdb
