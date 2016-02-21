@@ -2,15 +2,15 @@
   <entity>
     <tag name="player" />
     <transform pos="3 3 1" />
-    <name name="john" />
+    <name name="camara" />
     <life points="4" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
   </entity>
   <entity>
-    <tag name="target"/>
-    <transform pos="1 0 1"/>
-    <name name="peter"/>
+    <tag name="target" />
+    <transform pos="1 0 1" />
+    <name name="peter" />
   </entity>
   <entity>
     <name name="box1" />
@@ -27,5 +27,46 @@
     <tag name="ia_mole" />
     <transform pos="0 0 0" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_guard" />
+    <tag name="ears" />
+    <name name="guard1" />
+    <transform pos="0 0 0" />
+
+    <ai_guard
+      kpt_size  = "8"
+      kpt0_type = "seek" kpt0_pos = " 10  0  10" kpt0_wait = "2"
+      kpt1_type = "look" kpt1_pos = "  0  0   0" kpt1_wait = "2"
+      kpt2_type = "seek" kpt2_pos = " 10  0 -10" kpt2_wait = "2"
+      kpt3_type = "look" kpt3_pos = "  0  0   0" kpt3_wait = "2"
+      kpt4_type = "seek" kpt4_pos = "-10  0 -10" kpt4_wait = "2"
+      kpt5_type = "look" kpt5_pos = "  0  0   0" kpt5_wait = "2"
+      kpt6_type = "seek" kpt6_pos = "-10  0  10" kpt6_wait = "2"
+      kpt7_type = "look" kpt7_pos = "  0  0   0" kpt7_wait = "2" />
+    <!-- <render_mesh name="muroA.render_mesh" /> -->
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_cientifico" />
+    <transform pos="1 0 1" />
+    <name name="scientist1" />
+    <cientifico />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <transform pos="5 0 5" />
+    <name name="beacon1" />
+    <beacon />
+  </entity>
+
+  <entity name="ia_speedy">
+    <tag name="AI" />
+    <tag name="AI_speedy" />
+    <transform pos="9 0 9" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 </entities>

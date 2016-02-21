@@ -52,6 +52,12 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompController3rdPerson>()->init(4);
 	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
 
+	getHandleManager<ai_guard>()->init(MAX_ENTITIES);
+	getHandleManager<ai_mole>()->init(MAX_ENTITIES);
+	getHandleManager<ai_scientific>()->init(MAX_ENTITIES);
+	getHandleManager<ai_speedy>()->init(MAX_ENTITIES);
+	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
+
 	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
@@ -89,6 +95,12 @@ bool CEntitiesModule::start() {
 		moleAi->Init(ai, 3.50f);
 		ais.push_back(moleAi);
 	}
+
+	getHandleManager<ai_guard>()->onAll(&ai_guard::Init);
+	//getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
+	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
+	//getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
+	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 
 	return true;
 }
@@ -153,12 +165,18 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
+
 	//getHandleManager<ai_mole>()->updateAll(dt);
+	getHandleManager<ai_guard>()->updateAll(dt);
+	getHandleManager<ai_scientific>()->updateAll(dt);
+	getHandleManager<beacon_controller>()->updateAll(dt);
+	//getHandleManager<ai_speedy>()->updateAll(dt);
+
 	for (aicontroller * ai : ais) {
 		ai->Recalc();
 	}
 	// Show a menu to modify any entity
-	renderInMenu();
+	//renderInMenu();
 }
 
 void CEntitiesModule::render() {

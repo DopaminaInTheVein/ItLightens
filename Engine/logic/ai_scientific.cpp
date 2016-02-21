@@ -39,9 +39,9 @@ void ai_scientific::Init()
 
 void ai_scientific::Idle() {
 	//Nothing to do
-	if (GetAsyncKeyState('Q') != 0) {
-		ChangeState("lookForObj");
-	}
+	//if (GetAsyncKeyState('Q') != 0) {
+	ChangeState("lookForObj");
+	//}
 }
 
 void ai_scientific::LookForObj()

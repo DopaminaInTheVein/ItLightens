@@ -11,6 +11,8 @@
 #include "components\entity.h"
 #include "debug/debug.h"
 
+#include <Commdlg.h>
+
 bool CImGuiModule::start() {
 	CApp& app = CApp::get();
 	//CDebug::initDebugger(Debug);
@@ -106,4 +108,24 @@ void CImGuiModule::render() {
 
 bool CImGuiModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	return ImGui_ImplDX11_WndProcHandler(hWnd, message, wParam, lParam) ? true : false;
+}
+
+//Open file path
+std::string CImGuiModule::getFilePath(char * filter, HWND owner)
+{
+	OPENFILENAME ofn;
+	char fileName[MAX_PATH] = "";
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = owner;
+	ofn.lpstrFilter = filter;
+	ofn.lpstrFile = fileName;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+	ofn.lpstrDefExt = "";
+	std::string fileNameStr;
+	if (GetOpenFileName(&ofn))
+		fileNameStr = fileName;
+
+	return fileNameStr;
 }

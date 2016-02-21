@@ -13,6 +13,7 @@ public:
 		return "imgui";
 	}
 	bool onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) override;
+	static std::string getFilePath(char *filter = "All Files (*.*)\0*.*\0", HWND owner = NULL);		//open file path
 };
 
 #endif

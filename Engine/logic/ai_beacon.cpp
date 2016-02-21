@@ -47,8 +47,8 @@ void beacon_controller::Init() {
 void beacon_controller::Idle()
 {
 	//Nothing to do
-	if (GetAsyncKeyState('Q') != 0)
-		ChangeState("waitInactive");
+	//if (GetAsyncKeyState('Q') != 0)
+	ChangeState("waitInactive");
 }
 
 void beacon_controller::WaitInactive()
