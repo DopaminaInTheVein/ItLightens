@@ -20,7 +20,7 @@
 #include <chrono>
 #include <windows.h>
 
-class ai_mole : public aicontroller { //, public TCompBase {
+class ai_mole : public aicontroller, public TCompBase {
 	int towptbox;
 	int towptleave;
 	float waitSecondsToBoxRespawn;

@@ -60,22 +60,49 @@ const IResource* CResourcesManager::get(const char* name) {
 
 // -------------------------------------
 void CResourcesManager::renderUIDebug(ImGuiTextFilter * filter) {
-	// Para cada tipo
+	std::vector<bool> res_filter;
+	res_filter.resize(IResource::NUM_RESOURCES_TYPE);
+
+	for (auto& it : res_filter)
+		it = false;
+
 	for (int i = IResource::UNDEFINED + 1; i < IResource::NUM_RESOURCES_TYPE; ++i) {
 		auto res_type = (IResource::eType)(i);
+		bool show = false;
 		const char* res_type_name = IResource::getTypeName(res_type);
-		if (ImGui::TreeNode(res_type_name)) {
-			// Para todos los resources
-			for (auto it : all) {
-				auto r = it.second;
-				if (r->getType() == res_type) {
-					if (ImGui::TreeNode(it.first.c_str())) {
-						r->renderUIDebug();
-						ImGui::TreePop();
-					}
+		for (auto it : all) {
+			auto r = it.second;
+			if (r->getType() == res_type) {
+				if (filter->PassFilter(it.first.c_str())) {
+					res_filter[i] = true;
 				}
 			}
-			ImGui::TreePop();
+		}
+	}
+
+	//All resources loop
+	std::vector<std::string> resources;
+	for (int i = IResource::UNDEFINED + 1; i < IResource::NUM_RESOURCES_TYPE; ++i) {
+		if (res_filter[i] == true) {
+			auto res_type = (IResource::eType)(i);
+			bool show = false;
+			const char* res_type_name = IResource::getTypeName(res_type);
+			if (ImGui::TreeNode(res_type_name)) { //type resources header
+				for (auto it : all) {
+					auto r = it.second;
+					if (r->getType() == res_type) {
+						if (filter->PassFilter(it.first.c_str())) {
+							if (ImGui::TreeNode((it.first.c_str()))) {
+								r->renderUIDebug();
+								if (ImGui::SmallButton("reload"))
+									r->reload();
+								ImGui::TreePop();
+							}
+						}
+					}
+				}
+				ImGui::TreePop();
+			}
 		}
 	}
 }

@@ -123,6 +123,9 @@
     <ClCompile Include="debug\debug.cpp">
       <Filter>debug</Filter>
     </ClCompile>
+    <ClCompile Include="logic\ai_guard.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -278,6 +281,9 @@
     </ClInclude>
     <ClInclude Include="debug\debug.h">
       <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_guard.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

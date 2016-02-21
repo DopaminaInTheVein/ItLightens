@@ -19,7 +19,7 @@
 #include <chrono>
 #include <windows.h>
 
-class ai_speedy : public aicontroller {
+class ai_speedy : public aicontroller, public TCompBase {
 	CEntity* ent;
 	CEntity* player;
 	TCompTransform* transform;
@@ -65,6 +65,9 @@ public:
 	bool dashToTarget(VEC3 target);
 	void updateDashTimer();
 	void resetDashTimer();
+
+	//Overload function for handler_manager
+	ai_speedy& ai_speedy::operator=(ai_speedy arg) { return arg; }
 };
 
 #endif

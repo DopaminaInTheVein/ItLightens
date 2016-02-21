@@ -13,5 +13,6 @@
 #include "logic/ai_mole.h"
 #include "logic/ai_scientific.h"
 #include "logic/ai_speedy.h"
+#include "logic/ai_guard.h"
 
 #endif

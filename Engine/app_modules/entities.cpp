@@ -15,6 +15,9 @@ DECL_OBJ_MANAGER("camera", TCompCamera);
 DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
 DECL_OBJ_MANAGER("cientifico", ai_scientific);
 DECL_OBJ_MANAGER("beacon", beacon_controller);
+DECL_OBJ_MANAGER("ai_guard", ai_guard);
+DECL_OBJ_MANAGER("ai_mole", ai_mole);
+DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
 
 //DECL_OBJ_MANAGER("nombre_IA_xml", NameClass):
 

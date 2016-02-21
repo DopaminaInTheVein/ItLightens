@@ -130,6 +130,7 @@
     <ClCompile Include="input\input.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
     <ClCompile Include="logic\ai_beacon.cpp" />
+    <ClCompile Include="logic\ai_guard.cpp" />
     <ClCompile Include="logic\ai_mole.cpp" />
     <ClCompile Include="logic\ai_scientific.cpp" />
     <ClCompile Include="logic\ai_speedy.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="input\input.h" />
     <ClInclude Include="logic\aicontroller.h" />
     <ClInclude Include="logic\ai_beacon.h" />
+    <ClInclude Include="logic\ai_guard.h" />
     <ClInclude Include="logic\ai_mole.h" />
     <ClInclude Include="logic\ai_scientific.h" />
     <ClInclude Include="logic\ai_speedy.h" />
