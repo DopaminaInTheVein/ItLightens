@@ -24,10 +24,17 @@ class ai_mole : public aicontroller, public TCompBase {
 	int towptbox;
 	int towptleave;
 	float waitSecondsToBoxRespawn;
-	CEntity* ent;
+
+	CHandle myHandle;
+	CHandle myParent;
+
 	float timer;
-	//VEC3 posBoxIni;
-	TCompTransform* transform;
+	float waitSeconds = 3.5f;
+
+	TCompTransform * getEntityTransform() {
+		CEntity * ent = myParent;
+		return ent->get<TCompTransform>();
+	}
 
 	CEntity * getEntityPointer(int i) {
 		CHandle han = SBB::readHandles("wptsBoxes")[i];
@@ -48,11 +55,9 @@ public:
 	//	Recalc();
 	//}
 
-	void Init(CEntity *ent, float waitSeconds);
-
-	const void setTEntity(CEntity * entity) {
-		ent = entity;
-	}
+	void Init() override;
+	void update(float dt) { Recalc(); }
+	void init() { Init(); }
 };
 
 #endif

@@ -1,8 +1,11 @@
 #include "mcv_platform.h"
 #include "ai_mole.h"
 
-void ai_mole::Init(CEntity *ent, float waitSeconds)
+void ai_mole::Init()
 {
+	myHandle = CHandle(this);
+	myParent = myHandle.getOwner();
+
 	// insert all states in the map
 	// insertar punters a funcions de una classe hereva del aiccontroller.
 	AddState("idle", (statehandler)&ai_mole::IdleState);
@@ -21,9 +24,6 @@ void ai_mole::Init(CEntity *ent, float waitSeconds)
 
 	towptbox = 0;
 	towptleave = 0;
-
-	setTEntity(ent);
-	transform = ent->get<TCompTransform>();
 	// reset the state
 	ChangeState("idle");
 }
@@ -46,7 +46,7 @@ void ai_mole::SeekWptState() {
 			TCompTransform * transformBox = entTransform->get<TCompTransform>();
 			TCompName * nameBox = entTransform->get<TCompName>();
 			VEC3 wpt = transformBox->getPosition();
-			float disttowpt = simpleDistXZ(wpt, transform->getPosition());
+			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
 			string key = nameBox->name;
 			if (!SBB::readBool(key) && disttowpt < distMax) {
 				towptbox = i;
@@ -66,7 +66,7 @@ void ai_mole::OrientToWptState()
 {
 	CEntity * entTransform = this->getEntityPointer(towptbox);
 	TCompTransform * transformBox = entTransform->get<TCompTransform>();
-
+	TCompTransform * transform = getEntityTransform();
 	if (!transform->isHalfConeVision(transformBox->getPosition(), deg2rad(0.01f))) {
 		//ROTATE CAUSE WE DON'T SEE OBJECTIVE
 		float angle = 0.0f;
@@ -91,7 +91,7 @@ void ai_mole::OrientToWptState()
 void ai_mole::NextWptState()
 {
 	TCompTransform * transformBox = this->getEntityPointer(towptbox)->get<TCompTransform>();
-
+	TCompTransform * transform = getEntityTransform();
 	float distToWPT = simpleDistXZ(transformBox->getPosition(), transform->getPosition());
 
 	if (distToWPT > 1.0f) {
@@ -111,6 +111,7 @@ void ai_mole::GrabState() {
 	ChangeState("seekwptcarry");
 }
 void ai_mole::SeekWptCarryState() {
+	TCompTransform * transform = getEntityTransform();
 	if (SBB::readHandles("wptsBoxLeavePoint").size() > 0) {
 		float distMax = 999999999.9999f;
 		for (int i = 0; i < SBB::readHandles("wptsBoxLeavePoint").size(); i++) {
@@ -130,7 +131,7 @@ void ai_mole::SeekWptCarryState() {
 void ai_mole::OrientToCarryWptState() {
 	CEntity * wptbleave = SBB::readHandles("wptsBoxLeavePoint")[towptleave];
 	TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
-
+	TCompTransform * transform = getEntityTransform();
 	if (!transform->isHalfConeVision(wptbleavetransform->getPosition(), deg2rad(0.01f))) {
 		//ROTATE CAUSE WE DON'T SEE OBJECTIVE
 		float angle = 0.0f;
@@ -156,7 +157,7 @@ void ai_mole::NextWptCarryState() {
 	TCompTransform * transformBox = this->getEntityPointer(towptbox)->get<TCompTransform>();
 	CEntity * wptbleave = SBB::readHandles("wptsBoxLeavePoint")[towptleave];
 	TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
-
+	TCompTransform * transform = getEntityTransform();
 	float distToWPT = simpleDistXZ(wptbleavetransform->getPosition(), transform->getPosition());
 	if (distToWPT > 1.0f) {
 		//MOVE

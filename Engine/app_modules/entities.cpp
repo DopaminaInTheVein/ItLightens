@@ -72,32 +72,33 @@ bool CEntitiesModule::start() {
 	TTagID tagIDplayer = getID("player");
 	TTagID tagIDbox = getID("box");
 	TTagID tagIDboxleave = getID("box_leavepoint");
-	TTagID tagIDmole = getID("ia_mole");
-	vector<CEntity *> logics = tags_manager.getHandlesPointerByTag(tagIDmole);
 
 	player = tags_manager.getFirstHavingTag(tagIDplayer);
+
 	CEntity * player_e = player;
 	TCompCamera * pcam = player_e->get<TCompCamera>();
 	camera = pcam;
 	CHandle t = tags_manager.getFirstHavingTag(getID("target"));
+
 	if (player_e && t.isValid()) {
 		TMsgSetTarget msg;
 		msg.target = t;
 		player_e->sendMsg(msg);
 	}
+
 	target = t;
 
 	SBB::postHandles("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
 	SBB::postHandles("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
 
-	for (auto ai : logics) {
-		ai_mole * moleAi = new ai_mole;
-		moleAi->Init(ai, 3.50f);
-		ais.push_back(moleAi);
-	}
+	//for (auto ai : logics) {
+	//	ai_mole * moleAi = new ai_mole;
+	//	moleAi->Init(ai, 3.50f);
+	//	ais.push_back(moleAi);
+	//}
 
 	getHandleManager<ai_guard>()->onAll(&ai_guard::Init);
-	//getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
+	getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
 	//getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
@@ -166,15 +167,15 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
 
-	//getHandleManager<ai_mole>()->updateAll(dt);
+	getHandleManager<ai_mole>()->updateAll(dt);
 	getHandleManager<ai_guard>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	//getHandleManager<ai_speedy>()->updateAll(dt);
 
-	for (aicontroller * ai : ais) {
-		ai->Recalc();
-	}
+	//for (aicontroller * ai : ais) {
+	//	ai->Recalc();
+	//}
 	// Show a menu to modify any entity
 	//renderInMenu();
 }

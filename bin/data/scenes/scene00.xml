@@ -23,12 +23,13 @@
     <transform pos="5 0 5" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
   <entity>
+    <tag name="AI" />
     <name name="ia_mole1" />
-    <tag name="ia_mole" />
+    <tag name="AI_mole" />
     <transform pos="0 0 0" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
+    <ai_mole />
   </entity>
-
   <entity>
     <tag name="AI" />
     <tag name="AI_guard" />
