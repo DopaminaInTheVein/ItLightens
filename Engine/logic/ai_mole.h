@@ -51,9 +51,6 @@ public:
 	void NextWptCarryState();
 	void OrientToCarryWptState();
 	void UnGrabState();
-	//void update() {
-	//	Recalc();
-	//}
 
 	void Init() override;
 	void update(float dt) { Recalc(); }
