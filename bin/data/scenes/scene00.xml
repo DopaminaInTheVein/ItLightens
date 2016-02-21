@@ -1,28 +1,31 @@
 <entities>
-<!--
   <entity>
-    <tag name="the_camera"/>
-    <transform pos="10 10 10"/>
-    <camera znear="0.1" zfar="100" fov="60"/>
-    <controller_3rd_person/>
+    <tag name="player" />
+    <transform pos="3 3 1" />
+    <name name="john" />
+    <life points="4" />
+    <camera znear="1" zfar="250" fov="60" />
+    <controller_3rd_person />
   </entity>
--->
-  <entity>
-    <tag name="player"/>
-    <transform pos="3 3 1"/>
-    <name name="john"/>
-    <life points="4"/>
-    <camera znear="1" zfar="6" fov="45"/>
-    <controller_3rd_person/>
-    <!--<nombre_IA_xml tag="ai"> -->
-  </entity>
-  
- 
   <entity>
     <tag name="target"/>
     <transform pos="1 0 1"/>
     <name name="peter"/>
-   <!-- <render_mesh name="muroA.render_mesh"/> -->
   </entity>
- 
+  <entity>
+    <name name="box1" />
+    <tag name="box" />
+    <transform pos="5 0 0" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+  <entity>
+    <name name="box_leavepoint1" />
+    <tag name="box_leavepoint" />
+    <transform pos="5 0 5" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+  <entity>
+    <name name="ia_mole1" />
+    <tag name="ia_mole" />
+    <transform pos="0 0 0" rotation="1 2 3 3" scale="1 1 1" />
+    <life points="100" />
+  </entity>
 </entities>

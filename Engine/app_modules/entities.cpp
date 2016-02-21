@@ -7,6 +7,14 @@
 #include "components/comp_msgs.h"
 #include "components/entity_tags.h"
 #include "imgui/imgui.h"
+#include "logic/aicontroller.h"
+#include "logic/ai_mole.h"
+#include "logic/sbb.h"
+#include "input/input.h"
+#include "windows/app.h"
+#include "utils/utils.h"
+#include <vector>
+
 
 DECL_OBJ_MANAGER("entity", CEntity);
 DECL_OBJ_MANAGER("name", TCompName);
@@ -18,10 +26,15 @@ DECL_OBJ_MANAGER("beacon", beacon_controller);
 DECL_OBJ_MANAGER("ai_guard", ai_guard);
 DECL_OBJ_MANAGER("ai_mole", ai_mole);
 DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
-
 //DECL_OBJ_MANAGER("nombre_IA_xml", NameClass):
-
 DECL_OBJ_MANAGER("life", TCompLife);
+
+static vector<aicontroller*> ais;
+static CEntity * player;
+static CEntity * target;
+CInput input;
+CCamera * camera;
+
 
 // The global dict of all msgs
 MMsgSubscriptions msg_subscriptions;
@@ -31,14 +44,16 @@ TMsgID generateUniqueMsgID() {
 }
 
 bool CEntitiesModule::start() {
-	uint32_t nmax = 8;
-	getHandleManager<CEntity>()->init(nmax);
-	getHandleManager<TCompName>()->init(nmax);
-	getHandleManager<TCompTransform>()->init(nmax);
+
+	CApp& app = CApp::get();
+	input.Initialize(app.getHInstance(), app.getHWnd(), 800, 600);
+
+	getHandleManager<CEntity>()->init(MAX_ENTITIES);
+	getHandleManager<TCompName>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCamera>()->init(4);
 	getHandleManager<TCompController3rdPerson>()->init(4);
-
-	getHandleManager<TCompLife>()->init(nmax);
+	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
 
 	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
@@ -51,30 +66,99 @@ bool CEntitiesModule::start() {
 	bool is_ok = ep.xmlParseFile("data/scenes/scene00.xml");
 	assert(is_ok);
 
-	CEntity* e = tags_manager.getFirstHavingTag(getID("player"));
+	TTagID tagIDplayer = getID("player");
+	TTagID tagIDbox = getID("box");
+	TTagID tagIDboxleave = getID("box_leavepoint");
+	TTagID tagIDmole = getID("ia_mole");
+	vector<CEntity *> logics = tags_manager.getHandlesPointerByTag(tagIDmole);
+
+	player = tags_manager.getFirstHavingTag(tagIDplayer);
+	TCompCamera * pcam = player->get<TCompCamera>();
+	camera = pcam;
 	CHandle t = tags_manager.getFirstHavingTag(getID("target"));
-	if (e && t.isValid()) {
+	if (player && t.isValid()) {
 		TMsgSetTarget msg;
 		msg.target = t;
-		e->sendMsg(msg);
+		player->sendMsg(msg);
 	}
+	target = t;
 
-	//getHandleManager<NameClass>()->initAll();
+	SBB::postHandles("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
+	SBB::postHandles("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
+
+	for (auto ai : logics) {
+		ai_mole * moleAi = new ai_mole;
+		moleAi->Init(ai, 3.50f);
+		ais.push_back(moleAi);
+	}
 
 	return true;
 }
 
 void CEntitiesModule::stop() {
+	// Stop input
+	input.Shutdown();
 }
 
 void CEntitiesModule::update(float dt) {
+	TCompTransform* player_transform = target->get<TCompTransform>();
+	VEC3 position = player_transform->getPosition();
+	VEC3 front = player_transform->getFront();
+	dt = getDeltaTime();
+	input.Frame();
+	float yaw = 0.0f, pitch = 0.0f;
+	player_transform->getAngles(&yaw, &pitch);
+
+	if (input.IsUpPressed())
+	{
+		position.x += front.x * dt * 2;
+		position.z += front.z * dt * 2;
+	}
+	if (input.IsDownPressed())
+	{
+		position.x -= front.x * dt * 2;
+		position.z -= front.z * dt * 2;
+	}
+	if (input.IsLeftPressed())
+	{
+		position.x += front.z * dt * 2;
+		position.z -= front.x * dt * 2;
+	}
+	if (input.IsRightPressed())
+	{
+		position.x -= front.z * dt * 2;
+		position.z += front.x * dt * 2;
+	}
+	if (input.IsOrientLeftPressed())
+	{
+		player_transform->setAngles(yaw + dt, 0.0f);
+		orbitCamera(dt);
+	}
+	if (input.IsOrientRightPressed())
+	{
+		player_transform->setAngles(yaw - dt, 0.0f);
+		orbitCamera(-dt);
+	}
+	if (input.IsSpacePressed()) {
+		dbg("SALTO!\n");
+	}
+	if (input.IsLeftClickPressed()) {
+		dbg("ACCION!\n");
+	}
+	if (input.IsRightClickPressed()) {
+		dbg("POSESION!\n");
+	}
+
+	player_transform->setPosition(position);
+
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
-
-	//getHandleManager<NameClass>()->updateAll( dt );
-
+	//getHandleManager<ai_mole>()->updateAll(dt);
+	for (aicontroller * ai : ais) {
+		ai->Recalc();
+	}
 	// Show a menu to modify any entity
-	//renderInMenu();
+	renderInMenu();
 }
 
 void CEntitiesModule::render() {
@@ -98,4 +182,32 @@ void CEntitiesModule::renderInMenu() {
 		ImGui::TreePop();
 	}
 	ImGui::End();
+}
+
+void CEntitiesModule::orbitCamera(float angle) {
+	float s = sin(angle);
+	float c = cos(angle);
+
+	// translate point back to origin:
+	TCompTransform* player_transform = player->get<TCompTransform>();
+	TCompTransform* target_transform = target->get<TCompTransform>();
+
+	VEC3 entPos = player_transform->getPosition();
+	entPos.x -= target_transform->getPosition().x;
+	entPos.z -= target_transform->getPosition().z;
+
+	// rotate point
+	float xnew = entPos.x * c - entPos.z * s;
+	float ynew = entPos.x * s + entPos.z * c;
+
+	// translate point back:
+	entPos.x = xnew + target_transform->getPosition().x;
+	entPos.z = ynew + target_transform->getPosition().z;
+
+	player_transform->setPosition(entPos);
+
+	angle = player_transform->getDeltaYawToAimTo(target_transform->getPosition());
+	float yaw = 0.0f, pitch = 0.0f;
+	player_transform->getAngles(&yaw, &pitch);
+	player_transform->setAngles(yaw + angle, 0.0f);
 }

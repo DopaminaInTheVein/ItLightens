@@ -11,6 +11,9 @@
 #include "contants/ctes_object.h"
 extern CShaderCte< TCteObject > shader_ctes_object;
 
+#include "contants/ctes_camera.h"
+extern CShaderCte< TCteCamera > shader_ctes_camera;
+
 bool TCompCamera::load(MKeyValue& atts) {
   float znear = atts.getFloat("znear", 0.1f);
   float zfar = atts.getFloat("zfar", 1000.f);
@@ -24,6 +27,11 @@ void TCompCamera::render() const {
   shader_ctes_object.World = getViewProjection().Invert();
   shader_ctes_object.uploadToGPU();
   axis->activateAndRender();
+
+  shader_ctes_camera.activate(CTE_SHADER_CAMERA_SLOT);
+  shader_ctes_camera.ViewProjection = getViewProjection();
+  shader_ctes_camera.uploadToGPU();
+
 }
 
 void TCompCamera::update(float dt) {
@@ -32,6 +40,10 @@ void TCompCamera::update(float dt) {
   assert(e_owner);
   TCompTransform* tmx = e_owner->get<TCompTransform>();
   assert(tmx);
+  VEC3 pos = tmx->getPosition();
+  pos.y += 2;
+  tmx->setPosition(pos);
+
   this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
 }
 

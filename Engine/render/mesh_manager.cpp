@@ -127,10 +127,10 @@ bool createGridXZ(CMesh& mesh, int nsteps) {
     float fsteps = static_cast<float>(nsteps);
     float fit = static_cast<float>(i);
     VEC4 color = ((i % 5) == 0) ? c1 : c2;
-    vtxs[k].set(VEC3(fsteps, 0, fit), color); ++k;
-    vtxs[k].set(VEC3(-fsteps, 0, fit), color); ++k;
-    vtxs[k].set(VEC3(fit, 0, fsteps), color); ++k;
-    vtxs[k].set(VEC3(fit, 0, -fsteps), color); ++k;
+    vtxs[k].set(VEC3(fsteps * 10, 0, fit * 10), color); ++k;
+    vtxs[k].set(VEC3(-fsteps * 10, 0, fit * 10), color); ++k;
+    vtxs[k].set(VEC3(fit * 10, 0, fsteps * 10), color); ++k;
+    vtxs[k].set(VEC3(fit * 10, 0, -fsteps * 10), color); ++k;
   }
   assert(k == nvtxs);
   return mesh.create(

@@ -30,6 +30,7 @@ struct TCompController3rdPerson : public TCompBase {
     TCompTransform* target_tmx = e_target->get<TCompTransform>();
     assert(target_tmx);
     auto target_loc = target_tmx->getPosition();
+	target_tmx->getAngles(&yaw, &pitch);
     VEC3 delta = getVectorFromYawPitch(yaw, pitch);
     auto origin = target_loc - delta * distance_to_target;
 

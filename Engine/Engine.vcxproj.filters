@@ -27,9 +27,6 @@
     <ClCompile Include="utils\utils.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>windows</Filter>
-    </ClCompile>
     <ClCompile Include="geometry\angular.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
@@ -126,6 +123,7 @@
     <ClCompile Include="logic\ai_guard.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">

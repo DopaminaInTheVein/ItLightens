@@ -20,9 +20,6 @@
 
 #include "debug/debug.h"
 
-CCamera       camera;
-CInput        input;
-
 //DEBUG
 CDebug *	  Debug = nullptr;
 
@@ -39,8 +36,6 @@ CShaderCte< TCteObject > shader_ctes_object;
 #include "app_modules/entities.h"
 
 bool CApp::start() {
-	//init input controller
-	input.Initialize(CApp::getHInstance(), CApp::getHWnd(), 800, 600);
 
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
@@ -68,8 +63,6 @@ bool CApp::start() {
 	if (!shader_ctes_object.create("ctes_object"))
 		return false;
 
-	camera.lookAt(VEC3(10, 4, 2), VEC3(1, 0, 2));
-
 	// Init modules
 	for (auto it : mod_init_order) {
 		if (!it->start()) {
@@ -83,8 +76,6 @@ bool CApp::start() {
 
 // ----------------------------------
 void CApp::stop() {
-	// Stop input
-	input.Shutdown();
 
 	// Stop modules
 	for (auto it = mod_init_order.rbegin(); it != mod_init_order.rend(); ++it)
@@ -102,41 +93,11 @@ void CApp::stop() {
 
 // ----------------------------------
 void CApp::update(float elapsed) {
-	// Update input
-	input.Frame();
-
-	if (input.IsUpPressed())
-	{
-		dbg("ARRIBA!\n");
-	}
-	if (input.IsDownPressed())
-	{
-		dbg("ABAJO!\n");
-	}
-	if (input.IsLeftPressed())
-	{
-		dbg("IZQUIERDA!\n");
-	}
-	if (input.IsRightPressed())
-	{
-		dbg("DERECHA!\n");
-	}
-	if (input.IsSpacePressed()) {
-		dbg("SALTO!\n");
-	}
-	if (input.IsLeftClickPressed()) {
-		dbg("ACCION!\n");
-	}
-	if (input.IsRightClickPressed()) {
-		dbg("POSESION!\n");
-	}
-
 	for (auto it : mod_update)
 		it->update(elapsed);
 
 	static float ctime = 0.f;
 	ctime += elapsed* 0.01f;
-	// camera.lookAt(VEC3(sin(ctime), 1.f, cos(ctime))*4, VEC3(0, 0, 0));
 }
 
 // ----------------------------------
@@ -150,36 +111,18 @@ void CApp::render() {
 		// Clear the back buffer
 		float ClearColor[4] = { 0.3f, 0.3f, 0.3f, 1.0f }; // red,green,blue,alpha
 		Render.ctx->ClearRenderTargetView(Render.renderTargetView, ClearColor);
-		camera.setAspectRatio((float)xres / (float)yres);
-
-		shader_ctes_camera.activate(CTE_SHADER_CAMERA_SLOT);
-		shader_ctes_camera.ViewProjection = camera.getViewProjection();
-		shader_ctes_camera.uploadToGPU();
 
 		tech_solid_colored->activate();
 
 		shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
 		shader_ctes_object.World = MAT44::Identity;
 		shader_ctes_object.uploadToGPU();
-		auto axis = Resources.get("axis.mesh")->as<CMesh>();
 
 		//Debug TODO Provisional
 		Debug->render();
 
-		axis->activateAndRender();
 		Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
 	}
-
-	//{
-	//  CTraceScoped scope("textured obj");
-	//  // el shader de pos + uv
-	//  shader_ctes_object.World = MAT44::Identity;
-	//  shader_ctes_object.uploadToGPU();
-
-	//  texture1->activate(0);
-	//  tech_textured_colored->activate();
-	//  Resources.get("meshes/Teapot001.mesh")->as<CMesh>()->activateAndRender();
-	//}
 
 	for (auto it : mod_renders) {
 		CTraceScoped scope(it->getName());

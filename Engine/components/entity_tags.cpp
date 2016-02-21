@@ -31,3 +31,12 @@ const VHandles& TTagsManager::getHandlesByTag(TTagID tag_id) const {
   }
   return it->second;
 }
+
+VEntities TTagsManager::getHandlesPointerByTag(TTagID tag_id) {
+	VEntities entities;
+	for (auto it : getHandlesByTag(tag_id)) {
+		CEntity * entity = it;
+		entities.push_back(entity);
+	}
+	return entities;
+}
