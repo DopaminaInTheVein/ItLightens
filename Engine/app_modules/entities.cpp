@@ -29,8 +29,8 @@ DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
 DECL_OBJ_MANAGER("life", TCompLife);
 
 static vector<aicontroller*> ais;
-static CEntity * player;
-static CEntity * target;
+static CHandle player;
+static CHandle target;
 CInput input;
 CCamera * camera;
 
@@ -70,13 +70,14 @@ bool CEntitiesModule::start() {
 	vector<CEntity *> logics = tags_manager.getHandlesPointerByTag(tagIDmole);
 
 	player = tags_manager.getFirstHavingTag(tagIDplayer);
-	TCompCamera * pcam = player->get<TCompCamera>();
+	CEntity * player_e = player;
+	TCompCamera * pcam = player_e->get<TCompCamera>();
 	camera = pcam;
 	CHandle t = tags_manager.getFirstHavingTag(getID("target"));
-	if (player && t.isValid()) {
+	if (player_e && t.isValid()) {
 		TMsgSetTarget msg;
 		msg.target = t;
-		player->sendMsg(msg);
+		player_e->sendMsg(msg);
 	}
 	target = t;
 
@@ -98,7 +99,9 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-	TCompTransform* player_transform = target->get<TCompTransform>();
+	CEntity * target_e = target;
+
+	TCompTransform* player_transform = target_e->get<TCompTransform>();
 	VEC3 position = player_transform->getPosition();
 	VEC3 front = player_transform->getFront();
 	dt = getDeltaTime();
@@ -184,10 +187,12 @@ void CEntitiesModule::renderInMenu() {
 void CEntitiesModule::orbitCamera(float angle) {
 	float s = sin(angle);
 	float c = cos(angle);
+	CEntity * player_e = player;
+	CEntity * target_e = target;
 
 	// translate point back to origin:
-	TCompTransform* player_transform = player->get<TCompTransform>();
-	TCompTransform* target_transform = target->get<TCompTransform>();
+	TCompTransform* player_transform = player_e->get<TCompTransform>();
+	TCompTransform* target_transform = target_e->get<TCompTransform>();
 
 	VEC3 entPos = player_transform->getPosition();
 	entPos.x -= target_transform->getPosition().x;
