@@ -30,8 +30,8 @@
 #include "geometry/geometry.h"
 #include "render/render.h"
 
+//DEBUG
+#include "debug/debug.h"
+extern CDebug * Debug;
 
 #endif
-
-
-

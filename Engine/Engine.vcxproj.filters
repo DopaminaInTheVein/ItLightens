@@ -111,6 +111,18 @@
     <ClCompile Include="logic\aicontroller.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="logic\ai_mole.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_beacon.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_scientific.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\debug.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -255,6 +267,18 @@
     <ClInclude Include="logic\aicontroller.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="logic\ai_mole.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_beacon.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_scientific.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\debug.h">
+      <Filter>debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -301,6 +325,9 @@
     </Filter>
     <Filter Include="input">
       <UniqueIdentifier>{94c77502-c797-472d-9962-905c28738a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{f4e9f4d5-b47f-481a-9c6f-9354de3f32da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

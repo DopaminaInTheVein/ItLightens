@@ -9,25 +9,24 @@ IResource* createObjFromName(const std::string& aname);
 
 // ---------------------------------
 class CResourcesManager {
-  std::map< std::string, IResource* > all;
+	std::map< std::string, IResource* > all;
 public:
-  CResourcesManager() { }
-  void destroy() {
-    for (auto it : all) {
-      it.second->destroy();
-      delete it.second;
-    }
-    all.clear();
-  }
+	CResourcesManager() { }
+	void destroy() {
+		for (auto it : all) {
+			it.second->destroy();
+			delete it.second;
+		}
+		all.clear();
+	}
 
-  const IResource* get(const char* name);
+	const IResource* get(const char* name);
 
-  bool isValid(const char* name) const {
-    return all.find(name) != all.end();
-  }
+	bool isValid(const char* name) const {
+		return all.find(name) != all.end();
+	}
 
-  void renderUIDebug();
-
+	void renderUIDebug(ImGuiTextFilter * filter = nullptr);
 };
 
 extern CResourcesManager Resources;

@@ -112,7 +112,7 @@ bool CInput::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int scr
 	// Make sure we got a joystick
 	if (m_joystick == NULL) {
 		printf("Joystick not found.\n");
-		return E_FAIL;
+		return false;
 	}
 
 	// Set the data format for the joystick using the pre-defined joystick data format.
@@ -375,6 +375,27 @@ bool CInput::IsLeftPressed() {
 bool CInput::IsRightPressed() {
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
 	if ((m_keyboardState[DIK_D] & 0x80) || (m_joystick != nullptr && m_joystickState.lX > (joystick_axis_max - joystick_sensibility)))
+	{
+		return true;
+	}
+
+	return false;
+}
+// Detects if the Left orientation is pressed (key Q)
+bool CInput::IsOrientLeftPressed() {
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if ((m_keyboardState[DIK_Q] & 0x80) || (m_mouseState.lZ < 0) || (m_joystick != nullptr && m_joystickState.lRx < joystick_sensibility - joystick_axis_min))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+// Detects if the right orientation is pressed (key E)
+bool CInput::IsOrientRightPressed() {
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if ((m_keyboardState[DIK_E] & 0x80) || (m_mouseState.lZ > 0) || (m_joystick != nullptr && m_joystickState.lRx > (joystick_axis_max - joystick_sensibility)))
 	{
 		return true;
 	}

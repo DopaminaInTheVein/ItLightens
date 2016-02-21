@@ -8,5 +8,10 @@
 #include "comp_controller_3rd_person.h"
 #include "comp_life.h"
 
-#endif
+//Logic
+#include "logic/ai_beacon.h"
+#include "logic/ai_mole.h"
+#include "logic/ai_scientific.h"
+#include "logic/ai_speedy.h"
 
+#endif

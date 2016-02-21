@@ -19,4 +19,16 @@ struct TMsgSetTarget {
   DECLARE_MSG_ID();
 };
 
+struct TMsgBeaconToRemove {
+	VEC3 pos_beacon;
+	std::string name_beacon;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgBeaconEmpty {
+	VEC3 pos_beacon;
+	std::string name_beacon;
+	DECLARE_MSG_ID();
+};
+
 #endif
