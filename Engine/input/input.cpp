@@ -10,16 +10,13 @@ CInput::CInput()
 	m_joystick = 0;
 }
 
-
 CInput::CInput(const CInput& other)
 {
 }
 
-
 CInput::~CInput()
 {
 }
-
 
 bool CInput::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeight)
 {
@@ -305,7 +302,6 @@ void CInput::GetMouseLocation(int& mouseX, int& mouseY)
 
 // Detects whether the left mouse button is pressed
 bool CInput::IsLeftClickPressed() {
-
 	int mouseButtonPressed = 10;
 	getMouseButtonPressed(mouseButtonPressed);
 
@@ -322,7 +318,6 @@ bool CInput::IsLeftClickPressed() {
 
 // Detects wheter the right mouse is pressed
 bool CInput::IsRightClickPressed() {
-
 	int mouseButtonPressed = 10;
 	getMouseButtonPressed(mouseButtonPressed);
 
@@ -339,12 +334,10 @@ bool CInput::IsRightClickPressed() {
 
 // Detects which mouse button has been pressed
 void CInput::getMouseButtonPressed(int &pressed) {
-
 	for (int i = 0; i < 4; i++) {
 		if (m_mouseState.rgbButtons[i] != 0)
 			pressed = i;
 	}
-
 }
 
 /*** KEYBOARD ***/
@@ -427,7 +420,6 @@ bool CInput::IsDownPressed() {
 
 // Detects if the space key was pressed
 bool CInput::IsSpacePressed() {
-
 	int buttonPressed = 50;
 	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
 
@@ -443,7 +435,6 @@ bool CInput::IsSpacePressed() {
 /*** JOYSTICK ***/
 // Detects which button of the joystick was pressed
 bool CInput::getJoystickButtonPressed(int &pressed) {
-
 	if (m_joystick == nullptr)
 		return false;
 

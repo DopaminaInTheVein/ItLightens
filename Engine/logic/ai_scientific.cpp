@@ -7,11 +7,10 @@
 
 #include "ai_beacon.h"
 
-
 void ai_scientific::Init()
 {
 	om = getHandleManager<ai_scientific>();	//list handle scientific in game
-	
+
 	//list states
 	AddState("idle", (statehandler)&ai_scientific::Idle);
 	AddState("seekWB", (statehandler)&ai_scientific::SeekWorkbench);
@@ -28,12 +27,10 @@ void ai_scientific::Init()
 	out[REMOVE_BEACON] = "REMOVE_BEACON";
 	out[WANDER] = "WANDER";
 
-
 	//TODO: search positions from WorkBench components in game
 	wbs.resize(2);
-	wbs[0] = VEC3(10.0f,0.0f,10.0f);
+	wbs[0] = VEC3(10.0f, 0.0f, 10.0f);
 	wbs[1] = VEC3(-10.0f, 0.0f, -10.0f);
-
 
 	SetHandleMeInit();				//need to be initialized after all handles, ¿awake/init?
 
@@ -41,23 +38,19 @@ void ai_scientific::Init()
 }
 
 void ai_scientific::Idle() {
-	
 	//Nothing to do
 	if (GetAsyncKeyState('Q') != 0) {
 		ChangeState("lookForObj");
-		
 	}
-		
 }
 
-void ai_scientific::LookForObj() 
+void ai_scientific::LookForObj()
 {
-	VEC3 pos_wander = VEC3(rand()%20-10,0.0f, rand() % 20 - 10);
+	VEC3 pos_wander = VEC3(rand() % 20 - 10, 0.0f, rand() % 20 - 10);
 	actual_action = WANDER;
 	obj_position = pos_wander;
 	ChangeState("aimToPos");
 }
-
 
 void ai_scientific::SeekWorkbench()
 {
@@ -66,7 +59,7 @@ void ai_scientific::SeekWorkbench()
 	VEC3 curr_pos = me_transform->getPosition();
 
 	//look for closest wb
-	float min_d = 10000.0f; 
+	float min_d = 10000.0f;
 	float square_d = 0.0f;
 	for (auto &wb : wbs) {
 		square_d = simpleDistXZ(curr_pos, wb);
@@ -131,7 +124,7 @@ void ai_scientific::MoveToPos()
 
 	me_transform->setPosition(new_pos);
 
-	float dist_square = simpleDistXZ(new_pos,target);
+	float dist_square = simpleDistXZ(new_pos, target);
 
 	if (dist_square < d_epsilon) {		//TODO: System to read action to do: add beacon, remove beacon, create beacon from WB
 		if (actual_action == CREATE_BEACON)
@@ -162,7 +155,7 @@ void ai_scientific::AddBeacon()
 	if (waiting_time > t_addBeacon) {		//go to new action
 		SBB::postInt(beacon_to_go_name, beacon_controller::SONAR);
 		waiting_time = 0.0f;
-		actual_action = IDLE;				
+		actual_action = IDLE;
 		ChangeState("lookForObj");
 	}
 }
@@ -173,7 +166,7 @@ void ai_scientific::RemoveBeacon()
 	if (waiting_time > t_removeBeacon) {		//go to new action
 		SBB::postInt(beacon_to_go_name, beacon_controller::INACTIVE);
 		waiting_time = 0.0f;
-		actual_action = IDLE;					
+		actual_action = IDLE;
 		ChangeState("lookForObj");
 	}
 }
@@ -181,7 +174,6 @@ void ai_scientific::RemoveBeacon()
 //Messages:
 void ai_scientific::onRemoveBeacon(const TMsgBeaconToRemove& msg)
 {
-
 	if (actual_action == IDLE || actual_action == WANDER) {
 		//TODO: preference for closest objectives
 		if (SBB::readInt(msg.name_beacon) != beacon_controller::TO_REMOVE_TAKEN) {
@@ -220,7 +212,6 @@ void ai_scientific::SetHandleMeInit()
 	myParent = myHandle.getOwner();
 }
 
-void ai_scientific::SetMyEntity(){
+void ai_scientific::SetMyEntity() {
 	myEntity = myParent;
 }
-

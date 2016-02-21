@@ -10,30 +10,30 @@
 extern CShaderCte< TCteObject > shader_ctes_object;
 
 void TCompTransform::render() const {
-  auto axis = Resources.get("axis.mesh")->as<CMesh>();
-  shader_ctes_object.World = asMatrix();
-  shader_ctes_object.uploadToGPU();
-  axis->activateAndRender();
+	auto axis = Resources.get("axis.mesh")->as<CMesh>();
+	shader_ctes_object.World = asMatrix();
+	shader_ctes_object.uploadToGPU();
+	axis->activateAndRender();
 }
 
 bool TCompTransform::load(MKeyValue& atts) {
-  auto p = atts.getPoint("pos");
-  setPosition(p);
-  return true;
+	auto p = atts.getPoint("pos");
+	setPosition(p);
+	return true;
 }
 
 void TCompTransform::renderInMenu() {
-  VEC3 pos = getPosition();
-  if (ImGui::SliderFloat3("Pos", &pos.x, -10.f, 10.f)) {
-    setPosition(pos);
-  }
+	VEC3 pos = getPosition();
+	if (ImGui::SliderFloat3("Pos", &pos.x, -10.f, 10.f)) {
+		setPosition(pos);
+	}
 
-  float yaw, pitch;
-  getAngles(&yaw, &pitch);
-  yaw = rad2deg(yaw);
-  pitch = rad2deg(pitch);
-  bool yaw_changed = ImGui::SliderFloat("Yaw", &yaw, -180.f, 180.f);
-  bool pitch_changed = ImGui::SliderFloat("Pitch", &pitch, -90.f + 0.001f, 90.f - 0.001f);
-  if (yaw_changed || pitch_changed)
-    setAngles(deg2rad(yaw), deg2rad(pitch));
+	float yaw, pitch;
+	getAngles(&yaw, &pitch);
+	yaw = rad2deg(yaw);
+	pitch = rad2deg(pitch);
+	bool yaw_changed = ImGui::SliderFloat("Yaw", &yaw, -180.f, 180.f);
+	bool pitch_changed = ImGui::SliderFloat("Pitch", &pitch, -90.f + 0.001f, 90.f - 0.001f);
+	if (yaw_changed || pitch_changed)
+		setAngles(deg2rad(yaw), deg2rad(pitch));
 }

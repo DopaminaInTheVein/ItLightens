@@ -4,16 +4,16 @@
 class MKeyValue;
 
 struct TCompBase {
-  void render() {}
-  void init() {}
-  void update(float elapsed) {
-    (void)(elapsed);
-  }
-  bool load(MKeyValue& atts) {
-    (void)(atts);
-    return true;
-  }
-  void renderInMenu() {}
+	void render() {}
+	void init() {}
+	void update(float elapsed) {
+		(void)(elapsed);
+	}
+	bool load(MKeyValue& atts) {
+		(void)(atts);
+		return true;
+	}
+	void renderInMenu() {}
 };
 
 #endif

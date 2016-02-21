@@ -5,17 +5,16 @@
 #include "comp_base.h"
 
 struct TCompName : public TCompBase {
-  static const size_t max_name_length = 64;
-  char name[max_name_length];
-  bool load(MKeyValue& atts) {
-    strcpy(name, atts.getString("name", "no_name").c_str());
-    return true;
-  }
+	static const size_t max_name_length = 64;
+	char name[max_name_length];
+	bool load(MKeyValue& atts) {
+		strcpy(name, atts.getString("name", "no_name").c_str());
+		return true;
+	}
 
-  void renderInMenu() {
-	  ImGui::Text(name);
-  }
+	void renderInMenu() {
+		ImGui::Text(name);
+	}
 };
 
 #endif
-

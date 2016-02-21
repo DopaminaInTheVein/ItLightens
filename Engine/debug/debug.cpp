@@ -3,7 +3,6 @@
 #include "render\mesh.h"
 #include "resources/resource.h"
 
-
 struct SimpleVertexColored {
 	float x, y, z;
 	float r, g, b, a;
@@ -59,7 +58,6 @@ void CDebug::LogWithTag(const char * tag, const char * msg, ...)
 		if (Buf[old_size] == '\n')
 			LineOffsets.push_back(old_size);
 	ScrollToBottom = true;
-
 
 	//visual studio log
 	dbg(Buf.c_str());
@@ -118,7 +116,7 @@ void CDebug::DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color)
 {
 	VEC3 pos_end = pos;
 	pos_end += direction*dist;
-	DrawLine(pos,pos_end,color);
+	DrawLine(pos, pos_end, color);
 }
 
 void CDebug::RenderLine(line l)
@@ -136,7 +134,6 @@ void CDebug::RenderLine(line l)
 		, 0, 0, nullptr
 		, CMesh::VTX_DECL_POSITION_COLOR
 		, CMesh::LINE_LIST)) {
-
 		mesh->activateAndRender();
 	}
 }
@@ -150,10 +147,10 @@ void CDebug::render()
 	if (lines.size() == 0) return;
 	//render all lines
 	line l = lines.back();
-	while(true) {
+	while (true) {
 		RenderLine(l);
 		lines.pop_back();
-		if(lines.size() > 0) l = lines.back();
+		if (lines.size() > 0) l = lines.back();
 		else break;
 	}
 }

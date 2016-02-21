@@ -1,7 +1,6 @@
 #ifndef INC_BEACON_H_
 #define INC_BEACON_H_
 
-
 #include "aicontroller.h"
 #include "sbb.h"
 
@@ -9,38 +8,36 @@
 #include "handle\handle.h"
 #include "components\comp_msgs.h"
 
-//forward declarations	
+//forward declarations
 //--------------------------------------
 class CEntity;
 
 template< class TObj >
-class CObjectManager;	
+class CObjectManager;
 //--------------------------------------
 
-
 class beacon_controller : public aicontroller, public TCompBase {
-
 	std::map<int, std::string> out;
 
 	//main attributes
 	//--------------------------------------
-	const float range				= 7.5f;		//range sonar
-	const float rot_speed_sonar		= 8.0f;		//TODO: mesh change
-	const float rot_speed_disable	= 2.0f;		//TODO: mesh change
+	const float range = 7.5f;		//range sonar
+	const float rot_speed_sonar = 8.0f;		//TODO: mesh change
+	const float rot_speed_disable = 2.0f;		//TODO: mesh change
 	//--------------------------------------
 
 	//general info
 	//--------------------------------------
 	//CHandle *target_h;		//TODO: player target
 
-	int id_beacon=0;
-	
+	int id_beacon = 0;
+
 	std::string full_name = "";
 
-	CObjectManager<beacon_controller>	*om			= nullptr;
+	CObjectManager<beacon_controller>	*om = nullptr;
 	CHandle								 myHandle;
 	CHandle								 myParent;
-	CEntity								*myEntity	= nullptr;
+	CEntity								*myEntity = nullptr;
 	//--------------------------------------
 
 	//messages types

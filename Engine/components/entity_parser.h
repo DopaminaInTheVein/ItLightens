@@ -5,14 +5,10 @@
 #include "handle/handle.h"
 
 class CEntityParser : public CXMLParser {
-  CHandle curr_entity;
+	CHandle curr_entity;
 public:
-  void onStartElement(const std::string &elem, MKeyValue &atts) override;
-  void onEndElement(const std::string &elem) override;
+	void onStartElement(const std::string &elem, MKeyValue &atts) override;
+	void onEndElement(const std::string &elem) override;
 };
 
-
-
-
 #endif
-

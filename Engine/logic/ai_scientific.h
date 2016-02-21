@@ -16,11 +16,9 @@ class CEntity;
 template< class TObj >
 class CObjectManager;
 
-
 //--------------------------------------
 
 class ai_scientific : public aicontroller, public TCompBase {
-
 	//Enum actions for bot
 	enum {
 		IDLE = 0,
@@ -67,7 +65,7 @@ class ai_scientific : public aicontroller, public TCompBase {
 	CHandle myHandle;
 	CHandle myParent;
 	CEntity *myEntity = nullptr;
-	
+
 	int actual_action = IDLE;		//TEMP, TODO: enum camera
 	//--------------------------------------
 
@@ -78,19 +76,17 @@ public:
 	void init() { Init(); }
 	//Overload functions from TCompBase, needed to loop AI Component
 	//--------------------------------------
-	bool load(MKeyValue& atts) { 
+	bool load(MKeyValue& atts) {
 		return true;
 	};
-	void update(float elapsed) { Recalc();}  //Called from object_manager
+	void update(float elapsed) { Recalc(); }  //Called from object_manager
 	//--------------------------------------
 
-	
 	//Init handlers
 	//--------------------------------------
 	void SetHandleMeInit();
 	void SetMyEntity();
 	//--------------------------------------
-
 
 	//messages function:
 	void onRemoveBeacon(const TMsgBeaconToRemove& msg);
@@ -113,9 +109,6 @@ public:
 
 	//Overload function for handler_manager
 	ai_scientific& ai_scientific::operator=(ai_scientific arg) { return arg; }
-
 };
-
-
 
 #endif

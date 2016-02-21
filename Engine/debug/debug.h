@@ -12,15 +12,12 @@
 
 #define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
 
-
-
 //standart colors:
 #define RED VEC3(1,0,0)
 #define GREEN VEC3(0,1,0)
 #define BLUE VEC3(0,0,1)
 
 class CDebug {
-
 	struct line {
 	public:
 		VEC3 org;
@@ -44,7 +41,7 @@ class CDebug {
 
 public:
 
-	CDebug(){}
+	CDebug() {}
 
 	void update();
 	void render();
@@ -68,12 +65,11 @@ public:
 	void DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color);
 	void RenderLine(line);
 	//-------------------------------------------------------
-
 };
 
 extern CDebug *Debug;		//global empty debug declaration --> run initDebugger() to init Debug, we need to initialize ImGui first
 
-							//needed because ImGui need to run first							
+							//needed because ImGui need to run first
 
 /*
 * Function to test debug Log
@@ -104,18 +100,15 @@ static void TestGameLog()
 		last_time = time;
 	}
 	//-------------------------------------------------------
-
 }
-
-
 
 static void testLines() {
 	static float var = 0;
 	var = fmod(var + getDeltaTime(), 10);
-	Debug->DrawLine(VEC3(var,0,0),VEC3(-6,0,1),RED);
+	Debug->DrawLine(VEC3(var, 0, 0), VEC3(-6, 0, 1), RED);
 	Debug->DrawLine(VEC3(0, var, 0), VEC3(-6, 0, 1), GREEN);
 	Debug->DrawLine(VEC3(0, 0, var), VEC3(-6, 0, 1), BLUE);
-	Debug->DrawLine(VEC3(var, 0, var), VEC3(-6, 0, 1), VEC3(0.4,0.3,0.6));
+	Debug->DrawLine(VEC3(var, 0, var), VEC3(-6, 0, 1), VEC3(0.4, 0.3, 0.6));
 }
 
 #endif

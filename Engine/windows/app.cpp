@@ -5,7 +5,7 @@
 // -------------------------------------------------
 static CApp* app = nullptr;
 CApp& CApp::get() {
-	if (!app) 
+	if (!app)
 		app = new CApp();
 	assert(app);
 	return *app;
@@ -13,20 +13,19 @@ CApp& CApp::get() {
 
 // -------------------------------------------------
 CApp::CApp()
-  : xres(800)
-  , yres(600)
+	: xres(800)
+	, yres(600)
 {}
 
 // ------------------------------------
 LRESULT CALLBACK CApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-  
-  // Forward the wnd msg to each module registered to this
-  auto mods = CApp::get().getModulesToWndProc();
-  bool processed = false;
-  for (auto m : mods)
-    processed |= m->onSysMsg(hWnd, message, wParam, lParam);
-  if (processed)
-    return true;
+	// Forward the wnd msg to each module registered to this
+	auto mods = CApp::get().getModulesToWndProc();
+	bool processed = false;
+	for (auto m : mods)
+		processed |= m->onSysMsg(hWnd, message, wParam, lParam);
+	if (processed)
+		return true;
 
 	PAINTSTRUCT ps;
 	HDC hdc;
@@ -49,13 +48,11 @@ LRESULT CALLBACK CApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 	return 0;
 }
 
-
 //--------------------------------------------------------------------------------------
 // Register class and create window
 //--------------------------------------------------------------------------------------
 bool CApp::createWindow(HINSTANCE new_hInstance, int nCmdShow)
 {
-
 	hInstance = new_hInstance;
 
 	// Register class
@@ -95,7 +92,7 @@ void CApp::generateFrame() {
 	float delta_time = 1.0f / 60.f;
 	update(delta_time);
 	render();
-  Render.swapChain();
+	Render.swapChain();
 }
 
 // -------------------------------------------------
@@ -116,4 +113,3 @@ void CApp::mainLoop() {
 		}
 	}
 }
-

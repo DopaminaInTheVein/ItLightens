@@ -9,37 +9,35 @@
 #include "geometry/angular.h"
 
 struct TCompController3rdPerson : public TCompBase {
-  CHandle target;
-  float   yaw;
-  float   pitch;
-  float   distance_to_target;
-  TCompController3rdPerson()
-  : yaw(deg2rad(0.f))
-  , pitch(deg2rad(0.f))
-  , distance_to_target( 5.0f )
-  {} 
+	CHandle target;
+	float   yaw;
+	float   pitch;
+	float   distance_to_target;
+	TCompController3rdPerson()
+		: yaw(deg2rad(0.f))
+		, pitch(deg2rad(0.f))
+		, distance_to_target(5.0f)
+	{}
 
-  void onSetTarget(const TMsgSetTarget& msg) {
-    target = msg.target;
-  }
+	void onSetTarget(const TMsgSetTarget& msg) {
+		target = msg.target;
+	}
 
-  void update( float dt ) {
-    CEntity* e_target = target;
-    if (!e_target)
-      return;
-    TCompTransform* target_tmx = e_target->get<TCompTransform>();
-    assert(target_tmx);
-    auto target_loc = target_tmx->getPosition();
-	target_tmx->getAngles(&yaw, &pitch);
-    VEC3 delta = getVectorFromYawPitch(yaw, pitch);
-    auto origin = target_loc - delta * distance_to_target;
+	void update(float dt) {
+		CEntity* e_target = target;
+		if (!e_target)
+			return;
+		TCompTransform* target_tmx = e_target->get<TCompTransform>();
+		assert(target_tmx);
+		auto target_loc = target_tmx->getPosition();
+		target_tmx->getAngles(&yaw, &pitch);
+		VEC3 delta = getVectorFromYawPitch(yaw, pitch);
+		auto origin = target_loc - delta * distance_to_target;
 
-    CEntity* e_owner = CHandle(this).getOwner();
-    TCompTransform* my_tmx = e_owner->get<TCompTransform>();
-    my_tmx->lookAt(origin, target_loc);
-  }
-
+		CEntity* e_owner = CHandle(this).getOwner();
+		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
+		my_tmx->lookAt(origin, target_loc);
+	}
 };
 
 #endif
-

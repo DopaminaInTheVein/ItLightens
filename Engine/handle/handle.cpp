@@ -3,46 +3,45 @@
 
 // ------------------------------------
 bool CHandle::isValid() const {
-  auto hm = CHandleManager::getByType(type);
-  return hm && hm->isValid(*this);
+	auto hm = CHandleManager::getByType(type);
+	return hm && hm->isValid(*this);
 }
 
 void CHandle::destroy() {
-  auto hm = CHandleManager::getByType(type);
-  if (hm)
-    hm->destroyHandle(*this);
+	auto hm = CHandleManager::getByType(type);
+	if (hm)
+		hm->destroyHandle(*this);
 }
 
 bool CHandle::load(MKeyValue& atts) {
-  auto hm = CHandleManager::getByType(type);
-  if (hm)
-    return hm->load(*this, atts);
-  return false;
+	auto hm = CHandleManager::getByType(type);
+	if (hm)
+		return hm->load(*this, atts);
+	return false;
 }
 
 void CHandle::renderInMenu() {
-  auto hm = CHandleManager::getByType(type);
-  if (hm)
-    hm->renderInMenu(*this);
+	auto hm = CHandleManager::getByType(type);
+	if (hm)
+		hm->renderInMenu(*this);
 }
 
 // ------------------------------------
 void CHandle::setOwner(CHandle new_owner) {
-  auto hm = CHandleManager::getByType(type);
-  if (hm)
-    hm->setOwner(*this, new_owner);
+	auto hm = CHandleManager::getByType(type);
+	if (hm)
+		hm->setOwner(*this, new_owner);
 }
 
 CHandle CHandle::getOwner() {
-  auto hm = CHandleManager::getByType(type);
-  if (hm)
-    return hm->getOwner(*this);
-  return CHandle();
+	auto hm = CHandleManager::getByType(type);
+	if (hm)
+		return hm->getOwner(*this);
+	return CHandle();
 }
 
 /*
  void test_handles() {
-
    CHandle h_e;
    h_e.create<CEntity>();
    CEntity* e = h_e;
@@ -89,7 +88,5 @@ CHandle CHandle::getOwner() {
   assert(life2b == nullptr);
   //assert(life1->life == 1.01f);
   //assert(life3->life == 3.44f);
-
-
 }
  */

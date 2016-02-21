@@ -2,6 +2,5 @@
 
 ShaderBuffer(TCteObject, CTE_SHADER_OBJECT_SLOT)
 {
-  matrix World;
+	matrix World;
 };
-

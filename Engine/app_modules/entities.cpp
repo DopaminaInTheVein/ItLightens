@@ -15,7 +15,6 @@
 #include "utils/utils.h"
 #include <vector>
 
-
 DECL_OBJ_MANAGER("entity", CEntity);
 DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("transform", TCompTransform);
@@ -35,7 +34,6 @@ static CEntity * target;
 CInput input;
 CCamera * camera;
 
-
 // The global dict of all msgs
 MMsgSubscriptions msg_subscriptions;
 TMsgID generateUniqueMsgID() {
@@ -44,7 +42,6 @@ TMsgID generateUniqueMsgID() {
 }
 
 bool CEntitiesModule::start() {
-
 	CApp& app = CApp::get();
 	input.Initialize(app.getHInstance(), app.getHWnd(), 800, 600);
 

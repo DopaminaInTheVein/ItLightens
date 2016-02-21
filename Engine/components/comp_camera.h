@@ -6,11 +6,10 @@
 
 // ------------------------------------
 struct TCompCamera : public CCamera, public TCompBase {
-  void render() const;
-  void update(float dt);
-  bool load(MKeyValue& atts);
-  void renderInMenu();
+	void render() const;
+	void update(float dt);
+	bool load(MKeyValue& atts);
+	void renderInMenu();
 };
 
 #endif
-

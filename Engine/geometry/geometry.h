@@ -16,6 +16,3 @@ typedef DirectX::SimpleMath::Quaternion CQuaternion;
 #include "transform.h"
 
 #endif
-
-
-

@@ -2,9 +2,8 @@
 
 ShaderBuffer(TCteCamera, CTE_SHADER_CAMERA_SLOT)
 {
-  //float4 CamPosition;
-  //matrix View;
-  //matrix Projection;
-  matrix ViewProjection;
+	//float4 CamPosition;
+	//matrix View;
+	//matrix Projection;
+	matrix ViewProjection;
 };
-

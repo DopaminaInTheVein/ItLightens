@@ -36,7 +36,6 @@ CShaderCte< TCteObject > shader_ctes_object;
 #include "app_modules/entities.h"
 
 bool CApp::start() {
-
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
 	auto entities = new CEntitiesModule;
@@ -76,7 +75,6 @@ bool CApp::start() {
 
 // ----------------------------------
 void CApp::stop() {
-
 	// Stop modules
 	for (auto it = mod_init_order.rbegin(); it != mod_init_order.rend(); ++it)
 		(*it)->stop();

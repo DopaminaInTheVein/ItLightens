@@ -8,4 +8,3 @@ struct TCompRenderMesh : public TCompBase {
 };
 
 #endif
-

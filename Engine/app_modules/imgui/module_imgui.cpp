@@ -11,9 +11,6 @@
 #include "components\entity.h"
 #include "debug/debug.h"
 
-
-
-
 bool CImGuiModule::start() {
 	CApp& app = CApp::get();
 	//CDebug::initDebugger(Debug);
@@ -34,20 +31,18 @@ void CImGuiModule::update(float dt) {
 	ImGui::Begin("Debug UI", &menu, ImVec2(512, 512), -1.0f, window_flags);
 	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 
-
 	//Console log
 	//---------------------------------------
 	if (ImGui::BeginMenuBar())
 	{
 		if (ImGui::BeginMenu("Console Debug"))
 		{
-			ImGui::MenuItem("Log", NULL, Debug->getStatus()); 
+			ImGui::MenuItem("Log", NULL, Debug->getStatus());
 			ImGui::EndMenu();
 		}
 		ImGui::EndMenuBar();
 	}
 	//---------------------------------------
-
 
 	//Buttons game
 	//---------------------------------------
@@ -57,7 +52,6 @@ void CImGuiModule::update(float dt) {
 	ImGui::Separator();
 	//---------------------------------------
 
-
 	//Filter options
 	//---------------------------------------
 	ImGui::Text("Filtering");
@@ -65,7 +59,6 @@ void CImGuiModule::update(float dt) {
 	//header for filtering instructions
 	if (ImGui::TreeNode("instructions filtering"))
 	{
-
 		ImGui::Text("Filter usage:\n"
 			"  \"\"         display all lines\n"
 			"  \"xxx\"      display lines containing \"xxx\"\n"
@@ -88,23 +81,19 @@ void CImGuiModule::update(float dt) {
 
 	if (ImGui::CollapsingHeader("Entities")) {
 		getHandleManager<CEntity>()->onAll(&CEntity::renderInMenu);
-
 	}
 
 	if (ImGui::CollapsingHeader("SELECTED ENTITY")) {
 		ImGui::Text("Application SELECTED ENTITY - TODO");
-
 	}if (ImGui::CollapsingHeader("Entity by Tag")) {
 		ImGui::Text("Application ENTITY TAG - TODO");
 	}
 
 	ImGui::End();
 
-
 	//TESTS DEBUG:
 	//TestGameLog();
 	//testLines();
-
 
 	Debug->update();		//update log
 }
@@ -118,4 +107,3 @@ void CImGuiModule::render() {
 bool CImGuiModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	return ImGui_ImplDX11_WndProcHandler(hWnd, message, wParam, lParam) ? true : false;
 }
-

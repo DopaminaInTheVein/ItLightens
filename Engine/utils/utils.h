@@ -6,7 +6,7 @@
 
 #ifdef NDEBUG
 
-#define dbg(...)  
+#define dbg(...)
 
 #else
 
@@ -31,4 +31,3 @@ float simpleDistXZ(VEC3 init, VEC3 dest);
 float simpleDist(VEC3 init, VEC3 dest);
 
 #endif
-

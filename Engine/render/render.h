@@ -10,14 +10,14 @@ class CRender {
 public:
 	CRender();
 
-  // Remove copy ctor
-  CRender(const CRender&) = delete;
+	// Remove copy ctor
+	CRender(const CRender&) = delete;
 
 	ID3D11Device*           device;
 	ID3D11DeviceContext*    ctx;
 	ID3D11RenderTargetView* renderTargetView;
-  
-  void destroyDevice();
+
+	void destroyDevice();
 	bool createDevice();
 	void swapChain();
 };
@@ -26,7 +26,7 @@ extern CRender Render;
 //#define Render		CRender::get()
 
 //#ifdef NDEBUG
-//#define setDXName(dx_obj,new_name) 
+//#define setDXName(dx_obj,new_name)
 //#else
 #define setDXName(dx_obj,new_name) \
         dx_obj->SetPrivateData(WKPDID_D3DDebugObjectName, (UINT)strlen(new_name), new_name);
@@ -35,4 +35,3 @@ extern CRender Render;
 #include "gpu_trace.h"
 
 #endif
-
