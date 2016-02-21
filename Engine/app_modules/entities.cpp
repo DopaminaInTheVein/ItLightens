@@ -114,55 +114,61 @@ void CEntitiesModule::stop() {
 void CEntitiesModule::update(float dt) {
 	CEntity * target_e = target;
 
-	TCompTransform* player_transform = target_e->get<TCompTransform>();
-	VEC3 position = player_transform->getPosition();
-	VEC3 front = player_transform->getFront();
-	dt = getDeltaTime();
-	input.Frame();
-	float yaw = 0.0f, pitch = 0.0f;
-	player_transform->getAngles(&yaw, &pitch);
+	if (!ImGui::GetIO().WantCaptureKeyboard) {
 
-	if (input.IsUpPressed())
-	{
-		position.x += front.x * dt * 2;
-		position.z += front.z * dt * 2;
-	}
-	if (input.IsDownPressed())
-	{
-		position.x -= front.x * dt * 2;
-		position.z -= front.z * dt * 2;
-	}
-	if (input.IsLeftPressed())
-	{
-		position.x += front.z * dt * 2;
-		position.z -= front.x * dt * 2;
-	}
-	if (input.IsRightPressed())
-	{
-		position.x -= front.z * dt * 2;
-		position.z += front.x * dt * 2;
-	}
-	if (input.IsOrientLeftPressed())
-	{
-		player_transform->setAngles(yaw + dt, 0.0f);
-		orbitCamera(dt);
-	}
-	if (input.IsOrientRightPressed())
-	{
-		player_transform->setAngles(yaw - dt, 0.0f);
-		orbitCamera(-dt);
-	}
-	if (input.IsSpacePressed()) {
-		dbg("SALTO!\n");
-	}
-	if (input.IsLeftClickPressed()) {
-		dbg("ACCION!\n");
-	}
-	if (input.IsRightClickPressed()) {
-		dbg("POSESION!\n");
-	}
+		TCompTransform* player_transform = target_e->get<TCompTransform>();
+		VEC3 position = player_transform->getPosition();
+		VEC3 front = player_transform->getFront();
+		dt = getDeltaTime();
+		input.Frame();
+		float yaw = 0.0f, pitch = 0.0f;
+		player_transform->getAngles(&yaw, &pitch);
 
-	player_transform->setPosition(position);
+		if (input.IsUpPressed())
+		{
+			position.x += front.x * dt * 2;
+			position.z += front.z * dt * 2;
+		}
+		if (input.IsDownPressed())
+		{
+			position.x -= front.x * dt * 2;
+			position.z -= front.z * dt * 2;
+		}
+		if (input.IsLeftPressed())
+		{
+			position.x += front.z * dt * 2;
+			position.z -= front.x * dt * 2;
+		}
+		if (input.IsRightPressed())
+		{
+			position.x -= front.z * dt * 2;
+			position.z += front.x * dt * 2;
+		}
+		if (input.IsOrientLeftPressed())
+		{
+			player_transform->setAngles(yaw + dt, 0.0f);
+			orbitCamera(dt);
+		}
+		if (input.IsOrientRightPressed())
+		{
+			player_transform->setAngles(yaw - dt, 0.0f);
+			orbitCamera(-dt);
+		}
+		if (input.IsSpacePressed()) {
+			dbg("SALTO!\n");
+		}
+		if (input.IsLeftClickPressed()) {
+			dbg("ACCION!\n");
+		}
+		if (input.IsRightClickPressed()) {
+			dbg("POSESION!\n");
+		}
+
+		player_transform->setPosition(position);
+
+	}
+	else
+		input.Unacquire();
 
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);

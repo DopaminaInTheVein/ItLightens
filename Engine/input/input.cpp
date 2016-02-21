@@ -432,6 +432,11 @@ bool CInput::IsSpacePressed() {
 	return false;
 }
 
+void CInput::Unacquire()
+{
+	m_keyboard->Unacquire();
+}
+
 /*** JOYSTICK ***/
 // Detects which button of the joystick was pressed
 bool CInput::getJoystickButtonPressed(int &pressed) {

@@ -51,6 +51,8 @@ public:
 	bool IsDownPressed();
 	bool IsSpacePressed();
 
+	void Unacquire();
+
 private:
 	bool ReadKeyboard();
 	bool ReadMouse();
