@@ -105,6 +105,12 @@
     <ClCompile Include="input\input.cpp">
       <Filter>input</Filter>
     </ClCompile>
+    <ClCompile Include="logic\ai_speedy.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\aicontroller.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -242,6 +248,12 @@
     </ClInclude>
     <ClInclude Include="input\input.h">
       <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_speedy.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\aicontroller.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
