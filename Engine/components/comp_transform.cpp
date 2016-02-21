@@ -11,7 +11,19 @@ extern CShaderCte< TCteObject > shader_ctes_object;
 
 void TCompTransform::render() const {
 	auto axis = Resources.get("axis.mesh")->as<CMesh>();
-	shader_ctes_object.World = asMatrix();
+	if (getScale().x != 1) {
+		VEC3 pos = getPosition();
+		VEC3 posAux = pos / getScale().x;
+
+		CTransform t;
+		t.setPosition(posAux);
+		t.setRotation(getRotation());
+		t.setScale(getScale());
+		shader_ctes_object.World = t.asMatrix();
+	}
+	else {
+		shader_ctes_object.World = asMatrix();
+	}
 	shader_ctes_object.uploadToGPU();
 	axis->activateAndRender();
 }
@@ -36,4 +48,9 @@ void TCompTransform::renderInMenu() {
 	bool pitch_changed = ImGui::SliderFloat("Pitch", &pitch, -90.f + 0.001f, 90.f - 0.001f);
 	if (yaw_changed || pitch_changed)
 		setAngles(deg2rad(yaw), deg2rad(pitch));
+
+	float scale = getScale().x;
+	if (ImGui::SliderFloat("Scale", &scale, 0.2f, 5.0f)) {
+		setScale(VEC3(scale, scale, scale));
+	}
 }

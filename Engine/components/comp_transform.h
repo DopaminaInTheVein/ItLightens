@@ -7,12 +7,13 @@
 class MKeyValue;
 
 struct TCompTransform : public CTransform, public TCompBase {
-	void render() const;
-	bool load(MKeyValue& atts);
-	void onCreate(const TMsgEntityCreated&) {
-		dbg("TCompTransform on TMsgEntityCreated\n");
-	}
-	void renderInMenu();
+  void render() const;
+  bool load(MKeyValue& atts);
+  void onCreate(const TMsgEntityCreated&) {
+    dbg("TCompTransform on TMsgEntityCreated\n");
+  }
+  void renderInMenu();
 };
 
 #endif
+
