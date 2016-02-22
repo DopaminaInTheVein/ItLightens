@@ -53,6 +53,25 @@ public:
 		}
 	}
 
+	template< class TMsg >
+	void sendMsgWithReply(TMsg& msg) {
+		// Get all entries matching the msg_id of the TMsg
+		auto range = msg_subscriptions.equal_range(TMsg::getMsgID());
+		while (range.first != range.second) {
+			const TComponentMsgHandler& msg_handler = range.first->second;
+
+			// If this entity HAS that component, and it's valid
+			CHandle my_comp = comps[msg_handler.comp_type];
+			if (my_comp.isValid()) {
+				// use the method object to call to the method
+				// which was registered to that msg in the subscribe macro
+				msg_handler.method->execute(my_comp, &msg);
+			}
+
+			range.first++;
+		}
+	}
+
 	// --------------------------------------------
 	void renderInMenu();
 
