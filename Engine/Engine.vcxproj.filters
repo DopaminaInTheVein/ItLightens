@@ -124,6 +124,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="logic\ai_possessable.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -281,6 +284,9 @@
       <Filter>debug</Filter>
     </ClInclude>
     <ClInclude Include="logic\ai_guard.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_possessable.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

@@ -37,4 +37,10 @@ struct TMsgNoise {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgPossession {
+	VEC3 source;
+	float intensity;
+	DECLARE_MSG_ID();
+};
+
 #endif

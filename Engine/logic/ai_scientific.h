@@ -1,6 +1,7 @@
 #ifndef INC_AI_SCIENTIFIC_H_
 #define	INC_AI_SCIENTIFIC_H_
 
+#include "ai_possessable.h"
 #include "aicontroller.h"
 
 #include "components\comp_base.h"
@@ -15,10 +16,9 @@ class CEntity;
 
 template< class TObj >
 class CObjectManager;
-
 //--------------------------------------
 
-class ai_scientific : public aicontroller, public TCompBase {
+class ai_scientific : public aicontroller, public TCompBase, ai_possessable {
 	//Enum actions for bot
 	enum {
 		IDLE = 0,
@@ -79,7 +79,7 @@ public:
 	bool load(MKeyValue& atts) {
 		return true;
 	};
-	void update(float elapsed) { Recalc(); }  //Called from object_manager
+	void update(float elapsed) { aicontroller::Recalc(); }  //Called from object_manager
 	//--------------------------------------
 
 	//Init handlers
@@ -91,6 +91,9 @@ public:
 	//messages function:
 	void onRemoveBeacon(const TMsgBeaconToRemove& msg);
 	void onEmptyBeacon(const TMsgBeaconEmpty& msg);
+	void onPossessionStart(const TMsgPossession&);
+	void onPossessionEnd(const TMsgPossession&);
+	void configPossession(BOTS, float);
 
 	//Functions AI Nodes:
 	//--------------------------------------

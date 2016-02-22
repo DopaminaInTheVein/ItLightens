@@ -7,6 +7,8 @@
 
 #include "ai_beacon.h"
 
+DECLARE_POSSESSION(BOTS::SCIENTIST, 1);
+
 void ai_scientific::Init()
 {
 	om = getHandleManager<ai_scientific>();	//list handle scientific in game

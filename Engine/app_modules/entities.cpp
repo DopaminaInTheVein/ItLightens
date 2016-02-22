@@ -64,6 +64,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
+	SUBSCRIBE(ai_scientific, TMsgPossession, onPossessionStart);
+	SUBSCRIBE(ai_scientific, TMsgPossession, onPossessionEnd);
 
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene00.xml");
@@ -87,6 +89,14 @@ bool CEntitiesModule::start() {
 	}
 
 	target = t;
+
+	//Prueba
+	CHandle cientifico = tags_manager.getFirstHavingTag(getID("AI_cientifico"));
+	CEntity* eCientifico = cientifico;
+	TMsgPossession msg;
+	msg.source = VEC3(0, 0, 0);
+	eCientifico->sendMsg(msg);
+	//Prueba -fin
 
 	SBB::postHandles("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
 	SBB::postHandles("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
@@ -115,7 +125,6 @@ void CEntitiesModule::update(float dt) {
 	CEntity * target_e = target;
 
 	if (!ImGui::GetIO().WantCaptureKeyboard) {
-
 		TCompTransform* player_transform = target_e->get<TCompTransform>();
 		VEC3 position = player_transform->getPosition();
 		VEC3 front = player_transform->getFront();
@@ -165,7 +174,6 @@ void CEntitiesModule::update(float dt) {
 		}
 
 		player_transform->setPosition(position);
-
 	}
 	else
 		input.Unacquire();
