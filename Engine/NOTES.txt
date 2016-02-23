@@ -1,3 +1,9 @@
+Render
++ subir transform de los objetos
+- exportar una escena completa desde el max
+- tech leerlas de xml
+- exportar las submeshes
+
 Handles
 + Messages
 + IO de components / Creacion de entidades desde disco

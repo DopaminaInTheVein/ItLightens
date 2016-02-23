@@ -62,6 +62,10 @@ public:
       && age == h.age;
   }
 
+  bool operator!=(CHandle h) const {
+    return !(*this == h);
+  }
+
   void setOwner(CHandle new_owner);
   CHandle getOwner();
   bool load(MKeyValue& atts);

@@ -13,6 +13,7 @@ DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("transform", TCompTransform);
 DECL_OBJ_MANAGER("camera", TCompCamera);
 DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
+DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
 
 DECL_OBJ_MANAGER("life", TCompLife);
 
@@ -28,6 +29,7 @@ bool CEntitiesModule::start() {
   getHandleManager<CEntity>()->init(nmax);
   getHandleManager<TCompName>()->init(nmax);
   getHandleManager<TCompTransform>()->init(nmax);
+  getHandleManager<TCompRenderStaticMesh>()->init(nmax);
   getHandleManager<TCompCamera>()->init(4);
   getHandleManager<TCompController3rdPerson>()->init(4);
 
@@ -37,6 +39,7 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
   SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
   SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
+  SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 
   CEntityParser ep;
   bool is_ok = ep.xmlParseFile("data/scenes/scene00.xml");
@@ -49,7 +52,6 @@ bool CEntitiesModule::start() {
     msg.target = t;
     e->sendMsg(msg);
   }
-
 
   return true;
 }

@@ -7,7 +7,6 @@ struct CVertexDeclaration;
 
 // ----------------------------------------------
 class CVertexShader : public IResource {
-  std::string           name;
   ID3D11VertexShader*   vs;
   ID3D11InputLayout*    vertex_layout;
 public:
@@ -20,9 +19,6 @@ public:
   void destroy() override;
   void activate() const;
 
-  const std::string& getName() const override {
-    return name;
-  }
   bool isValid() const override {
     return vs != nullptr;
   }
@@ -33,7 +29,6 @@ public:
 
 // ----------------------------------------------
 class CPixelShader : public IResource {
-  std::string          name;
   ID3D11PixelShader*   ps;
 public:
   CPixelShader() : ps(nullptr) { }
@@ -44,9 +39,6 @@ public:
   void destroy() override; 
   void activate() const;
 
-  const std::string& getName() const override {
-    return name;
-  }
   bool isValid() const override {
     return ps != nullptr;
   }

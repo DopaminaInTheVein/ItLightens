@@ -99,6 +99,18 @@
     <ClCompile Include="components\entity.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="render\material.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\static_mesh.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_render_static_mesh.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="render\render_manager.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -228,8 +240,17 @@
     <ClInclude Include="app_modules\imgui\module_imgui.h">
       <Filter>app_modules\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="components\comp_render_mesh.h">
+    <ClInclude Include="render\material.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\static_mesh.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_render_static_mesh.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="render\render_manager.h">
+      <Filter>render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

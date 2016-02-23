@@ -1,9 +1,0 @@
-<render_mesh>
-  <mesh name="muroA.mesh">
-    <material idx="0" name="piedras.material"/>
-    <material idx="1" name="hiedra.material"/>
-  </mesh>
-  <mesh name="piedras.mesh">
-    <material idx="0" name="piedras.material"/>
-  </mesh>
-</render_mesh>

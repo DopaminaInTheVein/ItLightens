@@ -200,7 +200,7 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
     if (!mesh->create(8
       , sizeof(SimpleVertexColored)
       , vtxs
-      , idxs.size(), 2, &idxs[0] 
+      , (uint32_t) idxs.size(), 2, &idxs[0] 
       , CMesh::VTX_DECL_POSITION_COLOR
       , CMesh::LINE_LIST))
       return nullptr;

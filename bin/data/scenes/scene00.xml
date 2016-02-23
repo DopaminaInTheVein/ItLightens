@@ -15,10 +15,16 @@
     <camera znear="1" zfar="6" fov="45"/>
     <controller_3rd_person/>
   </entity>
-  <entity>
-    <tag name="target"/>
-    <transform pos="1 0 1"/>
-    <name name="peter"/>
-    <render_mesh name="muroA.render_mesh"/>
-  </entity>
+    <entity>
+        <tag name="target"/>
+        <transform pos="1 0 1"/>
+        <name name="peter"/>
+        <render_static_mesh name="static_meshes/tetera.static_mesh"/>
+    </entity>
+    <entity>
+        <tag name="t2"/>
+        <transform pos="6 0 1"/>
+        <name name="peter2"/>
+        <render_static_mesh name="static_meshes/tetera2.static_mesh"/>
+    </entity>
 </entities>

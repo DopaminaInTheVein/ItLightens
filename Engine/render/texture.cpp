@@ -20,7 +20,6 @@ IResource* createObjFromName<CTexture>(const std::string& name) {
   return texture;
 }
 
-
 // ----------------------------------------------
 void CTexture::renderUIDebug() {
   ImGui::Image((ImTextureID*)res_view, ImVec2(512, 512));
