@@ -432,6 +432,15 @@ bool CInput::IsSpacePressed() {
 	return false;
 }
 
+bool CInput::IsKeyPressedDown(int key) {
+	if (m_keyboardState[key] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void CInput::Unacquire()
 {
 	m_keyboard->Unacquire();

@@ -9,20 +9,16 @@
 struct IFunctorBase {
 	virtual ~IFunctorBase() {}
 	virtual void execute(CHandle handle, const void* msg_data) = 0;
-	virtual void execute(CHandle handle, void* msg_data) = 0;
 };
 
 template< class TObj, class TMsgData >
 struct TFunctor : public IFunctorBase {
 	// Save a pointer to a member of the class TObj
 	// which receives a const TMsg& and returns nothing
-	typedef void (TObj::*TMemberFnConst)(const TMsgData&);
-	typedef void (TObj::*TMemberFn)(TMsgData&);
+	typedef void (TObj::*TMemberFn)(const TMsgData&);
 	TMemberFn member_fn;
-	TMemberFnConst member_fn_const;
 
 	// Save the member_fn received as argument of the ctor
-	TFunctor(TMemberFnConst new_member_fn) : member_fn_const(new_member_fn) { }
 	TFunctor(TMemberFn new_member_fn) : member_fn(new_member_fn) { }
 
 	// Implement the virtual interface
@@ -38,22 +34,7 @@ struct TFunctor : public IFunctorBase {
 		// Llamar al member 'member_fn' del objeto obj
 		// y pasar como argumento el msg casted to the
 		// template type
-		(obj->*member_fn_const)(*(const TMsgData*)msg);
-	}
-
-	void execute(CHandle handle, void* msg) {
-		assert(msg);
-		TObj* obj = handle;
-		// Confirm the handle is still valid
-		assert(obj);
-
-		if (!obj)
-			return;
-
-		// Llamar al member 'member_fn' del objeto obj
-		// y pasar como argumento el msg casted to the
-		// template type
-		(obj->*member_fn)(*(TMsgData*)msg);
+		(obj->*member_fn)(*(const TMsgData*)msg);
 	}
 };
 

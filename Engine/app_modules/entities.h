@@ -5,7 +5,6 @@
 
 class CEntitiesModule : public IAppModule {
 	void renderInMenu();
-	void orbitCamera(float angle);
 
 public:
 	bool start() override;

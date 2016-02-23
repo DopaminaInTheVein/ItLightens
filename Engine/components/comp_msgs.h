@@ -14,6 +14,11 @@ struct TMsgDamage {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgSetCamera {
+	CHandle camera;
+	DECLARE_MSG_ID();
+};
+
 struct TMsgSetTarget {
 	CHandle target;
 	DECLARE_MSG_ID();
@@ -32,12 +37,6 @@ struct TMsgBeaconEmpty {
 };
 
 struct TMsgNoise {
-	VEC3 source;
-	float intensity;
-	DECLARE_MSG_ID();
-};
-
-struct TMsgPossession {
 	VEC3 source;
 	float intensity;
 	DECLARE_MSG_ID();

@@ -22,6 +22,7 @@
 
 //DEBUG
 CDebug *	  Debug = nullptr;
+CInput	      Input;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
@@ -36,6 +37,10 @@ CShaderCte< TCteObject > shader_ctes_object;
 #include "app_modules/entities.h"
 
 bool CApp::start() {
+	// input initialization
+	CApp& app = CApp::get();
+	Input.Initialize(app.getHInstance(), app.getHWnd(), 800, 600);
+
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
 	auto entities = new CEntitiesModule;

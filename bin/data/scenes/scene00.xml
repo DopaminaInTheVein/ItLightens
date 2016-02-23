@@ -11,6 +11,7 @@
     <tag name="target" />
     <transform pos="1 0 1" />
     <name name="peter" />
+    <player />
   </entity>
   <entity>
     <name name="box1" />

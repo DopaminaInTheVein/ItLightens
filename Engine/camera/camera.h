@@ -47,6 +47,7 @@ public:
 	float getFov() const { return fov_vertical_rads; }
 
 	MAT44 getViewProjection() const { return view_projection; }
+
 };
 
 #endif
