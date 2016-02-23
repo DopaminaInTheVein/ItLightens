@@ -96,6 +96,7 @@ void CDebug::DrawLog()
 
 		if (ScrollToBottom)
 			ImGui::SetScrollHere(1.0f);
+
 		ScrollToBottom = false;
 		ImGui::EndChild();
 		ImGui::End();
@@ -136,6 +137,9 @@ void CDebug::RenderLine(line l)
 		, CMesh::LINE_LIST)) {
 		mesh->activateAndRender();
 	}
+
+	mesh->destroy();
+	delete mesh;
 }
 
 void CDebug::update() {
@@ -145,7 +149,7 @@ void CDebug::update() {
 void CDebug::render()
 {
 	if (lines.size() == 0) return;
-	//render all lines
+
 	line l = lines.back();
 	while (true) {
 		RenderLine(l);
@@ -153,4 +157,5 @@ void CDebug::render()
 		if (lines.size() > 0) l = lines.back();
 		else break;
 	}
+	lines.clear();
 }
