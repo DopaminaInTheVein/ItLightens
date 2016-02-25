@@ -112,7 +112,7 @@ bool CVertexShader::create(
 	, const char* entry_point
 	, const CVertexDeclaration* vtx_decl
 	) {
-	name = fx_filename;
+	setName(fx_filename);
 	HRESULT hr;
 
 	assert(fx_filename);
@@ -165,7 +165,7 @@ bool CPixelShader::create(
 	const char* fx_filename
 	, const char* entry_point
 	) {
-	name = fx_filename; // entry_point + "@" + fx_filename;
+	setName(fx_filename);   // entry_point + "@" + fx_filename;
 
 	HRESULT hr;
 

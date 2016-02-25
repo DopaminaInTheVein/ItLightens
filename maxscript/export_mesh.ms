@@ -29,11 +29,13 @@ fn saveBinaryMesh obj vtxs idxs = (
 	local num_bytes_of_header = 9 * 4
 	local version = 1
 	local primitive_type = 2000
-	local vertex_type = 1001		-- Pos UV
+	local vertex_type = 1002		-- Pos, N, UV
 	local bytes_per_float = 4		-- Assuming all vtxs are float
 	local bytes_per_vertex = vtxs[1].count * bytes_per_float
 	local bytes_per_index = if idxs.count > 65535 then 4 else 2
 	local num_ranges = 1
+	
+	format "Exporting mesh with % vertexs and % idxs\n" vtxs.count idxs.count
 	
 	WriteLong fs 0x44221100  -- Mesh magic
 	WriteLong fs num_bytes_of_header
@@ -139,4 +141,4 @@ fn export_mesh given_obj = (
 	
 )
 
-export_mesh $
+--export_mesh $

@@ -6,6 +6,7 @@
 #include "render/shader_cte.h"
 #include "render/technique.h"
 #include "render/texture.h"
+#include "render/render_manager.h"
 #include "resources/resources_manager.h"
 #include "camera/camera.h"
 #include "app_modules/app_module.h"
@@ -126,6 +127,7 @@ void CApp::render() {
 
 		Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
 	}
+	RenderManager.renderAll();
 
 	for (auto it : mod_renders) {
 		CTraceScoped scope(it->getName());

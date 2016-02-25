@@ -51,7 +51,7 @@ void CTexture::renderUIDebug() {
 		std::string newTexture = CImGuiModule::getFilePath();
 		if (newTexture.size() > 2) { //not empty
 			setName(newTexture.c_str());
-			loadFullPath(name.c_str());
+			loadFullPath(getName().c_str());
 		}
 	}
 }
@@ -106,10 +106,10 @@ bool CTexture::loadFullPath(const char* filename) {
 
 bool CTexture::reload() {
 	if (ImGui::Button("reload texture")) {
-		if (name.find(':') != std::string::npos)
-			return loadFullPath(name.c_str());
+		if (getName().find(':') != std::string::npos)
+			return loadFullPath(getName().c_str());
 		else
-			return load(name.c_str());
+			return load(getName().c_str());
 	}
 	return false;
 }

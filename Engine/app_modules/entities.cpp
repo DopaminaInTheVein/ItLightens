@@ -21,6 +21,7 @@ DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("transform", TCompTransform);
 DECL_OBJ_MANAGER("camera", TCompCamera);
 DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
+DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
 DECL_OBJ_MANAGER("cientifico", ai_scientific);
 DECL_OBJ_MANAGER("beacon", beacon_controller);
 DECL_OBJ_MANAGER("ai_guard", ai_guard);
@@ -51,6 +52,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
+	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCamera>()->init(4);
 	getHandleManager<TCompController3rdPerson>()->init(4);
 	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
@@ -68,6 +70,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
+	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene00.xml");

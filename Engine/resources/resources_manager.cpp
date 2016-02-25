@@ -4,6 +4,8 @@
 #include "render/mesh.h"
 #include "render/technique.h"
 #include "render/texture.h"
+#include "render/material.h"
+#include "render/static_mesh.h"
 #include "imgui/imgui.h"
 
 CResourcesManager Resources;
@@ -16,6 +18,8 @@ const char* IResource::getTypeName(IResource::eType atype) {
 	case IResource::VERTEX_SHADER: return "VertexShaders";
 	case IResource::PIXEL_SHADER: return "PixelShaders";
 	case IResource::TEXTURE: return "Textures";
+	case IResource::MATERIAL: return "Materials";
+	case IResource::STATIC_MESH: return "StaticMeshes";
 	}
 	return "invalid";
 }
@@ -49,6 +53,12 @@ const IResource* CResourcesManager::get(const char* name) {
 	}
 	else if (ext == ".dds") {
 		new_obj = createObjFromName<CTexture>(name);
+	}
+	else if (ext == ".material") {
+		new_obj = createObjFromName<CMaterial>(name);
+	}
+	else if (ext == ".static_mesh") {
+		new_obj = createObjFromName<CStaticMesh>(name);
 	}
 	else {
 		fatal("Invalid resource type %s at %s\n", ext.c_str(), name);

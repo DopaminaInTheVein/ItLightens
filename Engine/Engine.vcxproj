@@ -96,6 +96,7 @@
     <ClCompile Include="app_modules\imgui\module_imgui.cpp" />
     <ClCompile Include="camera\camera.cpp" />
     <ClCompile Include="components\comp_camera.cpp" />
+    <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\entity.cpp" />
     <ClCompile Include="components\entity_parser.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
+    <ClCompile Include="render\material.cpp" />
     <ClCompile Include="render\mesh.cpp" />
     <ClCompile Include="render\mesh_manager.cpp" />
     <ClCompile Include="render\render.cpp" />
@@ -145,7 +147,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="render\render_manager.cpp" />
     <ClCompile Include="render\shaders.cpp" />
+    <ClCompile Include="render\static_mesh.cpp" />
     <ClCompile Include="render\technique.cpp" />
     <ClCompile Include="render\texture.cpp" />
     <ClCompile Include="render\vertex_declarations.cpp" />
@@ -173,7 +177,7 @@
     <ClInclude Include="components\comp_life.h" />
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
-    <ClInclude Include="components\comp_render_mesh.h" />
+    <ClInclude Include="components\comp_render_static_mesh.h" />
     <ClInclude Include="components\comp_transform.h" />
     <ClInclude Include="components\entity.h" />
     <ClInclude Include="components\entity_parser.h" />
@@ -199,10 +203,13 @@
     <ClInclude Include="mcv_platform.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
     <ClInclude Include="render\gpu_trace.h" />
+    <ClInclude Include="render\material.h" />
     <ClInclude Include="render\mesh.h" />
     <ClInclude Include="render\render.h" />
+    <ClInclude Include="render\render_manager.h" />
     <ClInclude Include="render\shaders.h" />
     <ClInclude Include="render\shader_cte.h" />
+    <ClInclude Include="render\static_mesh.h" />
     <ClInclude Include="render\technique.h" />
     <ClInclude Include="render\texture.h" />
     <ClInclude Include="render\vertex_declarations.h" />

@@ -12,10 +12,11 @@ class CRenderTechnique : public IResource {
 	const CVertexShader* vs;
 	const CPixelShader*  ps;
 	std::string          name;
+	int                  priority;
 
 public:
 
-	CRenderTechnique() : vs(nullptr), ps(nullptr) { }
+	CRenderTechnique() : vs(nullptr), ps(nullptr), priority(100) { }
 	CRenderTechnique(const CRenderTechnique&) = delete;
 
 	void destroy();
@@ -23,6 +24,8 @@ public:
 
 	void activate() const;
 	void render() const;
+
+	int getPriority() const { return priority; }
 
 	const std::string& getName() const {
 		return name;

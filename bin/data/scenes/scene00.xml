@@ -12,6 +12,7 @@
     <transform pos="1 0 1" />
     <name name="peter" />
     <player />
+    <render_static_mesh name="static_meshes/tetera2.static_mesh"/>
   </entity>
   <entity>
     <name name="box1" />
