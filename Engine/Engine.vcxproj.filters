@@ -111,7 +111,6 @@
     <ClCompile Include="render\render_manager.cpp">
       <Filter>render</Filter>
     </ClCompile>
-
     <ClCompile Include="logic\sbb.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -141,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="logic\player_controller.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\player_controller_base.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -284,9 +286,6 @@
     <ClInclude Include="render\render_manager.h">
       <Filter>render</Filter>
     </ClInclude>
-    <ClInclude Include="components\comp_render_mesh.h">
-      <Filter>components</Filter>
-    </ClInclude>
     <ClInclude Include="logic\sbb.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -315,6 +314,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\player_controller.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\player_controller_base.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
