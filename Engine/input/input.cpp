@@ -30,6 +30,9 @@ bool CInput::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int scr
 	m_mouseX = 0;
 	m_mouseY = 0;
 
+	last_mouseX = 0;
+	last_mouseY = 0;
+
 	// Initialize the main direct input interface.
 	result = DirectInput8Create(hinstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_directInput, NULL);
 	if (FAILED(result))
@@ -38,6 +41,10 @@ bool CInput::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int scr
 	}
 
 	/** KEYBOARD **/
+
+	// No keys pressed
+	key_pressed.resize(DIK_MEDIASELECT + 1);
+	std::fill(key_pressed.begin(), key_pressed.end(), false);
 
 	// Initialize the direct input interface for the keyboard.
 	result = m_directInput->CreateDevice(GUID_SysKeyboard, &m_keyboard, NULL);
@@ -69,6 +76,10 @@ bool CInput::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int scr
 
 	/** MOUSE **/
 
+	// No buttons pressed
+	mouse_pressed.resize(mouse_EXTRA + 1);
+	std::fill(mouse_pressed.begin(), mouse_pressed.end(), false);
+
 	// Initialize the direct input interface for the mouse.
 	result = m_directInput->CreateDevice(GUID_SysMouse, &m_mouse, NULL);
 	if (FAILED(result))
@@ -98,6 +109,10 @@ bool CInput::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int scr
 	}
 
 	/** JOYSTICK **/
+
+	// No buttons pressed
+	joystick_pressed.resize(joystick_START + 1);
+	std::fill(joystick_pressed.begin(), joystick_pressed.end(), false);
 
 	// Initialize the direct input interface for the joystick.
 	result = m_directInput->CreateDevice(GUID_Joystick, &m_joystick, NULL);
@@ -176,6 +191,9 @@ bool CInput::Frame()
 {
 	bool result;
 
+	// Process the changes in the mouse, keyboard and joystick.
+	ProcessInput();
+
 	// Read the current state of the keyboard.
 	result = ReadKeyboard();
 	if (!result)
@@ -196,9 +214,6 @@ bool CInput::Frame()
 	{
 		return false;
 	}
-
-	// Process the changes in the mouse, keyboard and joystick.
-	ProcessInput();
 
 	return true;
 }
@@ -300,7 +315,38 @@ void CInput::GetMouseLocation(int& mouseX, int& mouseY)
 	return;
 }
 
-// Detects whether the left mouse button is pressed
+// Updates mouse location
+void CInput::UpdateMousePosition() {
+	int mouseX, mouseY;
+	GetMouseLocation(mouseX, mouseY);
+	last_mouseX = mouseX;
+	last_mouseY = mouseY;
+}
+
+// Detects whether the mouse was moved to the left
+bool CInput::IsMouseMovedLeft() {
+	int mouseX, mouseY;
+
+	GetMouseLocation(mouseX, mouseY);
+
+	bool moved_left = mouseX < last_mouseX;
+
+	return moved_left;
+
+}
+
+// Detects whether the mouse was moved to the right
+bool CInput::IsMouseMovedRight() {
+	int mouseX, mouseY;
+
+	GetMouseLocation(mouseX, mouseY);
+
+	bool moved_right = mouseX > last_mouseX;
+
+	return moved_right;
+}
+
+// Detects whether the left mouse button is pressed or is being pressed
 bool CInput::IsLeftClickPressed() {
 	int mouseButtonPressed = 10;
 	getMouseButtonPressed(mouseButtonPressed);
@@ -308,8 +354,47 @@ bool CInput::IsLeftClickPressed() {
 	int buttonPressed = 50;
 	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
 
-	if ((mouseButtonPressed == mouse_LEFT) || (joystickButtonPressed && buttonPressed == joystick_X))
+	if ((mouse_pressed[mouse_LEFT] && mouseButtonPressed == mouse_LEFT) ||
+		(joystickButtonPressed && joystick_pressed[joystick_X] && buttonPressed == joystick_X))
 	{
+		return true;
+	}
+
+	return false;
+}
+
+// Detects whether the left mouse button is pressed
+bool CInput::IsLeftClickPressedDown() {
+	int mouseButtonPressed = 10;
+	getMouseButtonPressed(mouseButtonPressed);
+
+	int buttonPressed = 50;
+	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
+
+	if ((!mouse_pressed[mouse_LEFT] && mouseButtonPressed == mouse_LEFT) ||
+		(!joystick_pressed[joystick_X] && joystickButtonPressed && buttonPressed != joystick_X))
+	{
+		mouse_pressed[mouse_LEFT] = true;
+		joystick_pressed[joystick_X] = true;
+		return true;
+	}
+
+	return false;
+}
+
+// Detects whether the left mouse button is released
+bool CInput::IsLeftClickReleased() {
+	int mouseButtonPressed = 10;
+	getMouseButtonPressed(mouseButtonPressed);
+
+	int buttonPressed = 50;
+	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
+
+	if ((mouse_pressed[mouse_LEFT] && (mouseButtonPressed == 10 || mouseButtonPressed != mouse_LEFT)) ||
+		(joystick_pressed[joystick_X] && (!joystickButtonPressed || buttonPressed != joystick_X)))
+	{
+		mouse_pressed[mouse_LEFT] = false;
+		joystick_pressed[joystick_X] = false;
 		return true;
 	}
 
@@ -324,8 +409,47 @@ bool CInput::IsRightClickPressed() {
 	int buttonPressed = 50;
 	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
 
-	if ((mouseButtonPressed == mouse_RIGHT) || (joystickButtonPressed && buttonPressed == joystick_B))
+	if ((mouse_pressed[mouse_RIGHT] && mouseButtonPressed == mouse_RIGHT) ||
+		(joystickButtonPressed && joystick_pressed[joystick_B] && buttonPressed == joystick_B))
 	{
+		return true;
+	}
+
+	return false;
+}
+
+// Detects whether the right mouse button is pressed
+bool CInput::IsRightClickPressedDown() {
+	int mouseButtonPressed = 10;
+	getMouseButtonPressed(mouseButtonPressed);
+
+	int buttonPressed = 50;
+	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
+
+	if ((!mouse_pressed[mouse_RIGHT] && mouseButtonPressed == mouse_RIGHT) ||
+		(!joystick_pressed[joystick_B] && joystickButtonPressed && buttonPressed != joystick_B))
+	{
+		mouse_pressed[mouse_RIGHT] = true;
+		joystick_pressed[joystick_B] = true;
+		return true;
+	}
+
+	return false;
+}
+
+// Detects whether the right mouse button is released
+bool CInput::IsRightClickReleased() {
+	int mouseButtonPressed = 10;
+	getMouseButtonPressed(mouseButtonPressed);
+
+	int buttonPressed = 50;
+	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
+
+	if ((mouse_pressed[mouse_RIGHT] && (mouseButtonPressed == 10 || mouseButtonPressed != mouse_RIGHT)) ||
+		(joystick_pressed[joystick_B] && (!joystickButtonPressed || buttonPressed != joystick_B)))
+	{
+		mouse_pressed[mouse_RIGHT] = false;
+		joystick_pressed[joystick_B] = false;
 		return true;
 	}
 
@@ -418,13 +542,57 @@ bool CInput::IsDownPressed() {
 	return false;
 }
 
-// Detects if the space key was pressed
+// Detects if the space key was pressed or is being pressed
 bool CInput::IsSpacePressed() {
 	int buttonPressed = 50;
 	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
 
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
-	if ((m_keyboardState[DIK_SPACE] & 0x80) || (joystickButtonPressed && buttonPressed == joystick_A))
+	if ((key_pressed[DIK_SPACE] && m_keyboardState[DIK_SPACE] & 0x80) ||
+		(joystickButtonPressed && joystick_pressed[joystick_A] && buttonPressed == joystick_A))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+// Detects if the space key was pressed
+bool CInput::IsSpacePressedDown() {
+	int buttonPressed = 50;
+	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
+
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if ((!key_pressed[DIK_SPACE] && (m_keyboardState[DIK_SPACE] & 0x80)) ||
+		(!joystick_pressed[joystick_A] && joystickButtonPressed && buttonPressed == joystick_A))
+	{
+		key_pressed[DIK_SPACE] = true;
+		joystick_pressed[joystick_A] = true;
+		return true;
+	}
+
+	return false;
+}
+
+// Detects if the space key was released
+bool CInput::IsSpaceReleased() {
+	int buttonPressed = 50;
+	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
+
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if ((key_pressed[DIK_SPACE] && !(m_keyboardState[DIK_SPACE] & 0x80)) ||
+		(joystick_pressed[joystick_A] && (!joystickButtonPressed || buttonPressed != joystick_A)))
+	{
+		key_pressed[DIK_SPACE] = false;
+		joystick_pressed[joystick_A] = false;
+		return true;
+	}
+
+	return false;
+}
+
+bool CInput::IsKeyPressed(int key) {
+	if (key_pressed[key] && m_keyboardState[key] & 0x80)
 	{
 		return true;
 	}
@@ -433,7 +601,16 @@ bool CInput::IsSpacePressed() {
 }
 
 bool CInput::IsKeyPressedDown(int key) {
-	if (m_keyboardState[key] & 0x80)
+	if (!key_pressed[key] && (m_keyboardState[key] & 0x80))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool CInput::IsKeyReleased(int key) {
+	if (key_pressed[key] && !(m_keyboardState[key] & 0x80))
 	{
 		return true;
 	}

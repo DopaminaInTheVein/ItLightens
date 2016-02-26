@@ -211,18 +211,35 @@ public:
 	bool Frame();
 
 	void GetMouseLocation(int&, int&);
-	bool IsLeftClickPressed();
-	bool IsRightClickPressed();
 
-	bool IsEscapePressed();
+	// Mouse movement detection
+	bool IsMouseMovedLeft();
+	bool IsMouseMovedRight();
+	void UpdateMousePosition();
+	// Main actions (left click, right click and space)
+	bool IsLeftClickPressed();
+	bool IsLeftClickPressedDown();
+	bool IsLeftClickReleased();
+	bool IsRightClickPressed();
+	bool IsRightClickPressedDown();
+	bool IsRightClickReleased();
+	bool IsSpacePressed();
+	bool IsSpacePressedDown();
+	bool IsSpaceReleased();
+	// Movement actions (WASD)
 	bool IsLeftPressed();
 	bool IsRightPressed();
 	bool IsUpPressed();
 	bool IsDownPressed();
+	// Camera rotation (QE)
 	bool IsOrientLeftPressed();
 	bool IsOrientRightPressed();
-	bool IsSpacePressed();
+
+	bool IsEscapePressed();
+
 	bool IsKeyPressedDown(int key);
+	bool IsKeyPressed(int key);
+	bool IsKeyReleased(int key);
 
 	void Unacquire();
 
@@ -245,8 +262,13 @@ private:
 	DIMOUSESTATE m_mouseState;
 	DIJOYSTATE m_joystickState;
 
+	std::vector<bool> mouse_pressed;
+	std::vector<bool> key_pressed;
+	std::vector<bool> joystick_pressed;
+
 	int m_screenWidth, m_screenHeight;
 	int m_mouseX, m_mouseY;
+	int last_mouseX, last_mouseY;
 };
 
 #endif
