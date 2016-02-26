@@ -67,9 +67,20 @@
     <beacon />
   </entity>
 
-  <entity name="ia_speedy">
+  <entity>
     <tag name="AI" />
     <tag name="AI_speedy" />
+    <name name="speedy1" />
     <transform pos="9 0 9" rotation="1 2 3 3" scale="1 1 1" />
+    <ai_speedy
+      wpts_size  = "8"
+      wpt0_pos = " 10  0  10"
+      wpt1_pos = " 10  0 -10"
+      wpt2_pos = "-10  0 -10"
+      wpt3_pos = "-10  0  10"
+      wpt4_pos = "  5  0   5"
+      wpt5_pos = "  5  0  -5"
+      wpt6_pos = " -5  0  -5"
+      wpt7_pos = " -5  0   5" />
   </entity>
 </entities>

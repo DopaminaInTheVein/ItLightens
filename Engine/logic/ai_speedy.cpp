@@ -1,7 +1,6 @@
 #include "mcv_platform.h"<
 #include "ai_speedy.h"
-
-void ai_speedy::Init(CEntity *new_entity, CEntity* new_player)
+void ai_speedy::Init()
 {
 	// insert all states in the map
 	AddState("idle", (statehandler)&ai_speedy::IdleState);
@@ -10,19 +9,12 @@ void ai_speedy::Init(CEntity *new_entity, CEntity* new_player)
 	AddState("dashtoplayer", (statehandler)&ai_speedy::DashToPlayerState);
 	AddState("dashtopoint", (statehandler)&ai_speedy::DashToPointState);
 	AddState("dashtonewpoint", (statehandler)&ai_speedy::DashToNewPointState);
-
-	// init entity, player and sbb
-	setTEntity(new_entity);
-	setPlayer(new_player);
+	om = getHandleManager<ai_speedy>();
+	myHandle = om->getHandleFromObjAddr(this);
+	myParent = myHandle.getOwner();
 
 	// transforms for the speedy and the player
-	transform = ent->get<TCompTransform>();
-	player_transform = player->get<TCompTransform>();
-
-	// init wpts list
-	for (int i = 0; i < 5; i++) {
-		fixedWpts.push_back(VEC3((float)(rand() % 9), 0, (float)(rand() % 9)));
-	}
+	SetMyEntity();
 
 	// current wpt
 	curwpt = 0;
@@ -35,6 +27,41 @@ void ai_speedy::Init(CEntity *new_entity, CEntity* new_player)
 	// reset the state
 	ChangeState("idle");
 }
+
+void ai_speedy::onSetPlayer(const TMsgSetPlayer& msg) {
+	player = msg.player;
+}
+
+void ai_speedy::update(float elapsed) {
+	// Update transforms
+	SetMyEntity();
+	transform = myEntity->get<TCompTransform>();
+	CEntity * player_e = player;
+	player_transform = player_e->get<TCompTransform>();
+	// Recalc AI
+	Recalc();
+}
+
+// Loading the wpts
+#define WPT_ATR_NAME(nameVariable, nameSufix, index) \
+char nameVariable[10]; sprintf(nameVariable, "wpt%d_%s", index, nameSufix);
+
+bool ai_speedy::load(MKeyValue& atts) {
+	int n = atts.getInt("wpts_size", 0);
+	fixedWpts.resize(n);
+	for (unsigned int i = 0; i < n; i++) {
+		WPT_ATR_NAME(atrPos, "pos", i);
+		fixedWpts.push_back(atts.getPoint(atrPos));
+	}
+	return true;
+}
+
+// Sets the entity
+void ai_speedy::SetMyEntity() {
+	myEntity = myParent;
+}
+
+// Speedy states
 
 void ai_speedy::IdleState() {
 	ChangeState("nextwpt");

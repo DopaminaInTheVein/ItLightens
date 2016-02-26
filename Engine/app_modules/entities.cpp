@@ -68,6 +68,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
+	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
 	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
@@ -100,6 +101,19 @@ bool CEntitiesModule::start() {
 		target_e->sendMsg(msg_camera);
 	}
 
+	// Set the player in the Speedy AIs
+	TTagID tagIDSpeedy = getID("AI_speedy");
+	VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
+
+	for (CHandle speedyHandle : speedyHandles) {
+
+		CEntity * speedy_e = speedyHandle;
+		TMsgSetPlayer msg_player;
+		msg_player.player = t;
+		speedy_e->sendMsg(msg_player);
+
+	}
+
 	SBB::postHandles("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
 	SBB::postHandles("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
 
@@ -108,7 +122,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_guard>()->onAll(&ai_guard::Init);
 	getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
-	//getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
+	getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 
 	return true;
@@ -130,7 +144,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<ai_guard>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
-	//getHandleManager<ai_speedy>()->updateAll(dt);
+	getHandleManager<ai_speedy>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

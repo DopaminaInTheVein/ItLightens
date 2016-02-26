@@ -20,8 +20,14 @@
 #include <windows.h>
 
 class ai_speedy : public aicontroller, public TCompBase {
-	CEntity* ent;
-	CEntity* player;
+
+	CObjectManager<ai_speedy> * om = nullptr;
+	CHandle myHandle;
+	CHandle myParent;
+	CEntity *myEntity = nullptr;
+
+	CHandle player;
+
 	TCompTransform* transform;
 	TCompTransform* player_transform;
 
@@ -49,16 +55,13 @@ public:
 	void DashToPointState();
 	void DashToNewPointState();
 
-	void Init(CEntity *new_entity, CEntity* new_player);
+	void Init();
+	void update(float elapsed);
+	bool load(MKeyValue& atts);
 
-	const void setTEntity(CEntity * new_entity) {
-		ent = new_entity;
-	}
+	void onSetPlayer(const TMsgSetPlayer& msg);
 
-	const void setPlayer(CEntity * new_player) {
-		player = new_player;
-	}
-
+	void SetMyEntity();
 	string decide_next_action();
 	bool aimToTarget(VEC3 target);
 	void moveFront(float speed);
