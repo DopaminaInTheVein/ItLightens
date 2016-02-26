@@ -27,6 +27,7 @@ public:
 
 	// View
 	void lookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
+	void smoothLookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
 
 	MAT44 getView() const { return view; }
 	VEC3  getPosition() const { return position; }

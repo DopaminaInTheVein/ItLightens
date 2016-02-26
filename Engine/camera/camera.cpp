@@ -25,6 +25,22 @@ void CCamera::lookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
 	updateViewProjection();
 }
 
+void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
+	float drag = 0.9f;
+	float drag_i = 1 - drag;
+
+	position = new_position*drag_i + position*drag;
+	target = new_target*drag_i + target*drag;
+	up_aux = new_up_aux;
+
+	view = MAT44::CreateLookAt(position, target, up_aux);
+
+	front = view.Forward();
+	up = view.Up();
+	left = view.Left();
+	updateViewProjection();
+}
+
 // Projection
 void CCamera::setProjection(float new_fov_vertical_rads, float new_znear, float new_zfar) {
 	fov_vertical_rads = new_fov_vertical_rads;

@@ -115,6 +115,7 @@ void CApp::render() {
 		// Clear the back buffer
 		float ClearColor[4] = { 0.3f, 0.3f, 0.3f, 1.0f }; // red,green,blue,alpha
 		Render.ctx->ClearRenderTargetView(Render.renderTargetView, ClearColor);
+		Render.ctx->ClearDepthStencilView(Render.zbuffer, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 		tech_solid_colored->activate();
 

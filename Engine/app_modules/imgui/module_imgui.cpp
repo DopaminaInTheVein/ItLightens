@@ -101,9 +101,14 @@ void CImGuiModule::update(float dt) {
 }
 
 void CImGuiModule::render() {
+
+	//TODO: better way of deactive zbuffer?
+
+	Render.ctx->OMSetRenderTargets(1, &Render.renderTargetView, NULL);
 	ImGui::Render();
+	Render.ctx->OMSetRenderTargets(1, &Render.renderTargetView, Render.zbuffer);
 	//Debug->render();		//need to be called on game.cpp for now to get the technique and shader variables
-							//TODO: fix that
+	//TODO: fix that
 }
 
 bool CImGuiModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {

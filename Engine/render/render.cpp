@@ -17,10 +17,52 @@ CRender::CRender()
 	, device(nullptr)
 	, ctx(nullptr)
 	, renderTargetView(nullptr)
+	, zbuffer(nullptr)
+	, depthStencil(nullptr)
 { }
 
 void CRender::swapChain() {
 	swap_chain->Present(0, 0);
+}
+
+bool CRender::createZBuffer()
+{
+	CApp& app = CApp::get();
+
+	HRESULT hr = S_OK;
+
+	RECT rc;
+	GetClientRect(app.getHWnd(), &rc);
+	UINT width = rc.right - rc.left;
+	UINT height = rc.bottom - rc.top;
+
+	D3D11_TEXTURE2D_DESC descDepth;
+	ZeroMemory(&descDepth, sizeof(descDepth));
+	descDepth.Width = width;
+	descDepth.Height = height;
+	descDepth.MipLevels = 1;
+	descDepth.ArraySize = 1;
+	descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	descDepth.SampleDesc.Count = 1;
+	descDepth.SampleDesc.Quality = 0;
+	descDepth.Usage = D3D11_USAGE_DEFAULT;
+	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	descDepth.CPUAccessFlags = 0;
+	descDepth.MiscFlags = 0;
+	hr = device->CreateTexture2D(&descDepth, NULL, &depthStencil);
+	if (FAILED(hr)) { return false; }
+
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
+	ZeroMemory(&descDSV, sizeof(descDSV));
+	descDSV.Format = descDepth.Format;
+	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	descDSV.Texture2D.MipSlice = 0;
+	hr = device->CreateDepthStencilView(depthStencil, &descDSV, &zbuffer);
+	if (FAILED(hr))
+		return false;
+
+	return true;
 }
 
 void CRender::destroyDevice() {
@@ -29,6 +71,8 @@ void CRender::destroyDevice() {
 	if (swap_chain) swap_chain->Release(), swap_chain = nullptr;
 	if (ctx) ctx->Release(), ctx = nullptr;
 	if (device) device->Release(), device = nullptr;
+	if (zbuffer) zbuffer->Release(), zbuffer = nullptr;
+	if (depthStencil) depthStencil->Release(), depthStencil = nullptr;
 }
 
 bool CRender::createDevice() {
@@ -93,7 +137,11 @@ bool CRender::createDevice() {
 	if (FAILED(hr))
 		return false;
 
-	ctx->OMSetRenderTargets(1, &renderTargetView, NULL);
+	//zBuffer:
+	if (createZBuffer())
+		dbg("zbuffer created\n");
+
+	ctx->OMSetRenderTargets(1, &renderTargetView, zbuffer);
 
 	// Setup the viewport
 	D3D11_VIEWPORT vp;

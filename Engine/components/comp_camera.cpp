@@ -43,7 +43,8 @@ void TCompCamera::update(float dt) {
 	pos.y += 2;
 	tmx->setPosition(pos);
 
-	this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+	this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());	//smooth movement
+	//this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());		//too robotic
 }
 
 void TCompCamera::renderInMenu() {

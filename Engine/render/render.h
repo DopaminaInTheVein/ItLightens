@@ -16,10 +16,14 @@ public:
 	ID3D11Device*           device;
 	ID3D11DeviceContext*    ctx;
 	ID3D11RenderTargetView* renderTargetView;
+	ID3D11Texture2D*        depthStencil;
+	ID3D11DepthStencilView* zbuffer;
 
 	void destroyDevice();
 	bool createDevice();
 	void swapChain();
+
+	bool createZBuffer();
 };
 
 extern CRender Render;
