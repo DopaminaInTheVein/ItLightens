@@ -603,6 +603,7 @@ bool CInput::IsKeyPressed(int key) {
 bool CInput::IsKeyPressedDown(int key) {
 	if (!key_pressed[key] && (m_keyboardState[key] & 0x80))
 	{
+		key_pressed[key] = true;
 		return true;
 	}
 
@@ -612,6 +613,7 @@ bool CInput::IsKeyPressedDown(int key) {
 bool CInput::IsKeyReleased(int key) {
 	if (key_pressed[key] && !(m_keyboardState[key] & 0x80))
 	{
+		key_pressed[key] = false;
 		return true;
 	}
 
