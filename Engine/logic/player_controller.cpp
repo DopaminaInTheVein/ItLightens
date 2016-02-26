@@ -22,6 +22,9 @@ void player_controller::Init() {
 	AddState("jump", (statehandler)&player_controller::Jump);
 	AddState("stun", (statehandler)&player_controller::Stun);
 	AddState("possess", (statehandler)&player_controller::Possess);
+	/**TO REMOVE**/AddState("dash", (statehandler)&player_controller::Dashing);
+	/**TO REMOVE**/AddState("blinking", (statehandler)&player_controller::Blinking);
+	/**TO REMOVE**/AddState("blink", (statehandler)&player_controller::Blink);
 
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
@@ -36,6 +39,8 @@ void player_controller::onSetCamera(const TMsgSetCamera& msg) {
 void player_controller::update(float elapsed) {
 	Input.Frame();
 	Recalc();
+	/***TO REMOVE***/updateDashTimer();
+	/***TO REMOVE***/updateBlinkTimer();
 }
 
 // Player States
@@ -224,6 +229,16 @@ string player_controller::ParseInput() {
 	dt = getDeltaTime();
 
 	if (!ImGui::GetIO().WantCaptureKeyboard) {
+		if (Input.IsKeyPressedDown(0x18)) {
+			if (in_speedy) {
+				in_speedy = false;
+				dbg("ESTADO NORMAL.\n");
+			}
+			else {
+				in_speedy = true;
+				dbg("EN SPEEDY.\n");
+			}
+		}
 		if (Input.IsLeftPressed()) {
 			return "moveleft";
 		}
@@ -236,14 +251,22 @@ string player_controller::ParseInput() {
 		if (Input.IsDownPressed()) {
 			return "movedown";
 		}
-		if (Input.IsSpacePressed()) {
+		if (Input.IsSpacePressedDown()) {
 			return "jump";
 		}
-		if (Input.IsLeftClickPressed()) {
-			return "action";
+		if (Input.IsLeftClickPressedDown()) {
+			if (!in_speedy)
+				return "action";
+			else
+				return "dash";
+		}
+		if (Input.IsRightClickPressedDown()) {
+			if (!in_speedy)
+				return "possess";
 		}
 		if (Input.IsRightClickPressed()) {
-			return "possess";
+			if (in_speedy)
+				return "blinking";
 		}
 		if (Input.IsOrientLeftPressed())
 		{
@@ -261,3 +284,97 @@ string player_controller::ParseInput() {
 	return "idle";
 }
 
+/**TO REMOVE**/
+void player_controller::Dashing() {
+
+	if (dash_ready) {
+		bool arrived = dashFront();
+		if (arrived) {
+			resetDashTimer();
+			ChangeState("idle");
+		}
+	}
+	else {
+		ChangeState("idle");
+	}
+}
+
+void player_controller::Blinking()
+{
+	if (blink_ready) {
+
+		int mouseX = 0;
+		int mouseY = 0;
+
+		// TODO: Marcar punto
+		if (Input.IsMouseMovedLeft())
+			ChangeState("orientleft");
+		if (Input.IsMouseMovedRight())
+			ChangeState("orientright");
+		if (Input.IsRightClickReleased())
+			ChangeState("blink");
+		Input.UpdateMousePosition();
+	}
+	else {
+		ChangeState("idle");
+	}
+}
+
+void player_controller::Blink()
+{
+	if (blink_ready) {
+		VEC3 front = GetPlayerFront();
+		VEC3 position = GetPlayerPosition();
+
+		position += front * blink_distance;
+
+		SetPlayerPosition(position);
+
+		resetBlinkTimer();
+	}
+
+	ChangeState("idle");
+}
+
+bool player_controller::dashFront() {
+	dash_duration += getDeltaTime();
+
+	VEC3 front = GetPlayerFront();
+	VEC3 position = GetPlayerPosition();
+
+	VEC3 new_position = VEC3(position.x + front.x*dash_speed, position.y, position.z + front.z*dash_speed);
+	SetPlayerPosition(new_position);
+
+	if (dash_duration > dash_max_duration) {
+		dash_duration = 0;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void player_controller::updateDashTimer() {
+	dash_timer -= getDeltaTime();
+	if (dash_timer <= 0) {
+		dash_ready = true;
+	}
+}
+
+void player_controller::resetDashTimer() {
+	dash_timer = dash_cooldown;
+	dash_ready = false;
+}
+
+void player_controller::updateBlinkTimer() {
+	blink_timer -= getDeltaTime();
+	if (blink_timer <= 0) {
+		blink_ready = true;
+	}
+}
+
+void player_controller::resetBlinkTimer() {
+	blink_timer = blink_cooldown;
+	blink_ready = false;
+}
+/**TO REMOVE**/
