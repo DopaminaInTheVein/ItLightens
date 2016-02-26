@@ -191,6 +191,28 @@ bool CInput::Frame()
 {
 	bool result;
 
+	// Update the pressed vectors for keyboard, mouse and joystick
+	for (int i = 0; i < key_pressed.size(); i++) {
+		if (IsKeyPressed(i))
+			key_pressed[i] = true;
+		else
+			key_pressed[i] = false;
+	}
+
+	for (int i = 0; i < mouse_pressed.size(); i++) {
+		if (m_mouseState.rgbButtons[i] != 0)
+			mouse_pressed[i] = true;
+		else
+			mouse_pressed[i] = false;
+	}
+
+	for (int i = 0; i < joystick_pressed.size(); i++) {
+		if (m_joystickState.rgbButtons[i] != 0)
+			joystick_pressed[i] = true;
+		else
+			joystick_pressed[i] = false;
+	}
+
 	// Process the changes in the mouse, keyboard and joystick.
 	ProcessInput();
 
@@ -210,10 +232,6 @@ bool CInput::Frame()
 
 	// Read the current state of the joystick.
 	result = ReadJoystick();
-	if (!result)
-	{
-		return false;
-	}
 
 	return true;
 }
@@ -374,8 +392,6 @@ bool CInput::IsLeftClickPressedDown() {
 	if ((!mouse_pressed[mouse_LEFT] && mouseButtonPressed == mouse_LEFT) ||
 		(!joystick_pressed[joystick_X] && joystickButtonPressed && buttonPressed != joystick_X))
 	{
-		mouse_pressed[mouse_LEFT] = true;
-		joystick_pressed[joystick_X] = true;
 		return true;
 	}
 
@@ -393,8 +409,6 @@ bool CInput::IsLeftClickReleased() {
 	if ((mouse_pressed[mouse_LEFT] && (mouseButtonPressed == 10 || mouseButtonPressed != mouse_LEFT)) ||
 		(joystick_pressed[joystick_X] && (!joystickButtonPressed || buttonPressed != joystick_X)))
 	{
-		mouse_pressed[mouse_LEFT] = false;
-		joystick_pressed[joystick_X] = false;
 		return true;
 	}
 
@@ -429,8 +443,6 @@ bool CInput::IsRightClickPressedDown() {
 	if ((!mouse_pressed[mouse_RIGHT] && mouseButtonPressed == mouse_RIGHT) ||
 		(!joystick_pressed[joystick_B] && joystickButtonPressed && buttonPressed != joystick_B))
 	{
-		mouse_pressed[mouse_RIGHT] = true;
-		joystick_pressed[joystick_B] = true;
 		return true;
 	}
 
@@ -444,12 +456,9 @@ bool CInput::IsRightClickReleased() {
 
 	int buttonPressed = 50;
 	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
-
 	if ((mouse_pressed[mouse_RIGHT] && (mouseButtonPressed == 10 || mouseButtonPressed != mouse_RIGHT)) ||
 		(joystick_pressed[joystick_B] && (!joystickButtonPressed || buttonPressed != joystick_B)))
 	{
-		mouse_pressed[mouse_RIGHT] = false;
-		joystick_pressed[joystick_B] = false;
 		return true;
 	}
 
@@ -566,8 +575,6 @@ bool CInput::IsSpacePressedDown() {
 	if ((!key_pressed[DIK_SPACE] && (m_keyboardState[DIK_SPACE] & 0x80)) ||
 		(!joystick_pressed[joystick_A] && joystickButtonPressed && buttonPressed == joystick_A))
 	{
-		key_pressed[DIK_SPACE] = true;
-		joystick_pressed[joystick_A] = true;
 		return true;
 	}
 
@@ -583,8 +590,6 @@ bool CInput::IsSpaceReleased() {
 	if ((key_pressed[DIK_SPACE] && !(m_keyboardState[DIK_SPACE] & 0x80)) ||
 		(joystick_pressed[joystick_A] && (!joystickButtonPressed || buttonPressed != joystick_A)))
 	{
-		key_pressed[DIK_SPACE] = false;
-		joystick_pressed[joystick_A] = false;
 		return true;
 	}
 
@@ -592,7 +597,7 @@ bool CInput::IsSpaceReleased() {
 }
 
 bool CInput::IsKeyPressed(int key) {
-	if (key_pressed[key] && m_keyboardState[key] & 0x80)
+	if (m_keyboardState[key] & 0x80)
 	{
 		return true;
 	}
@@ -603,7 +608,6 @@ bool CInput::IsKeyPressed(int key) {
 bool CInput::IsKeyPressedDown(int key) {
 	if (!key_pressed[key] && (m_keyboardState[key] & 0x80))
 	{
-		key_pressed[key] = true;
 		return true;
 	}
 
@@ -613,7 +617,6 @@ bool CInput::IsKeyPressedDown(int key) {
 bool CInput::IsKeyReleased(int key) {
 	if (key_pressed[key] && !(m_keyboardState[key] & 0x80))
 	{
-		key_pressed[key] = false;
 		return true;
 	}
 
