@@ -37,7 +37,7 @@ class ai_mole : public aicontroller, public TCompBase {
 	}
 
 	CEntity * getEntityPointer(int i) {
-		CHandle han = SBB::readHandles("wptsBoxes")[i];
+		CHandle han = SBB::readHandlesVector("wptsBoxes")[i];
 		CEntity * ent = han;
 		return ent;
 	}

@@ -3,9 +3,10 @@
 
 #include <windows.h>
 #include "handle\object_manager.h"
+#include "handle\handle_manager.h"
+
 #include "components\comp_transform.h"
 #include "components\entity.h"
-
 #include "components\entity_tags.h"
 
 void player_controller::Init() {
@@ -22,6 +23,9 @@ void player_controller::Init() {
 	AddState("jump", (statehandler)&player_controller::Jump);
 	AddState("stun", (statehandler)&player_controller::Stun);
 	AddState("possess", (statehandler)&player_controller::Possess);
+	AddState("grabBox", (statehandler)&player_controller::GrabBox);
+	AddState("leaveBox", (statehandler)&player_controller::LeaveBox);
+	AddState("destroyWall", (statehandler)&player_controller::DestroyWall);
 
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
@@ -55,7 +59,11 @@ void player_controller::MoveLeft()
 	player_position.z -= player_front.x * dt * player_speed;
 
 	SetPlayerPosition(player_position);
-
+	if (boxGrabbed) {
+		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
+		TCompTransform* box_t = box->get<TCompTransform>();
+		box_t->setPosition(player_position);
+	}
 	ChangeState("idle");
 }
 
@@ -68,7 +76,11 @@ void player_controller::MoveRight()
 	player_position.z += player_front.x * dt * player_speed;
 
 	SetPlayerPosition(player_position);
-
+	if (boxGrabbed) {
+		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
+		TCompTransform* box_t = box->get<TCompTransform>();
+		box_t->setPosition(player_position);
+	}
 	ChangeState("idle");
 }
 
@@ -81,7 +93,11 @@ void player_controller::MoveUp()
 	player_position.z += player_front.z * dt * player_speed;
 
 	SetPlayerPosition(player_position);
-
+	if (boxGrabbed) {
+		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
+		TCompTransform* box_t = box->get<TCompTransform>();
+		box_t->setPosition(player_position);
+	}
 	ChangeState("idle");
 }
 
@@ -94,7 +110,11 @@ void player_controller::MoveDown()
 	player_position.z -= player_front.z * dt * player_speed;
 
 	SetPlayerPosition(player_position);
-
+	if (boxGrabbed) {
+		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
+		TCompTransform* box_t = box->get<TCompTransform>();
+		box_t->setPosition(player_position);
+	}
 	ChangeState("idle");
 }
 
@@ -149,7 +169,7 @@ void player_controller::SetMyEntity() {
 
 // Returns the position of the player
 VEC3 player_controller::GetPlayerPosition() {
-	SetMyEntity(); 
+	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	return player_position;
@@ -220,7 +240,6 @@ void player_controller::OrbitCamera(float angle) {
 
 // Decides which state to go next
 string player_controller::ParseInput() {
-
 	dt = getDeltaTime();
 
 	if (!ImGui::GetIO().WantCaptureKeyboard) {
@@ -240,6 +259,17 @@ string player_controller::ParseInput() {
 			return "jump";
 		}
 		if (Input.IsLeftClickPressed()) {
+			if (boxGrabbed) {
+				return "leaveBox";
+			}
+			else {
+				if (this->nearToBox()) {
+					return "grabBox";
+				}
+				else if (this->nearToWall()) {
+					return "destroyWall";
+				}
+			}
 			return "action";
 		}
 		if (Input.IsRightClickPressed()) {
@@ -261,3 +291,72 @@ string player_controller::ParseInput() {
 	return "idle";
 }
 
+void player_controller::GrabBox() {
+	if (SBB::readBool(selectedBox)) {
+		ai_mole * mole = SBB::readMole(selectedBox);
+		mole->ChangeState("idle");
+	}
+	else {
+		SBB::postBool(selectedBox, true);
+	}
+	boxGrabbed = true;
+	player_speed /= 2;
+	ChangeState("idle");
+}
+
+void player_controller::DestroyWall() {
+	vector<CHandle> handles = SBB::readHandlesVector("wptsBreakableWall");
+	handles.erase(handles.begin() + selectedWallToBreaki);
+	getHandleManager<CEntity>()->destroyHandle(getEntityWallHandle(selectedWallToBreaki));
+	SBB::postHandlesVector("wptsBreakableWall", handles);
+	ChangeState("idle");
+}
+
+bool player_controller::nearToWall() {
+	bool found = false;
+	if (SBB::readHandlesVector("wptsBreakableWall").size() > 0) {
+		float distMax = 15.0f;
+		for (int i = 0; !found && i < SBB::readHandlesVector("wptsBreakableWall").size(); i++) {
+			CEntity * entTransform = this->getEntityWallHandle(i);
+			TCompTransform * transformBox = entTransform->get<TCompTransform>();
+			TCompName * nameBox = entTransform->get<TCompName>();
+			VEC3 wpt = transformBox->getPosition();
+			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
+			if (disttowpt < distMax) {
+				distMax = disttowpt;
+				selectedWallToBreaki = i;
+				found = true;
+			}
+		}
+	}
+	return found;
+}
+bool player_controller::nearToBox() {
+	bool found = false;
+	if (SBB::readHandlesVector("wptsBoxes").size() > 0) {
+		float distMax = 15.0f;
+		string key_final = "";
+		for (int i = 0; i < SBB::readHandlesVector("wptsBoxes").size(); i++) {
+			CEntity * entTransform = this->getEntityBoxPointer(i);
+			TCompTransform * transformBox = entTransform->get<TCompTransform>();
+			TCompName * nameBox = entTransform->get<TCompName>();
+			VEC3 wpt = transformBox->getPosition();
+			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
+			string key = nameBox->name;
+			if (disttowpt < distMax) {
+				distMax = disttowpt;
+				selectedBox = key;
+				selectedBoxi = i;
+				found = true;
+			}
+		}
+	}
+	return found;
+}
+
+void player_controller::LeaveBox() {
+	SBB::postBool(selectedBox, false);
+	boxGrabbed = false;
+	player_speed *= 2;
+	ChangeState("idle");
+}

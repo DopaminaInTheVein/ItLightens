@@ -9,7 +9,7 @@
   </entity>
   <entity>
     <tag name="target" />
-    <transform pos="1 0 1" />
+    <transform pos="21 0 0" />
     <name name="peter" />
     <player />
     <render_static_mesh name="static_meshes/tetera2.static_mesh"/>
@@ -18,6 +18,11 @@
     <name name="box1" />
     <tag name="box" />
     <transform pos="5 0 0" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+  <entity>
+    <name name="breakable_wall_e" />
+    <tag name="breakable_wall" />
+    <transform pos="25 0 0" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
   <entity>
     <name name="box_leavepoint1" />
@@ -32,6 +37,7 @@
     <life points="100" />
     <ai_mole />
   </entity>
+  <!--
   <entity>
     <tag name="AI" />
     <tag name="AI_guard" />
@@ -49,7 +55,6 @@
       kpt5_type = "look" kpt5_pos = "  0  0   0" kpt5_wait = "2"
       kpt6_type = "seek" kpt6_pos = "-10  0  10" kpt6_wait = "2"
       kpt7_type = "look" kpt7_pos = "  0  0   0" kpt7_wait = "2" />
-    <!-- <render_mesh name="muroA.render_mesh" /> -->
   </entity>
 
   <entity>
@@ -71,5 +76,5 @@
     <tag name="AI" />
     <tag name="AI_speedy" />
     <transform pos="9 0 9" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>
+  </entity>-->
 </entities>

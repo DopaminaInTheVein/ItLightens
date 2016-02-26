@@ -2,11 +2,14 @@
 #include <windows.h>
 #include "sbb.h"
 #include "handle\handle.h"
+#include "logic/ai_mole.h"
 
 map<string, int> SBB::sbbInt;
 map<string, bool> SBB::sbbBool;
 map<string, VEC3> SBB::sbbVEC3;
-map<string, vector<CHandle>> SBB::sbbHandles;
+map<string, ai_mole*> SBB::sbbMole;
+map<string, CHandle> SBB::sbbHandle;
+map<string, vector<CHandle>> SBB::sbbHandlesVector;
 
 void SBB::init() {
 }
@@ -18,7 +21,7 @@ void SBB::postInt(string name, int value) {
 int SBB::readInt(string name) {
 	if (sbbInt.find(name) == sbbInt.end())
 	{
-		fatal("SBB: Se intenta leer String que no existe!");
+		fatal("sbbInt: Se intenta leer String que no existe!");
 	}
 	return sbbInt[name];
 }
@@ -26,7 +29,7 @@ int SBB::readInt(string name) {
 void SBB::inc(string name) {
 	if (sbbInt.find(name) == sbbInt.end())
 	{
-		fatal("SBB: Se intenta incrementar String que no existe!");
+		fatal("sbbInt: Se intenta incrementar String que no existe!");
 	}
 	sbbInt[name]++;
 }
@@ -34,7 +37,7 @@ void SBB::inc(string name) {
 void SBB::dec(string name) {
 	if (sbbInt.find(name) == sbbInt.end())
 	{
-		fatal("SBB: Se intenta decrementar String que no existe!");
+		fatal("sbbInt: Se intenta decrementar String que no existe!");
 	}
 	sbbInt[name]--;
 }
@@ -48,7 +51,7 @@ void SBB::postBool(string name, bool value) {
 bool SBB::readBool(string name) {
 	if (sbbBool.find(name) == sbbBool.end())
 	{
-		fatal("SBB: Se intenta leer String que no existe!");
+		fatal("sbbBool: Se intenta leer String que no existe!");
 	}
 	return sbbBool[name];
 }
@@ -62,21 +65,48 @@ void SBB::postVEC3(string name, VEC3 value) {
 VEC3 SBB::readVEC3(string name) {
 	if (sbbVEC3.find(name) == sbbVEC3.end())
 	{
-		fatal("SBB: Se intenta leer String que no existe!");
+		fatal("sbbVEC3: Se intenta leer String que no existe!");
 	}
 	return sbbVEC3[name];
 }
 
-// sbbHandles
-
-void SBB::postHandles(string name, vector<CHandle> value) {
-	sbbHandles[name] = value;
+// sbbMoles
+void SBB::postMole(string name, ai_mole* value) {
+	sbbMole[name] = value;
 }
 
-vector<CHandle> SBB::readHandles(string name) {
-	if (sbbHandles.find(name) == sbbHandles.end())
+ai_mole* SBB::readMole(string name) {
+	if (sbbMole.find(name) == sbbMole.end())
 	{
-		fatal("SBB: Se intenta leer String que no existe!");
+		fatal("sbbMole: Se intenta leer String que no existe!");
 	}
-	return sbbHandles[name];
+	return sbbMole[name];
+}
+
+// sbbHandles
+
+void SBB::postHandle(string name, CHandle value) {
+	sbbHandle[name] = value;
+}
+
+CHandle SBB::readHandle(string name) {
+	if (sbbHandle.find(name) == sbbHandle.end())
+	{
+		fatal("sbbHandle: Se intenta leer String que no existe!");
+	}
+	return sbbHandle[name];
+}
+
+// sbbHandlesVector
+
+void SBB::postHandlesVector(string name, vector<CHandle> value) {
+	sbbHandlesVector[name] = value;
+}
+
+vector<CHandle> SBB::readHandlesVector(string name) {
+	if (sbbHandlesVector.find(name) == sbbHandlesVector.end())
+	{
+		fatal("sbbHandlesVector: Se intenta leer String que no existe!");
+	}
+	return sbbHandlesVector[name];
 }

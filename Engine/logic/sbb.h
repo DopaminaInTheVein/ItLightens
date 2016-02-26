@@ -4,6 +4,7 @@
 using namespace std;
 
 class CHandle;
+class ai_mole;
 
 class SBB
 {
@@ -11,7 +12,9 @@ private:
 	static map<string, bool > sbbBool;
 	static map<string, int > sbbInt;
 	static map<string, VEC3> sbbVEC3;
-	static map<string, vector<CHandle> > sbbHandles;
+	static map<string, CHandle> sbbHandle;
+	static map<string, ai_mole*> sbbMole;
+	static map<string, vector<CHandle> > sbbHandlesVector;
 
 public:
 	SBB() = delete;
@@ -28,8 +31,14 @@ public:
 	static void postVEC3(string, VEC3);
 	static VEC3 readVEC3(string);
 	// sbbHandle
-	static void postHandles(string, vector<CHandle>);
-	static vector<CHandle> readHandles(string);
+	static void postHandle(string, CHandle);
+	static CHandle readHandle(string);
+	// sbbAiMole
+	static void postMole(string, ai_mole*);
+	static ai_mole* readMole(string);
+	// sbbHandleVector
+	static void postHandlesVector(string, vector<CHandle>);
+	static vector<CHandle> readHandlesVector(string);
 };
 
 #endif

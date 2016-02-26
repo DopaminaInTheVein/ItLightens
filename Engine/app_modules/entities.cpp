@@ -79,6 +79,7 @@ bool CEntitiesModule::start() {
 	TTagID tagIDplayer = getID("player");
 	TTagID tagIDbox = getID("box");
 	TTagID tagIDboxleave = getID("box_leavepoint");
+	TTagID tagIDwall = getID("breakable_wall");
 
 	// Camara del player
 	player = tags_manager.getFirstHavingTag(tagIDplayer);
@@ -86,7 +87,7 @@ bool CEntitiesModule::start() {
 	TCompCamera * pcam = player_e->get<TCompCamera>();
 	camera = pcam;
 	// Player real
-	CHandle t = tags_manager.getFirstHavingTag(getID("target")); 
+	CHandle t = tags_manager.getFirstHavingTag(getID("target"));
 	CEntity * target_e = t;
 
 	// Set the player in the 3rdPersonController
@@ -100,8 +101,9 @@ bool CEntitiesModule::start() {
 		target_e->sendMsg(msg_camera);
 	}
 
-	SBB::postHandles("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
-	SBB::postHandles("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
+	SBB::postHandlesVector("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
+	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
+	SBB::postHandlesVector("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
 
 	getHandleManager<player_controller>()->onAll(&player_controller::Init);
 
@@ -120,7 +122,6 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-
 	getHandleManager<player_controller>()->updateAll(dt);
 
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
