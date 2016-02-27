@@ -1,6 +1,6 @@
 #include "mcv_platform.h"
 #include "debug.h"
-#include "render\mesh.h"
+#include "render/mesh.h"
 #include "resources/resource.h"
 
 struct SimpleVertexColored {

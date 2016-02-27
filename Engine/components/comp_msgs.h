@@ -47,4 +47,14 @@ struct TMsgNoise {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgPossControllerSetEnable {
+	bool enabled;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgAISetPossessed {
+	bool possessed;
+	DECLARE_MSG_ID();
+};
+
 #endif

@@ -334,6 +334,20 @@ void CInput::GetMouseLocation(int& mouseX, int& mouseY)
 	mouseY = m_mouseY;
 	return;
 }
+// Difference in X between the current frame and the last
+int CInput::GetMouseDiffX() {
+	int mouse_x, mouse_y;
+	GetMouseLocation(mouse_x, mouse_y);
+
+	return mouse_x - last_mouseX.back();
+}
+// Difference in X between the current frame and the last
+int CInput::GetMouseDiffY() {
+	int mouse_x, mouse_y;
+	GetMouseLocation(mouse_x, mouse_y);
+
+	return mouse_y - last_mouseY.back();
+}
 
 // Updates mouse location
 void CInput::UpdateMousePosition() {
@@ -362,7 +376,6 @@ bool CInput::IsMouseMovedUp() {
 	bool moved_up = mouseY < mean_mouseY;
 
 	return moved_up;
-
 }
 
 // Detects whether the mouse was moved down
@@ -397,7 +410,6 @@ bool CInput::IsMouseMovedLeft() {
 	bool moved_left = mouseX < mean_mouseX;
 
 	return moved_left;
-
 }
 
 // Detects whether the mouse was moved to the right
@@ -655,6 +667,36 @@ bool CInput::IsSpacePressedDown() {
 	return false;
 }
 
+// Detects if the + polarity key is being pressed
+bool CInput::IsPlusPolarityPressedDown() {
+	int buttonPressed = 50;
+	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
+
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if ((key_pressed[DIK_1] && (m_keyboardState[DIK_1] & 0x80)) ||
+		(joystick_pressed[joystick_LB] && joystickButtonPressed && buttonPressed == joystick_LB))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+// Detects if the - polarity key is being pressed
+bool CInput::IsMinusPolarityPressedDown() {
+	int buttonPressed = 50;
+	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
+
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if ((key_pressed[DIK_2] && (m_keyboardState[DIK_2] & 0x80)) ||
+		(joystick_pressed[joystick_RB] && joystickButtonPressed && buttonPressed == joystick_RB))
+	{
+		return true;
+	}
+
+	return false;
+}
+
 // Detects if the space key was released
 bool CInput::IsSpaceReleased() {
 	int buttonPressed = 50;
@@ -714,4 +756,29 @@ bool CInput::getJoystickButtonPressed(int &pressed) {
 	}
 
 	return true;
+}
+
+int CInput::GetLeftStickX() {
+	if (m_joystick == nullptr)
+		return -1;
+
+	return m_joystickState.lX;
+}
+int CInput::GetLeftStickY() {
+	if (m_joystick == nullptr)
+		return -1;
+
+	return m_joystickState.lY;
+}
+int CInput::GetRightStickX() {
+	if (m_joystick == nullptr)
+		return -1;
+
+	return m_joystickState.lRx;
+}
+int CInput::GetRightStickY() {
+	if (m_joystick == nullptr)
+		return -1;
+
+	return m_joystickState.lRy;
 }

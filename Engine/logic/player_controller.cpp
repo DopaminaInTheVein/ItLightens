@@ -2,24 +2,29 @@
 #include "player_controller.h"
 
 #include <windows.h>
-#include "handle\object_manager.h"
-#include "components\comp_transform.h"
-#include "components\entity.h"
-#include "components\entity_tags.h"
+#include "handle/object_manager.h"
+#include "components/comp_transform.h"
+#include "components/entity.h"
+#include "components/entity_tags.h"
 
-#include "components\comp_msgs.h"
+#include "components/comp_msgs.h"
 
 void player_controller::Init() {
 	om = getHandleManager<player_controller>();	//player
 
 	DeleteState("jumping");
 	DeleteState("falling");
+	DeleteState("idle");
+
+	AddState("idle", (statehandler)&player_controller::Idle);		// Idle Redo
 
 	AddState("doublefalling", (statehandler)&player_controller::DoubleFalling);		//needed to disable double jump on falling
 	AddState("doublejump", (statehandler)&player_controller::DoubleJump);
 
 	AddState("falling", (statehandler)&player_controller::Falling);
 	AddState("jumping", (statehandler)&player_controller::Jumping);
+	AddState("toplus", (statehandler)&player_controller::AttractToPlus);
+	AddState("tominus", (statehandler)&player_controller::AttractToMinus);
 
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
@@ -29,6 +34,32 @@ void player_controller::Init() {
 	player_y = starting_player_y;
 
 	ChangeState("idle");
+}
+
+void player_controller::Idle() {
+	if (Input.IsMinusPolarityPressedDown() && nearMinus()) {
+		ChangeState("tominus");
+	}
+	else if (Input.IsPlusPolarityPressedDown() && nearPlus()) {
+		ChangeState("toplus");
+	}
+	else if (polarizedCurrentSpeed > 1.0f) {
+		polarizedMove = false;
+		CEntity * entPoint = nullptr;
+		if (tominus) {
+			entPoint = this->getMinusPointHandle(topolarizedminus);
+		}
+		else if (toplus) {
+			entPoint = this->getPlusPointHandle(topolarizedplus);
+		}
+		AttractMove(entPoint);
+	}
+	else {
+		topolarizedplus = -1;
+		topolarizedminus = -1;
+		polarizedCurrentSpeed = 0.0f;
+		CPlayerBase::Idle();
+	}
 }
 
 void player_controller::DoubleJump()
@@ -102,4 +133,99 @@ void player_controller::Falling()
 		directionJump = VEC3(0, 0, 0);
 		ChangeState("idle");
 	}
+}
+
+void player_controller::AttractToMinus() {
+	CEntity * entPoint = this->getMinusPointHandle(topolarizedminus);
+	tominus = true;
+	toplus = false;
+	AttractMove(entPoint);
+	ChangeState("idle");
+}
+void player_controller::AttractToPlus() {
+	CEntity * entPoint = this->getPlusPointHandle(topolarizedplus);
+	tominus = false;
+	toplus = true;
+	AttractMove(entPoint);
+	ChangeState("idle");
+}
+
+bool player_controller::nearMinus() {
+	if (topolarizedminus != -1) {
+		return true;
+	}
+	else {
+		bool found = false;
+		if (SBB::readHandlesVector("wptsMinusPoint").size() > 0) {
+			float distMax = 500.0f;
+			for (int i = 0; !found && i < SBB::readHandlesVector("wptsMinusPoint").size(); i++) {
+				CEntity * entTransform = this->getMinusPointHandle(i);
+				TCompTransform * transformBox = entTransform->get<TCompTransform>();
+				VEC3 wpt = transformBox->getPosition();
+				float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
+				if (disttowpt < distMax) {
+					distMax = disttowpt;
+					topolarizedminus = i;
+					found = true;
+					polarizedMove = true;
+				}
+			}
+		}
+		return found;
+	}
+}
+bool player_controller::nearPlus() {
+	if (topolarizedplus != -1) {
+		return true;
+	}
+	else {
+		bool found = false;
+		if (SBB::readHandlesVector("wptsPlusPoint").size() > 0) {
+			float distMax = 500.0f;
+			for (int i = 0; !found && i < SBB::readHandlesVector("wptsPlusPoint").size(); i++) {
+				CEntity * entTransform = this->getPlusPointHandle(i);
+				TCompTransform * transformBox = entTransform->get<TCompTransform>();
+				VEC3 wpt = transformBox->getPosition();
+				float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
+				if (disttowpt < distMax) {
+					distMax = disttowpt;
+					topolarizedplus = i;
+					found = true;
+					polarizedMove = true;
+				}
+			}
+		}
+		return found;
+	}
+}
+
+void player_controller::AttractMove(CEntity * entPoint) {
+	if (entPoint == nullptr) {
+		return;
+	}
+	TCompTransform * entPointTransform = entPoint->get<TCompTransform>();
+	SetMyEntity();
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	VEC3 player_position = player_transform->getPosition();
+	VEC3 direction = entPointTransform->getPosition() - player_position;
+	float drag = 0.001f;
+	float drag_i = (1 - drag);
+
+	if (polarizedMove) polarizedCurrentSpeed = drag_i*polarizedCurrentSpeed + drag*player_max_speed;
+	else polarizedCurrentSpeed = drag_i*polarizedCurrentSpeed - drag*player_max_speed;
+
+	float multiplier = getDeltaTime()*polarizedCurrentSpeed * 1.5f;
+
+	float tox = min(fabsf(direction.x*multiplier), fabsf(player_position.x - entPointTransform->getPosition().x));
+	float toz = min(fabsf(direction.z*multiplier), fabsf(player_position.z - entPointTransform->getPosition().z));
+
+	if (direction.x < 0) {
+		tox *= -1;
+	}if (direction.z < 0) {
+		toz *= -1;
+	}
+
+	player_position.x += tox;
+	player_position.z += toz;
+	player_transform->setPosition(player_position);
 }

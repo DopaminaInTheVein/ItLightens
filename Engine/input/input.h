@@ -210,10 +210,10 @@ public:
 	void Shutdown();
 	bool Frame();
 	int getScreenWidth() {
-		return m_screenWidth;		
+		return m_screenWidth;
 	}
 	int getScreenHeight() {
-		return m_screenHeight;		
+		return m_screenHeight;
 	}
 
 	void GetMouseLocation(int&, int&);
@@ -245,11 +245,22 @@ public:
 	bool IsOrientLeftPressed();
 	bool IsOrientRightPressed();
 
+	// Polarity (1-2 / LB - RB)
+	bool IsPlusPolarityPressedDown();
+	bool IsMinusPolarityPressedDown();
+
 	bool IsEscapePressed();
 
+	// General functions
+	int GetMouseDiffX();
+	int GetMouseDiffY();
 	bool IsKeyPressedDown(int key);
 	bool IsKeyPressed(int key);
 	bool IsKeyReleased(int key);
+	int GetLeftStickX();
+	int GetLeftStickY();
+	int GetRightStickX();
+	int GetRightStickY();
 
 	void Unacquire();
 
