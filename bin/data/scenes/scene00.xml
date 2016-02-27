@@ -22,13 +22,13 @@
   <entity>
     <name name="attractionPointPlus" />
     <tag name="plus_wall" />
-    <transform pos="5 0 20" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="5 0 50" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 
   <entity>
     <name name="attractionPointMinus" />
     <tag name="minus_wall" />
-    <transform pos="5 0 -20" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="5 0 -50" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 
   
