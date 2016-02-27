@@ -48,9 +48,6 @@ TMsgID generateUniqueMsgID() {
 }
 
 bool CEntitiesModule::start() {
-	CApp& app = CApp::get();
-	input.Initialize(app.getHInstance(), app.getHWnd(), 800, 600);
-
 	getHandleManager<player_controller>()->init(4);
 	getHandleManager<player_controller_speedy>()->init(4);
 	getHandleManager<player_controller_mole>()->init(4);

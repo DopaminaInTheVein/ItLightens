@@ -30,8 +30,10 @@ bool CInput::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int scr
 	m_mouseX = 0;
 	m_mouseY = 0;
 
-	last_mouseX = 0;
-	last_mouseY = 0;
+	last_mouseX.resize(10);
+	std::fill(last_mouseX.begin(), last_mouseX.end(), 0);
+	last_mouseY.resize(10);
+	std::fill(last_mouseY.begin(), last_mouseY.end(), 0);
 
 	// Initialize the main direct input interface.
 	result = DirectInput8Create(hinstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_directInput, NULL);
@@ -337,8 +339,47 @@ void CInput::GetMouseLocation(int& mouseX, int& mouseY)
 void CInput::UpdateMousePosition() {
 	int mouseX, mouseY;
 	GetMouseLocation(mouseX, mouseY);
-	last_mouseX = mouseX;
-	last_mouseY = mouseY;
+
+	last_mouseX.pop_front();
+	last_mouseX.push_back(mouseX);
+
+	last_mouseY.pop_front();
+	last_mouseY.push_back(mouseY);
+}
+
+// Detects whether the mouse was moved up
+bool CInput::IsMouseMovedUp() {
+	int mouseX, mouseY;
+
+	GetMouseLocation(mouseX, mouseY);
+
+	float mean_mouseY = 0;
+	for (int i = 0; i < last_mouseY.size(); i++) {
+		mean_mouseY += last_mouseY[i];
+	}
+	mean_mouseY /= last_mouseY.size();
+
+	bool moved_up = mouseY < mean_mouseY;
+
+	return moved_up;
+
+}
+
+// Detects whether the mouse was moved down
+bool CInput::IsMouseMovedDown() {
+	int mouseX, mouseY;
+
+	GetMouseLocation(mouseX, mouseY);
+
+	float mean_mouseY = 0;
+	for (int i = 0; i < last_mouseY.size(); i++) {
+		mean_mouseY += last_mouseY[i];
+	}
+	mean_mouseY /= last_mouseY.size();
+
+	bool moved_down = mouseY > mean_mouseY;
+
+	return moved_down;
 }
 
 // Detects whether the mouse was moved to the left
@@ -347,7 +388,13 @@ bool CInput::IsMouseMovedLeft() {
 
 	GetMouseLocation(mouseX, mouseY);
 
-	bool moved_left = mouseX < last_mouseX;
+	float mean_mouseX = 0;
+	for (int i = 0; i < last_mouseX.size(); i++) {
+		mean_mouseX += last_mouseX[i];
+	}
+	mean_mouseX /= last_mouseX.size();
+
+	bool moved_left = mouseX < mean_mouseX;
 
 	return moved_left;
 
@@ -359,7 +406,13 @@ bool CInput::IsMouseMovedRight() {
 
 	GetMouseLocation(mouseX, mouseY);
 
-	bool moved_right = mouseX > last_mouseX;
+	float mean_mouseX = 0;
+	for (int i = 0; i < last_mouseX.size(); i++) {
+		mean_mouseX += last_mouseX[i];
+	}
+	mean_mouseX /= last_mouseX.size();
+
+	bool moved_right = mouseX > mean_mouseX;
 
 	return moved_right;
 }
@@ -390,7 +443,7 @@ bool CInput::IsLeftClickPressedDown() {
 	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
 
 	if ((!mouse_pressed[mouse_LEFT] && mouseButtonPressed == mouse_LEFT) ||
-		(!joystick_pressed[joystick_X] && joystickButtonPressed && buttonPressed != joystick_X))
+		(!joystick_pressed[joystick_X] && joystickButtonPressed && buttonPressed == joystick_X))
 	{
 		return true;
 	}
@@ -441,7 +494,7 @@ bool CInput::IsRightClickPressedDown() {
 	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
 
 	if ((!mouse_pressed[mouse_RIGHT] && mouseButtonPressed == mouse_RIGHT) ||
-		(!joystick_pressed[joystick_B] && joystickButtonPressed && buttonPressed != joystick_B))
+		(!joystick_pressed[joystick_B] && joystickButtonPressed && buttonPressed == joystick_B))
 	{
 		return true;
 	}
@@ -507,10 +560,31 @@ bool CInput::IsRightPressed() {
 
 	return false;
 }
+// Detects if the up orientation is pressed (key R)
+bool CInput::IsOrientUpPressed() {
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if ((m_keyboardState[DIK_R] & 0x80) || (m_joystick != nullptr && m_joystickState.lRy < joystick_sensibility - joystick_axis_min))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+// Detects if the down orientation is pressed (key T)
+bool CInput::IsOrientDownPressed() {
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if ((m_keyboardState[DIK_T] & 0x80) || (m_joystick != nullptr && m_joystickState.lRy > (joystick_axis_max - joystick_sensibility)))
+	{
+		return true;
+	}
+
+	return false;
+}
 // Detects if the Left orientation is pressed (key Q)
 bool CInput::IsOrientLeftPressed() {
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
-	if ((m_keyboardState[DIK_Q] & 0x80) || (m_mouseState.lZ < 0) || (m_joystick != nullptr && m_joystickState.lRx < joystick_sensibility - joystick_axis_min))
+	if ((m_keyboardState[DIK_Q] & 0x80) || (m_joystick != nullptr && m_joystickState.lRx < joystick_sensibility - joystick_axis_min))
 	{
 		return true;
 	}
@@ -521,7 +595,7 @@ bool CInput::IsOrientLeftPressed() {
 // Detects if the right orientation is pressed (key E)
 bool CInput::IsOrientRightPressed() {
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
-	if ((m_keyboardState[DIK_E] & 0x80) || (m_mouseState.lZ > 0) || (m_joystick != nullptr && m_joystickState.lRx > (joystick_axis_max - joystick_sensibility)))
+	if ((m_keyboardState[DIK_E] & 0x80) || (m_joystick != nullptr && m_joystickState.lRx > (joystick_axis_max - joystick_sensibility)))
 	{
 		return true;
 	}

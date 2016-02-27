@@ -20,6 +20,7 @@
 #include <cstdint>
 #include <algorithm>
 #include <vector>
+#include <deque>
 #include <map>
 #include <string>
 

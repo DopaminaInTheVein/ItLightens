@@ -149,3 +149,4 @@ void player_controller_speedy::resetBlinkTimer()
 	blink_timer = blink_cooldown;
 	blink_ready = false;	
 }
+
