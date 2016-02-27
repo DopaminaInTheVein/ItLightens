@@ -133,11 +133,13 @@
     <ClCompile Include="logic\ai_beacon.cpp" />
     <ClCompile Include="logic\ai_guard.cpp" />
     <ClCompile Include="logic\ai_mole.cpp" />
+    <ClCompile Include="logic\ai_poss.cpp" />
     <ClCompile Include="logic\ai_scientific.cpp" />
     <ClCompile Include="logic\ai_speedy.cpp" />
     <ClCompile Include="logic\player_controller.cpp" />
     <ClCompile Include="logic\player_controller_base.cpp" />
     <ClCompile Include="logic\player_controller_mole.cpp" />
+    <ClCompile Include="logic\poss_controller.cpp" />
     <ClCompile Include="logic\player_controller_speedy.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
@@ -199,11 +201,13 @@
     <ClInclude Include="logic\ai_beacon.h" />
     <ClInclude Include="logic\ai_guard.h" />
     <ClInclude Include="logic\ai_mole.h" />
+    <ClInclude Include="logic\ai_poss.h" />
     <ClInclude Include="logic\ai_scientific.h" />
     <ClInclude Include="logic\ai_speedy.h" />
     <ClInclude Include="logic\player_controller.h" />
     <ClInclude Include="logic\player_controller_base.h" />
     <ClInclude Include="logic\player_controller_mole.h" />
+    <ClInclude Include="logic\poss_controller.h" />
     <ClInclude Include="logic\player_controller_speedy.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
@@ -222,6 +226,8 @@
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="resources\resources_manager.h" />
     <ClInclude Include="utils\data_provider.h" />
+    <ClInclude Include="utils\macros\macros.h" />
+    <ClInclude Include="utils\macros\timers.h" />
     <ClInclude Include="utils\murmur3.h" />
     <ClInclude Include="utils\utils.h" />
     <ClInclude Include="utils\XMLParser.h" />

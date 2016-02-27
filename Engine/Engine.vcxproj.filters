@@ -148,6 +148,12 @@
     <ClCompile Include="logic\player_controller_mole.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="logic\ai_poss.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\poss_controller.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
     <ClCompile Include="logic\player_controller_speedy.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -331,6 +337,18 @@
     <ClInclude Include="logic\player_controller_speedy.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="logic\ai_poss.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\poss_controller.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\macros\macros.h">
+      <Filter>utils\macros</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\macros\timers.h">
+      <Filter>utils\macros</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -380,6 +398,9 @@
     </Filter>
     <Filter Include="debug">
       <UniqueIdentifier>{f4e9f4d5-b47f-481a-9c6f-9354de3f32da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\macros">
+      <UniqueIdentifier>{133787e7-f6f1-4496-90da-f6746ea1ce49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
