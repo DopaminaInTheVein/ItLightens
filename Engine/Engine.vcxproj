@@ -136,7 +136,8 @@
     <ClCompile Include="logic\ai_scientific.cpp" />
     <ClCompile Include="logic\ai_speedy.cpp" />
     <ClCompile Include="logic\player_controller.cpp" />
-    <ClCompile Include="logic\player_mole_controller.cpp" />
+    <ClCompile Include="logic\player_controller_base.cpp" />
+    <ClCompile Include="logic\player_controller_mole.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
@@ -200,7 +201,8 @@
     <ClInclude Include="logic\ai_scientific.h" />
     <ClInclude Include="logic\ai_speedy.h" />
     <ClInclude Include="logic\player_controller.h" />
-    <ClInclude Include="logic\player_mole_controller.h" />
+    <ClInclude Include="logic\player_controller_base.h" />
+    <ClInclude Include="logic\player_controller_mole.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />

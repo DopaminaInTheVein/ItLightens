@@ -32,3 +32,7 @@ void aicontroller::AddState(std::string name, statehandler sh)
 	}
 	statemap[name] = sh;
 }
+
+void aicontroller::DeleteState(string name) {
+	statemap.erase(name);
+}

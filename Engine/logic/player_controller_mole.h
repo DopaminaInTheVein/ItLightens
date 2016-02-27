@@ -1,5 +1,5 @@
-#ifndef INC_PLAYER_MOLE_CONTROLLER_H_
-#define INC_PLAYER_MOLE_CONTROLLER_H_
+#ifndef INC_PLAYER_CONTROLLER_MOLE_H_
+#define INC_PLAYER_CONTROLLER_MOLE_H_
 
 #include "aicontroller.h"
 #include "player_controller.h"
@@ -23,33 +23,41 @@ extern CInput Input;
 template< class TObj >
 class CObjectManager;
 
-class player_mole_controller : public player_controller {
+class player_controller_mole : public CPlayerBase {
+	CObjectManager<player_controller_mole> *om;
+	float player_max_speed = CPlayerBase::player_max_speed;
+public:
+	void Init();
+
+	void GrabBox();
+	void LeaveBox();
+	void DestroyWall();
+	void Idle();
+	void Moving();
+
+	bool nearToBox();
+	bool nearToWall();
 	bool boxGrabbed = false;
-	int selectedBox = -1;
+	string selectedBox = "";
+	int selectedBoxi = 0;
+	int selectedWallToBreaki = 0;
 
 	TCompTransform * getEntityTransform() {
 		CEntity * ent = myParent;
 		return ent->get<TCompTransform>();
 	}
 
-	CEntity * getEntityPointer(int i) {
+	CEntity * getEntityBoxPointer(int i) {
 		CHandle han = SBB::readHandlesVector("wptsBoxes")[i];
 		CEntity * ent = han;
 		return ent;
 	}
-public:
-
-	player_mole_controller() {}
-	void Init() override;
-	void init() { Init(); }
-
-	void GrabBox();
-	void LeaveBox();
-
-	string ParseInput();
+	CHandle getEntityWallHandle(int i) {
+		return SBB::readHandlesVector("wptsBreakableWall")[i];
+	}
 
 	//Overload function for handler_manager
-	player_mole_controller& player_mole_controller::operator=(player_mole_controller arg) { return arg; }
+	player_controller_mole& player_controller_mole::operator=(player_controller_mole arg) { return arg; }
 };
 
 #endif

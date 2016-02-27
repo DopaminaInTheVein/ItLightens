@@ -11,6 +11,7 @@
 #include "logic/ai_mole.h"
 #include "logic/sbb.h"
 #include "logic/player_controller.h"
+#include "logic/player_controller_mole.h"
 #include "input/input.h"
 #include "windows/app.h"
 #include "utils/utils.h"
@@ -28,6 +29,7 @@ DECL_OBJ_MANAGER("ai_guard", ai_guard);
 DECL_OBJ_MANAGER("ai_mole", ai_mole);
 DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
 DECL_OBJ_MANAGER("player", player_controller);
+DECL_OBJ_MANAGER("player_mole", player_controller_mole);
 //DECL_OBJ_MANAGER("nombre_IA_xml", NameClass):
 DECL_OBJ_MANAGER("life", TCompLife);
 
@@ -48,6 +50,7 @@ bool CEntitiesModule::start() {
 	input.Initialize(app.getHInstance(), app.getHWnd(), 800, 600);
 
 	getHandleManager<player_controller>()->init(4);
+	getHandleManager<player_controller_mole>()->init(4);
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
@@ -68,6 +71,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
+	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
+	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
 	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
@@ -101,16 +106,28 @@ bool CEntitiesModule::start() {
 		target_e->sendMsg(msg_camera);
 	}
 
+	// Set the player in the Speedy AIs
+	TTagID tagIDSpeedy = getID("AI_speedy");
+	VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
+
+	for (CHandle speedyHandle : speedyHandles) {
+		CEntity * speedy_e = speedyHandle;
+		TMsgSetPlayer msg_player;
+		msg_player.player = t;
+		speedy_e->sendMsg(msg_player);
+	}
+
 	SBB::postHandlesVector("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
 	SBB::postHandlesVector("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
 
 	getHandleManager<player_controller>()->onAll(&player_controller::Init);
+	getHandleManager<player_controller_mole>()->onAll(&player_controller_mole::Init);
 
 	getHandleManager<ai_guard>()->onAll(&ai_guard::Init);
 	getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
-	//getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
+	getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 
 	return true;
@@ -122,7 +139,9 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
+	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
+	// getHandleManager<player_controller_mole>()->updateAll(dt);
 
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
@@ -131,7 +150,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<ai_guard>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
-	//getHandleManager<ai_speedy>()->updateAll(dt);
+	getHandleManager<ai_speedy>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

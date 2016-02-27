@@ -24,6 +24,11 @@ struct TMsgSetTarget {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgSetPlayer {
+	CHandle player;
+	DECLARE_MSG_ID();
+};
+
 struct TMsgBeaconToRemove {
 	VEC3 pos_beacon;
 	std::string name_beacon;

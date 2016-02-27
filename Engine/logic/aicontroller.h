@@ -19,6 +19,7 @@ typedef void (aicontroller::*statehandler)();
 
 class aicontroller
 {
+protected:
 	string state;
 	// the states, as maps to functions
 	map<string, statehandler>statemap;
@@ -28,6 +29,7 @@ public:
 	virtual void Init();	// resets the controller
 	void Recalc();	// recompute behaviour
 	void AddState(string, statehandler);
+	void DeleteState(string);
 };
 
 #endif
