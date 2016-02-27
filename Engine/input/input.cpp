@@ -743,3 +743,28 @@ bool CInput::getJoystickButtonPressed(int &pressed) {
 
 	return true;
 }
+
+int CInput::GetLeftStickX() {
+	if (m_joystick == nullptr)
+		return -1;
+
+	return m_joystickState.lX;
+}
+int CInput::GetLeftStickY() {
+	if (m_joystick == nullptr)
+		return -1;
+
+	return m_joystickState.lY;
+}
+int CInput::GetRightStickX() {
+	if (m_joystick == nullptr)
+		return -1;
+
+	return m_joystickState.lRx;
+}
+int CInput::GetRightStickY() {
+	if (m_joystick == nullptr)
+		return -1;
+
+	return m_joystickState.lRy;
+}

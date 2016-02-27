@@ -251,9 +251,14 @@ public:
 
 	bool IsEscapePressed();
 
+	// General functions
 	bool IsKeyPressedDown(int key);
 	bool IsKeyPressed(int key);
 	bool IsKeyReleased(int key);
+	int GetLeftStickX();
+	int GetLeftStickY();
+	int GetRightStickX();
+	int GetRightStickY();
 
 	void Unacquire();
 
