@@ -11,6 +11,7 @@
 #include "logic/ai_mole.h"
 #include "logic/sbb.h"
 #include "logic/player_controller.h"
+#include "logic/player_controller_speedy.h"
 #include "input/input.h"
 #include "windows/app.h"
 #include "utils/utils.h"
@@ -28,6 +29,7 @@ DECL_OBJ_MANAGER("ai_guard", ai_guard);
 DECL_OBJ_MANAGER("ai_mole", ai_mole);
 DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
 DECL_OBJ_MANAGER("player", player_controller);
+DECL_OBJ_MANAGER("player_speedy", player_controller_speedy);
 //DECL_OBJ_MANAGER("nombre_IA_xml", NameClass):
 DECL_OBJ_MANAGER("life", TCompLife);
 
@@ -44,10 +46,8 @@ TMsgID generateUniqueMsgID() {
 }
 
 bool CEntitiesModule::start() {
-	CApp& app = CApp::get();
-	input.Initialize(app.getHInstance(), app.getHWnd(), 800, 600);
-
 	getHandleManager<player_controller>()->init(4);
+	getHandleManager<player_controller_speedy>()->init(4);
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
@@ -68,6 +68,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
+	SUBSCRIBE(player_controller_speedy, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
 	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
@@ -118,6 +119,7 @@ bool CEntitiesModule::start() {
 	SBB::postHandles("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
 
 	getHandleManager<player_controller>()->onAll(&player_controller::Init);
+	getHandleManager<player_controller_speedy>()->onAll(&player_controller_speedy::Init);
 
 	getHandleManager<ai_guard>()->onAll(&ai_guard::Init);
 	getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
@@ -136,6 +138,7 @@ void CEntitiesModule::stop() {
 void CEntitiesModule::update(float dt) {
 
 	getHandleManager<player_controller>()->updateAll(dt);
+	getHandleManager<player_controller_speedy>()->updateAll(dt);
 
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);

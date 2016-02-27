@@ -443,7 +443,7 @@ bool CInput::IsLeftClickPressedDown() {
 	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
 
 	if ((!mouse_pressed[mouse_LEFT] && mouseButtonPressed == mouse_LEFT) ||
-		(!joystick_pressed[joystick_X] && joystickButtonPressed && buttonPressed != joystick_X))
+		(!joystick_pressed[joystick_X] && joystickButtonPressed && buttonPressed == joystick_X))
 	{
 		return true;
 	}
@@ -494,7 +494,7 @@ bool CInput::IsRightClickPressedDown() {
 	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
 
 	if ((!mouse_pressed[mouse_RIGHT] && mouseButtonPressed == mouse_RIGHT) ||
-		(!joystick_pressed[joystick_B] && joystickButtonPressed && buttonPressed != joystick_B))
+		(!joystick_pressed[joystick_B] && joystickButtonPressed && buttonPressed == joystick_B))
 	{
 		return true;
 	}
