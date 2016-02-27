@@ -15,6 +15,13 @@
 	<player_mole />
     <render_static_mesh name="static_meshes/tetera2.static_mesh"/>
   </entity>
+  <!--<entity>
+    <tag name="target" />
+    <transform pos="1 0 1" />
+    <name name="peter" />
+    <player_speedy />
+    <render_static_mesh name="static_meshes/tetera2.static_mesh"/>
+  </entity>-->
   <entity>
     <name name="box1" />
     <tag name="box" />

@@ -40,7 +40,7 @@ CShaderCte< TCteObject > shader_ctes_object;
 bool CApp::start() {
 	// input initialization
 	CApp& app = CApp::get();
-	Input.Initialize(app.getHInstance(), app.getHWnd(), 800, 600);
+	Input.Initialize(app.getHInstance(), app.getHWnd(), 1960, 1080);
 
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
