@@ -5,15 +5,15 @@
 #include "player_controller.h"
 #include "sbb.h"
 
-#include "components\comp_base.h"
-#include "components\comp_transform.h"
-#include "components\entity.h"
-#include "handle\handle.h"
-#include "components\comp_msgs.h"
+#include "components/comp_base.h"
+#include "components/comp_transform.h"
+#include "components/entity.h"
+#include "handle/handle.h"
+#include "components/comp_msgs.h"
 #include "logic/ai_mole.h"
 
-#include "camera\camera.h"
-#include "input\input.h"
+#include "camera/camera.h"
+#include "input/input.h"
 
 class CEntity;
 class CInput;

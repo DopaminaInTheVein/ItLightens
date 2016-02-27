@@ -1,7 +1,7 @@
 #ifndef INC_DEBUG_H_
 #define INC_DEBUG_H_
 
-#include "imgui\imgui.h"
+#include "imgui/imgui.h"
 
 // Some compilers support applying printf-style warnings to user functions.
 #if defined(__clang__) || defined(__GNUC__)

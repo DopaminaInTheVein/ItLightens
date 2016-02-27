@@ -7,8 +7,8 @@
 #include "imgui/imgui.h"
 #pragma comment(lib, "imgui.lib" )
 
-#include "handle\object_manager.h"
-#include "components\entity.h"
+#include "handle/object_manager.h"
+#include "components/entity.h"
 #include "debug/debug.h"
 
 #include <Commdlg.h>
@@ -101,7 +101,6 @@ void CImGuiModule::update(float dt) {
 }
 
 void CImGuiModule::render() {
-
 	//TODO: better way of deactive zbuffer?
 
 	Render.ctx->OMSetRenderTargets(1, &Render.renderTargetView, NULL);

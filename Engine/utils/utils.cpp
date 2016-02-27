@@ -28,7 +28,8 @@ bool fatal(const char* format, ...) {
 
 uint32_t getID(const char* text) {
 	uint32_t out;
-	MurmurHash3_x86_32(text, strlen(text), 12345, &out);
+	int stringsize = (int)strlen(text);
+	MurmurHash3_x86_32(text, stringsize, 12345, &out);
 	return out;
 }
 

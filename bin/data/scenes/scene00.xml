@@ -10,18 +10,28 @@
   <entity>
     <tag name="target" />
     <transform pos="21 0 0" />
-    <name name="peter" />
+    <name name="pj" />
     <player />
+	<!--
 	<player_mole />
+	<player_speedy />
+	-->
     <render_static_mesh name="static_meshes/tetera2.static_mesh"/>
   </entity>
-  <!--<entity>
-    <tag name="target" />
-    <transform pos="1 0 1" />
-    <name name="peter" />
-    <player_speedy />
-    <render_static_mesh name="static_meshes/tetera2.static_mesh"/>
-  </entity>-->
+  
+  <entity>
+    <name name="attractionPointPlus" />
+    <tag name="plus_wall" />
+    <transform pos="5 0 20" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+
+  <entity>
+    <name name="attractionPointMinus" />
+    <tag name="minus_wall" />
+    <transform pos="5 0 -20" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+
+  
   <entity>
     <name name="box1" />
     <tag name="box" />

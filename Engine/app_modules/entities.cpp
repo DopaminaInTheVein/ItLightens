@@ -86,6 +86,8 @@ bool CEntitiesModule::start() {
 	TTagID tagIDbox = getID("box");
 	TTagID tagIDboxleave = getID("box_leavepoint");
 	TTagID tagIDwall = getID("breakable_wall");
+	TTagID tagIDminus = getID("minus_wall");
+	TTagID tagIDplus = getID("plus_wall");
 
 	// Camara del player
 	player = tags_manager.getFirstHavingTag(tagIDplayer);
@@ -121,6 +123,8 @@ bool CEntitiesModule::start() {
 	SBB::postHandlesVector("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
 	SBB::postHandlesVector("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
+	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
+	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
 
 	getHandleManager<player_controller>()->onAll(&player_controller::Init);
 	getHandleManager<player_controller_speedy>()->onAll(&player_controller_speedy::Init);

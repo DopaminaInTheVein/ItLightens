@@ -362,7 +362,6 @@ bool CInput::IsMouseMovedUp() {
 	bool moved_up = mouseY < mean_mouseY;
 
 	return moved_up;
-
 }
 
 // Detects whether the mouse was moved down
@@ -397,7 +396,6 @@ bool CInput::IsMouseMovedLeft() {
 	bool moved_left = mouseX < mean_mouseX;
 
 	return moved_left;
-
 }
 
 // Detects whether the mouse was moved to the right
@@ -648,6 +646,36 @@ bool CInput::IsSpacePressedDown() {
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
 	if ((!key_pressed[DIK_SPACE] && (m_keyboardState[DIK_SPACE] & 0x80)) ||
 		(!joystick_pressed[joystick_A] && joystickButtonPressed && buttonPressed == joystick_A))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+// Detects if the + polarity key is being pressed
+bool CInput::IsPlusPolarityPressedDown() {
+	int buttonPressed = 50;
+	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
+
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if ((key_pressed[DIK_1] && (m_keyboardState[DIK_1] & 0x80)) ||
+		(joystick_pressed[joystick_LB] && joystickButtonPressed && buttonPressed == joystick_LB))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+// Detects if the - polarity key is being pressed
+bool CInput::IsMinusPolarityPressedDown() {
+	int buttonPressed = 50;
+	bool joystickButtonPressed = getJoystickButtonPressed(buttonPressed);
+
+	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
+	if ((key_pressed[DIK_2] && (m_keyboardState[DIK_2] & 0x80)) ||
+		(joystick_pressed[joystick_RB] && joystickButtonPressed && buttonPressed == joystick_RB))
 	{
 		return true;
 	}
