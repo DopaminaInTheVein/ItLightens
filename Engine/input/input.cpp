@@ -334,6 +334,20 @@ void CInput::GetMouseLocation(int& mouseX, int& mouseY)
 	mouseY = m_mouseY;
 	return;
 }
+// Difference in X between the current frame and the last
+int CInput::GetMouseDiffX() {
+	int mouse_x, mouse_y;
+	GetMouseLocation(mouse_x, mouse_y);
+
+	return mouse_x - last_mouseX.back();
+}
+// Difference in X between the current frame and the last
+int CInput::GetMouseDiffY() {
+	int mouse_x, mouse_y;
+	GetMouseLocation(mouse_x, mouse_y);
+
+	return mouse_y - last_mouseY.back();
+}
 
 // Updates mouse location
 void CInput::UpdateMousePosition() {

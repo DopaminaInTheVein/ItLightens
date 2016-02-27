@@ -252,6 +252,8 @@ public:
 	bool IsEscapePressed();
 
 	// General functions
+	int GetMouseDiffX();
+	int GetMouseDiffY();
 	bool IsKeyPressedDown(int key);
 	bool IsKeyPressed(int key);
 	bool IsKeyReleased(int key);
