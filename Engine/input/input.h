@@ -209,10 +209,18 @@ public:
 	bool Initialize(HINSTANCE, HWND, int, int);
 	void Shutdown();
 	bool Frame();
+	int getScreenWidth() {
+		return m_screenWidth;
+	}
+	int getScreenHeight() {
+		return m_screenHeight;
+	}
 
 	void GetMouseLocation(int&, int&);
 
 	// Mouse movement detection
+	bool IsMouseMovedUp();
+	bool IsMouseMovedDown();
 	bool IsMouseMovedLeft();
 	bool IsMouseMovedRight();
 	void UpdateMousePosition();
@@ -231,7 +239,9 @@ public:
 	bool IsRightPressed();
 	bool IsUpPressed();
 	bool IsDownPressed();
-	// Camera rotation (QE)
+	// Camera rotation (QERT)
+	bool IsOrientUpPressed();
+	bool IsOrientDownPressed();
 	bool IsOrientLeftPressed();
 	bool IsOrientRightPressed();
 
@@ -268,7 +278,7 @@ private:
 
 	int m_screenWidth, m_screenHeight;
 	int m_mouseX, m_mouseY;
-	int last_mouseX, last_mouseY;
+	std::deque<int> last_mouseX, last_mouseY;
 };
 
 #endif

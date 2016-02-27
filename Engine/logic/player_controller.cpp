@@ -22,9 +22,12 @@ void player_controller::Init() {
 	AddState("falling", (statehandler)&player_controller::Falling);
 	AddState("jumping", (statehandler)&player_controller::Jumping);
 
-
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
+	myEntity = myParent;
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	starting_player_y = player_transform->getPosition().y + 2;
+	player_y = starting_player_y;
 
 	ChangeState("idle");
 }
@@ -74,7 +77,7 @@ void player_controller::Jumping()
 		jspeed = 0.0f;
 		ChangeState("falling");
 	}
-	if (Input.IsKeyPressedDown(DIK_SPACE)) {
+	if (Input.IsSpacePressedDown()) {
 		jspeed = jimpulse;
 		ChangeState("doublejump");
 	}
@@ -89,7 +92,7 @@ void player_controller::Falling()
 	VEC3 player_position = player_transform->getPosition();
 	jspeed -= gravity*getDeltaTime();
 
-	if (Input.IsKeyPressedDown(DIK_SPACE)) {
+	if (Input.IsSpacePressedDown()) {
 		jspeed = jimpulse;
 		ChangeState("doublejump");
 	}

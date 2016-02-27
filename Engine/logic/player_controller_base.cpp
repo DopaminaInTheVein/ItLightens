@@ -8,8 +8,7 @@
 #include "components\entity_tags.h"
 
 #include "components\comp_msgs.h"
-
-
+#include "components\comp_camera.h"
 
 
 CPlayerBase::CPlayerBase() {
@@ -46,6 +45,10 @@ void CPlayerBase::UpdateMoves()
 	VEC3 player_position = player_transform->getPosition();
 
 	VEC3 direction = directionForward + directionLateral;
+
+	CEntity * camera_e = camera;
+	TCompCamera* camera_comp = camera_e->get<TCompCamera>();
+	VEC3 camera_position = camera_comp->getPosition();
 
 	float yaw, pitch;
 	player_transform->getAngles(&yaw, &pitch);
@@ -97,6 +100,21 @@ void CPlayerBase::UpdateMoves()
 	if (rotate != 0) {
 		player_transform->setAngles(yaw + rotate*player_rotation_speed*getDeltaTime(), pitch);
 	}
+	if (rotateXY != 0) {
+		player_y += rotateXY*player_rotation_speed*getDeltaTime();
+
+		if (player_y > camera_max_height)
+			player_y = camera_max_height;
+		if (player_y < camera_min_height)
+			player_y = camera_min_height;
+
+		camera_comp->lookAt(camera_comp->getPosition(), VEC3(player_position.x, player_y, player_position.z));
+		camera_comp->update(getDeltaTime());
+	}
+	else {
+		player_y = starting_player_y;
+	}
+
 }
 #pragma endregion
 //##########################################################################
@@ -148,19 +166,25 @@ bool CPlayerBase::UpdateMovDirection() {
 }
 
 void CPlayerBase::UpdateJumpState() {
-	if (Input.IsKeyPressedDown(DIK_SPACE)) {
+	if (Input.IsSpacePressedDown()) {
 		Jump();
 	}
 }
 
 void CPlayerBase::UpdateDirection() {
-	if (Input.IsOrientLeftPressed())
+	if (Input.IsOrientLeftPressed() || Input.IsMouseMovedLeft())
 		rotate = 1;
-	else if (Input.IsOrientRightPressed())
+	else if (Input.IsOrientRightPressed() || Input.IsMouseMovedRight())
 		rotate = -1;
-	else
+	else if (Input.IsOrientUpPressed())
+		rotateXY = 1;
+	else if (Input.IsOrientDownPressed())
+		rotateXY = -1;
+	else {
 		rotate = 0;
-
+		rotateXY = 0;
+	}
+	Input.UpdateMousePosition();
 }
 
 void CPlayerBase::UpdateInputActions() {

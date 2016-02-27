@@ -51,6 +51,11 @@ protected:
 	VEC3 directionForward = VEC3(0, 0, 1);
 	VEC3 directionJump = VEC3(0, 0, 0);
 	float rotate = 0;
+	const float camera_max_height = 4;
+	const float camera_min_height = 0;
+	float rotateXY = 0;
+	float starting_player_y = 0;
+	float player_y = 0;
 
 	void UpdateInputActions();
 	void UpdateMoves();
