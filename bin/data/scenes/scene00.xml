@@ -13,7 +13,7 @@
     <name name="peter" />
     <player />
 	<player_mole />
-    <render_static_mesh name="static_meshes/tetera2.static_mesh"/>
+    <render_static_mesh name="static_meshes/speedy.static_mesh"/>
   </entity>
   <!--<entity>
     <tag name="target" />

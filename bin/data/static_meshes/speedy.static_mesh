@@ -1,0 +1,3 @@
+<static_mesh>
+    <slot mesh="meshes/model.mesh" material="materials/bronze.material"/>
+</static_mesh>
