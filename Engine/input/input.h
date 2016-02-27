@@ -209,12 +209,6 @@ public:
 	bool Initialize(HINSTANCE, HWND, int, int);
 	void Shutdown();
 	bool Frame();
-	int getScreenWidth() {
-		return m_screenWidth;
-	}
-	int getScreenHeight() {
-		return m_screenHeight;
-	}
 
 	void GetMouseLocation(int&, int&);
 
@@ -239,7 +233,7 @@ public:
 	bool IsRightPressed();
 	bool IsUpPressed();
 	bool IsDownPressed();
-	// Camera rotation (QERT)
+	// Camera rotation (QE)
 	bool IsOrientUpPressed();
 	bool IsOrientDownPressed();
 	bool IsOrientLeftPressed();
