@@ -148,6 +148,9 @@
     <ClCompile Include="logic\player_controller_mole.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="logic\player_controller_speedy.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -323,6 +326,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\player_controller_mole.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\player_controller_speedy.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
