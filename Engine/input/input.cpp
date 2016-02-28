@@ -317,7 +317,7 @@ void CInput::ProcessInput()
 	m_mouseX += m_mouseState.lX;
 	m_mouseY += m_mouseState.lY;
 
-	dbg("mouse %d\n",m_mouseState.lX);
+	//dbg("mouse %d\n",m_mouseState.lX);
 
 	// Ensure the mouse location doesn't exceed the screen width or height.
 	if (m_mouseX < 0) { m_mouseX = 0; }
@@ -786,7 +786,7 @@ float CInput::GetRightStickY() {
 	float ry = (m_joystickState.lRy - joystick_axis_min) / float(joystick_axis_max - joystick_axis_min);
 
 	//range -1,1
-	float value = (ry-0.5f)*2;
+	float value = (ry - 0.5f) * 2;
 	if (fabs(value) < 0.1f) return 0.0f;
 	return value;
 }

@@ -11,10 +11,10 @@
 
 class PossController : public CPlayerBase {
 	____TIMER_DECLARE_(timerShowEnergy, 1); //Para debugar
-	float maxEnergy = 100;
-	float energyRemain = 100;
-	float speedRecover = 1;
-	float speedSpend = 2;
+	float maxEnergy;
+	float energyRemain;
+	float speedRecover;
+	float speedSpend;
 
 public:
 	bool npcIsPossessed = false;
