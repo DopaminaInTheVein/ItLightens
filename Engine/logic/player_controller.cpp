@@ -248,7 +248,7 @@ void player_controller::AttractMove(CEntity * entPoint) {
 void player_controller::UpdatePossession() {
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
-		if (Input.IsLeftClickPressedDown()) {
+		if (Input.IsRightClickPressedDown()) {
 			// Se avisa el ai_poss que ha sido poseído
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;
