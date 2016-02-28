@@ -10,7 +10,6 @@
 #include "components\comp_msgs.h"
 #include "components\comp_camera.h"
 
-
 CPlayerBase::CPlayerBase() {
 	AddState("idle", (statehandler)&CPlayerBase::Idle);
 	AddState("moving", (statehandler)&CPlayerBase::Moving);
@@ -103,7 +102,6 @@ void CPlayerBase::UpdateMoves()
 	else {
 		player_y = starting_player_y;
 	}
-
 }
 #pragma endregion
 //##########################################################################
@@ -185,9 +183,15 @@ void CPlayerBase::UpdateInputActions() {
 // Player States
 //##########################################################################
 #pragma region Player States
+void CPlayerBase::energyDecreasal(float howmuch) {
+	TMsgDamage msg;
+	msg.points = howmuch;
+	this->myEntity->sendMsg(msg);
+}
 
 void CPlayerBase::Idle()
 {
+	energyDecreasal(getDeltaTime());
 	UpdateDirection();
 	UpdateJumpState();
 	if (UpdateMovDirection()) ChangeState("moving");

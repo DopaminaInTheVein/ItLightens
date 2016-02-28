@@ -38,12 +38,15 @@ void player_controller::Init() {
 
 void player_controller::Idle() {
 	if (Input.IsMinusPolarityPressedDown() && nearMinus()) {
+		energyDecreasal(getDeltaTime());
 		ChangeState("tominus");
 	}
 	else if (Input.IsPlusPolarityPressedDown() && nearPlus()) {
+		energyDecreasal(getDeltaTime());
 		ChangeState("toplus");
 	}
 	else if (polarizedCurrentSpeed > 1.0f) {
+		energyDecreasal(getDeltaTime());
 		polarizedMove = false;
 		CEntity * entPoint = nullptr;
 		if (tominus) {

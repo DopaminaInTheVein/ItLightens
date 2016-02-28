@@ -3,11 +3,11 @@
     <tag name="player" />
     <transform pos="3 3 1" />
     <name name="camara" />
-    <life points="4" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
   </entity>
   <entity>
+    <life points="100" />
     <tag name="target" />
     <transform pos="21 0 0" />
     <name name="pj" />
@@ -80,6 +80,7 @@
     <transform pos="1 0 1" />
     <name name="scientist1" />
     <cientifico />
+    <life points="100" />
   </entity>
 
   <entity>
@@ -93,6 +94,7 @@
     <tag name="AI" />
     <tag name="AI_speedy" />
     <name name="speedy1" />
+    <life points="100" />
     <transform pos="9 0 9" rotation="1 2 3 3" scale="1 1 1" />
     <ai_speedy
       wpts_size  = "8"

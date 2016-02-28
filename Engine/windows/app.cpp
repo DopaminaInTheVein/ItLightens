@@ -17,6 +17,12 @@ CApp::CApp()
 	, yres(600)
 {}
 
+int CApp::getXRes() {
+	return xres;
+}
+int CApp::getYRes() {
+	return yres;
+}
 // ------------------------------------
 LRESULT CALLBACK CApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	// Forward the wnd msg to each module registered to this
@@ -73,6 +79,16 @@ bool CApp::createWindow(HINSTANCE new_hInstance, int nCmdShow)
 		return false;
 
 	// Create window
+	RECT desktop;
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+	// The top left corner will have coordinates (0,0)
+	// and the bottom right corner will have coordinates
+	// (horizontal, vertical)
+	xres = desktop.right;
+	yres = desktop.bottom;
+
 	RECT rc = { 0, 0, xres, yres };
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 	hWnd = CreateWindow("TutorialWindowClass", "Direct3D 11 Tutorial 2: Rendering a Triangle",

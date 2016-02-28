@@ -6,19 +6,26 @@
 
 // ------------------------------------
 struct TCompLife : public TCompBase {
-	float life;
-	TCompLife() : life(0.f) {
-		dbg("ctor of TCompLife\n");
+	float currentlife;
+	float maxlife;
+	TCompLife() : maxlife(100.f) {
+		dbg("constructor of TCompLife\n");
 	}
 	~TCompLife() {
-		dbg("dtor of TCompLife\n");
+		dbg("destructor of TCompLife\n");
 	}
+
+	bool load(MKeyValue& atts) {
+		currentlife = maxlife = atts.getFloat("points", 100.0f);
+		return true;
+	}
+
 	void onCreate(const TMsgEntityCreated&) {
 		dbg("TCompLife on TMsgEntityCreated\n");
 	}
 	void onDamage(const TMsgDamage& msg) {
-		life -= msg.points;
-		if (life < 0) {
+		currentlife -= msg.points;
+		if (currentlife < 0) {
 			dbg("Me he muerto\n");
 		}
 	}
