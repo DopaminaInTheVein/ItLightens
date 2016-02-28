@@ -92,6 +92,10 @@ public:
 	void onRemoveBeacon(const TMsgBeaconToRemove& msg);
 	void onEmptyBeacon(const TMsgBeaconEmpty& msg);
 
+	void onTakenBeacon(const TMsgBeaconTakenByPlayer & msg);
+
+	void onStaticBomb(const TMsgStaticBomb & msg);
+
 	//Functions AI Nodes:
 	//--------------------------------------
 	void Idle();
@@ -108,12 +112,12 @@ public:
 	void renderInMenu();
 
 	//Possession
-	virtual void _actionBeforePossession();
+/*	virtual void _actionBeforePossession();
 	virtual ACTION_RESULT _actionBeingPossessed();
 	virtual ACTION_RESULT _actionBeingUnpossessed();
 	virtual void _actionStunt();
-	virtual void _StuntEndState();
-	virtual CEntity* getMyEntity();
+	virtual void _StuntEndState();*/
+	CEntity* getMyEntity() override;
 
 	//Overload function for handler_manager
 	ai_scientific& ai_scientific::operator=(ai_scientific arg) { return arg; }

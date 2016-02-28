@@ -35,5 +35,10 @@
       kpt6_type = "seek" kpt6_pos = "-10  0  10" kpt6_wait = "2"
       kpt7_type = "look" kpt7_pos = "  0  0   0" kpt7_wait = "2" />
     <render_static_mesh name="static_meshes/tetera2.static_mesh" />
+<<<<<<< HEAD
+=======
+    <cientifico />
+    <player_cientifico />
+>>>>>>> b4722e7386cb815e4c1e7b890a3522d9f400a6bd
   </entity>
 </entities>

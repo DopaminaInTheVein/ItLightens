@@ -11,6 +11,8 @@ void ai_scientific::Init()
 {
 	om = getHandleManager<ai_scientific>();	//list handle scientific in game
 
+	DeleteState("idle");
+
 	//list states
 	AddState("idle", (statehandler)&ai_scientific::Idle);
 	AddState("seekWB", (statehandler)&ai_scientific::SeekWorkbench);
@@ -199,6 +201,31 @@ void ai_scientific::onEmptyBeacon(const TMsgBeaconEmpty & msg)
 	}
 }
 
+
+void ai_scientific::onTakenBeacon(const TMsgBeaconTakenByPlayer & msg)
+{
+	dbg("read message\n");
+	if (msg.name == beacon_to_go_name) {
+		dbg("Iam");
+		waiting_time = 0.0f;
+		actual_action = IDLE;
+		ChangeState("lookForObj");
+	}
+}
+
+void ai_scientific::onStaticBomb(const TMsgStaticBomb & msg)
+{
+	dbg("called\n");
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 curr_pos = me_transform->getPosition();
+
+	if (curr_pos.x <= msg.x_max && curr_pos.x >= msg.x_min && curr_pos.z <= msg.z_max && curr_pos.z >= msg.z_min) {
+		dbg("stunned\n");
+	}
+
+}
+
 void ai_scientific::renderInMenu()
 {
 	ImGui::Text("Node: %s", out[actual_action].c_str());
@@ -217,6 +244,7 @@ void ai_scientific::SetMyEntity() {
 }
 
 //Possession
+/*
 void ai_scientific::_actionBeforePossession() {
 }
 ACTION_RESULT ai_scientific::_actionBeingPossessed() {
@@ -231,7 +259,7 @@ void ai_scientific::_actionStunt() {
 void ai_scientific::_StuntEndState() {
 	ChangeState("idle");
 }
-
+*/
 CEntity* ai_scientific::getMyEntity() {
 	CHandle me = CHandle(this);
 	return me.getOwner();

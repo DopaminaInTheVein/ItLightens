@@ -157,6 +157,15 @@
     <ClCompile Include="logic\player_controller_speedy.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="prefabs\static_bomb.cpp">
+      <Filter>prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="prefabs\magnetic_bomb.cpp">
+      <Filter>prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\player_controller_cientifico.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -349,6 +358,15 @@
     <ClInclude Include="utils\macros\timers.h">
       <Filter>utils\macros</Filter>
     </ClInclude>
+    <ClInclude Include="prefabs\static_bomb.h">
+      <Filter>prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="prefabs\magnetic_bomb.h">
+      <Filter>prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\player_controller_cientifico.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -401,6 +419,9 @@
     </Filter>
     <Filter Include="utils\macros">
       <UniqueIdentifier>{133787e7-f6f1-4496-90da-f6746ea1ce49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="prefabs">
+      <UniqueIdentifier>{a908d031-f6a7-4027-840a-0933d76ea3ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
