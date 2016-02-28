@@ -142,7 +142,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
 	getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
-
 	return true;
 }
 

@@ -21,7 +21,8 @@ enum ACTION_RESULT {
 
 class ai_poss : public aicontroller {
 private:
-
+	bool stunned;
+	bool possessed;
 public:
 	ai_poss();
 
@@ -31,6 +32,11 @@ public:
 	const void UnpossessingState();
 	const void StuntState();
 	virtual void actionStunt();
+
+	//Preguntar por Stunt o Poseido
+	bool isStunned() { return stunned; }
+	bool isPossessed() { return possessed; }
+	bool isAvailable() { return !stunned && !possessed; }
 
 	//Estado cuando el bot se recupera del stunt
 	virtual void _StuntEndState() = 0;

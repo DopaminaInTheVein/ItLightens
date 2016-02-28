@@ -8,6 +8,8 @@ ai_poss::ai_poss() {
 	AddState(ST_UNPOSSESSING, (statehandler)&ai_poss::UnpossessingState);
 	AddState(ST_STUNT, (statehandler)&ai_poss::StuntState);
 	AddState(ST_STUNT_END, (statehandler)&ai_poss::_StuntEndState);
+	possessed = false;
+	stunned = false;
 }
 
 // MENSAJES
@@ -34,6 +36,8 @@ const void ai_poss::PossessingState() {
 	switch (_actionBeingPossessed()) {
 	case DONE:
 		ChangeState(ST_POSSESSED);
+		possessed = true;
+
 		me = getMyEntity();
 		TMsgControllerSetEnable msg;
 		msg.enabled = true;
@@ -67,6 +71,8 @@ const void ai_poss::UnpossessingState() {
 	switch (_actionBeingUnpossessed()) {
 	case DONE:
 		ChangeState(ST_STUNT);
+		possessed = false;
+		stunned = true;
 		____TIMER_RESET_(timeStunt);
 		//TODO: Enviar mensaje a la misma entidad para apagar PossController (declarado)
 		break;
@@ -84,6 +90,7 @@ const void ai_poss::StuntState() {
 	actionStunt();
 	____TIMER_CHECK_DO_(timeStunt);
 	ChangeState(ST_STUNT_END);
+	stunned = false;
 	____TIMER_CHECK_DONE_(timeStunt);
 }
 
