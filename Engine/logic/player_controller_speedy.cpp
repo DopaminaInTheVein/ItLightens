@@ -27,12 +27,7 @@ void player_controller_speedy::Init()
 	ChangeState("idle");
 }
 
-void player_controller_speedy::update(float elapsed) {
-	Recalc();
-	if (!enabled) return;
-	Input.Frame();
-	UpdateInputActions();
-	UpdateMoves();
+void player_controller_speedy::myUpdate(float elapsed) {
 	updateDashTimer();
 	updateBlinkTimer();
 }

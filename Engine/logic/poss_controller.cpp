@@ -1,6 +1,7 @@
 #include "mcv_platform.h"
 #include "poss_controller.h"
 #include "ai_poss.h"
+#include "components/entity_tags.h"
 #include "components/components.h"
 
 PossController::PossController() {
@@ -9,7 +10,7 @@ PossController::PossController() {
 	ChangeState(ST_DISABLED);
 }
 
-void PossController::Recalc() {
+void PossController::UpdatePossession() {
 	if (npcIsPossessed) {
 		energyRemain -= speedSpend * getDeltaTime();
 		if (energyRemain <= 0) {
@@ -34,8 +35,6 @@ void PossController::Recalc() {
 	____TIMER_CHECK_DO_(timerShowEnergy);
 	dbg("PossController: EnergyRemain = %f\n", energyRemain);
 	____TIMER_CHECK_DONE_(timerShowEnergy);
-
-	aicontroller::Recalc();
 }
 
 void PossController::onSetEnable(const TMsgPossControllerSetEnable& msg) {
@@ -45,7 +44,26 @@ void PossController::onSetEnable(const TMsgPossControllerSetEnable& msg) {
 void PossController::onSetEnable(bool enabled) {
 	dbg("PossController::setEnable(%d)", enabled);
 	npcIsPossessed = enabled;
-	this->enabled = enabled;
-	if (enabled) ChangeState(ST_INIT_CONTROL);
-	else ChangeState(ST_DISABLED);
+	this->controlEnabled = enabled;
+	if (enabled) {
+		// Avisar que se activa el control
+		ChangeState(ST_INIT_CONTROL);
+
+		// Componentes y entidades para asignar Controlador y cámara
+		CHandle hPlayer = tags_manager.getFirstHavingTag(getID("player"));
+		CHandle me = CHandle(getMyEntity());
+		CEntity* ePlayer = hPlayer;
+		//TCompCamera* pCamera = ePlayer->get<TCompCamera>();
+
+		//Set 3rd Person Controller
+		TMsgSetTarget msg3rdController;
+		msg3rdController.target = me;
+		ePlayer->sendMsg(msg3rdController);
+
+		//Set Camera
+		camera = CHandle(ePlayer);
+	}
+	else {
+		ChangeState(ST_DISABLED);
+	}
 }

@@ -34,7 +34,7 @@ class player_controller_speedy : public PossController {
 
 public:
 	void Init();
-	void update(float elapsed);
+	void myUpdate(float elapsed);
 
 	void UpdateInputActions();
 

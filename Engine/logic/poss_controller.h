@@ -19,10 +19,11 @@ class PossController : public CPlayerBase {
 public:
 	bool npcIsPossessed = false;
 	PossController();
-	virtual void DisabledState() = 0;
-	virtual void InitControlState() = 0;
+	virtual void DisabledState() {};
+	virtual void InitControlState() {};
 	virtual CEntity* getMyEntity() = 0; //Pasar al TCompBase?
-	void Recalc();
+	void update(float dt) { UpdatePossession(); CPlayerBase::update(dt); }
+	void UpdatePossession();
 
 	//Mensajes
 	void onSetEnable(const TMsgPossControllerSetEnable&);

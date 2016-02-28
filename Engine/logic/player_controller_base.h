@@ -23,7 +23,7 @@ class CPlayerBase : public aicontroller, public TCompBase {
 protected:
 
 	//Enabled
-	bool enabled = false;
+	bool controlEnabled = false;
 
 	// Map for debug on ImGui
 	std::map<int, std::string> out;
@@ -66,10 +66,11 @@ public:
 
 	CPlayerBase();
 	void init() { Init(); }
-	void update(float elapsed);
+	void update(float elapsed); //deberia ser const pero Recalc no lo es  e historias
 
 	void onSetCamera(const TMsgSetCamera& msg);
 	void SetMyEntity();
+	virtual void myUpdate(); // deberia ser abstracta pero peta
 
 	// Player states
 	void Idle();

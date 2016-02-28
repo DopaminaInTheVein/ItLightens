@@ -23,10 +23,13 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 }
 
 void CPlayerBase::update(float elapsed) {
-	Input.Frame();
-	UpdateInputActions();
-	Recalc();
-	UpdateMoves();
+	if (controlEnabled) {
+		Input.Frame();
+		UpdateInputActions();
+		Recalc();
+		UpdateMoves();
+		myUpdate();
+	}
 }
 
 //##########################################################################
@@ -236,4 +239,7 @@ void CPlayerBase::renderInMenu()
 	ImGui::Text("NODE: %s\n", state.c_str());
 	ImGui::Text("direction: %.4f, %.4f, %.4f", direction.x, direction.y, direction.z);
 	ImGui::Text("jump: %.5f", jspeed);
+}
+
+void CPlayerBase::myUpdate() {
 }

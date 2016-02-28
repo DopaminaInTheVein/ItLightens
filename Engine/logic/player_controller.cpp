@@ -34,6 +34,7 @@ void player_controller::Init() {
 	player_y = starting_player_y;
 
 	ChangeState("idle");
+	controlEnabled = true;
 }
 
 void player_controller::Idle() {
@@ -237,10 +238,14 @@ void player_controller::UpdatePossession() {
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
 		if (Input.IsLeftClickPressedDown()) {
+			// Se avisa el ai_poss que ha sido poseído
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;
 			msg.possessed = true;
 			ePoss->sendMsg(msg);
+
+			//Se desactiva el player
+			controlEnabled = false;
 		}
 		else {
 			____TIMER_CHECK_DO_(timeShowAblePossess);
@@ -255,6 +260,7 @@ void player_controller::UpdatePossession() {
 	}
 }
 
+// Recalcula el mejor candidato para poseer
 void player_controller::recalcPossassable() {
 	float minDeltaYaw = FLT_MAX;
 	float minDistance = FLT_MAX;
