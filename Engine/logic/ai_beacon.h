@@ -24,11 +24,11 @@ class beacon_controller : public aicontroller, public TCompBase {
 	const float range = 7.5f;		//range sonar
 	const float rot_speed_sonar = 8.0f;		//TODO: mesh change
 	const float rot_speed_disable = 2.0f;		//TODO: mesh change
-	//--------------------------------------
+												//--------------------------------------
 
-	//general info
-	//--------------------------------------
-	//CHandle *target_h;		//TODO: player target
+												//general info
+												//--------------------------------------
+												//CHandle *target_h;		//TODO: player target
 
 	int id_beacon = 0;
 
@@ -41,22 +41,23 @@ class beacon_controller : public aicontroller, public TCompBase {
 	//--------------------------------------
 
 	//messages types
-	TMsgBeaconEmpty		msg_empty;
-	TMsgBeaconToRemove	msg_remove;
+	TMsgBeaconEmpty				msg_empty;
+	TMsgBeaconToRemove			msg_remove;
+	TMsgBeaconTakenByPlayer		msg_taken;
 
 	//Timer counts
 	//--------------------------------------
 	float			t_waiting = 0.0f;
 	const float		t_max_sonar = 10.0f;
 	const float		t_max_empty = 7.5f;
-	const float		t_max_disable = 15.0f;	//not used for now
-	//--------------------------------------
+	const float		t_max_disable = 30.0f;	//not used for now
+											//--------------------------------------
 
 public:
 
 	static int id_curr_max_beacons;	//count ids, id++ each beacon
 
-	//states beacon
+									//states beacon
 	enum {
 		INACTIVE = 0,
 		INACTIVE_TAKEN,
@@ -73,14 +74,15 @@ public:
 	//Overload functions from TCompBase, needed to loop AI Component
 	//--------------------------------------
 	void update(float elapsed) { Recalc(); }  //Called from object_manager
-	//--------------------------------------
+											  //--------------------------------------
 
-	//Init handlers
-	//--------------------------------------
+											  //Init handlers
+											  //--------------------------------------
 	void SetHandleMeInit();
 	void SetMyEntity();
 	void SendMessageEmpty();
 	void SendMessageRemove();
+	void SendMessageTaken();
 	//--------------------------------------
 
 	//Functions AI Nodes:
@@ -90,7 +92,14 @@ public:
 	void Inactive();		//beacon empty
 	void ActiveSonar();
 	void ActiveNothing();	//beacon busy, but do nothing
+	void WaitToRemoveSonar();
+	void WaitToRemoveNothing();
 	void WaitToRemove();
+	//--------------------------------------
+
+	//Messages:
+	//--------------------------------------
+	void onPlayerAction(TMsgBeaconBusy& msg);
 	//--------------------------------------
 
 	void renderInMenu();

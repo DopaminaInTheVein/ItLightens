@@ -7,12 +7,7 @@
 #include "components/comp_msgs.h"
 #include "components/entity_tags.h"
 #include "imgui/imgui.h"
-#include "logic/aicontroller.h"
-#include "logic/ai_mole.h"
 #include "logic/sbb.h"
-#include "logic/player_controller.h"
-#include "logic/player_controller_speedy.h"
-#include "logic/player_controller_mole.h"
 #include "input/input.h"
 #include "windows/app.h"
 #include "utils/utils.h"
@@ -32,8 +27,13 @@ DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
 DECL_OBJ_MANAGER("player", player_controller);
 DECL_OBJ_MANAGER("player_speedy", player_controller_speedy);
 DECL_OBJ_MANAGER("player_mole", player_controller_mole);
-//DECL_OBJ_MANAGER("nombre_IA_xml", NameClass):
+DECL_OBJ_MANAGER("player_cientifico", player_controller_cientifico);
 DECL_OBJ_MANAGER("life", TCompLife);
+
+//prefabs
+DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
+DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
+
 
 static CHandle player;
 static CHandle target;
@@ -51,6 +51,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<player_controller>()->init(4);
 	getHandleManager<player_controller_speedy>()->init(4);
 	getHandleManager<player_controller_mole>()->init(4);
+	getHandleManager<player_controller_cientifico>()->init(4);
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
@@ -66,6 +67,9 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_speedy>()->init(MAX_ENTITIES);
 	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
 
+	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
+	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
+
 	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
@@ -78,10 +82,14 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 
+	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
+	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
+	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
+
 	//Posesiones Mensajes
 	//..Cientifico
 	SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
-	SUBSCRIBE(player_controller_speedy, TMsgControllerSetEnable, onSetEnable);
+	SUBSCRIBE(player_controller_cientifico, TMsgControllerSetEnable, onSetEnable);
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
 
@@ -135,6 +143,7 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<player_controller>()->onAll(&player_controller::Init);
 	getHandleManager<player_controller_speedy>()->onAll(&player_controller_speedy::Init);
+	getHandleManager<player_controller_cientifico>()->onAll(&player_controller_cientifico::Init);
 	getHandleManager<player_controller_mole>()->onAll(&player_controller_mole::Init);
 
 	getHandleManager<ai_guard>()->onAll(&ai_guard::Init);
@@ -155,7 +164,8 @@ void CEntitiesModule::update(float dt) {
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
 	getHandleManager<player_controller_speedy>()->updateAll(dt);
-	// getHandleManager<player_controller_mole>()->updateAll(dt);
+	getHandleManager<player_controller_mole>()->updateAll(dt);
+	getHandleManager<player_controller_cientifico>()->updateAll(dt);
 
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
@@ -165,6 +175,9 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<ai_speedy>()->updateAll(dt);
+
+	getHandleManager<CStaticBomb>()->updateAll(dt);
+	getHandleManager<CMagneticBomb>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

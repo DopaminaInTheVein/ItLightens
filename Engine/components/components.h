@@ -15,5 +15,16 @@
 #include "logic/ai_scientific.h"
 #include "logic/ai_speedy.h"
 #include "logic/ai_guard.h"
+#include "logic/aicontroller.h"
+
+//controllers
+#include "logic/player_controller.h"
+#include "logic/player_controller_speedy.h"
+#include "logic/player_controller_mole.h"
+#include "logic/player_controller_cientifico.h"
+
+//prefabs
+#include "prefabs\magnetic_bomb.h"
+#include "prefabs\static_bomb.h"
 
 #endif

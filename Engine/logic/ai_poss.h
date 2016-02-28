@@ -33,7 +33,8 @@ public:
 	virtual void actionStunt();
 
 	//Estado cuando el bot se recupera del stunt
-	virtual void _StuntEndState() = 0;
+	virtual void _StuntEndState();
+	virtual void idle() {}
 
 	//Funciones que utiliza para poder cambiar entre los estados  anteriores
 

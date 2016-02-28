@@ -81,6 +81,6 @@
     <name name="scientist1" />
     <render_static_mesh name="static_meshes/tetera2.static_mesh" />
     <cientifico />
-    <player_speedy />
+    <player_cientifico />
   </entity>
 </entities>
