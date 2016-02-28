@@ -14,6 +14,36 @@
     <player />
     <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
   </entity>
+  
+  <entity>
+    <name name="attractionPointPlus" />
+    <tag name="plus_wall" />
+    <transform pos="5 0 20" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+
+  <entity>
+    <name name="attractionPointMinus" />
+    <tag name="minus_wall" />
+    <transform pos="5 0 -20" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+
+  
+  <entity>
+    <name name="box1" />
+    <tag name="box" />
+    <transform pos="5 0 0" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+  <entity>
+    <name name="breakable_wall_e" />
+    <tag name="breakable_wall" />
+    <transform pos="25 0 0" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+  <entity>
+    <name name="box_leavepoint1" />
+    <tag name="box_leavepoint" />
+    <transform pos="5 0 5" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+  
   <entity>
     <tag name="AI" />
     <name name="ia_mole1" />
