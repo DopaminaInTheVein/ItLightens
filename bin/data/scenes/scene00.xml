@@ -77,36 +77,9 @@
     <tag name="AI_poss" />
     <transform pos="1 0 1" />
     <name name="scientist1" />
-    <cientifico />
     <life points="100" />
-    <player_speedy />
-  </entity>
-
-  <entity>
-    <tag name="AI" />
-    <transform pos="5 0 5" />
-    <name name="beacon1" />
-    <beacon />
-  </entity>
-
-  <entity>
-    <tag name="AI" />
-    <tag name="AI_speedy" />
-    <tag name="AI_poss" />
-    <name name="speedy1" />
-    <life points="100" />
-    <transform pos="9 0 9" rotation="1 2 3 3" scale="1 1 1" />
-    <ai_speedy
-      wpts_size  = "8"
-      wpt0_pos = " 10  0  10"
-      wpt1_pos = " 10  0 -10"
-      wpt2_pos = "-10  0 -10"
-      wpt3_pos = "-10  0  10"
-      wpt4_pos = "  5  0   5"
-      wpt5_pos = "  5  0  -5"
-      wpt6_pos = " -5  0  -5"
-      wpt7_pos = " -5  0   5" />
-    <player_speedy />
     <render_static_mesh name="static_meshes/tetera2.static_mesh" />
+    <cientifico />
+    <player_cientifico />
   </entity>
 </entities>

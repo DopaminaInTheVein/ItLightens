@@ -41,6 +41,33 @@ struct TMsgBeaconEmpty {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgBeaconBusy {
+	VEC3 pos;
+	bool* reply;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgBeaconTakenByPlayer {
+	std::string name;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgStaticBomb {
+	float x_max;
+	float z_max;
+	float x_min;
+	float z_min;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgMagneticBomb {
+	float x_max;
+	float z_max;
+	float x_min;
+	float z_min;
+	DECLARE_MSG_ID();
+};
+
 struct TMsgNoise {
 	VEC3 source;
 	float intensity;

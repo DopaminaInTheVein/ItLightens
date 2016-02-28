@@ -3,6 +3,8 @@
 #include "components\entity.h"
 
 ai_poss::ai_poss() {
+
+	AddState("idle", (statehandler)&ai_poss::idle);
 	AddState(ST_POSSESSING, (statehandler)&ai_poss::PossessingState);
 	AddState(ST_POSSESSED, (statehandler)&ai_poss::PossessedState);
 	AddState(ST_UNPOSSESSING, (statehandler)&ai_poss::UnpossessingState);
@@ -90,4 +92,8 @@ const void ai_poss::StuntState() {
 // Things to do when is possessed
 void ai_poss::actionStunt() {
 	// Nothing at the moment
+}
+
+void ai_poss::_StuntEndState() {
+	ChangeState("idle");
 }
