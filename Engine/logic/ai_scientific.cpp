@@ -215,3 +215,24 @@ void ai_scientific::SetHandleMeInit()
 void ai_scientific::SetMyEntity() {
 	myEntity = myParent;
 }
+
+//Possession
+void ai_scientific::_actionBeforePossession() {
+}
+ACTION_RESULT ai_scientific::_actionBeingPossessed() {
+	return DONE;
+}
+ACTION_RESULT ai_scientific::_actionBeingUnpossessed() {
+	return DONE;
+}
+void ai_scientific::_actionStunt() {
+}
+
+void ai_scientific::_StuntEndState() {
+	ChangeState("idle");
+}
+
+CEntity* ai_scientific::getMyEntity() {
+	CHandle me = CHandle(this);
+	return me.getOwner();
+}
