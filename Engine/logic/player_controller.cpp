@@ -257,6 +257,11 @@ void player_controller::UpdatePossession() {
 
 			//Se desactiva el player
 			controlEnabled = false;
+
+			//TODO: Desactivar render
+			CEntity* eMe = CHandle(this).getOwner();
+			TCompTransform* tMe = eMe->get<TCompTransform>();
+			tMe->setPosition(VEC3(0, 100, 0));
 		}
 		else {
 			____TIMER_CHECK_DO_(timeShowAblePossess);
@@ -303,4 +308,28 @@ void player_controller::recalcPossassable() {
 			}
 		}
 	}
+}
+
+void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
+	// Handles y entities necesarias
+	CHandle  hMe = CHandle(this).getOwner();
+	CEntity* eMe = hMe;
+	CHandle hPlayer = tags_manager.getFirstHavingTag(getID("player"));
+	CEntity* ePlayer = hPlayer;
+
+	//Colocamos el player
+	TCompTransform* tMe = eMe->get<TCompTransform>();
+	tMe->lookAt(msg.npcPos, msg.npcPos + msg.npcFront * 1);
+	tMe->setPosition(msg.npcPos + msg.npcFront * DIST_LEAVING_POSSESSION);
+
+	//Set 3rd Person Controller
+	TMsgSetTarget msg3rdController;
+	msg3rdController.target = hMe;
+	ePlayer->sendMsg(msg3rdController);
+
+	//Set Camera
+	camera = CHandle(ePlayer);
+
+	//Habilitamos control
+	controlEnabled = true;
 }

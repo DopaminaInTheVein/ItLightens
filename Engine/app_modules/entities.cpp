@@ -81,7 +81,9 @@ bool CEntitiesModule::start() {
 	//Posesiones Mensajes
 	//..Cientifico
 	SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
-	SUBSCRIBE(player_controller_speedy, TMsgPossControllerSetEnable, onSetEnable);
+	SUBSCRIBE(player_controller_speedy, TMsgControllerSetEnable, onSetEnable);
+	//..PJ Principal
+	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
 
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene00.xml");

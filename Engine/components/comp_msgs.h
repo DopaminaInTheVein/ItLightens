@@ -47,8 +47,14 @@ struct TMsgNoise {
 	DECLARE_MSG_ID();
 };
 
-struct TMsgPossControllerSetEnable {
+struct TMsgControllerSetEnable {
 	bool enabled;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgPossessionLeave {
+	VEC3 npcPos;
+	VEC3 npcFront;
 	DECLARE_MSG_ID();
 };
 

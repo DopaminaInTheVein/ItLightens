@@ -26,7 +26,7 @@ public:
 	void UpdatePossession();
 
 	//Mensajes
-	void onSetEnable(const TMsgPossControllerSetEnable&);
+	void onSetEnable(const TMsgControllerSetEnable&);
 	void onSetEnable(bool);
 
 	//FUNCIONES QUE REDEFINIR!
