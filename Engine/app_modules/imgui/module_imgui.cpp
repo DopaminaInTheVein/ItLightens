@@ -4,6 +4,7 @@
 #include "resources/resources_manager.h"
 #include "app_modules/entities.h"
 #include "handle/handle_manager.h"
+#include "components/entity.h"
 #include "components/components.h"
 #include "components/entity_tags.h"
 // ImGui LIB headers
@@ -12,7 +13,6 @@
 #pragma comment(lib, "imgui.lib" )
 
 #include "handle/object_manager.h"
-#include "components/entity.h"
 #include "debug/debug.h"
 
 #include <Commdlg.h>
@@ -34,10 +34,14 @@ void CImGuiModule::update(float dt) {
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_MenuBar;
 	bool menu = true;
-	TTagID tagIDplayer = getID("target");
+	TTagID tagIDplayer = getID("player");
 	CHandle player = tags_manager.getFirstHavingTag(tagIDplayer);
 	CEntity * player_e = player;
-	TCompLife * life = player_e->get<TCompLife>();
+
+	TCompController3rdPerson * camara3rd = player_e->get<TCompController3rdPerson>();
+	CEntity * target_e = camara3rd->target;
+
+	TCompLife * life = target_e->get<TCompLife>();
 
 	if (life->currentlife <= 0.0f) {
 		ImGui::Begin("Fatal Player State", &menu, ImVec2(300, 100), -1.0f, window_flags);

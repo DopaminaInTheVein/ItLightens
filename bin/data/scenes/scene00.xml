@@ -79,7 +79,6 @@
     <tag name="AI_poss" />
     <transform pos="1 0 1" />
     <name name="scientist1" />
-    <render_static_mesh name="static_meshes/tetera2.static_mesh" />
     <cientifico />
     <life points="100" />
   </entity>
@@ -108,5 +107,6 @@
       wpt6_pos = " -5  0  -5"
       wpt7_pos = " -5  0   5" />
     <player_speedy />
+    <render_static_mesh name="static_meshes/tetera2.static_mesh" />
   </entity>
 </entities>
