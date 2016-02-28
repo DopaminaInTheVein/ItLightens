@@ -1,6 +1,9 @@
 #include "mcv_platform.h"
 #include "comp_camera.h"
+#include "comp_controller_3rd_person.h"
 #include "comp_transform.h"
+#include "comp_life.h"
+#include "entity.h"
 #include "resources/resources_manager.h"
 #include "render/mesh.h"
 #include "render/shader_cte.h"
@@ -39,11 +42,21 @@ void TCompCamera::update(float dt) {
 	assert(e_owner);
 	TCompTransform* tmx = e_owner->get<TCompTransform>();
 	assert(tmx);
-	VEC3 pos = tmx->getPosition();
-	pos.y += 2;
-	tmx->setPosition(pos);
+	TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
+	CHandle targetowner = obtarged->target;
+	CEntity* targeted = targetowner;
+	TCompLife * targetlife = targeted->get<TCompLife>();
+	TCompTransform * targettrans = targeted->get<TCompTransform>();
 
-	this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());	//smooth movement
+	if (targetlife->currentlife > 0.0f) {
+		VEC3 pos = tmx->getPosition();
+		pos.y += 2;
+		tmx->setPosition(pos);
+		this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());	//smooth movement
+	}
+	else {
+		this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());	//smooth movement
+	}
 	//this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());		//too robotic
 }
 

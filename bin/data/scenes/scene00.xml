@@ -7,7 +7,7 @@
     <controller_3rd_person />
   </entity>
   <entity>
-    <life points="100" />
+    <life points="50" />
     <tag name="target" />
     <transform pos="21 0 0" />
     <name name="pj" />

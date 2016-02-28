@@ -59,6 +59,8 @@ protected:
 	void UpdateDirection();
 
 	void energyDecreasal(float howmuch);
+	bool checkDead();
+	void orbitCameraDeath();
 public:
 
 	CPlayerBase();

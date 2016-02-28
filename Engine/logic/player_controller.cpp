@@ -37,31 +37,33 @@ void player_controller::Init() {
 }
 
 void player_controller::Idle() {
-	if (Input.IsMinusPolarityPressedDown() && nearMinus()) {
-		energyDecreasal(getDeltaTime());
-		ChangeState("tominus");
-	}
-	else if (Input.IsPlusPolarityPressedDown() && nearPlus()) {
-		energyDecreasal(getDeltaTime());
-		ChangeState("toplus");
-	}
-	else if (polarizedCurrentSpeed > 1.0f) {
-		energyDecreasal(getDeltaTime());
-		polarizedMove = false;
-		CEntity * entPoint = nullptr;
-		if (tominus) {
-			entPoint = this->getMinusPointHandle(topolarizedminus);
+	if (!checkDead()) {
+		if (Input.IsMinusPolarityPressedDown() && nearMinus()) {
+			energyDecreasal(getDeltaTime()*0.05f);
+			ChangeState("tominus");
 		}
-		else if (toplus) {
-			entPoint = this->getPlusPointHandle(topolarizedplus);
+		else if (Input.IsPlusPolarityPressedDown() && nearPlus()) {
+			energyDecreasal(getDeltaTime()*0.05f);
+			ChangeState("toplus");
 		}
-		AttractMove(entPoint);
-	}
-	else {
-		topolarizedplus = -1;
-		topolarizedminus = -1;
-		polarizedCurrentSpeed = 0.0f;
-		CPlayerBase::Idle();
+		else if (polarizedCurrentSpeed > .2f) {
+			energyDecreasal(getDeltaTime()*0.1f);
+			polarizedMove = false;
+			CEntity * entPoint = nullptr;
+			if (tominus) {
+				entPoint = this->getMinusPointHandle(topolarizedminus);
+			}
+			else if (toplus) {
+				entPoint = this->getPlusPointHandle(topolarizedplus);
+			}
+			AttractMove(entPoint);
+		}
+		else {
+			topolarizedplus = -1;
+			topolarizedminus = -1;
+			polarizedCurrentSpeed = 0.0f;
+			CPlayerBase::Idle();
+		}
 	}
 }
 
@@ -112,6 +114,12 @@ void player_controller::Jumping()
 	}
 	if (Input.IsSpacePressedDown()) {
 		jspeed = jimpulse;
+		if (player_position.y <= 0) {
+			energyDecreasal(1.0f);
+		}
+		else {
+			energyDecreasal(5.0f);
+		}
 		ChangeState("doublejump");
 	}
 }
@@ -127,6 +135,7 @@ void player_controller::Falling()
 
 	if (Input.IsSpacePressedDown()) {
 		jspeed = jimpulse;
+		energyDecreasal(5.0f);
 		ChangeState("doublejump");
 	}
 

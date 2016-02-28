@@ -4,6 +4,7 @@
 #include <windows.h>
 #include "handle\object_manager.h"
 #include "components\comp_transform.h"
+#include "components\comp_life.h"
 #include "components\entity.h"
 #include "components\entity_tags.h"
 
@@ -18,6 +19,15 @@ CPlayerBase::CPlayerBase() {
 	AddState("die", (statehandler)&CPlayerBase::Die);
 }
 
+bool CPlayerBase::checkDead() {
+	SetMyEntity();
+	TCompLife * player_life = myEntity->get<TCompLife>();
+	if (player_life->currentlife <= 0) {
+		ChangeState("die");
+		return true;
+	}
+	return false;
+}
 void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 	camera = msg.camera;
 }
@@ -25,8 +35,8 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 void CPlayerBase::update(float elapsed) {
 	Input.Frame();
 	UpdateInputActions();
-	Recalc();
 	UpdateMoves();
+	Recalc();
 }
 
 //##########################################################################
@@ -96,7 +106,7 @@ void CPlayerBase::UpdateMoves()
 		if (player_y < camera_min_height)
 			player_y = camera_min_height;
 
-		camera_comp->lookAt(camera_comp->getPosition(), VEC3(player_position.x, player_y, player_position.z));
+		camera_comp->lookAt(camera_position, VEC3(player_position.x, player_y, player_position.z));
 		camera_comp->update(getDeltaTime());
 	}
 	else {
@@ -113,39 +123,43 @@ void CPlayerBase::UpdateMoves()
 
 bool CPlayerBase::UpdateMovDirection() {
 	moving = false;
+
 	bool moving_h = false;
 	bool moving_v = false;
+	directionLateral = VEC3(0, 0, 0);
+	directionForward = VEC3(0, 0, 0);
 
-	if (Input.IsUpPressed() && !Input.IsDownPressed()) {
-		directionForward = VEC3(0, 0, 1);
-		moving = true;
-		moving_v = true;
-	}
-	else if (Input.IsDownPressed() && !Input.IsUpPressed()) {
-		directionForward = VEC3(0, 0, -1);
-		moving = true;
-		moving_v = true;
-	}
+	if (!checkDead()) {
+		if (Input.IsUpPressed() && !Input.IsDownPressed()) {
+			directionForward = VEC3(0, 0, 1);
+			moving = true;
+			moving_v = true;
+		}
+		else if (Input.IsDownPressed() && !Input.IsUpPressed()) {
+			directionForward = VEC3(0, 0, -1);
+			moving = true;
+			moving_v = true;
+		}
 
-	if (Input.IsLeftPressed() && !Input.IsRightPressed()) {
-		directionLateral = VEC3(1, 0, 0);
-		moving = true;
-		moving_h = true;
-	}
-	else if (Input.IsRightPressed() && !Input.IsLeftPressed()) {
-		directionLateral = VEC3(-1, 0, 0);
-		moving = true;
-		moving_h = true;
-	}
+		if (Input.IsLeftPressed() && !Input.IsRightPressed()) {
+			directionLateral = VEC3(1, 0, 0);
+			moving = true;
+			moving_h = true;
+		}
+		else if (Input.IsRightPressed() && !Input.IsLeftPressed()) {
+			directionLateral = VEC3(-1, 0, 0);
+			moving = true;
+			moving_h = true;
+		}
 
-	//TODO: depends on movemtent type, maybe wont be needed
-	if (moving_h && !moving_v) {	//moving only one direction
-		directionForward = VEC3(0, 0, 0);
+		//TODO: depends on movemtent type, maybe wont be needed
+		if (moving_h && !moving_v) {	//moving only one direction
+			directionForward = VEC3(0, 0, 0);
+		}
+		else if (!moving_h && moving_v) {	//moving only one direction
+			directionLateral = VEC3(0, 0, 0);
+		}
 	}
-	else if (!moving_h && moving_v) {	//moving only one direction
-		directionLateral = VEC3(0, 0, 0);
-	}
-
 	return moving;
 }
 
@@ -191,14 +205,19 @@ void CPlayerBase::energyDecreasal(float howmuch) {
 
 void CPlayerBase::Idle()
 {
-	energyDecreasal(getDeltaTime());
-	UpdateDirection();
-	UpdateJumpState();
-	if (UpdateMovDirection()) ChangeState("moving");
+	if (!checkDead()) {
+		energyDecreasal(getDeltaTime()*0.05f);
+		UpdateDirection();
+		UpdateJumpState();
+		if (UpdateMovDirection()) ChangeState("moving");
+	}
 }
 
 void CPlayerBase::Jump()
 {
+	if (onGround) {
+		energyDecreasal(1.0f);
+	}
 	jspeed = jimpulse;
 	directionJump = VEC3(0, 1, 0);
 	onGround = false;
@@ -207,6 +226,18 @@ void CPlayerBase::Jump()
 
 void CPlayerBase::Die()
 {
+	SetMyEntity();
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	VEC3 player_position = player_transform->getPosition();
+	if (player_position.y > 0.0f) {
+		Falling();
+	}
+	else {
+		onGround = true;
+		jspeed = 0.0f;
+		directionJump = VEC3(0, 0, 0);
+	}
+	orbitCameraDeath();
 	dbg("die!\n");
 	ChangeState("idle");
 }
@@ -247,6 +278,7 @@ void CPlayerBase::Jumping()
 
 void CPlayerBase::Moving()
 {
+	energyDecreasal(getDeltaTime()*0.05f);
 	UpdateDirection();
 	UpdateJumpState();
 	if (!UpdateMovDirection()) ChangeState("idle");
@@ -270,4 +302,34 @@ void CPlayerBase::renderInMenu()
 	ImGui::Text("NODE: %s\n", state.c_str());
 	ImGui::Text("direction: %.4f, %.4f, %.4f", direction.x, direction.y, direction.z);
 	ImGui::Text("jump: %.5f", jspeed);
+}
+
+void CPlayerBase::orbitCameraDeath() {
+	float angle = getDeltaTime();
+	float s = sin(angle);
+	float c = cos(angle);
+
+	// translate point back to origin:
+	TCompTransform* target_transform = myEntity->get<TCompTransform>();
+
+	CEntity * camera_e = camera;
+	//TCompCamera* camera_transform = camera_e->get<TCompCamera>();
+	TCompTransform* player_transform = camera_e->get<TCompTransform>();
+	TCompCamera* player_cam = camera_e->get<TCompCamera>();
+
+	VEC3 entPos = player_transform->getPosition();
+	entPos.x -= target_transform->getPosition().x;
+	entPos.z -= target_transform->getPosition().z;
+
+	// rotate point
+	float xnew = entPos.x * c - entPos.z * s;
+	float ynew = entPos.x * s + entPos.z * c;
+
+	// translate point back:
+	entPos.x = xnew + target_transform->getPosition().x;
+	entPos.z = ynew + target_transform->getPosition().z;
+
+	player_transform->setPosition(entPos);
+
+	player_cam->update(getDeltaTime());
 }

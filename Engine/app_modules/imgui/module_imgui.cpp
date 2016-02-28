@@ -34,14 +34,19 @@ void CImGuiModule::update(float dt) {
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_MenuBar;
 	bool menu = true;
-
-	ImGui::Begin("Debug UI", &menu, ImVec2(800, 512), -1.0f, window_flags);
-	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
-
 	TTagID tagIDplayer = getID("target");
 	CHandle player = tags_manager.getFirstHavingTag(tagIDplayer);
 	CEntity * player_e = player;
 	TCompLife * life = player_e->get<TCompLife>();
+
+	if (life->currentlife <= 0.0f) {
+		ImGui::Begin("Fatal Player State", &menu, ImVec2(300, 100), -1.0f, window_flags);
+		ImGui::Text("You are Dead!\n");
+		ImGui::End();
+	}
+
+	ImGui::Begin("Debug UI", &menu, ImVec2(800, 512), -1.0f, window_flags);
+	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 
 	ImGui::Text("LifeBar\n");
 	string lifeString = "|";

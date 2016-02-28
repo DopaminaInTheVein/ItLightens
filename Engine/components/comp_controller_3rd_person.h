@@ -5,6 +5,7 @@
 #include "handle/handle.h"
 #include "entity.h"
 #include "comp_transform.h"
+#include "comp_life.h"
 #include "comp_msgs.h"
 #include "geometry/angular.h"
 
@@ -25,7 +26,7 @@ struct TCompController3rdPerson : public TCompBase {
 
 	void update(float dt) {
 		CEntity* e_target = target;
-		if (!e_target)
+		if (!e_target || ((TCompLife*)e_target->get<TCompLife>())->currentlife <= 0.0f)
 			return;
 		TCompTransform* target_tmx = e_target->get<TCompTransform>();
 		assert(target_tmx);
