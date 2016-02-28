@@ -56,6 +56,7 @@ public:
 	//virtual ACTION_RESULT _actionBeingUnpossessed();
 	//virtual void _actionStunt();
 	//virtual void _StuntEndState();
+	//virtual CEntity* getMyEntity() = 0;
 };
 
 #endif

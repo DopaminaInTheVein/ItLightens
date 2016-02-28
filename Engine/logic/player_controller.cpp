@@ -34,10 +34,12 @@ void player_controller::Init() {
 	player_y = starting_player_y;
 
 	ChangeState("idle");
+	controlEnabled = true;
 }
 
 void player_controller::Idle() {
 	if (!checkDead()) {
+		UpdatePossession();
 		if (Input.IsMinusPolarityPressedDown() && nearMinus()) {
 			energyDecreasal(getDeltaTime()*0.05f);
 			ChangeState("tominus");
@@ -240,4 +242,65 @@ void player_controller::AttractMove(CEntity * entPoint) {
 	player_position.x += tox;
 	player_position.z += toz;
 	player_transform->setPosition(player_position);
+}
+
+//Possession
+void player_controller::UpdatePossession() {
+	recalcPossassable();
+	if (currentPossessable.isValid()) {
+		if (Input.IsLeftClickPressedDown()) {
+			// Se avisa el ai_poss que ha sido poseído
+			CEntity* ePoss = currentPossessable;
+			TMsgAISetPossessed msg;
+			msg.possessed = true;
+			ePoss->sendMsg(msg);
+
+			//Se desactiva el player
+			controlEnabled = false;
+		}
+		else {
+			____TIMER_CHECK_DO_(timeShowAblePossess);
+			dbg("Press to POSSESS!\n");
+			____TIMER_CHECK_DONE_(timeShowAblePossess);
+		}
+	}
+	else {
+		____TIMER_CHECK_DO_(timeShowAblePossess);
+		dbg("_\n");
+		____TIMER_CHECK_DONE_(timeShowAblePossess);
+	}
+}
+
+// Recalcula el mejor candidato para poseer
+void player_controller::recalcPossassable() {
+	float minDeltaYaw = FLT_MAX;
+	float minDistance = FLT_MAX;
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	VEC3 player_position = player_transform->getPosition();
+	currentPossessable = CHandle();
+	VHandles possessables = tags_manager.getHandlesByTag(getID("AI_poss"));
+	for (CHandle hPoss : possessables) {
+		CEntity* ePoss = hPoss;
+		TCompTransform* tPoss = ePoss->get<TCompTransform>();
+		VEC3 posPoss = tPoss->getPosition();
+		float dist = realDistXZ(player_position, posPoss);
+		if (dist < possessionReach) {
+			float yaw = player_transform->getDeltaYawToAimTo(posPoss);
+			if (abs(yaw) > deg2rad(90)) continue;
+			if (yaw < minDeltaYaw) {
+				bool isBetter = false;
+				if (minDeltaYaw - yaw > deg2rad(2)) {
+					isBetter = true;
+				}
+				else if (dist < minDistance) {
+					isBetter = true;
+				}
+				if (isBetter) {
+					currentPossessable = hPoss;
+					minDeltaYaw = yaw;
+					minDistance = dist;
+				}
+			}
+		}
+	}
 }

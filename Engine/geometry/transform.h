@@ -37,6 +37,7 @@ public:
 	void       getAngles(float* yaw, float* pitch) const {
 		VEC3 f = getFront();
 		getYawPitchFromVector(f, yaw, pitch);
+
 	}
 	void setAngles(float new_yaw, float new_pitch) {
 		rotation = CQuaternion::CreateFromYawPitchRoll(new_yaw, -new_pitch, 0.f);

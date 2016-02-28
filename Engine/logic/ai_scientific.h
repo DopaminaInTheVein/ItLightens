@@ -1,7 +1,7 @@
 #ifndef INC_AI_SCIENTIFIC_H_
 #define	INC_AI_SCIENTIFIC_H_
 
-#include "aicontroller.h"
+#include "ai_poss.h"
 
 #include "components\comp_base.h"
 #include "handle\handle.h"
@@ -18,7 +18,7 @@ class CObjectManager;
 
 //--------------------------------------
 
-class ai_scientific : public aicontroller, public TCompBase {
+class ai_scientific : public ai_poss, public TCompBase {
 	//Enum actions for bot
 	enum {
 		IDLE = 0,
@@ -106,6 +106,14 @@ public:
 
 	//UI Debug for scientific AI
 	void renderInMenu();
+
+	//Possession
+	virtual void _actionBeforePossession();
+	virtual ACTION_RESULT _actionBeingPossessed();
+	virtual ACTION_RESULT _actionBeingUnpossessed();
+	virtual void _actionStunt();
+	virtual void _StuntEndState();
+	virtual CEntity* getMyEntity();
 
 	//Overload function for handler_manager
 	ai_scientific& ai_scientific::operator=(ai_scientific arg) { return arg; }

@@ -78,6 +78,11 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 
+	//Posesiones Mensajes
+	//..Cientifico
+	SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
+	SUBSCRIBE(player_controller_speedy, TMsgPossControllerSetEnable, onSetEnable);
+
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene00.xml");
 	assert(is_ok);
@@ -147,7 +152,7 @@ void CEntitiesModule::stop() {
 void CEntitiesModule::update(float dt) {
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
-	// getHandleManager<player_controller_speedy>()->updateAll(dt);
+	getHandleManager<player_controller_speedy>()->updateAll(dt);
 	// getHandleManager<player_controller_mole>()->updateAll(dt);
 
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);

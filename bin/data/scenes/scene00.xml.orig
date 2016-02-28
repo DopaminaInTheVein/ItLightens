@@ -81,6 +81,7 @@
     <name name="scientist1" />
     <render_static_mesh name="static_meshes/tetera2.static_mesh" />
     <cientifico />
+<<<<<<< HEAD
     <life points="100" />
   </entity>
 
@@ -107,6 +108,8 @@
       wpt5_pos = "  5  0  -5"
       wpt6_pos = " -5  0  -5"
       wpt7_pos = " -5  0   5" />
+=======
     <player_speedy />
+>>>>>>> developBase
   </entity>
 </entities>

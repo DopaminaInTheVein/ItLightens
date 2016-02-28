@@ -21,3 +21,5 @@ bool CTransform::isInFront(VEC3 target) const {
 bool CTransform::isInLeft(VEC3 target) const {
 	return getDeltaYawToAimTo(target) > 0.f;
 }
+
+

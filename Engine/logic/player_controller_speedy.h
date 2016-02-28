@@ -1,7 +1,7 @@
 #ifndef INC_PLAYER_CONTROLLER_SPEEDY_H_
 #define INC_PLAYER_CONTROLLER_SPEEDY_H_
 
-#include "aicontroller.h"
+#include "poss_controller.h"
 #include "sbb.h"
 
 #include "components\comp_base.h"
@@ -13,8 +13,7 @@
 
 #include "player_controller_base.h"
 
-class player_controller_speedy : public CPlayerBase {
-
+class player_controller_speedy : public PossController {
 	CObjectManager<player_controller_speedy> *om;
 
 	bool in_speedy = false;
@@ -32,10 +31,10 @@ class player_controller_speedy : public CPlayerBase {
 	float blink_timer = 0.f;
 	bool blink_ready = true;
 	const float blink_cooldown = 5.f;
-	
+
 public:
 	void Init();
-	void update(float elapsed);
+	void myUpdate(float elapsed);
 
 	void UpdateInputActions();
 
@@ -49,6 +48,10 @@ public:
 	void updateDashTimer();
 	void resetBlinkTimer();
 	void updateBlinkTimer();
+
+	void DisabledState();
+	void InitControlState();
+	CEntity* getMyEntity();
 
 	//Overload function for handler_manager
 	player_controller_speedy& player_controller_speedy::operator=(player_controller_speedy arg) { return arg; }
