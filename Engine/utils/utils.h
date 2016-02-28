@@ -21,13 +21,17 @@ float getDeltaTime();
 
 float squared(float i);
 
-float realDist(VEC3 init, VEC3 dest);
-float realDistXZ(VEC3 init, VEC3 dest);
+float realDist(const VEC3& init, const VEC3& dest);
+float realDistXZ(const VEC3& init, const VEC3& dest);
 
-float squaredDist(VEC3 init, VEC3 dest);
-float squaredDistXZ(VEC3 init, VEC3 dest);
+float squaredDist(const VEC3& init, const VEC3& dest);
+float squaredDistXZ(const VEC3& init, const VEC3& dest);
 
-float simpleDistXZ(VEC3 init, VEC3 dest);
-float simpleDist(VEC3 init, VEC3 dest);
+float simpleDistXZ(const VEC3& init, const VEC3& dest);
+float simpleDist(VEC3& init, VEC3& dest);
+
+void getRotationMatrix(const double roll, const double pitch, const double yaw, MAT44 &R);
+VEC3 productVectorMatrix(const VEC4& vec, const MAT44& matrix);
+VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const float yaw);
 
 #endif

@@ -41,7 +41,7 @@ void CPlayerBase::UpdateMoves()
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
-	VEC3 direction = directionForward + directionLateral;
+	VEC3 direction = directionForward;
 
 	CEntity * camera_e = camera;
 	TCompCamera* camera_comp = camera_e->get<TCompCamera>();
@@ -62,7 +62,7 @@ void CPlayerBase::UpdateMoves()
 
 	if (onGround) {
 		//Set current velocity with friction
-		float drag = 0.001f;
+		float drag = 0.002f;
 		float drag_i = (1 - drag);
 
 		if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
@@ -89,20 +89,6 @@ void CPlayerBase::UpdateMoves()
 	if (rotate != 0) {
 		player_transform->setAngles(yaw + rotate*player_rotation_speed*getDeltaTime(), pitch);
 	}
-	if (rotateXY != 0) {
-		player_y += rotateXY*player_rotation_speed*getDeltaTime();
-
-		if (player_y > camera_max_height)
-			player_y = camera_max_height;
-		if (player_y < camera_min_height)
-			player_y = camera_min_height;
-
-		camera_comp->lookAt(camera_comp->getPosition(), VEC3(player_position.x, player_y, player_position.z));
-		camera_comp->update(getDeltaTime());
-	}
-	else {
-		player_y = starting_player_y;
-	}
 
 }
 #pragma endregion
@@ -115,37 +101,14 @@ void CPlayerBase::UpdateMoves()
 
 bool CPlayerBase::UpdateMovDirection() {
 	moving = false;
-	bool moving_h = false;
-	bool moving_v = false;
 
 	if (Input.IsUpPressed() && !Input.IsDownPressed()) {
 		directionForward = VEC3(0, 0, 1);
 		moving = true;
-		moving_v = true;
 	}
 	else if (Input.IsDownPressed() && !Input.IsUpPressed()) {
 		directionForward = VEC3(0, 0, -1);
 		moving = true;
-		moving_v = true;
-	}
-
-	if (Input.IsLeftPressed() && !Input.IsRightPressed()) {
-		directionLateral = VEC3(1, 0, 0);
-		moving = true;
-		moving_h = true;
-	}
-	else if (Input.IsRightPressed() && !Input.IsLeftPressed()) {
-		directionLateral = VEC3(-1, 0, 0);
-		moving = true;
-		moving_h = true;
-	}
-
-	//TODO: depends on movemtent type, maybe wont be needed
-	if (moving_h && !moving_v) {	//moving only one direction
-		directionForward = VEC3(0, 0, 0);
-	}
-	else if (!moving_h && moving_v) {	//moving only one direction
-		directionLateral = VEC3(0, 0, 0);
 	}
 
 	return moving;
@@ -158,19 +121,13 @@ void CPlayerBase::UpdateJumpState() {
 }
 
 void CPlayerBase::UpdateDirection() {
-	if (Input.IsOrientLeftPressed() || Input.IsMouseMovedLeft())
+	if (Input.IsOrientLeftPressed())
 		rotate = 1;
-	else if (Input.IsOrientRightPressed() || Input.IsMouseMovedRight())
+	else if (Input.IsOrientRightPressed())
 		rotate = -1;
-	else if (Input.IsOrientUpPressed())
-		rotateXY = 1;
-	else if (Input.IsOrientDownPressed())
-		rotateXY = -1;
 	else {
 		rotate = 0;
-		rotateXY = 0;
 	}
-	Input.UpdateMousePosition();
 }
 
 void CPlayerBase::UpdateInputActions() {
