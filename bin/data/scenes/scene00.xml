@@ -14,34 +14,6 @@
     <player />
     <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
   </entity>
-
-  <entity>
-    <name name="attractionPointPlus" />
-    <tag name="plus_wall" />
-    <transform pos="5 0 50" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>
-
-  <entity>
-    <name name="attractionPointMinus" />
-    <tag name="minus_wall" />
-    <transform pos="5 0 -50" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>
-
-  <entity>
-    <name name="box1" />
-    <tag name="box" />
-    <transform pos="5 0 0" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>
-  <entity>
-    <name name="breakable_wall_e" />
-    <tag name="breakable_wall" />
-    <transform pos="25 0 0" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>
-  <entity>
-    <name name="box_leavepoint1" />
-    <tag name="box_leavepoint" />
-    <transform pos="5 0 5" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>
   <entity>
     <tag name="AI" />
     <name name="ia_mole1" />
@@ -52,14 +24,11 @@
     <player_mole />
     <ai_mole />
   </entity>
-  <!--
   <entity>
     <tag name="AI" />
     <tag name="AI_guard" />
-    <tag name="ears" />
-    <name name="guard1" />
-    <transform pos="0 0 0" />
-
+    <transform pos="7 0 7" rotation="1 2 3 3" scale="1 1 1" />
+    <life points="100" />
     <ai_guard
       kpt_size  = "8"
       kpt0_type = "seek" kpt0_pos = " 10  0  10" kpt0_wait = "2"
@@ -83,5 +52,4 @@
     <cientifico />
     <player_cientifico />
   </entity>
-  -->
 </entities>
