@@ -192,7 +192,7 @@ void CInput::Shutdown()
 bool CInput::Frame()
 {
 	bool result;
-
+	UpdateMousePosition();
 	// Update the pressed vectors for keyboard, mouse and joystick
 	for (int i = 0; i < key_pressed.size(); i++) {
 		if (IsKeyPressed(i))
@@ -317,6 +317,8 @@ void CInput::ProcessInput()
 	m_mouseX += m_mouseState.lX;
 	m_mouseY += m_mouseState.lY;
 
+	dbg("mouse %d\n",m_mouseState.lX);
+
 	// Ensure the mouse location doesn't exceed the screen width or height.
 	if (m_mouseX < 0) { m_mouseX = 0; }
 	if (m_mouseY < 0) { m_mouseY = 0; }
@@ -336,17 +338,11 @@ void CInput::GetMouseLocation(int& mouseX, int& mouseY)
 }
 // Difference in X between the current frame and the last
 int CInput::GetMouseDiffX() {
-	int mouse_x, mouse_y;
-	GetMouseLocation(mouse_x, mouse_y);
-
-	return mouse_x - last_mouseX.back();
+	return m_mouseState.lX;
 }
 // Difference in X between the current frame and the last
 int CInput::GetMouseDiffY() {
-	int mouse_x, mouse_y;
-	GetMouseLocation(mouse_x, mouse_y);
-
-	return mouse_y - last_mouseY.back();
+	return m_mouseState.lY;
 }
 
 // Updates mouse location
@@ -596,7 +592,7 @@ bool CInput::IsOrientDownPressed() {
 // Detects if the Left orientation is pressed (key Q)
 bool CInput::IsOrientLeftPressed() {
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
-	if ((m_keyboardState[DIK_Q] & 0x80) || (m_joystick != nullptr && m_joystickState.lRx < joystick_sensibility - joystick_axis_min))
+	if ((m_keyboardState[DIK_A] & 0x80) || (m_joystick != nullptr && m_joystickState.lX < joystick_sensibility - joystick_axis_min))
 	{
 		return true;
 	}
@@ -607,7 +603,7 @@ bool CInput::IsOrientLeftPressed() {
 // Detects if the right orientation is pressed (key E)
 bool CInput::IsOrientRightPressed() {
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
-	if ((m_keyboardState[DIK_E] & 0x80) || (m_joystick != nullptr && m_joystickState.lRx > (joystick_axis_max - joystick_sensibility)))
+	if ((m_keyboardState[DIK_D] & 0x80) || (m_joystick != nullptr && m_joystickState.lX > (joystick_axis_max - joystick_sensibility)))
 	{
 		return true;
 	}
@@ -758,27 +754,39 @@ bool CInput::getJoystickButtonPressed(int &pressed) {
 	return true;
 }
 
-int CInput::GetLeftStickX() {
+float CInput::GetLeftStickX() {
 	if (m_joystick == nullptr)
 		return -1;
 
 	return m_joystickState.lX;
 }
-int CInput::GetLeftStickY() {
+float CInput::GetLeftStickY() {
 	if (m_joystick == nullptr)
 		return -1;
 
 	return m_joystickState.lY;
 }
-int CInput::GetRightStickX() {
+float CInput::GetRightStickX() {
 	if (m_joystick == nullptr)
 		return -1;
 
-	return m_joystickState.lRx;
+	//normalize betwen 0-1
+	float ry = (m_joystickState.lRx - joystick_axis_min) / float(joystick_axis_max - joystick_axis_min);
+
+	//range -1,1
+	float value = (ry - 0.5f) * 2;
+	if (fabs(value) < 0.1f) return 0.0f;
+	return value;
 }
-int CInput::GetRightStickY() {
+float CInput::GetRightStickY() {
 	if (m_joystick == nullptr)
 		return -1;
 
-	return m_joystickState.lRy;
+	//normalize betwen 0-1
+	float ry = (m_joystickState.lRy - joystick_axis_min) / float(joystick_axis_max - joystick_axis_min);
+
+	//range -1,1
+	float value = (ry-0.5f)*2;
+	if (fabs(value) < 0.1f) return 0.0f;
+	return value;
 }

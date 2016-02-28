@@ -9,14 +9,14 @@
   </entity>
   <entity>
     <tag name="target" />
-    <transform pos="21 0 0" />
+    <transform pos="2 0 1" />
     <name name="pj" />
     <player />
 	<!--
 	<player_mole />
 	<player_speedy />
 	-->
-    <render_static_mesh name="static_meshes/tetera2.static_mesh"/>
+    <render_static_mesh name="static_meshes/player_noposs.static_mesh"/>
   </entity>
   
   <entity>

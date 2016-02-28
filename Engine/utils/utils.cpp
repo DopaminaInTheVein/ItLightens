@@ -41,24 +41,84 @@ float squared(float i) {
 	return i*i;
 }
 
-float realDist(VEC3 init, VEC3 dest) {
+float realDist(const VEC3 &init, const VEC3 &dest) {
 	return sqrtf(squaredDist(init, dest));
 }
-float realDistXZ(VEC3 init, VEC3 dest) {
+float realDistXZ(const VEC3 &init, const VEC3 &dest) {
 	return sqrtf(squaredDistXZ(init, dest));
 }
 
-float squaredDist(VEC3 init, VEC3 dest) {
+float squaredDist(const VEC3& init, const VEC3& dest) {
 	return squared(abs(init.x - dest.x)) + squared(abs(init.y - dest.y)) + squared(abs(init.z - dest.z));
 }
-float squaredDistXZ(VEC3 init, VEC3 dest) {
+float squaredDistXZ(const VEC3& init, const VEC3& dest) {
 	return squared(abs(init.x - dest.x)) + squared(abs(init.z - dest.z));
 }
 
-float simpleDist(VEC3 init, VEC3 dest) {
+float simpleDist(const VEC3& init, const VEC3& dest) {
 	return abs(init.x - dest.x) + abs(init.y - dest.y) + abs(init.z - dest.z);
 }
 
-float simpleDistXZ(VEC3 init, VEC3 dest) {
+float simpleDistXZ(const VEC3 &init, const VEC3 &dest) {
 	return abs(init.x - dest.x) + abs(init.z - dest.z);
+}
+
+//return MAT44 rotation from roll, yaw, pitch
+void getRotationMatrix(double roll, double pitch, double yaw, MAT44 &R)
+{
+	MAT44 Rx, Ry, Rz;
+	Rx = MAT44::Identity;
+	Ry = MAT44::Identity;
+	Rz = MAT44::Identity;
+
+	Rx(3, 3) = 0;
+	Ry(3, 3) = 0;
+	Rz(3, 3) = 0;
+
+
+	pitch = -pitch;
+	yaw = -yaw;
+	roll = -roll;
+	// Rotation over X axis
+	Rx(1, 1) = cos(-pitch*M_PI / 180);
+	Rx(1, 2) = -sin(-pitch*M_PI / 180);
+	Rx(2, 1) = sin(-pitch*M_PI / 180);
+	Rx(2, 2) = cos(-pitch*M_PI / 180);
+
+	// Rotation over Y axis
+	Ry(0, 0) = cos(-yaw*M_PI / 180);
+	Ry(0, 2) = sin(-yaw*M_PI / 180);
+	Ry(2, 0) = -sin(-yaw*M_PI / 180);
+	Ry(2, 2) = cos(-yaw*M_PI / 180);
+
+	// Rotation over X axis
+	Rz(0, 0) = cos(-roll*M_PI / 180);
+	Rz(0, 1) = -sin(-roll*M_PI / 180);
+	Rz(1, 0) = sin(-roll*M_PI / 180);
+	Rz(1, 1) = cos(-roll*M_PI / 180);
+
+	// Rotation matrix R
+	R = Rx*Ry*Rz;
+}
+
+VEC3 productVectorMatrix(const VEC4& vec, const MAT44& matrix) {
+	VEC3 res;
+	res.x = vec.x*matrix(0, 0) + vec.y*matrix(0, 1) + vec.z*matrix(0, 2);
+	res.y = vec.x*matrix(1, 0) + vec.y*matrix(1, 1) + vec.z*matrix(1, 2);
+	res.z = vec.x*matrix(2, 0) + vec.y*matrix(2, 1) + vec.z*matrix(2, 2);
+	return res;
+}
+
+VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const float yaw)
+{
+	if (yaw == 0.0f && pitch == 0.0f && roll == 0.0f)
+		return pos;
+
+	MAT44 rotMatrix;
+	getRotationMatrix(roll, pitch, yaw, rotMatrix);
+
+	VEC4 pos4 = VEC4(pos.x, pos.y, pos.z, 0);
+	VEC3 pos_f = productVectorMatrix(pos4, rotMatrix);
+
+	return pos_f;
 }

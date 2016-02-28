@@ -57,7 +57,7 @@ protected:
 	float starting_player_y = 0;
 	float player_y = 0;
 
-	void UpdateInputActions();
+	virtual void UpdateInputActions();
 	void UpdateMoves();
 	bool UpdateMovDirection();		
 	void UpdateJumpState();
