@@ -55,16 +55,17 @@ public:
 			if (m_pitch < min_pitch)
 				m_pitch = min_pitch;*/
 		}
-	
-		if (Input.GetRightStickX() != 0.0f) {
-			m_yaw = -Input.GetRightStickX()*speed_camera*5;
-		}
-		if (Input.GetRightStickY() != 0.0f) {
-			m_pitch = -Input.GetRightStickY()*speed_camera*5;
-			/*if (m_pitch >= max_pitch)
-				m_pitch = max_pitch;
-			if (m_pitch < min_pitch)
-				m_pitch = min_pitch;*/
+		if (Input.GetRightStickX() >= -1.0f) {
+			if (Input.GetRightStickX() != 0.0f) {
+				m_yaw = -Input.GetRightStickX()*speed_camera * 5;
+			}
+			if (Input.GetRightStickY() != 0.0f) {
+				m_pitch = -Input.GetRightStickY()*speed_camera * 5;
+				/*if (m_pitch >= max_pitch)
+					m_pitch = max_pitch;
+				if (m_pitch < min_pitch)
+					m_pitch = min_pitch;*/
+			}
 		}
 
 		//TODO: mouse wheel, distance

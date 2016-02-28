@@ -756,19 +756,19 @@ bool CInput::getJoystickButtonPressed(int &pressed) {
 
 float CInput::GetLeftStickX() {
 	if (m_joystick == nullptr)
-		return -1;
+		return -2;	//no joystick
 
 	return m_joystickState.lX;
 }
 float CInput::GetLeftStickY() {
 	if (m_joystick == nullptr)
-		return -1;
+		return -2;	//no joystick
 
 	return m_joystickState.lY;
 }
 float CInput::GetRightStickX() {
 	if (m_joystick == nullptr)
-		return -1;
+		return -2;	//no joystick
 
 	//normalize betwen 0-1
 	float ry = (m_joystickState.lRx - joystick_axis_min) / float(joystick_axis_max - joystick_axis_min);
@@ -780,7 +780,7 @@ float CInput::GetRightStickX() {
 }
 float CInput::GetRightStickY() {
 	if (m_joystick == nullptr)
-		return -1;
+		return -2;	//no joystick
 
 	//normalize betwen 0-1
 	float ry = (m_joystickState.lRy - joystick_axis_min) / float(joystick_axis_max - joystick_axis_min);
