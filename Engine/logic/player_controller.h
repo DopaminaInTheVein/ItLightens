@@ -27,8 +27,9 @@ class player_controller : public CPlayerBase {
 	float polarizedCurrentSpeed = 0.0f;
 
 	//Possession
+	float DIST_LEAVING_POSSESSION = 10.0f;
 	CHandle currentPossessable;
-	float possessionReach = 20;
+	float possessionReach = 10.0f;
 
 	//Possession debug
 	____TIMER_DECLARE_(timeShowAblePossess, 1);
@@ -64,6 +65,9 @@ public:
 	void AttractMove(CEntity * ent);
 	bool nearMinus();
 	bool nearPlus();
+
+	//Mensajes
+	void onLeaveFromPossession(const TMsgPossessionLeave&);
 
 	//Overload function for handler_manager
 	player_controller& player_controller::operator=(player_controller arg) { return arg; }

@@ -33,10 +33,9 @@ const void ai_poss::PossessingState() {
 	CEntity* me;
 	switch (_actionBeingPossessed()) {
 	case DONE:
-		dbg("Poseido!\n");
 		ChangeState(ST_POSSESSED);
 		me = getMyEntity();
-		TMsgPossControllerSetEnable msg;
+		TMsgControllerSetEnable msg;
 		msg.enabled = true;
 		me->sendMsg(msg);
 		break;
@@ -51,10 +50,7 @@ const void ai_poss::PossessingState() {
 }
 
 ACTION_RESULT ai_poss::_actionBeingPossessed() {
-	//Ejecutar animacion, etc
-	dbg("Siendo poseido...\n");
-	if (rand() % 10 == 0) return DONE;
-	else return IN_PROGRESS;
+	return DONE;
 }
 
 const void ai_poss::PossessedState() {
@@ -71,6 +67,7 @@ const void ai_poss::UnpossessingState() {
 	switch (_actionBeingUnpossessed()) {
 	case DONE:
 		ChangeState(ST_STUNT);
+		____TIMER_RESET_(timeStunt);
 		//TODO: Enviar mensaje a la misma entidad para apagar PossController (declarado)
 		break;
 

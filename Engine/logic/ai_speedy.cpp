@@ -1,4 +1,4 @@
-#include "mcv_platform.h"<
+#include "mcv_platform.h"
 #include "ai_speedy.h"
 void ai_speedy::Init()
 {
