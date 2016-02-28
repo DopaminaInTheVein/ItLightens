@@ -9,16 +9,17 @@
   </entity>
   <entity>
     <tag name="target" />
-    <transform pos="21 0 0" />
+    <transform pos="2 0 1" />
     <name name="pj" />
     <player />
-    <!--
+<<<<<<< HEAD
+	<!--
 	<player_mole />
 	<player_speedy />
 	-->
-    <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
+    <render_static_mesh name="static_meshes/player_noposs.static_mesh"/>
   </entity>
-
+  
   <entity>
     <name name="attractionPointPlus" />
     <tag name="plus_wall" />
@@ -31,6 +32,7 @@
     <transform pos="5 0 -50" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 
+  
   <entity>
     <name name="box1" />
     <tag name="box" />
@@ -71,6 +73,9 @@
       kpt5_type = "look" kpt5_pos = "  0  0   0" kpt5_wait = "2"
       kpt6_type = "seek" kpt6_pos = "-10  0  10" kpt6_wait = "2"
       kpt7_type = "look" kpt7_pos = "  0  0   0" kpt7_wait = "2" />
+=======
+    <render_static_mesh name="static_meshes/tetera2.static_mesh" />
+>>>>>>> possessionWithPlayer
   </entity>
 
   <entity>
@@ -81,6 +86,6 @@
     <name name="scientist1" />
     <render_static_mesh name="static_meshes/tetera2.static_mesh" />
     <cientifico />
-    <player_speedy />
+    <!--<player_speedy /> -->
   </entity>
 </entities>

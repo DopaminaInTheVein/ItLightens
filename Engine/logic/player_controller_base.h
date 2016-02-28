@@ -1,8 +1,6 @@
 #ifndef INC_PC_BASE_H_
 #define	INC_PC_BASE_H_
 
-
-
 #include "aicontroller.h"
 #include "sbb.h"
 
@@ -13,8 +11,6 @@
 #include "camera\camera.h"
 #include "input\input.h"
 
-
-
 class CEntity;
 class CInput;
 
@@ -24,8 +20,11 @@ template< class TObj >
 class CObjectManager;
 
 class CPlayerBase : public aicontroller, public TCompBase {
-
 protected:
+
+	//Enabled
+	bool enabled = false;
+
 	// Map for debug on ImGui
 	std::map<int, std::string> out;
 
@@ -59,7 +58,7 @@ protected:
 
 	virtual void UpdateInputActions();
 	void UpdateMoves();
-	bool UpdateMovDirection();		
+	bool UpdateMovDirection();
 	void UpdateJumpState();
 	void UpdateDirection();
 
@@ -68,7 +67,6 @@ public:
 	CPlayerBase();
 	void init() { Init(); }
 	void update(float elapsed);
-
 
 	void onSetCamera(const TMsgSetCamera& msg);
 	void SetMyEntity();
@@ -81,7 +79,6 @@ public:
 	void Jumping();
 	void Falling();
 	void Moving();
-	
 
 	void renderInMenu();
 

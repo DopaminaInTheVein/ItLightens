@@ -26,6 +26,13 @@ class player_controller : public CPlayerBase {
 
 	float polarizedCurrentSpeed = 0.0f;
 
+	//Possession
+	CHandle currentPossessable;
+	float possessionReach = 20;
+
+	//Possession debug
+	____TIMER_DECLARE_(timeShowAblePossess, 1);
+
 	TCompTransform * getEntityTransform() {
 		SetMyEntity();
 		CEntity * ent = myParent;
@@ -38,6 +45,9 @@ class player_controller : public CPlayerBase {
 	CHandle getPlusPointHandle(int i) {
 		return SBB::readHandlesVector("wptsPlusPoint")[i];
 	}
+
+	void recalcPossassable();
+	void UpdatePossession();
 
 public:
 	void Init();

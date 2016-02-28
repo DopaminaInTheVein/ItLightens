@@ -88,7 +88,9 @@ void CPlayerBase::UpdateMoves()
 	if (rotate != 0) {
 		player_transform->setAngles(yaw + rotate*player_rotation_speed*getDeltaTime(), pitch);
 	}
+<<<<<<< HEAD
 
+=======
 	if (rotateXY != 0) {
 		player_y += rotateXY*player_rotation_speed*getDeltaTime();
 
@@ -103,6 +105,7 @@ void CPlayerBase::UpdateMoves()
 	else {
 		player_y = starting_player_y;
 	}
+>>>>>>> possessionWithPlayer
 }
 #pragma endregion
 //##########################################################################

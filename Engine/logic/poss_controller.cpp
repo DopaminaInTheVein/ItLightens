@@ -45,6 +45,7 @@ void PossController::onSetEnable(const TMsgPossControllerSetEnable& msg) {
 void PossController::onSetEnable(bool enabled) {
 	dbg("PossController::setEnable(%d)", enabled);
 	npcIsPossessed = enabled;
+	this->enabled = enabled;
 	if (enabled) ChangeState(ST_INIT_CONTROL);
 	else ChangeState(ST_DISABLED);
 }
