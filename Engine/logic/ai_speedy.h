@@ -60,6 +60,8 @@ public:
 	void DashToNewPointState();
 
 	void Init();
+	void init() { IdleState(); }
+	void idle() { IdleState(); }
 	void update(float elapsed);
 	bool load(MKeyValue& atts);
 

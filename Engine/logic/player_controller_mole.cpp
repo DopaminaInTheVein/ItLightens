@@ -14,13 +14,12 @@ void player_controller_mole::Init() {
 
 	DeleteState("jumping");
 	DeleteState("falling");
-	DeleteState("idle");
+	//	DeleteState("idle");
 	DeleteState("moving");
 
 	AddState("grabBox", (statehandler)&player_controller_mole::GrabBox);
 	AddState("leaveBox", (statehandler)&player_controller_mole::LeaveBox);
 	AddState("destroyWall", (statehandler)&player_controller_mole::DestroyWall);
-	AddState("idle", (statehandler)&player_controller_mole::Idle);
 	AddState("moving", (statehandler)&player_controller_mole::Moving);
 
 	myHandle = om->getHandleFromObjAddr(this);
@@ -28,15 +27,8 @@ void player_controller_mole::Init() {
 
 	ChangeState("idle");
 }
-
-void player_controller_mole::Idle()
-{
-	UpdateDirection();
-	UpdateJumpState();
-	if (UpdateMovDirection()) {
-		ChangeState("moving");
-	}
-	else if (Input.IsLeftClickPressed()) {
+void player_controller_mole::UpdateInputActions() {
+	if (Input.IsLeftClickPressed()) {
 		if (boxGrabbed) {
 			ChangeState("leaveBox");
 		}

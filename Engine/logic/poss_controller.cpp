@@ -3,6 +3,7 @@
 #include "ai_poss.h"
 #include "components/entity_tags.h"
 #include "components/comp_transform.h"
+#include "components/comp_name.h"
 
 PossController::PossController() {
 	AddState(ST_DISABLED, (statehandler)&PossController::DisabledState);
@@ -24,6 +25,8 @@ void PossController::UpdatePossession() {
 
 		if (Input.IsKeyPressed(DIK_LSHIFT)) {
 			CEntity* myParent = getMyEntity();
+			TCompName * myParentName = myParent->get<TCompName>();
+			string name = myParentName->name;
 			TMsgAISetPossessed msg;
 			msg.possessed = false;
 			myParent->sendMsg(msg);

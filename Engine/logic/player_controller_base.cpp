@@ -208,7 +208,6 @@ void CPlayerBase::Die()
 		directionJump = VEC3(0, 0, 0);
 	}
 	orbitCameraDeath();
-	dbg("die!\n");
 	ChangeState("idle");
 }
 

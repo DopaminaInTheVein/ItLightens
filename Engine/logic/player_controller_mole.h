@@ -33,7 +33,6 @@ public:
 	void GrabBox();
 	void LeaveBox();
 	void DestroyWall();
-	void Idle();
 	void Moving();
 
 	bool nearToBox();
@@ -42,6 +41,8 @@ public:
 	string selectedBox = "";
 	int selectedBoxi = 0;
 	int selectedWallToBreaki = 0;
+
+	void UpdateInputActions();
 
 	TCompTransform * getEntityTransform() {
 		CEntity * ent = myParent;

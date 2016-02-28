@@ -47,10 +47,10 @@ TMsgID generateUniqueMsgID() {
 }
 
 bool CEntitiesModule::start() {
-	getHandleManager<player_controller>()->init(4);
-	getHandleManager<player_controller_speedy>()->init(4);
-	getHandleManager<player_controller_mole>()->init(4);
-	getHandleManager<player_controller_cientifico>()->init(4);
+	getHandleManager<player_controller>()->init(8);
+	getHandleManager<player_controller_speedy>()->init(8);
+	getHandleManager<player_controller_mole>()->init(8);
+	getHandleManager<player_controller_cientifico>()->init(8);
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);

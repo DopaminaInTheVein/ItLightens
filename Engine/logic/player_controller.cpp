@@ -263,10 +263,10 @@ void player_controller::UpdatePossession() {
 			player_e->sendMsg(msgTarg);
 
 			//Se desactiva el player
-			CEntity * eMe = CHandle(this).getOwner();
 			controlEnabled = false;
 
 			//TODO: Desactivar render
+			CEntity * eMe = CHandle(this).getOwner();
 			TCompTransform* tMe = eMe->get<TCompTransform>();
 			tMe->setPosition(VEC3(0, 100, 0));
 		}

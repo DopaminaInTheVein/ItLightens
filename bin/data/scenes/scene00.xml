@@ -52,6 +52,7 @@
     <player_mole />
     <ai_mole />
   </entity>
+  <!--
   <entity>
     <tag name="AI" />
     <tag name="AI_guard" />
@@ -82,4 +83,5 @@
     <cientifico />
     <player_cientifico />
   </entity>
+  -->
 </entities>

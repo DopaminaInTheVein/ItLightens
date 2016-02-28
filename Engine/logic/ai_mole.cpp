@@ -8,7 +8,7 @@ void ai_mole::Init()
 
 	// insert all states in the map
 	// insertar punters a funcions de una classe hereva del aiccontroller.
-	AddState("idle", (statehandler)&ai_mole::IdleState);
+//	AddState("idle", (statehandler)&ai_mole::IdleState);
 	AddState("seekwpt", (statehandler)&ai_mole::SeekWptState);
 	AddState("orientTowpt", (statehandler)&ai_mole::OrientToWptState);
 	AddState("nextwpt", (statehandler)&ai_mole::NextWptState);

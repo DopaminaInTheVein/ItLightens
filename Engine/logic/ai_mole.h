@@ -67,6 +67,7 @@ public:
 	void Init() override;
 	void update(float dt) { Recalc(); }
 	void init() { Init(); }
+	void idle() { IdleState(); }
 };
 
 #endif
