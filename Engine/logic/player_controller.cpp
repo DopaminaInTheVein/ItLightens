@@ -255,11 +255,18 @@ void player_controller::UpdatePossession() {
 			msg.possessed = true;
 			ePoss->sendMsg(msg);
 
+			// Camara Nueva
+			CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
+
+			TMsgSetTarget msgTarg;
+			msgTarg.target = ePoss;
+			player_e->sendMsg(msgTarg);
+
 			//Se desactiva el player
+			CEntity * eMe = CHandle(this).getOwner();
 			controlEnabled = false;
 
 			//TODO: Desactivar render
-			CEntity* eMe = CHandle(this).getOwner();
 			TCompTransform* tMe = eMe->get<TCompTransform>();
 			tMe->setPosition(VEC3(0, 100, 0));
 		}

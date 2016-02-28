@@ -199,3 +199,18 @@ void ai_mole::UnGrabState() {
 	SBB::postBool(key, false);
 	ChangeState("idle");
 }
+
+void ai_mole::_actionBeforePossession() {
+}
+ACTION_RESULT ai_mole::_actionBeingPossessed() {
+	return DONE;
+}
+ACTION_RESULT ai_mole::_actionBeingUnpossessed() {
+	return DONE;
+}
+void ai_mole::_actionStunt() {
+}
+
+void ai_mole::_StuntEndState() {
+	ChangeState("idle");
+}

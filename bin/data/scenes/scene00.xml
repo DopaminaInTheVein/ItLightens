@@ -12,10 +12,6 @@
     <transform pos="21 0 0" />
     <name name="pj" />
     <player />
-    <!--
-	<player_mole />
-	<player_speedy />
-	-->
     <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
   </entity>
 
@@ -49,9 +45,11 @@
   <entity>
     <tag name="AI" />
     <name name="ia_mole1" />
+    <tag name="AI_poss" />
     <tag name="AI_mole" />
     <transform pos="0 0 0" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
+    <player_mole />
     <ai_mole />
   </entity>
   <entity>
@@ -81,6 +79,7 @@
     <name name="scientist1" />
     <cientifico />
     <life points="100" />
+    <player_speedy />
   </entity>
 
   <entity>
@@ -93,6 +92,7 @@
   <entity>
     <tag name="AI" />
     <tag name="AI_speedy" />
+    <tag name="AI_poss" />
     <name name="speedy1" />
     <life points="100" />
     <transform pos="9 0 9" rotation="1 2 3 3" scale="1 1 1" />

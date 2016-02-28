@@ -82,6 +82,10 @@ bool CEntitiesModule::start() {
 	//..Cientifico
 	SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
 	SUBSCRIBE(player_controller_speedy, TMsgControllerSetEnable, onSetEnable);
+
+	SUBSCRIBE(ai_mole, TMsgAISetPossessed, onSetPossessed);
+	SUBSCRIBE(player_controller_mole, TMsgControllerSetEnable, onSetEnable);
+
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
 
@@ -155,7 +159,7 @@ void CEntitiesModule::update(float dt) {
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
 	getHandleManager<player_controller_speedy>()->updateAll(dt);
-	// getHandleManager<player_controller_mole>()->updateAll(dt);
+	getHandleManager<player_controller_mole>()->updateAll(dt);
 
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);

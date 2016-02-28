@@ -69,6 +69,13 @@ void PossController::onSetEnable(bool enabled) {
 	}
 	else {
 		CHandle hTarget = tags_manager.getFirstHavingTag(getID("target"));
+
+		CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
+
+		TMsgSetTarget msgTarg;
+		msgTarg.target = hTarget;
+		player_e->sendMsg(msgTarg);
+
 		CEntity* eTarget = hTarget;
 		CEntity* eMe = hMe;
 		TCompTransform* tMe = eMe->get<TCompTransform>();

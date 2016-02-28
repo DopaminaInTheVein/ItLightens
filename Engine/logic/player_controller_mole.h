@@ -1,9 +1,10 @@
 #ifndef INC_PLAYER_CONTROLLER_MOLE_H_
 #define INC_PLAYER_CONTROLLER_MOLE_H_
 
-#include "aicontroller.h"
-#include "player_controller.h"
+#include "poss_controller.h"
 #include "sbb.h"
+
+#include "player_controller_base.h"
 
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
@@ -23,7 +24,7 @@ extern CInput Input;
 template< class TObj >
 class CObjectManager;
 
-class player_controller_mole : public CPlayerBase {
+class player_controller_mole : public PossController {
 	CObjectManager<player_controller_mole> *om;
 	float player_max_speed = CPlayerBase::player_max_speed;
 public:
@@ -46,7 +47,10 @@ public:
 		CEntity * ent = myParent;
 		return ent->get<TCompTransform>();
 	}
-
+	CEntity* player_controller_mole::getMyEntity() {
+		CHandle me = CHandle(this);
+		return me.getOwner();
+	}
 	CEntity * getEntityBoxPointer(int i) {
 		CHandle han = SBB::readHandlesVector("wptsBoxes")[i];
 		CEntity * ent = han;
