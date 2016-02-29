@@ -37,9 +37,12 @@ void player_controller::Init() {
 	controlEnabled = true;
 }
 
+void player_controller::myUpdate() {
+	UpdatePossession();
+}
+
 void player_controller::Idle() {
 	if (!checkDead()) {
-		UpdatePossession();
 		if (Input.IsMinusPolarityPressedDown() && nearMinus()) {
 			energyDecreasal(getDeltaTime()*0.05f);
 			ChangeState("tominus");

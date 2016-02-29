@@ -10,6 +10,15 @@ float CTransform::getDeltaYawToAimTo(VEC3 target) const {
 	return angle;
 }
 
+float CTransform::getDeltaYawToAimDirection(VEC3 direction) const{
+
+	float parallel_part = direction.Dot(getFront());
+	VEC3 left = getLeft();
+	float perp_part = direction.Dot(getLeft());
+	float angle = atan2f(perp_part, parallel_part);
+	return angle;
+}
+
 bool CTransform::isHalfConeVision(VEC3 target, float half_cone_in_rads) const {
 	return fabsf(getDeltaYawToAimTo(target)) <= half_cone_in_rads;
 }

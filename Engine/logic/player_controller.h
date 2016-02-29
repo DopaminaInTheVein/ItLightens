@@ -50,6 +50,9 @@ class player_controller : public CPlayerBase {
 	void recalcPossassable();
 	void UpdatePossession();
 
+protected:
+	void myUpdate();
+
 public:
 	void Init();
 	void Idle();

@@ -53,15 +53,16 @@ void CPlayerBase::UpdateMoves()
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
-	VEC3 direction = directionForward;
+	VEC3 direction = directionForward+directionLateral;
+	
 
 	CEntity * camera_e = camera;
-	TCompCamera* camera_comp = camera_e->get<TCompCamera>();
-	VEC3 camera_position = camera_comp->getPosition();
+	TCompTransform* camera_comp = camera_e->get<TCompTransform>();
+
+	direction.Normalize ();
 
 	float yaw, pitch;
-	player_transform->getAngles(&yaw, &pitch);
-
+	camera_comp->getAngles(&yaw, &pitch);
 	float new_x, new_z;
 
 	new_x = direction.x * cosf(yaw) + direction.z*sinf(yaw);
@@ -70,7 +71,16 @@ void CPlayerBase::UpdateMoves()
 	direction.x = new_x;
 	direction.z = new_z;
 
+	
 	direction.Normalize();
+
+	float new_yaw = player_transform->getDeltaYawToAimDirection(direction);
+
+	player_transform->getAngles(&yaw, &pitch);
+
+	player_transform->setAngles(new_yaw+yaw, pitch);
+
+
 
 	if (onGround) {
 		//Set current velocity with friction
@@ -88,6 +98,7 @@ void CPlayerBase::UpdateMoves()
 		//set final position
 		player_position = player_position + direction*getDeltaTime()*player_curr_speed;
 		player_transform->setPosition(player_position);
+
 	}
 	else {
 		player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2);
@@ -96,25 +107,6 @@ void CPlayerBase::UpdateMoves()
 		player_position = player_transform->getPosition();
 		player_position = player_position + directionJump*getDeltaTime()*jspeed;
 		player_transform->setPosition(player_position);
-	}
-
-	if (rotate != 0) {
-		player_transform->setAngles(yaw + rotate*player_rotation_speed*getDeltaTime(), pitch);
-	}
-
-	if (rotateXY != 0) {
-		player_y += rotateXY*player_rotation_speed*getDeltaTime();
-
-		if (player_y > camera_max_height)
-			player_y = camera_max_height;
-		if (player_y < camera_min_height)
-			player_y = camera_min_height;
-
-		camera_comp->lookAt(camera_position, VEC3(player_position.x, player_y, player_position.z));
-		camera_comp->update(getDeltaTime());
-	}
-	else {
-		player_y = starting_player_y;
 	}
 }
 #pragma endregion
@@ -136,6 +128,17 @@ bool CPlayerBase::UpdateMovDirection() {
 		directionForward = VEC3(0, 0, -1);
 		moving = true;
 	}
+
+	if (Input.IsLeftPressed() && !Input.IsRightPressed()) {
+		directionLateral = VEC3(1,0,0);
+		moving = true;
+	}
+	else if (!Input.IsLeftPressed() && Input.IsRightPressed()) {
+		directionLateral = VEC3(-1, 0, 0);
+		moving = true;
+
+	}
+
 	return moving;
 }
 
@@ -145,14 +148,15 @@ void CPlayerBase::UpdateJumpState() {
 	}
 }
 
+
 void CPlayerBase::UpdateDirection() {
-	if (Input.IsOrientLeftPressed())
+/*	if (Input.IsOrientLeftPressed())
 		rotate = 1;
 	else if (Input.IsOrientRightPressed())
 		rotate = -1;
 	else {
 		rotate = 0;
-	}
+	}*/
 }
 
 void CPlayerBase::UpdateInputActions() {
