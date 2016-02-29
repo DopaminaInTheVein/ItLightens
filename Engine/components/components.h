@@ -23,6 +23,10 @@
 #include "logic/player_controller_mole.h"
 #include "logic/player_controller_cientifico.h"
 
+//Physics
+#include "physics/comp_collider.h"
+
+
 //prefabs
 #include "prefabs\magnetic_bomb.h"
 #include "prefabs\static_bomb.h"

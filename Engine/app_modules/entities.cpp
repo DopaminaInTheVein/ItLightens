@@ -30,6 +30,9 @@ DECL_OBJ_MANAGER("player_mole", player_controller_mole);
 DECL_OBJ_MANAGER("player_cientifico", player_controller_cientifico);
 DECL_OBJ_MANAGER("life", TCompLife);
 
+//Physics
+DECL_OBJ_MANAGER("collider", TCompCollider);
+
 //prefabs
 DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
@@ -59,6 +62,9 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompCamera>()->init(4);
 	getHandleManager<TCompController3rdPerson>()->init(4);
 	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
+
+	//Physics
+	getHandleManager<TCompCollider>()->init(MAX_ENTITIES);
 
 	getHandleManager<ai_guard>()->init(MAX_ENTITIES);
 	getHandleManager<ai_mole>()->init(MAX_ENTITIES);
@@ -157,6 +163,11 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
 	getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
+
+	//Prueba Fisica
+	CHandle h;
+	getHandleManager<TCompCollider>()->onAll(&TCompCollider::collide);
+
 	return true;
 }
 

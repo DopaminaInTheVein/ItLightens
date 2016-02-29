@@ -256,9 +256,6 @@
     <ClInclude Include="components\comp_life.h">
       <Filter>components</Filter>
     </ClInclude>
-    <ClInclude Include="components\components.h">
-      <Filter>components</Filter>
-    </ClInclude>
     <ClInclude Include="components\entity.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -367,7 +364,13 @@
     <ClInclude Include="logic\player_controller_cientifico.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="physics\physics.h.h">
+    <ClInclude Include="components\components.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\comp_collider.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\physics.h">
       <Filter>physics</Filter>
     </ClInclude>
   </ItemGroup>

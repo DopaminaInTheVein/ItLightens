@@ -5,6 +5,7 @@
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
+    <collider/>
   </entity>
   <entity>
     <life points="50" />

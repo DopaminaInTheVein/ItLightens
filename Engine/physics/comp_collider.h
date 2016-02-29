@@ -1,8 +1,8 @@
-#ifndef INC_COMPONENT_NAME_H_
-#define INC_COMPONENT_NAME_H_
+#ifndef INC_COMPONENT_COLLIDER_H_
+#define INC_COMPONENT_COLLIDER_H_
 
 #include "utils/XMLParser.h"
-#include "comp_base.h"
+#include "components/comp_base.h"
 
 struct TCompCollider : public TCompBase {
 	float radius;
@@ -17,6 +17,10 @@ struct TCompCollider : public TCompBase {
 	}
 
 	void renderInMenu() {
+	}
+
+	void collide() {
+		dbg("Hola soy collider %f %f (%f, %f, %f), ", radius, height, position.x, position.y, position.z);
 	}
 };
 
