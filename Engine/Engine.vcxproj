@@ -215,6 +215,7 @@
     <ClInclude Include="logic\player_controller_speedy.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
+    <ClInclude Include="physics\physics.h.h" />
     <ClInclude Include="prefabs\magnetic_bomb.h" />
     <ClInclude Include="prefabs\static_bomb.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />

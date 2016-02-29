@@ -367,6 +367,9 @@
     <ClInclude Include="logic\player_controller_cientifico.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="physics\physics.h.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -422,6 +425,9 @@
     </Filter>
     <Filter Include="prefabs">
       <UniqueIdentifier>{a908d031-f6a7-4027-840a-0933d76ea3ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{8363631e-fb31-4f78-80df-fb6750e11494}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
