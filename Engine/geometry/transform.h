@@ -44,6 +44,7 @@ public:
 	}
 
 	float getDeltaYawToAimTo(VEC3 target) const;
+	float getDeltaYawToAimDirection(VEC3 direction) const;
 	bool isHalfConeVision(VEC3 target, float half_cone_in_rads) const;
 	bool isInFront(VEC3 target) const;
 	bool isInLeft(VEC3 target) const;

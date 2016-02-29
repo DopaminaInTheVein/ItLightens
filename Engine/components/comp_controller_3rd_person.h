@@ -42,12 +42,15 @@ public:
 	}
 
 	void updateInput() {
+		m_yaw = 0.0f; 
+		m_pitch = 0.0f;
+
 		if (Input.GetMouseDiffX() != 0) {
-			m_yaw -= Input.GetMouseDiffX()*speed_camera*getDeltaTime();
+			m_yaw =  -Input.GetMouseDiffX()*speed_camera*getDeltaTime();
 		}
 
 		if (Input.GetMouseDiffY() != 0) {
-			m_pitch -= Input.GetMouseDiffY()*speed_camera*getDeltaTime();
+			m_pitch = -Input.GetMouseDiffY()*speed_camera*getDeltaTime();
 			/*if (m_pitch > max_pitch)
 				m_pitch = max_pitch;
 			if (m_pitch < min_pitch)
@@ -66,6 +69,8 @@ public:
 			}
 		}
 
+		Debug->LogRaw("%f, %f\n",m_yaw,m_pitch);
+
 		//TODO: mouse wheel, distance
 	}
 
@@ -79,11 +84,15 @@ public:
 		assert(target_tmx);
 		auto target_loc = target_tmx->getPosition();
 		target_tmx->getAngles(&yaw, &pitch);
-		VEC3 delta = getVectorFromYawPitch(yaw, pitch);
-		auto origin = target_loc - delta * distance_to_target;
-		origin = origin - target_loc;		//normalize vector, needed for traslation pos
+
 		CEntity* e_owner = CHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
+		VEC3 vec_camera = my_tmx->getFront();
+		vec_camera.y = 0;
+		auto origin = target_loc - vec_camera*distance_to_target;
+
+		origin = origin - target_loc;		//normalize vector, needed for traslation pos
+		
 		VEC3 posF = rotateAround(origin, 0.0f, m_pitch, m_yaw);
 		posF = posF + target_loc;			//normalize vector, needed for traslation pos
 		my_tmx->lookAt(posF, target_loc);
