@@ -168,6 +168,7 @@ void CPlayerBase::UpdateInputActions() {
 //##########################################################################
 #pragma region Player States
 void CPlayerBase::energyDecreasal(float howmuch) {
+	SetMyEntity();
 	TMsgDamage msg;
 	msg.points = howmuch;
 	this->myEntity->sendMsg(msg);

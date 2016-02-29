@@ -28,7 +28,8 @@ void player_controller_mole::Init() {
 	ChangeState("idle");
 }
 void player_controller_mole::UpdateInputActions() {
-	if (Input.IsLeftClickPressed()) {
+	energyDecreasal(getDeltaTime()*0.5f);
+	if (Input.IsLeftClickReleased()) {
 		if (boxGrabbed) {
 			ChangeState("leaveBox");
 		}
@@ -46,8 +47,9 @@ void player_controller_mole::UpdateInputActions() {
 void player_controller_mole::Moving()
 {
 	UpdateDirection();
-
+	energyDecreasal(getDeltaTime()*0.5f);
 	if (boxGrabbed) {
+		energyDecreasal(getDeltaTime()*0.5f);
 		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 		TCompTransform* box_t = box->get<TCompTransform>();
 		SetMyEntity();
@@ -68,12 +70,14 @@ void player_controller_mole::GrabBox() {
 	else {
 		SBB::postBool(selectedBox, true);
 	}
+	energyDecreasal(5.0f);
 	boxGrabbed = true;
 	player_max_speed /= 2;
 	ChangeState("idle");
 }
 
 void player_controller_mole::DestroyWall() {
+	energyDecreasal(10.0f);
 	vector<CHandle> handles = SBB::readHandlesVector("wptsBreakableWall");
 	handles.erase(handles.begin() + selectedWallToBreaki);
 	getHandleManager<CEntity>()->destroyHandle(getEntityWallHandle(selectedWallToBreaki));

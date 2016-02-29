@@ -15,7 +15,6 @@
 void player_controller_cientifico::Init() {
 	om = getHandleManager<player_controller_cientifico>();	//player
 
-
 	//Specific Scientist nodes
 	AddState("createMagneticBomb", (statehandler)&player_controller_cientifico::CreateMagneticBomb);
 	AddState("createDisableBeacon", (statehandler)&player_controller_cientifico::CreateDisableBeacon);
@@ -30,7 +29,6 @@ void player_controller_cientifico::Init() {
 	ChangeState("idle");
 }
 
-
 //##########################################################################
 
 //##########################################################################
@@ -39,7 +37,7 @@ void player_controller_cientifico::Init() {
 #pragma region Inputs
 
 void player_controller_cientifico::UpdateInputActions() {
-
+	energyDecreasal(getDeltaTime()*0.5f);
 	if (Input.IsKeyPressedDown(DIK_1)) {
 		ChangeState("createDisableBeacon");
 	}
@@ -49,16 +47,20 @@ void player_controller_cientifico::UpdateInputActions() {
 	}
 
 	if (Input.IsKeyPressedDown(DIK_3)) {
+		energyDecreasal(5.0f);
 		ChangeState("createStaticBomb");
 	}
 
 	if (Input.IsKeyPressedDown(DIK_5)) {
+		energyDecreasal(5.0f);
 		ChangeState("createMagneticBomb");
 	}
 	if (Input.IsKeyPressedDown(DIK_6)) {
+		energyDecreasal(10.0f);
 		ChangeState("useMagneticBomb");
 	}
 	if (Input.IsKeyPressedDown(DIK_4)) {
+		energyDecreasal(10.0f);
 		ChangeState("useStaticBomb");
 	}
 }
@@ -66,7 +68,6 @@ void player_controller_cientifico::UpdateInputActions() {
 #pragma endregion
 
 //##########################################################################
-
 
 //##########################################################################
 // Player States
@@ -139,11 +140,9 @@ void player_controller_cientifico::UseMagneticBomb()
 
 void player_controller_cientifico::UseStaticBomb()
 {
-
 	if (obj == STATIC_BOMB) createStaticBombEntity();
 	ChangeState("idle");
 }
-
 
 #pragma endregion
 
@@ -157,7 +156,6 @@ void player_controller_cientifico::UseStaticBomb()
 
 void player_controller_cientifico::createMagneticBombEntity()
 {
-
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -191,7 +189,6 @@ void player_controller_cientifico::createMagneticBombEntity()
 
 	CMagneticBomb *mag_bomb = e->get<CMagneticBomb>();
 	mag_bomb->Init();
-
 }
 
 void player_controller_cientifico::createStaticBombEntity()
@@ -203,7 +200,6 @@ void player_controller_cientifico::createStaticBombEntity()
 	auto hm_e = CHandleManager::getByName("entity");
 	CHandle new_h_e = hm_e->createHandle();
 
-	
 	auto hm_n = CHandleManager::getByName("name");
 	CHandle new_h_n = hm_n->createHandle();
 
@@ -217,7 +213,6 @@ void player_controller_cientifico::createStaticBombEntity()
 	e->add(new_h_n);
 	e->add(new_h_mb);
 	e->add(new_h_t);
-	
 
 	TCompTransform *static_trans = e->get<TCompTransform>();
 	static_trans->setPosition(player_position);
@@ -249,8 +244,6 @@ void player_controller_cientifico::renderInMenu()
 	ImGui::Text("direction: %.4f, %.4f, %.4f", direction.x, direction.y, direction.z);
 	ImGui::Text("jump: %.5f", jspeed);
 }
-
-
 
 void player_controller_cientifico::DisabledState() {
 }

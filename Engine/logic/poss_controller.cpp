@@ -9,20 +9,11 @@ PossController::PossController() {
 	AddState(ST_DISABLED, (statehandler)&PossController::DisabledState);
 	AddState(ST_INIT_CONTROL, (statehandler)&PossController::InitControlState);
 	ChangeState(ST_DISABLED);
-	maxEnergy = 100.0f;
-	energyRemain = 100.0f;
 	speedRecover = 5.0f;
-	speedSpend = 5.0f;
 }
 
 void PossController::UpdatePossession() {
 	if (npcIsPossessed) {
-		energyRemain -= speedSpend * getDeltaTime();
-		if (energyRemain <= 0) {
-			//TODO
-			dbg("G A M E    O V E R \n");
-		}
-
 		if (Input.IsKeyPressed(DIK_LSHIFT)) {
 			CEntity* myParent = getMyEntity();
 			TCompName * myParentName = myParent->get<TCompName>();
@@ -35,12 +26,10 @@ void PossController::UpdatePossession() {
 		}
 	}
 	else {
-		energyRemain += speedRecover * getDeltaTime();
-		if (energyRemain >= maxEnergy) energyRemain = maxEnergy;
+		energyDecreasal(-getDeltaTime()*speedRecover);
 	}
 
 	____TIMER_CHECK_DO_(timerShowEnergy);
-	dbg("PossController: EnergyRemain = %f\n", energyRemain);
 	____TIMER_CHECK_DONE_(timerShowEnergy);
 }
 

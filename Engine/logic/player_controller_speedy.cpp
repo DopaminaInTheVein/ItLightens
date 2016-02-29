@@ -28,6 +28,7 @@ void player_controller_speedy::Init()
 }
 
 void player_controller_speedy::myUpdate(float elapsed) {
+	energyDecreasal(getDeltaTime()*0.5f);
 	updateDashTimer();
 	updateBlinkTimer();
 }
@@ -85,10 +86,14 @@ void player_controller_speedy::Blink()
 }
 
 void player_controller_speedy::UpdateInputActions() {
-	if (Input.IsLeftClickPressedDown())
+	if (Input.IsLeftClickPressedDown()) {
 		ChangeState("dashing");
-	if (Input.IsRightClickPressed())
+		energyDecreasal(10.0f);
+	}
+	if (Input.IsRightClickPressedDown()) {
+		energyDecreasal(15.0f);
 		ChangeState("blinking");
+	}
 }
 
 bool player_controller_speedy::dashFront()
