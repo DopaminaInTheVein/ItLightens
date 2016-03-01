@@ -14,7 +14,7 @@ PossController::PossController() {
 
 void PossController::UpdatePossession() {
 	if (npcIsPossessed) {
-		if (Input.IsKeyPressed(DIK_LSHIFT)) {
+		if (Input.IsKeyPressedDown(DIK_LSHIFT) && possessionCooldown <= 0.0f) {
 			CEntity* myParent = getMyEntity();
 			TCompName * myParentName = myParent->get<TCompName>();
 			string name = myParentName->name;
@@ -23,6 +23,9 @@ void PossController::UpdatePossession() {
 			myParent->sendMsg(msg);
 
 			onSetEnable(false);
+		}
+		else {
+			possessionCooldown -= getDeltaTime();
 		}
 	}
 	else {

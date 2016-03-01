@@ -247,20 +247,20 @@ void player_controller::AttractMove(CEntity * entPoint) {
 	player_transform->setPosition(player_position);
 }
 
+float CPlayerBase::possessionCooldown;
 //Possession
 void player_controller::UpdatePossession() {
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
-		if (Input.IsRightClickPressedDown()) {
+		if (Input.IsKeyPressedDown(DIK_LSHIFT)) {
 			// Se avisa el ai_poss que ha sido poseído
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;
 			msg.possessed = true;
 			ePoss->sendMsg(msg);
-
+			possessionCooldown = 1.0f;
 			// Camara Nueva
 			CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
-
 			TMsgSetTarget msgTarg;
 			msgTarg.target = ePoss;
 			player_e->sendMsg(msgTarg);
@@ -273,16 +273,13 @@ void player_controller::UpdatePossession() {
 			TCompTransform* tMe = eMe->get<TCompTransform>();
 			tMe->setPosition(VEC3(0, 100, 0));
 		}
-		else {
-			____TIMER_CHECK_DO_(timeShowAblePossess);
-			dbg("Press to POSSESS!\n");
-			____TIMER_CHECK_DONE_(timeShowAblePossess);
+		if (Input.IsLeftClickPressedDown()) {
+			// Se avisa el ai_poss que ha sido stuneado
+			CEntity* ePoss = currentPossessable;
+			TMsgAISetStunned msg;
+			msg.stunned = true;
+			ePoss->sendMsg(msg);
 		}
-	}
-	else {
-		____TIMER_CHECK_DO_(timeShowAblePossess);
-		dbg("_\n");
-		____TIMER_CHECK_DONE_(timeShowAblePossess);
 	}
 }
 

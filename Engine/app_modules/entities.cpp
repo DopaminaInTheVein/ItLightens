@@ -92,12 +92,15 @@ bool CEntitiesModule::start() {
 	//Posesiones Mensajes
 	//..Cientifico
 	SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
+	SUBSCRIBE(ai_scientific, TMsgAISetStunned, onSetStunned);
 	SUBSCRIBE(player_controller_cientifico, TMsgControllerSetEnable, onSetEnable);
 	//..Speedy
 	SUBSCRIBE(ai_speedy, TMsgAISetPossessed, onSetPossessed);
+	SUBSCRIBE(ai_speedy, TMsgAISetStunned, onSetStunned);
 	SUBSCRIBE(player_controller_speedy, TMsgControllerSetEnable, onSetEnable);
 	//..Mole
 	SUBSCRIBE(ai_mole, TMsgAISetPossessed, onSetPossessed);
+	SUBSCRIBE(ai_mole, TMsgAISetStunned, onSetStunned);
 	SUBSCRIBE(player_controller_mole, TMsgControllerSetEnable, onSetEnable);
 
 	//..PJ Principal

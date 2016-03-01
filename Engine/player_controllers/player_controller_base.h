@@ -25,6 +25,9 @@ protected:
 	//Enabled
 	bool controlEnabled = false;
 
+	// CountDown To Unpossess
+	static float possessionCooldown;
+
 	// Map for debug on ImGui
 	std::map<int, std::string> out;
 

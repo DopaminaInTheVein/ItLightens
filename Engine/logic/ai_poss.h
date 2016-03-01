@@ -53,6 +53,8 @@ public:
 
 	//Avisar a la entidad que ha sido poseída
 	void onSetPossessed(const TMsgAISetPossessed&);
+	//Avisar a la entidad que ha sido stunneada
+	void onSetStunned(const TMsgAISetStunned&);
 
 	//Override function for changeStae
 	void ChangeState(std::string newstate) override;

@@ -35,7 +35,6 @@ struct TMsgBeaconToRemove {
 	DECLARE_MSG_ID();
 };
 
-
 struct TMsgBeaconEmpty {
 	VEC3 pos;
 	std::string name;
@@ -63,7 +62,6 @@ struct TMsgWBTakenByPlayer {
 	std::string name;
 	DECLARE_MSG_ID();
 };
-
 
 struct TMsgStaticBomb {
 	float x_max;
@@ -100,6 +98,11 @@ struct TMsgPossessionLeave {
 
 struct TMsgAISetPossessed {
 	bool possessed;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgAISetStunned {
+	bool stunned;
 	DECLARE_MSG_ID();
 };
 

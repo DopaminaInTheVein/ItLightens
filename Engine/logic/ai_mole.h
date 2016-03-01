@@ -57,8 +57,9 @@ public:
 	void NextWptCarryState();
 	void OrientToCarryWptState();
 	void UnGrabState();
-	
+
 	void _actionBeforePossession();
+	void _StuntEndState();
 
 	void Init() override;
 	void update(float dt) { Recalc(); }
