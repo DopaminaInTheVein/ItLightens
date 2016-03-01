@@ -5,6 +5,7 @@
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
+    <colCylinder pos ="0 0 0" radius ="5" height ="10" type ="player" />
   </entity>
   <entity>
     <life points="50" />
@@ -14,7 +15,7 @@
     <player />
     <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
   </entity>
-  
+
   <entity>
     <name name="attractionPointPlus" />
     <tag name="plus_wall" />
@@ -27,7 +28,6 @@
     <transform pos="5 0 -20" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 
-  
   <entity>
     <name name="box1" />
     <tag name="box" />
@@ -44,7 +44,7 @@
     <tag name="box_leavepoint" />
     <transform pos="5 0 5" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
-  
+
   <entity>
     <tag name="AI" />
     <name name="ia_mole1" />

@@ -139,7 +139,22 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="logic\player_controller.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\player_controller_base.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\player_controller_mole.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
     <ClCompile Include="logic\ai_poss.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\poss_controller.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\player_controller_speedy.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="prefabs\static_bomb.cpp">
@@ -168,6 +183,9 @@
     </ClCompile>
     <ClCompile Include="logic\ai_workbench.cpp">
       <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\physics.cpp">
+      <Filter>physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -337,7 +355,22 @@
     <ClInclude Include="logic\ai_guard.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="logic\player_controller.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\player_controller_base.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\player_controller_mole.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\player_controller_speedy.h">
+      <Filter>logic</Filter>
+    </ClInclude>
     <ClInclude Include="logic\ai_poss.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\poss_controller.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="utils\macros\macros.h">
@@ -437,6 +470,9 @@
     </Filter>
     <Filter Include="player controllers">
       <UniqueIdentifier>{015f2a57-fefa-4062-9950-b4b729347030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{8363631e-fb31-4f78-80df-fb6750e11494}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

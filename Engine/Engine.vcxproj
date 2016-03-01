@@ -145,6 +145,7 @@
     <ClCompile Include="player_controllers\player_controller_mole.cpp" />
     <ClCompile Include="player_controllers\player_controller_speedy.cpp" />
     <ClCompile Include="player_controllers\poss_controller.cpp" />
+    <ClCompile Include="physics\physics.cpp" />
     <ClCompile Include="prefabs\magnetic_bomb.cpp" />
     <ClCompile Include="prefabs\static_bomb.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
@@ -217,6 +218,8 @@
     <ClInclude Include="player_controllers\player_controller_mole.h" />
     <ClInclude Include="player_controllers\player_controller_speedy.h" />
     <ClInclude Include="player_controllers\poss_controller.h" />
+    <ClInclude Include="physics\comp_col_cylinder.h" />
+    <ClInclude Include="physics\physics.h" />
     <ClInclude Include="prefabs\magnetic_bomb.h" />
     <ClInclude Include="prefabs\static_bomb.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
