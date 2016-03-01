@@ -274,6 +274,7 @@ void player_controller::UpdatePossession() {
 			tMe->setPosition(VEC3(0, 100, 0));
 		}
 		if (Input.IsLeftClickPressedDown()) {
+			energyDecreasal(5.0f);
 			// Se avisa el ai_poss que ha sido stuneado
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetStunned msg;
