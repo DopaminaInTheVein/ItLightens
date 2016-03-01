@@ -1,6 +1,7 @@
 #include "mcv_platform.h"
 #include "ai_poss.h"
 #include "components\entity.h"
+#include "components\comp_transform.h"
 
 ai_poss::ai_poss() {
 
@@ -23,6 +24,19 @@ void ai_poss::onSetPossessed(const TMsgAISetPossessed& msg) {
 	}
 	else {
 		ChangeState(ST_UNPOSSESSING);
+	}
+}
+
+void ai_poss::ChangeState(std::string newstate)
+{
+	if (!possessed || newstate == ST_STUNT || newstate == ST_UNPOSSESSING || newstate == ST_POSSESSING) {
+		// try to find a state with the suitable name
+		if (statemap.find(newstate) == statemap.end())
+		{
+			// the state we wish to jump to does not exist. we abort
+			exit(-1);
+		}
+		state = newstate;
 	}
 }
 
@@ -103,4 +117,16 @@ void ai_poss::actionStunt() {
 
 void ai_poss::_StuntEndState() {
 	ChangeState("idle");
+}
+
+void ai_poss::onStaticBomb(const TMsgStaticBomb & msg)
+{
+	CEntity *me = getMyEntity();
+	TCompTransform *me_transform = me->get<TCompTransform>();
+	VEC3 curr_pos = me_transform->getPosition();
+
+	if (curr_pos.x <= msg.x_max && curr_pos.x >= msg.x_min && curr_pos.z <= msg.z_max && curr_pos.z >= msg.z_min) {
+		ChangeState(ST_STUNT);
+	}
+
 }

@@ -26,8 +26,8 @@ struct TCompLife : public TCompBase {
 	}
 	void onDamage(const TMsgDamage& msg) {
 		currentlife -= msg.points;
-		if (currentlife < 0) {
-			dbg("Me he muerto\n");
+		if (currentlife > maxlife) {
+			currentlife = maxlife;
 		}
 	}
 };

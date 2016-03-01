@@ -4,8 +4,6 @@
 #include "resources/resources_manager.h"
 #include "app_modules/entities.h"
 #include "handle/handle_manager.h"
-#include "components/entity.h"
-#include "components/components.h"
 #include "components/entity_tags.h"
 // ImGui LIB headers
 #include "imgui/imgui_impl_dx11.h"
@@ -19,7 +17,6 @@
 
 bool CImGuiModule::start() {
 	CApp& app = CApp::get();
-	//CDebug::initDebugger(Debug);
 	Debug = new CDebug();
 	return ImGui_ImplDX11_Init(app.getHWnd(), Render.device, Render.ctx);
 }
@@ -34,39 +31,10 @@ void CImGuiModule::update(float dt) {
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_MenuBar;
 	bool menu = true;
-	TTagID tagIDplayer = getID("player");
-	CHandle player = tags_manager.getFirstHavingTag(tagIDplayer);
-	CEntity * player_e = player;
-
-	TCompController3rdPerson * camara3rd = player_e->get<TCompController3rdPerson>();
-	CEntity * target_e = camara3rd->target;
-
-	TCompLife * life = target_e->get<TCompLife>();
-
-	if (life->currentlife <= 0.0f) {
-		ImGui::Begin("Fatal Player State", &menu, ImVec2(300, 100), -1.0f, window_flags);
-		ImGui::Text("You are Dead!\n");
-		ImGui::End();
-	}
 
 	ImGui::Begin("Debug UI", &menu, ImVec2(800, 512), -1.0f, window_flags);
 	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 
-	ImGui::Text("LifeBar\n");
-	string lifeString = "|";
-	if (life) {
-		for (int i = 0; i < life->maxlife; i++) {
-			if (life->currentlife > i) {
-				lifeString += "=";
-			}
-			else {
-				lifeString += ".";
-			}
-		}
-	}
-	lifeString += "|";
-	ImGui::Text(lifeString.c_str());
-	ImGui::Separator();
 	//Console log
 	//---------------------------------------
 	if (ImGui::BeginMenuBar())
@@ -131,6 +99,7 @@ void CImGuiModule::update(float dt) {
 	//TestGameLog();
 	//testLines();
 
+	ui.update();			//update ui
 	Debug->update();		//update log
 }
 

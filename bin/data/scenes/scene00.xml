@@ -31,6 +31,7 @@
   <entity>
     <name name="box1" />
     <tag name="box" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 0 0" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
   <entity>
@@ -59,6 +60,7 @@
     <tag name="AI_guard" />
     <transform pos="7 0 7" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
+    <!-- <render_static_mesh name="static_meshes/guard.static_mesh" /> -->
     <ai_guard
       kpt_size  = "8"
       kpt0_type = "seek" kpt0_pos = " 10  0  10" kpt0_wait = "2"
@@ -75,11 +77,103 @@
     <tag name="AI" />
     <tag name="AI_cientifico" />
     <tag name="AI_poss" />
-    <transform pos="1 0 1" />
+    <transform pos="-7 0 1" />
     <name name="scientist1" />
     <life points="100" />
-    <render_static_mesh name="static_meshes/tetera2.static_mesh" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
     <cientifico />
     <player_cientifico />
   </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_cientifico" />
+    <tag name="AI_poss" />
+    <transform pos="1 0 5" />
+    <name name="scientist2" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <cientifico />
+    <player_cientifico />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_cientifico" />
+    <tag name="AI_poss" />
+    <transform pos="-1 0 -1" />
+    <name name="scientist3" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <cientifico />
+    <player_cientifico />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_cientifico" />
+    <tag name="AI_poss" />
+    <transform pos="-1 0 1" />
+    <name name="scientist4" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <cientifico />
+    <player_cientifico />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_cientifico" />
+    <tag name="AI_poss" />
+    <transform pos="1 0 -1" />
+    <name name="scientist5" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <cientifico />
+    <player_cientifico />
+  </entity>
+
+  <entity>
+    <name name="beacon1" />
+    <tag name="beacon" />
+    <transform pos="5 0 7" rotation="1 1 1 1" scale="1 1 1" />
+    <beacon/>
+  </entity>
+
+  <entity>
+    <name name="beacon2" />
+    <tag name="beacon" />
+    <transform pos="-5 0 -7" rotation="1 1 1 1" scale="1 1 1" />
+    <beacon/>
+  </entity>
+
+  <entity>
+    <name name="beacon3" />
+    <tag name="beacon" />
+    <transform pos="-5 0 7" rotation="1 1 1 1" scale="1 1 1" />
+    <beacon/>
+  </entity>
+
+  <entity>
+    <name name="beacon4" />
+    <tag name="beacon" />
+    <transform pos="5 0 -7" rotation="1 1 1 1" scale="1 1 1" />
+    <beacon/>
+  </entity>
+
+  <entity>
+    <name name="workbench1" />
+    <tag name="workbench" />
+    <transform pos="3 0 4" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/workbench.static_mesh" />
+    <workbench/>
+  </entity>
+  <entity>
+    <name name="workbench2" />
+    <tag name="workbench" />
+    <transform pos="3 0 -4" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/workbench.static_mesh" />
+    <workbench/>
+  </entity>
+
 </entities>

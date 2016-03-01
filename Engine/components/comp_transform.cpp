@@ -5,11 +5,15 @@
 #include "render/shader_cte.h"
 #include "utils/XMLParser.h"
 #include "imgui/imgui.h"
-
+#include "render\technique.h"
 #include "contants/ctes_object.h"
-extern CShaderCte< TCteObject > shader_ctes_object;
 
-void TCompTransform::render() const {
+extern CShaderCte< TCteObject > shader_ctes_object;
+extern const CRenderTechnique* tech_solid_colored;
+
+void TCompTransform::render() const
+{
+	tech_solid_colored->activate();
 	auto axis = Resources.get("axis.mesh")->as<CMesh>();
 	if (getScale().x != 1) {
 		VEC3 pos = getPosition();

@@ -758,13 +758,26 @@ float CInput::GetLeftStickX() {
 	if (m_joystick == nullptr)
 		return -2;	//no joystick
 
-	return m_joystickState.lX;
+					//normalize betwen 0-1
+	float ry = (m_joystickState.lX - joystick_axis_min) / float(joystick_axis_max - joystick_axis_min);
+
+	//range -1,1
+	float value = (ry - 0.5f) * 2;
+	if (fabs(value) < 0.15f) return 0.0f;
+	return value;
 }
 float CInput::GetLeftStickY() {
 	if (m_joystick == nullptr)
 		return -2;	//no joystick
 
-	return m_joystickState.lY;
+					//normalize betwen 0-1
+	float ry = (m_joystickState.lY - joystick_axis_min) / float(joystick_axis_max - joystick_axis_min);
+	
+	//range -1,1
+	float value = (ry - 0.5f) * 2;
+	if (fabs(value) < 0.15f) return 0.0f;
+	
+	return value;
 }
 float CInput::GetRightStickX() {
 	if (m_joystick == nullptr)
@@ -775,7 +788,8 @@ float CInput::GetRightStickX() {
 
 	//range -1,1
 	float value = (ry - 0.5f) * 2;
-	if (fabs(value) < 0.1f) return 0.0f;
+	if (fabs(value) < 0.15f) return 0.0f;
+
 	return value;
 }
 float CInput::GetRightStickY() {
@@ -787,6 +801,6 @@ float CInput::GetRightStickY() {
 
 	//range -1,1
 	float value = (ry - 0.5f) * 2;
-	if (fabs(value) < 0.1f) return 0.0f;
+	if (fabs(value) < 0.15f) return 0.0f;
 	return value;
 }

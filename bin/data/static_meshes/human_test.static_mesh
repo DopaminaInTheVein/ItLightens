@@ -1,0 +1,3 @@
+<static_mesh>
+    <slot mesh="meshes/human_test.mesh" material="materials/scientist.material"/>
+</static_mesh>

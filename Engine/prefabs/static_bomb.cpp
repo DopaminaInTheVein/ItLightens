@@ -31,7 +31,7 @@ void CStaticBomb::SendMsg()
 	myParent = myHandle.getOwner();
 
 	TMsgStaticBomb msg;
-	float rad = 10.0f;
+	
 	CHandle player_h = tags_manager.getFirstHavingTag(getID("target"));
 	CEntity *p_e = player_h;
 	TCompTransform *mtx = p_e->get<TCompTransform>();

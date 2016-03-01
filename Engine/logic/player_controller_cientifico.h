@@ -11,8 +11,8 @@
 #include "camera\camera.h"
 #include "input\input.h"
 
-#include "logic\player_controller_base.h"
-#include "logic\poss_controller.h"
+#include "player_controller_base.h"
+#include "poss_controller.h"
 
 
 
