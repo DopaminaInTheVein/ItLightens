@@ -57,12 +57,8 @@ public:
 	void NextWptCarryState();
 	void OrientToCarryWptState();
 	void UnGrabState();
-
-	virtual void _actionBeforePossession();
-	virtual ACTION_RESULT _actionBeingPossessed();
-	virtual ACTION_RESULT _actionBeingUnpossessed();
-	virtual void _actionStunt();
-	virtual void _StuntEndState();
+	
+	void _actionBeforePossession();
 
 	void Init() override;
 	void update(float dt) { Recalc(); }

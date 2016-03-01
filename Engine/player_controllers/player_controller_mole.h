@@ -34,6 +34,7 @@ public:
 	void DestroyWall();
 	void Moving();
 
+	void InitControlState();
 	bool nearToBox();
 	bool nearToWall();
 	bool boxGrabbed = false;

@@ -105,8 +105,8 @@ const void ai_poss::UnpossessingState() {
 const void ai_poss::StuntState() {
 	actionStunt();
 	____TIMER_CHECK_DO_(timeStunt);
-	ChangeState(ST_STUNT_END);
 	stunned = false;
+	ChangeState(ST_STUNT_END);
 	____TIMER_CHECK_DONE_(timeStunt);
 }
 
