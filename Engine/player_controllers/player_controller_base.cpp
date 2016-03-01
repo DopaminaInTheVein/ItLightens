@@ -168,7 +168,7 @@ bool CPlayerBase::UpdateMovDirection() {
 			}
 
 		}
-		moving = true;
+ 		moving = true;
 		horizontal = true;
 	}
 

@@ -1,0 +1,3 @@
+<material tech="tech_textured_colored.tech">
+	<texture type="diffuse" name="textures/wb_d.dds"/>
+</material>

@@ -763,7 +763,7 @@ float CInput::GetLeftStickX() {
 
 	//range -1,1
 	float value = (ry - 0.5f) * 2;
-	if (fabs(value) < 0.1f) return 0.0f;
+	if (fabs(value) < 0.15f) return 0.0f;
 	return value;
 }
 float CInput::GetLeftStickY() {
@@ -775,7 +775,7 @@ float CInput::GetLeftStickY() {
 	
 	//range -1,1
 	float value = (ry - 0.5f) * 2;
-	if (fabs(value) < 0.1f) return 0.0f;
+	if (fabs(value) < 0.15f) return 0.0f;
 	
 	return value;
 }
@@ -788,7 +788,7 @@ float CInput::GetRightStickX() {
 
 	//range -1,1
 	float value = (ry - 0.5f) * 2;
-	if (fabs(value) < 0.1f) return 0.0f;
+	if (fabs(value) < 0.15f) return 0.0f;
 
 	return value;
 }
@@ -801,6 +801,6 @@ float CInput::GetRightStickY() {
 
 	//range -1,1
 	float value = (ry - 0.5f) * 2;
-	if (fabs(value) < 0.1f) return 0.0f;
+	if (fabs(value) < 0.15f) return 0.0f;
 	return value;
 }
