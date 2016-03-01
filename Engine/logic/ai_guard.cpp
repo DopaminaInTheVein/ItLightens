@@ -8,7 +8,7 @@
 #define DIST_SQ_REACH_PNT_INI			10
 #define DIST_SQ_SHOT_AREA_ENTER_INI		50
 #define DIST_SQ_SHOT_AREA_LEAVE_INI		100
-#define DIST_RAYSHOT_INI				10
+#define DIST_RAYSHOT_INI				20
 #define DIST_SQ_PLAYER_DETECTION_INI	150
 #define DIST_SQ_PLAYER_LOST_INI			200
 #define SPEED_WALK_INI					10
@@ -46,7 +46,7 @@ TCompTransform * ai_guard::getTransform() {
 }
 
 CEntity* getPlayer() {
-	return tags_manager.getFirstHavingTag(getID("player"));
+	return tags_manager.getFirstHavingTag(getID("target"));
 }
 
 /**************
@@ -189,7 +189,8 @@ void ai_guard::ShootState() {
 	dbg("Resultado Raycast: \n");
 	dbg("------------------ \n");
 	if (res.firstCollider.isValid()) {
-		if (res.firstCollider == CHandle(getPlayer())) {
+		CEntity * eCollider = res.firstCollider;
+		if (eCollider == getPlayer()) {
 			dbg("Doy al player!");
 		}
 		else {

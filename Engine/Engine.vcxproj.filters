@@ -139,22 +139,7 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="logic\player_controller.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\player_controller_base.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\player_controller_mole.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="logic\ai_poss.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\poss_controller.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\player_controller_speedy.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="prefabs\static_bomb.cpp">
@@ -185,6 +170,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="physics\physics.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\com_col_cylinder.cpp">
       <Filter>physics</Filter>
     </ClCompile>
   </ItemGroup>
@@ -355,22 +343,7 @@
     <ClInclude Include="logic\ai_guard.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\player_controller.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\player_controller_base.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\player_controller_mole.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\player_controller_speedy.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="logic\ai_poss.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\poss_controller.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="utils\macros\macros.h">
@@ -408,6 +381,10 @@
     </ClInclude>
     <ClInclude Include="logic\ai_workbench.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\physics.h" />
+    <ClInclude Include="physics\comp_col_cylinder.h">
+      <Filter>physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

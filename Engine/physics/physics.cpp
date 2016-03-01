@@ -12,7 +12,7 @@ ray_cast_result Physics::calcRayCast(const ray_cast_query& query) {
 	getHandleManager<TCompColCillinder>()->onAll(&TCompColCillinder::rayCast);
 	CHandle firstCollider = RayCastHalfWay.handle;
 	if (firstCollider.isValid()) {
-		res.firstCollider = CHandle(firstCollider).getOwner(); //Devolvemos directamente handle a entity
+		res.firstCollider = firstCollider;
 		res.positionCollision = RayCastHalfWay.posCollision;
 	}
 	return res;

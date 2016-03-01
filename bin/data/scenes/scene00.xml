@@ -60,7 +60,7 @@
     <tag name="AI_guard" />
     <transform pos="7 0 7" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
-    <!-- <render_static_mesh name="static_meshes/guard.static_mesh" /> -->
+    <render_static_mesh name="static_meshes/tetera2.static_mesh" />
     <ai_guard
       kpt_size  = "8"
       kpt0_type = "seek" kpt0_pos = " 10  0  10" kpt0_wait = "2"
