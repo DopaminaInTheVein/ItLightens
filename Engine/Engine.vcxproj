@@ -144,6 +144,7 @@
     <ClCompile Include="logic\player_controller_speedy.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="physics\physics.cpp" />
     <ClCompile Include="prefabs\magnetic_bomb.cpp" />
     <ClCompile Include="prefabs\static_bomb.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
@@ -215,7 +216,7 @@
     <ClInclude Include="logic\player_controller_speedy.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
-    <ClInclude Include="physics\comp_collider.h" />
+    <ClInclude Include="physics\comp_col_cylinder.h" />
     <ClInclude Include="physics\physics.h" />
     <ClInclude Include="prefabs\magnetic_bomb.h" />
     <ClInclude Include="prefabs\static_bomb.h" />

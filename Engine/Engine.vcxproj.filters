@@ -166,6 +166,9 @@
     <ClCompile Include="logic\player_controller_cientifico.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="physics\physics.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -367,10 +370,10 @@
     <ClInclude Include="components\components.h">
       <Filter>components</Filter>
     </ClInclude>
-    <ClInclude Include="physics\comp_collider.h">
+    <ClInclude Include="physics\physics.h">
       <Filter>physics</Filter>
     </ClInclude>
-    <ClInclude Include="physics\physics.h">
+    <ClInclude Include="physics\comp_col_cylinder.h">
       <Filter>physics</Filter>
     </ClInclude>
   </ItemGroup>

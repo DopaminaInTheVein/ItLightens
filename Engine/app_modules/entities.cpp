@@ -31,7 +31,7 @@ DECL_OBJ_MANAGER("player_cientifico", player_controller_cientifico);
 DECL_OBJ_MANAGER("life", TCompLife);
 
 //Physics
-DECL_OBJ_MANAGER("collider", TCompCollider);
+DECL_OBJ_MANAGER("colCylinder", TCompColCillinder);
 
 //prefabs
 DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
@@ -64,7 +64,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
 
 	//Physics
-	getHandleManager<TCompCollider>()->init(MAX_ENTITIES);
+	getHandleManager<TCompColCillinder>()->init(MAX_ENTITIES);
 
 	getHandleManager<ai_guard>()->init(MAX_ENTITIES);
 	getHandleManager<ai_mole>()->init(MAX_ENTITIES);
@@ -164,9 +164,13 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 
-	//Prueba Fisica
-	CHandle h;
-	getHandleManager<TCompCollider>()->onAll(&TCompCollider::collide);
+	//Prueba Física
+	ray_cast_query rcQuery;
+	rcQuery.position = VEC3(-4, 3, 1);
+	rcQuery.direction = VEC3(1, 0, 0);
+	rcQuery.maxDistance = 10;
+	rcQuery.types = COL_TAG_PLAYER | COL_TAG_OBJECT;
+	ray_cast_result res = Physics::calcRayCast(rcQuery);
 
 	return true;
 }

@@ -24,8 +24,7 @@
 #include "logic/player_controller_cientifico.h"
 
 //Physics
-#include "physics/comp_collider.h"
-
+#include "physics/comp_col_cylinder.h"
 
 //prefabs
 #include "prefabs\magnetic_bomb.h"
