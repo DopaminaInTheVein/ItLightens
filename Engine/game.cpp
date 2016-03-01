@@ -86,6 +86,7 @@ void CApp::stop() {
 		(*it)->stop();
 
 	Resources.destroy();
+	Debug->destroy();
 	shader_ctes_camera.destroy();
 	shader_ctes_object.destroy();
 

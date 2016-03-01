@@ -21,6 +21,7 @@ DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
 DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
 DECL_OBJ_MANAGER("cientifico", ai_scientific);
 DECL_OBJ_MANAGER("beacon", beacon_controller);
+DECL_OBJ_MANAGER("workbench", workbench_controller);
 DECL_OBJ_MANAGER("ai_guard", ai_guard);
 DECL_OBJ_MANAGER("ai_mole", ai_mole);
 DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
@@ -65,6 +66,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_scientific>()->init(MAX_ENTITIES);
 	getHandleManager<ai_speedy>()->init(MAX_ENTITIES);
 	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
+	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
@@ -79,10 +81,12 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
 	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
+	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);					//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
+	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
 
 	//Posesiones Mensajes
@@ -157,6 +161,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
 	getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
+	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
 	return true;
 }
 
@@ -179,6 +184,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<ai_guard>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
+	getHandleManager<workbench_controller>()->updateAll(dt);
 	getHandleManager<ai_speedy>()->updateAll(dt);
 
 	getHandleManager<CStaticBomb>()->updateAll(dt);

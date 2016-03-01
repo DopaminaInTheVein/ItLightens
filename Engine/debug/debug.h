@@ -42,6 +42,7 @@ class CDebug {
 public:
 
 	CDebug() {}
+	void destroy() { Clear(); }
 
 	void update();
 	void render();

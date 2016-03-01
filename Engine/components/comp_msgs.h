@@ -35,9 +35,16 @@ struct TMsgBeaconToRemove {
 	DECLARE_MSG_ID();
 };
 
+
 struct TMsgBeaconEmpty {
-	VEC3 pos_beacon;
-	std::string name_beacon;
+	VEC3 pos;
+	std::string name;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgWBEmpty {
+	VEC3 pos;
+	std::string name;
 	DECLARE_MSG_ID();
 };
 
@@ -51,6 +58,12 @@ struct TMsgBeaconTakenByPlayer {
 	std::string name;
 	DECLARE_MSG_ID();
 };
+
+struct TMsgWBTakenByPlayer {
+	std::string name;
+	DECLARE_MSG_ID();
+};
+
 
 struct TMsgStaticBomb {
 	float x_max;

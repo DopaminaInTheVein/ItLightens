@@ -2,7 +2,6 @@
 #define INC_PLAYER_CONTROLLER_MOLE_H_
 
 #include "poss_controller.h"
-#include "sbb.h"
 
 #include "player_controller_base.h"
 

@@ -2,7 +2,6 @@
 #define INC_PLAYER_CONTROLLER_SPEEDY_H_
 
 #include "poss_controller.h"
-#include "sbb.h"
 
 #include "components\comp_base.h"
 #include "handle\handle.h"

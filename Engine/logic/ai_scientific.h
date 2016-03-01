@@ -33,7 +33,7 @@ class ai_scientific : public ai_poss, public TCompBase {
 
 	//main attributes
 	//--------------------------------------
-	const float move_speed = 5.0f;
+	const float move_speed = 2.0f;
 	const float rot_speed = 2.0f;
 	//--------------------------------------
 
@@ -45,10 +45,10 @@ class ai_scientific : public ai_poss, public TCompBase {
 
 	//Map points, TEMP, TODO: look for positions from object_manager
 	//--------------------------------------
-	std::vector<VEC3> wbs;
 	VEC3 obj_position;					//Where to move
 	VEC3 beacon_to_go;
 	std::string beacon_to_go_name = "";
+	std::string wb_to_go_name = "";
 	//--------------------------------------
 
 	//Timer counts
@@ -66,7 +66,7 @@ class ai_scientific : public ai_poss, public TCompBase {
 	CHandle myParent;
 	CEntity *myEntity = nullptr;
 
-	int actual_action = IDLE;		//TEMP, TODO: enum camera
+	int actual_action = IDLE;	
 	//--------------------------------------
 
 public:
@@ -74,6 +74,7 @@ public:
 	ai_scientific() {}		//needed to create obj at load
 	void Init() override;
 	void init() { Init(); }
+
 	//Overload functions from TCompBase, needed to loop AI Component
 	//--------------------------------------
 	bool load(MKeyValue& atts) {
@@ -88,13 +89,15 @@ public:
 	void SetMyEntity();
 	//--------------------------------------
 
+	void CleanStates();
+
 	//messages function:
 	void onRemoveBeacon(const TMsgBeaconToRemove& msg);
 	void onEmptyBeacon(const TMsgBeaconEmpty& msg);
-
+	void onEmptyWB(const TMsgWBEmpty& msg);
 	void onTakenBeacon(const TMsgBeaconTakenByPlayer & msg);
-
-	void onStaticBomb(const TMsgStaticBomb & msg);
+	void onTakenWB(const TMsgWBTakenByPlayer & msg);
+	void onStaticBomb(const TMsgStaticBomb & msg) override;		//need to override to clean old states and reserved objects
 
 	//Functions AI Nodes:
 	//--------------------------------------
@@ -112,11 +115,6 @@ public:
 	void renderInMenu();
 
 	//Possession
-/*	virtual void _actionBeforePossession();
-	virtual ACTION_RESULT _actionBeingPossessed();
-	virtual ACTION_RESULT _actionBeingUnpossessed();
-	virtual void _actionStunt();
-	virtual void _StuntEndState();*/
 	CEntity* getMyEntity() override;
 
 	//Overload function for handler_manager

@@ -2,7 +2,6 @@
 #define INC_PLAYER_CONTROLLER_CIENTIFICO_H_
 
 
-#include "sbb.h"
 
 #include "components\comp_base.h"
 #include "handle\handle.h"

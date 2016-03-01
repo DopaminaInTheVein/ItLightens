@@ -1,8 +1,8 @@
 #ifndef INC_PLAYER_CONTROLLER_H_
 #define INC_PLAYER_CONTROLLER_H_
 
-#include "aicontroller.h"
-#include "sbb.h"
+#include "logic/aicontroller.h"
+#include "logic/sbb.h"
 
 #include "handle/handle.h"
 

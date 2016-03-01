@@ -39,8 +39,8 @@ void beacon_controller::Init() {
 	msg_remove.pos_beacon = VEC3(0, 0, 0);	//has to be updated on frame if can be moved
 	msg_remove.name_beacon = full_name;
 
-	msg_empty.pos_beacon = VEC3(0, 0, 0);	//has to be updated on frame if can be moved
-	msg_empty.name_beacon = full_name;
+	msg_empty.pos = VEC3(0, 0, 0);	//has to be updated on frame if can be moved
+	msg_empty.name = full_name;
 
 	ChangeState("idle");
 }
@@ -202,7 +202,7 @@ void beacon_controller::SendMessageEmpty() {
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
-	msg_empty.pos_beacon = curr_pos;
+	msg_empty.pos = curr_pos;
 
 	VHandles hs = tags_manager.getHandlesByTag(getID("AI_cientifico"));
 	for (CEntity *e : hs)

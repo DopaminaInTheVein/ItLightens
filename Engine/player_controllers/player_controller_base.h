@@ -1,8 +1,8 @@
 #ifndef INC_PC_BASE_H_
 #define	INC_PC_BASE_H_
 
-#include "aicontroller.h"
-#include "sbb.h"
+#include "logic/aicontroller.h"
+#include "logic/sbb.h"
 
 #include "components\comp_base.h"
 #include "handle\handle.h"

@@ -54,6 +54,9 @@ public:
 	//Avisar a la entidad que ha sido poseída
 	void onSetPossessed(const TMsgAISetPossessed&);
 
+	//Override function for changeStae
+	void ChangeState(std::string newstate) override;
+	virtual void onStaticBomb(const TMsgStaticBomb & msg);
 	//TComponent
 	virtual CEntity* getMyEntity() = 0; //Pasar al TCompBase?
 

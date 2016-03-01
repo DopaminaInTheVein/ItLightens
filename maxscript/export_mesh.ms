@@ -78,7 +78,6 @@ fn saveBinaryMesh obj vtxs idxs = (
 )
 
 fn export_mesh given_obj = (
-	
 	-- Is the object valid?...
 	local obj = given_obj
 	if classof given_obj != Editable_Mesh then (
@@ -96,6 +95,7 @@ fn export_mesh given_obj = (
 	local all_idxs = #()
 	
 	local HT = dotNetObject "System.Collections.Hashtable"
+	
 	
 	if not meshop.getMapSupport obj channelA then (
 		throw ("Object " + given_obj.name + " does not have tex coords for channel " + channelA )

@@ -90,6 +90,7 @@ void CPlayerBase::UpdateMoves()
 		if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
 		else player_curr_speed = drag_i*player_curr_speed - drag*player_max_speed;
 
+
 		if (player_curr_speed < 0) {
 			player_curr_speed = 0.0f;
 			directionForward = directionLateral = VEC3(0, 0, 0);
@@ -118,26 +119,64 @@ void CPlayerBase::UpdateMoves()
 #pragma region Inputs
 
 bool CPlayerBase::UpdateMovDirection() {
+	
 	moving = false;
 
-	if (Input.IsUpPressed() && !Input.IsDownPressed()) {
+	bool horizontal = false;
+	bool vertical = false;
+
+	if (Input.IsUpPressed()) {
 		directionForward = VEC3(0, 0, 1);
+		if (Input.GetLeftStickY() != -2) {
+			if (Input.GetLeftStickY() != 0.0f) {
+				directionForward = VEC3(0,0, -Input.GetLeftStickY());
+			}
+
+		}
 		moving = true;
+		vertical = true;
 	}
-	else if (Input.IsDownPressed() && !Input.IsUpPressed()) {
+	if (Input.IsDownPressed()) {
 		directionForward = VEC3(0, 0, -1);
+		if (Input.GetLeftStickY() != -2) {
+			if (Input.GetLeftStickY() != 0.0f) {
+				directionForward = VEC3(0, 0, -Input.GetLeftStickY());
+				//TODO: y-axis not working, joystick-L & joystick-R
+			}
+
+		}
 		moving = true;
+		vertical = true;
 	}
 
-	if (Input.IsLeftPressed() && !Input.IsRightPressed()) {
+	if (Input.IsLeftPressed()) {
 		directionLateral = VEC3(1,0,0);
-		moving = true;
-	}
-	else if (!Input.IsLeftPressed() && Input.IsRightPressed()) {
-		directionLateral = VEC3(-1, 0, 0);
-		moving = true;
+		if (Input.GetLeftStickX() != -2) {
+			if (Input.GetLeftStickX() != 0.0f) {
+				directionLateral = VEC3(-Input.GetLeftStickX(), 0, 0);
+			}
 
+		}
+		moving = true;
+		horizontal = true;
 	}
+	if (Input.IsRightPressed()) {
+		directionLateral = VEC3(-1, 0, 0);
+		if (Input.GetLeftStickX() != -2) {
+			if (Input.GetLeftStickX() != 0.0f) {
+				directionLateral = VEC3(-Input.GetLeftStickX(), 0, 0);
+			}
+
+		}
+		moving = true;
+		horizontal = true;
+	}
+
+	if (!vertical && moving)
+		directionForward = VEC3(0, 0, 0);
+
+	else if (!horizontal && moving)
+		directionLateral = VEC3(0,0,0);
 
 	return moving;
 }
