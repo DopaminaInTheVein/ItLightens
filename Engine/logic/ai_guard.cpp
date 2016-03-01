@@ -3,10 +3,12 @@
 #include "ai_guard.h"
 #include "components/entity_tags.h"
 #include "utils/XMLParser.h"
+#include "physics/physics.h"
 
 #define DIST_SQ_REACH_PNT_INI			10
 #define DIST_SQ_SHOT_AREA_ENTER_INI		50
 #define DIST_SQ_SHOT_AREA_LEAVE_INI		100
+#define DIST_RAYSHOT_INI				10
 #define DIST_SQ_PLAYER_DETECTION_INI	150
 #define DIST_SQ_PLAYER_LOST_INI			200
 #define SPEED_WALK_INI					10
@@ -16,6 +18,7 @@
 float DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI;
 float DIST_SQ_SHOT_AREA_ENTER = DIST_SQ_SHOT_AREA_ENTER_INI;
 float DIST_SQ_SHOT_AREA_LEAVE = DIST_SQ_SHOT_AREA_LEAVE_INI;
+float DIST_RAYSHOT = DIST_RAYSHOT_INI;
 float DIST_SQ_PLAYER_DETECTION = DIST_SQ_PLAYER_DETECTION_INI;
 float DIST_SQ_PLAYER_LOST = DIST_SQ_PLAYER_LOST_INI;
 float SPEED_WALK = SPEED_WALK_INI;
@@ -173,7 +176,30 @@ void ai_guard::ChaseState()
 void ai_guard::ShootState() {
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
+	VEC3 myPos = getTransform()->getPosition();
 	float dist = squaredDistXZ(posPlayer, getTransform()->getPosition());
+
+	//RayCast
+	ray_cast_query rcQuery;
+	rcQuery.position = getTransform()->getPosition();
+	rcQuery.direction = posPlayer - myPos;
+	rcQuery.maxDistance = DIST_RAYSHOT;
+	rcQuery.types = COL_TAG_PLAYER | COL_TAG_OBJECT;
+	ray_cast_result res = Physics::calcRayCast(rcQuery);
+	dbg("Resultado Raycast: \n");
+	dbg("------------------ \n");
+	if (res.firstCollider.isValid()) {
+		if (res.firstCollider == CHandle(getPlayer())) {
+			dbg("Doy al player!");
+		}
+		else {
+			dbg("Doy a otra cosa!");
+		}
+	}
+	else {
+		dbg("No doy a nada!\n");
+	}
+	dbg("------------------ \n\n\n\n\n\n\n\n\n");
 
 	//Fuera de tiro?
 	if (dist > DIST_SQ_SHOT_AREA_LEAVE) ChangeState(ST_CHASE);

@@ -169,24 +169,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
 
-	//Prueba Física
-	/*ray_cast_query rcQuery;
-	rcQuery.position = VEC3(-4, 3, 1);
-	rcQuery.direction = VEC3(1, 0, 0);
-	rcQuery.maxDistance = 10;
-	rcQuery.types = COL_TAG_PLAYER | COL_TAG_OBJECT;
-	ray_cast_result res = Physics::calcRayCast(rcQuery);
-	dbg("Resultado Raycast: \n");
-	dbg("------------------ \n");
-	if (res.firstCollider.isValid()) {
-		VEC3 pos = res.positionCollision;
-		dbg("Position = (%f, %f, %f)\n", pos.x, pos.y, pos.z);
-	}
-	else {
-		dbg("No hay colisión!\n");
-	}
-	dbg("------------------ \n\n\n\n\n\n\n\n\n");*/
-
 	return true;
 }
 
