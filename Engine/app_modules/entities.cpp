@@ -171,6 +171,16 @@ bool CEntitiesModule::start() {
 	rcQuery.maxDistance = 10;
 	rcQuery.types = COL_TAG_PLAYER | COL_TAG_OBJECT;
 	ray_cast_result res = Physics::calcRayCast(rcQuery);
+	dbg("Resultado Raycast: \n");
+	dbg("------------------ \n");
+	if (res.firstCollider.isValid()) {
+		VEC3 pos = res.positionCollision;
+		dbg("Position = (%f, %f, %f)\n", pos.x, pos.y, pos.z);
+	}
+	else {
+		dbg("No hay colisión!\n");
+	}
+	dbg("------------------ \n\n\n\n\n\n\n\n\n");
 
 	return true;
 }

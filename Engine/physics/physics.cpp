@@ -8,6 +8,7 @@ ray_cast_halfway Physics::RayCastHalfWay;
 ray_cast_result Physics::calcRayCast(const ray_cast_query& query) {
 	ray_cast_result res;
 	RayCastHalfWay = ray_cast_halfway(query);
+	RayCastHalfWay.query.direction.Normalize();
 	getHandleManager<TCompColCillinder>()->onAll(&TCompColCillinder::rayCast);
 	CHandle firstCollider = RayCastHalfWay.handle;
 	if (firstCollider.isValid()) {

@@ -28,6 +28,7 @@ struct TCompColCillinder : public TCompBase {
 	void renderInMenu() {
 	}
 
+	// RayCast (sólo el más cercano)
 	void rayCast() {
 		ray_cast_halfway* rHalfWay = &Physics::RayCastHalfWay;
 		ray_cast_query* rQuery = &rHalfWay->query;
@@ -37,18 +38,42 @@ struct TCompColCillinder : public TCompBase {
 		dbg("Types: %d\n", rQuery->types);
 		if (!(type & rQuery->types)) return;
 
-		//TODO: Calcular raycast de verdad
+		//Calculo Raycast vs. Cylinder
+		//(Suponemos Cilidor alineado en eje Y)
+		//p = Origen del rayo						  
+		//v = Direccion del rayo					  
+		//q = Centro de la base inferior del cilindro 
+		//radius = Radio del cilindro					  
+		//alfa = Angulo entre {PQ} y {tangente de la base del cilindro que pasa por P}
+		//beta = Angulo entre {v} y {PQ}
+		//Colision = abs(alfa) > abs(beta)
+
 		CEntity* eMe = CHandle(this).getOwner();
 		TCompTransform* tMe = eMe->get<TCompTransform>();
-		VEC3 myPos = tMe->getPosition() + position;
+		VEC3 p = rQuery->position;
+		VEC3 q = tMe->getPosition() + position;
+		VEC3 v = rQuery->direction;
 
-		//Prueba: devolver el collider más cercano
-		float distance = realDist(myPos, rQuery->position);
-		if (distance < rQuery->maxDistance) {
-			rQuery->maxDistance = distance;
-			rHalfWay->posCollision = myPos;
-			Physics::RayCastHalfWay.handle = CHandle(this);
+		//Calculo Distancia (Si está más lejos que la colision encontrada paramos)
+		float distancePQ = realDistXZ(q, p);
+		if (distancePQ > rQuery->maxDistance) return;
+		
+		//Calculo alfa
+		float alfa = atan2f(radius, distancePQ);
+
+		//Calculo beta
+		VEC3 u = (q - p);
+		u.Normalize();
+		float cosBeta = u.x * v.x + u.z * v.z;
+		float beta = acos(cosBeta);
+
+		// Si colisiona, guardamos resultado
+		if (abs(alfa) > abs(beta)) {
+			rHalfWay->posCollision = q;
+			rHalfWay->handle = CHandle(this);
+			rQuery->maxDistance = distancePQ;
 		}
+
 	}
 };
 

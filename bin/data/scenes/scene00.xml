@@ -5,7 +5,7 @@
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
-    <colCylinder pos =" 0 0 0" radius ="5" height ="10" type ="enemy" />
+    <colCylinder pos ="0 0 0" radius ="5" height ="10" type ="player" />
   </entity>
   <entity>
     <life points="50" />
