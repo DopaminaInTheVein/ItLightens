@@ -165,7 +165,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 
 	//Prueba Física
-	ray_cast_query rcQuery;
+	/*ray_cast_query rcQuery;
 	rcQuery.position = VEC3(-4, 3, 1);
 	rcQuery.direction = VEC3(1, 0, 0);
 	rcQuery.maxDistance = 10;
@@ -180,7 +180,7 @@ bool CEntitiesModule::start() {
 	else {
 		dbg("No hay colisión!\n");
 	}
-	dbg("------------------ \n\n\n\n\n\n\n\n\n");
+	dbg("------------------ \n\n\n\n\n\n\n\n\n");*/
 
 	return true;
 }
