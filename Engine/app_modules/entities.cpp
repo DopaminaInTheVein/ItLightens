@@ -77,7 +77,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
 
-	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
@@ -108,6 +107,10 @@ bool CEntitiesModule::start() {
 
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
+
+	//Damage
+	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
+	SUBSCRIBE(player_controller, TMsgDamage, onDamage);
 
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene00.xml");

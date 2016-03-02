@@ -7,9 +7,15 @@ struct TMsgEntityCreated {
 	DECLARE_MSG_ID();
 };
 
+enum DMGTYPE {
+	UNKNOWN
+	, ENERGY_DECREASE
+	, LASER
+};
 struct TMsgDamage {
 	VEC3    source;
 	CHandle sender;
+	DMGTYPE dmgType;
 	float   points;
 	DECLARE_MSG_ID();
 };
@@ -34,7 +40,6 @@ struct TMsgBeaconToRemove {
 	std::string name_beacon;
 	DECLARE_MSG_ID();
 };
-
 
 struct TMsgBeaconEmpty {
 	VEC3 pos;
@@ -63,7 +68,6 @@ struct TMsgWBTakenByPlayer {
 	std::string name;
 	DECLARE_MSG_ID();
 };
-
 
 struct TMsgStaticBomb {
 	float x_max;

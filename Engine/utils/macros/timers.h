@@ -8,6 +8,8 @@
 
 #define ____TIMER_CHECK_DO_(name)				if (____TIMER__END_(name)) {
 #define ____TIMER_CHECK_DONE_(name)				____TIMER_RESET_(name); } else {	____TIMER__UPDATE_(name); }
+#define ____TIMER__END_(name)					(name < 0)
+#define ____TIMER__SET_ZERO_(name)				name = -1
 //____TIMER_CHECK_DO_ and ____TIMER_CHECK_DONE_
 //If timer ends, doSometing and reset timer
 //else update timer
@@ -18,8 +20,7 @@
 //
 
 // Auxiliars
-#define ____TIMER__END_(name)			name < 0
 #define ____TIMER__IF_END_(name)		if (____TIMER__END_(name))
-#define ____TIMER__UPDATE_(name)		name -= getDeltaTime()
+#define ____TIMER__UPDATE_(name)		if (name > -1) name -= getDeltaTime()
 
 #endif

@@ -4,35 +4,7 @@
 #include "components/entity_tags.h"
 #include "utils/XMLParser.h"
 #include "physics/physics.h"
-
-#define DIST_SQ_REACH_PNT_INI			10
-#define DIST_SQ_SHOT_AREA_ENTER_INI		50
-#define DIST_SQ_SHOT_AREA_LEAVE_INI		100
-#define DIST_RAYSHOT_INI				20
-#define DIST_SQ_PLAYER_DETECTION_INI	150
-#define DIST_SQ_PLAYER_LOST_INI			200
-#define SPEED_WALK_INI					10
-#define CONE_VISION_INI					deg2rad(45)
-#define SPEED_ROT_INI					deg2rad(100)
-
-float DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI;
-float DIST_SQ_SHOT_AREA_ENTER = DIST_SQ_SHOT_AREA_ENTER_INI;
-float DIST_SQ_SHOT_AREA_LEAVE = DIST_SQ_SHOT_AREA_LEAVE_INI;
-float DIST_RAYSHOT = DIST_RAYSHOT_INI;
-float DIST_SQ_PLAYER_DETECTION = DIST_SQ_PLAYER_DETECTION_INI;
-float DIST_SQ_PLAYER_LOST = DIST_SQ_PLAYER_LOST_INI;
-float SPEED_WALK = SPEED_WALK_INI;
-float CONE_VISION = CONE_VISION_INI;
-float SPEED_ROT = SPEED_ROT_INI;
-
-#define ST_NEXT_ACTION		"next_action"
-#define ST_SEEK_POINT		"seek_point"
-#define ST_WAIT_NEXT		"wait_next"
-#define ST_LOOK_POINT		"look_point"
-#define ST_CHASE			"chase"
-#define ST_SHOOT			"shoot"
-#define ST_SOUND_DETECTED	"sound_detected"
-#define ST_LOOK_ARROUND		"look_arround"
+#include "logic/sbb.h"
 
 map<string, ai_guard::KptType> ai_guard::kptTypes = {
 	  {"seek", KptType::Seek}
@@ -45,8 +17,9 @@ TCompTransform * ai_guard::getTransform() {
 	return t;
 }
 
-CEntity* getPlayer() {
-	return tags_manager.getFirstHavingTag(getID("target"));
+CEntity* ai_guard::getPlayer() {
+	CEntity* player = thePlayer;
+	return player;;
 }
 
 /**************
@@ -57,6 +30,9 @@ void ai_guard::Init()
 	//Handles
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
+	thePlayer = tags_manager.getFirstHavingTag(getID("target"));
+	CHandle prueba = tags_manager.getFirstHavingTag(getID("target"));
+	if (prueba == thePlayer) dbg("Son iguales!");
 
 	// insert all states in the map
 	AddState(ST_NEXT_ACTION, (statehandler)&ai_guard::NextActionState);
@@ -157,10 +133,13 @@ void ai_guard::ChaseState()
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 
-	//player lost?
-	if (distance > DIST_SQ_PLAYER_LOST) {
+	if (!playerVisible()) {
 		ChangeState(ST_NEXT_ACTION);
 	}
+	//player lost?
+	//if (distance > DIST_SQ_PLAYER_LOST) {
+	//	ChangeState(ST_NEXT_ACTION);
+	//}
 
 	//player near?
 	else if (distance < DIST_SQ_SHOT_AREA_ENTER) {
@@ -174,33 +153,35 @@ void ai_guard::ChaseState()
 * ShootState
 **************/
 void ai_guard::ShootState() {
+	if (!playerVisible()) {
+		ChangeState(ST_NEXT_ACTION);
+		return;
+	}
+
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
 	float dist = squaredDistXZ(posPlayer, getTransform()->getPosition());
 
 	//RayCast
-	ray_cast_query rcQuery;
-	rcQuery.position = getTransform()->getPosition();
-	rcQuery.direction = posPlayer - myPos;
-	rcQuery.maxDistance = DIST_RAYSHOT;
-	rcQuery.types = COL_TAG_PLAYER | COL_TAG_OBJECT;
-	ray_cast_result res = Physics::calcRayCast(rcQuery);
-	dbg("Resultado Raycast: \n");
-	dbg("------------------ \n");
-	if (res.firstCollider.isValid()) {
-		CEntity * eCollider = res.firstCollider;
-		if (eCollider == getPlayer()) {
-			dbg("Doy al player!");
-		}
-		else {
-			dbg("Doy a otra cosa!");
-		}
+	float distRay;
+	CHandle collider = rayCastToFront(COL_TAG_PLAYER | COL_TAG_OBJECT, distRay);
+	if (collider == thePlayer) {
+		CEntity* ePlayer = thePlayer;
+		TMsgDamage dmg;
+		dmg.source = getTransform()->getPosition();
+		dmg.sender = myParent;
+		dmg.points = DAMAGE_LASER * getDeltaTime();
+		dmg.dmgType = DMGTYPE::LASER;
+		ePlayer->sendMsg(dmg);
 	}
-	else {
-		dbg("No doy a nada!\n");
+
+	//Render Debug
+	for (int i = 0; i < 8; i++) {
+		float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		Debug->DrawLine(myPos + VEC3(r1, 1, r2), getTransform()->getFront(), distRay, RED);
 	}
-	dbg("------------------ \n\n\n\n\n\n\n\n\n");
 
 	//Fuera de tiro?
 	if (dist > DIST_SQ_SHOT_AREA_LEAVE) ChangeState(ST_CHASE);
@@ -316,6 +297,7 @@ bool ai_guard::turnTo(VEC3 dest) {
 
 // -- Player Visible? -- //
 bool ai_guard::playerVisible() {
+	if (SBB::readBool("possMode")) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
@@ -324,7 +306,27 @@ bool ai_guard::playerVisible() {
 			return true;
 		}
 	}
+	ray_cast_query rcQuery;
+	float distRay;
+	CHandle collider = rayCastToFront(COL_TAG_OBJECT, distRay);
+	if (!collider.isValid()) { //No bloquea vision
+		____TIMER_CHECK_DO_(timerDebug);
+		dbg("ai_guard: Detecto al player\n");
+		____TIMER_CHECK_DONE_(timerDebug);
+		return true;
+	}
 	return false;
+}
+
+CHandle ai_guard::rayCastToFront(char types, float& distRay) {
+	ray_cast_query rcQuery;
+	rcQuery.position = getTransform()->getPosition();
+	rcQuery.direction = getTransform()->getFront();
+	rcQuery.maxDistance = DIST_RAYSHOT;
+	rcQuery.types = types;
+	ray_cast_result res = Physics::calcRayCast(rcQuery);
+	distRay = realDist(res.positionCollision, getTransform()->getPosition());
+	return res.firstCollider;
 }
 
 // -- Reset Times-- //
@@ -368,4 +370,6 @@ void ai_guard::renderInMenu() {
 	ImGui::SliderFloat("Shot Area Enter", &DIST_SQ_SHOT_AREA_ENTER, 0, 500);
 	ImGui::SliderFloat("Shot Area Leave", &DIST_SQ_SHOT_AREA_LEAVE, 0, 500);
 	ImGui::SliderFloat("Lost Player Distance", &DIST_SQ_PLAYER_LOST, 0, 500);
+	ImGui::SliderFloat("Laser Shot Reach", &DIST_RAYSHOT, DIST_SQ_SHOT_AREA_ENTER, DIST_SQ_SHOT_AREA_LEAVE * 2);
+	ImGui::SliderFloat("Laser Damage", &DAMAGE_LASER, 0, 10);
 }

@@ -35,10 +35,20 @@ void player_controller::Init() {
 
 	ChangeState("idle");
 	controlEnabled = true;
+	____TIMER__SET_ZERO_(timerDamaged);
+	dbg("TDam: %f / %f\n", timerDamaged, _timerDamaged);
+}
+
+bool player_controller::isDamaged() {
+	return !____TIMER__END_(timerDamaged);
 }
 
 void player_controller::myUpdate() {
-	UpdatePossession();
+	dbg("TDam: %f / %f\n", timerDamaged, _timerDamaged);
+	____TIMER__UPDATE_(timerDamaged);
+	if (!isDamaged()) {
+		UpdatePossession();
+	}
 }
 
 void player_controller::Idle() {
@@ -267,22 +277,18 @@ void player_controller::UpdatePossession() {
 
 			//Se desactiva el player
 			controlEnabled = false;
+			SBB::postBool("possMode", true);
 
 			//TODO: Desactivar render
 			CEntity * eMe = CHandle(this).getOwner();
 			TCompTransform* tMe = eMe->get<TCompTransform>();
-			tMe->setPosition(VEC3(0, 100, 0));
+			tMe->setPosition(VEC3(0, 200, 0));
 		}
 		else {
 			____TIMER_CHECK_DO_(timeShowAblePossess);
 			dbg("Press to POSSESS!\n");
 			____TIMER_CHECK_DONE_(timeShowAblePossess);
 		}
-	}
-	else {
-		____TIMER_CHECK_DO_(timeShowAblePossess);
-		dbg("_\n");
-		____TIMER_CHECK_DONE_(timeShowAblePossess);
 	}
 }
 
@@ -342,4 +348,15 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 
 	//Habilitamos control
 	controlEnabled = true;
+
+	//Notificamos presencia de Player
+	SBB::postBool("possMode", false);
+}
+
+void player_controller::onDamage(const TMsgDamage& msg) {
+	switch (msg.dmgType) {
+	case LASER:
+		____TIMER_RESET_(timerDamaged);
+		break;
+	}
 }

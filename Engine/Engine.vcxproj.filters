@@ -382,8 +382,10 @@
     <ClInclude Include="logic\ai_workbench.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="physics\physics.h" />
     <ClInclude Include="physics\comp_col_cylinder.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\physics.h">
       <Filter>physics</Filter>
     </ClInclude>
   </ItemGroup>

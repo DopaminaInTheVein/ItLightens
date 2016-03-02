@@ -26,6 +26,10 @@ class player_controller : public CPlayerBase {
 
 	float polarizedCurrentSpeed = 0.0f;
 
+	//Is damaged?
+	____TIMER_DECLARE_(timerDamaged, 1.0f);
+	bool isDamaged();
+
 	//Possession
 	float DIST_LEAVING_POSSESSION = 10.0f;
 	CHandle currentPossessable;
@@ -71,6 +75,7 @@ public:
 
 	//Mensajes
 	void onLeaveFromPossession(const TMsgPossessionLeave&);
+	void onDamage(const TMsgDamage&);
 
 	//Overload function for handler_manager
 	player_controller& player_controller::operator=(player_controller arg) { return arg; }

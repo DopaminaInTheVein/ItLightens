@@ -23,16 +23,14 @@ void TCompColCillinder::rayCast() {
 	ray_cast_query* rQuery = &rHalfWay->query;
 
 	// Filtro tipo
-	dbg("My Type: %d\n", type);
-	dbg("Types: %d\n", rQuery->types);
 	if (!(type & rQuery->types)) return;
 
 	//Calculo Raycast vs. Cylinder
 	//(Suponemos Cilidor alineado en eje Y)
-	//p = Origen del rayo						  
-	//v = Direccion del rayo					  
-	//q = Centro de la base inferior del cilindro 
-	//radius = Radio del cilindro					  
+	//p = Origen del rayo
+	//v = Direccion del rayo
+	//q = Centro de la base inferior del cilindro
+	//radius = Radio del cilindro
 	//alfa = Angulo entre {PQ} y {tangente de la base del cilindro que pasa por P}
 	//beta = Angulo entre {v} y {PQ}
 	//Colision = abs(alfa) > abs(beta)

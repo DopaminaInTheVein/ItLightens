@@ -53,13 +53,12 @@ void CPlayerBase::UpdateMoves()
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
-	VEC3 direction = directionForward+directionLateral;
-	
+	VEC3 direction = directionForward + directionLateral;
 
 	CEntity * camera_e = camera;
 	TCompTransform* camera_comp = camera_e->get<TCompTransform>();
 
-	direction.Normalize ();
+	direction.Normalize();
 
 	float yaw, pitch;
 	camera_comp->getAngles(&yaw, &pitch);
@@ -71,16 +70,13 @@ void CPlayerBase::UpdateMoves()
 	direction.x = new_x;
 	direction.z = new_z;
 
-	
 	direction.Normalize();
 
 	float new_yaw = player_transform->getDeltaYawToAimDirection(direction);
 
 	player_transform->getAngles(&yaw, &pitch);
 
-	player_transform->setAngles(new_yaw+yaw, pitch);
-
-
+	player_transform->setAngles(new_yaw + yaw, pitch);
 
 	if (onGround) {
 		//Set current velocity with friction
@@ -90,7 +86,6 @@ void CPlayerBase::UpdateMoves()
 		if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
 		else player_curr_speed = drag_i*player_curr_speed - drag*player_max_speed;
 
-
 		if (player_curr_speed < 0) {
 			player_curr_speed = 0.0f;
 			directionForward = directionLateral = VEC3(0, 0, 0);
@@ -99,7 +94,6 @@ void CPlayerBase::UpdateMoves()
 		//set final position
 		player_position = player_position + direction*getDeltaTime()*player_curr_speed;
 		player_transform->setPosition(player_position);
-
 	}
 	else {
 		player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2);
@@ -119,7 +113,6 @@ void CPlayerBase::UpdateMoves()
 #pragma region Inputs
 
 bool CPlayerBase::UpdateMovDirection() {
-	
 	moving = false;
 
 	bool horizontal = false;
@@ -129,9 +122,8 @@ bool CPlayerBase::UpdateMovDirection() {
 		directionForward = VEC3(0, 0, 1);
 		if (Input.GetLeftStickY() != -2) {
 			if (Input.GetLeftStickY() != 0.0f) {
-				directionForward = VEC3(0,0, -Input.GetLeftStickY());
+				directionForward = VEC3(0, 0, -Input.GetLeftStickY());
 			}
-
 		}
 		moving = true;
 		vertical = true;
@@ -143,19 +135,17 @@ bool CPlayerBase::UpdateMovDirection() {
 				directionForward = VEC3(0, 0, -Input.GetLeftStickY());
 				//TODO: y-axis not working, joystick-L & joystick-R
 			}
-
 		}
 		moving = true;
 		vertical = true;
 	}
 
 	if (Input.IsLeftPressed()) {
-		directionLateral = VEC3(1,0,0);
+		directionLateral = VEC3(1, 0, 0);
 		if (Input.GetLeftStickX() != -2) {
 			if (Input.GetLeftStickX() != 0.0f) {
 				directionLateral = VEC3(-Input.GetLeftStickX(), 0, 0);
 			}
-
 		}
 		moving = true;
 		horizontal = true;
@@ -166,9 +156,8 @@ bool CPlayerBase::UpdateMovDirection() {
 			if (Input.GetLeftStickX() != 0.0f) {
 				directionLateral = VEC3(-Input.GetLeftStickX(), 0, 0);
 			}
-
 		}
- 		moving = true;
+		moving = true;
 		horizontal = true;
 	}
 
@@ -176,7 +165,7 @@ bool CPlayerBase::UpdateMovDirection() {
 		directionForward = VEC3(0, 0, 0);
 
 	else if (!horizontal && moving)
-		directionLateral = VEC3(0,0,0);
+		directionLateral = VEC3(0, 0, 0);
 
 	return moving;
 }
@@ -187,15 +176,14 @@ void CPlayerBase::UpdateJumpState() {
 	}
 }
 
-
 void CPlayerBase::UpdateDirection() {
-/*	if (Input.IsOrientLeftPressed())
-		rotate = 1;
-	else if (Input.IsOrientRightPressed())
-		rotate = -1;
-	else {
-		rotate = 0;
-	}*/
+	/*	if (Input.IsOrientLeftPressed())
+			rotate = 1;
+		else if (Input.IsOrientRightPressed())
+			rotate = -1;
+		else {
+			rotate = 0;
+		}*/
 }
 
 void CPlayerBase::UpdateInputActions() {
@@ -214,6 +202,7 @@ void CPlayerBase::energyDecreasal(float howmuch) {
 	SetMyEntity();
 	TMsgDamage msg;
 	msg.points = howmuch;
+	msg.dmgType = ENERGY_DECREASE;
 	this->myEntity->sendMsg(msg);
 }
 
