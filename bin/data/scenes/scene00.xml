@@ -5,7 +5,6 @@
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
-    <colCylinder pos ="0 0 0" radius ="5" height ="10" type ="player" />
   </entity>
   <entity>
     <life points="50" />
@@ -14,6 +13,7 @@
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
+    <colCylinder pos ="0 0 0" radius ="5" height ="10" type ="player" />
   </entity>
 
   <entity>
@@ -137,28 +137,28 @@
     <name name="beacon1" />
     <tag name="beacon" />
     <transform pos="5 0 7" rotation="1 1 1 1" scale="1 1 1" />
-    <beacon/>
+    <beacon />
   </entity>
 
   <entity>
     <name name="beacon2" />
     <tag name="beacon" />
     <transform pos="-5 0 -7" rotation="1 1 1 1" scale="1 1 1" />
-    <beacon/>
+    <beacon />
   </entity>
 
   <entity>
     <name name="beacon3" />
     <tag name="beacon" />
     <transform pos="-5 0 7" rotation="1 1 1 1" scale="1 1 1" />
-    <beacon/>
+    <beacon />
   </entity>
 
   <entity>
     <name name="beacon4" />
     <tag name="beacon" />
     <transform pos="5 0 -7" rotation="1 1 1 1" scale="1 1 1" />
-    <beacon/>
+    <beacon />
   </entity>
 
   <entity>
@@ -166,14 +166,13 @@
     <tag name="workbench" />
     <transform pos="3 0 4" rotation="1 1 1 1" scale="1 1 1" />
     <render_static_mesh name="static_meshes/workbench.static_mesh" />
-    <workbench/>
+    <workbench />
   </entity>
   <entity>
     <name name="workbench2" />
     <tag name="workbench" />
     <transform pos="3 0 -4" rotation="1 1 1 1" scale="1 1 1" />
     <render_static_mesh name="static_meshes/workbench.static_mesh" />
-    <workbench/>
+    <workbench />
   </entity>
-
 </entities>
