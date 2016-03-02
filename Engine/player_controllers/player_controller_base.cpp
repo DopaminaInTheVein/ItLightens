@@ -94,7 +94,8 @@ void CPlayerBase::UpdateMoves()
 	}
 
 	//set final position
-	player_position = player_position + direction*getDeltaTime()*player_curr_speed;
+	if(onGround) player_position = player_position + direction*getDeltaTime()*player_curr_speed;
+	else player_position = player_position + direction*getDeltaTime()*(player_curr_speed/2.0f);
 	//player_transform->setPosition(player_position);
 	player_transform->executeMovement(player_position);
 	
@@ -260,6 +261,7 @@ void CPlayerBase::ApplyGravity() {
 	else {
 		player_position.y = 0;
 		player_transform->setPosition(player_position);
+		onGround = true;
 	}
 }
 
@@ -270,7 +272,6 @@ void CPlayerBase::Falling()
 
 	if (onGround) {
 		jspeed = 0.0f;
-		directionJump = VEC3(0, 0, 0);
 		ChangeState("idle");
 	}
 }

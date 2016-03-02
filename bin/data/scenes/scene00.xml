@@ -9,12 +9,12 @@
   <entity>
     <life points="500" />
     <tag name="target" />
-    <transform pos="1 0.1 0" />
+    <transform pos="1 0 0" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
     <colCylinder pos ="0 0 0" radius ="5" height ="10" type ="player" />
-    <sphere_collider radius="0.4" tag ="player" />
+    <sphere_collider radius="0.3" tag ="player" />
   </entity>
 
   <entity>
@@ -59,12 +59,12 @@
     <player_mole />
     <ai_mole />
   </entity>
-<!--  <entity>
+<!---> <entity>
     <tag name="AI" />
     <tag name="AI_guard" />
     <transform pos="7 0 7" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
-    <render_static_mesh name="static_meshes/tetera2.static_mesh" />
+    <render_static_mesh name="static_meshes/guard.static_mesh" />
     <ai_guard
       kpt_size  = "8"
       kpt0_type = "seek" kpt0_pos = " 10  0  10" kpt0_wait = "2"

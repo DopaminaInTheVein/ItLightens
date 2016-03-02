@@ -97,7 +97,6 @@ void player_controller::DoubleFalling() {
 
 	if (onGround) {
 		jspeed = 0.0f;
-		directionJump = VEC3(0, 0, 0);
 		ChangeState("idle");
 	}
 }
@@ -110,7 +109,6 @@ void player_controller::Jumping()
 
 	if (onGround) {
 		jspeed = 0.0f;
-		directionJump = VEC3(0, 0, 0);
 		ChangeState("idle");
 	}
 
@@ -140,7 +138,6 @@ void player_controller::Falling()
 
 	if (onGround) {
 		jspeed = 0.0f;
-		directionJump = VEC3(0, 0, 0);
 		ChangeState("idle");
 	}
 }
