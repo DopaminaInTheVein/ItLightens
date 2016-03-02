@@ -35,9 +35,6 @@ class player_controller : public CPlayerBase {
 	CHandle currentPossessable;
 	float possessionReach = 10.0f;
 
-	//Possession debug
-	____TIMER_DECLARE_(timeShowAblePossess, 1);
-
 	TCompTransform * getEntityTransform() {
 		SetMyEntity();
 		CEntity * ent = myParent;

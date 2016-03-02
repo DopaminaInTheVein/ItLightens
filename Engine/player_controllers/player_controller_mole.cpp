@@ -14,7 +14,6 @@ void player_controller_mole::Init() {
 
 	DeleteState("jumping");
 	DeleteState("falling");
-	//	DeleteState("idle");
 	DeleteState("moving");
 
 	AddState("grabBox", (statehandler)&player_controller_mole::GrabBox);
@@ -95,7 +94,7 @@ void player_controller_mole::LeaveBox() {
 bool player_controller_mole::nearToWall() {
 	bool found = false;
 	if (SBB::readHandlesVector("wptsBreakableWall").size() > 0) {
-		float distMax = 15.0f;
+		float distMax = 2.0f;
 		for (int i = 0; !found && i < SBB::readHandlesVector("wptsBreakableWall").size(); i++) {
 			CEntity * entTransform = this->getEntityWallHandle(i);
 			TCompTransform * transformBox = entTransform->get<TCompTransform>();
@@ -114,7 +113,7 @@ bool player_controller_mole::nearToWall() {
 bool player_controller_mole::nearToBox() {
 	bool found = false;
 	if (SBB::readHandlesVector("wptsBoxes").size() > 0) {
-		float distMax = 15.0f;
+		float distMax = 2.0f;
 		string key_final = "";
 		for (int i = 0; i < SBB::readHandlesVector("wptsBoxes").size(); i++) {
 			CEntity * entTransform = this->getEntityBoxPointer(i);
@@ -132,4 +131,8 @@ bool player_controller_mole::nearToBox() {
 		}
 	}
 	return found;
+}
+
+void player_controller_mole::InitControlState() {
+	ChangeState("idle");
 }

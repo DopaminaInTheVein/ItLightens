@@ -107,4 +107,9 @@ struct TMsgAISetPossessed {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgAISetStunned {
+	bool stunned;
+	DECLARE_MSG_ID();
+};
+
 #endif

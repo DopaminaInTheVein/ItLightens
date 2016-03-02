@@ -201,16 +201,18 @@ void ai_mole::UnGrabState() {
 }
 
 void ai_mole::_actionBeforePossession() {
-}
-ACTION_RESULT ai_mole::_actionBeingPossessed() {
-	return DONE;
-}
-ACTION_RESULT ai_mole::_actionBeingUnpossessed() {
-	return DONE;
-}
-void ai_mole::_actionStunt() {
+	vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
+	CEntity * en = newPointerVec[towptbox];
+	TCompName * nameBox = en->get<TCompName>();
+	string key = nameBox->name;
+	SBB::postBool(key, false);
 }
 
 void ai_mole::_StuntEndState() {
+	vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
+	CEntity * en = newPointerVec[towptbox];
+	TCompName * nameBox = en->get<TCompName>();
+	string key = nameBox->name;
+	SBB::postBool(key, false);
 	ChangeState("idle");
 }

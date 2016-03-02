@@ -4,7 +4,6 @@
 #include "components\comp_transform.h"
 
 ai_poss::ai_poss() {
-
 	AddState("idle", (statehandler)&ai_poss::idle);
 	AddState(ST_POSSESSING, (statehandler)&ai_poss::PossessingState);
 	AddState(ST_POSSESSED, (statehandler)&ai_poss::PossessedState);
@@ -24,6 +23,17 @@ void ai_poss::onSetPossessed(const TMsgAISetPossessed& msg) {
 	}
 	else {
 		ChangeState(ST_UNPOSSESSING);
+	}
+}
+
+void ai_poss::onSetStunned(const TMsgAISetStunned& msg) {
+	dbg("ai_poss, recibe Set Stunned = %d\n", msg.stunned);
+	stunned = msg.stunned;
+	if (msg.stunned) {
+		ChangeState(ST_STUNT);
+	}
+	else {
+		ChangeState("idle");
 	}
 }
 
@@ -105,8 +115,8 @@ const void ai_poss::UnpossessingState() {
 const void ai_poss::StuntState() {
 	actionStunt();
 	____TIMER_CHECK_DO_(timeStunt);
-	ChangeState(ST_STUNT_END);
 	stunned = false;
+	ChangeState(ST_STUNT_END);
 	____TIMER_CHECK_DONE_(timeStunt);
 }
 
@@ -128,5 +138,4 @@ void ai_poss::onStaticBomb(const TMsgStaticBomb & msg)
 	if (curr_pos.x <= msg.x_max && curr_pos.x >= msg.x_min && curr_pos.z <= msg.z_max && curr_pos.z >= msg.z_min) {
 		ChangeState(ST_STUNT);
 	}
-
 }
