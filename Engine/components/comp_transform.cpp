@@ -8,6 +8,15 @@
 #include "render\technique.h"
 #include "contants/ctes_object.h"
 
+
+//provisional physics
+#include "physics\simple_physx.h"
+#include "physics\colliders.h"
+#include "handle\handle.h"
+#include "components\entity.h"
+
+extern CSimplePhysx s_physx;
+
 extern CShaderCte< TCteObject > shader_ctes_object;
 extern const CRenderTechnique* tech_solid_colored;
 
@@ -57,4 +66,33 @@ void TCompTransform::renderInMenu() {
 	if (ImGui::SliderFloat("Scale", &scale, 0.2f, 5.0f)) {
 		setScale(VEC3(scale, scale, scale));
 	}
+}
+
+bool TCompTransform::executeMovement(VEC3 new_pos)
+{
+
+	CHandle me = CHandle(this);
+	CHandle owner = me.getOwner();
+	CEntity *e = owner;
+
+	VEC3 old_pos = getPosition();
+	setPosition(new_pos);
+
+	if (e->getCollisionType() == CEntity::SPHERE) {
+		sphereCollider *sc = e->get<sphereCollider>();
+		if (!s_physx.isMovementValid(owner, sc->getTag())) {
+			setPosition(old_pos);
+			return false;
+		}
+	}
+	else if (e->getCollisionType() == CEntity::BOX) {
+		boxCollider *bc = e->get<boxCollider>();
+		if (!s_physx.isMovementValid(owner, bc->getTag())) {
+			setPosition(old_pos);
+			return false;
+		}
+	}
+
+
+	return true;
 }

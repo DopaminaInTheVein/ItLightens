@@ -84,10 +84,7 @@ void player_controller::DoubleJump()
 {
 	UpdateDirection();
 	UpdateMovDirection();
-	SetMyEntity();
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-	jspeed -= gravity*getDeltaTime();
+
 	if (jspeed <= 0.1f) {
 		jspeed = 0.0f;
 		ChangeState("doublefalling");
@@ -97,13 +94,8 @@ void player_controller::DoubleJump()
 void player_controller::DoubleFalling() {
 	UpdateDirection();
 	UpdateMovDirection();
-	SetMyEntity();
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-	jspeed -= gravity*getDeltaTime();
 
-	if (player_position.y <= 0) {
-		onGround = true;
+	if (onGround) {
 		jspeed = 0.0f;
 		directionJump = VEC3(0, 0, 0);
 		ChangeState("idle");
@@ -114,20 +106,17 @@ void player_controller::Jumping()
 {
 	UpdateDirection();
 	UpdateMovDirection();
-	SetMyEntity();
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-	//dbg("deltatime: %f\n", getDeltaTime());
-	jspeed -= gravity*getDeltaTime();
-	//dbg("jspeed: %f\n", jspeed);
 
-	if (jspeed <= 0.1f) {
+
+	if (onGround) {
 		jspeed = 0.0f;
-		ChangeState("falling");
+		directionJump = VEC3(0, 0, 0);
+		ChangeState("idle");
 	}
+
 	if (Input.IsSpacePressedDown()) {
 		jspeed = jimpulse;
-		if (player_position.y <= 0) {
+		if (onGround) {
 			energyDecreasal(1.0f);
 		}
 		else {
@@ -141,19 +130,15 @@ void player_controller::Falling()
 {
 	UpdateDirection();
 	UpdateMovDirection();
-	SetMyEntity();
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-	jspeed -= gravity*getDeltaTime();
 
+	
 	if (Input.IsSpacePressedDown()) {
 		jspeed = jimpulse;
 		energyDecreasal(5.0f);
 		ChangeState("doublejump");
 	}
 
-	if (player_position.y <= 0) {
-		onGround = true;
+	if (onGround) {
 		jspeed = 0.0f;
 		directionJump = VEC3(0, 0, 0);
 		ChangeState("idle");

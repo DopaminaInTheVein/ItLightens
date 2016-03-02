@@ -62,8 +62,8 @@ public:
 
 	//Draw lines functions:
 	//-------------------------------------------------------
-	void DrawLine(VEC3 org, VEC3 end, VEC3 color);
-	void DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color);
+	void DrawLine(VEC3 org, VEC3 end, VEC3 color = RED);
+	void DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color = RED);
 	void RenderLine(line);
 	//-------------------------------------------------------
 };

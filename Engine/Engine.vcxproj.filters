@@ -175,6 +175,12 @@
     <ClCompile Include="physics\com_col_cylinder.cpp">
       <Filter>physics</Filter>
     </ClCompile>
+    <ClCompile Include="physics\simple_physx.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\colliders.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -386,6 +392,12 @@
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="physics\physics.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\simple_physx.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\colliders.h">
       <Filter>physics</Filter>
     </ClInclude>
   </ItemGroup>

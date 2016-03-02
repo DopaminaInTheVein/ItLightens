@@ -8,6 +8,10 @@
 // --------------------------------------------
 class CEntity : public TCompBase {
 	CHandle comps[CHandle::max_types];
+
+	int typeCollision = 0;
+	
+
 public:
 
 	void add(CHandle h) {
@@ -72,6 +76,19 @@ public:
 		}
 	}
 
+
+
+	//TO REMOVE
+
+	//Collision type
+	enum typeCollision {
+		NONE = 0,
+		SPHERE,
+		BOX
+	};
+
+	void	setCollisionType(int type) { typeCollision = type; }
+	int		getCollisionType() const { return typeCollision; }
 
 	// --------------------------------------------
 	void renderInMenu();

@@ -38,6 +38,10 @@ DECL_OBJ_MANAGER("colCylinder", TCompColCillinder);
 DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 
+//colliders
+DECL_OBJ_MANAGER("sphere_collider", sphereCollider);
+DECL_OBJ_MANAGER("box_collider", boxCollider);
+
 static CHandle player;
 static CHandle target;
 CInput input;
@@ -77,6 +81,11 @@ bool CEntitiesModule::start() {
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
 
+	//colliders
+	getHandleManager<sphereCollider>()->init(MAX_ENTITIES);
+	getHandleManager<boxCollider>()->init(MAX_ENTITIES);
+
+	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
@@ -110,10 +119,14 @@ bool CEntitiesModule::start() {
 
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
-
+	
 	//Damage
 	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(player_controller, TMsgDamage, onDamage);
+
+	//colliders
+	SUBSCRIBE(sphereCollider, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(boxCollider, TMsgEntityCreated, onCreate);
 
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene00.xml");

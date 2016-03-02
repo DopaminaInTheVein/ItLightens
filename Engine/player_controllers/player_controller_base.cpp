@@ -50,6 +50,9 @@ void CPlayerBase::update(float elapsed) {
 void CPlayerBase::UpdateMoves()
 {
 	SetMyEntity();
+
+	ApplyGravity();
+
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
@@ -78,31 +81,23 @@ void CPlayerBase::UpdateMoves()
 
 	player_transform->setAngles(new_yaw + yaw, pitch);
 
-	if (onGround) {
-		//Set current velocity with friction
-		float drag = 0.002f;
-		float drag_i = (1 - drag);
+	//Set current velocity with friction
+	float drag = 0.002f;
+	float drag_i = (1 - drag);
 
-		if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
-		else player_curr_speed = drag_i*player_curr_speed - drag*player_max_speed;
+	if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
+	else player_curr_speed = drag_i*player_curr_speed - drag*player_max_speed;
 
-		if (player_curr_speed < 0) {
-			player_curr_speed = 0.0f;
-			directionForward = directionLateral = VEC3(0, 0, 0);
-		}
-
-		//set final position
-		player_position = player_position + direction*getDeltaTime()*player_curr_speed;
-		player_transform->setPosition(player_position);
+	if (player_curr_speed < 0) {
+		player_curr_speed = 0.0f;
+		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
-	else {
-		player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2);
 
-		player_transform->setPosition(player_position);
-		player_position = player_transform->getPosition();
-		player_position = player_position + directionJump*getDeltaTime()*jspeed;
-		player_transform->setPosition(player_position);
-	}
+	//set final position
+	player_position = player_position + direction*getDeltaTime()*player_curr_speed;
+	//player_transform->setPosition(player_position);
+	player_transform->executeMovement(player_position);
+	
 }
 #pragma endregion
 //##########################################################################
@@ -244,17 +239,36 @@ void CPlayerBase::Die()
 	ChangeState("idle");
 }
 
+void CPlayerBase::ApplyGravity() {
+	SetMyEntity();
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	VEC3 player_position = player_transform->getPosition();
+
+	if (player_position.y > 0 || jspeed > 0) {
+		jspeed -= gravity*getDeltaTime();
+		player_position = player_position + directionJump*getDeltaTime()*jspeed;
+		//player_transform->setPosition(player_position);
+		if (!player_transform->executeMovement(player_position)) {
+			onGround = true;
+			jspeed = 0.0f;
+			ChangeState("idle");
+		}
+		else {
+			onGround = false;
+		}
+	}
+	else {
+		player_position.y = 0;
+		player_transform->setPosition(player_position);
+	}
+}
+
 void CPlayerBase::Falling()
 {
 	UpdateDirection();
 	UpdateMovDirection();
-	SetMyEntity();
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-	jspeed -= gravity*getDeltaTime();
 
-	if (player_position.y <= 0) {
-		onGround = true;
+	if (onGround) {
 		jspeed = 0.0f;
 		directionJump = VEC3(0, 0, 0);
 		ChangeState("idle");

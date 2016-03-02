@@ -83,6 +83,8 @@ public:
 	void Jump();
 	void Die();
 
+	void ApplyGravity();
+
 	void Jumping();
 	void Falling();
 	void Moving();

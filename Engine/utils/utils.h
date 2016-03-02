@@ -28,7 +28,7 @@ float squaredDist(const VEC3& init, const VEC3& dest);
 float squaredDistXZ(const VEC3& init, const VEC3& dest);
 
 float simpleDistXZ(const VEC3& init, const VEC3& dest);
-float simpleDist(VEC3& init, VEC3& dest);
+float simpleDist(const VEC3& init, const VEC3& dest);
 
 void getRotationMatrix(const double roll, const double pitch, const double yaw, MAT44 &R);
 VEC3 productVectorMatrix(const VEC4& vec, const MAT44& matrix);

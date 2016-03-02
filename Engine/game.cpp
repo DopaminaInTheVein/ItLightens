@@ -21,9 +21,12 @@
 
 #include "debug/debug.h"
 
+#include "physics/simple_physx.h"
+
 //DEBUG
 CDebug *	  Debug = nullptr;
 CInput	      Input;
+CSimplePhysx  s_physx;		//provisional
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;

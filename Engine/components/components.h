@@ -26,6 +26,7 @@
 
 //Physics
 #include "physics/comp_col_cylinder.h"
+#include "physics\colliders.h"
 
 //prefabs
 #include "prefabs\magnetic_bomb.h"

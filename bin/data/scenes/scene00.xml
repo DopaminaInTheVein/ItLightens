@@ -7,13 +7,14 @@
     <controller_3rd_person />
   </entity>
   <entity>
-    <life points="50" />
+    <life points="500" />
     <tag name="target" />
-    <transform pos="21 0 0" />
+    <transform pos="1 0.1 0" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
     <colCylinder pos ="0 0 0" radius ="5" height ="10" type ="player" />
+    <sphere_collider radius="0.4" tag ="player" />
   </entity>
 
   <entity>
@@ -31,9 +32,12 @@
   <entity>
     <name name="box1" />
     <tag name="box" />
+    <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 0 0" rotation="1 2 3 3" scale="1 1 1" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform"/>
   </entity>
+  
   <entity>
     <name name="breakable_wall_e" />
     <tag name="breakable_wall" />
@@ -55,7 +59,7 @@
     <player_mole />
     <ai_mole />
   </entity>
-  <entity>
+<!--  <entity>
     <tag name="AI" />
     <tag name="AI_guard" />
     <transform pos="7 0 7" rotation="1 2 3 3" scale="1 1 1" />
@@ -72,7 +76,7 @@
       kpt6_type = "seek" kpt6_pos = "-10  0  10" kpt6_wait = "2"
       kpt7_type = "look" kpt7_pos = "  0  0   0" kpt7_wait = "2" />
   </entity>
-
+-->
   <entity>
     <tag name="AI" />
     <tag name="AI_cientifico" />
@@ -175,4 +179,55 @@
     <render_static_mesh name="static_meshes/workbench.static_mesh" />
     <workbench />
   </entity>
+  
+  
+  <!-- physics platforms testing-->
+
+  <entity>
+    <transform pos="-1 0 1.5" />
+    <tag name = "platform"/>
+    <name name="box" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform"/>
+  </entity>
+
+  <entity>
+    <transform pos="-3 2 1.5" />
+    <tag name = "platform"/>
+    <name name="box" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform"/>
+  </entity>
+
+  <entity>
+    <transform pos="-5 4 1.5" />
+    <tag name = "platform"/>
+    <name name="box" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform"/>
+  </entity>
+
+  <entity>
+    <transform pos="-7 6 1.5" />
+    <tag name = "platform"/>
+    <name name="box" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform"/>
+  </entity>
+
+  <entity>
+    <transform pos="-9 8 1.5" />
+    <tag name = "platform"/>
+    <name name="box" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform"/>
+  </entity>
+
+  <entity>
+    <tag name="floor" />
+    <tag name ="platform"/>
+    <transform pos="0 -1 0" />
+    <render_static_mesh name="static_meshes/floor.static_mesh" />
+  </entity>
+
 </entities>

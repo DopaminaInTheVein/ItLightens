@@ -139,7 +139,9 @@
     <ClCompile Include="logic\ai_workbench.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="physics\colliders.cpp" />
     <ClCompile Include="physics\com_col_cylinder.cpp" />
+    <ClCompile Include="physics\simple_physx.cpp" />
     <ClCompile Include="player_controllers\player_controller.cpp" />
     <ClCompile Include="player_controllers\player_controller_base.cpp" />
     <ClCompile Include="player_controllers\player_controller_cientifico.cpp" />
@@ -213,7 +215,9 @@
     <ClInclude Include="logic\ai_workbench.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
+    <ClInclude Include="physics\colliders.h" />
     <ClInclude Include="physics\comp_col_cylinder.h" />
+    <ClInclude Include="physics\simple_physx.h" />
     <ClInclude Include="player_controllers\player_controller.h" />
     <ClInclude Include="player_controllers\player_controller_base.h" />
     <ClInclude Include="player_controllers\player_controller_cientifico.h" />
