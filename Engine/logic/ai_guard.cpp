@@ -180,7 +180,7 @@ void ai_guard::ShootState() {
 	for (int i = 0; i < 8; i++) {
 		float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 		float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		Debug->DrawLine(myPos + VEC3(r1, 1, r2), getTransform()->getFront(), distRay, RED);
+		Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), getTransform()->getFront(), distRay, RED);
 	}
 
 	//Fuera de tiro?
@@ -310,9 +310,6 @@ bool ai_guard::playerVisible() {
 	float distRay;
 	CHandle collider = rayCastToFront(COL_TAG_OBJECT, distRay);
 	if (!collider.isValid()) { //No bloquea vision
-		____TIMER_CHECK_DO_(timerDebug);
-		dbg("ai_guard: Detecto al player\n");
-		____TIMER_CHECK_DONE_(timerDebug);
 		return true;
 	}
 	return false;

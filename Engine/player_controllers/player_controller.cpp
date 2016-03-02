@@ -36,7 +36,6 @@ void player_controller::Init() {
 	ChangeState("idle");
 	controlEnabled = true;
 	____TIMER__SET_ZERO_(timerDamaged);
-	dbg("TDam: %f / %f\n", timerDamaged, _timerDamaged);
 }
 
 bool player_controller::isDamaged() {
@@ -44,7 +43,6 @@ bool player_controller::isDamaged() {
 }
 
 void player_controller::myUpdate() {
-	dbg("TDam: %f / %f\n", timerDamaged, _timerDamaged);
 	____TIMER__UPDATE_(timerDamaged);
 	if (!isDamaged()) {
 		UpdatePossession();

@@ -19,7 +19,7 @@
 #define SPEED_WALK_INI					6
 #define CONE_VISION_INI					deg2rad(45)
 #define SPEED_ROT_INI					deg2rad(100)
-#define DAMAGE_LASER_INI				3
+#define DAMAGE_LASER_INI				1
 
 #define ST_NEXT_ACTION		"next_action"
 #define ST_SEEK_POINT		"seek_point"
@@ -52,7 +52,7 @@ class ai_guard : public TCompBase, public aicontroller
 	CEntity* getPlayer();
 
 	//Debug
-	____TIMER_DECLARE_(timerDebug, 2.0f);
+	//____TIMER_DECLARE_(timerDebug, 2.0f);
 
 	//KeyPoints
 	enum KptType { Seek, Look };
