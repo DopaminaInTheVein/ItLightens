@@ -181,6 +181,9 @@
     <ClCompile Include="physics\colliders.cpp">
       <Filter>physics</Filter>
     </ClCompile>
+    <ClCompile Include="input\input_manager.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -399,6 +402,9 @@
     </ClInclude>
     <ClInclude Include="physics\colliders.h">
       <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="input\input_manager.h">
+      <Filter>input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

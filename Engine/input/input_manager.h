@@ -1,12 +1,12 @@
-#ifndef _INC_INPUT_H_
-#define _INC_INPUT_H_
+#ifndef _INC_INPUT_MANAGER_H_
+#define _INC_INPUT_MANAGER_H_
 
 #define DIRECTINPUT_VERSION 0x0800
 
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
 
-#include <dinput.h>
+#include "input.h"
 
 #pragma region "defines keys"
 
@@ -182,116 +182,40 @@
 
 #pragma endregion
 
-class CInput
+class CInputManager
 {
 public:
-	CInput();
-	CInput(const CInput&);
-	~CInput();
+	CInputManager();
+	CInputManager(const CInputManager&);
+	~CInputManager();
 
-	const int mouse_LEFT = 0;
-	const int mouse_RIGHT = 1;
-	const int mouse_WHEEL = 2;
-	const int mouse_EXTRA = 3;
+	CInput input;
 
-	const long joystick_axis_max = 65535;
-	const long joystick_axis_min = 0;
-	const long joystick_sensibility = 1000;
+	HWND window;
+	int screen_width;
+	int screen_height;
 
-	const int joystick_A = 0;
-	const int joystick_B = 1;
-	const int joystick_X = 2;
-	const int joystick_Y = 3;
-	const int joystick_LB = 4;
-	const int joystick_RB = 5;
-	const int joystick_BACK = 6;
-	const int joystick_START = 7;
+	bool init(HINSTANCE, HWND, int, int);
+	bool update();
 
-	bool Initialize(HINSTANCE, HWND, int, int);
-	void Shutdown();
-	bool Frame();
-	int getScreenWidth() {
-		return m_screenWidth;
-	}
-	int getScreenHeight() {
-		return m_screenHeight;
+	void exitGame(int exit_code);
+	void hideMenu();
+	void unhideMenu();
+	void lockMouse();
+	void unlockMouse();
+
+	bool isMouseLocked() {
+		return mouse_locked;
 	}
 
-	void GetMouseLocation(int&, int&);
-
-	// Mouse movement detection
-	bool IsMouseMovedUp();
-	bool IsMouseMovedDown();
-	bool IsMouseMovedLeft();
-	bool IsMouseMovedRight();
-	void UpdateMousePosition();
-	// Main actions (left click, right click and space)
-	void SetMouseInWindowCenter();
-	bool IsLeftClickPressed();
-	bool IsLeftClickPressedDown();
-	bool IsLeftClickReleased();
-	bool IsRightClickPressed();
-	bool IsRightClickPressedDown();
-	bool IsRightClickReleased();
-	bool IsSpacePressed();
-	bool IsSpacePressedDown();
-	bool IsSpaceReleased();
-	// Movement actions (WASD)
-	bool IsLeftPressed();
-	bool IsRightPressed();
-	bool IsUpPressed();
-	bool IsDownPressed();
-	// Camera rotation (QERT)
-	bool IsOrientUpPressed();
-	bool IsOrientDownPressed();
-	bool IsOrientLeftPressed();
-	bool IsOrientRightPressed();
-
-	// Polarity (1-2 / LB - RB)
-	bool IsPlusPolarityPressedDown();
-	bool IsMinusPolarityPressedDown();
-
-	bool IsEscapePressed();
-
-	// General functions
-	int GetMouseDiffX();
-	int GetMouseDiffY();
-	bool IsKeyPressedDown(int key);
-	bool IsKeyPressed(int key);
-	bool IsKeyReleased(int key);
-	float GetLeftStickX();
-	float GetLeftStickY();
-	float GetRightStickX();
-	float GetRightStickY();
-
-	void Unacquire();
+	bool isMenuHidden() {
+		return menu_hidden;
+	}
 
 private:
-	bool ReadKeyboard();
-	bool ReadMouse();
-	bool ReadJoystick();
-	void ProcessInput();
-	void getMouseButtonPressed(int &pressed);
-	bool getJoystickButtonPressed(int &pressed);
+	bool mouse_locked = false;
+	bool menu_hidden = false;
 
-private:
-
-	IDirectInput8* m_directInput;
-	IDirectInputDevice8* m_keyboard;
-	IDirectInputDevice8* m_mouse;
-	IDirectInputDevice8* m_joystick;
-
-	unsigned char m_keyboardState[256];
-	DIMOUSESTATE m_mouseState;
-	DIJOYSTATE m_joystickState;
-
-	std::vector<bool> mouse_pressed;
-	std::vector<bool> key_pressed;
-	std::vector<bool> joystick_pressed;
-
-	int m_screenWidth, m_screenHeight;
-	int m_mouseX, m_mouseY;
-	std::deque<int> last_mouseX, last_mouseY;
 };
 
 #endif
