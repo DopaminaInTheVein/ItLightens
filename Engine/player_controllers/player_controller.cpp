@@ -8,6 +8,7 @@
 #include "components/entity_tags.h"
 
 #include "components/comp_msgs.h"
+#include "ui\ui_interface.h"
 
 void player_controller::Init() {
 	om = getHandleManager<player_controller>();	//player
@@ -106,7 +107,6 @@ void player_controller::Jumping()
 	UpdateDirection();
 	UpdateMovDirection();
 
-
 	if (onGround) {
 		jspeed = 0.0f;
 		ChangeState("idle");
@@ -129,7 +129,6 @@ void player_controller::Falling()
 	UpdateDirection();
 	UpdateMovDirection();
 
-	
 	if (Input.IsSpacePressedDown()) {
 		jspeed = jimpulse;
 		energyDecreasal(5.0f);
@@ -273,6 +272,17 @@ void player_controller::UpdatePossession() {
 			ePoss->sendMsg(msg);
 		}
 	}
+	else if (Input.IsLeftClickPressed()) {
+		SetMyEntity();
+		TCompTransform* player_transform = myEntity->get<TCompTransform>();
+		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
+		for (CEntity * ptr : ptsRecover) {
+			TCompTransform * ptr_trn = ptr->get<TCompTransform>();
+			if (3 > simpleDist(ptr_trn->getPosition(), player_transform->getPosition())) {
+				energyDecreasal(-5.0f*getDeltaTime());
+			}
+		}
+	}
 }
 
 // Recalcula el mejor candidato para poseer
@@ -334,6 +344,11 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 
 	//Notificamos presencia de Player
 	SBB::postBool("possMode", false);
+}
+
+void player_controller::update_msgs()
+{
+	ui.addTextInstructions("Press 'shift' to possess someone\n");
 }
 
 void player_controller::onDamage(const TMsgDamage& msg) {

@@ -48,7 +48,8 @@ void CPlayerBase::update(float elapsed) {
 		UpdateInputActions();
 		Recalc();
 		UpdateMoves();
-		myUpdate();
+		myUpdate(); 
+		update_msgs();
 	}
 }
 
@@ -108,6 +109,7 @@ void CPlayerBase::UpdateMoves()
 	else player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
 	//player_transform->setPosition(player_position);
 	player_transform->executeMovement(player_position);
+	
 }
 #pragma endregion
 //##########################################################################
@@ -271,7 +273,7 @@ void CPlayerBase::ApplyGravity() {
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
-	if (player_position.y > 0 || jspeed > 0) {
+	if (player_position.y > 0 || jspeed > 0.01f) {
 		jspeed -= gravity*getDeltaTime();
 		player_position = player_position + directionJump*getDeltaTime()*jspeed;
 		//player_transform->setPosition(player_position);
@@ -309,9 +311,7 @@ void CPlayerBase::Jumping()
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	//dbg("deltatime: %f\n", getDeltaTime());
 	jspeed -= gravity*getDeltaTime();
-	//dbg("jspeed: %f\n", jspeed);
 
 	if (jspeed <= 0.1f) {
 		jspeed = 0.0f;

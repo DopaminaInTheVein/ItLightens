@@ -22,11 +22,13 @@
 #include "debug/debug.h"
 
 #include "physics/simple_physx.h"
+#include "ui\ui_interface.h"
 
 //DEBUG
 CDebug *	  Debug = nullptr;
 CInput	      Input;
 CSimplePhysx  s_physx;		//provisional
+CUI ui;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;

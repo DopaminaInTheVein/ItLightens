@@ -44,6 +44,8 @@ void TCompTransform::render() const
 bool TCompTransform::load(MKeyValue& atts) {
 	auto p = atts.getPoint("pos");
 	setPosition(p);
+	auto r = atts.getQuat("quat");
+	setRotation(r);
 	return true;
 }
 

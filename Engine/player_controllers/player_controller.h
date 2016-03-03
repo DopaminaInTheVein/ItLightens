@@ -70,6 +70,7 @@ public:
 	bool nearMinus();
 	bool nearPlus();
 
+	void update_msgs() override;
 	//Mensajes
 	void onLeaveFromPossession(const TMsgPossessionLeave&);
 	void onDamage(const TMsgDamage&);

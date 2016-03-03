@@ -6,7 +6,7 @@
 
 class CImGuiModule : public IAppModule {
 
-	CUI ui;
+
 
 public:
 	bool start() override;

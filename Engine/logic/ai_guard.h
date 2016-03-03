@@ -29,6 +29,9 @@
 #define ST_SHOOT			"shoot"
 #define ST_SOUND_DETECTED	"sound_detected"
 #define ST_LOOK_ARROUND		"look_arround"
+#define ST_SHOOTING_WALL	"shootingWall"
+
+#define PLAYER_CENTER_Y		0.5f
 
 class ai_guard : public TCompBase, public aicontroller
 {
@@ -43,6 +46,7 @@ class ai_guard : public TCompBase, public aicontroller
 	float CONE_VISION = CONE_VISION_INI;
 	float SPEED_ROT = SPEED_ROT_INI;
 	float DAMAGE_LASER = DAMAGE_LASER_INI;
+	____TIMER_DECLARE_(timerShootingWall);
 
 	//Handles & More
 	CHandle myHandle;
@@ -82,10 +86,16 @@ class ai_guard : public TCompBase, public aicontroller
 	//Times and similars
 	float timeWaiting;
 	float deltaYawLookingArround;
-	void resetTimes();
+	void resetTimers();
 
 	//Raycast
-	CHandle rayCastToFront(char types, float& distRay);
+	CHandle rayCastToPlayer(char types, float& distRay);
+	void shootToPlayer();
+
+//from bombs
+	const float reduce_factor = 3.0f;
+	const float t_reduceStats_max = 15.0f;
+	float t_reduceStats = 0.0f;
 
 public:
 	void NextActionState();
@@ -96,15 +106,35 @@ public:
 	void ShootState();
 	void SoundDetectedState();
 	void LookArroundState();
+	void ShootingWallState();
 
 	void Init() override;
 	void init() { Init(); }
 	void noise(const TMsgNoise& msg);
 
-	void update(float dt) { Recalc(); }
+	//From bombs
+	void reduceStats();
+	void resetStats();
+	void onMagneticBomb(const TMsgMagneticBomb& msg);
+
+	//TODO: remove, testing gameplay
+	void artificialInterrupt();
+
+	void update(float dt) { 
+		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
+			t_reduceStats -= getDeltaTime();
+			if (t_reduceStats <= 0.0f) {
+				t_reduceStats = 0.0f;
+				resetStats();
+			}
+		}
+		Recalc();
+	}
 	void render();
 	void renderInMenu();
 	bool load(MKeyValue& atts);
+
+	ai_guard& ai_guard::operator=(ai_guard arg) { return arg; }
 };
 
 #endif

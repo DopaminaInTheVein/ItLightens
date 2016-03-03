@@ -99,13 +99,11 @@ void CMagneticBomb::SendMsg()
 	TCompTransform *mtx = p_e->get<TCompTransform>();
 	VEC3 org = mtx->getPosition();
 
-	msg.x_max = org.x + rad;
-	msg.x_min = org.x - rad;
-	msg.z_max = org.z + rad;
-	msg.z_min = org.z - rad;
+	msg.pos = org;
+	msg.r = rad;
 
 	//TODO: for each NPC, tag NPC
-	VEntities ets = tags_manager.getHandlesPointerByTag(getID("AI_cientifico"));
+	VEntities ets = tags_manager.getHandlesPointerByTag(getID("AI_guard"));
 	for (CEntity *e : ets) {
 		e->sendMsg(msg);
 	}

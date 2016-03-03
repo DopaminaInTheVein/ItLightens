@@ -40,17 +40,24 @@ class player_controller_cientifico : public PossController {
 		EMPTY = 0,
 		DISABLE_BEACON,
 		MAGNETIC_BOMB,
-		STATIC_BOMB
+		MAGNETIC_BOMB_GAME,
+		STATIC_BOMB,
+		STATIC_BOMB_GAME
 	};
 
 
 	int obj = EMPTY;
+	CHandle bomb_handle;
+
 	const float t_create_beacon = 1.0f;
 	const float t_create_StaticBomb = 1.0f;
 	const float t_create_MagneticBomb = 1.0f;
+	const float t_explode_static_bomb = 5.0f;
 	float t_waiting = 0.0f;
+	float t_to_explode = 5.0f;
 
 	void UpdateInputActions() override;
+	void ExplodeBomb();
 
 
 public:
@@ -78,6 +85,9 @@ public:
 	void DisabledState();
 	void InitControlState();
 	CEntity* getMyEntity();
+
+	void update_msgs() override;
+	void myUpdate() override;
 
 	void renderInMenu();
 

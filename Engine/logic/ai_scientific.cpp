@@ -44,7 +44,11 @@ void ai_scientific::Idle() {
 
 void ai_scientific::LookForObj()
 {
-	VEC3 pos_wander = VEC3(rand() % 20 - 10, 0.0f, rand() % 20 - 10);
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 curr_pos = me_transform->getPosition();
+
+	VEC3 pos_wander = VEC3(rand() % 10 - 5 +curr_pos.x, 0.0f, rand() % 10 - 5 + curr_pos.z);
 	actual_action = WANDER;
 	obj_position = pos_wander;
 	if (beacon_to_go_name != "") ChangeState("seekWB");
@@ -258,7 +262,9 @@ void ai_scientific::onStaticBomb(const TMsgStaticBomb & msg)
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
-	if (curr_pos.x <= msg.x_max && curr_pos.x >= msg.x_min && curr_pos.z <= msg.z_max && curr_pos.z >= msg.z_min) {
+	float d = squaredDist(msg.pos, curr_pos);
+
+	if(d < msg.r){
 		CleanStates();
 		ChangeState(ST_STUNT);
 	}
@@ -283,23 +289,16 @@ void ai_scientific::SetMyEntity() {
 	myEntity = myParent;
 }
 
-//Possession
-/*
-void ai_scientific::_actionBeforePossession() {
-}
-ACTION_RESULT ai_scientific::_actionBeingPossessed() {
-	return DONE;
-}
-ACTION_RESULT ai_scientific::_actionBeingUnpossessed() {
-	return DONE;
-}
-void ai_scientific::_actionStunt() {
+const void ai_scientific::StuntState() {
+	actionStunt();
+	CleanStates();
+	____TIMER_CHECK_DO_(timeStunt);
+	stunned = false;
+	ChangeState(ST_STUNT_END);
+	____TIMER_CHECK_DONE_(timeStunt);
 }
 
-void ai_scientific::_StuntEndState() {
-	ChangeState("idle");
-}
-*/
+
 CEntity* ai_scientific::getMyEntity() {
 	CHandle me = CHandle(this);
 	return me.getOwner();

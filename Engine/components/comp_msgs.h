@@ -70,18 +70,14 @@ struct TMsgWBTakenByPlayer {
 };
 
 struct TMsgStaticBomb {
-	float x_max;
-	float z_max;
-	float x_min;
-	float z_min;
+	VEC3 pos;
+	float r;
 	DECLARE_MSG_ID();
 };
 
 struct TMsgMagneticBomb {
-	float x_max;
-	float z_max;
-	float x_min;
-	float z_min;
+	VEC3 pos;
+	float r;
 	DECLARE_MSG_ID();
 };
 

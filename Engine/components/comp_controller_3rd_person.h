@@ -75,8 +75,13 @@ public:
 	void update(float dt) {
 		updateInput();
 
+		CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
 		CEntity* e_target = target;
-		if (!e_target || ((TCompLife*)e_target->get<TCompLife>())->currentlife <= 0.0f)
+
+		TCompTransform * player_transform = e_target->get<TCompTransform>();
+		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
+
+		if (!e_target || ((TCompLife*)e_target->get<TCompLife>())->currentlife <= 0.0f || 2.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition()))
 			return;
 		TCompTransform* target_tmx = e_target->get<TCompTransform>();
 		assert(target_tmx);

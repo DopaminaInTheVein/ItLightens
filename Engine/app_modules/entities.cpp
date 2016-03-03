@@ -85,7 +85,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<sphereCollider>()->init(MAX_ENTITIES);
 	getHandleManager<boxCollider>()->init(MAX_ENTITIES);
 
-	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
+	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
@@ -101,7 +101,13 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
+
+	//bombs
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
+	//SUBSCRIBE(ai_guard, TMsgStaticBomb, onStaticBomb);		//TODO: should do something
+	SUBSCRIBE(ai_mole, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(ai_speedy, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(ai_guard, TMsgMagneticBomb, onMagneticBomb);
 
 	//Posesiones Mensajes
 	//..Cientifico
@@ -138,6 +144,7 @@ bool CEntitiesModule::start() {
 	TTagID tagIDwall = getID("breakable_wall");
 	TTagID tagIDminus = getID("minus_wall");
 	TTagID tagIDplus = getID("plus_wall");
+	TTagID tagIDrec = getID("recover_point");
 
 	// Camara del player
 	player = tags_manager.getFirstHavingTag(tagIDplayer);
@@ -175,6 +182,7 @@ bool CEntitiesModule::start() {
 	SBB::postHandlesVector("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
 	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
 	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
+	SBB::postHandlesVector("wptsRecoverPoint", tags_manager.getHandlesByTag(tagIDrec));
 
 	getHandleManager<player_controller>()->onAll(&player_controller::Init);
 	getHandleManager<player_controller_speedy>()->onAll(&player_controller_speedy::Init);

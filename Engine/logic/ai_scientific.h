@@ -87,6 +87,7 @@ public:
 	//--------------------------------------
 	void SetHandleMeInit();
 	void SetMyEntity();
+	const void StuntState() override;
 	//--------------------------------------
 
 	void CleanStates();

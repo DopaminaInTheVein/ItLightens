@@ -13,9 +13,12 @@ extern CInput Input;
 class CUI {
 	bool open_main_ui = true;
 	bool open_ui_keys = true;
-
+	bool open_assist = true;
+	vector<std::string> msgs;
+	
 public:
 	void update() {
+
 		//Here goes all game UI info
 
 		ImGui::Begin("UI", &open_main_ui, ImVec2(400, 150), -1.0f);
@@ -26,8 +29,19 @@ public:
 		instructions_update();
 
 		ImGui::End();
+
+		ui_assist();
 	}
 
+	void ui_assist() {
+		ImGui::Begin("Help", &open_assist, ImVec2(400, 150), -1.0f);
+		for (auto msg : msgs) {
+			ImGui::Text(msg.c_str());
+		}
+		ImGui::End();
+		msgs.clear();
+	}
+	
 	void instructions_update() {
 		if (ImGui::CollapsingHeader("Instructions")) {
 			ImGui::Text("Instructions goes here");
@@ -44,6 +58,8 @@ public:
 	}
 
 	void life_update() {
+
+
 		TTagID tagIDplayer = getID("player");
 		CHandle player = tags_manager.getFirstHavingTag(tagIDplayer);
 		CEntity * player_e = player;
@@ -52,6 +68,8 @@ public:
 		CEntity * target_e = camara3rd->target;
 
 		TCompLife * life = target_e->get<TCompLife>();
+
+		
 
 		ImGui::Text("LifeBar\n");
 		std::string lifeString = "|";
@@ -68,7 +86,7 @@ public:
 		lifeString += "|";
 		ImGui::Text(lifeString.c_str());
 		ImGui::Separator();
-
+		
 		//put cheats here:
 		ImGui::Text("Press 'L' to refill energy (don't work)");
 
@@ -93,5 +111,11 @@ public:
 			ImGui::End();
 		}
 	}
+
+	void addTextInstructions(std::string message) {
+		msgs.push_back(message.c_str());
+	}
 };
+
+extern CUI ui;
 #endif
