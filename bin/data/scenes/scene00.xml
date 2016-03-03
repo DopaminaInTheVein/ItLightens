@@ -182,11 +182,11 @@
     <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" />
   </entity>
   <!--platforms, helpers to pass to next point-->
-  <!--ZONE 1-->
+  <!--ZONE 2-->
   <!--    Shoudnt be necessary, can be passed with mole and box moving-->
 
   <!-- -->
-  <!--ZONE 2-->
+  <!--ZONE 3-->
 
   <entity>
     <transform pos="38 1 0" />
@@ -196,11 +196,11 @@
     <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" />
   </entity>
 
-  <!--ZONE 3-->
+  <!--ZONE 4-->
   <!--END-->
 
-  <!-- NPC -->
-  <!-- ZONE 1 -->
+  <!-- LOGIC OBJECTS -->
+  <!-- ZONE 2 -->
   <entity>
     <name name="box1" />
     <tag name="box" />
@@ -239,14 +239,14 @@
     <ai_mole />
   </entity>
 
-  <!-- END ZONE 1 -->
-
-  <!-- ZONE 2 -->
-  <!-- SPEEDY -->
-  <!-- NOTHING FOR NOW -->
   <!-- END ZONE 2 -->
 
   <!-- ZONE 3 -->
+  <!-- SPEEDY -->
+  <!-- NOTHING FOR NOW -->
+  <!-- END ZONE 3 -->
+
+  <!-- ZONE 4 -->
   <!-- CIENTIFICO & GUARD-->
 
   <entity>
@@ -374,5 +374,5 @@
     <workbench />
   </entity>
 
-  <!-- END ZONE 3 -->
+  <!-- END ZONE 4 -->
 </entities>

@@ -114,7 +114,7 @@ void CRenderManager::renderAll() {
     }
 
     it->mesh->render( );    // it->mesh->renderSubMesh( it->submesh );
-    prev_it = it;
+	prev_it = it;
     ++it;
   }
 

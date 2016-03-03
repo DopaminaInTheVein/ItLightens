@@ -10,7 +10,7 @@
 #define ST_INIT_CONTROL "initControl"
 
 class PossController : public CPlayerBase {
-	____TIMER_DECLARE_(timerShowEnergy, 1); //Para debugar
+	____TIMER_DECLARE_VALUE_(timerShowEnergy, 1); //Para debugar
 	float speedRecover;
 
 public:

@@ -75,7 +75,7 @@ void CMagneticBomb::UpdatePosition() {
 	curr_position.x += mtx->getFront().x*speed * getDeltaTime();
 
 	x_local += speed*getDeltaTime();
-	curr_position.y = altura*sinf(dist*(x_local / M_PI));
+	curr_position.y = altura*sinf(dist*(x_local / (float)M_PI));
 
 
 	mtx->setPosition(curr_position);

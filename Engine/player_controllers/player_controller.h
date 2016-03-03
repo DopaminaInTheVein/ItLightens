@@ -27,7 +27,7 @@ class player_controller : public CPlayerBase {
 	float polarizedCurrentSpeed = 0.0f;
 
 	//Is damaged?
-	____TIMER_DECLARE_(timerDamaged, 1.0f);
+	____TIMER_DECLARE_VALUE_(timerDamaged, 1.0f);
 	bool isDamaged();
 
 	//Possession

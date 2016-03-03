@@ -402,7 +402,7 @@ void ai_guard::render() {
 
 void ai_guard::renderInMenu() {
 	ImGui::SliderFloat("Speed Walk", &SPEED_WALK, 0, 1);
-	ImGui::SliderFloat("Speed Rot (rad/s)", &SPEED_ROT, 0, 2 * M_PI);
+	ImGui::SliderFloat("Speed Rot (rad/s)", &SPEED_ROT, 0, 2 * (float)M_PI);
 	ImGui::SliderFloat("Cone Vision 1/2 (rads)", &CONE_VISION, 0, 180);
 	ImGui::SliderFloat("Distance Reach", &DIST_SQ_REACH_PNT, 0, 1);
 	ImGui::SliderFloat("Detection Area", &DIST_SQ_PLAYER_DETECTION, 0, 500);
