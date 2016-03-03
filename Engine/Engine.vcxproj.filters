@@ -111,6 +111,18 @@
     <ClCompile Include="render\render_manager.cpp">
       <Filter>render</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_hierarchy.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\io\io.cpp">
+      <Filter>app_modules\io</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\io\mouse.cpp">
+      <Filter>app_modules\io</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\io\keyboard.cpp">
+      <Filter>app_modules\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -252,6 +264,27 @@
     <ClInclude Include="render\render_manager.h">
       <Filter>render</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_physics.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_hierarchy.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\io\io.h">
+      <Filter>app_modules\io</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\io\keyboard.h">
+      <Filter>app_modules\io</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\io\digital_button.h">
+      <Filter>app_modules\io</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\io\mouse.h">
+      <Filter>app_modules\io</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_controller_1st_person.h">
+      <Filter>components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -292,6 +325,9 @@
     </Filter>
     <Filter Include="expat">
       <UniqueIdentifier>{269512a1-bbd5-4af1-a1ba-e05207790f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\io">
+      <UniqueIdentifier>{6ac0be2a-9d77-4643-89cc-aa139df1bc56}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

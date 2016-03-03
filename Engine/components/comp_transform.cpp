@@ -18,15 +18,22 @@ void TCompTransform::render() const {
 
 bool TCompTransform::load(MKeyValue& atts) {
   auto p = atts.getPoint("pos");
+  auto q = atts.getQuat("quat");
+  auto s = atts.getFloat("scale", 1.0f);
   setPosition(p);
+  setRotation(q);
+  setScale(VEC3(s));
+  if (atts.getString("lookat", "") != "") {
+    auto target = atts.getPoint("lookat");
+    lookAt(p, target, getUp());
+  }
   return true;
 }
 
 void TCompTransform::renderInMenu() {
   VEC3 pos = getPosition();
-  if (ImGui::SliderFloat3("Pos", &pos.x, -10.f, 10.f)) {
+  if (ImGui::SliderFloat3("Pos", &pos.x, -10.f, 10.f))
     setPosition(pos);
-  }
 
   float yaw, pitch;
   getAngles(&yaw, &pitch);
@@ -36,4 +43,8 @@ void TCompTransform::renderInMenu() {
   bool pitch_changed = ImGui::SliderFloat("Pitch", &pitch, -90.f + 0.001f, 90.f - 0.001f);
   if (yaw_changed || pitch_changed)
     setAngles(deg2rad(yaw), deg2rad(pitch));
+
+  VEC3 scale = getScale();
+  if (ImGui::SliderFloat3("Scale", &scale.x, -10.f, 10.f))
+    setScale(scale);
 }

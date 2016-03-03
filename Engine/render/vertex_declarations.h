@@ -7,20 +7,24 @@ struct CVertexDeclaration {
   const D3D11_INPUT_ELEMENT_DESC* elems;
   uint32_t                        nelems;
   const char*                     name;
+  uint32_t                        id;
+  uint32_t                        bytes_per_vertex;
   CVertexDeclaration(const D3D11_INPUT_ELEMENT_DESC* new_elems
     , uint32_t new_nelems
     , const char* new_name
-    ) 
-  : elems( new_elems )
-  , nelems( new_nelems )
-  , name( new_name )
-  { }
+    , uint32_t new_id
+    , uint32_t new_bytes_per_vertex
+    );
 };
 
-extern CVertexDeclaration vdecl_positions;
-extern CVertexDeclaration vdecl_positions_color;
-extern CVertexDeclaration vdecl_positions_uv;
-extern CVertexDeclaration vdecl_positions_normal_uv;
+class CVertexDeclarationMgr {
+public:
+  std::vector< CVertexDeclaration* > all_decls;
+  const CVertexDeclaration* getByName(const std::string& name);
+  const CVertexDeclaration* getById( uint32_t id );
+};
+
+extern CVertexDeclarationMgr vdecl_manager;
 
 #endif
 

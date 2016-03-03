@@ -31,6 +31,12 @@ void CTexture::activate(int slot) const {
 }
 
 // ----------------------------------------------
+void CTexture::deactivate(int slot) {
+  ID3D11ShaderResourceView* rs = nullptr;
+  Render.ctx->PSSetShaderResources(slot, 1, &rs);
+}
+
+// ----------------------------------------------
 bool CTexture::load(const char* filename) {
 
   std::string full_path =

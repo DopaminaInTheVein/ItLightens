@@ -23,6 +23,7 @@ public:
   bool load(const char* filename);
 
   void activate(int slot) const;
+  static void deactivate(int slot);
 
 };
 

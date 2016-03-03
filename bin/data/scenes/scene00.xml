@@ -1,30 +1,24 @@
 <entities>
-<!--
+
   <entity>
     <tag name="the_camera"/>
-    <transform pos="10 10 10"/>
+    <name name="the_camera"/>
+    <transform pos="10 10 10" lookat="0 0 0"/>
     <camera znear="0.1" zfar="100" fov="60"/>
-    <controller_3rd_person/>
+    <controller_1st_person/>
   </entity>
--->
+
   <entity>
     <tag name="player"/>
     <transform pos="3 3 1"/>
     <name name="john"/>
     <life points="4"/>
-    <camera znear="1" zfar="6" fov="45"/>
-    <controller_3rd_person/>
+    <controller_1st_person/>
   </entity>
     <entity>
         <tag name="target"/>
         <transform pos="1 0 1"/>
         <name name="peter"/>
-        <render_static_mesh name="static_meshes/tetera.static_mesh"/>
-    </entity>
-    <entity>
-        <tag name="t2"/>
-        <transform pos="6 0 1"/>
-        <name name="peter2"/>
-        <render_static_mesh name="static_meshes/tetera2.static_mesh"/>
+        <render_static_mesh name="static_meshes/tetera_multi.static_mesh"/>
     </entity>
 </entities>

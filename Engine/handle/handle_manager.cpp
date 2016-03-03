@@ -5,6 +5,11 @@ uint32_t CHandleManager::next_type_of_handle_manager = 1;
 CHandleManager* CHandleManager::all_managers[CHandle::max_types];
 std::map<std::string, CHandleManager*> CHandleManager::all_manager_by_name;
 
+void CHandleManager::destroyAllPendingObjects() {
+  for (uint32_t i = 1; i < next_type_of_handle_manager; ++i)
+    all_managers[i]->destroyPendingObjects();
+}
+
 uint32_t CHandleManager::getNumDefinedTypes() {
   return next_type_of_handle_manager;
 }
@@ -61,7 +66,7 @@ CHandle CHandleManager::createHandle() {
   // Actualizar donde esta el siguiente libre, para la proxima vez 
   // que cree un objeto
   next_free_handle_ext_index = ed->next_external_index;
-  assert(next_free_handle_ext_index != invalid_index);
+  assert(next_free_handle_ext_index != invalid_index || fatal( "We run out of objects of type %s. Currently set to %d\n", getName(), capacity()));
 
   // Sacar de la cadena de handles a borrar
   ed->next_external_index = invalid_index;
@@ -79,56 +84,84 @@ void CHandleManager::destroyHandle(CHandle h) {
   if (!isValid(h))
     return;
 
-  assert(num_objs_used > 0);
+  // Guardarlo en la lista de objetos pendientes
+  // de destruir
+  objs_to_destroy.push_back(h);
 
+  // Acceder a la tabla y actualiza la current
+  // age para invalidar el handle
   auto external_index = h.getExternalIndex();
   auto ed = external_to_internal + external_index;
-  auto internal_index = ed->internal_index;
-
-  // Llamar al dtor del objecto real #1
-  destroyObj(internal_index);
-
-  // Invalidar el handle antiguo
   ed->current_age++;
+}
+
+void CHandleManager::destroyPendingObjects() {
+
+  for (auto h : objs_to_destroy) {
+    auto external_index = h.getExternalIndex();
+    auto ed = external_to_internal + external_index;
+
+    auto internal_index = ed->internal_index;
+
+    assert(num_objs_used > 0);
+
+    // Restore the previous current age
+    // to be able to recover the CHandle from 
+    // and object addr during the scope of the
+    // dtor. For example, the RenderStaticMesh
+    // uses it's own handle as id in the render
+    // manager
+    ed->current_age--;
+
+    // Llamar al dtor del objecto real #1
+    destroyObj(internal_index);
   
-  // Esta entrada ya no apunta a un objeto valido de la tabla
-  ed->internal_index = invalid_index;
+    // Invalidate the age again to the correct
+    // value
+    ed->current_age++;
 
-  assert(last_free_handle_ext_index != invalid_index);
-  auto last_free_ed = external_to_internal + last_free_handle_ext_index;
-  assert(last_free_ed->next_external_index == invalid_index);
+    // Esta entrada ya no apunta a un objeto valido de la tabla
+    ed->internal_index = invalid_index;
 
-  // El antiguo 'mas viejo' pasa a ser el penultimo 'mas viejo'
-  last_free_ed->next_external_index = external_index;
+    assert(last_free_handle_ext_index != invalid_index);
+    auto last_free_ed = external_to_internal + last_free_handle_ext_index;
+    assert(last_free_ed->next_external_index == invalid_index);
+
+    // El antiguo 'mas viejo' pasa a ser el penultimo 'mas viejo'
+    last_free_ed->next_external_index = external_index;
   
-  // El handle borrado pasa a ser el ultimo handle a borrar
-  last_free_handle_ext_index = external_index;
+    // El handle borrado pasa a ser el ultimo handle a borrar
+    last_free_handle_ext_index = external_index;
 
-  // Ya deberia de ser así, hecho en el createHandle
-  assert(ed->next_external_index == invalid_index);
+    // Ya deberia de ser así, hecho en el createHandle
+    assert(ed->next_external_index == invalid_index);
 
-  // --------------------------
-  // Compactar los objetos para que sigan siendo 'continuos' 
-  // en memoria
-  // Estoy borrando el último objeto compactado?
-  uint32_t internal_idx_of_last_valid_object = num_objs_used - 1;
-  if (internal_index < internal_idx_of_last_valid_object) {   // No!!!
-    moveObj(internal_idx_of_last_valid_object, internal_index);
+    // --------------------------
+    // Compactar los objetos para que sigan siendo 'continuos' 
+    // en memoria
+    // Estoy borrando el último objeto compactado?
+    uint32_t internal_idx_of_last_valid_object = num_objs_used - 1;
+    if (internal_index < internal_idx_of_last_valid_object) {   // No!!!
+      moveObj(internal_idx_of_last_valid_object, internal_index);
     
-    // Actualizar la tabla que me dice que external_idx tiene
-    // cada internal idx
-    // Basicamente me traigo el valor del objeto q estoy moviendo
-    auto moved_object_external_index = internal_to_external[internal_idx_of_last_valid_object];
-    internal_to_external[internal_index] = moved_object_external_index;
+      // Actualizar la tabla que me dice que external_idx tiene
+      // cada internal idx
+      // Basicamente me traigo el valor del objeto q estoy moviendo
+      auto moved_object_external_index = internal_to_external[internal_idx_of_last_valid_object];
+      internal_to_external[internal_index] = moved_object_external_index;
 
-    // Actualizar tambien la tabla external para decir donde esta
-    // ahora el last object que acabamos de mover
-    auto moved_object_ed = external_to_internal + moved_object_external_index;
-    moved_object_ed->internal_index = internal_index;
+      // Actualizar tambien la tabla external para decir donde esta
+      // ahora el last object que acabamos de mover
+      auto moved_object_ed = external_to_internal + moved_object_external_index;
+      moved_object_ed->internal_index = internal_index;
+    }
+
+    // Tenemos un objecto valido menos
+    num_objs_used--;
   }
 
-  // Tenemos un objecto valido menos
-  num_objs_used--;
+  // All pending objects have been destroyed
+  objs_to_destroy.clear();
 }
 
 

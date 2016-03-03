@@ -20,20 +20,6 @@ void VS(
 }
 
 //--------------------------------------------------------------------------------------
-void VS_UV( 
-    in float4 iPos : POSITION
-  , in float2 iTex0 : TEXCOORD0
-  , out float4 oPos : SV_POSITION
-  , out float2 oTex0 : TEXCOORD0
-  )
-{
-  float4 worldPos = mul(iPos, World);
-  oPos = mul(worldPos, ViewProjection );
-  oTex0 = iTex0;
-}
-
-
-//--------------------------------------------------------------------------------------
 // Pixel Shader
 //--------------------------------------------------------------------------------------
 float4 PS( float4 Pos : SV_POSITION
@@ -41,6 +27,21 @@ float4 PS( float4 Pos : SV_POSITION
          ) : SV_Target
 {
     return iColor;
+}
+
+
+//--------------------------------------------------------------------------------------
+void VS_N_UV(
+  in float4 iPos : POSITION
+  , in float3 iNormal : NORMAL
+  , in float2 iTex0 : TEXCOORD0
+  , out float4 oPos : SV_POSITION
+  , out float2 oTex0 : TEXCOORD0
+  )
+{
+  float4 worldPos = mul(iPos, World);
+  oPos = mul(worldPos, ViewProjection);
+  oTex0 = iTex0;
 }
 
 //--------------------------------------------------------------------------------------

@@ -58,6 +58,7 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
 }
 
 void CRenderManager::renderAll() {
+  CTraceScoped scope("RenderManager");
 
   if (!in_order) {
     // sort the keys based on....
@@ -76,14 +77,14 @@ void CRenderManager::renderAll() {
   // on each iteration
   {
     it->material->tech->activate();
-    it->material->activate();
+    it->material->activateTextures();
     it->mesh->activate();
     TCompTransform* c_tmx = it->transform;
     assert(c_tmx);
     shader_ctes_object.World = c_tmx->asMatrix();
     shader_ctes_object.uploadToGPU();
     shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
-    it->mesh->render();    // it->mesh->renderSubMesh( it->submesh );
+    it->mesh->renderGroup( it->submesh_idx );    // it->mesh->renderSubMesh( it->submesh );
     ++it;
   }
 
@@ -91,27 +92,32 @@ void CRenderManager::renderAll() {
   while (it != all_keys.end()) {
 
     if (it->material != prev_it->material ) {
-      if (it->material->tech != prev_it->material->tech) {
+      if (it->material->tech != prev_it->material->tech)
         it->material->tech->activate();
-      }
-      it->material->activate();
+      it->material->activateTextures();
     }
-    if (it->mesh != prev_it->mesh) {
+    if (it->mesh != prev_it->mesh)
       it->mesh->activate();
-    }
 
     if (it->owner != prev_it->owner) {
       // subir la world de it
       TCompTransform* c_tmx = it->transform;
       assert(c_tmx);
+      
+      // For static objects, we could skip this step 
+      // if each static object had it's own shader_ctes_object
       shader_ctes_object.World = c_tmx->asMatrix();
       shader_ctes_object.uploadToGPU();
+
+      // We could skip this step as currently, we only
+      // have one shader_ctes_object
       shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
     }
 
-    it->mesh->render( );    // it->mesh->renderSubMesh( it->submesh );
+    it->mesh->renderGroup( it->submesh_idx );    // it->mesh->renderSubMesh( it->submesh );
     prev_it = it;
     ++it;
   }
 
+  CMaterial::deactivateTextures();
 }

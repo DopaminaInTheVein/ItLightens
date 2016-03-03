@@ -7,6 +7,8 @@
 #include "comp_camera.h"
 #include "comp_render_static_mesh.h"
 #include "comp_controller_3rd_person.h"
+#include "comp_controller_1st_person.h"
+#include "comp_hierarchy.h"
 #include "comp_life.h"
 
 #endif

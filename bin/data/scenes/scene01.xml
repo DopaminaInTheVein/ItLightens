@@ -1,0 +1,6 @@
+<entities>
+<entity>
+  <name name="Teapot001"/>
+  <transform pos="-0.0273542 0.0 0.0130348" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+</entity>
+</entities>

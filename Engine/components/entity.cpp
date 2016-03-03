@@ -23,6 +23,9 @@ void CEntity::renderInMenu() {
         }
       }
     }
+    if (ImGui::Button("Destroy")) {
+      CHandle(this).destroy();
+    }
     ImGui::TreePop();
   }
   ImGui::PopID();

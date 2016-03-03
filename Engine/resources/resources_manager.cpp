@@ -64,9 +64,16 @@ const IResource* CResourcesManager::get(const char* name) {
   else {
     fatal("Invalid resource type %s at %s\n", ext.c_str(), name);
   }
-
+  assert(new_obj);
   all[name] = new_obj;
   return new_obj;
+}
+
+// -------------------------------------
+void CResourcesManager::registerNew(IResource* new_res) {
+  assert(new_res);
+  assert(!new_res->getName().empty());
+  all[new_res->getName()] = new_res;
 }
 
 // -------------------------------------

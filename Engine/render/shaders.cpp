@@ -12,19 +12,8 @@
 template<> IResource::eType getTypeOfResource<CVertexShader>() { return IResource::VERTEX_SHADER; }
 template<>
 IResource* createObjFromName<CVertexShader>(const std::string& name) {
-
-  CVertexShader* vs = new CVertexShader;
-  
-  if (name == "solid_colored.vs") {
-    vs->create("data/shaders/Tutorial02.fx", "VS", &vdecl_positions_color);
-  }
-  else if (name == "textured_colored.vs") {
-    vs->create("data/shaders/Tutorial02.fx", "VS_UV", &vdecl_positions_uv);
-  }
-  else {
-    fatal("Unsupported vertex shader %s\n", name.c_str());
-  }
-  return vs;
+  fatal("Should not create vertex shaders directly. Use a tech");
+  return nullptr;
 }
 
 // ----------------------------------
@@ -32,17 +21,8 @@ IResource* createObjFromName<CVertexShader>(const std::string& name) {
 template<> IResource::eType getTypeOfResource<CPixelShader>() { return IResource::PIXEL_SHADER; }
 template<>
 IResource* createObjFromName<CPixelShader>(const std::string& name) {
-  CPixelShader* ps = new CPixelShader;
-  if (name == "solid_colored.ps") {
-    ps->create("data/shaders/Tutorial02.fx", "PS");
-  }
-  else if (name == "textured.ps") {
-    ps->create("data/shaders/Tutorial02.fx", "PSTextured");
-  }
-  else {
-    fatal("Unsupported pixel shader %s\n", name.c_str());
-  }
-  return ps;
+  fatal("Should not create pixel shaders directly. Use a tech");
+  return nullptr;
 }
 
 

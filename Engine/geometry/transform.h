@@ -14,7 +14,7 @@ public:
   MAT44       asMatrix() const {
     MAT44 mrot = MAT44::CreateFromQuaternion(rotation);
     mrot.Translation(position);
-    return mrot * MAT44::CreateScale(scale);
+    return MAT44::CreateScale(scale) * mrot;
   }
 
   CQuaternion getRotation() const { return rotation; }
@@ -31,6 +31,11 @@ public:
     // To be coherent with our local system
     MAT44 mrot = MAT44::CreateFromQuaternion(rotation);
     return mrot.Right();
+  }
+  VEC3        getUp() const {
+    // To be coherent with our local system
+    MAT44 mrot = MAT44::CreateFromQuaternion(rotation);
+    return mrot.Up();
   }
 
   // ---------------------------

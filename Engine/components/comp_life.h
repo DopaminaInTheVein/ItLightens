@@ -20,6 +20,8 @@ struct TCompLife : public TCompBase {
     life -= msg.points;
     if (life < 0) {
       dbg("Me he muerto\n");
+      CHandle(this).destroy();
+      dbg("life is %f\n", life);
     }
   }
 };

@@ -27,7 +27,8 @@ class CObjectManager : public CHandleManager
   void moveObj(uint32_t src_internal_idx, uint32_t dst_internal_idx) override {
     TObj* src = objs + src_internal_idx;
     TObj* dst = objs + dst_internal_idx;
-    *dst = std::move(*src);
+    // Build a TObj in dst addr using the move semantics
+    new (dst) TObj(std::move(*src));
   }
 
   bool load(CHandle h, MKeyValue& atts) {

@@ -1,8 +1,12 @@
 Render
-+ subir transform de los objetos
-- exportar una escena completa desde el max
-- tech leerlas de xml
+- Hierarchies
 - exportar las submeshes
+- exportar colisones para physics
++ io keys + mouse
+- ZBuffers
++ subir transform de los objetos
++ exportar una escena completa desde el max
++ tech leerlas de xml
 
 Handles
 + Messages
@@ -11,15 +15,11 @@ Handles
 		Expat
 
 - Controlador de camara
-- ZBuffers
-
 - ImGUI
     - Listado de entities
         - Listado de sus components
         - Borrar component/Add component?
-
 - Prefabs
-- Hierarchies
 
 - Grupos de entities/Tags/Tags Managers
 - Tags from strings    // https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp

@@ -39,6 +39,8 @@ protected:
   uint32_t        next_free_handle_ext_index;
   uint32_t        last_free_handle_ext_index;
 
+  std::vector< CHandle > objs_to_destroy;
+
   // Shared by all managers
   static uint32_t next_type_of_handle_manager;
   static CHandleManager* all_managers[CHandle::max_types];
@@ -125,6 +127,7 @@ public:
   virtual void createObj(uint32_t internal_idx) = 0;
   virtual void destroyObj(uint32_t internal_idx) = 0;
   virtual void moveObj(uint32_t src_internal_idx, uint32_t dst_internal_idx) = 0;
+  void destroyPendingObjects();
 
   // ---------------------------------------
   virtual void renderAll() const { }
@@ -141,6 +144,7 @@ public:
   static CHandleManager* getByType(uint32_t type);
   static CHandleManager* getByName(const char* obj_name);
   static uint32_t getNumDefinedTypes();
+  static void destroyAllPendingObjects();
 };
 
 

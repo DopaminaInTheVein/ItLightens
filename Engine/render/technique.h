@@ -3,18 +3,22 @@
 
 #include "render/render.h"
 #include "resources/resource.h"
-
+#include "utils/XMLParser.h"
 
 struct CVertexDeclaration;
 class  CVertexShader;
 class  CPixelShader;
 
-class CRenderTechnique : public IResource {
+class CRenderTechnique : public IResource, public CXMLParser {
 
   const CVertexShader* vs;
   const CPixelShader*  ps;
   std::string          name;
   int                  priority;
+
+  static CRenderTechnique* curr_active;
+
+  void onStartElement(const std::string &elem, MKeyValue &atts) override;
 
 public:
 
@@ -25,7 +29,6 @@ public:
   bool create(const char* new_name, const CVertexShader* new_vs, const CPixelShader* new_ps);
 
   void activate() const;
-  void render() const;
 
   int getPriority() const { return priority; }
 
@@ -38,7 +41,6 @@ public:
   }
 
   eType getType() const { return TECHNIQUE; }
-  //void renderUIDebug() override;
 };
 
 #endif

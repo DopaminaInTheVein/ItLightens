@@ -27,7 +27,7 @@ void CStaticMesh::onStartElement(const std::string &elem, MKeyValue &atts) {
     TSlot s;
     s.mesh = Resources.get(mesh_name.c_str())->as<CMesh>();
     s.material = Resources.get(mat_name.c_str())->as<CMaterial>();
-    s.submesh_idx = atts.getInt("submesh_idx", 0);
+    s.submesh_idx = atts.getInt("mesh_idx", 0);
     slots.push_back(s);
   }
 }

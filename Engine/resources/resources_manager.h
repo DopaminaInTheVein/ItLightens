@@ -26,6 +26,8 @@ public:
     return all.find(name) != all.end();
   }
 
+  // The manager takes ownership of new_res
+  void registerNew(IResource* new_res);
   void renderUIDebug();
 
 };

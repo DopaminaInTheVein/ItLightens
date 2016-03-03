@@ -30,6 +30,7 @@ bool CMesh::create(
 , const void* initial_index_data
 , eVertexDecl new_enum_vtx_decl
 , ePrimitiveType new_topology
+, const CMesh::VGroups* new_groups
 ) {
   assert(vb == nullptr);
   assert(new_num_vertexs > 0);
@@ -46,19 +47,8 @@ bool CMesh::create(
   }
 
   // Translate the vtx decr from our system to dx11
-  switch (new_enum_vtx_decl) {
-  case VTX_DECL_POSITION_UV:
-    assert(new_num_bytes_per_vertex == 4 * (3 + 2));
-    vtx_decl = &vdecl_positions_uv; break;
-  case VTX_DECL_POSITION_COLOR:
-    assert(new_num_bytes_per_vertex == 4 * (3 + 4));
-    vtx_decl = &vdecl_positions_color; break;
-  case VTX_DECL_POSITION_NORMAL_UV:
-    assert(new_num_bytes_per_vertex == 4 * (3 + 3 + 2));
-    vtx_decl = &vdecl_positions_normal_uv; break;
-  default:
-    fatal("Unknown vertex decl %d\n", new_enum_vtx_decl);
-  }
+  vtx_decl = vdecl_manager.getById(new_enum_vtx_decl);
+  assert(vtx_decl->bytes_per_vertex == new_num_bytes_per_vertex);
 
   num_vertexs = new_num_vertexs;
   num_bytes_per_vertex = new_num_bytes_per_vertex;
@@ -98,7 +88,20 @@ bool CMesh::create(
       return false;
 
     setDXName(ib, getName().c_str());
+  }
 
+  // Upgrade group info
+  if (new_groups) {
+    groups = *new_groups;
+  }
+  else {
+    // Generate a single fake group
+    groups.resize(1);
+    groups[0].first_index = 0;
+    if( num_idxs > 0 )    // If the mesh is indexed
+      groups[0].num_indices = num_idxs;   
+    else
+      groups[0].num_indices = num_vertexs;
   }
 
   return true;
@@ -127,6 +130,15 @@ void CMesh::render() const {
     Render.ctx->DrawIndexed(num_idxs, 0, 0);
   else
     Render.ctx->Draw(num_vertexs, 0);
+}
+
+void CMesh::renderGroup(uint32_t group_idx) const {
+  assert(group_idx < (uint32_t)groups.size());
+  const auto& g = groups[group_idx];
+  if (ib)
+    Render.ctx->DrawIndexed(g.num_indices, g.first_index, 0);
+  else
+    Render.ctx->Draw(g.num_indices, g.first_index);
 }
 
 void CMesh::activateAndRender() const {

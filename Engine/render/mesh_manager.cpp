@@ -14,6 +14,7 @@ bool meshLoader(CMesh* mesh, CDataProvider& dp) {
   static const uint32_t magic_header = 0x44221100;
   static const uint32_t magic_vtxs = 0x44221101;
   static const uint32_t magic_idxs = 0x44221102;
+  static const uint32_t magic_groups = 0x44221103;
   static const uint32_t magic_mesh_end = 0x44221144;
   static const uint32_t magic_terminator = 0x44222200;
 
@@ -25,7 +26,7 @@ bool meshLoader(CMesh* mesh, CDataProvider& dp) {
     uint32_t vertex_type;
     uint32_t bytes_per_vtx;
     uint32_t bytes_per_idx;
-    uint32_t num_range;
+    uint32_t num_groups;
     uint32_t the_magic_terminator;
     bool isValid() const { 
       return version == 1 && (the_magic_terminator == magic_terminator);
@@ -36,6 +37,7 @@ bool meshLoader(CMesh* mesh, CDataProvider& dp) {
   THeader header;
   TBuffer vtxs;
   TBuffer idxs;
+  CMesh::VGroups groups;
 
   bool end_found = false;
   while (!end_found) {
@@ -61,6 +63,13 @@ bool meshLoader(CMesh* mesh, CDataProvider& dp) {
       dp.readBytes(&idxs[0], riff.num_bytes);
       break;
 
+    case magic_groups:
+      assert(riff.num_bytes == header.num_groups * sizeof(CMesh::TGroup));
+      assert(header.num_groups > 0);
+      groups.resize(header.num_groups);
+      dp.readBytes(&groups[0], riff.num_bytes);
+      break;
+
     case magic_mesh_end:
       end_found = true;
       break;
@@ -77,14 +86,15 @@ bool meshLoader(CMesh* mesh, CDataProvider& dp) {
 
   return mesh->create(
     header.num_vtxs
-    , header.bytes_per_vtx
-    , &vtxs[0]
-    , header.num_idxs
-    , header.bytes_per_idx
-    , &idxs[0]
-    , (CMesh::eVertexDecl)header.vertex_type
-    , (CMesh::ePrimitiveType) header.primitive_type
-    );
+  , header.bytes_per_vtx
+  , &vtxs[0]
+  , header.num_idxs
+  , header.bytes_per_idx
+  , &idxs[0]
+  , (CMesh::eVertexDecl)header.vertex_type
+  , (CMesh::ePrimitiveType) header.primitive_type
+  , &groups
+  );
 
 }
 

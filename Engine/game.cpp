@@ -9,10 +9,15 @@
 #include "render/render_manager.h"
 #include "resources/resources_manager.h"
 #include "camera/camera.h"
+#include "components/entity_tags.h"
+#include "components/entity.h"
+#include "components/comp_camera.h"
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
+#include "app_modules/io/io.h"
+#include "handle/handle_manager.h"
 
-CCamera       camera;
+CHandle       h_camera;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
@@ -31,30 +36,34 @@ bool CApp::start() {
   // imgui must be the first to update and the last to render
   auto imgui = new CImGuiModule;
   auto entities = new CEntitiesModule;
+  io = new CIOModule;     // It's the global io
   
   // Will contain all modules created
   all_modules.push_back(imgui);
   all_modules.push_back(entities);
+  all_modules.push_back(io);
   
   mod_update.push_back(imgui);
+  mod_update.push_back(io);
   mod_update.push_back(entities);
   mod_renders.push_back(entities);
   mod_renders.push_back(imgui);
+  mod_renders.push_back(io);
   mod_init_order.push_back(imgui);
   mod_init_order.push_back(entities);
+  mod_init_order.push_back(io);
+  mod_wnd_proc.push_back(io);
   mod_wnd_proc.push_back(imgui);
 
   // ----------------------------
-  tech_solid_colored = Resources.get("tech_solid_colored.tech")->as<CRenderTechnique>();
-  tech_textured_colored = Resources.get("tech_textured_colored.tech")->as<CRenderTechnique>();
+  tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+  tech_textured_colored = Resources.get("textured.tech")->as<CRenderTechnique>();
   texture1 = Resources.get("textures/wood_d.dds")->as<CTexture>();
 
   if (!shader_ctes_camera.create("ctes_camera"))
     return false;
   if (!shader_ctes_object.create("ctes_object"))
     return false;
-
-  camera.lookAt(VEC3(10, 4, 2), VEC3(1, 0, 2));
 
   // Init modules
   for (auto it : mod_init_order) {
@@ -63,6 +72,8 @@ bool CApp::start() {
       return false;
     }
   }
+
+  h_camera = tags_manager.getFirstHavingTag(getID("the_camera"));
 
   return true;
 }
@@ -94,13 +105,21 @@ void CApp::update(float elapsed) {
 
   static float ctime = 0.f;
   ctime += elapsed* 0.01f;
- // camera.lookAt(VEC3(sin(ctime), 1.f, cos(ctime))*4, VEC3(0, 0, 0));
+
+  CHandleManager::destroyAllPendingObjects();
 }
 
 // ----------------------------------
 void CApp::render() {
   {
     CTraceScoped scope("initFrame");
+
+    static CCamera camera;
+    if (h_camera.isValid()) {
+      CEntity* e = h_camera;
+      TCompCamera* comp_cam = e->get<TCompCamera>();
+      camera = *comp_cam;
+    }
 
     // To set a default and known Render State
     Render.ctx->RSSetState(nullptr);
@@ -124,17 +143,6 @@ void CApp::render() {
     axis->activateAndRender();
     Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
   }
-
-  //{
-  //  CTraceScoped scope("textured obj");
-  //  // el shader de pos + uv
-  //  shader_ctes_object.World = MAT44::Identity;
-  //  shader_ctes_object.uploadToGPU();
-
-  //  texture1->activate(0);
-  //  tech_textured_colored->activate();
-  //  Resources.get("meshes/Teapot001.mesh")->as<CMesh>()->activateAndRender();
-  //}
 
   RenderManager.renderAll();
 
