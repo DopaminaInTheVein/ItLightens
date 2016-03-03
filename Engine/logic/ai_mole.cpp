@@ -38,7 +38,7 @@ void ai_mole::IdleState() {
 
 void ai_mole::SeekWptState() {
 	if (SBB::readHandlesVector("wptsBoxes").size() > 0) {
-		float distMax = 999999999.9999f;
+		float distMax = 15.0f;
 		string key_final = "";
 		bool found = false;
 		for (int i = 0; i < SBB::readHandlesVector("wptsBoxes").size(); i++) {
@@ -179,14 +179,8 @@ void ai_mole::NextWptCarryState() {
 
 void ai_mole::UnGrabState() {
 	VEC3 new_posBox;
-	new_posBox.x = (float)(rand() % 15);
-	if (rand() % 2 == 0) {
-		new_posBox.x *= -1;
-	}
-	new_posBox.z = (float)(rand() % 15);
-	if (rand() % 2 == 0) {
-		new_posBox.z *= -1;
-	}
+	new_posBox.x = 5.0f;
+	new_posBox.z = -5.0f;
 	vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
 	CEntity * en = newPointerVec[towptbox];
 	TCompTransform * transformBox = en->get<TCompTransform>();

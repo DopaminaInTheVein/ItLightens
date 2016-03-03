@@ -8,7 +8,6 @@
 #include "render\technique.h"
 #include "contants/ctes_object.h"
 
-
 //provisional physics
 #include "physics\simple_physx.h"
 #include "physics\colliders.h"
@@ -51,7 +50,7 @@ bool TCompTransform::load(MKeyValue& atts) {
 
 void TCompTransform::renderInMenu() {
 	VEC3 pos = getPosition();
-	if (ImGui::SliderFloat3("Pos", &pos.x, -10.f, 10.f)) {
+	if (ImGui::SliderFloat3("Pos", &pos.x, -200.f, 200.f)) {
 		setPosition(pos);
 	}
 
@@ -72,7 +71,6 @@ void TCompTransform::renderInMenu() {
 
 bool TCompTransform::executeMovement(VEC3 new_pos)
 {
-
 	CHandle me = CHandle(this);
 	CHandle owner = me.getOwner();
 	CEntity *e = owner;
@@ -94,7 +92,6 @@ bool TCompTransform::executeMovement(VEC3 new_pos)
 			return false;
 		}
 	}
-
 
 	return true;
 }

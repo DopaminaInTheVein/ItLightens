@@ -12,7 +12,7 @@
   <!-- Player -->
   <entity>
     <tag name="player" />
-    <transform pos="3 3 1" />
+    <transform pos="-30 2 5" />
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
@@ -20,7 +20,7 @@
   <entity>
     <life points="50" />
     <tag name="target" />
-    <transform pos="0 0 0" />
+    <transform pos="-28 0 3" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
@@ -29,6 +29,33 @@
   </entity>
 
   <!-- Scene objects -->
+  <entity>
+    <name name="floor_1lvl" />
+    <transform pos="-25.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="wall_1lvl" />
+    <transform pos="-30.0 -2.0 -10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="wall_1lvl" />
+    <transform pos="-30.0 -2.0 10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <name name="bridge_rompible" />
+    <tag name = "platform" />
+    <tag name = "breakable_wall" />
+    <transform pos="-15.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/bridge_1lvl.static_mesh" />
+    <box_collider p1 ="5 5 12.5" p2="-5 0 -12.5"  tag="platform" />
+  </entity>
   <entity>
     <name name="floor_1lvl" />
     <transform pos="0.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
@@ -83,7 +110,7 @@
   <entity>
     <tag name = "platform" />
     <name name="wall_1lvl" />
-    <transform pos="-10.0 -2.0 0.0" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <transform pos="-35.0 -2.0 0.0" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
     <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
     <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
   </entity>
@@ -188,6 +215,18 @@
     <tag name="AI_poss" />
     <tag name="AI_mole" />
     <transform pos="0 0 0" rotation="1 2 3 3" scale="1 1 1" />
+    <life points="100" />
+    <!-- <sphere_collider radius="0.3" tag ="player" />-->
+    <player_mole />
+    <ai_mole />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <name name="ia_mole1" />
+    <tag name="AI_poss" />
+    <tag name="AI_mole" />
+    <transform pos="-25 0 0" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
     <!-- <sphere_collider radius="0.3" tag ="player" />-->
     <player_mole />

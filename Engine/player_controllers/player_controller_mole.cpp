@@ -94,15 +94,18 @@ void player_controller_mole::LeaveBox() {
 bool player_controller_mole::nearToWall() {
 	bool found = false;
 	if (SBB::readHandlesVector("wptsBreakableWall").size() > 0) {
-		float distMax = 2.0f;
+		float distMaxx = 6.0f;
+		float distMaxz = 10.5f;
 		for (int i = 0; !found && i < SBB::readHandlesVector("wptsBreakableWall").size(); i++) {
 			CEntity * entTransform = this->getEntityWallHandle(i);
 			TCompTransform * transformBox = entTransform->get<TCompTransform>();
 			TCompName * nameBox = entTransform->get<TCompName>();
 			VEC3 wpt = transformBox->getPosition();
-			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
-			if (disttowpt < distMax) {
-				distMax = disttowpt;
+			float disttowptx = fabsf(fabsf(wpt.x) - fabsf(getEntityTransform()->getPosition().x));
+			float disttowptz = fabsf(fabsf(wpt.z) - fabsf(getEntityTransform()->getPosition().z));
+			if (disttowptx < distMaxx && disttowptz < distMaxz) {
+				distMaxx = disttowptx;
+				distMaxz = disttowptz;
 				selectedWallToBreaki = i;
 				found = true;
 			}

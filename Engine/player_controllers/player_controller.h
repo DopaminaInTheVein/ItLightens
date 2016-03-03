@@ -31,7 +31,7 @@ class player_controller : public CPlayerBase {
 	bool isDamaged();
 
 	//Possession
-	float DIST_LEAVING_POSSESSION = 10.0f;
+	float DIST_LEAVING_POSSESSION = 1.0f;
 	CHandle currentPossessable;
 	float possessionReach = 10.0f;
 

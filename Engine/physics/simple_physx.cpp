@@ -56,19 +56,20 @@ bool CSimplePhysx::isColliding(CHandle own, CHandle other)
 {
 	CEntity *e1 = own;
 	CEntity *e2 = other;
+	if (e1 && e2) {
+		if (e1->getCollisionType() == CEntity::SPHERE && e2->getCollisionType() == CEntity::SPHERE) {
+			sphereCollider *sc1 = e1->get<sphereCollider>();
+			sphereCollider *sc2 = e2->get<sphereCollider>();
 
-	if (e1->getCollisionType() == CEntity::SPHERE && e2->getCollisionType() == CEntity::SPHERE) {
-		sphereCollider *sc1 = e1->get<sphereCollider>();
-		sphereCollider *sc2 = e2->get<sphereCollider>();
+			return SphereVsSphere(sc1->getRadius(), sc1->getCenter(), sc2->getRadius(), sc2->getCenter());
+		}
 
-		return SphereVsSphere(sc1->getRadius(),sc1->getCenter(),sc2->getRadius(),sc2->getCenter());
-	}
+		if (e1->getCollisionType() == CEntity::SPHERE && e2->getCollisionType() == CEntity::BOX) {
+			sphereCollider	*sc1 = e1->get<sphereCollider>();
+			boxCollider		*bc2 = e2->get<boxCollider>();
 
-	if (e1->getCollisionType() == CEntity::SPHERE && e2->getCollisionType() == CEntity::BOX){
-		sphereCollider	*sc1 = e1->get<sphereCollider>();
-		boxCollider		*bc2 = e2->get<boxCollider>();
-
-		return SphereVsBox(sc1->getRadius(), sc1->getCenter(), bc2->getPMIN(), bc2->getPMAX());
+			return SphereVsBox(sc1->getRadius(), sc1->getCenter(), bc2->getPMIN(), bc2->getPMAX());
+		}
 	}
 	return false;
 }
