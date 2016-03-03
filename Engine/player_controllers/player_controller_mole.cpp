@@ -54,8 +54,9 @@ void player_controller_mole::Moving()
 		SetMyEntity();
 		CEntity* p = myParent;
 		TCompTransform* p_t = p->get<TCompTransform>();
-
-		box_t->setPosition(p_t->getPosition());
+		VEC3 posPlayer = p_t->getPosition();
+		posPlayer.y += 2;
+		box_t->setPosition(posPlayer);
 	}
 
 	if (!UpdateMovDirection()) ChangeState("idle");
@@ -69,6 +70,12 @@ void player_controller_mole::GrabBox() {
 	else {
 		SBB::postBool(selectedBox, true);
 	}
+
+	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
+	TCompTransform* box_t = box->get<TCompTransform>();
+	VEC3 posbox = box_t->getPosition();
+	posbox.y += 2;
+	box_t->setPosition(posbox);
 	energyDecreasal(5.0f);
 	boxGrabbed = true;
 	player_max_speed /= 2;
@@ -88,6 +95,17 @@ void player_controller_mole::LeaveBox() {
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = false;
 	player_max_speed *= 2;
+
+	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
+	TCompTransform* box_t = box->get<TCompTransform>();
+	VEC3 posbox = box_t->getPosition();
+	posbox.y -= 2;
+	CEntity* p = myParent;
+	TCompTransform* p_t = p->get<TCompTransform>();
+	posbox.x += p_t->getFront().x * 3;
+	posbox.z += p_t->getFront().z * 3;
+	box_t->setPosition(posbox);
+
 	ChangeState("idle");
 }
 

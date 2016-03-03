@@ -166,13 +166,7 @@
   <!--platforms, helpers to pass to next point-->
   <!--ZONE 1-->
   <!--    Shoudnt be necessary, can be passed with mole and box moving-->
-  <entity>
-    <transform pos="8 1 0" />
-    <tag name = "platform" />
-    <name name="box" />
-    <render_static_mesh name="static_meshes/box.static_mesh" />
-    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" />
-  </entity>
+
   <!-- -->
   <!--ZONE 2-->
 
@@ -197,12 +191,6 @@
     <transform pos="5 0 0" rotation="1 2 3 3" scale="1 1 1" />
     <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" />
   </entity>
-
-  <entity>
-    <name name="breakable_wall_e" />
-    <tag name="breakable_wall" />
-    <transform pos="25 0 0" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>
   <entity>
     <name name="box_leavepoint1" />
     <tag name="box_leavepoint" />
@@ -216,7 +204,7 @@
     <tag name="AI_mole" />
     <transform pos="0 0 0" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
-    <!-- <sphere_collider radius="0.3" tag ="player" />-->
+    <sphere_collider radius="0.3" tag ="player" />
     <player_mole />
     <ai_mole />
   </entity>
@@ -228,7 +216,7 @@
     <tag name="AI_mole" />
     <transform pos="-25 0 0" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
-    <!-- <sphere_collider radius="0.3" tag ="player" />-->
+    <sphere_collider radius="0.3" tag ="player" />
     <player_mole />
     <ai_mole />
   </entity>
