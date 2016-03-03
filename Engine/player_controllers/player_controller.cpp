@@ -163,12 +163,12 @@ bool player_controller::nearMinus() {
 	else {
 		bool found = false;
 		if (SBB::readHandlesVector("wptsMinusPoint").size() > 0) {
-			float distMax = 500.0f;
+			float distMax = 10.0f;
 			for (int i = 0; !found && i < SBB::readHandlesVector("wptsMinusPoint").size(); i++) {
 				CEntity * entTransform = this->getMinusPointHandle(i);
 				TCompTransform * transformBox = entTransform->get<TCompTransform>();
 				VEC3 wpt = transformBox->getPosition();
-				float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
+				float disttowpt = simpleDist(wpt, getEntityTransform()->getPosition());
 				if (disttowpt < distMax) {
 					distMax = disttowpt;
 					topolarizedminus = i;
@@ -187,12 +187,12 @@ bool player_controller::nearPlus() {
 	else {
 		bool found = false;
 		if (SBB::readHandlesVector("wptsPlusPoint").size() > 0) {
-			float distMax = 500.0f;
+			float distMax = 10.0f;
 			for (int i = 0; !found && i < SBB::readHandlesVector("wptsPlusPoint").size(); i++) {
 				CEntity * entTransform = this->getPlusPointHandle(i);
 				TCompTransform * transformBox = entTransform->get<TCompTransform>();
 				VEC3 wpt = transformBox->getPosition();
-				float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
+				float disttowpt = simpleDist(wpt, getEntityTransform()->getPosition());
 				if (disttowpt < distMax) {
 					distMax = disttowpt;
 					topolarizedplus = i;
@@ -223,15 +223,22 @@ void player_controller::AttractMove(CEntity * entPoint) {
 	float multiplier = getDeltaTime()*polarizedCurrentSpeed * 1.5f;
 
 	float tox = min(fabsf(direction.x*multiplier), fabsf(player_position.x - entPointTransform->getPosition().x));
+	float toy = min(fabsf(direction.y*multiplier), fabsf(player_position.y - entPointTransform->getPosition().y));
 	float toz = min(fabsf(direction.z*multiplier), fabsf(player_position.z - entPointTransform->getPosition().z));
 
 	if (direction.x < 0) {
 		tox *= -1;
-	}if (direction.z < 0) {
+	}
+	if (direction.z < 0) {
 		toz *= -1;
+	}
+	if (direction.y < 0) {
+		toy *= -1;
 	}
 
 	player_position.x += tox;
+
+	jspeed = polarizedCurrentSpeed*direction.y;
 	player_position.z += toz;
 	player_transform->setPosition(player_position);
 }

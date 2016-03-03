@@ -51,7 +51,7 @@ void TCompCamera::update(float dt) {
 	CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
 	TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
 
-	if (targetlife->currentlife > 0.0f && 2.5f <= simpleDistXZ(victoryPoint_transform->getPosition(), targettrans->getPosition())) {
+	if (targetlife->currentlife > 0.0f && 0.5f <= simpleDist(victoryPoint_transform->getPosition(), targettrans->getPosition())) {
 		VEC3 pos = tmx->getPosition();
 		pos.y += 2;
 		tmx->setPosition(pos);

@@ -12,8 +12,8 @@
 void player_controller_mole::Init() {
 	om = getHandleManager<player_controller_mole>();	//player
 
-	DeleteState("jumping");
-	DeleteState("falling");
+	//DeleteState("jumping");
+	//DeleteState("falling");
 	DeleteState("moving");
 
 	AddState("grabBox", (statehandler)&player_controller_mole::GrabBox);

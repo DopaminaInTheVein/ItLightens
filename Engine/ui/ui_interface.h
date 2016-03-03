@@ -15,10 +15,9 @@ class CUI {
 	bool open_ui_keys = true;
 	bool open_assist = true;
 	vector<std::string> msgs;
-	
+
 public:
 	void update() {
-
 		//Here goes all game UI info
 
 		ImGui::Begin("UI", &open_main_ui, ImVec2(400, 150), -1.0f);
@@ -41,7 +40,7 @@ public:
 		ImGui::End();
 		msgs.clear();
 	}
-	
+
 	void instructions_update() {
 		if (ImGui::CollapsingHeader("Instructions")) {
 			ImGui::Text("Instructions goes here");
@@ -58,8 +57,6 @@ public:
 	}
 
 	void life_update() {
-
-
 		TTagID tagIDplayer = getID("player");
 		CHandle player = tags_manager.getFirstHavingTag(tagIDplayer);
 		CEntity * player_e = player;
@@ -68,8 +65,6 @@ public:
 		CEntity * target_e = camara3rd->target;
 
 		TCompLife * life = target_e->get<TCompLife>();
-
-		
 
 		ImGui::Text("LifeBar\n");
 		std::string lifeString = "|";
@@ -86,7 +81,7 @@ public:
 		lifeString += "|";
 		ImGui::Text(lifeString.c_str());
 		ImGui::Separator();
-		
+
 		//put cheats here:
 		ImGui::Text("Press 'L' to refill energy (don't work)");
 
@@ -103,7 +98,7 @@ public:
 			ImGui::Text("Press 'Enter' to restart (don't work)");
 			ImGui::End();
 		}
-		else if (2.5f > simpleDistXZ(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
+		else if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
 			bool open = true;
 			ImGui::Begin("Victory Player State", &open, ImVec2(300, 100), -1.0f);
 			ImGui::Text("You WIN!\n");

@@ -32,7 +32,7 @@ bool CPlayerBase::checkDead() {
 	CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
 	TCompTransform * player_transform = myEntity->get<TCompTransform>();
 	TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
-	if (2.5f > simpleDistXZ(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
+	if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
 		ChangeState("win");
 		return true;
 	}
@@ -48,7 +48,7 @@ void CPlayerBase::update(float elapsed) {
 		UpdateInputActions();
 		Recalc();
 		UpdateMoves();
-		myUpdate(); 
+		myUpdate();
 		update_msgs();
 	}
 }
@@ -109,7 +109,6 @@ void CPlayerBase::UpdateMoves()
 	else player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
 	//player_transform->setPosition(player_position);
 	player_transform->executeMovement(player_position);
-	
 }
 #pragma endregion
 //##########################################################################

@@ -42,7 +42,7 @@ struct TCompLife : public TCompBase {
 		TCompTransform * player_transform = target_e->get<TCompTransform>();
 		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
 
-		if (2.5f <= simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
+		if (0.5f <= simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
 			float dmgTotal;
 			switch (msg.dmgType) {
 			case ENERGY_DECREASE:

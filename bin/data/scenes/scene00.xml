@@ -155,14 +155,31 @@
     <tag name="recover_point" />
     <transform pos="45 3 0" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
+  <!-- MAGNETIC POINTS-->
+  <entity>
+    <name name="attractionPointMinus" />
+    <tag name="minus_wall" />
+    <transform pos="62 7 4" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+  <entity>
+    <name name="attractionPointPlus" />
+    <tag name="plus_wall" />
+    <transform pos="64 7 0" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
 
   <!-- VICTORY POINT -->
   <entity>
     <name name="win_point" />
     <tag name="victory_point" />
-    <transform pos="64 0 0" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="64 4 0" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
-
+  <entity>
+    <name name="box1" />
+    <tag name ="platform" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <transform pos="64 3 0" rotation="1 2 3 3" scale="1 1 1" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" />
+  </entity>
   <!--platforms, helpers to pass to next point-->
   <!--ZONE 1-->
   <!--    Shoudnt be necessary, can be passed with mole and box moving-->
@@ -355,5 +372,6 @@
     <render_static_mesh name="static_meshes/workbench.static_mesh" />
     <workbench />
   </entity>
+
   <!-- END ZONE 3 -->
 </entities>
