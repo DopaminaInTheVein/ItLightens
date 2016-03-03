@@ -92,6 +92,11 @@ class ai_guard : public TCompBase, public aicontroller
 	CHandle rayCastToPlayer(char types, float& distRay);
 	void shootToPlayer();
 
+//from bombs
+	const float reduce_factor = 3.0f;
+	const float t_reduceStats_max = 15.0f;
+	float t_reduceStats = 0.0f;
+
 public:
 	void NextActionState();
 	void SeekPointState();
@@ -107,10 +112,29 @@ public:
 	void init() { Init(); }
 	void noise(const TMsgNoise& msg);
 
-	void update(float dt) { Recalc(); }
+	//From bombs
+	void reduceStats();
+	void resetStats();
+	void onMagneticBomb(const TMsgMagneticBomb& msg);
+
+	//TODO: remove, testing gameplay
+	void artificialInterrupt();
+
+	void update(float dt) { 
+		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
+			t_reduceStats -= getDeltaTime();
+			if (t_reduceStats <= 0.0f) {
+				t_reduceStats = 0.0f;
+				resetStats();
+			}
+		}
+		Recalc();
+	}
 	void render();
 	void renderInMenu();
 	bool load(MKeyValue& atts);
+
+	ai_guard& ai_guard::operator=(ai_guard arg) { return arg; }
 };
 
 #endif

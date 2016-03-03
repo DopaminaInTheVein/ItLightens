@@ -68,6 +68,7 @@ protected:
 	void energyDecreasal(float howmuch);
 	bool checkDead();
 	void orbitCameraDeath();
+
 public:
 
 	CPlayerBase();
@@ -88,6 +89,8 @@ public:
 	void Jumping();
 	void Falling();
 	void Moving();
+
+	virtual void update_msgs() {}
 
 	void renderInMenu();
 

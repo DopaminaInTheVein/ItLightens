@@ -9,7 +9,7 @@
 #include "prefabs\magnetic_bomb.h"
 #include "prefabs\static_bomb.h"
 #include "components\comp_name.h"
-
+#include "ui\ui_interface.h"
 #include "components\comp_msgs.h"
 
 void player_controller_cientifico::Init() {
@@ -62,6 +62,23 @@ void player_controller_cientifico::UpdateInputActions() {
 	if (Input.IsKeyPressedDown(DIK_4)) {
 		energyDecreasal(10.0f);
 		ChangeState("useStaticBomb");
+	}
+	if (Input.IsKeyPressedDown(DIK_R))
+		ExplodeBomb();
+}
+
+void player_controller_cientifico::ExplodeBomb()
+{
+	if (obj == STATIC_BOMB_GAME) {
+		CStaticBomb *bomb = bomb_handle;
+		obj = EMPTY;
+		bomb->Explode();
+	}
+	
+	if (obj == MAGNETIC_BOMB_GAME) {
+		CMagneticBomb *bomb = bomb_handle;
+		obj = EMPTY;
+		bomb->Explode();
 	}
 }
 
@@ -135,12 +152,14 @@ void player_controller_cientifico::AddDisableBeacon()
 void player_controller_cientifico::UseMagneticBomb()
 {
 	if (obj == MAGNETIC_BOMB) createMagneticBombEntity();
+	obj = MAGNETIC_BOMB_GAME;
 	ChangeState("idle");
 }
 
 void player_controller_cientifico::UseStaticBomb()
 {
 	if (obj == STATIC_BOMB) createStaticBombEntity();
+	obj = STATIC_BOMB_GAME;
 	ChangeState("idle");
 }
 
@@ -172,6 +191,7 @@ void player_controller_cientifico::createMagneticBombEntity()
 	auto hm_mb = CHandleManager::getByName("magnetic_bomb");
 	CHandle new_h_mb = hm_mb->createHandle();
 	CEntity *e = new_h_e;
+	bomb_handle = new_h_mb;
 
 	e->add(new_h_n);
 	e->add(new_h_mb);
@@ -209,6 +229,7 @@ void player_controller_cientifico::createStaticBombEntity()
 	auto hm_mb = CHandleManager::getByName("static_bomb");
 	CHandle new_h_mb = hm_mb->createHandle();
 	CEntity *e = new_h_e;
+	bomb_handle = new_h_mb;
 
 	e->add(new_h_n);
 	e->add(new_h_mb);
@@ -253,4 +274,56 @@ void player_controller_cientifico::InitControlState() {
 CEntity* player_controller_cientifico::getMyEntity() {
 	CHandle me = CHandle(this);
 	return me.getOwner();
+}
+
+void player_controller_cientifico::update_msgs()
+{
+	ui.addTextInstructions("Press 'shift' to exit possession\n");
+	if (obj == EMPTY) {
+		ui.addTextInstructions("Press '1' to create object to disable beacons\n");
+		ui.addTextInstructions("Press '3' to create static bombs\n");
+		ui.addTextInstructions("Press '5' to create magnetic bombs\n");
+	}
+	else if (obj == DISABLE_BEACON) {
+		ui.addTextInstructions("Press '2' to disable beacon next to it");
+	}
+	else if (obj == MAGNETIC_BOMB) {
+		ui.addTextInstructions("Can reduce the range and movements from guards");
+		ui.addTextInstructions("Press '6' to shot magnetic bomb");
+	}
+	else if (obj == STATIC_BOMB) {
+		ui.addTextInstructions("Can stun NPC when explode");
+		ui.addTextInstructions("Press '4' to leave static bomb");
+	}
+	else if (obj == STATIC_BOMB_GAME) {
+		ui.addTextInstructions("Press '1' to create object to disable beacons\n");
+		ui.addTextInstructions("Press '3' to create static bombs\n");
+		ui.addTextInstructions("Press '5' to create magnetic bombs\n");
+
+		ui.addTextInstructions("\nPress 'R' to explode static bomb before time\n");
+		std::string text = "To explode in: "+to_string(t_to_explode);
+		ui.addTextInstructions(text);
+
+	}
+	else if (obj == MAGNETIC_BOMB_GAME) {
+		ui.addTextInstructions("Press '1' to create object to disable beacons\n");
+		ui.addTextInstructions("Press '3' to create static bombs\n");
+		ui.addTextInstructions("Press '5' to create magnetic bombs\n");
+
+		ui.addTextInstructions("\nPress 'R' to explode magnetic bomb before time\n");
+		std::string text = "To explode in: " + to_string(t_to_explode);
+		ui.addTextInstructions(text);
+
+	}
+}
+
+void player_controller_cientifico::myUpdate()
+{
+	if (obj == STATIC_BOMB_GAME || obj == MAGNETIC_BOMB_GAME) {
+		t_to_explode -= getDeltaTime();
+		if (t_to_explode <= 0.0f) {
+			obj = EMPTY;
+			t_to_explode = 5.0f;
+		}
+	}
 }

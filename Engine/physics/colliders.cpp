@@ -73,11 +73,16 @@ VEC3 boxCollider::getPMIN() const
 	CEntity *p_e = parent;
 
 	TCompTransform * t = p_e->get<TCompTransform>();
-
+	CQuaternion rot = t->getRotation();
+	rot.Inverse(rot);
+	CQuaternion rot2 = rot;
+	rot.Conjugate();
+	CQuaternion aux = CQuaternion(relative_p2.x,relative_p2.y,relative_p2.z,0);
+	aux = rot2 * aux;
+	aux = aux * rot;
+	VEC3 orientedP2 = VEC3(aux.x,aux.y,aux.z);
 	VEC3 org = t->getPosition();
-
-	p = org + relative_p2;
-
+	p = org + orientedP2;
 	return p;
 }
 
@@ -90,11 +95,17 @@ VEC3 boxCollider::getPMAX() const
 	CEntity *p_e = parent;
 
 	TCompTransform * t = p_e->get<TCompTransform>();
-
+	CQuaternion rot = t->getRotation();
+	rot.Inverse(rot);
+	CQuaternion rot2 = rot;
+	rot.Conjugate();
+	CQuaternion aux = CQuaternion(relative_p1.x, relative_p1.y, relative_p1.z,0);
+	aux = rot2 * aux;
+	aux = aux * rot;
+	VEC3 orientedP1 = VEC3(aux.x, aux.y, aux.z);
 	VEC3 org = t->getPosition();
 
-	p = org + relative_p1;
-
+	p = org + orientedP1;
 	return p;
 }
 //---------------------------------------------------------

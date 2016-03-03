@@ -13,6 +13,8 @@ extern CInput Input;
 class CUI {
 	bool open_main_ui = true;
 	bool open_ui_keys = true;
+	bool open_assist = true;
+	vector<std::string> msgs;
 	
 public:
 	void update() {
@@ -27,6 +29,17 @@ public:
 		instructions_update();
 
 		ImGui::End();
+
+		ui_assist();
+	}
+
+	void ui_assist() {
+		ImGui::Begin("Help", &open_assist, ImVec2(400, 150), -1.0f);
+		for (auto msg : msgs) {
+			ImGui::Text(msg.c_str());
+		}
+		ImGui::End();
+		msgs.clear();
 	}
 	
 	void instructions_update() {
@@ -89,5 +102,11 @@ public:
 		}
 
 	}
+
+	void addTextInstructions(std::string message) {
+		msgs.push_back(message.c_str());
+	}
 };
+
+extern CUI ui;
 #endif

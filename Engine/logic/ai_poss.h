@@ -20,7 +20,7 @@ enum ACTION_RESULT {
 };
 
 class ai_poss : public aicontroller {
-private:
+protected:
 	bool stunned;
 	bool possessed;
 public:
@@ -30,7 +30,7 @@ public:
 	const void PossessingState();
 	const void PossessedState();
 	const void UnpossessingState();
-	const void StuntState();
+	virtual const void StuntState();
 	virtual void actionStunt();
 
 	//Preguntar por Stunt o Poseido

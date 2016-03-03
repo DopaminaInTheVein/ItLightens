@@ -8,6 +8,7 @@
 #include "components/entity_tags.h"
 
 #include "components/comp_msgs.h"
+#include "ui\ui_interface.h"
 
 void player_controller::Init() {
 	om = getHandleManager<player_controller>();	//player
@@ -106,6 +107,7 @@ void player_controller::Jumping()
 	UpdateDirection();
 	UpdateMovDirection();
 
+
 	if (onGround) {
 		jspeed = 0.0f;
 		ChangeState("idle");
@@ -128,6 +130,7 @@ void player_controller::Falling()
 	UpdateDirection();
 	UpdateMovDirection();
 
+	
 	if (Input.IsSpacePressedDown()) {
 		jspeed = jimpulse;
 		energyDecreasal(5.0f);
@@ -332,6 +335,11 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 
 	//Notificamos presencia de Player
 	SBB::postBool("possMode", false);
+}
+
+void player_controller::update_msgs()
+{
+	ui.addTextInstructions("Press 'shift' to possess someone\n");
 }
 
 void player_controller::onDamage(const TMsgDamage& msg) {

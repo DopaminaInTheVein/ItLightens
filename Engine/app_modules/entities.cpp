@@ -101,7 +101,14 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
+
+	//bombs
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
+	//SUBSCRIBE(ai_guard, TMsgStaticBomb, onStaticBomb);		//TODO: should do something
+	SUBSCRIBE(ai_mole, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(ai_speedy, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(ai_guard, TMsgMagneticBomb, onMagneticBomb);
+
 
 	//Posesiones Mensajes
 	//..Cientifico

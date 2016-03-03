@@ -6,6 +6,8 @@
 #include "physics/physics.h"
 #include "logic/sbb.h"
 
+#include "ui\ui_interface.h"
+
 map<string, ai_guard::KptType> ai_guard::kptTypes = {
 	  {"seek", KptType::Seek}
 	, {"look", KptType::Look}
@@ -169,6 +171,11 @@ void ai_guard::ShootState() {
 		if (!playerVisible()) {
 			ChangeState(ST_SHOOTING_WALL);
 		}
+	}
+
+ui.addTextInstructions("\nPress 'M' to interrupt gaurd shoot when he dont see you!!! (artificial)\n");
+	if (Input.IsKeyPressedDown(KEY_M)) {
+		artificialInterrupt();
 	}
 }
 
@@ -400,4 +407,56 @@ void ai_guard::renderInMenu() {
 	ImGui::SliderFloat("Laser Shot Reach", &DIST_RAYSHOT, DIST_SQ_SHOT_AREA_ENTER, DIST_SQ_SHOT_AREA_LEAVE * 2);
 	ImGui::SliderFloat("Laser Damage", &DAMAGE_LASER, 0, 10);
 	ImGui::SliderFloat("Time Shooting Wall before leave", &_timerShootingWall, 0, 15);
+}
+
+/**************/
+//FROM SCIENTIST
+/**************/
+
+void ai_guard::reduceStats()
+{
+	DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI/reduce_factor;
+	DIST_SQ_SHOT_AREA_ENTER = DIST_SQ_SHOT_AREA_ENTER_INI / reduce_factor;
+	DIST_SQ_SHOT_AREA_LEAVE = DIST_SQ_SHOT_AREA_LEAVE_INI / reduce_factor;
+	DIST_RAYSHOT = DIST_RAYSHOT_INI / reduce_factor;
+	DIST_SQ_PLAYER_DETECTION = DIST_SQ_PLAYER_DETECTION_INI / reduce_factor;
+	SPEED_WALK = SPEED_WALK_INI / reduce_factor;
+	CONE_VISION = CONE_VISION_INI / reduce_factor;
+	SPEED_ROT = SPEED_ROT_INI / reduce_factor;
+	DAMAGE_LASER = DAMAGE_LASER_INI / reduce_factor;
+}
+
+void ai_guard::resetStats()
+{
+	DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI;
+	DIST_SQ_SHOT_AREA_ENTER = DIST_SQ_SHOT_AREA_ENTER_INI;
+	DIST_SQ_SHOT_AREA_LEAVE = DIST_SQ_SHOT_AREA_LEAVE_INI;
+	DIST_RAYSHOT = DIST_RAYSHOT_INI;
+	DIST_SQ_PLAYER_DETECTION = DIST_SQ_PLAYER_DETECTION_INI;
+	SPEED_WALK = SPEED_WALK_INI;
+	CONE_VISION = CONE_VISION_INI;
+	SPEED_ROT = SPEED_ROT_INI;
+	DAMAGE_LASER = DAMAGE_LASER_INI;
+}
+
+void ai_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
+{
+	VEC3 myPos = getTransform()->getPosition();
+	float d = squaredDist(msg.pos, myPos);
+
+	if (d < msg.r) {
+		reduceStats();
+		t_reduceStats = t_reduceStats_max;
+	}
+}
+
+
+//TODO: remove
+void ai_guard::artificialInterrupt()
+{
+	TCompTransform *t = getTransform();
+	float yaw, pitch;
+	t->getAngles(&yaw,&pitch);
+	t->setAngles(-yaw,pitch);
+	ChangeState(ST_WAIT_NEXT);
 }

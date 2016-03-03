@@ -84,13 +84,6 @@ bool CSimplePhysx::SphereVsSphere(float r1, VEC3 c1, float r2, VEC3 c2)
 			ret = true;
 	}
 
-	/*if (ret) {
-		Debug->LogRaw("colliding!!!\n");
-	}
-	else {
-		Debug->LogRaw("not colliding!!!\n");
-	}*/
-
 	return ret;
 }
 
@@ -142,13 +135,6 @@ bool CSimplePhysx::SphereVsBox(float r, VEC3 c, VEC3 pos_min, VEC3 pos_max)
 	else if (c.z > real_z_max) dist_squared -= squared(c.z - real_z_max);
 	
 	bool ret =  dist_squared > 0;
-
-	/*if (ret) {
-		Debug->LogRaw("colliding!!!\n");
-	}
-	else {
-		Debug->LogRaw("not colliding!!!\n");
-	}*/
 
 	return ret;
 }

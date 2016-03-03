@@ -135,7 +135,9 @@ void ai_poss::onStaticBomb(const TMsgStaticBomb & msg)
 	TCompTransform *me_transform = me->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
-	if (curr_pos.x <= msg.x_max && curr_pos.x >= msg.x_min && curr_pos.z <= msg.z_max && curr_pos.z >= msg.z_min) {
+	float d = squaredDist(msg.pos,curr_pos);
+
+	if (d < msg.r) {
 		ChangeState(ST_STUNT);
 	}
 }

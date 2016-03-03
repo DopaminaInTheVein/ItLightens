@@ -11,6 +11,8 @@
 #include "components\comp_msgs.h"
 #include "components\comp_camera.h"
 
+
+
 CPlayerBase::CPlayerBase() {
 	AddState("idle", (statehandler)&CPlayerBase::Idle);
 	AddState("moving", (statehandler)&CPlayerBase::Moving);
@@ -28,6 +30,7 @@ bool CPlayerBase::checkDead() {
 	}
 	return false;
 }
+
 void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 	camera = msg.camera;
 }
@@ -38,7 +41,8 @@ void CPlayerBase::update(float elapsed) {
 		UpdateInputActions();
 		Recalc();
 		UpdateMoves();
-		myUpdate();
+		myUpdate(); 
+		update_msgs();
 	}
 }
 
@@ -245,7 +249,7 @@ void CPlayerBase::ApplyGravity() {
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
-	if (player_position.y > 0 || jspeed > 0) {
+	if (player_position.y > 0 || jspeed > 0.01f) {
 		jspeed -= gravity*getDeltaTime();
 		player_position = player_position + directionJump*getDeltaTime()*jspeed;
 		//player_transform->setPosition(player_position);
@@ -283,9 +287,7 @@ void CPlayerBase::Jumping()
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	//dbg("deltatime: %f\n", getDeltaTime());
 	jspeed -= gravity*getDeltaTime();
-	//dbg("jspeed: %f\n", jspeed);
 
 	if (jspeed <= 0.1f) {
 		jspeed = 0.0f;
