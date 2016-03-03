@@ -21,9 +21,14 @@
 
 #include "debug/debug.h"
 
+#include "physics/simple_physx.h"
+#include "ui\ui_interface.h"
+
 //DEBUG
 CDebug *	  Debug = nullptr;
 CInput	      Input;
+CSimplePhysx  s_physx;		//provisional
+CUI ui;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
@@ -40,7 +45,7 @@ CShaderCte< TCteObject > shader_ctes_object;
 bool CApp::start() {
 	// input initialization
 	CApp& app = CApp::get();
-	Input.Initialize(app.getHInstance(), app.getHWnd(), 1960, 1080);
+	Input.Initialize(app.getHInstance(), app.getHWnd(), app.getXRes(), app.getYRes());
 
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
@@ -86,6 +91,7 @@ void CApp::stop() {
 		(*it)->stop();
 
 	Resources.destroy();
+	Debug->destroy();
 	shader_ctes_camera.destroy();
 	shader_ctes_object.destroy();
 

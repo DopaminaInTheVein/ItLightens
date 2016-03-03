@@ -11,9 +11,25 @@
 
 //Logic
 #include "logic/ai_beacon.h"
+#include "logic/ai_workbench.h"
 #include "logic/ai_mole.h"
 #include "logic/ai_scientific.h"
 #include "logic/ai_speedy.h"
 #include "logic/ai_guard.h"
+#include "logic/aicontroller.h"
+
+//controllers
+#include "player_controllers\player_controller.h"
+#include "player_controllers/player_controller_speedy.h"
+#include "player_controllers/player_controller_mole.h"
+#include "player_controllers/player_controller_cientifico.h"
+
+//Physics
+#include "physics/comp_col_cylinder.h"
+#include "physics\colliders.h"
+
+//prefabs
+#include "prefabs\magnetic_bomb.h"
+#include "prefabs\static_bomb.h"
 
 #endif

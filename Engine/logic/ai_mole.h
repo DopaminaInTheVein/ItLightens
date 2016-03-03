@@ -3,6 +3,7 @@
 
 #include "mcv_platform.h"
 #include "aicontroller.h"
+#include "ai_poss.h"
 #include "sbb.h"
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
@@ -20,7 +21,7 @@
 #include <chrono>
 #include <windows.h>
 
-class ai_mole : public aicontroller, public TCompBase {
+class ai_mole : public ai_poss, public TCompBase {
 	int towptbox;
 	int towptleave;
 	float waitSecondsToBoxRespawn;
@@ -41,6 +42,11 @@ class ai_mole : public aicontroller, public TCompBase {
 		CEntity * ent = han;
 		return ent;
 	}
+
+	CEntity* getMyEntity() {
+		CHandle me = CHandle(this);
+		return me.getOwner();
+	}
 public:
 	void IdleState();
 	void SeekWptState();
@@ -52,9 +58,13 @@ public:
 	void OrientToCarryWptState();
 	void UnGrabState();
 
+	void _actionBeforePossession();
+	void _StuntEndState();
+
 	void Init() override;
 	void update(float dt) { Recalc(); }
 	void init() { Init(); }
+	void idle() { IdleState(); }
 };
 
 #endif

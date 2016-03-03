@@ -1,0 +1,3 @@
+<static_mesh>
+    <slot mesh="meshes/workbench.mesh" material="materials/wb.material"/>
+</static_mesh>

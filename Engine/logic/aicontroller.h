@@ -25,7 +25,7 @@ protected:
 	map<string, statehandler>statemap;
 
 public:
-	void ChangeState(string);	// state we wish to go to
+	virtual void ChangeState(string);	// state we wish to go to
 	virtual void Init();	// resets the controller
 	void Recalc();	// recompute behaviour
 	void AddState(string, statehandler);

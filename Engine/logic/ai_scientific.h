@@ -1,7 +1,7 @@
 #ifndef INC_AI_SCIENTIFIC_H_
 #define	INC_AI_SCIENTIFIC_H_
 
-#include "aicontroller.h"
+#include "ai_poss.h"
 
 #include "components\comp_base.h"
 #include "handle\handle.h"
@@ -18,7 +18,7 @@ class CObjectManager;
 
 //--------------------------------------
 
-class ai_scientific : public aicontroller, public TCompBase {
+class ai_scientific : public ai_poss, public TCompBase {
 	//Enum actions for bot
 	enum {
 		IDLE = 0,
@@ -33,7 +33,7 @@ class ai_scientific : public aicontroller, public TCompBase {
 
 	//main attributes
 	//--------------------------------------
-	const float move_speed = 5.0f;
+	const float move_speed = 2.0f;
 	const float rot_speed = 2.0f;
 	//--------------------------------------
 
@@ -45,10 +45,10 @@ class ai_scientific : public aicontroller, public TCompBase {
 
 	//Map points, TEMP, TODO: look for positions from object_manager
 	//--------------------------------------
-	std::vector<VEC3> wbs;
 	VEC3 obj_position;					//Where to move
 	VEC3 beacon_to_go;
 	std::string beacon_to_go_name = "";
+	std::string wb_to_go_name = "";
 	//--------------------------------------
 
 	//Timer counts
@@ -66,7 +66,7 @@ class ai_scientific : public aicontroller, public TCompBase {
 	CHandle myParent;
 	CEntity *myEntity = nullptr;
 
-	int actual_action = IDLE;		//TEMP, TODO: enum camera
+	int actual_action = IDLE;	
 	//--------------------------------------
 
 public:
@@ -74,6 +74,7 @@ public:
 	ai_scientific() {}		//needed to create obj at load
 	void Init() override;
 	void init() { Init(); }
+
 	//Overload functions from TCompBase, needed to loop AI Component
 	//--------------------------------------
 	bool load(MKeyValue& atts) {
@@ -86,11 +87,18 @@ public:
 	//--------------------------------------
 	void SetHandleMeInit();
 	void SetMyEntity();
+	const void StuntState() override;
 	//--------------------------------------
+
+	void CleanStates();
 
 	//messages function:
 	void onRemoveBeacon(const TMsgBeaconToRemove& msg);
 	void onEmptyBeacon(const TMsgBeaconEmpty& msg);
+	void onEmptyWB(const TMsgWBEmpty& msg);
+	void onTakenBeacon(const TMsgBeaconTakenByPlayer & msg);
+	void onTakenWB(const TMsgWBTakenByPlayer & msg);
+	void onStaticBomb(const TMsgStaticBomb & msg) override;		//need to override to clean old states and reserved objects
 
 	//Functions AI Nodes:
 	//--------------------------------------
@@ -106,6 +114,9 @@ public:
 
 	//UI Debug for scientific AI
 	void renderInMenu();
+
+	//Possession
+	CEntity* getMyEntity() override;
 
 	//Overload function for handler_manager
 	ai_scientific& ai_scientific::operator=(ai_scientific arg) { return arg; }

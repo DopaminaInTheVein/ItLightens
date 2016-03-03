@@ -4,12 +4,15 @@
 #include "handle\object_manager.h"
 #include "components\comp_transform.h"
 #include "components\entity.h"
+#include "ai_workbench.h"
 
 #include "ai_beacon.h"
 
 void ai_scientific::Init()
 {
 	om = getHandleManager<ai_scientific>();	//list handle scientific in game
+
+	DeleteState("idle");
 
 	//list states
 	AddState("idle", (statehandler)&ai_scientific::Idle);
@@ -27,11 +30,6 @@ void ai_scientific::Init()
 	out[REMOVE_BEACON] = "REMOVE_BEACON";
 	out[WANDER] = "WANDER";
 
-	//TODO: search positions from WorkBench components in game
-	wbs.resize(2);
-	wbs[0] = VEC3(10.0f, 0.0f, 10.0f);
-	wbs[1] = VEC3(-10.0f, 0.0f, -10.0f);
-
 	SetHandleMeInit();				//need to be initialized after all handles, ¿awake/init?
 
 	ChangeState("idle"); //init Node
@@ -46,10 +44,15 @@ void ai_scientific::Idle() {
 
 void ai_scientific::LookForObj()
 {
-	VEC3 pos_wander = VEC3(rand() % 20 - 10, 0.0f, rand() % 20 - 10);
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 curr_pos = me_transform->getPosition();
+
+	VEC3 pos_wander = VEC3(rand() % 10 - 5 +curr_pos.x, 0.0f, rand() % 10 - 5 + curr_pos.z);
 	actual_action = WANDER;
 	obj_position = pos_wander;
-	ChangeState("aimToPos");
+	if (beacon_to_go_name != "") ChangeState("seekWB");
+	else ChangeState("aimToPos");
 }
 
 void ai_scientific::SeekWorkbench()
@@ -58,18 +61,23 @@ void ai_scientific::SeekWorkbench()
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
-	//look for closest wb
-	float min_d = 10000.0f;
-	float square_d = 0.0f;
-	for (auto &wb : wbs) {
-		square_d = simpleDistXZ(curr_pos, wb);
-		if (square_d < min_d) {
-			obj_position = wb;
-			min_d = square_d;
+	int wbs = workbench_controller::id_curr_max_wb;	//the last number exists
+	std::string base_name = "workbench_";
+	bool found = false;
+
+	for (int i = 1; i <= wbs; i++) {		//fisrt start at 1
+		std::string name = base_name + std::to_string(i);
+		if (SBB::readInt(name) == workbench_controller::INACTIVE) {
+			obj_position = SBB::readVEC3(name);
+			wb_to_go_name = name;
+			actual_action = CREATE_BEACON;
+			SBB::postInt(name, workbench_controller::INACTIVE_TAKEN);
+			ChangeState("aimToPos");
+			return;
 		}
 	}
 
-	ChangeState("aimToPos");
+	ChangeState("lookForObj");
 }
 
 void ai_scientific::AimToPos() {
@@ -144,6 +152,8 @@ void ai_scientific::CreateBeaconFromWB()
 	if (waiting_time > t_createBeacon) {		//go to beacon
 		obj_position = beacon_to_go;
 		actual_action = ADD_BEACON;
+		SBB::postInt(wb_to_go_name.c_str(), workbench_controller::INACTIVE);
+		wb_to_go_name = "";
 		waiting_time = 0.0f;
 		ChangeState("aimToPos");
 	}
@@ -155,6 +165,7 @@ void ai_scientific::AddBeacon()
 	if (waiting_time > t_addBeacon) {		//go to new action
 		SBB::postInt(beacon_to_go_name, beacon_controller::SONAR);
 		waiting_time = 0.0f;
+		beacon_to_go_name = "";
 		actual_action = IDLE;
 		ChangeState("lookForObj");
 	}
@@ -189,15 +200,77 @@ void ai_scientific::onRemoveBeacon(const TMsgBeaconToRemove& msg)
 void ai_scientific::onEmptyBeacon(const TMsgBeaconEmpty & msg)
 {
 	if (actual_action == IDLE || actual_action == WANDER) {
-		if (SBB::readInt(msg.name_beacon) != beacon_controller::INACTIVE_TAKEN) {
-			beacon_to_go = msg.pos_beacon;
-			beacon_to_go_name = msg.name_beacon;
+		if (SBB::readInt(msg.name) != beacon_controller::INACTIVE_TAKEN) {
+			beacon_to_go = msg.pos;
+			beacon_to_go_name = msg.name;
 			actual_action = CREATE_BEACON;
-			SBB::postInt(msg.name_beacon, beacon_controller::INACTIVE_TAKEN);	//disable beacon for other bots
+			SBB::postInt(msg.name, beacon_controller::INACTIVE_TAKEN);	//disable beacon for other bots
 			ChangeState("seekWB");
 		}
 	}
 }
+
+void ai_scientific::onEmptyWB(const TMsgWBEmpty & msg)
+{
+	
+}
+
+
+void ai_scientific::onTakenBeacon(const TMsgBeaconTakenByPlayer & msg)
+{
+	if (msg.name == beacon_to_go_name) {
+		waiting_time = 0.0f;
+		beacon_to_go_name = "";
+		actual_action = IDLE;
+		ChangeState("lookForObj");
+	}
+}
+
+void ai_scientific::onTakenWB(const TMsgWBTakenByPlayer & msg)
+{
+	
+}
+
+
+//clean all objects with actions related with NPC
+void ai_scientific::CleanStates() {
+	if (beacon_to_go_name != "") {
+		if (SBB::readInt(beacon_to_go_name) == beacon_controller::INACTIVE_TAKEN)
+			SBB::postInt(beacon_to_go_name, beacon_controller::INACTIVE);
+
+		if (SBB::readInt(beacon_to_go_name) == beacon_controller::TO_REMOVE_TAKEN) {
+			SBB::postInt(beacon_to_go_name,beacon_controller::TO_REMOVE);
+		}
+		beacon_to_go_name = "";
+	}
+
+	if (wb_to_go_name != "") {
+		if (SBB::readInt(wb_to_go_name) == workbench_controller::INACTIVE_TAKEN)
+			SBB::postInt(wb_to_go_name, workbench_controller::INACTIVE);
+
+		if (SBB::readInt(wb_to_go_name) == workbench_controller::BUSY)
+			SBB::postInt(wb_to_go_name, workbench_controller::INACTIVE);
+
+		wb_to_go_name = "";
+	}
+}
+
+
+void ai_scientific::onStaticBomb(const TMsgStaticBomb & msg)
+{
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 curr_pos = me_transform->getPosition();
+
+	float d = squaredDist(msg.pos, curr_pos);
+
+	if(d < msg.r){
+		CleanStates();
+		ChangeState(ST_STUNT);
+	}
+
+}
+
 
 void ai_scientific::renderInMenu()
 {
@@ -214,4 +287,19 @@ void ai_scientific::SetHandleMeInit()
 
 void ai_scientific::SetMyEntity() {
 	myEntity = myParent;
+}
+
+const void ai_scientific::StuntState() {
+	actionStunt();
+	CleanStates();
+	____TIMER_CHECK_DO_(timeStunt);
+	stunned = false;
+	ChangeState(ST_STUNT_END);
+	____TIMER_CHECK_DONE_(timeStunt);
+}
+
+
+CEntity* ai_scientific::getMyEntity() {
+	CHandle me = CHandle(this);
+	return me.getOwner();
 }

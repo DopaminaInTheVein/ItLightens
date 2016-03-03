@@ -1,0 +1,49 @@
+<entities>
+  <entity>
+    <tag name="player" />
+    <transform pos="3 3 1" />
+    <name name="camara" />
+    <camera znear="1" zfar="250" fov="60" />
+    <controller_3rd_person />
+  </entity>
+  <entity>
+    <life points="500" />
+    <tag name="target" />
+    <transform pos="1 0 0" />
+    <name name="pj" />
+    <player />
+    <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
+    <colCylinder pos ="0 0 0" radius ="5" height ="10" type ="player" />
+    <sphere_collider radius="0.3" tag ="player" />
+  </entity>
+  <entity>
+    <name name="floor"/>
+    <transform pos="100.0 25.0 -1.09278e-006" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/floor.static_mesh"/>
+  </entity>
+  <entity>
+    <name name="wall"/>
+    <transform pos="0.0 -2.18557e-006 -50.0" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall.static_mesh"/>
+  </entity>
+  <entity>
+    <name name="wall"/>
+    <transform pos="0.0 2.18557e-006 50.0" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall.static_mesh"/>
+  </entity>
+  <entity>
+    <name name="wall"/>
+    <transform pos="-50.0 0.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall.static_mesh"/>
+  </entity>
+  <entity>
+    <name name="middle_wall"/>
+    <transform pos="50.0 0.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/middle_wall.static_mesh"/>
+  </entity>
+  <entity>
+    <name name="floor"/>
+    <transform pos="0.0 0.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/floor.static_mesh"/>
+  </entity>
+</entities>

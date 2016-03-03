@@ -1,13 +1,17 @@
 #include "mcv_platform.h"
 #include "ai_poss.h"
 #include "components\entity.h"
+#include "components\comp_transform.h"
 
 ai_poss::ai_poss() {
+	AddState("idle", (statehandler)&ai_poss::idle);
 	AddState(ST_POSSESSING, (statehandler)&ai_poss::PossessingState);
 	AddState(ST_POSSESSED, (statehandler)&ai_poss::PossessedState);
 	AddState(ST_UNPOSSESSING, (statehandler)&ai_poss::UnpossessingState);
 	AddState(ST_STUNT, (statehandler)&ai_poss::StuntState);
 	AddState(ST_STUNT_END, (statehandler)&ai_poss::_StuntEndState);
+	possessed = false;
+	stunned = false;
 }
 
 // MENSAJES
@@ -22,6 +26,30 @@ void ai_poss::onSetPossessed(const TMsgAISetPossessed& msg) {
 	}
 }
 
+void ai_poss::onSetStunned(const TMsgAISetStunned& msg) {
+	dbg("ai_poss, recibe Set Stunned = %d\n", msg.stunned);
+	stunned = msg.stunned;
+	if (msg.stunned) {
+		ChangeState(ST_STUNT);
+	}
+	else {
+		ChangeState("idle");
+	}
+}
+
+void ai_poss::ChangeState(std::string newstate)
+{
+	if (!possessed || newstate == ST_STUNT || newstate == ST_UNPOSSESSING || newstate == ST_POSSESSING) {
+		// try to find a state with the suitable name
+		if (statemap.find(newstate) == statemap.end())
+		{
+			// the state we wish to jump to does not exist. we abort
+			exit(-1);
+		}
+		state = newstate;
+	}
+}
+
 //ACCIONES implementables
 void ai_poss::_actionBeforePossession() {
 	//Default: Nothing to do
@@ -33,10 +61,11 @@ const void ai_poss::PossessingState() {
 	CEntity* me;
 	switch (_actionBeingPossessed()) {
 	case DONE:
-		dbg("Poseido!\n");
 		ChangeState(ST_POSSESSED);
+		possessed = true;
+
 		me = getMyEntity();
-		TMsgPossControllerSetEnable msg;
+		TMsgControllerSetEnable msg;
 		msg.enabled = true;
 		me->sendMsg(msg);
 		break;
@@ -51,10 +80,7 @@ const void ai_poss::PossessingState() {
 }
 
 ACTION_RESULT ai_poss::_actionBeingPossessed() {
-	//Ejecutar animacion, etc
-	dbg("Siendo poseido...\n");
-	if (rand() % 10 == 0) return DONE;
-	else return IN_PROGRESS;
+	return DONE;
 }
 
 const void ai_poss::PossessedState() {
@@ -71,6 +97,9 @@ const void ai_poss::UnpossessingState() {
 	switch (_actionBeingUnpossessed()) {
 	case DONE:
 		ChangeState(ST_STUNT);
+		possessed = false;
+		stunned = true;
+		____TIMER_RESET_(timeStunt);
 		//TODO: Enviar mensaje a la misma entidad para apagar PossController (declarado)
 		break;
 
@@ -86,6 +115,7 @@ const void ai_poss::UnpossessingState() {
 const void ai_poss::StuntState() {
 	actionStunt();
 	____TIMER_CHECK_DO_(timeStunt);
+	stunned = false;
 	ChangeState(ST_STUNT_END);
 	____TIMER_CHECK_DONE_(timeStunt);
 }
@@ -93,4 +123,21 @@ const void ai_poss::StuntState() {
 // Things to do when is possessed
 void ai_poss::actionStunt() {
 	// Nothing at the moment
+}
+
+void ai_poss::_StuntEndState() {
+	ChangeState("idle");
+}
+
+void ai_poss::onStaticBomb(const TMsgStaticBomb & msg)
+{
+	CEntity *me = getMyEntity();
+	TCompTransform *me_transform = me->get<TCompTransform>();
+	VEC3 curr_pos = me_transform->getPosition();
+
+	float d = squaredDist(msg.pos,curr_pos);
+
+	if (d < msg.r) {
+		ChangeState(ST_STUNT);
+	}
 }

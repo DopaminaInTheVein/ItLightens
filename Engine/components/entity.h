@@ -8,6 +8,10 @@
 // --------------------------------------------
 class CEntity : public TCompBase {
 	CHandle comps[CHandle::max_types];
+
+	int typeCollision = 0;
+	
+
 public:
 
 	void add(CHandle h) {
@@ -52,6 +56,39 @@ public:
 			range.first++;
 		}
 	}
+
+	template< class TMsg >
+	void sendMsgWithReply(TMsg& msg) {
+		// Get all entries matching the msg_id of the TMsg
+		auto range = msg_subscriptions.equal_range(TMsg::getMsgID());
+		while (range.first != range.second) {
+			const TComponentMsgHandler& msg_handler = range.first->second;
+
+			// If this entity HAS that component, and it's valid
+			CHandle my_comp = comps[msg_handler.comp_type];
+			if (my_comp.isValid()) {
+				// use the method object to call to the method
+				// which was registered to that msg in the subscribe macro
+				msg_handler.method->execute(my_comp, &msg);
+			}
+
+			range.first++;
+		}
+	}
+
+
+
+	//TO REMOVE
+
+	//Collision type
+	enum typeCollision {
+		NONE = 0,
+		SPHERE,
+		BOX
+	};
+
+	void	setCollisionType(int type) { typeCollision = type; }
+	int		getCollisionType() const { return typeCollision; }
 
 	// --------------------------------------------
 	void renderInMenu();

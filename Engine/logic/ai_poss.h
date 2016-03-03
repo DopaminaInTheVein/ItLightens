@@ -20,8 +20,9 @@ enum ACTION_RESULT {
 };
 
 class ai_poss : public aicontroller {
-private:
-
+protected:
+	bool stunned;
+	bool possessed;
 public:
 	ai_poss();
 
@@ -29,11 +30,17 @@ public:
 	const void PossessingState();
 	const void PossessedState();
 	const void UnpossessingState();
-	const void StuntState();
+	virtual const void StuntState();
 	virtual void actionStunt();
 
+	//Preguntar por Stunt o Poseido
+	bool isStunned() { return stunned; }
+	bool isPossessed() { return possessed; }
+	bool isAvailable() { return !stunned && !possessed; }
+
 	//Estado cuando el bot se recupera del stunt
-	virtual void _StuntEndState() = 0;
+	virtual void _StuntEndState();
+	virtual void idle() {}
 
 	//Funciones que utiliza para poder cambiar entre los estados  anteriores
 
@@ -46,7 +53,12 @@ public:
 
 	//Avisar a la entidad que ha sido poseída
 	void onSetPossessed(const TMsgAISetPossessed&);
+	//Avisar a la entidad que ha sido stunneada
+	void onSetStunned(const TMsgAISetStunned&);
 
+	//Override function for changeStae
+	void ChangeState(std::string newstate) override;
+	virtual void onStaticBomb(const TMsgStaticBomb & msg);
 	//TComponent
 	virtual CEntity* getMyEntity() = 0; //Pasar al TCompBase?
 
@@ -56,6 +68,7 @@ public:
 	//virtual ACTION_RESULT _actionBeingUnpossessed();
 	//virtual void _actionStunt();
 	//virtual void _StuntEndState();
+	//virtual CEntity* getMyEntity() = 0;
 };
 
 #endif

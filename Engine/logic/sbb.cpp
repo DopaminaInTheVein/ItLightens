@@ -12,6 +12,7 @@ map<string, CHandle> SBB::sbbHandle;
 map<string, vector<CHandle>> SBB::sbbHandlesVector;
 
 void SBB::init() {
+	postBool("possMode", false);
 }
 
 void SBB::postInt(string name, int value) {

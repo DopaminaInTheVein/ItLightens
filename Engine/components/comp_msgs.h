@@ -7,9 +7,15 @@ struct TMsgEntityCreated {
 	DECLARE_MSG_ID();
 };
 
+enum DMGTYPE {
+	UNKNOWN
+	, ENERGY_DECREASE
+	, LASER
+};
 struct TMsgDamage {
 	VEC3    source;
 	CHandle sender;
+	DMGTYPE dmgType;
 	float   points;
 	DECLARE_MSG_ID();
 };
@@ -36,8 +42,42 @@ struct TMsgBeaconToRemove {
 };
 
 struct TMsgBeaconEmpty {
-	VEC3 pos_beacon;
-	std::string name_beacon;
+	VEC3 pos;
+	std::string name;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgWBEmpty {
+	VEC3 pos;
+	std::string name;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgBeaconBusy {
+	VEC3 pos;
+	bool* reply;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgBeaconTakenByPlayer {
+	std::string name;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgWBTakenByPlayer {
+	std::string name;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgStaticBomb {
+	VEC3 pos;
+	float r;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgMagneticBomb {
+	VEC3 pos;
+	float r;
 	DECLARE_MSG_ID();
 };
 
@@ -47,13 +87,24 @@ struct TMsgNoise {
 	DECLARE_MSG_ID();
 };
 
-struct TMsgPossControllerSetEnable {
+struct TMsgControllerSetEnable {
 	bool enabled;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgPossessionLeave {
+	VEC3 npcPos;
+	VEC3 npcFront;
 	DECLARE_MSG_ID();
 };
 
 struct TMsgAISetPossessed {
 	bool possessed;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgAISetStunned {
+	bool stunned;
 	DECLARE_MSG_ID();
 };
 

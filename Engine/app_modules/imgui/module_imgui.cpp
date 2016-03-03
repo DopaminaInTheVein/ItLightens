@@ -2,20 +2,21 @@
 #include "module_imgui.h"
 #include "windows/app.h"
 #include "resources/resources_manager.h"
+#include "app_modules/entities.h"
+#include "handle/handle_manager.h"
+#include "components/entity_tags.h"
 // ImGui LIB headers
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui.h"
 #pragma comment(lib, "imgui.lib" )
 
 #include "handle/object_manager.h"
-#include "components/entity.h"
 #include "debug/debug.h"
 
 #include <Commdlg.h>
 
 bool CImGuiModule::start() {
 	CApp& app = CApp::get();
-	//CDebug::initDebugger(Debug);
 	Debug = new CDebug();
 	return ImGui_ImplDX11_Init(app.getHWnd(), Render.device, Render.ctx);
 }
@@ -30,7 +31,8 @@ void CImGuiModule::update(float dt) {
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_MenuBar;
 	bool menu = true;
-	ImGui::Begin("Debug UI", &menu, ImVec2(512, 512), -1.0f, window_flags);
+
+	ImGui::Begin("Debug UI", &menu, ImVec2(800, 512), -1.0f, window_flags);
 	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 
 	//Console log
@@ -97,6 +99,7 @@ void CImGuiModule::update(float dt) {
 	//TestGameLog();
 	//testLines();
 
+	ui.update();			//update ui
 	Debug->update();		//update log
 }
 

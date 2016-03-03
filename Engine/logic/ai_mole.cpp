@@ -8,7 +8,7 @@ void ai_mole::Init()
 
 	// insert all states in the map
 	// insertar punters a funcions de una classe hereva del aiccontroller.
-	AddState("idle", (statehandler)&ai_mole::IdleState);
+//	AddState("idle", (statehandler)&ai_mole::IdleState);
 	AddState("seekwpt", (statehandler)&ai_mole::SeekWptState);
 	AddState("orientTowpt", (statehandler)&ai_mole::OrientToWptState);
 	AddState("nextwpt", (statehandler)&ai_mole::NextWptState);
@@ -196,6 +196,23 @@ void ai_mole::UnGrabState() {
 
 	string key = nameBox->name;
 
+	SBB::postBool(key, false);
+	ChangeState("idle");
+}
+
+void ai_mole::_actionBeforePossession() {
+	vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
+	CEntity * en = newPointerVec[towptbox];
+	TCompName * nameBox = en->get<TCompName>();
+	string key = nameBox->name;
+	SBB::postBool(key, false);
+}
+
+void ai_mole::_StuntEndState() {
+	vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
+	CEntity * en = newPointerVec[towptbox];
+	TCompName * nameBox = en->get<TCompName>();
+	string key = nameBox->name;
 	SBB::postBool(key, false);
 	ChangeState("idle");
 }

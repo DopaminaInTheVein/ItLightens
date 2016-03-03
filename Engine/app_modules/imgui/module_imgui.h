@@ -2,8 +2,12 @@
 #define INC_MODULE_IMGUI_H_
 
 #include "app_modules/app_module.h"
+#include "ui\ui_interface.h"
 
 class CImGuiModule : public IAppModule {
+
+
+
 public:
 	bool start() override;
 	void stop() override;

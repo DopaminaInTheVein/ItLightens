@@ -16,10 +16,8 @@ fn registerVertex ht all_vtxs new_vtx = (
 	return idx
 )
 
-fn saveBinaryMesh obj vtxs idxs = (
-	
-	local data_path = "c:\\code\\engine\\bin\\data\\meshes\\"
-	local full_path = data_path + obj.name + ".mesh"
+-- 
+fn saveBinaryMesh obj vtxs idxs full_path = (
 	
 	-- Open file
 	local fs = fopen full_path "wb"
@@ -77,7 +75,11 @@ fn saveBinaryMesh obj vtxs idxs = (
 	FClose fs
 )
 
-fn export_mesh given_obj = (
+fn export_mesh given_obj outfilename = (
+
+	if outfilename == undefined then (
+		outfilename = "c:/code/engine/bin/data/meshes/" + obj.name + ".mesh"
+	)
 	
 	-- Is the object valid?...
 	local obj = given_obj
@@ -137,8 +139,8 @@ fn export_mesh given_obj = (
 	---------------------------------------------
 	-- Save everything
 	---------------------------------------------
-	saveBinaryMesh given_obj all_vtxs all_idxs
+	saveBinaryMesh given_obj all_vtxs all_idxs outfilename
 	
 )
 
-export_mesh $
+--export_mesh $

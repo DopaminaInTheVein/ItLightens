@@ -1,9 +1,9 @@
-#include "mcv_platform.h"<
+#include "mcv_platform.h"
 #include "ai_speedy.h"
 void ai_speedy::Init()
 {
 	// insert all states in the map
-	AddState("idle", (statehandler)&ai_speedy::IdleState);
+//	AddState("idle", (statehandler)&ai_speedy::IdleState);
 	AddState("nextwpt", (statehandler)&ai_speedy::NextWptState);
 	AddState("seekwpt", (statehandler)&ai_speedy::SeekWptState);
 	AddState("dashtoplayer", (statehandler)&ai_speedy::DashToPlayerState);

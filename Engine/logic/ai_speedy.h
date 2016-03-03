@@ -2,6 +2,7 @@
 #define _AI_SPEEDY_
 
 #include "mcv_platform.h"
+#include "ai_poss.h"
 #include "aicontroller.h"
 #include "sbb.h"
 #include "components/comp_base.h"
@@ -19,8 +20,7 @@
 #include <chrono>
 #include <windows.h>
 
-class ai_speedy : public aicontroller, public TCompBase {
-
+class ai_speedy : public ai_poss, public TCompBase {
 	CObjectManager<ai_speedy> * om = nullptr;
 	CHandle myHandle;
 	CHandle myParent;
@@ -47,6 +47,10 @@ class ai_speedy : public aicontroller, public TCompBase {
 	const int dash_to_new_point_chance = 25;
 	const int dash_to_player_chance = 25;
 
+	CEntity* getMyEntity() {
+		CHandle me = CHandle(this);
+		return me.getOwner();
+	}
 public:
 	void IdleState();
 	void NextWptState();
@@ -56,6 +60,8 @@ public:
 	void DashToNewPointState();
 
 	void Init();
+	void init() { IdleState(); }
+	void idle() { IdleState(); }
 	void update(float elapsed);
 	bool load(MKeyValue& atts);
 

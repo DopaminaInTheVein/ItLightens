@@ -20,7 +20,8 @@ void beacon_controller::Init() {
 	AddState("inactive", (statehandler)&beacon_controller::Inactive);
 	AddState("activeNothing", (statehandler)&beacon_controller::ActiveNothing);
 	AddState("activeSonar", (statehandler)&beacon_controller::ActiveSonar);
-	AddState("waitToRemove", (statehandler)&beacon_controller::WaitToRemove);
+	AddState("waitToRemove", (statehandler)&beacon_controller::WaitToRemoveSonar);
+	AddState("waitToremoveNothing", (statehandler)&beacon_controller::WaitToRemoveNothing);
 	AddState("waitInactive", (statehandler)&beacon_controller::WaitInactive);
 
 	SetHandleMeInit();				//need to be initialized after all handles, ¿awake/init?
@@ -34,12 +35,12 @@ void beacon_controller::Init() {
 
 	SBB::postInt(full_name, INACTIVE);		//init my state on the board
 
-	//Init mesages data
+											//Init mesages data
 	msg_remove.pos_beacon = VEC3(0, 0, 0);	//has to be updated on frame if can be moved
 	msg_remove.name_beacon = full_name;
 
-	msg_empty.pos_beacon = VEC3(0, 0, 0);	//has to be updated on frame if can be moved
-	msg_empty.name_beacon = full_name;
+	msg_empty.pos = VEC3(0, 0, 0);	//has to be updated on frame if can be moved
+	msg_empty.name = full_name;
 
 	ChangeState("idle");
 }
@@ -112,6 +113,7 @@ void beacon_controller::ActiveNothing()
 	float yaw, pitch;
 	me_transform->getAngles(&yaw, &pitch);
 	me_transform->setAngles(yaw + rot_speed_disable*getDeltaTime(), pitch);
+	Debug->DrawLine(me_transform->getPosition() + VEC3(0, 1, 0), me_transform->getFront(), range, BLUE);
 
 	t_waiting += getDeltaTime();
 	if (t_waiting > t_max_disable) {		//go to new action
@@ -120,11 +122,11 @@ void beacon_controller::ActiveNothing()
 		VEC3 curr_pos = me_transform->getPosition();
 		SBB::postInt(full_name, TO_REMOVE);
 		SendMessageRemove();
-		ChangeState("waitToRemove");
+		ChangeState("waitToremoveNothing");
 	}
 }
 
-void beacon_controller::WaitToRemove()
+void beacon_controller::WaitToRemoveSonar()
 {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
@@ -139,6 +141,43 @@ void beacon_controller::WaitToRemove()
 	//nothing to do, check sbb. Should go system of events
 	if (SBB::readInt(full_name) != TO_REMOVE && SBB::readInt(full_name) != TO_REMOVE_TAKEN) {
 		ChangeState("waitInactive");
+	}
+}
+
+void beacon_controller::WaitToRemoveNothing()
+{
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 curr_pos = me_transform->getPosition();
+
+	//TODO: difference with active_disable, animation from active_sonar only right now
+	float yaw, pitch;
+	me_transform->getAngles(&yaw, &pitch);
+	me_transform->setAngles(yaw + rot_speed_disable*getDeltaTime(), pitch);
+	Debug->DrawLine(me_transform->getPosition() + VEC3(0, 1, 0), me_transform->getFront(), range, BLUE);
+
+	//nothing to do, check sbb. Should go system of events
+	if (SBB::readInt(full_name) != TO_REMOVE && SBB::readInt(full_name) != TO_REMOVE_TAKEN) {
+		ChangeState("waitInactive");
+	}
+}
+
+void beacon_controller::onPlayerAction(TMsgBeaconBusy & msg)
+{
+	//dbg("%s :\n", full_name.c_str());
+	if (SBB::readInt(full_name) != SONAR) {
+		SetMyEntity();
+		TCompTransform *me_transform = myEntity->get<TCompTransform>();
+		VEC3 curr_pos = me_transform->getPosition();
+
+		float d = simpleDistXZ(curr_pos, msg.pos);
+		//dbg("%s - %f\n",full_name.c_str(),d);
+		if (d <= 5) {
+			*msg.reply = true;
+			SBB::postInt(full_name, BUSY);
+			ChangeState("activeNothing");
+			SendMessageTaken();
+		}
 	}
 }
 
@@ -163,7 +202,7 @@ void beacon_controller::SendMessageEmpty() {
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
-	msg_empty.pos_beacon = curr_pos;
+	msg_empty.pos = curr_pos;
 
 	VHandles hs = tags_manager.getHandlesByTag(getID("AI_cientifico"));
 	for (CEntity *e : hs)
@@ -180,4 +219,12 @@ void beacon_controller::SendMessageRemove() {
 	VHandles hs = tags_manager.getHandlesByTag(getID("AI_cientifico"));
 	for (CEntity *e : hs)
 		e->sendMsg(msg_remove);
+}
+
+void beacon_controller::SendMessageTaken() {
+	msg_taken.name = full_name;
+
+	VHandles hs = tags_manager.getHandlesByTag(getID("AI_cientifico"));
+	for (CEntity *e : hs)
+		e->sendMsg(msg_taken);
 }

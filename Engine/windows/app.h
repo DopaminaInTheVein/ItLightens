@@ -16,6 +16,8 @@ public:
 	// Enable default ctor
 	CApp();
 
+	int getXRes();
+	int getYRes();
 	bool createWindow(HINSTANCE new_hInstance, int nCmdShow);
 	void mainLoop();
 	HINSTANCE getHInstance() { return hInstance; }

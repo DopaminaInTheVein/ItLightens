@@ -3,24 +3,59 @@
 
 #include "comp_base.h"
 #include "comp_msgs.h"
+#include "utils/XMLParser.h"
+
+#define DMG_SCALE_ACTION_INI	0.1f
+#define DMG_SCALE_ENEMY_INI		1.0f
 
 // ------------------------------------
 struct TCompLife : public TCompBase {
-	float life;
-	TCompLife() : life(0.f) {
-		dbg("ctor of TCompLife\n");
+	float currentlife;
+	float maxlife;
+
+	float DMG_SCALE_ACTION;
+	float DMG_SCALE_ENEMY;
+
+	float energyDamageScale = 0.1f;
+	TCompLife() : maxlife(100.f) {
+		dbg("constructor of TCompLife\n");
+		DMG_SCALE_ACTION = DMG_SCALE_ACTION_INI;
+		DMG_SCALE_ENEMY = DMG_SCALE_ENEMY_INI;
 	}
 	~TCompLife() {
-		dbg("dtor of TCompLife\n");
+		dbg("destructor of TCompLife\n");
 	}
+
+	bool load(MKeyValue& atts) {
+		currentlife = maxlife = atts.getFloat("points", 100.0f);
+		return true;
+	}
+
 	void onCreate(const TMsgEntityCreated&) {
 		dbg("TCompLife on TMsgEntityCreated\n");
 	}
 	void onDamage(const TMsgDamage& msg) {
-		life -= msg.points;
-		if (life < 0) {
-			dbg("Me he muerto\n");
+		float dmgTotal;
+		switch (msg.dmgType) {
+		case ENERGY_DECREASE:
+			dmgTotal = msg.points * DMG_SCALE_ACTION;
+			break;
+		case LASER:
+			dmgTotal = msg.points * DMG_SCALE_ENEMY;
+			break;
+		default:
+			dmgTotal = 0;
+			break;
 		}
+		currentlife -= dmgTotal;
+		if (currentlife > maxlife) {
+			currentlife = maxlife;
+		}
+	}
+
+	void renderInMenu() {
+		ImGui::SliderFloat("Action Damage Scale", &DMG_SCALE_ACTION, 0, 1);
+		ImGui::SliderFloat("Enemy Damage Scale", &DMG_SCALE_ENEMY, 0, 1);
 	}
 };
 
