@@ -55,6 +55,10 @@ float squaredDistXZ(const VEC3& init, const VEC3& dest) {
 	return squared(abs(init.x - dest.x)) + squared(abs(init.z - dest.z));
 }
 
+float squaredDistY(const VEC3& init, const VEC3& dest) {
+	return squared(init.y - dest.y);
+}
+
 float simpleDist(const VEC3& init, const VEC3& dest) {
 	return abs(init.x - dest.x) + abs(init.y - dest.y) + abs(init.z - dest.z);
 }
@@ -74,7 +78,6 @@ void getRotationMatrix(double roll, double pitch, double yaw, MAT44 &R)
 	Rx(3, 3) = 0;
 	Ry(3, 3) = 0;
 	Rz(3, 3) = 0;
-
 
 	pitch = -pitch;
 	yaw = -yaw;

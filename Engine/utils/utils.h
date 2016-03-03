@@ -26,6 +26,7 @@ float realDistXZ(const VEC3& init, const VEC3& dest);
 
 float squaredDist(const VEC3& init, const VEC3& dest);
 float squaredDistXZ(const VEC3& init, const VEC3& dest);
+float squaredDistY(const VEC3& init, const VEC3& dest);
 
 float simpleDistXZ(const VEC3& init, const VEC3& dest);
 float simpleDist(const VEC3& init, const VEC3& dest);
