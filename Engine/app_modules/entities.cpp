@@ -55,6 +55,8 @@ TMsgID generateUniqueMsgID() {
 }
 
 bool CEntitiesModule::start() {
+	SBB::init();
+
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(8);

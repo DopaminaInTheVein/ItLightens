@@ -163,15 +163,16 @@ void ai_guard::ShootState() {
 	//Fuera de tiro
 	if (dist > DIST_SQ_SHOT_AREA_LEAVE) {
 		ChangeState(ST_CHASE);
-	}
-	else {
+	} else {
 		turnTo(posPlayer);
-		if (squaredDistY(myPos, posPlayer) > dist) {
+		if (squaredDistY(myPos, posPlayer)*2 > dist) { //Angulo de 30 grados
 			//Si pitch muy alto me alejo
-			goBackward();
+			goForward(-SPEED_WALK * getDeltaTime());
 		}
 		if (!playerVisible()) {
 			ChangeState(ST_SHOOTING_WALL);
+		} else {
+			shootToPlayer();
 		}
 	}
 
