@@ -119,7 +119,7 @@ bool CEntitiesModule::start() {
 
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
-	
+
 	//Damage
 	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(player_controller, TMsgDamage, onDamage);

@@ -82,6 +82,7 @@ public:
 	void Idle();
 	void Jump();
 	void Die();
+	void Win();
 
 	void ApplyGravity();
 
