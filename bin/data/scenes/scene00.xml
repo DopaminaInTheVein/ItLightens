@@ -1,10 +1,11 @@
 <!-- SCENE TESTING -->
 
 <!--
-3 ZONES:
-  1 - MOLE + BOX TO PASS NEXT POINT
-  2 - SPEEDY (NOTHING FOR NOW)
-  3 - MASS SCIENTIST + GUARD
+4 ZONES:
+  1 - BREAKEBLE WALL                  -> center at x = -25,   z = 0
+  2 - MOLE + BOX TO PASS NEXT POINT   -> center at x =   0,   z = 0
+  3 - SPEEDY (NOTHING FOR NOW)        -> center at x =  30,   z = 0
+  4 - MASS SCIENTIST + GUARD          -> center at x =  60,   z = 0
 -->
 
 <entities>
