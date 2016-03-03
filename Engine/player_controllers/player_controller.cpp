@@ -106,7 +106,6 @@ void player_controller::Jumping()
 	UpdateDirection();
 	UpdateMovDirection();
 
-
 	if (onGround) {
 		jspeed = 0.0f;
 		ChangeState("idle");
@@ -129,7 +128,6 @@ void player_controller::Falling()
 	UpdateDirection();
 	UpdateMovDirection();
 
-	
 	if (Input.IsSpacePressedDown()) {
 		jspeed = jimpulse;
 		energyDecreasal(5.0f);

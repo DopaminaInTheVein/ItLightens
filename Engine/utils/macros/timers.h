@@ -3,6 +3,7 @@
 
 #define ____TIMER Timers. Declara par de floats que representan un timer, comprobar si llegan a cero, ...
 #define ____TIMER_DECLARE_(name, value)			float name = value, _##name = value
+#define ____TIMER_DECLARE_(name)				float name, _##name;
 #define ____TIMER_REDEFINE_(name, value)		name = value; _##name = value;
 #define ____TIMER_RESET_(name)					name = _##name
 

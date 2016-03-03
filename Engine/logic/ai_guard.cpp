@@ -43,12 +43,14 @@ void ai_guard::Init()
 	AddState(ST_SHOOT, (statehandler)&ai_guard::ShootState);
 	AddState(ST_SOUND_DETECTED, (statehandler)&ai_guard::SoundDetectedState);
 	AddState(ST_LOOK_ARROUND, (statehandler)&ai_guard::LookArroundState);
+	AddState(ST_SHOOTING_WALL, (statehandler)&ai_guard::ShootingWallState);
 
 	// reset the state
 	ChangeState(ST_NEXT_ACTION);
 	curkpt = -1; //Para que el primero en acceder sea el índice 0
 
 	//Other info
+	____TIMER_REDEFINE_(timerShootingWall, 8);
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
 }
@@ -153,39 +155,36 @@ void ai_guard::ChaseState()
 * ShootState
 **************/
 void ai_guard::ShootState() {
-	if (!playerVisible()) {
-		ChangeState(ST_NEXT_ACTION);
-		return;
-	}
-
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
 	float dist = squaredDistXZ(posPlayer, getTransform()->getPosition());
 
-	//RayCast
-	float distRay;
-	CHandle collider = rayCastToFront(COL_TAG_PLAYER | COL_TAG_OBJECT, distRay);
-	if (collider == thePlayer) {
-		CEntity* ePlayer = thePlayer;
-		TMsgDamage dmg;
-		dmg.source = getTransform()->getPosition();
-		dmg.sender = myParent;
-		dmg.points = DAMAGE_LASER * getDeltaTime();
-		dmg.dmgType = DMGTYPE::LASER;
-		ePlayer->sendMsg(dmg);
-	}
+	shootToPlayer();
 
-	//Render Debug
-	for (int i = 0; i < 8; i++) {
-		float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), getTransform()->getFront(), distRay, RED);
-	}
-
-	//Fuera de tiro?
+	//Fuera de tiro
 	if (dist > DIST_SQ_SHOT_AREA_LEAVE) ChangeState(ST_CHASE);
-	else turnTo(posPlayer);
+	else {
+		turnTo(posPlayer);
+		if (!playerVisible()) {
+			ChangeState(ST_SHOOTING_WALL);
+		}
+	}
+}
+
+/**************
+* Shooting Wall
+**************/
+void ai_guard::ShootingWallState() {
+	if (playerVisible()) {
+		ChangeState(ST_SHOOT);
+	}
+	else {
+		shootToPlayer();
+		____TIMER_CHECK_DO_(timerShootingWall);
+		ChangeState(ST_NEXT_ACTION);
+		____TIMER_CHECK_DONE_(timerShootingWall);
+	}
 }
 
 /**************
@@ -238,7 +237,7 @@ void ai_guard::LookArroundState() {
 **************/
 void ai_guard::noise(const TMsgNoise& msg) {
 	if (!playerVisible()) {
-		resetTimes();
+		resetTimers();
 		noisePoint = msg.source;
 		ChangeState(ST_SOUND_DETECTED);
 	}
@@ -303,22 +302,24 @@ bool ai_guard::playerVisible() {
 	VEC3 myPos = getTransform()->getPosition();
 	if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) {
 		if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) {
-			return true;
+			// Está en el cono de vision, visible?
+			ray_cast_query rcQuery;
+			float distRay;
+			CHandle collider = rayCastToPlayer(COL_TAG_OBJECT, distRay);
+			if (!collider.isValid()) { //No bloquea vision
+				return true;
+			}
 		}
-	}
-	ray_cast_query rcQuery;
-	float distRay;
-	CHandle collider = rayCastToFront(COL_TAG_OBJECT, distRay);
-	if (!collider.isValid()) { //No bloquea vision
-		return true;
 	}
 	return false;
 }
 
-CHandle ai_guard::rayCastToFront(char types, float& distRay) {
+CHandle ai_guard::rayCastToPlayer(char types, float& distRay) {
 	ray_cast_query rcQuery;
-	rcQuery.position = getTransform()->getPosition();
-	rcQuery.direction = getTransform()->getFront();
+	VEC3 myPos = getTransform()->getPosition();
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	rcQuery.position = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
+	rcQuery.direction = tPlayer->getPosition() - myPos;
 	rcQuery.maxDistance = DIST_RAYSHOT;
 	rcQuery.types = types;
 	ray_cast_result res = Physics::calcRayCast(rcQuery);
@@ -326,10 +327,39 @@ CHandle ai_guard::rayCastToFront(char types, float& distRay) {
 	return res.firstCollider;
 }
 
-// -- Reset Times-- //
-void ai_guard::resetTimes() {
+void ai_guard::shootToPlayer() {
+	//Values
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	VEC3 posPlayer = tPlayer->getPosition();
+	VEC3 myPos = getTransform()->getPosition();
+	float distance = squaredDistXZ(myPos, posPlayer);
+
+	//RayCast
+	float distRay;
+	CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_OBJECT, distRay);
+	if (collider == thePlayer) {
+		CEntity* ePlayer = thePlayer;
+		TMsgDamage dmg;
+		dmg.source = getTransform()->getPosition();
+		dmg.sender = myParent;
+		dmg.points = DAMAGE_LASER * getDeltaTime();
+		dmg.dmgType = LASER;
+		ePlayer->sendMsg(dmg);
+	}
+
+	//Render Debug
+	for (int i = 0; i < 8; i++) {
+		float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), posPlayer - myPos, distRay, RED);
+	}
+}
+
+// -- Reset Timers-- //
+void ai_guard::resetTimers() {
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
+	____TIMER_RESET_(timerShootingWall);
 }
 
 /**************
@@ -369,4 +399,5 @@ void ai_guard::renderInMenu() {
 	ImGui::SliderFloat("Lost Player Distance", &DIST_SQ_PLAYER_LOST, 0, 500);
 	ImGui::SliderFloat("Laser Shot Reach", &DIST_RAYSHOT, DIST_SQ_SHOT_AREA_ENTER, DIST_SQ_SHOT_AREA_LEAVE * 2);
 	ImGui::SliderFloat("Laser Damage", &DAMAGE_LASER, 0, 10);
+	ImGui::SliderFloat("Time Shooting Wall before leave", &_timerShootingWall, 0, 15);
 }

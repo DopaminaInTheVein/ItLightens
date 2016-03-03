@@ -115,6 +115,7 @@ void CDebug::DrawLine(VEC3 org, VEC3 end, VEC3 color)
 
 void CDebug::DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color)
 {
+	direction.Normalize();
 	VEC3 pos_end = pos;
 	pos_end += direction*dist;
 	DrawLine(pos, pos_end, color);

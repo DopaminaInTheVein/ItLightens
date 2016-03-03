@@ -29,6 +29,9 @@
 #define ST_SHOOT			"shoot"
 #define ST_SOUND_DETECTED	"sound_detected"
 #define ST_LOOK_ARROUND		"look_arround"
+#define ST_SHOOTING_WALL	"shootingWall"
+
+#define PLAYER_CENTER_Y		0.5f
 
 class ai_guard : public TCompBase, public aicontroller
 {
@@ -43,6 +46,7 @@ class ai_guard : public TCompBase, public aicontroller
 	float CONE_VISION = CONE_VISION_INI;
 	float SPEED_ROT = SPEED_ROT_INI;
 	float DAMAGE_LASER = DAMAGE_LASER_INI;
+	____TIMER_DECLARE_(timerShootingWall);
 
 	//Handles & More
 	CHandle myHandle;
@@ -82,10 +86,11 @@ class ai_guard : public TCompBase, public aicontroller
 	//Times and similars
 	float timeWaiting;
 	float deltaYawLookingArround;
-	void resetTimes();
+	void resetTimers();
 
 	//Raycast
-	CHandle rayCastToFront(char types, float& distRay);
+	CHandle rayCastToPlayer(char types, float& distRay);
+	void shootToPlayer();
 
 public:
 	void NextActionState();
@@ -96,6 +101,7 @@ public:
 	void ShootState();
 	void SoundDetectedState();
 	void LookArroundState();
+	void ShootingWallState();
 
 	void Init() override;
 	void init() { Init(); }
