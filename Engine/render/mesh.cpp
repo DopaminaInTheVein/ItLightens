@@ -45,20 +45,9 @@ bool CMesh::create(
 		fatal("Unknown topology %d\n", new_topology);
 	}
 
-	// Translate the vtx decr from our system to dx11
-	switch (new_enum_vtx_decl) {
-	case VTX_DECL_POSITION_UV:
-		assert(new_num_bytes_per_vertex == 4 * (3 + 2));
-		vtx_decl = &vdecl_positions_uv; break;
-	case VTX_DECL_POSITION_COLOR:
-		assert(new_num_bytes_per_vertex == 4 * (3 + 4));
-		vtx_decl = &vdecl_positions_color; break;
-	case VTX_DECL_POSITION_NORMAL_UV:
-		assert(new_num_bytes_per_vertex == 4 * (3 + 3 + 2));
-		vtx_decl = &vdecl_positions_normal_uv; break;
-	default:
-		fatal("Unknown vertex decl %d\n", new_enum_vtx_decl);
-	}
+  // Translate the vtx decr from our system to dx11
+  vtx_decl = vdecl_manager.getById(new_enum_vtx_decl);
+  assert(vtx_decl->bytes_per_vertex == new_num_bytes_per_vertex);
 
 	num_vertexs = new_num_vertexs;
 	num_bytes_per_vertex = new_num_bytes_per_vertex;

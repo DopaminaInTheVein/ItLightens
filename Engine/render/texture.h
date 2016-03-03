@@ -26,7 +26,7 @@ public:
   bool loadFullPath(const char * filename);
 
   void activate(int slot) const;
-
+  static void deactivate(int slot);
   bool reload() override;
 
 };

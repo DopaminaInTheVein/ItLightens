@@ -6,6 +6,8 @@
 #include "handle/msgs.h"
 #include "components/comp_msgs.h"
 #include "components/entity_tags.h"
+#include "render/technique.h"
+#include "resources/resources_manager.h"
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
 #include "input/input.h"
@@ -61,7 +63,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(8);
 	getHandleManager<player_controller_cientifico>()->init(8);
-
+	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
@@ -230,6 +232,8 @@ void CEntitiesModule::render() {
 	// for each manager
 	// if manager has debug render active
 	// manager->renderAll()
+	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+	tech->activate();
 	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 
