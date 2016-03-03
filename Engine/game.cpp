@@ -46,8 +46,8 @@ bool CApp::start() {
 
 	//light setup init
 	shader_ctes_object.lightvec = float4(1.0f, 1.0f, 1.0f, 0.0f);
-	shader_ctes_object.lightcol = float4(0.5f, 0.5f, 0.5f, 1.0f);
-	shader_ctes_object.ambientcol = float4(0.2f, 0.2f, 0.2f, 1.0f);
+	shader_ctes_object.lightcol = float4(0.8f, 0.8f, 0.8f, 1.0f);
+	shader_ctes_object.ambientcol = float4(0.1f, 0.1f, 0.1f, 1.0f);
 
 	// input initialization
 	CApp& app = CApp::get();

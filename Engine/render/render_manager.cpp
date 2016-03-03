@@ -79,6 +79,7 @@ void CRenderManager::renderAll() {
     TCompTransform* c_tmx = it->transform;
     assert(c_tmx);
     shader_ctes_object.World = c_tmx->asMatrix();
+	shader_ctes_object.Rotation = MAT44::CreateFromQuaternion(c_tmx->getRotation());
     shader_ctes_object.uploadToGPU();
     shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
     it->mesh->render();    // it->mesh->renderSubMesh( it->submesh );
@@ -103,6 +104,7 @@ void CRenderManager::renderAll() {
       
       // For static objects, we could skip this step 
       // if each static object had it's own shader_ctes_object
+	  shader_ctes_object.Rotation = MAT44::CreateFromQuaternion(c_tmx->getRotation());
       shader_ctes_object.World = c_tmx->asMatrix();
       shader_ctes_object.uploadToGPU();
 
