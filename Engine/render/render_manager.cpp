@@ -56,57 +56,66 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
 }
 
 void CRenderManager::renderAll() {
-	if (!in_order) {
-		// sort the keys based on....
-		std::sort(all_keys.begin(), all_keys.end(), &sortByTechMatMesh);
-		in_order = true;
-	}
 
-	if (all_keys.empty())
-		return;
+  if (!in_order) {
+    // sort the keys based on....
+    std::sort(all_keys.begin(), all_keys.end(), &sortByTechMatMesh);
+    in_order = true;
+  }
 
-	//
-	auto it = all_keys.begin();
-	auto prev_it = it;
+  if (all_keys.empty())
+    return;
 
-	// Activate the first key to avoid checking for validations
-	// on each iteration
-	{
-		it->material->tech->activate();
-		it->material->activate();
-		it->mesh->activate();
-		TCompTransform* c_tmx = it->transform;
-		assert(c_tmx);
-		shader_ctes_object.World = c_tmx->asMatrix();
-		shader_ctes_object.uploadToGPU();
-		shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
-		it->mesh->render();    // it->mesh->renderSubMesh( it->submesh );
-		++it;
-	}
+  // 
+  auto it = all_keys.begin();
+  auto prev_it = it;
 
-	// Pasearse por todas las keys
-	while (it != all_keys.end()) {
-		if (it->material != prev_it->material) {
-			if (it->material->tech != prev_it->material->tech) {
-				it->material->tech->activate();
-			}
-			it->material->activate();
-		}
-		if (it->mesh != prev_it->mesh) {
-			it->mesh->activate();
-		}
+  // Activate the first key to avoid checking for validations
+  // on each iteration
+  {
+    it->material->tech->activate();
+    it->material->activateTextures();
+    it->mesh->activate();
+    TCompTransform* c_tmx = it->transform;
+    assert(c_tmx);
+    shader_ctes_object.World = c_tmx->asMatrix();
+    shader_ctes_object.uploadToGPU();
+    shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
+    it->mesh->render();    // it->mesh->renderSubMesh( it->submesh );
+    ++it;
+  }
 
-		if (it->owner != prev_it->owner) {
-			// subir la world de it
-			TCompTransform* c_tmx = it->transform;
-			assert(c_tmx);
-			shader_ctes_object.World = c_tmx->asMatrix();
-			shader_ctes_object.uploadToGPU();
-			shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
-		}
+  // Pasearse por todas las keys
+  while (it != all_keys.end()) {
 
-		it->mesh->render();    // it->mesh->renderSubMesh( it->submesh );
-		prev_it = it;
-		++it;
-	}
+    if (it->material != prev_it->material ) {
+      if (it->material->tech != prev_it->material->tech)
+        it->material->tech->activate();
+      it->material->activateTextures();
+    }
+    if (it->mesh != prev_it->mesh)
+      it->mesh->activate();
+
+    if (it->owner != prev_it->owner) {
+      // subir la world de it
+      TCompTransform* c_tmx = it->transform;
+      assert(c_tmx);
+      
+      // For static objects, we could skip this step 
+      // if each static object had it's own shader_ctes_object
+      shader_ctes_object.World = c_tmx->asMatrix();
+      shader_ctes_object.uploadToGPU();
+
+      // We could skip this step as currently, we only
+      // have one shader_ctes_object
+      shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
+    }
+
+    it->mesh->render( );    // it->mesh->renderSubMesh( it->submesh );
+    prev_it = it;
+    ++it;
+  }
+
+
+  CMaterial::deactivateTextures();
 }

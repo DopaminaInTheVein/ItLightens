@@ -16,3 +16,4 @@ struct TCompRenderStaticMesh : public TCompBase {
 };
 
 #endif
+

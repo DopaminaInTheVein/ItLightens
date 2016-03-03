@@ -58,7 +58,13 @@ void CTexture::renderUIDebug() {
 
 // ----------------------------------------------
 void CTexture::activate(int slot) const {
-	Render.ctx->PSSetShaderResources(slot, 1, &res_view);
+  Render.ctx->PSSetShaderResources(slot, 1, &res_view);
+}
+
+// ----------------------------------------------
+void CTexture::deactivate(int slot) {
+  ID3D11ShaderResourceView* rs = nullptr;
+  Render.ctx->PSSetShaderResources(slot, 1, &rs);
 }
 
 // ----------------------------------------------
