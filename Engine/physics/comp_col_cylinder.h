@@ -11,7 +11,7 @@ struct TCompColCillinder : public TCompBase {
 	float radius;
 	float height;
 	VEC3  position;
-	char type;
+	int type;
 
 	bool load(MKeyValue& atts);
 

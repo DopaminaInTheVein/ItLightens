@@ -6,9 +6,14 @@
 #include "geometry/geometry.h"
 #include "components/entity.h"
 
-#define COL_TAG_PLAYER 1
-#define COL_TAG_ENEMY 1 << 1
-#define COL_TAG_OBJECT 1 << 2
+#define COL_TAG_PLAYER		1			//1
+#define COL_TAG_ENEMY		1 << 1		//2
+#define COL_TAG_OBJECT		1 << 2		//4
+#define COL_TAG_WALL		1 << 3		//8
+#define COL_TAG_CRISTAL		1 << 4		//16
+
+#define COL_TAG_SOLID			COL_TAG_OBJECT | COL_TAG_WALL
+#define COL_TAG_SOLID_OPAQUE	COL_TAG_SOLID  & !COL_TAG_CRISTAL
 
 struct ray_cast_result {
 	CHandle firstCollider;
@@ -20,7 +25,7 @@ struct ray_cast_query {
 	float maxDistance;
 	VEC3 position;
 	VEC3 direction;
-	char types;
+	int types;
 	ray_cast_query(VEC3 pos, VEC3 dir, float dist, char t) :
 		maxDistance(dist)
 		, position(pos)

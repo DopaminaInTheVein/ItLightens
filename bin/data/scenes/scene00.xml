@@ -24,7 +24,7 @@
     <transform pos="28 0 3" />
     <name name="pj" />
     <player />
-    <render_static_mesh name="static_meshes/player_idle.static_mesh" /> 
+    <render_static_mesh name="static_meshes/player_idle.static_mesh" />
     <colCylinder pos ="0 0 0" radius ="0.3" height ="1" type ="player" />
     <sphere_collider radius="0.3" tag ="player" />
   </entity>
@@ -179,7 +179,7 @@
     <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="64 3 0" rotation="1 2 3 3" scale="1 1 1" />
-    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" types = "0" />
   </entity>
   <!--platforms, helpers to pass to next point-->
   <!--ZONE 2-->
@@ -193,7 +193,7 @@
     <tag name = "platform" />
     <name name="box" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
-    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" types="4" />
   </entity>
 
   <!--ZONE 4-->
@@ -207,7 +207,7 @@
     <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 0 0" rotation="1 2 3 3" scale="1 1 1" />
-    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" types="4" />
   </entity>
   <entity>
     <name name="box_leavepoint1" />
@@ -239,6 +239,20 @@
     <ai_mole />
   </entity>
 
+  <!--Guardia centinela sin pistola-->
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_guard" />
+    <transform pos="-25 0 5" rotation="1 2 3 3" scale="1 1 1" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/guard.static_mesh" />
+    <ai_guard
+      kpt_size  = "2"
+      kpt0_type = "seek" kpt0_pos = " -25  0  5" kpt0_wait = "0"
+      kpt1_type = "look" kpt1_pos = " -25  0  0" kpt1_wait = "2"
+      noShoot ="true" />
+  </entity>
+
   <!-- END ZONE 2 -->
 
   <!-- ZONE 3 -->
@@ -258,6 +272,20 @@
       wpt1_pos = "21  0  -5"
       wpt2_pos = "37  0  -5"
       wpt3_pos = "37  0   5" />
+  </entity>
+
+  <!--Guardia centinela sin pistola-->
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_guard" />
+    <transform pos="30 0 0" rotation="1 2 3 3" scale="1 1 1" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/guard.static_mesh" />
+    <ai_guard
+      kpt_size  = "2"
+      kpt0_type = "seek" kpt0_pos = " 30  0   3" kpt0_wait = "0"
+      kpt1_type = "look" kpt1_pos = " 30  0  10" kpt1_wait = "2"
+      noShoot ="true" />
   </entity>
   <!-- END ZONE 3 -->
 
