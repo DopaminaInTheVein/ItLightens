@@ -314,7 +314,7 @@ bool CXMLParser::xmlParseStream(std::istream &is, const char *stream_name) {
 		is.read(buf, sizeof(buf));
 		size_t len = is.gcount();
 		done = len < sizeof(buf);
-		if (!XML_Parse(parser, buf, len, done)) {
+		if (!XML_Parse(parser, buf, (int)len, done)) {
 			char msg[512];
 			_snprintf(msg, sizeof(msg) - 1, "XML Parser error '%s' at line %d when processing input stream( %s )\n",
 				XML_ErrorString(XML_GetErrorCode(parser)),

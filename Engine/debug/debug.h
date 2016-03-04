@@ -105,11 +105,11 @@ static void TestGameLog()
 
 static void testLines() {
 	static float var = 0;
-	var = fmod(var + getDeltaTime(), 10);
+	var = fmodf(var + getDeltaTime(), 10);
 	Debug->DrawLine(VEC3(var, 0, 0), VEC3(-6, 0, 1), RED);
 	Debug->DrawLine(VEC3(0, var, 0), VEC3(-6, 0, 1), GREEN);
 	Debug->DrawLine(VEC3(0, 0, var), VEC3(-6, 0, 1), BLUE);
-	Debug->DrawLine(VEC3(var, 0, var), VEC3(-6, 0, 1), VEC3(0.4, 0.3, 0.6));
+	Debug->DrawLine(VEC3(var, 0, var), VEC3(-6, 0, 1), VEC3(0.4f, 0.3f, 0.6f));
 }
 
 #endif

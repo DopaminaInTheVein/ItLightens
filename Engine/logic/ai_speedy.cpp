@@ -20,7 +20,7 @@ void ai_speedy::Init()
 	curwpt = 0;
 
 	// dash timer initialization
-	dash_timer = dash_timer_reset;
+	dash_timer = (float)dash_timer_reset;
 	dash_ready = false;
 	dash_target = VEC3(0, 0, 0);
 
@@ -193,6 +193,6 @@ void ai_speedy::updateDashTimer() {
 }
 
 void ai_speedy::resetDashTimer() {
-	dash_timer = dash_timer_reset;
+	dash_timer = (float)dash_timer_reset;
 	dash_ready = false;
 }
