@@ -29,6 +29,8 @@ CDebug *	  Debug = nullptr;
 CInput	      Input;
 CSimplePhysx  s_physx;		//provisional
 CUI ui;
+bool toMaxScreen;
+bool toMinScreen;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
@@ -43,6 +45,9 @@ CShaderCte< TCteObject > shader_ctes_object;
 #include "app_modules/entities.h"
 
 bool CApp::start() {
+
+	toMaxScreen = false;
+	toMinScreen = false;
 
 	//light setup init
 	shader_ctes_object.lightvec = float4(1.0f, 1.0f, 1.0f, 0.0f);
