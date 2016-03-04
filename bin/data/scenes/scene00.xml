@@ -24,7 +24,7 @@
     <transform pos="-28 0 3" />
     <name name="pj" />
     <player />
-    <render_static_mesh name="static_meshes/player_noposs.static_mesh" />
+    <render_static_mesh name="static_meshes/player_idle.static_mesh" /> 
     <colCylinder pos ="0 0 0" radius ="0.3" height ="1" type ="player" />
     <sphere_collider radius="0.3" tag ="player" />
   </entity>

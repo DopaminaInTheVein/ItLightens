@@ -59,11 +59,14 @@ protected:
 	float starting_player_y = 0;
 	float player_y = 0;
 
+
+	//virtual needed for poses right now
 	virtual void UpdateInputActions();
-	void UpdateMoves();
-	bool UpdateMovDirection();
-	void UpdateJumpState();
-	void UpdateDirection();
+	virtual void UpdateMoves();
+	virtual bool UpdateMovDirection();
+	virtual void UpdateJumpState();
+	virtual void UpdateDirection();
+	virtual void ApplyGravity();
 
 	void energyDecreasal(float howmuch);
 	bool checkDead();
@@ -84,8 +87,6 @@ public:
 	void Jump();
 	void Die();
 	void Win();
-
-	void ApplyGravity();
 
 	void Jumping();
 	void Falling();

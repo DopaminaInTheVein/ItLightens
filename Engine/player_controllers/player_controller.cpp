@@ -6,6 +6,8 @@
 #include "components/comp_transform.h"
 #include "components/entity.h"
 #include "components/entity_tags.h"
+#include "components/comp_render_static_mesh.h"
+#include "render\static_mesh.h"
 
 #include "components/comp_msgs.h"
 #include "ui\ui_interface.h"
@@ -34,6 +36,27 @@ void player_controller::Init() {
 	starting_player_y = player_transform->getPosition().y + 2;
 	player_y = starting_player_y;
 
+	pose_run	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_jump	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
+
+	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
+	actual_render = pose_idle;
+
+	pose_idle.setOwner(myEntity);
+	pose_run.setOwner(myEntity);
+	pose_jump.setOwner(myEntity);
+
+
+	TCompRenderStaticMesh *mesh;
+
+	mesh = pose_jump;
+	mesh->static_mesh = Resources.get("static_meshes/player_jump.static_mesh")->as<CStaticMesh>();
+
+	mesh = pose_run;
+	mesh->static_mesh = Resources.get("static_meshes/player_run.static_mesh")->as<CStaticMesh>();
+
+	actual_render->registerToRender();
+
 	ChangeState("idle");
 	controlEnabled = true;
 	____TIMER__SET_ZERO_(timerDamaged);
@@ -41,6 +64,19 @@ void player_controller::Init() {
 
 bool player_controller::isDamaged() {
 	return !____TIMER__END_(timerDamaged);
+}
+
+void player_controller::ChangePose(CHandle new_pos_h)
+{
+	TCompRenderStaticMesh *new_pose = new_pos_h;
+	if (new_pose == actual_render) return;		//no change
+
+	actual_render->unregisterFromRender();
+	actual_render = new_pose;
+	//CEntity *me = myParent;
+	//me->del<TCompRenderStaticMesh>();
+	//me->add(new_pos_h);
+	actual_render->registerToRender();
 }
 
 void player_controller::myUpdate() {
@@ -241,6 +277,67 @@ void player_controller::AttractMove(CEntity * entPoint) {
 	jspeed = polarizedCurrentSpeed*direction.y;
 	player_position.z += toz;
 	player_transform->setPosition(player_position);
+}
+
+void player_controller::UpdateMoves()
+{
+	SetMyEntity();
+
+	ApplyGravity();
+
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	VEC3 player_position = player_transform->getPosition();
+
+	VEC3 direction = directionForward + directionLateral;
+
+	CEntity * camera_e = camera;
+	TCompTransform* camera_comp = camera_e->get<TCompTransform>();
+
+	direction.Normalize();
+
+	float yaw, pitch;
+	camera_comp->getAngles(&yaw, &pitch);
+	float new_x, new_z;
+
+	new_x = direction.x * cosf(yaw) + direction.z*sinf(yaw);
+	new_z = -direction.x * sinf(yaw) + direction.z*cosf(yaw);
+
+	direction.x = new_x;
+	direction.z = new_z;
+
+	direction.Normalize();
+
+	float new_yaw = player_transform->getDeltaYawToAimDirection(direction);
+
+	player_transform->getAngles(&yaw, &pitch);
+
+	player_transform->setAngles(new_yaw + yaw, pitch);
+
+	//Set current velocity with friction
+	float drag = 0.002f;
+	float drag_i = (1 - drag);
+
+	if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
+	else player_curr_speed = drag_i*player_curr_speed - drag*player_max_speed;
+
+	if (player_curr_speed < 0) {
+		player_curr_speed = 0.0f;
+		directionForward = directionLateral = VEC3(0, 0, 0);
+	}
+
+	//set final position
+	if (onGround) {
+		ChangePose(pose_run);
+		player_position = player_position + direction*getDeltaTime()*player_curr_speed;
+	}
+	else {
+		ChangePose(pose_jump);
+		player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
+	}
+
+	if(player_curr_speed == 0.0f) ChangePose(pose_idle);
+
+	player_transform->executeMovement(player_position);
 }
 
 float CPlayerBase::possessionCooldown;

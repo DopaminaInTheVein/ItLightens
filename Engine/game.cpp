@@ -138,7 +138,7 @@ void CApp::render() {
 		//Debug TODO Provisional
 		Debug->render();
 
-		Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
+		//Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
 	}
 	RenderManager.renderAll();
 

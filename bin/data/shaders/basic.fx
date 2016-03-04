@@ -66,4 +66,28 @@ float4 PSTextured(float4 Pos : SV_POSITION
 }
 
 
+//--------------------------------------------------------------------------------------
+void v_crystal(
+	in float4 iPos : POSITION
+	, in float3 iNormal : NORMAL
+	, in float2 iTex0 : TEXCOORD0
+	, out float4 oPos : SV_POSITION
+	, out float4 oCol : COLOR
+	, out float2 oTex0 : TEXCOORD0
+	)
+{
+	float4 worldPos = mul(iPos, World);
+	oPos = mul(worldPos, ViewProjection);
+
+	oCol = ambientcol;		//ambient as base color
+	
+
+	//float4 norm = normalize(mul(Rotation, iNormal));			//direction of light normalized on actual rotation
+	//float diffusebrightness = saturate(dot(norm, lightvec));
+	float diffusebrightness = saturate(dot(float3(0,0,0), lightvec));
+	oCol += lightcol * diffusebrightness;
+	oCol += -float4(0, 0, 0, 0.5);
+	oTex0 = iTex0;
+}
+
 
