@@ -33,7 +33,8 @@ public:
 	//void renderUIDebug();
 	bool load(const char* filename);
 
-	void activate() const;
+  void activateTextures() const;
+  static void deactivateTextures();
 };
 
 #endif

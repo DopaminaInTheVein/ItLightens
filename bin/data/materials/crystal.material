@@ -1,0 +1,3 @@
+<material tech="crystal.tech">
+  <texture type="diffuse" name="textures/water_d.dds"/>
+</material>

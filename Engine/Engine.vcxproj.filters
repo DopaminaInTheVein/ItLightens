@@ -473,7 +473,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\bin\data\shaders\Tutorial02.fx">
+    <FxCompile Include="..\bin\data\shaders\basic.fx">
       <Filter>render\shaders</Filter>
     </FxCompile>
   </ItemGroup>

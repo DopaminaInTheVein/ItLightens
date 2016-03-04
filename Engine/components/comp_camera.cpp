@@ -4,6 +4,7 @@
 #include "comp_transform.h"
 #include "comp_life.h"
 #include "entity.h"
+#include "entity_tags.h"
 #include "resources/resources_manager.h"
 #include "render/mesh.h"
 #include "render/shader_cte.h"
@@ -47,8 +48,10 @@ void TCompCamera::update(float dt) {
 	CEntity* targeted = targetowner;
 	TCompLife * targetlife = targeted->get<TCompLife>();
 	TCompTransform * targettrans = targeted->get<TCompTransform>();
+	CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
+	TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
 
-	if (targetlife->currentlife > 0.0f) {
+	if (targetlife->currentlife > 0.0f && 0.5f <= simpleDist(victoryPoint_transform->getPosition(), targettrans->getPosition())) {
 		VEC3 pos = tmx->getPosition();
 		pos.y += 2;
 		tmx->setPosition(pos);

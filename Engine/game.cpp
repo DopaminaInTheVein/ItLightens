@@ -43,6 +43,12 @@ CShaderCte< TCteObject > shader_ctes_object;
 #include "app_modules/entities.h"
 
 bool CApp::start() {
+
+	//light setup init
+	shader_ctes_object.lightvec = float4(1.0f, 1.0f, 1.0f, 0.0f);
+	shader_ctes_object.lightcol = float4(0.8f, 0.8f, 0.8f, 1.0f);
+	shader_ctes_object.ambientcol = float4(0.1f, 0.1f, 0.1f, 1.0f);
+
 	// input initialization
 	CApp& app = CApp::get();
 	Input.Initialize(app.getHInstance(), app.getHWnd(), app.getXRes(), app.getYRes());
@@ -64,8 +70,8 @@ bool CApp::start() {
 	mod_wnd_proc.push_back(imgui);
 
 	// ----------------------------
-	tech_solid_colored = Resources.get("tech_solid_colored.tech")->as<CRenderTechnique>();
-	tech_textured_colored = Resources.get("tech_textured_colored.tech")->as<CRenderTechnique>();
+	tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+	tech_textured_colored = Resources.get("textured.tech")->as<CRenderTechnique>();
 	texture1 = Resources.get("textures/wood_d.dds")->as<CTexture>();
 
 	if (!shader_ctes_camera.create("ctes_camera"))
@@ -132,7 +138,7 @@ void CApp::render() {
 		//Debug TODO Provisional
 		Debug->render();
 
-		Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
+		//Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
 	}
 	RenderManager.renderAll();
 

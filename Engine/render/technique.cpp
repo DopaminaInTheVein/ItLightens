@@ -2,46 +2,61 @@
 #include "technique.h"
 #include "resources/resources_manager.h"
 #include "shaders.h"
+#include "render/vertex_declarations.h"
 
 template<> IResource::eType getTypeOfResource<CRenderTechnique>() { return IResource::TECHNIQUE; }
 
 // name = techniques/tech_solid_colored.tech
 template<>
 IResource* createObjFromName<CRenderTechnique>(const std::string& name) {
-	CRenderTechnique* tech = new CRenderTechnique;
-	const CVertexShader* vs = nullptr;
-	const CPixelShader*  ps = nullptr;
+  CRenderTechnique* tech = new CRenderTechnique;
+  std::string full_path = "data/shaders/" + name;
+  bool is_ok = tech->xmlParseFile(full_path.c_str());
+  assert(is_ok);
+  tech->setName(name);
+  return tech;
+}
 
-	// ----------------------------------
-	if (name == "tech_solid_colored.tech") {
-		vs = Resources.get("solid_colored.vs")->as<CVertexShader>();
-		ps = Resources.get("solid_colored.ps")->as<CPixelShader>();
-	}
-	else if (name == "tech_textured_colored.tech") {
-		vs = Resources.get("textured_colored.vs")->as<CVertexShader>();
-		ps = Resources.get("textured.ps")->as<CPixelShader>();
-	}
-	else {
-		fatal("Unknown tech %s\n", name.c_str());
-	}
-	tech->create(name.c_str(), vs, ps);
-	return tech;
+// --------------------------------
+void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) {
+  if (elem == "vs") {
+    auto fx = atts["fx"];       // "basic"
+    auto main = atts["main"];   // "VS"
+    auto decl_name = atts["decl"];   // "positions_color"
+    auto res_name = main + "@" + fx + ".vs";
+    fx = "data/shaders/" + fx + ".fx";
+    if (!Resources.isValid(res_name.c_str())) {
+      CVertexShader* vs = new CVertexShader;
+      auto vdecl = vdecl_manager.getByName(decl_name);
+      vs->create(fx.c_str(), main.c_str(), vdecl);
+      vs->setName(res_name);
+      Resources.registerNew(vs);
+    }
+    vs = Resources.get( res_name.c_str() )->as<CVertexShader>();
+  }
+  else if (elem == "ps") {
+    auto fx = atts["fx"];       // "basic"
+    auto main = atts["main"];   // "PS"
+    auto res_name = main + "@" + fx + ".ps";
+    fx = "data/shaders/" + fx + ".fx";
+    if (!Resources.isValid(res_name.c_str())) {
+      CPixelShader* ps = new CPixelShader;
+      ps->create(fx.c_str(), main.c_str());
+      ps->setName(res_name);
+      Resources.registerNew(ps);
+    }
+    ps = Resources.get(res_name.c_str())->as<CPixelShader>();
+  }
 }
 
 void CRenderTechnique::destroy() {
-	vs = nullptr;
-	ps = nullptr;
-}
-
-bool CRenderTechnique::create(const char* new_name, const CVertexShader* new_vs, const CPixelShader* new_ps) {
-	name = new_name;
-	vs = new_vs;
-	ps = new_ps;
-	return true;
+  vs = nullptr;
+  ps = nullptr;
 }
 
 void CRenderTechnique::activate() const {
-	assert(isValid());
-	ps->activate();
-	vs->activate();
+  assert(isValid());
+  ps->activate();
+  vs->activate();
 }
+

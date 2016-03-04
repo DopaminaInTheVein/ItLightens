@@ -33,8 +33,6 @@ void ai_guard::Init()
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 	thePlayer = tags_manager.getFirstHavingTag(getID("target"));
-	CHandle prueba = tags_manager.getFirstHavingTag(getID("target"));
-	if (prueba == thePlayer) dbg("Son iguales!");
 
 	// insert all states in the map
 	AddState(ST_NEXT_ACTION, (statehandler)&ai_guard::NextActionState);
@@ -137,13 +135,10 @@ void ai_guard::ChaseState()
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 
-	if (!playerVisible()) {
+	//player lost?
+	if (distance > DIST_SQ_PLAYER_LOST) {
 		ChangeState(ST_NEXT_ACTION);
 	}
-	//player lost?
-	//if (distance > DIST_SQ_PLAYER_LOST) {
-	//	ChangeState(ST_NEXT_ACTION);
-	//}
 
 	//player near?
 	else if (distance < DIST_SQ_SHOT_AREA_ENTER) {
@@ -162,18 +157,25 @@ void ai_guard::ShootState() {
 	VEC3 myPos = getTransform()->getPosition();
 	float dist = squaredDistXZ(posPlayer, getTransform()->getPosition());
 
-	shootToPlayer();
-
 	//Fuera de tiro
-	if (dist > DIST_SQ_SHOT_AREA_LEAVE) ChangeState(ST_CHASE);
+	if (dist > DIST_SQ_SHOT_AREA_LEAVE) {
+		ChangeState(ST_CHASE);
+	}
 	else {
 		turnTo(posPlayer);
+		if (squaredDistY(myPos, posPlayer) * 2 > dist) { //Angulo de 30 grados
+			//Si pitch muy alto me alejo
+			goForward(-SPEED_WALK * getDeltaTime());
+		}
 		if (!playerVisible()) {
 			ChangeState(ST_SHOOTING_WALL);
 		}
+		else {
+			shootToPlayer();
+		}
 	}
 
-ui.addTextInstructions("\nPress 'M' to interrupt gaurd shoot when he dont see you!!! (artificial)\n");
+	ui.addTextInstructions("\nPress 'M' to interrupt gaurd shoot when he dont see you!!! (artificial)\n");
 	if (Input.IsKeyPressedDown(KEY_M)) {
 		artificialInterrupt();
 	}
@@ -307,14 +309,18 @@ bool ai_guard::playerVisible() {
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
-	if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) {
-		if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) {
-			// Está en el cono de vision, visible?
-			ray_cast_query rcQuery;
-			float distRay;
-			CHandle collider = rayCastToPlayer(COL_TAG_OBJECT, distRay);
-			if (!collider.isValid()) { //No bloquea vision
-				return true;
+	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos)) {
+		if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) {
+			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) {
+				// Está en el cono de vision, visible?
+				ray_cast_query rcQuery;
+				float distRay;
+				CHandle collider = rayCastToPlayer(COL_TAG_OBJECT | COL_TAG_PLAYER, distRay);
+				if (collider.isValid()) { //No bloquea vision
+					if (collider == thePlayer) {
+						return true;
+					}
+				}
 			}
 		}
 	}
@@ -397,7 +403,7 @@ void ai_guard::render() {
 
 void ai_guard::renderInMenu() {
 	ImGui::SliderFloat("Speed Walk", &SPEED_WALK, 0, 1);
-	ImGui::SliderFloat("Speed Rot (rad/s)", &SPEED_ROT, 0, 2 * M_PI);
+	ImGui::SliderFloat("Speed Rot (rad/s)", &SPEED_ROT, 0, 2 * (float)M_PI);
 	ImGui::SliderFloat("Cone Vision 1/2 (rads)", &CONE_VISION, 0, 180);
 	ImGui::SliderFloat("Distance Reach", &DIST_SQ_REACH_PNT, 0, 1);
 	ImGui::SliderFloat("Detection Area", &DIST_SQ_PLAYER_DETECTION, 0, 500);
@@ -415,7 +421,7 @@ void ai_guard::renderInMenu() {
 
 void ai_guard::reduceStats()
 {
-	DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI/reduce_factor;
+	DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI / reduce_factor;
 	DIST_SQ_SHOT_AREA_ENTER = DIST_SQ_SHOT_AREA_ENTER_INI / reduce_factor;
 	DIST_SQ_SHOT_AREA_LEAVE = DIST_SQ_SHOT_AREA_LEAVE_INI / reduce_factor;
 	DIST_RAYSHOT = DIST_RAYSHOT_INI / reduce_factor;
@@ -450,13 +456,12 @@ void ai_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 	}
 }
 
-
 //TODO: remove
 void ai_guard::artificialInterrupt()
 {
 	TCompTransform *t = getTransform();
 	float yaw, pitch;
-	t->getAngles(&yaw,&pitch);
-	t->setAngles(-yaw,pitch);
+	t->getAngles(&yaw, &pitch);
+	t->setAngles(-yaw, pitch);
 	ChangeState(ST_WAIT_NEXT);
 }

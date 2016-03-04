@@ -16,6 +16,9 @@
 
 #include "player_controller_base.h"
 
+struct TCompRenderStaticMesh;
+
+
 class player_controller : public CPlayerBase {
 	CObjectManager<player_controller> *om;
 	int topolarizedplus = -1;
@@ -27,11 +30,11 @@ class player_controller : public CPlayerBase {
 	float polarizedCurrentSpeed = 0.0f;
 
 	//Is damaged?
-	____TIMER_DECLARE_(timerDamaged, 1.0f);
+	____TIMER_DECLARE_VALUE_(timerDamaged, 1.0f);
 	bool isDamaged();
 
 	//Possession
-	float DIST_LEAVING_POSSESSION = 10.0f;
+	float DIST_LEAVING_POSSESSION = 1.0f;
 	CHandle currentPossessable;
 	float possessionReach = 10.0f;
 
@@ -50,6 +53,16 @@ class player_controller : public CPlayerBase {
 
 	void recalcPossassable();
 	void UpdatePossession();
+
+	CHandle pose_idle;	
+	CHandle pose_run;	
+	CHandle pose_jump;	
+
+	TCompRenderStaticMesh* actual_render = nullptr;
+
+	void ChangePose(CHandle new_pos_h);
+
+	void UpdateMoves() override;
 
 protected:
 	void myUpdate();

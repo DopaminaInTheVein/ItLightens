@@ -256,7 +256,7 @@
     <None Include="geometry\SimpleMath.inl" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\bin\data\shaders\Tutorial02.fx">
+    <FxCompile Include="..\bin\data\shaders\basic.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

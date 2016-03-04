@@ -6,6 +6,8 @@
 #include "handle/msgs.h"
 #include "components/comp_msgs.h"
 #include "components/entity_tags.h"
+#include "render/technique.h"
+#include "resources/resources_manager.h"
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
 #include "input/input.h"
@@ -55,11 +57,13 @@ TMsgID generateUniqueMsgID() {
 }
 
 bool CEntitiesModule::start() {
+	SBB::init();
+
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(8);
 	getHandleManager<player_controller_cientifico>()->init(8);
-
+	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
@@ -85,7 +89,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<sphereCollider>()->init(MAX_ENTITIES);
 	getHandleManager<boxCollider>()->init(MAX_ENTITIES);
 
-	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
+	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
@@ -109,7 +113,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(ai_guard, TMsgMagneticBomb, onMagneticBomb);
 
-
 	//Posesiones Mensajes
 	//..Cientifico
 	SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
@@ -126,7 +129,7 @@ bool CEntitiesModule::start() {
 
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
-	
+
 	//Damage
 	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(player_controller, TMsgDamage, onDamage);
@@ -145,6 +148,7 @@ bool CEntitiesModule::start() {
 	TTagID tagIDwall = getID("breakable_wall");
 	TTagID tagIDminus = getID("minus_wall");
 	TTagID tagIDplus = getID("plus_wall");
+	TTagID tagIDrec = getID("recover_point");
 
 	// Camara del player
 	player = tags_manager.getFirstHavingTag(tagIDplayer);
@@ -182,6 +186,7 @@ bool CEntitiesModule::start() {
 	SBB::postHandlesVector("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
 	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
 	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
+	SBB::postHandlesVector("wptsRecoverPoint", tags_manager.getHandlesByTag(tagIDrec));
 
 	getHandleManager<player_controller>()->onAll(&player_controller::Init);
 	getHandleManager<player_controller_speedy>()->onAll(&player_controller_speedy::Init);
@@ -228,6 +233,8 @@ void CEntitiesModule::render() {
 	// for each manager
 	// if manager has debug render active
 	// manager->renderAll()
+	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+	tech->activate();
 	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 

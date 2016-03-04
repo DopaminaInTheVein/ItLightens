@@ -42,11 +42,11 @@ public:
 	}
 
 	void updateInput() {
-		m_yaw = 0.0f; 
+		m_yaw = 0.0f;
 		m_pitch = 0.0f;
 
 		if (Input.GetMouseDiffX() != 0) {
-			m_yaw =  -Input.GetMouseDiffX()*speed_camera*getDeltaTime();
+			m_yaw = -Input.GetMouseDiffX()*speed_camera*getDeltaTime();
 		}
 
 		if (Input.GetMouseDiffY() != 0) {
@@ -75,8 +75,13 @@ public:
 	void update(float dt) {
 		updateInput();
 
+		CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
 		CEntity* e_target = target;
-		if (!e_target || ((TCompLife*)e_target->get<TCompLife>())->currentlife <= 0.0f)
+
+		TCompTransform * player_transform = e_target->get<TCompTransform>();
+		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
+
+		if (!e_target || ((TCompLife*)e_target->get<TCompLife>())->currentlife <= 0.0f || 0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition()))
 			return;
 		TCompTransform* target_tmx = e_target->get<TCompTransform>();
 		assert(target_tmx);
@@ -90,7 +95,7 @@ public:
 		auto origin = target_loc - vec_camera*distance_to_target;
 
 		origin = origin - target_loc;		//normalize vector, needed for traslation pos
-		
+
 		VEC3 posF = rotateAround(origin, 0.0f, m_pitch, m_yaw);
 		posF = posF + target_loc;			//normalize vector, needed for traslation pos
 		my_tmx->lookAt(posF, target_loc);

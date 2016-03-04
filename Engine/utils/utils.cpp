@@ -55,6 +55,10 @@ float squaredDistXZ(const VEC3& init, const VEC3& dest) {
 	return squared(abs(init.x - dest.x)) + squared(abs(init.z - dest.z));
 }
 
+float squaredDistY(const VEC3& init, const VEC3& dest) {
+	return squared(init.y - dest.y);
+}
+
 float simpleDist(const VEC3& init, const VEC3& dest) {
 	return abs(init.x - dest.x) + abs(init.y - dest.y) + abs(init.z - dest.z);
 }
@@ -64,7 +68,7 @@ float simpleDistXZ(const VEC3 &init, const VEC3 &dest) {
 }
 
 //return MAT44 rotation from roll, yaw, pitch
-void getRotationMatrix(double roll, double pitch, double yaw, MAT44 &R)
+void getRotationMatrix(float roll, float pitch, float yaw, MAT44 &R)
 {
 	MAT44 Rx, Ry, Rz;
 	Rx = MAT44::Identity;
@@ -75,27 +79,26 @@ void getRotationMatrix(double roll, double pitch, double yaw, MAT44 &R)
 	Ry(3, 3) = 0;
 	Rz(3, 3) = 0;
 
-
 	pitch = -pitch;
 	yaw = -yaw;
 	roll = -roll;
 	// Rotation over X axis
-	Rx(1, 1) = cos(-pitch*M_PI / 180);
-	Rx(1, 2) = -sin(-pitch*M_PI / 180);
-	Rx(2, 1) = sin(-pitch*M_PI / 180);
-	Rx(2, 2) = cos(-pitch*M_PI / 180);
+	Rx(1, 1) = cos(-pitch*(float)M_PI / 180);
+	Rx(1, 2) = -sin(-pitch*(float)M_PI / 180);
+	Rx(2, 1) = sin(-pitch*(float)M_PI / 180);
+	Rx(2, 2) = cos(-pitch*(float)M_PI / 180);
 
 	// Rotation over Y axis
-	Ry(0, 0) = cos(-yaw*M_PI / 180);
-	Ry(0, 2) = sin(-yaw*M_PI / 180);
-	Ry(2, 0) = -sin(-yaw*M_PI / 180);
-	Ry(2, 2) = cos(-yaw*M_PI / 180);
+	Ry(0, 0) = cos(-yaw*(float)M_PI / 180);
+	Ry(0, 2) = sin(-yaw*(float)M_PI / 180);
+	Ry(2, 0) = -sin(-yaw*(float)M_PI / 180);
+	Ry(2, 2) = cos(-yaw*(float)M_PI / 180);
 
 	// Rotation over X axis
-	Rz(0, 0) = cos(-roll*M_PI / 180);
-	Rz(0, 1) = -sin(-roll*M_PI / 180);
-	Rz(1, 0) = sin(-roll*M_PI / 180);
-	Rz(1, 1) = cos(-roll*M_PI / 180);
+	Rz(0, 0) = cos(-roll*(float)M_PI / 180);
+	Rz(0, 1) = -sin(-roll*(float)M_PI / 180);
+	Rz(1, 0) = sin(-roll*(float)M_PI / 180);
+	Rz(1, 1) = cos(-roll*(float)M_PI / 180);
 
 	// Rotation matrix R
 	R = Rx*Ry*Rz;

@@ -54,6 +54,11 @@ bool CMaterial::load(const char* filename) {
 }
 
 // ----------------------------------------------
-void CMaterial::activate() const {
-	textures[DIFFUSE]->activate(0);
+void CMaterial::activateTextures() const {
+  textures[DIFFUSE]->activate(0);
+}
+
+// ----------------------------------------------
+void CMaterial::deactivateTextures() {
+	CTexture::deactivate(0);
 }

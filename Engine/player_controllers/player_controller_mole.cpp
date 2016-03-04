@@ -12,8 +12,8 @@
 void player_controller_mole::Init() {
 	om = getHandleManager<player_controller_mole>();	//player
 
-	DeleteState("jumping");
-	DeleteState("falling");
+	//DeleteState("jumping");
+	//DeleteState("falling");
 	DeleteState("moving");
 
 	AddState("grabBox", (statehandler)&player_controller_mole::GrabBox);
@@ -54,8 +54,9 @@ void player_controller_mole::Moving()
 		SetMyEntity();
 		CEntity* p = myParent;
 		TCompTransform* p_t = p->get<TCompTransform>();
-
-		box_t->setPosition(p_t->getPosition());
+		VEC3 posPlayer = p_t->getPosition();
+		posPlayer.y += 2;
+		box_t->setPosition(posPlayer);
 	}
 
 	if (!UpdateMovDirection()) ChangeState("idle");
@@ -69,6 +70,12 @@ void player_controller_mole::GrabBox() {
 	else {
 		SBB::postBool(selectedBox, true);
 	}
+
+	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
+	TCompTransform* box_t = box->get<TCompTransform>();
+	VEC3 posbox = box_t->getPosition();
+	posbox.y += 2;
+	box_t->setPosition(posbox);
 	energyDecreasal(5.0f);
 	boxGrabbed = true;
 	player_max_speed /= 2;
@@ -88,21 +95,35 @@ void player_controller_mole::LeaveBox() {
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = false;
 	player_max_speed *= 2;
+
+	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
+	TCompTransform* box_t = box->get<TCompTransform>();
+	VEC3 posbox = box_t->getPosition();
+	posbox.y -= 2;
+	CEntity* p = myParent;
+	TCompTransform* p_t = p->get<TCompTransform>();
+	posbox.x += p_t->getFront().x * 3;
+	posbox.z += p_t->getFront().z * 3;
+	box_t->setPosition(posbox);
+
 	ChangeState("idle");
 }
 
 bool player_controller_mole::nearToWall() {
 	bool found = false;
 	if (SBB::readHandlesVector("wptsBreakableWall").size() > 0) {
-		float distMax = 2.0f;
+		float distMaxx = 6.0f;
+		float distMaxz = 10.5f;
 		for (int i = 0; !found && i < SBB::readHandlesVector("wptsBreakableWall").size(); i++) {
 			CEntity * entTransform = this->getEntityWallHandle(i);
 			TCompTransform * transformBox = entTransform->get<TCompTransform>();
 			TCompName * nameBox = entTransform->get<TCompName>();
 			VEC3 wpt = transformBox->getPosition();
-			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
-			if (disttowpt < distMax) {
-				distMax = disttowpt;
+			float disttowptx = fabsf(fabsf(wpt.x) - fabsf(getEntityTransform()->getPosition().x));
+			float disttowptz = fabsf(fabsf(wpt.z) - fabsf(getEntityTransform()->getPosition().z));
+			if (disttowptx < distMaxx && disttowptz < distMaxz) {
+				distMaxx = disttowptx;
+				distMaxz = disttowptz;
 				selectedWallToBreaki = i;
 				found = true;
 			}

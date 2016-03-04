@@ -32,10 +32,11 @@ public:
 	uint32_t getTag() const { return tag; }
 	void setTag(uint32_t new_tag) { tag = new_tag; }
 
-	void setName(const char* new_name) { name = new_name; }
-	const std::string& getName() const {
-		return name;
-	}
+  void setName(const std::string& new_name) { name = new_name; }
+  void setName(const char* new_name) { name = new_name; }
+  const std::string& getName() const {
+    return name;
+  }
 
 	template< typename TObj>
 	const TObj* as() const {

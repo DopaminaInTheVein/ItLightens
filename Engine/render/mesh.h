@@ -27,11 +27,12 @@ public:
 		, LINE_LIST
 	};
 
-	enum eVertexDecl {
-		VTX_DECL_POSITION_UV = 1000
-		, VTX_DECL_POSITION_COLOR
-		, VTX_DECL_POSITION_NORMAL_UV = 1002
-	};
+  enum eVertexDecl {
+    VTX_DECL_POSITION = 999
+  , VTX_DECL_POSITION_UV = 1000
+  , VTX_DECL_POSITION_COLOR 
+  , VTX_DECL_POSITION_NORMAL_UV = 1002
+  };
 
 	CMesh(const std::string& new_name)
 		: vb(nullptr)

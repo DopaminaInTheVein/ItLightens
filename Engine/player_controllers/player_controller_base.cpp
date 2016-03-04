@@ -11,7 +11,7 @@
 #include "components\comp_msgs.h"
 #include "components\comp_camera.h"
 
-
+#include "utils/utils.h"
 
 CPlayerBase::CPlayerBase() {
 	AddState("idle", (statehandler)&CPlayerBase::Idle);
@@ -19,6 +19,7 @@ CPlayerBase::CPlayerBase() {
 	AddState("falling", (statehandler)&CPlayerBase::Falling);
 	AddState("jumping", (statehandler)&CPlayerBase::Jumping);
 	AddState("die", (statehandler)&CPlayerBase::Die);
+	AddState("win", (statehandler)&CPlayerBase::Win);
 }
 
 bool CPlayerBase::checkDead() {
@@ -28,9 +29,15 @@ bool CPlayerBase::checkDead() {
 		ChangeState("die");
 		return true;
 	}
+	CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
+	TCompTransform * player_transform = myEntity->get<TCompTransform>();
+	TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
+	if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
+		ChangeState("win");
+		return true;
+	}
 	return false;
 }
-
 void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 	camera = msg.camera;
 }
@@ -41,7 +48,7 @@ void CPlayerBase::update(float elapsed) {
 		UpdateInputActions();
 		Recalc();
 		UpdateMoves();
-		myUpdate(); 
+		myUpdate();
 		update_msgs();
 	}
 }
@@ -98,11 +105,10 @@ void CPlayerBase::UpdateMoves()
 	}
 
 	//set final position
-	if(onGround) player_position = player_position + direction*getDeltaTime()*player_curr_speed;
-	else player_position = player_position + direction*getDeltaTime()*(player_curr_speed/2.0f);
+	if (onGround) player_position = player_position + direction*getDeltaTime()*player_curr_speed;
+	else player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
 	//player_transform->setPosition(player_position);
 	player_transform->executeMovement(player_position);
-	
 }
 #pragma endregion
 //##########################################################################
@@ -228,6 +234,23 @@ void CPlayerBase::Jump()
 }
 
 void CPlayerBase::Die()
+{
+	SetMyEntity();
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	VEC3 player_position = player_transform->getPosition();
+	if (player_position.y > 0.0f) {
+		Falling();
+	}
+	else {
+		onGround = true;
+		jspeed = 0.0f;
+		directionJump = VEC3(0, 0, 0);
+	}
+	orbitCameraDeath();
+	ChangeState("idle");
+}
+
+void CPlayerBase::Win()
 {
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();

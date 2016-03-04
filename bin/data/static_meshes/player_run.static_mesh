@@ -1,0 +1,3 @@
+<static_mesh>
+    <slot mesh="meshes/pj_run.mesh" material="materials/player.material"/>
+</static_mesh>
