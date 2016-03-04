@@ -13,7 +13,7 @@
   <!-- Player -->
   <entity>
     <tag name="player" />
-    <transform pos="-30 2 5" />
+    <transform pos="25 2 5" />
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
@@ -21,7 +21,7 @@
   <entity>
     <life points="50" />
     <tag name="target" />
-    <transform pos="-28 0 3" />
+    <transform pos="28 0 3" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_idle.static_mesh" /> 
@@ -243,7 +243,18 @@
 
   <!-- ZONE 3 -->
   <!-- SPEEDY -->
-  <!-- NOTHING FOR NOW -->
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_speedy" />
+    <name name="speedy1" />
+    <transform pos="30 0 0" rotation="1 2 3 3" scale="1 1 1" />
+    <ai_speedy
+      wpts_size  = "4"
+      wpt0_pos = "21  0   5"
+      wpt1_pos = "21  0  -5"
+      wpt2_pos = "37  0  -5"
+      wpt3_pos = "37  0   5" />
+  </entity>
   <!-- END ZONE 3 -->
 
   <!-- ZONE 4 -->

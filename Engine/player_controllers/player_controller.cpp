@@ -126,6 +126,7 @@ void player_controller::DoubleJump()
 		jspeed = 0.0f;
 		ChangeState("doublefalling");
 	}
+
 }
 
 void player_controller::DoubleFalling() {
@@ -287,7 +288,7 @@ void player_controller::UpdateMoves()
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-
+	
 	VEC3 direction = directionForward + directionLateral;
 
 	CEntity * camera_e = camera;

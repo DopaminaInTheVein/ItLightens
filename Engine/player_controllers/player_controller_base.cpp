@@ -64,8 +64,8 @@ void CPlayerBase::UpdateMoves()
 
 	ApplyGravity();
 
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
+	TCompTransform* player_transform = myEntity->get<TCompTransform>(); 
+	VEC3 player_position = player_transform->getPosition(); 	
 
 	VEC3 direction = directionForward + directionLateral;
 

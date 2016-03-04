@@ -51,7 +51,7 @@ bool ai_speedy::load(MKeyValue& atts) {
 	fixedWpts.resize(n);
 	for (unsigned int i = 0; i < n; i++) {
 		WPT_ATR_NAME(atrPos, "pos", i);
-		fixedWpts.push_back(atts.getPoint(atrPos));
+		fixedWpts[i] = atts.getPoint(atrPos);
 	}
 	return true;
 }
@@ -91,7 +91,7 @@ void ai_speedy::SeekWptState() {
 		ChangeState(next_action);
 	}
 	else if (next_action == "dashtonewpoint" && dash_ready) {
-		dash_target = VEC3(-(float)(rand() % 9), 0.0f, -(float)(rand() % 9));
+		dash_target = VEC3(30.f, 0.0f, 0.0f);
 		ChangeState(next_action);
 	}
 	else if (next_action == "dashtopoint" && dash_ready) {
@@ -153,7 +153,7 @@ bool ai_speedy::aimToTarget(VEC3 target) {
 	if (abs(delta_yaw) > 0.001f) {
 		float yaw, pitch;
 		transform->getAngles(&yaw, &pitch);
-		transform->setAngles(yaw + delta_yaw*0.005f, pitch);
+		transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
 		return false;
 	}
 	else {
@@ -165,7 +165,7 @@ void ai_speedy::moveFront(float movement_speed) {
 	VEC3 front = transform->getFront();
 	VEC3 position = transform->getPosition();
 
-	transform->setPosition(VEC3(position.x + front.x*movement_speed, position.y, position.z + front.z*movement_speed));
+	transform->setPosition(VEC3(position.x + front.x*movement_speed*getDeltaTime(), position.y, position.z + front.z*movement_speed*getDeltaTime()));
 }
 
 bool ai_speedy::dashToTarget(VEC3 target) {

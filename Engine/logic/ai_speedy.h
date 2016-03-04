@@ -38,14 +38,15 @@ class ai_speedy : public ai_poss, public TCompBase {
 	bool dash_ready;
 	VEC3 dash_target;
 
-	const float speed = 0.0025f;
-	const float dash_speed = 0.1f;
+	const float speed = 2.f;
+	const float dash_speed = 20.f;
+	const float rotation_speed = deg2rad(200);
 	// timer in seconds
-	const int dash_timer_reset = 3 + (rand() % 5);
+	const int dash_timer_reset = 8;
 
-	const int dash_to_point_chance = 25;
-	const int dash_to_new_point_chance = 25;
-	const int dash_to_player_chance = 25;
+	const int dash_to_point_chance = 2;
+	const int dash_to_new_point_chance = 2;
+	const int dash_to_player_chance = 2;
 
 	CEntity* getMyEntity() {
 		CHandle me = CHandle(this);
