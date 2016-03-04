@@ -16,8 +16,12 @@ public:
 	// Enable default ctor
 	CApp();
 
+	std::string file_options;
+	bool max_screen;
 	int getXRes();
 	int getYRes();
+	bool maxScreen();
+	bool windowedScreen();
 	bool createWindow(HINSTANCE new_hInstance, int nCmdShow);
 	void mainLoop();
 	HINSTANCE getHInstance() { return hInstance; }
@@ -37,7 +41,7 @@ private:
 	HINSTANCE hInstance;
 	HWND      hWnd;
 	int       xres, yres;
-
+	int		  xres_max, yres_max;
 	VModules  all_modules;
 	VModules  mod_update;
 	VModules  mod_renders;
