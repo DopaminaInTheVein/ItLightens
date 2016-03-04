@@ -33,6 +33,9 @@
 
 #define PLAYER_CENTER_Y		0.5f
 
+//Cambio malla
+struct TCompRenderStaticMesh;
+
 class ai_guard : public TCompBase, public aicontroller
 {
 	//Parameters
@@ -133,6 +136,14 @@ public:
 	void render();
 	void renderInMenu();
 	bool load(MKeyValue& atts);
+
+	//Cambio malla
+	TCompRenderStaticMesh* actual_render = nullptr;
+	CHandle pose_idle;
+	CHandle pose_run;
+	CHandle pose_shoot;
+	void ChangePose(CHandle new_pos_h);
+
 
 	ai_guard& ai_guard::operator=(ai_guard arg) { return arg; }
 };

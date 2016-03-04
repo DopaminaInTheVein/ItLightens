@@ -53,6 +53,28 @@ void ai_guard::Init()
 	____TIMER_REDEFINE_(timerShootingWall, 8);
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
+
+	//Mallas
+	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_shoot = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	CEntity* myEntity = myParent;
+	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
+	actual_render = pose_idle;
+
+	pose_idle.setOwner(myEntity);
+	pose_run.setOwner(myEntity);
+	pose_shoot.setOwner(myEntity);
+
+	TCompRenderStaticMesh *mesh;
+
+	mesh = pose_shoot;
+	mesh->static_mesh = Resources.get("static_meshes/guard_shoot.static_mesh")->as<CStaticMesh>();
+
+	mesh = pose_run;
+	mesh->static_mesh = Resources.get("static_meshes/guard_run.static_mesh")->as<CStaticMesh>();
+
+	actual_render->registerToRender();
+
 }
 
 /**************
@@ -454,6 +476,16 @@ void ai_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 		reduceStats();
 		t_reduceStats = t_reduceStats_max;
 	}
+}
+
+//Cambio de malla
+void ai_guard::ChangePose(CHandle new_pos_h)
+{
+	TCompRenderStaticMesh *new_pose = new_pos_h;
+	if (new_pose == actual_render) return;
+	actual_render->unregisterFromRender();
+	actual_render = new_pose;
+	actual_render->registerToRender();
 }
 
 //TODO: remove
