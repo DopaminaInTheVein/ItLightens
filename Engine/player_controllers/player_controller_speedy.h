@@ -15,9 +15,7 @@
 class player_controller_speedy : public PossController {
 	CObjectManager<player_controller_speedy> *om;
 
-	bool in_speedy = false;
-
-	const float dash_speed = 0.075f;
+	const float dash_speed = 20.f;
 	const float dash_max_duration = 1.f;
 	float dash_duration = 0.f;
 

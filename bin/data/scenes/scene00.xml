@@ -246,8 +246,12 @@
   <entity>
     <tag name="AI" />
     <tag name="AI_speedy" />
+    <tag name="AI_poss" />
     <name name="speedy1" />
     <transform pos="30 0 0" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <life points="50" />
+    <player_speedy />
     <ai_speedy
       wpts_size  = "4"
       wpt0_pos = "21  0   5"

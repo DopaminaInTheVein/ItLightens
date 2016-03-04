@@ -42,7 +42,7 @@ class ai_speedy : public ai_poss, public TCompBase {
 	const float dash_speed = 20.f;
 	const float rotation_speed = deg2rad(200);
 	// timer in seconds
-	const int dash_timer_reset = 8;
+	const int dash_timer_reset = 5;
 
 	const int dash_to_point_chance = 2;
 	const int dash_to_new_point_chance = 2;

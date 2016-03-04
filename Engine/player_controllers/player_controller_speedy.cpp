@@ -21,8 +21,6 @@ void player_controller_speedy::Init()
 	myParent = myHandle.getOwner();
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	starting_player_y = player_transform->getPosition().y + 2;
-	player_y = starting_player_y;
 
 	ChangeState("idle");
 }
@@ -105,7 +103,7 @@ bool player_controller_speedy::dashFront()
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 player_front = player_transform->getFront();
 
-	VEC3 new_position = VEC3(player_position.x + player_front.x*dash_speed, player_position.y, player_position.z + player_front.z*dash_speed);
+	VEC3 new_position = VEC3(player_position.x + player_front.x*dash_speed*getDeltaTime(), player_position.y, player_position.z + player_front.z*dash_speed*getDeltaTime());
 
 	player_transform->setPosition(new_position);
 
