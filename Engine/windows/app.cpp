@@ -16,20 +16,21 @@ CApp::CApp()
 	: xres(800)
 	, yres(600)
 {
+	file_options = "./options.ini";
 	max_screen = GetPrivateProfileIntA(	"screen",
 										"full_screen",
 										0,
-										"./options.ini");
+										file_options.c_str());
 
 	xres = GetPrivateProfileIntA(	"screen",
 									"xres",
 									800,
-									"./options.ini");
+									file_options.c_str());
 
 	yres = GetPrivateProfileIntA(	"screen",
 									"yres",
 									600,
-									"./options.ini");
+									file_options.c_str());
 
 
 	// Create window

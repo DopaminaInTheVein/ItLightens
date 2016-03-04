@@ -16,6 +16,7 @@ public:
 	// Enable default ctor
 	CApp();
 
+	std::string file_options;
 	bool max_screen;
 	int getXRes();
 	int getYRes();
