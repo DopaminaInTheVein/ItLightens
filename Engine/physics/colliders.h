@@ -4,7 +4,6 @@
 #include "components\comp_base.h"
 #include "components\comp_msgs.h"
 
-
 struct sphereCollider : public TCompBase {
 	float	r;
 	float	offset;		//distance to move center
@@ -27,6 +26,9 @@ struct boxCollider : public TCompBase {
 	bool load(MKeyValue& atts);
 	std::string getTag() const { return std::string(tag); }
 	void onCreate(const TMsgEntityCreated&);
+
+	// RayCast (sólo el más cercano)
+	void rayCast();
 };
 
 #endif

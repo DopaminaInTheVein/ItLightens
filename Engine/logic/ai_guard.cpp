@@ -135,13 +135,10 @@ void ai_guard::ChaseState()
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 
-	if (!playerVisible()) {
+	//player lost?
+	if (distance > DIST_SQ_PLAYER_LOST) {
 		ChangeState(ST_NEXT_ACTION);
 	}
-	//player lost?
-	//if (distance > DIST_SQ_PLAYER_LOST) {
-	//	ChangeState(ST_NEXT_ACTION);
-	//}
 
 	//player near?
 	else if (distance < DIST_SQ_SHOT_AREA_ENTER) {
@@ -163,15 +160,17 @@ void ai_guard::ShootState() {
 	//Fuera de tiro
 	if (dist > DIST_SQ_SHOT_AREA_LEAVE) {
 		ChangeState(ST_CHASE);
-	} else {
+	}
+	else {
 		turnTo(posPlayer);
-		if (squaredDistY(myPos, posPlayer)*2 > dist) { //Angulo de 30 grados
+		if (squaredDistY(myPos, posPlayer) * 2 > dist) { //Angulo de 30 grados
 			//Si pitch muy alto me alejo
 			goForward(-SPEED_WALK * getDeltaTime());
 		}
 		if (!playerVisible()) {
 			ChangeState(ST_SHOOTING_WALL);
-		} else {
+		}
+		else {
 			shootToPlayer();
 		}
 	}
@@ -316,9 +315,11 @@ bool ai_guard::playerVisible() {
 				// Está en el cono de vision, visible?
 				ray_cast_query rcQuery;
 				float distRay;
-				CHandle collider = rayCastToPlayer(COL_TAG_OBJECT, distRay);
-				if (!collider.isValid()) { //No bloquea vision
-					return true;
+				CHandle collider = rayCastToPlayer(COL_TAG_OBJECT | COL_TAG_PLAYER, distRay);
+				if (collider.isValid()) { //No bloquea vision
+					if (collider == thePlayer) {
+						return true;
+					}
 				}
 			}
 		}

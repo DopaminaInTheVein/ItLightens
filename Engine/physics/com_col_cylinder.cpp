@@ -71,7 +71,7 @@ void TCompColCillinder::rayCast() {
 			// Si colisiona, guardamos resultado
 			rHalfWay->posCollision = q;
 			rHalfWay->handle = CHandle(this).getOwner();
-			rQuery->maxDistance = distancePQ;
+			rQuery->maxDistance = realDist(p, q);
 		}
 	}
 }
