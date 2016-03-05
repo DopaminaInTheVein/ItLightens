@@ -127,6 +127,8 @@ void player_controller::Falling()
 	UpdateDirection();
 	UpdateMovDirection();
 
+	Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
+
 	if (io->keys[VK_SPACE].becomesPressed()) {
 		jspeed = jimpulse;
 		energyDecreasal(5.0f);
@@ -398,11 +400,9 @@ void player_controller::recalcPossassable() {
 		if (dist < possessionReach) {
 			float yaw = player_transform->getDeltaYawToAimTo(posPoss);
 			yaw = abs(yaw);
-			Debug->LogRaw("Yaw: %f\n", rad2deg(yaw));
 			if (yaw > deg2rad(90)) continue;
 
 			float improvementDeltaYaw = minDeltaYaw - yaw;
-			Debug->LogRaw("Improvement Yaw: %f\n", rad2deg(improvementDeltaYaw));
 			bool isBetter = false;
 			if (improvementDeltaYaw > DELTA_YAW_SELECTION) {
 				isBetter = true;
