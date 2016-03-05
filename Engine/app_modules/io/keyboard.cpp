@@ -10,6 +10,7 @@ void TKeyBoard::update(float dt) {
   sysSysStatus(VK_CONTROL, isKeyPressed(VK_CONTROL));
   sysSysStatus(VK_LWIN, isKeyPressed(VK_LWIN));
   sysSysStatus(VK_SHIFT, isKeyPressed(VK_SHIFT));
+  sysSysStatus(VK_SHIFT, isKeyPressed(VK_LSHIFT));
   sysSysStatus(VK_MENU, isKeyPressed(VK_MENU)); //ALT
   sysSysStatus(VK_SPACE, isKeyPressed(VK_SPACE));
 

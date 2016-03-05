@@ -77,9 +77,6 @@ public:
 		VEC3 delta = getVectorFromYawPitch(yaw, pitch);
 		auto origin = target_loc - delta * distance_to_target;
 
-		if (io->keys['T'].isPressed())
-			io->mouse.toggle();
-
 		CEntity* e_owner = CHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
 		my_tmx->lookAt(origin, target_loc);

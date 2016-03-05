@@ -36,8 +36,8 @@ void player_controller::Init() {
 	starting_player_y = player_transform->getPosition().y + 2;
 	player_y = starting_player_y;
 
-	pose_run	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_jump	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 
 	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
 	actual_render = pose_idle;
@@ -45,7 +45,6 @@ void player_controller::Init() {
 	pose_idle.setOwner(myEntity);
 	pose_run.setOwner(myEntity);
 	pose_jump.setOwner(myEntity);
-
 
 	TCompRenderStaticMesh *mesh;
 
@@ -126,7 +125,6 @@ void player_controller::DoubleJump()
 		jspeed = 0.0f;
 		ChangeState("doublefalling");
 	}
-
 }
 
 void player_controller::DoubleFalling() {
@@ -288,7 +286,7 @@ void player_controller::UpdateMoves()
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	
+
 	VEC3 direction = directionForward + directionLateral;
 
 	CEntity * camera_e = camera;
@@ -336,7 +334,7 @@ void player_controller::UpdateMoves()
 		player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
 	}
 
-	if(player_curr_speed == 0.0f) ChangePose(pose_idle);
+	if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
 	player_transform->executeMovement(player_position);
 }
@@ -378,6 +376,7 @@ void player_controller::UpdatePossession() {
 		}
 	}
 	else if (io->mouse.left.isPressed()) {
+
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
@@ -402,7 +401,7 @@ void player_controller::recalcPossassable() {
 		CEntity* ePoss = hPoss;
 		TCompTransform* tPoss = ePoss->get<TCompTransform>();
 		VEC3 posPoss = tPoss->getPosition();
-		float dist = realDistXZ(player_position, posPoss);
+		float dist = realDist(player_position, posPoss);
 		if (dist < possessionReach) {
 			float yaw = player_transform->getDeltaYawToAimTo(posPoss);
 			if (abs(yaw) > deg2rad(90)) continue;
