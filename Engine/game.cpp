@@ -11,7 +11,6 @@
 #include "camera/camera.h"
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
-#include "input\input.h"
 #include "app_modules/io/io.h"
 
 #include "logic/sbb.h"
@@ -27,11 +26,8 @@
 
 //DEBUG
 CDebug *	  Debug = nullptr;
-CInput	      Input;
 CSimplePhysx  s_physx;		//provisional
 CUI ui;
-bool toMaxScreen;
-bool toMinScreen;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
@@ -47,17 +43,10 @@ CShaderCte< TCteObject > shader_ctes_object;
 
 bool CApp::start() {
 
-	toMaxScreen = false;
-	toMinScreen = false;
-
 	//light setup init
 	shader_ctes_object.lightvec = float4(1.0f, 1.0f, 1.0f, 0.0f);
 	shader_ctes_object.lightcol = float4(0.8f, 0.8f, 0.8f, 1.0f);
 	shader_ctes_object.ambientcol = float4(0.1f, 0.1f, 0.1f, 1.0f);
-
-	// input initialization
-	CApp& app = CApp::get();
-	Input.Initialize(app.getHInstance(), app.getHWnd(), app.getXRes(), app.getYRes());
 
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
@@ -70,8 +59,10 @@ bool CApp::start() {
 	all_modules.push_back(io);
 
 	mod_update.push_back(imgui);
-	mod_update.push_back(io);
+	
 	mod_update.push_back(entities);
+	mod_update.push_back(io);
+
 	mod_renders.push_back(entities);
 	mod_renders.push_back(imgui);
 	mod_renders.push_back(io);

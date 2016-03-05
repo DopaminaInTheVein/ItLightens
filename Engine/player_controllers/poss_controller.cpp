@@ -4,6 +4,9 @@
 #include "components/entity_tags.h"
 #include "components/comp_transform.h"
 #include "components/comp_name.h"
+#include "app_modules\io\io.h"
+
+
 
 PossController::PossController() {
 	AddState(ST_DISABLED, (statehandler)&PossController::DisabledState);
@@ -14,7 +17,7 @@ PossController::PossController() {
 
 void PossController::UpdatePossession() {
 	if (npcIsPossessed) {
-		if (Input.IsKeyPressedDown(DIK_LSHIFT) && possessionCooldown <= 0.0f) {
+		if (io->keys[VK_SHIFT].becomesPressed() && possessionCooldown <= 0.0f) {
 			CEntity* myParent = getMyEntity();
 			TCompName * myParentName = myParent->get<TCompName>();
 			string name = myParentName->name;

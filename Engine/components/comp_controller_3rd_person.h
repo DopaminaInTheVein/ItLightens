@@ -20,8 +20,8 @@ class TCompController3rdPerson : public TCompBase {
 	float		speed_camera;
 	float		m_yaw;
 	float		m_pitch;
-	float		min_pitch = -20.0f;
-	float		max_pitch = 75.0f;
+	float		min_pitch = -1.0f;
+	float		max_pitch = 0.25f;
 	float		rotation_sensibility;
 
 public:
@@ -32,10 +32,10 @@ public:
 		, pitch(deg2rad(0.f))
 		, distance_to_target(5.0f)
 		, position_diff(VEC3(0, 0, 0))
-		, speed_camera(20)
+		, speed_camera(0.8f)
 		, m_yaw(0.0f)
 		, m_pitch(0.0f)
-		, rotation_sensibility(deg2rad(45.0f) / 250.0f)
+		, rotation_sensibility(deg2rad(45.0f))
 	{}
 
 	void onSetTarget(const TMsgSetTarget& msg) {
@@ -44,8 +44,17 @@ public:
 
 	void updateInput() {
 
-		yaw += io->mouse.dx * rotation_sensibility;
-		pitch += io->mouse.dy * rotation_sensibility;
+
+		yaw -= io->mouse.dx * rotation_sensibility*getDeltaTime()*speed_camera;
+		pitch -= io->mouse.dy * rotation_sensibility*getDeltaTime()*speed_camera;
+
+		if (pitch >= max_pitch) {
+			pitch = max_pitch;
+		}
+
+		if (pitch <= min_pitch) {
+			pitch = min_pitch;
+		}
 
 		//TODO: mouse wheel, distance
 		/**** WHEEL EXAMPLE
@@ -74,6 +83,10 @@ public:
 		CEntity* e_owner = CHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
 		my_tmx->lookAt(origin, target_loc);
+	}
+
+	void renderInMenu() {
+		ImGui::SliderFloat("rot_speed", &speed_camera, -2.0f, 2.0f);
 	}
 };
 

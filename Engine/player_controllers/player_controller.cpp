@@ -8,7 +8,7 @@
 #include "components/entity_tags.h"
 #include "components/comp_render_static_mesh.h"
 #include "render\static_mesh.h"
-
+#include "app_modules\io\io.h"
 #include "components/comp_msgs.h"
 #include "ui\ui_interface.h"
 
@@ -88,11 +88,11 @@ void player_controller::myUpdate() {
 
 void player_controller::Idle() {
 	if (!checkDead()) {
-		if (Input.IsMinusPolarityPressedDown() && nearMinus()) {
+		if (io->keys['1'].isPressed() && nearMinus()) {
 			energyDecreasal(getDeltaTime()*0.05f);
 			ChangeState("tominus");
 		}
-		else if (Input.IsPlusPolarityPressedDown() && nearPlus()) {
+		else if (io->keys['2'].isPressed() && nearPlus()) {
 			energyDecreasal(getDeltaTime()*0.05f);
 			ChangeState("toplus");
 		}
@@ -149,7 +149,7 @@ void player_controller::Jumping()
 		ChangeState("idle");
 	}
 
-	if (Input.IsSpacePressedDown()) {
+	if (io->keys[VK_SPACE].becomesPressed()) {
 		jspeed = jimpulse;
 		if (onGround) {
 			energyDecreasal(1.0f);
@@ -166,7 +166,7 @@ void player_controller::Falling()
 	UpdateDirection();
 	UpdateMovDirection();
 
-	if (Input.IsSpacePressedDown()) {
+	if (io->keys[VK_SPACE].becomesPressed()) {
 		jspeed = jimpulse;
 		energyDecreasal(5.0f);
 		ChangeState("doublejump");
@@ -346,7 +346,7 @@ float CPlayerBase::possessionCooldown;
 void player_controller::UpdatePossession() {
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
-		if (Input.IsKeyPressedDown(DIK_LSHIFT)) {
+		if (io->keys[VK_SHIFT].becomesPressed()) {
 			// Se avisa el ai_poss que ha sido poseído
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;
@@ -368,7 +368,7 @@ void player_controller::UpdatePossession() {
 			TCompTransform* tMe = eMe->get<TCompTransform>();
 			tMe->setPosition(VEC3(0, 200, 0));
 		}
-		if (Input.IsLeftClickPressedDown()) {
+		if (io->mouse.left.becomesPressed()) {
 			energyDecreasal(5.0f);
 			// Se avisa el ai_poss que ha sido stuneado
 			CEntity* ePoss = currentPossessable;
@@ -377,7 +377,7 @@ void player_controller::UpdatePossession() {
 			ePoss->sendMsg(msg);
 		}
 	}
-	else if (Input.IsLeftClickPressed()) {
+	else if (io->mouse.left.isPressed()) {
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");

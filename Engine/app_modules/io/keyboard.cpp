@@ -12,11 +12,6 @@ void TKeyBoard::update(float dt) {
   sysSysStatus(VK_SHIFT, isKeyPressed(VK_SHIFT));
   sysSysStatus(VK_MENU, isKeyPressed(VK_MENU)); //ALT
   sysSysStatus(VK_SPACE, isKeyPressed(VK_SPACE));
-  sysSysStatus('W', isKeyPressed('W'));
-  sysSysStatus('A', isKeyPressed('A'));
-  sysSysStatus('S', isKeyPressed('S'));
-  sysSysStatus('D', isKeyPressed('D'));
-  sysSysStatus('T', isKeyPressed('T'));
 
   for (auto& it : active_keys) {
     it.second.setCurrentStatus(it.second.isPressed());

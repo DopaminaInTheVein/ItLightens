@@ -4,7 +4,7 @@
 #include <windows.h>
 #include "handle\object_manager.h"
 #include "components\comp_name.h"
-
+#include "app_modules\io\io.h"
 #include "components\entity_tags.h"
 
 #include "logic\ai_mole.h"
@@ -28,7 +28,7 @@ void player_controller_mole::Init() {
 }
 void player_controller_mole::UpdateInputActions() {
 	energyDecreasal(getDeltaTime()*0.5f);
-	if (Input.IsLeftClickReleased()) {
+	if (io->mouse.left.becomesReleased()) {
 		if (boxGrabbed) {
 			ChangeState("leaveBox");
 		}

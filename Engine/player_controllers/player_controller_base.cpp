@@ -45,7 +45,6 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 
 void CPlayerBase::update(float elapsed) {
 	if (controlEnabled) {
-		Input.Frame();
 		UpdateInputActions();
 		Recalc();
 		UpdateMoves();
@@ -127,43 +126,26 @@ bool CPlayerBase::UpdateMovDirection() {
 
 	if (io->keys['W'].isPressed()) {
 		directionForward = VEC3(0, 0, 1);
-		if (Input.GetLeftStickY() != -2) {
-			if (Input.GetLeftStickY() != 0.0f) {
-				directionForward = VEC3(0, 0, -Input.GetLeftStickY());
-			}
-		}
+		//TODO: xbobx
 		moving = true;
 		vertical = true;
 	}
 	if (io->keys['S'].isPressed()) {
 		directionForward = VEC3(0, 0, -1);
-		if (Input.GetLeftStickY() != -2) {
-			if (Input.GetLeftStickY() != 0.0f) {
-				directionForward = VEC3(0, 0, -Input.GetLeftStickY());
-				//TODO: y-axis not working, joystick-L & joystick-R
-			}
-		}
+		//TODO: xbobx
 		moving = true;
 		vertical = true;
 	}
 
 	if (io->keys['A'].isPressed()) {
 		directionLateral = VEC3(1, 0, 0);
-		if (Input.GetLeftStickX() != -2) {
-			if (Input.GetLeftStickX() != 0.0f) {
-				directionLateral = VEC3(-Input.GetLeftStickX(), 0, 0);
-			}
-		}
+		//TODO: xbobx
 		moving = true;
 		horizontal = true;
 	}
 	if (io->keys['D'].isPressed()) {
 		directionLateral = VEC3(-1, 0, 0);
-		if (Input.GetLeftStickX() != -2) {
-			if (Input.GetLeftStickX() != 0.0f) {
-				directionLateral = VEC3(-Input.GetLeftStickX(), 0, 0);
-			}
-		}
+		//TODO: xbobx
 		moving = true;
 		horizontal = true;
 	}

@@ -13,15 +13,15 @@
   <!-- Player -->
   <entity>
     <tag name="player" />
-    <transform pos="25 2 5" />
+    <transform pos="-25 2 5" />
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
   </entity>
   <entity>
-    <life points="50" />
+    <life points="5000" />
     <tag name="target" />
-    <transform pos="28 0 3" />
+    <transform pos="60 0 3" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_idle.static_mesh" />
@@ -281,7 +281,7 @@
   <!-- ZONE 4 -->
   <!-- CIENTIFICO & GUARD-->
 
-  <entity>
+  <!--<entity>
     <tag name="AI" />
     <tag name="AI_guard" />
     <transform pos="67 0 7" rotation="1 2 3 3" scale="1 1 1" />
@@ -292,12 +292,12 @@
       kpt0_type = "seek" kpt0_pos = " 70  0  10" kpt0_wait = "2"
       kpt1_type = "look" kpt1_pos = " 60  0   0" kpt1_wait = "2"
       kpt2_type = "seek" kpt2_pos = " 70  0 -10" kpt2_wait = "2"
-      kpt3_type = "look" kpt3_pos = " 60  0   0" kpt3_wait = "2"
+      kpt3_type = "look" kpt3_pos = " 60  0   0" kpt3_wait = "2"l
       kpt4_type = "seek" kpt4_pos = "50  0 -10" kpt4_wait = "2"
       kpt5_type = "look" kpt5_pos = " 60  0   0" kpt5_wait = "2"
       kpt6_type = "seek" kpt6_pos = " 50  0  10" kpt6_wait = "2"
       kpt7_type = "look" kpt7_pos = " 60  0   0" kpt7_wait = "2" />
-  </entity>
+  </entity>-->
 
   <entity>
     <tag name="AI" />
