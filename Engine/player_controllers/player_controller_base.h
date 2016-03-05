@@ -9,12 +9,8 @@
 #include "components\comp_msgs.h"
 
 #include "camera\camera.h"
-#include "input\input.h"
 
 class CEntity;
-class CInput;
-
-extern CInput Input;
 
 template< class TObj >
 class CObjectManager;

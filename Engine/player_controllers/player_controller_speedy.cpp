@@ -6,7 +6,7 @@
 #include "components\comp_transform.h"
 #include "components\entity.h"
 #include "components\entity_tags.h"
-
+#include "app_modules\io\io.h"
 #include "components\comp_msgs.h"
 
 void player_controller_speedy::Init()
@@ -49,16 +49,14 @@ void player_controller_speedy::Blinking()
 {
 	if (blink_ready) {
 		// TODO: Marcar punto
-		if (Input.IsOrientLeftPressed() || Input.IsMouseMovedLeft())
+		if (io->mouse.dx > 0)
 			rotate = 1;
-		else if (Input.IsOrientRightPressed() || Input.IsMouseMovedRight())
+		else if (io->mouse.dx < 0)
 			rotate = -1;
 		else
 			rotate = 0;
 
-		Input.UpdateMousePosition();
-
-		if (Input.IsRightClickReleased())
+		if (io->mouse.right.becomesReleased())
 			ChangeState("blink");
 	}
 	else {
@@ -84,11 +82,11 @@ void player_controller_speedy::Blink()
 }
 
 void player_controller_speedy::UpdateInputActions() {
-	if (Input.IsLeftClickPressedDown()) {
+	if (io->mouse.left.becomesPressed()) {
 		ChangeState("dashing");
 		energyDecreasal(10.0f);
 	}
-	if (Input.IsRightClickPressedDown()) {
+	if (io->mouse.right.isPressed()) {
 		energyDecreasal(15.0f);
 		ChangeState("blinking");
 	}

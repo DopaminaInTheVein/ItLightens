@@ -5,7 +5,7 @@
 #include "utils/XMLParser.h"
 #include "physics/physics.h"
 #include "logic/sbb.h"
-
+#include "app_modules\io\io.h"
 #include "ui\ui_interface.h"
 
 map<string, ai_guard::KptType> ai_guard::kptTypes = {
@@ -214,7 +214,7 @@ void ai_guard::ShootState() {
 	}
 
 	ui.addTextInstructions("\nPress 'M' to interrupt gaurd shoot when he dont see you!!! (artificial)\n");
-	if (Input.IsKeyPressedDown(KEY_M)) {
+	if (io->keys['M'].becomesPressed()) {
 		artificialInterrupt();
 	}
 }

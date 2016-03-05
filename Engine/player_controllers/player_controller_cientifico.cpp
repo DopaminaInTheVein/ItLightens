@@ -11,6 +11,7 @@
 #include "components\comp_name.h"
 #include "ui\ui_interface.h"
 #include "components\comp_msgs.h"
+#include "app_modules\io\io.h"
 
 void player_controller_cientifico::Init() {
 	om = getHandleManager<player_controller_cientifico>();	//player
@@ -38,32 +39,32 @@ void player_controller_cientifico::Init() {
 
 void player_controller_cientifico::UpdateInputActions() {
 	energyDecreasal(getDeltaTime()*0.5f);
-	if (Input.IsKeyPressedDown(DIK_1)) {
+	if (io->keys['1'].becomesPressed()) {
 		ChangeState("createDisableBeacon");
 	}
 
-	if (Input.IsKeyPressedDown(DIK_2)) {
+	if (io->keys['2'].becomesPressed()) {
 		ChangeState("addDisableBeacon");
 	}
 
-	if (Input.IsKeyPressedDown(DIK_3)) {
+	if (io->keys['3'].becomesPressed()) {
 		energyDecreasal(5.0f);
 		ChangeState("createStaticBomb");
 	}
 
-	if (Input.IsKeyPressedDown(DIK_5)) {
+	if (io->keys['5'].becomesPressed()) {
 		energyDecreasal(5.0f);
 		ChangeState("createMagneticBomb");
 	}
-	if (Input.IsKeyPressedDown(DIK_6)) {
+	if (io->keys['6'].becomesPressed()) {
 		energyDecreasal(10.0f);
 		ChangeState("useMagneticBomb");
 	}
-	if (Input.IsKeyPressedDown(DIK_4)) {
+	if (io->keys['4'].becomesPressed()) {
 		energyDecreasal(10.0f);
 		ChangeState("useStaticBomb");
 	}
-	if (Input.IsKeyPressedDown(DIK_R))
+	if (io->keys['R'].becomesPressed())
 		ExplodeBomb();
 }
 
