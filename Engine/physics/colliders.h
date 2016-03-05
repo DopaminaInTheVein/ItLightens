@@ -20,6 +20,7 @@ struct boxCollider : public TCompBase {
 	VEC3	relative_p1;
 	VEC3	relative_p2;
 	char	tag[64];
+	int		types;
 
 	VEC3 getPMAX() const;
 	VEC3 getPMIN() const;

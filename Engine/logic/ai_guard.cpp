@@ -35,6 +35,7 @@ void ai_guard::Init()
 	thePlayer = tags_manager.getFirstHavingTag(getID("target"));
 
 	// insert all states in the map
+	AddState(ST_SELECT_ACTION, (statehandler)&ai_guard::SelectActionState);
 	AddState(ST_NEXT_ACTION, (statehandler)&ai_guard::NextActionState);
 	AddState(ST_SEEK_POINT, (statehandler)&ai_guard::SeekPointState);
 	AddState(ST_WAIT_NEXT, (statehandler)&ai_guard::WaitNextState);
@@ -46,8 +47,8 @@ void ai_guard::Init()
 	AddState(ST_SHOOTING_WALL, (statehandler)&ai_guard::ShootingWallState);
 
 	// reset the state
-	ChangeState(ST_NEXT_ACTION);
-	curkpt = -1; //Para que el primero en acceder sea el índice 0
+	ChangeState(ST_SELECT_ACTION);
+	curkpt = 0;
 
 	//Other info
 	____TIMER_REDEFINE_(timerShootingWall, 8);
@@ -74,14 +75,13 @@ void ai_guard::Init()
 	mesh->static_mesh = Resources.get("static_meshes/guard_run.static_mesh")->as<CStaticMesh>();
 
 	actual_render->registerToRender();
-
 }
 
 /**************
-* NextAction State
+* Select Action
 **************/
-void ai_guard::NextActionState() {
-	curkpt = (curkpt + 1) % keyPoints.size();
+void ai_guard::SelectActionState() {
+	ChangePose(pose_idle);
 	switch (keyPoints[curkpt].type)
 	{
 	case Seek:
@@ -91,6 +91,14 @@ void ai_guard::NextActionState() {
 		ChangeState(ST_LOOK_POINT);
 		break;
 	}
+}
+
+/**************
+* NextAction State
+**************/
+void ai_guard::NextActionState() {
+	curkpt = (curkpt + 1) % keyPoints.size();
+	ChangeState(ST_SELECT_ACTION);
 }
 
 /**************
@@ -112,6 +120,7 @@ void ai_guard::SeekPointState() {
 
 	//Go to waypoint
 	else {
+		ChangePose(pose_run);
 		goTo(dest);
 	}
 }
@@ -138,6 +147,7 @@ void ai_guard::LookPointState() {
 * WaitNext State
 **************/
 void ai_guard::WaitNextState() {
+	ChangePose(pose_idle);
 	if (timeWaiting > keyPoints[curkpt].time) {
 		timeWaiting = 0;
 		ChangeState(ST_NEXT_ACTION);
@@ -167,7 +177,10 @@ void ai_guard::ChaseState()
 		ChangeState(ST_SHOOT);
 	}
 
-	else goTo(posPlayer);
+	else {
+		ChangePose(pose_run);
+		goTo(posPlayer);
+	}
 }
 
 /**************
@@ -193,6 +206,7 @@ void ai_guard::ShootState() {
 			ChangeState(ST_SHOOTING_WALL);
 		}
 		else {
+			ChangePose(pose_shoot);
 			shootToPlayer();
 		}
 	}
@@ -207,13 +221,16 @@ void ai_guard::ShootState() {
 * Shooting Wall
 **************/
 void ai_guard::ShootingWallState() {
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	VEC3 posPlayer = tPlayer->getPosition();
+	turnTo(posPlayer);
 	if (playerVisible()) {
 		ChangeState(ST_SHOOT);
 	}
 	else {
 		shootToPlayer();
 		____TIMER_CHECK_DO_(timerShootingWall);
-		ChangeState(ST_NEXT_ACTION);
+		ChangeState(ST_SELECT_ACTION);
 		____TIMER_CHECK_DONE_(timerShootingWall);
 	}
 }
@@ -249,6 +266,7 @@ void ai_guard::LookArroundState() {
 
 	//Turn arround
 	else if (deltaYawLookingArround < 2 * M_PI) {
+		ChangePose(pose_idle);
 		float yaw, pitch;
 		getTransform()->getAngles(&yaw, &pitch);
 
@@ -259,7 +277,7 @@ void ai_guard::LookArroundState() {
 	}
 	else {
 		deltaYawLookingArround = 0;
-		ChangeState(ST_NEXT_ACTION);
+		ChangeState(ST_SELECT_ACTION);
 	}
 }
 
@@ -337,7 +355,7 @@ bool ai_guard::playerVisible() {
 				// Está en el cono de vision, visible?
 				ray_cast_query rcQuery;
 				float distRay;
-				CHandle collider = rayCastToPlayer(COL_TAG_OBJECT | COL_TAG_PLAYER, distRay);
+				CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
 				if (collider.isValid()) { //No bloquea vision
 					if (collider == thePlayer) {
 						return true;
@@ -363,6 +381,9 @@ CHandle ai_guard::rayCastToPlayer(char types, float& distRay) {
 }
 
 void ai_guard::shootToPlayer() {
+	//If cant shoot returns
+	if (noShoot) return;
+
 	//Values
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
@@ -371,7 +392,7 @@ void ai_guard::shootToPlayer() {
 
 	//RayCast
 	float distRay;
-	CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_OBJECT, distRay);
+	CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
 	if (collider == thePlayer) {
 		CEntity* ePlayer = thePlayer;
 		TMsgDamage dmg;
@@ -417,6 +438,8 @@ bool ai_guard::load(MKeyValue& atts) {
 			, atts.getInt(atrWait, 0)
 			);
 	}
+	noShoot = atts.getBool("noShoot", false);
+
 	return true;
 }
 

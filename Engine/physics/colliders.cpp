@@ -54,7 +54,7 @@ bool boxCollider::load(MKeyValue & atts)
 	relative_p2 = atts.getPoint("p2");
 
 	strcpy(tag, atts.getString("tag", "").c_str());
-	int i = 0;
+	types = atts.getInt("types", COL_TAG_WALL);
 	return true;
 }
 
@@ -113,6 +113,8 @@ VEC3 boxCollider::getPMAX() const
 void boxCollider::rayCast() {
 	ray_cast_halfway* rHalfWay = &Physics::RayCastHalfWay;
 	ray_cast_query* rQuery = &rHalfWay->query;
+
+	if (rQuery->types & types == 0) return;
 
 	VEC3 min = getPMIN(), max = getPMAX();
 	VEC3 rOrig = rQuery->position;

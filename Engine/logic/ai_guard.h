@@ -16,11 +16,12 @@
 #define DIST_RAYSHOT_INI				20
 #define DIST_SQ_PLAYER_DETECTION_INI	150
 #define DIST_SQ_PLAYER_LOST_INI			200
-#define SPEED_WALK_INI					6
-#define CONE_VISION_INI					deg2rad(45)
+#define SPEED_WALK_INI					3
+#define CONE_VISION_INI					deg2rad(60)
 #define SPEED_ROT_INI					deg2rad(100)
 #define DAMAGE_LASER_INI				1
 
+#define ST_SELECT_ACTION	"select_action"
 #define ST_NEXT_ACTION		"next_action"
 #define ST_SEEK_POINT		"seek_point"
 #define ST_WAIT_NEXT		"wait_next"
@@ -49,7 +50,6 @@ class ai_guard : public TCompBase, public aicontroller
 	float CONE_VISION = CONE_VISION_INI;
 	float SPEED_ROT = SPEED_ROT_INI;
 	float DAMAGE_LASER = DAMAGE_LASER_INI;
-	____TIMER_DECLARE_(timerShootingWall);
 
 	//Handles & More
 	CHandle myHandle;
@@ -74,6 +74,7 @@ class ai_guard : public TCompBase, public aicontroller
 	};
 	static map<string, KptType > kptTypes;
 
+	bool noShoot;
 	std::vector<KeyPoint> keyPoints;
 	int curkpt;
 	VEC3 noisePoint;
@@ -95,12 +96,13 @@ class ai_guard : public TCompBase, public aicontroller
 	CHandle rayCastToPlayer(char types, float& distRay);
 	void shootToPlayer();
 
-//from bombs
+	//from bombs
 	const float reduce_factor = 3.0f;
 	const float t_reduceStats_max = 15.0f;
 	float t_reduceStats = 0.0f;
 
 public:
+	void SelectActionState();
 	void NextActionState();
 	void SeekPointState();
 	void LookPointState();
@@ -123,7 +125,7 @@ public:
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();
 
-	void update(float dt) { 
+	void update(float dt) {
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
 			if (t_reduceStats <= 0.0f) {
@@ -144,8 +146,8 @@ public:
 	CHandle pose_shoot;
 	void ChangePose(CHandle new_pos_h);
 
-
 	ai_guard& ai_guard::operator=(ai_guard arg) { return arg; }
+	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)
 };
 
 #endif

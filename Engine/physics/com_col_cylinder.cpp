@@ -23,7 +23,7 @@ void TCompColCillinder::rayCast() {
 	ray_cast_query* rQuery = &rHalfWay->query;
 
 	// Filtro tipo
-	if (!(type & rQuery->types)) return;
+	if (type & rQuery->types == 0) return;
 
 	//Calculo Raycast vs. Cylinder
 	//(Suponemos Cilidor alineado en eje Y)
