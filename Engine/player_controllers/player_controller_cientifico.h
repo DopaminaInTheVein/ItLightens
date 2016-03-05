@@ -8,7 +8,6 @@
 #include "components\comp_msgs.h"
 
 #include "camera\camera.h"
-#include "input\input.h"
 
 #include "player_controller_base.h"
 #include "poss_controller.h"
@@ -16,9 +15,6 @@
 
 
 class CEntity;
-class CInput;
-
-extern CInput Input;
 
 template< class TObj >
 class CObjectManager;

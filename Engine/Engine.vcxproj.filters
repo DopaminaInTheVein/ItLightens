@@ -114,9 +114,6 @@
     <ClCompile Include="logic\sbb.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="input\input.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
     <ClCompile Include="logic\ai_speedy.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -180,9 +177,6 @@
     </ClCompile>
     <ClCompile Include="physics\colliders.cpp">
       <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="input\input_manager.cpp">
-      <Filter>input</Filter>
     </ClCompile>
     <ClCompile Include="app_modules\io\io.cpp">
       <Filter>app_modules\io</Filter>
@@ -340,9 +334,6 @@
     <ClInclude Include="logic\sbb.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="input\input.h">
-      <Filter>input</Filter>
-    </ClInclude>
     <ClInclude Include="logic\ai_speedy.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -415,9 +406,6 @@
     <ClInclude Include="physics\colliders.h">
       <Filter>physics</Filter>
     </ClInclude>
-    <ClInclude Include="input\input_manager.h">
-      <Filter>input</Filter>
-    </ClInclude>
     <ClInclude Include="app_modules\io\digital_button.h">
       <Filter>app_modules\io</Filter>
     </ClInclude>
@@ -476,9 +464,6 @@
     </Filter>
     <Filter Include="logic">
       <UniqueIdentifier>{c4cefe0b-fafc-4e30-a6e2-9cc68d3649da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="input">
-      <UniqueIdentifier>{94c77502-c797-472d-9962-905c28738a0c}</UniqueIdentifier>
     </Filter>
     <Filter Include="debug">
       <UniqueIdentifier>{f4e9f4d5-b47f-481a-9c6f-9354de3f32da}</UniqueIdentifier>

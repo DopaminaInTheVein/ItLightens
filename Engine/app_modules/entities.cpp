@@ -11,7 +11,6 @@
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
 #include "logic/ai_water.h"
-#include "input/input.h"
 #include "windows/app.h"
 #include "utils/utils.h"
 #include <vector>
@@ -48,7 +47,6 @@ DECL_OBJ_MANAGER("box_collider", boxCollider);
 
 static CHandle player;
 static CHandle target;
-CInput input;
 CCamera * camera;
 
 // The global dict of all msgs
@@ -208,8 +206,6 @@ bool CEntitiesModule::start() {
 }
 
 void CEntitiesModule::stop() {
-	// Stop input
-	input.Shutdown();
 }
 
 void CEntitiesModule::update(float dt) {

@@ -49,7 +49,7 @@ public:
 
 	void keys_update() {
 		if (ImGui::CollapsingHeader("Game controls", 0, true, open_ui_keys)) {
-			ImGui::Text("unlock mouse          -> T");
+			ImGui::Text("unlock mouse          -> º");
 			ImGui::Text("w,a,s,d/ L joystick   -> player moving");
 			ImGui::Text("mouse mov/ R joystick -> camera moving");
 			ImGui::Text("SPACE/ A              -> jump,doublejump(if possible)");
