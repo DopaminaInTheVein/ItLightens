@@ -28,6 +28,7 @@ public:
 	HWND getHWnd() { return hWnd; }
 	bool start();
 	void stop();
+	void restart();
 
 	VModules& getModulesToWndProc() {
 		return mod_wnd_proc;
