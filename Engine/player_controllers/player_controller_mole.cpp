@@ -71,12 +71,15 @@ void player_controller_mole::GrabBox() {
 	else {
 		SBB::postBool(selectedBox, true);
 	}
-
 	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 	TCompTransform* box_t = box->get<TCompTransform>();
-	VEC3 posbox = box_t->getPosition();
-	posbox.y += 2;
-	box_t->setPosition(posbox);
+	SetMyEntity();
+	CEntity* p = myParent;
+	TCompTransform* p_t = p->get<TCompTransform>();
+	VEC3 posPlayer = p_t->getPosition();
+	posPlayer.y += 2;
+	box_t->setPosition(posPlayer);
+
 	energyDecreasal(5.0f);
 	boxGrabbed = true;
 	player_max_speed /= 2;

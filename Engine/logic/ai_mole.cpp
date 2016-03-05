@@ -102,6 +102,12 @@ void ai_mole::NextWptState()
 }
 
 void ai_mole::GrabState() {
+	TCompTransform * transform = getEntityTransform();
+	CEntity* box = SBB::readHandlesVector("wptsBoxes")[towptbox];
+	TCompTransform* box_t = box->get<TCompTransform>();
+	VEC3 posbox = transform->getPosition();
+	posbox.y += 2;
+	box_t->setPosition(posbox);
 	ChangeState("seekwptcarry");
 }
 void ai_mole::SeekWptCarryState() {
