@@ -11,7 +11,6 @@
 #include "entity.h"
 #include "utils/XMLParser.h"
 #include "imgui/imgui.h"
-
 #include "contants/ctes_object.h"
 extern CShaderCte< TCteObject > shader_ctes_object;
 
@@ -67,6 +66,7 @@ void TCompCamera::renderInMenu() {
 	float fov_in_rad = getFov();
 	float znear = getZNear();
 	float zfar = getZFar();
+	float ar = getAspectRatio();
 
 	bool changed = false;
 	float fov_in_deg = rad2deg(fov_in_rad);
@@ -78,4 +78,8 @@ void TCompCamera::renderInMenu() {
 	changed |= ImGui::SliderFloat("ZFar", &zfar, 10.f, 1000.f);
 	if (changed)
 		setProjection(fov_in_rad, znear, zfar);
+
+	if (ImGui::SliderFloat("a/r", &ar, 0.f, 10.f)) {
+		//setAspectRatio(ar);
+	}
 }

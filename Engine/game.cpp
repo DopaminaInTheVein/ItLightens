@@ -62,8 +62,8 @@ bool CApp::start() {
 	all_modules.push_back(entities);
 	all_modules.push_back(io);
 
-	mod_update.push_back(imgui);
-	
+
+	mod_update.push_back(imgui);	
 	mod_update.push_back(entities);
 	mod_update.push_back(io);
 
@@ -73,8 +73,11 @@ bool CApp::start() {
 	mod_init_order.push_back(imgui);
 	mod_init_order.push_back(entities);
 	mod_init_order.push_back(io);
+
 	mod_wnd_proc.push_back(io);
 	mod_wnd_proc.push_back(imgui);
+
+	
 
 	// ----------------------------
 	tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
@@ -131,6 +134,8 @@ void CApp::update(float elapsed) {
 
 	static float ctime = 0.f;
 	ctime += elapsed* 0.01f;
+
+	CHandleManager::destroyAllPendingObjects();
 }
 
 // ----------------------------------

@@ -24,12 +24,6 @@ void CIOModule::stop() {
 void CIOModule::update(float dt) {
   mouse.update(dt);
   keys.update(dt);
-  ImGui::Begin("IO");
-  ImGui::Text("Mouse Delta %d,%d", mouse.dx, mouse.dy);
-  if (ImGui::Button("Toggle Capture")) {
-    mouse.toggle();
-  }
-  ImGui::End();
 }
 
 void CIOModule::render() {

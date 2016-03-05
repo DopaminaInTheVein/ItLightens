@@ -19,9 +19,9 @@
     <controller_3rd_person />
   </entity>
   <entity>
-    <life points="50" />
+    <life points="300" />
     <tag name="target" />
-    <transform pos="-28 0 3" />
+    <transform pos="-28 0.1 3" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_idle.static_mesh" />
@@ -31,9 +31,11 @@
 
   <!-- Scene objects -->
   <entity>
+    <tag name = "platform" />
     <name name="floor_1lvl" />
     <transform pos="-25.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 2 12.5" p2="-12.5 0 -12.5"  tag="platform" />
   </entity>
   <entity>
     <tag name = "platform" />
@@ -58,19 +60,25 @@
     <box_collider p1 ="5 5 12.5" p2="-5 0 -12.5"  tag="platform" />
   </entity>
   <entity>
+    <tag name = "platform" />
     <name name="floor_1lvl" />
     <transform pos="0.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 2 12.5" p2="-12.5 0 -12.5"  tag="platform" />
   </entity>
   <entity>
+    <tag name = "platform" />
     <name name="floor_1lvl" />
     <transform pos="30.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 2 12.5" p2="-12.5 0 -12.5"  tag="platform" />
   </entity>
   <entity>
+    <tag name = "platform" />
     <name name="floor_1lvl" />
     <transform pos="60.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 2 12.5" p2="-12.5 0 -12.5"  tag="platform" />
   </entity>
   <entity>
     <tag name = "platform" />
@@ -258,6 +266,7 @@
       wpt1_pos = "21  0  -5"
       wpt2_pos = "37  0  -5"
       wpt3_pos = "37  0   5" />
+    <sphere_collider radius="0.3" tag ="player" />
   </entity>
 
   <!--Guardia centinela sin pistola-->

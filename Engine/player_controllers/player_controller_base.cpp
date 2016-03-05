@@ -17,6 +17,8 @@
 #include "app_modules\io\io.h"
 #include "utils/utils.h"
 
+#include "physics\physics.h"
+
 CPlayerBase::CPlayerBase() {
 	AddState("idle", (statehandler)&CPlayerBase::Idle);
 	AddState("moving", (statehandler)&CPlayerBase::Moving);
@@ -262,9 +264,14 @@ void CPlayerBase::ApplyGravity() {
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
-	if (player_position.y > 0 || jspeed > 0.01f) {
+	ray_cast_query floor_query = ray_cast_query(player_position,VEC3(0,-1,0),15.0f, COL_TAG_SOLID);
+	ray_cast_result res = Physics::calcRayCast(floor_query);
+	VEC3 ground = res.positionCollision;
+	float d = simpleDist(player_position, ground);
+
+	if (d > 0.1f || jspeed > 0.1f) {
 		jspeed -= gravity*getDeltaTime();
-		player_position = player_position + directionJump*getDeltaTime()*jspeed;
+		player_position = player_position + VEC3(0, 1, 0)*getDeltaTime()*jspeed;
 		//player_transform->setPosition(player_position);
 		if (!player_transform->executeMovement(player_position)) {
 			onGround = true;
@@ -272,12 +279,18 @@ void CPlayerBase::ApplyGravity() {
 			ChangeState("idle");
 		}
 		else {
+
+ 			if (state != "doublefalling" && jspeed < 0.1f) {
+				if (state == "doublejump")
+ 					ChangeState("doublefalling");
+				else
+					ChangeState("falling");
+			}
+
 			onGround = false;
 		}
 	}
 	else {
-		player_position.y = 0;
-		player_transform->setPosition(player_position);
 		onGround = true;
 	}
 }
@@ -297,15 +310,7 @@ void CPlayerBase::Jumping()
 {
 	UpdateDirection();
 	UpdateMovDirection();
-	SetMyEntity();
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-	jspeed -= gravity*getDeltaTime();
-
-	if (jspeed <= 0.1f) {
-		jspeed = 0.0f;
-		ChangeState("falling");
-	}
+	
 }
 
 void CPlayerBase::Moving()
@@ -331,7 +336,12 @@ void CPlayerBase::renderInMenu()
 	direction.Normalize();
 	direction = direction + directionJump;
 
+	SetMyEntity();
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	VEC3 player_position = player_transform->getPosition();
+
 	ImGui::Text("NODE: %s\n", state.c_str());
+	ImGui::Text("position: %.4f, %.4f, %.4f\n", player_position.x, player_position.y, player_position.z);
 	ImGui::Text("direction: %.4f, %.4f, %.4f", direction.x, direction.y, direction.z);
 	ImGui::Text("jump: %.5f", jspeed);
 }
@@ -367,4 +377,5 @@ void CPlayerBase::orbitCameraDeath() {
 }
 
 void CPlayerBase::myUpdate() {
+	//nothing, to do on child
 }
