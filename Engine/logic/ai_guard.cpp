@@ -371,7 +371,7 @@ bool ai_guard::playerVisible() {
 	return false;
 }
 
-CHandle ai_guard::rayCastToPlayer(char types, float& distRay) {
+CHandle ai_guard::rayCastToPlayer(int types, float& distRay) {
 	ray_cast_query rcQuery;
 	VEC3 myPos = getTransform()->getPosition();
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();

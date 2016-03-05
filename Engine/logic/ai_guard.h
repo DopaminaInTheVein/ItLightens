@@ -105,7 +105,7 @@ class ai_guard : public TCompBase, public aicontroller
 	void resetTimers();
 
 	//Raycast
-	CHandle rayCastToPlayer(char types, float& distRay);
+	CHandle rayCastToPlayer(int types, float& distRay);
 	void shootToPlayer();
 
 	//from bombs
