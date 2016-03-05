@@ -239,20 +239,6 @@
     <ai_mole />
   </entity>
 
-  <!--Guardia centinela sin pistola-->
-  <entity>
-    <tag name="AI" />
-    <tag name="AI_guard" />
-    <transform pos="-25 0 5" rotation="1 2 3 3" scale="1 1 1" />
-    <life points="100" />
-    <render_static_mesh name="static_meshes/guard.static_mesh" />
-    <ai_guard
-      kpt_size  = "2"
-      kpt0_type = "seek" kpt0_pos = " -25  0  5" kpt0_wait = "0"
-      kpt1_type = "look" kpt1_pos = " -25  0  0" kpt1_wait = "2"
-      noShoot ="true" />
-  </entity>
-
   <!-- END ZONE 2 -->
 
   <!-- ZONE 3 -->
@@ -285,8 +271,11 @@
       kpt_size  = "2"
       kpt0_type = "seek" kpt0_pos = " 30  0   3" kpt0_wait = "0"
       kpt1_type = "look" kpt1_pos = " 30  0  10" kpt1_wait = "2"
+      jurisdiction ="30 0 0"
+      jurRadius = "0"
       noShoot ="true" />
   </entity>
+
   <!-- END ZONE 3 -->
 
   <!-- ZONE 4 -->

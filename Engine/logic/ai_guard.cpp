@@ -166,9 +166,11 @@ void ai_guard::ChaseState()
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
-
+	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
+	bool playerLost = distance > DIST_SQ_PLAYER_LOST || outJurisdiction(posPlayer);
+	//bool playerLost = distance > DIST_SQ_PLAYER_LOST || distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
 	//player lost?
-	if (distance > DIST_SQ_PLAYER_LOST) {
+	if (playerLost) {
 		ChangeState(ST_NEXT_ACTION);
 	}
 
@@ -349,16 +351,18 @@ bool ai_guard::playerVisible() {
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
-	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos)) {
-		if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) {
-			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) {
-				// Está en el cono de vision, visible?
-				ray_cast_query rcQuery;
-				float distRay;
-				CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
-				if (collider.isValid()) { //No bloquea vision
-					if (collider == thePlayer) {
-						return true;
+	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos) * 2) { //Pitch < 30
+		if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
+			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) { //Distancia
+				if (inJurisdiction(posPlayer)) { //Jurisdiccion
+					float distanceJur = squaredDistXZ(posPlayer, jurCenter);
+					ray_cast_query rcQuery;
+					float distRay;
+					CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
+					if (collider.isValid()) { //No bloquea vision
+						if (collider == thePlayer) {
+							return true;
+						}
 					}
 				}
 			}
@@ -411,6 +415,17 @@ void ai_guard::shootToPlayer() {
 	}
 }
 
+// -- Jurisdiction -- //
+bool ai_guard::inJurisdiction(VEC3 posPlayer) {
+	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
+	return distanceJur < jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
+}
+
+bool ai_guard::outJurisdiction(VEC3 posPlayer) {
+	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
+	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_LEAVE;
+}
+
 // -- Reset Timers-- //
 void ai_guard::resetTimers() {
 	timeWaiting = 0;
@@ -440,6 +455,11 @@ bool ai_guard::load(MKeyValue& atts) {
 	}
 	noShoot = atts.getBool("noShoot", false);
 
+	//Jurisdiction
+	jurCenter = atts.getPoint("jurisdiction");
+	jurRadiusSq = atts.getFloat("jurRadius", 1000.0f);
+	if (jurRadiusSq < FLT_MAX) jurRadiusSq *= jurRadiusSq;
+
 	return true;
 }
 
@@ -449,7 +469,7 @@ void ai_guard::render() {
 void ai_guard::renderInMenu() {
 	ImGui::SliderFloat("Speed Walk", &SPEED_WALK, 0, 1);
 	ImGui::SliderFloat("Speed Rot (rad/s)", &SPEED_ROT, 0, 2 * (float)M_PI);
-	ImGui::SliderFloat("Cone Vision 1/2 (rads)", &CONE_VISION, 0, 180);
+	ImGui::SliderFloat("Cone Vision 1/2 (rads)", &CONE_VISION, 0, (float)M_PI);
 	ImGui::SliderFloat("Distance Reach", &DIST_SQ_REACH_PNT, 0, 1);
 	ImGui::SliderFloat("Detection Area", &DIST_SQ_PLAYER_DETECTION, 0, 500);
 	ImGui::SliderFloat("Shot Area Enter", &DIST_SQ_SHOT_AREA_ENTER, 0, 500);

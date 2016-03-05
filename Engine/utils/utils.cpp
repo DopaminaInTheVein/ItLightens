@@ -33,8 +33,16 @@ uint32_t getID(const char* text) {
 	return out;
 }
 
+float _deltaTimePrev = 1.0f / 60.0f;
 float getDeltaTime() {
-	return ImGui::GetIO().DeltaTime;
+	float dt = ImGui::GetIO().DeltaTime;
+	if (dt > 0.5f) {
+		dt = _deltaTimePrev;
+	}
+	else {
+		_deltaTimePrev = dt;
+	}
+	return dt;
 }
 
 float squared(float i) {

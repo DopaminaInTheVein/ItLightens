@@ -58,6 +58,12 @@ class ai_guard : public TCompBase, public aicontroller
 	TCompTransform * getTransform();
 	CEntity* getPlayer();
 
+	//Cambio malla
+	TCompRenderStaticMesh* actual_render = nullptr;
+	CHandle pose_idle;
+	CHandle pose_run;
+	CHandle pose_shoot;
+
 	//Debug
 	//____TIMER_DECLARE_(timerDebug, 2.0f);
 
@@ -79,6 +85,10 @@ class ai_guard : public TCompBase, public aicontroller
 	int curkpt;
 	VEC3 noisePoint;
 
+	//Correa
+	VEC3 jurCenter;
+	float jurRadiusSq;
+
 	//Aux actions
 	void goTo(const VEC3& dest);
 	void goForward(float stepForward);
@@ -86,6 +96,8 @@ class ai_guard : public TCompBase, public aicontroller
 
 	//Aux checks
 	bool playerVisible();
+	bool inJurisdiction(VEC3);
+	bool outJurisdiction(VEC3);
 
 	//Times and similars
 	float timeWaiting;
@@ -139,11 +151,6 @@ public:
 	void renderInMenu();
 	bool load(MKeyValue& atts);
 
-	//Cambio malla
-	TCompRenderStaticMesh* actual_render = nullptr;
-	CHandle pose_idle;
-	CHandle pose_run;
-	CHandle pose_shoot;
 	void ChangePose(CHandle new_pos_h);
 
 	ai_guard& ai_guard::operator=(ai_guard arg) { return arg; }
