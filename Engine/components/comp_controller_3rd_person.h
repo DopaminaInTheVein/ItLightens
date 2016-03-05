@@ -32,7 +32,7 @@ public:
 		, pitch(deg2rad(0.f))
 		, distance_to_target(5.0f)
 		, position_diff(VEC3(0, 0, 0))
-		, speed_camera(0.8f)
+		, speed_camera(2.0f)
 		, m_yaw(0.0f)
 		, m_pitch(0.0f)
 		, rotation_sensibility(deg2rad(45.0f))

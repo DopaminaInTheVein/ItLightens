@@ -7,6 +7,7 @@
 #include "app_modules\io\io.h"
 #include "components\entity_tags.h"
 
+#include "ui\ui_interface.h"
 #include "logic\ai_mole.h"
 
 void player_controller_mole::Init() {
@@ -70,12 +71,15 @@ void player_controller_mole::GrabBox() {
 	else {
 		SBB::postBool(selectedBox, true);
 	}
-
 	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 	TCompTransform* box_t = box->get<TCompTransform>();
-	VEC3 posbox = box_t->getPosition();
-	posbox.y += 2;
-	box_t->setPosition(posbox);
+	SetMyEntity();
+	CEntity* p = myParent;
+	TCompTransform* p_t = p->get<TCompTransform>();
+	VEC3 posPlayer = p_t->getPosition();
+	posPlayer.y += 2;
+	box_t->setPosition(posPlayer);
+
 	energyDecreasal(5.0f);
 	boxGrabbed = true;
 	player_max_speed /= 2;
@@ -92,10 +96,6 @@ void player_controller_mole::DestroyWall() {
 }
 
 void player_controller_mole::LeaveBox() {
-	SBB::postBool(selectedBox, false);
-	boxGrabbed = false;
-	player_max_speed *= 2;
-
 	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 	TCompTransform* box_t = box->get<TCompTransform>();
 	VEC3 posbox = box_t->getPosition();
@@ -104,8 +104,12 @@ void player_controller_mole::LeaveBox() {
 	TCompTransform* p_t = p->get<TCompTransform>();
 	posbox.x += p_t->getFront().x * 3;
 	posbox.z += p_t->getFront().z * 3;
-	box_t->setPosition(posbox);
-
+	//box_t->setPosition(posbox);
+	if (box_t->executeMovement(posbox)) {
+		SBB::postBool(selectedBox, false);
+		boxGrabbed = false;
+		player_max_speed *= 2;
+	}
 	ChangeState("idle");
 }
 
@@ -156,4 +160,10 @@ bool player_controller_mole::nearToBox() {
 
 void player_controller_mole::InitControlState() {
 	ChangeState("idle");
+}
+
+void player_controller_mole::update_msgs()
+{
+	ui.addTextInstructions("Left Shift            -> Exit possession State");
+	ui.addTextInstructions("Click Left Mouse      -> Grab/Throw near Box or Break Wall");
 }

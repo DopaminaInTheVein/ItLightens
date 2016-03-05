@@ -2,14 +2,20 @@
 #define INC_PLAYER_CONTROLLER_SPEEDY_H_
 
 #include "poss_controller.h"
+#include "logic\ai_water.h"
 
 #include "components\comp_base.h"
 #include "handle\handle.h"
 #include "components\comp_msgs.h"
+#include "components/entity_tags.h"
 
 #include "camera\camera.h"
 
 #include "player_controller_base.h"
+
+#include "utils/XMLParser.h"
+
+extern TTagsManager tags_manager;
 
 class player_controller_speedy : public PossController {
 	CObjectManager<player_controller_speedy> *om;
@@ -21,11 +27,15 @@ class player_controller_speedy : public PossController {
 	float dash_timer = 0.f;
 	bool dash_ready = true;
 	const float dash_cooldown = 5.f;
+	float drop_water_timer;
 
 	const float blink_distance = 8.f;
 
+	const float drop_water_timer_reset = 0.25f;
+
 	float blink_timer = 0.f;
 	bool blink_ready = true;
+	bool drop_water_ready = false;
 	const float blink_cooldown = 5.f;
 
 public:
@@ -44,6 +54,8 @@ public:
 	void updateDashTimer();
 	void resetBlinkTimer();
 	void updateBlinkTimer();
+	void updateDropWaterTimer();
+	void resetDropWaterTimer();
 
 	void DisabledState();
 	void InitControlState();

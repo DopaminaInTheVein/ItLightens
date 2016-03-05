@@ -61,6 +61,7 @@ class player_controller : public CPlayerBase {
 	void ChangePose(CHandle new_pos_h);
 
 	void UpdateMoves() override;
+	void UpdateInputActions() override;
 
 protected:
 	void myUpdate();

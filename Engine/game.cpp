@@ -131,6 +131,8 @@ void CApp::update(float elapsed) {
 
 	static float ctime = 0.f;
 	ctime += elapsed* 0.01f;
+
+	CHandleManager::destroyAllPendingObjects();
 }
 
 // ----------------------------------

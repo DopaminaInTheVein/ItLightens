@@ -22,6 +22,8 @@ void player_controller_speedy::Init()
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 
+	drop_water_timer = drop_water_timer_reset;
+
 	ChangeState("idle");
 }
 
@@ -105,6 +107,49 @@ bool player_controller_speedy::dashFront()
 
 	player_transform->setPosition(new_position);
 
+	if (drop_water_ready) {
+
+		// CREATE WATER 
+		// Creating the new handle
+		CHandle curr_entity;
+		auto hm = CHandleManager::getByName("entity");
+		CHandle new_h = hm->createHandle();
+		curr_entity = new_h;
+		CEntity* e = curr_entity;
+		// Adding water tag
+		tags_manager.addTag(curr_entity, getID("water"));
+		// Creating the new entity components
+		// create transform component
+		auto hm_transform = CHandleManager::getByName("transform");
+		CHandle new_transform_h = hm_transform->createHandle();
+		MKeyValue atts;
+		// position, rotation and scale
+		char position[100]; sprintf(position, "%f %f %f", player_position.x, player_position.y, player_position.z);
+		atts["pos"] = position;
+		char rotation[100]; sprintf(rotation, "%f %f %f %f", 1, 1, 1, 1);
+		atts["rotation"] = rotation;
+		char scale[100]; sprintf(scale, "%f %f %f", 1, 1, 1);
+		atts["scale"] = scale;
+		// load transform attributes and add transform to the entity
+		new_transform_h.load(atts);
+		e->add(new_transform_h);
+		// create water component and add it to the entity
+		CHandleManager* hm_water = CHandleManager::getByName("water");
+		CHandle new_water_h = hm_water->createHandle();
+		e->add(new_water_h);
+		// init entity and send message to the new water entity with its type
+		TMsgSetWaterType msg_water;
+		msg_water.type = 1;
+		e->sendMsg(msg_water);
+		// init the new water component
+		auto hm_water_cont = getHandleManager<water_controller>();
+		water_controller* water_cont = hm_water_cont->getAddrFromHandle(new_water_h);
+		water_cont->Init();
+
+		// reset drop water cooldown
+		resetDropWaterTimer();
+	}
+
 	if (dash_duration > dash_max_duration) {
 		dash_duration = 0;
 		return true;
@@ -142,8 +187,21 @@ void player_controller_speedy::resetBlinkTimer()
 	blink_ready = false;
 }
 
+void player_controller_speedy::updateDropWaterTimer() {
+	drop_water_timer -= getDeltaTime();
+	if (drop_water_timer <= 0) {
+		drop_water_ready = true;
+	}
+}
+
+void player_controller_speedy::resetDropWaterTimer() {
+	drop_water_timer = drop_water_timer_reset;
+	drop_water_ready = false;
+}
+
 void player_controller_speedy::DisabledState() {
 }
+
 void player_controller_speedy::InitControlState() {
 	ChangeState("idle");
 }

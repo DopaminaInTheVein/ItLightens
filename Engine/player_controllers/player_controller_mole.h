@@ -38,6 +38,8 @@ public:
 	int selectedBoxi = 0;
 	int selectedWallToBreaki = 0;
 
+	void update_msgs() override;
+
 	void UpdateInputActions();
 
 	TCompTransform * getEntityTransform() {

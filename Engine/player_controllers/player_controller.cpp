@@ -12,14 +12,13 @@
 #include "components/comp_msgs.h"
 #include "ui\ui_interface.h"
 
+#define DELTA_YAW_SELECTION		deg2rad(10)
+
 void player_controller::Init() {
 	om = getHandleManager<player_controller>();	//player
 
 	DeleteState("jumping");
 	DeleteState("falling");
-	DeleteState("idle");
-
-	AddState("idle", (statehandler)&player_controller::Idle);		// Idle Redo
 
 	AddState("doublefalling", (statehandler)&player_controller::DoubleFalling);		//needed to disable double jump on falling
 	AddState("doublejump", (statehandler)&player_controller::DoubleJump);
@@ -85,37 +84,6 @@ void player_controller::myUpdate() {
 	}
 }
 
-void player_controller::Idle() {
-	if (!checkDead()) {
-		if (io->keys['1'].isPressed() && nearMinus()) {
-			energyDecreasal(getDeltaTime()*0.05f);
-			ChangeState("tominus");
-		}
-		else if (io->keys['2'].isPressed() && nearPlus()) {
-			energyDecreasal(getDeltaTime()*0.05f);
-			ChangeState("toplus");
-		}
-		else if (polarizedCurrentSpeed > .2f) {
-			energyDecreasal(getDeltaTime()*0.1f);
-			polarizedMove = false;
-			CEntity * entPoint = nullptr;
-			if (tominus) {
-				entPoint = this->getMinusPointHandle(topolarizedminus);
-			}
-			else if (toplus) {
-				entPoint = this->getPlusPointHandle(topolarizedplus);
-			}
-			AttractMove(entPoint);
-		}
-		else {
-			topolarizedplus = -1;
-			topolarizedminus = -1;
-			polarizedCurrentSpeed = 0.0f;
-			CPlayerBase::Idle();
-		}
-	}
-}
-
 void player_controller::DoubleJump()
 {
 	UpdateDirection();
@@ -149,12 +117,7 @@ void player_controller::Jumping()
 
 	if (io->keys[VK_SPACE].becomesPressed()) {
 		jspeed = jimpulse;
-		if (onGround) {
-			energyDecreasal(1.0f);
-		}
-		else {
-			energyDecreasal(5.0f);
-		}
+		energyDecreasal(5.0f);
 		ChangeState("doublejump");
 	}
 }
@@ -280,6 +243,7 @@ void player_controller::AttractMove(CEntity * entPoint) {
 
 void player_controller::UpdateMoves()
 {
+	
 	SetMyEntity();
 
 	ApplyGravity();
@@ -339,6 +303,35 @@ void player_controller::UpdateMoves()
 	player_transform->executeMovement(player_position);
 }
 
+void player_controller::UpdateInputActions()
+{
+	if (io->keys['1'].isPressed() && nearMinus()) {
+		energyDecreasal(getDeltaTime()*0.05f);
+		ChangeState("tominus");
+	}
+	else if (io->keys['2'].isPressed() && nearPlus()) {
+		energyDecreasal(getDeltaTime()*0.05f);
+		ChangeState("toplus");
+	}
+	else if (polarizedCurrentSpeed > .2f) {
+		energyDecreasal(getDeltaTime()*0.1f);
+		polarizedMove = false;
+		CEntity * entPoint = nullptr;
+		if (tominus) {
+			entPoint = this->getMinusPointHandle(topolarizedminus);
+		}
+		else if (toplus) {
+			entPoint = this->getPlusPointHandle(topolarizedplus);
+		}
+		AttractMove(entPoint);
+	}
+	else {
+		topolarizedplus = -1;
+		topolarizedminus = -1;
+		polarizedCurrentSpeed = 0.0f;
+	}
+}
+
 float CPlayerBase::possessionCooldown;
 //Possession
 void player_controller::UpdatePossession() {
@@ -365,6 +358,7 @@ void player_controller::UpdatePossession() {
 			CEntity * eMe = CHandle(this).getOwner();
 			TCompTransform* tMe = eMe->get<TCompTransform>();
 			tMe->setPosition(VEC3(0, 200, 0));
+			player_curr_speed = 0;
 		}
 		if (io->mouse.left.becomesPressed()) {
 			energyDecreasal(5.0f);
@@ -376,7 +370,6 @@ void player_controller::UpdatePossession() {
 		}
 	}
 	else if (io->mouse.left.isPressed()) {
-
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
@@ -404,22 +397,37 @@ void player_controller::recalcPossassable() {
 		float dist = realDist(player_position, posPoss);
 		if (dist < possessionReach) {
 			float yaw = player_transform->getDeltaYawToAimTo(posPoss);
-			if (abs(yaw) > deg2rad(90)) continue;
-			if (yaw < minDeltaYaw) {
-				bool isBetter = false;
-				if (minDeltaYaw - yaw > deg2rad(2)) {
-					isBetter = true;
-				}
-				else if (dist < minDistance) {
-					isBetter = true;
-				}
-				if (isBetter) {
-					currentPossessable = hPoss;
-					minDeltaYaw = yaw;
-					minDistance = dist;
-				}
+			yaw = abs(yaw);
+			Debug->LogRaw("Yaw: %f\n", rad2deg(yaw));
+			if (yaw > deg2rad(90)) continue;
+
+			float improvementDeltaYaw = minDeltaYaw - yaw;
+			Debug->LogRaw("Improvement Yaw: %f\n", rad2deg(improvementDeltaYaw));
+			bool isBetter = false;
+			if (improvementDeltaYaw > DELTA_YAW_SELECTION) {
+				isBetter = true;
+			}
+			else if (improvementDeltaYaw < DELTA_YAW_SELECTION) {
+				isBetter = false;
+			}
+			else {
+				isBetter = dist < minDistance;
+			}
+			if (isBetter) {
+				currentPossessable = hPoss;
+				minDeltaYaw = abs(yaw);
+				minDistance = dist;
 			}
 		}
+	}
+
+	//Debug
+	if (currentPossessable.isValid()) {
+		CEntity* ePoss = currentPossessable;
+		TCompTransform* tPoss = ePoss->get<TCompTransform>();
+		VEC3 posPoss = tPoss->getPosition();
+		Debug->DrawLine(posPoss + VEC3(-0.1f, 1.5f, -0.1f), posPoss + VEC3(0.1f, 1.5f, 0.1f), BLUE);
+		Debug->DrawLine(posPoss + VEC3(0.1f, 1.5f, -0.1f), posPoss + VEC3(-0.1f, 1.5f, 0.1f), BLUE);
 	}
 }
 

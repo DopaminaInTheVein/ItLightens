@@ -5,6 +5,7 @@
 #include "ai_poss.h"
 #include "aicontroller.h"
 #include "sbb.h"
+#include "ai_water.h"
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
 #include "components/entity.h"
@@ -17,7 +18,6 @@
 #include "render/shader_cte.h"
 #include "utils/utils.h"
 #include "utils/XMLParser.h"
-#include "logic/ai_water.h"
 #include <vector>
 #include <chrono>
 #include <windows.h>
