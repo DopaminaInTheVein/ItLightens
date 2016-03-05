@@ -70,43 +70,53 @@ VEC3 boxCollider::getPMIN() const
 {
 	VEC3 p;
 	CHandle me = CHandle(this);
-	CHandle parent = me.getOwner();
-	CEntity *p_e = parent;
+	if (me.isValid()) {
+		CHandle parent = me.getOwner();
+		if (parent.isValid()) {
+			CEntity *p_e = parent;
 
-	TCompTransform * t = p_e->get<TCompTransform>();
-	CQuaternion rot = t->getRotation();
-	rot.Inverse(rot);
-	CQuaternion rot2 = rot;
-	rot.Conjugate();
-	CQuaternion aux = CQuaternion(relative_p2.x, relative_p2.y, relative_p2.z, 0);
-	aux = rot2 * aux;
-	aux = aux * rot;
-	VEC3 orientedP2 = VEC3(aux.x, aux.y, aux.z);
-	VEC3 org = t->getPosition();
-	p = org + orientedP2;
-	return p;
+			TCompTransform * t = p_e->get<TCompTransform>();
+			CQuaternion rot = t->getRotation();
+			rot.Inverse(rot);
+			CQuaternion rot2 = rot;
+			rot.Conjugate();
+			CQuaternion aux = CQuaternion(relative_p2.x, relative_p2.y, relative_p2.z, 0);
+			aux = rot2 * aux;
+			aux = aux * rot;
+			VEC3 orientedP2 = VEC3(aux.x, aux.y, aux.z);
+			VEC3 org = t->getPosition();
+			p = org + orientedP2;
+			return p;
+		}
+	}
+	return VEC3(0,0,0);
 }
 
 VEC3 boxCollider::getPMAX() const
 {
 	VEC3 p;
 	CHandle me = CHandle(this);
-	CHandle parent = me.getOwner();
-	CEntity *p_e = parent;
+	if (me.isValid()) {
+		CHandle parent = me.getOwner();
+		if (parent.isValid()) {
+			CEntity *p_e = parent;
+			TCompTransform * t = p_e->get<TCompTransform>();
+			CQuaternion rot = t->getRotation();
+			rot.Inverse(rot);
+			CQuaternion rot2 = rot;
+			rot.Conjugate();
+			CQuaternion aux = CQuaternion(relative_p1.x, relative_p1.y, relative_p1.z, 0);
+			aux = rot2 * aux;
+			aux = aux * rot;
+			VEC3 orientedP1 = VEC3(aux.x, aux.y, aux.z);
+			VEC3 org = t->getPosition();
 
-	TCompTransform * t = p_e->get<TCompTransform>();
-	CQuaternion rot = t->getRotation();
-	rot.Inverse(rot);
-	CQuaternion rot2 = rot;
-	rot.Conjugate();
-	CQuaternion aux = CQuaternion(relative_p1.x, relative_p1.y, relative_p1.z, 0);
-	aux = rot2 * aux;
-	aux = aux * rot;
-	VEC3 orientedP1 = VEC3(aux.x, aux.y, aux.z);
-	VEC3 org = t->getPosition();
+			p = org + orientedP1;
+			return p;
 
-	p = org + orientedP1;
-	return p;
+		}
+	}
+	return VEC3(0, 0, 0);
 }
 
 // RayCast (sólo el más cercano)
