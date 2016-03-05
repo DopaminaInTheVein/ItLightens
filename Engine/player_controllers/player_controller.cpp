@@ -12,6 +12,8 @@
 #include "components/comp_msgs.h"
 #include "ui\ui_interface.h"
 
+#define DELTA_YAW_SELECTION		deg2rad(10)
+
 void player_controller::Init() {
 	om = getHandleManager<player_controller>();	//player
 
@@ -365,6 +367,7 @@ void player_controller::UpdatePossession() {
 			CEntity * eMe = CHandle(this).getOwner();
 			TCompTransform* tMe = eMe->get<TCompTransform>();
 			tMe->setPosition(VEC3(0, 200, 0));
+			player_curr_speed = 0;
 		}
 		if (io->mouse.left.becomesPressed()) {
 			energyDecreasal(5.0f);
@@ -376,7 +379,6 @@ void player_controller::UpdatePossession() {
 		}
 	}
 	else if (io->mouse.left.isPressed()) {
-
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
@@ -403,23 +405,39 @@ void player_controller::recalcPossassable() {
 		VEC3 posPoss = tPoss->getPosition();
 		float dist = realDist(player_position, posPoss);
 		if (dist < possessionReach) {
+			Debug->LogRaw("-----\n");
 			float yaw = player_transform->getDeltaYawToAimTo(posPoss);
-			if (abs(yaw) > deg2rad(90)) continue;
-			if (yaw < minDeltaYaw) {
-				bool isBetter = false;
-				if (minDeltaYaw - yaw > deg2rad(2)) {
-					isBetter = true;
-				}
-				else if (dist < minDistance) {
-					isBetter = true;
-				}
-				if (isBetter) {
-					currentPossessable = hPoss;
-					minDeltaYaw = yaw;
-					minDistance = dist;
-				}
+			yaw = abs(yaw);
+			Debug->LogRaw("Yaw: %f\n", rad2deg(yaw));
+			if (yaw > deg2rad(90)) continue;
+
+			float improvementDeltaYaw = minDeltaYaw - yaw;
+			Debug->LogRaw("Improvement Yaw: %f\n", rad2deg(improvementDeltaYaw));
+			bool isBetter = false;
+			if (improvementDeltaYaw > DELTA_YAW_SELECTION) {
+				isBetter = true;
+			}
+			else if (improvementDeltaYaw < DELTA_YAW_SELECTION) {
+				isBetter = false;
+			}
+			else {
+				isBetter = dist < minDistance;
+			}
+			if (isBetter) {
+				currentPossessable = hPoss;
+				minDeltaYaw = abs(yaw);
+				minDistance = dist;
 			}
 		}
+	}
+
+	//Debug
+	if (currentPossessable.isValid()) {
+		CEntity* ePoss = currentPossessable;
+		TCompTransform* tPoss = ePoss->get<TCompTransform>();
+		VEC3 posPoss = tPoss->getPosition();
+		Debug->DrawLine(posPoss + VEC3(-0.1f, 1.5f, -0.1f), posPoss + VEC3(0.1f, 1.5f, 0.1f), BLUE);
+		Debug->DrawLine(posPoss + VEC3(0.1f, 1.5f, -0.1f), posPoss + VEC3(-0.1f, 1.5f, 0.1f), BLUE);
 	}
 }
 

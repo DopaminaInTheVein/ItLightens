@@ -6,8 +6,6 @@
 #include "components/comp_name.h"
 #include "app_modules\io\io.h"
 
-
-
 PossController::PossController() {
 	AddState(ST_DISABLED, (statehandler)&PossController::DisabledState);
 	AddState(ST_INIT_CONTROL, (statehandler)&PossController::InitControlState);
@@ -47,6 +45,7 @@ void PossController::onSetEnable(bool enabled) {
 	dbg("PossController::setEnable(%d)", enabled);
 	npcIsPossessed = enabled;
 	this->controlEnabled = enabled;
+	player_curr_speed = 0;
 
 	// Componentes y entidades para asignar Controlador y cámara
 	CHandle hPlayer = tags_manager.getFirstHavingTag(getID("player"));
