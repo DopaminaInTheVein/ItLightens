@@ -266,6 +266,7 @@
       wpt1_pos = "21  0  -5"
       wpt2_pos = "37  0  -5"
       wpt3_pos = "37  0   5" />
+    <sphere_collider radius="0.3" tag ="player" />
   </entity>
 
   <entity>

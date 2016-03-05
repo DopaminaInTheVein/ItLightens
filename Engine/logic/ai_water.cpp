@@ -27,8 +27,11 @@ void water_controller::Init() {
 }
 
 void water_controller::update(float elapsed) {
-	Recalc();
-	updateTTL();
+	
+	if(myHandle.isValid()) Recalc();
+	if(myParent.isValid()) 
+		updateTTL();
+			
 }
 
 void water_controller::onSetWaterType(const TMsgSetWaterType& msg) {
@@ -61,8 +64,8 @@ void water_controller::Idle()
 void water_controller::Die()
 {
 	dbg("Muerte Agua!! %i\n", id_water);
-	if (myParent.isValid())
-		getHandleManager<CEntity>()->destroyHandle(myParent);
+	myHandle.destroy();
+	myParent.destroy();
 	ChangeState("dead");
 }
 
