@@ -184,6 +184,15 @@
     <ClCompile Include="input\input_manager.cpp">
       <Filter>input</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\io\io.cpp">
+      <Filter>app_modules\io</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\io\keyboard.cpp">
+      <Filter>app_modules\io</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\io\mouse.cpp">
+      <Filter>app_modules\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -406,6 +415,18 @@
     <ClInclude Include="input\input_manager.h">
       <Filter>input</Filter>
     </ClInclude>
+    <ClInclude Include="app_modules\io\digital_button.h">
+      <Filter>app_modules\io</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\io\io.h">
+      <Filter>app_modules\io</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\io\keyboard.h">
+      <Filter>app_modules\io</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\io\mouse.h">
+      <Filter>app_modules\io</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -470,6 +491,9 @@
     </Filter>
     <Filter Include="physics">
       <UniqueIdentifier>{8363631e-fb31-4f78-80df-fb6750e11494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\io">
+      <UniqueIdentifier>{a9e4179a-d89e-4a4d-86a7-45f6f384b662}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

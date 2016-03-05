@@ -10,8 +10,7 @@
 #include "geometry/angular.h"
 
 #include "input\input.h"
-
-extern CInput Input;
+#include "app_modules/io/io.h"
 
 class TCompController3rdPerson : public TCompBase {
 	float		yaw;
@@ -23,6 +22,7 @@ class TCompController3rdPerson : public TCompBase {
 	float		m_pitch;
 	float		min_pitch = -20.0f;
 	float		max_pitch = 75.0f;
+	float		rotation_sensibility;
 
 public:
 	CHandle		target;
@@ -35,6 +35,7 @@ public:
 		, speed_camera(20)
 		, m_yaw(0.0f)
 		, m_pitch(0.0f)
+		, rotation_sensibility(deg2rad(45.0f) / 250.0f)
 	{}
 
 	void onSetTarget(const TMsgSetTarget& msg) {
@@ -42,63 +43,37 @@ public:
 	}
 
 	void updateInput() {
-		m_yaw = 0.0f;
-		m_pitch = 0.0f;
 
-		if (Input.GetMouseDiffX() != 0) {
-			m_yaw = -Input.GetMouseDiffX()*speed_camera*getDeltaTime();
-		}
-
-		if (Input.GetMouseDiffY() != 0) {
-			m_pitch = -Input.GetMouseDiffY()*speed_camera*getDeltaTime();
-			/*if (m_pitch > max_pitch)
-				m_pitch = max_pitch;
-			if (m_pitch < min_pitch)
-				m_pitch = min_pitch;*/
-		}
-		if (Input.GetRightStickX() >= -1.0f) {
-			if (Input.GetRightStickX() != 0.0f) {
-				m_yaw = -Input.GetRightStickX()*speed_camera *speed_camera*getDeltaTime();
-			}
-			if (Input.GetRightStickY() != 0.0f) {
-				m_pitch = -Input.GetRightStickY()*speed_camera *speed_camera*getDeltaTime();
-				/*if (m_pitch >= max_pitch)
-					m_pitch = max_pitch;
-				if (m_pitch < min_pitch)
-					m_pitch = min_pitch;*/
-			}
-		}
+		yaw += io->mouse.dx * rotation_sensibility;
+		pitch += io->mouse.dy * rotation_sensibility;
 
 		//TODO: mouse wheel, distance
+		/**** WHEEL EXAMPLE
+		if (io->mouse.wheel) {
+			pitch += io->mouse.wheel * 8;
+		}
+		*/
 	}
 
 	void update(float dt) {
+		CEntity* e_target = target;
+		if (!e_target)
+			return;
+
 		updateInput();
 
-		CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
-		CEntity* e_target = target;
-
-		TCompTransform * player_transform = e_target->get<TCompTransform>();
-		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
-
-		if (!e_target || ((TCompLife*)e_target->get<TCompLife>())->currentlife <= 0.0f || 0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition()))
-			return;
 		TCompTransform* target_tmx = e_target->get<TCompTransform>();
 		assert(target_tmx);
 		auto target_loc = target_tmx->getPosition();
-		target_tmx->getAngles(&yaw, &pitch);
+		VEC3 delta = getVectorFromYawPitch(yaw, pitch);
+		auto origin = target_loc - delta * distance_to_target;
+
+		if (io->keys['T'].isPressed())
+			io->mouse.toggle();
 
 		CEntity* e_owner = CHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
-		VEC3 vec_camera = my_tmx->getFront();
-		vec_camera.y = 0;
-		auto origin = target_loc - vec_camera*distance_to_target;
-
-		origin = origin - target_loc;		//normalize vector, needed for traslation pos
-
-		VEC3 posF = rotateAround(origin, 0.0f, m_pitch, m_yaw);
-		posF = posF + target_loc;			//normalize vector, needed for traslation pos
-		my_tmx->lookAt(posF, target_loc);
+		my_tmx->lookAt(origin, target_loc);
 	}
 };
 

@@ -11,6 +11,7 @@
 #include "components\comp_msgs.h"
 #include "components\comp_camera.h"
 
+#include "app_modules\io\io.h"
 #include "utils/utils.h"
 
 CPlayerBase::CPlayerBase() {
@@ -124,7 +125,7 @@ bool CPlayerBase::UpdateMovDirection() {
 	bool horizontal = false;
 	bool vertical = false;
 
-	if (Input.IsUpPressed()) {
+	if (io->keys['W'].isPressed()) {
 		directionForward = VEC3(0, 0, 1);
 		if (Input.GetLeftStickY() != -2) {
 			if (Input.GetLeftStickY() != 0.0f) {
@@ -134,7 +135,7 @@ bool CPlayerBase::UpdateMovDirection() {
 		moving = true;
 		vertical = true;
 	}
-	if (Input.IsDownPressed()) {
+	if (io->keys['S'].isPressed()) {
 		directionForward = VEC3(0, 0, -1);
 		if (Input.GetLeftStickY() != -2) {
 			if (Input.GetLeftStickY() != 0.0f) {
@@ -146,7 +147,7 @@ bool CPlayerBase::UpdateMovDirection() {
 		vertical = true;
 	}
 
-	if (Input.IsLeftPressed()) {
+	if (io->keys['A'].isPressed()) {
 		directionLateral = VEC3(1, 0, 0);
 		if (Input.GetLeftStickX() != -2) {
 			if (Input.GetLeftStickX() != 0.0f) {
@@ -156,7 +157,7 @@ bool CPlayerBase::UpdateMovDirection() {
 		moving = true;
 		horizontal = true;
 	}
-	if (Input.IsRightPressed()) {
+	if (io->keys['D'].isPressed()) {
 		directionLateral = VEC3(-1, 0, 0);
 		if (Input.GetLeftStickX() != -2) {
 			if (Input.GetLeftStickX() != 0.0f) {
@@ -177,7 +178,7 @@ bool CPlayerBase::UpdateMovDirection() {
 }
 
 void CPlayerBase::UpdateJumpState() {
-	if (Input.IsSpacePressedDown()) {
+	if (io->keys[VK_SPACE].isPressed()) {
 		Jump();
 	}
 }

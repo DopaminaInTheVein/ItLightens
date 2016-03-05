@@ -12,6 +12,7 @@
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
 #include "input\input.h"
+#include "app_modules/io/io.h"
 
 #include "logic/sbb.h"
 #include "handle/object_manager.h"
@@ -61,17 +62,23 @@ bool CApp::start() {
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
 	auto entities = new CEntitiesModule;
+	io = new CIOModule;     // It's the global io
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
 	all_modules.push_back(entities);
+	all_modules.push_back(io);
 
 	mod_update.push_back(imgui);
+	mod_update.push_back(io);
 	mod_update.push_back(entities);
 	mod_renders.push_back(entities);
 	mod_renders.push_back(imgui);
+	mod_renders.push_back(io);
 	mod_init_order.push_back(imgui);
 	mod_init_order.push_back(entities);
+	mod_init_order.push_back(io);
+	mod_wnd_proc.push_back(io);
 	mod_wnd_proc.push_back(imgui);
 
 	// ----------------------------
@@ -91,6 +98,8 @@ bool CApp::start() {
 			return false;
 		}
 	}
+
+	io->mouse.toggle();
 
 	return true;
 }
