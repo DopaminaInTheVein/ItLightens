@@ -35,15 +35,19 @@ class ai_speedy : public ai_poss, public TCompBase {
 	int curwpt;
 
 	float dash_timer;
+	float drop_water_timer;
 	bool dash_ready;
+	bool drop_water_ready;
 	VEC3 dash_target;
 
 	const float speed = 2.f;
 	const float dash_speed = 20.f;
 	const float rotation_speed = deg2rad(200);
-	// timer in seconds
+	const float max_dash_player_distance = 70.f;
+	// timers in seconds
 	const int dash_timer_reset = 5;
-
+	const float drop_water_timer_reset = 0.25f;
+	// probabilities
 	const int dash_to_point_chance = 2;
 	const int dash_to_new_point_chance = 2;
 	const int dash_to_player_chance = 2;
@@ -75,6 +79,8 @@ public:
 	bool dashToTarget(VEC3 target);
 	void updateDashTimer();
 	void resetDashTimer();
+	void updateDropWaterTimer();
+	void resetDropWaterTimer();
 
 	//Overload function for handler_manager
 	ai_speedy& ai_speedy::operator=(ai_speedy arg) { return arg; }

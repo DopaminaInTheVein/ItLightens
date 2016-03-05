@@ -24,6 +24,10 @@ void ai_speedy::Init()
 	dash_ready = false;
 	dash_target = VEC3(0, 0, 0);
 
+	// drop water timer initialization
+	drop_water_timer = drop_water_timer_reset;
+	drop_water_ready = false;
+
 	// reset the state
 	ChangeState("idle");
 }
@@ -38,7 +42,9 @@ void ai_speedy::update(float elapsed) {
 	transform = myEntity->get<TCompTransform>();
 	CEntity * player_e = player;
 	player_transform = player_e->get<TCompTransform>();
-	// Recalc AI
+	// Recalc AI and update timers
+	updateDashTimer();
+	updateDropWaterTimer();
 	Recalc();
 }
 
@@ -69,7 +75,6 @@ void ai_speedy::IdleState() {
 
 void ai_speedy::NextWptState()
 {
-	updateDashTimer();
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
 
@@ -80,15 +85,19 @@ void ai_speedy::NextWptState()
 	}
 }
 
-void ai_speedy::SeekWptState() {
-	updateDashTimer();
+void ai_speedy::SeekWptState() 
+{
 	float distance = squaredDistXZ(fixedWpts[curwpt], transform->getPosition());
 
 	string next_action = decide_next_action();
 
 	if (next_action == "dashtoplayer" && dash_ready) {
 		dash_target = player_transform->getPosition();
-		ChangeState(next_action);
+		float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
+		if (abs(distance_to_player) <= max_dash_player_distance)
+			ChangeState(next_action);
+		else if (abs(distance) > 0.1f) 
+			moveFront(speed);
 	}
 	else if (next_action == "dashtonewpoint" && dash_ready) {
 		dash_target = VEC3(30.f, 0.0f, 0.0f);
@@ -173,6 +182,10 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 
 	if (aimed) {
 		moveFront(dash_speed);
+		if (drop_water_ready) {
+			//CREATE WATER HERE
+			resetDropWaterTimer();
+		}
 	}
 
 	float distance = squaredDistXZ(target, transform->getPosition());
@@ -195,4 +208,16 @@ void ai_speedy::updateDashTimer() {
 void ai_speedy::resetDashTimer() {
 	dash_timer = (float)dash_timer_reset;
 	dash_ready = false;
+}
+
+void ai_speedy::updateDropWaterTimer() {
+	drop_water_timer -= getDeltaTime();
+	if (drop_water_timer <= 0) {
+		drop_water_ready = true;
+	}
+}
+
+void ai_speedy::resetDropWaterTimer() {
+	drop_water_timer = drop_water_timer_reset;
+	drop_water_ready = false;
 }

@@ -10,6 +10,7 @@
 #include "resources/resources_manager.h"
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
+#include "logic/ai_water.h"
 #include "input/input.h"
 #include "windows/app.h"
 #include "utils/utils.h"
@@ -27,6 +28,7 @@ DECL_OBJ_MANAGER("workbench", workbench_controller);
 DECL_OBJ_MANAGER("ai_guard", ai_guard);
 DECL_OBJ_MANAGER("ai_mole", ai_mole);
 DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
+DECL_OBJ_MANAGER("water", water_controller);
 DECL_OBJ_MANAGER("player", player_controller);
 DECL_OBJ_MANAGER("player_speedy", player_controller_speedy);
 DECL_OBJ_MANAGER("player_mole", player_controller_mole);
@@ -81,6 +83,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_speedy>()->init(MAX_ENTITIES);
 	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
+	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
@@ -197,6 +200,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
 	getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
+	getHandleManager<water_controller>()->onAll(&water_controller::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
 
@@ -223,7 +227,9 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);
+
 	getHandleManager<ai_speedy>()->updateAll(dt);
+	getHandleManager<water_controller>()->updateAll(dt);
 
 	getHandleManager<CStaticBomb>()->updateAll(dt);
 	getHandleManager<CMagneticBomb>()->updateAll(dt);

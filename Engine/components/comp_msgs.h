@@ -11,6 +11,7 @@ enum DMGTYPE {
 	UNKNOWN
 	, ENERGY_DECREASE
 	, LASER
+	, SPEEDY_WATER
 };
 struct TMsgDamage {
 	VEC3    source;
