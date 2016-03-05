@@ -2,6 +2,8 @@
 #include "physics.h"
 #include "comp_col_cylinder.h"
 
+#define EPSILON_ANGLE_RAD 0.001f
+
 bool TCompColCillinder::load(MKeyValue& atts) {
 	radius = atts.getFloat("radius", 0);
 	height = atts.getFloat("height", 0);
@@ -58,7 +60,9 @@ void TCompColCillinder::rayCast() {
 	VEC3 u = VEC3(q.x - p.x, 0, q.z - p.z); //PQxz
 	u.Normalize();
 	float cosBeta = u.x * vXZ.x + u.z * vXZ.z;
-	float beta = acos(cosBeta);
+	float beta;
+	if (abs(1 - cosBeta) < EPSILON_ANGLE_RAD) beta = 0;
+	else beta = acos(cosBeta);
 
 	//Colisiona en XZ, comprobar pitch vs. altura
 	if (abs(alfa) > abs(beta)) {

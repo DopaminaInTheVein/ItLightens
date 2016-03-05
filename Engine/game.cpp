@@ -11,7 +11,7 @@
 #include "camera/camera.h"
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
-#include "input\input.h"
+#include "input/input.h"
 #include "app_modules/io/io.h"
 
 #include "logic/sbb.h"
@@ -23,7 +23,10 @@
 #include "debug/debug.h"
 
 #include "physics/simple_physx.h"
-#include "ui\ui_interface.h"
+#include "ui/ui_interface.h"
+
+#include <shellapi.h>
+#include <process.h>
 
 //DEBUG
 CDebug *	  Debug = nullptr;
@@ -46,7 +49,6 @@ CShaderCte< TCteObject > shader_ctes_object;
 #include "app_modules/entities.h"
 
 bool CApp::start() {
-
 	toMaxScreen = false;
 	toMinScreen = false;
 
@@ -119,6 +121,14 @@ void CApp::stop() {
 	for (auto m : all_modules)
 		delete m;
 	all_modules.clear();
+}
+
+void CApp::restart() {
+	HWND hTempWnd = getHWnd();
+	char szFileName[MAX_PATH] = "";
+	GetModuleFileName(NULL, szFileName, MAX_PATH);
+	ShellExecute(GetDesktopWindow(), "open", szFileName, NULL, NULL, SW_SHOWDEFAULT);
+	SendMessage(hTempWnd, WM_CLOSE, 0, 0);
 }
 
 // ----------------------------------

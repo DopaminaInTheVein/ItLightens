@@ -3,6 +3,9 @@
 
 #include <windows.h>
 #include "handle\object_manager.h"
+
+#include "windows/app.h"
+
 #include "components\comp_transform.h"
 #include "components\comp_life.h"
 #include "components\entity.h"
@@ -46,6 +49,10 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 void CPlayerBase::update(float elapsed) {
 	if (controlEnabled) {
 		Input.Frame();
+		if (Input.IsKeyPressedDown(DIK_ESCAPE)) {
+			CApp& app = CApp::get();
+			app.restart();
+		}
 		UpdateInputActions();
 		Recalc();
 		UpdateMoves();
@@ -65,8 +72,8 @@ void CPlayerBase::UpdateMoves()
 
 	ApplyGravity();
 
-	TCompTransform* player_transform = myEntity->get<TCompTransform>(); 
-	VEC3 player_position = player_transform->getPosition(); 	
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	VEC3 player_position = player_transform->getPosition();
 
 	VEC3 direction = directionForward + directionLateral;
 
