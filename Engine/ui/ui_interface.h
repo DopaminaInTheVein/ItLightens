@@ -53,6 +53,7 @@ public:
 			ImGui::Text("w,a,s,d/ L joystick -> player moving");
 			ImGui::Text("mouse mov/ R joystick -> camera moving");
 			ImGui::Text("SPACE/ A -> jump,doublejump(if possible)");
+			ImGui::Text("1,2/ RB,LB -> Move to POSITIVE/NEGATIVE atraction Point");
 		}
 	}
 
@@ -83,7 +84,7 @@ public:
 		ImGui::Separator();
 
 		//put cheats here:
-		ImGui::Text("Press 'L' to refill energy (don't work)");
+		ImGui::Text("Press 'ESC' to restart");
 
 		//if (Input.IsKeyPressedDown(KEY_L))
 			//life->refillLife();
@@ -95,14 +96,14 @@ public:
 			bool open = true;
 			ImGui::Begin("Fatal Player State", &open, ImVec2(300, 100), -1.0f);
 			ImGui::Text("You are Dead!\n");
-			ImGui::Text("Press 'Enter' to restart (don't work)");
+			ImGui::Text("Press 'ESC' to restart");
 			ImGui::End();
 		}
 		else if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
 			bool open = true;
 			ImGui::Begin("Victory Player State", &open, ImVec2(300, 100), -1.0f);
 			ImGui::Text("You WIN!\n");
-			ImGui::Text("Press 'Enter' to restart (don't work)");
+			ImGui::Text("Press 'ESC' to restart");
 			ImGui::End();
 		}
 	}
