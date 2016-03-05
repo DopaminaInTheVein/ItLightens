@@ -117,12 +117,7 @@ void player_controller::Jumping()
 
 	if (io->keys[VK_SPACE].becomesPressed()) {
 		jspeed = jimpulse;
-		if (onGround) {
-			energyDecreasal(1.0f);
-		}
-		else {
-			energyDecreasal(5.0f);
-		}
+		energyDecreasal(5.0f);
 		ChangeState("doublejump");
 	}
 }
@@ -248,31 +243,7 @@ void player_controller::AttractMove(CEntity * entPoint) {
 
 void player_controller::UpdateMoves()
 {
-	if (io->keys['1'].isPressed() && nearMinus()) {
-		energyDecreasal(getDeltaTime()*0.05f);
-		ChangeState("tominus");
-	}
-	else if (io->keys['2'].isPressed() && nearPlus()) {
-		energyDecreasal(getDeltaTime()*0.05f);
-		ChangeState("toplus");
-	}
-	else if (polarizedCurrentSpeed > .2f) {
-		energyDecreasal(getDeltaTime()*0.1f);
-		polarizedMove = false;
-		CEntity * entPoint = nullptr;
-		if (tominus) {
-			entPoint = this->getMinusPointHandle(topolarizedminus);
-		}
-		else if (toplus) {
-			entPoint = this->getPlusPointHandle(topolarizedplus);
-		}
-		AttractMove(entPoint);
-	}
-	else {
-		topolarizedplus = -1;
-		topolarizedminus = -1;
-		polarizedCurrentSpeed = 0.0f;
-	}
+	
 	SetMyEntity();
 
 	ApplyGravity();
@@ -330,6 +301,35 @@ void player_controller::UpdateMoves()
 	if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
 	player_transform->executeMovement(player_position);
+}
+
+void player_controller::UpdateInputActions()
+{
+	if (io->keys['1'].isPressed() && nearMinus()) {
+		energyDecreasal(getDeltaTime()*0.05f);
+		ChangeState("tominus");
+	}
+	else if (io->keys['2'].isPressed() && nearPlus()) {
+		energyDecreasal(getDeltaTime()*0.05f);
+		ChangeState("toplus");
+	}
+	else if (polarizedCurrentSpeed > .2f) {
+		energyDecreasal(getDeltaTime()*0.1f);
+		polarizedMove = false;
+		CEntity * entPoint = nullptr;
+		if (tominus) {
+			entPoint = this->getMinusPointHandle(topolarizedminus);
+		}
+		else if (toplus) {
+			entPoint = this->getPlusPointHandle(topolarizedplus);
+		}
+		AttractMove(entPoint);
+	}
+	else {
+		topolarizedplus = -1;
+		topolarizedminus = -1;
+		polarizedCurrentSpeed = 0.0f;
+	}
 }
 
 float CPlayerBase::possessionCooldown;
@@ -396,7 +396,6 @@ void player_controller::recalcPossassable() {
 		VEC3 posPoss = tPoss->getPosition();
 		float dist = realDist(player_position, posPoss);
 		if (dist < possessionReach) {
-			Debug->LogRaw("-----\n");
 			float yaw = player_transform->getDeltaYawToAimTo(posPoss);
 			yaw = abs(yaw);
 			Debug->LogRaw("Yaw: %f\n", rad2deg(yaw));
