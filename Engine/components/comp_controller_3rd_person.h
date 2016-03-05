@@ -8,7 +8,7 @@
 #include "comp_life.h"
 #include "comp_msgs.h"
 #include "geometry/angular.h"
-
+#include "windows\app.h"
 #include "input\input.h"
 #include "app_modules/io/io.h"
 
@@ -23,6 +23,8 @@ class TCompController3rdPerson : public TCompBase {
 	float		min_pitch = -1.0f;
 	float		max_pitch = 0.25f;
 	float		rotation_sensibility;
+	bool		y_axis_inverted;
+	bool		x_axis_inverted;
 
 public:
 	CHandle		target;
@@ -38,15 +40,41 @@ public:
 		, rotation_sensibility(deg2rad(45.0f))
 	{}
 
+	void onCreate(const TMsgEntityCreated& msg) {
+		CApp& app = CApp::get();
+		CEntity* e_owner = CHandle(this).getOwner();
+		
+		//init aspect/ratio from screen
+		TCompCamera *camera = e_owner->get<TCompCamera>();
+		float ar = (float)app.getXRes() / (float)app.getYRes();
+		camera->setAspectRatio(ar);
+
+		//read y-axis inverted
+		y_axis_inverted = GetPrivateProfileIntA("controls",
+												"y-axis_inverted",
+												1,
+												app.file_options.c_str());
+
+		//read x-axis inverted
+		x_axis_inverted = GetPrivateProfileIntA("controls",
+												"x-axis_inverted",
+												1,
+												app.file_options.c_str());
+	}
+
+
 	void onSetTarget(const TMsgSetTarget& msg) {
 		target = msg.target;
+
 	}
 
 	void updateInput() {
 
 
-		yaw -= io->mouse.dx * rotation_sensibility*getDeltaTime()*speed_camera;
-		pitch -= io->mouse.dy * rotation_sensibility*getDeltaTime()*speed_camera;
+		if(x_axis_inverted)	yaw -= io->mouse.dx * rotation_sensibility*getDeltaTime()*speed_camera;
+		else yaw += io->mouse.dx * rotation_sensibility*getDeltaTime()*speed_camera;
+		if(y_axis_inverted) pitch -= io->mouse.dy * rotation_sensibility*getDeltaTime()*speed_camera;
+		else pitch += io->mouse.dy * rotation_sensibility*getDeltaTime()*speed_camera;
 
 		if (pitch >= max_pitch) {
 			pitch = max_pitch;
