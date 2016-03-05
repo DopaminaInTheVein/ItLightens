@@ -17,9 +17,6 @@ void player_controller::Init() {
 
 	DeleteState("jumping");
 	DeleteState("falling");
-	DeleteState("idle");
-
-	AddState("idle", (statehandler)&player_controller::Idle);		// Idle Redo
 
 	AddState("doublefalling", (statehandler)&player_controller::DoubleFalling);		//needed to disable double jump on falling
 	AddState("doublejump", (statehandler)&player_controller::DoubleJump);
@@ -82,37 +79,6 @@ void player_controller::myUpdate() {
 	____TIMER__UPDATE_(timerDamaged);
 	if (!isDamaged()) {
 		UpdatePossession();
-	}
-}
-
-void player_controller::Idle() {
-	if (!checkDead()) {
-		if (io->keys['1'].isPressed() && nearMinus()) {
-			energyDecreasal(getDeltaTime()*0.05f);
-			ChangeState("tominus");
-		}
-		else if (io->keys['2'].isPressed() && nearPlus()) {
-			energyDecreasal(getDeltaTime()*0.05f);
-			ChangeState("toplus");
-		}
-		else if (polarizedCurrentSpeed > .2f) {
-			energyDecreasal(getDeltaTime()*0.1f);
-			polarizedMove = false;
-			CEntity * entPoint = nullptr;
-			if (tominus) {
-				entPoint = this->getMinusPointHandle(topolarizedminus);
-			}
-			else if (toplus) {
-				entPoint = this->getPlusPointHandle(topolarizedplus);
-			}
-			AttractMove(entPoint);
-		}
-		else {
-			topolarizedplus = -1;
-			topolarizedminus = -1;
-			polarizedCurrentSpeed = 0.0f;
-			CPlayerBase::Idle();
-		}
 	}
 }
 
@@ -280,6 +246,31 @@ void player_controller::AttractMove(CEntity * entPoint) {
 
 void player_controller::UpdateMoves()
 {
+	if (io->keys['1'].isPressed() && nearMinus()) {
+		energyDecreasal(getDeltaTime()*0.05f);
+		ChangeState("tominus");
+	}
+	else if (io->keys['2'].isPressed() && nearPlus()) {
+		energyDecreasal(getDeltaTime()*0.05f);
+		ChangeState("toplus");
+	}
+	else if (polarizedCurrentSpeed > .2f) {
+		energyDecreasal(getDeltaTime()*0.1f);
+		polarizedMove = false;
+		CEntity * entPoint = nullptr;
+		if (tominus) {
+			entPoint = this->getMinusPointHandle(topolarizedminus);
+		}
+		else if (toplus) {
+			entPoint = this->getPlusPointHandle(topolarizedplus);
+		}
+		AttractMove(entPoint);
+	}
+	else {
+		topolarizedplus = -1;
+		topolarizedminus = -1;
+		polarizedCurrentSpeed = 0.0f;
+	}
 	SetMyEntity();
 
 	ApplyGravity();
@@ -376,7 +367,6 @@ void player_controller::UpdatePossession() {
 		}
 	}
 	else if (io->mouse.left.isPressed()) {
-
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
