@@ -21,7 +21,7 @@ class player_controller_speedy : public PossController {
 	CObjectManager<player_controller_speedy> *om;
 
 	const float dash_speed = 20.f;
-	const float dash_max_duration = 1.f;
+	const float dash_max_duration = 3.f;
 	float dash_duration = 0.f;
 
 	float dash_timer = 0.f;
@@ -50,6 +50,10 @@ public:
 	void Blink();
 	// Speedy auxiliar functions
 	bool dashFront();
+	bool collisionWall();
+	bool collisionBlink(float& distCollision);
+	CHandle rayCastToFront(int types, float reach, float& distRay);
+	// Timer control functions
 	void resetDashTimer();
 	void updateDashTimer();
 	void resetBlinkTimer();

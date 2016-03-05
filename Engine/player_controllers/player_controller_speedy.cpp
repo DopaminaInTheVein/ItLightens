@@ -9,6 +9,8 @@
 #include "app_modules\io\io.h"
 #include "components\comp_msgs.h"
 
+#include "physics/physics.h"
+
 void player_controller_speedy::Init()
 {
 	om = getHandleManager<player_controller_speedy>();	//player
@@ -31,6 +33,7 @@ void player_controller_speedy::myUpdate(float elapsed) {
 	energyDecreasal(getDeltaTime()*0.5f);
 	updateDashTimer();
 	updateBlinkTimer();
+	updateDropWaterTimer();
 }
 
 void player_controller_speedy::Dashing()
@@ -66,6 +69,21 @@ void player_controller_speedy::Blinking()
 	}
 }
 
+void player_controller_speedy::UpdateInputActions() {
+	if (io->mouse.left.becomesPressed()) {
+		if (dash_ready) {
+			energyDecreasal(10.0f);
+			ChangeState("dashing");
+		}
+	}
+	if (io->mouse.right.becomesPressed()) {
+		if (blink_ready) {
+			energyDecreasal(15.0f);
+			ChangeState("blinking");
+		}
+	}
+}
+
 void player_controller_speedy::Blink()
 {
 	if (blink_ready) {
@@ -73,25 +91,20 @@ void player_controller_speedy::Blink()
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		VEC3 player_position = player_transform->getPosition();
 		VEC3 player_front = player_transform->getFront();
-
-		player_position += player_front * blink_distance;
+		float dist, distCollision;
+		if (collisionBlink(distCollision)) {
+			dist = distCollision;
+		}
+		else {
+			dist = blink_distance;
+		}
+		player_position += player_front * dist;
 
 		player_transform->setPosition(player_position);
 
 		resetBlinkTimer();
 	}
 	ChangeState("idle");
-}
-
-void player_controller_speedy::UpdateInputActions() {
-	if (io->mouse.left.becomesPressed()) {
-		ChangeState("dashing");
-		energyDecreasal(10.0f);
-	}
-	if (io->mouse.right.isPressed()) {
-		energyDecreasal(15.0f);
-		ChangeState("blinking");
-	}
 }
 
 bool player_controller_speedy::dashFront()
@@ -104,7 +117,6 @@ bool player_controller_speedy::dashFront()
 	VEC3 player_front = player_transform->getFront();
 
 	VEC3 new_position = VEC3(player_position.x + player_front.x*dash_speed*getDeltaTime(), player_position.y, player_position.z + player_front.z*dash_speed*getDeltaTime());
-
 	player_transform->setPosition(new_position);
 
 	if (drop_water_ready) {
@@ -150,7 +162,7 @@ bool player_controller_speedy::dashFront()
 		resetDropWaterTimer();
 	}
 
-	if (dash_duration > dash_max_duration) {
+	if (dash_duration > dash_max_duration || collisionWall()) {
 		dash_duration = 0;
 		return true;
 	}
@@ -158,6 +170,33 @@ bool player_controller_speedy::dashFront()
 		return false;
 	}
 }
+bool player_controller_speedy::collisionWall() {
+	float distFirstCollider; // No lo uso
+	CHandle collider = rayCastToFront(COL_TAG_SOLID, 0.5f, distFirstCollider);
+	return !(collider.isValid());
+}
+
+bool player_controller_speedy::collisionBlink(float& distCollision) {
+	CHandle collider = rayCastToFront(COL_TAG_SOLID_OPAQUE, blink_distance, distCollision);
+	return !(collider.isValid());
+}
+
+CHandle player_controller_speedy::rayCastToFront(int types, float reach, float& distRay) {
+	CHandle me = CHandle(this).getOwner();
+	CEntity* eMe = me;
+	TCompTransform* tMe = eMe->get<TCompTransform>();
+
+	ray_cast_query rcQuery;
+	rcQuery.position = tMe->getPosition() + VEC3(0, 0.5, 0);
+	rcQuery.direction = tMe->getFront();
+	rcQuery.maxDistance = reach;
+	rcQuery.types = types;
+	ray_cast_result res = Physics::calcRayCast(rcQuery);
+	distRay = realDist(res.positionCollision, tMe->getPosition());
+	return res.firstCollider;
+}
+
+// Timers update functions
 
 void player_controller_speedy::updateDashTimer()
 {
