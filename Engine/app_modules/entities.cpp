@@ -98,6 +98,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
+	SUBSCRIBE(water_controller, TMsgSetWaterType, onSetWaterType);
 	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);					//Workbench empty
@@ -180,6 +181,17 @@ bool CEntitiesModule::start() {
 		TMsgSetPlayer msg_player;
 		msg_player.player = t;
 		speedy_e->sendMsg(msg_player);
+	}
+
+	// Set the type for the starting water zones to 0 (PERMANENT)
+	TTagID tagIDWater = getID("water");
+	VHandles waterHandles = tags_manager.getHandlesByTag(tagIDWater);
+
+	for (CHandle waterHandle : waterHandles) {
+		CEntity * water_e = waterHandle;
+		TMsgSetWaterType msg_water;
+		msg_water.type = 0;
+		water_e->sendMsg(msg_water);
 	}
 
 	SBB::postHandlesVector("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));

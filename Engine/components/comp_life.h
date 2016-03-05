@@ -51,6 +51,9 @@ struct TCompLife : public TCompBase {
 			case LASER:
 				dmgTotal = msg.points * DMG_SCALE_ENEMY;
 				break;
+			case WATER:
+				dmgTotal = msg.points * DMG_SCALE_ENEMY;
+				break;
 			default:
 				dmgTotal = 0;
 				break;

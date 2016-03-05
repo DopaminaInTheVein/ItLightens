@@ -13,7 +13,7 @@
   <!-- Player -->
   <entity>
     <tag name="player" />
-    <transform pos="-25 2 5" />
+    <transform pos="29 2 5" />
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
@@ -21,7 +21,7 @@
   <entity>
     <life points="50" />
     <tag name="target" />
-    <transform pos="-28 0 3" />
+    <transform pos="26 0 3" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_idle.static_mesh" />
@@ -258,6 +258,31 @@
       wpt1_pos = "21  0  -5"
       wpt2_pos = "37  0  -5"
       wpt3_pos = "37  0   5" />
+  </entity>
+
+  <entity>
+    <name name="water1" />
+    <tag name="water" />
+    <transform pos="38 0 7" rotation="1 1 1 1" scale="1 1 1" />
+    <water />
+  </entity>
+  <entity>
+    <name name="water2" />
+    <tag name="water" />
+    <transform pos="38 0 8" rotation="1 1 1 1" scale="1 1 1" />
+    <water />
+  </entity>
+  <entity>
+    <name name="water3" />
+    <tag name="water" />
+    <transform pos="37 0 7" rotation="1 1 1 1" scale="1 1 1" />
+    <water />
+  </entity>
+  <entity>
+    <name name="water4" />
+    <tag name="water" />
+    <transform pos="37 0 8" rotation="1 1 1 1" scale="1 1 1" />
+    <water />
   </entity>
 
   <!--Guardia centinela sin pistola-->

@@ -8,6 +8,7 @@
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
 #include "components/entity.h"
+#include "components/entity_tags.h"
 #include "handle/handle.h"
 #include "handle/object_manager.h"
 #include "handle/handle_manager.h"
@@ -16,9 +17,12 @@
 #include "render/shader_cte.h"
 #include "utils/utils.h"
 #include "utils/XMLParser.h"
+#include "logic/ai_water.h"
 #include <vector>
 #include <chrono>
 #include <windows.h>
+
+extern TTagsManager tags_manager;
 
 class ai_speedy : public ai_poss, public TCompBase {
 	CObjectManager<ai_speedy> * om = nullptr;

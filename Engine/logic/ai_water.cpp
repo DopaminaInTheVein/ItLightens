@@ -15,6 +15,7 @@ void water_controller::Init() {
 
 	id_water = ++water_controller::id_curr_max_waters;
 	full_name = "water_" + to_string(id_water);
+	dbg("%i\n", id_water);
 
 	AddState("idle", (statehandler)&water_controller::Idle);
 	AddState("die", (statehandler)&water_controller::Die);
@@ -28,6 +29,25 @@ void water_controller::Init() {
 void water_controller::update(float elapsed) {
 	updateTTL();
 	Recalc();
+}
+
+void water_controller::onSetWaterType(const TMsgSetWaterType& msg) {
+	switch (msg.type) {
+	case PERMANENT:
+		water_type = PERMANENT;
+		damage = permanent_water_damage;
+		ttl = permanent_max_ttl;
+		break;
+	case DROPPED:
+		water_type = DROPPED;
+		damage = dropped_water_damage;
+		ttl = dropped_max_ttl;
+		break;
+	default:
+		water_type = PERMANENT;
+		damage = permanent_water_damage;
+		ttl = permanent_max_ttl;
+	}
 }
 
 void water_controller::Idle()
@@ -44,9 +64,12 @@ void water_controller::Die()
 }
 
 void water_controller::updateTTL() {
-	ttl -= getDeltaTime();
-	if (ttl <= 0) {
-		dead = true;
+
+	if (water_type != PERMANENT) {
+		ttl -= getDeltaTime();
+		if (ttl <= 0) {
+			dead = true;
+		}
 	}
 }
 
@@ -60,14 +83,14 @@ void water_controller::tryToDamagePlayer() {
 	TCompTransform* water_transform = myEntity->get<TCompTransform>();
 	VEC3 water_position = water_transform->getPosition();
 
-	float distance = squaredDistXZ(water_position, player_position);
+	float distance = squaredDist(water_position, player_position);
 
 	if (distance < 1.f) {
 		TMsgDamage dmg;
 		dmg.source = water_position;
 		dmg.sender = myParent;
-		dmg.points = speedy_water_damage * getDeltaTime();
-		dmg.dmgType = SPEEDY_WATER;
+		dmg.points = damage * getDeltaTime();
+		dmg.dmgType = WATER;
 		e_player->sendMsg(dmg);
 	}
 

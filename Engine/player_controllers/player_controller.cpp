@@ -460,5 +460,9 @@ void player_controller::onDamage(const TMsgDamage& msg) {
 	case LASER:
 		____TIMER_RESET_(timerDamaged);
 		break;
+	case WATER:
+		____TIMER_RESET_(timerDamaged);
+		break;
+
 	}
 }

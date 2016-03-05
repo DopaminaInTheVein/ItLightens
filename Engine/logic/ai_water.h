@@ -26,10 +26,16 @@ class water_controller : public aicontroller, public TCompBase {
 	int id_water = 0;
 	std::string full_name = "";
 
-	const int speedy_water_damage = 1;
+	const int permanent_water_damage = 500;
+	const int dropped_water_damage = 50;
 
-	const int max_ttl = 60;				//in seconds
-	int ttl = max_ttl;
+	const int permanent_max_ttl = -1;				//in seconds
+	const int dropped_max_ttl = 60;					//in seconds
+
+	int water_type;
+	int damage;
+	int ttl;
+
 	bool dead = false;
 
 	void updateTTL();
@@ -38,9 +44,14 @@ class water_controller : public aicontroller, public TCompBase {
 
 public:
 
-	static int id_curr_max_waters;	//count ids, id++ each beacon
+	static int id_curr_max_waters;
 
-	water_controller() {}			//needed to create obj at load
+	enum {
+		PERMANENT = 0,
+		DROPPED,
+	};
+
+	water_controller() {}
 	void Init() override;
 	void init() { Init(); }
 
@@ -48,6 +59,8 @@ public:
 
 	void SetHandleMeInit();
 	void SetMyEntity();
+
+	void onSetWaterType(const TMsgSetWaterType& msg);
 
 	void Idle();
 	void Die();
