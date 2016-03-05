@@ -19,9 +19,6 @@ void ai_mole::Init()
 	AddState("nextwptCarry", (statehandler)&ai_mole::NextWptCarryState);
 	AddState("ungrab", (statehandler)&ai_mole::UnGrabState);
 
-	waitSecondsToBoxRespawn = waitSeconds;
-	timer = 0.0f;
-
 	towptbox = 0;
 	towptleave = 0;
 	// reset the state
@@ -29,11 +26,7 @@ void ai_mole::Init()
 }
 
 void ai_mole::IdleState() {
-	timer += getDeltaTime();
-	if (timer >= waitSecondsToBoxRespawn) {
-		timer = 0.0f;
-		ChangeState("seekwpt");
-	}
+	ChangeState("seekwpt");
 }
 
 void ai_mole::SeekWptState() {
@@ -48,7 +41,7 @@ void ai_mole::SeekWptState() {
 			VEC3 wpt = transformBox->getPosition();
 			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
 			string key = nameBox->name;
-			if (!SBB::readBool(key) && disttowpt < distMax) {
+			if (!SBB::readBool(key) && disttowpt < distMax && !isBoxAtLeavePoint(wpt)) {
 				towptbox = i;
 				distMax = disttowpt;
 				key_final = key;
@@ -178,19 +171,13 @@ void ai_mole::NextWptCarryState() {
 }
 
 void ai_mole::UnGrabState() {
-	VEC3 new_posBox;
-	new_posBox.x = 5.0f;
-	new_posBox.z = -5.0f;
-	vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
-	CEntity * en = newPointerVec[towptbox];
-	TCompTransform * transformBox = en->get<TCompTransform>();
-	TCompName * nameBox = en->get<TCompName>();
-	transformBox->setPosition(new_posBox);
-	SBB::postHandlesVector("wptsBoxes", newPointerVec);
-
-	string key = nameBox->name;
-
-	SBB::postBool(key, false);
+	CEntity * enBox = SBB::readHandlesVector("wptsBoxes")[towptbox];
+	CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[towptleave];
+	TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
+	TCompTransform * enBoxT = enBox->get<TCompTransform>();
+	TCompName * nameBox = enBox->get<TCompName>();
+	enBoxT->setPosition(wptbleavetransform->getPosition());
+	SBB::postBool(nameBox->name, false);
 	ChangeState("idle");
 }
 
@@ -199,7 +186,17 @@ void ai_mole::_actionBeforePossession() {
 	CEntity * en = newPointerVec[towptbox];
 	TCompName * nameBox = en->get<TCompName>();
 	string key = nameBox->name;
-	SBB::postBool(key, false);
+
+	ai_mole * mole = SBB::readMole(key);
+	CEntity * mole_e = mole->getMyEntity();
+	TCompName * mole_e_n = mole_e->get<TCompName>();
+
+	CEntity * currmole_e = getMyEntity();
+	TCompName * currmole_e_n = currmole_e->get<TCompName>();
+
+	if (mole_e_n->name == currmole_e_n->name) {
+		SBB::postBool(key, false);
+	}
 }
 
 void ai_mole::_StuntEndState() {
@@ -207,6 +204,31 @@ void ai_mole::_StuntEndState() {
 	CEntity * en = newPointerVec[towptbox];
 	TCompName * nameBox = en->get<TCompName>();
 	string key = nameBox->name;
-	SBB::postBool(key, false);
+
+	ai_mole * mole = SBB::readMole(key);
+	CEntity * mole_e = mole->getMyEntity();
+	TCompName * mole_e_n = mole_e->get<TCompName>();
+
+	CEntity * currmole_e = getMyEntity();
+	TCompName * currmole_e_n = currmole_e->get<TCompName>();
+
+	if (mole_e_n->name == currmole_e_n->name) {
+		SBB::postBool(key, false);
+	}
 	ChangeState("idle");
+}
+
+bool ai_mole::isBoxAtLeavePoint(VEC3 posBox) {
+	if (SBB::readHandlesVector("wptsBoxLeavePoint").size() > 0) {
+		for (int i = 0; i < SBB::readHandlesVector("wptsBoxLeavePoint").size(); i++) {
+			CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[i];
+			TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
+			VEC3 wpt = wptbleavetransform->getPosition();
+			float disttowpt = simpleDistXZ(wpt, posBox);
+			if (disttowpt < 0.1f) {
+				return true;
+			}
+		}
+	}
+	return false;
 }

@@ -57,15 +57,6 @@ public:
 			ImGui::Text("Click Left Mouse      -> Stun near IA / Recharge Energy from Recover Point");
 			ImGui::Text("Left Shift            -> Possess near IA");
 		}
-
-		if (ImGui::CollapsingHeader("Game Mole controls", 0, true, open_ui_keys)) {
-			ImGui::Text("unlock mouse          -> T");
-			ImGui::Text("w,a,s,d/ L joystick   -> player moving");
-			ImGui::Text("mouse mov/ R joystick -> camera moving");
-			ImGui::Text("SPACE/ A              -> jump");
-			ImGui::Text("Click Left Mouse      -> Grab/Throw near Box or Break Wall");
-			ImGui::Text("Left Shift            -> Exit possession State");
-		}
 	}
 
 	void life_update() {

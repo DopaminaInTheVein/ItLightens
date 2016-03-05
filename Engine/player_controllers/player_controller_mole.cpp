@@ -7,6 +7,7 @@
 
 #include "components\entity_tags.h"
 
+#include "ui\ui_interface.h"
 #include "logic\ai_mole.h"
 
 void player_controller_mole::Init() {
@@ -156,4 +157,10 @@ bool player_controller_mole::nearToBox() {
 
 void player_controller_mole::InitControlState() {
 	ChangeState("idle");
+}
+
+void player_controller_mole::update_msgs()
+{
+	ui.addTextInstructions("Left Shift            -> Exit possession State");
+	ui.addTextInstructions("Click Left Mouse      -> Grab/Throw near Box or Break Wall");
 }

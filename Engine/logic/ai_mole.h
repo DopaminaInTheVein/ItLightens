@@ -24,13 +24,9 @@
 class ai_mole : public ai_poss, public TCompBase {
 	int towptbox;
 	int towptleave;
-	float waitSecondsToBoxRespawn;
 
 	CHandle myHandle;
 	CHandle myParent;
-
-	float timer;
-	float waitSeconds = 3.5f;
 
 	TCompTransform * getEntityTransform() {
 		CEntity * ent = myParent;
@@ -47,6 +43,8 @@ class ai_mole : public ai_poss, public TCompBase {
 		CHandle me = CHandle(this);
 		return me.getOwner();
 	}
+	bool isBoxAtLeavePoint(VEC3 posBox);
+
 public:
 	void IdleState();
 	void SeekWptState();

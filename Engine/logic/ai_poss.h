@@ -26,15 +26,12 @@ protected:
 public:
 	ai_poss();
 
-	____TIMER_DECLARE_VALUE_(timeStunt, 250.0f);
+	____TIMER_DECLARE_VALUE_(timeStunt, 10.0f);
 	const void PossessingState();
 	const void PossessedState();
 	const void UnpossessingState();
 	virtual const void StuntState();
 	virtual void actionStunt();
-
-	//float timeStunt = 15.0f;
-	//float _timeStunt = 15.0f;
 
 	//Preguntar por Stunt o Poseido
 	bool isStunned() { return stunned; }
