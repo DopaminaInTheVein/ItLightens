@@ -202,7 +202,7 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 			CHandle new_transform_h = hm_transform->createHandle();
 			MKeyValue atts;
 			// position, rotation and scale
-			char position[100]; sprintf(position, "%f %f %f", player_pos.x, player_pos.y, player_pos.y);
+			char position[100]; sprintf(position, "%f %f %f", player_pos.x, player_pos.y, player_pos.z);
 			atts["pos"] = position;
 			char rotation[100]; sprintf(rotation, "%f %f %f %f", 1, 1, 1, 1);
 			atts["rotation"] = rotation;

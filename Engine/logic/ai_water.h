@@ -29,12 +29,12 @@ class water_controller : public aicontroller, public TCompBase {
 	const int permanent_water_damage = 500;
 	const int dropped_water_damage = 50;
 
-	const int permanent_max_ttl = -1;				//in seconds
-	const int dropped_max_ttl = 60;					//in seconds
+	const float permanent_max_ttl = -1.0;				//in seconds
+	const float dropped_max_ttl = 10.0;					//in seconds
 
 	int water_type;
 	int damage;
-	int ttl;
+	float ttl;
 
 	bool dead = false;
 

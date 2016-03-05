@@ -15,7 +15,6 @@ void water_controller::Init() {
 
 	id_water = ++water_controller::id_curr_max_waters;
 	full_name = "water_" + to_string(id_water);
-	dbg("%i\n", id_water);
 
 	AddState("idle", (statehandler)&water_controller::Idle);
 	AddState("die", (statehandler)&water_controller::Die);
@@ -60,6 +59,7 @@ void water_controller::Idle()
 
 void water_controller::Die()
 {
+	dbg("Muero!! %i\n", id_water);
 	getHandleManager<water_controller>()->destroyHandle(myHandle);
 }
 
@@ -67,7 +67,7 @@ void water_controller::updateTTL() {
 
 	if (water_type != PERMANENT) {
 		ttl -= getDeltaTime();
-		if (ttl <= 0) {
+		if (ttl <= 0.0) {
 			dead = true;
 		}
 	}
