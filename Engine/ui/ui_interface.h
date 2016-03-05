@@ -20,7 +20,7 @@ public:
 	void update() {
 		//Here goes all game UI info
 
-		ImGui::Begin("UI", &open_main_ui, ImVec2(400, 150), -1.0f);
+		ImGui::Begin("UI", &open_main_ui, ImVec2(500, 350), -1.0f);
 
 		life_update();
 
@@ -49,11 +49,22 @@ public:
 
 	void keys_update() {
 		if (ImGui::CollapsingHeader("Game controls", 0, true, open_ui_keys)) {
-			ImGui::Text("unlock mouse -> T");
-			ImGui::Text("w,a,s,d/ L joystick -> player moving");
+			ImGui::Text("unlock mouse          -> T");
+			ImGui::Text("w,a,s,d/ L joystick   -> player moving");
 			ImGui::Text("mouse mov/ R joystick -> camera moving");
-			ImGui::Text("SPACE/ A -> jump,doublejump(if possible)");
-			ImGui::Text("1,2/ RB,LB -> Move to POSITIVE/NEGATIVE atraction Point");
+			ImGui::Text("SPACE/ A              -> jump,doublejump(if possible)");
+			ImGui::Text("1,2/ RB,LB            -> Move to POSITIVE/NEGATIVE atraction Point");
+			ImGui::Text("Click Left Mouse      -> Stun near IA / Recharge Energy from Recover Point");
+			ImGui::Text("Left Shift            -> Possess near IA");
+		}
+
+		if (ImGui::CollapsingHeader("Game Mole controls", 0, true, open_ui_keys)) {
+			ImGui::Text("unlock mouse          -> T");
+			ImGui::Text("w,a,s,d/ L joystick   -> player moving");
+			ImGui::Text("mouse mov/ R joystick -> camera moving");
+			ImGui::Text("SPACE/ A              -> jump");
+			ImGui::Text("Click Left Mouse      -> Grab/Throw near Box or Break Wall");
+			ImGui::Text("Left Shift            -> Exit possession State");
 		}
 	}
 
