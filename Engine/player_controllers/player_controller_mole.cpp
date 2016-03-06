@@ -13,14 +13,9 @@
 void player_controller_mole::Init() {
 	om = getHandleManager<player_controller_mole>();	//player
 
-	//DeleteState("jumping");
-	//DeleteState("falling");
-	DeleteState("moving");
-
 	AddState("grabBox", (statehandler)&player_controller_mole::GrabBox);
 	AddState("leaveBox", (statehandler)&player_controller_mole::LeaveBox);
 	AddState("destroyWall", (statehandler)&player_controller_mole::DestroyWall);
-	AddState("moving", (statehandler)&player_controller_mole::Moving);
 
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
@@ -44,10 +39,7 @@ void player_controller_mole::UpdateInputActions() {
 	}
 }
 
-void player_controller_mole::Moving()
-{
-	UpdateDirection();
-	energyDecreasal(getDeltaTime()*0.5f);
+void player_controller_mole::UpdateMovingWithOther() {
 	if (boxGrabbed) {
 		energyDecreasal(getDeltaTime()*0.5f);
 		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
@@ -59,8 +51,12 @@ void player_controller_mole::Moving()
 		posPlayer.y += 2;
 		box_t->setPosition(posPlayer);
 	}
+}
 
-	if (!UpdateMovDirection()) ChangeState("idle");
+void player_controller_mole::UpdateUnpossess() {
+	if (boxGrabbed) {
+		LeaveBox();
+	}
 }
 
 void player_controller_mole::GrabBox() {
@@ -106,7 +102,7 @@ void player_controller_mole::LeaveBox() {
 	posbox.y = posboxIni.y - 2;
 	posbox.z = posboxIni.z + p_t->getFront().z * 3;
 	float angle = 0.0f;
-	if (!box_t->executeMovement(posbox)) {
+	while (!box_t->executeMovement(posbox)) {
 		angle += 0.1;
 		posbox.x = posboxIni.x + p_t->getFront().x * sin(angle) * 3;
 		posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;

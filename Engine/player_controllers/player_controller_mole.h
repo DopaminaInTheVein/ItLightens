@@ -28,7 +28,6 @@ public:
 	void GrabBox();
 	void LeaveBox();
 	void DestroyWall();
-	void Moving();
 
 	void InitControlState();
 	bool nearToBox();
@@ -41,6 +40,8 @@ public:
 	void update_msgs() override;
 
 	void UpdateInputActions();
+	void UpdateMovingWithOther();
+	void UpdateUnpossess();
 
 	TCompTransform * getEntityTransform() {
 		CEntity * ent = myParent;

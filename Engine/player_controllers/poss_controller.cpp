@@ -22,7 +22,7 @@ void PossController::UpdatePossession() {
 			TMsgAISetPossessed msg;
 			msg.possessed = false;
 			myParent->sendMsg(msg);
-
+			UpdateUnpossess();
 			onSetEnable(false);
 		}
 		else {
@@ -39,6 +39,9 @@ void PossController::UpdatePossession() {
 
 void PossController::onSetEnable(const TMsgControllerSetEnable& msg) {
 	onSetEnable(msg.enabled);
+}
+
+void PossController::UpdateUnpossess() {
 }
 
 void PossController::onSetEnable(bool enabled) {

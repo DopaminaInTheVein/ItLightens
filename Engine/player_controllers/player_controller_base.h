@@ -55,11 +55,11 @@ protected:
 	float starting_player_y = 0;
 	float player_y = 0;
 
-
 	//virtual needed for poses right now
 	virtual void UpdateInputActions();
 	virtual void UpdateMoves();
 	virtual bool UpdateMovDirection();
+	virtual void UpdateMovingWithOther();
 	virtual void UpdateJumpState();
 	virtual void UpdateDirection();
 	virtual void ApplyGravity();
