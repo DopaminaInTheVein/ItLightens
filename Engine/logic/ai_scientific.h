@@ -33,14 +33,14 @@ class ai_scientific : public ai_poss, public TCompBase {
 
 	//main attributes
 	//--------------------------------------
-	const float move_speed = 2.0f;
-	const float rot_speed = 2.0f;
+	float move_speed = 2.0f;
+	float rot_speed = 2.0f;
 	//--------------------------------------
 
 	//distance limitations
 	//--------------------------------------
-	const float square_range_action = 1.0f;
-	const float d_epsilon = 0.1f;
+	float square_range_action = 1.0f;
+	float d_epsilon = 0.1f;
 	//--------------------------------------
 
 	//Map points, TEMP, TODO: look for positions from object_manager
@@ -54,9 +54,9 @@ class ai_scientific : public ai_poss, public TCompBase {
 	//Timer counts
 	//--------------------------------------
 	float waiting_time = 0.0f;
-	const float t_addBeacon = 2.5f;
-	const float t_createBeacon = 5.0f;
-	const float t_removeBeacon = 1.5f;
+	float t_addBeacon = 2.5f;
+	float t_createBeacon = 5.0f;
+	float t_removeBeacon = 1.5f;
 	//--------------------------------------
 
 	//general pointers
@@ -117,9 +117,6 @@ public:
 
 	//Possession
 	CEntity* getMyEntity() override;
-
-	//Overload function for handler_manager
-	ai_scientific& ai_scientific::operator=(ai_scientific arg) { return arg; }
 };
 
 #endif
