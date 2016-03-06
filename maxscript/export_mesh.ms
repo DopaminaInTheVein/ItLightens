@@ -78,7 +78,7 @@ fn saveBinaryMesh obj vtxs idxs full_path = (
 fn export_mesh given_obj outfilename = (
 
 	if outfilename == undefined then (
-		outfilename = "c:/code/engine/bin/data/meshes/" + obj.name + ".mesh"
+		outfilename = "c:/" + obj.name + ".mesh"
 	)
 	
 	-- Is the object valid?...
@@ -143,4 +143,4 @@ fn export_mesh given_obj outfilename = (
 	
 )
 
---export_mesh $
+export_mesh $ "C:/Users/Cristian/Documents/Cristian/ItLightens/bin/data/meshes/water.mesh"

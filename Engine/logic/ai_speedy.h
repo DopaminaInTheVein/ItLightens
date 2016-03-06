@@ -10,6 +10,7 @@
 #include "components/comp_transform.h"
 #include "components/entity.h"
 #include "components/entity_tags.h"
+#include "components/comp_render_static_mesh.h"
 #include "handle/handle.h"
 #include "handle/object_manager.h"
 #include "handle/handle_manager.h"
@@ -23,6 +24,9 @@
 #include <windows.h>
 
 extern TTagsManager tags_manager;
+
+//Cambio malla
+struct TCompRenderStaticMesh;
 
 class ai_speedy : public ai_poss, public TCompBase {
 	CObjectManager<ai_speedy> * om = nullptr;
@@ -56,12 +60,19 @@ class ai_speedy : public ai_poss, public TCompBase {
 	const int dash_to_new_point_chance = 2;
 	const int dash_to_player_chance = 2;
 
-	const string water_static_mesh = "static_meshes/workbench.static_mesh";
+	const string water_static_mesh = "static_meshes/water.static_mesh";
 
 	CEntity* getMyEntity() {
 		CHandle me = CHandle(this);
 		return me.getOwner();
 	}
+
+	//Cambio malla
+	TCompRenderStaticMesh* actual_render = nullptr;
+	CHandle pose_idle;
+	CHandle pose_run;
+	CHandle pose_jump;
+
 public:
 	void IdleState();
 	void NextWptState();
@@ -87,6 +98,9 @@ public:
 	void resetDashTimer();
 	void updateDropWaterTimer();
 	void resetDropWaterTimer();
+
+	//Cambio Malla
+	void ChangePose(CHandle new_pos_h);
 
 	//Overload function for handler_manager
 	ai_speedy& ai_speedy::operator=(ai_speedy arg) { return arg; }

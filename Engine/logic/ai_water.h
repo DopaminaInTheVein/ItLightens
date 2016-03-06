@@ -32,7 +32,7 @@ class water_controller : public aicontroller, public TCompBase {
 	const float permanent_max_ttl = -1.f;				//in seconds
 	const float dropped_max_ttl = 10.f;					//in seconds
 
-	const float damage_radius = 20.f;
+	const float damage_radius = 25.f;
 
 	int water_type;
 	int damage;
@@ -42,7 +42,6 @@ class water_controller : public aicontroller, public TCompBase {
 
 	void updateTTL();
 	void tryToDamagePlayer();
-
 
 public:
 

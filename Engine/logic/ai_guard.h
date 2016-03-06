@@ -153,6 +153,7 @@ public:
 	void renderInMenu();
 	bool load(MKeyValue& atts);
 
+	//Cambio Malla
 	void ChangePose(CHandle new_pos_h);
 
 	ai_guard& ai_guard::operator=(ai_guard arg) { return arg; }
