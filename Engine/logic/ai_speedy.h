@@ -48,19 +48,19 @@ class ai_speedy : public ai_poss, public TCompBase {
 	bool drop_water_ready;
 	VEC3 dash_target;
 
-	const float speed = 2.f;
-	const float dash_speed = 20.f;
-	const float rotation_speed = deg2rad(200);
-	const float max_dash_player_distance = 70.f;
+	float speed = 2.f;
+	float dash_speed = 20.f;
+	float rotation_speed = deg2rad(200);
+	float max_dash_player_distance = 70.f;
 	// timers in seconds
-	const float dash_timer_reset = 10.f;
-	const float drop_water_timer_reset = 3.f;
+	float dash_timer_reset = 10.f;
+	float drop_water_timer_reset = 3.f;
 	// probabilities
-	const int dash_to_point_chance = 2;
-	const int dash_to_new_point_chance = 2;
-	const int dash_to_player_chance = 2;
+	int dash_to_point_chance = 2;
+	int dash_to_new_point_chance = 2;
+	int dash_to_player_chance = 2;
 
-	const string water_static_mesh = "static_meshes/water.static_mesh";
+	string water_static_mesh = "static_meshes/water.static_mesh";
 
 	CEntity* getMyEntity() {
 		CHandle me = CHandle(this);
@@ -101,9 +101,6 @@ public:
 
 	//Cambio Malla
 	void ChangePose(CHandle new_pos_h);
-
-	//Overload function for handler_manager
-	ai_speedy& ai_speedy::operator=(ai_speedy arg) { return arg; }
 };
 
 #endif

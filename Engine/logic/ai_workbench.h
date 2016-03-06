@@ -22,9 +22,9 @@ class workbench_controller : public aicontroller, public TCompBase {
 
 	//main attributes
 	//--------------------------------------
-	const float range = 7.5f;		//range sonar
-	const float rot_speed_sonar = 8.0f;	
-	const float rot_speed_disable = 2.0f;		
+	float range = 7.5f;		//range sonar
+	float rot_speed_sonar = 8.0f;	
+	float rot_speed_disable = 2.0f;		
 	//--------------------------------------
 
 	//general info
@@ -81,7 +81,6 @@ public:
 	//--------------------------------------
 
 	void renderInMenu();
-	workbench_controller& workbench_controller::operator=(workbench_controller arg) { return arg; }
 };
 
 #endif

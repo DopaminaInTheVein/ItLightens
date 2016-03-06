@@ -1,4 +1,3 @@
-<material tech="textured.tech">
+<material tech="tech_textured_colored.tech">
 <texture type="diffuse" name="textures/floor_d.dds"/>
 </material>
-

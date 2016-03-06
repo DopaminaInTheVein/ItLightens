@@ -8,6 +8,10 @@
 #include "handle\handle.h"
 #include "components\comp_msgs.h"
 #include "components/entity_tags.h"
+#include "components/comp_render_static_mesh.h"
+#include "resources/resources_manager.h"
+#include "render/mesh.h"
+#include "render/static_mesh.h"
 
 #include "camera\camera.h"
 
@@ -16,6 +20,9 @@
 #include "utils/XMLParser.h"
 
 extern TTagsManager tags_manager;
+
+//Cambio malla
+struct TCompRenderStaticMesh;
 
 class player_controller_speedy : public PossController {
 	CObjectManager<player_controller_speedy> *om;
@@ -41,7 +48,13 @@ class player_controller_speedy : public PossController {
 	bool drop_water_ready = false;
 	const float blink_cooldown = 5.f;
 
-	const string water_static_mesh = "static_meshes/workbench.static_mesh";
+	const string water_static_mesh = "static_meshes/water.static_mesh";
+
+	//Cambio Malla
+	TCompRenderStaticMesh* actual_render = nullptr;
+	CHandle pose_idle;
+	CHandle pose_run;
+	CHandle pose_jump;
 
 public:
 	void Init();
@@ -69,6 +82,9 @@ public:
 	void DisabledState();
 	void InitControlState();
 	CEntity* getMyEntity();
+
+	//Cambio Malla
+	void ChangePose(CHandle new_pos_h);
 
 	//Overload function for handler_manager
 	player_controller_speedy& player_controller_speedy::operator=(player_controller_speedy arg) { return arg; }

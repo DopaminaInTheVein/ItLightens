@@ -10,7 +10,7 @@ class CEntity;
 
 class CMagneticBomb : public TCompBase, public aicontroller {
 
-	const float t_explode = 5.0f;
+	float t_explode = 5.0f;
 	float t_waiting = 0.0f;
 	float x_local = 0.0f;
 
@@ -38,7 +38,6 @@ public:
 	}
 
 	void SendMsg();
-	CMagneticBomb& CMagneticBomb::operator=(CMagneticBomb arg) { return arg; }
 };
 
 #endif

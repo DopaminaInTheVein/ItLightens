@@ -26,6 +26,27 @@ void player_controller_speedy::Init()
 
 	drop_water_timer = drop_water_timer_reset;
 
+	//Mallas
+	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	CEntity* myEntity = myParent;
+	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
+	actual_render = pose_idle;
+
+	pose_idle.setOwner(myEntity);
+	pose_run.setOwner(myEntity);
+	pose_jump.setOwner(myEntity);
+
+	TCompRenderStaticMesh *mesh;
+
+	mesh = pose_jump;
+	mesh->static_mesh = Resources.get("static_meshes/speedy_jump.static_mesh")->as<CStaticMesh>();
+
+	mesh = pose_run;
+	mesh->static_mesh = Resources.get("static_meshes/speedy_run.static_mesh")->as<CStaticMesh>();
+
+	actual_render->registerToRender();
+
 	ChangeState("idle");
 }
 
@@ -62,6 +83,10 @@ void player_controller_speedy::Dashing()
 			dashing = false;
 			resetDashTimer();
 			ChangeState("idle");
+			ChangePose(pose_idle);
+		}
+		else {
+			ChangePose(pose_run);
 		}
 	}
 }
@@ -69,6 +94,7 @@ void player_controller_speedy::Dashing()
 void player_controller_speedy::Blinking()
 {
 	if (io->mouse.right.isPressed() || io->joystick.button_B.becomesPressed()) {
+		ChangePose(pose_jump);
 		blink_duration -= getDeltaTime();
 
 		if (blink_ready && blink_duration <= 0)
@@ -76,9 +102,9 @@ void player_controller_speedy::Blinking()
 	}
 	else {
 		//blink_duration = max_blink_duration;
+		ChangePose(pose_idle);
 		ChangeState("idle");
 	}
-
 }
 
 void player_controller_speedy::Blink()
@@ -102,6 +128,7 @@ void player_controller_speedy::Blink()
 		resetBlinkTimer();
 	}
 	ChangeState("idle");
+	ChangePose(pose_idle);
 }
 
 bool player_controller_speedy::dashFront()
@@ -117,8 +144,7 @@ bool player_controller_speedy::dashFront()
 	player_transform->setPosition(new_position);
 
 	if (drop_water_ready) {
-
-		// CREATE WATER 
+		// CREATE WATER
 		// Creating the new handle
 		CHandle curr_entity;
 		auto hm = CHandleManager::getByName("entity");
@@ -257,8 +283,19 @@ void player_controller_speedy::DisabledState() {
 
 void player_controller_speedy::InitControlState() {
 	ChangeState("idle");
+	ChangePose(pose_idle);
 }
 CEntity* player_controller_speedy::getMyEntity() {
 	CHandle me = CHandle(this);
 	return me.getOwner();
+}
+
+//Cambio de malla
+void player_controller_speedy::ChangePose(CHandle new_pos_h)
+{
+	TCompRenderStaticMesh *new_pose = new_pos_h;
+	if (new_pose == actual_render) return;
+	actual_render->unregisterFromRender();
+	actual_render = new_pose;
+	actual_render->registerToRender();
 }
