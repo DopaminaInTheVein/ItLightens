@@ -22,6 +22,27 @@ bool CSimplePhysx::isMovementValid(CHandle h, std::string tag)
 	return true;
 }
 
+bool CSimplePhysx::isCollidingBoxOverBox(CHandle h, std::string tag) {
+	VHandles objs_h = tags_manager.getHandlesByTag(getID("box"));
+	for (auto obj : objs_h) {
+		CEntity * ent = obj;
+		boxCollider *bc = ent->get<boxCollider>();
+		if (tag.compare("box") == 0 && bc->getTag().compare("box") == 0) {
+			bool collidesFirst = false;
+			while (isColliding(h, obj)) {
+				collidesFirst = true;
+				CEntity * box = h;
+				TCompTransform * bt = box->get<TCompTransform>();
+				VEC3 boxpos = bt->getPosition();
+				boxpos.y += 0.01;
+				bt->setPosition(boxpos);
+			}
+			if (collidesFirst) return true;
+		}
+	}
+	return false;
+}
+
 void CSimplePhysx::test()
 {
 	CHandle h1 = tags_manager.getFirstHavingTag(getID("coll1"));
@@ -47,7 +68,7 @@ bool CSimplePhysx::isColliding(CHandle own, CHandle other)
 {
 	CEntity *e1 = own;
 	CEntity *e2 = other;
-	if (e1 && e2) {
+	if (e1 && e2 && e1 != e2) {
 		if (e1->getCollisionType() == CEntity::SPHERE && e2->getCollisionType() == CEntity::SPHERE) {
 			sphereCollider *sc1 = e1->get<sphereCollider>();
 			sphereCollider *sc2 = e2->get<sphereCollider>();
@@ -208,9 +229,9 @@ bool CSimplePhysx::BoxVsBox(VEC3 pos_minA, VEC3 pos_maxA, VEC3 pos_minB, VEC3 po
 		real_x_maxB = pos_minB.x;
 	}
 
-	bool colX = (real_x_minA > real_x_minB && real_x_minA < real_x_maxB || real_x_maxA > real_x_minB && real_x_maxA < real_x_maxB);
-	bool colY = (real_y_minA > real_y_minB && real_y_minA < real_y_maxB || real_y_maxA > real_y_minB && real_y_maxA < real_y_maxB);
-	bool colZ = (real_z_minA > real_z_minB && real_z_minA < real_z_maxB || real_z_maxA > real_z_minB && real_z_maxA < real_z_maxB);
+	bool colX = (real_x_minA >= real_x_minB && real_x_minA <= real_x_maxB || real_x_maxA >= real_x_minB && real_x_maxA <= real_x_maxB);
+	bool colY = (real_y_minA >= real_y_minB && real_y_minA <= real_y_maxB || real_y_maxA >= real_y_minB && real_y_maxA <= real_y_maxB);
+	bool colZ = (real_z_minA >= real_z_minB && real_z_minA <= real_z_maxB || real_z_maxA >= real_z_minB && real_z_maxA <= real_z_maxB);
 
 	return colX && colY && colZ;
 }

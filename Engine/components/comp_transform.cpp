@@ -18,10 +18,8 @@ extern CSimplePhysx s_physx;
 
 extern CShaderCte< TCteObject > shader_ctes_object;
 
-
 void TCompTransform::render() const
 {
-	
 	auto axis = Resources.get("axis.mesh")->as<CMesh>();
 	if (getScale().x != 1) {
 		VEC3 pos = getPosition();
@@ -41,13 +39,13 @@ void TCompTransform::render() const
 }
 
 bool TCompTransform::load(MKeyValue& atts) {
-  auto p = atts.getPoint("pos");
-  auto q = atts.getQuat("quat");
-  auto s = atts.getFloat("scale", 1.0f);
-  setPosition(p);
-  setRotation(q);
-  setScale(VEC3(s));
-  return true;
+	auto p = atts.getPoint("pos");
+	auto q = atts.getQuat("quat");
+	auto s = atts.getFloat("scale", 1.0f);
+	setPosition(p);
+	setRotation(q);
+	setScale(VEC3(s));
+	return true;
 }
 
 void TCompTransform::renderInMenu() {
@@ -90,8 +88,10 @@ bool TCompTransform::executeMovement(VEC3 new_pos)
 	else if (e->getCollisionType() == CEntity::BOX) {
 		boxCollider *bc = e->get<boxCollider>();
 		if (!s_physx.isMovementValid(owner, bc->getTag())) {
-			setPosition(old_pos);
-			return false;
+			if (!s_physx.isCollidingBoxOverBox(owner, bc->getTag())) {
+				setPosition(old_pos);
+				return false;
+			}
 		}
 	}
 
