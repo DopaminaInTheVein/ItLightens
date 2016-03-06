@@ -226,6 +226,7 @@ void ai_mole::_actionBeforePossession() {
 				posbox.z = posboxIni.z + p_t->getFront().z * sin(angle) * 3;
 			}
 			SBB::postBool(key, false);
+			carryingBox = false;
 		}
 	}
 }
@@ -259,6 +260,7 @@ void ai_mole::actionStunt() {
 					posbox.z = posboxIni.z + p_t->getFront().z * sin(angle) * 3;
 				}
 				SBB::postBool(key, false);
+				carryingBox = false;
 			}
 		}
 	}

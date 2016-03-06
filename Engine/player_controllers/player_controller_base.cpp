@@ -118,6 +118,7 @@ void CPlayerBase::UpdateMoves()
 	else player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
 	//player_transform->setPosition(player_position);
 	player_transform->executeMovement(player_position);
+	UpdateMovingWithOther();
 }
 #pragma endregion
 //##########################################################################
@@ -188,6 +189,9 @@ void CPlayerBase::UpdateInputActions() {
 	//TODO: actions
 }
 
+void CPlayerBase::UpdateMovingWithOther() {
+	//TODO: actions
+}
 #pragma endregion
 
 //##########################################################################
@@ -264,7 +268,7 @@ void CPlayerBase::ApplyGravity() {
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
-	ray_cast_query floor_query = ray_cast_query(player_position,VEC3(0,-1,0),15.0f, COL_TAG_SOLID);
+	ray_cast_query floor_query = ray_cast_query(player_position, VEC3(0, -1, 0), 15.0f, COL_TAG_SOLID);
 	ray_cast_result res = Physics::calcRayCast(floor_query);
 	VEC3 ground = res.positionCollision;
 	float d = simpleDist(player_position, ground);
@@ -279,10 +283,9 @@ void CPlayerBase::ApplyGravity() {
 			ChangeState("idle");
 		}
 		else {
-
- 			if (state != "doublefalling" && jspeed < 0.1f) {
+			if (state != "doublefalling" && jspeed < 0.1f) {
 				if (state == "doublejump")
- 					ChangeState("doublefalling");
+					ChangeState("doublefalling");
 				else
 					ChangeState("falling");
 			}
@@ -310,7 +313,6 @@ void CPlayerBase::Jumping()
 {
 	UpdateDirection();
 	UpdateMovDirection();
-	
 }
 
 void CPlayerBase::Moving()

@@ -17,6 +17,7 @@ public:
 	bool npcIsPossessed = false;
 	PossController();
 	virtual void DisabledState() {};
+	virtual void UpdateUnpossess();
 	virtual void InitControlState() {};
 	virtual CEntity* getMyEntity() = 0; //Pasar al TCompBase?
 	void update(float dt) { UpdatePossession(); CPlayerBase::update(dt); }
