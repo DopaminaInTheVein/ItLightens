@@ -7,10 +7,21 @@ void TKeyBoard::sysSysStatus(int key_code, const bool& is_pressed) {
 
 void TKeyBoard::update(float dt) {
 
+  /*sysSysStatus(VK_CONTROL, isKeyPressed(VK_CONTROL));
+  sysSysStatus(VK_LWIN, isKeyPressed(VK_LWIN));
+  sysSysStatus(VK_SHIFT, isKeyPressed(VK_SHIFT));
+  
+  sysSysStatus(VK_MENU, isKeyPressed(VK_MENU)); //ALT*/
+	
+  sysSysStatus(VK_LSHIFT, isKeyPressed(VK_LSHIFT));
+
+
+
   for (auto& it : active_keys) {
-	  //if (!it.second.isPressed()) {
+	  if (it.first != VK_LSHIFT) {
 		  it.second.setCurrentStatus(it.second.isPressed());
 		  it.second.update(dt);
+	  }
   }
 }
 

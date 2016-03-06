@@ -6,6 +6,8 @@
 #include "keyboard.h"
 #include "mouse.h"
 
+#define MY_SHIFT 0xA0
+
 class CIOModule : public IAppModule {
   void renderInMenu();
 public:
