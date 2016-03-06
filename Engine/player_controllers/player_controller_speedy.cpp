@@ -212,7 +212,7 @@ bool player_controller_speedy::dashFront()
 }
 bool player_controller_speedy::collisionWall() {
 	float distFirstCollider; // No lo uso
-	CHandle collider = rayCastToFront(COL_TAG_SOLID, 0.5f, distFirstCollider);
+	CHandle collider = rayCastToFront(COL_TAG_SOLID, 1.0f, distFirstCollider);
 	return collider.isValid();
 }
 
