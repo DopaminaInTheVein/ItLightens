@@ -28,7 +28,7 @@ void ai_poss::onSetPossessed(const TMsgAISetPossessed& msg) {
 
 void ai_poss::onSetStunned(const TMsgAISetStunned& msg) {
 	dbg("ai_poss, recibe Set Stunned = %d\n", msg.stunned);
-	//stunned = msg.stunned;
+	stunned = msg.stunned;
 	if (msg.stunned) {
 		ChangeState(ST_STUNT);
 	}
