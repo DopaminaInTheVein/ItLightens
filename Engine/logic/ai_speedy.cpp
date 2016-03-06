@@ -197,6 +197,13 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 			// Adding water tag
 			tags_manager.addTag(curr_entity, getID("water"));
 			// Creating the new entity components
+			// create name component
+			auto hm_name = CHandleManager::getByName("name");
+			CHandle new_name_h = hm_name->createHandle();
+			MKeyValue atts_name;
+			atts_name["name"] = "speedy_water";
+			new_name_h.load(atts_name);
+			e->add(new_name_h);
 			// create transform component
 			auto hm_transform = CHandleManager::getByName("transform");
 			CHandle new_transform_h = hm_transform->createHandle();
@@ -204,9 +211,9 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 			// position, rotation and scale
 			char position[100]; sprintf(position, "%f %f %f", player_pos.x, player_pos.y, player_pos.z);
 			atts["pos"] = position;
-			char rotation[100]; sprintf(rotation, "%f %f %f %f", 1, 1, 1, 1);
+			char rotation[100]; sprintf(rotation, "%f %f %f %f", 1.f, 1.f, 1.f, 1.f);
 			atts["rotation"] = rotation;
-			char scale[100]; sprintf(scale, "%f %f %f", 1, 1, 1);
+			char scale[100]; sprintf(scale, "%f %f %f", 1.f, 1.f, 1.f);
 			atts["scale"] = scale;
 			// load transform attributes and add transform to the entity
 			new_transform_h.load(atts);
@@ -215,14 +222,14 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 			CHandleManager* hm_water = CHandleManager::getByName("water");
 			CHandle new_water_h = hm_water->createHandle();
 			e->add(new_water_h);
-			// init entity and send message to the new water entity with its type
-			TMsgSetWaterType msg_water;
-			msg_water.type = 1;
-			e->sendMsg(msg_water);
 			// init the new water component
 			auto hm_water_cont = getHandleManager<water_controller>();
 			water_controller* water_cont = hm_water_cont->getAddrFromHandle(new_water_h);
 			water_cont->Init();
+			// init entity and send message to the new water entity with its type
+			TMsgSetWaterType msg_water;
+			msg_water.type = 1;
+			e->sendMsg(msg_water);
 
 			// reset drop water cooldown
 			resetDropWaterTimer();
