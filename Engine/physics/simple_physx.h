@@ -24,13 +24,14 @@ public:
 		relations["player"] = { "npc", "wall", "platform", "objects" };
 
 		//box
-		relations["box"] = { "npc", "wall", "platform", "objects" };
+		relations["box"] = { "npc", "wall", "platform", "objects", "box" };
 
 		//enemy
 		relations["npc"] = { "platform", "objects" };
 	}
 
 	bool isMovementValid(CHandle h, std::string tag);
+	bool isCollidingBoxOverBox(CHandle h, std::string tag);
 
 	void test();		//TO REMOVE
 };

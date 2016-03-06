@@ -24,7 +24,7 @@ void player_controller_mole::Init() {
 }
 void player_controller_mole::UpdateInputActions() {
 	energyDecreasal(getDeltaTime()*0.5f);
-	if (io->mouse.left.becomesReleased()) {
+	if (io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) {
 		if (boxGrabbed) {
 			ChangeState("leaveBox");
 		}
@@ -139,6 +139,7 @@ bool player_controller_mole::nearToBox() {
 	bool found = false;
 	if (SBB::readHandlesVector("wptsBoxes").size() > 0) {
 		float distMax = 2.0f;
+		float higher = -0.5f;
 		string key_final = "";
 		for (int i = 0; i < SBB::readHandlesVector("wptsBoxes").size(); i++) {
 			CEntity * entTransform = this->getEntityBoxPointer(i);
@@ -147,8 +148,9 @@ bool player_controller_mole::nearToBox() {
 			VEC3 wpt = transformBox->getPosition();
 			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
 			string key = nameBox->name;
-			if (disttowpt < distMax) {
+			if (disttowpt < distMax + 2 && wpt.y >= higher) {
 				distMax = disttowpt;
+				higher = wpt.y;
 				selectedBox = key;
 				selectedBoxi = i;
 				found = true;

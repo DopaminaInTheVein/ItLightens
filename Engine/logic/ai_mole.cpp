@@ -34,6 +34,7 @@ void ai_mole::SeekWptState() {
 		float distMax = 15.0f;
 		string key_final = "";
 		bool found = false;
+		float higher = -0.5f;
 		for (int i = 0; i < SBB::readHandlesVector("wptsBoxes").size(); i++) {
 			CEntity * entTransform = this->getEntityPointer(i);
 			TCompTransform * transformBox = entTransform->get<TCompTransform>();
@@ -41,8 +42,9 @@ void ai_mole::SeekWptState() {
 			VEC3 wpt = transformBox->getPosition();
 			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
 			string key = nameBox->name;
-			if (!SBB::readBool(key) && disttowpt < distMax && !isBoxAtLeavePoint(wpt)) {
+			if (!SBB::readBool(key) && !isBoxAtLeavePoint(wpt) && (disttowpt < distMax + 2 && wpt.y > higher)) {
 				towptbox = i;
+				higher = wpt.y;
 				distMax = disttowpt;
 				key_final = key;
 				found = true;
@@ -191,6 +193,16 @@ void ai_mole::UnGrabState() {
 		TCompTransform * enBoxT = enBox->get<TCompTransform>();
 		TCompName * nameBox = enBox->get<TCompName>();
 		enBoxT->setPosition(wptbleavetransform->getPosition());
+		VEC3 posbox = enBoxT->getPosition();
+		VEC3 posboxIni = enBoxT->getPosition();
+		TCompTransform * transform = getEntityTransform();
+
+		float angle = 0.0f;
+		while (!enBoxT->executeMovement(posbox)) {
+			angle += 0.1;
+			posbox.x = posboxIni.x + transform->getFront().x * cos(angle) * 3;
+			posbox.z = posboxIni.z + transform->getFront().z * sin(angle) * 3;
+		}
 		SBB::postBool(nameBox->name, false);
 		carryingBox = false;
 	}

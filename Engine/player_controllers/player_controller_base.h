@@ -39,6 +39,7 @@ protected:
 	const float jimpulse = 5.0f;
 	bool onGround = true;
 	bool moving = false;
+	const int left_stick_sensibility = 5000;
 
 	//CObjectManager<CPlayerBase> * om = nullptr;
 	CHandle myHandle;

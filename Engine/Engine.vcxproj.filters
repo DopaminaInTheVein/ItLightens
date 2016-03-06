@@ -190,6 +190,9 @@
     <ClCompile Include="logic\ai_water.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\io\joystick.cpp">
+      <Filter>app_modules\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -420,6 +423,9 @@
     </ClInclude>
     <ClInclude Include="logic\ai_water.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\io\joystick.h">
+      <Filter>app_modules\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

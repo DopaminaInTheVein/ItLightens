@@ -135,7 +135,6 @@ public:
 	void reduceStats();
 	void resetStats();
 	void onMagneticBomb(const TMsgMagneticBomb& msg);
-	void onPlayerDetected(const TMsgNoise& msg);
 
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();

@@ -5,6 +5,7 @@
 
 #include "keyboard.h"
 #include "mouse.h"
+#include "joystick.h"
 
 #define MY_SHIFT 0xA0
 
@@ -21,6 +22,7 @@ public:
 
   TKeyBoard keys;
   TMouse    mouse;
+  TJoystick joystick;
 
   bool onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 
