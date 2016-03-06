@@ -304,29 +304,77 @@
     <tag name = "platform" />
     <name name ="collider_wall_zone_4"/>
     <transform pos ="-6.1 1.8 55"/>
-    <box_collider p1 ="1 10 3" p2="-1 -5 -4.1"  tag="platform" />
+    <box_collider p1 ="1 10 3" p2="-3 -5 -4.1"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
     <name name ="collider_wall_zone_4"/>
     <transform pos ="6.1 1.8 55"/>
-    <box_collider p1 ="1 10 3" p2="-1 -5 -4.1"  tag="platform" />
+    <box_collider p1 ="3 10 3" p2="-1 -5 -4.1"  tag="platform" />
   </entity>
   
   
   <!-- END ZONE 4-->
 
-  <!-- ZONE 5 : SCIENTIST & GUARD -->
-  
+  <!-- ZONE 5 : MAGNETISM 2 -->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_5"/>
+    <name name ="collider_floor_wall_5"/>
     <transform pos ="0 3.8 90"/>
     <box_collider p1 ="20 0 95" p2="-20 -4 -28.8"  tag="platform" />
   </entity>
   
+  
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5"/>
+    <transform pos ="-10 0 60"/>
+    <box_collider p1 ="1 10 1.3" p2="-2 -1 -5"  tag="platform" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5"/>
+    <transform pos ="10 0 60"/>
+    <box_collider p1 ="2 10 1.3" p2="-1 -1 -5"  tag="platform" />
+  </entity>
+  
   <!-- END ZONE 5-->
+  
+  <!-- ZONE 6: INTRO GUARD-->
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5"/>
+    <transform pos ="12.5 2 65"/>
+    <box_collider p1 ="1 10 4" p2="-1 -1 -3.7"  tag="platform" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5"/>
+    <transform pos ="-12.5 2 65"/>
+    <box_collider p1 ="1 10 4" p2="-1 -1 -3.7"  tag="platform" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5"/>
+    <transform pos ="-6 2 90"/>
+    <box_collider p1 ="1 10 21" p2="-8 -1 -21"  tag="platform" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5"/>
+    <transform pos ="13 2 90"/>
+    <box_collider p1 ="1 10 21" p2="-8 -1 -21"  tag="platform" />
+  </entity>
+  
+  
+  <!-- END ZONE 6 -->
+  
   
   <!-- END SCENE COLLIDERS -->
   <!-- END SCENE -->
