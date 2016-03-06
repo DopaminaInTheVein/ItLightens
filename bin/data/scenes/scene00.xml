@@ -257,7 +257,7 @@
     <tag name="AI_poss" />
     <name name="speedy1" />
     <transform pos="30 0.1 0" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <render_static_mesh name="static_meshes/speedy.static_mesh" />
     <life points="50" />
     <player_speedy />
     <ai_speedy
