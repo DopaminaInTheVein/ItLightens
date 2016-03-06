@@ -5,10 +5,11 @@
 #include <map>
 
 class TKeyBoard {
-  std::map< int, CDigitalButton > active_keys;
+  
 public:
+	std::map< int, CDigitalButton > active_keys;
   void update(float dt);
-  void sysSysStatus(int key_code, bool is_pressed);
+  void sysSysStatus(int key_code, const bool &is_pressed);
   const CDigitalButton &operator[](int key_code);
 };
 

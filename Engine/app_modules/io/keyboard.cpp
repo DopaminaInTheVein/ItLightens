@@ -1,22 +1,16 @@
 #include "mcv_platform.h"
 #include "keyboard.h"
 
-void TKeyBoard::sysSysStatus(int key_code, bool is_pressed) {
+void TKeyBoard::sysSysStatus(int key_code, const bool& is_pressed) {
   active_keys[key_code].setCurrentStatus(is_pressed);
 }
 
 void TKeyBoard::update(float dt) {
 
-  sysSysStatus(VK_CONTROL, isKeyPressed(VK_CONTROL));
-  sysSysStatus(VK_LWIN, isKeyPressed(VK_LWIN));
-  sysSysStatus(VK_SHIFT, isKeyPressed(VK_SHIFT));
-  sysSysStatus(VK_SHIFT, isKeyPressed(VK_LSHIFT));
-  sysSysStatus(VK_MENU, isKeyPressed(VK_MENU)); //ALT
-  sysSysStatus(VK_SPACE, isKeyPressed(VK_SPACE));
-
   for (auto& it : active_keys) {
-    it.second.setCurrentStatus(it.second.isPressed());
-    it.second.update(dt);
+	  //if (!it.second.isPressed()) {
+		  it.second.setCurrentStatus(it.second.isPressed());
+		  it.second.update(dt);
   }
 }
 

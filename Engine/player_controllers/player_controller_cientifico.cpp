@@ -70,16 +70,16 @@ void player_controller_cientifico::UpdateInputActions() {
 
 void player_controller_cientifico::ExplodeBomb()
 {
-	if (obj == STATIC_BOMB_GAME) {
+	if (obj == STATIC_BOMB_GAME && bomb_handle.isValid()) {
 		CStaticBomb *bomb = bomb_handle;
 		obj = EMPTY;
-		bomb->Explode();
+		bomb->toExplode();
 	}
 	
-	if (obj == MAGNETIC_BOMB_GAME) {
+	if (obj == MAGNETIC_BOMB_GAME && bomb_handle.isValid()) {
 		CMagneticBomb *bomb = bomb_handle;
 		obj = EMPTY;
-		bomb->Explode();
+		bomb->toExplode();
 	}
 }
 
@@ -265,6 +265,7 @@ void player_controller_cientifico::renderInMenu()
 	ImGui::Text("NODE: %s\n", state.c_str());
 	ImGui::Text("direction: %.4f, %.4f, %.4f", direction.x, direction.y, direction.z);
 	ImGui::Text("jump: %.5f", jspeed);
+	ImGui::Text("object: %d\n", obj);
 }
 
 void player_controller_cientifico::DisabledState() {
