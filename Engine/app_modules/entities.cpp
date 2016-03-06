@@ -115,6 +115,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_mole, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(ai_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(ai_guard, TMsgMagneticBomb, onMagneticBomb);
+	SUBSCRIBE(ai_guard, TMsgNoise, noise);
 
 	//Posesiones Mensajes
 	//..Cientifico

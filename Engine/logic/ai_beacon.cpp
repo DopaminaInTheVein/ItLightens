@@ -92,8 +92,25 @@ void beacon_controller::ActiveSonar()
 	me_transform->getAngles(&yaw, &pitch);
 	me_transform->setAngles(yaw + rot_speed_sonar*getDeltaTime(), pitch);
 	Debug->DrawLine(me_transform->getPosition() + VEC3(0, 1, 0), me_transform->getFront(), range, RED);
+	//TMsgNoise
 
-	//TODO: detection
+	CEntity * player = tags_manager.getFirstHavingTag(getID("target"));
+	TCompTransform * player_transform = player->get<TCompTransform>();
+	VEC3 posPlayer = player_transform->getPosition();
+	VEC3 myPos = me_transform->getPosition();
+	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos) * 2) { //Pitch < 30
+		if (me_transform->isHalfConeVision(posPlayer, deg2rad(15.0f))) { //Cono vision
+			if (squaredDist(myPos, posPlayer) < 3.0f) { //Distancia
+				TMsgNoise msg;
+				msg.source = posPlayer;
+				for (CHandle guardHandle : tags_manager.getHandlesByTag(getID("AI_guard"))) {
+					CEntity * ePoss = guardHandle;
+					ePoss->sendMsg(msg);
+				}
+			}
+		}
+	}
+
 	t_waiting += getDeltaTime();
 	if (t_waiting > t_max_sonar) {		//go to new action
 		t_waiting = 0.0f;

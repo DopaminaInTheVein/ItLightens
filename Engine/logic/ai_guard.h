@@ -135,6 +135,7 @@ public:
 	void reduceStats();
 	void resetStats();
 	void onMagneticBomb(const TMsgMagneticBomb& msg);
+	void onPlayerDetected(const TMsgNoise& msg);
 
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();
@@ -153,6 +154,7 @@ public:
 	void renderInMenu();
 	bool load(MKeyValue& atts);
 
+	//Cambio Malla
 	void ChangePose(CHandle new_pos_h);
 
 	ai_guard& ai_guard::operator=(ai_guard arg) { return arg; }
