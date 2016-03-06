@@ -19,6 +19,7 @@ class CStaticBomb : public TCompBase {
 public:
 	void update(float elapsed);
 	void Explode();
+	void toExplode();
 
 	void destroy() {
 		myParent.destroy();

@@ -10,6 +10,7 @@
 #include "resources/resources_manager.h"
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
+#include "logic/ai_water.h"
 #include "windows/app.h"
 #include "utils/utils.h"
 #include <vector>
@@ -26,6 +27,7 @@ DECL_OBJ_MANAGER("workbench", workbench_controller);
 DECL_OBJ_MANAGER("ai_guard", ai_guard);
 DECL_OBJ_MANAGER("ai_mole", ai_mole);
 DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
+DECL_OBJ_MANAGER("water", water_controller);
 DECL_OBJ_MANAGER("player", player_controller);
 DECL_OBJ_MANAGER("player_speedy", player_controller_speedy);
 DECL_OBJ_MANAGER("player_mole", player_controller_mole);
@@ -79,6 +81,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_speedy>()->init(MAX_ENTITIES);
 	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
+	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
@@ -96,6 +99,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
+	SUBSCRIBE(water_controller, TMsgSetWaterType, onSetWaterType);
 	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);					//Workbench empty
@@ -180,6 +184,17 @@ bool CEntitiesModule::start() {
 		speedy_e->sendMsg(msg_player);
 	}
 
+	// Set the type for the starting water zones to 0 (PERMANENT)
+	TTagID tagIDWater = getID("water");
+	VHandles waterHandles = tags_manager.getHandlesByTag(tagIDWater);
+
+	for (CHandle waterHandle : waterHandles) {
+		CEntity * water_e = waterHandle;
+		TMsgSetWaterType msg_water;
+		msg_water.type = 0;
+		water_e->sendMsg(msg_water);
+	}
+
 	SBB::postHandlesVector("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
 	SBB::postHandlesVector("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
@@ -196,6 +211,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
 	getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
+	getHandleManager<water_controller>()->onAll(&water_controller::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
 
@@ -220,7 +236,9 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);
+
 	getHandleManager<ai_speedy>()->updateAll(dt);
+	getHandleManager<water_controller>()->updateAll(dt);
 
 	getHandleManager<CStaticBomb>()->updateAll(dt);
 	getHandleManager<CMagneticBomb>()->updateAll(dt);

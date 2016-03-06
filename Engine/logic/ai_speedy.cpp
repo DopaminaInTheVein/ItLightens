@@ -1,5 +1,6 @@
 #include "mcv_platform.h"
 #include "ai_speedy.h"
+
 void ai_speedy::Init()
 {
 	// insert all states in the map
@@ -24,6 +25,10 @@ void ai_speedy::Init()
 	dash_ready = false;
 	dash_target = VEC3(0, 0, 0);
 
+	// drop water timer initialization
+	drop_water_timer = drop_water_timer_reset;
+	drop_water_ready = false;
+
 	// reset the state
 	ChangeState("idle");
 }
@@ -38,7 +43,9 @@ void ai_speedy::update(float elapsed) {
 	transform = myEntity->get<TCompTransform>();
 	CEntity * player_e = player;
 	player_transform = player_e->get<TCompTransform>();
-	// Recalc AI
+	// Recalc AI and update timers
+	updateDashTimer();
+	updateDropWaterTimer();
 	Recalc();
 }
 
@@ -69,7 +76,6 @@ void ai_speedy::IdleState() {
 
 void ai_speedy::NextWptState()
 {
-	updateDashTimer();
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
 
@@ -80,15 +86,19 @@ void ai_speedy::NextWptState()
 	}
 }
 
-void ai_speedy::SeekWptState() {
-	updateDashTimer();
+void ai_speedy::SeekWptState() 
+{
 	float distance = squaredDistXZ(fixedWpts[curwpt], transform->getPosition());
 
 	string next_action = decide_next_action();
 
 	if (next_action == "dashtoplayer" && dash_ready) {
 		dash_target = player_transform->getPosition();
-		ChangeState(next_action);
+		float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
+		if (abs(distance_to_player) <= max_dash_player_distance)
+			ChangeState(next_action);
+		else if (abs(distance) > 0.1f) 
+			moveFront(speed);
 	}
 	else if (next_action == "dashtonewpoint" && dash_ready) {
 		dash_target = VEC3(30.f, 0.0f, 0.0f);
@@ -173,6 +183,57 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 
 	if (aimed) {
 		moveFront(dash_speed);
+		if (drop_water_ready) {
+
+			VEC3 player_pos = transform->getPosition();
+
+			// CREATE WATER 
+			// Creating the new handle
+			CHandle curr_entity;
+			auto hm = CHandleManager::getByName("entity");
+			CHandle new_h = hm->createHandle();
+			curr_entity = new_h;
+			CEntity* e = curr_entity;
+			// Adding water tag
+			tags_manager.addTag(curr_entity, getID("water"));
+			// Creating the new entity components
+			// create name component
+			auto hm_name = CHandleManager::getByName("name");
+			CHandle new_name_h = hm_name->createHandle();
+			MKeyValue atts_name;
+			atts_name["name"] = "speedy_water";
+			new_name_h.load(atts_name);
+			e->add(new_name_h);
+			// create transform component
+			auto hm_transform = CHandleManager::getByName("transform");
+			CHandle new_transform_h = hm_transform->createHandle();
+			MKeyValue atts;
+			// position, rotation and scale
+			char position[100]; sprintf(position, "%f %f %f", player_pos.x, player_pos.y, player_pos.z);
+			atts["pos"] = position;
+			char rotation[100]; sprintf(rotation, "%f %f %f %f", 1.f, 1.f, 1.f, 1.f);
+			atts["rotation"] = rotation;
+			char scale[100]; sprintf(scale, "%f %f %f", 1.f, 1.f, 1.f);
+			atts["scale"] = scale;
+			// load transform attributes and add transform to the entity
+			new_transform_h.load(atts);
+			e->add(new_transform_h);
+			// create water component and add it to the entity
+			CHandleManager* hm_water = CHandleManager::getByName("water");
+			CHandle new_water_h = hm_water->createHandle();
+			e->add(new_water_h);
+			// init the new water component
+			auto hm_water_cont = getHandleManager<water_controller>();
+			water_controller* water_cont = hm_water_cont->getAddrFromHandle(new_water_h);
+			water_cont->Init();
+			// init entity and send message to the new water entity with its type
+			TMsgSetWaterType msg_water;
+			msg_water.type = 1;
+			e->sendMsg(msg_water);
+
+			// reset drop water cooldown
+			resetDropWaterTimer();
+		}
 	}
 
 	float distance = squaredDistXZ(target, transform->getPosition());
@@ -195,4 +256,16 @@ void ai_speedy::updateDashTimer() {
 void ai_speedy::resetDashTimer() {
 	dash_timer = (float)dash_timer_reset;
 	dash_ready = false;
+}
+
+void ai_speedy::updateDropWaterTimer() {
+	drop_water_timer -= getDeltaTime();
+	if (drop_water_timer <= 0) {
+		drop_water_ready = true;
+	}
+}
+
+void ai_speedy::resetDropWaterTimer() {
+	drop_water_timer = drop_water_timer_reset;
+	drop_water_ready = false;
 }

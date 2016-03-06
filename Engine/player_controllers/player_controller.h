@@ -34,6 +34,7 @@ class player_controller : public CPlayerBase {
 	//Possession
 	float DIST_LEAVING_POSSESSION = 1.0f;
 	CHandle currentPossessable;
+	CHandle currentStunable;
 	float possessionReach = 3.0f;
 
 	TCompTransform * getEntityTransform() {
@@ -51,6 +52,8 @@ class player_controller : public CPlayerBase {
 
 	void recalcPossassable();
 	void UpdatePossession();
+
+	bool nearStunable();
 
 	CHandle pose_idle;
 	CHandle pose_run;

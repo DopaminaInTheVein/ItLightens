@@ -19,8 +19,8 @@ void ai_mole::Init()
 	AddState("nextwptCarry", (statehandler)&ai_mole::NextWptCarryState);
 	AddState("ungrab", (statehandler)&ai_mole::UnGrabState);
 
-	towptbox = 0;
-	towptleave = 0;
+	towptbox = -1;
+	towptleave = -1;
 	// reset the state
 	ChangeState("idle");
 }
@@ -58,57 +58,64 @@ void ai_mole::SeekWptState() {
 
 void ai_mole::OrientToWptState()
 {
-	CEntity * entTransform = this->getEntityPointer(towptbox);
-	TCompTransform * transformBox = entTransform->get<TCompTransform>();
-	TCompTransform * transform = getEntityTransform();
-	if (!transform->isHalfConeVision(transformBox->getPosition(), deg2rad(0.01f))) {
-		//ROTATE CAUSE WE DON'T SEE OBJECTIVE
-		float angle = 0.0f;
+	if (towptbox > -1) {
+		CEntity * entTransform = this->getEntityPointer(towptbox);
+		TCompTransform * transformBox = entTransform->get<TCompTransform>();
+		TCompTransform * transform = getEntityTransform();
+		if (!transform->isHalfConeVision(transformBox->getPosition(), deg2rad(0.01f))) {
+			//ROTATE CAUSE WE DON'T SEE OBJECTIVE
+			float angle = 0.0f;
 
-		float littleAngle = transform->getDeltaYawToAimTo(transformBox->getPosition());
-		float littleDeltaAngle = getDeltaTime() / 2;
-		if (littleAngle < 0) {
-			littleDeltaAngle *= -1;
-			angle = max(littleAngle, littleDeltaAngle);
+			float littleAngle = transform->getDeltaYawToAimTo(transformBox->getPosition());
+			float littleDeltaAngle = getDeltaTime() / 2;
+			if (littleAngle < 0) {
+				littleDeltaAngle *= -1;
+				angle = max(littleAngle, littleDeltaAngle);
+			}
+			else {
+				angle = min(littleAngle, littleDeltaAngle);
+			}
+			float yaw = 0.0f, pitch = 0.0f;
+			transform->getAngles(&yaw, &pitch);
+			transform->setAngles(yaw + angle, 0.0f);
 		}
 		else {
-			angle = min(littleAngle, littleDeltaAngle);
+			ChangeState("nextwpt");
 		}
-		float yaw = 0.0f, pitch = 0.0f;
-		transform->getAngles(&yaw, &pitch);
-		transform->setAngles(yaw + angle, 0.0f);
-	}
-	else {
-		ChangeState("nextwpt");
 	}
 }
 void ai_mole::NextWptState()
 {
-	TCompTransform * transformBox = this->getEntityPointer(towptbox)->get<TCompTransform>();
-	TCompTransform * transform = getEntityTransform();
-	float distToWPT = simpleDistXZ(transformBox->getPosition(), transform->getPosition());
+	if (towptbox > -1) {
+		TCompTransform * transformBox = this->getEntityPointer(towptbox)->get<TCompTransform>();
+		TCompTransform * transform = getEntityTransform();
+		float distToWPT = simpleDistXZ(transformBox->getPosition(), transform->getPosition());
 
-	if (distToWPT > 1.0f) {
-		//MOVE
-		VEC3 front = transform->getFront();
-		VEC3 pos = transform->getPosition();
-		pos.x += front.x*getDeltaTime() * 2;
-		pos.z += front.z*getDeltaTime() * 2;
-		transform->setPosition(pos);
-	}
-	else {
-		ChangeState("grab");
+		if (distToWPT > 1.0f) {
+			//MOVE
+			VEC3 front = transform->getFront();
+			VEC3 pos = transform->getPosition();
+			pos.x += front.x*getDeltaTime() * 2;
+			pos.z += front.z*getDeltaTime() * 2;
+			transform->setPosition(pos);
+		}
+		else {
+			ChangeState("grab");
+		}
 	}
 }
 
 void ai_mole::GrabState() {
-	TCompTransform * transform = getEntityTransform();
-	CEntity* box = SBB::readHandlesVector("wptsBoxes")[towptbox];
-	TCompTransform* box_t = box->get<TCompTransform>();
-	VEC3 posbox = transform->getPosition();
-	posbox.y += 2;
-	box_t->setPosition(posbox);
-	ChangeState("seekwptcarry");
+	if (towptbox > -1) {
+		TCompTransform * transform = getEntityTransform();
+		CEntity* box = SBB::readHandlesVector("wptsBoxes")[towptbox];
+		TCompTransform* box_t = box->get<TCompTransform>();
+		VEC3 posbox = transform->getPosition();
+		posbox.y += 2;
+		box_t->setPosition(posbox);
+		carryingBox = true;
+		ChangeState("seekwptcarry");
+	}
 }
 void ai_mole::SeekWptCarryState() {
 	TCompTransform * transform = getEntityTransform();
@@ -159,7 +166,7 @@ void ai_mole::NextWptCarryState() {
 	TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
 	TCompTransform * transform = getEntityTransform();
 	float distToWPT = simpleDistXZ(wptbleavetransform->getPosition(), transform->getPosition());
-	if (distToWPT > 1.0f) {
+	if (distToWPT > 1.5f) {
 		//MOVE
 		VEC3 front = transform->getFront();
 		VEC3 pos = transform->getPosition();
@@ -177,77 +184,84 @@ void ai_mole::NextWptCarryState() {
 }
 
 void ai_mole::UnGrabState() {
-	CEntity * enBox = SBB::readHandlesVector("wptsBoxes")[towptbox];
-	CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[towptleave];
-	TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
-	TCompTransform * enBoxT = enBox->get<TCompTransform>();
-	TCompName * nameBox = enBox->get<TCompName>();
-	enBoxT->setPosition(wptbleavetransform->getPosition());
-	SBB::postBool(nameBox->name, false);
+	if (towptbox > -1) {
+		CEntity * enBox = SBB::readHandlesVector("wptsBoxes")[towptbox];
+		CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[towptleave];
+		TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
+		TCompTransform * enBoxT = enBox->get<TCompTransform>();
+		TCompName * nameBox = enBox->get<TCompName>();
+		enBoxT->setPosition(wptbleavetransform->getPosition());
+		SBB::postBool(nameBox->name, false);
+		carryingBox = false;
+	}
 	ChangeState("idle");
 }
 
 void ai_mole::_actionBeforePossession() {
-	vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
-	CEntity * en = newPointerVec[towptbox];
-	TCompName * nameBox = en->get<TCompName>();
-	string key = nameBox->name;
+	if (towptbox > -1 && carryingBox) {
+		vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
+		CEntity * en = newPointerVec[towptbox];
+		TCompName * nameBox = en->get<TCompName>();
+		string key = nameBox->name;
 
-	ai_mole * mole = SBB::readMole(key);
-	CEntity * mole_e = mole->getMyEntity();
-	TCompName * mole_e_n = mole_e->get<TCompName>();
+		ai_mole * mole = SBB::readMole(key);
+		CEntity * mole_e = mole->getMyEntity();
+		TCompName * mole_e_n = mole_e->get<TCompName>();
 
-	CEntity * currmole_e = getMyEntity();
-	TCompName * currmole_e_n = currmole_e->get<TCompName>();
+		CEntity * currmole_e = getMyEntity();
+		TCompName * currmole_e_n = currmole_e->get<TCompName>();
 
-	if (mole_e_n->name == currmole_e_n->name) {
-		TCompTransform* p_t = mole_e->get<TCompTransform>();
-		TCompTransform* b_t = en->get<TCompTransform>();
-		VEC3 posboxIni = b_t->getPosition();
-		VEC3 posbox;
-		posbox.x = posboxIni.x + p_t->getFront().x * 3;
-		posbox.y = posboxIni.y - 2;
-		posbox.z = posboxIni.z + p_t->getFront().z * 3;
-		float angle = 0.0f;
-		while (!b_t->executeMovement(posbox)) {
-			angle += 0.1;
-			posbox.x = posboxIni.x + p_t->getFront().x * sin(angle) * 3;
-			posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;
+		if (mole_e_n->name == currmole_e_n->name) {
+			TCompTransform* p_t = mole_e->get<TCompTransform>();
+			TCompTransform* b_t = en->get<TCompTransform>();
+			VEC3 posboxIni = b_t->getPosition();
+			VEC3 posbox;
+			posbox.x = posboxIni.x + p_t->getFront().x * 3;
+			posbox.y = posboxIni.y - 2;
+			posbox.z = posboxIni.z + p_t->getFront().z * 3;
+			float angle = 0.0f;
+			while (!b_t->executeMovement(posbox)) {
+				angle += 0.1;
+				posbox.x = posboxIni.x + p_t->getFront().x * cos(angle) * 3;
+				posbox.z = posboxIni.z + p_t->getFront().z * sin(angle) * 3;
+			}
+			SBB::postBool(key, false);
 		}
-		SBB::postBool(key, false);
 	}
 }
 
 void ai_mole::actionStunt() {
-	vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
-	CEntity * en = newPointerVec[towptbox];
-	TCompName * nameBox = en->get<TCompName>();
-	string key = nameBox->name;
+	if (towptbox > -1 && carryingBox) {
+		vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
+		CEntity * en = newPointerVec[towptbox];
+		TCompName * nameBox = en->get<TCompName>();
+		string key = nameBox->name;
+		if (SBB::readBool(key)) {
+			ai_mole * mole = SBB::readMole(key);
+			CEntity * mole_e = mole->getMyEntity();
+			TCompName * mole_e_n = mole_e->get<TCompName>();
 
-	ai_mole * mole = SBB::readMole(key);
-	CEntity * mole_e = mole->getMyEntity();
-	TCompName * mole_e_n = mole_e->get<TCompName>();
+			CEntity * currmole_e = getMyEntity();
+			TCompName * currmole_e_n = currmole_e->get<TCompName>();
 
-	CEntity * currmole_e = getMyEntity();
-	TCompName * currmole_e_n = currmole_e->get<TCompName>();
-
-	if (mole_e_n->name == currmole_e_n->name) {
-		TCompTransform* p_t = mole_e->get<TCompTransform>();
-		TCompTransform* b_t = en->get<TCompTransform>();
-		VEC3 posboxIni = b_t->getPosition();
-		VEC3 posbox;
-		posbox.x = posboxIni.x + p_t->getFront().x * 3;
-		posbox.y = posboxIni.y - 2;
-		posbox.z = posboxIni.z + p_t->getFront().z * 3;
-		float angle = 0.0f;
-		while (!b_t->executeMovement(posbox)) {
-			angle += 0.1;
-			posbox.x = posboxIni.x + p_t->getFront().x * sin(angle) * 3;
-			posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;
+			if (mole_e_n->name == currmole_e_n->name) {
+				TCompTransform* p_t = mole_e->get<TCompTransform>();
+				TCompTransform* b_t = en->get<TCompTransform>();
+				VEC3 posboxIni = b_t->getPosition();
+				VEC3 posbox;
+				posbox.x = posboxIni.x + p_t->getFront().x * 3;
+				posbox.y = posboxIni.y - 2;
+				posbox.z = posboxIni.z + p_t->getFront().z * 3;
+				float angle = 0.0f;
+				while (!b_t->executeMovement(posbox)) {
+					angle += 0.1;
+					posbox.x = posboxIni.x + p_t->getFront().x * cos(angle) * 3;
+					posbox.z = posboxIni.z + p_t->getFront().z * sin(angle) * 3;
+				}
+				SBB::postBool(key, false);
+			}
 		}
-		SBB::postBool(key, false);
 	}
-	ChangeState("idle");
 }
 
 bool ai_mole::isBoxAtLeavePoint(VEC3 posBox) {

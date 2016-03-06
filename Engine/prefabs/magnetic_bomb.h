@@ -31,6 +31,7 @@ public:
 
 
 	void UpdatePosition();
+	void toExplode();
 	void update(float elapsed);
 	void destroy() {
 		myParent.destroy();

@@ -25,6 +25,8 @@ class ai_mole : public ai_poss, public TCompBase {
 	int towptbox;
 	int towptleave;
 
+	bool carryingBox = false;
+
 	CHandle myHandle;
 	CHandle myParent;
 

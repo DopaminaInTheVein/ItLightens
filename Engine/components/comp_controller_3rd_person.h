@@ -37,7 +37,7 @@ public:
 		, speed_camera(2.0f)
 		, m_yaw(0.0f)
 		, m_pitch(0.0f)
-		, rotation_sensibility(deg2rad(45.0f))
+		, rotation_sensibility(deg2rad(45.0f)/250.0f)
 	{}
 
 	void onCreate(const TMsgEntityCreated& msg) {
@@ -67,10 +67,10 @@ public:
 	}
 
 	void updateInput() {
-		if (x_axis_inverted)	yaw -= io->mouse.dx * rotation_sensibility*getDeltaTime()*speed_camera;
-		else yaw += io->mouse.dx * rotation_sensibility*getDeltaTime()*speed_camera;
-		if (y_axis_inverted) pitch -= io->mouse.dy * rotation_sensibility*getDeltaTime()*speed_camera;
-		else pitch += io->mouse.dy * rotation_sensibility*getDeltaTime()*speed_camera;
+		if(x_axis_inverted)	yaw -= io->mouse.dx * rotation_sensibility*speed_camera;
+		else yaw += io->mouse.dx * rotation_sensibility*speed_camera;
+		if(y_axis_inverted) pitch -= io->mouse.dy * rotation_sensibility*speed_camera;
+		else pitch += io->mouse.dy * rotation_sensibility*speed_camera;
 
 		if (pitch >= max_pitch) {
 			pitch = max_pitch;

@@ -127,7 +127,7 @@ void player_controller::Falling()
 	UpdateDirection();
 	UpdateMovDirection();
 
-	Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
+	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed()) {
 		jspeed = jimpulse;
@@ -245,7 +245,6 @@ void player_controller::AttractMove(CEntity * entPoint) {
 
 void player_controller::UpdateMoves()
 {
-	
 	SetMyEntity();
 
 	ApplyGravity();
@@ -279,7 +278,7 @@ void player_controller::UpdateMoves()
 	player_transform->setAngles(new_yaw + yaw, pitch);
 
 	//Set current velocity with friction
-	float drag = 0.002f;
+	float drag = 2.5f*getDeltaTime();
 	float drag_i = (1 - drag);
 
 	if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
@@ -327,6 +326,25 @@ void player_controller::UpdateInputActions()
 		}
 		AttractMove(entPoint);
 	}
+	else if (io->mouse.left.becomesPressed() && nearStunable()) {
+		energyDecreasal(5.0f);
+		// Se avisa el ai_poss que ha sido stuneado
+		CEntity* ePoss = currentStunable;
+		TMsgAISetStunned msg;
+		msg.stunned = true;
+		ePoss->sendMsg(msg);
+	}
+	else if (io->mouse.left.isPressed()) {
+		SetMyEntity();
+		TCompTransform* player_transform = myEntity->get<TCompTransform>();
+		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
+		for (CEntity * ptr : ptsRecover) {
+			TCompTransform * ptr_trn = ptr->get<TCompTransform>();
+			if (3 > simpleDist(ptr_trn->getPosition(), player_transform->getPosition())) {
+				energyDecreasal(-5.0f*getDeltaTime());
+			}
+		}
+	}
 	else {
 		topolarizedplus = -1;
 		topolarizedminus = -1;
@@ -339,7 +357,7 @@ float CPlayerBase::possessionCooldown;
 void player_controller::UpdatePossession() {
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
-		if (io->keys[VK_SHIFT].becomesPressed()) {
+		if (io->keys[VK_LSHIFT].becomesPressed()) {
 			// Se avisa el ai_poss que ha sido poseído
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;
@@ -361,25 +379,6 @@ void player_controller::UpdatePossession() {
 			TCompTransform* tMe = eMe->get<TCompTransform>();
 			tMe->setPosition(VEC3(0, 200, 0));
 			player_curr_speed = 0;
-		}
-		if (io->mouse.left.becomesPressed()) {
-			energyDecreasal(5.0f);
-			// Se avisa el ai_poss que ha sido stuneado
-			CEntity* ePoss = currentPossessable;
-			TMsgAISetStunned msg;
-			msg.stunned = true;
-			ePoss->sendMsg(msg);
-		}
-	}
-	else if (io->mouse.left.isPressed()) {
-		SetMyEntity();
-		TCompTransform* player_transform = myEntity->get<TCompTransform>();
-		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
-		for (CEntity * ptr : ptsRecover) {
-			TCompTransform * ptr_trn = ptr->get<TCompTransform>();
-			if (3 > simpleDist(ptr_trn->getPosition(), player_transform->getPosition())) {
-				energyDecreasal(-5.0f*getDeltaTime());
-			}
 		}
 	}
 }
@@ -431,6 +430,50 @@ void player_controller::recalcPossassable() {
 	}
 }
 
+// Calcula el mejor candidato para stunear
+bool player_controller::nearStunable() {
+	float minDeltaYaw = FLT_MAX;
+	float minDistance = FLT_MAX;
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	VEC3 player_position = player_transform->getPosition();
+	currentStunable = CHandle();
+	VHandles stuneables = tags_manager.getHandlesByTag(getID("AI_poss"));
+	for (CHandle hPoss : stuneables) {
+		CEntity* ePoss = hPoss;
+		TCompTransform* tPoss = ePoss->get<TCompTransform>();
+		VEC3 posPoss = tPoss->getPosition();
+		float dist = realDist(player_position, posPoss);
+		if (dist < possessionReach) {
+			float yaw = player_transform->getDeltaYawToAimTo(posPoss);
+			yaw = abs(yaw);
+			if (yaw > deg2rad(90)) continue;
+
+			float improvementDeltaYaw = minDeltaYaw - yaw;
+			bool isBetter = false;
+			if (improvementDeltaYaw > DELTA_YAW_SELECTION) {
+				isBetter = true;
+			}
+			else if (improvementDeltaYaw < DELTA_YAW_SELECTION) {
+				isBetter = false;
+			}
+			else {
+				isBetter = dist < minDistance;
+			}
+			if (isBetter) {
+				currentStunable = hPoss;
+				minDeltaYaw = abs(yaw);
+				minDistance = dist;
+			}
+		}
+	}
+
+	//Debug
+	if (currentStunable.isValid()) {
+		return true;
+	}
+	return false;
+}
+
 void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	// Handles y entities necesarias
 	CHandle  hMe = CHandle(this).getOwner();
@@ -460,12 +503,15 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 
 void player_controller::update_msgs()
 {
-	ui.addTextInstructions("Press 'shift' to possess someone\n");
+	ui.addTextInstructions("Press 'l-shift' to possess someone\n");
 }
 
 void player_controller::onDamage(const TMsgDamage& msg) {
 	switch (msg.dmgType) {
 	case LASER:
+		____TIMER_RESET_(timerDamaged);
+		break;
+	case WATER:
 		____TIMER_RESET_(timerDamaged);
 		break;
 	}

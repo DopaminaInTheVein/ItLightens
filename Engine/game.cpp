@@ -63,16 +63,17 @@ bool CApp::start() {
 	all_modules.push_back(io);
 
 
-	mod_update.push_back(imgui);	
+	mod_update.push_back(imgui);
 	mod_update.push_back(entities);
 	mod_update.push_back(io);
+	
 
 	mod_renders.push_back(entities);
 	mod_renders.push_back(imgui);
 	mod_renders.push_back(io);
 	mod_init_order.push_back(imgui);
-	mod_init_order.push_back(entities);
 	mod_init_order.push_back(io);
+	mod_init_order.push_back(entities);
 
 	mod_wnd_proc.push_back(io);
 	mod_wnd_proc.push_back(imgui);
@@ -107,7 +108,7 @@ void CApp::stop() {
 	// Stop modules
 	for (auto it = mod_init_order.rbegin(); it != mod_init_order.rend(); ++it)
 		(*it)->stop();
-
+	
 	Resources.destroy();
 	Debug->destroy();
 	shader_ctes_camera.destroy();
