@@ -25,6 +25,7 @@ void CIOModule::stop() {
 void CIOModule::update(float dt) {
   mouse.update(dt);
   keys.update(dt);
+  joystick.update(dt);
 }
 
 void CIOModule::render() {

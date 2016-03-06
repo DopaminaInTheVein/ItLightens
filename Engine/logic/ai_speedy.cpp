@@ -29,6 +29,27 @@ void ai_speedy::Init()
 	drop_water_timer = drop_water_timer_reset;
 	drop_water_ready = false;
 
+	//Mallas
+	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	CEntity* myEntity = myParent;
+	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
+	actual_render = pose_idle;
+
+	pose_idle.setOwner(myEntity);
+	pose_run.setOwner(myEntity);
+	pose_jump.setOwner(myEntity);
+
+	TCompRenderStaticMesh *mesh;
+
+	mesh = pose_jump;
+	mesh->static_mesh = Resources.get("static_meshes/speedy_jump.static_mesh")->as<CStaticMesh>();
+
+	mesh = pose_run;
+	mesh->static_mesh = Resources.get("static_meshes/speedy_run.static_mesh")->as<CStaticMesh>();
+
+	actual_render->registerToRender();
+
 	// reset the state
 	ChangeState("idle");
 }
@@ -86,7 +107,7 @@ void ai_speedy::NextWptState()
 	}
 }
 
-void ai_speedy::SeekWptState() 
+void ai_speedy::SeekWptState()
 {
 	float distance = squaredDistXZ(fixedWpts[curwpt], transform->getPosition());
 
@@ -97,7 +118,7 @@ void ai_speedy::SeekWptState()
 		float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
 		if (abs(distance_to_player) <= max_dash_player_distance)
 			ChangeState(next_action);
-		else if (abs(distance) > 0.1f) 
+		else if (abs(distance) > 0.1f)
 			moveFront(speed);
 	}
 	else if (next_action == "dashtonewpoint" && dash_ready) {
@@ -158,6 +179,7 @@ string ai_speedy::decide_next_action() {
 }
 
 bool ai_speedy::aimToTarget(VEC3 target) {
+	ChangePose(pose_idle);
 	float delta_yaw = transform->getDeltaYawToAimTo(target);
 
 	if (abs(delta_yaw) > 0.001f) {
@@ -172,6 +194,7 @@ bool ai_speedy::aimToTarget(VEC3 target) {
 }
 
 void ai_speedy::moveFront(float movement_speed) {
+	ChangePose(pose_run);
 	VEC3 front = transform->getFront();
 	VEC3 position = transform->getPosition();
 
@@ -184,10 +207,9 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 	if (aimed) {
 		moveFront(dash_speed);
 		if (drop_water_ready) {
-
 			VEC3 player_pos = transform->getPosition();
 
-			// CREATE WATER 
+			// CREATE WATER
 			// Creating the new handle
 			CHandle curr_entity;
 			auto hm = CHandleManager::getByName("entity");
@@ -278,4 +300,14 @@ void ai_speedy::updateDropWaterTimer() {
 void ai_speedy::resetDropWaterTimer() {
 	drop_water_timer = drop_water_timer_reset;
 	drop_water_ready = false;
+}
+
+//Cambio de malla
+void ai_speedy::ChangePose(CHandle new_pos_h)
+{
+	TCompRenderStaticMesh *new_pose = new_pos_h;
+	if (new_pose == actual_render) return;
+	actual_render->unregisterFromRender();
+	actual_render = new_pose;
+	actual_render->registerToRender();
 }

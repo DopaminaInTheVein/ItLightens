@@ -115,7 +115,7 @@ void player_controller::Jumping()
 		ChangeState("idle");
 	}
 
-	if (io->keys[VK_SPACE].becomesPressed()) {
+	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		jspeed = jimpulse;
 		energyDecreasal(5.0f);
 		ChangeState("doublejump");
@@ -129,7 +129,7 @@ void player_controller::Falling()
 
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
-	if (io->keys[VK_SPACE].becomesPressed()) {
+	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		jspeed = jimpulse;
 		energyDecreasal(5.0f);
 		ChangeState("doublejump");
@@ -306,11 +306,11 @@ void player_controller::UpdateMoves()
 
 void player_controller::UpdateInputActions()
 {
-	if (io->keys['1'].isPressed() && nearMinus()) {
+	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed()) && nearMinus()) {
 		energyDecreasal(getDeltaTime()*0.05f);
 		ChangeState("tominus");
 	}
-	else if (io->keys['2'].isPressed() && nearPlus()) {
+	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed()) && nearPlus()) {
 		energyDecreasal(getDeltaTime()*0.05f);
 		ChangeState("toplus");
 	}
@@ -326,7 +326,7 @@ void player_controller::UpdateInputActions()
 		}
 		AttractMove(entPoint);
 	}
-	else if (io->mouse.left.becomesPressed() && nearStunable()) {
+	else if ((io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado
 		CEntity* ePoss = currentStunable;
@@ -334,7 +334,7 @@ void player_controller::UpdateInputActions()
 		msg.stunned = true;
 		ePoss->sendMsg(msg);
 	}
-	else if (io->mouse.left.isPressed()) {
+	else if ((io->mouse.left.isPressed() || io->joystick.button_X.isPressed())) {
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
@@ -357,7 +357,7 @@ float CPlayerBase::possessionCooldown;
 void player_controller::UpdatePossession() {
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
-		if (io->keys[VK_LSHIFT].becomesPressed()) {
+		if (io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()) {
 			// Se avisa el ai_poss que ha sido poseído
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;

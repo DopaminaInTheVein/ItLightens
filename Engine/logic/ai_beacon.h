@@ -21,9 +21,9 @@ class beacon_controller : public aicontroller, public TCompBase {
 
 	//main attributes
 	//--------------------------------------
-	const float range = 7.5f;		//range sonar
-	const float rot_speed_sonar = 8.0f;		//TODO: mesh change
-	const float rot_speed_disable = 2.0f;		//TODO: mesh change
+	float range = 7.5f;		//range sonar
+	float rot_speed_sonar = 8.0f;		//TODO: mesh change
+	float rot_speed_disable = 2.0f;		//TODO: mesh change
 												//--------------------------------------
 
 												//general info
@@ -48,9 +48,9 @@ class beacon_controller : public aicontroller, public TCompBase {
 	//Timer counts
 	//--------------------------------------
 	float			t_waiting = 0.0f;
-	const float		t_max_sonar = 10.0f;
-	const float		t_max_empty = 7.5f;
-	const float		t_max_disable = 30.0f;	//not used for now
+	float		t_max_sonar = 10.0f;
+	float		t_max_empty = 7.5f;
+	float		t_max_disable = 30.0f;	//not used for now
 											//--------------------------------------
 
 public:
@@ -103,7 +103,6 @@ public:
 	//--------------------------------------
 
 	void renderInMenu();
-	beacon_controller& beacon_controller::operator=(beacon_controller arg) { return arg; }
 };
 
 #endif

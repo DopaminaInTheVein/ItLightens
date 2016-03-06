@@ -71,8 +71,9 @@ public:
 
 		ImGui::Text("LifeBar\n");
 		std::string lifeString = "|";
+		//int increment = life->maxlife / 60;
 		if (life) {
-			for (int i = 0; i < life->maxlife; i++) {
+			for (int i = 0; i < life->maxlife; i++) {//= increment) {
 				if (life->currentlife > i) {
 					lifeString += "=";
 				}

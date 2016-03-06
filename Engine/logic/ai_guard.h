@@ -111,8 +111,8 @@ class ai_guard : public TCompBase, public aicontroller
 	void shootToPlayer();
 
 	//from bombs
-	const float reduce_factor = 3.0f;
-	const float t_reduceStats_max = 15.0f;
+	float reduce_factor = 3.0f;
+	float t_reduceStats_max = 15.0f;
 	float t_reduceStats = 0.0f;
 
 public:
@@ -153,9 +153,9 @@ public:
 	void renderInMenu();
 	bool load(MKeyValue& atts);
 
+	//Cambio Malla
 	void ChangePose(CHandle new_pos_h);
 
-	ai_guard& ai_guard::operator=(ai_guard arg) { return arg; }
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)
 };
 

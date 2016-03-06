@@ -7,7 +7,7 @@
 
 class CStaticBomb : public TCompBase {
 
-	const float t_explode = 5.0f;
+	float t_explode = 5.0f;
 	float t_waiting = 0.0f;
 
 	float rad = 15.0f;
@@ -26,7 +26,6 @@ public:
 	}
 
 	void SendMsg();
-	CStaticBomb& CStaticBomb::operator=(CStaticBomb arg) { return arg; }
 };
 
 #endif

@@ -66,11 +66,20 @@ public:
 		target = msg.target;
 	}
 
-	void updateInput() {
-		if(x_axis_inverted)	yaw -= io->mouse.dx * rotation_sensibility*speed_camera;
-		else yaw += io->mouse.dx * rotation_sensibility*speed_camera;
-		if(y_axis_inverted) pitch -= io->mouse.dy * rotation_sensibility*speed_camera;
-		else pitch += io->mouse.dy * rotation_sensibility*speed_camera;
+	void updateInput() { 
+		int movement_x = 0;
+
+		if (io->joystick.drx != 0)
+			movement_x = io->joystick.drx;
+		else if (io->joystick.rx == io->joystick.min_stick_value)
+			movement_x = -2;
+		else if (io->joystick.rx == io->joystick.max_stick_value)
+			movement_x = 2;
+
+		if(x_axis_inverted)	yaw -= (io->mouse.dx + movement_x)* rotation_sensibility*speed_camera;
+		else yaw += (io->mouse.dx + movement_x) * rotation_sensibility*speed_camera;
+		if(y_axis_inverted) pitch -= (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
+		else pitch += (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
 
 		if (pitch >= max_pitch) {
 			pitch = max_pitch;

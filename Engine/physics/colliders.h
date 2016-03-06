@@ -30,6 +30,7 @@ struct boxCollider : public TCompBase {
 
 	// RayCast (sólo el más cercano)
 	void rayCast();
+	void update(float dt);
 };
 
 #endif
