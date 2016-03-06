@@ -201,11 +201,24 @@ void ai_mole::_actionBeforePossession() {
 	TCompName * currmole_e_n = currmole_e->get<TCompName>();
 
 	if (mole_e_n->name == currmole_e_n->name) {
+		TCompTransform* p_t = mole_e->get<TCompTransform>();
+		TCompTransform* b_t = en->get<TCompTransform>();
+		VEC3 posboxIni = b_t->getPosition();
+		VEC3 posbox;
+		posbox.x = posboxIni.x + p_t->getFront().x * 3;
+		posbox.y = posboxIni.y - 2;
+		posbox.z = posboxIni.z + p_t->getFront().z * 3;
+		float angle = 0.0f;
+		while (!b_t->executeMovement(posbox)) {
+			angle += 0.1;
+			posbox.x = posboxIni.x + p_t->getFront().x * sin(angle) * 3;
+			posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;
+		}
 		SBB::postBool(key, false);
 	}
 }
 
-void ai_mole::_StuntEndState() {
+void ai_mole::actionStunt() {
 	vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
 	CEntity * en = newPointerVec[towptbox];
 	TCompName * nameBox = en->get<TCompName>();
@@ -219,6 +232,19 @@ void ai_mole::_StuntEndState() {
 	TCompName * currmole_e_n = currmole_e->get<TCompName>();
 
 	if (mole_e_n->name == currmole_e_n->name) {
+		TCompTransform* p_t = mole_e->get<TCompTransform>();
+		TCompTransform* b_t = en->get<TCompTransform>();
+		VEC3 posboxIni = b_t->getPosition();
+		VEC3 posbox;
+		posbox.x = posboxIni.x + p_t->getFront().x * 3;
+		posbox.y = posboxIni.y - 2;
+		posbox.z = posboxIni.z + p_t->getFront().z * 3;
+		float angle = 0.0f;
+		while (!b_t->executeMovement(posbox)) {
+			angle += 0.1;
+			posbox.x = posboxIni.x + p_t->getFront().x * sin(angle) * 3;
+			posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;
+		}
 		SBB::postBool(key, false);
 	}
 	ChangeState("idle");

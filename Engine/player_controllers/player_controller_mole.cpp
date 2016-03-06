@@ -98,18 +98,22 @@ void player_controller_mole::DestroyWall() {
 void player_controller_mole::LeaveBox() {
 	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 	TCompTransform* box_t = box->get<TCompTransform>();
-	VEC3 posbox = box_t->getPosition();
-	posbox.y -= 2;
+	VEC3 posboxIni = box_t->getPosition();
 	CEntity* p = myParent;
 	TCompTransform* p_t = p->get<TCompTransform>();
-	posbox.x += p_t->getFront().x * 3;
-	posbox.z += p_t->getFront().z * 3;
-	//box_t->setPosition(posbox);
-	if (box_t->executeMovement(posbox)) {
-		SBB::postBool(selectedBox, false);
-		boxGrabbed = false;
-		player_max_speed *= 2;
+	VEC3 posbox;
+	posbox.x = posboxIni.x + p_t->getFront().x * 3;
+	posbox.y = posboxIni.y - 2;
+	posbox.z = posboxIni.z + p_t->getFront().z * 3;
+	float angle = 0.0f;
+	if (!box_t->executeMovement(posbox)) {
+		angle += 0.1;
+		posbox.x = posboxIni.x + p_t->getFront().x * sin(angle) * 3;
+		posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;
 	}
+	SBB::postBool(selectedBox, false);
+	boxGrabbed = false;
+	player_max_speed *= 2;
 	ChangeState("idle");
 }
 

@@ -57,7 +57,7 @@ public:
 	void UnGrabState();
 
 	void _actionBeforePossession();
-	void _StuntEndState();
+	void actionStunt();
 
 	void Init() override;
 	void update(float dt) { Recalc(); }
