@@ -11,6 +11,7 @@ enum DMGTYPE {
 	UNKNOWN
 	, ENERGY_DECREASE
 	, LASER
+	, WATER
 };
 struct TMsgDamage {
 	VEC3    source;
@@ -32,6 +33,11 @@ struct TMsgSetTarget {
 
 struct TMsgSetPlayer {
 	CHandle player;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgSetWaterType {
+	int type;
 	DECLARE_MSG_ID();
 };
 
