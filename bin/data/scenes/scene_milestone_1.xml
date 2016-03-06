@@ -75,32 +75,38 @@
   <box_collider p1 ="1 1 1" p2="-1 0 -1"  tag="platform" types = "0" />
 </entity>
 <entity>
-  <name name="punto_magnetismo"/>
+  <name name="punto_magnetismo1"/>
+  <tag name="minus_wall" />
   <transform pos="0.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
   <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
 </entity>
 <entity>
-  <name name="punto_magnetismo"/>
+  <tag name="plus_wall" />
+  <name name="punto_magnetismo2"/>
   <transform pos="0.357965 -0.63678 4.40073" quat="0.0 0.0 0.0 1.0" scale="1.0" />
   <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
 </entity>
 <entity>
-  <name name="punto_magnetismo"/>
+  <name name="punto_magnetismo3"/>
+  <tag name="minus_wall" />
   <transform pos="0.357965 5.29071 62.5609" quat="0.0 0.0 0.0 1.0" scale="1.0" />
   <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
 </entity>
 <entity>
-  <name name="punto_magnetismo"/>
+  <name name="punto_magnetismo4"/>
+  <tag name="plus_wall" />
   <transform pos="0.357965 4.539 59.6009" quat="0.0 0.0 0.0 1.0" scale="1.0" />
   <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
 </entity>
 <entity>
-  <name name="punto_magnetismo"/>
+  <name name="punto_magnetismo5"/>
+  <tag name="minus_wall" />
   <transform pos="0.357965 2.38953 57.2293" quat="0.0 0.0 0.0 1.0" scale="1.0" />
   <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
 </entity>
 <entity>
-  <name name="mesa_cientifico"/>
+  <name name="mesa_cientifico6"/>
+  <tag name="plus_wall" />
   <transform pos="-11.7247 3.90382 128.531" quat="0.0 0.0 1.66893e-006 1.0" scale="1.0" />
   <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh"/>
 </entity>
