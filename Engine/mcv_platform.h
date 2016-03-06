@@ -7,7 +7,7 @@
 #define _USE_MATH_DEFINES
 #define NOMINMAX
 #define _WIN32_WINNT      _WIN32_WINNT_WIN7
-#define MAX_ENTITIES 128
+#define MAX_ENTITIES 1000
 
 #define SAFE_RELEASE(p)  if (p) p->Release(), p = nullptr
 

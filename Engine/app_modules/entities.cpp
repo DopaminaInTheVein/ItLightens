@@ -143,7 +143,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(boxCollider, TMsgEntityCreated, onCreate);
 
 	CEntityParser ep;
-	bool is_ok = ep.xmlParseFile("data/scenes/scene00.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
 	assert(is_ok);
 
 	TTagID tagIDplayer = getID("player");
@@ -243,6 +243,10 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<CStaticBomb>()->updateAll(dt);
 	getHandleManager<CMagneticBomb>()->updateAll(dt);
+
+
+	//TODO:REMOVE!!
+	getHandleManager<boxCollider>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {
