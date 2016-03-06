@@ -22,7 +22,7 @@ void ai_speedy::Init()
 
 	// dash timer initialization
 	dash_timer = (float)dash_timer_reset;
-	dash_ready = false;
+	dash_ready = true;
 	dash_target = VEC3(0, 0, 0);
 
 	// drop water timer initialization
@@ -209,11 +209,11 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 			CHandle new_transform_h = hm_transform->createHandle();
 			MKeyValue atts;
 			// position, rotation and scale
-			char position[100]; sprintf(position, "%f %f %f", player_pos.x, player_pos.y, player_pos.z);
+			char position[64]; sprintf(position, "%f %f %f", player_pos.x, player_pos.y, player_pos.z);
 			atts["pos"] = position;
-			char rotation[100]; sprintf(rotation, "%f %f %f %f", 1.f, 1.f, 1.f, 1.f);
+			char rotation[64]; sprintf(rotation, "%f %f %f %f", 1.f, 1.f, 1.f, 1.f);
 			atts["rotation"] = rotation;
-			char scale[100]; sprintf(scale, "%f %f %f", 1.f, 1.f, 1.f);
+			char scale[64]; sprintf(scale, "%f %f %f", 1.f, 1.f, 1.f);
 			atts["scale"] = scale;
 			// load transform attributes and add transform to the entity
 			new_transform_h.load(atts);
@@ -254,7 +254,7 @@ void ai_speedy::updateDashTimer() {
 }
 
 void ai_speedy::resetDashTimer() {
-	dash_timer = (float)dash_timer_reset;
+	dash_timer = dash_timer_reset;
 	dash_ready = false;
 }
 

@@ -13,7 +13,7 @@
   <!-- Player -->
   <entity>
     <tag name="player" />
-    <transform pos="-28 2 5" />
+    <transform pos="25 2 5" />
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
@@ -21,7 +21,7 @@
   <entity>
     <life points="300" />
     <tag name="target" />
-    <transform pos="-25 0.1 3" />
+    <transform pos="28 0.1 3" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_idle.static_mesh" />

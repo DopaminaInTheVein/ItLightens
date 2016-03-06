@@ -140,11 +140,11 @@ bool player_controller_speedy::dashFront()
 		CHandle new_transform_h = hm_transform->createHandle();
 		MKeyValue atts;
 		// position, rotation and scale
-		char position[100]; sprintf(position, "%f %f %f", player_position.x, player_position.y, player_position.z);
+		char position[64]; sprintf(position, "%f %f %f", player_position.x, player_position.y, player_position.z);
 		atts["pos"] = position;
-		char rotation[100]; sprintf(rotation, "%f %f %f %f", 1.f, 1.f, 1.f, 1.f);
+		char rotation[64]; sprintf(rotation, "%f %f %f %f", 1.f, 1.f, 1.f, 1.f);
 		atts["rotation"] = rotation;
-		char scale[100]; sprintf(scale, "%f %f %f", 1.f, 1.f, 1.f);
+		char scale[64]; sprintf(scale, "%f %f %f", 1.f, 1.f, 1.f);
 		atts["scale"] = scale;
 		// load transform attributes and add transform to the entity
 		new_transform_h.load(atts);

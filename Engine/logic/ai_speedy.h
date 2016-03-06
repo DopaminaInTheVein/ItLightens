@@ -49,8 +49,8 @@ class ai_speedy : public ai_poss, public TCompBase {
 	const float rotation_speed = deg2rad(200);
 	const float max_dash_player_distance = 70.f;
 	// timers in seconds
-	const int dash_timer_reset = 5;
-	const float drop_water_timer_reset = 0.25f;
+	const float dash_timer_reset = 8.f;
+	const float drop_water_timer_reset = 0.5f;
 	// probabilities
 	const int dash_to_point_chance = 2;
 	const int dash_to_new_point_chance = 2;
