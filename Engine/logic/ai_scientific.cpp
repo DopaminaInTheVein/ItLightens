@@ -10,6 +10,11 @@
 
 #include "utils/XMLParser.h"
 
+map<string, ai_scientific::KptTipo> ai_scientific::kptTypes = {
+	{ "seek", KptTipo::Seek }
+	,{ "look", KptTipo::Look }
+};
+
 void ai_scientific::Init()
 {
 	om = getHandleManager<ai_scientific>();	//list handle scientific in game
@@ -56,9 +61,9 @@ void ai_scientific::LookForObj()
 	if (beacon_to_go_name != "") {
 		ChangeState("seekWB");
 	}
-	else {
+	else if (keyPoints.size() > 0){
 		actual_action = WANDER;
-		obj_position = keyPoints[curkpt++].pos;
+		obj_position = keyPoints[curkpt].pos;
 		t_waitInPos = 0;
 		ChangeState("aimToPos");
 	}
@@ -121,7 +126,7 @@ void ai_scientific::AimToPos() {
 	me_transform->setAngles(new_yaw + yaw, pitch);
 
 	if (new_yaw == diff_yaw) {
-		if (keyPoints[curkpt].type == Seek) {
+		if (actual_action != WANDER || keyPoints[curkpt].type == Seek) {
 			ChangeState("moveToPos");
 		}
 		else {
@@ -165,6 +170,7 @@ void ai_scientific::MoveToPos()
 void ai_scientific::WaitInPos() {
 	if (t_waitInPos > keyPoints[curkpt].time) {
 		ChangeState("lookForObj");
+		curkpt = (curkpt + 1) & keyPoints.size();
 	}
 	else {
 		t_waitInPos += getDeltaTime();
