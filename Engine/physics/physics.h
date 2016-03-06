@@ -11,6 +11,7 @@
 #define COL_TAG_OBJECT		1 << 2		//4
 #define COL_TAG_WALL		1 << 3		//8
 #define COL_TAG_CRISTAL		1 << 4		//16
+#define COL_TAG_BOX			1 << 5		//32
 
 #define COL_TAG_SOLID			COL_TAG_OBJECT | COL_TAG_WALL
 #define COL_TAG_SOLID_OPAQUE	COL_TAG_SOLID  & !COL_TAG_CRISTAL

@@ -12,6 +12,7 @@ bool TCompColCillinder::load(MKeyValue& atts) {
 	if (type_str.compare("player") == 0)		type = COL_TAG_PLAYER;
 	else if (type_str.compare("enemy") == 0)	type = COL_TAG_ENEMY;
 	else if (type_str.compare("object") == 0)	type = COL_TAG_OBJECT;
+	else if (type_str.compare("box") == 0)		type = COL_TAG_BOX;
 
 	return true;
 }

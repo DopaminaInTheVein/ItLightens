@@ -23,6 +23,9 @@ public:
 		//player physx relations
 		relations["player"] = { "npc", "wall", "platform", "objects" };
 
+		//box
+		relations["box"] = { "npc", "wall", "platform", "objects" };
+
 		//enemy
 		relations["npc"] = { "platform", "objects" };
 	}

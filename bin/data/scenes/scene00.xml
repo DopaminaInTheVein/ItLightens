@@ -215,7 +215,7 @@
     <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 0 0" rotation="1 2 3 3" scale="1 1 1" />
-    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="player" types="4" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="box" types="4" />
   </entity>
   <entity>
     <name name="box_leavepoint1" />
