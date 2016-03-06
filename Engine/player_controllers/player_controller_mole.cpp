@@ -24,7 +24,7 @@ void player_controller_mole::Init() {
 }
 void player_controller_mole::UpdateInputActions() {
 	energyDecreasal(getDeltaTime()*0.5f);
-	if (io->mouse.left.becomesReleased()) {
+	if (io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) {
 		if (boxGrabbed) {
 			ChangeState("leaveBox");
 		}

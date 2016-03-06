@@ -39,14 +39,14 @@ void player_controller_speedy::myUpdate() {
 }
 
 void player_controller_speedy::UpdateInputActions() {
-	if (io->mouse.left.becomesPressed()) {
+	if (io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()) {
 		if (dash_ready) {
 			energyDecreasal(5.0f);
 			ChangeState("dashing");
 			dashing = true;
 		}
 	}
-	if (io->mouse.right.becomesPressed()) {
+	if (io->mouse.right.becomesPressed() || io->joystick.button_B.becomesPressed()) {
 		if (blink_ready) {
 			energyDecreasal(10.0f);
 			ChangeState("blink");
@@ -68,7 +68,7 @@ void player_controller_speedy::Dashing()
 
 void player_controller_speedy::Blinking()
 {
-	if (io->mouse.right.isPressed()) {
+	if (io->mouse.right.isPressed() || io->joystick.button_B.becomesPressed()) {
 		blink_duration -= getDeltaTime();
 
 		if (blink_ready && blink_duration <= 0)

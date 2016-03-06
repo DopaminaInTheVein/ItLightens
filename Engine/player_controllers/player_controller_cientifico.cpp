@@ -39,32 +39,32 @@ void player_controller_cientifico::Init() {
 
 void player_controller_cientifico::UpdateInputActions() {
 	energyDecreasal(getDeltaTime()*0.5f);
-	if (io->keys['1'].becomesPressed()) {
+	if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
 		ChangeState("createDisableBeacon");
 	}
 
-	if (io->keys['2'].becomesPressed()) {
+	if (io->keys['2'].becomesPressed() || io->joystick.button_B.becomesPressed()) {
 		ChangeState("addDisableBeacon");
 	}
 
-	if (io->keys['3'].becomesPressed()) {
+	if (io->keys['3'].becomesPressed() || io->joystick.button_Y.becomesPressed()) {
 		energyDecreasal(5.0f);
 		ChangeState("createStaticBomb");
 	}
 
-	if (io->keys['5'].becomesPressed()) {
+	if (io->keys['5'].becomesPressed() || io->joystick.button_L.becomesPressed()) {
 		energyDecreasal(5.0f);
 		ChangeState("createMagneticBomb");
 	}
-	if (io->keys['6'].becomesPressed()) {
+	if (io->keys['6'].becomesPressed() || io->joystick.button_LT > io->joystick.max_trigger_value / 2) {
 		energyDecreasal(10.0f);
 		ChangeState("useMagneticBomb");
 	}
-	if (io->keys['4'].becomesPressed()) {
+	if (io->keys['4'].becomesPressed() || io->joystick.button_RT > io->joystick.max_trigger_value / 2) {
 		energyDecreasal(10.0f);
 		ChangeState("useStaticBomb");
 	}
-	if (io->keys['R'].becomesPressed())
+	if (io->keys['R'].becomesPressed() || io->joystick.button_R.becomesPressed())
 		ExplodeBomb();
 }
 

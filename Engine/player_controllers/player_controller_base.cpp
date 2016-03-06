@@ -50,7 +50,7 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 
 void CPlayerBase::update(float elapsed) {
 	if (controlEnabled) {
-		if (io->keys[VK_ESCAPE].becomesPressed()) {
+		if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
 			CApp& app = CApp::get();
 			app.restart();
 		}
@@ -134,26 +134,26 @@ bool CPlayerBase::UpdateMovDirection() {
 	bool horizontal = false;
 	bool vertical = false;
 
-	if (io->keys['W'].isPressed()) {
+	if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
 		directionForward = VEC3(0, 0, 1);
 		//TODO: xbobx
 		moving = true;
 		vertical = true;
 	}
-	if (io->keys['S'].isPressed()) {
+	if (io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
 		directionForward = VEC3(0, 0, -1);
 		//TODO: xbobx
 		moving = true;
 		vertical = true;
 	}
 
-	if (io->keys['A'].isPressed()) {
+	if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility) {
 		directionLateral = VEC3(1, 0, 0);
 		//TODO: xbobx
 		moving = true;
 		horizontal = true;
 	}
-	if (io->keys['D'].isPressed()) {
+	if (io->keys['D'].isPressed()|| io->joystick.lx > left_stick_sensibility) {
 		directionLateral = VEC3(-1, 0, 0);
 		//TODO: xbobx
 		moving = true;
@@ -170,7 +170,7 @@ bool CPlayerBase::UpdateMovDirection() {
 }
 
 void CPlayerBase::UpdateJumpState() {
-	if (io->keys[VK_SPACE].isPressed()) {
+	if (io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed()) {
 		Jump();
 	}
 }
