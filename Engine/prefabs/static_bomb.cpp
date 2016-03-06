@@ -16,24 +16,26 @@ void CStaticBomb::update(float elapsed)
 
 void CStaticBomb::Explode()
 {
+	myHandle = CHandle(this);
+	myParent = myHandle.getOwner();
 	dbg("STATIC BOMB -> I am going to explode\n");
-	SendMsg();
-	//TODO: animation
-	dbg("STATIC BOMB -> exploded\n");
-	destroy();
+	if (myHandle.isValid() && myParent.isValid()) {
+		SendMsg();
+		//TODO: animation
+		dbg("STATIC BOMB -> exploded\n");
+		destroy();
+	}
+}
+
+void CStaticBomb::toExplode()
+{
+	Explode();
 }
 
 void CStaticBomb::SendMsg()
 {
-
-	auto om = getHandleManager<CStaticBomb>();
-	myHandle = om->getHandleFromObjAddr(this);
-	myParent = myHandle.getOwner();
-
 	TMsgStaticBomb msg;
-	
-	CHandle bomb_h = CHandle(this);
-	CEntity *p_e = bomb_h.getOwner();
+	CEntity *p_e = myParent;
 	TCompTransform *mtx = p_e->get<TCompTransform>();
 	VEC3 org = mtx->getPosition();
 

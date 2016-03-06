@@ -1,6 +1,7 @@
 #include "mcv_platform.h"
 #include "app.h"
 #include "app_modules/app_module.h"
+#include "app_modules\io\io.h"
 
 // -------------------------------------------------
 static CApp* app = nullptr;
@@ -100,7 +101,6 @@ LRESULT CALLBACK CApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
-
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

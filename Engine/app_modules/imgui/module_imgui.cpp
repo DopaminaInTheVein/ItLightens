@@ -114,6 +114,7 @@ void CImGuiModule::render() {
 }
 
 bool CImGuiModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+
 	return ImGui_ImplDX11_WndProcHandler(hWnd, message, wParam, lParam) ? true : false;
 }
 

@@ -127,7 +127,7 @@ void player_controller::Falling()
 	UpdateDirection();
 	UpdateMovDirection();
 
-	Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
+	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed()) {
 		jspeed = jimpulse;
@@ -279,7 +279,7 @@ void player_controller::UpdateMoves()
 	player_transform->setAngles(new_yaw + yaw, pitch);
 
 	//Set current velocity with friction
-	float drag = 0.002f;
+	float drag = 2.5f*getDeltaTime();
 	float drag_i = (1 - drag);
 
 	if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
@@ -339,7 +339,7 @@ float CPlayerBase::possessionCooldown;
 void player_controller::UpdatePossession() {
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
-		if (io->keys[VK_SHIFT].becomesPressed()) {
+		if (io->keys[VK_LSHIFT].becomesPressed()) {
 			// Se avisa el ai_poss que ha sido poseído
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;
@@ -460,7 +460,7 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 
 void player_controller::update_msgs()
 {
-	ui.addTextInstructions("Press 'shift' to possess someone\n");
+	ui.addTextInstructions("Press 'l-shift' to possess someone\n");
 }
 
 void player_controller::onDamage(const TMsgDamage& msg) {

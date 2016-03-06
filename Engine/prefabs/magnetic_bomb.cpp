@@ -81,13 +81,21 @@ void CMagneticBomb::UpdatePosition() {
 	mtx->setPosition(curr_position);
 }
 
+void CMagneticBomb::toExplode() {
+	ChangeState("explode");
+}
+
 void CMagneticBomb::Explode()
 {
+	myHandle = CHandle(this);
+	myParent = myHandle.getOwner();
 	dbg("MAGNETIC BOMB -> I am going to explode\n");
-	SendMsg();
-	//TODO: animation
-	dbg("MAGNETIC BOMB -> exploded\n");
-	destroy();
+	if (myHandle.isValid() && myParent.isValid()) {
+		SendMsg();
+		//TODO: animation
+		dbg("MAGNETIC BOMB -> exploded\n");
+		destroy();
+	}
 }
 
 void CMagneticBomb::SendMsg()

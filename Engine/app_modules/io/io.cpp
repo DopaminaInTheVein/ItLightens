@@ -5,7 +5,7 @@
 #include <windowsx.h>
 
 extern CIOModule* io = nullptr;
-
+static int i = 0;
 bool isKeyPressed(int key_code) {
   return ( ::GetAsyncKeyState(key_code) & 0x8000 ) != 0;
 }
@@ -14,6 +14,7 @@ bool isKeyPressed(int key_code) {
 bool CIOModule::start() {
   mouse.start(CApp::get().getHWnd());
   //mouse.capture();
+  
   return true;
 }
 
@@ -31,24 +32,28 @@ void CIOModule::render() {
 }
 
 bool CIOModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-  switch (message) {
-  case WM_MOUSEMOVE: {
-    int x = GET_X_LPARAM(lParam);
-    int y = GET_Y_LPARAM(lParam);
-    mouse.setSysMouseLoc(x, y);
-    return true;
-    break;
-    }
-  case WM_MOUSEWHEEL: {
-    mouse.wheel = GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA;
-    break;
-  }
-  case WM_KEYDOWN:
-    keys.sysSysStatus((int)wParam, true);
-    break;
-  case WM_KEYUP:
-    keys.sysSysStatus((int)wParam, false);
-    break;
-  }
+	int x = GET_X_LPARAM(lParam);
+	int y = GET_Y_LPARAM(lParam);
+	switch (message) {
+	case WM_MOUSEMOVE:
+		mouse.setSysMouseLoc(x, y);
+		return true;
+		break;
+
+	case WM_MOUSEWHEEL:
+		mouse.wheel = GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA;
+		return true;
+		break;
+
+	case WM_KEYDOWN:
+		keys.sysSysStatus((int)wParam, true);
+		return true;
+		break;
+
+	case WM_KEYUP:
+		keys.sysSysStatus((int)wParam, false);
+		return true;
+		break;
+	}
   return false;
 }
