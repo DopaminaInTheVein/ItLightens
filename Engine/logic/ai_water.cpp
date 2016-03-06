@@ -64,7 +64,6 @@ void water_controller::Idle()
 
 void water_controller::Die()
 {
-	myHandle.destroy();
 	myParent.destroy();
 	ChangeState("dead");
 }
@@ -96,7 +95,7 @@ void water_controller::tryToDamagePlayer() {
 
 	float distance = squaredDist(water_position, player_position);
 
-	if (distance < 1.f) {
+	if (distance < damage_radius) {
 		TMsgDamage dmg;
 		dmg.source = water_position;
 		dmg.sender = myParent;
@@ -117,6 +116,7 @@ void water_controller::SetHandleMeInit()
 {
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
+
 }
 
 void water_controller::SetMyEntity() {

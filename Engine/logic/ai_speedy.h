@@ -49,12 +49,14 @@ class ai_speedy : public ai_poss, public TCompBase {
 	const float rotation_speed = deg2rad(200);
 	const float max_dash_player_distance = 70.f;
 	// timers in seconds
-	const float dash_timer_reset = 8.f;
-	const float drop_water_timer_reset = 0.5f;
+	const float dash_timer_reset = 10.f;
+	const float drop_water_timer_reset = 3.f;
 	// probabilities
 	const int dash_to_point_chance = 2;
 	const int dash_to_new_point_chance = 2;
 	const int dash_to_player_chance = 2;
+
+	const string water_static_mesh = "static_meshes/workbench.static_mesh";
 
 	CEntity* getMyEntity() {
 		CHandle me = CHandle(this);

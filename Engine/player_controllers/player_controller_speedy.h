@@ -34,12 +34,14 @@ class player_controller_speedy : public PossController {
 	const float blink_distance = 8.f;
 
 	float drop_water_timer;
-	const float drop_water_timer_reset = 0.5f;
+	const float drop_water_timer_reset = 3.f;
 
 	float blink_timer = 0.f;
 	bool blink_ready = true;
 	bool drop_water_ready = false;
 	const float blink_cooldown = 5.f;
+
+	const string water_static_mesh = "static_meshes/workbench.static_mesh";
 
 public:
 	void Init();

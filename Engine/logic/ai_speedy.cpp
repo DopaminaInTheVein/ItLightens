@@ -218,6 +218,13 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 			// load transform attributes and add transform to the entity
 			new_transform_h.load(atts);
 			e->add(new_transform_h);
+			// create static_mesh component
+			auto hm_mesh = CHandleManager::getByName("render_static_mesh");
+			CHandle new_mesh_h = hm_mesh->createHandle();
+			MKeyValue atts_mesh;
+			atts_mesh["name"] = water_static_mesh;
+			new_mesh_h.load(atts_mesh);
+			e->add(new_mesh_h);
 			// create water component and add it to the entity
 			CHandleManager* hm_water = CHandleManager::getByName("water");
 			CHandle new_water_h = hm_water->createHandle();
@@ -230,6 +237,9 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 			TMsgSetWaterType msg_water;
 			msg_water.type = 1;
 			e->sendMsg(msg_water);
+			// end the entity creation
+			e->sendMsg(TMsgEntityCreated());
+			curr_entity = CHandle();
 
 			// reset drop water cooldown
 			resetDropWaterTimer();
