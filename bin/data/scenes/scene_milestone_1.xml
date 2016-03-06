@@ -212,7 +212,7 @@
   
   <!-- END SCENE OBJECTS -->
   <!-- START SCENE COLLIDERS -->
-  <!-- ZONE 1-->
+  <!-- ZONE 1 : JUMP INTRO-->
   <entity>
     <tag name = "platform" />
     <name name ="collider_floor_zone_1"/>
@@ -242,7 +242,7 @@
   </entity>
   <!-- END ZONE 1 -->
 
-  <!-- ZONE 2 -->
+  <!-- ZONE 2 : MAGNETISM INTRO -->
   <entity>
     <tag name = "platform" />
     <name name ="collider_floor_zone_2"/>
@@ -250,7 +250,7 @@
     <box_collider p1 ="10 -3.8 7" p2="-10 -7.8 -6.6"  tag="platform" />
   </entity>
   <!-- END ZONE 2 -->
-  <!-- ZONE 3 -->
+  <!-- ZONE 3 : MOLE INTRO -->
   <entity>
     <tag name = "platform" />
     <name name ="collider_floor_zone_3"/>
@@ -260,27 +260,38 @@
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_3"/>
+    <name name ="collider_wall_zone_3"/>
     <transform pos ="7.5 -1 14"/>
     <box_collider p1 ="1 10 10" p2="-1 -1 -10"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_3"/>
+    <name name ="collider_wall_zone_3"/>
     <transform pos ="-7.5 -1 14"/>
     <box_collider p1 ="1 10 10" p2="-1 -1 -10"  tag="platform" />
   </entity>
   
   <!-- END ZONE 3 -->
+
   
-  <!-- ZONE 4-->
+  <!-- ZONE 4 : SPEEDY INTRO-->
   <entity>
     <tag name = "platform" />
     <name name ="collider_floor_zone_4"/>
     <transform pos ="0 1.8 33.4"/>
     <box_collider p1 ="10 -2 12.1" p2="-10 -5 -10"  tag="platform" />
   </entity>
+  
+<!--WATER-->
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_water_4"/>
+    <transform pos ="0 0 44"/>
+    <box_collider p1 ="10 -2 10" p2="-10 -7 -10"  tag="platform" />
+    <!--SHOUD GO MORE DOWN!!!, TO HELP PASS FOR NOW-->
+  </entity>
+  <!--END WATER-->
 
   <entity>
     <tag name = "platform" />
@@ -288,9 +299,25 @@
     <transform pos ="0 1.8 55"/>
     <box_collider p1 ="10 -2 7" p2="-10 -5 -4.5"  tag="platform" />
   </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_4"/>
+    <transform pos ="-6.1 1.8 55"/>
+    <box_collider p1 ="1 10 3" p2="-1 -5 -4.1"  tag="platform" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_4"/>
+    <transform pos ="6.1 1.8 55"/>
+    <box_collider p1 ="1 10 3" p2="-1 -5 -4.1"  tag="platform" />
+  </entity>
+  
+  
   <!-- END ZONE 4-->
 
-  <!-- ZONE 5 -->
+  <!-- ZONE 5 : SCIENTIST & GUARD -->
   
   <entity>
     <tag name = "platform" />
