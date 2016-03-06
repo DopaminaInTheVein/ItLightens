@@ -140,15 +140,22 @@ bool player_controller_speedy::dashFront()
 		CHandle new_transform_h = hm_transform->createHandle();
 		MKeyValue atts;
 		// position, rotation and scale
-		char position[100]; sprintf(position, "%f %f %f", player_position.x, player_position.y, player_position.z);
+		char position[64]; sprintf(position, "%f %f %f", player_position.x, player_position.y, player_position.z);
 		atts["pos"] = position;
-		char rotation[100]; sprintf(rotation, "%f %f %f %f", 1.f, 1.f, 1.f, 1.f);
+		char rotation[64]; sprintf(rotation, "%f %f %f %f", 1.f, 1.f, 1.f, 1.f);
 		atts["rotation"] = rotation;
-		char scale[100]; sprintf(scale, "%f %f %f", 1.f, 1.f, 1.f);
+		char scale[64]; sprintf(scale, "%f %f %f", 1.f, 1.f, 1.f);
 		atts["scale"] = scale;
 		// load transform attributes and add transform to the entity
 		new_transform_h.load(atts);
 		e->add(new_transform_h);
+		// create static_mesh component
+		auto hm_mesh = CHandleManager::getByName("render_static_mesh");
+		CHandle new_mesh_h = hm_mesh->createHandle();
+		MKeyValue atts_mesh;
+		atts_mesh["name"] = water_static_mesh;
+		new_mesh_h.load(atts_mesh);
+		e->add(new_mesh_h);
 		// create water component and add it to the entity
 		CHandleManager* hm_water = CHandleManager::getByName("water");
 		CHandle new_water_h = hm_water->createHandle();
@@ -161,6 +168,9 @@ bool player_controller_speedy::dashFront()
 		TMsgSetWaterType msg_water;
 		msg_water.type = 1;
 		e->sendMsg(msg_water);
+		// end the entity creation
+		e->sendMsg(TMsgEntityCreated());
+		curr_entity = CHandle();
 
 		// reset drop water cooldown
 		resetDropWaterTimer();
