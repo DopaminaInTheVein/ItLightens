@@ -29,11 +29,29 @@ void player_controller_speedy::Init()
 	ChangeState("idle");
 }
 
-void player_controller_speedy::myUpdate(float elapsed) {
+void player_controller_speedy::myUpdate() {
 	energyDecreasal(getDeltaTime()*0.5f);
 	updateDashTimer();
 	updateBlinkTimer();
 	updateDropWaterTimer();
+	if (dashing)
+		ChangeState("dashing");
+}
+
+void player_controller_speedy::UpdateInputActions() {
+	if (io->mouse.left.becomesPressed()) {
+		if (dash_ready) {
+			energyDecreasal(5.0f);
+			ChangeState("dashing");
+			dashing = true;
+		}
+	}
+	if (io->mouse.right.becomesPressed()) {
+		if (blink_ready) {
+			energyDecreasal(10.0f);
+			ChangeState("blink");
+		}
+	}
 }
 
 void player_controller_speedy::Dashing()
@@ -41,47 +59,26 @@ void player_controller_speedy::Dashing()
 	if (dash_ready) {
 		bool arrived = dashFront();
 		if (arrived) {
+			dashing = false;
 			resetDashTimer();
 			ChangeState("idle");
 		}
-	}
-	else {
-		ChangeState("idle");
 	}
 }
 
 void player_controller_speedy::Blinking()
 {
-	if (blink_ready) {
-		// TODO: Marcar punto
-		if (io->mouse.dx > 0)
-			rotate = 1;
-		else if (io->mouse.dx < 0)
-			rotate = -1;
-		else
-			rotate = 0;
+	if (io->mouse.right.isPressed()) {
+		blink_duration -= getDeltaTime();
 
-		if (io->mouse.right.becomesReleased())
+		if (blink_ready && blink_duration <= 0)
 			ChangeState("blink");
 	}
 	else {
+		//blink_duration = max_blink_duration;
 		ChangeState("idle");
 	}
-}
 
-void player_controller_speedy::UpdateInputActions() {
-	if (io->mouse.left.becomesPressed()) {
-		if (dash_ready) {
-			energyDecreasal(10.0f);
-			ChangeState("dashing");
-		}
-	}
-	if (io->mouse.right.becomesPressed()) {
-		if (blink_ready) {
-			energyDecreasal(15.0f);
-			ChangeState("blinking");
-		}
-	}
 }
 
 void player_controller_speedy::Blink()
@@ -173,12 +170,12 @@ bool player_controller_speedy::dashFront()
 bool player_controller_speedy::collisionWall() {
 	float distFirstCollider; // No lo uso
 	CHandle collider = rayCastToFront(COL_TAG_SOLID, 0.5f, distFirstCollider);
-	return !(collider.isValid());
+	return collider.isValid();
 }
 
 bool player_controller_speedy::collisionBlink(float& distCollision) {
 	CHandle collider = rayCastToFront(COL_TAG_SOLID_OPAQUE, blink_distance, distCollision);
-	return !(collider.isValid());
+	return collider.isValid();
 }
 
 CHandle player_controller_speedy::rayCastToFront(int types, float reach, float& distRay) {

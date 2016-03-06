@@ -26,11 +26,14 @@ class player_controller_speedy : public PossController {
 
 	float dash_timer = 0.f;
 	bool dash_ready = true;
-	const float dash_cooldown = 5.f;
-	float drop_water_timer;
+	bool dashing = false;
+	const float dash_cooldown = 5.f; //in seconds
 
+	const float max_blink_duration = 2.f; //in seconds
+	float blink_duration = max_blink_duration; //in seconds
 	const float blink_distance = 8.f;
 
+	float drop_water_timer;
 	const float drop_water_timer_reset = 0.25f;
 
 	float blink_timer = 0.f;
@@ -40,7 +43,7 @@ class player_controller_speedy : public PossController {
 
 public:
 	void Init();
-	void myUpdate(float elapsed);
+	void myUpdate() override;
 
 	void UpdateInputActions();
 
