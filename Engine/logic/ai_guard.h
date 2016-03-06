@@ -16,6 +16,7 @@
 #define DIST_RAYSHOT_INI				20
 #define DIST_SQ_PLAYER_DETECTION_INI	150
 #define DIST_SQ_PLAYER_LOST_INI			200
+#define DIST_SQ_SOUND_DETECTION			400
 #define SPEED_WALK_INI					3
 #define CONE_VISION_INI					deg2rad(60)
 #define SPEED_ROT_INI					deg2rad(100)
@@ -98,6 +99,7 @@ class ai_guard : public TCompBase, public aicontroller
 	bool playerVisible();
 	bool inJurisdiction(VEC3);
 	bool outJurisdiction(VEC3);
+	bool canHear(VEC3, float);
 
 	//Times and similars
 	float timeWaiting;

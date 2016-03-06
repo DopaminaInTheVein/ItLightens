@@ -287,7 +287,9 @@ void ai_guard::LookArroundState() {
 * Mensajes
 **************/
 void ai_guard::noise(const TMsgNoise& msg) {
-	if (!playerVisible()) {
+	if (outJurisdiction(msg.source)) return;
+	if (playerVisible()) return;
+	if (canHear(msg.source, msg.intensity)) {
 		resetTimers();
 		noisePoint = msg.source;
 		ChangeState(ST_SOUND_DETECTED);
@@ -297,7 +299,13 @@ void ai_guard::noise(const TMsgNoise& msg) {
 /**************
  * Auxiliares
  **************/
+
  // -- Go To -- //
+bool ai_guard::canHear(VEC3 position, float intensity) {
+	return (squaredDistXZ(getTransform()->getPosition(), position) > DIST_SQ_SOUND_DETECTION);
+}
+
+// -- Go To -- //
 void ai_guard::goTo(const VEC3& dest) {
 	//avanzar
 	goForward(SPEED_WALK * getDeltaTime());
