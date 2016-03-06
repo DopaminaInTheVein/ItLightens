@@ -345,7 +345,16 @@
     <name name="scientist1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/human_test.static_mesh" />
-    <cientifico />
+    <cientifico
+     kpt_size  = "8"
+      kpt0_type = "seek" kpt0_pos = " 70  0  10" kpt0_wait = "2"
+      kpt1_type = "look" kpt1_pos = " 60  0   0" kpt1_wait = "2"
+      kpt2_type = "seek" kpt2_pos = " 70  0 -10" kpt2_wait = "2"
+      kpt3_type = "look" kpt3_pos = " 60  0   0" kpt3_wait = "2"
+      kpt4_type = "seek" kpt4_pos = "50  0 -10" kpt4_wait = "2"
+      kpt5_type = "look" kpt5_pos = " 60  0   0" kpt5_wait = "2"
+      kpt6_type = "seek" kpt6_pos = " 50  0  10" kpt6_wait = "2"
+      kpt7_type = "look" kpt7_pos = " 60  0   0" kpt7_wait = "2" /> />
     <player_cientifico />
     <sphere_collider radius="0.3" tag ="player" />
   </entity>

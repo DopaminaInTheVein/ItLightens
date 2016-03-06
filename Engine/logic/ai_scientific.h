@@ -15,7 +15,6 @@ class CEntity;
 
 template< class TObj >
 class CObjectManager;
-
 //--------------------------------------
 
 class ai_scientific : public ai_poss, public TCompBase {
@@ -57,6 +56,7 @@ class ai_scientific : public ai_poss, public TCompBase {
 	float t_addBeacon = 2.5f;
 	float t_createBeacon = 5.0f;
 	float t_removeBeacon = 1.5f;
+	float t_waitInPos = 0.0f;
 	//--------------------------------------
 
 	//general pointers
@@ -66,7 +66,7 @@ class ai_scientific : public ai_poss, public TCompBase {
 	CHandle myParent;
 	CEntity *myEntity = nullptr;
 
-	int actual_action = IDLE;	
+	int actual_action = IDLE;
 	//--------------------------------------
 
 public:
@@ -77,9 +77,7 @@ public:
 
 	//Overload functions from TCompBase, needed to loop AI Component
 	//--------------------------------------
-	bool load(MKeyValue& atts) {
-		return true;
-	};
+	bool load(MKeyValue& atts);
 	void update(float elapsed) { Recalc(); }  //Called from object_manager
 	//--------------------------------------
 
@@ -110,6 +108,24 @@ public:
 	void CreateBeaconFromWB();
 	void AddBeacon();
 	void RemoveBeacon();
+	void WaitInPos();
+	//--------------------------------------
+
+	//Patrulla
+	//--------------------------------------
+	enum KptTipo { Seek, Look };
+	struct KeyPoint {
+		KptTipo type;
+		VEC3 pos;
+		float time;
+		KeyPoint() : type(KptTipo::Seek), pos(VEC3(0, 0, 0)), time(0) {};
+		KeyPoint(VEC3 p) : type(KptTipo::Seek), pos(p), time(0) {};
+		KeyPoint(KptTipo t, VEC3 p) : type(t), pos(p), time(0) {};
+		KeyPoint(KptTipo t, VEC3 p, float temps) : type(t), pos(p), time(temps) {};
+	};
+	static map<string, KptTipo > kptTypes;
+	std::vector<KeyPoint> keyPoints;
+	int curkpt;
 	//--------------------------------------
 
 	//UI Debug for scientific AI
