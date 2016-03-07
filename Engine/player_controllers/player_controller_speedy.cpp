@@ -169,7 +169,7 @@ void player_controller_speedy::Blink()
 		else {
 			dist = blink_distance;
 		}
-		player_position += player_front * dist;
+		player_position += (player_front * (dist - 0.5f));
 
 		player_transform->setPosition(player_position);
 
@@ -265,7 +265,7 @@ bool player_controller_speedy::collisionWall() {
 }
 
 bool player_controller_speedy::collisionBlink(float& distCollision) {
-	CHandle collider = rayCastToFront(COL_TAG_SOLID_OPAQUE, blink_distance, distCollision);
+	CHandle collider = rayCastToFront(COL_TAG_SOLID_OPAQUE, blink_distance + 0.5f, distCollision);
 	return collider.isValid();
 }
 

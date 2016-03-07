@@ -1583,7 +1583,7 @@
       kpt5_type = "look" kpt5_pos = " 4  3.8   80" kpt5_wait = "1"
       kpt6_type = "seek" kpt6_pos = " 0  3.8  80" kpt6_wait = "1"
       kpt7_type = "look" kpt7_pos = " 0  3.8   70" kpt7_wait = "0.5"
-      jurisdiction = "0 3.8 90"
+      jurisdiction = "0 3.8 80"
       jurRadius    = "0" />
   </entity>
 
