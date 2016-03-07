@@ -416,7 +416,7 @@
   <!-- END ZONE 2 -->
 
   <!-- ZONE 3 -->
-  <!-- SPEEDY 0,0,30-->
+  <!-- SPEEDY 0,0,30 & WATER (from 8,-1,48 to 8,-1,48)-->
   <entity>
     <tag name="AI" />
     <tag name="AI_speedy" />
@@ -433,6 +433,70 @@
       wpt2_pos = "-5  0  33"
       wpt3_pos = "-5  0  25" />
     <sphere_collider radius="0.3" tag ="player" />
+  </entity>
+  
+   <entity>
+    <name name="water1" />
+    <tag name="water" />
+    <transform pos="8 -1 48" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/water.static_mesh" />
+    <water />
+  </entity>
+   <entity>
+    <name name="water2" />
+    <tag name="water" />
+    <transform pos="6 -1 48" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/water.static_mesh" />
+    <water />
+  </entity>
+  <entity>
+    <name name="water3" />
+    <tag name="water" />
+    <transform pos="4 -1 48" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/water.static_mesh" />
+    <water />
+  </entity>
+  <entity>
+    <name name="water4" />
+    <tag name="water" />
+    <transform pos="2 -1 48" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/water.static_mesh" />
+    <water />
+  </entity>
+     <entity>
+    <name name="water5" />
+    <tag name="water" />
+    <transform pos="0 -1 48" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/water.static_mesh" />
+    <water />
+  </entity>
+   <entity>
+    <name name="water6" />
+    <tag name="water" />
+    <transform pos="-2 -1 48" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/water.static_mesh" />
+    <water />
+  </entity>
+  <entity>
+    <name name="water7" />
+    <tag name="water" />
+    <transform pos="-4 -1 48" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/water.static_mesh" />
+    <water />
+  </entity>
+  <entity>
+    <name name="water8" />
+    <tag name="water" />
+    <transform pos="-6 -1 48" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/water.static_mesh" />
+    <water />
+  </entity>
+    <entity>
+    <name name="water9" />
+    <tag name="water" />
+    <transform pos="-8 -1 48" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/water.static_mesh" />
+    <water />
   </entity>
 
   <entity>

@@ -95,7 +95,7 @@ void water_controller::tryToDamagePlayer() {
 
 	float distance = squaredDist(water_position, player_position);
 
-	if (distance < damage_radius) {
+	if (distance < damage_radius && player_position.y - water_position.y < 0.5) {
 		TMsgDamage dmg;
 		dmg.source = water_position;
 		dmg.sender = myParent;

@@ -134,8 +134,8 @@ void ai_speedy::SeekWptState()
 	else {
 		transform->setPosition(fixedWpts[curwpt]);
 		float distance_to_next_wpt = squaredDist(transform->getPosition(), fixedWpts[(curwpt + 1) % fixedWpts.size()]);
-		dbg("distance: %f", distance_to_next_wpt);
 		curwpt = (curwpt + 1) % fixedWpts.size();
+
 		if (distance_to_next_wpt > 200.f)
 			ChangeState("dashtopoint");
 		else 

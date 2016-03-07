@@ -78,9 +78,9 @@ void player_controller::ChangePose(CHandle new_pos_h)
 void player_controller::myUpdate() {
 	____TIMER__UPDATE_(timerDamaged);
 	SetMyEntity();
-	/*TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 pos = player_transform->getPosition();
-	dbg("PLAYER POSI: %f %f %f\n", pos.x, pos.y, pos.z);*/
+	dbg("PLAYER POSI: %f %f %f\n", pos.x, pos.y, pos.z);
 	if (!isDamaged()) {
 		UpdatePossession();
 	}
