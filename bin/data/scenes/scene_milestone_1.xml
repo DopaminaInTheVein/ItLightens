@@ -1209,16 +1209,18 @@
   <entity>
     <tag name ="platform" />
     <name name="Box11" />
+    <tag name="box" />
     <transform pos="0.478754 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types = "0" />
   </entity>
   <entity>
     <tag name ="platform" />
     <name name="Box12" />
+    <tag name="box" />
     <transform pos="3.24255 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh"/>
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="player" types="4"  />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4"  />
   </entity>
   <entity>
     <name name="columnas_3" />
@@ -1700,6 +1702,12 @@
     <transform pos="-5 4 145" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 
+  <!-- VICTORY POINT -->
+  <entity>
+    <name name="win_point" />
+    <tag name="victory_point" />
+    <transform pos="-5 5 145" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
   <entity>
     <tag name="AI" />
     <name name="ia_mole2" />
@@ -1714,17 +1722,21 @@
 
   <!-- END FINAL ZONE -->
 
-  <!-- RECOVER POINT 2-->
+  <!-- RECOVER POINT 2
   <entity>
     <name name="recover_point2" />
     <tag name="recover_point" />
     <transform pos="45 3 0" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>
-
-  <!-- VICTORY POINT -->
+  </entity>-->
+  <!-- MAGNETIC POINTS
   <entity>
-    <name name="win_point" />
-    <tag name="victory_point" />
-    <transform pos="0 10 180" rotation="1 2 3 3" scale="1 1 1" />
+    <name name="attractionPointMinus" />
+    <tag name="minus_wall" />
+    <transform pos="62 7 4" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
+  <entity>
+    <name name="attractionPointPlus" />
+    <tag name="plus_wall" />
+    <transform pos="64 7 0" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>-->
 </entities>
