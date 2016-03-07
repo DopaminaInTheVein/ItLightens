@@ -148,7 +148,7 @@ bool player_controller_mole::nearToBox() {
 			VEC3 wpt = transformBox->getPosition();
 			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
 			string key = nameBox->name;
-			if (disttowpt < distMax + 2 && wpt.y >= higher) {
+			if (disttowpt < distMax + 2 /*&& wpt.y >= higher*/) {
 				distMax = disttowpt;
 				higher = wpt.y;
 				selectedBox = key;

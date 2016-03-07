@@ -380,13 +380,14 @@
     <tag name="box" />
     <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
-    <transform pos="5 0 0" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="5 -1.8 5" rotation="1 2 3 3" scale="1 1 1" />
     <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="player" types="4" />
   </entity>
+  
   <entity>
     <name name="box_leavepoint1" />
     <tag name="box_leavepoint" />
-    <transform pos="5 0 5" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="-4 -1.8 8" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 
   <entity>
@@ -394,19 +395,7 @@
     <name name="ia_mole1" />
     <tag name="AI_poss" />
     <tag name="AI_mole" />
-    <transform pos="0 0.1 0" rotation="1 2 3 3" scale="1 1 1" />
-    <life points="100" />
-    <sphere_collider radius="0.3" tag ="player" />
-    <player_mole />
-    <ai_mole />
-  </entity>
-
-  <entity>
-    <tag name="AI" />
-    <name name="ia_mole1" />
-    <tag name="AI_poss" />
-    <tag name="AI_mole" />
-    <transform pos="-25 0.1 0" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="0 -1.8 8" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
     <sphere_collider radius="0.3" tag ="player" />
     <player_mole />
@@ -686,6 +675,33 @@
     <sphere_collider radius="0.3" tag ="player" />
   </entity>
 
+  <entity>
+    <name name="box2" />
+    <tag name="box" />
+    <tag name ="platform" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <transform pos="6 4 150" rotation="1 2 3 3" scale="1 1 1" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="player" types="4" />
+  </entity>
+
+  <entity>
+    <name name="box_leavepoint2" />
+    <tag name="box_leavepoint" />
+    <transform pos="-5 4 145" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <name name="ia_mole2" />
+    <tag name="AI_poss" />
+    <tag name="AI_mole" />
+    <transform pos="0 4 160" rotation="1 2 3 3" scale="1 1 1" />
+    <life points="100" />
+    <sphere_collider radius="0.3" tag ="player" />
+    <player_mole />
+    <ai_mole />
+  </entity>
+
   <!-- END FINAL ZONE -->
 
   <!-- RECOVER POINT 2-->
@@ -711,12 +727,5 @@
     <name name="win_point" />
     <tag name="victory_point" />
     <transform pos="64 4 0" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>
-  <entity>
-    <name name="box1" />
-    <tag name ="platform" />
-    <render_static_mesh name="static_meshes/box.static_mesh" />
-    <transform pos="64 3 0" rotation="1 2 3 3" scale="1 1 1" />
-    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" types = "0" />
   </entity>
 </entities>
