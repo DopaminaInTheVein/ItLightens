@@ -58,11 +58,16 @@ void CPlayerBase::update(float elapsed) {
 			CApp& app = CApp::get();
 			app.restart();
 		}
-		UpdateInputActions();
+		bool alive = !checkDead();
+		if (alive) {
+			UpdateInputActions();
+		}
 		Recalc();
-		UpdateMoves();
-		myUpdate();
-		update_msgs();
+		if (alive) {
+			UpdateMoves();
+			myUpdate();
+			update_msgs();
+		}
 	}
 }
 
