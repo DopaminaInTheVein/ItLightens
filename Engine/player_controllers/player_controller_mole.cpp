@@ -3,9 +3,13 @@
 
 #include <windows.h>
 #include "handle\object_manager.h"
-#include "components\comp_name.h"
-#include "app_modules\io\io.h"
+#include "components\comp_transform.h"
+#include "components\entity.h"
 #include "components\entity_tags.h"
+#include "app_modules\io\io.h"
+#include "components\comp_msgs.h"
+
+#include "physics/physics.h"
 
 #include "ui\ui_interface.h"
 #include "logic\ai_mole.h"
@@ -63,6 +67,8 @@ void player_controller_mole::UpdateInputActions() {
 		ChangePose(pose_run);
 	else if (state == "jumping")
 		ChangePose(pose_jump);
+	else if (state == "idle")
+		ChangePose(pose_idle);
 
 	if (io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) {
 		if (boxGrabbed) {
