@@ -12,6 +12,7 @@ ai_poss::ai_poss() {
 	AddState(ST_STUNT_END, (statehandler)&ai_poss::_StuntEndState);
 	possessed = false;
 	stunned = false;
+	
 }
 
 // MENSAJES

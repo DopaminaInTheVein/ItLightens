@@ -72,6 +72,7 @@ class ai_speedy : public ai_poss, public TCompBase {
 	CHandle pose_idle;
 	CHandle pose_run;
 	CHandle pose_jump;
+	CHandle pose_void;
 
 public:
 	void IdleState();
