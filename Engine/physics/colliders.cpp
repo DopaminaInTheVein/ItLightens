@@ -122,8 +122,8 @@ VEC3 boxCollider::getPMAX() const
 void boxCollider::rayCast() {
 	ray_cast_halfway* rHalfWay = &Physics::RayCastHalfWay;
 	ray_cast_query* rQuery = &rHalfWay->query;
-
-	if (rQuery->types & types == 0) return;
+	int resMascara = rQuery->types & types;
+	if ( types == 0) return;
 
 	VEC3 min = getPMIN(), max = getPMAX();
 	VEC3 rOrig = rQuery->position;
