@@ -37,7 +37,7 @@
     <tag name ="platform" />
     <transform pos="0.0101869 -1.83557 13.3673" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/pared_mole.static_mesh" />
-    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+    <box_collider p1 ="12.5 5 1" p2="-12.5 0 -1"  tag="box" />
   </entity>
   <entity>
     <name name="pared_speedy_final" />
@@ -60,7 +60,7 @@
     <tag name ="platform" />
     <transform pos="-0.0249984 3.95734 170.816" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/pared_mole_final.static_mesh" />
-    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="box" />
   </entity>
   <entity>
     <name name="baliza" />
@@ -104,7 +104,8 @@
     <name name="mesa_cientifico" />
     <tag name="workbench" />
     <transform pos="-11.7247 3.90382 128.531" quat="0.0 0.0 1.66893e-006 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh" />
+    <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh"/>
+    <workbench/>
   </entity>
   <entity>
     <name name="columnas" />
@@ -1141,70 +1142,70 @@
     <name name="Box1" />
     <transform pos="0.358 -8.246 -10.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="player" types="4" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4" />
   </entity>
   <entity>
     <tag name ="platform" />
     <name name="Box2" />
     <transform pos="4.95928 -1.84045 17.3327" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="player" types="4" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4" />
   </entity>
   <entity>
     <tag name ="platform" />
     <name name="Box3" />
     <transform pos="0.478754 3.90856 111.336" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="player" types="4" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4" />
   </entity>
   <entity>
     <tag name ="platform" />
     <name name="Box4" />
     <transform pos="2.8988 3.90856 105.074" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="player" types="4" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4" />
   </entity>
   <entity>
     <tag name ="platform" />
     <name name="Box5" />
     <transform pos="-2.7472 3.90856 105.074" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="player" types="4" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4" />
   </entity>
   <entity>
     <tag name ="platform" />
     <name name="Box6" />
     <transform pos="-2.96467 3.90856 90.7216" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types = "4" />
   </entity>
   <entity>
     <tag name ="platform" />
     <name name="Box7" />
     <transform pos="1.91384 3.90856 95.8815" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="player" types="4" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4" />
   </entity>
   <entity>
     <tag name ="platform" />
     <name name="Box8" />
     <transform pos="2.86123 3.90856 85.469" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="player" types="4" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4" />
   </entity>
   <entity>
     <tag name ="platform" />
     <name name="Box9" />
     <transform pos="1.0736 3.90856 72.114" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="player" types="4" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4" />
   </entity>
   <entity>
     <tag name ="platform" />
     <name name="Box10" />
     <transform pos="-2.93519 3.90856 79.4002" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="player" types="4" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -1212,7 +1213,7 @@
     <tag name="box" />
     <transform pos="0.478754 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types = "0" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types = "4" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -1653,11 +1654,17 @@
     <tag name="AI" />
     <tag name="AI_cientifico" />
     <tag name="AI_poss" />
-    <transform pos="53 0.1 1" />
+    <transform pos="0 3.9 120" />
     <name name="scientist1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/human_test.static_mesh" />
-    <cientifico />
+    <cientifico 
+      kpt_size  = "4"
+      kpt0_type = "seek" kpt0_pos = " 5  3.9  120" kpt0_wait = "0.5"
+      kpt1_type = "look" kpt1_pos = " 0  3.9   125" kpt1_wait = "1"
+      kpt2_type = "seek" kpt2_pos = " 4.5  3.9 115" kpt2_wait = "1"
+      kpt3_type = "look" kpt3_pos = " -2.1  3.9 123" kpt3_wait = "1"
+     />
     <player_cientifico />
     <sphere_collider radius="0.3" tag ="player" />
   </entity>
@@ -1720,22 +1727,4 @@
   </entity>
 
   <!-- END FINAL ZONE -->
-
-  <!-- RECOVER POINT 2
-  <entity>
-    <name name="recover_point2" />
-    <tag name="recover_point" />
-    <transform pos="45 3 0" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>-->
-  <!-- MAGNETIC POINTS
-  <entity>
-    <name name="attractionPointMinus" />
-    <tag name="minus_wall" />
-    <transform pos="62 7 4" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>
-  <entity>
-    <name name="attractionPointPlus" />
-    <tag name="plus_wall" />
-    <transform pos="64 7 0" rotation="1 2 3 3" scale="1 1 1" />
-  </entity>-->
-</entities>
+  </entities>
