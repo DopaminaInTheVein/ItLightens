@@ -24,11 +24,11 @@ bool CSimplePhysx::isMovementValid(CHandle h, std::string tag)
 
 bool CSimplePhysx::isCollidingBoxOverBox(CHandle h, std::string tag) {
 	VHandles objs_h = tags_manager.getHandlesByTag(getID("box"));
+	bool collidesFirst = false;
 	for (auto obj : objs_h) {
 		CEntity * ent = obj;
 		boxCollider *bc = ent->get<boxCollider>();
 		if (bc && tag.compare("box") == 0 && bc->getTag().compare("box") == 0) {
-			bool collidesFirst = false;
 			while (isColliding(h, obj)) {
 				collidesFirst = true;
 				CEntity * box = h;
@@ -37,10 +37,9 @@ bool CSimplePhysx::isCollidingBoxOverBox(CHandle h, std::string tag) {
 				boxpos.y += 0.01;
 				bt->setPosition(boxpos);
 			}
-			if (collidesFirst) return true;
 		}
 	}
-	return false;
+	return collidesFirst;
 }
 
 void CSimplePhysx::test()
