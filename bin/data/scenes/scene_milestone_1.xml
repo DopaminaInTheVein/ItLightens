@@ -21,1227 +21,1229 @@
     <colCylinder pos ="0 0 0" radius ="0.3" height ="1" type ="player" />
     <sphere_collider radius="0.3" tag ="player" />
   </entity>
-  
+
   <!--END PLAYER & CAMERA -->
-  
+
   <!-- START SCENE -->
   <!-- START SCENE OBJECTS -->
   <entity>
-    <name name="nivel"/>
+    <name name="nivel" />
     <transform pos="0.0 -0.0317383 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/nivel.static_mesh"/>
+    <render_static_mesh name="static_meshes/nivel.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_mole"/>
+    <name name="pared_mole" />
+    <tag name="breakable_wall" />
     <transform pos="0.0101869 -1.83557 13.3673" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_mole.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_mole.static_mesh" />
+    <!-- <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" /> -->
   </entity>
   <entity>
-    <name name="pared_speedy_final"/>
+    <name name="pared_speedy_final" />
     <transform pos="0.0101869 7.82282 178.612" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_speedy_final.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_speedy_final.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_speedy"/>
+    <name name="pared_speedy" />
     <transform pos="0.0101869 -0.321139 37.0312" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_speedy.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_speedy.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_atravesar_cable"/>
+    <name name="pared_atravesar_cable" />
     <transform pos="-0.0145572 3.90864 138.549" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_atravesar_cable.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_atravesar_cable.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_mole_final"/>
+    <name name="pared_mole_final" />
+    <tag name="breakable_wall" />
     <transform pos="-0.0249984 3.95734 170.816" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_mole_final.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_mole_final.static_mesh" />
   </entity>
   <entity>
-    <name name="baliza"/>
+    <name name="baliza" />
     <transform pos="11.7903 3.91032 124.523" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/baliza.static_mesh"/>
+    <render_static_mesh name="static_meshes/baliza.static_mesh" />
   </entity>
   <entity>
-    <name name="baliza"/>
+    <name name="baliza" />
     <transform pos="11.7903 3.91887 132.52" quat="0.0 1.0 0.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/baliza.static_mesh"/>
+    <render_static_mesh name="static_meshes/baliza.static_mesh" />
   </entity>
   <entity>
     <name name="punto_magnetismo1" />
     <tag name="minus_wall" />
     <transform pos="0.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
   </entity>
   <entity>
     <name name="punto_magnetismo2" />
     <tag name="plus_wall" />
     <transform pos="0.357965 1.06714 4.40073" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
   </entity>
   <entity>
     <name name="punto_magnetismo3" />
     <tag name="minus_wall" />
     <transform pos="0.357965 8.0246 63.1498" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
   </entity>
   <entity>
     <name name="punto_magnetismo4" />
     <tag name="plus_wall" />
     <transform pos="0.357965 5.08771 59.6009" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
   </entity>
   <entity>
-    <name name="mesa_cientifico"/>
+    <name name="mesa_cientifico" />
     <transform pos="-11.7247 3.90382 128.531" quat="0.0 0.0 1.66893e-006 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh"/>
+    <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-8.66875 -8.25623 -9.55649" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-6.45715 -8.276 -25.2541" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="6.53137 -8.276 -25.2541" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-8.87701 -8.276 -11.8497" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-8.89178 -8.27619 -16.8308" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-8.87701 -8.276 -21.8108" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="8.99473 -8.276 -21.8112" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="8.99474 -8.276 -11.8501" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="9.00951 -8.27619 -16.8301" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_1"/>
+    <name name="pared_1" />
     <transform pos="-8.06951 -8.17521 -8.83327" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_1.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_1.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_1"/>
+    <name name="pared_1" />
     <transform pos="-4.77425 -8.17521 -8.83327" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_1.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_1.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_1"/>
+    <name name="pared_1" />
     <transform pos="1.75987 -8.17521 -8.83327" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_1.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_1.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_1"/>
+    <name name="pared_1" />
     <transform pos="-1.53539 -8.17521 -8.83327" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_1.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_1.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_1"/>
+    <name name="pared_1" />
     <transform pos="8.33463 -8.17521 -8.83327" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_1.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_1.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_1"/>
+    <name name="pared_1" />
     <transform pos="5.03937 -8.17521 -8.83327" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_1.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_1.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_2"/>
+    <name name="pared_2" />
     <transform pos="8.33463 -5.19126 3.98801" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_2.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_2.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_2"/>
+    <name name="pared_2" />
     <transform pos="5.03937 -5.19126 3.98801" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_2.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_2.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_2"/>
+    <name name="pared_2" />
     <transform pos="1.75987 -5.19126 3.98801" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_2.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_2.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_2"/>
+    <name name="pared_2" />
     <transform pos="-1.53539 -5.19126 3.98801" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_2.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_2.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_2"/>
+    <name name="pared_2" />
     <transform pos="-4.77425 -5.19126 3.98801" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_2.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_2.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_2"/>
+    <name name="pared_2" />
     <transform pos="-8.06951 -5.19126 3.98801" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_2.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_2.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_3"/>
+    <name name="pared_3" />
     <transform pos="3.95283 -1.93177 23.5154" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_3.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_3"/>
+    <name name="pared_3" />
     <transform pos="1.99381 -1.93177 23.5154" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_3.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_3"/>
+    <name name="pared_3" />
     <transform pos="0.0271798 -1.93177 23.5154" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_3.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_3"/>
+    <name name="pared_3" />
     <transform pos="-1.9489 -1.93177 23.5154" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_3.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_3"/>
+    <name name="pared_3" />
     <transform pos="-3.89116 -1.93177 23.5154" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_3.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_3"/>
+    <name name="pared_3" />
     <transform pos="-5.86724 -1.93177 23.5154" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_3.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_3"/>
+    <name name="pared_3" />
     <transform pos="5.91218 -1.93177 23.5154" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_3.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_4"/>
+    <name name="pared_4" />
     <transform pos="8.33463 -0.215091 62.645" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_4.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_4.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_4"/>
+    <name name="pared_4" />
     <transform pos="5.03937 -0.215091 62.645" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_4.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_4.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_4"/>
+    <name name="pared_4" />
     <transform pos="1.75987 -0.215091 62.645" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_4.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_4.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_4"/>
+    <name name="pared_4" />
     <transform pos="-1.53539 -0.215091 62.645" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_4.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_4.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_4"/>
+    <name name="pared_4" />
     <transform pos="-4.77425 -0.215091 62.645" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_4.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_4.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_4"/>
+    <name name="pared_4" />
     <transform pos="-8.06951 -0.215091 62.645" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_4.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_4.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_5"/>
+    <name name="pared_5" />
     <transform pos="6.51052 3.83231 112.404" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_5.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_5.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_5"/>
+    <name name="pared_5" />
     <transform pos="3.51161 3.83231 112.404" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_5.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_5.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_5"/>
+    <name name="pared_5" />
     <transform pos="1.21401 3.83231 112.404" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_5.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_5.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_5"/>
+    <name name="pared_5" />
     <transform pos="-1.17668 3.83231 112.404" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_5.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_5.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_5"/>
+    <name name="pared_5" />
     <transform pos="-3.52645 3.83231 112.404" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_5.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_5.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_5"/>
+    <name name="pared_5" />
     <transform pos="-5.91714 3.83231 112.404" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_5.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_5.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_9"/>
+    <name name="pared_9" />
     <transform pos="-5.90036 3.83231 114.53" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_9.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_9.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_9"/>
+    <name name="pared_9" />
     <transform pos="-3.50967 3.83231 114.53" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_9.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_9.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_9"/>
+    <name name="pared_9" />
     <transform pos="-1.13041 3.83231 114.53" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_9.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_9.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_9"/>
+    <name name="pared_9" />
     <transform pos="1.26028 3.83231 114.53" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_9.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_9.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_9"/>
+    <name name="pared_9" />
     <transform pos="3.61005 3.83231 114.53" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_9.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_9.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_9"/>
+    <name name="pared_9" />
     <transform pos="6.00075 3.83231 114.53" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_9.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_9.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_9"/>
+    <name name="pared_9" />
     <transform pos="-8.2677 3.83231 114.53" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_9.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_9.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_9"/>
+    <name name="pared_9" />
     <transform pos="8.4062 3.83231 114.53" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_9.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_9.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_9"/>
+    <name name="pared_9" />
     <transform pos="10.8093 3.83231 114.53" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_9.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_9.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="8.70809 -8.25623 -9.46738" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="8.93594 -8.25623 -24.4442" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-8.74164 -8.25623 -24.4442" quat="-0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="8.67772 -5.22314 -5.35838" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="8.67772 -5.22314 0.495989" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-6.73029 -1.8623 4.54324" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-6.73029 -1.8623 22.8582" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-6.69789 -1.88342 14.9514" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-6.69789 -1.88342 19.9571" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-6.69789 -1.88342 6.58997" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-6.69789 -1.88342 11.5956" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-6.49687 -1.84277 13.0136" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="6.73966 -1.8623 4.58467" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="6.70726 -1.88342 7.37041" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="6.70726 -1.88342 12.3761" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="6.50624 -1.84277 14.3139" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="6.70726 -1.88342 15.7319" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="6.70726 -1.88342 20.7375" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="6.73966 -1.8623 22.7843" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="8.52178 -5.21399 -2.42492" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="8.70809 -5.19336 -8.27305" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="8.70809 -5.19958 3.19277" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-8.98731 -5.19336 3.37508" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-8.95694 -5.22314 0.411347" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-8.801 -5.21399 -2.52211" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-8.95694 -5.22314 -5.44302" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-8.98731 -5.19959 -8.13981" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-1.45505 -8.276 -25.2541" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="1.56696 -8.276 -25.2541" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="0.164591 -8.26672 -25.3016" quat="1.0 0.0 0.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="8.62955 -0.160216 24.1422" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="8.56053 -0.181333 27.1229" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="8.56053 -0.181333 32.0976" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="8.46376 -0.158232 35.07" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="8.56053 -0.181333 37.8163" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="8.56053 -0.181333 42.7986" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="8.59293 -0.160215 44.8687" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-8.49565 -0.160215 44.8697" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-8.42662 -0.181333 41.889" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-8.42662 -0.181333 36.9142" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-8.32985 -0.158232 33.9419" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-8.42662 -0.181333 31.1956" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-8.42662 -0.181333 26.2133" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-8.45903 -0.160216 24.1432" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="5.31346 -0.181332 55.5602" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="5.34586 -0.160215 58.5049" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="5.34586 -0.160215 52.578" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-5.32859 -0.160215 58.5313" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-5.29619 -0.181332 55.5491" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-5.32859 -0.160215 52.5766" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-5.83451 3.862 70.7227" quat="0.0 0.0 1.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-8.81671 3.84089 70.6903" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-11.6377 3.862 70.0345" quat="0.0 0.0 1.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="8.63706 3.84089 70.6858" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="5.8161 3.862 70.7182" quat="0.0 0.0 1.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="11.447 3.86518 69.8625" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="11.4694 3.86518 63.8439" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="11.437 3.84406 66.835" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-11.9855 3.862 63.9557" quat="-0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-11.9755 3.84089 66.926" quat="0.0 1.0 0.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="5.35032 3.87476 83.3212" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="5.35032 3.87476 88.1137" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="5.38272 3.89588 90.9847" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="5.35033 3.87476 93.8726" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="5.35032 3.87476 98.6753" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="5.2931 3.9618 101.523" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="5.35032 3.84119 104.318" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="5.38272 3.89588 112.004" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="5.35032 3.84119 109.122" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="5.35032 3.87476 73.8163" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="5.38272 3.90018 71.16" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-5.41058 3.87357 111.92" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-5.37818 3.84815 109.264" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-5.37818 3.84815 104.546" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-5.37818 3.84815 99.7594" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-5.37817 3.84815 94.9668" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-5.41057 3.86927 92.0958" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-5.37818 3.84815 89.2079" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-5.37817 3.84815 84.4052" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-5.32095 3.93518 81.5578" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-5.37817 3.81458 78.7629" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-5.37817 3.81458 73.9585" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-5.41057 3.86927 71.0761" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="16.8414 3.85914 121.566" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="16.809 3.83802 124.58" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="16.809 3.835 129.583" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="16.809 3.84339 134.387" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="16.8414 3.85914 137.269" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-12.7013 3.87641 129.825" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-12.7013 3.87641 125.02" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-12.7337 3.89765 122.138" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-12.7337 3.89588 137.715" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-12.7013 3.87476 134.827" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="11.2903 3.87476 142.036" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="11.3227 3.90018 139.38" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="11.2903 3.87476 147.023" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="11.2903 3.87476 152.028" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="11.2903 3.87476 156.994" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="11.3227 3.89588 169.515" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="11.2903 3.87476 162.017" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="11.2903 3.87476 166.958" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-11.4668 3.87476 142.03" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-11.4992 3.90018 169.608" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-11.4668 3.87476 166.952" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-11.4668 3.87476 161.965" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-11.4668 3.87476 156.96" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-11.4668 3.87476 151.994" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-11.4668 3.87476 146.971" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-11.4992 3.89588 139.472" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="12.3004 3.89025 137.84" quat="0.0 0.0 1.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="15.1829 3.83556 137.808" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="12.5067 3.85914 121.379" quat="1.0 0.0 1.50996e-007 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="14.4327 3.83556 121.243" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-12.1056 3.87231 121.243" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-9.99623 3.89588 121.103" quat="1.0 0.0 1.50996e-007 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-9.68604 3.89588 121.103" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-9.58196 3.87231 118.08" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-9.68604 3.89588 114.934" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="12.3004 3.92699 137.84" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="12.5067 3.85914 121.379" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-11.4992 3.89588 139.472" quat="0.0 0.0 1.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="8.59293 -0.160215 44.8687" quat="1.0 0.0 0.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-8.49565 -0.160215 44.8697" quat="1.0 0.0 0.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-8.66875 -8.25623 -9.55649" quat="1.0 0.0 0.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="12.0927 3.84406 63.1317" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="9.58771 3.86518 63.0993" quat="1.0 0.0 3.01992e-007 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="9.58771 3.86518 63.0993" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="-11.5945 3.84406 63.1317" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-9.22919 3.86518 63.0993" quat="1.0 0.0 3.01992e-007 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-9.22919 3.86518 63.0993" quat="-0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="-11.6377 3.862 70.0345" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="12.0312 3.87623 114.975" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="11.9271 3.85265 117.999" quat="0.0 -1.50996e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas"/>
+    <name name="columnas" />
     <transform pos="12.0312 3.87623 121.144" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_6"/>
+    <name name="pared_6" />
     <transform pos="8.04556 4.12754 176.894" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_6.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_6.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_6"/>
+    <name name="pared_6" />
     <transform pos="3.88798 4.12502 176.894" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_6.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_6.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_6"/>
+    <name name="pared_6" />
     <transform pos="-0.105112 4.132 176.894" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_6.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_6.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_6"/>
+    <name name="pared_6" />
     <transform pos="-4.27973 4.132 176.894" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_6.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_6.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_6"/>
+    <name name="pared_6" />
     <transform pos="-8.41474 4.132 176.894" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_6.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_6.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_7"/>
+    <name name="pared_7" />
     <transform pos="-5.01185 7.69196 192.343" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_7.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_7.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_7"/>
+    <name name="pared_7" />
     <transform pos="-1.64055 7.69196 192.343" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_7.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_7.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_7"/>
+    <name name="pared_7" />
     <transform pos="1.76304 7.69196 192.343" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_7.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_7.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_7"/>
+    <name name="pared_7" />
     <transform pos="5.01863 7.68627 192.343" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_7.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_7.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_7"/>
+    <name name="pared_7" />
     <transform pos="8.40833 7.68832 192.343" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_7.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_7.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_7"/>
+    <name name="pared_7" />
     <transform pos="-8.36909 7.69196 192.343" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_7.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_7.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_7"/>
+    <name name="pared_7" />
     <transform pos="9.08735 7.68832 190.714" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_7.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_7.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_7"/>
+    <name name="pared_7" />
     <transform pos="-9.10876 7.68832 190.714" quat="0.0 1.0 0.0 -1.62921e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_7.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_7.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas_2"/>
+    <name name="columnas_2" />
     <transform pos="8.82438 6.33228 192.457" quat="0.0 0.0 1.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas_2.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas_2.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas_2"/>
+    <name name="columnas_2" />
     <transform pos="-8.95021 6.35554 192.457" quat="0.0 0.0 1.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas_2.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas_2.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas_2"/>
+    <name name="columnas_2" />
     <transform pos="-9.19619 6.35554 189.558" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas_2.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas_2.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas_2"/>
+    <name name="columnas_2" />
     <transform pos="9.16844 6.35554 189.558" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas_2.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas_2.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas_3"/>
+    <name name="columnas_3" />
     <transform pos="9.16844 6.35554 177.655" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas_3.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_10"/>
+    <name name="pared_10" />
     <transform pos="9.08735 7.68832 179.591" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_10.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_10.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas_3"/>
+    <name name="columnas_3" />
     <transform pos="8.82438 6.33228 181.566" quat="0.707107 0.0 0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas_3.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_10"/>
+    <name name="pared_10" />
     <transform pos="-9.15115 7.68832 179.617" quat="0.0 1.0 0.0 -1.94707e-007" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_10.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_10.static_mesh" />
   </entity>
   <entity>
-    <name name="columnas_3"/>
+    <name name="columnas_3" />
     <transform pos="-9.23224 6.35554 181.553" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas_3.static_mesh" />
   </entity>
   <entity>
-    <name name="pared_standard"/>
+    <name name="pared_standard" />
     <transform pos="5.35032 3.87476 78.6103" quat="0.0 1.19209e-007 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/pared_standard.static_mesh"/>
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
   </entity>
   <entity>
     <tag name ="platform" />
-    <name name="Box"/>
+    <name name="Box1" />
     <transform pos="0.358 -8.246 -10.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
     <tag name ="platform" />
-    <name name="Box"/>
+    <name name="Box2" />
     <transform pos="4.95928 -1.84045 17.3327" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
     <tag name ="platform" />
-    <name name="Box"/>
+    <name name="Box3" />
     <transform pos="0.478754 3.90856 111.336" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
     <tag name ="platform" />
-    <name name="Box"/>
+    <name name="Box4" />
     <transform pos="2.8988 3.90856 105.074" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
     <tag name ="platform" />
-    <name name="Box"/>
+    <name name="Box5" />
     <transform pos="-2.7472 3.90856 105.074" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
     <tag name ="platform" />
-    <name name="Box"/>
+    <name name="Box6" />
     <transform pos="-2.96467 3.90856 90.7216" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
-    <name name="Box"/>
+    <name name="Box7" />
     <transform pos="1.91384 3.90856 95.8815" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
     <tag name ="platform" />
-    <name name="Box"/>
+    <name name="Box8" />
     <transform pos="2.86123 3.90856 85.469" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
-    <name name="Box"/>
+    <name name="Box9" />
     <transform pos="1.0736 3.90856 72.114" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
     <tag name ="platform" />
-    <name name="Box"/>
+    <name name="Box10" />
     <transform pos="-2.93519 3.90856 79.4002" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
     <tag name ="platform" />
-    <name name="Box"/>
+    <name name="Box11" />
     <transform pos="0.478754 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
     <tag name ="platform" />
-    <name name="Box"/>
+    <name name="Box12" />
     <transform pos="3.24255 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
     <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "0" />
   </entity>
   <entity>
-    <name name="columnas_3"/>
+    <name name="columnas_3" />
     <transform pos="-9.17438 6.33228 177.642" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/columnas_3.static_mesh"/>
+    <render_static_mesh name="static_meshes/columnas_3.static_mesh" />
   </entity>
-  
 
   <!-- END SCENE OBJECTS -->
   <!-- START SCENE COLLIDERS -->
   <!-- ZONE 1 : JUMP INTRO-->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_1"/>
-    <transform pos ="0 -3.1 -17"/>
+    <name name ="collider_floor_zone_1" />
+    <transform pos ="0 -3.1 -17" />
     <box_collider p1 ="10 -5.2 8" p2="-10 -7.2 -8"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_1"/>
-    <transform pos ="0 -8 -25"/>
+    <name name ="collider_wall_zone_1" />
+    <transform pos ="0 -8 -25" />
     <box_collider p1 ="10 10.2 0.5" p2="-10 -1 -2"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_1"/>
-    <transform pos ="-8.5 -8 -24" quat ="0 0.707 0 0.707"/>
+    <name name ="collider_wall_zone_1" />
+    <transform pos ="-8.5 -8 -24" quat ="0 0.707 0 0.707" />
     <box_collider p1 ="10 20 0.5" p2="-69.5 -1 -2"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_1"/>
-    <transform pos ="10 -8 -24" quat ="0 0.707 0 0.707"/>
+    <name name ="collider_wall_zone_1" />
+    <transform pos ="10 -8 -24" quat ="0 0.707 0 0.707" />
     <box_collider p1 ="10 20 0.5" p2="-69.5 -1 -2"  tag="platform" />
   </entity>
   <!-- END ZONE 1 -->
@@ -1249,49 +1251,48 @@
   <!-- ZONE 2 : MAGNETISM INTRO -->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_2"/>
-    <transform pos ="0 -1.4 -2.3"/>
+    <name name ="collider_floor_zone_2" />
+    <transform pos ="0 -1.4 -2.3" />
     <box_collider p1 ="10 -3.8 7" p2="-10 -7.8 -6.6"  tag="platform" />
   </entity>
   <!-- END ZONE 2 -->
   <!-- ZONE 3 : MOLE INTRO -->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_3"/>
-    <transform pos ="0 0.1 13.9"/>
+    <name name ="collider_floor_zone_3" />
+    <transform pos ="0 0.1 13.9" />
     <box_collider p1 ="10 -2 10" p2="-10 -7 -10"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_3"/>
-    <transform pos ="7.5 -1 14"/>
+    <name name ="collider_wall_zone_3" />
+    <transform pos ="7.5 -1 14" />
     <box_collider p1 ="1 10 10" p2="-1 -1 -10"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_3"/>
-    <transform pos ="-7.5 -1 14"/>
+    <name name ="collider_wall_zone_3" />
+    <transform pos ="-7.5 -1 14" />
     <box_collider p1 ="1 10 10" p2="-1 -1 -10"  tag="platform" />
   </entity>
-  
+
   <!-- END ZONE 3 -->
 
-  
   <!-- ZONE 4 : SPEEDY INTRO-->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_4"/>
-    <transform pos ="0 1.8 33.4"/>
+    <name name ="collider_floor_zone_4" />
+    <transform pos ="0 1.8 33.4" />
     <box_collider p1 ="10 -2 12.1" p2="-10 -5 -10"  tag="platform" />
   </entity>
-  
-<!--WATER-->
+
+  <!--WATER-->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_water_4"/>
-    <transform pos ="0 0 44"/>
+    <name name ="collider_water_4" />
+    <transform pos ="0 0 44" />
     <box_collider p1 ="10 -2 10" p2="-10 -7 -10"  tag="platform" />
     <!--SHOUD GO MORE DOWN!!!, TO HELP PASS FOR NOW-->
   </entity>
@@ -1299,159 +1300,150 @@
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_4"/>
-    <transform pos ="0 1.8 55"/>
+    <name name ="collider_floor_zone_4" />
+    <transform pos ="0 1.8 55" />
     <box_collider p1 ="10 -2 7" p2="-10 -5 -4.5"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_4"/>
-    <transform pos ="-6.1 1.8 55"/>
+    <name name ="collider_wall_zone_4" />
+    <transform pos ="-6.1 1.8 55" />
     <box_collider p1 ="1 10 3" p2="-3 -5 -4.1"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_4"/>
-    <transform pos ="6.1 1.8 55"/>
+    <name name ="collider_wall_zone_4" />
+    <transform pos ="6.1 1.8 55" />
     <box_collider p1 ="3 10 3" p2="-1 -5 -4.1"  tag="platform" />
   </entity>
-  
-  
+
   <!-- END ZONE 4-->
 
   <!-- ZONE 5 : MAGNETISM 2 -->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_wall_5"/>
-    <transform pos ="0 3.8 90"/>
+    <name name ="collider_floor_wall_5" />
+    <transform pos ="0 3.8 90" />
     <box_collider p1 ="20 0 95" p2="-20 -4 -28.8"  tag="platform" />
   </entity>
-  
-  
+
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_5"/>
-    <transform pos ="-10 0 60"/>
+    <name name ="collider_wall_zone_5" />
+    <transform pos ="-10 0 60" />
     <box_collider p1 ="1 10 1.3" p2="-2 -1 -5"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_5"/>
-    <transform pos ="10 0 60"/>
+    <name name ="collider_wall_zone_5" />
+    <transform pos ="10 0 60" />
     <box_collider p1 ="2 10 1.3" p2="-1 -1 -5"  tag="platform" />
   </entity>
-  
+
   <!-- END ZONE 5-->
-  
+
   <!-- ZONE 6: INTRO GUARD-->
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_6"/>
-    <transform pos ="12.5 2 65"/>
+    <name name ="collider_wall_zone_6" />
+    <transform pos ="12.5 2 65" />
     <box_collider p1 ="1 10 4" p2="-1 -1 -3.7"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_6"/>
-    <transform pos ="-12.5 2 65"/>
+    <name name ="collider_wall_zone_6" />
+    <transform pos ="-12.5 2 65" />
     <box_collider p1 ="1 10 4" p2="-1 -1 -3.7"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_6"/>
-    <transform pos ="-6 2 90"/>
+    <name name ="collider_wall_zone_6" />
+    <transform pos ="-6 2 90" />
     <box_collider p1 ="1 10 23.2" p2="-8 -1 -21"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_6"/>
-    <transform pos ="13 2 90"/>
+    <name name ="collider_wall_zone_6" />
+    <transform pos ="13 2 90" />
     <box_collider p1 ="1 10 23.2" p2="-8 -1 -21"  tag="platform" />
   </entity>
-  
-  
+
   <!-- END ZONE 6 -->
-  
+
   <!-- ZONE 7: INTRO SCIENTIST -->
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_7"/>
-    <transform pos ="0 3.8 112"/>
+    <name name ="collider_wall_zone_7" />
+    <transform pos ="0 3.8 112" />
     <box_collider p1 ="5 2.3 1.3" p2="-5 -1 -1"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_7"/>
-    <transform pos ="-6 3.8 112"/>
+    <name name ="collider_wall_zone_7" />
+    <transform pos ="-6 3.8 112" />
     <box_collider p1 ="2.1 4 1.2" p2="-4 -1 -1"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_7"/>
-    <transform pos ="7.8 3.8 112"/>
+    <name name ="collider_wall_zone_7" />
+    <transform pos ="7.8 3.8 112" />
     <box_collider p1 ="2.1 4 1.2" p2="-4 -1 -1"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_7"/>
-    <transform pos ="17.8 3.8 128"/>
+    <name name ="collider_wall_zone_7" />
+    <transform pos ="17.8 3.8 128" />
     <box_collider p1 ="1 8 9" p2="-1 -1 -8"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_7"/>
-    <transform pos ="-14 3.8 128"/>
+    <name name ="collider_wall_zone_7" />
+    <transform pos ="-14 3.8 128" />
     <box_collider p1 ="1 8 9" p2="-1 -1 -8"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_7"/>
-    <transform pos ="-10.2 3.8 116"/>
+    <name name ="collider_wall_zone_7" />
+    <transform pos ="-10.2 3.8 116" />
     <box_collider p1 ="1 8 4" p2="-5 -1 -3"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_7"/>
-    <transform pos ="16.5 3.8 116"/>
+    <name name ="collider_wall_zone_7" />
+    <transform pos ="16.5 3.8 116" />
     <box_collider p1 ="1 8 4" p2="-5 -1 -3"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_7"/>
-    <transform pos ="0 3.8 137.8"/>
+    <name name ="collider_wall_zone_7" />
+    <transform pos ="0 3.8 137.8" />
     <box_collider p1 ="15 2 1.3" p2="-15 -1 -1"  tag="platform" />
   </entity>
 
   <!-- END ZONE 7 -->
-  
+
   <!-- FINAL ZONE -->
-  
-  
-  
+
   <!-- END ZONE -->
-  
+
   <!-- END SCENE COLLIDERS -->
   <!-- END SCENE -->
 
-
-
-  
-  
   <!-- LOGIC OBJECTS -->
   <!-- ZONE 2 -->
   <entity>
@@ -1460,9 +1452,17 @@
     <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 -1.8 5" rotation="1 2 3 3" scale="1 1 1" />
-    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="player" types="4" />
+    <box_collider p1 ="0.7 1 0.7" p2="-0.7 0 -0.7"  tag="box" types="4" />
   </entity>
-  
+  <entity>
+    <name name="box2" />
+    <tag name="box" />
+    <tag name ="platform" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <transform pos="5 -0.81 5" rotation="1 2 3 3" scale="1 1 1" />
+    <box_collider p1 ="0.7 1 0.7" p2="-0.7 0 -0.7"  tag="box" types="4" />
+  </entity>
+
   <entity>
     <name name="box_leavepoint1" />
     <tag name="box_leavepoint" />
@@ -1755,7 +1755,7 @@
   </entity>
 
   <entity>
-    <name name="box2" />
+    <name name="box5" />
     <tag name="box" />
     <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />

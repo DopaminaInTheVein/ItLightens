@@ -46,7 +46,6 @@ CShaderCte< TCteObject > shader_ctes_object;
 #include "app_modules/entities.h"
 
 bool CApp::start() {
-
 	//light setup init
 	shader_ctes_object.lightvec = float4(1.0f, 1.0f, 1.0f, 0.0f);
 	shader_ctes_object.lightcol = float4(0.8f, 0.8f, 0.8f, 1.0f);
@@ -62,11 +61,9 @@ bool CApp::start() {
 	all_modules.push_back(entities);
 	all_modules.push_back(io);
 
-
 	mod_update.push_back(imgui);
 	mod_update.push_back(entities);
 	mod_update.push_back(io);
-	
 
 	mod_renders.push_back(entities);
 	mod_renders.push_back(imgui);
@@ -77,8 +74,6 @@ bool CApp::start() {
 
 	mod_wnd_proc.push_back(io);
 	mod_wnd_proc.push_back(imgui);
-
-	
 
 	// ----------------------------
 	tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
@@ -108,7 +103,7 @@ void CApp::stop() {
 	// Stop modules
 	for (auto it = mod_init_order.rbegin(); it != mod_init_order.rend(); ++it)
 		(*it)->stop();
-	
+
 	Resources.destroy();
 	Debug->destroy();
 	shader_ctes_camera.destroy();
@@ -125,6 +120,11 @@ void CApp::restart() {
 	char szFileName[MAX_PATH] = "";
 	GetModuleFileName(NULL, szFileName, MAX_PATH);
 	ShellExecute(GetDesktopWindow(), "open", szFileName, NULL, NULL, SW_SHOWDEFAULT);
+	SendMessage(hTempWnd, WM_CLOSE, 0, 0);
+}
+
+void CApp::exitGame() {
+	HWND hTempWnd = getHWnd();
 	SendMessage(hTempWnd, WM_CLOSE, 0, 0);
 }
 

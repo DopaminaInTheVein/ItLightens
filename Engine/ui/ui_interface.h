@@ -87,7 +87,8 @@ public:
 		ImGui::Separator();
 
 		//put cheats here:
-		ImGui::Text("Press 'ESC' to restart");
+		ImGui::Text("Press 'ESC' to exit\n");
+		ImGui::Text("Press 'ENTER' to restart\n");
 
 		//if (Input.IsKeyPressedDown(KEY_L))
 			//life->refillLife();
@@ -99,14 +100,16 @@ public:
 			bool open = true;
 			ImGui::Begin("Fatal Player State", &open, ImVec2(300, 100), -1.0f);
 			ImGui::Text("You are Dead!\n");
-			ImGui::Text("Press 'ESC' to restart");
+			ImGui::Text("Press 'ESC' to exit\n");
+			ImGui::Text("Press 'ENTER' to restart\n");
 			ImGui::End();
 		}
 		else if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
 			bool open = true;
 			ImGui::Begin("Victory Player State", &open, ImVec2(300, 100), -1.0f);
 			ImGui::Text("You WIN!\n");
-			ImGui::Text("Press 'ESC' to restart");
+			ImGui::Text("Press 'ESC' to exit\n");
+			ImGui::Text("Press 'ENTER' to restart\n");
 			ImGui::End();
 		}
 	}

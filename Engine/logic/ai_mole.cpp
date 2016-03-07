@@ -34,7 +34,7 @@ void ai_mole::SeekWptState() {
 		float distMax = 15.0f;
 		string key_final = "";
 		bool found = false;
-		float higher = -0.5f;
+		float higher = -999.9f;
 		for (int i = 0; i < SBB::readHandlesVector("wptsBoxes").size(); i++) {
 			CEntity * entTransform = this->getEntityPointer(i);
 			TCompTransform * transformBox = entTransform->get<TCompTransform>();
@@ -42,7 +42,7 @@ void ai_mole::SeekWptState() {
 			VEC3 wpt = transformBox->getPosition();
 			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
 			string key = nameBox->name;
-			if (!SBB::readBool(key) && !isBoxAtLeavePoint(wpt) && (disttowpt < distMax + 2 /*&& wpt.y > higher*/)) {
+			if (!SBB::readBool(key) && !isBoxAtLeavePoint(wpt) && (disttowpt < distMax + 2 && wpt.y > higher)) {
 				towptbox = i;
 				higher = wpt.y;
 				distMax = disttowpt;
