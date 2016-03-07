@@ -109,6 +109,7 @@ public:
 	void AddBeacon();
 	void RemoveBeacon();
 	void WaitInPos();
+	void NextKpt();
 	//--------------------------------------
 
 	//Patrulla

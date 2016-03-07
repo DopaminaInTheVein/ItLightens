@@ -31,6 +31,7 @@ void ai_scientific::Init()
 	AddState("removeBeacon", (statehandler)&ai_scientific::RemoveBeacon);
 	AddState("lookForObj", (statehandler)&ai_scientific::LookForObj);
 	AddState("waitInPos", (statehandler)&ai_scientific::WaitInPos);
+	AddState("nextKpt", (statehandler)&ai_scientific::NextKpt);
 
 	out[IDLE] = "IDLE";
 	out[CREATE_BEACON] = "CREATE_BEACON";
@@ -62,11 +63,15 @@ void ai_scientific::LookForObj()
 		ChangeState("seekWB");
 	}
 	else if (keyPoints.size() > 0){
-		actual_action = WANDER;
-		obj_position = keyPoints[curkpt].pos;
-		t_waitInPos = 0;
-		ChangeState("aimToPos");
+		ChangeState("nextKpt");
 	}
+}
+
+void ai_scientific::NextKpt() {
+	actual_action = WANDER;
+	obj_position = keyPoints[curkpt].pos;
+	t_waitInPos = 0;
+	ChangeState("aimToPos");
 }
 
 void ai_scientific::SeekWorkbench()
@@ -91,7 +96,8 @@ void ai_scientific::SeekWorkbench()
 		}
 	}
 
-	ChangeState("lookForObj");
+	ChangeState("nextKpt");
+	//ChangeState("lookForObj");
 }
 
 void ai_scientific::AimToPos() {
@@ -170,7 +176,7 @@ void ai_scientific::MoveToPos()
 void ai_scientific::WaitInPos() {
 	if (t_waitInPos > keyPoints[curkpt].time) {
 		ChangeState("lookForObj");
-		curkpt = (curkpt + 1) & keyPoints.size();
+		curkpt = (curkpt + 1) % keyPoints.size();
 	}
 	else {
 		t_waitInPos += getDeltaTime();
