@@ -1396,7 +1396,7 @@
   <entity>
     <name name="recover_point2" />
     <tag name="recover_point" />
-    <transform pos="45 3 0" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="0 4 65" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 
   <!-- VICTORY POINT -->

@@ -253,7 +253,6 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompWire>()->updateAll(dt);
 
-
 	//TODO:REMOVE!!
 	getHandleManager<boxCollider>()->updateAll(dt);
 }
@@ -266,7 +265,6 @@ void CEntitiesModule::render() {
 	tech->activate();
 	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
-
 }
 
 void CEntitiesModule::renderInMenu() {

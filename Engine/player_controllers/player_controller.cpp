@@ -328,7 +328,7 @@ void player_controller::UpdateInputActions()
 		}
 		AttractMove(entPoint);
 	}
-	else if ((io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) && nearStunable()) {
+	else if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado
 		CEntity* ePoss = currentStunable;
@@ -336,7 +336,7 @@ void player_controller::UpdateInputActions()
 		msg.stunned = true;
 		ePoss->sendMsg(msg);
 	}
-	else if ((io->keys[VK_SHIFT].isPressed() || io->joystick.button_Y.isPressed())) {
+	else if (io->mouse.left.isPressed() || io->joystick.button_X.isPressed()) {
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
@@ -526,7 +526,7 @@ void player_controller::onWirePass(const TMsgWirePass & msg)
 	if (io->keys['E'].becomesPressed()) {
 		SetMyEntity();
 		TCompTransform *t = myEntity->get<TCompTransform>();
-		Debug->LogRaw("pass to: %f, %f, %f\n",msg.dst.x, msg.dst.y,msg.dst.z);
+		Debug->LogRaw("pass to: %f, %f, %f\n", msg.dst.x, msg.dst.y, msg.dst.z);
 		t->setPosition(msg.dst);
 	}
 }
