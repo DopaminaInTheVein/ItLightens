@@ -32,6 +32,7 @@ void ai_speedy::Init()
 	//Mallas
 	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_void = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 	CEntity* myEntity = myParent;
 	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
 	actual_render = pose_idle;
@@ -39,6 +40,7 @@ void ai_speedy::Init()
 	pose_idle.setOwner(myEntity);
 	pose_run.setOwner(myEntity);
 	pose_jump.setOwner(myEntity);
+	pose_void.setOwner(myEntity);
 
 	TCompRenderStaticMesh *mesh;
 
@@ -51,8 +53,11 @@ void ai_speedy::Init()
 	mesh = pose_run;
 	mesh->static_mesh = Resources.get("static_meshes/speedy_run.static_mesh")->as<CStaticMesh>();
 
-	actual_render->registerToRender();
+	mesh = pose_void;
+	mesh->static_mesh = Resources.get("static_meshes/void.static_mesh")->as<CStaticMesh>();
 
+	actual_render->registerToRender();
+	ChangePose(pose_idle);
 	// reset the state
 	ChangeState("idle");
 }
@@ -71,6 +76,10 @@ void ai_speedy::update(float elapsed) {
 	updateDashTimer();
 	updateDropWaterTimer();
 	Recalc();
+	if (possessed)
+		ChangePose(pose_void);
+	else if (state != "idle" && state != "falling")
+		ChangePose(pose_run);
 }
 
 // Loading the wpts
@@ -120,7 +129,7 @@ void ai_speedy::SeekWptState()
 	if (next_action == "dashtoplayer" && dash_ready) {
 		dash_target = player_transform->getPosition();
 		float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
-		if (abs(distance_to_player) <= max_dash_player_distance)
+		if (abs(distance_to_player) <= max_dash_player_distance && abs(dash_target.y - transform->getPosition().y) < 0.5f)
 			ChangeState(next_action);
 		else if (abs(distance) > 0.1f)
 			moveFront(speed);
@@ -151,6 +160,7 @@ void ai_speedy::DashToPlayerState() {
 	bool arrived = dashToTarget(dash_target);
 	if (arrived) {
 		resetDashTimer();
+		ChangePose(pose_idle);
 		ChangeState("nextwpt");
 	}
 }
@@ -158,6 +168,7 @@ void ai_speedy::DashToPointState() {
 	bool arrived = dashToTarget(fixedWpts[curwpt]);
 	if (arrived) {
 		resetDashTimer();
+		ChangePose(pose_idle);
 		ChangeState("nextwpt");
 	}
 }
@@ -166,6 +177,7 @@ void ai_speedy::DashToNewPointState() {
 	bool arrived = dashToTarget(dash_target);
 	if (arrived) {
 		resetDashTimer();
+		ChangePose(pose_idle);
 		ChangeState("nextwpt");
 	}
 }

@@ -15,6 +15,15 @@ void player_controller_speedy::Init()
 {
 	om = getHandleManager<player_controller_speedy>();	//player
 
+	DeleteState("jumping");
+	DeleteState("falling");
+
+	AddState("doublefalling", (statehandler)&player_controller_speedy::DoubleFalling);		//needed to disable double jump on falling
+	AddState("doublejump", (statehandler)&player_controller_speedy::DoubleJump);
+
+	AddState("falling", (statehandler)&player_controller_speedy::Falling);
+	AddState("jumping", (statehandler)&player_controller_speedy::Jumping);
+
 	AddState("dashing", (statehandler)&player_controller_speedy::Dashing);
 	AddState("blinking", (statehandler)&player_controller_speedy::Blinking);
 	AddState("blink", (statehandler)&player_controller_speedy::Blink);
@@ -29,9 +38,10 @@ void player_controller_speedy::Init()
 	//Mallas
 	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+
 	CEntity* myEntity = myParent;
 	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
-	actual_render = pose_idle;
+	actual_render = pose_run;
 
 	pose_idle.setOwner(myEntity);
 	pose_run.setOwner(myEntity);
@@ -58,10 +68,10 @@ void player_controller_speedy::myUpdate() {
 	updateDashTimer();
 	updateBlinkTimer();
 	updateDropWaterTimer();
-	if (dashing) {
+
+	if (dashing) 
 		ChangeState("dashing");
-	}
-	if (state != "idle")
+	if (state != "idle" && state != "falling")
 		ChangePose(pose_run);
 	else
 		ChangePose(pose_idle);
@@ -120,6 +130,61 @@ void player_controller_speedy::ApplyGravity() {
 		else {
 			onGround = true;
 		}
+	}
+}
+
+void player_controller_speedy::DoubleJump()
+{
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (jspeed <= 0.1f) {
+		jspeed = 0.0f;
+		ChangeState("doublefalling");
+	}
+}
+
+void player_controller_speedy::DoubleFalling() {
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (onGround) {
+		jspeed = 0.0f;
+		ChangeState("idle");
+	}
+}
+
+void player_controller_speedy::Jumping()
+{
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (onGround) {
+		jspeed = 0.0f;
+		ChangeState("idle");
+	}
+
+	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
+		jspeed = jimpulse;
+		energyDecreasal(5.0f);
+		ChangeState("doublejump");
+	}
+}
+
+void player_controller_speedy::Falling()
+{
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
+		jspeed = jimpulse;
+		energyDecreasal(5.0f);
+		ChangeState("doublejump");
+	}
+
+	if (onGround) {
+		jspeed = 0.0f;
+		ChangeState("idle");
 	}
 }
 
@@ -191,7 +256,7 @@ bool player_controller_speedy::dashFront()
 	VEC3 new_position = VEC3(player_position.x + player_front.x*dash_speed*getDeltaTime(), player_position.y, player_position.z + player_front.z*dash_speed*getDeltaTime());
 	player_transform->setPosition(new_position);
 
-	if (drop_water_ready) {
+	/*if (drop_water_ready) {
 		// CREATE WATER
 		// Creating the new handle
 		CHandle curr_entity;
@@ -248,7 +313,7 @@ bool player_controller_speedy::dashFront()
 
 		// reset drop water cooldown
 		resetDropWaterTimer();
-	}
+	}*/
 
 	if (dash_duration > dash_max_duration || collisionWall()) {
 		dash_duration = 0;
@@ -331,7 +396,7 @@ void player_controller_speedy::DisabledState() {
 
 void player_controller_speedy::InitControlState() {
 	ChangeState("idle");
-	ChangePose(pose_idle);
+	//ChangePose(pose_idle);
 }
 CEntity* player_controller_speedy::getMyEntity() {
 	CHandle me = CHandle(this);

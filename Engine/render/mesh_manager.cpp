@@ -196,6 +196,25 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
 			return nullptr;
 		return mesh;
 	}
+	else if (name == "missing.mesh") {
+		SimpleVertexColored vtxs_axis[6] =
+		{
+			{ 0.0f, 0.0f, 0.0f,    1, 0, 0, 1 },    // X+
+			{ 0.1f, 0.0f, 0.0f,    1, 0, 0, 1 },
+			{ 0.0f, 0.0f, 0.0f,    0, 1, 0, 1 },    // Y+ x2
+			{ 0.0f, 0.1f, 0.0f,    0, 1, 0, 1 },
+			{ 0.0f, 0.0f, 0.0f,    0, 0, 1, 1 },    // Z+ x3
+			{ 0.0f, 0.0f, 0.1f,    0, 0, 1, 1 },
+		};
+		if (!mesh->create(6
+			, sizeof(SimpleVertexColored)
+			, vtxs_axis
+			, 0, 0, nullptr
+			, CMesh::VTX_DECL_POSITION_COLOR
+			, CMesh::LINE_LIST))
+			return nullptr;
+		return mesh;
+	}
 
 	// ----------------------------------
 	// Try to load from disk

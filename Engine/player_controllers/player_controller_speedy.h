@@ -64,6 +64,10 @@ public:
 	void ApplyGravity();
 
 	// Speedy specific state
+	void DoubleJump();
+	void Jumping();
+	void DoubleFalling();
+	void Falling();
 	void Dashing();
 	void Blinking();
 	void Blink();

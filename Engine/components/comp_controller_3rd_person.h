@@ -37,7 +37,7 @@ public:
 		, speed_camera(2.0f)
 		, m_yaw(0.0f)
 		, m_pitch(0.0f)
-		, rotation_sensibility(deg2rad(45.0f)/250.0f)
+		, rotation_sensibility(deg2rad(45.0f) / 250.0f)
 	{}
 
 	void onCreate(const TMsgEntityCreated& msg) {
@@ -66,7 +66,7 @@ public:
 		target = msg.target;
 	}
 
-	void updateInput() { 
+	void updateInput() {
 		int movement_x = 0;
 
 		if (io->joystick.drx != 0)
@@ -76,9 +76,9 @@ public:
 		else if (io->joystick.rx == io->joystick.max_stick_value)
 			movement_x = 2;
 
-		if(x_axis_inverted)	yaw -= (io->mouse.dx + movement_x)* rotation_sensibility*speed_camera;
+		if (x_axis_inverted)	yaw -= (io->mouse.dx + movement_x)* rotation_sensibility*speed_camera;
 		else yaw += (io->mouse.dx + movement_x) * rotation_sensibility*speed_camera;
-		if(y_axis_inverted) pitch -= (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
+		if (y_axis_inverted) pitch -= (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
 		else pitch += (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
 
 		if (pitch >= max_pitch) {
@@ -112,7 +112,18 @@ public:
 
 		CEntity* e_owner = CHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
-		my_tmx->lookAt(origin, target_loc);
+
+		TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
+		CHandle targetowner = obtarged->target;
+		CEntity* targeted = targetowner;
+		TCompLife * targetlife = targeted->get<TCompLife>();
+		TCompTransform * targettrans = targeted->get<TCompTransform>();
+		CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
+		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
+
+		if (targetlife->currentlife > 0.0f && 0.5f <= simpleDist(victoryPoint_transform->getPosition(), targettrans->getPosition())) {
+			my_tmx->lookAt(origin, target_loc);
+		}
 	}
 
 	void renderInMenu() {
