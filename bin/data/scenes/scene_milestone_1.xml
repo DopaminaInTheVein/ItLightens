@@ -1403,6 +1403,6 @@
   <entity>
     <name name="win_point" />
     <tag name="victory_point" />
-    <transform pos="0 10 180" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="0 8 175" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 </entities>
