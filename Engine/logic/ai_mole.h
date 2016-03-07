@@ -13,6 +13,10 @@
 #include "handle/object_manager.h"
 #include "handle/handle_manager.h"
 #include "resources/resources_manager.h"
+#include "components/comp_render_static_mesh.h"
+#include "resources/resources_manager.h"
+#include "render/mesh.h"
+#include "render/static_mesh.h"
 #include "render/mesh.h"
 #include "render/shader_cte.h"
 #include "utils/utils.h"
@@ -47,6 +51,14 @@ class ai_mole : public ai_poss, public TCompBase {
 	}
 	bool isBoxAtLeavePoint(VEC3 posBox);
 
+	//Cambio Malla
+	TCompRenderStaticMesh* actual_render = nullptr;
+	CHandle pose_idle;
+	CHandle pose_run;
+	CHandle pose_jump;
+	CHandle pose_box;
+	CHandle pose_wall;
+
 public:
 	void IdleState();
 	void SeekWptState();
@@ -65,6 +77,9 @@ public:
 	void update(float dt) { Recalc(); }
 	void init() { Init(); }
 	void idle() { IdleState(); }
+
+	//Cambio Malla
+	void ChangePose(CHandle new_pos_h);
 };
 
 #endif

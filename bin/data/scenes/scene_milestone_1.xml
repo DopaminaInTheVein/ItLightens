@@ -961,7 +961,7 @@
     <tag name = "platform" />
     <name name ="collider_floor_zone_4" />
     <transform pos ="-1 0 37" />
-    <box_collider p1 ="12.5 3 0.5" p2="-12.5 -1 -0.5"  tag="platform" />
+    <!--<box_collider p1 ="12.5 3 0.5" p2="-12.5 -1 -0.5"  tag="platform" types ="24" />-->
   </entity>
 
   <!--WATER-->
@@ -1172,6 +1172,7 @@
     <tag name="AI_poss" />
     <tag name="AI_mole" />
     <transform pos="0 -1.8 8" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/mole_run.static_mesh" />
     <life points="100" />
     <sphere_collider radius="0.3" tag ="player" />
     <player_mole />
@@ -1188,7 +1189,7 @@
     <tag name="AI_poss" />
     <name name="speedy1" />
     <transform pos="0 0 30" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <render_static_mesh name="static_meshes/speedy.static_mesh" />
     <life points="50" />
     <player_speedy />
     <ai_speedy
@@ -1391,6 +1392,7 @@
     <tag name="AI_poss" />
     <tag name="AI_mole" />
     <transform pos="0 4 160" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/mole_run.static_mesh" />
     <life points="100" />
     <sphere_collider radius="0.3" tag ="player" />
     <player_mole />

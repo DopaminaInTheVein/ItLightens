@@ -11,6 +11,10 @@
 #include "handle/handle.h"
 #include "components/comp_msgs.h"
 #include "logic/ai_mole.h"
+#include "components/comp_render_static_mesh.h"
+#include "resources/resources_manager.h"
+#include "render/mesh.h"
+#include "render/static_mesh.h"
 
 #include "camera/camera.h"
 
@@ -37,6 +41,14 @@ public:
 	int selectedBoxi = 0;
 	int selectedWallToBreaki = 0;
 
+	//Cambio Malla
+	TCompRenderStaticMesh* actual_render = nullptr;
+	CHandle pose_idle;
+	CHandle pose_run;
+	CHandle pose_jump;
+	CHandle pose_box;
+	CHandle pose_wall;
+
 	void update_msgs() override;
 
 	void UpdateInputActions();
@@ -59,6 +71,9 @@ public:
 	CHandle getEntityWallHandle(int i) {
 		return SBB::readHandlesVector("wptsBreakableWall")[i];
 	}
+
+	//Cambio Malla
+	void ChangePose(CHandle new_pos_h);
 
 	//Overload function for handler_manager
 	player_controller_mole& player_controller_mole::operator=(player_controller_mole arg) { return arg; }
