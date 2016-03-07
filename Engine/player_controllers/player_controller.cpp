@@ -216,7 +216,7 @@ void player_controller::AttractMove(CEntity * entPoint) {
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 direction = entPointTransform->getPosition() - player_position;
-	float drag = 0.001f;
+	float drag = getDeltaTime();
 	float drag_i = (1 - drag);
 
 	if (polarizedMove) polarizedCurrentSpeed = drag_i*polarizedCurrentSpeed + drag*player_max_speed;

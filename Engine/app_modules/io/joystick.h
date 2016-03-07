@@ -4,7 +4,14 @@
 #include <XInput.h>
 #include "digital_button.h"
 
-#pragma comment(lib, "XInput.lib")
+#if(_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+#define XINPUT_DLL_A  "xinput1_4.dll"
+#define XINPUT_DLL_W L"xinput1_4.dll"
+#else 
+#pragma comment(lib,  "XInput9_1_0.lib")
+#endif
+
+
 
 class TJoystick {
 
@@ -59,7 +66,7 @@ public:
 
   void start();
   void update(float dt);
-
+  
 };
 
 #endif

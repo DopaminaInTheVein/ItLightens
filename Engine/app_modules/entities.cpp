@@ -258,7 +258,6 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 
-	//getHandleManager<NameClass>()->renderAll();
 }
 
 void CEntitiesModule::renderInMenu() {

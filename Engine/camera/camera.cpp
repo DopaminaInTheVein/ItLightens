@@ -26,11 +26,11 @@ void CCamera::lookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
 }
 
 void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
-	float drag = 0.9f;
+	float drag = getDeltaTime()*10;
 	float drag_i = 1 - drag;
 
-	position = new_position*drag_i + position*drag;
-	target = new_target*drag_i + target*drag;
+	position = new_position*drag + position*drag_i;
+	target = new_target*drag + target*drag_i;
 	up_aux = new_up_aux;
 
 	view = MAT44::CreateLookAt(position, target, up_aux);

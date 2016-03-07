@@ -102,7 +102,7 @@ void CPlayerBase::UpdateMoves()
 	player_transform->setAngles(new_yaw + yaw, pitch);
 
 	//Set current velocity with friction
-	float drag = 0.002f;
+	float drag = 2.5f*getDeltaTime();
 	float drag_i = (1 - drag);
 
 	if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
@@ -114,9 +114,13 @@ void CPlayerBase::UpdateMoves()
 	}
 
 	//set final position
-	if (onGround) player_position = player_position + direction*getDeltaTime()*player_curr_speed;
-	else player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
-	//player_transform->setPosition(player_position);
+	if (onGround) {
+		player_position = player_position + direction*getDeltaTime()*player_curr_speed;
+	}
+	else {
+		player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
+	}
+
 	player_transform->executeMovement(player_position);
 	UpdateMovingWithOther();
 }
