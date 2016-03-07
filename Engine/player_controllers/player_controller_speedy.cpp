@@ -15,6 +15,15 @@ void player_controller_speedy::Init()
 {
 	om = getHandleManager<player_controller_speedy>();	//player
 
+	DeleteState("jumping");
+	DeleteState("falling");
+
+	AddState("doublefalling", (statehandler)&player_controller_speedy::DoubleFalling);		//needed to disable double jump on falling
+	AddState("doublejump", (statehandler)&player_controller_speedy::DoubleJump);
+
+	AddState("falling", (statehandler)&player_controller_speedy::Falling);
+	AddState("jumping", (statehandler)&player_controller_speedy::Jumping);
+
 	AddState("dashing", (statehandler)&player_controller_speedy::Dashing);
 	AddState("blinking", (statehandler)&player_controller_speedy::Blinking);
 	AddState("blink", (statehandler)&player_controller_speedy::Blink);
@@ -61,7 +70,7 @@ void player_controller_speedy::myUpdate() {
 	if (dashing) {
 		ChangeState("dashing");
 	}
-	if (state != "idle")
+	if (state != "idle" && state != "falling")
 		ChangePose(pose_run);
 	else
 		ChangePose(pose_idle);
@@ -120,6 +129,63 @@ void player_controller_speedy::ApplyGravity() {
 		else {
 			onGround = true;
 		}
+	}
+}
+
+void player_controller_speedy::DoubleJump()
+{
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (jspeed <= 0.1f) {
+		jspeed = 0.0f;
+		ChangeState("doublefalling");
+	}
+}
+
+void player_controller_speedy::DoubleFalling() {
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (onGround) {
+		jspeed = 0.0f;
+		ChangeState("idle");
+	}
+}
+
+void player_controller_speedy::Jumping()
+{
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (onGround) {
+		jspeed = 0.0f;
+		ChangeState("idle");
+	}
+
+	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
+		jspeed = jimpulse;
+		energyDecreasal(5.0f);
+		ChangeState("doublejump");
+	}
+}
+
+void player_controller_speedy::Falling()
+{
+	UpdateDirection();
+	UpdateMovDirection();
+
+	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
+
+	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
+		jspeed = jimpulse;
+		energyDecreasal(5.0f);
+		ChangeState("doublejump");
+	}
+
+	if (onGround) {
+		jspeed = 0.0f;
+		ChangeState("idle");
 	}
 }
 
@@ -331,7 +397,7 @@ void player_controller_speedy::DisabledState() {
 
 void player_controller_speedy::InitControlState() {
 	ChangeState("idle");
-	ChangePose(pose_idle);
+	//ChangePose(pose_idle);
 }
 CEntity* player_controller_speedy::getMyEntity() {
 	CHandle me = CHandle(this);
