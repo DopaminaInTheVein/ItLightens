@@ -14,7 +14,7 @@
   <entity>
     <life points="300" />
     <tag name="target" />
-    <transform pos="0 10 -22" />
+    <transform pos="0 3.8 130" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_idle.static_mesh" />
@@ -1628,7 +1628,7 @@
       kpt1_type = "look" kpt1_pos = " 0  3.56  100" kpt1_wait = "0.5"
       noShoot="true" />
   </entity>
-
+<!--
   <entity>
     <tag name="AI" />
     <tag name="AI_guard" />
@@ -1646,16 +1646,22 @@
       kpt6_type = "seek" kpt6_pos = " 50  0  10" kpt6_wait = "2"
       kpt7_type = "look" kpt7_pos = " 60  0   0" kpt7_wait = "2" />
   </entity>
-
+-->
   <entity>
     <tag name="AI" />
     <tag name="AI_cientifico" />
     <tag name="AI_poss" />
-    <transform pos="53 0.1 1" />
+    <transform pos="3 3.8 130" />
     <name name="scientist1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/human_test.static_mesh" />
-    <cientifico />
+    <cientifico 
+      kpt_size  = "4"
+      kpt0_type = "seek" kpt0_pos = "-6 5 133" kpt0_wait = "0.5"
+      kpt1_type = "seek" kpt1_pos = "-6 5 123" kpt1_wait = "0.5"
+      kpt2_type = "seek" kpt2_pos = "6 5 123" kpt2_wait = "0.5"
+      kpt3_type = "seek" kpt3_pos = "6 5 133" kpt3_wait = "0.5"
+      />
     <player_cientifico />
     <sphere_collider radius="0.3" tag ="player" />
   </entity>
