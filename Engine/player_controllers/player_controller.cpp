@@ -343,7 +343,7 @@ void player_controller::UpdateInputActions()
 		for (CEntity * ptr : ptsRecover) {
 			TCompTransform * ptr_trn = ptr->get<TCompTransform>();
 			if (3 > simpleDist(ptr_trn->getPosition(), player_transform->getPosition())) {
-				energyDecreasal(-5.0f*getDeltaTime());
+				energyDecreasal(-15.0f*getDeltaTime());
 			}
 		}
 	}
