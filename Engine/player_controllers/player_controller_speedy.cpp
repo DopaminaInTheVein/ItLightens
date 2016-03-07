@@ -38,9 +38,10 @@ void player_controller_speedy::Init()
 	//Mallas
 	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+
 	CEntity* myEntity = myParent;
 	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
-	actual_render = pose_idle;
+	actual_render = pose_run;
 
 	pose_idle.setOwner(myEntity);
 	pose_run.setOwner(myEntity);
@@ -67,9 +68,9 @@ void player_controller_speedy::myUpdate() {
 	updateDashTimer();
 	updateBlinkTimer();
 	updateDropWaterTimer();
-	if (dashing) {
+
+	if (dashing) 
 		ChangeState("dashing");
-	}
 	if (state != "idle" && state != "falling")
 		ChangePose(pose_run);
 	else
@@ -175,8 +176,6 @@ void player_controller_speedy::Falling()
 	UpdateDirection();
 	UpdateMovDirection();
 
-	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
-
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		jspeed = jimpulse;
 		energyDecreasal(5.0f);
@@ -257,7 +256,7 @@ bool player_controller_speedy::dashFront()
 	VEC3 new_position = VEC3(player_position.x + player_front.x*dash_speed*getDeltaTime(), player_position.y, player_position.z + player_front.z*dash_speed*getDeltaTime());
 	player_transform->setPosition(new_position);
 
-	if (drop_water_ready) {
+	/*if (drop_water_ready) {
 		// CREATE WATER
 		// Creating the new handle
 		CHandle curr_entity;
@@ -314,7 +313,7 @@ bool player_controller_speedy::dashFront()
 
 		// reset drop water cooldown
 		resetDropWaterTimer();
-	}
+	}*/
 
 	if (dash_duration > dash_max_duration || collisionWall()) {
 		dash_duration = 0;

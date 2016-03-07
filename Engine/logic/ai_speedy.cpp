@@ -80,8 +80,6 @@ void ai_speedy::update(float elapsed) {
 		ChangePose(pose_void);
 	else if (state != "idle" && state != "falling")
 		ChangePose(pose_run);
-	else
-		ChangePose(pose_idle);
 }
 
 // Loading the wpts
