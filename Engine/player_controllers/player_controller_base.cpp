@@ -52,6 +52,10 @@ void CPlayerBase::update(float elapsed) {
 	if (controlEnabled) {
 		if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
 			CApp& app = CApp::get();
+			app.exitGame();
+		}
+		if (io->keys[VK_RETURN].becomesPressed() || io->joystick.button_START.becomesPressed()) {
+			CApp& app = CApp::get();
 			app.restart();
 		}
 		UpdateInputActions();
@@ -157,7 +161,7 @@ bool CPlayerBase::UpdateMovDirection() {
 		moving = true;
 		horizontal = true;
 	}
-	if (io->keys['D'].isPressed()|| io->joystick.lx > left_stick_sensibility) {
+	if (io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
 		directionLateral = VEC3(-1, 0, 0);
 		//TODO: xbobx
 		moving = true;

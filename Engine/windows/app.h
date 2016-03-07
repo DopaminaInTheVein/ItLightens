@@ -29,6 +29,7 @@ public:
 	bool start();
 	void stop();
 	void restart();
+	void exitGame();
 
 	VModules& getModulesToWndProc() {
 		return mod_wnd_proc;

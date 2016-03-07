@@ -89,7 +89,7 @@ VEC3 boxCollider::getPMIN() const
 			return p;
 		}
 	}
-	return VEC3(0,0,0);
+	return VEC3(0, 0, 0);
 }
 
 VEC3 boxCollider::getPMAX() const
@@ -113,7 +113,6 @@ VEC3 boxCollider::getPMAX() const
 
 			p = org + orientedP1;
 			return p;
-
 		}
 	}
 	return VEC3(0, 0, 0);
@@ -170,7 +169,6 @@ void boxCollider::update(float dt) {
 	VEC3 posmax = getPMAX();
 	VEC3 posmin = getPMIN();
 
-
 	Debug->DrawLine(posmax, VEC3(posmax.x, posmax.y, posmin.z));
 	Debug->DrawLine(posmax, VEC3(posmax.x, posmin.y, posmax.z));
 	Debug->DrawLine(posmax, VEC3(posmin.x, posmax.y, posmax.z));
@@ -178,5 +176,4 @@ void boxCollider::update(float dt) {
 	Debug->DrawLine(posmin, VEC3(posmin.x, posmin.y, posmax.z));
 	Debug->DrawLine(posmin, VEC3(posmax.x, posmin.y, posmin.z));
 	Debug->DrawLine(posmin, VEC3(posmin.x, posmax.y, posmin.z));
-
 }
