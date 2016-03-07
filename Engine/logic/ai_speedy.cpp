@@ -42,6 +42,9 @@ void ai_speedy::Init()
 
 	TCompRenderStaticMesh *mesh;
 
+	mesh = pose_idle;
+	mesh->static_mesh = Resources.get("static_meshes/speedy.static_mesh")->as<CStaticMesh>();
+
 	mesh = pose_jump;
 	mesh->static_mesh = Resources.get("static_meshes/speedy_jump.static_mesh")->as<CStaticMesh>();
 
@@ -92,6 +95,7 @@ void ai_speedy::SetMyEntity() {
 // Speedy states
 
 void ai_speedy::IdleState() {
+	ChangePose(pose_idle);
 	ChangeState("nextwpt");
 }
 
@@ -99,7 +103,7 @@ void ai_speedy::NextWptState()
 {
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
-
+	ChangePose(pose_idle);
 	bool aimed = aimToTarget(target);
 
 	if (aimed) {

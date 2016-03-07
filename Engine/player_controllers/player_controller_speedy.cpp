@@ -39,6 +39,9 @@ void player_controller_speedy::Init()
 
 	TCompRenderStaticMesh *mesh;
 
+	mesh = pose_idle;
+	mesh->static_mesh = Resources.get("static_meshes/speedy.static_mesh")->as<CStaticMesh>();
+
 	mesh = pose_jump;
 	mesh->static_mesh = Resources.get("static_meshes/speedy_jump.static_mesh")->as<CStaticMesh>();
 
@@ -56,9 +59,12 @@ void player_controller_speedy::myUpdate() {
 	updateBlinkTimer();
 	updateDropWaterTimer();
 	if (dashing) {
-		ChangePose(pose_run);
 		ChangeState("dashing");
 	}
+	if (state != "idle")
+		ChangePose(pose_run);
+	else
+		ChangePose(pose_idle);
 }
 
 void player_controller_speedy::UpdateInputActions() {
