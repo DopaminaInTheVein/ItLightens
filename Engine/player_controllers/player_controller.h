@@ -54,10 +54,17 @@ class player_controller : public CPlayerBase {
 	void UpdatePossession();
 
 	bool nearStunable();
-
+	
+	CHandle pose_no_ev;
 	CHandle pose_idle;
 	CHandle pose_run;
 	CHandle pose_jump;
+
+	float evolution_limit	= 50.0f;
+	float max_life			= 150.0f;
+	float init_life			= 50.0f;
+
+	void rechargeEnergy();
 
 	TCompRenderStaticMesh* actual_render = nullptr;
 
@@ -90,6 +97,7 @@ public:
 	void onLeaveFromPossession(const TMsgPossessionLeave&);
 	void onDamage(const TMsgDamage&);
 	void onWirePass(const TMsgWirePass& msg);
+	void onCanRec(const TMsgCanRec& msg);
 
 	//Overload function for handler_manager
 	player_controller& player_controller::operator=(player_controller arg) { return arg; }

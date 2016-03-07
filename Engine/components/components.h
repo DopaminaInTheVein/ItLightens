@@ -32,5 +32,6 @@
 #include "prefabs\magnetic_bomb.h"
 #include "prefabs\static_bomb.h"
 #include "comp_wire.h"
+#include "comp_generator.h"
 
 #endif
