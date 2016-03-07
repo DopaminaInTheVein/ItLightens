@@ -1402,8 +1402,8 @@
   <!-- RECOVER POINT 2-->
   <entity>
     <name name="recover" />
-    <tag name="recover" />
-    <transform pos="5 -8 -16" rotation="1 2 3 3" scale="1 1 1" />
+    <tag name="recover_point" />
+    <transform pos="0 4 65" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/generator.static_mesh" />
     <generator rad ="2"/>
   </entity>
