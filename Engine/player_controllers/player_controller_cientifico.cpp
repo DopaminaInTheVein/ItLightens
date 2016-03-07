@@ -12,6 +12,8 @@
 #include "ui\ui_interface.h"
 #include "components\comp_msgs.h"
 #include "app_modules\io\io.h"
+#include "render\static_mesh.h"
+#include "components\comp_render_static_mesh.h"
 
 void player_controller_cientifico::Init() {
 	om = getHandleManager<player_controller_cientifico>();	//player
@@ -191,12 +193,21 @@ void player_controller_cientifico::createMagneticBombEntity()
 
 	auto hm_mb = CHandleManager::getByName("magnetic_bomb");
 	CHandle new_h_mb = hm_mb->createHandle();
+
+	auto hm_sm = CHandleManager::getByName("render_static_mesh");
+	CHandle new_h_sm = hm_sm->createHandle();
+
 	CEntity *e = new_h_e;
 	bomb_handle = new_h_mb;
 
 	e->add(new_h_n);
 	e->add(new_h_mb);
 	e->add(new_h_t);
+	e->add(new_h_sm);
+
+	TCompRenderStaticMesh *sm = new_h_sm;
+	sm->static_mesh = Resources.get("static_meshes/bomb.static_mesh")->as<CStaticMesh>();
+	sm->registerToRender();
 
 	TCompTransform *mag_trans = e->get<TCompTransform>();
 	mag_trans->setPosition(player_position);
@@ -229,12 +240,23 @@ void player_controller_cientifico::createStaticBombEntity()
 
 	auto hm_mb = CHandleManager::getByName("static_bomb");
 	CHandle new_h_mb = hm_mb->createHandle();
+
+	auto hm_sm = CHandleManager::getByName("render_static_mesh");
+	CHandle new_h_sm = hm_sm->createHandle();
+
 	CEntity *e = new_h_e;
 	bomb_handle = new_h_mb;
 
 	e->add(new_h_n);
 	e->add(new_h_mb);
 	e->add(new_h_t);
+	e->add(new_h_sm);
+
+	TCompRenderStaticMesh *sm = new_h_sm;
+	sm->static_mesh = Resources.get("static_meshes/bomb_static.static_mesh")->as<CStaticMesh>();
+	sm->registerToRender();
+
+	
 
 	TCompTransform *static_trans = e->get<TCompTransform>();
 	static_trans->setPosition(player_position);

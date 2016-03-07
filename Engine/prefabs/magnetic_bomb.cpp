@@ -4,6 +4,7 @@
 #include "components\entity.h"
 #include "components\comp_transform.h"
 #include "components\entity_tags.h"
+#include "physics\physics.h"
 
 void CMagneticBomb::update(float elapsed)
 {
@@ -36,10 +37,14 @@ void CMagneticBomb::GoingUp() {
 
 	VEC3 curr_position = mtx->getPosition();
 
+	ray_cast_query floor_query = ray_cast_query(curr_position, VEC3(0, -1, 0), 15.0f, COL_TAG_SOLID);
+	ray_cast_result res = Physics::calcRayCast(floor_query);
+	VEC3 ground = res.positionCollision;
+	float d = simpleDist(curr_position, ground);
+
 	UpdatePosition();
 	float altura = 2.0f;
-	if (curr_position.y >= altura / 2) {
-
+	if (d >= altura / 2) {
 		ChangeState("going_down");
 	}
 }
@@ -48,12 +53,16 @@ void CMagneticBomb::GoingDown() {
 	SetMyEntity();
 	TCompTransform *mtx = myEntity->get<TCompTransform>();
 
+	UpdatePosition();
 	VEC3 curr_position = mtx->getPosition();
 
-	UpdatePosition();
+	ray_cast_query floor_query = ray_cast_query(curr_position, VEC3(0, -1, 0), 15.0f, COL_TAG_SOLID);
+	ray_cast_result res = Physics::calcRayCast(floor_query);
+	VEC3 ground = res.positionCollision;
+	float d = simpleDist(curr_position, ground);
 
-	if (curr_position.y <= 0) {
-		curr_position.y = 0.0f;
+	if (d < 0.2) {
+		curr_position.y = res.positionCollision.y+0.2;
 		mtx->setPosition(curr_position);
 
 		ChangeState("countDown");
@@ -67,6 +76,12 @@ void CMagneticBomb::UpdatePosition() {
 
 	VEC3 curr_position = mtx->getPosition();
 
+	ray_cast_query floor_query = ray_cast_query(curr_position, VEC3(0, -1, 0), 15.0f, COL_TAG_SOLID);
+	ray_cast_result res = Physics::calcRayCast(floor_query);
+	VEC3 ground = res.positionCollision;
+	float d = simpleDist(curr_position, ground);
+
+
 	float dist = 1.0f;
 	float altura = 2.0f;
 	float speed = 5.0;
@@ -75,7 +90,7 @@ void CMagneticBomb::UpdatePosition() {
 	curr_position.x += mtx->getFront().x*speed * getDeltaTime();
 
 	x_local += speed*getDeltaTime();
-	curr_position.y = altura*sinf(dist*(x_local / (float)M_PI));
+	curr_position.y = (curr_position.y - d) + altura*sinf(dist*(x_local / (float)M_PI));
 
 
 	mtx->setPosition(curr_position);
