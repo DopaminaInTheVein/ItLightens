@@ -39,6 +39,9 @@ void player_controller_speedy::Init()
 
 	TCompRenderStaticMesh *mesh;
 
+	mesh = pose_idle;
+	mesh->static_mesh = Resources.get("static_meshes/speedy.static_mesh")->as<CStaticMesh>();
+
 	mesh = pose_jump;
 	mesh->static_mesh = Resources.get("static_meshes/speedy_jump.static_mesh")->as<CStaticMesh>();
 
@@ -55,14 +58,20 @@ void player_controller_speedy::myUpdate() {
 	updateDashTimer();
 	updateBlinkTimer();
 	updateDropWaterTimer();
-	if (dashing)
+	if (dashing) {
 		ChangeState("dashing");
+	}
+	if (state != "idle")
+		ChangePose(pose_run);
+	else
+		ChangePose(pose_idle);
 }
 
 void player_controller_speedy::UpdateInputActions() {
 	if (io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()) {
 		if (dash_ready) {
 			energyDecreasal(5.0f);
+			ChangePose(pose_run);
 			ChangeState("dashing");
 			dashing = true;
 		}
@@ -71,6 +80,45 @@ void player_controller_speedy::UpdateInputActions() {
 		if (blink_ready) {
 			energyDecreasal(10.0f);
 			ChangeState("blink");
+		}
+	}
+}
+
+void player_controller_speedy::ApplyGravity() {
+
+	if (state != "dashing") {
+
+		SetMyEntity();
+		TCompTransform* player_transform = myEntity->get<TCompTransform>();
+		VEC3 player_position = player_transform->getPosition();
+
+		ray_cast_query floor_query = ray_cast_query(player_position, VEC3(0, -1, 0), 15.0f, COL_TAG_SOLID);
+		ray_cast_result res = Physics::calcRayCast(floor_query);
+		VEC3 ground = res.positionCollision;
+		float d = simpleDist(player_position, ground);
+
+		if (d > 0.1f || jspeed > 0.1f) {
+			jspeed -= gravity*getDeltaTime();
+			player_position = player_position + VEC3(0, 1, 0)*getDeltaTime()*jspeed;
+			//player_transform->setPosition(player_position);
+			if (!player_transform->executeMovement(player_position)) {
+				onGround = true;
+				jspeed = 0.0f;
+				ChangeState("idle");
+			}
+			else {
+				if (state != "doublefalling" && jspeed < 0.1f) {
+					if (state == "doublejump")
+						ChangeState("doublefalling");
+					else
+						ChangeState("falling");
+				}
+
+				onGround = false;
+			}
+		}
+		else {
+			onGround = true;
 		}
 	}
 }
