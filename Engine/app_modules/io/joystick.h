@@ -5,8 +5,7 @@
 #include "digital_button.h"
 
 #if(_WIN32_WINNT >= _WIN32_WINNT_WIN8)
-#define XINPUT_DLL_A  "xinput1_4.dll"
-#define XINPUT_DLL_W L"xinput1_4.dll"
+#pragma comment(lib,  "XInput.lib")
 #else 
 #pragma comment(lib,  "XInput9_1_0.lib")
 #endif
