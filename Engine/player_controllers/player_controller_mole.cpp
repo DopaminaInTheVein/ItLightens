@@ -68,11 +68,11 @@ void player_controller_mole::UpdateInputActions() {
 	else if (state == "jumping")
 		ChangePose(pose_jump);
 	else if (state == "idle")
-		ChangePose(pose_idle);
+		ChangePose(pose_run);
 
 	if (io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) {
 		if (boxGrabbed) {
-			ChangePose(pose_idle);
+			ChangePose(pose_run);
 			ChangeState("leaveBox");
 		}
 		else {
@@ -90,7 +90,7 @@ void player_controller_mole::UpdateInputActions() {
 
 void player_controller_mole::UpdateMovingWithOther() {
 	if (boxGrabbed) {
-		ChangePose(pose_box);
+		ChangePose(pose_run);
 		energyDecreasal(getDeltaTime()*0.5f);
 		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 		TCompTransform* box_t = box->get<TCompTransform>();
@@ -105,7 +105,7 @@ void player_controller_mole::UpdateMovingWithOther() {
 
 void player_controller_mole::UpdateUnpossess() {
 	if (boxGrabbed) {
-		ChangePose(pose_idle);
+		ChangePose(pose_run);
 		LeaveBox();
 	}
 }
@@ -113,7 +113,7 @@ void player_controller_mole::UpdateUnpossess() {
 void player_controller_mole::GrabBox() {
 	if (SBB::readBool(selectedBox)) {
 		ai_mole * mole = SBB::readMole(selectedBox);
-		ChangePose(pose_idle);
+		ChangePose(pose_run);
 		mole->ChangeState("idle");
 	}
 	else {
@@ -131,7 +131,7 @@ void player_controller_mole::GrabBox() {
 	energyDecreasal(5.0f);
 	boxGrabbed = true;
 	player_max_speed /= 2;
-	ChangePose(pose_idle);
+	ChangePose(pose_run);
 	ChangeState("idle");
 }
 
@@ -141,7 +141,7 @@ void player_controller_mole::DestroyWall() {
 	handles.erase(handles.begin() + selectedWallToBreaki);
 	getHandleManager<CEntity>()->destroyHandle(getEntityWallHandle(selectedWallToBreaki));
 	SBB::postHandlesVector("wptsBreakableWall", handles);
-	ChangePose(pose_idle);
+	ChangePose(pose_run);
 	ChangeState("idle");
 }
 
@@ -164,7 +164,7 @@ void player_controller_mole::LeaveBox() {
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = false;
 	player_max_speed *= 2;
-	ChangePose(pose_idle);
+	ChangePose(pose_run);
 	ChangeState("idle");
 }
 

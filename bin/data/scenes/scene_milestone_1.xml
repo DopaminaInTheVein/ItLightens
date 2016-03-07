@@ -1172,7 +1172,7 @@
     <tag name="AI_poss" />
     <tag name="AI_mole" />
     <transform pos="0 -1.8 8" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/mole.static_mesh" />
+    <render_static_mesh name="static_meshes/mole_run.static_mesh" />
     <life points="100" />
     <sphere_collider radius="0.3" tag ="player" />
     <player_mole />
@@ -1392,7 +1392,7 @@
     <tag name="AI_poss" />
     <tag name="AI_mole" />
     <transform pos="0 4 160" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/mole.static_mesh" />
+    <render_static_mesh name="static_meshes/mole_run.static_mesh" />
     <life points="100" />
     <sphere_collider radius="0.3" tag ="player" />
     <player_mole />

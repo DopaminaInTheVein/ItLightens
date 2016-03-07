@@ -62,7 +62,7 @@ void ai_mole::Init()
 }
 
 void ai_mole::IdleState() {
-	ChangePose(pose_idle);
+	ChangePose(pose_run);
 	ChangeState("seekwpt");
 }
 
@@ -90,7 +90,7 @@ void ai_mole::SeekWptState() {
 		if (found) {
 			SBB::postBool(key_final, true);
 			SBB::postMole(key_final, this);
-			ChangePose(pose_idle);
+			ChangePose(pose_run);
 			ChangeState("orientTowpt");
 		}
 	}
@@ -120,7 +120,7 @@ void ai_mole::OrientToWptState()
 			transform->setAngles(yaw + angle, 0.0f);
 		}
 		else {
-			ChangePose(pose_idle);
+			ChangePose(pose_run);
 			ChangeState("nextwpt");
 		}
 	}
@@ -142,7 +142,7 @@ void ai_mole::NextWptState()
 			transform->setPosition(pos);
 		}
 		else {
-			ChangePose(pose_box);
+			ChangePose(pose_run);
 			ChangeState("grab");
 		}
 	}
@@ -157,7 +157,7 @@ void ai_mole::GrabState() {
 		posbox.y += 2;
 		box_t->setPosition(posbox);
 		carryingBox = true;
-		ChangePose(pose_idle);
+		ChangePose(pose_run);
 		ChangeState("seekwptcarry");
 	}
 }
@@ -175,7 +175,7 @@ void ai_mole::SeekWptCarryState() {
 				distMax = disttowpt;
 			}
 		}
-		ChangePose(pose_idle);
+		ChangePose(pose_run);
 		ChangeState("orientTowptCarry");
 	}
 }
@@ -225,7 +225,7 @@ void ai_mole::NextWptCarryState() {
 		transformBox->setPosition(posBox);
 	}
 	else {
-		ChangePose(pose_idle);
+		ChangePose(pose_run);
 		ChangeState("ungrab");
 	}
 }
@@ -251,7 +251,7 @@ void ai_mole::UnGrabState() {
 		SBB::postBool(nameBox->name, false);
 		carryingBox = false;
 	}
-	ChangePose(pose_idle);
+	ChangePose(pose_run);
 	ChangeState("idle");
 }
 
