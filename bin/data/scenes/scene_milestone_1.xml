@@ -796,6 +796,7 @@
     <tag name="box"/>
     <transform pos="4.95928 -1.84045 17.3327" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh"/>
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types="4" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -827,7 +828,7 @@
     <tag name="box"/>
     <transform pos="-2.96467 3.90856 90.7216" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh"/>
-    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="platform" types = "4" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1" tag="box" types = "4" />
   </entity>
   <entity>
     <tag name ="platform" />
