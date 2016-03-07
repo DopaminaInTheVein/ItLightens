@@ -1,0 +1,3 @@
+<material tech="textured_noshadows.tech">
+<texture type="diffuse" name="textures/pared_2.dds"/>
+</material>

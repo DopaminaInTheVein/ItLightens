@@ -90,4 +90,30 @@ void v_crystal(
 	oTex0 = iTex0;
 }
 
+//--------------------------------------------------------------------------------------
+void VS_NOSHADOW_TEX(
+	in float4 iPos : POSITION
+	, in float3 iNormal : NORMAL
+	, in float2 iTex0 : TEXCOORD0
+	, out float4 oPos : SV_POSITION
+	, out float2 oTex0 : TEXCOORD0
+	)
+{
+	float4 worldPos = mul(iPos, World);
+	oPos = mul(worldPos, ViewProjection);
+
+	oTex0 = iTex0;
+}
+
+//--------------------------------------------------------------------------------------
+float4 PSTexturedNoShadow(float4 Pos : SV_POSITION
+	, float2 iTex0 : TEXCOORD0
+	) : SV_Target
+{
+
+	//apply color effect
+	return txDiffuse.Sample(samLinear, iTex0);
+}
+
+
 
