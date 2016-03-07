@@ -33,6 +33,7 @@ DECL_OBJ_MANAGER("player_speedy", player_controller_speedy);
 DECL_OBJ_MANAGER("player_mole", player_controller_mole);
 DECL_OBJ_MANAGER("player_cientifico", player_controller_cientifico);
 DECL_OBJ_MANAGER("life", TCompLife);
+DECL_OBJ_MANAGER("wire", TCompWire);
 
 //Physics
 DECL_OBJ_MANAGER("colCylinder", TCompColCillinder);
@@ -71,6 +72,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompCamera>()->init(4);
 	getHandleManager<TCompController3rdPerson>()->init(4);
 	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
+	getHandleManager<TCompWire>()->init(10);
 
 	//Physics
 	getHandleManager<TCompColCillinder>()->init(MAX_ENTITIES);
@@ -116,6 +118,10 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(ai_guard, TMsgMagneticBomb, onMagneticBomb);
 	SUBSCRIBE(ai_guard, TMsgNoise, noise);
+
+	//WIRES
+	SUBSCRIBE(TCompWire, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(player_controller, TMsgWirePass, onWirePass);
 
 	//Posesiones Mensajes
 	//..Cientifico
@@ -215,6 +221,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<water_controller>()->onAll(&water_controller::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
+	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 
 	return true;
 }
@@ -244,6 +251,9 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<CStaticBomb>()->updateAll(dt);
 	getHandleManager<CMagneticBomb>()->updateAll(dt);
 
+	getHandleManager<TCompWire>()->updateAll(dt);
+
+
 	//TODO:REMOVE!!
 	getHandleManager<boxCollider>()->updateAll(dt);
 }
@@ -256,6 +266,7 @@ void CEntitiesModule::render() {
 	tech->activate();
 	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
+
 }
 
 void CEntitiesModule::renderInMenu() {

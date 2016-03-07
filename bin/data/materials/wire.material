@@ -1,0 +1,3 @@
+<material tech="textured.tech">
+<texture type="diffuse" name="textures/bronze.dds"/>
+</material>

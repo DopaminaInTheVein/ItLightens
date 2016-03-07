@@ -114,4 +114,9 @@ struct TMsgAISetStunned {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgWirePass {
+	VEC3 dst;
+	DECLARE_MSG_ID();
+};
+
 #endif

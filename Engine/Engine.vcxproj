@@ -103,6 +103,7 @@
     <ClCompile Include="components\comp_camera.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
+    <ClCompile Include="components\comp_wire.cpp" />
     <ClCompile Include="components\entity.cpp" />
     <ClCompile Include="components\entity_parser.cpp" />
     <ClCompile Include="components\entity_tags.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="components\comp_name.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
     <ClInclude Include="components\comp_transform.h" />
+    <ClInclude Include="components\comp_wire.h" />
     <ClInclude Include="components\entity.h" />
     <ClInclude Include="components\entity_parser.h" />
     <ClInclude Include="components\entity_tags.h" />

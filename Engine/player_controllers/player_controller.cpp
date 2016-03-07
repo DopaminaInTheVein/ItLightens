@@ -518,3 +518,15 @@ void player_controller::onDamage(const TMsgDamage& msg) {
 		break;
 	}
 }
+
+void player_controller::onWirePass(const TMsgWirePass & msg)
+{
+	ui.addTextInstructions("\n Press 'E' to pass by the wire\n");
+
+	if (io->keys['E'].becomesPressed()) {
+		SetMyEntity();
+		TCompTransform *t = myEntity->get<TCompTransform>();
+		Debug->LogRaw("pass to: %f, %f, %f\n",msg.dst.x, msg.dst.y,msg.dst.z);
+		t->setPosition(msg.dst);
+	}
+}

@@ -89,6 +89,7 @@ public:
 	//Mensajes
 	void onLeaveFromPossession(const TMsgPossessionLeave&);
 	void onDamage(const TMsgDamage&);
+	void onWirePass(const TMsgWirePass& msg);
 
 	//Overload function for handler_manager
 	player_controller& player_controller::operator=(player_controller arg) { return arg; }

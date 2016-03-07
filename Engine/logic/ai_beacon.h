@@ -48,8 +48,8 @@ class beacon_controller : public aicontroller, public TCompBase {
 	//Timer counts
 	//--------------------------------------
 	float			t_waiting = 0.0f;
-	float		t_max_sonar = 10.0f;
-	float		t_max_empty = 7.5f;
+	float		t_max_sonar = 20.0f;
+	float		t_max_empty = 15.0f;
 	float		t_max_disable = 30.0f;	//not used for now
 											//--------------------------------------
 

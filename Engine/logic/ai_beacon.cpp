@@ -155,6 +155,8 @@ void beacon_controller::WaitToRemoveSonar()
 	me_transform->setAngles(yaw + rot_speed_sonar*getDeltaTime(), pitch);
 	Debug->DrawLine(me_transform->getPosition() + VEC3(0, 1, 0), me_transform->getFront(), range, RED);
 
+	if(SBB::readInt(full_name) == TO_REMOVE)SendMessageRemove();
+
 	//nothing to do, check sbb. Should go system of events
 	if (SBB::readInt(full_name) != TO_REMOVE && SBB::readInt(full_name) != TO_REMOVE_TAKEN) {
 		ChangeState("waitInactive");
@@ -172,6 +174,8 @@ void beacon_controller::WaitToRemoveNothing()
 	me_transform->getAngles(&yaw, &pitch);
 	me_transform->setAngles(yaw + rot_speed_disable*getDeltaTime(), pitch);
 	Debug->DrawLine(me_transform->getPosition() + VEC3(0, 1, 0), me_transform->getFront(), range, BLUE);
+	
+	if(SBB::readInt(full_name) == TO_REMOVE)SendMessageRemove();	
 
 	//nothing to do, check sbb. Should go system of events
 	if (SBB::readInt(full_name) != TO_REMOVE && SBB::readInt(full_name) != TO_REMOVE_TAKEN) {
