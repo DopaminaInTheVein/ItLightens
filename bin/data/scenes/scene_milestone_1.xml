@@ -1,9 +1,8 @@
 <entities>
   <!--PLAYER & CAMERA -->
-  
+
   <!--POS INICIAL : 0 0 -22 -->
-  
-  
+
   <entity>
     <tag name="player" />
     <transform pos="-15 2 0" />
@@ -11,7 +10,7 @@
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
   </entity>
-  
+
   <entity>
     <life points="300" />
     <tag name="target" />
@@ -22,292 +21,358 @@
     <colCylinder pos ="0 0 0" radius ="0.3" height ="1" type ="player" />
     <sphere_collider radius="0.3" tag ="player" />
   </entity>
-  
+
   <!--END PLAYER & CAMERA -->
-  
+
   <!-- START SCENE -->
   <!-- START SCENE OBJECTS -->
-<entity>
-  <name name="nivel"/>
-  <transform pos="0.0 -0.0317383 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/nivel.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared_mole"/>
-  <transform pos="0.0101869 -1.83557 13.3673" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared_mole.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared_speedy_final"/>
-  <transform pos="0.0101869 7.82282 178.612" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared_speedy_final.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared_speedy"/>
-  <transform pos="0.0101869 -0.321139 37.0312" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared_speedy.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared_atravesar_cable"/>
-  <transform pos="-0.0145572 3.90864 137.901" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared_atravesar_cable.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared_mole_final"/>
-  <transform pos="-0.0249984 3.95734 169.484" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared_mole_final.static_mesh"/>
-</entity>
-<entity>
-  <name name="baliza"/>
-  <transform pos="11.7903 3.91032 124.147" quat="0.0 0.0 0.0 1.0" scale="0.0161288" />
-  <render_static_mesh name="static_meshes/baliza.static_mesh"/>
-</entity>
-<entity>
-  <name name="baliza"/>
-  <transform pos="11.7903 3.91887 132.144" quat="0.0 1.0 0.0 0.0" scale="0.0161288" />
-  <render_static_mesh name="static_meshes/baliza.static_mesh"/>
-</entity>
-<entity>
-  <tag name ="platform" />
-  <name name="caja"/>
-  <transform pos="0.357965 -8.24597 -9.97773" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/caja.static_mesh"/>
-  <box_collider p1 ="1 1 1" p2="-1 0 -1"  tag="platform" types = "0" />
-</entity>
-<entity>
-  <name name="punto_magnetismo1"/>
-  <tag name="minus_wall" />
-  <transform pos="0.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
-</entity>
-<entity>
-  <tag name="plus_wall" />
-  <name name="punto_magnetismo2"/>
-  <transform pos="0.357965 -0.63678 4.40073" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
-</entity>
-<entity>
-  <name name="punto_magnetismo3"/>
-  <tag name="minus_wall" />
-  <transform pos="0.357965 5.29071 62.5609" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
-</entity>
-<entity>
-  <name name="punto_magnetismo4"/>
-  <tag name="plus_wall" />
-  <transform pos="0.357965 4.539 59.6009" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
-</entity>
-<entity>
-  <name name="punto_magnetismo5"/>
-  <tag name="minus_wall" />
-  <transform pos="0.357965 2.38953 57.2293" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh"/>
-</entity>
-<entity>
-  <name name="mesa_cientifico6"/>
-  <tag name="plus_wall" />
-  <transform pos="-11.7247 3.90382 128.531" quat="0.0 0.0 1.66893e-006 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh"/>
-</entity>
-<entity>
-  <tag name ="platform" />
-  <name name="caja"/>
-  <transform pos="4.95928 -1.84045 17.3327" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/caja.static_mesh"/>
-  <box_collider p1 ="1 1 1" p2="-1 0 -1"  tag="platform" types = "0" />
-</entity>
-<entity>
-  <tag name ="platform" />
-  <name name="caja"/>
-  <transform pos="0.478754 3.90856 109.95" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/caja.static_mesh"/>
-  <box_collider p1 ="1 1 1" p2="-1 0 -1"  tag="platform" types = "0" />
-</entity>
-<entity>
-  <name name="conjunto_cajas"/>
-  <transform pos="2.89037 3.90856 101.834" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/conjunto_cajas.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared"/>
-  <transform pos="8.62196 -5.98356 -12.4593" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared.static_mesh"/>
-</entity>
-<entity>
-  <name name="Box002"/>
-  <transform pos="-0.281703 -8.24988 -25.0542" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/Box002.static_mesh"/>
-</entity>
-<entity>
-  <name name="Object001"/>
-  <transform pos="8.38848 -5.72171 -9.49589" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
-  <render_static_mesh name="static_meshes/Object001.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared001"/>
-  <transform pos="8.62196 -5.98356 -17.4386" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared001.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared002"/>
-  <transform pos="8.62196 -5.98356 -22.4475" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared002.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared003"/>
-  <transform pos="7.22102 -5.98356 -25.2007" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared003.static_mesh"/>
-</entity>
-<entity>
-  <name name="columna esquinera001"/>
-  <transform pos="-10.3437 -8.12064 -28.2641" quat="0.92388 0.0 0.382684 0.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/columna esquinera001.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared004"/>
-  <transform pos="2.25703 -5.98356 -25.2007" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared004.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared005"/>
-  <transform pos="-2.7325 -5.98356 -25.2007" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared005.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared006"/>
-  <transform pos="-7.72786 -5.98356 -25.2007" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared006.static_mesh"/>
-</entity>
-<entity>
-  <name name="Box003"/>
-  <transform pos="8.19336 -8.23081 -24.8013" quat="0.0 -0.382683 0.0 0.92388" scale="1.0" />
-  <render_static_mesh name="static_meshes/Box003.static_mesh"/>
-</entity>
-<entity>
-  <name name="Box004"/>
-  <transform pos="-8.15385 -8.23081 -24.6564" quat="0.92388 0.0 -0.382683 0.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/Box004.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared007"/>
-  <transform pos="-8.64592 -5.98356 -12.1221" quat="0.0 1.0 0.0 0.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared007.static_mesh"/>
-</entity>
-<entity>
-  <name name="Object003"/>
-  <transform pos="-8.40803 -5.72891 -9.49589" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/Object003.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared008"/>
-  <transform pos="-8.64592 -5.98356 -17.0583" quat="0.0 1.0 0.0 0.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared008.static_mesh"/>
-</entity>
-<entity>
-  <name name="pared009"/>
-  <transform pos="-8.64592 -5.98356 -22.0658" quat="0.0 1.0 0.0 0.0" scale="1.0" />
-  <render_static_mesh name="static_meshes/pared009.static_mesh"/>
-</entity>
-  
+  <entity>
+    <name name="nivel" />
+    <transform pos="0.0 -0.0317383 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/nivel.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared_mole" />
+    <transform pos="0.0101869 -1.83557 13.3673" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_mole.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared_speedy_final" />
+    <transform pos="0.0101869 7.82282 178.612" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_speedy_final.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared_speedy" />
+    <transform pos="0.0101869 -0.321139 37.0312" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_speedy.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared_atravesar_cable" />
+    <transform pos="-0.0145572 3.90864 137.901" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_atravesar_cable.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared_mole_final" />
+    <transform pos="-0.0249984 3.95734 169.484" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_mole_final.static_mesh" />
+  </entity>
+  <entity>
+    <name name="baliza" />
+    <transform pos="11.7903 3.91032 124.147" quat="0.0 0.0 0.0 1.0" scale="0.0161288" />
+    <render_static_mesh name="static_meshes/baliza.static_mesh" />
+  </entity>
+  <entity>
+    <name name="baliza" />
+    <transform pos="11.7903 3.91887 132.144" quat="0.0 1.0 0.0 0.0" scale="0.0161288" />
+    <render_static_mesh name="static_meshes/baliza.static_mesh" />
+  </entity>
+  <entity>
+    <tag name ="platform" />
+    <name name="caja" />
+    <transform pos="0.357965 -8.24597 -9.97773" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/caja.static_mesh" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1"  tag="platform" types = "0" />
+  </entity>
+  <entity>
+    <name name="punto_magnetismo1" />
+    <tag name="minus_wall" />
+    <transform pos="0.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+  </entity>
+  <entity>
+    <tag name="plus_wall" />
+    <name name="punto_magnetismo2" />
+    <transform pos="0.357965 -0.63678 4.40073" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+  </entity>
+  <entity>
+    <name name="punto_magnetismo3" />
+    <tag name="minus_wall" />
+    <transform pos="0.357965 5.29071 62.5609" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+  </entity>
+  <entity>
+    <name name="punto_magnetismo4" />
+    <tag name="plus_wall" />
+    <transform pos="0.357965 4.539 59.6009" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+  </entity>
+  <entity>
+    <name name="punto_magnetismo5" />
+    <tag name="minus_wall" />
+    <transform pos="0.357965 2.38953 57.2293" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+  </entity>
+  <entity>
+    <name name="mesa_cientifico6" />
+    <tag name="plus_wall" />
+    <transform pos="-11.7247 3.90382 128.531" quat="0.0 0.0 1.66893e-006 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh" />
+  </entity>
+  <entity>
+    <tag name ="platform" />
+    <name name="caja" />
+    <transform pos="4.95928 -1.84045 17.3327" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/caja.static_mesh" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1"  tag="platform" types = "0" />
+  </entity>
+  <entity>
+    <tag name ="platform" />
+    <name name="caja" />
+    <transform pos="0.478754 3.90856 109.95" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/caja.static_mesh" />
+    <box_collider p1 ="1 1 1" p2="-1 0 -1"  tag="platform" types = "0" />
+  </entity>
+  <entity>
+    <name name="conjunto_cajas" />
+    <transform pos="2.89037 3.90856 101.834" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/conjunto_cajas.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared" />
+    <transform pos="8.62196 -5.98356 -12.4593" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared.static_mesh" />
+  </entity>
+  <entity>
+    <name name="Box002" />
+    <transform pos="-0.281703 -8.24988 -25.0542" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/Box002.static_mesh" />
+  </entity>
+  <entity>
+    <name name="Object001" />
+    <transform pos="8.38848 -5.72171 -9.49589" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/Object001.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared001" />
+    <transform pos="8.62196 -5.98356 -17.4386" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared001.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared002" />
+    <transform pos="8.62196 -5.98356 -22.4475" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared002.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared003" />
+    <transform pos="7.22102 -5.98356 -25.2007" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared003.static_mesh" />
+  </entity>
+  <entity>
+    <name name="columna esquinera001" />
+    <transform pos="-10.3437 -8.12064 -28.2641" quat="0.92388 0.0 0.382684 0.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/columna esquinera001.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared004" />
+    <transform pos="2.25703 -5.98356 -25.2007" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared004.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared005" />
+    <transform pos="-2.7325 -5.98356 -25.2007" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared005.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared006" />
+    <transform pos="-7.72786 -5.98356 -25.2007" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared006.static_mesh" />
+  </entity>
+  <entity>
+    <name name="Box003" />
+    <transform pos="8.19336 -8.23081 -24.8013" quat="0.0 -0.382683 0.0 0.92388" scale="1.0" />
+    <render_static_mesh name="static_meshes/Box003.static_mesh" />
+  </entity>
+  <entity>
+    <name name="Box004" />
+    <transform pos="-8.15385 -8.23081 -24.6564" quat="0.92388 0.0 -0.382683 0.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/Box004.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared007" />
+    <transform pos="-8.64592 -5.98356 -12.1221" quat="0.0 1.0 0.0 0.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared007.static_mesh" />
+  </entity>
+  <entity>
+    <name name="Object003" />
+    <transform pos="-8.40803 -5.72891 -9.49589" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/Object003.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared008" />
+    <transform pos="-8.64592 -5.98356 -17.0583" quat="0.0 1.0 0.0 0.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared008.static_mesh" />
+  </entity>
+  <entity>
+    <name name="pared009" />
+    <transform pos="-8.64592 -5.98356 -22.0658" quat="0.0 1.0 0.0 0.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared009.static_mesh" />
+  </entity>
+
   <!-- END SCENE OBJECTS -->
   <!-- START SCENE COLLIDERS -->
-  <!-- ZONE 1-->
+  <!-- ZONE 1 : JUMP INTRO-->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_1"/>
-    <transform pos ="0 -3.1 -17"/>
+    <name name ="collider_floor_zone_1" />
+    <transform pos ="0 -3.1 -17" />
     <box_collider p1 ="10 -5.2 8" p2="-10 -7.2 -8"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_1"/>
-    <transform pos ="0 -8 -25"/>
+    <name name ="collider_wall_zone_1" />
+    <transform pos ="0 -8 -25" />
     <box_collider p1 ="10 10.2 0.5" p2="-10 -1 -2"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_1"/>
-    <transform pos ="-8.5 -8 -24" quat ="0 0.707 0 0.707"/>
+    <name name ="collider_wall_zone_1" />
+    <transform pos ="-8.5 -8 -24" quat ="0 0.707 0 0.707" />
     <box_collider p1 ="10 20 0.5" p2="-69.5 -1 -2"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_wall_zone_1"/>
-    <transform pos ="10 -8 -24" quat ="0 0.707 0 0.707"/>
+    <name name ="collider_wall_zone_1" />
+    <transform pos ="10 -8 -24" quat ="0 0.707 0 0.707" />
     <box_collider p1 ="10 20 0.5" p2="-69.5 -1 -2"  tag="platform" />
   </entity>
   <!-- END ZONE 1 -->
 
-  <!-- ZONE 2 -->
+  <!-- ZONE 2 : MAGNETISM INTRO -->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_2"/>
-    <transform pos ="0 -1.4 -2.3"/>
+    <name name ="collider_floor_zone_2" />
+    <transform pos ="0 -1.4 -2.3" />
     <box_collider p1 ="10 -3.8 7" p2="-10 -7.8 -6.6"  tag="platform" />
   </entity>
   <!-- END ZONE 2 -->
-  <!-- ZONE 3 -->
+  <!-- ZONE 3 : MOLE INTRO -->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_3"/>
-    <transform pos ="0 0.1 13.9"/>
+    <name name ="collider_floor_zone_3" />
+    <transform pos ="0 0.1 13.9" />
     <box_collider p1 ="10 -2 10" p2="-10 -7 -10"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_3"/>
-    <transform pos ="7.5 -1 14"/>
+    <name name ="collider_wall_zone_3" />
+    <transform pos ="7.5 -1 14" />
     <box_collider p1 ="1 10 10" p2="-1 -1 -10"  tag="platform" />
   </entity>
 
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_3"/>
-    <transform pos ="-7.5 -1 14"/>
+    <name name ="collider_wall_zone_3" />
+    <transform pos ="-7.5 -1 14" />
     <box_collider p1 ="1 10 10" p2="-1 -1 -10"  tag="platform" />
   </entity>
-  
+
   <!-- END ZONE 3 -->
-  
-  <!-- ZONE 4-->
+
+  <!-- ZONE 4 : SPEEDY INTRO-->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_4"/>
-    <transform pos ="0 1.8 33.4"/>
+    <name name ="collider_floor_zone_4" />
+    <transform pos ="0 1.8 33.4" />
     <box_collider p1 ="10 -2 12.1" p2="-10 -5 -10"  tag="platform" />
   </entity>
 
+  <!--WATER-->
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_4"/>
-    <transform pos ="0 1.8 55"/>
+    <name name ="collider_water_4" />
+    <transform pos ="0 0 44" />
+    <box_collider p1 ="10 -2 10" p2="-10 -7 -10"  tag="platform" />
+    <!--SHOUD GO MORE DOWN!!!, TO HELP PASS FOR NOW-->
+  </entity>
+  <!--END WATER-->
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_floor_zone_4" />
+    <transform pos ="0 1.8 55" />
     <box_collider p1 ="10 -2 7" p2="-10 -5 -4.5"  tag="platform" />
   </entity>
-  <!-- END ZONE 4-->
 
-  <!-- ZONE 5 -->
-  
   <entity>
     <tag name = "platform" />
-    <name name ="collider_floor_zone_5"/>
-    <transform pos ="0 3.8 90"/>
+    <name name ="collider_wall_zone_4" />
+    <transform pos ="-6.1 1.8 55" />
+    <box_collider p1 ="1 10 3" p2="-3 -5 -4.1"  tag="platform" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_4" />
+    <transform pos ="6.1 1.8 55" />
+    <box_collider p1 ="3 10 3" p2="-1 -5 -4.1"  tag="platform" />
+  </entity>
+
+  <!-- END ZONE 4-->
+
+  <!-- ZONE 5 : MAGNETISM 2 -->
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_floor_wall_5" />
+    <transform pos ="0 3.8 90" />
     <box_collider p1 ="20 0 95" p2="-20 -4 -28.8"  tag="platform" />
   </entity>
-  
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5" />
+    <transform pos ="-10 0 60" />
+    <box_collider p1 ="1 10 1.3" p2="-2 -1 -5"  tag="platform" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5" />
+    <transform pos ="10 0 60" />
+    <box_collider p1 ="2 10 1.3" p2="-1 -1 -5"  tag="platform" />
+  </entity>
+
   <!-- END ZONE 5-->
-  
+
+  <!-- ZONE 6: INTRO GUARD-->
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5" />
+    <transform pos ="12.5 2 65" />
+    <box_collider p1 ="1 10 4" p2="-1 -1 -3.7"  tag="platform" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5" />
+    <transform pos ="-12.5 2 65" />
+    <box_collider p1 ="1 10 4" p2="-1 -1 -3.7"  tag="platform" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5" />
+    <transform pos ="-6 2 90" />
+    <box_collider p1 ="1 10 21" p2="-8 -1 -21"  tag="platform" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_5" />
+    <transform pos ="13 2 90" />
+    <box_collider p1 ="1 10 21" p2="-8 -1 -21"  tag="platform" />
+  </entity>
+
+  <!-- END ZONE 6 -->
+
   <!-- END SCENE COLLIDERS -->
   <!-- END SCENE -->
 
-
-
-  
-  
   <!-- LOGIC OBJECTS -->
   <!-- ZONE 2 -->
   <entity>
@@ -370,20 +435,22 @@
     <sphere_collider radius="0.3" tag ="player" />
   </entity>
 
-  <!--Guardia centinela sin pistola-->
   <entity>
     <tag name="AI" />
     <tag name="AI_guard" />
-    <transform pos="30 0 0" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="67 0 7" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/guard.static_mesh" />
     <ai_guard
-      kpt_size  = "2"
-      kpt0_type = "seek" kpt0_pos = " 30  0   3" kpt0_wait = "0"
-      kpt1_type = "look" kpt1_pos = " 30  0  10" kpt1_wait = "2"
-      jurisdiction ="30 0 0"
-      jurRadius = "0"
-      noShoot ="true" />
+      kpt_size  = "8"
+      kpt0_type = "seek" kpt0_pos = " 70  0  10" kpt0_wait = "2"
+      kpt1_type = "look" kpt1_pos = " 60  0   0" kpt1_wait = "2"
+      kpt2_type = "seek" kpt2_pos = " 70  0 -10" kpt2_wait = "2"
+      kpt3_type = "look" kpt3_pos = " 60  0   0" kpt3_wait = "2"
+      kpt4_type = "seek" kpt4_pos = "50  0 -10" kpt4_wait = "2"
+      kpt5_type = "look" kpt5_pos = " 60  0   0" kpt5_wait = "2"
+      kpt6_type = "seek" kpt6_pos = " 50  0  10" kpt6_wait = "2"
+      kpt7_type = "look" kpt7_pos = " 60  0   0" kpt7_wait = "2" />
   </entity>
 
   <!-- END ZONE 3 -->

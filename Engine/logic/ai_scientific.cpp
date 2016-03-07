@@ -8,6 +8,13 @@
 
 #include "ai_beacon.h"
 
+#include "utils/XMLParser.h"
+
+map<string, ai_scientific::KptTipo> ai_scientific::kptTypes = {
+	{ "seek", KptTipo::Seek }
+	,{ "look", KptTipo::Look }
+};
+
 void ai_scientific::Init()
 {
 	om = getHandleManager<ai_scientific>();	//list handle scientific in game
@@ -23,6 +30,7 @@ void ai_scientific::Init()
 	AddState("addBeacon", (statehandler)&ai_scientific::AddBeacon);
 	AddState("removeBeacon", (statehandler)&ai_scientific::RemoveBeacon);
 	AddState("lookForObj", (statehandler)&ai_scientific::LookForObj);
+	AddState("waitInPos", (statehandler)&ai_scientific::WaitInPos);
 
 	out[IDLE] = "IDLE";
 	out[CREATE_BEACON] = "CREATE_BEACON";
@@ -31,6 +39,8 @@ void ai_scientific::Init()
 	out[WANDER] = "WANDER";
 
 	SetHandleMeInit();				//need to be initialized after all handles, ¿awake/init?
+
+	curkpt = 0;
 
 	ChangeState("idle"); //init Node
 }
@@ -48,11 +58,15 @@ void ai_scientific::LookForObj()
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
-	VEC3 pos_wander = VEC3(rand() % 10 - 5 +curr_pos.x, 0.0f, rand() % 10 - 5 + curr_pos.z);
-	actual_action = WANDER;
-	obj_position = pos_wander;
-	if (beacon_to_go_name != "") ChangeState("seekWB");
-	else ChangeState("aimToPos");
+	if (beacon_to_go_name != "") {
+		ChangeState("seekWB");
+	}
+	else if (keyPoints.size() > 0){
+		actual_action = WANDER;
+		obj_position = keyPoints[curkpt].pos;
+		t_waitInPos = 0;
+		ChangeState("aimToPos");
+	}
 }
 
 void ai_scientific::SeekWorkbench()
@@ -112,7 +126,12 @@ void ai_scientific::AimToPos() {
 	me_transform->setAngles(new_yaw + yaw, pitch);
 
 	if (new_yaw == diff_yaw) {
-		ChangeState("moveToPos");
+		if (actual_action != WANDER || keyPoints[curkpt].type == Seek) {
+			ChangeState("moveToPos");
+		}
+		else {
+			ChangeState("waitInPos");
+		}
 	}
 }
 
@@ -141,8 +160,20 @@ void ai_scientific::MoveToPos()
 			ChangeState("addBeacon");
 		else if (actual_action == REMOVE_BEACON)
 			ChangeState("removeBeacon");
-		else if (actual_action == WANDER)
-			ChangeState("lookForObj");
+		else if (actual_action == WANDER) {
+			ChangeState("waitInPos");
+			//ChangeState("lookForObj");
+		}
+	}
+}
+
+void ai_scientific::WaitInPos() {
+	if (t_waitInPos > keyPoints[curkpt].time) {
+		ChangeState("lookForObj");
+		curkpt = (curkpt + 1) & keyPoints.size();
+	}
+	else {
+		t_waitInPos += getDeltaTime();
 	}
 }
 
@@ -212,9 +243,7 @@ void ai_scientific::onEmptyBeacon(const TMsgBeaconEmpty & msg)
 
 void ai_scientific::onEmptyWB(const TMsgWBEmpty & msg)
 {
-	
 }
-
 
 void ai_scientific::onTakenBeacon(const TMsgBeaconTakenByPlayer & msg)
 {
@@ -228,9 +257,7 @@ void ai_scientific::onTakenBeacon(const TMsgBeaconTakenByPlayer & msg)
 
 void ai_scientific::onTakenWB(const TMsgWBTakenByPlayer & msg)
 {
-	
 }
-
 
 //clean all objects with actions related with NPC
 void ai_scientific::CleanStates() {
@@ -239,7 +266,7 @@ void ai_scientific::CleanStates() {
 			SBB::postInt(beacon_to_go_name, beacon_controller::INACTIVE);
 
 		if (SBB::readInt(beacon_to_go_name) == beacon_controller::TO_REMOVE_TAKEN) {
-			SBB::postInt(beacon_to_go_name,beacon_controller::TO_REMOVE);
+			SBB::postInt(beacon_to_go_name, beacon_controller::TO_REMOVE);
 		}
 		beacon_to_go_name = "";
 	}
@@ -255,7 +282,6 @@ void ai_scientific::CleanStates() {
 	}
 }
 
-
 void ai_scientific::onStaticBomb(const TMsgStaticBomb & msg)
 {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
@@ -264,13 +290,11 @@ void ai_scientific::onStaticBomb(const TMsgStaticBomb & msg)
 
 	float d = squaredDist(msg.pos, curr_pos);
 
-	if(d < msg.r){
+	if (d < msg.r) {
 		CleanStates();
 		ChangeState(ST_STUNT);
 	}
-
 }
-
 
 void ai_scientific::renderInMenu()
 {
@@ -298,8 +322,27 @@ const void ai_scientific::StuntState() {
 	____TIMER_CHECK_DONE_(timeStunt);
 }
 
-
 CEntity* ai_scientific::getMyEntity() {
 	CHandle me = CHandle(this);
 	return me.getOwner();
+}
+
+#define KPT_ATR_NAME(nameVariable, nameSufix, index) \
+char nameVariable[10]; sprintf(nameVariable, "kpt%d_%s", index, nameSufix);
+
+bool ai_scientific::load(MKeyValue& atts) {
+	dbg("load de AI_GUARD\n");
+	int n = atts.getInt("kpt_size", 0);
+	keyPoints.resize(n);
+	for (unsigned int i = 0; i < n; i++) {
+		KPT_ATR_NAME(atrType, "type", i);
+		KPT_ATR_NAME(atrPos, "pos", i);
+		KPT_ATR_NAME(atrWait, "wait", i);
+		keyPoints[i] = KeyPoint(
+			kptTypes[atts.getString(atrType, "seek")]
+			, atts.getPoint(atrPos)
+			, atts.getInt(atrWait, 0)
+			);
+	}
+	return true;
 }
