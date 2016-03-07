@@ -13,6 +13,8 @@
 #include "logic/ai_mole.h"
 #include "components/comp_render_static_mesh.h"
 #include "resources/resources_manager.h"
+#include "render/mesh.h"
+#include "render/static_mesh.h"
 
 #include "camera/camera.h"
 
