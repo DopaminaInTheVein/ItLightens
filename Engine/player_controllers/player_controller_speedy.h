@@ -61,6 +61,7 @@ public:
 	void myUpdate() override;
 
 	void UpdateInputActions();
+	void ApplyGravity();
 
 	// Speedy specific state
 	void Dashing();

@@ -78,6 +78,45 @@ void player_controller_speedy::UpdateInputActions() {
 	}
 }
 
+void player_controller_speedy::ApplyGravity() {
+
+	if (state != "dashing") {
+
+		SetMyEntity();
+		TCompTransform* player_transform = myEntity->get<TCompTransform>();
+		VEC3 player_position = player_transform->getPosition();
+
+		ray_cast_query floor_query = ray_cast_query(player_position, VEC3(0, -1, 0), 15.0f, COL_TAG_SOLID);
+		ray_cast_result res = Physics::calcRayCast(floor_query);
+		VEC3 ground = res.positionCollision;
+		float d = simpleDist(player_position, ground);
+
+		if (d > 0.1f || jspeed > 0.1f) {
+			jspeed -= gravity*getDeltaTime();
+			player_position = player_position + VEC3(0, 1, 0)*getDeltaTime()*jspeed;
+			//player_transform->setPosition(player_position);
+			if (!player_transform->executeMovement(player_position)) {
+				onGround = true;
+				jspeed = 0.0f;
+				ChangeState("idle");
+			}
+			else {
+				if (state != "doublefalling" && jspeed < 0.1f) {
+					if (state == "doublejump")
+						ChangeState("doublefalling");
+					else
+						ChangeState("falling");
+				}
+
+				onGround = false;
+			}
+		}
+		else {
+			onGround = true;
+		}
+	}
+}
+
 void player_controller_speedy::Dashing()
 {
 	if (dash_ready) {
