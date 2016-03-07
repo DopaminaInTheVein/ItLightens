@@ -27,7 +27,7 @@ bool CSimplePhysx::isCollidingBoxOverBox(CHandle h, std::string tag) {
 	for (auto obj : objs_h) {
 		CEntity * ent = obj;
 		boxCollider *bc = ent->get<boxCollider>();
-		if (tag.compare("box") == 0 && bc->getTag().compare("box") == 0) {
+		if (bc && tag.compare("box") == 0 && bc->getTag().compare("box") == 0) {
 			bool collidesFirst = false;
 			while (isColliding(h, obj)) {
 				collidesFirst = true;
