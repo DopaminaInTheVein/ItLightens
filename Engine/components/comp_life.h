@@ -65,6 +65,11 @@ struct TCompLife : public TCompBase {
 		}
 	}
 
+	void setMaxLife(float max) { 
+		maxlife = max;
+		currentlife = max; 
+	}
+
 	void renderInMenu() {
 		ImGui::SliderFloat("Action Damage Scale", &DMG_SCALE_ACTION, 0, 1);
 		ImGui::SliderFloat("Enemy Damage Scale", &DMG_SCALE_ENEMY, 0, 1);

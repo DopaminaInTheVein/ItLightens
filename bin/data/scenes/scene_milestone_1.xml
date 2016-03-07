@@ -12,12 +12,12 @@
   </entity>
 
   <entity>
-    <life points="300" />
+    <life points="50" />
     <tag name="target" />
     <transform pos="0 3.9 -22" />
     <name name="pj" />
     <player />
-    <render_static_mesh name="static_meshes/player_idle.static_mesh" />
+    <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
     <colCylinder pos ="0 0 0" radius ="0.3" height ="1" type ="player" />
     <sphere_collider radius="0.3" tag ="player" />
   </entity>
@@ -1128,6 +1128,13 @@
     <transform pos ="12 3.8 150"/>
     <box_collider p1 ="1 8 20" p2="-1 -1 -10"  tag="platform" />
   </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name ="collider_wall_zone_7"/>
+    <transform pos ="0 3.8 177"/>
+    <box_collider p1 ="12.5 8 3" p2="-12.5 -1 -1"  tag="platform" />
+  </entity>
   
   <!-- END ZONE -->
 
@@ -1394,9 +1401,11 @@
 
   <!-- RECOVER POINT 2-->
   <entity>
-    <name name="recover_point2" />
-    <tag name="recover_point" />
-    <transform pos="0 4 65" rotation="1 2 3 3" scale="1 1 1" />
+    <name name="recover" />
+    <tag name="recover" />
+    <transform pos="5 -8 -16" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/generator.static_mesh" />
+    <generator rad ="2"/>
   </entity>
 
   <!-- VICTORY POINT -->
