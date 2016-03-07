@@ -55,14 +55,17 @@ void player_controller_speedy::myUpdate() {
 	updateDashTimer();
 	updateBlinkTimer();
 	updateDropWaterTimer();
-	if (dashing)
+	if (dashing) {
+		ChangePose(pose_run);
 		ChangeState("dashing");
+	}
 }
 
 void player_controller_speedy::UpdateInputActions() {
 	if (io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()) {
 		if (dash_ready) {
 			energyDecreasal(5.0f);
+			ChangePose(pose_run);
 			ChangeState("dashing");
 			dashing = true;
 		}

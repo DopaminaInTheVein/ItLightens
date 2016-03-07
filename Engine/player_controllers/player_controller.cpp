@@ -32,8 +32,6 @@ void player_controller::Init() {
 	myParent = myHandle.getOwner();
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	starting_player_y = player_transform->getPosition().y + 2;
-	player_y = starting_player_y;
 
 	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
@@ -79,6 +77,10 @@ void player_controller::ChangePose(CHandle new_pos_h)
 
 void player_controller::myUpdate() {
 	____TIMER__UPDATE_(timerDamaged);
+	SetMyEntity();
+	/*TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	VEC3 pos = player_transform->getPosition();
+	dbg("PLAYER POSI: %f %f %f\n", pos.x, pos.y, pos.z);*/
 	if (!isDamaged()) {
 		UpdatePossession();
 	}
@@ -326,7 +328,7 @@ void player_controller::UpdateInputActions()
 		}
 		AttractMove(entPoint);
 	}
-	else if ((io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()) && nearStunable()) {
+	else if ((io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado
 		CEntity* ePoss = currentStunable;
@@ -334,7 +336,7 @@ void player_controller::UpdateInputActions()
 		msg.stunned = true;
 		ePoss->sendMsg(msg);
 	}
-	else if ((io->mouse.left.isPressed() || io->joystick.button_X.isPressed())) {
+	else if ((io->keys[VK_SHIFT].isPressed() || io->joystick.button_Y.isPressed())) {
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
@@ -357,7 +359,7 @@ float CPlayerBase::possessionCooldown;
 void player_controller::UpdatePossession() {
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
-		if (io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()) {
+		if (io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) {
 			// Se avisa el ai_poss que ha sido poseído
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;

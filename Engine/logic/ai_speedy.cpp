@@ -133,8 +133,13 @@ void ai_speedy::SeekWptState()
 	}
 	else {
 		transform->setPosition(fixedWpts[curwpt]);
+		float distance_to_next_wpt = squaredDist(transform->getPosition(), fixedWpts[(curwpt + 1) % fixedWpts.size()]);
+		dbg("distance: %f", distance_to_next_wpt);
 		curwpt = (curwpt + 1) % fixedWpts.size();
-		ChangeState("nextwpt");
+		if (distance_to_next_wpt > 200.f)
+			ChangeState("dashtopoint");
+		else 
+			ChangeState("nextwpt");		
 	}
 }
 
@@ -167,11 +172,11 @@ string ai_speedy::decide_next_action() {
 	if (next_action < dash_to_point_chance) {
 		return "dashtopoint";
 	}
-	else if (next_action < dash_to_point_chance + dash_to_new_point_chance) {
-		return "dashtonewpoint";
+	else if (next_action < dash_to_point_chance + dash_to_player_chance) {
+		return "dashtoplayer";
 	}
 	else if (next_action < dash_to_point_chance + dash_to_new_point_chance + dash_to_player_chance) {
-		return "dashtoplayer";
+		return "dashtonewpoint";
 	}
 	else {
 		return "seekwpt";

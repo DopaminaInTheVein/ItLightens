@@ -57,7 +57,7 @@ class ai_speedy : public ai_poss, public TCompBase {
 	float drop_water_timer_reset = 3.f;
 	// probabilities
 	int dash_to_point_chance = 2;
-	int dash_to_new_point_chance = 2;
+	int dash_to_new_point_chance = 0;
 	int dash_to_player_chance = 2;
 
 	string water_static_mesh = "static_meshes/water.static_mesh";

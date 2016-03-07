@@ -26,7 +26,7 @@ class water_controller : public aicontroller, public TCompBase {
 	int id_water = 0;
 	std::string full_name = "";
 
-	int permanent_water_damage = 500;
+	int permanent_water_damage = 100000;
 	int dropped_water_damage = 350;
 
 	float permanent_max_ttl = -1.f;				//in seconds
@@ -68,6 +68,8 @@ public:
 	void Dead();
 
 	void renderInMenu();
+
+	water_controller& water_controller::operator=(water_controller arg) { return arg; }
 };
 
 #endif

@@ -351,22 +351,22 @@
   <!-- END ZONE 2 -->
 
   <!-- ZONE 3 -->
-  <!-- SPEEDY -->
+  <!-- SPEEDY 0,0,30-->
   <entity>
     <tag name="AI" />
     <tag name="AI_speedy" />
     <tag name="AI_poss" />
     <name name="speedy1" />
-    <transform pos="30 0.1 0" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="0 0 30" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/human_test.static_mesh" />
     <life points="50" />
     <player_speedy />
     <ai_speedy
-      wpts_size  = "4"
-      wpt0_pos = "21  0   5"
-      wpt1_pos = "21  0  -5"
-      wpt2_pos = "37  0  -5"
-      wpt3_pos = "37  0   5" />
+      wpts_size = "4"
+      wpt0_pos = " 5  0  25"
+      wpt1_pos = " 5  0  33"
+      wpt2_pos = "-5  0  33"
+      wpt3_pos = "-5  0  25" />
     <sphere_collider radius="0.3" tag ="player" />
   </entity>
 
@@ -517,6 +517,30 @@
   </entity>
 
   <!-- END ZONE 4 -->
+
+  <!-- FINAL ZONE -->
+
+  <!-- SPEEDY 7,4,150-->
+  
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_speedy" />
+    <tag name="AI_poss" />
+    <name name="speedy1" />
+    <transform pos="7 4 150" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <life points="50" />
+    <player_speedy />
+    <ai_speedy
+      wpts_size  = "4"
+      wpt0_pos = " 7  4 163"
+      wpt1_pos = "-7  4 163"
+      wpt2_pos = "-7  4 142"
+      wpt3_pos = " 7  4 142" />
+    <sphere_collider radius="0.3" tag ="player" />
+  </entity>
+
+  <!-- END FINAL ZONE -->
 
   <!-- RECOVER POINT 2-->
   <entity>
