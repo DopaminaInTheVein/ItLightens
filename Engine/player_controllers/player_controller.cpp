@@ -33,17 +33,23 @@ void player_controller::Init() {
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 
-	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_run	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_jump	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_idle	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
 
-	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
-	actual_render = pose_idle;
 
+	pose_no_ev		= myEntity->get<TCompRenderStaticMesh>();		//defined on xml
+	actual_render	= pose_no_ev;
+
+	pose_no_ev.setOwner(myEntity);
 	pose_idle.setOwner(myEntity);
 	pose_run.setOwner(myEntity);
 	pose_jump.setOwner(myEntity);
 
 	TCompRenderStaticMesh *mesh;
+
+	mesh = pose_idle;
+	mesh->static_mesh = Resources.get("static_meshes/player_idle.static_mesh")->as<CStaticMesh>();
 
 	mesh = pose_jump;
 	mesh->static_mesh = Resources.get("static_meshes/player_jump.static_mesh")->as<CStaticMesh>();
@@ -62,8 +68,21 @@ bool player_controller::isDamaged() {
 	return !____TIMER__END_(timerDamaged);
 }
 
+void player_controller::rechargeEnergy()
+{
+	SetMyEntity();
+	TCompLife *life = myEntity->get<TCompLife>();
+	life->setMaxLife(max_life);
+	ChangePose(pose_idle);
+}
+
 void player_controller::ChangePose(CHandle new_pos_h)
 {
+
+	SetMyEntity();
+	TCompLife *life = myEntity->get<TCompLife>();
+	if (life->currentlife < evolution_limit) new_pos_h = pose_no_ev;
+
 	TCompRenderStaticMesh *new_pose = new_pos_h;
 	if (new_pose == actual_render) return;		//no change
 
@@ -328,7 +347,7 @@ void player_controller::UpdateInputActions()
 		}
 		AttractMove(entPoint);
 	}
-	else if ((io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) && nearStunable()) {
+	else if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado
 		CEntity* ePoss = currentStunable;
@@ -336,14 +355,14 @@ void player_controller::UpdateInputActions()
 		msg.stunned = true;
 		ePoss->sendMsg(msg);
 	}
-	else if ((io->keys[VK_SHIFT].isPressed() || io->joystick.button_Y.isPressed())) {
+	else if (io->mouse.left.isPressed() || io->joystick.button_X.isPressed()) {
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
 		for (CEntity * ptr : ptsRecover) {
 			TCompTransform * ptr_trn = ptr->get<TCompTransform>();
 			if (3 > simpleDist(ptr_trn->getPosition(), player_transform->getPosition())) {
-				energyDecreasal(-5.0f*getDeltaTime());
+				energyDecreasal(-15.0f*getDeltaTime());
 			}
 		}
 	}
@@ -526,7 +545,15 @@ void player_controller::onWirePass(const TMsgWirePass & msg)
 	if (io->keys['E'].becomesPressed()) {
 		SetMyEntity();
 		TCompTransform *t = myEntity->get<TCompTransform>();
-		Debug->LogRaw("pass to: %f, %f, %f\n",msg.dst.x, msg.dst.y,msg.dst.z);
 		t->setPosition(msg.dst);
+	}
+}
+
+void player_controller::onCanRec(const TMsgCanRec & msg)
+{
+	ui.addTextInstructions("\n Press 'E' to recharge energy\n");
+
+	if (io->keys['E'].becomesPressed()) {
+		rechargeEnergy();
 	}
 }

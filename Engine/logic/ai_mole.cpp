@@ -132,7 +132,7 @@ void ai_mole::NextWptState()
 		TCompTransform * transform = getEntityTransform();
 		float distToWPT = simpleDistXZ(transformBox->getPosition(), transform->getPosition());
 
-		if (distToWPT > 1.0f) {
+		if (distToWPT > 2.0f) {
 			//MOVE
 			ChangePose(pose_run);
 			VEC3 front = transform->getFront();
@@ -212,7 +212,7 @@ void ai_mole::NextWptCarryState() {
 	TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
 	TCompTransform * transform = getEntityTransform();
 	float distToWPT = simpleDistXZ(wptbleavetransform->getPosition(), transform->getPosition());
-	if (distToWPT > 1.5f) {
+	if (distToWPT > 2.0f) {
 		//MOVE
 		VEC3 front = transform->getFront();
 		VEC3 pos = transform->getPosition();

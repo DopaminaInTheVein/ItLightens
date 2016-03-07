@@ -34,6 +34,7 @@ DECL_OBJ_MANAGER("player_mole", player_controller_mole);
 DECL_OBJ_MANAGER("player_cientifico", player_controller_cientifico);
 DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
+DECL_OBJ_MANAGER("generator", TCompGenerator);
 
 //Physics
 DECL_OBJ_MANAGER("colCylinder", TCompColCillinder);
@@ -73,6 +74,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompController3rdPerson>()->init(4);
 	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
 	getHandleManager<TCompWire>()->init(10);
+	getHandleManager<TCompGenerator>()->init(10);
 
 	//Physics
 	getHandleManager<TCompColCillinder>()->init(MAX_ENTITIES);
@@ -122,6 +124,10 @@ bool CEntitiesModule::start() {
 	//WIRES
 	SUBSCRIBE(TCompWire, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgWirePass, onWirePass);
+
+	//generator
+	SUBSCRIBE(TCompGenerator, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(player_controller, TMsgCanRec, onCanRec);
 
 	//Posesiones Mensajes
 	//..Cientifico
@@ -252,6 +258,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<CMagneticBomb>()->updateAll(dt);
 
 	getHandleManager<TCompWire>()->updateAll(dt);
+	getHandleManager<TCompGenerator>()->updateAll(dt);
 
 
 	//TODO:REMOVE!!

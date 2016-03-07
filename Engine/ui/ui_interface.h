@@ -82,8 +82,9 @@ public:
 				}
 			}
 		}
-		lifeString += "|";
+		lifeString += "|\n";
 		ImGui::Text(lifeString.c_str());
+		ImGui::Text("%f / %f", life->currentlife, life->maxlife);
 		ImGui::Separator();
 
 		//put cheats here:

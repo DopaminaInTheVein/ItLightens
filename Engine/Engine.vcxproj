@@ -101,6 +101,7 @@
     <ClCompile Include="app_modules\io\mouse.cpp" />
     <ClCompile Include="camera\camera.cpp" />
     <ClCompile Include="components\comp_camera.cpp" />
+    <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\comp_wire.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="components\comp_base.h" />
     <ClInclude Include="components\comp_camera.h" />
     <ClInclude Include="components\comp_controller_3rd_person.h" />
+    <ClInclude Include="components\comp_generator.h" />
     <ClInclude Include="components\comp_life.h" />
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />

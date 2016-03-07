@@ -119,4 +119,8 @@ struct TMsgWirePass {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgCanRec {
+	DECLARE_MSG_ID();
+};
+
 #endif

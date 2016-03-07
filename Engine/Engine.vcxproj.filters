@@ -196,6 +196,9 @@
     <ClCompile Include="components\comp_wire.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_generator.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -431,6 +434,9 @@
       <Filter>app_modules\io</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_wire.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_generator.h">
       <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
