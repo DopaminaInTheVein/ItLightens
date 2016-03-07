@@ -961,7 +961,7 @@
     <tag name = "platform" />
     <name name ="collider_floor_zone_4" />
     <transform pos ="-1 0 37" />
-    <box_collider p1 ="12.5 3 0.5" p2="-12.5 -1 -0.5"  tag="platform" />
+    <!--<box_collider p1 ="12.5 3 0.5" p2="-12.5 -1 -0.5"  tag="platform" types ="24" />-->
   </entity>
 
   <!--WATER-->
