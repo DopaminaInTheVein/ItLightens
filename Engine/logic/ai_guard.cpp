@@ -148,6 +148,12 @@ void ai_guard::LookPointState() {
 **************/
 void ai_guard::WaitNextState() {
 	ChangePose(pose_idle);
+
+	//player visible?
+	if (playerVisible()) {
+		ChangeState(ST_CHASE);
+	}
+
 	if (timeWaiting > keyPoints[curkpt].time) {
 		timeWaiting = 0;
 		ChangeState(ST_NEXT_ACTION);

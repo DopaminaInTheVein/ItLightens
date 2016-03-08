@@ -20,7 +20,7 @@
 #define SPEED_WALK_INI					3
 #define CONE_VISION_INI					deg2rad(60)
 #define SPEED_ROT_INI					deg2rad(100)
-#define DAMAGE_LASER_INI				1
+#define DAMAGE_LASER_INI				30
 
 #define ST_SELECT_ACTION	"select_action"
 #define ST_NEXT_ACTION		"next_action"

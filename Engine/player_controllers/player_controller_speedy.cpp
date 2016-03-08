@@ -69,7 +69,7 @@ void player_controller_speedy::myUpdate() {
 	updateBlinkTimer();
 	updateDropWaterTimer();
 
-	if (dashing) 
+	if (dashing)
 		ChangeState("dashing");
 	if (state != "idle" && state != "falling")
 		ChangePose(pose_run);
@@ -95,9 +95,7 @@ void player_controller_speedy::UpdateInputActions() {
 }
 
 void player_controller_speedy::ApplyGravity() {
-
 	if (state != "dashing") {
-
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		VEC3 player_position = player_transform->getPosition();
@@ -330,7 +328,7 @@ bool player_controller_speedy::collisionWall() {
 }
 
 bool player_controller_speedy::collisionBlink(float& distCollision) {
-	CHandle collider = rayCastToFront(COL_TAG_SOLID_OPAQUE, blink_distance + 0.5f, distCollision);
+	CHandle collider = rayCastToFront(COL_TAG_SOLO_CRISTAL, blink_distance + 0.5f, distCollision);
 	return collider.isValid();
 }
 

@@ -14,7 +14,7 @@
 #define COL_TAG_BOX			1 << 5		//32
 
 #define COL_TAG_SOLID			COL_TAG_OBJECT | COL_TAG_WALL
-#define COL_TAG_SOLID_OPAQUE	COL_TAG_SOLID  & !COL_TAG_CRISTAL
+#define COL_TAG_SOLO_CRISTAL	24 //Solucion horrible
 
 struct ray_cast_result {
 	CHandle firstCollider;
