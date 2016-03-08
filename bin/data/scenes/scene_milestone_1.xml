@@ -961,7 +961,7 @@
     <tag name = "platform" />
     <name name ="collider_floor_zone_4" />
     <transform pos ="-1 0 37" />
-    <!--<box_collider p1 ="12.5 3 0.5" p2="-12.5 -1 -0.5"  tag="platform" types ="24" />-->
+    <box_collider p1 ="12.5 3 0.5" p2="-12.5 -1 -0.5"  tag="platform" types ="24" />
   </entity>
 
   <!--WATER-->
@@ -1293,32 +1293,16 @@
   <entity>
     <tag name="AI" />
     <tag name="AI_guard" />
-    <transform pos="0 3.8 130" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="0 4 130" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/guard.static_mesh" />
     <ai_guard
       kpt_size  = "2"
-      kpt0_type = "seek" kpt0_pos = " 0  3.56  126" kpt0_wait = "100"
-      kpt1_type = "look" kpt1_pos = " 0  3.56  100" kpt1_wait = "100"
-      noShoot="true" />
-  </entity>
-
-  <entity>
-    <tag name="AI" />
-    <tag name="AI_guard" />
-    <transform pos="67 0 7" rotation="1 2 3 3" scale="1 1 1" />
-    <life points="100" />
-    <render_static_mesh name="static_meshes/guard.static_mesh" />
-    <ai_guard
-      kpt_size  = "8"
-      kpt0_type = "seek" kpt0_pos = " 70  0  10" kpt0_wait = "2"
-      kpt1_type = "look" kpt1_pos = " 60  0   0" kpt1_wait = "2"
-      kpt2_type = "seek" kpt2_pos = " 70  0 -10" kpt2_wait = "2"
-      kpt3_type = "look" kpt3_pos = " 60  0   0" kpt3_wait = "2"
-      kpt4_type = "seek" kpt4_pos = "50  0 -10" kpt4_wait = "2"
-      kpt5_type = "look" kpt5_pos = " 60  0   0" kpt5_wait = "2"
-      kpt6_type = "seek" kpt6_pos = " 50  0  10" kpt6_wait = "2"
-      kpt7_type = "look" kpt7_pos = " 60  0   0" kpt7_wait = "2" />
+      kpt0_type = "seek" kpt0_pos = " 0  4  126" kpt0_wait = "100"
+      kpt1_type = "look" kpt1_pos = " 0  4  100" kpt1_wait = "100"
+      noShoot="true"
+	  jurisdiction="0 4 130"
+	  />
   </entity>
 
   <entity>
