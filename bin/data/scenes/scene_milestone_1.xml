@@ -14,7 +14,7 @@
   <entity>
     <life points="10" />
     <tag name="target" />
-    <transform pos="0 3.9 150" />
+    <transform pos="0 0 -20" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
