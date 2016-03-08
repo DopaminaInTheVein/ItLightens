@@ -60,9 +60,9 @@ class player_controller : public CPlayerBase {
 	CHandle pose_run;
 	CHandle pose_jump;
 
-	float evolution_limit	= 50.0f;
-	float max_life			= 150.0f;
-	float init_life			= 50.0f;
+	float evolution_limit	= 10.0f;
+	float max_life			= 50.0f;
+	float init_life			= 10.0f;
 
 	void rechargeEnergy();
 

@@ -18,7 +18,9 @@ CApp::CApp()
 	, yres(600)
 {
 	file_options = "./options.ini";
-	max_screen = GetPrivateProfileIntA(	"screen",
+	
+	//"0 != " to convert uint to bool more efficient
+	max_screen = 0 != GetPrivateProfileIntA(	"screen",
 										"full_screen",
 										0,
 										file_options.c_str());

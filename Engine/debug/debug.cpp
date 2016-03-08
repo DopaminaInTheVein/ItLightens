@@ -19,6 +19,7 @@ struct SimpleVertexColored {
 
 void  CDebug::LogRaw(const char* msg, ...)
 {
+#ifndef NDEBUG					//performance cost
 	int old_size = Buf.size();
 	va_list args;
 	va_start(args, msg);
@@ -31,6 +32,9 @@ void  CDebug::LogRaw(const char* msg, ...)
 
 	//visual studio log
 	dbg(Buf.c_str());
+#else
+	(void)(true);
+#endif
 }
 
 void  CDebug::LogError(const char* msg, ...)
@@ -40,6 +44,7 @@ void  CDebug::LogError(const char* msg, ...)
 
 void CDebug::LogWithTag(const char * tag, const char * msg, ...)
 {
+#ifndef NDEBUG					//performance cost
 	std::string msg_s(msg);
 	std::string tag_s(tag);
 
@@ -61,6 +66,9 @@ void CDebug::LogWithTag(const char * tag, const char * msg, ...)
 
 	//visual studio log
 	dbg(Buf.c_str());
+#else
+	(void)(true);
+#endif
 }
 
 void CDebug::DrawLog()

@@ -260,9 +260,10 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompWire>()->updateAll(dt);
 	getHandleManager<TCompGenerator>()->updateAll(dt);
 
-
+#ifndef NDEBUG
 	//TODO:REMOVE!!
 	getHandleManager<boxCollider>()->updateAll(dt);
+#endif
 }
 
 void CEntitiesModule::render() {
@@ -271,7 +272,10 @@ void CEntitiesModule::render() {
 	// manager->renderAll()
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
 	tech->activate();
-	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
+
+#ifndef NDEBUG
+	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);		//axis trasnfrom
+#endif
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 
 }

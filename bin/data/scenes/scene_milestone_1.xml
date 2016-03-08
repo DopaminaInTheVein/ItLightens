@@ -12,9 +12,9 @@
   </entity>
 
   <entity>
-    <life points="50" />
+    <life points="10" />
     <tag name="target" />
-    <transform pos="0 3.9 -22" />
+    <transform pos="0 3.9 150" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
@@ -1133,7 +1133,7 @@
     <tag name = "platform" />
     <name name ="collider_wall_zone_7"/>
     <transform pos ="0 3.8 177"/>
-    <box_collider p1 ="12.5 8 3" p2="-12.5 -1 -1"  tag="platform" />
+    <box_collider p1 ="12.5 3.8 3" p2="-12.5 -1 -1"  tag="platform" />
   </entity>
   
   <!-- END ZONE -->
@@ -1405,15 +1405,31 @@
   <entity>
     <name name="recover" />
     <tag name="recover_point" />
-    <transform pos="0 4 65" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="4 -8 -16" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/generator.static_mesh" />
     <generator rad ="2"/>
   </entity>
+  <entity>
+    <name name="recover" />
+    <tag name="recover_point" />
+    <transform pos="-8.3 4 142.7" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/generator.static_mesh" />
+    <generator rad ="2"/>
+  </entity>
+
+  <entity>
+    <name name="recover" />
+    <tag name="recover_point" />
+    <transform pos="-6 4 117" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/generator.static_mesh" />
+    <generator rad ="2"/>
+  </entity>
+
 
   <!-- VICTORY POINT -->
   <entity>
     <name name="win_point" />
     <tag name="victory_point" />
-    <transform pos="0 8 175" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="0 7.8 177" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 </entities>
