@@ -48,7 +48,7 @@ class ai_speedy : public ai_poss, public TCompBase {
 	bool drop_water_ready;
 	VEC3 dash_target;
 
-	float speed = 2.f;
+	float speed = 4.f;
 	float dash_speed = 20.f;
 	float rotation_speed = deg2rad(200);
 	float max_dash_player_distance = 70.f;
