@@ -7,7 +7,7 @@
 #include "utils/XMLParser.h"
 
 #define DMG_SCALE_ACTION_INI	1.0f
-#define DMG_SCALE_ENEMY_INI		0.1f
+#define DMG_SCALE_ENEMY_INI		1.0f
 
 // ------------------------------------
 struct TCompLife : public TCompBase {
@@ -65,9 +65,9 @@ struct TCompLife : public TCompBase {
 		}
 	}
 
-	void setMaxLife(float max) { 
+	void setMaxLife(float max) {
 		maxlife = max;
-		currentlife = max; 
+		currentlife = max;
 	}
 
 	void renderInMenu() {
