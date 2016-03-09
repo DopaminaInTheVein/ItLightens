@@ -199,6 +199,9 @@
     <ClCompile Include="components\comp_generator.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="profiling\profiling.cpp">
+      <Filter>profiling</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -439,6 +442,9 @@
     <ClInclude Include="components\comp_generator.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="profiling\profiling.h">
+      <Filter>profiling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -503,6 +509,9 @@
     </Filter>
     <Filter Include="app_modules\io">
       <UniqueIdentifier>{a9e4179a-d89e-4a4d-86a7-45f6f384b662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="profiling">
+      <UniqueIdentifier>{77cfda78-8c78-4cd8-a585-4925331cc637}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

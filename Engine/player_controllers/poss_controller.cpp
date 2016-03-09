@@ -32,9 +32,10 @@ void PossController::UpdatePossession() {
 	else {
 		energyDecreasal(-getDeltaTime()*speedRecover);
 	}
-
+#ifndef NDEBUG
 	____TIMER_CHECK_DO_(timerShowEnergy);
 	____TIMER_CHECK_DONE_(timerShowEnergy);
+#endif
 }
 
 void PossController::onSetEnable(const TMsgControllerSetEnable& msg) {

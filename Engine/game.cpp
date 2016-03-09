@@ -130,9 +130,11 @@ void CApp::exitGame() {
 
 // ----------------------------------
 void CApp::update(float elapsed) {
-	for (auto it : mod_update)
+	PROFILE_FUNCTION("update");
+	for (auto it : mod_update) {
+		PROFILE_FUNCTION(it->getName());
 		it->update(elapsed);
-
+	}
 	static float ctime = 0.f;
 	ctime += elapsed* 0.01f;
 
@@ -141,6 +143,7 @@ void CApp::update(float elapsed) {
 
 // ----------------------------------
 void CApp::render() {
+	PROFILE_FUNCTION("render");
 	{
 		CTraceScoped scope("initFrame");
 

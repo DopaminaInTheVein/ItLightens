@@ -22,6 +22,7 @@ CRender::CRender()
 { }
 
 void CRender::swapChain() {
+	PROFILE_FUNCTION("swap");
 	swap_chain->Present(0, 0);
 }
 

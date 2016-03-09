@@ -7,6 +7,7 @@
 ray_cast_halfway Physics::RayCastHalfWay;
 
 ray_cast_result Physics::calcRayCast(const ray_cast_query& query) {
+	PROFILE_FUNCTION("raycast");
 	ray_cast_result res;
 	RayCastHalfWay = ray_cast_halfway(query);
 	RayCastHalfWay.query.direction.Normalize();

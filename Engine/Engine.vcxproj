@@ -158,6 +158,7 @@
     <ClCompile Include="physics\physics.cpp" />
     <ClCompile Include="prefabs\magnetic_bomb.cpp" />
     <ClCompile Include="prefabs\static_bomb.cpp" />
+    <ClCompile Include="profiling\profiling.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
     <ClCompile Include="render\material.cpp" />
     <ClCompile Include="render\mesh.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="physics\physics.h" />
     <ClInclude Include="prefabs\magnetic_bomb.h" />
     <ClInclude Include="prefabs\static_bomb.h" />
+    <ClInclude Include="profiling\profiling.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
     <ClInclude Include="render\gpu_trace.h" />
     <ClInclude Include="render\material.h" />

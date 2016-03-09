@@ -11,6 +11,7 @@
 
 bool CSimplePhysx::isMovementValid(CHandle h, std::string tag)
 {
+	PROFILE_FUNCTION("movimentValid");
 	vector<string> objToCollide = relations[tag];
 	for (auto objs : objToCollide) {
 		VHandles objs_h = tags_manager.getHandlesByTag(getID(objs.c_str()));

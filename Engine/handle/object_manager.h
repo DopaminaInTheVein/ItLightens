@@ -91,8 +91,10 @@ public:
 
 	// -------------------------
 	void updateAll(float dt) override {
+		PROFILE_FUNCTION(getName());
 		auto o = objs;
 		for (size_t i = 0; i < num_objs_used; ++i, ++o) {
+			PROFILE_FUNCTION("object");
 			o->update(dt);
 		}
 	}

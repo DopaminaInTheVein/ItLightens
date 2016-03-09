@@ -27,6 +27,12 @@ void CImGuiModule::stop() {
 
 void CImGuiModule::update(float dt) {
 	ImGui_ImplDX11_NewFrame();
+#ifdef PROFILING_ENABLED
+	static int nframes = 5;
+	ImGui::InputInt("NFrames", &nframes, 1, 5);
+	if (ImGui::Button("Start Capture Profiling"))
+		profiler.setNFramesToCapture(nframes);
+#endif
 
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_MenuBar;

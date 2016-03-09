@@ -6,6 +6,7 @@ CHandleManager* CHandleManager::all_managers[CHandle::max_types];
 std::map<std::string, CHandleManager*> CHandleManager::all_manager_by_name;
 
 void CHandleManager::destroyAllPendingObjects() {
+	PROFILE_FUNCTION("destryoPendingObj");
   for (uint32_t i = 1; i < next_type_of_handle_manager; ++i)
     all_managers[i]->destroyPendingObjects();
 }
