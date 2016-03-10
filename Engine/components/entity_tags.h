@@ -13,6 +13,7 @@ typedef std::vector< CEntity * > VEntities;
 class TTagsManager : private std::map< TTagID, VHandles > {
 public:
 	void addTag(CHandle h, TTagID tag_id);
+	void removeTag(CHandle h, TTagID tag_id);
 	const VHandles& getHandlesByTag(TTagID tag_id) const;
 	VEntities getHandlesPointerByTag(TTagID tag_id);
 	CHandle getFirstHavingTag(TTagID tag_id) const;

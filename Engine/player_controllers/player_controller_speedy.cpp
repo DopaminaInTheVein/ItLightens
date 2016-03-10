@@ -371,9 +371,13 @@ void player_controller_speedy::resetDropWaterTimer() {
 }
 
 void player_controller_speedy::DisabledState() {
+	CHandle h = CHandle(this);
+	tags_manager.removeTag(h.getOwner(), getID("target"));
 }
 
 void player_controller_speedy::InitControlState() {
+	CHandle h = CHandle(this);
+	tags_manager.addTag(h.getOwner(), getID("target"));
 	ChangeState("idle");
 	//ChangePose(pose_idle);
 }

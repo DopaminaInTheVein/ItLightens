@@ -51,7 +51,7 @@ class beacon_controller : public aicontroller, public TCompBase {
 	float		t_max_sonar = 20.0f;
 	float		t_max_empty = 15.0f;
 	float		t_max_disable = 40.0f;	
-											//--------------------------------------
+	//--------------------------------------
 
 public:
 

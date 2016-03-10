@@ -291,8 +291,12 @@ void player_controller_cientifico::renderInMenu()
 }
 
 void player_controller_cientifico::DisabledState() {
+	CHandle h = CHandle(this);
+	tags_manager.removeTag(h.getOwner(), getID("target"));
 }
 void player_controller_cientifico::InitControlState() {
+	CHandle h = CHandle(this);
+	tags_manager.addTag(h.getOwner(), getID("target"));
 	ChangeState("idle");
 }
 CEntity* player_controller_cientifico::getMyEntity() {

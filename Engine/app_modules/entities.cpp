@@ -236,6 +236,7 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
+
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
 	getHandleManager<player_controller_speedy>()->updateAll(dt);

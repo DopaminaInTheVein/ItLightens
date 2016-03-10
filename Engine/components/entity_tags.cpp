@@ -14,6 +14,16 @@ void TTagsManager::addTag(CHandle h, TTagID tag_id) {
 	}
 }
 
+void TTagsManager::removeTag(CHandle h, TTagID tag_id)
+{
+	for (auto& it_m : tags_manager) {
+		if (it_m.first == tag_id) {
+			it_m.second.erase(std::remove(it_m.second.begin(), it_m.second.end(), h), it_m.second.end());
+		}
+	}
+
+}
+
 // ---------------------------------------
 CHandle TTagsManager::getFirstHavingTag(TTagID tag_id) const {
 	auto h = getHandlesByTag(tag_id);

@@ -78,6 +78,9 @@ void player_controller_mole::UpdateMovingWithOther() {
 }
 
 void player_controller_mole::UpdateUnpossess() {
+	CHandle h = CHandle(this);
+	tags_manager.removeTag(h.getOwner(), getID("target"));
+
 	if (boxGrabbed) {
 		LeaveBox();
 	}
@@ -188,6 +191,8 @@ bool player_controller_mole::nearToBox() {
 }
 
 void player_controller_mole::InitControlState() {
+	CHandle h = CHandle(this);
+	tags_manager.addTag(h.getOwner(), getID("target"));
 	ChangeState("idle");
 }
 
