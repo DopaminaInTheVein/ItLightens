@@ -58,6 +58,7 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
 }
 
 void CRenderManager::renderAll() {
+  PROFILE_FUNCTION("RenderManager");
   CTraceScoped scope("RenderManager");
 
   if (!in_order) {

@@ -8,7 +8,15 @@
     <controller_1st_person/>
   </entity>
 
-  <entity>
+    <entity prefab="bullet"/>
+    <entity prefab="bullet">
+        <life points="20"/>
+    </entity>
+    <entity prefab="bullet">
+        <life points="30"/>
+    </entity>
+
+    <entity>
     <tag name="player"/>
     <transform pos="3 3 1"/>
     <name name="john"/>

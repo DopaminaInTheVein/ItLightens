@@ -25,6 +25,7 @@
 // Windows
 
 // Engine ...
+#include "profiling/profiling.h"
 #include "utils/data_provider.h"
 #include "utils/utils.h"
 #include "geometry/geometry.h"

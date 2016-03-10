@@ -183,6 +183,22 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
     return mesh;
   }
   // ----------------------------------
+  else if (name == "line.mesh") {
+    SimpleVertexColored vtxs[2] =
+    {
+      { 0.0f, 0.0f, 0.0f,    1, 1, 1, 1 },    // X+
+      { 0.0f, 0.0f, 1.0f,    1, 1, 1, 1 },
+    };
+    if (!mesh->create(2
+      , sizeof(SimpleVertexColored)
+      , vtxs
+      , 0, 0, nullptr
+      , CMesh::VTX_DECL_POSITION_COLOR
+      , CMesh::LINE_LIST))
+      return nullptr;
+    return mesh;
+  }
+  // ----------------------------------
   else if (name == "frustum.mesh") {
     float zfar = 1.f;
     float znear = 0.f;

@@ -19,6 +19,7 @@ public:
     , TEXTURE
     , MATERIAL
     , STATIC_MESH
+    , SKELETON
     , NUM_RESOURCES_TYPE
   };
   static const char* getTypeName(eType atype);

@@ -10,6 +10,7 @@
 #include "comp_controller_1st_person.h"
 #include "comp_hierarchy.h"
 #include "comp_life.h"
+#include "skeleton/comp_skeleton.h"
 
 #endif
 

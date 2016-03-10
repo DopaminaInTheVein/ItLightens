@@ -3,6 +3,7 @@
 
 #include "comp_base.h"
 #include "comp_msgs.h"
+#include "imgui/imgui.h"
 
 // ------------------------------------
 struct TCompLife : public TCompBase {
@@ -13,8 +14,15 @@ struct TCompLife : public TCompBase {
   ~TCompLife() {
     dbg("dtor of TCompLife\n");
   }
+  bool load(MKeyValue& atts) {
+    life = atts.getFloat("points", 10.f);
+    return true;
+  }
   void onCreate(const TMsgEntityCreated&) {
     dbg("TCompLife on TMsgEntityCreated\n");
+  }
+  void renderInMenu() {
+    ImGui::DragFloat("Life", &life, 0, 100.f);
   }
   void onDamage(const TMsgDamage& msg) {
     life -= msg.points;

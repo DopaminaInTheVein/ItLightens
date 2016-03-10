@@ -10,16 +10,12 @@
 #include "app_modules/io/io.h"
 
 struct TCompController1stPerson : public TCompBase {
-  float   yaw;
-  float   pitch;
   float   rotation_sensibility;
   float   pan_sensibility;
   float   speed_reduction_factor;
   VEC3    speed;
   TCompController1stPerson()
-    : yaw(deg2rad(0.f))
-    , pitch(deg2rad(0.f))
-    , rotation_sensibility(deg2rad(45.0f) / 250.0f)
+    : rotation_sensibility(deg2rad(45.0f) / 250.0f)
     , pan_sensibility(0.01f)
     , speed(0.f,0.f,0.f)
     , speed_reduction_factor(0.99f)
@@ -30,6 +26,9 @@ struct TCompController1stPerson : public TCompBase {
     CEntity* e_owner = CHandle(this).getOwner();
     TCompTransform* my_tmx = e_owner->get<TCompTransform>();
     VEC3 origin = my_tmx->getPosition();
+
+    float yaw, pitch;
+    my_tmx->getAngles(&yaw, &pitch);
 
     speed *= speed_reduction_factor;
 

@@ -15,6 +15,7 @@
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
 #include "app_modules/io/io.h"
+#include "components/entity_parser.h"
 #include "handle/handle_manager.h"
 
 CHandle       h_camera;
@@ -75,6 +76,8 @@ bool CApp::start() {
 
   h_camera = tags_manager.getFirstHavingTag(getID("the_camera"));
 
+  CHandle h = createPrefab("bullet");
+
   return true;
 }
 
@@ -97,23 +100,33 @@ void CApp::stop() {
 
 // ----------------------------------
 void CApp::update(float elapsed) {
+  PROFILE_FUNCTION("CApp::update");
 
-  for (auto it : mod_update )
+  for (auto it : mod_update) {
+    PROFILE_FUNCTION(it->getName());
     it->update(elapsed);
+  }
 
-  Resources.renderUIDebug();
+  {
+    PROFILE_FUNCTION("Resources.renderUIDebug");
+    Resources.renderUIDebug();
+  }
 
   static float ctime = 0.f;
   ctime += elapsed* 0.01f;
 
-  CHandleManager::destroyAllPendingObjects();
+  {
+    PROFILE_FUNCTION("destroyAllPendingObjects");
+    CHandleManager::destroyAllPendingObjects();
+  }
 }
 
 // ----------------------------------
 void CApp::render() {
+  PROFILE_FUNCTION("CApp::render");
   {
+    PROFILE_FUNCTION("initFrame");
     CTraceScoped scope("initFrame");
-
     static CCamera camera;
     if (h_camera.isValid()) {
       CEntity* e = h_camera;
@@ -147,6 +160,7 @@ void CApp::render() {
   RenderManager.renderAll();
 
   for (auto it : mod_renders) {
+    PROFILE_FUNCTION(it->getName());
     CTraceScoped scope( it->getName() );
     it->render();
   }

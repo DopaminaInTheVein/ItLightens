@@ -27,6 +27,10 @@ public:
     return comps[hm->getType()];
   }
 
+  CHandle getByCompIndex(uint32_t idx) {
+    return comps[idx];
+  }
+
   template< typename TObj >
   void del() {
     get<TObj>().destroy();

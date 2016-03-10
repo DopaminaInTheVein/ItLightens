@@ -123,6 +123,18 @@
     <ClCompile Include="app_modules\io\keyboard.cpp">
       <Filter>app_modules\io</Filter>
     </ClCompile>
+    <ClCompile Include="profiling\profiling.cpp">
+      <Filter>profiling</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\comp_skeleton.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\skeleton.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="render\draw_utils.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -285,6 +297,21 @@
     <ClInclude Include="components\comp_controller_1st_person.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="profiling\profiling.h">
+      <Filter>profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\timer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\comp_skeleton.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\skeleton.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="render\draw_utils.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -328,6 +355,12 @@
     </Filter>
     <Filter Include="app_modules\io">
       <UniqueIdentifier>{6ac0be2a-9d77-4643-89cc-aa139df1bc56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="profiling">
+      <UniqueIdentifier>{0d247dec-2ad0-4680-97c4-c9c539591ed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="skeleton">
+      <UniqueIdentifier>{40aa0e38-f738-4369-826d-2acf6a821c92}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

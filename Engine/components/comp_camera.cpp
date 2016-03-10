@@ -3,13 +3,10 @@
 #include "comp_transform.h"
 #include "resources/resources_manager.h"
 #include "render/mesh.h"
-#include "render/shader_cte.h"
+#include "render/draw_utils.h"
 #include "entity.h"
 #include "utils/XMLParser.h"
 #include "imgui/imgui.h"
-
-#include "contants/ctes_object.h"
-extern CShaderCte< TCteObject > shader_ctes_object;
 
 bool TCompCamera::load(MKeyValue& atts) {
   float znear = atts.getFloat("znear", 0.1f);

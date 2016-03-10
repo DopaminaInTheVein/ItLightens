@@ -12,6 +12,11 @@ class CObjectManager : public CHandleManager
 
   TObj* objs;
 
+  //void cloneObj(TObj* source) override {
+  //  TObj* addr_to_use = objs + internal_idx;
+  //  new (addr_to_use) TObj( *source );
+  //}
+
   void createObj(uint32_t internal_idx) override {
     TObj* addr_to_use = objs + internal_idx;
     new (addr_to_use) TObj;
@@ -93,8 +98,10 @@ public:
 
   // -------------------------
   void updateAll( float dt ) override {
+    PROFILE_FUNCTION( getName() );
     auto o = objs;
     for (size_t i = 0; i<num_objs_used; ++i, ++o) {
+      PROFILE_FUNCTION("object");
       o->update( dt );
     }
   }

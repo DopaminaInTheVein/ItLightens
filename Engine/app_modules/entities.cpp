@@ -18,6 +18,7 @@ DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
 DECL_OBJ_MANAGER("controller_1st_person", TCompController1stPerson);
 DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
 DECL_OBJ_MANAGER("hierarchy", TCompHierarchy);
+DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 
 DECL_OBJ_MANAGER("life", TCompLife);
 
@@ -38,6 +39,7 @@ bool CEntitiesModule::start() {
   getHandleManager<TCompController3rdPerson>()->init(4);
   getHandleManager<TCompController1stPerson>()->init(4);
   getHandleManager<TCompHierarchy>()->init(nmax);
+  getHandleManager<TCompSkeleton>()->init(nmax);
 
   getHandleManager<TCompLife>()->init(nmax);
 
@@ -76,7 +78,8 @@ void CEntitiesModule::update(float dt) {
 
   getHandleManager<TCompController3rdPerson>()->updateAll(dt);
   getHandleManager<TCompController1stPerson>()->updateAll( dt );
-  getHandleManager<TCompCamera>()->updateAll( dt );
+  getHandleManager<TCompCamera>()->updateAll(dt);
+  getHandleManager<TCompSkeleton>()->updateAll( dt );
   
   // Move this line to the physics module maybe?
   // Physics.get()..update( dt );
@@ -103,7 +106,8 @@ void CEntitiesModule::render() {
   // All components render in this stage with this 'tech'
   tech->activate();
   getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
-  getHandleManager<TCompCamera>()->onAll( &TCompCamera::render );
+  getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
+  getHandleManager<TCompSkeleton>()->onAll( &TCompSkeleton::render );
   //getHandleManager<TCompLife>()->renderAll();
 }
 

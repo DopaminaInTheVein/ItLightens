@@ -20,7 +20,8 @@ CRender::CRender()
 { }
 
 void CRender::swapChain() {
-	swap_chain->Present(0, 0);
+  PROFILE_FUNCTION("CRender::swapChain");
+  swap_chain->Present(0, 0);
 }
 
 void CRender::destroyDevice() {
