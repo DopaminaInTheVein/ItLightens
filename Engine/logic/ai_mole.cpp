@@ -137,8 +137,8 @@ void ai_mole::NextWptState()
 			ChangePose(pose_run);
 			VEC3 front = transform->getFront();
 			VEC3 pos = transform->getPosition();
-			pos.x += front.x*getDeltaTime() * 2;
-			pos.z += front.z*getDeltaTime() * 2;
+			pos.x += front.x*mole_speed*getDeltaTime() * 2;
+			pos.z += front.z*mole_speed*getDeltaTime() * 2;
 			transform->setPosition(pos);
 		}
 		else {
@@ -216,12 +216,12 @@ void ai_mole::NextWptCarryState() {
 		//MOVE
 		VEC3 front = transform->getFront();
 		VEC3 pos = transform->getPosition();
-		pos.x += front.x*getDeltaTime();
-		pos.z += front.z*getDeltaTime();
+		pos.x += front.x*mole_speed*getDeltaTime();
+		pos.z += front.z*mole_speed*getDeltaTime();
 		transform->setPosition(pos);
 		VEC3 posBox = transformBox->getPosition();
-		posBox.x += front.x*getDeltaTime();
-		posBox.z += front.z*getDeltaTime();
+		posBox.x += front.x*mole_speed*getDeltaTime();
+		posBox.z += front.z*mole_speed*getDeltaTime();
 		transformBox->setPosition(posBox);
 	}
 	else {

@@ -26,6 +26,8 @@
 #include <windows.h>
 
 class ai_mole : public ai_poss, public TCompBase {
+	float mole_speed = 2.f;
+
 	int towptbox;
 	int towptleave;
 
