@@ -87,10 +87,8 @@ void ai_scientific::SeekWorkbench()
 	for (int i = 1; i <= wbs; i++) {		//fisrt start at 1
 		std::string name = base_name + std::to_string(i);
 		if (SBB::readInt(name) == workbench_controller::INACTIVE) {
-			SetMyEntity();
-			TCompTransform* tMe = myEntity->get<TCompTransform>();
 			VEC3 wb_pos = SBB::readVEC3(name);
-			if (simpleDistXZ(tMe->getPosition(), wb_pos) < d_beacon_simple) {
+			if (wb_pos.z > zmin && wb_pos.z < zmax) {
 				obj_position = wb_pos;
 				wb_to_go_name = name;
 				actual_action = CREATE_BEACON;
@@ -230,9 +228,7 @@ void ai_scientific::onRemoveBeacon(const TMsgBeaconToRemove& msg)
 	if (actual_action == IDLE || actual_action == WANDER) {
 		//TODO: preference for closest objectives
 		if (SBB::readInt(msg.name_beacon) != beacon_controller::TO_REMOVE_TAKEN) {
-			SetMyEntity();
-			TCompTransform* tMe = myEntity->get<TCompTransform>();
-			if (simpleDistXZ(tMe->getPosition(), msg.pos_beacon) < d_beacon_simple) {
+			if (msg.pos_beacon.z > zmin && msg.pos_beacon.z < zmax) {
 				SBB::postInt(msg.name_beacon, beacon_controller::TO_REMOVE_TAKEN);
 				obj_position = beacon_to_go = msg.pos_beacon;
 				beacon_to_go_name = msg.name_beacon;
@@ -247,9 +243,7 @@ void ai_scientific::onEmptyBeacon(const TMsgBeaconEmpty & msg)
 {
 	if (actual_action == IDLE || actual_action == WANDER) {
 		if (SBB::readInt(msg.name) != beacon_controller::INACTIVE_TAKEN) {
-			SetMyEntity();
-			TCompTransform* tMe = myEntity->get<TCompTransform>();
-			if (simpleDistXZ(tMe->getPosition(), msg.pos) < d_beacon_simple) {
+			if (msg.pos.z > zmin && msg.pos.z < zmax) {
 				beacon_to_go = msg.pos;
 				beacon_to_go_name = msg.name;
 				actual_action = CREATE_BEACON;
@@ -350,7 +344,6 @@ CEntity* ai_scientific::getMyEntity() {
 char nameVariable[10]; sprintf(nameVariable, "kpt%d_%s", index, nameSufix);
 
 bool ai_scientific::load(MKeyValue& atts) {
-	dbg("load de AI_GUARD\n");
 	int n = atts.getInt("kpt_size", 0);
 	keyPoints.resize(n);
 	for (unsigned int i = 0; i < n; i++) {
@@ -363,5 +356,9 @@ bool ai_scientific::load(MKeyValue& atts) {
 			, atts.getInt(atrWait, 0)
 			);
 	}
+
+	zmin = atts.getFloat("zmin",0.0f);
+	zmax = atts.getFloat("zmax",0.0f);
+
 	return true;
 }
