@@ -42,12 +42,12 @@ public:
 	int selectedWallToBreaki = 0;
 
 	//Cambio Malla
-	TCompRenderStaticMesh* actual_render = nullptr;
-	CHandle pose_idle;
-	CHandle pose_run;
-	CHandle pose_jump;
-	CHandle pose_box;
-	CHandle pose_wall;
+	TCompRenderStaticMesh* mesh;
+	string pose_idle_route;
+	string pose_run_route;
+	string pose_jump_route;
+	string pose_box_route;
+	string pose_wall_route;
 
 	void update_msgs() override;
 
@@ -73,7 +73,7 @@ public:
 	}
 
 	//Cambio Malla
-	void ChangePose(CHandle new_pos_h);
+	void ChangePose(string new_pose_route);
 
 	//Overload function for handler_manager
 	player_controller_mole& player_controller_mole::operator=(player_controller_mole arg) { return arg; }

@@ -29,35 +29,13 @@ void ai_speedy::Init()
 	drop_water_timer = drop_water_timer_reset;
 	drop_water_ready = false;
 
-	//Mallas
-	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_void = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	CEntity* myEntity = myParent;
-	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
-	actual_render = pose_idle;
+	// Mesh management
+	mesh = myEntity->get<TCompRenderStaticMesh>();
 
-	pose_idle.setOwner(myEntity);
-	pose_run.setOwner(myEntity);
-	pose_jump.setOwner(myEntity);
-	pose_void.setOwner(myEntity);
+	pose_idle_route = "static_meshes/speedy/speedy.static_mesh";
+	pose_jump_route = "static_meshes/speedy/speedy_jump.static_mesh";
+	pose_run_route = "static_meshes/speedy/speedy_run.static_mesh";
 
-	TCompRenderStaticMesh *mesh;
-
-	mesh = pose_idle;
-	mesh->static_mesh = Resources.get("static_meshes/speedy.static_mesh")->as<CStaticMesh>();
-
-	mesh = pose_jump;
-	mesh->static_mesh = Resources.get("static_meshes/speedy_jump.static_mesh")->as<CStaticMesh>();
-
-	mesh = pose_run;
-	mesh->static_mesh = Resources.get("static_meshes/speedy_run.static_mesh")->as<CStaticMesh>();
-
-	mesh = pose_void;
-	mesh->static_mesh = Resources.get("static_meshes/void.static_mesh")->as<CStaticMesh>();
-
-	actual_render->registerToRender();
-	ChangePose(pose_idle);
 	// reset the state
 	ChangeState("idle");
 }
@@ -76,10 +54,6 @@ void ai_speedy::update(float elapsed) {
 	updateDashTimer();
 	updateDropWaterTimer();
 	Recalc();
-	if (possessed)
-		ChangePose(pose_void);
-	else if (state != "idle" && state != "falling")
-		ChangePose(pose_run);
 }
 
 // Loading the wpts
@@ -104,7 +78,7 @@ void ai_speedy::SetMyEntity() {
 // Speedy states
 
 void ai_speedy::IdleState() {
-	ChangePose(pose_idle);
+	ChangePose(pose_idle_route);
 	ChangeState("nextwpt");
 }
 
@@ -112,10 +86,10 @@ void ai_speedy::NextWptState()
 {
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
-	ChangePose(pose_idle);
 	bool aimed = aimToTarget(target);
 
 	if (aimed) {
+		ChangePose(pose_run_route);
 		ChangeState("seekwpt");
 	}
 }
@@ -129,16 +103,20 @@ void ai_speedy::SeekWptState()
 	if (next_action == "dashtoplayer" && dash_ready) {
 		dash_target = player_transform->getPosition();
 		float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
-		if (abs(distance_to_player) <= max_dash_player_distance && abs(dash_target.y - transform->getPosition().y) < 0.5f)
+		if (abs(distance_to_player) <= max_dash_player_distance && abs(dash_target.y - transform->getPosition().y) < 0.5f) {
+			ChangePose(pose_run_route);
 			ChangeState(next_action);
+		}
 		else if (abs(distance) > 0.1f)
 			moveFront(speed);
 	}
 	else if (next_action == "dashtonewpoint" && dash_ready) {
 		dash_target = VEC3(30.f, 0.0f, 0.0f);
+		ChangePose(pose_run_route);
 		ChangeState(next_action);
 	}
 	else if (next_action == "dashtopoint" && dash_ready) {
+		ChangePose(pose_run_route);
 		ChangeState(next_action);
 	}
 	else if (abs(distance) > 0.1f) {
@@ -149,10 +127,14 @@ void ai_speedy::SeekWptState()
 		float distance_to_next_wpt = squaredDist(transform->getPosition(), fixedWpts[(curwpt + 1) % fixedWpts.size()]);
 		curwpt = (curwpt + 1) % fixedWpts.size();
 
-		if (distance_to_next_wpt > 200.f)
+		if (distance_to_next_wpt > 200.f) {
+			ChangePose(pose_run_route);
 			ChangeState("dashtopoint");
-		else 
-			ChangeState("nextwpt");		
+		}
+		else {
+			ChangePose(pose_idle_route);
+			ChangeState("nextwpt");
+		}
 	}
 }
 
@@ -160,7 +142,7 @@ void ai_speedy::DashToPlayerState() {
 	bool arrived = dashToTarget(dash_target);
 	if (arrived) {
 		resetDashTimer();
-		ChangePose(pose_idle);
+		ChangePose(pose_idle_route);
 		ChangeState("nextwpt");
 	}
 }
@@ -168,7 +150,7 @@ void ai_speedy::DashToPointState() {
 	bool arrived = dashToTarget(fixedWpts[curwpt]);
 	if (arrived) {
 		resetDashTimer();
-		ChangePose(pose_idle);
+		ChangePose(pose_idle_route);
 		ChangeState("nextwpt");
 	}
 }
@@ -177,7 +159,7 @@ void ai_speedy::DashToNewPointState() {
 	bool arrived = dashToTarget(dash_target);
 	if (arrived) {
 		resetDashTimer();
-		ChangePose(pose_idle);
+		ChangePose(pose_idle_route);
 		ChangeState("nextwpt");
 	}
 }
@@ -200,7 +182,6 @@ string ai_speedy::decide_next_action() {
 }
 
 bool ai_speedy::aimToTarget(VEC3 target) {
-	ChangePose(pose_idle);
 	float delta_yaw = transform->getDeltaYawToAimTo(target);
 
 	if (abs(delta_yaw) > 0.001f) {
@@ -215,7 +196,6 @@ bool ai_speedy::aimToTarget(VEC3 target) {
 }
 
 void ai_speedy::moveFront(float movement_speed) {
-	ChangePose(pose_run);
 	VEC3 front = transform->getFront();
 	VEC3 position = transform->getPosition();
 
@@ -324,11 +304,11 @@ void ai_speedy::resetDropWaterTimer() {
 }
 
 //Cambio de malla
-void ai_speedy::ChangePose(CHandle new_pos_h)
-{
-	TCompRenderStaticMesh *new_pose = new_pos_h;
-	if (new_pose == actual_render) return;
-	actual_render->unregisterFromRender();
-	actual_render = new_pose;
-	actual_render->registerToRender();
+void ai_speedy::ChangePose(string new_pose_route) {
+	mesh->unregisterFromRender();
+	MKeyValue atts_mesh;
+	atts_mesh["name"] = new_pose_route;
+	mesh->load(atts_mesh);
+	mesh->registerToRender();
 }
+
