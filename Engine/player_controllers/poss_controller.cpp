@@ -40,10 +40,9 @@ void PossController::UpdatePossession() {
 }
 
 void PossController::onDamage(const TMsgDamage& msg) {
+	CEntity* myParent = getMyEntity();
 	switch (msg.dmgType) {
-	case LASER:
-		CEntity* myParent = getMyEntity();
-		TCompName * myParentName = myParent->get<TCompName>();
+	case LASER:		
 		TMsgAISetPossessed msg;
 		msg.possessed = false;
 		myParent->sendMsg(msg);
