@@ -1459,6 +1459,14 @@
     <generator rad ="2" />
   </entity>
 
+  <entity>
+    <name name="wb_final_zone" />
+    <tag name="workbench" />
+    <transform pos="8.3 4 142.7" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh" />
+    <workbench/>
+  </entity>
+
   <!-- VICTORY POINT -->
   <entity>
     <name name="win_point" />
