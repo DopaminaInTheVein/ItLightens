@@ -62,7 +62,7 @@ void ai_scientific::LookForObj()
 	if (beacon_to_go_name != "") {
 		ChangeState("seekWB");
 	}
-	else if (keyPoints.size() > 0){
+	else if (keyPoints.size() > 0) {
 		ChangeState("nextKpt");
 	}
 }
@@ -87,12 +87,17 @@ void ai_scientific::SeekWorkbench()
 	for (int i = 1; i <= wbs; i++) {		//fisrt start at 1
 		std::string name = base_name + std::to_string(i);
 		if (SBB::readInt(name) == workbench_controller::INACTIVE) {
-			obj_position = SBB::readVEC3(name);
-			wb_to_go_name = name;
-			actual_action = CREATE_BEACON;
-			SBB::postInt(name, workbench_controller::INACTIVE_TAKEN);
-			ChangeState("aimToPos");
-			return;
+			SetMyEntity();
+			TCompTransform* tMe = myEntity->get<TCompTransform>();
+			VEC3 wb_pos = SBB::readVEC3(name);
+			if (simpleDistXZ(tMe->getPosition(), wb_pos) < d_beacon_simple) {
+				obj_position = wb_pos;
+				wb_to_go_name = name;
+				actual_action = CREATE_BEACON;
+				SBB::postInt(name, workbench_controller::INACTIVE_TAKEN);
+				ChangeState("aimToPos");
+				return;
+			}
 		}
 	}
 
@@ -225,11 +230,15 @@ void ai_scientific::onRemoveBeacon(const TMsgBeaconToRemove& msg)
 	if (actual_action == IDLE || actual_action == WANDER) {
 		//TODO: preference for closest objectives
 		if (SBB::readInt(msg.name_beacon) != beacon_controller::TO_REMOVE_TAKEN) {
-			SBB::postInt(msg.name_beacon, beacon_controller::TO_REMOVE_TAKEN);
-			obj_position = beacon_to_go = msg.pos_beacon;
-			beacon_to_go_name = msg.name_beacon;
-			actual_action = REMOVE_BEACON;
-			ChangeState("aimToPos");
+			SetMyEntity();
+			TCompTransform* tMe = myEntity->get<TCompTransform>();
+			if (simpleDistXZ(tMe->getPosition(), msg.pos_beacon) < d_beacon_simple) {
+				SBB::postInt(msg.name_beacon, beacon_controller::TO_REMOVE_TAKEN);
+				obj_position = beacon_to_go = msg.pos_beacon;
+				beacon_to_go_name = msg.name_beacon;
+				actual_action = REMOVE_BEACON;
+				ChangeState("aimToPos");
+			}
 		}
 	}
 }
@@ -238,11 +247,15 @@ void ai_scientific::onEmptyBeacon(const TMsgBeaconEmpty & msg)
 {
 	if (actual_action == IDLE || actual_action == WANDER) {
 		if (SBB::readInt(msg.name) != beacon_controller::INACTIVE_TAKEN) {
-			beacon_to_go = msg.pos;
-			beacon_to_go_name = msg.name;
-			actual_action = CREATE_BEACON;
-			SBB::postInt(msg.name, beacon_controller::INACTIVE_TAKEN);	//disable beacon for other bots
-			ChangeState("seekWB");
+			SetMyEntity();
+			TCompTransform* tMe = myEntity->get<TCompTransform>();
+			if (simpleDistXZ(tMe->getPosition(), msg.pos) < d_beacon_simple) {
+				beacon_to_go = msg.pos;
+				beacon_to_go_name = msg.name;
+				actual_action = CREATE_BEACON;
+				SBB::postInt(msg.name, beacon_controller::INACTIVE_TAKEN);	//disable beacon for other bots
+				ChangeState("seekWB");
+			}
 		}
 	}
 }

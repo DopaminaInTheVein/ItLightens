@@ -432,12 +432,12 @@ void ai_guard::shootToPlayer() {
 // -- Jurisdiction -- //
 bool ai_guard::inJurisdiction(VEC3 posPlayer) {
 	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur < jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
+	return distanceJur < jurRadiusSq;
 }
 
 bool ai_guard::outJurisdiction(VEC3 posPlayer) {
 	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_LEAVE;
+	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
 }
 
 // -- Reset Timers-- //
@@ -500,6 +500,7 @@ void ai_guard::renderInMenu() {
 
 void ai_guard::reduceStats()
 {
+	noShoot = true;
 	DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI / reduce_factor;
 	DIST_SQ_SHOT_AREA_ENTER = DIST_SQ_SHOT_AREA_ENTER_INI / reduce_factor;
 	DIST_SQ_SHOT_AREA_LEAVE = DIST_SQ_SHOT_AREA_LEAVE_INI / reduce_factor;

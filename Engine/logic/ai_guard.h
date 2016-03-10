@@ -112,7 +112,7 @@ class ai_guard : public TCompBase, public aicontroller
 
 	//from bombs
 	float reduce_factor = 3.0f;
-	float t_reduceStats_max = 15.0f;
+	float t_reduceStats_max = 15;
 	float t_reduceStats = 0.0f;
 
 public:
