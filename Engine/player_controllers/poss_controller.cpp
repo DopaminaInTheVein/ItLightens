@@ -6,6 +6,8 @@
 #include "components/comp_name.h"
 #include "app_modules\io\io.h"
 
+extern CHandle player;
+
 PossController::PossController() {
 	AddState(ST_DISABLED, (statehandler)&PossController::DisabledState);
 	AddState(ST_INIT_CONTROL, (statehandler)&PossController::InitControlState);
@@ -69,6 +71,7 @@ void PossController::onSetEnable(bool enabled) {
 	}
 	else {
 		CHandle hTarget = tags_manager.getFirstHavingTag(getID("target"));
+		//CHandle hTarget = player;
 
 		CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
 

@@ -290,9 +290,12 @@ void player_controller_cientifico::renderInMenu()
 	ImGui::Text("object: %d\n", obj);
 }
 
-void player_controller_cientifico::DisabledState() {
+void player_controller_cientifico::UpdateUnpossess() {
 	CHandle h = CHandle(this);
 	tags_manager.removeTag(h.getOwner(), getID("target"));
+}
+
+void player_controller_cientifico::DisabledState() {	
 }
 void player_controller_cientifico::InitControlState() {
 	CHandle h = CHandle(this);

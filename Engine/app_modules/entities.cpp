@@ -265,6 +265,7 @@ void CEntitiesModule::update(float dt) {
 	//TODO:REMOVE!!
 	getHandleManager<boxCollider>()->updateAll(dt);
 #endif
+
 }
 
 void CEntitiesModule::render() {

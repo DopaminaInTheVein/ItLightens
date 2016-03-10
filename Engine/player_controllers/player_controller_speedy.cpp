@@ -370,9 +370,12 @@ void player_controller_speedy::resetDropWaterTimer() {
 	drop_water_ready = false;
 }
 
-void player_controller_speedy::DisabledState() {
+void player_controller_speedy::UpdateUnpossess() {
 	CHandle h = CHandle(this);
 	tags_manager.removeTag(h.getOwner(), getID("target"));
+}
+
+void player_controller_speedy::DisabledState() {
 }
 
 void player_controller_speedy::InitControlState() {
