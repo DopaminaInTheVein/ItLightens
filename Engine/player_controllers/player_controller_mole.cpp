@@ -15,6 +15,7 @@
 #include "logic\ai_mole.h"
 
 void player_controller_mole::Init() {
+
 	om = getHandleManager<player_controller_mole>();	//player
 
 	AddState("grabBox", (statehandler)&player_controller_mole::GrabBox);
@@ -36,6 +37,7 @@ void player_controller_mole::Init() {
 
 	ChangeState("idle");
 }
+
 void player_controller_mole::UpdateInputActions() {
 	energyDecreasal(getDeltaTime()*0.5f);
 	if (state == "moving")

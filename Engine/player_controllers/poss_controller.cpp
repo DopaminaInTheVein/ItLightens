@@ -39,6 +39,22 @@ void PossController::UpdatePossession() {
 	____TIMER_CHECK_DONE_(timerShowEnergy);
 }
 
+void PossController::onDamage(const TMsgDamage& msg) {
+	switch (msg.dmgType) {
+	case LASER:
+		CEntity* myParent = getMyEntity();
+		TCompName * myParentName = myParent->get<TCompName>();
+		TMsgAISetPossessed msg;
+		msg.possessed = false;
+		myParent->sendMsg(msg);
+		UpdateUnpossess();
+		onSetEnable(false);
+		break;
+	case WATER:
+		break;
+	}
+}
+
 void PossController::onSetEnable(const TMsgControllerSetEnable& msg) {
 	onSetEnable(msg.enabled);
 }
