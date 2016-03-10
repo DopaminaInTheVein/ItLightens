@@ -84,6 +84,8 @@ public:
 	void updateDropWaterTimer();
 	void resetDropWaterTimer();
 
+	void UpdateUnpossess() override;
+
 	void DisabledState();
 	void InitControlState();
 	CEntity* getMyEntity();
