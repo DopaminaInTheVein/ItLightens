@@ -115,6 +115,8 @@ class ai_guard : public TCompBase, public aicontroller
 	float t_reduceStats_max = 15;
 	float t_reduceStats = 0.0f;
 
+	bool stunned;
+
 public:
 	void SelectActionState();
 	void NextActionState();
@@ -126,6 +128,7 @@ public:
 	void SoundDetectedState();
 	void LookArroundState();
 	void ShootingWallState();
+	void StuntState();
 
 	void Init() override;
 	void init() { Init(); }
@@ -135,6 +138,7 @@ public:
 	void reduceStats();
 	void resetStats();
 	void onMagneticBomb(const TMsgMagneticBomb& msg);
+	void onStaticBomb(const TMsgStaticBomb& msg);
 
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();
@@ -156,6 +160,7 @@ public:
 	//Cambio Malla
 	void ChangePose(CHandle new_pos_h);
 
+	float timerStunt, _timerStunt;
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)
 };
 

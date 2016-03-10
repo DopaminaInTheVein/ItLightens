@@ -51,9 +51,11 @@ void ai_guard::Init()
 	curkpt = 0;
 
 	//Other info
-	____TIMER_REDEFINE_(timerShootingWall, 8);
+	____TIMER_REDEFINE_(timerShootingWall, 3);
+	____TIMER_REDEFINE_(timerStunt, 3);
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
+	stunned = false;
 
 	//Mallas
 	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
@@ -289,16 +291,46 @@ void ai_guard::LookArroundState() {
 	}
 }
 
+void ai_guard::StuntState() {
+	____TIMER_CHECK_DO_(timerStunt);
+	ChangeState(ST_SELECT_ACTION);
+	stunned = false;
+	____TIMER_CHECK_DONE_(timerStunt);
+}
+
 /**************
 * Mensajes
 **************/
 void ai_guard::noise(const TMsgNoise& msg) {
 	if (outJurisdiction(msg.source)) return;
 	if (playerVisible()) return;
+	if (stunned) return;
 	if (canHear(msg.source, msg.intensity)) {
 		resetTimers();
 		noisePoint = msg.source;
 		ChangeState(ST_SOUND_DETECTED);
+	}
+}
+
+void ai_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
+{
+	VEC3 myPos = getTransform()->getPosition();
+	float d = squaredDist(msg.pos, myPos);
+
+	if (d < msg.r) {
+		reduceStats();
+		t_reduceStats = t_reduceStats_max;
+	}
+}
+
+void ai_guard::onStaticBomb(const TMsgStaticBomb& msg) {
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	VEC3 posPlayer = tPlayer->getPosition();
+	VEC3 myPos = getTransform()->getPosition();
+	if (squaredDist(msg.pos, posPlayer) < msg.r * msg.r) {
+		resetTimers();
+		stunned = true;
+		ChangeState("ST_STUNT");
 	}
 }
 
@@ -361,10 +393,11 @@ bool ai_guard::turnTo(VEC3 dest) {
 
 // -- Player Visible? -- //
 bool ai_guard::playerVisible() {
-	if (SBB::readBool("possMode")) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
+	if (SBB::readBool("possMode") && squaredDistXZ(myPos, posPlayer) > 25.f) return false;
+
 	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos) * 2) { //Pitch < 30
 		if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
 			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) { //Distancia
@@ -445,6 +478,7 @@ void ai_guard::resetTimers() {
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
 	____TIMER_RESET_(timerShootingWall);
+	____TIMER_RESET_(timerStunt);
 }
 
 /**************
@@ -523,17 +557,6 @@ void ai_guard::resetStats()
 	CONE_VISION = CONE_VISION_INI;
 	SPEED_ROT = SPEED_ROT_INI;
 	DAMAGE_LASER = DAMAGE_LASER_INI;
-}
-
-void ai_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
-{
-	VEC3 myPos = getTransform()->getPosition();
-	float d = squaredDist(msg.pos, myPos);
-
-	if (d < msg.r) {
-		reduceStats();
-		t_reduceStats = t_reduceStats_max;
-	}
 }
 
 //Cambio de malla

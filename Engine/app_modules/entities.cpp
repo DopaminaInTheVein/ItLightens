@@ -115,7 +115,7 @@ bool CEntitiesModule::start() {
 
 	//bombs
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
-	//SUBSCRIBE(ai_guard, TMsgStaticBomb, onStaticBomb);		//TODO: should do something
+	SUBSCRIBE(ai_guard, TMsgStaticBomb, onStaticBomb);		//TODO: should do something
 	SUBSCRIBE(ai_mole, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(ai_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(ai_guard, TMsgMagneticBomb, onMagneticBomb);
@@ -236,7 +236,6 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
 	getHandleManager<player_controller_speedy>()->updateAll(dt);
@@ -278,7 +277,6 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);		//axis trasnfrom
 #endif
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
-
 }
 
 void CEntitiesModule::renderInMenu() {
