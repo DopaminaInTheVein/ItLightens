@@ -99,7 +99,6 @@ public:
 	void resetDropWaterTimer();
 
 	//Cambio Malla
-	//void ChangePose(CHandle new_pos_h);
 	void ChangePose(string new_pose_route);
 };
 

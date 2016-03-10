@@ -149,7 +149,9 @@ bool CEntitiesModule::start() {
 	//Damage
 	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(player_controller, TMsgDamage, onDamage);
-	//SUBSCRIBE(PossController, TMsgDamage, onDamage);
+	SUBSCRIBE(player_controller_cientifico, TMsgDamage, onDamage);
+	SUBSCRIBE(player_controller_speedy, TMsgDamage, onDamage);
+	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
 
 	//colliders
 	SUBSCRIBE(sphereCollider, TMsgEntityCreated, onCreate);
