@@ -20,8 +20,10 @@ TCompTransform * ai_guard::getTransform() {
 }
 
 CEntity* ai_guard::getPlayer() {
+	VHandles targets = tags_manager.getHandlesByTag(getID("target"));
+	thePlayer = targets[targets.size() - 1];
 	CEntity* player = thePlayer;
-	return player;;
+	return player;
 }
 
 /**************
@@ -396,8 +398,9 @@ bool ai_guard::playerVisible() {
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
-	if (SBB::readBool("possMode") && squaredDistXZ(myPos, posPlayer) > 25.f) return false;
-
+	if (SBB::readBool("possMode") && squaredDistXZ(myPos, posPlayer) > 25.f) {
+		return false;
+	}
 	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos) * 2) { //Pitch < 30
 		if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
 			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) { //Distancia
@@ -405,10 +408,16 @@ bool ai_guard::playerVisible() {
 					float distanceJur = squaredDistXZ(posPlayer, jurCenter);
 					ray_cast_query rcQuery;
 					float distRay;
-					CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
-					if (collider.isValid()) { //No bloquea vision
-						if (collider == thePlayer) {
-							return true;
+					if (SBB::readBool("possMode")) {
+						// Estas poseyendo, estas cerca y dentro del cono de vision, no hace falta raycast
+						return true;
+					}
+					else {
+						CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
+						if (collider.isValid()) { //No bloquea vision
+							if (collider == thePlayer) {
+								return true;
+							}
 						}
 					}
 				}
@@ -441,11 +450,23 @@ void ai_guard::shootToPlayer() {
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 
-	//RayCast
+	bool damage = false;
 	float distRay;
-	CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
-	if (collider == thePlayer) {
-		CEntity* ePlayer = thePlayer;
+	if (SBB::readBool("possMode")) {
+		damage = true;
+		distRay = realDist(myPos, posPlayer);
+	}
+	else {
+		//RayCast
+		CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
+		if (collider == CHandle(getPlayer())) {
+			damage = true;
+		}
+	}
+
+	//Do damage
+	if (damage) {
+		CEntity* ePlayer = getPlayer();
 		TMsgDamage dmg;
 		dmg.source = getTransform()->getPosition();
 		dmg.sender = myParent;
