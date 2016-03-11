@@ -343,7 +343,7 @@ void ai_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 
  // -- Go To -- //
 bool ai_guard::canHear(VEC3 position, float intensity) {
-	return (squaredDistXZ(getTransform()->getPosition(), position) > DIST_SQ_SOUND_DETECTION);
+	return (squaredDistXZ(getTransform()->getPosition(), position) < DIST_SQ_SOUND_DETECTION);
 }
 
 // -- Go To -- //
