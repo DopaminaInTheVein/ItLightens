@@ -94,7 +94,9 @@ void beacon_controller::ActiveSonar()
 	Debug->DrawLine(me_transform->getPosition() + VEC3(0, 1, 0), me_transform->getFront(), range, RED);
 	//TMsgNoise
 
-	CEntity * player = tags_manager.getFirstHavingTag(getID("target"));
+	VHandles hs = tags_manager.getHandlesByTag(getID("target"));
+
+	CEntity * player = hs[hs.size() - 1];
 	TCompTransform * player_transform = player->get<TCompTransform>();
 	VEC3 posPlayer = player_transform->getPosition();
 	VEC3 myPos = me_transform->getPosition();
