@@ -101,14 +101,14 @@ void ai_speedy::SeekWptState()
 	string next_action = decide_next_action();
 
 	if (next_action == "dashtoplayer" && dash_ready) {
-		dash_target = player_transform->getPosition();
+			dash_target = player_transform->getPosition();
 		float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
 		if (abs(distance_to_player) <= max_dash_player_distance && abs(dash_target.y - transform->getPosition().y) < 0.5f) {
 			ChangePose(pose_run_route);
 			ChangeState(next_action);
 		}
-		else if (abs(distance) > 0.1f)
-			moveFront(speed);
+		else
+			ChangeState("seekwpt");
 	}
 	else if (next_action == "dashtonewpoint" && dash_ready) {
 		dash_target = VEC3(30.f, 0.0f, 0.0f);
@@ -271,7 +271,7 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 
 	float distance = squaredDistXZ(target, transform->getPosition());
 
-	if (distance < 0.1f) {
+	if (distance < 0.5f) {
 		return true;
 	}
 	else {
