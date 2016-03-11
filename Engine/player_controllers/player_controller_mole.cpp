@@ -29,7 +29,7 @@ void player_controller_mole::Init() {
 
 	mesh = myEntity->get<TCompRenderStaticMesh>();
 
-	pose_idle_route = "static_meshes/mole/mole_run.static_mesh";
+	pose_idle_route = "static_meshes/mole/mole.static_mesh";
 	pose_jump_route = "static_meshes/mole/mole_jump.static_mesh";
 	pose_run_route = "static_meshes/mole/mole_run.static_mesh";
 	pose_box_route = "static_meshes/mole/mole_box.static_mesh";
@@ -67,6 +67,7 @@ void player_controller_mole::UpdateInputActions() {
 
 void player_controller_mole::UpdateMovingWithOther() {
 	if (boxGrabbed) {
+		ChangePose(pose_box_route);
 		energyDecreasal(getDeltaTime()*0.5f);
 		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 		TCompTransform* box_t = box->get<TCompTransform>();

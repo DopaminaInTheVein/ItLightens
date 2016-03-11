@@ -27,7 +27,7 @@ void ai_mole::Init()
 
 	mesh = myEntity->get<TCompRenderStaticMesh>();
 
-	pose_idle_route = "static_meshes/mole/mole_run.static_mesh";
+	pose_idle_route = "static_meshes/mole/mole.static_mesh";
 	pose_jump_route = "static_meshes/mole/mole_jump.static_mesh";
 	pose_run_route = "static_meshes/mole/mole_run.static_mesh";
 	pose_box_route = "static_meshes/mole/mole_box.static_mesh";
@@ -95,7 +95,7 @@ void ai_mole::OrientToWptState()
 			transform->setAngles(yaw + angle, 0.0f);
 		}
 		else {
-			ChangePose(pose_idle_route);
+			ChangePose(pose_run_route);
 			ChangeState("nextwpt");
 		}
 	}
@@ -160,6 +160,7 @@ void ai_mole::OrientToCarryWptState() {
 	TCompTransform * transform = getEntityTransform();
 	if (!transform->isHalfConeVision(wptbleavetransform->getPosition(), deg2rad(0.01f))) {
 		//ROTATE CAUSE WE DON'T SEE OBJECTIVE
+		ChangePose(pose_box_route);
 		float angle = 0.0f;
 		float littleAngle = transform->getDeltaYawToAimTo(wptbleavetransform->getPosition());
 		float littleDeltaAngle = getDeltaTime() / 2;
@@ -188,6 +189,7 @@ void ai_mole::NextWptCarryState() {
 	float distToWPT = simpleDistXZ(wptbleavetransform->getPosition(), transform->getPosition());
 	if (distToWPT > 2.0f) {
 		//MOVE
+		ChangePose(pose_box_route);
 		VEC3 front = transform->getFront();
 		VEC3 pos = transform->getPosition();
 		pos.x += front.x*mole_speed*getDeltaTime();
