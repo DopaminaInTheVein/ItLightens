@@ -37,7 +37,6 @@ void player_controller::Init() {
 	pose_jump	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
 	pose_idle	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
 
-
 	pose_no_ev		= myEntity->get<TCompRenderStaticMesh>();		//defined on xml
 	actual_render	= pose_no_ev;
 
