@@ -157,6 +157,25 @@ void beacon_controller::WaitToRemoveSonar()
 	me_transform->setAngles(yaw + rot_speed_sonar*getDeltaTime(), pitch);
 	Debug->DrawLine(me_transform->getPosition() + VEC3(0, 1, 0), me_transform->getFront(), range, RED);
 
+	VHandles hs = tags_manager.getHandlesByTag(getID("target"));
+
+	CEntity * player = hs[hs.size() - 1];
+	TCompTransform * player_transform = player->get<TCompTransform>();
+	VEC3 posPlayer = player_transform->getPosition();
+	VEC3 myPos = me_transform->getPosition();
+	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos) * 2) { //Pitch < 30
+		if (me_transform->isHalfConeVision(posPlayer, deg2rad(15.0f))) { //Cono vision
+			if (squaredDist(myPos, posPlayer) < 3.0f) { //Distancia
+				TMsgNoise msg;
+				msg.source = posPlayer;
+				for (CHandle guardHandle : tags_manager.getHandlesByTag(getID("AI_guard"))) {
+					CEntity * ePoss = guardHandle;
+					ePoss->sendMsg(msg);
+				}
+			}
+		}
+	}
+
 	if(SBB::readInt(full_name) == TO_REMOVE)SendMessageRemove();
 
 	//nothing to do, check sbb. Should go system of events
