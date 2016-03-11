@@ -47,15 +47,15 @@ void ai_guard::Init()
 	AddState(ST_SOUND_DETECTED, (statehandler)&ai_guard::SoundDetectedState);
 	AddState(ST_LOOK_ARROUND, (statehandler)&ai_guard::LookArroundState);
 	AddState(ST_SHOOTING_WALL, (statehandler)&ai_guard::ShootingWallState);
-	AddState(ST_STUNT, (statehandler)&ai_guard::ShootingWallState);
+	AddState(ST_STUNT, (statehandler)&ai_guard::StuntState);
 
 	// reset the state
 	ChangeState(ST_SELECT_ACTION);
 	curkpt = 0;
 
 	//Other info
-	____TIMER_REDEFINE_(timerShootingWall, 3);
-	____TIMER_REDEFINE_(timerStunt, 3);
+	____TIMER_REDEFINE_(timerShootingWall, 1);
+	____TIMER_REDEFINE_(timerStunt, 15);
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
 	stunned = false;
@@ -333,7 +333,7 @@ void ai_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	if (squaredDist(msg.pos, posPlayer) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
-		ChangeState("ST_STUNT");
+		ChangeState(ST_STUNT);
 	}
 }
 
