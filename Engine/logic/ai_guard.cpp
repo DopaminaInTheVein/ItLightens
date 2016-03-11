@@ -47,6 +47,7 @@ void ai_guard::Init()
 	AddState(ST_SOUND_DETECTED, (statehandler)&ai_guard::SoundDetectedState);
 	AddState(ST_LOOK_ARROUND, (statehandler)&ai_guard::LookArroundState);
 	AddState(ST_SHOOTING_WALL, (statehandler)&ai_guard::ShootingWallState);
+	AddState(ST_STUNT, (statehandler)&ai_guard::ShootingWallState);
 
 	// reset the state
 	ChangeState(ST_SELECT_ACTION);
