@@ -27,12 +27,6 @@ void CImGuiModule::stop() {
 
 void CImGuiModule::update(float dt) {
 	ImGui_ImplDX11_NewFrame();
-#ifdef PROFILING_ENABLED
-	static int nframes = 5;
-	ImGui::InputInt("NFrames", &nframes, 1, 5);
-	if (ImGui::Button("Start Capture Profiling"))
-		profiler.setNFramesToCapture(nframes);
-#endif
 
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_MenuBar;
@@ -60,6 +54,21 @@ void CImGuiModule::update(float dt) {
 	ImGui::SameLine();
 	ImGui::Button("RESUME BUTTON - TODO");
 	ImGui::Separator();
+	//---------------------------------------
+
+	//Profiling
+	//---------------------------------------
+#ifdef PROFILING_ENABLED
+	//header for filtering instructions
+	if (ImGui::TreeNode("PROFILING"))
+	{
+		static int nframes = 5;
+		ImGui::InputInt("NFrames", &nframes, 1, 5);
+		if (ImGui::Button("Start Capture Profiling"))
+			profiler.setNFramesToCapture(nframes);
+		ImGui::TreePop();
+	}
+#endif
 	//---------------------------------------
 
 	//Filter options
@@ -120,7 +129,6 @@ void CImGuiModule::render() {
 }
 
 bool CImGuiModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-
 	return ImGui_ImplDX11_WndProcHandler(hWnd, message, wParam, lParam) ? true : false;
 }
 
