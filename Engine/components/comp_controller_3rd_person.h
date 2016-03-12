@@ -12,6 +12,15 @@
 #include "input\input.h"
 #include "app_modules/io/io.h"
 
+#define THIRD_PERSON_CONTROLLER_PLAYER_DIST				1.6f
+#define THIRD_PERSON_CONTROLLER_SPEEDY_DIST				5.f
+#define THIRD_PERSON_CONTROLLER_MOLE_DIST				5.f
+#define THIRD_PERSON_CONTROLLER_SCIENTIST_DIST			5.f
+#define THIRD_PERSON_CONTROLLER_PLAYER_POS_OFFSET_Y			-1.1f
+#define THIRD_PERSON_CONTROLLER_SPEEDY_POS_OFFSET_Y			0.f
+#define THIRD_PERSON_CONTROLLER_MOLE_POS_OFFSET_Y			0.f
+#define THIRD_PERSON_CONTROLLER_SCIENTIST_POS_OFFSET_Y		0.f
+
 class TCompController3rdPerson : public TCompBase {
 	float		yaw;
 	float		pitch;
@@ -64,6 +73,24 @@ public:
 
 	void onSetTarget(const TMsgSetTarget& msg) {
 		target = msg.target;
+		switch (msg.who) {
+		case PLAYER:
+			distance_to_target = THIRD_PERSON_CONTROLLER_PLAYER_DIST;
+			position_diff = VEC3(0.f, THIRD_PERSON_CONTROLLER_PLAYER_POS_OFFSET_Y, 0.f);
+			break;
+		case SPEEDY:
+			distance_to_target = THIRD_PERSON_CONTROLLER_SPEEDY_DIST;
+			position_diff = VEC3(0.f, THIRD_PERSON_CONTROLLER_SPEEDY_POS_OFFSET_Y, 0.f);
+			break;
+		case MOLE:
+			distance_to_target = THIRD_PERSON_CONTROLLER_MOLE_DIST;
+			position_diff = VEC3(0.f, THIRD_PERSON_CONTROLLER_MOLE_POS_OFFSET_Y, 0.f);
+			break;
+		case SCIENTIST:
+			distance_to_target = THIRD_PERSON_CONTROLLER_SCIENTIST_DIST;
+			position_diff = VEC3(0.f, THIRD_PERSON_CONTROLLER_SCIENTIST_POS_OFFSET_Y, 0.f);
+			break;
+		}
 	}
 
 	void updateInput() {
@@ -109,7 +136,6 @@ public:
 		auto target_loc = target_tmx->getPosition();
 		VEC3 delta = getVectorFromYawPitch(yaw, pitch);
 		auto origin = target_loc - delta * distance_to_target;
-
 		CEntity* e_owner = CHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
 
@@ -123,11 +149,15 @@ public:
 
 		if (targetlife->currentlife > 0.0f && 0.5f <= simpleDist(victoryPoint_transform->getPosition(), targettrans->getPosition())) {
 			my_tmx->lookAt(origin, target_loc);
+			//Aplicar offset
+			my_tmx->setPosition(my_tmx->getPosition() + position_diff);
 		}
 	}
 
 	void renderInMenu() {
 		ImGui::SliderFloat("rot_speed", &speed_camera, -2.0f, 2.0f);
+		ImGui::SliderFloat("distanceToTarget", &distance_to_target, 0.5f, 10.f);
+		ImGui::SliderFloat3("positionDiff", &position_diff.x, -5.f, 5.f);
 	}
 };
 

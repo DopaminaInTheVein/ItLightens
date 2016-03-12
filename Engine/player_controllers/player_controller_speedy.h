@@ -55,6 +55,9 @@ class player_controller_speedy : public PossController {
 	CHandle pose_idle;
 	CHandle pose_run;
 	CHandle pose_jump;
+protected:
+	//virtual method for know am I (player, mole, speedy, ...)
+	virtual PLAYER_TYPE whoAmI() { return SPEEDY; };
 
 public:
 	void Init();

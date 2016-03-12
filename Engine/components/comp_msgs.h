@@ -26,8 +26,15 @@ struct TMsgSetCamera {
 	DECLARE_MSG_ID();
 };
 
+enum PLAYER_TYPE {
+	PLAYER
+	, MOLE
+	, SPEEDY
+	, SCIENTIST
+};
 struct TMsgSetTarget {
 	CHandle target;
+	PLAYER_TYPE who;
 	DECLARE_MSG_ID();
 };
 

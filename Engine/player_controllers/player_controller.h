@@ -54,15 +54,15 @@ class player_controller : public CPlayerBase {
 	void UpdatePossession();
 
 	bool nearStunable();
-	
+
 	CHandle pose_no_ev;
 	CHandle pose_idle;
 	CHandle pose_run;
 	CHandle pose_jump;
 
-	float evolution_limit	= 10.0f;
-	float max_life			= 50.0f;
-	float init_life			= 10.0f;
+	float evolution_limit = 10.0f;
+	float max_life = 50.0f;
+	float init_life = 10.0f;
 
 	void rechargeEnergy();
 
@@ -75,10 +75,10 @@ class player_controller : public CPlayerBase {
 
 protected:
 	void myUpdate();
+	PLAYER_TYPE whoAmI() { return PLAYER; }
 
 public:
 	void Init();
-	void Idle();
 
 	void DoubleJump();
 	void DoubleFalling();

@@ -56,6 +56,9 @@ protected:
 	float starting_player_y = 0;
 	float player_y = 0;
 
+	//virtual method for know am I (player, mole, speedy, ...)
+	virtual PLAYER_TYPE whoAmI() = 0;
+
 	//virtual needed for poses right now
 	virtual void UpdateInputActions();
 	virtual void UpdateMoves();

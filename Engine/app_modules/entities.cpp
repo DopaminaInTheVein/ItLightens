@@ -179,6 +179,7 @@ bool CEntitiesModule::start() {
 	if (player_e && t.isValid()) {
 		TMsgSetTarget msg;
 		msg.target = t;
+		msg.who = PLAYER;
 		player_e->sendMsg(msg);
 
 		TMsgSetCamera msg_camera;
@@ -277,7 +278,6 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);		//axis trasnfrom
 #endif
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
-
 }
 
 void CEntitiesModule::renderInMenu() {

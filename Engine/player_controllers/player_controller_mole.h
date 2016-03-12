@@ -26,6 +26,11 @@ class CObjectManager;
 class player_controller_mole : public PossController {
 	CObjectManager<player_controller_mole> *om;
 	float player_max_speed = CPlayerBase::player_max_speed;
+
+protected:
+	//virtual method for know am I (player, mole, speedy, ...)
+	virtual PLAYER_TYPE whoAmI() { return MOLE; };
+
 public:
 	void Init();
 
