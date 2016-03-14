@@ -40,6 +40,18 @@ rollout RL_Export "IT Lightens!" width:296 height:900
 	label 'lblComponents' "COMPONENTS" pos:[109,201] width:77 height:16 align:#left
 	button 'btnWizard' "Wizard Value..." pos:[169,544] width:86 height:16 align:#left
 	
+	
+	fn selectComponent sel = (
+		local currentValue = tObj.getValor sel
+		local enabled = (currentValue != undefined)
+		chkComponent.state = enabled
+		txtNewVal.readOnly = not enabled
+		txtNewVal.text = ""
+		if enabled do (
+			txtCurVal.text = currentValue
+		)
+	)
+	
 	--Initialize
 	on RL_Export open do
 	(
@@ -57,25 +69,25 @@ rollout RL_Export "IT Lightens!" width:296 height:900
 		tObj = TObject()
 		tObj.setObj obj
 		
+		ddlComponents.items = #()
 		listaComponentes = tObj.getComponentList()
 		for comp in listaComponentes do (
 			local item = comp.nombre
 			format "%\n" item
 			ddlComponents.items = append ddlComponents.items item
 		)
+		
+		selectComponent 1
 	)
 	
 	--Select Component
 	on ddlComponents selected sel do
 	(
-		local currentValue = tObj.getValor sel
-		local enabled = (currentValue != undefined)
-		chkComponent.state = enabled
-		txtNewVal.readOnly = not enabled
-		if enabled do (
-			txtNewVal.text = currentValue
-		)
+		selectComponent sel
 	)
+	
+
+	
 	
 	on btnExportFromObj pressed do
 	(
@@ -83,11 +95,18 @@ rollout RL_Export "IT Lightens!" width:296 height:900
 	)
 	on btnModify pressed do
 	(
-	
+		tObj.setValor ddlComponents.selected txtNewVal.text
+		txtCurVal.text = txtNewVal.text
+		txtNewVal.text = ""
 	)
 	on btnModifyAll pressed do
 	(
-	
+		for objS in $ do (
+			local tObj2 = TObject()
+			tObj2.setObj objS
+			tObj2.setValor ddlComponents.selected txtNewVal.text
+		)
+		selectComponent ddlComponents.selection
 	)
 	on btnExportScene pressed do
 	(

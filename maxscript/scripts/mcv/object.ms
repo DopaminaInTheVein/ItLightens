@@ -1,6 +1,6 @@
 clearListener()
 
-listComponents = #("staticMesh", "mesh")
+listComponents = #("mesh", "staticMesh")
 
 struct TComponentListItem (
 	nombre,
@@ -26,7 +26,11 @@ struct TObject (
 	),
 	
 	fn getValor index = (
-			return  getUserProp obj listComponents[index]
+		return  getUserProp obj listComponents[index]
+	),
+	
+	fn setValor nombre valor = (
+		setUserProp obj nombre valor
 	)
 )
 
