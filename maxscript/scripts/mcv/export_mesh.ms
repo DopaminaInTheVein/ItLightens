@@ -143,4 +143,4 @@ fn export_mesh given_obj outfilename = (
 	
 )
 
-export_mesh $ "C:/Users/Cristian/Documents/Cristian/ItLightens/bin/data/meshes/water.mesh"
+--export_mesh $ "C:/Users/Cristian/Documents/Cristian/ItLightens/bin/data/meshes/water.mesh"

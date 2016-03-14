@@ -160,6 +160,6 @@ struct TSceneExporter (
 )
 
 gc()
-se = TSceneExporter();
-se.exportScene "scene01"
+--se = TSceneExporter();
+--se.exportScene "scene01"
 
