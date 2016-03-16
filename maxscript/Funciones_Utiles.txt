@@ -8,3 +8,11 @@ setUserProp $ "key" true
 ----------------------------
 getUserPropBuffer $
 setUserPropBuffer $ "key1=value1 key2=value2 ..."
+
+
+
+Para colocar objetos segun el mouse
+====================================
+-- From Screen (mouse) space to Grid space:
+p2MouseScreenPos = mouse.pos -- Get Mouse Screen Position in pixels
+p3MouseGridPos = gw.getPointOnCP p2MouseScreenPos

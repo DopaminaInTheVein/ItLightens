@@ -42,11 +42,11 @@ struct TSceneExporter (
 			throw ("Unsupported material " + ((classof mat) as string))
 	),
 	
-	fn matrixMax2MCV mtx = (
-		local tm = rotateXMatrix -90
-		local tm_inv = inverse tm
-		return tm_inv * mtx * tm
-	),
+	--fn matrixMax2MCV mtx = (
+	--	local tm = rotateXMatrix -90
+	--	local tm_inv = inverse tm
+	--	return tm_inv * mtx * tm
+	--),
 	
 	
 	fn exportCompName fs obj = (
