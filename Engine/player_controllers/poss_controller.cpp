@@ -6,6 +6,8 @@
 #include "components/comp_name.h"
 #include "app_modules\io\io.h"
 
+extern CHandle player;
+
 PossController::PossController() {
 	AddState(ST_DISABLED, (statehandler)&PossController::DisabledState);
 	AddState(ST_INIT_CONTROL, (statehandler)&PossController::InitControlState);
@@ -36,6 +38,21 @@ void PossController::UpdatePossession() {
 	____TIMER_CHECK_DO_(timerShowEnergy);
 	____TIMER_CHECK_DONE_(timerShowEnergy);
 #endif
+}
+
+void PossController::onDamage(const TMsgDamage& msg) {
+	CEntity* myParent = getMyEntity();
+	switch (msg.dmgType) {
+	case LASER:		
+		TMsgAISetPossessed msg;
+		msg.possessed = false;
+		myParent->sendMsg(msg);
+		UpdateUnpossess();
+		onSetEnable(false);
+		break;
+	case WATER:
+		break;
+	}
 }
 
 void PossController::onSetEnable(const TMsgControllerSetEnable& msg) {
@@ -71,6 +88,13 @@ void PossController::onSetEnable(bool enabled) {
 	}
 	else {
 		CHandle hTarget = tags_manager.getFirstHavingTag(getID("target"));
+
+		//CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
+
+		//TMsgSetTarget msgTarg;
+		//msgTarg.target = hTarget;
+		//player_e->sendMsg(msgTarg);
+
 		CEntity* eTarget = hTarget;
 		CEntity* eMe = hMe;
 		TCompTransform* tMe = eMe->get<TCompTransform>();

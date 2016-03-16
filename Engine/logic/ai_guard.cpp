@@ -20,8 +20,10 @@ TCompTransform * ai_guard::getTransform() {
 }
 
 CEntity* ai_guard::getPlayer() {
+	VHandles targets = tags_manager.getHandlesByTag(getID("target"));
+	thePlayer = targets[targets.size() - 1];
 	CEntity* player = thePlayer;
-	return player;;
+	return player;
 }
 
 /**************
@@ -45,15 +47,18 @@ void ai_guard::Init()
 	AddState(ST_SOUND_DETECTED, (statehandler)&ai_guard::SoundDetectedState);
 	AddState(ST_LOOK_ARROUND, (statehandler)&ai_guard::LookArroundState);
 	AddState(ST_SHOOTING_WALL, (statehandler)&ai_guard::ShootingWallState);
+	AddState(ST_STUNT, (statehandler)&ai_guard::StuntState);
 
 	// reset the state
 	ChangeState(ST_SELECT_ACTION);
 	curkpt = 0;
 
 	//Other info
-	____TIMER_REDEFINE_(timerShootingWall, 8);
+	____TIMER_REDEFINE_(timerShootingWall, 1);
+	____TIMER_REDEFINE_(timerStunt, 15);
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
+	stunned = false;
 
 	//Mallas
 	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
@@ -289,16 +294,46 @@ void ai_guard::LookArroundState() {
 	}
 }
 
+void ai_guard::StuntState() {
+	____TIMER_CHECK_DO_(timerStunt);
+	ChangeState(ST_SELECT_ACTION);
+	stunned = false;
+	____TIMER_CHECK_DONE_(timerStunt);
+}
+
 /**************
 * Mensajes
 **************/
 void ai_guard::noise(const TMsgNoise& msg) {
 	if (outJurisdiction(msg.source)) return;
 	if (playerVisible()) return;
+	if (stunned) return;
 	if (canHear(msg.source, msg.intensity)) {
 		resetTimers();
 		noisePoint = msg.source;
 		ChangeState(ST_SOUND_DETECTED);
+	}
+}
+
+void ai_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
+{
+	VEC3 myPos = getTransform()->getPosition();
+	float d = squaredDist(msg.pos, myPos);
+
+	if (d < msg.r) {
+		reduceStats();
+		t_reduceStats = t_reduceStats_max;
+	}
+}
+
+void ai_guard::onStaticBomb(const TMsgStaticBomb& msg) {
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	VEC3 posPlayer = tPlayer->getPosition();
+	VEC3 myPos = getTransform()->getPosition();
+	if (squaredDist(msg.pos, posPlayer) < msg.r * msg.r) {
+		resetTimers();
+		stunned = true;
+		ChangeState(ST_STUNT);
 	}
 }
 
@@ -308,7 +343,7 @@ void ai_guard::noise(const TMsgNoise& msg) {
 
  // -- Go To -- //
 bool ai_guard::canHear(VEC3 position, float intensity) {
-	return (squaredDistXZ(getTransform()->getPosition(), position) > DIST_SQ_SOUND_DETECTION);
+	return (squaredDistXZ(getTransform()->getPosition(), position) < DIST_SQ_SOUND_DETECTION);
 }
 
 // -- Go To -- //
@@ -361,10 +396,12 @@ bool ai_guard::turnTo(VEC3 dest) {
 
 // -- Player Visible? -- //
 bool ai_guard::playerVisible() {
-	if (SBB::readBool("possMode")) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
+	if (SBB::readBool("possMode") && squaredDistXZ(myPos, posPlayer) > 25.f) {
+		return false;
+	}
 	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos) * 2) { //Pitch < 30
 		if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
 			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) { //Distancia
@@ -372,10 +409,16 @@ bool ai_guard::playerVisible() {
 					float distanceJur = squaredDistXZ(posPlayer, jurCenter);
 					ray_cast_query rcQuery;
 					float distRay;
-					CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
-					if (collider.isValid()) { //No bloquea vision
-						if (collider == thePlayer) {
-							return true;
+					if (SBB::readBool("possMode")) {
+						// Estas poseyendo, estas cerca y dentro del cono de vision, no hace falta raycast
+						return true;
+					}
+					else {
+						CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
+						if (collider.isValid()) { //No bloquea vision
+							if (collider == thePlayer) {
+								return true;
+							}
 						}
 					}
 				}
@@ -408,11 +451,23 @@ void ai_guard::shootToPlayer() {
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 
-	//RayCast
+	bool damage = false;
 	float distRay;
-	CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
-	if (collider == thePlayer) {
-		CEntity* ePlayer = thePlayer;
+	if (SBB::readBool("possMode")) {
+		damage = true;
+		distRay = realDist(myPos, posPlayer);
+	}
+	else {
+		//RayCast
+		CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
+		if (collider == CHandle(getPlayer())) {
+			damage = true;
+		}
+	}
+
+	//Do damage
+	if (damage) {
+		CEntity* ePlayer = getPlayer();
 		TMsgDamage dmg;
 		dmg.source = getTransform()->getPosition();
 		dmg.sender = myParent;
@@ -432,12 +487,12 @@ void ai_guard::shootToPlayer() {
 // -- Jurisdiction -- //
 bool ai_guard::inJurisdiction(VEC3 posPlayer) {
 	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur < jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
+	return distanceJur < jurRadiusSq;
 }
 
 bool ai_guard::outJurisdiction(VEC3 posPlayer) {
 	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_LEAVE;
+	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
 }
 
 // -- Reset Timers-- //
@@ -445,6 +500,7 @@ void ai_guard::resetTimers() {
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
 	____TIMER_RESET_(timerShootingWall);
+	____TIMER_RESET_(timerStunt);
 }
 
 /**************
@@ -500,6 +556,7 @@ void ai_guard::renderInMenu() {
 
 void ai_guard::reduceStats()
 {
+	noShoot = true;
 	DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI / reduce_factor;
 	DIST_SQ_SHOT_AREA_ENTER = DIST_SQ_SHOT_AREA_ENTER_INI / reduce_factor;
 	DIST_SQ_SHOT_AREA_LEAVE = DIST_SQ_SHOT_AREA_LEAVE_INI / reduce_factor;
@@ -522,17 +579,6 @@ void ai_guard::resetStats()
 	CONE_VISION = CONE_VISION_INI;
 	SPEED_ROT = SPEED_ROT_INI;
 	DAMAGE_LASER = DAMAGE_LASER_INI;
-}
-
-void ai_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
-{
-	VEC3 myPos = getTransform()->getPosition();
-	float d = squaredDist(msg.pos, myPos);
-
-	if (d < msg.r) {
-		reduceStats();
-		t_reduceStats = t_reduceStats_max;
-	}
 }
 
 //Cambio de malla

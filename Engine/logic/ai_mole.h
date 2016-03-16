@@ -26,6 +26,8 @@
 #include <windows.h>
 
 class ai_mole : public ai_poss, public TCompBase {
+	float mole_speed = 2.f;
+
 	int towptbox;
 	int towptleave;
 
@@ -52,12 +54,12 @@ class ai_mole : public ai_poss, public TCompBase {
 	bool isBoxAtLeavePoint(VEC3 posBox);
 
 	//Cambio Malla
-	TCompRenderStaticMesh* actual_render = nullptr;
-	CHandle pose_idle;
-	CHandle pose_run;
-	CHandle pose_jump;
-	CHandle pose_box;
-	CHandle pose_wall;
+	TCompRenderStaticMesh* mesh;
+	string pose_idle_route;
+	string pose_run_route;
+	string pose_jump_route;
+	string pose_box_route;
+	string pose_wall_route;
 
 public:
 	void IdleState();
@@ -79,7 +81,7 @@ public:
 	void idle() { IdleState(); }
 
 	//Cambio Malla
-	void ChangePose(CHandle new_pos_h);
+	void ChangePose(string new_pose_route);
 };
 
 #endif

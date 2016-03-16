@@ -23,46 +23,21 @@ void ai_mole::Init()
 	towptleave = -1;
 	// reset the state
 
-	//Mallas
-	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_box = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_wall = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-
 	CEntity* myEntity = myParent;
-	pose_idle = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
-	actual_render = pose_run;
 
-	pose_idle.setOwner(myEntity);
-	pose_run.setOwner(myEntity);
-	pose_jump.setOwner(myEntity);
-	pose_box.setOwner(myEntity);
-	pose_wall.setOwner(myEntity);
+	mesh = myEntity->get<TCompRenderStaticMesh>();
 
-	TCompRenderStaticMesh *mesh;
-
-	mesh = pose_idle;
-	mesh->static_mesh = Resources.get("static_meshes/mole.static_mesh")->as<CStaticMesh>();
-
-	mesh = pose_jump;
-	mesh->static_mesh = Resources.get("static_meshes/mole_jump.static_mesh")->as<CStaticMesh>();
-
-	mesh = pose_run;
-	mesh->static_mesh = Resources.get("static_meshes/mole_run.static_mesh")->as<CStaticMesh>();
-
-	mesh = pose_box;
-	mesh->static_mesh = Resources.get("static_meshes/mole_box.static_mesh")->as<CStaticMesh>();
-
-	mesh = pose_wall;
-	mesh->static_mesh = Resources.get("static_meshes/mole_wall.static_mesh")->as<CStaticMesh>();
-
-	actual_render->registerToRender();
+	pose_idle_route = "static_meshes/mole/mole.static_mesh";
+	pose_jump_route = "static_meshes/mole/mole_jump.static_mesh";
+	pose_run_route = "static_meshes/mole/mole_run.static_mesh";
+	pose_box_route = "static_meshes/mole/mole_box.static_mesh";
+	pose_wall_route = "static_meshes/mole/mole_wall.static_mesh";
 
 	ChangeState("idle");
 }
 
 void ai_mole::IdleState() {
-	ChangePose(pose_run);
+	ChangePose(pose_run_route);
 	ChangeState("seekwpt");
 }
 
@@ -90,7 +65,7 @@ void ai_mole::SeekWptState() {
 		if (found) {
 			SBB::postBool(key_final, true);
 			SBB::postMole(key_final, this);
-			ChangePose(pose_run);
+			ChangePose(pose_idle_route);
 			ChangeState("orientTowpt");
 		}
 	}
@@ -120,7 +95,7 @@ void ai_mole::OrientToWptState()
 			transform->setAngles(yaw + angle, 0.0f);
 		}
 		else {
-			ChangePose(pose_run);
+			ChangePose(pose_run_route);
 			ChangeState("nextwpt");
 		}
 	}
@@ -134,15 +109,14 @@ void ai_mole::NextWptState()
 
 		if (distToWPT > 2.0f) {
 			//MOVE
-			ChangePose(pose_run);
 			VEC3 front = transform->getFront();
 			VEC3 pos = transform->getPosition();
-			pos.x += front.x*getDeltaTime() * 2;
-			pos.z += front.z*getDeltaTime() * 2;
+			pos.x += front.x*mole_speed*getDeltaTime() * 2;
+			pos.z += front.z*mole_speed*getDeltaTime() * 2;
 			transform->setPosition(pos);
 		}
 		else {
-			ChangePose(pose_run);
+			ChangePose(pose_box_route);
 			ChangeState("grab");
 		}
 	}
@@ -157,7 +131,7 @@ void ai_mole::GrabState() {
 		posbox.y += 2;
 		box_t->setPosition(posbox);
 		carryingBox = true;
-		ChangePose(pose_run);
+		ChangePose(pose_idle_route);
 		ChangeState("seekwptcarry");
 	}
 }
@@ -175,7 +149,7 @@ void ai_mole::SeekWptCarryState() {
 				distMax = disttowpt;
 			}
 		}
-		ChangePose(pose_run);
+		ChangePose(pose_idle_route);
 		ChangeState("orientTowptCarry");
 	}
 }
@@ -186,6 +160,7 @@ void ai_mole::OrientToCarryWptState() {
 	TCompTransform * transform = getEntityTransform();
 	if (!transform->isHalfConeVision(wptbleavetransform->getPosition(), deg2rad(0.01f))) {
 		//ROTATE CAUSE WE DON'T SEE OBJECTIVE
+		ChangePose(pose_box_route);
 		float angle = 0.0f;
 		float littleAngle = transform->getDeltaYawToAimTo(wptbleavetransform->getPosition());
 		float littleDeltaAngle = getDeltaTime() / 2;
@@ -201,7 +176,7 @@ void ai_mole::OrientToCarryWptState() {
 		transform->setAngles(yaw + angle, 0.0f);
 	}
 	else {
-		ChangePose(pose_run);
+		ChangePose(pose_run_route);
 		ChangeState("nextwptCarry");
 	}
 }
@@ -214,18 +189,19 @@ void ai_mole::NextWptCarryState() {
 	float distToWPT = simpleDistXZ(wptbleavetransform->getPosition(), transform->getPosition());
 	if (distToWPT > 2.0f) {
 		//MOVE
+		ChangePose(pose_box_route);
 		VEC3 front = transform->getFront();
 		VEC3 pos = transform->getPosition();
-		pos.x += front.x*getDeltaTime();
-		pos.z += front.z*getDeltaTime();
+		pos.x += front.x*mole_speed*getDeltaTime();
+		pos.z += front.z*mole_speed*getDeltaTime();
 		transform->setPosition(pos);
 		VEC3 posBox = transformBox->getPosition();
-		posBox.x += front.x*getDeltaTime();
-		posBox.z += front.z*getDeltaTime();
+		posBox.x += front.x*mole_speed*getDeltaTime();
+		posBox.z += front.z*mole_speed*getDeltaTime();
 		transformBox->setPosition(posBox);
 	}
 	else {
-		ChangePose(pose_run);
+		ChangePose(pose_idle_route);
 		ChangeState("ungrab");
 	}
 }
@@ -251,7 +227,7 @@ void ai_mole::UnGrabState() {
 		SBB::postBool(nameBox->name, false);
 		carryingBox = false;
 	}
-	ChangePose(pose_run);
+	ChangePose(pose_idle_route);
 	ChangeState("idle");
 }
 
@@ -340,11 +316,11 @@ bool ai_mole::isBoxAtLeavePoint(VEC3 posBox) {
 }
 
 //Cambio de malla
-void ai_mole::ChangePose(CHandle new_pos_h)
-{
-	TCompRenderStaticMesh *new_pose = new_pos_h;
-	if (new_pose == actual_render) return;
-	actual_render->unregisterFromRender();
-	actual_render = new_pose;
-	actual_render->registerToRender();
+void ai_mole::ChangePose(string new_pose_route) {
+
+	mesh->unregisterFromRender();
+	MKeyValue atts_mesh;
+	atts_mesh["name"] = new_pose_route;
+	mesh->load(atts_mesh);
+	mesh->registerToRender();
 }

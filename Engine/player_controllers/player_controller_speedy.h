@@ -50,11 +50,11 @@ class player_controller_speedy : public PossController {
 
 	const string water_static_mesh = "static_meshes/water.static_mesh";
 
-	//Cambio Malla
-	TCompRenderStaticMesh* actual_render = nullptr;
-	CHandle pose_idle;
-	CHandle pose_run;
-	CHandle pose_jump;
+	TCompRenderStaticMesh* mesh;
+	string pose_idle_route;
+	string pose_run_route;
+	string pose_jump_route;
+	string pose_void_route;
 protected:
 	//virtual method for know am I (player, mole, speedy, ...)
 	virtual PLAYER_TYPE whoAmI() { return SPEEDY; };
@@ -87,12 +87,15 @@ public:
 	void updateDropWaterTimer();
 	void resetDropWaterTimer();
 
+	void UpdateUnpossess() override;
+
 	void DisabledState();
 	void InitControlState();
 	CEntity* getMyEntity();
 
 	//Cambio Malla
-	void ChangePose(CHandle new_pos_h);
+	//void ChangePose(CHandle new_pos_h);
+	void ChangePose(string new_pose_route);
 
 	//Overload function for handler_manager
 	player_controller_speedy& player_controller_speedy::operator=(player_controller_speedy arg) { return arg; }

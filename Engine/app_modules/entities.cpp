@@ -115,7 +115,7 @@ bool CEntitiesModule::start() {
 
 	//bombs
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
-	//SUBSCRIBE(ai_guard, TMsgStaticBomb, onStaticBomb);		//TODO: should do something
+	SUBSCRIBE(ai_guard, TMsgStaticBomb, onStaticBomb);		//TODO: should do something
 	SUBSCRIBE(ai_mole, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(ai_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(ai_guard, TMsgMagneticBomb, onMagneticBomb);
@@ -149,6 +149,9 @@ bool CEntitiesModule::start() {
 	//Damage
 	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(player_controller, TMsgDamage, onDamage);
+	SUBSCRIBE(player_controller_cientifico, TMsgDamage, onDamage);
+	SUBSCRIBE(player_controller_speedy, TMsgDamage, onDamage);
+	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
 
 	//colliders
 	SUBSCRIBE(sphereCollider, TMsgEntityCreated, onCreate);
@@ -265,6 +268,7 @@ void CEntitiesModule::update(float dt) {
 	//TODO:REMOVE!!
 	getHandleManager<boxCollider>()->updateAll(dt);
 #endif
+
 }
 
 void CEntitiesModule::render() {

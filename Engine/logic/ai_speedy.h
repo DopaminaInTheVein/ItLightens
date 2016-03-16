@@ -67,12 +67,10 @@ class ai_speedy : public ai_poss, public TCompBase {
 		return me.getOwner();
 	}
 
-	//Cambio malla
-	TCompRenderStaticMesh* actual_render = nullptr;
-	CHandle pose_idle;
-	CHandle pose_run;
-	CHandle pose_jump;
-	CHandle pose_void;
+	TCompRenderStaticMesh* mesh;
+	string pose_idle_route;
+	string pose_run_route;
+	string pose_jump_route;
 
 public:
 	void IdleState();
@@ -101,7 +99,7 @@ public:
 	void resetDropWaterTimer();
 
 	//Cambio Malla
-	void ChangePose(CHandle new_pos_h);
+	void ChangePose(string new_pose_route);
 };
 
 #endif

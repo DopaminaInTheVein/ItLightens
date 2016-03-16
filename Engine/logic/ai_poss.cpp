@@ -2,6 +2,7 @@
 #include "ai_poss.h"
 #include "components\entity.h"
 #include "components\comp_transform.h"
+#include "components\entity_tags.h"
 
 ai_poss::ai_poss() {
 	AddState("idle", (statehandler)&ai_poss::idle);

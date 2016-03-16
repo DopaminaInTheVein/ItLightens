@@ -116,7 +116,7 @@ void CMagneticBomb::Explode()
 void CMagneticBomb::SendMsg()
 {
 
-	TMsgMagneticBomb msg;
+	TMsgStaticBomb msg;
 	float rad = 10.0f;
 	CEntity *p_e = myParent;
 	TCompTransform *mtx = p_e->get<TCompTransform>();

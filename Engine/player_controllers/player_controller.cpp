@@ -77,6 +77,7 @@ void player_controller::rechargeEnergy()
 
 void player_controller::ChangePose(CHandle new_pos_h)
 {
+
 	SetMyEntity();
 	TCompLife *life = myEntity->get<TCompLife>();
 	if (life->currentlife < evolution_limit) new_pos_h = pose_no_ev;
@@ -383,6 +384,11 @@ void player_controller::UpdatePossession() {
 			msg.possessed = true;
 			ePoss->sendMsg(msg);
 			possessionCooldown = 1.0f;
+			// Camara Nueva
+			CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
+			TMsgSetTarget msgTarg;
+			msgTarg.target = ePoss;
+			player_e->sendMsg(msgTarg);
 
 			//Se desactiva el player
 			controlEnabled = false;
@@ -503,7 +509,6 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	//Set 3rd Person Controller
 	TMsgSetTarget msg3rdController;
 	msg3rdController.target = hMe;
-	msg3rdController.who = PLAYER;
 	ePlayer->sendMsg(msg3rdController);
 
 	//Set Camera

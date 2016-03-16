@@ -40,6 +40,7 @@ class ai_scientific : public ai_poss, public TCompBase {
 	//--------------------------------------
 	float square_range_action = 1.0f;
 	float d_epsilon = 0.1f;
+	float d_beacon_simple = 100.0f;
 	//--------------------------------------
 
 	//Map points, TEMP, TODO: look for positions from object_manager
@@ -68,6 +69,10 @@ class ai_scientific : public ai_poss, public TCompBase {
 
 	int actual_action = IDLE;
 	//--------------------------------------
+
+
+	float zmin =0.0f;
+	float zmax =0.0f;
 
 public:
 
