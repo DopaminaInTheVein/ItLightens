@@ -5,14 +5,22 @@ fn startUp = (
 	--Personal config file (where is data path, etc.)
 	filein (scriptsDir+"config.ms") 
 	
-	--Funciones MaxScript
+	--Utils file
 	mcvScriptsDir = scriptsDir + "mcv\\"
+	filein (mcvScriptsDir+"utils.ms") 		
+	
+	--Funciones MaxScript
 	filein (mcvScriptsDir+"export_mesh.ms") 
 	filein (mcvScriptsDir+"object.ms") 
 	filein (mcvScriptsDir+"export_scene.ms")
 	
-	--Utils file
-	filein (mcvScriptsDir+"utils.ms") 	
+	--Tools MaxScript
+	mcvTools = mcvScriptsDir + "\\tools\\"
+	getTools = getFiles (mcvTools + "*.ms")
+	for f in getTools do
+	(
+		fileIn f
+	)
 
 	-- Parsing
 	mcvParsingDir = mcvScriptsDir + "\\parsing\\"

@@ -34,7 +34,15 @@ struct TObject (
 	)
 )
 
-gc()
---se = TSceneExporter();
---se.exportScene "scene01"
+fn getAllObjectTypes = (
+	local res = #()
+	local maxFiles = getFiles (objMax_dir + "*.max")
+	for f in maxFiles do
+	(
+		f
+		append res (getFilenameFile f)
+	)
+	return res
+)
+
 
