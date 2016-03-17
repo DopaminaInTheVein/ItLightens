@@ -1,1 +1,0 @@
-data_dir = "C:\\Users\\Cristian\\Documents\\Cristian\\ItLightens\\bin\\data\\"
