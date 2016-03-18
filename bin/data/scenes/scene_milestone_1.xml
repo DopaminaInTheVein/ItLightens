@@ -5,7 +5,7 @@
 
   <entity>
     <tag name="player" />
-    <transform pos="-15 2 0" />
+    <transform pos="0 0 -22" />
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
@@ -14,7 +14,7 @@
   <entity>
     <life points="10" />
     <tag name="target" />
-    <transform pos="0 4 130" />
+    <transform pos="0 0 -22" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
