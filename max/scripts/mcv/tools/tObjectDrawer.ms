@@ -40,14 +40,26 @@ tool ObjectDrawer
 	)
 )
 
-fn drawObj nombre = (
-	local filePath = objMax_dir + nombre + ".max"
+fn drawObj fileDir nombre = (
+	local filePath = fileDir + nombre + ".max"
 	if mergemaxfile filePath #(nombre) then (
 		local labelObj = "$'" + nombre + "'"
 		__newObj = execute(labelObj)
-		__newObj.name += "_"
-		if startTool ObjectDrawer == #abort then delete __newObj
+		
+		--Tiene defaultName?
+		defaultName = (getUserProp __newObj "defaultName")
+		if defaultName != undefined do (
+			__newObj.name = defaultName
+		)
+
+		if startTool ObjectDrawer == #abort then (
+			delete __newObj
+		) else (
+			numerateObject __newObj
+			return __newObj
+		)
 	) else (
 		messageBox "Error cargando objeto " + nombre + " del fichero " + nombre + ".max"
 	)
+	return undefined
 )

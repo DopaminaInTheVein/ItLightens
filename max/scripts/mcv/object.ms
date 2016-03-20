@@ -1,6 +1,7 @@
 clearListener()
 
 listComponents = #("mesh", "staticMesh")
+reservedProps = #("typeObject", "typeHelper", "defaultName")
 
 struct TComponentListItem (
 	nombre,
@@ -34,15 +35,48 @@ struct TObject (
 	)
 )
 
-fn getAllObjectTypes = (
+fn getAllMaxIn dir = (
 	local res = #()
-	local maxFiles = getFiles (objMax_dir + "*.max")
+	local maxFiles = getFiles (dir + "*.max")
 	for f in maxFiles do
 	(
-		f
 		append res (getFilenameFile f)
 	)
 	return res
 )
 
+fn objExists nombre = (
+	queryName = "$'"+nombre+"'"
+	obj = execute (queryName)
+	return (obj != undefined)
+)
+
+fn numerateObject obj = (
+	obj.name += "_"
+	local repeat = true
+	local newName = undefined
+	local index = 0
+	while repeat do (
+		index += 1
+		newName = obj.name + (index as string)
+		repeat = (objExists newName)
+	)
+	obj.name = newName
+)
+
+fn getEditableProps obj = (
+	local props = getUserPropBuffer obj
+	props = filterString props "=, \n"
+	local res = #()
+	local i = 1
+	while i < props.count do (
+		local index = findItem reservedProps props[i]
+		if (index == 0) do (
+			-- No es una propiedad reservada
+			append res props[i]
+		)
+		i += 2
+	)
+	return res
+)
 
