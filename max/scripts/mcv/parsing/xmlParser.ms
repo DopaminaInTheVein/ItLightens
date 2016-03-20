@@ -8,7 +8,6 @@ struct XMLNode (
 	nombre = "",
 	attrs = #(),
 	elems = #(),
-	indent = "",
 	
 	fn addAttr nombre valor= (
 		local atr = XMLAttr()
@@ -21,13 +20,15 @@ struct XMLNode (
 		local nodo = XMLNode()
 		nodo.nombre = nombreNodo
 		append elems nodo
-		nodo.indent = indent + "   "
 		return nodo
 	),
 	
+	fn addElement nodo = (
+		append elems nodo
+	),
+	
 	fn parse = (
-		res = indent
-		res += "<"
+		res = "<"
 		res += nombre
 		-- Tiene más elementos (pero no atributos)
 		if elems.count > 0 then (
@@ -40,7 +41,6 @@ struct XMLNode (
 			)
 			
 			--Tag cierre
-			res += indent
 			res += "</"
 			res += nombre
 			res += ">\n"
@@ -50,11 +50,9 @@ struct XMLNode (
 			if attrs.count > 0 then (
 				-- Tiene más atributos
 				for atr in attrs do (
-					res += "\n" + indent + "   " + atr.nombre + "=" + (_val atr.valor)
+					res += "\n" + "   " + atr.nombre + "=" + (_val atr.valor)
 				)
-				res += "\n"
-				res += indent
-				res += "/>\n"
+				res += "\n/>\n"
 			) else (
 				-- Ni elems ni atributos
 				res += "/>\n"

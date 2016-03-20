@@ -1,18 +1,56 @@
--- Parse an Object from userprops to XML
+-- Some general data
+TAG_PLAYER = "target"
+TAG_CAMERA = "player"
+
+-- Current Object Parsing from userprops to XML
 _parsingObject = undefined
+
+--*******************************************************
+-------------FUNCTIONS-------------------------------------
+--*******************************************************
+---------------------------------------------------------------------
+-- OBJECT --
+---------------------------------------------------------------------
 fn _parseObject obj = (
-	--_parsingObject = obj
-	--format "_parseObject, obj = %\n" obj
-	--local typeObject = getUserProp obj "typeObject"
-	--local parserFunction = "_parse" + typeObject
-	--return execute(parserFunction + "()")
+	-- Guardamos objeto a parsear en una variable global
+	_parsingObject = obj
+	
+	-- Según tipo de objeto llamamos a su correspondiente función de parseo
+	local typeObject = getUserProp obj "typeObject"
+	local parserFunction = "_parse" + typeObject
+	xml = execute(parserFunction + "()")
+	
+	-- Devolvemos elemento XML del objeto parseado
+	return xml
 )
-
-fn _val val = (
-	return "\"" + (val as string) + "\""
+----------------------------------------------------------------------
+-- NAME--
+---------------------------------------------------------------------
+fn _parseName parent = (
+	local xml = parent.addChild "name"
+	xml.addAttr "name" _parsingObject.name
 )
-
-fn _parseTransform = (
+----------------------------------------------------------------------
+--TAGS--
+----------------------------------------------------------------------
+fn _parseTags parent tag= (
+	format "Llamo parseTags con %\n" tag
+	if (ClassOf tag) == (ClassOf #()) then (
+		format "Es Array %\n" tag
+		for t in tag do (
+			format "Es ElemArray %\n" t
+			_parseTags parent t
+		)
+	) else (
+		format "Es string %\n" tag
+		local xml = parent.addChild "tag"
+		xml.addAttr "name" tag
+	)
+)
+----------------------------------------------------------------------
+-- TRANSFORM --
+----------------------------------------------------------------------
+fn _parseTransform parent = (
 	local obj = _parsingObject
 	format "_parseTransform, obj = %\n" obj
 	local mcv_tmx = matrixMax2MCV obj.transform -- matrix3
@@ -24,17 +62,17 @@ fn _parseTransform = (
 	--if s.x != s.y or s.y != s.z then throw ("Object " + obj.name + " has non-uniform scales. Please fix it and try again " + (s as string) )
 	-- We change the sign of the quaternion because max conversion from matrix to quaternion
 	-- rotates in the opposite direction from DX libs
+
+	-- Creamos elemento Transform
+	xmlTransform = parent.addChild "transform"
 	
-	xmlTransform = XMLNode()
-	xmlTransform.nombre = "TCompTransform"
-	
-	--Position
+	-- Position
 	local ss = stringstream ""
 	format "% % %" t.x t.y t.z to:ss
 	posVal = ss as string
 	xmlTransform.addAttr "pos" posVal
 	
-	--Quaternion (Orientation)
+	-- Quaternion (Orientation)
 	ss = stringstream ""
 	format "% % % %" -q.x -q.y -q.z q.w to:ss
 	quatVal = ss as string
@@ -43,6 +81,25 @@ fn _parseTransform = (
 	-- Scale
 	scaleVal = s.x as string
 	xmlTransform.addAttr "scale" scaleVal
-	
-	return xmlTransform.parse()--ss as string
+)
+----------------------------------------------------------------------
+-- RENDER STATIC MESH --
+----------------------------------------------------------------------
+fn _parseRenderStatic parent = (
+	stMesh = getUserProp _parsingObject "staticMesh"
+	if (staticMesh != undefined) do (
+		local xml = parent.addChild "render_static_mesh"
+		xml.addAttr "name" ("static_meshes/" + stMesh)
+	)
+)
+
+-- Aux Valores -- (poner entre comillas)
+fn _val val = (
+	return "\"" + (val as string) + "\""
+)
+
+--Test
+fn xmlTest obj = (
+	local xml = _parseObject obj
+	xml.parse()
 )
