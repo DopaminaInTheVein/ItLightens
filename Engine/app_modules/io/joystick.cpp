@@ -75,21 +75,21 @@ void TJoystick::update(float dt) {
 		drx = (rx - old_rx) / right_stick_x_sensibility;
 		dry = (ry - old_ry) / right_stick_y_sensibility;
 		// Button state
-		button_A.setCurrentStatus(GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A);
+		button_A.setCurrentStatus((GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0);
 		button_A.update(dt);
-		button_B.setCurrentStatus(GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B);
+		button_B.setCurrentStatus((GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0);
 		button_B.update(dt);
-		button_X.setCurrentStatus(GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X);
+		button_X.setCurrentStatus((GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X) != 0);
 		button_X.update(dt);
-		button_Y.setCurrentStatus(GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y);
+		button_Y.setCurrentStatus((GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y) != 0);
 		button_Y.update(dt);
-		button_R.setCurrentStatus(GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
+		button_R.setCurrentStatus((GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) != 0);
 		button_R.update(dt);
-		button_L.setCurrentStatus(GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
+		button_L.setCurrentStatus((GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) != 0);
 		button_L.update(dt);
-		button_START.setCurrentStatus(GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START);
+		button_START.setCurrentStatus((GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START) != 0);
 		button_START.update(dt);
-		button_BACK.setCurrentStatus(GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK);
+		button_BACK.setCurrentStatus((GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK) != 0);
 		button_BACK.update(dt);
 		// Trigger values
 		button_LT = GetState().Gamepad.bLeftTrigger;

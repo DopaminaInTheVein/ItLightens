@@ -1,5 +1,6 @@
 #include "mcv_platform.h"
 #include "handle_manager.h"
+#include "components\entity_tags.h"
 
 // ------------------------------------
 bool CHandle::isValid() const {
@@ -38,4 +39,13 @@ CHandle CHandle::getOwner() {
 	if (hm)
 		return hm->getOwner(*this);
 	return CHandle();
+}
+
+bool CHandle::hasTag(std::string tag)
+{
+	std::vector<TTagID> tags;
+	tags_manager.getTagFromHandle(*this, tags);
+	TTagID tag_id = getID(tag.c_str());
+	bool ret = isInVector(tags, tag_id);
+	return ret;
 }

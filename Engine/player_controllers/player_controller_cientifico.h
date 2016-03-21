@@ -1,6 +1,8 @@
 #ifndef INC_PLAYER_CONTROLLER_CIENTIFICO_H_
 #define INC_PLAYER_CONTROLLER_CIENTIFICO_H_
 
+
+
 #include "components\comp_base.h"
 #include "handle\handle.h"
 #include "components\comp_msgs.h"
@@ -10,14 +12,18 @@
 #include "player_controller_base.h"
 #include "poss_controller.h"
 
+
+
 class CEntity;
 
 template< class TObj >
 class CObjectManager;
 
 class player_controller_cientifico : public PossController {
+
 	// Map for debug on ImGui
 	std::map<int, std::string> out;
+
 
 	CObjectManager<player_controller_cientifico> * om = nullptr;
 
@@ -35,6 +41,7 @@ class player_controller_cientifico : public PossController {
 		STATIC_BOMB_GAME
 	};
 
+
 	int obj = EMPTY;
 	CHandle bomb_handle;
 
@@ -48,15 +55,13 @@ class player_controller_cientifico : public PossController {
 	void UpdateInputActions() override;
 	void ExplodeBomb();
 
-protected:
-	//virtual method for know am I (player, mole, speedy, ...)
-	virtual PLAYER_TYPE whoAmI() { return SCIENTIST; };
 
 public:
 
 	player_controller_cientifico() {}
 	void Init() override;
 	void init() { Init(); }
+
 
 	//void onSetCamera(const TMsgSetCamera& msg);
 	void SetMyEntity();
@@ -79,6 +84,8 @@ public:
 
 	void update_msgs() override;
 	void myUpdate() override;
+
+	void SetCharacterController();
 
 	void renderInMenu();
 

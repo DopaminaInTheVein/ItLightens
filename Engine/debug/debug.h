@@ -39,6 +39,9 @@ class CDebug {
 	std::vector<line> lines;
 	//-------------------------------------------------------
 
+	void DrawLog();
+	void Clear() { Buf.clear(); LineOffsets.clear(); }
+
 public:
 
 	CDebug() {}
@@ -49,11 +52,10 @@ public:
 
 	//Console functions:
 	//-------------------------------------------------------
-	void Clear() { Buf.clear(); LineOffsets.clear(); }
+	
 	void LogRaw(const char* msg, ...) IM_PRINTFARGS(2);
 	void LogError(const char* msg, ...) IM_PRINTFARGS(2);
 	void LogWithTag(const char* tag, const char* msg, ...); IM_PRINTFARGS(3);
-	void DrawLog();
 
 	void setOpen(bool newOpened) { opened = newOpened; }
 	bool isOpen() { return opened; }

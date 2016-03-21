@@ -1,6 +1,8 @@
 #ifndef INC_COMPONENT_BASE_H_
 #define INC_COMPONENT_BASE_H_
 
+#include "utils\XMLParser.h"
+
 class MKeyValue;
 
 struct TCompBase {

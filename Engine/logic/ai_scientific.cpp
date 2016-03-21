@@ -5,6 +5,7 @@
 #include "components\comp_transform.h"
 #include "components\entity.h"
 #include "ai_workbench.h"
+#include "components\comp_charactercontroller.h"
 
 #include "ai_beacon.h"
 
@@ -149,16 +150,17 @@ void ai_scientific::MoveToPos()
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
+	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 
 	VEC3 target = obj_position;
 	float delta_time = getDeltaTime();
 
 	VEC3 new_pos = curr_pos;
-	new_pos.x += delta_time*move_speed*me_transform->getFront().x;
-	new_pos.y += delta_time*move_speed*me_transform->getFront().y;
-	new_pos.z += delta_time*move_speed*me_transform->getFront().z;
+	new_pos.x = delta_time*move_speed*me_transform->getFront().x;
+	new_pos.y = delta_time*move_speed*me_transform->getFront().y;
+	new_pos.z = delta_time*move_speed*me_transform->getFront().z;
 
-	me_transform->setPosition(new_pos);
+	cc->AddMovement(new_pos);
 
 	float dist_square = simpleDistXZ(new_pos, target);
 
@@ -346,14 +348,14 @@ char nameVariable[10]; sprintf(nameVariable, "kpt%d_%s", index, nameSufix);
 bool ai_scientific::load(MKeyValue& atts) {
 	int n = atts.getInt("kpt_size", 0);
 	keyPoints.resize(n);
-	for (unsigned int i = 0; i < n; i++) {
+	for ( int i = 0; i < n; i++) {
 		KPT_ATR_NAME(atrType, "type", i);
 		KPT_ATR_NAME(atrPos, "pos", i);
 		KPT_ATR_NAME(atrWait, "wait", i);
 		keyPoints[i] = KeyPoint(
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
-			, atts.getInt(atrWait, 0)
+			, atts.getFloat(atrWait, 0.0f)
 			);
 	}
 

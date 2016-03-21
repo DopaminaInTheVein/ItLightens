@@ -60,14 +60,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.;..\bin\data\shaders</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)/libs/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)/physx/libs/$(Configuration);$(ProjectDir)/libs/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>XINPUT9_1_0.LIB;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -80,16 +81,17 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.;..\bin\data\shaders</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)/libs/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)/physx/libs/$(Configuration);$(ProjectDir)/libs/$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -101,7 +103,9 @@
     <ClCompile Include="app_modules\io\mouse.cpp" />
     <ClCompile Include="camera\camera.cpp" />
     <ClCompile Include="components\comp_camera.cpp" />
+    <ClCompile Include="components\comp_charactercontroller.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
+    <ClCompile Include="components\comp_physics.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\comp_wire.cpp" />
@@ -146,16 +150,13 @@
     <ClCompile Include="logic\ai_workbench.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="physics\colliders.cpp" />
-    <ClCompile Include="physics\com_col_cylinder.cpp" />
-    <ClCompile Include="physics\simple_physx.cpp" />
+    <ClCompile Include="Physx\physx_manager.cpp" />
     <ClCompile Include="player_controllers\player_controller.cpp" />
     <ClCompile Include="player_controllers\player_controller_base.cpp" />
     <ClCompile Include="player_controllers\player_controller_cientifico.cpp" />
     <ClCompile Include="player_controllers\player_controller_mole.cpp" />
     <ClCompile Include="player_controllers\player_controller_speedy.cpp" />
     <ClCompile Include="player_controllers\poss_controller.cpp" />
-    <ClCompile Include="physics\physics.cpp" />
     <ClCompile Include="prefabs\magnetic_bomb.cpp" />
     <ClCompile Include="prefabs\static_bomb.cpp" />
     <ClCompile Include="profiling\profiling.cpp" />
@@ -199,11 +200,13 @@
     <ClInclude Include="components\components.h" />
     <ClInclude Include="components\comp_base.h" />
     <ClInclude Include="components\comp_camera.h" />
+    <ClInclude Include="components\comp_charactercontroller.h" />
     <ClInclude Include="components\comp_controller_3rd_person.h" />
     <ClInclude Include="components\comp_generator.h" />
     <ClInclude Include="components\comp_life.h" />
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
+    <ClInclude Include="components\comp_physics.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
     <ClInclude Include="components\comp_transform.h" />
     <ClInclude Include="components\comp_wire.h" />
@@ -230,16 +233,13 @@
     <ClInclude Include="logic\ai_workbench.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
-    <ClInclude Include="physics\colliders.h" />
-    <ClInclude Include="physics\comp_col_cylinder.h" />
-    <ClInclude Include="physics\simple_physx.h" />
+    <ClInclude Include="Physx\physx_manager.h" />
     <ClInclude Include="player_controllers\player_controller.h" />
     <ClInclude Include="player_controllers\player_controller_base.h" />
     <ClInclude Include="player_controllers\player_controller_cientifico.h" />
     <ClInclude Include="player_controllers\player_controller_mole.h" />
     <ClInclude Include="player_controllers\player_controller_speedy.h" />
     <ClInclude Include="player_controllers\poss_controller.h" />
-    <ClInclude Include="physics\physics.h" />
     <ClInclude Include="prefabs\magnetic_bomb.h" />
     <ClInclude Include="prefabs\static_bomb.h" />
     <ClInclude Include="profiling\profiling.h" />

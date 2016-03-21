@@ -37,15 +37,13 @@ DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 
 //Physics
-DECL_OBJ_MANAGER("colCylinder", TCompColCillinder);
+DECL_OBJ_MANAGER("rigidbody", TCompPhysics);
+DECL_OBJ_MANAGER("character_controller", TCompCharacterController);
 
 //prefabs
 DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 
-//colliders
-DECL_OBJ_MANAGER("sphere_collider", sphereCollider);
-DECL_OBJ_MANAGER("box_collider", boxCollider);
 
 static CHandle player;
 static CHandle target;
@@ -61,12 +59,14 @@ TMsgID generateUniqueMsgID() {
 bool CEntitiesModule::start() {
 	SBB::init();
 
+	getHandleManager<CEntity>()->init(MAX_ENTITIES);
+
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(8);
 	getHandleManager<player_controller_cientifico>()->init(8);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-	getHandleManager<CEntity>()->init(MAX_ENTITIES);
+	
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
@@ -75,9 +75,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
 	getHandleManager<TCompWire>()->init(10);
 	getHandleManager<TCompGenerator>()->init(10);
-
-	//Physics
-	getHandleManager<TCompColCillinder>()->init(MAX_ENTITIES);
 
 	getHandleManager<ai_guard>()->init(MAX_ENTITIES);
 	getHandleManager<ai_mole>()->init(MAX_ENTITIES);
@@ -91,12 +88,15 @@ bool CEntitiesModule::start() {
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
 
 	//colliders
-	getHandleManager<sphereCollider>()->init(MAX_ENTITIES);
-	getHandleManager<boxCollider>()->init(MAX_ENTITIES);
+	getHandleManager<TCompPhysics>()->init(MAX_ENTITIES);
+	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
+	
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
@@ -153,10 +153,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgDamage, onDamage);
 	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
 
-	//colliders
-	SUBSCRIBE(sphereCollider, TMsgEntityCreated, onCreate);
-	SUBSCRIBE(boxCollider, TMsgEntityCreated, onCreate);
-
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
 	assert(is_ok);
@@ -178,11 +174,12 @@ bool CEntitiesModule::start() {
 	CHandle t = tags_manager.getFirstHavingTag(getID("target"));
 	CEntity * target_e = t;
 
+	
+
 	// Set the player in the 3rdPersonController
 	if (player_e && t.isValid()) {
 		TMsgSetTarget msg;
 		msg.target = t;
-		msg.who = PLAYER;
 		player_e->sendMsg(msg);
 
 		TMsgSetCamera msg_camera;
@@ -264,11 +261,9 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompWire>()->updateAll(dt);
 	getHandleManager<TCompGenerator>()->updateAll(dt);
 
-#ifndef NDEBUG
-	//TODO:REMOVE!!
-	getHandleManager<boxCollider>()->updateAll(dt);
-#endif
-
+	//physx objects
+	getHandleManager<TCompCharacterController>()->updateAll(dt);
+	getHandleManager<TCompPhysics>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {
@@ -278,9 +273,6 @@ void CEntitiesModule::render() {
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
 	tech->activate();
 
-#ifndef NDEBUG
-	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);		//axis trasnfrom
-#endif
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 }
 

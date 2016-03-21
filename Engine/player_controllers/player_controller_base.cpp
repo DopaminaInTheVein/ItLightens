@@ -17,7 +17,7 @@
 #include "app_modules\io\io.h"
 #include "utils/utils.h"
 
-#include "physics\physics.h"
+#include "components/comp_charactercontroller.h"
 
 CPlayerBase::CPlayerBase() {
 	AddState("idle", (statehandler)&CPlayerBase::Idle);
@@ -80,8 +80,6 @@ void CPlayerBase::UpdateMoves()
 {
 	SetMyEntity();
 
-	ApplyGravity();
-
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
@@ -122,15 +120,8 @@ void CPlayerBase::UpdateMoves()
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
 
-	//set final position
-	if (onGround) {
-		player_position = player_position + direction*getDeltaTime()*player_curr_speed;
-	}
-	else {
-		player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
-	}
-
-	player_transform->executeMovement(player_position);
+	SetCharacterController();
+	cc->AddMovement(direction*getDeltaTime(), player_curr_speed);
 	UpdateMovingWithOther();
 }
 #pragma endregion
@@ -233,27 +224,26 @@ void CPlayerBase::Idle()
 
 void CPlayerBase::Jump()
 {
-	if (onGround) {
+	SetCharacterController();
+	if (cc->OnGround()) {
 		energyDecreasal(1.0f);
 	}
-	jspeed = jimpulse;
-	directionJump = VEC3(0, 1, 0);
-	onGround = false;
+	
+	cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
+	//jspeed = jimpulse;
+	//directionJump = VEC3(0, 1, 0);
+	//onGround = false;
 	ChangeState("jumping");
 }
 
 void CPlayerBase::Die()
 {
 	SetMyEntity();
+	SetCharacterController();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	if (player_position.y > 0.0f) {
+	if (!cc->OnGround()) {
 		Falling();
-	}
-	else {
-		onGround = true;
-		jspeed = 0.0f;
-		directionJump = VEC3(0, 0, 0);
 	}
 	orbitCameraDeath();
 	ChangeState("idle");
@@ -262,61 +252,25 @@ void CPlayerBase::Die()
 void CPlayerBase::Win()
 {
 	SetMyEntity();
+	SetCharacterController();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	if (player_position.y > 0.0f) {
+	if (!cc->OnGround()) {
 		Falling();
-	}
-	else {
-		onGround = true;
-		jspeed = 0.0f;
-		directionJump = VEC3(0, 0, 0);
 	}
 	orbitCameraDeath();
 	ChangeState("idle");
 }
 
-void CPlayerBase::ApplyGravity() {
-	SetMyEntity();
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-
-	ray_cast_query floor_query = ray_cast_query(player_position, VEC3(0, -1, 0), 15.0f, COL_TAG_SOLID);
-	ray_cast_result res = Physics::calcRayCast(floor_query);
-	VEC3 ground = res.positionCollision;
-	float d = simpleDist(player_position, ground);
-
-	if (d > 0.1f || jspeed > 0.1f) {
-		jspeed -= gravity*getDeltaTime();
-		player_position = player_position + VEC3(0, 1, 0)*getDeltaTime()*jspeed;
-		//player_transform->setPosition(player_position);
-		if (!player_transform->executeMovement(player_position)) {
-			onGround = true;
-			jspeed = 0.0f;
-			ChangeState("idle");
-		}
-		else {
-			if (state != "doublefalling" && jspeed < 0.1f) {
-				if (state == "doublejump")
-					ChangeState("doublefalling");
-				else
-					ChangeState("falling");
-			}
-
-			onGround = false;
-		}
-	}
-	else {
-		onGround = true;
-	}
-}
 
 void CPlayerBase::Falling()
 {
 	UpdateDirection();
 	UpdateMovDirection();
 
-	if (onGround) {
+	SetCharacterController();
+
+	if (cc->OnGround()) {
 		jspeed = 0.0f;
 		ChangeState("idle");
 	}

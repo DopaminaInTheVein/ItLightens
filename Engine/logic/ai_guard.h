@@ -37,6 +37,7 @@
 
 //Cambio malla
 struct TCompRenderStaticMesh;
+class TCompCharacterController;
 
 class ai_guard : public TCompBase, public aicontroller
 {
@@ -57,6 +58,7 @@ class ai_guard : public TCompBase, public aicontroller
 	CHandle myParent;
 	CHandle thePlayer;
 	TCompTransform * getTransform();
+	TCompCharacterController * getCC();
 	CEntity* getPlayer();
 
 	//Cambio malla
@@ -107,7 +109,7 @@ class ai_guard : public TCompBase, public aicontroller
 	void resetTimers();
 
 	//Raycast
-	CHandle rayCastToPlayer(int types, float& distRay);
+	bool rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit);
 	void shootToPlayer();
 
 	//from bombs

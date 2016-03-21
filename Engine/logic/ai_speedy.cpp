@@ -1,5 +1,6 @@
 #include "mcv_platform.h"
 #include "ai_speedy.h"
+#include "components\comp_charactercontroller.h"
 
 void ai_speedy::Init()
 {
@@ -63,7 +64,7 @@ char nameVariable[10]; sprintf(nameVariable, "wpt%d_%s", index, nameSufix);
 bool ai_speedy::load(MKeyValue& atts) {
 	int n = atts.getInt("wpts_size", 0);
 	fixedWpts.resize(n);
-	for (unsigned int i = 0; i < n; i++) {
+	for ( int i = 0; i < n; i++) {
 		WPT_ATR_NAME(atrPos, "pos", i);
 		fixedWpts[i] = atts.getPoint(atrPos);
 	}
@@ -97,6 +98,7 @@ void ai_speedy::NextWptState()
 void ai_speedy::SeekWptState()
 {
 	float distance = squaredDistXZ(fixedWpts[curwpt], transform->getPosition());
+	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 
 	string next_action = decide_next_action();
 
@@ -123,7 +125,7 @@ void ai_speedy::SeekWptState()
 		moveFront(speed);
 	}
 	else {
-		transform->setPosition(fixedWpts[curwpt]);
+		cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(fixedWpts[curwpt]+VEC3(0,cc->GetHeight(),0)));
 		float distance_to_next_wpt = squaredDist(transform->getPosition(), fixedWpts[(curwpt + 1) % fixedWpts.size()]);
 		curwpt = (curwpt + 1) % fixedWpts.size();
 
@@ -198,8 +200,8 @@ bool ai_speedy::aimToTarget(VEC3 target) {
 void ai_speedy::moveFront(float movement_speed) {
 	VEC3 front = transform->getFront();
 	VEC3 position = transform->getPosition();
-
-	transform->setPosition(VEC3(position.x + front.x*movement_speed*getDeltaTime(), position.y, position.z + front.z*movement_speed*getDeltaTime()));
+	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
+	cc->AddMovement(VEC3(front.x*movement_speed*getDeltaTime(), 0.0f, front.z*movement_speed*getDeltaTime()));
 }
 
 bool ai_speedy::dashToTarget(VEC3 target) {

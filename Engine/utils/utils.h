@@ -35,4 +35,8 @@ void getRotationMatrix(const float roll, const float pitch, const float yaw, MAT
 VEC3 productVectorMatrix(const VEC4& vec, const MAT44& matrix);
 VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const float yaw);
 
+//template<class TObj>
+typedef uint32_t TTagID;
+bool isInVector(std::vector<TTagID>& v, TTagID obj);
+
 #endif

@@ -9,7 +9,7 @@
 #include "app_modules\io\io.h"
 #include "components\comp_msgs.h"
 
-#include "physics/physics.h"
+#include "components/comp_charactercontroller.h"
 
 void player_controller_speedy::Init()
 {
@@ -70,6 +70,8 @@ void player_controller_speedy::UpdateInputActions() {
 		if (dash_ready) {
 			energyDecreasal(5.0f);
 			ChangeState("dashing");
+			TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
+			cc->SetGravity(false);
 			dashing = true;
 		}
 	}
@@ -78,47 +80,6 @@ void player_controller_speedy::UpdateInputActions() {
 			energyDecreasal(10.0f);
 			ChangePose(pose_idle_route);
 			ChangeState("blink");
-		}
-	}
-}
-
-void player_controller_speedy::ApplyGravity() {
-	if (state != "dashing") {
-		SetMyEntity();
-		TCompTransform* player_transform = myEntity->get<TCompTransform>();
-		VEC3 player_position = player_transform->getPosition();
-
-		ray_cast_query floor_query = ray_cast_query(player_position, VEC3(0, -1, 0), 15.0f, COL_TAG_SOLID);
-		ray_cast_result res = Physics::calcRayCast(floor_query);
-		VEC3 ground = res.positionCollision;
-		float d = simpleDist(player_position, ground);
-
-		if (d > 0.1f || jspeed > 0.1f) {
-			jspeed -= gravity*getDeltaTime();
-			player_position = player_position + VEC3(0, 1, 0)*getDeltaTime()*jspeed;
-			//player_transform->setPosition(player_position);
-			if (!player_transform->executeMovement(player_position)) {
-				onGround = true;
-				jspeed = 0.0f;
-				ChangeState("idle");
-			}
-			else {
-				if (state != "doublefalling" && jspeed < 0.1f) {
-					if (state == "doublejump") {
-						ChangePose(pose_jump_route);
-						ChangeState("doublefalling");
-					}
-					else {
-						ChangePose(pose_jump_route);
-						ChangeState("falling");
-					}
-				}
-
-				onGround = false;
-			}
-		}
-		else {
-			onGround = true;
 		}
 	}
 }
@@ -204,6 +165,7 @@ void player_controller_speedy::Blink()
 	if (blink_ready) {
 		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
+		TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 		VEC3 player_position = player_transform->getPosition();
 		VEC3 player_front = player_transform->getFront();
 		float dist, distCollision;
@@ -215,7 +177,7 @@ void player_controller_speedy::Blink()
 		}
 		player_position += (player_front * (dist - 0.5f));
 
-		player_transform->setPosition(player_position);
+		cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(player_position));
 
 		resetBlinkTimer();
 	}
@@ -226,14 +188,12 @@ void player_controller_speedy::Blink()
 bool player_controller_speedy::dashFront()
 {
 	dash_duration += getDeltaTime();
-
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 player_front = player_transform->getFront();
-
-	VEC3 new_position = VEC3(player_position.x + player_front.x*dash_speed*getDeltaTime(), player_position.y, player_position.z + player_front.z*dash_speed*getDeltaTime());
-	player_transform->setPosition(new_position);
+	cc->AddMovement(VEC3(player_front.x*dash_speed*getDeltaTime(),0.0f, player_front.z*dash_speed*getDeltaTime()));
 
 	/*if (drop_water_ready) {
 		// CREATE WATER
@@ -294,8 +254,10 @@ bool player_controller_speedy::dashFront()
 		resetDropWaterTimer();
 	}*/
 
-	if (dash_duration > dash_max_duration || collisionWall()) {
+	if (dash_duration > dash_max_duration ) {
 		dash_duration = 0;
+		TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
+		cc->SetGravity(true);
 		return true;
 	}
 	else {
@@ -304,28 +266,38 @@ bool player_controller_speedy::dashFront()
 }
 bool player_controller_speedy::collisionWall() {
 	float distFirstCollider; // No lo uso
-	CHandle collider = rayCastToFront(COL_TAG_SOLID, 1.0f, distFirstCollider);
-	return collider.isValid();
+	//TODO RAYCAST SOLID
+	bool ret = rayCastToFront(1, 1.0f, distFirstCollider);
+	return ret;
 }
 
 bool player_controller_speedy::collisionBlink(float& distCollision) {
-	CHandle collider = rayCastToFront(COL_TAG_SOLO_CRISTAL, blink_distance + 0.5f, distCollision);
-	return collider.isValid();
+	//TODO RAYCAST CRYSTAL
+	bool ret = rayCastToFront(2, blink_distance + 0.5f, distCollision);
+	return ret;
 }
 
-CHandle player_controller_speedy::rayCastToFront(int types, float reach, float& distRay) {
+bool player_controller_speedy::rayCastToFront(int types, float reach, float& distRay) {
 	CHandle me = CHandle(this).getOwner();
 	CEntity* eMe = me;
 	TCompTransform* tMe = eMe->get<TCompTransform>();
 
-	ray_cast_query rcQuery;
-	rcQuery.position = tMe->getPosition() + VEC3(0, 0.5, 0);
-	rcQuery.direction = tMe->getFront();
-	rcQuery.maxDistance = reach;
-	rcQuery.types = types;
-	ray_cast_result res = Physics::calcRayCast(rcQuery);
-	distRay = realDist(res.positionCollision, tMe->getPosition());
-	return res.firstCollider;
+	VEC3 origin = tMe->getPosition() + VEC3(0, 1.0f, 0);
+	VEC3 direction = tMe->getFront();
+	float dist = reach;
+	Debug->DrawLine(origin, direction, dist);
+
+	//PROVISINAL FOR TEST:
+	PxQueryFilterData filter = PxQueryFilterData();
+	if (types == 2) {
+		filter.data.word0 = CPhysxManager::eALL_STATICS | CPhysxManager::eOBJECT;	//ignore crystal and people
+	}
+	//END PROV
+
+	PxRaycastBuffer hit;
+	bool ret = PhysxManager->raycast(origin,direction,dist,hit,filter);
+	distRay = hit.getAnyHit(0).distance;	//first hit
+	return ret;
 }
 
 // Timers update functions
@@ -396,4 +368,10 @@ void player_controller_speedy::ChangePose(string new_pose_route) {
 	atts_mesh["name"] = new_pose_route;
 	mesh->load(atts_mesh);
 	mesh->registerToRender();
+}
+
+void player_controller_speedy::SetCharacterController()
+{
+	SetMyEntity();
+	cc = myEntity->get<TCompCharacterController>();
 }

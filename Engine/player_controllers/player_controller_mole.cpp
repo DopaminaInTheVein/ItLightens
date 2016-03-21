@@ -9,10 +9,9 @@
 #include "app_modules\io\io.h"
 #include "components\comp_msgs.h"
 
-#include "physics/physics.h"
-
 #include "ui\ui_interface.h"
 #include "logic\ai_mole.h"
+#include "components/comp_charactercontroller.h"
 
 void player_controller_mole::Init() {
 
@@ -134,11 +133,12 @@ void player_controller_mole::LeaveBox() {
 	posbox.y = posboxIni.y - 2;
 	posbox.z = posboxIni.z + p_t->getFront().z * 3;
 	float angle = 0.0f;
-	while (!box_t->executeMovement(posbox)) {
+	//TODO PHYSX OBJECT
+	/*while (!box_t->setPosition(posbox)) {
 		angle += 0.1;
 		posbox.x = posboxIni.x + p_t->getFront().x * sin(angle) * 3;
 		posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;
-	}
+	}*/
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = false;
 	player_max_speed *= 2;
@@ -213,4 +213,10 @@ void player_controller_mole::ChangePose(string new_pose_route) {
 	atts_mesh["name"] = new_pose_route;
 	mesh->load(atts_mesh);
 	mesh->registerToRender();
+}
+
+void player_controller_mole::SetCharacterController()
+{
+	SetMyEntity();
+	cc = myEntity->get<TCompCharacterController>();
 }

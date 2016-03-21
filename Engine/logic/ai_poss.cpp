@@ -116,7 +116,6 @@ const void ai_poss::UnpossessingState() {
 
 const void ai_poss::StuntState() {
 	actionStunt();
-	Debug->LogRaw("%f -> %f\n", timeStunt, _timeStunt);
 	____TIMER_CHECK_DO_(timeStunt);
 	stunned = false;
 	ChangeState(ST_STUNT_END);

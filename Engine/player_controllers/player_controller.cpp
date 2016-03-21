@@ -12,6 +12,8 @@
 #include "components/comp_msgs.h"
 #include "ui\ui_interface.h"
 
+#include "components\comp_charactercontroller.h"
+
 #define DELTA_YAW_SELECTION		deg2rad(10)
 
 void player_controller::Init() {
@@ -33,12 +35,12 @@ void player_controller::Init() {
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 
-	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_idle = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_run	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_jump	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_idle	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
 
-	pose_no_ev = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
-	actual_render = pose_no_ev;
+	pose_no_ev		= myEntity->get<TCompRenderStaticMesh>();		//defined on xml
+	actual_render	= pose_no_ev;
 
 	pose_no_ev.setOwner(myEntity);
 	pose_idle.setOwner(myEntity);
@@ -72,6 +74,9 @@ void player_controller::rechargeEnergy()
 	SetMyEntity();
 	TCompLife *life = myEntity->get<TCompLife>();
 	life->setMaxLife(max_life);
+	TCompCharacterController *p = myEntity->get<TCompCharacterController>();
+	PxController *cc = p->GetController();
+	cc->resize(full_height);
 	ChangePose(pose_idle);
 }
 
@@ -80,7 +85,11 @@ void player_controller::ChangePose(CHandle new_pos_h)
 
 	SetMyEntity();
 	TCompLife *life = myEntity->get<TCompLife>();
-	if (life->currentlife < evolution_limit) new_pos_h = pose_no_ev;
+	if (life->currentlife < evolution_limit) {
+		SetCharacterController();
+		new_pos_h = pose_no_ev;
+		cc->GetController()->resize(min_height);	//update collider size to new form
+	}
 
 	TCompRenderStaticMesh *new_pose = new_pos_h;
 	if (new_pose == actual_render) return;		//no change
@@ -94,11 +103,31 @@ void player_controller::ChangePose(CHandle new_pos_h)
 }
 
 void player_controller::myUpdate() {
+
+	SetMyEntity();
+	TCompTransform *m = myEntity->get<TCompTransform>();
+	
+	
+	//TESTING RAYCAST
+	int hits = 0;
+	SetCharacterController();
+	VEC3 origin = PhysxConversion::PxExVec3ToVec3(cc->GetController()->getFootPosition());
+	Debug->DrawLine(origin + m->getFront()*0.5f + VEC3(0,1,0), m->getFront(), 2.0f);
+	PxQueryFilterData filterData = PxQueryFilterData();
+	filterData.data.word0 = CPhysxManager::eGUARD;
+	PxRaycastBuffer hit;
+
+	if (PhysxManager->raycast(origin + m->getFront()*0.5f + VEC3(0, 0.5f, 0), m->getFront(), 2.0f, hit, filterData)) {
+		hits = hit.hasAnyHits();
+		Debug->LogRaw("player hits = %d to guard\n", hits);
+	}
+	//END TESTING RAYCAST
+
+
 	____TIMER__UPDATE_(timerDamaged);
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 pos = player_transform->getPosition();
-	dbg("PLAYER POSI: %f %f %f\n", pos.x, pos.y, pos.z);
 	if (!isDamaged()) {
 		UpdatePossession();
 	}
@@ -109,8 +138,9 @@ void player_controller::DoubleJump()
 	UpdateDirection();
 	UpdateMovDirection();
 
-	if (jspeed <= 0.1f) {
-		jspeed = 0.0f;
+	SetCharacterController();
+
+	if (cc->GetYAxisSpeed() < 0.0f) {
 		ChangeState("doublefalling");
 	}
 }
@@ -118,9 +148,8 @@ void player_controller::DoubleJump()
 void player_controller::DoubleFalling() {
 	UpdateDirection();
 	UpdateMovDirection();
-
-	if (onGround) {
-		jspeed = 0.0f;
+	SetCharacterController();
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 }
@@ -129,14 +158,17 @@ void player_controller::Jumping()
 {
 	UpdateDirection();
 	UpdateMovDirection();
+	SetCharacterController();
 
-	if (onGround) {
-		jspeed = 0.0f;
+	if (cc->GetYAxisSpeed() <= 0.0f)
+		ChangeState("falling");
+
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		jspeed = jimpulse;
+		cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
 		energyDecreasal(5.0f);
 		ChangeState("doublejump");
 	}
@@ -146,17 +178,17 @@ void player_controller::Falling()
 {
 	UpdateDirection();
 	UpdateMovDirection();
+	SetCharacterController();
 
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		jspeed = jimpulse;
+		cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
 		energyDecreasal(5.0f);
 		ChangeState("doublejump");
 	}
 
-	if (onGround) {
-		jspeed = 0.0f;
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 }
@@ -240,11 +272,11 @@ void player_controller::AttractMove(CEntity * entPoint) {
 	if (polarizedMove) polarizedCurrentSpeed = drag_i*polarizedCurrentSpeed + drag*player_max_speed;
 	else polarizedCurrentSpeed = drag_i*polarizedCurrentSpeed - drag*player_max_speed;
 
-	float multiplier = getDeltaTime()*polarizedCurrentSpeed * 1.5f;
+	float multiplier = polarizedCurrentSpeed * 1.5f;
 
-	float tox = min(fabsf(direction.x*multiplier), fabsf(player_position.x - entPointTransform->getPosition().x));
-	float toy = min(fabsf(direction.y*multiplier), fabsf(player_position.y - entPointTransform->getPosition().y));
-	float toz = min(fabsf(direction.z*multiplier), fabsf(player_position.z - entPointTransform->getPosition().z));
+	float tox = min(fabsf(direction.x)*multiplier, fabsf(player_position.x - entPointTransform->getPosition().x));
+	float toy = min(fabsf(direction.y)*multiplier, fabsf(player_position.y - entPointTransform->getPosition().y));
+	float toz = min(fabsf(direction.z)*multiplier, fabsf(player_position.z - entPointTransform->getPosition().z));
 
 	if (direction.x < 0) {
 		tox *= -1;
@@ -256,18 +288,14 @@ void player_controller::AttractMove(CEntity * entPoint) {
 		toy *= -1;
 	}
 
-	player_position.x += tox;
-
-	jspeed = polarizedCurrentSpeed*direction.y;
-	player_position.z += toz;
-	player_transform->setPosition(player_position);
+	SetCharacterController();
+	cc->AddImpulse(VEC3(tox, toy, toz));
 }
 
 void player_controller::UpdateMoves()
 {
 	SetMyEntity();
-
-	ApplyGravity();
+	SetCharacterController();
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -295,7 +323,7 @@ void player_controller::UpdateMoves()
 
 	player_transform->getAngles(&yaw, &pitch);
 
-	player_transform->setAngles(new_yaw + yaw, pitch);
+	player_transform->setAngles(new_yaw + yaw, pitch);		//control rotate transfom, not needed for the character controller
 
 	//Set current velocity with friction
 	float drag = 2.5f*getDeltaTime();
@@ -309,19 +337,18 @@ void player_controller::UpdateMoves()
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
 
-	//set final position
-	if (onGround) {
+	if (cc->GetYAxisSpeed() == 0.0f) {
 		ChangePose(pose_run);
-		player_position = player_position + direction*getDeltaTime()*player_curr_speed;
 	}
 	else {
 		ChangePose(pose_jump);
-		player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
 	}
 
 	if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
-	player_transform->executeMovement(player_position);
+
+	
+	cc->AddMovement(direction*getDeltaTime() , player_curr_speed);
 }
 
 void player_controller::UpdateInputActions()
@@ -372,6 +399,12 @@ void player_controller::UpdateInputActions()
 	}
 }
 
+void player_controller::SetCharacterController()
+{
+	SetMyEntity();
+	cc = myEntity->get<TCompCharacterController>();
+}
+
 float CPlayerBase::possessionCooldown;
 //Possession
 void player_controller::UpdatePossession() {
@@ -395,9 +428,11 @@ void player_controller::UpdatePossession() {
 			SBB::postBool("possMode", true);
 
 			//TODO: Desactivar render
-			CEntity * eMe = CHandle(this).getOwner();
-			TCompTransform* tMe = eMe->get<TCompTransform>();
-			tMe->setPosition(VEC3(0, 200, 0));
+			SetCharacterController();
+			cc->SetActive(false);
+			cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
+			TCompTransform *t = myEntity->get<TCompTransform>();
+			t->setPosition(VEC3(0, 200, 0));
 			player_curr_speed = 0;
 		}
 	}
@@ -500,11 +535,16 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	CEntity* eMe = hMe;
 	CHandle hPlayer = tags_manager.getFirstHavingTag(getID("player"));
 	CEntity* ePlayer = hPlayer;
+	
 
 	//Colocamos el player
+	SetCharacterController();
+	VEC3 pos = msg.npcPos + VEC3(0.0f, cc->GetHeight(), 0.0f);	//to be sure the collider will be above the ground, add height from collider, origin on center shape
 	TCompTransform* tMe = eMe->get<TCompTransform>();
-	tMe->lookAt(msg.npcPos, msg.npcPos + msg.npcFront * 1);
-	tMe->setPosition(msg.npcPos + msg.npcFront * DIST_LEAVING_POSSESSION);
+	cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(pos + msg.npcFront * DIST_LEAVING_POSSESSION));	//set collider position
+	tMe->setPosition(msg.npcPos + msg.npcFront * DIST_LEAVING_POSSESSION);												//set render position
+	cc->SetActive(true);
+
 
 	//Set 3rd Person Controller
 	TMsgSetTarget msg3rdController;
@@ -543,8 +583,8 @@ void player_controller::onWirePass(const TMsgWirePass & msg)
 
 	if (io->keys['E'].becomesPressed()) {
 		SetMyEntity();
-		TCompTransform *t = myEntity->get<TCompTransform>();
-		t->setPosition(msg.dst);
+		SetCharacterController();
+		cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(msg.dst));
 	}
 }
 

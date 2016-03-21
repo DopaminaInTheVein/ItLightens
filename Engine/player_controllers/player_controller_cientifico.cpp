@@ -14,6 +14,7 @@
 #include "app_modules\io\io.h"
 #include "render\static_mesh.h"
 #include "components\comp_render_static_mesh.h"
+#include "components/comp_charactercontroller.h"
 
 void player_controller_cientifico::Init() {
 	om = getHandleManager<player_controller_cientifico>();	//player
@@ -131,7 +132,7 @@ void player_controller_cientifico::CreateStaticBomb()
 void player_controller_cientifico::AddDisableBeacon()
 {
 	if (obj == DISABLE_BEACON) {
-		VEntities es = tags_manager.getHandlesPointerByTag(getID("beacon"));
+		VHandles es = tags_manager.getHandlesByTag(getID("beacon"));
 		TMsgBeaconBusy msg;
 		bool resp = false;
 		msg.reply = &resp;
@@ -357,4 +358,10 @@ void player_controller_cientifico::myUpdate()
 			t_to_explode = 5.0f;
 		}
 	}
+}
+
+void player_controller_cientifico::SetCharacterController()
+{
+	SetMyEntity();
+	cc = myEntity->get<TCompCharacterController>();
 }

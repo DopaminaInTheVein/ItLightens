@@ -55,16 +55,12 @@ class player_controller_speedy : public PossController {
 	string pose_run_route;
 	string pose_jump_route;
 	string pose_void_route;
-protected:
-	//virtual method for know am I (player, mole, speedy, ...)
-	virtual PLAYER_TYPE whoAmI() { return SPEEDY; };
 
 public:
 	void Init();
 	void myUpdate() override;
 
 	void UpdateInputActions();
-	void ApplyGravity();
 
 	// Speedy specific state
 	void DoubleJump();
@@ -78,7 +74,7 @@ public:
 	bool dashFront();
 	bool collisionWall();
 	bool collisionBlink(float& distCollision);
-	CHandle rayCastToFront(int types, float reach, float& distRay);
+	bool rayCastToFront(int types, float reach, float& distRay);
 	// Timer control functions
 	void resetDashTimer();
 	void updateDashTimer();
@@ -96,6 +92,8 @@ public:
 	//Cambio Malla
 	//void ChangePose(CHandle new_pos_h);
 	void ChangePose(string new_pose_route);
+
+	void SetCharacterController();
 
 	//Overload function for handler_manager
 	player_controller_speedy& player_controller_speedy::operator=(player_controller_speedy arg) { return arg; }

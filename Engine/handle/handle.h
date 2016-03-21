@@ -68,6 +68,7 @@ public:
 
 	void setOwner(CHandle new_owner);
 	CHandle getOwner();
+	bool hasTag(std::string tag);
 	bool load(MKeyValue& atts);
 	void renderInMenu();
 

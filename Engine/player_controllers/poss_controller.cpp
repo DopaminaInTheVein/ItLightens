@@ -34,10 +34,9 @@ void PossController::UpdatePossession() {
 	else {
 		energyDecreasal(-getDeltaTime()*speedRecover);
 	}
-#ifndef NDEBUG
+
 	____TIMER_CHECK_DO_(timerShowEnergy);
 	____TIMER_CHECK_DONE_(timerShowEnergy);
-#endif
 }
 
 void PossController::onDamage(const TMsgDamage& msg) {
@@ -80,7 +79,6 @@ void PossController::onSetEnable(bool enabled) {
 		//Set 3rd Person Controller
 		TMsgSetTarget msg3rdController;
 		msg3rdController.target = hMe;
-		msg3rdController.who = whoAmI();
 		ePlayer->sendMsg(msg3rdController);
 
 		//Set Camera
@@ -88,12 +86,13 @@ void PossController::onSetEnable(bool enabled) {
 	}
 	else {
 		CHandle hTarget = tags_manager.getFirstHavingTag(getID("target"));
+		//CHandle hTarget = player;
 
-		//CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
+		CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
 
-		//TMsgSetTarget msgTarg;
-		//msgTarg.target = hTarget;
-		//player_e->sendMsg(msgTarg);
+		TMsgSetTarget msgTarg;
+		msgTarg.target = hTarget;
+		player_e->sendMsg(msgTarg);
 
 		CEntity* eTarget = hTarget;
 		CEntity* eMe = hMe;

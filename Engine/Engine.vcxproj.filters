@@ -166,18 +166,6 @@
     <ClCompile Include="logic\ai_workbench.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="physics\physics.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="physics\com_col_cylinder.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="physics\simple_physx.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="physics\colliders.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
     <ClCompile Include="app_modules\io\io.cpp">
       <Filter>app_modules\io</Filter>
     </ClCompile>
@@ -201,6 +189,15 @@
     </ClCompile>
     <ClCompile Include="profiling\profiling.cpp">
       <Filter>profiling</Filter>
+    </ClCompile>
+    <ClCompile Include="Physx\physx_manager.cpp">
+      <Filter>physx</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_charactercontroller.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_physics.cpp">
+      <Filter>components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,18 +403,6 @@
     <ClInclude Include="logic\ai_workbench.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="physics\comp_col_cylinder.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="physics\physics.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="physics\simple_physx.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="physics\colliders.h">
-      <Filter>physics</Filter>
-    </ClInclude>
     <ClInclude Include="app_modules\io\digital_button.h">
       <Filter>app_modules\io</Filter>
     </ClInclude>
@@ -444,6 +429,15 @@
     </ClInclude>
     <ClInclude Include="profiling\profiling.h">
       <Filter>profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="Physx\physx_manager.h">
+      <Filter>physx</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_charactercontroller.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_physics.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -504,14 +498,14 @@
     <Filter Include="player controllers">
       <UniqueIdentifier>{015f2a57-fefa-4062-9950-b4b729347030}</UniqueIdentifier>
     </Filter>
-    <Filter Include="physics">
-      <UniqueIdentifier>{8363631e-fb31-4f78-80df-fb6750e11494}</UniqueIdentifier>
-    </Filter>
     <Filter Include="app_modules\io">
       <UniqueIdentifier>{a9e4179a-d89e-4a4d-86a7-45f6f384b662}</UniqueIdentifier>
     </Filter>
     <Filter Include="profiling">
       <UniqueIdentifier>{77cfda78-8c78-4cd8-a585-4925331cc637}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physx">
+      <UniqueIdentifier>{16d1a48c-1e04-411f-8706-8555b3d2c0b9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
