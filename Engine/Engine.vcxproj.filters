@@ -114,9 +114,6 @@
     <ClCompile Include="logic\sbb.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_speedy.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="logic\aicontroller.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -198,6 +195,21 @@
     </ClCompile>
     <ClCompile Include="components\comp_generator.cpp">
       <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\bt.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\btnode.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\bt_speedy.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_speedy.cpp">
+      <Filter>logic_old</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\bt_poss.cpp">
+      <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -343,9 +355,6 @@
     <ClInclude Include="logic\sbb.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\ai_speedy.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="logic\aicontroller.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -439,6 +448,21 @@
     <ClInclude Include="components\comp_generator.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="logic\bt.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\btnode.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\bt_speedy.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_speedy.h">
+      <Filter>logic_old</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\bt_poss.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -503,6 +527,9 @@
     </Filter>
     <Filter Include="app_modules\io">
       <UniqueIdentifier>{a9e4179a-d89e-4a4d-86a7-45f6f384b662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic_old">
+      <UniqueIdentifier>{c7f9dd6c-e314-46af-a5e9-d24812be7273}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

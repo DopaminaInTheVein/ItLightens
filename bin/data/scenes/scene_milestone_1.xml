@@ -1191,7 +1191,7 @@
     <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
     <life points="50" />
     <player_speedy />
-    <ai_speedy
+    <bt_speedy
       wpts_size = "4"
       wpt0_pos = " 5  0  25"
       wpt1_pos = " 5  0  33"
@@ -1346,7 +1346,7 @@
     <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
     <life points="50" />
     <player_speedy />
-    <ai_speedy
+    <bt_speedy
       wpts_size  = "4"
       wpt0_pos = " 7  4 163"
       wpt1_pos = "-7  4 163"

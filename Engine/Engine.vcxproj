@@ -144,6 +144,10 @@
     <ClCompile Include="logic\ai_speedy.cpp" />
     <ClCompile Include="logic\ai_water.cpp" />
     <ClCompile Include="logic\ai_workbench.cpp" />
+    <ClCompile Include="logic\bt.cpp" />
+    <ClCompile Include="logic\btnode.cpp" />
+    <ClCompile Include="logic\bt_poss.cpp" />
+    <ClCompile Include="logic\bt_speedy.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="physics\colliders.cpp" />
@@ -227,6 +231,10 @@
     <ClInclude Include="logic\ai_speedy.h" />
     <ClInclude Include="logic\ai_water.h" />
     <ClInclude Include="logic\ai_workbench.h" />
+    <ClInclude Include="logic\bt.h" />
+    <ClInclude Include="logic\btnode.h" />
+    <ClInclude Include="logic\bt_poss.h" />
+    <ClInclude Include="logic\bt_speedy.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
     <ClInclude Include="physics\colliders.h" />
