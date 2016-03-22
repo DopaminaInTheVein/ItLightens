@@ -1,7 +1,7 @@
 clearListener()
 
 struct TSceneExporter (
-	project_path = "c:\\code\\engine\\bin\\data\\",
+	project_path = data_dir ,
 	
 	fn saveTextureSlot fs slot bitmap_texture = (
 		local textures_path = "textures/"
@@ -12,16 +12,20 @@ struct TSceneExporter (
 		) else (
 			local full_name = bitmap_texture.bitmap.filename
 			local aname = filenameFromPath full_name
-			format "<texture type=\"%\" name=\"%%\"/>\n" slot textures_path aname to:fs 
+			format "<texture slot=\"%\" name=\"%%\"/>\n" slot textures_path aname to:fs 
 		)
 	),
 
 	fn saveStdMaterial fs m = (
-		if classof m != Standardmaterial then throw "Invalid material recv"
-		format "<material tech=\"tech_textured_colored.tech\">\n" to:fs
-		saveTextureSlot fs "diffuse" m.diffusemap
-		saveTextureSlot fs "specular" m.specularmap
-		format "</material>\n" to:fs
+		if (m != undefined) then (
+			if classof m != Standardmaterial then throw "Invalid material recv"
+			format "<material tech=\"textured.tech\">\n" to:fs
+			saveTextureSlot fs "diffuse" m.diffusemap
+			saveTextureSlot fs "specular" m.specularmap
+			format "</material>\n" to:fs
+		) else (
+			format "WARNING: - - Undefined material ignored!! - -\n"
+		)
 	),
 
 	fn saveMultiMaterial fs multi_mat = (
@@ -70,6 +74,30 @@ struct TSceneExporter (
 		exportTransform fs max_tmx "transform" ""
 	),
 	
+	fn getMeshMaterialInfo obj = (
+		local mat = obj.mat
+		local mes = obj.mesh
+		
+		local res
+		if classof mat == MultiMaterial then (
+			res = #()
+			for f = 1 to mes.faces.count do (
+				local m = getFaceMatID mes f
+				if res[m] == undefined then (
+					res[m] = #(f)
+				) else (
+					append res[m] f
+				)
+			)
+		) else (
+			res = #(#()) 
+			for f = 1 to mes.faces.count do (
+				res[1][f] = f
+			)
+		)
+		return res
+	),
+		
 	fn exportStaticMesh out_filename objs = (
 		
 		local fsm = createFile out_filename
@@ -82,25 +110,61 @@ struct TSceneExporter (
 				format ("Object " + obj.name + " requires a material\n")
 				continue
 			) 
-			local filename = project_path + "meshes/" + obj.name + ".mesh"
-			local filename_xml = "meshes/" + obj.name + ".mesh"
-			export_mesh obj (filename)
-			local mat_name = m.name			-- bronze
+			
+			-- #(   #(faces_with_mat1) undef undef #(faces_with_mat4) )
+			local mat_infos = getMeshMaterialInfo obj
+			
+			local filename = meshes_dir + obj.name + mesh_ext
+			local filenameXML = "meshes/" + obj.name + mesh_ext
+			
+			export_mesh obj filename mat_infos
+			
+			local used_mats = #()
+			local mat_info
 			local mesh_idx = 0
+			local mat_idx = 0
+			for mat_info in mat_infos do (
+				local mat_used = m
+				mat_idx = mat_idx + 1
+				if mat_info == undefined then continue
+				
+				if classof m == MultiMaterial then (
+					mat_used = m[ mat_idx ]
+					if( mat_used == undefined ) then (
+						throw ("El obj" + obj.name + " uses a multimaterial which is not defining the submaterial index " + mat_idx )
+					)
+					if( classof mat_used != StandardMaterial ) then (
+						throw ("El obj" + obj.name + " uses a multimaterial which in slot "+ mat_idx + " does not contain a std material" )
+					)
+				)
+				local mat_name = mat_used.name
+				
+				tieneEspacios = (findString mat_name " ")
+				tieneAlmohadilla = (findString mat_name "#")
+				if (tieneEspacios != undefined) do (
+					throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+				)
+				if (tieneEspacios != undefined) do (
+					throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+				)
+				
+				if not appendifunique used_mats mat_name then (
+					throw ("El obj '" + obj.name + "' uses the same material '" + mat_name + "' with more than one material ids (one is mat_id " + (mat_idx as string ) + "). Please, combine both material id's in a single number.")
+				)
+				
+				local mat_res_name = "materials/" + mat_name + ".material"
+				local mat_file = createFile (materials_dir + mat_name + ".material")
+				saveMaterial mat_file mat_used
+				close mat_file
+				format "  <slot mesh=\"%\" material=\"%\" mesh_idx=\"%\"/>\n" filenameXML mat_res_name mesh_idx to:fsm
+				mesh_idx = mesh_idx + 1
+			)
 			
-			local mat_res_name = "materials/" + mat_name + ".material"
-			
-			fsmat_name = project_path + mat_res_name
-			local fmaterial = createFile fsmat_name
-			saveMaterial fmaterial obj.mat
-			close fmaterial
-			format "  <slot mesh=\"%\" material=\"%\" mesh_idx=\"%\"/>\n" filename_xml mat_res_name mesh_idx to:fsm
 		)
 		format "</static_mesh>\n" to:fsm
 		close fsm
 	),
-		
-	
+
 	fn exportCompStaticMesh fs obj = (
 		local static_mesh_name = "static_meshes/" +obj.name  + ".static_mesh"
 		format "  <render_static_mesh name=\"%\"/>\n" static_mesh_name to:fs
@@ -144,11 +208,11 @@ struct TSceneExporter (
 	
 	fn exportScene scene_name = (
 		-- For each obj in the scene
-		local out_filename = project_path + "scenes\\" + scene_name + ".xml"
+		local out_filename = scenes_dir + scene_name + ".xml"
 		local fs = createFile out_filename
 		format "<entities>\n" to:fs
 		local obj
-		for obj in $* do (
+		for obj in $ do (
 			-- Only export the root objects of the scene
 			-- The children are exported by the parents
 			if obj.parent == undefined then
@@ -159,7 +223,7 @@ struct TSceneExporter (
 	)
 )
 
-gc()
+--gc()
 --se = TSceneExporter();
---se.exportScene "scene01"
+--se.exportScene "sceneZZZ"
 
