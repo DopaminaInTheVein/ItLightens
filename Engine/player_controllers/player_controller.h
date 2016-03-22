@@ -25,6 +25,9 @@ class player_controller : public CPlayerBase {
 	bool tominus = false;
 	bool toplus = false;
 
+	float full_height = 0.5f;
+	float min_height = 0.2f;
+
 	float polarizedCurrentSpeed = 0.0f;
 
 	//Is damaged?
@@ -54,15 +57,15 @@ class player_controller : public CPlayerBase {
 	void UpdatePossession();
 
 	bool nearStunable();
-
+	
 	CHandle pose_no_ev;
 	CHandle pose_idle;
 	CHandle pose_run;
 	CHandle pose_jump;
 
-	float evolution_limit = 10.0f;
-	float max_life = 50.0f;
-	float init_life = 10.0f;
+	float evolution_limit	= 10.0f;
+	float max_life			= 50.0f;
+	float init_life			= 10.0f;
 
 	void rechargeEnergy();
 
@@ -72,13 +75,14 @@ class player_controller : public CPlayerBase {
 
 	void UpdateMoves() override;
 	void UpdateInputActions() override;
+	void SetCharacterController();
 
 protected:
 	void myUpdate();
-	PLAYER_TYPE whoAmI() { return PLAYER; }
 
 public:
 	void Init();
+	void Idle();
 
 	void DoubleJump();
 	void DoubleFalling();

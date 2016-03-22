@@ -35,6 +35,34 @@
 #include "geometry/geometry.h"
 #include "render/render.h"
 
+//physx
+#include "PxPhysicsAPI.h"
+
+#ifndef NDEBUG
+#pragma comment(lib, "PhysX3DEBUG_x64.lib")
+#pragma comment(lib, "PhysX3CommonDEBUG_x64.lib")
+#pragma comment(lib, "PhysX3ExtensionsDEBUG.lib")
+#pragma comment(lib, "PhysXVisualDebuggerSDKDEBUG.lib") 
+#pragma comment(lib, "PhysX3CharacterKinematicDEBUG_x64") 
+#pragma comment(lib, "PhysX3CookingDEBUG_x64.lib")
+#pragma comment(lib, "PxTaskDEBUG.lib")
+#pragma comment(lib, "PhysXProfileSDKDEBUG.lib")
+
+#else
+#pragma comment(lib, "PhysX3_x64.lib")
+#pragma comment(lib, "PhysX3Common_x64.lib")
+#pragma comment(lib, "PhysX3Cooking_x64.lib")
+#pragma comment(lib, "PhysX3Extensions.lib")
+#pragma comment(lib, "PhysX3CharacterKinematic_x64.lib")
+#pragma comment(lib, "PxTask.lib")
+#pragma comment(lib, "PhysXProfileSDK.lib")
+
+#endif
+
+//Physics
+#include "physx\physx_manager.h"
+extern CPhysxManager *PhysxManager;
+
 //DEBUG
 #include "debug/debug.h"
 extern CDebug * Debug;

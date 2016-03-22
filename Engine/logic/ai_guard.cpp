@@ -3,7 +3,6 @@
 #include "ai_guard.h"
 #include "components/entity_tags.h"
 #include "utils/XMLParser.h"
-#include "physics/physics.h"
 #include "logic/sbb.h"
 #include "app_modules\io\io.h"
 #include "ui\ui_interface.h"
@@ -17,6 +16,12 @@ TCompTransform * ai_guard::getTransform() {
 	CEntity * e = myParent;
 	TCompTransform * t = e->get<TCompTransform>();
 	return t;
+}
+
+TCompCharacterController* ai_guard::getCC() {
+	CEntity * e = myParent;
+	TCompCharacterController * cc = e->get<TCompCharacterController>();
+	return cc;
 }
 
 CEntity* ai_guard::getPlayer() {
@@ -358,7 +363,7 @@ void ai_guard::goTo(const VEC3& dest) {
 // -- Go Forward -- //
 void ai_guard::goForward(float stepForward) {
 	VEC3 myPos = getTransform()->getPosition();
-	getTransform()->setPosition(myPos + getTransform()->getFront() * stepForward);
+	getCC()->AddMovement(getTransform()->getFront() * stepForward);
 }
 
 // -- Turn To -- //
@@ -407,16 +412,18 @@ bool ai_guard::playerVisible() {
 			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) { //Distancia
 				if (inJurisdiction(posPlayer)) { //Jurisdiccion
 					float distanceJur = squaredDistXZ(posPlayer, jurCenter);
-					ray_cast_query rcQuery;
 					float distRay;
 					if (SBB::readBool("possMode")) {
 						// Estas poseyendo, estas cerca y dentro del cono de vision, no hace falta raycast
 						return true;
 					}
 					else {
-						CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
-						if (collider.isValid()) { //No bloquea vision
-							if (collider == thePlayer) {
+						//TODO RAYCAST PLAYER
+						PxRaycastBuffer hit;
+						bool ret = rayCastToPlayer(1, distRay,hit);
+						if (ret) { //No bloquea vision
+							CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+							if (h.hasTag("target")) { //player?
 								return true;
 							}
 						}
@@ -428,17 +435,23 @@ bool ai_guard::playerVisible() {
 	return false;
 }
 
-CHandle ai_guard::rayCastToPlayer(int types, float& distRay) {
-	ray_cast_query rcQuery;
+bool ai_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) {
 	VEC3 myPos = getTransform()->getPosition();
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	rcQuery.position = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
-	rcQuery.direction = tPlayer->getPosition() - myPos;
-	rcQuery.maxDistance = DIST_RAYSHOT;
-	rcQuery.types = types;
-	ray_cast_result res = Physics::calcRayCast(rcQuery);
-	distRay = realDist(res.positionCollision, getTransform()->getPosition());
-	return res.firstCollider;
+	VEC3 origin = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
+	VEC3 direction = tPlayer->getPosition() - myPos;
+	direction.Normalize();
+	float dist = DIST_RAYSHOT;
+	//rcQuery.types = types;
+	CEntity *e = myParent;
+	TCompCharacterController *cc = e->get<TCompCharacterController>();
+	Debug->DrawLine(origin + VEC3(0, 0.5f, 0), getTransform()->getFront(), 10.0f);
+	bool ret = PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
+
+	if(ret)
+		distRay = hit.getAnyHit(0).distance;
+
+	return ret;
 }
 
 void ai_guard::shootToPlayer() {
@@ -458,10 +471,14 @@ void ai_guard::shootToPlayer() {
 		distRay = realDist(myPos, posPlayer);
 	}
 	else {
-		//RayCast
-		CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
-		if (collider == CHandle(getPlayer())) {
-			damage = true;
+		//RayCast to player //TODO RAYCAST
+		PxRaycastBuffer hit;
+		bool ret = rayCastToPlayer(1, distRay, hit);
+		if (ret) {
+			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+			if (h.hasTag("target")) {
+				damage = true;
+			}
 		}
 	}
 
@@ -513,14 +530,14 @@ bool ai_guard::load(MKeyValue& atts) {
 	dbg("load de AI_GUARD\n");
 	int n = atts.getInt("kpt_size", 0);
 	keyPoints.resize(n);
-	for (unsigned int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		KPT_ATR_NAME(atrType, "type", i);
 		KPT_ATR_NAME(atrPos, "pos", i);
 		KPT_ATR_NAME(atrWait, "wait", i);
 		keyPoints[i] = KeyPoint(
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
-			, atts.getInt(atrWait, 0)
+			, atts.getFloat(atrWait, 0.0f)
 			);
 	}
 	noShoot = atts.getBool("noShoot", false);

@@ -219,11 +219,13 @@ void ai_mole::UnGrabState() {
 		TCompTransform * transform = getEntityTransform();
 
 		float angle = 0.0f;
+		//TODO PHYSX OBJECT
+		/*
 		while (!enBoxT->executeMovement(posbox)) {
 			angle += 0.1;
 			posbox.x = posboxIni.x + transform->getFront().x * cos(angle) * 3;
 			posbox.z = posboxIni.z + transform->getFront().z * sin(angle) * 3;
-		}
+		}*/
 		SBB::postBool(nameBox->name, false);
 		carryingBox = false;
 	}
@@ -254,11 +256,13 @@ void ai_mole::_actionBeforePossession() {
 			posbox.y = posboxIni.y - 2;
 			posbox.z = posboxIni.z + p_t->getFront().z * 3;
 			float angle = 0.0f;
+			//TODO PHYSX OBJECT
+			/*
 			while (!b_t->executeMovement(posbox)) {
 				angle += 0.1;
 				posbox.x = posboxIni.x + p_t->getFront().x * cos(angle) * 3;
 				posbox.z = posboxIni.z + p_t->getFront().z * sin(angle) * 3;
-			}
+			}*/
 			SBB::postBool(key, false);
 			carryingBox = false;
 		}
@@ -288,11 +292,14 @@ void ai_mole::actionStunt() {
 				posbox.y = posboxIni.y - 2;
 				posbox.z = posboxIni.z + p_t->getFront().z * 3;
 				float angle = 0.0f;
+				//TODO PHYSX OBJECT
+				/*
 				while (!b_t->executeMovement(posbox)) {
 					angle += 0.1;
 					posbox.x = posboxIni.x + p_t->getFront().x * cos(angle) * 3;
 					posbox.z = posboxIni.z + p_t->getFront().z * sin(angle) * 3;
 				}
+				*/
 				SBB::postBool(key, false);
 				carryingBox = false;
 			}

@@ -2,6 +2,7 @@
 #include "murmur3.h"
 #include "imgui/imgui.h"
 #include <windows.h>
+#include <algorithm>
 
 #ifndef NDEBUG
 
@@ -132,4 +133,12 @@ VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const fl
 	VEC3 pos_f = productVectorMatrix(pos4, rotMatrix);
 
 	return pos_f;
+}
+
+//template<class TObj>
+#include "components\entity_tags.h"
+//template<class  TObj>
+bool isInVector(std::vector<TTagID>& v, TTagID obj)
+{
+	return (std::find(v.begin(), v.end(), obj) != v.end());
 }

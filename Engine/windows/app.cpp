@@ -18,6 +18,7 @@ CApp::CApp()
 	, yres(600)
 {
 	file_options = "./options.ini";
+	file_initAttr = "./inicialization.ini";
 	
 	//"0 != " to convert uint to bool more efficient
 	max_screen = 0 != GetPrivateProfileIntA(	"screen",

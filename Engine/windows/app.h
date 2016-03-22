@@ -17,6 +17,7 @@ public:
 	CApp();
 
 	std::string file_options;
+	std::string file_initAttr;
 	bool max_screen;
 	int getXRes();
 	int getYRes();

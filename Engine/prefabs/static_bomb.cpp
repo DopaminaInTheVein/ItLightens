@@ -42,7 +42,7 @@ void CStaticBomb::SendMsg()
 	msg.pos = org;
 	msg.r = rad;
 
-	VEntities ets = tags_manager.getHandlesPointerByTag(getID("AI"));
+	VHandles ets = tags_manager.getHandlesByTag(getID("AI"));
 	for (CEntity *e : ets) {
 		e->sendMsg(msg);
 	}

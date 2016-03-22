@@ -22,16 +22,16 @@
 
 #include "debug/debug.h"
 
-#include "physics/simple_physx.h"
 #include "ui/ui_interface.h"
+#include "physx\physx_manager.h"
 
 #include <shellapi.h>
 #include <process.h>
 
 //DEBUG
 CDebug *	  Debug = nullptr;
-CSimplePhysx  s_physx;		//provisional
 CUI ui;
+CPhysxManager *PhysxManager = nullptr;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
@@ -55,14 +55,17 @@ bool CApp::start() {
 	auto imgui = new CImGuiModule;
 	auto entities = new CEntitiesModule;
 	io = new CIOModule;     // It's the global io
+	PhysxManager = new CPhysxManager;
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
+	all_modules.push_back(PhysxManager);
 	all_modules.push_back(entities);
 	all_modules.push_back(io);
 
 	mod_update.push_back(imgui);
 	mod_update.push_back(entities);
+	mod_update.push_back(PhysxManager);
 	mod_update.push_back(io);
 
 	mod_renders.push_back(entities);
@@ -70,6 +73,7 @@ bool CApp::start() {
 	mod_renders.push_back(io);
 	mod_init_order.push_back(imgui);
 	mod_init_order.push_back(io);
+	mod_init_order.push_back(PhysxManager);
 	mod_init_order.push_back(entities);
 
 	mod_wnd_proc.push_back(io);

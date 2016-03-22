@@ -32,6 +32,16 @@ CHandle TTagsManager::getFirstHavingTag(TTagID tag_id) const {
 	return h[0];
 }
 
+void TTagsManager::getTagFromHandle(CHandle h_match, std::vector<TTagID>& out)
+{
+	for (auto& it_m : tags_manager) {
+		for (CHandle h : it_m.second) {
+			if (h == h_match)
+				out.push_back(it_m.first);
+		}
+	}
+}
+
 // ---------------------------------------
 const VHandles& TTagsManager::getHandlesByTag(TTagID tag_id) const {
 	auto it = find(tag_id);
@@ -40,13 +50,4 @@ const VHandles& TTagsManager::getHandlesByTag(TTagID tag_id) const {
 		return empty_set;
 	}
 	return it->second;
-}
-
-VEntities TTagsManager::getHandlesPointerByTag(TTagID tag_id) {
-	VEntities entities;
-	for (auto it : getHandlesByTag(tag_id)) {
-		CEntity * entity = it;
-		entities.push_back(entity);
-	}
-	return entities;
 }
