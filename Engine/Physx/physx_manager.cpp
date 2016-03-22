@@ -490,7 +490,7 @@ PxQuat PhysxConversion::CQuaternionToPxQuat(const CQuaternion & quat)
 
 CQuaternion PhysxConversion::PxQuatToCQuaternion(const PxQuat & quat)
 {
-	return CQuaternion(quat.x, quat.y, quat.z, quat.w);
+	return CQuaternion(quat.x,quat.y, quat.z, quat.w);
 }
 
 PxTransform PhysxConversion::ToPxTransform(const VEC3 & pos, const CQuaternion & rot)

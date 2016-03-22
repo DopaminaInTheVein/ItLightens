@@ -77,6 +77,9 @@ public:
 
 	void update(float dt);
 	void renderInMenu();
+	void readIniFileAttr();
+	void updateAttrMaterial();
+	void writeIniFileAttr();
 };
 
 #endif

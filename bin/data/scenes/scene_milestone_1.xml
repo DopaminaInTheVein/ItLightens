@@ -944,7 +944,7 @@
     <tag name="box" />
     <transform pos="4.95928 -1.84045 17.3327" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -952,7 +952,7 @@
     <tag name="box" />
     <transform pos="0.478754 3.90856 111.336" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -960,7 +960,7 @@
     <tag name="box" />
     <transform pos="2.8988 3.90856 105.074" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -968,7 +968,7 @@
     <tag name="box" />
     <transform pos="-2.7472 3.90856 105.074" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -984,7 +984,7 @@
     <tag name="box" />
     <transform pos="1.91384 3.90856 95.8815" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -992,7 +992,7 @@
     <tag name="box" />
     <transform pos="2.86123 3.90856 85.469" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -1000,7 +1000,7 @@
     <tag name="box" />
     <transform pos="1.0736 3.90856 72.114" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -1008,7 +1008,7 @@
     <tag name="box" />
     <transform pos="-2.93519 3.90856 79.4002" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -1016,7 +1016,7 @@
     <tag name="box" />
     <transform pos="0.478754 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <tag name ="platform" />
@@ -1024,13 +1024,13 @@
     <tag name="box" />
     <transform pos="3.24255 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <name name="columnas_3" />
     <transform pos="-9.17438 6.33228 177.642" quat="0.707107 0.0 -0.707107 0.0" scale="1.0" />
     <render_static_mesh name="static_meshes/columnas_3.static_mesh" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
 
   <!-- END SCENE OBJECTS -->
@@ -1044,7 +1044,7 @@
     <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 -1.8 5" rotation="1 2 3 3" scale="1 1 1" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <name name="box22" />
@@ -1052,7 +1052,7 @@
     <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 -0.81 5" rotation="1 2 3 3" scale="1 1 1" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
 
   <entity>
@@ -1259,7 +1259,7 @@
     <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="6 4 150" rotation="1 2 3 3" scale="1 1 1" />
-    <rigidbody type_collision="static" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
 
   <entity>

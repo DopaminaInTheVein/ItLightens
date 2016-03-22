@@ -4,6 +4,7 @@
 #include "comp_transform.h"
 #include "comp_render_static_mesh.h"
 #include "render\static_mesh.h"
+#include "windows\app.h"
 
 //will return first material from shape
 PxMaterial* getMaterial(PxShape* shape) {
@@ -111,6 +112,7 @@ int TCompPhysics::getCollisionShapeValueFromString(std::string str) {
 //When entity created
 void TCompPhysics::onCreate(const TMsgEntityCreated &)
 {
+	readIniFileAttr();	//load current default values
 	switch (mCollisionShape) {
 	case TRI_MESH:
 		createTriMeshShape();
@@ -271,11 +273,12 @@ void TCompPhysics::renderInMenu()
 
 			PxTransform trans = rigidDynamic->getGlobalPose();
 
-			if (ImGui::SliderFloat3("Pos", &trans.p.x, -50.f, 50.f, "%.3f", 1.0f)) {
+			if (ImGui::SliderFloat3("Pos", &trans.p.x, -50.f, 50.f)) {
 				rigidDynamic->setGlobalPose(trans);
 			}
 
-			if (ImGui::SliderFloat4("rot", &trans.q.x, -1.f, 1.f, "%.3f", 0.1f)) {
+			if (ImGui::SliderFloat4("rot", &trans.q.x, -1.f, 1.f)) {
+				trans.q.normalize();
 				rigidDynamic->setGlobalPose(trans);
 			}
 
@@ -301,17 +304,17 @@ void TCompPhysics::renderInMenu()
 
 					if (ImGui::TreeNode("Configurables values")) {
 
-						if (ImGui::SliderFloat("dynamic friction", &mDynamicFriction, 0.0f, 2.0f, "%.3f", 0.25f)) {
+						if (ImGui::SliderFloat("dynamic friction", &mDynamicFriction, 0.0f, 2.0f)) {
 							PxMaterial *m = getMaterial(ptr[i]);
 							if(m)
 								getMaterial(ptr[i])->setDynamicFriction(mDynamicFriction);
 						}
-						if (ImGui::SliderFloat("static friction", &mStaticFriction, 0.0f, 2.0f, "%.3f", 0.25f)) {
+						if (ImGui::SliderFloat("static friction", &mStaticFriction, 0.0f, 2.0f)) {
 							PxMaterial *m = getMaterial(ptr[i]);
 							if (m)
 								getMaterial(ptr[i])->setStaticFriction(mStaticFriction);
 						}
-						if (ImGui::SliderFloat("restitution", &mRestitution, 0.0f, 2.0f, "%.3f", 0.25f)) {
+						if (ImGui::SliderFloat("restitution", &mRestitution, 0.0f, 2.0f)) {
 							PxMaterial *m = getMaterial(ptr[i]);
 							if (m)
 								getMaterial(ptr[i])->setRestitution(mRestitution);
@@ -332,34 +335,30 @@ void TCompPhysics::renderInMenu()
 		ImGui::Separator();
 
 		if (ImGui::SmallButton("Read values from file")) {
-			//TODO: read .ini values
+			readIniFileAttr();
+			updateAttrMaterial();
 		}
 		
 		if (ImGui::SmallButton("Save config values")) {
-			//TODO: save to .ini
+			writeIniFileAttr();
 		}
 	}
 
 	if (rigidStatic) {
-		ImGui::Text("Object static, recommended to not change trigger option");
-
-		ImGui::Text("Object dynamic, recommended to turn on kinematic before moving");
-
-		bool isKinematic = rigidDynamic->getRigidDynamicFlags().isSet(PxRigidBodyFlag::eKINEMATIC);
-		if (ImGui::Checkbox("isKinematic", &isKinematic))
-			rigidDynamic->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, isKinematic);
+		ImGui::Text("Object static");
 
 		ImGui::Separator();
 		if (ImGui::TreeNode("Temporal values")) {
 
-			PxTransform trans = rigidDynamic->getGlobalPose();
+			PxTransform trans = rigidStatic->getGlobalPose();
 
-			if (ImGui::SliderFloat3("Pos", &trans.p.x, -50.f, 50.f, "%.3f", 1.0f)) {
-				rigidDynamic->setGlobalPose(trans);
+			if (ImGui::SliderFloat3("Pos", &trans.p.x, -50.f, 50.f)) {
+				rigidStatic->setGlobalPose(trans);
 			}
 
-			if (ImGui::SliderFloat4("rot", &trans.q.x, -1.f, 1.f, "%.3f", 0.1f)) {
-				rigidDynamic->setGlobalPose(trans);
+			if (ImGui::SliderFloat4("rot", &trans.q.x, -1.f, 1.f)) {
+				trans.q.normalize();
+				rigidStatic->setGlobalPose(trans);
 			}
 
 			ImGui::TreePop();
@@ -369,10 +368,10 @@ void TCompPhysics::renderInMenu()
 
 		if (ImGui::TreeNode("Shapes")) {
 
-			int nBShapes = rigidDynamic->getNbShapes();
+			int nBShapes = rigidStatic->getNbShapes();
 			PxShape **ptr;
 			ptr = new PxShape*[nBShapes];
-			rigidDynamic->getShapes(ptr, 1);
+			rigidStatic->getShapes(ptr, 1);
 
 			for (int i = 0; i < nBShapes; i++) {
 				std::string name = "shape_noname";
@@ -384,17 +383,17 @@ void TCompPhysics::renderInMenu()
 
 					if (ImGui::TreeNode("Configurables values")) {
 
-						if (ImGui::SliderFloat("dynamic friction", &mDynamicFriction, 0.0f, 2.0f, "%.3f", 0.25f)) {
+						if (ImGui::SliderFloat("dynamic friction", &mDynamicFriction, 0.0f, 2.0f)) {
 							PxMaterial *m = getMaterial(ptr[i]);
 							if (m)
 								getMaterial(ptr[i])->setDynamicFriction(mDynamicFriction);
 						}
-						if (ImGui::SliderFloat("static friction", &mStaticFriction, 0.0f, 2.0f, "%.3f", 0.25f)) {
+						if (ImGui::SliderFloat("static friction", &mStaticFriction, 0.0f, 2.0f)) {
 							PxMaterial *m = getMaterial(ptr[i]);
 							if (m)
 								getMaterial(ptr[i])->setStaticFriction(mStaticFriction);
 						}
-						if (ImGui::SliderFloat("restitution", &mRestitution, 0.0f, 2.0f, "%.3f", 0.25f)) {
+						if (ImGui::SliderFloat("restitution", &mRestitution, 0.0f, 2.0f)) {
 							PxMaterial *m = getMaterial(ptr[i]);
 							if (m)
 								getMaterial(ptr[i])->setRestitution(mRestitution);
@@ -415,11 +414,101 @@ void TCompPhysics::renderInMenu()
 		ImGui::Separator();
 
 		if (ImGui::SmallButton("Read values from file")) {
-			//TODO: read .ini values
+			readIniFileAttr();
+			updateAttrMaterial();
 		}
 
 		if (ImGui::SmallButton("Save config values")) {
-			//TODO: save to .ini
+			writeIniFileAttr();
+		}
+	}
+}
+
+
+void TCompPhysics::readIniFileAttr() {
+	CApp &app = CApp::get();
+	std::string file_ini = app.file_initAttr;
+
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("box")) {
+			char read[64];
+			std::string read_s;
+
+			//dynamic friction
+			GetPrivateProfileStringA("box", "dynamic_friction", "not_found", read, 64, file_ini.c_str());
+			read_s = std::string(read);
+			if (read_s != "not_found") {
+				mDynamicFriction = std::stof(read_s);
+			}
+
+			//static friction
+			GetPrivateProfileStringA("box", "static_friction", "not_found", read, 64, file_ini.c_str());
+			read_s = std::string(read);
+			if (read_s != "not_found") {
+				mStaticFriction = std::stof(read_s);
+			}
+
+			//restitution
+			GetPrivateProfileStringA("box", "restitution", "not_found", read, 64, file_ini.c_str());
+			read_s = std::string(read);
+			if (read_s != "not_found") {
+				mRestitution = std::stof(read_s);
+			}
+		}
+	}
+}
+
+void TCompPhysics::updateAttrMaterial() {
+	PxRigidDynamic* rd = pActor->isRigidDynamic();
+	PxRigidStatic* rs = pActor->isRigidStatic();
+	int numShapes = 0;
+	if (rd) {
+		numShapes = rd->getNbShapes();
+	}
+	if (rs) {
+		numShapes = rs->getNbShapes();
+	}
+	if (!rd && !rs) return;
+	PxShape ** buff_s = new PxShape*[numShapes];
+	if (rd) {
+		rd->getShapes(buff_s, numShapes);
+	}
+	if (rs) {
+		rs->getShapes(buff_s, numShapes);
+	}
+	for (int i = 0; i < numShapes; i++) {
+		int numMats = buff_s[i]->getNbMaterials();
+		PxMaterial **buff_m = new PxMaterial*[numMats];
+		buff_s[i]->getMaterials(buff_m,numMats);
+		for (int j = 0; j < numMats; j++) {
+			buff_m[j]->setDynamicFriction(mDynamicFriction);
+			buff_m[j]->setStaticFriction(mStaticFriction);
+			buff_m[j]->setRestitution(mRestitution);
+		}
+	}
+}
+
+void TCompPhysics::writeIniFileAttr() {
+	CApp &app = CApp::get();
+	std::string file_ini = app.file_initAttr;
+
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("box")) {
+			char read[64];
+			
+			//dynamic friction
+			sprintf(read, "%.2f", mDynamicFriction);
+			WritePrivateProfileStringA("box", "dynamic_friction", read, file_ini.c_str());
+
+			//static friction
+			sprintf(read, "%.2f", mStaticFriction);
+			WritePrivateProfileStringA("box", "static_friction", read, file_ini.c_str());
+
+			//restitution
+			sprintf(read, "%.2f", mRestitution);
+			WritePrivateProfileStringA("box", "restitution", read, file_ini.c_str());
 		}
 	}
 }
