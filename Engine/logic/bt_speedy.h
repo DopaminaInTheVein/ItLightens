@@ -23,7 +23,6 @@
 #include <chrono>
 #include <windows.h>
 
-
 class bt_speedy : public bt_poss, public TCompBase {
 
 	CObjectManager<bt_speedy> * om = nullptr;

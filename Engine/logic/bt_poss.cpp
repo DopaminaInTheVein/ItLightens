@@ -24,6 +24,7 @@ void bt_poss::onSetPossessed(const TMsgAISetPossessed& msg) {
 		possessing = true;
 	}
 	else {
+		stunning = true;
 		possessed = false;
 	}
 }
@@ -32,7 +33,7 @@ void bt_poss::onSetStunned(const TMsgAISetStunned& msg) {
 	dbg("ai_poss, recibe Set Stunned = %d\n", msg.stunned);
 	stunned = msg.stunned;
 	if (msg.stunned) {
-		stunned = true;
+		stunning = true;
 	}
 	else {
 		stunned = false;
@@ -58,7 +59,7 @@ bool bt_poss::beingPossessed() {
 	return possessing == true;
 }
 bool bt_poss::beingUnpossessed() {
-	return isStunned() == true;
+	return stunning == true;
 }
 //actions
 int bt_poss::actionPossessing() {
@@ -80,18 +81,24 @@ int bt_poss::actionPossessed() {
 }
 int bt_poss::actionUnpossessing() {
 	possessed = false;
+	stunning = false;
 	stunned = true;
 	____TIMER_RESET_(timeStunt);
 	return OK;
 }
 int bt_poss::actionStunt() {
-	____TIMER_CHECK_DO_(timeStunt);
-	// stunned = false;
-	____TIMER_CHECK_DONE_(timeStunt);
-	return OK;
+	if (timeStunt < 0) {
+		stunned = false;
+		return OK;
+	}
+	else {
+		if (timeStunt > -1)
+			timeStunt -= getDeltaTime();
+		return STAY;
+	}
 }
 int bt_poss::actionStuntEnd() {
-	//stunned = false;
+	stunned = false;
 	return OK;
 }
 

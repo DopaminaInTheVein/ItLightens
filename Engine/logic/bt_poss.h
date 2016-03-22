@@ -18,6 +18,7 @@ class bt_poss : public bt {
 protected:
 	bool stunned = false;
 	bool possessed = false;
+	bool stunning = false;
 	bool possessing = false;
 public:
 	bt_poss();
