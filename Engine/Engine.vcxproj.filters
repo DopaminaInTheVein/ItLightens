@@ -117,9 +117,6 @@
     <ClCompile Include="logic\aicontroller.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_mole.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="logic\ai_beacon.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -210,6 +207,12 @@
     </ClCompile>
     <ClCompile Include="logic\bt_poss.cpp">
       <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\bt_mole.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_mole.cpp">
+      <Filter>logic_old</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -358,9 +361,6 @@
     <ClInclude Include="logic\aicontroller.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\ai_mole.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="logic\ai_beacon.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -462,6 +462,12 @@
     </ClInclude>
     <ClInclude Include="logic\bt_poss.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\bt_mole.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_mole.h">
+      <Filter>logic_old</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

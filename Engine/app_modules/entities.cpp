@@ -11,6 +11,7 @@
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
 #include "logic/ai_water.h"
+#include "logic/bt_mole.h"
 #include "logic/bt_speedy.h"
 #include "windows/app.h"
 #include "utils/utils.h"
@@ -27,6 +28,7 @@ DECL_OBJ_MANAGER("beacon", beacon_controller);
 DECL_OBJ_MANAGER("workbench", workbench_controller);
 DECL_OBJ_MANAGER("ai_guard", ai_guard);
 DECL_OBJ_MANAGER("ai_mole", ai_mole);
+DECL_OBJ_MANAGER("bt_mole", bt_mole);
 DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
 DECL_OBJ_MANAGER("bt_speedy", bt_speedy);
 DECL_OBJ_MANAGER("water", water_controller);
@@ -82,7 +84,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompColCillinder>()->init(MAX_ENTITIES);
 
 	getHandleManager<ai_guard>()->init(MAX_ENTITIES);
-	getHandleManager<ai_mole>()->init(MAX_ENTITIES);
+	//getHandleManager<ai_mole>()->init(MAX_ENTITIES);
+	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
 	getHandleManager<ai_scientific>()->init(MAX_ENTITIES);
 	//getHandleManager<ai_speedy>()->init(MAX_ENTITIES);
 	getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
@@ -120,7 +123,8 @@ bool CEntitiesModule::start() {
 	//bombs
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(ai_guard, TMsgStaticBomb, onStaticBomb);		//TODO: should do something
-	SUBSCRIBE(ai_mole, TMsgStaticBomb, onStaticBomb);
+	//SUBSCRIBE(ai_mole, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
 	//SUBSCRIBE(ai_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(ai_guard, TMsgMagneticBomb, onMagneticBomb);
@@ -146,8 +150,10 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(bt_speedy, TMsgAISetStunned, onSetStunned);
 	SUBSCRIBE(player_controller_speedy, TMsgControllerSetEnable, onSetEnable);
 	//..Mole
-	SUBSCRIBE(ai_mole, TMsgAISetPossessed, onSetPossessed);
-	SUBSCRIBE(ai_mole, TMsgAISetStunned, onSetStunned);
+	//SUBSCRIBE(ai_mole, TMsgAISetPossessed, onSetPossessed);
+	//SUBSCRIBE(ai_mole, TMsgAISetStunned, onSetStunned);
+	SUBSCRIBE(bt_mole, TMsgAISetPossessed, onSetPossessed);
+	SUBSCRIBE(bt_mole, TMsgAISetStunned, onSetStunned);
 	SUBSCRIBE(player_controller_mole, TMsgControllerSetEnable, onSetEnable);
 
 	//..PJ Principal
@@ -231,7 +237,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<player_controller_mole>()->onAll(&player_controller_mole::Init);
 
 	getHandleManager<ai_guard>()->onAll(&ai_guard::Init);
-	getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
+	//getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
+	getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
 	//getHandleManager<ai_speedy>()->onAll(&ai_speedy::Init);
 	getHandleManager<bt_speedy>()->onAll(&bt_speedy::Init);
@@ -256,7 +263,8 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
 
-	getHandleManager<ai_mole>()->updateAll(dt);
+	//getHandleManager<ai_mole>()->updateAll(dt);
+	getHandleManager<bt_mole>()->updateAll(dt);
 	getHandleManager<ai_guard>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);

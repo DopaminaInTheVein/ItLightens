@@ -44,6 +44,7 @@ public:
 	//(útil para guardarse último estado antes de ser poseído, etc.)
 	void _actionBeforePossession();
 	void _actionBeingUnpossessed();
+	void _actionWhenStunt();
 
 	//Avisar a la entidad que ha sido poseída
 	void onSetPossessed(const TMsgAISetPossessed&);

@@ -96,6 +96,7 @@ int bt_speedy::actionNextWpt() {
 	}
 	return STAY;
 }
+
 int bt_speedy::actionSeekWpt() {
 
 	float distance = squaredDistXZ(fixedWpts[curwpt], transform->getPosition());
@@ -112,6 +113,7 @@ int bt_speedy::actionSeekWpt() {
 		return OK;
 	}
 }
+
 int bt_speedy::actionDashPoint() {	
 
 	bool arrived = dashToTarget(fixedWpts[curwpt]);

@@ -1175,7 +1175,12 @@
     <life points="100" />
     <sphere_collider radius="0.3" tag ="player" />
     <player_mole />
-    <ai_mole />
+    <bt_mole
+      wpts_size = "4"
+      wpt0_pos = " 2  -1.8  6"
+      wpt1_pos = " 2  -1.8  10"
+      wpt2_pos = "-2  -1.8  10"
+      wpt3_pos = "-2  -1.8  6" />
   </entity>
 
   <!-- END ZONE 2 -->
@@ -1380,7 +1385,12 @@
     <life points="100" />
     <sphere_collider radius="0.3" tag ="player" />
     <player_mole />
-    <ai_mole />
+    <bt_mole
+      wpts_size = "4"
+      wpt0_pos = " 2  4  157"
+      wpt1_pos = " 2  4  163"
+      wpt2_pos = "-2  4  163"
+      wpt3_pos = "-2  4  157" />
   </entity>
 
   <entity>

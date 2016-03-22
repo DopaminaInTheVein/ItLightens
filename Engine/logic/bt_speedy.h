@@ -1,9 +1,8 @@
-#ifndef _BT_PATROLLER_INC
-#define _BT_PATROLLER_INC
+#ifndef _BT_SPEEDY_INC
+#define _BT_SPEEDY_INC
 
 #include "mcv_platform.h"
 #include "bt_poss.h"
-//#include "ai_poss.h"
 #include "sbb.h"
 #include "ai_water.h"
 #include "components/comp_base.h"

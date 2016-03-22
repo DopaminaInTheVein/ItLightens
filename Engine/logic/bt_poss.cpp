@@ -51,6 +51,11 @@ void bt_poss::_actionBeingUnpossessed() {
 	//Ejecutar animacion etc.
 }
 
+void bt_poss::_actionWhenStunt() {
+	dbg("Being Stunt");
+	//Ejecutar animacion etc.
+}
+
 //conditions
 bool bt_poss::npcAvailable() {
 	return isAvailable();
@@ -87,6 +92,7 @@ int bt_poss::actionUnpossessing() {
 	return OK;
 }
 int bt_poss::actionStunt() {
+	_actionWhenStunt();
 	if (timeStunt < 0) {
 		stunned = false;
 		return OK;
