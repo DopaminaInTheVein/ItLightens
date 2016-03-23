@@ -134,6 +134,7 @@ public:
 	int actionLookAround();
 	int actionSeekWpt();
 	int actionNextWpt();
+	int actionWaitWpt();
 
 	void Init();
 	void noise(const TMsgNoise& msg);

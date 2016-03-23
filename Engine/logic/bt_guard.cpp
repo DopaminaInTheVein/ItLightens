@@ -50,6 +50,7 @@ void bt_guard::Init()
 	addChild("guard", "patrol", SEQUENCE, NULL, NULL);
 	addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_guard::actionNextWpt);
 	addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_guard::actionSeekWpt);
+	addChild("patrol", "waitwpt", ACTION, NULL, (btaction)&bt_guard::actionWaitWpt);
 
 	curkpt = 0;
 
@@ -246,15 +247,8 @@ int bt_guard::actionSeekWpt() {
 	else if (keyPoints[curkpt].type == Seek) {
 		//reach waypoint?
 		if (squaredDistXZ(myPos, dest) < DIST_SQ_REACH_PNT) {
-			if (timeWaiting > keyPoints[curkpt].time) {
-				timeWaiting = 0;
-				curkpt = (curkpt + 1) % keyPoints.size();
-				return OK;
-			}
-			else {
-				timeWaiting += getDeltaTime();
-				return STAY;
-			}
+			curkpt = (curkpt + 1) % keyPoints.size();
+			return OK;
 		}
 		else {
 			ChangePose(pose_run_route);
@@ -267,15 +261,8 @@ int bt_guard::actionSeekWpt() {
 		ChangePose(pose_idle_route);
 		//Look to waypoint
 		if (turnTo(dest)) {
-			if (timeWaiting > keyPoints[curkpt].time) {
-				timeWaiting = 0;
-				curkpt = (curkpt + 1) % keyPoints.size();
-				return OK;
-			}
-			else {
-				timeWaiting += getDeltaTime();
-				return STAY;
-			}
+			curkpt = (curkpt + 1) % keyPoints.size();
+			return OK;
 		}
 		else {
 			return STAY;
@@ -297,6 +284,23 @@ int bt_guard::actionNextWpt() {
 		return OK;
 	}
 	else {
+		return STAY;
+	}
+}
+
+int bt_guard::actionWaitWpt() {
+	ChangePose(pose_idle_route);
+
+	//player visible?
+	if (playerVisible()) {
+		setCurrent(NULL);
+	}
+	else if (timeWaiting > keyPoints[curkpt].time) {
+		timeWaiting = 0;
+		return OK;
+	}
+	else {
+		timeWaiting += getDeltaTime();
 		return STAY;
 	}
 }
@@ -333,6 +337,7 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	if (squaredDist(msg.pos, posPlayer) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
+		setCurrent(NULL);
 	}
 }
 
