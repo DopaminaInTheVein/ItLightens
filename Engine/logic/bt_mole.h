@@ -1,9 +1,8 @@
-#ifndef _AI_MOLE_
-#define _AI_MOLE_
+#ifndef _BT_MOLE_INC
+#define _BT_MOLE_INC
 
 #include "mcv_platform.h"
-#include "aicontroller.h"
-#include "ai_poss.h"
+#include "bt_poss.h"
 #include "sbb.h"
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
@@ -25,22 +24,27 @@
 #include <chrono>
 #include <windows.h>
 
-class ai_mole : public ai_poss, public TCompBase {
-	float mole_speed = 2.f;
-	float rotation_speed = 2.f;
+class bt_mole : public bt_poss, public TCompBase {
+	float speed = 2.f;
+	float rotation_speed = deg2rad(200);
+	float distMaxToBox = 10.0f;
 
 	int towptbox;
 	int towptleave;
 
 	bool carryingBox = false;
 
+	vector<VEC3> fixedWpts;
+	int curwpt;
+
+	CObjectManager<bt_mole> * om = nullptr;
 	CHandle myHandle;
 	CHandle myParent;
+	CEntity *myEntity = nullptr;
 
-	TCompTransform * getEntityTransform() {
-		CEntity * ent = myParent;
-		return ent->get<TCompTransform>();
-	}
+	TCompTransform* transform;
+
+	void SetMyEntity();
 
 	CEntity * getEntityPointer(int i) {
 		CHandle han = SBB::readHandlesVector("wptsBoxes")[i];
@@ -63,23 +67,28 @@ class ai_mole : public ai_poss, public TCompBase {
 	string pose_wall_route;
 
 public:
-	void IdleState();
-	void SeekWptState();
-	void NextWptState();
-	void OrientToWptState();
-	void GrabState();
-	void SeekWptCarryState();
-	void NextWptCarryState();
-	void OrientToCarryWptState();
-	void UnGrabState();
+	void Init();
+	void update(float elapsed);
+	//conditions
+	bool checkBoxes();
+	//actions
+	int actionSeekBoxWpt();
+	int actionNextBoxWpt();
+	int actionGrabBox();
+	int actionCarryFindBoxWpt();
+	int actionCarryNextBoxWpt();
+	int actionCarrySeekBoxWpt();
+	int actionUngrabBox();
+	int actionSeekWpt();
+	int actionNextWpt();
+
+	bool load(MKeyValue& atts);
 
 	void _actionBeforePossession();
-	void actionStunt();
+	void _actionWhenStunt();
 
-	void Init() override;
-	void update(float dt) { Recalc(); }
-	void init() { Init(); }
-	void idle() { IdleState(); }
+	bool aimToTarget(VEC3 target);
+	void moveFront(float movement_speed);
 
 	//Cambio Malla
 	void ChangePose(string new_pose_route);

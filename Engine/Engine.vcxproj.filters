@@ -114,13 +114,13 @@
     <ClCompile Include="logic\sbb.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_speedy.cpp">
+    <ClCompile Include="logic\bt_speedy.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="logic\aicontroller.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_mole.cpp">
+    <ClCompile Include="logic\bt_mole.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="logic\ai_beacon.cpp">
@@ -132,11 +132,11 @@
     <ClCompile Include="debug\debug.cpp">
       <Filter>debug</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_guard.cpp">
+    <ClCompile Include="logic\bt_guard.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="logic\ai_poss.cpp">
+    <ClCompile Include="logic\bt_poss.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="prefabs\static_bomb.cpp">
@@ -198,6 +198,24 @@
     </ClCompile>
     <ClCompile Include="components\comp_physics.cpp">
       <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\bt.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\btnode.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_guard.cpp">
+      <Filter>logic_old</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_mole.cpp">
+      <Filter>logic_old</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_poss.cpp">
+      <Filter>logic_old</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_speedy.cpp">
+      <Filter>logic_old</Filter>
     </ClCompile>
     <ClCompile Include="input\input.cpp">
       <Filter>input</Filter>
@@ -448,13 +466,13 @@
     <ClInclude Include="logic\sbb.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\ai_speedy.h">
+    <ClInclude Include="logic\bt_speedy.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\aicontroller.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\ai_mole.h">
+    <ClInclude Include="logic\bt_mole.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\ai_beacon.h">
@@ -466,10 +484,10 @@
     <ClInclude Include="debug\debug.h">
       <Filter>debug</Filter>
     </ClInclude>
-    <ClInclude Include="logic\ai_guard.h">
+    <ClInclude Include="logic\bt_guard.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\ai_poss.h">
+    <ClInclude Include="logic\bt_poss.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="utils\macros\macros.h">
@@ -543,6 +561,24 @@
     </ClInclude>
     <ClInclude Include="components\comp_physics.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\bt.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\btnode.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_guard.h">
+      <Filter>logic_old</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_mole.h">
+      <Filter>logic_old</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_poss.h">
+      <Filter>logic_old</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_speedy.h">
+      <Filter>logic_old</Filter>
     </ClInclude>
     <ClInclude Include="input\input.h">
       <Filter>input</Filter>
@@ -704,6 +740,9 @@
     </Filter>
     <Filter Include="physx">
       <UniqueIdentifier>{16d1a48c-1e04-411f-8706-8555b3d2c0b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic_old">
+      <UniqueIdentifier>{cfd37209-5b4f-484a-a06d-56d3541bf572}</UniqueIdentifier>
     </Filter>
     <Filter Include="input">
       <UniqueIdentifier>{3cada1c5-734d-4cb7-a898-3db5437867da}</UniqueIdentifier>

@@ -5,7 +5,7 @@
 
   <entity>
     <tag name="player" />
-    <transform pos="-15 2 0" />
+    <transform pos="0 0 -25" />
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
@@ -1071,7 +1071,12 @@
     <life points="100" />
     <character_controller radius ="1.0" height ="1.0"/>
     <player_mole />
-    <ai_mole />
+    <bt_mole
+      wpts_size = "4"
+      wpt0_pos = " 2  -1.8  6"
+      wpt1_pos = " 2  -1.8  10"
+      wpt2_pos = "-2  -1.8  10"
+      wpt3_pos = "-2  -1.8  6" />
   </entity>
 
   <!-- END ZONE 2 -->
@@ -1087,7 +1092,7 @@
     <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
     <life points="50" />
     <player_speedy />
-    <ai_speedy
+    <bt_speedy
       wpts_size = "4"
       wpt0_pos = " 5  0  25"
       wpt1_pos = " 5  0  33"
@@ -1166,7 +1171,7 @@
     <transform pos="0 3.8 91" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/guard.static_mesh" />
-    <ai_guard
+    <bt_guard
       kpt_size  = "8"
       kpt0_type = "seek" kpt0_pos = " 0  3.8  91" kpt0_wait = "0.5"
       kpt1_type = "look" kpt1_pos = " 0  3.8   83" kpt1_wait = "1"
@@ -1192,7 +1197,7 @@
     <transform pos="0 4 130" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/guard.static_mesh" />
-    <ai_guard
+    <bt_guard
       kpt_size  = "2"
       kpt0_type = "seek" kpt0_pos = " 0  4  126" kpt0_wait = "100"
       kpt1_type = "look" kpt1_pos = " 0  4  100" kpt1_wait = "100"
@@ -1244,7 +1249,7 @@
     <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
     <life points="50" />
     <player_speedy />
-    <ai_speedy
+    <bt_speedy
       wpts_size  = "4"
       wpt0_pos = " 7  4 163"
       wpt1_pos = "-7  4 163"
@@ -1278,7 +1283,12 @@
     <life points="100" />
     <character_controller radius ="1.0" height ="1.0"/>
     <player_mole />
-    <ai_mole />
+    <bt_mole
+      wpts_size = "4"
+      wpt0_pos = " 2  4  157"
+      wpt1_pos = " 2  4  163"
+      wpt2_pos = "-2  4  163"
+      wpt3_pos = "-2  4  157" />
   </entity>
 
   <entity>
@@ -1306,7 +1316,7 @@
     <transform pos="0 3.91887 167.5" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/guard.static_mesh" />
-    <ai_guard
+    <bt_guard
       kpt_size  = "6"
       kpt0_type = "seek" kpt0_pos = "7 3.9 158" kpt0_wait = "0.5"
       kpt1_type = "look" kpt1_pos = "0 3.9 167.5" kpt1_wait = "1"

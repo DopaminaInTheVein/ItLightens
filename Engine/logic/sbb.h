@@ -4,7 +4,7 @@
 using namespace std;
 
 class CHandle;
-class ai_mole;
+class bt_mole;
 
 class SBB
 {
@@ -13,7 +13,7 @@ private:
 	static map<string, int > sbbInt;
 	static map<string, VEC3> sbbVEC3;
 	static map<string, CHandle> sbbHandle;
-	static map<string, ai_mole*> sbbMole;
+	static map<string, bt_mole*> sbbMole;
 	static map<string, vector<CHandle> > sbbHandlesVector;
 
 public:
@@ -34,8 +34,8 @@ public:
 	static void postHandle(string, CHandle);
 	static CHandle readHandle(string);
 	// sbbAiMole
-	static void postMole(string, ai_mole*);
-	static ai_mole* readMole(string);
+	static void postMole(string, bt_mole*);
+	static bt_mole* readMole(string);
 	// sbbHandleVector
 	static void postHandlesVector(string, vector<CHandle>);
 	static vector<CHandle> readHandlesVector(string);

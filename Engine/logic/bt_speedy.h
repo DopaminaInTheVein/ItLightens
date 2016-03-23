@@ -1,9 +1,8 @@
-#ifndef _AI_SPEEDY_
-#define _AI_SPEEDY_
+#ifndef _BT_SPEEDY_INC
+#define _BT_SPEEDY_INC
 
 #include "mcv_platform.h"
-#include "ai_poss.h"
-#include "aicontroller.h"
+#include "bt_poss.h"
 #include "sbb.h"
 #include "ai_water.h"
 #include "components/comp_base.h"
@@ -23,14 +22,9 @@
 #include <chrono>
 #include <windows.h>
 
-extern TTagsManager tags_manager;
+class bt_speedy : public bt_poss, public TCompBase {
 
-//Cambio malla
-struct TCompRenderStaticMesh;
-
-class ai_speedy : public ai_poss, public TCompBase {
-
-	CObjectManager<ai_speedy> * om = nullptr;
+	CObjectManager<bt_speedy> * om = nullptr;
 	CHandle myHandle;
 	CHandle myParent;
 	CEntity *myEntity = nullptr;
@@ -57,9 +51,7 @@ class ai_speedy : public ai_poss, public TCompBase {
 	float dash_timer_reset = 10.f;
 	float drop_water_timer_reset = 3.f;
 	// probabilities
-	int dash_to_point_chance = 2;
-	int dash_to_new_point_chance = 0;
-	int dash_to_player_chance = 2;
+	int random_wpt = -1;
 
 	string water_static_mesh = "static_meshes/water.static_mesh";
 
@@ -73,34 +65,33 @@ class ai_speedy : public ai_poss, public TCompBase {
 	string pose_run_route;
 	string pose_jump_route;
 
-public:
-	void IdleState();
-	void NextWptState();
-	void SeekWptState();
-	void DashToPlayerState();
-	void DashToPointState();
-	void DashToNewPointState();
+	public:
+		void Init();
+		void update(float elapsed);
+		//conditions
+		bool dashReady();
+		//actions
+		int actionSeekWpt();
+		int actionNextWpt();
+		int actionDashPoint();
+		int actionDashNewPoint();
+		int actionDashPlayer();
 
-	void Init();
-	void init() { IdleState(); }
-	void idle() { IdleState(); }
-	void update(float elapsed);
-	bool load(MKeyValue& atts);
+		bool load(MKeyValue& atts);
 
-	void onSetPlayer(const TMsgSetPlayer& msg);
+		void onSetPlayer(const TMsgSetPlayer& msg);
 
-	void SetMyEntity();
-	string decide_next_action();
-	bool aimToTarget(VEC3 target);
-	void moveFront(float speed);
-	bool dashToTarget(VEC3 target);
-	void updateDashTimer();
-	void resetDashTimer();
-	void updateDropWaterTimer();
-	void resetDropWaterTimer();
+		void SetMyEntity();
+		bool aimToTarget(VEC3 target);
+		void moveFront(float speed);
+		bool dashToTarget(VEC3 target);
+		void updateDashTimer();
+		void resetDashTimer();
+		void updateDropWaterTimer();
+		void resetDropWaterTimer();
 
-	//Cambio Malla
-	void ChangePose(string new_pose_route);
-};
+		//Cambio Malla
+		void ChangePose(string new_pose_route);
+	};
 
 #endif
