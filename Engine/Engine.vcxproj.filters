@@ -126,9 +126,6 @@
     <ClCompile Include="debug\debug.cpp">
       <Filter>debug</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_guard.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="logic\ai_poss.cpp">
       <Filter>logic</Filter>
@@ -216,6 +213,9 @@
     </ClCompile>
     <ClCompile Include="logic\bt_guard.cpp">
       <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_guard.cpp">
+      <Filter>logic_old</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -373,9 +373,6 @@
     <ClInclude Include="debug\debug.h">
       <Filter>debug</Filter>
     </ClInclude>
-    <ClInclude Include="logic\ai_guard.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="logic\ai_poss.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -474,6 +471,9 @@
     </ClInclude>
     <ClInclude Include="logic\bt_guard.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_guard.h">
+      <Filter>logic_old</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -27,7 +27,7 @@
 class bt_mole : public bt_poss, public TCompBase {
 	float speed = 2.f;
 	float rotation_speed = deg2rad(200);
-	float distMaxToBox = 15.0f;
+	float distMaxToBox = 10.0f;
 
 	int towptbox;
 	int towptleave;

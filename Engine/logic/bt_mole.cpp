@@ -200,6 +200,8 @@ int bt_mole::actionCarryFindBoxWpt() {
 			TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
 			VEC3 wpt = wptbleavetransform->getPosition();
 			float disttowpt = simpleDistXZ(wpt, transform->getPosition());
+			if (disttowpt > D3D10_FLOAT32_MAX)
+				break;
 			if (disttowpt < distMax) {
 				towptleave = i;
 				distMax = disttowpt;

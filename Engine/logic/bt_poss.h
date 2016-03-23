@@ -42,9 +42,9 @@ public:
 
 	//Accion que se ejecuta antes de empezar el proceso de posesión
 	//(útil para guardarse último estado antes de ser poseído, etc.)
-	void _actionBeforePossession();
-	void _actionBeingUnpossessed();
-	void _actionWhenStunt();
+	virtual void _actionBeforePossession();
+	virtual void _actionBeingUnpossessed();
+	virtual void _actionWhenStunt();
 
 	//Avisar a la entidad que ha sido poseída
 	void onSetPossessed(const TMsgAISetPossessed&);
