@@ -146,6 +146,7 @@
     <ClCompile Include="logic\ai_workbench.cpp" />
     <ClCompile Include="logic\bt.cpp" />
     <ClCompile Include="logic\btnode.cpp" />
+    <ClCompile Include="logic\bt_guard.cpp" />
     <ClCompile Include="logic\bt_mole.cpp" />
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_speedy.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="logic\ai_workbench.h" />
     <ClInclude Include="logic\bt.h" />
     <ClInclude Include="logic\btnode.h" />
+    <ClInclude Include="logic\bt_guard.h" />
     <ClInclude Include="logic\bt_mole.h" />
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_speedy.h" />

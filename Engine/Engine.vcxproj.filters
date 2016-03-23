@@ -214,6 +214,9 @@
     <ClCompile Include="logic\ai_mole.cpp">
       <Filter>logic_old</Filter>
     </ClCompile>
+    <ClCompile Include="logic\bt_guard.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -468,6 +471,9 @@
     </ClInclude>
     <ClInclude Include="logic\ai_mole.h">
       <Filter>logic_old</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\bt_guard.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

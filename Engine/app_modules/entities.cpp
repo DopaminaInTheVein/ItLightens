@@ -11,6 +11,7 @@
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
 #include "logic/ai_water.h"
+#include "logic/bt_guard.h"
 #include "logic/bt_mole.h"
 #include "logic/bt_speedy.h"
 #include "windows/app.h"
@@ -26,10 +27,11 @@ DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
 DECL_OBJ_MANAGER("cientifico", ai_scientific);
 DECL_OBJ_MANAGER("beacon", beacon_controller);
 DECL_OBJ_MANAGER("workbench", workbench_controller);
-DECL_OBJ_MANAGER("ai_guard", ai_guard);
-DECL_OBJ_MANAGER("ai_mole", ai_mole);
+/****/DECL_OBJ_MANAGER("ai_guard", ai_guard);
+DECL_OBJ_MANAGER("bt_guard", bt_guard);
+/****/DECL_OBJ_MANAGER("ai_mole", ai_mole);
 DECL_OBJ_MANAGER("bt_mole", bt_mole);
-DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
+/****/DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
 DECL_OBJ_MANAGER("bt_speedy", bt_speedy);
 DECL_OBJ_MANAGER("water", water_controller);
 DECL_OBJ_MANAGER("player", player_controller);
@@ -83,7 +85,8 @@ bool CEntitiesModule::start() {
 	//Physics
 	getHandleManager<TCompColCillinder>()->init(MAX_ENTITIES);
 
-	getHandleManager<ai_guard>()->init(MAX_ENTITIES);
+	//getHandleManager<ai_guard>()->init(MAX_ENTITIES);
+	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	//getHandleManager<ai_mole>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
 	getHandleManager<ai_scientific>()->init(MAX_ENTITIES);
@@ -122,13 +125,16 @@ bool CEntitiesModule::start() {
 
 	//bombs
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
-	SUBSCRIBE(ai_guard, TMsgStaticBomb, onStaticBomb);		//TODO: should do something
+	//SUBSCRIBE(ai_guard, TMsgStaticBomb, onStaticBomb);		//TODO: should do something
+	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
 	//SUBSCRIBE(ai_mole, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
 	//SUBSCRIBE(ai_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
-	SUBSCRIBE(ai_guard, TMsgMagneticBomb, onMagneticBomb);
-	SUBSCRIBE(ai_guard, TMsgNoise, noise);
+	//SUBSCRIBE(ai_guard, TMsgMagneticBomb, onMagneticBomb);
+	//SUBSCRIBE(ai_guard, TMsgNoise, noise);
+	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
+	SUBSCRIBE(bt_guard, TMsgNoise, noise);
 
 	//WIRES
 	SUBSCRIBE(TCompWire, TMsgEntityCreated, onCreate);
@@ -236,7 +242,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<player_controller_cientifico>()->onAll(&player_controller_cientifico::Init);
 	getHandleManager<player_controller_mole>()->onAll(&player_controller_mole::Init);
 
-	getHandleManager<ai_guard>()->onAll(&ai_guard::Init);
+	//getHandleManager<ai_guard>()->onAll(&ai_guard::Init);
+	getHandleManager<bt_guard>()->onAll(&bt_guard::Init);
 	//getHandleManager<ai_mole>()->onAll(&ai_mole::Init);
 	getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
@@ -265,7 +272,8 @@ void CEntitiesModule::update(float dt) {
 
 	//getHandleManager<ai_mole>()->updateAll(dt);
 	getHandleManager<bt_mole>()->updateAll(dt);
-	getHandleManager<ai_guard>()->updateAll(dt);
+	//getHandleManager<ai_guard>()->updateAll(dt);
+	getHandleManager<bt_guard>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);

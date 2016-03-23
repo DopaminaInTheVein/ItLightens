@@ -1275,7 +1275,7 @@
     <transform pos="0 3.8 91" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/guard.static_mesh" />
-    <ai_guard
+    <bt_guard
       kpt_size  = "8"
       kpt0_type = "seek" kpt0_pos = " 0  3.8  91" kpt0_wait = "0.5"
       kpt1_type = "look" kpt1_pos = " 0  3.8   83" kpt1_wait = "1"
@@ -1300,7 +1300,7 @@
     <transform pos="0 4 130" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/guard.static_mesh" />
-    <ai_guard
+    <bt_guard
       kpt_size  = "2"
       kpt0_type = "seek" kpt0_pos = " 0  4  126" kpt0_wait = "100"
       kpt1_type = "look" kpt1_pos = " 0  4  100" kpt1_wait = "100"
@@ -1416,7 +1416,7 @@
     <transform pos="0 3.91887 167.5" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
     <render_static_mesh name="static_meshes/guard.static_mesh" />
-    <ai_guard
+    <bt_guard
       kpt_size  = "6"
       kpt0_type = "seek" kpt0_pos = "7 3.9 158" kpt0_wait = "0.5"
       kpt1_type = "look" kpt1_pos = "0 3.9 167.5" kpt1_wait = "1"
