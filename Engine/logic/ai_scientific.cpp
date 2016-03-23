@@ -155,12 +155,10 @@ void ai_scientific::MoveToPos()
 	VEC3 target = obj_position;
 	float delta_time = getDeltaTime();
 
-	VEC3 new_pos = curr_pos;
-	new_pos.x = delta_time*move_speed*me_transform->getFront().x;
-	new_pos.y = delta_time*move_speed*me_transform->getFront().y;
-	new_pos.z = delta_time*move_speed*me_transform->getFront().z;
 
-	cc->AddMovement(new_pos);
+	cc->AddMovement(me_transform->getFront(), move_speed*getDeltaTime());
+	VEC3 new_pos = cc->getPosition() - VEC3(0, cc->GetRadius() + cc->GetHeight(), 0);
+
 
 	float dist_square = simpleDistXZ(new_pos, target);
 

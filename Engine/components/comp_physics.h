@@ -18,7 +18,7 @@ enum eTypeShape {
 	SPHERE,
 	CAPSULE,
 	BOX,
-	CONVEX,		//not implemented yet
+	CONVEX,	
 };
 
 // ------------------------------------
@@ -74,6 +74,11 @@ public:
 
 	// load Xml
 	void onCreate(const TMsgEntityCreated&);
+
+	bool isKinematic();
+	bool setKinematic(bool isKinematic);
+	//void AddForce();
+	void setPosition(VEC3 position, CQuaternion rotation);
 
 	void update(float dt);
 	void renderInMenu();

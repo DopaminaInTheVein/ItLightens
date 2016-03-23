@@ -57,6 +57,11 @@ bool TCompCharacterController::OnGround() {
 	return false;
 }
 
+VEC3 TCompCharacterController::getPosition()
+{
+	return PhysxConversion::PxExVec3ToVec3(pActor->getPosition());
+}
+
 void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 {
 

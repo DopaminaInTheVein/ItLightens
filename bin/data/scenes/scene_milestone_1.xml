@@ -120,7 +120,7 @@
   <entity>
     <name name="mesa_cientifico" />
     <tag name="workbench" />
-    <transform pos="-11.7247 3.90382 128.531" quat="0.0 0.0 1.66893e-006 1.0" scale="1.0" />
+    <transform pos="8.7247 3.90382 128.531" quat="0.0 0.0 1.66893e-006 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh" />
     <workbench />
   </entity>
@@ -1069,7 +1069,7 @@
     <transform pos="0 -1.8 8" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/mole/mole_run.static_mesh" />
     <life points="100" />
-    <character_controller radius ="1.0" height ="1.0"/>
+    <character_controller radius ="0.3" height ="1.0"/>
     <player_mole />
     <bt_mole
       wpts_size = "4"
@@ -1281,7 +1281,7 @@
     <transform pos="0 4 160" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/mole/mole_run.static_mesh" />
     <life points="100" />
-    <character_controller radius ="1.0" height ="1.0"/>
+    <character_controller radius ="0.3" height ="1.0"/>
     <player_mole />
     <bt_mole
       wpts_size = "4"
@@ -1378,7 +1378,7 @@
   <entity>
     <name name="wb_final_zone" />
     <tag name="workbench" />
-    <transform pos="8.3 4 142.7" rotation="1 2 3 3" scale="1 1 1" />
+    <transform pos="6 4 142.7" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh" />
     <workbench/>
   </entity>

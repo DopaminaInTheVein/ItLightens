@@ -62,6 +62,7 @@ public:
 	void AddImpulse(const VEC3 & impulse);
 	void SetActive(bool isActive) { mActive = isActive; }
 	void SetGravity(bool isActive) { mAffectGravity = isActive; }
+	VEC3 getPosition();
 	void update(float dt);
 
 	//virtual fucntions from PxUserControllerHitReport
