@@ -1,11 +1,11 @@
 #include "mcv_platform.h"
 #include "app_modules/entities.h"
-#include "handle/handle_manager.h"
 #include "components/components.h"
 #include "components/entity_parser.h"
-#include "handle/msgs.h"
 #include "components/comp_msgs.h"
 #include "components/entity_tags.h"
+#include "handle/handle_manager.h"
+#include "handle/msgs.h"
 #include "render/technique.h"
 #include "resources/resources_manager.h"
 #include "imgui/imgui.h"
@@ -13,6 +13,8 @@
 #include "logic/ai_water.h"
 #include "windows/app.h"
 #include "utils/utils.h"
+#include "recast/navmesh.h"
+#include "recast/navmesh_query.h"
 #include <vector>
 
 DECL_OBJ_MANAGER("entity", CEntity);
@@ -44,10 +46,11 @@ DECL_OBJ_MANAGER("character_controller", TCompCharacterController);
 DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 
-
 static CHandle player;
 static CHandle target;
 CCamera * camera;
+CNavmesh nav;
+//CNavmeshQuery nav_query(&nav);
 
 // The global dict of all msgs
 MMsgSubscriptions msg_subscriptions;
@@ -66,7 +69,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<player_controller_mole>()->init(8);
 	getHandleManager<player_controller_cientifico>()->init(8);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-	
+
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
@@ -90,7 +93,6 @@ bool CEntitiesModule::start() {
 	//colliders
 	getHandleManager<TCompPhysics>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
-	
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
@@ -154,8 +156,31 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
 
 	CEntityParser ep;
-	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/scene_test_recast.xml");
 	assert(is_ok);
+
+	// GENERATE NAVMESH
+	VHandles collisionables = ep.getCollisionables();
+
+	//getHandleManager<TCompPhysics>()->
+
+	//VHandles collisionables = tags_manager.getAllHandlesWithComponent("rigidbody");
+	nav.m_input.clearInput();
+	for (CHandle han : collisionables) {
+		CEntity * e = han;
+		TCompPhysics * p = e->get<TCompPhysics>();
+		PxBounds3 bounds = p->getActor()->getWorldBounds();
+		VEC3 min, max;
+		min.x = bounds.minimum.x;
+		min.y = bounds.minimum.y;
+		min.z = bounds.minimum.z;
+		max.x = bounds.maximum.x;
+		max.y = bounds.maximum.y;
+		max.z = bounds.maximum.z;
+		nav.m_input.addInput(min, max);
+	}
+	nav.m_input.computeBoundaries();
+	nav.build();
 
 	TTagID tagIDplayer = getID("player");
 	TTagID tagIDbox = getID("box");
@@ -173,8 +198,6 @@ bool CEntitiesModule::start() {
 	// Player real
 	CHandle t = tags_manager.getFirstHavingTag(getID("target"));
 	CEntity * target_e = t;
-
-	
 
 	// Set the player in the 3rdPersonController
 	if (player_e && t.isValid()) {

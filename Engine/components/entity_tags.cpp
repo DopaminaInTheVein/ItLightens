@@ -21,7 +21,6 @@ void TTagsManager::removeTag(CHandle h, TTagID tag_id)
 			it_m.second.erase(std::remove(it_m.second.begin(), it_m.second.end(), h), it_m.second.end());
 		}
 	}
-
 }
 
 // ---------------------------------------
@@ -51,3 +50,5 @@ const VHandles& TTagsManager::getHandlesByTag(TTagID tag_id) const {
 	}
 	return it->second;
 }
+
+// ---------------------------------------

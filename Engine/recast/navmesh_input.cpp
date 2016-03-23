@@ -1,5 +1,6 @@
 #include "mcv_platform.h"
 #include "navmesh_input.h"
+#include "components\comp_physics.h"
 #include <assert.h>
 
 CNavmeshInput::CNavmeshInput()

@@ -28,6 +28,9 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 		CEntity* e = curr_entity;
 		new_h.load(atts);
 		e->add(new_h);
+		if (elem == "rigidbody") {
+			collisionables.push_back(curr_entity);
+		}
 	}
 }
 
@@ -39,4 +42,8 @@ void CEntityParser::onEndElement(const std::string &elem) {
 		dbg("Entity created!!\n");
 		curr_entity = CHandle();
 	}
+}
+
+std::vector< CHandle > CEntityParser::getCollisionables() {
+	return collisionables;
 }

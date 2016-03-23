@@ -10,6 +10,18 @@
 #include "navmesh_input.h"
 
 class CNavmesh {
+private:
+	rcHeightfield*        m_solid;
+	rcCompactHeightfield* m_chf;
+	rcContourSet*         m_cset;
+	rcPolyMesh*           m_pmesh;
+	rcConfig              m_cfg;
+	rcPolyMeshDetail*     m_dmesh;
+	rcBuildContext*       m_ctx;
+	unsigned char*        m_triareas;
+
+	rcBuildContext        m_context;
+
 public:
 	enum {
 		FLAG_WALK = 0x01
@@ -39,34 +51,18 @@ public:
 		, NAVMESH_DRAW_TYPE_COUNT
 	};
 
-public:
 	dtNavMesh*            m_navMesh;
 	dtNavMeshQuery*       m_navQuery;
-
-private:
-	rcHeightfield*        m_solid;
-	rcCompactHeightfield* m_chf;
-	rcContourSet*         m_cset;
-	rcPolyMesh*           m_pmesh;
-	rcConfig              m_cfg;
-	rcPolyMeshDetail*     m_dmesh;
-	rcBuildContext*       m_ctx;
-	unsigned char*        m_triareas;
-
-	rcBuildContext        m_context;
-
-public:
 	CNavmeshInput         m_input;
 	EDrawMode             m_draw_mode;
 
-public:
 	CNavmesh();
 	void build();
 	dtNavMesh* create(const rcConfig& cfg);
 	void prepareQueries();
 	void destroy();
 	void dumpLog();
-	void render(bool use_z_test);
+	//void render(bool use_z_test) {};
 };
 
 #endif

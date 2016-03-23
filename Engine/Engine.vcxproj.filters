@@ -301,6 +301,9 @@
     <ClCompile Include="recast\Detour\Source\DetourNode.cpp">
       <Filter>recast\Detour\Source</Filter>
     </ClCompile>
+    <ClCompile Include="recast\navmesh.cpp">
+      <Filter>recast</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">

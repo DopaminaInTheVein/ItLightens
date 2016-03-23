@@ -70,6 +70,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)/physx/libs/$(Configuration);$(ProjectDir)/libs/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>XINPUT9_1_0.LIB;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -84,7 +85,7 @@
       <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -180,6 +181,7 @@
     <ClCompile Include="recast\Detour\Source\DetourNavMeshBuilder.cpp" />
     <ClCompile Include="recast\Detour\Source\DetourNavMeshQuery.cpp" />
     <ClCompile Include="recast\Detour\Source\DetourNode.cpp" />
+    <ClCompile Include="recast\navmesh.cpp" />
     <ClCompile Include="recast\navmesh_builder.cpp" />
     <ClCompile Include="recast\navmesh_input.cpp" />
     <ClCompile Include="recast\navmesh_query.cpp" />
