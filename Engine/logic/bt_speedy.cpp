@@ -1,17 +1,19 @@
 #include "mcv_platform.h"
-#include "ai_speedy.h"
+#include "bt_speedy.h"
 #include "components\comp_charactercontroller.h"
 
-void ai_speedy::Init()
-{
-	// insert all states in the map
-//	AddState("idle", (statehandler)&ai_speedy::IdleState);
-	AddState("nextwpt", (statehandler)&ai_speedy::NextWptState);
-	AddState("seekwpt", (statehandler)&ai_speedy::SeekWptState);
-	AddState("dashtoplayer", (statehandler)&ai_speedy::DashToPlayerState);
-	AddState("dashtopoint", (statehandler)&ai_speedy::DashToPointState);
-	AddState("dashtonewpoint", (statehandler)&ai_speedy::DashToNewPointState);
-	om = getHandleManager<ai_speedy>();
+void bt_speedy::Init() {
+
+	addChild("possessable", "speedy", PRIORITY, (btcondition)&bt_speedy::npcAvailable, NULL);
+	addChild("speedy", "dash", RANDOM, (btcondition)&bt_speedy::dashReady, NULL);
+	addChild("dash", "dashNextPoint", ACTION, NULL, (btaction)&bt_speedy::actionDashPoint);
+	addChild("dash", "dashNewPoint", ACTION, NULL, (btaction)&bt_speedy::actionDashNewPoint);
+	addChild("dash", "dashPlayer", ACTION, NULL, (btaction)&bt_speedy::actionDashPlayer);
+	addChild("speedy", "patrol", SEQUENCE, NULL, NULL);
+	addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_speedy::actionNextWpt);
+	addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_speedy::actionSeekWpt);
+
+	om = getHandleManager<bt_speedy>();
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
 
@@ -37,15 +39,9 @@ void ai_speedy::Init()
 	pose_jump_route = "static_meshes/speedy/speedy_jump.static_mesh";
 	pose_run_route = "static_meshes/speedy/speedy_run.static_mesh";
 
-	// reset the state
-	ChangeState("idle");
 }
 
-void ai_speedy::onSetPlayer(const TMsgSetPlayer& msg) {
-	player = msg.player;
-}
-
-void ai_speedy::update(float elapsed) {
+void bt_speedy::update(float elapsed) {
 	// Update transforms
 	SetMyEntity();
 	transform = myEntity->get<TCompTransform>();
@@ -54,17 +50,24 @@ void ai_speedy::update(float elapsed) {
 	// Recalc AI and update timers
 	updateDashTimer();
 	updateDropWaterTimer();
+	// If we become possessed, reset the tree and stop all actions
+	if (possessing)
+		setCurrent(NULL);
 	Recalc();
+}
+
+void bt_speedy::onSetPlayer(const TMsgSetPlayer& msg) {
+	player = msg.player;
 }
 
 // Loading the wpts
 #define WPT_ATR_NAME(nameVariable, nameSufix, index) \
 char nameVariable[10]; sprintf(nameVariable, "wpt%d_%s", index, nameSufix);
 
-bool ai_speedy::load(MKeyValue& atts) {
+bool bt_speedy::load(MKeyValue& atts) {
 	int n = atts.getInt("wpts_size", 0);
 	fixedWpts.resize(n);
-	for ( int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		WPT_ATR_NAME(atrPos, "pos", i);
 		fixedWpts[i] = atts.getPoint(atrPos);
 	}
@@ -72,118 +75,88 @@ bool ai_speedy::load(MKeyValue& atts) {
 }
 
 // Sets the entity
-void ai_speedy::SetMyEntity() {
+void bt_speedy::SetMyEntity() {
 	myEntity = myParent;
 }
 
-// Speedy states
-
-void ai_speedy::IdleState() {
-	ChangePose(pose_idle_route);
-	ChangeState("nextwpt");
+// conditions
+bool bt_speedy::dashReady() {
+	return dash_ready;
 }
-
-void ai_speedy::NextWptState()
-{
+// actions
+int bt_speedy::actionNextWpt() {
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
 	bool aimed = aimToTarget(target);
 
 	if (aimed) {
 		ChangePose(pose_run_route);
-		ChangeState("seekwpt");
+		//ChangeState("seekwpt");
+		return OK;
 	}
+	return STAY;
 }
 
-void ai_speedy::SeekWptState()
-{
+int bt_speedy::actionSeekWpt() {
+
 	float distance = squaredDistXZ(fixedWpts[curwpt], transform->getPosition());
-	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 
-	string next_action = decide_next_action();
-
-	if (next_action == "dashtoplayer" && dash_ready) {
-			dash_target = player_transform->getPosition();
-	float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
-		if (abs(distance_to_player) <= max_dash_player_distance && abs(dash_target.y - transform->getPosition().y) < 0.5f) {
-			ChangePose(pose_run_route);
-			ChangeState(next_action);
-		}	
-		else
-			ChangeState("seekwpt");
-	}
-	else if (next_action == "dashtonewpoint" && dash_ready) {
-		dash_target = VEC3(30.f, 0.0f, 0.0f);
-		ChangePose(pose_run_route);
-		ChangeState(next_action);
-	}
-	else if (next_action == "dashtopoint" && dash_ready) {
-		ChangePose(pose_run_route);
-		ChangeState(next_action);
-	}
-	else if (abs(distance) > 0.1f) {
+	 if (abs(distance) > 0.1f) {
 		moveFront(speed);
+		return STAY;
 	}
 	else {
-		cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(fixedWpts[curwpt]+VEC3(0,cc->GetHeight(),0)));
+		transform->setPosition(fixedWpts[curwpt]);
 		float distance_to_next_wpt = squaredDist(transform->getPosition(), fixedWpts[(curwpt + 1) % fixedWpts.size()]);
 		curwpt = (curwpt + 1) % fixedWpts.size();
 
-		if (distance_to_next_wpt > 200.f) {
-			ChangePose(pose_run_route);
-			ChangeState("dashtopoint");
-		}
-		else {
-			ChangePose(pose_idle_route);
-			ChangeState("nextwpt");
-		}
+		return OK;
 	}
 }
 
-void ai_speedy::DashToPlayerState() {
-	bool arrived = dashToTarget(dash_target);
-	if (arrived) {
-		resetDashTimer();
-		ChangePose(pose_idle_route);
-		ChangeState("nextwpt");
-	}
-}
-void ai_speedy::DashToPointState() {
+int bt_speedy::actionDashPoint() {	
+
 	bool arrived = dashToTarget(fixedWpts[curwpt]);
 	if (arrived) {
 		resetDashTimer();
 		ChangePose(pose_idle_route);
-		ChangeState("nextwpt");
+		return OK;
 	}
+	return STAY;
 }
+int bt_speedy::actionDashNewPoint() {
 
-void ai_speedy::DashToNewPointState() {
+	if (random_wpt == -1)
+		random_wpt = rand() % fixedWpts.size();
+
+	bool arrived = dashToTarget(fixedWpts[random_wpt]);
+	if (arrived) {
+		resetDashTimer();
+		ChangePose(pose_idle_route);
+		random_wpt = -1;
+		return OK;
+	}
+	return STAY;
+}
+int bt_speedy::actionDashPlayer() {
+
+	dash_target = player_transform->getPosition();
+	float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
+	if (abs(distance_to_player) > max_dash_player_distance || abs(dash_target.y - transform->getPosition().y) > 0.5f) {
+		return KO;
+	}
+
 	bool arrived = dashToTarget(dash_target);
 	if (arrived) {
 		resetDashTimer();
 		ChangePose(pose_idle_route);
-		ChangeState("nextwpt");
+		return OK;
 	}
+	return STAY;
 }
 
-string ai_speedy::decide_next_action() {
-	int next_action = rand() % 100;
+bool bt_speedy::aimToTarget(VEC3 target) {
 
-	if (next_action < dash_to_point_chance) {
-		return "dashtopoint";
-	}
-	else if (next_action < dash_to_point_chance + dash_to_player_chance) {
-		return "dashtoplayer";
-	}
-	else if (next_action < dash_to_point_chance + dash_to_new_point_chance + dash_to_player_chance) {
-		return "dashtonewpoint";
-	}
-	else {
-		return "seekwpt";
-	}
-}
-
-bool ai_speedy::aimToTarget(VEC3 target) {
 	float delta_yaw = transform->getDeltaYawToAimTo(target);
 
 	if (abs(delta_yaw) > 0.001f) {
@@ -197,14 +170,14 @@ bool ai_speedy::aimToTarget(VEC3 target) {
 	}
 }
 
-void ai_speedy::moveFront(float movement_speed) {
+void bt_speedy::moveFront(float movement_speed) {
 	VEC3 front = transform->getFront();
 	VEC3 position = transform->getPosition();
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 	cc->AddMovement(VEC3(front.x*movement_speed*getDeltaTime(), 0.0f, front.z*movement_speed*getDeltaTime()));
 }
 
-bool ai_speedy::dashToTarget(VEC3 target) {
+bool bt_speedy::dashToTarget(VEC3 target) {
 	bool aimed = aimToTarget(target);
 
 	if (aimed) {
@@ -281,32 +254,32 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 	}
 }
 
-void ai_speedy::updateDashTimer() {
+void bt_speedy::updateDashTimer() {
 	dash_timer -= getDeltaTime();
 	if (dash_timer <= 0) {
 		dash_ready = true;
 	}
 }
 
-void ai_speedy::resetDashTimer() {
+void bt_speedy::resetDashTimer() {
 	dash_timer = dash_timer_reset;
 	dash_ready = false;
 }
 
-void ai_speedy::updateDropWaterTimer() {
+void bt_speedy::updateDropWaterTimer() {
 	drop_water_timer -= getDeltaTime();
 	if (drop_water_timer <= 0) {
 		drop_water_ready = true;
 	}
 }
 
-void ai_speedy::resetDropWaterTimer() {
+void bt_speedy::resetDropWaterTimer() {
 	drop_water_timer = drop_water_timer_reset;
 	drop_water_ready = false;
 }
 
 //Cambio de malla
-void ai_speedy::ChangePose(string new_pose_route) {
+void bt_speedy::ChangePose(string new_pose_route) {
 	mesh->unregisterFromRender();
 	MKeyValue atts_mesh;
 	atts_mesh["name"] = new_pose_route;

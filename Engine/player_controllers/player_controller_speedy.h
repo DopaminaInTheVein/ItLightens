@@ -27,7 +27,7 @@ struct TCompRenderStaticMesh;
 class player_controller_speedy : public PossController {
 	CObjectManager<player_controller_speedy> *om;
 
-	const float dash_speed = 15.f;
+	const float dash_speed = 30.f;
 	const float dash_max_duration = 1.f;
 	float dash_duration = 0.f;
 

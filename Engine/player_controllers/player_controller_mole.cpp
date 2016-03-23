@@ -90,8 +90,8 @@ void player_controller_mole::UpdateUnpossess() {
 
 void player_controller_mole::GrabBox() {
 	if (SBB::readBool(selectedBox)) {
-		ai_mole * mole = SBB::readMole(selectedBox);
-		mole->ChangeState("idle");
+		bt_mole * mole = SBB::readMole(selectedBox);
+		//mole->ChangeState("idle");
 	}
 	else {
 		SBB::postBool(selectedBox, true);

@@ -1,27 +1,29 @@
 #include "mcv_platform.h"
-#include "ai_mole.h"
+#include "bt_mole.h"
+#include "components\comp_charactercontroller.h"
 
-void ai_mole::Init()
+void bt_mole::Init()
 {
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 
-	// insert all states in the map
-	// insertar punters a funcions de una classe hereva del aiccontroller.
-//	AddState("idle", (statehandler)&ai_mole::IdleState);
-	AddState("seekwpt", (statehandler)&ai_mole::SeekWptState);
-	AddState("orientTowpt", (statehandler)&ai_mole::OrientToWptState);
-	AddState("nextwpt", (statehandler)&ai_mole::NextWptState);
-
-	AddState("grab", (statehandler)&ai_mole::GrabState);
-	AddState("seekwptcarry", (statehandler)&ai_mole::SeekWptCarryState);
-	AddState("orientTowptCarry", (statehandler)&ai_mole::OrientToCarryWptState);
-	AddState("nextwptCarry", (statehandler)&ai_mole::NextWptCarryState);
-	AddState("ungrab", (statehandler)&ai_mole::UnGrabState);
+	addChild("possessable", "mole", PRIORITY, (btcondition)&bt_mole::npcAvailable, NULL);
+	addChild("mole", "movebox", SEQUENCE, (btcondition)&bt_mole::checkBoxes, NULL);
+	addChild("movebox", "nextboxpt", ACTION, NULL, (btaction)&bt_mole::actionNextBoxWpt);
+	addChild("movebox", "seekboxpt", ACTION, NULL, (btaction)&bt_mole::actionSeekBoxWpt);
+	addChild("movebox", "grabbox", ACTION, NULL, (btaction)&bt_mole::actionGrabBox);
+	addChild("movebox", "carryboxfindwpt", ACTION, NULL, (btaction)&bt_mole::actionCarryFindBoxWpt);
+	addChild("movebox", "carryboxnextwpt", ACTION, NULL, (btaction)&bt_mole::actionCarryNextBoxWpt);
+	addChild("movebox", "carryboxseekwpt", ACTION, NULL, (btaction)&bt_mole::actionCarrySeekBoxWpt);
+	addChild("movebox", "ungrabbox", ACTION, NULL, (btaction)&bt_mole::actionUngrabBox);
+	addChild("mole", "patrol", SEQUENCE, NULL, NULL);
+	addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_mole::actionNextWpt);
+	addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_mole::actionSeekWpt);
 
 	towptbox = -1;
 	towptleave = -1;
-	// reset the state
+	// current wpt
+	curwpt = 0;
 
 	CEntity* myEntity = myParent;
 
@@ -33,98 +35,148 @@ void ai_mole::Init()
 	pose_box_route = "static_meshes/mole/mole_box.static_mesh";
 	pose_wall_route = "static_meshes/mole/mole_wall.static_mesh";
 
-	ChangeState("idle");
 }
 
-void ai_mole::IdleState() {
-	ChangePose(pose_run_route);
-	ChangeState("seekwpt");
+void bt_mole::update(float elapsed) {
+	// Update transforms
+	SetMyEntity();
+	transform = myEntity->get<TCompTransform>();
+	// If we become possessed, reset the tree and stop all actions
+	if (possessing)
+		setCurrent(NULL);
+	Recalc();
 }
 
-void ai_mole::SeekWptState() {
+// Sets the entity
+void bt_mole::SetMyEntity() {
+	myEntity = myParent;
+}
+
+// Loading the wpts
+#define WPT_ATR_NAME(nameVariable, nameSufix, index) \
+char nameVariable[10]; sprintf(nameVariable, "wpt%d_%s", index, nameSufix);
+
+bool bt_mole::load(MKeyValue& atts) {
+	int n = atts.getInt("wpts_size", 0);
+	fixedWpts.resize(n);
+	for (int i = 0; i < n; i++) {
+		WPT_ATR_NAME(atrPos, "pos", i);
+		fixedWpts[i] = atts.getPoint(atrPos);
+	}
+	return true;
+}
+
+// actions
+int bt_mole::actionNextWpt() {
+	VEC3 front = transform->getFront();
+	VEC3 target = fixedWpts[curwpt];
+	bool aimed = aimToTarget(target);
+
+	if (aimed) {
+		ChangePose(pose_run_route);
+		return OK;
+	}
+	return STAY;
+}
+
+int bt_mole::actionSeekWpt() {
+
+	float distance = squaredDistXZ(fixedWpts[curwpt], transform->getPosition());
+
+	if (abs(distance) > 0.1f) {
+		moveFront(speed);
+		return STAY;
+	}
+	else {
+		transform->setPosition(fixedWpts[curwpt]);
+		float distance_to_next_wpt = squaredDist(transform->getPosition(), fixedWpts[(curwpt + 1) % fixedWpts.size()]);
+		curwpt = (curwpt + 1) % fixedWpts.size();
+
+		return OK;
+	}
+}
+
+bool bt_mole::checkBoxes() {
+
+	bool found = false;
+	float minDistanceToBox = distMaxToBox;
+
 	if (SBB::readHandlesVector("wptsBoxes").size() > 0) {
-		float distMax = 15.0f;
+
 		string key_final = "";
-		bool found = false;
 		float higher = -999.9f;
+
 		for (int i = 0; i < SBB::readHandlesVector("wptsBoxes").size(); i++) {
 			CEntity * entTransform = this->getEntityPointer(i);
 			TCompTransform * transformBox = entTransform->get<TCompTransform>();
 			TCompName * nameBox = entTransform->get<TCompName>();
 			VEC3 wpt = transformBox->getPosition();
-			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
+			float disttowpt = simpleDistXZ(wpt, transform->getPosition());
 			string key = nameBox->name;
-			if (!SBB::readBool(key) && !isBoxAtLeavePoint(wpt) && (disttowpt < distMax + 2 && wpt.y > higher)) {
+			if (!SBB::readBool(key) && !isBoxAtLeavePoint(wpt) && (disttowpt < minDistanceToBox + 2 && wpt.y > higher)) {
 				towptbox = i;
 				higher = wpt.y;
-				distMax = disttowpt;
+				minDistanceToBox = disttowpt;
 				key_final = key;
 				found = true;
 			}
 		}
+
 		if (found) {
 			SBB::postBool(key_final, true);
-			//SBB::postMole(key_final, this);
+			SBB::postMole(key_final, this);
 			ChangePose(pose_idle_route);
-			ChangeState("orientTowpt");
+			return true;
 		}
 	}
+	return false;
 }
 
-void ai_mole::OrientToWptState()
+int bt_mole::actionNextBoxWpt()
 {
 	if (towptbox > -1) {
 		CEntity * entTransform = this->getEntityPointer(towptbox);
 		TCompTransform * transformBox = entTransform->get<TCompTransform>();
-		TCompTransform * transform = getEntityTransform();
 		if (!transform->isHalfConeVision(transformBox->getPosition(), deg2rad(0.01f))) {
-			//ROTATE CAUSE WE DON'T SEE OBJECTIVE
-			float angle = 0.0f;
 
-			float littleAngle = transform->getDeltaYawToAimTo(transformBox->getPosition());
-			float littleDeltaAngle = getDeltaTime() / 2;
-			if (littleAngle < 0) {
-				littleDeltaAngle *= -1;
-				angle = max(littleAngle, littleDeltaAngle);
+			bool aimed = aimToTarget(transformBox->getPosition());
+
+			if (aimed) {
+				ChangePose(pose_run_route);
+				return OK;
 			}
-			else {
-				angle = min(littleAngle, littleDeltaAngle);
-			}
-			float yaw = 0.0f, pitch = 0.0f;
-			transform->getAngles(&yaw, &pitch);
-			transform->setAngles(yaw + angle, 0.0f);
+			else
+				return STAY;
 		}
 		else {
 			ChangePose(pose_run_route);
-			ChangeState("nextwpt");
+			return OK;
 		}
 	}
+	return KO;
 }
-void ai_mole::NextWptState()
+
+int bt_mole::actionSeekBoxWpt()
 {
 	if (towptbox > -1) {
 		TCompTransform * transformBox = this->getEntityPointer(towptbox)->get<TCompTransform>();
-		TCompTransform * transform = getEntityTransform();
 		float distToWPT = simpleDistXZ(transformBox->getPosition(), transform->getPosition());
 
-		if (distToWPT > 2.0f) {
-			//MOVE
-			VEC3 front = transform->getFront();
-			VEC3 pos = transform->getPosition();
-			pos.x += front.x*mole_speed*getDeltaTime() * 2;
-			pos.z += front.z*mole_speed*getDeltaTime() * 2;
-			transform->setPosition(pos);
+		if (abs(distToWPT) > 2.0f) {
+			moveFront(speed);
+			return STAY;
 		}
 		else {
 			ChangePose(pose_box_route);
-			ChangeState("grab");
+			return OK;
 		}
 	}
+	return KO;
 }
 
-void ai_mole::GrabState() {
+int bt_mole::actionGrabBox() {
+
 	if (towptbox > -1) {
-		TCompTransform * transform = getEntityTransform();
 		CEntity* box = SBB::readHandlesVector("wptsBoxes")[towptbox];
 		TCompTransform* box_t = box->get<TCompTransform>();
 		VEC3 posbox = transform->getPosition();
@@ -132,81 +184,82 @@ void ai_mole::GrabState() {
 		box_t->setPosition(posbox);
 		carryingBox = true;
 		ChangePose(pose_idle_route);
-		ChangeState("seekwptcarry");
+		return OK;
 	}
+	ChangePose(pose_idle_route);
+	return KO;
 }
-void ai_mole::SeekWptCarryState() {
-	TCompTransform * transform = getEntityTransform();
+
+int bt_mole::actionCarryFindBoxWpt() {
+
 	if (SBB::readHandlesVector("wptsBoxLeavePoint").size() > 0) {
-		float distMax = 999999999.9999f;
+
+		float distMax = D3D10_FLOAT32_MAX;
 		for (int i = 0; i < SBB::readHandlesVector("wptsBoxLeavePoint").size(); i++) {
 			CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[i];
 			TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
 			VEC3 wpt = wptbleavetransform->getPosition();
 			float disttowpt = simpleDistXZ(wpt, transform->getPosition());
+			if (disttowpt > D3D10_FLOAT32_MAX)
+				break;
 			if (disttowpt < distMax) {
 				towptleave = i;
 				distMax = disttowpt;
 			}
 		}
 		ChangePose(pose_idle_route);
-		ChangeState("orientTowptCarry");
+		return OK;
 	}
+	return KO;
 }
 
-void ai_mole::OrientToCarryWptState() {
+int bt_mole::actionCarryNextBoxWpt() {
+
 	CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[towptleave];
 	TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
-	TCompTransform * transform = getEntityTransform();
 	if (!transform->isHalfConeVision(wptbleavetransform->getPosition(), deg2rad(0.01f))) {
 		//ROTATE CAUSE WE DON'T SEE OBJECTIVE
 		ChangePose(pose_box_route);
-		float angle = 0.0f;
-		float littleAngle = transform->getDeltaYawToAimTo(wptbleavetransform->getPosition());
-		float littleDeltaAngle = getDeltaTime() / 2;
-		if (littleAngle < 0) {
-			littleDeltaAngle *= -1;
-			angle = max(littleAngle, littleDeltaAngle);
+		bool aimed = aimToTarget(wptbleavetransform->getPosition());
+
+		if (aimed) {
+			ChangePose(pose_run_route);
+			return OK;
 		}
-		else {
-			angle = min(littleAngle, littleDeltaAngle);
-		}
-		float yaw = 0.0f, pitch = 0.0f;
-		transform->getAngles(&yaw, &pitch);
-		transform->setAngles(yaw + angle, 0.0f);
+		else
+			return STAY;
 	}
 	else {
 		ChangePose(pose_run_route);
-		ChangeState("nextwptCarry");
+		return OK;
 	}
+	return KO;
 }
 
-void ai_mole::NextWptCarryState() {
+int bt_mole::actionCarrySeekBoxWpt() {
+
 	TCompTransform * transformBox = this->getEntityPointer(towptbox)->get<TCompTransform>();
 	CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[towptleave];
 	TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
-	TCompTransform * transform = getEntityTransform();
 	float distToWPT = simpleDistXZ(wptbleavetransform->getPosition(), transform->getPosition());
 	if (distToWPT > 2.0f) {
-		//MOVE
-		ChangePose(pose_box_route);
+		// Move Mole
+		moveFront(speed);
+		// Move box
 		VEC3 front = transform->getFront();
-		VEC3 pos = transform->getPosition();
-		pos.x += front.x*mole_speed*getDeltaTime();
-		pos.z += front.z*mole_speed*getDeltaTime();
-		transform->setPosition(pos);
 		VEC3 posBox = transformBox->getPosition();
-		posBox.x += front.x*mole_speed*getDeltaTime();
-		posBox.z += front.z*mole_speed*getDeltaTime();
+		posBox.x += front.x*speed*getDeltaTime();
+		posBox.z += front.z*speed*getDeltaTime();
 		transformBox->setPosition(posBox);
+		return STAY;
 	}
 	else {
-		ChangePose(pose_idle_route);
-		ChangeState("ungrab");
+		ChangePose(pose_box_route);
+		return OK;
 	}
 }
 
-void ai_mole::UnGrabState() {
+int bt_mole::actionUngrabBox() {
 	if (towptbox > -1) {
 		CEntity * enBox = SBB::readHandlesVector("wptsBoxes")[towptbox];
 		CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[towptleave];
@@ -216,31 +269,34 @@ void ai_mole::UnGrabState() {
 		enBoxT->setPosition(wptbleavetransform->getPosition());
 		VEC3 posbox = enBoxT->getPosition();
 		VEC3 posboxIni = enBoxT->getPosition();
-		TCompTransform * transform = getEntityTransform();
 
 		float angle = 0.0f;
 		//TODO PHYSX OBJECT
 		/*
 		while (!enBoxT->executeMovement(posbox)) {
-			angle += 0.1;
+			angle += 0.1f;
 			posbox.x = posboxIni.x + transform->getFront().x * cos(angle) * 3;
 			posbox.z = posboxIni.z + transform->getFront().z * sin(angle) * 3;
-		}*/
+		}
+		*/
 		SBB::postBool(nameBox->name, false);
 		carryingBox = false;
+		ChangePose(pose_idle_route);
+		return OK;
 	}
 	ChangePose(pose_idle_route);
-	ChangeState("idle");
+	return KO;
 }
 
-void ai_mole::_actionBeforePossession() {
-	/*if (towptbox > -1 && carryingBox) {
+void bt_mole::_actionBeforePossession() {
+
+	if (towptbox > -1 && carryingBox) {
 		vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
 		CEntity * en = newPointerVec[towptbox];
 		TCompName * nameBox = en->get<TCompName>();
 		string key = nameBox->name;
 
-		ai_mole * mole = SBB::readMole(key);
+		bt_mole * mole = SBB::readMole(key);
 		CEntity * mole_e = mole->getMyEntity();
 		TCompName * mole_e_n = mole_e->get<TCompName>();
 
@@ -259,24 +315,24 @@ void ai_mole::_actionBeforePossession() {
 			//TODO PHYSX OBJECT
 			/*
 			while (!b_t->executeMovement(posbox)) {
-				angle += 0.1;
+				angle += 0.1f;
 				posbox.x = posboxIni.x + p_t->getFront().x * cos(angle) * 3;
 				posbox.z = posboxIni.z + p_t->getFront().z * sin(angle) * 3;
-			}
+			}*/
 			SBB::postBool(key, false);
 			carryingBox = false;
 		}
-	}*/
+	}
 }
 
-void ai_mole::actionStunt() {
-	/*if (towptbox > -1 && carryingBox) {
+void bt_mole::_actionWhenStunt() {
+	if (towptbox > -1 && carryingBox) {
 		vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
 		CEntity * en = newPointerVec[towptbox];
 		TCompName * nameBox = en->get<TCompName>();
 		string key = nameBox->name;
 		if (SBB::readBool(key)) {
-			ai_mole * mole = SBB::readMole(key);
+			bt_mole * mole = SBB::readMole(key);
 			CEntity * mole_e = mole->getMyEntity();
 			TCompName * mole_e_n = mole_e->get<TCompName>();
 
@@ -295,19 +351,19 @@ void ai_mole::actionStunt() {
 				//TODO PHYSX OBJECT
 				/*
 				while (!b_t->executeMovement(posbox)) {
-					angle += 0.1;
+					angle += 0.1f;
 					posbox.x = posboxIni.x + p_t->getFront().x * cos(angle) * 3;
 					posbox.z = posboxIni.z + p_t->getFront().z * sin(angle) * 3;
 				}
-				
+				*/
 				SBB::postBool(key, false);
 				carryingBox = false;
 			}
 		}
-	}*/
+	}
 }
 
-bool ai_mole::isBoxAtLeavePoint(VEC3 posBox) {
+bool bt_mole::isBoxAtLeavePoint(VEC3 posBox) {
 	if (SBB::readHandlesVector("wptsBoxLeavePoint").size() > 0) {
 		for (int i = 0; i < SBB::readHandlesVector("wptsBoxLeavePoint").size(); i++) {
 			CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[i];
@@ -322,8 +378,30 @@ bool ai_mole::isBoxAtLeavePoint(VEC3 posBox) {
 	return false;
 }
 
+bool bt_mole::aimToTarget(VEC3 target) {
+
+	float delta_yaw = transform->getDeltaYawToAimTo(target);
+
+	if (abs(delta_yaw) > 0.001f) {
+		float yaw, pitch;
+		transform->getAngles(&yaw, &pitch);
+		transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+void bt_mole::moveFront(float movement_speed) {
+	VEC3 front = transform->getFront();
+	VEC3 position = transform->getPosition();
+	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
+	cc->AddMovement(VEC3(front.x*movement_speed*getDeltaTime(), 0.0f, front.z*movement_speed*getDeltaTime()));
+}
+
 //Cambio de malla
-void ai_mole::ChangePose(string new_pose_route) {
+void bt_mole::ChangePose(string new_pose_route) {
 
 	mesh->unregisterFromRender();
 	MKeyValue atts_mesh;
