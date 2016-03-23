@@ -42,7 +42,8 @@ public:
 	void findPath(TPos& start, TPos& end);
 	void wallDistance(TPos& pos);
 	void raycast(TPos& start, TPos& end);
-
+	const int getNumVertexSmoothPath() { return m_nsmoothPath; }
+	const float * getVertexSmoothPath() { return m_smoothPath; }
 private:
 	// the dt data
 	dtQueryFilter m_filter;

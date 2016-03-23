@@ -1,10 +1,12 @@
 #include "mcv_platform.h"
 #include <windows.h>
 #include "sbb.h"
-#include "handle\handle.h"
+#include "handle/handle.h"
 #include "logic/ai_mole.h"
 #include "logic/bt_mole.h"
+#include "recast/navmesh.h"
 
+CNavmesh SBB::nav;
 map<string, int> SBB::sbbInt;
 map<string, bool> SBB::sbbBool;
 map<string, VEC3> SBB::sbbVEC3;
@@ -14,6 +16,14 @@ map<string, vector<CHandle>> SBB::sbbHandlesVector;
 
 void SBB::init() {
 	postBool("possMode", false);
+}
+
+void SBB::postNavmesh(CNavmesh navmesh) {
+	nav = navmesh;
+}
+
+CNavmesh SBB::readNavmesh() {
+	return nav;
 }
 
 void SBB::postInt(string name, int value) {

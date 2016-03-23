@@ -55,8 +55,6 @@ DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 static CHandle player;
 static CHandle target;
 CCamera * camera;
-CNavmesh nav;
-//CNavmeshQuery nav_query(&nav);
 
 // The global dict of all msgs
 MMsgSubscriptions msg_subscriptions;
@@ -168,10 +166,7 @@ bool CEntitiesModule::start() {
 
 	// GENERATE NAVMESH
 	VHandles collisionables = ep.getCollisionables();
-
-	//getHandleManager<TCompPhysics>()->
-
-	//VHandles collisionables = tags_manager.getAllHandlesWithComponent("rigidbody");
+	CNavmesh nav;
 	nav.m_input.clearInput();
 	for (CHandle han : collisionables) {
 		CEntity * e = han;
@@ -188,6 +183,7 @@ bool CEntitiesModule::start() {
 	}
 	nav.m_input.computeBoundaries();
 	nav.build();
+	SBB::postNavmesh(nav);
 
 	TTagID tagIDplayer = getID("player");
 	TTagID tagIDbox = getID("box");
