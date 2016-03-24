@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "comp_transform.h"
 #include "entity_tags.h"
+#include "comp_name.h"
 
 #include "app_modules\io\io.h"
 
@@ -31,13 +32,25 @@ void TCompCharacterController::updateFriction() {
 	PROFILE_FUNCTION("update friction");
 	float dt = getDeltaTime();
 	if(mSpeed.x > 0) mSpeed.x -= mSpeed.x*mFriction*dt;
-	else mSpeed.x = 0;
-	if(mSpeed.z) mSpeed.z -= mSpeed.z*mFriction*dt;
-	else mSpeed.z = 0;
+	else if(mSpeed.x < 0) mSpeed.x += mSpeed.x*mFriction*dt;
+	if(mSpeed.z > 0) mSpeed.z -= mSpeed.z*mFriction*dt;
+	else if (mSpeed.z < 0) mSpeed.z += mSpeed.z*mFriction*dt;
+
+	float abs_x = abs(mSpeed.x);
+	float abs_z = abs(mSpeed.z);
+
+	if (abs_x < eOffsetSpeed)
+		mSpeed.x = 0;
+
+	if (abs_z < eOffsetSpeed)
+		mSpeed.z = 0;
+	
 }
 
 void TCompCharacterController::ApplyPendingMoves() {
-	PROFILE_FUNCTION("apply pending moves");
+	std::string toprint = "apply pending moves ";
+	toprint = toprint + name;
+	PROFILE_FUNCTION(name.c_str());
 	float dt = getDeltaTime();
 	mToMove += mSpeed;
 	if (mToMove != VEC3(0.0f, 0.0f, 0.0f)) {
@@ -83,6 +96,9 @@ void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 	mAffectGravity = true;
 	CEntity *e = CHandle(this).getOwner();
 	if (e) {	//update position from CC to match the render transform
+		TCompName  *nameComp = e->get<TCompName>();
+		if(nameComp)
+			name = std::string(nameComp->name);
 		TCompTransform *mtx = e->get<TCompTransform>();
 		PxExtendedVec3 p = Vec3ToPxExVec3(mtx->getPosition());
 		p.y += mHeight + mRadius;	//add height value from capsule, center from collider at center of the shape

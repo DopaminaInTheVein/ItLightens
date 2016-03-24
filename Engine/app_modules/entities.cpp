@@ -299,7 +299,12 @@ void CEntitiesModule::render() {
 	// manager->renderAll()
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
 	tech->activate();
-	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
+
+#ifdef _DEBUG
+	//getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
+#endif
+
+	getHandleManager<TCompSkeleton>()->onAll( &TCompSkeleton::render );
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 }
 
