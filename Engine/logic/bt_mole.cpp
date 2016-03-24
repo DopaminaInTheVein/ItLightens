@@ -1,6 +1,7 @@
 #include "mcv_platform.h"
 #include "bt_mole.h"
 #include "components\comp_charactercontroller.h"
+#include "components\comp_physics.h"
 #include "recast\navmesh.h"
 #include "recast\navmesh_query.h"
 #include "recast\DebugUtils\Include\DebugDraw.h"
@@ -197,9 +198,11 @@ int bt_mole::actionGrabBox() {
 	if (towptbox > -1) {
 		CEntity* box = SBB::readHandlesVector("wptsBoxes")[towptbox];
 		TCompTransform* box_t = box->get<TCompTransform>();
+		TCompPhysics* box_p = box->get<TCompPhysics>();
 		VEC3 posbox = transform->getPosition();
-		posbox.y += 2;
-		box_t->setPosition(posbox);
+		posbox.y += 4;
+		box_p->setKinematic(true);
+		box_p->setPosition(posbox, box_t->getRotation());
 		carryingBox = true;
 		if (SBB::readHandlesVector("wptsBoxLeavePoint").size() > 0) {
 			VEC3 initial = transform->getPosition(), destiny;
@@ -239,7 +242,8 @@ int bt_mole::actionFollowNextBoxLeavepointWpt() {
 	if (towptleave > -1) {
 		CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[towptleave];
 		TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
-		TCompTransform * transformBox = this->getEntityPointer(towptbox)->get<TCompTransform>();
+		CEntity * box = this->getEntityPointer(towptbox);
+		TCompTransform * transformBox = box->get<TCompTransform>();
 		VEC3 leavepos = wptbleavetransform->getPosition();
 		while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
 			++currPathWpt;
@@ -256,11 +260,10 @@ int bt_mole::actionFollowNextBoxLeavepointWpt() {
 			float distToWPT = squaredDistXZ(leavepos, transform->getPosition());
 			if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 1.0f) {
 				moveFront(speed);
-				VEC3 front = transform->getFront();
-				VEC3 posBox = transformBox->getPosition();
-				posBox.x += front.x*speed*getDeltaTime();
-				posBox.z += front.z*speed*getDeltaTime();
-				transformBox->setPosition(posBox);
+				TCompPhysics *enBoxP = box->get<TCompPhysics>();
+				VEC3 posbox = transform->getPosition();
+				posbox.y += 4;
+				enBoxP->setPosition(posbox, transformBox->getRotation());
 				return STAY;
 			}
 			else {
@@ -278,11 +281,16 @@ int bt_mole::actionUngrabBox() {
 		TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
 		TCompTransform * enBoxT = enBox->get<TCompTransform>();
 		TCompName * nameBox = enBox->get<TCompName>();
-		enBoxT->setPosition(wptbleavetransform->getPosition());
-		VEC3 posbox = enBoxT->getPosition();
-		VEC3 posboxIni = enBoxT->getPosition();
+		VEC3 posLeave = wptbleavetransform->getPosition();
+		posLeave.y += 2;
+		TCompPhysics *enBoxP = enBox->get<TCompPhysics>();
+		enBoxP->setKinematic(false);
+		enBoxP->setPosition(posLeave, enBoxT->getRotation());
 
-		float angle = 0.0f;
+		//VEC3 posbox = enBoxT->getPosition();
+		//VEC3 posboxIni = enBoxT->getPosition();
+
+		//float angle = 0.0f;
 		//TODO PHYSX OBJECT
 		/*
 		while (!enBoxT->executeMovement(posbox)) {
