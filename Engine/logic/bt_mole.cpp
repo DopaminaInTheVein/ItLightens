@@ -14,11 +14,11 @@ void bt_mole::Init()
 	addChild("mole", "movebox", SEQUENCE, (btcondition)&bt_mole::checkBoxes, NULL);
 	addChild("movebox", "followbox", ACTION, NULL, (btaction)&bt_mole::actionFollowBoxWpt);
 	addChild("movebox", "grabbox", ACTION, NULL, (btaction)&bt_mole::actionGrabBox);
-	addChild("movebox", "carryboxfollowwpt", ACTION, NULL, (btaction)&bt_mole::actionFollowNextBoxWpt);
+	addChild("movebox", "carryboxfollowwpt", ACTION, NULL, (btaction)&bt_mole::actionFollowNextBoxLeavepointWpt);
 	addChild("movebox", "ungrabbox", ACTION, NULL, (btaction)&bt_mole::actionUngrabBox);
 	addChild("mole", "patrol", SEQUENCE, NULL, NULL);
-	addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_mole::actionNextWpt);
-	addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_mole::actionSeekWpt);
+	addChild("patrol", "lookForWpt", ACTION, NULL, (btaction)&bt_mole::actionLookForWpt);
+	addChild("patrol", "followPathToWpt", ACTION, NULL, (btaction)&bt_mole::actionFollowPathToWpt);
 
 	towptbox = -1;
 	towptleave = -1;
@@ -65,31 +65,49 @@ bool bt_mole::load(MKeyValue& atts) {
 }
 
 // actions
-int bt_mole::actionNextWpt() {
+int bt_mole::actionLookForWpt() {
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
-	bool aimed = aimToTarget(target);
-
-	if (aimed) {
-		ChangePose(pose_run_route);
-		return OK;
+	VEC3 initial = transform->getPosition();
+	CNavmesh nav = SBB::readNavmesh();
+	CNavmeshQuery query(&nav);
+	query.updatePosIni(initial);
+	query.updatePosEnd(target);
+	query.findPath(query.p1, query.p2);
+	const float * path = query.getVertexSmoothPath();
+	pathWpts.clear();
+	totalPathWpt = query.getNumVertexSmoothPath();
+	if (totalPathWpt > 0) {
+		for (int i = 0; i < totalPathWpt * 3; i = i + 3) {
+			pathWpts.push_back(VEC3(path[i], path[i + 1], path[i + 2]));
+		}
 	}
-	return STAY;
+	currPathWpt = 0;
+	return OK;
 }
 
-int bt_mole::actionSeekWpt() {
-	float distance = squaredDistXZ(fixedWpts[curwpt], transform->getPosition());
-
-	if (abs(distance) > 1.0f) {
-		moveFront(speed);
+int bt_mole::actionFollowPathToWpt() {
+	VEC3 target = fixedWpts[curwpt];
+	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
+		++currPathWpt;
+	}
+	if (currPathWpt < totalPathWpt) {
+		target = pathWpts[currPathWpt];
+	}
+	if (!transform->isHalfConeVision(target, deg2rad(5.0f))) {
+		aimToTarget(target);
 		return STAY;
 	}
 	else {
-		transform->setPosition(fixedWpts[curwpt]);
-		float distance_to_next_wpt = squaredDist(transform->getPosition(), fixedWpts[(curwpt + 1) % fixedWpts.size()]);
-		curwpt = (curwpt + 1) % fixedWpts.size();
-
-		return OK;
+		float distToWPT = squaredDistXZ(target, transform->getPosition());
+		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
+			moveFront(speed);
+			return STAY;
+		}
+		else {
+			curwpt = (curwpt + 1) % fixedWpts.size();
+			return OK;
+		}
 	}
 }
 
@@ -130,13 +148,14 @@ bool bt_mole::checkBoxes() {
 			query.findPath(query.p1, query.p2);
 			const float * path = query.getVertexSmoothPath();
 			totalPathWpt = query.getNumVertexSmoothPath();
+			pathWpts.clear();
 			if (totalPathWpt > 0) {
 				for (int i = 0; i < totalPathWpt * 3; i = i + 3) {
 					pathWpts.push_back(VEC3(path[i], path[i + 1], path[i + 2]));
 				}
 			}
 			currPathWpt = 0;
-			ChangePose(pose_idle_route);
+			ChangePose(pose_run_route);
 			return true;
 		}
 	}
@@ -151,6 +170,8 @@ int bt_mole::actionFollowBoxWpt()
 		VEC3 boxpos = transformBox->getPosition();
 		while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
 			++currPathWpt;
+		}
+		if (currPathWpt < totalPathWpt) {
 			boxpos = pathWpts[currPathWpt];
 		}
 		if (!transform->isHalfConeVision(boxpos, deg2rad(5.0f))) {
@@ -160,7 +181,6 @@ int bt_mole::actionFollowBoxWpt()
 		else {
 			float distToWPT = squaredDistXZ(boxpos, transform->getPosition());
 			if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
-				ChangePose(pose_run_route);
 				moveFront(speed);
 				return STAY;
 			}
@@ -181,7 +201,6 @@ int bt_mole::actionGrabBox() {
 		posbox.y += 2;
 		box_t->setPosition(posbox);
 		carryingBox = true;
-		ChangePose(pose_idle_route);
 		if (SBB::readHandlesVector("wptsBoxLeavePoint").size() > 0) {
 			VEC3 initial = transform->getPosition(), destiny;
 			float distMax = D3D10_FLOAT32_MAX;
@@ -204,19 +223,19 @@ int bt_mole::actionGrabBox() {
 			query.updatePosEnd(destiny);
 			query.findPath(query.p1, query.p2);
 			const float * path = query.getVertexSmoothPath();
+			pathWpts.clear();
 			for (int i = 0; i < query.getNumVertexSmoothPath() * 3; i = i + 3) {
 				pathWpts.push_back(VEC3(path[i], path[i + 1], path[i + 2]));
 			}
 			currPathWpt = 0;
 			totalPathWpt = query.getNumVertexSmoothPath();
-			ChangePose(pose_idle_route);
 			return OK;
 		}
 	}
 	return KO;
 }
 
-int bt_mole::actionFollowNextBoxWpt() {
+int bt_mole::actionFollowNextBoxLeavepointWpt() {
 	if (towptleave > -1) {
 		CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[towptleave];
 		TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
@@ -224,17 +243,18 @@ int bt_mole::actionFollowNextBoxWpt() {
 		VEC3 leavepos = wptbleavetransform->getPosition();
 		while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
 			++currPathWpt;
+		}
+		if (currPathWpt < totalPathWpt) {
 			leavepos = pathWpts[currPathWpt];
 		}
+
 		if (!transform->isHalfConeVision(leavepos, deg2rad(1.0f))) {
-			ChangePose(pose_box_route);
 			aimToTarget(leavepos);
 			return STAY;
 		}
 		else {
 			float distToWPT = squaredDistXZ(leavepos, transform->getPosition());
 			if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 1.0f) {
-				ChangePose(pose_run_route);
 				moveFront(speed);
 				VEC3 front = transform->getFront();
 				VEC3 posBox = transformBox->getPosition();
@@ -244,7 +264,6 @@ int bt_mole::actionFollowNextBoxWpt() {
 				return STAY;
 			}
 			else {
-				ChangePose(pose_box_route);
 				return OK;
 			}
 		}
@@ -277,7 +296,6 @@ int bt_mole::actionUngrabBox() {
 		ChangePose(pose_idle_route);
 		return OK;
 	}
-	ChangePose(pose_idle_route);
 	return KO;
 }
 

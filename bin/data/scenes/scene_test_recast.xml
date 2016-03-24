@@ -31,22 +31,41 @@
     <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
     <rigidbody type_collision="static"/>
   </entity>
-  
+
   <entity>
-    <name name="pared_2" />
+    <name name="pared_1" />
     <transform pos="-1.53539 2 3.98801" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
     <render_static_mesh name="static_meshes/pared_2.static_mesh" />
     <rigidbody type_collision="static" />
   </entity>
   <entity>
-    <name name="pared_2" />
+    <name name="pared_1" />
     <transform pos="-4.77425 2 3.98801" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
     <render_static_mesh name="static_meshes/pared_2.static_mesh" />
     <rigidbody type_collision="static" />
   </entity>
   <entity>
-    <name name="pared_2" />
+    <name name="pared_1" />
     <transform pos="-8.06951 2 3.98801" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_2.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+
+  <entity>
+    <name name="pared_2" />
+    <transform pos="-1.53539 2 4.48801" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_2.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_2" />
+    <transform pos="-4.77425 2 4.48801" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_2.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_2" />
+    <transform pos="-8.06951 2 4.48801" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
     <render_static_mesh name="static_meshes/pared_2.static_mesh" />
     <rigidbody type_collision="static" />
   </entity>

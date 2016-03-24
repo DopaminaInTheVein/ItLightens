@@ -78,10 +78,10 @@ public:
 	//actions
 	int actionFollowBoxWpt();
 	int actionGrabBox();
-	int actionFollowNextBoxWpt();
+	int actionFollowNextBoxLeavepointWpt();
 	int actionUngrabBox();
-	int actionSeekWpt();
-	int actionNextWpt();
+	int actionLookForWpt();
+	int actionFollowPathToWpt();
 
 	bool load(MKeyValue& atts);
 

@@ -24,10 +24,10 @@ void CNavmesh::build() {
 	config.cs = 0.05;
 	config.ch = 0.05;
 	config.walkableHeight = 2.0;
-	config.walkableRadius = 0;
+	config.walkableRadius = 1;
 	config.walkableClimb = 0.1;
 	config.walkableSlopeAngle = 45.0f;
-	config.minRegionArea = 1;
+	config.minRegionArea = 4;
 	config.mergeRegionArea = 1;
 	config.maxEdgeLen = 10;
 	config.maxSimplificationError = 1.0f;
