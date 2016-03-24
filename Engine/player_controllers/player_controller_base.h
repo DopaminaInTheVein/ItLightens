@@ -32,12 +32,11 @@ protected:
 	CHandle camera;
 
 	float dt;
-	const float player_max_speed = 5.f;
-	const float gravity = 10.0f;
+	float player_max_speed = 5.f;
 	float player_curr_speed = 0.0f;
 	float jspeed = 0.0f;
 	float player_rotation_speed = 5.f;
-	float jimpulse = 5.0f;
+	float jimpulse = 7.0f;
 	bool onGround = true;
 	bool moving = false;
 	const int left_stick_sensibility = 5000;

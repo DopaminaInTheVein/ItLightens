@@ -5,14 +5,24 @@
 #include "handle/handle.h"
 #include <vector>
 
-class CEntityParser : public CXMLParser {
-	CHandle curr_entity;
-	std::vector< CHandle > collisionables;
+class CPrefabCompiler;
 
+class CEntityParser : public CXMLParser {
+  CHandle curr_entity;
+  CHandle root_entity;
+  CPrefabCompiler* curr_prefab_compiler;
+  std::vector< CHandle > collisionables;
 public:
-	void onStartElement(const std::string &elem, MKeyValue &atts) override;
-	void onEndElement(const std::string &elem) override;
-	std::vector< CHandle > getCollisionables();
+  CEntityParser() : curr_prefab_compiler( nullptr ) { }
+  CHandle getRootEntity() { return root_entity; }
+  void onStartElement(const std::string &elem, MKeyValue &atts) override;
+  void onEndElement(const std::string &elem) override;
+  void setPrefabCompiler(CPrefabCompiler* new_prefab_compiler) {
+    curr_prefab_compiler = new_prefab_compiler;
+  }
 };
 
+CHandle createPrefab(const std::string& prefab);
+
 #endif
+

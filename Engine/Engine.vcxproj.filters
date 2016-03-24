@@ -322,6 +322,12 @@
     <ClCompile Include="recast\navmesh.cpp">
       <Filter>recast</Filter>
     </ClCompile>
+    <ClCompile Include="skeleton\skeleton.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\comp_skeleton.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -673,6 +679,12 @@
     <ClInclude Include="recast\Detour\Include\DetourStatus.h">
       <Filter>recast\Detour\Include</Filter>
     </ClInclude>
+    <ClInclude Include="skeleton\comp_skeleton.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\skeleton.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -794,6 +806,9 @@
     </Filter>
     <Filter Include="recast\Recast\Source">
       <UniqueIdentifier>{ac634405-f7d5-4af0-af9a-2fb16b5c7da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="skeleton">
+      <UniqueIdentifier>{b91640c3-0058-40ee-b94f-108a7884bd1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

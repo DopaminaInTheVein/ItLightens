@@ -9,36 +9,57 @@
 
 void TCompCharacterController::ApplyGravity(float dt)
 {
+	PROFILE_FUNCTION("apply gravity");
 	if (mAffectGravity) {
-		if (!OnGround() || mSpeedYAxis != 0.0f) {
-			dt = getDeltaTime();
-			mSpeedYAxis += -9.8f*dt;	//update y-axis speed with gravity
-			mFlagsCollisions = pActor->move(PxVec3(0, mSpeedYAxis, 0)*dt, 0.0f, dt, PxControllerFilters());
-			if (OnGround())
-				mSpeedYAxis = 0.0f;
+		if (!OnGround()){
+				dt = getDeltaTime();
+				mSpeed.y += -12.0f*dt;	//update y-axis speed with gravity
 		}
 	}
 }
 
 void TCompCharacterController::AddImpulse(const VEC3& impulse) {
-	mSpeedYAxis += impulse.y;
-	if (mSpeedYAxis > mMaxYimpulse)		//check if acum impulse passed max impulse
-		mSpeedYAxis = mMaxYimpulse;		
-	mToMove.x += impulse.x;
-	mToMove.z += impulse.z;
+	PROFILE_FUNCTION("add impulse");
+	mSpeed.y = impulse.y;
+	if (mSpeed.y > mMaxYimpulse)		//check if acum impulse passed max impulse
+		mSpeed.y = mMaxYimpulse;
+	mSpeed.x += impulse.x;
+	mSpeed.z += impulse.z;
+}
+
+void TCompCharacterController::updateFriction() {
+	PROFILE_FUNCTION("update friction");
+	float dt = getDeltaTime();
+	if(mSpeed.x > 0) mSpeed.x -= mSpeed.x*mFriction*dt;
+	else mSpeed.x = 0;
+	if(mSpeed.z) mSpeed.z -= mSpeed.z*mFriction*dt;
+	else mSpeed.z = 0;
 }
 
 void TCompCharacterController::ApplyPendingMoves() {
+	PROFILE_FUNCTION("apply pending moves");
+	float dt = getDeltaTime();
+	mToMove += mSpeed;
 	if (mToMove != VEC3(0.0f, 0.0f, 0.0f)) {
-		float dt = getDeltaTime();
-		if(OnGround())mFlagsCollisions = pActor->move(PxVec3(mToMove.x, mToMove.y, mToMove.z), 0.0f, dt, PxControllerFilters());
-		else mFlagsCollisions = pActor->move(PxVec3(mToMove.x, mToMove.y, mToMove.z)/2, 0.0f, dt, PxControllerFilters());
+		PxVec3 moved = PxVec3(mToMove.x, mToMove.y, mToMove.z)*dt;
+		if(OnGround())mFlagsCollisions = pActor->move(moved, 0, dt, mFilter);
+		else mFlagsCollisions = pActor->move(moved/2, 0, dt, mFilter);
 		mToMove = VEC3(0.0f,0.0f,0.0f);
 	}
 }
 
-void TCompCharacterController::AddMovement(const VEC3& direction, float speed) {
+void TCompCharacterController::recalcOnGround()
+{
+	PROFILE_FUNCTION("on ground");
+	if (mFlagsCollisions & PxControllerFlag::eCOLLISION_DOWN) {
+		mOnGround = true;
+	}
+	else
+		mOnGround = false;
+}
 
+void TCompCharacterController::AddMovement(const VEC3& direction, float speed) {
+	PROFILE_FUNCTION("add move");
 	mToMove += direction*speed;
 }
 
@@ -49,12 +70,10 @@ bool TCompCharacterController::load(MKeyValue & atts)
 	return true;
 }
 
-bool TCompCharacterController::OnGround() {
-
-	if (mFlagsCollisions & PxControllerFlag::eCOLLISION_DOWN)
-		return true;
-
-	return false;
+VEC3 TCompCharacterController::getPosition()
+{
+	PROFILE_FUNCTION("get position");
+	return PhysxConversion::PxExVec3ToVec3(pActor->getPosition());
 }
 
 void TCompCharacterController::onCreate(const TMsgEntityCreated &)
@@ -75,6 +94,7 @@ void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 
 void TCompCharacterController::updateTags(PxFilterData filter)
 {
+	//PROFILE_FUNCTION("update tags");
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("target")) //player
@@ -96,8 +116,12 @@ void TCompCharacterController::updateTags(PxFilterData filter)
 
 void TCompCharacterController::update(float dt)
 {
+	//PROFILE_FUNCTION("update");
 	if (mActive) {
+		recalcOnGround();
+		
 		ApplyGravity(dt);
+		updateFriction();
 		ApplyPendingMoves();
 		PxExtendedVec3 curr_pos = pActor->getFootPosition();
 		//PxVec3 up_v = pActor->getUpDirection();	//get rotation

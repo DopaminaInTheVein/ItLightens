@@ -193,7 +193,7 @@ bool player_controller_speedy::dashFront()
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 player_front = player_transform->getFront();
-	cc->AddMovement(VEC3(player_front.x*dash_speed*getDeltaTime(),0.0f, player_front.z*dash_speed*getDeltaTime()));
+	cc->AddMovement(VEC3(player_front.x*dash_speed,0.0f, player_front.z*dash_speed));
 
 	/*if (drop_water_ready) {
 		// CREATE WATER

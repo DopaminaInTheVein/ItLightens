@@ -66,12 +66,13 @@ void player_controller::Init() {
 }
 
 bool player_controller::isDamaged() {
+	PROFILE_FUNCTION("is damaged");
 	return !____TIMER__END_(timerDamaged);
 }
 
 void player_controller::rechargeEnergy()
 {
-	SetMyEntity();
+	PROFILE_FUNCTION("recharge_eergy");
 	TCompLife *life = myEntity->get<TCompLife>();
 	life->setMaxLife(max_life);
 	TCompCharacterController *p = myEntity->get<TCompCharacterController>();
@@ -80,9 +81,10 @@ void player_controller::rechargeEnergy()
 	ChangePose(pose_idle);
 }
 
+
 void player_controller::ChangePose(CHandle new_pos_h)
 {
-
+	PROFILE_FUNCTION("change pose player");
 	SetMyEntity();
 	TCompLife *life = myEntity->get<TCompLife>();
 	if (life->currentlife < evolution_limit) {
@@ -96,18 +98,15 @@ void player_controller::ChangePose(CHandle new_pos_h)
 
 	actual_render->unregisterFromRender();
 	actual_render = new_pose;
-	//CEntity *me = myParent;
-	//me->del<TCompRenderStaticMesh>();
-	//me->add(new_pos_h);
 	actual_render->registerToRender();
 }
 
 void player_controller::myUpdate() {
-
+	PROFILE_FUNCTION("MY_update");
 	SetMyEntity();
 	TCompTransform *m = myEntity->get<TCompTransform>();
 	
-	
+	/*
 	//TESTING RAYCAST
 	int hits = 0;
 	SetCharacterController();
@@ -122,7 +121,7 @@ void player_controller::myUpdate() {
 		Debug->LogRaw("player hits = %d to guard\n", hits);
 	}
 	//END TESTING RAYCAST
-
+	*/
 
 	____TIMER__UPDATE_(timerDamaged);
 	SetMyEntity();
@@ -135,6 +134,7 @@ void player_controller::myUpdate() {
 
 void player_controller::DoubleJump()
 {
+	PROFILE_FUNCTION("double jump");
 	UpdateDirection();
 	UpdateMovDirection();
 
@@ -146,6 +146,7 @@ void player_controller::DoubleJump()
 }
 
 void player_controller::DoubleFalling() {
+	PROFILE_FUNCTION("double falling");
 	UpdateDirection();
 	UpdateMovDirection();
 	SetCharacterController();
@@ -156,6 +157,7 @@ void player_controller::DoubleFalling() {
 
 void player_controller::Jumping()
 {
+	PROFILE_FUNCTION("jumping");
 	UpdateDirection();
 	UpdateMovDirection();
 	SetCharacterController();
@@ -176,6 +178,7 @@ void player_controller::Jumping()
 
 void player_controller::Falling()
 {
+	PROFILE_FUNCTION("falling");
 	UpdateDirection();
 	UpdateMovDirection();
 	SetCharacterController();
@@ -194,6 +197,7 @@ void player_controller::Falling()
 }
 
 void player_controller::AttractToMinus() {
+	PROFILE_FUNCTION("attract to minus");
 	CEntity * entPoint = this->getMinusPointHandle(topolarizedminus);
 	tominus = true;
 	toplus = false;
@@ -201,6 +205,7 @@ void player_controller::AttractToMinus() {
 	ChangeState("idle");
 }
 void player_controller::AttractToPlus() {
+	PROFILE_FUNCTION("attract to plus");
 	CEntity * entPoint = this->getPlusPointHandle(topolarizedplus);
 	tominus = false;
 	toplus = true;
@@ -209,6 +214,7 @@ void player_controller::AttractToPlus() {
 }
 
 bool player_controller::nearMinus() {
+	PROFILE_FUNCTION("near minus");
 	if (topolarizedminus != -1) {
 		return true;
 	}
@@ -233,6 +239,7 @@ bool player_controller::nearMinus() {
 	}
 }
 bool player_controller::nearPlus() {
+	PROFILE_FUNCTION("near plus");
 	if (topolarizedplus != -1) {
 		return true;
 	}
@@ -258,6 +265,7 @@ bool player_controller::nearPlus() {
 }
 
 void player_controller::AttractMove(CEntity * entPoint) {
+	PROFILE_FUNCTION("attract move");
 	if (entPoint == nullptr) {
 		return;
 	}
@@ -294,6 +302,7 @@ void player_controller::AttractMove(CEntity * entPoint) {
 
 void player_controller::UpdateMoves()
 {
+	PROFILE_FUNCTION("update moves");
 	SetMyEntity();
 	SetCharacterController();
 
@@ -337,7 +346,7 @@ void player_controller::UpdateMoves()
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
 
-	if (cc->GetYAxisSpeed() == 0.0f) {
+	if (cc->OnGround()) {
 		ChangePose(pose_run);
 	}
 	else {
@@ -348,11 +357,12 @@ void player_controller::UpdateMoves()
 
 
 	
-	cc->AddMovement(direction*getDeltaTime() , player_curr_speed);
+	cc->AddMovement(direction , player_curr_speed);
 }
 
 void player_controller::UpdateInputActions()
 {
+	PROFILE_FUNCTION("update input actions");
 	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed()) && nearMinus()) {
 		energyDecreasal(getDeltaTime()*0.05f);
 		ChangeState("tominus");
@@ -401,6 +411,7 @@ void player_controller::UpdateInputActions()
 
 void player_controller::SetCharacterController()
 {
+	PROFILE_FUNCTION("set cc");
 	SetMyEntity();
 	cc = myEntity->get<TCompCharacterController>();
 }
@@ -408,6 +419,7 @@ void player_controller::SetCharacterController()
 float CPlayerBase::possessionCooldown;
 //Possession
 void player_controller::UpdatePossession() {
+	PROFILE_FUNCTION("update poss");
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
 		if (io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) {
@@ -440,6 +452,7 @@ void player_controller::UpdatePossession() {
 
 // Recalcula el mejor candidato para poseer
 void player_controller::recalcPossassable() {
+	PROFILE_FUNCTION("recalc possessable");
 	float minDeltaYaw = FLT_MAX;
 	float minDistance = FLT_MAX;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
@@ -487,6 +500,7 @@ void player_controller::recalcPossassable() {
 
 // Calcula el mejor candidato para stunear
 bool player_controller::nearStunable() {
+	PROFILE_FUNCTION("near stunnable");
 	float minDeltaYaw = FLT_MAX;
 	float minDistance = FLT_MAX;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
@@ -530,6 +544,7 @@ bool player_controller::nearStunable() {
 }
 
 void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
+	PROFILE_FUNCTION("on leave poss");
 	// Handles y entities necesarias
 	CHandle  hMe = CHandle(this).getOwner();
 	CEntity* eMe = hMe;
@@ -563,10 +578,12 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 
 void player_controller::update_msgs()
 {
+	PROFILE_FUNCTION("updat mesgs");
 	ui.addTextInstructions("Press 'l-shift' to possess someone\n");
 }
 
 void player_controller::onDamage(const TMsgDamage& msg) {
+	PROFILE_FUNCTION("onDamage");
 	switch (msg.dmgType) {
 	case LASER:
 		____TIMER_RESET_(timerDamaged);
@@ -579,6 +596,7 @@ void player_controller::onDamage(const TMsgDamage& msg) {
 
 void player_controller::onWirePass(const TMsgWirePass & msg)
 {
+	PROFILE_FUNCTION("onWirepass");
 	ui.addTextInstructions("\n Press 'E' to pass by the wire\n");
 
 	if (io->keys['E'].becomesPressed()) {
@@ -590,6 +608,7 @@ void player_controller::onWirePass(const TMsgWirePass & msg)
 
 void player_controller::onCanRec(const TMsgCanRec & msg)
 {
+	PROFILE_FUNCTION("onCanrec");
 	ui.addTextInstructions("\n Press 'E' to recharge energy\n");
 
 	if (io->keys['E'].becomesPressed()) {

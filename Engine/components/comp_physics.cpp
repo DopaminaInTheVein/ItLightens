@@ -253,6 +253,34 @@ bool TCompPhysics::addRigidbodyScene()
 	fatal("collision type unsupported!!\n");
 	return false;
 }
+
+bool TCompPhysics::isKinematic()
+{
+	PxRigidDynamic *rd = pActor->isRigidDynamic();
+
+	if (rd) {
+		return rd->getRigidDynamicFlags().isSet(PxRigidDynamicFlag::eKINEMATIC);
+	}
+	return true;
+}
+
+bool TCompPhysics::setKinematic(bool isKinematic)
+{
+	PxRigidDynamic *rd = pActor->isRigidDynamic();
+
+	if (rd) {
+		rd->setRigidBodyFlag(PxRigidDynamicFlag::eKINEMATIC, isKinematic);
+		return true;
+	}
+	return false;
+}
+
+void TCompPhysics::setPosition(VEC3 position, CQuaternion rotation)
+{
+	PxTransform tr = PxTransform(PhysxConversion::Vec3ToPxVec3(position), PhysxConversion::CQuaternionToPxQuat(rotation));
+	pActor->isRigidActor()->setGlobalPose(tr);
+}
+
 //----------------------------------------------------------
 
 

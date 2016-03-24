@@ -29,6 +29,7 @@ CPlayerBase::CPlayerBase() {
 }
 
 bool CPlayerBase::checkDead() {
+	PROFILE_FUNCTION("checkdead");
 	SetMyEntity();
 	TCompLife * player_life = myEntity->get<TCompLife>();
 	if (player_life->currentlife <= 0) {
@@ -49,6 +50,7 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 }
 
 void CPlayerBase::update(float elapsed) {
+	PROFILE_FUNCTION("update base");
 	if (controlEnabled) {
 		if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
 			CApp& app = CApp::get();
@@ -78,6 +80,7 @@ void CPlayerBase::update(float elapsed) {
 
 void CPlayerBase::UpdateMoves()
 {
+	PROFILE_FUNCTION("update moves base");
 	SetMyEntity();
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
@@ -121,7 +124,7 @@ void CPlayerBase::UpdateMoves()
 	}
 
 	SetCharacterController();
-	cc->AddMovement(direction*getDeltaTime(), player_curr_speed);
+	cc->AddMovement(direction, player_curr_speed);
 	UpdateMovingWithOther();
 }
 #pragma endregion
@@ -133,6 +136,7 @@ void CPlayerBase::UpdateMoves()
 #pragma region Inputs
 
 bool CPlayerBase::UpdateMovDirection() {
+	PROFILE_FUNCTION("update direction base");
 	moving = false;
 
 	bool horizontal = false;
@@ -174,6 +178,7 @@ bool CPlayerBase::UpdateMovDirection() {
 }
 
 void CPlayerBase::UpdateJumpState() {
+	PROFILE_FUNCTION("update jump state base");
 	if (io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed()) {
 		Jump();
 	}
@@ -205,6 +210,7 @@ void CPlayerBase::UpdateMovingWithOther() {
 //##########################################################################
 #pragma region Player States
 void CPlayerBase::energyDecreasal(float howmuch) {
+	PROFILE_FUNCTION("energy dec");
 	SetMyEntity();
 	TMsgDamage msg;
 	msg.points = howmuch;
@@ -214,6 +220,7 @@ void CPlayerBase::energyDecreasal(float howmuch) {
 
 void CPlayerBase::Idle()
 {
+	PROFILE_FUNCTION("idle base");
 	if (!checkDead()) {
 		energyDecreasal(getDeltaTime()*0.05f);
 		UpdateDirection();
@@ -224,6 +231,7 @@ void CPlayerBase::Idle()
 
 void CPlayerBase::Jump()
 {
+	PROFILE_FUNCTION("jump base");
 	SetCharacterController();
 	if (cc->OnGround()) {
 		energyDecreasal(1.0f);
@@ -238,6 +246,7 @@ void CPlayerBase::Jump()
 
 void CPlayerBase::Die()
 {
+	PROFILE_FUNCTION("die base");
 	SetMyEntity();
 	SetCharacterController();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
@@ -251,6 +260,7 @@ void CPlayerBase::Die()
 
 void CPlayerBase::Win()
 {
+	PROFILE_FUNCTION("win base");
 	SetMyEntity();
 	SetCharacterController();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
@@ -265,6 +275,7 @@ void CPlayerBase::Win()
 
 void CPlayerBase::Falling()
 {
+	PROFILE_FUNCTION("falling base");
 	UpdateDirection();
 	UpdateMovDirection();
 
@@ -278,12 +289,14 @@ void CPlayerBase::Falling()
 
 void CPlayerBase::Jumping()
 {
+	PROFILE_FUNCTION("jumping base");
 	UpdateDirection();
 	UpdateMovDirection();
 }
 
 void CPlayerBase::Moving()
 {
+	PROFILE_FUNCTION("moving base");
 	energyDecreasal(getDeltaTime()*0.05f);
 	UpdateDirection();
 	UpdateJumpState();
@@ -296,11 +309,13 @@ void CPlayerBase::Moving()
 
 // Sets the entity
 void CPlayerBase::SetMyEntity() {
+	PROFILE_FUNCTION("set enitity base");
 	myEntity = myParent;
 }
 
 void CPlayerBase::renderInMenu()
 {
+	PROFILE_FUNCTION("render in menu base");
 	VEC3 direction = directionForward + directionLateral;
 	direction.Normalize();
 	direction = direction + directionJump;
@@ -316,6 +331,7 @@ void CPlayerBase::renderInMenu()
 }
 
 void CPlayerBase::orbitCameraDeath() {
+	PROFILE_FUNCTION("orbit camera dead base");
 	float angle = getDeltaTime();
 	float s = sin(angle);
 	float c = cos(angle);

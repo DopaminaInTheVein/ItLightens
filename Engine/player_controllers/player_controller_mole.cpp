@@ -12,6 +12,7 @@
 #include "ui\ui_interface.h"
 #include "logic\ai_mole.h"
 #include "components/comp_charactercontroller.h"
+#include "components\comp_physics.h"
 
 void player_controller_mole::Init() {
 
@@ -70,12 +71,13 @@ void player_controller_mole::UpdateMovingWithOther() {
 		energyDecreasal(getDeltaTime()*0.5f);
 		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 		TCompTransform* box_t = box->get<TCompTransform>();
+		TCompPhysics* box_p = box->get<TCompPhysics>();
 		SetMyEntity();
 		CEntity* p = myParent;
 		TCompTransform* p_t = p->get<TCompTransform>();
 		VEC3 posPlayer = p_t->getPosition();
-		posPlayer.y += 2;
-		box_t->setPosition(posPlayer);
+		posPlayer.y += 4;
+		box_p->setPosition(posPlayer, box_t->getRotation());
 	}
 }
 
@@ -98,12 +100,15 @@ void player_controller_mole::GrabBox() {
 	}
 	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 	TCompTransform* box_t = box->get<TCompTransform>();
+	TCompPhysics* box_p = box->get<TCompPhysics>();
 	SetMyEntity();
 	CEntity* p = myParent;
 	TCompTransform* p_t = p->get<TCompTransform>();
 	VEC3 posPlayer = p_t->getPosition();
-	posPlayer.y += 2;
-	box_t->setPosition(posPlayer);
+	posPlayer.y += 4;
+
+	box_p->setKinematic(true);
+	box_p->setPosition(posPlayer, box_t->getRotation());
 
 	energyDecreasal(5.0f);
 	boxGrabbed = true;
@@ -139,6 +144,11 @@ void player_controller_mole::LeaveBox() {
 		posbox.x = posboxIni.x + p_t->getFront().x * sin(angle) * 3;
 		posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;
 	}*/
+
+	TCompPhysics *box_p = box->get<TCompPhysics>();
+	box_p->setKinematic(false);
+	box_p->setPosition(posbox, box_t->getRotation());
+
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = false;
 	player_max_speed *= 2;

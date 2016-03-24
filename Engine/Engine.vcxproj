@@ -218,6 +218,8 @@
     <ClCompile Include="render\texture.cpp" />
     <ClCompile Include="render\vertex_declarations.cpp" />
     <ClCompile Include="resources\resources_manager.cpp" />
+    <ClCompile Include="skeleton\comp_skeleton.cpp" />
+    <ClCompile Include="skeleton\skeleton.cpp" />
     <ClCompile Include="utils\murmur3.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -336,6 +338,8 @@
     <ClInclude Include="render\vertex_declarations.h" />
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="resources\resources_manager.h" />
+    <ClInclude Include="skeleton\comp_skeleton.h" />
+    <ClInclude Include="skeleton\skeleton.h" />
     <ClInclude Include="ui\ui_interface.h" />
     <ClInclude Include="utils\data_provider.h" />
     <ClInclude Include="utils\macros\macros.h" />

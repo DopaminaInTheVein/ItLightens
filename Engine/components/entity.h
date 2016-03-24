@@ -8,8 +8,6 @@
 // --------------------------------------------
 class CEntity : public TCompBase {
 	CHandle comps[CHandle::max_types];
-
-	int typeCollision = 0;
 	
 
 public:
@@ -30,6 +28,10 @@ public:
 		auto hm = getHandleManager<TObj>();
 		return comps[hm->getType()];
 	}
+
+CHandle getByCompIndex(uint32_t idx) {
+    return comps[idx];
+ }
 
 	template< typename TObj >
 	void del() {
@@ -75,20 +77,6 @@ public:
 			range.first++;
 		}
 	}
-
-
-
-	//TO REMOVE
-
-	//Collision type
-	enum typeCollision {
-		NONE = 0,
-		SPHERE,
-		BOX
-	};
-
-	void	setCollisionType(int type) { typeCollision = type; }
-	int		getCollisionType() const { return typeCollision; }
 
 	// --------------------------------------------
 	void renderInMenu();
