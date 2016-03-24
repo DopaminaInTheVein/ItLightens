@@ -162,7 +162,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
 
 	CEntityParser ep;
-	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/scene_test_recast.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH
@@ -278,7 +278,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);
-	getHandleManager<TCompSkeleton>()->updateAll( dt );
+	getHandleManager<TCompSkeleton>()->updateAll(dt);
 	getHandleManager<bt_speedy>()->updateAll(dt);
 	getHandleManager<water_controller>()->updateAll(dt);
 
@@ -299,7 +299,7 @@ void CEntitiesModule::render() {
 	// manager->renderAll()
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
 	tech->activate();
-	getHandleManager<TCompSkeleton>()->onAll( &TCompSkeleton::render );
+	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 }
 
