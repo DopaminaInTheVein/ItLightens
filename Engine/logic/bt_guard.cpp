@@ -159,7 +159,7 @@ int bt_guard::actionAbsorb() {
 	turnTo(posPlayer);
 	if (squaredDistY(myPos, posPlayer) * 2 > dist) { //Angulo de 30 grados
 														//Si pitch muy alto me alejo
-		goForward(-SPEED_WALK * getDeltaTime());
+		goForward(-SPEED_WALK);
 	}
 	if (!playerVisible()) {
 		return OK;
@@ -358,7 +358,7 @@ bool bt_guard::canHear(VEC3 position, float intensity) {
 // -- Go To -- //
 void bt_guard::goTo(const VEC3& dest) {
 	//avanzar
-	goForward(SPEED_WALK * getDeltaTime());
+	goForward(SPEED_WALK);
 
 	//girar
 	turnTo(dest);

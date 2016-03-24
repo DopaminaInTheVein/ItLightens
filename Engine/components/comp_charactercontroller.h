@@ -12,19 +12,23 @@ class TCompCharacterController : public TCompBase, public PxUserControllerHitRep
 	float mRadius		= 0.0f;
 	float mHeight		= 0.0f;
 	float mSpeedYAxis	= 0.0f;
-	float mMaxYimpulse	= 5.0f;		//max impulse for yaxis, to block acumulating impulse forces
+	float mMaxYimpulse	= 7.0f;		//max impulse for yaxis, to block acumulating impulse forces
+	float mFriction		= 1.0f;
 	bool mActive = true;
 	bool mAffectGravity = true;
+	bool mOnGround = false;
 
-	VEC3 mToMove = VEC3(0.0f,0.0f,0.0f);
+	VEC3 mToMove		= VEC3(0.0f, 0.0f, 0.0f);
+	VEC3 mSpeed		= VEC3(0.0f, 0.0f, 0.0f);
 
 	PxController* pActor = nullptr;
 
 	PxControllerCollisionFlags mFlagsCollisions;
-
+	PxControllerFilters mFilter = PxControllerFilters();
 	void ApplyGravity(float dt);
 
 	void ApplyPendingMoves();
+	void recalcOnGround();
 
 	
 
@@ -42,9 +46,9 @@ public:
 	PxController* GetController() {
 		return pActor;
 	}
-	bool OnGround();
+	bool OnGround() const { return mOnGround; }
 	float GetYAxisSpeed() const {
-		return mSpeedYAxis;
+		return mSpeed.y;
 	}
 	float GetHeight() const{
 		return mHeight;
@@ -60,6 +64,7 @@ public:
 
 	void AddMovement(const VEC3& direction, float speed = 1.0f);
 	void AddImpulse(const VEC3 & impulse);
+	void updateFriction();
 	void SetActive(bool isActive) { mActive = isActive; }
 	void SetGravity(bool isActive) { mAffectGravity = isActive; }
 	VEC3 getPosition();

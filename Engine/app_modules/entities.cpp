@@ -259,7 +259,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);
-getHandleManager<TCompSkeleton>()->updateAll( dt );
+	getHandleManager<TCompSkeleton>()->updateAll( dt );
 	getHandleManager<bt_speedy>()->updateAll(dt);
 	getHandleManager<water_controller>()->updateAll(dt);
 

@@ -130,4 +130,8 @@ struct TMsgCanRec {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgTrigger{
+	CHandle other;
+	DECLARE_MSG_ID();
+};
 #endif

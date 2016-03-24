@@ -156,7 +156,7 @@ void ai_scientific::MoveToPos()
 	float delta_time = getDeltaTime();
 
 
-	cc->AddMovement(me_transform->getFront(), move_speed*getDeltaTime());
+	cc->AddMovement(me_transform->getFront(), move_speed);
 	VEC3 new_pos = cc->getPosition() - VEC3(0, cc->GetRadius() + cc->GetHeight(), 0);
 
 
