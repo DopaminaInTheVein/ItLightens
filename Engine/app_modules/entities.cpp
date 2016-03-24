@@ -282,7 +282,7 @@ void CEntitiesModule::render() {
 	tech->activate();
 
 #ifdef _DEBUG
-	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
+	//getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 #endif
 
 	getHandleManager<TCompSkeleton>()->onAll( &TCompSkeleton::render );
