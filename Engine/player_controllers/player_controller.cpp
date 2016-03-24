@@ -66,7 +66,7 @@ void player_controller::Init() {
 }
 
 bool player_controller::isDamaged() {
-	PROFILE_FUNCTION("is damaged");
+	PROFILE_FUNCTION("player controller: is damaged");
 	return !____TIMER__END_(timerDamaged);
 }
 
@@ -84,13 +84,15 @@ void player_controller::rechargeEnergy()
 
 void player_controller::ChangePose(CHandle new_pos_h)
 {
-	PROFILE_FUNCTION("change pose player");
+	PROFILE_FUNCTION("player controller: change pose player");
 	SetMyEntity();
 	TCompLife *life = myEntity->get<TCompLife>();
-	if (life->currentlife < evolution_limit) {
+
+	if (life->currentlife < evolution_limit && curr_evol > 0) {
 		SetCharacterController();
 		new_pos_h = pose_no_ev;
 		cc->GetController()->resize(min_height);	//update collider size to new form
+		curr_evol = 0;
 	}
 
 	TCompRenderStaticMesh *new_pose = new_pos_h;
@@ -102,7 +104,7 @@ void player_controller::ChangePose(CHandle new_pos_h)
 }
 
 void player_controller::myUpdate() {
-	PROFILE_FUNCTION("MY_update");
+	PROFILE_FUNCTION("player controller: MY_update");
 	SetMyEntity();
 	TCompTransform *m = myEntity->get<TCompTransform>();
 	
@@ -134,7 +136,7 @@ void player_controller::myUpdate() {
 
 void player_controller::DoubleJump()
 {
-	PROFILE_FUNCTION("double jump");
+	PROFILE_FUNCTION("player controller: double jump");
 	UpdateDirection();
 	UpdateMovDirection();
 
@@ -146,7 +148,7 @@ void player_controller::DoubleJump()
 }
 
 void player_controller::DoubleFalling() {
-	PROFILE_FUNCTION("double falling");
+	PROFILE_FUNCTION("player controller: double falling");
 	UpdateDirection();
 	UpdateMovDirection();
 	SetCharacterController();
@@ -157,7 +159,7 @@ void player_controller::DoubleFalling() {
 
 void player_controller::Jumping()
 {
-	PROFILE_FUNCTION("jumping");
+	PROFILE_FUNCTION("player controller: jumping");
 	UpdateDirection();
 	UpdateMovDirection();
 	SetCharacterController();
@@ -178,7 +180,7 @@ void player_controller::Jumping()
 
 void player_controller::Falling()
 {
-	PROFILE_FUNCTION("falling");
+	PROFILE_FUNCTION("player controller: falling");
 	UpdateDirection();
 	UpdateMovDirection();
 	SetCharacterController();
@@ -197,7 +199,7 @@ void player_controller::Falling()
 }
 
 void player_controller::AttractToMinus() {
-	PROFILE_FUNCTION("attract to minus");
+	PROFILE_FUNCTION("player controller: attract to minus");
 	CEntity * entPoint = this->getMinusPointHandle(topolarizedminus);
 	tominus = true;
 	toplus = false;
@@ -205,7 +207,7 @@ void player_controller::AttractToMinus() {
 	ChangeState("idle");
 }
 void player_controller::AttractToPlus() {
-	PROFILE_FUNCTION("attract to plus");
+	PROFILE_FUNCTION("player controller: attract to plus");
 	CEntity * entPoint = this->getPlusPointHandle(topolarizedplus);
 	tominus = false;
 	toplus = true;
@@ -214,7 +216,7 @@ void player_controller::AttractToPlus() {
 }
 
 bool player_controller::nearMinus() {
-	PROFILE_FUNCTION("near minus");
+	PROFILE_FUNCTION("player controller: near minus");
 	if (topolarizedminus != -1) {
 		return true;
 	}
@@ -239,7 +241,7 @@ bool player_controller::nearMinus() {
 	}
 }
 bool player_controller::nearPlus() {
-	PROFILE_FUNCTION("near plus");
+	PROFILE_FUNCTION("player controller: near plus");
 	if (topolarizedplus != -1) {
 		return true;
 	}
@@ -265,44 +267,27 @@ bool player_controller::nearPlus() {
 }
 
 void player_controller::AttractMove(CEntity * entPoint) {
-	PROFILE_FUNCTION("attract move");
+	PROFILE_FUNCTION("player controller: attract move");
 	if (entPoint == nullptr) {
 		return;
 	}
 	TCompTransform * entPointTransform = entPoint->get<TCompTransform>();
+	VEC3 point_pos = entPointTransform->getPosition();
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 direction = entPointTransform->getPosition() - player_position;
-	float drag = getDeltaTime();
-	float drag_i = (1 - drag);
+	direction.Normalize();
 
-	if (polarizedMove) polarizedCurrentSpeed = drag_i*polarizedCurrentSpeed + drag*player_max_speed;
-	else polarizedCurrentSpeed = drag_i*polarizedCurrentSpeed - drag*player_max_speed;
-
-	float multiplier = polarizedCurrentSpeed * 1.5f;
-
-	float tox = min(fabsf(direction.x)*multiplier, fabsf(player_position.x - entPointTransform->getPosition().x));
-	float toy = min(fabsf(direction.y)*multiplier, fabsf(player_position.y - entPointTransform->getPosition().y));
-	float toz = min(fabsf(direction.z)*multiplier, fabsf(player_position.z - entPointTransform->getPosition().z));
-
-	if (direction.x < 0) {
-		tox *= -1;
-	}
-	if (direction.z < 0) {
-		toz *= -1;
-	}
-	if (direction.y < 0) {
-		toy *= -1;
-	}
 
 	SetCharacterController();
-	cc->AddImpulse(VEC3(tox, toy, toz));
+	Debug->LogRaw("direction: %f, %f, %f\n", direction.x,direction.y,direction.z);
+	cc->AddMovement(direction, player_max_speed);
 }
 
 void player_controller::UpdateMoves()
 {
-	PROFILE_FUNCTION("update moves");
+	PROFILE_FUNCTION("player controller: update moves");
 	SetMyEntity();
 	SetCharacterController();
 
@@ -346,14 +331,12 @@ void player_controller::UpdateMoves()
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
 
-	if (cc->OnGround()) {
+	if (cc->OnGround() && player_curr_speed != 0.0f) {
 		ChangePose(pose_run);
 	}
-	else {
+	else if(player_curr_speed != 0.0f) {
 		ChangePose(pose_jump);
-	}
-
-	if (player_curr_speed == 0.0f) ChangePose(pose_idle);
+	}else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
 
 	
@@ -370,18 +353,6 @@ void player_controller::UpdateInputActions()
 	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed()) && nearPlus()) {
 		energyDecreasal(getDeltaTime()*0.05f);
 		ChangeState("toplus");
-	}
-	else if (polarizedCurrentSpeed > .2f) {
-		energyDecreasal(getDeltaTime()*0.1f);
-		polarizedMove = false;
-		CEntity * entPoint = nullptr;
-		if (tominus) {
-			entPoint = this->getMinusPointHandle(topolarizedminus);
-		}
-		else if (toplus) {
-			entPoint = this->getPlusPointHandle(topolarizedplus);
-		}
-		AttractMove(entPoint);
 	}
 	else if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
 		energyDecreasal(5.0f);
@@ -613,5 +584,6 @@ void player_controller::onCanRec(const TMsgCanRec & msg)
 
 	if (io->keys['E'].becomesPressed()) {
 		rechargeEnergy();
+		curr_evol = 1;
 	}
 }

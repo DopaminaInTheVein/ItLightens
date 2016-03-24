@@ -13,18 +13,21 @@ map<string, bt_guard::KptType> bt_guard::kptTypes = {
 };
 
 TCompTransform * bt_guard::getTransform() {
+	PROFILE_FUNCTION("guard: get transform");
 	CEntity * e = myParent;
 	TCompTransform * t = e->get<TCompTransform>();
 	return t;
 }
 
 TCompCharacterController* bt_guard::getCC() {
+	PROFILE_FUNCTION("guard: get cc");
 	CEntity * e = myParent;
 	TCompCharacterController * cc = e->get<TCompCharacterController>();
 	return cc;
 }
 
 CEntity* bt_guard::getPlayer() {
+	PROFILE_FUNCTION("guard: get player");
 	VHandles targets = tags_manager.getHandlesByTag(getID("target"));
 	thePlayer = targets[targets.size() - 1];
 	CEntity* player = thePlayer;
@@ -79,14 +82,17 @@ void bt_guard::Init()
 
 //conditions
 bool bt_guard::playerStunned() {
+	PROFILE_FUNCTION("guard: player stunned");
 	return stunned == true;
 }
 
 bool bt_guard::playerDetected() {
+	PROFILE_FUNCTION("guard: player detected");
 	return playerVisible();
 }
 
 bool bt_guard::playerOutOfReach() {
+	PROFILE_FUNCTION("guard: player out of reach");
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
@@ -102,6 +108,7 @@ bool bt_guard::playerOutOfReach() {
 }
 
 bool bt_guard::guardAlerted() {
+	PROFILE_FUNCTION("guard: guardalert");
 	if (playerLost || noiseHeard) {
 		return true;
 	}
@@ -110,6 +117,7 @@ bool bt_guard::guardAlerted() {
 
 //actions
 int bt_guard::actionStunned() {
+	PROFILE_FUNCTION("guard: actionstunned");
 	if (timerStunt < 0) {
 		stunned = false;
 		return OK;
@@ -122,7 +130,7 @@ int bt_guard::actionStunned() {
 }
 
 int bt_guard::actionChase() {
-
+	PROFILE_FUNCTION("guard: chase");
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
@@ -146,6 +154,7 @@ int bt_guard::actionChase() {
 }
 
 int bt_guard::actionAbsorb() {
+	PROFILE_FUNCTION("guard: absorb");
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
@@ -173,6 +182,7 @@ int bt_guard::actionAbsorb() {
 }
 
 int bt_guard::actionShootWall() {
+	PROFILE_FUNCTION("guard: shootwall");
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	turnTo(posPlayer);
@@ -193,6 +203,7 @@ int bt_guard::actionShootWall() {
 }
 
 int bt_guard::actionSearch() {
+	PROFILE_FUNCTION("guard: search");
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, noisePoint);
 
@@ -218,6 +229,7 @@ int bt_guard::actionSearch() {
 
 }
 int bt_guard::actionLookAround() {
+	PROFILE_FUNCTION("guard: lookaround");
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
@@ -241,7 +253,7 @@ int bt_guard::actionLookAround() {
 }
 
 int bt_guard::actionSeekWpt() {
-
+	PROFILE_FUNCTION("guard: actionseekwpt");
 	VEC3 myPos = getTransform()->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Player Visible?
@@ -278,6 +290,7 @@ int bt_guard::actionSeekWpt() {
 }
 
 int bt_guard::actionNextWpt() {
+	PROFILE_FUNCTION("guard: actionnextwpt");
 	VEC3 dest = keyPoints[curkpt].pos;
 
 	//Player Visible?
@@ -294,6 +307,7 @@ int bt_guard::actionNextWpt() {
 }
 
 int bt_guard::actionWaitWpt() {
+	//PROFILE_FUNCTION("guard: actionwaitwpt");
 	ChangePose(pose_idle_route);
 
 	//player visible?
@@ -314,6 +328,7 @@ int bt_guard::actionWaitWpt() {
 * Mensajes
 **************/
 void bt_guard::noise(const TMsgNoise& msg) {
+	PROFILE_FUNCTION("guard: noise");
 	if (outJurisdiction(msg.source)) return;
 	if (playerVisible()) return;
 	if (stunned) return;
@@ -326,6 +341,7 @@ void bt_guard::noise(const TMsgNoise& msg) {
 
 void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 {
+	PROFILE_FUNCTION("guard: onmagneticbomb");
 	VEC3 myPos = getTransform()->getPosition();
 	float d = squaredDist(msg.pos, myPos);
 
@@ -336,6 +352,7 @@ void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 }
 
 void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
+	PROFILE_FUNCTION("guard: onstaticbomb");
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
@@ -357,6 +374,7 @@ bool bt_guard::canHear(VEC3 position, float intensity) {
 
 // -- Go To -- //
 void bt_guard::goTo(const VEC3& dest) {
+	PROFILE_FUNCTION("guard: go to");
 	//avanzar
 	goForward(SPEED_WALK);
 
@@ -366,12 +384,14 @@ void bt_guard::goTo(const VEC3& dest) {
 
 // -- Go Forward -- //
 void bt_guard::goForward(float stepForward) {
+	PROFILE_FUNCTION("guard: go forward");
 	VEC3 myPos = getTransform()->getPosition();
 	getCC()->AddMovement(getTransform()->getFront() * stepForward);
 }
 
 // -- Turn To -- //
 bool bt_guard::turnTo(VEC3 dest) {
+	PROFILE_FUNCTION("guard: turn to");
 	VEC3 myPos = getTransform()->getPosition();
 	float yaw, pitch;
 	getTransform()->getAngles(&yaw, &pitch);
@@ -604,12 +624,15 @@ void bt_guard::resetStats()
 
 //Cambio de malla
 void bt_guard::ChangePose(string new_pose_route) {
-
-	mesh->unregisterFromRender();
-	MKeyValue atts_mesh;
-	atts_mesh["name"] = new_pose_route;
-	mesh->load(atts_mesh);
-	mesh->registerToRender();
+	PROFILE_FUNCTION("guard bt: change pose");
+	if (last_pose != new_pose_route) {
+		mesh->unregisterFromRender();
+		MKeyValue atts_mesh;
+		atts_mesh["name"] = new_pose_route;
+		mesh->load(atts_mesh);
+		mesh->registerToRender();
+		last_pose = new_pose_route;
+	}
 }
 
 //TODO: remove

@@ -13,7 +13,9 @@ class TCompCharacterController : public TCompBase, public PxUserControllerHitRep
 	float mHeight		= 0.0f;
 	float mSpeedYAxis	= 0.0f;
 	float mMaxYimpulse	= 7.0f;		//max impulse for yaxis, to block acumulating impulse forces
-	float mFriction		= 1.0f;
+	float mFriction		= 15.0f;
+	float eOffsetSpeed	= 0.02f;
+
 	bool mActive = true;
 	bool mAffectGravity = true;
 	bool mOnGround = false;
@@ -29,6 +31,8 @@ class TCompCharacterController : public TCompBase, public PxUserControllerHitRep
 
 	void ApplyPendingMoves();
 	void recalcOnGround();
+
+	std::string name = "defaul name";
 
 	
 

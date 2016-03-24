@@ -66,6 +66,7 @@ class bt_guard : public TCompBase, public bt
 	string pose_idle_route;
 	string pose_shoot_route;
 	string pose_run_route;
+	string last_pose = "";
 
 	//Debug
 	//____TIMER_DECLARE_(timerDebug, 2.0f);

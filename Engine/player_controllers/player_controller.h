@@ -77,6 +77,13 @@ class player_controller : public CPlayerBase {
 	void UpdateInputActions() override;
 	void SetCharacterController();
 
+	enum evol {
+		first=0,
+		second,
+	};
+
+	int curr_evol = 0;
+
 protected:
 	void myUpdate();
 
