@@ -217,6 +217,12 @@
     <ClCompile Include="logic\ai_speedy.cpp">
       <Filter>logic_old</Filter>
     </ClCompile>
+    <ClCompile Include="skeleton\skeleton.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\comp_skeleton.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -475,6 +481,12 @@
     <ClInclude Include="logic\ai_speedy.h">
       <Filter>logic_old</Filter>
     </ClInclude>
+    <ClInclude Include="skeleton\comp_skeleton.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\skeleton.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -545,6 +557,9 @@
     </Filter>
     <Filter Include="logic_old">
       <UniqueIdentifier>{cfd37209-5b4f-484a-a06d-56d3541bf572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="skeleton">
+      <UniqueIdentifier>{b91640c3-0058-40ee-b94f-108a7884bd1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

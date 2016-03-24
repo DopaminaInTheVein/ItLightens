@@ -7,19 +7,20 @@ class IResource {
 
 public:
 
-	// ---------------------------------
-	enum eType {
-		UNDEFINED
-		, MESH
-		, PIXEL_SHADER
-		, VERTEX_SHADER
-		, TECHNIQUE
-		, TEXTURE
-		, MATERIAL
-		, STATIC_MESH
-		, NUM_RESOURCES_TYPE
-	};
-	static const char* getTypeName(eType atype);
+  // ---------------------------------
+  enum eType {
+    UNDEFINED
+    , MESH
+    , PIXEL_SHADER
+    , VERTEX_SHADER
+    , TECHNIQUE
+    , TEXTURE
+    , MATERIAL
+    , STATIC_MESH
+    , SKELETON
+    , NUM_RESOURCES_TYPE
+  };
+  static const char* getTypeName(eType atype);
 
 	virtual ~IResource() { }
 

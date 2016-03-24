@@ -41,6 +41,7 @@ DECL_OBJ_MANAGER("player_cientifico", player_controller_cientifico);
 DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
+DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 
 //Physics
 DECL_OBJ_MANAGER("rigidbody", TCompPhysics);
@@ -72,7 +73,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<player_controller_mole>()->init(8);
 	getHandleManager<player_controller_cientifico>()->init(8);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-	
+	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
@@ -258,7 +259,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);
-
+getHandleManager<TCompSkeleton>()->updateAll( dt );
 	getHandleManager<bt_speedy>()->updateAll(dt);
 	getHandleManager<water_controller>()->updateAll(dt);
 
@@ -279,7 +280,7 @@ void CEntitiesModule::render() {
 	// manager->renderAll()
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
 	tech->activate();
-
+	getHandleManager<TCompSkeleton>()->onAll( &TCompSkeleton::render );
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 }
 
