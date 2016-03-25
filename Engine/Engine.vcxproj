@@ -106,6 +106,7 @@
     <ClCompile Include="components\comp_charactercontroller.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_physics.cpp" />
+    <ClCompile Include="components\comp_polarized.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\comp_wire.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
     <ClInclude Include="components\comp_physics.h" />
+    <ClInclude Include="components\comp_polarized.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
     <ClInclude Include="components\comp_transform.h" />
     <ClInclude Include="components\comp_wire.h" />

@@ -96,26 +96,37 @@
   <entity>
     <name name="punto_magnetismo1" />
     <tag name="minus_wall" />
-    <transform pos="0.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <transform pos="-2.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <polarized pol="minus"/>
+  </entity>
+  <entity>
+    <name name="punto_magnetismo" />
+    <tag name="plus_wall" />
+    <transform pos="2.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <polarized pol="plus"/>
   </entity>
   <entity>
     <name name="punto_magnetismo2" />
     <tag name="plus_wall" />
     <transform pos="0.357965 1.06714 4.40073" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <polarized pol="plus"/>
   </entity>
   <entity>
     <name name="punto_magnetismo3" />
     <tag name="minus_wall" />
     <transform pos="0.357965 8.0246 63.1498" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <polarized pol="minus"/>
   </entity>
   <entity>
     <name name="punto_magnetismo4" />
     <tag name="plus_wall" />
     <transform pos="0.357965 5.08771 59.6009" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <polarized pol="plus"/>
   </entity>
   <entity>
     <name name="mesa_cientifico" />

@@ -210,7 +210,7 @@ void CPlayerBase::UpdateMovingWithOther() {
 //##########################################################################
 #pragma region Player States
 void CPlayerBase::energyDecreasal(float howmuch) {
-	PROFILE_FUNCTION("energy dec");
+	PROFILE_FUNCTION("player base: energy dec function");
 	SetMyEntity();
 	TMsgDamage msg;
 	msg.points = howmuch;

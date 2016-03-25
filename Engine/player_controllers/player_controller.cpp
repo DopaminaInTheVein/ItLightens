@@ -27,8 +27,6 @@ void player_controller::Init() {
 
 	AddState("falling", (statehandler)&player_controller::Falling);
 	AddState("jumping", (statehandler)&player_controller::Jumping);
-	AddState("toplus", (statehandler)&player_controller::AttractToPlus);
-	AddState("tominus", (statehandler)&player_controller::AttractToMinus);
 
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
@@ -198,91 +196,33 @@ void player_controller::Falling()
 	}
 }
 
-void player_controller::AttractToMinus() {
-	PROFILE_FUNCTION("player controller: attract to minus");
-	CEntity * entPoint = this->getMinusPointHandle(topolarizedminus);
-	tominus = true;
-	toplus = false;
-	AttractMove(entPoint);
-	ChangeState("idle");
-}
-void player_controller::AttractToPlus() {
-	PROFILE_FUNCTION("player controller: attract to plus");
-	CEntity * entPoint = this->getPlusPointHandle(topolarizedplus);
-	tominus = false;
-	toplus = true;
-	AttractMove(entPoint);
-	ChangeState("idle");
+
+void player_controller::RecalcAttractions()
+{
+
+	if (pol_state == NEUTRAL) return;	//check if polarized is neutral, no effect
+	VEC3 forces = VEC3(0,0,0);
+
+	for (auto force : force_points) {		//sum of all forces
+		if (force.pol == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
+		if(pol_state == force.pol) forces += AttractMove(force.point);
+		else if (pol_state != force.pol) forces -= AttractMove(force.point);
+	}
+
+	SetCharacterController();
+	forces.Normalize();
+	Debug->LogRaw("num_effects pols = %d\n", force_points.size());
+	cc->AddMovement(forces, player_max_speed);
 }
 
-bool player_controller::nearMinus() {
-	PROFILE_FUNCTION("player controller: near minus");
-	if (topolarizedminus != -1) {
-		return true;
-	}
-	else {
-		bool found = false;
-		if (SBB::readHandlesVector("wptsMinusPoint").size() > 0) {
-			float distMax = 10.0f;
-			for (int i = 0; !found && i < SBB::readHandlesVector("wptsMinusPoint").size(); i++) {
-				CEntity * entTransform = this->getMinusPointHandle(i);
-				TCompTransform * transformBox = entTransform->get<TCompTransform>();
-				VEC3 wpt = transformBox->getPosition();
-				float disttowpt = simpleDist(wpt, getEntityTransform()->getPosition());
-				if (disttowpt < distMax) {
-					distMax = disttowpt;
-					topolarizedminus = i;
-					found = true;
-					polarizedMove = true;
-				}
-			}
-		}
-		return found;
-	}
-}
-bool player_controller::nearPlus() {
-	PROFILE_FUNCTION("player controller: near plus");
-	if (topolarizedplus != -1) {
-		return true;
-	}
-	else {
-		bool found = false;
-		if (SBB::readHandlesVector("wptsPlusPoint").size() > 0) {
-			float distMax = 10.0f;
-			for (int i = 0; !found && i < SBB::readHandlesVector("wptsPlusPoint").size(); i++) {
-				CEntity * entTransform = this->getPlusPointHandle(i);
-				TCompTransform * transformBox = entTransform->get<TCompTransform>();
-				VEC3 wpt = transformBox->getPosition();
-				float disttowpt = simpleDist(wpt, getEntityTransform()->getPosition());
-				if (disttowpt < distMax) {
-					distMax = disttowpt;
-					topolarizedplus = i;
-					found = true;
-					polarizedMove = true;
-				}
-			}
-		}
-		return found;
-	}
-}
-
-void player_controller::AttractMove(CEntity * entPoint) {
+VEC3 player_controller::AttractMove(VEC3 point_pos) {
 	PROFILE_FUNCTION("player controller: attract move");
-	if (entPoint == nullptr) {
-		return;
-	}
-	TCompTransform * entPointTransform = entPoint->get<TCompTransform>();
-	VEC3 point_pos = entPointTransform->getPosition();
+	
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	VEC3 direction = entPointTransform->getPosition() - player_position;
-	direction.Normalize();
-
-
-	SetCharacterController();
-	Debug->LogRaw("direction: %f, %f, %f\n", direction.x,direction.y,direction.z);
-	cc->AddMovement(direction, player_max_speed);
+	VEC3 direction = point_pos - player_position;
+	return direction/squaredDist(player_position,point_pos);
 }
 
 void player_controller::UpdateMoves()
@@ -338,7 +278,6 @@ void player_controller::UpdateMoves()
 		ChangePose(pose_jump);
 	}else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
-
 	
 	cc->AddMovement(direction , player_curr_speed);
 }
@@ -346,13 +285,33 @@ void player_controller::UpdateMoves()
 void player_controller::UpdateInputActions()
 {
 	PROFILE_FUNCTION("update input actions");
-	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed()) && nearMinus()) {
+	SetCharacterController();
+	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed())) {
 		energyDecreasal(getDeltaTime()*0.05f);
-		ChangeState("tominus");
+		pol_state = PLUS;
+		if (!affectPolarized && force_points.size() > 0) {
+			affectPolarized = true;
+			cc->SetGravity(false);
+		}
+		else if (affectPolarized && force_points.size() == 0) {
+			affectPolarized = false;
+			cc->SetGravity(true);
+		}
+		RecalcAttractions();
 	}
-	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed()) && nearPlus()) {
+	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed())) {
 		energyDecreasal(getDeltaTime()*0.05f);
-		ChangeState("toplus");
+		pol_state = MINUS;
+		if (!affectPolarized && force_points.size() > 0) {
+			affectPolarized = true;
+			cc->SetGravity(false);
+		}
+		else if (affectPolarized && force_points.size() == 0) {
+			affectPolarized = false;
+			cc->SetGravity(true);
+		}
+		RecalcAttractions();
+		
 	}
 	else if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
 		energyDecreasal(5.0f);
@@ -374,9 +333,10 @@ void player_controller::UpdateInputActions()
 		}
 	}
 	else {
-		topolarizedplus = -1;
-		topolarizedminus = -1;
-		polarizedCurrentSpeed = 0.0f;
+		if (affectPolarized) {
+			affectPolarized = false;
+			cc->SetGravity(true);
+		}
 	}
 }
 
@@ -585,5 +545,16 @@ void player_controller::onCanRec(const TMsgCanRec & msg)
 	if (io->keys['E'].becomesPressed()) {
 		rechargeEnergy();
 		curr_evol = 1;
+	}
+}
+
+void player_controller::onPolarize(const TMsgPolarize & msg)
+{
+	if (!msg.range) {
+		TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
+		force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
+	}else{
+		TForcePoint newForce = TForcePoint(msg.origin, msg.pol);
+		force_points.push_back(newForce);
 	}
 }

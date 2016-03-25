@@ -280,10 +280,13 @@ void bt_speedy::resetDropWaterTimer() {
 
 //Cambio de malla
 void bt_speedy::ChangePose(string new_pose_route) {
-	mesh->unregisterFromRender();
-	MKeyValue atts_mesh;
-	atts_mesh["name"] = new_pose_route;
-	mesh->load(atts_mesh);
-	mesh->registerToRender();
+	if (last_pose != new_pose_route) {
+		mesh->unregisterFromRender();
+		MKeyValue atts_mesh;
+		atts_mesh["name"] = new_pose_route;
+		mesh->load(atts_mesh);
+		mesh->registerToRender();
+		last_pose = new_pose_route;
+	}
 }
 

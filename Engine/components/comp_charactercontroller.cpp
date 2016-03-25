@@ -17,6 +17,7 @@ void TCompCharacterController::ApplyGravity(float dt)
 				mSpeed.y += -12.0f*dt;	//update y-axis speed with gravity
 		}
 	}
+	else mSpeed.y = 0.0f;
 }
 
 void TCompCharacterController::AddImpulse(const VEC3& impulse) {
@@ -55,7 +56,7 @@ void TCompCharacterController::ApplyPendingMoves() {
 	mToMove += mSpeed;
 	if (mToMove != VEC3(0.0f, 0.0f, 0.0f)) {
 		PxVec3 moved = PxVec3(mToMove.x, mToMove.y, mToMove.z)*dt;
-		if(OnGround())mFlagsCollisions = pActor->move(moved, 0, dt, mFilter);
+		if(OnGround() | !mAffectGravity) mFlagsCollisions = pActor->move(moved, 0, dt, mFilter);
 		else mFlagsCollisions = pActor->move(moved/2, 0, dt, mFilter);
 		mToMove = VEC3(0.0f,0.0f,0.0f);
 	}
