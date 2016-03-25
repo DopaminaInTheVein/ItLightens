@@ -59,14 +59,15 @@ void TCompPolarized::update(float elapsed)
 				}
 
 
-				if (dist_effect_squared > squaredDist(player_pos, origin)) {
+				float dist = squaredDist(player_pos, origin);
+				if (dist_effect_squared > dist && dist_near < dist) {
 
 					VEC3 direction = player_pos - origin;
 					TCompPhysics *p = e->get<TCompPhysics>();
 					
 					if (p) {
-						if (mPol != mPlayer_state)	p->AddForce(-direction*10);		//opposite pols
-						else							p->AddForce(direction*10);
+						if (mPol != mPlayer_state)	p->AddForce((-direction*100)/dist);		//opposite pols
+						else							p->AddForce((direction*100)/dist);
 					}
 				}
 			}

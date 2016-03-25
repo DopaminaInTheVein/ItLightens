@@ -234,6 +234,7 @@ bool TCompPhysics::addRigidbodyScene()
 		rigidActor = pActor->isRigidDynamic();
 		CEntity *m = CHandle(this).getOwner();
 		pActor->userData = m;
+		pActor->isRigidBody()->setMass(mMass);
 		
 		return true;
 	}else if (mCollisionType == TRIGGER) {

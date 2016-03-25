@@ -27,6 +27,7 @@ struct TCompPolarized : public TCompBase {
 	CHandle			player_h;
 
 	float			dist_effect_squared	= 25.0f;
+	float			dist_near			= 1.5f;
 
 	int				mPol					= NEUTRAL;
 	int				mType				= FIXED;
