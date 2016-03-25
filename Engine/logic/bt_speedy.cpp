@@ -182,7 +182,7 @@ bool bt_speedy::dashToTarget(VEC3 target) {
 
 	if (aimed) {
 		moveFront(dash_speed);
-		if (drop_water_ready) {
+		/*if (drop_water_ready) {
 			VEC3 player_pos = transform->getPosition();
 
 			// CREATE WATER
@@ -241,7 +241,7 @@ bool bt_speedy::dashToTarget(VEC3 target) {
 
 			// reset drop water cooldown
 			resetDropWaterTimer();
-		}
+		}*/
 	}
 
 	float distance = squaredDistXZ(target, transform->getPosition());

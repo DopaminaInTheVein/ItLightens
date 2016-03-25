@@ -275,6 +275,22 @@ bool TCompPhysics::setKinematic(bool isKinematic)
 	return false;
 }
 
+void TCompPhysics::AddForce(VEC3 force)
+{
+	PxRigidDynamic *rb = pActor->isRigidDynamic();
+	if (rb) {
+		rb->addForce(PhysxConversion::Vec3ToPxVec3(force));
+	}
+}
+
+void TCompPhysics::AddVelocity(VEC3 velocity)
+{
+	PxRigidDynamic *rb = pActor->isRigidDynamic();
+	if (rb) {
+		rb->addForce(PhysxConversion::Vec3ToPxVec3(velocity), physx::PxForceMode::eVELOCITY_CHANGE);
+	}
+}
+
 void TCompPhysics::setPosition(VEC3 position, CQuaternion rotation)
 {
 	PxTransform tr = PxTransform(PhysxConversion::Vec3ToPxVec3(position), PhysxConversion::CQuaternionToPxQuat(rotation));

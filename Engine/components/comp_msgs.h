@@ -141,4 +141,11 @@ struct TMsgPolarize {
 	bool range;
 	DECLARE_MSG_ID();
 };
+
+struct TMsgPlayerPolarize {
+	int type;
+	DECLARE_MSG_ID();
+};
+
+
 #endif

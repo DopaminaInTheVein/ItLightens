@@ -118,7 +118,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
-
+	
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
@@ -142,6 +142,7 @@ bool CEntitiesModule::start() {
 	//polarized
 	SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgPolarize, onPolarize);
+	SUBSCRIBE(TCompPolarized, TMsgPlayerPolarize, onPolarize);
 
 	//Posesiones Mensajes
 	//..Cientifico

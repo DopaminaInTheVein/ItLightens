@@ -937,6 +937,7 @@
     <tag name="box" />
     <transform pos="0.358 -8.046 -11.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
+    <polarized pol="minus" type ="free"/>
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
 

@@ -4,18 +4,18 @@
 #include "logic/aicontroller.h"
 #include "logic/sbb.h"
 
-#include "handle/handle.h"
+
 
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
-#include "components/comp_msgs.h"
 #include "components/entity.h"
 
 #include "camera/camera.h"
 
 #include "player_controller_base.h"
 
-struct TCompRenderStaticMesh;
+class CHandle;
+class TCompRenderStaticMesh;
 
 class player_controller : public CPlayerBase {
 
@@ -82,6 +82,7 @@ class player_controller : public CPlayerBase {
 
 	int						curr_evol				= 0;
 	int						pol_state				= 0;
+	int						last_pol_state			= 0;
 
 	bool						affectPolarized			= false;
 
@@ -136,12 +137,16 @@ public:
 	void Falling();
 
 	void update_msgs() override;
-	//Mensajes
+
+	//input Messages
 	void onLeaveFromPossession(const TMsgPossessionLeave&);
 	void onDamage(const TMsgDamage&);
 	void onWirePass(const TMsgWirePass& msg);
 	void onCanRec(const TMsgCanRec& msg);
 	void onPolarize(const TMsgPolarize& msg);
+
+	//output messages
+	void SendMessagePolarizeState();
 
 	//Overload function for handler_manager
 	player_controller& player_controller::operator=(player_controller arg) { return arg; }

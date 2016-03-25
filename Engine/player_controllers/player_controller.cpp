@@ -10,6 +10,7 @@
 #include "render\static_mesh.h"
 #include "app_modules\io\io.h"
 #include "components/comp_msgs.h"
+#include "handle/handle.h"
 #include "ui\ui_interface.h"
 
 #include "components\comp_charactercontroller.h"
@@ -199,7 +200,7 @@ void player_controller::Falling()
 
 void player_controller::RecalcAttractions()
 {
-
+	PROFILE_FUNCTION("player controller: recalc attraction");
 	if (pol_state == NEUTRAL) return;	//check if polarized is neutral, no effect
 	VEC3 forces = VEC3(0,0,0);
 
@@ -289,7 +290,7 @@ void player_controller::UpdateInputActions()
 	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed())) {
 		energyDecreasal(getDeltaTime()*0.05f);
 		pol_state = PLUS;
-		if (!affectPolarized && force_points.size() > 0) {
+		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
 			cc->SetGravity(false);
 		}
@@ -302,7 +303,7 @@ void player_controller::UpdateInputActions()
 	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed())) {
 		energyDecreasal(getDeltaTime()*0.05f);
 		pol_state = MINUS;
-		if (!affectPolarized && force_points.size() > 0) {
+		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
 			cc->SetGravity(false);
 		}
@@ -310,10 +311,19 @@ void player_controller::UpdateInputActions()
 			affectPolarized = false;
 			cc->SetGravity(true);
 		}
+
 		RecalcAttractions();
 		
 	}
-	else if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
+	else {
+		pol_state = NEUTRAL;
+		if (affectPolarized) {
+			affectPolarized = false;
+			cc->SetGravity(true);
+		}
+	}
+	
+	if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado
 		CEntity* ePoss = currentStunable;
@@ -332,11 +342,11 @@ void player_controller::UpdateInputActions()
 			}
 		}
 	}
-	else {
-		if (affectPolarized) {
-			affectPolarized = false;
-			cc->SetGravity(true);
-		}
+	
+
+	if (last_pol_state != pol_state) {
+		last_pol_state = pol_state;
+		SendMessagePolarizeState();
 	}
 }
 
@@ -556,5 +566,15 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 	}else{
 		TForcePoint newForce = TForcePoint(msg.origin, msg.pol);
 		force_points.push_back(newForce);
+	}
+}
+
+void player_controller::SendMessagePolarizeState()
+{
+	TMsgPlayerPolarize msg;
+	msg.type = pol_state;
+	VHandles hs = tags_manager.getHandlesByTag(getID("box"));
+	for (CEntity *e : hs) {
+		e->sendMsg(msg);
 	}
 }

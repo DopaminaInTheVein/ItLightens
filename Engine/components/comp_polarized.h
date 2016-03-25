@@ -14,22 +14,31 @@ struct TCompPolarized : public TCompBase {
 		PLUS,
 	};
 
-	VEC3 origin;
-	bool send = false;
+	enum type {
+		FIXED = 0,
+		FREE,
+	};
 
-	TMsgPolarize msg_in;
-	TMsgPolarize msg_out;
-	CHandle player_h;
+	VEC3				origin;
+	bool				send					= false;
 
-	float dist_effect_squared = 25.0f;
+	TMsgPolarize		msg_in;
+	TMsgPolarize		msg_out;
+	CHandle			player_h;
 
-	int pol = NEUTRAL;
+	float			dist_effect_squared	= 25.0f;
+
+	int				mPol					= NEUTRAL;
+	int				mType				= FIXED;
+	int				mPlayer_state		= NEUTRAL;
 
 	void init();
 	void update(float elapsed);
 	bool load(MKeyValue& atts);
 
 	void onCreate(const TMsgEntityCreated&);
+
+	void onPolarize(const TMsgPlayerPolarize& msg);
 
 	void sendMessagePlayer(const TMsgPolarize& msg);
 };
