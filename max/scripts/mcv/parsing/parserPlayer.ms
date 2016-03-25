@@ -17,18 +17,15 @@ fn _parsePlayer = (
 	
 	--Life
 	xmlLife = xml.addChild "life"
-	xmlLife.addAttr "points" "10"
-	
-	-- Player Controller
-	xmlController = xml.addChild "player"
+	xmlLife.addAttr "points" (getUserProp _parsingObject "life")
 	
 	-- Character Controller (Physx)
-	xmlCC = xml.addChild "character_controller"
-	xmlCC.addAttr "radius" "0.3"
-	xmlCC.addAttr "height" "0.4"
+	_parseCharController xml
 
 	-- Parse Render del objeto
 	_parseRenderStatic xml
-
+	
+	-- Player Controller
+	xmlController = xml.addChild "player"
 	return xml
 )

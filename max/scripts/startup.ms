@@ -9,10 +9,20 @@ fn startUp = (
 	mcvScriptsDir = scriptsDir + "mcv\\"
 	filein (mcvScriptsDir+"utils.ms") 		
 	
+	--Resources export (meshes, materials, skel, ...)
+	mcvResources = mcvScriptsDir + "\\resources\\"
+	getResources = getFiles (mcvResources + "*.ms")
+	for f in getResources do
+	(
+		fileIn f
+	)
+	filein (mcvScriptsDir+"resources.ms") 
+	
+	
+	
 	--Funciones MaxScript
-	filein (mcvScriptsDir+"export_mesh.ms") 
 	filein (mcvScriptsDir+"object.ms") 
-	filein (mcvScriptsDir+"export_scene.ms")
+	--filein (mcvScriptsDir+"export_scene.ms")
 	
 	--Tools MaxScript
 	mcvTools = mcvScriptsDir + "\\tools\\"
@@ -41,3 +51,4 @@ fn startUp = (
 )
 
 startUp()
+clearListener()

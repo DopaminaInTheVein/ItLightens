@@ -1,0 +1,27 @@
+<entities>
+<entity>
+<name
+   name="Box_1"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="-1.70426 0 -2.12037"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="200.0 100.0 200.0"
+   type_shape="box"
+   mass="5"
+/>
+</entity>
+</entities>

@@ -34,17 +34,32 @@ tool ObjectDrawer
 			if state == "st_movingXY" then (
 				__newObj.pos = worldPoint
 			) else if state == "st_movingZ" then (
-				__newObj.pos.z = yWhenClick - viewPoint.y
+				__newObj.pos.z = (yWhenClick - viewPoint.y) * 0.01
 			)
 		)		
 	)
 )
 
 fn drawObj fileDir nombre = (
+	__newObj = undefined
 	local filePath = fileDir + nombre + ".max"
-	if mergemaxfile filePath #(nombre) then (
-		local labelObj = "$'" + nombre + "'"
-		__newObj = execute(labelObj)
+	local objs = getmaxfileobjectnames filePath
+	clearSelection() --just in case
+	if mergemaxfile filePath objs #select then (
+		print "-----------------"
+		print $
+		objs = $
+		if (classof objs == ObjectSet) then (objs = ($ as array))
+		else objs = #(objs)
+
+		local o
+		for o in objs do (
+			if (o.parent == undefined) then (
+				__newObj = o
+				exit
+			)
+		)
+		if __newObj == undefined then messageBox ("Error cargando objetos del fichero " + nombre + ".max")
 		
 		--Tiene defaultName?
 		defaultName = (getUserProp __newObj "defaultName")
@@ -53,13 +68,13 @@ fn drawObj fileDir nombre = (
 		)
 
 		if startTool ObjectDrawer == #abort then (
-			delete __newObj
+			deleteHierarchy __newObj
 		) else (
-			numerateObject __newObj
+			for o in (getHierarchy __newObj) do (numerateObject o)
 			return __newObj
 		)
 	) else (
-		messageBox "Error cargando objeto " + nombre + " del fichero " + nombre + ".max"
+		messageBox ("Error cargando objeto " + nombre + " del fichero " + nombre + ".max")
 	)
 	return undefined
 )

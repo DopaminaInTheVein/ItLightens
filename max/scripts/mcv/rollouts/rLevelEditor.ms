@@ -59,12 +59,18 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:520
 			messageBox "Debes seleccionar un objeto!"
 		) else (
 			local obj = drawObj helperMax_dir ddlHelper.selected
-			if obj != undefined then ( obj.parent = selectedObj )
+			if obj != undefined then ( 
+				obj.parent = selectedObj
+			)
 		)
 	)
 	on btnExport pressed do
 	(
-	
+		local xml = _parseLevel()
+		messagebox (xml.parse())
+		local fsm = createFile (scenes_dir + "pruebaExportador.xml")
+		format (xml.parse()) to:fsm
+		close fsm
 	)
 	on ddlProperties selected sel do
 	(
