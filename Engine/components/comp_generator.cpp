@@ -14,7 +14,7 @@ bool TCompGenerator::load(MKeyValue & atts)
 
 void TCompGenerator::update(float dt)
 {
-	player = player = tags_manager.getFirstHavingTag(getID("target"));
+	player = player = tags_manager.getFirstHavingTag(getID("player"));
 	CEntity *p_e = player;
 	TCompTransform *t_p = p_e->get<TCompTransform>();
 	VEC3 player_position = t_p->getPosition();
@@ -37,7 +37,7 @@ void TCompGenerator::onCreate(const TMsgEntityCreated & msg)
 
 void TCompGenerator::init()
 {
-	player = tags_manager.getFirstHavingTag(getID("target"));
+	player = tags_manager.getFirstHavingTag(getID("player"));
 }
 
 void TCompGenerator::CanRec()

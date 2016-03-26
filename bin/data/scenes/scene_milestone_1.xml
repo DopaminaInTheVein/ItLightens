@@ -4,7 +4,7 @@
   <!--POS INICIAL : 0 0 -22 -->
 
   <entity>
-    <tag name="player" />
+    <tag name="camera_main" />
     <transform pos="0 0 -25" />
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
@@ -13,7 +13,7 @@
 
   <entity>
     <life points="10" />
-    <tag name="target" />
+    <tag name="player" />
     <transform pos="0 0 -22" />
     <name name="pj" />
     <player />
@@ -23,7 +23,7 @@
   <!--
   <entity>
     <life points="10" />
-    <tag name="target" />
+    <tag name="player" />
     <transform pos="0 0 -18" />
     <name name="pj" />
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
@@ -975,6 +975,7 @@
     <tag name="box" />
     <transform pos="2.8988 3.90856 105.074" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
+    <polarized pol="minus" type ="free"/>
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
@@ -1067,6 +1068,24 @@
     <tag name ="platform" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 -1.8 5" rotation="1 2 3 3" scale="1 1 1" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
+  </entity>
+  <entity>
+    <name name="box21" />
+    <tag name="box" />
+    <tag name ="platform" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <transform pos="0 -1.8 5" rotation="1 2 3 3" scale="1 1 1" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
+  </entity>
+  <entity>
+    <name name="box21" />
+    <tag name="box" />
+    <tag name ="platform" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <transform pos="5 -1.8 10" rotation="1 2 3 3" scale="1 1 1" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
     <polarized pol="minus" type ="free"/>
   </entity>
@@ -1290,6 +1309,7 @@
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="6 4 150" rotation="1 2 3 3" scale="1 1 1" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
 
   <entity>

@@ -42,7 +42,7 @@ void TCompWire::onCreate(const TMsgEntityCreated & msg)
 
 void TCompWire::init()
 {
-	player = tags_manager.getFirstHavingTag(getID("target"));
+	player = tags_manager.getFirstHavingTag(getID("player"));
 }
 
 void TCompWire::CanPass()

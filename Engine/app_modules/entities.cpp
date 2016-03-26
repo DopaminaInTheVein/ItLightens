@@ -56,8 +56,7 @@ DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
-static CHandle player;
-static CHandle target;
+
 CCamera * camera;
 
 // The global dict of all msgs
@@ -195,7 +194,7 @@ bool CEntitiesModule::start() {
 	/*nav.build();*/
 	SBB::postNavmesh(nav);
 
-	TTagID tagIDplayer = getID("player");
+	TTagID tagIDcamera = getID("camera_main");
 	TTagID tagIDbox = getID("box");
 	TTagID tagIDboxleave = getID("box_leavepoint");
 	TTagID tagIDwall = getID("breakable_wall");
@@ -204,23 +203,23 @@ bool CEntitiesModule::start() {
 	TTagID tagIDrec = getID("recover_point");
 
 	// Camara del player
-	player = tags_manager.getFirstHavingTag(tagIDplayer);
-	CEntity * player_e = player;
-	TCompCamera * pcam = player_e->get<TCompCamera>();
-	camera = pcam;
+	CHandle camera = tags_manager.getFirstHavingTag(tagIDcamera);
+	CEntity * camera_e = camera;
+	TCompCamera * pcam = camera_e->get<TCompCamera>();
+
 	// Player real
-	CHandle t = tags_manager.getFirstHavingTag(getID("target"));
+	CHandle t = tags_manager.getFirstHavingTag(getID("player"));
 	CEntity * target_e = t;
 
 	// Set the player in the 3rdPersonController
-	if (player_e && t.isValid()) {
+	if (camera_e && t.isValid()) {
 		TMsgSetTarget msg;
 		msg.target = t;
-		player_e->sendMsg(msg);
+		camera_e->sendMsg(msg);		//set camera
 
 		TMsgSetCamera msg_camera;
-		msg_camera.camera = player;
-		target_e->sendMsg(msg_camera);
+		msg_camera.camera = camera;
+		target_e->sendMsg(msg_camera);	//set target camera
 	}
 
 	// Set the player in the Speedy AIs
@@ -346,16 +345,18 @@ void CEntitiesModule::recalcNavmesh() {
 	nav.m_input.clearInput();
 	for (CHandle han : collisionables) {
 		CEntity * e = han;
-		TCompPhysics * p = e->get<TCompPhysics>();
-		PxBounds3 bounds = p->getActor()->getWorldBounds();
-		VEC3 min, max;
-		min.x = bounds.minimum.x;
-		min.y = bounds.minimum.y;
-		min.z = bounds.minimum.z;
-		max.x = bounds.maximum.x;
-		max.y = bounds.maximum.y;
-		max.z = bounds.maximum.z;
-		nav.m_input.addInput(min, max);
+		if (e) {
+			TCompPhysics * p = e->get<TCompPhysics>();
+			PxBounds3 bounds = p->getActor()->getWorldBounds();
+			VEC3 min, max;
+			min.x = bounds.minimum.x;
+			min.y = bounds.minimum.y;
+			min.z = bounds.minimum.z;
+			max.x = bounds.maximum.x;
+			max.y = bounds.maximum.y;
+			max.z = bounds.maximum.z;
+			nav.m_input.addInput(min, max);
+		}
 	}
 	nav.m_input.computeBoundaries();
 	nav.build();
