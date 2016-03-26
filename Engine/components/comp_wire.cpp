@@ -29,10 +29,15 @@ void TCompWire::update(float dt)
 void TCompWire::onCreate(const TMsgEntityCreated & msg)
 {
 	CHandle me_h = CHandle(this).getOwner();
-	CEntity *me_e = me_h;
-	TCompTransform *t = me_e->get<TCompTransform>();
-
-	org = t->getPosition();
+	org = VEC3(0.0f, 0.0f, 0.0f);
+	if (me_h.isValid()) {
+		CEntity *me_e = me_h;
+		if (me_e) {
+			TCompTransform *t = me_e->get<TCompTransform>();
+			if (t)
+				org = t->getPosition();
+		}
+	}
 }
 
 void TCompWire::init()

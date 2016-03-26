@@ -210,7 +210,7 @@ void CPlayerBase::UpdateMovingWithOther() {
 //##########################################################################
 #pragma region Player States
 void CPlayerBase::energyDecreasal(float howmuch) {
-	PROFILE_FUNCTION("energy dec");
+	PROFILE_FUNCTION("player base: energy dec function");
 	SetMyEntity();
 	TMsgDamage msg;
 	msg.points = howmuch;
@@ -292,6 +292,10 @@ void CPlayerBase::Jumping()
 	PROFILE_FUNCTION("jumping base");
 	UpdateDirection();
 	UpdateMovDirection();
+
+	if (cc->GetYAxisSpeed() < 0) {
+		ChangeState("falling");
+	}
 }
 
 void CPlayerBase::Moving()

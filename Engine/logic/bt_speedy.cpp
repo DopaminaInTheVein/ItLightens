@@ -182,7 +182,7 @@ bool bt_speedy::dashToTarget(VEC3 target) {
 
 	if (aimed) {
 		moveFront(dash_speed);
-		if (drop_water_ready) {
+		/*if (drop_water_ready) {
 			VEC3 player_pos = transform->getPosition();
 
 			// CREATE WATER
@@ -241,7 +241,7 @@ bool bt_speedy::dashToTarget(VEC3 target) {
 
 			// reset drop water cooldown
 			resetDropWaterTimer();
-		}
+		}*/
 	}
 
 	float distance = squaredDistXZ(target, transform->getPosition());
@@ -280,10 +280,13 @@ void bt_speedy::resetDropWaterTimer() {
 
 //Cambio de malla
 void bt_speedy::ChangePose(string new_pose_route) {
-	mesh->unregisterFromRender();
-	MKeyValue atts_mesh;
-	atts_mesh["name"] = new_pose_route;
-	mesh->load(atts_mesh);
-	mesh->registerToRender();
+	if (last_pose != new_pose_route) {
+		mesh->unregisterFromRender();
+		MKeyValue atts_mesh;
+		atts_mesh["name"] = new_pose_route;
+		mesh->load(atts_mesh);
+		mesh->registerToRender();
+		last_pose = new_pose_route;
+	}
 }
 

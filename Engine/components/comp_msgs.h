@@ -134,4 +134,18 @@ struct TMsgTrigger{
 	CHandle other;
 	DECLARE_MSG_ID();
 };
+
+struct TMsgPolarize {
+	VEC3 origin;
+	int pol;
+	bool range;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgPlayerPolarize {
+	int type;
+	DECLARE_MSG_ID();
+};
+
+
 #endif

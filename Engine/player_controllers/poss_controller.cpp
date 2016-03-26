@@ -40,6 +40,7 @@ void PossController::UpdatePossession() {
 }
 
 void PossController::onDamage(const TMsgDamage& msg) {
+	PROFILE_FUNCTION("poss controller: onDamage");
 	CEntity* myParent = getMyEntity();
 	switch (msg.dmgType) {
 	case LASER:		
@@ -50,6 +51,9 @@ void PossController::onDamage(const TMsgDamage& msg) {
 		onSetEnable(false);
 		break;
 	case WATER:
+		break;
+	default:
+		//nothing
 		break;
 	}
 }

@@ -328,6 +328,9 @@
     <ClCompile Include="skeleton\comp_skeleton.cpp">
       <Filter>skeleton</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_polarized.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -684,6 +687,9 @@
     </ClInclude>
     <ClInclude Include="skeleton\skeleton.h">
       <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_polarized.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

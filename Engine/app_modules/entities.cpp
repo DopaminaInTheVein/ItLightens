@@ -22,7 +22,7 @@
 #include <thread>
 #include <future>
 
-DECL_OBJ_MANAGER("entity", CEntity);
+DECL_OBJ_MANAGER("entity", CEntity);		//need to be first
 DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("transform", TCompTransform);
 DECL_OBJ_MANAGER("camera", TCompCamera);
@@ -54,6 +54,7 @@ DECL_OBJ_MANAGER("character_controller", TCompCharacterController);
 //prefabs
 DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
+DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
 static CHandle player;
 static CHandle target;
@@ -85,6 +86,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
 	getHandleManager<TCompWire>()->init(10);
 	getHandleManager<TCompGenerator>()->init(10);
+	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -118,7 +120,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
-
+	
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
@@ -138,6 +140,11 @@ bool CEntitiesModule::start() {
 	//generator
 	SUBSCRIBE(TCompGenerator, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgCanRec, onCanRec);
+
+	//polarized
+	SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(player_controller, TMsgPolarize, onPolarize);
+	SUBSCRIBE(TCompPolarized, TMsgPlayerPolarize, onPolarize);
 
 	//Posesiones Mensajes
 	//..Cientifico
@@ -258,6 +265,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
+	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 
 	return true;
 }
@@ -297,6 +305,7 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompWire>()->updateAll(dt);
 	getHandleManager<TCompGenerator>()->updateAll(dt);
+	getHandleManager<TCompPolarized>()->updateAll(dt);
 
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);

@@ -42,6 +42,7 @@ CHandle getByCompIndex(uint32_t idx) {
 
 	template< class TMsg >
 	void sendMsg(const TMsg& msg) {
+		//if(profiler) PROFILE_FUNCTION("entity: send message");
 		// Get all entries matching the msg_id of the TMsg
 		auto range = msg_subscriptions.equal_range(TMsg::getMsgID());
 		while (range.first != range.second) {
@@ -61,6 +62,7 @@ CHandle getByCompIndex(uint32_t idx) {
 
 	template< class TMsg >
 	void sendMsgWithReply(TMsg& msg) {
+		PROFILE_FUNCTION("entity: send message with reply");
 		// Get all entries matching the msg_id of the TMsg
 		auto range = msg_subscriptions.equal_range(TMsg::getMsgID());
 		while (range.first != range.second) {

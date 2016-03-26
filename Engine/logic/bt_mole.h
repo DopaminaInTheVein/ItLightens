@@ -69,6 +69,7 @@ class bt_mole : public bt_poss, public TCompBase {
 	string pose_jump_route;
 	string pose_box_route;
 	string pose_wall_route;
+	string last_pose = "";
 
 public:
 	void Init();

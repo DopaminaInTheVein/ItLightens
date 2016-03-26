@@ -27,16 +27,17 @@ class TCompPhysics : public TCompBase {
 	int mCollisionType;
 	int mCollisionShape;
 
-	float mStaticFriction = 0.5f;
-	float mDynamicFriction = 0.5f;
-	float mRestitution = 0.25f;
+	float mStaticFriction		= 0.5f;
+	float mDynamicFriction		= 0.5f;
+	float mRestitution			= 0.25f;
+	float mMass					= 2.0f;
 
 	float			mRadius		= 0.0f;
 	float			mHeight		= 0.0f;
-	VEC3			mSize		= VEC3(1.0f,1.0f,1.0f);	//default size for box
+	VEC3				mSize		= VEC3(1.0f,1.0f,1.0f);	//default size for box
 
-	PxShape*		pShape		= nullptr;
-	PxActor*		pActor		= nullptr;
+	PxShape*			pShape		= nullptr;
+	PxActor*			pActor		= nullptr;
 	PxRigidActor*	rigidActor	= nullptr;
 
 	int getCollisionTypeValueFromString(std::string str);
@@ -77,7 +78,8 @@ public:
 
 	bool isKinematic();
 	bool setKinematic(bool isKinematic);
-	//void AddForce();
+	void AddForce(VEC3 force);
+	void AddVelocity(VEC3 velocity);
 	void setPosition(VEC3 position, CQuaternion rotation);
 
 	void update(float dt);

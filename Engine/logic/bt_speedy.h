@@ -64,6 +64,7 @@ class bt_speedy : public bt_poss, public TCompBase {
 	string pose_idle_route;
 	string pose_run_route;
 	string pose_jump_route;
+	string last_pose = "";
 
 	public:
 		void Init();

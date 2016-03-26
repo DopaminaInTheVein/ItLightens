@@ -96,26 +96,37 @@
   <entity>
     <name name="punto_magnetismo1" />
     <tag name="minus_wall" />
-    <transform pos="0.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <transform pos="-2.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <polarized pol="minus"/>
+  </entity>
+  <entity>
+    <name name="punto_magnetismo" />
+    <tag name="plus_wall" />
+    <transform pos="2.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <polarized pol="plus"/>
   </entity>
   <entity>
     <name name="punto_magnetismo2" />
     <tag name="plus_wall" />
     <transform pos="0.357965 1.06714 4.40073" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <polarized pol="plus"/>
   </entity>
   <entity>
     <name name="punto_magnetismo3" />
     <tag name="minus_wall" />
     <transform pos="0.357965 8.0246 63.1498" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <polarized pol="minus"/>
   </entity>
   <entity>
     <name name="punto_magnetismo4" />
     <tag name="plus_wall" />
     <transform pos="0.357965 5.08771 59.6009" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <polarized pol="plus"/>
   </entity>
   <entity>
     <name name="mesa_cientifico" />
@@ -926,6 +937,7 @@
     <tag name="box" />
     <transform pos="0.358 -8.046 -11.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
+    <polarized pol="minus" type ="free"/>
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
   </entity>
 
@@ -936,6 +948,7 @@
     <transform pos="0.358 -8.046 -14.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   
   <entity>
@@ -945,6 +958,7 @@
     <transform pos="4.95928 -1.84045 17.3327" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <tag name ="platform" />
@@ -953,6 +967,7 @@
     <transform pos="0.478754 3.90856 111.336" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <tag name ="platform" />
@@ -969,6 +984,7 @@
     <transform pos="-2.7472 3.90856 105.074" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <tag name ="platform" />
@@ -977,6 +993,7 @@
     <transform pos="-2.96467 3.90856 90.7216" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="static" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <tag name ="platform" />
@@ -985,6 +1002,7 @@
     <transform pos="1.91384 3.90856 95.8815" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <tag name ="platform" />
@@ -993,6 +1011,7 @@
     <transform pos="2.86123 3.90856 85.469" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <tag name ="platform" />
@@ -1001,6 +1020,7 @@
     <transform pos="1.0736 3.90856 72.114" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <tag name ="platform" />
@@ -1009,6 +1029,7 @@
     <transform pos="-2.93519 3.90856 79.4002" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <tag name ="platform" />
@@ -1017,6 +1038,7 @@
     <transform pos="0.478754 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <tag name ="platform" />
@@ -1025,6 +1047,7 @@
     <transform pos="3.24255 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <name name="columnas_3" />
@@ -1045,6 +1068,7 @@
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 -1.8 5" rotation="1 2 3 3" scale="1 1 1" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
   <entity>
     <name name="box22" />
@@ -1053,6 +1077,7 @@
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 -0.81 5" rotation="1 2 3 3" scale="1 1 1" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus" type ="free"/>
   </entity>
 
   <entity>

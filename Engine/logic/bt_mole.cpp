@@ -419,9 +419,12 @@ void bt_mole::moveFront(float movement_speed) {
 
 //Cambio de malla
 void bt_mole::ChangePose(string new_pose_route) {
-	mesh->unregisterFromRender();
-	MKeyValue atts_mesh;
-	atts_mesh["name"] = new_pose_route;
-	mesh->load(atts_mesh);
-	mesh->registerToRender();
+	if (last_pose != new_pose_route){
+		mesh->unregisterFromRender();
+		MKeyValue atts_mesh;
+		atts_mesh["name"] = new_pose_route;
+		mesh->load(atts_mesh);
+		mesh->registerToRender();
+		last_pose = new_pose_route;
+	}
 }
