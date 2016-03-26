@@ -120,7 +120,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
-	
+
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
@@ -171,7 +171,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
 
 	CEntityParser ep;
-	bool is_ok = ep.xmlParseFile("data/scenes/scene_test_recast.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH
@@ -274,9 +274,9 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-	static float timeAcumulated = 10.0f;
+	static float timeAcumulated = 55.0f;
 	timeAcumulated += getDeltaTime();
-	if (timeAcumulated > 10.0f) {
+	if (timeAcumulated > 60.0f) {
 		timeAcumulated = 0.0f;
 		std::thread t(&CEntitiesModule::recalcNavmesh, this);
 		t.detach();
