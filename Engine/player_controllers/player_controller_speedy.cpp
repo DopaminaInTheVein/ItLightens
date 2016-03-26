@@ -344,7 +344,7 @@ void player_controller_speedy::resetDropWaterTimer() {
 
 void player_controller_speedy::UpdateUnpossess() {
 	CHandle h = CHandle(this);
-	tags_manager.removeTag(h.getOwner(), getID("target"));
+	tags_manager.removeTag(h.getOwner(), getID("player"));
 }
 
 void player_controller_speedy::DisabledState() {
@@ -352,7 +352,7 @@ void player_controller_speedy::DisabledState() {
 
 void player_controller_speedy::InitControlState() {
 	CHandle h = CHandle(this);
-	tags_manager.addTag(h.getOwner(), getID("target"));
+	tags_manager.addTag(h.getOwner(), getID("player"));
 	ChangeState("idle");
 	//ChangePose(pose_idle);
 }

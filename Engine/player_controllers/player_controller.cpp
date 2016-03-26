@@ -247,6 +247,7 @@ void player_controller::UpdateMoves()
 	VEC3 direction = directionForward + directionLateral;
 
 	CEntity * camera_e = camera;
+
 	TCompTransform* camera_comp = camera_e->get<TCompTransform>();
 
 	direction.Normalize();
@@ -380,10 +381,10 @@ void player_controller::UpdatePossession() {
 			ePoss->sendMsg(msg);
 			possessionCooldown = 1.0f;
 			// Camara Nueva
-			CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
+			CEntity * camera_e = tags_manager.getFirstHavingTag(getID("camera_main"));
 			TMsgSetTarget msgTarg;
 			msgTarg.target = ePoss;
-			player_e->sendMsg(msgTarg);
+			camera_e->sendMsg(msgTarg);
 
 			//Se desactiva el player
 			controlEnabled = false;
@@ -498,8 +499,8 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	// Handles y entities necesarias
 	CHandle  hMe = CHandle(this).getOwner();
 	CEntity* eMe = hMe;
-	CHandle hPlayer = tags_manager.getFirstHavingTag(getID("player"));
-	CEntity* ePlayer = hPlayer;
+	CHandle hCamera = tags_manager.getFirstHavingTag(getID("camera_main"));
+	CEntity* eCamera = hCamera;
 	
 
 	//Colocamos el player
@@ -514,10 +515,10 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	//Set 3rd Person Controller
 	TMsgSetTarget msg3rdController;
 	msg3rdController.target = hMe;
-	ePlayer->sendMsg(msg3rdController);
+	eCamera->sendMsg(msg3rdController);
 
 	//Set Camera
-	camera = CHandle(ePlayer);
+	camera = CHandle(eCamera);
 
 	//Habilitamos control
 	controlEnabled = true;

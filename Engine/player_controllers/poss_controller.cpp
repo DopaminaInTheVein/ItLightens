@@ -72,9 +72,9 @@ void PossController::onSetEnable(bool enabled) {
 	player_curr_speed = 0;
 
 	// Componentes y entidades para asignar Controlador y cámara
-	CHandle hPlayer = tags_manager.getFirstHavingTag(getID("player"));
+	CHandle camera3 = tags_manager.getFirstHavingTag(getID("camera_main"));
 	CHandle hMe = CHandle(getMyEntity());
-	CEntity* ePlayer = hPlayer;
+	CEntity* e_camera = camera3;
 
 	if (enabled) {
 		// Avisar que se activa el control
@@ -83,20 +83,20 @@ void PossController::onSetEnable(bool enabled) {
 		//Set 3rd Person Controller
 		TMsgSetTarget msg3rdController;
 		msg3rdController.target = hMe;
-		ePlayer->sendMsg(msg3rdController);
+		e_camera->sendMsg(msg3rdController);
 
 		//Set Camera
-		camera = CHandle(ePlayer);
+		camera = camera3;
 	}
 	else {
-		CHandle hTarget = tags_manager.getFirstHavingTag(getID("target"));
+		CHandle hTarget = tags_manager.getFirstHavingTag(getID("player"));
 		//CHandle hTarget = player;
 
-		CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
+		CEntity * camera3 = tags_manager.getFirstHavingTag(getID("camera_main"));
 
 		TMsgSetTarget msgTarg;
 		msgTarg.target = hTarget;
-		player_e->sendMsg(msgTarg);
+		camera3->sendMsg(msgTarg);
 
 		CEntity* eTarget = hTarget;
 		CEntity* eMe = hMe;

@@ -9,7 +9,7 @@
 
 void TCompPolarized::init()
 {
-	player_h = tags_manager.getFirstHavingTag(getID("target"));
+	player_h = tags_manager.getFirstHavingTag(getID("player"));
 
 	msg_in.origin = origin;
 	msg_in.pol = mPol;

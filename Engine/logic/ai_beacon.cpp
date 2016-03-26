@@ -94,7 +94,7 @@ void beacon_controller::ActiveSonar()
 	Debug->DrawLine(me_transform->getPosition() + VEC3(0, 1, 0), me_transform->getFront(), range, RED);
 	//TMsgNoise
 
-	VHandles hs = tags_manager.getHandlesByTag(getID("target"));
+	VHandles hs = tags_manager.getHandlesByTag(getID("player"));
 
 	CEntity * player = hs[hs.size() - 1];
 	TCompTransform * player_transform = player->get<TCompTransform>();
@@ -157,7 +157,7 @@ void beacon_controller::WaitToRemoveSonar()
 	me_transform->setAngles(yaw + rot_speed_sonar*getDeltaTime(), pitch);
 	Debug->DrawLine(me_transform->getPosition() + VEC3(0, 1, 0), me_transform->getFront(), range, RED);
 
-	VHandles hs = tags_manager.getHandlesByTag(getID("target"));
+	VHandles hs = tags_manager.getHandlesByTag(getID("player"));
 
 	CEntity * player = hs[hs.size() - 1];
 	TCompTransform * player_transform = player->get<TCompTransform>();

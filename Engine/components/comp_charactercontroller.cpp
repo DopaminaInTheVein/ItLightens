@@ -114,7 +114,7 @@ void TCompCharacterController::updateTags(PxFilterData filter)
 	//PROFILE_FUNCTION("update tags");
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
-		if (h.hasTag("target")) //player
+		if (h.hasTag("player")) //player
 			filter.word0 = filter.word0 | CPhysxManager::ePLAYER_BASE;
 
 		if (h.hasTag("AI_guard"))

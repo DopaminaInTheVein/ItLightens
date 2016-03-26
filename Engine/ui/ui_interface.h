@@ -60,11 +60,11 @@ public:
 	}
 
 	void life_update() {
-		TTagID tagIDplayer = getID("player");
-		CHandle player = tags_manager.getFirstHavingTag(tagIDplayer);
-		CEntity * player_e = player;
+		TTagID tagIDCamera = getID("camera_main");
+		CHandle camera_h = tags_manager.getFirstHavingTag(tagIDCamera);
+		CEntity * camera_e = camera_h;
 
-		TCompController3rdPerson * camara3rd = player_e->get<TCompController3rdPerson>();
+		TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
 		CEntity * target_e = camara3rd->target;
 
 		TCompLife * life = target_e->get<TCompLife>();

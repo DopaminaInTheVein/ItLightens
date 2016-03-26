@@ -21,7 +21,7 @@ void water_controller::Init() {
 	AddState("dead", (statehandler)&water_controller::Dead);
 
 	SetHandleMeInit();
-	player = tags_manager.getFirstHavingTag(getID("target"));
+	player = tags_manager.getFirstHavingTag(getID("player"));
 
 	ChangeState("idle");
 }

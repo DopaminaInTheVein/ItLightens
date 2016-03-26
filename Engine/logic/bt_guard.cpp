@@ -28,7 +28,7 @@ TCompCharacterController* bt_guard::getCC() {
 
 CEntity* bt_guard::getPlayer() {
 	PROFILE_FUNCTION("guard: get player");
-	VHandles targets = tags_manager.getHandlesByTag(getID("target"));
+	VHandles targets = tags_manager.getHandlesByTag(getID("player"));
 	thePlayer = targets[targets.size() - 1];
 	CEntity* player = thePlayer;
 	return player;
@@ -42,7 +42,7 @@ void bt_guard::Init()
 	//Handles
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
-	thePlayer = tags_manager.getFirstHavingTag(getID("target"));
+	thePlayer = tags_manager.getFirstHavingTag(getID("player"));
 
 	// insert all states in the map
 	createRoot("guard", PRIORITY, NULL, NULL);
@@ -447,7 +447,7 @@ bool bt_guard::playerVisible() {
 						bool ret = rayCastToPlayer(1, distRay, hit);
 						if (ret) { //No bloquea vision
 							CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
-							if (h.hasTag("target")) { //player?
+							if (h.hasTag("player")) { //player?
 								return true;
 							}
 						}
@@ -500,7 +500,7 @@ void bt_guard::shootToPlayer() {
 		bool ret = rayCastToPlayer(1, distRay, hit);
 		if (ret) {
 			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
-			if (h.hasTag("target")) {
+			if (h.hasTag("player")) {
 				damage = true;
 			}
 		}

@@ -306,7 +306,7 @@ void player_controller_cientifico::renderInMenu()
 void player_controller_cientifico::UpdateUnpossess() {
 	PROFILE_FUNCTION("player cientifico: update unposses");
 	CHandle h = CHandle(this);
-	tags_manager.removeTag(h.getOwner(), getID("target"));
+	tags_manager.removeTag(h.getOwner(), getID("player"));
 }
 
 void player_controller_cientifico::DisabledState() {	
@@ -315,7 +315,7 @@ void player_controller_cientifico::DisabledState() {
 void player_controller_cientifico::InitControlState() {
 	PROFILE_FUNCTION("player cientifico: init control state");
 	CHandle h = CHandle(this);
-	tags_manager.addTag(h.getOwner(), getID("target"));
+	tags_manager.addTag(h.getOwner(), getID("player"));
 	ChangeState("idle");
 }
 CEntity* player_controller_cientifico::getMyEntity() {
