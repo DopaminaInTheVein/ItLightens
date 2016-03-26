@@ -561,7 +561,7 @@ bool bt_guard::load(MKeyValue& atts) {
 		keyPoints[i] = KeyPoint(
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
-			, atts.getInt(atrWait, 0)
+			, atts.getFloat(atrWait, 0.0f)
 			);
 	}
 	noShoot = atts.getBool("noShoot", false);

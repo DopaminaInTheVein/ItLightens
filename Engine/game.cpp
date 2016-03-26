@@ -31,6 +31,7 @@
 //DEBUG
 CDebug *	  Debug = nullptr;
 CUI ui;
+CGameController* GameController = nullptr;
 CPhysxManager *PhysxManager = nullptr;
 
 const CRenderTechnique* tech_solid_colored = nullptr;
@@ -56,12 +57,14 @@ bool CApp::start() {
 	auto entities = new CEntitiesModule;
 	io = new CIOModule;     // It's the global io
 	PhysxManager = new CPhysxManager;
+	GameController = new CGameController;
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
 	all_modules.push_back(PhysxManager);
 	all_modules.push_back(entities);
 	all_modules.push_back(io);
+	all_modules.push_back(GameController);
 
 	mod_update.push_back(imgui);
 	mod_update.push_back(entities);
@@ -71,6 +74,7 @@ bool CApp::start() {
 	mod_renders.push_back(entities);
 	mod_renders.push_back(imgui);
 	mod_renders.push_back(io);
+
 	mod_init_order.push_back(imgui);
 	mod_init_order.push_back(io);
 	mod_init_order.push_back(PhysxManager);
@@ -99,6 +103,8 @@ bool CApp::start() {
 
 	io->mouse.toggle();
 
+
+	GameController->SetGameState(CGameController::RUNNING);
 	return true;
 }
 

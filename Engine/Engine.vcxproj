@@ -235,6 +235,7 @@
     <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h" />
     <ClInclude Include="app_modules\app_module.h" />
     <ClInclude Include="app_modules\entities.h" />
+    <ClInclude Include="app_modules\gameController.h" />
     <ClInclude Include="app_modules\imgui\module_imgui.h" />
     <ClInclude Include="app_modules\io\digital_button.h" />
     <ClInclude Include="app_modules\io\io.h" />
@@ -255,6 +256,8 @@
     <ClInclude Include="components\comp_polarized.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
     <ClInclude Include="components\comp_transform.h" />
+    <ClInclude Include="components\comp_trigger.h" />
+    <ClInclude Include="components\comp_victory_point.h" />
     <ClInclude Include="components\comp_wire.h" />
     <ClInclude Include="components\entity.h" />
     <ClInclude Include="components\entity_parser.h" />

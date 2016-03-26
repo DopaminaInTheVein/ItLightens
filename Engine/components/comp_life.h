@@ -36,13 +36,11 @@ struct TCompLife : public TCompBase {
 		dbg("TCompLife on TMsgEntityCreated\n");
 	}
 	void onDamage(const TMsgDamage& msg) {
-		CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
 		CHandle playerhandle = CHandle(this).getOwner();
 		CEntity * target_e = playerhandle;
 		TCompTransform * player_transform = target_e->get<TCompTransform>();
-		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
 
-		if (0.5f <= simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
+		if (GameController->GetGameState() != CGameController::VICTORY) {
 			float dmgTotal;
 			switch (msg.dmgType) {
 			case ENERGY_DECREASE:
@@ -62,6 +60,8 @@ struct TCompLife : public TCompBase {
 			if (currentlife > maxlife) {
 				currentlife = maxlife;
 			}
+			else if (currentlife <= 0.0f)
+				GameController->SetGameState(CGameController::LOSE);
 		}
 	}
 

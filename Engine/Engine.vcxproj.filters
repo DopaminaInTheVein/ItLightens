@@ -691,6 +691,15 @@
     <ClInclude Include="components\comp_polarized.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_trigger.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_victory_point.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gameController.h">
+      <Filter>app_modules\game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -815,6 +824,9 @@
     </Filter>
     <Filter Include="skeleton">
       <UniqueIdentifier>{b91640c3-0058-40ee-b94f-108a7884bd1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\game">
+      <UniqueIdentifier>{cbacce40-a6c6-44fb-95a1-bcfa4dbfeab9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

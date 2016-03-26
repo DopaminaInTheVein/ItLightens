@@ -12,17 +12,25 @@ bool TCompGenerator::load(MKeyValue & atts)
 	return true;
 }
 
-void TCompGenerator::update(float dt)
+void TCompGenerator::mUpdate(float dt)
 {
-	player = player = tags_manager.getFirstHavingTag(getID("player"));
-	CEntity *p_e = player;
-	TCompTransform *t_p = p_e->get<TCompTransform>();
-	VEC3 player_position = t_p->getPosition();
+	//nothing to do
+}
 
-	float d_squared = simpleDistXZ(org, player_position);
+void TCompGenerator::onTriggerEnter(const TMsgTriggerIn & msg)
+{
+	Debug->LogRaw("OnTriggerEnter\n");
+	CHandle h_in = msg.other;
+	if (h_in.hasTag("player")) {
+		CanRec(true);
+	}
+}
 
-	if (d_squared < rad) {
-		CanRec();
+void TCompGenerator::onTriggerExit(const TMsgTriggerOut & msg)
+{
+	CHandle h_in = msg.other;
+	if (h_in.hasTag("player")) {
+		CanRec(false);
 	}
 }
 
@@ -40,14 +48,14 @@ void TCompGenerator::init()
 	player = tags_manager.getFirstHavingTag(getID("player"));
 }
 
-void TCompGenerator::CanRec()
+void TCompGenerator::CanRec(bool new_range)
 {
 	TMsgCanRec msg;
 	CEntity *p_e = player;
 	TCompTransform *t_p = p_e->get<TCompTransform>();
 	VEC3 player_position = t_p->getPosition();
 
-
+	msg.range = new_range;
 	CEntity *player_e = player;
 	player_e->sendMsg(msg);
 }

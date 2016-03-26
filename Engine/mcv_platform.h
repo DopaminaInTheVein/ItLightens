@@ -35,6 +35,8 @@
 #include "geometry/geometry.h"
 #include "render/render.h"
 
+#include "app_modules\gameController.h"
+
 //physx
 #include "PxPhysicsAPI.h"
 

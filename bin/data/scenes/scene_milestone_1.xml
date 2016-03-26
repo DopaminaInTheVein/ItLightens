@@ -1403,6 +1403,7 @@
     <transform pos="4 -8 -16" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/generator.static_mesh" />
     <generator rad ="2" />
+    <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
   </entity>
   <entity>
     <name name="recover" />
@@ -1410,6 +1411,7 @@
     <transform pos="-8.3 4 142.7" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/generator.static_mesh" />
     <generator rad ="2" />
+    <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
   </entity>
 
   <entity>
@@ -1418,6 +1420,7 @@
     <transform pos="-6 4 117" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/generator.static_mesh" />
     <generator rad ="2" />
+    <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
   </entity>
 
   <entity>
@@ -1434,5 +1437,7 @@
     <tag name="victory_point" />
     <transform pos="0 7.8 177" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/generator.static_mesh" />
+    <rigidbody type_collision="trigger" type_shape="box" size="1 1 1" />
+    <victory_point/>
   </entity>
 </entities>

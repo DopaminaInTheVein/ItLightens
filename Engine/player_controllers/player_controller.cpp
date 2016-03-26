@@ -358,6 +358,30 @@ void player_controller::UpdateInputActions()
 		last_pol_state = pol_state;
 		SendMessagePolarizeState();
 	}
+
+	UpdateActionsTrigger();
+}
+
+void player_controller::UpdateActionsTrigger() {
+	PROFILE_FUNCTION("player_controller: update Actions trigger");
+
+	if (canRecEnergy) {
+		ui.addTextInstructions("\n Press 'E' to recharge energy\n");
+		if (io->keys['E'].becomesPressed()) {
+			rechargeEnergy();
+			curr_evol = 1;
+		}
+	}
+
+	if (canPassWire) {
+		ui.addTextInstructions("\n Press 'E' to pass by the wire\n");
+
+		if (io->keys['E'].becomesPressed()) {
+			SetMyEntity();
+			SetCharacterController();
+			cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(endPointWire));
+		}
+	}
 }
 
 void player_controller::SetCharacterController()
@@ -547,25 +571,13 @@ void player_controller::onDamage(const TMsgDamage& msg) {
 
 void player_controller::onWirePass(const TMsgWirePass & msg)
 {
-	PROFILE_FUNCTION("onWirepass");
-	ui.addTextInstructions("\n Press 'E' to pass by the wire\n");
-
-	if (io->keys['E'].becomesPressed()) {
-		SetMyEntity();
-		SetCharacterController();
-		cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(msg.dst));
-	}
+	canPassWire = msg.range;
+	endPointWire = msg.dst;
 }
 
 void player_controller::onCanRec(const TMsgCanRec & msg)
 {
-	PROFILE_FUNCTION("onCanrec");
-	ui.addTextInstructions("\n Press 'E' to recharge energy\n");
-
-	if (io->keys['E'].becomesPressed()) {
-		rechargeEnergy();
-		curr_evol = 1;
-	}
+	canRecEnergy = msg.range;
 }
 
 void player_controller::onPolarize(const TMsgPolarize & msg)

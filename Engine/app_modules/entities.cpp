@@ -56,6 +56,8 @@ DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
+DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
+
 
 CCamera * camera;
 
@@ -71,6 +73,7 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 
+	getHandleManager<TVictoryPoint>()->init(20);
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(8);
@@ -139,6 +142,11 @@ bool CEntitiesModule::start() {
 	//generator
 	SUBSCRIBE(TCompGenerator, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgCanRec, onCanRec);
+	SUBSCRIBE(TCompGenerator, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TCompGenerator, TMsgTriggerOut, onTriggerExitCall);
+
+	//victory point
+	SUBSCRIBE(TVictoryPoint, TMsgTriggerIn, onTriggerEnterCall);
 
 	//polarized
 	SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);
@@ -263,6 +271,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<water_controller>()->onAll(&water_controller::Init);
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
+	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 

@@ -144,10 +144,8 @@ public:
 		CEntity* targeted = targetowner;
 		TCompLife * targetlife = targeted->get<TCompLife>();
 		TCompTransform * targettrans = targeted->get<TCompTransform>();
-		CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
-		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
 
-		if (targetlife->currentlife > 0.0f && 0.5f <= simpleDist(victoryPoint_transform->getPosition(), targettrans->getPosition())) {
+		if (GameController->GetGameState()==CGameController::RUNNING) {
 			my_tmx->lookAt(origin, target_loc);
 			//Aplicar offset
 			my_tmx->setPosition(my_tmx->getPosition() + position_diff);

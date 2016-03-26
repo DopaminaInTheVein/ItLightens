@@ -93,11 +93,8 @@ public:
 
 		//if (Input.IsKeyPressedDown(KEY_L))
 			//life->refillLife();
-		CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
-		TCompTransform * player_transform = target_e->get<TCompTransform>();
-		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
 
-		if (life->currentlife <= 0.0f) {
+		if (GameController->GetGameState() == CGameController::LOSE) {
 			bool open = true;
 			ImGui::Begin("Fatal Player State", &open, ImVec2(300, 100), -1.0f);
 			ImGui::Text("You are Dead!\n");
@@ -105,7 +102,7 @@ public:
 			ImGui::Text("Press 'ENTER' to restart\n");
 			ImGui::End();
 		}
-		else if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
+		else if (GameController->GetGameState() == CGameController::VICTORY) {
 			bool open = true;
 			ImGui::Begin("Victory Player State", &open, ImVec2(300, 100), -1.0f);
 			ImGui::Text("You WIN!\n");

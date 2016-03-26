@@ -30,16 +30,13 @@ CPlayerBase::CPlayerBase() {
 
 bool CPlayerBase::checkDead() {
 	PROFILE_FUNCTION("checkdead");
-	SetMyEntity();
-	TCompLife * player_life = myEntity->get<TCompLife>();
-	if (player_life->currentlife <= 0) {
+
+	if (GameController->GetGameState() == CGameController::LOSE) {
 		ChangeState("die");
 		return true;
 	}
-	CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
-	TCompTransform * player_transform = myEntity->get<TCompTransform>();
-	TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
-	if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
+
+	if (GameController->GetGameState() == CGameController::VICTORY) {
 		ChangeState("win");
 		return true;
 	}
