@@ -19,6 +19,8 @@
 #include "recast/navmesh.h"
 #include "recast/navmesh_query.h"
 #include <vector>
+#include <thread>
+#include <future>
 
 DECL_OBJ_MANAGER("entity", CEntity);
 DECL_OBJ_MANAGER("name", TCompName);
@@ -166,7 +168,7 @@ bool CEntitiesModule::start() {
 	assert(is_ok);
 
 	// GENERATE NAVMESH
-	VHandles collisionables = ep.getCollisionables();
+	collisionables = ep.getCollisionables();
 	CNavmesh nav;
 	nav.m_input.clearInput();
 	for (CHandle han : collisionables) {
@@ -183,7 +185,7 @@ bool CEntitiesModule::start() {
 		nav.m_input.addInput(min, max);
 	}
 	nav.m_input.computeBoundaries();
-	nav.build();
+	/*nav.build();*/
 	SBB::postNavmesh(nav);
 
 	TTagID tagIDplayer = getID("player");
@@ -264,6 +266,14 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
+	static float timeAcumulated = 10.0f;
+	timeAcumulated += getDeltaTime();
+	if (timeAcumulated > 10.0f) {
+		timeAcumulated = 0.0f;
+		std::thread t(&CEntitiesModule::recalcNavmesh, this);
+		t.detach();
+	}
+
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
 	getHandleManager<player_controller_speedy>()->updateAll(dt);
@@ -304,7 +314,7 @@ void CEntitiesModule::render() {
 	//getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 #endif
 
-	getHandleManager<TCompSkeleton>()->onAll( &TCompSkeleton::render );
+	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 }
 
@@ -319,4 +329,26 @@ void CEntitiesModule::renderInMenu() {
 		ImGui::TreePop();
 	}
 	ImGui::End();
+}
+
+void CEntitiesModule::recalcNavmesh() {
+	// GENERATE NAVMESH
+	CNavmesh nav;
+	nav.m_input.clearInput();
+	for (CHandle han : collisionables) {
+		CEntity * e = han;
+		TCompPhysics * p = e->get<TCompPhysics>();
+		PxBounds3 bounds = p->getActor()->getWorldBounds();
+		VEC3 min, max;
+		min.x = bounds.minimum.x;
+		min.y = bounds.minimum.y;
+		min.z = bounds.minimum.z;
+		max.x = bounds.maximum.x;
+		max.y = bounds.maximum.y;
+		max.z = bounds.maximum.z;
+		nav.m_input.addInput(min, max);
+	}
+	nav.m_input.computeBoundaries();
+	nav.build();
+	SBB::postNavmesh(nav);
 }
