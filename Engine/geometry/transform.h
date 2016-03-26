@@ -33,6 +33,11 @@ public:
 		return mrot.Right();
 	}
 
+	VEC3			getUp() const {
+		MAT44 mrot = MAT44::CreateFromQuaternion(rotation);
+		return mrot.Up();
+	}
+
 	// ---------------------------
 	void       getAngles(float* yaw, float* pitch) const {
 		VEC3 f = getFront();

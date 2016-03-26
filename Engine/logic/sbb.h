@@ -3,12 +3,14 @@
 
 using namespace std;
 
+class CNavmesh;
 class CHandle;
 class bt_mole;
 
 class SBB
 {
 private:
+	static CNavmesh nav;
 	static map<string, bool > sbbBool;
 	static map<string, int > sbbInt;
 	static map<string, VEC3> sbbVEC3;
@@ -19,6 +21,10 @@ private:
 public:
 	SBB() = delete;
 	static void init();
+
+	// NavMesh
+	static void postNavmesh(CNavmesh);
+	static CNavmesh readNavmesh();
 	// sbbInt
 	static void postInt(string, int);
 	static int readInt(string);

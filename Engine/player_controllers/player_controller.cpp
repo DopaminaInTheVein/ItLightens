@@ -92,14 +92,23 @@ void player_controller::ChangePose(CHandle new_pos_h)
 		new_pos_h = pose_no_ev;
 		cc->GetController()->resize(min_height);	//update collider size to new form
 		curr_evol = 0;
+		
+		actual_render->unregisterFromRender();
+		TCompRenderStaticMesh *new_pose = new_pos_h;
+		actual_render = new_pose;
+		actual_render = new_pose;
+		actual_render->registerToRender();
 	}
+	else if (curr_evol > 0) {
 
-	TCompRenderStaticMesh *new_pose = new_pos_h;
-	if (new_pose == actual_render) return;		//no change
+		TCompRenderStaticMesh *new_pose = new_pos_h;
+		if (new_pose == actual_render) return;		//no change
 
-	actual_render->unregisterFromRender();
-	actual_render = new_pose;
-	actual_render->registerToRender();
+		actual_render->unregisterFromRender();
+		actual_render = new_pose;
+		actual_render->registerToRender();
+
+	}
 }
 
 void player_controller::myUpdate() {

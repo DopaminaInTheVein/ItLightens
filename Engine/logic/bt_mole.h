@@ -37,6 +37,10 @@ class bt_mole : public bt_poss, public TCompBase {
 	vector<VEC3> fixedWpts;
 	int curwpt;
 
+	vector<VEC3> pathWpts;
+	int currPathWpt;
+	int totalPathWpt;
+
 	CObjectManager<bt_mole> * om = nullptr;
 	CHandle myHandle;
 	CHandle myParent;
@@ -73,15 +77,12 @@ public:
 	//conditions
 	bool checkBoxes();
 	//actions
-	int actionSeekBoxWpt();
-	int actionNextBoxWpt();
+	int actionFollowBoxWpt();
 	int actionGrabBox();
-	int actionCarryFindBoxWpt();
-	int actionCarryNextBoxWpt();
-	int actionCarrySeekBoxWpt();
+	int actionFollowNextBoxLeavepointWpt();
 	int actionUngrabBox();
-	int actionSeekWpt();
-	int actionNextWpt();
+	int actionLookForWpt();
+	int actionFollowPathToWpt();
 
 	bool load(MKeyValue& atts);
 

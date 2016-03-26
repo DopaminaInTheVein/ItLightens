@@ -117,6 +117,10 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
     assert(curr_entity.isValid());
     CEntity* e = curr_entity;
     new_h.load(atts);
+    if (elem == "rigidbody") {
+	collisionables.push_back(curr_entity);
+    }
+
     if( !reusing_component )
       e->add(new_h);
   }

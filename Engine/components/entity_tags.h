@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <string>
 #include "handle/handle.h"
 #include "components/entity.h"
 
