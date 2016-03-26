@@ -52,7 +52,7 @@ bool TCompPhysics::load(MKeyValue & atts)
 		break;
 	case BOX:
 		mSize = atts.getPoint("size");
-		mSize = mSize / 2;
+		mSize = mSize/2;
 		break;
 	case CAPSULE:
 		mRadius = atts.getFloat("radius", 0.5f);
@@ -144,13 +144,17 @@ void TCompPhysics::update(float dt)
 		// ask physics about the current pos + rotation
 		// update my sibling TCompTransform with the physics info
 		PxTransform curr_pose = rigidActor->getGlobalPose();
-
-		if (mCollisionShape == BOX) curr_pose.p.y = curr_pose.p.y - 0.5f;		//TODO: Origin from shape at center!!!!! mesh center at foot, FIX THAT, temp solution
 		
 		CEntity *e = CHandle(this).getOwner();
 		TCompTransform *tmx = e->get<TCompTransform>();
-		tmx->setPosition(PxVec3ToVec3( curr_pose.p));
-		tmx->setRotation(PxQuatToCQuaternion(curr_pose.q));
+		CQuaternion quat = PxQuatToCQuaternion(curr_pose.q);
+		tmx->setRotation(quat);
+		//quat.CreateFromAxisAngle(anglesEuler,0.0f);
+		VEC3 up_mesh = tmx->getUp();
+		VEC3 pos = PxVec3ToVec3(curr_pose.p);
+		if (mCollisionShape == BOX) pos -= 0.5*up_mesh; 		//TODO: Origin from shape at center!!!!! mesh center at foot, FIX THAT, temp solution
+		tmx->setPosition(pos);
+		
 	}
 }
 

@@ -292,6 +292,10 @@ void CPlayerBase::Jumping()
 	PROFILE_FUNCTION("jumping base");
 	UpdateDirection();
 	UpdateMovDirection();
+
+	if (cc->GetYAxisSpeed() < 0) {
+		ChangeState("falling");
+	}
 }
 
 void CPlayerBase::Moving()
