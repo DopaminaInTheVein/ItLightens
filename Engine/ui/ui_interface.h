@@ -93,9 +93,7 @@ public:
 
 		//if (Input.IsKeyPressedDown(KEY_L))
 			//life->refillLife();
-		CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
 		TCompTransform * player_transform = target_e->get<TCompTransform>();
-		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
 
 		if (life->currentlife <= 0.0f) {
 			bool open = true;
@@ -105,13 +103,21 @@ public:
 			ImGui::Text("Press 'ENTER' to restart\n");
 			ImGui::End();
 		}
-		else if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
-			bool open = true;
-			ImGui::Begin("Victory Player State", &open, ImVec2(300, 100), -1.0f);
-			ImGui::Text("You WIN!\n");
-			ImGui::Text("Press 'ESC' to exit\n");
-			ImGui::Text("Press 'ENTER' to restart\n");
-			ImGui::End();
+		else {
+			CHandle hVictoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
+			if (hVictoryPoint.isValid()) {
+				CEntity * victoryPoint = hVictoryPoint;
+				TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
+
+				if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
+					bool open = true;
+					ImGui::Begin("Victory Player State", &open, ImVec2(300, 100), -1.0f);
+					ImGui::Text("You WIN!\n");
+					ImGui::Text("Press 'ESC' to exit\n");
+					ImGui::Text("Press 'ENTER' to restart\n");
+					ImGui::End();
+				}
+			}
 		}
 	}
 

@@ -36,12 +36,16 @@ bool CPlayerBase::checkDead() {
 		ChangeState("die");
 		return true;
 	}
-	CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
 	TCompTransform * player_transform = myEntity->get<TCompTransform>();
-	TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
-	if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
-		ChangeState("win");
-		return true;
+
+	CHandle hVictoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
+	if (hVictoryPoint.isValid()) {
+		CEntity * victoryPoint = hVictoryPoint;
+		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
+		if (0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
+			ChangeState("win");
+			return true;
+		}
 	}
 	return false;
 }

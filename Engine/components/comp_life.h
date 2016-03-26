@@ -36,13 +36,21 @@ struct TCompLife : public TCompBase {
 		dbg("TCompLife on TMsgEntityCreated\n");
 	}
 	void onDamage(const TMsgDamage& msg) {
-		CEntity * victoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
+		CHandle hVictoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
 		CHandle playerhandle = CHandle(this).getOwner();
 		CEntity * target_e = playerhandle;
 		TCompTransform * player_transform = target_e->get<TCompTransform>();
-		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
 
-		if (0.5f <= simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition())) {
+		bool win = false;
+		if (hVictoryPoint.isValid()) {
+			CEntity * victoryPoint = hVictoryPoint;
+			TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
+			win = 0.5f > simpleDist(victoryPoint_transform->getPosition(), player_transform->getPosition());
+		}
+		
+
+
+		if (!win) {
 			float dmgTotal;
 			switch (msg.dmgType) {
 			case ENERGY_DECREASE:

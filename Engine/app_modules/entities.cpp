@@ -52,7 +52,6 @@ DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
-
 static CHandle player;
 static CHandle target;
 CCamera * camera;
@@ -99,7 +98,6 @@ bool CEntitiesModule::start() {
 	//colliders
 	getHandleManager<TCompPhysics>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
-	
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
@@ -118,7 +116,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
-	
+
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
@@ -169,7 +167,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
 
 	CEntityParser ep;
-	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
+	//bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
 	assert(is_ok);
 
 	TTagID tagIDplayer = getID("player");
@@ -188,8 +187,6 @@ bool CEntitiesModule::start() {
 	// Player real
 	CHandle t = tags_manager.getFirstHavingTag(getID("target"));
 	CEntity * target_e = t;
-
-	
 
 	// Set the player in the 3rdPersonController
 	if (player_e && t.isValid()) {
@@ -267,7 +264,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);
-	getHandleManager<TCompSkeleton>()->updateAll( dt );
+	getHandleManager<TCompSkeleton>()->updateAll(dt);
 	getHandleManager<bt_speedy>()->updateAll(dt);
 	getHandleManager<water_controller>()->updateAll(dt);
 
@@ -294,7 +291,7 @@ void CEntitiesModule::render() {
 	//getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 #endif
 
-	getHandleManager<TCompSkeleton>()->onAll( &TCompSkeleton::render );
+	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 }
 

@@ -9,7 +9,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/sc_1_box.static_mesh"
+   name="static_meshes/sc_1_box"
 />
 <rigidbody
    type_collision="static"
@@ -54,7 +54,7 @@
    height="50.0"
 />
 <render_static_mesh
-   name="static_meshes/player_first_ev.static_mesh"
+   name="static_meshes/player_first_ev"
 />
 <player/>
 </entity>
