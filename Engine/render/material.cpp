@@ -25,7 +25,7 @@ void CMaterial::onStartElement(const std::string &elem, MKeyValue &atts) {
 		tech = Resources.get(tech_name.c_str())->as<CRenderTechnique>();
 	}
 	else if (elem == "texture") {
-		auto type_name = atts["type"];  // diffuse/specular/...
+		auto type_name = atts["slot"];  // diffuse/specular/...
 		auto text_name = atts["name"];
 
 		TTextureSlot type_slot;
