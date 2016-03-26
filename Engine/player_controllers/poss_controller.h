@@ -26,6 +26,7 @@ public:
 	//Mensajes
 	void onSetEnable(const TMsgControllerSetEnable&);
 	void onSetEnable(bool);
+	void onDamage(const TMsgDamage&);
 
 	//FUNCIONES QUE REDEFINIR!
 	//virtual void DisabledState();

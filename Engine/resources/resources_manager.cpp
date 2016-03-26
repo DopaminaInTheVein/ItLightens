@@ -7,21 +7,24 @@
 #include "render/material.h"
 #include "render/static_mesh.h"
 #include "imgui/imgui.h"
+#include "skeleton/skeleton.h"
+
 
 CResourcesManager Resources;
 
-const char* IResource::getTypeName(IResource::eType atype) {
-	switch (atype) {
-	case IResource::UNDEFINED: return "undefined";
-	case IResource::MESH:      return "Meshes";
-	case IResource::TECHNIQUE: return "Techniques";
-	case IResource::VERTEX_SHADER: return "VertexShaders";
-	case IResource::PIXEL_SHADER: return "PixelShaders";
-	case IResource::TEXTURE: return "Textures";
-	case IResource::MATERIAL: return "Materials";
-	case IResource::STATIC_MESH: return "StaticMeshes";
-	}
-	return "invalid";
+const char* IResource::getTypeName( IResource::eType atype ) {
+  switch (atype) {
+  case IResource::UNDEFINED: return "undefined";
+  case IResource::MESH:      return "Meshes";
+  case IResource::TECHNIQUE: return "Techniques";
+  case IResource::VERTEX_SHADER: return "VertexShaders";
+  case IResource::PIXEL_SHADER: return "PixelShaders";
+  case IResource::TEXTURE: return "Textures";
+  case IResource::MATERIAL: return "Materials";
+  case IResource::STATIC_MESH: return "StaticMeshes";
+  case IResource::SKELETON: return "Skeletons";
+  }
+  return "invalid";
 }
 
 const IResource* CResourcesManager::get(const char* name) {
@@ -60,6 +63,9 @@ const IResource* CResourcesManager::get(const char* name) {
 	else if (ext == ".static_mesh") {
 		new_obj = createObjFromName<CStaticMesh>(name);
 	}
+	else if (ext == ".skeleton") {
+	    new_obj = createObjFromName<CSkeleton>(name);
+  	}
 	else {
 		fatal("Invalid resource type %s at %s\n", ext.c_str(), name);
 	}

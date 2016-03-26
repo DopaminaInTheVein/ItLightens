@@ -16,6 +16,9 @@
 #include "render/mesh.h"
 #include "render/static_mesh.h"
 
+
+
+
 #include "camera/camera.h"
 
 class CEntity;
@@ -26,11 +29,6 @@ class CObjectManager;
 class player_controller_mole : public PossController {
 	CObjectManager<player_controller_mole> *om;
 	float player_max_speed = CPlayerBase::player_max_speed;
-
-protected:
-	//virtual method for know am I (player, mole, speedy, ...)
-	virtual PLAYER_TYPE whoAmI() { return MOLE; };
-
 public:
 	void Init();
 
@@ -47,12 +45,12 @@ public:
 	int selectedWallToBreaki = 0;
 
 	//Cambio Malla
-	TCompRenderStaticMesh* actual_render = nullptr;
-	CHandle pose_idle;
-	CHandle pose_run;
-	CHandle pose_jump;
-	CHandle pose_box;
-	CHandle pose_wall;
+	TCompRenderStaticMesh* mesh;
+	string pose_idle_route;
+	string pose_run_route;
+	string pose_jump_route;
+	string pose_box_route;
+	string pose_wall_route;
 
 	void update_msgs() override;
 
@@ -78,7 +76,9 @@ public:
 	}
 
 	//Cambio Malla
-	void ChangePose(CHandle new_pos_h);
+	void ChangePose(string new_pose_route);
+
+	void SetCharacterController();
 
 	//Overload function for handler_manager
 	player_controller_mole& player_controller_mole::operator=(player_controller_mole arg) { return arg; }

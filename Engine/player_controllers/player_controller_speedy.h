@@ -27,7 +27,7 @@ struct TCompRenderStaticMesh;
 class player_controller_speedy : public PossController {
 	CObjectManager<player_controller_speedy> *om;
 
-	const float dash_speed = 15.f;
+	const float dash_speed = 30.f;
 	const float dash_max_duration = 1.f;
 	float dash_duration = 0.f;
 
@@ -50,21 +50,17 @@ class player_controller_speedy : public PossController {
 
 	const string water_static_mesh = "static_meshes/water.static_mesh";
 
-	//Cambio Malla
-	TCompRenderStaticMesh* actual_render = nullptr;
-	CHandle pose_idle;
-	CHandle pose_run;
-	CHandle pose_jump;
-protected:
-	//virtual method for know am I (player, mole, speedy, ...)
-	virtual PLAYER_TYPE whoAmI() { return SPEEDY; };
+	TCompRenderStaticMesh* mesh;
+	string pose_idle_route;
+	string pose_run_route;
+	string pose_jump_route;
+	string pose_void_route;
 
 public:
 	void Init();
 	void myUpdate() override;
 
 	void UpdateInputActions();
-	void ApplyGravity();
 
 	// Speedy specific state
 	void DoubleJump();
@@ -78,7 +74,7 @@ public:
 	bool dashFront();
 	bool collisionWall();
 	bool collisionBlink(float& distCollision);
-	CHandle rayCastToFront(int types, float reach, float& distRay);
+	bool rayCastToFront(int types, float reach, float& distRay);
 	// Timer control functions
 	void resetDashTimer();
 	void updateDashTimer();
@@ -87,12 +83,17 @@ public:
 	void updateDropWaterTimer();
 	void resetDropWaterTimer();
 
+	void UpdateUnpossess() override;
+
 	void DisabledState();
 	void InitControlState();
 	CEntity* getMyEntity();
 
 	//Cambio Malla
-	void ChangePose(CHandle new_pos_h);
+	//void ChangePose(CHandle new_pos_h);
+	void ChangePose(string new_pose_route);
+
+	void SetCharacterController();
 
 	//Overload function for handler_manager
 	player_controller_speedy& player_controller_speedy::operator=(player_controller_speedy arg) { return arg; }

@@ -37,6 +37,7 @@
 
 //Cambio malla
 struct TCompRenderStaticMesh;
+class TCompCharacterController;
 
 class ai_guard : public TCompBase, public aicontroller
 {
@@ -57,6 +58,7 @@ class ai_guard : public TCompBase, public aicontroller
 	CHandle myParent;
 	CHandle thePlayer;
 	TCompTransform * getTransform();
+	TCompCharacterController * getCC();
 	CEntity* getPlayer();
 
 	//Cambio malla
@@ -107,13 +109,15 @@ class ai_guard : public TCompBase, public aicontroller
 	void resetTimers();
 
 	//Raycast
-	CHandle rayCastToPlayer(int types, float& distRay);
+	bool rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit);
 	void shootToPlayer();
 
 	//from bombs
 	float reduce_factor = 3.0f;
-	float t_reduceStats_max = 15.0f;
+	float t_reduceStats_max = 15;
 	float t_reduceStats = 0.0f;
+
+	bool stunned;
 
 public:
 	void SelectActionState();
@@ -126,6 +130,7 @@ public:
 	void SoundDetectedState();
 	void LookArroundState();
 	void ShootingWallState();
+	void StuntState();
 
 	void Init() override;
 	void init() { Init(); }
@@ -135,6 +140,7 @@ public:
 	void reduceStats();
 	void resetStats();
 	void onMagneticBomb(const TMsgMagneticBomb& msg);
+	void onStaticBomb(const TMsgStaticBomb& msg);
 
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();
@@ -156,6 +162,7 @@ public:
 	//Cambio Malla
 	void ChangePose(CHandle new_pos_h);
 
+	float timerStunt, _timerStunt;
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)
 };
 

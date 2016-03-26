@@ -5,6 +5,7 @@
 #include "components\comp_transform.h"
 #include "components\entity.h"
 #include "ai_workbench.h"
+#include "components\comp_charactercontroller.h"
 
 #include "ai_beacon.h"
 
@@ -62,7 +63,7 @@ void ai_scientific::LookForObj()
 	if (beacon_to_go_name != "") {
 		ChangeState("seekWB");
 	}
-	else if (keyPoints.size() > 0){
+	else if (keyPoints.size() > 0) {
 		ChangeState("nextKpt");
 	}
 }
@@ -87,12 +88,15 @@ void ai_scientific::SeekWorkbench()
 	for (int i = 1; i <= wbs; i++) {		//fisrt start at 1
 		std::string name = base_name + std::to_string(i);
 		if (SBB::readInt(name) == workbench_controller::INACTIVE) {
-			obj_position = SBB::readVEC3(name);
-			wb_to_go_name = name;
-			actual_action = CREATE_BEACON;
-			SBB::postInt(name, workbench_controller::INACTIVE_TAKEN);
-			ChangeState("aimToPos");
-			return;
+			VEC3 wb_pos = SBB::readVEC3(name);
+			if (wb_pos.z > zmin && wb_pos.z < zmax) {
+				obj_position = wb_pos;
+				wb_to_go_name = name;
+				actual_action = CREATE_BEACON;
+				SBB::postInt(name, workbench_controller::INACTIVE_TAKEN);
+				ChangeState("aimToPos");
+				return;
+			}
 		}
 	}
 
@@ -146,16 +150,15 @@ void ai_scientific::MoveToPos()
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
+	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 
 	VEC3 target = obj_position;
 	float delta_time = getDeltaTime();
 
-	VEC3 new_pos = curr_pos;
-	new_pos.x += delta_time*move_speed*me_transform->getFront().x;
-	new_pos.y += delta_time*move_speed*me_transform->getFront().y;
-	new_pos.z += delta_time*move_speed*me_transform->getFront().z;
 
-	me_transform->setPosition(new_pos);
+	cc->AddMovement(me_transform->getFront(), move_speed);
+	VEC3 new_pos = cc->getPosition() - VEC3(0, cc->GetRadius() + cc->GetHeight(), 0);
+
 
 	float dist_square = simpleDistXZ(new_pos, target);
 
@@ -225,11 +228,13 @@ void ai_scientific::onRemoveBeacon(const TMsgBeaconToRemove& msg)
 	if (actual_action == IDLE || actual_action == WANDER) {
 		//TODO: preference for closest objectives
 		if (SBB::readInt(msg.name_beacon) != beacon_controller::TO_REMOVE_TAKEN) {
-			SBB::postInt(msg.name_beacon, beacon_controller::TO_REMOVE_TAKEN);
-			obj_position = beacon_to_go = msg.pos_beacon;
-			beacon_to_go_name = msg.name_beacon;
-			actual_action = REMOVE_BEACON;
-			ChangeState("aimToPos");
+			if (msg.pos_beacon.z > zmin && msg.pos_beacon.z < zmax) {
+				SBB::postInt(msg.name_beacon, beacon_controller::TO_REMOVE_TAKEN);
+				obj_position = beacon_to_go = msg.pos_beacon;
+				beacon_to_go_name = msg.name_beacon;
+				actual_action = REMOVE_BEACON;
+				ChangeState("aimToPos");
+			}
 		}
 	}
 }
@@ -238,11 +243,13 @@ void ai_scientific::onEmptyBeacon(const TMsgBeaconEmpty & msg)
 {
 	if (actual_action == IDLE || actual_action == WANDER) {
 		if (SBB::readInt(msg.name) != beacon_controller::INACTIVE_TAKEN) {
-			beacon_to_go = msg.pos;
-			beacon_to_go_name = msg.name;
-			actual_action = CREATE_BEACON;
-			SBB::postInt(msg.name, beacon_controller::INACTIVE_TAKEN);	//disable beacon for other bots
-			ChangeState("seekWB");
+			if (msg.pos.z > zmin && msg.pos.z < zmax) {
+				beacon_to_go = msg.pos;
+				beacon_to_go_name = msg.name;
+				actual_action = CREATE_BEACON;
+				SBB::postInt(msg.name, beacon_controller::INACTIVE_TAKEN);	//disable beacon for other bots
+				ChangeState("seekWB");
+			}
 		}
 	}
 }
@@ -337,18 +344,21 @@ CEntity* ai_scientific::getMyEntity() {
 char nameVariable[10]; sprintf(nameVariable, "kpt%d_%s", index, nameSufix);
 
 bool ai_scientific::load(MKeyValue& atts) {
-	dbg("load de AI_GUARD\n");
 	int n = atts.getInt("kpt_size", 0);
 	keyPoints.resize(n);
-	for (unsigned int i = 0; i < n; i++) {
+	for ( int i = 0; i < n; i++) {
 		KPT_ATR_NAME(atrType, "type", i);
 		KPT_ATR_NAME(atrPos, "pos", i);
 		KPT_ATR_NAME(atrWait, "wait", i);
 		keyPoints[i] = KeyPoint(
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
-			, atts.getInt(atrWait, 0)
+			, atts.getFloat(atrWait, 0.0f)
 			);
 	}
+
+	zmin = atts.getFloat("zmin",0.0f);
+	zmax = atts.getFloat("zmax",0.0f);
+
 	return true;
 }

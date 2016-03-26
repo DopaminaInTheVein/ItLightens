@@ -3,7 +3,6 @@
 #include "ai_guard.h"
 #include "components/entity_tags.h"
 #include "utils/XMLParser.h"
-#include "physics/physics.h"
 #include "logic/sbb.h"
 #include "app_modules\io\io.h"
 #include "ui\ui_interface.h"
@@ -19,9 +18,17 @@ TCompTransform * ai_guard::getTransform() {
 	return t;
 }
 
+TCompCharacterController* ai_guard::getCC() {
+	CEntity * e = myParent;
+	TCompCharacterController * cc = e->get<TCompCharacterController>();
+	return cc;
+}
+
 CEntity* ai_guard::getPlayer() {
+	VHandles targets = tags_manager.getHandlesByTag(getID("target"));
+	thePlayer = targets[targets.size() - 1];
 	CEntity* player = thePlayer;
-	return player;;
+	return player;
 }
 
 /**************
@@ -45,15 +52,18 @@ void ai_guard::Init()
 	AddState(ST_SOUND_DETECTED, (statehandler)&ai_guard::SoundDetectedState);
 	AddState(ST_LOOK_ARROUND, (statehandler)&ai_guard::LookArroundState);
 	AddState(ST_SHOOTING_WALL, (statehandler)&ai_guard::ShootingWallState);
+	AddState(ST_STUNT, (statehandler)&ai_guard::StuntState);
 
 	// reset the state
 	ChangeState(ST_SELECT_ACTION);
 	curkpt = 0;
 
 	//Other info
-	____TIMER_REDEFINE_(timerShootingWall, 8);
+	____TIMER_REDEFINE_(timerShootingWall, 1);
+	____TIMER_REDEFINE_(timerStunt, 15);
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
+	stunned = false;
 
 	//Mallas
 	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
@@ -208,7 +218,7 @@ void ai_guard::ShootState() {
 		turnTo(posPlayer);
 		if (squaredDistY(myPos, posPlayer) * 2 > dist) { //Angulo de 30 grados
 			//Si pitch muy alto me alejo
-			goForward(-SPEED_WALK * getDeltaTime());
+			goForward(-SPEED_WALK);
 		}
 		if (!playerVisible()) {
 			ChangeState(ST_SHOOTING_WALL);
@@ -289,16 +299,46 @@ void ai_guard::LookArroundState() {
 	}
 }
 
+void ai_guard::StuntState() {
+	____TIMER_CHECK_DO_(timerStunt);
+	ChangeState(ST_SELECT_ACTION);
+	stunned = false;
+	____TIMER_CHECK_DONE_(timerStunt);
+}
+
 /**************
 * Mensajes
 **************/
 void ai_guard::noise(const TMsgNoise& msg) {
 	if (outJurisdiction(msg.source)) return;
 	if (playerVisible()) return;
+	if (stunned) return;
 	if (canHear(msg.source, msg.intensity)) {
 		resetTimers();
 		noisePoint = msg.source;
 		ChangeState(ST_SOUND_DETECTED);
+	}
+}
+
+void ai_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
+{
+	VEC3 myPos = getTransform()->getPosition();
+	float d = squaredDist(msg.pos, myPos);
+
+	if (d < msg.r) {
+		reduceStats();
+		t_reduceStats = t_reduceStats_max;
+	}
+}
+
+void ai_guard::onStaticBomb(const TMsgStaticBomb& msg) {
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	VEC3 posPlayer = tPlayer->getPosition();
+	VEC3 myPos = getTransform()->getPosition();
+	if (squaredDist(msg.pos, posPlayer) < msg.r * msg.r) {
+		resetTimers();
+		stunned = true;
+		ChangeState(ST_STUNT);
 	}
 }
 
@@ -308,13 +348,13 @@ void ai_guard::noise(const TMsgNoise& msg) {
 
  // -- Go To -- //
 bool ai_guard::canHear(VEC3 position, float intensity) {
-	return (squaredDistXZ(getTransform()->getPosition(), position) > DIST_SQ_SOUND_DETECTION);
+	return (squaredDistXZ(getTransform()->getPosition(), position) < DIST_SQ_SOUND_DETECTION);
 }
 
 // -- Go To -- //
 void ai_guard::goTo(const VEC3& dest) {
 	//avanzar
-	goForward(SPEED_WALK * getDeltaTime());
+	goForward(SPEED_WALK);
 
 	//girar
 	turnTo(dest);
@@ -323,7 +363,7 @@ void ai_guard::goTo(const VEC3& dest) {
 // -- Go Forward -- //
 void ai_guard::goForward(float stepForward) {
 	VEC3 myPos = getTransform()->getPosition();
-	getTransform()->setPosition(myPos + getTransform()->getFront() * stepForward);
+	getCC()->AddMovement(getTransform()->getFront() * stepForward);
 }
 
 // -- Turn To -- //
@@ -361,21 +401,31 @@ bool ai_guard::turnTo(VEC3 dest) {
 
 // -- Player Visible? -- //
 bool ai_guard::playerVisible() {
-	if (SBB::readBool("possMode")) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
+	if (SBB::readBool("possMode") && squaredDistXZ(myPos, posPlayer) > 25.f) {
+		return false;
+	}
 	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos) * 2) { //Pitch < 30
 		if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
 			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) { //Distancia
 				if (inJurisdiction(posPlayer)) { //Jurisdiccion
 					float distanceJur = squaredDistXZ(posPlayer, jurCenter);
-					ray_cast_query rcQuery;
 					float distRay;
-					CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
-					if (collider.isValid()) { //No bloquea vision
-						if (collider == thePlayer) {
-							return true;
+					if (SBB::readBool("possMode")) {
+						// Estas poseyendo, estas cerca y dentro del cono de vision, no hace falta raycast
+						return true;
+					}
+					else {
+						//TODO RAYCAST PLAYER
+						PxRaycastBuffer hit;
+						bool ret = rayCastToPlayer(1, distRay,hit);
+						if (ret) { //No bloquea vision
+							CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+							if (h.hasTag("target")) { //player?
+								return true;
+							}
 						}
 					}
 				}
@@ -385,17 +435,23 @@ bool ai_guard::playerVisible() {
 	return false;
 }
 
-CHandle ai_guard::rayCastToPlayer(int types, float& distRay) {
-	ray_cast_query rcQuery;
+bool ai_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) {
 	VEC3 myPos = getTransform()->getPosition();
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	rcQuery.position = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
-	rcQuery.direction = tPlayer->getPosition() - myPos;
-	rcQuery.maxDistance = DIST_RAYSHOT;
-	rcQuery.types = types;
-	ray_cast_result res = Physics::calcRayCast(rcQuery);
-	distRay = realDist(res.positionCollision, getTransform()->getPosition());
-	return res.firstCollider;
+	VEC3 origin = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
+	VEC3 direction = tPlayer->getPosition() - myPos;
+	direction.Normalize();
+	float dist = DIST_RAYSHOT;
+	//rcQuery.types = types;
+	CEntity *e = myParent;
+	TCompCharacterController *cc = e->get<TCompCharacterController>();
+	Debug->DrawLine(origin + VEC3(0, 0.5f, 0), getTransform()->getFront(), 10.0f);
+	bool ret = PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
+
+	if(ret)
+		distRay = hit.getAnyHit(0).distance;
+
+	return ret;
 }
 
 void ai_guard::shootToPlayer() {
@@ -408,11 +464,27 @@ void ai_guard::shootToPlayer() {
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 
-	//RayCast
+	bool damage = false;
 	float distRay;
-	CHandle collider = rayCastToPlayer(COL_TAG_PLAYER | COL_TAG_SOLID, distRay);
-	if (collider == thePlayer) {
-		CEntity* ePlayer = thePlayer;
+	if (SBB::readBool("possMode")) {
+		damage = true;
+		distRay = realDist(myPos, posPlayer);
+	}
+	else {
+		//RayCast to player //TODO RAYCAST
+		PxRaycastBuffer hit;
+		bool ret = rayCastToPlayer(1, distRay, hit);
+		if (ret) {
+			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+			if (h.hasTag("target")) {
+				damage = true;
+			}
+		}
+	}
+
+	//Do damage
+	if (damage) {
+		CEntity* ePlayer = getPlayer();
 		TMsgDamage dmg;
 		dmg.source = getTransform()->getPosition();
 		dmg.sender = myParent;
@@ -432,12 +504,12 @@ void ai_guard::shootToPlayer() {
 // -- Jurisdiction -- //
 bool ai_guard::inJurisdiction(VEC3 posPlayer) {
 	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur < jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
+	return distanceJur < jurRadiusSq;
 }
 
 bool ai_guard::outJurisdiction(VEC3 posPlayer) {
 	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_LEAVE;
+	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
 }
 
 // -- Reset Timers-- //
@@ -445,6 +517,7 @@ void ai_guard::resetTimers() {
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
 	____TIMER_RESET_(timerShootingWall);
+	____TIMER_RESET_(timerStunt);
 }
 
 /**************
@@ -457,14 +530,14 @@ bool ai_guard::load(MKeyValue& atts) {
 	dbg("load de AI_GUARD\n");
 	int n = atts.getInt("kpt_size", 0);
 	keyPoints.resize(n);
-	for (unsigned int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		KPT_ATR_NAME(atrType, "type", i);
 		KPT_ATR_NAME(atrPos, "pos", i);
 		KPT_ATR_NAME(atrWait, "wait", i);
 		keyPoints[i] = KeyPoint(
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
-			, atts.getInt(atrWait, 0)
+			, atts.getFloat(atrWait, 0.0f)
 			);
 	}
 	noShoot = atts.getBool("noShoot", false);
@@ -500,6 +573,7 @@ void ai_guard::renderInMenu() {
 
 void ai_guard::reduceStats()
 {
+	noShoot = true;
 	DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI / reduce_factor;
 	DIST_SQ_SHOT_AREA_ENTER = DIST_SQ_SHOT_AREA_ENTER_INI / reduce_factor;
 	DIST_SQ_SHOT_AREA_LEAVE = DIST_SQ_SHOT_AREA_LEAVE_INI / reduce_factor;
@@ -522,17 +596,6 @@ void ai_guard::resetStats()
 	CONE_VISION = CONE_VISION_INI;
 	SPEED_ROT = SPEED_ROT_INI;
 	DAMAGE_LASER = DAMAGE_LASER_INI;
-}
-
-void ai_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
-{
-	VEC3 myPos = getTransform()->getPosition();
-	float d = squaredDist(msg.pos, myPos);
-
-	if (d < msg.r) {
-		reduceStats();
-		t_reduceStats = t_reduceStats_max;
-	}
 }
 
 //Cambio de malla

@@ -2,6 +2,7 @@
 #include "ai_poss.h"
 #include "components\entity.h"
 #include "components\comp_transform.h"
+#include "components\entity_tags.h"
 
 ai_poss::ai_poss() {
 	AddState("idle", (statehandler)&ai_poss::idle);
@@ -115,7 +116,6 @@ const void ai_poss::UnpossessingState() {
 
 const void ai_poss::StuntState() {
 	actionStunt();
-	Debug->LogRaw("%f -> %f\n", timeStunt, _timeStunt);
 	____TIMER_CHECK_DO_(timeStunt);
 	stunned = false;
 	ChangeState(ST_STUNT_END);

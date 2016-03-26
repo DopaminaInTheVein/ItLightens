@@ -17,7 +17,7 @@
 #include "app_modules\io\io.h"
 #include "utils/utils.h"
 
-#include "physics\physics.h"
+#include "components/comp_charactercontroller.h"
 
 CPlayerBase::CPlayerBase() {
 	AddState("idle", (statehandler)&CPlayerBase::Idle);
@@ -29,6 +29,7 @@ CPlayerBase::CPlayerBase() {
 }
 
 bool CPlayerBase::checkDead() {
+	PROFILE_FUNCTION("checkdead");
 	SetMyEntity();
 	TCompLife * player_life = myEntity->get<TCompLife>();
 	if (player_life->currentlife <= 0) {
@@ -49,6 +50,7 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 }
 
 void CPlayerBase::update(float elapsed) {
+	PROFILE_FUNCTION("update base");
 	if (controlEnabled) {
 		if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
 			CApp& app = CApp::get();
@@ -78,9 +80,8 @@ void CPlayerBase::update(float elapsed) {
 
 void CPlayerBase::UpdateMoves()
 {
+	PROFILE_FUNCTION("update moves base");
 	SetMyEntity();
-
-	ApplyGravity();
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -122,15 +123,8 @@ void CPlayerBase::UpdateMoves()
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
 
-	//set final position
-	if (onGround) {
-		player_position = player_position + direction*getDeltaTime()*player_curr_speed;
-	}
-	else {
-		player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
-	}
-
-	player_transform->executeMovement(player_position);
+	SetCharacterController();
+	cc->AddMovement(direction, player_curr_speed);
 	UpdateMovingWithOther();
 }
 #pragma endregion
@@ -142,6 +136,7 @@ void CPlayerBase::UpdateMoves()
 #pragma region Inputs
 
 bool CPlayerBase::UpdateMovDirection() {
+	PROFILE_FUNCTION("update direction base");
 	moving = false;
 
 	bool horizontal = false;
@@ -183,6 +178,7 @@ bool CPlayerBase::UpdateMovDirection() {
 }
 
 void CPlayerBase::UpdateJumpState() {
+	PROFILE_FUNCTION("update jump state base");
 	if (io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed()) {
 		Jump();
 	}
@@ -214,6 +210,7 @@ void CPlayerBase::UpdateMovingWithOther() {
 //##########################################################################
 #pragma region Player States
 void CPlayerBase::energyDecreasal(float howmuch) {
+	PROFILE_FUNCTION("player base: energy dec function");
 	SetMyEntity();
 	TMsgDamage msg;
 	msg.points = howmuch;
@@ -223,6 +220,7 @@ void CPlayerBase::energyDecreasal(float howmuch) {
 
 void CPlayerBase::Idle()
 {
+	PROFILE_FUNCTION("idle base");
 	if (!checkDead()) {
 		energyDecreasal(getDeltaTime()*0.05f);
 		UpdateDirection();
@@ -233,27 +231,28 @@ void CPlayerBase::Idle()
 
 void CPlayerBase::Jump()
 {
-	if (onGround) {
+	PROFILE_FUNCTION("jump base");
+	SetCharacterController();
+	if (cc->OnGround()) {
 		energyDecreasal(1.0f);
 	}
-	jspeed = jimpulse;
-	directionJump = VEC3(0, 1, 0);
-	onGround = false;
+	
+	cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
+	//jspeed = jimpulse;
+	//directionJump = VEC3(0, 1, 0);
+	//onGround = false;
 	ChangeState("jumping");
 }
 
 void CPlayerBase::Die()
 {
+	PROFILE_FUNCTION("die base");
 	SetMyEntity();
+	SetCharacterController();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	if (player_position.y > 0.0f) {
+	if (!cc->OnGround()) {
 		Falling();
-	}
-	else {
-		onGround = true;
-		jspeed = 0.0f;
-		directionJump = VEC3(0, 0, 0);
 	}
 	orbitCameraDeath();
 	ChangeState("idle");
@@ -261,62 +260,28 @@ void CPlayerBase::Die()
 
 void CPlayerBase::Win()
 {
+	PROFILE_FUNCTION("win base");
 	SetMyEntity();
+	SetCharacterController();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	if (player_position.y > 0.0f) {
+	if (!cc->OnGround()) {
 		Falling();
-	}
-	else {
-		onGround = true;
-		jspeed = 0.0f;
-		directionJump = VEC3(0, 0, 0);
 	}
 	orbitCameraDeath();
 	ChangeState("idle");
 }
 
-void CPlayerBase::ApplyGravity() {
-	SetMyEntity();
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-
-	ray_cast_query floor_query = ray_cast_query(player_position, VEC3(0, -1, 0), 15.0f, COL_TAG_SOLID);
-	ray_cast_result res = Physics::calcRayCast(floor_query);
-	VEC3 ground = res.positionCollision;
-	float d = simpleDist(player_position, ground);
-
-	if (d > 0.1f || jspeed > 0.1f) {
-		jspeed -= gravity*getDeltaTime();
-		player_position = player_position + VEC3(0, 1, 0)*getDeltaTime()*jspeed;
-		//player_transform->setPosition(player_position);
-		if (!player_transform->executeMovement(player_position)) {
-			onGround = true;
-			jspeed = 0.0f;
-			ChangeState("idle");
-		}
-		else {
-			if (state != "doublefalling" && jspeed < 0.1f) {
-				if (state == "doublejump")
-					ChangeState("doublefalling");
-				else
-					ChangeState("falling");
-			}
-
-			onGround = false;
-		}
-	}
-	else {
-		onGround = true;
-	}
-}
 
 void CPlayerBase::Falling()
 {
+	PROFILE_FUNCTION("falling base");
 	UpdateDirection();
 	UpdateMovDirection();
 
-	if (onGround) {
+	SetCharacterController();
+
+	if (cc->OnGround()) {
 		jspeed = 0.0f;
 		ChangeState("idle");
 	}
@@ -324,12 +289,14 @@ void CPlayerBase::Falling()
 
 void CPlayerBase::Jumping()
 {
+	PROFILE_FUNCTION("jumping base");
 	UpdateDirection();
 	UpdateMovDirection();
 }
 
 void CPlayerBase::Moving()
 {
+	PROFILE_FUNCTION("moving base");
 	energyDecreasal(getDeltaTime()*0.05f);
 	UpdateDirection();
 	UpdateJumpState();
@@ -342,11 +309,13 @@ void CPlayerBase::Moving()
 
 // Sets the entity
 void CPlayerBase::SetMyEntity() {
+	PROFILE_FUNCTION("set enitity base");
 	myEntity = myParent;
 }
 
 void CPlayerBase::renderInMenu()
 {
+	PROFILE_FUNCTION("render in menu base");
 	VEC3 direction = directionForward + directionLateral;
 	direction.Normalize();
 	direction = direction + directionJump;
@@ -362,6 +331,7 @@ void CPlayerBase::renderInMenu()
 }
 
 void CPlayerBase::orbitCameraDeath() {
+	PROFILE_FUNCTION("orbit camera dead base");
 	float angle = getDeltaTime();
 	float s = sin(angle);
 	float c = cos(angle);

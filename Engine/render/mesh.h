@@ -6,6 +6,15 @@
 
 struct CVertexDeclaration;
 
+struct FileDataMesh {
+	std::vector<unsigned char> vtxs;
+	std::vector<unsigned char> idxs;
+	uint32_t numVtx;
+	uint32_t numIdx;
+	uint32_t numVtxPerBytes;
+	uint32_t numIdxPerBytes;
+};
+
 class CMesh : public IResource {
 	ID3D11Buffer*             vb;
 	ID3D11Buffer*             ib;
@@ -56,6 +65,32 @@ public:
 	void activate() const;
 	void render() const;
 	void activateAndRender() const;
+
+	static FileDataMesh loadData(std::string path, CDataProvider & dp);
+
+	uint32_t getNumVtxs() const {
+		return num_vertexs;
+	}
+
+	uint32_t getNumIdxs() const {
+		return num_idxs;
+	}
+
+	ID3D11Buffer* getVtxBuffer() const {
+		return vb;
+	}
+
+	ID3D11Buffer* getIdxBuffer() const {
+		return ib;
+	}
+
+	uint32_t getBytesPerVtx() const {
+		return num_bytes_per_vertex;
+	}
+
+	uint32_t getBytesPerIdx() const {
+		return num_bytes_per_idx;
+	}
 
 	const std::string& getName() const {
 		return name;

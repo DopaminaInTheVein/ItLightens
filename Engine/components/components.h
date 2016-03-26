@@ -8,6 +8,7 @@
 #include "comp_render_static_mesh.h"
 #include "comp_controller_3rd_person.h"
 #include "comp_life.h"
+#include "skeleton/comp_skeleton.h"
 
 //Logic
 #include "logic/ai_beacon.h"
@@ -25,13 +26,14 @@
 #include "player_controllers/player_controller_cientifico.h"
 
 //Physics
-#include "physics/comp_col_cylinder.h"
-#include "physics\colliders.h"
+#include "comp_physics.h"
+#include "comp_charactercontroller.h"
 
 //prefabs
 #include "prefabs\magnetic_bomb.h"
 #include "prefabs\static_bomb.h"
 #include "comp_wire.h"
 #include "comp_generator.h"
+#include "comp_polarized.h"
 
 #endif

@@ -13,8 +13,6 @@ struct TCompTransform : public CTransform, public TCompBase {
     dbg("TCompTransform on TMsgEntityCreated\n");
   }
   void renderInMenu();
-
-  bool executeMovement(VEC3 new_pos);
 };
 
 #endif

@@ -8,8 +8,6 @@
 // --------------------------------------------
 class CEntity : public TCompBase {
 	CHandle comps[CHandle::max_types];
-
-	int typeCollision = 0;
 	
 
 public:
@@ -31,6 +29,10 @@ public:
 		return comps[hm->getType()];
 	}
 
+CHandle getByCompIndex(uint32_t idx) {
+    return comps[idx];
+ }
+
 	template< typename TObj >
 	void del() {
 		get<TObj>().destroy();
@@ -40,6 +42,7 @@ public:
 
 	template< class TMsg >
 	void sendMsg(const TMsg& msg) {
+		//if(profiler) PROFILE_FUNCTION("entity: send message");
 		// Get all entries matching the msg_id of the TMsg
 		auto range = msg_subscriptions.equal_range(TMsg::getMsgID());
 		while (range.first != range.second) {
@@ -59,6 +62,7 @@ public:
 
 	template< class TMsg >
 	void sendMsgWithReply(TMsg& msg) {
+		PROFILE_FUNCTION("entity: send message with reply");
 		// Get all entries matching the msg_id of the TMsg
 		auto range = msg_subscriptions.equal_range(TMsg::getMsgID());
 		while (range.first != range.second) {
@@ -75,20 +79,6 @@ public:
 			range.first++;
 		}
 	}
-
-
-
-	//TO REMOVE
-
-	//Collision type
-	enum typeCollision {
-		NONE = 0,
-		SPHERE,
-		BOX
-	};
-
-	void	setCollisionType(int type) { typeCollision = type; }
-	int		getCollisionType() const { return typeCollision; }
 
 	// --------------------------------------------
 	void renderInMenu();

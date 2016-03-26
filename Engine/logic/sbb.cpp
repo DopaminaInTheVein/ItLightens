@@ -3,11 +3,12 @@
 #include "sbb.h"
 #include "handle\handle.h"
 #include "logic/ai_mole.h"
+#include "logic/bt_mole.h"
 
 map<string, int> SBB::sbbInt;
 map<string, bool> SBB::sbbBool;
 map<string, VEC3> SBB::sbbVEC3;
-map<string, ai_mole*> SBB::sbbMole;
+map<string, bt_mole*> SBB::sbbMole;
 map<string, CHandle> SBB::sbbHandle;
 map<string, vector<CHandle>> SBB::sbbHandlesVector;
 
@@ -72,11 +73,11 @@ VEC3 SBB::readVEC3(string name) {
 }
 
 // sbbMoles
-void SBB::postMole(string name, ai_mole* value) {
+void SBB::postMole(string name, bt_mole* value) {
 	sbbMole[name] = value;
 }
 
-ai_mole* SBB::readMole(string name) {
+bt_mole* SBB::readMole(string name) {
 	if (sbbMole.find(name) == sbbMole.end())
 	{
 		fatal("sbbMole: Se intenta leer String que no existe!");

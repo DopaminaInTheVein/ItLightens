@@ -10,7 +10,10 @@
 #include "render\static_mesh.h"
 #include "app_modules\io\io.h"
 #include "components/comp_msgs.h"
+#include "handle/handle.h"
 #include "ui\ui_interface.h"
+
+#include "components\comp_charactercontroller.h"
 
 #define DELTA_YAW_SELECTION		deg2rad(10)
 
@@ -25,20 +28,18 @@ void player_controller::Init() {
 
 	AddState("falling", (statehandler)&player_controller::Falling);
 	AddState("jumping", (statehandler)&player_controller::Jumping);
-	AddState("toplus", (statehandler)&player_controller::AttractToPlus);
-	AddState("tominus", (statehandler)&player_controller::AttractToMinus);
 
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 
-	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_idle = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_run	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_jump	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_idle	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
 
-	pose_no_ev = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
-	actual_render = pose_no_ev;
+	pose_no_ev		= myEntity->get<TCompRenderStaticMesh>();		//defined on xml
+	actual_render	= pose_no_ev;
 
 	pose_no_ev.setOwner(myEntity);
 	pose_idle.setOwner(myEntity);
@@ -64,40 +65,69 @@ void player_controller::Init() {
 }
 
 bool player_controller::isDamaged() {
+	PROFILE_FUNCTION("player controller: is damaged");
 	return !____TIMER__END_(timerDamaged);
 }
 
 void player_controller::rechargeEnergy()
 {
-	SetMyEntity();
+	PROFILE_FUNCTION("recharge_eergy");
 	TCompLife *life = myEntity->get<TCompLife>();
 	life->setMaxLife(max_life);
+	TCompCharacterController *p = myEntity->get<TCompCharacterController>();
+	PxController *cc = p->GetController();
+	cc->resize(full_height);
 	ChangePose(pose_idle);
 }
 
+
 void player_controller::ChangePose(CHandle new_pos_h)
 {
+	PROFILE_FUNCTION("player controller: change pose player");
 	SetMyEntity();
 	TCompLife *life = myEntity->get<TCompLife>();
-	if (life->currentlife < evolution_limit) new_pos_h = pose_no_ev;
+
+	if (life->currentlife < evolution_limit && curr_evol > 0) {
+		SetCharacterController();
+		new_pos_h = pose_no_ev;
+		cc->GetController()->resize(min_height);	//update collider size to new form
+		curr_evol = 0;
+	}
 
 	TCompRenderStaticMesh *new_pose = new_pos_h;
 	if (new_pose == actual_render) return;		//no change
 
 	actual_render->unregisterFromRender();
 	actual_render = new_pose;
-	//CEntity *me = myParent;
-	//me->del<TCompRenderStaticMesh>();
-	//me->add(new_pos_h);
 	actual_render->registerToRender();
 }
 
 void player_controller::myUpdate() {
+	PROFILE_FUNCTION("player controller: MY_update");
+	SetMyEntity();
+	TCompTransform *m = myEntity->get<TCompTransform>();
+	
+	/*
+	//TESTING RAYCAST
+	int hits = 0;
+	SetCharacterController();
+	VEC3 origin = PhysxConversion::PxExVec3ToVec3(cc->GetController()->getFootPosition());
+	Debug->DrawLine(origin + m->getFront()*0.5f + VEC3(0,1,0), m->getFront(), 2.0f);
+	PxQueryFilterData filterData = PxQueryFilterData();
+	filterData.data.word0 = CPhysxManager::eGUARD;
+	PxRaycastBuffer hit;
+
+	if (PhysxManager->raycast(origin + m->getFront()*0.5f + VEC3(0, 0.5f, 0), m->getFront(), 2.0f, hit, filterData)) {
+		hits = hit.hasAnyHits();
+		Debug->LogRaw("player hits = %d to guard\n", hits);
+	}
+	//END TESTING RAYCAST
+	*/
+
 	____TIMER__UPDATE_(timerDamaged);
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 pos = player_transform->getPosition();
-	dbg("PLAYER POSI: %f %f %f\n", pos.x, pos.y, pos.z);
 	if (!isDamaged()) {
 		UpdatePossession();
 	}
@@ -105,37 +135,43 @@ void player_controller::myUpdate() {
 
 void player_controller::DoubleJump()
 {
+	PROFILE_FUNCTION("player controller: double jump");
 	UpdateDirection();
 	UpdateMovDirection();
 
-	if (jspeed <= 0.1f) {
-		jspeed = 0.0f;
+	SetCharacterController();
+
+	if (cc->GetYAxisSpeed() < 0.0f) {
 		ChangeState("doublefalling");
 	}
 }
 
 void player_controller::DoubleFalling() {
+	PROFILE_FUNCTION("player controller: double falling");
 	UpdateDirection();
 	UpdateMovDirection();
-
-	if (onGround) {
-		jspeed = 0.0f;
+	SetCharacterController();
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 }
 
 void player_controller::Jumping()
 {
+	PROFILE_FUNCTION("player controller: jumping");
 	UpdateDirection();
 	UpdateMovDirection();
+	SetCharacterController();
 
-	if (onGround) {
-		jspeed = 0.0f;
+	if (cc->GetYAxisSpeed() <= 0.0f)
+		ChangeState("falling");
+
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		jspeed = jimpulse;
+		cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
 		energyDecreasal(5.0f);
 		ChangeState("doublejump");
 	}
@@ -143,130 +179,58 @@ void player_controller::Jumping()
 
 void player_controller::Falling()
 {
+	PROFILE_FUNCTION("player controller: falling");
 	UpdateDirection();
 	UpdateMovDirection();
+	SetCharacterController();
 
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		jspeed = jimpulse;
+		cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
 		energyDecreasal(5.0f);
 		ChangeState("doublejump");
 	}
 
-	if (onGround) {
-		jspeed = 0.0f;
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 }
 
-void player_controller::AttractToMinus() {
-	CEntity * entPoint = this->getMinusPointHandle(topolarizedminus);
-	tominus = true;
-	toplus = false;
-	AttractMove(entPoint);
-	ChangeState("idle");
-}
-void player_controller::AttractToPlus() {
-	CEntity * entPoint = this->getPlusPointHandle(topolarizedplus);
-	tominus = false;
-	toplus = true;
-	AttractMove(entPoint);
-	ChangeState("idle");
+
+void player_controller::RecalcAttractions()
+{
+	PROFILE_FUNCTION("player controller: recalc attraction");
+	if (pol_state == NEUTRAL) return;	//check if polarized is neutral, no effect
+	VEC3 forces = VEC3(0,0,0);
+
+	for (auto force : force_points) {		//sum of all forces
+		if (force.pol == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
+		if(pol_state == force.pol) forces += AttractMove(force.point);
+		else if (pol_state != force.pol) forces -= AttractMove(force.point);
+	}
+
+	SetCharacterController();
+	forces.Normalize();
+	Debug->LogRaw("num_effects pols = %d\n", force_points.size());
+	cc->AddMovement(forces, player_max_speed);
 }
 
-bool player_controller::nearMinus() {
-	if (topolarizedminus != -1) {
-		return true;
-	}
-	else {
-		bool found = false;
-		if (SBB::readHandlesVector("wptsMinusPoint").size() > 0) {
-			float distMax = 10.0f;
-			for (int i = 0; !found && i < SBB::readHandlesVector("wptsMinusPoint").size(); i++) {
-				CEntity * entTransform = this->getMinusPointHandle(i);
-				TCompTransform * transformBox = entTransform->get<TCompTransform>();
-				VEC3 wpt = transformBox->getPosition();
-				float disttowpt = simpleDist(wpt, getEntityTransform()->getPosition());
-				if (disttowpt < distMax) {
-					distMax = disttowpt;
-					topolarizedminus = i;
-					found = true;
-					polarizedMove = true;
-				}
-			}
-		}
-		return found;
-	}
-}
-bool player_controller::nearPlus() {
-	if (topolarizedplus != -1) {
-		return true;
-	}
-	else {
-		bool found = false;
-		if (SBB::readHandlesVector("wptsPlusPoint").size() > 0) {
-			float distMax = 10.0f;
-			for (int i = 0; !found && i < SBB::readHandlesVector("wptsPlusPoint").size(); i++) {
-				CEntity * entTransform = this->getPlusPointHandle(i);
-				TCompTransform * transformBox = entTransform->get<TCompTransform>();
-				VEC3 wpt = transformBox->getPosition();
-				float disttowpt = simpleDist(wpt, getEntityTransform()->getPosition());
-				if (disttowpt < distMax) {
-					distMax = disttowpt;
-					topolarizedplus = i;
-					found = true;
-					polarizedMove = true;
-				}
-			}
-		}
-		return found;
-	}
-}
-
-void player_controller::AttractMove(CEntity * entPoint) {
-	if (entPoint == nullptr) {
-		return;
-	}
-	TCompTransform * entPointTransform = entPoint->get<TCompTransform>();
+VEC3 player_controller::AttractMove(VEC3 point_pos) {
+	PROFILE_FUNCTION("player controller: attract move");
+	
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	VEC3 direction = entPointTransform->getPosition() - player_position;
-	float drag = getDeltaTime();
-	float drag_i = (1 - drag);
-
-	if (polarizedMove) polarizedCurrentSpeed = drag_i*polarizedCurrentSpeed + drag*player_max_speed;
-	else polarizedCurrentSpeed = drag_i*polarizedCurrentSpeed - drag*player_max_speed;
-
-	float multiplier = getDeltaTime()*polarizedCurrentSpeed * 1.5f;
-
-	float tox = min(fabsf(direction.x*multiplier), fabsf(player_position.x - entPointTransform->getPosition().x));
-	float toy = min(fabsf(direction.y*multiplier), fabsf(player_position.y - entPointTransform->getPosition().y));
-	float toz = min(fabsf(direction.z*multiplier), fabsf(player_position.z - entPointTransform->getPosition().z));
-
-	if (direction.x < 0) {
-		tox *= -1;
-	}
-	if (direction.z < 0) {
-		toz *= -1;
-	}
-	if (direction.y < 0) {
-		toy *= -1;
-	}
-
-	player_position.x += tox;
-
-	jspeed = polarizedCurrentSpeed*direction.y;
-	player_position.z += toz;
-	player_transform->setPosition(player_position);
+	VEC3 direction = point_pos - player_position;
+	return direction/squaredDist(player_position,point_pos);
 }
 
 void player_controller::UpdateMoves()
 {
+	PROFILE_FUNCTION("player controller: update moves");
 	SetMyEntity();
-
-	ApplyGravity();
+	SetCharacterController();
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -294,7 +258,7 @@ void player_controller::UpdateMoves()
 
 	player_transform->getAngles(&yaw, &pitch);
 
-	player_transform->setAngles(new_yaw + yaw, pitch);
+	player_transform->setAngles(new_yaw + yaw, pitch);		//control rotate transfom, not needed for the character controller
 
 	//Set current velocity with friction
 	float drag = 2.5f*getDeltaTime();
@@ -308,44 +272,58 @@ void player_controller::UpdateMoves()
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
 
-	//set final position
-	if (onGround) {
+	if (cc->OnGround() && player_curr_speed != 0.0f) {
 		ChangePose(pose_run);
-		player_position = player_position + direction*getDeltaTime()*player_curr_speed;
 	}
-	else {
+	else if(player_curr_speed != 0.0f) {
 		ChangePose(pose_jump);
-		player_position = player_position + direction*getDeltaTime()*(player_curr_speed / 2.0f);
-	}
+	}else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
-	if (player_curr_speed == 0.0f) ChangePose(pose_idle);
-
-	player_transform->executeMovement(player_position);
+	
+	cc->AddMovement(direction , player_curr_speed);
 }
 
 void player_controller::UpdateInputActions()
 {
-	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed()) && nearMinus()) {
+	PROFILE_FUNCTION("update input actions");
+	SetCharacterController();
+	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed())) {
 		energyDecreasal(getDeltaTime()*0.05f);
-		ChangeState("tominus");
+		pol_state = PLUS;
+		if (!affectPolarized && force_points.size() != 0) {
+			affectPolarized = true;
+			cc->SetGravity(false);
+		}
+		else if (affectPolarized && force_points.size() == 0) {
+			affectPolarized = false;
+			cc->SetGravity(true);
+		}
+		RecalcAttractions();
 	}
-	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed()) && nearPlus()) {
+	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed())) {
 		energyDecreasal(getDeltaTime()*0.05f);
-		ChangeState("toplus");
-	}
-	else if (polarizedCurrentSpeed > .2f) {
-		energyDecreasal(getDeltaTime()*0.1f);
-		polarizedMove = false;
-		CEntity * entPoint = nullptr;
-		if (tominus) {
-			entPoint = this->getMinusPointHandle(topolarizedminus);
+		pol_state = MINUS;
+		if (!affectPolarized && force_points.size() != 0) {
+			affectPolarized = true;
+			cc->SetGravity(false);
 		}
-		else if (toplus) {
-			entPoint = this->getPlusPointHandle(topolarizedplus);
+		else if (affectPolarized && force_points.size() == 0) {
+			affectPolarized = false;
+			cc->SetGravity(true);
 		}
-		AttractMove(entPoint);
+
+		RecalcAttractions();
+		
 	}
-	else if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
+	else {
+		pol_state = NEUTRAL;
+		if (affectPolarized) {
+			affectPolarized = false;
+			cc->SetGravity(true);
+		}
+	}
+	
+	if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado
 		CEntity* ePoss = currentStunable;
@@ -364,16 +342,25 @@ void player_controller::UpdateInputActions()
 			}
 		}
 	}
-	else {
-		topolarizedplus = -1;
-		topolarizedminus = -1;
-		polarizedCurrentSpeed = 0.0f;
+	
+
+	if (last_pol_state != pol_state) {
+		last_pol_state = pol_state;
+		SendMessagePolarizeState();
 	}
+}
+
+void player_controller::SetCharacterController()
+{
+	PROFILE_FUNCTION("set cc");
+	SetMyEntity();
+	cc = myEntity->get<TCompCharacterController>();
 }
 
 float CPlayerBase::possessionCooldown;
 //Possession
 void player_controller::UpdatePossession() {
+	PROFILE_FUNCTION("update poss");
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
 		if (io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) {
@@ -383,15 +370,22 @@ void player_controller::UpdatePossession() {
 			msg.possessed = true;
 			ePoss->sendMsg(msg);
 			possessionCooldown = 1.0f;
+			// Camara Nueva
+			CEntity * player_e = tags_manager.getFirstHavingTag(getID("player"));
+			TMsgSetTarget msgTarg;
+			msgTarg.target = ePoss;
+			player_e->sendMsg(msgTarg);
 
 			//Se desactiva el player
 			controlEnabled = false;
 			SBB::postBool("possMode", true);
 
 			//TODO: Desactivar render
-			CEntity * eMe = CHandle(this).getOwner();
-			TCompTransform* tMe = eMe->get<TCompTransform>();
-			tMe->setPosition(VEC3(0, 200, 0));
+			SetCharacterController();
+			cc->SetActive(false);
+			cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
+			TCompTransform *t = myEntity->get<TCompTransform>();
+			t->setPosition(VEC3(0, 200, 0));
 			player_curr_speed = 0;
 		}
 	}
@@ -399,6 +393,7 @@ void player_controller::UpdatePossession() {
 
 // Recalcula el mejor candidato para poseer
 void player_controller::recalcPossassable() {
+	PROFILE_FUNCTION("recalc possessable");
 	float minDeltaYaw = FLT_MAX;
 	float minDistance = FLT_MAX;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
@@ -446,6 +441,7 @@ void player_controller::recalcPossassable() {
 
 // Calcula el mejor candidato para stunear
 bool player_controller::nearStunable() {
+	PROFILE_FUNCTION("near stunnable");
 	float minDeltaYaw = FLT_MAX;
 	float minDistance = FLT_MAX;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
@@ -489,21 +485,26 @@ bool player_controller::nearStunable() {
 }
 
 void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
+	PROFILE_FUNCTION("on leave poss");
 	// Handles y entities necesarias
 	CHandle  hMe = CHandle(this).getOwner();
 	CEntity* eMe = hMe;
 	CHandle hPlayer = tags_manager.getFirstHavingTag(getID("player"));
 	CEntity* ePlayer = hPlayer;
+	
 
 	//Colocamos el player
+	SetCharacterController();
+	VEC3 pos = msg.npcPos + VEC3(0.0f, cc->GetHeight(), 0.0f);	//to be sure the collider will be above the ground, add height from collider, origin on center shape
 	TCompTransform* tMe = eMe->get<TCompTransform>();
-	tMe->lookAt(msg.npcPos, msg.npcPos + msg.npcFront * 1);
-	tMe->setPosition(msg.npcPos + msg.npcFront * DIST_LEAVING_POSSESSION);
+	cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(pos + msg.npcFront * DIST_LEAVING_POSSESSION));	//set collider position
+	tMe->setPosition(msg.npcPos + msg.npcFront * DIST_LEAVING_POSSESSION);												//set render position
+	cc->SetActive(true);
+
 
 	//Set 3rd Person Controller
 	TMsgSetTarget msg3rdController;
 	msg3rdController.target = hMe;
-	msg3rdController.who = PLAYER;
 	ePlayer->sendMsg(msg3rdController);
 
 	//Set Camera
@@ -518,10 +519,12 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 
 void player_controller::update_msgs()
 {
+	PROFILE_FUNCTION("updat mesgs");
 	ui.addTextInstructions("Press 'l-shift' to possess someone\n");
 }
 
 void player_controller::onDamage(const TMsgDamage& msg) {
+	PROFILE_FUNCTION("onDamage");
 	switch (msg.dmgType) {
 	case LASER:
 		____TIMER_RESET_(timerDamaged);
@@ -534,20 +537,44 @@ void player_controller::onDamage(const TMsgDamage& msg) {
 
 void player_controller::onWirePass(const TMsgWirePass & msg)
 {
+	PROFILE_FUNCTION("onWirepass");
 	ui.addTextInstructions("\n Press 'E' to pass by the wire\n");
 
 	if (io->keys['E'].becomesPressed()) {
 		SetMyEntity();
-		TCompTransform *t = myEntity->get<TCompTransform>();
-		t->setPosition(msg.dst);
+		SetCharacterController();
+		cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(msg.dst));
 	}
 }
 
 void player_controller::onCanRec(const TMsgCanRec & msg)
 {
+	PROFILE_FUNCTION("onCanrec");
 	ui.addTextInstructions("\n Press 'E' to recharge energy\n");
 
 	if (io->keys['E'].becomesPressed()) {
 		rechargeEnergy();
+		curr_evol = 1;
+	}
+}
+
+void player_controller::onPolarize(const TMsgPolarize & msg)
+{
+	if (!msg.range) {
+		TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
+		force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
+	}else{
+		TForcePoint newForce = TForcePoint(msg.origin, msg.pol);
+		force_points.push_back(newForce);
+	}
+}
+
+void player_controller::SendMessagePolarizeState()
+{
+	TMsgPlayerPolarize msg;
+	msg.type = pol_state;
+	VHandles hs = tags_manager.getHandlesByTag(getID("box"));
+	for (CEntity *e : hs) {
+		e->sendMsg(msg);
 	}
 }

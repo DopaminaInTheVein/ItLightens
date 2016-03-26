@@ -14,6 +14,7 @@
 #include "app_modules\io\io.h"
 #include "render\static_mesh.h"
 #include "components\comp_render_static_mesh.h"
+#include "components/comp_charactercontroller.h"
 
 void player_controller_cientifico::Init() {
 	om = getHandleManager<player_controller_cientifico>();	//player
@@ -40,6 +41,7 @@ void player_controller_cientifico::Init() {
 #pragma region Inputs
 
 void player_controller_cientifico::UpdateInputActions() {
+	PROFILE_FUNCTION("player cientifico: energy dec");
 	energyDecreasal(getDeltaTime()*0.5f);
 	if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
 		ChangeState("createDisableBeacon");
@@ -72,6 +74,7 @@ void player_controller_cientifico::UpdateInputActions() {
 
 void player_controller_cientifico::ExplodeBomb()
 {
+	PROFILE_FUNCTION("player cientifico: explode bomb");
 	if (obj == STATIC_BOMB_GAME && bomb_handle.isValid()) {
 		CStaticBomb *bomb = bomb_handle;
 		obj = EMPTY;
@@ -96,6 +99,7 @@ void player_controller_cientifico::ExplodeBomb()
 
 void player_controller_cientifico::CreateMagneticBomb()
 {
+	PROFILE_FUNCTION("player cientifico: vreate mag bomb");
 	t_waiting += getDeltaTime();
 	if (t_waiting >= t_create_MagneticBomb) {
 		dbg("magnetic bomb created!\n");
@@ -107,6 +111,7 @@ void player_controller_cientifico::CreateMagneticBomb()
 
 void player_controller_cientifico::CreateDisableBeacon()
 {
+	PROFILE_FUNCTION("player cientifico: create disable beac");
 	//TODO: input cancel
 	t_waiting += getDeltaTime();
 	if (t_waiting >= t_create_beacon) {
@@ -119,6 +124,7 @@ void player_controller_cientifico::CreateDisableBeacon()
 
 void player_controller_cientifico::CreateStaticBomb()
 {
+	PROFILE_FUNCTION("player cientifico: create static");
 	t_waiting += getDeltaTime();
 	if (t_waiting >= t_create_StaticBomb) {
 		dbg("static bomb created!\n");
@@ -130,8 +136,9 @@ void player_controller_cientifico::CreateStaticBomb()
 
 void player_controller_cientifico::AddDisableBeacon()
 {
+	PROFILE_FUNCTION("player cientifico: add disable beac");
 	if (obj == DISABLE_BEACON) {
-		VEntities es = tags_manager.getHandlesPointerByTag(getID("beacon"));
+		VHandles es = tags_manager.getHandlesByTag(getID("beacon"));
 		TMsgBeaconBusy msg;
 		bool resp = false;
 		msg.reply = &resp;
@@ -154,6 +161,7 @@ void player_controller_cientifico::AddDisableBeacon()
 
 void player_controller_cientifico::UseMagneticBomb()
 {
+	PROFILE_FUNCTION("player cientifico: use mag bomb");
 	if (obj == MAGNETIC_BOMB) createMagneticBombEntity();
 	obj = MAGNETIC_BOMB_GAME;
 	ChangeState("idle");
@@ -161,6 +169,7 @@ void player_controller_cientifico::UseMagneticBomb()
 
 void player_controller_cientifico::UseStaticBomb()
 {
+	PROFILE_FUNCTION("player cientifico: use static bomb");
 	if (obj == STATIC_BOMB) createStaticBombEntity();
 	obj = STATIC_BOMB_GAME;
 	ChangeState("idle");
@@ -178,6 +187,7 @@ void player_controller_cientifico::UseStaticBomb()
 
 void player_controller_cientifico::createMagneticBombEntity()
 {
+	PROFILE_FUNCTION("player cientifico: create mag bomb");
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -225,6 +235,7 @@ void player_controller_cientifico::createMagneticBombEntity()
 
 void player_controller_cientifico::createStaticBombEntity()
 {
+	PROFILE_FUNCTION("player cientifico: create static bomb entity");
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -275,11 +286,13 @@ void player_controller_cientifico::createStaticBombEntity()
 
 // Sets the entity
 void player_controller_cientifico::SetMyEntity() {
+	PROFILE_FUNCTION("player cientico set my entity");
 	myEntity = myParent;
 }
 
 void player_controller_cientifico::renderInMenu()
 {
+	PROFILE_FUNCTION("player cientifico: render in menu");
 	VEC3 direction = directionForward + directionLateral;
 	direction.Normalize();
 	direction = direction + directionJump;
@@ -290,18 +303,30 @@ void player_controller_cientifico::renderInMenu()
 	ImGui::Text("object: %d\n", obj);
 }
 
-void player_controller_cientifico::DisabledState() {
+void player_controller_cientifico::UpdateUnpossess() {
+	PROFILE_FUNCTION("player cientifico: update unposses");
+	CHandle h = CHandle(this);
+	tags_manager.removeTag(h.getOwner(), getID("target"));
+}
+
+void player_controller_cientifico::DisabledState() {	
+	PROFILE_FUNCTION("player cientifico: disabled satte");
 }
 void player_controller_cientifico::InitControlState() {
+	PROFILE_FUNCTION("player cientifico: init control state");
+	CHandle h = CHandle(this);
+	tags_manager.addTag(h.getOwner(), getID("target"));
 	ChangeState("idle");
 }
 CEntity* player_controller_cientifico::getMyEntity() {
+	PROFILE_FUNCTION("player cientifico: get my entity");
 	CHandle me = CHandle(this);
 	return me.getOwner();
 }
 
 void player_controller_cientifico::update_msgs()
 {
+	PROFILE_FUNCTION("player cientifico: update mesg");
 	ui.addTextInstructions("Press 'shift' to exit possession\n");
 	if (obj == EMPTY) {
 		ui.addTextInstructions("Press '1' to create object to disable beacons\n");
@@ -343,6 +368,7 @@ void player_controller_cientifico::update_msgs()
 
 void player_controller_cientifico::myUpdate()
 {
+	PROFILE_FUNCTION("player cientifico: myUpdate");
 	if (obj == STATIC_BOMB_GAME || obj == MAGNETIC_BOMB_GAME) {
 		t_to_explode -= getDeltaTime();
 		if (t_to_explode <= 0.0f) {
@@ -350,4 +376,11 @@ void player_controller_cientifico::myUpdate()
 			t_to_explode = 5.0f;
 		}
 	}
+}
+
+void player_controller_cientifico::SetCharacterController()
+{
+	PROFILE_FUNCTION("player cientifico: setCharacter controller");
+	SetMyEntity();
+	cc = myEntity->get<TCompCharacterController>();
 }
