@@ -20,8 +20,19 @@ protected:
 	bool possessed = false;
 	bool stunning = false;
 	bool possessing = false;
+
+	// the nodes
+	virtual map<string, btnode *>* getTree();
+	// the C++ functions that implement node actions, hence, the behaviours
+	virtual map<string, btaction>* getActions();
+	// the C++ functions that implement conditions
+	virtual map<string, btcondition>* getConditions();
+
+	virtual btnode** getRoot();
+
 public:
 	bt_poss();
+	void addBtPossStates();
 
 	//conditions
 	bool npcAvailable();

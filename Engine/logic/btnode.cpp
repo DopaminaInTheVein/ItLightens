@@ -3,7 +3,6 @@
 #include "btnode.h"
 #include "bt.h"
 
-
 btnode::btnode(string s)
 {
 name=s;

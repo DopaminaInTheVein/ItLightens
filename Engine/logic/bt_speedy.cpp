@@ -2,20 +2,28 @@
 #include "bt_speedy.h"
 #include "components\comp_charactercontroller.h"
 
-void bt_speedy::Init() {
+map<string, btnode *> bt_speedy::tree = {};
+map<string, btaction> bt_speedy::actions = {};
+map<string, btcondition> bt_speedy::conditions = {};
+btnode* bt_speedy::root = nullptr;
 
-	addChild("possessable", "speedy", PRIORITY, (btcondition)&bt_speedy::npcAvailable, NULL);
-	addChild("speedy", "dash", RANDOM, (btcondition)&bt_speedy::dashReady, NULL);
-	addChild("dash", "dashNextPoint", ACTION, NULL, (btaction)&bt_speedy::actionDashPoint);
-	addChild("dash", "dashNewPoint", ACTION, NULL, (btaction)&bt_speedy::actionDashNewPoint);
-	addChild("dash", "dashPlayer", ACTION, NULL, (btaction)&bt_speedy::actionDashPlayer);
-	addChild("speedy", "patrol", SEQUENCE, NULL, NULL);
-	addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_speedy::actionNextWpt);
-	addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_speedy::actionSeekWpt);
+void bt_speedy::Init() {
 
 	om = getHandleManager<bt_speedy>();
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
+
+	if (tree.empty()) {
+		addBtPossStates();
+		addChild("possessable", "speedy", PRIORITY, (btcondition)&bt_speedy::npcAvailable, NULL);
+		addChild("speedy", "dash", RANDOM, (btcondition)&bt_speedy::dashReady, NULL);
+		addChild("dash", "dashNextPoint", ACTION, NULL, (btaction)&bt_speedy::actionDashPoint);
+		addChild("dash", "dashNewPoint", ACTION, NULL, (btaction)&bt_speedy::actionDashNewPoint);
+		addChild("dash", "dashPlayer", ACTION, NULL, (btaction)&bt_speedy::actionDashPlayer);
+		addChild("speedy", "patrol", SEQUENCE, NULL, NULL);
+		addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_speedy::actionNextWpt);
+		addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_speedy::actionSeekWpt);
+	}
 
 	// transforms for the speedy and the player
 	SetMyEntity();

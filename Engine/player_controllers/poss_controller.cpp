@@ -9,10 +9,13 @@
 extern CHandle player;
 
 PossController::PossController() {
+	speedRecover = 5.0f;
+}
+
+void PossController::addPossStates() {
 	AddState(ST_DISABLED, (statehandler)&PossController::DisabledState);
 	AddState(ST_INIT_CONTROL, (statehandler)&PossController::InitControlState);
 	ChangeState(ST_DISABLED);
-	speedRecover = 5.0f;
 }
 
 void PossController::UpdatePossession() {

@@ -44,7 +44,7 @@ class bt_speedy : public bt_poss, public TCompBase {
 	VEC3 dash_target;
 
 	float speed = 4.f;
-	float dash_speed = 20.f;
+	float dash_speed = 10.f;
 	float rotation_speed = deg2rad(200);
 	float max_dash_player_distance = 70.f;
 	// timers in seconds
@@ -66,6 +66,15 @@ class bt_speedy : public bt_poss, public TCompBase {
 	string pose_jump_route;
 	string last_pose = "";
 
+	// the nodes
+	static map<string, btnode *>tree;
+	// the C++ functions that implement node actions, hence, the behaviours
+	static map<string, btaction> actions;
+	// the C++ functions that implement conditions
+	static map<string, btcondition> conditions;
+	// tree root
+	static btnode* root;
+
 	public:
 		void Init();
 		void update(float elapsed);
@@ -77,6 +86,23 @@ class bt_speedy : public bt_poss, public TCompBase {
 		int actionDashPoint();
 		int actionDashNewPoint();
 		int actionDashPlayer();
+
+		//functions that allow access to the static maps
+		map<string, btnode *>* getTree() override {
+			return &tree;
+		}
+
+		map<string, btaction>* getActions() override {
+			return &actions;
+		}
+
+		map<string, btcondition>* getConditions() override {
+			return &conditions;
+		}
+
+		btnode** getRoot() override {
+			return &root;
+		}
 
 		bool load(MKeyValue& atts);
 

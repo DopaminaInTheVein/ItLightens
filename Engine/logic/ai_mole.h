@@ -62,7 +62,16 @@ class ai_mole : public ai_poss, public TCompBase {
 	string pose_box_route;
 	string pose_wall_route;
 
+protected:
+	// the states, as maps to functions
+	static map<string, statehandler> statemap;
+
 public:
+
+	map<string, statehandler>* getStatemap() override {
+		return &statemap;
+	}
+
 	void IdleState();
 	void SeekWptState();
 	void NextWptState();
