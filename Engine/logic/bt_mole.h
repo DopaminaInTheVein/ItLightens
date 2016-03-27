@@ -71,6 +71,15 @@ class bt_mole : public bt_poss, public TCompBase {
 	string pose_wall_route;
 	string last_pose = "";
 
+	// the nodes
+	static map<string, btnode *>tree;
+	// the C++ functions that implement node actions, hence, the behaviours
+	static map<string, btaction> actions;
+	// the C++ functions that implement conditions
+	static map<string, btcondition> conditions;
+	// tree root
+	static btnode* root;
+
 public:
 	void Init();
 	void update(float elapsed);
@@ -83,6 +92,23 @@ public:
 	int actionUngrabBox();
 	int actionLookForWpt();
 	int actionFollowPathToWpt();
+
+	//functions that allow access to the static maps
+	map<string, btnode *>* getTree() override {
+		return &tree;
+	}
+
+	map<string, btaction>* getActions() override {
+		return &actions;
+	}
+
+	map<string, btcondition>* getConditions() override {
+		return &conditions;
+	}
+
+	btnode** getRoot() override {
+		return &root;
+	}
 
 	bool load(MKeyValue& atts);
 

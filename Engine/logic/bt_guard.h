@@ -122,6 +122,15 @@ class bt_guard : public TCompBase, public bt
 
 	bool stunned;
 
+	// the nodes
+	static map<string, btnode *>tree;
+	// the C++ functions that implement node actions, hence, the behaviours
+	static map<string, btaction> actions;
+	// the C++ functions that implement conditions
+	static map<string, btcondition> conditions;
+	// tree root
+	static btnode* root;
+
 public:
 	//conditions
 	bool playerStunned();
@@ -138,6 +147,23 @@ public:
 	int actionSeekWpt();
 	int actionNextWpt();
 	int actionWaitWpt();
+
+	//functions that allow access to the static maps
+	map<string, btnode *>* getTree() override {
+		return &tree;
+	}
+
+	map<string, btaction>* getActions() override {
+		return &actions;
+	}
+
+	map<string, btcondition>* getConditions() override {
+		return &conditions;
+	}
+
+	btnode** getRoot() override {
+		return &root;
+	}
 
 	void Init();
 	void noise(const TMsgNoise& msg);
@@ -161,6 +187,7 @@ public:
 		}
 		Recalc();
 	}
+
 	void render();
 	void renderInMenu();
 	bool load(MKeyValue& atts);
