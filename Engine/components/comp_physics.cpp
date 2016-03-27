@@ -168,7 +168,8 @@ bool TCompPhysics::createTriMeshShape()
 		int size_slots = comp_static_mesh->static_mesh->slots.size();
 		if (size_slots > 1) {
 			for (int i = 1; i < size_slots; i++) {
-				pShape = PhysxManager->CreateConvexShape(comp_static_mesh->static_mesh->slots[i].mesh);
+				PxTriangleMesh *cookedMesh = PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[i].mesh);		//only will cook from mesh from slot 0
+				pShape = PhysxManager->CreateTriangleMesh(cookedMesh, mStaticFriction, mDynamicFriction, mRestitution);
 				PxRigidActor *ra = pActor->isRigidActor();
 				if (ra)
 					ra->attachShape(*pShape);
