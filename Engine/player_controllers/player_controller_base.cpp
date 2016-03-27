@@ -19,6 +19,8 @@
 
 #include "components/comp_charactercontroller.h"
 
+map<int, string> CPlayerBase::out = {};
+
 CPlayerBase::CPlayerBase() {
 }
 

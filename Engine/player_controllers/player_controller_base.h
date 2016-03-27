@@ -28,7 +28,7 @@ protected:
 	static float possessionCooldown;
 
 	// Map for debug on ImGui
-	std::map<int, std::string> out;
+	static std::map<int, std::string> out;
 
 	// Controller input class
 	CHandle camera;

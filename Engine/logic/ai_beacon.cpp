@@ -12,6 +12,8 @@ int beacon_controller::id_curr_max_beacons = 0;
 
 map<string, statehandler> beacon_controller::statemap = {};
 
+map<int, string> beacon_controller::out = {};
+
 void beacon_controller::Init() {
 	om = getHandleManager<beacon_controller>();	//list handle beacon in game
 

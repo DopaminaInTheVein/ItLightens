@@ -17,6 +17,7 @@
 #include "components/comp_charactercontroller.h"
 
 map<string, statehandler> player_controller_cientifico::statemap = {};
+map<int, string> player_controller_cientifico::out = {};
 
 void player_controller_cientifico::Init() {
 	om = getHandleManager<player_controller_cientifico>();	//player

@@ -14,7 +14,7 @@ template< class TObj >
 class CObjectManager;
 
 class water_controller : public aicontroller, public TCompBase {
-	std::map<int, std::string> out;
+	static std::map<int, std::string> out;
 
 	CObjectManager<water_controller>	*om = nullptr;
 	CHandle								 myHandle;
@@ -76,8 +76,6 @@ public:
 	void Dead();
 
 	void renderInMenu();
-
-	water_controller& water_controller::operator=(water_controller arg) { return arg; }
 };
 
 #endif

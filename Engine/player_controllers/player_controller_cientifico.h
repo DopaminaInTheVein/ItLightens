@@ -22,7 +22,7 @@ class CObjectManager;
 class player_controller_cientifico : public PossController {
 
 	// Map for debug on ImGui
-	std::map<int, std::string> out;
+	static std::map<int, std::string> out;
 
 
 	CObjectManager<player_controller_cientifico> * om = nullptr;

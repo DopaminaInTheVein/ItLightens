@@ -28,7 +28,7 @@ class ai_scientific : public ai_poss, public TCompBase {
 	};
 
 	//map for debug on ImGui
-	std::map<int, std::string> out;
+	static std::map<int, std::string> out;
 
 	//main attributes
 	//--------------------------------------

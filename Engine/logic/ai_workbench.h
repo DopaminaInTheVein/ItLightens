@@ -18,7 +18,7 @@ class CObjectManager;
 //--------------------------------------
 
 class workbench_controller : public aicontroller, public TCompBase {
-	std::map<int, std::string> out;
+	static std::map<int, std::string> out;
 
 	//main attributes
 	//--------------------------------------

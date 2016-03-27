@@ -17,6 +17,7 @@ map<string, ai_scientific::KptTipo> ai_scientific::kptTypes = {
 };
 
 map<string, statehandler> ai_scientific::statemap = {};
+map<int, string> ai_scientific::out = {};
 
 void ai_scientific::Init()
 {

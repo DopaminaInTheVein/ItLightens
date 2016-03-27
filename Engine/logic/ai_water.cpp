@@ -11,6 +11,7 @@
 int water_controller::id_curr_max_waters = 0;
 
 map<string, statehandler> water_controller::statemap = {};
+map<int, string> water_controller::out = {};
 
 void water_controller::Init() {
 	om = getHandleManager<water_controller>();	//list handle water in game
@@ -112,7 +113,7 @@ void water_controller::tryToDamagePlayer() {
 
 void water_controller::renderInMenu()
 {
-	ImGui::Text("Node : %s", out[SBB::readInt(full_name)].c_str());
+	//ImGui::Text("Node : %s", out[SBB::readInt(full_name)].c_str());
 	ImGui::Text("timer : %.4f", ttl);
 }
 

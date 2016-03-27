@@ -12,6 +12,7 @@
 int workbench_controller::id_curr_max_wb = 0;
 
 map<string, statehandler> workbench_controller::statemap = {};
+map<int, string> workbench_controller::out = {};
 
 void workbench_controller::Init() {
 	om = getHandleManager<workbench_controller>();	//list handle beacon in game
