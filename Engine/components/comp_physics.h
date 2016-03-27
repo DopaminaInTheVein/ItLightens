@@ -82,6 +82,8 @@ public:
 	void AddVelocity(VEC3 velocity);
 	void setPosition(VEC3 position, CQuaternion rotation);
 
+	float GetMass() const { return mMass; }
+
 	void update(float dt);
 	void renderInMenu();
 	void readIniFileAttr();

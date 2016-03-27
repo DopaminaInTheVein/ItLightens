@@ -91,14 +91,6 @@ bool TCompPolarized::load(MKeyValue & atts)
 	else {
 		mPol = NEUTRAL;		//default
 	}
-	
-	//TODO: read from box component size
-	read_s = atts.getString("type", "fixed");
-	if (read_s == "free") {
-		mType = FREE;
-	}
-	else
-		mType = FIXED;
 
 	return true;
 }
@@ -114,6 +106,12 @@ void TCompPolarized::onCreate(const TMsgEntityCreated &)
 			TCompTransform *t = me_e->get<TCompTransform>();
 			if (t) {
 				origin = t->getPosition();
+			}
+
+			TCompPhysics * p = me_e->get<TCompPhysics>();
+			if (p) {
+				if (p->GetMass() > mThresholdMass) mType = FIXED;
+				else mType = FREE;
 			}
 		}
 	}
