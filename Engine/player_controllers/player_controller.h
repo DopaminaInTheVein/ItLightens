@@ -14,6 +14,8 @@
 
 #include "player_controller_base.h"
 
+template< class TObj >
+class CObjectManager;
 class CHandle;
 struct TCompRenderStaticMesh;
 
@@ -132,7 +134,13 @@ class player_controller : public CPlayerBase {
 protected:
 	void myUpdate();
 
+	// the states, as maps to functions
+	static map<string, statehandler> statemap;
+
 public:
+
+	map<string, statehandler>* getStatemap();
+
 	void Init();
 	void Idle();
 

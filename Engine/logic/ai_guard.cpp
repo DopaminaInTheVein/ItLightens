@@ -7,6 +7,8 @@
 #include "app_modules\io\io.h"
 #include "ui\ui_interface.h"
 
+map<string, statehandler> ai_guard::statemap = {};
+
 map<string, ai_guard::KptType> ai_guard::kptTypes = {
 	  {"seek", KptType::Seek}
 	, {"look", KptType::Look}
@@ -41,18 +43,20 @@ void ai_guard::Init()
 	myParent = myHandle.getOwner();
 	thePlayer = tags_manager.getFirstHavingTag(getID("player"));
 
-	// insert all states in the map
-	AddState(ST_SELECT_ACTION, (statehandler)&ai_guard::SelectActionState);
-	AddState(ST_NEXT_ACTION, (statehandler)&ai_guard::NextActionState);
-	AddState(ST_SEEK_POINT, (statehandler)&ai_guard::SeekPointState);
-	AddState(ST_WAIT_NEXT, (statehandler)&ai_guard::WaitNextState);
-	AddState(ST_CHASE, (statehandler)&ai_guard::ChaseState);
-	AddState(ST_LOOK_POINT, (statehandler)&ai_guard::LookPointState);
-	AddState(ST_SHOOT, (statehandler)&ai_guard::ShootState);
-	AddState(ST_SOUND_DETECTED, (statehandler)&ai_guard::SoundDetectedState);
-	AddState(ST_LOOK_ARROUND, (statehandler)&ai_guard::LookArroundState);
-	AddState(ST_SHOOTING_WALL, (statehandler)&ai_guard::ShootingWallState);
-	AddState(ST_STUNT, (statehandler)&ai_guard::StuntState);
+	if (statemap.empty()) {
+		// insert all states in the map
+		AddState(ST_SELECT_ACTION, (statehandler)&ai_guard::SelectActionState);
+		AddState(ST_NEXT_ACTION, (statehandler)&ai_guard::NextActionState);
+		AddState(ST_SEEK_POINT, (statehandler)&ai_guard::SeekPointState);
+		AddState(ST_WAIT_NEXT, (statehandler)&ai_guard::WaitNextState);
+		AddState(ST_CHASE, (statehandler)&ai_guard::ChaseState);
+		AddState(ST_LOOK_POINT, (statehandler)&ai_guard::LookPointState);
+		AddState(ST_SHOOT, (statehandler)&ai_guard::ShootState);
+		AddState(ST_SOUND_DETECTED, (statehandler)&ai_guard::SoundDetectedState);
+		AddState(ST_LOOK_ARROUND, (statehandler)&ai_guard::LookArroundState);
+		AddState(ST_SHOOTING_WALL, (statehandler)&ai_guard::ShootingWallState);
+		AddState(ST_STUNT, (statehandler)&ai_guard::StuntState);
+	}
 
 	// reset the state
 	ChangeState(ST_SELECT_ACTION);

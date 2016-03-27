@@ -5,7 +5,9 @@
 #include "components\entity_tags.h"
 
 bt_poss::bt_poss() {
+}
 
+void bt_poss::addBtPossStates() {
 	createRoot("possessable", PRIORITY, NULL, NULL);
 	addChild("possessable", "possession", SEQUENCE, (btcondition)&bt_poss::beingPossessed, NULL);
 	addChild("possession", "possessing", ACTION, NULL, (btaction)&bt_poss::actionPossessing);
@@ -14,7 +16,6 @@ bt_poss::bt_poss() {
 	addChild("unpossession", "unpossessing", ACTION, NULL, (btaction)&bt_poss::actionUnpossessing);
 	addChild("unpossession", "stunt", ACTION, NULL, (btaction)&bt_poss::actionStunt);
 	addChild("unpossession", "stunt_end", ACTION, NULL, (btaction)&bt_poss::actionStuntEnd);
-
 }
 
 // MENSAJES
@@ -119,4 +120,19 @@ void bt_poss::onStaticBomb(const TMsgStaticBomb & msg)
 	if (d < msg.r) {
 		stunned = true;
 	}
+}
+
+// To be implemented in the subclasses
+map<string, btnode *>* bt_poss::getTree() {
+	return nullptr;
+}
+map<string, btaction>* bt_poss::getActions() {
+	return nullptr;
+}
+map<string, btcondition>* bt_poss::getConditions() {
+	return nullptr;
+}
+
+btnode** bt_poss::getRoot() {
+	return nullptr;
 }

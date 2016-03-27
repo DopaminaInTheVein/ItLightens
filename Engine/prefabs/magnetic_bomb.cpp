@@ -5,6 +5,8 @@
 #include "components\comp_transform.h"
 #include "components\entity_tags.h"
 
+map<string, statehandler> CMagneticBomb::statemap = {};
+
 void CMagneticBomb::update(float elapsed)
 {
 	Recalc();

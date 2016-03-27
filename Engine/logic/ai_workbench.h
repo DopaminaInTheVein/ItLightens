@@ -18,7 +18,7 @@ class CObjectManager;
 //--------------------------------------
 
 class workbench_controller : public aicontroller, public TCompBase {
-	std::map<int, std::string> out;
+	static std::map<int, std::string> out;
 
 	//main attributes
 	//--------------------------------------
@@ -44,6 +44,9 @@ class workbench_controller : public aicontroller, public TCompBase {
 	TMsgWBEmpty				msg_empty;
 	TMsgWBTakenByPlayer		msg_taken;
 
+protected:
+	// the states, as maps to functions
+	static map<string, statehandler>statemap;
 
 public:
 
@@ -55,6 +58,10 @@ public:
 		INACTIVE_TAKEN,
 		BUSY
 	};
+
+	map<string, statehandler>* getStatemap() override {
+		return &statemap;
+	}
 
 	workbench_controller() {}		//needed to create obj at load
 	void Init() override;
@@ -81,6 +88,7 @@ public:
 	//--------------------------------------
 
 	void renderInMenu();
+
 };
 
 #endif

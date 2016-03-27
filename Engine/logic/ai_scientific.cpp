@@ -16,23 +16,29 @@ map<string, ai_scientific::KptTipo> ai_scientific::kptTypes = {
 	,{ "look", KptTipo::Look }
 };
 
+map<string, statehandler> ai_scientific::statemap = {};
+map<int, string> ai_scientific::out = {};
+
 void ai_scientific::Init()
 {
 	om = getHandleManager<ai_scientific>();	//list handle scientific in game
 
-	DeleteState("idle");
-
-	//list states
-	AddState("idle", (statehandler)&ai_scientific::Idle);
-	AddState("seekWB", (statehandler)&ai_scientific::SeekWorkbench);
-	AddState("moveToPos", (statehandler)&ai_scientific::MoveToPos);
-	AddState("aimToPos", (statehandler)&ai_scientific::AimToPos);
-	AddState("createBeacon", (statehandler)&ai_scientific::CreateBeaconFromWB);
-	AddState("addBeacon", (statehandler)&ai_scientific::AddBeacon);
-	AddState("removeBeacon", (statehandler)&ai_scientific::RemoveBeacon);
-	AddState("lookForObj", (statehandler)&ai_scientific::LookForObj);
-	AddState("waitInPos", (statehandler)&ai_scientific::WaitInPos);
-	AddState("nextKpt", (statehandler)&ai_scientific::NextKpt);
+	if (statemap.empty()) {
+		// states from ai_poss
+		addAiPossStates();
+		DeleteState("idle");
+		//list states
+		AddState("idle", (statehandler)&ai_scientific::Idle);
+		AddState("seekWB", (statehandler)&ai_scientific::SeekWorkbench);
+		AddState("moveToPos", (statehandler)&ai_scientific::MoveToPos);
+		AddState("aimToPos", (statehandler)&ai_scientific::AimToPos);
+		AddState("createBeacon", (statehandler)&ai_scientific::CreateBeaconFromWB);
+		AddState("addBeacon", (statehandler)&ai_scientific::AddBeacon);
+		AddState("removeBeacon", (statehandler)&ai_scientific::RemoveBeacon);
+		AddState("lookForObj", (statehandler)&ai_scientific::LookForObj);
+		AddState("waitInPos", (statehandler)&ai_scientific::WaitInPos);
+		AddState("nextKpt", (statehandler)&ai_scientific::NextKpt);
+	}
 
 	out[IDLE] = "IDLE";
 	out[CREATE_BEACON] = "CREATE_BEACON";

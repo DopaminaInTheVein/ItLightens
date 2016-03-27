@@ -5,15 +5,18 @@
 #include "components\entity_tags.h"
 
 ai_poss::ai_poss() {
+	possessed = false;
+	stunned = false;
+	
+}
+
+void ai_poss::addAiPossStates() {
 	AddState("idle", (statehandler)&ai_poss::idle);
 	AddState(ST_POSSESSING, (statehandler)&ai_poss::PossessingState);
 	AddState(ST_POSSESSED, (statehandler)&ai_poss::PossessedState);
 	AddState(ST_UNPOSSESSING, (statehandler)&ai_poss::UnpossessingState);
 	AddState(ST_STUNT, (statehandler)&ai_poss::StuntState);
 	AddState(ST_STUNT_END, (statehandler)&ai_poss::_StuntEndState);
-	possessed = false;
-	stunned = false;
-	
 }
 
 // MENSAJES
@@ -43,7 +46,7 @@ void ai_poss::ChangeState(std::string newstate)
 {
 	if (!possessed || newstate == ST_STUNT || newstate == ST_UNPOSSESSING || newstate == ST_POSSESSING) {
 		// try to find a state with the suitable name
-		if (statemap.find(newstate) == statemap.end())
+		if (getStatemap()->find(newstate) == getStatemap()->end())
 		{
 			// the state we wish to jump to does not exist. we abort
 			exit(-1);
@@ -142,4 +145,9 @@ void ai_poss::onStaticBomb(const TMsgStaticBomb & msg)
 	if (d < msg.r) {
 		ChangeState(ST_STUNT);
 	}
+}
+
+map<string, statehandler>* ai_poss::getStatemap() {
+	//Must implement in subclasses
+	return nullptr;
 }

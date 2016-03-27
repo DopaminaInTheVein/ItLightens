@@ -14,7 +14,7 @@ template< class TObj >
 class CObjectManager;
 
 class water_controller : public aicontroller, public TCompBase {
-	std::map<int, std::string> out;
+	static std::map<int, std::string> out;
 
 	CObjectManager<water_controller>	*om = nullptr;
 	CHandle								 myHandle;
@@ -43,6 +43,10 @@ class water_controller : public aicontroller, public TCompBase {
 	void updateTTL();
 	void tryToDamagePlayer();
 
+protected:
+	// the states, as maps to functions
+	static map<string, statehandler>statemap;
+
 public:
 
 	static int id_curr_max_waters;
@@ -51,6 +55,10 @@ public:
 		PERMANENT = 0,
 		DROPPED,
 	};
+
+	map<string, statehandler>* getStatemap() override {
+		return &statemap;
+	}
 
 	water_controller() {}
 	void Init() override;
@@ -68,8 +76,6 @@ public:
 	void Dead();
 
 	void renderInMenu();
-
-	water_controller& water_controller::operator=(water_controller arg) { return arg; }
 };
 
 #endif

@@ -17,17 +17,24 @@
 
 #define DELTA_YAW_SELECTION		deg2rad(10)
 
+map<string, statehandler> player_controller::statemap = {};
+
 void player_controller::Init() {
 	om = getHandleManager<player_controller>();	//player
 
-	DeleteState("jumping");
-	DeleteState("falling");
+	if (statemap.empty()) {
+		//States from controller base
+		addBasicStates();
 
-	AddState("doublefalling", (statehandler)&player_controller::DoubleFalling);		//needed to disable double jump on falling
-	AddState("doublejump", (statehandler)&player_controller::DoubleJump);
+		DeleteState("jumping");
+		DeleteState("falling");
 
-	AddState("falling", (statehandler)&player_controller::Falling);
-	AddState("jumping", (statehandler)&player_controller::Jumping);
+		AddState("doublefalling", (statehandler)&player_controller::DoubleFalling);		//needed to disable double jump on falling
+		AddState("doublejump", (statehandler)&player_controller::DoubleJump);
+
+		AddState("falling", (statehandler)&player_controller::Falling);
+		AddState("jumping", (statehandler)&player_controller::Jumping);
+	}
 
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
@@ -599,4 +606,8 @@ void player_controller::SendMessagePolarizeState()
 	for (CEntity *e : hs) {
 		e->sendMsg(msg);
 	}
+}
+
+map<string, statehandler>* player_controller::getStatemap() {
+	return &statemap;
 }
