@@ -148,9 +148,9 @@ void TCompPhysics::update(float dt)
 		tmx->setRotation(quat);
 		//quat.CreateFromAxisAngle(anglesEuler,0.0f);
 		//VEC3 up_mesh = tmx->getUp();
-		//VEC3 pos = PxVec3ToVec3(curr_pose.p);
+		VEC3 pos = PxVec3ToVec3(curr_pose.p);
 		//if (mCollisionShape == BOX) pos -= 0.5*up_mesh; 		//TODO: Origin from shape at center!!!!! mesh center at foot, FIX THAT, temp solution
-		//tmx->setPosition(pos);
+		tmx->setPosition(pos);
 	}
 }
 

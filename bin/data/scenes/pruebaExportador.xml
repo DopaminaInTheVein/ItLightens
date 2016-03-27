@@ -80,6 +80,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 </entity>
 <entity>
@@ -104,6 +105,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 </entity>
 <entity>
@@ -128,6 +130,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 </entity>
 <entity>
@@ -152,6 +155,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 </entity>
 <entity>
@@ -176,6 +180,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 </entity>
 <entity>
@@ -200,6 +205,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 </entity>
 <entity>
@@ -224,6 +230,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 </entity>
 <entity>
@@ -248,6 +255,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 </entity>
 <entity>
@@ -272,6 +280,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 <polarized
    pol="minus"
@@ -299,6 +308,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 <polarized
    pol="plus"
@@ -326,6 +336,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 <polarized
    pol="minus"
@@ -353,6 +364,7 @@
    type_collision="dynamic"
    size="2.0 1.0 2.0"
    type_shape="box"
+   mass="2"
 />
 <polarized
    pol="plus"
