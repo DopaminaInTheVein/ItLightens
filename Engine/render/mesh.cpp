@@ -93,6 +93,7 @@ bool CMesh::create(
 }
 
 void CMesh::activate() const {
+	PROFILE_FUNCTION("render mesh: activate");
 	UINT stride = num_bytes_per_vertex;
 	UINT offset = 0;
 	Render.ctx->IASetVertexBuffers(0, 1, &vb, &stride, &offset);

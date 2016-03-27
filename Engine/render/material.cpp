@@ -55,6 +55,7 @@ bool CMaterial::load(const char* filename) {
 
 // ----------------------------------------------
 void CMaterial::activateTextures() const {
+	PROFILE_FUNCTION("render material: activate textures");
   textures[DIFFUSE]->activate(0);
 }
 

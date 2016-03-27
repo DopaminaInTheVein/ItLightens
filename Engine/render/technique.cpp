@@ -55,6 +55,7 @@ void CRenderTechnique::destroy() {
 }
 
 void CRenderTechnique::activate() const {
+	PROFILE_FUNCTION("render technique: activate");
   assert(isValid());
   ps->activate();
   vs->activate();

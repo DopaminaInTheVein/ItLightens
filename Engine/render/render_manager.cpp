@@ -16,6 +16,7 @@ extern CShaderCte< TCteObject > shader_ctes_object;
 bool CRenderManager::sortByTechMatMesh(
 	const TKey &k1
 	, const TKey &k2) {
+	PROFILE_FUNCTION("RM: sortByTechMatMesh");
 	if (k1.material->tech != k2.material->tech) {
 		if (k1.material->tech->getPriority() == k2.material->tech->getPriority())
 			return k1.material->tech->getName() < k2.material->tech->getName();
@@ -56,7 +57,7 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
 }
 
 void CRenderManager::renderAll() {
-
+	PROFILE_FUNCTION("RenderManager: renderALL");
   if (!in_order) {
     // sort the keys based on....
     std::sort(all_keys.begin(), all_keys.end(), &sortByTechMatMesh);

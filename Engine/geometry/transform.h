@@ -3,6 +3,9 @@
 
 #include "geometry.h"
 
+
+//extern CDebug* Debug;
+
 // ---------------------------
 class CTransform {
 	CQuaternion rotation;
@@ -24,18 +27,34 @@ public:
 	// ---------------------------
 	// Yes, these are not super efficient
 	VEC3        getFront() const {
-		MAT44 mrot = MAT44::CreateFromQuaternion(rotation);
-		return mrot.Backward();
+		PROFILE_FUNCTION("apply geometry get front");
+		VEC3 front;
+		front.x = 2 * (rotation.x*rotation.z + rotation.w*rotation.y);
+		front.y = 2 * (rotation.y*rotation.z - rotation.w*rotation.x);
+		front.z = 1 - 2 * (rotation.x*rotation.x + rotation.y*rotation.y);
+
+		return front;
 	}
 	VEC3        getLeft() const {
-		// To be coherent with our local system
-		MAT44 mrot = MAT44::CreateFromQuaternion(rotation);
-		return mrot.Right();
+		PROFILE_FUNCTION("apply geometry get left");
+		VEC3 left;	
+
+		left.x = 1 - 2 * (rotation.y*rotation.y + rotation.z*rotation.z);
+		left.y = 2 * (rotation.x*rotation.y + rotation.w*rotation.z);
+		left.z = 2 * (rotation.x*rotation.z - rotation.w*rotation.y);
+
+		return left;
 	}
 
 	VEC3			getUp() const {
-		MAT44 mrot = MAT44::CreateFromQuaternion(rotation);
-		return mrot.Up();
+		PROFILE_FUNCTION("apply geometry get up");
+		VEC3 up;
+
+		up.x = 2 * (rotation.x*rotation.y - rotation.w*rotation.z);
+		up.y = 1 - 2 * (rotation.x*rotation.x + rotation.z*rotation.z);
+		up.z = 2 * (rotation.y*rotation.z + rotation.w*rotation.x);
+
+		return up;
 	}
 
 	// ---------------------------
