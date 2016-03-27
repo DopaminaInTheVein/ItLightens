@@ -133,8 +133,6 @@ void TCompPhysics::onCreate(const TMsgEntityCreated &)
 		fatal("object type inexistent!!\n");
 		break;
 	}
-
-	addRigidbodyScene();
 }
 
 //fixedUpdate for physix, only needed for dynamic rigidbodys
@@ -170,6 +168,18 @@ bool TCompPhysics::createTriMeshShape()
 		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
 		PxTriangleMesh *cookedMesh = PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0
 		pShape = PhysxManager->CreateTriangleMesh(cookedMesh,mStaticFriction, mDynamicFriction, mRestitution);
+		addRigidbodyScene();
+
+		int size_slots = comp_static_mesh->static_mesh->slots.size();
+		if (size_slots > 1) {
+			for (int i = 1; i < size_slots; i++) {
+				pShape = PhysxManager->CreateConvexShape(comp_static_mesh->static_mesh->slots[i].mesh);
+				PxRigidActor *ra = pActor->isRigidActor();
+				if (ra)
+					ra->attachShape(*pShape);
+			}
+		}
+
 		return true;
 	}
 
@@ -180,18 +190,21 @@ bool TCompPhysics::createTriMeshShape()
 bool TCompPhysics::createBoxShape()
 {
 	pShape = PhysxManager->CreatePxBox(Vec3ToPxVec3(mSize), mStaticFriction, mDynamicFriction, mRestitution);
+	addRigidbodyScene();
 	return true;
 }
 
 bool TCompPhysics::createCapsuleShape()
 {
 	pShape = PhysxManager->CreatePxCapsule(mRadius, mHeight, mStaticFriction, mDynamicFriction, mRestitution);
+	addRigidbodyScene();
 	return true;
 }
 
 bool TCompPhysics::createSphereShape()
 {
 	pShape = PhysxManager->CreatePxSphere(mRadius, mStaticFriction, mDynamicFriction, mRestitution);
+	addRigidbodyScene();
 	return true;
 }
 
@@ -202,6 +215,18 @@ bool TCompPhysics::createConvexShape() {
 	if (e) {
 		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
 		pShape = PhysxManager->CreateConvexShape(comp_static_mesh->static_mesh->slots[0].mesh);
+		addRigidbodyScene();
+
+		int size_slots = comp_static_mesh->static_mesh->slots.size();
+		if (size_slots > 1) {
+			for (int i = 1; i < size_slots; i++) {
+				pShape = PhysxManager->CreateConvexShape(comp_static_mesh->static_mesh->slots[i].mesh);
+				PxRigidActor *ra = pActor->isRigidActor();
+				if (ra)
+					ra->attachShape(*pShape);
+			}
+		}
+		
 		return true;
 	}
 
@@ -224,7 +249,6 @@ bool TCompPhysics::addRigidbodyScene()
 		pActor = PhysxManager->CreateAndAddRigidStatic(&curr_pose, pShape);
 		CEntity *m = CHandle(this).getOwner();
 		pActor->userData = m;
-
 		return true;
 	}
 	else if (mCollisionType == DYNAMIC_RB) {
