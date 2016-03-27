@@ -23,7 +23,7 @@
    name="player"
 />
 <transform
-   pos="0 -2.45288 0"
+   pos="0 14.4893 0"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -47,7 +47,7 @@
    name="camera_main"
 />
 <transform
-   pos="0 0.319629 0"
+   pos="0 17.1863 0"
    quat="0 0.707104 0 0.707104"
    scale="1.0"
 />
@@ -57,5 +57,305 @@
    fov="60.0"
 />
 <controller_3rd_person/>
+</entity>
+<entity>
+<name
+   name="Box_1"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="-0.0109349 0 -6.99458"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+</entity>
+<entity>
+<name
+   name="Box_2"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="-6.8353 0 -0.0115087"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+</entity>
+<entity>
+<name
+   name="Box_3"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="6.88145 0 0.0338359"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+</entity>
+<entity>
+<name
+   name="Box_4"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="0.0344098 0 6.85821"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+</entity>
+<entity>
+<name
+   name="Box_5"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="8.62722 0 -8.5363"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+</entity>
+<entity>
+<name
+   name="Box_6"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="-8.58107 0 -8.55898"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+</entity>
+<entity>
+<name
+   name="Box_7"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="-8.5584 0 8.62665"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+</entity>
+<entity>
+<name
+   name="Box_8"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="8.60455 0 8.60397"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+</entity>
+<entity>
+<name
+   name="Box_9"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="-5.11221 0 -5.13545"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<name
+   name="Box_10"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="-5.08954 0 5.13511"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+<polarized
+   pol="plus"
+/>
+</entity>
+<entity>
+<name
+   name="Box_11"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="5.15836 0 5.2258"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<name
+   name="Box_12"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="5.13568 0 -5.11278"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   size="2.0 1.0 2.0"
+   type_shape="box"
+/>
+<polarized
+   pol="plus"
+/>
 </entity>
 </entities>

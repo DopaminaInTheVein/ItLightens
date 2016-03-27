@@ -29,7 +29,6 @@ void TCompPhysics::updateTags(PxFilterData filter)
 		if (h.hasTag("bomb")) {
 			filter.word0 = filter.word0 | CPhysxManager::eBOMB;
 		}
-		
 	}
 
 	pShape->setQueryFilterData(filter);
@@ -48,11 +47,11 @@ bool TCompPhysics::load(MKeyValue & atts)
 		//nothing extra needed to read
 		break;
 	case SPHERE:
-		mRadius = atts.getFloat("radius",0.5f);
+		mRadius = atts.getFloat("radius", 0.5f);
 		break;
 	case BOX:
 		mSize = atts.getPoint("size");
-		mSize = mSize/2;
+		mSize = mSize / 2;
 		break;
 	case CAPSULE:
 		mRadius = atts.getFloat("radius", 0.5f);
@@ -70,10 +69,10 @@ bool TCompPhysics::load(MKeyValue & atts)
 }
 
 int TCompPhysics::getCollisionTypeValueFromString(std::string str) {
-
 	if (str == "static") {
 		return STATIC_OBJECT;
-	}else if(str == "dynamic") {
+	}
+	else if (str == "dynamic") {
 		return DYNAMIC_RB;
 	}
 	else if (str == "trigger") {
@@ -86,7 +85,6 @@ int TCompPhysics::getCollisionTypeValueFromString(std::string str) {
 }
 
 int TCompPhysics::getCollisionShapeValueFromString(std::string str) {
-
 	if (str == "mesh") {
 		return TRI_MESH;
 	}
@@ -107,7 +105,6 @@ int TCompPhysics::getCollisionShapeValueFromString(std::string str) {
 		return BOX;
 	}
 }
-
 
 //When entity created
 void TCompPhysics::onCreate(const TMsgEntityCreated &)
@@ -144,20 +141,18 @@ void TCompPhysics::update(float dt)
 		// ask physics about the current pos + rotation
 		// update my sibling TCompTransform with the physics info
 		PxTransform curr_pose = rigidActor->getGlobalPose();
-		
+
 		CEntity *e = CHandle(this).getOwner();
 		TCompTransform *tmx = e->get<TCompTransform>();
 		CQuaternion quat = PxQuatToCQuaternion(curr_pose.q);
 		tmx->setRotation(quat);
 		//quat.CreateFromAxisAngle(anglesEuler,0.0f);
-		VEC3 up_mesh = tmx->getUp();
-		VEC3 pos = PxVec3ToVec3(curr_pose.p);
-		if (mCollisionShape == BOX) pos -= 0.5*up_mesh; 		//TODO: Origin from shape at center!!!!! mesh center at foot, FIX THAT, temp solution
-		tmx->setPosition(pos);
-		
+		//VEC3 up_mesh = tmx->getUp();
+		//VEC3 pos = PxVec3ToVec3(curr_pose.p);
+		//if (mCollisionShape == BOX) pos -= 0.5*up_mesh; 		//TODO: Origin from shape at center!!!!! mesh center at foot, FIX THAT, temp solution
+		//tmx->setPosition(pos);
 	}
 }
-
 
 //Private methods to init rigidbodys and actor
 //----------------------------------------------------------
@@ -165,11 +160,11 @@ bool TCompPhysics::createTriMeshShape()
 {
 	CHandle entity_h = CHandle(this).getOwner();
 	CEntity *e = nullptr;
-	if(entity_h.isValid()) e = entity_h;
+	if (entity_h.isValid()) e = entity_h;
 	if (e) {
 		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
 		PxTriangleMesh *cookedMesh = PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0
-		pShape = PhysxManager->CreateTriangleMesh(cookedMesh,mStaticFriction, mDynamicFriction, mRestitution);
+		pShape = PhysxManager->CreateTriangleMesh(cookedMesh, mStaticFriction, mDynamicFriction, mRestitution);
 		return true;
 	}
 
@@ -215,10 +210,9 @@ bool TCompPhysics::addRigidbodyScene()
 	TCompTransform *tmx = e->get<TCompTransform>();
 
 	if (mCollisionType == STATIC_OBJECT) {
-
 		PxVec3 p = Vec3ToPxVec3(tmx->getPosition());
 		PxQuat q = CQuaternionToPxQuat(tmx->getRotation());
-		PxTransform curr_pose = PxTransform(p,q);
+		PxTransform curr_pose = PxTransform(p, q);
 		PxFilterData mFilterData = DEFAULT_DATA_STATIC;
 		updateTags(mFilterData);
 		pActor = PhysxManager->CreateAndAddRigidStatic(&curr_pose, pShape);
@@ -228,7 +222,6 @@ bool TCompPhysics::addRigidbodyScene()
 		return true;
 	}
 	else if (mCollisionType == DYNAMIC_RB) {
-		
 		PxVec3 p = Vec3ToPxVec3(tmx->getPosition());
 		PxQuat q = CQuaternionToPxQuat(tmx->getRotation());
 		PxTransform curr_pose = PxTransform(p, q);
@@ -239,10 +232,10 @@ bool TCompPhysics::addRigidbodyScene()
 		CEntity *m = CHandle(this).getOwner();
 		pActor->userData = m;
 		pActor->isRigidBody()->setMass(mMass);
-		
-		return true;
-	}else if (mCollisionType == TRIGGER) {
 
+		return true;
+	}
+	else if (mCollisionType == TRIGGER) {
 		PxVec3 p = Vec3ToPxVec3(tmx->getPosition());
 		PxQuat q = CQuaternionToPxQuat(tmx->getRotation());
 		PxTransform curr_pose = PxTransform(p, q);
@@ -304,7 +297,6 @@ void TCompPhysics::setPosition(VEC3 position, CQuaternion rotation)
 
 //----------------------------------------------------------
 
-
 void TCompPhysics::renderInMenu()
 {
 	PxRigidDynamic *rigidDynamic = pActor->isRigidDynamic();
@@ -319,7 +311,6 @@ void TCompPhysics::renderInMenu()
 
 		ImGui::Separator();
 		if (ImGui::TreeNode("Temporal values")) {
-
 			PxTransform trans = rigidDynamic->getGlobalPose();
 
 			if (ImGui::SliderFloat3("Pos", &trans.p.x, -50.f, 50.f)) {
@@ -337,7 +328,6 @@ void TCompPhysics::renderInMenu()
 		ImGui::Separator();
 
 		if (ImGui::TreeNode("Shapes")) {
-
 			int nBShapes = rigidDynamic->getNbShapes();
 			PxShape **ptr;
 			ptr = new PxShape*[nBShapes];
@@ -350,12 +340,10 @@ void TCompPhysics::renderInMenu()
 					name += "_shape";
 				}
 				if (ImGui::TreeNode(name.c_str())) {
-
 					if (ImGui::TreeNode("Configurables values")) {
-
 						if (ImGui::SliderFloat("dynamic friction", &mDynamicFriction, 0.0f, 2.0f)) {
 							PxMaterial *m = getMaterial(ptr[i]);
-							if(m)
+							if (m)
 								getMaterial(ptr[i])->setDynamicFriction(mDynamicFriction);
 						}
 						if (ImGui::SliderFloat("static friction", &mStaticFriction, 0.0f, 2.0f)) {
@@ -369,10 +357,8 @@ void TCompPhysics::renderInMenu()
 								getMaterial(ptr[i])->setRestitution(mRestitution);
 						}
 
-
 						ImGui::TreePop();
 					}
-
 
 					ImGui::TreePop();
 				}
@@ -387,7 +373,7 @@ void TCompPhysics::renderInMenu()
 			readIniFileAttr();
 			updateAttrMaterial();
 		}
-		
+
 		if (ImGui::SmallButton("Save config values")) {
 			writeIniFileAttr();
 		}
@@ -398,7 +384,6 @@ void TCompPhysics::renderInMenu()
 
 		ImGui::Separator();
 		if (ImGui::TreeNode("Temporal values")) {
-
 			PxTransform trans = rigidStatic->getGlobalPose();
 
 			if (ImGui::SliderFloat3("Pos", &trans.p.x, -50.f, 50.f)) {
@@ -416,7 +401,6 @@ void TCompPhysics::renderInMenu()
 		ImGui::Separator();
 
 		if (ImGui::TreeNode("Shapes")) {
-
 			int nBShapes = rigidStatic->getNbShapes();
 			PxShape **ptr;
 			ptr = new PxShape*[nBShapes];
@@ -429,9 +413,7 @@ void TCompPhysics::renderInMenu()
 					name += "_shape";
 				}
 				if (ImGui::TreeNode(name.c_str())) {
-
 					if (ImGui::TreeNode("Configurables values")) {
-
 						if (ImGui::SliderFloat("dynamic friction", &mDynamicFriction, 0.0f, 2.0f)) {
 							PxMaterial *m = getMaterial(ptr[i]);
 							if (m)
@@ -448,10 +430,8 @@ void TCompPhysics::renderInMenu()
 								getMaterial(ptr[i])->setRestitution(mRestitution);
 						}
 
-
 						ImGui::TreePop();
 					}
-
 
 					ImGui::TreePop();
 				}
@@ -472,7 +452,6 @@ void TCompPhysics::renderInMenu()
 		}
 	}
 }
-
 
 void TCompPhysics::readIniFileAttr() {
 	CApp &app = CApp::get();
@@ -529,7 +508,7 @@ void TCompPhysics::updateAttrMaterial() {
 	for (int i = 0; i < numShapes; i++) {
 		int numMats = buff_s[i]->getNbMaterials();
 		PxMaterial **buff_m = new PxMaterial*[numMats];
-		buff_s[i]->getMaterials(buff_m,numMats);
+		buff_s[i]->getMaterials(buff_m, numMats);
 		for (int j = 0; j < numMats; j++) {
 			buff_m[j]->setDynamicFriction(mDynamicFriction);
 			buff_m[j]->setStaticFriction(mStaticFriction);
@@ -546,7 +525,7 @@ void TCompPhysics::writeIniFileAttr() {
 	if (h.isValid()) {
 		if (h.hasTag("box")) {
 			char read[64];
-			
+
 			//dynamic friction
 			sprintf(read, "%.2f", mDynamicFriction);
 			WritePrivateProfileStringA("box", "dynamic_friction", read, file_ini.c_str());
