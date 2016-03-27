@@ -47,17 +47,10 @@ void TCompCamera::update(float dt) {
 	CEntity* targeted = targetowner;
 	TCompLife * targetlife = targeted->get<TCompLife>();
 	TCompTransform * targettrans = targeted->get<TCompTransform>();
-	
-	bool win = false;
-	CHandle hVictoryPoint = tags_manager.getFirstHavingTag(getID("victory_point"));
-	if (hVictoryPoint.isValid())
-	{
-		CEntity* victoryPoint = hVictoryPoint;
-		TCompTransform * victoryPoint_transform = victoryPoint->get<TCompTransform>();
-		win = 0.5f <= simpleDist(victoryPoint_transform->getPosition(), targettrans->getPosition());
-	}
 
-	if (targetlife->currentlife > 0.0f && !win) {
+
+
+	if(GameController->GetGameState() == CGameController::RUNNING){
 		VEC3 pos = tmx->getPosition();
 		pos.y += 2;
 		tmx->setPosition(pos);

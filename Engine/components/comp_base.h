@@ -17,9 +17,6 @@ struct TCompBase {
 		return true;
 	}
 
-	void onTrigger(const TMsgTrigger& msg){}
-	void onTriggerExit(const TMsgTrigger& msg){}
-	void onTriggered(const TMsgTrigger& msg){}
 	void renderInMenu() {}
 };
 

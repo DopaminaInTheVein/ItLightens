@@ -123,14 +123,21 @@ struct TMsgAISetStunned {
 
 struct TMsgWirePass {
 	VEC3 dst;
+	bool range;
 	DECLARE_MSG_ID();
 };
 
 struct TMsgCanRec {
+	bool range;
 	DECLARE_MSG_ID();
 };
 
-struct TMsgTrigger{
+struct TMsgTriggerIn{
+	CHandle other;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgTriggerOut {
 	CHandle other;
 	DECLARE_MSG_ID();
 };

@@ -45,6 +45,8 @@ private:
 	HWND      hWnd;
 	int       xres, yres;
 	int		  xres_max, yres_max;
+	int		  game_state = 0;
+
 	VModules  all_modules;
 	VModules  mod_update;
 	VModules  mod_renders;
@@ -58,6 +60,7 @@ private:
 	void render();
 
 public:
+
 };
 
 #endif

@@ -15,7 +15,7 @@
 #include "player_controller_base.h"
 
 class CHandle;
-class TCompRenderStaticMesh;
+struct TCompRenderStaticMesh;
 
 class player_controller : public CPlayerBase {
 
@@ -86,6 +86,11 @@ class player_controller : public CPlayerBase {
 
 	bool						affectPolarized			= false;
 
+	bool						canRecEnergy				= false;
+	bool						canPassWire				= false;
+
+	VEC3						endPointWire				= VEC3(0,0,0);
+
 	std::vector<TForcePoint> force_points;
 
 	//private functions
@@ -116,6 +121,7 @@ class player_controller : public CPlayerBase {
 
 	void UpdateMoves() override;
 	void UpdateInputActions() override;
+	void UpdateActionsTrigger();
 	void SetCharacterController();
 
 	void RecalcAttractions();

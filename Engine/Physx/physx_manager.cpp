@@ -387,12 +387,18 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 				CEntity* e_trigger = static_cast<CEntity*>(pair.triggerActor->userData);
 				CEntity* e_active = static_cast<CEntity*>(pair.otherActor->userData);
 				//OnTriggerExit()
+				TMsgTriggerOut msg;
+				msg.other = CHandle(e_active);
+				e_trigger->sendMsg(msg);
 			}
 
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_FOUND)) {
 				CEntity* e_trigger = static_cast<CEntity*>(pair.triggerActor->userData);
 				CEntity* e_active = static_cast<CEntity*>(pair.otherActor->userData);
 				//OnTriggerEnter()
+				TMsgTriggerIn msg;
+				msg.other = CHandle(e_active);
+				e_trigger->sendMsg(msg);
 			}
 
 		}
