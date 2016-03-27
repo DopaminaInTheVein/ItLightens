@@ -14,13 +14,21 @@
 #include "components/comp_charactercontroller.h"
 #include "components\comp_physics.h"
 
+map<string, statehandler> player_controller_mole::statemap = {};
+
 void player_controller_mole::Init() {
 
 	om = getHandleManager<player_controller_mole>();	//player
 
-	AddState("grabBox", (statehandler)&player_controller_mole::GrabBox);
-	AddState("leaveBox", (statehandler)&player_controller_mole::LeaveBox);
-	AddState("destroyWall", (statehandler)&player_controller_mole::DestroyWall);
+	if (statemap.empty()) {
+		//States from controller base and poss controller
+		addBasicStates();
+		addPossStates();
+
+		AddState("grabBox", (statehandler)&player_controller_mole::GrabBox);
+		AddState("leaveBox", (statehandler)&player_controller_mole::LeaveBox);
+		AddState("destroyWall", (statehandler)&player_controller_mole::DestroyWall);
+	}
 
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();

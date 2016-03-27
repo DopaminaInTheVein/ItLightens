@@ -21,8 +21,8 @@ class aicontroller
 {
 protected:
 	string state;
-	// the states, as maps to functions
-	map<string, statehandler>statemap;
+
+	virtual map<string, statehandler>* getStatemap();
 
 public:
 	virtual void ChangeState(string);	// state we wish to go to

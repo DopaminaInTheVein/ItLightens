@@ -22,6 +22,7 @@ public:
 	virtual CEntity* getMyEntity() = 0; //Pasar al TCompBase?
 	void update(float dt) { UpdatePossession(); CPlayerBase::update(dt); }
 	void UpdatePossession();
+	void addPossStates();
 
 	//Mensajes
 	void onSetEnable(const TMsgControllerSetEnable&);

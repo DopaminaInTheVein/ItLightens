@@ -73,7 +73,16 @@ class ai_speedy : public ai_poss, public TCompBase {
 	string pose_run_route;
 	string pose_jump_route;
 
+protected:
+	// the states, as maps to functions
+	static map<string, statehandler> statemap;
+
 public:
+
+	map<string, statehandler>* getStatemap() override {
+		return &statemap;
+	}
+
 	void IdleState();
 	void NextWptState();
 	void SeekWptState();

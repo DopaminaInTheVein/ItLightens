@@ -20,6 +20,9 @@
 #include "components/comp_charactercontroller.h"
 
 CPlayerBase::CPlayerBase() {
+}
+
+void CPlayerBase::addBasicStates() {
 	AddState("idle", (statehandler)&CPlayerBase::Idle);
 	AddState("moving", (statehandler)&CPlayerBase::Moving);
 	AddState("falling", (statehandler)&CPlayerBase::Falling);
@@ -364,4 +367,9 @@ void CPlayerBase::orbitCameraDeath() {
 
 void CPlayerBase::myUpdate() {
 	//nothing, to do on child
+}
+
+map<string, statehandler>* CPlayerBase::getStatemap() {
+	//Must implement in subclasses
+	return nullptr;
 }

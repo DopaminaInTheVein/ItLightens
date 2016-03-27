@@ -1,23 +1,29 @@
 #include "mcv_platform.h"
 #include "ai_mole.h"
 
+map<string, statehandler> ai_mole::statemap = {};
+
 void ai_mole::Init()
 {
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 
-	// insert all states in the map
-	// insertar punters a funcions de una classe hereva del aiccontroller.
-//	AddState("idle", (statehandler)&ai_mole::IdleState);
-	AddState("seekwpt", (statehandler)&ai_mole::SeekWptState);
-	AddState("orientTowpt", (statehandler)&ai_mole::OrientToWptState);
-	AddState("nextwpt", (statehandler)&ai_mole::NextWptState);
+	if (statemap.empty()) {
+		// states from ai_poss
+		addAiPossStates();
+		// insert all states in the map
+		// insertar punters a funcions de una classe hereva del aiccontroller.
+	//	AddState("idle", (statehandler)&ai_mole::IdleState);
+		AddState("seekwpt", (statehandler)&ai_mole::SeekWptState);
+		AddState("orientTowpt", (statehandler)&ai_mole::OrientToWptState);
+		AddState("nextwpt", (statehandler)&ai_mole::NextWptState);
 
-	AddState("grab", (statehandler)&ai_mole::GrabState);
-	AddState("seekwptcarry", (statehandler)&ai_mole::SeekWptCarryState);
-	AddState("orientTowptCarry", (statehandler)&ai_mole::OrientToCarryWptState);
-	AddState("nextwptCarry", (statehandler)&ai_mole::NextWptCarryState);
-	AddState("ungrab", (statehandler)&ai_mole::UnGrabState);
+		AddState("grab", (statehandler)&ai_mole::GrabState);
+		AddState("seekwptcarry", (statehandler)&ai_mole::SeekWptCarryState);
+		AddState("orientTowptCarry", (statehandler)&ai_mole::OrientToCarryWptState);
+		AddState("nextwptCarry", (statehandler)&ai_mole::NextWptCarryState);
+		AddState("ungrab", (statehandler)&ai_mole::UnGrabState);
+	}
 
 	towptbox = -1;
 	towptleave = -1;

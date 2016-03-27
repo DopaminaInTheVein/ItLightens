@@ -1,7 +1,6 @@
 #include "mcv_platform.h"
 #include "bt.h"
 
-
 void bt::create(string s)
 {
 name=s;

@@ -4,6 +4,10 @@
 
 void bt_speedy::Init() {
 
+	om = getHandleManager<bt_speedy>();
+	myHandle = om->getHandleFromObjAddr(this);
+	myParent = myHandle.getOwner();
+
 	addChild("possessable", "speedy", PRIORITY, (btcondition)&bt_speedy::npcAvailable, NULL);
 	addChild("speedy", "dash", RANDOM, (btcondition)&bt_speedy::dashReady, NULL);
 	addChild("dash", "dashNextPoint", ACTION, NULL, (btaction)&bt_speedy::actionDashPoint);
@@ -12,10 +16,6 @@ void bt_speedy::Init() {
 	addChild("speedy", "patrol", SEQUENCE, NULL, NULL);
 	addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_speedy::actionNextWpt);
 	addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_speedy::actionSeekWpt);
-
-	om = getHandleManager<bt_speedy>();
-	myHandle = om->getHandleFromObjAddr(this);
-	myParent = myHandle.getOwner();
 
 	// transforms for the speedy and the player
 	SetMyEntity();

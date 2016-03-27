@@ -16,16 +16,24 @@
 #include "components\comp_render_static_mesh.h"
 #include "components/comp_charactercontroller.h"
 
+map<string, statehandler> player_controller_cientifico::statemap = {};
+
 void player_controller_cientifico::Init() {
 	om = getHandleManager<player_controller_cientifico>();	//player
 
-	//Specific Scientist nodes
-	AddState("createMagneticBomb", (statehandler)&player_controller_cientifico::CreateMagneticBomb);
-	AddState("createDisableBeacon", (statehandler)&player_controller_cientifico::CreateDisableBeacon);
-	AddState("createStaticBomb", (statehandler)&player_controller_cientifico::CreateStaticBomb);
-	AddState("addDisableBeacon", (statehandler)&player_controller_cientifico::AddDisableBeacon);
-	AddState("useMagneticBomb", (statehandler)&player_controller_cientifico::UseMagneticBomb);
-	AddState("useStaticBomb", (statehandler)&player_controller_cientifico::UseStaticBomb);
+	if (statemap.empty()) {
+		//States from controller base and poss controller
+		addBasicStates();
+		addPossStates();
+
+		//Specific Scientist nodes
+		AddState("createMagneticBomb", (statehandler)&player_controller_cientifico::CreateMagneticBomb);
+		AddState("createDisableBeacon", (statehandler)&player_controller_cientifico::CreateDisableBeacon);
+		AddState("createStaticBomb", (statehandler)&player_controller_cientifico::CreateStaticBomb);
+		AddState("addDisableBeacon", (statehandler)&player_controller_cientifico::AddDisableBeacon);
+		AddState("useMagneticBomb", (statehandler)&player_controller_cientifico::UseMagneticBomb);
+		AddState("useStaticBomb", (statehandler)&player_controller_cientifico::UseStaticBomb);
+	}
 
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
