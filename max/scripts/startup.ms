@@ -51,4 +51,5 @@ fn startUp = (
 )
 
 startUp()
+startUp() -- Fix Problemas orden de declaraciones
 clearListener()

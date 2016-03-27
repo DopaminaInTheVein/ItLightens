@@ -19,7 +19,7 @@ fn _parseCamController = (
 	xmlCamera = xml.addChild "camera"
 	xmlCamera.addAttr "znear" _parsingObject.nearrange
 	xmlCamera.addAttr "zfar" _parsingObject.farrange
-	xmlCamera.addAttr "fov" _parsinObject.fov
+	xmlCamera.addAttr "fov" _parsingObject.fov
 	
 	-- Controller 3rdPerson
 	xmlController = xml.addChild "controller_3rd_person"

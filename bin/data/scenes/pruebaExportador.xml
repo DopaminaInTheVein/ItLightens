@@ -9,7 +9,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/sc_1_box.static_mesh"
+   name="static_meshes/_sc1.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -20,7 +20,7 @@
    name="player_1"
 />
 <tag
-   name="target"
+   name="player"
 />
 <transform
    pos="0 -2.45288 0"
@@ -44,7 +44,7 @@
    name="camController_1"
 />
 <tag
-   name="player"
+   name="camera_main"
 />
 <transform
    pos="0 0.319629 0"

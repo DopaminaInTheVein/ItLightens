@@ -1,6 +1,6 @@
 -- Rollout Level Editor
 try(DestroyDialog RL_LevelEditor)catch()
-rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:520
+rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:542
 (
 	local selectedObj = undefined
 	
@@ -15,7 +15,7 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:520
 	pickbutton 'pckObj' "-- None --" pos:[80,156] width:152 height:16 align:#left
 	dropdownList 'ddlHelper' "Helper type" pos:[23,348] width:201 height:40 align:#left
 	button 'btnHelper' "Add Helper" pos:[20,394] width:204 height:20 align:#left
-	button 'btnExport' "Export Level" pos:[12,477] width:225 height:31 align:#left
+	button 'btnExport' "Export Level" pos:[33,495] width:184 height:31 align:#left
 
 	
 	GroupBox 'grpProps' "Edit Properties (from selected)" pos:[10,197] width:228 height:117 align:#left
@@ -36,6 +36,9 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:520
 		)
 	)	
 	
+	GroupBox 'grpExport' "Export Level (XML)" pos:[11,436] width:228 height:97 align:#left
+	label 'lblExport' "Name" pos:[26,465] width:33 height:19 align:#left
+	edittext 'txtExport' "" pos:[57,464] width:166 height:17 align:#left
 	on RL_LevelEditor open do
 	(
 		ddlType.items = (getAllMaxIn objMax_dir)
@@ -68,7 +71,7 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:520
 	(
 		local xml = _parseLevel()
 		messagebox (xml.parse())
-		local fsm = createFile (scenes_dir + "pruebaExportador.xml")
+		local fsm = createFile (scenes_dir + txtExport.text + ".xml")
 		format (xml.parse()) to:fsm
 		close fsm
 	)
@@ -94,4 +97,4 @@ CreateDialog RL_LevelEditor
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------

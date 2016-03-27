@@ -1,0 +1,4 @@
+<static_mesh>
+  <slot mesh="meshes/_sc1____sc1_bornze.mesh" material="materials/__sc1_bornze.material" mesh_idx="0"/>
+  <slot mesh="meshes/_sc1____sc1_gray.mesh" material="materials/__sc1_gray.material" mesh_idx="1"/>
+</static_mesh>

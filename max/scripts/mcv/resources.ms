@@ -39,34 +39,90 @@ struct TResources (
 		)
 	),
 
-	fn saveStdMaterial fs m = (
+	fn saveStdMaterial m = (
 		if (m != undefined) then (
-			if classof m != Standardmaterial then throw "Invalid material recv"
-			format "<material tech=\"textured.tech\">\n" to:fs
-			saveTextureSlot fs "diffuse" m.diffusemap
-			saveTextureSlot fs "specular" m.specularmap
-			format "</material>\n" to:fs
+			if classof m != Standardmaterial then (throw "Invalid material recv")
+			local mat_file = createFile (materials_dir + m.name + ".material")
+			format "<material tech=\"textured.tech\">\n" to:mat_file
+			saveTextureSlot mat_file "diffuse" m.diffusemap
+			saveTextureSlot mat_file "specular" m.specularmap
+			format "</material>\n" to:mat_file
+			close mat_file
 		) else (
 			format "WARNING: - - Undefined material ignored!! - -\n"
 		)
 	),
 
-	fn saveMultiMaterial fs multi_mat = (
+	fn saveMultiMaterial multi_mat = (
 		if classof multi_mat != Multimaterial then throw "Invalid material recv. Need a Multimaterial"
 		local m
 		for m in multi_mat do (
-			-- Create a file for each material?
-			saveStdMaterial fs m
+			if m != undefined then (
+				-- Create a file for each material?
+				saveStdMaterial m			
+			)
 		)
 	),
 	
-	fn saveMaterial fs mat = (
+	fn saveMaterial mat = (
 		if classof mat == Multimaterial then (
-			saveMultiMaterial fs mat
+			saveMultiMaterial mat
 		) else if classof mat == Standardmaterial then (
-			saveStdMaterial fs mat
+			saveStdMaterial mat
 		) else 
 			throw ("Unsupported material " + ((classof mat) as string))
+	),
+	
+	fn getSubMeshesByMaterial obj = (
+		-- Obtenemos el material
+		local mat = obj.mat
+		if mat == undefined then (
+			throw ("Object " + obj.name + " requires a material\n")
+		) 
+		
+		local meshPrefix = getResourceName obj "mesh"
+		-- Si llegamos hasta aqui y no sabemos que mesh poner, es que:
+		-- 1)  reexportamos una staticMesh y no conocemos su mesh
+		-- 2) exportamos una static mesh nueva pero ya tenía mesh
+		if meshPrefix == undefined then (
+			throw "-- ERROR -- [" + obj.name + "] Objeto corrupto! ¡Tiene mesh pero no staticMesh!\n"
+		)
+		
+		local res = #()
+		
+		if classof mat != MultiMaterial then (
+			newObj = copy obj
+			newObj.name = meshPrefix
+			setUserProp newObj "mesh" meshPrefix
+			res = #(newObj)
+			print res
+		) else (
+			local polyObj = copy obj --Objeto temporal solo en esta funcion
+			try (
+				
+				for m=1 to mat.count do (
+					local subMesh = undefined
+					if mat[m] != undefined then(
+						polyObj.selectByMaterial m
+						faces = getFaceSelection polyObj
+						
+						if faces.count > 0 then (
+							local the_name = meshPrefix + "__" + (mat[m].name)
+							polyOp.detachFaces polyObj faces asnode:true keepOriginal:on name:the_name
+							subMesh = (getnodebyname the_name)
+							setUserProp subMesh "mesh" the_name
+						)
+					)
+					append res subMesh
+				)
+			) catch (
+				delete polyObj
+				throw()
+			)
+			delete polyObj
+		)
+		
+		return res
 	),
 	
 	fn getMeshMaterialInfo obj = (
@@ -97,64 +153,81 @@ struct TResources (
 		local fsm = createFile out_filename
 		format "<static_mesh>\n" to:fsm
 		
+		--Simplificamos a Array de solo un elemento
+		-- (Si añadimos multimaterial tampoco le veo utilidad a que pueda ser mayor)
+		-- Obtenemos el unico elementoq ue esperamos en [obj]
 		local obj
-		for obj in objs do (
-			local m = obj.mat
-			if m == undefined then (
-				throw ("Object " + obj.name + " requires a material\n")
-			) 
-			
-			-- #(   #(faces_with_mat1) undef undef #(faces_with_mat4) )
-			local mat_infos = getMeshMaterialInfo obj
-			
-			local meshName = getResourceName obj "mesh"
-			if meshName == undefined then (
-				throw "-- ERROR -- [" + obj.name + "] Objeto corrupto! ¡Tiene mesh pero no staticMesh!\n"
+		if (classof objs == Array) then (
+			if objs.count > 1 then (
+				throw "Function exportStaticMesh is not implemented for more than one object!"
+			) else (
+				obj = objs[1]
 			)
-			local filenameXML = "meshes/" + meshName + mesh_ext
-			export_mesh obj meshName mat_infos
-			
-			local used_mats = #()
-			local mat_info
+		) else (
+			obj = objs
+		)
+		
+		-- Creamos submeshes temporales
+		local subMeshes = getSubMeshesByMaterial obj
+		--Material de la mesh principal
+		local m = obj.mat
+		
+		try (
+			-- Tratamos de crear la static mesh con sus meshes
 			local mesh_idx = 0
 			local mat_idx = 0
-			for mat_info in mat_infos do (
-				local mat_used = m
-				mat_idx = mat_idx + 1
-				if mat_info == undefined then continue
-				
-				if classof m == MultiMaterial then (
-					mat_used = m[ mat_idx ]
-					if( mat_used == undefined ) then (
-						throw ("El obj" + obj.name + " uses a multimaterial which is not defining the submaterial index " + mat_idx )
-					)
-					if( classof mat_used != StandardMaterial ) then (
-						throw ("El obj" + obj.name + " uses a multimaterial which in slot "+ mat_idx + " does not contain a std material" )
-					)
-				)
-				local mat_name = mat_used.name
-				
-				tieneEspacios = (findString mat_name " ")
-				tieneAlmohadilla = (findString mat_name "#")
-				if (tieneEspacios != undefined) do (
-					throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
-				)
-				if (tieneEspacios != undefined) do (
-					throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
-				)
-				
-				if not appendifunique used_mats mat_name then (
-					throw ("El obj '" + obj.name + "' uses the same material '" + mat_name + "' with more than one material ids (one is mat_id " + (mat_idx as string ) + "). Please, combine both material id's in a single number.")
-				)
-				
-				local mat_res_name = "materials/" + mat_name + ".material"
-				local mat_file = createFile (materials_dir + mat_name + ".material")
-				saveMaterial mat_file mat_used
-				close mat_file
-				format "  <slot mesh=\"%\" material=\"%\" mesh_idx=\"%\"/>\n" filenameXML mat_res_name mesh_idx to:fsm
-				mesh_idx = mesh_idx + 1
-			)
+			local used_mats = #()
 			
+			for obj in subMeshes do (
+				mat_idx = mat_idx + 1
+				if obj != undefined then (
+					--Current material
+					local mat_used = m
+					if classOf m == MultiMaterial then (
+						mat_used = m[mat_idx]
+					)
+					
+					-- Name of mesh and material
+					local mat_name = mat_used.name
+					local meshName = obj.name
+					
+					-- Check material is correct
+					tieneEspacios = (findString mat_name " ")
+					tieneAlmohadilla = (findString mat_name "#")
+					if (tieneEspacios != undefined) do (
+						throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+					)
+					if (tieneEspacios != undefined) do (
+						throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+					)
+					if not appendifunique used_mats mat_name then (
+						throw ("El obj '" + obj.name + "' uses the same material '" + mat_name + "' with more than one material ids (one is mat_id " + (mat_idx as string ) + "). Please, combine both material id's in a single number.")
+					)
+					
+					-- Save mesh resource
+					-- #(   #(faces_with_mat1) undef undef #(faces_with_mat4) )
+					local mat_infos = getMeshMaterialInfo obj
+					local filenameXML = "meshes/" + meshName + mesh_ext
+					export_mesh obj meshName mat_infos
+					
+					-- Añadimos mesh slot 
+					local mat_res_name = "materials/" + mat_name + ".material"
+					format "  <slot mesh=\"%\" material=\"%\" mesh_idx=\"%\"/>\n" filenameXML mat_res_name mesh_idx to:fsm
+					mesh_idx = mesh_idx + 1
+				)
+			)
+			-- Save material(s) resource
+			saveMaterial m
+		) catch (
+			-- Si falla debemos de borrar los objetos temporales de todas formas!
+			for sm in subMeshes do (
+				if sm != undefined then (delete sm)
+			)
+			close fsm
+			throw()
+		)
+		for sm in subMeshes do (
+			if sm != undefined then (delete sm)
 		)
 		format "</static_mesh>\n" to:fsm
 		close fsm
@@ -163,10 +236,11 @@ struct TResources (
 	fn exportCompStaticMesh obj = (
 		rStMesh = getResourceName obj "staticMesh"
 		if rStMesh != undefined do (
-			local static_mesh_name = "static_meshes/" + rStMesh + ".static_mesh"
+			local static_mesh_name = "static_meshes\\" + rStMesh + ".static_mesh"
 			--format "  <render_static_mesh name=\"%\"/>\n" static_mesh_name to:fs
 			exportStaticMesh (project_path + static_mesh_name) #(obj)
 			setUserProp obj "staticMesh" rStMesh
+			--messagebox ("Obtengo mesh de " + obj.name)
 			local rMesh = getResourceName obj "mesh"
 			setUserProp obj "mesh" rMesh
 		)

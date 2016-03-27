@@ -1,6 +1,6 @@
 -- Some general data
-TAG_PLAYER = "target"
-TAG_CAMERA = "player"
+TAG_PLAYER = "player"
+TAG_CAMERA = "camera_main"
 
 -- Current Object Parsing from userprops to XML
 _parsingObject = undefined
@@ -106,7 +106,7 @@ fn _parseRenderStatic parent = (
 	stMesh = getUserProp _parsingObject "staticMesh"
 	if (stMesh != undefined) do (
 		local xml = parent.addChild "render_static_mesh"
-		xml.addAttr "name" ("static_meshes/" + stMesh)
+		xml.addAttr "name" ("static_meshes/" + stMesh + staticMesh_ext)
 	)
 )
 

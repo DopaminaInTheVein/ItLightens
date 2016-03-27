@@ -22,70 +22,74 @@ fn saveBinaryMesh obj vtxs idxs groups full_path = (
 	-- Open file
 	local fs = fopen full_path "wb"
 	if fs == undefined then throw ("Can't create output file " + full_path )
-	
-	-- Save Header
-	local num_bytes_of_header = 9 * 4
-	local version = 1
-	local primitive_type = 2000
-	local vertex_type = 1002		-- Pos, N, UV
-	local bytes_per_float = 4		-- Assuming all vtxs are float
-	local bytes_per_vertex = vtxs[1].count * bytes_per_float
-	local bytes_per_index = if idxs.count > 65535 then 4 else 2
-	local num_groups = groups.count
-	local bytes_per_group = 4 * 2    -- 4 bytes/int x 2 ints (one for first_index, one for num_indices)
-	
-	format "Exporting mesh with % vertexs and % idxs\n" vtxs.count idxs.count
-	
-	WriteLong fs 0x44221100  -- Mesh magic
-	WriteLong fs num_bytes_of_header
-	
-	WriteLong fs version
-	WriteLong fs vtxs.count
-	WriteLong fs idxs.count
-	WriteLong fs primitive_type
-	
-	WriteLong fs vertex_type
-	WriteLong fs bytes_per_vertex
-	WriteLong fs bytes_per_index			-- 2 or 4
-	WriteLong fs num_groups
-	WriteLong fs 0x44222200  -- terminator Mesh header
-	
-	-- Save vtxs
-	WriteLong fs 0x44221101  -- vtxs magic
-	WriteLong fs ( bytes_per_vertex * vtxs.count )
-	for v in vtxs do (
-		for c in v do (			-- Each member of the vtx
-			WriteFloat fs c		-- Write a float
+	try (
+		-- Save Header
+		local num_bytes_of_header = 9 * 4
+		local version = 1
+		local primitive_type = 2000
+		local vertex_type = 1002		-- Pos, N, UV
+		local bytes_per_float = 4		-- Assuming all vtxs are float
+		local bytes_per_vertex = vtxs[1].count * bytes_per_float
+		local bytes_per_index = if idxs.count > 65535 then 4 else 2
+		local num_groups = groups.count
+		local bytes_per_group = 4 * 2    -- 4 bytes/int x 2 ints (one for first_index, one for num_indices)
+		
+		format "Exporting mesh with % vertexs and % idxs\n" vtxs.count idxs.count
+		
+		WriteLong fs 0x44221100  -- Mesh magic
+		WriteLong fs num_bytes_of_header
+		
+		WriteLong fs version
+		WriteLong fs vtxs.count
+		WriteLong fs idxs.count
+		WriteLong fs primitive_type
+		
+		WriteLong fs vertex_type
+		WriteLong fs bytes_per_vertex
+		WriteLong fs bytes_per_index			-- 2 or 4
+		WriteLong fs num_groups
+		WriteLong fs 0x44222200  -- terminator Mesh header
+		
+		-- Save vtxs
+		WriteLong fs 0x44221101  -- vtxs magic
+		WriteLong fs ( bytes_per_vertex * vtxs.count )
+		for v in vtxs do (
+			for c in v do (			-- Each member of the vtx
+				WriteFloat fs c		-- Write a float
+			)
 		)
-	)
 
-	-- Save idxs
-	WriteLong fs 0x44221102  -- idx magic
-	WriteLong fs ( bytes_per_index * idxs.count )
-	for i in idxs do (
-		if bytes_per_index == 2 then (
-			WriteShort fs (i-1)			-- Base 0
-		) else (
-			WriteLong fs (i-1)
+		-- Save idxs
+		WriteLong fs 0x44221102  -- idx magic
+		WriteLong fs ( bytes_per_index * idxs.count )
+		for i in idxs do (
+			if bytes_per_index == 2 then (
+				WriteShort fs (i-1)			-- Base 0
+			) else (
+				WriteLong fs (i-1)
+			)
 		)
+		
+		-- Save group info
+		WriteLong fs 0x44221103  -- groups magic
+		WriteLong fs ( bytes_per_group * groups.count )
+		for g in groups do (
+			writeLong fs g[1]
+			writeLong fs g[2]
+		)
+		
+		WriteLong fs 0x44221144  -- magic mesh end
+		WriteLong fs 0
+	) catch (
+		FClose fs
+		deleteFile full_path
+		throw()
 	)
-	
-	-- Save group info
-	WriteLong fs 0x44221103  -- groups magic
-	WriteLong fs ( bytes_per_group * groups.count )
-	for g in groups do (
-		writeLong fs g[1]
-		writeLong fs g[2]
-	)
-	
-	WriteLong fs 0x44221144  -- magic mesh end
-	WriteLong fs 0
-	
 	FClose fs
 )
 
 fn export_mesh given_obj meshName mat_infos = (
-
+	--messagebox "Entro en export mesh"
 	local outfilename = meshes_dir + meshName + mesh_ext
 	
 	-- Is the object valid?...
@@ -162,7 +166,7 @@ fn export_mesh given_obj meshName mat_infos = (
 	-- Save everything
 	---------------------------------------------
 	saveBinaryMesh given_obj all_vtxs all_idxs all_groups outfilename
-	
+	--messagebox "Salgo de export_mesh"
 )
 
 --export_mesh $

@@ -42,7 +42,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:554
 		local _mesh = trimRight (trimLeft txtMesh.text)
 		local meshPath = meshes_dir + _mesh + mesh_ext
 		local newMeshCreated = false
-		--try (
+		try (
 	
 			if selectedObj == undefined do (
 				throw "Debes seleccionar un objeto!!" 
@@ -73,27 +73,27 @@ rollout RL_Meshes "IT Lightens!" width:296 height:554
 			)
 			
 			-- Exportar Static Mesh
-			--try (
+			try (
 				setUserProp selectedObj "mesh" _mesh
 				setUserProp selectedObj "staticMesh" stMesh
 				
 				tr = TResources();
 				tr.exportStaticMesh stMeshPath #(selectedObj)
-			--) catch (
-			--	err = "Error exportando static_mesh!"
-			--	throw()
-			--)
+			) catch (
+				err = "Error exportando static_mesh!"
+				throw()
+			)
 			
-		--) catch (
-		--	err += "\n***\n"+getCurrentException()+"\n***\n"
-		--	try (
-		--		if newMeshCreated do (
-		--			messageBox "Borro Mesh"
-		--			deleteFile meshPath
-		--		)
-		--	) catch ( )
-		--	messageBox err
-		--)
+		) catch (
+			err += "\n***\n"+getCurrentException()+"\n***\n"
+			try (
+				if newMeshCreated do (
+					messageBox "Borro Mesh"
+					deleteFile meshPath
+				)
+			) catch ( )
+			messageBox err
+		)
 	)
 	on btnHelp pressed do
 	(
