@@ -23,8 +23,13 @@ class ai_poss : public aicontroller {
 protected:
 	bool stunned;
 	bool possessed;
+
+	virtual map<string, statehandler>* getStatemap();
+
 public:
+
 	ai_poss();
+	void addAiPossStates();
 
 	____TIMER_DECLARE_VALUE_(timeStunt, 10.0f);
 	const void PossessingState();

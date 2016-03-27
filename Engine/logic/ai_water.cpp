@@ -10,15 +10,20 @@
 
 int water_controller::id_curr_max_waters = 0;
 
+map<string, statehandler> water_controller::statemap = {};
+map<int, string> water_controller::out = {};
+
 void water_controller::Init() {
 	om = getHandleManager<water_controller>();	//list handle water in game
 
 	id_water = ++water_controller::id_curr_max_waters;
 	full_name = "water_" + to_string(id_water);
 
-	AddState("idle", (statehandler)&water_controller::Idle);
-	AddState("die", (statehandler)&water_controller::Die);
-	AddState("dead", (statehandler)&water_controller::Dead);
+	if (statemap.empty()) {
+		AddState("idle", (statehandler)&water_controller::Idle);
+		AddState("die", (statehandler)&water_controller::Die);
+		AddState("dead", (statehandler)&water_controller::Dead);
+	}
 
 	SetHandleMeInit();
 	player = tags_manager.getFirstHavingTag(getID("player"));
@@ -108,7 +113,7 @@ void water_controller::tryToDamagePlayer() {
 
 void water_controller::renderInMenu()
 {
-	ImGui::Text("Node : %s", out[SBB::readInt(full_name)].c_str());
+	//ImGui::Text("Node : %s", out[SBB::readInt(full_name)].c_str());
 	ImGui::Text("timer : %.4f", ttl);
 }
 

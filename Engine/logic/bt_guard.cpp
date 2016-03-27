@@ -12,6 +12,11 @@ map<string, bt_guard::KptType> bt_guard::kptTypes = {
 	, {"look", KptType::Look}
 };
 
+map<string, btnode *> bt_guard::tree = {};
+map<string, btaction> bt_guard::actions = {};
+map<string, btcondition> bt_guard::conditions = {};
+btnode* bt_guard::root = nullptr;
+
 TCompTransform * bt_guard::getTransform() {
 	PROFILE_FUNCTION("guard: get transform");
 	CEntity * e = myParent;
@@ -44,21 +49,23 @@ void bt_guard::Init()
 	myParent = myHandle.getOwner();
 	thePlayer = tags_manager.getFirstHavingTag(getID("player"));
 
-	// insert all states in the map
-	createRoot("guard", PRIORITY, NULL, NULL);
-	addChild("guard", "stunned", ACTION, (btcondition)&bt_guard::playerStunned, (btaction)&bt_guard::actionStunned);
-	addChild("guard", "attack", PRIORITY, (btcondition)&bt_guard::playerDetected, NULL);
-	addChild("attack", "chase", ACTION, (btcondition)&bt_guard::playerOutOfReach, (btaction)&bt_guard::actionChase);
-	addChild("attack", "absorbsequence", SEQUENCE, NULL, NULL);
-	addChild("absorbsequence", "absorb", ACTION, NULL, (btaction)&bt_guard::actionAbsorb);
-	addChild("absorbsequence", "shootwall", ACTION, NULL, (btaction)&bt_guard::actionShootWall);
-	addChild("guard", "alertdetected", SEQUENCE, (btcondition)&bt_guard::guardAlerted, NULL);
-	addChild("alertdetected", "search", ACTION, NULL, (btaction)&bt_guard::actionSearch);
-	addChild("alertdetected", "lookaround", ACTION, NULL, (btaction)&bt_guard::actionLookAround);
-	addChild("guard", "patrol", SEQUENCE, NULL, NULL);
-	addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_guard::actionNextWpt);
-	addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_guard::actionSeekWpt);
-	addChild("patrol", "waitwpt", ACTION, NULL, (btaction)&bt_guard::actionWaitWpt);
+	if (tree.empty()) {
+		// insert all states in the map
+		createRoot("guard", PRIORITY, NULL, NULL);
+		addChild("guard", "stunned", ACTION, (btcondition)&bt_guard::playerStunned, (btaction)&bt_guard::actionStunned);
+		addChild("guard", "attack", PRIORITY, (btcondition)&bt_guard::playerDetected, NULL);
+		addChild("attack", "chase", ACTION, (btcondition)&bt_guard::playerOutOfReach, (btaction)&bt_guard::actionChase);
+		addChild("attack", "absorbsequence", SEQUENCE, NULL, NULL);
+		addChild("absorbsequence", "absorb", ACTION, NULL, (btaction)&bt_guard::actionAbsorb);
+		addChild("absorbsequence", "shootwall", ACTION, NULL, (btaction)&bt_guard::actionShootWall);
+		addChild("guard", "alertdetected", SEQUENCE, (btcondition)&bt_guard::guardAlerted, NULL);
+		addChild("alertdetected", "search", ACTION, NULL, (btaction)&bt_guard::actionSearch);
+		addChild("alertdetected", "lookaround", ACTION, NULL, (btaction)&bt_guard::actionLookAround);
+		addChild("guard", "patrol", SEQUENCE, NULL, NULL);
+		addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_guard::actionNextWpt);
+		addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_guard::actionSeekWpt);
+		addChild("patrol", "waitwpt", ACTION, NULL, (btaction)&bt_guard::actionWaitWpt);
+	}
 
 	curkpt = 0;
 

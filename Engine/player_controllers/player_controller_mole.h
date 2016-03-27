@@ -29,7 +29,17 @@ class CObjectManager;
 class player_controller_mole : public PossController {
 	CObjectManager<player_controller_mole> *om;
 	float player_max_speed = CPlayerBase::player_max_speed;
+
+protected:
+	// the states, as maps to functions
+	static map<string, statehandler> statemap;
+
 public:
+
+	map<string, statehandler>* getStatemap() override {
+		return &statemap;
+	}
+
 	void Init();
 
 	void GrabBox();

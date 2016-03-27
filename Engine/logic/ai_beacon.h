@@ -17,7 +17,8 @@ class CObjectManager;
 //--------------------------------------
 
 class beacon_controller : public aicontroller, public TCompBase {
-	std::map<int, std::string> out;
+	static std::map<int, std::string> out;
+
 
 	//main attributes
 	//--------------------------------------
@@ -53,6 +54,10 @@ class beacon_controller : public aicontroller, public TCompBase {
 	float		t_max_disable = 40.0f;	
 	//--------------------------------------
 
+protected:
+	// the states, as maps to functions
+	static map<string, statehandler>statemap;
+
 public:
 
 	static int id_curr_max_beacons;	//count ids, id++ each beacon
@@ -66,6 +71,10 @@ public:
 		TO_REMOVE,
 		TO_REMOVE_TAKEN
 	};
+
+	map<string, statehandler>* getStatemap() override {
+		return &statemap;
+	}
 
 	beacon_controller() {}		//needed to create obj at load
 	void Init() override;

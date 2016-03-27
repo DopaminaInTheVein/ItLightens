@@ -6,20 +6,28 @@
 #include "recast\navmesh_query.h"
 #include "recast\DebugUtils\Include\DebugDraw.h"
 
+map<string, btnode *> bt_mole::tree = {};
+map<string, btaction> bt_mole::actions = {};
+map<string, btcondition> bt_mole::conditions = {};
+btnode* bt_mole::root = nullptr;
+
 void bt_mole::Init()
 {
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 
-	addChild("possessable", "mole", PRIORITY, (btcondition)&bt_mole::npcAvailable, NULL);
-	addChild("mole", "movebox", SEQUENCE, (btcondition)&bt_mole::checkBoxes, NULL);
-	addChild("movebox", "followbox", ACTION, NULL, (btaction)&bt_mole::actionFollowBoxWpt);
-	addChild("movebox", "grabbox", ACTION, NULL, (btaction)&bt_mole::actionGrabBox);
-	addChild("movebox", "carryboxfollowwpt", ACTION, NULL, (btaction)&bt_mole::actionFollowNextBoxLeavepointWpt);
-	addChild("movebox", "ungrabbox", ACTION, NULL, (btaction)&bt_mole::actionUngrabBox);
-	addChild("mole", "patrol", SEQUENCE, NULL, NULL);
-	addChild("patrol", "lookForWpt", ACTION, NULL, (btaction)&bt_mole::actionLookForWpt);
-	addChild("patrol", "followPathToWpt", ACTION, NULL, (btaction)&bt_mole::actionFollowPathToWpt);
+	if (tree.empty()) {
+		addBtPossStates();
+		addChild("possessable", "mole", PRIORITY, (btcondition)&bt_mole::npcAvailable, NULL);
+		addChild("mole", "movebox", SEQUENCE, (btcondition)&bt_mole::checkBoxes, NULL);
+		addChild("movebox", "followbox", ACTION, NULL, (btaction)&bt_mole::actionFollowBoxWpt);
+		addChild("movebox", "grabbox", ACTION, NULL, (btaction)&bt_mole::actionGrabBox);
+		addChild("movebox", "carryboxfollowwpt", ACTION, NULL, (btaction)&bt_mole::actionFollowNextBoxLeavepointWpt);
+		addChild("movebox", "ungrabbox", ACTION, NULL, (btaction)&bt_mole::actionUngrabBox);
+		addChild("mole", "patrol", SEQUENCE, NULL, NULL);
+		addChild("patrol", "lookForWpt", ACTION, NULL, (btaction)&bt_mole::actionLookForWpt);
+		addChild("patrol", "followPathToWpt", ACTION, NULL, (btaction)&bt_mole::actionFollowPathToWpt);
+	}
 
 	towptbox = -1;
 	towptleave = -1;

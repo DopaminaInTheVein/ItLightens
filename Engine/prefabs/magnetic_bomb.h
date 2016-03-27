@@ -21,14 +21,21 @@ class CMagneticBomb : public TCompBase, public aicontroller {
 
 	void SetMyEntity();
 
+protected:
+	// the states, as maps to functions
+	static map<string, statehandler> statemap;
+
 public:
+
+	map<string, statehandler>* getStatemap() override {
+		return &statemap;
+	}
+
 	void Init();
 	void GoingUp();
 	void GoingDown();
 	void CountDown();
 	void Explode();
-
-
 
 	void UpdatePosition();
 	void toExplode();

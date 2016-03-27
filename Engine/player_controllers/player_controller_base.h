@@ -19,6 +19,8 @@ class TCompCharacterController;
 class CPlayerBase : public aicontroller, public TCompBase {
 protected:
 
+	virtual map<string, statehandler>* getStatemap();
+
 	//Enabled
 	bool controlEnabled = false;
 
@@ -26,7 +28,7 @@ protected:
 	static float possessionCooldown;
 
 	// Map for debug on ImGui
-	std::map<int, std::string> out;
+	static std::map<int, std::string> out;
 
 	// Controller input class
 	CHandle camera;
@@ -76,6 +78,7 @@ public:
 	CPlayerBase();
 	void init() { Init(); }
 	void update(float elapsed); //deberia ser const pero Recalc no lo es  e historias
+	void addBasicStates();
 
 	void onSetCamera(const TMsgSetCamera& msg);
 	void SetMyEntity();

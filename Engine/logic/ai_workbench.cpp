@@ -11,15 +11,20 @@
 
 int workbench_controller::id_curr_max_wb = 0;
 
+map<string, statehandler> workbench_controller::statemap = {};
+map<int, string> workbench_controller::out = {};
+
 void workbench_controller::Init() {
 	om = getHandleManager<workbench_controller>();	//list handle beacon in game
 
 	id_wb = ++workbench_controller::id_curr_max_wb;
 	full_name = "workbench_" + to_string(id_wb);
 
-	AddState("idle", (statehandler)&workbench_controller::Idle);
-	AddState("inactive", (statehandler)&workbench_controller::Inactive);
-	AddState("busy", (statehandler)&workbench_controller::Busy);
+	if (statemap.empty()) {
+		AddState("idle", (statehandler)&workbench_controller::Idle);
+		AddState("inactive", (statehandler)&workbench_controller::Inactive);
+		AddState("busy", (statehandler)&workbench_controller::Busy);
+	}
 
 	SetHandleMeInit();				//need to be initialized after all handles, ¿awake/init?
 

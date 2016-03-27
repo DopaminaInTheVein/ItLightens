@@ -11,21 +11,29 @@
 
 #include "components/comp_charactercontroller.h"
 
+map<string, statehandler> player_controller_speedy::statemap = {};
+
 void player_controller_speedy::Init()
 {
 	om = getHandleManager<player_controller_speedy>();	//player
 
-	DeleteState("jumping");
-	DeleteState("falling");
+	//States from controller base and poss controller
+	if (statemap.empty()) {
+		addBasicStates();
+		addPossStates();
 
-	AddState("doublefalling", (statehandler)&player_controller_speedy::DoubleFalling);		//needed to disable double jump on falling
-	AddState("doublejump", (statehandler)&player_controller_speedy::DoubleJump);
+		DeleteState("jumping");
+		DeleteState("falling");
 
-	AddState("falling", (statehandler)&player_controller_speedy::Falling);
-	AddState("jumping", (statehandler)&player_controller_speedy::Jumping);
+		AddState("doublefalling", (statehandler)&player_controller_speedy::DoubleFalling);		//needed to disable double jump on falling
+		AddState("doublejump", (statehandler)&player_controller_speedy::DoubleJump);
 
-	AddState("dashing", (statehandler)&player_controller_speedy::Dashing);
-	AddState("blink", (statehandler)&player_controller_speedy::Blink);
+		AddState("falling", (statehandler)&player_controller_speedy::Falling);
+		AddState("jumping", (statehandler)&player_controller_speedy::Jumping);
+
+		AddState("dashing", (statehandler)&player_controller_speedy::Dashing);
+		AddState("blink", (statehandler)&player_controller_speedy::Blink);
+	}
 
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();

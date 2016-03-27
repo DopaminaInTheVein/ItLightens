@@ -300,8 +300,8 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
 
-	getHandleManager<bt_mole>()->updateAll(dt);
 	getHandleManager<bt_guard>()->updateAll(dt);
+	getHandleManager<bt_mole>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);

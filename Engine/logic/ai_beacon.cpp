@@ -10,19 +10,25 @@
 
 int beacon_controller::id_curr_max_beacons = 0;
 
+map<string, statehandler> beacon_controller::statemap = {};
+
+map<int, string> beacon_controller::out = {};
+
 void beacon_controller::Init() {
 	om = getHandleManager<beacon_controller>();	//list handle beacon in game
 
 	id_beacon = ++beacon_controller::id_curr_max_beacons;
 	full_name = "beacon_" + to_string(id_beacon);
 
-	AddState("idle", (statehandler)&beacon_controller::Idle);
-	AddState("inactive", (statehandler)&beacon_controller::Inactive);
-	AddState("activeNothing", (statehandler)&beacon_controller::ActiveNothing);
-	AddState("activeSonar", (statehandler)&beacon_controller::ActiveSonar);
-	AddState("waitToRemove", (statehandler)&beacon_controller::WaitToRemoveSonar);
-	AddState("waitToremoveNothing", (statehandler)&beacon_controller::WaitToRemoveNothing);
-	AddState("waitInactive", (statehandler)&beacon_controller::WaitInactive);
+	if (statemap.empty()) {
+		AddState("idle", (statehandler)&beacon_controller::Idle);
+		AddState("inactive", (statehandler)&beacon_controller::Inactive);
+		AddState("activeNothing", (statehandler)&beacon_controller::ActiveNothing);
+		AddState("activeSonar", (statehandler)&beacon_controller::ActiveSonar);
+		AddState("waitToRemove", (statehandler)&beacon_controller::WaitToRemoveSonar);
+		AddState("waitToremoveNothing", (statehandler)&beacon_controller::WaitToRemoveNothing);
+		AddState("waitInactive", (statehandler)&beacon_controller::WaitInactive);
+	}
 
 	SetHandleMeInit();				//need to be initialized after all handles, ¿awake/init?
 

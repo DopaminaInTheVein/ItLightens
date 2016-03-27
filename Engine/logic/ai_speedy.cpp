@@ -2,15 +2,22 @@
 #include "ai_speedy.h"
 #include "components\comp_charactercontroller.h"
 
+map<string, statehandler> ai_speedy::statemap = {};
+
 void ai_speedy::Init()
 {
-	// insert all states in the map
-//	AddState("idle", (statehandler)&ai_speedy::IdleState);
-	AddState("nextwpt", (statehandler)&ai_speedy::NextWptState);
-	AddState("seekwpt", (statehandler)&ai_speedy::SeekWptState);
-	AddState("dashtoplayer", (statehandler)&ai_speedy::DashToPlayerState);
-	AddState("dashtopoint", (statehandler)&ai_speedy::DashToPointState);
-	AddState("dashtonewpoint", (statehandler)&ai_speedy::DashToNewPointState);
+	if (statemap.empty()) {
+		// states from ai_poss
+		addAiPossStates();
+		// insert all states in the map
+	//	AddState("idle", (statehandler)&ai_speedy::IdleState);
+		AddState("nextwpt", (statehandler)&ai_speedy::NextWptState);
+		AddState("seekwpt", (statehandler)&ai_speedy::SeekWptState);
+		AddState("dashtoplayer", (statehandler)&ai_speedy::DashToPlayerState);
+		AddState("dashtopoint", (statehandler)&ai_speedy::DashToPointState);
+		AddState("dashtonewpoint", (statehandler)&ai_speedy::DashToNewPointState);
+	}
+
 	om = getHandleManager<ai_speedy>();
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();

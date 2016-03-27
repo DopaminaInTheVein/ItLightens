@@ -21,19 +21,21 @@ typedef bool (bt::*btcondition)();
 
 class bt
 	{
-	// the nodes
-	map<string,btnode *>tree;
-	// the C++ functions that implement node actions, hence, the behaviours
-	map<string,btaction> actions;
-	// the C++ functions that implement conditions
-	map<string,btcondition> conditions;
+	protected:
 
-	btnode *root;
-	btnode *current;
+		// the nodes
+		virtual map<string, btnode *>* getTree();
+		// the C++ functions that implement node actions, hence, the behaviours
+		virtual map<string, btaction>* getActions();
+		// the C++ functions that implement conditions
+		virtual map<string, btcondition>* getConditions();
 
-	// moved to private as really the derived classes do not need to see this
-	btnode *createNode(string);
-	btnode *findNode(string);
+		virtual btnode** getRoot();
+		btnode *current;
+
+		// moved to private as really the derived classes do not need to see this
+		btnode *createNode(string);
+		btnode *findNode(string);
 		
 	public:
 		string name;
