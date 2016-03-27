@@ -41,7 +41,7 @@ bool TCompPhysics::load(MKeyValue & atts)
 	mCollisionType = getCollisionTypeValueFromString(readString);
 	readString = atts.getString("type_shape", "mesh");
 	mCollisionShape = getCollisionShapeValueFromString(readString);
-
+	mMass = atts.getFloat("mass", 2.5f);		//default enough to pass polarize threshold
 	switch (mCollisionShape) {
 	case TRI_MESH:
 		//nothing extra needed to read
