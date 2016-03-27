@@ -17,30 +17,6 @@
 </entity>
 <entity>
 <name
-   name="player_1"
-/>
-<tag
-   name="player"
-/>
-<transform
-   pos="0 14.4893 0"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<life
-   points="10"
-/>
-<character_controller
-   radius="0.3"
-   height="0.5"
-/>
-<render_static_mesh
-   name="static_meshes/player_first_ev.static_mesh"
-/>
-<player/>
-</entity>
-<entity>
-<name
    name="camController_1"
 />
 <tag
@@ -369,5 +345,29 @@
 <polarized
    pol="plus"
 />
+</entity>
+<entity>
+<name
+   name="player_1"
+/>
+<tag
+   name="player"
+/>
+<transform
+   pos="-0.107086 -0.823018 0.305754"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<life
+   points="10"
+/>
+<character_controller
+   radius="0.3"
+   height="0.5"
+/>
+<render_static_mesh
+   name="static_meshes/__player.static_mesh"
+/>
+<player/>
 </entity>
 </entities>
