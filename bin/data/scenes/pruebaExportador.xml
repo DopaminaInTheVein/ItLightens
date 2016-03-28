@@ -54,8 +54,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 </entity>
@@ -79,8 +79,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 </entity>
@@ -104,8 +104,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 </entity>
@@ -129,8 +129,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 </entity>
@@ -154,8 +154,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 </entity>
@@ -179,8 +179,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 </entity>
@@ -204,8 +204,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 </entity>
@@ -229,8 +229,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 </entity>
@@ -254,8 +254,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 <polarized
@@ -282,8 +282,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 <polarized
@@ -310,8 +310,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 <polarized
@@ -338,8 +338,8 @@
 />
 <rigidbody
    type_collision="dynamic"
-   size="2.0 1.0 2.0"
    type_shape="box"
+   size="2.0 1.0 2.0"
    mass="2"
 />
 <polarized
@@ -384,7 +384,7 @@
    name="AI_poss"
 />
 <transform
-   pos="-25.2719 0.774537 19.7288"
+   pos="-17.1856 4.88216 16.3311"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -393,10 +393,10 @@
 />
 <bt_speedy
    wpts_size="4"
-   wpt0_pos="4.12383 0.774537 19.6835"
-   wpt1_pos="3.78404 0.774535 -14.4596"
-   wpt2_pos="-25.2102 0.774535 -14.4801"
-   wpt3_pos="-25.1914 0.774537 19.8309"
+   wpt0_pos="-29.6259 -2.78291 19.7639"
+   wpt1_pos="-30.015 0.076479 -20.0476"
+   wpt2_pos="-20.0 -0.615551 -20.0"
+   wpt3_pos="-20.0 -2.76332 20.0"
 />
 <render_static_mesh
    name="static_meshes/speedy/speedy.static_mesh"
@@ -406,5 +406,105 @@
    radius="0.3"
    height="1.7"
 />
+</entity>
+<entity>
+<name
+   name="mole_1"
+/>
+<tag
+   name="AI"
+/>
+<tag
+   name="AI_mole"
+/>
+<tag
+   name="AI_poss"
+/>
+<transform
+   pos="0.0291334 -1.6384 -15.503"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<life
+   points="100"
+/>
+<bt_mole
+   wpts_size="4"
+   wpt0_pos="13.7281 -1.36456 -10.2374"
+   wpt1_pos="10.8073 -1.66961 13.7462"
+   wpt2_pos="-10.2143 -2.72661 15.4328"
+   wpt3_pos="-15.5211 -0.0123775 -13.693"
+/>
+<render_static_mesh
+   name="static_meshes/mole/mole.static_mesh"
+/>
+<player_mole/>
+<character_controller
+   radius="0.5"
+   height="2.0"
+/>
+</entity>
+<entity>
+<name
+   name="trigger_1"
+/>
+<tag
+   name="victory_point"
+/>
+<transform
+   pos="-35.1702 1.9055 -38.5884"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="5.38 9.4122 0.68"
+/>
+<victory_point/>
+</entity>
+<entity>
+<name
+   name="Box_13"
+/>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<transform
+   pos="-34.8213 0 -33.4936"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<name
+   name="trigger_2"
+/>
+<tag
+   name="generator"
+/>
+<transform
+   pos="4.38609 -2.25879 -31.6495"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.0"
+/>
+<generator/>
 </entity>
 </entities>

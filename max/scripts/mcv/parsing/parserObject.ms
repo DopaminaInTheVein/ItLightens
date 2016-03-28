@@ -48,8 +48,15 @@ fn _parseLevel = (
 -- NAME--
 ---------------------------------------------------------------------
 fn _parseName parent = (
+	local theName = _parsingObject.name
+	local parentObj = _parsingObject.parent
+	if parentObj != undefined then (
+		if (getUserProp parentObj "typeObject") != undefined then (
+			theName = (parentObj.name + "_" + theName)
+		)
+	)
 	local xml = parent.addChild "name"
-	xml.addAttr "name" _parsingObject.name
+	xml.addAttr "name" theName
 )
 ----------------------------------------------------------------------
 --TAGS--
@@ -113,36 +120,52 @@ fn _parseRenderStatic parent = (
 ----------------------------------------------------------------------
 -- RIGID BODY --
 ----------------------------------------------------------------------
-fn _parseRigidBody parent = (
-	local xml = parent.addChild "rigidbody"
-	local collider = findHelper "Collider"
-	
-	-- Type Collision (static, dynamic)
-	local typeCollision = "static"
-	if collider != undefined then (
-		local dynamic = getUserProp collider "dynamic"
-		
-		if dynamic == "yes" then typeCollision = "dynamic"
-	)
-	xml.addAttr "type_collision" typeCollision
-	
-	--Type Shape (Convex, box, etc.)
+fn _parseTypeShape xml collider = (
 	local typeShape = undefined
+	local sizeShape = undefined
+	local radiusShape = undefined
+	
 	if collider != undefined then (
 		 if ( classof collider == Pyramid )  then (
 			 typeShape = "convex"
 		 ) else if (classof collider == Box) then (
 			typeShape = "box"
-			 local ss = stringstream ""
-			 format "% % %" collider.Length collider.Height collider.Width to:ss
-			 xml.addAttr "size" (ss as string)
+			local ss = stringstream ""
+			format "% % %" collider.Width collider.Height collider.Length to:ss
+			sizeShape = (ss as string)
+		 ) else if (classof collider == Sphere) then (
+			 typeShape = "sphere"
+			 radiusShape = collider.radius
 		 ) else (
-			throw ("Falta implementar el collider de tipo" + ((classof collider) as string) + "!\n")
+			throw ("Falta implementar el collider de tipo" + ((classof collider) as string) + "! + (" + collider.name + ")\n")
 		)
 	)
+	
 	if typeShape != undefined then (
 		xml.addAttr "type_shape" typeShape
+		if sizeShape != undefined then (
+			xml.addAttr "size" sizeShape
+		)
+		if radiusShape != undefined then (
+			xml.addAttr "radius" radiusShape
+		)
 	)
+)
+
+fn _parseRigidBody parent = (
+	local xml = parent.addChild "rigidbody"
+	local collider = findHelper "Collider"
+	
+	-- Type Collision (static, dynamic, trigger)
+	local typeCollision = "static"
+	if collider != undefined then (
+		local dynamic = getUserProp collider "dynamic"
+		if dynamic == "yes" then typeCollision = "dynamic"
+	)
+	xml.addAttr "type_collision" typeCollision
+	
+	--Type Shape (Convex, box, etc.)
+	_parseTypeShape xml collider
 	
 	--Mass
 	if collider != undefined then (
@@ -151,6 +174,16 @@ fn _parseRigidBody parent = (
 			xml.addAttr "mass" mass
 		)
 	)
+)
+
+fn _parseRigidBodyTrigger parent = (
+	local xml = parent.addChild "rigidbody"
+
+	-- Type collision = trigger
+	xml.addAttr "type_collision" "trigger"
+	
+	--Type Shape (Convex, box, etc.)
+	_parseTypeShape xml _parsingObject
 )
 
 ----------------------------------------------------------------------

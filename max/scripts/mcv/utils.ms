@@ -27,6 +27,14 @@ fn getHierarchy obj = (
 	return res
 )
 
+fn getHierarchyRoot obj = (
+	local res = obj
+	while ( res.parent != undefined ) do (
+		res = res.parent
+	)
+	return res
+)
+
 -- List Values for XML ("val_1 val_2 val_3..." without microvalues ( 1.5836e-7)
 fn getAsXmlValues values = (
 	local res = ""

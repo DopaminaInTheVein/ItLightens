@@ -7,6 +7,7 @@
 class CStaticMesh;
 
 struct TCompRenderStaticMesh : public TCompBase {
+	bool onlyDebug = false;
 	const CStaticMesh* static_mesh;
 	~TCompRenderStaticMesh();
 	void onCreate(const TMsgEntityCreated&);
@@ -16,4 +17,3 @@ struct TCompRenderStaticMesh : public TCompBase {
 };
 
 #endif
-

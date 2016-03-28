@@ -263,17 +263,19 @@ struct TResources (
 */
 	
 	fn exportObject obj = (
-		--exportCompName obj
-		if classof obj != Editable_mesh and classof obj != Editable_Poly then (
-			ConvertToMesh obj
-		)
-		exportCompStaticMesh obj
-		--if obj.parent != undefined then exportCompHierarchy fs obj
-		
-		
-		-- Export the children
-		for c in obj.children do (
-			exportObject fs c 
+		if (getUserProp obj "typeHelper") == undefined then (
+			--exportCompName obj
+			if classof obj != Editable_mesh and classof obj != Editable_Poly then (
+				ConvertToMesh obj
+			)
+			exportCompStaticMesh obj
+			--if obj.parent != undefined then exportCompHierarchy fs obj
+			
+			
+			-- Export the children
+			for c in obj.children do (
+				exportObject c 
+			)
 		)
 	),
 	
