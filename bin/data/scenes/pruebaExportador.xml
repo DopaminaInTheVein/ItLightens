@@ -370,4 +370,41 @@
 />
 <player/>
 </entity>
+<entity>
+<name
+   name="speedy_1"
+/>
+<tag
+   name="AI"
+/>
+<tag
+   name="AI_speedy"
+/>
+<tag
+   name="AI_poss"
+/>
+<transform
+   pos="-25.2719 0.774537 19.7288"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<life
+   points="50"
+/>
+<bt_speedy
+   wpts_size="4"
+   wpt0_pos="4.12383 0.774537 19.6835"
+   wpt1_pos="3.78404 0.774535 -14.4596"
+   wpt2_pos="-25.2102 0.774535 -14.4801"
+   wpt3_pos="-25.1914 0.774537 19.8309"
+/>
+<render_static_mesh
+   name="static_meshes/speedy/speedy.static_mesh"
+/>
+<player_speedy/>
+<character_controller
+   radius="0.3"
+   height="1.7"
+/>
+</entity>
 </entities>
