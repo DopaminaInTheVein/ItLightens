@@ -33,6 +33,7 @@ public:
 	}
 
 	void uploadToGPU() {
+		PROFILE_FUNCTION("upload GPU: upload gpu");
 		Render.ctx->UpdateSubresource(constant_buffer, 0, NULL, (TObjParams*)this, 0, 0);
 	}
 };
