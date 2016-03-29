@@ -13,8 +13,40 @@
 
 map<string, statehandler> player_controller_speedy::statemap = {};
 
+void player_controller_speedy::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("AI_speedy")) {
+
+			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+
+			assignValueToVar(player_max_speed, fields_base);
+			assignValueToVar(player_rotation_speed, fields_base);
+			assignValueToVar(jimpulse, fields_base);
+			assignValueToVar(left_stick_sensibility, fields_base);
+			assignValueToVar(camera_max_height, fields_base);
+			assignValueToVar(camera_min_height, fields_base);
+
+			map<std::string, float> fields_speedy = readIniFileAttrMap("controller_speedy");
+
+			assignValueToVar(dash_speed, fields_speedy);
+			assignValueToVar(dash_max_duration, fields_speedy);
+			assignValueToVar(dash_cooldown, fields_speedy);
+			assignValueToVar(dash_energy, fields_speedy);
+			assignValueToVar(blink_cooldown, fields_speedy);
+			assignValueToVar(blink_distance, fields_speedy);
+			assignValueToVar(blink_energy, fields_speedy);
+			assignValueToVar(drop_water_timer_reset, fields_speedy);
+
+		}
+	}
+}
+
 void player_controller_speedy::Init()
 {
+	// Read Main attributes from file
+	readIniFileAttr();
+
 	om = getHandleManager<player_controller_speedy>();	//player
 
 	//States from controller base and poss controller

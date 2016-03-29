@@ -27,26 +27,28 @@ struct TCompRenderStaticMesh;
 class player_controller_speedy : public PossController {
 	CObjectManager<player_controller_speedy> *om;
 
-	const float dash_speed = 30.f;
-	const float dash_max_duration = 1.f;
-	float dash_duration = 0.f;
+	// main attributes
+	//dash
+	float dash_speed;
+	float dash_max_duration;
+	float dash_cooldown; //in seconds
+	float dash_energy;
+	//blink
+	float blink_cooldown;
+	float blink_distance;
+	float blink_energy;
+	//water
+	float drop_water_timer_reset;
 
+	float dash_duration = 0.f;
 	float dash_timer = 0.f;
 	bool dash_ready = true;
 	bool dashing = false;
-	const float dash_cooldown = 8.f; //in seconds
-
-	const float max_blink_duration = 2.f; //in seconds
-	float blink_duration = max_blink_duration; //in seconds
-	const float blink_distance = 8.f;
 
 	float drop_water_timer;
-	const float drop_water_timer_reset = 3.f;
-
 	float blink_timer = 0.f;
 	bool blink_ready = true;
 	bool drop_water_ready = false;
-	const float blink_cooldown = 5.f;
 
 	const string water_static_mesh = "static_meshes/water.static_mesh";
 
@@ -68,6 +70,7 @@ public:
 
 	void Init();
 	void myUpdate() override;
+	void readIniFileAttr();
 
 	void UpdateInputActions();
 

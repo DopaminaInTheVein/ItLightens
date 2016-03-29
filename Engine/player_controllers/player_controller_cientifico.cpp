@@ -19,7 +19,41 @@
 map<string, statehandler> player_controller_cientifico::statemap = {};
 map<int, string> player_controller_cientifico::out = {};
 
+void player_controller_cientifico::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("AI_cientifico")) {
+
+			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+
+			assignValueToVar(player_max_speed, fields_base);
+			assignValueToVar(player_rotation_speed, fields_base);
+			assignValueToVar(jimpulse, fields_base);
+			assignValueToVar(left_stick_sensibility, fields_base);
+			assignValueToVar(camera_max_height, fields_base);
+			assignValueToVar(camera_min_height, fields_base);
+
+			map<std::string, float> fields_scientist = readIniFileAttrMap("controller_scientist");
+
+			assignValueToVar(t_waiting, fields_scientist);
+			assignValueToVar(t_to_explode, fields_scientist);
+			assignValueToVar(t_create_beacon, fields_scientist);
+			assignValueToVar(t_create_StaticBomb, fields_scientist);
+			assignValueToVar(t_create_MagneticBomb, fields_scientist);
+			assignValueToVar(t_explode_static_bomb, fields_scientist);
+			assignValueToVar(t_create_beacon_energy, fields_scientist);
+			assignValueToVar(t_create_StaticBomb_energy, fields_scientist);
+			assignValueToVar(t_create_MagneticBomb_energy, fields_scientist);
+
+		}
+	}
+}
+
 void player_controller_cientifico::Init() {
+
+	// read main attributes from file
+	readIniFileAttr();
+
 	om = getHandleManager<player_controller_cientifico>();	//player
 
 	if (statemap.empty()) {

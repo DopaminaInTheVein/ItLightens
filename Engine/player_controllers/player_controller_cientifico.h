@@ -24,7 +24,6 @@ class player_controller_cientifico : public PossController {
 	// Map for debug on ImGui
 	static std::map<int, std::string> out;
 
-
 	CObjectManager<player_controller_cientifico> * om = nullptr;
 
 	VEC3 directionLateral = VEC3(0, 0, 0);
@@ -45,12 +44,16 @@ class player_controller_cientifico : public PossController {
 	int obj = EMPTY;
 	CHandle bomb_handle;
 
-	const float t_create_beacon = 1.0f;
-	const float t_create_StaticBomb = 1.0f;
-	const float t_create_MagneticBomb = 1.0f;
-	const float t_explode_static_bomb = 5.0f;
-	float t_waiting = 0.0f;
-	float t_to_explode = 5.0f;
+	//Main attributes
+	float t_waiting;
+	float t_to_explode;
+	float t_create_beacon;
+	float t_create_StaticBomb;
+	float t_create_MagneticBomb;
+	float t_explode_static_bomb;
+	float t_create_beacon_energy;
+	float t_create_StaticBomb_energy;
+	float t_create_MagneticBomb_energy;
 
 	void UpdateInputActions() override;
 	void ExplodeBomb();
@@ -69,7 +72,7 @@ public:
 	player_controller_cientifico() {}
 	void Init() override;
 	void init() { Init(); }
-
+	void readIniFileAttr();
 
 	//void onSetCamera(const TMsgSetCamera& msg);
 	void SetMyEntity();
