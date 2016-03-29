@@ -94,61 +94,64 @@ void player_controller_speedy::UpdateInputActions() {
 
 void player_controller_speedy::DoubleJump()
 {
+	PROFILE_FUNCTION("player speedy controller: double jump");
 	UpdateDirection();
 	UpdateMovDirection();
 
-	if (jspeed <= 0.1f) {
-		jspeed = 0.0f;
-		ChangePose(pose_jump_route);
+	SetCharacterController();
+
+	if (cc->GetYAxisSpeed() < 0.0f) {
 		ChangeState("doublefalling");
 	}
 }
 
 void player_controller_speedy::DoubleFalling() {
+	PROFILE_FUNCTION("player speedy controller: double falling");
 	UpdateDirection();
 	UpdateMovDirection();
-
-	if (onGround) {
-		jspeed = 0.0f;
-		ChangePose(pose_idle_route);
+	SetCharacterController();
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 }
 
 void player_controller_speedy::Jumping()
 {
+	PROFILE_FUNCTION("player speedy controller: jumping");
 	UpdateDirection();
 	UpdateMovDirection();
+	SetCharacterController();
 
-	if (onGround) {
-		jspeed = 0.0f;
-		ChangePose(pose_idle_route);
+	if (cc->GetYAxisSpeed() <= 0.0f)
+		ChangeState("falling");
+
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		jspeed = jimpulse;
+		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 		energyDecreasal(5.0f);
-		ChangePose(pose_jump_route);
 		ChangeState("doublejump");
 	}
 }
 
 void player_controller_speedy::Falling()
 {
+	PROFILE_FUNCTION("player speedy controller: falling");
 	UpdateDirection();
 	UpdateMovDirection();
+	SetCharacterController();
+
+	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		jspeed = jimpulse;
+		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 		energyDecreasal(5.0f);
-		ChangePose(pose_jump_route);
 		ChangeState("doublejump");
 	}
 
-	if (onGround) {
-		jspeed = 0.0f;
-		ChangePose(pose_idle_route);
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 }
