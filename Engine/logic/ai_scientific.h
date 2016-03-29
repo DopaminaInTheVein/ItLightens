@@ -32,15 +32,15 @@ class ai_scientific : public ai_poss, public TCompBase {
 
 	//main attributes
 	//--------------------------------------
-	float move_speed = 2.0f;
-	float rot_speed = 2.0f;
+	float move_speed;
+	float rot_speed;
 	//--------------------------------------
 
 	//distance limitations
 	//--------------------------------------
-	float square_range_action = 1.0f;
-	float d_epsilon = 0.1f;
-	float d_beacon_simple = 100.0f;
+	float square_range_action;
+	float d_epsilon;
+	float d_beacon_simple;
 	//--------------------------------------
 
 	//Map points, TEMP, TODO: look for positions from object_manager
@@ -53,11 +53,11 @@ class ai_scientific : public ai_poss, public TCompBase {
 
 	//Timer counts
 	//--------------------------------------
-	float waiting_time = 0.0f;
-	float t_addBeacon = 2.5f;
-	float t_createBeacon = 5.0f;
-	float t_removeBeacon = 1.5f;
-	float t_waitInPos = 0.0f;
+	float waiting_time;
+	float t_addBeacon;
+	float t_createBeacon;
+	float t_removeBeacon;
+	float t_waitInPos;
 	//--------------------------------------
 
 	//general pointers
@@ -87,6 +87,7 @@ public:
 	ai_scientific() {}		//needed to create obj at load
 	void Init() override;
 	void init() { Init(); }
+	void readIniFileAttr();
 
 	//Overload functions from TCompBase, needed to loop AI Component
 	//--------------------------------------

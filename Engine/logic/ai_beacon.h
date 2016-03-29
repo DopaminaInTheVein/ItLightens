@@ -22,9 +22,9 @@ class beacon_controller : public aicontroller, public TCompBase {
 
 	//main attributes
 	//--------------------------------------
-	float range = 7.5f;		//range sonar
-	float rot_speed_sonar = 8.0f;		//TODO: mesh change
-	float rot_speed_disable = 2.0f;		//TODO: mesh change
+	float range;		//range sonar
+	float rot_speed_sonar;		//TODO: mesh change
+	float rot_speed_disable;		//TODO: mesh change
 												//--------------------------------------
 
 												//general info
@@ -48,10 +48,10 @@ class beacon_controller : public aicontroller, public TCompBase {
 
 	//Timer counts
 	//--------------------------------------
-	float			t_waiting = 0.0f;
-	float		t_max_sonar = 20.0f;
-	float		t_max_empty = 15.0f;
-	float		t_max_disable = 40.0f;	
+	float		t_waiting;
+	float		t_max_sonar;
+	float		t_max_empty;
+	float		t_max_disable;	
 	//--------------------------------------
 
 protected:
@@ -79,6 +79,7 @@ public:
 	beacon_controller() {}		//needed to create obj at load
 	void Init() override;
 	void init() { Init(); }
+	void readIniFileAttr();
 
 	//Overload functions from TCompBase, needed to loop AI Component
 	//--------------------------------------

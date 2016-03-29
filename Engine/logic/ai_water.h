@@ -26,13 +26,12 @@ class water_controller : public aicontroller, public TCompBase {
 	int id_water = 0;
 	std::string full_name = "";
 
-	int permanent_water_damage = 1000;
-	int dropped_water_damage = 15;
-
-	float permanent_max_ttl = -1.f;				//in seconds
-	float dropped_max_ttl = 10.f;					//in seconds
-
-	float damage_radius = 25.f;
+	// Main attributes
+	float permanent_water_damage;
+	float dropped_water_damage;
+	float permanent_max_ttl;				//in seconds
+	float dropped_max_ttl;				//in seconds
+	float damage_radius;
 
 	int water_type;
 	int damage;
@@ -63,6 +62,7 @@ public:
 	water_controller() {}
 	void Init() override;
 	void init() { Init(); }
+	void readIniFileAttr();
 
 	void update(float elapsed);
 

@@ -3,6 +3,7 @@
 #include "bt_guard.h"
 #include "components/entity_tags.h"
 #include "utils/XMLParser.h"
+#include "utils/utils.h"
 #include "logic/sbb.h"
 #include "app_modules\io\io.h"
 #include "ui\ui_interface.h"
@@ -39,11 +40,40 @@ CEntity* bt_guard::getPlayer() {
 	return player;
 }
 
+void bt_guard::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("AI_guard")) {
+			map<std::string, float> fields = readIniFileAttrMap("bt_guard");
+
+			assignValueToVar(DIST_SQ_REACH_PNT, fields);
+			assignValueToVar(DIST_SQ_SHOT_AREA_ENTER, fields);
+			assignValueToVar(DIST_SQ_SHOT_AREA_LEAVE, fields);
+			assignValueToVar(DIST_RAYSHOT, fields);
+			assignValueToVar(DIST_SQ_PLAYER_DETECTION, fields);
+			assignValueToVar(DIST_SQ_PLAYER_LOST, fields);
+			assignValueToVar(SPEED_WALK, fields);
+			assignValueToVar(CONE_VISION, fields);
+			CONE_VISION = deg2rad(CONE_VISION);
+			assignValueToVar(SPEED_ROT, fields);
+			SPEED_ROT = deg2rad(SPEED_ROT);
+			assignValueToVar(DAMAGE_LASER, fields);
+			assignValueToVar(reduce_factor, fields);
+			assignValueToVar(t_reduceStats_max, fields);
+			assignValueToVar(t_reduceStats, fields);
+			
+		}
+	}
+}
+
 /**************
 * Init
 **************/
 void bt_guard::Init()
 {
+	// read main attributes from file
+	readIniFileAttr();
+
 	//Handles
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();

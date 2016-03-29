@@ -1,7 +1,6 @@
 #include "mcv_platform.h"
 #include "ai_workbench.h"
 
-
 #include <windows.h>
 #include "handle\object_manager.h"
 #include "components\comp_transform.h"
@@ -14,7 +13,25 @@ int workbench_controller::id_curr_max_wb = 0;
 map<string, statehandler> workbench_controller::statemap = {};
 map<int, string> workbench_controller::out = {};
 
+void workbench_controller::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("workbench")) {
+			map<std::string, float> fields = readIniFileAttrMap("ai_workbench");
+
+			assignValueToVar(range, fields);
+			assignValueToVar(rot_speed_sonar, fields);
+			assignValueToVar(rot_speed_disable, fields);
+
+		}
+	}
+}
+
 void workbench_controller::Init() {
+
+	//read attributes from file
+	readIniFileAttr();
+
 	om = getHandleManager<workbench_controller>();	//list handle beacon in game
 
 	id_wb = ++workbench_controller::id_curr_max_wb;

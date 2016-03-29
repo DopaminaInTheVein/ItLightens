@@ -43,13 +43,14 @@ class bt_speedy : public bt_poss, public TCompBase {
 	bool drop_water_ready;
 	VEC3 dash_target;
 
-	float speed = 4.f;
-	float dash_speed = 10.f;
-	float rotation_speed = deg2rad(200);
-	float max_dash_player_distance = 70.f;
+	// Main attributes
+	float speed;
+	float dash_speed;
+	float rotation_speed;
+	float max_dash_player_distance;
 	// timers in seconds
-	float dash_timer_reset = 10.f;
-	float drop_water_timer_reset = 3.f;
+	float dash_timer_reset;
+	float drop_water_timer_reset;
 	// probabilities
 	int random_wpt = -1;
 
@@ -78,6 +79,7 @@ class bt_speedy : public bt_poss, public TCompBase {
 	public:
 		void Init();
 		void update(float elapsed);
+		void readIniFileAttr();
 		//conditions
 		bool dashReady();
 		//actions

@@ -142,3 +142,39 @@ bool isInVector(std::vector<TTagID>& v, TTagID obj)
 {
 	return (std::find(v.begin(), v.end(), obj) != v.end());
 }
+
+std::map<std::string, float> readIniFileAttrMap(char* element_to_read) {
+	CApp &app = CApp::get();
+	std::string file_ini = app.file_initAttr;
+	std::map<std::string, float> element_fields;
+
+	char result[32000];
+	char field[64];
+
+	GetPrivateProfileString(element_to_read, NULL, "not_found", result, 32000, file_ini.c_str());
+
+	std::string res_string(result, 32000);
+	std::string delimiter("\0", 1);
+
+	size_t pos = 0;
+	std::string token;
+	while ((pos = res_string.find(delimiter)) != std::string::npos) {
+		token = res_string.substr(0, pos);
+		
+		GetPrivateProfileStringA(element_to_read, token.c_str(), "not_found", field, 64, file_ini.c_str());
+		std::string field_s = std::string(field);
+
+		if (field_s != "not_found")
+			element_fields[token] = std::stof(field_s);
+		else
+			element_fields[token] = 0.0f;
+
+		res_string.erase(0, pos + delimiter.length());
+	}
+
+	return element_fields;
+}
+
+void assingValueFromMap(float *variable, char *name, std::map<std::string, float> data_map) {
+	*variable = data_map[name];
+}

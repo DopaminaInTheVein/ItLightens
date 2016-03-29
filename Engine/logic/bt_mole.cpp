@@ -11,8 +11,26 @@ map<string, btaction> bt_mole::actions = {};
 map<string, btcondition> bt_mole::conditions = {};
 btnode* bt_mole::root = nullptr;
 
+void bt_mole::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("AI_mole")) {
+			map<std::string, float> fields = readIniFileAttrMap("bt_mole");
+
+			assignValueToVar(speed, fields);
+			assignValueToVar(rotation_speed, fields);
+			rotation_speed = deg2rad(rotation_speed);
+			assignValueToVar(distMaxToBox, fields);
+
+		}
+	}
+}
+
 void bt_mole::Init()
 {
+	// read main attributes from file
+	readIniFileAttr();
+
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 

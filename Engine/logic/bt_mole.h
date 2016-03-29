@@ -25,9 +25,10 @@
 #include <windows.h>
 
 class bt_mole : public bt_poss, public TCompBase {
-	float speed = 2.f;
-	float rotation_speed = deg2rad(200);
-	float distMaxToBox = 10.0f;
+	// Main attributes
+	float speed;
+	float rotation_speed;
+	float distMaxToBox;
 
 	int towptbox;
 	int towptleave;
@@ -83,6 +84,7 @@ class bt_mole : public bt_poss, public TCompBase {
 public:
 	void Init();
 	void update(float elapsed);
+	void readIniFileAttr();
 	//conditions
 	bool checkBoxes();
 	//actions

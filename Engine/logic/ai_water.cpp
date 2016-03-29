@@ -13,7 +13,26 @@ int water_controller::id_curr_max_waters = 0;
 map<string, statehandler> water_controller::statemap = {};
 map<int, string> water_controller::out = {};
 
+void water_controller::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("water")) {
+			map<std::string, float> fields = readIniFileAttrMap("ai_water");
+
+			assignValueToVar(permanent_water_damage, fields);
+			assignValueToVar(dropped_water_damage, fields);
+			assignValueToVar(permanent_max_ttl, fields);
+			assignValueToVar(dropped_max_ttl, fields);
+			assignValueToVar(damage_radius, fields);
+
+		}
+	}
+}
+
 void water_controller::Init() {
+	//read attributes from file
+	readIniFileAttr();
+
 	om = getHandleManager<water_controller>();	//list handle water in game
 
 	id_water = ++water_controller::id_curr_max_waters;

@@ -22,9 +22,9 @@ class workbench_controller : public aicontroller, public TCompBase {
 
 	//main attributes
 	//--------------------------------------
-	float range = 7.5f;		//range sonar
-	float rot_speed_sonar = 8.0f;	
-	float rot_speed_disable = 2.0f;		
+	float range; 				//range sonar
+	float rot_speed_sonar;	
+	float rot_speed_disable;		
 	//--------------------------------------
 
 	//general info
@@ -66,6 +66,7 @@ public:
 	workbench_controller() {}		//needed to create obj at load
 	void Init() override;
 	void init() { Init(); }
+	void readIniFileAttr();
 
 	//Overload functions from TCompBase, needed to loop AI Component
 	//--------------------------------------
