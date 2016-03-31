@@ -1,82 +1,217 @@
-clearListener()
+------ INDEXES of Descriptor Info --------
+NAME_IDX = 1
+TAGS_IDX = 2
+ATTRIBUTES_IDX = 3
+COMPONENTS_IDX = 4
+HELPERS_IDX = 5
+--------------------------------------------
 
-listComponents = #("mesh", "staticMesh")
-reservedProps = #("typeObject", "typeHelper", "defaultName")
-
-struct TComponentListItem (
-	nombre,
-	valor
+--------- Object Descriptor --------------
+struct ObjectDescriptor (
+	theName = undefined
+	,theTags = #()
+	,theAttributes = #()
+	,theComponents = #()
+	,theHelpers = #()
+	
+	,fn create info = (
+		theName = info[NAME_IDX]
+		theTags = info[TAGS_IDX]
+		theAttributes = info[ATTRIBUTES_IDX]
+		theComponents = info[COMPONENTS_IDX]
+		theHelpers = info[HELPERS_IDX]
+	)
+	
+	,fn getType = ( return theName )
+	,fn getTags = ( return theTags )
+	,fn getAttributes = ( return theAttributes )
+	,fn getComponents = ( return theComponents )
+	,fn getHelpers = ( return theHelpers )
 )
+---------------------------------------------------------------------
 
-struct TObject (
-	obj,
-	
-	fn setObj _obj = (
-		obj = _obj
-	),
-	
-	fn getComponentList = (
-		result = #()
-		for c in listComponents do (
-			local item = TComponentListItem()
-			item.nombre = c
-			item.valor = getUserProp obj c
-			append result item
+----------Object Manager -----------------------------------------
+struct OM (
+	hColliders = #("colliderBox","colliderConvex")
+	,hPolarized = #("pol_minus","pol_neutral","pol_plus")
+	,hPatrol = #("patrol_go", "patrol_look")
+	,hNpcs = #("patrol_go", "patrol_look", "jurisdiction", "charController")
+	,allTheObjectsDescription = #(
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		#("undefined" --Default Object. Must be the first!
+			-- Tags
+			,#()
+			-- Attributes
+			,#()
+			--Components
+			,#("name", "transform",  "render", "physx")
+			--Helpers
+			,hPolarized + hColliders
 		)
-		return result
-	),
-	
-	fn getValor index = (
-		return  getUserProp obj listComponents[index]
-	),
-	
-	fn setValor nombre valor = (
-		setUserProp obj nombre valor
-	)
-)
-
-fn getAllMaxIn dir = (
-	local res = #()
-	local maxFiles = getFiles (dir + "*.max")
-	for f in maxFiles do
-	(
-		append res (getFilenameFile f)
-	)
-	return res
-)
-
-fn objExists nombre = (
-	queryName = "$'"+nombre+"'"
-	obj = execute (queryName)
-	return (obj != undefined)
-)
-
-fn numerateObject obj = (
-	obj.name += "_"
-	local repeat = true
-	local newName = undefined
-	local index = 0
-	while repeat do (
-		index += 1
-		newName = obj.name + (index as string)
-		repeat = (objExists newName)
-	)
-	obj.name = newName
-)
-
-fn getEditableProps obj = (
-	local props = getUserPropBuffer obj
-	props = filterString props "=, \n"
-	local res = #()
-	local i = 1
-	while i < props.count do (
-		local index = findItem reservedProps props[i]
-		if (index == 0) do (
-			-- No es una propiedad reservada
-			append res props[i]
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("Beacon"
+			-- Tags
+			,#("beacon")
+			-- Attributes
+			,#()
+			--Components
+			,#("beacon")
+			--Helpers
+			,#()
 		)
-		i += 2
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("Box"
+			-- Tags
+			,#("box","platform")
+			-- Attributes
+			,#()
+			--Components
+			,#("box")
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("BreakableWall"
+			-- Tags
+			,#("breakable_wall", "platform")
+			-- Attributes
+			,#()
+			--Components
+			,#()
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("CamController"
+			-- Tags
+			,#(TAG_CAMERA)
+			--- Attributes
+			,#()
+			--Components
+			,#("camera", "controller_3rd_person")
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("CrystalWall"
+			-- Tags
+			,#("crystal")
+			-- Attributes
+			,#()
+			--Components
+			,#()
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("Guard"
+			-- Tags
+			,#("AI","AI_guard")
+			-- Attributes
+			,#("life")
+			--Components
+			,#("life","bt_guard")
+			--Helpers
+			,hNpcs
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("Mole"
+			-- Tags
+			,#("AI","AI_mole","AI_poss")
+			-- Attributes
+			,#("life")
+			--Components
+			,#("life", "bt_mole", "player_mole")
+			--Helpers
+			,hNpcs
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("Player"
+			-- Tags
+			,#(TAG_PLAYER)
+			-- Attributes
+			,#("life")
+			--Components
+			,#("player")
+			--Helpers
+			,#("charController")
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("Speedy"
+			-- Tags
+			,#("AI", "AI_speedy", "AI_poss")
+			-- Attributes
+			,#("life")
+			--Components
+			,#("bt_speedy")
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("Trigger"
+			-- Tags
+			,#()
+			-- Attributes
+			,#("script")
+			--Components
+			,#("script")
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("Water"
+			-- Tags
+			,#("water")
+			-- Attributes
+			,#()
+			--Components
+			,#("water")
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#(""
+			-- Tags
+			,#()
+			-- Attributes
+			,#()
+			--Components
+			,#()
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
 	)
-	return res
-)
+	
+	-- Functions --
+	,fn getDescriptor obj = (	
+		var =" 10"
+		messagebox ("hola2" + var as string)
+		local theName = getUserProp obj "typeObject"
+		local tDescriptor = allTheObjectsDescription[1]
+		for tDesc in allTheObjectsDescription do (
+			if tDesc[NAME_IDX] == (theName as string) then (
+				tDescriptor = tDesc
+			) else if tDesc[NAME_IDX] == "" then (
+				exit
+			)
+		)
+		
+		-- Si no undefined añadimos las cosas de undefined
+		if theName != undefined then (
+			tDefault = allTheObjectsDescription[1]
+			local i
+			for i = TAGS_IDX to tDescriptor.count do (
+				for elem in tDefault[i] do (
+					appendIfUnique tDescriptor[i] elem
+				)
+			)
+		)
+		
+		local oDesc = ObjectDescriptor()
+		oDesc.create tDescriptor
 
+		return oDesc
+	)
+)
+OManager = OM()

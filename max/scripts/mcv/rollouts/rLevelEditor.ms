@@ -55,7 +55,8 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 	(
 		selectedObj = obj
 		pckObj.text = selectedObj.name
-		ddlProperties.items = getEditableProps obj
+		local descriptor = OManager.getDescriptor obj
+		ddlProperties.items = descriptor.getAttributes()
 		
 		-- Actualizmos propiedades
 		updateProperties()
