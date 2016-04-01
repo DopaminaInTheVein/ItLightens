@@ -1,0 +1,4 @@
+<static_mesh>
+    <slot mesh="skeletons/warrior/skeleton_chest.mesh" material="materials/skin_madera.material"/>
+    <slot mesh="skeletons/warrior/skeleton_head.mesh" material="materials/skin_madera.material"/>
+</static_mesh>

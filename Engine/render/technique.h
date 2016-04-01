@@ -15,6 +15,7 @@ class CRenderTechnique : public IResource, public CXMLParser {
   const CPixelShader*  ps;
   std::string          name;
   int                  priority;
+  bool                 uses_bones;
 
   static CRenderTechnique* curr_active;
 
@@ -39,6 +40,8 @@ public:
   bool isValid() const {
     return vs && ps;
   }
+
+  bool usesBones() const { return uses_bones; }
 
   eType getType() const { return TECHNIQUE; }
 };

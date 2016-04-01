@@ -5,6 +5,7 @@
 #include "technique.h"
 #include "mesh.h"
 #include "components/comp_transform.h"
+#include "skeleton/comp_skeleton.h"
 #include "components/entity.h"
 
 CRenderManager RenderManager;
@@ -83,6 +84,15 @@ void CRenderManager::renderAll() {
 	shader_ctes_object.Rotation = MAT44::CreateFromQuaternion(c_tmx->getRotation());
     shader_ctes_object.uploadToGPU();
     shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
+
+	if (it->material->tech->usesBones()) {
+		CEntity* e = it->owner.getOwner();
+		assert(e);
+		TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+		assert(comp_skel);
+		comp_skel->uploadBonesToCteShader();
+	}
+	
     it->mesh->render();    // it->mesh->renderSubMesh( it->submesh );
     ++it;
   }

@@ -4,6 +4,9 @@
 #include "comp_skeleton.h"
 #include "skeleton.h"
 #include "cal3d/cal3d.h"
+#include "render/draw_utils.h"
+#include "contants/ctes_bones.h"
+
 #include "imgui/imgui.h"
 
 #pragma comment(lib, "cal3d.lib" )
@@ -13,6 +16,8 @@ bool TCompSkeleton::load(MKeyValue& atts) {
   resource_skeleton = Resources.get(res_name.c_str())->as<CSkeleton>();
   auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
   model = new CalModel(non_const_skel->getCoreModel());
+
+  // Play the first animation as cycle
   model->getMixer()->blendCycle(0, 1.0f, 0.f);
   return true;
 }
@@ -61,6 +66,44 @@ void TCompSkeleton::renderInMenu() {
 
 void TCompSkeleton::update(float dt) {
   model->update(dt * 0.1f);
+}
+
+void TCompSkeleton::uploadBonesToCteShader() const {
+	
+	float* fout = &shader_ctes_bones.Bones[0]._11;
+	
+	CalSkeleton* skel = model->getSkeleton();
+	auto& cal_bones = skel->getVectorBone();
+	assert(cal_bones.size() < MAX_BONES_SUPPORTED);
+	// For each bone from the cal model
+	for (size_t bone_idx = 0; bone_idx < cal_bones.size(); ++bone_idx) {
+		CalBone* bone = cal_bones[bone_idx];
+		
+		const CalMatrix& cal_mtx = bone->getTransformMatrix();
+		const CalVector& cal_pos = bone->getTranslationBoneSpace();
+		
+		*fout++ = cal_mtx.dxdx;
+		*fout++ = cal_mtx.dydx;
+		*fout++ = cal_mtx.dzdx;
+		*fout++ = 0.f;
+		*fout++ = cal_mtx.dxdy;
+		*fout++ = cal_mtx.dydy;
+		*fout++ = cal_mtx.dzdy;
+		*fout++ = 0.f;
+		*fout++ = cal_mtx.dxdz;
+		*fout++ = cal_mtx.dydz;
+		*fout++ = cal_mtx.dzdz;
+		*fout++ = 0.f;
+		*fout++ = cal_pos.x;
+		*fout++ = cal_pos.y;
+		*fout++ = cal_pos.z;
+		*fout++ = 1.f;
+		
+	}
+	shader_ctes_bones.uploadToGPU();
+	
+	// Already done in game.cpp
+	// shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
 }
 
 void TCompSkeleton::render() const {

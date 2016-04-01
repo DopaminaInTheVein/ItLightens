@@ -41,6 +41,7 @@ public:
   , VTX_DECL_POSITION_UV = 1000
   , VTX_DECL_POSITION_COLOR 
   , VTX_DECL_POSITION_NORMAL_UV = 1002
+  , VTX_DECL_POSITION_NORMAL_UV_SKIN = 1102
   };
 
 	CMesh(const std::string& new_name)

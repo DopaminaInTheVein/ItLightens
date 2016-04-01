@@ -16,7 +16,7 @@ void VS(
 {
   float4 worldPos = mul(iPos, World);
   oPos = mul(worldPos, ViewProjection );
-  oColor = iColor;
+  oColor = iColor;// *obj_color;
 }
 
 //--------------------------------------------------------------------------------------

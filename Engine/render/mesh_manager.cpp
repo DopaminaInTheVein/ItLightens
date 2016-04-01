@@ -1,6 +1,9 @@
 #include "mcv_platform.h"
 #include "resources/resources_manager.h"
 #include "render/mesh.h"
+#include "render/mesh_format.h"
+
+using namespace MeshFormat;
 
 bool meshLoader(CMesh* mesh, CDataProvider& dp) {
 	assert(dp.isValid());
@@ -8,27 +11,6 @@ bool meshLoader(CMesh* mesh, CDataProvider& dp) {
 	struct TRiff {
 		uint32_t magic;
 		uint32_t num_bytes;
-	};
-
-	static const uint32_t magic_header = 0x44221100;
-	static const uint32_t magic_vtxs = 0x44221101;
-	static const uint32_t magic_idxs = 0x44221102;
-	static const uint32_t magic_mesh_end = 0x44221144;
-	static const uint32_t magic_terminator = 0x44222200;
-
-	struct THeader {
-		uint32_t version;
-		uint32_t num_vtxs;
-		uint32_t num_idxs;
-		uint32_t primitive_type;
-		uint32_t vertex_type;
-		uint32_t bytes_per_vtx;
-		uint32_t bytes_per_idx;
-		uint32_t num_range;
-		uint32_t the_magic_terminator;
-		bool isValid() const {
-			return version == 1 && (the_magic_terminator == magic_terminator);
-		}
 	};
 
 	typedef std::vector< unsigned char > TBuffer;
