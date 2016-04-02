@@ -3,7 +3,7 @@
 
 #include "render/shader_cte.h"
 
-void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color);
+//void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color);
 
 #include "contants/ctes_camera.h"
 extern CShaderCte< TCteCamera > shader_ctes_camera;

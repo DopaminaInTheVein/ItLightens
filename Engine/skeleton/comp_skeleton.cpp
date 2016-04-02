@@ -106,7 +106,6 @@ void TCompSkeleton::render() const {
 	int nlines = skel->getBoneLines(&bone_points[0].x);
 	float scale = 10.0f;
 	for (int i = 0; i < nlines; ++i) {
-		//TODO: draw line
 		Debug->DrawLine(bone_points[i * 2] * scale, bone_points[i * 2 + 1] * scale, VEC3(1, 0, 1));
 	}
 }

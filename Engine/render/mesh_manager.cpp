@@ -17,6 +17,7 @@ bool meshLoader(CMesh* mesh, CDataProvider& dp) {
 	THeader header;
 	TBuffer vtxs;
 	TBuffer idxs;
+	CMesh::VGroups groups;
 
 	bool end_found = false;
 	while (!end_found) {
@@ -41,6 +42,13 @@ bool meshLoader(CMesh* mesh, CDataProvider& dp) {
 			dp.readBytes(&idxs[0], riff.num_bytes);
 			break;
 
+		case magic_groups:
+			assert(riff.num_bytes == header.num_groups * sizeof(CMesh::TGroup));
+			assert(header.num_groups > 0);
+			groups.resize(header.num_groups);
+			dp.readBytes(&groups[0], riff.num_bytes);
+			break;
+
 		case magic_mesh_end:
 			end_found = true;
 			break;
@@ -62,6 +70,7 @@ bool meshLoader(CMesh* mesh, CDataProvider& dp) {
 		, &idxs[0]
 		, (CMesh::eVertexDecl)header.vertex_type
 		, (CMesh::ePrimitiveType) header.primitive_type
+		, &groups
 		);
 }
 
@@ -109,8 +118,8 @@ bool createGridXZ(CMesh& mesh, int nsteps) {
 		&vtxs[0],
 		0, 0, nullptr,
 		CMesh::VTX_DECL_POSITION_COLOR,
-		CMesh::LINE_LIST
-		);
+		CMesh::LINE_LIST,
+		nullptr);
 }
 
 // ------------------------------------------
@@ -134,7 +143,8 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
 			, vtxs_axis
 			, 0, 0, nullptr
 			, CMesh::VTX_DECL_POSITION_COLOR
-			, CMesh::LINE_LIST))
+			, CMesh::LINE_LIST
+			, nullptr))
 			return nullptr;
 		return mesh;
 	}
@@ -168,7 +178,8 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
 			, vtxs
 			, (uint32_t)idxs.size(), 2, &idxs[0]
 			, CMesh::VTX_DECL_POSITION_COLOR
-			, CMesh::LINE_LIST))
+			, CMesh::LINE_LIST
+			, nullptr))
 			return nullptr;
 		return mesh;
 	}
@@ -193,7 +204,8 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
 			, vtxs_axis
 			, 0, 0, nullptr
 			, CMesh::VTX_DECL_POSITION_COLOR
-			, CMesh::LINE_LIST))
+			, CMesh::LINE_LIST
+			, nullptr))
 			return nullptr;
 		return mesh;
 	}

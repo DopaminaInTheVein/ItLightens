@@ -143,7 +143,8 @@ void CDebug::RenderLine(line l)
 		, vtxs_axis
 		, 0, 0, nullptr
 		, CMesh::VTX_DECL_POSITION_COLOR
-		, CMesh::LINE_LIST)) {
+		, CMesh::LINE_LIST
+		, nullptr)) {
 		mesh->activateAndRender();
 	}
 

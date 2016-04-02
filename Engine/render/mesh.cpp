@@ -33,6 +33,7 @@ bool CMesh::create(
 	, const void* initial_index_data
 	, eVertexDecl new_enum_vtx_decl
 	, ePrimitiveType new_topology
+	, const CMesh::VGroups* new_groups
 	) {
 	assert(vb == nullptr);
 	assert(new_num_vertexs > 0);
@@ -48,9 +49,9 @@ bool CMesh::create(
 		fatal("Unknown topology %d\n", new_topology);
 	}
 
-  // Translate the vtx decr from our system to dx11
-  vtx_decl = vdecl_manager.getById(new_enum_vtx_decl);
-  assert(vtx_decl->bytes_per_vertex == new_num_bytes_per_vertex);
+	// Translate the vtx decr from our system to dx11
+	vtx_decl = vdecl_manager.getById(new_enum_vtx_decl);
+	assert(vtx_decl->bytes_per_vertex == new_num_bytes_per_vertex);
 
 	num_vertexs = new_num_vertexs;
 	num_bytes_per_vertex = new_num_bytes_per_vertex;
@@ -90,6 +91,20 @@ bool CMesh::create(
 			return false;
 
 		setDXName(ib, getName().c_str());
+	}
+
+	// Upgrade group info
+	if (new_groups) {
+		groups = *new_groups;
+	}
+	else {
+		// Generate a single fake group
+		groups.resize(1);
+		groups[0].first_index = 0;
+		if (num_idxs > 0)    // If the mesh is indexed
+			groups[0].num_indices = num_idxs;
+		else
+			groups[0].num_indices = num_vertexs;
 	}
 
 	return true;

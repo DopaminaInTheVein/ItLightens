@@ -13,12 +13,12 @@ template<> IResource::eType getTypeOfResource<CSkeleton>() { return IResource::S
 
 template<>
 IResource* createObjFromName<CSkeleton>(const std::string& name) {
-  CSkeleton* obj = new CSkeleton;
-  auto full_name = IResource::getDataPath() + name;
-  if( !obj->xmlParseFile(full_name))
-    return nullptr;
-  obj->setName(name.c_str());
-  return obj;
+	CSkeleton* obj = new CSkeleton;
+	auto full_name = IResource::getDataPath() + name;
+	if (!obj->xmlParseFile(full_name))
+		return nullptr;
+	obj->setName(name.c_str());
+	return obj;
 }
 
 // ---------------------------------------------
@@ -148,10 +148,10 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 
 		// Define a new group
 		// CAUTION comentado!
-		//CMesh::TGroup g;
-		//g.first_index = header.num_idxs;
-		//g.num_indices = cal_faces.size() * 3; // each face -> 3 idxs
-		//ds_groups.write(g);
+		CMesh::TGroup g;
+		g.first_index = header.num_idxs;
+		g.num_indices = cal_faces.size() * 3; // each face -> 3 idxs
+		ds_groups.write(g);
 
 		// Update header info
 		header.num_idxs += cal_faces.size() * 3;
@@ -179,10 +179,10 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 	ds.writeBytes(ds_idxs.getDataBase(), ds_idxs.size());
 
 	// All groups - CAUTION comentado
-	//riff.magic = magic_groups;
-	//riff.num_bytes = ds_groups.size();
-	//ds.write(riff);
-	//ds.writeBytes(ds_groups.getDataBase(), ds_groups.size());
+	riff.magic = magic_groups;
+	riff.num_bytes = ds_groups.size();
+	ds.write(riff);
+	ds.writeBytes(ds_groups.getDataBase(), ds_groups.size());
 
 	// The terminator
 	riff.magic = magic_mesh_end;
@@ -192,66 +192,63 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 	bool is_ok = ds.writeToFile(ofilename.c_str());
 	assert(is_ok);
 	dbg("Skin mesh has AABB (%f,%f,%f)-(%f,%f,%f)\n", pmin.x, pmin.y, pmin.z, pmax.x, pmax.y, pmax.z);
-
 }
 
 // ---------------------------------------------
 
 void CSkeleton::onStartElement(const std::string &elem, MKeyValue &atts) {
-  auto src = IResource::getDataPath() + atts.getString("src", "");
-  if (elem == "skeleton") {
-    bool is_ok = core_model->loadCoreSkeleton(src);
-    assert(is_ok);
-  }
-  else if (elem == "animation") {
-    int anim_id = core_model->loadCoreAnimation(src);
-    core_model->getCoreAnimation(anim_id)->setName(src);
-    assert(anim_id != -1);
-  }
-  else if (elem == "animations") {
-	  WIN32_FIND_DATA ffd;
-	  std::string pattern = src + "*.caf";
-	  HANDLE hFind = FindFirstFile(pattern.c_str(), &ffd);
-	  do {
-		  if (ffd.dwFileAttributes & FILE_ATTRIBUTE_ARCHIVE) {
-			  dbg("File is %s\n", ffd.cFileName);
-			  std::string name(ffd.cFileName);    // idle.CAF
-			  std::string full_src = src + name;  // skels/barrufet/idle.caf
-												  // Remove extension
-			  name.resize(name.size() - 4);
-			  int anim_id = core_model->loadCoreAnimation(full_src);
-			  assert(anim_id != -1);
-			  core_model->getCoreAnimation(anim_id)->setName(name);
-		  }
-	  } while (FindNextFile(hFind, &ffd) != 0);
-	  FindClose(hFind);
-
-  }
-  else if (elem == "mesh") {
-	  std::string mesh_file = src;
-	  if (src.find(".cmf")) {
-		  int mesh_id = core_model->loadCoreMesh(src);
-		  core_model->getCoreMesh(mesh_id)->setName(src);
-		  assert(mesh_id != -1);
-		  mesh_file.resize(mesh_file.size() - 4);
-		  mesh_file += ".mesh";
-		  convertToEngineFormat(core_model, mesh_id, mesh_file);
-		  mesh_file = mesh_file.substr(strlen(IResource::getDataPath()));
-	  }
-	  // load the mesh_file
-	  //auto engine_mesh = Resources.get(mesh_file.c_str())->as<CMesh>();
-  }
-
+	auto src = IResource::getDataPath() + atts.getString("src", "");
+	if (elem == "skeleton") {
+		bool is_ok = core_model->loadCoreSkeleton(src);
+		assert(is_ok);
+	}
+	else if (elem == "animation") {
+		int anim_id = core_model->loadCoreAnimation(src);
+		core_model->getCoreAnimation(anim_id)->setName(src);
+		assert(anim_id != -1);
+	}
+	else if (elem == "animations") {
+		WIN32_FIND_DATA ffd;
+		std::string pattern = src + "*.caf";
+		HANDLE hFind = FindFirstFile(pattern.c_str(), &ffd);
+		do {
+			if (ffd.dwFileAttributes & FILE_ATTRIBUTE_ARCHIVE) {
+				dbg("File is %s\n", ffd.cFileName);
+				std::string name(ffd.cFileName);    // idle.CAF
+				std::string full_src = src + name;  // skels/barrufet/idle.caf
+													// Remove extension
+				name.resize(name.size() - 4);
+				int anim_id = core_model->loadCoreAnimation(full_src);
+				assert(anim_id != -1);
+				core_model->getCoreAnimation(anim_id)->setName(name);
+			}
+		} while (FindNextFile(hFind, &ffd) != 0);
+		FindClose(hFind);
+	}
+	else if (elem == "mesh") {
+		std::string mesh_file = src;
+		if (src.find(".cmf")) {
+			int mesh_id = core_model->loadCoreMesh(src);
+			core_model->getCoreMesh(mesh_id)->setName(src);
+			assert(mesh_id != -1);
+			mesh_file.resize(mesh_file.size() - 4);
+			mesh_file += ".mesh";
+			convertToEngineFormat(core_model, mesh_id, mesh_file);
+			mesh_file = mesh_file.substr(strlen(IResource::getDataPath()));
+		}
+		// load the mesh_file
+		//auto engine_mesh = Resources.get(mesh_file.c_str())->as<CMesh>();
+	}
 }
 
-CSkeleton::CSkeleton() 
-  : core_model(nullptr)
+CSkeleton::CSkeleton()
+	: core_model(nullptr)
 {
-  CalLoader::setLoadingMode(LOADER_ROTATE_X_AXIS| LOADER_INVERT_V_COORD);
-  core_model = new CalCoreModel("unknown");
+	CalLoader::setLoadingMode(LOADER_ROTATE_X_AXIS | LOADER_INVERT_V_COORD);
+	core_model = new CalCoreModel("unknown");
 }
 
 void CSkeleton::destroy()
 {
-  delete core_model;
+	delete core_model;
 }
