@@ -178,11 +178,11 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 	ds.write(riff);
 	ds.writeBytes(ds_idxs.getDataBase(), ds_idxs.size());
 
-	// All groups
-	riff.magic = magic_groups;
-	riff.num_bytes = ds_groups.size();
-	ds.write(riff);
-	ds.writeBytes(ds_groups.getDataBase(), ds_groups.size());
+	// All groups - CAUTION comentado
+	//riff.magic = magic_groups;
+	//riff.num_bytes = ds_groups.size();
+	//ds.write(riff);
+	//ds.writeBytes(ds_groups.getDataBase(), ds_groups.size());
 
 	// The terminator
 	riff.magic = magic_mesh_end;

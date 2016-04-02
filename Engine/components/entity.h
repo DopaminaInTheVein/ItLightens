@@ -8,7 +8,6 @@
 // --------------------------------------------
 class CEntity : public TCompBase {
 	CHandle comps[CHandle::max_types];
-	
 
 public:
 
@@ -29,9 +28,9 @@ public:
 		return comps[hm->getType()];
 	}
 
-CHandle getByCompIndex(uint32_t idx) {
-    return comps[idx];
- }
+	CHandle getByCompIndex(uint32_t idx) {
+		return comps[idx];
+	}
 
 	template< typename TObj >
 	void del() {

@@ -25,8 +25,7 @@ struct TTrigger : public TCompBase {
 		onTriggerExit(last_msg_out);
 	}
 
-	
-	virtual void mUpdate(float dt)=0;
+	virtual void mUpdate(float dt) = 0;
 	virtual void onTriggerInside(const TMsgTriggerIn& msg) = 0;
 	virtual void onTriggerEnter(const TMsgTriggerIn& msg) = 0;
 	virtual void onTriggerExit(const TMsgTriggerOut& msg) = 0;
