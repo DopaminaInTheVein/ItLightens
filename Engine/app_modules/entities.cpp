@@ -58,7 +58,6 @@ DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
 
-
 CCamera * camera;
 
 // The global dict of all msgs
