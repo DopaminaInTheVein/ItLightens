@@ -59,7 +59,7 @@ void TCompSkeleton::renderInMenu() {
 }
 
 void TCompSkeleton::update(float dt) {
-	model->update(dt * 0.1f);
+	model->update(getDeltaTime());
 }
 
 void TCompSkeleton::uploadBonesToCteShader() const {
@@ -104,7 +104,7 @@ void TCompSkeleton::render() const {
 	std::vector< VEC3 > bone_points;
 	bone_points.resize(nbones * 2); // begin to end
 	int nlines = skel->getBoneLines(&bone_points[0].x);
-	float scale = 40.0f;
+	float scale = 20.f;
 	for (int i = 0; i < nlines; ++i) {
 		Debug->DrawLine(bone_points[i * 2] * scale, bone_points[i * 2 + 1] * scale, VEC3(1, 0, 1));
 	}
