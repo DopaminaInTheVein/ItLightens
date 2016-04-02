@@ -36,12 +36,12 @@ void LogicManager::run() {
 		if (io->keys[VK_ESCAPE].becomesPressed())
 			break;
 		if (io->keys['R'].becomesPressed())
-			s.doFile("test.lua");
+			s.doFile("data/lua_scripts/test.lua");
 
 		Sleep(elapsed * 1000);
 	}
 
-	s.doFile("test.lua");
+	//s.doFile("data/lua_scripts/test.lua");
 	while (true) {
 		io->update(elapsed);
 		if (io->keys[VK_RETURN].becomesPressed())
