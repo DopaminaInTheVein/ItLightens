@@ -24,7 +24,7 @@ void VSSkin(
 	float4 skinned_Pos = mul(iPos, skin_mtx);
 
 	float4 worldPos = mul(skinned_Pos, World);
-	worldPos.xyz *= 20.f;
+	//worldPos.xyz *= 20.f; (para verlo más grande)
 
 	float4 norm = normalize(mul(Rotation, iNormal));
 	float diffusebrightness = saturate(dot(norm, lightvec));
