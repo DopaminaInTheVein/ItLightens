@@ -28,6 +28,7 @@ struct XMLNode (
 	),
 	
 	fn parse = (
+		print nombre
 		res = "<"
 		res += nombre
 		-- Tiene más elementos (pero no atributos)

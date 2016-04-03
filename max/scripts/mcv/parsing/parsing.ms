@@ -1,0 +1,109 @@
+-- Include XML Parser
+fileIn (mcvParsingDir + "xmlParser.ms")
+	
+-- Include Auxiliars
+getParsing = getFiles (mcvParsingDir + "auxiliars\\" + "*.ms")
+for f in getParsing do
+(
+	fileIn f
+)
+
+-- Include Parsing Components
+getParsing = getFiles (mcvParsingDir + "components\\" + "*.ms")
+for f in getParsing do
+(
+	fileIn f
+)
+
+-- Current Object Parsing from userprops to XML
+_parsingObject = undefined
+_descriptorObject = undefined
+XML_PARSING = undefined
+
+--*******************************************************
+-------------FUNCTIONS-------------------------------------
+--*******************************************************
+---------------------------------------------------------------------
+-- OBJECT --
+---------------------------------------------------------------------
+fn _parseObject parent = (
+	print ("Object: " + (_parsingObject.name as string))
+	-- Obtenemos descriptor del objeto
+	_descriptorObject = OManager.getDescriptor _parsingObject
+	
+	-- Añadimos Entity
+	XML_PARSING = parent.addChild "entity"
+	
+	--Parseamos Tags
+	tags = _descriptorObject.getTags()
+	parseTags XML_PARSING tags
+	
+	--Parseamos components
+	components = _descriptorObject.getComponents()
+	for c in components do (
+		parseComponent c
+	)
+	
+	-- Añadimos elemento XML del objeto parseado
+	parent.addElement XML_PARSING
+)
+
+----------------------------------------------------------------------
+-- LEVEL--
+---------------------------------------------------------------------
+fn _parseLevel = (
+	local xml = XMLNode()
+	xml.nombre = "entities"
+	for obj in $* do (
+		_parsingObject = obj
+		_parseObject xml
+	)
+	_parsingObject = undefined
+	return xml
+)
+
+----------------------------------------------------------------------
+--TAGS--
+----------------------------------------------------------------------
+fn parseTags parent tag = (
+	format "Llamo parseTags con %\n" tag
+	if (ClassOf tag) == (ClassOf #()) then (
+		for t in tag do (
+			parseTags parent t
+		)
+	) else (
+		local xml = parent.addChild "tag"
+		xml.addAttr "name" tag
+	)
+)
+
+----------------------------------------------------------------------
+-- COMPONENTS --
+---------------------------------------------------------------------
+fn parseComponent comp = (
+	-- Realizamos la llamada de parse
+	local parser = ("_parse_" + comp)
+	--print ("Component execute before: " + (comp as string))
+	local parserFn = execute parser
+	--print ("Component execute after: " + (comp as string))
+	if parserFn == undefined then (
+		--print ("Component no existe: " + (comp as string))
+		XML_PARSING.addChild comp
+	) else (
+		--print ("Component existe: " + (comp as string))
+		execute (parser + "()")
+	)
+)
+
+----------------------------------------------------------------------
+-- TEST Object --
+---------------------------------------------------------------------
+--Test (ver el xml generado por un objeto)
+fn xmlTest obj = (
+	local xml = XMLNode()
+	xml.nombre = "entities"
+	_parsingObject = obj
+	_parseObject xml
+	_parsingObject = undefined
+	xml.parse()
+)

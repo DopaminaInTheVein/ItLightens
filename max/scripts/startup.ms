@@ -1,16 +1,19 @@
 fn startUp = (
-	--Directorio Scripts
-	scriptsDir = getDir #scripts + "\\"
-
+	-- Folders
+	scriptsDir = (getDir #scripts) + "\\"
+	mcvScriptsDir = scriptsDir + "mcv\\"
+	mcvResources = mcvScriptsDir + "\\resources\\"
+	mcvTools = mcvScriptsDir + "\\tools\\"
+	mcvParsingDir = mcvScriptsDir + "\\parsing\\"
+	mcvMacrosDir = mcvScriptsDir + "\\macros\\"
+	
 	--Personal config file (where is data path, etc.)
 	filein (scriptsDir+"config.ms") 
 	
 	--Utils file
-	mcvScriptsDir = scriptsDir + "mcv\\"
-	filein (mcvScriptsDir+"utils.ms") 		
+	filein (mcvScriptsDir +"utils.ms") 		
 	
 	--Resources export (meshes, materials, skel, ...)
-	mcvResources = mcvScriptsDir + "\\resources\\"
 	getResources = getFiles (mcvResources + "*.ms")
 	for f in getResources do
 	(
@@ -25,7 +28,6 @@ fn startUp = (
 	--filein (mcvScriptsDir+"export_scene.ms")
 	
 	--Tools MaxScript
-	mcvTools = mcvScriptsDir + "\\tools\\"
 	getTools = getFiles (mcvTools + "*.ms")
 	for f in getTools do
 	(
@@ -33,16 +35,9 @@ fn startUp = (
 	)
 
 	-- Parsing
-	mcvParsingDir = mcvScriptsDir + "\\parsing\\"
-	getParsing = getFiles (mcvParsingDir + "*.ms")
-	for f in getParsing do
-	(
-		fileIn f
-	)
+	fileIn (mcvParsingDir + "parsing.ms")
 
 	--Macros MaxScript
-	mcvMacrosDir = mcvScriptsDir + "\\macros\\"
-
 	getMacros = getFiles (mcvMacrosDir + "*.mcr")
 	for f in getMacros do
 	(
@@ -51,5 +46,5 @@ fn startUp = (
 )
 
 startUp()
-startUp() -- Fix Problemas orden de declaraciones
+startUp()
 clearListener()

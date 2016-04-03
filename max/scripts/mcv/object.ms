@@ -1,3 +1,8 @@
+-- Some general data
+TAG_PLAYER = "player"
+TAG_CAMERA = "camera_main"
+
+
 ------ INDEXES of Descriptor Info --------
 NAME_IDX = 1
 TAGS_IDX = 2
@@ -44,7 +49,7 @@ struct OM (
 			-- Attributes
 			,#()
 			--Components
-			,#("name", "transform",  "render", "physx")
+			,#("name", "transform",  "render", "physx", "polarized")
 			--Helpers
 			,hPolarized + hColliders
 		)
@@ -154,7 +159,7 @@ struct OM (
 			-- Attributes
 			,#("script")
 			--Components
-			,#("script")
+			,#("trigger")
 			--Helpers
 			,#()
 		)
@@ -185,8 +190,6 @@ struct OM (
 	
 	-- Functions --
 	,fn getDescriptor obj = (	
-		var =" 10"
-		messagebox ("hola2" + var as string)
 		local theName = getUserProp obj "typeObject"
 		local tDescriptor = allTheObjectsDescription[1]
 		for tDesc in allTheObjectsDescription do (
