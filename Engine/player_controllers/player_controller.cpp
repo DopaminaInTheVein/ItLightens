@@ -19,7 +19,41 @@
 
 map<string, statehandler> player_controller::statemap = {};
 
+void player_controller::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("player")) {
+
+			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+
+			assignValueToVar(player_max_speed, fields_base);
+			assignValueToVar(player_rotation_speed, fields_base);
+			assignValueToVar(jimpulse, fields_base);
+			assignValueToVar(left_stick_sensibility, fields_base);
+			assignValueToVar(camera_max_height, fields_base);
+			assignValueToVar(camera_min_height, fields_base);
+
+			map<std::string, float> fields_player = readIniFileAttrMap("controller_player");
+
+			assignValueToVar(full_height, fields_player);
+			assignValueToVar(min_height, fields_player);
+			assignValueToVar(DIST_LEAVING_POSSESSION, fields_player);
+			assignValueToVar(possessionReach, fields_player);
+			assignValueToVar(evolution_limit, fields_player);
+			assignValueToVar(max_life, fields_player);
+			assignValueToVar(init_life, fields_player);
+			assignValueToVar(jump_energy, fields_player);
+			assignValueToVar(stun_energy, fields_player);
+
+		}
+	}
+}
+
 void player_controller::Init() {
+
+	//read main attributes from file
+	readIniFileAttr();
+
 	om = getHandleManager<player_controller>();	//player
 
 	if (statemap.empty()) {

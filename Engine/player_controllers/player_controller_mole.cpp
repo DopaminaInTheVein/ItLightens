@@ -16,7 +16,34 @@
 
 map<string, statehandler> player_controller_mole::statemap = {};
 
+void player_controller_mole::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("AI_mole")) {
+
+			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+
+			assignValueToVar(player_max_speed, fields_base);
+			assignValueToVar(player_rotation_speed, fields_base);
+			assignValueToVar(jimpulse, fields_base);
+			assignValueToVar(left_stick_sensibility, fields_base);
+			assignValueToVar(camera_max_height, fields_base);
+			assignValueToVar(camera_min_height, fields_base);
+
+			map<std::string, float> fields_mole = readIniFileAttrMap("controller_mole");
+
+			assignValueToVar(grab_box_energy, fields_mole);
+			assignValueToVar(destroy_wall_energy, fields_mole);
+
+		}
+	}
+}
+
 void player_controller_mole::Init() {
+
+	// read main attributes from file
+	readIniFileAttr();
+	mole_max_speed = player_max_speed;
 
 	om = getHandleManager<player_controller_mole>();	//player
 
@@ -120,7 +147,7 @@ void player_controller_mole::GrabBox() {
 
 	energyDecreasal(5.0f);
 	boxGrabbed = true;
-	player_max_speed /= 2;
+	mole_max_speed /= 2;
 	ChangePose(pose_idle_route);
 	ChangeState("idle");
 }
@@ -159,7 +186,7 @@ void player_controller_mole::LeaveBox() {
 
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = false;
-	player_max_speed *= 2;
+	mole_max_speed *= 2;
 	ChangePose(pose_idle_route);
 	ChangeState("idle");
 }

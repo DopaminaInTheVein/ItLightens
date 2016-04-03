@@ -1,0 +1,3 @@
+<static_mesh>
+    <slot mesh="skeletons/pitufo/pitufo.mesh" material="materials/skin_madera.material"/>
+</static_mesh>

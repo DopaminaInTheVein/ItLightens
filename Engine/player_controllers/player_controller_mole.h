@@ -16,9 +16,6 @@
 #include "render/mesh.h"
 #include "render/static_mesh.h"
 
-
-
-
 #include "camera/camera.h"
 
 class CEntity;
@@ -28,11 +25,16 @@ class CObjectManager;
 
 class player_controller_mole : public PossController {
 	CObjectManager<player_controller_mole> *om;
-	float player_max_speed = CPlayerBase::player_max_speed;
+	float mole_max_speed;
 
 protected:
 	// the states, as maps to functions
 	static map<string, statehandler> statemap;
+
+	// Main attributes
+	//energies
+	float grab_box_energy;
+	float destroy_wall_energy;
 
 public:
 
@@ -41,6 +43,7 @@ public:
 	}
 
 	void Init();
+	void readIniFileAttr();
 
 	void GrabBox();
 	void LeaveBox();

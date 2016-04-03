@@ -2,7 +2,10 @@
 #include "resources/resource.h"
 #include "vertex_declarations.h"
 #include "mesh.h"
+#include "render/mesh_format.h"
 #include "imgui/imgui.h"
+
+using namespace MeshFormat;
 
 template<>
 IResource::eType getTypeOfResource<CMesh>() {
@@ -30,6 +33,7 @@ bool CMesh::create(
 	, const void* initial_index_data
 	, eVertexDecl new_enum_vtx_decl
 	, ePrimitiveType new_topology
+	, const CMesh::VGroups* new_groups
 	) {
 	assert(vb == nullptr);
 	assert(new_num_vertexs > 0);
@@ -45,9 +49,9 @@ bool CMesh::create(
 		fatal("Unknown topology %d\n", new_topology);
 	}
 
-  // Translate the vtx decr from our system to dx11
-  vtx_decl = vdecl_manager.getById(new_enum_vtx_decl);
-  assert(vtx_decl->bytes_per_vertex == new_num_bytes_per_vertex);
+	// Translate the vtx decr from our system to dx11
+	vtx_decl = vdecl_manager.getById(new_enum_vtx_decl);
+	assert(vtx_decl->bytes_per_vertex == new_num_bytes_per_vertex);
 
 	num_vertexs = new_num_vertexs;
 	num_bytes_per_vertex = new_num_bytes_per_vertex;
@@ -87,6 +91,20 @@ bool CMesh::create(
 			return false;
 
 		setDXName(ib, getName().c_str());
+	}
+
+	// Upgrade group info
+	if (new_groups) {
+		groups = *new_groups;
+	}
+	else {
+		// Generate a single fake group
+		groups.resize(1);
+		groups[0].first_index = 0;
+		if (num_idxs > 0)    // If the mesh is indexed
+			groups[0].num_indices = num_idxs;
+		else
+			groups[0].num_indices = num_vertexs;
 	}
 
 	return true;
@@ -130,27 +148,6 @@ FileDataMesh CMesh::loadData(std::string path, CDataProvider& dp)
 	struct TRiff {
 		uint32_t magic;
 		uint32_t num_bytes;
-	};
-
-	static const uint32_t magic_header = 0x44221100;
-	static const uint32_t magic_vtxs = 0x44221101;
-	static const uint32_t magic_idxs = 0x44221102;
-	static const uint32_t magic_mesh_end = 0x44221144;
-	static const uint32_t magic_terminator = 0x44222200;
-
-	struct THeader {
-		uint32_t version;
-		uint32_t num_vtxs;
-		uint32_t num_idxs;
-		uint32_t primitive_type;
-		uint32_t vertex_type;
-		uint32_t bytes_per_vtx;
-		uint32_t bytes_per_idx;
-		uint32_t num_range;
-		uint32_t the_magic_terminator;
-		bool isValid() const {
-			return version == 1 && (the_magic_terminator == magic_terminator);
-		}
 	};
 
 	typedef std::vector< unsigned char > TBuffer;

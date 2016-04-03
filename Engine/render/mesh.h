@@ -16,19 +16,6 @@ struct FileDataMesh {
 };
 
 class CMesh : public IResource {
-	ID3D11Buffer*             vb;
-	ID3D11Buffer*             ib;
-
-	uint32_t                  num_vertexs;
-	uint32_t                  num_idxs;
-	uint32_t                  num_bytes_per_vertex;
-	uint32_t                  num_bytes_per_idx;
-	D3D_PRIMITIVE_TOPOLOGY    topology;
-
-	const CVertexDeclaration* vtx_decl;
-
-	std::string               name;
-
 public:
 
 	enum ePrimitiveType {
@@ -36,12 +23,19 @@ public:
 		, LINE_LIST
 	};
 
-  enum eVertexDecl {
-    VTX_DECL_POSITION = 999
-  , VTX_DECL_POSITION_UV = 1000
-  , VTX_DECL_POSITION_COLOR 
-  , VTX_DECL_POSITION_NORMAL_UV = 1002
-  };
+	enum eVertexDecl {
+		VTX_DECL_POSITION = 999
+		, VTX_DECL_POSITION_UV = 1000
+		, VTX_DECL_POSITION_COLOR
+		, VTX_DECL_POSITION_NORMAL_UV = 1002
+		, VTX_DECL_POSITION_NORMAL_UV_SKIN = 1102
+	};
+
+	struct TGroup {
+		uint32_t first_index;
+		uint32_t num_indices;
+	};
+	typedef std::vector<TGroup> VGroups;
 
 	CMesh(const std::string& new_name)
 		: vb(nullptr)
@@ -61,6 +55,7 @@ public:
 		, const void* initial_index_data
 		, eVertexDecl new_enum_vtx_decl
 		, ePrimitiveType new_topology
+		, const CMesh::VGroups* new_groups
 		);
 	void activate() const;
 	void render() const;
@@ -101,6 +96,21 @@ public:
 
 	eType getType() const { return MESH; }
 	void renderUIDebug() override;
+
+private:
+	ID3D11Buffer*             vb;
+	ID3D11Buffer*             ib;
+
+	uint32_t                  num_vertexs;
+	uint32_t                  num_idxs;
+	uint32_t                  num_bytes_per_vertex;
+	uint32_t                  num_bytes_per_idx;
+	D3D_PRIMITIVE_TOPOLOGY    topology;
+
+	const CVertexDeclaration* vtx_decl;
+
+	std::string               name;
+	VGroups                   groups;
 };
 
 #endif

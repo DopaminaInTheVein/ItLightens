@@ -34,14 +34,19 @@ protected:
 	CHandle camera;
 
 	float dt;
-	float player_max_speed = 5.f;
-	float player_curr_speed = 0.0f;
-	float jspeed = 0.0f;
-	float player_rotation_speed = 5.f;
-	float jimpulse = 7.0f;
+
+	// Main attributes
+	float player_max_speed;
+	float player_rotation_speed;
+	float jimpulse;
+	float left_stick_sensibility;
+	float camera_max_height;
+	float camera_min_height;
+
 	bool onGround = true;
 	bool moving = false;
-	const int left_stick_sensibility = 5000;
+	float player_curr_speed = 0.0f;
+	float jspeed = 0.0f;
 
 	//CObjectManager<CPlayerBase> * om = nullptr;
 	CHandle myHandle;
@@ -52,8 +57,6 @@ protected:
 	VEC3 directionForward = VEC3(0, 0, 1);
 	VEC3 directionJump = VEC3(0, 0, 0);
 	float rotate = 0;
-	float camera_max_height = 4;
-	float camera_min_height = 0;
 	float rotateXY = 0;
 	float starting_player_y = 0;
 	float player_y = 0;

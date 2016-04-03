@@ -7,7 +7,28 @@ map<string, btaction> bt_speedy::actions = {};
 map<string, btcondition> bt_speedy::conditions = {};
 btnode* bt_speedy::root = nullptr;
 
+void bt_speedy::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("AI_speedy")) {
+			map<std::string, float> fields = readIniFileAttrMap("bt_speedy");
+
+			assignValueToVar(speed, fields);
+			assignValueToVar(rotation_speed, fields);
+			rotation_speed = deg2rad(rotation_speed);
+			assignValueToVar(dash_speed, fields);
+			assignValueToVar(max_dash_player_distance, fields);
+			assignValueToVar(dash_timer_reset, fields);
+			assignValueToVar(drop_water_timer_reset, fields);
+
+		}
+	}
+}
+
 void bt_speedy::Init() {
+
+	//read main attributes from file
+	readIniFileAttr();
 
 	om = getHandleManager<bt_speedy>();
 	myHandle = om->getHandleFromObjAddr(this);

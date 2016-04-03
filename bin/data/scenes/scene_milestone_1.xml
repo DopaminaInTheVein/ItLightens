@@ -20,6 +20,16 @@
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
     <character_controller radius ="0.3" height ="0.5"/>
   </entity>
+
+<!--Prueba anims -->
+ <entity>
+   <name name="MySkel"/>
+   <transform pos="0 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+   <skeleton model="skeletons/pitufo/pitufo.skeleton"/>
+   <render_static_mesh name="skeletons/pitufo/pitufo.static_mesh"/>
+ </entity>
+<!-- Fin prueba anims -->
+
   <!--
   <entity>
     <life points="10" />

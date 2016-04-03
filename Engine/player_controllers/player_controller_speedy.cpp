@@ -13,8 +13,40 @@
 
 map<string, statehandler> player_controller_speedy::statemap = {};
 
+void player_controller_speedy::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("AI_speedy")) {
+
+			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+
+			assignValueToVar(player_max_speed, fields_base);
+			assignValueToVar(player_rotation_speed, fields_base);
+			assignValueToVar(jimpulse, fields_base);
+			assignValueToVar(left_stick_sensibility, fields_base);
+			assignValueToVar(camera_max_height, fields_base);
+			assignValueToVar(camera_min_height, fields_base);
+
+			map<std::string, float> fields_speedy = readIniFileAttrMap("controller_speedy");
+
+			assignValueToVar(dash_speed, fields_speedy);
+			assignValueToVar(dash_max_duration, fields_speedy);
+			assignValueToVar(dash_cooldown, fields_speedy);
+			assignValueToVar(dash_energy, fields_speedy);
+			assignValueToVar(blink_cooldown, fields_speedy);
+			assignValueToVar(blink_distance, fields_speedy);
+			assignValueToVar(blink_energy, fields_speedy);
+			assignValueToVar(drop_water_timer_reset, fields_speedy);
+
+		}
+	}
+}
+
 void player_controller_speedy::Init()
 {
+	// Read Main attributes from file
+	readIniFileAttr();
+
 	om = getHandleManager<player_controller_speedy>();	//player
 
 	//States from controller base and poss controller
@@ -94,61 +126,64 @@ void player_controller_speedy::UpdateInputActions() {
 
 void player_controller_speedy::DoubleJump()
 {
+	PROFILE_FUNCTION("player speedy controller: double jump");
 	UpdateDirection();
 	UpdateMovDirection();
 
-	if (jspeed <= 0.1f) {
-		jspeed = 0.0f;
-		ChangePose(pose_jump_route);
+	SetCharacterController();
+
+	if (cc->GetYAxisSpeed() < 0.0f) {
 		ChangeState("doublefalling");
 	}
 }
 
 void player_controller_speedy::DoubleFalling() {
+	PROFILE_FUNCTION("player speedy controller: double falling");
 	UpdateDirection();
 	UpdateMovDirection();
-
-	if (onGround) {
-		jspeed = 0.0f;
-		ChangePose(pose_idle_route);
+	SetCharacterController();
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 }
 
 void player_controller_speedy::Jumping()
 {
+	PROFILE_FUNCTION("player speedy controller: jumping");
 	UpdateDirection();
 	UpdateMovDirection();
+	SetCharacterController();
 
-	if (onGround) {
-		jspeed = 0.0f;
-		ChangePose(pose_idle_route);
+	if (cc->GetYAxisSpeed() <= 0.0f)
+		ChangeState("falling");
+
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		jspeed = jimpulse;
+		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 		energyDecreasal(5.0f);
-		ChangePose(pose_jump_route);
 		ChangeState("doublejump");
 	}
 }
 
 void player_controller_speedy::Falling()
 {
+	PROFILE_FUNCTION("player speedy controller: falling");
 	UpdateDirection();
 	UpdateMovDirection();
+	SetCharacterController();
+
+	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		jspeed = jimpulse;
+		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 		energyDecreasal(5.0f);
-		ChangePose(pose_jump_route);
 		ChangeState("doublejump");
 	}
 
-	if (onGround) {
-		jspeed = 0.0f;
-		ChangePose(pose_idle_route);
+	if (cc->OnGround()) {
 		ChangeState("idle");
 	}
 }

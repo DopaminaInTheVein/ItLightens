@@ -3,6 +3,7 @@
 
 #include "geometry/geometry.h"
 #include "imgui/imgui.h"
+#include "windows/app.h"
 
 #ifdef NDEBUG
 
@@ -13,6 +14,10 @@
 void		dbg			(const char* fmt, ...);
 
 #endif
+
+#define assignValueToVar(name, data_map) assingValueFromMap(&name, #name, data_map)
+
+void assingValueFromMap(float *variable, char *name, std::map<std::string, float> data_map);
 
 bool		fatal		(const char* fmt, ...);
 uint32_t	getID		(const char* text);
@@ -38,5 +43,7 @@ VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const fl
 //template<class TObj>
 typedef uint32_t TTagID;
 bool isInVector(std::vector<TTagID>& v, TTagID obj);
+
+std::map<std::string, float> readIniFileAttrMap(char* elements_to_read);
 
 #endif

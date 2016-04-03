@@ -14,7 +14,29 @@ map<string, statehandler> beacon_controller::statemap = {};
 
 map<int, string> beacon_controller::out = {};
 
+void beacon_controller::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("beacon")) {
+			map<std::string, float> fields = readIniFileAttrMap("ai_beacon");
+
+			assignValueToVar(range, fields);
+			assignValueToVar(rot_speed_sonar, fields);
+			assignValueToVar(rot_speed_disable, fields);
+			assignValueToVar(t_waiting, fields);
+			assignValueToVar(t_max_sonar, fields);
+			assignValueToVar(t_max_empty, fields);
+			assignValueToVar(t_max_disable, fields);
+
+		}
+	}
+}
+
 void beacon_controller::Init() {
+
+	//read main attributes from file
+	readIniFileAttr();
+
 	om = getHandleManager<beacon_controller>();	//list handle beacon in game
 
 	id_beacon = ++beacon_controller::id_curr_max_beacons;

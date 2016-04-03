@@ -204,6 +204,7 @@
     <ClCompile Include="recast\Recast\Source\RecastRasterization.cpp" />
     <ClCompile Include="recast\Recast\Source\RecastRegion.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
+    <ClCompile Include="render\draw_utils.cpp" />
     <ClCompile Include="render\material.cpp" />
     <ClCompile Include="render\mesh.cpp" />
     <ClCompile Include="render\mesh_manager.cpp" />
@@ -230,6 +231,7 @@
     <ClCompile Include="windows\app.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\bin\data\shaders\contants\ctes_bones.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_camera.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_object.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h" />
@@ -330,9 +332,11 @@
     <ClInclude Include="recast\Recast\Include\RecastAlloc.h" />
     <ClInclude Include="recast\Recast\Include\RecastAssert.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
+    <ClInclude Include="render\draw_utils.h" />
     <ClInclude Include="render\gpu_trace.h" />
     <ClInclude Include="render\material.h" />
     <ClInclude Include="render\mesh.h" />
+    <ClInclude Include="render\mesh_format.h" />
     <ClInclude Include="render\render.h" />
     <ClInclude Include="render\render_manager.h" />
     <ClInclude Include="render\shaders.h" />
@@ -347,6 +351,7 @@
     <ClInclude Include="skeleton\skeleton.h" />
     <ClInclude Include="ui\ui_interface.h" />
     <ClInclude Include="utils\data_provider.h" />
+    <ClInclude Include="utils\data_saver.h" />
     <ClInclude Include="utils\macros\macros.h" />
     <ClInclude Include="utils\macros\timers.h" />
     <ClInclude Include="utils\murmur3.h" />
@@ -361,6 +366,9 @@
     <FxCompile Include="..\bin\data\shaders\basic.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\skin.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

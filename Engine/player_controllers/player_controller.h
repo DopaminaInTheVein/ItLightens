@@ -58,17 +58,21 @@ class player_controller : public CPlayerBase {
 	//Is damaged?
 	____TIMER_DECLARE_VALUE_(timerDamaged, 1.0f);
 
-	float					full_height				= 0.5f;
-	float					min_height				= 0.2f;
+	float					full_height;
+	float					min_height;
 
 	//Possession
-	float					DIST_LEAVING_POSSESSION	= 1.0f;
-	float					possessionReach			= 3.0f;
+	float					DIST_LEAVING_POSSESSION;
+	float					possessionReach;
 
 	//evolution
-	float					evolution_limit			= 10.0f;
-	float					max_life					= 50.0f;
-	float					init_life				= 10.0f;
+	float					evolution_limit;
+	float					max_life;
+	float					init_life;
+
+	//energy
+	float					jump_energy;
+	float					stun_energy;
 
 	//possesion handles
 	CHandle					currentPossessable;
@@ -143,6 +147,7 @@ public:
 
 	void Init();
 	void Idle();
+	void readIniFileAttr();
 
 	void DoubleJump();
 	void DoubleFalling();

@@ -6,6 +6,7 @@
 #include "components\entity.h"
 #include "ai_workbench.h"
 #include "components\comp_charactercontroller.h"
+#include "windows\app.h"
 
 #include "ai_beacon.h"
 
@@ -19,8 +20,30 @@ map<string, ai_scientific::KptTipo> ai_scientific::kptTypes = {
 map<string, statehandler> ai_scientific::statemap = {};
 map<int, string> ai_scientific::out = {};
 
+void ai_scientific::readIniFileAttr() {
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("AI_cientifico")) {
+			map<std::string, float> fields = readIniFileAttrMap("ai_scientist");
+
+			assignValueToVar(move_speed, fields);
+			assignValueToVar(rot_speed, fields);
+			assignValueToVar(square_range_action, fields);
+			assignValueToVar(d_epsilon, fields);
+			assignValueToVar(d_beacon_simple, fields);
+			assignValueToVar(waiting_time, fields);
+			assignValueToVar(t_addBeacon, fields);
+			assignValueToVar(t_createBeacon, fields);
+			assignValueToVar(t_removeBeacon, fields);
+			assignValueToVar(t_waitInPos, fields);
+
+		}
+	}
+}
+
 void ai_scientific::Init()
 {
+	readIniFileAttr();
 	om = getHandleManager<ai_scientific>();	//list handle scientific in game
 
 	if (statemap.empty()) {

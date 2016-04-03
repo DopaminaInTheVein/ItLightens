@@ -331,6 +331,9 @@
     <ClCompile Include="components\comp_polarized.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="render\draw_utils.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -362,9 +365,6 @@
       <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\contants\ctes_object.h">
-      <Filter>render\contants</Filter>
-    </ClInclude>
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h">
       <Filter>render\contants</Filter>
     </ClInclude>
     <ClInclude Include="camera\camera.h">
@@ -700,6 +700,21 @@
     <ClInclude Include="app_modules\gameController.h">
       <Filter>app_modules\game</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\contants\ctes_bones.h">
+      <Filter>render\contants</Filter>
+    </ClInclude>
+    <ClInclude Include="render\mesh_format.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\draw_utils.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\data_saver.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h">
+      <Filter>render\contants</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -831,6 +846,9 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\bin\data\shaders\basic.fx">
+      <Filter>render\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\skin.fx">
       <Filter>render\shaders</Filter>
     </FxCompile>
   </ItemGroup>
