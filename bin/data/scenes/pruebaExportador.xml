@@ -366,8 +366,8 @@
    name="static_meshes/__player.static_mesh"
 />
 <character_controller
-   radius="0.3"
-   height="0.5"
+   radius="0.1"
+   height="0.05"
 />
 </entity>
 <entity>
@@ -404,7 +404,7 @@
 />
 <character_controller
    radius="0.3"
-   height="1.7"
+   height="0.25"
 />
 </entity>
 <entity>
@@ -440,8 +440,8 @@
    name="static_meshes/mole/mole.static_mesh"
 />
 <character_controller
-   radius="0.5"
-   height="2.0"
+   radius="0.1"
+   height="0.8"
 />
 </entity>
 <entity>

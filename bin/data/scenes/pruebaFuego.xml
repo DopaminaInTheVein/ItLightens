@@ -36,27 +36,6 @@
 </entity>
 <entity>
 <tag
-   name="beacon"
-/>
-<beacon/>
-<name
-   name="beacon_1"
-/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="0.0161288"
-/>
-<render_static_mesh
-   name="static_meshes/__baliza.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-   type_shape="convex"
-/>
-</entity>
-<entity>
-<tag
    name="box"
 />
 <tag
@@ -181,8 +160,8 @@
    name="static_meshes/mole/mole.static_mesh"
 />
 <character_controller
-   radius="0.5"
-   height="1.0"
+   radius="0.2"
+   height="0.6"
 />
 </entity>
 </entities>
