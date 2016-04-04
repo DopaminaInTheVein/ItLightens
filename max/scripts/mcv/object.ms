@@ -2,15 +2,12 @@
 TAG_PLAYER = "player"
 TAG_CAMERA = "camera_main"
 
-
 ------ INDEXES of Descriptor Info --------
 NAME_IDX = 1
 TAGS_IDX = 2
 ATTRIBUTES_IDX = 3
 COMPONENTS_IDX = 4
 HELPERS_IDX = 5
---------------------------------------------
-
 --------- Object Descriptor --------------
 struct ObjectDescriptor (
 	theName = undefined
@@ -187,16 +184,14 @@ struct OM (
 		)
 		----------------------------------------------------------------------------------------------------------------------------------------------------
 	)
-	
 	-- Functions --
-	,fn getDescriptor obj = (	
+	,fn getDescriptor obj = (
+		-- Object
 		local theName = getUserProp obj "typeObject"
 		local tDescriptor = allTheObjectsDescription[1]
 		for tDesc in allTheObjectsDescription do (
 			if tDesc[NAME_IDX] == (theName as string) then (
 				tDescriptor = tDesc
-			) else if tDesc[NAME_IDX] == "" then (
-				exit
 			)
 		)
 		

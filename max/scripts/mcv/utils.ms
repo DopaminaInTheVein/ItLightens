@@ -97,11 +97,7 @@ fn getEditableProps obj = (
 	local res = #()
 	local i = 1
 	while i < props.count do (
-		local index = findItem reservedProps props[i]
-		if (index == 0) do (
-			-- No es una propiedad reservada
-			append res props[i]
-		)
+		append res props[i]
 		i += 2
 	)
 	return res

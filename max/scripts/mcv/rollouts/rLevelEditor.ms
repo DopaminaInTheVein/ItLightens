@@ -3,7 +3,9 @@ try(DestroyDialog RL_LevelEditor)catch()
 rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 (
 	local selectedObj = undefined
-	
+	local reservedProps = #(
+		"typeObject", "typeHelper", "mesh", "staticMesh"
+	)
 	label 'lblTitle' "LEVEL EDITOR" pos:[85,8] width:79 height:16 align:#left
 	button 'btnCreate' "Create" pos:[23,92] width:212 height:24 align:#left
 	
@@ -33,6 +35,8 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 			if prop != undefined do (
 				txtValue.text = (prop as string)
 			)
+			local index = findItem reservedProps selProp 
+			txtValue.enabled = (index == 0)
 		)
 	)	
 	
@@ -45,7 +49,7 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 	on RL_LevelEditor open do
 	(
 		ddlType.items = (getAllMaxIn objMax_dir)
-		ddlHelper.items = (getAllMaxIn helperMax_dir)
+		ddlHelper.items = #()--(getAllMaxIn helperMax_dir)
 	)
 	on btnCreate pressed do
 	(
@@ -56,11 +60,13 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 		selectedObj = obj
 		pckObj.text = selectedObj.name
 		local descriptor = OManager.getDescriptor obj
-		ddlProperties.items = descriptor.getAttributes()
+		ddlProperties.items = getEditableProps obj
+		appendifUnique (ddlProperties.items) (descriptor.getAttributes())
+		ddlHelper.items = descriptor.getHelpers()
 		
 		-- Actualizamos propiedades
 		updateProperties()
-		
+		return #ok
 		-- Seleccionamos objeto de verdad
 		--if ($ != undefined) then (
 		--	clearSelection()
