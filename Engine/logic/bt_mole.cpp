@@ -301,6 +301,7 @@ int bt_mole::actionFollowNextBoxLeavepointWpt() {
 }
 
 int bt_mole::actionUngrabBox() {
+
 	if (towptbox > -1) {
 		CEntity * enBox = SBB::readHandlesVector("wptsBoxes")[towptbox];
 		CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[towptleave];

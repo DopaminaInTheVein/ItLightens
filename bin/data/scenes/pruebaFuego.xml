@@ -1,0 +1,188 @@
+<entities>
+<entity>
+<name
+   name="Sala"
+/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/pruebaSala.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tag
+   name="camera_main"
+/>
+<camera
+   znear="1.0"
+   zfar="250.0"
+   fov="60.0"
+/>
+<controller_3rd_person/>
+<name
+   name="camController_1"
+/>
+<transform
+   pos="0.0785599 6.0 15.5748"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tag
+   name="beacon"
+/>
+<beacon/>
+<name
+   name="beacon_1"
+/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="0.0161288"
+/>
+<render_static_mesh
+   name="static_meshes/__baliza.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_1"
+/>
+<transform
+   pos="3.14959 1.41113 -5.11288"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_2"
+/>
+<transform
+   pos="2.75151 1.41113 3.46344"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_3"
+/>
+<transform
+   pos="-2.8386 1.38743 6.9495"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="player"
+/>
+<player/>
+<life
+   points="10"
+/>
+<name
+   name="player_1"
+/>
+<transform
+   pos="3.50461 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__player.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="0.345"
+/>
+</entity>
+<entity>
+<tag
+   name="AI"
+/>
+<tag
+   name="AI_mole"
+/>
+<tag
+   name="AI_poss"
+/>
+<bt_mole/>
+<player_mole/>
+<life
+   points="100"
+/>
+<name
+   name="mole_1"
+/>
+<transform
+   pos="0.606216 0 0.485929"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/mole/mole.static_mesh"
+/>
+<character_controller
+   radius="0.5"
+   height="1.0"
+/>
+</entity>
+</entities>
