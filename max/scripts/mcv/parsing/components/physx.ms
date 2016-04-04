@@ -34,6 +34,17 @@ fn parseTypeShape xml collider = (
 		)
 	)
 )
+fn parseRigidBodyDefault parent = (
+	-- Si es mesh, rigidbody
+	local clase = classof _parsingObject
+	if clase == Editable_Mesh or clase == Editable_Poly then (
+		local colision = getUserProp _parsingObject "collision"
+		if colision as string != "no" then (
+			local xml = parent.addChild "rigidbody"
+			xml.addAttr "type_collision" "static"
+		)
+	)
+)
 
 fn parseRigidBody parent collider = (
 	local xml = XML_PARSING.addChild "rigidbody"
@@ -99,8 +110,7 @@ fn _parse_physx = (
 		if collider != undefined then (
 			parseRigidBody XML_PARSING collider
 		) else (
-			-- Si es mesh, rigidbody
-			--TODO
+			parseRigidBodyDefault XML_PARSING
 		)
 	)
 )

@@ -147,7 +147,6 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 		}
 
 		// Define a new group
-		// CAUTION comentado!
 		CMesh::TGroup g;
 		g.first_index = header.num_idxs;
 		g.num_indices = cal_faces.size() * 3; // each face -> 3 idxs
@@ -178,7 +177,7 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 	ds.write(riff);
 	ds.writeBytes(ds_idxs.getDataBase(), ds_idxs.size());
 
-	// All groups - CAUTION comentado
+	// All groups
 	riff.magic = magic_groups;
 	riff.num_bytes = ds_groups.size();
 	ds.write(riff);

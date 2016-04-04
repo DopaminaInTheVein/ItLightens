@@ -3,6 +3,7 @@
 #include "entity.h"
 #include "comp_transform.h"
 #include "comp_render_static_mesh.h"
+#include "comp_name.h"
 #include "render\static_mesh.h"
 #include "windows\app.h"
 
@@ -161,6 +162,7 @@ bool TCompPhysics::createTriMeshShape()
 	if (entity_h.isValid()) e = entity_h;
 	if (e) {
 		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
+		assert(comp_static_mesh) ;
 		PxTriangleMesh *cookedMesh = PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0
 		pShape = PhysxManager->CreateTriangleMesh(cookedMesh, mStaticFriction, mDynamicFriction, mRestitution);
 		addRigidbodyScene();

@@ -27,25 +27,25 @@ XML_PARSING = undefined
 -- OBJECT --
 ---------------------------------------------------------------------
 fn _parseObject parent = (
+	
 	print ("Object: " + (_parsingObject.name as string))
 	-- Obtenemos descriptor del objeto
 	_descriptorObject = OManager.getDescriptor _parsingObject
 	
-	-- Añadimos Entity
-	XML_PARSING = parent.addChild "entity"
-	
-	--Parseamos Tags
-	tags = _descriptorObject.getTags()
-	parseTags XML_PARSING tags
-	
-	--Parseamos components
-	components = _descriptorObject.getComponents()
-	for c in components do (
-		parseComponent c
+	if parseable() then (
+		-- Añadimos Entity
+		XML_PARSING = parent.addChild "entity"
+		
+		--Parseamos Tags
+		tags = _descriptorObject.getTags()
+		parseTags XML_PARSING tags
+		
+		--Parseamos components
+		components = _descriptorObject.getComponents()
+		for c in components do (
+			parseComponent c
+		)
 	)
-	
-	-- Añadimos elemento XML del objeto parseado
-	parent.addElement XML_PARSING
 )
 
 ----------------------------------------------------------------------
@@ -57,6 +57,7 @@ fn _parseLevel = (
 	for obj in $* do (
 		_parsingObject = obj
 		_parseObject xml
+		--print (xml.parse())
 	)
 	_parsingObject = undefined
 	return xml
