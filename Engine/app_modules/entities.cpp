@@ -58,7 +58,6 @@ DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
 
-
 CCamera * camera;
 
 // The global dict of all msgs
@@ -179,7 +178,7 @@ bool CEntitiesModule::start() {
 
 	CEntityParser ep;
 	//bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
-	bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/pruebaFuego.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH

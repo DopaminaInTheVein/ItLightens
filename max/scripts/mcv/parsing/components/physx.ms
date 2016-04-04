@@ -85,9 +85,8 @@ fn parseCharController parent charController = (
 	local radius = "0.3" --> Prefab!?
 	local height = "0.5" --> Prefab!?
 	if charController != undefined then (
-		local heightValue = (charController.height / 2) - (charController.radius*2)
 		radius = charController.radius as string
-		height = heightValue as string
+		height = charController.height as string
 	)
 	local xml = parent.addChild "character_controller"
 	xml.addAttr "radius" radius
