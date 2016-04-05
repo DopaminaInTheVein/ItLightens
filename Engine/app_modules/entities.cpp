@@ -22,6 +22,8 @@
 #include <thread>
 #include <future>
 
+#include "SLB\logic_manager.h"
+
 DECL_OBJ_MANAGER("entity", CEntity);		//need to be first
 DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("transform", TCompTransform);
@@ -273,6 +275,10 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
+
+	LogicManager lm;
+	lm.init();
+	lm.throwEvent(lm.OnAction);
 
 	return true;
 }
