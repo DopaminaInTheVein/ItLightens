@@ -178,7 +178,7 @@ bool CEntitiesModule::start() {
 
 	CEntityParser ep;
 	//bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
-	bool is_ok = ep.xmlParseFile("data/scenes/pruebaFuego.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH
@@ -284,11 +284,11 @@ void CEntitiesModule::stop() {
 void CEntitiesModule::update(float dt) {
 	static float timeAcumulated = 55.0f;
 	timeAcumulated += getDeltaTime();
-	if (timeAcumulated > 60.0f) {
+	/*if (timeAcumulated > 60.0f) {
 		timeAcumulated = 0.0f;
 		std::thread t(&CEntitiesModule::recalcNavmesh, this);
 		t.detach();
-	}
+	}*/
 
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);

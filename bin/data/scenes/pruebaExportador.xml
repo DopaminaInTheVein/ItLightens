@@ -366,45 +366,8 @@
    name="static_meshes/__player.static_mesh"
 />
 <character_controller
-   radius="0.1"
-   height="0.05"
-/>
-</entity>
-<entity>
-<tag
-   name="AI"
-/>
-<tag
-   name="AI_speedy"
-/>
-<tag
-   name="AI_poss"
-/>
-<bt_speedy
-   wpts_size="4"
-   wpt0_pos="-29.6259 -2.78291 19.7639"
-   wpt1_pos="-30.015 0.076479 -20.0476"
-   wpt2_pos="-20.0 -0.615551 -20.0"
-   wpt3_pos="-20.0 -2.76332 20.0"
-/>
-<player_speedy/>
-<life
-   points="50"
-/>
-<name
-   name="speedy_1"
-/>
-<transform
-   pos="-17.1856 4.88216 16.3311"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/speedy/speedy.static_mesh"
-/>
-<character_controller
    radius="0.3"
-   height="0.25"
+   height="0.5"
 />
 </entity>
 <entity>
@@ -440,8 +403,8 @@
    name="static_meshes/mole/mole.static_mesh"
 />
 <character_controller
-   radius="0.1"
-   height="0.8"
+   radius="0.5"
+   height="2.0"
 />
 </entity>
 <entity>
@@ -525,6 +488,166 @@
    pos="4.38609 -2.25879 -31.6495"
    quat="0 0 0 1.0"
    scale="1.0"
+/>
+</entity>
+
+<entity>
+<tag
+   name="AI"
+/>
+<tag
+   name="AI_speedy"
+/>
+<tag
+   name="AI_poss"
+/>
+<bt_speedy
+   wpts_size="4"
+   wpt0_pos="-20.0 -2.76332 20.0"
+   wpt1_pos="-20.0 -0.615551 -20.0"
+   wpt2_pos="-30.015 0.076479 -20.0476"
+   wpt3_pos="-29.6259 -2.78291 19.7639"
+/>
+<player_speedy/>
+<life
+   points="50"
+/>
+<name
+   name="speedy_1"
+/>
+<transform
+   pos="0.618652 -2.38599 17.7096"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__speedy.static_mesh"
+/>
+<character_controller
+   radius="0.2"
+   height="1.7"
+/>
+</entity>
+
+<entity>
+<tag
+   name="AI"
+/>
+<tag
+   name="AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="5"
+   kpt0_type="seek"
+   kpt0_pos="34.0024 0 31.0278"
+   kpt0_wait="2"
+   kpt1_type="look"
+   kpt1_pos="28.809 0 14.644"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="22.0164 0 30.7727"
+   kpt2_wait="2"
+   kpt3_type="look"
+   kpt3_pos="28.7825 0 13.5601"
+   kpt3_wait="2"
+   kpt4_type="look"
+   kpt4_pos="6.70422 0 31.5691"
+   kpt4_wait="5"
+   jurisdiction="27.9238 -2.59534 20.9154"
+   jurRadius="19.25"
+/>
+<name
+   name="guard_1"
+/>
+<transform
+   pos="29.3813 -2.59534 24.7328"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_14"
+/>
+<transform
+   pos="34.8982 0 17.0444"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_15"
+/>
+<transform
+   pos="30.1673 0 9.85425"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_16"
+/>
+<transform
+   pos="24.6694 0 3.27417"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
 />
 </entity>
 </entities>
