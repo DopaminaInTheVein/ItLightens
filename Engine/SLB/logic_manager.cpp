@@ -8,162 +8,161 @@ void LogicManager::init() {
 	//bind(slb_manager);
 
 	// Init and execute the script
-	SLB::Script slb_script(&slb_manager);
+	//SLB::Script slb_script(&slb_manager);
 	slb_script.doFile(lua_script_route);
 }
 
 void LogicManager::throwEvent(EVENT evt/*, params*/) {
 
-	std::string lua_code;
+	char lua_code[64];
 
 	switch (evt) {
 		case (OnAction) : {
-			lua_code = std::string("\"sampleFunction(Jose);\"");
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnEnter) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnLeave) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnGameStart) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnGameEnd) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnLevelStart001) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnZoneStart001) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnZoneEnd001) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnTimeout) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OntTimerStart) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 
 		case (OnPlayerDead) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnInterruptHit) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnStartReceiveHit) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnEndReceiveHit) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 
 		case (OnEmitParticles) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnChangePolarity) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnPickupBox) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnLeaveBox) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnPossess) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnUnpossess) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnDash) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnBlink) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnBreakWall) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnUseCable) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnStun) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnStunned) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnLiquid) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnBeingAttracted) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnOvercharge) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnDoubleJump) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnDetected) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnBeaconDetect) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 
 		case (OnEnterPC) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		case (OnLeavePC) : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 			break;
 		}
 		default : {
-			lua_code = "";
+			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
 		}
 	}
 
 	try {
 		// execute the string generated
-		SLB::Script slb_script(&slb_manager);
 		slb_script.doString(lua_code);
 	}
 	catch (int e) {
@@ -177,7 +176,7 @@ void LogicManager::throwUserEvent(std::string evt/*, params*/) {
 	std::string lua_code = evt;
 
 	// execute the string generated
-	SLB::Script slb_script(&slb_manager);
+	//SLB::Script slb_script(&slb_manager);
 	slb_script.doString(lua_code);
 }
 

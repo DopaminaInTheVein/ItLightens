@@ -8,12 +8,12 @@
 
 class LogicManager
 {
-
-	SLB::Manager slb_manager;
-
 	std::string lua_script_route = "data/lua_scripts/logic.lua";
 
 public:
+
+	SLB::Manager slb_manager;
+	SLB::Script slb_script;
 
 	enum EVENT {
 		OnAction = 0,
@@ -61,6 +61,7 @@ public:
 	void shutDown();
 
 	void bind(SLB::Manager& m);
+
 };
 
 #endif

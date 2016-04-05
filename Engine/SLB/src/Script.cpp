@@ -161,10 +161,10 @@ namespace SLB {
     lua_State *L = getState();
     int top = lua_gettop(L);
     SLB_DEBUG(10, "code = %10s, hint = %s", o_code.c_str(), hint.c_str()); 
-    std::stringstream code;
-    code << "--" << hint << std::endl << o_code;
+    std::string code;
+    code = "--" + hint + "\n" + o_code;
 
-    if(luaL_loadstring(L,code.str().c_str()) || _errorHandler->call(_L, 0, 0))
+    if(luaL_loadstring(L,code.c_str()) || _errorHandler->call(_L, 0, 0))
     {
       const char *s = lua_tostring(L,-1);
       throw std::runtime_error( s );
