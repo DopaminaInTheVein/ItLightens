@@ -261,6 +261,7 @@ public:
 		return PxControllerBehaviorFlag::eCCT_SLIDE | PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
 	}
 	virtual PxControllerBehaviorFlags getBehaviorFlags(const PxController& controller) {
+		//return PxControllerBehaviorFlag::eCCT_SLIDE | PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
 		return PxControllerBehaviorFlags(0);
 	}
 	virtual PxControllerBehaviorFlags getBehaviorFlags(const PxObstacle& obstacle) {

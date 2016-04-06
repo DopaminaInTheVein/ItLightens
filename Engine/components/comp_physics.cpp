@@ -329,8 +329,21 @@ void TCompPhysics::AddVelocity(VEC3 velocity)
 
 void TCompPhysics::setPosition(VEC3 position, CQuaternion rotation)
 {
+	bool isKinematic = false;
+	PxRigidDynamic *rd = pActor->isRigidDynamic();
 	PxTransform tr = PxTransform(PhysxConversion::Vec3ToPxVec3(position), PhysxConversion::CQuaternionToPxQuat(rotation));
-	pActor->isRigidActor()->setGlobalPose(tr);
+
+	if (rd) {
+		isKinematic = rd->getRigidDynamicFlags().isSet(PxRigidBodyFlag::eKINEMATIC);	
+	}
+
+	if (!isKinematic) {
+		pActor->isRigidActor()->setGlobalPose(tr);
+	}
+	else {
+		assert(rd);
+		rd->setKinematicTarget(tr);
+	}
 }
 
 //----------------------------------------------------------

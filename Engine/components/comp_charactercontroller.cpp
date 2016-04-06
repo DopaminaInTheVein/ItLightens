@@ -27,6 +27,12 @@ void TCompCharacterController::AddImpulse(const VEC3& impulse) {
 		mSpeed.y = mMaxYimpulse;
 	mSpeed.x += impulse.x;
 	mSpeed.z += impulse.z;
+
+	/*if (impulse.y >= 0) {
+		PxVec3 last_speed = pActor->getActor()->getLinearVelocity();
+		mSpeed.x += last_speed.x;
+		mSpeed.z += last_speed.z;
+	}*/
 }
 
 void TCompCharacterController::updateFriction() {
@@ -105,6 +111,7 @@ void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 		p.y += mHeight + mRadius;	//add height value from capsule, center from collider at center of the shape
 		pActor->setPosition(p);
 		pActor->getActor()->userData = e;
+
 		updateTags(DEFAULT_DATA_CC);
 	}
 }
@@ -191,6 +198,7 @@ void TCompCharacterController::update(float dt)
 		TCompTransform *tmx = e->get<TCompTransform>();
 		tmx->setPosition(PxExVec3ToVec3(curr_pos));
 		//tmx->setRotation(PxQuatToCQuaternion(curr_pose.q));
+		
 	}
 }
 

@@ -34,6 +34,9 @@ void CConsole::Command_Teleport(std::vector<char*> &args) {
 
 			TCompTransform *t = e_c->get<TCompTransform>();
 			VEC3 pos = t->getPosition();
+
+			pos += t->getFront()*2;
+
 			float x = pos.x;
 			float y = pos.y;
 			float z = pos.z;
