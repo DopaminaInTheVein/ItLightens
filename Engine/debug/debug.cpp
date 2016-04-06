@@ -21,6 +21,7 @@ void  CDebug::LogRaw(const char* msg, ...)
 {
 #ifndef NDEBUG					//performance cost
 	int old_size = Buf.size();
+
 	va_list args;
 	va_start(args, msg);
 	Buf.appendv(msg, args);
@@ -75,7 +76,7 @@ void CDebug::DrawLog()
 {
 	ImGui::SetNextWindowSize(ImVec2(512, 512), ImGuiSetCond_FirstUseEver);
 	if (opened) {
-		ImGui::Begin("Debug log", &opened);
+		ImGui::Begin("Log", &opened);
 		if (ImGui::Button("Clear")) Clear();
 		ImGui::SameLine();
 		bool copy = ImGui::Button("Copy");
@@ -152,7 +153,8 @@ void CDebug::RenderLine(line l)
 	delete mesh;
 }
 
-void CDebug::update() {
+void CDebug::update(float dt) {
+	console.update();
 	DrawLog();
 }
 

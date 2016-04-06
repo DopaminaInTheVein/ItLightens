@@ -29,7 +29,7 @@ struct TCompPolarized : public TCompBase {
 	float			dist_effect_squared	= 25.0f;
 	float			dist_near			= 3.0f;
 
-	float			mThresholdMass		= 2.0f;
+	float			mThresholdMass		= 2.5f;
 
 	int				mPol					= NEUTRAL;
 	int				mType				= FIXED;

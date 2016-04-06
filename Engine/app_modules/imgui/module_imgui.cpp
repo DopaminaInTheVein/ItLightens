@@ -12,12 +12,12 @@
 
 #include "handle/object_manager.h"
 #include "debug/debug.h"
+#include "debug\console.h"
 
 #include <Commdlg.h>
 
 bool CImGuiModule::start() {
 	CApp& app = CApp::get();
-	Debug = new CDebug();
 	return ImGui_ImplDX11_Init(app.getHWnd(), Render.device, Render.ctx);
 }
 
@@ -41,7 +41,9 @@ void CImGuiModule::update(float dt) {
 	{
 		if (ImGui::BeginMenu("Console Debug"))
 		{
-			ImGui::MenuItem("Log", NULL, Debug->getStatus());
+			ImGui::MenuItem("Log (L)", NULL, Debug->getStatus());
+			ImGui::MenuItem("Commands (O)", NULL, Debug->GetCommandsConsoleState());
+			//Debug->OpenConsole();
 			ImGui::EndMenu();
 		}
 		ImGui::EndMenuBar();
@@ -50,9 +52,47 @@ void CImGuiModule::update(float dt) {
 
 	//Buttons game
 	//---------------------------------------
-	ImGui::Button("PAUSE BUTTON - TODO");
-	ImGui::SameLine();
-	ImGui::Button("RESUME BUTTON - TODO");
+	if (GameController->GetGameState() == CGameController::RUNNING) {
+		if (ImGui::Button("PAUSE BUTTON"))
+			GameController->SetGameState(CGameController::STOPPED);
+
+		ImGui::SameLine();
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
+		if (ImGui::Button("RESUME BUTTON"))
+			GameController->SetGameState(CGameController::RUNNING);
+
+		ImGui::PopStyleColor();
+	}
+
+	if (GameController->GetGameState() == CGameController::STOPPED) {
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
+		if (ImGui::Button("PAUSE BUTTON"))
+			GameController->SetGameState(CGameController::STOPPED);
+
+		ImGui::PopStyleColor();
+
+		ImGui::SameLine();
+		
+		if (ImGui::Button("RESUME BUTTON"))
+			GameController->SetGameState(CGameController::RUNNING);
+
+		
+	}
+
+
+	
+	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCamera());
+
+	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
+	ImGui::Text("WARNING: The player will still move, pause the game to stop moving the player");
+	ImGui::PopStyleColor();
+
+	if (ImGui::TreeNode("Free camera instructions")) {
+		ImGui::Text("w/a/s/d - normal move\nq/e - up/down\nmouse wheel - speed up/down\n");
+
+		ImGui::TreePop();
+	}
+
 	ImGui::Separator();
 	//---------------------------------------
 
@@ -113,9 +153,12 @@ void CImGuiModule::update(float dt) {
 	//TESTS DEBUG:
 	//TestGameLog();
 	//testLines();
-
+	//bool open = true;
+	//ShowExampleAppConsole(&open);		//test console commands
+	
 	ui.update();			//update ui
-	Debug->update();		//update log
+	//Debug->update();		//update log
+
 }
 
 void CImGuiModule::render() {

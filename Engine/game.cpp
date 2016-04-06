@@ -61,6 +61,7 @@ bool CApp::start() {
 	io = new CIOModule;     // It's the global io
 	PhysxManager = new CPhysxManager;
 	GameController = new CGameController;
+	Debug = new CDebug();
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
@@ -68,11 +69,14 @@ bool CApp::start() {
 	all_modules.push_back(entities);
 	all_modules.push_back(io);
 	all_modules.push_back(GameController);
+	all_modules.push_back(Debug);
 
 	mod_update.push_back(imgui);
+	mod_update.push_back(GameController);
 	mod_update.push_back(entities);
 	mod_update.push_back(PhysxManager);
 	mod_update.push_back(io);
+	mod_update.push_back(Debug);
 
 	mod_renders.push_back(entities);
 	mod_renders.push_back(imgui);
@@ -121,7 +125,6 @@ void CApp::stop() {
 
 	Resources.destroy();
 
-	Debug->destroy();
 	shader_ctes_bones.destroy();
 	shader_ctes_camera.destroy();
 	shader_ctes_object.destroy();

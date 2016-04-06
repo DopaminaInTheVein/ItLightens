@@ -50,11 +50,19 @@ void TCompCamera::update(float dt) {
 
 
 
-	if(GameController->GetGameState() == CGameController::RUNNING){
+	if(GameController->GetGameState() == CGameController::RUNNING && !*GameController->GetFreeCamera()){
 		VEC3 pos = tmx->getPosition();
 		pos.y += 2;
 		tmx->setPosition(pos);
 		this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());	//smooth movement
+	}
+	else if (*GameController->GetFreeCamera()) {
+		CHandle owner = CHandle(this).getOwner();
+		CEntity* e_owner = owner;
+		assert(e_owner);
+		TCompTransform* tmx = e_owner->get<TCompTransform>();
+		assert(tmx);
+		this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
 	}
 	else {
 		this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());	//smooth movement

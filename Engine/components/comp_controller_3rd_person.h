@@ -27,6 +27,7 @@ class TCompController3rdPerson : public TCompBase {
 	float		distance_to_target;
 	VEC3		position_diff;
 	float		speed_camera;
+	float		speed_camera_unlocked;
 	float		m_yaw;
 	float		m_pitch;
 	float		min_pitch = -1.0f;
@@ -44,6 +45,7 @@ public:
 		, distance_to_target(5.0f)
 		, position_diff(VEC3(0, 0, 0))
 		, speed_camera(2.0f)
+		, speed_camera_unlocked(5.0f)
 		, m_yaw(0.0f)
 		, m_pitch(0.0f)
 		, rotation_sensibility(deg2rad(45.0f) / 250.0f)
@@ -94,6 +96,7 @@ public:
 	}
 
 	void updateInput() {
+
 		int movement_x = 0;
 
 		if (io->joystick.drx != 0)
@@ -125,6 +128,15 @@ public:
 	}
 
 	void update(float dt) {
+		if (!*GameController->GetFreeCamera())
+			personThirdController(dt);
+
+		else 
+			unlockedCameraController();
+	}
+
+	//default behaviour
+	void personThirdController(float dt) {
 		CEntity* e_target = target;
 		if (!e_target)
 			return;
@@ -145,11 +157,42 @@ public:
 		TCompLife * targetlife = targeted->get<TCompLife>();
 		TCompTransform * targettrans = targeted->get<TCompTransform>();
 
-		if (GameController->GetGameState()==CGameController::RUNNING) {
-			my_tmx->lookAt(origin, target_loc);
-			//Aplicar offset
-			my_tmx->setPosition(my_tmx->getPosition() + position_diff);
+		my_tmx->lookAt(origin, target_loc);
+		//Aplicar offset
+		my_tmx->setPosition(my_tmx->getPosition() + position_diff);
+	}
+	
+	void unlockedCameraController() {
+
+		CEntity* e_owner = CHandle(this).getOwner();
+		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
+		VEC3 origin = my_tmx->getPosition();
+		float dt = getDeltaTime(true);
+		if (!ImGui::GetIO().WantTextInput)
+		{
+			if (io->keys['W'].isPressed())
+				origin += my_tmx->getFront() * dt * speed_camera_unlocked;
+			if (io->keys['S'].isPressed())
+				origin -= my_tmx->getFront() * dt * speed_camera_unlocked;
+			if (io->keys['A'].isPressed())
+				origin += my_tmx->getLeft() * dt * speed_camera_unlocked;
+			if (io->keys['D'].isPressed())
+				origin -= my_tmx->getLeft() * dt * speed_camera_unlocked;
+			if (io->keys['Q'].isPressed())
+				origin.y += dt * speed_camera_unlocked;
+			if (io->keys['E'].isPressed())
+				origin.y -= dt * speed_camera_unlocked;
+		
+
+			if (io->mouse.wheel != 0)
+				speed_camera_unlocked += io->mouse.wheel;
 		}
+		yaw -= io->mouse.dx * rotation_sensibility;
+		pitch -= io->mouse.dy * rotation_sensibility;
+
+		VEC3 front = getVectorFromYawPitch(yaw, pitch);
+
+		my_tmx->lookAt(origin, origin + front);
 	}
 
 	void renderInMenu() {

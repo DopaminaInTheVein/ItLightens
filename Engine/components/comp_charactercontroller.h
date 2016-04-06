@@ -26,6 +26,7 @@ class TCompCharacterController : public TCompBase, public PxUserControllerHitRep
 	PxController* pActor = nullptr;
 
 	PxControllerCollisionFlags mFlagsCollisions;
+	PxControllerBehaviorFlags mFlagsBehavior;
 	PxControllerFilters mFilter = PxControllerFilters();
 	void ApplyGravity(float dt);
 
@@ -64,7 +65,11 @@ public:
 	// load Xml
 	void onCreate(const TMsgEntityCreated&);
 
-	void updateTags(PxFilterData filter);
+	void updateTags(PxFilterData& filter);
+
+	void teleport(const PxVec3 & pos);
+
+	void SetCollisions(bool new_collisions);
 
 	void AddMovement(const VEC3& direction, float speed = 1.0f);
 	void AddImpulse(const VEC3 & impulse);

@@ -109,26 +109,71 @@ void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 	}
 }
 
-void TCompCharacterController::updateTags(PxFilterData filter)
+void TCompCharacterController::updateTags(PxFilterData& filter)
 {
 	//PROFILE_FUNCTION("update tags");
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
-		if (h.hasTag("player")) //player
-			filter.word0 = filter.word0 | CPhysxManager::ePLAYER_BASE;
-
+		if (h.hasTag("player")) { //player
+			filter.word0 = filter.word0 | ItLightensFilter::ePLAYER_BASE;
+			
+		}
 		if (h.hasTag("AI_guard"))
-			filter.word0 = filter.word0 | CPhysxManager::eGUARD | CPhysxManager::eNPC;
+			filter.word0 = filter.word0 | ItLightensFilter::eGUARD | ItLightensFilter::eNPC;
 
 		if (h.hasTag("AI_poss"))
-			filter.word0 = filter.word0 | CPhysxManager::ePOSSEABLE | CPhysxManager::eNPC;
+			filter.word0 = filter.word0 | ItLightensFilter::ePOSSEABLE | ItLightensFilter::eNPC;
 	}
 
-	PxShape **ptr;
-	ptr = new PxShape*[1];
-	pActor->getActor()->getShapes(ptr, 1);
-	ptr[0]->setQueryFilterData(filter);
+	mFlagsBehavior = PxControllerBehaviorFlag::eCCT_SLIDE | PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
 
+	PxRigidActor *ra = pActor->getActor()->isRigidActor();
+	const PxU32 numShapes = ra->getNbShapes();
+	PxShape **ptr;
+	ptr = new PxShape*[numShapes];
+	ra->getShapes(ptr, numShapes);
+	for (PxU32 i = 0; i < numShapes; i++)
+	{
+		PxShape* shape = ptr[i];
+		shape->setSimulationFilterData(filter);
+		shape->setQueryFilterData(filter);
+	}
+
+	free(ptr);
+
+}
+
+void TCompCharacterController::teleport(const PxVec3& pos)
+{
+	pActor->setPosition(PxExtendedVec3(pos.x, pos.y, pos.z));
+}
+
+void TCompCharacterController::SetCollisions(bool new_collisions)
+{
+	PxRigidActor *ra = pActor->getActor()->isRigidActor();
+	if (ra) {
+		const PxU32 numShapes = ra->getNbShapes();
+		PxShape **ptr;
+		ptr = new PxShape*[numShapes];
+		ra->getShapes(ptr, numShapes);
+		for (PxU32 i = 0; i < numShapes; i++)
+		{
+			PxShape* shape = ptr[i];
+			PxFilterData ft = shape->getSimulationFilterData();
+			if (!new_collisions) {
+				ft.word1 &= ~ItLightensFilter::eCOLLISION;
+				ft.word1 &= ~ItLightensFilter::eCAN_TRIGGER;	//for test only
+			}
+			else {
+				ft.word1 |= ItLightensFilter::eCOLLISION;
+				ft.word1 |= ItLightensFilter::eCAN_TRIGGER;		//for test only
+			}
+			shape->setSimulationFilterData(ft);
+			shape->setQueryFilterData(ft);
+		}
+
+		free(ptr);
+	}
 }
 
 void TCompCharacterController::update(float dt)
