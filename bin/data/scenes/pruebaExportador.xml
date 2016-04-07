@@ -348,30 +348,6 @@
 </entity>
 <entity>
 <tag
-   name="player"
-/>
-<player/>
-<life
-   points="10"
-/>
-<name
-   name="player_1"
-/>
-<transform
-   pos="-0.107086 -0.823018 0.305754"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/__player.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="0.5"
-/>
-</entity>
-<entity>
-<tag
    name="AI"
 />
 <tag
@@ -490,7 +466,6 @@
    scale="1.0"
 />
 </entity>
-
 <entity>
 <tag
    name="AI"
@@ -528,7 +503,6 @@
    height="1.7"
 />
 </entity>
-
 <entity>
 <tag
    name="AI"
@@ -577,77 +551,48 @@
 </entity>
 <entity>
 <tag
-   name="box"
+   name="beacon"
 />
-<tag
-   name="platform"
-/>
+<beacon/>
 <name
-   name="Box_14"
+   name="beacon_1"
 />
 <transform
-   pos="34.8982 0 17.0444"
+   pos="-2.43738 -2.62433 18.0295"
    quat="0 0 0 1.0"
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/__box.static_mesh"
+   name="static_meshes/__baliza.static_mesh"
 />
 <rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="2.0 1.0 2.0"
-   mass="2"
+   type_collision="static"
+   type_shape="convex"
+   mass="5"
 />
 </entity>
 <entity>
 <tag
-   name="box"
+   name="player"
 />
-<tag
-   name="platform"
+<player/>
+<life
+   points="10"
 />
 <name
-   name="Box_15"
+   name="player_1"
 />
 <transform
-   pos="30.1673 0 9.85425"
+   pos="-0.31781 0 5.69775"
    quat="0 0 0 1.0"
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/__box.static_mesh"
+   name="static_meshes/__player.static_mesh"
 />
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="2.0 1.0 2.0"
-   mass="2"
-/>
-</entity>
-<entity>
-<tag
-   name="box"
-/>
-<tag
-   name="platform"
-/>
-<name
-   name="Box_16"
-/>
-<transform
-   pos="24.6694 0 3.27417"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/__box.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="2.0 1.0 2.0"
-   mass="2"
+<character_controller
+   radius="0.3"
+   height="0.7"
 />
 </entity>
 </entities>

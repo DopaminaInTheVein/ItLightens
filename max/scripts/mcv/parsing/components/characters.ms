@@ -28,7 +28,7 @@ fn parseWayPoints parent = (
 fn parseKeyPoints parent = (
 	local patrols = (findAllHelpers #("Patrol_Go", "Patrol_Look"))
 	if patrols.count > 0 then (
-		parent.addAttr "kpts_size" patrols.count
+		parent.addAttr "kpt_size" patrols.count
 		local curKpt = 0
 		for p in patrols do (
 			
@@ -71,7 +71,7 @@ fn parseJurisdiction parent = (
 	if jurisdiction != undefined then (
 		--Jurisdiction Pos
 		local mcv_tmx = (matrixMax2MCV jurisdiction.transform)
-		parent.addAttr "jursidiction" (getTransformPosValue mcv_tmx)
+		parent.addAttr "jurisdiction" (getTransformPosValue mcv_tmx)
 		
 		--Jurisdiction Radius
 		parent.addAttr "jurRadius" jurisdiction.radius
