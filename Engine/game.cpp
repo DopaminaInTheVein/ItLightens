@@ -7,6 +7,7 @@
 #include "render/technique.h"
 #include "render/texture.h"
 #include "render/render_manager.h"
+#include "render/draw_utils.h"
 #include "resources/resources_manager.h"
 #include "camera/camera.h"
 #include "components/entity_tags.h"
@@ -23,11 +24,6 @@ CHandle       h_camera;
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
 const CTexture*         texture1 = nullptr;
-
-#include "contants/ctes_camera.h"
-CShaderCte< TCteCamera > shader_ctes_camera;
-#include "contants/ctes_object.h"
-CShaderCte< TCteObject > shader_ctes_object;
 
 // --------------------------------------------
 #include "app_modules/entities.h"
@@ -65,6 +61,9 @@ bool CApp::start() {
     return false;
   if (!shader_ctes_object.create("ctes_object"))
     return false;
+  if (!shader_ctes_bones.create("ctes_bones"))
+    return false;
+  shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
 
   // Init modules
   for (auto it : mod_init_order) {
@@ -89,6 +88,7 @@ void CApp::stop() {
     (*it)->stop();
 
   Resources.destroy();
+  shader_ctes_bones.destroy();
   shader_ctes_camera.destroy();
   shader_ctes_object.destroy();
 

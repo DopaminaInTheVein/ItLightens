@@ -1,0 +1,5 @@
+<tech uses_bones="1">
+    <vs fx="skin" main="VSSkin" decl="positions_normal_uv_skin"/>
+    <ps fx="basic" main="PSTextured"/>
+</tech>
+

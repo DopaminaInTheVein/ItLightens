@@ -13,6 +13,7 @@ struct TCompSkeleton : public TCompBase {
   void update(float dt);
   void render() const;
   void renderInMenu();
+  void uploadBonesToCteShader() const;
 };
 
 #endif

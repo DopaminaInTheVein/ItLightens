@@ -5,6 +5,7 @@
 #include "technique.h"
 #include "mesh.h"
 #include "components/comp_transform.h"
+#include "skeleton/comp_skeleton.h"
 #include "components/entity.h"
 
 CRenderManager RenderManager;
@@ -114,6 +115,15 @@ void CRenderManager::renderAll() {
       // have one shader_ctes_object
       shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
     }
+
+    if (it->material->tech->usesBones()) {
+      CEntity* e = it->owner.getOwner();
+      assert(e);
+      TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+      assert(comp_skel);
+      comp_skel->uploadBonesToCteShader();
+    }
+
 
     it->mesh->renderGroup( it->submesh_idx );    // it->mesh->renderSubMesh( it->submesh );
     prev_it = it;

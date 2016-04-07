@@ -1,0 +1,3 @@
+<material tech="skin_textured.tech">
+	<texture slot="diffuse" name="textures/wood_d.dds"/>
+</material>

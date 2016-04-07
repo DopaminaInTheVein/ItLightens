@@ -3,8 +3,7 @@
 
 #include "resources/resource.h"
 #include "utils/XMLParser.h"
-
-class CalCoreModel;
+#include "cal3d/cal3d.h"
 
 class CSkeleton : public IResource, public CXMLParser {
   CalCoreModel*   core_model;

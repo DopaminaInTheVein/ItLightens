@@ -164,6 +164,7 @@
     <ClCompile Include="windows\app.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\bin\data\shaders\contants\ctes_bones.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_camera.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_object.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h" />
@@ -205,6 +206,7 @@
     <ClInclude Include="render\gpu_trace.h" />
     <ClInclude Include="render\material.h" />
     <ClInclude Include="render\mesh.h" />
+    <ClInclude Include="render\mesh_format.h" />
     <ClInclude Include="render\render.h" />
     <ClInclude Include="render\render_manager.h" />
     <ClInclude Include="render\shaders.h" />
@@ -218,6 +220,7 @@
     <ClInclude Include="skeleton\comp_skeleton.h" />
     <ClInclude Include="skeleton\skeleton.h" />
     <ClInclude Include="utils\data_provider.h" />
+    <ClInclude Include="utils\data_saver.h" />
     <ClInclude Include="utils\murmur3.h" />
     <ClInclude Include="utils\timer.h" />
     <ClInclude Include="utils\utils.h" />
@@ -228,13 +231,17 @@
     <None Include="geometry\SimpleMath.inl" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\bin\data\shaders\Tutorial02.fx">
+    <Text Include="NOTES.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\bin\data\shaders\basic.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="NOTES.txt" />
+    <FxCompile Include="..\bin\data\shaders\skin.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

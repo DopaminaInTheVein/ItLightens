@@ -31,7 +31,7 @@ public:
     assert(constant_buffer);
     Render.ctx->VSSetConstantBuffers(slot, 1, &constant_buffer);
   }
-
+   
   void uploadToGPU() {
     Render.ctx->UpdateSubresource(constant_buffer, 0, NULL, (TObjParams*)this, 0, 0);
   }
