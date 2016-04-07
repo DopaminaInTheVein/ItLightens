@@ -333,7 +333,7 @@ bool player_controller_speedy::rayCastToFront(int types, float reach, float& dis
 	//PROVISINAL FOR TEST:
 	PxQueryFilterData filter = PxQueryFilterData();
 	if (types == 2) {
-		filter.data.word0 = CPhysxManager::eALL_STATICS | CPhysxManager::eOBJECT;	//ignore crystal and people
+		filter.data.word0 = ItLightensFilter::eALL_STATICS | ItLightensFilter::eOBJECT;	//ignore crystal and people
 	}
 	//END PROV
 

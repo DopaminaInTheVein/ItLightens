@@ -12,20 +12,23 @@
 
 void CPhysxManager::setFtDynamic()
 {
-	ft_dynamic.word0 = eOBJECT | eALL_OBJECTS;
-	ft_dynamic.word1 = eCAN_TRIGGER | eCOLLISION;
+	ft_dynamic = PxFilterData();
+	ft_dynamic.word0 = ItLightensFilter::eOBJECT | ItLightensFilter::eALL_OBJECTS;
+	ft_dynamic.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
 }
 
 void CPhysxManager::setFtStatic()
 {
-	ft_static.word0 = eSTATIC_OBJECT | eALL_OBJECTS | eALL_STATICS;
-	ft_static.word1 = eCOLLISION;
+	ft_static = PxFilterData();
+	ft_static.word0 = ItLightensFilter::eSTATIC_OBJECT | ItLightensFilter::eALL_OBJECTS | ItLightensFilter::eALL_STATICS;
+	ft_static.word1 = ItLightensFilter::eCOLLISION;
 }
 
 void CPhysxManager::setFtCC()
 {
-	ft_cc.word0 = eANYONE | eALL_OBJECTS;
-	ft_cc.word1 = eCAN_TRIGGER | eCOLLISION;
+	ft_cc = PxFilterData();
+	ft_cc.word0 = ItLightensFilter::eANYONE | ItLightensFilter::eALL_OBJECTS;
+	ft_cc.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
 }
 
 //#########################################################################################################
@@ -77,9 +80,7 @@ bool CPhysxManager::start()
 
 	//init scene
 	PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
-
-	//customizeSceneDesc(sceneDesc);
+	customizeSceneDesc(sceneDesc);
 
 	if (!sceneDesc.cpuDispatcher)
 	{
@@ -93,7 +94,6 @@ bool CPhysxManager::start()
 	if (!sceneDesc.filterShader)
 		sceneDesc.filterShader = gDefaultFilterShader;
 
-	sceneDesc.simulationEventCallback = this;
 
 #ifdef PX_WINDOWS
 	if (!sceneDesc.gpuDispatcher && mCudaContextManager)
@@ -128,6 +128,9 @@ bool CPhysxManager::start()
 	// and now try to connect
 	mConnection = PxVisualDebuggerExt::createConnection(mPhysics->getPvdConnectionManager(),
 		pvd_host_ip, port, timeout, connectionFlags);
+
+	mScene->setVisualizationParameter(PxVisualizationParameter::eJOINT_LOCAL_FRAMES, 1.0f);
+	mScene->setVisualizationParameter(PxVisualizationParameter::eJOINT_LIMITS, 1.0f);
 #endif
 
 	setFtDynamic();
@@ -174,6 +177,46 @@ void CPhysxManager::update(float dt)
 #pragma endregion
 
 //#########################################################################################################
+//											customize functions
+//#########################################################################################################
+#pragma region customize functions
+
+// set filter tags
+void CPhysxManager::setupFiltering(PxRigidActor* actor, PxFilterData& filterData)
+{
+	const PxU32 numShapes = actor->getNbShapes();
+	PxShape **ptr;
+	ptr = new PxShape*[numShapes];
+
+	actor->getShapes(ptr, numShapes);
+	for (PxU32 i = 0; i < numShapes; i++)
+	{
+		PxShape* shape = ptr[i];
+		shape->setSimulationFilterData(filterData);
+		shape->setQueryFilterData(filterData);
+	}
+
+	free(ptr);
+}
+
+#pragma endregion
+
+//#########################################################################################################
+//											customize functions
+//#########################################################################################################
+#pragma region customize functions
+
+void CPhysxManager::customizeSceneDesc(PxSceneDesc& sceneDesc)
+{
+	sceneDesc.gravity = PxVec3(0.0f, GRAVITY, 0.0f);
+	sceneDesc.filterShader = ItLightensFilter::ItLightensFilterShader;
+	sceneDesc.simulationEventCallback = this;
+	//sceneDesc.flags |= PxSceneFlag::eREQUIRE_RW_LOCK;
+}
+
+#pragma endregion
+
+//#########################################################################################################
 //											primitive geometries
 //#########################################################################################################
 #pragma region primitive geometries
@@ -201,7 +244,7 @@ void CPhysxManager::CreateCapsuleGeometry(const PxReal& radius, const PxReal& he
 PxShape * CPhysxManager::CreatePxSphere(PxReal radius, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
 	PxShape *sphere = mPhysics->createShape(PxSphereGeometry(radius), 
-											*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution));
+											*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
 	
 	return sphere;
 }
@@ -209,7 +252,7 @@ PxShape * CPhysxManager::CreatePxSphere(PxReal radius, PxReal staticFriction, Px
 PxShape * CPhysxManager::CreatePxCapsule(PxReal radius, PxReal halfHeight, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
 	PxShape *capsule = mPhysics->createShape(PxCapsuleGeometry(radius,halfHeight),
-											*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution));
+											*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
 	
 	return capsule;
 }
@@ -217,7 +260,7 @@ PxShape * CPhysxManager::CreatePxCapsule(PxReal radius, PxReal halfHeight, PxRea
 PxShape * CPhysxManager::CreatePxBox(const PxVec3& size, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
 	PxShape *box = mPhysics->createShape(PxBoxGeometry(size), 
-										*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution));
+										*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
 	
 	return box;
 }
@@ -235,7 +278,7 @@ PxShape * CPhysxManager::CreateTriangleMesh(PxTriangleMesh * mesh, PxReal static
 {
 		PxTriangleMeshGeometry meshGeometry(mesh);
 		PxShape* triMesh = mPhysics->createShape(meshGeometry,
-												*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution));
+												*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
 
 		return triMesh;
 }
@@ -245,7 +288,7 @@ PxShape * CPhysxManager::CreateConvexShape(const CMesh * mesh, PxReal staticFric
 	
 	PxConvexMesh* convexMesh = CreateCookedConvexMesh(mesh);
 	PxShape* aConvexShape = mPhysics->createShape(PxConvexMeshGeometry(convexMesh), 
-												*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution));
+												*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
 
 	return aConvexShape;
 
@@ -272,7 +315,8 @@ PxController * CPhysxManager::CreateCharacterController(PxReal radius, PxReal he
 	descCapsule.stepOffset = 0.01f;	//height can pass walking
 	descCapsule.material = mPhysics->createMaterial(0.5f,0.5f,0.25f);
 	descCapsule.contactOffset = 0.01f;
-	//descCapsule.
+	descCapsule.behaviorCallback = this;
+	descCapsule.reportCallback = this;
 	PxController* c = mManagerControllers->createController(descCapsule);
 	return c;
 }
@@ -381,7 +425,7 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 
 		
 		PxFilterData fd = pair.otherShape->getQueryFilterData();
-		if (fd.word1 & (eCAN_TRIGGER)) {
+		if (fd.word1 & (ItLightensFilter::eCAN_TRIGGER)) {
 			//CHandle* h = CHandle::getHandleFromVoid(pair.otherActor->userData);
 			//CEntity* e_trigger = CHandle::getHandleFromptr(h);
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_LOST)) {
@@ -464,6 +508,28 @@ bool CPhysxManager::raycast(VEC3 origin, VEC3 end, PxRaycastBuffer& hit, PxQuery
 #pragma endregion
 
 //#########################################################################################################
+//									joints
+//#########################################################################################################
+#pragma region namespace joints
+
+/*
+bool CPhysxManager::Createjoint(PxRigidActor * a1, PxRigidActor * a2, const PxTransform & tmx1, const PxTransform & tmx2, int typeJoint)
+{
+PxControllerBehaviorFlag::
+//PxRevoluteJoint *joint = PxRevoluteJointCreate(*mPhysics, a1, tmx1, a2, tmx2);
+
+//PxD6Joint *joint = PxD6JointCreate(*mPhysics, a1, tmx1, a2, tmx2);
+PxFixedJoint *joint = PxFixedJointCreate(*mPhysics, a1, tmx1, a2, tmx2);
+//joint->setMotion(PxD6Axis::eX, PxD6Motion::eLIMITED);
+
+joint->setConstraintFlag(PxConstraintFlag::eVISUALIZATION, true);
+return false;
+}
+*/
+
+#pragma endregion
+
+//#########################################################################################################
 //									namespace physx helper
 //#########################################################################################################
 #pragma region namespace physx helper
@@ -506,8 +572,13 @@ PxTransform PhysxConversion::ToPxTransform(const VEC3 & pos, const CQuaternion &
 }
 CHandle PhysxConversion::GetEntityHandle(PxActor & a)
 {
-	CEntity* e = static_cast<CEntity*>(a.userData);
-	return CHandle(e);
+	if(&a){
+		CEntity* e = static_cast<CEntity*>(a.userData);
+		return CHandle(e);
+	}
+	else{
+		return CHandle(); //handle not valid
+	}
 }
 //----------------------------------------------------------
 

@@ -22,7 +22,7 @@ void assingValueFromMap(float *variable, char *name, std::map<std::string, float
 bool		fatal		(const char* fmt, ...);
 uint32_t	getID		(const char* text);
 
-float		getDeltaTime();
+float		getDeltaTime(float always = false);
 
 float squared(float i);
 

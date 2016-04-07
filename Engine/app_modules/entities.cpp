@@ -47,6 +47,8 @@ DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 
+DECL_OBJ_MANAGER("platform", TCompPlatform);
+
 //Physics
 DECL_OBJ_MANAGER("rigidbody", TCompPhysics);
 DECL_OBJ_MANAGER("character_controller", TCompCharacterController);
@@ -57,6 +59,7 @@ DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
+
 
 CCamera * camera;
 
@@ -97,6 +100,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 
+	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
+
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
 
@@ -108,6 +113,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
@@ -177,8 +183,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
 
 	CEntityParser ep;
-	//bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
-	bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH
@@ -284,11 +289,11 @@ void CEntitiesModule::stop() {
 void CEntitiesModule::update(float dt) {
 	static float timeAcumulated = 55.0f;
 	timeAcumulated += getDeltaTime();
-	/*if (timeAcumulated > 60.0f) {
-		timeAcumulated = 0.0f;
-		std::thread t(&CEntitiesModule::recalcNavmesh, this);
-		t.detach();
-	}*/
+	if (timeAcumulated > 60.0f) {
+		//timeAcumulated = 0.0f;
+		//std::thread t(&CEntitiesModule::recalcNavmesh, this);
+		//t.detach();
+	}
 
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
@@ -314,6 +319,8 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompWire>()->updateAll(dt);
 	getHandleManager<TCompGenerator>()->updateAll(dt);
 	getHandleManager<TCompPolarized>()->updateAll(dt);
+
+	getHandleManager<TCompPlatform>()->updateAll(dt);
 
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);

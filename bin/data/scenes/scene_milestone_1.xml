@@ -30,6 +30,18 @@
  </entity>
 <!-- Fin prueba anims -->
 
+<!--test platform joint-->
+    <entity>
+    <tag name ="platform" />
+    <name name="platform_testing" />
+    <tag name="box" />
+    <transform pos="0.358 -7.546 -19.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" mass="2.5"/>
+      <platform speed ="0.5" movement ="5 0 0"/>
+  </entity>
+  <!--end test-->
+
   <!--
   <entity>
     <life points="10" />
