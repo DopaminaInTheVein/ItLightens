@@ -11,22 +11,19 @@
 
 
 void CPhysxManager::setFtDynamic()
-{
-	ft_dynamic = PxFilterData();
+{	
 	ft_dynamic.word0 = ItLightensFilter::eOBJECT | ItLightensFilter::eALL_OBJECTS;
 	ft_dynamic.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
 }
 
 void CPhysxManager::setFtStatic()
 {
-	ft_static = PxFilterData();
 	ft_static.word0 = ItLightensFilter::eSTATIC_OBJECT | ItLightensFilter::eALL_OBJECTS | ItLightensFilter::eALL_STATICS;
 	ft_static.word1 = ItLightensFilter::eCOLLISION;
 }
 
 void CPhysxManager::setFtCC()
 {
-	ft_cc = PxFilterData();
 	ft_cc.word0 = ItLightensFilter::eANYONE | ItLightensFilter::eALL_OBJECTS;
 	ft_cc.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
 }
@@ -457,16 +454,6 @@ void	CPhysxManager::onSleep(PxActor **actors, PxU32 count) {}
 void	CPhysxManager::onContact(const PxContactPairHeader &pairHeader, const PxContactPair *pairs, PxU32 nbPairs) {}
 void	CPhysxManager::onConstraintBreak(PxConstraintInfo *constraints, PxU32 count) {}
 
-/*PxQueryHitType::Enum CPhysxManager::postFilter(const PxFilterData & filterData, const PxQueryHit & hit)
-{
-	return PxQueryHitType::Enum();
-}
-
-PxQueryHitType::Enum CPhysxManager::preFilter(const PxFilterData & filterData, const PxShape * shape, const PxRigidActor * actor, PxHitFlags & queryFlags)
-{
-	return PxQueryHitType::Enum();
-}
-*/
 #pragma endregion
 
 //#########################################################################################################

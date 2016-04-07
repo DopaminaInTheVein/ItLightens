@@ -33,6 +33,7 @@
 <!--test platform joint-->
     <entity>
     <tag name ="platform" />
+      <tag name ="platform_kinematic" />
     <name name="platform_testing" />
     <tag name="box" />
     <transform pos="0.358 -7.546 -19.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />

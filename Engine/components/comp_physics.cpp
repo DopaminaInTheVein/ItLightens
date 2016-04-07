@@ -329,7 +329,7 @@ void TCompPhysics::AddVelocity(VEC3 velocity)
 
 void TCompPhysics::setPosition(VEC3 position, CQuaternion rotation)
 {
-	bool isKinematic = false;
+	bool isKinematic = false;	//by default no kinematic
 	PxRigidDynamic *rd = pActor->isRigidDynamic();
 	PxTransform tr = PxTransform(PhysxConversion::Vec3ToPxVec3(position), PhysxConversion::CQuaternionToPxQuat(rotation));
 
@@ -337,12 +337,12 @@ void TCompPhysics::setPosition(VEC3 position, CQuaternion rotation)
 		isKinematic = rd->getRigidDynamicFlags().isSet(PxRigidBodyFlag::eKINEMATIC);	
 	}
 
-	if (!isKinematic) {
-		pActor->isRigidActor()->setGlobalPose(tr);
+	if (!isKinematic) {	//no kinematic object, 
+		pActor->isRigidActor()->setGlobalPose(tr);		//setposition without using simulation physx
 	}
-	else {
+	else {				//if kinematic use setkinematicTarget
 		assert(rd);
-		rd->setKinematicTarget(tr);
+		rd->setKinematicTarget(tr);	//use physx, can push, etc
 	}
 }
 
