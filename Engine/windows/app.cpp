@@ -154,8 +154,7 @@ bool CApp::createWindow(HINSTANCE new_hInstance, int nCmdShow)
 void CApp::generateFrame() {
 	PROFILE_FRAME_BEGINS();
 	PROFILE_FUNCTION("generateFrame");
-	float delta_time = 1.0f / 60.f;
-	update(delta_time);
+	update(getDeltaTime());
 	render();
 	Render.swapChain();
 }
