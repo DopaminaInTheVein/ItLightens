@@ -28,6 +28,13 @@ public:
 		, uint32_t new_external_index
 		, uint32_t new_age) : type(new_type), external_index(new_external_index), age(new_age) {}
 
+
+	CHandle(void* addr) {
+		CHandle h = static_cast<CHandle>(addr);
+		*this = h;
+	}
+
+
   // Contruir un handle a partir de una direccion de un obj
   // Solo va a devolver un handle valido si la direccion
   // pertenece al manager de ese tipo de objetos
@@ -79,7 +86,9 @@ public:
 	  template< class TMsg >
 	  void sendMsg(const TMsg& msg);
 
-	uint32_t asUnsigned() const { return *(unsigned*)this; }
+	uint32_t asUnsigned() const {
+		return *(unsigned*)this; 
+	}
 
 private:
 	// Guardar N bits para cada members, con la intencion de que objeto

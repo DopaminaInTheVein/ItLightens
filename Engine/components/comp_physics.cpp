@@ -252,7 +252,7 @@ bool TCompPhysics::addRigidbodyScene()
 		pShape->release();
 		CEntity *m = CHandle(this).getOwner();
 		updateTagsSetupActor(mFilterData);
-		pActor->userData = m;
+		pActor->userData = e;
 		return true;
 	}
 	else if (mCollisionType == DYNAMIC_RB) {
@@ -266,7 +266,7 @@ bool TCompPhysics::addRigidbodyScene()
 		rigidActor = pActor->isRigidDynamic();
 		CEntity *m = CHandle(this).getOwner();
 		updateTagsSetupActor(mFilterData);
-		pActor->userData = m;
+		pActor->userData = e;
 		pActor->isRigidBody()->setMass(mMass);
 		
 		return true;
@@ -279,7 +279,7 @@ bool TCompPhysics::addRigidbodyScene()
 		pShape->release();
 		CEntity *m = CHandle(this).getOwner();
 		//CHandle h = CHandle(this).getOwner();
-		pActor->userData = m;
+		pActor->userData = e;
 
 		return true;
 	}

@@ -426,8 +426,10 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 			//CHandle* h = CHandle::getHandleFromVoid(pair.otherActor->userData);
 			//CEntity* e_trigger = CHandle::getHandleFromptr(h);
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_LOST)) {
-				CEntity* e_trigger = static_cast<CEntity*>(pair.triggerActor->userData);
-				CEntity* e_active = static_cast<CEntity*>(pair.otherActor->userData);
+				//CEntity* e_trigger = static_cast<CEntity*>(pair.triggerActor->userData);
+				//CEntity* e_active = static_cast<CEntity*>(pair.otherActor->userData);
+				CEntity *e_trigger = GetEntityHandle(*pair.triggerActor);
+				CEntity *e_active = GetEntityHandle(*pair.otherActor);
 				//OnTriggerExit()
 				TMsgTriggerOut msg;
 				msg.other = CHandle(e_active);
@@ -435,12 +437,22 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 			}
 
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_FOUND)) {
-				CEntity* e_trigger = static_cast<CEntity*>(pair.triggerActor->userData);
-				CEntity* e_active = static_cast<CEntity*>(pair.otherActor->userData);
-				//OnTriggerEnter()
+				//CHandle h_trigger = CHandle(pair.triggerActor->userData);
+				//CEntity* e_trigger = h_trigger;
+
+				//CHandle h_active = static_cast<CHandle>(pair.otherActor->userData);
+				//CEntity* e_active = h_active;
+
+				CEntity *e_trigger = GetEntityHandle(*pair.triggerActor);
+				CEntity *e_active = GetEntityHandle(*pair.otherActor);
+				//OnTriggerExit()
 				TMsgTriggerIn msg;
 				msg.other = CHandle(e_active);
 				e_trigger->sendMsg(msg);
+				//OnTriggerEnter()
+				//TMsgTriggerIn msg;
+				//msg.other = CHandle(e_active);
+				//e_trigger->sendMsg(msg);
 			}
 
 		}
