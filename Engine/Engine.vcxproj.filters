@@ -757,6 +757,9 @@
     <ClInclude Include="app_modules\render\module_render_deferred.h">
       <Filter>app_modules\render</Filter>
     </ClInclude>
+    <ClInclude Include="utils\timer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">

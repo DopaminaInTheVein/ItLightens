@@ -69,6 +69,7 @@ bool CApp::start() {
 	
 	mod_renders.push_back(render_deferred);
 	mod_renders.push_back(entities);
+	mod_renders.push_back(Debug);
 	mod_renders.push_back(imgui);
 	mod_renders.push_back(io);
 

@@ -369,6 +369,7 @@
     <ClInclude Include="utils\macros\macros.h" />
     <ClInclude Include="utils\macros\timers.h" />
     <ClInclude Include="utils\murmur3.h" />
+    <ClInclude Include="utils\timer.h" />
     <ClInclude Include="utils\utils.h" />
     <ClInclude Include="utils\XMLParser.h" />
     <ClInclude Include="windows\app.h" />

@@ -2,6 +2,9 @@
 #include "debug.h"
 #include "render/mesh.h"
 #include "resources/resource.h"
+#include "render/shader_cte.h"
+#include "contants/ctes_object.h"
+extern CShaderCte< TCteObject > shader_ctes_object;
 
 struct SimpleVertexColored {
 	float x, y, z;
@@ -160,6 +163,9 @@ void CDebug::update(float dt) {
 
 void CDebug::render()
 {
+	shader_ctes_object.World = MAT44::Identity;
+	shader_ctes_object.uploadToGPU();
+
 	if (lines.size() == 0) return;
 
 	line l = lines.back();
@@ -169,5 +175,6 @@ void CDebug::render()
 		if (lines.size() > 0) l = lines.back();
 		else break;
 	}
+
 	lines.clear();
 }

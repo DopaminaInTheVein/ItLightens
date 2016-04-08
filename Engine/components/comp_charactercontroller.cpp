@@ -166,6 +166,7 @@ void TCompCharacterController::SetCollisions(bool new_collisions)
 
 		free(ptr);
 	}
+	free(ra);
 }
 
 void TCompCharacterController::update(float dt)

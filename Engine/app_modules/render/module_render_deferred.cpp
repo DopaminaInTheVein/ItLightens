@@ -65,6 +65,7 @@ void CRenderDeferredModule::render() {
 
       axis->activateAndRender();
       Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
+	  
   }
 
   Render.activateBackBuffer();
