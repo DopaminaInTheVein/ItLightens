@@ -3,6 +3,8 @@
 #include "app_modules\io\io.h"
 #include "SLB\slb_public_functions.h"
 
+#include "utils\utils.h"
+
 void LogicManager::init() {
 
 	slb_manager = slb_script.getManager();
@@ -10,27 +12,28 @@ void LogicManager::init() {
 	// Binds here, if needed
 	bindPublicFunctions(*slb_manager);
 
-	//list_files_recursively(lua_script_folder);
+	std::vector<std::string> files_to_load = list_files_recursively(lua_script_folder);
 
 	// Init and execute the script
-	slb_script.doFile(lua_script_route);
+	for (auto file : files_to_load)
+		slb_script.doFile(file);
 }
 
-void LogicManager::throwEvent(EVENT evt/*, params*/) {
+void LogicManager::throwEvent(EVENT evt, std::string params) {
 
 	char lua_code[64];
 
 	switch (evt) {
 		case (OnAction) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "sampleFunction(%f);", 0.1f);
 			break;
 		}
 		case (OnEnter) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "sampleFunction2(%f);", 0.2f);
 			break;
 		}
 		case (OnLeave) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "sampleFunction3(%f);", 0.3f);
 			break;
 		}
 		case (OnGameStart) : {
@@ -175,7 +178,7 @@ void LogicManager::throwEvent(EVENT evt/*, params*/) {
 
 }
 
-void LogicManager::throwUserEvent(std::string evt/*, params*/) {
+void LogicManager::throwUserEvent(std::string evt, std::string params) {
 	// construct the lua code using the event and the specified parameters
 	std::string lua_code = evt;
 

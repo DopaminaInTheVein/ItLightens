@@ -278,7 +278,7 @@ bool CEntitiesModule::start() {
 
 	LogicManager lm;
 	lm.init();
-	lm.throwEvent(lm.OnAction);
+	lm.throwEvent(lm.OnEnter, "");
 
 	return true;
 }

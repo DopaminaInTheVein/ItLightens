@@ -8,7 +8,7 @@
 
 class LogicManager
 {
-	std::string lua_script_route = "data/lua_scripts/logic.lua";
+	std::string lua_script_folder = "data/lua_scripts";
 
 public:
 
@@ -56,8 +56,8 @@ public:
 	};
 
 	void init();
-	void throwEvent(EVENT evt/*, params*/);
-	void throwUserEvent(std::string evt/*, params*/);
+	void throwEvent(EVENT evt, std::string params);
+	void throwUserEvent(std::string evt, std::string params);
 	void shutDown();
 
 	void bindPublicFunctions(SLB::Manager& m);

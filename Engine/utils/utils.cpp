@@ -178,3 +178,32 @@ std::map<std::string, float> readIniFileAttrMap(char* element_to_read) {
 void assingValueFromMap(float *variable, char *name, std::map<std::string, float> data_map) {
 	*variable = data_map[name];
 }
+
+std::vector<std::string> list_files_recursively(std::string folder_path) {
+	std::vector<std::string> files;
+	char search_path[200];
+	sprintf(search_path, "%s/*.*", folder_path.c_str());
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(search_path, &fd);
+
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			std::string filename(fd.cFileName);
+			// if the entry is a file, we add it
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				files.push_back(std::string(folder_path) + "/" + fd.cFileName);
+			}
+			// if the entry is a directory, we call the function recursively
+			else if (filename.compare(".") != 0 && filename.compare("..")) {
+				std::string subfolder_route = folder_path + "/" + fd.cFileName;
+				std::vector<std::string> files_subfolder = list_files_recursively(subfolder_route);
+				for (auto file : files_subfolder) {
+					files.push_back(file);
+				}
+			}
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
+
+	return files;
+}
