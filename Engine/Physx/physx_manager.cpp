@@ -423,36 +423,25 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 		
 		PxFilterData fd = pair.otherShape->getQueryFilterData();
 		if (fd.word1 & (ItLightensFilter::eCAN_TRIGGER)) {
-			//CHandle* h = CHandle::getHandleFromVoid(pair.otherActor->userData);
-			//CEntity* e_trigger = CHandle::getHandleFromptr(h);
+
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_LOST)) {
-				//CEntity* e_trigger = static_cast<CEntity*>(pair.triggerActor->userData);
-				//CEntity* e_active = static_cast<CEntity*>(pair.otherActor->userData);
-				CEntity *e_trigger = GetEntityHandle(*pair.triggerActor);
-				CEntity *e_active = GetEntityHandle(*pair.otherActor);
-				//OnTriggerExit()
+				CEntity *e_trigger = CHandle(pair.triggerActor->userData);
+				CEntity *e_active = CHandle(pair.otherActor->userData);
+
 				TMsgTriggerOut msg;
 				msg.other = CHandle(e_active);
 				e_trigger->sendMsg(msg);
 			}
 
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_FOUND)) {
-				//CHandle h_trigger = CHandle(pair.triggerActor->userData);
-				//CEntity* e_trigger = h_trigger;
 
-				//CHandle h_active = static_cast<CHandle>(pair.otherActor->userData);
-				//CEntity* e_active = h_active;
 
-				CEntity *e_trigger = GetEntityHandle(*pair.triggerActor);
-				CEntity *e_active = GetEntityHandle(*pair.otherActor);
-				//OnTriggerExit()
+				CEntity *e_trigger = CHandle(pair.triggerActor->userData);
+				CEntity *e_active = CHandle(pair.otherActor->userData);
 				TMsgTriggerIn msg;
 				msg.other = CHandle(e_active);
 				e_trigger->sendMsg(msg);
-				//OnTriggerEnter()
-				//TMsgTriggerIn msg;
-				//msg.other = CHandle(e_active);
-				//e_trigger->sendMsg(msg);
+	
 			}
 
 		}
@@ -572,8 +561,7 @@ PxTransform PhysxConversion::ToPxTransform(const VEC3 & pos, const CQuaternion &
 CHandle PhysxConversion::GetEntityHandle(PxActor & a)
 {
 	if(&a){
-		CEntity* e = static_cast<CEntity*>(a.userData);
-		return CHandle(e);
+		return CHandle(a.userData);
 	}
 	else{
 		return CHandle(); //handle not valid

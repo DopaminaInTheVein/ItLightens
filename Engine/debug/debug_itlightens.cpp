@@ -1,5 +1,5 @@
 #include "mcv_platform.h"
-#include "debug.h"
+#include "debug_itlightens.h"
 #include "render/mesh.h"
 #include "resources/resource.h"
 #include "render/shader_cte.h"

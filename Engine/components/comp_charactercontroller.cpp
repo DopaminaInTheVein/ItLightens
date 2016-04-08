@@ -111,11 +111,7 @@ void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 		PxExtendedVec3 p = Vec3ToPxExVec3(mtx->getPosition());
 		p.y += mHeight + mRadius;	//add height value from capsule, center from collider at center of the shape
 		pActor->setPosition(p);
-		CHandle& h = CHandle(this);
-		CHandle* h1 = &h;
-		uint32_t addr = h.asUnsigned();
-		void* addr_v = (void*)addr;
-		pActor->getActor()->userData = e;
+		pActor->getActor()->userData = CHandle(this).getOwner().ToVoidPt();
 		mFilter = DEFAULT_DATA_CC;
 		updateTags();
 	}

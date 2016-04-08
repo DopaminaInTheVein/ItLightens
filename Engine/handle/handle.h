@@ -15,23 +15,55 @@ class CObjectManager;
 template<class TObj>
 CObjectManager<TObj>* getHandleManager();
 
+
 // ---------------------------------
 class CHandle {
+
+
+
 public:
 	  static const uint32_t num_bits_type  = 7;
 	  static const uint32_t num_bits_index = 12;
 	  static const uint32_t num_bits_age   = 32 - num_bits_type - num_bits_index;
 	  static const uint32_t max_types      = 1 << num_bits_type;
 
+private:
+	struct THandleSave {
+		uint32_t type : CHandle::num_bits_type;  // Que tiopo de objeto representa
+		uint32_t external_index : CHandle::num_bits_index; // Sirve para encontrar el objeto de verdad
+		uint32_t age : CHandle::num_bits_age;   // Para descartar versiones antiguas de los objetos
+
+		THandleSave() : type(0), external_index(0), age(0) {}
+		THandleSave(uint32_t new_type
+			, uint32_t new_external_index
+			, uint32_t new_age) : type(new_type), external_index(new_external_index), age(new_age) {}
+	};
+
+public:
+
+
 	CHandle() : type(0), external_index(0), age(0) {}
 	CHandle(uint32_t new_type
 		, uint32_t new_external_index
 		, uint32_t new_age) : type(new_type), external_index(new_external_index), age(new_age) {}
 
+	CHandle(THandleSave h_data) {
+		CHandle h = CHandle(h_data.type, h_data.external_index, h_data.age);
+
+		//return handle valid
+		if(h.isValid()) *this = h;
+		else *this = CHandle();
+	}
 
 	CHandle(void* addr) {
-		CHandle h = static_cast<CHandle>(addr);
+		THandleSave *h_data = static_cast<THandleSave*>(addr);
+		CHandle h = CHandle(*h_data);
 		*this = h;
+	}
+
+	THandleSave* ToVoidPt() {
+		THandleSave *h_data = new THandleSave(type,external_index,age);
+		return h_data;
 	}
 
 
