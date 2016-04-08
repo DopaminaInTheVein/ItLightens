@@ -117,6 +117,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
@@ -130,6 +131,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
@@ -219,7 +221,7 @@ bool CEntitiesModule::start() {
 	TTagID tagIDrec = getID("recover_point");
 
 	// Camara del player
-	CHandle camera = tags_manager.getFirstHavingTag(tagIDcamera);
+	CHandle camera = tags_manager.getFirstHavingTag("camera_main");
 	CEntity * camera_e = camera;
 	if (!camera_e) {
 		//main camera needed
@@ -229,7 +231,7 @@ bool CEntitiesModule::start() {
 	TCompCamera * pcam = camera_e->get<TCompCamera>();
 
 	// Player real
-	CHandle t = tags_manager.getFirstHavingTag(getID("player"));
+	CHandle t = tags_manager.getFirstHavingTag("player");
 	CEntity * target_e = t;
 
 	// Set the player in the 3rdPersonController

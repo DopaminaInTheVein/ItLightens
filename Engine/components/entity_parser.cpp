@@ -85,12 +85,6 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
     if (!prefab.empty()) 
       new_h = createPrefab(prefab);
   }
-  else if (elem == "tag") {
-	  auto tag_name = atts.getString("name", "");
-	  assert(!tag_name.empty());
-	  tags_manager.addTag(curr_entity, getID(tag_name.c_str()));
-	  return;
-  }
 
   // Inside an entity...?
   if (curr_entity.isValid()) {

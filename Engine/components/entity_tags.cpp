@@ -70,6 +70,11 @@ CHandle TTagsManager::getFirstHavingTag(TTagID tag_id) const {
 	return h[0];
 }
 
+CHandle TTagsManager::getFirstHavingTag(std::string tag_id) const {
+
+	return getFirstHavingTag(getID(tag_id.c_str()));
+}
+
 // ---------------------------------------
 void TTagsManager::addTag(CHandle h, TTagID tag_id) {
 	auto it = find(tag_id);
@@ -89,6 +94,10 @@ const VHandles& TTagsManager::getHandlesByTag(TTagID tag_id) const {
 		return empty_set;
 	}
 	return it->second;
+}
+
+const VHandles& TTagsManager::getHandlesByTag(std::string tag_id) const {
+	return getHandlesByTag(getID(tag_id.c_str()));
 }
 
 // ---------------------------------------
