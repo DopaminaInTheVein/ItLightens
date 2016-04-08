@@ -15,19 +15,18 @@
 #include "input/input.h"
 #include "app_modules/io/io.h"
 
-#include "logic/sbb.h"
-#include "handle/object_manager.h"
-#include "components/comp_transform.h"
-#include "components/entity_tags.h"
-#include "components/entity.h"
-
-#include "debug/debug.h"
-
-#include "ui/ui_interface.h"
-#include "physx\physx_manager.h"
+#include "app_modules/render/module_render_deferred.h"
+#include "components/entity_parser.h"
+#include "handle/handle_manager.h"
 
 #include <shellapi.h>
 #include <process.h>
+
+const CRenderTechnique* tech_solid_colored = nullptr;
+const CRenderTechnique* tech_textured_colored = nullptr;
+
+// --------------------------------------------
+#include "app_modules/entities.h"
 
 //DEBUG
 CDebug *	  Debug = nullptr;
@@ -35,19 +34,7 @@ CUI ui;
 CGameController* GameController = nullptr;
 CPhysxManager *PhysxManager = nullptr;
 
-const CRenderTechnique* tech_solid_colored = nullptr;
-const CRenderTechnique* tech_textured_colored = nullptr;
-const CTexture*         texture1 = nullptr;
-
-//#include "contants/ctes_camera.h"
-//CShaderCte< TCteCamera > shader_ctes_camera;
-//#include "contants/ctes_object.h"
-//CShaderCte< TCteObject > shader_ctes_object;
-//
-//#include "contants/ctes_bones.h"
-//CShaderCte< TCteBones >  shader_ctes_bones;
 // --------------------------------------------
-#include "app_modules/entities.h"
 
 bool CApp::start() {
 	//light setup init
@@ -58,6 +45,7 @@ bool CApp::start() {
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
 	auto entities = new CEntitiesModule;
+	auto render_deferred = new CRenderDeferredModule;
 	io = new CIOModule;     // It's the global io
 	PhysxManager = new CPhysxManager;
 	GameController = new CGameController;
@@ -70,6 +58,7 @@ bool CApp::start() {
 	all_modules.push_back(io);
 	all_modules.push_back(GameController);
 	all_modules.push_back(Debug);
+	all_modules.push_back(render_deferred);
 
 	mod_update.push_back(imgui);
 	mod_update.push_back(GameController);
@@ -77,12 +66,14 @@ bool CApp::start() {
 	mod_update.push_back(PhysxManager);
 	mod_update.push_back(io);
 	mod_update.push_back(Debug);
-
+	
+	mod_renders.push_back(render_deferred);
 	mod_renders.push_back(entities);
 	mod_renders.push_back(imgui);
 	mod_renders.push_back(io);
 
 	mod_init_order.push_back(imgui);
+	mod_init_order.push_back(render_deferred);
 	mod_init_order.push_back(io);
 	mod_init_order.push_back(PhysxManager);
 	mod_init_order.push_back(entities);
@@ -93,7 +84,6 @@ bool CApp::start() {
 	// ----------------------------
 	tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
 	tech_textured_colored = Resources.get("textured.tech")->as<CRenderTechnique>();
-	texture1 = Resources.get("textures/wood_d.dds")->as<CTexture>();
 
 	if (!shader_ctes_camera.create("ctes_camera"))
 		return false;
@@ -163,33 +153,15 @@ void CApp::update(float elapsed) {
 
 // ----------------------------------
 void CApp::render() {
-	PROFILE_FUNCTION("render");
-	{
-		CTraceScoped scope("initFrame");
+  PROFILE_FUNCTION("CApp::render");
+  
+  for (auto it : mod_renders) {
+    PROFILE_FUNCTION(it->getName());
+    CTraceScoped scope( it->getName() );
+    it->render();
+  }
 
-		// To set a default and known Render State
-		Render.ctx->RSSetState(nullptr);
-
-		// Clear the back buffer
-		float ClearColor[4] = { 0.3f, 0.3f, 0.3f, 1.0f }; // red,green,blue,alpha
-		Render.ctx->ClearRenderTargetView(Render.renderTargetView, ClearColor);
-		Render.ctx->ClearDepthStencilView(Render.zbuffer, D3D11_CLEAR_DEPTH, 1.0f, 0);
-
-		tech_solid_colored->activate();
-
-		shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
-		shader_ctes_object.World = MAT44::Identity;
-		shader_ctes_object.uploadToGPU();
-
-		//Debug TODO Provisional
-		Debug->render();
-
-		//Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
-	}
-	RenderManager.renderAll();
-
-	for (auto it : mod_renders) {
-		CTraceScoped scope(it->getName());
-		it->render();
-	}
 }
+
+
+

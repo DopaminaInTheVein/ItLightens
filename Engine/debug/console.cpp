@@ -5,7 +5,7 @@
 #include "handle\handle.h"
 #include "components\comp_charactercontroller.h"
 #include "components\comp_transform.h"
-
+#include "components\entity.h"
 
 void CConsole::Command_TeleportXYZ(std::vector<char*> &args) {
 	CEntity *e = tags_manager.getFirstHavingTag(getID("player"));

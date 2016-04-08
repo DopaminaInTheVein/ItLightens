@@ -28,6 +28,7 @@
    <skeleton model="skeletons/pitufo/pitufo.skeleton"/>
    <render_static_mesh name="skeletons/pitufo/pitufo.static_mesh"/>
  </entity>
+ 
 <!-- Fin prueba anims -->
 
 <!--test platform joint-->
@@ -42,17 +43,6 @@
       <platform speed ="0.5" movement ="5 0 0"/>
   </entity>
   <!--end test-->
-
-  <!--
-  <entity>
-    <life points="10" />
-    <tag name="player" />
-    <transform pos="0 0 -18" />
-    <name name="pj" />
-    <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
-    <character_controller radius ="0.3" height ="1"/>
-  </entity>
-  -->
 
   <!--END PLAYER & CAMERA -->
 

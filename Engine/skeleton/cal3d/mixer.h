@@ -17,6 +17,8 @@
 //****************************************************************************//
 
 #include "cal3d/global.h"
+#include "cal3d/vector.h"
+#include "cal3d/quaternion.h"
 
 //****************************************************************************//
 // Forward declarations                                                       //
@@ -172,6 +174,13 @@ public:
   std::list<CalAnimationAction *> &getAnimationActionList();
   std::list<CalAnimationCycle *> &getAnimationCycle();  
   
+  // --------------------------------------
+  // Added by MCV
+  // The world matrix of the model
+  CalVector     extra_trans;
+  CalQuaternion extra_rotation;
+  // --------------------------------------
+
 protected:
   CalModel *m_pModel;
   std::vector<CalAnimation *> m_vectorAnimation;

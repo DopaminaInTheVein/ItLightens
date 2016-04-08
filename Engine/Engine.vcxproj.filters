@@ -340,6 +340,18 @@
     <ClCompile Include="components\comp_platform.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="skeleton\comp_bone_tracker.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="render\render_config.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\render_to_texture.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\render\module_render_deferred.cpp">
+      <Filter>app_modules\render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -730,6 +742,21 @@
     <ClInclude Include="components\comp_platform.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_tags.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\comp_bone_tracker.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="render\render_config.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\render_to_texture.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\render\module_render_deferred.h">
+      <Filter>app_modules\render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -857,6 +884,9 @@
     </Filter>
     <Filter Include="app_modules\game">
       <UniqueIdentifier>{cbacce40-a6c6-44fb-95a1-bcfa4dbfeab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\render">
+      <UniqueIdentifier>{8ad41bdc-bebe-4172-833d-05296e9cebe5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

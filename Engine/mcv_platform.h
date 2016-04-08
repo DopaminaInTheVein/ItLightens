@@ -27,6 +27,7 @@
 // Windows
 
 // Engine ...
+#include "imgui/imgui.h"
 #include "profiling/profiling.h"
 #include "utils/data_provider.h"
 #include "utils/utils.h"
@@ -34,7 +35,7 @@
 
 #include "geometry/geometry.h"
 #include "render/render.h"
-
+#include "utils/XMLParser.h"
 #include "app_modules\gameController.h"
 
 //physx

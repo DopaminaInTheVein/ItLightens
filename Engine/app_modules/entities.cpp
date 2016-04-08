@@ -46,6 +46,8 @@ DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
+DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
+DECL_OBJ_MANAGER("tags", TCompTags);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 
@@ -91,6 +93,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompWire>()->init(10);
 	getHandleManager<TCompGenerator>()->init(10);
 	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
+  	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -218,6 +222,11 @@ bool CEntitiesModule::start() {
 	// Camara del player
 	CHandle camera = tags_manager.getFirstHavingTag(tagIDcamera);
 	CEntity * camera_e = camera;
+	if (!camera_e) {
+		//main camera needed
+		fatal("main camera needed!!\n");
+		assert(false);
+	}
 	TCompCamera * pcam = camera_e->get<TCompCamera>();
 
 	// Player real
@@ -304,12 +313,18 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
 
+	if(use_parallel)
+	    getHandleManager<TCompSkeleton>()->updateAllInParallel( dt );
+	  else
+	    getHandleManager<TCompSkeleton>()->updateAll(dt);
+
+	  getHandleManager<TCompBoneTracker>()->updateAll(dt);
+
 	getHandleManager<bt_guard>()->updateAll(dt);
 	getHandleManager<bt_mole>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);
-	getHandleManager<TCompSkeleton>()->updateAll(dt);
 	getHandleManager<bt_speedy>()->updateAll(dt);
 	getHandleManager<water_controller>()->updateAll(dt);
 
@@ -352,6 +367,12 @@ void CEntitiesModule::renderInMenu() {
 		// Show all defined tags
 		ImGui::TreePop();
 	}
+
+	if (ImGui::TreeNode("Entities by Tag...")) {
+	    tags_manager.renderInMenu();
+	    // Show all defined tags
+	    ImGui::TreePop();
+	  }
 	ImGui::End();
 }
 

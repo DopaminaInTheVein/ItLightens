@@ -107,6 +107,16 @@ public:
 		}
 	}
 
+ // -------------------------
+  void updateAllInParallel(float dt) {
+    PROFILE_FUNCTION(getName());
+    #pragma omp parallel for
+    for (int i = 0; i<(int)num_objs_used; ++i) {
+      PROFILE_FUNCTION("object");
+      objs[i].update(dt);
+    }
+  }
+
 	// -------------------------
 	void renderInMenu(CHandle h) override {
 		auto obj = getAddrFromHandle(h);
@@ -126,6 +136,14 @@ public:
 		for (size_t i = 0; i < num_objs_used; ++i, ++o)
 			(o->*member_fn)();
 	}
+
+// -------------------------
+  template< typename CB >
+  void each( CB cb ) {
+    auto o = objs;
+    for (size_t i = 0; i<num_objs_used; ++i, ++o)
+      cb( o );
+  }
 };
 
 #define DECL_OBJ_MANAGER( obj_name, obj_class_name ) \

@@ -22,15 +22,17 @@ public:
 		h.setOwner(CHandle(this));
 	}
 
-	template< typename TObj >
-	CHandle get() {
-		auto hm = getHandleManager<TObj>();
-		return comps[hm->getType()];
-	}
+  template< typename TObj >
+  CHandle get() const {
+    auto hm = getHandleManager<TObj>();
+    return comps[hm->getType()];
+  }
 
-	CHandle getByCompIndex(uint32_t idx) {
-		return comps[idx];
-	}
+void renderInMenu();
+
+  CHandle getByCompIndex(uint32_t idx) const {
+    return comps[idx];
+  }
 
 	template< typename TObj >
 	void del() {
@@ -79,8 +81,10 @@ public:
 		}
 	}
 
-	// --------------------------------------------
-	void renderInMenu();
+  // ---------------------------------------------
+  const char* getName() const;
+  void setName(const char* new_name);
+  bool hasName(const char* new_name) const;
 
 	// --------------------------------------------
 	CEntity() {
