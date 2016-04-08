@@ -93,7 +93,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompGenerator>()->init(10);
 	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
-  	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -186,6 +186,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_cientifico, TMsgDamage, onDamage);
 	SUBSCRIBE(player_controller_speedy, TMsgDamage, onDamage);
 	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
+
+	//Set animations
+	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, setAnim);
 
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
@@ -314,12 +317,12 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
 
-	if(use_parallel)
-	    getHandleManager<TCompSkeleton>()->updateAllInParallel( dt );
-	  else
-	    getHandleManager<TCompSkeleton>()->updateAll(dt);
+	if (use_parallel)
+		getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
+	else
+		getHandleManager<TCompSkeleton>()->updateAll(dt);
 
-	  getHandleManager<TCompBoneTracker>()->updateAll(dt);
+	getHandleManager<TCompBoneTracker>()->updateAll(dt);
 
 	getHandleManager<bt_guard>()->updateAll(dt);
 	getHandleManager<bt_mole>()->updateAll(dt);
@@ -370,10 +373,10 @@ void CEntitiesModule::renderInMenu() {
 	}
 
 	if (ImGui::TreeNode("Entities by Tag...")) {
-	    tags_manager.renderInMenu();
-	    // Show all defined tags
-	    ImGui::TreePop();
-	  }
+		tags_manager.renderInMenu();
+		// Show all defined tags
+		ImGui::TreePop();
+	}
 	ImGui::End();
 }
 
