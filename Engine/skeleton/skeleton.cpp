@@ -220,6 +220,8 @@ void CSkeleton::onStartElement(const std::string &elem, MKeyValue &atts) {
 				name.resize(name.size() - 4);
 				int anim_id = core_model->loadCoreAnimation(full_src);
 				assert(anim_id != -1);
+				saveAnimId(src, anim_id);
+				assert(anim_id < MAX_NUMBER_ANIMS);
 				core_model->getCoreAnimation(anim_id)->setName(name);
 			}
 		} while (FindNextFile(hFind, &ffd) != 0);
@@ -239,6 +241,21 @@ void CSkeleton::onStartElement(const std::string &elem, MKeyValue &atts) {
 		// load the mesh_file
 		//auto engine_mesh = Resources.get(mesh_file.c_str())->as<CMesh>();
 	}
+}
+
+void CSkeleton::saveAnimId(std::string src, int anim_id) {
+	// Size of nameAnims is enough
+	assert(anim_id < MAX_NUMBER_ANIMS);
+	// Save anim name
+	nameAnims[anim_id] = src;
+}
+int CSkeleton::getAnimIdByName(std::string name) const {
+	//Looking for the name in saved animations
+	for (int i = 0; i < MAX_NUMBER_ANIMS; ++i) {
+		if (nameAnims[i] == name) return i;
+	}
+	// Doesnt exist that name!
+	return -1;
 }
 
 CSkeleton::CSkeleton()

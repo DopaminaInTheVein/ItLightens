@@ -14,6 +14,9 @@ struct TCompSkeleton : public TCompBase {
 	void render() const;
 	void renderInMenu();
 	void uploadBonesToCteShader() const;
+
+	//Messages
+	void setAnim(const TMsgSetAnim&);
 };
 
 #endif
