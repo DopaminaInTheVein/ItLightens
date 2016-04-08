@@ -4,7 +4,8 @@
 #include "mcv_platform.h"
 
 class CTimer {
-  uint64_t start;
+	uint64_t start;
+	float	delta_time = 0.0f;
 
 public:
   CTimer() : start(timeStamp()) {
@@ -30,8 +31,11 @@ public:
     LARGE_INTEGER freq;
     ::QueryPerformanceFrequency(&freq);
     start = now;
-    return (float)(double(delta) / double(freq.QuadPart));
+	delta_time = (float)(double(delta) / double(freq.QuadPart));
+    return delta_time;
   }
+
+  float GetDeltaTime() const { return delta_time; }
 };
 
 

@@ -3,6 +3,9 @@
 #include "imgui/imgui.h"
 #include <windows.h>
 #include <algorithm>
+#include "timer.h"
+#include "windows\app.h"
+
 
 #ifndef NDEBUG
 
@@ -37,7 +40,8 @@ uint32_t getID(const char* text) {
 float _deltaTimePrev = 1.0f / 60.0f;
 float getDeltaTime(float always) {
 	if (GameController->GetGameState() == CGameController::RUNNING || always ) {
-		float dt = ImGui::GetIO().DeltaTime;
+		CApp& app = CApp::get();
+		float dt = app.timer_app.GetDeltaTime();
 		if (dt > 0.5f) {
 			dt = _deltaTimePrev;
 		}
