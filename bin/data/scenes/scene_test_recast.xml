@@ -4,16 +4,18 @@
   <!--POS INICIAL : 0 0 -22 -->
 
   <entity>
-    <tag name="player" />
-    <transform pos="-3 4 -3" />
+    <tag name="camera_main" />
+    <tags tags="camera_main" />
+    <transform pos="0 0 -25" />
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
   </entity>
 
   <entity>
+    <tag name="player" />
     <life points="10" />
-    <tag name="target" />
+    <tags tags="player" />
     <transform pos="-2 2 -2" />
     <name name="pj" />
     <player />
@@ -22,6 +24,17 @@
   </entity>
 
   <!--END PLAYER & CAMERA -->
+
+  <entity>
+    <name name="box21" />
+    <tag name="box" />
+    <tags name="platform" />
+    <tags tags="box platform" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <transform pos="1 3 1" rotation="1 2 3 3" scale="1 1 1" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
+    <polarized pol="minus"/>
+  </entity>
 
   <!-- START SCENE -->
   <!-- START SCENE OBJECTS -->
@@ -38,6 +51,9 @@
     <render_static_mesh name="static_meshes/pared_2.static_mesh" />
     <rigidbody type_collision="static" />
   </entity>
+
+  <!--
+  
   <entity>
     <name name="pared_1" />
     <transform pos="-4.77425 2 3.98801" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
@@ -69,19 +85,7 @@
     <render_static_mesh name="static_meshes/pared_2.static_mesh" />
     <rigidbody type_collision="static" />
   </entity>
-  <!-- END SCENE OBJECTS -->
-  <!-- END SCENE -->
-
-  <!-- LOGIC OBJECTS -->
-  <!-- ZONE 2 -->
-  <entity>
-    <name name="box21" />
-    <tag name="box" />
-    <tag name ="platform" />
-    <render_static_mesh name="static_meshes/box.static_mesh" />
-    <transform pos="1 3 1" rotation="1 2 3 3" scale="1 1 1" />
-    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
-  </entity>
+  
   <entity>
     <name name="box_leavepoint1" />
     <tag name="box_leavepoint" />
@@ -104,7 +108,7 @@
     />
   </entity>
 
-  <!-- END ZONE 2 -->
+
 
   
   <entity>
@@ -114,11 +118,5 @@
     <render_static_mesh name="static_meshes/generator.static_mesh" />
     <generator rad ="2" />
   </entity>
-  <!-- VICTORY POINT -->
-  <entity>
-    <name name="win_point" />
-    <tag name="victory_point" />
-    <transform pos="1 5 1" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/generator.static_mesh" />
-  </entity>
+-->
 </entities>

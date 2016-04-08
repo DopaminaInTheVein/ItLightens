@@ -54,14 +54,6 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 void CPlayerBase::update(float elapsed) {
 	PROFILE_FUNCTION("update base");
 	if (controlEnabled) {
-		if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
-			CApp& app = CApp::get();
-			app.exitGame();
-		}
-		if (io->keys[VK_RETURN].becomesPressed() || io->joystick.button_START.becomesPressed()) {
-			CApp& app = CApp::get();
-			app.restart();
-		}
 		bool alive = !checkDead();
 		if (alive) {
 			UpdateInputActions();

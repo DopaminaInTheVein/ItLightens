@@ -22,8 +22,6 @@
 #include <thread>
 #include <future>
 
-#include "SLB\logic_manager.h"
-
 DECL_OBJ_MANAGER("entity", CEntity);		//need to be first
 DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("transform", TCompTransform);
@@ -48,6 +46,10 @@ DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
+DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
+DECL_OBJ_MANAGER("tags", TCompTags);
+
+DECL_OBJ_MANAGER("platform", TCompPlatform);
 
 //Physics
 DECL_OBJ_MANAGER("rigidbody", TCompPhysics);
@@ -90,6 +92,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompWire>()->init(10);
 	getHandleManager<TCompGenerator>()->init(10);
 	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
+  	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -98,6 +102,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<water_controller>()->init(MAX_ENTITIES);
+
+	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
 
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
@@ -110,6 +116,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
@@ -214,6 +221,11 @@ bool CEntitiesModule::start() {
 	// Camara del player
 	CHandle camera = tags_manager.getFirstHavingTag(tagIDcamera);
 	CEntity * camera_e = camera;
+	if (!camera_e) {
+		//main camera needed
+		fatal("main camera needed!!\n");
+		assert(false);
+	}
 	TCompCamera * pcam = camera_e->get<TCompCamera>();
 
 	// Player real
@@ -276,10 +288,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 
-	LogicManager lm;
-	lm.init();
-	lm.throwEvent(lm.OnEnter, "");
-
 	return true;
 }
 
@@ -290,9 +298,9 @@ void CEntitiesModule::update(float dt) {
 	static float timeAcumulated = 55.0f;
 	timeAcumulated += getDeltaTime();
 	if (timeAcumulated > 60.0f) {
-		timeAcumulated = 0.0f;
-		std::thread t(&CEntitiesModule::recalcNavmesh, this);
-		t.detach();
+		//timeAcumulated = 0.0f;
+		//std::thread t(&CEntitiesModule::recalcNavmesh, this);
+		//t.detach();
 	}
 
 	// May need here a switch to update wich player controller takes the action - possession rulez
@@ -304,12 +312,18 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
 
+	if(use_parallel)
+	    getHandleManager<TCompSkeleton>()->updateAllInParallel( dt );
+	  else
+	    getHandleManager<TCompSkeleton>()->updateAll(dt);
+
+	  getHandleManager<TCompBoneTracker>()->updateAll(dt);
+
 	getHandleManager<bt_guard>()->updateAll(dt);
 	getHandleManager<bt_mole>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);
-	getHandleManager<TCompSkeleton>()->updateAll(dt);
 	getHandleManager<bt_speedy>()->updateAll(dt);
 	getHandleManager<water_controller>()->updateAll(dt);
 
@@ -319,6 +333,8 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompWire>()->updateAll(dt);
 	getHandleManager<TCompGenerator>()->updateAll(dt);
 	getHandleManager<TCompPolarized>()->updateAll(dt);
+
+	getHandleManager<TCompPlatform>()->updateAll(dt);
 
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);
@@ -350,6 +366,12 @@ void CEntitiesModule::renderInMenu() {
 		// Show all defined tags
 		ImGui::TreePop();
 	}
+
+	if (ImGui::TreeNode("Entities by Tag...")) {
+	    tags_manager.renderInMenu();
+	    // Show all defined tags
+	    ImGui::TreePop();
+	  }
 	ImGui::End();
 }
 

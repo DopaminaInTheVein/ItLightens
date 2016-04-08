@@ -1,7 +1,9 @@
 #ifndef INC_DEBUG_H_
 #define INC_DEBUG_H_
 
+#include "app_modules\app_module.h"
 #include "imgui/imgui.h"
+#include "console.h"
 
 // Some compilers support applying printf-style warnings to user functions.
 #if defined(__clang__) || defined(__GNUC__)
@@ -17,7 +19,7 @@
 #define GREEN VEC3(0,1,0)
 #define BLUE VEC3(0,0,1)
 
-class CDebug {
+class CDebug : public IAppModule {
 	struct line {
 	public:
 		VEC3 org;
@@ -42,12 +44,17 @@ class CDebug {
 	void DrawLog();
 	void Clear() { Buf.clear(); LineOffsets.clear(); }
 
+	//Console attributes:
+	//-------------------------------------------------------
+	CConsole console;
+	//-------------------------------------------------------
+
 public:
 
 	CDebug() {}
 	void destroy() { Clear(); }
 
-	void update();
+	void update(float dt) override;
 	void render();
 
 	//Console functions:
@@ -68,6 +75,20 @@ public:
 	void DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color = RED);
 	void RenderLine(line);
 	//-------------------------------------------------------
+
+	bool * GetCommandsConsoleState(){
+		return console.GetOpened();
+	}
+
+
+	//Console functions:
+	void ToggleConsole() {
+		console.SetOpened(!*console.GetOpened());
+	}
+
+	const char* getName() const {
+		return "io";
+	}
 };
 
 extern CDebug *Debug;		//global empty debug declaration --> run initDebugger() to init Debug, we need to initialize ImGui first

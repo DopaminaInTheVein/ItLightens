@@ -75,12 +75,6 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
   if (elem == "entities") {
     return;
   }
-  else if (elem == "tag") {
-    auto tag_name = atts.getString("name", "");
-    assert(!tag_name.empty());
-    tags_manager.addTag(curr_entity, getID(tag_name.c_str()));
-    return;
-  }
 
   CHandle new_h;
   bool    reusing_component = false;
@@ -90,6 +84,12 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
     auto prefab = atts["prefab"];
     if (!prefab.empty()) 
       new_h = createPrefab(prefab);
+  }
+  else if (elem == "tag") {
+	  auto tag_name = atts.getString("name", "");
+	  assert(!tag_name.empty());
+	  tags_manager.addTag(curr_entity, getID(tag_name.c_str()));
+	  return;
   }
 
   // Inside an entity...?
@@ -137,13 +137,25 @@ void CEntityParser::onEndElement(const std::string &elem)  {
 
   //dbg("Bye from %s\n", elem.c_str());
   if (elem == "entity") {
-    CEntity*e = curr_entity;
-    e->sendMsg(TMsgEntityCreated());
-    dbg("Entity created!!\n");
+    handles.push_back(curr_entity);
     // Keep track of the first entity found in the file
     if (!root_entity.isValid())
       root_entity = curr_entity;
     curr_entity = CHandle();
+  }
+
+  if (elem == "entities" || elem == "prefab") {
+    for (auto h : handles) {
+      CEntity*e = h;
+      dbg("Entity created!!\n");
+      e->sendMsg(TMsgEntityCreated());
+    }
+
+    // Send the group has been created msg
+    TMsgEntityGroupCreated msg = { &handles };
+
+    for (auto h : handles)
+      ((CEntity*)h)->sendMsg(msg);
   }
 }
 

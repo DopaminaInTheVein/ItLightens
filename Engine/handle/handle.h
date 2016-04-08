@@ -18,24 +18,24 @@ CObjectManager<TObj>* getHandleManager();
 // ---------------------------------
 class CHandle {
 public:
-	static const uint32_t num_bits_type = 7;
-	static const uint32_t num_bits_index = 12;
-	static const uint32_t num_bits_age = 32 - num_bits_type - num_bits_index;
-	static const uint32_t max_types = 1 << num_bits_type;
+	  static const uint32_t num_bits_type  = 7;
+	  static const uint32_t num_bits_index = 12;
+	  static const uint32_t num_bits_age   = 32 - num_bits_type - num_bits_index;
+	  static const uint32_t max_types      = 1 << num_bits_type;
 
 	CHandle() : type(0), external_index(0), age(0) {}
 	CHandle(uint32_t new_type
 		, uint32_t new_external_index
 		, uint32_t new_age) : type(new_type), external_index(new_external_index), age(new_age) {}
 
-	// Contruir un handle a partir de una direccion de un obj
-	// Solo va a devolver un handle valido si la direccion
-	// pertenece al manager de ese tipo de objetos
-	template< class TObj>
-	CHandle(const TObj* obj_addr) {
-		auto hm = getHandleManager<TObj>();
-		*this = hm->getHandleFromObjAddr(obj_addr);
-	}
+  // Contruir un handle a partir de una direccion de un obj
+  // Solo va a devolver un handle valido si la direccion
+  // pertenece al manager de ese tipo de objetos
+  template< class TObj> 
+  CHandle( TObj* obj_addr ) {
+    auto hm = getHandleManager<std::remove_const<TObj>::type>();
+    *this = hm->getHandleFromObjAddr( obj_addr );
+  }
 
 	uint32_t getType()          const { return type; }
 	uint32_t getExternalIndex() const { return external_index; }
@@ -43,11 +43,14 @@ public:
 
 	bool isValid() const;
 
-	template<class TObj>
-	operator TObj*() {
-		auto hm = getHandleManager<TObj>();
-		return hm->getAddrFromHandle(*this);
-	}
+  template<class TObj>
+  operator TObj*() const {
+    // std::remove_const<T>::type returns the TObj without const
+    // Used when TObj is const*. We want the manager of <TLife> objs
+    // not the manager of <const TLife>, so we use the remove_const
+    auto hm = getHandleManager< std::remove_const<TObj>::type >();
+    return hm->getAddrFromHandle(*this);
+  }
 
 	template<class TObj>
 	void create() {
@@ -67,10 +70,16 @@ public:
 	}
 
 	void setOwner(CHandle new_owner);
-	CHandle getOwner();
+	CHandle getOwner() const;
 	bool hasTag(std::string tag);
 	bool load(MKeyValue& atts);
 	void renderInMenu();
+
+	 // --------------------------------------
+	  template< class TMsg >
+	  void sendMsg(const TMsg& msg);
+
+	uint32_t asUnsigned() const { return *(unsigned*)this; }
 
 private:
 	// Guardar N bits para cada members, con la intencion de que objeto
@@ -79,5 +88,17 @@ private:
 	uint32_t external_index : num_bits_index; // Sirve para encontrar el objeto de verdad
 	uint32_t age : num_bits_age;   // Para descartar versiones antiguas de los objetos
 };
+//
+
+#include "handle/msgs.h"
+
+// --------------------------------------
+// Assuming the TMsg goes to valid CEntities
+template< class TMsg >
+void CHandle::sendMsg(const TMsg& msg) {
+  CEntity* e = getHandleManager< std::remove_const<CEntity>::type >()->getAddrFromHandle( *this );
+  if (e) 
+    e->sendMsg(msg);
+}
 
 #endif

@@ -155,27 +155,10 @@ void player_controller::ChangePose(CHandle new_pos_h)
 void player_controller::myUpdate() {
 	PROFILE_FUNCTION("player controller: MY_update");
 	SetMyEntity();
-	TCompTransform *m = myEntity->get<TCompTransform>();
-	
-	/*
-	//TESTING RAYCAST
-	int hits = 0;
-	SetCharacterController();
-	VEC3 origin = PhysxConversion::PxExVec3ToVec3(cc->GetController()->getFootPosition());
-	Debug->DrawLine(origin + m->getFront()*0.5f + VEC3(0,1,0), m->getFront(), 2.0f);
-	PxQueryFilterData filterData = PxQueryFilterData();
-	filterData.data.word0 = CPhysxManager::eGUARD;
-	PxRaycastBuffer hit;
 
-	if (PhysxManager->raycast(origin + m->getFront()*0.5f + VEC3(0, 0.5f, 0), m->getFront(), 2.0f, hit, filterData)) {
-		hits = hit.hasAnyHits();
-		Debug->LogRaw("player hits = %d to guard\n", hits);
-	}
-	//END TESTING RAYCAST
-	*/
+	TCompTransform *m = myEntity->get<TCompTransform>();
 
 	____TIMER__UPDATE_(timerDamaged);
-	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 pos = player_transform->getPosition();
 	if (!isDamaged()) {
@@ -262,8 +245,14 @@ void player_controller::RecalcAttractions()
 
 	SetCharacterController();
 	forces.Normalize();
-	Debug->LogRaw("num_effects pols = %d\n", force_points.size());
-	cc->AddMovement(forces, player_max_speed);
+
+
+	float drag = getDeltaTime();
+	float drag_i = 1 - drag;
+	pol_speed = drag_i*pol_speed + drag*player_max_speed;
+
+	cc->AddMovement(forces, pol_speed);
+	//cc->AddImpulse(forces);
 }
 
 VEC3 player_controller::AttractMove(VEC3 point_pos) {
@@ -281,6 +270,19 @@ void player_controller::UpdateMoves()
 	PROFILE_FUNCTION("player controller: update moves");
 	SetMyEntity();
 	SetCharacterController();
+
+	//tests
+	if (io->keys['B'].becomesPressed()) {
+		cc->SetCollisions(false);
+		Debug->LogRaw("collisions false\n");
+	}
+
+	if (io->keys['V'].becomesPressed()) {
+		cc->SetCollisions(true);
+		Debug->LogRaw("collisions true\n");
+	}
+
+	//endtests
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -343,6 +345,7 @@ void player_controller::UpdateInputActions()
 		pol_state = PLUS;
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
+			pol_speed = 0;
 			cc->SetGravity(false);
 		}
 		else if (affectPolarized && force_points.size() == 0) {
@@ -356,6 +359,7 @@ void player_controller::UpdateInputActions()
 		pol_state = MINUS;
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
+			pol_speed = 0;
 			cc->SetGravity(false);
 		}
 		else if (affectPolarized && force_points.size() == 0) {

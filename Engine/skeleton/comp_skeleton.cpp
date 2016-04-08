@@ -1,19 +1,43 @@
 #include "mcv_platform.h"
-#include "utils/XMLParser.h"
 #include "resources/resources_manager.h"
 #include "comp_skeleton.h"
 #include "skeleton.h"
 #include "cal3d/cal3d.h"
+#include "render/draw_utils.h"
+#include "components\comp_transform.h"
+
 #include "imgui/imgui.h"
+#include "components\entity.h"
 
 #pragma comment(lib, "cal3d.lib" )
 
+// --------------------------------------------------
+CalVector Engine2Cal(VEC3 v) {
+  return CalVector(v.x, v.y, v.z);
+}
+CalQuaternion Engine2Cal(CQuaternion q) {
+  return CalQuaternion(q.x, q.y, q.z, -q.w);
+}
+VEC3 Cal2Engine(CalVector v) {
+  return VEC3(v.x, v.y, v.z);
+}
+CQuaternion Cal2Engine(CalQuaternion q) {
+  return CQuaternion(q.x, q.y, q.z, -q.w);
+}
+
+// --------------------------------------------------
 bool TCompSkeleton::load(MKeyValue& atts) {
   std::string res_name = atts.getString("model", "");   // warrior.skeleton
   resource_skeleton = Resources.get(res_name.c_str())->as<CSkeleton>();
   auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
   model = new CalModel(non_const_skel->getCoreModel());
+
+  // Play the first animation as cycle
   model->getMixer()->blendCycle(0, 1.0f, 0.f);
+  //model->getMixer()->blendCycle(1, 1.0f, 0.f);
+
+  // To get the bones updated right now, otherwis, trying to render will find all bones collapsed in the zero
+  model->update(0.f);
   return true;
 }
 
@@ -52,15 +76,17 @@ void TCompSkeleton::renderInMenu() {
       , a->getCoreAnimation()->getDuration()
       );
   }
-
-
-
-
-
 }
 
+// --------------------------------------------------
 void TCompSkeleton::update(float dt) {
-  model->update(dt * 0.1f);
+
+  // Transfer our current world location to the cal3d model
+  CEntity* e = CHandle(this).getOwner();
+  TCompTransform* tmx = e->get<TCompTransform>();
+  model->getMixer()->extra_trans = Engine2Cal(tmx->getPosition());
+  model->getMixer()->extra_rotation = Engine2Cal(tmx->getRotation());
+  model->update(dt);
 }
 
 void TCompSkeleton::render() const {
@@ -70,9 +96,46 @@ void TCompSkeleton::render() const {
   std::vector< VEC3 > bone_points;
   bone_points.resize(nbones * 2); // begin to end
   int nlines = skel->getBoneLines(&bone_points[0].x);
-  float scale = 0.02f;
+  float scale = 1.0f;
   for (int i = 0; i < nlines; ++i) {
-	  //TODO: draw line
-    //drawLine(bone_points[i * 2] * scale, bone_points[i * 2 + 1] * scale, VEC4(1, 0, 1, 1));
+	  Debug->DrawLine(bone_points[i * 2] * scale, bone_points[i * 2 + 1] * scale, VEC3(1, 0, 1));
   }
+}
+
+void TCompSkeleton::uploadBonesToCteShader() const {
+
+  float* fout = &shader_ctes_bones.Bones[0]._11;
+
+  CalSkeleton* skel = model->getSkeleton();
+  auto& cal_bones = skel->getVectorBone();
+  assert(cal_bones.size() < MAX_BONES_SUPPORTED);
+  // For each bone from the cal model
+  for (size_t bone_idx = 0; bone_idx < cal_bones.size(); ++bone_idx) {
+    CalBone* bone = cal_bones[bone_idx];
+
+    const CalMatrix& cal_mtx = bone->getTransformMatrix();
+    const CalVector& cal_pos = bone->getTranslationBoneSpace();
+
+    *fout++ = cal_mtx.dxdx;
+    *fout++ = cal_mtx.dydx;
+    *fout++ = cal_mtx.dzdx;
+    *fout++ = 0.f;
+    *fout++ = cal_mtx.dxdy;
+    *fout++ = cal_mtx.dydy;
+    *fout++ = cal_mtx.dzdy;
+    *fout++ = 0.f;
+    *fout++ = cal_mtx.dxdz;
+    *fout++ = cal_mtx.dydz;
+    *fout++ = cal_mtx.dzdz;
+    *fout++ = 0.f;
+    *fout++ = cal_pos.x;
+    *fout++ = cal_pos.y;
+    *fout++ = cal_pos.z;
+    *fout++ = 1.f;
+  }
+
+  shader_ctes_bones.uploadToGPU();
+  
+  // Already done in game.cpp
+  // shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
 }

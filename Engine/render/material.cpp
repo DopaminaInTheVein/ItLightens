@@ -20,13 +20,13 @@ IResource* createObjFromName<CMaterial>(const std::string& name) {
 }
 
 void CMaterial::onStartElement(const std::string &elem, MKeyValue &atts) {
-	if (elem == "material") {
-		auto tech_name = atts["tech"];
-		tech = Resources.get(tech_name.c_str())->as<CRenderTechnique>();
-	}
-	else if (elem == "texture") {
-		auto type_name = atts["type"];  // diffuse/specular/...
-		auto text_name = atts["name"];
+  if (elem == "material") {
+    auto tech_name = atts["tech"];
+    tech = Resources.get(tech_name.c_str())->as<CRenderTechnique>();
+  }
+  else if (elem == "texture") {
+    auto type_name = atts["type"];  // diffuse/specular/...
+    auto text_name = atts["name"];
 
 		TTextureSlot type_slot;
 		if (type_name == "diffuse") {
@@ -56,7 +56,7 @@ bool CMaterial::load(const char* filename) {
 // ----------------------------------------------
 void CMaterial::activateTextures() const {
 	PROFILE_FUNCTION("render material: activate textures");
-  textures[DIFFUSE]->activate(0);
+	textures[DIFFUSE]->activate(0);
 }
 
 // ----------------------------------------------

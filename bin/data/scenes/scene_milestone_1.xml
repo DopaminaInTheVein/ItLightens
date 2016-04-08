@@ -20,16 +20,29 @@
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
     <character_controller radius ="0.3" height ="0.5"/>
   </entity>
-  <!--
-  <entity>
-    <life points="10" />
-    <tag name="player" />
-    <transform pos="0 0 -18" />
-    <name name="pj" />
-    <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
-    <character_controller radius ="0.3" height ="1"/>
+
+<!-- Prueba anims -->
+ <entity>
+   <name name="MySkel"/>
+   <transform pos="0 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+   <skeleton model="skeletons/pitufo/pitufo.skeleton"/>
+   <render_static_mesh name="skeletons/pitufo/pitufo.static_mesh"/>
+ </entity>
+
+<!-- Fin prueba anims -->
+
+<!--test platform joint-->
+    <entity>
+    <tag name ="platform" />
+      <tag name ="platform_kinematic" />
+    <name name="platform_testing" />
+    <tag name="box" />
+    <transform pos="0.358 -7.546 -19.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" mass="2.5"/>
+      <platform speed ="0.5" movement ="5 0 0"/>
   </entity>
-  -->
+  <!--end test-->
 
   <!--END PLAYER & CAMERA -->
 

@@ -2,6 +2,9 @@
 #include "debug.h"
 #include "render/mesh.h"
 #include "resources/resource.h"
+#include "render/shader_cte.h"
+#include "contants/ctes_object.h"
+extern CShaderCte< TCteObject > shader_ctes_object;
 
 struct SimpleVertexColored {
 	float x, y, z;
@@ -21,6 +24,7 @@ void  CDebug::LogRaw(const char* msg, ...)
 {
 #ifndef NDEBUG					//performance cost
 	int old_size = Buf.size();
+
 	va_list args;
 	va_start(args, msg);
 	Buf.appendv(msg, args);
@@ -75,7 +79,7 @@ void CDebug::DrawLog()
 {
 	ImGui::SetNextWindowSize(ImVec2(512, 512), ImGuiSetCond_FirstUseEver);
 	if (opened) {
-		ImGui::Begin("Debug log", &opened);
+		ImGui::Begin("Log", &opened);
 		if (ImGui::Button("Clear")) Clear();
 		ImGui::SameLine();
 		bool copy = ImGui::Button("Copy");
@@ -143,7 +147,8 @@ void CDebug::RenderLine(line l)
 		, vtxs_axis
 		, 0, 0, nullptr
 		, CMesh::VTX_DECL_POSITION_COLOR
-		, CMesh::LINE_LIST)) {
+		, CMesh::LINE_LIST
+		, nullptr)) {
 		mesh->activateAndRender();
 	}
 
@@ -151,12 +156,16 @@ void CDebug::RenderLine(line l)
 	delete mesh;
 }
 
-void CDebug::update() {
+void CDebug::update(float dt) {
+	console.update();
 	DrawLog();
 }
 
 void CDebug::render()
 {
+	shader_ctes_object.World = MAT44::Identity;
+	shader_ctes_object.uploadToGPU();
+
 	if (lines.size() == 0) return;
 
 	line l = lines.back();
@@ -166,5 +175,6 @@ void CDebug::render()
 		if (lines.size() > 0) l = lines.back();
 		else break;
 	}
+
 	lines.clear();
 }

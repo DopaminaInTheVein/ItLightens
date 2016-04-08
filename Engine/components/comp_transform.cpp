@@ -3,7 +3,6 @@
 #include "resources/resources_manager.h"
 #include "render/mesh.h"
 #include "render/shader_cte.h"
-#include "utils/XMLParser.h"
 #include "imgui/imgui.h"
 
 #include "contants/ctes_object.h"
@@ -34,13 +33,17 @@ void TCompTransform::render() const
 }
 
 bool TCompTransform::load(MKeyValue& atts) {
-	auto p = atts.getPoint("pos");
-	auto q = atts.getQuat("quat");
-	auto s = atts.getFloat("scale", 1.0f);
-	setPosition(p);
-	setRotation(q);
-	setScale(VEC3(s));
-	return true;
+  auto p = atts.getPoint("pos");
+  auto q = atts.getQuat("quat");
+  auto s = atts.getFloat("scale", 1.0f);
+  setPosition(p);
+  setRotation(q);
+  setScale(VEC3(s));
+  if (atts.getString("lookat", "") != "") {
+    auto target = atts.getPoint("lookat");
+    lookAt(p, target, getUp());
+  }
+  return true;
 }
 
 void TCompTransform::renderInMenu() {

@@ -53,6 +53,9 @@ class player_controller : public CPlayerBase {
 
 	CObjectManager<player_controller> *om;
 
+
+	float					pol_speed = 0;
+
 	//Is damaged?
 	____TIMER_DECLARE_VALUE_(timerDamaged, 1.0f);
 

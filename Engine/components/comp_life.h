@@ -4,7 +4,7 @@
 #include "comp_base.h"
 #include "comp_msgs.h"
 #include "entity_tags.h"
-#include "utils/XMLParser.h"
+#include "entity.h"
 
 #define DMG_SCALE_ACTION_INI	1.0f
 #define DMG_SCALE_ENEMY_INI		1.0f

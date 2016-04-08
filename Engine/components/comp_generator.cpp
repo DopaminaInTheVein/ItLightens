@@ -19,7 +19,7 @@ void TCompGenerator::mUpdate(float dt)
 
 void TCompGenerator::onTriggerEnter(const TMsgTriggerIn & msg)
 {
-	Debug->LogRaw("OnTriggerEnter\n");
+	
 	CHandle h_in = msg.other;
 	if (h_in.hasTag("player")) {
 		CanRec(true);
@@ -28,6 +28,7 @@ void TCompGenerator::onTriggerEnter(const TMsgTriggerIn & msg)
 
 void TCompGenerator::onTriggerExit(const TMsgTriggerOut & msg)
 {
+	
 	CHandle h_in = msg.other;
 	if (h_in.hasTag("player")) {
 		CanRec(false);

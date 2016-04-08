@@ -2,10 +2,13 @@
 #define	INC_PHSYX_MANAGER_H_
 
 #include "app_modules\app_module.h"
+#include "ItLightensFilterShader.h"
 
 #define DEFAULT_DATA_DYNAMIC	PhysxManager->GetDefaultQueryTagsDynamic()
 #define DEFAULT_DATA_STATIC		PhysxManager->GetDefaultQueryTagsStatic()
 #define DEFAULT_DATA_CC			PhysxManager->GetDefaultQueryTagsCC()
+
+#define GRAVITY -10.0f
 
 using namespace physx;
 
@@ -32,22 +35,26 @@ public:
 	}
 };
 
-class CPhysxManager : public IAppModule, public PxSimulationEventCallback{//, public PxQueryFilterCallback {
+class CPhysxManager :	public IAppModule,
+						public PxSimulationEventCallback,
+						public PxControllerBehaviorCallback,
+						public PxUserControllerHitReport, 
+						public PxQueryFilterCallback {
 
 
-	PxFoundation			*mFoundation = nullptr;
-	PxProfileZoneManager	*mProfileZoneManager = nullptr;
-	PxPhysics				*mPhysics = nullptr;
-	PxCooking				*mCooking = nullptr;
-	PxScene					*mScene = nullptr;
-	PxDefaultCpuDispatcher  *mCpuDispatcher = nullptr;
+	PxFoundation			*mFoundation			= nullptr;
+	PxProfileZoneManager	*mProfileZoneManager	= nullptr;
+	PxPhysics				*mPhysics				= nullptr;
+	PxCooking				*mCooking				= nullptr;
+	PxScene					*mScene					= nullptr;
+	PxDefaultCpuDispatcher  *mCpuDispatcher			= nullptr;
 
-	PxControllerManager		*mManagerControllers = nullptr;		//Characters controllers manager
+	PxControllerManager		*mManagerControllers	= nullptr;		//Characters controllers manager
 
-	PxCudaContextManager	*mCudaContextManager = nullptr;
+	PxCudaContextManager	*mCudaContextManager	= nullptr;
 
 #ifndef NDEBUG
-	PxVisualDebuggerConnection *mConnection = nullptr;		//physx debugger
+	PxVisualDebuggerConnection *mConnection			= nullptr;		//physx debugger
 #endif
 
 	PxReal t_to_update = 0.0f;
@@ -72,53 +79,40 @@ class CPhysxManager : public IAppModule, public PxSimulationEventCallback{//, pu
 
 	int mNbThreads = 1;
 
+	//-----------------------------------------------------------------------------------------------------
+	//							Customize functions
+	//-----------------------------------------------------------------------------------------------------
+
+	//customize options
+	void customizeSceneDesc(PxSceneDesc & sceneDesc);
+
 public:
-
-	//flags
-
-	enum descObjectFlags {
-		ePLAYER_CONTROLLED = (1 << 0),
-		ePLAYER_BASE = (1 << 1),
-		eANYONE = (1 << 2),
-		eNPC = (1 << 3),
-		eLIQUID = (1 << 4),
-		eCRYSTAL = (1 << 5),
-		eGUARD = (1 << 6),
-		ePOSSEABLE = (1 << 7),
-		eBOMB = (1 << 8),
-		eOBJECT = (1 << 9),
-		eSTATIC_OBJECT = (1 << 10),
-		eALL_STATICS = (1 << 11),
-		eALL_OBJECTS = (1 << 12),
-	};
-
-	enum descObjectBehaviour {
-		eCOLLISION = (1 << 0),
-		eCAN_TRIGGER = (1 << 2),
-	};
 
 	//runtime funcions
 
-	bool start() override;
-	void stop() override;
-	void update(float dt) override;
+	bool					start() override;
+	void					stop() override;
+	void					update(float dt) override;
+
+	//set flags
+	void					setupFiltering(PxRigidActor * actor, PxFilterData& filterData);
 
 	//gets
 
-	PxControllerManager* GetCharacterControllerManager() const { return mManagerControllers; }
-	PxScene*			 GetActiveScene() { return mScene; }
+	PxControllerManager*	GetCharacterControllerManager() const { return mManagerControllers; }
+	PxScene*				GetActiveScene() { return mScene; }
 
-	PxFilterData&		GetDefaultQueryTagsDynamic() { return ft_dynamic; }
-	PxFilterData&		GetDefaultQueryTagsStatic() { return ft_static; }
-	PxFilterData&		GetDefaultQueryTagsCC() { return ft_cc; }
+	PxFilterData			GetDefaultQueryTagsDynamic() { return ft_dynamic; }
+	PxFilterData			GetDefaultQueryTagsStatic() { return ft_static; }
+	PxFilterData			GetDefaultQueryTagsCC() { return ft_cc; }
 
 	//-----------------------------------------------------------------------------------------------------
 	//							Primitives Gemoetries
 	//-----------------------------------------------------------------------------------------------------
 
-	void	CreateSphereGeometry(const PxReal& radius, PxSphereGeometry& g) const;
-	void	CreateBoxGeometry(const PxVec3& size, PxBoxGeometry& g) const;
-	void	CreateCapsuleGeometry(const PxReal& radius, const PxReal& halfheight, PxCapsuleGeometry& g) const;
+	void					CreateSphereGeometry(const PxReal& radius, PxSphereGeometry& g) const;
+	void					CreateBoxGeometry(const PxVec3& size, PxBoxGeometry& g) const;
+	void					CreateCapsuleGeometry(const PxReal& radius, const PxReal& halfheight, PxCapsuleGeometry& g) const;
 
 
 	//-----------------------------------------------------------------------------------------------------
@@ -237,8 +231,42 @@ public:
 	//						virtuals from PxQueryFilterCallback
 	//-----------------------------------------------------------------------------------------------------
 
-	/*PxQueryHitType::Enum postFilter(const PxFilterData& filterData, const PxQueryHit& hit);
-	PxQueryHitType::Enum preFilter(const PxFilterData& filterData, const PxShape* shape, const PxRigidActor* actor, PxHitFlags& queryFlags);*/
+	virtual PxQueryHitType::Enum postFilter(const PxFilterData& filterData, const PxQueryHit& hit) {
+		if (filterData.word1 & ItLightensFilter::eCOLLISION)
+			return PxSceneQueryHitType::eBLOCK;
+		else
+			return PxSceneQueryHitType::eNONE;
+	}
+	virtual PxQueryHitType::Enum preFilter(const PxFilterData& filterData, const PxShape* shape, const PxRigidActor* actor, PxHitFlags& queryFlags) {
+		if (filterData.word1 & ItLightensFilter::eCOLLISION)
+			return PxSceneQueryHitType::eBLOCK;
+		else
+			return PxSceneQueryHitType::eNONE;
+	}
+
+	//-----------------------------------------------------------------------------------------------------
+	//						virtuals from PxUserControllerHitReport
+	//-----------------------------------------------------------------------------------------------------
+
+	virtual void 	onShapeHit(const PxControllerShapeHit &hit) {}
+	virtual void 	onControllerHit(const PxControllersHit &hit) {}
+	virtual void 	onObstacleHit(const PxControllerObstacleHit &hit) {}
+
+	//-----------------------------------------------------------------------------------------------------
+	//						virtuals from PxControllerBehaviorCallback
+	//-----------------------------------------------------------------------------------------------------
+
+	virtual PxControllerBehaviorFlags getBehaviorFlags(const PxShape& shape, const PxActor& actor) {
+		//TODO: filter platforms
+		return PxControllerBehaviorFlag::eCCT_SLIDE | PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
+	}
+	virtual PxControllerBehaviorFlags getBehaviorFlags(const PxController& controller) {
+		return PxControllerBehaviorFlags(0);
+	}
+	virtual PxControllerBehaviorFlags getBehaviorFlags(const PxObstacle& obstacle) {
+		//TODO: filter platforms
+		return PxControllerBehaviorFlag::eCCT_SLIDE | PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
+	}
 
 	//-----------------------------------------------------------------------------------------------------
 	//								scene querys (raycast)
@@ -304,6 +332,24 @@ public:
 							const PxHitFlags outputFlags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
 
 
+
+	//-----------------------------------------------------------------------------------------------------
+	//								joints
+	//-----------------------------------------------------------------------------------------------------
+
+	enum typeJoints {
+		eFixed = 0,
+		eDistance,
+		eSpherical,
+		eRevolute,
+		ePrismatic,
+		eD6,
+	};
+
+	//Not needed for now
+	//bool Createjoint(PxRigidActor* a1, PxRigidActor* a2, const PxTransform& tmx1, const PxTransform& tmx2, int typeJoint= eFixed);
+
+	//name for module
 	const char* getName() const {
 		return "physx";
 	}

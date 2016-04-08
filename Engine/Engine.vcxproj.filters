@@ -331,9 +331,6 @@
     <ClCompile Include="components\comp_polarized.cpp">
       <Filter>components</Filter>
     </ClCompile>
-    <ClCompile Include="SLB\logic_manager.cpp">
-      <Filter>slb</Filter>
-    </ClCompile>
     <ClCompile Include="SLB\src\Allocator.cpp">
       <Filter>slb\src</Filter>
     </ClCompile>
@@ -487,8 +484,32 @@
     <ClCompile Include="SLB\src\lua\lparser.c">
       <Filter>slb\src\lua</Filter>
     </ClCompile>
-    <ClCompile Include="SLB\slb_public_functions.cpp">
-      <Filter>slb</Filter>
+    <ClCompile Include="render\draw_utils.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\console.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_platform.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\comp_bone_tracker.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="render\render_config.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\render_to_texture.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\render\module_render_deferred.cpp">
+      <Filter>app_modules\render</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\logic_manager\logic_manager.cpp">
+      <Filter>app_modules\logic_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp">
+      <Filter>app_modules\logic_manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -521,9 +542,6 @@
       <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\contants\ctes_object.h">
-      <Filter>render\contants</Filter>
-    </ClInclude>
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h">
       <Filter>render\contants</Filter>
     </ClInclude>
     <ClInclude Include="camera\camera.h">
@@ -859,9 +877,6 @@
     <ClInclude Include="app_modules\gameController.h">
       <Filter>app_modules\game</Filter>
     </ClInclude>
-    <ClInclude Include="SLB\logic_manager.h">
-      <Filter>slb</Filter>
-    </ClInclude>
     <ClInclude Include="SLB\include\SLB\Allocator.hpp">
       <Filter>slb\include\SLB</Filter>
     </ClInclude>
@@ -1042,8 +1057,53 @@
     <ClInclude Include="SLB\src\lua\lopcodes.h">
       <Filter>slb\src\lua</Filter>
     </ClInclude>
-    <ClInclude Include="SLB\slb_public_functions.h">
-      <Filter>slb</Filter>
+    <ClInclude Include="..\bin\data\shaders\contants\ctes_bones.h">
+      <Filter>render\contants</Filter>
+    </ClInclude>
+    <ClInclude Include="render\mesh_format.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\draw_utils.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\data_saver.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h">
+      <Filter>render\contants</Filter>
+    </ClInclude>
+    <ClInclude Include="Physx\ItLightensFilterShader.h">
+      <Filter>physx</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\console.h">
+      <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_platform.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tags.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\comp_bone_tracker.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="render\render_config.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\render_to_texture.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\render\module_render_deferred.h">
+      <Filter>app_modules\render</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\timer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\logic_manager\logic_manager.h">
+      <Filter>app_modules\logic_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\logic_manager\slb_public_functions.h">
+      <Filter>app_modules\logic_manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1191,9 +1251,18 @@
     <Filter Include="slb\src\lua">
       <UniqueIdentifier>{91188a86-0ddf-46b8-8e3e-ff46e7f5cbc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="app_modules\render">
+      <UniqueIdentifier>{8ad41bdc-bebe-4172-833d-05296e9cebe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\logic_manager">
+      <UniqueIdentifier>{224fc8a4-4ae1-4cb8-a9ef-6fa325768a77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\bin\data\shaders\basic.fx">
+      <Filter>render\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\skin.fx">
       <Filter>render\shaders</Filter>
     </FxCompile>
   </ItemGroup>
