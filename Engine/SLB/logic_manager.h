@@ -12,7 +12,7 @@ class LogicManager
 
 public:
 
-	SLB::Manager slb_manager;
+	SLB::Manager* slb_manager;
 	SLB::Script slb_script;
 
 	enum EVENT {
@@ -60,7 +60,7 @@ public:
 	void throwUserEvent(std::string evt/*, params*/);
 	void shutDown();
 
-	void bind(SLB::Manager& m);
+	void bindPublicFunctions(SLB::Manager& m);
 
 };
 

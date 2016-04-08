@@ -487,6 +487,9 @@
     <ClCompile Include="SLB\src\lua\lparser.c">
       <Filter>slb\src\lua</Filter>
     </ClCompile>
+    <ClCompile Include="SLB\slb_public_functions.cpp">
+      <Filter>slb</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1038,6 +1041,9 @@
     </ClInclude>
     <ClInclude Include="SLB\src\lua\lopcodes.h">
       <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\slb_public_functions.h">
+      <Filter>slb</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

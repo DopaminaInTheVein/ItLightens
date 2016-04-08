@@ -224,6 +224,7 @@
     <ClCompile Include="skeleton\comp_skeleton.cpp" />
     <ClCompile Include="skeleton\skeleton.cpp" />
     <ClCompile Include="SLB\logic_manager.cpp" />
+    <ClCompile Include="SLB\slb_public_functions.cpp" />
     <ClCompile Include="SLB\src\Allocator.cpp" />
     <ClCompile Include="SLB\src\Class.cpp" />
     <ClCompile Include="SLB\src\ClassHelpers.cpp" />
@@ -596,6 +597,7 @@
     <ClInclude Include="SLB\include\SLB\util.hpp" />
     <ClInclude Include="SLB\include\SLB\Value.hpp" />
     <ClInclude Include="SLB\logic_manager.h" />
+    <ClInclude Include="SLB\slb_public_functions.h" />
     <ClInclude Include="SLB\src\lua\lapi.h" />
     <ClInclude Include="SLB\src\lua\lauxlib.h" />
     <ClInclude Include="SLB\src\lua\lcode.h" />

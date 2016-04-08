@@ -1,14 +1,18 @@
 #include "mcv_platform.h"
 #include "logic_manager.h"
 #include "app_modules\io\io.h"
+#include "SLB\slb_public_functions.h"
 
 void LogicManager::init() {
 
+	slb_manager = slb_script.getManager();
+
 	// Binds here, if needed
-	//bind(slb_manager);
+	bindPublicFunctions(*slb_manager);
+
+	//list_files_recursively(lua_script_folder);
 
 	// Init and execute the script
-	//SLB::Script slb_script(&slb_manager);
 	slb_script.doFile(lua_script_route);
 }
 
@@ -181,34 +185,16 @@ void LogicManager::throwUserEvent(std::string evt/*, params*/) {
 }
 
 void LogicManager::shutDown() {
-	slb_manager.destroyDefaultManager();
+	slb_manager->destroyDefaultManager();
 }
 
-void LogicManager::bind(SLB::Manager& m) {
-	//Sample
-
-	/*class Character {
-	std::string name;
-
-	public:
-		int life;
-
-		Character() {}
-		void setName(const char* aname) {
-			name = aname;
-		}
-		const char* getName() {
-			return name.c_str();
-		}
-	};*/
-
-	/*SLB::Class<Character>("Character", &m)
-		.comment("Character game class")
+void LogicManager::bindPublicFunctions(SLB::Manager& m) {
+	SLB::Class<SLBPublicFunctions>("Public", &m)
 		.constructor()
-		.set("getName", &Character::getName)
-		.set("setName", &Character::setName)
-		.comment("Method to change the character name")
-		.param("New name of the character")
-		.property("life", &Character::life)
-		;*/
+		.comment("Public functions class")
+		// basic print function
+		.set("print", &SLBPublicFunctions::print)
+		.comment("Prints via VS console")
+		.param("Text to print")
+		;
 }
