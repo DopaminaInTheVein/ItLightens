@@ -7,7 +7,6 @@
 #include "render/material.h"
 #include "render/static_mesh.h"
 #include "skeleton/skeleton.h"
-#include "imgui/imgui.h"
 
 CResourcesManager Resources;
 

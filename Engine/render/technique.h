@@ -3,7 +3,6 @@
 
 #include "render/render.h"
 #include "resources/resource.h"
-#include "utils/XMLParser.h"
 
 struct CVertexDeclaration;
 class  CVertexShader;

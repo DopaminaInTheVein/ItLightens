@@ -72,30 +72,22 @@ void CRenderManager::renderAll() {
     return;
 
   // 
-  auto it = all_keys.begin();
-  auto prev_it = it;
+  const TKey* it = &all_keys[0];
+  const TKey* end_it = it + all_keys.size();
+  static TKey null_key;
+  memset(&null_key, 0x00, sizeof(TKey));
+  const TKey* prev_it = &null_key;
 
-  // Activate the first key to avoid checking for validations
-  // on each iteration
-  {
-    it->material->tech->activate();
-    it->material->activateTextures();
-    it->mesh->activate();
-    TCompTransform* c_tmx = it->transform;
-    assert(c_tmx);
-    shader_ctes_object.World = c_tmx->asMatrix();
-    shader_ctes_object.uploadToGPU();
-    shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
-    it->mesh->renderGroup( it->submesh_idx );    // it->mesh->renderSubMesh( it->submesh );
-    ++it;
-  }
+  bool curr_tech_used_bones = false;
 
   // Pasearse por todas las keys
-  while (it != all_keys.end()) {
+  while (it != end_it) {
 
     if (it->material != prev_it->material ) {
-      if (it->material->tech != prev_it->material->tech)
+      if (!prev_it->material || it->material->tech != prev_it->material->tech) {
         it->material->tech->activate();
+        curr_tech_used_bones = it->material->tech->usesBones();
+      }
       it->material->activateTextures();
     }
     if (it->mesh != prev_it->mesh)
@@ -103,7 +95,7 @@ void CRenderManager::renderAll() {
 
     if (it->owner != prev_it->owner) {
       // subir la world de it
-      TCompTransform* c_tmx = it->transform;
+      const TCompTransform* c_tmx = it->transform;
       assert(c_tmx);
       
       // For static objects, we could skip this step 
@@ -116,14 +108,13 @@ void CRenderManager::renderAll() {
       shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
     }
 
-    if (it->material->tech->usesBones()) {
-      CEntity* e = it->owner.getOwner();
+    if (curr_tech_used_bones) {
+      const CEntity* e = it->owner.getOwner();
       assert(e);
-      TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+      const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
       assert(comp_skel);
       comp_skel->uploadBonesToCteShader();
     }
-
 
     it->mesh->renderGroup( it->submesh_idx );    // it->mesh->renderSubMesh( it->submesh );
     prev_it = it;

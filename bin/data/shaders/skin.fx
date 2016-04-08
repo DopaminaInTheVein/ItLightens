@@ -22,11 +22,7 @@ void VSSkin(
                     + Bones[iBones.w] * iWeights.w;
 
   float4 skinned_Pos = mul(iPos, skin_mtx);
-
-  float4 worldPos = mul(skinned_Pos, World);
-
-  worldPos.xyz *= 10.0f;
-  oPos = mul(worldPos, ViewProjection);
+  oPos = mul(skinned_Pos, ViewProjection);
   oTex0 = iTex0;
 //  oNormal = mul(iNormal, (float3x3)skin_mtx);
 }

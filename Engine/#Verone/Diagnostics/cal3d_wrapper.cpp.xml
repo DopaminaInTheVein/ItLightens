@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Verone>
+	<Diagnostics>
+		<Diagnostic>
+			<Message>Undefined behavior detected. &quot;delete&quot; operator has argument with no definition</Message>
+			<Type>Error</Type>
+			<Locations>
+				<Location>
+					<File>C:\Code\engine\cal3d\cal3d_wrapper.cpp</File>
+					<Line>1062</Line>
+					<Column>10</Column>
+				</Location>
+			</Locations>
+		</Diagnostic>
+		<Diagnostic>
+			<Message>Undefined behavior detected. &quot;delete&quot; operator has argument with no definition</Message>
+			<Type>Error</Type>
+			<Locations>
+				<Location>
+					<File>C:\Code\engine\cal3d\cal3d_wrapper.cpp</File>
+					<Line>1091</Line>
+					<Column>10</Column>
+				</Location>
+			</Locations>
+		</Diagnostic>
+	</Diagnostics>
+</Verone>

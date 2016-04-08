@@ -1,7 +1,6 @@
 #ifndef INC_RENDER_STATIC_MESH_H_
 #define INC_RENDER_STATIC_MESH_H_
 
-#include "utils/XMLParser.h"
 #include "resources/resource.h"
 
 class CMaterial;

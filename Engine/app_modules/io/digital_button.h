@@ -25,8 +25,12 @@ public:
   }
   bool isPressed() const { return pressed; }
   bool isReleased() const { return !pressed; }
-  bool becomesPressed() const { return pressed && !prev_pressed; }
-  bool becomesReleased() const { return !pressed && prev_pressed; }
+  bool becomesPressed() const { 
+    return pressed && !prev_pressed; 
+  }
+  bool becomesReleased() const { 
+    return !pressed && prev_pressed; 
+  }
   float timePressed() const { return time_pressed; }
 };
 

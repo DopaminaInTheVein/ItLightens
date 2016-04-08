@@ -1,6 +1,7 @@
 #include "mcv_platform.h"
 #include "app.h"
 #include "app_modules/app_module.h"
+#include "utils/timer.h"
 
 // -------------------------------------------------
 static CApp* app = nullptr;
@@ -94,7 +95,11 @@ bool CApp::createWindow(HINSTANCE new_hInstance, int nCmdShow)
 void CApp::generateFrame() {
   PROFILE_FRAME_BEGINS();
   PROFILE_FUNCTION("generateFrame");
-	float delta_time = 1.0f / 60.f;
+  static CTimer timer;
+  float delta_time = timer.deltaAndReset();
+  const float max_delta_time = 5.f / 60.f;      // 5 frames
+  if (delta_time > max_delta_time)
+    delta_time = max_delta_time;
 	update(delta_time);
 	render();
   Render.swapChain();

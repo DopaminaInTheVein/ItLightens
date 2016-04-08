@@ -1,6 +1,6 @@
 #include "mcv_platform.h"
+#include "handle/handle.h"
 #include "app_modules/entities.h"
-#include "handle/handle_manager.h"
 #include "components/components.h"
 #include "components/entity_parser.h"
 #include "handle/msgs.h"
@@ -8,7 +8,6 @@
 #include "components/entity_tags.h"
 #include "render/technique.h"
 #include "resources/resources_manager.h"
-#include "imgui/imgui.h"
 
 DECL_OBJ_MANAGER("entity", CEntity);
 DECL_OBJ_MANAGER("name", TCompName);
@@ -19,6 +18,8 @@ DECL_OBJ_MANAGER("controller_1st_person", TCompController1stPerson);
 DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
 DECL_OBJ_MANAGER("hierarchy", TCompHierarchy);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
+DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
+DECL_OBJ_MANAGER("tags", TCompTags);
 
 DECL_OBJ_MANAGER("life", TCompLife);
 
@@ -30,7 +31,7 @@ TMsgID generateUniqueMsgID() {
 }
 
 bool CEntitiesModule::start() {
-  uint32_t nmax = 64;
+  uint32_t nmax = 512;
   getHandleManager<CEntity>()->init(nmax);
   getHandleManager<TCompName>()->init(nmax);
   getHandleManager<TCompTransform>()->init(nmax);
@@ -40,6 +41,8 @@ bool CEntitiesModule::start() {
   getHandleManager<TCompController1stPerson>()->init(4);
   getHandleManager<TCompHierarchy>()->init(nmax);
   getHandleManager<TCompSkeleton>()->init(nmax);
+  getHandleManager<TCompBoneTracker>()->init(nmax);
+  getHandleManager<TCompTags>()->init(nmax);
 
   getHandleManager<TCompLife>()->init(nmax);
 
@@ -48,6 +51,9 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
   SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
   SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
+  SUBSCRIBE(TCompBoneTracker, TMsgEntityGroupCreated, onGroupCreated);
+  SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
+  SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
 
   {
     CEntityParser ep;
@@ -79,8 +85,14 @@ void CEntitiesModule::update(float dt) {
   getHandleManager<TCompController3rdPerson>()->updateAll(dt);
   getHandleManager<TCompController1stPerson>()->updateAll( dt );
   getHandleManager<TCompCamera>()->updateAll(dt);
-  getHandleManager<TCompSkeleton>()->updateAll( dt );
-  
+
+  if(use_parallel)
+    getHandleManager<TCompSkeleton>()->updateAllInParallel( dt );
+  else
+    getHandleManager<TCompSkeleton>()->updateAll(dt);
+
+  getHandleManager<TCompBoneTracker>()->updateAll(dt);
+
   // Move this line to the physics module maybe?
   // Physics.get()..update( dt );
   //getHandleManager<TCompPhysics>()->onAll(&TCompPhysics::updateFromPhysics);
@@ -88,10 +100,26 @@ void CEntitiesModule::update(float dt) {
   // Show a menu to modify any entity
   renderInMenu();
 
-  if (io->keys[ 'A' ].becomesPressed()) {
-    dbg("Key A pressed!\n");
+  
+  if (io->keys[ 'T' ].becomesPressed()) {
+    dbg("Key T pressed!\n");
+    // Sending msg 'addTag' to all defined entities
+    TMsgAddTag m = { 0x123456 };
+    getHandleManager<CEntity>()->each(  [&m](CEntity* e) {
+      e->sendMsg(m);
+    });
   }
-  if (io->keys['A'].becomesReleased()) {
+
+  if (io->keys['Y'].becomesPressed()) {
+    dbg("Key Y pressed!\n");
+    // Sending msg 'addTag' to all defined entities
+    TMsgAddTag m = { 0x123456 };
+    for (auto h : tags_manager.getHandlesByTag(getID("bullet"))) {
+      h.sendMsg( m );
+    }
+  }
+
+  if (io->keys['T'].becomesReleased()) {
     dbg("Key A Released after %f sec!\n" ,io->keys['A'].timePressed());
   }
 
@@ -118,8 +146,44 @@ void CEntitiesModule::renderInMenu() {
     ImGui::TreePop();
   } 
   if (ImGui::TreeNode("Entities by Tag...")) {
+    tags_manager.renderInMenu();
     // Show all defined tags
     ImGui::TreePop();
   }
+
+  if (ImGui::TreeNode("Pitufos...")) {
+    static int num_pitufos = 0;
+    static int delta = 10;
+    static int row = 0;
+    ImGui::Text("We have %d pitufos", num_pitufos);
+    ImGui::Checkbox("In Parallel", &use_parallel);
+    ImGui::InputInt("Pitufos per row", &delta, 1, 10);
+    if (ImGui::SmallButton("Add 10")) {
+      for (int i = 0; i < delta; ++i) {
+        CEntity* e = createPrefab("pitufo");
+        if (e) {
+          TCompTransform* t = e->get<TCompTransform>();
+          t->setPosition(VEC3(float(row), 0.f, float(i)));
+          TCompName* n = e->get<TCompName>();
+          sprintf(n->name, "Pitufo %d", num_pitufos);
+          t->setPosition(VEC3(float(row), 0.f, float(i)));
+          ++num_pitufos;
+        }
+      }
+      ++row;
+    }
+    // Show all defined tags
+    ImGui::TreePop();
+  }
+
+  //if (io->keys['Y'].becomesPressed()) {
+  //  dbg("Y becomes pressed\n");
+  //}
+  //if (io->keys['Y'].becomesReleased()) {
+  //  dbg("Y becomes realeased\n");
+  //}
+  //if (io->keys['Y'].isPressed()) {
+  //  ImGui::Text("Y Pressed for %f secs", io->keys['Y'].timePressed());
+  //}
   ImGui::End();
 }

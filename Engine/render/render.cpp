@@ -1,5 +1,7 @@
 #include "mcv_platform.h"
 #include "windows/app.h"
+#include "render/draw_utils.h"
+#include "render/render_config.h"
 
 #pragma comment(lib, "d3d11.lib" )
 #pragma comment(lib, "d3d9.lib" )
@@ -14,9 +16,12 @@ CRender Render;
 
 CRender::CRender()
 : swap_chain(nullptr)
+, width( 0 )
+, height( 0 )
 , device(nullptr)
 , ctx(nullptr)
-, renderTargetView( nullptr )
+, render_target_view( nullptr )
+, depth_stencil_view( nullptr )
 { }
 
 void CRender::swapChain() {
@@ -24,9 +29,30 @@ void CRender::swapChain() {
   swap_chain->Present(0, 0);
 }
 
+// ----------------------------------------
+void CRender::activateBackBuffer() {
+  ctx->OMSetRenderTargets(1, &render_target_view, depth_stencil_view);
+  // Setup the viewport
+  D3D11_VIEWPORT vp;
+  vp.Width = (FLOAT)width;
+  vp.Height = (FLOAT)height;
+  vp.MinDepth = 0.0f;
+  vp.MaxDepth = 1.0f;
+  vp.TopLeftX = 0;
+  vp.TopLeftY = 0;
+  ctx->RSSetViewports(1, &vp);
+}
+
+void CRender::clearMainZBuffer() {
+  ctx->ClearDepthStencilView(depth_stencil_view, D3D11_CLEAR_DEPTH, 1.0f, 0);
+}
+
 void CRender::destroyDevice() {
+  destroyRenderStateConfigs();
+  SAFE_RELEASE(render_target_view);
+  SAFE_RELEASE(depth_stencil_view);
+  SAFE_RELEASE(depth_resource);
   if (ctx) ctx->ClearState();
-  if (renderTargetView) renderTargetView->Release(), renderTargetView = nullptr;
   if (swap_chain) swap_chain->Release(), swap_chain = nullptr;
   if (ctx) ctx->Release(), ctx = nullptr;
   if (device) device->Release(), device = nullptr;
@@ -40,8 +66,8 @@ bool CRender::createDevice() {
 
 	RECT rc;
 	GetClientRect(app.getHWnd(), &rc);
-	UINT width = rc.right - rc.left;
-	UINT height = rc.bottom - rc.top;
+	width = rc.right - rc.left;
+	height = rc.bottom - rc.top;
 
 	UINT createDeviceFlags = 0;
 #ifdef _DEBUG
@@ -90,22 +116,17 @@ bool CRender::createDevice() {
 	if (FAILED(hr))
 		return false;
 
-	hr = device->CreateRenderTargetView(pBackBuffer, NULL, &renderTargetView);
+	hr = device->CreateRenderTargetView(pBackBuffer, NULL, &render_target_view);
 	pBackBuffer->Release();
 	if (FAILED(hr))
 		return false;
 
-	ctx->OMSetRenderTargets(1, &renderTargetView, NULL);
+  if (!createDepthBuffer(width, height, DXGI_FORMAT_D24_UNORM_S8_UINT, &depth_resource, &depth_stencil_view))
+    return false;
 
-	// Setup the viewport
-	D3D11_VIEWPORT vp;
-	vp.Width = (FLOAT)width;
-	vp.Height = (FLOAT)height;
-	vp.MinDepth = 0.0f;
-	vp.MaxDepth = 1.0f;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	ctx->RSSetViewports(1, &vp);
+  activateBackBuffer();
+
+  createRenderStateConfigs();
 
   dbg("Render.device created\n");
 

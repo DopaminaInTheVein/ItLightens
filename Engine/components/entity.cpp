@@ -1,8 +1,27 @@
 #include "mcv_platform.h"
 #include "entity.h"
 #include "comp_name.h"
-#include "imgui/imgui.h"
 
+const char* CEntity::getName() const {
+  TCompName* c = get<TCompName>();
+  if (c)
+    return c->name;
+  return "unnamed";
+}
+
+void CEntity::setName(const char* new_name) {
+  TCompName* c = get<TCompName>();
+  if (c) {
+    assert(strlen(new_name) < 64);
+    strcpy(c->name, new_name);
+  }
+}
+
+bool CEntity::hasName(const char* new_name) const {
+  return strcmp(getName(), new_name) == 0;
+}
+
+// -----------------------------
 void CEntity::renderInMenu() {
   const char* my_name = "unknown..";
 
@@ -23,9 +42,13 @@ void CEntity::renderInMenu() {
         }
       }
     }
-    if (ImGui::Button("Destroy")) {
-      CHandle(this).destroy();
-    }
+    CHandle h(this);
+    if (ImGui::Button("Destroy"))
+      h.destroy();
+
+    ImGui::SameLine();
+    ImGui::Text("Idx:%04x Age:%04x", h.getExternalIndex(), h.getAge());
+
     ImGui::TreePop();
   }
   ImGui::PopID();

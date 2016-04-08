@@ -34,6 +34,7 @@ void CImGuiModule::update(float dt) {
 }
 
 void CImGuiModule::render() {
+  activateZ(ZCFG_ALL_DISABLED);
   ImGui::Render();
 }
  

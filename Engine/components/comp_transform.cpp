@@ -3,8 +3,6 @@
 #include "resources/resources_manager.h"
 #include "render/mesh.h"
 #include "render/shader_cte.h"
-#include "utils/XMLParser.h"
-#include "imgui/imgui.h"
 
 #include "contants/ctes_object.h"
 extern CShaderCte< TCteObject > shader_ctes_object;

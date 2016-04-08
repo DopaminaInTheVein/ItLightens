@@ -1,202 +1,1222 @@
 {"traceEvents": [{"name":"generateFrame", "cat":"c++","ph":"B","ts": 0, "pid":1234, "tid" : 5588 }
-,{"name":"CApp::update", "cat":"c++","ph":"B","ts": 40, "pid":1234, "tid" : 5588 }
-,{"name":"imgui", "cat":"c++","ph":"B","ts": 170, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 18576, "pid":1234, "tid" : 5588 }
-,{"name":"io", "cat":"c++","ph":"B","ts": 18660, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 31847, "pid":1234, "tid" : 5588 }
-,{"name":"entities", "cat":"c++","ph":"B","ts": 31873, "pid":1234, "tid" : 5588 }
-,{"name":"controller_3rd_person", "cat":"c++","ph":"B","ts": 32019, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 32040, "pid":1234, "tid" : 5588 }
-,{"name":"controller_1st_person", "cat":"c++","ph":"B","ts": 32082, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 32096, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 33203, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 33215, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 33672, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 33692, "pid":1234, "tid" : 5588 }
-,{"name":"camera", "cat":"c++","ph":"B","ts": 33739, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 33751, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 34033, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 34040, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 39256, "pid":1234, "tid" : 5588 }
-,{"name":"Resources.renderUIDebug", "cat":"c++","ph":"B","ts": 39263, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 41291, "pid":1234, "tid" : 5588 }
-,{"name":"destroyAllPendingObjects", "cat":"c++","ph":"B","ts": 41302, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 41430, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 41445, "pid":1234, "tid" : 5588 }
-,{"name":"CApp::render", "cat":"c++","ph":"B","ts": 41461, "pid":1234, "tid" : 5588 }
-,{"name":"initFrame", "cat":"c++","ph":"B","ts": 41468, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 45793, "pid":1234, "tid" : 5588 }
-,{"name":"RenderManager", "cat":"c++","ph":"B","ts": 45829, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 46770, "pid":1234, "tid" : 5588 }
-,{"name":"entities", "cat":"c++","ph":"B","ts": 46842, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 49125, "pid":1234, "tid" : 5588 }
-,{"name":"imgui", "cat":"c++","ph":"B","ts": 49138, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 55834, "pid":1234, "tid" : 5588 }
-,{"name":"io", "cat":"c++","ph":"B","ts": 55878, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 55906, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 55920, "pid":1234, "tid" : 5588 }
-,{"name":"CRender::swapChain", "cat":"c++","ph":"B","ts": 55964, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 142874, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 142968, "pid":1234, "tid" : 5588 }
-,{"name":"generateFrame", "cat":"c++","ph":"B","ts": 143274, "pid":1234, "tid" : 5588 }
-,{"name":"CApp::update", "cat":"c++","ph":"B","ts": 143314, "pid":1234, "tid" : 5588 }
-,{"name":"imgui", "cat":"c++","ph":"B","ts": 143435, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 160773, "pid":1234, "tid" : 5588 }
-,{"name":"io", "cat":"c++","ph":"B","ts": 160850, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 166215, "pid":1234, "tid" : 5588 }
-,{"name":"entities", "cat":"c++","ph":"B","ts": 166245, "pid":1234, "tid" : 5588 }
-,{"name":"controller_3rd_person", "cat":"c++","ph":"B","ts": 166401, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 166418, "pid":1234, "tid" : 5588 }
-,{"name":"controller_1st_person", "cat":"c++","ph":"B","ts": 166460, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 166473, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 167634, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 167646, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 168075, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 168093, "pid":1234, "tid" : 5588 }
-,{"name":"camera", "cat":"c++","ph":"B","ts": 168138, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 168162, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 168463, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 168471, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 173902, "pid":1234, "tid" : 5588 }
-,{"name":"Resources.renderUIDebug", "cat":"c++","ph":"B","ts": 173918, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 175934, "pid":1234, "tid" : 5588 }
-,{"name":"destroyAllPendingObjects", "cat":"c++","ph":"B","ts": 175955, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 176077, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 176088, "pid":1234, "tid" : 5588 }
-,{"name":"CApp::render", "cat":"c++","ph":"B","ts": 176101, "pid":1234, "tid" : 5588 }
-,{"name":"initFrame", "cat":"c++","ph":"B","ts": 176118, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 187886, "pid":1234, "tid" : 5588 }
-,{"name":"RenderManager", "cat":"c++","ph":"B","ts": 187915, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 188800, "pid":1234, "tid" : 5588 }
-,{"name":"entities", "cat":"c++","ph":"B","ts": 188873, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 191167, "pid":1234, "tid" : 5588 }
-,{"name":"imgui", "cat":"c++","ph":"B","ts": 191176, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 197531, "pid":1234, "tid" : 5588 }
-,{"name":"io", "cat":"c++","ph":"B","ts": 197576, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 197608, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 197618, "pid":1234, "tid" : 5588 }
-,{"name":"CRender::swapChain", "cat":"c++","ph":"B","ts": 197658, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 279864, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 279964, "pid":1234, "tid" : 5588 }
-,{"name":"generateFrame", "cat":"c++","ph":"B","ts": 280254, "pid":1234, "tid" : 5588 }
-,{"name":"CApp::update", "cat":"c++","ph":"B","ts": 280295, "pid":1234, "tid" : 5588 }
-,{"name":"imgui", "cat":"c++","ph":"B","ts": 280424, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 297295, "pid":1234, "tid" : 5588 }
-,{"name":"io", "cat":"c++","ph":"B","ts": 297379, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 302778, "pid":1234, "tid" : 5588 }
-,{"name":"entities", "cat":"c++","ph":"B","ts": 302800, "pid":1234, "tid" : 5588 }
-,{"name":"controller_3rd_person", "cat":"c++","ph":"B","ts": 302954, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 302972, "pid":1234, "tid" : 5588 }
-,{"name":"controller_1st_person", "cat":"c++","ph":"B","ts": 303025, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 303038, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 304153, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 304175, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 304603, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 304624, "pid":1234, "tid" : 5588 }
-,{"name":"camera", "cat":"c++","ph":"B","ts": 304673, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 304681, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 304996, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 305003, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 317769, "pid":1234, "tid" : 5588 }
-,{"name":"Resources.renderUIDebug", "cat":"c++","ph":"B","ts": 317778, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 319686, "pid":1234, "tid" : 5588 }
-,{"name":"destroyAllPendingObjects", "cat":"c++","ph":"B","ts": 319696, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 319801, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 319813, "pid":1234, "tid" : 5588 }
-,{"name":"CApp::render", "cat":"c++","ph":"B","ts": 319828, "pid":1234, "tid" : 5588 }
-,{"name":"initFrame", "cat":"c++","ph":"B","ts": 319836, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 323870, "pid":1234, "tid" : 5588 }
-,{"name":"RenderManager", "cat":"c++","ph":"B","ts": 323901, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 324789, "pid":1234, "tid" : 5588 }
-,{"name":"entities", "cat":"c++","ph":"B","ts": 324863, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 327141, "pid":1234, "tid" : 5588 }
-,{"name":"imgui", "cat":"c++","ph":"B","ts": 327156, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 333600, "pid":1234, "tid" : 5588 }
-,{"name":"io", "cat":"c++","ph":"B","ts": 333651, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 333673, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 333679, "pid":1234, "tid" : 5588 }
-,{"name":"CRender::swapChain", "cat":"c++","ph":"B","ts": 333719, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 415450, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 415536, "pid":1234, "tid" : 5588 }
-,{"name":"generateFrame", "cat":"c++","ph":"B","ts": 415823, "pid":1234, "tid" : 5588 }
-,{"name":"CApp::update", "cat":"c++","ph":"B","ts": 415864, "pid":1234, "tid" : 5588 }
-,{"name":"imgui", "cat":"c++","ph":"B","ts": 415995, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 432886, "pid":1234, "tid" : 5588 }
-,{"name":"io", "cat":"c++","ph":"B","ts": 432965, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 438148, "pid":1234, "tid" : 5588 }
-,{"name":"entities", "cat":"c++","ph":"B","ts": 438184, "pid":1234, "tid" : 5588 }
-,{"name":"controller_3rd_person", "cat":"c++","ph":"B","ts": 438319, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 438346, "pid":1234, "tid" : 5588 }
-,{"name":"controller_1st_person", "cat":"c++","ph":"B","ts": 438389, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 438399, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 439551, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 439568, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 440013, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 440029, "pid":1234, "tid" : 5588 }
-,{"name":"camera", "cat":"c++","ph":"B","ts": 440079, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 440096, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 440384, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 440392, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 445743, "pid":1234, "tid" : 5588 }
-,{"name":"Resources.renderUIDebug", "cat":"c++","ph":"B","ts": 445750, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 447635, "pid":1234, "tid" : 5588 }
-,{"name":"destroyAllPendingObjects", "cat":"c++","ph":"B","ts": 447655, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 447757, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 447774, "pid":1234, "tid" : 5588 }
-,{"name":"CApp::render", "cat":"c++","ph":"B","ts": 447787, "pid":1234, "tid" : 5588 }
-,{"name":"initFrame", "cat":"c++","ph":"B","ts": 447794, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 451856, "pid":1234, "tid" : 5588 }
-,{"name":"RenderManager", "cat":"c++","ph":"B","ts": 451882, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 452770, "pid":1234, "tid" : 5588 }
-,{"name":"entities", "cat":"c++","ph":"B","ts": 452845, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 455135, "pid":1234, "tid" : 5588 }
-,{"name":"imgui", "cat":"c++","ph":"B","ts": 455146, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 461857, "pid":1234, "tid" : 5588 }
-,{"name":"io", "cat":"c++","ph":"B","ts": 461901, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 461921, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 461938, "pid":1234, "tid" : 5588 }
-,{"name":"CRender::swapChain", "cat":"c++","ph":"B","ts": 461981, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 535926, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 536009, "pid":1234, "tid" : 5588 }
-,{"name":"generateFrame", "cat":"c++","ph":"B","ts": 536259, "pid":1234, "tid" : 5588 }
-,{"name":"CApp::update", "cat":"c++","ph":"B","ts": 536300, "pid":1234, "tid" : 5588 }
-,{"name":"imgui", "cat":"c++","ph":"B","ts": 536425, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 553080, "pid":1234, "tid" : 5588 }
-,{"name":"io", "cat":"c++","ph":"B","ts": 553155, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 558449, "pid":1234, "tid" : 5588 }
-,{"name":"entities", "cat":"c++","ph":"B","ts": 558489, "pid":1234, "tid" : 5588 }
-,{"name":"controller_3rd_person", "cat":"c++","ph":"B","ts": 558626, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 558652, "pid":1234, "tid" : 5588 }
-,{"name":"controller_1st_person", "cat":"c++","ph":"B","ts": 558694, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 558705, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 559797, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 559805, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 560229, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 560259, "pid":1234, "tid" : 5588 }
-,{"name":"camera", "cat":"c++","ph":"B","ts": 560306, "pid":1234, "tid" : 5588 }
-,{"name":"object", "cat":"c++","ph":"B","ts": 560314, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 560585, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 560592, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 566064, "pid":1234, "tid" : 5588 }
-,{"name":"Resources.renderUIDebug", "cat":"c++","ph":"B","ts": 566081, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 568012, "pid":1234, "tid" : 5588 }
-,{"name":"destroyAllPendingObjects", "cat":"c++","ph":"B","ts": 568024, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 568123, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 568131, "pid":1234, "tid" : 5588 }
-,{"name":"CApp::render", "cat":"c++","ph":"B","ts": 568144, "pid":1234, "tid" : 5588 }
-,{"name":"initFrame", "cat":"c++","ph":"B","ts": 568163, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 572149, "pid":1234, "tid" : 5588 }
-,{"name":"RenderManager", "cat":"c++","ph":"B","ts": 572183, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 573146, "pid":1234, "tid" : 5588 }
-,{"name":"entities", "cat":"c++","ph":"B","ts": 573211, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 575418, "pid":1234, "tid" : 5588 }
-,{"name":"imgui", "cat":"c++","ph":"B","ts": 575435, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 582225, "pid":1234, "tid" : 5588 }
-,{"name":"io", "cat":"c++","ph":"B","ts": 582266, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 582302, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 582309, "pid":1234, "tid" : 5588 }
-,{"name":"CRender::swapChain", "cat":"c++","ph":"B","ts": 582355, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 655862, "pid":1234, "tid" : 5588 }
-,{"ph":"E","ts": 655946, "pid":1234, "tid" : 5588 }
+,{"name":"CApp::update", "cat":"c++","ph":"B","ts": 581, "pid":1234, "tid" : 5588 }
+,{"name":"imgui", "cat":"c++","ph":"B","ts": 699, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 187883, "pid":1234, "tid" : 5588 }
+,{"name":"io", "cat":"c++","ph":"B","ts": 187968, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 233222, "pid":1234, "tid" : 5588 }
+,{"name":"entities", "cat":"c++","ph":"B","ts": 233294, "pid":1234, "tid" : 5588 }
+,{"name":"controller_3rd_person", "cat":"c++","ph":"B","ts": 233559, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 233585, "pid":1234, "tid" : 5588 }
+,{"name":"controller_1st_person", "cat":"c++","ph":"B","ts": 233867, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 233877, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 237272, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 237281, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 237853, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 237871, "pid":1234, "tid" : 5588 }
+,{"name":"camera", "cat":"c++","ph":"B","ts": 237987, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 238050, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 238579, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 238587, "pid":1234, "tid" : 5588 }
+,{"name":"skeleton", "cat":"c++","ph":"B","ts": 238605, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 238614, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 270773, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 270817, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 296195, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 296306, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 317588, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 317621, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 338586, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 338614, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 359533, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 359613, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 380371, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 380489, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 401630, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 401658, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 422472, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 422564, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 443362, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 443389, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 464210, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 464310, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 485249, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 485276, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 508941, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 509021, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 531034, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 531064, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 580384, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 580395, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 602663, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 602695, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 639764, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 639792, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 661769, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 661804, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 683266, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 683302, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 704260, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 704287, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 725598, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 725680, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 746807, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 746841, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 770323, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 770413, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 791888, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 791969, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 812900, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 813038, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 834292, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 834326, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 855293, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 855374, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 876268, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 876302, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 897162, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 897247, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 918346, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 918447, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 939670, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 939760, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 969783, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 969886, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 992871, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 992902, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1021610, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1021635, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1042568, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1042599, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1063640, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1063667, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1084599, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1084622, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1105438, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1105465, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1126313, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1126334, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1147085, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1147108, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1167993, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1168024, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1189076, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1189163, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1213101, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1213192, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1234879, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1234898, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1256477, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1256516, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1277988, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1278014, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1299160, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1299246, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1320164, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1320195, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1341413, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1341435, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1362563, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1362668, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1383769, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1383792, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1405110, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1405188, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1427423, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1427452, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1448532, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1448613, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1469542, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1469571, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1490632, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1490714, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1511381, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1511471, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1532298, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1532383, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1553098, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1553301, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1574152, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1574245, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1595149, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1595172, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1615975, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1616064, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1638040, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1638064, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1659159, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1659244, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1680224, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1680245, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1701049, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1701149, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1722070, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1722090, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1742914, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1743002, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1763717, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1763818, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1784545, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1784647, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1805259, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1805294, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1826240, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1826317, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1848729, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1848806, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1870093, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1870128, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1891331, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1891356, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1912304, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1912335, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1933190, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1933220, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1954039, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1954063, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 1975114, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 1975242, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2004937, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2005009, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2033433, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2033460, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2054544, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2054572, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2078666, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2078750, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2100678, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2100705, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2122111, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2122141, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2143675, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2143699, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2164669, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2164753, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2185949, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2185975, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2206947, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2206976, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2228024, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2228194, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2249301, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2249376, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2270612, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2270634, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2293568, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2293596, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2315314, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2315336, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2336559, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2336586, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2357484, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2357509, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2378774, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2378800, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2399964, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2400043, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2421007, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2421086, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2442363, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2442407, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2463509, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 2463603, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2484611, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2484634, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2497816, "pid":1234, "tid" : 5588 }
+,{"name":"Resources.renderUIDebug", "cat":"c++","ph":"B","ts": 2497826, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2500269, "pid":1234, "tid" : 5588 }
+,{"name":"destroyAllPendingObjects", "cat":"c++","ph":"B","ts": 2500356, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2500727, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2500739, "pid":1234, "tid" : 5588 }
+,{"name":"CApp::render", "cat":"c++","ph":"B","ts": 2500790, "pid":1234, "tid" : 5588 }
+,{"name":"initFrame", "cat":"c++","ph":"B","ts": 2500802, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2507990, "pid":1234, "tid" : 5588 }
+,{"name":"RenderManager", "cat":"c++","ph":"B","ts": 2508133, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2734996, "pid":1234, "tid" : 5588 }
+,{"name":"entities", "cat":"c++","ph":"B","ts": 2735282, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2762059, "pid":1234, "tid" : 5588 }
+,{"name":"imgui", "cat":"c++","ph":"B","ts": 2762091, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2775003, "pid":1234, "tid" : 5588 }
+,{"name":"io", "cat":"c++","ph":"B","ts": 2775052, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2775084, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 2775098, "pid":1234, "tid" : 5588 }
+,{"name":"CRender::swapChain", "cat":"c++","ph":"B","ts": 2775374, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3284636, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3284731, "pid":1234, "tid" : 5588 }
+,{"name":"generateFrame", "cat":"c++","ph":"B","ts": 3285508, "pid":1234, "tid" : 5588 }
+,{"name":"CApp::update", "cat":"c++","ph":"B","ts": 3286080, "pid":1234, "tid" : 5588 }
+,{"name":"imgui", "cat":"c++","ph":"B","ts": 3286191, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3311717, "pid":1234, "tid" : 5588 }
+,{"name":"io", "cat":"c++","ph":"B","ts": 3311779, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3318389, "pid":1234, "tid" : 5588 }
+,{"name":"entities", "cat":"c++","ph":"B","ts": 3318430, "pid":1234, "tid" : 5588 }
+,{"name":"controller_3rd_person", "cat":"c++","ph":"B","ts": 3318740, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3318804, "pid":1234, "tid" : 5588 }
+,{"name":"controller_1st_person", "cat":"c++","ph":"B","ts": 3323556, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3323617, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3326790, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3326822, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3327441, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3327460, "pid":1234, "tid" : 5588 }
+,{"name":"camera", "cat":"c++","ph":"B","ts": 3327556, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3327607, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3327971, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3328037, "pid":1234, "tid" : 5588 }
+,{"name":"skeleton", "cat":"c++","ph":"B","ts": 3328173, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3328187, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3361747, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3361813, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3388294, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3388405, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3419136, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3419156, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3440132, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3440220, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3461220, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3461302, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3482064, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3482145, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3503227, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3503310, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3524132, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3524152, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3544796, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3544877, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3565726, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3565819, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3586395, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3586422, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3609396, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3609469, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3631120, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3631145, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3652288, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3652389, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3673597, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3673625, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3695109, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3695132, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3716706, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3716735, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3765587, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3765613, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3787448, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3787488, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3824198, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3824205, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3846004, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3846039, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3869833, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3869950, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3891632, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3891716, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3912771, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3912850, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3933966, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3933987, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3954965, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3955045, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3975844, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3975935, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 3996912, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 3997005, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4018350, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4018455, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4049378, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4049425, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4071065, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4071144, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4100761, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4100853, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4121954, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4121980, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4142889, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4142925, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4163839, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4163870, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4184680, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4184699, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4205779, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4205805, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4226929, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4226955, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4247797, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4247872, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4268636, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4268660, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4289775, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4289797, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4314374, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4314404, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4336019, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4336039, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4357342, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4357373, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4378696, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4378779, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4399884, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4399920, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4421136, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4421170, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4442488, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4442516, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4463757, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4463855, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4484808, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4484841, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4505892, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4505925, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4528423, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4528450, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4549616, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4549647, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4570382, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4570503, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4591149, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4591236, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4611907, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4611930, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4633065, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4633149, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4653901, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4653984, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4674732, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4674821, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4695647, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4695729, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4716618, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4716652, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4738713, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4738734, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4759533, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4759559, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4780378, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4780476, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4801419, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4801507, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4822576, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4822602, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4843313, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4843390, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4864395, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4864428, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4885246, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4885302, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4905937, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4905960, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4926794, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4926817, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4949396, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4949478, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4971097, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4971131, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 4992204, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 4992227, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5013064, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5013149, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5033865, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5033944, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5055571, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5055589, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5084474, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5084555, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5112962, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5113062, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5133997, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5134106, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5154831, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5154851, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5178616, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5178695, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5200677, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5200702, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5222093, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5222174, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5243697, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5243730, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5264576, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5264606, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5285960, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5285986, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5306976, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5307006, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5328173, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5328344, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5349618, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5349695, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5371010, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5371038, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5393839, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5393884, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5415445, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5415524, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5436652, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5436729, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5493809, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5493834, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5515727, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5515816, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5537103, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5537180, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5558002, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5558080, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5579441, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5579547, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5600648, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 5600715, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5621884, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5622021, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5637144, "pid":1234, "tid" : 5588 }
+,{"name":"Resources.renderUIDebug", "cat":"c++","ph":"B","ts": 5637153, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5639735, "pid":1234, "tid" : 5588 }
+,{"name":"destroyAllPendingObjects", "cat":"c++","ph":"B","ts": 5639817, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5640106, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5640113, "pid":1234, "tid" : 5588 }
+,{"name":"CApp::render", "cat":"c++","ph":"B","ts": 5640166, "pid":1234, "tid" : 5588 }
+,{"name":"initFrame", "cat":"c++","ph":"B","ts": 5640174, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5648067, "pid":1234, "tid" : 5588 }
+,{"name":"RenderManager", "cat":"c++","ph":"B","ts": 5648209, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5970931, "pid":1234, "tid" : 5588 }
+,{"name":"entities", "cat":"c++","ph":"B","ts": 5971332, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 5999704, "pid":1234, "tid" : 5588 }
+,{"name":"imgui", "cat":"c++","ph":"B","ts": 5999733, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6015173, "pid":1234, "tid" : 5588 }
+,{"name":"io", "cat":"c++","ph":"B","ts": 6015229, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6015293, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6015316, "pid":1234, "tid" : 5588 }
+,{"name":"CRender::swapChain", "cat":"c++","ph":"B","ts": 6015534, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6426582, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6426664, "pid":1234, "tid" : 5588 }
+,{"name":"generateFrame", "cat":"c++","ph":"B","ts": 6427351, "pid":1234, "tid" : 5588 }
+,{"name":"CApp::update", "cat":"c++","ph":"B","ts": 6428037, "pid":1234, "tid" : 5588 }
+,{"name":"imgui", "cat":"c++","ph":"B","ts": 6428149, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6455466, "pid":1234, "tid" : 5588 }
+,{"name":"io", "cat":"c++","ph":"B","ts": 6455525, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6462411, "pid":1234, "tid" : 5588 }
+,{"name":"entities", "cat":"c++","ph":"B","ts": 6462451, "pid":1234, "tid" : 5588 }
+,{"name":"controller_3rd_person", "cat":"c++","ph":"B","ts": 6462819, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6462933, "pid":1234, "tid" : 5588 }
+,{"name":"controller_1st_person", "cat":"c++","ph":"B","ts": 6463080, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6463158, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6466769, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6466779, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6467489, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6467508, "pid":1234, "tid" : 5588 }
+,{"name":"camera", "cat":"c++","ph":"B","ts": 6467552, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6467611, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6468080, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6468145, "pid":1234, "tid" : 5588 }
+,{"name":"skeleton", "cat":"c++","ph":"B","ts": 6468308, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6468322, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6507739, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6507761, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6535257, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6535361, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6556775, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6556806, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6577844, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6577877, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6599123, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6599197, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6620100, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6620177, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6641423, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6641445, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6662310, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6662330, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6683208, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6683232, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6704011, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6704175, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6725181, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6725262, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6748360, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6748392, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6770107, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6770131, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6791398, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6791635, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6813001, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6813033, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6834432, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6834529, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6855900, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6855927, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6877380, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6877464, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6898774, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6898857, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6920279, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6920366, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6941716, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6941807, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 6989951, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 6989973, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7012044, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7012134, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7049295, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7049320, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7070994, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7071020, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7092137, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7092173, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7122768, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7122785, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7151813, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7151844, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7172794, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7172890, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7193881, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7193922, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7214971, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7215068, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7236976, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7236994, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7257978, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7258005, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7279310, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7279337, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7300346, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7300377, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7321135, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7321160, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7341998, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7342027, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7362962, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7363040, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7383769, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7383836, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7404894, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7404977, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7425975, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7426002, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7450369, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7450459, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7472060, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7472086, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7493397, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7493425, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7514821, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7514862, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7535992, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7536025, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7556972, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7557005, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7578509, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7578539, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7599661, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7599761, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7620800, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7620881, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7642288, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7642362, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7664451, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7664542, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7685537, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7685626, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7706161, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7706243, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7727028, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7727112, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7747690, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7747721, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7768264, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7768346, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7788816, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7788905, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7809495, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7809574, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7830152, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7830232, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7851062, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7851171, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7873893, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7873981, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7895234, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7895319, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7916154, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7916177, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7936937, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7937035, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7957944, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7957978, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7978795, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7978876, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 7999702, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 7999786, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8020470, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8020578, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8041014, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8041097, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8061761, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8061783, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8084453, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8084479, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8105869, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8105971, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8127724, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8127731, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8156524, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8156605, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8185513, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8185587, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8206441, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8206528, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8227549, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8227676, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8248531, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8248616, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8269666, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8269751, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8290803, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8290829, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8314470, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8314550, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8336508, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8336587, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8357894, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8357971, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8379682, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8379761, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8400731, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8400808, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8422219, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8422242, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8443398, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8443421, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8464546, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8464713, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8486307, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8486390, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8507874, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8507901, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8530780, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8530815, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8552519, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8552598, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8573857, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8573947, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8595087, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8595166, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8616535, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8616611, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8638100, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8638178, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8659661, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8659742, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8681008, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8681089, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8702370, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 8702446, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8723608, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8723708, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8736843, "pid":1234, "tid" : 5588 }
+,{"name":"Resources.renderUIDebug", "cat":"c++","ph":"B","ts": 8736851, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8739280, "pid":1234, "tid" : 5588 }
+,{"name":"destroyAllPendingObjects", "cat":"c++","ph":"B","ts": 8739368, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8739609, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8739621, "pid":1234, "tid" : 5588 }
+,{"name":"CApp::render", "cat":"c++","ph":"B","ts": 8739666, "pid":1234, "tid" : 5588 }
+,{"name":"initFrame", "cat":"c++","ph":"B","ts": 8739674, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8746364, "pid":1234, "tid" : 5588 }
+,{"name":"RenderManager", "cat":"c++","ph":"B","ts": 8746465, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8967207, "pid":1234, "tid" : 5588 }
+,{"name":"entities", "cat":"c++","ph":"B","ts": 8967531, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 8994773, "pid":1234, "tid" : 5588 }
+,{"name":"imgui", "cat":"c++","ph":"B","ts": 8994803, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9007060, "pid":1234, "tid" : 5588 }
+,{"name":"io", "cat":"c++","ph":"B","ts": 9007118, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9007159, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9007180, "pid":1234, "tid" : 5588 }
+,{"name":"CRender::swapChain", "cat":"c++","ph":"B","ts": 9007304, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9478585, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9478729, "pid":1234, "tid" : 5588 }
+,{"name":"generateFrame", "cat":"c++","ph":"B","ts": 9479368, "pid":1234, "tid" : 5588 }
+,{"name":"CApp::update", "cat":"c++","ph":"B","ts": 9479776, "pid":1234, "tid" : 5588 }
+,{"name":"imgui", "cat":"c++","ph":"B","ts": 9479887, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9505602, "pid":1234, "tid" : 5588 }
+,{"name":"io", "cat":"c++","ph":"B","ts": 9505663, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9512203, "pid":1234, "tid" : 5588 }
+,{"name":"entities", "cat":"c++","ph":"B","ts": 9512245, "pid":1234, "tid" : 5588 }
+,{"name":"controller_3rd_person", "cat":"c++","ph":"B","ts": 9512660, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9512683, "pid":1234, "tid" : 5588 }
+,{"name":"controller_1st_person", "cat":"c++","ph":"B","ts": 9512905, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9512916, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9516267, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9516284, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9516907, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9516927, "pid":1234, "tid" : 5588 }
+,{"name":"camera", "cat":"c++","ph":"B","ts": 9517029, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9517040, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9517567, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9517677, "pid":1234, "tid" : 5588 }
+,{"name":"skeleton", "cat":"c++","ph":"B","ts": 9517849, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9517859, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9549513, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9549548, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9575445, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9575555, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9596843, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9596924, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9617881, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9617911, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9638898, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9638925, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9659748, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9659823, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9686774, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9686823, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9707757, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9707871, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9728639, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9728661, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9749360, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9749442, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9770279, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9770362, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9793391, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9793472, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9815267, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9815293, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9836596, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9836680, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9858045, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9858072, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9879297, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9879371, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9900609, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9900707, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9922011, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9922093, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9943363, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9943447, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 9991432, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 9991457, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10013232, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10013313, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10051104, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10051130, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10072588, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10072685, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10093533, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10093619, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10114547, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10114582, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10135157, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10135189, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10155781, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10155811, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10178184, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10178203, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10198902, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10198993, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10228080, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10228166, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10256905, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10256983, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10280529, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10280561, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10301783, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10301811, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10322719, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10322754, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10343601, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10343635, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10364429, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10364448, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10385190, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10385222, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10405760, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10405836, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10426456, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10426535, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10447168, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10447196, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10468219, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10468245, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10490724, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10490810, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10511736, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10511754, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10532517, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10532547, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10553163, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10553192, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10573518, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10573605, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10594147, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10594174, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10615015, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10615051, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10635543, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10635646, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10656109, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10656141, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10676719, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10676753, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10700373, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10700402, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10721730, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10721766, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10742399, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10742480, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10763190, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10763275, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10783741, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10783776, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10804352, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10804426, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10825124, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10825215, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10845891, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10845968, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10866585, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10866611, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10887272, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10887295, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10909826, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10909908, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10930973, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10931048, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10951841, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10951874, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10972711, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10972811, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 10993563, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 10993650, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11014522, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11014547, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11035383, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11035408, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11056112, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11056213, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11076957, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11076978, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11097943, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11098025, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11120532, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11120558, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11142055, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11142087, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11217126, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11217157, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11247137, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11247166, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11268102, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11268135, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11288767, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11288838, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11309756, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11309897, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11330525, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11330659, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11351621, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11351710, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11372689, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11372709, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11396772, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11396799, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11418729, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11418756, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11440158, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11440182, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11461471, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11461501, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11482439, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11482525, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11503662, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11503680, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11524829, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11524855, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11545992, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11546101, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11567594, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11567676, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11588939, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11588960, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11612072, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11612153, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11633983, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11634011, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11655410, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11655431, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11676644, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11676721, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11698197, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11698318, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11719979, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11720059, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11741244, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11741326, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11762725, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11762813, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11784329, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 11784413, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11805859, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11805891, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11819915, "pid":1234, "tid" : 5588 }
+,{"name":"Resources.renderUIDebug", "cat":"c++","ph":"B","ts": 11819929, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11822352, "pid":1234, "tid" : 5588 }
+,{"name":"destroyAllPendingObjects", "cat":"c++","ph":"B","ts": 11822442, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11822659, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11822670, "pid":1234, "tid" : 5588 }
+,{"name":"CApp::render", "cat":"c++","ph":"B","ts": 11822768, "pid":1234, "tid" : 5588 }
+,{"name":"initFrame", "cat":"c++","ph":"B","ts": 11822775, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 11829922, "pid":1234, "tid" : 5588 }
+,{"name":"RenderManager", "cat":"c++","ph":"B","ts": 11830023, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12057559, "pid":1234, "tid" : 5588 }
+,{"name":"entities", "cat":"c++","ph":"B","ts": 12057825, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12084034, "pid":1234, "tid" : 5588 }
+,{"name":"imgui", "cat":"c++","ph":"B","ts": 12084063, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12097284, "pid":1234, "tid" : 5588 }
+,{"name":"io", "cat":"c++","ph":"B","ts": 12097329, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12097359, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12097372, "pid":1234, "tid" : 5588 }
+,{"name":"CRender::swapChain", "cat":"c++","ph":"B","ts": 12097568, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12560999, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12561091, "pid":1234, "tid" : 5588 }
+,{"name":"generateFrame", "cat":"c++","ph":"B","ts": 12561808, "pid":1234, "tid" : 5588 }
+,{"name":"CApp::update", "cat":"c++","ph":"B","ts": 12562424, "pid":1234, "tid" : 5588 }
+,{"name":"imgui", "cat":"c++","ph":"B","ts": 12562540, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12587548, "pid":1234, "tid" : 5588 }
+,{"name":"io", "cat":"c++","ph":"B","ts": 12587607, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12594156, "pid":1234, "tid" : 5588 }
+,{"name":"entities", "cat":"c++","ph":"B","ts": 12594202, "pid":1234, "tid" : 5588 }
+,{"name":"controller_3rd_person", "cat":"c++","ph":"B","ts": 12594508, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12594645, "pid":1234, "tid" : 5588 }
+,{"name":"controller_1st_person", "cat":"c++","ph":"B","ts": 12594854, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12594871, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12597983, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12597999, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12598673, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12598692, "pid":1234, "tid" : 5588 }
+,{"name":"camera", "cat":"c++","ph":"B","ts": 12598777, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12598832, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12599290, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12599302, "pid":1234, "tid" : 5588 }
+,{"name":"skeleton", "cat":"c++","ph":"B","ts": 12599455, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12599467, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12631257, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12631292, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12653765, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12653848, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12674522, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12674594, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12695028, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12695109, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12715489, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12715514, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12735829, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12735862, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12756219, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12756245, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12776307, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12776391, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12796510, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12796593, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12816562, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12816641, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12836876, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12836897, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12861626, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12861712, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12886706, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12886725, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12908260, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12908357, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12929832, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12929911, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12951045, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12951133, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12972392, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12972424, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 12993516, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 12993544, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13014691, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13014721, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13062071, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13062084, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13084532, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13084620, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13122071, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13122077, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13144111, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13144211, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13165010, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13165040, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13185925, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13186006, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13206709, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13206788, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13227555, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13227589, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13249861, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13249979, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13270875, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13270968, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13291545, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13291625, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13312292, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13312383, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13335577, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13335597, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13356788, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13356809, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13377775, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13377809, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13398623, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13398638, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13419378, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13419407, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13440259, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13440292, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13461338, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13461358, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13482324, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13482403, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13503127, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13503205, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13524103, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13524123, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13546284, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13546311, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13567160, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13567178, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13587959, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13588058, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13608979, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13609004, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13629605, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13629637, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13650074, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13650095, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13670821, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13670854, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13691365, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13691469, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13711939, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13711961, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13732520, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13732542, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13756407, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13756430, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13777698, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13777722, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13798474, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13798557, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13819211, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13819284, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13839703, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13839729, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13860651, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13860687, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13881189, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13881225, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13901823, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13901848, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13922438, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13922459, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13943147, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13943180, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13966112, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13966171, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 13987423, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 13987457, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14008367, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14008447, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14029526, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14029614, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14050547, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14050574, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14071738, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14071761, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14092719, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14092753, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14113755, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14113855, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14134654, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14134736, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14155661, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14155683, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14178095, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14178115, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14199627, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14199712, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14220741, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14220782, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14241759, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14241787, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14262574, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14262601, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14292937, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14292960, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14314680, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14314776, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14336169, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14336248, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14364513, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14364596, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14385503, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14385523, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14409484, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14409509, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14431487, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14431568, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14452839, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14452917, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14474616, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14474643, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14495739, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14495815, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14516998, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14517074, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14538004, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14538035, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14559432, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14559490, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14580814, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14580842, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14601972, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14601992, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14624877, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14624912, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14647197, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14647223, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14668583, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14668678, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14689809, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14689890, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14711243, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14711374, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14732929, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14733005, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14754104, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14754185, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14775671, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14775750, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14797195, "pid":1234, "tid" : 5588 }
+,{"name":"object", "cat":"c++","ph":"B","ts": 14797263, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14826117, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14826201, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14840230, "pid":1234, "tid" : 5588 }
+,{"name":"Resources.renderUIDebug", "cat":"c++","ph":"B","ts": 14840250, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14842918, "pid":1234, "tid" : 5588 }
+,{"name":"destroyAllPendingObjects", "cat":"c++","ph":"B","ts": 14843006, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14843236, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14843243, "pid":1234, "tid" : 5588 }
+,{"name":"CApp::render", "cat":"c++","ph":"B","ts": 14843309, "pid":1234, "tid" : 5588 }
+,{"name":"initFrame", "cat":"c++","ph":"B","ts": 14843316, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 14850906, "pid":1234, "tid" : 5588 }
+,{"name":"RenderManager", "cat":"c++","ph":"B","ts": 14851042, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 15107544, "pid":1234, "tid" : 5588 }
+,{"name":"entities", "cat":"c++","ph":"B","ts": 15107806, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 15135701, "pid":1234, "tid" : 5588 }
+,{"name":"imgui", "cat":"c++","ph":"B","ts": 15135726, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 15148700, "pid":1234, "tid" : 5588 }
+,{"name":"io", "cat":"c++","ph":"B","ts": 15148754, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 15148787, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 15148800, "pid":1234, "tid" : 5588 }
+,{"name":"CRender::swapChain", "cat":"c++","ph":"B","ts": 15149063, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 15592781, "pid":1234, "tid" : 5588 }
+,{"ph":"E","ts": 15592869, "pid":1234, "tid" : 5588 }
 ,{"name": "thread_name", "ph": "M", "pid": 1234, "tid": 5588, "args": {"name":"main_thread" }}
 ]}

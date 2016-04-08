@@ -536,6 +536,23 @@ void CalMixer::updateSkeleton()
   // lock the skeleton state
   pSkeleton->lockState();
 
+  // ------------------------- Added by MCV ---------
+  // Remove some component of the root bone
+  int root_bone_id = pSkeleton->getCoreSkeleton()->getVectorRootCoreBoneId()[0];
+  CalBone *root_bone = vectorBone[root_bone_id];
+  CalVector cal_trans = root_bone->getTranslation();
+  CalQuaternion cal_rot = root_bone->getRotation();
+  
+  // transform relative state with the absolute state of the parent
+  cal_trans *= extra_rotation;
+  cal_trans += extra_trans;
+  cal_rot *= extra_rotation;
+
+  root_bone->setTranslation(cal_trans);
+  root_bone->setRotation(cal_rot);
+
+  // ------------------------- Added by MCV ---------
+
   // let the skeleton calculate its final state
   pSkeleton->calculateState();
 }

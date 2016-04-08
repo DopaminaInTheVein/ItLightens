@@ -1,5 +1,5 @@
 #include "mcv_platform.h"
-#include "handle_manager.h"
+#include "handle.h"
 
 uint32_t CHandleManager::next_type_of_handle_manager = 1;
 CHandleManager* CHandleManager::all_managers[CHandle::max_types];

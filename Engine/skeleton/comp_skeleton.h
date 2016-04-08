@@ -16,5 +16,6 @@ struct TCompSkeleton : public TCompBase {
   void uploadBonesToCteShader() const;
 };
 
+
 #endif
 

@@ -1,0 +1,17 @@
+<entities>
+    <entity>
+        <name name="Pitufo"/>
+        <transform pos="1 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+        <skeleton model="skeletons/pitufo/pitufo.skeleton"/>
+        <render_static_mesh name="skeletons/pitufo/pitufo.static_mesh"/>
+    </entity>
+    <entity>
+        <name name="Ring"/>
+        <transform pos="1 0 0" quat="0.0 0.0 0.0 1.0" scale="0.1" />
+        <bone_tracker entity="Pitufo" bone="papa_pitufo Head"/>
+        <render_static_mesh name="static_meshes/tetera_multi.static_mesh"/>
+    </entity>
+</entities>
+
+
+

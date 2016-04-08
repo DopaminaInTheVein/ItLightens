@@ -1,8 +1,6 @@
 #ifndef INC_RENDER_MATERIAL_H_
 #define INC_RENDER_MATERIAL_H_
 
-#include "utils/XMLParser.h"
-
 class CTexture;
 class CRenderTechnique;
 

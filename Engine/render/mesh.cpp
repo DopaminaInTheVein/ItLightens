@@ -2,7 +2,6 @@
 #include "resources/resource.h"
 #include "vertex_declarations.h"
 #include "mesh.h"
-#include "imgui/imgui.h"
 
 template<>
 IResource::eType getTypeOfResource<CMesh>() {

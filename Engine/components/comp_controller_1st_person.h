@@ -15,8 +15,8 @@ struct TCompController1stPerson : public TCompBase {
   float   speed_reduction_factor;
   VEC3    speed;
   TCompController1stPerson()
-    : rotation_sensibility(deg2rad(45.0f) / 250.0f)
-    , pan_sensibility(0.01f)
+    : rotation_sensibility(deg2rad(45.0f) / 50.0f)
+    , pan_sensibility(0.1f)
     , speed(0.f,0.f,0.f)
     , speed_reduction_factor(0.99f)
   {} 

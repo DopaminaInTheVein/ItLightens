@@ -2,7 +2,6 @@
 #define INC_RESOURCE_SKELETON_H_
 
 #include "resources/resource.h"
-#include "utils/XMLParser.h"
 #include "cal3d/cal3d.h"
 
 class CSkeleton : public IResource, public CXMLParser {

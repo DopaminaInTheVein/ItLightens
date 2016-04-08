@@ -5,8 +5,6 @@
 #include "render/mesh.h"
 #include "render/draw_utils.h"
 #include "entity.h"
-#include "utils/XMLParser.h"
-#include "imgui/imgui.h"
 
 bool TCompCamera::load(MKeyValue& atts) {
   float znear = atts.getFloat("znear", 0.1f);

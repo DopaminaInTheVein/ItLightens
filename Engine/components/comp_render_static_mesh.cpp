@@ -1,7 +1,6 @@
 #include "mcv_platform.h"
 #include "comp_render_static_mesh.h"
 #include "resources/resources_manager.h"
-#include "utils/XMLParser.h"
 #include "render/render_manager.h"
 
 void TCompRenderStaticMesh::onCreate(const TMsgEntityCreated&) {

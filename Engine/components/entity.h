@@ -22,12 +22,12 @@ public:
   }
 
   template< typename TObj >
-  CHandle get() {
+  CHandle get() const {
     auto hm = getHandleManager<TObj>();
     return comps[hm->getType()];
   }
 
-  CHandle getByCompIndex(uint32_t idx) {
+  CHandle getByCompIndex(uint32_t idx) const {
     return comps[idx];
   }
 
@@ -40,6 +40,7 @@ public:
 
   template< class TMsg >
   void sendMsg(const TMsg& msg) {
+    assert(this);
     // Get all entries matching the msg_id of the TMsg
     auto range = msg_subscriptions.equal_range(TMsg::getMsgID());
     while (range.first != range.second) {
@@ -71,6 +72,12 @@ public:
         comps[i].destroy();
     }
   }
+
+  // ---------------------------------------------
+  const char* getName() const;
+  void setName(const char* new_name);
+  bool hasName(const char* new_name) const;
+
 };
 
 
