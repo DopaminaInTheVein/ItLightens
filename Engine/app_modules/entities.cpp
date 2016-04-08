@@ -288,6 +288,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 
+	readJSONAtrFile("inizialization.json");
+
 	return true;
 }
 

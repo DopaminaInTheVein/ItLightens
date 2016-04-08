@@ -48,4 +48,6 @@ std::map<std::string, float> readIniFileAttrMap(char* elements_to_read);
 
 std::vector<std::string> list_files_recursively(std::string folder_path);
 
+void readJSONAtrFile(const std::string route);
+
 #endif

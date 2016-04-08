@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "timer.h"
 #include "windows\app.h"
-
+#include "json\json.h"
 
 #ifndef NDEBUG
 
@@ -185,6 +185,17 @@ std::map<std::string, float> readIniFileAttrMap(char* element_to_read) {
 
 void assingValueFromMap(float *variable, char *name, std::map<std::string, float> data_map) {
 	*variable = data_map[name];
+}
+
+void readJSONAtrFile(const std::string route) {
+	Json::Value root;   // will contains the root value after parsing.
+	Json::Reader reader;
+	bool parsingSuccessful = reader.parse(route, root, false);
+	if (parsingSuccessful)
+	{
+		std::string res = root.get("box", "ASCII").asString();
+		dbg(res.c_str());
+	}
 }
 
 std::vector<std::string> list_files_recursively(std::string folder_path) {

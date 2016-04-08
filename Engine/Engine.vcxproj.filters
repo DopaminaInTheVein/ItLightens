@@ -1105,6 +1105,12 @@
     <ClInclude Include="app_modules\logic_manager\slb_public_functions.h">
       <Filter>app_modules\logic_manager</Filter>
     </ClInclude>
+    <ClInclude Include="utils\json\json\json.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\json\json-forwards.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1257,6 +1263,9 @@
     <Filter Include="app_modules\logic_manager">
       <UniqueIdentifier>{224fc8a4-4ae1-4cb8-a9ef-6fa325768a77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="utils\json">
+      <UniqueIdentifier>{28c68d3b-26b3-4e29-b6c6-8bbaa818f237}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\bin\data\shaders\basic.fx">
@@ -1273,5 +1282,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="NOTES.txt" />
+    <Text Include="utils\json\jsoncpp.cpp">
+      <Filter>utils</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -643,6 +643,8 @@
     <ClInclude Include="ui\ui_interface.h" />
     <ClInclude Include="utils\data_provider.h" />
     <ClInclude Include="utils\data_saver.h" />
+    <ClInclude Include="utils\json\json\json-forwards.h" />
+    <ClInclude Include="utils\json\json\json.h" />
     <ClInclude Include="utils\macros\macros.h" />
     <ClInclude Include="utils\macros\timers.h" />
     <ClInclude Include="utils\murmur3.h" />
@@ -665,6 +667,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="NOTES.txt" />
+    <Text Include="utils\json\jsoncpp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
