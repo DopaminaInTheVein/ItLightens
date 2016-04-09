@@ -58,7 +58,7 @@ struct TCompLife : public TCompBase {
 
 			if (currentlife < 0 && !dead) {
 				dead = true;
-				TMsgDie msg;
+				//TMsgDie msg;
 				CHandle player = tags_manager.getFirstHavingTag("player");
 				CHandle h = CHandle(this).getOwner();
 

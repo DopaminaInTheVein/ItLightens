@@ -50,6 +50,7 @@ DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
 DECL_OBJ_MANAGER("tags", TCompTags);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
+DECL_OBJ_MANAGER("box", TCompBox);
 
 //Physics
 DECL_OBJ_MANAGER("rigidbody", TCompPhysics);
@@ -94,6 +95,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -135,6 +137,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
+
+	//box
+	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
 
 	//bombs
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
@@ -222,8 +227,6 @@ bool CEntitiesModule::start() {
 	SBB::postNavmesh(nav);
 
 	TTagID tagIDcamera = getID("camera_main");
-	TTagID tagIDbox = getID("box");
-	TTagID tagIDboxleave = getID("box_leavepoint");
 	TTagID tagIDwall = getID("breakable_wall");
 	TTagID tagIDminus = getID("minus_wall");
 	TTagID tagIDplus = getID("plus_wall");
@@ -276,9 +279,8 @@ bool CEntitiesModule::start() {
 		water_e->sendMsg(msg_water);
 	}
 
-	SBB::postHandlesVector("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
+	
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
-	SBB::postHandlesVector("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
 	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
 	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
 	SBB::postHandlesVector("wptsRecoverPoint", tags_manager.getHandlesByTag(tagIDrec));
@@ -298,6 +300,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
+	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
 
 	return true;
 }
@@ -348,6 +351,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompLife>()->updateAll(dt);
 
 	getHandleManager<TCompPlatform>()->updateAll(dt);
+	getHandleManager<TCompBox>()->updateAll(dt);
 
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);

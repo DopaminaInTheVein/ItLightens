@@ -943,6 +943,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box1" />
+    <box fixed ="true"/>
     <transform pos="0.358 -8.046 -11.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <polarized pol="minus"/>
@@ -952,6 +953,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box1" />
+    <box fixed ="true"/>
     <transform pos="0.358 -8.046 -14.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" mass="2.0" />
@@ -961,6 +963,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box1" />
+    <box fixed ="true"/>
     <transform pos="4.95928 -1.84045 17.3327" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
@@ -969,6 +972,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box1" />
+    <box fixed ="true"/>
     <transform pos="0.478754 3.90856 111.336" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
@@ -977,6 +981,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box4" />
+    <box fixed ="true"/>
     <transform pos="2.8988 3.90856 105.074" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <polarized pol="minus" type ="free"/>
@@ -985,6 +990,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box1" />
+    <box fixed ="true"/>
     <transform pos="-2.7472 3.90856 105.074" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
@@ -993,6 +999,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box6" />
+    <box fixed ="true"/>
     <transform pos="-2.96467 3.90856 90.7216" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="static" />
@@ -1001,6 +1008,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box1" />
+    <box fixed ="true"/>
     <transform pos="1.91384 3.90856 95.8815" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
@@ -1009,6 +1017,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box8" />
+    <box fixed ="true"/>
     <transform pos="2.86123 3.90856 85.469" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
@@ -1017,6 +1026,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box1" />
+    <box fixed ="true"/>
     <transform pos="1.0736 3.90856 72.114" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
@@ -1025,6 +1035,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box1" />
+    <box fixed ="true"/>
     <transform pos="-2.93519 3.90856 79.4002" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
@@ -1033,6 +1044,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box1" />
+    <box fixed ="true"/>
     <transform pos="0.478754 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
@@ -1041,6 +1053,7 @@
   <entity>
     <tags tags="platform box" />
     <name name="Box1" />
+    <box fixed ="true"/>
     <transform pos="3.24255 3.90857 174.458" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/Box.static_mesh" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
@@ -1061,6 +1074,7 @@
   <entity>
     <name name="box21" />
     <tags tags="platform box" />
+    <box fixed ="true"/>
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 -1.8 5" rotation="1 2 3 3" scale="1 1 1" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
@@ -1068,6 +1082,7 @@
   </entity>
   <entity>
     <name name="box21" />
+    <box fixed ="true"/>
     <tags tags="platform box" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="0 -1.8 5" rotation="1 2 3 3" scale="1 1 1" />
@@ -1076,6 +1091,7 @@
   </entity>
   <entity>
     <name name="box21" />
+    <box fixed ="true"/>
     <tags tags="platform box" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 -1.8 10" rotation="1 2 3 3" scale="1 1 1" />
@@ -1084,17 +1100,12 @@
   </entity>
   <entity>
     <name name="box22" />
+    <box fixed ="true"/>
     <tags tags="platform box" />
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="5 -0.81 5" rotation="1 2 3 3" scale="1 1 1" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
     <polarized pol="minus" type ="free"/>
-  </entity>
-
-  <entity>
-    <name name="box_leavepoint1" />
-    <tags tags="box_leavepoint" />
-    <transform pos="-4 -1.8 8" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 
   <entity>
@@ -1287,16 +1298,11 @@
   <entity>
     <name name="box35" />
     <tags tags="box platform" />
+    <box fixed ="true"/>
     <render_static_mesh name="static_meshes/box.static_mesh" />
     <transform pos="6 4 150" rotation="1 2 3 3" scale="1 1 1" />
     <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" />
     <polarized pol="minus" type ="free"/>
-  </entity>
-
-  <entity>
-    <name name="box_leavepoint2" />
-    <tags tags="box_leavepoint" />
-    <transform pos="-5 4 145" rotation="1 2 3 3" scale="1 1 1" />
   </entity>
 
   <entity>

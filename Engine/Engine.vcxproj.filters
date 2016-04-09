@@ -1105,6 +1105,9 @@
     <ClInclude Include="debug\debug_itlightens.h">
       <Filter>debug</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_box.h">
+      <Filter>components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
