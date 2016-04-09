@@ -440,6 +440,7 @@ void player_controller::UpdatePossession() {
 			CEntity * camera_e = tags_manager.getFirstHavingTag(getID("camera_main"));
 			TMsgSetTarget msgTarg;
 			msgTarg.target = ePoss;
+			msgTarg.who = PLAYER;
 			camera_e->sendMsg(msgTarg);
 
 			//Se desactiva el player

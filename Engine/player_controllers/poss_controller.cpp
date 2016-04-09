@@ -80,8 +80,14 @@ void PossController::onSetEnable(bool enabled) {
 		//Set 3rd Person Controller
 		TMsgSetTarget msg3rdController;
 		msg3rdController.target = hMe;
-		e_camera->sendMsg(msg3rdController);
 
+		if (hMe.hasTag("AI_mole"))
+			msg3rdController.who = MOLE;
+
+		else if (hMe.hasTag("AI_speedy"))
+			msg3rdController.who = SPEEDY;
+
+		e_camera->sendMsg(msg3rdController);
 		//Set Camera
 		camera = camera3;
 	}
@@ -93,6 +99,8 @@ void PossController::onSetEnable(bool enabled) {
 
 		TMsgSetTarget msgTarg;
 		msgTarg.target = hTarget;
+		msgTarg.who = PLAYER;
+
 		camera3->sendMsg(msgTarg);
 
 		CEntity* eTarget = hTarget;
