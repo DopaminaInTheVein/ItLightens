@@ -39,6 +39,18 @@ void IdEntities::saveIdEntity(CHandle entity, int entity_id) {
 	}
 }
 
+CHandle spawnPrefab(const std::string& prefab) {
+	CHandle h = createPrefab(prefab);
+
+	//Le avisamos que se ha creado
+	CEntity* e = h;
+	TMsgEntityCreated msg;
+	e->sendMsg(msg);
+
+	//Devolvemos handle de la entidad creada
+	return h;
+}
+
 CHandle createPrefab(const std::string& prefab) {
 	// Check if the prefabs is already 'compiled'
 	CPrefabCompiler* prefab_compiler = nullptr;

@@ -68,11 +68,6 @@ struct TMsgSetPlayer {
 	DECLARE_MSG_ID();
 };
 
-struct TMsgSetWaterType {
-	int type;
-	DECLARE_MSG_ID();
-};
-
 struct TMsgBeaconToRemove {
 	VEC3 pos_beacon;
 	std::string name_beacon;

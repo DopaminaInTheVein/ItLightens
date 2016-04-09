@@ -70,12 +70,16 @@ public:
 	void SetHandleMeInit();
 	void SetMyEntity();
 
-	void onSetWaterType(const TMsgSetWaterType& msg);
-
+	//States
 	void Idle();
 	void Die();
 	void Dead();
 
+	// Load & Create
+	bool water_controller::load(MKeyValue& atts);
+	void onCreate(const TMsgEntityCreated& msg);
+
+	//Render Debug
 	void renderInMenu();
 };
 

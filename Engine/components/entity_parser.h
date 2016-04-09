@@ -34,6 +34,7 @@ public:
 	}
 };
 
+CHandle spawnPrefab(const std::string& prefab); // create Prefab and call onCreate
 CHandle createPrefab(const std::string& prefab);
 
 #endif

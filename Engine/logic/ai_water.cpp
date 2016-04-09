@@ -24,7 +24,6 @@ void water_controller::readIniFileAttr() {
 			assignValueToVar(permanent_max_ttl, fields);
 			assignValueToVar(dropped_max_ttl, fields);
 			assignValueToVar(damage_radius, fields);
-
 		}
 	}
 }
@@ -51,31 +50,14 @@ void water_controller::Init() {
 }
 
 void water_controller::update(float elapsed) {
-	
-	if(myHandle.isValid()) 
+	if (myHandle.isValid())
 		Recalc();
-	if(myParent.isValid()) 
+	if (myParent.isValid())
 		updateTTL();
-			
 }
 
-void water_controller::onSetWaterType(const TMsgSetWaterType& msg) {
-	switch (msg.type) {
-	case PERMANENT:
-		water_type = PERMANENT;
-		damage = permanent_water_damage;
-		ttl = permanent_max_ttl;
-		break;
-	case DROPPED:
-		water_type = DROPPED;
-		damage = dropped_water_damage;
-		ttl = dropped_max_ttl;
-		break;
-	default:
-		water_type = PERMANENT;
-		damage = permanent_water_damage;
-		ttl = permanent_max_ttl;
-	}
+void water_controller::onCreate(const TMsgEntityCreated& msg) {
+	Init();
 }
 
 void water_controller::Idle()
@@ -98,7 +80,6 @@ void water_controller::Dead()
 }
 
 void water_controller::updateTTL() {
-
 	if (water_type != PERMANENT) {
 		ttl -= getDeltaTime();
 		if (ttl <= 0.0) {
@@ -108,7 +89,6 @@ void water_controller::updateTTL() {
 }
 
 void water_controller::tryToDamagePlayer() {
-
 	SetMyEntity();
 	if (!myEntity) return;
 	CEntity* e_player = player;
@@ -124,12 +104,12 @@ void water_controller::tryToDamagePlayer() {
 		sendMsgDamage = !sendMsgDamage;
 		dmg.modif = 5.0f;
 		e_player->sendMsg(dmg);
-	} else if ((distance > damage_radius || player_position.y - water_position.y > 0.5) && sendMsgDamage) {
+	}
+	else if ((distance > damage_radius || player_position.y - water_position.y > 0.5) && sendMsgDamage) {
 		TMsgStopDamage dmg;
 		sendMsgDamage = !sendMsgDamage;
 		e_player->sendMsg(dmg);
 	}
-
 }
 
 void water_controller::renderInMenu()
@@ -142,9 +122,37 @@ void water_controller::SetHandleMeInit()
 {
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
-
 }
 
 void water_controller::SetMyEntity() {
 	myEntity = myParent;
+}
+
+bool water_controller::load(MKeyValue& atts) {
+	string type = atts.getString("type", "permanent");
+	if (type == "permanent") {
+		water_type = PERMANENT;
+	}
+	else if (type == "dropped") {
+		water_type = DROPPED;
+	}
+	else {
+		fatal("Wrong Type Water!");
+	}
+
+	switch (water_type) {
+	case PERMANENT:
+		damage = permanent_water_damage;
+		ttl = permanent_max_ttl;
+		break;
+	case DROPPED:
+		damage = dropped_water_damage;
+		ttl = dropped_max_ttl;
+		break;
+	default:
+		damage = permanent_water_damage;
+		ttl = permanent_max_ttl;
+	}
+
+	return true;
 }

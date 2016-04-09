@@ -1,6 +1,7 @@
 #include "mcv_platform.h"
 #include "bt_speedy.h"
 #include "components\comp_charactercontroller.h"
+#include "components/entity_parser.h"
 
 map<string, btnode *> bt_speedy::tree = {};
 map<string, btaction> bt_speedy::actions = {};
@@ -20,13 +21,11 @@ void bt_speedy::readIniFileAttr() {
 			assignValueToVar(max_dash_player_distance, fields);
 			assignValueToVar(dash_timer_reset, fields);
 			assignValueToVar(drop_water_timer_reset, fields);
-
 		}
 	}
 }
 
 void bt_speedy::Init() {
-
 	//read main attributes from file
 	readIniFileAttr();
 
@@ -67,7 +66,6 @@ void bt_speedy::Init() {
 	pose_idle_route = "static_meshes/speedy/speedy.static_mesh";
 	pose_jump_route = "static_meshes/speedy/speedy_jump.static_mesh";
 	pose_run_route = "static_meshes/speedy/speedy_run.static_mesh";
-
 }
 
 void bt_speedy::update(float elapsed) {
@@ -128,10 +126,9 @@ int bt_speedy::actionNextWpt() {
 }
 
 int bt_speedy::actionSeekWpt() {
-
 	float distance = squaredDistXZ(fixedWpts[curwpt], transform->getPosition());
 
-	 if (abs(distance) > 0.1f) {
+	if (abs(distance) > 0.1f) {
 		moveFront(speed);
 		return STAY;
 	}
@@ -144,8 +141,7 @@ int bt_speedy::actionSeekWpt() {
 	}
 }
 
-int bt_speedy::actionDashPoint() {	
-
+int bt_speedy::actionDashPoint() {
 	bool arrived = dashToTarget(fixedWpts[curwpt]);
 	if (arrived) {
 		resetDashTimer();
@@ -155,7 +151,6 @@ int bt_speedy::actionDashPoint() {
 	return STAY;
 }
 int bt_speedy::actionDashNewPoint() {
-
 	if (random_wpt == -1)
 		random_wpt = rand() % fixedWpts.size();
 
@@ -169,7 +164,6 @@ int bt_speedy::actionDashNewPoint() {
 	return STAY;
 }
 int bt_speedy::actionDashPlayer() {
-
 	dash_target = player_transform->getPosition();
 	float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
 	if (abs(distance_to_player) > max_dash_player_distance || abs(dash_target.y - transform->getPosition().y) > 0.5f) {
@@ -186,7 +180,6 @@ int bt_speedy::actionDashPlayer() {
 }
 
 bool bt_speedy::aimToTarget(VEC3 target) {
-
 	float delta_yaw = transform->getDeltaYawToAimTo(target);
 
 	if (abs(delta_yaw) > 0.001f) {
@@ -213,61 +206,16 @@ bool bt_speedy::dashToTarget(VEC3 target) {
 	if (aimed) {
 		moveFront(dash_speed);
 		if (drop_water_ready) {
-			VEC3 player_pos = transform->getPosition();
-
 			// CREATE WATER
-			// Creating the new handle
-			CHandle curr_entity;
-			auto hm = CHandleManager::getByName("entity");
-			CHandle new_h = hm->createHandle();
-			curr_entity = new_h;
-			CEntity* e = curr_entity;
-			// Adding water tag
-			tags_manager.addTag(curr_entity, getID("water"));
-			// Creating the new entity components
-			// create name component
-			auto hm_name = CHandleManager::getByName("name");
-			CHandle new_name_h = hm_name->createHandle();
-			MKeyValue atts_name;
-			atts_name["name"] = "speedy_water";
-			new_name_h.load(atts_name);
-			e->add(new_name_h);
-			// create transform component
-			auto hm_transform = CHandleManager::getByName("transform");
-			CHandle new_transform_h = hm_transform->createHandle();
-			MKeyValue atts;
-			// position, rotation and scale
-			char position[64]; sprintf(position, "%f %f %f", player_pos.x, player_pos.y, player_pos.z);
-			atts["pos"] = position;
-			char rotation[64]; sprintf(rotation, "%f %f %f %f", 1.f, 1.f, 1.f, 1.f);
-			atts["rotation"] = rotation;
-			char scale[64]; sprintf(scale, "%f %f %f", 1.f, 1.f, 1.f);
-			atts["scale"] = scale;
-			// load transform attributes and add transform to the entity
-			new_transform_h.load(atts);
-			e->add(new_transform_h);
-			// create static_mesh component
-			auto hm_mesh = CHandleManager::getByName("render_static_mesh");
-			CHandle new_mesh_h = hm_mesh->createHandle();
-			MKeyValue atts_mesh;
-			atts_mesh["name"] = water_static_mesh;
-			new_mesh_h.load(atts_mesh);
-			e->add(new_mesh_h);
-			// create water component and add it to the entity
-			CHandleManager* hm_water = CHandleManager::getByName("water");
-			CHandle new_water_h = hm_water->createHandle();
-			e->add(new_water_h);
-			// init the new water component
-			auto hm_water_cont = getHandleManager<water_controller>();
-			water_controller* water_cont = hm_water_cont->getAddrFromHandle(new_water_h);
-			water_cont->Init();
-			// init entity and send message to the new water entity with its type
-			TMsgSetWaterType msg_water;
-			msg_water.type = 1;
-			e->sendMsg(msg_water);
-			// end the entity creation
-			e->sendMsg(TMsgEntityCreated());
-			curr_entity = CHandle();
+			CEntity* e = spawnPrefab("speedy_water");
+			if (e) {
+				VEC3 posWater = transform->getPosition();
+				float yaw_water, pitch_water;
+				transform->getAngles(&yaw_water, &pitch_water);
+				TCompTransform* t = e->get<TCompTransform>();
+				t->setPosition(posWater);
+				t->setAngles(yaw_water, pitch_water);
+			}
 
 			// reset drop water cooldown
 			resetDropWaterTimer();
@@ -319,4 +267,3 @@ void bt_speedy::ChangePose(string new_pose_route) {
 		last_pose = new_pose_route;
 	}
 }
-

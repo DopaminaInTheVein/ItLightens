@@ -127,7 +127,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
 	SUBSCRIBE(bt_speedy, TMsgSetPlayer, onSetPlayer);
-	SUBSCRIBE(water_controller, TMsgSetWaterType, onSetWaterType);
 	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
@@ -140,6 +139,9 @@ bool CEntitiesModule::start() {
 
 	//box
 	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
+
+	//water
+	SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
 
 	//bombs
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
@@ -269,18 +271,6 @@ bool CEntitiesModule::start() {
 		speedy_e->sendMsg(msg_player);
 	}
 
-	// Set the type for the starting water zones to 0 (PERMANENT)
-	TTagID tagIDWater = getID("water");
-	VHandles waterHandles = tags_manager.getHandlesByTag(tagIDWater);
-
-	for (CHandle waterHandle : waterHandles) {
-		CEntity * water_e = waterHandle;
-		TMsgSetWaterType msg_water;
-		msg_water.type = 0;
-		water_e->sendMsg(msg_water);
-	}
-
-	
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
 	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
 	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
@@ -295,7 +285,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
 	getHandleManager<bt_speedy>()->onAll(&bt_speedy::Init);
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
-	getHandleManager<water_controller>()->onAll(&water_controller::Init);
+	//getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
 	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
