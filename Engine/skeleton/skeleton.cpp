@@ -147,7 +147,6 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 		}
 
 		// Define a new group
-		// CAUTION comentado!
 		CMesh::TGroup g;
 		g.first_index = header.num_idxs;
 		g.num_indices = cal_faces.size() * 3; // each face -> 3 idxs
@@ -178,7 +177,7 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 	ds.write(riff);
 	ds.writeBytes(ds_idxs.getDataBase(), ds_idxs.size());
 
-	// All groups - CAUTION comentado
+	// All groups
 	riff.magic = magic_groups;
 	riff.num_bytes = ds_groups.size();
 	ds.write(riff);
@@ -220,6 +219,8 @@ void CSkeleton::onStartElement(const std::string &elem, MKeyValue &atts) {
 				name.resize(name.size() - 4);
 				int anim_id = core_model->loadCoreAnimation(full_src);
 				assert(anim_id != -1);
+				saveAnimId(src, anim_id);
+				assert(anim_id < MAX_NUMBER_ANIMS);
 				core_model->getCoreAnimation(anim_id)->setName(name);
 			}
 		} while (FindNextFile(hFind, &ffd) != 0);
@@ -239,6 +240,21 @@ void CSkeleton::onStartElement(const std::string &elem, MKeyValue &atts) {
 		// load the mesh_file
 		//auto engine_mesh = Resources.get(mesh_file.c_str())->as<CMesh>();
 	}
+}
+
+void CSkeleton::saveAnimId(std::string src, int anim_id) {
+	// Size of nameAnims is enough
+	assert(anim_id < MAX_NUMBER_ANIMS);
+	// Save anim name
+	nameAnims[anim_id] = src;
+}
+int CSkeleton::getAnimIdByName(std::string name) const {
+	//Looking for the name in saved animations
+	for (int i = 0; i < MAX_NUMBER_ANIMS; ++i) {
+		if (nameAnims[i] == name) return i;
+	}
+	// Doesnt exist that name!
+	return -1;
 }
 
 CSkeleton::CSkeleton()

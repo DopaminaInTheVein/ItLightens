@@ -11,8 +11,6 @@
 #pragma comment(lib, "imgui.lib" )
 
 #include "handle/object_manager.h"
-#include "debug/debug.h"
-#include "debug\console.h"
 
 #include <Commdlg.h>
 

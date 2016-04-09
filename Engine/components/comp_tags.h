@@ -43,6 +43,15 @@ struct TCompTags : public TCompBase {
         tags_manager.addTag(h_entity, tags[i]);
   }
 
+  bool hasTag(TTagID tag) {
+	  for (auto t : tags) {
+		  if (t == tag)
+			  return true;
+	  }
+
+	  return false;
+  }
+
   void renderInMenu() {
     for (uint32_t i = 0; i < max_tags; ++i) {
       if(tags[i])

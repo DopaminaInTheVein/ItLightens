@@ -111,6 +111,7 @@ void workbench_controller::SetMyEntity() {
 
 void workbench_controller::SendMessageEmpty() {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
@@ -118,7 +119,9 @@ void workbench_controller::SendMessageEmpty() {
 
 	VHandles hs = tags_manager.getHandlesByTag(getID("AI_cientifico"));
 	for (CEntity *e : hs)
-		e->sendMsg(msg_empty);
+		if (e) {
+			e->sendMsg(msg_empty);
+		}
 }
 
 void workbench_controller::SendMessageTaken() {

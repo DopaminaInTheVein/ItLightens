@@ -22,12 +22,13 @@ public:
 	virtual CEntity* getMyEntity() = 0; //Pasar al TCompBase?
 	void update(float dt) { UpdatePossession(); CPlayerBase::update(dt); }
 	void UpdatePossession();
+	void onDie(const TMsgDie & msg);
+	void onForceUnPosses(const TMsgUnpossesDamage& msg);
 	void addPossStates();
 
 	//Mensajes
 	void onSetEnable(const TMsgControllerSetEnable&);
 	void onSetEnable(bool);
-	void onDamage(const TMsgDamage&);
 
 	//FUNCIONES QUE REDEFINIR!
 	//virtual void DisabledState();

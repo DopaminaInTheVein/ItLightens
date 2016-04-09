@@ -65,6 +65,7 @@ public:
 
 	// --------------------------------------------
 	TObj* getAddrFromHandle(CHandle h) {
+
 		if (!h.getType())
 			return nullptr;
 

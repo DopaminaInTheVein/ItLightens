@@ -8,25 +8,41 @@ struct TMsgEntityCreated {
 	DECLARE_MSG_ID();
 };
 
-enum DMGTYPE {
-	UNKNOWN
-	, ENERGY_DECREASE
-	, LASER
-	, WATER
-};
-
 // Sent to all entities from a parsed file once all the entities
 // in that file has been created. Used to link entities between them
 struct TMsgEntityGroupCreated {
-  VHandles* handles;
-  DECLARE_MSG_ID();
+	VHandles* handles;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgLeaveBox {
+	DECLARE_MSG_ID();
 };
 
 struct TMsgDamage {
-	VEC3    source;
-	CHandle sender;
-	DMGTYPE dmgType;
-	float   points;
+	float modif;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgDie {
+	DECLARE_MSG_ID();
+};
+
+struct TMsgDamageSave {
+	float modif;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgStopDamage {
+	DECLARE_MSG_ID();
+};
+
+struct TMsgSetDamage {
+	float dmg;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgUnpossesDamage {
 	DECLARE_MSG_ID();
 };
 
@@ -49,11 +65,6 @@ struct TMsgSetTarget {
 
 struct TMsgSetPlayer {
 	CHandle player;
-	DECLARE_MSG_ID();
-};
-
-struct TMsgSetWaterType {
-	int type;
 	DECLARE_MSG_ID();
 };
 
@@ -141,7 +152,7 @@ struct TMsgCanRec {
 	DECLARE_MSG_ID();
 };
 
-struct TMsgTriggerIn{
+struct TMsgTriggerIn {
 	CHandle other;
 	DECLARE_MSG_ID();
 };
@@ -164,9 +175,13 @@ struct TMsgPlayerPolarize {
 };
 
 struct TMsgAddTag {
-  uint32_t tag_id;
-  DECLARE_MSG_ID();
+	uint32_t tag_id;
+	DECLARE_MSG_ID();
 };
 
+struct TMsgSetAnim {
+	std::string name;
+	DECLARE_MSG_ID();
+};
 
 #endif

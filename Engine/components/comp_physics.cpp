@@ -146,6 +146,7 @@ void TCompPhysics::update(float dt)
 		PxTransform curr_pose = rigidActor->getGlobalPose();
 		
 		CEntity *e = CHandle(this).getOwner();
+		if (!e) return;
 		TCompTransform *tmx = e->get<TCompTransform>();
 		CQuaternion quat = PxQuatToCQuaternion(curr_pose.q);
 		tmx->setRotation(quat);
@@ -168,6 +169,7 @@ bool TCompPhysics::createTriMeshShape()
 	if(entity_h.isValid()) e = entity_h;
 	if (e) {
 		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
+		assert(comp_static_mesh) ;
 		PxTriangleMesh *cookedMesh = PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0
 		pShape = PhysxManager->CreateTriangleMesh(cookedMesh,mStaticFriction, mDynamicFriction, mRestitution);
 		addRigidbodyScene();
@@ -250,9 +252,8 @@ bool TCompPhysics::addRigidbodyScene()
 		PxFilterData mFilterData = DEFAULT_DATA_STATIC;	
 		pActor = PhysxManager->CreateAndAddRigidStatic(&curr_pose, pShape);
 		pShape->release();
-		CEntity *m = CHandle(this).getOwner();
 		updateTagsSetupActor(mFilterData);
-		pActor->userData = m;
+		pActor->userData = CHandle(this).getOwner().ToVoidPt();
 		return true;
 	}
 	else if (mCollisionType == DYNAMIC_RB) {
@@ -264,9 +265,8 @@ bool TCompPhysics::addRigidbodyScene()
 		pActor = PhysxManager->CreateAndAddRigidDynamic(&curr_pose, pShape, 0.5f);
 		pShape->release();
 		rigidActor = pActor->isRigidDynamic();
-		CEntity *m = CHandle(this).getOwner();
 		updateTagsSetupActor(mFilterData);
-		pActor->userData = m;
+		pActor->userData = CHandle(this).getOwner().ToVoidPt();
 		pActor->isRigidBody()->setMass(mMass);
 		
 		return true;
@@ -277,9 +277,7 @@ bool TCompPhysics::addRigidbodyScene()
 		PxTransform curr_pose = PxTransform(p, q);
 		pActor = PhysxManager->CreateAndAddTrigger(&curr_pose, pShape);
 		pShape->release();
-		CEntity *m = CHandle(this).getOwner();
-		//CHandle h = CHandle(this).getOwner();
-		pActor->userData = m;
+		pActor->userData = CHandle(this).getOwner().ToVoidPt();
 
 		return true;
 	}

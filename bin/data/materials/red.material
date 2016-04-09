@@ -1,0 +1,3 @@
+<material tech="textured.tech">
+<texture slot="diffuse" name="textures/material1.dds"/>
+</material>

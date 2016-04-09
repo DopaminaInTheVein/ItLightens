@@ -1,0 +1,3 @@
+<static_mesh>
+    <slot mesh="meshes/speedy/speedy_jump.mesh" material="materials/madera.material"/>
+</static_mesh>

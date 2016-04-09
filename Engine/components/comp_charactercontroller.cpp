@@ -6,6 +6,7 @@
 #include "entity_tags.h"
 #include "comp_name.h"
 
+#include "handle\handle.h"
 #include "app_modules\io\io.h"
 
 void TCompCharacterController::ApplyGravity(float dt)
@@ -110,7 +111,7 @@ void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 		PxExtendedVec3 p = Vec3ToPxExVec3(mtx->getPosition());
 		p.y += mHeight + mRadius;	//add height value from capsule, center from collider at center of the shape
 		pActor->setPosition(p);
-		pActor->getActor()->userData = e;
+		pActor->getActor()->userData = CHandle(this).getOwner().ToVoidPt();
 		mFilter = DEFAULT_DATA_CC;
 		updateTags();
 	}
@@ -181,6 +182,7 @@ void TCompCharacterController::update(float dt)
 		PxExtendedVec3 curr_pos = pActor->getFootPosition();
 		//PxVec3 up_v = pActor->getUpDirection();	//get rotation
 		CEntity *e = CHandle(this).getOwner();
+		if (!e) return;
 		TCompTransform *tmx = e->get<TCompTransform>();
 		tmx->setPosition(PxExVec3ToVec3(curr_pos));
 		//tmx->setRotation(PxQuatToCQuaternion(curr_pose.q));

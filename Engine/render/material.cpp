@@ -20,13 +20,15 @@ IResource* createObjFromName<CMaterial>(const std::string& name) {
 }
 
 void CMaterial::onStartElement(const std::string &elem, MKeyValue &atts) {
-  if (elem == "material") {
-    auto tech_name = atts["tech"];
-    tech = Resources.get(tech_name.c_str())->as<CRenderTechnique>();
-  }
-  else if (elem == "texture") {
-    auto type_name = atts["type"];  // diffuse/specular/...
-    auto text_name = atts["name"];
+	if (elem == "material") {
+		auto tech_name = atts["tech"];
+		tech = Resources.get(tech_name.c_str())->as<CRenderTechnique>();
+	}
+	else if (elem == "texture") {
+		auto type_name = atts["type"];  // diffuse/specular/...
+		if (type_name == "") type_name = atts["slot"];
+		assert(type_name != "");
+		auto text_name = atts["name"];
 
 		TTextureSlot type_slot;
 		if (type_name == "diffuse") {

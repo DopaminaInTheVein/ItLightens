@@ -61,8 +61,10 @@ public:
 
 	void life_update() {
 		TTagID tagIDCamera = getID("camera_main");
-		CHandle camera_h = tags_manager.getFirstHavingTag(tagIDCamera);
+		CHandle camera_h = tags_manager.getFirstHavingTag("camera_main");
+		if (!camera_h.isValid()) return;
 		CEntity * camera_e = camera_h;
+		if (!camera_e) return;
 
 		TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
 		CEntity * target_e = camara3rd->target;

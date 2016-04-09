@@ -67,7 +67,7 @@
 extern CPhysxManager *PhysxManager;
 
 //DEBUG
-#include "debug/debug.h"
+#include "debug/debug_itlightens.h"
 extern CDebug * Debug;
 
 #endif

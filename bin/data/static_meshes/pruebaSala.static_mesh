@@ -1,0 +1,4 @@
+<static_mesh>
+  <slot mesh="meshes/pruebaSala__paredsala.mesh" material="materials/paredsala.material" mesh_idx="0"/>
+  <slot mesh="meshes/pruebaSala__sueloSala.mesh" material="materials/sueloSala.material" mesh_idx="1"/>
+</static_mesh>

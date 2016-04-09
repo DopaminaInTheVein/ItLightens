@@ -94,6 +94,7 @@ void beacon_controller::WaitInactive()
 void beacon_controller::Inactive()
 {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 	if (SBB::readInt(full_name) == INACTIVE) SendMessageEmpty();
@@ -116,6 +117,7 @@ void beacon_controller::Inactive()
 void beacon_controller::ActiveSonar()
 {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 
 	float yaw, pitch;
@@ -157,6 +159,7 @@ void beacon_controller::ActiveSonar()
 void beacon_controller::ActiveNothing()
 {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 
 	float yaw, pitch;
@@ -178,6 +181,7 @@ void beacon_controller::ActiveNothing()
 void beacon_controller::WaitToRemoveSonar()
 {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
@@ -217,6 +221,7 @@ void beacon_controller::WaitToRemoveSonar()
 void beacon_controller::WaitToRemoveNothing()
 {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
@@ -271,32 +276,41 @@ void beacon_controller::SetMyEntity() {
 
 void beacon_controller::SendMessageEmpty() {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
 	msg_empty.pos = curr_pos;
 
 	VHandles hs = tags_manager.getHandlesByTag(getID("AI_cientifico"));
-	for (CEntity *e : hs)
-		e->sendMsg(msg_empty);
+	for (CEntity *e : hs) {
+		if (e) {
+			e->sendMsg(msg_empty);
+		}
+	}
 }
 
 void beacon_controller::SendMessageRemove() {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
 	msg_remove.pos_beacon = curr_pos;
 
 	VHandles hs = tags_manager.getHandlesByTag(getID("AI_cientifico"));
-	for (CEntity *e : hs)
-		e->sendMsg(msg_remove);
+	for (CEntity *e : hs) {
+		if(e)
+			e->sendMsg(msg_remove);
+	}
 }
 
 void beacon_controller::SendMessageTaken() {
 	msg_taken.name = full_name;
 
 	VHandles hs = tags_manager.getHandlesByTag(getID("AI_cientifico"));
-	for (CEntity *e : hs)
-		e->sendMsg(msg_taken);
+	for (CEntity *e : hs) {
+		if(e)
+			e->sendMsg(msg_taken);
+	}
 }

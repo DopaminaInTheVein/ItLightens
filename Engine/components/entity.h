@@ -85,6 +85,7 @@ void renderInMenu();
   const char* getName() const;
   void setName(const char* new_name);
   bool hasName(const char* new_name) const;
+  bool hasTag(std::string tag);
 
 	// --------------------------------------------
 	CEntity() {

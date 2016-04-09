@@ -16,7 +16,9 @@ public:
 	void addTag(CHandle h, TTagID tag_id);
 	void removeTag(CHandle h, TTagID tag_id);
 	const VHandles& getHandlesByTag(TTagID tag_id) const;
+	const VHandles & getHandlesByTag(std::string tag_id) const;
 	CHandle getFirstHavingTag(TTagID tag_id) const;
+	CHandle getFirstHavingTag(std::string tag_id) const;
 	void getTagFromHandle(CHandle h_match, std::vector<TTagID>& out);
 
 	void renderInMenu();

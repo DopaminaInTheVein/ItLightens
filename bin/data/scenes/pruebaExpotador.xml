@@ -1,0 +1,598 @@
+<entities>
+<entity>
+<name
+   name="sc_1_box"
+/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/_sc1.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tag
+   name="camera_main"
+/>
+<camera
+   znear="1.0"
+   zfar="250.0"
+   fov="60.0"
+/>
+<controller_3rd_person/>
+<name
+   name="camController_1"
+/>
+<transform
+   pos="0 17.1863 0"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_1"
+/>
+<transform
+   pos="-0.0109349 7.21606 -6.99459"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_2"
+/>
+<transform
+   pos="-6.8353 7.21606 -0.011509"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_3"
+/>
+<transform
+   pos="6.88145 7.21606 0.0338356"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_4"
+/>
+<transform
+   pos="0.0344098 7.21606 6.85821"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_5"
+/>
+<transform
+   pos="8.62722 7.21606 -8.5363"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_6"
+/>
+<transform
+   pos="-8.58107 7.21606 -8.55898"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_7"
+/>
+<transform
+   pos="-8.5584 7.21606 8.62665"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_8"
+/>
+<transform
+   pos="8.60455 7.21606 8.60397"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_9"
+/>
+<transform
+   pos="-5.11221 7.21606 -5.13545"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_10"
+/>
+<transform
+   pos="-5.08954 7.21606 5.13511"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+<polarized
+   pol="plus"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_11"
+/>
+<transform
+   pos="5.15836 7.21606 5.2258"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_12"
+/>
+<transform
+   pos="5.13568 7.21606 -5.11278"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+<polarized
+   pol="plus"
+/>
+</entity>
+<entity>
+<tag
+   name="AI"
+/>
+<tag
+   name="AI_mole"
+/>
+<tag
+   name="AI_poss"
+/>
+<bt_mole
+   wpts_size="4"
+   wpt0_pos="13.7281 -1.36456 -10.2374"
+   wpt1_pos="10.8073 -1.66961 13.7462"
+   wpt2_pos="-10.2143 -2.72661 15.4328"
+   wpt3_pos="-15.5211 -0.0123775 -13.693"
+/>
+<player_mole/>
+<life
+   points="100"
+/>
+<name
+   name="mole_1"
+/>
+<transform
+   pos="0.0291334 -1.6384 -15.503"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/mole/mole.static_mesh"
+/>
+<character_controller
+   radius="0.5"
+   height="2.0"
+/>
+</entity>
+<entity>
+<name
+   name="victory_point_1"
+/>
+<transform
+   pos="-35.1702 0 -38.5884"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__victory.static_mesh"
+/>
+</entity>
+<entity>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="5.38 9.4122 0.68"
+/>
+<victory_point/>
+<name
+   name="trigger_1"
+/>
+<transform
+   pos="-35.1702 1.9055 -38.5884"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_13"
+/>
+<transform
+   pos="-34.8213 0 -33.4936"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<name
+   name="generator_1"
+/>
+<transform
+   pos="4.38609 -2.25879 -31.6495"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__generator.static_mesh"
+/>
+</entity>
+<entity>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.0"
+/>
+<generator/>
+<name
+   name="trigger_2"
+/>
+<transform
+   pos="4.38609 -2.25879 -31.6495"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tag
+   name="AI"
+/>
+<tag
+   name="AI_speedy"
+/>
+<tag
+   name="AI_poss"
+/>
+<bt_speedy
+   wpts_size="4"
+   wpt0_pos="-20.0 -2.76332 20.0"
+   wpt1_pos="-20.0 -0.615551 -20.0"
+   wpt2_pos="-30.015 0.076479 -20.0476"
+   wpt3_pos="-29.6259 -2.78291 19.7639"
+/>
+<player_speedy/>
+<life
+   points="50"
+/>
+<name
+   name="speedy_1"
+/>
+<transform
+   pos="0.618652 -2.38599 17.7096"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__speedy.static_mesh"
+/>
+<character_controller
+   radius="0.2"
+   height="1.7"
+/>
+</entity>
+<entity>
+<tag
+   name="AI"
+/>
+<tag
+   name="AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpts_size="5"
+   kpt0_type="seek"
+   kpt0_pos="34.0024 0 31.0278"
+   kpt0_wait="2"
+   kpt1_type="look"
+   kpt1_pos="28.809 0 14.644"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="22.0164 0 30.7727"
+   kpt2_wait="2"
+   kpt3_type="look"
+   kpt3_pos="28.7825 0 13.5601"
+   kpt3_wait="2"
+   kpt4_type="look"
+   kpt4_pos="6.70422 0 31.5691"
+   kpt4_wait="5"
+   jursidiction="27.9238 -2.59534 20.9154"
+   jurRadius="19.25"
+/>
+<name
+   name="guard_1"
+/>
+<transform
+   pos="29.3813 -2.59534 24.7328"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tag
+   name="beacon"
+/>
+<beacon/>
+<name
+   name="beacon_1"
+/>
+<transform
+   pos="-2.43738 -2.62433 18.0295"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__baliza.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"
+/>
+</entity>
+<entity>
+<tag
+   name="player"
+/>
+<player/>
+<life
+   points="10"
+/>
+<name
+   name="player_1"
+/>
+<transform
+   pos="-0.31781 0 5.69775"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__player.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="0.7"
+/>
+</entity>
+</entities>

@@ -2,6 +2,7 @@
 #include "entity.h"
 #include "comp_name.h"
 #include "imgui/imgui.h"
+#include "comp_tags.h"
 
 const char* CEntity::getName() const {
   TCompName* c = get<TCompName>();
@@ -20,6 +21,13 @@ void CEntity::setName(const char* new_name) {
 
 bool CEntity::hasName(const char* new_name) const {
   return strcmp(getName(), new_name) == 0;
+}
+
+bool CEntity::hasTag(std::string tag)
+{
+	TCompTags *tags = get<TCompTags>();
+	if (tags) return tags->hasTag(getID(tag.c_str()));
+	return false;
 }
 
 // -----------------------------

@@ -137,6 +137,7 @@ void ai_scientific::SeekWorkbench()
 
 void ai_scientific::AimToPos() {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
@@ -179,6 +180,7 @@ void ai_scientific::AimToPos() {
 void ai_scientific::MoveToPos()
 {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();

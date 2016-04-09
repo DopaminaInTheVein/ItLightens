@@ -114,7 +114,7 @@ bool player_controller::isDamaged() {
 
 void player_controller::rechargeEnergy()
 {
-	PROFILE_FUNCTION("recharge_eergy");
+	PROFILE_FUNCTION("recharge_energy");
 	TCompLife *life = myEntity->get<TCompLife>();
 	life->setMaxLife(max_life);
 	TCompCharacterController *p = myEntity->get<TCompCharacterController>();
@@ -343,7 +343,6 @@ void player_controller::UpdateInputActions()
 	PROFILE_FUNCTION("update input actions");
 	SetCharacterController();
 	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed())) {
-		energyDecreasal(getDeltaTime()*0.05f);
 		pol_state = PLUS;
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
@@ -357,7 +356,6 @@ void player_controller::UpdateInputActions()
 		RecalcAttractions();
 	}
 	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed())) {
-		energyDecreasal(getDeltaTime()*0.05f);
 		pol_state = MINUS;
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
@@ -387,17 +385,6 @@ void player_controller::UpdateInputActions()
 		TMsgAISetStunned msg;
 		msg.stunned = true;
 		ePoss->sendMsg(msg);
-	}
-	else if (io->mouse.left.isPressed() || io->joystick.button_X.isPressed()) {
-		SetMyEntity();
-		TCompTransform* player_transform = myEntity->get<TCompTransform>();
-		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
-		for (CEntity * ptr : ptsRecover) {
-			TCompTransform * ptr_trn = ptr->get<TCompTransform>();
-			if (3 > simpleDist(ptr_trn->getPosition(), player_transform->getPosition())) {
-				energyDecreasal(-15.0f*getDeltaTime());
-			}
-		}
 	}
 	
 
@@ -455,6 +442,7 @@ void player_controller::UpdatePossession() {
 			CEntity * camera_e = tags_manager.getFirstHavingTag(getID("camera_main"));
 			TMsgSetTarget msgTarg;
 			msgTarg.target = ePoss;
+			msgTarg.who = PLAYER;
 			camera_e->sendMsg(msgTarg);
 
 			//Se desactiva el player
@@ -482,7 +470,9 @@ void player_controller::recalcPossassable() {
 	currentPossessable = CHandle();
 	VHandles possessables = tags_manager.getHandlesByTag(getID("AI_poss"));
 	for (CHandle hPoss : possessables) {
+		if (!hPoss.isValid()) continue;
 		CEntity* ePoss = hPoss;
+		if (!ePoss) continue;
 		TCompTransform* tPoss = ePoss->get<TCompTransform>();
 		VEC3 posPoss = tPoss->getPosition();
 		float dist = realDist(player_position, posPoss);
@@ -530,7 +520,9 @@ bool player_controller::nearStunable() {
 	currentStunable = CHandle();
 	VHandles stuneables = tags_manager.getHandlesByTag(getID("AI_poss"));
 	for (CHandle hPoss : stuneables) {
+		if (!hPoss.isValid()) continue;
 		CEntity* ePoss = hPoss;
+		if (!ePoss) continue;
 		TCompTransform* tPoss = ePoss->get<TCompTransform>();
 		VEC3 posPoss = tPoss->getPosition();
 		float dist = realDist(player_position, posPoss);
@@ -602,18 +594,6 @@ void player_controller::update_msgs()
 {
 	PROFILE_FUNCTION("updat mesgs");
 	ui.addTextInstructions("Press 'l-shift' to possess someone\n");
-}
-
-void player_controller::onDamage(const TMsgDamage& msg) {
-	PROFILE_FUNCTION("onDamage");
-	switch (msg.dmgType) {
-	case LASER:
-		____TIMER_RESET_(timerDamaged);
-		break;
-	case WATER:
-		____TIMER_RESET_(timerDamaged);
-		break;
-	}
 }
 
 void player_controller::onWirePass(const TMsgWirePass & msg)
