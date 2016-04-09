@@ -4,8 +4,6 @@
 #include "logic/aicontroller.h"
 #include "logic/sbb.h"
 
-
-
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
 #include "components/entity.h"

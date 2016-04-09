@@ -251,9 +251,8 @@ bool TCompPhysics::addRigidbodyScene()
 		PxFilterData mFilterData = DEFAULT_DATA_STATIC;	
 		pActor = PhysxManager->CreateAndAddRigidStatic(&curr_pose, pShape);
 		pShape->release();
-		CEntity *m = CHandle(this).getOwner();
 		updateTagsSetupActor(mFilterData);
-		pActor->userData = m;
+		pActor->userData = CHandle(this).getOwner().ToVoidPt();
 		return true;
 	}
 	else if (mCollisionType == DYNAMIC_RB) {
@@ -265,9 +264,8 @@ bool TCompPhysics::addRigidbodyScene()
 		pActor = PhysxManager->CreateAndAddRigidDynamic(&curr_pose, pShape, 0.5f);
 		pShape->release();
 		rigidActor = pActor->isRigidDynamic();
-		CEntity *m = CHandle(this).getOwner();
 		updateTagsSetupActor(mFilterData);
-		pActor->userData = m;
+		pActor->userData = CHandle(this).getOwner().ToVoidPt();
 		pActor->isRigidBody()->setMass(mMass);
 		
 		return true;
@@ -278,9 +276,7 @@ bool TCompPhysics::addRigidbodyScene()
 		PxTransform curr_pose = PxTransform(p, q);
 		pActor = PhysxManager->CreateAndAddTrigger(&curr_pose, pShape);
 		pShape->release();
-		CEntity *m = CHandle(this).getOwner();
-		//CHandle h = CHandle(this).getOwner();
-		pActor->userData = m;
+		pActor->userData = CHandle(this).getOwner().ToVoidPt();
 
 		return true;
 	}
@@ -330,7 +326,7 @@ void TCompPhysics::AddVelocity(VEC3 velocity)
 
 void TCompPhysics::setPosition(VEC3 position, CQuaternion rotation)
 {
-	bool isKinematic = false;
+	bool isKinematic = false;	//by default no kinematic
 	PxRigidDynamic *rd = pActor->isRigidDynamic();
 	PxTransform tr = PxTransform(PhysxConversion::Vec3ToPxVec3(position), PhysxConversion::CQuaternionToPxQuat(rotation));
 
@@ -338,12 +334,12 @@ void TCompPhysics::setPosition(VEC3 position, CQuaternion rotation)
 		isKinematic = rd->getRigidDynamicFlags().isSet(PxRigidBodyFlag::eKINEMATIC);	
 	}
 
-	if (!isKinematic) {
-		pActor->isRigidActor()->setGlobalPose(tr);
+	if (!isKinematic) {	//no kinematic object, 
+		pActor->isRigidActor()->setGlobalPose(tr);		//setposition without using simulation physx
 	}
-	else {
+	else {				//if kinematic use setkinematicTarget
 		assert(rd);
-		rd->setKinematicTarget(tr);
+		rd->setKinematicTarget(tr);	//use physx, can push, etc
 	}
 }
 

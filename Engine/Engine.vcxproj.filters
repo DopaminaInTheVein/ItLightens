@@ -129,9 +129,6 @@
     <ClCompile Include="logic\ai_scientific.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="debug\debug.cpp">
-      <Filter>debug</Filter>
-    </ClCompile>
     <ClCompile Include="logic\bt_guard.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -331,6 +328,159 @@
     <ClCompile Include="components\comp_polarized.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="SLB\src\Allocator.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Class.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\ClassHelpers.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\ClassInfo.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Debug.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Error.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\FuncCall.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Hybrid.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Instance.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Iterator.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\LuaCall.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Manager.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Object.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Property.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Script.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\SLB.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Table.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Type.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Value.cpp">
+      <Filter>slb\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lstate.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lstring.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lstrlib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ltable.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ltablib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ltm.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lundump.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lvm.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lzio.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lapi.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lauxlib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lbaselib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lbitlib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lcode.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lcorolib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lctype.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ldblib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ldebug.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ldo.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ldump.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lfunc.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lgc.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\linit.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\liolib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\llex.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lmathlib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lmem.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\loadlib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lobject.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lopcodes.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\loslib.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lparser.c">
+      <Filter>slb\src\lua</Filter>
+    </ClCompile>
     <ClCompile Include="render\draw_utils.cpp">
       <Filter>render</Filter>
     </ClCompile>
@@ -339,6 +489,27 @@
     </ClCompile>
     <ClCompile Include="components\comp_platform.cpp">
       <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\comp_bone_tracker.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="render\render_config.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\render_to_texture.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\render\module_render_deferred.cpp">
+      <Filter>app_modules\render</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\logic_manager\logic_manager.cpp">
+      <Filter>app_modules\logic_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp">
+      <Filter>app_modules\logic_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\debug_itlightens.cpp">
+      <Filter>debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -495,9 +666,6 @@
     </ClInclude>
     <ClInclude Include="logic\ai_scientific.h">
       <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="debug\debug.h">
-      <Filter>debug</Filter>
     </ClInclude>
     <ClInclude Include="logic\bt_guard.h">
       <Filter>logic</Filter>
@@ -706,6 +874,186 @@
     <ClInclude Include="app_modules\gameController.h">
       <Filter>app_modules\game</Filter>
     </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Allocator.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Class.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\ClassHelpers.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\ClassInfo.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Conversor.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Debug.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Error.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Export.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\FuncCall.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\FuncCall_inline.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Hybrid.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Instance.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Iterator.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\lua.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\LuaCall.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Manager.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Mutex.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Object.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Private_FuncCall.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Property.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\PushGet.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\ref_ptr.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Script.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\SLB.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\SPP.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\StatefulHybrid.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\String.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Table.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Type.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\TypeInfoWrapper.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\util.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\Value.hpp">
+      <Filter>slb\include\SLB</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\lua\lauxlib.h">
+      <Filter>slb\include\SLB\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\lua\lua.h">
+      <Filter>slb\include\SLB\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\lua\luaconf.h">
+      <Filter>slb\include\SLB\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\include\SLB\lua\lualib.h">
+      <Filter>slb\include\SLB\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lparser.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lstate.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lstring.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\ltable.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\ltm.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lua.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\luaconf.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lualib.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lundump.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lvm.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lzio.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lapi.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lauxlib.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lcode.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lctype.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\ldebug.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\ldo.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lfunc.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lgc.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\llex.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\llimits.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lmem.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lobject.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SLB\src\lua\lopcodes.h">
+      <Filter>slb\src\lua</Filter>
+    </ClInclude>
     <ClInclude Include="..\bin\data\shaders\contants\ctes_bones.h">
       <Filter>render\contants</Filter>
     </ClInclude>
@@ -729,6 +1077,33 @@
     </ClInclude>
     <ClInclude Include="components\comp_platform.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tags.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\comp_bone_tracker.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="render\render_config.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\render_to_texture.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\render\module_render_deferred.h">
+      <Filter>app_modules\render</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\timer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\logic_manager\logic_manager.h">
+      <Filter>app_modules\logic_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\logic_manager\slb_public_functions.h">
+      <Filter>app_modules\logic_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\debug_itlightens.h">
+      <Filter>debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -857,6 +1232,30 @@
     </Filter>
     <Filter Include="app_modules\game">
       <UniqueIdentifier>{cbacce40-a6c6-44fb-95a1-bcfa4dbfeab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="slb">
+      <UniqueIdentifier>{7a151aba-ae83-4721-a1ee-2138e434fd04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="slb\include">
+      <UniqueIdentifier>{37534ed8-ca7a-4ef0-a557-ab176e15b55a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="slb\include\SLB">
+      <UniqueIdentifier>{978e199a-de05-4da0-8374-2005b1b67ed1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="slb\include\SLB\lua">
+      <UniqueIdentifier>{d35db151-d749-4cac-81a8-60812245ad4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="slb\src">
+      <UniqueIdentifier>{80627af8-b34b-4b65-9691-139b3a0e470c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="slb\src\lua">
+      <UniqueIdentifier>{91188a86-0ddf-46b8-8e3e-ff46e7f5cbc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\render">
+      <UniqueIdentifier>{8ad41bdc-bebe-4172-833d-05296e9cebe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\logic_manager">
+      <UniqueIdentifier>{224fc8a4-4ae1-4cb8-a9ef-6fa325768a77}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

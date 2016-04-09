@@ -23,15 +23,12 @@ void VSSkin(
 
 	float4 skinned_Pos = mul(iPos, skin_mtx);
 
-	float4 worldPos = mul(skinned_Pos, World);
-	//worldPos.xyz *= 20.f; (para verlo más grande)
-
 	float4 norm = normalize(mul(Rotation, iNormal));
 	float diffusebrightness = saturate(dot(norm, lightvec));
 	oCol = ambientcol;		//ambient as base color
 	oCol += lightcol * diffusebrightness;
 
-	oPos = mul(worldPos, ViewProjection);
+	oPos = mul(skinned_Pos, ViewProjection);
 	oTex0 = iTex0;
 	//  oNormal = mul(iNormal, (float3x3)skin_mtx);
 }

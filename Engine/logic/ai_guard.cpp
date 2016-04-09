@@ -422,7 +422,6 @@ bool ai_guard::playerVisible() {
 						return true;
 					}
 					else {
-						//TODO RAYCAST PLAYER
 						PxRaycastBuffer hit;
 						bool ret = rayCastToPlayer(1, distRay,hit);
 						if (ret) { //No bloquea vision
@@ -475,7 +474,6 @@ void ai_guard::shootToPlayer() {
 		distRay = realDist(myPos, posPlayer);
 	}
 	else {
-		//RayCast to player //TODO RAYCAST
 		PxRaycastBuffer hit;
 		bool ret = rayCastToPlayer(1, distRay, hit);
 		if (ret) {

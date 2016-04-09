@@ -81,7 +81,7 @@ void v_crystal(
 	//float diffusebrightness = saturate(dot(norm, lightvec));
 	float diffusebrightness = saturate(dot(float3(0, 0, 0), lightvec));
 	oCol += lightcol * diffusebrightness;
-	oCol += -float4(0, 0, 0, 0.5);
+	oCol += -float4(0, 0, 0, 0.7);
 	oTex0 = iTex0;
 }
 

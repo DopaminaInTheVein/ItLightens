@@ -15,25 +15,25 @@ public:
 
 	//type object
 	enum descObjectFlags {
-		ePLAYER_CONTROLLED = (1 << 0),
-		ePLAYER_BASE = (1 << 1),
-		eANYONE = (1 << 2),
-		eNPC = (1 << 3),
-		eLIQUID = (1 << 4),
-		eCRYSTAL = (1 << 5),
-		eGUARD = (1 << 6),
-		ePOSSEABLE = (1 << 7),
-		eBOMB = (1 << 8),
-		eOBJECT = (1 << 9),
-		eSTATIC_OBJECT = (1 << 10),
-		eALL_STATICS = (1 << 11),
-		eALL_OBJECTS = (1 << 12),
+		ePLAYER_CONTROLLED 	= (1 << 0),
+		ePLAYER_BASE 		= (1 << 1),
+		eANYONE 		= (1 << 2),
+		eNPC 			= (1 << 3),
+		eLIQUID 		= (1 << 4),
+		eCRYSTAL 		= (1 << 5),
+		eGUARD 			= (1 << 6),
+		ePOSSEABLE 		= (1 << 7),
+		eBOMB 			= (1 << 8),
+		eOBJECT 		= (1 << 9),
+		eSTATIC_OBJECT 		= (1 << 10),
+		eALL_STATICS 		= (1 << 11),
+		eALL_OBJECTS 		= (1 << 12),
 	};
 
 	//behaviour object
 	enum descObjectBehaviour {
-		eCOLLISION = (1 << 0),
-		eCAN_TRIGGER = (1 << 2),
+		eCOLLISION 		= (1 << 0),
+		eCAN_TRIGGER 		= (1 << 2),
 	};
 
 

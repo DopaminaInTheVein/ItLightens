@@ -8,7 +8,9 @@
 #include "comp_render_static_mesh.h"
 #include "comp_controller_3rd_person.h"
 #include "comp_life.h"
+#include "comp_tags.h"
 #include "skeleton/comp_skeleton.h"
+#include "skeleton/comp_bone_tracker.h"
 #include "comp_victory_point.h"
 #include "comp_platform.h"
 

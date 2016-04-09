@@ -102,9 +102,9 @@ public:
 	PxControllerManager*	GetCharacterControllerManager() const { return mManagerControllers; }
 	PxScene*				GetActiveScene() { return mScene; }
 
-	PxFilterData&			GetDefaultQueryTagsDynamic() { return ft_dynamic; }
-	PxFilterData&			GetDefaultQueryTagsStatic() { return ft_static; }
-	PxFilterData&			GetDefaultQueryTagsCC() { return ft_cc; }
+	PxFilterData			GetDefaultQueryTagsDynamic() { return ft_dynamic; }
+	PxFilterData			GetDefaultQueryTagsStatic() { return ft_static; }
+	PxFilterData			GetDefaultQueryTagsCC() { return ft_cc; }
 
 	//-----------------------------------------------------------------------------------------------------
 	//							Primitives Gemoetries
@@ -261,7 +261,6 @@ public:
 		return PxControllerBehaviorFlag::eCCT_SLIDE | PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
 	}
 	virtual PxControllerBehaviorFlags getBehaviorFlags(const PxController& controller) {
-		//return PxControllerBehaviorFlag::eCCT_SLIDE | PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
 		return PxControllerBehaviorFlags(0);
 	}
 	virtual PxControllerBehaviorFlags getBehaviorFlags(const PxObstacle& obstacle) {

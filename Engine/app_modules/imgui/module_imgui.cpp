@@ -11,8 +11,6 @@
 #pragma comment(lib, "imgui.lib" )
 
 #include "handle/object_manager.h"
-#include "debug/debug.h"
-#include "debug\console.h"
 
 #include <Commdlg.h>
 
@@ -146,6 +144,7 @@ void CImGuiModule::update(float dt) {
 		ImGui::Text("Application SELECTED ENTITY - TODO");
 	}if (ImGui::CollapsingHeader("Entity by Tag")) {
 		ImGui::Text("Application ENTITY TAG - TODO");
+		tags_manager.renderInMenu();
 	}
 
 	ImGui::End();
@@ -162,13 +161,10 @@ void CImGuiModule::update(float dt) {
 }
 
 void CImGuiModule::render() {
-	//TODO: better way of deactive zbuffer?
 
-	Render.ctx->OMSetRenderTargets(1, &Render.renderTargetView, NULL);
+	activateZ(ZCFG_ALL_DISABLED);
 	ImGui::Render();
-	Render.ctx->OMSetRenderTargets(1, &Render.renderTargetView, Render.zbuffer);
-	//Debug->render();		//need to be called on game.cpp for now to get the technique and shader variables
-	//TODO: fix that
+
 }
 
 bool CImGuiModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {

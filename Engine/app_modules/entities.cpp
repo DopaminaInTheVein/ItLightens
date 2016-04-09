@@ -46,6 +46,8 @@ DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
+DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
+DECL_OBJ_MANAGER("tags", TCompTags);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 
@@ -59,7 +61,6 @@ DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
-
 
 CCamera * camera;
 
@@ -91,6 +92,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompWire>()->init(10);
 	getHandleManager<TCompGenerator>()->init(10);
 	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -114,6 +117,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
@@ -127,6 +131,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
@@ -182,6 +187,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgDamage, onDamage);
 	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
 
+	//Set animations
+	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, setAnim);
+
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
 	assert(is_ok);
@@ -216,12 +224,17 @@ bool CEntitiesModule::start() {
 	TTagID tagIDrec = getID("recover_point");
 
 	// Camara del player
-	CHandle camera = tags_manager.getFirstHavingTag(tagIDcamera);
+	CHandle camera = tags_manager.getFirstHavingTag("camera_main");
 	CEntity * camera_e = camera;
+	if (!camera_e) {
+		//main camera needed
+		fatal("main camera needed!!\n");
+		assert(false);
+	}
 	TCompCamera * pcam = camera_e->get<TCompCamera>();
 
 	// Player real
-	CHandle t = tags_manager.getFirstHavingTag(getID("player"));
+	CHandle t = tags_manager.getFirstHavingTag("player");
 	CEntity * target_e = t;
 
 	// Set the player in the 3rdPersonController
@@ -304,12 +317,18 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
 
+	if (use_parallel)
+		getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
+	else
+		getHandleManager<TCompSkeleton>()->updateAll(dt);
+
+	getHandleManager<TCompBoneTracker>()->updateAll(dt);
+
 	getHandleManager<bt_guard>()->updateAll(dt);
 	getHandleManager<bt_mole>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);
-	getHandleManager<TCompSkeleton>()->updateAll(dt);
 	getHandleManager<bt_speedy>()->updateAll(dt);
 	getHandleManager<water_controller>()->updateAll(dt);
 
@@ -349,6 +368,12 @@ void CEntitiesModule::renderInMenu() {
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Entities by Tag...")) {
+		// Show all defined tags
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("Entities by Tag...")) {
+		tags_manager.renderInMenu();
 		// Show all defined tags
 		ImGui::TreePop();
 	}

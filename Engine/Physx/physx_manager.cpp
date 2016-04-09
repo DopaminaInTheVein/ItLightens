@@ -11,22 +11,19 @@
 
 
 void CPhysxManager::setFtDynamic()
-{
-	ft_dynamic = PxFilterData();
+{	
 	ft_dynamic.word0 = ItLightensFilter::eOBJECT | ItLightensFilter::eALL_OBJECTS;
 	ft_dynamic.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
 }
 
 void CPhysxManager::setFtStatic()
 {
-	ft_static = PxFilterData();
 	ft_static.word0 = ItLightensFilter::eSTATIC_OBJECT | ItLightensFilter::eALL_OBJECTS | ItLightensFilter::eALL_STATICS;
 	ft_static.word1 = ItLightensFilter::eCOLLISION;
 }
 
 void CPhysxManager::setFtCC()
 {
-	ft_cc = PxFilterData();
 	ft_cc.word0 = ItLightensFilter::eANYONE | ItLightensFilter::eALL_OBJECTS;
 	ft_cc.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
 }
@@ -426,24 +423,25 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 		
 		PxFilterData fd = pair.otherShape->getQueryFilterData();
 		if (fd.word1 & (ItLightensFilter::eCAN_TRIGGER)) {
-			//CHandle* h = CHandle::getHandleFromVoid(pair.otherActor->userData);
-			//CEntity* e_trigger = CHandle::getHandleFromptr(h);
+
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_LOST)) {
-				CEntity* e_trigger = static_cast<CEntity*>(pair.triggerActor->userData);
-				CEntity* e_active = static_cast<CEntity*>(pair.otherActor->userData);
-				//OnTriggerExit()
+				CEntity *e_trigger = CHandle(pair.triggerActor->userData);
+				CEntity *e_active = CHandle(pair.otherActor->userData);
+
 				TMsgTriggerOut msg;
 				msg.other = CHandle(e_active);
 				e_trigger->sendMsg(msg);
 			}
 
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_FOUND)) {
-				CEntity* e_trigger = static_cast<CEntity*>(pair.triggerActor->userData);
-				CEntity* e_active = static_cast<CEntity*>(pair.otherActor->userData);
-				//OnTriggerEnter()
+
+
+				CEntity *e_trigger = CHandle(pair.triggerActor->userData);
+				CEntity *e_active = CHandle(pair.otherActor->userData);
 				TMsgTriggerIn msg;
 				msg.other = CHandle(e_active);
 				e_trigger->sendMsg(msg);
+	
 			}
 
 		}
@@ -457,16 +455,6 @@ void	CPhysxManager::onSleep(PxActor **actors, PxU32 count) {}
 void	CPhysxManager::onContact(const PxContactPairHeader &pairHeader, const PxContactPair *pairs, PxU32 nbPairs) {}
 void	CPhysxManager::onConstraintBreak(PxConstraintInfo *constraints, PxU32 count) {}
 
-/*PxQueryHitType::Enum CPhysxManager::postFilter(const PxFilterData & filterData, const PxQueryHit & hit)
-{
-	return PxQueryHitType::Enum();
-}
-
-PxQueryHitType::Enum CPhysxManager::preFilter(const PxFilterData & filterData, const PxShape * shape, const PxRigidActor * actor, PxHitFlags & queryFlags)
-{
-	return PxQueryHitType::Enum();
-}
-*/
 #pragma endregion
 
 //#########################################################################################################
@@ -573,8 +561,7 @@ PxTransform PhysxConversion::ToPxTransform(const VEC3 & pos, const CQuaternion &
 CHandle PhysxConversion::GetEntityHandle(PxActor & a)
 {
 	if(&a){
-		CEntity* e = static_cast<CEntity*>(a.userData);
-		return CHandle(e);
+		return CHandle(a.userData);
 	}
 	else{
 		return CHandle(); //handle not valid

@@ -8,26 +8,30 @@
 using namespace PhysxConversion;
 
 //Character controller, for now only support to capsules collision
-class TCompCharacterController : public TCompBase, public PxUserControllerHitReport {
-	float mRadius		= 0.0f;
-	float mHeight		= 0.0f;
-	float mSpeedYAxis	= 0.0f;
-	float mMaxYimpulse	= 7.0f;		//max impulse for yaxis, to block acumulating impulse forces
-	float mFriction		= 15.0f;
-	float eOffsetSpeed	= 0.02f;
+class TCompCharacterController : public TCompBase {
+	float							mRadius				= 0.0f;
+	float							mHeight				= 0.0f;
+	float							mSpeedYAxis			= 0.0f;
+	float							mMaxYimpulse		= 7.0f;		//max impulse for yaxis, to block acumulating impulse forces
+	float							mFriction			= 15.0f;
+	float							eOffsetSpeed		= 0.02f;
 
-	bool mActive = true;
-	bool mAffectGravity = true;
-	bool mOnGround = false;
+	bool							mActive				= true;
+	bool							mAffectGravity		= true;
+	bool							mOnGround			= false;
 
-	VEC3 mToMove		= VEC3(0.0f, 0.0f, 0.0f);
-	VEC3 mSpeed		= VEC3(0.0f, 0.0f, 0.0f);
+	VEC3							mToMove				= VEC3(0.0f, 0.0f, 0.0f);
+	VEC3							mSpeed				= VEC3(0.0f, 0.0f, 0.0f);
 
-	PxController* pActor = nullptr;
+	PxController*					pActor				= nullptr;
 
-	PxControllerCollisionFlags mFlagsCollisions;
-	PxControllerBehaviorFlags mFlagsBehavior;
-	PxControllerFilters mFilter = PxControllerFilters();
+	PxFilterData					mFilter				= PxFilterData();
+
+	PxControllerCollisionFlags		mFlagsCollisions;
+	PxControllerFilters				mFilterController	= PxControllerFilters(&mFilter, PhysxManager);
+
+	
+
 	void ApplyGravity(float dt);
 
 	void ApplyPendingMoves();
@@ -65,7 +69,7 @@ public:
 	// load Xml
 	void onCreate(const TMsgEntityCreated&);
 
-	void updateTags(PxFilterData& filter);
+	void updateTags();
 
 	void teleport(const PxVec3 & pos);
 
@@ -78,11 +82,6 @@ public:
 	void SetGravity(bool isActive) { mAffectGravity = isActive; }
 	VEC3 getPosition();
 	void update(float dt);
-
-	//virtual fucntions from PxUserControllerHitReport
-	void onShapeHit(const PxControllerShapeHit &hit);
-	void onControllerHit(const PxControllersHit &hit);
-	void onObstacleHit(const PxControllerObstacleHit &hit);
 };
 
 

@@ -2,6 +2,7 @@
 #define INC_COMPONENTS_MSGS_H_
 
 #include "handle/msgs.h"
+#include "components/entity_tags.h"
 
 struct TMsgEntityCreated {
 	DECLARE_MSG_ID();
@@ -13,6 +14,14 @@ enum DMGTYPE {
 	, LASER
 	, WATER
 };
+
+// Sent to all entities from a parsed file once all the entities
+// in that file has been created. Used to link entities between them
+struct TMsgEntityGroupCreated {
+	VHandles* handles;
+	DECLARE_MSG_ID();
+};
+
 struct TMsgDamage {
 	VEC3    source;
 	CHandle sender;
@@ -132,7 +141,7 @@ struct TMsgCanRec {
 	DECLARE_MSG_ID();
 };
 
-struct TMsgTriggerIn{
+struct TMsgTriggerIn {
 	CHandle other;
 	DECLARE_MSG_ID();
 };
@@ -154,5 +163,14 @@ struct TMsgPlayerPolarize {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgAddTag {
+	uint32_t tag_id;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgSetAnim {
+	std::string name;
+	DECLARE_MSG_ID();
+};
 
 #endif

@@ -3,6 +3,14 @@
 
 #include "render/shader_cte.h"
 
+bool createDepthBuffer(
+    int xres
+  , int yres
+  , DXGI_FORMAT depth_format
+  , ID3D11Texture2D** out_depth_resource
+  , ID3D11DepthStencilView** out_depth_stencil_view
+  );
+
 //void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color);
 
 #include "contants/ctes_camera.h"

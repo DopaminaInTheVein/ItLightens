@@ -2,6 +2,8 @@
 #define INC_WINDOWS_APP_H_
 
 #include <windows.h>
+#include "utils\timer.h"
+
 
 class IAppModule;
 
@@ -37,6 +39,8 @@ public:
 	}
 
 	static CApp& get();
+
+	CTimer timer_app;
 
 private:
 

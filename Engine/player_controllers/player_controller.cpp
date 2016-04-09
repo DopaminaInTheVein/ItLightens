@@ -156,11 +156,9 @@ void player_controller::myUpdate() {
 	PROFILE_FUNCTION("player controller: MY_update");
 	SetMyEntity();
 
-
 	TCompTransform *m = myEntity->get<TCompTransform>();
 
 	____TIMER__UPDATE_(timerDamaged);
-	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 pos = player_transform->getPosition();
 	if (!isDamaged()) {

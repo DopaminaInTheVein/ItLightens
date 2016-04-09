@@ -1,7 +1,7 @@
 #ifndef INC_GAME_CONTROLLER_H_
 #define INC_GAME_CONTROLLER_H_
 
-#include "debug\debug.h"
+#include "debug\debug_itlightens.h"
 #include "app_module.h"
 #include "io\io.h"
 

@@ -63,8 +63,6 @@ public:
 		}
 
 		if (rigidActor) rigidActor->release();
-
-		if (pShape)	pShape->release();
 	}
 
 	void updateTagsSetupActor(PxFilterData& filter);

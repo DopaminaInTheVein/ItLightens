@@ -34,11 +34,11 @@ void CHandle::setOwner(CHandle new_owner) {
 		hm->setOwner(*this, new_owner);
 }
 
-CHandle CHandle::getOwner() {
-	auto hm = CHandleManager::getByType(type);
-	if (hm)
-		return hm->getOwner(*this);
-	return CHandle();
+CHandle CHandle::getOwner() const {
+  auto hm = CHandleManager::getByType(type);
+  if (hm)
+    return hm->getOwner(*this);
+  return CHandle();
 }
 
 bool CHandle::hasTag(std::string tag)
