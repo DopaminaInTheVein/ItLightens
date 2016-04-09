@@ -87,6 +87,7 @@ void TCompSkeleton::renderInMenu() {
 void TCompSkeleton::update(float dt) {
 	// Transfer our current world location to the cal3d model
 	CEntity* e = CHandle(this).getOwner();
+	if (!e) return;
 	TCompTransform* tmx = e->get<TCompTransform>();
 	model->getMixer()->extra_trans = Engine2Cal(tmx->getPosition());
 	model->getMixer()->extra_rotation = Engine2Cal(tmx->getRotation());

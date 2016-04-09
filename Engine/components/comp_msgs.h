@@ -8,13 +8,6 @@ struct TMsgEntityCreated {
 	DECLARE_MSG_ID();
 };
 
-enum DMGTYPE {
-	UNKNOWN
-	, ENERGY_DECREASE
-	, LASER
-	, WATER
-};
-
 // Sent to all entities from a parsed file once all the entities
 // in that file has been created. Used to link entities between them
 struct TMsgEntityGroupCreated {
@@ -22,11 +15,34 @@ struct TMsgEntityGroupCreated {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgLeaveBox {
+	DECLARE_MSG_ID();
+};
+
 struct TMsgDamage {
-	VEC3    source;
-	CHandle sender;
-	DMGTYPE dmgType;
-	float   points;
+	float modif;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgDie {
+	DECLARE_MSG_ID();
+};
+
+struct TMsgDamageSave {
+	float modif;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgStopDamage {
+	DECLARE_MSG_ID();
+};
+
+struct TMsgSetDamage {
+	float dmg;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgUnpossesDamage {
 	DECLARE_MSG_ID();
 };
 

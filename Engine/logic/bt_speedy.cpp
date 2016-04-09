@@ -73,6 +73,7 @@ void bt_speedy::Init() {
 void bt_speedy::update(float elapsed) {
 	// Update transforms
 	SetMyEntity();
+	if (!myEntity) return;
 	transform = myEntity->get<TCompTransform>();
 	CEntity * player_e = player;
 	player_transform = player_e->get<TCompTransform>();

@@ -459,7 +459,9 @@ bool ai_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) 
 
 void ai_guard::shootToPlayer() {
 	//If cant shoot returns
-	if (noShoot) return;
+	if (noShoot) {
+		return;
+	}
 
 	//Values
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
@@ -468,6 +470,7 @@ void ai_guard::shootToPlayer() {
 	float distance = squaredDistXZ(myPos, posPlayer);
 
 	bool damage = false;
+	bool sendDamage = false;
 	float distRay;
 	if (SBB::readBool("possMode")) {
 		damage = true;
@@ -485,13 +488,18 @@ void ai_guard::shootToPlayer() {
 	}
 
 	//Do damage
-	if (damage) {
+	if (damage && !sendDamage) {
+		sendDamage = !sendDamage;
 		CEntity* ePlayer = getPlayer();
 		TMsgDamage dmg;
-		dmg.source = getTransform()->getPosition();
-		dmg.sender = myParent;
-		dmg.points = DAMAGE_LASER * getDeltaTime();
-		dmg.dmgType = LASER;
+		dmg.modif = 10.0f;
+		ePlayer->sendMsg(dmg);
+	}
+
+	if (!damage && sendDamage) {
+		sendDamage = !sendDamage;
+		CEntity* ePlayer = getPlayer();
+		TMsgStopDamage dmg;
 		ePlayer->sendMsg(dmg);
 	}
 

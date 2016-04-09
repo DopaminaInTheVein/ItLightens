@@ -50,6 +50,7 @@ DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
 DECL_OBJ_MANAGER("tags", TCompTags);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
+DECL_OBJ_MANAGER("box", TCompBox);
 
 //Physics
 DECL_OBJ_MANAGER("rigidbody", TCompPhysics);
@@ -94,6 +95,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -113,7 +115,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
-	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
@@ -136,6 +137,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
+
+	//box
+	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
 
 	//bombs
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
@@ -180,15 +184,22 @@ bool CEntitiesModule::start() {
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
 
-	//Damage
-	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller_cientifico, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller_speedy, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
+	//Dead
+	//anything for now
+	/*SUBSCRIBE(player_controller, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_cientifico, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_speedy, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_mole, TMsgDie, onDie);*/
 
-	//Set animations
-	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, setAnim);
+	//Damage
+	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);		//init damage scales
+	SUBSCRIBE(TCompLife, TMsgDamageSave, onSetSaveDamage);
+	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
+	SUBSCRIBE(TCompLife, TMsgSetDamage, onReciveDamage);
+	SUBSCRIBE(TCompLife, TMsgStopDamage, onStopDamage);
+	SUBSCRIBE(player_controller_cientifico, TMsgUnpossesDamage, onForceUnPosses);
+	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
+	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
@@ -216,8 +227,6 @@ bool CEntitiesModule::start() {
 	SBB::postNavmesh(nav);
 
 	TTagID tagIDcamera = getID("camera_main");
-	TTagID tagIDbox = getID("box");
-	TTagID tagIDboxleave = getID("box_leavepoint");
 	TTagID tagIDwall = getID("breakable_wall");
 	TTagID tagIDminus = getID("minus_wall");
 	TTagID tagIDplus = getID("plus_wall");
@@ -241,6 +250,7 @@ bool CEntitiesModule::start() {
 	if (camera_e && t.isValid()) {
 		TMsgSetTarget msg;
 		msg.target = t;
+		msg.who = PLAYER;
 		camera_e->sendMsg(msg);		//set camera
 
 		TMsgSetCamera msg_camera;
@@ -270,9 +280,8 @@ bool CEntitiesModule::start() {
 		water_e->sendMsg(msg_water);
 	}
 
-	SBB::postHandlesVector("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
+	
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
-	SBB::postHandlesVector("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
 	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
 	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
 	SBB::postHandlesVector("wptsRecoverPoint", tags_manager.getHandlesByTag(tagIDrec));
@@ -292,6 +301,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
+	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
 
 	return true;
 }
@@ -339,7 +349,10 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompGenerator>()->updateAll(dt);
 	getHandleManager<TCompPolarized>()->updateAll(dt);
 
+	getHandleManager<TCompLife>()->updateAll(dt);
+
 	getHandleManager<TCompPlatform>()->updateAll(dt);
+	getHandleManager<TCompBox>()->updateAll(dt);
 
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);

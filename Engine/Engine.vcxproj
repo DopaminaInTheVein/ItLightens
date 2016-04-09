@@ -471,6 +471,7 @@
     <ClInclude Include="camera\camera.h" />
     <ClInclude Include="components\components.h" />
     <ClInclude Include="components\comp_base.h" />
+    <ClInclude Include="components\comp_box.h" />
     <ClInclude Include="components\comp_camera.h" />
     <ClInclude Include="components\comp_charactercontroller.h" />
     <ClInclude Include="components\comp_controller_3rd_person.h" />

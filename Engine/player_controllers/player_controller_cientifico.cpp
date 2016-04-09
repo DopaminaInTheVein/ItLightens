@@ -85,7 +85,6 @@ void player_controller_cientifico::Init() {
 
 void player_controller_cientifico::UpdateInputActions() {
 	PROFILE_FUNCTION("player cientifico: energy dec");
-	energyDecreasal(getDeltaTime()*0.5f);
 	if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
 		ChangeState("createDisableBeacon");
 	}

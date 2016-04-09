@@ -110,7 +110,7 @@ void water_controller::updateTTL() {
 void water_controller::tryToDamagePlayer() {
 
 	SetMyEntity();
-
+	if (!myEntity) return;
 	CEntity* e_player = player;
 	TCompTransform* player_transform = e_player->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -119,12 +119,14 @@ void water_controller::tryToDamagePlayer() {
 
 	float distance = squaredDist(water_position, player_position);
 
-	if (distance < damage_radius && player_position.y - water_position.y < 0.5) {
+	if (distance < damage_radius && player_position.y - water_position.y < 0.5 && !sendMsgDamage) {
 		TMsgDamage dmg;
-		dmg.source = water_position;
-		dmg.sender = myParent;
-		dmg.points = damage * getDeltaTime();
-		dmg.dmgType = WATER;
+		sendMsgDamage = !sendMsgDamage;
+		dmg.modif = 5.0f;
+		e_player->sendMsg(dmg);
+	} else if ((distance > damage_radius || player_position.y - water_position.y > 0.5) && sendMsgDamage) {
+		TMsgStopDamage dmg;
+		sendMsgDamage = !sendMsgDamage;
 		e_player->sendMsg(dmg);
 	}
 

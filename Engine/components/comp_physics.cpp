@@ -146,6 +146,7 @@ void TCompPhysics::update(float dt)
 		PxTransform curr_pose = rigidActor->getGlobalPose();
 		
 		CEntity *e = CHandle(this).getOwner();
+		if (!e) return;
 		TCompTransform *tmx = e->get<TCompTransform>();
 		CQuaternion quat = PxQuatToCQuaternion(curr_pose.q);
 		tmx->setRotation(quat);
