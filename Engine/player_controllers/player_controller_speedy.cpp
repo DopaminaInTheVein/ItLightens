@@ -18,7 +18,9 @@ void player_controller_speedy::readIniFileAttr() {
 	if (h.isValid()) {
 		if (h.hasTag("AI_speedy")) {
 
-			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
 			assignValueToVar(player_max_speed, fields_base);
 			assignValueToVar(player_rotation_speed, fields_base);
@@ -27,7 +29,7 @@ void player_controller_speedy::readIniFileAttr() {
 			assignValueToVar(camera_max_height, fields_base);
 			assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_speedy = readIniFileAttrMap("controller_speedy");
+			map<std::string, float> fields_speedy = readIniAtrData(file_ini, "controller_speedy");
 
 			assignValueToVar(dash_speed, fields_speedy);
 			assignValueToVar(dash_max_duration, fields_speedy);

@@ -15,7 +15,9 @@ void bt_mole::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_mole")) {
-			map<std::string, float> fields = readIniFileAttrMap("bt_mole");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields = readIniAtrData(file_ini, "bt_mole");
 
 			assignValueToVar(speed, fields);
 			assignValueToVar(rotation_speed, fields);

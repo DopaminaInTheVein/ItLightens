@@ -1105,11 +1105,110 @@
     <ClInclude Include="app_modules\logic_manager\slb_public_functions.h">
       <Filter>app_modules\logic_manager</Filter>
     </ClInclude>
-    <ClInclude Include="utils\json\json\json.h">
-      <Filter>utils\json</Filter>
+    <ClInclude Include="utils\rapidjson\allocators.h">
+      <Filter>utils\rapidjson</Filter>
     </ClInclude>
-    <ClInclude Include="utils\json\json\json-forwards.h">
-      <Filter>utils\json</Filter>
+    <ClInclude Include="utils\rapidjson\document.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\encodedstream.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\encodings.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\filereadstream.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\filewritestream.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\fwd.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\istreamwrapper.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\memorybuffer.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\memorystream.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\ostreamwrapper.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\pointer.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\prettywriter.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\rapidjson.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\reader.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\schema.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\stream.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\stringbuffer.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\writer.h">
+      <Filter>utils\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\error\en.h">
+      <Filter>utils\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\error\error.h">
+      <Filter>utils\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\biginteger.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\diyfp.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\dtoa.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\ieee754.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\itoa.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\meta.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\pow10.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\regex.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\stack.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\strfunc.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\strtod.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\internal\swap.h">
+      <Filter>utils\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\msinttypes\inttypes.h">
+      <Filter>utils\rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\rapidjson\msinttypes\stdint.h">
+      <Filter>utils\rapidjson\msinttypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1263,8 +1362,17 @@
     <Filter Include="app_modules\logic_manager">
       <UniqueIdentifier>{224fc8a4-4ae1-4cb8-a9ef-6fa325768a77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="utils\json">
-      <UniqueIdentifier>{28c68d3b-26b3-4e29-b6c6-8bbaa818f237}</UniqueIdentifier>
+    <Filter Include="utils\rapidjson">
+      <UniqueIdentifier>{ba8962c2-9f5f-4fa0-a782-c4a102bcfa92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\rapidjson\error">
+      <UniqueIdentifier>{72cf1885-046a-4e6e-86c3-7d2771526fa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\rapidjson\internal">
+      <UniqueIdentifier>{26c46c72-12a6-4152-ae7d-120570f309fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\rapidjson\msinttypes">
+      <UniqueIdentifier>{7d410083-59bf-4880-a82b-b4e8e3483964}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1282,8 +1390,5 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="NOTES.txt" />
-    <Text Include="utils\json\jsoncpp.cpp">
-      <Filter>utils</Filter>
-    </Text>
   </ItemGroup>
 </Project>

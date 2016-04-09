@@ -522,35 +522,18 @@ void TCompPhysics::renderInMenu()
 
 
 void TCompPhysics::readIniFileAttr() {
-	CApp &app = CApp::get();
-	std::string file_ini = app.file_initAttr;
-
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("box")) {
-			char read[64];
-			std::string read_s;
 
-			//dynamic friction
-			GetPrivateProfileStringA("box", "dynamic_friction", "not_found", read, 64, file_ini.c_str());
-			read_s = std::string(read);
-			if (read_s != "not_found") {
-				mDynamicFriction = std::stof(read_s);
-			}
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			std::map<std::string, float> fields_box = readIniAtrData(file_ini, "box");
 
-			//static friction
-			GetPrivateProfileStringA("box", "static_friction", "not_found", read, 64, file_ini.c_str());
-			read_s = std::string(read);
-			if (read_s != "not_found") {
-				mStaticFriction = std::stof(read_s);
-			}
+			mDynamicFriction = fields_box["dynamic_friction"];
+			mStaticFriction = fields_box["static_friction"];
+			mRestitution = fields_box["restitution"];
 
-			//restitution
-			GetPrivateProfileStringA("box", "restitution", "not_found", read, 64, file_ini.c_str());
-			read_s = std::string(read);
-			if (read_s != "not_found") {
-				mRestitution = std::stof(read_s);
-			}
 		}
 	}
 }
@@ -587,24 +570,20 @@ void TCompPhysics::updateAttrMaterial() {
 
 void TCompPhysics::writeIniFileAttr() {
 	CApp &app = CApp::get();
-	std::string file_ini = app.file_initAttr;
+	std::string file_ini = app.file_initAttr_json;
 
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("box")) {
 			char read[64];
+
+			std::map<std::string, float> atributes_map;
+
+			atributes_map["dynamic_friction"] = mDynamicFriction;
+			atributes_map["static_friction"] = mStaticFriction;
+			atributes_map["restitution"] = mRestitution;
 			
-			//dynamic friction
-			sprintf(read, "%.2f", mDynamicFriction);
-			WritePrivateProfileStringA("box", "dynamic_friction", read, file_ini.c_str());
-
-			//static friction
-			sprintf(read, "%.2f", mStaticFriction);
-			WritePrivateProfileStringA("box", "static_friction", read, file_ini.c_str());
-
-			//restitution
-			sprintf(read, "%.2f", mRestitution);
-			WritePrivateProfileStringA("box", "restitution", read, file_ini.c_str());
+			writeIniAtrData(file_ini, "box", atributes_map);
 		}
 	}
 }

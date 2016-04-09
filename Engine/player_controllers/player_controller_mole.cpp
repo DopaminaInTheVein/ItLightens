@@ -21,7 +21,9 @@ void player_controller_mole::readIniFileAttr() {
 	if (h.isValid()) {
 		if (h.hasTag("AI_mole")) {
 
-			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
 			assignValueToVar(player_max_speed, fields_base);
 			assignValueToVar(player_rotation_speed, fields_base);
@@ -30,7 +32,7 @@ void player_controller_mole::readIniFileAttr() {
 			assignValueToVar(camera_max_height, fields_base);
 			assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_mole = readIniFileAttrMap("controller_mole");
+			map<std::string, float> fields_mole = readIniAtrData(file_ini, "controller_mole");
 
 			assignValueToVar(grab_box_energy, fields_mole);
 			assignValueToVar(destroy_wall_energy, fields_mole);

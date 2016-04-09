@@ -44,7 +44,9 @@ void bt_guard::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_guard")) {
-			map<std::string, float> fields = readIniFileAttrMap("bt_guard");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields = readIniAtrData(file_ini, "bt_guard");
 
 			assignValueToVar(DIST_SQ_REACH_PNT, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_ENTER, fields);

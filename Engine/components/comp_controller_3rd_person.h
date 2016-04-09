@@ -60,17 +60,11 @@ public:
 		float ar = (float)app.getXRes() / (float)app.getYRes();
 		camera->setAspectRatio(ar);
 
+		std::map<std::string, float> options = readIniAtrData(app.file_options_json, "controls");
 		//read y-axis inverted, "0 != " to convert uint to bool more efficient
-		y_axis_inverted = 0 != GetPrivateProfileIntA("controls",
-			"y-axis_inverted",
-			1,
-			app.file_options.c_str());
-
+		y_axis_inverted = 0 != (int)options["y-axis_inverted"];
 		//read x-axis inverted, "0 != " to convert uint to bool more efficient
-		x_axis_inverted = 0 != GetPrivateProfileIntA("controls",
-			"x-axis_inverted",
-			1,
-			app.file_options.c_str());
+		x_axis_inverted = 0 != (int)options["x-axis_inverted"];
 	}
 
 	void onSetTarget(const TMsgSetTarget& msg) {

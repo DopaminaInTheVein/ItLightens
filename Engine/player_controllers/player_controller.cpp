@@ -24,7 +24,9 @@ void player_controller::readIniFileAttr() {
 	if (h.isValid()) {
 		if (h.hasTag("player")) {
 
-			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
 			assignValueToVar(player_max_speed, fields_base);
 			assignValueToVar(player_rotation_speed, fields_base);
@@ -33,7 +35,7 @@ void player_controller::readIniFileAttr() {
 			assignValueToVar(camera_max_height, fields_base);
 			assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_player = readIniFileAttrMap("controller_player");
+			map<std::string, float> fields_player = readIniAtrData(file_ini, "controller_player");
 
 			assignValueToVar(full_height, fields_player);
 			assignValueToVar(min_height, fields_player);

@@ -17,25 +17,15 @@ CApp::CApp()
 	: xres(800)
 	, yres(600)
 {
-	file_options = "./options.ini";
-	file_initAttr = "./inicialization.ini";
+	file_options_json = "./options.json";
+	file_initAttr_json = "./inicialization.json";
+
+	std::map<std::string, float> options = readIniAtrData(file_options_json, "screen");
 	
 	//"0 != " to convert uint to bool more efficient
-	max_screen = 0 != GetPrivateProfileIntA(	"screen",
-										"full_screen",
-										0,
-										file_options.c_str());
-
-	xres = GetPrivateProfileIntA(	"screen",
-									"xres",
-									800,
-									file_options.c_str());
-
-	yres = GetPrivateProfileIntA(	"screen",
-									"yres",
-									600,
-									file_options.c_str());
-
+	max_screen = 0 != (int)options["full_screen"];
+	xres = (int)options["xres"];
+	yres = (int)options["yres"];
 
 	// Create window
 	RECT desktop;

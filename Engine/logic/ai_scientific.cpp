@@ -24,7 +24,9 @@ void ai_scientific::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_cientifico")) {
-			map<std::string, float> fields = readIniFileAttrMap("ai_scientist");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields = readIniAtrData(file_ini, "ai_scientist");
 
 			assignValueToVar(move_speed, fields);
 			assignValueToVar(rot_speed, fields);

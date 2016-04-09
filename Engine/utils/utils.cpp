@@ -5,7 +5,6 @@
 #include <algorithm>
 #include "timer.h"
 #include "windows\app.h"
-#include "json\json.h"
 
 #ifndef NDEBUG
 
@@ -151,53 +150,55 @@ bool isInVector(std::vector<TTagID>& v, TTagID obj)
 	return (std::find(v.begin(), v.end(), obj) != v.end());
 }
 
-std::map<std::string, float> readIniFileAttrMap(char* element_to_read) {
-	CApp &app = CApp::get();
-	std::string file_ini = app.file_initAttr;
-	std::map<std::string, float> element_fields;
-
-	char result[32000];
-	char field[64];
-
-	GetPrivateProfileString(element_to_read, NULL, "not_found", result, 32000, file_ini.c_str());
-
-	std::string res_string(result, 32000);
-	std::string delimiter("\0", 1);
-
-	size_t pos = 0;
-	std::string token;
-	while ((pos = res_string.find(delimiter)) != std::string::npos) {
-		token = res_string.substr(0, pos);
-		
-		GetPrivateProfileStringA(element_to_read, token.c_str(), "not_found", field, 64, file_ini.c_str());
-		std::string field_s = std::string(field);
-
-		if (field_s != "not_found")
-			element_fields[token] = std::stof(field_s);
-		else
-			element_fields[token] = 0.0f;
-
-		res_string.erase(0, pos + delimiter.length());
-	}
-
-	return element_fields;
-}
-
+// Assigns to a variable the value of the map that corresponds to the specified name
 void assingValueFromMap(float *variable, char *name, std::map<std::string, float> data_map) {
 	*variable = data_map[name];
 }
 
-void readJSONAtrFile(const std::string route) {
-	Json::Value root;   // will contains the root value after parsing.
-	Json::Reader reader;
-	bool parsingSuccessful = reader.parse(route, root, false);
-	if (parsingSuccessful)
-	{
-		std::string res = root.get("box", "ASCII").asString();
-		dbg(res.c_str());
-	}
+// Reads and parses a JSON document
+Document readJSONAtrFile(const std::string route) {
+	FILE* pFile = fopen(route.c_str(), "rb");
+	char buffer[65536];
+	FileReadStream is(pFile, buffer, sizeof(buffer));
+	Document document;
+	document.ParseStream<0, UTF8<>, FileReadStream>(is);
+	fclose(pFile);
+
+	return document;
 }
 
+// Obtains all the atributes of the specified element of a JSON object
+std::map<std::string, float> readIniAtrData(const std::string route, std::string element) {
+
+	Document document = readJSONAtrFile(route);
+	std::map<std::string, float> atributes;
+
+	for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
+		atributes[it->name.GetString()] = it->value.GetFloat();
+	}
+
+	return atributes;
+
+}
+
+// Modifies the specified json element of the specified file
+void writeIniAtrData(const std::string route, std::string element, std::map<std::string, float> element_values) {
+
+	Document document = readJSONAtrFile(route);
+
+	for (auto atribute : element_values) {
+		document[element.c_str()][atribute.first.c_str()].SetFloat(atribute.second);
+	}
+
+	FILE* pFile = fopen(route.c_str(), "wb");
+	char buffer[65536];
+	FileWriteStream os(pFile, buffer, sizeof(buffer));
+	PrettyWriter<FileWriteStream> prettywritter(os);
+	document.Accept(prettywritter);
+	fclose(pFile);
+}
+
+// Lists all files contained in the specified folder recursively
 std::vector<std::string> list_files_recursively(std::string folder_path) {
 	std::vector<std::string> files;
 	char search_path[200];

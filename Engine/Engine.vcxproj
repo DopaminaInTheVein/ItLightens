@@ -643,11 +643,44 @@
     <ClInclude Include="ui\ui_interface.h" />
     <ClInclude Include="utils\data_provider.h" />
     <ClInclude Include="utils\data_saver.h" />
-    <ClInclude Include="utils\json\json\json-forwards.h" />
-    <ClInclude Include="utils\json\json\json.h" />
     <ClInclude Include="utils\macros\macros.h" />
     <ClInclude Include="utils\macros\timers.h" />
     <ClInclude Include="utils\murmur3.h" />
+    <ClInclude Include="utils\rapidjson\allocators.h" />
+    <ClInclude Include="utils\rapidjson\document.h" />
+    <ClInclude Include="utils\rapidjson\encodedstream.h" />
+    <ClInclude Include="utils\rapidjson\encodings.h" />
+    <ClInclude Include="utils\rapidjson\error\en.h" />
+    <ClInclude Include="utils\rapidjson\error\error.h" />
+    <ClInclude Include="utils\rapidjson\filereadstream.h" />
+    <ClInclude Include="utils\rapidjson\filewritestream.h" />
+    <ClInclude Include="utils\rapidjson\fwd.h" />
+    <ClInclude Include="utils\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="utils\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="utils\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="utils\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="utils\rapidjson\internal\itoa.h" />
+    <ClInclude Include="utils\rapidjson\internal\meta.h" />
+    <ClInclude Include="utils\rapidjson\internal\pow10.h" />
+    <ClInclude Include="utils\rapidjson\internal\regex.h" />
+    <ClInclude Include="utils\rapidjson\internal\stack.h" />
+    <ClInclude Include="utils\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="utils\rapidjson\internal\strtod.h" />
+    <ClInclude Include="utils\rapidjson\internal\swap.h" />
+    <ClInclude Include="utils\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="utils\rapidjson\memorybuffer.h" />
+    <ClInclude Include="utils\rapidjson\memorystream.h" />
+    <ClInclude Include="utils\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="utils\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="utils\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="utils\rapidjson\pointer.h" />
+    <ClInclude Include="utils\rapidjson\prettywriter.h" />
+    <ClInclude Include="utils\rapidjson\rapidjson.h" />
+    <ClInclude Include="utils\rapidjson\reader.h" />
+    <ClInclude Include="utils\rapidjson\schema.h" />
+    <ClInclude Include="utils\rapidjson\stream.h" />
+    <ClInclude Include="utils\rapidjson\stringbuffer.h" />
+    <ClInclude Include="utils\rapidjson\writer.h" />
     <ClInclude Include="utils\timer.h" />
     <ClInclude Include="utils\utils.h" />
     <ClInclude Include="utils\XMLParser.h" />
@@ -667,7 +700,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="NOTES.txt" />
-    <Text Include="utils\json\jsoncpp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
