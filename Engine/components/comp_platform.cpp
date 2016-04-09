@@ -26,6 +26,7 @@ void TCompPlatform::update(float elapsed)
 {
 	CHandle h = CHandle(this).getOwner();
 	CEntity *e = h;
+	if (!e) return;
 	TCompTransform *t = e->get<TCompTransform>();
 	
 

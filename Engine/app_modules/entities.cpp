@@ -113,7 +113,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
-	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
@@ -180,15 +179,22 @@ bool CEntitiesModule::start() {
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
 
-	//Damage
-	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller_cientifico, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller_speedy, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
+	//Dead
+	//anything for now
+	/*SUBSCRIBE(player_controller, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_cientifico, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_speedy, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_mole, TMsgDie, onDie);*/
 
-	//Set animations
-	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, setAnim);
+	//Damage
+	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);		//init damage scales
+	SUBSCRIBE(TCompLife, TMsgDamageSave, onSetSaveDamage);
+	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
+	SUBSCRIBE(TCompLife, TMsgSetDamage, onReciveDamage);
+	SUBSCRIBE(TCompLife, TMsgStopDamage, onStopDamage);
+	SUBSCRIBE(player_controller_cientifico, TMsgUnpossesDamage, onForceUnPosses);
+	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
+	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
@@ -338,6 +344,8 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompWire>()->updateAll(dt);
 	getHandleManager<TCompGenerator>()->updateAll(dt);
 	getHandleManager<TCompPolarized>()->updateAll(dt);
+
+	getHandleManager<TCompLife>()->updateAll(dt);
 
 	getHandleManager<TCompPlatform>()->updateAll(dt);
 

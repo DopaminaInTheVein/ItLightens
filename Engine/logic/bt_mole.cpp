@@ -65,6 +65,7 @@ void bt_mole::Init()
 void bt_mole::update(float elapsed) {
 	// Update transforms
 	SetMyEntity();
+	if (!myEntity) return;
 	transform = myEntity->get<TCompTransform>();
 	// If we become possessed, reset the tree and stop all actions
 	if (possessing)
@@ -149,6 +150,7 @@ bool bt_mole::checkBoxes() {
 
 		for (int i = 0; i < SBB::readHandlesVector("wptsBoxes").size(); i++) {
 			CEntity * entTransform = this->getEntityPointer(i);
+			if (!entTransform) continue;
 			TCompTransform * transformBox = entTransform->get<TCompTransform>();
 			TCompName * nameBox = entTransform->get<TCompName>();
 			VEC3 wpt = transformBox->getPosition();
@@ -235,6 +237,7 @@ int bt_mole::actionGrabBox() {
 			float distMax = D3D10_FLOAT32_MAX;
 			for (int i = 0; i < SBB::readHandlesVector("wptsBoxLeavePoint").size(); i++) {
 				CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[i];
+				if (!wptbleave) continue;
 				TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
 				VEC3 wpt = wptbleavetransform->getPosition();
 				float disttowpt = simpleDistXZ(wpt, transform->getPosition());
@@ -411,6 +414,7 @@ bool bt_mole::isBoxAtLeavePoint(VEC3 posBox) {
 	if (SBB::readHandlesVector("wptsBoxLeavePoint").size() > 0) {
 		for (int i = 0; i < SBB::readHandlesVector("wptsBoxLeavePoint").size(); i++) {
 			CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[i];
+			if (!wptbleave) continue;
 			TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
 			VEC3 wpt = wptbleavetransform->getPosition();
 			float disttowpt = simpleDistXZ(wpt, posBox);

@@ -37,6 +37,7 @@ class water_controller : public aicontroller, public TCompBase {
 	int damage;
 	float ttl;
 
+	bool sendMsgDamage = false;
 	bool dead = false;
 
 	void updateTTL();

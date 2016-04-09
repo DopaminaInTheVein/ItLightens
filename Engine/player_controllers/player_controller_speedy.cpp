@@ -85,7 +85,6 @@ void player_controller_speedy::Init()
 }
 
 void player_controller_speedy::myUpdate() {
-	energyDecreasal(getDeltaTime()*0.5f);
 	updateDashTimer();
 	updateBlinkTimer();
 	updateDropWaterTimer();

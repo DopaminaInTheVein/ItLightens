@@ -12,7 +12,7 @@
   </entity>
 
   <entity>
-    <life points="10" />
+    <life points="50" />
     <tags tags="player" />
     <transform pos="0 0 -22" />
     <name name="pj" />

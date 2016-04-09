@@ -78,6 +78,7 @@ class bt_guard : public TCompBase, public bt
 	static map<string, KptType > kptTypes;
 
 	bool noShoot;
+	bool sendMsgDmg = false;
 	std::vector<KeyPoint> keyPoints;
 	int curkpt;
 	VEC3 noisePoint;

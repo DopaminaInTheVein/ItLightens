@@ -173,7 +173,7 @@ bool CPlayerBase::UpdateMovDirection() {
 
 void CPlayerBase::UpdateJumpState() {
 	PROFILE_FUNCTION("update jump state base");
-	if (io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed()) {
+	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.isPressed()) {
 		Jump();
 	}
 }
@@ -206,9 +206,11 @@ void CPlayerBase::UpdateMovingWithOther() {
 void CPlayerBase::energyDecreasal(float howmuch) {
 	PROFILE_FUNCTION("player base: energy dec function");
 	SetMyEntity();
-	TMsgDamage msg;
-	msg.points = howmuch;
-	msg.dmgType = ENERGY_DECREASE;
+	
+	TMsgSetDamage msg;
+	msg.dmg = howmuch;
+	Debug->LogRaw("to reduce on %f\n", howmuch);
+	Debug->LogRaw("to reduce on %f\n", msg.dmg);
 	this->myEntity->sendMsg(msg);
 }
 
@@ -216,7 +218,6 @@ void CPlayerBase::Idle()
 {
 	PROFILE_FUNCTION("idle base");
 	if (!checkDead()) {
-		energyDecreasal(getDeltaTime()*0.05f);
 		UpdateDirection();
 		UpdateJumpState();
 		if (UpdateMovDirection()) ChangeState("moving");
@@ -227,14 +228,9 @@ void CPlayerBase::Jump()
 {
 	PROFILE_FUNCTION("jump base");
 	SetCharacterController();
-	if (cc->OnGround()) {
-		energyDecreasal(1.0f);
-	}
 	
 	cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
-	//jspeed = jimpulse;
-	//directionJump = VEC3(0, 1, 0);
-	//onGround = false;
+	energyDecreasal(5.0f);
 	ChangeState("jumping");
 }
 
@@ -295,7 +291,6 @@ void CPlayerBase::Jumping()
 void CPlayerBase::Moving()
 {
 	PROFILE_FUNCTION("moving base");
-	energyDecreasal(getDeltaTime()*0.05f);
 	UpdateDirection();
 	UpdateJumpState();
 	if (!UpdateMovDirection()) ChangeState("idle");

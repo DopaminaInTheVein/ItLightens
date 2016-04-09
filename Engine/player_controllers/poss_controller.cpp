@@ -34,35 +34,29 @@ void PossController::UpdatePossession() {
 			possessionCooldown -= getDeltaTime();
 		}
 	}
-	else {
-		energyDecreasal(-getDeltaTime()*speedRecover);
-	}
 
 	____TIMER_CHECK_DO_(timerShowEnergy);
 	____TIMER_CHECK_DONE_(timerShowEnergy);
 }
 
-void PossController::onDamage(const TMsgDamage& msg) {
-	PROFILE_FUNCTION("poss controller: onDamage");
-	CEntity* myParent = getMyEntity();
-	switch (msg.dmgType) {
-	case LASER:		
-		TMsgAISetPossessed msg;
-		msg.possessed = false;
-		myParent->sendMsg(msg);
-		UpdateUnpossess();
-		onSetEnable(false);
-		break;
-	case WATER:
-		break;
-	default:
-		//nothing
-		break;
-	}
+void PossController::onForceUnPosses(const TMsgUnpossesDamage& msg) {
+	PROFILE_FUNCTION("poss controller: onUnposses");
+	UpdateUnpossess();
+	TMsgDamageSave msg_unpss;
+	SetMyEntity();
+	myEntity->sendMsg(msg_unpss);
+	msg_unpss.modif = -0.1f;
+	onSetEnable(false);
 }
 
 void PossController::onSetEnable(const TMsgControllerSetEnable& msg) {
 	onSetEnable(msg.enabled);
+	if (msg.enabled) {
+		TMsgDamageSave msg_pss;
+		msg_pss.modif = 0.1f;
+		SetMyEntity();
+		myEntity->sendMsg(msg_pss);
+	}
 }
 
 void PossController::UpdateUnpossess() {

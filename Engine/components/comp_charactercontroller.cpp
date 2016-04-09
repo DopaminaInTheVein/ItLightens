@@ -182,6 +182,7 @@ void TCompCharacterController::update(float dt)
 		PxExtendedVec3 curr_pos = pActor->getFootPosition();
 		//PxVec3 up_v = pActor->getUpDirection();	//get rotation
 		CEntity *e = CHandle(this).getOwner();
+		if (!e) return;
 		TCompTransform *tmx = e->get<TCompTransform>();
 		tmx->setPosition(PxExVec3ToVec3(curr_pos));
 		//tmx->setRotation(PxQuatToCQuaternion(curr_pose.q));
