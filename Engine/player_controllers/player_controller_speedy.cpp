@@ -339,7 +339,7 @@ bool player_controller_speedy::rayCastToFront(int types, float reach, float& dis
 	//END PROV
 
 	PxRaycastBuffer hit;
-	bool ret = PhysxManager->raycast(origin,direction,dist,hit,filter);
+	bool ret = g_PhysxManager->raycast(origin,direction,dist,hit,filter);
 	distRay = hit.getAnyHit(0).distance;	//first hit
 	return ret;
 }

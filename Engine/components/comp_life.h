@@ -87,7 +87,6 @@ struct TCompLife : public TCompBase {
 
 	void onReciveDamage(const TMsgSetDamage& msg) {
 		currentlife -= msg.dmg;
-		Debug->LogRaw("life at %f, dmg of %f\n", currentlife, msg.dmg);
 	}
 
 	void onStopDamage(const TMsgStopDamage& dmg) {

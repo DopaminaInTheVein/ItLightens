@@ -69,7 +69,7 @@
 	"controller_base" : {
 		"player_max_speed" : 5.0,
 		"player_rotation_speed" : 5.0,
-		"jimpulse" : 7.0,
+		"jimpulse" : 5.0,
 		"left_stick_sensibility" : 5000,
 		"camera_max_height" : 4,
 		"camera_min_height" : 0

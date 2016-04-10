@@ -209,8 +209,6 @@ void CPlayerBase::energyDecreasal(float howmuch) {
 	
 	TMsgSetDamage msg;
 	msg.dmg = howmuch;
-	Debug->LogRaw("to reduce on %f\n", howmuch);
-	Debug->LogRaw("to reduce on %f\n", msg.dmg);
 	this->myEntity->sendMsg(msg);
 }
 

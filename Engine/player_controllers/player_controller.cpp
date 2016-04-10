@@ -335,7 +335,7 @@ void player_controller::UpdateMoves()
 	}else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
 	
-	cc->AddMovement(direction , player_curr_speed);
+	cc->AddMovement(direction*player_curr_speed*getDeltaTime());
 }
 
 void player_controller::UpdateInputActions()

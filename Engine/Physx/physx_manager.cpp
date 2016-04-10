@@ -12,20 +12,20 @@
 
 void CPhysxManager::setFtDynamic()
 {	
-	ft_dynamic.word0 = ItLightensFilter::eOBJECT | ItLightensFilter::eALL_OBJECTS;
-	ft_dynamic.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
+	m_ft_dynamic.word0 = ItLightensFilter::eOBJECT | ItLightensFilter::eALL_OBJECTS;
+	m_ft_dynamic.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
 }
 
 void CPhysxManager::setFtStatic()
 {
-	ft_static.word0 = ItLightensFilter::eSTATIC_OBJECT | ItLightensFilter::eALL_OBJECTS | ItLightensFilter::eALL_STATICS;
-	ft_static.word1 = ItLightensFilter::eCOLLISION;
+	m_ft_static.word0 = ItLightensFilter::eSTATIC_OBJECT | ItLightensFilter::eALL_OBJECTS | ItLightensFilter::eALL_STATICS;
+	m_ft_static.word1 = ItLightensFilter::eCOLLISION;
 }
 
 void CPhysxManager::setFtCC()
 {
-	ft_cc.word0 = ItLightensFilter::eANYONE | ItLightensFilter::eALL_OBJECTS;
-	ft_cc.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
+	m_ft_cc.word0 = ItLightensFilter::eANYONE | ItLightensFilter::eALL_OBJECTS;
+	m_ft_cc.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
 }
 
 //#########################################################################################################
@@ -42,49 +42,49 @@ bool CPhysxManager::start()
 	PxTolerancesScale scale = PxTolerancesScale();
 
 	//init foundation
-	mFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback,
+	m_pFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback,
 		gDefaultErrorCallback);
 
-	assert(mFoundation);
-	if (!mFoundation)
+	assert(m_pFoundation);
+	if (!m_pFoundation)
 		fatal("PxCreateFoundation failed!");
 
 	//init ProfileZoneManager
 	bool recordMemoryAllocations = true;
-	mProfileZoneManager = &PxProfileZoneManager::createProfileZoneManager(mFoundation);
-	if (!mProfileZoneManager)
+	m_pProfileZoneManager = &PxProfileZoneManager::createProfileZoneManager(m_pFoundation);
+	if (!m_pProfileZoneManager)
 		fatal("PxProfileZoneManager::createProfileZoneManager failed!");
 
 
 	//init Physics
-	mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation,
-		PxTolerancesScale(), recordMemoryAllocations, mProfileZoneManager);
+	m_pPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pFoundation,
+		PxTolerancesScale(), recordMemoryAllocations, m_pProfileZoneManager);
 
-	assert(mPhysics);
-	if (!mPhysics)
+	assert(m_pPhysics);
+	if (!m_pPhysics)
 		fatal("PxCreatePhysics failed!");
 
 	//init cooking
-	mCooking = PxCreateCooking(PX_PHYSICS_VERSION, *mFoundation, PxCookingParams(scale));
+	m_pCooking = PxCreateCooking(PX_PHYSICS_VERSION, *m_pFoundation, PxCookingParams(scale));
 
-	assert(mCooking);
-	if (!mCooking)
+	assert(m_pCooking);
+	if (!m_pCooking)
 		fatal("PxCreateCooking failed!");
 
 	//init extensions
-	if (!PxInitExtensions(*mPhysics))
+	if (!PxInitExtensions(*m_pPhysics))
 		fatal("PxInitExtensions failed!");
 
 	//init scene
-	PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
+	PxSceneDesc sceneDesc(m_pPhysics->getTolerancesScale());
 	customizeSceneDesc(sceneDesc);
 
 	if (!sceneDesc.cpuDispatcher)
 	{
-		mCpuDispatcher = PxDefaultCpuDispatcherCreate(mNbThreads);
-		if (!mCpuDispatcher)
+		m_pCpuDispatcher = PxDefaultCpuDispatcherCreate(m_NbThreads);
+		if (!m_pCpuDispatcher)
 			fatal("PxDefaultCpuDispatcherCreate failed!");
-		sceneDesc.cpuDispatcher = mCpuDispatcher;
+		sceneDesc.cpuDispatcher = m_pCpuDispatcher;
 	}
 	
 	PxSimulationFilterShader gDefaultFilterShader = PxDefaultSimulationFilterShader;
@@ -93,26 +93,26 @@ bool CPhysxManager::start()
 
 
 #ifdef PX_WINDOWS
-	if (!sceneDesc.gpuDispatcher && mCudaContextManager)
+	if (!sceneDesc.gpuDispatcher && m_pCudaContextManager)
 	{
-		sceneDesc.gpuDispatcher = mCudaContextManager->getGpuDispatcher();
+		sceneDesc.gpuDispatcher = m_pCudaContextManager->getGpuDispatcher();
 	}
 #endif
 
-	mScene = mPhysics->createScene(sceneDesc);
-	assert(mScene);
-	if (!mScene)
+	m_pScene = m_pPhysics->createScene(sceneDesc);
+	assert(m_pScene);
+	if (!m_pScene)
 		fatal("createScene failed!");
 
 	//init managers characters controllers
-	mManagerControllers = PxCreateControllerManager(*mScene);
-	if (!mManagerControllers)
+	m_pManagerControllers = PxCreateControllerManager(*m_pScene);
+	if (!m_pManagerControllers)
 		fatal("manager controllers failed!");
 
 
 #ifndef NDEBUG
 	//Physx Debbuger
-	if (mPhysics->getPvdConnectionManager() == NULL)
+	if (m_pPhysics->getPvdConnectionManager() == NULL)
 		return true;	// no Pvd support for debugging physx
 
 	// setup connection parameters
@@ -123,11 +123,11 @@ bool CPhysxManager::start()
 	PxVisualDebuggerConnectionFlags connectionFlags = PxVisualDebuggerExt::getAllConnectionFlags();
 
 	// and now try to connect
-	mConnection = PxVisualDebuggerExt::createConnection(mPhysics->getPvdConnectionManager(),
+	m_pConnection = PxVisualDebuggerExt::createConnection(m_pPhysics->getPvdConnectionManager(),
 		pvd_host_ip, port, timeout, connectionFlags);
 
-	mScene->setVisualizationParameter(PxVisualizationParameter::eJOINT_LOCAL_FRAMES, 1.0f);
-	mScene->setVisualizationParameter(PxVisualizationParameter::eJOINT_LIMITS, 1.0f);
+	m_pScene->setVisualizationParameter(PxVisualizationParameter::eJOINT_LOCAL_FRAMES, 1.0f);
+	m_pScene->setVisualizationParameter(PxVisualizationParameter::eJOINT_LIMITS, 1.0f);
 #endif
 
 	setFtDynamic();
@@ -140,12 +140,12 @@ bool CPhysxManager::start()
 //stop function: release memory
 void CPhysxManager::stop()
 {
-	if(mPhysics)mPhysics->release();
-	if(mFoundation)mFoundation->release();
-	if(mCooking)mCooking->release();
-	if(mProfileZoneManager)mProfileZoneManager->release();
-	if (mManagerControllers) {
-		//mManagerControllers->purgeControllers();	//TODO: free memory
+	if(m_pPhysics)m_pPhysics->release();
+	if(m_pFoundation)m_pFoundation->release();
+	if(m_pCooking)m_pCooking->release();
+	if(m_pProfileZoneManager)m_pProfileZoneManager->release();
+	if (m_pManagerControllers) {
+		//m_pManagerControllers->purgeControllers();	//TODO: free memory
 	}
 #ifndef NDEBUG
 		
@@ -163,8 +163,8 @@ void CPhysxManager::update(float dt)
 	//calculate fixed update
 	t_to_update += getDeltaTime();
 	if (t_to_update >= t_max_update) {
-		mScene->simulate(t_max_update);
-		mScene->fetchResults(true);
+		m_pScene->simulate(t_max_update);
+		m_pScene->fetchResults(true);
 
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
 		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
@@ -240,24 +240,24 @@ void CPhysxManager::CreateCapsuleGeometry(const PxReal& radius, const PxReal& he
 
 PxShape * CPhysxManager::CreatePxSphere(PxReal radius, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
-	PxShape *sphere = mPhysics->createShape(PxSphereGeometry(radius), 
-											*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
+	PxShape *sphere = m_pPhysics->createShape(PxSphereGeometry(radius), 
+											*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
 	
 	return sphere;
 }
 
 PxShape * CPhysxManager::CreatePxCapsule(PxReal radius, PxReal halfHeight, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
-	PxShape *capsule = mPhysics->createShape(PxCapsuleGeometry(radius,halfHeight),
-											*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
+	PxShape *capsule = m_pPhysics->createShape(PxCapsuleGeometry(radius,halfHeight),
+											*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
 	
 	return capsule;
 }
 
 PxShape * CPhysxManager::CreatePxBox(const PxVec3& size, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
-	PxShape *box = mPhysics->createShape(PxBoxGeometry(size), 
-										*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
+	PxShape *box = m_pPhysics->createShape(PxBoxGeometry(size), 
+										*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
 	
 	return box;
 }
@@ -274,8 +274,8 @@ PxShape * CPhysxManager::CreatePxBox(const PxVec3& size, PxReal staticFriction, 
 PxShape * CPhysxManager::CreateTriangleMesh(PxTriangleMesh * mesh, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
 		PxTriangleMeshGeometry meshGeometry(mesh);
-		PxShape* triMesh = mPhysics->createShape(meshGeometry,
-												*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
+		PxShape* triMesh = m_pPhysics->createShape(meshGeometry,
+												*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
 
 		return triMesh;
 }
@@ -284,8 +284,8 @@ PxShape * CPhysxManager::CreateConvexShape(const CMesh * mesh, PxReal staticFric
 
 	
 	PxConvexMesh* convexMesh = CreateCookedConvexMesh(mesh);
-	PxShape* aConvexShape = mPhysics->createShape(PxConvexMeshGeometry(convexMesh), 
-												*mPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
+	PxShape* aConvexShape = m_pPhysics->createShape(PxConvexMeshGeometry(convexMesh), 
+												*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
 
 	return aConvexShape;
 
@@ -299,7 +299,7 @@ PxShape * CPhysxManager::CreateConvexShape(const CMesh * mesh, PxReal staticFric
 #pragma region Game elements
 //Add actor to the scene
 void CPhysxManager::AddToActiveScene(PxActor& actor) {
-	mScene->addActor(actor);
+	m_pScene->addActor(actor);
 }
 
 //Create Character controller with capsule collider
@@ -310,18 +310,18 @@ PxController * CPhysxManager::CreateCharacterController(PxReal radius, PxReal he
 	descCapsule.height = height;
 	//descCapsule.slopeLimit = 0.3f;	//slope can walk
 	descCapsule.stepOffset = 0.01f;	//height can pass walking
-	descCapsule.material = mPhysics->createMaterial(0.5f,0.5f,0.25f);
+	descCapsule.material = m_pPhysics->createMaterial(0.5f, 0.5f, 0.25f);
 	descCapsule.contactOffset = 0.01f;
 	descCapsule.behaviorCallback = this;
 	descCapsule.reportCallback = this;
-	PxController* c = mManagerControllers->createController(descCapsule);
+	PxController* c = m_pManagerControllers->createController(descCapsule);
 	return c;
 }
 
 //create actor with dynamic rigidbody
 PxActor * CPhysxManager::CreateAndAddRigidDynamic(const PxTransform *transform, PxShape *shape, PxReal density)
 {
-	PxRigidDynamic *actor = PxCreateDynamic(*mPhysics,*transform,*shape,density);
+	PxRigidDynamic *actor = PxCreateDynamic(*m_pPhysics,*transform,*shape,density);
 	AddToActiveScene(*actor);
 	return actor;
 }
@@ -329,7 +329,7 @@ PxActor * CPhysxManager::CreateAndAddRigidDynamic(const PxTransform *transform, 
 //create actor with static rigidbody
 PxActor * CPhysxManager::CreateAndAddRigidStatic(const PxTransform *transform, PxShape* shape)
 {
-	PxRigidStatic *actor = PxCreateStatic(*mPhysics, *transform, *shape);
+	PxRigidStatic *actor = PxCreateStatic(*m_pPhysics, *transform, *shape);
 	AddToActiveScene(*actor);
 	return actor;
 }
@@ -338,7 +338,7 @@ PxActor * CPhysxManager::CreateAndAddRigidStatic(const PxTransform *transform, P
 PxActor* CPhysxManager::CreateAndAddTrigger(const PxTransform *transform, PxShape* shape) {
 	shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
 	shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
-	PxRigidStatic *actor = PxCreateStatic(*mPhysics, *transform, *shape);
+	PxRigidStatic *actor = PxCreateStatic(*m_pPhysics, *transform, *shape);
 	AddToActiveScene(*actor);
 	return actor;
 }
@@ -371,12 +371,12 @@ PxTriangleMesh * CPhysxManager::CreateCookedTriangleMesh(const CMesh * mesh)
 	meshDesc.flags = PxMeshFlag::eFLIPNORMALS | PxMeshFlag::e16_BIT_INDICES;
 
 	PxDefaultMemoryOutputStream writeBuffer;
-	bool status = mCooking->cookTriangleMesh(meshDesc, writeBuffer);
+	bool status = m_pCooking->cookTriangleMesh(meshDesc, writeBuffer);
 	if (!status)
 		return NULL;
 
 	PxDefaultMemoryInputData readBuffer(writeBuffer.getData(), writeBuffer.getSize());
-	PxTriangleMesh * cookedMesh = mPhysics->createTriangleMesh(readBuffer);
+	PxTriangleMesh * cookedMesh = m_pPhysics->createTriangleMesh(readBuffer);
 
 	return cookedMesh;
 }
@@ -394,10 +394,10 @@ PxConvexMesh * CPhysxManager::CreateCookedConvexMesh(const CMesh * mesh) {
 
 	PxDefaultMemoryOutputStream buf;
 	PxConvexMeshCookingResult::Enum result;
-	if (!mCooking->cookConvexMesh(convexDesc, buf, &result))
+	if (!m_pCooking->cookConvexMesh(convexDesc, buf, &result))
 		return NULL;
 	PxDefaultMemoryInputData input(buf.getData(), buf.getSize());
-	PxConvexMesh* convexMesh = mPhysics->createConvexMesh(input);
+	PxConvexMesh* convexMesh = m_pPhysics->createConvexMesh(input);
 
 	return convexMesh;
 }
@@ -465,7 +465,7 @@ void	CPhysxManager::onConstraintBreak(PxConstraintInfo *constraints, PxU32 count
 bool CPhysxManager::raycast(PxVec3 origin, PxVec3 unitDir, PxReal maxDistance, PxRaycastBuffer& hit, PxQueryFilterData filterData, const PxHitFlags outputFlags)
 {
 
-	bool status = mScene->raycast(origin, unitDir, maxDistance, hit, outputFlags, filterData);
+	bool status = m_pScene->raycast(origin, unitDir, maxDistance, hit, outputFlags, filterData);
 
 	return status;
 }
@@ -477,14 +477,14 @@ bool CPhysxManager::raycast(VEC3 origin, VEC3 unitDir, PxReal maxDistance, PxRay
 
 bool CPhysxManager::raycast(PxVec3 origin, PxVec3 end, PxRaycastBuffer& hit, PxQueryFilterData filterData, const PxHitFlags outputFlags)
 {
-	if (!(origin == last_origin && end == last_end)) {
-		last_origin = origin;
-		last_end = end;
-		last_direction = end - origin;
-		last_distance = sqrt(squared(last_direction.x) + squared(last_direction.y) + squared(last_direction.z));
+	if (!(origin == m_last_origin && end == m_last_end)) {
+		m_last_origin = origin;
+		m_last_end = end;
+		m_last_direction = end - origin;
+		m_last_distance = sqrt(squared(m_last_direction.x) + squared(m_last_direction.y) + squared(m_last_direction.z));
 	}
 
-	bool status = raycast(origin, last_direction,last_distance, hit, filterData, outputFlags);
+	bool status = raycast(origin, m_last_direction,m_last_distance, hit, filterData, outputFlags);
 	return status;
 }
 
@@ -504,10 +504,10 @@ bool CPhysxManager::raycast(VEC3 origin, VEC3 end, PxRaycastBuffer& hit, PxQuery
 bool CPhysxManager::Createjoint(PxRigidActor * a1, PxRigidActor * a2, const PxTransform & tmx1, const PxTransform & tmx2, int typeJoint)
 {
 PxControllerBehaviorFlag::
-//PxRevoluteJoint *joint = PxRevoluteJointCreate(*mPhysics, a1, tmx1, a2, tmx2);
+//PxRevoluteJoint *joint = PxRevoluteJointCreate(*m_pPhysics, a1, tmx1, a2, tmx2);
 
-//PxD6Joint *joint = PxD6JointCreate(*mPhysics, a1, tmx1, a2, tmx2);
-PxFixedJoint *joint = PxFixedJointCreate(*mPhysics, a1, tmx1, a2, tmx2);
+//PxD6Joint *joint = PxD6JointCreate(*m_pPhysics, a1, tmx1, a2, tmx2);
+PxFixedJoint *joint = PxFixedJointCreate(*m_pPhysics, a1, tmx1, a2, tmx2);
 //joint->setMotion(PxD6Axis::eX, PxD6Motion::eLIMITED);
 
 joint->setConstraintFlag(PxConstraintFlag::eVISUALIZATION, true);

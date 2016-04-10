@@ -190,7 +190,7 @@ void ai_scientific::MoveToPos()
 
 
 	cc->AddMovement(me_transform->getFront(), move_speed);
-	VEC3 new_pos = cc->getPosition() - VEC3(0, cc->GetRadius() + cc->GetHeight(), 0);
+	VEC3 new_pos = cc->GetFootPosition();
 
 
 	float dist_square = simpleDistXZ(new_pos, target);

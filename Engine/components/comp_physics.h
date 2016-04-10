@@ -24,21 +24,21 @@ enum eTypeShape {
 // ------------------------------------
 class TCompPhysics : public TCompBase {
 
-	int					mCollisionType;
-	int					mCollisionShape;
+	int					m_collisionType;
+	int					m_collisionShape;
 
-	float				mStaticFriction		= 0.5f;
-	float				mDynamicFriction		= 0.5f;
-	float				mRestitution			= 0.25f;
-	float				mMass					= 2.0f;
+	float				m_staticFriction		= 0.5f;
+	float				m_dynamicFriction		= 0.5f;
+	float				m_restitution			= 0.25f;
+	float				m_mass					= 2.0f;
 
-	float				mRadius		= 0.0f;
-	float				mHeight		= 0.0f;
-	VEC3				mSize		= VEC3(1.0f,1.0f,1.0f);	//default size for box
+	float				m_radius				= 0.0f;
+	float				m_height				= 0.0f;
+	VEC3				m_size					= VEC3(1.0f,1.0f,1.0f);	//default size for box
 
-	PxShape*			pShape		= nullptr;
-	PxActor*			pActor		= nullptr;
-	PxRigidActor*		rigidActor	= nullptr;
+	PxShape*			m_pShape				= nullptr;
+	PxActor*			m_pActor				= nullptr;
+	PxRigidActor*		m_pRigidActor			= nullptr;
 
 	int getCollisionTypeValueFromString(std::string str);
 	int getCollisionShapeValueFromString(std::string str);
@@ -57,9 +57,9 @@ public:
 	}
 	~TCompPhysics() {
 		// Destroy physics obj
-		if (pActor) {
-			PhysxManager->GetActiveScene()->removeActor(*pActor);
-			pActor->release();
+		if (m_pActor) {
+			g_PhysxManager->GetActiveScene()->removeActor(*m_pActor);
+			m_pActor->release();
 		}
 
 		//if (rigidActor) rigidActor->release();
@@ -67,7 +67,7 @@ public:
 
 	void updateTagsSetupActor(PxFilterData& filter);
 
-	PxActor* getActor() { return pActor; }
+	PxActor* getActor() { return m_pActor; }
 	bool load(MKeyValue& atts);
 
 	// load Xml
@@ -79,7 +79,7 @@ public:
 	void AddVelocity(VEC3 velocity);
 	void setPosition(VEC3 position, CQuaternion rotation);
 
-	float GetMass() const { return mMass; }
+	float GetMass() const { return m_mass; }
 
 	void update(float dt);
 	void renderInMenu();

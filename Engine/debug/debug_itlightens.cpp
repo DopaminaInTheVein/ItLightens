@@ -24,7 +24,12 @@ void  CDebug::LogRaw(const char* msg, ...)
 {
 #ifndef NDEBUG					//performance cost
 	int old_size = Buf.size();
-
+	
+	//near max int
+	if (old_size >= 2047483647) {
+		Clear();
+		old_size = Buf.size();
+	}
 	va_list args;
 	va_start(args, msg);
 	Buf.appendv(msg, args);
