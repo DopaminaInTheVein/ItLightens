@@ -253,7 +253,7 @@ void player_controller::RecalcAttractions()
 	//float drag_i = 1 - drag;
 	//pol_speed = drag_i*pol_speed + drag*player_max_speed;
 
-	cc->AddAccel(forces);
+	cc->AddSpeed(forces*getDeltaTime());
 	//cc->AddImpulse(forces);
 }
 
@@ -264,7 +264,8 @@ VEC3 player_controller::AttractMove(VEC3 point_pos) {
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 direction = point_pos - player_position;
-	return direction*(log10(simpleDist(player_position,point_pos)));
+	direction.Normalize();
+	return 10*direction/(log10f(simpleDist(player_position,point_pos)));
 }
 
 void player_controller::UpdateMoves()
@@ -350,11 +351,11 @@ void player_controller::UpdateInputActions()
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
 			pol_speed = 0;
-			cc->SetGravity(false);
+			//cc->SetGravity(false);
 		}
 		else if (affectPolarized && force_points.size() == 0) {
 			affectPolarized = false;
-			cc->SetGravity(true);
+			//cc->SetGravity(true);
 		}
 		RecalcAttractions();
 	}
@@ -363,11 +364,11 @@ void player_controller::UpdateInputActions()
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
 			pol_speed = 0;
-			cc->SetGravity(false);
+			//cc->SetGravity(false);
 		}
 		else if (affectPolarized && force_points.size() == 0) {
 			affectPolarized = false;
-			cc->SetGravity(true);
+			//cc->SetGravity(true);
 		}
 
 		RecalcAttractions();
@@ -377,7 +378,7 @@ void player_controller::UpdateInputActions()
 		pol_state = NEUTRAL;
 		if (affectPolarized) {
 			affectPolarized = false;
-			cc->SetGravity(true);
+			//cc->SetGravity(true);
 		}
 	}
 	

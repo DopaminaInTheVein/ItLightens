@@ -13,7 +13,7 @@ class TCompCharacterController : public TCompBase {
 	float							m_height			= 0.0f;
 	float							m_mass				= 80.0f;
 	float							m_gravitySpeed		= -10.0f;
-	float							m_maxYimpulse		= 7.0f;		//max impulse for yaxis, to block acumulating impulse forces
+	float							m_maxSpeed			= 10.0f;
 	float							m_friction			= 15.0f;
 	float							m_eOffsetSpeed		= 0.2f;
 

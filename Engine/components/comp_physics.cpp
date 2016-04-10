@@ -290,6 +290,7 @@ bool TCompPhysics::addRigidbodyScene()
 
 bool TCompPhysics::isKinematic()
 {
+	if (m_collisionType == STATIC_OBJECT) return true;
 	PxRigidDynamic *rd = m_pActor->isRigidDynamic();
 
 	if (rd) {

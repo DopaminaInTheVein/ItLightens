@@ -20,6 +20,16 @@
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
     <character_controller radius ="0.3" height ="0.5"/>
   </entity>
+<!-- Test 1 punto magnetismo -->
+  <entity>
+    <name name="punto_magnetismo1" />
+    <tags tags="minus_wall" />
+    <polarized pol="minus"/>
+    <transform pos="-2.357965 -5.63678 -22" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
+  </entity>
+  <!-- fin 1 punto magnetismo -->
 
 <!-- Prueba anims -->
  <entity>

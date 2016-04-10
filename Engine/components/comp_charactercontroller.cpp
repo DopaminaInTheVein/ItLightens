@@ -29,6 +29,7 @@ void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 	m_pActor = g_PhysxManager->CreateCharacterController(m_radius, m_height);
 	m_affectGravity = true;
 	m_gravitySpeed = -10.0f;
+	m_maxSpeed = 7.0f;
 	CEntity *e = CHandle(this).getOwner();
 	if (e) {	//update position from CC to match the render transform
 		TCompName  *nameComp = e->get<TCompName>();
@@ -118,11 +119,43 @@ void TCompCharacterController::RecalcSpeed(float dt)
 //recalc how much have to move from speed
 void TCompCharacterController::RecalcMovement(float dt)
 {
-	//updata y speed & accel if controller is on ground
+	//update y speed & accel if controller is on ground
 	if (m_physxOnground) {
 		if (m_speed.y < 0.0f)	m_speed.y = -0.001f;
-		if (m_accel.y < 0.0f)	m_accel.y = 0.0f;
 	}
+
+	//update speed if collision is up
+	if (m_flagsCollisions & PxControllerFlag::eCOLLISION_UP) {
+		if (m_speed.y > 0.0f) m_speed.y = 0.0f;
+	}
+
+	//check is some speed is too big
+	//speed x axis
+	if (m_speed.x >  m_maxSpeed) {
+		m_speed.x = m_maxSpeed;
+	}
+	else if (m_speed.x < -m_maxSpeed) {
+		m_speed.x = -m_maxSpeed;
+	}
+
+	//speed y axis
+	if (m_speed.y >  m_maxSpeed) {
+		m_speed.y = m_maxSpeed;
+	}
+	else if (m_speed.y < -m_maxSpeed) {
+		m_speed.y = -m_maxSpeed;
+	}
+
+	//speed z axis
+	if (m_speed.z >  m_maxSpeed) {
+		m_speed.z = m_maxSpeed;
+	}
+	else if (m_speed.z < -m_maxSpeed) {
+		m_speed.z = -m_maxSpeed;
+	}
+
+
+
 
 	//update final movement
 	m_toMove += m_speed*dt;
