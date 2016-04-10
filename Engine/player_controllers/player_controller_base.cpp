@@ -135,39 +135,40 @@ bool CPlayerBase::UpdateMovDirection() {
 
 	bool horizontal = false;
 	bool vertical = false;
+	if (!GameController->GetFreeCamera()) {
+		if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
+			directionForward = VEC3(0, 0, 1);
+			//TODO: xbobx
+			moving = true;
+			vertical = true;
+		}
+		if (io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
+			directionForward = VEC3(0, 0, -1);
+			//TODO: xbobx
+			moving = true;
+			vertical = true;
+		}
 
-	if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
-		directionForward = VEC3(0, 0, 1);
-		//TODO: xbobx
-		moving = true;
-		vertical = true;
+		if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility) {
+			directionLateral = VEC3(1, 0, 0);
+			//TODO: xbobx
+			moving = true;
+			horizontal = true;
+		}
+		if (io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
+			directionLateral = VEC3(-1, 0, 0);
+			//TODO: xbobx
+			moving = true;
+			horizontal = true;
+		}
+
+		if (!vertical && moving)
+			directionForward = VEC3(0, 0, 0);
+
+		else if (!horizontal && moving)
+			directionLateral = VEC3(0, 0, 0);
+
 	}
-	if (io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
-		directionForward = VEC3(0, 0, -1);
-		//TODO: xbobx
-		moving = true;
-		vertical = true;
-	}
-
-	if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility) {
-		directionLateral = VEC3(1, 0, 0);
-		//TODO: xbobx
-		moving = true;
-		horizontal = true;
-	}
-	if (io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
-		directionLateral = VEC3(-1, 0, 0);
-		//TODO: xbobx
-		moving = true;
-		horizontal = true;
-	}
-
-	if (!vertical && moving)
-		directionForward = VEC3(0, 0, 0);
-
-	else if (!horizontal && moving)
-		directionLateral = VEC3(0, 0, 0);
-
 	return moving;
 }
 

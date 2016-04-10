@@ -49,14 +49,14 @@ void TCompCharacterController::renderInMenu()
 	ImGui::Text("Editable values:\n");
 	ImGui::Checkbox("affectGravity", &m_affectGravity);
 	ImGui::SliderFloat("gravity", &m_gravitySpeed, -15.0, 15.0f);
-	ImGui::SliderFloat3("acceleration",&m_accel.x,-20.0f,20.0f);
+	//ImGui::SliderFloat3("acceleration",&m_accel.x,-10.0f,10.0f);		//will be 0, cleaned each frame
 	ImGui::SliderFloat3("speed", &m_speed.x, -20.0f, 20.0f);
 	ImGui::Separator();
 	ImGui::Text("Will be updated by engine\n");
 	ImGui::Checkbox("OnGround", &m_OnGround);
 	ImGui::Checkbox("PhysxOnGround", &m_physxOnground);
 	ImGui::Checkbox("last_onground", &m_lastOnGround);
-	ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");
+	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 	
 }
 
@@ -88,7 +88,7 @@ void TCompCharacterController::RecalcSpeed(float dt)
 
 	//update y speed based on y gravity
 	if (m_affectGravity) {
-		if (!OnGround()) {
+		if (!m_OnGround) {
 			m_speed.y += m_gravitySpeed*dt;
 		}
 	}
@@ -97,8 +97,8 @@ void TCompCharacterController::RecalcSpeed(float dt)
 	m_speed += m_accel*dt;
 
 	//calc if there are some speed to sum at speed from own rigidbdy speed
-	if (!OnGround() && m_lastOnGround) {
-		VEC3 speed = PhysxConversion::PxVec3ToVec3(m_pActor->getActor()->getLinearVelocity());
+	if (!m_OnGround && m_lastOnGround) {
+		VEC3 speed = PhysxConversion::PxVec3ToVec3(m_last_speed);
 		speed.y = 0;
 		m_speed += speed;
 	}
@@ -147,11 +147,12 @@ void TCompCharacterController::ApplyPendingMoves(float dt) {
 
 	PROFILE_FUNCTION(name.c_str());
 	if (m_toMove != VEC3(0.0f, 0.0f, 0.0f)) {
-		PxVec3 moved;
-		if (OnGround() | !m_affectGravity) moved = PxVec3(m_toMove.x, m_toMove.y, m_toMove.z);
-		else moved = PxVec3(m_toMove.x/2, m_toMove.y, m_toMove.z/2);
+		PxVec3 moved = PxVec3(m_toMove.x, m_toMove.y, m_toMove.z);
+		m_last_speed = m_pActor->getActor()->getLinearVelocity();
 		m_flagsCollisions = m_pActor->move(moved, 0.0f, dt, m_filterController);
+		//clean acceleration & pendent displacement
 		m_toMove = VEC3(0.0f, 0.0f, 0.0f);
+		m_accel = m_toMove;
 	}
 }
 
@@ -169,7 +170,7 @@ void TCompCharacterController::RecalcOnGround()
 	else {
 		//raycast to look for down distance
 		PxRaycastBuffer hit;
-		bool hit_ground = g_PhysxManager->raycast(GetFootPosition(), PhysxConversion::PxVec3ToVec3(-m_pActor->getUpDirection()), 0.01f, hit);
+		bool hit_ground = g_PhysxManager->raycast(GetFootPosition(), PhysxConversion::PxVec3ToVec3(-m_pActor->getUpDirection()), 0.1f, hit);
 		m_OnGround = hit_ground;
 		m_physxOnground = false;
 	}
@@ -267,13 +268,6 @@ void TCompCharacterController::AddImpulse(const VEC3& impulse) {
 	m_speed.y = impulse.y;
 	m_speed.x = impulse.x;
 	m_speed.z = impulse.z;
-
-	//jump form ground
-	/*if (m_lastOnGround && m_speed.y != 0.0f) {
-		VEC3 speed = PhysxConversion::PxVec3ToVec3(m_pActor->getActor()->getLinearVelocity());
-		Debug->LogRaw("speed: %f, %f, %f\n",speed.x,speed.y,speed.z);
-		AddSpeed(speed);
-	}*/
 }
 
 void TCompCharacterController::AddSpeed(const VEC3 & direction, float speed)

@@ -436,7 +436,8 @@ void bt_guard::goTo(const VEC3& dest) {
 void bt_guard::goForward(float stepForward) {
 	PROFILE_FUNCTION("guard: go forward");
 	VEC3 myPos = getTransform()->getPosition();
-	getCC()->AddMovement(getTransform()->getFront() * stepForward);
+	float dt = getDeltaTime();
+	getCC()->AddMovement(getTransform()->getFront() * stepForward*dt);
 }
 
 // -- Turn To -- //

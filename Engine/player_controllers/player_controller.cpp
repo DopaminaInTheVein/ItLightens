@@ -246,14 +246,14 @@ void player_controller::RecalcAttractions()
 	}
 
 	SetCharacterController();
-	forces.Normalize();
+	//forces.Normalize();
 
 
-	float drag = getDeltaTime();
-	float drag_i = 1 - drag;
-	pol_speed = drag_i*pol_speed + drag*player_max_speed;
+	//float drag = getDeltaTime();
+	//float drag_i = 1 - drag;
+	//pol_speed = drag_i*pol_speed + drag*player_max_speed;
 
-	cc->AddMovement(forces, pol_speed);
+	cc->AddAccel(forces);
 	//cc->AddImpulse(forces);
 }
 
@@ -264,7 +264,7 @@ VEC3 player_controller::AttractMove(VEC3 point_pos) {
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 direction = point_pos - player_position;
-	return direction/squaredDist(player_position,point_pos);
+	return direction*(log10(simpleDist(player_position,point_pos)));
 }
 
 void player_controller::UpdateMoves()
@@ -334,8 +334,11 @@ void player_controller::UpdateMoves()
 		ChangePose(pose_jump);
 	}else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
-	
-	cc->AddMovement(direction*player_curr_speed*getDeltaTime());
+	if(cc->OnGround())
+		cc->AddMovement(direction*player_curr_speed*getDeltaTime());
+	else {
+		cc->AddMovement(direction*player_curr_speed*getDeltaTime()/2);
+	}
 }
 
 void player_controller::UpdateInputActions()

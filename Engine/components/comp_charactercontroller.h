@@ -26,6 +26,7 @@ class TCompCharacterController : public TCompBase {
 	VEC3							m_toMove			= VEC3(0.0f, 0.0f, 0.0f);
 	VEC3							m_accel				= VEC3(0.0f,0.0f,0.0f);
 	VEC3							m_speed				= VEC3(0.0f, 0.0f, 0.0f);
+	PxVec3							m_last_speed		= PxVec3(0.0f,0.0f,0.0f);
 
 	PxController*					m_pActor			= nullptr;
 

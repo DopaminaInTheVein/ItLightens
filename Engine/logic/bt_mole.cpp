@@ -427,7 +427,8 @@ void bt_mole::moveFront(float movement_speed) {
 	VEC3 front = transform->getFront();
 	VEC3 position = transform->getPosition();
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
-	cc->AddMovement(VEC3(front.x*movement_speed, 0.0f, front.z*movement_speed));
+	float dt = getDeltaTime();
+	cc->AddMovement(VEC3(front.x*movement_speed*dt, 0.0f, front.z*movement_speed*dt));
 }
 
 //Cambio de malla

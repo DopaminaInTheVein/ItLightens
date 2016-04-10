@@ -122,7 +122,7 @@ public:
 	}
 
 	void update(float dt) {
-		if (!*GameController->GetFreeCamera())
+		if (!GameController->GetFreeCamera())
 			personThirdController(dt);
 
 		else 
