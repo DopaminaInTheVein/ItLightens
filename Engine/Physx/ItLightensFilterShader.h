@@ -56,6 +56,8 @@ public:
 			return PxFilterFlag::eDEFAULT;
 		}
 
+		// generate default contact for no-triggers
+		pairFlags = PxPairFlag::eCONTACT_DEFAULT;
 
 		//pass collision only on objects with tag eCOLLISION
 		if ((filterData1.word1 & eCOLLISION) && (filterData0.word1 & eCOLLISION))
@@ -64,8 +66,8 @@ public:
 			return PxFilterFlag::eDEFAULT;
 		}
 
-		// generate contacts for all that were not filtered above
-		pairFlags = PxPairFlag::eCONTACT_DEFAULT;
+		
+		
 
 		return PxFilterFlag::eDEFAULT;
 	}
