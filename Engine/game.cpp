@@ -51,7 +51,7 @@ bool CApp::start() {
 	g_PhysxManager = new CPhysxManager;
 	GameController = new CGameController;
 	Debug = new CDebug();
-	auto logic_manager = new CLogicManagerModule;
+	logic_manager = new CLogicManagerModule;
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
@@ -69,6 +69,7 @@ bool CApp::start() {
 	mod_update.push_back(g_PhysxManager);
 	mod_update.push_back(io);
 	mod_update.push_back(Debug);
+	mod_update.push_back(logic_manager);
 	
 	mod_renders.push_back(render_deferred);
 	mod_renders.push_back(entities);
