@@ -1,7 +1,7 @@
 #include "mcv_platform.h"
 #include "app.h"
 #include "app_modules/app_module.h"
-#include "app_modules\io\io.h"
+//#include "utils/timer.h"
 
 // -------------------------------------------------
 static CApp* app = nullptr;
@@ -17,25 +17,15 @@ CApp::CApp()
 	: xres(800)
 	, yres(600)
 {
-	file_options = "./options.ini";
-	file_initAttr = "./inicialization.ini";
+	file_options_json = "./options.json";
+	file_initAttr_json = "./inicialization.json";
+
+	std::map<std::string, float> options = readIniAtrData(file_options_json, "screen");
 	
 	//"0 != " to convert uint to bool more efficient
-	max_screen = 0 != GetPrivateProfileIntA(	"screen",
-										"full_screen",
-										0,
-										file_options.c_str());
-
-	xres = GetPrivateProfileIntA(	"screen",
-									"xres",
-									800,
-									file_options.c_str());
-
-	yres = GetPrivateProfileIntA(	"screen",
-									"yres",
-									600,
-									file_options.c_str());
-
+	max_screen = 0 != (int)options["full_screen"];
+	xres = (int)options["xres"];
+	yres = (int)options["yres"];
 
 	// Create window
 	RECT desktop;
@@ -152,9 +142,13 @@ bool CApp::createWindow(HINSTANCE new_hInstance, int nCmdShow)
 
 // -------------------------------------------------
 void CApp::generateFrame() {
-	PROFILE_FRAME_BEGINS();
-	PROFILE_FUNCTION("generateFrame");
-	float delta_time = 1.0f / 60.f;
+  PROFILE_FRAME_BEGINS();
+  PROFILE_FUNCTION("generateFrame");
+  float delta_time = timer_app.deltaAndReset();
+  delta_time = getDeltaTime();
+  const float max_delta_time = 5.f / 60.f;      // 5 frames
+  if (delta_time > max_delta_time)
+    delta_time = max_delta_time;
 	update(delta_time);
 	render();
 	Render.swapChain();
@@ -164,6 +158,10 @@ void CApp::generateFrame() {
 void CApp::mainLoop() {
 	// Main message loop
 	MSG msg = { 0 };
+
+	static CTimer timer;
+	timer_app = timer;
+
 	while (WM_QUIT != msg.message)
 	{
 		// Check if windows has some msg for us

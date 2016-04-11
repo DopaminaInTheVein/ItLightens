@@ -6,8 +6,8 @@
 #include <vector>
 
 class CEntitiesModule : public IAppModule {
-	void renderInMenu();
-
+  void renderInMenu();
+  bool use_parallel = false;
 public:
 	std::vector< CHandle > collisionables;
 

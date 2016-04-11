@@ -24,7 +24,9 @@ void player_controller_cientifico::readIniFileAttr() {
 	if (h.isValid()) {
 		if (h.hasTag("AI_cientifico")) {
 
-			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
 			assignValueToVar(player_max_speed, fields_base);
 			assignValueToVar(player_rotation_speed, fields_base);
@@ -33,7 +35,7 @@ void player_controller_cientifico::readIniFileAttr() {
 			assignValueToVar(camera_max_height, fields_base);
 			assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_scientist = readIniFileAttrMap("controller_scientist");
+			map<std::string, float> fields_scientist = readIniAtrData(file_ini, "controller_scientist");
 
 			assignValueToVar(t_waiting, fields_scientist);
 			assignValueToVar(t_to_explode, fields_scientist);
@@ -85,7 +87,6 @@ void player_controller_cientifico::Init() {
 
 void player_controller_cientifico::UpdateInputActions() {
 	PROFILE_FUNCTION("player cientifico: energy dec");
-	energyDecreasal(getDeltaTime()*0.5f);
 	if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
 		ChangeState("createDisableBeacon");
 	}

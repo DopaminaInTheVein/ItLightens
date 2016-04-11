@@ -14,19 +14,20 @@ struct TTrigger : public TCompBase {
 	}
 
 	void onTriggerEnterCall(const TMsgTriggerIn& msg) {
+		Debug->LogRaw("OnTriggerEnter\n");
 		last_msg_in = msg;
 		triggered = true;
 		onTriggerEnter(last_msg_in);
 	}
 
 	void onTriggerExitCall(const TMsgTriggerOut& msg) {
+		Debug->LogRaw("OnTriggerExit\n");
 		last_msg_out = msg;
 		triggered = false;
 		onTriggerExit(last_msg_out);
 	}
 
-	
-	virtual void mUpdate(float dt)=0;
+	virtual void mUpdate(float dt) = 0;
 	virtual void onTriggerInside(const TMsgTriggerIn& msg) = 0;
 	virtual void onTriggerEnter(const TMsgTriggerIn& msg) = 0;
 	virtual void onTriggerExit(const TMsgTriggerOut& msg) = 0;

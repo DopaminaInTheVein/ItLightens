@@ -3,6 +3,7 @@
 
 #define CTE_SHADER_OBJECT_SLOT     0
 #define CTE_SHADER_CAMERA_SLOT     1
+#define CTE_SHADER_BONES_SLOT      2
 
 #ifdef INC_MCV_PLATFORM_H_
 

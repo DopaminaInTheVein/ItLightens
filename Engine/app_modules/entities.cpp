@@ -46,6 +46,11 @@ DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
+DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
+DECL_OBJ_MANAGER("tags", TCompTags);
+
+DECL_OBJ_MANAGER("platform", TCompPlatform);
+DECL_OBJ_MANAGER("box", TCompBox);
 
 //Physics
 DECL_OBJ_MANAGER("rigidbody", TCompPhysics);
@@ -88,6 +93,9 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompWire>()->init(10);
 	getHandleManager<TCompGenerator>()->init(10);
 	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -97,6 +105,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 
+	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
+
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
 
@@ -105,9 +115,10 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
-	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
@@ -116,15 +127,21 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
 	SUBSCRIBE(bt_speedy, TMsgSetPlayer, onSetPlayer);
-	SUBSCRIBE(water_controller, TMsgSetWaterType, onSetWaterType);
 	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
+
+	//box
+	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
+
+	//water
+	SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
 
 	//bombs
 	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
@@ -169,15 +186,25 @@ bool CEntitiesModule::start() {
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
 
+	//Dead
+	//anything for now
+	/*SUBSCRIBE(player_controller, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_cientifico, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_speedy, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_mole, TMsgDie, onDie);*/
+
 	//Damage
+	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);		//init damage scales
+	SUBSCRIBE(TCompLife, TMsgDamageSave, onSetSaveDamage);
 	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller_cientifico, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller_speedy, TMsgDamage, onDamage);
-	SUBSCRIBE(player_controller_mole, TMsgDamage, onDamage);
+	SUBSCRIBE(TCompLife, TMsgSetDamage, onReciveDamage);
+	SUBSCRIBE(TCompLife, TMsgStopDamage, onStopDamage);
+	SUBSCRIBE(player_controller_cientifico, TMsgUnpossesDamage, onForceUnPosses);
+	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
+	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	CEntityParser ep;
-	bool is_ok = ep.xmlParseFile("data/scenes/scene_test_recast.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH
@@ -204,26 +231,30 @@ bool CEntitiesModule::start() {
 	thre.detach();
 
 	TTagID tagIDcamera = getID("camera_main");
-	TTagID tagIDbox = getID("box");
-	TTagID tagIDboxleave = getID("box_leavepoint");
 	TTagID tagIDwall = getID("breakable_wall");
 	TTagID tagIDminus = getID("minus_wall");
 	TTagID tagIDplus = getID("plus_wall");
 	TTagID tagIDrec = getID("recover_point");
 
 	// Camara del player
-	CHandle camera = tags_manager.getFirstHavingTag(tagIDcamera);
+	CHandle camera = tags_manager.getFirstHavingTag("camera_main");
 	CEntity * camera_e = camera;
+	if (!camera_e) {
+		//main camera needed
+		fatal("main camera needed!!\n");
+		assert(false);
+	}
 	TCompCamera * pcam = camera_e->get<TCompCamera>();
 
 	// Player real
-	CHandle t = tags_manager.getFirstHavingTag(getID("player"));
+	CHandle t = tags_manager.getFirstHavingTag("player");
 	CEntity * target_e = t;
 
 	// Set the player in the 3rdPersonController
 	if (camera_e && t.isValid()) {
 		TMsgSetTarget msg;
 		msg.target = t;
+		msg.who = PLAYER;
 		camera_e->sendMsg(msg);		//set camera
 
 		TMsgSetCamera msg_camera;
@@ -242,20 +273,7 @@ bool CEntitiesModule::start() {
 		speedy_e->sendMsg(msg_player);
 	}
 
-	// Set the type for the starting water zones to 0 (PERMANENT)
-	TTagID tagIDWater = getID("water");
-	VHandles waterHandles = tags_manager.getHandlesByTag(tagIDWater);
-
-	for (CHandle waterHandle : waterHandles) {
-		CEntity * water_e = waterHandle;
-		TMsgSetWaterType msg_water;
-		msg_water.type = 0;
-		water_e->sendMsg(msg_water);
-	}
-
-	SBB::postHandlesVector("wptsBoxes", tags_manager.getHandlesByTag(tagIDbox));
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
-	SBB::postHandlesVector("wptsBoxLeavePoint", tags_manager.getHandlesByTag(tagIDboxleave));
 	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
 	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
 	SBB::postHandlesVector("wptsRecoverPoint", tags_manager.getHandlesByTag(tagIDrec));
@@ -269,12 +287,13 @@ bool CEntitiesModule::start() {
 	getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
 	getHandleManager<bt_speedy>()->onAll(&bt_speedy::Init);
 	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
-	getHandleManager<water_controller>()->onAll(&water_controller::Init);
+	//getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
 	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
+	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
 
 	return true;
 }
@@ -292,12 +311,18 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
 
+	if (use_parallel)
+		getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
+	else
+		getHandleManager<TCompSkeleton>()->updateAll(dt);
+
+	getHandleManager<TCompBoneTracker>()->updateAll(dt);
+
 	getHandleManager<bt_guard>()->updateAll(dt);
 	getHandleManager<bt_mole>()->updateAll(dt);
 	getHandleManager<ai_scientific>()->updateAll(dt);
 	getHandleManager<beacon_controller>()->updateAll(dt);
 	getHandleManager<workbench_controller>()->updateAll(dt);
-	getHandleManager<TCompSkeleton>()->updateAll(dt);
 	getHandleManager<bt_speedy>()->updateAll(dt);
 	getHandleManager<water_controller>()->updateAll(dt);
 
@@ -307,6 +332,11 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompWire>()->updateAll(dt);
 	getHandleManager<TCompGenerator>()->updateAll(dt);
 	getHandleManager<TCompPolarized>()->updateAll(dt);
+
+	getHandleManager<TCompLife>()->updateAll(dt);
+
+	getHandleManager<TCompPlatform>()->updateAll(dt);
+	getHandleManager<TCompBox>()->updateAll(dt);
 
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);
@@ -335,6 +365,12 @@ void CEntitiesModule::renderInMenu() {
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Entities by Tag...")) {
+		// Show all defined tags
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("Entities by Tag...")) {
+		tags_manager.renderInMenu();
 		// Show all defined tags
 		ImGui::TreePop();
 	}

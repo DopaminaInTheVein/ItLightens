@@ -21,7 +21,9 @@ void player_controller_mole::readIniFileAttr() {
 	if (h.isValid()) {
 		if (h.hasTag("AI_mole")) {
 
-			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
 			assignValueToVar(player_max_speed, fields_base);
 			assignValueToVar(player_rotation_speed, fields_base);
@@ -30,7 +32,7 @@ void player_controller_mole::readIniFileAttr() {
 			assignValueToVar(camera_max_height, fields_base);
 			assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_mole = readIniFileAttrMap("controller_mole");
+			map<std::string, float> fields_mole = readIniAtrData(file_ini, "controller_mole");
 
 			assignValueToVar(grab_box_energy, fields_mole);
 			assignValueToVar(destroy_wall_energy, fields_mole);
@@ -74,7 +76,6 @@ void player_controller_mole::Init() {
 }
 
 void player_controller_mole::UpdateInputActions() {
-	energyDecreasal(getDeltaTime()*0.5f);
 	if (state == "moving")
 		ChangePose(pose_run_route);
 	else if (state == "jumping" || state == "falling")
@@ -103,7 +104,6 @@ void player_controller_mole::UpdateInputActions() {
 void player_controller_mole::UpdateMovingWithOther() {
 	if (boxGrabbed) {
 		ChangePose(pose_box_route);
-		energyDecreasal(getDeltaTime()*0.5f);
 		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 		TCompTransform* box_t = box->get<TCompTransform>();
 		TCompPhysics* box_p = box->get<TCompPhysics>();
@@ -146,6 +146,9 @@ void player_controller_mole::GrabBox() {
 	box_p->setPosition(posPlayer, box_t->getRotation());
 
 	energyDecreasal(5.0f);
+	TMsgDamage dmg;
+	dmg.modif = 0.5f;
+	myEntity->sendMsg(dmg);
 	boxGrabbed = true;
 	mole_max_speed /= 2;
 	ChangePose(pose_idle_route);

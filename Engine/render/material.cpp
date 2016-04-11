@@ -26,6 +26,8 @@ void CMaterial::onStartElement(const std::string &elem, MKeyValue &atts) {
 	}
 	else if (elem == "texture") {
 		auto type_name = atts["type"];  // diffuse/specular/...
+		if (type_name == "") type_name = atts["slot"];
+		assert(type_name != "");
 		auto text_name = atts["name"];
 
 		TTextureSlot type_slot;
@@ -56,7 +58,7 @@ bool CMaterial::load(const char* filename) {
 // ----------------------------------------------
 void CMaterial::activateTextures() const {
 	PROFILE_FUNCTION("render material: activate textures");
-  textures[DIFFUSE]->activate(0);
+	textures[DIFFUSE]->activate(0);
 }
 
 // ----------------------------------------------

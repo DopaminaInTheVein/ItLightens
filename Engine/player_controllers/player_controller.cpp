@@ -24,7 +24,9 @@ void player_controller::readIniFileAttr() {
 	if (h.isValid()) {
 		if (h.hasTag("player")) {
 
-			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
 			assignValueToVar(player_max_speed, fields_base);
 			assignValueToVar(player_rotation_speed, fields_base);
@@ -33,7 +35,7 @@ void player_controller::readIniFileAttr() {
 			assignValueToVar(camera_max_height, fields_base);
 			assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_player = readIniFileAttrMap("controller_player");
+			map<std::string, float> fields_player = readIniAtrData(file_ini, "controller_player");
 
 			assignValueToVar(full_height, fields_player);
 			assignValueToVar(min_height, fields_player);
@@ -98,6 +100,8 @@ void player_controller::Init() {
 	mesh = pose_run;
 	mesh->static_mesh = Resources.get("static_meshes/player_run.static_mesh")->as<CStaticMesh>();
 
+	lastForces = VEC3(0,0,0);
+
 	actual_render->registerToRender();
 
 	ChangeState("idle");
@@ -112,7 +116,7 @@ bool player_controller::isDamaged() {
 
 void player_controller::rechargeEnergy()
 {
-	PROFILE_FUNCTION("recharge_eergy");
+	PROFILE_FUNCTION("recharge_energy");
 	TCompLife *life = myEntity->get<TCompLife>();
 	life->setMaxLife(max_life);
 	TCompCharacterController *p = myEntity->get<TCompCharacterController>();
@@ -155,27 +159,10 @@ void player_controller::ChangePose(CHandle new_pos_h)
 void player_controller::myUpdate() {
 	PROFILE_FUNCTION("player controller: MY_update");
 	SetMyEntity();
-	TCompTransform *m = myEntity->get<TCompTransform>();
-	
-	/*
-	//TESTING RAYCAST
-	int hits = 0;
-	SetCharacterController();
-	VEC3 origin = PhysxConversion::PxExVec3ToVec3(cc->GetController()->getFootPosition());
-	Debug->DrawLine(origin + m->getFront()*0.5f + VEC3(0,1,0), m->getFront(), 2.0f);
-	PxQueryFilterData filterData = PxQueryFilterData();
-	filterData.data.word0 = CPhysxManager::eGUARD;
-	PxRaycastBuffer hit;
 
-	if (PhysxManager->raycast(origin + m->getFront()*0.5f + VEC3(0, 0.5f, 0), m->getFront(), 2.0f, hit, filterData)) {
-		hits = hit.hasAnyHits();
-		Debug->LogRaw("player hits = %d to guard\n", hits);
-	}
-	//END TESTING RAYCAST
-	*/
+	TCompTransform *m = myEntity->get<TCompTransform>();
 
 	____TIMER__UPDATE_(timerDamaged);
-	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 pos = player_transform->getPosition();
 	if (!isDamaged()) {
@@ -261,9 +248,17 @@ void player_controller::RecalcAttractions()
 	}
 
 	SetCharacterController();
-	forces.Normalize();
-	Debug->LogRaw("num_effects pols = %d\n", force_points.size());
-	cc->AddMovement(forces, player_max_speed);
+	//forces.Normalize();
+
+
+	//float drag = getDeltaTime();
+	//float drag_i = 1 - drag;
+	//pol_speed = drag_i*pol_speed + drag*player_max_speed;
+
+	forces = (lastForces + forces) / 2;	//smooth change of forces
+	lastForces = forces;
+	cc->AddSpeed(forces*getDeltaTime());
+	//cc->AddImpulse(forces);
 }
 
 VEC3 player_controller::AttractMove(VEC3 point_pos) {
@@ -273,7 +268,9 @@ VEC3 player_controller::AttractMove(VEC3 point_pos) {
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 direction = point_pos - player_position;
-	return direction/squaredDist(player_position,point_pos);
+	direction.Normalize();
+	//return 50*10*direction/squared(simpleDist(player_position,point_pos));
+	return 50*direction / (simpleDist(player_position, point_pos)/2.0f);
 }
 
 void player_controller::UpdateMoves()
@@ -281,6 +278,19 @@ void player_controller::UpdateMoves()
 	PROFILE_FUNCTION("player controller: update moves");
 	SetMyEntity();
 	SetCharacterController();
+
+	//tests
+	if (io->keys['B'].becomesPressed()) {
+		cc->SetCollisions(false);
+		Debug->LogRaw("collisions false\n");
+	}
+
+	if (io->keys['V'].becomesPressed()) {
+		cc->SetCollisions(true);
+		Debug->LogRaw("collisions true\n");
+	}
+
+	//endtests
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -330,8 +340,11 @@ void player_controller::UpdateMoves()
 		ChangePose(pose_jump);
 	}else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
-	
-	cc->AddMovement(direction , player_curr_speed);
+	if(cc->OnGround())
+		cc->AddMovement(direction*player_curr_speed*getDeltaTime());
+	else {
+		cc->AddMovement(direction*player_curr_speed*getDeltaTime()/2);
+	}
 }
 
 void player_controller::UpdateInputActions()
@@ -339,28 +352,28 @@ void player_controller::UpdateInputActions()
 	PROFILE_FUNCTION("update input actions");
 	SetCharacterController();
 	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed())) {
-		energyDecreasal(getDeltaTime()*0.05f);
 		pol_state = PLUS;
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
-			cc->SetGravity(false);
+			pol_speed = 0;
+			//cc->SetGravity(false);
 		}
 		else if (affectPolarized && force_points.size() == 0) {
 			affectPolarized = false;
-			cc->SetGravity(true);
+			//cc->SetGravity(true);
 		}
 		RecalcAttractions();
 	}
 	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed())) {
-		energyDecreasal(getDeltaTime()*0.05f);
 		pol_state = MINUS;
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
-			cc->SetGravity(false);
+			pol_speed = 0;
+			//cc->SetGravity(false);
 		}
 		else if (affectPolarized && force_points.size() == 0) {
 			affectPolarized = false;
-			cc->SetGravity(true);
+			//cc->SetGravity(true);
 		}
 
 		RecalcAttractions();
@@ -370,7 +383,7 @@ void player_controller::UpdateInputActions()
 		pol_state = NEUTRAL;
 		if (affectPolarized) {
 			affectPolarized = false;
-			cc->SetGravity(true);
+			//cc->SetGravity(true);
 		}
 	}
 	
@@ -381,17 +394,6 @@ void player_controller::UpdateInputActions()
 		TMsgAISetStunned msg;
 		msg.stunned = true;
 		ePoss->sendMsg(msg);
-	}
-	else if (io->mouse.left.isPressed() || io->joystick.button_X.isPressed()) {
-		SetMyEntity();
-		TCompTransform* player_transform = myEntity->get<TCompTransform>();
-		vector<CHandle> ptsRecover = SBB::readHandlesVector("wptsRecoverPoint");
-		for (CEntity * ptr : ptsRecover) {
-			TCompTransform * ptr_trn = ptr->get<TCompTransform>();
-			if (3 > simpleDist(ptr_trn->getPosition(), player_transform->getPosition())) {
-				energyDecreasal(-15.0f*getDeltaTime());
-			}
-		}
 	}
 	
 
@@ -449,6 +451,7 @@ void player_controller::UpdatePossession() {
 			CEntity * camera_e = tags_manager.getFirstHavingTag(getID("camera_main"));
 			TMsgSetTarget msgTarg;
 			msgTarg.target = ePoss;
+			msgTarg.who = PLAYER;
 			camera_e->sendMsg(msgTarg);
 
 			//Se desactiva el player
@@ -476,7 +479,9 @@ void player_controller::recalcPossassable() {
 	currentPossessable = CHandle();
 	VHandles possessables = tags_manager.getHandlesByTag(getID("AI_poss"));
 	for (CHandle hPoss : possessables) {
+		if (!hPoss.isValid()) continue;
 		CEntity* ePoss = hPoss;
+		if (!ePoss) continue;
 		TCompTransform* tPoss = ePoss->get<TCompTransform>();
 		VEC3 posPoss = tPoss->getPosition();
 		float dist = realDist(player_position, posPoss);
@@ -524,7 +529,9 @@ bool player_controller::nearStunable() {
 	currentStunable = CHandle();
 	VHandles stuneables = tags_manager.getHandlesByTag(getID("AI_poss"));
 	for (CHandle hPoss : stuneables) {
+		if (!hPoss.isValid()) continue;
 		CEntity* ePoss = hPoss;
+		if (!ePoss) continue;
 		TCompTransform* tPoss = ePoss->get<TCompTransform>();
 		VEC3 posPoss = tPoss->getPosition();
 		float dist = realDist(player_position, posPoss);
@@ -596,18 +603,6 @@ void player_controller::update_msgs()
 {
 	PROFILE_FUNCTION("updat mesgs");
 	ui.addTextInstructions("Press 'l-shift' to possess someone\n");
-}
-
-void player_controller::onDamage(const TMsgDamage& msg) {
-	PROFILE_FUNCTION("onDamage");
-	switch (msg.dmgType) {
-	case LASER:
-		____TIMER_RESET_(timerDamaged);
-		break;
-	case WATER:
-		____TIMER_RESET_(timerDamaged);
-		break;
-	}
 }
 
 void player_controller::onWirePass(const TMsgWirePass & msg)

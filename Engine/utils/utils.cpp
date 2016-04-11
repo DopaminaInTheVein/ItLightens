@@ -3,6 +3,8 @@
 #include "imgui/imgui.h"
 #include <windows.h>
 #include <algorithm>
+#include "timer.h"
+#include "windows\app.h"
 
 #ifndef NDEBUG
 
@@ -35,15 +37,20 @@ uint32_t getID(const char* text) {
 }
 
 float _deltaTimePrev = 1.0f / 60.0f;
-float getDeltaTime() {
-	float dt = ImGui::GetIO().DeltaTime;
-	if (dt > 0.5f) {
-		dt = _deltaTimePrev;
+float getDeltaTime(float always) {
+	if (GameController->GetGameState() == CGameController::RUNNING || always ) {
+		CApp& app = CApp::get();
+		float dt = app.timer_app.GetDeltaTime();
+		if (dt > 0.5f) {
+			dt = _deltaTimePrev;
+		}
+		else {
+			_deltaTimePrev = dt;
+		}
+		return dt;
 	}
-	else {
-		_deltaTimePrev = dt;
-	}
-	return dt;
+
+	return 0.0f;
 }
 
 float squared(float i) {
@@ -143,38 +150,80 @@ bool isInVector(std::vector<TTagID>& v, TTagID obj)
 	return (std::find(v.begin(), v.end(), obj) != v.end());
 }
 
-std::map<std::string, float> readIniFileAttrMap(char* element_to_read) {
-	CApp &app = CApp::get();
-	std::string file_ini = app.file_initAttr;
-	std::map<std::string, float> element_fields;
-
-	char result[32000];
-	char field[64];
-
-	GetPrivateProfileString(element_to_read, NULL, "not_found", result, 32000, file_ini.c_str());
-
-	std::string res_string(result, 32000);
-	std::string delimiter("\0", 1);
-
-	size_t pos = 0;
-	std::string token;
-	while ((pos = res_string.find(delimiter)) != std::string::npos) {
-		token = res_string.substr(0, pos);
-		
-		GetPrivateProfileStringA(element_to_read, token.c_str(), "not_found", field, 64, file_ini.c_str());
-		std::string field_s = std::string(field);
-
-		if (field_s != "not_found")
-			element_fields[token] = std::stof(field_s);
-		else
-			element_fields[token] = 0.0f;
-
-		res_string.erase(0, pos + delimiter.length());
-	}
-
-	return element_fields;
-}
-
+// Assigns to a variable the value of the map that corresponds to the specified name
 void assingValueFromMap(float *variable, char *name, std::map<std::string, float> data_map) {
 	*variable = data_map[name];
+}
+
+// Reads and parses a JSON document
+Document readJSONAtrFile(const std::string route) {
+	FILE* pFile = fopen(route.c_str(), "rb");
+	char buffer[65536];
+	FileReadStream is(pFile, buffer, sizeof(buffer));
+	Document document;
+	document.ParseStream<0, UTF8<>, FileReadStream>(is);
+	fclose(pFile);
+
+	return document;
+}
+
+// Obtains all the atributes of the specified element of a JSON object
+std::map<std::string, float> readIniAtrData(const std::string route, std::string element) {
+
+	Document document = readJSONAtrFile(route);
+	std::map<std::string, float> atributes;
+
+	for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
+		atributes[it->name.GetString()] = it->value.GetFloat();
+	}
+
+	return atributes;
+
+}
+
+// Modifies the specified json element of the specified file
+void writeIniAtrData(const std::string route, std::string element, std::map<std::string, float> element_values) {
+
+	Document document = readJSONAtrFile(route);
+
+	for (auto atribute : element_values) {
+		document[element.c_str()][atribute.first.c_str()].SetFloat(atribute.second);
+	}
+
+	FILE* pFile = fopen(route.c_str(), "wb");
+	char buffer[65536];
+	FileWriteStream os(pFile, buffer, sizeof(buffer));
+	PrettyWriter<FileWriteStream> prettywritter(os);
+	document.Accept(prettywritter);
+	fclose(pFile);
+}
+
+// Lists all files contained in the specified folder recursively
+std::vector<std::string> list_files_recursively(std::string folder_path) {
+	std::vector<std::string> files;
+	char search_path[200];
+	sprintf(search_path, "%s/*.*", folder_path.c_str());
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(search_path, &fd);
+
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			std::string filename(fd.cFileName);
+			// if the entry is a file, we add it
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				files.push_back(std::string(folder_path) + "/" + fd.cFileName);
+			}
+			// if the entry is a directory, we call the function recursively
+			else if (filename.compare(".") != 0 && filename.compare("..")) {
+				std::string subfolder_route = folder_path + "/" + fd.cFileName;
+				std::vector<std::string> files_subfolder = list_files_recursively(subfolder_route);
+				for (auto file : files_subfolder) {
+					files.push_back(file);
+				}
+			}
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
+
+	return files;
 }

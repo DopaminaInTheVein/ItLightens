@@ -4,8 +4,6 @@
 #include "logic/aicontroller.h"
 #include "logic/sbb.h"
 
-
-
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
 #include "components/entity.h"
@@ -55,6 +53,9 @@ class player_controller : public CPlayerBase {
 
 	CObjectManager<player_controller> *om;
 
+
+	float					pol_speed = 0;
+
 	//Is damaged?
 	____TIMER_DECLARE_VALUE_(timerDamaged, 1.0f);
 
@@ -90,12 +91,13 @@ class player_controller : public CPlayerBase {
 	int						pol_state				= 0;
 	int						last_pol_state			= 0;
 
-	bool						affectPolarized			= false;
+	bool					affectPolarized			= false;
 
-	bool						canRecEnergy				= false;
-	bool						canPassWire				= false;
+	bool					canRecEnergy			= false;
+	bool					canPassWire				= false;
 
-	VEC3						endPointWire				= VEC3(0,0,0);
+	VEC3					endPointWire			= VEC3(0,0,0);
+	VEC3					lastForces;
 
 	std::vector<TForcePoint> force_points;
 
@@ -159,7 +161,6 @@ public:
 
 	//input Messages
 	void onLeaveFromPossession(const TMsgPossessionLeave&);
-	void onDamage(const TMsgDamage&);
 	void onWirePass(const TMsgWirePass& msg);
 	void onCanRec(const TMsgCanRec& msg);
 	void onPolarize(const TMsgPolarize& msg);

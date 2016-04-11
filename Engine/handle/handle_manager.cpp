@@ -63,10 +63,10 @@ CHandle CHandleManager::createHandle() {
 	// One more object in use
 	++num_objs_used;
 
-	// Actualizar donde esta el siguiente libre, para la proxima vez
-	// que cree un objeto
-	next_free_handle_ext_index = ed->next_external_index;
-	assert(next_free_handle_ext_index != invalid_index);
+  // Actualizar donde esta el siguiente libre, para la proxima vez 
+  // que cree un objeto
+  next_free_handle_ext_index = ed->next_external_index;
+  assert(next_free_handle_ext_index != invalid_index || fatal( "We run out of objects of type %s. Currently set to %d\n", getName(), capacity()));
 
 	// Sacar de la cadena de handles a borrar
 	ed->next_external_index = invalid_index;

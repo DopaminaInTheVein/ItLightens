@@ -54,14 +54,6 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 void CPlayerBase::update(float elapsed) {
 	PROFILE_FUNCTION("update base");
 	if (controlEnabled) {
-		if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
-			CApp& app = CApp::get();
-			app.exitGame();
-		}
-		if (io->keys[VK_RETURN].becomesPressed() || io->joystick.button_START.becomesPressed()) {
-			CApp& app = CApp::get();
-			app.restart();
-		}
 		bool alive = !checkDead();
 		if (alive) {
 			UpdateInputActions();
@@ -126,7 +118,7 @@ void CPlayerBase::UpdateMoves()
 	}
 
 	SetCharacterController();
-	cc->AddMovement(direction, player_curr_speed);
+	cc->AddMovement(direction, player_curr_speed*getDeltaTime());
 	UpdateMovingWithOther();
 }
 #pragma endregion
@@ -143,45 +135,46 @@ bool CPlayerBase::UpdateMovDirection() {
 
 	bool horizontal = false;
 	bool vertical = false;
+	if (!GameController->GetFreeCamera()) {
+		if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
+			directionForward = VEC3(0, 0, 1);
+			//TODO: xbobx
+			moving = true;
+			vertical = true;
+		}
+		if (io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
+			directionForward = VEC3(0, 0, -1);
+			//TODO: xbobx
+			moving = true;
+			vertical = true;
+		}
 
-	if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
-		directionForward = VEC3(0, 0, 1);
-		//TODO: xbobx
-		moving = true;
-		vertical = true;
+		if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility) {
+			directionLateral = VEC3(1, 0, 0);
+			//TODO: xbobx
+			moving = true;
+			horizontal = true;
+		}
+		if (io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
+			directionLateral = VEC3(-1, 0, 0);
+			//TODO: xbobx
+			moving = true;
+			horizontal = true;
+		}
+
+		if (!vertical && moving)
+			directionForward = VEC3(0, 0, 0);
+
+		else if (!horizontal && moving)
+			directionLateral = VEC3(0, 0, 0);
+
 	}
-	if (io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
-		directionForward = VEC3(0, 0, -1);
-		//TODO: xbobx
-		moving = true;
-		vertical = true;
-	}
-
-	if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility) {
-		directionLateral = VEC3(1, 0, 0);
-		//TODO: xbobx
-		moving = true;
-		horizontal = true;
-	}
-	if (io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
-		directionLateral = VEC3(-1, 0, 0);
-		//TODO: xbobx
-		moving = true;
-		horizontal = true;
-	}
-
-	if (!vertical && moving)
-		directionForward = VEC3(0, 0, 0);
-
-	else if (!horizontal && moving)
-		directionLateral = VEC3(0, 0, 0);
-
 	return moving;
 }
 
 void CPlayerBase::UpdateJumpState() {
 	PROFILE_FUNCTION("update jump state base");
-	if (io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed()) {
+	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.isPressed()) {
 		Jump();
 	}
 }
@@ -214,9 +207,9 @@ void CPlayerBase::UpdateMovingWithOther() {
 void CPlayerBase::energyDecreasal(float howmuch) {
 	PROFILE_FUNCTION("player base: energy dec function");
 	SetMyEntity();
-	TMsgDamage msg;
-	msg.points = howmuch;
-	msg.dmgType = ENERGY_DECREASE;
+	
+	TMsgSetDamage msg;
+	msg.dmg = howmuch;
 	this->myEntity->sendMsg(msg);
 }
 
@@ -224,7 +217,6 @@ void CPlayerBase::Idle()
 {
 	PROFILE_FUNCTION("idle base");
 	if (!checkDead()) {
-		energyDecreasal(getDeltaTime()*0.05f);
 		UpdateDirection();
 		UpdateJumpState();
 		if (UpdateMovDirection()) ChangeState("moving");
@@ -235,14 +227,9 @@ void CPlayerBase::Jump()
 {
 	PROFILE_FUNCTION("jump base");
 	SetCharacterController();
-	if (cc->OnGround()) {
-		energyDecreasal(1.0f);
-	}
 	
 	cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
-	//jspeed = jimpulse;
-	//directionJump = VEC3(0, 1, 0);
-	//onGround = false;
+	energyDecreasal(5.0f);
 	ChangeState("jumping");
 }
 
@@ -303,7 +290,6 @@ void CPlayerBase::Jumping()
 void CPlayerBase::Moving()
 {
 	PROFILE_FUNCTION("moving base");
-	energyDecreasal(getDeltaTime()*0.05f);
 	UpdateDirection();
 	UpdateJumpState();
 	if (!UpdateMovDirection()) ChangeState("idle");

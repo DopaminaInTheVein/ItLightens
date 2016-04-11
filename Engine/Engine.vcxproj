@@ -60,15 +60,16 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders;.\SLB\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)/physx/libs/$(Configuration);$(ProjectDir)/libs/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>XINPUT9_1_0.LIB;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -82,17 +83,18 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders;.\SLB\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)/physx/libs/$(Configuration);$(ProjectDir)/libs/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -102,11 +104,15 @@
     <ClCompile Include="app_modules\io\joystick.cpp" />
     <ClCompile Include="app_modules\io\keyboard.cpp" />
     <ClCompile Include="app_modules\io\mouse.cpp" />
+    <ClCompile Include="app_modules\logic_manager\logic_manager.cpp" />
+    <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
+    <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
     <ClCompile Include="camera\camera.cpp" />
     <ClCompile Include="components\comp_camera.cpp" />
     <ClCompile Include="components\comp_charactercontroller.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_physics.cpp" />
+    <ClCompile Include="components\comp_platform.cpp" />
     <ClCompile Include="components\comp_polarized.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
@@ -114,7 +120,8 @@
     <ClCompile Include="components\entity.cpp" />
     <ClCompile Include="components\entity_parser.cpp" />
     <ClCompile Include="components\entity_tags.cpp" />
-    <ClCompile Include="debug\debug.cpp" />
+    <ClCompile Include="debug\console.cpp" />
+    <ClCompile Include="debug\debug_itlightens.cpp" />
     <ClCompile Include="expat\xmlparse.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -204,6 +211,7 @@
     <ClCompile Include="recast\Recast\Source\RecastRasterization.cpp" />
     <ClCompile Include="recast\Recast\Source\RecastRegion.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
+    <ClCompile Include="render\draw_utils.cpp" />
     <ClCompile Include="render\material.cpp" />
     <ClCompile Include="render\mesh.cpp" />
     <ClCompile Include="render\mesh_manager.cpp" />
@@ -212,15 +220,229 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="render\render_config.cpp" />
     <ClCompile Include="render\render_manager.cpp" />
+    <ClCompile Include="render\render_to_texture.cpp" />
     <ClCompile Include="render\shaders.cpp" />
     <ClCompile Include="render\static_mesh.cpp" />
     <ClCompile Include="render\technique.cpp" />
     <ClCompile Include="render\texture.cpp" />
     <ClCompile Include="render\vertex_declarations.cpp" />
     <ClCompile Include="resources\resources_manager.cpp" />
+    <ClCompile Include="skeleton\comp_bone_tracker.cpp" />
     <ClCompile Include="skeleton\comp_skeleton.cpp" />
     <ClCompile Include="skeleton\skeleton.cpp" />
+    <ClCompile Include="SLB\src\Allocator.cpp" />
+    <ClCompile Include="SLB\src\Class.cpp" />
+    <ClCompile Include="SLB\src\ClassHelpers.cpp" />
+    <ClCompile Include="SLB\src\ClassInfo.cpp" />
+    <ClCompile Include="SLB\src\Debug.cpp" />
+    <ClCompile Include="SLB\src\Error.cpp" />
+    <ClCompile Include="SLB\src\FuncCall.cpp" />
+    <ClCompile Include="SLB\src\Hybrid.cpp" />
+    <ClCompile Include="SLB\src\Instance.cpp" />
+    <ClCompile Include="SLB\src\Iterator.cpp" />
+    <ClCompile Include="SLB\src\LuaCall.cpp" />
+    <ClCompile Include="SLB\src\lua\lapi.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lauxlib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lbaselib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lbitlib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lcode.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lcorolib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lctype.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ldblib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ldebug.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ldo.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ldump.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lfunc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lgc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\linit.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\liolib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\llex.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lmathlib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lmem.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\loadlib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lobject.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lopcodes.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\loslib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lparser.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lstate.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lstring.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lstrlib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ltable.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ltablib.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\ltm.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lundump.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lvm.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\lua\lzio.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="SLB\src\Manager.cpp" />
+    <ClCompile Include="SLB\src\Object.cpp" />
+    <ClCompile Include="SLB\src\Property.cpp" />
+    <ClCompile Include="SLB\src\Script.cpp" />
+    <ClCompile Include="SLB\src\SLB.cpp" />
+    <ClCompile Include="SLB\src\Table.cpp" />
+    <ClCompile Include="SLB\src\Type.cpp" />
+    <ClCompile Include="SLB\src\Value.cpp" />
     <ClCompile Include="utils\murmur3.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -230,6 +452,7 @@
     <ClCompile Include="windows\app.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\bin\data\shaders\contants\ctes_bones.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_camera.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_object.h" />
     <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h" />
@@ -242,9 +465,13 @@
     <ClInclude Include="app_modules\io\joystick.h" />
     <ClInclude Include="app_modules\io\keyboard.h" />
     <ClInclude Include="app_modules\io\mouse.h" />
+    <ClInclude Include="app_modules\logic_manager\logic_manager.h" />
+    <ClInclude Include="app_modules\logic_manager\slb_public_functions.h" />
+    <ClInclude Include="app_modules\render\module_render_deferred.h" />
     <ClInclude Include="camera\camera.h" />
     <ClInclude Include="components\components.h" />
     <ClInclude Include="components\comp_base.h" />
+    <ClInclude Include="components\comp_box.h" />
     <ClInclude Include="components\comp_camera.h" />
     <ClInclude Include="components\comp_charactercontroller.h" />
     <ClInclude Include="components\comp_controller_3rd_person.h" />
@@ -253,8 +480,10 @@
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
     <ClInclude Include="components\comp_physics.h" />
+    <ClInclude Include="components\comp_platform.h" />
     <ClInclude Include="components\comp_polarized.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
+    <ClInclude Include="components\comp_tags.h" />
     <ClInclude Include="components\comp_transform.h" />
     <ClInclude Include="components\comp_trigger.h" />
     <ClInclude Include="components\comp_victory_point.h" />
@@ -262,7 +491,8 @@
     <ClInclude Include="components\entity.h" />
     <ClInclude Include="components\entity_parser.h" />
     <ClInclude Include="components\entity_tags.h" />
-    <ClInclude Include="debug\debug.h" />
+    <ClInclude Include="debug\console.h" />
+    <ClInclude Include="debug\debug_itlightens.h" />
     <ClInclude Include="geometry\angular.h" />
     <ClInclude Include="geometry\geometry.h" />
     <ClInclude Include="geometry\SimpleMath.h" />
@@ -290,6 +520,7 @@
     <ClInclude Include="logic\bt_speedy.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
+    <ClInclude Include="Physx\ItLightensFilterShader.h" />
     <ClInclude Include="Physx\physx_manager.h" />
     <ClInclude Include="player_controllers\player_controller.h" />
     <ClInclude Include="player_controllers\player_controller_base.h" />
@@ -330,11 +561,15 @@
     <ClInclude Include="recast\Recast\Include\RecastAlloc.h" />
     <ClInclude Include="recast\Recast\Include\RecastAssert.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
+    <ClInclude Include="render\draw_utils.h" />
     <ClInclude Include="render\gpu_trace.h" />
     <ClInclude Include="render\material.h" />
     <ClInclude Include="render\mesh.h" />
+    <ClInclude Include="render\mesh_format.h" />
     <ClInclude Include="render\render.h" />
+    <ClInclude Include="render\render_config.h" />
     <ClInclude Include="render\render_manager.h" />
+    <ClInclude Include="render\render_to_texture.h" />
     <ClInclude Include="render\shaders.h" />
     <ClInclude Include="render\shader_cte.h" />
     <ClInclude Include="render\static_mesh.h" />
@@ -343,13 +578,111 @@
     <ClInclude Include="render\vertex_declarations.h" />
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="resources\resources_manager.h" />
+    <ClInclude Include="skeleton\comp_bone_tracker.h" />
     <ClInclude Include="skeleton\comp_skeleton.h" />
     <ClInclude Include="skeleton\skeleton.h" />
+    <ClInclude Include="SLB\include\SLB\Allocator.hpp" />
+    <ClInclude Include="SLB\include\SLB\Class.hpp" />
+    <ClInclude Include="SLB\include\SLB\ClassHelpers.hpp" />
+    <ClInclude Include="SLB\include\SLB\ClassInfo.hpp" />
+    <ClInclude Include="SLB\include\SLB\Conversor.hpp" />
+    <ClInclude Include="SLB\include\SLB\Debug.hpp" />
+    <ClInclude Include="SLB\include\SLB\Error.hpp" />
+    <ClInclude Include="SLB\include\SLB\Export.hpp" />
+    <ClInclude Include="SLB\include\SLB\FuncCall.hpp" />
+    <ClInclude Include="SLB\include\SLB\FuncCall_inline.hpp" />
+    <ClInclude Include="SLB\include\SLB\Hybrid.hpp" />
+    <ClInclude Include="SLB\include\SLB\Instance.hpp" />
+    <ClInclude Include="SLB\include\SLB\Iterator.hpp" />
+    <ClInclude Include="SLB\include\SLB\lua.hpp" />
+    <ClInclude Include="SLB\include\SLB\LuaCall.hpp" />
+    <ClInclude Include="SLB\include\SLB\lua\lauxlib.h" />
+    <ClInclude Include="SLB\include\SLB\lua\lua.h" />
+    <ClInclude Include="SLB\include\SLB\lua\luaconf.h" />
+    <ClInclude Include="SLB\include\SLB\lua\lualib.h" />
+    <ClInclude Include="SLB\include\SLB\Manager.hpp" />
+    <ClInclude Include="SLB\include\SLB\Mutex.hpp" />
+    <ClInclude Include="SLB\include\SLB\Object.hpp" />
+    <ClInclude Include="SLB\include\SLB\Private_FuncCall.hpp" />
+    <ClInclude Include="SLB\include\SLB\Property.hpp" />
+    <ClInclude Include="SLB\include\SLB\PushGet.hpp" />
+    <ClInclude Include="SLB\include\SLB\ref_ptr.hpp" />
+    <ClInclude Include="SLB\include\SLB\Script.hpp" />
+    <ClInclude Include="SLB\include\SLB\SLB.hpp" />
+    <ClInclude Include="SLB\include\SLB\SPP.hpp" />
+    <ClInclude Include="SLB\include\SLB\StatefulHybrid.hpp" />
+    <ClInclude Include="SLB\include\SLB\String.hpp" />
+    <ClInclude Include="SLB\include\SLB\Table.hpp" />
+    <ClInclude Include="SLB\include\SLB\Type.hpp" />
+    <ClInclude Include="SLB\include\SLB\TypeInfoWrapper.hpp" />
+    <ClInclude Include="SLB\include\SLB\util.hpp" />
+    <ClInclude Include="SLB\include\SLB\Value.hpp" />
+    <ClInclude Include="SLB\src\lua\lapi.h" />
+    <ClInclude Include="SLB\src\lua\lauxlib.h" />
+    <ClInclude Include="SLB\src\lua\lcode.h" />
+    <ClInclude Include="SLB\src\lua\lctype.h" />
+    <ClInclude Include="SLB\src\lua\ldebug.h" />
+    <ClInclude Include="SLB\src\lua\ldo.h" />
+    <ClInclude Include="SLB\src\lua\lfunc.h" />
+    <ClInclude Include="SLB\src\lua\lgc.h" />
+    <ClInclude Include="SLB\src\lua\llex.h" />
+    <ClInclude Include="SLB\src\lua\llimits.h" />
+    <ClInclude Include="SLB\src\lua\lmem.h" />
+    <ClInclude Include="SLB\src\lua\lobject.h" />
+    <ClInclude Include="SLB\src\lua\lopcodes.h" />
+    <ClInclude Include="SLB\src\lua\lparser.h" />
+    <ClInclude Include="SLB\src\lua\lstate.h" />
+    <ClInclude Include="SLB\src\lua\lstring.h" />
+    <ClInclude Include="SLB\src\lua\ltable.h" />
+    <ClInclude Include="SLB\src\lua\ltm.h" />
+    <ClInclude Include="SLB\src\lua\lua.h" />
+    <ClInclude Include="SLB\src\lua\luaconf.h" />
+    <ClInclude Include="SLB\src\lua\lualib.h" />
+    <ClInclude Include="SLB\src\lua\lundump.h" />
+    <ClInclude Include="SLB\src\lua\lvm.h" />
+    <ClInclude Include="SLB\src\lua\lzio.h" />
     <ClInclude Include="ui\ui_interface.h" />
     <ClInclude Include="utils\data_provider.h" />
+    <ClInclude Include="utils\data_saver.h" />
     <ClInclude Include="utils\macros\macros.h" />
     <ClInclude Include="utils\macros\timers.h" />
     <ClInclude Include="utils\murmur3.h" />
+    <ClInclude Include="utils\rapidjson\allocators.h" />
+    <ClInclude Include="utils\rapidjson\document.h" />
+    <ClInclude Include="utils\rapidjson\encodedstream.h" />
+    <ClInclude Include="utils\rapidjson\encodings.h" />
+    <ClInclude Include="utils\rapidjson\error\en.h" />
+    <ClInclude Include="utils\rapidjson\error\error.h" />
+    <ClInclude Include="utils\rapidjson\filereadstream.h" />
+    <ClInclude Include="utils\rapidjson\filewritestream.h" />
+    <ClInclude Include="utils\rapidjson\fwd.h" />
+    <ClInclude Include="utils\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="utils\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="utils\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="utils\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="utils\rapidjson\internal\itoa.h" />
+    <ClInclude Include="utils\rapidjson\internal\meta.h" />
+    <ClInclude Include="utils\rapidjson\internal\pow10.h" />
+    <ClInclude Include="utils\rapidjson\internal\regex.h" />
+    <ClInclude Include="utils\rapidjson\internal\stack.h" />
+    <ClInclude Include="utils\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="utils\rapidjson\internal\strtod.h" />
+    <ClInclude Include="utils\rapidjson\internal\swap.h" />
+    <ClInclude Include="utils\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="utils\rapidjson\memorybuffer.h" />
+    <ClInclude Include="utils\rapidjson\memorystream.h" />
+    <ClInclude Include="utils\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="utils\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="utils\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="utils\rapidjson\pointer.h" />
+    <ClInclude Include="utils\rapidjson\prettywriter.h" />
+    <ClInclude Include="utils\rapidjson\rapidjson.h" />
+    <ClInclude Include="utils\rapidjson\reader.h" />
+    <ClInclude Include="utils\rapidjson\schema.h" />
+    <ClInclude Include="utils\rapidjson\stream.h" />
+    <ClInclude Include="utils\rapidjson\stringbuffer.h" />
+    <ClInclude Include="utils\rapidjson\writer.h" />
+    <ClInclude Include="utils\timer.h" />
     <ClInclude Include="utils\utils.h" />
     <ClInclude Include="utils\XMLParser.h" />
     <ClInclude Include="windows\app.h" />
@@ -359,6 +692,10 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\bin\data\shaders\basic.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\skin.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

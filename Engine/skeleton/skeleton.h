@@ -3,24 +3,28 @@
 
 #include "resources/resource.h"
 #include "utils/XMLParser.h"
+#include "cal3d/cal3d.h"
 
-class CalCoreModel;
+#define MAX_NUMBER_ANIMS	32
 
 class CSkeleton : public IResource, public CXMLParser {
-  CalCoreModel*   core_model;
+	CalCoreModel*   core_model;
 
-  void onStartElement(const std::string &elem, MKeyValue &atts);
+	std::string nameAnims[MAX_NUMBER_ANIMS];
+	void saveAnimId(std::string src, int anim_id);
+
+	void onStartElement(const std::string &elem, MKeyValue &atts);
 public:
-  CSkeleton();
-  eType getType() const { return SKELETON; }
+	CSkeleton();
+	eType getType() const { return SKELETON; }
 
-  bool isValid() const {
-    return core_model != nullptr;
-  }
-  void destroy();
+	bool isValid() const {
+		return core_model != nullptr;
+	}
+	void destroy();
 
-  CalCoreModel* getCoreModel() { return core_model; }
+	CalCoreModel* getCoreModel() { return core_model; }
+	int getAnimIdByName(std::string name) const;
 };
 
 #endif
-

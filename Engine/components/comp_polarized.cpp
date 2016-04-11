@@ -111,6 +111,7 @@ void TCompPolarized::onCreate(const TMsgEntityCreated &)
 			TCompPhysics * p = me_e->get<TCompPhysics>();
 			if (p) {
 				if (p->GetMass() > mThresholdMass) mType = FIXED;
+				if (p->isKinematic()) mType = FIXED;
 				else mType = FREE;
 			}
 		}

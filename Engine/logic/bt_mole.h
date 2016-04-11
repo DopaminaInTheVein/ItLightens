@@ -41,6 +41,7 @@ class bt_mole : public bt_poss, public TCompBase {
 	CObjectManager<bt_mole> * om = nullptr;
 	CHandle myHandle;
 	CHandle myParent;
+	CHandle myBox = CHandle();
 	CEntity *myEntity = nullptr;
 
 	TCompTransform* transform;

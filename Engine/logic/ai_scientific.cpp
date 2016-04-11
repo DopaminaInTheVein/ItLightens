@@ -24,7 +24,9 @@ void ai_scientific::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_cientifico")) {
-			map<std::string, float> fields = readIniFileAttrMap("ai_scientist");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields = readIniAtrData(file_ini, "ai_scientist");
 
 			assignValueToVar(move_speed, fields);
 			assignValueToVar(rot_speed, fields);
@@ -135,6 +137,7 @@ void ai_scientific::SeekWorkbench()
 
 void ai_scientific::AimToPos() {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 
@@ -177,6 +180,7 @@ void ai_scientific::AimToPos() {
 void ai_scientific::MoveToPos()
 {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
@@ -186,7 +190,7 @@ void ai_scientific::MoveToPos()
 
 
 	cc->AddMovement(me_transform->getFront(), move_speed);
-	VEC3 new_pos = cc->getPosition() - VEC3(0, cc->GetRadius() + cc->GetHeight(), 0);
+	VEC3 new_pos = cc->GetFootPosition();
 
 
 	float dist_square = simpleDistXZ(new_pos, target);

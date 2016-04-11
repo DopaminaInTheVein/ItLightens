@@ -2,6 +2,8 @@
 #define INC_WINDOWS_APP_H_
 
 #include <windows.h>
+#include "utils\timer.h"
+
 
 class IAppModule;
 
@@ -16,8 +18,8 @@ public:
 	// Enable default ctor
 	CApp();
 
-	std::string file_options;
-	std::string file_initAttr;
+	std::string file_options_json;
+	std::string file_initAttr_json;
 	bool max_screen;
 	int getXRes();
 	int getYRes();
@@ -37,6 +39,8 @@ public:
 	}
 
 	static CApp& get();
+
+	CTimer timer_app;
 
 private:
 

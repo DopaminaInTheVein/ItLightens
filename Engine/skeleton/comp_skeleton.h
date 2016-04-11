@@ -7,13 +7,16 @@ class CalModel;
 class CSkeleton;
 
 struct TCompSkeleton : public TCompBase {
-  const CSkeleton* resource_skeleton;
-  CalModel*  model;
-  bool load(MKeyValue& atts);
-  void update(float dt);
-  void render() const;
-  void renderInMenu();
+	const CSkeleton* resource_skeleton;
+	CalModel*  model;
+	bool load(MKeyValue& atts);
+	void update(float dt);
+	void render() const;
+	void renderInMenu();
+	void uploadBonesToCteShader() const;
+
+	//Messages
+	void setAnim(const TMsgSetAnim&);
 };
 
 #endif
-

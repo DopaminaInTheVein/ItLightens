@@ -27,6 +27,7 @@
 // Windows
 
 // Engine ...
+#include "imgui/imgui.h"
 #include "profiling/profiling.h"
 #include "utils/data_provider.h"
 #include "utils/utils.h"
@@ -34,8 +35,8 @@
 
 #include "geometry/geometry.h"
 #include "render/render.h"
-
-#include "app_modules\gameController.h"
+#include "utils/XMLParser.h"
+#include "app_modules/gameController.h"
 
 //physx
 #include "PxPhysicsAPI.h"
@@ -63,10 +64,10 @@
 
 //Physics
 #include "physx\physx_manager.h"
-extern CPhysxManager *PhysxManager;
+extern CPhysxManager *g_PhysxManager;
 
 //DEBUG
-#include "debug/debug.h"
+#include "debug/debug_itlightens.h"
 extern CDebug * Debug;
 
 #endif

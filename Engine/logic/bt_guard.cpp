@@ -21,6 +21,7 @@ btnode* bt_guard::root = nullptr;
 TCompTransform * bt_guard::getTransform() {
 	PROFILE_FUNCTION("guard: get transform");
 	CEntity * e = myParent;
+	if (!e) return nullptr;
 	TCompTransform * t = e->get<TCompTransform>();
 	return t;
 }
@@ -28,6 +29,7 @@ TCompTransform * bt_guard::getTransform() {
 TCompCharacterController* bt_guard::getCC() {
 	PROFILE_FUNCTION("guard: get cc");
 	CEntity * e = myParent;
+	if (!e) return nullptr;
 	TCompCharacterController * cc = e->get<TCompCharacterController>();
 	return cc;
 }
@@ -44,7 +46,9 @@ void bt_guard::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_guard")) {
-			map<std::string, float> fields = readIniFileAttrMap("bt_guard");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields = readIniAtrData(file_ini, "bt_guard");
 
 			assignValueToVar(DIST_SQ_REACH_PNT, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_ENTER, fields);
@@ -153,6 +157,7 @@ bool bt_guard::guardAlerted() {
 //actions
 int bt_guard::actionStunned() {
 	PROFILE_FUNCTION("guard: actionstunned");
+	if (!myParent.isValid()) return false;
 	if (timerStunt < 0) {
 		stunned = false;
 		return OK;
@@ -166,6 +171,7 @@ int bt_guard::actionStunned() {
 
 int bt_guard::actionChase() {
 	PROFILE_FUNCTION("guard: chase");
+	if (!myParent.isValid()) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
@@ -190,6 +196,7 @@ int bt_guard::actionChase() {
 
 int bt_guard::actionAbsorb() {
 	PROFILE_FUNCTION("guard: absorb");
+	if (!myParent.isValid()) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
@@ -217,6 +224,7 @@ int bt_guard::actionAbsorb() {
 
 int bt_guard::actionShootWall() {
 	PROFILE_FUNCTION("guard: shootwall");
+	if (!myParent.isValid()) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	turnTo(posPlayer);
@@ -238,6 +246,7 @@ int bt_guard::actionShootWall() {
 
 int bt_guard::actionSearch() {
 	PROFILE_FUNCTION("guard: search");
+	if (!myParent.isValid()) return false;
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, noisePoint);
 
@@ -263,6 +272,7 @@ int bt_guard::actionSearch() {
 }
 int bt_guard::actionLookAround() {
 	PROFILE_FUNCTION("guard: lookaround");
+	if (!myParent.isValid()) return false;
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
@@ -287,6 +297,7 @@ int bt_guard::actionLookAround() {
 
 int bt_guard::actionSeekWpt() {
 	PROFILE_FUNCTION("guard: actionseekwpt");
+	if (!myParent.isValid()) return 0;
 	VEC3 myPos = getTransform()->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Player Visible?
@@ -324,6 +335,7 @@ int bt_guard::actionSeekWpt() {
 
 int bt_guard::actionNextWpt() {
 	PROFILE_FUNCTION("guard: actionnextwpt");
+	if (!myParent.isValid()) return false;
 	VEC3 dest = keyPoints[curkpt].pos;
 
 	//Player Visible?
@@ -341,6 +353,7 @@ int bt_guard::actionNextWpt() {
 
 int bt_guard::actionWaitWpt() {
 	//PROFILE_FUNCTION("guard: actionwaitwpt");
+	if (!myParent.isValid()) return false;
 	ChangePose(pose_idle_route);
 
 	//player visible?
@@ -419,12 +432,14 @@ void bt_guard::goTo(const VEC3& dest) {
 void bt_guard::goForward(float stepForward) {
 	PROFILE_FUNCTION("guard: go forward");
 	VEC3 myPos = getTransform()->getPosition();
-	getCC()->AddMovement(getTransform()->getFront() * stepForward);
+	float dt = getDeltaTime();
+	getCC()->AddMovement(getTransform()->getFront() * stepForward*dt);
 }
 
 // -- Turn To -- //
 bool bt_guard::turnTo(VEC3 dest) {
 	PROFILE_FUNCTION("guard: turn to");
+	if (!myParent.isValid()) return false;
 	VEC3 myPos = getTransform()->getPosition();
 	float yaw, pitch;
 	getTransform()->getAngles(&yaw, &pitch);
@@ -458,6 +473,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 
 // -- Player Visible? -- //
 bool bt_guard::playerVisible() {
+	if (!myParent.isValid()) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
@@ -503,7 +519,7 @@ bool bt_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) 
 	CEntity *e = myParent;
 	TCompCharacterController *cc = e->get<TCompCharacterController>();
 	Debug->DrawLine(origin + VEC3(0, 0.5f, 0), getTransform()->getFront(), 10.0f);
-	bool ret = PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
+	bool ret = g_PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
 
 	if (ret)
 		distRay = hit.getAnyHit(0).distance;
@@ -540,13 +556,17 @@ void bt_guard::shootToPlayer() {
 	}
 
 	//Do damage
-	if (damage) {
+	if (damage && !sendMsgDmg) {
 		CEntity* ePlayer = getPlayer();
+		sendMsgDmg = !sendMsgDmg;
 		TMsgDamage dmg;
-		dmg.source = getTransform()->getPosition();
-		dmg.sender = myParent;
-		dmg.points = DAMAGE_LASER * getDeltaTime();
-		dmg.dmgType = LASER;
+		dmg.modif = DAMAGE_LASER;
+		ePlayer->sendMsg(dmg);
+	}
+	else if (!damage && sendMsgDmg) {
+		CEntity* ePlayer = getPlayer();
+		sendMsgDmg = !sendMsgDmg;
+		TMsgStopDamage dmg;
 		ePlayer->sendMsg(dmg);
 	}
 

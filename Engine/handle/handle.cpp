@@ -1,6 +1,7 @@
 #include "mcv_platform.h"
 #include "handle_manager.h"
 #include "components\entity_tags.h"
+#include "components\entity.h"
 
 // ------------------------------------
 bool CHandle::isValid() const {
@@ -34,18 +35,28 @@ void CHandle::setOwner(CHandle new_owner) {
 		hm->setOwner(*this, new_owner);
 }
 
-CHandle CHandle::getOwner() {
-	auto hm = CHandleManager::getByType(type);
-	if (hm)
-		return hm->getOwner(*this);
-	return CHandle();
+CHandle CHandle::getOwner() const {
+  auto hm = CHandleManager::getByType(type);
+  if (hm)
+    return hm->getOwner(*this);
+  return CHandle();
 }
 
 bool CHandle::hasTag(std::string tag)
 {
-	std::vector<TTagID> tags;
-	tags_manager.getTagFromHandle(*this, tags);
-	TTagID tag_id = getID(tag.c_str());
-	bool ret = isInVector(tags, tag_id);
-	return ret;
+	CEntity* e = *this;
+	if (e) {
+		return e->hasTag(tag);
+	}
+	else {
+		CHandle h = this->getOwner();
+		if (h.isValid()) {
+			e = h;
+			if (e) {
+				return e->hasTag(tag);
+			}
+		}
+	}
+
+	return false;
 }

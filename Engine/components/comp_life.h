@@ -4,65 +4,98 @@
 #include "comp_base.h"
 #include "comp_msgs.h"
 #include "entity_tags.h"
-#include "utils/XMLParser.h"
-
-#define DMG_SCALE_ACTION_INI	1.0f
-#define DMG_SCALE_ENEMY_INI		1.0f
+#include "entity.h"
 
 // ------------------------------------
 struct TCompLife : public TCompBase {
 	float currentlife;
 	float maxlife;
-
-	float DMG_SCALE_ACTION;
-	float DMG_SCALE_ENEMY;
+	float modifier	= 1.0f;
 
 	float energyDamageScale = 0.1f;
+	float last_modif = energyDamageScale;
+
+	bool dead = false;
+
 	TCompLife() : maxlife(100.f) {
 		dbg("constructor of TCompLife\n");
-		DMG_SCALE_ACTION = DMG_SCALE_ACTION_INI;
-		DMG_SCALE_ENEMY = DMG_SCALE_ENEMY_INI;
 	}
 	~TCompLife() {
 		dbg("destructor of TCompLife\n");
 	}
 
 	bool load(MKeyValue& atts) {
-		currentlife = maxlife = atts.getFloat("points", 100.0f);
+		maxlife = atts.getFloat("points", 100.0f);
+		currentlife = maxlife;
 		return true;
 	}
 
-	void onCreate(const TMsgEntityCreated&) {
-		dbg("TCompLife on TMsgEntityCreated\n");
-	}
-	void onDamage(const TMsgDamage& msg) {
-		CHandle playerhandle = CHandle(this).getOwner();
-		CEntity * target_e = playerhandle;
-		TCompTransform * player_transform = target_e->get<TCompTransform>();
-
-		if (GameController->GetGameState() != CGameController::VICTORY) {
-			float dmgTotal;
-			switch (msg.dmgType) {
-			case ENERGY_DECREASE:
-				dmgTotal = msg.points * DMG_SCALE_ACTION;
-				break;
-			case LASER:
-				dmgTotal = msg.points * DMG_SCALE_ENEMY;
-				break;
-			case WATER:
-				dmgTotal = msg.points * DMG_SCALE_ENEMY;
-				break;
-			default:
-				dmgTotal = 0;
-				break;
-			}
-			currentlife -= dmgTotal;
-			if (currentlife > maxlife) {
-				currentlife = maxlife;
-			}
-			else if (currentlife <= 0.0f)
-				GameController->SetGameState(CGameController::LOSE);
+	void onCreate(const TMsgEntityCreated &) {
+		CHandle me = CHandle(this).getOwner();
+		if (!me.isValid()) {
+			fatal("Error creating life component\n");
+			assert(false);
 		}
+
+
+		//init damage scales by time
+		if (me.hasTag("player")) {
+			energyDamageScale = 0.1f;
+			last_modif = 0.1f;
+		}
+
+		//for NPC will gain life until full life if not possessed
+		else if (me.hasTag("AI_poss")) {
+			energyDamageScale = 0.0f;
+			last_modif = -0.1f;
+		}
+	}
+
+	void update(float elapsed) {
+		if (!dead) {
+			if (modifier != 0 && energyDamageScale != 0)
+				currentlife -= energyDamageScale*modifier*elapsed;
+
+			if (currentlife < 0 && !dead) {
+				dead = true;
+				//TMsgDie msg;
+				CHandle player = tags_manager.getFirstHavingTag("player");
+				CHandle h = CHandle(this).getOwner();
+
+				/*
+				if (player != h) {
+					player.sendMsg(msg);
+				}
+
+				h.sendMsg(msg);
+				*/
+
+				GameController->SetGameState(CGameController::LOSE);
+
+				currentlife = 0;
+			}
+
+
+			else if (currentlife > maxlife)
+				currentlife = maxlife;
+		}
+	}
+
+	void onDamage(const TMsgDamage& msg) {
+		energyDamageScale = msg.modif;
+	}
+
+	void onReciveDamage(const TMsgSetDamage& msg) {
+		currentlife -= msg.dmg;
+	}
+
+	void onStopDamage(const TMsgStopDamage& dmg) {
+		energyDamageScale = last_modif;
+	}
+
+	void onSetSaveDamage(const TMsgDamageSave& msg) {
+		last_modif = msg.modif;
+		energyDamageScale = last_modif;
 	}
 
 	void setMaxLife(float max) {
@@ -71,8 +104,8 @@ struct TCompLife : public TCompBase {
 	}
 
 	void renderInMenu() {
-		ImGui::SliderFloat("Action Damage Scale", &DMG_SCALE_ACTION, 0, 1);
-		ImGui::SliderFloat("Enemy Damage Scale", &DMG_SCALE_ENEMY, 0, 1);
+		ImGui::SliderFloat("life", &currentlife, 0, 1);
+		ImGui::SliderFloat("Action Damage Scale", &energyDamageScale, 0, 1);
 	}
 };
 

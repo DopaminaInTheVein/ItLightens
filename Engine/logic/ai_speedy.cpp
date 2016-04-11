@@ -71,7 +71,7 @@ char nameVariable[10]; sprintf(nameVariable, "wpt%d_%s", index, nameSufix);
 bool ai_speedy::load(MKeyValue& atts) {
 	int n = atts.getInt("wpts_size", 0);
 	fixedWpts.resize(n);
-	for ( int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		WPT_ATR_NAME(atrPos, "pos", i);
 		fixedWpts[i] = atts.getPoint(atrPos);
 	}
@@ -110,12 +110,12 @@ void ai_speedy::SeekWptState()
 	string next_action = decide_next_action();
 
 	if (next_action == "dashtoplayer" && dash_ready) {
-			dash_target = player_transform->getPosition();
-	float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
+		dash_target = player_transform->getPosition();
+		float distance_to_player = squaredDistXZ(dash_target, transform->getPosition());
 		if (abs(distance_to_player) <= max_dash_player_distance && abs(dash_target.y - transform->getPosition().y) < 0.5f) {
 			ChangePose(pose_run_route);
 			ChangeState(next_action);
-		}	
+		}
 		else
 			ChangeState("seekwpt");
 	}
@@ -132,7 +132,7 @@ void ai_speedy::SeekWptState()
 		moveFront(speed);
 	}
 	else {
-		cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(fixedWpts[curwpt]+VEC3(0,cc->GetHeight(),0)));
+		cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(fixedWpts[curwpt] + VEC3(0, cc->GetHeight(), 0)));
 		float distance_to_next_wpt = squaredDist(transform->getPosition(), fixedWpts[(curwpt + 1) % fixedWpts.size()]);
 		curwpt = (curwpt + 1) % fixedWpts.size();
 
@@ -266,11 +266,11 @@ bool ai_speedy::dashToTarget(VEC3 target) {
 			water_controller* water_cont = hm_water_cont->getAddrFromHandle(new_water_h);
 			water_cont->Init();
 			// init entity and send message to the new water entity with its type
-			TMsgSetWaterType msg_water;
-			msg_water.type = 1;
-			e->sendMsg(msg_water);
+			//TMsgSetWaterType msg_water;
+			//msg_water.type = 1;
+			//e->sendMsg(msg_water);
 			// end the entity creation
-			e->sendMsg(TMsgEntityCreated());
+			//e->sendMsg(TMsgEntityCreated());
 			curr_entity = CHandle();
 
 			// reset drop water cooldown
@@ -320,4 +320,3 @@ void ai_speedy::ChangePose(string new_pose_route) {
 	mesh->load(atts_mesh);
 	mesh->registerToRender();
 }
-

@@ -18,7 +18,9 @@ void player_controller_speedy::readIniFileAttr() {
 	if (h.isValid()) {
 		if (h.hasTag("AI_speedy")) {
 
-			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
 			assignValueToVar(player_max_speed, fields_base);
 			assignValueToVar(player_rotation_speed, fields_base);
@@ -27,7 +29,7 @@ void player_controller_speedy::readIniFileAttr() {
 			assignValueToVar(camera_max_height, fields_base);
 			assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_speedy = readIniFileAttrMap("controller_speedy");
+			map<std::string, float> fields_speedy = readIniAtrData(file_ini, "controller_speedy");
 
 			assignValueToVar(dash_speed, fields_speedy);
 			assignValueToVar(dash_max_duration, fields_speedy);
@@ -85,7 +87,6 @@ void player_controller_speedy::Init()
 }
 
 void player_controller_speedy::myUpdate() {
-	energyDecreasal(getDeltaTime()*0.5f);
 	updateDashTimer();
 	updateBlinkTimer();
 	updateDropWaterTimer();
@@ -333,12 +334,12 @@ bool player_controller_speedy::rayCastToFront(int types, float reach, float& dis
 	//PROVISINAL FOR TEST:
 	PxQueryFilterData filter = PxQueryFilterData();
 	if (types == 2) {
-		filter.data.word0 = CPhysxManager::eALL_STATICS | CPhysxManager::eOBJECT;	//ignore crystal and people
+		filter.data.word0 = ItLightensFilter::eALL_STATICS | ItLightensFilter::eOBJECT;	//ignore crystal and people
 	}
 	//END PROV
 
 	PxRaycastBuffer hit;
-	bool ret = PhysxManager->raycast(origin,direction,dist,hit,filter);
+	bool ret = g_PhysxManager->raycast(origin,direction,dist,hit,filter);
 	distRay = hit.getAnyHit(0).distance;	//first hit
 	return ret;
 }

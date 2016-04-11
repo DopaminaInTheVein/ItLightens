@@ -1,3 +1,3 @@
 <static_mesh>
-    <slot mesh="meshes/mole/mole.mesh" material="materials/madera.material"/>
+  <slot mesh="meshes/mole/mole.mesh" material="materials/__mole.material" mesh_idx="0"/>
 </static_mesh>

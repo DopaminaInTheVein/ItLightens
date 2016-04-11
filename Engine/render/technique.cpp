@@ -32,7 +32,7 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
       vs->setName(res_name);
       Resources.registerNew(vs);
     }
-    vs = Resources.get( res_name.c_str() )->as<CVertexShader>();
+    vs = Resources.get(res_name.c_str() )->as<CVertexShader>();
   }
   else if (elem == "ps") {
     auto fx = atts["fx"];       // "basic"
@@ -46,6 +46,9 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
       Resources.registerNew(ps);
     }
     ps = Resources.get(res_name.c_str())->as<CPixelShader>();
+  }
+  else if (elem == "tech") {
+	  uses_bones = atts.getBool("uses_bones", false);
   }
 }
 

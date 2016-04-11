@@ -17,6 +17,8 @@
 //****************************************************************************//
 
 #include "cal3d/global.h"
+#include "cal3d/vector.h"
+#include "cal3d/quaternion.h"
 
 //****************************************************************************//
 // Forward declarations                                                       //
@@ -27,11 +29,8 @@ class CalAnimation;
 class CalAnimationAction;
 class CalAnimationCycle;
 
-
-
-
 /*****************************************************************************/
-/** 
+/**
  * CalAbstractMixer defines the API that CalModel relies on for
  * blending and scheduling animations. A third party mixer must
  * implement this API in order to register itself with the
@@ -41,7 +40,7 @@ class CalAnimationCycle;
  * cal3d expects a mixer to handle two tasks : scheduling and
  * blending. Scheduling refers to everything related to time such
  * as when an animation must run or when it must stop. Blending
- * defines how concurrent animations influence each other: for 
+ * defines how concurrent animations influence each other: for
  * instance walking and waving.
  *
  * If CalMixer proves to be insufficient for the applications needs,
@@ -89,7 +88,7 @@ class CalAnimationCycle;
  * your own mixer that implements the CalMixer API so that existing
  * applications can switch to it by calling CalModel::getAbstractMixer
  * instead of CalModel::getMixer. The existing code using the CalMixer
- * methods will keep working and the developper will be able to 
+ * methods will keep working and the developper will be able to
  * switch to a new API when convenient.
  *
  *****************************************************************************/
@@ -97,89 +96,95 @@ class CalAnimationCycle;
 class CAL3D_API CalAbstractMixer
 {
 public:
-  CalAbstractMixer() {}
-  virtual ~CalAbstractMixer() {}
+	CalAbstractMixer() {}
+	virtual ~CalAbstractMixer() {}
 
-  /*****************************************************************************/
-  /**
-   * Is the object an instance of the default mixer (i.e. an instance of CalMixer) ?
-   *
-   * @return \li \b true if an instance of CalMixer
-   *         \li \b false if not an instance of CalMixer
-   *
-   *****************************************************************************/
-  virtual bool isDefaultMixer() { return false; }
+	/*****************************************************************************/
+	/**
+	 * Is the object an instance of the default mixer (i.e. an instance of CalMixer) ?
+	 *
+	 * @return \li \b true if an instance of CalMixer
+	 *         \li \b false if not an instance of CalMixer
+	 *
+	 *****************************************************************************/
+	virtual bool isDefaultMixer() { return false; }
 
-  /*****************************************************************************/
-  /** 
-   * Notifies the instance that updateAnimation was last called
-   * deltaTime seconds ago. The internal scheduler of the instance
-   * should terminate animations or update the timing information of
-   * active animations accordingly. It should not blend animations
-   * together or otherwise modify the CalModel associated to these
-   * animations.
-   *
-   * The CalModel::update method will call updateSkeleton immediately
-   * after updateAnimation if the instance was allocated by
-   * CalModel::create (in which case it is a CalMixer instance) or if
-   * the instance was set via CalModel::setAbstractMixer.
-   *
-   * @param deltaTime The elapsed time in seconds since the last call.
-   *
-   *****************************************************************************/
-  virtual void updateAnimation(float deltaTime) = 0;
+	/*****************************************************************************/
+	/**
+	 * Notifies the instance that updateAnimation was last called
+	 * deltaTime seconds ago. The internal scheduler of the instance
+	 * should terminate animations or update the timing information of
+	 * active animations accordingly. It should not blend animations
+	 * together or otherwise modify the CalModel associated to these
+	 * animations.
+	 *
+	 * The CalModel::update method will call updateSkeleton immediately
+	 * after updateAnimation if the instance was allocated by
+	 * CalModel::create (in which case it is a CalMixer instance) or if
+	 * the instance was set via CalModel::setAbstractMixer.
+	 *
+	 * @param deltaTime The elapsed time in seconds since the last call.
+	 *
+	 *****************************************************************************/
+	virtual void updateAnimation(float deltaTime) = 0;
 
-  /*****************************************************************************/
-  /**
-   * Updates the skeleton of the corresponding CalModel (as provided to
-   * the create method) to match the current animation state (as
-   * updated by the last call to updateAnimation).  The tracks of each
-   * active animation are blended to compute the position and
-   * orientation of each bone of the skeleton. The updateAnimation
-   * method should be called just before calling updateSkeleton to
-   * define the set of active animations.
-   *
-   * The CalModel::update method will call updateSkeleton immediately
-   * after updateAnimation if the instance was allocated by
-   * CalModel::create (in which case it is a CalMixer instance) or if
-   * the instance was set via CalModel::setAbstractMixer.
-   *
-   *****************************************************************************/
-  virtual void updateSkeleton() = 0;
+	/*****************************************************************************/
+	/**
+	 * Updates the skeleton of the corresponding CalModel (as provided to
+	 * the create method) to match the current animation state (as
+	 * updated by the last call to updateAnimation).  The tracks of each
+	 * active animation are blended to compute the position and
+	 * orientation of each bone of the skeleton. The updateAnimation
+	 * method should be called just before calling updateSkeleton to
+	 * define the set of active animations.
+	 *
+	 * The CalModel::update method will call updateSkeleton immediately
+	 * after updateAnimation if the instance was allocated by
+	 * CalModel::create (in which case it is a CalMixer instance) or if
+	 * the instance was set via CalModel::setAbstractMixer.
+	 *
+	 *****************************************************************************/
+	virtual void updateSkeleton() = 0;
 };
-
 
 class CAL3D_API CalMixer : public CalAbstractMixer
 {
 public:
-  CalMixer(CalModel* pModel);
-  virtual ~CalMixer();
+	CalMixer(CalModel* pModel);
+	virtual ~CalMixer();
 
-  virtual bool isDefaultMixer() { return true; }
-  bool blendCycle(int id, float weight, float delay);
-  bool clearCycle(int id, float delay);
-  bool executeAction(int id, float delayIn, float delayOut, float weightTarget = 1.0f, bool autoLock=false);
-  bool removeAction(int id);
-  virtual void updateAnimation(float deltaTime);
-  virtual void updateSkeleton();
-  float getAnimationTime();
-  float getAnimationDuration();
-  void setAnimationTime(float animationTime);
-  void setTimeFactor(float timeFactor);
-  float getTimeFactor();
-  CalModel *getCalModel();  
-  std::vector<CalAnimation *> &getAnimationVector();
-  std::list<CalAnimationAction *> &getAnimationActionList();
-  std::list<CalAnimationCycle *> &getAnimationCycle();  
-  
+	virtual bool isDefaultMixer() { return true; }
+	bool blendCycle(int id, float weight, float delay);
+	bool clearCycle(int id, float delay);
+	bool executeAction(int id, float delayIn, float delayOut, float weightTarget = 1.0f, bool autoLock = false);
+	bool removeAction(int id);
+	virtual void updateAnimation(float deltaTime);
+	virtual void updateSkeleton();
+	float getAnimationTime();
+	float getAnimationDuration();
+	void setAnimationTime(float animationTime);
+	void setTimeFactor(float timeFactor);
+	float getTimeFactor();
+	CalModel *getCalModel();
+	std::vector<CalAnimation *> &getAnimationVector();
+	std::list<CalAnimationAction *> &getAnimationActionList();
+	std::list<CalAnimationCycle *> &getAnimationCycle();
+
+	// --------------------------------------
+	// Added by MCV
+	// The world matrix of the model
+	CalVector     extra_trans;
+	CalQuaternion extra_rotation;
+	// --------------------------------------
+
 protected:
-  CalModel *m_pModel;
-  std::vector<CalAnimation *> m_vectorAnimation;
-  std::list<CalAnimationAction *> m_listAnimationAction;
-  std::list<CalAnimationCycle *> m_listAnimationCycle;
-  float m_animationTime;
-  float m_animationDuration;
-  float m_timeFactor;
+	CalModel *m_pModel;
+	std::vector<CalAnimation *> m_vectorAnimation;
+	std::list<CalAnimationAction *> m_listAnimationAction;
+	std::list<CalAnimationCycle *> m_listAnimationCycle;
+	float m_animationTime;
+	float m_animationDuration;
+	float m_timeFactor;
 };
 
 #endif
