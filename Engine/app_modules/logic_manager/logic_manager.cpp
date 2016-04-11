@@ -5,6 +5,8 @@
 
 #include "utils\utils.h"
 
+extern CLogicManagerModule* logic_manager = nullptr;
+
 CLogicManagerModule::CLogicManagerModule() {}
 
 bool CLogicManagerModule::start() {
@@ -25,13 +27,35 @@ bool CLogicManagerModule::start() {
 	return true;
 }
 
+void CLogicManagerModule::update(float dt) {
+
+	int i = 0;
+	std::vector<int> to_erase;
+
+	// update the timer of each command
+	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ++command_it, ++i) {
+		command_it->execution_time -= dt;
+
+		if (command_it->execution_time < 0.f) {
+			slb_script.doString(command_it->code);
+			to_erase.push_back(i);
+		}
+	}
+
+	// erase the expired timers
+	for (int position : to_erase)
+		command_queue.erase(command_queue.begin() + position);
+	
+
+}
+
 void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
 
 	char lua_code[64];
 
 	switch (evt) {
 		case (OnAction) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.1f);
+			sprintf(lua_code, "dbg(%f);", 0.1f);
 			break;
 		}
 		case (OnEnter) : {
@@ -43,134 +67,136 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
 			break;
 		}
 		case (OnGameStart) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			char command_code[64];
+			sprintf(command_code, "dbg('%s');", "TIMER");
+			sprintf(lua_code, "execCommandTest(\"%s\", %f);", command_code, 5.f);
 			break;
 		}
 		case (OnGameEnd) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnLevelStart001) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnZoneStart001) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnZoneEnd001) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnTimeout) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OntTimerStart) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 
 		case (OnPlayerDead) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnInterruptHit) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnStartReceiveHit) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnEndReceiveHit) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 
 		case (OnEmitParticles) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnChangePolarity) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnPickupBox) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnLeaveBox) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnPossess) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnUnpossess) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnDash) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnBlink) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnBreakWall) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnUseCable) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnStun) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnStunned) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnLiquid) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnBeingAttracted) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnOvercharge) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnDoubleJump) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnDetected) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnBeaconDetect) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 
 		case (OnEnterPC) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		case (OnLeavePC) : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 			break;
 		}
 		default : {
-			sprintf(lua_code, "sampleFunction(%f);", 0.5f);
+			sprintf(lua_code, "dbg(%f);", 0.5f);
 		}
 	}
 
@@ -189,18 +215,23 @@ void CLogicManagerModule::throwUserEvent(std::string evt, std::string params) {
 	std::string lua_code = evt;
 
 	// execute the string generated
-	//SLB::Script slb_script(&slb_manager);
 	slb_script.doString(lua_code);
 }
 
 void CLogicManagerModule::stop() {
 	slb_manager->destroyDefaultManager();
+	command_queue.clear();
 }
 
 void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 	SLB::Class<SLBPublicFunctions>("Public", &m)
-		.constructor()
 		.comment("Public functions class")
+		.constructor()
+		// execute command function
+		.set("exec_command", &SLBPublicFunctions::execCommand)
+		.comment("Executes the specified command after a given time")
+		.param("string: code to execute")
+		.param("float: time until execution")
 		// basic print function
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")

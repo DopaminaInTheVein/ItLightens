@@ -4,8 +4,12 @@ SLB.using( SLB )
 
 public = Public( )
 
-function sampleFunction( name )
-    public:print( "sampleFunction: Hello, "..name )
+function execCommandTest( code, timer )
+    public:exec_command( code, timer )
+end
+
+function dbg( name )
+    public:print( "DBG: "..name )
 end
 
 
