@@ -205,6 +205,7 @@ bool CEntitiesModule::start() {
 
 	CEntityParser ep;
 	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
+	//bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH
