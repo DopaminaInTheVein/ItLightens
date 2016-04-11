@@ -71,6 +71,49 @@ fn _parse_camera = (
 	xmlCamera.addAttr "fov" _parsingObject.fov
 )
 
+----------------------------------------------------------------------
+-- TRACKER  --
+----------------------------------------------------------------------
+fn _parse_tracker = (
+	
+	local tracker = undefined
+	
+	-- Busqueda tracker
+	for child in _parsingObject.children do (
+		if (isSpline child) then (
+			tracker = child
+			exit -- Solo aceptamos un componente tracker
+		)
+	)
+	
+	-- Parseo tracker
+	if tracker != undefined then (
+		xmlTracker = XML_PARSING.addChild "tracker"
+		nspl = numSplines tracker
+	
+		local curPoint = 0
+		local atrPrefix = "point"
+		local atrName = undefined
+		local atrValue	= undefined
+		local tPoint = undefined
+		local tMatrix = undefined
+		local mcv_tmx = undefined
+		-- Por cada Spline
+		for s = 1 to nspl do (
+			--Por cada Vértice
+			for k = 1 to (numknots tracker s) do (
+				tPoint = (getKnotPoint tracker s k)
+				tMatrix = matrix3 1
+				tMatrix.pos = tPoint
+				mcv_tmx = matrixMax2MCV tMatrix
+				atrName = atrPrefix + (curPoint as string)
+				atrValue = getTransformPosValue mcv_tmx
+				xmlTracker.addAttr atrName atrValue
+				curPoint += 1
+			)
+		)
+	)
+)
 
 ----------------------------------------------------------------------
 -- RENDER  --
