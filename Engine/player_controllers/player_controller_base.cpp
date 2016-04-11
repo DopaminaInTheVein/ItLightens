@@ -118,7 +118,7 @@ void CPlayerBase::UpdateMoves()
 	}
 
 	SetCharacterController();
-	cc->AddMovement(direction, player_curr_speed);
+	cc->AddMovement(direction, player_curr_speed*getDeltaTime());
 	UpdateMovingWithOther();
 }
 #pragma endregion

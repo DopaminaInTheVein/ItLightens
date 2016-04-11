@@ -1206,7 +1206,7 @@
     </ClInclude>
     <ClInclude Include="utils\rapidjson\msinttypes\stdint.h">
       <Filter>utils\rapidjson\msinttypes</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="debug\debug_itlightens.h">
       <Filter>debug</Filter>
     </ClInclude>

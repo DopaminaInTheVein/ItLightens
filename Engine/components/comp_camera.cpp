@@ -9,7 +9,6 @@
 #include "render/mesh.h"
 #include "render/shader_cte.h"
 #include "entity.h"
-#include "utils/XMLParser.h"
 #include "imgui/imgui.h"
 #include "contants/ctes_object.h"
 extern CShaderCte< TCteObject > shader_ctes_object;
@@ -17,11 +16,14 @@ extern CShaderCte< TCteObject > shader_ctes_object;
 #include "contants/ctes_camera.h"
 extern CShaderCte< TCteCamera > shader_ctes_camera;
 
+#include "comp_charactercontroller.h"
+
 bool TCompCamera::load(MKeyValue& atts) {
 	float znear = atts.getFloat("znear", 0.1f);
 	float zfar = atts.getFloat("zfar", 1000.f);
 	float fov_in_degs = atts.getFloat("fov", 70.f);
 	setProjection(deg2rad(fov_in_degs), znear, zfar);
+	detect_colsions = atts.getBool("collision",false);
 	return true;
 }
 
@@ -54,7 +56,12 @@ void TCompCamera::update(float dt) {
 		VEC3 pos = tmx->getPosition();
 		pos.y += 2;
 		tmx->setPosition(pos);
-		this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());	//smooth movement
+		//if (detect_colsions) {
+		//	if(!checkColision(pos))
+				this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
+		//}
+		//else this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());	//smooth movement
+
 	}
 	else if (GameController->GetFreeCamera()) {
 		CHandle owner = CHandle(this).getOwner();
@@ -68,6 +75,31 @@ void TCompCamera::update(float dt) {
 		this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());	//smooth movement
 	}
 	//this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());		//too robotic
+}
+
+bool TCompCamera::checkColision(const VEC3 & pos)
+{
+	//TODO:for now only for camera_main
+
+	CEntity *e_me = CHandle(this).getOwner();
+	TCompController3rdPerson *c = e_me->get<TCompController3rdPerson>();
+
+	CEntity *target = c->target;
+	TCompCharacterController *cc = target->get<TCompCharacterController>();
+	VEC3 pos_target = cc->GetPosition();
+
+	PxRaycastBuffer hit;
+	VEC3 direction = pos_target - getPosition();
+	direction.Normalize();
+	float dist = c->GetPositionDistance();
+	bool collision = g_PhysxManager->raycast(getPosition(),direction,dist-1.5f,hit);
+	if (collision) {
+		TCompTransform *tmx = e_me->get<TCompTransform>();
+		this->lookAt(PhysxConversion::PxVec3ToVec3(hit.getAnyHit(0).position), tmx->getFront(), getUpAux());
+	}
+
+	return collision;
+
 }
 
 void TCompCamera::renderInMenu() {

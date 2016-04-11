@@ -7,7 +7,7 @@
     <tags tags="camera_main" />
     <transform pos="0 0 -25" />
     <name name="camara" />
-    <camera znear="1" zfar="250" fov="60" />
+    <camera znear="1" zfar="250" fov="60" collision="true" />
     <controller_3rd_person />
   </entity>
 
@@ -117,6 +117,7 @@
     <tags tags="minus_wall" />
     <transform pos="-2.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
     <polarized pol="minus"/>
   </entity>
   <entity>
@@ -124,6 +125,7 @@
     <tags tags="plus_wall" />
     <transform pos="2.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
     <polarized pol="plus"/>
   </entity>
   <entity>
@@ -131,6 +133,7 @@
     <tags tags="plus_wall" />
     <transform pos="0.357965 1.06714 4.40073" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
     <polarized pol="plus"/>
   </entity>
   <entity>
@@ -138,6 +141,7 @@
     <tags tags="minus_wall" />
     <transform pos="0.357965 8.0246 63.1498" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
     <polarized pol="minus"/>
   </entity>
   <entity>
@@ -145,6 +149,7 @@
     <tags tags="plus_wall" />
     <transform pos="0.357965 5.08771 59.6009" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
     <polarized pol="plus"/>
   </entity>
   <entity>

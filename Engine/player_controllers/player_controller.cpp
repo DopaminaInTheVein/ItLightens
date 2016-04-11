@@ -100,6 +100,8 @@ void player_controller::Init() {
 	mesh = pose_run;
 	mesh->static_mesh = Resources.get("static_meshes/player_run.static_mesh")->as<CStaticMesh>();
 
+	lastForces = VEC3(0,0,0);
+
 	actual_render->registerToRender();
 
 	ChangeState("idle");
@@ -253,6 +255,8 @@ void player_controller::RecalcAttractions()
 	//float drag_i = 1 - drag;
 	//pol_speed = drag_i*pol_speed + drag*player_max_speed;
 
+	forces = (lastForces + forces) / 2;	//smooth change of forces
+	lastForces = forces;
 	cc->AddSpeed(forces*getDeltaTime());
 	//cc->AddImpulse(forces);
 }
@@ -265,7 +269,8 @@ VEC3 player_controller::AttractMove(VEC3 point_pos) {
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 direction = point_pos - player_position;
 	direction.Normalize();
-	return 10*direction/(log10f(simpleDist(player_position,point_pos)));
+	//return 50*10*direction/squared(simpleDist(player_position,point_pos));
+	return 50*direction / (simpleDist(player_position, point_pos)/2.0f);
 }
 
 void player_controller::UpdateMoves()
