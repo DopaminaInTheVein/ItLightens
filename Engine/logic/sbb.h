@@ -10,7 +10,7 @@ class bt_mole;
 class SBB
 {
 private:
-	static CNavmesh nav;
+	static map<string, CNavmesh> sbbNavs;
 	static map<string, bool > sbbBool;
 	static map<string, int > sbbInt;
 	static map<string, VEC3> sbbVEC3;
@@ -23,8 +23,8 @@ public:
 	static void init();
 
 	// NavMesh
-	static void postNavmesh(CNavmesh);
-	static CNavmesh readNavmesh();
+	static void postNavmesh(string, CNavmesh);
+	static CNavmesh readNavmesh(string);
 	// sbbInt
 	static void postInt(string, int);
 	static int readInt(string);

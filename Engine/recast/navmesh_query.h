@@ -40,10 +40,11 @@ public:
 	void updateTool();
 	void findInside(TPos& pos);
 	void findPath(TPos& start, TPos& end);
-	void wallDistance(TPos& pos);
+	void wallDistance(VEC3& pos);
 	void raycast(TPos& start, TPos& end);
 	const int getNumVertexSmoothPath() { return m_nsmoothPath; }
 	const float * getVertexSmoothPath() { return m_smoothPath; }
+	const float getCalculatesDistanceToWall() { return m_distanceToWall; }
 private:
 	// the dt data
 	dtQueryFilter m_filter;

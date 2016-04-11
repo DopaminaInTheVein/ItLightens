@@ -38,10 +38,6 @@ class bt_mole : public bt_poss, public TCompBase {
 	vector<VEC3> fixedWpts;
 	int curwpt;
 
-	vector<VEC3> pathWpts;
-	int currPathWpt;
-	int totalPathWpt;
-
 	CObjectManager<bt_mole> * om = nullptr;
 	CHandle myHandle;
 	CHandle myParent;

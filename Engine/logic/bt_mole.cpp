@@ -2,9 +2,6 @@
 #include "bt_mole.h"
 #include "components\comp_charactercontroller.h"
 #include "components\comp_physics.h"
-#include "recast\navmesh.h"
-#include "recast\navmesh_query.h"
-#include "recast\DebugUtils\Include\DebugDraw.h"
 
 map<string, btnode *> bt_mole::tree = {};
 map<string, btaction> bt_mole::actions = {};
@@ -21,7 +18,6 @@ void bt_mole::readIniFileAttr() {
 			assignValueToVar(rotation_speed, fields);
 			rotation_speed = deg2rad(rotation_speed);
 			assignValueToVar(distMaxToBox, fields);
-
 		}
 	}
 }
@@ -96,20 +92,7 @@ int bt_mole::actionLookForWpt() {
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
 	VEC3 initial = transform->getPosition();
-	CNavmesh nav = SBB::readNavmesh();
-	CNavmeshQuery query(&nav);
-	query.updatePosIni(initial);
-	query.updatePosEnd(target);
-	query.findPath(query.p1, query.p2);
-	const float * path = query.getVertexSmoothPath();
-	pathWpts.clear();
-	totalPathWpt = query.getNumVertexSmoothPath();
-	if (totalPathWpt > 0) {
-		for (int i = 0; i < totalPathWpt * 3; i = i + 3) {
-			pathWpts.push_back(VEC3(path[i], path[i + 1], path[i + 2]));
-		}
-	}
-	currPathWpt = 0;
+	getPath(initial, target, "sala1");
 	return OK;
 }
 
@@ -121,7 +104,13 @@ int bt_mole::actionFollowPathToWpt() {
 	if (currPathWpt < totalPathWpt) {
 		target = pathWpts[currPathWpt];
 	}
-	if (!transform->isHalfConeVision(target, deg2rad(5.0f))) {
+	VEC3 npcPos = transform->getPosition();
+	VEC3 npcFront = transform->getFront();
+	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, "sala1")) {
+		moveFront(speed);
+		return STAY;
+	}
+	else if (!transform->isHalfConeVision(target, deg2rad(5.0f))) {
 		aimToTarget(target);
 		return STAY;
 	}
@@ -168,20 +157,7 @@ bool bt_mole::checkBoxes() {
 			SBB::postBool(key_final, true);
 			SBB::postMole(key_final, this);
 
-			CNavmesh nav = SBB::readNavmesh();
-			CNavmeshQuery query(&nav);
-			query.updatePosIni(initial);
-			query.updatePosEnd(destiny);
-			query.findPath(query.p1, query.p2);
-			const float * path = query.getVertexSmoothPath();
-			totalPathWpt = query.getNumVertexSmoothPath();
-			pathWpts.clear();
-			if (totalPathWpt > 0) {
-				for (int i = 0; i < totalPathWpt * 3; i = i + 3) {
-					pathWpts.push_back(VEC3(path[i], path[i + 1], path[i + 2]));
-				}
-			}
-			currPathWpt = 0;
+			getPath(initial, destiny, "sala1");
 			ChangePose(pose_run_route);
 			return true;
 		}
@@ -201,13 +177,19 @@ int bt_mole::actionFollowBoxWpt()
 		if (currPathWpt < totalPathWpt) {
 			boxpos = pathWpts[currPathWpt];
 		}
-		if (!transform->isHalfConeVision(boxpos, deg2rad(5.0f))) {
-			aimToTarget(boxpos);
+		VEC3 npcPos = transform->getPosition();
+		VEC3 npcFront = transform->getFront();
+		if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, "sala1", entTransform)) {
+			moveFront(speed);
 			return STAY;
 		}
 		else {
 			float distToWPT = squaredDistXZ(boxpos, transform->getPosition());
-			if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
+			if (!transform->isHalfConeVision(boxpos, deg2rad(5.0f))) {
+				aimToTarget(boxpos);
+				return STAY;
+			}
+			else if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
 				moveFront(speed);
 				return STAY;
 			}
@@ -246,18 +228,7 @@ int bt_mole::actionGrabBox() {
 					destiny = wpt;
 				}
 			}
-			CNavmesh nav = SBB::readNavmesh();
-			CNavmeshQuery query(&nav);
-			query.updatePosIni(initial);
-			query.updatePosEnd(destiny);
-			query.findPath(query.p1, query.p2);
-			const float * path = query.getVertexSmoothPath();
-			pathWpts.clear();
-			for (int i = 0; i < query.getNumVertexSmoothPath() * 3; i = i + 3) {
-				pathWpts.push_back(VEC3(path[i], path[i + 1], path[i + 2]));
-			}
-			currPathWpt = 0;
-			totalPathWpt = query.getNumVertexSmoothPath();
+			getPath(initial, destiny, "sala1");
 			return OK;
 		}
 	}
@@ -278,13 +249,19 @@ int bt_mole::actionFollowNextBoxLeavepointWpt() {
 			leavepos = pathWpts[currPathWpt];
 		}
 
-		if (!transform->isHalfConeVision(leavepos, deg2rad(1.0f))) {
-			aimToTarget(leavepos);
+		VEC3 npcPos = transform->getPosition();
+		VEC3 npcFront = transform->getFront();
+		if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, "sala1")) {
+			moveFront(speed);
 			return STAY;
 		}
 		else {
 			float distToWPT = squaredDistXZ(leavepos, transform->getPosition());
-			if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 1.0f) {
+			if (!transform->isHalfConeVision(leavepos, deg2rad(5.0f))) {
+				aimToTarget(leavepos);
+				return STAY;
+			}
+			else if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 1.0f) {
 				moveFront(speed);
 				TCompPhysics *enBoxP = box->get<TCompPhysics>();
 				VEC3 posbox = transform->getPosition();
@@ -413,8 +390,8 @@ bool bt_mole::isBoxAtLeavePoint(VEC3 posBox) {
 			CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[i];
 			TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
 			VEC3 wpt = wptbleavetransform->getPosition();
-			float disttowpt = simpleDistXZ(wpt, posBox);
-			if (disttowpt < 0.1f) {
+			float disttowpt = squaredDist(wpt, posBox);
+			if (disttowpt < 4.0f) {
 				return true;
 			}
 		}
@@ -428,7 +405,12 @@ bool bt_mole::aimToTarget(VEC3 target) {
 	if (abs(delta_yaw) > 0.001f) {
 		float yaw, pitch;
 		transform->getAngles(&yaw, &pitch);
-		transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
+		if (delta_yaw > 0.15) {
+			transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
+		}
+		else {
+			transform->setAngles(yaw + delta_yaw, pitch);
+		}
 		return false;
 	}
 	else {
@@ -445,7 +427,7 @@ void bt_mole::moveFront(float movement_speed) {
 
 //Cambio de malla
 void bt_mole::ChangePose(string new_pose_route) {
-	if (last_pose != new_pose_route){
+	if (last_pose != new_pose_route) {
 		mesh->unregisterFromRender();
 		MKeyValue atts_mesh;
 		atts_mesh["name"] = new_pose_route;
