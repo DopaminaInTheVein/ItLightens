@@ -97,6 +97,7 @@ class player_controller : public CPlayerBase {
 	bool					canPassWire				= false;
 
 	VEC3					endPointWire			= VEC3(0,0,0);
+	VEC3					lastForces;
 
 	std::vector<TForcePoint> force_points;
 

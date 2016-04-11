@@ -11,6 +11,7 @@
 #include "windows\app.h"
 #include "input\input.h"
 #include "app_modules/io/io.h"
+#include "comp_charactercontroller.h"
 
 #define THIRD_PERSON_CONTROLLER_PLAYER_DIST				2.0f
 #define THIRD_PERSON_CONTROLLER_SPEEDY_DIST				5.f
@@ -25,7 +26,6 @@ class TCompController3rdPerson : public TCompBase {
 	float		yaw;
 	float		pitch;
 	float		distance_to_target;
-	VEC3		position_diff;
 	float		speed_camera;
 	float		speed_camera_unlocked;
 	float		m_yaw;
@@ -35,6 +35,7 @@ class TCompController3rdPerson : public TCompBase {
 	float		rotation_sensibility;
 	bool		y_axis_inverted;
 	bool		x_axis_inverted;
+	VEC3		position_diff;
 
 public:
 	CHandle		target;
@@ -51,6 +52,10 @@ public:
 		, rotation_sensibility(deg2rad(45.0f) / 250.0f)
 	{}
 
+	float GetPositionDistance() const {
+		return distance_to_target;
+	}
+
 	void onCreate(const TMsgEntityCreated& msg) {
 		CApp& app = CApp::get();
 		CEntity* e_owner = CHandle(this).getOwner();
@@ -60,17 +65,11 @@ public:
 		float ar = (float)app.getXRes() / (float)app.getYRes();
 		camera->setAspectRatio(ar);
 
+		std::map<std::string, float> options = readIniAtrData(app.file_options_json, "controls");
 		//read y-axis inverted, "0 != " to convert uint to bool more efficient
-		y_axis_inverted = 0 != GetPrivateProfileIntA("controls",
-			"y-axis_inverted",
-			1,
-			app.file_options.c_str());
-
+		y_axis_inverted = 0 != (int)options["y-axis_inverted"];
 		//read x-axis inverted, "0 != " to convert uint to bool more efficient
-		x_axis_inverted = 0 != GetPrivateProfileIntA("controls",
-			"x-axis_inverted",
-			1,
-			app.file_options.c_str());
+		x_axis_inverted = 0 != (int)options["x-axis_inverted"];
 	}
 
 	void onSetTarget(const TMsgSetTarget& msg) {
@@ -94,6 +93,13 @@ public:
 			break;
 		}
 	}
+
+	/*void updateCollisionPosition(VEC3 hit) {
+		CEntity* e_owner = CHandle(this).getOwner();
+		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
+		my_tmx->setPosition(hit);
+
+	}*/
 
 	void updateInput() {
 
@@ -128,7 +134,7 @@ public:
 	}
 
 	void update(float dt) {
-		if (!*GameController->GetFreeCamera())
+		if (!GameController->GetFreeCamera())
 			personThirdController(dt);
 
 		else 
@@ -156,10 +162,11 @@ public:
 		CEntity* targeted = targetowner;
 		TCompLife * targetlife = targeted->get<TCompLife>();
 		TCompTransform * targettrans = targeted->get<TCompTransform>();
-
 		my_tmx->lookAt(origin, target_loc);
 		//Aplicar offset
 		my_tmx->setPosition(my_tmx->getPosition() + position_diff);
+
+
 	}
 	
 	void unlockedCameraController() {

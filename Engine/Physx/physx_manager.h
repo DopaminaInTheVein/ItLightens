@@ -4,9 +4,9 @@
 #include "app_modules\app_module.h"
 #include "ItLightensFilterShader.h"
 
-#define DEFAULT_DATA_DYNAMIC	PhysxManager->GetDefaultQueryTagsDynamic()
-#define DEFAULT_DATA_STATIC		PhysxManager->GetDefaultQueryTagsStatic()
-#define DEFAULT_DATA_CC			PhysxManager->GetDefaultQueryTagsCC()
+#define DEFAULT_DATA_DYNAMIC	g_PhysxManager->GetDefaultQueryTagsDynamic()
+#define DEFAULT_DATA_STATIC		g_PhysxManager->GetDefaultQueryTagsStatic()
+#define DEFAULT_DATA_CC			g_PhysxManager->GetDefaultQueryTagsCC()
 
 #define GRAVITY -10.0f
 
@@ -42,19 +42,19 @@ class CPhysxManager :	public IAppModule,
 						public PxQueryFilterCallback {
 
 
-	PxFoundation			*mFoundation			= nullptr;
-	PxProfileZoneManager	*mProfileZoneManager	= nullptr;
-	PxPhysics				*mPhysics				= nullptr;
-	PxCooking				*mCooking				= nullptr;
-	PxScene					*mScene					= nullptr;
-	PxDefaultCpuDispatcher  *mCpuDispatcher			= nullptr;
+	PxFoundation			*m_pFoundation				= nullptr;
+	PxProfileZoneManager	*m_pProfileZoneManager		= nullptr;
+	PxPhysics				*m_pPhysics					= nullptr;
+	PxCooking				*m_pCooking					= nullptr;
+	PxScene					*m_pScene					= nullptr;
+	PxDefaultCpuDispatcher  *m_pCpuDispatcher			= nullptr;
 
-	PxControllerManager		*mManagerControllers	= nullptr;		//Characters controllers manager
+	PxControllerManager		*m_pManagerControllers		= nullptr;		//Characters controllers manager
 
-	PxCudaContextManager	*mCudaContextManager	= nullptr;
+	PxCudaContextManager	*m_pCudaContextManager		= nullptr;
 
 #ifndef NDEBUG
-	PxVisualDebuggerConnection *mConnection			= nullptr;		//physx debugger
+	PxVisualDebuggerConnection *m_pConnection			= nullptr;		//physx debugger
 #endif
 
 	PxReal t_to_update = 0.0f;
@@ -62,22 +62,22 @@ class CPhysxManager :	public IAppModule,
 
 
 	//memory raycast, used for point-to-point
-	PxReal last_distance = 0.0f;
+	PxReal m_last_distance = 0.0f;
 
-	PxVec3 last_direction = PxVec3(0.0f, 0.0f, 0.0f);
-	PxVec3 last_origin = PxVec3(0.0f, 0.0f, 0.0f);
-	PxVec3 last_end = PxVec3(0.0f, 0.0f, 0.0f);
+	PxVec3 m_last_direction = PxVec3(0.0f, 0.0f, 0.0f);
+	PxVec3 m_last_origin = PxVec3(0.0f, 0.0f, 0.0f);
+	PxVec3 m_last_end = PxVec3(0.0f, 0.0f, 0.0f);
 
 	//default filter data
-	PxFilterData ft_dynamic;
-	PxFilterData ft_static;
-	PxFilterData ft_cc;
+	PxFilterData m_ft_dynamic;
+	PxFilterData m_ft_static;
+	PxFilterData m_ft_cc;
 
 	void setFtDynamic();
 	void setFtStatic();
 	void setFtCC();
 
-	int mNbThreads = 1;
+	int m_NbThreads = 1;
 
 	//-----------------------------------------------------------------------------------------------------
 	//							Customize functions
@@ -87,6 +87,18 @@ class CPhysxManager :	public IAppModule,
 	void customizeSceneDesc(PxSceneDesc & sceneDesc);
 
 public:
+
+	CPhysxManager() :	m_pCooking(nullptr),
+						m_pCpuDispatcher(nullptr),
+						m_pCudaContextManager(nullptr),
+						m_pFoundation(nullptr),
+						m_pManagerControllers(nullptr),
+						m_pPhysics(nullptr),
+						m_pProfileZoneManager(nullptr),
+						m_pScene(nullptr) 
+	{}
+
+	~CPhysxManager() { stop(); }
 
 	//runtime funcions
 
@@ -99,12 +111,12 @@ public:
 
 	//gets
 
-	PxControllerManager*	GetCharacterControllerManager() const { return mManagerControllers; }
-	PxScene*				GetActiveScene() { return mScene; }
+	PxControllerManager*	GetCharacterControllerManager() const { return m_pManagerControllers; }
+	PxScene*				GetActiveScene() { return m_pScene; }
 
-	PxFilterData			GetDefaultQueryTagsDynamic() { return ft_dynamic; }
-	PxFilterData			GetDefaultQueryTagsStatic() { return ft_static; }
-	PxFilterData			GetDefaultQueryTagsCC() { return ft_cc; }
+	PxFilterData			GetDefaultQueryTagsDynamic() { return m_ft_dynamic; }
+	PxFilterData			GetDefaultQueryTagsStatic() { return m_ft_static; }
+	PxFilterData			GetDefaultQueryTagsCC() { return m_ft_cc; }
 
 	//-----------------------------------------------------------------------------------------------------
 	//							Primitives Gemoetries

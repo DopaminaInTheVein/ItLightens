@@ -5,6 +5,11 @@
 #include "imgui/imgui.h"
 #include "windows/app.h"
 
+#include "rapidjson/document.h"
+#include "rapidjson/filereadstream.h"
+#include "rapidjson/filewritestream.h"
+#include "rapidjson/prettywriter.h"
+
 #ifdef NDEBUG
 
 #define dbg(...)
@@ -16,6 +21,8 @@ void		dbg			(const char* fmt, ...);
 #endif
 
 #define assignValueToVar(name, data_map) assingValueFromMap(&name, #name, data_map)
+
+using namespace rapidjson;
 
 void assingValueFromMap(float *variable, char *name, std::map<std::string, float> data_map);
 
@@ -47,5 +54,9 @@ bool isInVector(std::vector<TTagID>& v, TTagID obj);
 std::map<std::string, float> readIniFileAttrMap(char* elements_to_read);
 
 std::vector<std::string> list_files_recursively(std::string folder_path);
+
+Document readJSONAtrFile(const std::string route);
+std::map<std::string, float> readIniAtrData(const std::string route, std::string atr_to_read);
+void writeIniAtrData(const std::string route, std::string element_name, std::map<std::string, float> element_values);
 
 #endif

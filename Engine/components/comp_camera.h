@@ -6,8 +6,12 @@
 
 // ------------------------------------
 struct TCompCamera : public CCamera, public TCompBase {
+
+	bool detect_colsions;
+
 	void render() const;
 	void update(float dt);
+	bool checkColision(const VEC3& pos);
 	bool load(MKeyValue& atts);
 	void renderInMenu();
 };

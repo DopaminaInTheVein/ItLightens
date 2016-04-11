@@ -46,7 +46,9 @@ void bt_guard::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_guard")) {
-			map<std::string, float> fields = readIniFileAttrMap("bt_guard");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields = readIniAtrData(file_ini, "bt_guard");
 
 			assignValueToVar(DIST_SQ_REACH_PNT, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_ENTER, fields);
@@ -434,7 +436,8 @@ void bt_guard::goTo(const VEC3& dest) {
 void bt_guard::goForward(float stepForward) {
 	PROFILE_FUNCTION("guard: go forward");
 	VEC3 myPos = getTransform()->getPosition();
-	getCC()->AddMovement(getTransform()->getFront() * stepForward);
+	float dt = getDeltaTime();
+	getCC()->AddMovement(getTransform()->getFront() * stepForward*dt);
 }
 
 // -- Turn To -- //
@@ -520,7 +523,7 @@ bool bt_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) 
 	CEntity *e = myParent;
 	TCompCharacterController *cc = e->get<TCompCharacterController>();
 	Debug->DrawLine(origin + VEC3(0, 0.5f, 0), getTransform()->getFront(), 10.0f);
-	bool ret = PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
+	bool ret = g_PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
 
 	if (ret)
 		distRay = hit.getAnyHit(0).distance;

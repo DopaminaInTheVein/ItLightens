@@ -24,7 +24,9 @@ void player_controller::readIniFileAttr() {
 	if (h.isValid()) {
 		if (h.hasTag("player")) {
 
-			map<std::string, float> fields_base = readIniFileAttrMap("controller_base");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
 			assignValueToVar(player_max_speed, fields_base);
 			assignValueToVar(player_rotation_speed, fields_base);
@@ -33,7 +35,7 @@ void player_controller::readIniFileAttr() {
 			assignValueToVar(camera_max_height, fields_base);
 			assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_player = readIniFileAttrMap("controller_player");
+			map<std::string, float> fields_player = readIniAtrData(file_ini, "controller_player");
 
 			assignValueToVar(full_height, fields_player);
 			assignValueToVar(min_height, fields_player);
@@ -97,6 +99,8 @@ void player_controller::Init() {
 
 	mesh = pose_run;
 	mesh->static_mesh = Resources.get("static_meshes/player_run.static_mesh")->as<CStaticMesh>();
+
+	lastForces = VEC3(0,0,0);
 
 	actual_render->registerToRender();
 
@@ -244,14 +248,16 @@ void player_controller::RecalcAttractions()
 	}
 
 	SetCharacterController();
-	forces.Normalize();
+	//forces.Normalize();
 
 
-	float drag = getDeltaTime();
-	float drag_i = 1 - drag;
-	pol_speed = drag_i*pol_speed + drag*player_max_speed;
+	//float drag = getDeltaTime();
+	//float drag_i = 1 - drag;
+	//pol_speed = drag_i*pol_speed + drag*player_max_speed;
 
-	cc->AddMovement(forces, pol_speed);
+	forces = (lastForces + forces) / 2;	//smooth change of forces
+	lastForces = forces;
+	cc->AddSpeed(forces*getDeltaTime());
 	//cc->AddImpulse(forces);
 }
 
@@ -262,7 +268,9 @@ VEC3 player_controller::AttractMove(VEC3 point_pos) {
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 direction = point_pos - player_position;
-	return direction/squaredDist(player_position,point_pos);
+	direction.Normalize();
+	//return 50*10*direction/squared(simpleDist(player_position,point_pos));
+	return 50*direction / (simpleDist(player_position, point_pos)/2.0f);
 }
 
 void player_controller::UpdateMoves()
@@ -332,8 +340,11 @@ void player_controller::UpdateMoves()
 		ChangePose(pose_jump);
 	}else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
-	
-	cc->AddMovement(direction , player_curr_speed);
+	if(cc->OnGround())
+		cc->AddMovement(direction*player_curr_speed*getDeltaTime());
+	else {
+		cc->AddMovement(direction*player_curr_speed*getDeltaTime()/2);
+	}
 }
 
 void player_controller::UpdateInputActions()
@@ -345,11 +356,11 @@ void player_controller::UpdateInputActions()
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
 			pol_speed = 0;
-			cc->SetGravity(false);
+			//cc->SetGravity(false);
 		}
 		else if (affectPolarized && force_points.size() == 0) {
 			affectPolarized = false;
-			cc->SetGravity(true);
+			//cc->SetGravity(true);
 		}
 		RecalcAttractions();
 	}
@@ -358,11 +369,11 @@ void player_controller::UpdateInputActions()
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
 			pol_speed = 0;
-			cc->SetGravity(false);
+			//cc->SetGravity(false);
 		}
 		else if (affectPolarized && force_points.size() == 0) {
 			affectPolarized = false;
-			cc->SetGravity(true);
+			//cc->SetGravity(true);
 		}
 
 		RecalcAttractions();
@@ -372,7 +383,7 @@ void player_controller::UpdateInputActions()
 		pol_state = NEUTRAL;
 		if (affectPolarized) {
 			affectPolarized = false;
-			cc->SetGravity(true);
+			//cc->SetGravity(true);
 		}
 	}
 	

@@ -87,7 +87,7 @@ public:
 	}
 
 	const char* getName() const {
-		return "io";
+		return "debug_lines";
 	}
 };
 

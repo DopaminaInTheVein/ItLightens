@@ -17,7 +17,9 @@ void workbench_controller::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("workbench")) {
-			map<std::string, float> fields = readIniFileAttrMap("ai_workbench");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields = readIniAtrData(file_ini, "ai_workbench");
 
 			assignValueToVar(range, fields);
 			assignValueToVar(rot_speed_sonar, fields);

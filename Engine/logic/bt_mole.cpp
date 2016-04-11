@@ -16,7 +16,9 @@ void bt_mole::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_mole")) {
-			map<std::string, float> fields = readIniFileAttrMap("bt_mole");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields = readIniAtrData(file_ini, "bt_mole");
 
 			assignValueToVar(speed, fields);
 			assignValueToVar(rotation_speed, fields);
@@ -425,7 +427,8 @@ void bt_mole::moveFront(float movement_speed) {
 	VEC3 front = transform->getFront();
 	VEC3 position = transform->getPosition();
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
-	cc->AddMovement(VEC3(front.x*movement_speed, 0.0f, front.z*movement_speed));
+	float dt = getDeltaTime();
+	cc->AddMovement(VEC3(front.x*movement_speed*dt, 0.0f, front.z*movement_speed*dt));
 }
 
 //Cambio de malla

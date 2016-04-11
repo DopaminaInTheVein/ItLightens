@@ -18,7 +18,9 @@ void beacon_controller::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("beacon")) {
-			map<std::string, float> fields = readIniFileAttrMap("ai_beacon");
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields = readIniAtrData(file_ini, "ai_beacon");
 
 			assignValueToVar(range, fields);
 			assignValueToVar(rot_speed_sonar, fields);

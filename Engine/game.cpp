@@ -33,7 +33,7 @@ const CRenderTechnique* tech_textured_colored = nullptr;
 CDebug *	  Debug = nullptr;
 CUI ui;
 CGameController* GameController = nullptr;
-CPhysxManager *PhysxManager = nullptr;
+CPhysxManager *g_PhysxManager = nullptr;
 
 // --------------------------------------------
 
@@ -48,14 +48,14 @@ bool CApp::start() {
 	auto entities = new CEntitiesModule;
 	auto render_deferred = new CRenderDeferredModule;
 	io = new CIOModule;     // It's the global io
-	PhysxManager = new CPhysxManager;
+	g_PhysxManager = new CPhysxManager;
 	GameController = new CGameController;
 	Debug = new CDebug();
 	auto logic_manager = new CLogicManagerModule;
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
-	all_modules.push_back(PhysxManager);
+	all_modules.push_back(g_PhysxManager);
 	all_modules.push_back(entities);
 	all_modules.push_back(io);
 	all_modules.push_back(GameController);
@@ -66,7 +66,7 @@ bool CApp::start() {
 	mod_update.push_back(imgui);
 	mod_update.push_back(GameController);
 	mod_update.push_back(entities);
-	mod_update.push_back(PhysxManager);
+	mod_update.push_back(g_PhysxManager);
 	mod_update.push_back(io);
 	mod_update.push_back(Debug);
 	
@@ -79,7 +79,7 @@ bool CApp::start() {
 	mod_init_order.push_back(imgui);
 	mod_init_order.push_back(render_deferred);
 	mod_init_order.push_back(io);
-	mod_init_order.push_back(PhysxManager);
+	mod_init_order.push_back(g_PhysxManager);
 	mod_init_order.push_back(entities);
 	mod_init_order.push_back(logic_manager);
 

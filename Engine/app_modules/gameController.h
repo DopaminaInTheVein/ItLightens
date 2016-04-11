@@ -72,8 +72,12 @@ public:
 		UpdateGeneralInputs();
 	}
 
-	bool * GetFreeCamera() {
+	bool * GetFreeCameraPointer() {
 		return &free_camera;
+	}
+
+	bool GetFreeCamera() const {
+		return free_camera;
 	}
 
 

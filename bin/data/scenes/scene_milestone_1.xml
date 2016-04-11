@@ -7,7 +7,7 @@
     <tags tags="camera_main" />
     <transform pos="0 0 -25" />
     <name name="camara" />
-    <camera znear="1" zfar="250" fov="60" />
+    <camera znear="1" zfar="250" fov="60" collision="true" />
     <controller_3rd_person />
   </entity>
 
@@ -20,6 +20,16 @@
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
     <character_controller radius ="0.3" height ="0.5"/>
   </entity>
+<!-- Test 1 punto magnetismo -->
+  <entity>
+    <name name="punto_magnetismo1" />
+    <tags tags="minus_wall" />
+    <polarized pol="minus"/>
+    <transform pos="-2.357965 -5.63678 -22" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
+  </entity>
+  <!-- fin 1 punto magnetismo -->
 
 <!-- Prueba anims -->
  <entity>
@@ -107,6 +117,7 @@
     <tags tags="minus_wall" />
     <transform pos="-2.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
     <polarized pol="minus"/>
   </entity>
   <entity>
@@ -114,6 +125,7 @@
     <tags tags="plus_wall" />
     <transform pos="2.357965 -0.63678 1.4407" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
     <polarized pol="plus"/>
   </entity>
   <entity>
@@ -121,6 +133,7 @@
     <tags tags="plus_wall" />
     <transform pos="0.357965 1.06714 4.40073" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
     <polarized pol="plus"/>
   </entity>
   <entity>
@@ -128,6 +141,7 @@
     <tags tags="minus_wall" />
     <transform pos="0.357965 8.0246 63.1498" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
     <polarized pol="minus"/>
   </entity>
   <entity>
@@ -135,6 +149,7 @@
     <tags tags="plus_wall" />
     <transform pos="0.357965 5.08771 59.6009" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
     <polarized pol="plus"/>
   </entity>
   <entity>
@@ -1248,25 +1263,6 @@
     <character_controller radius ="1" height ="1"/>
   </entity>
 
-  <entity>
-    <tags tags="AI AI_cientifico AI_poss" />
-    <transform pos="0 3.9 120" />
-    <name name="scientist1" />
-    <life points="100" />
-    <render_static_mesh name="static_meshes/human_test.static_mesh" />
-    <cientifico
-      kpt_size  = "4"
-      kpt0_type = "seek" kpt0_pos = " 5  3.9  125" kpt0_wait = "0.5"
-      kpt1_type = "look" kpt1_pos = " 0  3.9   130" kpt1_wait = "1"
-      kpt2_type = "seek" kpt2_pos = " 4.5  3.9 120" kpt2_wait = "1"
-      kpt3_type = "look" kpt3_pos = " -2.1  3.9 128" kpt3_wait = "1" 
-      zmin="120"
-      zmax ="135"
-      />
-    <player_cientifico />
-    <character_controller radius ="1" height ="1"/>
-  </entity>
-
   <!-- END ZONE 4 -->
 
   <!-- FINAL ZONE -->
@@ -1353,26 +1349,6 @@
       kpt3_type = "look" kpt3_pos = "0 3.9 167.5" kpt3_wait = "1"
       kpt4_type = "look" kpt4_pos = "0 3.9 150" kpt4_wait = "1"
       kpt5_type = "seek" kpt5_pos = "0 3.9 167.5" kpt5_wait = "0.5" />
-    <character_controller radius ="1" height ="1"/>
-  </entity>
-
-  <entity>
-    <tags tags="AI AI_cientifico AI_poss" />
-    <transform pos="0 3.9 167.5" />
-    <name name="scientist1" />
-    <life points="100" />
-    <render_static_mesh name="static_meshes/human_test.static_mesh" />
-    <cientifico
-      kpt_size  = "6"
-      kpt0_type = "seek" kpt0_pos = "5 3.9 165" kpt0_wait = "0.5"
-      kpt1_type = "look" kpt1_pos = "-6 3.9 167.5" kpt1_wait = "1"
-      kpt2_type = "seek" kpt2_pos = "0 3.9 160" kpt2_wait = "0.5"
-      kpt3_type = "look" kpt3_pos = "6 3.9 167.5" kpt3_wait = "1"
-      kpt4_type = "seek" kpt4_pos = "-5 3.9 165" kpt4_wait = "0.5"
-      kpt5_type = "look" kpt5_pos = "0 3.9 160" kpt5_wait = "1" 
-      zmin ="140"
-      zmax ="200"/>
-    <player_cientifico />
     <character_controller radius ="1" height ="1"/>
   </entity>
 

@@ -79,7 +79,7 @@ void CImGuiModule::update(float dt) {
 
 
 	
-	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCamera());
+	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
 
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
 	ImGui::Text("WARNING: The player will still move, pause the game to stop moving the player");

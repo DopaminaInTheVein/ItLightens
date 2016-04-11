@@ -449,7 +449,7 @@ bool ai_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) 
 	CEntity *e = myParent;
 	TCompCharacterController *cc = e->get<TCompCharacterController>();
 	Debug->DrawLine(origin + VEC3(0, 0.5f, 0), getTransform()->getFront(), 10.0f);
-	bool ret = PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
+	bool ret = g_PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
 
 	if(ret)
 		distRay = hit.getAnyHit(0).distance;

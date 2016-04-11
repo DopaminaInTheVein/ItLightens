@@ -64,7 +64,7 @@
 
 //Physics
 #include "physx\physx_manager.h"
-extern CPhysxManager *PhysxManager;
+extern CPhysxManager *g_PhysxManager;
 
 //DEBUG
 #include "debug/debug_itlightens.h"
