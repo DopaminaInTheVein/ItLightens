@@ -36,7 +36,7 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 				txtValue.text = (prop as string)
 			)
 			local index = findItem reservedProps selProp 
-			txtValue.enabled = (index == 0)
+			txtValue.enabled = true --(index == 0)
 		)
 	)	
 	

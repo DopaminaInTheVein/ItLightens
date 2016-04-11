@@ -119,10 +119,21 @@ fn _parse_tracker = (
 -- RENDER  --
 ----------------------------------------------------------------------
 fn _parse_render = (
-	stMesh = getUserProp _parsingObject "staticMesh"
-	if (stMesh != undefined) do (
-		local xml = XML_PARSING.addChild "render_static_mesh"
-		xml.addAttr "name" ("static_meshes/" + stMesh + staticMesh_ext)
+	-- Tiene skeleton?
+	skel = getUserProp _parsingObject "skeleton"
+	if skel != undefined then (
+		--local xmlSkel = XML_PARSING.addChild "skeleton"
+		--xmlSkel.addAttr ("skeletons/" + skel + "/" + skel + skel_ext)
+		
+		--local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
+		--xmlStMesh.addAttr "name" ("skeletons/" + skel + "/" + skel + staticMesh_ext)
+	) else (
+		--Tiene staticMesh?
+		stMesh = getUserProp _parsingObject "staticMesh"
+		if (stMesh != undefined) do (
+			local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
+			xmlStMesh.addAttr "name" ("static_meshes/" + stMesh + staticMesh_ext)
+		)
 	)
 )
 

@@ -149,6 +149,8 @@ struct TResources (
 		return res
 	),
 		
+-- STATIC MESH
+--------------------
 	fn exportStaticMesh out_filename objs = (
 		local fsm = createFile out_filename
 		format "<static_mesh>\n" to:fsm
@@ -232,6 +234,53 @@ struct TResources (
 		format "</static_mesh>\n" to:fsm
 		close fsm
 	),
+	
+-- SKEL - Static Mesh - 
+----------------------------------------------------------------------
+	fn exportStaticMeshSkel nameSkel obj = (
+		local staticMeshPath = (project_path + "skeletons/" + nameSkel + "/" + nameSkel + staticMesh_ext)
+		local fsm = createFile staticMeshPath
+		format "<static_mesh>\n" to:fsm
+		
+		--Material de la mesh
+		local m = obj.mat
+		
+		try (
+			--Current material
+			local mat_used = m
+			if classOf m == MultiMaterial then (
+				throw "No se puede exportar animacion con multimaterial!"
+			)
+						
+			-- Name of mesh and material
+			local mat_name = mat_used.name
+	
+			-- Check material is correct
+			tieneEspacios = (findString mat_name " ")
+			tieneAlmohadilla = (findString mat_name "#")
+
+			if (tieneEspacios != undefined) do (
+				throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+			)
+			if (tieneEspacios != undefined) do (
+				throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+			)
+			local meshPath =("skeletons/" + nameSkel + "/" + nameSkel + mesh_ext)
+	
+			-- Añadimos mesh slot 
+			local mat_res_name = "materials/" + mat_name + ".material"
+			format "  <slot mesh=\"%\" material=\"%\" />\n" meshPath mat_res_name to:fsm
+			-- Save material resource
+			saveMaterial m
+		) catch (
+			close fsm
+			throw()
+		)
+		format "</static_mesh>\n" to:fsm
+		close fsm
+	),
+----------------------------------------------------------------------	
+
 
 	fn exportCompStaticMesh obj = (
 		rStMesh = getResourceName obj "staticMesh"

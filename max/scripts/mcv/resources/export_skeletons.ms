@@ -5,6 +5,21 @@ struct  TSkeletonsExporter (
 	skel_name = "unknown",
 	skel_root_path,
 	skel_file, 
+
+	fn exportModel obj = (
+		local modelFilePath = (skel_root_path + skel_name + ".skeleton")
+		local fsm = createFile modelFilePath
+		try (
+			format "<model>\n" to:fsm
+			format "  <skeleton src =\"%\"/>\n" ("skeletons/" + skel_name + "/" + skel_name + ".skeleton") to:fsm
+			format "  <animations/>\n" to:fsm
+			format "</model>\n" to:fsm
+		) catch (
+			throw()
+			close fsm
+		)
+		close fsm		
+	),
 	
 	fn isBone obj = ( 
 		-- Discard black bones
@@ -83,21 +98,14 @@ struct  TSkeletonsExporter (
 			local mesh_file = skel_root_path + obj.name + ".cmf"
 			-- 0.01 threshold, no LOD, no springs
 			local rc = ExportCalMesh mesh_file skel_file obj 4 0.01 false false
+					
+			-- Export static mesh skel
+			tr = TResources()
+			tr.exportStaticMeshSkel obj.name obj
 		)
 
 		-- Export model (.skeleton)
-		local modelFilePath = (skel_root_path + root.name + ".skeleton")
-		local fsm = createFile modelFilePath
-		try (
-			format "<model>\n" to:fsm
-			format "  <skeleton src =\"%\"/>\n" ("skeletons/" + root.name + "/" + root.name + ".skeleton") to:fsm
-			format "  <animations/>\n" to:fsm
-			format "</model>\n" to:fsm
-		) catch (
-			throw()
-			close fsm
-		)
-		close fsm
+		exportModel(root)
 		
 		-- Restaurar el modo pose si es q estaba en modo pose inicialmente
 		if was_in_figure_mode == false then root.controller.figureMode = false
@@ -115,12 +123,7 @@ struct  TSkeletonsExporter (
 		local begin_time =  animationRange.start as integer * frameRate / 4800  
 		local end_time = animationRange.end as integer  * frameRate / 4800
 		local rc = ExportCalAnim animation_file skel_file bones_to_export begin_time end_time 0 frameRate
-	),
-	
-	fn exportModel = (
-		
 	)
-	
 )
 
 --gc()
