@@ -2,14 +2,15 @@ print('This is lua')
 
 SLB.using( SLB )
 
-public = Public( )
+p = Public( )
 
 function execCommandTest( code, timer )
-    public:exec_command( code, timer )
+    p:exec_command( code, timer )
 end
 
-function dbg( name )
-    public:print( "DBG: "..name )
+--prints the specified text via the VS console
+function dbg( text )
+    p:print( "DBG: "..text )
 end
 
 
