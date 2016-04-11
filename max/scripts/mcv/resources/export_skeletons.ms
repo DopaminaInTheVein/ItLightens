@@ -11,7 +11,7 @@ struct  TSkeletonsExporter (
 		local fsm = createFile modelFilePath
 		try (
 			format "<model>\n" to:fsm
-			format "  <skeleton src =\"%\"/>\n" ("skeletons/" + skel_name + "/" + skel_name + ".skeleton") to:fsm
+			format "  <skeleton src =\"%\"/>\n" ("skeletons/" + skel_name + "/" + skel_name + ".csf") to:fsm
 			format "  <animations/>\n" to:fsm
 			format "</model>\n" to:fsm
 		) catch (

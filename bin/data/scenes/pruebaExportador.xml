@@ -1,5 +1,8 @@
 <entities>
 <entity>
+<tags
+   tags=""
+/>
 <name
    name="sc_1_box"
 />
@@ -16,8 +19,8 @@
 />
 </entity>
 <entity>
-<tag
-   name="camera_main"
+<tags
+   tags="camera_main"
 />
 <camera
    znear="1.0"
@@ -35,12 +38,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_1"
 />
@@ -60,12 +61,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_2"
 />
@@ -85,12 +84,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_3"
 />
@@ -110,12 +107,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_4"
 />
@@ -135,12 +130,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_5"
 />
@@ -160,12 +153,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_6"
 />
@@ -185,12 +176,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_7"
 />
@@ -210,12 +199,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_8"
 />
@@ -235,12 +222,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_9"
 />
@@ -263,12 +248,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_10"
 />
@@ -291,12 +274,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_11"
 />
@@ -319,12 +300,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_12"
 />
@@ -347,14 +326,8 @@
 />
 </entity>
 <entity>
-<tag
-   name="AI"
-/>
-<tag
-   name="AI_mole"
-/>
-<tag
-   name="AI_poss"
+<tags
+   tags="AI AI_mole AI_poss"
 />
 <bt_mole
    wpts_size="4"
@@ -384,6 +357,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <name
    name="victory_point_1"
 />
@@ -392,11 +368,17 @@
    quat="0 0 0 1.0"
    scale="1.0"
 />
+<skeleton
+   model="skeletons/papa_pitufo/papa_pitufo.skeleton"
+/>
 <render_static_mesh
-   name="static_meshes/__victory.static_mesh"
+   name="skeletons/papa_pitufo/papa_pitufo.static_mesh"
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
@@ -413,12 +395,10 @@
 />
 </entity>
 <entity>
-<tag
-   name="box"
+<tags
+   tags="box platform"
 />
-<tag
-   name="platform"
-/>
+<box/>
 <name
    name="Box_13"
 />
@@ -438,6 +418,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <name
    name="generator_1"
 />
@@ -451,6 +434,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <rigidbody
    type_collision="trigger"
    type_shape="sphere"
@@ -467,14 +453,8 @@
 />
 </entity>
 <entity>
-<tag
-   name="AI"
-/>
-<tag
-   name="AI_speedy"
-/>
-<tag
-   name="AI_poss"
+<tags
+   tags="AI AI_speedy AI_poss"
 />
 <bt_speedy
    wpts_size="4"
@@ -504,11 +484,8 @@
 />
 </entity>
 <entity>
-<tag
-   name="AI"
-/>
-<tag
-   name="AI_guard"
+<tags
+   tags="AI AI_guard"
 />
 <life
    points="100"
@@ -550,15 +527,15 @@
 />
 </entity>
 <entity>
-<tag
-   name="beacon"
+<tags
+   tags="beacon"
 />
 <beacon/>
 <name
    name="beacon_1"
 />
 <transform
-   pos="-2.43738 -2.62433 18.0295"
+   pos="-2.43738 -2.62433 19.8403"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -572,8 +549,8 @@
 />
 </entity>
 <entity>
-<tag
-   name="player"
+<tags
+   tags="player"
 />
 <player/>
 <life

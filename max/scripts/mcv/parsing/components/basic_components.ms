@@ -122,11 +122,11 @@ fn _parse_render = (
 	-- Tiene skeleton?
 	skel = getUserProp _parsingObject "skeleton"
 	if skel != undefined then (
-		--local xmlSkel = XML_PARSING.addChild "skeleton"
-		--xmlSkel.addAttr ("skeletons/" + skel + "/" + skel + skel_ext)
+		local xmlSkel = XML_PARSING.addChild "skeleton"
+		xmlSkel.addAttr "model" ("skeletons/" + skel + "/" + skel + skel_ext)
 		
-		--local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
-		--xmlStMesh.addAttr "name" ("skeletons/" + skel + "/" + skel + staticMesh_ext)
+		local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
+		xmlStMesh.addAttr "name" ("skeletons/" + skel + "/" + skel + staticMesh_ext)
 	) else (
 		--Tiene staticMesh?
 		stMesh = getUserProp _parsingObject "staticMesh"
