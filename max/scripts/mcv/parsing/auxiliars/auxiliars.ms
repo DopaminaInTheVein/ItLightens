@@ -11,5 +11,6 @@ fn parseable = (
 
 -- Valores -- (poner entre comillas)
 fn _val val = (
-	return "\"" + (val as string) + "\""
+	local valTrimmed = trimLeft (trimRight (val as string) )
+	return "\"" + (valTrimmed as string) + "\""
 )

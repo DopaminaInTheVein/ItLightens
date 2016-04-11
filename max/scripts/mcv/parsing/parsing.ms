@@ -67,14 +67,15 @@ fn _parseLevel = (
 --TAGS--
 ----------------------------------------------------------------------
 fn parseTags parent tag = (
-	format "Llamo parseTags con %\n" tag
-	if (ClassOf tag) == (ClassOf #()) then (
-		for t in tag do (
-			parseTags parent t
-		)
+	if (ClassOf tag) != (ClassOf #()) then (
+		parseTags parent #(t)
 	) else (
-		local xml = parent.addChild "tag"
-		xml.addAttr "name" tag
+		local xml = parent.addChild "tags"
+		local tags_list = ""
+		for t in tag do (
+			tags_list += (" " + t)
+		)
+		xml.addAttr "tags" tags_list
 	)
 )
 

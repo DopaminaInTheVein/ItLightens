@@ -66,9 +66,9 @@ struct OM (
 			-- Tags
 			,#("box","platform")
 			-- Attributes
-			,#()
+			,#("fixed")
 			--Components
-			,#()--"box")
+			,#("box")
 			--Helpers
 			,#()
 		)

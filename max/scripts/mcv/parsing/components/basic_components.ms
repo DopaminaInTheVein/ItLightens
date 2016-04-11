@@ -94,3 +94,16 @@ fn _parse_polarized = (
 	)
 )
 
+----------------------------------------------------------------------
+-- BOX --
+----------------------------------------------------------------------
+fn _parse_box = (
+	local xmlBox = XML_PARSING.addChild "box"
+	local fixedValue = (getUserProp _parsingObject "fixed") as string
+	if fixedValue != "undefined" then (
+		if fixedValue == "yes" then (fixedValue = "true")
+		else if fixedValue == "no" then (fixedValue = "false")
+		else throw ("Error [" + _parsingObject + "]: wrong 'fixed' value")
+		xmlBox.addAttr "fixed" fixedValue
+	)
+)
