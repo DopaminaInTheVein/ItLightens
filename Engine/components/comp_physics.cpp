@@ -20,15 +20,21 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 	if (h.isValid()) {
 		if (h.hasTag("crystal")) {
 			filter.word0 |= ItLightensFilter::eCRYSTAL;
-			filter.word0 &= ~ItLightensFilter::eALL_STATICS;
 		}
 
-		if (h.hasTag("water")) {
+		else if (h.hasTag("water")) {
 			filter.word0 |= ItLightensFilter::eLIQUID;
 		}
 
-		if (h.hasTag("bomb")) {
+		else if (h.hasTag("bomb")) {
 			filter.word0 |= ItLightensFilter::eBOMB;
+		}
+
+		else if (m_collisionType == STATIC_OBJECT) {
+			filter.word0 |= ItLightensFilter::eSCENE;
+		}
+		else {
+			filter.word0 |= ItLightensFilter::eOBJECT;
 		}
 
 	}

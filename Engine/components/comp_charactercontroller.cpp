@@ -61,6 +61,13 @@ void TCompCharacterController::renderInMenu()
 	
 }
 
+VEC3 TCompCharacterController::GetCameraPointFocus() const
+{
+	CEntity *e = CHandle(this).getOwner();
+	TCompTransform *t = e->get<TCompTransform>();
+	return VEC3(0, m_height, 0) + (-t->getLeft()*m_radius);
+}
+
 void TCompCharacterController::update(float dt)
 {
 	//PROFILE_FUNCTION("update");
@@ -240,11 +247,12 @@ void TCompCharacterController::UpdateTags()
 			m_mass = 50.0f;
 
 		}
-		if (h.hasTag("AI_guard"))
-			m_filter.word0 |= ItLightensFilter::eGUARD | ItLightensFilter::eNPC;
+		if (h.hasTag("AI_guard")) {
+			m_filter.word0 |= ItLightensFilter::eGUARD;
+		}
 
 		if (h.hasTag("AI_poss"))
-			m_filter.word0 |= ItLightensFilter::ePOSSEABLE | ItLightensFilter::eNPC;
+			m_filter.word0 |= ItLightensFilter::ePOSSESSABLE;
 	}
 
 	g_PhysxManager->setupFiltering(m_pActor->getActor(), m_filter);
@@ -283,10 +291,25 @@ void TCompCharacterController::SetCollisions(bool new_collisions)
 			shape->setSimulationFilterData(m_filter);
 			shape->setQueryFilterData(m_filter);
 		}
-
-		free(ptr);
 	}
-	free(ra);
+}
+
+void TCompCharacterController::SetFilterData(PxFilterData& filter)
+{
+	PxRigidActor *ra = m_pActor->getActor()->isRigidActor();
+	m_filter = filter;
+	if (ra) {
+		const PxU32 numShapes = ra->getNbShapes();
+		PxShape **ptr;
+		ptr = new PxShape*[numShapes];
+		ra->getShapes(ptr, numShapes);
+		for (PxU32 i = 0; i < numShapes; i++)
+		{
+			PxShape* shape = ptr[i];
+			shape->setSimulationFilterData(m_filter);
+			shape->setQueryFilterData(m_filter);
+		}
+	}
 }
 
 #pragma endregion

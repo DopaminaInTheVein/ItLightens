@@ -8,6 +8,12 @@
 #define DEFAULT_DATA_STATIC		g_PhysxManager->GetDefaultQueryTagsStatic()
 #define DEFAULT_DATA_CC			g_PhysxManager->GetDefaultQueryTagsCC()
 
+
+#define NO_PLAYER_CRYSTAL ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
+#define NO_CRYSTAL ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
+#define NO_PLAYER ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
+#define ALL_LESS_STATIC ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT
+
 #define GRAVITY -10.0f
 
 using namespace physx;
@@ -343,6 +349,14 @@ public:
 							PxQueryFilterData filterData = PxQueryFilterData(),
 							const PxHitFlags outputFlags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
 
+
+	bool raySphere(PxReal radius, PxVec3 & start, PxVec3 & direction, PxReal distance, PxSweepCallback & hit,
+																					PxQueryFilterData filter = PxQueryFilterData(), 
+																					const PxHitFlags outputflags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
+
+	bool raySphere(PxReal radius, VEC3 & start, VEC3 & direction, PxReal distance, PxSweepCallback & hit,
+																					PxQueryFilterData filter = PxQueryFilterData(),
+																					const PxHitFlags outputflags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
 
 
 	//-----------------------------------------------------------------------------------------------------

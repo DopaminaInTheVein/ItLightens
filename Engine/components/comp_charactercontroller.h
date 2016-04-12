@@ -14,7 +14,7 @@ class TCompCharacterController : public TCompBase {
 	float							m_mass				= 80.0f;
 	float							m_gravitySpeed		= -10.0f;
 	float							m_maxSpeed			= 10.0f;
-	float							m_friction			= 15.0f;
+	float							m_friction			= 10.0f;
 	float							m_eOffsetSpeed		= 0.2f;
 
 	bool							m_active			= true;
@@ -99,6 +99,12 @@ public:
 		return PhysxConversion::PxExVec3ToVec3(m_pActor->getFootPosition());
 	}
 
+	VEC3 GetCameraPointFocus() const;
+
+	PxFilterData& GetFilterData() {
+		return m_filter;
+	}
+
 	//-----------------------------------------------------------------------------------------------------
 	//									physics setters
 	//-----------------------------------------------------------------------------------------------------
@@ -106,6 +112,7 @@ public:
 	void teleport(const PxVec3 & pos);
 	void teleport(const VEC3 & pos);
 	void SetCollisions(bool new_collisions);
+	void SetFilterData(PxFilterData& filter);
 	void SetActive(bool isActive) { m_active = isActive; }
 	void SetGravity(bool isActive) { m_affectGravity = isActive; }
 

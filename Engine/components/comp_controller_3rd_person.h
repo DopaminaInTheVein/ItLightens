@@ -17,7 +17,7 @@
 #define THIRD_PERSON_CONTROLLER_SPEEDY_DIST				5.f
 #define THIRD_PERSON_CONTROLLER_MOLE_DIST				5.f
 #define THIRD_PERSON_CONTROLLER_SCIENTIST_DIST			5.f
-#define THIRD_PERSON_CONTROLLER_PLAYER_POS_OFFSET_Y			-0.8f
+#define THIRD_PERSON_CONTROLLER_PLAYER_POS_OFFSET_Y			-0.5f
 #define THIRD_PERSON_CONTROLLER_SPEEDY_POS_OFFSET_Y			0.f
 #define THIRD_PERSON_CONTROLLER_MOLE_POS_OFFSET_Y			0.f
 #define THIRD_PERSON_CONTROLLER_SCIENTIST_POS_OFFSET_Y		0.f
@@ -36,6 +36,7 @@ class TCompController3rdPerson : public TCompBase {
 	bool		y_axis_inverted;
 	bool		x_axis_inverted;
 	VEC3		position_diff;
+	VEC3		offset;
 
 public:
 	CHandle		target;
@@ -162,12 +163,17 @@ public:
 		CEntity* targeted = targetowner;
 		TCompLife * targetlife = targeted->get<TCompLife>();
 		TCompTransform * targettrans = targeted->get<TCompTransform>();
+		TCompCharacterController *cc = targeted->get<TCompCharacterController>();
+
+		offset = position_diff - VEC3(targettrans->getLeft()*cc->GetRadius());
 		my_tmx->lookAt(origin, target_loc);
 		//Aplicar offset
 		my_tmx->setPosition(my_tmx->getPosition() + position_diff);
 
 
 	}
+
+	VEC3 GetOffset() const { return offset; }
 	
 	void unlockedCameraController() {
 
