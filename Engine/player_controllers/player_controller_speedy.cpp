@@ -6,8 +6,9 @@
 #include "components\comp_transform.h"
 #include "components\entity.h"
 #include "components\entity_tags.h"
-#include "app_modules\io\io.h"
 #include "components\comp_msgs.h"
+#include "app_modules\io\io.h"
+#include "app_modules\logic_manager\logic_manager.h"
 
 #include "components/comp_charactercontroller.h"
 
@@ -114,6 +115,7 @@ void player_controller_speedy::UpdateInputActions() {
 			TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 			cc->SetGravity(false);
 			dashing = true;
+			logic_manager->throwEvent(logic_manager->OnDash, "");
 		}
 	}
 	if (io->mouse.right.becomesPressed() || io->joystick.button_B.becomesPressed()) {
@@ -121,6 +123,7 @@ void player_controller_speedy::UpdateInputActions() {
 			energyDecreasal(10.0f);
 			ChangePose(pose_idle_route);
 			ChangeState("blink");
+			logic_manager->throwEvent(logic_manager->OnBlink, "");
 		}
 	}
 }
@@ -165,6 +168,7 @@ void player_controller_speedy::Jumping()
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 		energyDecreasal(5.0f);
+		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
 	}
 }
@@ -181,6 +185,7 @@ void player_controller_speedy::Falling()
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 		energyDecreasal(5.0f);
+		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
 	}
 

@@ -109,6 +109,9 @@ bool CApp::start() {
 	io->mouse.toggle();
 
 	GameController->SetGameState(CGameController::RUNNING);
+
+	logic_manager->throwEvent(logic_manager->OnGameStart, "");
+
 	return true;
 }
 

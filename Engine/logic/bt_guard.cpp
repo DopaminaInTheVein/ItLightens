@@ -6,6 +6,7 @@
 #include "utils/utils.h"
 #include "logic/sbb.h"
 #include "app_modules\io\io.h"
+#include "app_modules\logic_manager\logic_manager.h"
 #include "ui\ui_interface.h"
 
 map<string, bt_guard::KptType> bt_guard::kptTypes = {
@@ -213,6 +214,7 @@ int bt_guard::actionAbsorb() {
 		goForward(-SPEED_WALK);
 	}
 	if (!playerVisible()) {
+		logic_manager->throwEvent(logic_manager->OnInterruptHit, "");
 		return OK;
 	}
 	else {

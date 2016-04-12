@@ -7,6 +7,7 @@
 #include "components\entity.h"
 #include "components\entity_tags.h"
 #include "app_modules\io\io.h"
+#include "app_modules\logic_manager\logic_manager.h"
 #include "components\comp_msgs.h"
 
 #include "ui\ui_interface.h"
@@ -86,15 +87,18 @@ void player_controller_mole::UpdateInputActions() {
 	if (io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) {
 		if (boxGrabbed) {
 			ChangePose(pose_idle_route);
+			logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
 			ChangeState("leaveBox");
 		}
 		else {
 			if (this->nearToBox()) {
 				ChangePose(pose_box_route);
+				logic_manager->throwEvent(logic_manager->OnPickupBox, "");
 				ChangeState("grabBox");
 			}
 			else if (this->nearToWall()) {
 				ChangePose(pose_wall_route);
+				logic_manager->throwEvent(logic_manager->OnBreakWall, "");
 				ChangeState("destroyWall");
 			}
 		}
