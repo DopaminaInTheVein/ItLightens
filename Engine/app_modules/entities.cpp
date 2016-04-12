@@ -204,8 +204,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	CEntityParser ep;
-	//bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
-	bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
+	//bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH

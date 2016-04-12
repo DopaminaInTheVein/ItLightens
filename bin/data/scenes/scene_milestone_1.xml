@@ -1,4 +1,41 @@
 <entities>
+
+<!-- Prueba Guarda -->
+
+<entity>
+<transform
+   pos="-2 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/test_guard1.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"
+/>
+</entity>
+
+<entity>
+<transform
+   pos="2 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/test_guard2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"
+/>
+</entity>
+
+<!-- Fin prueba guarda -->
+
   <!--PLAYER & CAMERA -->
 
   <!--POS INICIAL : 0 0 -22 -->

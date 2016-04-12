@@ -9,6 +9,24 @@
  </entity>
 <!-- Fin prueba anims -->
 
+<!-- Prueba Guarda -->
+<entity>
+<transform
+   pos="-2.43738 -2.62433 19.8403"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/test_guard1.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"
+/>
+</entity>
+<!-- Fin prueba guarda -->
+
 <entity>
 <tags
    tags=""
