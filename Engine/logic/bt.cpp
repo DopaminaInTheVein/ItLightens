@@ -1,110 +1,108 @@
 #include "mcv_platform.h"
 #include "bt.h"
+#include "sbb.h"
+#include "recast/navmesh.h"
+#include "recast/navmesh_query.h"
+#include "recast/DebugUtils/Include/DebugDraw.h"
+#include "components/entity_tags.h"
+#include "components/components.h"
 
 void bt::create(string s)
 {
-name=s;
+	name = s;
 }
 
 btnode *bt::createNode(string s)
 {
-if (findNode(s)!=NULL) 
+	if (findNode(s) != NULL)
 	{
-	printf("Error: node %s already exists\n",s.c_str());
-	return NULL;	// error: node already exists
+		printf("Error: node %s already exists\n", s.c_str());
+		return NULL;	// error: node already exists
 	}
-btnode *btn=new btnode(s);
-(*getTree())[s]=btn;
-return btn;
+	btnode *btn = new btnode(s);
+	(*getTree())[s] = btn;
+	return btn;
 }
-
 
 btnode *bt::findNode(string s)
 {
-if (getTree()->find(s)==getTree()->end()) return NULL;
-else return (*getTree())[s];
+	if (getTree()->find(s) == getTree()->end()) return NULL;
+	else return (*getTree())[s];
 }
 
-
-btnode *bt::createRoot(string s,int type,btcondition btc,btaction bta)
+btnode *bt::createRoot(string s, int type, btcondition btc, btaction bta)
 {
-btnode *r=createNode(s);
-r->setParent(NULL);
-*getRoot()=r;
-r->setType(type);
-if (btc!=NULL) addCondition(s,btc);
-if (bta!=NULL) addAction(s,bta);
+	btnode *r = createNode(s);
+	r->setParent(NULL);
+	*getRoot() = r;
+	r->setType(type);
+	if (btc != NULL) addCondition(s, btc);
+	if (bta != NULL) addAction(s, bta);
 
-current=NULL;
-return r;
+	current = NULL;
+	return r;
 }
 
-
-btnode *bt::addChild(string parent,string son,int type,btcondition btc,btaction bta)
+btnode *bt::addChild(string parent, string son, int type, btcondition btc, btaction bta)
 {
-btnode *p=findNode(parent);
-btnode *s=createNode(son);
-p->addChild(s);
-s->setParent(p);
-s->setType(type);
-if (btc!=NULL) addCondition(son,btc);
-if (bta!=NULL) addAction(son,bta);
-return s;
+	btnode *p = findNode(parent);
+	btnode *s = createNode(son);
+	p->addChild(s);
+	s->setParent(p);
+	s->setType(type);
+	if (btc != NULL) addCondition(son, btc);
+	if (bta != NULL) addAction(son, bta);
+	return s;
 }
-
 
 void bt::Recalc()
 {
-if (current==NULL) (*getRoot())->recalc(this);	// I'm not in a sequence, start from the root
-else current->recalc(this);				// I'm in a sequence. Continue where I left
+	if (current == NULL) (*getRoot())->recalc(this);	// I'm not in a sequence, start from the root
+	else current->recalc(this);				// I'm in a sequence. Continue where I left
 }
 
 void bt::setCurrent(btnode *nc)
 {
-current=nc;
+	current = nc;
 }
 
-
-void bt::addAction(string s,btaction act)
+void bt::addAction(string s, btaction act)
 {
-if (getActions()->find(s)!=getActions()->end())
+	if (getActions()->find(s) != getActions()->end())
 	{
-	printf("Error: node %s already has an action\n",s.c_str());
-	return;	// if action already exists don't insert again...
+		printf("Error: node %s already has an action\n", s.c_str());
+		return;	// if action already exists don't insert again...
 	}
-(*getActions())[s]=act;
+	(*getActions())[s] = act;
 }
-
 
 int bt::execAction(string s)
 {
-if (getActions()->find(s)==getActions()->end()) 
+	if (getActions()->find(s) == getActions()->end())
 	{
-	printf("ERROR: Missing node action for node %s\n",s.c_str());
-	return OK; // error: action does not exist
+		printf("ERROR: Missing node action for node %s\n", s.c_str());
+		return OK; // error: action does not exist
 	}
-return (this->*(*getActions())[s])();
+	return (this->*(*getActions())[s])();
 }
 
-
-void bt::addCondition(string s,btcondition cond)
+void bt::addCondition(string s, btcondition cond)
 {
-if (getConditions()->find(s)!=getConditions()->end())
+	if (getConditions()->find(s) != getConditions()->end())
 	{
-	printf("Error: node %s already has a condition\n",s.c_str());
-	return;	// if condition already exists don't insert again...
+		printf("Error: node %s already has a condition\n", s.c_str());
+		return;	// if condition already exists don't insert again...
 	}
-(*getConditions())[s]=cond;
+	(*getConditions())[s] = cond;
 }
-
 
 bool bt::testCondition(string s)
 {
-if (getConditions()->find(s)==getConditions()->end())
+	if (getConditions()->find(s) == getConditions()->end())
 	{
-	return true;	// error: no condition defined, we assume TRUE
+		return true;	// error: no condition defined, we assume TRUE
 	}
-return (this->*(*getConditions())[s])();
+	return (this->*(*getConditions())[s])();
 }
 
 // To be implemented in the subclasses
@@ -120,4 +118,84 @@ map<string, btcondition>* bt::getConditions() {
 
 btnode** bt::getRoot() {
 	return nullptr;
+}
+void bt::getPath(VEC3 startPoint, VEC3 endPoint, string nombreSala) {
+	CNavmesh nav = SBB::readNavmesh(nombreSala);
+	CNavmeshQuery query(&nav);
+	query.updatePosIni(startPoint);
+	query.updatePosEnd(endPoint);
+	query.findPath(query.p1, query.p2);
+	const float * path = query.getVertexSmoothPath();
+	pathWpts.clear();
+	totalPathWpt = query.getNumVertexSmoothPath();
+	if (totalPathWpt > 0) {
+		for (int i = 0; i < totalPathWpt * 3; i = i + 3) {
+			pathWpts.push_back(VEC3(path[i], path[i + 1], path[i + 2]));
+		}
+	}
+	currPathWpt = 0;
+}
+
+CEntity* bt::frontCollisionIA(VEC3 npcPos, CHandle ownHandle) {
+	TTagID tagIDia = getID("AI");
+	vector<CHandle> colCandidates = tags_manager.getHandlesByTag(tagIDia);
+	for (CHandle candidateH : colCandidates) {
+		if (candidateH != ownHandle) {
+			CEntity * candidateE = candidateH;
+			TCompTransform * candidateT = candidateE->get<TCompTransform>();
+			if (realDist(npcPos, candidateT->getPosition()) < 1.5f) {
+				return candidateE;
+			}
+		}
+	}
+	return nullptr;
+}
+
+CEntity* bt::frontCollisionBOX(VEC3 npcPos, CEntity *  molePursuingBoxi) {
+	TTagID tagIDbox = getID("box");
+	vector<CHandle> colCandidates = tags_manager.getHandlesByTag(tagIDbox);
+	for (CHandle candidateH : colCandidates) {
+		CEntity * candidateE = candidateH;
+		TCompTransform * candidateT = candidateE->get<TCompTransform>();
+		if ((molePursuingBoxi == nullptr || molePursuingBoxi != candidateE) && realDist(npcPos, candidateT->getPosition()) < 1.5f) {
+			return candidateE;
+		}
+	}
+	return nullptr;
+}
+bool bt::avoidBoxByLeft(CEntity * candidateE, VEC3 npcPos, string nombreSala) {
+	TCompTransform * candidateT = candidateE->get<TCompTransform>();
+	CNavmesh nav = SBB::readNavmesh(nombreSala);
+	CNavmeshQuery query(&nav);
+	query.wallDistance(candidateT->getPosition());
+	float distanceToWallOrig = query.getCalculatesDistanceToWall();
+	VEC3 rectToPlayer = candidateT->getPosition() - npcPos;
+	VEC3 posBoxMovedLeft = candidateT->getPosition();
+	posBoxMovedLeft.x -= rectToPlayer.z;
+	posBoxMovedLeft.z += rectToPlayer.x;
+	query.wallDistance(posBoxMovedLeft);
+	float distanceToWallMoved = query.getCalculatesDistanceToWall();
+	if (distanceToWallMoved < distanceToWallOrig) {
+		return true;
+	}
+	return false;
+}
+bool bt::needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, string nombreSala, CEntity *  molePursuingBoxi) {
+	float yaw, pitch, delta_yaw = 1.0f;
+	transform->getAngles(&yaw, &pitch);
+	CEntity * collisionBOX = frontCollisionBOX(npcPos, molePursuingBoxi);
+	if (frontCollisionIA(npcPos, myHandle) != nullptr) {
+		transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
+		return true;
+	}
+	else if (collisionBOX != nullptr && avoidBoxByLeft(collisionBOX, npcPos, nombreSala)) {
+		transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
+		return true;
+	}
+	else if (collisionBOX != nullptr) {
+		delta_yaw = -1.0f;
+		transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
+		return true;
+	}
+	return false;
 }

@@ -231,13 +231,14 @@ void player_controller_speedy::Blink()
 
 bool player_controller_speedy::dashFront()
 {
-	dash_duration += getDeltaTime();
+	float dt = getDeltaTime();
+	dash_duration += dt;
 	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 player_front = player_transform->getFront();
-	cc->AddMovement(VEC3(player_front.x*dash_speed,0.0f, player_front.z*dash_speed));
+	cc->AddMovement(VEC3(player_front.x*dash_speed,0.0f, player_front.z*dash_speed)*dt);
 
 	/*if (drop_water_ready) {
 		// CREATE WATER
@@ -334,7 +335,7 @@ bool player_controller_speedy::rayCastToFront(int types, float reach, float& dis
 	//PROVISINAL FOR TEST:
 	PxQueryFilterData filter = PxQueryFilterData();
 	if (types == 2) {
-		filter.data.word0 = ItLightensFilter::eALL_STATICS | ItLightensFilter::eOBJECT;	//ignore crystal and people
+		filter.data.word0 = NO_PLAYER_CRYSTAL; //ignore crystal and people
 	}
 	//END PROV
 

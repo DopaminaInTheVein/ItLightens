@@ -65,7 +65,6 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
-			
 		}
 	}
 }
@@ -118,7 +117,6 @@ void bt_guard::Init()
 	pose_idle_route = "static_meshes/guard.static_mesh";
 	pose_shoot_route = "static_meshes/guard_shoot.static_mesh";
 	pose_run_route = "static_meshes/guard_run.static_mesh";
-
 }
 
 //conditions
@@ -222,7 +220,6 @@ int bt_guard::actionAbsorb() {
 		shootToPlayer();
 		return STAY;
 	}
-
 }
 
 int bt_guard::actionShootWall() {
@@ -272,7 +269,6 @@ int bt_guard::actionSearch() {
 	// If player was lost, we simply look around
 	else
 		return OK;
-
 }
 int bt_guard::actionLookAround() {
 	PROFILE_FUNCTION("guard: lookaround");

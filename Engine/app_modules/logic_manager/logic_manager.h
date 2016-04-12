@@ -7,9 +7,16 @@
 #include <stdio.h>
 #include "SLB\SLB.hpp"
 
+struct command {
+	const char* code;
+	float execution_time;
+};
+
 class CLogicManagerModule : public IAppModule
 {
 	std::string lua_script_folder = "data/lua_scripts";
+
+	std::deque<command> command_queue;
 
 public:
 
@@ -58,9 +65,15 @@ public:
 
 	CLogicManagerModule();
 	bool start() override;
+	void update(float dt) override;
 	void stop() override;
 	const char* getName() const {
 		return "logic_manager";
+	}
+
+	// internal functions
+	std::deque<command>* getCommandQueue() {
+		return &command_queue;
 	}
 
 	// module specific functions
@@ -69,5 +82,7 @@ public:
 	void bindPublicFunctions(SLB::Manager& m);
 
 };
+
+extern CLogicManagerModule* logic_manager;
 
 #endif

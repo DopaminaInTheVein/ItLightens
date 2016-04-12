@@ -6,7 +6,7 @@
 #include "logic/bt_mole.h"
 #include "recast/navmesh.h"
 
-CNavmesh SBB::nav;
+map<string, CNavmesh> SBB::sbbNavs;
 map<string, int> SBB::sbbInt;
 map<string, bool> SBB::sbbBool;
 map<string, VEC3> SBB::sbbVEC3;
@@ -18,12 +18,12 @@ void SBB::init() {
 	postBool("possMode", false);
 }
 
-void SBB::postNavmesh(CNavmesh navmesh) {
-	nav = navmesh;
+void SBB::postNavmesh(string name, CNavmesh navmesh) {
+	sbbNavs[name] = navmesh;
 }
 
-CNavmesh SBB::readNavmesh() {
-	return nav;
+CNavmesh SBB::readNavmesh(string name) {
+	return sbbNavs[name];
 }
 
 void SBB::postInt(string name, int value) {

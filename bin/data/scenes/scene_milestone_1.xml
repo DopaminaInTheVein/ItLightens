@@ -152,13 +152,7 @@
     <rigidbody type_collision="static"/>
     <polarized pol="plus"/>
   </entity>
-  <entity>
-    <name name="mesa_cientifico" />
-    <tags tags="workbench" />
-    <transform pos="8.7247 3.90382 128.531" quat="0.0 0.0 1.66893e-006 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh" />
-    <workbench />
-  </entity>
+
   <entity>
     <name name="pared_standard" />
     <transform pos="-6.45715 -8.276 -25.2541" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
@@ -1277,7 +1271,7 @@
 
   <entity>
     <tags tags="AI AI_speedy AI_poss" />
-    <name name="speedy1" />
+    <name name="speedy2" />
     <transform pos="7 4 150" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
     <life points="50" />
@@ -1381,13 +1375,6 @@
     <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
   </entity>
 
-  <entity>
-    <name name="wb_final_zone" />
-    <tags tags="workbench" />
-    <transform pos="6 4 142.7" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh" />
-    <workbench/>
-  </entity>
 
   <!-- VICTORY POINT -->
   <entity>

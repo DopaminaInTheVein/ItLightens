@@ -12,20 +12,23 @@
 
 void CPhysxManager::setFtDynamic()
 {	
-	m_ft_dynamic.word0 = ItLightensFilter::eOBJECT | ItLightensFilter::eALL_OBJECTS;
-	m_ft_dynamic.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
+	m_ft_dynamic.word0 = 0;
+	m_ft_dynamic.word1 = ItLightensFilter::eALL;
+	m_ft_dynamic.word2 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
 }
 
 void CPhysxManager::setFtStatic()
 {
-	m_ft_static.word0 = ItLightensFilter::eSTATIC_OBJECT | ItLightensFilter::eALL_OBJECTS | ItLightensFilter::eALL_STATICS;
-	m_ft_static.word1 = ItLightensFilter::eCOLLISION;
+	m_ft_static.word0 = 0;
+	m_ft_static.word1 = ALL_LESS_STATIC;
+	m_ft_static.word2 = ItLightensFilter::eCOLLISION;
 }
 
 void CPhysxManager::setFtCC()
 {
-	m_ft_cc.word0 = ItLightensFilter::eANYONE | ItLightensFilter::eALL_OBJECTS;
-	m_ft_cc.word1 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
+	m_ft_cc.word0 = 0;
+	m_ft_cc.word1 = ItLightensFilter::eALL;
+	m_ft_cc.word2 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
 }
 
 //#########################################################################################################
@@ -422,7 +425,7 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 
 		
 		PxFilterData fd = pair.otherShape->getQueryFilterData();
-		if (fd.word1 & (ItLightensFilter::eCAN_TRIGGER)) {
+		if (fd.word2 & (ItLightensFilter::eCAN_TRIGGER)) {
 
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_LOST)) {
 				CEntity *e_trigger = CHandle(pair.triggerActor->userData);
@@ -491,6 +494,22 @@ bool CPhysxManager::raycast(PxVec3 origin, PxVec3 end, PxRaycastBuffer& hit, PxQ
 bool CPhysxManager::raycast(VEC3 origin, VEC3 end, PxRaycastBuffer& hit, PxQueryFilterData filterData, const PxHitFlags outputFlags)
 {
 	return raycast(Vec3ToPxVec3(origin), Vec3ToPxVec3(end), hit, filterData, outputFlags);
+}
+
+bool CPhysxManager::raySphere(PxReal radius, PxVec3& start, PxVec3& direction, PxReal distance, PxSweepCallback& hit, PxQueryFilterData filter, PxHitFlags outputflags)
+{
+	PxSphereGeometry sphere;
+	CreateSphereGeometry(radius, sphere);
+	PxTransform transform = PxTransform(start,PxQuat(0,0,0,1));
+
+	bool status = m_pScene->sweep(sphere, transform, direction, distance, hit, outputflags, filter);
+
+	return status;
+}
+
+bool CPhysxManager::raySphere(PxReal radius, VEC3& start, VEC3& direction, PxReal distance, PxSweepCallback& hit, PxQueryFilterData filter, PxHitFlags outputflags)
+{
+	return raySphere(radius, Vec3ToPxVec3(start), Vec3ToPxVec3(direction), distance, hit, filter, outputflags);
 }
 
 #pragma endregion

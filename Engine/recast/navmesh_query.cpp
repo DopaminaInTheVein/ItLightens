@@ -53,7 +53,7 @@ void CNavmeshQuery::updateTool() {
 	if (tool == ETool::FIND_PATH)
 		findPath(p1, p2);
 	else if (tool == ETool::WALL_DISTANCE)
-		wallDistance(p1);
+		wallDistance(p1.p);
 	else if (tool == ETool::RAYCAST)
 		raycast(p1, p2);
 }
@@ -343,7 +343,10 @@ void CNavmeshQuery::findPath(TPos& start, TPos& end) {
 	}
 }
 
-void CNavmeshQuery::wallDistance(TPos& pos) {
+void CNavmeshQuery::wallDistance(VEC3& posNpc) {
+	TPos pos;
+	pos.p = posNpc;
+	pos.set = true;
 	m_distanceToWall = 0;
 	if (pos.set && m_startRef) {
 #ifdef DUMP_REQS

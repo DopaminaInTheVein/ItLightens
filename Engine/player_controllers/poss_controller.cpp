@@ -5,6 +5,7 @@
 #include "components/comp_transform.h"
 #include "components/comp_name.h"
 #include "app_modules\io\io.h"
+#include "components\comp_charactercontroller.h"
 
 extern CHandle player;
 
@@ -71,6 +72,7 @@ void PossController::onSetEnable(bool enabled) {
 	// Componentes y entidades para asignar Controlador y cámara
 	CHandle camera3 = tags_manager.getFirstHavingTag(getID("camera_main"));
 	CHandle hMe = CHandle(getMyEntity());
+	CEntity *eMe = hMe;
 	CEntity* e_camera = camera3;
 
 	if (enabled) {
@@ -81,11 +83,19 @@ void PossController::onSetEnable(bool enabled) {
 		TMsgSetTarget msg3rdController;
 		msg3rdController.target = hMe;
 
-		if (hMe.hasTag("AI_mole"))
+		if (hMe.hasTag("AI_mole")) {
 			msg3rdController.who = MOLE;
+		}
 
-		else if (hMe.hasTag("AI_speedy"))
+		else if (hMe.hasTag("AI_speedy")) {
 			msg3rdController.who = SPEEDY;
+		}
+
+		//set flag of controlled for physx queries and simulation collisions
+		TCompCharacterController* cc = eMe->get<TCompCharacterController>();
+		PxFilterData fd = cc->GetFilterData();
+		fd.word0 = ItLightensFilter::ePLAYER_CONTROLLED;
+		cc->SetFilterData(fd);
 
 		e_camera->sendMsg(msg3rdController);
 		//Set Camera
@@ -106,6 +116,13 @@ void PossController::onSetEnable(bool enabled) {
 		CEntity* eTarget = hTarget;
 		CEntity* eMe = hMe;
 		TCompTransform* tMe = eMe->get<TCompTransform>();
+
+
+		//set flag of possessable for physx queries and simulation collisions
+		TCompCharacterController* cc = eMe->get<TCompCharacterController>();
+		PxFilterData fd = cc->GetFilterData();
+		fd.word0 = ItLightensFilter::ePOSSESSABLE;
+		cc->SetFilterData(fd);
 
 		//Avisar que se ha deshabilitado
 		ChangeState(ST_DISABLED);
