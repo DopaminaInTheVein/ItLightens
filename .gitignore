@@ -13,4 +13,5 @@ bin/Engine.ipdb
 bin/Engine.pdb
 bin/Engined.exp
 bin/Engined.lib
+bin/results.cpuprofile
 Engine/#Verone/
