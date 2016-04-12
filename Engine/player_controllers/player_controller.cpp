@@ -7,10 +7,11 @@
 #include "components/entity.h"
 #include "components/entity_tags.h"
 #include "components/comp_render_static_mesh.h"
+#include "components/comp_msgs.h"
 #include "render\static_mesh.h"
 #include "app_modules\io\io.h"
-#include "components/comp_msgs.h"
-#include "handle/handle.h"
+#include "app_modules\logic_manager\logic_manager.h"
+#include "handle\handle.h"
 #include "ui\ui_interface.h"
 
 #include "components\comp_charactercontroller.h"
@@ -210,6 +211,7 @@ void player_controller::Jumping()
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
 		energyDecreasal(5.0f);
+		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
 	}
 }
@@ -226,6 +228,7 @@ void player_controller::Falling()
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
 		energyDecreasal(5.0f);
+		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
 	}
 
@@ -354,6 +357,7 @@ void player_controller::UpdateInputActions()
 	SetCharacterController();
 	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed())) {
 		pol_state = PLUS;
+		logic_manager->throwEvent(logic_manager->OnChangePolarity, "");
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
 			pol_speed = 0;
@@ -367,6 +371,7 @@ void player_controller::UpdateInputActions()
 	}
 	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed())) {
 		pol_state = MINUS;
+		logic_manager->throwEvent(logic_manager->OnChangePolarity, "");
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
 			pol_speed = 0;
@@ -395,6 +400,7 @@ void player_controller::UpdateInputActions()
 		TMsgAISetStunned msg;
 		msg.stunned = true;
 		ePoss->sendMsg(msg);
+		logic_manager->throwEvent(logic_manager->OnStun, "");
 	}
 	
 
@@ -414,6 +420,7 @@ void player_controller::UpdateActionsTrigger() {
 		if (io->keys['E'].becomesPressed()) {
 			rechargeEnergy();
 			curr_evol = 1;
+			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
 		}
 	}
 
@@ -424,6 +431,7 @@ void player_controller::UpdateActionsTrigger() {
 			SetMyEntity();
 			SetCharacterController();
 			cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(endPointWire));
+			logic_manager->throwEvent(logic_manager->OnUseCable, "");
 		}
 	}
 }
@@ -466,6 +474,8 @@ void player_controller::UpdatePossession() {
 			TCompTransform *t = myEntity->get<TCompTransform>();
 			t->setPosition(VEC3(0, 200, 0));
 			player_curr_speed = 0;
+
+			logic_manager->throwEvent(logic_manager->OnPossess, "");
 		}
 	}
 }

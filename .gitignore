@@ -17,3 +17,4 @@ Engine/#Verone/
 bin/Engined.exp
 bin/Engined.lib
 bin/Settings.cap
+bin/results.cpuprofile

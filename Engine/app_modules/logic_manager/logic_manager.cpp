@@ -154,6 +154,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
 			sprintf(lua_code, "OnUseCable(%f);", 0.5f);
 			break;
 		}
+		case (OnUseGenerator) : {
+			sprintf(lua_code, "OnUseGenerator(%f);", 0.5f);
+			break;
+		}
 		case (OnStun) : {
 			sprintf(lua_code, "OnStun(%f);", 0.5f);
 			break;

@@ -3,6 +3,7 @@
 #include "components\comp_charactercontroller.h"
 #include "components\comp_physics.h"
 #include "components\comp_box.h"
+#include "app_modules\logic_manager\logic_manager.h"
 
 map<string, btnode *> bt_mole::tree = {};
 map<string, btaction> bt_mole::actions = {};
@@ -200,6 +201,7 @@ int bt_mole::actionFollowBoxWpt()
 			}
 			else {
 				ChangePose(pose_box_route);
+				logic_manager->throwEvent(logic_manager->OnPickupBox, "");
 				return OK;
 			}
 		}
@@ -268,6 +270,7 @@ int bt_mole::actionFollowNextBoxLeavepointWpt() {
 				return STAY;
 			}
 			else {
+				logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
 				return OK;
 			}
 		}

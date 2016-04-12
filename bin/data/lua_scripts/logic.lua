@@ -10,7 +10,7 @@ end
 
 --prints the specified text via the VS console
 function dbg( text )
-    p:print( "DBG: "..text )
+    p:print( "DBG: "..text.."\n" )
 end
 
 

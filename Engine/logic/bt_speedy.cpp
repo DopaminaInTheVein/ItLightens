@@ -1,7 +1,8 @@
 #include "mcv_platform.h"
 #include "bt_speedy.h"
 #include "components\comp_charactercontroller.h"
-#include "components/entity_parser.h"
+#include "components\entity_parser.h"
+#include "app_modules\logic_manager\logic_manager.h"
 
 map<string, btnode *> bt_speedy::tree = {};
 map<string, btaction> bt_speedy::actions = {};
