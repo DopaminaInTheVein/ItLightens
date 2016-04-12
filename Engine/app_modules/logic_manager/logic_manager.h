@@ -50,6 +50,7 @@ public:
 		OnBlink,
 		OnBreakWall,
 		OnUseCable,
+		OnUseGenerator,
 		OnStun,
 		OnStunned,
 		OnLiquid,

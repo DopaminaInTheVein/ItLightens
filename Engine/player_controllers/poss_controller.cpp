@@ -5,6 +5,7 @@
 #include "components/comp_transform.h"
 #include "components/comp_name.h"
 #include "app_modules\io\io.h"
+#include "app_modules\logic_manager\logic_manager.h"
 #include "components\comp_charactercontroller.h"
 
 extern CHandle player;
@@ -30,6 +31,7 @@ void PossController::UpdatePossession() {
 			myParent->sendMsg(msg);
 			UpdateUnpossess();
 			onSetEnable(false);
+			logic_manager->throwEvent(logic_manager->OnUnpossess, "");
 		}
 		else {
 			possessionCooldown -= getDeltaTime();

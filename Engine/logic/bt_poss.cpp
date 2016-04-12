@@ -3,6 +3,7 @@
 #include "components\entity.h"
 #include "components\comp_transform.h"
 #include "components\entity_tags.h"
+#include "app_modules\logic_manager\logic_manager.h"
 
 bt_poss::bt_poss() {
 }
@@ -90,6 +91,7 @@ int bt_poss::actionUnpossessing() {
 	stunning = false;
 	stunned = true;
 	____TIMER_RESET_(timeStunt);
+	logic_manager->throwEvent(logic_manager->OnStunned, "");
 	return OK;
 }
 int bt_poss::actionStunt() {
