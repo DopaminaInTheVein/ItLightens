@@ -1,4 +1,14 @@
 <entities>
+
+<!-- Prueba anims -->
+ <entity>
+   <name name="MySkel"/>
+   <transform pos="0 0 -11" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+   <skeleton model="skeletons/papa_pitufo/papa_pitufo.skeleton"/>
+   <render_static_mesh name="skeletons/papa_pitufo/papa_pitufo.static_mesh"/>
+ </entity>
+<!-- Fin prueba anims -->
+
 <entity>
 <tags
    tags=""

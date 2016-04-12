@@ -219,7 +219,7 @@ void CSkeleton::onStartElement(const std::string &elem, MKeyValue &atts) {
 				name.resize(name.size() - 4);
 				int anim_id = core_model->loadCoreAnimation(full_src);
 				assert(anim_id != -1);
-				saveAnimId(src, anim_id);
+				saveAnimId(name, anim_id);
 				assert(anim_id < MAX_NUMBER_ANIMS);
 				core_model->getCoreAnimation(anim_id)->setName(name);
 			}

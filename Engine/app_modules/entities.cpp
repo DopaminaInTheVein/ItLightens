@@ -204,8 +204,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	CEntityParser ep;
-	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
-	//bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
+	//bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH
@@ -228,8 +228,8 @@ bool CEntitiesModule::start() {
 	nav.m_input.computeBoundaries();
 	SBB::postNavmesh("sala1", nav);
 
-	std::thread thre(&CEntitiesModule::recalcNavmesh, this);
-	thre.detach();
+	//std::thread thre(&CEntitiesModule::recalcNavmesh, this);
+	//thre.detach();
 
 	TTagID tagIDcamera = getID("camera_main");
 	TTagID tagIDwall = getID("breakable_wall");
@@ -407,5 +407,5 @@ void CEntitiesModule::recalcNavmesh() {
 	}
 	nav.m_input.computeBoundaries();
 	nav.build();
-	SBB::postNavmesh(nav);
+	//SBB::postNavmesh(nav);
 }
