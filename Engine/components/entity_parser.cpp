@@ -138,7 +138,7 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 		assert(curr_entity.isValid());
 		CEntity* e = curr_entity;
 		new_h.load(atts);
-		if (elem == "rigidbody") {
+		if (elem == "rigidbody" && atts["type_collision"] == "static") {
 			collisionables.push_back(curr_entity);
 		}
 
