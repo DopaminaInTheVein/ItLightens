@@ -70,10 +70,10 @@ VEC3 TCompCharacterController::GetCameraPointFocus() const
 
 void TCompCharacterController::update(float dt)
 {
-	//PROFILE_FUNCTION("update");
+	PROFILE_FUNCTION("update");
 	if (m_active) {
-		RecalcOnGround();
 
+		RecalcOnGround();
 		UpdateFriction(dt);
 		RecalcSpeed(dt);
 		RecalcMovement(dt);
@@ -93,7 +93,7 @@ void TCompCharacterController::update(float dt)
 //recalc actual speed from acceleration
 void TCompCharacterController::RecalcSpeed(float dt)
 {
-
+	PROFILE_FUNCTION("update: speed");
 	//update y speed based on y gravity
 	if (m_affectGravity) {
 		if (!m_OnGround) {
@@ -126,6 +126,7 @@ void TCompCharacterController::RecalcSpeed(float dt)
 //recalc how much have to move from speed
 void TCompCharacterController::RecalcMovement(float dt)
 {
+	PROFILE_FUNCTION("update: movement");
 	//update y speed & accel if controller is on ground
 	if (m_physxOnground) {
 		if (m_speed.y < 0.0f)	m_speed.y = -0.001f;
@@ -170,7 +171,7 @@ void TCompCharacterController::RecalcMovement(float dt)
 
 //apply a friction for the speeds
 void TCompCharacterController::UpdateFriction(float dt) {
-	PROFILE_FUNCTION("update friction adn gravity");
+	PROFILE_FUNCTION("update: friction");
 	//update speeds with friction
 	if (m_speed.x != 0.0f) m_speed.x -= m_speed.x*m_friction*dt;
 	if (m_speed.z != 0.0f) m_speed.z -= m_speed.z*m_friction*dt;
@@ -178,6 +179,7 @@ void TCompCharacterController::UpdateFriction(float dt) {
 
 //apply the calculated movement
 void TCompCharacterController::ApplyPendingMoves(float dt) {
+	PROFILE_FUNCTION("apply moves");
 	std::string toprint = "apply pending moves ";
 	toprint = toprint + name;
 
@@ -185,8 +187,9 @@ void TCompCharacterController::ApplyPendingMoves(float dt) {
 		int i = 0;
 	}
 
-	PROFILE_FUNCTION(name.c_str());
+	
 	if (m_toMove != VEC3(0.0f, 0.0f, 0.0f)) {
+		PROFILE_FUNCTION(name.c_str());
 		PxVec3 moved = PxVec3(m_toMove.x, m_toMove.y, m_toMove.z);
 		m_last_speed = m_pActor->getActor()->getLinearVelocity();
 		m_flagsCollisions = m_pActor->move(moved, 0.0f, dt, m_filterController);
@@ -200,7 +203,7 @@ void TCompCharacterController::ApplyPendingMoves(float dt) {
 //recalc if the controller is on ground
 void TCompCharacterController::RecalcOnGround()
 {
-	PROFILE_FUNCTION("on ground");
+	PROFILE_FUNCTION("recalc: onground");
 	m_lastOnGround = m_OnGround;
 
 	if (m_flagsCollisions & PxControllerFlag::eCOLLISION_DOWN) {
@@ -220,6 +223,7 @@ void TCompCharacterController::RecalcOnGround()
 //update position from render mesh
 void TCompCharacterController::UpdateMeshTransform()
 {
+	PROFILE_FUNCTION("update: transform");
 	PxExtendedVec3 curr_pos = m_pActor->getFootPosition();
 	//PxVec3 up_v = pActor->getUpDirection();	//get rotation
 	CEntity *e = CHandle(this).getOwner();
