@@ -68,16 +68,6 @@
   </entity>
   <!-- fin 1 punto magnetismo -->
 
-<!-- Prueba anims -->
- <entity>
-   <name name="MySkel"/>
-   <transform pos="0 0 -11" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-   <skeleton model="skeletons/pitufo/pitufo.skeleton"/>
-   <render_static_mesh name="skeletons/pitufo/pitufo.static_mesh"/>
- </entity>
-
-<!-- Fin prueba anims -->
-
 <!--test platform joint-->
     <entity>
       <tags tags ="platform platform_kinematic box" />
@@ -1412,7 +1402,23 @@
     <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
   </entity>
 
-
+<!-- Prueba anims -->
+ <entity>
+   <name name="MySkel"/>
+   <transform pos="0 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+   <skeleton model="skeletons/papa_pitufo/papa_pitufo.skeleton"/>
+   <render_static_mesh name="skeletons/papa_pitufo/papa_pitufo.static_mesh"/>
+ </entity>
+ 
+ <entity>
+   <name name="MySkel2"/>
+   <transform pos="1 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+   <skeleton model="skeletons/pitufo/pitufo.skeleton"/>
+   <render_static_mesh name="skeletons/pitufo/pitufo.static_mesh"/>
+ </entity>
+ 
+ <!-- Fin prueba anims -->
+  
   <!-- VICTORY POINT -->
   <entity>
     <name name="win_point" />

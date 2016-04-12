@@ -123,7 +123,6 @@ void CRenderManager::renderAll() {
 			shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
 		}
 
-		it->mesh->render();    // it->mesh->renderSubMesh( it->submesh );
 		if (it->material->tech->usesBones()) {
 			CEntity* e = it->owner.getOwner();
 			assert(e);
@@ -131,6 +130,7 @@ void CRenderManager::renderAll() {
 			assert(comp_skel);
 			comp_skel->uploadBonesToCteShader();
 		}
+		it->mesh->render();    // it->mesh->renderSubMesh( it->submesh );
 
 		prev_it = it;
 		++it;

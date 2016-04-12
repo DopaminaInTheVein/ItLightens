@@ -39,11 +39,11 @@ struct TResources (
 		)
 	),
 
-	fn saveStdMaterial m = (
+	fn saveMaterialTech m technique= (
 		if (m != undefined) then (
 			if classof m != Standardmaterial then (throw "Invalid material recv")
 			local mat_file = createFile (materials_dir + m.name + ".material")
-			format "<material tech=\"textured.tech\">\n" to:mat_file
+			format ("<material tech=\"" + technique + ".tech\">\n") to:mat_file
 			saveTextureSlot mat_file "diffuse" m.diffusemap
 			saveTextureSlot mat_file "specular" m.specularmap
 			format "</material>\n" to:mat_file
@@ -51,6 +51,14 @@ struct TResources (
 		) else (
 			format "WARNING: - - Undefined material ignored!! - -\n"
 		)
+	),
+	
+	fn saveStdMaterial m = (
+		saveMaterialTech m "textured"
+	),
+	
+	fn saveStdMaterialSkel m = (
+		saveMaterialTech m "skin_textured"
 	),
 
 	fn saveMultiMaterial multi_mat = (
@@ -69,6 +77,13 @@ struct TResources (
 			saveMultiMaterial mat
 		) else if classof mat == Standardmaterial then (
 			saveStdMaterial mat
+		) else 
+			throw ("Unsupported material " + ((classof mat) as string))
+	),
+	
+	fn saveMaterialSkel mat = (
+		if classof mat == Standardmaterial then (
+			saveStdMaterialSkel mat
 		) else 
 			throw ("Unsupported material " + ((classof mat) as string))
 	),
@@ -271,7 +286,7 @@ struct TResources (
 			local mat_res_name = "materials/" + mat_name + ".material"
 			format "  <slot mesh=\"%\" material=\"%\" />\n" meshPath mat_res_name to:fsm
 			-- Save material resource
-			saveMaterial m
+			saveMaterialSkel m
 		) catch (
 			close fsm
 			throw()
