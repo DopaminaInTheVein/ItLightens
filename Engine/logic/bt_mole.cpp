@@ -94,6 +94,9 @@ bool bt_mole::load(MKeyValue& atts) {
 
 // actions
 int bt_mole::actionLookForWpt() {
+	if (!SBB::readBool("sala1")) {
+		return STAY;
+	}
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
 	VEC3 initial = transform->getPosition();
@@ -102,6 +105,10 @@ int bt_mole::actionLookForWpt() {
 }
 
 int bt_mole::actionFollowPathToWpt() {
+	if (!SBB::readBool("sala1")) {
+		setCurrent(NULL);
+		return OK;
+	}
 	VEC3 target = fixedWpts[curwpt];
 	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
 		++currPathWpt;
@@ -237,66 +244,66 @@ int bt_mole::actionGrabBox() {
 }
 
 int bt_mole::actionFollowNextBoxLeavepointWpt() {
-		CEntity *e_box = myBox;
-		TCompBox *cbox = e_box->get<TCompBox>();
-		VEC3 leavepos = cbox->GetLeavePoint();
-		CEntity * box = this->getEntityPointer(towptbox);
-		TCompTransform * transformBox = box->get<TCompTransform>();
-		while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
-			++currPathWpt;
-		}
-		if (currPathWpt < totalPathWpt) {
-			leavepos = pathWpts[currPathWpt];
-		}
+	CEntity *e_box = myBox;
+	TCompBox *cbox = e_box->get<TCompBox>();
+	VEC3 leavepos = cbox->GetLeavePoint();
+	CEntity * box = this->getEntityPointer(towptbox);
+	TCompTransform * transformBox = box->get<TCompTransform>();
+	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
+		++currPathWpt;
+	}
+	if (currPathWpt < totalPathWpt) {
+		leavepos = pathWpts[currPathWpt];
+	}
 
-		VEC3 npcPos = transform->getPosition();
-		VEC3 npcFront = transform->getFront();
-		if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, "sala1")) {
+	VEC3 npcPos = transform->getPosition();
+	VEC3 npcFront = transform->getFront();
+	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, "sala1")) {
+		moveFront(speed);
+		return STAY;
+	}
+	else {
+		float distToWPT = squaredDistXZ(leavepos, transform->getPosition());
+		if (!transform->isHalfConeVision(leavepos, deg2rad(5.0f))) {
+			aimToTarget(leavepos);
+			return STAY;
+		}
+		else if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 1.0f) {
 			moveFront(speed);
+			TCompPhysics *enBoxP = box->get<TCompPhysics>();
+			VEC3 posbox = transform->getPosition();
+			posbox.y += 4;
+			enBoxP->setPosition(posbox, transformBox->getRotation());
 			return STAY;
 		}
 		else {
-			float distToWPT = squaredDistXZ(leavepos, transform->getPosition());
-			if (!transform->isHalfConeVision(leavepos, deg2rad(5.0f))) {
-				aimToTarget(leavepos);
-				return STAY;
-			}
-			else if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 1.0f) {
-				moveFront(speed);
-				TCompPhysics *enBoxP = box->get<TCompPhysics>();
-				VEC3 posbox = transform->getPosition();
-				posbox.y += 4;
-				enBoxP->setPosition(posbox, transformBox->getRotation());
-				return STAY;
-			}
-			else {
-				logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
-				return OK;
-			}
+			logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
+			return OK;
 		}
+	}
 }
 
 int bt_mole::actionUngrabBox() {
-		CEntity * enBox = SBB::readHandlesVector("wptsBoxes")[towptbox];
-		CEntity *e_box = myBox;
-		TCompBox *cbox = e_box->get<TCompBox>();
-		VEC3 leavepos = cbox->GetLeavePoint();
-		TCompTransform * enBoxT = enBox->get<TCompTransform>();
-		TCompName * nameBox = enBox->get<TCompName>();
-		VEC3 posLeave = cbox->GetLeavePoint();
-		posLeave.y += 2;
-		TCompPhysics *enBoxP = enBox->get<TCompPhysics>();
-		enBoxP->setKinematic(false);
-		enBoxP->setPosition(posLeave, enBoxT->getRotation());
+	CEntity * enBox = SBB::readHandlesVector("wptsBoxes")[towptbox];
+	CEntity *e_box = myBox;
+	TCompBox *cbox = e_box->get<TCompBox>();
+	VEC3 leavepos = cbox->GetLeavePoint();
+	TCompTransform * enBoxT = enBox->get<TCompTransform>();
+	TCompName * nameBox = enBox->get<TCompName>();
+	VEC3 posLeave = cbox->GetLeavePoint();
+	posLeave.y += 2;
+	TCompPhysics *enBoxP = enBox->get<TCompPhysics>();
+	enBoxP->setKinematic(false);
+	enBoxP->setPosition(posLeave, enBoxT->getRotation());
 
-		SBB::postBool(nameBox->name, false);
-		carryingBox = false;
-		ChangePose(pose_idle_route);
+	SBB::postBool(nameBox->name, false);
+	carryingBox = false;
+	ChangePose(pose_idle_route);
 
-		TMsgLeaveBox msg;
-		myBox.sendMsg(msg);
+	TMsgLeaveBox msg;
+	myBox.sendMsg(msg);
 
-		return OK;
+	return OK;
 }
 
 void bt_mole::_actionBeforePossession() {
