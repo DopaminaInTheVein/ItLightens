@@ -79,6 +79,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:554
 				
 				tr = TResources();
 				tr.exportStaticMesh stMeshPath #(selectedObj)
+				messageBox "Exportado correctamente"
 			) catch (
 				err = "Error exportando static_mesh!"
 				throw()
@@ -108,7 +109,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:554
 		
 		help += "\nRecomedaciones:\n"
 		help += "1) Utilizar mismo nombre para mesh que para static_mesh (a excepción de reutilizar misma geometría con distintas texturas, etc.)\n" 
-		help += "2) Exportar nuevas mallas sólo desde los .max de los objetos sueltos\n"
+		help += "2) Exportar nuevas mallas sólo desde los .max de los objetos sueltos\n(o mallas únicas de un escenario)\n"
 		help += "3) Preguntad lo que sea que no entendáis antes de liarla :P"
 		messageBox help
 	)
@@ -126,26 +127,32 @@ rollout RL_Meshes "IT Lightens!" width:296 height:554
 			setUserProp o "mesh" rMesh
 			setUserProp o "staticMesh" rStMesh
 		)
+		
+		messageBox "Meshes y StaticMeshes modificadas correctamente"
 	)
 	on btnExportSelectedNew pressed do
 	(
 		tr = TResources()
 		tr.exportSelectedNew()
+		messageBox "Operación realizada OK"
 	)
 	on btnRexport pressed do
 	(
 		tr = TResources()
 		tr.rexport()	
+		messageBox "Operación realizada OK"
 	)
 	on btnExportSelected pressed do
 	(
 		tr = TResources()
 		tr.exportSelected()		
+		messageBox "Operación realizada OK"
 	)
 	on btnForceNew pressed  do
 	(
 		tr = TResources()
 		tr.exportSelectedForceNew()		
+		messageBox "Operación realizada OK"
 	)
 )
 CreateDialog RL_Meshes

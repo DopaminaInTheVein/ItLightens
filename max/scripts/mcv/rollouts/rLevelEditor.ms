@@ -60,7 +60,6 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 		selectedObj = obj
 		pckObj.text = selectedObj.name
 		local descriptor = OManager.getDescriptor obj
-		messageBox (descriptor as string)
 		local propList = getEditableProps obj
 		for p in descriptor.getAttributes() do (appendifUnique propList p)
 		ddlProperties.items = propList
@@ -89,10 +88,11 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 	on btnExport pressed do
 	(
 		local xml = _parseLevel()
-		messagebox (xml.parse())
-		local fsm = createFile (scenes_dir + txtExport.text + ".xml")
+		local fileName = (scenes_dir + txtExport.text + ".xml")
+		local fsm = createFile fileName
 		format (xml.parse()) to:fsm
 		close fsm
+		messagebox ("Nivel exportado correctamente: \n(" + fileName + ")")
 	)
 	on ddlProperties selected sel do
 	(

@@ -39,12 +39,24 @@ struct TResources (
 		)
 	),
 
+	fn checkMaterialName mat_name = (
+		tieneEspacios = (findString mat_name " ")
+		tieneAlmohadilla = (findString mat_name "#")
+		if (tieneEspacios != undefined) do (
+			throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+		)
+		if (tieneAlmohadilla != undefined) do (
+			throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+		)
+	),
+	
 	fn saveMaterialTech m technique= (
 		if (m != undefined) then (
 			if classof m != Standardmaterial then (throw "Invalid material recv")
 			local mat_file = createFile (materials_dir + m.name + ".material")
 			format ("<material tech=\"" + technique + ".tech\">\n") to:mat_file
 			saveTextureSlot mat_file "diffuse" m.diffusemap
+			saveTextureSlot mat_file "bump" m.bumpmap
 			saveTextureSlot mat_file "specular" m.specularmap
 			format "</material>\n" to:mat_file
 			close mat_file
@@ -54,7 +66,11 @@ struct TResources (
 	),
 	
 	fn saveStdMaterial m = (
-		saveMaterialTech m "textured"
+		local tech = "textured"
+		if m.bumpMap != undefined then (
+			tech += "_normals"
+		)
+		saveMaterialTech m tech
 	),
 	
 	fn saveStdMaterialSkel m = (
@@ -209,17 +225,11 @@ struct TResources (
 					local meshName = obj.name
 					
 					-- Check material is correct
-					tieneEspacios = (findString mat_name " ")
-					tieneAlmohadilla = (findString mat_name "#")
-					if (tieneEspacios != undefined) do (
-						throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
-					)
-					if (tieneEspacios != undefined) do (
-						throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
-					)
+					checkMaterialName mat_name
 					if not appendifunique used_mats mat_name then (
 						throw ("El obj '" + obj.name + "' uses the same material '" + mat_name + "' with more than one material ids (one is mat_id " + (mat_idx as string ) + "). Please, combine both material id's in a single number.")
 					)
+					
 					
 					-- Save mesh resource
 					-- #(   #(faces_with_mat1) undef undef #(faces_with_mat4) )
@@ -257,36 +267,28 @@ struct TResources (
 		local fsm = createFile staticMeshPath
 		format "<static_mesh>\n" to:fsm
 		
-		--Material de la mesh
-		local m = obj.mat
-		
 		try (
-			--Current material
-			local mat_used = m
+			--Material de la mesh
+			local m = obj.mat
+		
 			if classOf m == MultiMaterial then (
 				throw "No se puede exportar animacion con multimaterial!"
 			)
 						
 			-- Name of mesh and material
-			local mat_name = mat_used.name
+			local mat_name = m.name
 	
 			-- Check material is correct
-			tieneEspacios = (findString mat_name " ")
-			tieneAlmohadilla = (findString mat_name "#")
+			checkMaterialName mat_name
 
-			if (tieneEspacios != undefined) do (
-				throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
-			)
-			if (tieneEspacios != undefined) do (
-				throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
-			)
+			-- Añadimos mesh slot
 			local meshPath =("skeletons/" + nameSkel + "/" + nameSkel + mesh_ext)
-	
-			-- Añadimos mesh slot 
 			local mat_res_name = "materials/" + mat_name + ".material"
 			format "  <slot mesh=\"%\" material=\"%\" />\n" meshPath mat_res_name to:fsm
+			
 			-- Save material resource
 			saveMaterialSkel m
+			
 		) catch (
 			close fsm
 			throw()
