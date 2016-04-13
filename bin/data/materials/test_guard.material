@@ -1,3 +1,4 @@
-<material tech="textured.tech">
-<texture slot="diffuse" name="textures/albedoMap.tga"/>
+<material tech="textured_normals.tech">
+<texture slot="diffuse" name="textures/guarda_albedo_map.dds"/>
+  <texture slot="bump" name="textures/guarda_normal_map_Y_flip.dds"/>
 </material>

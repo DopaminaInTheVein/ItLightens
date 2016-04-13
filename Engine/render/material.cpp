@@ -34,6 +34,9 @@ void CMaterial::onStartElement(const std::string &elem, MKeyValue &atts) {
 		if (type_name == "diffuse") {
 			type_slot = TTextureSlot::DIFFUSE;
 		}
+		else if (type_name == "bump") {
+			type_slot = TTextureSlot::BUMP;
+		}
 		else if (type_name == "specular") {
 			type_slot = TTextureSlot::SPECULAR;
 		}
@@ -58,7 +61,15 @@ bool CMaterial::load(const char* filename) {
 // ----------------------------------------------
 void CMaterial::activateTextures() const {
 	PROFILE_FUNCTION("render material: activate textures");
-	textures[DIFFUSE]->activate(0);
+	
+	for (int i = 0; i < TTextureSlot::COUNT; i++) {
+		if (textures[i]) {
+			if (textures[i] && i > 0) {
+				int i = 0;
+			}
+			textures[i]->activate(i);
+		}
+	}
 }
 
 // ----------------------------------------------

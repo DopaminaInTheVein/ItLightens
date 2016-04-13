@@ -11,6 +11,7 @@ public:
 
 	enum TTextureSlot {
 		DIFFUSE = 0
+		, BUMP
 		, SPECULAR
 		, COUNT
 	};

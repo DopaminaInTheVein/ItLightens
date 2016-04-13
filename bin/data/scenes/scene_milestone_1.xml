@@ -9,7 +9,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/test_guard1.static_mesh"
+   name="static_meshes/test_guard.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -21,11 +21,11 @@
 <entity>
 <transform
    pos="2 0 0"
-   quat="0 0 0 1.0"
+   quat="0 1 0 0"
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/test_guard2.static_mesh"
+   name="static_meshes/test_guard.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -44,7 +44,7 @@
     <tags tags="camera_main" />
     <transform pos="0 0 -25" />
     <name name="camara" />
-    <camera znear="1" zfar="250" fov="60" collision="true" />
+    <camera znear="0.1" zfar="250" fov="60" collision="true" />
     <controller_3rd_person />
   </entity>
 

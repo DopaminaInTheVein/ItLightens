@@ -33,11 +33,11 @@ void CRenderDeferredModule::render() {
     static CCamera camera;
 
     CHandle h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
-    if (h_camera.isValid()) {
-      CEntity* e = h_camera;
-      TCompCamera* comp_cam = e->get<TCompCamera>();
-      camera = *comp_cam;
-    }
+    if (!h_camera.isValid()) return;
+    CEntity* e = h_camera;
+    TCompCamera* comp_cam = e->get<TCompCamera>();
+    camera = *comp_cam;
+	  
 
     // To set a default and known Render State
     Render.ctx->RSSetState(nullptr);
@@ -53,6 +53,11 @@ void CRenderDeferredModule::render() {
       camera.setAspectRatio((float)xres / (float)yres);
 
       shader_ctes_camera.activate(CTE_SHADER_CAMERA_SLOT);
+	  VEC4 vec = comp_cam->getPosition();
+	  shader_ctes_camera.lightvec = float4(1.0f, 1.0f, 1.0f, 0.0f);
+	  shader_ctes_camera.lightcol = float4(0.8f, 0.8f, 0.8f, 1.0f);
+	  shader_ctes_camera.ambientcol = float4(0.1f, 0.1f, 0.1f, 1.0f);
+	  shader_ctes_camera.CamPosition = vec;
       shader_ctes_camera.ViewProjection = camera.getViewProjection();
       shader_ctes_camera.uploadToGPU();
 
@@ -70,6 +75,21 @@ void CRenderDeferredModule::render() {
 
   Render.activateBackBuffer();
   Render.clearMainZBuffer();
+  static CCamera camera;
+  CHandle h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
+  if (!h_camera.isValid()) return;
+  CEntity* e = h_camera;
+  TCompCamera* comp_cam = e->get<TCompCamera>();
+  camera = *comp_cam;
+
+  shader_ctes_camera.activate(CTE_SHADER_CAMERA_SLOT);
+  VEC4 vec = comp_cam->getPosition();
+  shader_ctes_camera.lightvec = float4(1.0f, 1.0f, 1.0f, 0.0f);
+  shader_ctes_camera.lightcol = float4(0.8f, 0.8f, 0.8f, 1.0f);
+  shader_ctes_camera.ambientcol = float4(0.1f, 0.1f, 0.1f, 1.0f);
+  shader_ctes_camera.CamPosition = vec;
+  shader_ctes_camera.ViewProjection = camera.getViewProjection();
+  shader_ctes_camera.uploadToGPU();
 
   // Clear the back buffer 
   float ClearColor[4] = { 0.3f, 0.3f, 0.3f, 1.0f }; // red,green,blue,alpha
