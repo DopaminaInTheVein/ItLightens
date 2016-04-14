@@ -7,6 +7,7 @@
 map<string, btnode *> bt_speedy::tree = {};
 map<string, btaction> bt_speedy::actions = {};
 map<string, btcondition> bt_speedy::conditions = {};
+map<string, btevent> bt_speedy::events = {};
 btnode* bt_speedy::root = nullptr;
 
 void bt_speedy::readIniFileAttr() {
@@ -39,7 +40,8 @@ void bt_speedy::Init() {
 	if (tree.empty()) {
 		addBtPossStates();
 		addChild("possessable", "speedy", PRIORITY, (btcondition)&bt_speedy::npcAvailable, NULL);
-		addChild("speedy", "dash", RANDOM, (btcondition)&bt_speedy::dashReady, NULL);
+		addChild("speedy", "dash_start", DECORATOR_LUA, (btcondition)&bt_speedy::dashReady, logic_manager->OnDash, "PARAMETROS");
+		addChild("dash_start", "dash", RANDOM, NULL, NULL);
 		addChild("dash", "dashNextPoint", ACTION, NULL, (btaction)&bt_speedy::actionDashPoint);
 		addChild("dash", "dashNewPoint", ACTION, NULL, (btaction)&bt_speedy::actionDashNewPoint);
 		addChild("dash", "dashPlayer", ACTION, NULL, (btaction)&bt_speedy::actionDashPlayer);
@@ -56,7 +58,7 @@ void bt_speedy::Init() {
 
 	// dash timer initialization
 	dash_timer = (float)dash_timer_reset;
-	dash_ready = true;
+	dash_ready = false;
 	dash_target = VEC3(0, 0, 0);
 
 	// drop water timer initialization

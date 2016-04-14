@@ -5,11 +5,17 @@
 #include <map>
 #include "btnode.h"
 #include "components/components.h"
+#include "app_modules\logic_manager\logic_manager.h"
 
 using namespace std;
 
 typedef int (bt::*btaction)();
 typedef bool (bt::*btcondition)();
+
+struct btevent {
+	CLogicManagerModule::EVENT evt;
+	string params;
+};
 
 // Implementation of the behavior tree
 // uses the BTnode so both work as a system
@@ -32,6 +38,8 @@ protected:
 	virtual map<string, btaction>* getActions();
 	// the C++ functions that implement conditions
 	virtual map<string, btcondition>* getConditions();
+	// the events that will be executed by the decoratos
+	virtual map<string, btevent>* getEvents();
 
 	virtual btnode** getRoot();
 	btnode *current;
@@ -54,12 +62,15 @@ public:
 
 	btnode *createRoot(string, int, btcondition, btaction); //nombre nodo, tipo nodo, condicion, accion
 	btnode *addChild(string, string, int, btcondition, btaction); // nombre padre, nombre hijo, tipo, cond, accion
+	btnode *addChild(string, string, int, btcondition, CLogicManagerModule::EVENT, string); // nombre padre, nombre hijo, tipo, cond, evento, parametros
 
 	// internals used by btnode and other bt calls
 	void addAction(string, btaction);
 	int execAction(string);
 	void addCondition(string, btcondition);
 	bool testCondition(string);
+	void addEvent(string, btevent);
+	int execEvent(string);
 	void setCurrent(btnode *);
 
 	// call this once per frame to compute the AI. No need to derive this one,

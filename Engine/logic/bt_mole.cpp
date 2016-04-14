@@ -8,6 +8,7 @@
 map<string, btnode *> bt_mole::tree = {};
 map<string, btaction> bt_mole::actions = {};
 map<string, btcondition> bt_mole::conditions = {};
+map<string, btevent> bt_mole::events = {};
 btnode* bt_mole::root = nullptr;
 
 void bt_mole::readIniFileAttr() {
