@@ -125,7 +125,7 @@ fn _parse_trigger = (
 	local onEnter = getUserProp _parsingObject "onEnter"
 
 	-- Exit
-	local onExit = getUserProp _parsingObject "onExit"
+	local onExit = getUserProp _parsingObject "onLeave"
 	
 	-- Script (component)
 	if component != undefined then (
@@ -145,7 +145,7 @@ fn _parse_trigger = (
 		
 		-- Logic trigger on exit
 		if onExit != undefined then (
-			local nameFunc = "onExit" + _parsingObject.name
+			local nameFunc = "onLeave" + _parsingObject.name
 			luaAppend nameFunc onExit
 		)
 		
