@@ -259,7 +259,9 @@ bool TCompPhysics::addRigidbodyScene()
 		m_pActor = g_PhysxManager->CreateAndAddRigidStatic(&curr_pose, m_pShape);
 		m_pShape->release();
 		updateTagsSetupActor(mFilterData);
-		m_pActor->userData = CHandle(this).getOwner().ToVoidPt();
+
+		//save parent handle to physx
+		m_pActor->userData = (void*)CHandle(this).getOwner().asUnsigned();
 		return true;
 	}
 	else if (m_collisionType == DYNAMIC_RB) {
@@ -272,7 +274,9 @@ bool TCompPhysics::addRigidbodyScene()
 		m_pShape->release();
 		m_pRigidActor = m_pActor->isRigidDynamic();
 		updateTagsSetupActor(mFilterData);
-		m_pActor->userData = CHandle(this).getOwner().ToVoidPt();
+
+		//save parent handle to physx
+		m_pActor->userData = (void*)CHandle(this).getOwner().asUnsigned();
 		m_pActor->isRigidBody()->setMass(m_mass);
 		
 		return true;
@@ -283,7 +287,9 @@ bool TCompPhysics::addRigidbodyScene()
 		PxTransform curr_pose = PxTransform(p, q);
 		m_pActor = g_PhysxManager->CreateAndAddTrigger(&curr_pose, m_pShape);
 		m_pShape->release();
-		m_pActor->userData = CHandle(this).getOwner().ToVoidPt();
+
+		//save parent handle to physx
+		m_pActor->userData = (void*)CHandle(this).getOwner().asUnsigned();
 
 		return true;
 	}

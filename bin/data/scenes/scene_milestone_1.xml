@@ -3,6 +3,7 @@
 <!-- Prueba Guarda -->
 
 <entity>
+  <tags tags="test_alpha/"/>
 <transform
    pos="-2 0 0"
    quat="0 0 0 1.0"
