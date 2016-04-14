@@ -15,10 +15,10 @@ public:
 
 	void getPlayer();
 	// generic functions
-	void setPosition(float x, float y, float z);
-	float getX();
-	float getY();
-	float getZ();
+	void setPlayerPosition(float x, float y, float z);
+	float getPlayerX();
+	float getPlayerY();
+	float getPlayerZ();
 };
 
 class SLBPublicFunctions

@@ -1,7 +1,7 @@
 #include "mcv_platform.h"
 #include "slb_public_functions.h"
 #include "components\entity.h"
-#include "components\comp_transform.h"
+#include "components\comp_charactercontroller.h"
 
 void SLBHandle::getPlayer() {
 	VHandles targets = tags_manager.getHandlesByTag(getID("player"));
@@ -10,34 +10,38 @@ void SLBHandle::getPlayer() {
 }
 
 // generic functions
-void SLBHandle::setPosition(float x, float y, float z) {
-	VEC3 new_position(x, y, z);
+void SLBHandle::setPlayerPosition(float x, float y, float z) {
+	getPlayer();
+	const PxVec3 new_position(x, y, z);
 
 	CEntity* entity = real_handle;
-	TCompTransform* entity_transform = entity->get<TCompTransform>();
+	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
 
-	entity_transform->setPosition(new_position);
+	entity_controller->teleport(new_position);
 }
 
-float SLBHandle::getX() {
+float SLBHandle::getPlayerX() {
+	getPlayer();
 	CEntity* entity = real_handle;
-	TCompTransform* entity_transform = entity->get<TCompTransform>();
+	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
 
-	return entity_transform->getPosition().x;
+	return entity_controller->GetPosition().x;
 }
 
-float SLBHandle::getY() {
+float SLBHandle::getPlayerY() {
+	getPlayer();
 	CEntity* entity = real_handle;
-	TCompTransform* entity_transform = entity->get<TCompTransform>();
+	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
 
-	return entity_transform->getPosition().y;
+	return entity_controller->GetPosition().y;
 }
 
-float SLBHandle::getZ() {
+float SLBHandle::getPlayerZ() {
+	getPlayer();
 	CEntity* entity = real_handle;
-	TCompTransform* entity_transform = entity->get<TCompTransform>();
+	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
 
-	return entity_transform->getPosition().z;
+	return entity_controller->GetPosition().z;
 }
 
 // public functions
