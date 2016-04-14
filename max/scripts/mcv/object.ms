@@ -154,7 +154,7 @@ struct OM (
 			-- Tags
 			,#()
 			-- Attributes
-			,#("script")
+			,#("onEnter", "onExit", "component")
 			--Components
 			,#("trigger")
 			--Helpers

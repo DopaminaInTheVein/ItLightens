@@ -90,8 +90,18 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 		local xml = _parseLevel()
 		local fileName = (scenes_dir + txtExport.text + ".xml")
 		local fsm = createFile fileName
-		format (xml.parse()) to:fsm
+		try (
+			format (xml.parse()) to:fsm
+		) catch (
+			close fsm
+			throw()				
+		)
 		close fsm
+		
+		local fLua = createFile (lua_dir + txtExport.text + ".lua")
+		format _lua_code to:fLua
+		close fLua
+		
 		messagebox ("Nivel exportado correctamente: \n(" + fileName + ")")
 	)
 	on ddlProperties selected sel do

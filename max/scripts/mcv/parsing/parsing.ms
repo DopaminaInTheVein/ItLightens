@@ -19,6 +19,8 @@ for f in getParsing do
 _parsingObject = undefined
 _descriptorObject = undefined
 XML_PARSING = undefined
+_lua_code = ""
+
 
 --*******************************************************
 -------------FUNCTIONS-------------------------------------
@@ -53,6 +55,7 @@ fn _parseObject parent = (
 ---------------------------------------------------------------------
 fn _parseLevel = (
 	local xml = XMLNode()
+	_lua_code = ""
 	xml.nombre = "entities"
 	for obj in $* do (
 		_parsingObject = obj

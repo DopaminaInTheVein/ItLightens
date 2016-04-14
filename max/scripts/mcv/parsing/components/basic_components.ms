@@ -75,7 +75,6 @@ fn _parse_camera = (
 -- TRACKER  --
 ----------------------------------------------------------------------
 fn _parse_tracker = (
-	
 	local tracker = undefined
 	
 	-- Busqueda tracker
@@ -88,30 +87,65 @@ fn _parse_tracker = (
 	
 	-- Parseo tracker
 	if tracker != undefined then (
-		xmlTracker = XML_PARSING.addChild "tracker"
-		nspl = numSplines tracker
-	
-		local curPoint = 0
-		local atrPrefix = "point"
-		local atrName = undefined
-		local atrValue	= undefined
-		local tPoint = undefined
-		local tMatrix = undefined
-		local mcv_tmx = undefined
-		-- Por cada Spline
-		for s = 1 to nspl do (
-			--Por cada Vértice
-			for k = 1 to (numknots tracker s) do (
-				tPoint = (getKnotPoint tracker s k)
+		--Creamos copia del tracker
+		tracker = copy tracker
+		
+		try (
+			-- Convert to spline
+			clearSelection()
+			selectMore tracker
+			macros.run "Modifier Stack" "Convert_to_Spline"
+			clearSelection()
+			
+			--Obtenemos longitud
+			local lengths = getSegLengths tracker 1 cum:true
+			local longitud = lengths[lengths.count]
+			
+			-- Ojo resolucion super hard-code!
+			local numDivs =ceil (longitud * 2) -- Cada 0.5m
+			local deltaInterval = ( 1 / numDivs)
+			
+			xmlTracker = XML_PARSING.addChild "tracker"
+			nspl = numSplines tracker
+		
+			-- 
+			local curPoint = 0
+			local atrName = undefined
+			local atrValue	= undefined
+			local tPoint = undefined
+			local tMatrix = undefined
+			local mcv_tmx = undefined
+			-- 
+			local x = 0 -- valor entre 0 y 1 donde evaluar curva
+			while x < 1 do (
+				
+				-- Attribute pos
+				tPoint = interpCurve3D tracker 1 x
 				tMatrix = matrix3 1
 				tMatrix.pos = tPoint
 				mcv_tmx = matrixMax2MCV tMatrix
-				atrName = atrPrefix + (curPoint as string)
+				atrName = "point" + (curPoint as string)
 				atrValue = getTransformPosValue mcv_tmx
 				xmlTracker.addAttr atrName atrValue
+				
+				-- Attribute tangent
+				tPoint = tangentCurve3D tracker 1 x
+				tMatrix = matrix3 1
+				tMatrix.pos = tPoint
+				mcv_tmx = matrixMax2MCV tMatrix
+				atrName = "tangent" + (curPoint as string)
+				atrValue = getTransformPosValue mcv_tmx
+				xmlTracker.addAttr atrName atrValue
+				
+				-- Next
+				x += deltaInterval
 				curPoint += 1
 			)
+		) catch (
+			delete tracker
+			throw()
 		)
+		delete tracker
 	)
 )
 
