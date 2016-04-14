@@ -428,8 +428,16 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 		if (fd.word2 & (ItLightensFilter::eCAN_TRIGGER)) {
 
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_LOST)) {
-				CEntity *e_trigger = CHandle(pair.triggerActor->userData);
-				CEntity *e_active = CHandle(pair.otherActor->userData);
+				CHandle h_active = CHandle();
+				h_active.fromUnsigned(HandleToUlong(pair.otherActor->userData));
+
+				CHandle h_trigger = CHandle();
+				h_trigger.fromUnsigned(HandleToUlong(pair.triggerActor->userData));
+
+				if (!h_trigger.isValid() || !h_active.isValid()) return;
+
+				CEntity *e_trigger = h_trigger;
+				CEntity *e_active = h_active;
 
 				TMsgTriggerOut msg;
 				msg.other = CHandle(e_active);
@@ -439,8 +447,17 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_FOUND)) {
 
 
-				CEntity *e_trigger = CHandle(pair.triggerActor->userData);
-				CEntity *e_active = CHandle(pair.otherActor->userData);
+				CHandle h_active = CHandle();
+				h_active.fromUnsigned(HandleToUlong(pair.otherActor->userData));
+
+				CHandle h_trigger = CHandle();
+				h_trigger.fromUnsigned(HandleToUlong(pair.triggerActor->userData));
+
+				if (!h_trigger.isValid() || !h_active.isValid()) return;
+
+				CEntity *e_trigger = h_trigger;
+				CEntity *e_active = h_active;
+
 				TMsgTriggerIn msg;
 				msg.other = CHandle(e_active);
 				e_trigger->sendMsg(msg);
@@ -580,7 +597,9 @@ PxTransform PhysxConversion::ToPxTransform(const VEC3 & pos, const CQuaternion &
 CHandle PhysxConversion::GetEntityHandle(PxActor & a)
 {
 	if(&a){
-		return CHandle(a.userData);
+		CHandle h;
+		h.fromUnsigned(HandleToUlong(a.userData));
+		return h;
 	}
 	else{
 		return CHandle(); //handle not valid

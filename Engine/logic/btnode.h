@@ -15,12 +15,16 @@ enum {
 	, SEQUENCE
 	, PRIORITY
 	, ACTION
+	, DECORATOR
+	, DECORATOR_LUA
 };
 
 #define RANDOM 0
 #define SEQUENCE 1
 #define PRIORITY 2
 #define ACTION 3
+#define DECORATOR 4
+#define DECORATOR_LUA 5
 
 enum {
 	STAY

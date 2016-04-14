@@ -17,6 +17,7 @@ map<string, bt_guard::KptType> bt_guard::kptTypes = {
 map<string, btnode *> bt_guard::tree = {};
 map<string, btaction> bt_guard::actions = {};
 map<string, btcondition> bt_guard::conditions = {};
+map<string, btevent> bt_guard::events = {};
 btnode* bt_guard::root = nullptr;
 
 TCompTransform * bt_guard::getTransform() {

@@ -27,6 +27,8 @@ protected:
 	virtual map<string, btaction>* getActions();
 	// the C++ functions that implement conditions
 	virtual map<string, btcondition>* getConditions();
+	// the events that will be executed by the decoratos
+	virtual map<string, btevent>* getEvents();
 
 	virtual btnode** getRoot();
 

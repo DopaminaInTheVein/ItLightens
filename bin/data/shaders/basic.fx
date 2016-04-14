@@ -3,6 +3,7 @@
 
 Texture2D txDiffuse : register(t0);
 Texture2D txBump: register(t1);
+Texture2D txSpec: register(t2);
 SamplerState samLinear : register(s0);
 
 //--------------------------------------------------------------------------------------
@@ -134,44 +135,82 @@ VS_N_UV_normals_struct VS_N_UV_normals(
 	in float4 iPos : POSITION
 	, in float3 iNor : NORMAL
 	, in float2 iTex0 : TEXCOORD0
-	, out float3 olightVector: LIGHT
-	, out float3 oViewVec : VIEW
+	, out float3 oLightVec : LIGHTVEC
+	, out float3 oViewVec : VIEWVEC
 	)
 {
-	VS_N_UV_normals_struct output = (VS_N_UV_normals_struct)0;
-	oViewVec = normalize(CamPosition - iPos);
+	VS_N_UV_normals_struct output;
+
 	float4 worldPos = mul(iPos, World);
 	output.Pos = mul(worldPos, ViewProjection);
+
+	oViewVec = normalize(CamPosition - output.Pos);
+	oViewVec = normalize(CamPosition - output.Pos);
+	oLightVec = normalize(lightvec);
+
 	output.Normal = mul(iNor, World);
 	output.Tex = iTex0;
-	olightVector = lightvec;
+
 	return output;
 }
 
 
 //--------------------------------------------------------------------------------------
 float4 PSTextured_normals(VS_N_UV_normals_struct input
-	, in float3 iLightVector : LIGHT
-	, in float3 iViewVec : VIEW
+	, in float3 iLightVec : LIGHTVEC
+	, in float3 iViewVec : VIEWVEC
 	) : SV_Target
 {
 
-	float3 L = iLightVector;
-	//float3 normal = txBump.Sample(samLinear, input.Tex).xyz * 2 - 0.5f;	//range -1 to 1
-	float3 normal = txBump.Sample(samLinear, input.Tex).xyz;	//range -1 to 1
-	normal = 1 - normal;	//¿?
-	float3 ViewDir = normalize(iViewVec);
+	float3 ViewDir = iViewVec;
+	float3 normal = txBump.Sample(samLinear, input.Tex);
+	//return float4(normal,1);
+	//normal = 1 - normal;	//invert values
+	normal = normal*2 - 1.0f;	//range -1 to 1
+	normal = normalize(normal);
+	//return float4(normal, 1);
+
+	float3 LightDir = iLightVec;
+
+
+	float diffIntensity = dot(normal, LightDir);
+
 	float4 color = txDiffuse.Sample(samLinear, input.Tex);
-	float3 LightDir = normalize(L); // L
-	float4 diff = saturate(dot(normal, LightDir)); // diffuse comp.
-	float4 eff = saturate(color * diff);
+	//return float4(color.a, color.a, color.a, color.a);
 
-	float3 Reflect = normalize(4 * diff * normal - LightDir); // R
-	float4 specular = pow(saturate(dot(Reflect, ViewDir)), 8)*0.5f+ eff*0.5f; // R.V^n 
+	float4 color_final = saturate(color*diffIntensity);
 
-	eff.a = 1;
-	float shadow = saturate(diff);
-	//return eff;
-	return   float4(0.1 * color.xyz, 1) + shadow*eff+specular*0.5f;
+	// ambient as base color * 0.1
+	color_final = color_final + color*0.1f;
+
+	
+
+	//specular calulation
+	if (diffIntensity > 0.0f) {
+
+		float3 r = normalize(2 * dot(LightDir, normal) * normal - LightDir);
+		float3 v = normalize(mul(normalize(ViewDir), World));
+
+		
+
+		//float4 SpecularColor = float4(1, 1, 1, 1);
+		float4 SpecularColor = txSpec.Sample(samLinear, input.Tex);
+		//return txSpec.Sample(samLinear, input.Tex);
+
+		float SpecularIntensity = 2.0f;
+		float Shininess = 20;
+
+		float dotProduct = dot(r, v);
+		float4 specular = SpecularIntensity * SpecularColor * max(pow(diffIntensity, Shininess), 0) * length(color);
+		specular.a = color.a;
+
+		color_final = saturate(color_final + specular);
+		//return specular;
+	}
+
+	//transparency as alpha channel
+	color_final.a = color.a;
+
+	return  color_final;
 
 }
