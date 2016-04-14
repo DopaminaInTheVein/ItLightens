@@ -17,6 +17,7 @@ bool CLogicManagerModule::start() {
 
 	// Binds here, if needed
 	bindPublicFunctions(*slb_manager);
+	bindHandle(*slb_manager);
 
 	// load the scripts
 	std::vector<std::string> files_to_load = list_files_recursively(lua_script_folder);
@@ -70,7 +71,8 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
 			break;
 		}
 		case (OnGameEnd) : {
-			sprintf(lua_code, "OnGameEnd(%f);", 0.5f);
+			//sprintf(lua_code, "OnGameEnd(%f);", 0.5f);
+			sprintf(lua_code, "teleportPlayer(%f, %f, %f);", 0.0f, 0.0f, -22.0f);
 			break;
 		}
 		case (OnLevelStart001) : {
@@ -239,5 +241,28 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
 		.param("Text to print")
+		;
+}
+
+void CLogicManagerModule::bindHandle(SLB::Manager& m) {
+	SLB::Class<SLBHandle>("Handle", &m)
+		.comment("Handle class")
+		.constructor()
+		// sets the handle pointer to the player
+		.set("get_player", &SLBHandle::getPlayer)
+		.comment("Sets the handle pointer to the player")
+		// set handle position function
+		.set("set_player_position", &SLBHandle::setPlayerPosition)
+		.comment("Sets the position of the handle")
+		.param("float: x coordinate")
+		.param("float: x coordinate")
+		.param("float: x coordinate")
+		// basic coordinates functions
+		.set("get_player_x", &SLBHandle::getPlayerX)
+		.comment("returns the X coordinate")
+		.set("get_player_y", &SLBHandle::getPlayerY)
+		.comment("returns the Y coordinate")
+		.set("get_player_z", &SLBHandle::getPlayerZ)
+		.comment("returns the Z coordinate")
 		;
 }
