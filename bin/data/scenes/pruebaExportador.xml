@@ -343,6 +343,7 @@
    scale="1.0"
 />
 </entity>
+-->
 <entity>
 <tags
    tags="AI AI_speedy AI_poss"
@@ -374,6 +375,7 @@
    height="1.7"
 />
 </entity>
+<!--
 <entity>
 <tags
    tags="AI AI_guard"

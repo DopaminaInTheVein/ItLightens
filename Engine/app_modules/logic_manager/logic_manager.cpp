@@ -29,23 +29,20 @@ bool CLogicManagerModule::start() {
 
 void CLogicManagerModule::update(float dt) {
 
-	int i = 0;
 	std::vector<int> to_erase;
 
 	// update the timer of each command
-	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ++command_it, ++i) {
+	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ) {
 		command_it->execution_time -= dt;
 
 		if (command_it->execution_time < 0.f) {
 			slb_script.doString(command_it->code);
-			to_erase.push_back(i);
+			command_it = command_queue.erase(command_it);
+		}
+		else {
+			command_it++;
 		}
 	}
-
-	// erase the expired timers
-	for (int position : to_erase)
-		command_queue.erase(command_queue.begin() + position);	
-
 }
 
 void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
@@ -68,7 +65,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
 		case (OnGameStart) : {
 			//sprintf(lua_code, "OnGameStart(%f);", 0.4f);
 			char command_code[64];
-			sprintf(command_code, "dbg('%s');", "TIMER");
+			sprintf(command_code, "dbg('%s');", "TIMER - OGS");
 			sprintf(lua_code, "execCommandTest(\"%s\", %f);", command_code, 5.f);
 			break;
 		}
@@ -77,7 +74,9 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
 			break;
 		}
 		case (OnLevelStart001) : {
-			sprintf(lua_code, "OnLevelStart001(%f);", 0.5f);
+			char command_code[64];
+			sprintf(command_code, "dbg('%s');", "TIMER - OLS");
+			sprintf(lua_code, "execCommandTest(\"%s\", %f);", command_code, 5.f);
 			break;
 		}
 		case (OnZoneStart001) : {

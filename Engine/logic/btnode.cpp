@@ -117,20 +117,26 @@ switch (type)
 		}
 	case DECORATOR:
 		{
-		// run the controller of this node
-		int res = tree->execAction(name);
-		// begin the sequence...the inner node (action) will take care of the sequence
-		// via the "setCurrent" mechanism
-		children[0]->recalc(tree);
+		// if the condition returns true
+		if (tree->testCondition(children[0]->getName()))
+			{
+			// run the controller of this node
+			int res = tree->execAction(name);
+			// go to child
+			children[0]->recalc(tree);
+			}
 		break;
 		}
 	case DECORATOR_LUA:
 		{
-		// run the controller of this node
-		int res = tree->execEvent(name);
-		// begin the sequence...the inner node (action) will take care of the sequence
-		// via the "setCurrent" mechanism
-		children[0]->recalc(tree);
+		// if the condition returns true
+		if (tree->testCondition(children[0]->getName()))
+			{
+			// run the controller of this node
+			int res = tree->execEvent(name);
+			// go to child
+			children[0]->recalc(tree);
+			}
 		break;
 		}
 	}
