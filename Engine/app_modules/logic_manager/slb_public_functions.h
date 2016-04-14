@@ -5,6 +5,21 @@
 #include <conio.h>
 #include <stdio.h>
 #include "logic_manager.h"
+#include "handle\handle.h"
+
+class SLBHandle
+{
+	CHandle real_handle;
+
+public:
+
+	void getPlayer();
+	// generic functions
+	void setPosition(float x, float y, float z);
+	float getX();
+	float getY();
+	float getZ();
+};
 
 class SLBPublicFunctions
 {

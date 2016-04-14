@@ -241,3 +241,26 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("Text to print")
 		;
 }
+
+void CLogicManagerModule::bindHandle(SLB::Manager& m, CHandle handle) {
+	SLB::Class<SLBHandle>("Handle", &m)
+		.comment("Handle class")
+		.constructor()
+		// sets the handle pointer to the player
+		.set("get_player", &SLBHandle::getPlayer)
+		.comment("Sets the handle pointer to the player")
+		// set handle position function
+		.set("set_position", &SLBHandle::setPosition)
+		.comment("Sets the position of the handle")
+		.param("float: x coordinate")
+		.param("float: x coordinate")
+		.param("float: x coordinate")
+		// basic coordinates functions
+		.set("get_x", &SLBHandle::getX)
+		.comment("returns the X coordinate")
+		.set("get_y", &SLBHandle::getY)
+		.comment("returns the Y coordinate")
+		.set("get_z", &SLBHandle::getZ)
+		.comment("returns the Z coordinate")
+		;
+}
