@@ -55,11 +55,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
 			break;
 		}
 		case (OnEnter) : {
-			sprintf(lua_code, "OnEnter(%f);", 0.2f);
+			sprintf(lua_code, "onEnter%s();", params.c_str());
 			break;
 		}
 		case (OnLeave) : {
-			sprintf(lua_code, "OnLeave(%f);", 0.3f);
+			sprintf(lua_code, "OnLeave%s(%f);", params.c_str(), 0.3f);
 			break;
 		}
 		case (OnGameStart) : {

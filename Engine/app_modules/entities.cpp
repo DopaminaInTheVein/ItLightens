@@ -62,6 +62,7 @@ DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
+DECL_OBJ_MANAGER("trigger_lua", TTriggerLua);
 
 CCamera * camera;
 
@@ -78,6 +79,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 
 	getHandleManager<TVictoryPoint>()->init(20);
+	getHandleManager<TTriggerLua>()->init(100);
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(8);
@@ -164,6 +166,10 @@ bool CEntitiesModule::start() {
 	//victory point
 	SUBSCRIBE(TVictoryPoint, TMsgTriggerIn, onTriggerEnterCall);
 
+	//trigger_lua
+	SUBSCRIBE(TTriggerLua, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TTriggerLua, TMsgTriggerOut, onTriggerExitCall);
+
 	//polarized
 	SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgPolarize, onPolarize);
@@ -204,9 +210,10 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	CEntityParser ep;
-	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
+	//bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
 	//bool is_ok = ep.xmlParseFile("data/scenes/scene_test_recast.xml");
 	//bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/test.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH

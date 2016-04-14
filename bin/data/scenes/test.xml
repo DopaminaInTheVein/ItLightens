@@ -107,7 +107,7 @@
 />
 <trigger_lua/>
 <name
-   name="TriggerBox_1"
+   name="TriggerBox1"
 />
 <transform
    pos="-4.22729 5.74774 -1.76611"

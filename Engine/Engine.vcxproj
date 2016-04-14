@@ -116,6 +116,7 @@
     <ClCompile Include="components\comp_polarized.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
+    <ClCompile Include="components\comp_trigger_lua.cpp" />
     <ClCompile Include="components\comp_wire.cpp" />
     <ClCompile Include="components\entity.cpp" />
     <ClCompile Include="components\entity_parser.cpp" />
@@ -486,6 +487,7 @@
     <ClInclude Include="components\comp_tags.h" />
     <ClInclude Include="components\comp_transform.h" />
     <ClInclude Include="components\comp_trigger.h" />
+    <ClInclude Include="components\comp_trigger_lua.h" />
     <ClInclude Include="components\comp_victory_point.h" />
     <ClInclude Include="components\comp_wire.h" />
     <ClInclude Include="components\entity.h" />
