@@ -204,7 +204,7 @@ void player_controller::Jumping()
 	if (cc->GetYAxisSpeed() <= 0.0f)
 		ChangeState("falling");
 
-	if (cc->OnGround()) {
+	if (cc->OnGround() && !(cc->GetYAxisSpeed() >  0.0f)) {
 		ChangeState("idle");
 	}
 
