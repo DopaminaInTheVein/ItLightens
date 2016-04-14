@@ -118,31 +118,48 @@ bool bt_speedy::dashReady() {
 }
 // actions
 int bt_speedy::actionNextWpt() {
+	if (!SBB::readBool("sala1")) {
+		return STAY;
+	}
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
-	bool aimed = aimToTarget(target);
-
-	if (aimed) {
-		ChangePose(pose_run_route);
-		//ChangeState("seekwpt");
-		return OK;
-	}
-	return STAY;
+	VEC3 initial = transform->getPosition();
+	getPath(initial, target, "sala1");
+	return OK;
 }
 
 int bt_speedy::actionSeekWpt() {
-	float distance = squaredDistXZ(fixedWpts[curwpt], transform->getPosition());
-
-	if (abs(distance) > 0.1f) {
+	if (!SBB::readBool("sala1")) {
+		setCurrent(NULL);
+		return OK;
+	}
+	VEC3 target = fixedWpts[curwpt];
+	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
+		++currPathWpt;
+	}
+	if (currPathWpt < totalPathWpt) {
+		target = pathWpts[currPathWpt];
+	}
+	VEC3 npcPos = transform->getPosition();
+	VEC3 npcFront = transform->getFront();
+	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, "sala1")) {
 		moveFront(speed);
 		return STAY;
 	}
+	else if (!transform->isHalfConeVision(target, deg2rad(5.0f))) {
+		aimToTarget(target);
+		return STAY;
+	}
 	else {
-		transform->setPosition(fixedWpts[curwpt]);
-		float distance_to_next_wpt = squaredDist(transform->getPosition(), fixedWpts[(curwpt + 1) % fixedWpts.size()]);
-		curwpt = (curwpt + 1) % fixedWpts.size();
-
-		return OK;
+		float distToWPT = squaredDistXZ(target, transform->getPosition());
+		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
+			moveFront(speed);
+			return STAY;
+		}
+		else {
+			curwpt = (curwpt + 1) % fixedWpts.size();
+			return OK;
+		}
 	}
 }
 

@@ -20,7 +20,7 @@ void CPhysxManager::setFtDynamic()
 void CPhysxManager::setFtStatic()
 {
 	m_ft_static.word0 = 0;
-	m_ft_static.word1 = ALL_LESS_STATIC;
+	m_ft_static.word1 = PXM_ALL_LESS_STATIC;
 	m_ft_static.word2 = ItLightensFilter::eCOLLISION;
 }
 

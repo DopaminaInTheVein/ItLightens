@@ -24,6 +24,7 @@ public:
 		eBOMB 				= (1 << 6),
 		eOBJECT 			= (1 << 7),
 		eSCENE 				= (1 << 8),
+		eBIG_OBJECT			= (1 << 9),
 		eALL				= ~0,
 	};
 

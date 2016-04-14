@@ -219,21 +219,6 @@ bool CEntitiesModule::start() {
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();
 	CNavmesh nav;
-	nav.m_input.clearInput();
-	for (CHandle han : collisionables) {
-		CEntity * e = han;
-		TCompPhysics * p = e->get<TCompPhysics>();
-		PxBounds3 bounds = p->getActor()->getWorldBounds();
-		VEC3 min, max;
-		min.x = bounds.minimum.x;
-		min.y = bounds.minimum.y;
-		min.z = bounds.minimum.z;
-		max.x = bounds.maximum.x;
-		max.y = bounds.maximum.y;
-		max.z = bounds.maximum.z;
-		nav.m_input.addInput(min, max);
-	}
-	nav.m_input.computeBoundaries();
 	SBB::postNavmesh("sala1", nav);
 
 	//std::thread thre(&CEntitiesModule::recalcNavmesh, this);
@@ -311,14 +296,6 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-	static float timeAcumulated = 55.0f;
-	timeAcumulated += getDeltaTime();
-	if (timeAcumulated > 60.0f) {
-		//timeAcumulated = 0.0f;
-		//std::thread t(&CEntitiesModule::recalcNavmesh, this);
-		//t.detach();
-	}
-
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
 	getHandleManager<player_controller_speedy>()->updateAll(dt);
