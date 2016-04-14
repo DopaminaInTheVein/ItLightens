@@ -3,6 +3,7 @@
 <!-- Prueba Guarda -->
 
 <entity>
+  <tags tags="test_alpha/"/>
 <transform
    pos="-2 0 0"
    quat="0 0 0 1.0"
@@ -1295,7 +1296,7 @@
   </entity>
 
   <!-- SPEEDY 7,4,150-->
-
+  <!--
   <entity>
     <tags tags="AI AI_speedy AI_poss" />
     <name name="speedy2" />
@@ -1311,7 +1312,7 @@
       wpt3_pos = " 7  4 142" />
     <character_controller radius ="0.3" height ="0.4"/>
   </entity>
-
+  -->
   <entity>
     <name name="box35" />
     <tags tags="box platform" />

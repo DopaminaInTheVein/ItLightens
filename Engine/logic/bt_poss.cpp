@@ -134,6 +134,9 @@ map<string, btaction>* bt_poss::getActions() {
 map<string, btcondition>* bt_poss::getConditions() {
 	return nullptr;
 }
+map<string, btevent>* bt_poss::getEvents() {
+	return nullptr;
+}
 
 btnode** bt_poss::getRoot() {
 	return nullptr;

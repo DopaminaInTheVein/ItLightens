@@ -73,6 +73,8 @@ class bt_speedy : public bt_poss, public TCompBase {
 	static map<string, btaction> actions;
 	// the C++ functions that implement conditions
 	static map<string, btcondition> conditions;
+	// the events that will be executed by the decoratos
+	static map<string, btevent> events;
 	// tree root
 	static btnode* root;
 
@@ -100,6 +102,10 @@ class bt_speedy : public bt_poss, public TCompBase {
 
 		map<string, btcondition>* getConditions() override {
 			return &conditions;
+		}
+
+		map<string, btevent>* getEvents() override {
+			return &events;
 		}
 
 		btnode** getRoot() override {

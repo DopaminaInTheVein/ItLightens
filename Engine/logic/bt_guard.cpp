@@ -17,6 +17,7 @@ map<string, bt_guard::KptType> bt_guard::kptTypes = {
 map<string, btnode *> bt_guard::tree = {};
 map<string, btaction> bt_guard::actions = {};
 map<string, btcondition> bt_guard::conditions = {};
+map<string, btevent> bt_guard::events = {};
 btnode* bt_guard::root = nullptr;
 
 TCompTransform * bt_guard::getTransform() {
@@ -189,6 +190,8 @@ int bt_guard::actionChase() {
 		return OK;
 	}
 	else {
+		getPath(myPos, posPlayer, "sala1");
+
 		ChangePose(pose_run_route);
 		goTo(posPlayer);
 		return STAY;
@@ -264,6 +267,8 @@ int bt_guard::actionSearch() {
 			return OK;
 		}
 		else {
+			getPath(myPos, noisePoint, "sala1");
+
 			goTo(noisePoint);
 			return STAY;
 		}
@@ -314,6 +319,7 @@ int bt_guard::actionSeekWpt() {
 			return OK;
 		}
 		else {
+			getPath(myPos, dest, "sala1");
 			ChangePose(pose_run_route);
 			goTo(dest);
 			return STAY;
@@ -423,11 +429,30 @@ bool bt_guard::canHear(VEC3 position, float intensity) {
 // -- Go To -- //
 void bt_guard::goTo(const VEC3& dest) {
 	PROFILE_FUNCTION("guard: go to");
-	//avanzar
-	goForward(SPEED_WALK);
-
-	//girar
-	turnTo(dest);
+	if (!SBB::readBool("sala1")) {
+		return;
+	}
+	VEC3 target = dest;
+	VEC3 npcPos = getTransform()->getPosition();
+	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) < 0.5f) {
+		++currPathWpt;
+	}
+	if (currPathWpt < totalPathWpt) {
+		target = pathWpts[currPathWpt];
+	}
+	VEC3 npcFront = getTransform()->getFront();
+	if (needsSteering(npcPos + npcFront, getTransform(), SPEED_WALK, myParent, "sala1")) {
+		goForward(SPEED_WALK);
+	}
+	else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
+		turnTo(target);
+	}
+	else {
+		float distToWPT = squaredDistXZ(target, getTransform()->getPosition());
+		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
+			goForward(SPEED_WALK);
+		}
+	}
 }
 
 // -- Go Forward -- //

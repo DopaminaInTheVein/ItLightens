@@ -115,5 +115,29 @@ switch (type)
 		children[0]->recalc(tree);	
 		break;
 		}
+	case DECORATOR:
+		{
+		// if the condition returns true
+		if (tree->testCondition(children[0]->getName()))
+			{
+			// run the controller of this node
+			int res = tree->execAction(name);
+			// go to child
+			children[0]->recalc(tree);
+			}
+		break;
+		}
+	case DECORATOR_LUA:
+		{
+		// if the condition returns true
+		if (tree->testCondition(children[0]->getName()))
+			{
+			// run the controller of this node
+			int res = tree->execEvent(name);
+			// go to child
+			children[0]->recalc(tree);
+			}
+		break;
+		}
 	}
 }

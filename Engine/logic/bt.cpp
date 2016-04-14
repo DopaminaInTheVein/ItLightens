@@ -55,6 +55,23 @@ btnode *bt::addChild(string parent, string son, int type, btcondition btc, btact
 	return s;
 }
 
+btnode *bt::addChild(string parent, string son, int type, btcondition btc, CLogicManagerModule::EVENT evt, string params)
+{
+	btnode *p = findNode(parent);
+	btnode *s = createNode(son);
+	p->addChild(s);
+	s->setParent(p);
+	s->setType(type);
+	if (btc != NULL) addCondition(son, btc);
+	if (evt != NULL) { 
+		btevent event;
+		event.evt = evt;
+		event.params = params;
+		addEvent(son, event);
+	}
+	return s;
+}
+
 void bt::Recalc()
 {
 	if (current == NULL) (*getRoot())->recalc(this);	// I'm not in a sequence, start from the root
@@ -105,6 +122,31 @@ bool bt::testCondition(string s)
 	return (this->*(*getConditions())[s])();
 }
 
+void bt::addEvent(string s, btevent event)
+{
+	if (getEvents()->find(s) != getEvents()->end())
+	{
+		printf("Error: node %s already has a event\n", s.c_str());
+		return;	// if condition already exists don't insert again...
+	}
+	(*getEvents())[s] = event;
+}
+
+int bt::execEvent(string s)
+{
+	if (getEvents()->find(s) == getEvents()->end())
+	{
+		printf("ERROR: Missing node event for node %s\n", s.c_str());
+	}
+	else 
+	{
+		btevent to_execute = (*getEvents())[s];
+		logic_manager->throwEvent(to_execute.evt, to_execute.params);
+	}
+
+	return OK;
+}
+
 // To be implemented in the subclasses
 map<string, btnode *>* bt::getTree() {
 	return nullptr;
@@ -113,6 +155,9 @@ map<string, btaction>* bt::getActions() {
 	return nullptr;
 }
 map<string, btcondition>* bt::getConditions() {
+	return nullptr;
+}
+map<string, btevent>* bt::getEvents() {
 	return nullptr;
 }
 
