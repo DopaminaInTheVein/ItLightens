@@ -514,6 +514,9 @@
     <ClCompile Include="components\comp_trigger_lua.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_tracker.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1217,6 +1220,9 @@
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_trigger_lua.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tracker.h">
       <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>

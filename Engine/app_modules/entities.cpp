@@ -64,6 +64,9 @@ DECL_OBJ_MANAGER("polarized", TCompPolarized);
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
 DECL_OBJ_MANAGER("trigger_lua", TTriggerLua);
 
+//Tracker
+DECL_OBJ_MANAGER("tracker", TCompTracker);
+
 CCamera * camera;
 
 // The global dict of all msgs
@@ -116,6 +119,9 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompPhysics>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
 
+	//Trackers
+	getHandleManager<TCompTracker>()->init(100);
+
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
@@ -134,6 +140,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
+
+	//Trackers
+	SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);

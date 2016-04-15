@@ -1,8 +1,4 @@
-print('This is lua')
-
-SLB.using( SLB )
-
-function onEnterTriggerBox1()
-	cruza()
+function onEnterTriggerBox_1( )
+cruza();
 end
 

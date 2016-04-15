@@ -15,6 +15,7 @@
 #include "comp_trigger_lua.h"
 #include "comp_platform.h"
 #include "comp_box.h"
+#include "comp_tracker.h"
 
 //Logic
 #include "logic/ai_beacon.h"
