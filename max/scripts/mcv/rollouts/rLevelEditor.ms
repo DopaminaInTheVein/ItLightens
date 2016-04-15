@@ -94,6 +94,7 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 			format (xml.parse()) to:fsm
 		) catch (
 			close fsm
+			DestroyDialog RL_LevelEditor
 			throw()				
 		)
 		close fsm
@@ -117,6 +118,7 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 				messageBox "Debes seleccionar una propiedad!"
 			) else (
 				setUserProp selectedObj ddlProperties.selected txtValue.text 
+				messageBox "Ok!"
 			)
 		)
 	)

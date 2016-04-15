@@ -106,6 +106,7 @@ fn _parse_tracker = (
 			local deltaInterval = ( 1 / numDivs)
 			
 			xmlTracker = XML_PARSING.addChild "tracker"
+			xmlTracker.addAttr "long" longitud
 			nspl = numSplines tracker
 		
 			-- 
@@ -141,6 +142,7 @@ fn _parse_tracker = (
 				x += deltaInterval
 				curPoint += 1
 			)
+			xmlTracker.addAttr "size" curPoint
 		) catch (
 			delete tracker
 			throw()
