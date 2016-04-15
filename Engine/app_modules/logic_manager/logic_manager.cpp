@@ -47,7 +47,7 @@ void CLogicManagerModule::update(float dt) {
 	}
 }
 
-void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
+void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t handle_id) {
 
 	char lua_code[64];
 
@@ -57,7 +57,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
 			break;
 		}
 		case (OnEnter) : {
-			sprintf(lua_code, "OnEnter(%f);", 0.2f);
+			sprintf(lua_code, "OnEnter(\"%s\", %d);", params.c_str(), handle_id);
 			break;
 		}
 		case (OnLeave) : {
@@ -216,7 +216,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
 
 }
 
-void CLogicManagerModule::throwUserEvent(std::string evt, std::string params) {
+void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, uint32_t handle_id) {
 	// construct the lua code using the event and the specified parameters
 	std::string lua_code = evt;
 

@@ -19,6 +19,12 @@
 #define GREEN VEC3(0,1,0)
 #define BLUE VEC3(0,0,1)
 
+/*
+#define ERROR_COLOR ImVec4(1,0,0,1)
+#define DEFAULT_COLOR ImVec4(1,1,1,1)
+#define TAG_COLOR ImVec4(1,1,0,1)
+#define LUA_COLOR ImVec4(0,1,1,1)
+*/
 class CDebug : public IAppModule {
 	struct line {
 	public:
@@ -53,7 +59,6 @@ public:
 
 	CDebug() {}
 	void destroy() { Clear(); }
-
 	void update(float dt) override;
 	void render();
 
@@ -62,7 +67,9 @@ public:
 	
 	void LogRaw(const char* msg, ...) IM_PRINTFARGS(2);
 	void LogError(const char* msg, ...) IM_PRINTFARGS(2);
-	void LogWithTag(const char* tag, const char* msg, ...); IM_PRINTFARGS(3);
+	void LogWithTag(const char* tag, const char* msg, ...);
+	
+	IM_PRINTFARGS(3);
 
 	void setOpen(bool newOpened) { opened = newOpened; }
 	bool isOpen() { return opened; }

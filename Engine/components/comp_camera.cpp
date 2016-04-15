@@ -97,7 +97,10 @@ bool TCompCamera::checkColision(const VEC3 & pos)
 	float dist = c->GetPositionDistance();
 	PxQueryFilterData fd = PxQueryFilterData();
 	
-	fd.data.word0 = NO_PLAYER_CRYSTAL;	//will ignore crystals
+	//fd.data.word0 = PXM_NO_PLAYER_CRYSTAL;	//will ignore crystals
+
+	fd.data.word0 = PXM_CAMERA_COLLISIONS;
+
 	pos_target += c->GetOffset() + VEC3(0, 1.0f, 0);
 
 	//efficient raycast to search if there is some type of vision on the player

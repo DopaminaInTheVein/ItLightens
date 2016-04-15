@@ -63,6 +63,12 @@ DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
 
+DECL_OBJ_MANAGER("box_spawn", TCompBoxSpawner);
+DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
+
+DECL_OBJ_MANAGER("trigger_lua", TCompTriggerStandar);
+
+
 CCamera * camera;
 
 // The global dict of all msgs
@@ -109,6 +115,11 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
+
+	getHandleManager<TCompBoxSpawner>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoxDestructor>()->init(MAX_ENTITIES);
+
+	getHandleManager<TCompTriggerStandar>()->init(MAX_ENTITIES);
 
 	//colliders
 	getHandleManager<TCompPhysics>()->init(MAX_ENTITIES);
@@ -161,6 +172,12 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompGenerator, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TCompGenerator, TMsgTriggerOut, onTriggerExitCall);
 
+	SUBSCRIBE(TCompBoxDestructor, TMsgTriggerIn, onTriggerEnterCall);
+
+	//triggers
+	SUBSCRIBE(TCompTriggerStandar, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TCompTriggerStandar, TMsgTriggerOut, onTriggerExitCall);
+
 	//victory point
 	SUBSCRIBE(TVictoryPoint, TMsgTriggerIn, onTriggerEnterCall);
 
@@ -212,21 +229,6 @@ bool CEntitiesModule::start() {
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();
 	CNavmesh nav;
-	nav.m_input.clearInput();
-	for (CHandle han : collisionables) {
-		CEntity * e = han;
-		TCompPhysics * p = e->get<TCompPhysics>();
-		PxBounds3 bounds = p->getActor()->getWorldBounds();
-		VEC3 min, max;
-		min.x = bounds.minimum.x;
-		min.y = bounds.minimum.y;
-		min.z = bounds.minimum.z;
-		max.x = bounds.maximum.x;
-		max.y = bounds.maximum.y;
-		max.z = bounds.maximum.z;
-		nav.m_input.addInput(min, max);
-	}
-	nav.m_input.computeBoundaries();
 	SBB::postNavmesh("sala1", nav);
 	SBB::postBool("sala1", false);
 
@@ -305,14 +307,6 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-	static float timeAcumulated = 55.0f;
-	timeAcumulated += getDeltaTime();
-	if (timeAcumulated > 60.0f) {
-		//timeAcumulated = 0.0f;
-		//std::thread t(&CEntitiesModule::recalcNavmesh, this);
-		//t.detach();
-	}
-
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
 	getHandleManager<player_controller_speedy>()->updateAll(dt);
@@ -348,6 +342,9 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompPlatform>()->updateAll(dt);
 	getHandleManager<TCompBox>()->updateAll(dt);
+
+	getHandleManager<TCompBoxSpawner>()->updateAll(dt);
+	getHandleManager<TCompBoxDestructor>()->updateAll(dt);
 
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);

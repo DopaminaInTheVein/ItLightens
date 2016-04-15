@@ -69,7 +69,37 @@
   </entity>
   <!-- fin 1 punto magnetismo -->
 
-<!--test platform joint-->
+<!-- test spawn -->
+  <entity>
+    <name name="spawn_box" />
+    <tags tags="spawn_box" />
+    <transform pos="4 0 -22" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/generator.static_mesh" />
+    <box_spawn spawn ="4 -3 -22" />
+    <rigidbody type_collision="static"/>
+  </entity>
+
+  <entity>
+    <name name="spawn_box" />
+    <tags tags="spawn_box" />
+    <transform pos="4 -7 -22" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/generator.static_mesh" />
+    <box_destructor />
+    <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
+  </entity>
+
+  <!-- end test spawn -->
+
+  <entity>
+    <name name="trigger lua 1" />
+    <tags tags="spawn_box" />
+    <transform pos="-4 -7.56 -22" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/generator.static_mesh" />
+    <trigger_lua id="TRIGGER_ZONE_START_TEST" />
+    <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
+  </entity>
+
+  <!--test platform joint-->
     <entity>
       <tags tags ="platform platform_kinematic box" />
       <name name="platform_testing" />

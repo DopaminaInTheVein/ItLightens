@@ -47,6 +47,9 @@ public:
 	void execCommand(const char* exec_code, float exec_time);
 	void print(const char* to_print);
 
+
+	void test(const char* to_print);
+
 };
 
 #endif

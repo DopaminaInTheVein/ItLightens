@@ -168,16 +168,29 @@
   <!-- LOGIC OBJECTS -->
   <!-- ZONE 2 -->
   <entity>
-    <tags tags="AI AI_guard" />
+    <tags tags="AI AI_speedy AI_poss" />
+    <name name="speedy1" />
     <transform pos="-10 4 -10" rotation="1 2 3 3" scale="1 1 1" />
-    <life points="100" />
-    <render_static_mesh name="static_meshes/guard.static_mesh" />
-    <bt_guard
-      kpt_size  = "2"
-      kpt0_type = "seek" kpt0_pos = "10  2   10" kpt0_wait = "0.5"
-      kpt1_type = "seek" kpt1_pos = "-10 2  -10" kpt1_wait = "1"
-      jurisdiction = "0 2 0"
-      jurRadius    = "20" />
+    <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
+    <life points="50" />
+    <player_speedy />
+    <bt_speedy
+      wpts_size = "2"
+      wpt0_pos = "-10  2  -10"
+      wpt1_pos = " 10  2   10" />
+    <character_controller radius ="1.0" height ="1.0" />
+  </entity>
+  <entity>
+    <tags tags="AI AI_speedy AI_poss" />
+    <name name="speedy2" />
+    <transform pos="10 4 10" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
+    <life points="50" />
+    <player_speedy />
+    <bt_speedy
+      wpts_size = "2"
+      wpt0_pos = "-10  2  -10"
+      wpt1_pos = " 10  2   10" />
     <character_controller radius ="1.0" height ="1.0" />
   </entity>
 </entities>

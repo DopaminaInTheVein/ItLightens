@@ -15,6 +15,10 @@ struct TMsgEntityGroupCreated {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgBoxDestroyed {
+	DECLARE_MSG_ID();
+};
+
 struct TMsgLeaveBox {
 	DECLARE_MSG_ID();
 };
