@@ -184,4 +184,8 @@ struct TMsgSetAnim {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgFollow {
+	CHandle follower;
+	DECLARE_MSG_ID();
+};
 #endif

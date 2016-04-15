@@ -130,6 +130,9 @@
 <render_static_mesh
    name="static_meshes/test_cinta.static_mesh"
 />
+<rigidbody
+   type_collision="static"
+/>
 <tracker
    long="21.6863"
    point0="-35.1873 0.551149 33.7684"
@@ -234,7 +237,7 @@
    name="Box_1"
 />
 <transform
-   pos="-34.6638 -0.0131821 33.8342"
+   pos="-34.6638 2.83655 33.8342"
    quat="0 0 0 1.0"
    scale="1.0"
 />

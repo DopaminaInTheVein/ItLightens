@@ -143,6 +143,7 @@ bool CEntitiesModule::start() {
 
 	//Trackers
 	SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);

@@ -5,12 +5,21 @@
 
 #include "comp_msgs.h"
 #include "comp_base.h"
+#include "comp_physics.h"
+#include "comp_transform.h"
+
+struct HandleTrack {
+	CHandle handle;
+	float normalTime;
+};
+typedef std::vector<HandleTrack> VHandleTracks;
 
 struct TCompTracker : public TCompBase {
-
-	VHandles followers;
+	
+	VHandleTracks followers;
 	VEC3 positions[MAX_TRACK_POINTS];
 	VEC3 orientations[MAX_TRACK_POINTS];
+
 	int size;
 	float longitude;
 	float mSpeed = 1.f;
@@ -23,10 +32,12 @@ struct TCompTracker : public TCompBase {
 	//int		mDirection = 1;
 
 	void onCreate(const TMsgEntityCreated&);
+	void setFollower(const TMsgFollow &msg);
 	void update(float elapsed);
+	void updateTrackMovement(TCompPhysics*, TCompTransform*);
 	bool load(MKeyValue& atts);
 	void renderInMenu() {
-		ImGui::Text("I am a platform!!");
+		ImGui::Text("I am a tracker!!");
 	}
 };
 
