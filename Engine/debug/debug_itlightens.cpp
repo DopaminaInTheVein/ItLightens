@@ -72,7 +72,6 @@ void CDebug::LogWithTag(const char * tag, const char * msg, ...)
 		if (Buf[old_size] == '\n')
 			LineOffsets.push_back(old_size);
 	ScrollToBottom = true;
-
 	//visual studio log
 	dbg(Buf.c_str());
 #else
@@ -98,11 +97,13 @@ void CDebug::DrawLog()
 		{
 			const char* buf_begin = Buf.begin();
 			const char* line = buf_begin;
+
 			for (int line_no = 0; line != NULL; line_no++)
 			{
 				const char* line_end = (line_no < LineOffsets.size()) ? buf_begin + LineOffsets[line_no] : NULL;
-				if (Filter.PassFilter(line, line_end))
+				if (Filter.PassFilter(line, line_end)) {
 					ImGui::TextUnformatted(line, line_end);
+				}
 				line = line_end && line_end[1] ? line_end + 1 : NULL;
 			}
 		}

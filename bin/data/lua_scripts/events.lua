@@ -8,12 +8,16 @@ function OnAction( param )
 	p:print( "OnAction: "..param.."\n" )
 end
 
-function OnEnter( param )
-	p:print( "OnEnter: "..param.."\n" )
+function OnEnter( param, handle )
+	p:print( "OnEnter: "..param.."\n" ) 
+	if _G["OnEnter_"..param] then _G["OnEnter_"..param](handle) 
+	else
+		p:print("function OnEnter_"..param.." does not exist!\n")
+	end
 end
 
 function OnLeave( param )
-	p:print( "OnLeave: "..param.."\n" )
+	p:print( "OnLeave: ".. param.."\n" )
 end
 
 function OnGameStart( param )

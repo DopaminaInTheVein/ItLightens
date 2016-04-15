@@ -643,8 +643,10 @@ void player_controller::SendMessagePolarizeState()
 	TMsgPlayerPolarize msg;
 	msg.type = pol_state;
 	VHandles hs = tags_manager.getHandlesByTag(getID("box"));
-	for (CEntity *e : hs) {
-		e->sendMsg(msg);
+	for (CHandle h : hs) {
+		if (h.isValid()) {
+			h.sendMsg(msg);
+		}
 	}
 }
 

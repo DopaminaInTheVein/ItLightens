@@ -200,6 +200,7 @@ CEntity* bt::frontCollisionBOX(VEC3 npcPos, CEntity *  molePursuingBoxi) {
 	TTagID tagIDbox = getID("box");
 	vector<CHandle> colCandidates = tags_manager.getHandlesByTag(tagIDbox);
 	for (CHandle candidateH : colCandidates) {
+		if (!candidateH.isValid()) continue;
 		CEntity * candidateE = candidateH;
 		TCompTransform * candidateT = candidateE->get<TCompTransform>();
 		if ((molePursuingBoxi == nullptr || molePursuingBoxi != candidateE) && realDist(npcPos, candidateT->getPosition()) < 1.5f) {

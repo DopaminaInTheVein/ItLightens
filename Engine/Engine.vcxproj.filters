@@ -1213,6 +1213,15 @@
     <ClInclude Include="components\comp_box.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_box_spawner.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_box_destructor.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_trigger_standar.h">
+      <Filter>components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
