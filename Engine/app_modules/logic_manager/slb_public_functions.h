@@ -7,20 +7,38 @@
 #include "logic_manager.h"
 #include "handle\handle.h"
 
-class SLBHandle
+// player handle control in LUA
+class SLBPlayer
 {
-	CHandle real_handle;
+	CHandle player_handle;
 
 public:
 
+	// player functions
 	void getPlayer();
-	// generic functions
 	void setPlayerPosition(float x, float y, float z);
 	float getPlayerX();
 	float getPlayerY();
 	float getPlayerZ();
 };
 
+// generic handle control in LUA
+class SLBHandle
+{
+	CHandle real_handle;
+
+public:
+
+	// player functions
+	void getHandleById(int id);
+	void getHandleByNameTag(const char* name, const char* tag);
+	void setPosition(float x, float y, float z);
+	float getX();
+	float getY();
+	float getZ();
+};
+
+// public functions
 class SLBPublicFunctions
 {
 public:

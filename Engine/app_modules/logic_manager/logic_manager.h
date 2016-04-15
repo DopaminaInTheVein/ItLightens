@@ -81,6 +81,7 @@ public:
 	void throwEvent(EVENT evt, std::string params);
 	void throwUserEvent(std::string evt, std::string params);
 	void bindPublicFunctions(SLB::Manager& m);
+	void bindPlayer(SLB::Manager& m);
 	void bindHandle(SLB::Manager& m);
 
 };

@@ -17,6 +17,7 @@ bool CLogicManagerModule::start() {
 
 	// Binds here, if needed
 	bindPublicFunctions(*slb_manager);
+	bindPlayer(*slb_manager);
 	bindHandle(*slb_manager);
 
 	// load the scripts
@@ -82,7 +83,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params) {
 			break;
 		}
 		case (OnZoneStart001) : {
-			sprintf(lua_code, "OnZoneStart001(%f);", 0.5f);
+			sprintf(lua_code, "teleportSpeedy('%s', %f, %f, %f);", "speedy1", 0.0f, 0.0f, -22.0f);
 			break;
 		}
 		case (OnZoneEnd001) : {
@@ -244,25 +245,54 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		;
 }
 
-void CLogicManagerModule::bindHandle(SLB::Manager& m) {
-	SLB::Class<SLBHandle>("Handle", &m)
-		.comment("Handle class")
+void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
+	SLB::Class<SLBPlayer>("Player", &m)
+		.comment("Player class")
 		.constructor()
 		// sets the handle pointer to the player
-		.set("get_player", &SLBHandle::getPlayer)
+		.set("get_player", &SLBPlayer::getPlayer)
 		.comment("Sets the handle pointer to the player")
 		// set handle position function
-		.set("set_player_position", &SLBHandle::setPlayerPosition)
-		.comment("Sets the position of the handle")
+		.set("set_position", &SLBPlayer::setPlayerPosition)
+		.comment("Sets the position of the player")
 		.param("float: x coordinate")
 		.param("float: x coordinate")
 		.param("float: x coordinate")
 		// basic coordinates functions
-		.set("get_player_x", &SLBHandle::getPlayerX)
+		.set("get_x", &SLBPlayer::getPlayerX)
 		.comment("returns the X coordinate")
-		.set("get_player_y", &SLBHandle::getPlayerY)
+		.set("get_y", &SLBPlayer::getPlayerY)
 		.comment("returns the Y coordinate")
-		.set("get_player_z", &SLBHandle::getPlayerZ)
+		.set("get_z", &SLBPlayer::getPlayerZ)
+		.comment("returns the Z coordinate")
+		;
+}
+
+void CLogicManagerModule::bindHandle(SLB::Manager& m) {
+	SLB::Class<SLBHandle>("Handle", &m)
+		.comment("Handle class")
+		.constructor()
+		// sets the handle pointer to the handle with the specified id
+		.set("get_handle_by_id", &SLBHandle::getHandleById)
+		.comment("Finds the handle with the specified id")
+		.param("int: handle id")
+		// sets the handle pointer to the handle with the specified name and tag
+		.set("get_handle_by_name_tag", &SLBHandle::getHandleByNameTag)
+		.comment("Finds the handle with the specified name and tag")
+		.param("string: handle name")
+		.param("string: handle tag")
+		// set handle position function
+		.set("set_position", &SLBHandle::setPosition)
+		.comment("Sets the position of the player")
+		.param("float: x coordinate")
+		.param("float: x coordinate")
+		.param("float: x coordinate")
+		// basic coordinates functions
+		.set("get_x", &SLBHandle::getX)
+		.comment("returns the X coordinate")
+		.set("get_y", &SLBHandle::getY)
+		.comment("returns the Y coordinate")
+		.set("get_z", &SLBHandle::getZ)
 		.comment("returns the Z coordinate")
 		;
 }
