@@ -69,7 +69,7 @@
    name="generator_1"
 />
 <transform
-   pos="-7.06226 -2.42848 18.6267"
+   pos="11.5594 2.02489 26.9411"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -91,7 +91,7 @@
    name="trigger_1"
 />
 <transform
-   pos="-7.06226 -2.42848 18.6267"
+   pos="11.5594 2.02489 26.9411"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -256,10 +256,10 @@
    tags=""
 />
 <name
-   name="plus_point_1"
+   name="plus_point_007"
 />
 <transform
-   pos="12.4006 2.34371 23.9412"
+   pos="8.6174 7.61799 15.7685"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -268,12 +268,1263 @@
 />
 <rigidbody
    type_collision="static"
-   type_shape="sphere"
-   radius="1.0"
-   mass="5"
 />
 <polarized
    pol="plus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="plus_point_008"
+/>
+<transform
+   pos="5.56174 7.61799 15.7685"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__plus.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="plus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="plus_point_011"
+/>
+<transform
+   pos="7.03305 7.68928 22.1932"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__plus.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="plus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_1"
+/>
+<transform
+   pos="7.2339 8.67512 10.4399"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_003"
+/>
+<transform
+   pos="8.66602 7.45802 6.84087"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_004"
+/>
+<transform
+   pos="5.32949 7.45802 6.84087"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_005"
+/>
+<transform
+   pos="8.66602 7.45802 2.89794"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_006"
+/>
+<transform
+   pos="5.32949 7.45802 2.89794"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_007"
+/>
+<transform
+   pos="8.66602 10.5532 4.49297"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_008"
+/>
+<transform
+   pos="5.32949 10.5532 4.49297"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_009"
+/>
+<transform
+   pos="8.66602 7.45802 -1.04499"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_010"
+/>
+<transform
+   pos="5.32949 7.45802 -1.04499"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_011"
+/>
+<transform
+   pos="8.66602 10.5532 0.550037"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_012"
+/>
+<transform
+   pos="5.32949 10.5532 0.550037"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_013"
+/>
+<transform
+   pos="8.66602 7.45802 -4.98793"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_014"
+/>
+<transform
+   pos="5.32949 7.45802 -4.98793"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_015"
+/>
+<transform
+   pos="8.66602 10.5532 -3.3929"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_016"
+/>
+<transform
+   pos="5.32949 10.5532 -3.3929"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_017"
+/>
+<transform
+   pos="8.66602 7.45802 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_018"
+/>
+<transform
+   pos="5.32949 7.45802 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_019"
+/>
+<transform
+   pos="8.66602 4.05 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_020"
+/>
+<transform
+   pos="5.32949 4.05 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_021"
+/>
+<transform
+   pos="8.66602 7.45802 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_022"
+/>
+<transform
+   pos="5.32949 7.45802 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_023"
+/>
+<transform
+   pos="8.66602 4.05 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_024"
+/>
+<transform
+   pos="5.32949 4.05 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_025"
+/>
+<transform
+   pos="8.66602 10.4837 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_026"
+/>
+<transform
+   pos="5.32949 10.4837 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_027"
+/>
+<transform
+   pos="5.32949 13.8917 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_028"
+/>
+<transform
+   pos="8.66602 13.8917 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_029"
+/>
+<transform
+   pos="5.32949 13.8917 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_030"
+/>
+<transform
+   pos="8.66602 13.8917 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_031"
+/>
+<transform
+   pos="5.32949 10.4837 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_032"
+/>
+<transform
+   pos="8.66602 10.4837 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_041"
+/>
+<transform
+   pos="8.66602 23.3511 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_042"
+/>
+<transform
+   pos="5.32949 23.3511 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_043"
+/>
+<transform
+   pos="5.32949 26.7592 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_044"
+/>
+<transform
+   pos="8.66602 26.7592 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_045"
+/>
+<transform
+   pos="5.32949 26.7592 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_046"
+/>
+<transform
+   pos="8.66602 26.7592 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_047"
+/>
+<transform
+   pos="5.32949 23.3511 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_048"
+/>
+<transform
+   pos="8.66602 23.3511 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_049"
+/>
+<transform
+   pos="8.66602 29.7849 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_050"
+/>
+<transform
+   pos="5.32949 29.7849 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_051"
+/>
+<transform
+   pos="5.32949 33.1929 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_052"
+/>
+<transform
+   pos="8.66602 33.1929 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_053"
+/>
+<transform
+   pos="5.32949 33.1929 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_054"
+/>
+<transform
+   pos="8.66602 33.1929 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_055"
+/>
+<transform
+   pos="5.32949 29.7849 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_056"
+/>
+<transform
+   pos="8.66602 29.7849 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_057"
+/>
+<transform
+   pos="8.66602 36.2186 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_058"
+/>
+<transform
+   pos="5.32949 36.2186 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_059"
+/>
+<transform
+   pos="5.32949 39.6266 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_060"
+/>
+<transform
+   pos="8.66602 39.6266 -12.8738"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_061"
+/>
+<transform
+   pos="5.32949 39.6266 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_062"
+/>
+<transform
+   pos="8.66602 39.6266 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_063"
+/>
+<transform
+   pos="5.32949 36.2186 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="minus_point_064"
+/>
+<transform
+   pos="8.66602 36.2186 -8.93086"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/minus_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="minus"
 />
 </entity>
 </entities>

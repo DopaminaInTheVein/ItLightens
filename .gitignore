@@ -20,3 +20,4 @@ bin/Settings.cap
 bin/results.cpuprofile
 bin/Engined.exp
 bin/Engined.lib
+*.VC.db

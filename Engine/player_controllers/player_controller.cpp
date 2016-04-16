@@ -269,12 +269,19 @@ VEC3 player_controller::AttractMove(VEC3 point_pos) {
 	
 	SetMyEntity();
 	//point_pos.y += 0.5f;
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
+	TCompCharacterController* cc = myEntity->get<TCompCharacterController>();
+	VEC3 player_position = cc->GetPosition();
 	VEC3 direction = point_pos - player_position;
 	direction.Normalize();
+	float dist = simpleDist(player_position, point_pos);
+	
+	VEC3 force = 50 * direction / (dist + 0.1f);
+
+	//Fuerza hacia arriba más intensa
+	if (force.y >= 0) force.y += force.y;
+
 	//return 50*10*direction/squared(simpleDist(player_position,point_pos));
-	return 50*direction / (simpleDist(player_position, point_pos)/2.0f);
+	return force;
 }
 
 void player_controller::UpdateMoves()
