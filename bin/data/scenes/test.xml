@@ -30,7 +30,7 @@
    name="player_1"
 />
 <transform
-   pos="2.85663 0 14.8022"
+   pos="11.5441 1.97498 26.0956"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -228,7 +228,7 @@
    size="45"
 />
 </entity>
-<entity id = "1">
+<entity>
 <tags
    tags="box platform"
 />
@@ -249,6 +249,31 @@
    type_shape="box"
    size="2.0 1.0 2.0"
    mass="2"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="plus_point_1"
+/>
+<transform
+   pos="12.4006 2.34371 23.9412"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__plus.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="sphere"
+   radius="1.0"
+   mass="5"
+/>
+<polarized
+   pol="plus"
 />
 </entity>
 </entities>

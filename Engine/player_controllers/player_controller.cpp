@@ -268,7 +268,7 @@ VEC3 player_controller::AttractMove(VEC3 point_pos) {
 	PROFILE_FUNCTION("player controller: attract move");
 	
 	SetMyEntity();
-	point_pos.y += 0.5f;
+	//point_pos.y += 0.5f;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 direction = point_pos - player_position;
