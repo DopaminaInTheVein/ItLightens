@@ -34,7 +34,7 @@ struct ObjectDescriptor (
 
 ----------Object Manager -----------------------------------------
 struct OM (
-	hColliders = #("colliderBox","colliderConvex")
+	hColliders = #("colliderBox","colliderConvex","colliderSphere")
 	,hPolarized = #("pol_minus","pol_neutral","pol_plus")
 	,hPatrol = #("patrol_go", "patrol_look")
 	,hNpcs = #("patrol_go", "patrol_look", "jurisdiction", "charController")

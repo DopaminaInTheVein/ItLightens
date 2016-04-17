@@ -1,6 +1,6 @@
-macroScript ExportSkeleton
+macroScript Skeleton
 	category:"_ItLightens!"
-	toolTip:"Export Skeleton"
+	toolTip:"Skeleton"
 (
 	gc();
 	se = TSkeletonsExporter();
