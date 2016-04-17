@@ -13,7 +13,7 @@
 #define PXM_NO_CRYSTAL ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
 #define PXM_NO_PLAYER ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
 #define PXM_ALL_LESS_STATIC ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT
-#define PXM_CAMERA_COLLISIONS ItLightensFilter::eSCENE | ItLightensFilter::eBIG_OBJECT
+#define PXM_CAMERA_COLLISIONS ItLightensFilter::eSCENE | ItLightensFilter::eOBJECT
 
 #define GRAVITY -10.0f
 

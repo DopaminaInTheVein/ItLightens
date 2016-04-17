@@ -471,6 +471,8 @@
     <ClInclude Include="app_modules\logic_manager\slb_public_functions.h" />
     <ClInclude Include="app_modules\render\module_render_deferred.h" />
     <ClInclude Include="camera\camera.h" />
+    <ClInclude Include="components\comp_box_destructor.h" />
+    <ClInclude Include="components\comp_box_spawner.h" />
     <ClInclude Include="components\components.h" />
     <ClInclude Include="components\comp_base.h" />
     <ClInclude Include="components\comp_box.h" />
@@ -489,6 +491,7 @@
     <ClInclude Include="components\comp_tracker.h" />
     <ClInclude Include="components\comp_transform.h" />
     <ClInclude Include="components\comp_trigger.h" />
+    <ClInclude Include="components\comp_trigger_standar.h" />
     <ClInclude Include="components\comp_trigger_lua.h" />
     <ClInclude Include="components\comp_victory_point.h" />
     <ClInclude Include="components\comp_wire.h" />

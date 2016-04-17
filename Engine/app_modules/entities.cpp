@@ -67,6 +67,12 @@ DECL_OBJ_MANAGER("trigger_lua", TTriggerLua);
 //Tracker
 DECL_OBJ_MANAGER("tracker", TCompTracker);
 
+DECL_OBJ_MANAGER("box_spawn", TCompBoxSpawner);
+DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
+
+DECL_OBJ_MANAGER("trigger_lua", TCompTriggerStandar);
+
+
 CCamera * camera;
 
 // The global dict of all msgs
@@ -114,6 +120,11 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
+
+	getHandleManager<TCompBoxSpawner>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoxDestructor>()->init(MAX_ENTITIES);
+
+	getHandleManager<TCompTriggerStandar>()->init(MAX_ENTITIES);
 
 	//colliders
 	getHandleManager<TCompPhysics>()->init(MAX_ENTITIES);
@@ -172,6 +183,12 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller, TMsgCanRec, onCanRec);
 	SUBSCRIBE(TCompGenerator, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TCompGenerator, TMsgTriggerOut, onTriggerExitCall);
+
+	SUBSCRIBE(TCompBoxDestructor, TMsgTriggerIn, onTriggerEnterCall);
+
+	//triggers
+	SUBSCRIBE(TCompTriggerStandar, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TCompTriggerStandar, TMsgTriggerOut, onTriggerExitCall);
 
 	//victory point
 	SUBSCRIBE(TVictoryPoint, TMsgTriggerIn, onTriggerEnterCall);
@@ -341,6 +358,9 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompPlatform>()->updateAll(dt);
 	getHandleManager<TCompBox>()->updateAll(dt);
+
+	getHandleManager<TCompBoxSpawner>()->updateAll(dt);
+	getHandleManager<TCompBoxDestructor>()->updateAll(dt);
 
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);

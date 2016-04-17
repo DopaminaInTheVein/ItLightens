@@ -16,6 +16,8 @@
 #include "comp_platform.h"
 #include "comp_box.h"
 #include "comp_tracker.h"
+#include "comp_box_spawner.h"
+#include "comp_box_destructor.h"
 
 //Logic
 #include "logic/ai_beacon.h"
@@ -25,6 +27,8 @@
 #include "logic/ai_speedy.h"
 #include "logic/ai_guard.h"
 #include "logic/aicontroller.h"
+
+#include "comp_trigger_standar.h"
 
 //controllers
 #include "player_controllers\player_controller.h"

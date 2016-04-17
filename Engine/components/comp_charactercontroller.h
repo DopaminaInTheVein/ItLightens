@@ -128,6 +128,7 @@ public:
 	void AddAccel(const VEC3& direction, float accel = 1.0f);
 	void AddMovement(const VEC3& direction, float speed = 1.0f);
 	void AddImpulse(const VEC3 & impulse);
+	void ChangeSpeed(float speed);
 	void ResetMovement();
 	
 };

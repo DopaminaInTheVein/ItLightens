@@ -15,7 +15,14 @@ end
 
 function teleportPlayer( x, y, z )
 	p:print( "TELEPORT PLAYER.\n" )
+	player = Player()
+	player:set_position(x, y, z)
+end
+
+function teleportSpeedy( name, x, y, z )
+	p:print( "TELEPORT SPEEDY.\n" )
 	handle = Handle()
-	handle:set_player_position(x, y, z)
+	handle:get_handle_by_name_tag(name, "AI_speedy")
+	handle:set_position(x, y, z)
 end
 

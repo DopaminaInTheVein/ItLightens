@@ -171,6 +171,9 @@ public:
 	//output messages
 	void SendMessagePolarizeState();
 
+	//Gets
+	string GetPolarity();
+
 	//Overload function for handler_manager
 	player_controller& player_controller::operator=(player_controller arg) { return arg; }
 };

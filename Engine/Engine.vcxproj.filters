@@ -1222,6 +1222,15 @@
     <ClInclude Include="components\comp_trigger_lua.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_box_spawner.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_box_destructor.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_trigger_standar.h">
+      <Filter>components</Filter>
+    </ClInclude>
     <ClInclude Include="components\comp_tracker.h">
       <Filter>components</Filter>
     </ClInclude>

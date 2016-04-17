@@ -257,7 +257,8 @@ void player_controller::RecalcAttractions()
 			}
 			//Otherwise, continue adding extra forces
 			else {
-				forces += PolarityForce(force.point, pol_state == force.pol);			}
+				forces += PolarityForce(force.point, pol_state == force.pol);
+			}
 		}
 
 		//float drag = getDeltaTime();
@@ -277,7 +278,14 @@ void player_controller::RecalcAttractions()
 		if (forces.y < rangeYMaxModifier && forces.y > rangeYminModifier) forces.y = valueYModifier;
 		forces.y = (forces.y * percentTrickY) + (forceYreal * (1- percentTrickY));
 
-		if (!pol_orbit_prev) cc->ResetMovement();
+		if (!pol_orbit_prev) {
+			//cc->ResetMovement();
+			cc->ChangeSpeed(.1f);
+		}
+
+	}
+	else {
+		forces = (lastForces * 0.95f) + (forces * 0.05f);
 	}
 
 	//Smooth forces
@@ -301,15 +309,20 @@ VEC3 player_controller::PolarityForce(VEC3 point_pos, bool atraction) {
 	//point_pos.y += 0.5f;
 	TCompCharacterController* cc = myEntity->get<TCompCharacterController>();
 	VEC3 player_position = cc->GetPosition();
-	float dist = simpleDist(player_position, point_pos);
+	float dist = realDist(player_position, point_pos);
 
 	VEC3 force = VEC3(0, 0, 0);
 
 	// Suficiente cerca?
 	if (dist < distMax) {
 		VEC3 direction = point_pos - player_position;
+		// Si la direccion es bastante horizontal, lo acentuamos más
+		if (direction.y < 0.35f) {
+			direction.x *= 2;
+			direction.z *= 2;
+		}
 		direction.Normalize();
-		force = 100 * direction / (dist + 0.01f);
+		force = 100 * direction / ((dist) + 0.01f);
 	}
 
 	// Atraccion -> Si cerca, orbitar
@@ -318,7 +331,7 @@ VEC3 player_controller::PolarityForce(VEC3 point_pos, bool atraction) {
 	}
 	//Repulsion -> Invertimos fuerza
 	else {
-		force = -force;
+		force = -force * 2;
 	}
 
 	return force;
@@ -402,50 +415,63 @@ void player_controller::UpdateInputActions()
 {
 	PROFILE_FUNCTION("update input actions");
 	SetCharacterController();
-	string pol_to_lua = "";
 	pol_orbit = false;
-	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed())) {
-		pol_state = PLUS;
-		pol_to_lua = "plus";
-		if (!affectPolarized && force_points.size() != 0) {
-			affectPolarized = true;
-			pol_speed = 0;
-			//cc->SetGravity(false);
-		}
-		else if (affectPolarized && force_points.size() == 0) {
-			affectPolarized = false;
-			//cc->SetGravity(true);
-		}
-		RecalcAttractions();
-	}
-	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed())) {
-		pol_state = MINUS;
-		pol_to_lua = "minus";
-		if (!affectPolarized && force_points.size() != 0) {
-			affectPolarized = true;
-			pol_speed = 0;
-			//cc->SetGravity(false);
-		}
-		else if (affectPolarized && force_points.size() == 0) {
-			affectPolarized = false;
-			//cc->SetGravity(true);
-		}
+	if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
+		if (pol_state == PLUS) pol_state = NEUTRAL;
+		else pol_state = PLUS;
+		//pol_to_lua = "plus";
 
-		RecalcAttractions();
-		
+		//if (!affectPolarized && force_points.size() != 0) {
+		//	affectPolarized = true;
+		//	pol_speed = 0;
+		//	//cc->SetGravity(false);
+		//}
+		//else if (affectPolarized && force_points.size() == 0) {
+		//	affectPolarized = false;
+		//	//cc->SetGravity(true);
+		//}
+		//RecalcAttractions();
 	}
+	else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
+		if (pol_state == MINUS) pol_state = NEUTRAL;
+		else pol_state = MINUS;
+		//pol_to_lua = "minus";
+
+		//if (!affectPolarized && force_points.size() != 0) {
+		//	affectPolarized = true;
+		//	pol_speed = 0;
+		//	//cc->SetGravity(false);
+		//}
+		//else if (affectPolarized && force_points.size() == 0) {
+		//	affectPolarized = false;
+		//	//cc->SetGravity(true);
+		//}
+
+		//RecalcAttractions();
+	}
+
+	if (pol_state == NEUTRAL) affectPolarized = false;
 	else {
-		pol_state = NEUTRAL;
-		pol_to_lua = "neutral";
-		if (affectPolarized) {
-			affectPolarized = false;
-			//cc->SetGravity(true);
-		}
+		affectPolarized = (force_points.size() != 0);
+		RecalcAttractions();
 	}
+
 	cc->SetGravity(!pol_orbit);
 	
 	//Event onChangePolarity to LogicManager 
 	if (pol_state != pol_state_prev) {
+		string pol_to_lua = "";
+		switch (pol_state) {
+		case PLUS:
+			pol_to_lua = "plus";
+			break;
+		case MINUS:
+			pol_to_lua = "minus";
+			break;
+		case NEUTRAL:
+			pol_to_lua = "neutral";
+			break;
+		}
 		logic_manager->throwEvent(logic_manager->OnChangePolarity, pol_to_lua);
 		pol_state_prev = pol_state;
 	}
@@ -704,9 +730,24 @@ void player_controller::SendMessagePolarizeState()
 	TMsgPlayerPolarize msg;
 	msg.type = pol_state;
 	VHandles hs = tags_manager.getHandlesByTag(getID("box"));
-	for (CEntity *e : hs) {
-		e->sendMsg(msg);
+	for (CHandle h : hs) {
+		if (h.isValid()) {
+			h.sendMsg(msg);
+		}
 	}
+}
+
+//Gets
+string player_controller::GetPolarity() {
+	string res = "Neutral";
+	switch (pol_state) {
+	case PLUS:
+		res = "Plus (RED)";
+		break;
+	case MINUS:
+		res = "Minus (BLUE)";
+	}
+	return res;
 }
 
 map<string, statehandler>* player_controller::getStatemap() {
