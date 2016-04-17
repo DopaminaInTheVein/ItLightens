@@ -94,7 +94,7 @@ class player_controller : public CPlayerBase {
 	float	POL_INERTIA					= 0.95f;
 	float	POL_SPEED_ORBITA			= 0.2f;
 	float	POL_ATRACTION_ORBITA		= 1.f;
-	float	POL_LEAVING					= 1.f;
+	float	POL_NO_LEAVING_FORCE		= 0.8f;
 
 
 	TCompRenderStaticMesh*	actual_render			= nullptr;

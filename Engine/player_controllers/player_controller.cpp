@@ -294,11 +294,11 @@ void player_controller::RecalcAttractions()
 			bool movementApplied = false;
 			if (movementPlayer.x != 0) {
 				if (std::signbit(movementPlayer.x) != std::signbit(forceReal.x)) {
-					movementAtraction.x = -movementPlayer.x * POL_LEAVING;
+					movementAtraction.x = -movementPlayer.x * POL_NO_LEAVING_FORCE;
 					movementApplied = true;
 				}
 				if (std::signbit(movementPlayer.z) != std::signbit(forceReal.z)) {
-					movementAtraction.z = -movementPlayer.z * POL_LEAVING;
+					movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE;
 					movementApplied = true;
 				}
 				if (movementApplied) {
@@ -785,7 +785,7 @@ void player_controller::renderInMenu() {
 	ImGui::SliderFloat("Inertia", &POL_INERTIA, 0.f, 0.99f);
 	ImGui::SliderFloat("Speed When Enter Orbita", &POL_SPEED_ORBITA, 0.f, 10.f);
 	ImGui::SliderFloat("Force Atraction Factor in Orbita", &POL_ATRACTION_ORBITA, 0.f, 5.f);
-	ImGui::SliderFloat("Factor allowing leave", &POL_LEAVING, 0.f, 2.f);
+	ImGui::SliderFloat("Factor allowing leave", &POL_NO_LEAVING_FORCE, 0.f, 1.5f);
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
 
