@@ -250,6 +250,10 @@ void player_controller::RecalcAttractions()
 		else if (pol_state != force.pol) forces -= AttractMove(force.point);
 	}
 
+	//Ayudita si la fuerza es hacia arriba
+	if (forces.y > 0) forces.y += forces.y;
+	if (forces.y < 0) forces.y = 0;
+
 	SetCharacterController();
 	//forces.Normalize();
 
@@ -278,7 +282,7 @@ VEC3 player_controller::AttractMove(VEC3 point_pos) {
 	VEC3 force = 50 * direction / (dist + 0.1f);
 
 	//Fuerza hacia arriba más intensa
-	if (force.y >= 0) force.y += force.y;
+	//if (force.y >= 0) force.y += force.y;
 
 	//return 50*10*direction/squared(simpleDist(player_position,point_pos));
 	return force;
@@ -362,9 +366,10 @@ void player_controller::UpdateInputActions()
 {
 	PROFILE_FUNCTION("update input actions");
 	SetCharacterController();
+	string pol_to_lua = "";
 	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed())) {
 		pol_state = PLUS;
-		logic_manager->throwEvent(logic_manager->OnChangePolarity, "");
+		pol_to_lua = "plus";
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
 			pol_speed = 0;
@@ -378,7 +383,7 @@ void player_controller::UpdateInputActions()
 	}
 	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed())) {
 		pol_state = MINUS;
-		logic_manager->throwEvent(logic_manager->OnChangePolarity, "");
+		pol_to_lua = "minus";
 		if (!affectPolarized && force_points.size() != 0) {
 			affectPolarized = true;
 			pol_speed = 0;
@@ -394,12 +399,19 @@ void player_controller::UpdateInputActions()
 	}
 	else {
 		pol_state = NEUTRAL;
+		pol_to_lua = "neutral";
 		if (affectPolarized) {
 			affectPolarized = false;
 			//cc->SetGravity(true);
 		}
 	}
 	
+	//Event onChangePolarity to LogicManager 
+	if (pol_state != pol_state_prev) {
+		logic_manager->throwEvent(logic_manager->OnChangePolarity, pol_to_lua);
+		pol_state_prev = pol_state;
+	}
+
 	if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado

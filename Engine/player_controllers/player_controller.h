@@ -89,6 +89,7 @@ class player_controller : public CPlayerBase {
 
 	int						curr_evol				= 0;
 	int						pol_state				= 0;
+	int						pol_state_prev			= 0;
 	int						last_pol_state			= 0;
 
 	bool					affectPolarized			= false;
