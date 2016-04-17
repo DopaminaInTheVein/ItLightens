@@ -349,6 +349,11 @@ void TCompCharacterController::AddMovement(const VEC3& direction, float speed) {
 	m_toMove += direction*speed;
 }
 
+void TCompCharacterController::ResetMovement()
+{
+	m_accel = VEC3(0,0,0);
+	m_speed = VEC3(0,0,0);
+}
 
 #pragma endregion
 

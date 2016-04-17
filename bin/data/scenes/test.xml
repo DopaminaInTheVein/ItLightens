@@ -1527,4 +1527,26 @@
    pol="minus"
 />
 </entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="plus_point_1"
+/>
+<transform
+   pos="6.75357 0.555001 21.8596"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__plus.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<polarized
+   pol="plus"
+/>
+</entity>
 </entities>

@@ -91,6 +91,8 @@ class player_controller : public CPlayerBase {
 	int						pol_state				= 0;
 	int						pol_state_prev			= 0;
 	int						last_pol_state			= 0;
+	bool					pol_orbit				= false;
+	bool					pol_orbit_prev			= false;
 
 	bool					affectPolarized			= false;
 
@@ -134,7 +136,7 @@ class player_controller : public CPlayerBase {
 	void SetCharacterController();
 
 	void RecalcAttractions();
-	VEC3 AttractMove(VEC3 point_pos);
+	VEC3 PolarityForce(VEC3 point_pos, bool atraction);
 	//--------------------------------------------------------------------
 
 

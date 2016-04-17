@@ -241,50 +241,86 @@ void player_controller::Falling()
 void player_controller::RecalcAttractions()
 {
 	PROFILE_FUNCTION("player controller: recalc attraction");
-	if (pol_state == NEUTRAL) return;	//check if polarized is neutral, no effect
-	VEC3 forces = VEC3(0,0,0);
+	VEC3 forces = VEC3(0, 0, 0);
+	SetCharacterController();
 
-	for (auto force : force_points) {		//sum of all forces
-		if (force.pol == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
-		if(pol_state == force.pol) forces += AttractMove(force.point);
-		else if (pol_state != force.pol) forces -= AttractMove(force.point);
+	if (pol_state != NEUTRAL) {
+		bool nearForceFound = false;
+		for (auto force : force_points) {		//sum of all forces
+			if (force.pol == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
+
+			VEC3 localForce = PolarityForce(force.point, pol_state == force.pol);
+			// The first near force discard previous found forces
+			if (!nearForceFound && pol_orbit) {
+				nearForceFound = true;
+				forces = localForce;
+			}
+			//Otherwise, continue adding extra forces
+			else {
+				forces += PolarityForce(force.point, pol_state == force.pol);			}
+		}
+
+		//float drag = getDeltaTime();
+		//float drag_i = 1 - drag;
+		//pol_speed = drag_i*pol_speed + drag*player_max_speed;
 	}
 
-	//Ayudita si la fuerza es hacia arriba
-	if (forces.y > 0) forces.y += forces.y;
-	if (forces.y < 0) forces.y = 0;
+	//Check if player is orbiting
+	if (pol_orbit) {
+		float forceYreal = forces.y;
+		forces = VEC3(1, 1, 1) / forces;
+		float percentTrickY = 0.95f;
+		float rangeYminModifier = -0.2f;
+		float rangeYMaxModifier = -0.1f;
+		float valueYModifier = -0.1f;
 
-	SetCharacterController();
-	//forces.Normalize();
+		if (forces.y < rangeYMaxModifier && forces.y > rangeYminModifier) forces.y = valueYModifier;
+		forces.y = (forces.y * percentTrickY) + (forceYreal * (1- percentTrickY));
 
+		if (!pol_orbit_prev) cc->ResetMovement();
+	}
 
-	//float drag = getDeltaTime();
-	//float drag_i = 1 - drag;
-	//pol_speed = drag_i*pol_speed + drag*player_max_speed;
+	//Smooth forces
+	//forces = (lastForces * 0.95f) + (forces * 0.05f);
 
-	forces = (lastForces + forces) / 2;	//smooth change of forces
-	lastForces = forces;
+	//if (forces.y > 0) forces.y += forces.y;
+	
 	cc->AddSpeed(forces*getDeltaTime());
+	lastForces = forces;
 	//cc->AddImpulse(forces);
 }
 
-VEC3 player_controller::AttractMove(VEC3 point_pos) {
+VEC3 player_controller::PolarityForce(VEC3 point_pos, bool atraction) {
 	PROFILE_FUNCTION("player controller: attract move");
 	
+	//Esto deberian ser ctes o variables del punto de magnetismo
+	float distMax = 5.f;
+	float distOrbit = 2.f;
+
 	SetMyEntity();
 	//point_pos.y += 0.5f;
 	TCompCharacterController* cc = myEntity->get<TCompCharacterController>();
 	VEC3 player_position = cc->GetPosition();
-	VEC3 direction = point_pos - player_position;
-	direction.Normalize();
 	float dist = simpleDist(player_position, point_pos);
-	
-	VEC3 force = 50 * direction / (dist + 0.1f);
 
-	//Fuerza hacia arriba más intensa
-	//if (force.y >= 0) force.y += force.y;
+	VEC3 force = VEC3(0, 0, 0);
 
-	//return 50*10*direction/squared(simpleDist(player_position,point_pos));
+	// Suficiente cerca?
+	if (dist < distMax) {
+		VEC3 direction = point_pos - player_position;
+		direction.Normalize();
+		force = 100 * direction / (dist + 0.01f);
+	}
+
+	// Atraccion -> Si cerca, orbitar
+	if (atraction) {
+		pol_orbit = pol_orbit || (dist < distOrbit);
+	}
+	//Repulsion -> Invertimos fuerza
+	else {
+		force = -force;
+	}
+
 	return force;
 }
 
@@ -367,6 +403,7 @@ void player_controller::UpdateInputActions()
 	PROFILE_FUNCTION("update input actions");
 	SetCharacterController();
 	string pol_to_lua = "";
+	pol_orbit = false;
 	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed())) {
 		pol_state = PLUS;
 		pol_to_lua = "plus";
@@ -405,6 +442,7 @@ void player_controller::UpdateInputActions()
 			//cc->SetGravity(true);
 		}
 	}
+	cc->SetGravity(!pol_orbit);
 	
 	//Event onChangePolarity to LogicManager 
 	if (pol_state != pol_state_prev) {
@@ -426,6 +464,10 @@ void player_controller::UpdateInputActions()
 	if (last_pol_state != pol_state) {
 		last_pol_state = pol_state;
 		SendMessagePolarizeState();
+	}
+	if (pol_orbit_prev != pol_orbit) {
+		pol_orbit_prev = pol_orbit;
+		//Logic Manager, extra behaviour/animation ...?
 	}
 
 	UpdateActionsTrigger();
