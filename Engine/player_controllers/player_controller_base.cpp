@@ -56,11 +56,12 @@ void CPlayerBase::update(float elapsed) {
 	if (controlEnabled) {
 		bool alive = !checkDead();
 		if (alive) {
+			UpdateMoves();
 			UpdateInputActions();
 		}
 		Recalc();
 		if (alive) {
-			UpdateMoves();
+			//UpdateMoves();
 			myUpdate();
 			update_msgs();
 		}

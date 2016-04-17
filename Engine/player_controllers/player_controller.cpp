@@ -266,9 +266,12 @@ void player_controller::RecalcAttractions()
 		//pol_speed = drag_i*pol_speed + drag*player_max_speed;
 	}
 
+	//Orbiting force
+	//VEC3 forceOrbita = VEC3(1, 1, 1) / forces;
+
 	//Check if player is orbiting
 	if (pol_orbit) {
-		float forceYreal = forces.y;
+		VEC3 forceReal = forces;
 		forces = VEC3(1, 1, 1) / forces;
 		float percentTrickY = 0.95f;
 		float rangeYminModifier = -0.2f;
@@ -276,16 +279,37 @@ void player_controller::RecalcAttractions()
 		float valueYModifier = -0.1f;
 
 		if (forces.y < rangeYMaxModifier && forces.y > rangeYminModifier) forces.y = valueYModifier;
-		forces.y = (forces.y * percentTrickY) + (forceYreal * (1- percentTrickY));
+		forces.y = (forces.y * percentTrickY) + (forceReal.y * (1- percentTrickY));
+		forces *= POL_ATRACTION_ORBITA;
 
 		if (!pol_orbit_prev) {
 			//cc->ResetMovement();
-			cc->ChangeSpeed(.1f);
+			cc->ChangeSpeed(POL_SPEED_ORBITA);
+		}
+		else {
+			//Playing trying to go away?
+			forceReal.Normalize();
+			VEC3 movementPlayer = cc->GetMovement();
+			VEC3 movementAtraction = VEC3(0,0,0);
+			bool movementApplied = false;
+			if (movementPlayer.x != 0) {
+				if (std::signbit(movementPlayer.x) != std::signbit(forceReal.x)) {
+					movementAtraction.x = -movementPlayer.x * POL_LEAVING;
+					movementApplied = true;
+				}
+				if (std::signbit(movementPlayer.z) != std::signbit(forceReal.z)) {
+					movementAtraction.z = -movementPlayer.z * POL_LEAVING;
+					movementApplied = true;
+				}
+				if (movementApplied) {
+					cc->AddMovement(movementAtraction);
+				}
+			}
 		}
 
 	}
 	else {
-		forces = (lastForces * 0.95f) + (forces * 0.05f);
+		forces = (lastForces * POL_INERTIA) + (forces * (1-POL_INERTIA));
 	}
 
 	//Smooth forces
@@ -302,8 +326,8 @@ VEC3 player_controller::PolarityForce(VEC3 point_pos, bool atraction) {
 	PROFILE_FUNCTION("player controller: attract move");
 	
 	//Esto deberian ser ctes o variables del punto de magnetismo
-	float distMax = 5.f;
-	float distOrbit = 2.f;
+	float distMax = POL_RADIUS;
+	float distOrbit = POL_RADIUS_STRONG;
 
 	SetMyEntity();
 	//point_pos.y += 0.5f;
@@ -317,12 +341,12 @@ VEC3 player_controller::PolarityForce(VEC3 point_pos, bool atraction) {
 	if (dist < distMax) {
 		VEC3 direction = point_pos - player_position;
 		// Si la direccion es bastante horizontal, lo acentuamos más
-		if (direction.y < 0.35f) {
+		if (direction.y < POL_HORIZONTALITY) {
 			direction.x *= 2;
 			direction.z *= 2;
 		}
 		direction.Normalize();
-		force = 100 * direction / ((dist) + 0.01f);
+		force = POL_INTENSITY * direction / ((dist) + 0.01f);
 	}
 
 	// Atraccion -> Si cerca, orbitar
@@ -331,7 +355,7 @@ VEC3 player_controller::PolarityForce(VEC3 point_pos, bool atraction) {
 	}
 	//Repulsion -> Invertimos fuerza
 	else {
-		force = -force * 2;
+		force = -force * POL_REPULSION;
 	}
 
 	return force;
@@ -748,6 +772,21 @@ string player_controller::GetPolarity() {
 		res = "Minus (BLUE)";
 	}
 	return res;
+}
+
+//Render In Menu
+void player_controller::renderInMenu() {
+	ImGui::Text("Editable values (polarity):\n");
+	ImGui::SliderFloat("Radius Influence", &POL_RADIUS, 1.f, 10.f);
+	ImGui::SliderFloat("Radius Strong Influence", &POL_RADIUS_STRONG, 1.f, 10.f);
+	ImGui::SliderFloat("Horizontality Influence", &POL_HORIZONTALITY, 0.f, 1.f);
+	ImGui::SliderFloat("Intensity Influence", &POL_INTENSITY, 1.f, 500.f);
+	ImGui::SliderFloat("Repulsion Factor", &POL_REPULSION, 0.f, 5.f);
+	ImGui::SliderFloat("Inertia", &POL_INERTIA, 0.f, 0.99f);
+	ImGui::SliderFloat("Speed When Enter Orbita", &POL_SPEED_ORBITA, 0.f, 10.f);
+	ImGui::SliderFloat("Force Atraction Factor in Orbita", &POL_ATRACTION_ORBITA, 0.f, 5.f);
+	ImGui::SliderFloat("Factor allowing leave", &POL_LEAVING, 0.f, 2.f);
+	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
 
 map<string, statehandler>* player_controller::getStatemap() {

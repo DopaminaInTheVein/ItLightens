@@ -85,6 +85,18 @@ class player_controller : public CPlayerBase {
 	CHandle					pose_run;
 	CHandle					pose_jump;
 
+	//Polarity Constants
+	float	POL_RADIUS					= 5.f;
+	float	POL_RADIUS_STRONG			= 2.f;
+	float	POL_HORIZONTALITY			= 0.35f;
+	float	POL_INTENSITY				= 100.f;
+	float	POL_REPULSION				= 2.f;
+	float	POL_INERTIA					= 0.95f;
+	float	POL_SPEED_ORBITA			= 0.2f;
+	float	POL_ATRACTION_ORBITA		= 1.f;
+	float	POL_LEAVING					= 1.f;
+
+
 	TCompRenderStaticMesh*	actual_render			= nullptr;
 
 	int						curr_evol				= 0;
@@ -173,6 +185,9 @@ public:
 
 	//Gets
 	string GetPolarity();
+
+	//Render In Menu
+	void renderInMenu();
 
 	//Overload function for handler_manager
 	player_controller& player_controller::operator=(player_controller arg) { return arg; }
