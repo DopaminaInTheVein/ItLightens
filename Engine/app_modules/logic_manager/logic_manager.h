@@ -36,6 +36,7 @@ public:
 		OntTimerStart,
 
 		OnPlayerDead,
+		OnGuardAttack,
 		OnInterruptHit,
 		OnStartReceiveHit,
 		OnEndReceiveHit,

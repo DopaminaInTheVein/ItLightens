@@ -41,6 +41,7 @@ class bt_guard : public TCompBase, public bt
 	float CONE_VISION;
 	float SPEED_ROT;
 	float DAMAGE_LASER;
+	float MAX_REACTION_TIME;
 	//from bombs
 	float reduce_factor;
 	float t_reduceStats_max;
@@ -84,6 +85,8 @@ class bt_guard : public TCompBase, public bt
 	VEC3 noisePoint;
 	bool noiseHeard = false;
 	bool playerLost = false;
+	bool player_detected_start = false;
+	float reaction_time = -1.0f;
 
 	//Correa
 	VEC3 jurCenter;
@@ -130,6 +133,7 @@ public:
 	bool guardAlerted();
 	//actions
 	int actionStunned();
+	int actionReact();
 	int actionChase();
 	int actionAbsorb();
 	int actionShootWall();

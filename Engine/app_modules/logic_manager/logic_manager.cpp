@@ -103,6 +103,12 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 			sprintf(lua_code, "OnPlayerDead(%f);", 0.5f);
 			break;
 		}
+
+		case (OnGuardAttack) : {
+			sprintf(lua_code, "OnGuardAttack(%f);", 0.5f);
+			break;
+		}
+
 		case (OnInterruptHit) : {
 			sprintf(lua_code, "OnInterruptHit(%f);", 0.5f);
 			break;

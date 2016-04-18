@@ -28,6 +28,7 @@
 		"dist_sound_detection" : 400,
 		"SPEED_ROT" : 100,
 		"CONE_VISION" : 60,
+		"MAX_REACTION_TIME" : 5,
 		"reduce_factor" : 3.0,
 		"t_reduceStats_max" : 15,
 		"t_reduceStats" : 0.0

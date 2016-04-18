@@ -64,6 +64,7 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(SPEED_ROT, fields);
 			SPEED_ROT = deg2rad(SPEED_ROT);
 			assignValueToVar(DAMAGE_LASER, fields);
+			assignValueToVar(MAX_REACTION_TIME, fields);
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
@@ -88,6 +89,8 @@ void bt_guard::Init()
 		// insert all states in the map
 		createRoot("guard", PRIORITY, NULL, NULL);
 		addChild("guard", "stunned", ACTION, (btcondition)&bt_guard::playerStunned, (btaction)&bt_guard::actionStunned);
+		//addChild("guard", "attack_decorator", DECORATOR, (btcondition)&bt_guard::playerDetected, (btaction)&bt_guard::actionReact);
+		//addChild("attack_decorator", "attack", PRIORITY, NULL, NULL);
 		addChild("guard", "attack", PRIORITY, (btcondition)&bt_guard::playerDetected, NULL);
 		addChild("attack", "chase", ACTION, (btcondition)&bt_guard::playerOutOfReach, (btaction)&bt_guard::actionChase);
 		addChild("attack", "absorbsequence", SEQUENCE, NULL, NULL);
@@ -169,6 +172,31 @@ int bt_guard::actionStunned() {
 			timerStunt -= getDeltaTime();
 		return STAY;
 	}
+}
+
+int bt_guard::actionReact() {
+	PROFILE_FUNCTION("guard: actionreact");
+	if (!myParent.isValid()) return false;
+	
+	if (!player_detected_start) {
+		// starting the reaction time decorator
+		player_detected_start = true;
+		reaction_time = rand() % (int)MAX_REACTION_TIME;
+		// calling OnGuardAttackEvent
+		logic_manager->throwEvent(logic_manager->OnGuardAttack, "");
+	}
+
+	// stay in this state until the reaction time is over
+	if (reaction_time < 0.f) {
+		player_detected_start = false;
+		return OK;
+	}
+	else {
+		if (reaction_time > -1)
+			reaction_time -= getDeltaTime();
+		return STAY;
+	}
+
 }
 
 int bt_guard::actionChase() {

@@ -28,6 +28,10 @@ function OnGameEnd( param )
 	p:print( "OnGameEnd: "..param.."\n" )
 end
 
+function OnGuardAttack( reaction_time )
+	p:print( "OnGuardAttack: "..reaction_time.."\n" )
+end
+
 function OnLevelStart001( param )
 	p:print( "OnLevelStart001: "..param.."\n" )
 end
