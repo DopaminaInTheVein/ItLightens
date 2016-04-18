@@ -242,23 +242,21 @@ void player_controller::RecalcAttractions()
 {
 	PROFILE_FUNCTION("player controller: recalc attraction");
 	VEC3 forces = VEC3(0, 0, 0);
+	VEC3 orbitPoint;
 	SetCharacterController();
 
 	if (pol_state != NEUTRAL) {
-		bool nearForceFound = false;
 		for (auto force : force_points) {		//sum of all forces
 			if (force.pol == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
 
 			VEC3 localForce = PolarityForce(force.point, pol_state == force.pol);
 			// The first near force discard previous found forces
-			if (!nearForceFound && pol_orbit) {
-				nearForceFound = true;
+			if (pol_orbit) {
 				forces = localForce;
+				orbitPoint = force.point;
+				break;
 			}
-			//Otherwise, continue adding extra forces
-			else {
-				forces += PolarityForce(force.point, pol_state == force.pol);
-			}
+			else forces += localForce;
 		}
 
 		//float drag = getDeltaTime();
@@ -271,6 +269,10 @@ void player_controller::RecalcAttractions()
 
 	//Check if player is orbiting
 	if (pol_orbit) {
+		TCompTransform * t = myEntity->get<TCompTransform>();
+		VEC3 posPlayer = t->getPosition();
+		float dist = realDist(posPlayer, orbitPoint);
+		float nearFactor = (1.f - (dist / POL_RADIUS_STRONG));
 		VEC3 forceReal = forces;
 		forces = VEC3(1, 1, 1) / forces;
 		float percentTrickY = 0.95f;
@@ -287,20 +289,39 @@ void player_controller::RecalcAttractions()
 			cc->ChangeSpeed(POL_SPEED_ORBITA);
 		}
 		else {
-			//Playing trying to go away?
+
+			//Player moving?
 			forceReal.Normalize();
 			VEC3 movementPlayer = cc->GetMovement();
-			VEC3 movementAtraction = VEC3(0,0,0);
+			VEC3 movementAtraction = VEC3(0, 0, 0);
 			bool movementApplied = false;
-			if (movementPlayer.x != 0) {
-				if (std::signbit(movementPlayer.x) != std::signbit(forceReal.x)) {
-					movementAtraction.x = -movementPlayer.x * POL_NO_LEAVING_FORCE;
-					movementApplied = true;
+			float moveAmoung = movementPlayer.LengthSquared();
+			if (moveAmoung > 0.f) {
+				//Playing trying to go away?
+				if (movementPlayer.x != 0) {
+					if (std::signbit(movementPlayer.x) != std::signbit(forceReal.x)) {
+						movementAtraction.x = -movementPlayer.x * POL_NO_LEAVING_FORCE * nearFactor;
+						movementApplied = true;
+					}
+					if (std::signbit(movementPlayer.z) != std::signbit(forceReal.z)) {
+						movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE * nearFactor;
+						movementApplied = true;
+					}
 				}
-				if (std::signbit(movementPlayer.z) != std::signbit(forceReal.z)) {
-					movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE;
-					movementApplied = true;
+				//Playing getting closer?
+				bool gettingCloser = false;
+				if (abs(movementPlayer.x) > abs(movementPlayer.z)) {
+					gettingCloser = (std::signbit(movementPlayer.x) == std::signbit(forceReal.x));
 				}
+				else {
+					gettingCloser = (std::signbit(movementPlayer.z) == std::signbit(forceReal.z));
+				}
+
+				//Getting closer -> player up a little
+				if (gettingCloser) {
+					forces.y += POL_ORBITA_UP_EXTRA_FORCE;
+				}
+
 				if (movementApplied) {
 					cc->AddMovement(movementAtraction);
 				}
@@ -786,6 +807,8 @@ void player_controller::renderInMenu() {
 	ImGui::SliderFloat("Speed When Enter Orbita", &POL_SPEED_ORBITA, 0.f, 10.f);
 	ImGui::SliderFloat("Force Atraction Factor in Orbita", &POL_ATRACTION_ORBITA, 0.f, 5.f);
 	ImGui::SliderFloat("Factor allowing leave", &POL_NO_LEAVING_FORCE, 0.f, 1.5f);
+	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_ORBITA_UP_EXTRA_FORCE, 0.01f, 5.f);
+	
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
 
