@@ -89,9 +89,8 @@ void bt_guard::Init()
 		// insert all states in the map
 		createRoot("guard", PRIORITY, NULL, NULL);
 		addChild("guard", "stunned", ACTION, (btcondition)&bt_guard::playerStunned, (btaction)&bt_guard::actionStunned);
-		//addChild("guard", "attack_decorator", DECORATOR, (btcondition)&bt_guard::playerDetected, (btaction)&bt_guard::actionReact);
-		//addChild("attack_decorator", "attack", PRIORITY, NULL, NULL);
-		addChild("guard", "attack", PRIORITY, (btcondition)&bt_guard::playerDetected, NULL);
+		addChild("guard", "attack_decorator", DECORATOR, (btcondition)&bt_guard::playerDetected, (btaction)&bt_guard::actionReact);
+		addChild("attack_decorator", "attack", PRIORITY, NULL, NULL);
 		addChild("attack", "chase", ACTION, (btcondition)&bt_guard::playerOutOfReach, (btaction)&bt_guard::actionChase);
 		addChild("attack", "absorbsequence", SEQUENCE, NULL, NULL);
 		addChild("absorbsequence", "absorb", ACTION, NULL, (btaction)&bt_guard::actionAbsorb);
@@ -607,6 +606,15 @@ void bt_guard::shootToPlayer() {
 			if (h.hasTag("player")) {
 				damage = true;
 			}
+			else if (h.hasTag("box")) {
+				CEntity* box = h;
+				dbg("Disparando a caja %s!\n", box->getName());
+				TCompBox* box_component = box->get<TCompBox>();
+				if (box_component->isRemovable()) {
+					dbg("Caja %s es apartable!\n", box->getName());
+					removeBox(h);
+				}
+			}
 		}
 	}
 
@@ -631,6 +639,12 @@ void bt_guard::shootToPlayer() {
 		float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 		Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), posPlayer - myPos, distRay, RED);
 	}
+}
+
+void bt_guard::removeBox(CHandle box_handle) {
+	CEntity* box = box_handle;
+	TCompPhysics* box_physx = box->get<TCompPhysics>();
+	box_physx->AddForce(VEC3(rand() % 100, rand() % 100, rand() % 100));
 }
 
 // -- Jurisdiction -- //

@@ -111,6 +111,7 @@ class bt_guard : public TCompBase, public bt
 	//Raycast
 	bool rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit);
 	void shootToPlayer();
+	void removeBox(CHandle box_handle);
 
 	bool stunned;
 
