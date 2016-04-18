@@ -70,6 +70,7 @@
   <!-- fin 1 punto magnetismo -->
 
 <!-- test spawn -->
+  <!--
   <entity>
     <name name="spawn_box" />
     <tags tags="spawn_box" />
@@ -87,6 +88,7 @@
     <box_destructor />
     <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
   </entity>
+  -->
 
   <!-- end test spawn -->
 
