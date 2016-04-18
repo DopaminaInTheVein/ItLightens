@@ -30,7 +30,7 @@ class player_controller : public CPlayerBase {
 		NEUTRAL = 0,
 		MINUS,
 		PLUS,
-	};
+	}; const string polarize_name[3] = {"neutral", "minus", "plus" };
 	//--------------------------------------------------------------------
 
 	//internal struct

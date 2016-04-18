@@ -464,35 +464,10 @@ void player_controller::UpdateInputActions()
 	if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
 		if (pol_state == PLUS) pol_state = NEUTRAL;
 		else pol_state = PLUS;
-		//pol_to_lua = "plus";
-
-		//if (!affectPolarized && force_points.size() != 0) {
-		//	affectPolarized = true;
-		//	pol_speed = 0;
-		//	//cc->SetGravity(false);
-		//}
-		//else if (affectPolarized && force_points.size() == 0) {
-		//	affectPolarized = false;
-		//	//cc->SetGravity(true);
-		//}
-		//RecalcAttractions();
 	}
 	else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
 		if (pol_state == MINUS) pol_state = NEUTRAL;
 		else pol_state = MINUS;
-		//pol_to_lua = "minus";
-
-		//if (!affectPolarized && force_points.size() != 0) {
-		//	affectPolarized = true;
-		//	pol_speed = 0;
-		//	//cc->SetGravity(false);
-		//}
-		//else if (affectPolarized && force_points.size() == 0) {
-		//	affectPolarized = false;
-		//	//cc->SetGravity(true);
-		//}
-
-		//RecalcAttractions();
 	}
 
 	if (pol_state == NEUTRAL) affectPolarized = false;
@@ -505,18 +480,7 @@ void player_controller::UpdateInputActions()
 	
 	//Event onChangePolarity to LogicManager 
 	if (pol_state != pol_state_prev) {
-		string pol_to_lua = "";
-		switch (pol_state) {
-		case PLUS:
-			pol_to_lua = "plus";
-			break;
-		case MINUS:
-			pol_to_lua = "minus";
-			break;
-		case NEUTRAL:
-			pol_to_lua = "neutral";
-			break;
-		}
+		string pol_to_lua = polarize_name[pol_state];
 		logic_manager->throwEvent(logic_manager->OnChangePolarity, pol_to_lua);
 		pol_state_prev = pol_state;
 	}
