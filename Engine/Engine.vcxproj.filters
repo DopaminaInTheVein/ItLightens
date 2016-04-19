@@ -1234,6 +1234,9 @@
     <ClInclude Include="components\comp_tracker.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="logic\damage.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">

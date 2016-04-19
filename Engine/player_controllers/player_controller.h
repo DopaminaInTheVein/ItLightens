@@ -12,6 +12,8 @@
 
 #include "player_controller_base.h"
 
+#include "logic/damage.h"
+
 template< class TObj >
 class CObjectManager;
 class CHandle;
@@ -75,6 +77,10 @@ class player_controller : public CPlayerBase {
 	float					jump_energy;
 	float					stun_energy;
 
+	//Damages
+	float					dmg_water;
+	float					dmg_absorbed;
+
 	//possesion handles
 	CHandle					currentPossessable;
 	CHandle					currentStunable;
@@ -98,6 +104,9 @@ class player_controller : public CPlayerBase {
 	float	POL_ORBITA_UP_EXTRA_FORCE	= 1.f;
 	float	POL_REAL_FORCE_Y_ORBITA		= 0.05f;
 
+	//Damage Fonts Actived
+	float damageCurrent = 0.f;
+	int damageFonts[Damage::SIZE] = { 0 };
 
 	TCompRenderStaticMesh*	actual_render			= nullptr;
 
@@ -181,6 +190,7 @@ public:
 	void onWirePass(const TMsgWirePass& msg);
 	void onCanRec(const TMsgCanRec& msg);
 	void onPolarize(const TMsgPolarize& msg);
+	void onSetDamage(const TMsgDamageSpecific& msg);
 
 	//output messages
 	void SendMessagePolarizeState();

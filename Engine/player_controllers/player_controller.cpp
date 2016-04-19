@@ -47,7 +47,6 @@ void player_controller::readIniFileAttr() {
 			assignValueToVar(init_life, fields_player);
 			assignValueToVar(jump_energy, fields_player);
 			assignValueToVar(stun_energy, fields_player);
-
 		}
 	}
 }
@@ -725,6 +724,41 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 	}else{
 		TForcePoint newForce = TForcePoint(msg.origin, msg.pol);
 		force_points.push_back(newForce);
+	}
+}
+
+void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
+	CEntity* eMe = CHandle(this).getOwner();
+
+	assert(eMe);
+	Damage::DMG_TYPE type = msg.type;
+
+	int signDamage = msg.actived ? 1 : -1;
+
+	//Damage Once
+	float dmgOnce = DMG_ONCE(type);
+	if ( abs(dmgOnce) > 0.001f ) {
+		TMsgSetDamage msgDamageOnce;
+		msgDamageOnce.dmg = dmgOnce * signDamage;
+		eMe->sendMsg(msgDamageOnce);
+	}
+	
+	//Update damage fonts
+	damageFonts[type] += signDamage;
+	assert(damageFonts[type] >= 0); // Number fonts can't be negative
+
+	//Cumulative add always, otherwise when change to 0 or 1
+	if (DMG_IS_CUMULATIVE(type) || damageFonts[type] < 2) {
+		damageCurrent += DMG_PER_SECOND(type) * signDamage;
+		TMsgDamageSave msgDamagePerSecond;
+		msgDamagePerSecond.modif = damageCurrent;
+		eMe->sendMsg(msgDamagePerSecond);
+		if (type == Damage::ABSORB) {
+			//LogicManager
+			if (damageFonts[type] == 0) {
+				//LogicManager message
+			}	
+		}
 	}
 }
 

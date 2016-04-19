@@ -3,6 +3,7 @@
 
 #include "handle/msgs.h"
 #include "components/entity_tags.h"
+#include "logic/damage.h"
 
 struct TMsgEntityCreated {
 	DECLARE_MSG_ID();
@@ -25,6 +26,12 @@ struct TMsgLeaveBox {
 
 struct TMsgDamage {
 	float modif;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgDamageSpecific {
+	Damage::DMG_TYPE type;
+	bool actived;
 	DECLARE_MSG_ID();
 };
 
