@@ -87,15 +87,16 @@ class player_controller : public CPlayerBase {
 
 	//Polarity Constants
 	float	POL_RADIUS					= 5.f;
-	float	POL_RADIUS_STRONG			= 2.f;
-	float	POL_HORIZONTALITY			= 0.35f;
+	float	POL_RADIUS_STRONG			= 1.f;
+	float	POL_HORIZONTALITY			= 1.f;
 	float	POL_INTENSITY				= 100.f;
-	float	POL_REPULSION				= 2.f;
-	float	POL_INERTIA					= 0.95f;
+	float	POL_REPULSION				= 1.f;
+	float	POL_INERTIA					= 0.99f;
 	float	POL_SPEED_ORBITA			= 0.2f;
 	float	POL_ATRACTION_ORBITA		= 1.f;
 	float	POL_NO_LEAVING_FORCE		= 0.99f;
 	float	POL_ORBITA_UP_EXTRA_FORCE	= 1.f;
+	float	POL_REAL_FORCE_Y_ORBITA		= 0.05f;
 
 
 	TCompRenderStaticMesh*	actual_render			= nullptr;

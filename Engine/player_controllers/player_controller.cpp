@@ -244,44 +244,38 @@ void player_controller::RecalcAttractions()
 	VEC3 forces = VEC3(0, 0, 0);
 	VEC3 orbitPoint;
 	SetCharacterController();
+	TCompTransform * t = myEntity->get<TCompTransform>();
+	VEC3 posPlayer = t->getPosition();
+	float lowestDist = FLT_MAX;
 
 	if (pol_state != NEUTRAL) {
 		for (auto force : force_points) {		//sum of all forces
 			if (force.pol == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
 
 			VEC3 localForce = PolarityForce(force.point, pol_state == force.pol);
-			// The first near force discard previous found forces
+			// The first near force discard other forces (we asume no points too close)
 			if (pol_orbit) {
-				forces = localForce;
-				orbitPoint = force.point;
-				break;
+				float dist = simpleDist(posPlayer, force.point);
+				if (dist < lowestDist) {
+					forces = localForce;
+					orbitPoint = force.point;
+					lowestDist = dist;
+				}
 			}
 			else forces += localForce;
 		}
-
-		//float drag = getDeltaTime();
-		//float drag_i = 1 - drag;
-		//pol_speed = drag_i*pol_speed + drag*player_max_speed;
 	}
-
-	//Orbiting force
-	//VEC3 forceOrbita = VEC3(1, 1, 1) / forces;
 
 	//Check if player is orbiting
 	if (pol_orbit) {
-		TCompTransform * t = myEntity->get<TCompTransform>();
-		VEC3 posPlayer = t->getPosition();
 		float dist = realDist(posPlayer, orbitPoint);
 		float nearFactor = (1.f - (dist / POL_RADIUS_STRONG));
 		VEC3 forceReal = forces;
-		forces = VEC3(1, 1, 1) / forces;
-		float percentTrickY = 0.95f;
-		float rangeYminModifier = -0.2f;
-		float rangeYMaxModifier = -0.1f;
-		float valueYModifier = -0.1f;
-
-		if (forces.y < rangeYMaxModifier && forces.y > rangeYminModifier) forces.y = valueYModifier;
-		forces.y = (forces.y * percentTrickY) + (forceReal.y * (1- percentTrickY));
+		forces = VEC3(
+			1 / forces.x,		//x
+			forces.y * 0.05f ,	//y
+			1/forces.z);		//z
+		
 		forces *= POL_ATRACTION_ORBITA;
 
 		if (!pol_orbit_prev) {
@@ -762,16 +756,17 @@ string player_controller::GetPolarity() {
 //Render In Menu
 void player_controller::renderInMenu() {
 	ImGui::Text("Editable values (polarity):\n");
-	ImGui::SliderFloat("Radius Influence", &POL_RADIUS, 1.f, 10.f);
-	ImGui::SliderFloat("Radius Strong Influence", &POL_RADIUS_STRONG, 1.f, 10.f);
-	ImGui::SliderFloat("Horizontality Influence", &POL_HORIZONTALITY, 0.f, 1.f);
-	ImGui::SliderFloat("Intensity Influence", &POL_INTENSITY, 1.f, 500.f);
+	ImGui::SliderFloat("Radius1", &POL_RADIUS, 1.f, 10.f);
+	ImGui::SliderFloat("Radius2", &POL_RADIUS_STRONG, 1.f, 10.f);
+	ImGui::SliderFloat("Horiz. Repulsion", &POL_HORIZONTALITY, 0.f, 1.f);
+	ImGui::SliderFloat("Intensity", &POL_INTENSITY, 1.f, 500.f);
 	ImGui::SliderFloat("Repulsion Factor", &POL_REPULSION, 0.f, 5.f);
 	ImGui::SliderFloat("Inertia", &POL_INERTIA, 0.f, 0.99f);
-	ImGui::SliderFloat("Speed When Enter Orbita", &POL_SPEED_ORBITA, 0.f, 10.f);
+	ImGui::SliderFloat("Speed OnEnter", &POL_SPEED_ORBITA, 0.f, 10.f);
 	ImGui::SliderFloat("Force Atraction Factor in Orbita", &POL_ATRACTION_ORBITA, 0.f, 5.f);
 	ImGui::SliderFloat("Factor allowing leave", &POL_NO_LEAVING_FORCE, 0.f, 1.5f);
 	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_ORBITA_UP_EXTRA_FORCE, 0.01f, 5.f);
+	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_REAL_FORCE_Y_ORBITA, 0.01f, 1.f);
 	
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
