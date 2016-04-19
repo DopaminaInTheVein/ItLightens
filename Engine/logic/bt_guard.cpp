@@ -65,6 +65,8 @@ void bt_guard::readIniFileAttr() {
 			SPEED_ROT = deg2rad(SPEED_ROT);
 			assignValueToVar(DAMAGE_LASER, fields);
 			assignValueToVar(MAX_REACTION_TIME, fields);
+			assignValueToVar(MAX_BOX_REMOVAL_TIME, fields);
+			assignValueToVar(BOX_REMOVAL_ANIM_TIME, fields);
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
@@ -95,6 +97,7 @@ void bt_guard::Init()
 		addChild("attack", "absorbsequence", SEQUENCE, NULL, NULL);
 		addChild("absorbsequence", "absorb", ACTION, NULL, (btaction)&bt_guard::actionAbsorb);
 		addChild("absorbsequence", "shootwall", ACTION, NULL, (btaction)&bt_guard::actionShootWall);
+		addChild("absorbsequence", "removebox", ACTION, NULL, (btaction)&bt_guard::actionRemoveBox);
 		addChild("guard", "alertdetected", SEQUENCE, (btcondition)&bt_guard::guardAlerted, NULL);
 		addChild("alertdetected", "search", ACTION, NULL, (btaction)&bt_guard::actionSearch);
 		addChild("alertdetected", "lookaround", ACTION, NULL, (btaction)&bt_guard::actionLookAround);
@@ -261,18 +264,39 @@ int bt_guard::actionShootWall() {
 	VEC3 posPlayer = tPlayer->getPosition();
 	turnTo(posPlayer);
 	if (playerVisible()) {
-		return OK;
+		return KO;
 	}
 	else {
-		shootToPlayer();
-		if (timerShootingWall < 0) {
+		//if a box can be removed, we remove it (next state)
+		if (shootToPlayer()) {
+			removeBox(box_to_remove);
+			logic_manager->throwEvent(logic_manager->OnGuardRemoveBox, "");
 			return OK;
 		}
 		else {
-			if (timerShootingWall > -1)
-				timerShootingWall -= getDeltaTime();
-			return STAY;
+			if (timerShootingWall < 0) {
+				return KO;
+			}
+			else {
+				if (timerShootingWall > -1)
+					timerShootingWall -= getDeltaTime();
+				return STAY;
+			}
 		}
+	}
+}
+
+int bt_guard::actionRemoveBox() {
+	PROFILE_FUNCTION("guard: removebox");
+	if (!myParent.isValid()) return false;
+	// wait for the remove box animation to end
+	if (removing_box_animation_time > BOX_REMOVAL_ANIM_TIME) {
+		removing_box_animation_time = 0.f;
+		return OK;
+	}
+	else {
+		removing_box_animation_time += getDeltaTime();
+		return STAY;
 	}
 }
 
@@ -581,9 +605,9 @@ bool bt_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) 
 	return ret;
 }
 
-void bt_guard::shootToPlayer() {
+bool bt_guard::shootToPlayer() {
 	//If cant shoot returns
-	if (noShoot) return;
+	if (noShoot) return false;
 
 	//Values
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
@@ -612,7 +636,19 @@ void bt_guard::shootToPlayer() {
 				TCompBox* box_component = box->get<TCompBox>();
 				if (box_component->isRemovable()) {
 					dbg("Caja %s es apartable!\n", box->getName());
-					removeBox(h);
+					// if remove box is ready, reset the timer and remove the box
+					if (remove_box_ready) {
+						remove_box_time = MAX_BOX_REMOVAL_TIME;
+						remove_box_ready = false;
+						box_to_remove = h;
+						return true;				
+					}
+					// if not, just update the timer
+					else {
+						remove_box_time -= getDeltaTime();
+						if (remove_box_time <= 0.f)
+							remove_box_ready = true;
+					}
 				}
 			}
 		}
@@ -639,12 +675,15 @@ void bt_guard::shootToPlayer() {
 		float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 		Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), posPlayer - myPos, distRay, RED);
 	}
+
+	return false;
 }
 
 void bt_guard::removeBox(CHandle box_handle) {
 	CEntity* box = box_handle;
 	TCompPhysics* box_physx = box->get<TCompPhysics>();
-	box_physx->AddForce(VEC3(rand() % 100, rand() % 100, rand() % 100));
+	int lateral_force = rand() % 2500;
+	box_physx->AddForce(VEC3(lateral_force, rand() % 100, 2500 - lateral_force));
 }
 
 // -- Jurisdiction -- //

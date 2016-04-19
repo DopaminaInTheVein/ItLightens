@@ -32,6 +32,10 @@ function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
 end
 
+function OnGuardRemoveBox( reaction_time )
+	p:print( "OnGuardRemoveBox: "..reaction_time.."\n" )
+end
+
 function OnLevelStart001( param )
 	p:print( "OnLevelStart001: "..param.."\n" )
 end

@@ -109,6 +109,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 			break;
 		}
 
+		case (OnGuardRemoveBox) : {
+			sprintf(lua_code, "OnGuardRemoveBox(%f);", 0.5f);
+			break;
+		}
+
 		case (OnInterruptHit) : {
 			sprintf(lua_code, "OnInterruptHit(%f);", 0.5f);
 			break;

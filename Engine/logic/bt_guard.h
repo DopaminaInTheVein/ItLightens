@@ -42,6 +42,8 @@ class bt_guard : public TCompBase, public bt
 	float SPEED_ROT;
 	float DAMAGE_LASER;
 	float MAX_REACTION_TIME;
+	float MAX_BOX_REMOVAL_TIME;
+	float BOX_REMOVAL_ANIM_TIME;
 	//from bombs
 	float reduce_factor;
 	float t_reduceStats_max;
@@ -85,8 +87,14 @@ class bt_guard : public TCompBase, public bt
 	VEC3 noisePoint;
 	bool noiseHeard = false;
 	bool playerLost = false;
+	// reaction time management
 	bool player_detected_start = false;
 	float reaction_time = -1.0f;
+	// box removal management
+	CHandle box_to_remove;
+	bool remove_box_ready = true;
+	float remove_box_time = -1.0f;
+	float removing_box_animation_time = 0.f;
 
 	//Correa
 	VEC3 jurCenter;
@@ -110,7 +118,7 @@ class bt_guard : public TCompBase, public bt
 
 	//Raycast
 	bool rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit);
-	void shootToPlayer();
+	bool shootToPlayer();
 	void removeBox(CHandle box_handle);
 
 	bool stunned;
@@ -138,6 +146,7 @@ public:
 	int actionChase();
 	int actionAbsorb();
 	int actionShootWall();
+	int actionRemoveBox();
 	int actionSearch();
 	int actionLookAround();
 	int actionSeekWpt();
