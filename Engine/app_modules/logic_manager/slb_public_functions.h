@@ -20,6 +20,8 @@ public:
 	float getPlayerX();
 	float getPlayerY();
 	float getPlayerZ();
+	void addEnergy(int energy_to_add);
+	void refillEnergy();
 };
 
 // generic handle control in LUA

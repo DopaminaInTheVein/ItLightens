@@ -41,6 +41,10 @@ class bt_guard : public TCompBase, public bt
 	float CONE_VISION;
 	float SPEED_ROT;
 	float DAMAGE_LASER;
+	float MAX_REACTION_TIME;
+	float MAX_BOX_REMOVAL_TIME;
+	float BOX_REMOVAL_ANIM_TIME;
+	float LOOK_AROUND_TIME;
 	//from bombs
 	float reduce_factor;
 	float t_reduceStats_max;
@@ -81,9 +85,19 @@ class bt_guard : public TCompBase, public bt
 	bool sendMsgDmg = false;
 	std::vector<KeyPoint> keyPoints;
 	int curkpt;
+	VEC3 player_last_seen_point;
 	VEC3 noisePoint;
 	bool noiseHeard = false;
 	bool playerLost = false;
+	// reaction time management
+	bool player_detected_start = false;
+	float reaction_time = -1.0f;
+	// box removal management
+	CHandle box_to_remove;
+	bool remove_box_ready = true;
+	float remove_box_time = -1.0f;
+	float removing_box_animation_time = 0.f;
+	float looking_around_time = 0.f;
 
 	//Correa
 	VEC3 jurCenter;
@@ -107,9 +121,11 @@ class bt_guard : public TCompBase, public bt
 
 	//Raycast
 	bool rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit);
-	void shootToPlayer();
+	bool shootToPlayer();
+	void removeBox(CHandle box_handle);
 
 	bool stunned;
+	bool shooting = false;
 
 	// the nodes
 	static map<string, btnode *>tree;
@@ -130,9 +146,11 @@ public:
 	bool guardAlerted();
 	//actions
 	int actionStunned();
+	int actionReact();
 	int actionChase();
 	int actionAbsorb();
 	int actionShootWall();
+	int actionRemoveBox();
 	int actionSearch();
 	int actionLookAround();
 	int actionSeekWpt();

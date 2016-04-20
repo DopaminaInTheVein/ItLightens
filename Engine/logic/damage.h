@@ -1,8 +1,7 @@
 #ifndef INC_DAMAGE_H_
 #define INC_DAMAGE_H_
 
-#define CONFIG_DAMAGE(type, dmg, dmgPerSecond, cum) \
-Damage::types[type] = TDamage(type,dmg,dmgPerSecond)
+#define CONFIG_DAMAGE(type, dmg, dmgPerSecond, cum) Damage::types[type] = TDamage(dmg, dmgPerSecond, cum)
 
 #define DMG_ONCE(type) \
 Damage::types[type].damageOnce
@@ -36,6 +35,7 @@ public:
 	static std::vector<TDamage> types;
 
 	static void init();
+
 };
 
 #endif

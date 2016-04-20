@@ -252,8 +252,8 @@ bool CEntitiesModule::start() {
 	CNavmesh nav;
 	SBB::postNavmesh("sala1", nav);
 
-	//std::thread thre(&CEntitiesModule::recalcNavmesh, this);
-	//thre.detach();
+	std::thread thre(&CEntitiesModule::recalcNavmesh, this);
+	thre.detach();
 
 	TTagID tagIDcamera = getID("camera_main");
 	TTagID tagIDwall = getID("breakable_wall");
@@ -426,5 +426,6 @@ void CEntitiesModule::recalcNavmesh() {
 	}
 	nav.m_input.computeBoundaries();
 	nav.build();
-	//SBB::postNavmesh(nav);
+	SBB::postNavmesh("sala1", nav);
+	SBB::postBool("sala1", true);
 }
