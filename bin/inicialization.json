@@ -31,6 +31,7 @@
 		"MAX_REACTION_TIME" : 2,
 		"MAX_BOX_REMOVAL_TIME" : 15,
 		"BOX_REMOVAL_ANIM_TIME" : 1,
+		"LOOK_AROUND_TIME" : 10,
 		"reduce_factor" : 3.0,
 		"t_reduceStats_max" : 15,
 		"t_reduceStats" : 0.0

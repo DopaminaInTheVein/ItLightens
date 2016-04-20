@@ -44,6 +44,7 @@ class bt_guard : public TCompBase, public bt
 	float MAX_REACTION_TIME;
 	float MAX_BOX_REMOVAL_TIME;
 	float BOX_REMOVAL_ANIM_TIME;
+	float LOOK_AROUND_TIME;
 	//from bombs
 	float reduce_factor;
 	float t_reduceStats_max;
@@ -84,6 +85,7 @@ class bt_guard : public TCompBase, public bt
 	bool sendMsgDmg = false;
 	std::vector<KeyPoint> keyPoints;
 	int curkpt;
+	VEC3 player_last_seen_point;
 	VEC3 noisePoint;
 	bool noiseHeard = false;
 	bool playerLost = false;
@@ -95,6 +97,7 @@ class bt_guard : public TCompBase, public bt
 	bool remove_box_ready = true;
 	float remove_box_time = -1.0f;
 	float removing_box_animation_time = 0.f;
+	float looking_around_time = 0.f;
 
 	//Correa
 	VEC3 jurCenter;
