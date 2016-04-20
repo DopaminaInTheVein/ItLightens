@@ -125,6 +125,7 @@ class bt_guard : public TCompBase, public bt
 	void removeBox(CHandle box_handle);
 
 	bool stunned;
+	bool shooting = false;
 
 	// the nodes
 	static map<string, btnode *>tree;

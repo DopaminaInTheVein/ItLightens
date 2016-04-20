@@ -255,7 +255,8 @@ int bt_guard::actionAbsorb() {
 		goForward(-SPEED_WALK);
 	}
 	// if we don't see the player anymore
-	if (!playerVisible()) {
+	if (!playerVisible() && shooting) {
+		shooting = false;
 		// throw interrupt hit event
 		logic_manager->throwEvent(logic_manager->OnInterruptHit, "");
 		// stop damaging the player
@@ -369,6 +370,7 @@ int bt_guard::actionLookAround() {
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
+		return KO;
 	}
 	//Turn arround
 	else if (deltaYawLookingArround < 2 * M_PI && looking_around_time > 0.f) {
@@ -694,6 +696,7 @@ bool bt_guard::shootToPlayer() {
 
 	//Do damage
 	if (damage && !sendMsgDmg) {
+		shooting = true;
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
 		TMsgDamageSpecific dmg;
@@ -702,6 +705,7 @@ bool bt_guard::shootToPlayer() {
 		ePlayer->sendMsg(dmg);
 	}
 	else if (!damage && sendMsgDmg) {
+		shooting = false;
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
 		TMsgDamageSpecific dmg;
