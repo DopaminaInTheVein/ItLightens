@@ -511,6 +511,12 @@
     <ClCompile Include="debug\debug_itlightens.cpp">
       <Filter>debug</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_trigger_lua.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_tracker.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1213,6 +1219,9 @@
     <ClInclude Include="components\comp_box.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_trigger_lua.h">
+      <Filter>components</Filter>
+    </ClInclude>
     <ClInclude Include="components\comp_box_spawner.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -1221,6 +1230,12 @@
     </ClInclude>
     <ClInclude Include="components\comp_trigger_standar.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tracker.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\damage.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

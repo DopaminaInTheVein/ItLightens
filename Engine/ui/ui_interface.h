@@ -89,6 +89,11 @@ public:
 		ImGui::Text("%f / %f", life->currentlife, life->maxlife);
 		ImGui::Separator();
 
+		//Polarity
+		player_controller * playerController = target_e->get<player_controller>();
+		ImGui::Text(playerController->GetPolarity().c_str());
+		ImGui::Separator();
+
 		//put cheats here:
 		ImGui::Text("Press 'ESC' to exit\n");
 		ImGui::Text("Press 'ENTER' to restart\n");

@@ -12,6 +12,8 @@
 
 #include "player_controller_base.h"
 
+#include "logic/damage.h"
+
 template< class TObj >
 class CObjectManager;
 class CHandle;
@@ -30,7 +32,7 @@ class player_controller : public CPlayerBase {
 		NEUTRAL = 0,
 		MINUS,
 		PLUS,
-	};
+	}; const string polarize_name[3] = {"neutral", "minus", "plus" };
 	//--------------------------------------------------------------------
 
 	//internal struct
@@ -75,6 +77,10 @@ class player_controller : public CPlayerBase {
 	float					jump_energy;
 	float					stun_energy;
 
+	//Damages
+	float					dmg_water;
+	float					dmg_absorbed;
+
 	//possesion handles
 	CHandle					currentPossessable;
 	CHandle					currentStunable;
@@ -85,11 +91,31 @@ class player_controller : public CPlayerBase {
 	CHandle					pose_run;
 	CHandle					pose_jump;
 
+	//Polarity Constants
+	float	POL_RADIUS					= 5.f;
+	float	POL_RADIUS_STRONG			= 1.f;
+	float	POL_HORIZONTALITY			= 1.f;
+	float	POL_INTENSITY				= 100.f;
+	float	POL_REPULSION				= 1.f;
+	float	POL_INERTIA					= 0.99f;
+	float	POL_SPEED_ORBITA			= 0.2f;
+	float	POL_ATRACTION_ORBITA		= 1.f;
+	float	POL_NO_LEAVING_FORCE		= 0.99f;
+	float	POL_ORBITA_UP_EXTRA_FORCE	= 1.f;
+	float	POL_REAL_FORCE_Y_ORBITA		= 0.05f;
+
+	//Damage Fonts Actived
+	float damageCurrent = 0.f;
+	int damageFonts[Damage::SIZE] = { 0 };
+
 	TCompRenderStaticMesh*	actual_render			= nullptr;
 
 	int						curr_evol				= 0;
 	int						pol_state				= 0;
+	int						pol_state_prev			= 0;
 	int						last_pol_state			= 0;
+	bool					pol_orbit				= false;
+	bool					pol_orbit_prev			= false;
 
 	bool					affectPolarized			= false;
 
@@ -118,6 +144,8 @@ class player_controller : public CPlayerBase {
 	}
 
 	bool isDamaged();
+	float getLife();
+	void setLife(float);
 	bool nearStunable();
 
 	void recalcPossassable();
@@ -129,11 +157,15 @@ class player_controller : public CPlayerBase {
 
 	void UpdateMoves() override;
 	void UpdateInputActions() override;
+	void UpdateOverCharge();
+	void startOverCharge();
+	void doOverCharge();
+	void Evolve(eEvol);
 	void UpdateActionsTrigger();
 	void SetCharacterController();
 
 	void RecalcAttractions();
-	VEC3 AttractMove(VEC3 point_pos);
+	VEC3 PolarityForce(VEC3 point_pos, bool atraction);
 	//--------------------------------------------------------------------
 
 
@@ -164,9 +196,16 @@ public:
 	void onWirePass(const TMsgWirePass& msg);
 	void onCanRec(const TMsgCanRec& msg);
 	void onPolarize(const TMsgPolarize& msg);
+	void onSetDamage(const TMsgDamageSpecific& msg);
 
 	//output messages
 	void SendMessagePolarizeState();
+
+	//Gets
+	string GetPolarity();
+
+	//Render In Menu
+	void renderInMenu();
 
 	//Overload function for handler_manager
 	player_controller& player_controller::operator=(player_controller arg) { return arg; }

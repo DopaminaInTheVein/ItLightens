@@ -259,10 +259,12 @@ int bt_guard::actionAbsorb() {
 		// throw interrupt hit event
 		logic_manager->throwEvent(logic_manager->OnInterruptHit, "");
 		// stop damaging the player
-		/****CEntity* ePlayer = getPlayer();
+		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
-		TMsgStopDamage dmg;
-		ePlayer->sendMsg(dmg);****/
+		TMsgDamageSpecific dmg;
+		dmg.type = Damage::ABSORB;
+		dmg.actived = true;
+		ePlayer->sendMsg(dmg);
 		return OK;
 	}
 	else {
@@ -694,14 +696,17 @@ bool bt_guard::shootToPlayer() {
 	if (damage && !sendMsgDmg) {
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
-		TMsgDamage dmg;
-		dmg.modif = DAMAGE_LASER;
+		TMsgDamageSpecific dmg;
+		dmg.type = Damage::ABSORB;
+		dmg.actived = true;
 		ePlayer->sendMsg(dmg);
 	}
 	else if (!damage && sendMsgDmg) {
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
-		TMsgStopDamage dmg;
+		TMsgDamageSpecific dmg;
+		dmg.type = Damage::ABSORB;
+		dmg.actived = false;
 		ePlayer->sendMsg(dmg);
 	}
 

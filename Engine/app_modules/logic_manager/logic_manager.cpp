@@ -61,7 +61,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 			break;
 		}
 		case (OnLeave) : {
-			sprintf(lua_code, "OnLeave(%f);", 0.3f);
+			sprintf(lua_code, "OnLeave%s(%f);", params.c_str(), 0.3f);
 			break;
 		}
 		case (OnGameStart) : {
@@ -132,7 +132,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 			break;
 		}
 		case (OnChangePolarity) : {
-			sprintf(lua_code, "OnChangePolarity(%f);", 0.5f);
+			sprintf(lua_code, "OnChangePolarity(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnPickupBox) : {

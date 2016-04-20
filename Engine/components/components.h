@@ -12,8 +12,10 @@
 #include "skeleton/comp_skeleton.h"
 #include "skeleton/comp_bone_tracker.h"
 #include "comp_victory_point.h"
+#include "comp_trigger_lua.h"
 #include "comp_platform.h"
 #include "comp_box.h"
+#include "comp_tracker.h"
 #include "comp_box_spawner.h"
 #include "comp_box_destructor.h"
 

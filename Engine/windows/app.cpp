@@ -127,7 +127,7 @@ bool CApp::createWindow(HINSTANCE new_hInstance, int nCmdShow)
 
 	RECT rc = { 0, 0, getXRes(), getYRes() };
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
-	hWnd = CreateWindow("It Lightens", "It Lightens: Milestone 1",
+	hWnd = CreateWindow("It Lightens", "It Lightens: Milestone 2",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, hInstance,
 		NULL);

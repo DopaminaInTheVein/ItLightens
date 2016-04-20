@@ -19,7 +19,7 @@ fn _val val = (
 
 fn isSpline obj = (
 	try (
-		local nspl =numSplines obj;
-		return (nspl > 0 )
+		local nknots =numKnots obj;
+		return (nknots > 0 )
 	) catch ( return false)
 )

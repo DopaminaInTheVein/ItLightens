@@ -1,4 +1,4 @@
-macroScript Exporter
+macroScript Meshes
 	category:"_ItLightens!"
 	toolTip:"Meshes"
 (

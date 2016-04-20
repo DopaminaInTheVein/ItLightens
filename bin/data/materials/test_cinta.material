@@ -1,0 +1,3 @@
+<material tech="textured.tech">
+<texture slot="diffuse" name="textures/Papa_Smurf_D.dds"/>
+</material>

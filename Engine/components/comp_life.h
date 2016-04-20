@@ -30,6 +30,14 @@ struct TCompLife : public TCompBase {
 		return true;
 	}
 
+	float getCurrent() {
+		return currentlife;
+	}
+
+	void setCurrent(float new_life) {
+		currentlife = new_life;
+	}
+
 	void onCreate(const TMsgEntityCreated &) {
 		CHandle me = CHandle(this).getOwner();
 		if (!me.isValid()) {

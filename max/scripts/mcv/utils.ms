@@ -132,3 +132,10 @@ fn findAllHelpers tHelper = (
 	if (classof tHelper) == Array then return (findAllHelpersList tHelper)
 	else return (findAllHelpersList #(tHelper))
 )
+
+--Append Lua
+fn luaAppend nameFunc code = (
+	_lua_code += "function " + nameFunc + "( )" + "\n"
+	_lua_code += code
+	_lua_code += "\nend\n\n"
+)

@@ -47,7 +47,6 @@ void player_controller::readIniFileAttr() {
 			assignValueToVar(init_life, fields_player);
 			assignValueToVar(jump_energy, fields_player);
 			assignValueToVar(stun_energy, fields_player);
-
 		}
 	}
 }
@@ -115,6 +114,24 @@ bool player_controller::isDamaged() {
 	return !____TIMER__END_(timerDamaged);
 }
 
+float player_controller::getLife()
+{
+	CEntity * eMe = CHandle(this).getOwner();
+	assert(eMe);
+	TCompLife * life = eMe->get<TCompLife>();
+	assert(life || fatal("Player doesnt have life component!"));
+	return life->getCurrent();
+}
+
+void player_controller::setLife(float new_life)
+{
+	CEntity * eMe = CHandle(this).getOwner();
+	assert(eMe);
+	TCompLife * life = eMe->get<TCompLife>();
+	assert(life || fatal("Player doesnt have life component!"));
+	life->setCurrent(new_life);
+}
+
 void player_controller::rechargeEnergy()
 {
 	PROFILE_FUNCTION("recharge_energy");
@@ -166,7 +183,9 @@ void player_controller::myUpdate() {
 	____TIMER__UPDATE_(timerDamaged);
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 pos = player_transform->getPosition();
-	if (!isDamaged()) {
+	if (isDamaged()) {
+		UpdateOverCharge();
+	} else {
 		UpdatePossession();
 	}
 }
@@ -241,40 +260,139 @@ void player_controller::Falling()
 void player_controller::RecalcAttractions()
 {
 	PROFILE_FUNCTION("player controller: recalc attraction");
-	if (pol_state == NEUTRAL) return;	//check if polarized is neutral, no effect
-	VEC3 forces = VEC3(0,0,0);
+	VEC3 forces = VEC3(0, 0, 0);
+	VEC3 orbitPoint;
+	SetCharacterController();
+	TCompTransform * t = myEntity->get<TCompTransform>();
+	VEC3 posPlayer = t->getPosition();
+	float lowestDist = FLT_MAX;
 
-	for (auto force : force_points) {		//sum of all forces
-		if (force.pol == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
-		if(pol_state == force.pol) forces += AttractMove(force.point);
-		else if (pol_state != force.pol) forces -= AttractMove(force.point);
+	if (pol_state != NEUTRAL) {
+		for (auto force : force_points) {		//sum of all forces
+			if (force.pol == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
+
+			VEC3 localForce = PolarityForce(force.point, pol_state == force.pol);
+			// The first near force discard other forces (we asume no points too close)
+			if (pol_orbit) {
+				float dist = simpleDist(posPlayer, force.point);
+				if (dist < lowestDist) {
+					forces = localForce;
+					orbitPoint = force.point;
+					lowestDist = dist;
+				}
+			}
+			else forces += localForce;
+		}
 	}
 
-	SetCharacterController();
-	//forces.Normalize();
+	//Check if player is orbiting
+	if (pol_orbit) {
+		float dist = realDist(posPlayer, orbitPoint);
+		float nearFactor = (1.f - (dist / POL_RADIUS_STRONG));
+		VEC3 forceReal = forces;
+		forces = VEC3(
+			1 / forces.x,		//x
+			forces.y * 0.05f ,	//y
+			1/forces.z);		//z
+		
+		forces *= POL_ATRACTION_ORBITA;
 
+		if (!pol_orbit_prev) {
+			//cc->ResetMovement();
+			cc->ChangeSpeed(POL_SPEED_ORBITA);
+		}
+		else {
 
-	//float drag = getDeltaTime();
-	//float drag_i = 1 - drag;
-	//pol_speed = drag_i*pol_speed + drag*player_max_speed;
+			//Player moving?
+			forceReal.Normalize();
+			VEC3 movementPlayer = cc->GetMovement();
+			VEC3 movementAtraction = VEC3(0, 0, 0);
+			bool movementApplied = false;
+			float moveAmoung = movementPlayer.LengthSquared();
+			if (moveAmoung > 0.f) {
+				//Playing trying to go away?
+				if (movementPlayer.x != 0) {
+					if (std::signbit(movementPlayer.x) != std::signbit(forceReal.x)) {
+						movementAtraction.x = -movementPlayer.x * POL_NO_LEAVING_FORCE * nearFactor;
+						movementApplied = true;
+					}
+					if (std::signbit(movementPlayer.z) != std::signbit(forceReal.z)) {
+						movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE * nearFactor;
+						movementApplied = true;
+					}
+				}
+				//Playing getting closer?
+				bool gettingCloser = false;
+				if (abs(movementPlayer.x) > abs(movementPlayer.z)) {
+					gettingCloser = (std::signbit(movementPlayer.x) == std::signbit(forceReal.x));
+				}
+				else {
+					gettingCloser = (std::signbit(movementPlayer.z) == std::signbit(forceReal.z));
+				}
 
-	forces = (lastForces + forces) / 2;	//smooth change of forces
-	lastForces = forces;
+				//Getting closer -> player up a little
+				if (gettingCloser) {
+					forces.y += POL_ORBITA_UP_EXTRA_FORCE;
+				}
+
+				if (movementApplied) {
+					cc->AddMovement(movementAtraction);
+				}
+			}
+		}
+
+	}
+	else {
+		forces = (lastForces * POL_INERTIA) + (forces * (1-POL_INERTIA));
+	}
+
+	//Smooth forces
+	//forces = (lastForces * 0.95f) + (forces * 0.05f);
+
+	//if (forces.y > 0) forces.y += forces.y;
+	
 	cc->AddSpeed(forces*getDeltaTime());
+	lastForces = forces;
 	//cc->AddImpulse(forces);
 }
 
-VEC3 player_controller::AttractMove(VEC3 point_pos) {
+VEC3 player_controller::PolarityForce(VEC3 point_pos, bool atraction) {
 	PROFILE_FUNCTION("player controller: attract move");
 	
+	//Esto deberian ser ctes o variables del punto de magnetismo
+	float distMax = POL_RADIUS;
+	float distOrbit = POL_RADIUS_STRONG;
+
 	SetMyEntity();
-	point_pos.y += 0.5f;
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-	VEC3 direction = point_pos - player_position;
-	direction.Normalize();
-	//return 50*10*direction/squared(simpleDist(player_position,point_pos));
-	return 50*direction / (simpleDist(player_position, point_pos)/2.0f);
+	//point_pos.y += 0.5f;
+	TCompCharacterController* cc = myEntity->get<TCompCharacterController>();
+	VEC3 player_position = cc->GetPosition();
+	float dist = realDist(player_position, point_pos);
+
+	VEC3 force = VEC3(0, 0, 0);
+
+	// Suficiente cerca?
+	if (dist < distMax) {
+		VEC3 direction = point_pos - player_position;
+		// Si la direccion es bastante horizontal, lo acentuamos más
+		if (direction.y < POL_HORIZONTALITY) {
+			direction.x *= 2;
+			direction.z *= 2;
+		}
+		direction.Normalize();
+		force = POL_INTENSITY * direction / ((dist) + 0.01f);
+	}
+
+	// Atraccion -> Si cerca, orbitar
+	if (atraction) {
+		pol_orbit = pol_orbit || (dist < distOrbit);
+	}
+	//Repulsion -> Invertimos fuerza
+	else {
+		force = -force * POL_REPULSION;
+	}
+
+	return force;
 }
 
 void player_controller::UpdateMoves()
@@ -355,44 +473,36 @@ void player_controller::UpdateInputActions()
 {
 	PROFILE_FUNCTION("update input actions");
 	SetCharacterController();
-	if ((io->keys['1'].isPressed() || io->joystick.button_L.isPressed())) {
-		pol_state = PLUS;
-		logic_manager->throwEvent(logic_manager->OnChangePolarity, "");
-		if (!affectPolarized && force_points.size() != 0) {
-			affectPolarized = true;
-			pol_speed = 0;
-			//cc->SetGravity(false);
-		}
-		else if (affectPolarized && force_points.size() == 0) {
-			affectPolarized = false;
-			//cc->SetGravity(true);
-		}
-		RecalcAttractions();
-	}
-	else if ((io->keys['2'].isPressed() || io->joystick.button_R.isPressed())) {
-		pol_state = MINUS;
-		logic_manager->throwEvent(logic_manager->OnChangePolarity, "");
-		if (!affectPolarized && force_points.size() != 0) {
-			affectPolarized = true;
-			pol_speed = 0;
-			//cc->SetGravity(false);
-		}
-		else if (affectPolarized && force_points.size() == 0) {
-			affectPolarized = false;
-			//cc->SetGravity(true);
-		}
-
-		RecalcAttractions();
-		
+	pol_orbit = false;
+	if (isDamaged()) {
+		pol_state = NEUTRAL;
 	}
 	else {
-		pol_state = NEUTRAL;
-		if (affectPolarized) {
-			affectPolarized = false;
-			//cc->SetGravity(true);
+		if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
+			if (pol_state == PLUS) pol_state = NEUTRAL;
+			else pol_state = PLUS;
+		}
+		else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
+			if (pol_state == MINUS) pol_state = NEUTRAL;
+			else pol_state = MINUS;
 		}
 	}
+
+	if (pol_state == NEUTRAL) affectPolarized = false;
+	else {
+		affectPolarized = (force_points.size() != 0);
+		RecalcAttractions();
+	}
+
+	cc->SetGravity(!pol_orbit);
 	
+	//Event onChangePolarity to LogicManager 
+	if (pol_state != pol_state_prev) {
+		string pol_to_lua = polarize_name[pol_state];
+		logic_manager->throwEvent(logic_manager->OnChangePolarity, pol_to_lua);
+		pol_state_prev = pol_state;
+	}
+
 	if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado
@@ -407,6 +517,10 @@ void player_controller::UpdateInputActions()
 	if (last_pol_state != pol_state) {
 		last_pol_state = pol_state;
 		SendMessagePolarizeState();
+	}
+	if (pol_orbit_prev != pol_orbit) {
+		pol_orbit_prev = pol_orbit;
+		//Logic Manager, extra behaviour/animation ...?
 	}
 
 	UpdateActionsTrigger();
@@ -530,6 +644,7 @@ void player_controller::recalcPossassable() {
 	}
 }
 
+//TODO: near Stunneable, currentStunneable es LO MISMO que possessable, dejar sólo una de ellas
 // Calcula el mejor candidato para stunear
 bool player_controller::nearStunable() {
 	PROFILE_FUNCTION("near stunnable");
@@ -610,6 +725,49 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	SBB::postBool("possMode", false);
 }
 
+void player_controller::UpdateOverCharge() {
+	if (damageFonts[Damage::ABSORB] > 1) {
+		float currentLife = getLife();
+
+		if (currentLife > evolution_limit) {
+			if (io->keys[VK_LSHIFT].becomesPressed()) {
+				startOverCharge();
+			}
+			else {
+				ui.addTextInstructions("Press 'L-SHIFT' to OVERCHARGE guard weapon\n");
+			}
+		}
+	}
+}
+
+void player_controller::startOverCharge()
+{
+	//TODO - Estado intermedio OverCharging
+	
+	//OverCharge Effect
+	doOverCharge();
+}
+
+void player_controller::doOverCharge()
+{
+	VHandles guards = tags_manager.getHandlesByTag(getID("AI_guard"));
+	TMsgOverCharge msg;
+	for (auto guard : guards) {
+		if (guard.isValid()) {
+			CEntity* eGuard = guard;
+			eGuard->sendMsg(msg);
+		}
+	}
+	Evolve(eEvol::first);
+}
+
+void player_controller::Evolve(eEvol evolution) {
+	if (evolution == eEvol::first) {
+		//Set Life
+		setLife(evolution_limit);
+	}
+}
+
 void player_controller::update_msgs()
 {
 	PROFILE_FUNCTION("updat mesgs");
@@ -638,6 +796,46 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 	}
 }
 
+void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
+	CEntity* eMe = CHandle(this).getOwner();
+
+	assert(eMe);
+	Damage::DMG_TYPE type = msg.type;
+
+	int signDamage = msg.actived ? 1 : -1;
+
+	//Damage Once
+	float dmgOnce = DMG_ONCE(type);
+	if ( abs(dmgOnce) > 0.001f ) {
+		TMsgSetDamage msgDamageOnce;
+		msgDamageOnce.dmg = dmgOnce * signDamage;
+		eMe->sendMsg(msgDamageOnce);
+	}
+	
+	//Update damage fonts
+	if (DMG_IS_CUMULATIVE(type)) damageFonts[type] += signDamage;
+	assert(damageFonts[type] >= 0); // Number fonts can't be negative
+
+	//Cumulative add always, otherwise when change to 0 or 1
+	if (DMG_IS_CUMULATIVE(type) || damageFonts[type] < 2) {
+		damageCurrent += DMG_PER_SECOND(type) * signDamage;
+		TMsgDamageSave msgDamagePerSecond;
+		msgDamagePerSecond.modif = damageCurrent;
+		eMe->sendMsg(msgDamagePerSecond);
+		if (type == Damage::ABSORB) {
+			//LogicManager
+			if (damageFonts[type] > 0) {
+				logic_manager->throwEvent(logic_manager->OnStartReceiveHit, "");
+			} else {
+				logic_manager->throwEvent(logic_manager->OnEndReceiveHit, "");
+			}
+		}
+	}
+
+	//Player is damaged (cant possess, etc.)
+	____TIMER_RESET_(timerDamaged);
+}
+
 void player_controller::SendMessagePolarizeState()
 {
 	TMsgPlayerPolarize msg;
@@ -648,6 +846,37 @@ void player_controller::SendMessagePolarizeState()
 			h.sendMsg(msg);
 		}
 	}
+}
+
+//Gets
+string player_controller::GetPolarity() {
+	string res = "Neutral";
+	switch (pol_state) {
+	case PLUS:
+		res = "Plus (RED)";
+		break;
+	case MINUS:
+		res = "Minus (BLUE)";
+	}
+	return res;
+}
+
+//Render In Menu
+void player_controller::renderInMenu() {
+	ImGui::Text("Editable values (polarity):\n");
+	ImGui::SliderFloat("Radius1", &POL_RADIUS, 1.f, 10.f);
+	ImGui::SliderFloat("Radius2", &POL_RADIUS_STRONG, 1.f, 10.f);
+	ImGui::SliderFloat("Horiz. Repulsion", &POL_HORIZONTALITY, 0.f, 1.f);
+	ImGui::SliderFloat("Intensity", &POL_INTENSITY, 1.f, 500.f);
+	ImGui::SliderFloat("Repulsion Factor", &POL_REPULSION, 0.f, 5.f);
+	ImGui::SliderFloat("Inertia", &POL_INERTIA, 0.f, 0.99f);
+	ImGui::SliderFloat("Speed OnEnter", &POL_SPEED_ORBITA, 0.f, 10.f);
+	ImGui::SliderFloat("Force Atraction Factor in Orbita", &POL_ATRACTION_ORBITA, 0.f, 5.f);
+	ImGui::SliderFloat("Factor allowing leave", &POL_NO_LEAVING_FORCE, 0.f, 1.5f);
+	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_ORBITA_UP_EXTRA_FORCE, 0.01f, 5.f);
+	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_REAL_FORCE_Y_ORBITA, 0.01f, 1.f);
+	
+	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
 
 map<string, statehandler>* player_controller::getStatemap() {
