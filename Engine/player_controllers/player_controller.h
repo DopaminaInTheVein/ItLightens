@@ -144,6 +144,8 @@ class player_controller : public CPlayerBase {
 	}
 
 	bool isDamaged();
+	float getLife();
+	void setLife(float);
 	bool nearStunable();
 
 	void recalcPossassable();
@@ -155,6 +157,10 @@ class player_controller : public CPlayerBase {
 
 	void UpdateMoves() override;
 	void UpdateInputActions() override;
+	void UpdateOverCharge();
+	void startOverCharge();
+	void doOverCharge();
+	void Evolve(eEvol);
 	void UpdateActionsTrigger();
 	void SetCharacterController();
 

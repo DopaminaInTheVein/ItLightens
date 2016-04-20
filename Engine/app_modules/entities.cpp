@@ -175,6 +175,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
 	SUBSCRIBE(bt_guard, TMsgNoise, noise);
+	//TODO
+	//SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
 
 	//WIRES
 	SUBSCRIBE(TCompWire, TMsgEntityCreated, onCreate);
@@ -242,7 +244,7 @@ bool CEntitiesModule::start() {
 	//bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
 	//bool is_ok = ep.xmlParseFile("data/scenes/scene_test_recast.xml");
 	//bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
-	bool is_ok = ep.xmlParseFile("data/scenes/test.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/test_guard.xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH

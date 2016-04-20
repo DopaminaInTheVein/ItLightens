@@ -114,6 +114,24 @@ bool player_controller::isDamaged() {
 	return !____TIMER__END_(timerDamaged);
 }
 
+float player_controller::getLife()
+{
+	CEntity * eMe = CHandle(this).getOwner();
+	assert(eMe);
+	TCompLife * life = eMe->get<TCompLife>();
+	assert(life || fatal("Player doesnt have life component!"));
+	return life->getCurrent();
+}
+
+void player_controller::setLife(float new_life)
+{
+	CEntity * eMe = CHandle(this).getOwner();
+	assert(eMe);
+	TCompLife * life = eMe->get<TCompLife>();
+	assert(life || fatal("Player doesnt have life component!"));
+	life->setCurrent(new_life);
+}
+
 void player_controller::rechargeEnergy()
 {
 	PROFILE_FUNCTION("recharge_energy");
@@ -165,7 +183,9 @@ void player_controller::myUpdate() {
 	____TIMER__UPDATE_(timerDamaged);
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 pos = player_transform->getPosition();
-	if (!isDamaged()) {
+	if (isDamaged()) {
+		UpdateOverCharge();
+	} else {
 		UpdatePossession();
 	}
 }
@@ -454,13 +474,18 @@ void player_controller::UpdateInputActions()
 	PROFILE_FUNCTION("update input actions");
 	SetCharacterController();
 	pol_orbit = false;
-	if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
-		if (pol_state == PLUS) pol_state = NEUTRAL;
-		else pol_state = PLUS;
+	if (isDamaged()) {
+		pol_state = NEUTRAL;
 	}
-	else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
-		if (pol_state == MINUS) pol_state = NEUTRAL;
-		else pol_state = MINUS;
+	else {
+		if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
+			if (pol_state == PLUS) pol_state = NEUTRAL;
+			else pol_state = PLUS;
+		}
+		else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
+			if (pol_state == MINUS) pol_state = NEUTRAL;
+			else pol_state = MINUS;
+		}
 	}
 
 	if (pol_state == NEUTRAL) affectPolarized = false;
@@ -619,6 +644,7 @@ void player_controller::recalcPossassable() {
 	}
 }
 
+//TODO: near Stunneable, currentStunneable es LO MISMO que possessable, dejar sólo una de ellas
 // Calcula el mejor candidato para stunear
 bool player_controller::nearStunable() {
 	PROFILE_FUNCTION("near stunnable");
@@ -699,6 +725,49 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	SBB::postBool("possMode", false);
 }
 
+void player_controller::UpdateOverCharge() {
+	if (damageFonts[Damage::ABSORB] > 1) {
+		float currentLife = getLife();
+
+		if (currentLife > evolution_limit) {
+			if (io->keys[VK_LSHIFT].becomesPressed()) {
+				startOverCharge();
+			}
+			else {
+				ui.addTextInstructions("Press 'L-SHIFT' to OVERCHARGE guard weapon\n");
+			}
+		}
+	}
+}
+
+void player_controller::startOverCharge()
+{
+	//TODO - Estado intermedio OverCharging
+	
+	//OverCharge Effect
+	doOverCharge();
+}
+
+void player_controller::doOverCharge()
+{
+	VHandles guards = tags_manager.getHandlesByTag(getID("AI_guard"));
+	TMsgOverCharge msg;
+	for (auto guard : guards) {
+		if (guard.isValid()) {
+			CEntity* eGuard = guard;
+			eGuard->sendMsg(msg);
+		}
+	}
+	Evolve(eEvol::first);
+}
+
+void player_controller::Evolve(eEvol evolution) {
+	if (evolution == eEvol::first) {
+		//Set Life
+		setLife(evolution_limit);
+	}
+}
+
 void player_controller::update_msgs()
 {
 	PROFILE_FUNCTION("updat mesgs");
@@ -744,7 +813,7 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 	}
 	
 	//Update damage fonts
-	damageFonts[type] += signDamage;
+	if (DMG_IS_CUMULATIVE(type)) damageFonts[type] += signDamage;
 	assert(damageFonts[type] >= 0); // Number fonts can't be negative
 
 	//Cumulative add always, otherwise when change to 0 or 1
@@ -755,11 +824,16 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 		eMe->sendMsg(msgDamagePerSecond);
 		if (type == Damage::ABSORB) {
 			//LogicManager
-			if (damageFonts[type] == 0) {
-				//LogicManager message
-			}	
+			if (damageFonts[type] > 0) {
+				logic_manager->throwEvent(logic_manager->OnStartReceiveHit, "");
+			} else {
+				logic_manager->throwEvent(logic_manager->OnEndReceiveHit, "");
+			}
 		}
 	}
+
+	//Player is damaged (cant possess, etc.)
+	____TIMER_RESET_(timerDamaged);
 }
 
 void player_controller::SendMessagePolarizeState()

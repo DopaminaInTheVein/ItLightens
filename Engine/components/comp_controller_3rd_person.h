@@ -120,18 +120,14 @@ public:
 		if (y_axis_inverted) deltaPitch -= (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
 		else deltaPitch += (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
 
-		if (abs(deltaYaw < deg2rad(50))) { // Mas de 50 grados en un frame --> error en Mouse
-			yaw = MOD_YAW(yaw + deltaYaw);
-
-			pitch += deltaPitch;
-			if (pitch >= max_pitch) {
-				pitch = max_pitch;
-			}
-			else if (pitch <= min_pitch) {
-				pitch = min_pitch;
-			}
+		yaw = MOD_YAW(yaw + deltaYaw);
+		pitch += deltaPitch;
+		if (pitch >= max_pitch) {
+			pitch = max_pitch;
 		}
-
+		else if (pitch <= min_pitch) {
+			pitch = min_pitch;
+		}
 
 		//TODO: mouse wheel, distance
 		/**** WHEEL EXAMPLE

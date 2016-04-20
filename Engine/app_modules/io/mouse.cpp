@@ -62,8 +62,8 @@ void TMouse::release() {
 
 void TMouse::setSysMouseLoc(int new_x, int new_y) {
   if (captured_by_app) {
-    dx = new_x - cx;
-    dy = new_y - cy;
+    dx = clampAbs(new_x - cx, MOUSE_DELTA_MAX);
+    dy = clampAbs(new_y - cy, MOUSE_DELTA_MAX);
   }
   else {
     x = new_x;
