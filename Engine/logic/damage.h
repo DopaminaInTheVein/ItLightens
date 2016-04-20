@@ -16,7 +16,8 @@ Damage::types[type].cumulative
 
 
 //--------------------------------------------------------------------
-namespace Damage {
+class Damage {
+public:
 	struct TDamage {
 		float damageOnce;
 		float damagePerSecond;
@@ -32,20 +33,9 @@ namespace Damage {
 		WATER,
 		SIZE
 	};
+	static std::vector<TDamage> types;
 
-	static TDamage types[DMG_TYPE::SIZE];
-	static void init() {
-		//TODO: assignValueToVar(..., ...);
-		//Type, DamageOnce, DamagePerSecond, Cumulative
-		CONFIG_DAMAGE(ABSORB, 0.f, 10.f, true);
-		CONFIG_DAMAGE(WATER, 0.f, 10.f, false);
-	}
-
-	//TODO: Poder modificar estos valores en ImGUI
-	//(añadir Damage::renderInMenu() en update para que funcione)
-	//void renderInMenu() {
-	//	
-	//}
-}
+	static void init();
+};
 
 #endif
