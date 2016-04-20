@@ -401,6 +401,7 @@ int bt_guard::actionSeekWpt() {
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
+		return KO;
 	}
 	//Go to waypoint
 	else if (keyPoints[curkpt].type == Seek) {
@@ -440,6 +441,7 @@ int bt_guard::actionNextWpt() {
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
+		return KO;
 	}
 	//Look to waypoint
 	else if (turnTo(dest)) {
@@ -458,6 +460,7 @@ int bt_guard::actionWaitWpt() {
 	//player visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
+		return KO;
 	}
 	else if (timeWaiting > keyPoints[curkpt].time) {
 		timeWaiting = 0;
@@ -760,7 +763,7 @@ bool bt_guard::load(MKeyValue& atts) {
 	dbg("load de AI_GUARD\n");
 	int n = atts.getInt("kpt_size", 0);
 	keyPoints.resize(n);
-	for (unsigned int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		KPT_ATR_NAME(atrType, "type", i);
 		KPT_ATR_NAME(atrPos, "pos", i);
 		KPT_ATR_NAME(atrWait, "wait", i);
