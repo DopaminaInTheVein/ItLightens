@@ -517,6 +517,9 @@
     <ClCompile Include="components\comp_tracker.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="logic\damage.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">

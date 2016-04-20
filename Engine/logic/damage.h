@@ -1,7 +1,7 @@
 #ifndef INC_DAMAGE_H_
 #define INC_DAMAGE_H_
 
-#define CONFIG_DAMAGE(type, dmg, dmgPerSecond, cum) Damage::types[type] = TDamage(type,dmg,dmgPerSecond)
+#define CONFIG_DAMAGE(type, dmg, dmgPerSecond, cum) Damage::types[type] = TDamage(dmg, dmgPerSecond, cum)
 
 #define DMG_ONCE(type) \
 Damage::types[type].damageOnce
@@ -32,24 +32,10 @@ public:
 		WATER,
 		SIZE
 	};
+	static std::vector<TDamage> types;
 
-	static std::vector<TDamage> types = {};
+	static void init();
 
-	static void init() {
-		types.resize(DMG_TYPE::SIZE);
-		//TODO: assignValueToVar(..., ...);
-		//Type, DamageOnce, DamagePerSecond, Cumulative
-		TDamage dam = TDamage(0.f, 10.f, true);
-		types[ABSORB] = dam;
-		//CONFIG_DAMAGE(ABSORB, 0.f, 10.f, true);
-		CONFIG_DAMAGE(WATER, 0.f, 10.f, false);
-	}
-
-	//TODO: Poder modificar estos valores en ImGUI
-	//(añadir Damage::renderInMenu() en update para que funcione)
-	//void renderInMenu() {
-	//	
-	//}
 };
 
 #endif

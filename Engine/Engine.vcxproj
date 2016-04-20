@@ -167,6 +167,7 @@
     <ClCompile Include="logic\bt_mole.cpp" />
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_speedy.cpp" />
+    <ClCompile Include="logic\damage.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physx\physx_manager.cpp" />

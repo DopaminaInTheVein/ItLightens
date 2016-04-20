@@ -263,7 +263,7 @@ int bt_guard::actionAbsorb() {
 		sendMsgDmg = !sendMsgDmg;
 		TMsgDamageSpecific dmg;
 		dmg.type = Damage::ABSORB;
-		dmg.actived = true;
+		dmg.actived = false;
 		ePlayer->sendMsg(dmg);
 		return OK;
 	}
