@@ -190,6 +190,17 @@ void player_controller::myUpdate() {
 	}
 }
 
+void player_controller::Idle() {
+	CPlayerBase::Idle();
+	myExtraIdle();
+}
+
+void player_controller::myExtraIdle() {
+	if (pol_state != NEUTRAL) {
+		ChangeState("falling");
+	}
+}
+
 void player_controller::DoubleJump()
 {
 	PROFILE_FUNCTION("player controller: double jump");
@@ -863,6 +874,9 @@ string player_controller::GetPolarity() {
 
 //Render In Menu
 void player_controller::renderInMenu() {
+	char stateTxt[256];
+	sprintf(stateTxt, "STATE: %s", getState().c_str());
+	ImGui::Text(stateTxt);
 	ImGui::Text("Editable values (polarity):\n");
 	ImGui::SliderFloat("Radius1", &POL_RADIUS, 1.f, 10.f);
 	ImGui::SliderFloat("Radius2", &POL_RADIUS_STRONG, 1.f, 10.f);

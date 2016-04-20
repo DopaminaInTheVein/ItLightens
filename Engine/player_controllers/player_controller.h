@@ -181,6 +181,7 @@ public:
 
 	void Init();
 	void Idle();
+	void myExtraIdle();
 	void readIniFileAttr();
 
 	void DoubleJump();
