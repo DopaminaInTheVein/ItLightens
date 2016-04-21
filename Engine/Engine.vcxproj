@@ -99,6 +99,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app_modules\entities.cpp" />
+    <ClCompile Include="app_modules\gui\gui.cpp" />
+    <ClCompile Include="app_modules\gui\gui_bar_color.cpp" />
+    <ClCompile Include="app_modules\gui\gui_utils.cpp" />
     <ClCompile Include="app_modules\imgui\module_imgui.cpp" />
     <ClCompile Include="app_modules\io\io.cpp" />
     <ClCompile Include="app_modules\io\joystick.cpp" />
@@ -462,6 +465,10 @@
     <ClInclude Include="app_modules\app_module.h" />
     <ClInclude Include="app_modules\entities.h" />
     <ClInclude Include="app_modules\gameController.h" />
+    <ClInclude Include="app_modules\gui\gui.h" />
+    <ClInclude Include="app_modules\gui\gui_bar.h" />
+    <ClInclude Include="app_modules\gui\gui_bar_color.h" />
+    <ClInclude Include="app_modules\gui\gui_utils.h" />
     <ClInclude Include="app_modules\imgui\module_imgui.h" />
     <ClInclude Include="app_modules\io\digital_button.h" />
     <ClInclude Include="app_modules\io\io.h" />
