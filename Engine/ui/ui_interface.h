@@ -90,9 +90,11 @@ public:
 		ImGui::Separator();
 
 		//Polarity
-		player_controller * playerController = target_e->get<player_controller>();
-		ImGui::Text(playerController->GetPolarity().c_str());
-		ImGui::Separator();
+		if (CHandle(target_e).hasTag("player")) {
+			player_controller * playerController = target_e->get<player_controller>();
+			ImGui::Text(playerController->GetPolarity().c_str());
+			ImGui::Separator();
+		}
 
 		//put cheats here:
 		ImGui::Text("Press 'ESC' to exit\n");
