@@ -70,7 +70,6 @@ fn parseRigidBody parent collider = (
 )
 
 fn parseRigidBodyTrigger parent = (
-	print ("Trigger: " + _parsingObject.name)
 	local xml = parent.addChild "rigidbody"
 
 	-- Type collision = trigger
@@ -78,7 +77,6 @@ fn parseRigidBodyTrigger parent = (
 	
 	--Type Shape (Convex, box, etc.)
 	parseTypeShape xml _parsingObject
-	print ("Trigger End: " + _parsingObject.name)
 )
 
 fn parseCharController parent charController = (
@@ -99,7 +97,6 @@ fn parseCharController parent charController = (
 -- PHYSX --
 -------------
 fn _parse_physx = (
-	print "Physx: " + _parsingObject.name
 	-- Character Controller?
 	local charController = findHelper "CharController"
 	if charController != undefined then (
@@ -118,18 +115,40 @@ fn _parse_physx = (
 -- Trigger --
 --------------
 fn _parse_trigger = (
-	-- Leemos script
-	local script = getUserProp _parsingObject "script"
-	if (script as string) == "undefined" then (
-		msg = "¡Cuidaaaao! ¡Això és rojaaaaa!\n\n"
-		msg += ("El trigger [" + _parsingObject.name + "] no tiene script!\n")
-		messageBox msg
-		throw msg
-	)
-	
 	-- Rigid Body (Physx)
 	parseRigidBodyTrigger XML_PARSING
-	
+
 	-- Component
-	XML_PARSING.addChild script
+	local component = getUserProp _parsingObject "component"
+
+	--Enter
+	local onEnter = getUserProp _parsingObject "onEnter"
+
+	-- Exit
+	local onExit = getUserProp _parsingObject "onLeave"
+	
+	-- Script (component)
+	if component != undefined then (
+		if (onEnter != undefined) or (onExit != undefined) then (
+			throw "No puede ser un trigger de componente y logico a la vez!"
+		)
+		XML_PARSING.addChild component
+	) else (
+		if (onEnter == undefined) and (onExit == undefined) then (
+			throw "El trigger debe ser lógico o de componente!"
+		)
+		-- Logic trigger on enter
+		if onEnter != undefined then (
+			local nameFunc = "onEnter" + _parsingObject.name
+			luaAppend nameFunc onEnter
+		)
+		
+		-- Logic trigger on exit
+		if onExit != undefined then (
+			local nameFunc = "onLeave" + _parsingObject.name
+			luaAppend nameFunc onExit
+		)
+		
+		XML_PARSING.addChild "trigger_lua"	
+	)
 )

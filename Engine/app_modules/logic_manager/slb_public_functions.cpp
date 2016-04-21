@@ -1,19 +1,22 @@
 #include "mcv_platform.h"
 #include "slb_public_functions.h"
 #include "handle\handle_manager.h"
+#include "handle\handle.h"
+#include "components\comp_name.h"
 #include "components\entity.h"
 #include "components\entity_parser.h"
 #include "components\comp_charactercontroller.h"
+#include "components\comp_life.h"
 
 using namespace IdEntities;
 
+// player functions
 void SLBPlayer::getPlayer() {
 	VHandles targets = tags_manager.getHandlesByTag(getID("player"));
 	CHandle thePlayer = targets[targets.size() - 1];
 	player_handle = thePlayer;
 }
 
-// player functions
 void SLBPlayer::setPlayerPosition(float x, float y, float z) {
 	getPlayer();
 	const PxVec3 new_position(x, y, z);
@@ -46,6 +49,24 @@ float SLBPlayer::getPlayerZ() {
 	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
 
 	return entity_controller->GetPosition().z;
+}
+
+void SLBPlayer::addEnergy(int energy_to_add) {
+	getPlayer();
+	CEntity* entity = player_handle;
+
+	TCompLife* player_life = entity->get<TCompLife>();
+
+	player_life->currentlife += energy_to_add;
+}
+
+void SLBPlayer::refillEnergy() {
+	getPlayer();
+	CEntity* entity = player_handle;
+
+	TCompLife* player_life = entity->get<TCompLife>();
+
+	player_life->currentlife = player_life->maxlife;
 }
 
 // generic handle function
@@ -89,10 +110,6 @@ float SLBHandle::getZ() {
 
 	return entity_controller->GetPosition().z;
 }
-
-#include "handle\handle.h"
-#include "components\entity.h"
-#include "components\comp_name.h"
 
 // public functions
 void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {

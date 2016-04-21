@@ -122,6 +122,8 @@ switch (type)
 			{
 			// run the controller of this node
 			int res = tree->execAction(name);
+			// now, the next lines compute what's the NEXT node to use in the next frame...
+			if (res == STAY) { tree->setCurrent(this); return; } // looping vs. on-shot actions
 			// go to child
 			children[0]->recalc(tree);
 			}

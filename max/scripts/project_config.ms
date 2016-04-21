@@ -7,6 +7,7 @@ scenes_dir = data_dir + "scenes\\"
 materials_dir = data_dir + "materials\\"
 objMax_dir = max_dir + "maxObjects\\"
 helperMax_dir = max_dir + "maxHelpers\\"
+lua_dir = data_dir + "lua_scripts\\"
 --Scripts
 scriptsDir = (getDir #scripts) + "\\"
 mcvScriptsDir = scriptsDir + "mcv\\"

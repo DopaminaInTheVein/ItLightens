@@ -12,6 +12,7 @@
 struct TCompBox : public TCompBase {
 	bool moving						= false;
 	bool carePosition				= true;
+	bool removable					= true;
 	bool added						= false;
 
 	VEC3 originPoint;
@@ -52,11 +53,13 @@ struct TCompBox : public TCompBase {
 	}
 
 	bool load(MKeyValue& atts) {
-		carePosition = atts.getBool("fixed",false);
+		carePosition = atts.getBool("fixed", false);
+		removable = atts.getBool("removable", false);
 		return true;
 	}
 
 	VEC3 GetLeavePoint() const { return originPoint; }
+	bool isRemovable() { return removable;  }
 
 	void onUnLeaveBox(const TMsgLeaveBox& msg) {
 		added = !added;

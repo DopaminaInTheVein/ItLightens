@@ -18,11 +18,34 @@ for f in getParsing do
 -- Current Object Parsing from userprops to XML
 _parsingObject = undefined
 _descriptorObject = undefined
+_entities_ids = #()
 XML_PARSING = undefined
+_lua_code = ""
+
 
 --*******************************************************
 -------------FUNCTIONS-------------------------------------
 --*******************************************************
+
+---------------------------------------------------------------------
+--Entity Id --
+---------------------------------------------------------------------
+fn parseId = ( --Esto no va porque el parser solo parsea atributos de "hojas" !!!
+	local id = getUserProp _parsingObject "id"
+	if id != undefined then (
+		id = id as integer
+		if id == undefined then (
+			throw ("id de la entidad debe ser un número entero! [" + _parsingObject.name + "]")
+		)
+		if _entities_ids[id] == undefined then (
+			_entities_ids[id] = true
+			XML_PARSING.addAttr "id" id
+		) else (
+			throw ("id repetido! [" + _parsingObject.name + "]")
+		)
+	)	
+)
+
 ---------------------------------------------------------------------
 -- OBJECT --
 ---------------------------------------------------------------------
@@ -35,6 +58,7 @@ fn _parseObject parent = (
 	if parseable() then (
 		-- Añadimos Entity
 		XML_PARSING = parent.addChild "entity"
+		parseId()
 		
 		--Parseamos Tags
 		tags = _descriptorObject.getTags()
@@ -53,6 +77,8 @@ fn _parseObject parent = (
 ---------------------------------------------------------------------
 fn _parseLevel = (
 	local xml = XMLNode()
+	_lua_code = ""
+	_entities_ids = #()
 	xml.nombre = "entities"
 	for obj in $* do (
 		_parsingObject = obj
@@ -60,6 +86,7 @@ fn _parseLevel = (
 		--print (xml.parse())
 	)
 	_parsingObject = undefined
+	_entities_ids = #()
 	return xml
 )
 

@@ -64,6 +64,10 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(SPEED_ROT, fields);
 			SPEED_ROT = deg2rad(SPEED_ROT);
 			assignValueToVar(DAMAGE_LASER, fields);
+			assignValueToVar(MAX_REACTION_TIME, fields);
+			assignValueToVar(MAX_BOX_REMOVAL_TIME, fields);
+			assignValueToVar(BOX_REMOVAL_ANIM_TIME, fields);
+			assignValueToVar(LOOK_AROUND_TIME, fields);
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
@@ -88,11 +92,13 @@ void bt_guard::Init()
 		// insert all states in the map
 		createRoot("guard", PRIORITY, NULL, NULL);
 		addChild("guard", "stunned", ACTION, (btcondition)&bt_guard::playerStunned, (btaction)&bt_guard::actionStunned);
-		addChild("guard", "attack", PRIORITY, (btcondition)&bt_guard::playerDetected, NULL);
+		addChild("guard", "attack_decorator", DECORATOR, (btcondition)&bt_guard::playerDetected, (btaction)&bt_guard::actionReact);
+		addChild("attack_decorator", "attack", PRIORITY, NULL, NULL);
 		addChild("attack", "chase", ACTION, (btcondition)&bt_guard::playerOutOfReach, (btaction)&bt_guard::actionChase);
 		addChild("attack", "absorbsequence", SEQUENCE, NULL, NULL);
 		addChild("absorbsequence", "absorb", ACTION, NULL, (btaction)&bt_guard::actionAbsorb);
 		addChild("absorbsequence", "shootwall", ACTION, NULL, (btaction)&bt_guard::actionShootWall);
+		addChild("absorbsequence", "removebox", ACTION, NULL, (btaction)&bt_guard::actionRemoveBox);
 		addChild("guard", "alertdetected", SEQUENCE, (btcondition)&bt_guard::guardAlerted, NULL);
 		addChild("alertdetected", "search", ACTION, NULL, (btaction)&bt_guard::actionSearch);
 		addChild("alertdetected", "lookaround", ACTION, NULL, (btaction)&bt_guard::actionLookAround);
@@ -150,9 +156,16 @@ bool bt_guard::playerOutOfReach() {
 
 bool bt_guard::guardAlerted() {
 	PROFILE_FUNCTION("guard: guardalert");
-	if (playerLost || noiseHeard) {
+	if (playerLost) {
+		TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+		VEC3 posPlayer = tPlayer->getPosition();
+		player_last_seen_point = posPlayer;
 		return true;
 	}
+	else if (noiseHeard) {
+		return true;
+	}
+		
 	return false;
 }
 
@@ -169,6 +182,31 @@ int bt_guard::actionStunned() {
 			timerStunt -= getDeltaTime();
 		return STAY;
 	}
+}
+
+int bt_guard::actionReact() {
+	PROFILE_FUNCTION("guard: actionreact");
+	if (!myParent.isValid()) return false;
+	
+	if (!player_detected_start) {
+		// starting the reaction time decorator
+		player_detected_start = true;
+		reaction_time = rand() % (int)MAX_REACTION_TIME;
+		// calling OnGuardAttackEvent
+		logic_manager->throwEvent(logic_manager->OnGuardAttack, "");
+	}
+
+	// stay in this state until the reaction time is over
+	if (reaction_time < 0.f) {
+		player_detected_start = false;
+		return OK;
+	}
+	else {
+		if (reaction_time > -1)
+			reaction_time -= getDeltaTime();
+		return STAY;
+	}
+
 }
 
 int bt_guard::actionChase() {
@@ -216,8 +254,18 @@ int bt_guard::actionAbsorb() {
 														//Si pitch muy alto me alejo
 		goForward(-SPEED_WALK);
 	}
-	if (!playerVisible()) {
+	// if we don't see the player anymore
+	if (!playerVisible() && shooting) {
+		shooting = false;
+		// throw interrupt hit event
 		logic_manager->throwEvent(logic_manager->OnInterruptHit, "");
+		// stop damaging the player
+		CEntity* ePlayer = getPlayer();
+		sendMsgDmg = !sendMsgDmg;
+		TMsgDamageSpecific dmg;
+		dmg.type = Damage::ABSORB;
+		dmg.actived = false;
+		ePlayer->sendMsg(dmg);
 		return OK;
 	}
 	else {
@@ -234,18 +282,39 @@ int bt_guard::actionShootWall() {
 	VEC3 posPlayer = tPlayer->getPosition();
 	turnTo(posPlayer);
 	if (playerVisible()) {
-		return OK;
+		return KO;
 	}
 	else {
-		shootToPlayer();
-		if (timerShootingWall < 0) {
+		//if a box can be removed, we remove it (next state)
+		if (shootToPlayer()) {
+			removeBox(box_to_remove);
+			logic_manager->throwEvent(logic_manager->OnGuardRemoveBox, "");
 			return OK;
 		}
 		else {
-			if (timerShootingWall > -1)
-				timerShootingWall -= getDeltaTime();
-			return STAY;
+			if (timerShootingWall < 0) {
+				return KO;
+			}
+			else {
+				if (timerShootingWall > -1)
+					timerShootingWall -= getDeltaTime();
+				return STAY;
+			}
 		}
+	}
+}
+
+int bt_guard::actionRemoveBox() {
+	PROFILE_FUNCTION("guard: removebox");
+	if (!myParent.isValid()) return false;
+	// wait for the remove box animation to end
+	if (removing_box_animation_time > BOX_REMOVAL_ANIM_TIME) {
+		removing_box_animation_time = 0.f;
+		return OK;
+	}
+	else {
+		removing_box_animation_time += getDeltaTime();
+		return STAY;
 	}
 }
 
@@ -253,17 +322,33 @@ int bt_guard::actionSearch() {
 	PROFILE_FUNCTION("guard: search");
 	if (!myParent.isValid()) return false;
 	VEC3 myPos = getTransform()->getPosition();
-	float distance = squaredDistXZ(myPos, noisePoint);
 
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
 	}
+	else if (playerLost) {
+		float distance = squaredDistXZ(myPos, player_last_seen_point);
+		//Noise Point Reached ?
+		if (distance < DIST_SQ_REACH_PNT) {
+			playerLost = false;
+			looking_around_time = LOOK_AROUND_TIME;
+			return OK;
+		}
+		else {
+			getPath(myPos, player_last_seen_point, "sala1");
+
+			goTo(player_last_seen_point);
+			return STAY;
+		}
+	}
 	// If we heared a noise, we go to the point and look around
 	else if (noiseHeard) {
+		float distance = squaredDistXZ(myPos, noisePoint);
 		//Noise Point Reached ?
 		if (distance < DIST_SQ_REACH_PNT) {
 			noiseHeard = false;
+			looking_around_time = LOOK_AROUND_TIME;
 			return OK;
 		}
 		else {
@@ -275,17 +360,20 @@ int bt_guard::actionSearch() {
 	}
 	// If player was lost, we simply look around
 	else
+		looking_around_time = LOOK_AROUND_TIME;
 		return OK;
 }
+
 int bt_guard::actionLookAround() {
 	PROFILE_FUNCTION("guard: lookaround");
 	if (!myParent.isValid()) return false;
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
+		return KO;
 	}
 	//Turn arround
-	else if (deltaYawLookingArround < 2 * M_PI) {
+	else if (deltaYawLookingArround < 2 * M_PI && looking_around_time > 0.f) {
 		ChangePose(pose_idle_route);
 		float yaw, pitch;
 		getTransform()->getAngles(&yaw, &pitch);
@@ -294,6 +382,9 @@ int bt_guard::actionLookAround() {
 		deltaYawLookingArround += deltaYaw;
 		yaw += deltaYaw;
 		getTransform()->setAngles(yaw, pitch);
+
+		looking_around_time -= getDeltaTime();
+
 		return STAY;
 	}
 	else {
@@ -310,6 +401,7 @@ int bt_guard::actionSeekWpt() {
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
+		return KO;
 	}
 	//Go to waypoint
 	else if (keyPoints[curkpt].type == Seek) {
@@ -349,6 +441,7 @@ int bt_guard::actionNextWpt() {
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
+		return KO;
 	}
 	//Look to waypoint
 	else if (turnTo(dest)) {
@@ -367,6 +460,7 @@ int bt_guard::actionWaitWpt() {
 	//player visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
+		return KO;
 	}
 	else if (timeWaiting > keyPoints[curkpt].time) {
 		timeWaiting = 0;
@@ -554,9 +648,9 @@ bool bt_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) 
 	return ret;
 }
 
-void bt_guard::shootToPlayer() {
+bool bt_guard::shootToPlayer() {
 	//If cant shoot returns
-	if (noShoot) return;
+	if (noShoot) return false;
 
 	//Values
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
@@ -579,21 +673,47 @@ void bt_guard::shootToPlayer() {
 			if (h.hasTag("player")) {
 				damage = true;
 			}
+			else if (h.hasTag("box")) {
+				CEntity* box = h;
+				dbg("Disparando a caja %s!\n", box->getName());
+				TCompBox* box_component = box->get<TCompBox>();
+				if (box_component->isRemovable()) {
+					dbg("Caja %s es apartable!\n", box->getName());
+					// if remove box is ready, reset the timer and remove the box
+					if (remove_box_ready) {
+						remove_box_time = MAX_BOX_REMOVAL_TIME;
+						remove_box_ready = false;
+						box_to_remove = h;
+						return true;				
+					}
+					// if not, just update the timer
+					else {
+						remove_box_time -= getDeltaTime();
+						if (remove_box_time <= 0.f)
+							remove_box_ready = true;
+					}
+				}
+			}
 		}
 	}
 
 	//Do damage
 	if (damage && !sendMsgDmg) {
+		shooting = true;
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
-		TMsgDamage dmg;
-		dmg.modif = DAMAGE_LASER;
+		TMsgDamageSpecific dmg;
+		dmg.type = Damage::ABSORB;
+		dmg.actived = true;
 		ePlayer->sendMsg(dmg);
 	}
 	else if (!damage && sendMsgDmg) {
+		shooting = false;
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
-		TMsgStopDamage dmg;
+		TMsgDamageSpecific dmg;
+		dmg.type = Damage::ABSORB;
+		dmg.actived = false;
 		ePlayer->sendMsg(dmg);
 	}
 
@@ -603,6 +723,15 @@ void bt_guard::shootToPlayer() {
 		float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 		Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), posPlayer - myPos, distRay, RED);
 	}
+
+	return false;
+}
+
+void bt_guard::removeBox(CHandle box_handle) {
+	CEntity* box = box_handle;
+	TCompPhysics* box_physx = box->get<TCompPhysics>();
+	int lateral_force = rand() % 2500;
+	box_physx->AddForce(VEC3(lateral_force, rand() % 100, 2500 - lateral_force));
 }
 
 // -- Jurisdiction -- //
@@ -634,7 +763,7 @@ bool bt_guard::load(MKeyValue& atts) {
 	dbg("load de AI_GUARD\n");
 	int n = atts.getInt("kpt_size", 0);
 	keyPoints.resize(n);
-	for (unsigned int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		KPT_ATR_NAME(atrType, "type", i);
 		KPT_ATR_NAME(atrPos, "pos", i);
 		KPT_ATR_NAME(atrWait, "wait", i);

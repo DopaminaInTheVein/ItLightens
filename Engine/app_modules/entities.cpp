@@ -63,6 +63,10 @@ DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
+DECL_OBJ_MANAGER("trigger_lua", TTriggerLua);
+
+//Tracker
+DECL_OBJ_MANAGER("tracker", TCompTracker);
 
 DECL_OBJ_MANAGER("box_spawn", TCompBoxSpawner);
 DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
@@ -80,10 +84,12 @@ TMsgID generateUniqueMsgID() {
 
 bool CEntitiesModule::start() {
 	SBB::init();
+	Damage::init();
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 
 	getHandleManager<TVictoryPoint>()->init(20);
+	getHandleManager<TTriggerLua>()->init(100);
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(8);
@@ -125,6 +131,9 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompPhysics>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
 
+	//Trackers
+	getHandleManager<TCompTracker>()->init(100);
+
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
@@ -134,6 +143,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
+	SUBSCRIBE(player_controller, TMsgDamageSpecific, onSetDamage);
 	SUBSCRIBE(player_controller_speedy, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
@@ -143,6 +153,10 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
+
+	//Trackers
+	SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
@@ -161,6 +175,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
 	SUBSCRIBE(bt_guard, TMsgNoise, noise);
+	//TODO
+	//SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
 
 	//WIRES
 	SUBSCRIBE(TCompWire, TMsgEntityCreated, onCreate);
@@ -180,6 +196,10 @@ bool CEntitiesModule::start() {
 
 	//victory point
 	SUBSCRIBE(TVictoryPoint, TMsgTriggerIn, onTriggerEnterCall);
+
+	//trigger_lua
+	SUBSCRIBE(TTriggerLua, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TTriggerLua, TMsgTriggerOut, onTriggerExitCall);
 
 	//polarized
 	SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);

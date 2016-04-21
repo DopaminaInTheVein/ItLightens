@@ -21,11 +21,13 @@ fn startUp = (
 	)
 	filein (mcvScriptsDir+"resources.ms") 
 	
-	
-	
 	--Funciones MaxScript
 	filein (mcvScriptsDir+"object.ms") 
 	--filein (mcvScriptsDir+"export_scene.ms")
+	
+	-- Rigid Anim
+	fileIn (mcvScriptsDir + "RigidAnimExp.ms")
+
 	
 	--Tools MaxScript
 	getTools = getFiles (mcvTools + "*.ms")
@@ -36,7 +38,7 @@ fn startUp = (
 
 	-- Parsing
 	fileIn (mcvParsingDir + "parsing.ms")
-
+	
 	--Macros MaxScript
 	getMacros = getFiles (mcvMacrosDir + "*.mcr")
 	for f in getMacros do

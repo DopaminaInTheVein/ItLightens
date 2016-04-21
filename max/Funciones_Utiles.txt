@@ -1,3 +1,17 @@
+Exportar splines a resolución deseada
+=====================================
+(convertir a spline)
+[addSelection]
+macros.run "Modifier Stack" "Convert_to_Spline"
+
+(obtener longitud total) [para decidir resolucion]
+lengths = getSegLengths $ 1 cum:true
+longitud = lengths[lengths.count]
+
+(evaluar entre 0 y 1)
+(interpCurve3D $ indexSpline[1] 0.5) --> point mitad
+
+
 Consultar/Modificar User Defined Object Properties
 ==================================================
 

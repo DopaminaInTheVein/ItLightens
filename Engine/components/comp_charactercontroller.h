@@ -95,6 +95,10 @@ public:
 		return PhysxConversion::PxExVec3ToVec3(m_pActor->getPosition());
 	}
 
+	float GetGravitySpeed() const {
+		return m_gravitySpeed;
+	}
+
 	VEC3 GetFootPosition() const {
 		return PhysxConversion::PxExVec3ToVec3(m_pActor->getFootPosition());
 	}
@@ -103,6 +107,10 @@ public:
 
 	PxFilterData& GetFilterData() {
 		return m_filter;
+	}
+
+	VEC3 GetMovement() const {
+		return m_toMove;
 	}
 
 	//-----------------------------------------------------------------------------------------------------
@@ -124,6 +132,8 @@ public:
 	void AddAccel(const VEC3& direction, float accel = 1.0f);
 	void AddMovement(const VEC3& direction, float speed = 1.0f);
 	void AddImpulse(const VEC3 & impulse);
+	void ChangeSpeed(float speed);
+	void ResetMovement();
 	
 };
 

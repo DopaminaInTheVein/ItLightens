@@ -1,6 +1,7 @@
 #ifndef INC_IO_MOUSE_H_
 #define INC_IO_MOUSE_H_
 
+#define MOUSE_DELTA_MAX	10
 #include "digital_button.h"
 
 class TMouse {

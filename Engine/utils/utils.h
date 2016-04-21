@@ -20,6 +20,7 @@ void		dbg			(const char* fmt, ...);
 
 #endif
 
+#define MOD_YAW(a) ((a > deg2rad(180.0)) ? (a - deg2rad(360.0)) : ((a < deg2rad(-180.0)) ? (a + deg2rad(360.0)) : a))
 #define assignValueToVar(name, data_map) assingValueFromMap(&name, #name, data_map)
 
 using namespace rapidjson;

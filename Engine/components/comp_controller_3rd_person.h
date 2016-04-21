@@ -104,6 +104,8 @@ public:
 
 	void updateInput() {
 
+		float deltaYaw = 0.f;
+		float deltaPitch = 0.f;
 		int movement_x = 0;
 
 		if (io->joystick.drx != 0)
@@ -113,16 +115,17 @@ public:
 		else if (io->joystick.rx == io->joystick.max_stick_value)
 			movement_x = 2;
 
-		if (x_axis_inverted)	yaw -= (io->mouse.dx + movement_x)* rotation_sensibility*speed_camera;
-		else yaw += (io->mouse.dx + movement_x) * rotation_sensibility*speed_camera;
-		if (y_axis_inverted) pitch -= (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
-		else pitch += (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
+		if (x_axis_inverted)	deltaYaw -= (io->mouse.dx + movement_x)* rotation_sensibility*speed_camera;
+		else deltaYaw += (io->mouse.dx + movement_x) * rotation_sensibility*speed_camera;
+		if (y_axis_inverted) deltaPitch -= (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
+		else deltaPitch += (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
 
+		yaw = MOD_YAW(yaw + deltaYaw);
+		pitch += deltaPitch;
 		if (pitch >= max_pitch) {
 			pitch = max_pitch;
 		}
-
-		if (pitch <= min_pitch) {
+		else if (pitch <= min_pitch) {
 			pitch = min_pitch;
 		}
 
