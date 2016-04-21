@@ -19,7 +19,7 @@ bin/Engined.lib
 bin/Settings.cap
 bin/results.cpuprofile
 bin/Engined.exp
-bin/Engined.lib
+bin/Engine.lib
 *.VC.db
 *.orig
 *.opendb
