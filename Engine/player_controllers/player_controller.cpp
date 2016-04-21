@@ -726,7 +726,7 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 }
 
 void player_controller::UpdateOverCharge() {
-	if (damageFonts[Damage::ABSORB] > 1) {
+	if (damageFonts[Damage::ABSORB] > 0) {
 		float currentLife = getLife();
 
 		if (currentLife > evolution_limit) {
