@@ -41,11 +41,10 @@ void CGuiModule::update(float dt) {
 
 	//Barra de vida
 	CGuiBarColor lifeBar(Rect(10, 10, 100, 20), GUI::IM_GREEN);
-	static float fraction = 0.5f;
-	static int sign = 1;
-	lifeBar.draw(fraction);
-	if (fraction < 1.f) fraction += getDeltaTime();
-	else fraction -= getDeltaTime();
+	//static float fraction = 0.5f;
+	lifeBar.draw(0.5f);
+	//if (fraction < 1.f) fraction += getDeltaTime();
+	//else fraction -= getDeltaTime();
 
 	ImGui::End();
 }

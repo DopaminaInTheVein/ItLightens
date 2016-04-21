@@ -15,6 +15,7 @@ public:
 	CGuiBarColor(Rect r, ImColor c) : color(c) {
 		CGuiBar::fraction = 0.f;
 		CGuiBar::rectangle = r;
+		border = 5;
 	};
 	int getBorder();
 	float getAlpha();
