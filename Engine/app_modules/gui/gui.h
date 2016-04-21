@@ -13,11 +13,28 @@ struct Rect {
 };
 
 class CGuiModule : public IAppModule {
+private:
 	int resolution_x;
 	int resolution_y;
 
+	//ImGui Window
+	bool menu;
+	ImGuiWindowFlags window_flags;
+
+	//Game States Screens
+	typedef void (CGuiModule::*screenRender)();
+	vector<screenRender> screenRenders;
+
+	//Renders
+	void inline setRender(int state, screenRender render);
+	void inline callRender(int state);
+	void renderDefault();
+	void renderOnPlay();
+
 public:
 	bool start() override;
+	void initWindow();
+	void initScreens();
 	void stop() override;
 	void update(float dt) override;
 	void render() override;

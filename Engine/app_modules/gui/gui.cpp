@@ -10,63 +10,87 @@
 #include "gui_utils.h"
 #include "gui_bar_color.h"
 
+#include "app_modules/gameController.h"
+
 // ImGui LIB headers
 #pragma comment(lib, "imgui.lib" )
 
-
 #include <Commdlg.h>
 
-bool CGuiModule::start() {
+#define ADD_RENDER(state, renderName) \
+setRender(state, (screenRender) &CGuiModule::renderName);
+
+// ----------------------------------- START MODULE ----------------------------------- //
+bool CGuiModule::start()
+{
 	resolution_x = CApp::get().getXRes();
 	resolution_y = CApp::get().getYRes();
+	initWindow();
+	initScreens();
 	dbg("GUI module started\n");
 
 	return true;
 }
 
-void CGuiModule::stop() {
-	dbg("GUI module stopped");
-	//ImGui_ImplDX11_Shutdown();
-}
-
-void CGuiModule::update(float dt) {
-	ImGuiWindowFlags window_flags = 0;
+void CGuiModule::initWindow()
+{
+	menu = false;
 	window_flags |= ImGuiWindowFlags_NoMove
 		| ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_NoTitleBar
 		| ImGuiWindowFlags_NoSavedSettings
 		;
-	bool menu = false;
-	ImGui::Begin("Game GUI", &menu, ImVec2(resolution_x, resolution_y), 0.0f, window_flags);
+}
 
-	//Barra de vida
-	CGuiBarColor lifeBar(Rect(10, 10, 100, 20), GUI::IM_GREEN);
-	//static float fraction = 0.5f;
-	lifeBar.draw(0.5f);
-	//if (fraction < 1.f) fraction += getDeltaTime();
-	//else fraction -= getDeltaTime();
+void CGuiModule::initScreens()
+{
+	screenRenders = vector<screenRender>(CGameController::GAME_STATES_SIZE, (screenRender)&CGuiModule::renderDefault);
 
-	ImGui::End();
+	//Add here renders
+	//setRender(CGameController::RUNNING, (screenRender) &CGuiModule::renderOnPlay);
+	ADD_RENDER(CGameController::RUNNING, renderOnPlay);
+}
+
+void inline CGuiModule::setRender(int state, screenRender render)
+{
+	assert(state >= 0);
+	assert(state < CGameController::GAME_STATES_SIZE);
+	screenRenders[state] = render;
+}
+
+// ----------------------------------- UPDATE MODULE ----------------------------------- //
+void CGuiModule::update(float dt)
+{
+
+}
+
+// ----------------------------------- RENDER MODULE ----------------------------------- //
+void inline CGuiModule::callRender(int state)
+{
+	(this->*screenRenders[state])();
 }
 
 void CGuiModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);
-	//ImGui::Render();
+	ImGui::Begin("Game GUI", &menu, ImVec2(resolution_x, resolution_y), 0.0f, window_flags);
+	callRender(GameController->GetGameState());
+	ImGui::End();
+	//ImGui::Render(); <-- Ya lo hace el módulo de ImGui!!
 }
 
-void CGuiModule::drawBar(const char* name, Rect r, float fraction, VEC3 color) {
-	ImGuiWindowFlags window_flags = 0;
-	window_flags |= ImGuiWindowFlags_NoMove
-		| ImGuiWindowFlags_NoResize
-		| ImGuiWindowFlags_NoTitleBar
-		| ImGuiWindowFlags_NoSavedSettings
-		;
-	bool menu = false;
-	ImGui::Begin(name, &menu, ImVec2(resolution_x, resolution_y), 0.0f, window_flags);
-	
-	ImGui::SetWindowPos(ImVec2(r.x, r.y));
-	//ImGui::Color
-	ImGui::ProgressBar(fraction, ImVec2(r.sx, r.sy));
-	
-	ImGui::End();
+// ----- Render Default ----- //
+void CGuiModule::renderDefault() {
+	ImGui::TextColored(GUI::IM_RED, "GAME STATE \"%d\", doesn't have any render!", GameController->GetGameState());
+}
+
+// ----- Render On Play ----- //
+void CGuiModule::renderOnPlay() {
+	CGuiBarColor lifeBar(Rect(10, 10, 100, 20), GUI::IM_GREEN);
+	lifeBar.draw(0.5f);
+}
+
+// ----------------------------------- STOP MODULE ----------------------------------- //
+void CGuiModule::stop() {
+	dbg("GUI module stopped");
+	//ImGui_ImplDX11_Shutdown(); <-- Ya lo hace el modulo de ImGui!
 }

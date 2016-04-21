@@ -18,6 +18,7 @@ public:
 		VICTORY,
 		LOSE,
 		MENU,
+		GAME_STATES_SIZE
 	};
 
 	int GetGameState() const { return game_state; }
