@@ -240,7 +240,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
-	//sala = "scene_milestone_1";
+	sala = "scene_milestone_1";
 	sala = "scene_test_recast";
 	//sala = "pruebaExportador";
 
@@ -255,7 +255,6 @@ bool CEntitiesModule::start() {
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();
 	CNavmesh nav;
-
 	nav.m_input.clearInput();
 	for (CHandle han : collisionables) {
 		CEntity * e = han;
@@ -273,11 +272,12 @@ bool CEntitiesModule::start() {
 		}
 	}
 	nav.m_input.computeBoundaries();
-
 	SBB::postNavmesh(nav);
 	std::ifstream is(salaloc.c_str());
 	std::ifstream is2(salalocExtra.c_str());
 	bool recalc = !is.is_open() && !is2.is_open();
+	is.close();
+	is2.close();
 	if (!recalc) {
 		// restore the navmesh from the archive
 		recalc = !nav.reload(salaloc, salalocExtra);
@@ -292,8 +292,6 @@ bool CEntitiesModule::start() {
 		SBB::postNavmesh(nav);
 		SBB::postBool(sala, true);
 	}
-	is.close();
-	is2.close();
 	TTagID tagIDcamera = getID("camera_main");
 	TTagID tagIDwall = getID("breakable_wall");
 	TTagID tagIDminus = getID("minus_wall");
@@ -448,7 +446,6 @@ void CEntitiesModule::recalcNavmesh() {
 	// GENERATE NAVMESH
 	CNavmesh nav = SBB::readNavmesh();
 	nav.build(salaloc, salalocExtra);
-
 	SBB::postNavmesh(nav);
 	SBB::postBool(sala, true);
 }

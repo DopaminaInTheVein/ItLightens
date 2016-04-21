@@ -372,21 +372,21 @@ void CNavmesh::storeExtraData(std::string path) {
 void CNavmesh::restoreExtraData(std::string path) {
 	std::string str = "";
 	std::ifstream ifs(path);
-	m_dmesh = new rcPolyMeshDetail;
+	m_dmesh = rcAllocPolyMeshDetail();
 	//m_dmesh
 	std::string val;
 	std::getline(ifs, val);
 	int ntris = stoi(val);
 	m_dmesh->ntris = ntris;
-	m_dmesh->tris = new unsigned char[ntris];
+	m_dmesh->tris = new unsigned char[ntris * 4];
 	std::getline(ifs, val);
 	int nverts = stoi(val);
 	m_dmesh->nverts = nverts;
-	m_dmesh->verts = new float[nverts];
+	m_dmesh->verts = new float[nverts * 3];
 	std::getline(ifs, val);
 	int nmeshes = stoi(val);
 	m_dmesh->nmeshes = nmeshes;
-	m_dmesh->meshes = new unsigned int[nmeshes];
+	m_dmesh->meshes = new unsigned int[nmeshes * 4];
 	if (ntris > 0) {
 		for (int i = 0; i < ntris * 4; ++i) {
 			std::getline(ifs, val);
@@ -403,7 +403,8 @@ void CNavmesh::restoreExtraData(std::string path) {
 	if (nmeshes > 0) {
 		for (int i = 0; i < nmeshes * 4; ++i) {
 			std::getline(ifs, val);
-			m_dmesh->meshes[i] = stoi(val);
+			unsigned int ival = stoi(val);
+			m_dmesh->meshes[i] = ival;
 		}
 	}
 	ifs.close();
@@ -435,14 +436,13 @@ bool CNavmesh::reload(std::string salaloc, std::string salalocExtra) {
 	std::vector<char> buffer((
 		std::istreambuf_iterator<char>(input)),
 		(std::istreambuf_iterator<char>()));
-
+	input.close();
 	const char * navDataS = buffer.data();
 	int  navDataSize = buffer.size();
 
 	char * dataSigned = const_cast<char*>(navDataS);
 	unsigned char * navData = reinterpret_cast<unsigned char*>(dataSigned);
 	// init Data
-	input.close();
 	m_navMesh = dtAllocNavMesh();
 	if (!m_navMesh) {
 		dtFree(navData);
@@ -451,7 +451,7 @@ bool CNavmesh::reload(std::string salaloc, std::string salalocExtra) {
 	}
 	dtStatus status = m_navMesh->init(navData, navDataSize, DT_TILE_FREE_DATA);
 	if (dtStatusFailed(status)) {
-		//dtFree(navData);
+		dtFree(navData);
 		m_ctx->log(RC_LOG_ERROR, "Could not reinit Detour navmesh");
 		return false;
 	}
