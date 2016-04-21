@@ -63,7 +63,7 @@ btnode *bt::addChild(string parent, string son, int type, btcondition btc, CLogi
 	s->setParent(p);
 	s->setType(type);
 	if (btc != NULL) addCondition(son, btc);
-	if (evt != NULL) { 
+	if (evt != NULL) {
 		btevent event;
 		event.evt = evt;
 		event.params = params;
@@ -138,7 +138,7 @@ int bt::execEvent(string s)
 	{
 		printf("ERROR: Missing node event for node %s\n", s.c_str());
 	}
-	else 
+	else
 	{
 		btevent to_execute = (*getEvents())[s];
 		logic_manager->throwEvent(to_execute.evt, to_execute.params);
@@ -165,7 +165,7 @@ btnode** bt::getRoot() {
 	return nullptr;
 }
 void bt::getPath(VEC3 startPoint, VEC3 endPoint, string nombreSala) {
-	CNavmesh nav = SBB::readNavmesh(nombreSala);
+	CNavmesh nav = SBB::readNavmesh();
 	CNavmeshQuery query(&nav);
 	query.updatePosIni(startPoint);
 	query.updatePosEnd(endPoint);
@@ -211,7 +211,7 @@ CEntity* bt::frontCollisionBOX(VEC3 npcPos, CEntity *  molePursuingBoxi) {
 }
 bool bt::avoidBoxByLeft(CEntity * candidateE, VEC3 npcPos, string nombreSala) {
 	TCompTransform * candidateT = candidateE->get<TCompTransform>();
-	CNavmesh nav = SBB::readNavmesh(nombreSala);
+	CNavmesh nav = SBB::readNavmesh();
 	CNavmeshQuery query(&nav);
 	query.wallDistance(candidateT->getPosition());
 	float distanceToWallOrig = query.getCalculatesDistanceToWall();

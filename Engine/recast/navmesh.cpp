@@ -5,6 +5,7 @@
 #include "recast/Detour/Include/DetourNavMeshBuilder.h"
 #include "recast/DebugUtils/Include/RecastDump.h"
 #include "recast/DebugUtils/Include/DetourDebugDraw.h"
+#include <fstream>
 
 CNavmesh::CNavmesh()
 	: m_navMesh(nullptr)
@@ -13,10 +14,7 @@ CNavmesh::CNavmesh()
 	m_ctx = &m_context;
 }
 
-void CNavmesh::build() {
-	destroy();
-	m_ctx->resetLog();
-
+rcConfig CNavmesh::getRcConfig() {
 	rcConfig config;
 	rcVcopy(config.bmin, &m_input.aabb_min.x);
 	rcVcopy(config.bmax, &m_input.aabb_max.x);
@@ -34,15 +32,23 @@ void CNavmesh::build() {
 	config.maxVertsPerPoly = 6;
 	config.detailSampleDist = 1.0f;
 	config.detailSampleMaxError = 0.1f;
+	return config;
+}
 
-	m_navMesh = create(config);
+void CNavmesh::build(std::string salaloc, std::string salalocExtra) {
+	destroy();
+	m_ctx->resetLog();
+
+	rcConfig config = getRcConfig();
+
+	m_navMesh = create(config, salaloc, salalocExtra);
 	if (m_navMesh)
 		prepareQueries();
 
 	dumpLog();
 }
 
-dtNavMesh* CNavmesh::create(const rcConfig& cfg) {
+dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc, std::string salalocExtra) {
 	// WARNING: We will admit animated meshes, but the first snapshot will be the used to generate the navmesh
 	//assert( mesh->header.nsnapshots == 1 ); // must be a static mesh!
 
@@ -300,6 +306,16 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg) {
 
 		dtStatus status;
 
+		//store Data
+		char* str = reinterpret_cast<char*>(navData);
+		std::ofstream ofs(salaloc, std::ios::binary);
+		ofs.write(str, navDataSize);
+		ofs.close();
+
+		// store extra data
+		storeExtraData(salalocExtra);
+
+		// init Data
 		status = m_nav->init(navData, navDataSize, DT_TILE_FREE_DATA);
 		if (dtStatusFailed(status)) {
 			dtFree(navData);
@@ -315,6 +331,135 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg) {
 	m_ctx->log(RC_LOG_PROGRESS, ">> Polymesh: %d vertices  %d polygons", m_pmesh->nverts, m_pmesh->npolys);
 
 	return m_nav;
+}
+
+void CNavmesh::storeExtraData(std::string path) {
+	std::string str = "";
+	std::ofstream ofs(path);
+	//m_dmesh
+	int ntris = m_dmesh->ntris;
+	str += std::to_string(ntris);
+	str.push_back('\n');
+	int nverts = m_dmesh->nverts;
+	str += std::to_string(nverts);
+	str.push_back('\n');
+	int nmeshes = m_dmesh->nmeshes;
+	str += std::to_string(nmeshes);
+	str.push_back('\n');
+	if (ntris > 0) {
+		for (int i = 0; i < ntris * 4; ++i) {
+			unsigned int uint = m_dmesh->tris[i];
+			str += std::to_string(uint);
+			str.push_back('\n');
+		}
+	}
+	if (nverts > 0) {
+		for (int i = 0; i < nverts * 3; ++i) {
+			str += std::to_string(m_dmesh->verts[i]);
+			str.push_back('\n');
+		}
+	}
+	if (nmeshes > 0) {
+		for (int i = 0; i < nmeshes * 4; ++i) {
+			str += std::to_string(m_dmesh->meshes[i]);
+			str.push_back('\n');
+		}
+	}
+	ofs.write(str.c_str(), str.length());
+	ofs.close();
+}
+
+void CNavmesh::restoreExtraData(std::string path) {
+	std::string str = "";
+	std::ifstream ifs(path);
+	m_dmesh = new rcPolyMeshDetail;
+	//m_dmesh
+	std::string val;
+	std::getline(ifs, val);
+	int ntris = stoi(val);
+	m_dmesh->ntris = ntris;
+	m_dmesh->tris = new unsigned char[ntris];
+	std::getline(ifs, val);
+	int nverts = stoi(val);
+	m_dmesh->nverts = nverts;
+	m_dmesh->verts = new float[nverts];
+	std::getline(ifs, val);
+	int nmeshes = stoi(val);
+	m_dmesh->nmeshes = nmeshes;
+	m_dmesh->meshes = new unsigned int[nmeshes];
+	if (ntris > 0) {
+		for (int i = 0; i < ntris * 4; ++i) {
+			std::getline(ifs, val);
+			unsigned int ival = stoi(val);
+			m_dmesh->tris[i] = ival;
+		}
+	}
+	if (nverts > 0) {
+		for (int i = 0; i < nverts * 3; ++i) {
+			std::getline(ifs, val);
+			m_dmesh->verts[i] = stof(val);
+		}
+	}
+	if (nmeshes > 0) {
+		for (int i = 0; i < nmeshes * 4; ++i) {
+			std::getline(ifs, val);
+			m_dmesh->meshes[i] = stoi(val);
+		}
+	}
+	ifs.close();
+}
+bool CNavmesh::reload(std::string salaloc, std::string salalocExtra) {
+	destroy();
+	m_ctx->resetLog();
+	m_navMesh = nullptr;
+
+	rcConfig cfg = getRcConfig();
+	// Init build configuration from GUI
+	memset(&m_cfg, 0, sizeof(m_cfg));
+	m_cfg.cs = cfg.cs;
+	m_cfg.ch = cfg.ch;
+	m_cfg.walkableSlopeAngle = cfg.walkableSlopeAngle;
+	m_cfg.walkableHeight = (int)ceilf(cfg.walkableHeight / m_cfg.ch);
+	m_cfg.walkableClimb = (int)floorf(cfg.walkableClimb / m_cfg.ch);
+	m_cfg.walkableRadius = (int)ceilf(cfg.walkableRadius / m_cfg.cs);
+	m_cfg.maxEdgeLen = (int)(cfg.maxEdgeLen / cfg.cs);
+	m_cfg.maxSimplificationError = cfg.maxSimplificationError;
+	m_cfg.minRegionArea = (int)rcSqr(cfg.minRegionArea);		// Note: area = size*size
+	m_cfg.mergeRegionArea = (int)rcSqr(cfg.mergeRegionArea);	// Note: area = size*size
+	m_cfg.maxVertsPerPoly = (int)cfg.maxVertsPerPoly;
+	m_cfg.detailSampleDist = cfg.detailSampleDist < 0.9f ? 0 : cfg.cs * cfg.detailSampleDist;
+	m_cfg.detailSampleMaxError = cfg.ch * cfg.detailSampleMaxError;
+
+	std::ifstream input(salaloc, std::ios::binary);
+	// copies all data into buffer
+	std::vector<char> buffer((
+		std::istreambuf_iterator<char>(input)),
+		(std::istreambuf_iterator<char>()));
+
+	const char * navDataS = buffer.data();
+	int  navDataSize = buffer.size();
+
+	char * dataSigned = const_cast<char*>(navDataS);
+	unsigned char * navData = reinterpret_cast<unsigned char*>(dataSigned);
+	// init Data
+	input.close();
+	m_navMesh = dtAllocNavMesh();
+	if (!m_navMesh) {
+		dtFree(navData);
+		m_ctx->log(RC_LOG_ERROR, "Could not create Detour navmesh");
+		return nullptr;
+	}
+	dtStatus status = m_navMesh->init(navData, navDataSize, DT_TILE_FREE_DATA);
+	if (dtStatusFailed(status)) {
+		//dtFree(navData);
+		m_ctx->log(RC_LOG_ERROR, "Could not reinit Detour navmesh");
+		return false;
+	}
+	if (m_navMesh) {
+		prepareQueries();
+	}
+	restoreExtraData(salalocExtra);
+	return true;
 }
 
 void CNavmesh::prepareQueries() {

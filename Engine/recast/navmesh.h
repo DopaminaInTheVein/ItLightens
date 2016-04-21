@@ -22,6 +22,9 @@ private:
 
 	rcBuildContext        m_context;
 
+	rcConfig getRcConfig();
+	void storeExtraData(std::string path);
+	void restoreExtraData(std::string path);
 public:
 	enum {
 		FLAG_WALK = 0x01
@@ -57,8 +60,10 @@ public:
 	EDrawMode             m_draw_mode;
 
 	CNavmesh();
-	void build();
-	dtNavMesh* create(const rcConfig& cfg);
+	void build(std::string salaloc, std::string salalocExtra);
+	bool reload(std::string salaloc, std::string salalocExtra);
+
+	dtNavMesh* create(const rcConfig& cfg, std::string salaloc, std::string salalocExtra);
 	void prepareQueries();
 	void destroy();
 	void dumpLog();

@@ -118,18 +118,18 @@ bool bt_speedy::dashReady() {
 }
 // actions
 int bt_speedy::actionNextWpt() {
-	if (!SBB::readBool("sala1")) {
+	if (!SBB::readBool(SBB::readSala())) {
 		return STAY;
 	}
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
 	VEC3 initial = transform->getPosition();
-	getPath(initial, target, "sala1");
+	getPath(initial, target, SBB::readSala());
 	return OK;
 }
 
 int bt_speedy::actionSeekWpt() {
-	if (!SBB::readBool("sala1")) {
+	if (!SBB::readBool(SBB::readSala())) {
 		setCurrent(NULL);
 		return OK;
 	}
@@ -142,7 +142,7 @@ int bt_speedy::actionSeekWpt() {
 	}
 	VEC3 npcPos = transform->getPosition();
 	VEC3 npcFront = transform->getFront();
-	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, "sala1")) {
+	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, SBB::readSala())) {
 		moveFront(speed);
 		return STAY;
 	}

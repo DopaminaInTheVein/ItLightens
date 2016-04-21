@@ -190,7 +190,7 @@ int bt_guard::actionChase() {
 		return OK;
 	}
 	else {
-		getPath(myPos, posPlayer, "sala1");
+		getPath(myPos, posPlayer, SBB::readSala());
 
 		ChangePose(pose_run_route);
 		goTo(posPlayer);
@@ -267,7 +267,7 @@ int bt_guard::actionSearch() {
 			return OK;
 		}
 		else {
-			getPath(myPos, noisePoint, "sala1");
+			getPath(myPos, noisePoint, SBB::readSala());
 
 			goTo(noisePoint);
 			return STAY;
@@ -319,7 +319,7 @@ int bt_guard::actionSeekWpt() {
 			return OK;
 		}
 		else {
-			getPath(myPos, dest, "sala1");
+			getPath(myPos, dest, SBB::readSala());
 			ChangePose(pose_run_route);
 			goTo(dest);
 			return STAY;
@@ -429,7 +429,7 @@ bool bt_guard::canHear(VEC3 position, float intensity) {
 // -- Go To -- //
 void bt_guard::goTo(const VEC3& dest) {
 	PROFILE_FUNCTION("guard: go to");
-	if (!SBB::readBool("sala1")) {
+	if (!SBB::readBool(SBB::readSala())) {
 		return;
 	}
 	VEC3 target = dest;
@@ -441,7 +441,7 @@ void bt_guard::goTo(const VEC3& dest) {
 		target = pathWpts[currPathWpt];
 	}
 	VEC3 npcFront = getTransform()->getFront();
-	if (needsSteering(npcPos + npcFront, getTransform(), SPEED_WALK, myParent, "sala1")) {
+	if (needsSteering(npcPos + npcFront, getTransform(), SPEED_WALK, myParent, SBB::readSala())) {
 		goForward(SPEED_WALK);
 	}
 	else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {

@@ -10,6 +10,9 @@ class CEntitiesModule : public IAppModule {
 	bool use_parallel = false;
 public:
 	std::vector< CHandle > collisionables;
+	std::string sala;
+	std::string salaloc;
+	std::string salalocExtra;
 
 	bool start() override;
 	void stop() override;

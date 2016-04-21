@@ -21,6 +21,7 @@
 #include <vector>
 #include <thread>
 #include <future>
+#include <fstream>
 
 DECL_OBJ_MANAGER("entity", CEntity);		//need to be first
 DECL_OBJ_MANAGER("name", TCompName);
@@ -67,7 +68,6 @@ DECL_OBJ_MANAGER("box_spawn", TCompBoxSpawner);
 DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
 
 DECL_OBJ_MANAGER("trigger_lua", TCompTriggerStandar);
-
 
 CCamera * camera;
 
@@ -220,21 +220,60 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
+	//sala = "scene_milestone_1";
+	sala = "scene_test_recast";
+	//sala = "pruebaExportador";
+
+	SBB::postSala(sala);
+	salaloc = "data/navmeshes/" + sala + ".data";
+	salalocExtra = "data/navmeshes/" + sala + "_extra.data";
+
 	CEntityParser ep;
-	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
-	//bool is_ok = ep.xmlParseFile("data/scenes/scene_test_recast.xml");
-	//bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
+	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();
 	CNavmesh nav;
-	SBB::postNavmesh("sala1", nav);
-	SBB::postBool("sala1", false);
 
-	std::thread thre(&CEntitiesModule::recalcNavmesh, this);
-	thre.detach();
+	nav.m_input.clearInput();
+	for (CHandle han : collisionables) {
+		CEntity * e = han;
+		if (e) {
+			TCompPhysics * p = e->get<TCompPhysics>();
+			PxBounds3 bounds = p->getActor()->getWorldBounds();
+			VEC3 min, max;
+			min.x = bounds.minimum.x;
+			min.y = bounds.minimum.y;
+			min.z = bounds.minimum.z;
+			max.x = bounds.maximum.x;
+			max.y = bounds.maximum.y;
+			max.z = bounds.maximum.z;
+			nav.m_input.addInput(min, max);
+		}
+	}
+	nav.m_input.computeBoundaries();
 
+	SBB::postNavmesh(nav);
+	std::ifstream is(salaloc.c_str());
+	std::ifstream is2(salalocExtra.c_str());
+	bool recalc = !is.is_open() && !is2.is_open();
+	if (!recalc) {
+		// restore the navmesh from the archive
+		recalc = !nav.reload(salaloc, salalocExtra);
+	}
+	if (recalc) {
+		// make mesh on a separate thread
+		SBB::postBool(sala, false);
+		std::thread thre(&CEntitiesModule::recalcNavmesh, this);
+		thre.detach();
+	}
+	else {
+		SBB::postNavmesh(nav);
+		SBB::postBool(sala, true);
+	}
+	is.close();
+	is2.close();
 	TTagID tagIDcamera = getID("camera_main");
 	TTagID tagIDwall = getID("breakable_wall");
 	TTagID tagIDminus = getID("minus_wall");
@@ -387,25 +426,9 @@ void CEntitiesModule::renderInMenu() {
 
 void CEntitiesModule::recalcNavmesh() {
 	// GENERATE NAVMESH
-	CNavmesh nav;
-	nav.m_input.clearInput();
-	for (CHandle han : collisionables) {
-		CEntity * e = han;
-		if (e) {
-			TCompPhysics * p = e->get<TCompPhysics>();
-			PxBounds3 bounds = p->getActor()->getWorldBounds();
-			VEC3 min, max;
-			min.x = bounds.minimum.x;
-			min.y = bounds.minimum.y;
-			min.z = bounds.minimum.z;
-			max.x = bounds.maximum.x;
-			max.y = bounds.maximum.y;
-			max.z = bounds.maximum.z;
-			nav.m_input.addInput(min, max);
-		}
-	}
-	nav.m_input.computeBoundaries();
-	nav.build();
-	SBB::postNavmesh("sala1", nav);
-	SBB::postBool("sala1", true);
+	CNavmesh nav = SBB::readNavmesh();
+	nav.build(salaloc, salalocExtra);
+
+	SBB::postNavmesh(nav);
+	SBB::postBool(sala, true);
 }
