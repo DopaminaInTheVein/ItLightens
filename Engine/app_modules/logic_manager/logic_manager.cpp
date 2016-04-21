@@ -31,8 +31,6 @@ bool CLogicManagerModule::start() {
 
 void CLogicManagerModule::update(float dt) {
 
-	std::vector<int> to_erase;
-
 	// update the timer of each command
 	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ) {
 		command_it->execution_time -= dt;

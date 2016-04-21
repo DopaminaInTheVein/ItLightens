@@ -369,6 +369,8 @@ void CEntitiesModule::update(float dt) {
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);
 	getHandleManager<TCompPhysics>()->updateAll(dt);
+
+	SBB::update(dt);
 }
 
 void CEntitiesModule::render() {

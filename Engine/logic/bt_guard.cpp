@@ -5,9 +5,9 @@
 #include "utils/XMLParser.h"
 #include "utils/utils.h"
 #include "logic/sbb.h"
-#include "app_modules\io\io.h"
-#include "app_modules\logic_manager\logic_manager.h"
-#include "ui\ui_interface.h"
+#include "app_modules/io/io.h"
+#include "app_modules/logic_manager/logic_manager.h"
+#include "ui/ui_interface.h"
 
 map<string, bt_guard::KptType> bt_guard::kptTypes = {
 	  {"seek", KptType::Seek}
@@ -68,6 +68,7 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(MAX_BOX_REMOVAL_TIME, fields);
 			assignValueToVar(BOX_REMOVAL_ANIM_TIME, fields);
 			assignValueToVar(LOOK_AROUND_TIME, fields);
+			assignValueToVar(GUARD_ALERT_TIME, fields);
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
@@ -135,7 +136,27 @@ bool bt_guard::playerStunned() {
 
 bool bt_guard::playerDetected() {
 	PROFILE_FUNCTION("guard: player detected");
-	return playerVisible();
+	// if the player is visible
+	if (playerVisible()) {
+		TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+		VEC3 posPlayer = tPlayer->getPosition();
+		VEC3 myPos = getTransform()->getPosition();
+
+		// we send a new alert with our position and the player position
+		guard_alert alert;
+		alert.guard_position = myPos;
+		alert.alert_position = posPlayer;
+		alert.timer = GUARD_ALERT_TIME;
+
+		CEntity* entity = myHandle.getOwner();		
+		string name = entity->getName() + string("_player_detected");
+
+		SBB::postGuardAlert(name, alert);
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool bt_guard::playerOutOfReach() {
