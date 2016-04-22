@@ -341,7 +341,13 @@ int bt_guard::actionAbsorb() {
 		dmg.type = Damage::ABSORB;
 		dmg.actived = false;
 		ePlayer->sendMsg(dmg);
-		return OK;
+		// if the player went out of reach, we don't shoot the wall
+		if (squaredDistXZ(myPos, posPlayer) > DIST_SQ_PLAYER_DETECTION || !inJurisdiction(posPlayer)) {
+			return KO;
+		}
+		else {
+			return OK;
+		}
 	}
 	else {
 		ChangePose(pose_shoot_route);
@@ -790,7 +796,7 @@ bool bt_guard::shootToPlayer() {
 	CEntity *entity = myHandle.getOwner();
 
 	//Do damage
-	if (damage && !sendMsgDmg) {
+	if (damage && !sendMsgDmg && !shooting) {
 		shooting = true;
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
@@ -800,7 +806,7 @@ bool bt_guard::shootToPlayer() {
 		dmg.actived = true;
 		ePlayer->sendMsg(dmg);
 	}
-	else if (!damage && sendMsgDmg) {
+	else if (!damage && sendMsgDmg && shooting) {
 		shooting = false;
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;

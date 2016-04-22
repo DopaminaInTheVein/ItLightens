@@ -826,10 +826,15 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 		eMe->sendMsg(msgDamagePerSecond);
 		if (type == Damage::ABSORB) {
 			//LogicManager
-			if (msg.actived)
+			if (msg.actived) {
 				damage_source = msg.source;
-			else
+			}
+			else {
 				damage_source = "none";
+				TMsgDamageSave msgDamagePerSecond;
+				msgDamagePerSecond.modif = 0.1f;
+				eMe->sendMsg(msgDamagePerSecond);
+			}
 			if (damageFonts[type] > 0) {
 				logic_manager->throwEvent(logic_manager->OnStartReceiveHit, "");
 			} else {
