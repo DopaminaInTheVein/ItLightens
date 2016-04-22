@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="skeletons/papa_pitufo/papa_pitufo.mesh" material="materials/_Papa_SmurfpapaSmurf.material" />
-</static_mesh>

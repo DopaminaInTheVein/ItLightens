@@ -1,5 +1,0 @@
-<tech>
-    <vs fx="basic" main="VS" decl="positions_color"/>
-    <ps fx="basic" main="PS"/>
-</tech>
-
