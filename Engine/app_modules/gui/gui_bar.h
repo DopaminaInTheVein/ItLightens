@@ -24,7 +24,7 @@ public:
 	void setSize(int width, int height) { setWidth(width); setHeight(height); }
 	void setWidth(int width) { rectangle.sx = width; }
 	void setHeight(int height) { rectangle.sy = height; }
-	void setFraction(float new_fraction) {
+	void setValue(float new_fraction) {
 		target = new_fraction;
 		dbg("Set Target: %f\n", target);
 	}

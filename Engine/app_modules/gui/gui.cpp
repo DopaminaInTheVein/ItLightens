@@ -11,6 +11,7 @@
 #include "gui_bar_color.h"
 
 #include "app_modules/gameController.h"
+#include "app_modules/gameData.h"
 
 // ImGui LIB headers
 #pragma comment(lib, "imgui.lib" )
@@ -35,6 +36,12 @@ bool CGuiModule::start()
 
 	//Bar Test
 	barTest = new CGuiBarColor(Rect(200, 50, 200, 20), GUI::IM_GREEN);
+	//barTest = new CGuiBarColor(
+	//	Rect(0.5f * resolution_x,
+	//		0.5f * resolution_y,
+	//		0.5f * resolution_x,
+	//		0.5f * resolution_y)
+	//	, GUI::IM_GREEN);
 	
 	dbg("GUI module started\n");
 
@@ -95,8 +102,9 @@ void CGuiModule::updateDefault(float dt)
 // ----- Update On Play ----- //
 void CGuiModule::updateOnPlay(float dt)
 {
-	if (io->keys[VK_CONTROL].becomesPressed()) barTest->setFraction(0.01f);
-	else if (io->keys[VK_DOWN].becomesPressed()) barTest->setFraction(1.0f);
+	//if (io->keys[VK_CONTROL].becomesPressed()) barTest->setFraction(0.01f);
+	//else if (io->keys[VK_DOWN].becomesPressed()) barTest->setFraction(1.0f);
+	barTest->setValue(GAMEDATA::PLAYER::getLife());
 	barTest->update(dt);
 }
 

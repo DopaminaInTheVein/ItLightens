@@ -465,6 +465,7 @@
     <ClInclude Include="app_modules\app_module.h" />
     <ClInclude Include="app_modules\entities.h" />
     <ClInclude Include="app_modules\gameController.h" />
+    <ClInclude Include="app_modules\gameData.h" />
     <ClInclude Include="app_modules\gui\gui.h" />
     <ClInclude Include="app_modules\gui\gui_bar.h" />
     <ClInclude Include="app_modules\gui\gui_bar_color.h" />

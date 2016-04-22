@@ -1261,6 +1261,9 @@
     <ClInclude Include="app_modules\gui\gui_utils.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
+    <ClInclude Include="app_modules\gameData.h">
+      <Filter>app_modules\game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
