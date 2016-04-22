@@ -24,10 +24,10 @@ void CGuiBarColor::setAlpha(float alpha)
 	color.Value.w = alpha;
 }
 
-void CGuiBarColor::draw(float fraction)
+void CGuiBarColor::draw()
 {
 	drawRect(rectangle, IM_BLACK);
-	drawForegroundBar(fraction);
+	drawForegroundBar(current);
 }
 
 void CGuiBarColor::drawForegroundBar(float fraction) {

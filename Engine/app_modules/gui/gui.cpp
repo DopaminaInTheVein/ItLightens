@@ -18,8 +18,13 @@
 #include <Commdlg.h>
 
 #define ADD_RENDER(state, renderName) \
-setRender(state, (screenRender) &CGuiModule::renderName);
+setRender(state, (screenRender) &CGuiModule::renderName)
 
+#define ADD_UPDATER(state, updaterName) \
+setUpdater(state, (screenUpdater) &CGuiModule::updaterName)
+
+#define ADD_GAME_STATE(state, name) \
+ADD_RENDER(state, render##name); ADD_UPDATER(state, update##name)
 // ----------------------------------- START MODULE ----------------------------------- //
 bool CGuiModule::start()
 {
@@ -27,6 +32,10 @@ bool CGuiModule::start()
 	resolution_y = CApp::get().getYRes();
 	initWindow();
 	initScreens();
+
+	//Bar Test
+	barTest = new CGuiBarColor(Rect(200, 50, 200, 20), GUI::IM_GREEN);
+	
 	dbg("GUI module started\n");
 
 	return true;
@@ -45,10 +54,11 @@ void CGuiModule::initWindow()
 void CGuiModule::initScreens()
 {
 	screenRenders = vector<screenRender>(CGameController::GAME_STATES_SIZE, (screenRender)&CGuiModule::renderDefault);
+	screenUpdaters = vector<screenUpdater>(CGameController::GAME_STATES_SIZE, (screenUpdater)&CGuiModule::updateDefault);
 
-	//Add here renders
-	//setRender(CGameController::RUNNING, (screenRender) &CGuiModule::renderOnPlay);
-	ADD_RENDER(CGameController::RUNNING, renderOnPlay);
+	//Add here Game States
+	ADD_GAME_STATE(CGameController::RUNNING, OnPlay);
+
 }
 
 void inline CGuiModule::setRender(int state, screenRender render)
@@ -58,10 +68,36 @@ void inline CGuiModule::setRender(int state, screenRender render)
 	screenRenders[state] = render;
 }
 
+void inline CGuiModule::setUpdater(int state, screenUpdater updater)
+{
+	assert(state >= 0);
+	assert(state < CGameController::GAME_STATES_SIZE);
+	screenUpdaters[state] = updater;
+}
+
 // ----------------------------------- UPDATE MODULE ----------------------------------- //
 void CGuiModule::update(float dt)
 {
+	callUpdater(GameController->GetGameState(), dt);
+}
 
+void inline CGuiModule::callUpdater(int state, float dt)
+{
+	(this->*screenUpdaters[state])(dt);
+}
+
+// ----- Update Default ----- //
+void CGuiModule::updateDefault(float dt)
+{
+	//Nothing to do?
+}
+
+// ----- Update On Play ----- //
+void CGuiModule::updateOnPlay(float dt)
+{
+	if (io->keys[VK_CONTROL].becomesPressed()) barTest->setFraction(0.01f);
+	else if (io->keys[VK_DOWN].becomesPressed()) barTest->setFraction(1.0f);
+	barTest->update(dt);
 }
 
 // ----------------------------------- RENDER MODULE ----------------------------------- //
@@ -85,8 +121,7 @@ void CGuiModule::renderDefault() {
 
 // ----- Render On Play ----- //
 void CGuiModule::renderOnPlay() {
-	CGuiBarColor lifeBar(Rect(10, 10, 100, 20), GUI::IM_GREEN);
-	lifeBar.draw(0.5f);
+	barTest->draw();
 }
 
 // ----------------------------------- STOP MODULE ----------------------------------- //

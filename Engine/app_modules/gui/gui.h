@@ -4,6 +4,9 @@
 #include "app_modules/app_module.h"
 #include "ui/ui_interface.h"
 
+#define DECL_GUI_STATE(name) \
+void render##name(); void update##name(float);
+
 struct Rect {
 	int x; int y;
 	int sx; int sy;
@@ -12,24 +15,36 @@ struct Rect {
 	Rect() : x(0), y(0), sx(100), sy(100) {}
 };
 
+//Forward Declarations
+class CGuiBarColor;
+
 class CGuiModule : public IAppModule {
 private:
+	//Screen Resolution
 	int resolution_x;
 	int resolution_y;
 
+	//Bar Test
+	CGuiBarColor * barTest;
+
+	//Game States Screens
+	DECL_GUI_STATE(Default);
+	DECL_GUI_STATE(OnPlay);
+
+	//Renders & Updaters Management
+	typedef void (CGuiModule::*screenRender)();
+	typedef void (CGuiModule::*screenUpdater)(float);
+	vector<screenUpdater> screenUpdaters;
+	vector<screenRender> screenRenders;
+
+	void inline setUpdater(int state, screenUpdater render);
+	void inline setRender(int state, screenRender render);
+	void inline callUpdater(int state, float dt);
+	void inline callRender(int state);
+	
 	//ImGui Window
 	bool menu;
 	ImGuiWindowFlags window_flags;
-
-	//Game States Screens
-	typedef void (CGuiModule::*screenRender)();
-	vector<screenRender> screenRenders;
-
-	//Renders
-	void inline setRender(int state, screenRender render);
-	void inline callRender(int state);
-	void renderDefault();
-	void renderOnPlay();
 
 public:
 	bool start() override;

@@ -5,7 +5,7 @@
 #include "gui_bar.h"
 #include "geometry/geometry.h"
 
-class CGuiBarColor : CGuiBar{
+class CGuiBarColor : public CGuiBar{
 	ImColor color;
 	int border;
 
@@ -13,15 +13,18 @@ class CGuiBarColor : CGuiBar{
 
 public:
 	CGuiBarColor(Rect r, ImColor c) : color(c) {
-		CGuiBar::fraction = 0.f;
+		CGuiBar::current = 0.f;
+		CGuiBar::target = 0.f;
+
 		CGuiBar::rectangle = r;
 		border = 5;
 	};
+
 	int getBorder();
 	float getAlpha();
 	void setAlpha(float);
 	void setBorder(int);
-	virtual void draw(float fraction);
+	virtual void draw();
 };
 
 #endif
