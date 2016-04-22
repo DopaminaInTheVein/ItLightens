@@ -18,6 +18,8 @@
 
 #include <Commdlg.h>
 
+using namespace std;
+
 #define ADD_RENDER(state, renderName) \
 setRender(state, (screenRender) &CGuiModule::renderName)
 
@@ -31,17 +33,15 @@ bool CGuiModule::start()
 {
 	resolution_x = CApp::get().getXRes();
 	resolution_y = CApp::get().getYRes();
+	
+	//Window
 	initWindow();
+	
+	//Screens
 	initScreens();
 
-	//Bar Test
-	barTest = new CGuiBarColor(Rect(200, 50, 200, 20), GUI::IM_GREEN);
-	//barTest = new CGuiBarColor(
-	//	Rect(0.5f * resolution_x,
-	//		0.5f * resolution_y,
-	//		0.5f * resolution_x,
-	//		0.5f * resolution_y)
-	//	, GUI::IM_GREEN);
+	//Hud Player
+	hudPlayer = new CGuiHudPlayer(GUI::createRect(0.05f, 0.05f, .30f, 0.05f));
 	
 	dbg("GUI module started\n");
 
@@ -51,6 +51,7 @@ bool CGuiModule::start()
 void CGuiModule::initWindow()
 {
 	menu = false;
+	enabled = true;
 	window_flags |= ImGuiWindowFlags_NoMove
 		| ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_NoTitleBar
@@ -85,7 +86,14 @@ void inline CGuiModule::setUpdater(int state, screenUpdater updater)
 // ----------------------------------- UPDATE MODULE ----------------------------------- //
 void CGuiModule::update(float dt)
 {
+	toogleEnabled();
 	callUpdater(GameController->GetGameState(), dt);
+}
+
+void CGuiModule::toogleEnabled() {
+	if (io->keys[VK_F1].becomesPressed()) {
+		enabled = !enabled;
+	}
 }
 
 void inline CGuiModule::callUpdater(int state, float dt)
@@ -102,10 +110,7 @@ void CGuiModule::updateDefault(float dt)
 // ----- Update On Play ----- //
 void CGuiModule::updateOnPlay(float dt)
 {
-	//if (io->keys[VK_CONTROL].becomesPressed()) barTest->setFraction(0.01f);
-	//else if (io->keys[VK_DOWN].becomesPressed()) barTest->setFraction(1.0f);
-	barTest->setValue(GAMEDATA::PLAYER::getLife());
-	barTest->update(dt);
+	hudPlayer->update(dt);
 }
 
 // ----------------------------------- RENDER MODULE ----------------------------------- //
@@ -115,8 +120,10 @@ void inline CGuiModule::callRender(int state)
 }
 
 void CGuiModule::render() {
+	if (!enabled) return;
 	activateZ(ZCFG_ALL_DISABLED);
 	ImGui::Begin("Game GUI", &menu, ImVec2(resolution_x, resolution_y), 0.0f, window_flags);
+	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
 	callRender(GameController->GetGameState());
 	ImGui::End();
 	//ImGui::Render(); <-- Ya lo hace el módulo de ImGui!!
@@ -129,7 +136,7 @@ void CGuiModule::renderDefault() {
 
 // ----- Render On Play ----- //
 void CGuiModule::renderOnPlay() {
-	barTest->draw();
+	hudPlayer->render();
 }
 
 // ----------------------------------- STOP MODULE ----------------------------------- //

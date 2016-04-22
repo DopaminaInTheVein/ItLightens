@@ -24,7 +24,8 @@ public:
 	float getAlpha();
 	void setAlpha(float);
 	void setBorder(int);
-	virtual void draw();
+	virtual void draw() { draw(true); }
+	void draw(bool borders);
 };
 
 #endif

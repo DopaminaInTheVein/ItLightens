@@ -8,3 +8,9 @@ void GUI::drawRect(Rect rect, ImColor color) {
 		color
 		);
 }
+
+Rect GUI::createRect(float x, float y, float sx, float sy) {
+	int res_x = CApp::get().getXRes();
+	int res_y = CApp::get().getYRes();
+	return Rect(x* res_x, y*res_y, sx* res_x, sy*res_y);
+}

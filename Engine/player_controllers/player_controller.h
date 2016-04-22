@@ -176,7 +176,9 @@ protected:
 	static map<string, statehandler> statemap;
 
 public:
-
+	// Added because GUI
+	float getMaxLife() { return max_life; }
+	
 	map<string, statehandler>* getStatemap();
 
 	void Init();

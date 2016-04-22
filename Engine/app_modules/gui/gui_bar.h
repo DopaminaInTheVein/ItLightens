@@ -3,6 +3,7 @@
 
 #include "gui.h"
 #include "geometry/geometry.h"
+#include "gui_utils.h"
 
 class CGuiBar {
 protected:

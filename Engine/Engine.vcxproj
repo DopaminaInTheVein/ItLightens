@@ -101,6 +101,7 @@
     <ClCompile Include="app_modules\entities.cpp" />
     <ClCompile Include="app_modules\gui\gui.cpp" />
     <ClCompile Include="app_modules\gui\gui_bar_color.cpp" />
+    <ClCompile Include="app_modules\gui\gui_hud_player.cpp" />
     <ClCompile Include="app_modules\gui\gui_utils.cpp" />
     <ClCompile Include="app_modules\imgui\module_imgui.cpp" />
     <ClCompile Include="app_modules\io\io.cpp" />
@@ -469,6 +470,7 @@
     <ClInclude Include="app_modules\gui\gui.h" />
     <ClInclude Include="app_modules\gui\gui_bar.h" />
     <ClInclude Include="app_modules\gui\gui_bar_color.h" />
+    <ClInclude Include="app_modules\gui\gui_hud_player.h" />
     <ClInclude Include="app_modules\gui\gui_utils.h" />
     <ClInclude Include="app_modules\imgui\module_imgui.h" />
     <ClInclude Include="app_modules\io\digital_button.h" />

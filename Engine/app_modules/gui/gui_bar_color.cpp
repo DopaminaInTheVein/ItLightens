@@ -24,9 +24,9 @@ void CGuiBarColor::setAlpha(float alpha)
 	color.Value.w = alpha;
 }
 
-void CGuiBarColor::draw()
+void CGuiBarColor::draw(bool borders)
 {
-	drawRect(rectangle, IM_BLACK);
+	if (borders) drawRect(rectangle, IM_BLACK);
 	drawForegroundBar(current);
 }
 

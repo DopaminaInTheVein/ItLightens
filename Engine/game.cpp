@@ -62,8 +62,8 @@ bool CApp::start() {
 	all_modules.push_back(render_deferred);
 	all_modules.push_back(logic_manager);
 
-	mod_update.push_back(imgui);
 	mod_update.push_back(GameController);
+	mod_update.push_back(imgui);
 	mod_update.push_back(gui);
 	mod_update.push_back(entities);
 	mod_update.push_back(g_PhysxManager);
@@ -79,8 +79,8 @@ bool CApp::start() {
 
 	mod_renders.push_back(io);
 
-	mod_init_order.push_back(imgui);
 	mod_init_order.push_back(gui);
+	mod_init_order.push_back(imgui);
 	mod_init_order.push_back(render_deferred);
 	mod_init_order.push_back(io);
 	mod_init_order.push_back(g_PhysxManager);

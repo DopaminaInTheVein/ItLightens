@@ -2,7 +2,8 @@
 #define INC_MODULE_GUI_H_
 
 #include "app_modules/app_module.h"
-#include "ui/ui_interface.h"
+
+#include "gui_hud_player.h"
 
 #define DECL_GUI_STATE(name) \
 void render##name(); void update##name(float);
@@ -25,7 +26,7 @@ private:
 	int resolution_y;
 
 	//Bar Test
-	CGuiBarColor * barTest;
+	CGuiHudPlayer * hudPlayer;
 
 	//Game States Screens
 	DECL_GUI_STATE(Default);
@@ -34,8 +35,8 @@ private:
 	//Renders & Updaters Management
 	typedef void (CGuiModule::*screenRender)();
 	typedef void (CGuiModule::*screenUpdater)(float);
-	vector<screenUpdater> screenUpdaters;
-	vector<screenRender> screenRenders;
+	std::vector<screenUpdater> screenUpdaters;
+	std::vector<screenRender> screenRenders;
 
 	void inline setUpdater(int state, screenUpdater render);
 	void inline setRender(int state, screenRender render);
@@ -43,11 +44,13 @@ private:
 	void inline callRender(int state);
 	
 	//ImGui Window
+	bool enabled;
 	bool menu;
 	ImGuiWindowFlags window_flags;
 
 public:
 	bool start() override;
+	void toogleEnabled();
 	void initWindow();
 	void initScreens();
 	void stop() override;
@@ -56,7 +59,7 @@ public:
 	const char* getName() const {
 		return "gui";
 	}
-	void drawBar(const char * name, Rect r, float fraction, VEC3 color);
+
 	//bool onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 	//static std::string getFilePath(char *filter = "All Files (*.*)\0*.*\0", HWND owner = NULL);		//open file path
 };

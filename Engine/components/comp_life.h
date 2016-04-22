@@ -39,6 +39,9 @@ struct TCompLife : public TCompBase {
 		return (currentlife / maxlife);
 	}
 
+	float getMax() {
+		return maxlife;
+	}
 
 	void setCurrent(float new_life) {
 		currentlife = new_life;
