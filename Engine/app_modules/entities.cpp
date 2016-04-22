@@ -175,8 +175,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
 	SUBSCRIBE(bt_guard, TMsgNoise, noise);
-	//TODO
-	//SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
+	SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
 
 	//WIRES
 	SUBSCRIBE(TCompWire, TMsgEntityCreated, onCreate);

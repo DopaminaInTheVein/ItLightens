@@ -208,7 +208,7 @@ bool bt_guard::guardAlerted() {
 	}
 	// check alerts from other guards
 	else {
-		std::map<string, guard_alert> guard_alerts = SBB::getGuardAlerts();
+		std::map<string, guard_alert> guard_alerts = SBB::sbbGuardAlerts;
 
 		if (!guard_alerts.empty()) {
 			for (std::map<string, guard_alert>::iterator alert_it = guard_alerts.begin(); alert_it != guard_alerts.end(); alert_it++) {
@@ -336,6 +336,8 @@ int bt_guard::actionAbsorb() {
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
 		TMsgDamageSpecific dmg;
+		CEntity* entity = myHandle.getOwner();
+		dmg.source = entity->getName();
 		dmg.type = Damage::ABSORB;
 		dmg.actived = false;
 		ePlayer->sendMsg(dmg);
@@ -585,6 +587,20 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	}
 }
 
+void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
+	PROFILE_FUNCTION("guard: onovercharge");
+	CEntity * entity = myHandle.getOwner();
+	string guard_name = entity->getName();
+
+	if (msg.guard_name == guard_name) {
+		logic_manager->throwEvent(logic_manager->OnGuardOvercharged, "");
+		stunned = true;
+		____TIMER_RESET_(timerStunt);
+		setCurrent(NULL);
+	}
+
+}
+
 /**************
  * Auxiliares
  **************/
@@ -771,12 +787,15 @@ bool bt_guard::shootToPlayer() {
 		}
 	}
 
+	CEntity *entity = myHandle.getOwner();
+
 	//Do damage
 	if (damage && !sendMsgDmg) {
 		shooting = true;
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
 		TMsgDamageSpecific dmg;
+		dmg.source = entity->getName();
 		dmg.type = Damage::ABSORB;
 		dmg.actived = true;
 		ePlayer->sendMsg(dmg);
@@ -786,6 +805,7 @@ bool bt_guard::shootToPlayer() {
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
 		TMsgDamageSpecific dmg;
+		dmg.source = entity->getName();
 		dmg.type = Damage::ABSORB;
 		dmg.actived = false;
 		ePlayer->sendMsg(dmg);

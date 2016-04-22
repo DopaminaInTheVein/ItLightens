@@ -18,9 +18,10 @@ private:
 	static map<string, CHandle> sbbHandle;
 	static map<string, bt_mole*> sbbMole;
 	static map<string, vector<CHandle> > sbbHandlesVector;
-	static map<string, guard_alert> sbbGuardAlerts;
 
 public:
+	static map<string, guard_alert> sbbGuardAlerts;
+
 	SBB() = delete;
 	static void init();
 	static void update(float);
@@ -49,7 +50,6 @@ public:
 	static void postHandlesVector(string, vector<CHandle>);
 	static vector<CHandle> readHandlesVector(string);
 	// sbbGuardAlerts
-	static map<string, guard_alert> getGuardAlerts() { return sbbGuardAlerts; }
 	static void postGuardAlert(string, guard_alert);
 	static guard_alert readGuardAlert(string);
 	static void updateGuardAlerts(float);
