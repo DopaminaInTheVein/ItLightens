@@ -113,6 +113,9 @@
    size="2.0 1.0 2.0"
    mass="2"
 />
+<polarized
+	pol="minus"
+/>
 </entity>
 <entity>
 <tags
@@ -135,6 +138,9 @@
    type_shape="box"
    size="2.0 1.0 2.0"
    mass="2"
+/>
+<polarized
+	pol="minus"
 />
 </entity>
 <entity>
@@ -159,6 +165,9 @@
    size="2.0 1.0 2.0"
    mass="2"
 />
+<polarized
+	pol="minus"
+/>
 </entity>
 <entity>
 <tags
@@ -181,6 +190,9 @@
    type_shape="box"
    size="2.0 1.0 2.0"
    mass="2"
+/>
+<polarized
+	pol="minus"
 />
 </entity>
 <entity>
@@ -205,6 +217,9 @@
    size="2.0 1.0 2.0"
    mass="2"
 />
+<polarized
+	pol="minus"
+/>
 </entity>
 <entity>
 <tags
@@ -228,6 +243,9 @@
    size="2.0 1.0 2.0"
    mass="2"
 />
+<polarized
+	pol="minus"
+/>
 </entity>
 <entity>
 <tags
@@ -250,6 +268,9 @@
    type_shape="box"
    size="2.0 1.0 2.0"
    mass="2"
+/>
+<polarized
+	pol="minus"
 />
 </entity>
 <entity>

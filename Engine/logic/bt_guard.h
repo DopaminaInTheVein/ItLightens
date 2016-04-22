@@ -130,6 +130,8 @@ class bt_guard : public TCompBase, public bt
 
 	//Raycast
 	bool rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit);
+	bool rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit);
+	bool rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform);
 	bool shootToPlayer();
 	void removeBox(CHandle box_handle);
 

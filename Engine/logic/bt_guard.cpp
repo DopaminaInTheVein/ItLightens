@@ -722,14 +722,51 @@ bool bt_guard::playerVisible() {
 			}
 		}
 	}
+	// moving boxes detection
+	float distRay;
+	PxRaycastBuffer hit;
+	bool ret = rayCastToFront(1, distRay, hit);
+	if (ret) { //No bloquea vision
+		CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+		if (h.hasTag("box")) { //box?
+			CEntity* box = h;
+			TCompPolarized* pol_component = box->get<TCompPolarized>();
+			if (pol_component && pol_component->moving) {
+				return true;
+			}
+		}
+	}
 	return false;
 }
 
 bool bt_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) {
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	return rayCastToTransform(types, distRay, hit, tPlayer);
+}
+
+bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform) {
 	VEC3 myPos = getTransform()->getPosition();
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 origin = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
 	VEC3 direction = tPlayer->getPosition() - myPos;
+	direction.Normalize();
+	float dist = DIST_RAYSHOT;
+	//rcQuery.types = types;
+	CEntity *e = myParent;
+	TCompCharacterController *cc = e->get<TCompCharacterController>();
+	Debug->DrawLine(origin + VEC3(0, 0.5f, 0), getTransform()->getFront(), 10.0f);
+	bool ret = g_PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
+
+	if (ret)
+		distRay = hit.getAnyHit(0).distance;
+
+	return ret;
+}
+
+bool bt_guard::rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit) {
+	VEC3 myPos = getTransform()->getPosition();
+	VEC3 origin = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
+	VEC3 direction = getTransform()->getFront();
 	direction.Normalize();
 	float dist = DIST_RAYSHOT;
 	//rcQuery.types = types;
@@ -771,10 +808,8 @@ bool bt_guard::shootToPlayer() {
 			}
 			else if (h.hasTag("box")) {
 				CEntity* box = h;
-				dbg("Disparando a caja %s!\n", box->getName());
 				TCompBox* box_component = box->get<TCompBox>();
-				if (box_component->isRemovable()) {
-					dbg("Caja %s es apartable!\n", box->getName());
+				if (box_component && box_component->isRemovable()) {
 					// if remove box is ready, reset the timer and remove the box
 					if (remove_box_ready) {
 						remove_box_time = MAX_BOX_REMOVAL_TIME;
