@@ -125,6 +125,8 @@ class player_controller : public CPlayerBase {
 	VEC3					endPointWire			= VEC3(0,0,0);
 	VEC3					lastForces;
 
+	std::string				damage_source			= "none";
+
 	std::vector<TForcePoint> force_points;
 
 	//private functions

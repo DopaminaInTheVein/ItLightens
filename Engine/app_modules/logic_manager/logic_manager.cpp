@@ -31,8 +31,6 @@ bool CLogicManagerModule::start() {
 
 void CLogicManagerModule::update(float dt) {
 
-	std::vector<int> to_erase;
-
 	// update the timer of each command
 	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ) {
 		command_it->execution_time -= dt;
@@ -111,6 +109,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 
 		case (OnGuardRemoveBox) : {
 			sprintf(lua_code, "OnGuardRemoveBox(%f);", 0.5f);
+			break;
+		}
+
+		case (OnGuardOvercharged) : {
+			sprintf(lua_code, "OnGuardOvercharged(%f);", 0.5f);
 			break;
 		}
 

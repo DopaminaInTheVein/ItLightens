@@ -38,6 +38,7 @@ public:
 		OnPlayerDead,
 		OnGuardAttack,
 		OnGuardRemoveBox,
+		OnGuardOvercharged,
 		OnInterruptHit,
 		OnStartReceiveHit,
 		OnEndReceiveHit,

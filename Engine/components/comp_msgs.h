@@ -32,6 +32,7 @@ struct TMsgDamage {
 struct TMsgDamageSpecific {
 	Damage::DMG_TYPE type;
 	bool actived;
+	std::string source;
 	DECLARE_MSG_ID();
 };
 
@@ -132,6 +133,7 @@ struct TMsgNoise {
 };
 
 struct TMsgOverCharge {
+	std::string guard_name;
 	DECLARE_MSG_ID();
 };
 

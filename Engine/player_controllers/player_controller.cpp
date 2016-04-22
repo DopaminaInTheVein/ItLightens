@@ -763,9 +763,11 @@ void player_controller::doOverCharge()
 {
 	VHandles guards = tags_manager.getHandlesByTag(getID("AI_guard"));
 	TMsgOverCharge msg;
+	logic_manager->throwEvent(logic_manager->OnOvercharge, "");
 	for (auto guard : guards) {
 		if (guard.isValid()) {
 			CEntity* eGuard = guard;
+			msg.guard_name = damage_source;
 			eGuard->sendMsg(msg);
 		}
 	}
@@ -835,6 +837,15 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 		eMe->sendMsg(msgDamagePerSecond);
 		if (type == Damage::ABSORB) {
 			//LogicManager
+			if (msg.actived) {
+				damage_source = msg.source;
+			}
+			else {
+				damage_source = "none";
+				TMsgDamageSave msgDamagePerSecond;
+				msgDamagePerSecond.modif = 0.1f;
+				eMe->sendMsg(msgDamagePerSecond);
+			}
 			if (damageFonts[type] > 0) {
 				logic_manager->throwEvent(logic_manager->OnStartReceiveHit, "");
 			} else {

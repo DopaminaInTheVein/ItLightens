@@ -4,6 +4,7 @@
 #include "handle/handle.h"
 #include "logic/ai_mole.h"
 #include "logic/bt_mole.h"
+#include "logic/bt_guard.h"
 #include "recast/navmesh.h"
 
 map<string, CNavmesh> SBB::sbbNavs;
@@ -13,9 +14,14 @@ map<string, VEC3> SBB::sbbVEC3;
 map<string, bt_mole*> SBB::sbbMole;
 map<string, CHandle> SBB::sbbHandle;
 map<string, vector<CHandle>> SBB::sbbHandlesVector;
+map<string, guard_alert> SBB::sbbGuardAlerts;
 
 void SBB::init() {
 	postBool("possMode", false);
+}
+
+void SBB::update(float dt) {
+	updateGuardAlerts(dt);
 }
 
 void SBB::postNavmesh(string name, CNavmesh navmesh) {
@@ -121,4 +127,32 @@ vector<CHandle> SBB::readHandlesVector(string name) {
 		fatal("sbbHandlesVector: Se intenta leer String que no existe!");
 	}
 	return sbbHandlesVector[name];
+}
+
+// sbbGuardAlerts
+
+void SBB::postGuardAlert(string name, guard_alert value) {
+	sbbGuardAlerts[name] = value;
+}
+
+guard_alert SBB::readGuardAlert(string name) {
+	if (sbbGuardAlerts.find(name) == sbbGuardAlerts.end())
+	{
+		fatal("sbbGuardAlerts: Se intenta leer String que no existe!");
+	}
+	return sbbGuardAlerts[name];
+}
+
+void SBB::updateGuardAlerts(float dt) {
+	// update the timer of each alert
+	for (std::map<string, guard_alert>::iterator alert_it = sbbGuardAlerts.begin(); alert_it != sbbGuardAlerts.end(); ) {
+		alert_it->second.timer -= dt;
+
+		if (alert_it->second.timer < 0.f) {
+			alert_it = sbbGuardAlerts.erase(alert_it);
+		}
+		else {
+			alert_it++;
+		}
+	}
 }
