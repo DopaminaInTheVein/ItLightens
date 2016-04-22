@@ -53,6 +53,7 @@ class bt_guard : public TCompBase, public bt
 	float BOX_REMOVAL_ANIM_TIME;
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
+	float GUARD_ALERT_RADIUS;
 	//from bombs
 	float reduce_factor;
 	float t_reduceStats_max;

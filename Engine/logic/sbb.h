@@ -49,6 +49,7 @@ public:
 	static void postHandlesVector(string, vector<CHandle>);
 	static vector<CHandle> readHandlesVector(string);
 	// sbbGuardAlerts
+	static map<string, guard_alert> getGuardAlerts() { return sbbGuardAlerts; }
 	static void postGuardAlert(string, guard_alert);
 	static guard_alert readGuardAlert(string);
 	static void updateGuardAlerts(float);

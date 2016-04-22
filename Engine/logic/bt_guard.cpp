@@ -69,6 +69,7 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(BOX_REMOVAL_ANIM_TIME, fields);
 			assignValueToVar(LOOK_AROUND_TIME, fields);
 			assignValueToVar(GUARD_ALERT_TIME, fields);
+			assignValueToVar(GUARD_ALERT_RADIUS, fields);
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
@@ -177,14 +178,65 @@ bool bt_guard::playerOutOfReach() {
 
 bool bt_guard::guardAlerted() {
 	PROFILE_FUNCTION("guard: guardalert");
+
+	VEC3 myPos = getTransform()->getPosition();
+
+	// we send a new alert with our position and the player position
+	guard_alert alert;
+	alert.guard_position = myPos;
+	alert.timer = GUARD_ALERT_TIME;
+	CEntity* entity = myHandle.getOwner();
+
 	if (playerLost) {
 		TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 		VEC3 posPlayer = tPlayer->getPosition();
 		player_last_seen_point = posPlayer;
+		// send an alert for the nearest guards with the player last position
+		alert.alert_position = player_last_seen_point;
+		string name = entity->getName() + string("_player_lost");
+		SBB::postGuardAlert(name, alert);
+
 		return true;
 	}
 	else if (noiseHeard) {
+		// send an alert for the nearest guards with the noise point
+		alert.alert_position = noisePoint;
+		string name = entity->getName() + string("_noise_heard");
+		SBB::postGuardAlert(name, alert);
+
 		return true;
+	}
+	// check alerts from other guards
+	else {
+		std::map<string, guard_alert> guard_alerts = SBB::getGuardAlerts();
+
+		if (!guard_alerts.empty()) {
+			for (std::map<string, guard_alert>::iterator alert_it = guard_alerts.begin(); alert_it != guard_alerts.end(); alert_it++) {
+				VEC3 guard_alert_position = alert_it->second.guard_position;
+
+				// the guard will be alerted if he is near enough
+				if (simpleDist(myPos, guard_alert_position) < GUARD_ALERT_RADIUS) {
+					VEC3 alert_point = alert_it->second.alert_position;
+
+					// depending on the alert type, we make a different decission
+					if (alert_it->first.find(string("_player_lost")) != string::npos) {
+						playerLost = true;
+						player_last_seen_point = alert_point;
+						return true;
+					}
+					else if (alert_it->first.find(string("_noise_heard")) != string::npos) {
+						noiseHeard = true;
+						noisePoint = alert_point;
+						return true;
+					}
+					else if (alert_it->first.find(string("_player_detected")) != string::npos) {
+						playerLost = true;
+						player_last_seen_point = alert_point;
+						return true;
+					}
+				}
+			}
+		}
 	}
 		
 	return false;
@@ -347,6 +399,7 @@ int bt_guard::actionSearch() {
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
+		return KO;
 	}
 	else if (playerLost) {
 		float distance = squaredDistXZ(myPos, player_last_seen_point);
