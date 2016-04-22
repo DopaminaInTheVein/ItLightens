@@ -1,0 +1,196 @@
+<entities>
+  <!--PLAYER & CAMERA -->
+
+  <!--POS INICIAL : 0 0 -22 -->
+
+  <entity>
+    <tags tags="camera_main" />
+    <transform pos="-5 18 -25" />
+    <name name="camara" />
+    <camera znear="1" zfar="250" fov="60" />
+    <controller_3rd_person />
+  </entity>
+
+  <entity>
+    <life points="1000" />
+    <tags tags="player" />
+    <transform pos="-15 18 0" />
+    <name name="pj" />
+    <player />
+    <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
+    <character_controller radius ="0.3" height ="0.5" />
+  </entity>
+
+  <!--END PLAYER & CAMERA -->
+
+  <!-- START SCENE -->
+  <!-- START SCENE OBJECTS -->
+  <entity>
+    <name name="nivel" />
+    <transform pos="0.0 0.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+
+  <entity>
+    <name name="nivel" />
+    <transform pos="-25.0 15.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+
+  <entity>
+    <name name="pared_1" />
+    <transform pos="2.0 2 0.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_1" />
+    <transform pos="-1.0 2 0.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_1" />
+    <transform pos="-4 2 0.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_1" />
+    <transform pos="-7 2 0.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_1" />
+    <transform pos="-10 2 0.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+
+  <entity>
+    <name name="pared_2" />
+    <transform pos="2 2 0.5" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_2" />
+    <transform pos="-1 2 0.5" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_2" />
+    <transform pos="-4 2 0.5" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_2" />
+    <transform pos="-7 2 0.5" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_2" />
+    <transform pos="-11 2 0.5" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+
+  <entity>
+    <name name="pared_3" />
+    <transform pos="-2 2 7.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_3" />
+    <transform pos="1.0 2 7.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_3" />
+    <transform pos="4 2 7.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_3" />
+    <transform pos="7 2 7.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_3" />
+    <transform pos="10 2 7.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+
+  <entity>
+    <name name="pared_4" />
+    <transform pos="-2 2 7.5" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_4" />
+    <transform pos="1 2 7.5" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_4" />
+    <transform pos="4 2 7.5" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_4" />
+    <transform pos="7 2 7.5" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <entity>
+    <name name="pared_4" />
+    <transform pos="11 2 7.5" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/pared_standard.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  <!-- END SCENE OBJECTS -->
+  <!-- END SCENE -->
+
+  <!-- LOGIC OBJECTS -->
+  <!-- ZONE 2 -->
+  <entity>
+    <tags tags="AI AI_speedy AI_poss" />
+    <name name="speedy1" />
+    <transform pos="-10 4 -10" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
+    <life points="50" />
+    <player_speedy />
+    <bt_speedy
+      wpts_size = "2"
+      wpt0_pos = "-10  2  -10"
+      wpt1_pos = " 10  2   10" />
+    <character_controller radius ="1.0" height ="1.0" />
+  </entity>
+  <entity>
+    <tags tags="AI AI_speedy AI_poss" />
+    <name name="speedy2" />
+    <transform pos="10 4 10" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
+    <life points="50" />
+    <player_speedy />
+    <bt_speedy
+      wpts_size = "2"
+      wpt0_pos = "-10  2  -10"
+      wpt1_pos = " 10  2   10" />
+    <character_controller radius ="1.0" height ="1.0" />
+  </entity>
+</entities>

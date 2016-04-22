@@ -1,0 +1,255 @@
+<entities>
+<entity>
+<name
+   name="Sala"
+/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/pruebaSala.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tag
+   name="player"
+/>
+<player/>
+<life
+   points="10"
+/>
+<name
+   name="player_1"
+/>
+<transform
+   pos="0 0 17.619"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__player.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="0.7"
+/>
+</entity>
+<entity>
+<tag
+   name="camera_main"
+/>
+<camera
+   znear="1.0"
+   zfar="250.0"
+   fov="60.0"
+/>
+<controller_3rd_person/>
+<name
+   name="camController_1"
+/>
+<transform
+   pos="-0.585238 3.80912 18.1414"
+   quat="0 0.707104 0 0.707105"
+   scale="0.0477005"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_1"
+/>
+<transform
+   pos="-3.31215 1.32 9.73563"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_2"
+/>
+<transform
+   pos="-1.69204 1.17989 0.313836"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_3"
+/>
+<transform
+   pos="-6.79318 1.32 4.2304"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="beacon"
+/>
+<beacon/>
+<name
+   name="beacon_1"
+/>
+<transform
+   pos="-3.59441 0 -17.5926"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__baliza.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"
+/>
+</entity>
+<entity>
+<tag
+   name="beacon"
+/>
+<beacon/>
+<name
+   name="beacon_2"
+/>
+<transform
+   pos="7.20425 0 -17.6835"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__baliza.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_004"
+/>
+<transform
+   pos="5.10117 1.32 9.73563"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_005"
+/>
+<transform
+   pos="3.85377 1.17989 -2.67684"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tag
+   name="box"
+/>
+<tag
+   name="platform"
+/>
+<name
+   name="Box_006"
+/>
+<transform
+   pos="1.3437 1.32 5.09875"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+</entities>

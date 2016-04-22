@@ -1,0 +1,465 @@
+<!-- SCENE TESTING -->
+
+<!--
+4 ZONES:
+  1 - BREAKEBLE WALL                  -> center at x = -25,   z = 0
+  2 - MOLE + BOX TO PASS NEXT POINT   -> center at x =   0,   z = 0
+  3 - SPEEDY (NOTHING FOR NOW)        -> center at x =  30,   z = 0
+  4 - MASS SCIENTIST + GUARD          -> center at x =  60,   z = 0
+-->
+
+<entities>
+
+  <!-- Player -->
+  <entity>
+    <tag name="player" />
+    <transform pos="-25 2 5" />
+    <name name="camara" />
+    <camera znear="1" zfar="250" fov="60" />
+    <controller_3rd_person />
+  </entity>
+  <entity>
+    <life points="300" />
+    <tag name="target" />
+    <transform pos="-28 0.1 3" />
+    <name name="pj" />
+    <player />
+    <render_static_mesh name="static_meshes/player_idle.static_mesh" />
+    <colCylinder pos ="0 0 0" radius ="0.3" height ="1" type ="player" />
+    <sphere_collider radius="0.3" tag ="player" />
+  </entity>
+
+  <!-- Scene objects -->
+  <entity>
+    <tag name = "platform" />
+    <name name="floor_1lvl" />
+    <transform pos="-25.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 2 12.5" p2="-12.5 0 -12.5"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="wall_1lvl" />
+    <transform pos="-30.0 -2.0 -10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="wall_1lvl" />
+    <transform pos="-30.0 -2.0 10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <name name="bridge_rompible" />
+    <tag name = "platform" />
+    <tag name = "breakable_wall" />
+    <transform pos="-15.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/bridge_1lvl.static_mesh" />
+    <box_collider p1 ="5 5 12.5" p2="-5 0 -12.5"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="floor_1lvl" />
+    <transform pos="0.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 2 12.5" p2="-12.5 0 -12.5"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="floor_1lvl" />
+    <transform pos="30.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 2 12.5" p2="-12.5 0 -12.5"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="floor_1lvl" />
+    <transform pos="60.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 2 12.5" p2="-12.5 0 -12.5"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="wall_1lvl" />
+    <transform pos="30.0 -2.0 -10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="wall_1lvl" />
+    <transform pos="30.0 -2.0 10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="wall_1lvl" />
+    <transform pos="70.0 -2.0 0.0" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="bridge_1lvl" />
+    <transform pos="15.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/bridge_1lvl.static_mesh" />
+    <box_collider p1 ="5 5 12.5" p2="-5 0 -12.5"  tag="platform" />
+  </entity>
+
+  <!-- RECOVER POINT -->
+  <entity>
+    <name name="recover_point1" />
+    <tag name="recover_point" />
+    <transform pos="15 3 0" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+
+  <entity>
+    <tag name = "platform" />
+    <name name="wall_1lvl" />
+    <transform pos="-35.0 -2.0 0.0" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <name name="wall_1lvl" />
+    <tag name = "platform" />
+    <transform pos="0.0 -2.0 10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <name name="wall_1lvl" />
+    <tag name = "platform" />
+    <transform pos="0.0 -2.0 -10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="wall_1lvl" />
+    <transform pos="60.0 -2.0 -10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+  </entity>
+  <entity>
+    <tag name = "platform" />
+    <name name="wall_1lvl" />
+    <transform pos="60.0 -2.0 10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <box_collider p1 ="12.5 10 1" p2="-12.5 0 -1"  tag="platform" />
+    <render_static_mesh name="static_meshes/wall_1lvl.static_mesh" />
+  </entity>
+  <entity>
+    <name name="bridge_1lvl" />
+    <tag name = "platform" />
+    <transform pos="45.0 -2.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/bridge_1lvl.static_mesh" />
+    <box_collider p1 ="5 5 12.5" p2="-5 0 -12.5"  tag="platform" />
+  </entity>
+  <!-- RECOVER POINT 2-->
+  <entity>
+    <name name="recover_point2" />
+    <tag name="recover_point" />
+    <transform pos="45 3 0" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+  <!-- MAGNETIC POINTS-->
+  <entity>
+    <name name="attractionPointMinus" />
+    <tag name="minus_wall" />
+    <transform pos="62 7 4" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+  <entity>
+    <name name="attractionPointPlus" />
+    <tag name="plus_wall" />
+    <transform pos="64 7 0" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+
+  <!-- VICTORY POINT -->
+  <entity>
+    <name name="win_point" />
+    <tag name="victory_point" />
+    <transform pos="64 4 0" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+  <entity>
+    <name name="box1" />
+    <tag name ="platform" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <transform pos="64 3 0" rotation="1 2 3 3" scale="1 1 1" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" types = "0" />
+  </entity>
+  <!--platforms, helpers to pass to next point-->
+  <!--ZONE 2-->
+  <!--    Shoudnt be necessary, can be passed with mole and box moving-->
+
+  <!-- -->
+  <!--ZONE 3-->
+
+  <entity>
+    <transform pos="38 1 0" />
+    <tag name = "platform" />
+    <name name="box" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="platform" types="4" />
+  </entity>
+
+  <!--ZONE 4-->
+  <!--END-->
+
+  <!-- LOGIC OBJECTS -->
+  <!-- ZONE 2 -->
+  <entity>
+    <name name="box1" />
+    <tag name="box" />
+    <tag name ="platform" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <transform pos="5 0.1 0" rotation="1 2 3 3" scale="1 1 1" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="box" types="4" />
+  </entity>
+   <entity>
+    <name name="box3" />
+    <tag name="box" />
+    <tag name ="platform" />
+    <render_static_mesh name="static_meshes/box.static_mesh" />
+    <transform pos="5 0.1 -5" rotation="1 2 3 3" scale="1 1 1" />
+    <box_collider p1 ="0.5 1 0.5" p2="-0.5 0 -0.5"  tag="box" types="4" />
+  </entity>
+  <entity>
+    <name name="box_leavepoint1" />
+    <tag name="box_leavepoint" />
+    <transform pos="5 0.1 5" rotation="1 2 3 3" scale="1 1 1" />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <name name="ia_mole1" />
+    <tag name="AI_poss" />
+    <tag name="AI_mole" />
+    <transform pos="0 0.1 0" rotation="1 2 3 3" scale="1 1 1" />
+    <life points="100" />
+    <sphere_collider radius="0.3" tag ="player" />
+    <player_mole />
+    <ai_mole />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <name name="ia_mole2" />
+    <tag name="AI_poss" />
+    <tag name="AI_mole" />
+    <transform pos="-25 0.1 0" rotation="1 2 3 3" scale="1 1 1" />
+    <life points="100" />
+    <sphere_collider radius="0.3" tag ="player" />
+    <player_mole />
+    <ai_mole />
+  </entity>
+
+  <!-- END ZONE 2 -->
+
+  <!-- ZONE 3 -->
+  <!-- SPEEDY -->
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_speedy" />
+    <tag name="AI_poss" />
+    <name name="speedy1" />
+    <transform pos="30 0.1 0" rotation="1 2 3 3" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/speedy.static_mesh" />
+    <life points="50" />
+    <player_speedy />
+    <ai_speedy
+      wpts_size  = "4"
+      wpt0_pos = "21  0   5"
+      wpt1_pos = "21  0  -5"
+      wpt2_pos = "37  0  -5"
+      wpt3_pos = "37  0   5" />
+    <sphere_collider radius="0.3" tag ="player" />
+  </entity>
+
+  <entity>
+    <name name="water1" />
+    <tag name="water" />
+    <transform pos="38 0 7" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/workbench.static_mesh" />
+    <water />
+  </entity>
+  <entity>
+    <name name="water2" />
+    <tag name="water" />
+    <transform pos="38 0 8" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/workbench.static_mesh" />
+    <water />
+  </entity>
+  <entity>
+    <name name="water3" />
+    <tag name="water" />
+    <transform pos="37 0 7" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/workbench.static_mesh" />
+    <water />
+  </entity>
+  <entity>
+    <name name="water4" />
+    <tag name="water" />
+    <transform pos="37 0 8" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/workbench.static_mesh" />
+    <water />
+  </entity>
+
+  <!--Guardia centinela sin pistola-->
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_guard" />
+    <transform pos="30 0 0" rotation="1 2 3 3" scale="1 1 1" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/guard.static_mesh" />
+    <ai_guard
+      kpt_size  = "2"
+      kpt0_type = "seek" kpt0_pos = " 30  0   3" kpt0_wait = "0"
+      kpt1_type = "look" kpt1_pos = " 30  0  10" kpt1_wait = "2"
+      jurisdiction ="30 0 0"
+      jurRadius = "0"
+      noShoot ="true" />
+  </entity>
+
+  <!-- END ZONE 3 -->
+
+  <!-- ZONE 4 -->
+  <!-- CIENTIFICO & GUARD-->
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_guard" />
+    <transform pos="67 0 7" rotation="1 2 3 3" scale="1 1 1" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/guard.static_mesh" />
+    <ai_guard
+      kpt_size  = "8"
+      kpt0_type = "seek" kpt0_pos = " 70  0  10" kpt0_wait = "2"
+      kpt1_type = "look" kpt1_pos = " 60  0   0" kpt1_wait = "2"
+      kpt2_type = "seek" kpt2_pos = " 70  0 -10" kpt2_wait = "2"
+      kpt3_type = "look" kpt3_pos = " 60  0   0" kpt3_wait = "2"
+      kpt4_type = "seek" kpt4_pos = "50  0 -10" kpt4_wait = "2"
+      kpt5_type = "look" kpt5_pos = " 60  0   0" kpt5_wait = "2"
+      kpt6_type = "seek" kpt6_pos = " 50  0  10" kpt6_wait = "2"
+      kpt7_type = "look" kpt7_pos = " 60  0   0" kpt7_wait = "2" />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_cientifico" />
+    <tag name="AI_poss" />
+    <transform pos="53 0.1 1" />
+    <name name="scientist1" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <cientifico
+     kpt_size  = "8"
+      kpt0_type = "seek" kpt0_pos = " 70  0  10" kpt0_wait = "2"
+      kpt1_type = "look" kpt1_pos = " 60  0   0" kpt1_wait = "2"
+      kpt2_type = "seek" kpt2_pos = " 70  0 -10" kpt2_wait = "2"
+      kpt3_type = "look" kpt3_pos = " 60  0   0" kpt3_wait = "2"
+      kpt4_type = "seek" kpt4_pos = "50  0 -10" kpt4_wait = "2"
+      kpt5_type = "look" kpt5_pos = " 60  0   0" kpt5_wait = "2"
+      kpt6_type = "seek" kpt6_pos = " 50  0  10" kpt6_wait = "2"
+      kpt7_type = "look" kpt7_pos = " 60  0   0" kpt7_wait = "2" /> />
+    <player_cientifico />
+    <sphere_collider radius="0.3" tag ="player" />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_cientifico" />
+    <tag name="AI_poss" />
+    <transform pos="61 0.1 5" />
+    <name name="scientist2" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <cientifico />
+    <player_cientifico />
+    <sphere_collider radius="0.3" tag ="player" />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_cientifico" />
+    <tag name="AI_poss" />
+    <transform pos="59 0.1 -1" />
+    <name name="scientist3" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <cientifico />
+    <player_cientifico />
+    <sphere_collider radius="0.3" tag ="player" />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_cientifico" />
+    <tag name="AI_poss" />
+    <transform pos="59 0.1 1" />
+    <name name="scientist4" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <cientifico />
+    <player_cientifico />
+  </entity>
+
+  <entity>
+    <tag name="AI" />
+    <tag name="AI_cientifico" />
+    <tag name="AI_poss" />
+    <transform pos="61 0.1 -1" />
+    <name name="scientist5" />
+    <life points="100" />
+    <render_static_mesh name="static_meshes/human_test.static_mesh" />
+    <cientifico />
+    <player_cientifico />
+    <sphere_collider radius="0.3" tag ="player" />
+  </entity>
+
+  <entity>
+    <name name="beacon1" />
+    <tag name="beacon" />
+    <transform pos="65 0 7" rotation="1 1 1 1" scale="1 1 1" />
+    <beacon />
+  </entity>
+
+  <entity>
+    <name name="beacon2" />
+    <tag name="beacon" />
+    <transform pos="55 0 -7" rotation="1 1 1 1" scale="1 1 1" />
+    <beacon />
+  </entity>
+
+  <entity>
+    <name name="beacon3" />
+    <tag name="beacon" />
+    <transform pos="55 0 7" rotation="1 1 1 1" scale="1 1 1" />
+    <beacon />
+  </entity>
+
+  <entity>
+    <name name="beacon4" />
+    <tag name="beacon" />
+    <transform pos="65 0 -7" rotation="1 1 1 1" scale="1 1 1" />
+    <beacon />
+  </entity>
+
+  <entity>
+    <name name="workbench1" />
+    <tag name="workbench" />
+    <transform pos="63 0 4" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/workbench.static_mesh" />
+    <workbench />
+  </entity>
+  <entity>
+    <name name="workbench2" />
+    <tag name="workbench" />
+    <transform pos="63 0 -4" rotation="1 1 1 1" scale="1 1 1" />
+    <render_static_mesh name="static_meshes/workbench.static_mesh" />
+    <workbench />
+  </entity>
+
+  <!-- END ZONE 4 -->
+</entities>
