@@ -66,6 +66,7 @@ void CGuiModule::initScreens()
 
 	//Add here Game States
 	ADD_GAME_STATE(CGameController::RUNNING, OnPlay);
+	ADD_GAME_STATE(CGameController::STOPPED, OnStop);
 
 }
 
@@ -113,6 +114,12 @@ void CGuiModule::updateOnPlay(float dt)
 	hudPlayer->update(dt);
 }
 
+// ----- Update On Stop ----- //
+void CGuiModule::updateOnStop(float dt)
+{
+	//Nothing to update?
+}
+
 // ----------------------------------- RENDER MODULE ----------------------------------- //
 void inline CGuiModule::callRender(int state)
 {
@@ -137,6 +144,13 @@ void CGuiModule::renderDefault() {
 // ----- Render On Play ----- //
 void CGuiModule::renderOnPlay() {
 	hudPlayer->render();
+}
+
+// ----- Render On Stop ----- //
+void CGuiModule::renderOnStop() {
+	hudPlayer->render();
+	GUI::drawRect(GUI::createRect(.01f,.01f,.98f,.98f), GUI::IM_BLACK_TRANSP);
+	// Text Pause
 }
 
 // ----------------------------------- STOP MODULE ----------------------------------- //

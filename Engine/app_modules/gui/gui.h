@@ -31,6 +31,7 @@ private:
 	//Game States Screens
 	DECL_GUI_STATE(Default);
 	DECL_GUI_STATE(OnPlay);
+	DECL_GUI_STATE(OnStop);
 
 	//Renders & Updaters Management
 	typedef void (CGuiModule::*screenRender)();
