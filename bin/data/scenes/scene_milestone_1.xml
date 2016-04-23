@@ -37,6 +37,28 @@
 
 <!-- Fin prueba guarda -->
 
+  <!--test platform joint-->
+  <entity>
+    <tags tags ="platform platform_kinematic box" />
+    <name name="platform_testing" />
+    <transform pos="0.358 -7.546 -19.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/Box.static_mesh" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" mass="2.5"/>
+    <platform speed ="0.5" movement ="5 0 0"/>
+  </entity>
+  <!--end test-->
+
+  <!-- Test 1 punto magnetismo -->
+  <entity>
+    <name name="punto_magnetismo1" />
+    <tags tags="minus_wall" />
+    <polarized pol="minus"/>
+    <transform pos="-2.357965 -5.63678 -22" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
+    <rigidbody type_collision="static"/>
+  </entity>
+  <!-- fin 1 punto magnetismo -->
+
   <!--PLAYER & CAMERA -->
 
   <!--POS INICIAL : 0 0 -22 -->
@@ -58,16 +80,6 @@
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
     <character_controller radius ="0.3" height ="0.5"/>
   </entity>
-<!-- Test 1 punto magnetismo -->
-  <entity>
-    <name name="punto_magnetismo1" />
-    <tags tags="minus_wall" />
-    <polarized pol="minus"/>
-    <transform pos="-2.357965 -5.63678 -22" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/punto_magnetismo.static_mesh" />
-    <rigidbody type_collision="static"/>
-  </entity>
-  <!-- fin 1 punto magnetismo -->
 
 <!-- test spawn -->
   <!--
@@ -100,17 +112,6 @@
     <trigger_lua id="TRIGGER_ZONE_START_TEST" />
     <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
   </entity>
-
-  <!--test platform joint-->
-    <entity>
-      <tags tags ="platform platform_kinematic box" />
-      <name name="platform_testing" />
-      <transform pos="0.358 -7.546 -19.1223" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-      <render_static_mesh name="static_meshes/Box.static_mesh" />
-      <rigidbody type_collision="dynamic" type_shape="box" size="2 1 2" mass="2.5"/>
-      <platform speed ="0.5" movement ="5 0 0"/>
-  </entity>
-  <!--end test-->
 
   <!--END PLAYER & CAMERA -->
 
@@ -1436,7 +1437,7 @@
   </entity>
 
 <!-- Prueba anims -->
- <entity>
+ <!--<entity>
    <name name="MySkel"/>
    <transform pos="0 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
    <skeleton model="skeletons/papa_pitufo/papa_pitufo.skeleton"/>
@@ -1449,7 +1450,7 @@
    <skeleton model="skeletons/pitufo/pitufo.skeleton"/>
    <render_static_mesh name="skeletons/pitufo/pitufo.static_mesh"/>
  </entity>
- 
+ -->
  <!-- Fin prueba anims -->
   
   <!-- VICTORY POINT -->

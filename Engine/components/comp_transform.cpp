@@ -5,7 +5,7 @@
 #include "render/shader_cte.h"
 #include "imgui/imgui.h"
 
-#include "contants/ctes_object.h"
+#include "constants/ctes_object.h"
 
 #include "handle\handle.h"
 #include "components\entity.h"

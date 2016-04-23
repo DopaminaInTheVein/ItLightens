@@ -5,6 +5,7 @@
 #include "SimpleMath.inl"
 
 typedef DirectX::SimpleMath::Matrix  MAT44;
+typedef DirectX::SimpleMath::Vector2 VEC2;
 typedef DirectX::SimpleMath::Vector3 VEC3;
 typedef DirectX::SimpleMath::Vector4 VEC4;
 typedef DirectX::SimpleMath::Quaternion CQuaternion;

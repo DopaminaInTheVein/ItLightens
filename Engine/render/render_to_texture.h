@@ -31,6 +31,9 @@ public:
   void clear(VEC4 clear_color);
   void clearZ();
 
+	ID3D11RenderTargetView* getRenderTargetView() {
+		return render_target_view;
+	}
 };
 
 #endif

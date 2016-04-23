@@ -47,7 +47,9 @@ DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
+DECL_OBJ_MANAGER("light_dir", TCompLightDir);
 DECL_OBJ_MANAGER("tags", TCompTags);
+DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("box", TCompBox);
@@ -108,6 +110,10 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+
+	//lights
+	getHandleManager<TCompLightDir>()->init(4);
+	getHandleManager<TCompLightPoint>()->init(32);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -240,6 +246,18 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	CEntityParser ep;
+
+//lights test
+	{
+		CEntityParser ep;
+		bool is_ok = ep.xmlParseFile("data/scenes/scene_basic_lights.xml");
+		assert(is_ok);
+	}
+
+//end test
+
+
+
 	bool is_ok = ep.xmlParseFile("data/scenes/scene_milestone_1.xml");
 	//bool is_ok = ep.xmlParseFile("data/scenes/scene_test_recast.xml");
 	//bool is_ok = ep.xmlParseFile("data/scenes/pruebaExportador.xml");
@@ -334,6 +352,7 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
+	getHandleManager<TCompLightDir>()->updateAll(dt);
 
 	if (use_parallel)
 		getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
@@ -385,6 +404,7 @@ void CEntitiesModule::render() {
 
 	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
+	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 }
 
 void CEntitiesModule::renderInMenu() {

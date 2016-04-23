@@ -10,10 +10,10 @@
 #include "render/shader_cte.h"
 #include "entity.h"
 #include "imgui/imgui.h"
-#include "contants/ctes_object.h"
+#include "constants/ctes_object.h"
 extern CShaderCte< TCteObject > shader_ctes_object;
 
-#include "contants/ctes_camera.h"
+#include "constants/ctes_camera.h"
 extern CShaderCte< TCteCamera > shader_ctes_camera;
 
 #include "comp_charactercontroller.h"
@@ -32,10 +32,13 @@ void TCompCamera::render() const {
 	//shader_ctes_object.World = getViewProjection().Invert();
 	//shader_ctes_object.uploadToGPU();
 	//axis->activateAndRender();
+}
 
-	shader_ctes_camera.activate(CTE_SHADER_CAMERA_SLOT);
-	shader_ctes_camera.ViewProjection = getViewProjection();
-	shader_ctes_camera.uploadToGPU();
+void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
+  assert(e_owner);
+  TCompTransform* tmx = e_owner->get<TCompTransform>();
+  assert(tmx);
+  this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
 }
 
 void TCompCamera::update(float dt) {

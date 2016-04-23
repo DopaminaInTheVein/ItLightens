@@ -1,6 +1,6 @@
-#include "contants/ctes_camera.h"
-#include "contants/ctes_object.h"
-#include "contants/ctes_bones.h"
+#include "constants/ctes_camera.h"
+#include "constants/ctes_object.h"
+#include "constants/ctes_bones.h"
 
 //--------------------------------------------------------------------------------------
 void VSSkin(
@@ -10,7 +10,6 @@ void VSSkin(
 	, in int4   iBones : BONES
 	, in float4 iWeights : WEIGHTS
 	, out float4 oPos : SV_POSITION
-	, out float4 oCol : COLOR
 	, out float2 oTex0 : TEXCOORD0
 	//  , out float3 oNormal : NORMAL
 	)
@@ -22,12 +21,6 @@ void VSSkin(
 		+ Bones[iBones.w] * iWeights.w;
 
 	float4 skinned_Pos = mul(iPos, skin_mtx);
-
-	float4 norm = normalize(mul(Rotation, iNormal));
-	float diffusebrightness = saturate(dot(norm, lightvec));
-	oCol = ambientcol;		//ambient as base color
-	oCol += lightcol * diffusebrightness;
-
 	oPos = mul(skinned_Pos, ViewProjection);
 	oTex0 = iTex0;
 	//  oNormal = mul(iNormal, (float3x3)skin_mtx);

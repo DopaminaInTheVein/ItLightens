@@ -109,6 +109,7 @@ bool CRender::createDevice() {
 		&sd, &swap_chain, &device, &featureLevel, &ctx);
 	if (!SUCCEEDED(hr))
 		return false;
+	setDXName(device, "DX11Dev");
 
 	// Create a render target view
 	ID3D11Texture2D* pBackBuffer = NULL;
@@ -120,9 +121,13 @@ bool CRender::createDevice() {
 	pBackBuffer->Release();
 	if (FAILED(hr))
 		return false;
+	setDXName(pBackBuffer, "BackBufferRes");
+	setDXName(render_target_view, "BackBufferRTV");
 
-  if (!createDepthBuffer(width, height, DXGI_FORMAT_D24_UNORM_S8_UINT, &depth_resource, &depth_stencil_view))
-    return false;
+	if (!createDepthBuffer(width, height, DXGI_FORMAT_D24_UNORM_S8_UINT, &depth_resource, &depth_stencil_view))
+		return false;
+	setDXName(depth_resource, "MainZBufferRes");
+	setDXName(depth_stencil_view, "MainZBufferDSV");
 
   activateBackBuffer();
 

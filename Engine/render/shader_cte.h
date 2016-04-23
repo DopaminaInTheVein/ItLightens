@@ -30,6 +30,7 @@ public:
 	void activate(int slot) {
 		assert(constant_buffer);
 		Render.ctx->VSSetConstantBuffers(slot, 1, &constant_buffer);
+		Render.ctx->PSSetConstantBuffers(slot, 1, &constant_buffer);
 	}
 
 	void uploadToGPU() {

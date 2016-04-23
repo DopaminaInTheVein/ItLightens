@@ -40,14 +40,16 @@ bool CMesh::create(
 	assert(new_num_bytes_per_vertex > 0);
 	assert(initial_vertex_data != nullptr);
 
-	// Translate the topology from our system to dx
-	if (new_topology == TRIANGLE_LIST)
-		topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-	else if (new_topology == LINE_LIST)
-		topology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
-	else {
-		fatal("Unknown topology %d\n", new_topology);
-	}
+  // Translate the topology from our system to dx
+  if( new_topology == TRIANGLE_LIST )
+    topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+  else if (new_topology == TRIANGLE_STRIP)
+    topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+  else if (new_topology == LINE_LIST)
+    topology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
+  else {
+    fatal("Unknown topology %d\n", new_topology);
+  }
 
 	// Translate the vtx decr from our system to dx11
 	vtx_decl = vdecl_manager.getById(new_enum_vtx_decl);
@@ -134,6 +136,15 @@ void CMesh::render() const {
 		Render.ctx->DrawIndexed(num_idxs, 0, 0);
 	else
 		Render.ctx->Draw(num_vertexs, 0);
+}
+
+void CMesh::renderGroup(uint32_t group_idx) const {
+  assert(group_idx < (uint32_t)groups.size());
+  const auto& g = groups[group_idx];
+  if (ib)
+    Render.ctx->DrawIndexed(g.num_indices, g.first_index, 0);
+  else
+    Render.ctx->Draw(g.num_indices, g.first_index);
 }
 
 void CMesh::activateAndRender() const {

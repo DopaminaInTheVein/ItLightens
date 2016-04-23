@@ -18,18 +18,20 @@ struct FileDataMesh {
 class CMesh : public IResource {
 public:
 
-	enum ePrimitiveType {
-		TRIANGLE_LIST = 2000
-		, LINE_LIST
-	};
+  enum ePrimitiveType {
+    TRIANGLE_LIST = 2000
+  , TRIANGLE_STRIP
+  , LINE_LIST
+  };
 
-	enum eVertexDecl {
-		VTX_DECL_POSITION = 999
-		, VTX_DECL_POSITION_UV = 1000
-		, VTX_DECL_POSITION_COLOR
-		, VTX_DECL_POSITION_NORMAL_UV = 1002
-		, VTX_DECL_POSITION_NORMAL_UV_SKIN = 1102
-	};
+  enum eVertexDecl {
+    VTX_DECL_POSITION = 999
+  , VTX_DECL_POSITION_UV = 1000
+  , VTX_DECL_POSITION_COLOR 
+  , VTX_DECL_POSITION_NORMAL_UV = 1002
+  , VTX_DECL_POSITION_NORMAL_UV_TANGENT = 1003
+  , VTX_DECL_POSITION_NORMAL_UV_SKIN = 1102
+  };
 
 	struct TGroup {
 		uint32_t first_index;
@@ -45,21 +47,22 @@ public:
 	{ }
 	CMesh(const CMesh&) = delete;
 
-	void destroy();
-	bool create(
-		uint32_t new_num_vertexs
-		, uint32_t new_num_bytes_per_vertex
-		, const void* initial_vertex_data
-		, uint32_t new_num_idxs
-		, uint32_t new_num_bytes_per_index
-		, const void* initial_index_data
-		, eVertexDecl new_enum_vtx_decl
-		, ePrimitiveType new_topology
-		, const CMesh::VGroups* new_groups
-		);
-	void activate() const;
-	void render() const;
-	void activateAndRender() const;
+  void destroy();
+  bool create(
+    uint32_t new_num_vertexs
+    , uint32_t new_num_bytes_per_vertex
+    , const void* initial_vertex_data
+    , uint32_t new_num_idxs
+    , uint32_t new_num_bytes_per_index
+    , const void* initial_index_data
+    , eVertexDecl new_enum_vtx_decl
+    , ePrimitiveType new_topology
+    , const VGroups* groups = nullptr
+    );
+  void activate() const;
+  void render() const;
+  void renderGroup( uint32_t group_idx ) const;
+  void activateAndRender() const;
 
 	static FileDataMesh loadData(std::string path, CDataProvider & dp);
 

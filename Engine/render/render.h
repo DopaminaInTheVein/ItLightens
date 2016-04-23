@@ -31,6 +31,14 @@ public:
 
   void activateBackBuffer();
   void clearMainZBuffer();
+
+  int getXRes() const{
+	  return width;
+  }
+
+  int getYRes() const {
+	  return height;
+  }
 };
 
 extern CRender Render;

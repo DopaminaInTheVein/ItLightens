@@ -27,6 +27,12 @@ const char* IResource::getTypeName( IResource::eType atype ) {
   return "invalid";
 }
 
+void CResourcesManager::onFileChanged(const std::string& filename) {
+  dbg("Resources file %s changed!\n", filename.c_str());
+  for (auto it : all)
+    it.second->onFileChanged(filename);
+}
+
 const IResource* CResourcesManager::get(const char* name) {
 	// Do we have this object?
 	auto it = all.find(name);

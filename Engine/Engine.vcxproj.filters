@@ -532,6 +532,12 @@
     <ClCompile Include="app_modules\gui\gui_hud_player.cpp">
       <Filter>app_modules\gui</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_light_dir.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_light_point.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1269,6 +1275,15 @@
     </ClInclude>
     <ClInclude Include="app_modules\gui\gui_hud_player.h">
       <Filter>app_modules\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_light_dir.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_light_point.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\directory_watcher.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
