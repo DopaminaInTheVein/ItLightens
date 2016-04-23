@@ -10,8 +10,7 @@ protected:
 	Rect rectangle;
 	float current;
 	float target;
-	float speed = 2.f;
-
+	const float speed = 0.5f;
 public:
 	CGuiBar() {}
 	CGuiBar(Rect r) : rectangle(r), target(0.f), current(0.f) {}

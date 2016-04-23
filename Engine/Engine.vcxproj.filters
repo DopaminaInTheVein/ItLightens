@@ -538,6 +538,12 @@
     <ClCompile Include="components\comp_light_point.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\gui\gui_menu_pause.cpp">
+      <Filter>app_modules\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\gui\gui_button_std.cpp">
+      <Filter>app_modules\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1261,9 +1267,6 @@
     <ClInclude Include="app_modules\gui\gui.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_bar.h">
-      <Filter>app_modules\gui</Filter>
-    </ClInclude>
     <ClInclude Include="app_modules\gui\gui_bar_color.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
@@ -1284,6 +1287,21 @@
     </ClInclude>
     <ClInclude Include="utils\directory_watcher.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_internal.h">
+      <Filter>app_modules\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\gui_menu_pause.h">
+      <Filter>app_modules\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\gui_button.h">
+      <Filter>app_modules\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\gui_button_std.h">
+      <Filter>app_modules\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\gui_bar.h">
+      <Filter>app_modules\gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

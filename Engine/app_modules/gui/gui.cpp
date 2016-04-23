@@ -9,6 +9,7 @@
 #include "handle/object_manager.h"
 #include "gui_utils.h"
 #include "gui_bar_color.h"
+#include "gui_menu_pause.h"
 
 #include "app_modules/gameController.h"
 #include "app_modules/gameData.h"
@@ -33,7 +34,14 @@ bool CGuiModule::start()
 {
 	resolution_x = CApp::get().getXRes();
 	resolution_y = CApp::get().getYRes();
+
+	//Pause and Menu
+	bigRect = GUI::createRect(.01f, .01f, .98f, .98f);
+	menuPause = new CGuiMenuPause();
 	
+	//Font
+	imFont = imIO.Fonts->AddFontDefault();
+
 	//Window
 	initWindow();
 	
@@ -41,7 +49,8 @@ bool CGuiModule::start()
 	initScreens();
 
 	//Hud Player
-	hudPlayer = new CGuiHudPlayer(GUI::createRect(0.05f, 0.05f, .30f, 0.05f));
+	hudPlayerRect = GUI::createRect(0.05f, 0.05f, .30f, 0.05f);
+	hudPlayer = new CGuiHudPlayer(hudPlayerRect);
 	
 	dbg("GUI module started\n");
 
@@ -67,7 +76,7 @@ void CGuiModule::initScreens()
 	//Add here Game States
 	ADD_GAME_STATE(CGameController::RUNNING, OnPlay);
 	ADD_GAME_STATE(CGameController::STOPPED, OnStop);
-
+	ADD_GAME_STATE(CGameController::MENU, OnMenu);
 }
 
 void inline CGuiModule::setRender(int state, screenRender render)
@@ -103,10 +112,7 @@ void inline CGuiModule::callUpdater(int state, float dt)
 }
 
 // ----- Update Default ----- //
-void CGuiModule::updateDefault(float dt)
-{
-	//Nothing to do?
-}
+void CGuiModule::updateDefault(float dt) {}
 
 // ----- Update On Play ----- //
 void CGuiModule::updateOnPlay(float dt)
@@ -115,10 +121,10 @@ void CGuiModule::updateOnPlay(float dt)
 }
 
 // ----- Update On Stop ----- //
-void CGuiModule::updateOnStop(float dt)
-{
-	//Nothing to update?
-}
+void CGuiModule::updateOnStop(float dt) {}
+
+// ----- Update On Menu ----- //
+void CGuiModule::updateOnMenu(float dt) {}
 
 // ----------------------------------- RENDER MODULE ----------------------------------- //
 void inline CGuiModule::callRender(int state)
@@ -149,8 +155,21 @@ void CGuiModule::renderOnPlay() {
 // ----- Render On Stop ----- //
 void CGuiModule::renderOnStop() {
 	hudPlayer->render();
-	GUI::drawRect(GUI::createRect(.01f,.01f,.98f,.98f), GUI::IM_BLACK_TRANSP);
+	ImGuiState& g = *GImGui;
+	g.FontSize = resolution_y;
+	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+
 	// Text Pause
+	GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSE");
+	//ImGui::GetWindowDrawList()->AddText(g.Font, g.FontSize, ImVec2(0,0), GUI::IM_WHITE, "PAUSE");
+
+}
+
+// ----- Render On Menu ----- //
+void CGuiModule::renderOnMenu() {
+	renderOnPlay();
+	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+	menuPause->render();
 }
 
 // ----------------------------------- STOP MODULE ----------------------------------- //

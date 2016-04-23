@@ -37,8 +37,16 @@ public:
 
 			//exit game
 			if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
-				CApp& app = CApp::get();
-				app.exitGame();
+				if (game_state == RUNNING) {
+					SetGameState(MENU);
+					io->mouse.release();
+				}
+				else if (game_state == MENU) {
+					SetGameState(RUNNING);
+					io->mouse.capture();
+				}
+				//CApp& app = CApp::get();
+				//app.exitGame();
 			}
 
 			//restart game

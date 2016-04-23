@@ -4,20 +4,14 @@
 #include "app_modules/app_module.h"
 
 #include "gui_hud_player.h"
+#include "imgui/imgui_internal.h"
 
 #define DECL_GUI_STATE(name) \
 void render##name(); void update##name(float);
 
-struct Rect {
-	int x; int y;
-	int sx; int sy;
-	Rect(int _x, int _y, int _sx, int _sy) :
-		x(_x), y(_y), sx(_sx), sy(_sy) {}
-	Rect() : x(0), y(0), sx(100), sy(100) {}
-};
-
 //Forward Declarations
 class CGuiBarColor;
+class CGuiMenuPause;
 
 class CGuiModule : public IAppModule {
 private:
@@ -25,13 +19,27 @@ private:
 	int resolution_x;
 	int resolution_y;
 
-	//Bar Test
+	//IO, font
+	ImGuiIO& imIO = ImGui::GetIO();
+	ImFont* imFont;
+	//static ImGuiState       GImDefaultState;
+	//ImGuiState*             GImGui = &GImDefaultState;
+
+	//Hud Player
+	Rect hudPlayerRect;
 	CGuiHudPlayer * hudPlayer;
+
+	//Pause
+	Rect bigRect;
+
+	//Menu
+	CGuiMenuPause * menuPause;
 
 	//Game States Screens
 	DECL_GUI_STATE(Default);
 	DECL_GUI_STATE(OnPlay);
 	DECL_GUI_STATE(OnStop);
+	DECL_GUI_STATE(OnMenu);
 
 	//Renders & Updaters Management
 	typedef void (CGuiModule::*screenRender)();
@@ -50,6 +58,7 @@ private:
 	ImGuiWindowFlags window_flags;
 
 public:
+	CGuiModule() {}
 	bool start() override;
 	void toogleEnabled();
 	void initWindow();

@@ -7,6 +7,8 @@
 #include "gui.h"
 
 CGuiHudPlayer::CGuiHudPlayer(Rect r) {
+	rect = r;
+	sizeFont = 0.025f;
 	barSmall = new CGuiBarColor(r, GUI::IM_BLUE_LIGHT);
 	barBig = new CGuiBarColor(r, GUI::IM_BLUE_DARK);
 }
@@ -26,4 +28,7 @@ void CGuiHudPlayer::update(float dt) {
 void CGuiHudPlayer::render() {
 	barBig->draw();
 	barSmall->draw(false);
+	GUI::drawText(Pixel(rect.x, rect.y - sizeFont * CApp::get().getYRes()), 
+		GImGui->Font, sizeFont, 
+		GUI::IM_WHITE, "ENERGY");
 }

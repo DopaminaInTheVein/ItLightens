@@ -12,7 +12,7 @@ public:
 			CEntity* ePlayer = player;
 			TCompLife * life = ePlayer->get<TCompLife>();
 			assert(life || fatal("Player doesn't have life component!"));
-			return life->getCurrentNormalized();
+			return life->getCurrent() / getLifeMax();
 		}
 	}
 
