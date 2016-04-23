@@ -35,20 +35,20 @@ rcConfig CNavmesh::getRcConfig() {
 	return config;
 }
 
-void CNavmesh::build(std::string salaloc, std::string salalocExtra) {
+void CNavmesh::build(std::string salaloc) {
 	destroy();
 	m_ctx->resetLog();
 
 	rcConfig config = getRcConfig();
 
-	m_navMesh = create(config, salaloc, salalocExtra);
+	m_navMesh = create(config, salaloc);
 	if (m_navMesh)
 		prepareQueries();
 
 	dumpLog();
 }
 
-dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc, std::string salalocExtra) {
+dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 	// WARNING: We will admit animated meshes, but the first snapshot will be the used to generate the navmesh
 	//assert( mesh->header.nsnapshots == 1 ); // must be a static mesh!
 
@@ -501,7 +501,7 @@ void CNavmesh::restoreExtraData(std::string path) {
 	}
 	ifs.close();
 }
-bool CNavmesh::reload(std::string salaloc, std::string salalocExtra) {
+bool CNavmesh::reload(std::string salaloc) {
 	destroy();
 	m_ctx->resetLog();
 	m_navMesh = nullptr;

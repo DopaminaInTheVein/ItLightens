@@ -75,7 +75,6 @@ DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
 
 DECL_OBJ_MANAGER("trigger_lua", TCompTriggerStandar);
 
-
 CCamera * camera;
 
 // The global dict of all msgs
@@ -253,19 +252,10 @@ bool CEntitiesModule::start() {
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";
-	salalocExtra = "data/navmeshes/" + sala + "_extra.data";
 
 	CEntityParser ep;
 
-//lights test
-	{
-		CEntityParser ep;
-		bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
-		assert(is_ok);
-	}
-
-//end test
-
+	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 
 	// GENERATE NAVMESH
@@ -290,10 +280,8 @@ bool CEntitiesModule::start() {
 	nav.m_input.computeBoundaries();
 	SBB::postNavmesh(nav);
 	std::ifstream is(salaloc.c_str());
-	std::ifstream is2(salalocExtra.c_str());
-	bool recalc = !is.is_open() && !is2.is_open();
+	bool recalc = !is.is_open();
 	is.close();
-	is2.close();
 	SBB::postBool(sala, false);
 	if (!recalc) {
 		// restore the navmesh from the archive
@@ -466,7 +454,7 @@ void CEntitiesModule::renderInMenu() {
 void CEntitiesModule::recalcNavmesh() {
 	// GENERATE NAVMESH
 	CNavmesh nav = SBB::readNavmesh();
-	nav.build(salaloc, salalocExtra);
+	nav.build(salaloc);
 	SBB::postNavmesh(nav);
 	SBB::postBool(sala, true);
 }
@@ -474,7 +462,7 @@ void CEntitiesModule::recalcNavmesh() {
 void CEntitiesModule::readNavmesh() {
 	// GENERATE NAVMESH
 	CNavmesh nav = SBB::readNavmesh();
-	bool recalc = !nav.reload(salaloc, salalocExtra);
+	bool recalc = !nav.reload(salaloc);
 	if (recalc) {
 		recalcNavmesh();
 	}

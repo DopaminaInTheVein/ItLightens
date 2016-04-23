@@ -13,14 +13,14 @@ class CNavmesh {
 private:
 	rcHeightfield*        m_solid;
 	rcCompactHeightfield* m_chf;
-	rcContourSet*         m_cset;//
-	rcPolyMesh*           m_pmesh;//
-	rcConfig              m_cfg;//
-	rcPolyMeshDetail*     m_dmesh;//
-	rcBuildContext*       m_ctx;//
-	unsigned char*        m_triareas;//
+	rcContourSet*         m_cset;
+	rcPolyMesh*           m_pmesh;
+	rcConfig              m_cfg;
+	rcPolyMeshDetail*     m_dmesh;
+	rcBuildContext*       m_ctx;
+	unsigned char*        m_triareas;
 
-	rcBuildContext        m_context;//
+	rcBuildContext        m_context;
 
 	rcConfig getRcConfig();
 	void storeExtraData(std::string path);
@@ -60,10 +60,10 @@ public:
 	EDrawMode             m_draw_mode;//
 
 	CNavmesh();
-	void build(std::string salaloc, std::string salalocExtra);
-	bool reload(std::string salaloc, std::string salalocExtra);
+	void build(std::string salaloc);
+	bool reload(std::string salaloc);
 
-	dtNavMesh* create(const rcConfig& cfg, std::string salaloc, std::string salalocExtra);
+	dtNavMesh* create(const rcConfig& cfg, std::string salaloc);
 	void prepareQueries();
 	void destroy();
 	void dumpLog();
