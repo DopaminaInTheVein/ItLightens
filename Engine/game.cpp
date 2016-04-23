@@ -20,12 +20,14 @@
 #include "app_modules/render/module_render_deferred.h"
 #include "components/entity_parser.h"
 #include "handle/handle_manager.h"
+#include "utils/directory_watcher.h"
 
 #include <shellapi.h>
 #include <process.h>
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
+CDirectoyWatcher resources_dir_watcher;
 
 // --------------------------------------------
 #include "app_modules/entities.h"
@@ -89,6 +91,12 @@ bool CApp::start() {
 
 	mod_wnd_proc.push_back(io);
 	mod_wnd_proc.push_back(imgui);
+
+// ----------------------------
+  if (!drawUtilsCreate())
+    return false;
+
+resources_dir_watcher.start("data/shaders", getHWnd());
 
 	// ----------------------------
 	tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
@@ -166,6 +174,8 @@ void CApp::update(float elapsed) {
 void CApp::render() {
   PROFILE_FUNCTION("CApp::render");
   
+  activateDefaultStates();
+
   for (auto it : mod_renders) {
     PROFILE_FUNCTION(it->getName());
     CTraceScoped scope( it->getName() );

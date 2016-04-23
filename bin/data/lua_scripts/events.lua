@@ -36,10 +36,6 @@ function OnGuardRemoveBox( reaction_time )
 	p:print( "OnGuardRemoveBox: "..reaction_time.."\n" )
 end
 
-function OnGuardOvercharged( param )
-	p:print( "OnGuardOvercharged: "..param.."\n" )
-end
-
 function OnLevelStart001( param )
 	p:print( "OnLevelStart001: "..param.."\n" )
 end

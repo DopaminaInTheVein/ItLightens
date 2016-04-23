@@ -11,8 +11,9 @@ public:
 
 	enum TTextureSlot {
 		DIFFUSE = 0
-		, BUMP
 		, SPECULAR
+    		, NORMALMAP
+    		, ENVIRONMENT
 		, COUNT
 	};
 	const CRenderTechnique*   tech;

@@ -14,6 +14,7 @@ struct TCompCamera : public CCamera, public TCompBase {
 	bool checkColision(const VEC3& pos);
 	bool load(MKeyValue& atts);
 	void renderInMenu();
+	void updateFromEntityTransform(CEntity* e_owner);
 };
 
 #endif

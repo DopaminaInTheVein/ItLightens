@@ -1,5 +1,5 @@
-<material tech="textured_normals.tech">
+<material tech="deferred.tech">
 <texture slot="diffuse" name="textures/guard_albedo_ALPHA_DXT5_black_background_white_elements.dds"/>
-  <texture slot="bump" name="textures/guarda_normal_map.dds"/>
+  <texture slot="normalmap" name="textures/guarda_normal_map.dds"/>
   <texture slot="specular" name="textures/guarda_specular_map.dds"/>
 </material>

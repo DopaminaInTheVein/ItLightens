@@ -2,6 +2,7 @@
 #include "resources/resources_manager.h"
 #include "material.h"
 #include "texture.h"
+#include "constants/ctes_platform.h"
 
 template<> IResource::eType getTypeOfResource<CMaterial>() { return IResource::MATERIAL; }
 
@@ -22,11 +23,13 @@ IResource* createObjFromName<CMaterial>(const std::string& name) {
 void CMaterial::onStartElement(const std::string &elem, MKeyValue &atts) {
 	if (elem == "material") {
 		auto tech_name = atts["tech"];
+		if (tech_name.empty())
+			tech_name = "deferred.tech";
 		tech = Resources.get(tech_name.c_str())->as<CRenderTechnique>();
 	}
 	else if (elem == "texture") {
-		auto type_name = atts["type"];  // diffuse/specular/...
-		if (type_name == "") type_name = atts["slot"];
+		auto type_name = atts["slot"];  // diffuse/specular/...
+		if (type_name == "") type_name = atts["type"];
 		assert(type_name != "");
 		auto text_name = atts["name"];
 
@@ -34,12 +37,18 @@ void CMaterial::onStartElement(const std::string &elem, MKeyValue &atts) {
 		if (type_name == "diffuse") {
 			type_slot = TTextureSlot::DIFFUSE;
 		}
-		else if (type_name == "bump") {
-			type_slot = TTextureSlot::BUMP;
-		}
+		//else if (type_name == "bump") {
+			//type_slot = TTextureSlot::BUMP;
+		//}
 		else if (type_name == "specular") {
 			type_slot = TTextureSlot::SPECULAR;
 		}
+	  	else if (type_name == "normalmap") {
+	      		type_slot = TTextureSlot::NORMALMAP;
+	    	}
+	    	else if (type_name == "environment") {
+	      		type_slot = TTextureSlot::ENVIRONMENT;
+	    	}
 		else {
 			fatal("Invalid texture slot type %s found at material definition\n", type_name.c_str());
 			return;
@@ -61,7 +70,7 @@ bool CMaterial::load(const char* filename) {
 // ----------------------------------------------
 void CMaterial::activateTextures() const {
 	PROFILE_FUNCTION("render material: activate textures");
-	
+	/*
 	for (int i = 0; i < TTextureSlot::COUNT; i++) {
 		if (textures[i]) {
 			if (textures[i] && i > 0) {
@@ -69,10 +78,17 @@ void CMaterial::activateTextures() const {
 			}
 			textures[i]->activate(i);
 		}
-	}
+	}*/
+
+	textures[DIFFUSE]->activate(TEXTURE_SLOT_DIFFUSE);
+  	//assert(textures[NORMALMAP]);
+	if(textures[NORMALMAP])
+  		textures[NORMALMAP]->activate(TEXTURE_SLOT_NORMALS);
+  	if( textures[ENVIRONMENT] )
+    		textures[ENVIRONMENT]->activate(TEXTURE_SLOT_ENVIRONMENT);
 }
 
 // ----------------------------------------------
 void CMaterial::deactivateTextures() {
-	CTexture::deactivate(0);
+	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 }

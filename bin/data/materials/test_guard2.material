@@ -1,4 +1,4 @@
-<material tech="textured_normals.tech">
+<material tech="deferred_no_tangent.tech">
 <texture slot="diffuse" name="textures/guarda_albedo_map.dds"/>
-  <texture slot="bump" name="textures/guarda_normal_map.dds"/>
+  <texture slot="normalmap" name="textures/guarda_normal_map.dds"/>
 </material>

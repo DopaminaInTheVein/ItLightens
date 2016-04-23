@@ -29,6 +29,8 @@ public:
 	// The manager takes ownership of new_res
   	void registerNew(IResource* new_res);	
 	void renderUIDebug(ImGuiTextFilter * filter = nullptr);
+
+	void onFileChanged(const std::string& filename);
 };
 
 extern CResourcesManager Resources;

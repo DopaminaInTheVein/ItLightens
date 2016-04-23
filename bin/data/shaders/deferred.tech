@@ -1,0 +1,4 @@
+<tech>
+  <vs fx="deferred" main="VS" decl="positions_normal_uv_tangent" />
+  <ps fx="deferred" main="PSGBuffer" />
+</tech>

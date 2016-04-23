@@ -90,8 +90,8 @@ public:
 		ImGui::Separator();
 
 		//Polarity
-		if (CHandle(target_e).hasTag("player")) {
-			player_controller * playerController = target_e->get<player_controller>();
+		player_controller * playerController = target_e->get<player_controller>();
+		if (playerController) {
 			ImGui::Text(playerController->GetPolarity().c_str());
 			ImGui::Separator();
 		}
