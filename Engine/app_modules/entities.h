@@ -19,6 +19,7 @@ public:
 	void update(float dt) override;
 	void render() override;
 	void recalcNavmesh();
+	void readNavmesh();
 	const char* getName() const {
 		return "entities";
 	}

@@ -306,14 +306,8 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc, std::strin
 
 		dtStatus status;
 
-		//store Data
-		char* str = reinterpret_cast<char*>(navData);
-		std::ofstream ofs(salaloc, std::ios::binary);
-		ofs.write(str, navDataSize);
-		ofs.close();
-
 		// store extra data
-		storeExtraData(salalocExtra);
+		storeExtraData(salaloc);
 
 		// init Data
 		status = m_nav->init(navData, navDataSize, DT_TILE_FREE_DATA);
@@ -365,6 +359,42 @@ void CNavmesh::storeExtraData(std::string path) {
 			str.push_back('\n');
 		}
 	}
+	//m_pmesh
+	int numverts = m_pmesh->nverts;
+	int npolys = m_pmesh->npolys;
+	int maxpolys = m_pmesh->maxpolys;
+	int nvp = m_pmesh->nvp;
+	str += std::to_string(numverts) + "\n";
+	str += std::to_string(npolys) + "\n";
+	str += std::to_string(maxpolys) + "\n";
+	str += std::to_string(nvp) + "\n";
+	str += std::to_string(m_pmesh->cs) + "\n";
+	str += std::to_string(m_pmesh->ch) + "\n";
+	str += std::to_string(m_pmesh->borderSize) + "\n";
+	str += std::to_string(m_pmesh->maxEdgeError) + "\n";
+	str += std::to_string(m_pmesh->bmin[0]) + "\n";
+	str += std::to_string(m_pmesh->bmin[1]) + "\n";
+	str += std::to_string(m_pmesh->bmin[2]) + "\n";
+	str += std::to_string(m_pmesh->bmax[0]) + "\n";
+	str += std::to_string(m_pmesh->bmax[1]) + "\n";
+	str += std::to_string(m_pmesh->bmax[2]) + "\n";
+	if (numverts > 0) {
+		for (int i = 0; i < numverts * 3; ++i) {
+			str += std::to_string(m_pmesh->verts[i]) + '\n';
+		}
+	}
+	if (maxpolys > 0 && nvp > 0) {
+		for (int i = 0; i < maxpolys * 2 * nvp; ++i) {
+			str += std::to_string(m_pmesh->polys[i]) + '\n';
+		}
+	}
+	if (maxpolys > 0) {
+		for (int i = 0; i < maxpolys; ++i) {
+			str += std::to_string(m_pmesh->regs[i]) + '\n';
+			str += std::to_string(m_pmesh->flags[i]) + '\n';
+			str += std::to_string(m_pmesh->areas[i]) + '\n';
+		}
+	}
 	ofs.write(str.c_str(), str.length());
 	ofs.close();
 }
@@ -407,6 +437,68 @@ void CNavmesh::restoreExtraData(std::string path) {
 			m_dmesh->meshes[i] = ival;
 		}
 	}
+	//m_pmesh
+	m_pmesh = rcAllocPolyMesh();
+	std::getline(ifs, val);
+	int numverts = stoi(val);
+	std::getline(ifs, val);
+	int npolys = stoi(val);
+	std::getline(ifs, val);
+	int maxpolys = stoi(val);
+	std::getline(ifs, val);
+	int nvp = stoi(val);
+	m_pmesh->nverts = nverts;
+	m_pmesh->npolys = npolys;
+	m_pmesh->maxpolys = maxpolys;
+	m_pmesh->nvp = nvp;
+	m_pmesh->verts = new unsigned short[nverts * 3];
+	m_pmesh->polys = new unsigned short[maxpolys * 2 * nvp];
+	m_pmesh->regs = new unsigned short[maxpolys];
+	m_pmesh->flags = new unsigned short[maxpolys];
+	m_pmesh->areas = new unsigned char[maxpolys];
+	std::getline(ifs, val);
+	m_pmesh->cs = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->ch = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->borderSize = stoi(val);
+	std::getline(ifs, val);
+	m_pmesh->maxEdgeError = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmin[0] = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmin[1] = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmin[2] = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmax[0] = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmax[1] = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmax[2] = stof(val);
+
+	if (numverts > 0) {
+		for (int i = 0; i < numverts * 3; ++i) {
+			std::getline(ifs, val);
+			m_pmesh->verts[i] = stoi(val);
+		}
+	}
+	if (maxpolys > 0 && nvp > 0) {
+		for (int i = 0; i < maxpolys * 2 * nvp; ++i) {
+			std::getline(ifs, val);
+			m_pmesh->polys[i] = stoi(val);
+		}
+	}
+	if (maxpolys > 0) {
+		for (int i = 0; i < maxpolys; ++i) {
+			std::getline(ifs, val);
+			m_pmesh->regs[i] = stoi(val);
+			std::getline(ifs, val);
+			m_pmesh->flags[i] = stoi(val);
+			std::getline(ifs, val);
+			m_pmesh->areas[i] = stol(val);
+		}
+	}
 	ifs.close();
 }
 bool CNavmesh::reload(std::string salaloc, std::string salalocExtra) {
@@ -431,34 +523,66 @@ bool CNavmesh::reload(std::string salaloc, std::string salalocExtra) {
 	m_cfg.detailSampleDist = cfg.detailSampleDist < 0.9f ? 0 : cfg.cs * cfg.detailSampleDist;
 	m_cfg.detailSampleMaxError = cfg.ch * cfg.detailSampleMaxError;
 
-	std::ifstream input(salaloc, std::ios::binary);
-	// copies all data into buffer
-	std::vector<char> buffer((
-		std::istreambuf_iterator<char>(input)),
-		(std::istreambuf_iterator<char>()));
-	input.close();
-	const char * navDataS = buffer.data();
-	int  navDataSize = buffer.size();
+	restoreExtraData(salaloc);
 
-	char * dataSigned = const_cast<char*>(navDataS);
-	unsigned char * navData = reinterpret_cast<unsigned char*>(dataSigned);
-	// init Data
+	unsigned char* navData = 0;
+	int navDataSize = 0;
+
+	// Update poly flags from areas.
+	for (int i = 0; i < m_pmesh->npolys; ++i) {
+		if (m_pmesh->areas[i] == RC_WALKABLE_AREA)
+			m_pmesh->flags[i] = FLAG_WALK;
+	}
+
+	dtNavMeshCreateParams params;
+	memset(&params, 0, sizeof(params));
+	params.verts = m_pmesh->verts;
+	params.vertCount = m_pmesh->nverts;
+	params.polys = m_pmesh->polys;
+	params.polyAreas = m_pmesh->areas;
+	params.polyFlags = m_pmesh->flags;
+	params.polyCount = m_pmesh->npolys;
+	params.nvp = m_pmesh->nvp;
+	params.detailMeshes = m_dmesh->meshes;
+	params.detailVerts = m_dmesh->verts;
+	params.detailVertsCount = m_dmesh->nverts;
+	params.detailTris = m_dmesh->tris;
+	params.detailTriCount = m_dmesh->ntris;
+	params.walkableHeight = (float)cfg.walkableHeight;
+	params.walkableRadius = (float)cfg.walkableRadius;
+	params.walkableClimb = (float)cfg.walkableClimb;
+	rcVcopy(params.bmin, m_pmesh->bmin);
+	rcVcopy(params.bmax, m_pmesh->bmax);
+	params.cs = m_cfg.cs;
+	params.ch = m_cfg.ch;
+	params.buildBvTree = true;
+
+	if (!dtCreateNavMeshData(&params, &navData, &navDataSize)) {
+		m_ctx->log(RC_LOG_ERROR, "Could not build Detour navmesh.");
+		return nullptr;
+	}
+
 	m_navMesh = dtAllocNavMesh();
 	if (!m_navMesh) {
 		dtFree(navData);
 		m_ctx->log(RC_LOG_ERROR, "Could not create Detour navmesh");
 		return nullptr;
 	}
-	dtStatus status = m_navMesh->init(navData, navDataSize, DT_TILE_FREE_DATA);
+
+	dtStatus status;
+
+	// init Data
+	status = m_navMesh->init(navData, navDataSize, DT_TILE_FREE_DATA);
 	if (dtStatusFailed(status)) {
 		dtFree(navData);
-		m_ctx->log(RC_LOG_ERROR, "Could not reinit Detour navmesh");
-		return false;
+		m_ctx->log(RC_LOG_ERROR, "Could not init Detour navmesh");
+		return nullptr;
 	}
+	m_navQuery = dtAllocNavMeshQuery();
 	if (m_navMesh) {
 		prepareQueries();
 	}
-	restoreExtraData(salalocExtra);
+
 	return true;
 }
 

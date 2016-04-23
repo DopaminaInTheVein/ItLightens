@@ -278,19 +278,16 @@ bool CEntitiesModule::start() {
 	bool recalc = !is.is_open() && !is2.is_open();
 	is.close();
 	is2.close();
+	SBB::postBool(sala, false);
 	if (!recalc) {
 		// restore the navmesh from the archive
-		recalc = !nav.reload(salaloc, salalocExtra);
-	}
-	if (recalc) {
-		// make mesh on a separate thread
-		SBB::postBool(sala, false);
-		std::thread thre(&CEntitiesModule::recalcNavmesh, this);
+		std::thread thre(&CEntitiesModule::readNavmesh, this);
 		thre.detach();
 	}
 	else {
-		SBB::postNavmesh(nav);
-		SBB::postBool(sala, true);
+		// make mesh on a separate thread
+		std::thread thre(&CEntitiesModule::recalcNavmesh, this);
+		thre.detach();
 	}
 	TTagID tagIDcamera = getID("camera_main");
 	TTagID tagIDwall = getID("breakable_wall");
@@ -364,6 +361,9 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
+	static float ia_wait = 0.0f;
+	ia_wait += getDeltaTime();
+
 	// May need here a switch to update wich player controller takes the action - possession rulez
 	getHandleManager<player_controller>()->updateAll(dt);
 	getHandleManager<player_controller_speedy>()->updateAll(dt);
@@ -380,14 +380,15 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompBoneTracker>()->updateAll(dt);
 
-	getHandleManager<bt_guard>()->updateAll(dt);
-	getHandleManager<bt_mole>()->updateAll(dt);
-	getHandleManager<ai_scientific>()->updateAll(dt);
-	getHandleManager<beacon_controller>()->updateAll(dt);
-	getHandleManager<workbench_controller>()->updateAll(dt);
-	getHandleManager<bt_speedy>()->updateAll(dt);
-	getHandleManager<water_controller>()->updateAll(dt);
-
+	if (SBB::readBool(sala) && ia_wait > 1.0f) {
+		getHandleManager<bt_guard>()->updateAll(dt);
+		getHandleManager<bt_mole>()->updateAll(dt);
+		getHandleManager<ai_scientific>()->updateAll(dt);
+		getHandleManager<beacon_controller>()->updateAll(dt);
+		getHandleManager<workbench_controller>()->updateAll(dt);
+		getHandleManager<bt_speedy>()->updateAll(dt);
+		getHandleManager<water_controller>()->updateAll(dt);
+	}
 	getHandleManager<CStaticBomb>()->updateAll(dt);
 	getHandleManager<CMagneticBomb>()->updateAll(dt);
 
@@ -448,4 +449,17 @@ void CEntitiesModule::recalcNavmesh() {
 	nav.build(salaloc, salalocExtra);
 	SBB::postNavmesh(nav);
 	SBB::postBool(sala, true);
+}
+
+void CEntitiesModule::readNavmesh() {
+	// GENERATE NAVMESH
+	CNavmesh nav = SBB::readNavmesh();
+	bool recalc = !nav.reload(salaloc, salalocExtra);
+	if (recalc) {
+		recalcNavmesh();
+	}
+	else {
+		SBB::postNavmesh(nav);
+		SBB::postBool(sala, true);
+	}
 }
