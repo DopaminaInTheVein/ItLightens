@@ -1,0 +1,27 @@
+<entities>
+  
+  <entity>
+    <name name="light_red" />
+    <transform pos="0.0 -5.0 -18.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <light_point color="1 0 0 1" in_radius="3" out_radius="10" />
+  </entity>
+
+  <entity>
+    <name name="light_rare" />
+    <transform pos="0.0 10.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <light_point color="1 0.9 0.3 1" in_radius="200" out_radius="200" />
+  </entity>
+
+  <entity>
+    <name name="light_green" />
+    <transform pos="0.0 -5.0 -22.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <light_point color="0 1 0 1" in_radius="3" out_radius="5" />
+  </entity>
+
+  <entity>
+    <name name="light_dir" />
+    <transform pos="7.0 3.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <light_dir color="1 1 1 1" znear="0.1" zfar="10" fov="45"/>
+  </entity>
+
+</entities>

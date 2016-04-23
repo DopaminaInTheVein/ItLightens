@@ -99,6 +99,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app_modules\entities.cpp" />
+    <ClCompile Include="app_modules\gui\gui.cpp" />
+    <ClCompile Include="app_modules\gui\gui_bar_color.cpp" />
+    <ClCompile Include="app_modules\gui\gui_button_std.cpp" />
+    <ClCompile Include="app_modules\gui\gui_hud_player.cpp" />
+    <ClCompile Include="app_modules\gui\gui_menu_pause.cpp" />
+    <ClCompile Include="app_modules\gui\gui_utils.cpp" />
     <ClCompile Include="app_modules\imgui\module_imgui.cpp" />
     <ClCompile Include="app_modules\io\io.cpp" />
     <ClCompile Include="app_modules\io\joystick.cpp" />
@@ -111,6 +117,8 @@
     <ClCompile Include="components\comp_camera.cpp" />
     <ClCompile Include="components\comp_charactercontroller.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
+    <ClCompile Include="components\comp_light_dir.cpp" />
+    <ClCompile Include="components\comp_light_point.cpp" />
     <ClCompile Include="components\comp_physics.cpp" />
     <ClCompile Include="components\comp_platform.cpp" />
     <ClCompile Include="components\comp_polarized.cpp" />
@@ -462,6 +470,15 @@
     <ClInclude Include="app_modules\app_module.h" />
     <ClInclude Include="app_modules\entities.h" />
     <ClInclude Include="app_modules\gameController.h" />
+    <ClInclude Include="app_modules\gameData.h" />
+    <ClInclude Include="app_modules\gui\gui.h" />
+    <ClInclude Include="app_modules\gui\gui_bar.h" />
+    <ClInclude Include="app_modules\gui\gui_bar_color.h" />
+    <ClInclude Include="app_modules\gui\gui_button.h" />
+    <ClInclude Include="app_modules\gui\gui_button_std.h" />
+    <ClInclude Include="app_modules\gui\gui_hud_player.h" />
+    <ClInclude Include="app_modules\gui\gui_menu_pause.h" />
+    <ClInclude Include="app_modules\gui\gui_utils.h" />
     <ClInclude Include="app_modules\imgui\module_imgui.h" />
     <ClInclude Include="app_modules\io\digital_button.h" />
     <ClInclude Include="app_modules\io\io.h" />
@@ -482,6 +499,8 @@
     <ClInclude Include="components\comp_controller_3rd_person.h" />
     <ClInclude Include="components\comp_generator.h" />
     <ClInclude Include="components\comp_life.h" />
+    <ClInclude Include="components\comp_light_dir.h" />
+    <ClInclude Include="components\comp_light_point.h" />
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
     <ClInclude Include="components\comp_physics.h" />
@@ -509,6 +528,7 @@
     <ClInclude Include="handle\handle_manager.h" />
     <ClInclude Include="handle\msgs.h" />
     <ClInclude Include="handle\object_manager.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\input_manager.h" />
     <ClInclude Include="logic\aicontroller.h" />
@@ -653,6 +673,7 @@
     <ClInclude Include="ui\ui_interface.h" />
     <ClInclude Include="utils\data_provider.h" />
     <ClInclude Include="utils\data_saver.h" />
+    <ClInclude Include="utils\directory_watcher.h" />
     <ClInclude Include="utils\macros\macros.h" />
     <ClInclude Include="utils\macros\timers.h" />
     <ClInclude Include="utils\murmur3.h" />

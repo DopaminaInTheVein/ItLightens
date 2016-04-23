@@ -48,7 +48,9 @@ DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
+DECL_OBJ_MANAGER("light_dir", TCompLightDir);
 DECL_OBJ_MANAGER("tags", TCompTags);
+DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("box", TCompBox);
@@ -72,6 +74,7 @@ DECL_OBJ_MANAGER("box_spawn", TCompBoxSpawner);
 DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
 
 DECL_OBJ_MANAGER("trigger_lua", TCompTriggerStandar);
+
 
 CCamera * camera;
 
@@ -108,6 +111,10 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+
+	//lights
+	getHandleManager<TCompLightDir>()->init(4);
+	getHandleManager<TCompLightPoint>()->init(32);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -175,8 +182,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
 	SUBSCRIBE(bt_guard, TMsgNoise, noise);
-	//TODO
-	//SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
+	SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
 
 	//WIRES
 	SUBSCRIBE(TCompWire, TMsgEntityCreated, onCreate);
@@ -241,15 +247,25 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	sala = "scene_milestone_1";
-	sala = "scene_test_recast";
+	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
+	//sala = "scene_basic_lights";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";
 	salalocExtra = "data/navmeshes/" + sala + "_extra.data";
 
 	CEntityParser ep;
-	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
+
+//lights test
+	{
+		CEntityParser ep;
+		bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
+		assert(is_ok);
+	}
+
+//end test
+
 	assert(is_ok);
 
 	// GENERATE NAVMESH
@@ -372,6 +388,7 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
+	getHandleManager<TCompLightDir>()->updateAll(dt);
 
 	if (use_parallel)
 		getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
@@ -407,6 +424,8 @@ void CEntitiesModule::update(float dt) {
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);
 	getHandleManager<TCompPhysics>()->updateAll(dt);
+
+	SBB::update(dt);
 }
 
 void CEntitiesModule::render() {
@@ -422,6 +441,7 @@ void CEntitiesModule::render() {
 
 	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
+	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 }
 
 void CEntitiesModule::renderInMenu() {

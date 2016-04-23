@@ -28,6 +28,13 @@
 struct TCompRenderStaticMesh;
 class TCompCharacterController;
 
+class guard_alert {
+public:
+	VEC3 guard_position;
+	VEC3 alert_position;
+	float timer;
+};
+
 class bt_guard : public TCompBase, public bt
 {
 	//Main attritbutes
@@ -45,6 +52,8 @@ class bt_guard : public TCompBase, public bt
 	float MAX_BOX_REMOVAL_TIME;
 	float BOX_REMOVAL_ANIM_TIME;
 	float LOOK_AROUND_TIME;
+	float GUARD_ALERT_TIME;
+	float GUARD_ALERT_RADIUS;
 	//from bombs
 	float reduce_factor;
 	float t_reduceStats_max;
@@ -121,6 +130,8 @@ class bt_guard : public TCompBase, public bt
 
 	//Raycast
 	bool rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit);
+	bool rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit);
+	bool rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform);
 	bool shootToPlayer();
 	void removeBox(CHandle box_handle);
 
@@ -187,6 +198,7 @@ public:
 	void resetStats();
 	void onMagneticBomb(const TMsgMagneticBomb& msg);
 	void onStaticBomb(const TMsgStaticBomb& msg);
+	void onOverCharged(const TMsgOverCharge& msg);
 
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();

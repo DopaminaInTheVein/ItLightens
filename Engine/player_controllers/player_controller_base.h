@@ -88,7 +88,7 @@ public:
 	virtual void myUpdate(); // deberia ser abstracta pero peta
 
 	// Player states
-	void Idle();
+	virtual void Idle();
 	void Jump();
 	void Die();
 	void Win();

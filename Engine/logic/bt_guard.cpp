@@ -5,9 +5,9 @@
 #include "utils/XMLParser.h"
 #include "utils/utils.h"
 #include "logic/sbb.h"
-#include "app_modules\io\io.h"
-#include "app_modules\logic_manager\logic_manager.h"
-#include "ui\ui_interface.h"
+#include "app_modules/io/io.h"
+#include "app_modules/logic_manager/logic_manager.h"
+#include "ui/ui_interface.h"
 
 map<string, bt_guard::KptType> bt_guard::kptTypes = {
 	  {"seek", KptType::Seek}
@@ -68,6 +68,8 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(MAX_BOX_REMOVAL_TIME, fields);
 			assignValueToVar(BOX_REMOVAL_ANIM_TIME, fields);
 			assignValueToVar(LOOK_AROUND_TIME, fields);
+			assignValueToVar(GUARD_ALERT_TIME, fields);
+			assignValueToVar(GUARD_ALERT_RADIUS, fields);
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
@@ -135,7 +137,27 @@ bool bt_guard::playerStunned() {
 
 bool bt_guard::playerDetected() {
 	PROFILE_FUNCTION("guard: player detected");
-	return playerVisible();
+	// if the player is visible
+	if (playerVisible()) {
+		TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+		VEC3 posPlayer = tPlayer->getPosition();
+		VEC3 myPos = getTransform()->getPosition();
+
+		// we send a new alert with our position and the player position
+		guard_alert alert;
+		alert.guard_position = myPos;
+		alert.alert_position = posPlayer;
+		alert.timer = GUARD_ALERT_TIME;
+
+		CEntity* entity = myHandle.getOwner();		
+		string name = entity->getName() + string("_player_detected");
+
+		SBB::postGuardAlert(name, alert);
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool bt_guard::playerOutOfReach() {
@@ -156,14 +178,65 @@ bool bt_guard::playerOutOfReach() {
 
 bool bt_guard::guardAlerted() {
 	PROFILE_FUNCTION("guard: guardalert");
+
+	VEC3 myPos = getTransform()->getPosition();
+
+	// we send a new alert with our position and the player position
+	guard_alert alert;
+	alert.guard_position = myPos;
+	alert.timer = GUARD_ALERT_TIME;
+	CEntity* entity = myHandle.getOwner();
+
 	if (playerLost) {
 		TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 		VEC3 posPlayer = tPlayer->getPosition();
 		player_last_seen_point = posPlayer;
+		// send an alert for the nearest guards with the player last position
+		alert.alert_position = player_last_seen_point;
+		string name = entity->getName() + string("_player_lost");
+		SBB::postGuardAlert(name, alert);
+
 		return true;
 	}
 	else if (noiseHeard) {
+		// send an alert for the nearest guards with the noise point
+		alert.alert_position = noisePoint;
+		string name = entity->getName() + string("_noise_heard");
+		SBB::postGuardAlert(name, alert);
+
 		return true;
+	}
+	// check alerts from other guards
+	else {
+		std::map<string, guard_alert> guard_alerts = SBB::sbbGuardAlerts;
+
+		if (!guard_alerts.empty()) {
+			for (std::map<string, guard_alert>::iterator alert_it = guard_alerts.begin(); alert_it != guard_alerts.end(); alert_it++) {
+				VEC3 guard_alert_position = alert_it->second.guard_position;
+
+				// the guard will be alerted if he is near enough
+				if (simpleDist(myPos, guard_alert_position) < GUARD_ALERT_RADIUS) {
+					VEC3 alert_point = alert_it->second.alert_position;
+
+					// depending on the alert type, we make a different decission
+					if (alert_it->first.find(string("_player_lost")) != string::npos) {
+						playerLost = true;
+						player_last_seen_point = alert_point;
+						return true;
+					}
+					else if (alert_it->first.find(string("_noise_heard")) != string::npos) {
+						noiseHeard = true;
+						noisePoint = alert_point;
+						return true;
+					}
+					else if (alert_it->first.find(string("_player_detected")) != string::npos) {
+						playerLost = true;
+						player_last_seen_point = alert_point;
+						return true;
+					}
+				}
+			}
+		}
 	}
 		
 	return false;
@@ -263,10 +336,18 @@ int bt_guard::actionAbsorb() {
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
 		TMsgDamageSpecific dmg;
+		CEntity* entity = myHandle.getOwner();
+		dmg.source = entity->getName();
 		dmg.type = Damage::ABSORB;
 		dmg.actived = false;
 		ePlayer->sendMsg(dmg);
-		return OK;
+		// if the player went out of reach, we don't shoot the wall
+		if (squaredDistXZ(myPos, posPlayer) > DIST_SQ_PLAYER_DETECTION || !inJurisdiction(posPlayer)) {
+			return KO;
+		}
+		else {
+			return OK;
+		}
 	}
 	else {
 		ChangePose(pose_shoot_route);
@@ -326,6 +407,7 @@ int bt_guard::actionSearch() {
 	//Player Visible?
 	if (playerVisible()) {
 		setCurrent(NULL);
+		return KO;
 	}
 	else if (playerLost) {
 		float distance = squaredDistXZ(myPos, player_last_seen_point);
@@ -511,6 +593,20 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	}
 }
 
+void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
+	PROFILE_FUNCTION("guard: onovercharge");
+	CEntity * entity = myHandle.getOwner();
+	string guard_name = entity->getName();
+
+	if (msg.guard_name == guard_name) {
+		logic_manager->throwEvent(logic_manager->OnGuardOvercharged, "");
+		stunned = true;
+		____TIMER_RESET_(timerStunt);
+		setCurrent(NULL);
+	}
+
+}
+
 /**************
  * Auxiliares
  **************/
@@ -626,14 +722,51 @@ bool bt_guard::playerVisible() {
 			}
 		}
 	}
+	// moving boxes detection
+	float distRay;
+	PxRaycastBuffer hit;
+	bool ret = rayCastToFront(1, distRay, hit);
+	if (ret) { //No bloquea vision
+		CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+		if (h.hasTag("box")) { //box?
+			CEntity* box = h;
+			TCompPolarized* pol_component = box->get<TCompPolarized>();
+			if (pol_component && pol_component->moving) {
+				return true;
+			}
+		}
+	}
 	return false;
 }
 
 bool bt_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) {
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	return rayCastToTransform(types, distRay, hit, tPlayer);
+}
+
+bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform) {
 	VEC3 myPos = getTransform()->getPosition();
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 origin = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
 	VEC3 direction = tPlayer->getPosition() - myPos;
+	direction.Normalize();
+	float dist = DIST_RAYSHOT;
+	//rcQuery.types = types;
+	CEntity *e = myParent;
+	TCompCharacterController *cc = e->get<TCompCharacterController>();
+	Debug->DrawLine(origin + VEC3(0, 0.5f, 0), getTransform()->getFront(), 10.0f);
+	bool ret = g_PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
+
+	if (ret)
+		distRay = hit.getAnyHit(0).distance;
+
+	return ret;
+}
+
+bool bt_guard::rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit) {
+	VEC3 myPos = getTransform()->getPosition();
+	VEC3 origin = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
+	VEC3 direction = getTransform()->getFront();
 	direction.Normalize();
 	float dist = DIST_RAYSHOT;
 	//rcQuery.types = types;
@@ -675,10 +808,8 @@ bool bt_guard::shootToPlayer() {
 			}
 			else if (h.hasTag("box")) {
 				CEntity* box = h;
-				dbg("Disparando a caja %s!\n", box->getName());
 				TCompBox* box_component = box->get<TCompBox>();
-				if (box_component->isRemovable()) {
-					dbg("Caja %s es apartable!\n", box->getName());
+				if (box_component && box_component->isRemovable()) {
 					// if remove box is ready, reset the timer and remove the box
 					if (remove_box_ready) {
 						remove_box_time = MAX_BOX_REMOVAL_TIME;
@@ -697,21 +828,25 @@ bool bt_guard::shootToPlayer() {
 		}
 	}
 
+	CEntity *entity = myHandle.getOwner();
+
 	//Do damage
-	if (damage && !sendMsgDmg) {
+	if (damage && !sendMsgDmg && !shooting) {
 		shooting = true;
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
 		TMsgDamageSpecific dmg;
+		dmg.source = entity->getName();
 		dmg.type = Damage::ABSORB;
 		dmg.actived = true;
 		ePlayer->sendMsg(dmg);
 	}
-	else if (!damage && sendMsgDmg) {
+	else if (!damage && sendMsgDmg && shooting) {
 		shooting = false;
 		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
 		TMsgDamageSpecific dmg;
+		dmg.source = entity->getName();
 		dmg.type = Damage::ABSORB;
 		dmg.actived = false;
 		ePlayer->sendMsg(dmg);

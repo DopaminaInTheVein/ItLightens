@@ -21,6 +21,8 @@ struct TCompPolarized : public TCompBase {
 
 	VEC3				origin;
 	bool				send					= false;
+	bool				moving					= false;
+	VEC3				last_position;
 
 	TMsgPolarize		msg_in;
 	TMsgPolarize		msg_out;

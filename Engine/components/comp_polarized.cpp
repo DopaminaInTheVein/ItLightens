@@ -19,6 +19,11 @@ void TCompPolarized::init()
 	msg_out.pol = mPol;
 	msg_out.range = false;
 
+	CHandle e_h = CHandle(this).getOwner();
+	CEntity * e = e_h;
+	TCompTransform *t = e->get<TCompTransform>();
+	last_position = t->getPosition();
+
 }
 
 void TCompPolarized::update(float elapsed)
@@ -44,6 +49,8 @@ void TCompPolarized::update(float elapsed)
 			}
 		}
 		else if (mType == FREE) {
+
+
 			if (mPlayer_state != NEUTRAL) {
 				CHandle e_h = CHandle(this).getOwner();
 				CEntity *e = e_h;
@@ -54,6 +61,13 @@ void TCompPolarized::update(float elapsed)
 						TCompTransform *t = me_e->get<TCompTransform>();
 						if (t) {
 							origin = t->getPosition();
+							if (origin != last_position) {
+								moving = true;
+								last_position = origin;
+							}
+							else {
+								moving = false;
+							}
 						}
 					}
 				}

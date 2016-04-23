@@ -8,6 +8,7 @@
 
 // ------------------------------------
 struct TCompLife : public TCompBase {
+
 	float currentlife;
 	float maxlife;
 	float modifier	= 1.0f;
@@ -32,6 +33,14 @@ struct TCompLife : public TCompBase {
 
 	float getCurrent() {
 		return currentlife;
+	}
+
+	float getCurrentNormalized() {
+		return (currentlife / maxlife);
+	}
+
+	float getMax() {
+		return maxlife;
 	}
 
 	void setCurrent(float new_life) {

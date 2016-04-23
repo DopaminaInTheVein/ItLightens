@@ -12,6 +12,7 @@
 #include "camera/camera.h"
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
+#include "app_modules/gui/gui.h"
 #include "input/input.h"
 #include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
@@ -19,12 +20,14 @@
 #include "app_modules/render/module_render_deferred.h"
 #include "components/entity_parser.h"
 #include "handle/handle_manager.h"
+#include "utils/directory_watcher.h"
 
 #include <shellapi.h>
 #include <process.h>
 
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
+CDirectoyWatcher resources_dir_watcher;
 
 // --------------------------------------------
 #include "app_modules/entities.h"
@@ -41,6 +44,7 @@ bool CApp::start() {
 
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
+	auto gui = new CGuiModule;
 	auto entities = new CEntitiesModule;
 	auto render_deferred = new CRenderDeferredModule;
 	io = new CIOModule;     // It's the global io
@@ -51,6 +55,7 @@ bool CApp::start() {
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
+	all_modules.push_back(gui);
 	all_modules.push_back(g_PhysxManager);
 	all_modules.push_back(entities);
 	all_modules.push_back(io);
@@ -59,8 +64,9 @@ bool CApp::start() {
 	all_modules.push_back(render_deferred);
 	all_modules.push_back(logic_manager);
 
-	mod_update.push_back(imgui);
 	mod_update.push_back(GameController);
+	mod_update.push_back(imgui);
+	mod_update.push_back(gui);
 	mod_update.push_back(entities);
 	mod_update.push_back(g_PhysxManager);
 	mod_update.push_back(io);
@@ -70,9 +76,12 @@ bool CApp::start() {
 	mod_renders.push_back(render_deferred);
 	mod_renders.push_back(entities);
 	mod_renders.push_back(Debug);
+	mod_renders.push_back(gui);
 	mod_renders.push_back(imgui);
+
 	mod_renders.push_back(io);
 
+	mod_init_order.push_back(gui);
 	mod_init_order.push_back(imgui);
 	mod_init_order.push_back(render_deferred);
 	mod_init_order.push_back(io);
@@ -82,6 +91,12 @@ bool CApp::start() {
 
 	mod_wnd_proc.push_back(io);
 	mod_wnd_proc.push_back(imgui);
+
+// ----------------------------
+  if (!drawUtilsCreate())
+    return false;
+
+resources_dir_watcher.start("data/shaders", getHWnd());
 
 	// ----------------------------
 	tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
@@ -159,6 +174,8 @@ void CApp::update(float elapsed) {
 void CApp::render() {
   PROFILE_FUNCTION("CApp::render");
   
+  activateDefaultStates();
+
   for (auto it : mod_renders) {
     PROFILE_FUNCTION(it->getName());
     CTraceScoped scope( it->getName() );

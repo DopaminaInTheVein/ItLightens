@@ -1,6 +1,6 @@
 {
 	"screen" : {
-		"xres" : 1280,
+		"xres" : 1024,
 		"yres" : 800,
 		"full_screen" : 1
 	},

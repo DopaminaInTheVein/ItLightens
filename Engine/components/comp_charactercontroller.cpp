@@ -329,9 +329,12 @@ void TCompCharacterController::SetFilterData(PxFilterData& filter)
 
 void TCompCharacterController::AddImpulse(const VEC3& impulse) {
 	PROFILE_FUNCTION("add impulse");
-	m_speed.y = impulse.y;
-	m_speed.x = impulse.x;
-	m_speed.z = impulse.z;
+	if (!sameSign(m_speed.x, impulse.x)) m_speed.x = 0;
+	if (!sameSign(m_speed.y, impulse.y)) m_speed.y = 0;
+	if (!sameSign(m_speed.z, impulse.z)) m_speed.z = 0;
+	m_speed.x += impulse.x;
+	m_speed.y += impulse.y;
+	m_speed.z += impulse.z;
 }
 
 void TCompCharacterController::AddSpeed(const VEC3 & direction, float speed)

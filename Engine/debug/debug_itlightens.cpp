@@ -3,7 +3,7 @@
 #include "render/mesh.h"
 #include "resources/resource.h"
 #include "render/shader_cte.h"
-#include "contants/ctes_object.h"
+#include "constants/ctes_object.h"
 extern CShaderCte< TCteObject > shader_ctes_object;
 
 struct SimpleVertexColored {

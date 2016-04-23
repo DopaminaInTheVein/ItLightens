@@ -9,27 +9,30 @@ class CMaterial;
 class CStaticMesh;
 
 class CRenderManager {
-	struct TKey {
-		const CMesh*            mesh;
-		const CMaterial*        material;
-		int                     submesh_idx;
-		//const CRenderTechnique* tech;
-		CHandle                 owner;
-		CHandle                 transform;
-	};
 
-	static bool sortByTechMatMesh(const TKey& k1, const TKey& k2);
+  struct TKey {
+    const CMesh*            mesh;
+    const CMaterial*        material;
+    int                     submesh_idx;
+    //const CRenderTechnique* tech;
+    CHandle                 owner;
+    CHandle                 transform;
+  };
 
-	bool in_order;
-	std::vector< TKey > all_keys;
+  static bool sortByTechMatMesh(const TKey& k1, const TKey& k2);
+  
+  bool in_order;
+  std::vector< TKey > all_keys;
 
 public:
+  
+  void registerToRender(const CStaticMesh* mesh, CHandle handle);
+  void unregisterFromRender(CHandle handle);
+  void renderAll();
 
-	void registerToRender(const CStaticMesh* mesh, CHandle handle);
-	void unregisterFromRender(CHandle handle);
-	void renderAll();
 };
 
 extern CRenderManager RenderManager;
 
 #endif
+

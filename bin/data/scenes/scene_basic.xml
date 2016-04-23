@@ -1,0 +1,38 @@
+<entities>
+<entity>
+  <name name="Plane001"/>
+  <transform pos="0.0 0.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+  <render_static_mesh name="static_meshes/Plane001.static_mesh"/>
+<rigidbody type_collision="static" />
+</entity>
+<entity>
+  <name name="Box001"/>
+  <transform pos="15.0 4.37114e-007 10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+  <render_static_mesh name="static_meshes/Box001.static_mesh"/>
+<rigidbody type_collision="static" />
+</entity>
+<entity>
+  <name name="Teapot001"/>
+  <transform pos="0.0 -4.37114e-007 -10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+  <render_static_mesh name="static_meshes/Teapot001.static_mesh"/>
+<rigidbody type_collision="static" />
+</entity>
+<entity>
+  <name name="GeoSphere001"/>
+  <transform pos="1.60666 2.85306 10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+  <render_static_mesh name="static_meshes/GeoSphere001.static_mesh"/>
+<rigidbody type_collision="static" />
+</entity>
+<entity>
+  <name name="Torus001"/>
+  <transform pos="-10.0 4.89345 3.0037" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+  <render_static_mesh name="static_meshes/Torus001.static_mesh"/>
+<rigidbody type_collision="static" />
+</entity>
+<entity>
+  <name name="Box002"/>
+  <transform pos="0.0 1.09278e-006 25.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+  <render_static_mesh name="static_meshes/Box002.static_mesh"/>
+<rigidbody type_collision="static" />
+</entity>
+</entities>

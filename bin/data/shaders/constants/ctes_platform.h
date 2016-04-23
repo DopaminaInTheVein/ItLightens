@@ -4,6 +4,14 @@
 #define CTE_SHADER_OBJECT_SLOT     0
 #define CTE_SHADER_CAMERA_SLOT     1
 #define CTE_SHADER_BONES_SLOT      2
+#define CTE_SHADER_LIGHT           3
+
+#define TEXTURE_SLOT_DIFFUSE       0
+#define TEXTURE_SLOT_NORMALS       1
+
+#define TEXTURE_SLOT_WORLD_POS     4
+#define TEXTURE_SLOT_ENVIRONMENT   5
+#define TEXTURE_SLOT_LIGHTS		   6
 
 #ifdef INC_MCV_PLATFORM_H_
 
@@ -13,12 +21,14 @@
 #define ShaderBuffer(name,cte) struct name
 #define matrix    MAT44
 #define float4    VEC4
+#define USE_SHADER_REG(nreg)
 
 #else
 
 // HLSL uses this definition
 
 #define ShaderBuffer(name,cte) cbuffer name : register(b##cte)
+#define USE_SHADER_REG(nreg) register(t ## nreg)
 
 #endif
 

@@ -6,6 +6,7 @@ using namespace std;
 class CNavmesh;
 class CHandle;
 class bt_mole;
+class guard_alert;
 
 class SBB
 {
@@ -20,8 +21,11 @@ private:
 	static map<string, vector<CHandle> > sbbHandlesVector;
 
 public:
+	static map<string, guard_alert> sbbGuardAlerts;
+
 	SBB() = delete;
 	static void init();
+	static void update(float);
 
 	// Sala
 	static void postSala(string);
@@ -50,6 +54,10 @@ public:
 	// sbbHandleVector
 	static void postHandlesVector(string, vector<CHandle>);
 	static vector<CHandle> readHandlesVector(string);
+	// sbbGuardAlerts
+	static void postGuardAlert(string, guard_alert);
+	static guard_alert readGuardAlert(string);
+	static void updateGuardAlerts(float);
 };
 
 #endif

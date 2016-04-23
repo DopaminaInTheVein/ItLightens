@@ -8,8 +8,6 @@
 #include <string>
 #include <map>
 
-using namespace std;
-
 // states are a map to member function pointers, to
 // be defined on a derived class.
 class aicontroller;
@@ -17,19 +15,22 @@ class aicontroller;
 // puntero a función miembro de aicontroller
 typedef void (aicontroller::*statehandler)();
 
+using namespace std;
+
 class aicontroller
 {
 protected:
-	string state;
+	std::string state;
 
-	virtual map<string, statehandler>* getStatemap();
+	virtual std::map<std::string, statehandler>* getStatemap();
 
 public:
-	virtual void ChangeState(string);	// state we wish to go to
+	virtual void ChangeState(std::string);	// state we wish to go to
 	virtual void Init();	// resets the controller
 	void Recalc();	// recompute behaviour
-	void AddState(string, statehandler);
-	void DeleteState(string);
+	void AddState(std::string, statehandler);
+	void DeleteState(std::string);
+	std::string getState();
 };
 
 #endif

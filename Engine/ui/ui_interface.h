@@ -91,8 +91,10 @@ public:
 
 		//Polarity
 		player_controller * playerController = target_e->get<player_controller>();
-		ImGui::Text(playerController->GetPolarity().c_str());
-		ImGui::Separator();
+		if (playerController) {
+			ImGui::Text(playerController->GetPolarity().c_str());
+			ImGui::Separator();
+		}
 
 		//put cheats here:
 		ImGui::Text("Press 'ESC' to exit\n");

@@ -19,6 +19,10 @@
 #include "comp_box_spawner.h"
 #include "comp_box_destructor.h"
 
+//lights
+#include "comp_light_dir.h"
+#include "comp_light_point.h"
+
 //Logic
 #include "logic/ai_beacon.h"
 #include "logic/ai_workbench.h"

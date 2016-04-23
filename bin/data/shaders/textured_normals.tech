@@ -1,5 +1,0 @@
-<tech>
-    <vs fx="basic" main="VS_N_UV_normals" decl="positions_normal_uv"/>
-    <ps fx="basic" main="PSTextured_normals"/>
-</tech>
-

@@ -7,10 +7,13 @@ struct CVertexDeclaration;
 
 // ----------------------------------------------
 class CVertexShader : public IResource {
+  std::string           src_fx_filename;
+  std::string           entry_point;
   ID3D11VertexShader*   vs;
   ID3D11InputLayout*    vertex_layout;
+  const CVertexDeclaration*   vtx_decl;
 public:
-  CVertexShader()  : vs( nullptr ), vertex_layout( nullptr ){ }
+  CVertexShader()  : vs( nullptr ), vertex_layout( nullptr ), vtx_decl( nullptr ) { }
 
   bool create(const char* fx_filename
     , const char* entry_point
@@ -25,10 +28,13 @@ public:
   eType getType() const override  {
     return VERTEX_SHADER;
   }
+  void onFileChanged(const std::string& filename);
 };
 
 // ----------------------------------------------
 class CPixelShader : public IResource {
+  std::string           src_fx_filename;
+  std::string           entry_point;
   ID3D11PixelShader*   ps;
 public:
   CPixelShader() : ps(nullptr) { }
@@ -45,7 +51,7 @@ public:
   eType getType() const override {
     return PIXEL_SHADER;
   }
-
+  void onFileChanged(const std::string& filename);
 };
 
 

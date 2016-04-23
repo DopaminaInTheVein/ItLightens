@@ -1,6 +1,8 @@
 #include "mcv_platform.h"
 #include "aicontroller.h"
 
+using namespace std;
+
 void aicontroller::Init()
 {
 }
@@ -40,4 +42,8 @@ void aicontroller::DeleteState(string name) {
 map<string, statehandler>* aicontroller::getStatemap() {
 	//Must implement in subclasses
 	return nullptr;
+}
+
+string aicontroller::getState() {
+	return state;
 }
