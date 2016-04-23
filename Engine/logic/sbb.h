@@ -11,7 +11,8 @@ class guard_alert;
 class SBB
 {
 private:
-	static map<string, CNavmesh> sbbNavs;
+	static CNavmesh sbbNav;
+	static string sbbSala;
 	static map<string, bool > sbbBool;
 	static map<string, int > sbbInt;
 	static map<string, VEC3> sbbVEC3;
@@ -26,9 +27,13 @@ public:
 	static void init();
 	static void update(float);
 
+	// Sala
+	static void postSala(string);
+	static string readSala();
+
 	// NavMesh
-	static void postNavmesh(string, CNavmesh);
-	static CNavmesh readNavmesh(string);
+	static void postNavmesh(CNavmesh);
+	static CNavmesh readNavmesh();
 	// sbbInt
 	static void postInt(string, int);
 	static int readInt(string);

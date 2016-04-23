@@ -24,7 +24,6 @@ void player_controller::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("player")) {
-
 			CApp &app = CApp::get();
 			std::string file_ini = app.file_initAttr_json;
 			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
@@ -52,7 +51,6 @@ void player_controller::readIniFileAttr() {
 }
 
 void player_controller::Init() {
-
 	//read main attributes from file
 	readIniFileAttr();
 
@@ -77,12 +75,12 @@ void player_controller::Init() {
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 
-	pose_run	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_jump	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_idle	= getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	pose_idle = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 
-	pose_no_ev		= myEntity->get<TCompRenderStaticMesh>();		//defined on xml
-	actual_render	= pose_no_ev;
+	pose_no_ev = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
+	actual_render = pose_no_ev;
 
 	pose_no_ev.setOwner(myEntity);
 	pose_idle.setOwner(myEntity);
@@ -100,7 +98,7 @@ void player_controller::Init() {
 	mesh = pose_run;
 	mesh->static_mesh = Resources.get("static_meshes/player_run.static_mesh")->as<CStaticMesh>();
 
-	lastForces = VEC3(0,0,0);
+	lastForces = VEC3(0, 0, 0);
 
 	actual_render->registerToRender();
 
@@ -143,7 +141,6 @@ void player_controller::rechargeEnergy()
 	ChangePose(pose_idle);
 }
 
-
 void player_controller::ChangePose(CHandle new_pos_h)
 {
 	PROFILE_FUNCTION("player controller: change pose player");
@@ -155,7 +152,7 @@ void player_controller::ChangePose(CHandle new_pos_h)
 		new_pos_h = pose_no_ev;
 		cc->GetController()->resize(min_height);	//update collider size to new form
 		curr_evol = 0;
-		
+
 		actual_render->unregisterFromRender();
 		TCompRenderStaticMesh *new_pose = new_pos_h;
 		actual_render = new_pose;
@@ -163,14 +160,12 @@ void player_controller::ChangePose(CHandle new_pos_h)
 		actual_render->registerToRender();
 	}
 	else if (curr_evol > 0) {
-
 		TCompRenderStaticMesh *new_pose = new_pos_h;
 		if (new_pose == actual_render) return;		//no change
 
 		actual_render->unregisterFromRender();
 		actual_render = new_pose;
 		actual_render->registerToRender();
-
 	}
 }
 
@@ -185,7 +180,8 @@ void player_controller::myUpdate() {
 	VEC3 pos = player_transform->getPosition();
 	if (isDamaged()) {
 		UpdateOverCharge();
-	} else {
+	}
+	else {
 		UpdatePossession();
 	}
 }
@@ -234,12 +230,12 @@ void player_controller::Jumping()
 	if (cc->GetYAxisSpeed() <= 0.0f)
 		ChangeState("falling");
 
-	if (cc->OnGround() && !(cc->GetYAxisSpeed() >  0.0f)) {
+	if (cc->OnGround() && !(cc->GetYAxisSpeed() > 0.0f)) {
 		ChangeState("idle");
 	}
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
+		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 		energyDecreasal(5.0f);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
@@ -256,7 +252,7 @@ void player_controller::Falling()
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
+		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 		energyDecreasal(5.0f);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
@@ -266,7 +262,6 @@ void player_controller::Falling()
 		ChangeState("idle");
 	}
 }
-
 
 void player_controller::RecalcAttractions()
 {
@@ -303,9 +298,9 @@ void player_controller::RecalcAttractions()
 		VEC3 forceReal = forces;
 		forces = VEC3(
 			1 / forces.x,		//x
-			forces.y * 0.05f ,	//y
-			1/forces.z);		//z
-		
+			forces.y * 0.05f,	//y
+			1 / forces.z);		//z
+
 		forces *= POL_ATRACTION_ORBITA;
 
 		if (!pol_orbit_prev) {
@@ -313,7 +308,6 @@ void player_controller::RecalcAttractions()
 			cc->ChangeSpeed(POL_SPEED_ORBITA);
 		}
 		else {
-
 			//Player moving?
 			forceReal.Normalize();
 			VEC3 movementPlayer = cc->GetMovement();
@@ -351,17 +345,16 @@ void player_controller::RecalcAttractions()
 				}
 			}
 		}
-
 	}
 	else {
-		forces = (lastForces * POL_INERTIA) + (forces * (1-POL_INERTIA));
+		forces = (lastForces * POL_INERTIA) + (forces * (1 - POL_INERTIA));
 	}
 
 	//Smooth forces
 	//forces = (lastForces * 0.95f) + (forces * 0.05f);
 
 	//if (forces.y > 0) forces.y += forces.y;
-	
+
 	cc->AddSpeed(forces*getDeltaTime());
 	lastForces = forces;
 	//cc->AddImpulse(forces);
@@ -369,7 +362,7 @@ void player_controller::RecalcAttractions()
 
 VEC3 player_controller::PolarityForce(VEC3 point_pos, bool atraction) {
 	PROFILE_FUNCTION("player controller: attract move");
-	
+
 	//Esto deberian ser ctes o variables del punto de magnetismo
 	float distMax = POL_RADIUS;
 	float distOrbit = POL_RADIUS_STRONG;
@@ -391,7 +384,7 @@ VEC3 player_controller::PolarityForce(VEC3 point_pos, bool atraction) {
 			direction.z *= 2;
 		}
 		direction.Normalize();
-		force = POL_INTENSITY * direction / ((dist) + 0.01f);
+		force = POL_INTENSITY * direction / ((dist)+0.01f);
 	}
 
 	// Atraccion -> Si cerca, orbitar
@@ -469,14 +462,15 @@ void player_controller::UpdateMoves()
 	if (cc->OnGround() && player_curr_speed != 0.0f) {
 		ChangePose(pose_run);
 	}
-	else if(player_curr_speed != 0.0f) {
+	else if (player_curr_speed != 0.0f) {
 		ChangePose(pose_jump);
-	}else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
+	}
+	else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
-	if(cc->OnGround())
+	if (cc->OnGround())
 		cc->AddMovement(direction*player_curr_speed*getDeltaTime());
 	else {
-		cc->AddMovement(direction*player_curr_speed*getDeltaTime()/2);
+		cc->AddMovement(direction*player_curr_speed*getDeltaTime() / 2);
 	}
 }
 
@@ -506,8 +500,8 @@ void player_controller::UpdateInputActions()
 	}
 
 	cc->SetGravity(!pol_orbit);
-	
-	//Event onChangePolarity to LogicManager 
+
+	//Event onChangePolarity to LogicManager
 	if (pol_state != pol_state_prev) {
 		string pol_to_lua = polarize_name[pol_state];
 		logic_manager->throwEvent(logic_manager->OnChangePolarity, pol_to_lua);
@@ -523,7 +517,6 @@ void player_controller::UpdateInputActions()
 		ePoss->sendMsg(msg);
 		logic_manager->throwEvent(logic_manager->OnStun, "");
 	}
-	
 
 	if (last_pol_state != pol_state) {
 		last_pol_state = pol_state;
@@ -710,7 +703,6 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	CEntity* eMe = hMe;
 	CHandle hCamera = tags_manager.getFirstHavingTag(getID("camera_main"));
 	CEntity* eCamera = hCamera;
-	
 
 	//Colocamos el player
 	SetCharacterController();
@@ -719,7 +711,6 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(pos + msg.npcFront * DIST_LEAVING_POSSESSION));	//set collider position
 	tMe->setPosition(msg.npcPos + msg.npcFront * DIST_LEAVING_POSSESSION);												//set render position
 	cc->SetActive(true);
-
 
 	//Set 3rd Person Controller
 	TMsgSetTarget msg3rdController;
@@ -754,7 +745,7 @@ void player_controller::UpdateOverCharge() {
 void player_controller::startOverCharge()
 {
 	//TODO - Estado intermedio OverCharging
-	
+
 	//OverCharge Effect
 	doOverCharge();
 }
@@ -803,7 +794,8 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 	if (!msg.range) {
 		TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
-	}else{
+	}
+	else {
 		TForcePoint newForce = TForcePoint(msg.origin, msg.pol);
 		force_points.push_back(newForce);
 	}
@@ -819,12 +811,12 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 
 	//Damage Once
 	float dmgOnce = DMG_ONCE(type);
-	if ( abs(dmgOnce) > 0.001f ) {
+	if (abs(dmgOnce) > 0.001f) {
 		TMsgSetDamage msgDamageOnce;
 		msgDamageOnce.dmg = dmgOnce * signDamage;
 		eMe->sendMsg(msgDamageOnce);
 	}
-	
+
 	//Update damage fonts
 	if (DMG_IS_CUMULATIVE(type)) damageFonts[type] += signDamage;
 	assert(damageFonts[type] >= 0); // Number fonts can't be negative
@@ -848,7 +840,8 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 			}
 			if (damageFonts[type] > 0) {
 				logic_manager->throwEvent(logic_manager->OnStartReceiveHit, "");
-			} else {
+			}
+			else {
 				logic_manager->throwEvent(logic_manager->OnEndReceiveHit, "");
 			}
 		}
@@ -900,7 +893,7 @@ void player_controller::renderInMenu() {
 	ImGui::SliderFloat("Factor allowing leave", &POL_NO_LEAVING_FORCE, 0.f, 1.5f);
 	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_ORBITA_UP_EXTRA_FORCE, 0.01f, 5.f);
 	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_REAL_FORCE_Y_ORBITA, 0.01f, 1.f);
-	
+
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
 

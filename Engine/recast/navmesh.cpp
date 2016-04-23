@@ -5,6 +5,7 @@
 #include "recast/Detour/Include/DetourNavMeshBuilder.h"
 #include "recast/DebugUtils/Include/RecastDump.h"
 #include "recast/DebugUtils/Include/DetourDebugDraw.h"
+#include <fstream>
 
 CNavmesh::CNavmesh()
 	: m_navMesh(nullptr)
@@ -13,10 +14,7 @@ CNavmesh::CNavmesh()
 	m_ctx = &m_context;
 }
 
-void CNavmesh::build() {
-	destroy();
-	m_ctx->resetLog();
-
+rcConfig CNavmesh::getRcConfig() {
 	rcConfig config;
 	rcVcopy(config.bmin, &m_input.aabb_min.x);
 	rcVcopy(config.bmax, &m_input.aabb_max.x);
@@ -34,15 +32,23 @@ void CNavmesh::build() {
 	config.maxVertsPerPoly = 6;
 	config.detailSampleDist = 1.0f;
 	config.detailSampleMaxError = 0.1f;
+	return config;
+}
 
-	m_navMesh = create(config);
+void CNavmesh::build(std::string salaloc) {
+	destroy();
+	m_ctx->resetLog();
+
+	rcConfig config = getRcConfig();
+
+	m_navMesh = create(config, salaloc);
 	if (m_navMesh)
 		prepareQueries();
 
 	dumpLog();
 }
 
-dtNavMesh* CNavmesh::create(const rcConfig& cfg) {
+dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 	// WARNING: We will admit animated meshes, but the first snapshot will be the used to generate the navmesh
 	//assert( mesh->header.nsnapshots == 1 ); // must be a static mesh!
 
@@ -300,6 +306,10 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg) {
 
 		dtStatus status;
 
+		// store extra data
+		storeExtraData(salaloc);
+
+		// init Data
 		status = m_nav->init(navData, navDataSize, DT_TILE_FREE_DATA);
 		if (dtStatusFailed(status)) {
 			dtFree(navData);
@@ -315,6 +325,265 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg) {
 	m_ctx->log(RC_LOG_PROGRESS, ">> Polymesh: %d vertices  %d polygons", m_pmesh->nverts, m_pmesh->npolys);
 
 	return m_nav;
+}
+
+void CNavmesh::storeExtraData(std::string path) {
+	std::string str = "";
+	std::ofstream ofs(path);
+	//m_dmesh
+	int ntris = m_dmesh->ntris;
+	str += std::to_string(ntris);
+	str.push_back('\n');
+	int nverts = m_dmesh->nverts;
+	str += std::to_string(nverts);
+	str.push_back('\n');
+	int nmeshes = m_dmesh->nmeshes;
+	str += std::to_string(nmeshes);
+	str.push_back('\n');
+	if (ntris > 0) {
+		for (int i = 0; i < ntris * 4; ++i) {
+			unsigned int uint = m_dmesh->tris[i];
+			str += std::to_string(uint);
+			str.push_back('\n');
+		}
+	}
+	if (nverts > 0) {
+		for (int i = 0; i < nverts * 3; ++i) {
+			str += std::to_string(m_dmesh->verts[i]);
+			str.push_back('\n');
+		}
+	}
+	if (nmeshes > 0) {
+		for (int i = 0; i < nmeshes * 4; ++i) {
+			str += std::to_string(m_dmesh->meshes[i]);
+			str.push_back('\n');
+		}
+	}
+	//m_pmesh
+	int numverts = m_pmesh->nverts;
+	int npolys = m_pmesh->npolys;
+	int maxpolys = m_pmesh->maxpolys;
+	int nvp = m_pmesh->nvp;
+	str += std::to_string(numverts) + "\n";
+	str += std::to_string(npolys) + "\n";
+	str += std::to_string(maxpolys) + "\n";
+	str += std::to_string(nvp) + "\n";
+	str += std::to_string(m_pmesh->cs) + "\n";
+	str += std::to_string(m_pmesh->ch) + "\n";
+	str += std::to_string(m_pmesh->borderSize) + "\n";
+	str += std::to_string(m_pmesh->maxEdgeError) + "\n";
+	str += std::to_string(m_pmesh->bmin[0]) + "\n";
+	str += std::to_string(m_pmesh->bmin[1]) + "\n";
+	str += std::to_string(m_pmesh->bmin[2]) + "\n";
+	str += std::to_string(m_pmesh->bmax[0]) + "\n";
+	str += std::to_string(m_pmesh->bmax[1]) + "\n";
+	str += std::to_string(m_pmesh->bmax[2]) + "\n";
+	if (numverts > 0) {
+		for (int i = 0; i < numverts * 3; ++i) {
+			str += std::to_string(m_pmesh->verts[i]) + '\n';
+		}
+	}
+	if (maxpolys > 0 && nvp > 0) {
+		for (int i = 0; i < maxpolys * 2 * nvp; ++i) {
+			str += std::to_string(m_pmesh->polys[i]) + '\n';
+		}
+	}
+	if (maxpolys > 0) {
+		for (int i = 0; i < maxpolys; ++i) {
+			str += std::to_string(m_pmesh->regs[i]) + '\n';
+			str += std::to_string(m_pmesh->flags[i]) + '\n';
+			str += std::to_string(m_pmesh->areas[i]) + '\n';
+		}
+	}
+	ofs.write(str.c_str(), str.length());
+	ofs.close();
+}
+
+void CNavmesh::restoreExtraData(std::string path) {
+	std::string str = "";
+	std::ifstream ifs(path);
+	m_dmesh = rcAllocPolyMeshDetail();
+	//m_dmesh
+	std::string val;
+	std::getline(ifs, val);
+	int ntris = stoi(val);
+	m_dmesh->ntris = ntris;
+	m_dmesh->tris = new unsigned char[ntris * 4];
+	std::getline(ifs, val);
+	int nverts = stoi(val);
+	m_dmesh->nverts = nverts;
+	m_dmesh->verts = new float[nverts * 3];
+	std::getline(ifs, val);
+	int nmeshes = stoi(val);
+	m_dmesh->nmeshes = nmeshes;
+	m_dmesh->meshes = new unsigned int[nmeshes * 4];
+	if (ntris > 0) {
+		for (int i = 0; i < ntris * 4; ++i) {
+			std::getline(ifs, val);
+			unsigned int ival = stoi(val);
+			m_dmesh->tris[i] = ival;
+		}
+	}
+	if (nverts > 0) {
+		for (int i = 0; i < nverts * 3; ++i) {
+			std::getline(ifs, val);
+			m_dmesh->verts[i] = stof(val);
+		}
+	}
+	if (nmeshes > 0) {
+		for (int i = 0; i < nmeshes * 4; ++i) {
+			std::getline(ifs, val);
+			unsigned int ival = stoi(val);
+			m_dmesh->meshes[i] = ival;
+		}
+	}
+	//m_pmesh
+	m_pmesh = rcAllocPolyMesh();
+	std::getline(ifs, val);
+	int numverts = stoi(val);
+	std::getline(ifs, val);
+	int npolys = stoi(val);
+	std::getline(ifs, val);
+	int maxpolys = stoi(val);
+	std::getline(ifs, val);
+	int nvp = stoi(val);
+	m_pmesh->nverts = nverts;
+	m_pmesh->npolys = npolys;
+	m_pmesh->maxpolys = maxpolys;
+	m_pmesh->nvp = nvp;
+	m_pmesh->verts = new unsigned short[nverts * 3];
+	m_pmesh->polys = new unsigned short[maxpolys * 2 * nvp];
+	m_pmesh->regs = new unsigned short[maxpolys];
+	m_pmesh->flags = new unsigned short[maxpolys];
+	m_pmesh->areas = new unsigned char[maxpolys];
+	std::getline(ifs, val);
+	m_pmesh->cs = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->ch = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->borderSize = stoi(val);
+	std::getline(ifs, val);
+	m_pmesh->maxEdgeError = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmin[0] = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmin[1] = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmin[2] = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmax[0] = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmax[1] = stof(val);
+	std::getline(ifs, val);
+	m_pmesh->bmax[2] = stof(val);
+
+	if (numverts > 0) {
+		for (int i = 0; i < numverts * 3; ++i) {
+			std::getline(ifs, val);
+			m_pmesh->verts[i] = stoi(val);
+		}
+	}
+	if (maxpolys > 0 && nvp > 0) {
+		for (int i = 0; i < maxpolys * 2 * nvp; ++i) {
+			std::getline(ifs, val);
+			m_pmesh->polys[i] = stoi(val);
+		}
+	}
+	if (maxpolys > 0) {
+		for (int i = 0; i < maxpolys; ++i) {
+			std::getline(ifs, val);
+			m_pmesh->regs[i] = stoi(val);
+			std::getline(ifs, val);
+			m_pmesh->flags[i] = stoi(val);
+			std::getline(ifs, val);
+			m_pmesh->areas[i] = stol(val);
+		}
+	}
+	ifs.close();
+}
+bool CNavmesh::reload(std::string salaloc) {
+	destroy();
+	m_ctx->resetLog();
+	m_navMesh = nullptr;
+
+	rcConfig cfg = getRcConfig();
+	// Init build configuration from GUI
+	memset(&m_cfg, 0, sizeof(m_cfg));
+	m_cfg.cs = cfg.cs;
+	m_cfg.ch = cfg.ch;
+	m_cfg.walkableSlopeAngle = cfg.walkableSlopeAngle;
+	m_cfg.walkableHeight = (int)ceilf(cfg.walkableHeight / m_cfg.ch);
+	m_cfg.walkableClimb = (int)floorf(cfg.walkableClimb / m_cfg.ch);
+	m_cfg.walkableRadius = (int)ceilf(cfg.walkableRadius / m_cfg.cs);
+	m_cfg.maxEdgeLen = (int)(cfg.maxEdgeLen / cfg.cs);
+	m_cfg.maxSimplificationError = cfg.maxSimplificationError;
+	m_cfg.minRegionArea = (int)rcSqr(cfg.minRegionArea);		// Note: area = size*size
+	m_cfg.mergeRegionArea = (int)rcSqr(cfg.mergeRegionArea);	// Note: area = size*size
+	m_cfg.maxVertsPerPoly = (int)cfg.maxVertsPerPoly;
+	m_cfg.detailSampleDist = cfg.detailSampleDist < 0.9f ? 0 : cfg.cs * cfg.detailSampleDist;
+	m_cfg.detailSampleMaxError = cfg.ch * cfg.detailSampleMaxError;
+
+	restoreExtraData(salaloc);
+
+	unsigned char* navData = 0;
+	int navDataSize = 0;
+
+	// Update poly flags from areas.
+	for (int i = 0; i < m_pmesh->npolys; ++i) {
+		if (m_pmesh->areas[i] == RC_WALKABLE_AREA)
+			m_pmesh->flags[i] = FLAG_WALK;
+	}
+
+	dtNavMeshCreateParams params;
+	memset(&params, 0, sizeof(params));
+	params.verts = m_pmesh->verts;
+	params.vertCount = m_pmesh->nverts;
+	params.polys = m_pmesh->polys;
+	params.polyAreas = m_pmesh->areas;
+	params.polyFlags = m_pmesh->flags;
+	params.polyCount = m_pmesh->npolys;
+	params.nvp = m_pmesh->nvp;
+	params.detailMeshes = m_dmesh->meshes;
+	params.detailVerts = m_dmesh->verts;
+	params.detailVertsCount = m_dmesh->nverts;
+	params.detailTris = m_dmesh->tris;
+	params.detailTriCount = m_dmesh->ntris;
+	params.walkableHeight = (float)cfg.walkableHeight;
+	params.walkableRadius = (float)cfg.walkableRadius;
+	params.walkableClimb = (float)cfg.walkableClimb;
+	rcVcopy(params.bmin, m_pmesh->bmin);
+	rcVcopy(params.bmax, m_pmesh->bmax);
+	params.cs = m_cfg.cs;
+	params.ch = m_cfg.ch;
+	params.buildBvTree = true;
+
+	if (!dtCreateNavMeshData(&params, &navData, &navDataSize)) {
+		m_ctx->log(RC_LOG_ERROR, "Could not build Detour navmesh.");
+		return nullptr;
+	}
+
+	m_navMesh = dtAllocNavMesh();
+	if (!m_navMesh) {
+		dtFree(navData);
+		m_ctx->log(RC_LOG_ERROR, "Could not create Detour navmesh");
+		return nullptr;
+	}
+
+	dtStatus status;
+
+	// init Data
+	status = m_navMesh->init(navData, navDataSize, DT_TILE_FREE_DATA);
+	if (dtStatusFailed(status)) {
+		dtFree(navData);
+		m_ctx->log(RC_LOG_ERROR, "Could not init Detour navmesh");
+		return nullptr;
+	}
+	m_navQuery = dtAllocNavMeshQuery();
+	if (m_navMesh) {
+		prepareQueries();
+	}
+
+	return true;
 }
 
 void CNavmesh::prepareQueries() {

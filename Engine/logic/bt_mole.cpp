@@ -95,18 +95,18 @@ bool bt_mole::load(MKeyValue& atts) {
 
 // actions
 int bt_mole::actionLookForWpt() {
-	if (!SBB::readBool("sala1")) {
+	if (!SBB::readBool(SBB::readSala())) {
 		return STAY;
 	}
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
 	VEC3 initial = transform->getPosition();
-	getPath(initial, target, "sala1");
+	getPath(initial, target, SBB::readSala());
 	return OK;
 }
 
 int bt_mole::actionFollowPathToWpt() {
-	if (!SBB::readBool("sala1")) {
+	if (!SBB::readBool(SBB::readSala())) {
 		setCurrent(NULL);
 		return OK;
 	}
@@ -119,7 +119,7 @@ int bt_mole::actionFollowPathToWpt() {
 	}
 	VEC3 npcPos = transform->getPosition();
 	VEC3 npcFront = transform->getFront();
-	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, "sala1")) {
+	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, SBB::readSala())) {
 		moveFront(speed);
 		return STAY;
 	}
@@ -171,7 +171,7 @@ bool bt_mole::checkBoxes() {
 			SBB::postBool(key_final, true);
 			SBB::postMole(key_final, this);
 
-			getPath(initial, destiny, "sala1");
+			getPath(initial, destiny, SBB::readSala());
 			ChangePose(pose_run_route);
 			return true;
 		}
@@ -193,7 +193,7 @@ int bt_mole::actionFollowBoxWpt()
 		}
 		VEC3 npcPos = transform->getPosition();
 		VEC3 npcFront = transform->getFront();
-		if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, "sala1", entTransform)) {
+		if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, SBB::readSala(), entTransform)) {
 			moveFront(speed);
 			return STAY;
 		}
@@ -237,7 +237,7 @@ int bt_mole::actionGrabBox() {
 			TCompBox *box = e_box->get<TCompBox>();
 			VEC3 destiny = box->GetLeavePoint();
 			VEC3 initial = t_mole->getPosition();
-			getPath(initial, destiny, "sala1");
+			getPath(initial, destiny, SBB::readSala());
 			return OK;
 		}
 	}
@@ -259,7 +259,7 @@ int bt_mole::actionFollowNextBoxLeavepointWpt() {
 
 	VEC3 npcPos = transform->getPosition();
 	VEC3 npcFront = transform->getFront();
-	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, "sala1")) {
+	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, SBB::readSala())) {
 		moveFront(speed);
 		return STAY;
 	}
