@@ -138,7 +138,7 @@ bool bt_guard::playerStunned() {
 bool bt_guard::playerDetected() {
 	PROFILE_FUNCTION("guard: player detected");
 	// if the player is visible
-	if (playerVisible()) {
+	if (playerVisible() || boxMovingDetected()) {
 		TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 		VEC3 posPlayer = tPlayer->getPosition();
 		VEC3 myPos = getTransform()->getPosition();
@@ -362,7 +362,7 @@ int bt_guard::actionShootWall() {
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	turnTo(posPlayer);
-	if (playerVisible()) {
+	if (playerVisible() || boxMovingDetected()) {
 		return KO;
 	}
 	else {
@@ -374,6 +374,7 @@ int bt_guard::actionShootWall() {
 		}
 		else {
 			if (timerShootingWall < 0) {
+				playerLost = true;
 				return KO;
 			}
 			else {
@@ -405,12 +406,15 @@ int bt_guard::actionSearch() {
 	VEC3 myPos = getTransform()->getPosition();
 
 	//Player Visible?
-	if (playerVisible()) {
+	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
 		return KO;
 	}
 	else if (playerLost) {
 		float distance = squaredDistXZ(myPos, player_last_seen_point);
+		getPath(myPos, player_last_seen_point, SBB::readSala());
+		ChangePose(pose_run_route);
+		goTo(player_last_seen_point);
 		//Noise Point Reached ?
 		if (distance < DIST_SQ_REACH_PNT) {
 			playerLost = false;
@@ -418,15 +422,15 @@ int bt_guard::actionSearch() {
 			return OK;
 		}
 		else {
-			getPath(myPos, player_last_seen_point, "sala1");
-
-			goTo(player_last_seen_point);
 			return STAY;
 		}
 	}
 	// If we heared a noise, we go to the point and look around
 	else if (noiseHeard) {
 		float distance = squaredDistXZ(myPos, noisePoint);
+		getPath(myPos, noisePoint, SBB::readSala());
+		ChangePose(pose_run_route);
+		goTo(noisePoint);
 		//Noise Point Reached ?
 		if (distance < DIST_SQ_REACH_PNT) {
 			noiseHeard = false;
@@ -434,9 +438,6 @@ int bt_guard::actionSearch() {
 			return OK;
 		}
 		else {
-			getPath(myPos, noisePoint, SBB::readSala());
-
-			goTo(noisePoint);
 			return STAY;
 		}
 	}
@@ -450,7 +451,7 @@ int bt_guard::actionLookAround() {
 	PROFILE_FUNCTION("guard: lookaround");
 	if (!myParent.isValid()) return false;
 	//Player Visible?
-	if (playerVisible()) {
+	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
 		return KO;
 	}
@@ -481,7 +482,7 @@ int bt_guard::actionSeekWpt() {
 	VEC3 myPos = getTransform()->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Player Visible?
-	if (playerVisible()) {
+	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
 		return KO;
 	}
@@ -521,7 +522,7 @@ int bt_guard::actionNextWpt() {
 	VEC3 dest = keyPoints[curkpt].pos;
 
 	//Player Visible?
-	if (playerVisible()) {
+	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
 		return KO;
 	}
@@ -540,7 +541,7 @@ int bt_guard::actionWaitWpt() {
 	ChangePose(pose_idle_route);
 
 	//player visible?
-	if (playerVisible()) {
+	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
 		return KO;
 	}
@@ -560,7 +561,7 @@ int bt_guard::actionWaitWpt() {
 void bt_guard::noise(const TMsgNoise& msg) {
 	PROFILE_FUNCTION("guard: noise");
 	if (outJurisdiction(msg.source)) return;
-	if (playerVisible()) return;
+	if (playerVisible() || boxMovingDetected()) return;
 	if (stunned) return;
 	if (canHear(msg.source, msg.intensity)) {
 		resetTimers();
@@ -722,6 +723,10 @@ bool bt_guard::playerVisible() {
 			}
 		}
 	}
+	return false;
+}
+
+bool bt_guard::boxMovingDetected() {
 	// moving boxes detection
 	float distRay;
 	PxRaycastBuffer hit;
