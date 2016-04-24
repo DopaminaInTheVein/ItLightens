@@ -261,6 +261,7 @@ bool CEntitiesModule::start() {
 	assert(is_ok);
 
 	is_ok = ep.xmlParseFile("data/scenes/scene_basic_lights.xml");
+	assert(is_ok);
 
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();
