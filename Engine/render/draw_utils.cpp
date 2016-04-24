@@ -134,3 +134,20 @@ void drawFullScreen(const CTexture* texture) {
   shader_ctes_camera.uploadToGPU();
 
 }
+
+void ShootManager::shootLaser(MAT44 transform, float reach)
+{
+	Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+	const CMesh * unit_sphere = Resources.get("meshes/sphere.mesh")->as<CMesh>();
+	unit_sphere->activate();
+
+	MAT44 mat = MAT44::Identity;
+	float laserLong = 5.f;
+	mat *= MAT44::CreateScale(.1f, .1f, laserLong);
+	mat *= MAT44::CreateTranslation(0, 0.5f, laserLong + 0.25f);
+	mat *= transform;
+
+	activateWorldMatrix(mat);
+	unit_sphere->render();
+}
+

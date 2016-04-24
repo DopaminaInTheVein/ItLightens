@@ -30,4 +30,10 @@ extern CShaderCte< TCteBones > shader_ctes_bones;
 #include "constants/ctes_light.h"
 extern CShaderCte< TCteLight > shader_ctes_lights;
 
+class ShootManager
+{
+public:
+	static void shootLaser(MAT44 transform, float reach);
+};
+
 #endif

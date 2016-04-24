@@ -9,6 +9,9 @@
 #include "app_modules/logic_manager/logic_manager.h"
 #include "ui/ui_interface.h"
 
+//Render shoot
+#include "render/draw_utils.h"
+
 map<string, bt_guard::KptType> bt_guard::kptTypes = {
 	  {"seek", KptType::Seek}
 	, {"look", KptType::Look}
@@ -858,11 +861,12 @@ bool bt_guard::shootToPlayer() {
 	}
 
 	//Render Debug
-	for (int i = 0; i < 8; i++) {
-		float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), posPlayer - myPos, distRay, RED);
-	}
+	//for (int i = 0; i < 8; i++) {
+	//	float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	//	float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	//	Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), posPlayer - myPos, distRay, RED);
+	//}
+	ShootManager::shootLaser(getTransform()->asMatrix(), distRay);
 
 	return false;
 }
