@@ -119,6 +119,7 @@ class bt_guard : public TCompBase, public bt
 
 	//Aux checks
 	bool playerVisible();
+	bool boxMovingDetected();
 	bool inJurisdiction(VEC3);
 	bool outJurisdiction(VEC3);
 	bool canHear(VEC3, float);
