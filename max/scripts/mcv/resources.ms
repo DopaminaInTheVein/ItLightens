@@ -56,7 +56,7 @@ struct TResources (
 			local mat_file = createFile (materials_dir + m.name + ".material")
 			format ("<material tech=\"" + technique + ".tech\">\n") to:mat_file
 			saveTextureSlot mat_file "diffuse" m.diffusemap
-			saveTextureSlot mat_file "normalmap" m.bumpmap
+			saveTextureSlot mat_file "bump" m.bumpmap
 			saveTextureSlot mat_file "specular" m.specularmap
 			format "</material>\n" to:mat_file
 			close mat_file
@@ -66,11 +66,11 @@ struct TResources (
 	),
 	
 	fn saveStdMaterial m = (
-		--local tech = "deferred"
-		--if m.bumpMap != undefined then (
-		--	tech = "deferred"
-		--)
-		saveMaterialTech m "deferred"
+		local tech = "textured"
+		if m.bumpMap != undefined then (
+			tech += "_normals"
+		)
+		saveMaterialTech m tech
 	),
 	
 	fn saveStdMaterialSkel m = (
