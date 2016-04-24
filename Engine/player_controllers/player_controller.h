@@ -20,7 +20,6 @@ class CHandle;
 struct TCompRenderStaticMesh;
 
 class player_controller : public CPlayerBase {
-
 	//enums declaration
 	//--------------------------------------------------------------------
 	enum eEvol {		//evolution states
@@ -32,7 +31,7 @@ class player_controller : public CPlayerBase {
 		NEUTRAL = 0,
 		MINUS,
 		PLUS,
-	}; const string polarize_name[3] = {"neutral", "minus", "plus" };
+	}; const string polarize_name[3] = { "neutral", "minus", "plus" };
 	//--------------------------------------------------------------------
 
 	//internal struct
@@ -54,7 +53,6 @@ class player_controller : public CPlayerBase {
 	//--------------------------------------------------------------------
 
 	CObjectManager<player_controller> *om;
-
 
 	float					pol_speed = 0;
 
@@ -84,7 +82,7 @@ class player_controller : public CPlayerBase {
 	//possesion handles
 	CHandle					currentPossessable;
 	CHandle					currentStunable;
-	
+
 	//poses handles
 	CHandle					pose_no_ev;
 	CHandle					pose_idle;
@@ -92,40 +90,40 @@ class player_controller : public CPlayerBase {
 	CHandle					pose_jump;
 
 	//Polarity Constants
-	float	POL_RADIUS					= 5.f;
-	float	POL_RADIUS_STRONG			= 1.f;
-	float	POL_HORIZONTALITY			= 1.f;
-	float	POL_INTENSITY				= 100.f;
-	float	POL_REPULSION				= 1.f;
-	float	POL_INERTIA					= 0.99f;
-	float	POL_SPEED_ORBITA			= 0.2f;
-	float	POL_ATRACTION_ORBITA		= 1.f;
-	float	POL_NO_LEAVING_FORCE		= 0.99f;
-	float	POL_ORBITA_UP_EXTRA_FORCE	= 1.f;
-	float	POL_REAL_FORCE_Y_ORBITA		= 0.05f;
+	float	POL_RADIUS = 5.f;
+	float	POL_RADIUS_STRONG = 1.f;
+	float	POL_HORIZONTALITY = 1.f;
+	float	POL_INTENSITY = 100.f;
+	float	POL_REPULSION = 1.f;
+	float	POL_INERTIA = 0.99f;
+	float	POL_SPEED_ORBITA = 0.2f;
+	float	POL_ATRACTION_ORBITA = 1.f;
+	float	POL_NO_LEAVING_FORCE = 0.99f;
+	float	POL_ORBITA_UP_EXTRA_FORCE = 1.f;
+	float	POL_REAL_FORCE_Y_ORBITA = 0.05f;
 
 	//Damage Fonts Actived
 	float damageCurrent = 0.f;
 	int damageFonts[Damage::SIZE] = { 0 };
 
-	TCompRenderStaticMesh*	actual_render			= nullptr;
+	TCompRenderStaticMesh*	actual_render = nullptr;
 
-	int						curr_evol				= 0;
-	int						pol_state				= 0;
-	int						pol_state_prev			= 0;
-	int						last_pol_state			= 0;
-	bool					pol_orbit				= false;
-	bool					pol_orbit_prev			= false;
+	int						curr_evol = 0;
+	int						pol_state = 0;
+	int						pol_state_prev = 0;
+	int						last_pol_state = 0;
+	bool					pol_orbit = false;
+	bool					pol_orbit_prev = false;
 
-	bool					affectPolarized			= false;
+	bool					affectPolarized = false;
 
-	bool					canRecEnergy			= false;
-	bool					canPassWire				= false;
+	bool					canRecEnergy = false;
+	bool					canPassWire = false;
 
-	VEC3					endPointWire			= VEC3(0,0,0);
+	VEC3					endPointWire = VEC3(0, 0, 0);
 	VEC3					lastForces;
 
-	std::string				damage_source			= "none";
+	std::string				damage_source = "none";
 
 	std::vector<TForcePoint> force_points;
 
@@ -155,6 +153,9 @@ class player_controller : public CPlayerBase {
 
 	void ChangePose(CHandle new_pos_h);
 
+	void createEvolveLight();
+	void createDevolveLight();
+
 	void rechargeEnergy();
 
 	void UpdateMoves() override;
@@ -170,7 +171,6 @@ class player_controller : public CPlayerBase {
 	VEC3 PolarityForce(VEC3 point_pos, bool atraction);
 	//--------------------------------------------------------------------
 
-
 protected:
 	void myUpdate();
 
@@ -180,7 +180,7 @@ protected:
 public:
 	// Added because GUI
 	float getMaxLife() { return max_life; }
-	
+
 	map<string, statehandler>* getStatemap();
 
 	void Init();

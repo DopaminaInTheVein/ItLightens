@@ -409,6 +409,8 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 	getHandleManager<TCompBoxDestructor>()->updateAll(dt);
 
+	getHandleManager<TCompLightPoint>()->updateAll(dt);
+
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);
 	getHandleManager<TCompPhysics>()->updateAll(dt);

@@ -10,12 +10,14 @@
 struct TCompLightPoint : public TCompBase {
 	float  out_radius;
 	float  in_radius;
+	float  ttl;
 
 	VEC4 color;
 	bool load(MKeyValue& atts);
 	void renderInMenu();
 	void uploadShaderCtes();
 
+	void update(float dt);
 	void activate();
 };
 
