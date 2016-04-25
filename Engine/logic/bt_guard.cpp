@@ -10,7 +10,7 @@
 #include "ui/ui_interface.h"
 
 //Render shoot
-#include "render/draw_utils.h"
+#include "render/fx/GuardShots.h"
 
 map<string, bt_guard::KptType> bt_guard::kptTypes = {
 	  {"seek", KptType::Seek}
@@ -76,6 +76,7 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
+			SHOT_OFFSET = VEC4(0, 1.5f, 0.5f, 1);
 		}
 	}
 }
@@ -866,9 +867,36 @@ bool bt_guard::shootToPlayer() {
 	//	float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 	//	Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), posPlayer - myPos, distRay, RED);
 	//}
-	ShootManager::shootLaser(myPos + VEC3(0,1,0), getTransform()->getRotation(), distRay);
+
+	//Render Shot
+	drawShot(distRay);
 
 	return false;
+}
+
+void bt_guard::drawShot(float distRay) {
+	PROFILE_FUNCTION("guard bt: draw shot");
+	// Centro del personaje
+	TCompCharacterController * cc = getPlayer()->get<TCompCharacterController>();
+	assert(cc || fatal("Player doesn't have character controller!"));
+	VEC3 posPlayer = cc->GetPosition();
+
+	// Origin and rayshot
+	VEC4 originShot4;
+	VEC4::Transform(SHOT_OFFSET, getTransform()->asMatrix(), originShot4);
+	VEC3 originShot = VEC3(originShot4.x, originShot4.y, originShot4.z);
+	VEC3 destShot = posPlayer; //algun offset?
+	VEC3 rayShot = destShot - originShot;
+
+	// Quaternion shot
+	CTransform t = (CTransform)*(getTransform());
+	float yaw, pitch;
+	t.getAngles(&yaw, &pitch);
+	pitch += atan2(rayShot.y, sqrtf(powf(rayShot.x, 2) + powf(rayShot.z, 2)));
+	t.setAngles(yaw, pitch);
+
+	// Add Render Instruction
+	ShootManager::shootLaser(originShot, t.getRotation(), distRay);
 }
 
 void bt_guard::removeBox(CHandle box_handle) {
@@ -942,6 +970,8 @@ void bt_guard::renderInMenu() {
 	ImGui::SliderFloat("Laser Shot Reach", &DIST_RAYSHOT, DIST_SQ_SHOT_AREA_ENTER, DIST_SQ_SHOT_AREA_LEAVE * 2);
 	ImGui::SliderFloat("Laser Damage", &DAMAGE_LASER, 0, 10);
 	ImGui::SliderFloat("Time Shooting Wall before leave", &_timerShootingWall, 0, 15);
+	ImGui::Separator();
+	ImGui::SliderFloat3("Offset Starting Shot", &SHOT_OFFSET.x, 0.f, 2.f);
 }
 
 /**************/

@@ -544,6 +544,9 @@
     <ClCompile Include="app_modules\gui\gui_button_std.cpp">
       <Filter>app_modules\gui</Filter>
     </ClCompile>
+    <ClCompile Include="render\fx\GuardShots.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1303,6 +1306,9 @@
     <ClInclude Include="app_modules\gui\gui_bar.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
+    <ClInclude Include="render\fx\GuardShots.h">
+      <Filter>render\fx</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1469,6 +1475,9 @@
     </Filter>
     <Filter Include="app_modules\gui">
       <UniqueIdentifier>{063e8cb1-512e-494c-a79a-0f13c83dfb31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render\fx">
+      <UniqueIdentifier>{9d0f3ef4-490d-4188-99c0-692744ec2cc1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

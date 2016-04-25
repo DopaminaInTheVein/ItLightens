@@ -54,6 +54,7 @@ class bt_guard : public TCompBase, public bt
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
 	float GUARD_ALERT_RADIUS;
+	VEC4 SHOT_OFFSET;
 	//from bombs
 	float reduce_factor;
 	float t_reduceStats_max;
@@ -134,6 +135,7 @@ class bt_guard : public TCompBase, public bt
 	bool rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit);
 	bool rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform);
 	bool shootToPlayer();
+	void drawShot(float distRay);
 	void removeBox(CHandle box_handle);
 
 	bool stunned;

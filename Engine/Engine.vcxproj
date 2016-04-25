@@ -223,6 +223,7 @@
     <ClCompile Include="recast\Recast\Source\RecastRegion.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
     <ClCompile Include="render\draw_utils.cpp" />
+    <ClCompile Include="render\fx\GuardShots.cpp" />
     <ClCompile Include="render\material.cpp" />
     <ClCompile Include="render\mesh.cpp" />
     <ClCompile Include="render\mesh_manager.cpp" />
@@ -591,6 +592,7 @@
     <ClInclude Include="recast\Recast\Include\RecastAssert.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
     <ClInclude Include="render\draw_utils.h" />
+    <ClInclude Include="render\fx\GuardShots.h" />
     <ClInclude Include="render\gpu_trace.h" />
     <ClInclude Include="render\material.h" />
     <ClInclude Include="render\mesh.h" />
