@@ -191,6 +191,9 @@ void CRenderDeferredModule::render() {
 	renderGBuffer();
 	renderAccLight();
 
+	//TODO: Esto deberia hacerse en otro sitio!
+	ShootManager::renderAll();
+
 	Render.activateBackBuffer();
 
 	// Clear the back buffer

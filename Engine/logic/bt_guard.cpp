@@ -866,7 +866,7 @@ bool bt_guard::shootToPlayer() {
 	//	float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 	//	Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), posPlayer - myPos, distRay, RED);
 	//}
-	ShootManager::shootLaser(getTransform()->asMatrix(), distRay);
+	ShootManager::shootLaser(myPos + VEC3(0,1,0), getTransform()->getRotation(), distRay);
 
 	return false;
 }

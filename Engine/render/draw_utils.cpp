@@ -135,19 +135,29 @@ void drawFullScreen(const CTexture* texture) {
 
 }
 
-void ShootManager::shootLaser(MAT44 transform, float reach)
+std::vector<Shot> ShootManager::shots = std::vector<Shot>();
+void ShootManager::shootLaser(VEC3 origin, CQuaternion quat, float reach)
 {
-	Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+	MAT44 mat = MAT44::Identity;
+	mat = MAT44::CreateScale(.1f, .1f, reach);
+	mat *= MAT44::CreateFromQuaternion(quat);
+	//mat *= MAT44::CreateLookAt(origin, dest, VEC3(0,1,0));
+	mat.Translation(origin);
+	shots.push_back(Shot(mat, reach));
+}
+
+void ShootManager::renderAll()
+{
+	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+	tech->activate();
+
 	const CMesh * unit_sphere = Resources.get("meshes/sphere.mesh")->as<CMesh>();
 	unit_sphere->activate();
 
-	MAT44 mat = MAT44::Identity;
-	float laserLong = 5.f;
-	mat *= MAT44::CreateScale(.1f, .1f, laserLong);
-	mat *= MAT44::CreateTranslation(0, 0.5f, laserLong + 0.25f);
-	mat *= transform;
-
-	activateWorldMatrix(mat);
-	unit_sphere->render();
+	for (Shot shot : shots) {
+		activateWorldMatrix(shot.transform);
+		unit_sphere->render();
+	}
+	shots.clear();
 }
 
