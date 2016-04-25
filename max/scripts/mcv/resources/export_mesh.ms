@@ -201,7 +201,7 @@ fn export_mesh given_obj meshName mat_infos = (
 	local HT = dotNetObject "System.Collections.Hashtable"
 	
 	if not meshop.getMapSupport obj channelA then (
-		throw ("Object " + given_obj.name + " does not have tex coords for channel " + channelA )
+		throw ("Object " + given_obj.name + " does not have tex coords for channel " + (channelA as string) )
 	)
 	
 	-- Modif 22/04/2016 --

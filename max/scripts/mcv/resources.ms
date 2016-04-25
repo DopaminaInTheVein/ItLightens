@@ -66,11 +66,11 @@ struct TResources (
 	),
 	
 	fn saveStdMaterial m = (
-		local tech = "textured"
-		if m.bumpMap != undefined then (
-			tech += "_normals"
-		)
-		saveMaterialTech m tech
+		--local tech = "textured"
+		--if m.bumpMap != undefined then (
+		--	tech += "_normals"
+		--)
+		saveMaterialTech m "deferred"
 	),
 	
 	fn saveStdMaterialSkel m = (

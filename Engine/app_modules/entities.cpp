@@ -255,11 +255,10 @@ bool CEntitiesModule::start() {
 	salaloc = "data/navmeshes/" + sala + ".data";
 
 	CEntityParser ep;
-
-
 	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 
+	ep = CEntityParser();
 	is_ok = ep.xmlParseFile("data/scenes/scene_basic_lights.xml");
 	assert(is_ok);
 
