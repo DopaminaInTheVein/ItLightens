@@ -892,7 +892,7 @@ void player_controller::renderInMenu() {
 	ImGui::SliderFloat("Force Atraction Factor in Orbita", &POL_ATRACTION_ORBITA, 0.f, 5.f);
 	ImGui::SliderFloat("Factor allowing leave", &POL_NO_LEAVING_FORCE, 0.f, 1.5f);
 	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_ORBITA_UP_EXTRA_FORCE, 0.01f, 5.f);
-	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_REAL_FORCE_Y_ORBITA, 0.01f, 1.f);
+	ImGui::SliderFloat("Real force Y Orbita", &POL_REAL_FORCE_Y_ORBITA, 0.01f, 1.f);
 
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }

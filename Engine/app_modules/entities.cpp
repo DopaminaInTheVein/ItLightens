@@ -249,7 +249,7 @@ bool CEntitiesModule::start() {
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
 	//sala = "scene_basic_lights";
-	sala = "test_simple";
+	sala = "test";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";
