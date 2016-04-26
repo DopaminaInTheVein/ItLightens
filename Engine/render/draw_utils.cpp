@@ -97,8 +97,9 @@ bool createSamplers()
 
 void destroySamplers()
 {
-	if (samplers[eCLAMP]) samplers[eCLAMP]->Release();
-	if (samplers[eWRAP]) samplers[eWRAP]->Release();
+	for (int i = 0; i < eSAMPLER_COUNT; ++i) {
+		if(samplers[i])(samplers[i]->Release());
+	}
 }
 
 void activateSamplers()
