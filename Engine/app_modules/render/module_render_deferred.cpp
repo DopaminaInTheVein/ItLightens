@@ -6,6 +6,7 @@
 #include "components/comp_camera.h"
 #include "components/comp_light_dir.h"
 #include "components/comp_light_point.h"
+#include "components/comp_light_fadable.h"
 #include "render/render.h"
 #include "windows/app.h"
 #include "resources/resources_manager.h"
@@ -33,17 +34,17 @@ bool CRenderDeferredModule::start() {
 	if (!rt_acc_light->createRT("rt_acc_light", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 		return false;
 
-  acc_light_points = Resources.get("deferred_lights_point.tech")->as<CRenderTechnique>();
-  assert(acc_light_points && acc_light_points->isValid());
+	acc_light_points = Resources.get("deferred_lights_point.tech")->as<CRenderTechnique>();
+	assert(acc_light_points && acc_light_points->isValid());
 
-  //acc_light_directionals = Resources.get("deferred_lights_dir.tech")->as<CRenderTechnique>();
-  //assert(acc_light_directionals && acc_light_directionals->isValid());
+	//acc_light_directionals = Resources.get("deferred_lights_dir.tech")->as<CRenderTechnique>();
+	//assert(acc_light_directionals && acc_light_directionals->isValid());
 
-  //unit_sphere = Resources.get("meshes/unit_sphere.mesh")->as<CMesh>();
-  unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
+	//unit_sphere = Resources.get("meshes/unit_sphere.mesh")->as<CMesh>();
+	unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
 	assert(unit_sphere && unit_sphere->isValid());
-  unit_cube = Resources.get("meshes/unit_frustum.mesh")->as<CMesh>();
-  assert(unit_cube && unit_cube->isValid());
+	unit_cube = Resources.get("meshes/unit_frustum.mesh")->as<CMesh>();
+	assert(unit_cube && unit_cube->isValid());
 
 	return true;
 }
@@ -89,10 +90,10 @@ void CRenderDeferredModule::renderGBuffer() {
 	Render.clearMainZBuffer();
 
 	// Activo la camara en la pipeline de render
-  activateCamera(&camera);
+	activateCamera(&camera);
 
 	// Activa la ctes del object
-  activateWorldMatrix(MAT44::Identity);
+	activateWorldMatrix(MAT44::Identity);
 
 	// Mandar a pintar los 'solidos'
 	RenderManager.renderAll();
@@ -110,7 +111,7 @@ void CRenderDeferredModule::addPointLights() {
 	const CMesh* mesh = unit_sphere;
 	mesh->activate();
 
-  // Activar la mesh unit_sphere
+	// Activar la mesh unit_sphere
 	getHandleManager<TCompLightPoint>()->each([mesh](TCompLightPoint* c) {
 		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
 		// la world para la mesh y las constantes en el pixel shader
@@ -118,33 +119,36 @@ void CRenderDeferredModule::addPointLights() {
 		// Pintar la mesh que hemos activado hace un momento
 		mesh->render();
 	});
-
+	getHandleManager<TCompLightFadable>()->each([mesh](TCompLightFadable* c) {
+		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
+		// la world para la mesh y las constantes en el pixel shader
+		c->activate();
+		// Pintar la mesh que hemos activado hace un momento
+		mesh->render();
+	});
 }
-
 
 // ----------------------------------------------
 void CRenderDeferredModule::addDirectionalLights() {
-  PROFILE_FUNCTION("addDirectionalLights");
-  CTraceScoped scope("addDirectionalLights");
+	PROFILE_FUNCTION("addDirectionalLights");
+	CTraceScoped scope("addDirectionalLights");
 
-  // Activar la tech acc_light_directionals.tech
-  acc_light_directionals->activate();
+	// Activar la tech acc_light_directionals.tech
+	acc_light_directionals->activate();
 
-  // Activar la mesh solo UNA vez
-  const CMesh* mesh = unit_cube;
-  mesh->activate();
+	// Activar la mesh solo UNA vez
+	const CMesh* mesh = unit_cube;
+	mesh->activate();
 
-  // Activar la mesh unit_sphere
-  getHandleManager<TCompLightDir>()->each([mesh](TCompLightDir* c) {
-    // Subir todo lo que necesite la luz para pintarse en el acc light buffer
-    // la world para la mesh y las constantes en el pixel shader
-    c->activate();
-    // Pintar la mesh que hemos activado hace un momento
-    mesh->render();
-  });
-
+	// Activar la mesh unit_sphere
+	getHandleManager<TCompLightDir>()->each([mesh](TCompLightDir* c) {
+		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
+		// la world para la mesh y las constantes en el pixel shader
+		c->activate();
+		// Pintar la mesh que hemos activado hace un momento
+		mesh->render();
+	});
 }
-
 
 // ----------------------------------------------
 void CRenderDeferredModule::renderAccLight() {
@@ -197,12 +201,11 @@ void CRenderDeferredModule::render() {
 	//float ClearColor[4] = { 0.3f, 0.3f, 0.3f, 1.0f }; // red,green,blue,alpha
 	//Render.ctx->ClearRenderTargetView(Render.render_target_view, ClearColor);
 
-  activateZ(ZCFG_ALL_DISABLED);
-  rt_acc_light->activate(TEXTURE_SLOT_LIGHTS);
-  rt_normals->activate(TEXTURE_SLOT_NORMALS);
-  drawFullScreen(rt_albedos);
-  CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-  CTexture::deactivate(TEXTURE_SLOT_LIGHTS);
-  activateZ(ZCFG_DEFAULT);
-
+	activateZ(ZCFG_ALL_DISABLED);
+	rt_acc_light->activate(TEXTURE_SLOT_LIGHTS);
+	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+	drawFullScreen(rt_albedos);
+	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+	CTexture::deactivate(TEXTURE_SLOT_LIGHTS);
+	activateZ(ZCFG_DEFAULT);
 }
