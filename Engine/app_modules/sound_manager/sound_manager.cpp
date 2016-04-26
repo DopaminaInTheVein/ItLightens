@@ -34,9 +34,14 @@ bool CSoundManagerModule::start() {
 	// load the scripts
 	std::vector<std::string> files_to_load = list_files_recursively(sounds_folder);
 
-	for (auto file : files_to_load) {
-		sfx[file] = nullptr;
-		result = system->createSound(file.c_str(), FMOD_DEFAULT, 0, &sfx[file]);
+	for (std::string file : files_to_load) {
+		sounds[file] = nullptr;
+		if (file.find("music") == std::string::npos) {
+			result = system->createSound(file.c_str(), FMOD_DEFAULT, 0, &sounds[file]);
+		}
+		else {
+			result = system->createStream(file.c_str(), FMOD_DEFAULT, 0, &sounds[file]);
+		}
 		if (result != FMOD_OK)
 			return false;
 	}
@@ -49,5 +54,16 @@ void CSoundManagerModule::update(float dt) {
 }
 
 void CSoundManagerModule::stop() {
+	// release sounds and system
+	for (std::map<std::string, FMOD::Sound*>::iterator sound_it = sounds.begin(); sound_it != sounds.end(); sound_it++) {
+		sound_it->second->release();
+	}
+	sounds.clear();
+	system->release();
+}
 
+bool CSoundManagerModule::playSound(std::string route) {
+	result = system->playSound(sounds[route], 0, false, &channel);
+
+	return result == FMOD_OK;
 }

@@ -125,7 +125,9 @@ void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA","%s\n",to_print);
 }
 
-
+void SLBPublicFunctions::playSound(const char* sound_route) {
+	sound_manager->playSound(std::string(sound_route));
+}
 
 //test
 void SLBPublicFunctions::test(const char* to_print) {

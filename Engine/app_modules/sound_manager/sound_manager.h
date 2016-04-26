@@ -14,7 +14,7 @@ class CSoundManagerModule : public IAppModule
 	std::string sounds_folder = "data/sounds";
 
 	FMOD::System	 *system;
-	std::map<std::string, FMOD::Sound*>		sfx;
+	std::map<std::string, FMOD::Sound*>		sounds;
 	FMOD::Channel    *channel = 0;
 	FMOD_RESULT       result;
 	unsigned int      version;
@@ -29,6 +29,8 @@ public:
 	const char* getName() const {
 		return "sound_manager";
 	}
+
+	bool playSound(std::string);
 
 };
 

@@ -256,6 +256,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
 		.param("Text to print")
+		// play sound function
+		.set("play_sound", &SLBPublicFunctions::playSound)
+		.comment("Executes the specified sound")
+		.param("Route of the sound")
 		;
 }
 

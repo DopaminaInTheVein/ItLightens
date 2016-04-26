@@ -22,6 +22,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
+	play_sound("data/sounds/music/space-harrier.mp3")
 end
 
 function OnGameEnd( param )
@@ -138,6 +139,7 @@ end
 
 function OnDoubleJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
+	play_sound("data/sounds/sfx/Jump.wav")
 end
 
 function OnDetected( param )
