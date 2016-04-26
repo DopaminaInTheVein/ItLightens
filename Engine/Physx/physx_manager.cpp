@@ -112,6 +112,8 @@ bool CPhysxManager::start()
 	if (!m_pManagerControllers)
 		fatal("manager controllers failed!");
 
+	m_pGeomQuerys = new PxGeometryQuery();
+
 
 #ifndef NDEBUG
 	//Physx Debbuger
@@ -150,6 +152,9 @@ void CPhysxManager::stop()
 	if (m_pManagerControllers) {
 		//m_pManagerControllers->purgeControllers();	//TODO: free memory
 	}
+
+	if (m_pGeomQuerys) delete m_pGeomQuerys;
+
 #ifndef NDEBUG
 		
 	//memory already free¿?
@@ -232,6 +237,11 @@ void CPhysxManager::CreateBoxGeometry(const PxVec3& size, PxBoxGeometry& g) cons
 void CPhysxManager::CreateCapsuleGeometry(const PxReal& radius, const PxReal& height, PxCapsuleGeometry& g) const
 {
 	g = PxCapsuleGeometry(radius, height);
+}
+
+void CPhysxManager::CreatePlaneGeometry(const PxReal & radius, const PxReal & halfheight, PxPlaneGeometry & g) const
+{
+	g = PxPlaneGeometry();
 }
 
 #pragma endregion
@@ -529,6 +539,20 @@ bool CPhysxManager::raySphere(PxReal radius, VEC3& start, VEC3& direction, PxRea
 	return raySphere(radius, Vec3ToPxVec3(start), Vec3ToPxVec3(direction), distance, hit, filter, outputflags);
 }
 
+float CPhysxManager::SquaredDistancePointToGeometry(const PxVec3& point, const PxGeometry& geometry, const PxVec3& originTransform, const PxQuat& quaternionTransform)
+{
+	float distance = -1;	//default exit, object not supported
+
+	distance = m_pGeomQuerys->pointDistance(point, geometry, PxTransform(originTransform, quaternionTransform));
+
+	return distance;
+}
+
+float CPhysxManager::SquaredDistancePointToGeometry(const VEC3& point, const PxGeometry& geometry, const VEC3& originTransform, const CQuaternion& quaternionTransform)
+{
+	return SquaredDistancePointToGeometry(Vec3ToPxVec3(point), geometry, Vec3ToPxVec3(originTransform), CQuaternionToPxQuat(quaternionTransform));
+}
+
 #pragma endregion
 
 //#########################################################################################################
@@ -536,6 +560,7 @@ bool CPhysxManager::raySphere(PxReal radius, VEC3& start, VEC3& direction, PxRea
 //#########################################################################################################
 #pragma region namespace joints
 
+//not needed for now
 /*
 bool CPhysxManager::Createjoint(PxRigidActor * a1, PxRigidActor * a2, const PxTransform & tmx1, const PxTransform & tmx2, int typeJoint)
 {
