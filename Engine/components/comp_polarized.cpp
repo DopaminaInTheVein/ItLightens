@@ -12,19 +12,16 @@ void TCompPolarized::init()
 {
 	player_h = tags_manager.getFirstHavingTag(getID("player"));
 
-	msg_in.origin = origin;
-	msg_in.pol = force.polarity;
-	msg_in.range = true;
-
-	msg_out.origin = origin;
-	msg_out.pol = force.polarity;
-	msg_out.range = false;
-
 	CHandle e_h = CHandle(this).getOwner();
 	CEntity * e = e_h;
 	TCompTransform *t = e->get<TCompTransform>();
 	last_position = t->getPosition();
 
+	msg_in.handle = e_h;
+	msg_in.range = true;
+
+	msg_out.handle = e_h;
+	msg_out.range = false;
 }
 
 void TCompPolarized::update(float elapsed)

@@ -17,6 +17,7 @@
 template< class TObj >
 class CObjectManager;
 class CHandle;
+struct PolarityForce;
 struct TCompRenderStaticMesh;
 
 class player_controller : public CPlayerBase {
@@ -28,11 +29,7 @@ class player_controller : public CPlayerBase {
 		second,
 	};
 
-	enum ePolarized {		//polarized state
-		NEUTRAL = 0,
-		MINUS,
-		PLUS,
-	}; const string polarize_name[3] = {"neutral", "minus", "plus" };
+	const string polarize_name[3] = {"neutral", "minus", "plus" };
 	//--------------------------------------------------------------------
 
 	//internal struct
@@ -127,7 +124,8 @@ class player_controller : public CPlayerBase {
 
 	std::string				damage_source			= "none";
 
-	std::vector<TForcePoint> force_points;
+	//std::vector<TForcePoint> force_points;
+	VHandles				polarityForces;
 
 	//private functions
 	//--------------------------------------------------------------------
@@ -144,6 +142,7 @@ class player_controller : public CPlayerBase {
 	CHandle getPlusPointHandle(int i) {
 		return SBB::readHandlesVector("wptsPlusPoint")[i];
 	}
+	PolarityForce getPolarityForce(CHandle forceHandle);
 
 	bool isDamaged();
 	float getLife();
@@ -167,7 +166,7 @@ class player_controller : public CPlayerBase {
 	void SetCharacterController();
 
 	void RecalcAttractions();
-	VEC3 PolarityForce(VEC3 point_pos, bool atraction);
+	VEC3 calcForceEffect(const PolarityForce& force);//VEC3 point_pos, bool atraction);
 	//--------------------------------------------------------------------
 
 

@@ -180,8 +180,7 @@ struct TMsgTriggerOut {
 };
 
 struct TMsgPolarize {
-	VEC3 origin;
-	int pol;
+	CHandle handle;
 	bool range;
 	DECLARE_MSG_ID();
 };

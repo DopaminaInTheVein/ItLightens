@@ -2,34 +2,15 @@
 #define INC_POLARIZED_H_
 
 #include "comp_base.h"
+#include "logic/polarity.h"
 
 struct TMsgPolarize;
 class CHandle;
 
-enum pols {
-	NEUTRAL = 0,
-	MINUS,
-	PLUS,
-};
-
-struct PolarityForce {
-	float distance;
-	VEC3 deltaPos;
-	pols polarity;
-	PolarityForce(float d, VEC3 dP, pols p) :
-		distance(d),
-		deltaPos(dP),
-		polarity(p) {}
-	PolarityForce() :
-		distance(100.f),
-		deltaPos(VEC3(0, 100, 0)),
-		polarity(NEUTRAL) {}
-};
-
 struct TCompPolarized : public TCompBase {
 	enum type {
 		FIXED = 0,
-		FREE
+		FREE,
 	};
 
 	VEC3				origin;
