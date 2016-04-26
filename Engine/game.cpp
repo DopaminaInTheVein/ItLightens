@@ -16,6 +16,7 @@
 #include "input/input.h"
 #include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
+#include "app_modules/sound_manager/sound_manager.h"
 
 #include "app_modules/render/module_render_deferred.h"
 #include "components/entity_parser.h"
@@ -52,6 +53,8 @@ bool CApp::start() {
 	GameController = new CGameController;
 	Debug = new CDebug();
 	logic_manager = new CLogicManagerModule;
+	sound_manager = new CSoundManagerModule;
+
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
@@ -63,6 +66,7 @@ bool CApp::start() {
 	all_modules.push_back(Debug);
 	all_modules.push_back(render_deferred);
 	all_modules.push_back(logic_manager);
+	all_modules.push_back(sound_manager);
 
 	mod_update.push_back(GameController);
 	mod_update.push_back(imgui);
@@ -88,6 +92,7 @@ bool CApp::start() {
 	mod_init_order.push_back(g_PhysxManager);
 	mod_init_order.push_back(entities);
 	mod_init_order.push_back(logic_manager);
+	mod_init_order.push_back(sound_manager);
 
 	mod_wnd_proc.push_back(io);
 	mod_wnd_proc.push_back(imgui);
