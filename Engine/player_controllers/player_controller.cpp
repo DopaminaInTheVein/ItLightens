@@ -147,6 +147,9 @@ void player_controller::ChangePose(CHandle new_pos_h)
 	PROFILE_FUNCTION("player controller: change pose player");
 	SetMyEntity();
 	TCompLife *life = myEntity->get<TCompLife>();
+	if (life->currentlife > evolution_limit && curr_evol == 0) {
+		createEvolveLight();
+	}
 
 	if (life->currentlife < evolution_limit && curr_evol > 0) {
 		SetCharacterController();
@@ -157,8 +160,8 @@ void player_controller::ChangePose(CHandle new_pos_h)
 		actual_render->unregisterFromRender();
 		TCompRenderStaticMesh *new_pose = new_pos_h;
 		actual_render = new_pose;
-		actual_render = new_pose;
 		actual_render->registerToRender();
+		createDevolveLight();
 	}
 	else if (curr_evol > 0) {
 		TCompRenderStaticMesh *new_pose = new_pos_h;
@@ -168,6 +171,78 @@ void player_controller::ChangePose(CHandle new_pos_h)
 		actual_render = new_pose;
 		actual_render->registerToRender();
 	}
+}
+void player_controller::createEvolveLight() {
+	TCompTransform * trans = myEntity->get<TCompTransform>();
+
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+	IdEntities::saveIdEntity(CHandle(entity), -1900);
+
+	auto hm1 = CHandleManager::getByName("name");
+	CHandle new_hn = hm1->createHandle();
+	MKeyValue atts1;
+	atts1.put("name", "light_evolve");
+	new_hn.load(atts1);
+	entity->add(new_hn);
+	auto hm2 = CHandleManager::getByName("transform");
+	CHandle new_ht = hm2->createHandle();
+	MKeyValue atts2;
+	VEC3 positio = trans->getPosition(), scal = trans->getScale();
+	VEC4 rota = trans->getRotation();
+	atts2["pos"] = std::to_string(positio.x) + " " + std::to_string(positio.y + 1.0f) + " " + std::to_string(positio.z);
+	atts2["quat"] = std::to_string(rota.x) + " " + std::to_string(rota.y) + " " + std::to_string(rota.z) + " " + std::to_string(rota.w);
+	atts2["scale"] = std::to_string(scal.x) + " " + std::to_string(scal.y) + " " + std::to_string(scal.z);
+	new_ht.load(atts2);
+	entity->add(new_ht);
+	auto hm3 = CHandleManager::getByName("light_fadable");
+	CHandle new_hl = hm3->createHandle();
+	MKeyValue atts3;
+	atts3["color"] = "0 255 0 255";
+	atts3["in_radius"] = "1.0";
+	atts3["out_radius"] = "1.5";
+	atts3["ttl"] = "3.5";
+	new_hl.load(atts3);
+	entity->add(new_hl);
+	TCompLightFadable * tclp = new_hl;
+	tclp->activate();
+}
+void player_controller::createDevolveLight() {
+	TCompTransform * trans = myEntity->get<TCompTransform>();
+
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+	IdEntities::saveIdEntity(CHandle(entity), -1900);
+
+	auto hm1 = CHandleManager::getByName("name");
+	CHandle new_hn = hm1->createHandle();
+	MKeyValue atts1;
+	atts1.put("name", "light_evolve");
+	new_hn.load(atts1);
+	entity->add(new_hn);
+	auto hm2 = CHandleManager::getByName("transform");
+	CHandle new_ht = hm2->createHandle();
+	MKeyValue atts2;
+	VEC3 positio = trans->getPosition(), scal = trans->getScale();
+	VEC4 rota = trans->getRotation();
+	atts2["pos"] = std::to_string(positio.x) + " " + std::to_string(positio.y + 1.0f) + " " + std::to_string(positio.z);
+	atts2["quat"] = std::to_string(rota.x) + " " + std::to_string(rota.y) + " " + std::to_string(rota.z) + " " + std::to_string(rota.w);
+	atts2["scale"] = std::to_string(scal.x) + " " + std::to_string(scal.y) + " " + std::to_string(scal.z);
+	new_ht.load(atts2);
+	entity->add(new_ht);
+	auto hm3 = CHandleManager::getByName("light_fadable");
+	CHandle new_hl = hm3->createHandle();
+	MKeyValue atts3;
+	atts3["color"] = "255 0 0 255";
+	atts3["in_radius"] = "1.0";
+	atts3["out_radius"] = "1.5";
+	atts3["ttl"] = "3.5";
+	new_hl.load(atts3);
+	entity->add(new_hl);
+	TCompLightFadable * tclp = new_hl;
+	tclp->activate();
 }
 
 void player_controller::myUpdate() {
@@ -532,8 +607,7 @@ void player_controller::UpdateActionsTrigger() {
 			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
 		}
 	}
-
-	if (canPassWire) {
+	else if (canPassWire) {
 		ui.addTextInstructions("\n Press 'E' to pass by the wire\n");
 
 		if (io->keys['E'].becomesPressed()) {

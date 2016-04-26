@@ -11,15 +11,15 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_acc_light;
 	int xres, yres;
 
-  const CRenderTechnique* acc_light_points;
-  const CRenderTechnique* acc_light_directionals;
-  const CMesh*            unit_sphere;
-  const CMesh*            unit_cube;
+	const CRenderTechnique* acc_light_points;
+	const CRenderTechnique* acc_light_directionals;
+	const CMesh*            unit_sphere;
+	const CMesh*            unit_cube;
 
 	void renderGBuffer();
 	void renderAccLight();
 	void addPointLights();
-  void addDirectionalLights();
+	void addDirectionalLights();
 
 public:
 	bool start() override;

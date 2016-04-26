@@ -9,6 +9,16 @@ CShaderCte< TCteObject > shader_ctes_object;
 CShaderCte< TCteBones >  shader_ctes_bones;
 CShaderCte< TCteLight >  shader_ctes_lights;
 
+enum samplers {
+	eCLAMP = 0,
+	eWRAP,
+	eSAMPLER_COUNT
+};
+
+ID3D11SamplerState* samplers[eSAMPLER_COUNT];
+
+
+
 // -----------------------------------------------
 bool createDepthBuffer(
     int xres
@@ -53,6 +63,50 @@ bool createDepthBuffer(
   return true;
 }
 
+bool createSamplers() 
+{
+	// Create the sample state
+	D3D11_SAMPLER_DESC sampDesc;
+
+	ZeroMemory(&sampDesc, sizeof(sampDesc));
+	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	sampDesc.MinLOD = 0;
+	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	HRESULT hr = Render.device->CreateSamplerState(
+		&sampDesc, &samplers[eWRAP]);
+	if (FAILED(hr)) { return false; }
+
+	ZeroMemory(&sampDesc, sizeof(sampDesc));
+	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	sampDesc.MinLOD = 0;
+	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	hr = Render.device->CreateSamplerState(
+		&sampDesc, &samplers[eCLAMP]);
+	if (FAILED(hr)) { return false; }
+
+	return true;
+}
+
+void destroySamplers()
+{
+	for (int i = 0; i < eSAMPLER_COUNT; ++i) {
+		if(samplers[i])(samplers[i]->Release());
+	}
+}
+
+void activateSamplers()
+{
+	Render.ctx->PSSetSamplers(0, eSAMPLER_COUNT, samplers);
+}
+
 // -----------------------------------------------
 /*void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color) {
   MAT44 world = MAT44::CreateLookAt(src, dst, VEC3(0, 1, 0)).Invert();
@@ -78,7 +132,12 @@ bool drawUtilsCreate() {
   if (!shader_ctes_lights.create("ctes_light"))
     return false;
 
+  if (!createSamplers())
+	  return false;
+
+  
   activateDefaultStates();
+  activateSamplers();
   return true;
 }
 
@@ -134,4 +193,3 @@ void drawFullScreen(const CTexture* texture) {
   shader_ctes_camera.uploadToGPU();
 
 }
-

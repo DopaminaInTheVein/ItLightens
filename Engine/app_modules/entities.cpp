@@ -51,6 +51,7 @@ DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
 DECL_OBJ_MANAGER("light_dir", TCompLightDir);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
+DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("box", TCompBox);
@@ -113,6 +114,7 @@ bool CEntitiesModule::start() {
 
 	//lights
 	getHandleManager<TCompLightDir>()->init(4);
+	getHandleManager<TCompLightFadable>()->init(4);
 	getHandleManager<TCompLightPoint>()->init(32);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
@@ -245,22 +247,26 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
-	//sala = "scene_milestone_1";
+	sala = "scene_milestone_1";
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
 	//sala = "scene_basic_lights";
-	sala = "test";
+	//sala = "test_simple";
+	//sala = "test_guard";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";
 
 	CEntityParser ep;
+
 	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 
-	ep = CEntityParser();
-	is_ok = ep.xmlParseFile("data/scenes/scene_basic_lights.xml");
-	assert(is_ok);
+	{
+		CEntityParser ep2;
+		bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
+		assert(isok);
+	}
 
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();
@@ -412,6 +418,9 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 	getHandleManager<TCompBoxDestructor>()->updateAll(dt);
+
+	getHandleManager<TCompLightPoint>()->updateAll(dt);
+	getHandleManager<TCompLightFadable>()->updateAll(dt);
 
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);

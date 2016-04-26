@@ -6,12 +6,12 @@
 class CCamera;
 
 bool createDepthBuffer(
-    int xres
-  , int yres
-  , DXGI_FORMAT depth_format
-  , ID3D11Texture2D** out_depth_resource
-  , ID3D11DepthStencilView** out_depth_stencil_view
-  );
+	int xres
+	, int yres
+	, DXGI_FORMAT depth_format
+	, ID3D11Texture2D** out_depth_resource
+	, ID3D11DepthStencilView** out_depth_stencil_view
+	);
 
 //void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color);
 void drawFullScreen(const CTexture* texture);
@@ -20,6 +20,11 @@ void activateWorldMatrix(const MAT44& mat);
 bool drawUtilsCreate();
 void drawUtilsDestroy();
 void activateDefaultStates();
+
+//samplers
+bool createSamplers();
+void destroySamplers();
+void activateSamplers();
 
 #include "constants/ctes_camera.h"
 extern CShaderCte< TCteCamera > shader_ctes_camera;
