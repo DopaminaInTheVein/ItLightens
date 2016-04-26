@@ -133,4 +133,6 @@ void CResourcesManager::renderUIDebug(ImGuiTextFilter * filter) {
 			}
 		}
 	}
+
+	res_filter.clear();
 }

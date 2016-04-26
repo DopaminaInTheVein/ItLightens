@@ -26,7 +26,6 @@ public:
 	void setHeight(int height) { rectangle.sy = height; }
 	void setValue(float new_fraction) {
 		target = new_fraction;
-		dbg("Set Target: %f\n", target);
 	}
 
 	void update(float dt)
@@ -38,7 +37,6 @@ public:
 		current = current < target ? 
 			  clamp(current + delta, current, target)
 			: clamp(current + delta, target, current);
-		dbg("Update Bar: current:%f, target:%f\n", current, target);
 	}
 	virtual void draw() = 0;
 };

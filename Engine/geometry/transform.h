@@ -15,9 +15,17 @@ public:
 	// ---------------------------
 	CTransform() : scale(1.f, 1.f, 1.f) {}
 	MAT44       asMatrix() const {
-		MAT44 mrot = MAT44::CreateFromQuaternion(rotation);
-		mrot.Translation(position);
-		return mrot * MAT44::CreateScale(scale);
+		MAT44 matScale;
+		if (scale.x == 1.f && scale.y == 1.f || scale.z == 1.f) {
+			matScale = MAT44::Identity;
+		}
+		else {
+			matScale = MAT44::CreateScale(scale);
+		}
+
+		MAT44 mat = matScale * MAT44::CreateFromQuaternion(rotation);
+		mat.Translation(position);
+		return mat;
 	}
 
 	CQuaternion getRotation() const { return rotation; }

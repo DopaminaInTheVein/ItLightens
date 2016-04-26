@@ -20,7 +20,6 @@ fn _parse_name = (
 ----------------------------------------------------------------------
 fn parseTransform parent = (
 	local obj = _parsingObject
-	format "_parseTransform, obj = %\n" obj
 	local mcv_tmx = matrixMax2MCV obj.transform -- matrix3
 	local t = mcv_tmx.pos
 	local q = mcv_tmx.rotationPart as quat

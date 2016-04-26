@@ -15,19 +15,7 @@ extern CShaderCte< TCteObject > shader_ctes_object;
 void TCompTransform::render() const
 {
 	auto axis = Resources.get("axis.mesh")->as<CMesh>();
-	if (getScale().x != 1) {
-		VEC3 pos = getPosition();
-		VEC3 posAux = pos / getScale().x;
-
-		CTransform t;
-		t.setPosition(posAux);
-		t.setRotation(getRotation());
-		t.setScale(getScale());
-		shader_ctes_object.World = t.asMatrix();
-	}
-	else {
-		shader_ctes_object.World = asMatrix();
-	}
+	shader_ctes_object.World = asMatrix();
 	shader_ctes_object.uploadToGPU();
 	axis->activateAndRender();
 }

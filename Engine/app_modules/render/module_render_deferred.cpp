@@ -12,6 +12,8 @@
 #include "resources/resources_manager.h"
 #include "render/draw_utils.h"
 
+#include "render/fx/GuardShots.h"
+
 // ------------------------------------------------------
 bool CRenderDeferredModule::start() {
 	//xres = CApp::get().getXRes();
@@ -194,6 +196,9 @@ void CRenderDeferredModule::renderAccLight() {
 void CRenderDeferredModule::render() {
 	renderGBuffer();
 	renderAccLight();
+
+	// Fx
+	ShootManager::renderAll();
 
 	Render.activateBackBuffer();
 

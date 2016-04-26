@@ -21,6 +21,11 @@ bool drawUtilsCreate();
 void drawUtilsDestroy();
 void activateDefaultStates();
 
+//samplers
+bool createSamplers();
+void destroySamplers();
+void activateSamplers();
+
 #include "constants/ctes_camera.h"
 extern CShaderCte< TCteCamera > shader_ctes_camera;
 #include "constants/ctes_object.h"

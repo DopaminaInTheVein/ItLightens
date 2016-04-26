@@ -251,6 +251,7 @@ bool CEntitiesModule::start() {
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
 	//sala = "scene_basic_lights";
+	//sala = "test_simple";
 	//sala = "test_guard";
 
 	SBB::postSala(sala);
@@ -442,6 +443,9 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
+
+	//Prueba BORRAR
+	getHandleManager<player_controller>()->onAll(&player_controller::render);
 }
 
 void CEntitiesModule::renderInMenu() {

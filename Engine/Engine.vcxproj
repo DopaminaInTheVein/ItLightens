@@ -224,6 +224,7 @@
     <ClCompile Include="recast\Recast\Source\RecastRegion.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
     <ClCompile Include="render\draw_utils.cpp" />
+    <ClCompile Include="render\fx\GuardShots.cpp" />
     <ClCompile Include="render\material.cpp" />
     <ClCompile Include="render\mesh.cpp" />
     <ClCompile Include="render\mesh_manager.cpp" />
@@ -594,6 +595,7 @@
     <ClInclude Include="recast\Recast\Include\RecastAssert.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
     <ClInclude Include="render\draw_utils.h" />
+    <ClInclude Include="render\fx\GuardShots.h" />
     <ClInclude Include="render\gpu_trace.h" />
     <ClInclude Include="render\material.h" />
     <ClInclude Include="render\mesh.h" />
@@ -725,6 +727,10 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\bin\data\shaders\basic.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\deferred.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

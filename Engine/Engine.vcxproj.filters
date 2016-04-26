@@ -547,6 +547,9 @@
     <ClCompile Include="components\comp_light_fadable.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="render\fx\GuardShots.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1294,6 +1297,9 @@
     <ClInclude Include="app_modules\gui\gui_bar.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
+    <ClInclude Include="render\fx\GuardShots.h">
+      <Filter>render\fx</Filter>
+    </ClInclude>
     <ClInclude Include="components\comp_light_fadable.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -1476,6 +1482,9 @@
     <Filter Include="app_modules\gui">
       <UniqueIdentifier>{063e8cb1-512e-494c-a79a-0f13c83dfb31}</UniqueIdentifier>
     </Filter>
+    <Filter Include="render\fx">
+      <UniqueIdentifier>{9d0f3ef4-490d-4188-99c0-692744ec2cc1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="render\constants">
       <UniqueIdentifier>{61448c20-12c5-409f-a50b-43ba674d0122}</UniqueIdentifier>
     </Filter>
@@ -1485,6 +1494,9 @@
       <Filter>render\shaders</Filter>
     </FxCompile>
     <FxCompile Include="..\bin\data\shaders\skin.fx">
+      <Filter>render\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\deferred.fx">
       <Filter>render\shaders</Filter>
     </FxCompile>
   </ItemGroup>
