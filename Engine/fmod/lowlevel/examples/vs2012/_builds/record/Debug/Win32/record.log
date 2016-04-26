@@ -1,9 +1,0 @@
-﻿  record.cpp
-..\record.cpp(179): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  common_platform.cpp
-  common.cpp
-  Generating Code...
-  record.vcxproj -> D:\Master\Proyecto\ItLightens\Engine\fmod\lowlevel\examples\vs2012\_builds\record\Debug\Win32\recordL.exe
-          1 archivo(s) copiado(s).
-          1 archivo(s) copiado(s).
-          1 archivo(s) copiado(s).

@@ -1,8 +1,0 @@
-﻿  fmod_distance_filter.cpp
-..\plugins\fmod_distance_filter.cpp(265): warning C4189: 'inbuffer': local variable is initialized but not referenced
-..\plugins\fmod_distance_filter.cpp(268): warning C4189: 'outchannels': local variable is initialized but not referenced
-..\plugins\fmod_distance_filter.cpp(266): warning C4189: 'outbuffer': local variable is initialized but not referenced
-..\plugins\fmod_distance_filter.cpp(267): warning C4189: 'inchannels': local variable is initialized but not referenced
-     Creating library D:\Master\Proyecto\ItLightens\Engine\fmod\lowlevel\examples\vs2012\_builds\fmod_distance_filter\Debug\Win32\fmod_distance_filterL.lib and object D:\Master\Proyecto\ItLightens\Engine\fmod\lowlevel\examples\vs2012\_builds\fmod_distance_filter\Debug\Win32\fmod_distance_filterL.exp
-  fmod_distance_filter.vcxproj -> D:\Master\Proyecto\ItLightens\Engine\fmod\lowlevel\examples\vs2012\_builds\fmod_distance_filter\Debug\Win32\fmod_distance_filterL.dll
-          1 archivo(s) copiado(s).
