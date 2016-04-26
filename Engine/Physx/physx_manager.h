@@ -60,6 +60,9 @@ class CPhysxManager :	public IAppModule,
 
 	PxCudaContextManager	*m_pCudaContextManager		= nullptr;
 
+	PxGeometryQuery			*m_pGeomQuerys				= nullptr;
+
+
 #ifndef NDEBUG
 	PxVisualDebuggerConnection *m_pConnection			= nullptr;		//physx debugger
 #endif
@@ -102,7 +105,8 @@ public:
 						m_pManagerControllers(nullptr),
 						m_pPhysics(nullptr),
 						m_pProfileZoneManager(nullptr),
-						m_pScene(nullptr) 
+						m_pScene(nullptr),
+						m_pGeomQuerys(nullptr)
 	{}
 
 	~CPhysxManager() { stop(); }
@@ -132,6 +136,7 @@ public:
 	void					CreateSphereGeometry(const PxReal& radius, PxSphereGeometry& g) const;
 	void					CreateBoxGeometry(const PxVec3& size, PxBoxGeometry& g) const;
 	void					CreateCapsuleGeometry(const PxReal& radius, const PxReal& halfheight, PxCapsuleGeometry& g) const;
+	void					CreatePlaneGeometry(const PxReal& radius, const PxReal& halfheight, PxPlaneGeometry& g) const;
 
 
 	//-----------------------------------------------------------------------------------------------------
@@ -165,13 +170,13 @@ public:
 	/**
 	\brief							Create and return the shape of a box with material.
 
-	\param[in] size					Vector of the size of the box. WARNING: size is at double, trying to fix.
+	\param[in] size					Vector of the size of the box. WARNING: size is from center
 	\param[in] staticfriction		Friction when object at rest and someone trying to move it.
 	\param[in] dynamicfriction		Friction when object is moving.
 	\param[in] restitution			Quantity of energy absorbed on contact. Bigger values, bigger the rebound.
 	\return							Pointer to a box shape.
 	*/
-	PxShape*						CreatePxBox	(const PxVec3& size = PxVec3(1,1,1), PxReal staticFriction = 0.5f, PxReal dynamicFriction = 0.5f, PxReal restitution = 0.5f);
+	PxShape*						CreatePxBox	(const PxVec3& size_from_center = PxVec3(1,1,1), PxReal staticFriction = 0.5f, PxReal dynamicFriction = 0.5f, PxReal restitution = 0.5f);
 
 
 
@@ -337,7 +342,7 @@ public:
 
 
 	/**
-	\brief								Sqrt calc, use direction if you can
+	\brief								WARNING: high cost. Sqrt calc, use direction if you can
 	\param[in] origin					Origin of the ray.
 	\param[in] end						End of the ray.
 	\param[out] hitCall					Raycast hit buffer or callback object used to report raycast hits.
@@ -358,6 +363,9 @@ public:
 	bool raySphere(PxReal radius, VEC3 & start, VEC3 & direction, PxReal distance, PxSweepCallback & hit,
 																					PxQueryFilterData filter = PxQueryFilterData(),
 																					const PxHitFlags outputflags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
+
+	float SquaredDistancePointToGeometry(const PxVec3& point, const PxGeometry& geometry, const PxVec3& originGeometry, const PxQuat& quaternionGeometry = PxQuat(0, 0, 0, 1));
+	float SquaredDistancePointToGeometry(const VEC3& point, const PxGeometry& geometry, const VEC3& originGeometry, const CQuaternion& quaternionGeometry = CQuaternion(0, 0, 0, 1));
 
 
 	//-----------------------------------------------------------------------------------------------------
