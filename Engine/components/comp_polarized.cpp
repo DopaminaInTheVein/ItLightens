@@ -6,17 +6,18 @@
 #include "comp_msgs.h"
 #include "entity_tags.h"
 #include "comp_physics.h"
+#include "comp_charactercontroller.h"
 
 void TCompPolarized::init()
 {
 	player_h = tags_manager.getFirstHavingTag(getID("player"));
 
 	msg_in.origin = origin;
-	msg_in.pol = mPol;
+	msg_in.pol = force.polarity;
 	msg_in.range = true;
 
 	msg_out.origin = origin;
-	msg_out.pol = mPol;
+	msg_out.pol = force.polarity;
 	msg_out.range = false;
 
 	CHandle e_h = CHandle(this).getOwner();
@@ -28,14 +29,16 @@ void TCompPolarized::init()
 
 void TCompPolarized::update(float elapsed)
 {
-
 	CEntity *e_p = player_h;
 	if (e_p) {
-		TCompTransform *t = e_p->get<TCompTransform>();
-		VEC3 player_pos = t->getPosition();
+		TCompCharacterController *cc = e_p->get<TCompCharacterController>();
+		assert(cc || fatal("Player doesnt have character controller!"));
+		VEC3 player_pos = cc->GetPosition();
 
 		if (mType == FIXED) {
-			if (dist_effect_squared > squaredDist(player_pos, origin)) {
+			force.deltaPos = origin - player_pos; //Vector from player to this
+			force.distance = force.deltaPos.LengthSquared();
+			if (dist_effect_squared > force.distance) {
 				if (!send) {
 					send = true;
 					sendMessagePlayer(msg_in);
@@ -49,8 +52,6 @@ void TCompPolarized::update(float elapsed)
 			}
 		}
 		else if (mType == FREE) {
-
-
 			if (mPlayer_state != NEUTRAL) {
 				CHandle e_h = CHandle(this).getOwner();
 				CEntity *e = e_h;
@@ -80,7 +81,7 @@ void TCompPolarized::update(float elapsed)
 					TCompPhysics *p = e->get<TCompPhysics>();
 					
 					if (p) {
-						if (mPol != mPlayer_state)	p->AddForce((-direction*100)/dist);		//opposite pols
+						if (force.polarity != mPlayer_state)	p->AddForce((-direction*100)/dist);		//opposite pols
 						else {
 							if(dist_near < dist)
 								p->AddForce((direction * 10)); 
@@ -97,13 +98,13 @@ bool TCompPolarized::load(MKeyValue & atts)
 	std::string read_s = atts.getString("pol", "neutral");
 
 	if (read_s == "plus") {
-		mPol = PLUS;
+		force.polarity = PLUS;
 	}
 	else if (read_s == "minus") {
-		mPol = MINUS;
+		force.polarity = MINUS;
 	}
 	else {
-		mPol = NEUTRAL;		//default
+		force.polarity = NEUTRAL;		//default
 	}
 
 	return true;
@@ -143,6 +144,10 @@ void TCompPolarized::sendMessagePlayer(const TMsgPolarize & msg)
 	if (e) {
 		e->sendMsg(msg);
 	}
+}
+
+PolarityForce TCompPolarized::getForce() {
+	return force;
 }
 
 

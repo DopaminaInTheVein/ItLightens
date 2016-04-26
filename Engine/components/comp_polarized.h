@@ -6,17 +6,30 @@
 struct TMsgPolarize;
 class CHandle;
 
+enum pols {
+	NEUTRAL = 0,
+	MINUS,
+	PLUS,
+};
+
+struct PolarityForce {
+	float distance;
+	VEC3 deltaPos;
+	pols polarity;
+	PolarityForce(float d, VEC3 dP, pols p) :
+		distance(d),
+		deltaPos(dP),
+		polarity(p) {}
+	PolarityForce() :
+		distance(100.f),
+		deltaPos(VEC3(0, 100, 0)),
+		polarity(NEUTRAL) {}
+};
+
 struct TCompPolarized : public TCompBase {
-
-	enum pols {
-		NEUTRAL = 0,
-		MINUS,
-		PLUS,
-	};
-
 	enum type {
 		FIXED = 0,
-		FREE,
+		FREE
 	};
 
 	VEC3				origin;
@@ -30,10 +43,13 @@ struct TCompPolarized : public TCompBase {
 
 	float			dist_effect_squared	= 25.0f;
 	float			dist_near			= 3.0f;
+	PolarityForce	force;
+	//float			dist_player = 1000.f; // Update each frame
+	//VEC3			deltaPos_player = VEC3(1000.f, 1000.f, 1000.f); //Update each frame
+	//int				mPol				= NEUTRAL;
 
 	float			mThresholdMass		= 2.5f;
 
-	int				mPol					= NEUTRAL;
 	int				mType				= FIXED;
 	int				mPlayer_state		= NEUTRAL;
 
@@ -46,6 +62,9 @@ struct TCompPolarized : public TCompBase {
 	void onPolarize(const TMsgPlayerPolarize& msg);
 
 	void sendMessagePlayer(const TMsgPolarize& msg);
+
+	//Get Force to Player
+	PolarityForce getForce();
 };
 
 #endif

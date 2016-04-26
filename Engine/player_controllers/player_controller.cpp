@@ -304,7 +304,6 @@ void player_controller::RecalcAttractions()
 		forces *= POL_ATRACTION_ORBITA;
 
 		if (!pol_orbit_prev) {
-			//cc->ResetMovement();
 			cc->ChangeSpeed(POL_SPEED_ORBITA);
 		}
 		else {
@@ -345,6 +344,7 @@ void player_controller::RecalcAttractions()
 				}
 			}
 		}
+		forces += VEC3(0, 10, 0); // Anular gravity
 	}
 	else {
 		forces = (lastForces * POL_INERTIA) + (forces * (1 - POL_INERTIA));
@@ -499,7 +499,7 @@ void player_controller::UpdateInputActions()
 		RecalcAttractions();
 	}
 
-	cc->SetGravity(!pol_orbit);
+	//cc->SetGravity(!pol_orbit);
 
 	//Event onChangePolarity to LogicManager
 	if (pol_state != pol_state_prev) {
