@@ -46,8 +46,13 @@ fn parseTransform parent = (
 	xmlTransform.addAttr "scale" scaleVal
 )
 
+fn needToCenter = (
+	local res = (_descriptorObject.getType() == "Trigger")
+	res = res or (_descriptorObject.getType() == "AreaPol")
+)
+
 fn centerIfNeeded = (
-	if _descriptorObject.getType() == "Trigger" then (
+	if needToCenter() then (
 		_parsingObject.pos = _parsingObject.center
 	)
 )
@@ -181,6 +186,28 @@ fn _parse_polarized = (
 		local xmlPol = XML_PARSING.addChild "polarized"
 		xmlPol.addAttr "pol" (getUserProp polarized "pol")
 	)
+)
+
+fn _parse_polarizedArea = (
+	--Polarized component
+	local xmlPol = XML_PARSING.addChild "polarized"
+	
+	--Polarity attribute (by color)
+	local pol
+	local r = _parsingObject.mat.diffuse.r
+	local g = _parsingObject.mat.diffuse.g
+	local b = _parsingObject.mat.diffuse.b
+	if r > ((g + b) * 2) then ( pol = "plus")
+	else if b > ((r + g) * 2) then ( pol = "minus")
+	else if b*4 < (r + g) then ( pol = "neutral")
+	else throw ("Cant calc polarity of " + _parsingObject.name + " from color material!")
+	xmlPol.addAttr "pol" pol
+
+	-- Box
+	local ss = stringstream ""
+	format "% % %" _parsingObject.Width _parsingObject.Height _parsingObject.Length to:ss
+	local size = (ss as string)
+	xmlPol.addAttr "size" size
 )
 
 ----------------------------------------------------------------------
