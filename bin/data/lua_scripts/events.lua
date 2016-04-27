@@ -22,6 +22,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
+	p:play_music("data/sounds/music/space-harrier.mp3")
 end
 
 function OnGameEnd( param )
@@ -136,8 +137,14 @@ function OnOvercharge( param )
 	p:print( "OnOvercharge: "..param.."\n" )
 end
 
+function OnJump( param )
+	p:print( "OnDoubleJump: "..param.."\n" )
+	p:play_sound("data/sounds/sfx/Jump.wav")
+end
+
 function OnDoubleJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
+	p:play_sound("data/sounds/sfx/Boing.wav")
 end
 
 function OnDetected( param )

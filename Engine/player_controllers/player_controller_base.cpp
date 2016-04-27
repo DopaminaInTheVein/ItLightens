@@ -2,19 +2,20 @@
 #include "player_controller_base.h"
 
 #include <windows.h>
-#include "handle\object_manager.h"
+#include "handle/object_manager.h"
 
 #include "windows/app.h"
 
-#include "components\comp_transform.h"
-#include "components\comp_life.h"
-#include "components\entity.h"
-#include "components\entity_tags.h"
+#include "components/comp_transform.h"
+#include "components/comp_life.h"
+#include "components/entity.h"
+#include "components/entity_tags.h"
 
-#include "components\comp_msgs.h"
-#include "components\comp_camera.h"
+#include "components/comp_msgs.h"
+#include "components/comp_camera.h"
 
-#include "app_modules\io\io.h"
+#include "app_modules/io/io.h"
+#include "app_modules/logic_manager/logic_manager.h"
 #include "utils/utils.h"
 
 #include "components/comp_charactercontroller.h"
@@ -176,6 +177,7 @@ bool CPlayerBase::UpdateMovDirection() {
 void CPlayerBase::UpdateJumpState() {
 	PROFILE_FUNCTION("update jump state base");
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.isPressed()) {
+		logic_manager->throwEvent(logic_manager->OnJump, "");
 		Jump();
 	}
 }

@@ -63,10 +63,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 			break;
 		}
 		case (OnGameStart) : {
-			//sprintf(lua_code, "OnGameStart(%f);", 0.4f);
-			char command_code[64];
+			sprintf(lua_code, "OnGameStart(%f);", 0.4f);
+			/*char command_code[64];
 			sprintf(command_code, "dbg('%s');", "TIMER - OGS");
-			sprintf(lua_code, "execCommandTest(\"%s\", %f);", command_code, 5.f);
+			sprintf(lua_code, "execCommandTest(\"%s\", %f);", command_code, 5.f);*/
 			break;
 		}
 		case (OnGameEnd) : {
@@ -194,6 +194,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 			sprintf(lua_code, "OnOvercharge(%f);", 0.5f);
 			break;
 		}
+		case (OnJump) : {
+			sprintf(lua_code, "OnJump(%f);", 0.5f);
+			break;
+		}
 		case (OnDoubleJump) : {
 			sprintf(lua_code, "OnDoubleJump(%f);", 0.5f);
 			break;
@@ -256,6 +260,22 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
 		.param("Text to print")
+		// play sound function
+		.set("play_sound", &SLBPublicFunctions::playSound)
+		.comment("Executes the specified sound effect")
+		.param("Route of the sound")
+		// play music function
+		.set("play_music", &SLBPublicFunctions::playMusic)
+		.comment("Executes the specified music")
+		.param("Route of the music")
+		// play voice function
+		.set("play_voice", &SLBPublicFunctions::playVoice)
+		.comment("Executes the specified voice")
+		.param("Route of the voice")
+		// play ambient function
+		.set("play_ambient", &SLBPublicFunctions::playAmbient)
+		.comment("Executes the specified ambient sound")
+		.param("Route of the ambient sound")
 		;
 }
 
