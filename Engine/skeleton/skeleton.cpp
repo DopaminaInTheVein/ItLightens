@@ -60,6 +60,8 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 	for (int sub_mesh_id = 0; sub_mesh_id < num_sub_meshes; ++sub_mesh_id) {
 		CalCoreSubmesh* core_sub_mesh = core_mesh->getCoreSubmesh(sub_mesh_id);
 
+		core_sub_mesh->enableTangents(0, true);
+
 		// # faces & indices
 		int nfaces = core_sub_mesh->getFaceCount();
 		auto& cal_faces = core_sub_mesh->getVectorFace();
@@ -77,6 +79,8 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 
 		// An array of all textcoord sets
 		auto& cal_all_uvs_sets = core_sub_mesh->getVectorVectorTextureCoordinate();
+
+		// core_sub_mesh->getVectorVectorTangentSpace()[0];
 
 		// We must have at least one texture coordinate set
 		std::vector<CalCoreSubmesh::TextureCoordinate>* cal_uvs = nullptr;
@@ -102,6 +106,7 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 			skin_vtx.normal[0] = cal_normal.x;
 			skin_vtx.normal[1] = cal_normal.y;
 			skin_vtx.normal[2] = cal_normal.z;
+			//skin_vtx.tangent[0] = cal_tanget
 
 			// Texture coords...
 			if (cal_uvs) {

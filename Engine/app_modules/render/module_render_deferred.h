@@ -9,6 +9,7 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_normals;
 	CRenderToTexture* rt_wpos;
 	CRenderToTexture* rt_acc_light;
+	CRenderToTexture* rt_final;
 	int xres, yres;
 
 	const CRenderTechnique* acc_light_points;
@@ -20,6 +21,8 @@ class CRenderDeferredModule : public IAppModule {
 	void renderAccLight();
 	void addPointLights();
 	void addDirectionalLights();
+
+	void FinalRender();
 
 public:
 	bool start() override;

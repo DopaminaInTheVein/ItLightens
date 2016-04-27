@@ -16,14 +16,23 @@ CRenderManager RenderManager;
 bool CRenderManager::sortByTechMatMesh(
     const TKey &k1
   , const TKey &k2) {
-
-  if (k1.material->tech != k2.material->tech) {
-    if (k1.material->tech->getPriority() == k2.material->tech->getPriority())
-      return k1.material->tech->getName() < k2.material->tech->getName();
-    return (k1.material->tech->getPriority() < k2.material->tech->getPriority());
+  auto* tech1 = k1.material->tech;
+  auto* tech2 = k2.material->tech;
+  if (tech1 != tech2) {
+    if (tech1->isTransparent() != tech2->isTransparent())
+      return tech1->isTransparent();
+    if (tech1->getPriority() == tech2->getPriority())
+      return tech1->getName() < tech2->getName();
+    return (tech1->getPriority() < tech2->getPriority());
   }
   // TODO: hacer esto bien...
   return k1.material < k2.material;
+}
+
+bool CRenderManager::sortByTransparency(const TKey &k1, bool is_transparent) {
+  if (k1.material->tech->isTransparent() != is_transparent)
+    return k1.material->tech->isTransparent();
+  return k1.material->tech->isTransparent();
 }
 
 void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
@@ -57,7 +66,7 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
   }
 }
 
-void CRenderManager::renderAll() {
+void CRenderManager::renderAll(eRenderType render_type) {
   PROFILE_FUNCTION("RenderManager");
   CTraceScoped scope("RenderManager");
 
@@ -70,9 +79,32 @@ void CRenderManager::renderAll() {
   if (all_keys.empty())
     return;
 
-  // 
-  const TKey* it = &all_keys[0];
-  const TKey* end_it = it + all_keys.size();
+  //
+  const TKey* it = nullptr;
+  const TKey* end_it = nullptr;
+
+  auto it_first_solid = std::lower_bound(
+    all_keys.begin()
+    , all_keys.end()
+    , true
+    , [](const TKey &k1, bool is_transparent)->bool {
+    if (k1.material->tech->isTransparent() != is_transparent)
+      return k1.material->tech->isTransparent();
+    return k1.material->tech->isTransparent();
+  }
+  );
+
+  if (render_type == eRenderType::TRANSPARENT_OBJS) {
+    it = &all_keys[0];
+    end_it = &(*it_first_solid);
+  }
+  else {
+    it = &(*it_first_solid);
+    int idx_of_first_solid = std::distance(all_keys.begin(), it_first_solid);
+    int num_solid_keys = all_keys.size() - idx_of_first_solid;
+    end_it = it + num_solid_keys;
+  }
+
   static TKey null_key;
   memset(&null_key, 0x00, sizeof(TKey));
   const TKey* prev_it = &null_key;

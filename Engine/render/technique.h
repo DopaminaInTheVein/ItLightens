@@ -16,6 +16,7 @@ class CRenderTechnique : public IResource, public CXMLParser {
   std::string          name;
   int                  priority;
   bool                 uses_bones;
+  bool                 is_transparent;
 
   static CRenderTechnique* curr_active;
 
@@ -32,6 +33,7 @@ public:
   void activate() const;
 
   int getPriority() const { return priority; }
+  bool isTransparent() const { return is_transparent; }
 
   const std::string& getName() const {
     return name;

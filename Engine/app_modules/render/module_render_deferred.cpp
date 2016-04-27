@@ -22,33 +22,36 @@ bool CRenderDeferredModule::start() {
 	xres = Render.getXRes();
 	yres = Render.getYRes();
 
-	rt_albedos = new CRenderToTexture;
-	rt_normals = new CRenderToTexture;
-	rt_wpos = new CRenderToTexture;
-	rt_acc_light = new CRenderToTexture;
+  rt_albedos = new CRenderToTexture;
+  rt_normals = new CRenderToTexture;
+  rt_wpos = new CRenderToTexture;
+  rt_acc_light = new CRenderToTexture;
+  rt_final = new CRenderToTexture;
 
-	if (!rt_albedos->createRT("rt_albedo", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
-		return false;
-	if (!rt_normals->createRT("rt_normals", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
-		return false;
-	if (!rt_wpos->createRT("rt_wpos", xres, yres, DXGI_FORMAT_R16G16B16A16_FLOAT, DXGI_FORMAT_UNKNOWN))
-		return false;
-	if (!rt_acc_light->createRT("rt_acc_light", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
-		return false;
+  if (!rt_albedos->createRT("rt_albedo", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+    return false;
+  if (!rt_normals->createRT("rt_normals", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+    return false;
+  if (!rt_wpos->createRT("rt_wpos", xres, yres, DXGI_FORMAT_R16G16B16A16_FLOAT, DXGI_FORMAT_UNKNOWN))
+    return false;
+  if (!rt_acc_light->createRT("rt_acc_light", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+    return false;
+  if (!rt_final->createRT("rt_final", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+	  return false;
 
-	acc_light_points = Resources.get("deferred_lights_point.tech")->as<CRenderTechnique>();
-	assert(acc_light_points && acc_light_points->isValid());
+  acc_light_points = Resources.get("deferred_lights_point.tech")->as<CRenderTechnique>();
+  assert(acc_light_points && acc_light_points->isValid());
 
-	//acc_light_directionals = Resources.get("deferred_lights_dir.tech")->as<CRenderTechnique>();
-	//assert(acc_light_directionals && acc_light_directionals->isValid());
+  acc_light_directionals = Resources.get("deferred_lights_dir.tech")->as<CRenderTechnique>();
+  assert(acc_light_directionals && acc_light_directionals->isValid());
 
-	//unit_sphere = Resources.get("meshes/unit_sphere.mesh")->as<CMesh>();
-	unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
-	assert(unit_sphere && unit_sphere->isValid());
-	unit_cube = Resources.get("meshes/unit_frustum.mesh")->as<CMesh>();
-	assert(unit_cube && unit_cube->isValid());
+  //unit_sphere = Resources.get("meshes/unit_sphere.mesh")->as<CMesh>();
+  unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
+  assert(unit_sphere && unit_sphere->isValid());
+  unit_cube = Resources.get("meshes/unit_frustum.mesh")->as<CMesh>();
+  assert(unit_cube && unit_cube->isValid());
 
-	return true;
+  return true;
 }
 
 // ------------------------------------------------------
@@ -83,12 +86,12 @@ void CRenderDeferredModule::renderGBuffer() {
 	};
 	// Y el ZBuffer del backbuffer principal
 	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
-	//Render.ctx->OMSetRenderTargets(3, rts, nullptr);
 
 	// Clear de los render targets y el ZBuffer
 	rt_albedos->clear(VEC4(1, 0, 0, 1));
 	rt_normals->clear(VEC4(0, 1, 0, 1));
 	rt_wpos->clear(VEC4(0, 0, 1, 1));
+	rt_final->clear(VEC4(0,0,0,1));
 	Render.clearMainZBuffer();
 
 	// Activo la camara en la pipeline de render
@@ -97,8 +100,8 @@ void CRenderDeferredModule::renderGBuffer() {
 	// Activa la ctes del object
 	activateWorldMatrix(MAT44::Identity);
 
-	// Mandar a pintar los 'solidos'
-	RenderManager.renderAll();
+  // Mandar a pintar los 'solidos'
+  RenderManager.renderAll(CRenderManager::SOLID_OBJS);
 }
 
 // ----------------------------------------------
@@ -132,24 +135,52 @@ void CRenderDeferredModule::addPointLights() {
 
 // ----------------------------------------------
 void CRenderDeferredModule::addDirectionalLights() {
-	PROFILE_FUNCTION("addDirectionalLights");
-	CTraceScoped scope("addDirectionalLights");
+	  PROFILE_FUNCTION("addDirectionalLights");
+  CTraceScoped scope("addDirectionalLights");
 
-	// Activar la tech acc_light_directionals.tech
-	acc_light_directionals->activate();
+  // Activar la tech acc_light_directionals.tech
+  acc_light_directionals->activate();
 
-	// Activar la mesh solo UNA vez
-	const CMesh* mesh = unit_cube;
-	mesh->activate();
+  // Activar la mesh solo UNA vez
+  const CMesh* mesh = unit_cube;
+  mesh->activate();
 
-	// Activar la mesh unit_sphere
-	getHandleManager<TCompLightDir>()->each([mesh](TCompLightDir* c) {
-		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
-		// la world para la mesh y las constantes en el pixel shader
-		c->activate();
-		// Pintar la mesh que hemos activado hace un momento
-		mesh->render();
-	});
+  // Activar la mesh unit_sphere
+  getHandleManager<TCompLightDir>()->each([mesh](TCompLightDir* c) {
+    // Subir todo lo que necesite la luz para pintarse en el acc light buffer
+    // la world para la mesh y las constantes en el pixel shader
+    c->activate();
+    // Pintar la mesh que hemos activado hace un momento
+    mesh->render();
+  });
+}
+
+void CRenderDeferredModule::FinalRender() {
+	PROFILE_FUNCTION("final_texture");
+	CTraceScoped scope("final_texture");
+
+	ID3D11RenderTargetView* rts[3] = {
+		rt_final->getRenderTargetView()
+		,	nullptr   // remove the other rt's from the pipeline
+		,	nullptr
+	};
+	// Y el ZBuffer del backbuffer principal
+	Render.ctx->OMSetRenderTargets(3, rts, nullptr);
+
+	//rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
+	rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
+	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+
+	activateZ(ZCFG_ALL_DISABLED);
+	
+	auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_albedos, tech);
+
+	activateZ(ZCFG_DEFAULT);
+
+	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+	CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
 }
 
 // ----------------------------------------------
@@ -179,9 +210,9 @@ void CRenderDeferredModule::renderAccLight() {
 	//activateRS(RSCFG_INVERT_CULLING);
 	addPointLights();
 
-	//activateZ(ZCFG_LIGHTS_DIR_CONFIG);
-	//activateRS(RSCFG_INVERT_CULLING);
-	//addDirectionalLights();
+  activateZ(ZCFG_LIGHTS_CONFIG);
+  //activateRS(RSCFG_INVERT_CULLING);
+  addDirectionalLights();
 
 	activateRS(RSCFG_DEFAULT);
 	activateZ(ZCFG_DEFAULT);
@@ -196,9 +227,11 @@ void CRenderDeferredModule::renderAccLight() {
 void CRenderDeferredModule::render() {
 	renderGBuffer();
 	renderAccLight();
+	FinalRender();
 
 	// Fx
 	ShootManager::renderAll();
+	
 
 	Render.activateBackBuffer();
 
@@ -207,10 +240,12 @@ void CRenderDeferredModule::render() {
 	//Render.ctx->ClearRenderTargetView(Render.render_target_view, ClearColor);
 
 	activateZ(ZCFG_ALL_DISABLED);
-	rt_acc_light->activate(TEXTURE_SLOT_LIGHTS);
-	rt_normals->activate(TEXTURE_SLOT_NORMALS);
-	drawFullScreen(rt_albedos);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-	CTexture::deactivate(TEXTURE_SLOT_LIGHTS);
+
+	//drawFullScreen(rt_acc_light);
+	drawFullScreen(rt_final);
+
 	activateZ(ZCFG_DEFAULT);
+
+	// Mandar a pintar los 'transparentes'
+	  RenderManager.renderAll(CRenderManager::TRANSPARENT_OBJS);
 }

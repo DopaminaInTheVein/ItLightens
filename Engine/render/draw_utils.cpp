@@ -9,16 +9,6 @@ CShaderCte< TCteObject > shader_ctes_object;
 CShaderCte< TCteBones >  shader_ctes_bones;
 CShaderCte< TCteLight >  shader_ctes_lights;
 
-enum samplers {
-	eCLAMP = 0,
-	eWRAP,
-	eSAMPLER_COUNT
-};
-
-ID3D11SamplerState* samplers[eSAMPLER_COUNT];
-
-
-
 // -----------------------------------------------
 bool createDepthBuffer(
     int xres
@@ -63,50 +53,6 @@ bool createDepthBuffer(
   return true;
 }
 
-bool createSamplers() 
-{
-	// Create the sample state
-	D3D11_SAMPLER_DESC sampDesc;
-
-	ZeroMemory(&sampDesc, sizeof(sampDesc));
-	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-	sampDesc.MinLOD = 0;
-	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	HRESULT hr = Render.device->CreateSamplerState(
-		&sampDesc, &samplers[eWRAP]);
-	if (FAILED(hr)) { return false; }
-
-	ZeroMemory(&sampDesc, sizeof(sampDesc));
-	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-	sampDesc.MinLOD = 0;
-	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	hr = Render.device->CreateSamplerState(
-		&sampDesc, &samplers[eCLAMP]);
-	if (FAILED(hr)) { return false; }
-
-	return true;
-}
-
-void destroySamplers()
-{
-	for (int i = 0; i < eSAMPLER_COUNT; ++i) {
-		if(samplers[i])(samplers[i]->Release());
-	}
-}
-
-void activateSamplers()
-{
-	Render.ctx->PSSetSamplers(0, eSAMPLER_COUNT, samplers);
-}
-
 // -----------------------------------------------
 /*void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color) {
   MAT44 world = MAT44::CreateLookAt(src, dst, VEC3(0, 1, 0)).Invert();
@@ -131,13 +77,8 @@ bool drawUtilsCreate() {
     return false;
   if (!shader_ctes_lights.create("ctes_light"))
     return false;
-
-  if (!createSamplers())
-	  return false;
-
   
   activateDefaultStates();
-  activateSamplers();
   return true;
 }
 
@@ -148,6 +89,7 @@ void activateDefaultStates() {
   shader_ctes_lights.activate(CTE_SHADER_LIGHT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
+  activateSamplerStates();
 }
 
 void drawUtilsDestroy() {
@@ -161,6 +103,12 @@ void drawUtilsDestroy() {
 void activateCamera(const CCamera* camera) {
   shader_ctes_camera.ViewProjection = camera->getViewProjection();
   shader_ctes_camera.CameraWorldPos = VEC4(camera->getPosition());
+  shader_ctes_camera.CameraFront = VEC4(camera->getFront());
+  shader_ctes_camera.CameraZFar = camera->getZFar();
+  shader_ctes_camera.CameraZNear = camera->getZNear();
+  shader_ctes_camera.CameraFov = camera->getFov();
+  shader_ctes_camera.CameraAspectRatio = camera->getAspectRatio();
+
   shader_ctes_camera.uploadToGPU();
 }
 
@@ -172,11 +120,12 @@ void activateWorldMatrix(const MAT44& mat) {
 }
 
 // -----------------------------------------------
-void drawFullScreen(const CTexture* texture) {
+void drawFullScreen(const CTexture* texture, const CRenderTechnique* tech) {
   
   texture->activate(TEXTURE_SLOT_DIFFUSE);
-
-  auto tech = Resources.get("solid_textured.tech")->as<CRenderTechnique>();
+  if(!tech)
+	tech = Resources.get("solid_textured.tech")->as<CRenderTechnique>();
+  
   tech->activate();
 
   activateWorldMatrix(MAT44::Identity);

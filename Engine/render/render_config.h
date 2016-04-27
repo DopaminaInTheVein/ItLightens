@@ -29,6 +29,8 @@ enum BlendConfig {
 };
 void activateBlend(enum BlendConfig);
 
+void activateSamplerStates();
+
 // ------------------------------------
 void createRenderStateConfigs();
 void destroyRenderStateConfigs();
