@@ -129,6 +129,18 @@ void SLBPublicFunctions::playSound(const char* sound_route) {
 	sound_manager->playSound(std::string(sound_route));
 }
 
+void SLBPublicFunctions::playMusic(const char* music_route) {
+	sound_manager->playMusic(std::string(music_route));
+}
+
+void SLBPublicFunctions::playVoice(const char* voice_route) {
+	sound_manager->playVoice(std::string(voice_route));
+}
+
+void SLBPublicFunctions::playAmbient(const char* ambient_route) {
+	sound_manager->playAmbient(std::string(ambient_route));
+}
+
 //test
 void SLBPublicFunctions::test(const char* to_print) {
 

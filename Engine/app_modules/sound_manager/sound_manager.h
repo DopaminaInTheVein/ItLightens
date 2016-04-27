@@ -15,12 +15,20 @@ class CSoundManagerModule : public IAppModule
 
 	FMOD::System	 *system;
 	std::map<std::string, FMOD::Sound*>		sounds;
-	FMOD::Channel    *channel = 0;
+	FMOD::Channel*							channels[4];
 	FMOD_RESULT       result;
 	unsigned int      version;
 	void             *extradriverdata = 0;
 
 public:
+
+	// sound channels
+	enum CHANNEL {
+		SFX = 0,
+		MUSIC,
+		VOICES,
+		AMBIENT
+	};
 
 	CSoundManagerModule();
 	bool start() override;
@@ -31,6 +39,10 @@ public:
 	}
 
 	bool playSound(std::string);
+	bool playMusic(std::string);
+	bool playVoice(std::string);
+	bool playAmbient(std::string);
+	void setVolume(CHANNEL, float);
 
 };
 

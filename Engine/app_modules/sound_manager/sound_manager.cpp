@@ -40,11 +40,18 @@ bool CSoundManagerModule::start() {
 			result = system->createSound(file.c_str(), FMOD_DEFAULT, 0, &sounds[file]);
 		}
 		else {
+			// musics are loaded as streams and with loop mode on
 			result = system->createStream(file.c_str(), FMOD_DEFAULT | FMOD_LOOP_NORMAL, 0, &sounds[file]);
 		}
 		if (result != FMOD_OK)
 			return false;
 	}
+
+	// init channels
+	channels[SFX] = 0;
+	channels[MUSIC] = 0;
+	channels[VOICES] = 0;
+	channels[AMBIENT] = 0;
 
 	return true;
 }
@@ -63,7 +70,36 @@ void CSoundManagerModule::stop() {
 }
 
 bool CSoundManagerModule::playSound(std::string route) {
-	result = system->playSound(sounds[route], 0, false, &channel);
+	result = system->playSound(sounds[route], 0, false, &channels[SFX]);
 
 	return result == FMOD_OK;
 }
+
+bool CSoundManagerModule::playMusic(std::string route) {
+	result = system->playSound(sounds[route], 0, false, &channels[MUSIC]);
+
+	return result == FMOD_OK;
+}
+
+bool CSoundManagerModule::playVoice(std::string route) {
+	result = system->playSound(sounds[route], 0, false, &channels[VOICES]);
+
+	return result == FMOD_OK;
+}
+
+bool CSoundManagerModule::playAmbient(std::string route) {
+	result = system->playSound(sounds[route], 0, false, &channels[AMBIENT]);
+
+	return result == FMOD_OK;
+}
+
+void CSoundManagerModule::setVolume(CHANNEL channel, float volume) {
+	// fit the volume to its min and max values
+	if (volume < 0.f)
+		volume = 0.f;
+	else if (volume > 1.f)
+		volume = 1.f;
+
+	channels[channel]->setVolume(volume);
+}
+

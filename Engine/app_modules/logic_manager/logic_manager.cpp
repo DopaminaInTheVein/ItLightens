@@ -262,8 +262,20 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("Text to print")
 		// play sound function
 		.set("play_sound", &SLBPublicFunctions::playSound)
-		.comment("Executes the specified sound")
+		.comment("Executes the specified sound effect")
 		.param("Route of the sound")
+		// play music function
+		.set("play_music", &SLBPublicFunctions::playMusic)
+		.comment("Executes the specified music")
+		.param("Route of the music")
+		// play voice function
+		.set("play_voice", &SLBPublicFunctions::playVoice)
+		.comment("Executes the specified voice")
+		.param("Route of the voice")
+		// play ambient function
+		.set("play_ambient", &SLBPublicFunctions::playAmbient)
+		.comment("Executes the specified ambient sound")
+		.param("Route of the ambient sound")
 		;
 }
 

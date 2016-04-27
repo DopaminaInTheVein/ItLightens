@@ -50,6 +50,9 @@ public:
 	void execCommand(const char* exec_code, float exec_time);
 	void print(const char* to_print);
 	void playSound(const char* sound_route);
+	void playMusic(const char* music_route);
+	void playVoice(const char* voice_route);
+	void playAmbient(const char* ambient_route);
 
 	void test(const char* to_print);
 
