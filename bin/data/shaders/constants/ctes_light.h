@@ -5,13 +5,14 @@
 
 ShaderBuffer(TCteLight, CTE_SHADER_LIGHT)
 {
-	float4 LightWorldPos;
-	matrix LightViewProjection;
-	float4 LightColor;
-	float  LightInRadius;
-	float  LightOutRadius;
-	float  LightDummy1;
-	float  LightDummy2;
+  float4 LightWorldPos;
+  float4 LightWorldFront;
+  matrix LightViewProjection;
+  float4 LightColor;
+  float  LightInRadius;
+  float  LightOutRadius;
+  float  LightAspectRatio;  // only directionals
+  float  LightCosFov;
 };
 
 #endif

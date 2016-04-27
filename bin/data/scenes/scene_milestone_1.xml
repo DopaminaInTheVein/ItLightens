@@ -104,14 +104,14 @@
 
   <!-- end test spawn -->
 
-  <entity>
+<!--  <entity>
     <name name="trigger lua 1" />
     <tags tags="spawn_box" />
     <transform pos="-4 -7.56 -22" rotation="1 2 3 3" scale="1 1 1" />
     <render_static_mesh name="static_meshes/generator.static_mesh" />
     <trigger_lua id="TRIGGER_ZONE_START_TEST" />
     <rigidbody type_collision="trigger" type_shape="box" size="2 1 2" />
-  </entity>
+  </entity>-->
 
   <!--END PLAYER & CAMERA -->
 

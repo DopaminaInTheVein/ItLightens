@@ -48,7 +48,8 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
     ps = Resources.get(res_name.c_str())->as<CPixelShader>();
   }
   else if (elem == "tech") {
-	  uses_bones = atts.getBool("uses_bones", false);
+    uses_bones = atts.getBool("uses_bones", false);
+    is_transparent = atts.getBool("is_transparent", false);
   }
 }
 

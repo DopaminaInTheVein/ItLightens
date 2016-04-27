@@ -37,9 +37,6 @@ void CMaterial::onStartElement(const std::string &elem, MKeyValue &atts) {
 		if (type_name == "diffuse") {
 			type_slot = TTextureSlot::DIFFUSE;
 		}
-		//else if (type_name == "bump") {
-			//type_slot = TTextureSlot::BUMP;
-		//}
 		else if (type_name == "specular") {
 			type_slot = TTextureSlot::SPECULAR;
 		}

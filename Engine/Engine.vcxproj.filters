@@ -1300,8 +1300,6 @@
     <ClInclude Include="render\fx\GuardShots.h">
       <Filter>render\fx</Filter>
     </ClInclude>
-    <ClInclude Include="logic\polarity.h">
-      <Filter>logic</Filter>
     <ClInclude Include="components\comp_light_fadable.h">
       <Filter>components</Filter>
     </ClInclude>

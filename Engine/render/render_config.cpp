@@ -5,6 +5,46 @@ static ID3D11RasterizerState*   rasterizer_states[RSCFG_COUNT];
 static ID3D11DepthStencilState* depth_stencil_states[ZCFG_COUNT];
 static ID3D11BlendState*        blend_states[BLENDCFG_COUNT];
 
+enum SMPConfig {
+  SMP_DEFAULT = 0,
+  SMP_BORDER_BLACK = 1, // light dirs
+  SMP_COUNT,
+};
+static ID3D11SamplerState*      sampler_states[SMP_COUNT];
+
+// --------------------------------------------------
+void createSamplerStates() {
+  HRESULT hr;
+  D3D11_SAMPLER_DESC desc;
+
+  // Valor por defecto, wrap textures and use mipmaps
+  ZeroMemory(&desc, sizeof(desc));
+  desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+  desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+  desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+  desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+  desc.MaxLOD = D3D11_FLOAT32_MAX;
+  hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_DEFAULT]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[SMP_DEFAULT], "SMP_DEFAULT");
+
+  // Para las luces direccionales, si me salgo del espacio homogeneo
+  // usar el color 'negro' para iluminar.
+  ZeroMemory(&desc, sizeof(desc));
+  desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+  desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+  desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+  desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+  desc.MaxLOD = D3D11_FLOAT32_MAX;
+  desc.BorderColor[0] = 0.f;
+  desc.BorderColor[1] = 0.f;
+  desc.BorderColor[2] = 0.f;
+  desc.BorderColor[3] = 0.f;
+  hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_BORDER_BLACK]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[SMP_BORDER_BLACK], "SMP_BORDER_BLACK");
+}
+
 // --------------------------------------------------
 void createZStates() {
 	HRESULT hr;
@@ -122,9 +162,10 @@ void createRasterizerStates() {
 
 // ----------------------------------------------
 void createRenderStateConfigs() {
-	createZStates();
-	createBlendStates();
-	createRasterizerStates();
+  createZStates();
+  createBlendStates();
+  createRasterizerStates();
+  createSamplerStates();
 }
 
 void destroyRenderStateConfigs() {
@@ -134,8 +175,11 @@ void destroyRenderStateConfigs() {
 	for (int i = 0; i < ZCFG_COUNT; ++i)
 		SAFE_RELEASE(depth_stencil_states[i]);
 
-	for (int i = 0; i < BLENDCFG_COUNT; ++i)
-		SAFE_RELEASE(blend_states[i]);
+  for (int i = 0; i < BLENDCFG_COUNT; ++i)
+    		SAFE_RELEASE(blend_states[i]);
+
+  for (int i = 0; i < SMP_COUNT; ++i)
+    		SAFE_RELEASE(sampler_states[i]);
 }
 
 void activateZ(enum ZConfig id) {
@@ -147,8 +191,12 @@ void activateRS(enum RSConfig id) {
 }
 
 void activateBlend(enum BlendConfig id) {
-	const float blend_factor[4] = { 0,0,0,0 };
-	Render.ctx->OMSetBlendState(blend_states[id], blend_factor, 0xffffffff);
+  const float blend_factor[4] = { 0,0,0,0 };
+  Render.ctx->OMSetBlendState(blend_states[id], blend_factor, 0xffffffff);
+}
+
+void activateSamplerStates() {
+  Render.ctx->PSSetSamplers(0, SMP_COUNT, sampler_states);
 }
 
 // ----------------------------------

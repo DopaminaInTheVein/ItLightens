@@ -20,7 +20,8 @@ class CRenderManager {
   };
 
   static bool sortByTechMatMesh(const TKey& k1, const TKey& k2);
-  
+  static bool sortByTransparency(const TKey &k1, bool is_transparent);
+
   bool in_order;
   std::vector< TKey > all_keys;
 
@@ -28,8 +29,13 @@ public:
   
   void registerToRender(const CStaticMesh* mesh, CHandle handle);
   void unregisterFromRender(CHandle handle);
-  void renderAll();
 
+  enum eRenderType {
+    SOLID_OBJS
+    , TRANSPARENT_OBJS
+  };
+
+  void renderAll(eRenderType render_type);
 };
 
 extern CRenderManager RenderManager;
