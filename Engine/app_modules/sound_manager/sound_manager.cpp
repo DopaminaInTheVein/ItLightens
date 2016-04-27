@@ -40,7 +40,7 @@ bool CSoundManagerModule::start() {
 			result = system->createSound(file.c_str(), FMOD_DEFAULT, 0, &sounds[file]);
 		}
 		else {
-			result = system->createStream(file.c_str(), FMOD_DEFAULT, 0, &sounds[file]);
+			result = system->createStream(file.c_str(), FMOD_DEFAULT | FMOD_LOOP_NORMAL, 0, &sounds[file]);
 		}
 		if (result != FMOD_OK)
 			return false;

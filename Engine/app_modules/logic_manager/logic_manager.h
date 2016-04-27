@@ -59,6 +59,7 @@ public:
 		OnLiquid,
 		OnBeingAttracted,
 		OnOvercharge,
+		OnJump,
 		OnDoubleJump,
 		OnDetected,
 		OnBeaconDetect,
