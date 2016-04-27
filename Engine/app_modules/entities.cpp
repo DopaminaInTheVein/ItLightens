@@ -247,7 +247,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
-	sala = "scene_milestone_1";
+	sala = "test_pol";
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
 	//sala = "scene_basic_lights";
