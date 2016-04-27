@@ -3,6 +3,9 @@
 #include "app_modules/app_module.h"
 //#include "utils/timer.h"
 
+#include "utils/directory_watcher.h"
+#include "resources/resources_manager.h"
+
 // -------------------------------------------------
 static CApp* app = nullptr;
 CApp& CApp::get() {
@@ -94,6 +97,15 @@ LRESULT CALLBACK CApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
+
+	case CDirectoyWatcher::WM_FILE_CHANGED: {
+		char* filename = (char*)lParam;
+		if (filename) {
+			Resources.onFileChanged(filename);
+			delete[] filename;
+		}
+		break; }
+
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

@@ -544,6 +544,9 @@
     <ClCompile Include="app_modules\gui\gui_button_std.cpp">
       <Filter>app_modules\gui</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_light_fadable.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
     <ClCompile Include="render\fx\GuardShots.cpp">
       <Filter>render\fx</Filter>
     </ClCompile>
@@ -562,9 +565,6 @@
     <ClInclude Include="geometry\geometry.h">
       <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_camera.h">
-      <Filter>render\contants</Filter>
-    </ClInclude>
     <ClInclude Include="render\shaders.h">
       <Filter>render</Filter>
     </ClInclude>
@@ -579,9 +579,6 @@
     </ClInclude>
     <ClInclude Include="render\shader_cte.h">
       <Filter>render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_object.h">
-      <Filter>render\contants</Filter>
     </ClInclude>
     <ClInclude Include="camera\camera.h">
       <Filter>camera</Filter>
@@ -1093,9 +1090,6 @@
     <ClInclude Include="SLB\src\lua\lopcodes.h">
       <Filter>slb\src\lua</Filter>
     </ClInclude>
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_bones.h">
-      <Filter>render\contants</Filter>
-    </ClInclude>
     <ClInclude Include="render\mesh_format.h">
       <Filter>render</Filter>
     </ClInclude>
@@ -1104,9 +1098,6 @@
     </ClInclude>
     <ClInclude Include="utils\data_saver.h">
       <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h">
-      <Filter>render\contants</Filter>
     </ClInclude>
     <ClInclude Include="Physx\ItLightensFilterShader.h">
       <Filter>physx</Filter>
@@ -1338,6 +1329,24 @@
     </ClInclude>
     <ClInclude Include="app_modules\sound_manager\sound_manager.h">
       <Filter>app_modules\sound_manager</Filter>
+	</ClInclude>
+    <ClInclude Include="components\comp_light_fadable.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_object.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h">
+      <Filter>render\constants</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1349,9 +1358,6 @@
     </Filter>
     <Filter Include="render\shaders">
       <UniqueIdentifier>{865620ba-b159-49d0-b912-472a7603202c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="render\contants">
-      <UniqueIdentifier>{041c6fc5-2054-4e63-89c3-0c4c613bfe99}</UniqueIdentifier>
     </Filter>
     <Filter Include="geometry">
       <UniqueIdentifier>{6ac4c3d5-f010-4f38-8161-11f5beca9294}</UniqueIdentifier>
@@ -1520,6 +1526,9 @@
     </Filter>
     <Filter Include="app_modules\sound_manager">
       <UniqueIdentifier>{0012f195-886a-4a8a-8113-bd4f5cb5649a}</UniqueIdentifier>
+	</Filter>
+    <Filter Include="render\constants">
+      <UniqueIdentifier>{61448c20-12c5-409f-a50b-43ba674d0122}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1527,6 +1536,9 @@
       <Filter>render\shaders</Filter>
     </FxCompile>
     <FxCompile Include="..\bin\data\shaders\skin.fx">
+      <Filter>render\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\deferred.fx">
       <Filter>render\shaders</Filter>
     </FxCompile>
   </ItemGroup>

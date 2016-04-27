@@ -22,6 +22,7 @@
 //lights
 #include "comp_light_dir.h"
 #include "comp_light_point.h"
+#include "comp_light_fadable.h"
 
 //Logic
 #include "logic/ai_beacon.h"

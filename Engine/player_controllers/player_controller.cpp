@@ -14,7 +14,8 @@
 #include "handle\handle.h"
 #include "ui\ui_interface.h"
 
-#include "components\comp_charactercontroller.h"
+#include "components/comp_charactercontroller.h"
+#include "logic/polarity.h"
 
 #define DELTA_YAW_SELECTION		deg2rad(10)
 
@@ -146,6 +147,9 @@ void player_controller::ChangePose(CHandle new_pos_h)
 	PROFILE_FUNCTION("player controller: change pose player");
 	SetMyEntity();
 	TCompLife *life = myEntity->get<TCompLife>();
+	if (life->currentlife > evolution_limit && curr_evol == 0) {
+		createEvolveLight();
+	}
 
 	if (life->currentlife < evolution_limit && curr_evol > 0) {
 		SetCharacterController();
@@ -156,8 +160,8 @@ void player_controller::ChangePose(CHandle new_pos_h)
 		actual_render->unregisterFromRender();
 		TCompRenderStaticMesh *new_pose = new_pos_h;
 		actual_render = new_pose;
-		actual_render = new_pose;
 		actual_render->registerToRender();
+		createDevolveLight();
 	}
 	else if (curr_evol > 0) {
 		TCompRenderStaticMesh *new_pose = new_pos_h;
@@ -167,6 +171,78 @@ void player_controller::ChangePose(CHandle new_pos_h)
 		actual_render = new_pose;
 		actual_render->registerToRender();
 	}
+}
+void player_controller::createEvolveLight() {
+	TCompTransform * trans = myEntity->get<TCompTransform>();
+
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+	IdEntities::saveIdEntity(CHandle(entity), -1900);
+
+	auto hm1 = CHandleManager::getByName("name");
+	CHandle new_hn = hm1->createHandle();
+	MKeyValue atts1;
+	atts1.put("name", "light_evolve");
+	new_hn.load(atts1);
+	entity->add(new_hn);
+	auto hm2 = CHandleManager::getByName("transform");
+	CHandle new_ht = hm2->createHandle();
+	MKeyValue atts2;
+	VEC3 positio = trans->getPosition(), scal = trans->getScale();
+	VEC4 rota = trans->getRotation();
+	atts2["pos"] = std::to_string(positio.x) + " " + std::to_string(positio.y + 1.0f) + " " + std::to_string(positio.z);
+	atts2["quat"] = std::to_string(rota.x) + " " + std::to_string(rota.y) + " " + std::to_string(rota.z) + " " + std::to_string(rota.w);
+	atts2["scale"] = std::to_string(scal.x) + " " + std::to_string(scal.y) + " " + std::to_string(scal.z);
+	new_ht.load(atts2);
+	entity->add(new_ht);
+	auto hm3 = CHandleManager::getByName("light_fadable");
+	CHandle new_hl = hm3->createHandle();
+	MKeyValue atts3;
+	atts3["color"] = "0 255 0 255";
+	atts3["in_radius"] = "1.0";
+	atts3["out_radius"] = "1.5";
+	atts3["ttl"] = "3.5";
+	new_hl.load(atts3);
+	entity->add(new_hl);
+	TCompLightFadable * tclp = new_hl;
+	tclp->activate();
+}
+void player_controller::createDevolveLight() {
+	TCompTransform * trans = myEntity->get<TCompTransform>();
+
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+	IdEntities::saveIdEntity(CHandle(entity), -1900);
+
+	auto hm1 = CHandleManager::getByName("name");
+	CHandle new_hn = hm1->createHandle();
+	MKeyValue atts1;
+	atts1.put("name", "light_evolve");
+	new_hn.load(atts1);
+	entity->add(new_hn);
+	auto hm2 = CHandleManager::getByName("transform");
+	CHandle new_ht = hm2->createHandle();
+	MKeyValue atts2;
+	VEC3 positio = trans->getPosition(), scal = trans->getScale();
+	VEC4 rota = trans->getRotation();
+	atts2["pos"] = std::to_string(positio.x) + " " + std::to_string(positio.y + 1.0f) + " " + std::to_string(positio.z);
+	atts2["quat"] = std::to_string(rota.x) + " " + std::to_string(rota.y) + " " + std::to_string(rota.z) + " " + std::to_string(rota.w);
+	atts2["scale"] = std::to_string(scal.x) + " " + std::to_string(scal.y) + " " + std::to_string(scal.z);
+	new_ht.load(atts2);
+	entity->add(new_ht);
+	auto hm3 = CHandleManager::getByName("light_fadable");
+	CHandle new_hl = hm3->createHandle();
+	MKeyValue atts3;
+	atts3["color"] = "255 0 0 255";
+	atts3["in_radius"] = "1.0";
+	atts3["out_radius"] = "1.5";
+	atts3["ttl"] = "3.5";
+	new_hl.load(atts3);
+	entity->add(new_hl);
+	TCompLightFadable * tclp = new_hl;
+	tclp->activate();
 }
 
 void player_controller::myUpdate() {
@@ -266,25 +342,27 @@ void player_controller::Falling()
 void player_controller::RecalcAttractions()
 {
 	PROFILE_FUNCTION("player controller: recalc attraction");
-	VEC3 forces = VEC3(0, 0, 0);
-	VEC3 orbitPoint;
+	VEC3 forces = VEC3(0, 0, 0); //Regular forces sum
+	PolarityForce orbitForce; //Orbit force (if exists)
+
 	SetCharacterController();
 	TCompTransform * t = myEntity->get<TCompTransform>();
 	VEC3 posPlayer = t->getPosition();
 	float lowestDist = FLT_MAX;
 
 	if (pol_state != NEUTRAL) {
-		for (auto force : force_points) {		//sum of all forces
-			if (force.pol == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
+		for (auto forceHandle : polarityForces) {
 
-			VEC3 localForce = PolarityForce(force.point, pol_state == force.pol);
+			PolarityForce force = getPolarityForce(forceHandle);
+			if (force.polarity == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
+
+			VEC3 localForce = calcForceEffect(force);
 			// The first near force discard other forces (we asume no points too close)
 			if (pol_orbit) {
-				float dist = simpleDist(posPlayer, force.point);
-				if (dist < lowestDist) {
+				if (force.distance < lowestDist) {
 					forces = localForce;
-					orbitPoint = force.point;
-					lowestDist = dist;
+					orbitForce = force;
+					lowestDist = force.distance;
 				}
 			}
 			else forces += localForce;
@@ -293,8 +371,7 @@ void player_controller::RecalcAttractions()
 
 	//Check if player is orbiting
 	if (pol_orbit) {
-		float dist = realDist(posPlayer, orbitPoint);
-		float nearFactor = (1.f - (dist / POL_RADIUS_STRONG));
+		float nearFactor = (1.f - (orbitForce.distance / POL_RADIUS_STRONG));
 		VEC3 forceReal = forces;
 		forces = VEC3(
 			1 / forces.x,		//x
@@ -304,7 +381,6 @@ void player_controller::RecalcAttractions()
 		forces *= POL_ATRACTION_ORBITA;
 
 		if (!pol_orbit_prev) {
-			//cc->ResetMovement();
 			cc->ChangeSpeed(POL_SPEED_ORBITA);
 		}
 		else {
@@ -345,58 +421,48 @@ void player_controller::RecalcAttractions()
 				}
 			}
 		}
+		forces += VEC3(0, 10, 0); // Anular gravity
 	}
 	else {
 		forces = (lastForces * POL_INERTIA) + (forces * (1 - POL_INERTIA));
 	}
 
-	//Smooth forces
-	//forces = (lastForces * 0.95f) + (forces * 0.05f);
-
-	//if (forces.y > 0) forces.y += forces.y;
-
+	//Apply and save forces
 	cc->AddSpeed(forces*getDeltaTime());
 	lastForces = forces;
-	//cc->AddImpulse(forces);
 }
 
-VEC3 player_controller::PolarityForce(VEC3 point_pos, bool atraction) {
+VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	PROFILE_FUNCTION("player controller: attract move");
 
-	//Esto deberian ser ctes o variables del punto de magnetismo
-	float distMax = POL_RADIUS;
-	float distOrbit = POL_RADIUS_STRONG;
+	//Force Effect (result)
+	VEC3 forceEffect = VEC3(0, 0, 0);
+	
+	//Distance and direction
+	float dist = force.distance;
+	VEC3 direction = force.deltaPos;
 
-	SetMyEntity();
-	//point_pos.y += 0.5f;
-	TCompCharacterController* cc = myEntity->get<TCompCharacterController>();
-	VEC3 player_position = cc->GetPosition();
-	float dist = realDist(player_position, point_pos);
-
-	VEC3 force = VEC3(0, 0, 0);
-
-	// Suficiente cerca?
-	if (dist < distMax) {
-		VEC3 direction = point_pos - player_position;
-		// Si la direccion es bastante horizontal, lo acentuamos más
-		if (direction.y < POL_HORIZONTALITY) {
-			direction.x *= 2;
-			direction.z *= 2;
-		}
-		direction.Normalize();
-		force = POL_INTENSITY * direction / ((dist)+0.01f);
+	// Si la direccion es bastante horizontal, lo acentuamos más
+	if (direction.y < POL_HORIZONTALITY) {
+		direction.x *= 2; direction.z *= 2;
 	}
+
+	//Regular force calc
+	direction.Normalize();
+	forceEffect = POL_INTENSITY * direction / ((dist)+0.01f);
 
 	// Atraccion -> Si cerca, orbitar
+	bool atraction = (force.polarity == pol_state);
 	if (atraction) {
-		pol_orbit = pol_orbit || (dist < distOrbit);
-	}
-	//Repulsion -> Invertimos fuerza
-	else {
-		force = -force * POL_REPULSION;
+		pol_orbit = pol_orbit || (dist < POL_RADIUS_STRONG);
 	}
 
-	return force;
+	//Repulsion -> Invertimos fuerza
+	else {
+		forceEffect = -forceEffect * POL_REPULSION;
+	}
+
+	return forceEffect;
 }
 
 void player_controller::UpdateMoves()
@@ -495,11 +561,11 @@ void player_controller::UpdateInputActions()
 
 	if (pol_state == NEUTRAL) affectPolarized = false;
 	else {
-		affectPolarized = (force_points.size() != 0);
+		affectPolarized = (polarityForces.size() != 0);
 		RecalcAttractions();
 	}
 
-	cc->SetGravity(!pol_orbit);
+	//cc->SetGravity(!pol_orbit);
 
 	//Event onChangePolarity to LogicManager
 	if (pol_state != pol_state_prev) {
@@ -541,8 +607,7 @@ void player_controller::UpdateActionsTrigger() {
 			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
 		}
 	}
-
-	if (canPassWire) {
+	else if (canPassWire) {
 		ui.addTextInstructions("\n Press 'E' to pass by the wire\n");
 
 		if (io->keys['E'].becomesPressed()) {
@@ -791,13 +856,23 @@ void player_controller::onCanRec(const TMsgCanRec & msg)
 
 void player_controller::onPolarize(const TMsgPolarize & msg)
 {
+	//TODO
 	if (!msg.range) {
-		TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
-		force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
+		polarityForces.erase(
+			std::remove(
+				polarityForces.begin(),
+				polarityForces.end(),
+				msg.handle
+			),
+			polarityForces.end()
+		);
+		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
+		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}
 	else {
-		TForcePoint newForce = TForcePoint(msg.origin, msg.pol);
-		force_points.push_back(newForce);
+		polarityForces.push_back(msg.handle);
+		//TForcePoint newForce = TForcePoint(msg.origin, msg.pol);
+		//force_points.push_back(newForce);
 	}
 }
 
@@ -892,9 +967,20 @@ void player_controller::renderInMenu() {
 	ImGui::SliderFloat("Force Atraction Factor in Orbita", &POL_ATRACTION_ORBITA, 0.f, 5.f);
 	ImGui::SliderFloat("Factor allowing leave", &POL_NO_LEAVING_FORCE, 0.f, 1.5f);
 	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_ORBITA_UP_EXTRA_FORCE, 0.01f, 5.f);
-	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_REAL_FORCE_Y_ORBITA, 0.01f, 1.f);
+	ImGui::SliderFloat("Real force Y Orbita", &POL_REAL_FORCE_Y_ORBITA, 0.01f, 1.f);
 
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
+}
+
+PolarityForce player_controller::getPolarityForce(CHandle forceHandle) {
+	PolarityForce pf;
+	if (forceHandle.isValid()) {
+		CEntity* eForce = forceHandle;
+		TCompPolarized * polarized = eForce->get<TCompPolarized>();
+		assert(polarized);
+		pf = polarized->getForce();
+	}
+	return pf;
 }
 
 map<string, statehandler>* player_controller::getStatemap() {

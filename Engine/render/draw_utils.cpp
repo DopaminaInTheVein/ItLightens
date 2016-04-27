@@ -77,7 +77,7 @@ bool drawUtilsCreate() {
     return false;
   if (!shader_ctes_lights.create("ctes_light"))
     return false;
-
+  
   activateDefaultStates();
   return true;
 }
@@ -89,6 +89,7 @@ void activateDefaultStates() {
   shader_ctes_lights.activate(CTE_SHADER_LIGHT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
+  activateSamplerStates();
 }
 
 void drawUtilsDestroy() {
@@ -102,6 +103,12 @@ void drawUtilsDestroy() {
 void activateCamera(const CCamera* camera) {
   shader_ctes_camera.ViewProjection = camera->getViewProjection();
   shader_ctes_camera.CameraWorldPos = VEC4(camera->getPosition());
+  shader_ctes_camera.CameraFront = VEC4(camera->getFront());
+  shader_ctes_camera.CameraZFar = camera->getZFar();
+  shader_ctes_camera.CameraZNear = camera->getZNear();
+  shader_ctes_camera.CameraFov = camera->getFov();
+  shader_ctes_camera.CameraAspectRatio = camera->getAspectRatio();
+
   shader_ctes_camera.uploadToGPU();
 }
 
@@ -113,11 +120,12 @@ void activateWorldMatrix(const MAT44& mat) {
 }
 
 // -----------------------------------------------
-void drawFullScreen(const CTexture* texture) {
+void drawFullScreen(const CTexture* texture, const CRenderTechnique* tech) {
   
   texture->activate(TEXTURE_SLOT_DIFFUSE);
-
-  auto tech = Resources.get("solid_textured.tech")->as<CRenderTechnique>();
+  if(!tech)
+	tech = Resources.get("solid_textured.tech")->as<CRenderTechnique>();
+  
   tech->activate();
 
   activateWorldMatrix(MAT44::Identity);
@@ -134,4 +142,3 @@ void drawFullScreen(const CTexture* texture) {
   shader_ctes_camera.uploadToGPU();
 
 }
-

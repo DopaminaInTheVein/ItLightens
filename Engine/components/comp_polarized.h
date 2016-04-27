@@ -2,18 +2,12 @@
 #define INC_POLARIZED_H_
 
 #include "comp_base.h"
+#include "logic/polarity.h"
 
 struct TMsgPolarize;
 class CHandle;
 
 struct TCompPolarized : public TCompBase {
-
-	enum pols {
-		NEUTRAL = 0,
-		MINUS,
-		PLUS,
-	};
-
 	enum type {
 		FIXED = 0,
 		FREE,
@@ -30,10 +24,13 @@ struct TCompPolarized : public TCompBase {
 
 	float			dist_effect_squared	= 25.0f;
 	float			dist_near			= 3.0f;
+	PolarityForce	force;
+	//float			dist_player = 1000.f; // Update each frame
+	//VEC3			deltaPos_player = VEC3(1000.f, 1000.f, 1000.f); //Update each frame
+	//int				mPol				= NEUTRAL;
 
 	float			mThresholdMass		= 2.5f;
 
-	int				mPol					= NEUTRAL;
 	int				mType				= FIXED;
 	int				mPlayer_state		= NEUTRAL;
 
@@ -46,6 +43,9 @@ struct TCompPolarized : public TCompBase {
 	void onPolarize(const TMsgPlayerPolarize& msg);
 
 	void sendMessagePlayer(const TMsgPolarize& msg);
+
+	//Get Force to Player
+	PolarityForce getForce();
 };
 
 #endif

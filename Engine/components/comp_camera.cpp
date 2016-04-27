@@ -23,7 +23,7 @@ bool TCompCamera::load(MKeyValue& atts) {
 	float zfar = atts.getFloat("zfar", 1000.f);
 	float fov_in_degs = atts.getFloat("fov", 70.f);
 	setProjection(deg2rad(fov_in_degs), znear, zfar);
-	detect_colsions = atts.getBool("collision",false);
+	detect_colsions = atts.getBool("collision", false);
 	return true;
 }
 
@@ -35,10 +35,10 @@ void TCompCamera::render() const {
 }
 
 void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
-  assert(e_owner);
-  TCompTransform* tmx = e_owner->get<TCompTransform>();
-  assert(tmx);
-  this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+	assert(e_owner);
+	TCompTransform* tmx = e_owner->get<TCompTransform>();
+	assert(tmx);
+	this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
 }
 
 void TCompCamera::update(float dt) {
@@ -53,18 +53,15 @@ void TCompCamera::update(float dt) {
 	TCompLife * targetlife = targeted->get<TCompLife>();
 	TCompTransform * targettrans = targeted->get<TCompTransform>();
 
-
-
-	if(GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()){
+	if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
 		VEC3 pos = tmx->getPosition();
 		pos.y += 2;
 		tmx->setPosition(pos);
 		if (detect_colsions) {
-			if(!checkColision(pos))
+			if (!checkColision(pos))
 				this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
 		}
 		else this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());	//smooth movement
-
 	}
 	else if (GameController->GetFreeCamera()) {
 		CHandle owner = CHandle(this).getOwner();
@@ -92,14 +89,13 @@ bool TCompCamera::checkColision(const VEC3 & pos)
 	CEntity *target = c->target;
 	TCompCharacterController *cc = target->get<TCompCharacterController>();
 	TCompTransform *targett = target->get<TCompTransform>();
-	VEC3 pos_target = targett->getPosition() + VEC3(0,cc->GetHeight(),0);
+	VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
 
-	
 	VEC3 direction = real_pos - pos_target;
 	direction.Normalize();
 	float dist = c->GetPositionDistance();
 	PxQueryFilterData fd = PxQueryFilterData();
-	
+
 	//fd.data.word0 = PXM_NO_PLAYER_CRYSTAL;	//will ignore crystals
 
 	fd.data.word0 = PXM_CAMERA_COLLISIONS;
@@ -109,9 +105,8 @@ bool TCompCamera::checkColision(const VEC3 & pos)
 	//efficient raycast to search if there is some type of vision on the player
 	//if it is possible to see the player will not be considered camera obstruction
 	PxRaycastBuffer hit;
-	bool collision = g_PhysxManager->raycast(pos_target, direction, dist, hit, fd);	
+	bool collision = g_PhysxManager->raycast(pos_target, direction, dist, hit, fd);
 	if (collision) {
-
 		//if there is obstruction, look for good position
 		PxSweepBuffer hit_sphere;
 		collision = g_PhysxManager->raySphere(0.3f, pos_target, direction, dist, hit_sphere, fd);
@@ -127,7 +122,6 @@ bool TCompCamera::checkColision(const VEC3 & pos)
 	}
 
 	return collision;
-
 }
 
 void TCompCamera::renderInMenu() {

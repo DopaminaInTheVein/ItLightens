@@ -124,7 +124,9 @@ void CGuiModule::updateOnPlay(float dt)
 void CGuiModule::updateOnStop(float dt) {}
 
 // ----- Update On Menu ----- //
-void CGuiModule::updateOnMenu(float dt) {}
+void CGuiModule::updateOnMenu(float dt) {
+	if (!enabled) CApp::get().exitGame();
+}
 
 // ----------------------------------- RENDER MODULE ----------------------------------- //
 void inline CGuiModule::callRender(int state)

@@ -119,6 +119,7 @@
     <ClCompile Include="components\comp_charactercontroller.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_light_dir.cpp" />
+    <ClCompile Include="components\comp_light_fadable.cpp" />
     <ClCompile Include="components\comp_light_point.cpp" />
     <ClCompile Include="components\comp_physics.cpp" />
     <ClCompile Include="components\comp_platform.cpp" />
@@ -465,10 +466,11 @@
     <ClCompile Include="windows\app.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_bones.h" />
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_camera.h" />
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_object.h" />
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_object.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h" />
     <ClInclude Include="app_modules\app_module.h" />
     <ClInclude Include="app_modules\entities.h" />
     <ClInclude Include="app_modules\gameController.h" />
@@ -503,6 +505,7 @@
     <ClInclude Include="components\comp_generator.h" />
     <ClInclude Include="components\comp_life.h" />
     <ClInclude Include="components\comp_light_dir.h" />
+    <ClInclude Include="components\comp_light_fadable.h" />
     <ClInclude Include="components\comp_light_point.h" />
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
@@ -558,6 +561,7 @@
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_speedy.h" />
     <ClInclude Include="logic\damage.h" />
+    <ClInclude Include="logic\polarity.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
     <ClInclude Include="Physx\ItLightensFilterShader.h" />
@@ -737,6 +741,10 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\bin\data\shaders\basic.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\deferred.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
