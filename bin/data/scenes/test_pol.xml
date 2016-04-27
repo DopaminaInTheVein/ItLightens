@@ -1,0 +1,188 @@
+<entities>
+<entity>
+<name
+   name="player_1"
+/>
+<transform
+   pos="0 1.04 0.09202"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<tags
+   tags="player"
+/>
+<player/>
+<life
+   points="10"
+/>
+<name
+   name="player_1"
+/>
+<transform
+   pos="0 1.04 0.09202"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/player_first_ev.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="0.7"
+/>
+</entity>
+<entity>
+<name
+   name="scene"
+/>
+<transform
+   pos="0.130402 0 0.131493"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<tags
+   tags=""
+/>
+<name
+   name="scene"
+/>
+<transform
+   pos="0.130402 0 0.131493"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/test_pol.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<name
+   name="camController_1"
+/>
+<transform
+   pos="1.44368 34.8799 0.193251"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"
+/>
+<tags
+   tags="camera_main"
+/>
+<camera
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"
+/>
+<controller_3rd_person/>
+<name
+   name="camController_1"
+/>
+<transform
+   pos="1.44368 34.8799 0.193251"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<name
+   name="generator_1"
+/>
+<transform
+   pos="-3.24916 0.741395 4.58068"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<tags
+   tags=""
+/>
+<name
+   name="generator_1"
+/>
+<transform
+   pos="-3.24916 0.741395 4.58068"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__generator.static_mesh"
+/>
+</entity>
+<entity>
+<name
+   name="trigger_1"
+/>
+<transform
+   pos="-3.24916 0.741395 4.58068"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<tags
+   tags=""
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.0"
+/>
+<generator/>
+<name
+   name="trigger_1"
+/>
+<transform
+   pos="-3.24916 0.741395 4.58068"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<name
+   name="Box002"
+/>
+<transform
+   pos="1.18727 4.98562 -8.39723"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<tags
+   tags=""
+/>
+<name
+   name="Box002"
+/>
+<transform
+   pos="1.18727 4.98562 -8.39723"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<name
+   name="AreaPlus_1"
+/>
+<transform
+   pos="1.33058 5.51655 -8.3311"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<tags
+   tags=""
+/>
+<polarized
+   pol="plus"
+   size="5.0 5.0 5.0"
+/>
+<name
+   name="AreaPlus_1"
+/>
+<transform
+   pos="1.33058 5.51655 -8.3311"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+</entities>
