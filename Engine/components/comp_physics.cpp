@@ -74,6 +74,11 @@ bool TCompPhysics::load(MKeyValue & atts)
 		break;
 	}
 
+	VEC3 size = atts.getPoint("size");
+	if (size.x != 0 || size.y != 0 || size.z != 0) {
+		//m_boxArea =
+	}
+
 	return true;
 }
 
