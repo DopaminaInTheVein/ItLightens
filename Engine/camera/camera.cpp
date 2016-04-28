@@ -22,11 +22,25 @@ void CCamera::lookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
 	front = view.Forward();
 	up = view.Up();
 	left = view.Left();
+	VEC3 scale, translation;
+	view.Decompose(scale, rotation, translation);
+	updateViewProjection();
+}
+
+void CCamera::applyQuat(CQuaternion quat) {
+	view = MAT44::CreateFromQuaternion(quat);
+
+	front = view.Forward();
+	up = view.Up();
+	left = view.Left();
+	VEC3 scale, translation;
+	view.Decompose(scale, rotation, translation);
+	assert(rotation == quat);
 	updateViewProjection();
 }
 
 void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
-	float drag = getDeltaTime()*10;
+	float drag = getDeltaTime() * 10;
 	float drag_i = 1 - drag;
 
 	position = new_position*drag + position*drag_i;
@@ -38,6 +52,8 @@ void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) 
 	front = view.Forward();
 	up = view.Up();
 	left = view.Left();
+	VEC3 scale, translation;
+	view.Decompose(scale, rotation, translation);
 	updateViewProjection();
 }
 

@@ -21,6 +21,8 @@ class CCamera {
 	MAT44 view_projection;
 	void updateViewProjection();
 
+protected:
+	CQuaternion  rotation;
 public:
 
 	CCamera();
@@ -28,6 +30,7 @@ public:
 	// View
 	void lookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
 	void smoothLookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
+	void applyQuat(CQuaternion quat);
 
 	MAT44 getView() const { return view; }
 	VEC3  getPosition() const { return position; }
@@ -48,7 +51,6 @@ public:
 	float getFov() const { return fov_vertical_rads; }
 
 	MAT44 getViewProjection() const { return view_projection; }
-
 };
 
 #endif

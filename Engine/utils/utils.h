@@ -16,7 +16,7 @@
 
 #else
 
-void		dbg			(const char* fmt, ...);
+void		dbg(const char* fmt, ...);
 
 #endif
 
@@ -27,8 +27,8 @@ using namespace rapidjson;
 
 void assingValueFromMap(float *variable, char *name, std::map<std::string, float> data_map);
 
-bool		fatal		(const char* fmt, ...);
-uint32_t	getID		(const char* text);
+bool		fatal(const char* fmt, ...);
+uint32_t	getID(const char* text);
 
 float		getDeltaTime(float always = false);
 
@@ -47,6 +47,13 @@ float simpleDist(const VEC3& init, const VEC3& dest);
 void getRotationMatrix(const float roll, const float pitch, const float yaw, MAT44 &R);
 VEC3 productVectorMatrix(const VEC4& vec, const MAT44& matrix);
 VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const float yaw);
+
+///  Performs a linear interpolation between two vectors. (@p v1 toward @p v2)
+///  return					The result vector. [(x, y, z)]
+///  @param[in]		start	The starting vector.
+///  @param[in]		end		The destination vector.
+///	 @param[in]		factor	The interpolation factor. [Limits: 0 <= value <= 1.0]
+CQuaternion interpolate(const CQuaternion &start, const CQuaternion &end, const float factor);
 
 //template<class TObj>
 typedef uint32_t TTagID;

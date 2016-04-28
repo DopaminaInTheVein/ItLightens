@@ -141,6 +141,9 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 		if (elem == "rigidbody" && atts["type_collision"] == "static") {
 			collisionables.push_back(curr_entity);
 		}
+		if (elem == "guided_camera") {
+			guidedCameras.push_back(curr_entity);
+		}
 
 		if (!reusing_component)
 			e->add(new_h);

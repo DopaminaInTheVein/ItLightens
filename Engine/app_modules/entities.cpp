@@ -76,6 +76,8 @@ DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
 
 DECL_OBJ_MANAGER("trigger_lua", TCompTriggerStandar);
 
+DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
+
 CCamera * camera;
 
 // The global dict of all msgs
@@ -111,6 +113,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+	getHandleManager<TCompGuidedCamera>()->init(16);
 
 	//lights
 	getHandleManager<TCompLightDir>()->init(4);
@@ -267,6 +270,7 @@ bool CEntitiesModule::start() {
 		bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
 		assert(isok);
 	}
+	SBB::postHandlesVector("guided_cameras", ep.getGuidedCameras());
 
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();

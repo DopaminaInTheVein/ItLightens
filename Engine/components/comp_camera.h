@@ -6,8 +6,8 @@
 
 // ------------------------------------
 struct TCompCamera : public CCamera, public TCompBase {
-
 	bool detect_colsions;
+	VEC3 lastPosCamera;
 
 	void render() const;
 	void update(float dt);

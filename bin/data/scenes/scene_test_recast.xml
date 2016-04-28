@@ -14,7 +14,7 @@
   <entity>
     <life points="1000" />
     <tags tags="player" />
-    <transform pos="-15 18 0" />
+    <transform pos="-10 18 -10" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
@@ -168,29 +168,11 @@
   <!-- LOGIC OBJECTS -->
   <!-- ZONE 2 -->
   <entity>
-    <tags tags="AI AI_speedy AI_poss" />
-    <name name="speedy1" />
-    <transform pos="-10 4 -10" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
-    <life points="50" />
-    <player_speedy />
-    <bt_speedy
-      wpts_size = "2"
-      wpt0_pos = "-10  2  -10"
-      wpt1_pos = " 10  2   10" />
-    <character_controller radius ="1.0" height ="1.0" />
-  </entity>
-  <entity>
-    <tags tags="AI AI_speedy AI_poss" />
-    <name name="speedy2" />
-    <transform pos="10 4 10" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
-    <life points="50" />
-    <player_speedy />
-    <bt_speedy
-      wpts_size = "2"
-      wpt0_pos = "-10  2  -10"
-      wpt1_pos = " 10  2   10" />
-    <character_controller radius ="1.0" height ="1.0" />
+    <guided_camera
+      points_size = "2"
+      wpt0 = "-10.0  2    3.5"
+      wpt1 = " 10.0  2    3.5"
+      rot0 = " 0.0   0.7  0.0 0.7"
+    />
   </entity>
 </entities>

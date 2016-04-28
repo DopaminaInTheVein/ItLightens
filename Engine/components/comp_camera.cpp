@@ -2,6 +2,7 @@
 #include "comp_camera.h"
 #include "comp_controller_3rd_person.h"
 #include "comp_transform.h"
+#include "comp_guided_camera.h"
 #include "comp_life.h"
 #include "entity.h"
 #include "entity_tags.h"
@@ -10,6 +11,7 @@
 #include "render/shader_cte.h"
 #include "entity.h"
 #include "imgui/imgui.h"
+#include "logic/sbb.h"
 #include "constants/ctes_object.h"
 extern CShaderCte< TCteObject > shader_ctes_object;
 
@@ -42,6 +44,7 @@ void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
 }
 
 void TCompCamera::update(float dt) {
+	static float acumTime = 0.0f;
 	CHandle owner = CHandle(this).getOwner();
 	CEntity* e_owner = owner;
 	assert(e_owner);
@@ -53,7 +56,30 @@ void TCompCamera::update(float dt) {
 	TCompLife * targetlife = targeted->get<TCompLife>();
 	TCompTransform * targettrans = targeted->get<TCompTransform>();
 
-	if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
+	VHandles guidedCameras = SBB::readHandlesVector("guided_cameras");
+	VEC3 campos = tmx->getPosition();
+	if (campos == lastPosCamera) {
+		acumTime += getDeltaTime();
+	}
+	else {
+		acumTime = getDeltaTime();
+	}
+	lastPosCamera = campos;
+	int influencia = -1;
+	TCompGuidedCamera * gc;
+	for (int i = 0; i < guidedCameras.size(); i++) {
+		CEntity * e = guidedCameras[i];
+		gc = e->get<TCompGuidedCamera>();
+		influencia = gc->nearCameraPoint(campos);
+		if (influencia >= 0) {
+			break;
+		}
+	}
+	if (influencia >= 0) {
+		CQuaternion newquad = gc->getNewRotationForCamera(campos, rotation, influencia, acumTime);
+		this->applyQuat(newquad);
+	}
+	else if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
 		VEC3 pos = tmx->getPosition();
 		pos.y += 2;
 		tmx->setPosition(pos);

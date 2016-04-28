@@ -19,6 +19,7 @@ class CEntityParser : public CXMLParser {
 	VHandles handles;
 	CPrefabCompiler* curr_prefab_compiler;
 	VHandles collisionables;
+	VHandles guidedCameras;
 public:
 	CEntityParser() : curr_prefab_compiler(nullptr) { IdEntities::init(); }
 	CHandle getRootEntity() { return root_entity; }
@@ -27,6 +28,9 @@ public:
 
 	const std::vector<CHandle> CEntityParser::getCollisionables() const {
 		return collisionables;
+	}
+	const std::vector<CHandle> CEntityParser::getGuidedCameras() const {
+		return guidedCameras;
 	}
 
 	void setPrefabCompiler(CPrefabCompiler* new_prefab_compiler) {
