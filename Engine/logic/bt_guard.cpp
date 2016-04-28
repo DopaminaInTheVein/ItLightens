@@ -62,6 +62,7 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(DIST_SQ_PLAYER_DETECTION, fields);
 			assignValueToVar(DIST_SQ_PLAYER_LOST, fields);
 			assignValueToVar(SPEED_WALK, fields);
+			assignValueToVar(MIN_DIST_TO_PLAYER, fields);
 			assignValueToVar(CONE_VISION, fields);
 			CONE_VISION = deg2rad(CONE_VISION);
 			assignValueToVar(SPEED_ROT, fields);
@@ -98,6 +99,7 @@ void bt_guard::Init()
 		// insert all states in the map
 		createRoot("guard", PRIORITY, NULL, NULL);
 		addChild("guard", "stunned", ACTION, (btcondition)&bt_guard::playerStunned, (btaction)&bt_guard::actionStunned);
+		//addChild("guard", "distance", ACTION, (btcondition)&bt_guard::playerNear, (btaction)&bt_guard::actionStepBack);
 		addChild("guard", "attack_decorator", DECORATOR, (btcondition)&bt_guard::playerDetected, (btaction)&bt_guard::actionReact);
 		addChild("attack_decorator", "attack", PRIORITY, NULL, NULL);
 		addChild("attack", "chase", ACTION, (btcondition)&bt_guard::playerOutOfReach, (btaction)&bt_guard::actionChase);
@@ -137,6 +139,21 @@ void bt_guard::Init()
 bool bt_guard::playerStunned() {
 	PROFILE_FUNCTION("guard: player stunned");
 	return stunned == true;
+}
+
+bool bt_guard::playerNear() {
+	PROFILE_FUNCTION("guard: player near");
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	VEC3 posPlayer = tPlayer->getPosition();
+	VEC3 myPos = getTransform()->getPosition();
+
+	float distance = squaredDistXZ(myPos, posPlayer);
+	if (distance < MIN_DIST_TO_PLAYER) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool bt_guard::playerDetected() {
@@ -261,6 +278,15 @@ int bt_guard::actionStunned() {
 	}
 }
 
+int bt_guard::actionStepBack() {
+	PROFILE_FUNCTION("guard: actionstepback");
+	ChangePose(pose_run_route);
+	goForward(-2.f*SPEED_WALK);
+
+	if (playerNear()) return STAY;
+	else return OK;
+}
+
 int bt_guard::actionReact() {
 	PROFILE_FUNCTION("guard: actionreact");
 	if (!myParent.isValid()) return false;
@@ -316,6 +342,11 @@ int bt_guard::actionChase() {
 int bt_guard::actionAbsorb() {
 	PROFILE_FUNCTION("guard: absorb");
 	if (!myParent.isValid()) return false;
+	if (playerNear()) {
+		goForward(-2.0f*SPEED_WALK);
+		return STAY;
+	}
+
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
@@ -644,7 +675,7 @@ void bt_guard::goTo(const VEC3& dest) {
 	}
 	else {
 		float distToWPT = squaredDistXZ(target, getTransform()->getPosition());
-		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
+		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 3.0f) {
 			goForward(SPEED_WALK);
 		}
 	}

@@ -20,6 +20,7 @@
 		"SPEED_WALK" : 3.0,
 		"DIST_RAYSHOT" : 20,
 		"DAMAGE_LASER" : 30,
+		"MIN_DIST_TO_PLAYER" : 9,
 		"DIST_SQ_REACH_PNT" : 10,
 		"DIST_SQ_SHOT_AREA_ENTER" : 50,
 		"DIST_SQ_SHOT_AREA_LEAVE" : 100,
@@ -32,6 +33,8 @@
 		"MAX_BOX_REMOVAL_TIME" : 15,
 		"BOX_REMOVAL_ANIM_TIME" : 1,
 		"LOOK_AROUND_TIME" : 10,
+		"GUARD_ALERT_TIME" : 15,
+		"GUARD_ALERT_RADIUS" : 20,
 		"reduce_factor" : 3.0,
 		"t_reduceStats_max" : 15,
 		"t_reduceStats" : 0.0
