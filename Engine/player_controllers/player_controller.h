@@ -87,8 +87,8 @@ class player_controller : public CPlayerBase {
 	CHandle					pose_jump;
 
 	//Polarity Constants
-	float	POL_RADIUS					= 25.f;
-	float	POL_RADIUS_STRONG			= 1.f;
+	float	POL_RCLOSE					= 4.f;  // 2 Meters arround
+	float	POL_RFAR					= 25.f; // 5 Meters arround
 	float	POL_HORIZONTALITY			= 1.f;
 	float	POL_INTENSITY				= 100.f;
 	float	POL_REPULSION				= 1.f;
@@ -98,6 +98,7 @@ class player_controller : public CPlayerBase {
 	float	POL_NO_LEAVING_FORCE		= 0.99f;
 	float	POL_ORBITA_UP_EXTRA_FORCE	= 1.f;
 	float	POL_REAL_FORCE_Y_ORBITA		= 0.05f;
+	float	POL_OSCILE_Y				= 1.f;
 
 	//Damage Fonts Actived
 	float damageCurrent = 0.f;
@@ -168,6 +169,7 @@ class player_controller : public CPlayerBase {
 
 	void RecalcAttractions();
 	VEC3 calcForceEffect(const PolarityForce& force);//VEC3 point_pos, bool atraction);
+	VEC3 calcFinalForces(const VEC3& all_forces, const PolarityForce& nearestForce);
 	//--------------------------------------------------------------------
 
 protected:

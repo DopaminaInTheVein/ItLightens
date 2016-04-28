@@ -342,91 +342,82 @@ void player_controller::Falling()
 void player_controller::RecalcAttractions()
 {
 	PROFILE_FUNCTION("player controller: recalc attraction");
-	VEC3 forces = VEC3(0, 0, 0); //Regular forces sum
-	PolarityForce orbitForce; //Orbit force (if exists)
 
 	SetCharacterController();
 	TCompTransform * t = myEntity->get<TCompTransform>();
 	VEC3 posPlayer = t->getPosition();
-	float lowestDist = FLT_MAX;
 
+	// Calc all_forces & Find Orbit force if exists
+	VEC3 all_forces = VEC3(0, 0, 0); //Regular forces sum
+	PolarityForce nearestForce; //Orbit force (if exists)
+	pol_orbit = false; //calcForceEffect update this state
+	float lowestDist = FLT_MAX;
 	if (pol_state != NEUTRAL) {
 		for (auto forceHandle : polarityForces) {
 
 			PolarityForce force = getPolarityForce(forceHandle);
 			if (force.polarity == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
-
+			
 			VEC3 localForce = calcForceEffect(force);
 			assert(isValid(localForce));
+			all_forces += localForce;
+
 			// The first near force discard other forces (we asume no points too close)
-			if (pol_orbit) {
-				if (force.distance < lowestDist) {
-					forces = localForce;
-					orbitForce = force;
-					lowestDist = force.distance;
-				}
+			if (!pol_orbit && force.distance < lowestDist) {
+				nearestForce = force;
+				lowestDist = force.distance;
 			}
-			else forces += localForce;
 		}
 	}
+
+	VEC3 final_forces = calcFinalForces(all_forces, nearestForce);
+
 
 	//Check if player is orbiting
 	if (pol_orbit) {
-		float nearFactor = (1.f - (orbitForce.distance / POL_RADIUS_STRONG));
-		VEC3 forceReal = forces;
-		forces = VEC3(
-			1 / std::max(0.2f, forces.x),		//x
-			forces.y * 0.05f,	//y
-			1 / std::max(0.2f, forces.z) //z
-		);		
-
-		forces *= POL_ATRACTION_ORBITA;
-
-		if (!pol_orbit_prev) {
-			cc->ChangeSpeed(POL_SPEED_ORBITA);
-		}
-		else {
-			//Player moving?
-			forceReal.Normalize();
-			VEC3 movementPlayer = cc->GetMovement();
-			VEC3 movementAtraction = VEC3(0, 0, 0);
-			bool movementApplied = false;
-			float moveAmoung = movementPlayer.LengthSquared();
-			if (moveAmoung > 0.f) {
-				//Playing trying to go away?
-				if (movementPlayer.x != 0) {
-					if (std::signbit(movementPlayer.x) != std::signbit(forceReal.x)) {
-						movementAtraction.x = -movementPlayer.x * POL_NO_LEAVING_FORCE * nearFactor;
-						movementApplied = true;
-					}
-					if (std::signbit(movementPlayer.z) != std::signbit(forceReal.z)) {
-						movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE * nearFactor;
-						movementApplied = true;
-					}
+		VEC3 movementPlayer = cc->GetMovement();
+		VEC3 movementAtraction = VEC3(0, 0, 0);
+		bool movementApplied = false;
+		float moveAmoung = movementPlayer.LengthSquared();
+		if (moveAmoung > 0.f) {
+			//Playing trying to go away?
+			if (movementPlayer.x != 0) {
+				if (std::signbit(movementPlayer.x) != std::signbit(forceReal.x)) {
+					movementAtraction.x = -movementPlayer.x * POL_NO_LEAVING_FORCE * nearFactor;
+					movementApplied = true;
 				}
-				//Playing getting closer?
-				bool gettingCloser = false;
-				if (abs(movementPlayer.x) > abs(movementPlayer.z)) {
-					gettingCloser = (std::signbit(movementPlayer.x) == std::signbit(forceReal.x));
-				}
-				else {
-					gettingCloser = (std::signbit(movementPlayer.z) == std::signbit(forceReal.z));
-				}
-
-				//Getting closer -> player up a little
-				if (gettingCloser) {
-					forces.y += POL_ORBITA_UP_EXTRA_FORCE;
-				}
-
-				if (movementApplied) {
-					cc->AddMovement(movementAtraction);
+				if (std::signbit(movementPlayer.z) != std::signbit(forceReal.z)) {
+					movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE * nearFactor;
+					movementApplied = true;
 				}
 			}
+			//Playing getting closer?
+			bool gettingCloser = false;
+			if (abs(movementPlayer.x) > abs(movementPlayer.z)) {
+				gettingCloser = (std::signbit(movementPlayer.x) == std::signbit(forceReal.x));
+			}
+			else {
+				gettingCloser = (std::signbit(movementPlayer.z) == std::signbit(forceReal.z));
+			}
+
+			//Getting closer -> player up a little
+			if (gettingCloser) {
+				all_forces.y += POL_ORBITA_UP_EXTRA_FORCE;
+			}
+
+			if (movementApplied) {
+				cc->AddMovement(movementAtraction);
+			}
 		}
-		forces += VEC3(0, 10, 0); // Anular gravity
+		all_forces.y += 10.f; // Anular gravity
 	}
 	else {
-		forces = (lastForces * POL_INERTIA) + (forces * (1 - POL_INERTIA));
+		all_forces = (lastForces * POL_INERTIA) + (forces * (1 - POL_INERTIA));
+	}
+
+	// Stop inertia if enter with attraction
+	if (!pol_orbit_prev) {
+		cc->ChangeSpeed(POL_SPEED_ORBITA);
 	}
 
 	//Apply and save forces
@@ -441,31 +432,62 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	VEC3 forceEffect = VEC3(0, 0, 0);
 	
 	//Distance and direction
-	float dist = force.distance;
 	VEC3 direction = force.deltaPos;
 	assert(isNormal(direction));
+	
 	// Si la direccion es bastante horizontal, lo acentuamos más
 	if (direction.y < POL_HORIZONTALITY) {
 		direction.x *= 2; direction.z *= 2;
 	}
 
-	//Regular force calc
-	direction.Normalize();
-	forceEffect = POL_INTENSITY * direction / ((dist)+0.01f);
-	assert(isValid(forceEffect));
-
-	// Atraccion -> Si cerca, orbitar
+	// Attraction?
 	bool atraction = (force.polarity == pol_state);
-	if (atraction) {
-		pol_orbit = pol_orbit || (dist < POL_RADIUS_STRONG);
+
+	// In orbit space
+	if (force.distance == 0) {
+		if(atraction) pol_orbit = true;
+		forceEffect = VEC3(0.f, 0.01f, 0.f);
+	}
+	else {
+		//Regular force calc
+		direction.Normalize();
+		forceEffect = POL_INTENSITY * direction / (force.distance); //We know is not zero
+		assert(isValid(forceEffect));
 	}
 
 	//Repulsion -> Invertimos fuerza
-	else {
+	if (!atraction) {
 		forceEffect = -forceEffect * POL_REPULSION;
 	}
 
 	return forceEffect;
+}
+
+VEC3 player_controller::calcFinalForces(const VEC3& all_forces, const PolarityForce& nearestForce) {
+	//Result 
+	VEC3 finalForce;
+	
+	//Orbit Force
+	VEC3 orbitForce;
+	orbitForce.y = sinf(getDeltaTime() * POL_OSCILE_Y);
+
+	//Orbit force
+	if (nearestForce.distance < POL_RCLOSE) {
+		finalForce = orbitForce;
+	
+	//Not orbit force
+	} else if(nearestForce.distance > POL_RFAR){
+		finalForce = all_forces;
+	}
+
+	//Both forces interpolation
+	else {
+		float deltaClose = nearestForce.distance - POL_RCLOSE;
+		float range = POL_RFAR - POL_RCLOSE;
+		float alfa = deltaClose / range;
+		finalForce = (1 - alfa) * orbitForce + (alfa)* all_forces;
+	}
+	return finalForce;
 }
 
 void player_controller::UpdateMoves()
@@ -960,8 +982,8 @@ void player_controller::renderInMenu() {
 	sprintf(stateTxt, "STATE: %s", getState().c_str());
 	ImGui::Text(stateTxt);
 	ImGui::Text("Editable values (polarity):\n");
-	ImGui::SliderFloat("Radius1", &POL_RADIUS, 1.f, 10.f);
-	ImGui::SliderFloat("Radius2", &POL_RADIUS_STRONG, 1.f, 10.f);
+	ImGui::SliderFloat("Radius1", &POL_RCLOSE, 1.f, 10.f);
+	ImGui::SliderFloat("Radius2", &POL_RFAR, 10.f, 100.f);
 	ImGui::SliderFloat("Horiz. Repulsion", &POL_HORIZONTALITY, 0.f, 1.f);
 	ImGui::SliderFloat("Intensity", &POL_INTENSITY, 1.f, 500.f);
 	ImGui::SliderFloat("Repulsion Factor", &POL_REPULSION, 0.f, 5.f);
