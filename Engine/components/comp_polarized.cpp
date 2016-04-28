@@ -39,15 +39,9 @@ void TCompPolarized::update(float elapsed)
 			if (force.distance > 0.f) {
 				VEC3 closestPoint = PhysxConversion::PxVec3ToVec3(*pxClosestPoint);
 				force.deltaPos = closestPoint - player_pos;
-				dbg("Pol: Out (%f, %f, %f)\n",
-					force.deltaPos.x,
-					force.deltaPos.y,
-					force.deltaPos.z
-				);
 				assert(isNormal(force.deltaPos));
 			} else {
 				force.deltaPos = origin - player_pos;
-				dbg("Pol: In\n");
 			}
 			
 			if (dist_effect_squared > force.distance) {

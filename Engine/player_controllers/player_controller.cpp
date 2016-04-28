@@ -362,7 +362,7 @@ void player_controller::RecalcAttractions()
 			all_forces += localForce;
 
 			// The first near force discard other forces (we asume no points too close)
-			if (!pol_orbit && force.distance < lowestDist) {
+			if (force.distance < lowestDist) {
 				nearestForce = force;
 				lowestDist = force.distance;
 			}
@@ -383,6 +383,17 @@ void player_controller::RecalcAttractions()
 
 	//Apply and save forces
 	cc->AddSpeed(final_forces * getDeltaTime());
+
+	//Anular gravedad
+	if (nearestForce.distance < POL_RCLOSE) {
+		VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
+		cc->AddSpeed(antigravity*getDeltaTime());
+		Debug->DrawLine(cc->GetPosition(), cc->GetPosition() + VEC3(0, 1, 0), VEC3(1, 0, 1));
+	}
+	else {
+		dbg("What!?");
+	}
+
 	lastForces = final_forces;
 }
 
@@ -401,7 +412,7 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	//Distance and direction
 	VEC3 direction = force.deltaPos;
 	assert(isNormal(direction));
-	
+	direction.Normalize();
 	// Si la direccion es bastante horizontal, lo acentuamos más
 	//if (direction.y < POL_HORIZONTALITY) {
 	//	direction.x *= 2; direction.z *= 2;
@@ -413,12 +424,11 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	// In orbit space
 	if (force.distance == 0) {
 		if(atraction) pol_orbit = true;
-		forceEffect = VEC3(0.f, 0.1f, 0.f);
 	}
 	else {
 		//Regular force calc
-		direction.Normalize();
 		forceEffect = POL_INTENSITY * direction / (force.distance); //We know is not zero
+		dbg("forceEffect: %f %f %f\n", forceEffect.x, forceEffect.y, forceEffect.z);
 		assert(isValid(forceEffect));
 	}
 
@@ -427,6 +437,8 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 		forceEffect = -forceEffect * POL_REPULSION;
 	}
 	
+	Debug->DrawLine(cc->GetPosition(), cc->GetPosition() + forceEffect, VEC3(1,1,0));
+
 	return forceEffect;
 }
 
@@ -436,7 +448,7 @@ VEC3 player_controller::calcFinalForces(const VEC3& all_forces, const PolarityFo
 	
 	//Orbit Force
 	VEC3 orbitForce;
-	orbitForce.y = 10.f + sinf(getDeltaTime() * POL_OSCILE_Y);
+	orbitForce.y = sinf(getDeltaTime() * POL_OSCILE_Y);
 
 	//Orbit force
 	if (nearestForce.distance < POL_RCLOSE) {
@@ -452,9 +464,9 @@ VEC3 player_controller::calcFinalForces(const VEC3& all_forces, const PolarityFo
 		float deltaClose = nearestForce.distance - POL_RCLOSE;
 		float range = POL_RFAR - POL_RCLOSE;
 		float alfa = deltaClose / range;
-		finalForce = (1 - alfa) * orbitForce + (alfa)* all_forces;
+		finalForce = (1 - alfa) * orbitForce + (alfa) * all_forces;
 	}
-	return finalForce;
+	return orbitForce;//finalForce! ojo!
 }
 
 void player_controller::polarityMoveResistance(const PolarityForce& force) {
