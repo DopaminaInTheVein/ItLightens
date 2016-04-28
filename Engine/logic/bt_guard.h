@@ -45,6 +45,7 @@ class bt_guard : public TCompBase, public bt
 	float DIST_SQ_PLAYER_DETECTION;
 	float DIST_SQ_PLAYER_LOST;
 	float SPEED_WALK;
+	float MIN_DIST_TO_PLAYER;
 	float CONE_VISION;
 	float SPEED_ROT;
 	float DAMAGE_LASER;
@@ -155,11 +156,13 @@ class bt_guard : public TCompBase, public bt
 public:
 	//conditions
 	bool playerStunned();
+	bool playerNear();
 	bool playerDetected();
 	bool playerOutOfReach();
 	bool guardAlerted();
 	//actions
 	int actionStunned();
+	int actionStepBack();
 	int actionReact();
 	int actionChase();
 	int actionAbsorb();
