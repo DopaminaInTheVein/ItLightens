@@ -40,9 +40,6 @@ class TCompPhysics : public TCompBase {
 	PxActor*			m_pActor				= nullptr;
 	PxRigidActor*		m_pRigidActor			= nullptr;
 
-	PxBoxGeometry*		m_boxArea = nullptr;
-	PxTransform*		m_transform = nullptr;
-
 	int getCollisionTypeValueFromString(std::string str);
 	int getCollisionShapeValueFromString(std::string str);
 
