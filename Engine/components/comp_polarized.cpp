@@ -126,7 +126,6 @@ bool TCompPolarized::load(MKeyValue & atts)
 		m_area = new PxBoxGeometry();
 		g_PhysxManager->CreateBoxGeometry(pxSize, *m_area);
 	}
-
 	return true;
 }
 
