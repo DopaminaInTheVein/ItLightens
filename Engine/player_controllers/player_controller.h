@@ -98,7 +98,7 @@ class player_controller : public CPlayerBase {
 	float	POL_NO_LEAVING_FORCE		= 0.99f;
 	float	POL_ORBITA_UP_EXTRA_FORCE	= 1.f;
 	float	POL_REAL_FORCE_Y_ORBITA		= 0.05f;
-	float	POL_OSCILE_Y				= .1f;
+	float	POL_OSCILE_Y				= .2f;
 
 	//Damage Fonts Actived
 	float damageCurrent = 0.f;

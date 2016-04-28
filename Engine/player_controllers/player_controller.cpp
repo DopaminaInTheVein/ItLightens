@@ -374,11 +374,11 @@ void player_controller::RecalcAttractions()
 
 	// Stop inertia if enter with attraction
 	if (pol_orbit && !pol_orbit_prev) {
-		//cc->ChangeSpeed(POL_SPEED_ORBITA);
+		cc->ChangeSpeed(POL_SPEED_ORBITA);
 	}
 	// Otherwise apply inertia
 	else {
-		//final_forces = (lastForces * POL_INERTIA) + ( final_forces * (1 - POL_INERTIA));
+		final_forces = (lastForces * POL_INERTIA) + ( final_forces * (1 - POL_INERTIA));
 	}
 
 	//Apply and save forces
@@ -448,7 +448,7 @@ VEC3 player_controller::calcFinalForces(const VEC3& all_forces, const PolarityFo
 	
 	//Orbit Force
 	VEC3 orbitForce;
-	orbitForce.y = sinf(getDeltaTime() * POL_OSCILE_Y);
+	orbitForce.y = nearestForce.deltaPos.y * POL_OSCILE_Y;//sinf(getDeltaTime() * POL_OSCILE_Y);
 
 	//Orbit force
 	if (nearestForce.distance < POL_RCLOSE) {
