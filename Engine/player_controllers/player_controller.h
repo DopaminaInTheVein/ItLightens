@@ -87,10 +87,10 @@ class player_controller : public CPlayerBase {
 	CHandle					pose_jump;
 
 	//Polarity Constants
-	float	POL_RCLOSE					= 4.f;  // 2 Meters arround
+	float	POL_RCLOSE					= 1.f;  // 1 Meters arround
 	float	POL_RFAR					= 25.f; // 5 Meters arround
 	float	POL_HORIZONTALITY			= 1.f;
-	float	POL_INTENSITY				= 100.f;
+	float	POL_INTENSITY				= 1000.f;
 	float	POL_REPULSION				= 1.f;
 	float	POL_INERTIA					= 0.99f;
 	float	POL_SPEED_ORBITA			= 0.2f;
