@@ -4,9 +4,9 @@
 #include "entity.h"
 
 #define WPT_ATR_NAME(nameVariable, index) \
-char nameVariable[10]; sprintf(nameVariable, "wpt%d", index);
+char nameVariable[10]; sprintf(nameVariable, "wpt%d", index)
 #define ROT_ATR_NAME(nameVariable, index) \
-char nameVariable[10]; sprintf(nameVariable, "rot%d", index);
+char nameVariable[10]; sprintf(nameVariable, "rot%d", index)
 
 bool TCompGuidedCamera::load(MKeyValue& atts) {
 	num_points = atts.getInt("points_size", 0);
@@ -31,7 +31,7 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
 	}
 
 	return true;
-}
+};
 
 int TCompGuidedCamera::nearCameraPoint(VEC3 playerPosition) {
 	int pos = -1;
@@ -44,17 +44,18 @@ int TCompGuidedCamera::nearCameraPoint(VEC3 playerPosition) {
 		}
 	}
 	return pos;
-}
+};
 
 CQuaternion TCompGuidedCamera::getNewRotationForCamera(VEC3 playerPosition, CQuaternion cameraActual, int pointOfInfluence, float acumulatedTime) {
+	// CORRECT?
 	if (pointOfInfluence < 0 || pointOfInfluence >= num_cameras || acumulatedTime <= 0.0f) {
 		return cameraActual;
 	}
 	float dist = realDist(playerPosition, cameraPositions[pointOfInfluence]);
 	float distanciaUnitaria = dist / influences[pointOfInfluence];
-	CQuaternion cameraNova = interpolate(cameraActual, rotations[pointOfInfluence], 1 - distanciaUnitaria);
+	CQuaternion cameraNova = CQuaternion::Slerp(cameraActual, rotations[pointOfInfluence], 1 - distanciaUnitaria);
 	if (acumulatedTime >= 1.0f) {
 		return cameraNova;
 	}
-	return interpolate(cameraActual, cameraNova, acumulatedTime);
-}
+	return CQuaternion::Slerp(cameraActual, cameraNova, acumulatedTime);
+};

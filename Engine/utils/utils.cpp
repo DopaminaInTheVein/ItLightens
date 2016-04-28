@@ -226,6 +226,7 @@ std::vector<std::string> list_files_recursively(std::string folder_path) {
 }
 
 CQuaternion interpolate(const CQuaternion &start, const CQuaternion &end, const float factor) {
+	// CORRECT?
 	if (factor <= 0.0f) {
 		return start;
 	}

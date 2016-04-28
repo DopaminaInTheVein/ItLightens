@@ -117,7 +117,7 @@ bool CEntitiesModule::start() {
 
 	//lights
 	getHandleManager<TCompLightDir>()->init(4);
-	getHandleManager<TCompLightFadable>()->init(4);
+	getHandleManager<TCompLightFadable>()->init(16);
 	getHandleManager<TCompLightPoint>()->init(32);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
@@ -251,11 +251,11 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	//sala = "scene_milestone_1";
-	//sala = "scene_test_recast";
+	sala = "scene_test_recast";
 	//sala = "pruebaExportador";
 	//sala = "scene_basic_lights";
 	//sala = "test_simple";
-	sala = "test_guard";
+	//sala = "test_guard";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";

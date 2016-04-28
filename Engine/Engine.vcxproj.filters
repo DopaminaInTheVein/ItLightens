@@ -27,9 +27,6 @@
     <ClCompile Include="utils\utils.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>windows</Filter>
-    </ClCompile>
     <ClCompile Include="geometry\angular.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
@@ -556,6 +553,7 @@
     <ClCompile Include="components\comp_guided_camera.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1336,8 +1334,8 @@
     <ClInclude Include="components\comp_light_fadable.h">
       <Filter>components</Filter>
     </ClInclude>
-    <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h">
-      <Filter>render\constants</Filter>
+    <ClInclude Include="components\comp_guided_camera.h">
+      <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h">
       <Filter>render\constants</Filter>
@@ -1351,9 +1349,11 @@
     <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h">
       <Filter>render\constants</Filter>
     </ClInclude>
-    <ClInclude Include="logic\polarity.h" />
-    <ClInclude Include="components\comp_guided_camera.h">
-      <Filter>components</Filter>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\polarity.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

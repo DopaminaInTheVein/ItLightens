@@ -12,7 +12,7 @@
   </entity>
 
   <entity>
-    <life points="1000" />
+    <life points="50" />
     <tags tags="player" />
     <transform pos="-10 18 -10" />
     <name name="pj" />
@@ -170,9 +170,9 @@
   <entity>
     <guided_camera
       points_size = "2"
-      wpt0 = "-10.0  2    3.5"
-      wpt1 = " 10.0  2    3.5"
-      rot0 = " 0.0   0.7  0.0 0.7"
+      wpt0 = "-10.0  3    3.5"
+      wpt1 = " 10.0  3    3.5"
+      rot0 = " 0.0  -0.7  0.0 0.7"
     />
   </entity>
 </entities>

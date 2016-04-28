@@ -22,20 +22,36 @@ void CCamera::lookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
 	front = view.Forward();
 	up = view.Up();
 	left = view.Left();
-	VEC3 scale, translation;
-	view.Decompose(scale, rotation, translation);
+
+	// CORRECT?
+	rotation.w = sqrtf(1.0 + view._11 + view._22 + view._33) / 2.0;
+	double w4 = (4.0 * rotation.w);
+	rotation.x = (view._32 - view._23) / w4;
+	rotation.y = (view._13 - view._31) / w4;
+	rotation.z = (view._21 - view._12) / w4;
+
 	updateViewProjection();
 }
 
 void CCamera::applyQuat(CQuaternion quat) {
-	view = MAT44::CreateFromQuaternion(quat);
+	// INCORRECT
 
+	MAT44 apply(
+		1.0f - 2.0f*quat.y*quat.y - 2.0f*quat.z*quat.z, 2.0f*quat.x*quat.y - 2.0f*quat.z*quat.w, 2.0f*quat.x*quat.z + 2.0f*quat.y*quat.w, 0.0f,
+		2.0f*quat.x*quat.y + 2.0f*quat.z*quat.w, 1.0f - 2.0f*quat.x*quat.x - 2.0f*quat.z*quat.z, 2.0f*quat.y*quat.z - 2.0f*quat.x*quat.w, 0.0f,
+		2.0f*quat.x*quat.z - 2.0f*quat.y*quat.w, 2.0f*quat.y*quat.z + 2.0f*quat.x*quat.w, 1.0f - 2.0f*quat.x*quat.x - 2.0f*quat.y*quat.y, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	view *= apply;
 	front = view.Forward();
 	up = view.Up();
 	left = view.Left();
-	VEC3 scale, translation;
-	view.Decompose(scale, rotation, translation);
-	assert(rotation == quat);
+	// CORRECT?
+	rotation.w = sqrtf(1.0 + view._11 + view._22 + view._33) / 2.0;
+	double w4 = (4.0 * rotation.w);
+	rotation.x = (view._32 - view._23) / w4;
+	rotation.y = (view._13 - view._31) / w4;
+	rotation.z = (view._21 - view._12) / w4;
+	//assert(rotation == quat);
 	updateViewProjection();
 }
 
@@ -52,8 +68,12 @@ void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) 
 	front = view.Forward();
 	up = view.Up();
 	left = view.Left();
-	VEC3 scale, translation;
-	view.Decompose(scale, rotation, translation);
+	// CORRECT?
+	rotation.w = sqrtf(1.0 + view._11 + view._22 + view._33) / 2.0;
+	double w4 = (4.0 * rotation.w);
+	rotation.x = (view._32 - view._23) / w4;
+	rotation.y = (view._13 - view._31) / w4;
+	rotation.z = (view._21 - view._12) / w4;
 	updateViewProjection();
 }
 

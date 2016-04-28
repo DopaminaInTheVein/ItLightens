@@ -66,7 +66,7 @@ void TCompCamera::update(float dt) {
 	}
 	lastPosCamera = campos;
 	int influencia = -1;
-	TCompGuidedCamera * gc;
+	TCompGuidedCamera * gc = nullptr;
 	for (int i = 0; i < guidedCameras.size(); i++) {
 		CEntity * e = guidedCameras[i];
 		gc = e->get<TCompGuidedCamera>();
@@ -75,7 +75,7 @@ void TCompCamera::update(float dt) {
 			break;
 		}
 	}
-	if (influencia >= 0) {
+	if (influencia >= 0 && gc) {
 		CQuaternion newquad = gc->getNewRotationForCamera(campos, rotation, influencia, acumTime);
 		this->applyQuat(newquad);
 	}
