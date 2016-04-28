@@ -8,6 +8,7 @@ static ID3D11BlendState*        blend_states[BLENDCFG_COUNT];
 enum SMPConfig {
   SMP_DEFAULT = 0,
   SMP_BORDER_BLACK = 1, // light dirs
+	SMP_CLAMP,
   SMP_COUNT,
 };
 static ID3D11SamplerState*      sampler_states[SMP_COUNT];
@@ -27,6 +28,18 @@ void createSamplerStates() {
   hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_DEFAULT]);
   assert(!FAILED(hr));
   setDXName(depth_stencil_states[SMP_DEFAULT], "SMP_DEFAULT");
+
+  ZeroMemory(&desc, sizeof(desc));
+  desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+  desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+  desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+  desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+  desc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+  desc.MinLOD = 0;
+  desc.MaxLOD = D3D11_FLOAT32_MAX;
+  hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_CLAMP]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[SMP_CLAMP], "SMP_CLAMP");
 
   // Para las luces direccionales, si me salgo del espacio homogeneo
   // usar el color 'negro' para iluminar.

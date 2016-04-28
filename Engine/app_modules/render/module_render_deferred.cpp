@@ -26,6 +26,8 @@ bool CRenderDeferredModule::start() {
   rt_normals = new CRenderToTexture;
   rt_wpos = new CRenderToTexture;
   rt_acc_light = new CRenderToTexture;
+  rt_selfIlum = new CRenderToTexture;
+  rt_selfIlum_blurred = new CRenderToTexture;
   rt_final = new CRenderToTexture;
 
   if (!rt_albedos->createRT("rt_albedo", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
@@ -34,8 +36,12 @@ bool CRenderDeferredModule::start() {
     return false;
   if (!rt_wpos->createRT("rt_wpos", xres, yres, DXGI_FORMAT_R16G16B16A16_FLOAT, DXGI_FORMAT_UNKNOWN))
     return false;
+  if (!rt_selfIlum->createRT("rt_selfIlum", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+	  return false;
   if (!rt_acc_light->createRT("rt_acc_light", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
     return false;
+  if (!rt_selfIlum_blurred->createRT("rt_selfIlum_blurred", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+	  return false; 
   if (!rt_final->createRT("rt_final", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 	  return false;
 
@@ -44,6 +50,8 @@ bool CRenderDeferredModule::start() {
 
   acc_light_directionals = Resources.get("deferred_lights_dir.tech")->as<CRenderTechnique>();
   assert(acc_light_directionals && acc_light_directionals->isValid());
+
+  blur_tech = Resources.get("blur.tech")->as<CRenderTechnique>();
 
   //unit_sphere = Resources.get("meshes/unit_sphere.mesh")->as<CMesh>();
   unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
@@ -79,17 +87,19 @@ void CRenderDeferredModule::renderGBuffer() {
 
 	// -------------------------
 	// Activar mis multiples render targets
-	ID3D11RenderTargetView* rts[3] = {
+	ID3D11RenderTargetView* rts[4] = {
 		rt_albedos->getRenderTargetView()
 		,	rt_normals->getRenderTargetView()
 		,	rt_wpos->getRenderTargetView()
+		,   rt_selfIlum->getRenderTargetView()
 	};
 	// Y el ZBuffer del backbuffer principal
-	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+	Render.ctx->OMSetRenderTargets(4, rts, Render.depth_stencil_view);
 
 	// Clear de los render targets y el ZBuffer
 	rt_albedos->clear(VEC4(1, 0, 0, 1));
 	rt_normals->clear(VEC4(0, 1, 0, 1));
+	rt_selfIlum->clear(VEC4(0, 0, 0, 1));
 	rt_wpos->clear(VEC4(0, 0, 1, 1));
 	rt_final->clear(VEC4(0,0,0,1));
 	Render.clearMainZBuffer();
@@ -169,6 +179,7 @@ void CRenderDeferredModule::FinalRender() {
 
 	//rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
 	rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
+	rt_selfIlum_blurred->activate(TEXTURE_SLOT_SELFILUM);
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
 	activateZ(ZCFG_ALL_DISABLED);
@@ -180,7 +191,30 @@ void CRenderDeferredModule::FinalRender() {
 
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+	CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
 	CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
+}
+
+void CRenderDeferredModule::blurEffectLights() {
+	PROFILE_FUNCTION("blurEffectLights");
+	CTraceScoped scope("blurEffectLights");
+
+
+	ID3D11RenderTargetView* rts[3] = {
+		rt_selfIlum_blurred->getRenderTargetView()
+		,	nullptr   // remove the other rt's from the pipeline
+		,	nullptr
+	};
+	// Y el ZBuffer del backbuffer principal
+	Render.ctx->OMSetRenderTargets(3, rts, nullptr);
+
+	activateZ(ZCFG_ALL_DISABLED);
+
+	//auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_selfIlum, blur_tech);
+
+	activateZ(ZCFG_DEFAULT);
+	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 }
 
 // ----------------------------------------------
@@ -227,6 +261,9 @@ void CRenderDeferredModule::renderAccLight() {
 void CRenderDeferredModule::render() {
 	renderGBuffer();
 	renderAccLight();
+
+	blurEffectLights();
+
 	FinalRender();
 
 	// Fx
@@ -242,6 +279,10 @@ void CRenderDeferredModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);
 
 	//drawFullScreen(rt_acc_light);
+	//drawFullScreen(rt_final);
+
+	
+
 	drawFullScreen(rt_final);
 
 	activateZ(ZCFG_DEFAULT);

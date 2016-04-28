@@ -30,4 +30,6 @@ extern CShaderCte< TCteBones > shader_ctes_bones;
 #include "constants/ctes_light.h"
 extern CShaderCte< TCteLight > shader_ctes_lights;
 
+extern const CTexture* all_black;
+
 #endif

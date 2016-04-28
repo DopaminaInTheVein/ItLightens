@@ -9,6 +9,8 @@ CShaderCte< TCteObject > shader_ctes_object;
 CShaderCte< TCteBones >  shader_ctes_bones;
 CShaderCte< TCteLight >  shader_ctes_lights;
 
+const CTexture* all_black;
+
 // -----------------------------------------------
 bool createDepthBuffer(
     int xres
@@ -77,6 +79,8 @@ bool drawUtilsCreate() {
     return false;
   if (!shader_ctes_lights.create("ctes_light"))
     return false;
+
+  all_black = Resources.get("textures/missing_black.dds")->as<CTexture>();
   
   activateDefaultStates();
   return true;

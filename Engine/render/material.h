@@ -12,8 +12,9 @@ public:
 	enum TTextureSlot {
 		DIFFUSE = 0
 		, SPECULAR
-    		, NORMALMAP
-    		, ENVIRONMENT
+    	, NORMALMAP
+    	, ENVIRONMENT
+		, SELFILUM
 		, COUNT
 	};
 	const CRenderTechnique*   tech;
