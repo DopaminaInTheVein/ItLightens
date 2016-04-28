@@ -1,5 +1,7 @@
 #include "mcv_platform.h"
 #include "comp_guided_camera.h"
+#include "comp_transform.h"
+#include "entity.h"
 
 #define WPT_ATR_NAME(nameVariable, index) \
 char nameVariable[10]; sprintf(nameVariable, "wpt%d", index);
