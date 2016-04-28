@@ -170,6 +170,7 @@ class player_controller : public CPlayerBase {
 	void RecalcAttractions();
 	VEC3 calcForceEffect(const PolarityForce& force);//VEC3 point_pos, bool atraction);
 	VEC3 calcFinalForces(const VEC3& all_forces, const PolarityForce& nearestForce);
+	void polarityMoveResistance(const PolarityForce& force);
 	//--------------------------------------------------------------------
 
 protected:
