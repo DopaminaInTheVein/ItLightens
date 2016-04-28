@@ -4,6 +4,8 @@
 #include "texture.h"
 #include "constants/ctes_platform.h"
 
+extern const CTexture* all_black;
+
 template<> IResource::eType getTypeOfResource<CMaterial>() { return IResource::MATERIAL; }
 
 template<>
@@ -41,11 +43,14 @@ void CMaterial::onStartElement(const std::string &elem, MKeyValue &atts) {
 			type_slot = TTextureSlot::SPECULAR;
 		}
 	  	else if (type_name == "normalmap") {
-	      		type_slot = TTextureSlot::NORMALMAP;
-	    	}
-	    	else if (type_name == "environment") {
-	      		type_slot = TTextureSlot::ENVIRONMENT;
-	    	}
+	      	type_slot = TTextureSlot::NORMALMAP;
+	    }
+	    else if (type_name == "environment") {
+	      	type_slot = TTextureSlot::ENVIRONMENT;
+	    }
+		else if (type_name == "selfilum") {
+			type_slot = TTextureSlot::SELFILUM;
+		}
 		else {
 			fatal("Invalid texture slot type %s found at material definition\n", type_name.c_str());
 			return;
@@ -81,8 +86,15 @@ void CMaterial::activateTextures() const {
   	//assert(textures[NORMALMAP]);
 	if(textures[NORMALMAP])
   		textures[NORMALMAP]->activate(TEXTURE_SLOT_NORMALS);
+
+	if(textures[SELFILUM])
+		textures[SELFILUM]->activate(TEXTURE_SLOT_SELFILUM);
+	else {
+		all_black->activate(TEXTURE_SLOT_SELFILUM);
+	}
+
   	if( textures[ENVIRONMENT] )
-    		textures[ENVIRONMENT]->activate(TEXTURE_SLOT_ENVIRONMENT);
+    	textures[ENVIRONMENT]->activate(TEXTURE_SLOT_ENVIRONMENT);
 }
 
 // ----------------------------------------------

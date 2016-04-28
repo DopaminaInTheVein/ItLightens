@@ -23,15 +23,10 @@
 <transform
    pos="2 0 0"
    quat="0 1 0 0"
-   scale="1.0"
+   scale="0.01"
 />
 <render_static_mesh
-   name="static_meshes/test_guard.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-   type_shape="convex"
-   mass="5"
+   name="static_meshes/test_mole.static_mesh"
 />
 </entity>
 

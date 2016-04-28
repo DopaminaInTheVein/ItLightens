@@ -6,12 +6,14 @@ Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
 Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
 Texture2D txWorldPos  : USE_SHADER_REG(TEXTURE_SLOT_WORLD_POS);
 Texture2D txLightMask : USE_SHADER_REG(TEXTURE_SLOT_LIGHT_MASK);
+Texture2D txSelfIlum : USE_SHADER_REG(TEXTURE_SLOT_SELFILUM);
 
 TextureCube txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
 
 // Same order as
 SamplerState samLinear : register(s0);
 SamplerState samLightBlackBorder : register(s1);
+SamplerState samClampLinear : register(s2);
 
 //--------------------------------------------------------------------------------------
 void VS(
@@ -69,6 +71,7 @@ void PSGBuffer(
   , out float4 o_albedo : SV_Target0
   , out float4 o_normal : SV_Target1
   , out float4 o_wpos : SV_Target2
+  , out float4 o_selfIlum : SV_Target3
   )
 {
   o_albedo = txDiffuse.Sample(samLinear, iTex0);
@@ -91,6 +94,10 @@ void PSGBuffer(
   o_normal.xyz = (normalize(N_world_space) + 1.) * 0.5;
   o_normal.a = 1.;
   o_wpos = float4(iWorldPos, 1.);
+
+  o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
+  if (!(o_selfIlum.r == 0 && o_selfIlum.g == 0 && o_selfIlum.b == 0))
+	  o_selfIlum *= float4(1, 0, 0, 1);
 }
 
 //--------------------------------------------------------------------------------------
