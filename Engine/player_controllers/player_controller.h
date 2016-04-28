@@ -87,7 +87,7 @@ class player_controller : public CPlayerBase {
 	CHandle					pose_jump;
 
 	//Polarity Constants
-	float	POL_RADIUS					= 5.f;
+	float	POL_RADIUS					= 25.f;
 	float	POL_RADIUS_STRONG			= 1.f;
 	float	POL_HORIZONTALITY			= 1.f;
 	float	POL_INTENSITY				= 100.f;

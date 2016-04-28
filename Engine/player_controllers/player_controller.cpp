@@ -357,6 +357,7 @@ void player_controller::RecalcAttractions()
 			if (force.polarity == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
 
 			VEC3 localForce = calcForceEffect(force);
+			assert(isValid(localForce));
 			// The first near force discard other forces (we asume no points too close)
 			if (pol_orbit) {
 				if (force.distance < lowestDist) {
@@ -374,9 +375,10 @@ void player_controller::RecalcAttractions()
 		float nearFactor = (1.f - (orbitForce.distance / POL_RADIUS_STRONG));
 		VEC3 forceReal = forces;
 		forces = VEC3(
-			1 / forces.x,		//x
+			1 / std::max(0.2f, forces.x),		//x
 			forces.y * 0.05f,	//y
-			1 / forces.z);		//z
+			1 / std::max(0.2f, forces.z) //z
+		);		
 
 		forces *= POL_ATRACTION_ORBITA;
 
@@ -441,7 +443,7 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	//Distance and direction
 	float dist = force.distance;
 	VEC3 direction = force.deltaPos;
-
+	assert(isNormal(direction));
 	// Si la direccion es bastante horizontal, lo acentuamos más
 	if (direction.y < POL_HORIZONTALITY) {
 		direction.x *= 2; direction.z *= 2;
@@ -450,6 +452,7 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	//Regular force calc
 	direction.Normalize();
 	forceEffect = POL_INTENSITY * direction / ((dist)+0.01f);
+	assert(isValid(forceEffect));
 
 	// Atraccion -> Si cerca, orbitar
 	bool atraction = (force.polarity == pol_state);
