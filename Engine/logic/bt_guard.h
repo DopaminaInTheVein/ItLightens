@@ -55,6 +55,7 @@ class bt_guard : public TCompBase, public bt
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
 	float GUARD_ALERT_RADIUS;
+	float RANDOM_POINT_MAX_DISTANCE;
 	VEC4 SHOT_OFFSET;
 	//from bombs
 	float reduce_factor;
@@ -118,6 +119,7 @@ class bt_guard : public TCompBase, public bt
 	void goTo(const VEC3& dest);
 	void goForward(float stepForward);
 	bool turnTo(VEC3 dest);
+	VEC3 generateRandomPoint();
 
 	//Aux checks
 	bool playerVisible();
@@ -169,6 +171,7 @@ public:
 	int actionShootWall();
 	int actionRemoveBox();
 	int actionSearch();
+	int actionMoveAround();
 	int actionLookAround();
 	int actionSeekWpt();
 	int actionNextWpt();

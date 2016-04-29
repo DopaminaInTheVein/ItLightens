@@ -22,7 +22,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-	p:play_music("data/sounds/music/space-harrier.mp3")
+	p:play_music("data/sounds/music/It-Lightens-muestra-2.mp3")
 end
 
 function OnGameEnd( param )

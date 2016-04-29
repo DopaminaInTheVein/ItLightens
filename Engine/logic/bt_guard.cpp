@@ -74,6 +74,7 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(LOOK_AROUND_TIME, fields);
 			assignValueToVar(GUARD_ALERT_TIME, fields);
 			assignValueToVar(GUARD_ALERT_RADIUS, fields);
+			assignValueToVar(RANDOM_POINT_MAX_DISTANCE, fields);
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
@@ -109,6 +110,7 @@ void bt_guard::Init()
 		addChild("absorbsequence", "removebox", ACTION, NULL, (btaction)&bt_guard::actionRemoveBox);
 		addChild("guard", "alertdetected", SEQUENCE, (btcondition)&bt_guard::guardAlerted, NULL);
 		addChild("alertdetected", "search", ACTION, NULL, (btaction)&bt_guard::actionSearch);
+		addChild("alertdetected", "movearound", ACTION, NULL, (btaction)&bt_guard::actionMoveAround);
 		addChild("alertdetected", "lookaround", ACTION, NULL, (btaction)&bt_guard::actionLookAround);
 		addChild("guard", "patrol", SEQUENCE, NULL, NULL);
 		addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_guard::actionNextWpt);
@@ -322,6 +324,7 @@ int bt_guard::actionChase() {
 	//player lost?
 	if (distance > DIST_SQ_PLAYER_LOST || outJurisdiction(posPlayer)) {
 		playerLost = true;
+		player_last_seen_point = posPlayer;
 		ChangePose(pose_idle_route);
 		return OK;
 	}
@@ -384,11 +387,13 @@ int bt_guard::actionAbsorb() {
 			return OK;
 		}
 	}
-	else {
+	else if (playerVisible()) {
 		ChangePose(pose_shoot_route);
 		shootToPlayer();
 		return STAY;
 	}
+
+	return KO;
 }
 
 int bt_guard::actionShootWall() {
@@ -410,6 +415,7 @@ int bt_guard::actionShootWall() {
 		else {
 			if (timerShootingWall < 0) {
 				playerLost = true;
+				player_last_seen_point = posPlayer;
 				return KO;
 			}
 			else {
@@ -427,6 +433,7 @@ int bt_guard::actionRemoveBox() {
 	// wait for the remove box animation to end
 	if (removing_box_animation_time > BOX_REMOVAL_ANIM_TIME) {
 		removing_box_animation_time = 0.f;
+		remove_box_ready = true;
 		return OK;
 	}
 	else {
@@ -476,10 +483,28 @@ int bt_guard::actionSearch() {
 			return STAY;
 		}
 	}
-	// If player was lost, we simply look around
-	else
+	// If player was lost, we simply move and look around
+	else {
 		looking_around_time = LOOK_AROUND_TIME;
 		return OK;
+	}
+}
+
+int bt_guard::actionMoveAround() {
+	PROFILE_FUNCTION("guard: movearound");
+	if (!myParent.isValid()) return false;
+	VEC3 myPos = getTransform()->getPosition();
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	VEC3 playerPos = tPlayer->getPosition();
+
+	VEC3 dir = playerPos - myPos;
+
+	VEC3 destination = playerPos + 2.0f * dir;
+	getPath(myPos, destination, SBB::readSala());
+	ChangePose(pose_run_route);
+	goTo(destination);
+
+	return OK;
 }
 
 int bt_guard::actionLookAround() {
@@ -490,7 +515,7 @@ int bt_guard::actionLookAround() {
 		setCurrent(NULL);
 		return KO;
 	}
-	//Turn arround
+	// Turn arround
 	else if (deltaYawLookingArround < 2 * M_PI && looking_around_time > 0.f) {
 		ChangePose(pose_idle_route);
 		float yaw, pitch;
@@ -675,7 +700,7 @@ void bt_guard::goTo(const VEC3& dest) {
 	}
 	else {
 		float distToWPT = squaredDistXZ(target, getTransform()->getPosition());
-		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 3.0f) {
+		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
 			goForward(SPEED_WALK);
 		}
 	}
@@ -722,6 +747,35 @@ bool bt_guard::turnTo(VEC3 dest) {
 
 	//Ha acabado el giro?
 	return abs(deltaYaw) < deltaAngle;
+}
+
+VEC3 bt_guard::generateRandomPoint() {
+
+	PROFILE_FUNCTION("guard: generate random point");
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	VEC3 myPos = tPlayer->getPosition();
+
+	// generate random increments for x and z coords
+	float x_diff = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / RANDOM_POINT_MAX_DISTANCE));
+	float z_diff = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / RANDOM_POINT_MAX_DISTANCE));
+
+	// randomly decide x sign
+	if (rand() % 10 < 5) {
+		myPos.x += x_diff;
+	}
+	else {
+		myPos.x -= x_diff;
+	}
+
+	// randomly decide z sign
+	if (rand() % 10 < 5) {
+		myPos.z += z_diff;
+	}
+	else {
+		myPos.z -= z_diff;
+	}
+
+	return myPos;
 }
 
 // -- Player Visible? -- //

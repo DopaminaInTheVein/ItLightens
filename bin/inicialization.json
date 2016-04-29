@@ -30,11 +30,12 @@
 		"SPEED_ROT" : 100,
 		"CONE_VISION" : 60,
 		"MAX_REACTION_TIME" : 2,
-		"MAX_BOX_REMOVAL_TIME" : 15,
+		"MAX_BOX_REMOVAL_TIME" : 60,
 		"BOX_REMOVAL_ANIM_TIME" : 1,
 		"LOOK_AROUND_TIME" : 10,
 		"GUARD_ALERT_TIME" : 15,
 		"GUARD_ALERT_RADIUS" : 20,
+		"RANDOM_POINT_MAX_DISTANCE" : 2.0,
 		"reduce_factor" : 3.0,
 		"t_reduceStats_max" : 15,
 		"t_reduceStats" : 0.0
