@@ -90,13 +90,14 @@ class player_controller : public CPlayerBase {
 	float	POL_RCLOSE					= 1.f;
 	float	POL_RFAR					= 25.f; // 5 Meters arround
 	float	POL_HORIZONTALITY			= 1.f;
-	float	POL_INTENSITY				= 500.f;
+	float	POL_INTENSITY				= 1000.f;
 	float	POL_REPULSION				= .5f;
+	float	POL_RESISTANCE				= .5f;
 	float	POL_INERTIA					= 0.5f;
 	float	POL_SPEED_ORBITA			= 0.2f;
 	float	POL_ATRACTION_ORBITA		= 1.f;
 	float	POL_NO_LEAVING_FORCE		= 0.99f;
-	float	POL_ORBITA_UP_EXTRA_FORCE	= .05f;
+	float	POL_ORBITA_UP_EXTRA_FORCE	= 1.f;
 	float	POL_REAL_FORCE_Y_ORBITA		= 0.05f;
 	float	POL_OSCILE_Y				= .2f;
 

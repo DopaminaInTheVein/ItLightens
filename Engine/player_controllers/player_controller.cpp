@@ -484,16 +484,14 @@ void player_controller::polarityMoveResistance(const PolarityForce& force) {
 		if (moveAmoung > 0.f) {
 			//Playing trying to go away?
 			if (movementPlayer.x != 0) {
-				assert(POL_RCLOSE > 0);
-				float howFar = clamp(POL_RCLOSE / force.deltaPos.LengthSquared() + 0.01f, 0.f, 0.9f);
 				if (std::signbit(movementPlayer.x) != std::signbit(force.deltaPos.x)) {
 					//movementAtraction.x = -movementPlayer.x * POL_NO_LEAVING_FORCE * nearFactor;
-					movementAtraction.x = -movementPlayer.x * howFar;
+					movementAtraction.x = -movementPlayer.x * POL_RESISTANCE;
 					movementApplied = true;
 				}
 				if (std::signbit(movementPlayer.z) != std::signbit(force.deltaPos.z)) {
 					//movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE * nearFactor;
-					movementAtraction.z = -movementPlayer.z * howFar;
+					movementAtraction.z = -movementPlayer.z * POL_RESISTANCE;
 					movementApplied = true;
 				}
 			}
@@ -508,9 +506,9 @@ void player_controller::polarityMoveResistance(const PolarityForce& force) {
 			}
 
 			//Getting closer -> player up a little
-			//if (gettingCloser) {
-			//	cc->AddSpeed(VEC3(0, 1, 0), POL_ORBITA_UP_EXTRA_FORCE);
-			//}
+			if (gettingCloser) {
+				cc->AddMovement(  VEC3(0, 1, 0), POL_ORBITA_UP_EXTRA_FORCE * max( abs(movementPlayer.z), abs(movementPlayer.x) )  );
+			}
 
 			if (movementApplied) {
 				cc->AddMovement(movementAtraction);
@@ -1013,15 +1011,13 @@ void player_controller::renderInMenu() {
 	ImGui::Text("Editable values (polarity):\n");
 	ImGui::SliderFloat("Radius1", &POL_RCLOSE, 1.f, 10.f);
 	ImGui::SliderFloat("Radius2", &POL_RFAR, 10.f, 100.f);
-	ImGui::SliderFloat("Horiz. Repulsion", &POL_HORIZONTALITY, 0.f, 1.f);
-	ImGui::SliderFloat("Intensity", &POL_INTENSITY, 1.f, 500.f);
+	ImGui::SliderFloat("Intensity", &POL_INTENSITY, 100.f, 5000.f);
 	ImGui::SliderFloat("Repulsion Factor", &POL_REPULSION, 0.f, 5.f);
 	ImGui::SliderFloat("Inertia", &POL_INERTIA, 0.f, 0.99f);
 	ImGui::SliderFloat("Speed OnEnter", &POL_SPEED_ORBITA, 0.f, 10.f);
 	ImGui::SliderFloat("Force Atraction Factor in Orbita", &POL_ATRACTION_ORBITA, 0.f, 5.f);
-	ImGui::SliderFloat("Factor allowing leave", &POL_NO_LEAVING_FORCE, 0.f, 1.5f);
 	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_ORBITA_UP_EXTRA_FORCE, 0.01f, 5.f);
-	ImGui::SliderFloat("Real force Y Orbita", &POL_REAL_FORCE_Y_ORBITA, 0.01f, 1.f);
+	ImGui::SliderFloat("Resistence to leave", &POL_RESISTANCE, 0.f, 1.f);
 
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
