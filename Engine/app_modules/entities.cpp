@@ -247,13 +247,14 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
-	sala = "scene_milestone_1";
+	//sala = "scene_milestone_1";
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
 	//sala = "scene_basic_lights";
 	//sala = "test_simple";
 	//sala = "test_guard";
 	//sala = "test_pol";
+	sala = "test_anim";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";

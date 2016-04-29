@@ -81,10 +81,10 @@ class player_controller : public CPlayerBase {
 	CHandle					currentStunable;
 
 	//poses handles
-	CHandle					pose_no_ev;
-	CHandle					pose_idle;
-	CHandle					pose_run;
-	CHandle					pose_jump;
+	//CHandle					pose_no_ev;
+	//CHandle					pose_idle;
+	//CHandle					pose_run;
+	//CHandle					pose_jump;
 
 	//Polarity Constants
 	float	POL_RCLOSE					= 1.f;
@@ -105,7 +105,7 @@ class player_controller : public CPlayerBase {
 	float damageCurrent = 0.f;
 	int damageFonts[Damage::SIZE] = { 0 };
 
-	TCompRenderStaticMesh*	actual_render = nullptr;
+	//TCompRenderStaticMesh*	actual_render = nullptr;
 
 	int						curr_evol = 0;
 	int						pol_state = 0;
