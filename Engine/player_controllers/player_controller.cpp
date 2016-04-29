@@ -178,7 +178,6 @@ void player_controller::createEvolveLight() {
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
-	IdEntities::saveIdEntity(CHandle(entity), -1900);
 
 	auto hm1 = CHandleManager::getByName("name");
 	CHandle new_hn = hm1->createHandle();
@@ -412,7 +411,7 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	direction.Normalize();
 	// Si la direccion es bastante horizontal, lo acentuamos más
 	if (direction.y < POL_HORIZONTALITY) {
-		direction.x *= 2; direction.z *= 2;
+		//direction.x *= 2; direction.z *= 2;
 	}
 
 	// Attraction?
@@ -426,7 +425,7 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	else {
 		//Regular force calc
 		forceEffect = POL_INTENSITY * direction /(force.distance); //We know is not zero
-		dbg("forceEffect: %f %f %f\n", forceEffect.x, forceEffect.y, forceEffect.z);
+		//dbg("forceEffect: %f %f %f\n", forceEffect.x, forceEffect.y, forceEffect.z);
 		assert(isValid(forceEffect));
 	}
 
@@ -473,7 +472,7 @@ VEC3 player_controller::calcFinalForces(const VEC3& all_forces, const PolarityFo
 }
 
 void player_controller::polarityMoveResistance(const PolarityForce& force) {
-	if (force.distance > 0 
+	if (force.distance > 0.1f
 		&& force.distance < POL_RCLOSE
 		&& force.polarity == pol_state
 	) {
@@ -486,13 +485,15 @@ void player_controller::polarityMoveResistance(const PolarityForce& force) {
 			//Playing trying to go away?
 			if (movementPlayer.x != 0) {
 				assert(POL_RCLOSE > 0);
-				float nearFactor = force.distance / POL_RCLOSE;
+				float howFar = clamp(POL_RCLOSE / force.deltaPos.LengthSquared() + 0.01f, 0.f, 0.9f);
 				if (std::signbit(movementPlayer.x) != std::signbit(force.deltaPos.x)) {
-					movementAtraction.x = -movementPlayer.x * POL_NO_LEAVING_FORCE * nearFactor;
+					//movementAtraction.x = -movementPlayer.x * POL_NO_LEAVING_FORCE * nearFactor;
+					movementAtraction.x = -movementPlayer.x * howFar;
 					movementApplied = true;
 				}
 				if (std::signbit(movementPlayer.z) != std::signbit(force.deltaPos.z)) {
-					movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE * nearFactor;
+					//movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE * nearFactor;
+					movementAtraction.z = -movementPlayer.z * howFar;
 					movementApplied = true;
 				}
 			}
@@ -507,9 +508,9 @@ void player_controller::polarityMoveResistance(const PolarityForce& force) {
 			}
 
 			//Getting closer -> player up a little
-			if (gettingCloser) {
-				movementAtraction.y += POL_ORBITA_UP_EXTRA_FORCE;
-			}
+			//if (gettingCloser) {
+			//	cc->AddSpeed(VEC3(0, 1, 0), POL_ORBITA_UP_EXTRA_FORCE);
+			//}
 
 			if (movementApplied) {
 				cc->AddMovement(movementAtraction);
