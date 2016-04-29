@@ -52,6 +52,7 @@ class bt_guard : public TCompBase, public bt
 	float MAX_REACTION_TIME;
 	float MAX_BOX_REMOVAL_TIME;
 	float BOX_REMOVAL_ANIM_TIME;
+	float MAX_SEARCH_DISTANCE;
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
 	float GUARD_ALERT_RADIUS;
@@ -99,6 +100,7 @@ class bt_guard : public TCompBase, public bt
 	int curkpt;
 	VEC3 player_last_seen_point;
 	VEC3 noisePoint;
+	VEC3 search_player_point;
 	bool noiseHeard = false;
 	bool playerLost = false;
 	// reaction time management

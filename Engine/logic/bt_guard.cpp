@@ -71,6 +71,7 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(MAX_REACTION_TIME, fields);
 			assignValueToVar(MAX_BOX_REMOVAL_TIME, fields);
 			assignValueToVar(BOX_REMOVAL_ANIM_TIME, fields);
+			assignValueToVar(MAX_SEARCH_DISTANCE, fields);
 			assignValueToVar(LOOK_AROUND_TIME, fields);
 			assignValueToVar(GUARD_ALERT_TIME, fields);
 			assignValueToVar(GUARD_ALERT_RADIUS, fields);
@@ -461,7 +462,15 @@ int bt_guard::actionSearch() {
 		if (distance < DIST_SQ_REACH_PNT) {
 			playerLost = false;
 			looking_around_time = LOOK_AROUND_TIME;
+
+			TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+			VEC3 playerPos = tPlayer->getPosition();
+
+			VEC3 dir = playerPos - myPos;
+			search_player_point = playerPos + 1.0f * dir;
+
 			return OK;
+
 		}
 		else {
 			return STAY;
@@ -477,7 +486,14 @@ int bt_guard::actionSearch() {
 		if (distance < DIST_SQ_REACH_PNT) {
 			noiseHeard = false;
 			looking_around_time = LOOK_AROUND_TIME;
+
+			TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+			VEC3 playerPos = tPlayer->getPosition();
+
+			VEC3 dir = playerPos - myPos;
+			search_player_point = playerPos + 1.0f * dir;
 			return OK;
+
 		}
 		else {
 			return STAY;
@@ -493,16 +509,28 @@ int bt_guard::actionSearch() {
 int bt_guard::actionMoveAround() {
 	PROFILE_FUNCTION("guard: movearound");
 	if (!myParent.isValid()) return false;
+
+	//Player Visible?
+	if (playerVisible() || boxMovingDetected()) {
+		setCurrent(NULL);
+		return KO;
+	}
+
 	VEC3 myPos = getTransform()->getPosition();
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	VEC3 playerPos = tPlayer->getPosition();
+	
+	float distance_to_point = squaredDistXZ(myPos, search_player_point);
 
-	VEC3 dir = playerPos - myPos;
+	// if the player is too far, we just look around
+	if (distance_to_point > MAX_SEARCH_DISTANCE) {
+		return OK;
+	}
 
-	VEC3 destination = playerPos + 2.0f * dir;
-	getPath(myPos, destination, SBB::readSala());
-	ChangePose(pose_run_route);
-	goTo(destination);
+	if (distance_to_point > DIST_SQ_REACH_PNT) {
+		getPath(myPos, search_player_point, SBB::readSala());
+		ChangePose(pose_run_route);
+		goTo(search_player_point);
+		return STAY;
+	}
 
 	return OK;
 }
