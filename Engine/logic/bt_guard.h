@@ -52,9 +52,11 @@ class bt_guard : public TCompBase, public bt
 	float MAX_REACTION_TIME;
 	float MAX_BOX_REMOVAL_TIME;
 	float BOX_REMOVAL_ANIM_TIME;
+	float MAX_SEARCH_DISTANCE;
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
 	float GUARD_ALERT_RADIUS;
+	float RANDOM_POINT_MAX_DISTANCE;
 	VEC4 SHOT_OFFSET;
 	//from bombs
 	float reduce_factor;
@@ -98,6 +100,7 @@ class bt_guard : public TCompBase, public bt
 	int curkpt;
 	VEC3 player_last_seen_point;
 	VEC3 noisePoint;
+	VEC3 search_player_point;
 	bool noiseHeard = false;
 	bool playerLost = false;
 	// reaction time management
@@ -118,6 +121,7 @@ class bt_guard : public TCompBase, public bt
 	void goTo(const VEC3& dest);
 	void goForward(float stepForward);
 	bool turnTo(VEC3 dest);
+	VEC3 generateRandomPoint();
 
 	//Aux checks
 	bool playerVisible();
@@ -169,6 +173,7 @@ public:
 	int actionShootWall();
 	int actionRemoveBox();
 	int actionSearch();
+	int actionMoveAround();
 	int actionLookAround();
 	int actionSeekWpt();
 	int actionNextWpt();
