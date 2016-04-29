@@ -97,42 +97,6 @@
 />
 </entity>
 <entity>
-<tags
-   tags=""
-/>
-<polarized
-   pol="plus"
-   size="2.0 2.0 2.0"
-/>
-<name
-   name="AreaPlus_1"
-/>
-<transform
-   pos="-1.8651 -7.02085 -7.9739"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="AreaPlus_1_pol_point"
-/>
-<transform
-   pos="-1.85026 -7.44554 -8.03"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/test_pol_point.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="200.0"
@@ -145,6 +109,78 @@
    pos="2.69164 5.03191 0.98557"
    quat="0 0 0 1.0"
    scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<polarized
+   pol="plus"
+   size="1.5 1.5 1.5"
+/>
+<name
+   name="AreaPlus_1"
+/>
+<transform
+   pos="-2.14631 -6.96018 -5.62699"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="AreaPlus_1_pol_point_1"
+/>
+<transform
+   pos="-2.14631 -6.96018 -5.62699"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/test_pol_point.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<polarized
+   pol="minus"
+   size="2.0 2.0 2.0"
+/>
+<name
+   name="AreaMinus_1"
+/>
+<transform
+   pos="-2.18558 -2.4329 -10.7832"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="AreaMinus_1_PolPoint_1"
+/>
+<transform
+   pos="-2.18558 -2.4329 -10.7832"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/test_minusPoint.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
 />
 </entity>
 </entities>
