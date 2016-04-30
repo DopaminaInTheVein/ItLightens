@@ -27,8 +27,15 @@ class player_controller : public CPlayerBase {
 		first = 0,
 		second,
 	};
-
 	const string polarize_name[3] = {"neutral", "minus", "plus" };
+
+	enum eAnimStates {
+		AST_IDLE = 0
+		, AST_MOVE
+		, AST_JUMP
+		, AST_JUMP2
+	};
+
 	//--------------------------------------------------------------------
 
 	//internal struct

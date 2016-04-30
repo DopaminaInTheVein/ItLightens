@@ -70,6 +70,7 @@ protected:
 	virtual void UpdateMovingWithOther();
 	virtual void UpdateJumpState();
 	virtual void UpdateDirection();
+	virtual void UpdateAnimation() {}
 	virtual void SetCharacterController()=0;
 
 	void energyDecreasal(float howmuch);
@@ -98,7 +99,6 @@ public:
 	void Moving();
 
 	virtual void update_msgs() {}
-
 	void renderInMenu();
 };
 

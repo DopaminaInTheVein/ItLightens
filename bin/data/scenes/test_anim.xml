@@ -252,7 +252,7 @@
    kpt1_pos="23.4349 -2.40576 21.0872"
    kpt1_wait="2"
    jurisdiction="29.3787 -2.50928 25.4651"
-   jurRadius="5.0"
+   jurRadius="52.15"
 />
 <name
    name="guard_1"
@@ -268,6 +268,43 @@
 <character_controller
    radius="0.3"
    height="1.8"
+/>
+</entity>
+<entity>
+<name
+   name="speedy_1"
+/>
+<transform
+   pos="29.4047 -2.45 34.5356"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<tags
+   tags="AI AI_speedy AI_poss"
+/>
+<bt_speedy
+   wpts_size="2"
+   wpt0_pos="23.4349 -2.40576 32.9626"
+   wpt1_pos="34.8384 -2.40576 32.9136"
+/>
+<player_speedy/>
+<life
+   points="50"
+/>
+<name
+   name="speedy_1"
+/>
+<transform
+   pos="29.4047 -2.45 34.5356"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__speedy.static_mesh"
+/>
+<character_controller
+   radius="0.2"
+   height="1.7"
 />
 </entity>
 </entities>
