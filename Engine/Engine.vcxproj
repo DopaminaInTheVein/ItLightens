@@ -245,8 +245,9 @@
     <ClCompile Include="resources\resources_manager.cpp" />
     <ClCompile Include="skeleton\comp_bone_tracker.cpp" />
     <ClCompile Include="skeleton\comp_skeleton.cpp" />
-    <ClCompile Include="skeleton\skel_controller.cpp" />
     <ClCompile Include="skeleton\skeleton.cpp" />
+    <ClCompile Include="skeleton_controllers\skc_player.cpp" />
+    <ClCompile Include="skeleton_controllers\skel_controller.cpp" />
     <ClCompile Include="SLB\src\Allocator.cpp" />
     <ClCompile Include="SLB\src\Class.cpp" />
     <ClCompile Include="SLB\src\ClassHelpers.cpp" />
@@ -626,8 +627,9 @@
     <ClInclude Include="resources\resources_manager.h" />
     <ClInclude Include="skeleton\comp_bone_tracker.h" />
     <ClInclude Include="skeleton\comp_skeleton.h" />
-    <ClInclude Include="skeleton\skel_controller.h" />
     <ClInclude Include="skeleton\skeleton.h" />
+    <ClInclude Include="skeleton_controllers\skc_player.h" />
+    <ClInclude Include="skeleton_controllers\skel_controller.h" />
     <ClInclude Include="SLB\include\SLB\Allocator.hpp" />
     <ClInclude Include="SLB\include\SLB\Class.hpp" />
     <ClInclude Include="SLB\include\SLB\ClassHelpers.hpp" />

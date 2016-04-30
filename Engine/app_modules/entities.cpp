@@ -208,6 +208,10 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TTriggerLua, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TTriggerLua, TMsgTriggerOut, onTriggerExitCall);
 
+	//Animations
+	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, onSetAnim);
+
+
 	//polarized
 	SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgPolarize, onPolarize);

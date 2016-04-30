@@ -11,6 +11,7 @@
 #include "camera/camera.h"
 
 #include "player_controller_base.h"
+#include "skeleton_controllers/skc_player.h"
 
 #include "logic/damage.h"
 
@@ -28,35 +29,15 @@ class player_controller : public CPlayerBase {
 		second,
 	};
 	const string polarize_name[3] = {"neutral", "minus", "plus" };
-
-	enum eAnimStates {
-		AST_IDLE = 0
-		, AST_MOVE
-		, AST_JUMP
-		, AST_JUMP2
-	};
-
 	//--------------------------------------------------------------------
-
-	//internal struct
+	
+	//Polarity
 	//--------------------------------------------------------------------
-	struct TForcePoint {
-		VEC3 point;
-		int pol;
-		TForcePoint(VEC3 new_point, int new_pol) {
-			pol = new_pol;
-			point = new_point;
-		}
-		inline bool operator==(TForcePoint other) {
-			if (this->point == other.point)
-				return true;
-			else
-				return false;
-		}
-	};
+	VHandles polarityForces;
 	//--------------------------------------------------------------------
 
 	CObjectManager<player_controller> *om;
+
 
 	float					pol_speed = 0;
 
@@ -131,9 +112,6 @@ class player_controller : public CPlayerBase {
 
 	std::string				damage_source = "none";
 
-	//std::vector<TForcePoint> force_points;
-	VHandles polarityForces;
-
 	//private functions
 	//--------------------------------------------------------------------
 
@@ -159,7 +137,7 @@ class player_controller : public CPlayerBase {
 	void recalcPossassable();
 	void UpdatePossession();
 
-	void ChangePose(CHandle new_pos_h);
+	//void ChangePose(CHandle new_pos_h);
 
 	void createEvolveLight();
 	void createDevolveLight();
@@ -183,9 +161,13 @@ class player_controller : public CPlayerBase {
 
 protected:
 	void myUpdate();
+	void ChangeCommonState(std::string);
 
 	// the states, as maps to functions
 	static map<string, statehandler> statemap;
+
+	//Anims
+	SkelControllerPlayer animController;
 
 public:
 	// Added because GUI

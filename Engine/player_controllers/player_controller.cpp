@@ -17,6 +17,14 @@
 #include "components/comp_charactercontroller.h"
 #include "logic/polarity.h"
 
+// --- Anims State --- //
+#define AST_IDLE	"idle"
+#define AST_FALL	"fall"
+#define AST_JUMP	"jump"
+#define AST_JUMP2	"jump2"
+#define AST_MOVE	"walk"
+// ------------------- //
+
 #define DELTA_YAW_SELECTION		deg2rad(10)
 
 map<string, statehandler> player_controller::statemap = {};
@@ -75,7 +83,7 @@ void player_controller::Init() {
 	myParent = myHandle.getOwner();
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-
+	animController.init(myEntity);
 	//pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 	//pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 	//pose_idle = getHandleManager<TCompRenderStaticMesh>()->createHandle();
@@ -104,6 +112,7 @@ void player_controller::Init() {
 	//actual_render->registerToRender();
 
 	ChangeState("idle");
+	animController.setState(AST_IDLE);
 	controlEnabled = true;
 	____TIMER__SET_ZERO_(timerDamaged);
 }
@@ -262,6 +271,7 @@ void player_controller::myUpdate() {
 	else {
 		UpdatePossession();
 	}
+	animController.update();
 }
 
 void player_controller::Idle() {
@@ -271,7 +281,9 @@ void player_controller::Idle() {
 
 void player_controller::myExtraIdle() {
 	if (pol_state != NEUTRAL) {
+		SetCharacterController();
 		ChangeState("falling");
+		if (!cc->OnGround()) animController.setState(AST_FALL);
 	}
 }
 
@@ -285,6 +297,7 @@ void player_controller::DoubleJump()
 
 	if (cc->GetYAxisSpeed() < 0.0f) {
 		ChangeState("doublefalling");
+		animController.setState(AST_FALL);
 	}
 }
 
@@ -295,6 +308,7 @@ void player_controller::DoubleFalling() {
 	SetCharacterController();
 	if (cc->OnGround()) {
 		ChangeState("idle");
+		animController.setState(AST_IDLE);
 	}
 }
 
@@ -305,11 +319,13 @@ void player_controller::Jumping()
 	UpdateMovDirection();
 	SetCharacterController();
 
-	if (cc->GetYAxisSpeed() <= 0.0f)
+	if (cc->GetYAxisSpeed() <= 0.0f) {
 		ChangeState("falling");
-
+		animController.setState(AST_FALL);
+	}
 	if (cc->OnGround() && !(cc->GetYAxisSpeed() > 0.0f)) {
 		ChangeState("idle");
+		animController.setState(AST_IDLE);
 	}
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
@@ -317,6 +333,7 @@ void player_controller::Jumping()
 		energyDecreasal(5.0f);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
+		animController.setState(AST_JUMP2);
 	}
 }
 
@@ -334,10 +351,12 @@ void player_controller::Falling()
 		energyDecreasal(5.0f);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
+		animController.setState(AST_JUMP2);
 	}
 
 	if (cc->OnGround()) {
 		ChangeState("idle");
+		animController.setState(AST_IDLE);
 	}
 }
 
@@ -1034,6 +1053,15 @@ PolarityForce player_controller::getPolarityForce(CHandle forceHandle) {
 		pf = polarized->getForce();
 	}
 	return pf;
+}
+
+//Anims
+void player_controller::ChangeCommonState(std::string state) {
+	if (state == "moving") {
+		animController.setState(AST_MOVE);
+	} else if (state == "jumping") {
+		animController.setState(AST_JUMP);
+	}
 }
 
 map<string, statehandler>* player_controller::getStatemap() {

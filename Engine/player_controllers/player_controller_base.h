@@ -4,11 +4,11 @@
 #include "logic/aicontroller.h"
 #include "logic/sbb.h"
 
-#include "components\comp_base.h"
-#include "handle\handle.h"
-#include "components\comp_msgs.h"
+#include "components/comp_base.h"
+#include "handle/handle.h"
+#include "components/comp_msgs.h"
 
-#include "camera\camera.h"
+#include "camera/camera.h"
 
 class CEntity;
 
@@ -72,6 +72,7 @@ protected:
 	virtual void UpdateDirection();
 	virtual void UpdateAnimation() {}
 	virtual void SetCharacterController()=0;
+	virtual void ChangeCommonState(std::string) {}
 
 	void energyDecreasal(float howmuch);
 	bool checkDead();

@@ -553,8 +553,11 @@
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp">
       <Filter>app_modules\sound_manager</Filter>
     </ClCompile>
-    <ClCompile Include="skeleton\skel_controller.cpp">
-      <Filter>skeleton</Filter>
+    <ClCompile Include="skeleton_controllers\skel_controller.cpp">
+      <Filter>skeleton_controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton_controllers\skc_player.cpp">
+      <Filter>skeleton_controllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1352,8 +1355,11 @@
       <Filter>render\constants</Filter>
     </ClInclude>
     <ClInclude Include="logic\polarity.h" />
-    <ClInclude Include="skeleton\skel_controller.h">
-      <Filter>skeleton</Filter>
+    <ClInclude Include="skeleton_controllers\skel_controller.h">
+      <Filter>skeleton_controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton_controllers\skc_player.h">
+      <Filter>skeleton_controllers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1536,6 +1542,9 @@
     </Filter>
     <Filter Include="render\constants">
       <UniqueIdentifier>{61448c20-12c5-409f-a50b-43ba674d0122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="skeleton_controllers">
+      <UniqueIdentifier>{443dd437-87c4-422c-8e95-0f58386a2893}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

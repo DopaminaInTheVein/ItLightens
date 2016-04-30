@@ -41,9 +41,14 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 	return true;
 }
 
-void TCompSkeleton::setAnim(const TMsgSetAnim &msg) {
+void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 	int anim_id = resource_skeleton->getAnimIdByName(msg.name);
-	model->getMixer()->blendCycle(anim_id, 1.0f, 0.f);
+	if (anim_id >= 0) {
+		if (msg.loop) model->getMixer()->blendCycle(anim_id, 1.0f, 0.f);
+		else model->getMixer()->executeAction(anim_id, 1.0f, 0.f);
+	} else {
+		fatal("Animation %s doesn't exist!", msg.name.c_str());
+	}
 }
 
 void TCompSkeleton::renderInMenu() {

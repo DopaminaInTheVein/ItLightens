@@ -186,11 +186,6 @@ void TCompCharacterController::UpdateFriction(float dt) {
 	PROFILE_FUNCTION("update: friction");
 	//update speeds with friction
 	assert(isValid(m_speed));
-	dbg("valor m_speed antes de friccion: (%f, %f, %f)\n"
-		,m_speed.x
-		,m_speed.y
-		,m_speed.z
-	);
 	if (m_speed.x != 0.0f) m_speed.x -= m_speed.x*m_friction*dt;
 	if (m_speed.z != 0.0f) m_speed.z -= m_speed.z*m_friction*dt;
 	assert(isValid(m_speed));
