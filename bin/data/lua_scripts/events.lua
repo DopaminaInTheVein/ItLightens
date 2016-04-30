@@ -6,6 +6,7 @@ p = Public( )
 
 function OnAction( param )
 	p:print( "OnAction: "..param.."\n" )
+	triggerGuardFormation();
 end
 
 function OnEnter( param, handle )

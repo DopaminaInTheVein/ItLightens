@@ -192,6 +192,7 @@ public:
 	int actionWaitInFormation();
 	//Toggle enabling/disabling functions
 	void toggleFormation() {
+		setCurrent(NULL);
 		formation_toggle = !formation_toggle;
 	}
 

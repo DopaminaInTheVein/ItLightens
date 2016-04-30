@@ -8,11 +8,11 @@
 #include "components/entity_tags.h"
 #include "components/comp_render_static_mesh.h"
 #include "components/comp_msgs.h"
-#include "render\static_mesh.h"
-#include "app_modules\io\io.h"
-#include "app_modules\logic_manager\logic_manager.h"
-#include "handle\handle.h"
-#include "ui\ui_interface.h"
+#include "render/static_mesh.h"
+#include "app_modules/io/io.h"
+#include "app_modules/logic_manager/logic_manager.h"
+#include "handle/handle.h"
+#include "ui/ui_interface.h"
 
 #include "components/comp_charactercontroller.h"
 #include "logic/polarity.h"
@@ -532,6 +532,10 @@ void player_controller::UpdateMoves()
 	if (io->keys['V'].becomesPressed()) {
 		cc->SetCollisions(true);
 		Debug->LogRaw("collisions true\n");
+	}
+
+	if (io->keys['F'].becomesPressed()) {
+		logic_manager->throwEvent(logic_manager->OnAction, "");
 	}
 
 	//endtests
