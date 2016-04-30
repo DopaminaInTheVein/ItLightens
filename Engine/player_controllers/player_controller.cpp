@@ -76,32 +76,32 @@ void player_controller::Init() {
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 
-	pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	pose_idle = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	//pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	//pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
+	//pose_idle = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 
-	pose_no_ev = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
-	actual_render = pose_no_ev;
+	//pose_no_ev = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
+	//actual_render = pose_no_ev;
 
-	pose_no_ev.setOwner(myEntity);
-	pose_idle.setOwner(myEntity);
-	pose_run.setOwner(myEntity);
-	pose_jump.setOwner(myEntity);
+	//pose_no_ev.setOwner(myEntity);
+	//pose_idle.setOwner(myEntity);
+	//pose_run.setOwner(myEntity);
+	//pose_jump.setOwner(myEntity);
 
-	TCompRenderStaticMesh *mesh;
+	//TCompRenderStaticMesh *mesh;
 
-	mesh = pose_idle;
-	mesh->static_mesh = Resources.get("static_meshes/player_idle.static_mesh")->as<CStaticMesh>();
+	//mesh = pose_idle;
+	//mesh->static_mesh = Resources.get("static_meshes/player_idle.static_mesh")->as<CStaticMesh>();
 
-	mesh = pose_jump;
-	mesh->static_mesh = Resources.get("static_meshes/player_jump.static_mesh")->as<CStaticMesh>();
+	//mesh = pose_jump;
+	//mesh->static_mesh = Resources.get("static_meshes/player_jump.static_mesh")->as<CStaticMesh>();
 
-	mesh = pose_run;
-	mesh->static_mesh = Resources.get("static_meshes/player_run.static_mesh")->as<CStaticMesh>();
+	//mesh = pose_run;
+	//mesh->static_mesh = Resources.get("static_meshes/player_run.static_mesh")->as<CStaticMesh>();
 
 	lastForces = VEC3(0, 0, 0);
 
-	actual_render->registerToRender();
+	//actual_render->registerToRender();
 
 	ChangeState("idle");
 	controlEnabled = true;
@@ -139,9 +139,10 @@ void player_controller::rechargeEnergy()
 	TCompCharacterController *p = myEntity->get<TCompCharacterController>();
 	PxController *cc = p->GetController();
 	cc->resize(full_height);
-	ChangePose(pose_idle);
+	//ChangePose(pose_idle);
 }
 
+/*
 void player_controller::ChangePose(CHandle new_pos_h)
 {
 	PROFILE_FUNCTION("player controller: change pose player");
@@ -172,6 +173,8 @@ void player_controller::ChangePose(CHandle new_pos_h)
 		actual_render->registerToRender();
 	}
 }
+*/
+
 void player_controller::createEvolveLight() {
 	TCompTransform * trans = myEntity->get<TCompTransform>();
 
@@ -581,13 +584,13 @@ void player_controller::UpdateMoves()
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
 
-	if (cc->OnGround() && player_curr_speed != 0.0f) {
-		ChangePose(pose_run);
-	}
-	else if (player_curr_speed != 0.0f) {
-		ChangePose(pose_jump);
-	}
-	else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
+	//if (cc->OnGround() && player_curr_speed != 0.0f) {
+	//	ChangePose(pose_run);
+	//}
+	//else if (player_curr_speed != 0.0f) {
+	//	ChangePose(pose_jump);
+	//}
+	//else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
 	if (cc->OnGround())
 		cc->AddMovement(direction*player_curr_speed*getDeltaTime());

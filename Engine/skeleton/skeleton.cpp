@@ -26,6 +26,7 @@ struct TSkinVertex {
 	float pos[3];
 	float normal[3];
 	float uv[2];
+	float tangent[4];
 	unsigned char bone_ids[4];
 	unsigned char weights[4];
 };
@@ -51,7 +52,7 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 	header.num_vtxs = 0;
 	header.primitive_type = CMesh::TRIANGLE_LIST;
 	header.the_magic_terminator = magic_terminator;
-	header.vertex_type = CMesh::VTX_DECL_POSITION_NORMAL_UV_SKIN;
+	header.vertex_type = CMesh::VTX_DECL_POSITION_NORMAL_UV_TANGENT_SKIN;
 
 	VEC3 pmin;
 	VEC3 pmax;
@@ -80,7 +81,8 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 		// An array of all textcoord sets
 		auto& cal_all_uvs_sets = core_sub_mesh->getVectorVectorTextureCoordinate();
 
-		// core_sub_mesh->getVectorVectorTangentSpace()[0];
+		// An array of all tangents
+		auto& cal_tangents = core_sub_mesh->getVectorVectorTangentSpace()[0];
 
 		// We must have at least one texture coordinate set
 		std::vector<CalCoreSubmesh::TextureCoordinate>* cal_uvs = nullptr;
@@ -106,7 +108,11 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 			skin_vtx.normal[0] = cal_normal.x;
 			skin_vtx.normal[1] = cal_normal.y;
 			skin_vtx.normal[2] = cal_normal.z;
-			//skin_vtx.tangent[0] = cal_tanget
+			skin_vtx.tangent[0] = cal_tangents[vtx_id].tangent.x;
+			skin_vtx.tangent[1] = cal_tangents[vtx_id].tangent.y;
+			skin_vtx.tangent[2] = cal_tangents[vtx_id].tangent.z;
+			skin_vtx.tangent[3] = cal_tangents[vtx_id].crossFactor; 
+
 
 			// Texture coords...
 			if (cal_uvs) {
