@@ -76,6 +76,18 @@ D3D11_INPUT_ELEMENT_DESC layout_positions_normal_uv_skin[] =
 };
 DECL_VERTEX_DECLARATION(positions_normal_uv_skin, CMesh::VTX_DECL_POSITION_NORMAL_UV_SKIN, (3 + 3 + 2 + 1 + 1) * 4);
 
+// ------------------------------------
+D3D11_INPUT_ELEMENT_DESC layout_positions_normal_uv_tangent_skin[] =
+{
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "NORMAL",    1, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "BONES", 0, DXGI_FORMAT_R8G8B8A8_UINT, 0, 48, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "WEIGHTS", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 52, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+};
+DECL_VERTEX_DECLARATION(positions_normal_uv_tangent_skin, CMesh::VTX_DECL_POSITION_NORMAL_UV_TANGENT_SKIN, (3 + 3 + 2 + 4 + 1 + 1) * 4);
+
 // ---------------------------------
 const CVertexDeclaration* CVertexDeclarationMgr::getByName( const std::string& name) {
   for (auto& v : all_decls) {
