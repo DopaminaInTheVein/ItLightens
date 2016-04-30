@@ -1,12 +1,13 @@
 #include "mcv_platform.h"
 #include "slb_public_functions.h"
-#include "handle\handle_manager.h"
-#include "handle\handle.h"
-#include "components\comp_name.h"
-#include "components\entity.h"
-#include "components\entity_parser.h"
-#include "components\comp_charactercontroller.h"
-#include "components\comp_life.h"
+#include "handle/handle_manager.h"
+#include "handle/handle.h"
+#include "components/comp_name.h"
+#include "components/entity.h"
+#include "components/entity_parser.h"
+#include "components/comp_charactercontroller.h"
+#include "components/comp_life.h"
+#include "logic/bt_guard.h"
 
 using namespace IdEntities;
 
@@ -76,6 +77,8 @@ void SLBHandle::getHandleById(int id) {
 }
 
 void SLBHandle::getHandleByNameTag(const char* name, const char* tag) {
+	handle_name = std::string(name);
+	handle_tag = std::string(tag);
 	VHandles targets = tags_manager.getHandlesByTag(getID(tag));
 	CHandle handle = findByName(targets, name);
 	real_handle = handle;
@@ -109,6 +112,19 @@ float SLBHandle::getZ() {
 	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
 
 	return entity_controller->GetPosition().z;
+}
+
+void SLBHandle::goToPoint(float x, float y, float z) {
+	VEC3 dest(x, y, z);
+	// depending on the tag, we need to use a different manager
+	if (handle_tag.find("guard") != std::string::npos) {
+		auto guard = getHandleManager<bt_guard>()->getAddrFromHandle(real_handle);
+		guard->goToPoint(dest);
+	}
+}
+
+void SLBHandle::toggleGuardFormation() {
+	getHandleManager<bt_guard>()->onAll(&bt_guard::toggleFormation);
 }
 
 // public functions

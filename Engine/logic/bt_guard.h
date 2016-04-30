@@ -150,6 +150,7 @@ class bt_guard : public TCompBase, public bt
 
 	bool stunned;
 	bool shooting = false;
+	bool forced_move = false;
 
 	// the nodes
 	static map<string, btnode *>tree;
@@ -170,7 +171,7 @@ public:
 	bool playerOutOfReach();
 	bool guardAlerted();
 	//toggle conditions
-	bool formationToggle();
+	bool checkFormation();
 	//actions
 	int actionStunned();
 	int actionStepBack();
@@ -187,7 +188,12 @@ public:
 	int actionWaitWpt();
 	//toggle actions
 	int actionGoToFormation();
+	int actionTurnToFormation();
 	int actionWaitInFormation();
+	//Toggle enabling/disabling functions
+	void toggleFormation() {
+		formation_toggle = !formation_toggle;
+	}
 
 	//functions that allow access to the static maps
 	map<string, btnode *>* getTree() override {
@@ -213,6 +219,7 @@ public:
 	void Init();
 	void noise(const TMsgNoise& msg);
 	void readIniFileAttr();
+	void goToPoint(VEC3 dest);
 
 	//From bombs
 	void reduceStats();
@@ -232,7 +239,7 @@ public:
 				resetStats();
 			}
 		}
-		Recalc();
+		if (!forced_move) Recalc();
 	}
 
 	void render();

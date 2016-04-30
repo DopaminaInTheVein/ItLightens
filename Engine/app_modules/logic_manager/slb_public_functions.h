@@ -29,16 +29,20 @@ public:
 class SLBHandle
 {
 	CHandle real_handle;
+	std::string handle_name;
+	std::string handle_tag;
 
 public:
 
-	// player functions
+	// generic handle functions
 	void getHandleById(int id);
 	void getHandleByNameTag(const char* name, const char* tag);
 	void setPosition(float x, float y, float z);
 	float getX();
 	float getY();
 	float getZ();
+	void goToPoint(float x, float y, float z);
+	void toggleGuardFormation();
 };
 
 // public functions

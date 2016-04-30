@@ -101,8 +101,9 @@ void bt_guard::Init()
 		// insert all states in the map
 		createRoot("guard", PRIORITY, NULL, NULL);
 		// formation toggle
-		addChild("guard", "formationsequence", SEQUENCE, (btcondition)&bt_guard::formationToggle, NULL);
+		addChild("guard", "formationsequence", SEQUENCE, (btcondition)&bt_guard::checkFormation, NULL);
 		addChild("formationsequence", "gotoformation", ACTION, NULL, (btaction)&bt_guard::actionGoToFormation);
+		addChild("formationsequence", "turntoformation", ACTION, NULL, (btaction)&bt_guard::actionTurnToFormation);
 		addChild("formationsequence", "waitinformation", ACTION, NULL, (btaction)&bt_guard::actionWaitInFormation);
 		// stunned state
 		addChild("guard", "stunned", ACTION, (btcondition)&bt_guard::playerStunned, (btaction)&bt_guard::actionStunned);
@@ -274,7 +275,7 @@ bool bt_guard::guardAlerted() {
 }
 
 //toggle conditions
-bool bt_guard::formationToggle() {
+bool bt_guard::checkFormation() {
 	return formation_toggle;
 }
 
@@ -672,16 +673,31 @@ int bt_guard::actionGoToFormation() {
 		return STAY;
 	}
 
+	ChangePose(pose_idle_route);
 	return OK;
+}
+
+int bt_guard::actionTurnToFormation() {
+	PROFILE_FUNCTION("guard: turntoformation");
+	if (!myParent.isValid()) return false;
+
+	VEC3 dest = formation_dir;
+
+	if (turnTo(dest)) {
+		return OK;
+	}
+	else {
+		return STAY;
+	}
 }
 
 int bt_guard::actionWaitInFormation() {
 	PROFILE_FUNCTION("guard: waitinformation");
 	if (!myParent.isValid()) return false;
 
-	VEC3 dest = formation_point + formation_dir;
+	VEC3 dest = formation_dir;
 
-	if (turnTo(dest) && !formation_toggle) {
+	if (!formation_toggle) {
 		return OK;
 	}
 	else {
@@ -1111,6 +1127,10 @@ bool bt_guard::load(MKeyValue& atts) {
 	jurRadiusSq = atts.getFloat("jurRadius", 1000.0f);
 	if (jurRadiusSq < FLT_MAX) jurRadiusSq *= jurRadiusSq;
 
+	//Formation
+	formation_point = atts.getPoint("formation_point");
+	formation_dir = atts.getPoint("formation_dir");
+
 	return true;
 }
 
@@ -1185,4 +1205,22 @@ void bt_guard::artificialInterrupt()
 	t->getAngles(&yaw, &pitch);
 	t->setAngles(-yaw, pitch);
 	setCurrent(NULL);
+}
+
+// function that will be used from LUA
+void bt_guard::goToPoint(VEC3 dest) {
+	PROFILE_FUNCTION("guard: go to point");
+	if (!myParent.isValid()) return;
+
+	ChangePose(pose_run_route);
+	forced_move = true;
+
+	// if we didn't reach the point
+	while (squaredDistXZ(getTransform()->getPosition(), dest) > DIST_SQ_REACH_PNT) {
+		getPath(getTransform()->getPosition(), dest, SBB::readSala());
+		goTo(dest);
+	}
+
+	ChangePose(pose_idle_route);
+	forced_move = false;
 }

@@ -317,7 +317,7 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.param("string: handle tag")
 		// set handle position function
 		.set("set_position", &SLBHandle::setPosition)
-		.comment("Sets the position of the player")
+		.comment("Sets the position of the NPC")
 		.param("float: x coordinate")
 		.param("float: x coordinate")
 		.param("float: x coordinate")
@@ -328,5 +328,14 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.comment("returns the Y coordinate")
 		.set("get_z", &SLBHandle::getZ)
 		.comment("returns the Z coordinate")
+		// go to point function
+		.set("go_to_point", &SLBHandle::goToPoint)
+		.comment("The NPC moves to the specified position")
+		.param("float: x coordinate")
+		.param("float: y coordinate")
+		.param("float: z coordinate")
+		// toggle guards formation
+		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
+		.comment("Activates/desactivates the guard formation states.")
 		;
 }
