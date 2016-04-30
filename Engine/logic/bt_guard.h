@@ -113,6 +113,11 @@ class bt_guard : public TCompBase, public bt
 	float removing_box_animation_time = 0.f;
 	float looking_around_time = 0.f;
 
+	//Toggles
+	bool formation_toggle = false;
+	VEC3 formation_point;
+	VEC3 formation_dir;
+
 	//Correa
 	VEC3 jurCenter;
 	float jurRadiusSq;
@@ -145,6 +150,7 @@ class bt_guard : public TCompBase, public bt
 
 	bool stunned;
 	bool shooting = false;
+	bool forced_move = false;
 
 	// the nodes
 	static map<string, btnode *>tree;
@@ -164,6 +170,8 @@ public:
 	bool playerDetected();
 	bool playerOutOfReach();
 	bool guardAlerted();
+	//toggle conditions
+	bool checkFormation();
 	//actions
 	int actionStunned();
 	int actionStepBack();
@@ -178,6 +186,15 @@ public:
 	int actionSeekWpt();
 	int actionNextWpt();
 	int actionWaitWpt();
+	//toggle actions
+	int actionGoToFormation();
+	int actionTurnToFormation();
+	int actionWaitInFormation();
+	//Toggle enabling/disabling functions
+	void toggleFormation() {
+		setCurrent(NULL);
+		formation_toggle = !formation_toggle;
+	}
 
 	//functions that allow access to the static maps
 	map<string, btnode *>* getTree() override {
@@ -203,6 +220,7 @@ public:
 	void Init();
 	void noise(const TMsgNoise& msg);
 	void readIniFileAttr();
+	void goToPoint(VEC3 dest);
 
 	//From bombs
 	void reduceStats();
@@ -222,7 +240,7 @@ public:
 				resetStats();
 			}
 		}
-		Recalc();
+		if (!forced_move) Recalc();
 	}
 
 	void render();

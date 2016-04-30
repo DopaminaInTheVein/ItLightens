@@ -3,9 +3,15 @@ print('This is lua')
 SLB.using( SLB )
 
 p = Public( )
+h = Handle( )
 
 function execCommandTest( code, timer )
     p:exec_command( code, timer )
+end
+
+function triggerGuardFormation()
+	h:toggle_guard_formation()
+	p:exec_command("h:toggle_guard_formation();", 20)
 end
 
 --prints the specified text via the VS console

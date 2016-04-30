@@ -290,6 +290,8 @@
    kpt1_wait="2"
    jurisdiction="22.9628 0 29.2104"
    jurRadius="38.4"
+   formation_point="14 0 -8"
+   formation_dir="1 0 0"
 />
 <name
    name="guard_1"
@@ -324,6 +326,8 @@
    kpt1_wait="2"
    jurisdiction="30.0801 0 21.3608"
    jurRadius="35.2"
+   formation_point="10 0 -12"
+   formation_dir="1 0 0"
 />
 <name
    name="guard_2"
@@ -358,6 +362,8 @@
    kpt1_wait="2"
    jurisdiction="33.3111 0 10.9548"
    jurRadius="26.9"
+   formation_point="12 0 -10"
+   formation_dir="1 0 0"
 />
 <name
    name="guard_3"
