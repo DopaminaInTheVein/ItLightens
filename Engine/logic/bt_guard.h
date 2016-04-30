@@ -113,6 +113,11 @@ class bt_guard : public TCompBase, public bt
 	float removing_box_animation_time = 0.f;
 	float looking_around_time = 0.f;
 
+	//Toggles
+	bool formation_toggle = false;
+	VEC3 formation_point;
+	VEC3 formation_dir;
+
 	//Correa
 	VEC3 jurCenter;
 	float jurRadiusSq;
@@ -164,6 +169,8 @@ public:
 	bool playerDetected();
 	bool playerOutOfReach();
 	bool guardAlerted();
+	//toggle conditions
+	bool formationToggle();
 	//actions
 	int actionStunned();
 	int actionStepBack();
@@ -178,6 +185,9 @@ public:
 	int actionSeekWpt();
 	int actionNextWpt();
 	int actionWaitWpt();
+	//toggle actions
+	int actionGoToFormation();
+	int actionWaitInFormation();
 
 	//functions that allow access to the static maps
 	map<string, btnode *>* getTree() override {

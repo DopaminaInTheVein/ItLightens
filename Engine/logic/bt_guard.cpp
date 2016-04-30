@@ -100,8 +100,13 @@ void bt_guard::Init()
 	if (tree.empty()) {
 		// insert all states in the map
 		createRoot("guard", PRIORITY, NULL, NULL);
+		// formation toggle
+		addChild("guard", "formationsequence", SEQUENCE, (btcondition)&bt_guard::formationToggle, NULL);
+		addChild("formationsequence", "gotoformation", ACTION, NULL, (btaction)&bt_guard::actionGoToFormation);
+		addChild("formationsequence", "waitinformation", ACTION, NULL, (btaction)&bt_guard::actionWaitInFormation);
+		// stunned state
 		addChild("guard", "stunned", ACTION, (btcondition)&bt_guard::playerStunned, (btaction)&bt_guard::actionStunned);
-		//addChild("guard", "distance", ACTION, (btcondition)&bt_guard::playerNear, (btaction)&bt_guard::actionStepBack);
+		// attack states
 		addChild("guard", "attack_decorator", DECORATOR, (btcondition)&bt_guard::playerDetected, (btaction)&bt_guard::actionReact);
 		addChild("attack_decorator", "attack", PRIORITY, NULL, NULL);
 		addChild("attack", "chase", ACTION, (btcondition)&bt_guard::playerOutOfReach, (btaction)&bt_guard::actionChase);
@@ -109,10 +114,12 @@ void bt_guard::Init()
 		addChild("absorbsequence", "absorb", ACTION, NULL, (btaction)&bt_guard::actionAbsorb);
 		addChild("absorbsequence", "shootwall", ACTION, NULL, (btaction)&bt_guard::actionShootWall);
 		addChild("absorbsequence", "removebox", ACTION, NULL, (btaction)&bt_guard::actionRemoveBox);
+		// alert states
 		addChild("guard", "alertdetected", SEQUENCE, (btcondition)&bt_guard::guardAlerted, NULL);
 		addChild("alertdetected", "search", ACTION, NULL, (btaction)&bt_guard::actionSearch);
 		addChild("alertdetected", "movearound", ACTION, NULL, (btaction)&bt_guard::actionMoveAround);
 		addChild("alertdetected", "lookaround", ACTION, NULL, (btaction)&bt_guard::actionLookAround);
+		// patrol states
 		addChild("guard", "patrol", SEQUENCE, NULL, NULL);
 		addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_guard::actionNextWpt);
 		addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_guard::actionSeekWpt);
@@ -264,6 +271,11 @@ bool bt_guard::guardAlerted() {
 	}
 		
 	return false;
+}
+
+//toggle conditions
+bool bt_guard::formationToggle() {
+	return formation_toggle;
 }
 
 //actions
@@ -639,6 +651,40 @@ int bt_guard::actionWaitWpt() {
 	}
 	else {
 		timeWaiting += getDeltaTime();
+		return STAY;
+	}
+}
+
+// toggle actions
+int bt_guard::actionGoToFormation() {
+	PROFILE_FUNCTION("guard: gotoformation");
+	if (!myParent.isValid()) return false;
+
+	VEC3 myPos = getTransform()->getPosition();
+
+	float distance_to_point = squaredDistXZ(myPos, formation_point);
+
+	// if we didn't reach the point
+	if (distance_to_point > DIST_SQ_REACH_PNT) {
+		getPath(myPos, formation_point, SBB::readSala());
+		ChangePose(pose_run_route);
+		goTo(formation_point);
+		return STAY;
+	}
+
+	return OK;
+}
+
+int bt_guard::actionWaitInFormation() {
+	PROFILE_FUNCTION("guard: waitinformation");
+	if (!myParent.isValid()) return false;
+
+	VEC3 dest = formation_point + formation_dir;
+
+	if (turnTo(dest) && !formation_toggle) {
+		return OK;
+	}
+	else {
 		return STAY;
 	}
 }
