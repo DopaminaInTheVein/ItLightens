@@ -258,7 +258,7 @@ bool CEntitiesModule::start() {
 	//sala = "test_simple";
 	//sala = "test_guard";
 	//sala = "test_pol";
-	sala = "test_anim";
+	sala = "test_guard";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";

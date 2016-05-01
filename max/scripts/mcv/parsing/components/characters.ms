@@ -81,7 +81,7 @@ fn parseJurisdiction parent = (
 ----------------------------------------------------------------------
 -- FORMATION --
 ----------------------------------------------------------------------
-fn parseJurisdiction parent = (
+fn parseFormation parent = (
 	local formationGo = (findHelper "Formation_Go")
 	if formationGo != undefined then (
 		--Formation Go

@@ -93,9 +93,122 @@
 </entity>
 <entity>
 <tags
-   tags="box platform"
+   tags=""
 />
-<box fixed ="true" removable="true"/>
+<name
+   name="Cinta"
+/>
+<transform
+   pos="-24.3882 -0.706938 33.8964"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/test_cinta.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<tracker
+   long="21.6863"
+   point0="-35.1873 0.551149 33.7684"
+   tangent0="0.9999 0 -0.0141511"
+   point1="-34.6944 0.551149 33.7614"
+   tangent1="0.9999 0 -0.0141511"
+   point2="-34.2016 0.551149 33.7545"
+   tangent2="0.9999 0 -0.0141511"
+   point3="-33.7088 0.551149 33.7475"
+   tangent3="0.9999 0 -0.0141511"
+   point4="-33.216 0.551149 33.7405"
+   tangent4="0.9999 0 -0.0141511"
+   point5="-32.7232 0.551149 33.7335"
+   tangent5="0.9999 0 -0.0141511"
+   point6="-32.2303 0.551149 33.7266"
+   tangent6="0.9999 0 -0.014151"
+   point7="-31.7375 0.551149 33.7196"
+   tangent7="0.9999 0 -0.0141512"
+   point8="-31.2447 0.551149 33.7126"
+   tangent8="0.9999 0 -0.0141511"
+   point9="-30.7519 0.551149 33.7056"
+   tangent9="0.9999 0 -0.014151"
+   point10="-30.2591 0.551149 33.6987"
+   tangent10="0.9999 0 -0.0141512"
+   point11="-29.7662 0.551149 33.6917"
+   tangent11="0.9999 0 -0.0141511"
+   point12="-29.2734 0.551149 33.6847"
+   tangent12="0.9999 0 -0.0141511"
+   point13="-28.7806 0.551149 33.6777"
+   tangent13="0.9999 0 -0.0141511"
+   point14="-28.2878 0.551149 33.6708"
+   tangent14="0.9999 0 -0.0141511"
+   point15="-27.795 0.551149 33.6638"
+   tangent15="0.9999 0 -0.0141511"
+   point16="-27.3021 0.551149 33.6568"
+   tangent16="0.9999 0 -0.0141511"
+   point17="-26.8093 0.551149 33.6498"
+   tangent17="0.9999 0 -0.0141511"
+   point18="-26.3165 0.551149 33.6429"
+   tangent18="0.9999 0 -0.0141511"
+   point19="-25.8237 0.551149 33.6359"
+   tangent19="0.9999 0 -0.0141511"
+   point20="-25.3309 0.551149 33.6289"
+   tangent20="0.9999 0 -0.0141511"
+   point21="-24.838 0.551149 33.6219"
+   tangent21="0.9999 0 -0.0141511"
+   point22="-24.3452 0.551149 33.615"
+   tangent22="0.9999 0 -0.0141511"
+   point23="-23.8524 0.551149 33.608"
+   tangent23="0.9999 0 -0.0141511"
+   point24="-23.3596 0.551149 33.601"
+   tangent24="0.9999 0 -0.0141511"
+   point25="-22.8668 0.551149 33.594"
+   tangent25="0.9999 0 -0.0141511"
+   point26="-22.3739 0.551149 33.5871"
+   tangent26="0.9999 0 -0.0141511"
+   point27="-21.8811 0.551149 33.5801"
+   tangent27="0.9999 0 -0.0141511"
+   point28="-21.3883 0.551149 33.5731"
+   tangent28="0.9999 0 -0.0141511"
+   point29="-20.8955 0.551149 33.5661"
+   tangent29="0.9999 0 -0.0141511"
+   point30="-20.4027 0.551149 33.5592"
+   tangent30="0.9999 0 -0.0141511"
+   point31="-19.9098 0.551149 33.5522"
+   tangent31="0.9999 0 -0.0141511"
+   point32="-19.417 0.551149 33.5452"
+   tangent32="0.9999 0 -0.0141511"
+   point33="-18.9242 0.551149 33.5382"
+   tangent33="0.9999 0 -0.0141511"
+   point34="-18.4314 0.551149 33.5313"
+   tangent34="0.9999 0 -0.0141511"
+   point35="-17.9386 0.551149 33.5243"
+   tangent35="0.9999 0 -0.0141512"
+   point36="-17.4457 0.551149 33.5173"
+   tangent36="0.9999 0 -0.0141511"
+   point37="-16.9529 0.551149 33.5103"
+   tangent37="0.9999 0 -0.0141511"
+   point38="-16.4601 0.551149 33.5034"
+   tangent38="0.9999 0 -0.014151"
+   point39="-15.9673 0.551149 33.4964"
+   tangent39="0.9999 0 -0.0141511"
+   point40="-15.4745 0.551149 33.4894"
+   tangent40="0.9999 0 -0.014151"
+   point41="-14.9816 0.551149 33.4824"
+   tangent41="0.9999 0 -0.0141511"
+   point42="-14.4888 0.551149 33.4755"
+   tangent42="0.9999 0 -0.0141511"
+   point43="-13.996 0.551149 33.4685"
+   tangent43="0.9999 0 -0.0141511"
+   point44="-13.5032 0.551149 33.4615"
+   tangent44="0.999903 0 -0.0139109"
+   size="45"
+/>
+</entity>
+<entity>
+<tags
+   tags="box platform removable"
+/>
+<box/>
 <name
    name="Box_1"
 />
@@ -113,15 +226,12 @@
    size="2.0 1.0 2.0"
    mass="2"
 />
-<polarized
-	pol="minus"
-/>
 </entity>
 <entity>
 <tags
-   tags="box platform"
+   tags="box platform removable"
 />
-<box fixed ="true" removable="true"/>
+<box/>
 <name
    name="Box_2"
 />
@@ -139,15 +249,12 @@
    size="2.0 1.0 2.0"
    mass="2"
 />
-<polarized
-	pol="minus"
-/>
 </entity>
 <entity>
 <tags
-   tags="box platform"
+   tags="box platform removable"
 />
-<box fixed ="true" removable="true"/>
+<box/>
 <name
    name="Box_3"
 />
@@ -165,15 +272,12 @@
    size="2.0 1.0 2.0"
    mass="2"
 />
-<polarized
-	pol="minus"
-/>
 </entity>
 <entity>
 <tags
-   tags="box platform"
+   tags="box platform removable"
 />
-<box fixed ="true" removable="true"/>
+<box/>
 <name
    name="Box_4"
 />
@@ -191,15 +295,12 @@
    size="2.0 1.0 2.0"
    mass="2"
 />
-<polarized
-	pol="minus"
-/>
 </entity>
 <entity>
 <tags
-   tags="box platform"
+   tags="box platform removable"
 />
-<box fixed ="true" removable="true"/>
+<box/>
 <name
    name="Box_5"
 />
@@ -217,15 +318,12 @@
    size="2.0 1.0 2.0"
    mass="2"
 />
-<polarized
-	pol="minus"
-/>
 </entity>
 <entity>
 <tags
-   tags="box platform"
+   tags="box platform removable"
 />
-<box fixed ="true" removable="true"/>
+<box/>
 <name
    name="Box_6"
 />
@@ -243,15 +341,12 @@
    size="2.0 1.0 2.0"
    mass="2"
 />
-<polarized
-	pol="minus"
-/>
 </entity>
 <entity>
 <tags
-   tags="box platform"
+   tags="box platform removable"
 />
-<box fixed ="true" removable="true"/>
+<box/>
 <name
    name="Box_7"
 />
@@ -268,9 +363,6 @@
    type_shape="box"
    size="2.0 1.0 2.0"
    mass="2"
-/>
-<polarized
-	pol="minus"
 />
 </entity>
 <entity>
@@ -290,8 +382,8 @@
    kpt1_wait="2"
    jurisdiction="22.9628 0 29.2104"
    jurRadius="38.4"
-   formation_point="14 0 -8"
-   formation_dir="1 0 0"
+   formation_point="9.48535 -1.8 16.0017"
+   formation_dir="9.48535 -1.8 16.0017"
 />
 <name
    name="guard_1"
@@ -326,8 +418,8 @@
    kpt1_wait="2"
    jurisdiction="30.0801 0 21.3608"
    jurRadius="35.2"
-   formation_point="10 0 -12"
-   formation_dir="1 0 0"
+   formation_point="9.48535 -1.5561 13.0334"
+   formation_dir="9.48535 -1.5561 13.0334"
 />
 <name
    name="guard_2"
@@ -362,8 +454,8 @@
    kpt1_wait="2"
    jurisdiction="33.3111 0 10.9548"
    jurRadius="26.9"
-   formation_point="12 0 -10"
-   formation_dir="1 0 0"
+   formation_point="9.48535 -1.50508 9.09375"
+   formation_dir="9.48535 -1.50508 9.09375"
 />
 <name
    name="guard_3"
