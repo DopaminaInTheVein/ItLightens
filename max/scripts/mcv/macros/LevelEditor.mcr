@@ -3,6 +3,6 @@ macroScript LevelEditor
 	toolTip:"Level Editor"
 (
 	filein (
-		(getDir #scripts) + "\\mcv\\rollouts\\rLevelEditor.ms"
+		(scripts_dir) + "\\mcv\\rollouts\\rLevelEditor.ms"
 	)
 )

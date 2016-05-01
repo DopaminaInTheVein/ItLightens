@@ -3,6 +3,6 @@ macroScript Exporter
 	toolTip:"RigidAnim"
 (
 	filein (
-		(getDir #scripts) + "\\mcv\\rollouts\\rRigidAnim.ms"
+		(scripts_dir) + "\\mcv\\rollouts\\rRigidAnim.ms"
 	)
 )
