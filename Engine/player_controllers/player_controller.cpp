@@ -17,14 +17,6 @@
 #include "components/comp_charactercontroller.h"
 #include "logic/polarity.h"
 
-// --- Anims State --- //
-#define AST_IDLE	"idle"
-#define AST_FALL	"fall"
-#define AST_JUMP	"jump"
-#define AST_JUMP2	"jump2"
-#define AST_MOVE	"walk"
-// ------------------- //
-
 #define DELTA_YAW_SELECTION		deg2rad(10)
 
 map<string, statehandler> player_controller::statemap = {};

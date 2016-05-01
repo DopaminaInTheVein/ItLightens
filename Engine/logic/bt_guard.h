@@ -5,6 +5,7 @@
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
 #include "components/entity.h"
+#include "skeleton_controllers/skc_guard.h"
 #include "handle/handle.h"
 #include "handle/object_manager.h"
 #include "handle/handle_manager.h"
@@ -72,11 +73,14 @@ class bt_guard : public TCompBase, public bt
 	CEntity* getPlayer();
 
 	//Cambio Malla
-	TCompRenderStaticMesh* mesh;
-	string pose_idle_route;
-	string pose_shoot_route;
-	string pose_run_route;
-	string last_pose = "";
+	//TCompRenderStaticMesh* mesh;
+	//string pose_idle_route;
+	//string pose_shoot_route;
+	//string pose_run_route;
+	//string last_pose = "";
+
+	//Cambio anim
+	SkelControllerGuard animController;
 
 	//Debug
 	//____TIMER_DECLARE_(timerDebug, 2.0f);
@@ -248,7 +252,8 @@ public:
 	bool load(MKeyValue& atts);
 
 	//Cambio Malla
-	void ChangePose(string new_pose_route);
+	//void ChangePose(string new_pose_route);
+
 
 	float timerStunt, _timerStunt;
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)

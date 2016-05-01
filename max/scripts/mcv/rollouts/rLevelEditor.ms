@@ -139,7 +139,6 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 			if objNoProp.count > 0 then (
 				msg = "Hay objetos que no tienen la propiedad '" + ddlProperties.selected + "', estos no se verán afectados.\n"
 				msg += "¿Desea continuar?\n"
-				msg += "\n No se modificarán los siguientes objetos:"
 				for o in objNoProp do (
 					msg += "\n- " + o.name 
 				)
@@ -151,9 +150,9 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 			)
 			
 			for obj in objs do (
-				if (getUserProp obj ddlProperties.selected != undefined) then (
+				--if (getUserProp obj ddlProperties.selected != undefined) then (
 					setUserProp obj ddlProperties.selected txtValue.text
-				)
+				--)
 			)
 		)
 	)

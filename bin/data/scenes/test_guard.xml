@@ -393,8 +393,11 @@
    quat="0 0 0 1.0"
    scale="1.0"
 />
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
 <render_static_mesh
-   name="static_meshes/guard.static_mesh"
+   name="skeletons/guard/guard.static_mesh"
 />
 <character_controller
    radius="0.3"
@@ -429,8 +432,11 @@
    quat="0 0 0 1.0"
    scale="1.0"
 />
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
 <render_static_mesh
-   name="static_meshes/guard.static_mesh"
+   name="skeletons/guard/guard.static_mesh"
 />
 <character_controller
    radius="0.3"
@@ -465,8 +471,11 @@
    quat="0 0 0 1.0"
    scale="1.0"
 />
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
 <render_static_mesh
-   name="static_meshes/guard.static_mesh"
+   name="skeletons/guard/guard.static_mesh"
 />
 <character_controller
    radius="0.3"

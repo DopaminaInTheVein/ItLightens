@@ -121,7 +121,7 @@ struct OM (
 			-- Tags
 			,#("AI","AI_guard")
 			-- Attributes
-			,#("life")
+			,#("life", "skeleton")
 			--Components
 			,#("life","bt_guard")
 			--Helpers

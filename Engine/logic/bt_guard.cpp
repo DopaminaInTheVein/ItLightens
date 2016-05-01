@@ -12,6 +12,7 @@
 //Render shoot
 #include "render/fx/GuardShots.h"
 
+
 map<string, bt_guard::KptType> bt_guard::kptTypes = {
 	  {"seek", KptType::Seek}
 	, {"look", KptType::Look}
@@ -138,12 +139,7 @@ void bt_guard::Init()
 
 	//Mallas
 	CEntity* myEntity = myParent;
-
-	mesh = myEntity->get<TCompRenderStaticMesh>();
-
-	pose_idle_route = "static_meshes/guard.static_mesh";
-	pose_shoot_route = "static_meshes/guard_shoot.static_mesh";
-	pose_run_route = "static_meshes/guard_run.static_mesh";
+	animController.init(myParent);
 }
 
 //conditions
@@ -199,11 +195,11 @@ bool bt_guard::playerOutOfReach() {
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 	if (distance > DIST_SQ_SHOT_AREA_ENTER) {
-		ChangePose(pose_run_route);
+		animController.setState(AST_RUN);
 		return true;
 	}
 	else {
-		ChangePose(pose_shoot_route);
+		animController.setState(AST_SHOOT);
 		return false;
 	}
 }
@@ -296,7 +292,7 @@ int bt_guard::actionStunned() {
 
 int bt_guard::actionStepBack() {
 	PROFILE_FUNCTION("guard: actionstepback");
-	ChangePose(pose_run_route);
+	animController.setState(AST_RUN);
 	goForward(-2.f*SPEED_WALK);
 
 	if (playerNear()) return STAY;
@@ -339,18 +335,18 @@ int bt_guard::actionChase() {
 	if (distance > DIST_SQ_PLAYER_LOST || outJurisdiction(posPlayer)) {
 		playerLost = true;
 		player_last_seen_point = posPlayer;
-		ChangePose(pose_idle_route);
+		animController.setState(AST_IDLE);
 		return OK;
 	}
 	//player near?
 	else if (distance < DIST_SQ_SHOT_AREA_ENTER) {
-		ChangePose(pose_shoot_route);
+		animController.setState(AST_SHOOT);
 		return OK;
 	}
 	else {
 		getPath(myPos, posPlayer, SBB::readSala());
 
-		ChangePose(pose_run_route);
+		animController.setState(AST_RUN);
 		goTo(posPlayer);
 		return STAY;
 	}
@@ -402,7 +398,7 @@ int bt_guard::actionAbsorb() {
 		}
 	}
 	else if (playerVisible()) {
-		ChangePose(pose_shoot_route);
+		animController.setState(AST_SHOOT);
 		shootToPlayer();
 		return STAY;
 	}
@@ -469,7 +465,7 @@ int bt_guard::actionSearch() {
 	else if (playerLost) {
 		float distance = squaredDistXZ(myPos, player_last_seen_point);
 		getPath(myPos, player_last_seen_point, SBB::readSala());
-		ChangePose(pose_run_route);
+		animController.setState(AST_RUN);
 		goTo(player_last_seen_point);
 		//Noise Point Reached ?
 		if (distance < DIST_SQ_REACH_PNT) {
@@ -493,7 +489,7 @@ int bt_guard::actionSearch() {
 	else if (noiseHeard) {
 		float distance = squaredDistXZ(myPos, noisePoint);
 		getPath(myPos, noisePoint, SBB::readSala());
-		ChangePose(pose_run_route);
+		animController.setState(AST_RUN);
 		goTo(noisePoint);
 		//Noise Point Reached ?
 		if (distance < DIST_SQ_REACH_PNT) {
@@ -540,7 +536,7 @@ int bt_guard::actionMoveAround() {
 
 	if (distance_to_point > DIST_SQ_REACH_PNT) {
 		getPath(myPos, search_player_point, SBB::readSala());
-		ChangePose(pose_run_route);
+		animController.setState(AST_RUN);
 		goTo(search_player_point);
 		return STAY;
 	}
@@ -558,7 +554,7 @@ int bt_guard::actionLookAround() {
 	}
 	// Turn arround
 	else if (deltaYawLookingArround < 2 * M_PI && looking_around_time > 0.f) {
-		ChangePose(pose_idle_route);
+		animController.setState(AST_IDLE);
 		float yaw, pitch;
 		getTransform()->getAngles(&yaw, &pitch);
 
@@ -596,14 +592,14 @@ int bt_guard::actionSeekWpt() {
 		}
 		else {
 			getPath(myPos, dest, SBB::readSala());
-			ChangePose(pose_run_route);
+			animController.setState(AST_RUN);
 			goTo(dest);
 			return STAY;
 		}
 	}
 	//Look to waypoint
 	else if (keyPoints[curkpt].type == Look) {
-		ChangePose(pose_idle_route);
+		animController.setState(AST_IDLE);
 		//Look to waypoint
 		if (turnTo(dest)) {
 			curkpt = (curkpt + 1) % keyPoints.size();
@@ -639,7 +635,7 @@ int bt_guard::actionNextWpt() {
 int bt_guard::actionWaitWpt() {
 	//PROFILE_FUNCTION("guard: actionwaitwpt");
 	if (!myParent.isValid()) return false;
-	ChangePose(pose_idle_route);
+	animController.setState(AST_IDLE);
 
 	//player visible?
 	if (playerVisible() || boxMovingDetected()) {
@@ -668,12 +664,12 @@ int bt_guard::actionGoToFormation() {
 	// if we didn't reach the point
 	if (distance_to_point > DIST_SQ_REACH_PNT) {
 		getPath(myPos, formation_point, SBB::readSala());
-		ChangePose(pose_run_route);
+		animController.setState(AST_RUN);
 		goTo(formation_point);
 		return STAY;
 	}
 
-	ChangePose(pose_idle_route);
+	animController.setState(AST_IDLE);
 	return OK;
 }
 
@@ -1185,17 +1181,17 @@ void bt_guard::resetStats()
 }
 
 //Cambio de malla
-void bt_guard::ChangePose(string new_pose_route) {
-	PROFILE_FUNCTION("guard bt: change pose");
-	if (last_pose != new_pose_route) {
-		mesh->unregisterFromRender();
-		MKeyValue atts_mesh;
-		atts_mesh["name"] = new_pose_route;
-		mesh->load(atts_mesh);
-		mesh->registerToRender();
-		last_pose = new_pose_route;
-	}
-}
+//void bt_guard::ChangePose(string new_pose_route) {
+//	PROFILE_FUNCTION("guard bt: change pose");
+//	if (last_pose != new_pose_route) {
+//		mesh->unregisterFromRender();
+//		MKeyValue atts_mesh;
+//		atts_mesh["name"] = new_pose_route;
+//		mesh->load(atts_mesh);
+//		mesh->registerToRender();
+//		last_pose = new_pose_route;
+//	}
+//}
 
 //TODO: remove
 void bt_guard::artificialInterrupt()
@@ -1212,7 +1208,7 @@ void bt_guard::goToPoint(VEC3 dest) {
 	PROFILE_FUNCTION("guard: go to point");
 	if (!myParent.isValid()) return;
 
-	ChangePose(pose_run_route);
+	animController.setState(AST_RUN);
 	forced_move = true;
 
 	// if we didn't reach the point
@@ -1221,6 +1217,6 @@ void bt_guard::goToPoint(VEC3 dest) {
 		goTo(dest);
 	}
 
-	ChangePose(pose_idle_route);
+	animController.setState(AST_IDLE);
 	forced_move = false;
 }

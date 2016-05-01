@@ -1,6 +1,16 @@
 #ifndef INC_SKELETON_CONTROLLER_H_
 #define INC_SKELETON_CONTROLLER_H_
 
+// --- Anims State --- //
+#define AST_IDLE	"idle"
+#define AST_FALL	"fall"
+#define AST_JUMP	"jump"
+#define AST_JUMP2	"jump2"
+#define AST_MOVE	"walk"
+#define AST_RUN		"run"
+#define AST_SHOOT	"shoot"
+// ------------------- //
+
 class SkelController {
 protected:
 	CHandle owner;

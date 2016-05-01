@@ -559,6 +559,9 @@
     <ClCompile Include="skeleton_controllers\skc_player.cpp">
       <Filter>skeleton_controllers</Filter>
     </ClCompile>
+    <ClCompile Include="skeleton_controllers\skc_guard.cpp">
+      <Filter>skeleton_controllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1359,6 +1362,9 @@
       <Filter>skeleton_controllers</Filter>
     </ClInclude>
     <ClInclude Include="skeleton_controllers\skc_player.h">
+      <Filter>skeleton_controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton_controllers\skc_guard.h">
       <Filter>skeleton_controllers</Filter>
     </ClInclude>
   </ItemGroup>

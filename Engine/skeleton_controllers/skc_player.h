@@ -1,5 +1,5 @@
-#ifndef INC_SKCPLAYER_H_
-#define INC_SKCPLAYER_H_
+#ifndef INC_SKC_PLAYER_H_
+#define INC_SKC_PLAYER_H_
 
 #include "skel_controller.h"
 
