@@ -1,14 +1,19 @@
+-- PATHS GENERALES (Configurar para cada usuario)
+--------------------------------------------------------------------------------------------------------------------
+data_dir = "E:GIT\\ItLightens\\bin\\data\\"
+max_dir = "E:\\GIT\\ItLightens\\max\\"
+--------------------------------------------------------------------------------------------------------------------
+
+filein (max_dir + "scripts\\" + "project_config.ms")
+
 fn startUp = (
 	-- Folders
-	scriptsDir = (getDir #scripts) + "\\"
+	scriptsDir = (max_dir + "scripts\\")
 	mcvScriptsDir = scriptsDir + "mcv\\"
 	mcvResources = mcvScriptsDir + "\\resources\\"
 	mcvTools = mcvScriptsDir + "\\tools\\"
 	mcvParsingDir = mcvScriptsDir + "\\parsing\\"
 	mcvMacrosDir = mcvScriptsDir + "\\macros\\"
-	
-	--Personal config file (where is data path, etc.)
-	filein (scriptsDir+"config.ms") 
 	
 	--Utils file
 	filein (mcvScriptsDir +"utils.ms") 		
