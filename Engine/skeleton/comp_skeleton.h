@@ -9,6 +9,7 @@ class CSkeleton;
 struct TCompSkeleton : public TCompBase {
 	const CSkeleton* resource_skeleton;
 	CalModel*  model;
+	int prevCycleId;
 	bool load(MKeyValue& atts);
 	void update(float dt);
 	void render() const;

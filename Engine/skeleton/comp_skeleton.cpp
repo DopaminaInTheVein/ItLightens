@@ -32,19 +32,22 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 	auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
 	model = new CalModel(non_const_skel->getCoreModel());
 
-	// Play the first animation as cycle
-	model->getMixer()->blendCycle(0, 1.0f, 0.f);
-	//model->getMixer()->blendCycle(1, 1.0f, 0.f);
-
 	// To get the bones updated right now, otherwis, trying to render will find all bones collapsed in the zero
 	model->update(0.f);
+
+	prevCycleId = -1;
+
 	return true;
 }
 
 void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 	int anim_id = resource_skeleton->getAnimIdByName(msg.name);
 	if (anim_id >= 0) {
-		if (msg.loop) model->getMixer()->blendCycle(anim_id, 1.0f, 0.f);
+		if (msg.loop) {
+			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.2f);
+			model->getMixer()->blendCycle(anim_id, 1.0f, 0.2f);
+			prevCycleId = anim_id;
+		}
 		else model->getMixer()->executeAction(anim_id, 1.0f, 0.f);
 	} else {
 		fatal("Animation %s doesn't exist!", msg.name.c_str());

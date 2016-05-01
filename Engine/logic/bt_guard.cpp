@@ -96,6 +96,7 @@ void bt_guard::Init()
 	//Handles
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
+	animController.init(myParent);
 	thePlayer = tags_manager.getFirstHavingTag(getID("player"));
 
 	if (tree.empty()) {
@@ -136,10 +137,6 @@ void bt_guard::Init()
 	timeWaiting = 0;
 	deltaYawLookingArround = 0;
 	stunned = false;
-
-	//Mallas
-	CEntity* myEntity = myParent;
-	animController.init(myParent);
 }
 
 //conditions

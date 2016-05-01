@@ -4,7 +4,7 @@
 #include "skel_controller.h"
 
 class SkelControllerGuard : public SkelController {
-	//virtual void myUpdate();
+	virtual void myUpdate();
 };
 
 #endif

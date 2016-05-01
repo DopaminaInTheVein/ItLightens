@@ -245,6 +245,7 @@ public:
 			}
 		}
 		if (!forced_move) Recalc();
+		animController.update();
 	}
 
 	void render();
