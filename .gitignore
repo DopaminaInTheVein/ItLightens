@@ -20,6 +20,7 @@ bin/Settings.cap
 bin/results.cpuprofile
 bin/Engined.exp
 bin/Engine.lib
+max/script/archives/*
 *.VC.db
 *.orig
 *.opendb
