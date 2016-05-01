@@ -1329,7 +1329,7 @@
     </ClInclude>
     <ClInclude Include="app_modules\sound_manager\sound_manager.h">
       <Filter>app_modules\sound_manager</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="components\comp_light_fadable.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -1348,6 +1348,7 @@
     <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h">
       <Filter>render\constants</Filter>
     </ClInclude>
+    <ClInclude Include="logic\polarity.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1526,7 +1527,7 @@
     </Filter>
     <Filter Include="app_modules\sound_manager">
       <UniqueIdentifier>{0012f195-886a-4a8a-8113-bd4f5cb5649a}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="render\constants">
       <UniqueIdentifier>{61448c20-12c5-409f-a50b-43ba674d0122}</UniqueIdentifier>
     </Filter>
