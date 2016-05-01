@@ -1,5 +1,5 @@
 <model>
-  <skeleton    src ="skeletons/guard/guard.csf"/>
-  <animations src ="skeletons/guard/"/>
-  <mesh     src="skeletons/guard/guard.cmf"/>
+  <skeleton    src ="skeletons/Guard/Guard.csf"/>
+  <animations src ="skeletons/Guard/"/>
+  <mesh     src="skeletons/Guard/Guard.cmf"/>
 </model>

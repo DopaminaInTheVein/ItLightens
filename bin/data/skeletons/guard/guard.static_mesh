@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="skeletons/guard/guard.mesh" material="materials/skin_guard.material" />
+  <slot mesh="skeletons/Guard/Guard.mesh" material="materials/skin_guard.material" />
 </static_mesh>
