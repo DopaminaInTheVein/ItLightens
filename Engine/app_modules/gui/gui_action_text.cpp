@@ -35,7 +35,9 @@ void CGuiActionText::render() {
 		break;
 	}
 
-	GUI::drawText(Pixel(rect.x, rect.y), 
-		GImGui->Font, sizeFont, 
-		GUI::IM_WHITE, text.c_str());
+	if (text != "") {
+		GUI::drawText(Pixel(rect.x, rect.y),
+			GImGui->Font, sizeFont,
+			GUI::IM_WHITE, text.c_str());
+	}
 }

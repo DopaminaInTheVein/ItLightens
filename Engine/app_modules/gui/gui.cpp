@@ -61,7 +61,7 @@ bool CGuiModule::start()
 	hudPlayer = new CGuiHudPlayer(hudPlayerRect);
 	
 	//Action Text
-	txtAction = new CGuiActionText(GUI::createRect(0.5f, 0.7f, .3f, .1f));
+	txtAction = new CGuiActionText(GUI::createRect(0.7f, 0.9f, .3f, .1f));
 
 	dbg("GUI module started\n");
 
@@ -172,6 +172,7 @@ void CGuiModule::renderDefault() {
 // ----- Render On Play ----- //
 void CGuiModule::renderOnPlay() {
 	hudPlayer->render();
+	txtAction->render();
 }
 
 // ----- Render On Stop ----- //

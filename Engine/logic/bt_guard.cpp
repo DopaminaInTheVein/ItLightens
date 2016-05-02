@@ -747,6 +747,15 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 		stunned = true;
 		____TIMER_RESET_(timerStunt);
 		setCurrent(NULL);
+
+		//End Damage Message
+		sendMsgDmg = shooting = false;
+
+		TMsgDamageSpecific dmg;
+		dmg.source = entity->getName();
+		dmg.type = Damage::ABSORB;
+		dmg.actived = false;
+		getPlayer()->sendMsg(dmg);
 	}
 
 }
@@ -1011,7 +1020,7 @@ bool bt_guard::shootToPlayer() {
 	if (damage && !sendMsgDmg && !shooting) {
 		shooting = true;
 		CEntity* ePlayer = getPlayer();
-		sendMsgDmg = !sendMsgDmg;
+		sendMsgDmg = true;
 		TMsgDamageSpecific dmg;
 		dmg.source = entity->getName();
 		dmg.type = Damage::ABSORB;
