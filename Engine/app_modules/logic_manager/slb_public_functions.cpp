@@ -127,7 +127,52 @@ void SLBHandle::toggleGuardFormation() {
 	getHandleManager<bt_guard>()->onAll(&bt_guard::toggleFormation);
 }
 
-// public functions
+// camera control in LUA
+void SLBCamera::getCamera() {
+	camera_h = tags_manager.getFirstHavingTag("camera_main");
+}
+
+void SLBCamera::setDistanceToTarget(float distance) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setDistanceToTarget(distance);
+}
+
+void SLBCamera::setSpeed(float speed) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setSpeed(speed);
+}
+
+void SLBCamera::setSpeedUnlocked(float speed) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setSpeedUnlocked(speed);
+}
+
+void SLBCamera::setRotationSensibility(float sensibility) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setRotationSensibility(sensibility);
+}
+
+// public generic functions
 void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	// create the new command
 	command new_command;

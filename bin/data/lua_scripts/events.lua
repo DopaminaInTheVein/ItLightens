@@ -7,6 +7,10 @@ p = Public( )
 function OnAction( param )
 	p:print( "OnAction: "..param.."\n" )
 	triggerGuardFormation();
+	setCameraDistanteToTarget(5.5);
+	setCameraRotationSensibility(60.5);
+	setCameraSpeed(4.0);
+	setCameraSpeedUnlocked(10.0);
 end
 
 function OnEnter( param, handle )

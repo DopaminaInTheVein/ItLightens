@@ -53,6 +53,22 @@ public:
 		, rotation_sensibility(deg2rad(45.0f) / 250.0f)
 	{}
 
+	void setDistanceToTarget(float distance) {
+		distance_to_target = distance;
+	}
+
+	void setSpeed(float speed) {
+		speed_camera = speed;
+	}
+
+	void setSpeedUnlocked(float speed) {
+		speed_camera_unlocked = speed;
+	}
+
+	void setRotationSensibility(float sensibility) {
+		rotation_sensibility = deg2rad(sensibility) / 250.0f;
+	}
+
 	float GetPositionDistance() const {
 		return distance_to_target;
 	}

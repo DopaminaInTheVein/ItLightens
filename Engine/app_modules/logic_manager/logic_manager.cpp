@@ -16,9 +16,10 @@ bool CLogicManagerModule::start() {
 	assert(slb_manager);
 
 	// Binds here, if needed
-	bindPublicFunctions(*slb_manager);
 	bindPlayer(*slb_manager);
 	bindHandle(*slb_manager);
+	bindCamera(*slb_manager);
+	bindPublicFunctions(*slb_manager);
 
 	// load the scripts
 	std::vector<std::string> files_to_load = list_files_recursively(lua_script_folder);
@@ -247,38 +248,7 @@ void CLogicManagerModule::stop() {
 	command_queue.clear();
 }
 
-void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
-	SLB::Class<SLBPublicFunctions>("Public", &m)
-		.comment("Public functions class")
-		.constructor()
-		// execute command function
-		.set("exec_command", &SLBPublicFunctions::execCommand)
-		.comment("Executes the specified command after a given time")
-		.param("string: code to execute")
-		.param("float: time until execution")
-		// basic print function
-		.set("print", &SLBPublicFunctions::print)
-		.comment("Prints via VS console")
-		.param("Text to print")
-		// play sound function
-		.set("play_sound", &SLBPublicFunctions::playSound)
-		.comment("Executes the specified sound effect")
-		.param("Route of the sound")
-		// play music function
-		.set("play_music", &SLBPublicFunctions::playMusic)
-		.comment("Executes the specified music")
-		.param("Route of the music")
-		// play voice function
-		.set("play_voice", &SLBPublicFunctions::playVoice)
-		.comment("Executes the specified voice")
-		.param("Route of the voice")
-		// play ambient function
-		.set("play_ambient", &SLBPublicFunctions::playAmbient)
-		.comment("Executes the specified ambient sound")
-		.param("Route of the ambient sound")
-		;
-}
-
+// Player LUA functions
 void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
 	SLB::Class<SLBPlayer>("Player", &m)
 		.comment("Player class")
@@ -302,6 +272,7 @@ void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
 		;
 }
 
+// Generic handle LUA functions
 void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 	SLB::Class<SLBHandle>("Handle", &m)
 		.comment("Handle class")
@@ -337,5 +308,65 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// toggle guards formation
 		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
 		.comment("Activates/desactivates the guard formation states.")
+		;
+}
+
+// Camera LUA functions
+void CLogicManagerModule::bindCamera(SLB::Manager& m) {
+	SLB::Class<SLBCamera>("Camera", &m)
+		.comment("Camera class")
+		.constructor()
+		// sets the handle pointer to the player
+		.set("get_camera", &SLBCamera::getCamera)
+		.comment("Gets the camera handler")
+		// set camera distance to player
+		.set("set_distance_to_target", &SLBCamera::setDistanceToTarget)
+		.comment("Sets the camera distance to the target")
+		.param("float: distance")
+		// sets the camera speed
+		.set("set_speed", &SLBCamera::setSpeed)
+		.comment("Sets the camera speed")
+		.param("float: speed")
+		// sets the camera speed when unlocked
+		.set("set_speed_unlocked", &SLBCamera::setSpeedUnlocked)
+		.comment("Sets the camera speed when unlocked")
+		.param("float: speed")
+		// sets the rotation sensibility of the camera
+		.set("set_rotation_sensibility", &SLBCamera::setRotationSensibility)
+		.comment("Sets the rotation sensibility of the camera")
+		.param("float: sensibility (in degrees)")
+		;
+}
+
+// General LUA functions
+void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
+	SLB::Class<SLBPublicFunctions>("Public", &m)
+		.comment("Public functions class")
+		.constructor()
+		// execute command function
+		.set("exec_command", &SLBPublicFunctions::execCommand)
+		.comment("Executes the specified command after a given time")
+		.param("string: code to execute")
+		.param("float: time until execution")
+		// basic print function
+		.set("print", &SLBPublicFunctions::print)
+		.comment("Prints via VS console")
+		.param("Text to print")
+		// play sound function
+		.set("play_sound", &SLBPublicFunctions::playSound)
+		.comment("Executes the specified sound effect")
+		.param("Route of the sound")
+		// play music function
+		.set("play_music", &SLBPublicFunctions::playMusic)
+		.comment("Executes the specified music")
+		.param("Route of the music")
+		// play voice function
+		.set("play_voice", &SLBPublicFunctions::playVoice)
+		.comment("Executes the specified voice")
+		.param("Route of the voice")
+		// play ambient function
+		.set("play_ambient", &SLBPublicFunctions::playAmbient)
+		.comment("Executes the specified ambient sound")
+		.param("Route of the ambient sound")
 		;
 }
