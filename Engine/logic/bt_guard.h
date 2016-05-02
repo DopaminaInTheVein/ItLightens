@@ -5,6 +5,7 @@
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
 #include "components/entity.h"
+#include "skeleton_controllers/skc_guard.h"
 #include "handle/handle.h"
 #include "handle/object_manager.h"
 #include "handle/handle_manager.h"
@@ -52,9 +53,11 @@ class bt_guard : public TCompBase, public bt
 	float MAX_REACTION_TIME;
 	float MAX_BOX_REMOVAL_TIME;
 	float BOX_REMOVAL_ANIM_TIME;
+	float MAX_SEARCH_DISTANCE;
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
 	float GUARD_ALERT_RADIUS;
+	float RANDOM_POINT_MAX_DISTANCE;
 	VEC4 SHOT_OFFSET;
 	//from bombs
 	float reduce_factor;
@@ -70,11 +73,14 @@ class bt_guard : public TCompBase, public bt
 	CEntity* getPlayer();
 
 	//Cambio Malla
-	TCompRenderStaticMesh* mesh;
-	string pose_idle_route;
-	string pose_shoot_route;
-	string pose_run_route;
-	string last_pose = "";
+	//TCompRenderStaticMesh* mesh;
+	//string pose_idle_route;
+	//string pose_shoot_route;
+	//string pose_run_route;
+	//string last_pose = "";
+
+	//Cambio anim
+	SkelControllerGuard animController;
 
 	//Debug
 	//____TIMER_DECLARE_(timerDebug, 2.0f);
@@ -98,6 +104,7 @@ class bt_guard : public TCompBase, public bt
 	int curkpt;
 	VEC3 player_last_seen_point;
 	VEC3 noisePoint;
+	VEC3 search_player_point;
 	bool noiseHeard = false;
 	bool playerLost = false;
 	// reaction time management
@@ -110,6 +117,11 @@ class bt_guard : public TCompBase, public bt
 	float removing_box_animation_time = 0.f;
 	float looking_around_time = 0.f;
 
+	//Toggles
+	bool formation_toggle = false;
+	VEC3 formation_point;
+	VEC3 formation_dir;
+
 	//Correa
 	VEC3 jurCenter;
 	float jurRadiusSq;
@@ -118,6 +130,7 @@ class bt_guard : public TCompBase, public bt
 	void goTo(const VEC3& dest);
 	void goForward(float stepForward);
 	bool turnTo(VEC3 dest);
+	VEC3 generateRandomPoint();
 
 	//Aux checks
 	bool playerVisible();
@@ -141,6 +154,7 @@ class bt_guard : public TCompBase, public bt
 
 	bool stunned;
 	bool shooting = false;
+	bool forced_move = false;
 
 	// the nodes
 	static map<string, btnode *>tree;
@@ -160,6 +174,8 @@ public:
 	bool playerDetected();
 	bool playerOutOfReach();
 	bool guardAlerted();
+	//toggle conditions
+	bool checkFormation();
 	//actions
 	int actionStunned();
 	int actionStepBack();
@@ -169,10 +185,20 @@ public:
 	int actionShootWall();
 	int actionRemoveBox();
 	int actionSearch();
+	int actionMoveAround();
 	int actionLookAround();
 	int actionSeekWpt();
 	int actionNextWpt();
 	int actionWaitWpt();
+	//toggle actions
+	int actionGoToFormation();
+	int actionTurnToFormation();
+	int actionWaitInFormation();
+	//Toggle enabling/disabling functions
+	void toggleFormation() {
+		setCurrent(NULL);
+		formation_toggle = !formation_toggle;
+	}
 
 	//functions that allow access to the static maps
 	map<string, btnode *>* getTree() override {
@@ -198,6 +224,7 @@ public:
 	void Init();
 	void noise(const TMsgNoise& msg);
 	void readIniFileAttr();
+	void goToPoint(VEC3 dest);
 
 	//From bombs
 	void reduceStats();
@@ -217,7 +244,8 @@ public:
 				resetStats();
 			}
 		}
-		Recalc();
+		if (!forced_move) Recalc();
+		animController.update();
 	}
 
 	void render();
@@ -225,7 +253,8 @@ public:
 	bool load(MKeyValue& atts);
 
 	//Cambio Malla
-	void ChangePose(string new_pose_route);
+	//void ChangePose(string new_pose_route);
+
 
 	float timerStunt, _timerStunt;
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)

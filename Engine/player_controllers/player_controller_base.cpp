@@ -222,7 +222,10 @@ void CPlayerBase::Idle()
 	if (!checkDead()) {
 		UpdateDirection();
 		UpdateJumpState();
-		if (UpdateMovDirection()) ChangeState("moving");
+		if (UpdateMovDirection()) {
+			ChangeState("moving");
+			ChangeCommonState("moving");
+		}
 	}
 }
 
@@ -234,6 +237,7 @@ void CPlayerBase::Jump()
 	cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
 	energyDecreasal(5.0f);
 	ChangeState("jumping");
+	ChangeCommonState("jumping");
 }
 
 void CPlayerBase::Die()

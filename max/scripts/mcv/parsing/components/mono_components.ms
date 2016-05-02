@@ -2,13 +2,17 @@
 --(Objetos que se interpretan como un solo componente, por su tipo de max) --
 
 fn parseMonoComponent = (
-	--Name, Transform
-	_parse_name()
-	_parse_transform()
+	local parsed = false
 	if (classof _parsingObject) == OmniLight then (
 		_parse_lightpoint()
-		return true
+		parsed = true
 	)
-		
-	return false
+	
+	-- If parsed we add common components
+	if parsed then (
+		--Name, Transform
+		_parse_name()
+		_parse_transform()
+	)
+	return parsed
 )

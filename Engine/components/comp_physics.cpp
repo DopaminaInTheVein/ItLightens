@@ -73,7 +73,6 @@ bool TCompPhysics::load(MKeyValue & atts)
 		fatal("object type inexistent!!\n");
 		break;
 	}
-
 	return true;
 }
 
@@ -174,8 +173,9 @@ bool TCompPhysics::createTriMeshShape()
 	CEntity *e = nullptr;
 	if(entity_h.isValid()) e = entity_h;
 	if (e) {
+
 		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
-		assert(comp_static_mesh) ;
+		assert(comp_static_mesh || fatal("Cant load static mesh on %s", e->getName()));
 		PxTriangleMesh *cookedMesh = g_PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0
 		m_pShape = g_PhysxManager->CreateTriangleMesh(cookedMesh,m_staticFriction, m_dynamicFriction, m_restitution);
 		addRigidbodyScene();

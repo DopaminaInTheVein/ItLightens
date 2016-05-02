@@ -101,18 +101,24 @@ void TCompCharacterController::RecalcSpeed(float dt)
 	//update y speed based on y gravity
 	if (m_affectGravity) {
 		if (!m_OnGround) {
+			assert(isValid(m_speed));
 			m_speed.y += m_gravitySpeed*dt;
+			assert(isValid(m_speed));
 		}
 	}
 
 	//update final speed
+	assert(isValid(m_speed));
 	m_speed += m_accel*dt;
+	assert(isValid(m_speed));
 
 	//calc if there are some speed to sum at speed from own rigidbdy speed
 	if (!m_OnGround && m_lastOnGround) {
+		assert(isValid(m_speed));
 		VEC3 speed = PhysxConversion::PxVec3ToVec3(m_last_speed);
 		speed.y = 0;
 		m_speed += speed;
+		assert(isValid(m_speed));
 	}
 
 	//calc if some speed is too low. if true, will be assigned at 0
@@ -170,15 +176,19 @@ void TCompCharacterController::RecalcMovement(float dt)
 
 
 	//update final movement
+	assert(isValid(m_toMove));
 	m_toMove += m_speed*dt;
+	assert(isValid(m_toMove));
 }
 
 //apply a friction for the speeds
 void TCompCharacterController::UpdateFriction(float dt) {
 	PROFILE_FUNCTION("update: friction");
 	//update speeds with friction
+	assert(isValid(m_speed));
 	if (m_speed.x != 0.0f) m_speed.x -= m_speed.x*m_friction*dt;
 	if (m_speed.z != 0.0f) m_speed.z -= m_speed.z*m_friction*dt;
+	assert(isValid(m_speed));
 }
 
 //apply the calculated movement
@@ -194,6 +204,7 @@ void TCompCharacterController::ApplyPendingMoves(float dt) {
 	
 	if (m_toMove != VEC3(0.0f, 0.0f, 0.0f)) {
 		PROFILE_FUNCTION(name.c_str());
+		assert(isValid(m_toMove));
 		PxVec3 moved = PxVec3(m_toMove.x, m_toMove.y, m_toMove.z);
 		m_last_speed = m_pActor->getActor()->getLinearVelocity();
 		m_flagsCollisions = m_pActor->move(moved, 0.0f, dt, m_filterController);
@@ -329,17 +340,23 @@ void TCompCharacterController::SetFilterData(PxFilterData& filter)
 
 void TCompCharacterController::AddImpulse(const VEC3& impulse) {
 	PROFILE_FUNCTION("add impulse");
+	assert(isValid(m_speed));
 	if (!sameSign(m_speed.x, impulse.x)) m_speed.x = 0;
 	if (!sameSign(m_speed.y, impulse.y)) m_speed.y = 0;
 	if (!sameSign(m_speed.z, impulse.z)) m_speed.z = 0;
 	m_speed.x += impulse.x;
 	m_speed.y += impulse.y;
 	m_speed.z += impulse.z;
+	assert(isValid(m_speed));
+
 }
 
 void TCompCharacterController::AddSpeed(const VEC3 & direction, float speed)
 {
+	assert(isValid(m_speed));
 	m_speed += direction*speed;
+	assert(isValid(m_speed));
+
 }
 
 void TCompCharacterController::AddAccel(const VEC3 & direction, float accel)
@@ -349,7 +366,9 @@ void TCompCharacterController::AddAccel(const VEC3 & direction, float accel)
 
 void TCompCharacterController::AddMovement(const VEC3& direction, float speed) {
 	PROFILE_FUNCTION("add move");
+	assert(isValid(m_toMove));
 	m_toMove += direction*speed;
+	assert(isValid(m_toMove));
 }
 
 void TCompCharacterController::ResetMovement()
@@ -361,8 +380,10 @@ void TCompCharacterController::ResetMovement()
 void TCompCharacterController::ChangeSpeed(float speed)
 {
 	m_accel = VEC3(0, 0, 0);
+	assert(isValid(m_speed));
 	m_speed.Normalize();
 	m_speed *= speed;
+	assert(isValid(m_speed));
 }
 
 #pragma endregion

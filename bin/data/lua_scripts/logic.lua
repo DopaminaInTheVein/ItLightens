@@ -2,10 +2,17 @@ print('This is lua')
 
 SLB.using( SLB )
 
+h = Handle( )
+c = Camera( )
 p = Public( )
 
 function execCommandTest( code, timer )
     p:exec_command( code, timer )
+end
+
+function triggerGuardFormation()
+	h:toggle_guard_formation()
+	p:exec_command("h:toggle_guard_formation();", 20)
 end
 
 --prints the specified text via the VS console
@@ -26,3 +33,22 @@ function teleportSpeedy( name, x, y, z )
 	handle:set_position(x, y, z)
 end
 
+function setCameraDistanteToTarget( distance )
+	c:get_camera()
+	c:set_distance_to_target(distance)
+end
+
+function setCameraSpeed( speed )
+	c:get_camera()
+	c:set_speed(speed)
+end
+
+function setCameraSpeedUnlocked( speed )
+	c:get_camera()
+	c:set_speed_unlocked(speed)
+end
+
+function setCameraRotationSensibility( sensibility )
+	c:get_camera()
+	c:set_rotation_sensibility(sensibility)
+end

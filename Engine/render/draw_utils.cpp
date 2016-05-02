@@ -8,6 +8,7 @@ CShaderCte< TCteCamera > shader_ctes_camera;
 CShaderCte< TCteObject > shader_ctes_object;
 CShaderCte< TCteBones >  shader_ctes_bones;
 CShaderCte< TCteLight >  shader_ctes_lights;
+CShaderCte< TCteGlobals > shader_ctes_globals;
 
 const CTexture* all_black;
 
@@ -42,7 +43,12 @@ bool createDepthBuffer(
   // Create the depth stencil view
   D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
   ZeroMemory(&descDSV, sizeof(descDSV));
-  descDSV.Format = desc.Format;
+  if (desc.Format == DXGI_FORMAT_R32_TYPELESS) {
+	  descDSV.Format = DXGI_FORMAT_D32_FLOAT;
+  }
+  else {
+	  descDSV.Format = desc.Format;
+  }
   descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
   descDSV.Texture2D.MipSlice = 0;
   hr = Render.device->CreateDepthStencilView(depth_resource
@@ -70,7 +76,8 @@ bool createDepthBuffer(
 }*/
 
 bool drawUtilsCreate() {
-
+	if (!shader_ctes_globals.create("ctes_globals"))
+		return false;
   if (!shader_ctes_camera.create("ctes_camera"))
     return false;
   if (!shader_ctes_object.create("ctes_object"))
@@ -91,12 +98,14 @@ void activateDefaultStates() {
   shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
   shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
   shader_ctes_lights.activate(CTE_SHADER_LIGHT);
+  shader_ctes_globals.activate(CTE_SHADER_GLOBALS_SLOT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
   activateSamplerStates();
 }
 
 void drawUtilsDestroy() {
+	shader_ctes_globals.destroy();
   shader_ctes_lights.destroy();
   shader_ctes_bones.destroy();
   shader_ctes_camera.destroy();

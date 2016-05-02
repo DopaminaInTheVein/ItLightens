@@ -3,6 +3,6 @@ macroScript Meshes
 	toolTip:"Meshes"
 (
 	filein (
-		(getDir #scripts) + "\\mcv\\rollouts\\rMeshes.ms"
+		(scripts_dir) + "\\mcv\\rollouts\\rMeshes.ms"
 	)
 )

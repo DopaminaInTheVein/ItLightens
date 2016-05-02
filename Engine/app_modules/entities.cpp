@@ -211,6 +211,10 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TTriggerLua, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TTriggerLua, TMsgTriggerOut, onTriggerExitCall);
 
+	//Animations
+	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, onSetAnim);
+
+
 	//polarized
 	SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgPolarize, onPolarize);
@@ -255,7 +259,9 @@ bool CEntitiesModule::start() {
 	//sala = "pruebaExportador";
 	//sala = "scene_basic_lights";
 	//sala = "test_simple";
+	//sala = "test_pol";
 	//sala = "test_guard";
+	//sala = "test_anim";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";

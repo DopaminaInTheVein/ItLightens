@@ -78,6 +78,30 @@ fn parseJurisdiction parent = (
 	)
 )
 
+----------------------------------------------------------------------
+-- FORMATION --
+----------------------------------------------------------------------
+fn parseFormation parent = (
+	local formationGo = (findHelper "Formation_Go")
+	if formationGo != undefined then (
+		--Formation Go
+		local mcv_tmx = (matrixMax2MCV formationGo.transform)
+		local goPos = (getTransformPosValue mcv_tmx)
+		parent.addAttr "formation_point" goPos
+		
+		local formationLook = (findHelper "Formation_Look")
+		if formationLook != undefined then (
+			--Formation Look
+			local mcv_tmx_look = (matrixMax2MCV formationLook.transform)
+			local lookPos = (getTransformPosValue mcv_tmx_look)
+			
+			parent.addAttr "formation_dir" (getTransformPosValue mcv_tmx)		
+		) else (
+			throw "Cannot be there was Formation Go but not Formation Look!"
+		)
+	)
+)
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 --- Components ---
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -97,6 +121,7 @@ fn _parse_bt_guard = (
 	btXml = XML_PARSING.addChild "bt_guard"
 	parseKeyPoints btXml -- KptPoints
 	parseJurisdiction btXml --Jurisdiction
+	parseFormation btXml --Formation
 )
 
 ----------------------------------------------------------------------

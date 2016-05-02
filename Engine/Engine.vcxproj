@@ -83,7 +83,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders;.\SLB\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders;.\SLB\include;.\fmod\lowlevel\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -94,7 +94,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\fmod\lowlevel\lib;$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmodL64_vc.lib;XINPUT9_1_0.LIB;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -247,6 +248,9 @@
     <ClCompile Include="skeleton\comp_bone_tracker.cpp" />
     <ClCompile Include="skeleton\comp_skeleton.cpp" />
     <ClCompile Include="skeleton\skeleton.cpp" />
+    <ClCompile Include="skeleton_controllers\skc_guard.cpp" />
+    <ClCompile Include="skeleton_controllers\skc_player.cpp" />
+    <ClCompile Include="skeleton_controllers\skel_controller.cpp" />
     <ClCompile Include="SLB\src\Allocator.cpp" />
     <ClCompile Include="SLB\src\Class.cpp" />
     <ClCompile Include="SLB\src\ClassHelpers.cpp" />
@@ -469,6 +473,7 @@
   <ItemGroup>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_object.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h" />
@@ -628,6 +633,9 @@
     <ClInclude Include="skeleton\comp_bone_tracker.h" />
     <ClInclude Include="skeleton\comp_skeleton.h" />
     <ClInclude Include="skeleton\skeleton.h" />
+    <ClInclude Include="skeleton_controllers\skc_guard.h" />
+    <ClInclude Include="skeleton_controllers\skc_player.h" />
+    <ClInclude Include="skeleton_controllers\skel_controller.h" />
     <ClInclude Include="SLB\include\SLB\Allocator.hpp" />
     <ClInclude Include="SLB\include\SLB\Class.hpp" />
     <ClInclude Include="SLB\include\SLB\ClassHelpers.hpp" />

@@ -1,0 +1,5 @@
+<model>
+  <skeleton    src ="skeletons/player/player.csf"/>
+  <animations src ="skeletons/player/"/>
+  <mesh     src="skeletons/player/player.cmf"/>
+</model>

@@ -1,12 +1,13 @@
 #include "mcv_platform.h"
 #include "slb_public_functions.h"
-#include "handle\handle_manager.h"
-#include "handle\handle.h"
-#include "components\comp_name.h"
-#include "components\entity.h"
-#include "components\entity_parser.h"
-#include "components\comp_charactercontroller.h"
-#include "components\comp_life.h"
+#include "handle/handle_manager.h"
+#include "handle/handle.h"
+#include "components/comp_name.h"
+#include "components/entity.h"
+#include "components/entity_parser.h"
+#include "components/comp_charactercontroller.h"
+#include "components/comp_life.h"
+#include "logic/bt_guard.h"
 
 using namespace IdEntities;
 
@@ -76,6 +77,8 @@ void SLBHandle::getHandleById(int id) {
 }
 
 void SLBHandle::getHandleByNameTag(const char* name, const char* tag) {
+	handle_name = std::string(name);
+	handle_tag = std::string(tag);
 	VHandles targets = tags_manager.getHandlesByTag(getID(tag));
 	CHandle handle = findByName(targets, name);
 	real_handle = handle;
@@ -111,7 +114,65 @@ float SLBHandle::getZ() {
 	return entity_controller->GetPosition().z;
 }
 
-// public functions
+void SLBHandle::goToPoint(float x, float y, float z) {
+	VEC3 dest(x, y, z);
+	// depending on the tag, we need to use a different manager
+	if (handle_tag.find("guard") != std::string::npos) {
+		auto guard = getHandleManager<bt_guard>()->getAddrFromHandle(real_handle);
+		guard->goToPoint(dest);
+	}
+}
+
+void SLBHandle::toggleGuardFormation() {
+	getHandleManager<bt_guard>()->onAll(&bt_guard::toggleFormation);
+}
+
+// camera control in LUA
+void SLBCamera::getCamera() {
+	camera_h = tags_manager.getFirstHavingTag("camera_main");
+}
+
+void SLBCamera::setDistanceToTarget(float distance) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setDistanceToTarget(distance);
+}
+
+void SLBCamera::setSpeed(float speed) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setSpeed(speed);
+}
+
+void SLBCamera::setSpeedUnlocked(float speed) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setSpeedUnlocked(speed);
+}
+
+void SLBCamera::setRotationSensibility(float sensibility) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setRotationSensibility(sensibility);
+}
+
+// public generic functions
 void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	// create the new command
 	command new_command;

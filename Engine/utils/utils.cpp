@@ -243,3 +243,25 @@ CQuaternion interpolate(const CQuaternion &start, const CQuaternion &end, const 
 
 	return result;
 }
+
+//Check Nan, Infinity's zero values,...
+
+//Is nan?
+bool isNan(VEC3 vec) {
+	return (vec.x != vec.x)
+		|| (vec.y != vec.y)
+		|| (vec.z != vec.z);
+}
+
+//Is not nan either infinity?
+bool isValid(VEC3 vec) {
+	return !isNan(vec)
+		&& (isfinite(vec.x))
+		&& (isfinite(vec.y))
+		&& (isfinite(vec.z));
+}
+
+// Is valid and different zero?
+bool isNormal(VEC3 vec) {
+	return isValid(vec) && vec.LengthSquared() > 0;
+}

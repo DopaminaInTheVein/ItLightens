@@ -6,6 +6,11 @@ p = Public( )
 
 function OnAction( param )
 	p:print( "OnAction: "..param.."\n" )
+	triggerGuardFormation();
+	setCameraDistanteToTarget(5.5);
+	setCameraRotationSensibility(60.5);
+	setCameraSpeed(4.0);
+	setCameraSpeedUnlocked(10.0);
 end
 
 function OnEnter( param, handle )
@@ -22,7 +27,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-	p:play_music("data/sounds/music/space-harrier.mp3")
+	p:play_music("data/sounds/music/It-Lightens-muestra-2.mp3")
 end
 
 function OnGameEnd( param )

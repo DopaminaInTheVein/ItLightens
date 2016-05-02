@@ -33,8 +33,18 @@ void TCompPolarized::update(float elapsed)
 		VEC3 player_pos = cc->GetPosition();
 
 		if (mType == FIXED) {
-			force.deltaPos = origin - player_pos; //Vector from player to this
-			force.distance = force.deltaPos.LengthSquared();
+			PxVec3* pxClosestPoint = new PxVec3();
+			PxVec3 pxPlayerPos = PhysxConversion::Vec3ToPxVec3(player_pos);
+			force.distance = PxGeometryQuery::pointDistance(pxPlayerPos, *m_area, m_transform, pxClosestPoint);
+			if (force.distance > 0.f) {
+				VEC3 closestPoint = PhysxConversion::PxVec3ToVec3(*pxClosestPoint);
+				force.deltaPos = closestPoint - player_pos;
+				//force.deltaPos = origin - player_pos;
+				assert(isNormal(force.deltaPos));
+			} else {
+				force.deltaPos = origin - player_pos;
+			}
+			
 			if (dist_effect_squared > force.distance) {
 				if (!send) {
 					send = true;
@@ -92,8 +102,8 @@ void TCompPolarized::update(float elapsed)
 
 bool TCompPolarized::load(MKeyValue & atts)
 {
+	//Polarity
 	std::string read_s = atts.getString("pol", "neutral");
-
 	if (read_s == "plus") {
 		force.polarity = PLUS;
 	}
@@ -104,6 +114,13 @@ bool TCompPolarized::load(MKeyValue & atts)
 		force.polarity = NEUTRAL;		//default
 	}
 
+	//Area
+	const VEC3 size = atts.getPoint("size");
+	if (size.x != 0 || size.y != 0 | size.z != 0) {
+		PxVec3 pxSize = PhysxConversion::Vec3ToPxVec3(size);
+		m_area = new PxBoxGeometry();
+		g_PhysxManager->CreateBoxGeometry(pxSize, *m_area);
+	}
 	return true;
 }
 
@@ -115,16 +132,31 @@ void TCompPolarized::onCreate(const TMsgEntityCreated &)
 	if (me_h.isValid()) {
 		CEntity *me_e = me_h;
 		if (me_e) {
-			TCompTransform *t = me_e->get<TCompTransform>();
-			if (t) {
-				origin = t->getPosition();
-			}
-
+			// Set FIXED or FREE
 			TCompPhysics * p = me_e->get<TCompPhysics>();
 			if (p) {
 				if (p->GetMass() > mThresholdMass) mType = FIXED;
 				if (p->isKinematic()) mType = FIXED;
 				else mType = FREE;
+			}
+			else {
+				//Not physic component --> FIXED
+				mType = FIXED;
+			}
+
+			//Origin and area
+			TCompTransform *t = me_e->get<TCompTransform>();
+			if (t) {
+				//Set origin (remains at the moment for FREE behaviour)
+				origin = t->getPosition();
+
+				//Set pxTransform (for FIXED behaviour)
+				if (m_area) {
+					m_transform = PhysxConversion::ToPxTransform(
+						t->getPosition(),
+						t->getRotation()
+					);
+				}
 			}
 		}
 	}

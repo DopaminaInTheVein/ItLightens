@@ -22,12 +22,12 @@ struct TCompPolarized : public TCompBase {
 	TMsgPolarize		msg_out;
 	CHandle			player_h;
 
-	float			dist_effect_squared	= 25.0f;
+	float			dist_effect_squared	= 100.0f;
 	float			dist_near			= 3.0f;
+
 	PolarityForce	force;
-	//float			dist_player = 1000.f; // Update each frame
-	//VEC3			deltaPos_player = VEC3(1000.f, 1000.f, 1000.f); //Update each frame
-	//int				mPol				= NEUTRAL;
+	PxBoxGeometry*	m_area;
+	PxTransform		m_transform;
 
 	float			mThresholdMass		= 2.5f;
 

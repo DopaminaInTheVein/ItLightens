@@ -16,9 +16,10 @@ bool CLogicManagerModule::start() {
 	assert(slb_manager);
 
 	// Binds here, if needed
-	bindPublicFunctions(*slb_manager);
 	bindPlayer(*slb_manager);
 	bindHandle(*slb_manager);
+	bindCamera(*slb_manager);
+	bindPublicFunctions(*slb_manager);
 
 	// load the scripts
 	std::vector<std::string> files_to_load = list_files_recursively(lua_script_folder);
@@ -247,6 +248,97 @@ void CLogicManagerModule::stop() {
 	command_queue.clear();
 }
 
+// Player LUA functions
+void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
+	SLB::Class<SLBPlayer>("Player", &m)
+		.comment("Player class")
+		.constructor()
+		// sets the handle pointer to the player
+		.set("get_player", &SLBPlayer::getPlayer)
+		.comment("Sets the handle pointer to the player")
+		// set handle position function
+		.set("set_position", &SLBPlayer::setPlayerPosition)
+		.comment("Sets the position of the player")
+		.param("float: x coordinate")
+		.param("float: x coordinate")
+		.param("float: x coordinate")
+		// basic coordinates functions
+		.set("get_x", &SLBPlayer::getPlayerX)
+		.comment("returns the X coordinate")
+		.set("get_y", &SLBPlayer::getPlayerY)
+		.comment("returns the Y coordinate")
+		.set("get_z", &SLBPlayer::getPlayerZ)
+		.comment("returns the Z coordinate")
+		;
+}
+
+// Generic handle LUA functions
+void CLogicManagerModule::bindHandle(SLB::Manager& m) {
+	SLB::Class<SLBHandle>("Handle", &m)
+		.comment("Handle class")
+		.constructor()
+		// sets the handle pointer to the handle with the specified id
+		.set("get_handle_by_id", &SLBHandle::getHandleById)
+		.comment("Finds the handle with the specified id")
+		.param("int: handle id")
+		// sets the handle pointer to the handle with the specified name and tag
+		.set("get_handle_by_name_tag", &SLBHandle::getHandleByNameTag)
+		.comment("Finds the handle with the specified name and tag")
+		.param("string: handle name")
+		.param("string: handle tag")
+		// set handle position function
+		.set("set_position", &SLBHandle::setPosition)
+		.comment("Sets the position of the NPC")
+		.param("float: x coordinate")
+		.param("float: x coordinate")
+		.param("float: x coordinate")
+		// basic coordinates functions
+		.set("get_x", &SLBHandle::getX)
+		.comment("returns the X coordinate")
+		.set("get_y", &SLBHandle::getY)
+		.comment("returns the Y coordinate")
+		.set("get_z", &SLBHandle::getZ)
+		.comment("returns the Z coordinate")
+		// go to point function
+		.set("go_to_point", &SLBHandle::goToPoint)
+		.comment("The NPC moves to the specified position")
+		.param("float: x coordinate")
+		.param("float: y coordinate")
+		.param("float: z coordinate")
+		// toggle guards formation
+		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
+		.comment("Activates/desactivates the guard formation states.")
+		;
+}
+
+// Camera LUA functions
+void CLogicManagerModule::bindCamera(SLB::Manager& m) {
+	SLB::Class<SLBCamera>("Camera", &m)
+		.comment("Camera class")
+		.constructor()
+		// sets the handle pointer to the player
+		.set("get_camera", &SLBCamera::getCamera)
+		.comment("Gets the camera handler")
+		// set camera distance to player
+		.set("set_distance_to_target", &SLBCamera::setDistanceToTarget)
+		.comment("Sets the camera distance to the target")
+		.param("float: distance")
+		// sets the camera speed
+		.set("set_speed", &SLBCamera::setSpeed)
+		.comment("Sets the camera speed")
+		.param("float: speed")
+		// sets the camera speed when unlocked
+		.set("set_speed_unlocked", &SLBCamera::setSpeedUnlocked)
+		.comment("Sets the camera speed when unlocked")
+		.param("float: speed")
+		// sets the rotation sensibility of the camera
+		.set("set_rotation_sensibility", &SLBCamera::setRotationSensibility)
+		.comment("Sets the rotation sensibility of the camera")
+		.param("float: sensibility (in degrees)")
+		;
+}
+
+// General LUA functions
 void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 	SLB::Class<SLBPublicFunctions>("Public", &m)
 		.comment("Public functions class")
@@ -276,57 +368,5 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("play_ambient", &SLBPublicFunctions::playAmbient)
 		.comment("Executes the specified ambient sound")
 		.param("Route of the ambient sound")
-		;
-}
-
-void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
-	SLB::Class<SLBPlayer>("Player", &m)
-		.comment("Player class")
-		.constructor()
-		// sets the handle pointer to the player
-		.set("get_player", &SLBPlayer::getPlayer)
-		.comment("Sets the handle pointer to the player")
-		// set handle position function
-		.set("set_position", &SLBPlayer::setPlayerPosition)
-		.comment("Sets the position of the player")
-		.param("float: x coordinate")
-		.param("float: x coordinate")
-		.param("float: x coordinate")
-		// basic coordinates functions
-		.set("get_x", &SLBPlayer::getPlayerX)
-		.comment("returns the X coordinate")
-		.set("get_y", &SLBPlayer::getPlayerY)
-		.comment("returns the Y coordinate")
-		.set("get_z", &SLBPlayer::getPlayerZ)
-		.comment("returns the Z coordinate")
-		;
-}
-
-void CLogicManagerModule::bindHandle(SLB::Manager& m) {
-	SLB::Class<SLBHandle>("Handle", &m)
-		.comment("Handle class")
-		.constructor()
-		// sets the handle pointer to the handle with the specified id
-		.set("get_handle_by_id", &SLBHandle::getHandleById)
-		.comment("Finds the handle with the specified id")
-		.param("int: handle id")
-		// sets the handle pointer to the handle with the specified name and tag
-		.set("get_handle_by_name_tag", &SLBHandle::getHandleByNameTag)
-		.comment("Finds the handle with the specified name and tag")
-		.param("string: handle name")
-		.param("string: handle tag")
-		// set handle position function
-		.set("set_position", &SLBHandle::setPosition)
-		.comment("Sets the position of the player")
-		.param("float: x coordinate")
-		.param("float: x coordinate")
-		.param("float: x coordinate")
-		// basic coordinates functions
-		.set("get_x", &SLBHandle::getX)
-		.comment("returns the X coordinate")
-		.set("get_y", &SLBHandle::getY)
-		.comment("returns the Y coordinate")
-		.set("get_z", &SLBHandle::getZ)
-		.comment("returns the Z coordinate")
 		;
 }

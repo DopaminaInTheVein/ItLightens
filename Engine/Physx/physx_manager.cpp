@@ -171,8 +171,10 @@ void CPhysxManager::update(float dt)
 	//calculate fixed update
 	t_to_update += getDeltaTime();
 	if (t_to_update >= t_max_update) {
-		m_pScene->simulate(t_max_update);
+		m_pScene->simulate(t_to_update);
 		m_pScene->fetchResults(true);
+
+		t_to_update = 0;
 
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
 		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
