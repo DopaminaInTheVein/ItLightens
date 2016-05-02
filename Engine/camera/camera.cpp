@@ -56,23 +56,23 @@ void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) 
   updateViewProjection();
 }
 void CCamera::smoothUpdateInfluence(VEC3 new_position, VEC3 new_target, TCompGuidedCamera * gc, int influencia, VEC3 new_up_aux) {
-  float drag = getDeltaTime() * 10;
-  float drag_i = 1 - drag;
-
-  position = new_position*drag + position*drag_i;
-  target = new_target*drag + target*drag_i;
+  position = new_position;
+  target = new_target;
   up_aux = new_up_aux;
-  view = MAT44::CreateLookAt(position, target, up_aux);
 
   CQuaternion  rotation;
   VEC3 pos, scale;
   view.Decompose(scale, rotation, pos);
   CQuaternion newquad = gc->getNewRotationForCamera(position, rotation, influencia);
-  this->applyQuat(newquad, pos);
-
+  VEC3 ntarget = target + newquad;
+  view = MAT44::CreateLookAt(position, target, up_aux);
   front = view.Forward();
   up = view.Up();
   left = view.Left();
+
+  view = MAT44::CreateLookAt(position, ntarget, up_aux);
+
+  //  this->applyQuat(newquad, pos);
 
   updateViewProjection();
 }
