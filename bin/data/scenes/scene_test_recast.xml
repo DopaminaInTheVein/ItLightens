@@ -14,7 +14,7 @@
   <entity>
     <life points="50" />
     <tags tags="player" />
-    <transform pos="-10 18 -10" />
+    <transform pos="-10 5 -10" />
     <name name="pj" />
     <player />
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
@@ -32,13 +32,15 @@
     <rigidbody type_collision="static" />
   </entity>
 
+  <!--
+
   <entity>
     <name name="nivel" />
     <transform pos="-25.0 15.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/floor_1lvl.static_mesh" />
     <rigidbody type_collision="static" />
   </entity>
-
+ -->
   <entity>
     <name name="pared_1" />
     <transform pos="2.0 2 0.0" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
@@ -163,16 +165,28 @@
     <rigidbody type_collision="static" />
   </entity>
   <!-- END SCENE OBJECTS -->
+  <entity>
+    <transform pos="-8.0  2    3.5" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/mole/mole.static_mesh" />
+  </entity>
+  <entity>
+    <transform pos=" 8.0  2    3.5" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/mole/mole.static_mesh" />
+  </entity>
+  <entity>
+    <transform pos=" 0.0  2    3.5" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/mole/mole.static_mesh" />
+  </entity>
   <!-- END SCENE -->
 
   <!-- LOGIC OBJECTS -->
   <!-- ZONE 2 -->
   <entity>
     <guided_camera
-      points_size = "2"
-      wpt0 = "-10.0  3    3.5"
-      wpt1 = " 10.0  3    3.5"
-      rot0 = " 0.0  -0.7  0.0 0.7"
-    />
+      points_size = "3"
+      wpt0 = "-8.0  2    3.5"
+      wpt1 = " 0.0  2    3.5"
+      wpt2 = " 8.0  2    3.5"
+      rot0 = "0.0 -0.707107 0.0 0.707107" rot1 = "0.0 -0.707107 0.0 0.707107" />
   </entity>
 </entities>

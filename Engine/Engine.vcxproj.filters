@@ -1364,7 +1364,6 @@
     <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h">
       <Filter>render\constants</Filter>
     </ClInclude>
-    <ClInclude Include="logic\polarity.h" />
     <ClInclude Include="skeleton_controllers\skel_controller.h">
       <Filter>skeleton_controllers</Filter>
     </ClInclude>
@@ -1376,6 +1375,9 @@
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h">
       <Filter>render\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\polarity.h">
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\polarity.h">
       <Filter>logic</Filter>
