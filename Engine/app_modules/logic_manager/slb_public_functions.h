@@ -58,6 +58,7 @@ public:
 	void setSpeed(float speed);
 	void setSpeedUnlocked(float speed);
 	void setRotationSensibility(float sensibility);
+	void setPositionOffset(float x_offset, float y_offset, float z_offset);
 };
 
 // public functions
