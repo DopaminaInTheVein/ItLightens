@@ -11,6 +11,8 @@
 #include "render/static_mesh.h"
 #include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
+#include "app_modules/gui/gui.h"
+
 #include "handle/handle.h"
 #include "ui/ui_interface.h"
 
@@ -867,11 +869,12 @@ void player_controller::UpdateOverCharge() {
 		float currentLife = getLife();
 
 		if (currentLife > evolution_limit) {
-			if (io->keys[VK_LSHIFT].becomesPressed()) {
+			if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 				startOverCharge();
 			}
 			else {
-				ui.addTextInstructions("Press 'L-SHIFT' to OVERCHARGE guard weapon\n");
+				Gui->setActionAvailable(eAction::OVERCHARGE);
+				//ui.addTextInstructions("Press ACTION to OVERCHARGE guard weapon\n");
 			}
 		}
 	}

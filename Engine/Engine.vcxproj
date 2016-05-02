@@ -101,6 +101,7 @@
   <ItemGroup>
     <ClCompile Include="app_modules\entities.cpp" />
     <ClCompile Include="app_modules\gui\gui.cpp" />
+    <ClCompile Include="app_modules\gui\gui_action_text.cpp" />
     <ClCompile Include="app_modules\gui\gui_bar_color.cpp" />
     <ClCompile Include="app_modules\gui\gui_button_std.cpp" />
     <ClCompile Include="app_modules\gui\gui_hud_player.cpp" />
@@ -480,6 +481,7 @@
     <ClInclude Include="app_modules\gameController.h" />
     <ClInclude Include="app_modules\gameData.h" />
     <ClInclude Include="app_modules\gui\gui.h" />
+    <ClInclude Include="app_modules\gui\gui_action_text.h" />
     <ClInclude Include="app_modules\gui\gui_bar.h" />
     <ClInclude Include="app_modules\gui\gui_bar_color.h" />
     <ClInclude Include="app_modules\gui\gui_button.h" />
