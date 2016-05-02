@@ -10,6 +10,8 @@ char nameVariable[10]; sprintf(nameVariable, "rot%d", index)
 
 bool TCompGuidedCamera::load(MKeyValue& atts) {
   num_points = atts.getInt("points_size", 0);
+  velocity = atts.getFloat("velocity", 0);
+  angularVelocity = atts.getFloat("angularVelocity", 0);
   num_cameras = num_points - 1;
   points.resize(num_points);
   rotations.resize(num_cameras);

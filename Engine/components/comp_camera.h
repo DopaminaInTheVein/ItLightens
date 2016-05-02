@@ -7,6 +7,7 @@
 // ------------------------------------
 struct TCompCamera : public CCamera, public TCompBase {
   bool detect_colsions;
+  int lastguidedCamPoint = 0;
 
   void render() const;
   void update(float dt);

@@ -182,11 +182,13 @@
   <!-- LOGIC OBJECTS -->
   <!-- ZONE 2 -->
   <entity>
+    <tags tags="guided_camera" />
     <guided_camera
-      points_size = "3"
-      wpt0 = "-8.0  2    3.5"
-      wpt1 = " 0.0  2    3.5"
-      wpt2 = " 8.0  2    3.5"
-      rot0 = "0.0 -0.707107 0.0 0.707107" rot1 = "0.0 -0.707107 0.0 0.707107" />
+      velocity="2.5"
+      angularVelocity="0.5"
+      points_size = "2"
+      wpt0 = "  10.0  3.5    3.5"
+      wpt1 = " -10.0  3.5    3.5"
+      rot0 = "0.0 -0.707107 0.0 0.707107" />
   </entity>
 </entities>

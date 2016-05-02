@@ -49,50 +49,93 @@ void TCompCamera::update(float dt) {
   assert(e_owner);
   TCompTransform* tmx = e_owner->get<TCompTransform>();
   assert(tmx);
-  TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
-  CHandle targetowner = obtarged->target;
-  CEntity* targeted = targetowner;
-  TCompLife * targetlife = targeted->get<TCompLife>();
-  TCompTransform * targettrans = targeted->get<TCompTransform>();
-
-  VHandles guidedCameras = SBB::readHandlesVector("guided_cameras");
   VEC3 campos = tmx->getPosition();
-  int influencia = -1;
-  TCompGuidedCamera * gc = nullptr;
-  for (int i = 0; i < guidedCameras.size(); i++) {
-    CEntity * e = guidedCameras[i];
-    gc = e->get<TCompGuidedCamera>();
-    influencia = gc->nearCameraPoint(campos);
-    if (influencia >= 0) {
-      break;
+
+  CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
+  CEntity * guidedCamE = guidedCam;
+  if (guidedCamE) {
+    TCompGuidedCamera * gc = guidedCamE->get<TCompGuidedCamera>();
+    int influencia = gc->nearCameraPoint(campos);
+    VEC3 goTo = gc->getPointPosition(lastguidedCamPoint);
+    float yaw, pitch;
+    tmx->getAngles(&yaw, &pitch);
+
+    if (!tmx->isHalfConeVision(goTo, deg2rad(1.0f))) {
+      float delta_yaw = tmx->getDeltaYawToAimTo(goTo);
+      if (abs(delta_yaw) > 0.001f) {
+        yaw += delta_yaw*getDeltaTime()*gc->getAngularVelocity();
+      }
+      else {
+        yaw += delta_yaw*gc->getAngularVelocity();
+      }
     }
-  }
-  if (influencia >= 0 && gc) {
-    VEC3 pos = tmx->getPosition();
-    pos.y += 2;
-    tmx->setPosition(pos);
-    this->smoothUpdateInfluence(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), gc, influencia, getUpAux());	//smooth movement
-  }
-  else if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
-    VEC3 pos = tmx->getPosition();
-    pos.y += 2;
-    tmx->setPosition(pos);
-    if (detect_colsions) {
-      if (!checkColision(pos))
-        this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
+    if (!tmx->isHalfConeVisionPitch(goTo, deg2rad(1.0f))) {
+      float delta_pitch = tmx->getDeltaPitchToAimTo(goTo);
+      if (abs(delta_pitch) > 0.001f) {
+        pitch += delta_pitch*gc->getAngularVelocity()*getDeltaTime();
+      }
+      else {
+        pitch += delta_pitch*gc->getAngularVelocity();
+      }
     }
-    else this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());	//smooth movement
-  }
-  else if (GameController->GetFreeCamera()) {
-    CHandle owner = CHandle(this).getOwner();
-    CEntity* e_owner = owner;
-    assert(e_owner);
-    TCompTransform* tmx = e_owner->get<TCompTransform>();
-    assert(tmx);
-    this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+    tmx->setAngles(yaw, pitch);
+
+    VEC3 pos = tmx->getPosition();
+    if (simpleDist(pos, goTo) > 2.0f) {
+      pos = pos + (tmx->getFront() * gc->getVelocity() * getDeltaTime());
+      tmx->setPosition(pos);
+    }
+    else {
+      ++lastguidedCamPoint;
+    }
+
+    if (lastguidedCamPoint >= gc->getTotalPoints()) {
+      guidedCam.destroy();
+      CHandle t = tags_manager.getFirstHavingTag("player");
+      CEntity * target_e = t;
+      // Set the player in the 3rdPersonController
+      if (e_owner && t.isValid()) {
+        TMsgSetTarget msg;
+        msg.target = t;
+        msg.who = PLAYER;
+        e_owner->sendMsg(msg);		//set camera
+
+        TMsgSetCamera msg_camera;
+        msg_camera.camera = owner;
+        target_e->sendMsg(msg_camera);	//set target camera
+      }
+    }
+    else {
+      this->smoothUpdateInfluence(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), gc, influencia, getUpAux());	//smooth movement
+    }
   }
   else {
-    this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());	//smooth movement
+    TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
+    CHandle targetowner = obtarged->target;
+    CEntity* targeted = targetowner;
+    TCompTransform * targettrans = targeted->get<TCompTransform>();
+
+    if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
+      VEC3 pos = tmx->getPosition();
+      pos.y += 2;
+      tmx->setPosition(pos);
+      if (detect_colsions) {
+        if (!checkColision(pos))
+          this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
+      }
+      else this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());	//smooth movement
+    }
+    else if (GameController->GetFreeCamera()) {
+      CHandle owner = CHandle(this).getOwner();
+      CEntity* e_owner = owner;
+      assert(e_owner);
+      TCompTransform* tmx = e_owner->get<TCompTransform>();
+      assert(tmx);
+      this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+    }
+    else {
+      this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());	//smooth movement
+    }
   }
 }
 
