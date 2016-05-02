@@ -5,6 +5,7 @@
 #define CTE_SHADER_CAMERA_SLOT     1
 #define CTE_SHADER_BONES_SLOT      2
 #define CTE_SHADER_LIGHT           3
+#define CTE_SHADER_GLOBALS_SLOT    4
 
 #define TEXTURE_SLOT_DIFFUSE       0
 #define TEXTURE_SLOT_NORMALS       1

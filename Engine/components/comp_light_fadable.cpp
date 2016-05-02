@@ -14,6 +14,7 @@ bool TCompLightFadable::load(MKeyValue& atts) {
 }
 
 void TCompLightFadable::update(float dt) {
+	PROFILE_FUNCTION("fadable update: movement");
 	if (ttl >= 0) {
 		// ttl only defined by player evolve/devolve
 		//follow player
@@ -46,6 +47,7 @@ void TCompLightFadable::renderInMenu() {
 }
 
 void TCompLightFadable::uploadShaderCtes() {
+	PROFILE_FUNCTION("fadable: uploadShader");
 	CEntity* e = CHandle(this).getOwner();
 	TCompTransform* trans = e->get<TCompTransform>();
 	shader_ctes_lights.LightWorldPos = VEC4(trans->getPosition());
@@ -57,6 +59,7 @@ void TCompLightFadable::uploadShaderCtes() {
 }
 
 void TCompLightFadable::activate() {
+	PROFILE_FUNCTION("fadable: activate");
 	CEntity* e = CHandle(this).getOwner();
 	assert(e);
 	TCompTransform* trans = e->get<TCompTransform>();

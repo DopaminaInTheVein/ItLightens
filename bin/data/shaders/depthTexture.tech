@@ -1,0 +1,5 @@
+<tech>
+    <vs fx="basic" main="VSTextured" decl="positions_uv"/>
+    <ps fx="basic" main="PsDepthTexture"/>
+</tech>
+

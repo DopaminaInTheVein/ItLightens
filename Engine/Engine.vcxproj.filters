@@ -1367,6 +1367,9 @@
     <ClInclude Include="skeleton_controllers\skc_guard.h">
       <Filter>skeleton_controllers</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">

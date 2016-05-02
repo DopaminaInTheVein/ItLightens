@@ -11,7 +11,11 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_selfIlum;
 	CRenderToTexture* rt_acc_light;
 	CRenderToTexture* rt_selfIlum_blurred;
+	CRenderToTexture* rt_depthTexture;
 	CRenderToTexture* rt_final;
+
+	CRenderToTexture* rt_data;
+	CRenderToTexture* rt_black;
 
 	int xres, yres;
 
@@ -23,6 +27,9 @@ class CRenderDeferredModule : public IAppModule {
 
 	void renderGBuffer();
 	void renderAccLight();
+	void DepthTexture();
+	void RenderPolarizedPP(int pol, const VEC4& color);
+	void GlowEdges();
 	void addPointLights();
 	void addDirectionalLights();
 
@@ -33,6 +40,7 @@ class CRenderDeferredModule : public IAppModule {
 public:
 	bool start() override;
 	void stop() override;
+	void update(float dt);
 	void render() override;
 	const char* getName() const {
 		return "render_deferred";

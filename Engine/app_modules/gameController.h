@@ -8,6 +8,10 @@
 class CGameController : public IAppModule {
 
 	int		game_state = 0;
+
+	bool    fx_polarize = true;
+	bool	fx_glow		= true;
+
 	bool	free_camera = false;
 
 public:
@@ -79,6 +83,22 @@ public:
 
 	void update(float dt) {
 		UpdateGeneralInputs();
+	}
+
+	bool * GetFxGlowPointer() {
+		return &fx_glow;
+	}
+
+	bool * GetFxPolarizePointer() {
+		return &fx_polarize;
+	}
+
+	bool GetFxGlow() {
+		return fx_glow;
+	}
+
+	bool GetFxPolarize() {
+		return fx_polarize;
 	}
 
 	bool * GetFreeCameraPointer() {

@@ -11,6 +11,7 @@
 #pragma comment(lib, "imgui.lib" )
 
 #include "handle/object_manager.h"
+#include "render/draw_utils.h"
 
 #include <Commdlg.h>
 
@@ -145,6 +146,23 @@ void CImGuiModule::update(float dt) {
 	}if (ImGui::CollapsingHeader("Entity by Tag")) {
 		ImGui::Text("Application ENTITY TAG - TODO");
 		tags_manager.renderInMenu();
+
+	}if (ImGui::CollapsingHeader("Graficos")) {
+		if(ImGui::TreeNode("polarize")) {
+
+			ImGui::SliderFloat("Polarize strength", &shader_ctes_globals.strenght_polarize, 0.0f, 2.0f);
+
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Grafic options")) {
+
+			ImGui::Checkbox("polarize effects", GameController->GetFxPolarizePointer());
+
+			ImGui::Checkbox("glow effect", GameController->GetFxGlowPointer());
+
+			ImGui::TreePop();
+		}
 	}
 
 	ImGui::End();
