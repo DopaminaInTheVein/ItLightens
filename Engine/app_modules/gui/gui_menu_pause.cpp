@@ -44,7 +44,7 @@ void CGuiMenuPause::render()
 	GUI::drawRect(rect, GUI::IM_BLACK_TRANSP);
 
 	// Menu Text
-	GUI::drawText(0.45f, 0.1f, GImGui->Font, 0.1f, GUI::IM_WHITE, "MENU");
+	GUI::drawText(0.425f, 0.1f, GImGui->Font, 0.1f, GUI::IM_WHITE, "MENU");
 
 	// Buttons
 	if (btnResume->render()) {

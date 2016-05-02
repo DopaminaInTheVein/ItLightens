@@ -178,6 +178,7 @@ bool TCompPhysics::createTriMeshShape()
 		assert(comp_static_mesh || fatal("Cant load static mesh on %s", e->getName()));
 		PxTriangleMesh *cookedMesh = g_PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0
 		m_pShape = g_PhysxManager->CreateTriangleMesh(cookedMesh,m_staticFriction, m_dynamicFriction, m_restitution);
+		assert(m_pShape);
 		addRigidbodyScene();
 
 		int size_slots = comp_static_mesh->static_mesh->slots.size();
@@ -201,6 +202,7 @@ bool TCompPhysics::createTriMeshShape()
 bool TCompPhysics::createBoxShape()
 {
 	m_pShape = g_PhysxManager->CreatePxBox(Vec3ToPxVec3(m_size), m_staticFriction, m_dynamicFriction, m_restitution);
+	assert(m_pShape);
 	addRigidbodyScene();
 	return true;
 }
@@ -208,6 +210,7 @@ bool TCompPhysics::createBoxShape()
 bool TCompPhysics::createCapsuleShape()
 {
 	m_pShape = g_PhysxManager->CreatePxCapsule(m_radius, m_height, m_staticFriction, m_dynamicFriction, m_restitution);
+	assert(m_pShape);
 	addRigidbodyScene();
 	return true;
 }
@@ -215,6 +218,7 @@ bool TCompPhysics::createCapsuleShape()
 bool TCompPhysics::createSphereShape()
 {
 	m_pShape = g_PhysxManager->CreatePxSphere(m_radius, m_staticFriction, m_dynamicFriction, m_restitution);
+	assert(m_pShape);
 	addRigidbodyScene();
 	return true;
 }
@@ -226,6 +230,7 @@ bool TCompPhysics::createConvexShape() {
 	if (e) {
 		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
 		m_pShape = g_PhysxManager->CreateConvexShape(comp_static_mesh->static_mesh->slots[0].mesh);
+		assert(m_pShape);
 		addRigidbodyScene();
 
 		int size_slots = comp_static_mesh->static_mesh->slots.size();
