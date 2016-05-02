@@ -199,26 +199,31 @@ float pixelWidth = 1.0f;
 	//return float4(iWorldPos,1);
 	//return float4(E,1);
 	
-	pixelWidth = strenght_polarize/(xres);
+	pixelWidth = strenght_polarize/(xres)/dc;
 	
 	float sinw = abs(sin(world_time/3));
 	float offset_c = sinw*sinw/2;
+
 
     for (int i = 0; i < 13; i++) 
     {
         blur.x = iTex0.x + Pixels[i] * pixelWidth*offset_c;
         color += txDiffuse.Sample(samLinear, blur.xy) * BlurWeights[i];
-		for (int i = 0; i < 13; i++)
-		{
-			blur.y = iTex0.y + Pixels[i] * pixelWidth*offset_c;
-			color += txDiffuse.Sample(samLinear, blur.xy) * BlurWeights[i];
-		}
     }  
+	
+	blur.x = iTex0.x;
+	
+	for (int i = 0; i < 13; i++)
+	{
+		blur.y = iTex0.y + Pixels[i] * pixelWidth*offset_c;
+		color += txDiffuse.Sample(samLinear, blur.xy) * BlurWeights[i];
+	}
 	
 	//color *= float4(1.0f,0.3f,0.3f,1.0f);
 	
 	if (color.r < 0.3 && color.g < 0.3 && color.b < 0.3)
 		color.w = 0;
+		
     return color*offset_c;
 }
 
@@ -266,32 +271,6 @@ float2 e_kernel = float2(1,1);   // x=norm, y=depth
  
 float dc = txDepth.Sample(samLinear, uv).r;
  pixel_size = pixel_size/dc; //adjust line witdh based on depth
- 
- // Normal discontinuity filter
- float3 nc = normalize(txNormal.Sample(samLinear, uv));
-	//return float4(nc,1);
- float4 nd;
- nd.x = abs(dot(nc, normalize(txNormal.Sample(samLinear, uv + offs[1]*pixel_size).xyz)));
-
- nd.y = abs(dot(nc, normalize(txNormal.Sample(samLinear, uv + offs[2]*pixel_size).xyz)));
-
- nd.z = abs(dot(nc, normalize(txNormal.Sample(samLinear, uv + offs[3]*pixel_size).xyz)));
-
- nd.w = abs(dot(nc, normalize(txNormal.Sample(samLinear, uv + offs[4]*pixel_size).xyz)));
-
- //return nd;
-
- 
- nd -= e_barrier.x;
- //return nd;
-
- nd = step(0 , nd);
- 
- 
- //return nd;
-
- float ne = saturate(dot(nd, e_weights.x));
-//return float4(ne,ne,ne,1);
 
  float2 tc5r = -offs[5];
 
