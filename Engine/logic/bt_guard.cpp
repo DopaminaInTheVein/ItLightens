@@ -352,7 +352,7 @@ int bt_guard::actionChase() {
 int bt_guard::actionAbsorb() {
 	PROFILE_FUNCTION("guard: absorb");
 	if (!myParent.isValid()) return false;
-	if (playerNear()) {
+	if (playerNear() && playerVisible()) {
 		goForward(-2.0f*SPEED_WALK);
 		return STAY;
 	}
@@ -498,6 +498,7 @@ int bt_guard::actionSearch() {
 
 			VEC3 dir = playerPos - myPos;
 			search_player_point = playerPos + 1.0f * dir;
+			Debug->DrawLine(myPos, search_player_point);
 			return OK;
 
 		}

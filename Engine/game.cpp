@@ -71,6 +71,7 @@ bool CApp::start() {
 
 	mod_update.push_back(GameController);
 	mod_update.push_back(imgui);
+	mod_update.push_back(render_deferred);
 	mod_update.push_back(Gui);
 	mod_update.push_back(entities);
 	mod_update.push_back(g_PhysxManager);

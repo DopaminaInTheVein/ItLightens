@@ -84,9 +84,10 @@ public:
 	// module specific functions
 	void throwEvent(EVENT evt, std::string params, uint32_t handle_id = 0);
 	void throwUserEvent(std::string evt, std::string params, uint32_t handle_id = 0);
-	void bindPublicFunctions(SLB::Manager& m);
 	void bindPlayer(SLB::Manager& m);
 	void bindHandle(SLB::Manager& m);
+	void bindCamera(SLB::Manager& m);
+	void bindPublicFunctions(SLB::Manager& m);
 
 };
 

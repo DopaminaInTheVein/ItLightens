@@ -114,6 +114,60 @@ void createZStates() {
   assert(!FAILED(hr));
   setDXName(depth_stencil_states[ZCFG_LIGHTS_DIR_CONFIG], "Z_LIGHTS_DIR_CONFIG");
 
+  //mark mask
+  //-------------------------------------------------------------------------
+  desc.DepthEnable = true;
+  desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+  desc.DepthFunc = D3D11_COMPARISON_EQUAL;
+
+  desc.StencilEnable = true;
+  desc.StencilReadMask = 0xFF;
+  desc.StencilWriteMask = 0xFF;
+
+  desc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+
+  desc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+  //we don't care about back facing pixels
+  desc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+  desc.BackFace.StencilFunc = D3D11_COMPARISON_NEVER;
+
+  hr = Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_MASK_NUMBER]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[ZCFG_MASK_NUMBER], "ZCFG_MASK_NUMBER");
+
+
+  //discard
+  //-------------------------------------------------------------------------
+  desc.DepthEnable = true;
+  desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+  desc.DepthFunc = D3D11_COMPARISON_LESS;
+
+  desc.StencilEnable = true;
+  desc.StencilReadMask = 0xFF;
+
+  desc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+
+  // The stencil test passes if the passed parameter is equal to value in the buffer.
+  desc.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+
+  // Again, we don't care about back facing pixels.
+  desc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+  desc.BackFace.StencilFunc = D3D11_COMPARISON_NEVER;
+
+  hr = Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_OUTLINE]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[ZCFG_OUTLINE], "ZCFG_OUTLINE");
+
+
 }
 
 // --------------------------------------------------
@@ -195,8 +249,8 @@ void destroyRenderStateConfigs() {
     		SAFE_RELEASE(sampler_states[i]);
 }
 
-void activateZ(enum ZConfig id) {
-	Render.ctx->OMSetDepthStencilState(depth_stencil_states[id], 0);
+void activateZ(enum ZConfig id, UINT num) {
+	Render.ctx->OMSetDepthStencilState(depth_stencil_states[id], num);
 }
 
 void activateRS(enum RSConfig id) {

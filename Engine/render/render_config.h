@@ -8,10 +8,12 @@ enum ZConfig {
 	, ZCFG_TEST_BUT_NO_WRITE
 	, ZCFG_LIGHTS_CONFIG
   , ZCFG_LIGHTS_DIR_CONFIG
+	, ZCFG_OUTLINE
+	, ZCFG_MASK_NUMBER
 	//, ZCFG_SHADOWS
 	, ZCFG_COUNT
 };
-void activateZ(enum ZConfig);
+void activateZ(enum ZConfig, UINT num = 0);
 
 enum RSConfig {
 	RSCFG_DEFAULT

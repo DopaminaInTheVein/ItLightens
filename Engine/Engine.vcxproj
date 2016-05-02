@@ -473,6 +473,7 @@
   <ItemGroup>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_object.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h" />

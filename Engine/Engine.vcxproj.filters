@@ -1373,6 +1373,9 @@
     <ClInclude Include="app_modules\gui\gui_action_text.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">

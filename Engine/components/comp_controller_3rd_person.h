@@ -57,6 +57,26 @@ public:
 		return distance_to_target;
 	}
 
+	void setDistanceToTarget(float distance) {
+		distance_to_target = distance;
+	}
+
+	void setSpeed(float speed) {
+		speed_camera = speed;
+	}
+
+	void setSpeedUnlocked(float speed) {
+		speed_camera_unlocked = speed;
+	}
+
+	void setRotationSensibility(float sensibility) {
+		rotation_sensibility = deg2rad(sensibility) / 250.0f;
+	}
+
+	void setPositionOffset(VEC3 offset) {
+		position_diff = offset;
+	}
+
 	void onCreate(const TMsgEntityCreated& msg) {
 		CApp& app = CApp::get();
 		CEntity* e_owner = CHandle(this).getOwner();

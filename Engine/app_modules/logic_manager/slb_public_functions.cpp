@@ -127,7 +127,63 @@ void SLBHandle::toggleGuardFormation() {
 	getHandleManager<bt_guard>()->onAll(&bt_guard::toggleFormation);
 }
 
-// public functions
+// camera control in LUA
+void SLBCamera::getCamera() {
+	camera_h = tags_manager.getFirstHavingTag("camera_main");
+}
+
+void SLBCamera::setDistanceToTarget(float distance) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setDistanceToTarget(distance);
+}
+
+void SLBCamera::setSpeed(float speed) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setSpeed(speed);
+}
+
+void SLBCamera::setSpeedUnlocked(float speed) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setSpeedUnlocked(speed);
+}
+
+void SLBCamera::setRotationSensibility(float sensibility) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	camara3rd->setRotationSensibility(sensibility);
+}
+
+void SLBCamera::setPositionOffset(float x_offset, float y_offset, float z_offset) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	VEC3 offset(x_offset, y_offset, z_offset);
+	camara3rd->setPositionOffset(offset);
+}
+
+// public generic functions
 void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	// create the new command
 	command new_command;

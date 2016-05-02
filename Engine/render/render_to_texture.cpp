@@ -45,7 +45,7 @@ bool CRenderToTexture::createRT(
   // Create ZBuffer 
   depth_format = new_depth_format;
   if (depth_format != DXGI_FORMAT_UNKNOWN) {
-    if (!createDepthBuffer(xres, yres, DXGI_FORMAT_UNKNOWN, &depth_resource, &depth_stencil_view))
+    if (!createDepthBuffer(xres, yres, new_depth_format, &depth_resource, &depth_stencil_view))
       return false;
   }
 

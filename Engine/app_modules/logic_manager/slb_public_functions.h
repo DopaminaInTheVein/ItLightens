@@ -45,6 +45,22 @@ public:
 	void toggleGuardFormation();
 };
 
+// camera control in LUA
+class SLBCamera
+{
+	CHandle camera_h;
+
+public:
+
+	// camera functions
+	void getCamera();
+	void setDistanceToTarget(float distance);
+	void setSpeed(float speed);
+	void setSpeedUnlocked(float speed);
+	void setRotationSensibility(float sensibility);
+	void setPositionOffset(float x_offset, float y_offset, float z_offset);
+};
+
 // public functions
 class SLBPublicFunctions
 {
