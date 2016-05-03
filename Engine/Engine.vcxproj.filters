@@ -566,6 +566,9 @@
     <ClCompile Include="skeleton_controllers\skc_guard.cpp">
       <Filter>skeleton_controllers</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\gui\gui_action_text.cpp">
+      <Filter>app_modules\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1372,6 +1375,9 @@
     </ClInclude>
     <ClInclude Include="skeleton_controllers\skc_guard.h">
       <Filter>skeleton_controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\gui_action_text.h">
+      <Filter>app_modules\gui</Filter>
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h">
       <Filter>render\constants</Filter>

@@ -53,6 +53,10 @@ public:
 		, rotation_sensibility(deg2rad(45.0f) / 250.0f)
 	{}
 
+	float GetPositionDistance() const {
+		return distance_to_target;
+	}
+
 	void setDistanceToTarget(float distance) {
 		distance_to_target = distance;
 	}
@@ -69,8 +73,8 @@ public:
 		rotation_sensibility = deg2rad(sensibility) / 250.0f;
 	}
 
-	float GetPositionDistance() const {
-		return distance_to_target;
+	void setPositionOffset(VEC3 offset) {
+		position_diff = offset;
 	}
 
 	void onCreate(const TMsgEntityCreated& msg) {
@@ -167,7 +171,7 @@ public:
 		CEntity* e_target = target;
 		if (!e_target)
 			return;
-
+		
 		updateInput();
 
 		TCompTransform* target_tmx = e_target->get<TCompTransform>();

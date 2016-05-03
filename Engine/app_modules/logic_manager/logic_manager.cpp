@@ -260,8 +260,8 @@ void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
 		.set("set_position", &SLBPlayer::setPlayerPosition)
 		.comment("Sets the position of the player")
 		.param("float: x coordinate")
-		.param("float: x coordinate")
-		.param("float: x coordinate")
+		.param("float: y coordinate")
+		.param("float: z coordinate")
 		// basic coordinates functions
 		.set("get_x", &SLBPlayer::getPlayerX)
 		.comment("returns the X coordinate")
@@ -290,8 +290,8 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("set_position", &SLBHandle::setPosition)
 		.comment("Sets the position of the NPC")
 		.param("float: x coordinate")
-		.param("float: x coordinate")
-		.param("float: x coordinate")
+		.param("float: y coordinate")
+		.param("float: z coordinate")
 		// basic coordinates functions
 		.set("get_x", &SLBHandle::getX)
 		.comment("returns the X coordinate")
@@ -335,6 +335,12 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.set("set_rotation_sensibility", &SLBCamera::setRotationSensibility)
 		.comment("Sets the rotation sensibility of the camera")
 		.param("float: sensibility (in degrees)")
+		// sets the camera position offset
+		.set("set_position_offset", &SLBCamera::setPositionOffset)
+		.comment("Sets the position offset of the camera")
+		.param("float: x coord offset")
+		.param("float: y coord offset")
+		.param("float: z coord offset")
 		;
 }
 
@@ -367,6 +373,8 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play ambient function
 		.set("play_ambient", &SLBPublicFunctions::playAmbient)
 		.comment("Executes the specified ambient sound")
-		.param("Route of the ambient sound")
+		// launch intro state
+		.set("toggle_intro_state", &SLBPublicFunctions::toggleIntroState)
+		.comment("Toggles the intro game state")
 		;
 }

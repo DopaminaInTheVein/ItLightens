@@ -19,6 +19,9 @@ public:
 	void render() override;
 	void recalcNavmesh();
 	void readNavmesh();
+	bool forcedUpdate() { 
+		return GameController->GetGameState() == CGameController::STOPPED_INTRO;
+	}
 	const char* getName() const {
 		return "entities";
 	}

@@ -1277,7 +1277,12 @@
     <tags tags="AI AI_guard" />
     <transform pos="0 3.8 91" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
-    <render_static_mesh name="static_meshes/guard.static_mesh" />
+	<skeleton
+	   model="skeletons/guard/guard.skeleton"
+	/>
+	<render_static_mesh
+	   name="skeletons/guard/guard.static_mesh"
+	/>
     <bt_guard
       kpt_size  = "8"
       kpt0_type = "seek" kpt0_pos = " 0  3.8  91" kpt0_wait = "0.5"
@@ -1302,7 +1307,12 @@
     <tags tags="AI AI_guard" />
     <transform pos="0 4 130" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
-    <render_static_mesh name="static_meshes/guard.static_mesh" />
+	<skeleton
+	   model="skeletons/guard/guard.skeleton"
+	/>
+	<render_static_mesh
+	   name="skeletons/guard/guard.static_mesh"
+	/>
     <bt_guard
       kpt_size  = "2"
       kpt0_type = "seek" kpt0_pos = " 0  4  126" kpt0_wait = "100"
@@ -1390,7 +1400,12 @@
     <tags tags="AI AI_guard" />
     <transform pos="0 3.91887 167.5" rotation="1 2 3 3" scale="1 1 1" />
     <life points="100" />
-    <render_static_mesh name="static_meshes/guard.static_mesh" />
+	<skeleton
+	   model="skeletons/guard/guard.skeleton"
+	/>
+	<render_static_mesh
+	   name="skeletons/guard/guard.static_mesh"
+	/>
     <bt_guard
       kpt_size  = "6"
       kpt0_type = "seek" kpt0_pos = "7 3.9 158" kpt0_wait = "0.5"

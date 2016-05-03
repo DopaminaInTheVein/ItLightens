@@ -147,6 +147,7 @@ class player_controller : public CPlayerBase {
 	void UpdateMoves() override;
 	void UpdateInputActions() override;
 	void UpdateOverCharge();
+	void UpdateDamage();
 	void startOverCharge();
 	void doOverCharge();
 	void Evolve(eEvol);

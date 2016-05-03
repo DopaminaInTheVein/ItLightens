@@ -58,6 +58,7 @@ public:
 	void setSpeed(float speed);
 	void setSpeedUnlocked(float speed);
 	void setRotationSensibility(float sensibility);
+	void setPositionOffset(float x_offset, float y_offset, float z_offset);
 };
 
 // public functions
@@ -72,6 +73,7 @@ public:
 	void playMusic(const char* music_route);
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);
+	void toggleIntroState();
 
 	void test(const char* to_print);
 

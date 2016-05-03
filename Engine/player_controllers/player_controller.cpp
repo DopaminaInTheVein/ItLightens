@@ -11,6 +11,8 @@
 #include "render/static_mesh.h"
 #include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
+#include "app_modules/gui/gui.h"
+
 #include "handle/handle.h"
 #include "ui/ui_interface.h"
 
@@ -135,11 +137,7 @@ void player_controller::setLife(float new_life)
 void player_controller::rechargeEnergy()
 {
 	PROFILE_FUNCTION("recharge_energy");
-	TCompLife *life = myEntity->get<TCompLife>();
-	life->setMaxLife(max_life);
-	TCompCharacterController *p = myEntity->get<TCompCharacterController>();
-	PxController *cc = p->GetController();
-	cc->resize(full_height);
+	Evolve(eEvol::second);
 	//ChangePose(pose_idle);
 }
 
@@ -252,11 +250,8 @@ void player_controller::myUpdate() {
 	PROFILE_FUNCTION("player controller: MY_update");
 	SetMyEntity();
 
-	TCompTransform *m = myEntity->get<TCompTransform>();
-
+	UpdateDamage();
 	____TIMER__UPDATE_(timerDamaged);
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 pos = player_transform->getPosition();
 	if (isDamaged()) {
 		UpdateOverCharge();
 	}
@@ -276,6 +271,15 @@ void player_controller::myExtraIdle() {
 		SetCharacterController();
 		ChangeState("falling");
 		if (!cc->OnGround()) animController.setState(AST_FALL);
+	}
+}
+
+void player_controller::UpdateDamage()
+{
+	SetMyEntity();
+	TCompLife * life = myEntity->get<TCompLife>();
+	if (life->energyDamageScale > 0.2f) {
+		____TIMER_RESET_(timerDamaged);
 	}
 }
 
@@ -670,11 +674,13 @@ void player_controller::UpdateActionsTrigger() {
 	PROFILE_FUNCTION("player_controller: update Actions trigger");
 
 	if (canRecEnergy) {
-		ui.addTextInstructions("\n Press 'E' to recharge energy\n");
-		if (io->keys['E'].becomesPressed()) {
+		//ui.addTextInstructions("\n Press 'E' to recharge energy\n");
+		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 			rechargeEnergy();
-			curr_evol = 1;
 			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
+		}
+		else {
+			Gui->setActionAvailable(eAction::RECHARGE);
 		}
 	}
 	else if (canPassWire) {
@@ -867,11 +873,12 @@ void player_controller::UpdateOverCharge() {
 		float currentLife = getLife();
 
 		if (currentLife > evolution_limit) {
-			if (io->keys[VK_LSHIFT].becomesPressed()) {
+			if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 				startOverCharge();
 			}
 			else {
-				ui.addTextInstructions("Press 'L-SHIFT' to OVERCHARGE guard weapon\n");
+				Gui->setActionAvailable(eAction::OVERCHARGE);
+				//ui.addTextInstructions("Press ACTION to OVERCHARGE guard weapon\n");
 			}
 		}
 	}
@@ -901,10 +908,18 @@ void player_controller::doOverCharge()
 }
 
 void player_controller::Evolve(eEvol evolution) {
-	if (evolution == eEvol::first) {
-		//Set Life
+	switch (evolution) {
+	case eEvol::first:
 		setLife(evolution_limit);
+		break;
+	case eEvol::second:
+		TCompCharacterController *p = myEntity->get<TCompCharacterController>();
+		PxController *cc = p->GetController();
+		cc->resize(full_height);
+		setLife(max_life);
+		break;
 	}
+	curr_evol = evolution;
 }
 
 void player_controller::update_msgs()

@@ -6,11 +6,15 @@ p = Public( )
 
 function OnAction( param )
 	p:print( "OnAction: "..param.."\n" )
-	triggerGuardFormation();
-	setCameraDistanteToTarget(5.5);
-	setCameraRotationSensibility(60.5);
-	setCameraSpeed(4.0);
-	setCameraSpeedUnlocked(10.0);
+	--triggerGuardFormation();
+	setCameraDistanteToTarget(1.0);
+	setCameraPositionOffset(0.0, -1.5, 0.0);
+	p:exec_command("toggleIntroState();", 0.2)
+	p:exec_command("toggleIntroState();", 5.2)
+	p:exec_command("setCameraDistanteToTarget(2.0); setCameraPositionOffset(0.0, -0.5, 0.0);", 5.4)
+	--setCameraRotationSensibility(60.5);
+	--setCameraSpeed(4.0);
+	--setCameraSpeedUnlocked(10.0);
 end
 
 function OnEnter( param, handle )
@@ -36,6 +40,10 @@ end
 
 function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
+end
+
+function OnGuardOvercharged( param )
+	p:print( "OnGuardOvercharged: "..param.."\n" )
 end
 
 function OnGuardRemoveBox( reaction_time )

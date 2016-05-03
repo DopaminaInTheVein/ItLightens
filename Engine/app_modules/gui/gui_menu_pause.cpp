@@ -41,10 +41,10 @@ CGuiMenuPause::CGuiMenuPause()
 void CGuiMenuPause::render()
 {
 	// Menu Frame
-	GUI::drawRect(rect, GUI::IM_RED_DARK_TRANS);
+	GUI::drawRect(rect, GUI::IM_BLACK_TRANSP);
 
 	// Menu Text
-	GUI::drawText(0.45f, 0.1f, GImGui->Font, 0.1f, GUI::IM_BLACK, "MENU");
+	GUI::drawText(0.45f, 0.1f, GImGui->Font, 0.1f, GUI::IM_WHITE, "MENU");
 
 	// Buttons
 	if (btnResume->render()) {

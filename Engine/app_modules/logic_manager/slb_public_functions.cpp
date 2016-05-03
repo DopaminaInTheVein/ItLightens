@@ -172,6 +172,17 @@ void SLBCamera::setRotationSensibility(float sensibility) {
 	camara3rd->setRotationSensibility(sensibility);
 }
 
+void SLBCamera::setPositionOffset(float x_offset, float y_offset, float z_offset) {
+	if (!camera_h.isValid()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+
+	VEC3 offset(x_offset, y_offset, z_offset);
+	camara3rd->setPositionOffset(offset);
+}
+
 // public generic functions
 void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	// create the new command
@@ -200,6 +211,10 @@ void SLBPublicFunctions::playVoice(const char* voice_route) {
 
 void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 	sound_manager->playAmbient(std::string(ambient_route));
+}
+
+void SLBPublicFunctions::toggleIntroState() {
+	GameController->TogglePauseIntroState();
 }
 
 //test
