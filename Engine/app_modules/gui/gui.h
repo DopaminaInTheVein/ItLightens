@@ -4,6 +4,7 @@
 #include "app_modules/app_module.h"
 
 #include "gui_hud_player.h"
+#include "gui_action_text.h"
 #include "imgui/imgui_internal.h"
 
 #define DECL_GUI_STATE(name) \
@@ -35,12 +36,16 @@ private:
 	//Menu
 	CGuiMenuPause * menuPause;
 
+	//Action Text
+	CGuiActionText * txtAction;
+
 	//Game States Screens
 	DECL_GUI_STATE(Default);
 	DECL_GUI_STATE(OnPlay);
 	DECL_GUI_STATE(OnStop);
 	DECL_GUI_STATE(OnStopIntro);
 	DECL_GUI_STATE(OnMenu);
+	DECL_GUI_STATE(OnDead);
 
 	//Renders & Updaters Management
 	typedef void (CGuiModule::*screenRender)();
@@ -52,6 +57,9 @@ private:
 	void inline setRender(int state, screenRender render);
 	void inline callUpdater(int state, float dt);
 	void inline callRender(int state);
+	void initWindow();
+	void initScreens();
+	void toogleEnabled();
 	
 	//ImGui Window
 	bool enabled;
@@ -61,9 +69,6 @@ private:
 public:
 	CGuiModule() {}
 	bool start() override;
-	void toogleEnabled();
-	void initWindow();
-	void initScreens();
 	void stop() override;
 	void update(float dt) override;
 	void render() override;
@@ -72,8 +77,14 @@ public:
 		return "gui";
 	}
 
+	//Text Actions
+	void setActionAvailable(eAction action);
+
 	//bool onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 	//static std::string getFilePath(char *filter = "All Files (*.*)\0*.*\0", HWND owner = NULL);		//open file path
 };
+
+//extern:
+extern CGuiModule* Gui;
 
 #endif

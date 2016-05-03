@@ -29,6 +29,14 @@ setUpdater(state, (screenUpdater) &CGuiModule::updaterName)
 
 #define ADD_GAME_STATE(state, name) \
 ADD_RENDER(state, render##name); ADD_UPDATER(state, update##name)
+
+// ------ External functions --------//
+void CGuiModule::setActionAvailable(eAction action) {
+	assert(txtAction);
+	txtAction->setState(action);
+}
+
+
 // ----------------------------------- START MODULE ----------------------------------- //
 bool CGuiModule::start()
 {
@@ -52,6 +60,9 @@ bool CGuiModule::start()
 	hudPlayerRect = GUI::createRect(0.05f, 0.05f, .30f, 0.05f);
 	hudPlayer = new CGuiHudPlayer(hudPlayerRect);
 	
+	//Action Text
+	txtAction = new CGuiActionText(GUI::createRect(0.7f, 0.9f, .3f, .1f));
+
 	dbg("GUI module started\n");
 
 	return true;
@@ -78,6 +89,7 @@ void CGuiModule::initScreens()
 	ADD_GAME_STATE(CGameController::STOPPED, OnStop);
 	ADD_GAME_STATE(CGameController::STOPPED_INTRO, OnStopIntro);
 	ADD_GAME_STATE(CGameController::MENU, OnMenu);
+	ADD_GAME_STATE(CGameController::LOSE, OnDead);
 }
 
 void inline CGuiModule::setRender(int state, screenRender render)
@@ -119,6 +131,7 @@ void CGuiModule::updateDefault(float dt) {}
 void CGuiModule::updateOnPlay(float dt)
 {
 	hudPlayer->update(dt);
+	txtAction->update(dt);
 }
 
 // ----- Update On Stop ----- //
@@ -134,6 +147,11 @@ void CGuiModule::updateOnMenu(float dt) {
 	if (!enabled) CApp::get().exitGame();
 }
 
+// ----- Update On Dead ----- //
+void CGuiModule::updateOnDead(float dt) {
+	//Nothing at the moment
+}
+
 // ----------------------------------- RENDER MODULE ----------------------------------- //
 void inline CGuiModule::callRender(int state)
 {
@@ -147,6 +165,8 @@ void CGuiModule::render() {
 	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
 	callRender(GameController->GetGameState());
 	ImGui::End();
+
+	txtAction->setState(eAction::NONE);
 	//ImGui::Render(); <-- Ya lo hace el módulo de ImGui!!
 }
 
@@ -158,6 +178,7 @@ void CGuiModule::renderDefault() {
 // ----- Render On Play ----- //
 void CGuiModule::renderOnPlay() {
 	hudPlayer->render();
+	txtAction->render();
 }
 
 // ----- Render On Stop ----- //
@@ -168,7 +189,7 @@ void CGuiModule::renderOnStop() {
 	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
 
 	// Text Pause
-	GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSE");
+	GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSA");
 	//ImGui::GetWindowDrawList()->AddText(g.Font, g.FontSize, ImVec2(0,0), GUI::IM_WHITE, "PAUSE");
 }
 
@@ -182,6 +203,18 @@ void CGuiModule::renderOnStopIntro() {
 	// Text Pause
 	GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSE");
 	//ImGui::GetWindowDrawList()->AddText(g.Font, g.FontSize, ImVec2(0,0), GUI::IM_WHITE, "PAUSE");
+}
+
+// ----- Render On Dead ----- //
+void CGuiModule::renderOnDead() {
+	//hudPlayer->render();
+	ImGuiState& g = *GImGui;
+	g.FontSize = resolution_y;
+	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+
+	// Text Dead
+	GUI::drawText(0.3f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "Has muerto");
+	GUI::drawText(0.3f, 0.5f, GImGui->Font, 0.05f, GUI::IM_WHITE, "Intro: Reintentar");
 }
 
 // ----- Render On Menu ----- //

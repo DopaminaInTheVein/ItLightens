@@ -423,7 +423,7 @@
    height="1.8"
 />
 </entity>
-<!--
+
 <entity>
 <tags
    tags="AI AI_guard"
@@ -502,7 +502,7 @@
    height="1.8"
 />
 </entity>
--->
+
 <entity>
 <tags
    tags="player"

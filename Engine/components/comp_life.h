@@ -44,6 +44,7 @@ struct TCompLife : public TCompBase {
 	}
 
 	void setCurrent(float new_life) {
+		if (new_life > maxlife) maxlife = new_life;
 		currentlife = new_life;
 	}
 

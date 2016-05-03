@@ -83,9 +83,11 @@ fn _parseLevel = (
 	_entities_ids = #()
 	xml.nombre = "entities"
 	for obj in $* do (
-		_parsingObject = obj
-		_parseObject xml
-		--print (xml.parse())
+		if not obj.isHidden then (
+			_parsingObject = obj
+			_parseObject xml
+			--print (xml.parse())
+		)
 	)
 	_parsingObject = undefined
 	_entities_ids = #()
