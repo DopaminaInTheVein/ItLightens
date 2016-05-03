@@ -21,5 +21,13 @@ void SkelControllerPlayer::myUpdate()
 			currentState = "idle";
 		}
 	}
-	SkelController::myUpdate();
+
+	if (currentState != prevState) {
+		if (currentState == "jump") {
+			setAction("jump");
+		}
+		else {
+			setLoop(currentState);
+		}
+	}
 }
