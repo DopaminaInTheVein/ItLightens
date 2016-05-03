@@ -43,6 +43,7 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 	int anim_id = resource_skeleton->getAnimIdByName(msg.name);
 	if (anim_id >= 0) {
+		dbg("Cambio anim: %s\n", msg.name.c_str());
 		if (msg.loop) {
 			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.2f);
 			model->getMixer()->blendCycle(anim_id, 1.0f, 0.2f);
