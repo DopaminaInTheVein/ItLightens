@@ -39,6 +39,7 @@ private:
 	DECL_GUI_STATE(Default);
 	DECL_GUI_STATE(OnPlay);
 	DECL_GUI_STATE(OnStop);
+	DECL_GUI_STATE(OnStopIntro);
 	DECL_GUI_STATE(OnMenu);
 
 	//Renders & Updaters Management
@@ -66,6 +67,7 @@ public:
 	void stop() override;
 	void update(float dt) override;
 	void render() override;
+	bool forcedUpdate() { return true; }
 	const char* getName() const {
 		return "gui";
 	}

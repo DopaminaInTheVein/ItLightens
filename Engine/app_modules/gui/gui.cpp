@@ -76,6 +76,7 @@ void CGuiModule::initScreens()
 	//Add here Game States
 	ADD_GAME_STATE(CGameController::RUNNING, OnPlay);
 	ADD_GAME_STATE(CGameController::STOPPED, OnStop);
+	ADD_GAME_STATE(CGameController::STOPPED_INTRO, OnStopIntro);
 	ADD_GAME_STATE(CGameController::MENU, OnMenu);
 }
 
@@ -123,6 +124,11 @@ void CGuiModule::updateOnPlay(float dt)
 // ----- Update On Stop ----- //
 void CGuiModule::updateOnStop(float dt) {}
 
+// ----- Update On Stop Intro----- //
+void CGuiModule::updateOnStopIntro(float dt) {
+	
+}
+
 // ----- Update On Menu ----- //
 void CGuiModule::updateOnMenu(float dt) {
 	if (!enabled) CApp::get().exitGame();
@@ -164,7 +170,18 @@ void CGuiModule::renderOnStop() {
 	// Text Pause
 	GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSE");
 	//ImGui::GetWindowDrawList()->AddText(g.Font, g.FontSize, ImVec2(0,0), GUI::IM_WHITE, "PAUSE");
+}
 
+// ----- Render On Stop Intro ----- //
+void CGuiModule::renderOnStopIntro() {
+	hudPlayer->render();
+	ImGuiState& g = *GImGui;
+	g.FontSize = resolution_y;
+	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+
+	// Text Pause
+	GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSE");
+	//ImGui::GetWindowDrawList()->AddText(g.Font, g.FontSize, ImVec2(0,0), GUI::IM_WHITE, "PAUSE");
 }
 
 // ----- Render On Menu ----- //

@@ -19,6 +19,7 @@ public:
 		STARTING = 0,
 		RUNNING,
 		STOPPED,
+		STOPPED_INTRO,
 		VICTORY,
 		LOSE,
 		MENU,
@@ -33,6 +34,14 @@ public:
 			game_state = STOPPED;
 
 		else if (game_state == STOPPED)
+			game_state = RUNNING;
+	}
+
+	void TogglePauseIntroState() {
+		if (game_state == RUNNING)
+			game_state = STOPPED_INTRO;
+
+		else if (game_state == STOPPED_INTRO)
 			game_state = RUNNING;
 	}
 
@@ -78,12 +87,19 @@ public:
 			if (io->keys['P'].becomesPressed()) {
 				TogglePauseState();
 			}
+
+			//pause/unpause game (intro mode)
+			if (io->keys['I'].becomesPressed()) {
+				TogglePauseIntroState();
+			}
 		}
 	}
 
 	void update(float dt) {
 		UpdateGeneralInputs();
 	}
+
+	bool forcedUpdate() { return true; }
 
 	bool * GetFxGlowPointer() {
 		return &fx_glow;

@@ -166,14 +166,16 @@ void CApp::exitGame() {
 // ----------------------------------
 void CApp::update(float elapsed) {
 	PROFILE_FUNCTION("update");
-	for (auto it : mod_update) {
-		PROFILE_FUNCTION(it->getName());
-		it->update(elapsed);
-	}
-	static float ctime = 0.f;
-	ctime += elapsed* 0.01f;
+		for (auto it : mod_update) {
+			if (GameController->GetGameState() == CGameController::RUNNING || it->forcedUpdate()) {
+				PROFILE_FUNCTION(it->getName());
+				it->update(elapsed);
+			}
+		}
+		static float ctime = 0.f;
+		ctime += elapsed* 0.01f;
 
-	CHandleManager::destroyAllPendingObjects();
+		CHandleManager::destroyAllPendingObjects();
 }
 
 // ----------------------------------
