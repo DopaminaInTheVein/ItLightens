@@ -194,7 +194,7 @@
    tags=""
 />
 <name
-   name="pibotes_balcon_pequeño-arribo"
+   name="pibotes_balcon_pequeno-arribo"
 />
 <transform
    pos="-15.8339 -1.02302 21.5208"
@@ -202,7 +202,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/pibotes_balcon_pequeño-arribo.static_mesh"
+   name="static_meshes/pibotes_balcon_pequeno-arribo.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -213,7 +213,7 @@
    tags=""
 />
 <name
-   name="marco_balcon_pequeño_arriba"
+   name="marco_balcon_pequeno_arriba"
 />
 <transform
    pos="-15.7973 0.0587932 25.1401"
@@ -221,7 +221,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/marco_balcon_pequeño_arriba.static_mesh"
+   name="static_meshes/marco_balcon_pequeno_arriba.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -232,7 +232,7 @@
    tags=""
 />
 <name
-   name="puerta_balcon_redondo_pequeño"
+   name="puerta_balcon_redondo_pequeno"
 />
 <transform
    pos="-15.8142 -0.103988 25.0861"
@@ -240,7 +240,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/puerta_balcon_redondo_pequeño.static_mesh"
+   name="static_meshes/puerta_balcon_redondo_pequeno.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -251,7 +251,7 @@
    tags=""
 />
 <name
-   name="balcon_redondo_pequeño"
+   name="balcon_redondo_pequeno"
 />
 <transform
    pos="-15.8538 -2.53427 21.7714"
@@ -259,7 +259,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/balcon_redondo_pequeño.static_mesh"
+   name="static_meshes/balcon_redondo_pequeno.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -650,7 +650,7 @@
    tags=""
 />
 <name
-   name="barrotes_balcon_redondo_pequeño"
+   name="barrotes_balcon_redondo_pequeno"
 />
 <transform
    pos="-15.8396 -0.972487 21.4911"
@@ -658,7 +658,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/barrotes_balcon_redondo_pequeño.static_mesh"
+   name="static_meshes/barrotes_balcon_redondo_pequeno.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -774,6 +774,81 @@
 />
 <transform
    pos="9.96492 23.3405 27.2393"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="16.0127"
+   out_radius="34.0"
+/>
+<name
+   name="Omni001"
+/>
+<transform
+   pos="-19.5386 -8.94751 0.470276"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="Omni002"
+/>
+<transform
+   pos="-19.5386 23.7925 -6.17871"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="Omni003"
+/>
+<transform
+   pos="-19.5386 23.7925 19.0538"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="Omni004"
+/>
+<transform
+   pos="51.4312 23.7925 19.0538"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="16.0127"
+   out_radius="34.0"
+/>
+<name
+   name="Omni005"
+/>
+<transform
+   pos="-31.8362 -18.8937 0.470277"
    quat="0 0 0 1.0"
    scale="1.0"
 />
