@@ -83,6 +83,7 @@ fn _parseLevel = (
 	_entities_ids = #()
 	xml.nombre = "entities"
 	for obj in $* do (
+		obj.name = strReplace obj.name "ñ" "n"
 		if not obj.isHidden then (
 			_parsingObject = obj
 			_parseObject xml

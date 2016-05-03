@@ -133,9 +133,21 @@ fn findAllHelpers tHelper = (
 	else return (findAllHelpersList #(tHelper))
 )
 
+-- LUA --
+-----------------------------------------------------------------------------------------------------------------
 --Append Lua
 fn luaAppend nameFunc code = (
 	_lua_code += "function " + nameFunc + "( )" + "\n"
 	_lua_code += code
 	_lua_code += "\nend\n\n"
+)
+
+-- Strings
+------------------------------------------------------------------------------------------------fn strReplace str strOld strNew = (
+fn strReplace str strOld strNew = (
+	while ((i=findstring str strOld) != undefined) do
+	(
+		str = replace str i strNew.count strNew
+	)
+	return str
 )
