@@ -13,10 +13,19 @@ fn parseWayPoints parent = (
 		parent.addAttr "wpts_size" patrols.count
 		local curWpt = 0
 		for p in patrols do (
+			--Pos
 			local mcv_tmx = matrixMax2MCV p.transform -- matrix3
 			atrName =  "wpt" + (curWpt as string) + "_pos"
 			atrValue = getTransformPosValue mcv_tmx
 			parent.addAttr atrName atrValue
+			
+			-- Wait
+			atrName = "wpt" + (curWpt as string) + "_wait"
+			atrValue = (getUserProp p "waitTime")
+			if (atrValue == undefined) then atrValue = 0
+			parent.addAttr atrName atrValue
+			
+			--Next
 			curWpt += 1
 		)
 	)
