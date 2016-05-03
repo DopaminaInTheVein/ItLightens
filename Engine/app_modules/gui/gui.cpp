@@ -138,9 +138,7 @@ void CGuiModule::updateOnPlay(float dt)
 void CGuiModule::updateOnStop(float dt) {}
 
 // ----- Update On Stop Intro----- //
-void CGuiModule::updateOnStopIntro(float dt) {
-	
-}
+void CGuiModule::updateOnStopIntro(float dt) {}
 
 // ----- Update On Menu ----- //
 void CGuiModule::updateOnMenu(float dt) {
@@ -195,14 +193,11 @@ void CGuiModule::renderOnStop() {
 
 // ----- Render On Stop Intro ----- //
 void CGuiModule::renderOnStopIntro() {
-	hudPlayer->render();
-	ImGuiState& g = *GImGui;
-	g.FontSize = resolution_y;
-	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
-
-	// Text Pause
-	GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSE");
-	//ImGui::GetWindowDrawList()->AddText(g.Font, g.FontSize, ImVec2(0,0), GUI::IM_WHITE, "PAUSE");
+	// Text Pause Intro
+	Rect upperRect = GUI::createRect(.00f, .00f, 2.f, .12f);
+	Rect lowerRect = GUI::createRect(.00f, .88f, 1.f, 1.f);
+	GUI::drawRect(upperRect, GUI::IM_BLACK);
+	GUI::drawRect(lowerRect, GUI::IM_BLACK);
 }
 
 // ----- Render On Dead ----- //
