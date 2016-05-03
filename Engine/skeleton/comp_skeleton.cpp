@@ -49,7 +49,10 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 			model->getMixer()->blendCycle(anim_id, 1.0f, 0.2f);
 			prevCycleId = anim_id;
 		}
-		else model->getMixer()->executeAction(anim_id, 1.0f, 0.f);
+		else {
+			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.f);
+			model->getMixer()->executeAction(anim_id, 0.f, 0.f, true);
+		}
 	} else {
 		fatal("Animation %s doesn't exist!", msg.name.c_str());
 	}
@@ -98,9 +101,21 @@ void TCompSkeleton::update(float dt) {
 	CEntity* e = CHandle(this).getOwner();
 	if (!e) return;
 	TCompTransform* tmx = e->get<TCompTransform>();
+	updateEndAction();
 	model->getMixer()->extra_trans = Engine2Cal(tmx->getPosition());
 	model->getMixer()->extra_rotation = Engine2Cal(tmx->getRotation());
 	model->update(dt);
+}
+
+void TCompSkeleton::updateEndAction() {
+	auto mixer = model->getMixer();
+	if (mixer->getAnimationActionList().size() == 0
+		&& mixer->getAnimationCycle().size() == 0)
+	{
+		if (prevCycleId >= 0) {
+			mixer->blendCycle(prevCycleId, 1.f, 0);
+		}
+	}
 }
 
 void TCompSkeleton::render() const {
