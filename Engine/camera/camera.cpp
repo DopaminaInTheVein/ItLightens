@@ -26,10 +26,15 @@ void CCamera::lookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
   updateViewProjection();
 }
 
-void CCamera::applyQuat(CQuaternion quat, VEC3 new_position) {
+void CCamera::applyQuat(CQuaternion quat, VEC3 p, VEC3 s) {
   MAT44 rotationMatrix = MAT44::CreateFromQuaternion(quat);
-  rotationMatrix.Translation(new_position);
-  view = rotationMatrix;
+  rotationMatrix.Translation(p);
+  MAT44 scaleMatrix = MAT44::CreateScale(s);
+
+  //view = scaleMatrix * rotationMatrix;
+  //view = rotationMatrix;
+  MAT44 preview = MAT44::Transform(view, quat);
+  view = preview;
 
   front = view.Forward();
   up = view.Up();
@@ -55,24 +60,19 @@ void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) 
 
   updateViewProjection();
 }
-void CCamera::smoothUpdateInfluence(VEC3 new_position, VEC3 new_target, TCompGuidedCamera * gc, int influencia, VEC3 new_up_aux) {
-  position = new_position;
-  target = new_target;
+void CCamera::smoothUpdateInfluence(TCompTransform * tmx_camera, TCompGuidedCamera * gc, int influencia, VEC3 new_up_aux) {
+  position = tmx_camera->getPosition();
+  target = tmx_camera->getPosition() + tmx_camera->getFront();
   up_aux = new_up_aux;
 
-  CQuaternion  rotation;
-  VEC3 pos, scale;
-  view.Decompose(scale, rotation, pos);
-  CQuaternion newquad = gc->getNewRotationForCamera(position, rotation, influencia);
-  VEC3 ntarget = target + newquad;
   view = MAT44::CreateLookAt(position, target, up_aux);
-  front = view.Forward();
-  up = view.Up();
-  left = view.Left();
 
-  view = MAT44::CreateLookAt(position, ntarget, up_aux);
-
-  //  this->applyQuat(newquad, pos);
+  VEC3 p, s;
+  CQuaternion cameraActualRotation;
+  view.Decompose(s, cameraActualRotation, p);
+  cameraActualRotation.Normalize();
+  CQuaternion newquad = gc->getNewRotationForCamera(position, cameraActualRotation, influencia);
+  this->applyQuat(newquad, p, s);
 
   updateViewProjection();
 }

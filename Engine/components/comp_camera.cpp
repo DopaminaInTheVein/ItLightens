@@ -49,13 +49,11 @@ void TCompCamera::update(float dt) {
   assert(e_owner);
   TCompTransform* tmx = e_owner->get<TCompTransform>();
   assert(tmx);
-  VEC3 campos = tmx->getPosition();
 
   CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
   CEntity * guidedCamE = guidedCam;
   if (guidedCamE) {
     TCompGuidedCamera * gc = guidedCamE->get<TCompGuidedCamera>();
-    int influencia = gc->nearCameraPoint(campos);
     VEC3 goTo = gc->getPointPosition(lastguidedCamPoint);
     float yaw, pitch;
     tmx->getAngles(&yaw, &pitch);
@@ -82,7 +80,9 @@ void TCompCamera::update(float dt) {
 
     VEC3 pos = tmx->getPosition();
     if (simpleDist(pos, goTo) > 2.0f) {
-      pos = pos + (tmx->getFront() * gc->getVelocity() * getDeltaTime());
+      VEC3 fro = goTo - pos;
+      fro.Normalize();
+      pos = pos + (fro * gc->getVelocity() * getDeltaTime());
       tmx->setPosition(pos);
     }
     else {
@@ -105,8 +105,13 @@ void TCompCamera::update(float dt) {
         target_e->sendMsg(msg_camera);	//set target camera
       }
     }
+    else if (lastguidedCamPoint > 0) {
+      VEC3 campos = tmx->getPosition();
+      int influencia = gc->nearCameraPoint(campos);
+      this->smoothUpdateInfluence(tmx, gc, influencia, getUpAux());	//smooth movement
+    }
     else {
-      this->smoothUpdateInfluence(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), gc, influencia, getUpAux());	//smooth movement
+      this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
     }
   }
   else {

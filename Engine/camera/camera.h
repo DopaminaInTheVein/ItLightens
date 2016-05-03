@@ -3,6 +3,7 @@
 
 #include "geometry/geometry.h"
 #include "components/comp_guided_camera.h"
+#include "components/comp_transform.h"
 
 class CCamera {
   VEC3  position;
@@ -29,8 +30,8 @@ public:
   // View
   void lookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
   void smoothLookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
-  void smoothUpdateInfluence(VEC3 eye, VEC3 target, TCompGuidedCamera * gc, int influencia, VEC3 up = VEC3(0, 1, 0));
-  void applyQuat(CQuaternion quat, VEC3 new_position);
+  void smoothUpdateInfluence(TCompTransform * tmx, TCompGuidedCamera * gc, int influencia, VEC3 up = VEC3(0, 1, 0));
+  void applyQuat(CQuaternion quat, VEC3 p, VEC3 s);
 
   MAT44 getView() const { return view; }
   VEC3  getPosition() const { return position; }
