@@ -373,6 +373,8 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play ambient function
 		.set("play_ambient", &SLBPublicFunctions::playAmbient)
 		.comment("Executes the specified ambient sound")
-		.param("Route of the ambient sound")
+		// launch intro state
+		.set("toggle_intro_state", &SLBPublicFunctions::toggleIntroState)
+		.comment("Toggles the intro game state")
 		;
 }

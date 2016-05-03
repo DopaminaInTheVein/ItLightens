@@ -171,7 +171,7 @@ public:
 		CEntity* e_target = target;
 		if (!e_target)
 			return;
-
+		
 		updateInput();
 
 		TCompTransform* target_tmx = e_target->get<TCompTransform>();

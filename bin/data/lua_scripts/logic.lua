@@ -57,3 +57,7 @@ function setCameraPositionOffset( x, y, z )
 	c:get_camera()
 	c:set_position_offset(x,y,z)
 end
+
+function toggleIntroState( )
+	p:toggle_intro_state()
+end

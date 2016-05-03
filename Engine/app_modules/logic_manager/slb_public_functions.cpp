@@ -213,6 +213,10 @@ void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 	sound_manager->playAmbient(std::string(ambient_route));
 }
 
+void SLBPublicFunctions::toggleIntroState() {
+	GameController->TogglePauseIntroState();
+}
+
 //test
 void SLBPublicFunctions::test(const char* to_print) {
 
