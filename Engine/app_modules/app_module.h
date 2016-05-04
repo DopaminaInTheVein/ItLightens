@@ -13,6 +13,7 @@ public:
 		return true;
 	}
 	//virtual void renderDebug2D();
+	virtual bool forcedUpdate() { return false; }
 	virtual const char* getName() const = 0;
 };
 

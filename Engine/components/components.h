@@ -18,6 +18,7 @@
 #include "comp_tracker.h"
 #include "comp_box_spawner.h"
 #include "comp_box_destructor.h"
+#include "comp_guided_camera.h"
 
 //lights
 #include "comp_light_dir.h"

@@ -76,6 +76,8 @@ DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
 
 DECL_OBJ_MANAGER("trigger_lua", TCompTriggerStandar);
 
+DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
+
 CCamera * camera;
 
 // The global dict of all msgs
@@ -91,26 +93,27 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 
-	getHandleManager<TVictoryPoint>()->init(20);
-	getHandleManager<TTriggerLua>()->init(100);
-	getHandleManager<player_controller>()->init(8);
-	getHandleManager<player_controller_speedy>()->init(8);
-	getHandleManager<player_controller_mole>()->init(8);
-	getHandleManager<player_controller_cientifico>()->init(8);
-	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
-	getHandleManager<TCompName>()->init(MAX_ENTITIES);
-	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
-	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-	getHandleManager<TCompCamera>()->init(4);
-	getHandleManager<TCompController3rdPerson>()->init(4);
-	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
-	getHandleManager<TCompWire>()->init(10);
-	getHandleManager<TCompGenerator>()->init(10);
-	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
-	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
-	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
-	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+  getHandleManager<TVictoryPoint>()->init(20);
+  getHandleManager<TTriggerLua>()->init(100);
+  getHandleManager<player_controller>()->init(8);
+  getHandleManager<player_controller_speedy>()->init(8);
+  getHandleManager<player_controller_mole>()->init(8);
+  getHandleManager<player_controller_cientifico>()->init(8);
+  getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
+  getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
+  getHandleManager<TCompName>()->init(MAX_ENTITIES);
+  getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
+  getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
+  getHandleManager<TCompCamera>()->init(4);
+  getHandleManager<TCompController3rdPerson>()->init(4);
+  getHandleManager<TCompLife>()->init(MAX_ENTITIES);
+  getHandleManager<TCompWire>()->init(10);
+  getHandleManager<TCompGenerator>()->init(10);
+  getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
+  getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
+  getHandleManager<TCompTags>()->init(MAX_ENTITIES);
+  getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+  getHandleManager<TCompGuidedCamera>()->init(16);
 
 	//lights
 	getHandleManager<TCompLightDir>()->init(4);
@@ -325,23 +328,27 @@ bool CEntitiesModule::start() {
 		assert(false);
 	}
 	TCompCamera * pcam = camera_e->get<TCompCamera>();
+  CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
+  CEntity * guidedCamE = guidedCam;
 
-	// Player real
-	CHandle t = tags_manager.getFirstHavingTag("player");
-	CEntity * target_e = t;
+  CHandle t = tags_manager.getFirstHavingTag("player");
+  CEntity * target_e = t;
 
-	// Set the player in the 3rdPersonController
-	if (camera_e && t.isValid()) {
-		TMsgSetTarget msg;
-		msg.target = t;
-		msg.who = PLAYER;
-		camera_e->sendMsg(msg);		//set camera
+  if (!guidedCamE) {
+    // Player real
 
-		TMsgSetCamera msg_camera;
-		msg_camera.camera = camera;
-		target_e->sendMsg(msg_camera);	//set target camera
-	}
+    // Set the player in the 3rdPersonController
+    if (camera_e && t.isValid()) {
+      TMsgSetTarget msg;
+      msg.target = t;
+      msg.who = PLAYER;
+      camera_e->sendMsg(msg);		//set camera
 
+      TMsgSetCamera msg_camera;
+      msg_camera.camera = camera;
+      target_e->sendMsg(msg_camera);	//set target camera
+    }
+  }
 	// Set the player in the Speedy AIs
 	TTagID tagIDSpeedy = getID("AI_speedy");
 	VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
@@ -382,58 +389,76 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-	static float ia_wait = 0.0f;
-	ia_wait += getDeltaTime();
 
-	// May need here a switch to update wich player controller takes the action - possession rulez
-	getHandleManager<player_controller>()->updateAll(dt);
-	getHandleManager<player_controller_speedy>()->updateAll(dt);
-	getHandleManager<player_controller_mole>()->updateAll(dt);
-	getHandleManager<player_controller_cientifico>()->updateAll(dt);
+	if (GameController->GetGameState() == CGameController::RUNNING) {
+  CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
+  CEntity * guidedCamE = guidedCam;
+		static float ia_wait = 0.0f;
+		ia_wait += getDeltaTime();
 
-	getHandleManager<TCompController3rdPerson>()->updateAll(dt);
-	getHandleManager<TCompCamera>()->updateAll(dt);
-	getHandleManager<TCompLightDir>()->updateAll(dt);
+		// May need here a switch to update wich player controller takes the action - possession rulez
+		if (!guidedCamE) {
+			getHandleManager<player_controller>()->updateAll(dt);
+			getHandleManager<player_controller_speedy>()->updateAll(dt);
+			getHandleManager<player_controller_mole>()->updateAll(dt);
+			getHandleManager<player_controller_cientifico>()->updateAll(dt);
+		getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+		}
 
-	if (use_parallel)
-		getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
-	else
-		getHandleManager<TCompSkeleton>()->updateAll(dt);
+		getHandleManager<TCompCamera>()->updateAll(dt);
+		getHandleManager<TCompLightDir>()->updateAll(dt);
 
-	getHandleManager<TCompBoneTracker>()->updateAll(dt);
+		if (use_parallel)
+			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
+		else
+			getHandleManager<TCompSkeleton>()->updateAll(dt);
 
-	if (SBB::readBool(sala) && ia_wait > 1.0f) {
-		getHandleManager<bt_guard>()->updateAll(dt);
-		getHandleManager<bt_mole>()->updateAll(dt);
-		getHandleManager<ai_scientific>()->updateAll(dt);
-		getHandleManager<beacon_controller>()->updateAll(dt);
-		getHandleManager<workbench_controller>()->updateAll(dt);
-		getHandleManager<bt_speedy>()->updateAll(dt);
-		getHandleManager<water_controller>()->updateAll(dt);
+		getHandleManager<TCompBoneTracker>()->updateAll(dt);
+
+		if (SBB::readBool(sala) && ia_wait > 1.0f) {
+			getHandleManager<bt_guard>()->updateAll(dt);
+			getHandleManager<bt_mole>()->updateAll(dt);
+			getHandleManager<ai_scientific>()->updateAll(dt);
+			getHandleManager<beacon_controller>()->updateAll(dt);
+			getHandleManager<workbench_controller>()->updateAll(dt);
+			getHandleManager<bt_speedy>()->updateAll(dt);
+			getHandleManager<water_controller>()->updateAll(dt);
+		}
+		getHandleManager<CStaticBomb>()->updateAll(dt);
+		getHandleManager<CMagneticBomb>()->updateAll(dt);
+
+		getHandleManager<TCompWire>()->updateAll(dt);
+		getHandleManager<TCompGenerator>()->updateAll(dt);
+		getHandleManager<TCompPolarized>()->updateAll(dt);
+
+		getHandleManager<TCompLife>()->updateAll(dt);
+
+		getHandleManager<TCompPlatform>()->updateAll(dt);
+		getHandleManager<TCompBox>()->updateAll(dt);
+
+		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
+		getHandleManager<TCompBoxDestructor>()->updateAll(dt);
+
+		getHandleManager<TCompLightPoint>()->updateAll(dt);
+		getHandleManager<TCompLightFadable>()->updateAll(dt);
+
+		//physx objects
+		getHandleManager<TCompCharacterController>()->updateAll(dt);
+		getHandleManager<TCompPhysics>()->updateAll(dt);
+
+		SBB::update(dt);
 	}
-	getHandleManager<CStaticBomb>()->updateAll(dt);
-	getHandleManager<CMagneticBomb>()->updateAll(dt);
+	// In this mode, only the animation of the player is updated
+	else if (GameController->GetGameState() == CGameController::STOPPED_INTRO) {
 
-	getHandleManager<TCompWire>()->updateAll(dt);
-	getHandleManager<TCompGenerator>()->updateAll(dt);
-	getHandleManager<TCompPolarized>()->updateAll(dt);
+		VHandles targets = tags_manager.getHandlesByTag(getID("player"));
+		CHandle player_handle = targets[targets.size() - 1];
+		CEntity* player_entity = player_handle;
 
-	getHandleManager<TCompLife>()->updateAll(dt);
+		TCompSkeleton* player_skeleton = player_entity->get<TCompSkeleton>();
+		player_skeleton->update(dt);
 
-	getHandleManager<TCompPlatform>()->updateAll(dt);
-	getHandleManager<TCompBox>()->updateAll(dt);
-
-	getHandleManager<TCompBoxSpawner>()->updateAll(dt);
-	getHandleManager<TCompBoxDestructor>()->updateAll(dt);
-
-	getHandleManager<TCompLightPoint>()->updateAll(dt);
-	getHandleManager<TCompLightFadable>()->updateAll(dt);
-
-	//physx objects
-	getHandleManager<TCompCharacterController>()->updateAll(dt);
-	getHandleManager<TCompPhysics>()->updateAll(dt);
-
-	SBB::update(dt);
+	}
 }
 
 void CEntitiesModule::render() {

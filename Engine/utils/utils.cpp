@@ -38,7 +38,7 @@ uint32_t getID(const char* text) {
 
 float _deltaTimePrev = 1.0f / 60.0f;
 float getDeltaTime(float always) {
-	if (GameController->GetGameState() == CGameController::RUNNING || always ) {
+	if (GameController->GetGameState() == CGameController::RUNNING || always) {
 		CApp& app = CApp::get();
 		float dt = app.timer_app.GetDeltaTime();
 		if (dt > 0.5f) {
@@ -169,7 +169,6 @@ Document readJSONAtrFile(const std::string route) {
 
 // Obtains all the atributes of the specified element of a JSON object
 std::map<std::string, float> readIniAtrData(const std::string route, std::string element) {
-
 	Document document = readJSONAtrFile(route);
 	std::map<std::string, float> atributes;
 
@@ -178,12 +177,10 @@ std::map<std::string, float> readIniAtrData(const std::string route, std::string
 	}
 
 	return atributes;
-
 }
 
 // Modifies the specified json element of the specified file
 void writeIniAtrData(const std::string route, std::string element, std::map<std::string, float> element_values) {
-
 	Document document = readJSONAtrFile(route);
 
 	for (auto atribute : element_values) {
@@ -226,6 +223,25 @@ std::vector<std::string> list_files_recursively(std::string folder_path) {
 	}
 
 	return files;
+}
+
+CQuaternion interpolate(const CQuaternion &start, const CQuaternion &end, const float factor) {
+	// CORRECT?
+	if (factor <= 0.0f) {
+		return start;
+	}
+	else if (factor >= 1.0f) {
+		return end;
+	}
+
+	CQuaternion result;
+
+	result.x = start.x + (end.x - start.x)*factor;
+	result.y = start.y + (end.y - start.y)*factor;
+	result.z = start.z + (end.z - start.z)*factor;
+	result.w = start.w + (end.w - start.w)*factor;
+
+	return result;
 }
 
 //Check Nan, Infinity's zero values,...
