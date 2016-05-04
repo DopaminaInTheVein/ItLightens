@@ -23,18 +23,21 @@ void SkelControllerPlayer::SetPlayerController() {
 
 void SkelControllerPlayer::myUpdate()
 {
-	SetCharacterController();
 	if (currentState == "walk") {
-		//TODO: read moving param!
-		VEC3 speed = cc->GetSpeed();
-		VEC3 lastSpeed = cc->GetLastSpeed();
-		speed.y = 0; // No tenemos en cuenta la velocidad vertical!
-		lastSpeed.y = 0; // No tenemos en cuenta la velocidad vertical!
-		dbg("Player Speed, Last: %f, %f\n", speed.LengthSquared(), lastSpeed.LengthSquared());
-
-		if ( !isNormal(speed) || speed.LengthSquared() <= 0.0001f) {
+		SetPlayerController();
+		if (!pc->isMoving()) {
 			currentState = "idle";
 		}
+		////TODO: read moving param!
+		//VEC3 speed = cc->GetSpeed();
+		//VEC3 lastSpeed = cc->GetLastSpeed();
+		//speed.y = 0; // No tenemos en cuenta la velocidad vertical!
+		//lastSpeed.y = 0; // No tenemos en cuenta la velocidad vertical!
+		//dbg("Player Speed, Last: %f, %f\n", speed.LengthSquared(), lastSpeed.LengthSquared());
+
+		//if ( !isNormal(speed) || speed.LengthSquared() <= 0.0001f) {
+		//	
+		//}
 	}
 
 	if (currentState != prevState) {
