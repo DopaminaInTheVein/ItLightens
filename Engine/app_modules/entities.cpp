@@ -254,13 +254,13 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
   //sala = "scene_milestone_1";
-  sala = "scene_test_recast";
+  //sala = "scene_test_recast";
   //sala = "pruebaExportador";
   //sala = "scene_basic_lights";
   //sala = "test_simple";
   //sala = "test_guard";
   //sala = "test_pol";
-  //sala = "test_guard";
+  sala = "test_guard";
   //sala = "test_anim";
 
   SBB::postSala(sala);
