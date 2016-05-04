@@ -1,2 +1,4 @@
 <material tech="deferred.tech">
 <texture slot="diffuse" name="textures/columna_2_normals_occlusion.dds"/>
+<texture slot="bump" name="textures/columna_2_normals_normals.dds"/>
+</material>

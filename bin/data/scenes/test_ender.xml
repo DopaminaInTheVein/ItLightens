@@ -4,7 +4,7 @@
    tags=""
 />
 <name
-   name="plataforma redonde"
+   name="plataforma_redonde"
 />
 <transform
    pos="-34.4344 3.1559 -0.986563"
@@ -12,7 +12,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/plataforma redonde.static_mesh"
+   name="static_meshes/plataforma_redonde.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -141,7 +141,7 @@
 />
 <transform
    pos="10.1304 -10.5613 -25.3549"
-   quat="0 0 0 1.0"
+   quat="0 1.0 0 0"
    scale="1.0"
 />
 <render_static_mesh
@@ -578,7 +578,7 @@
 />
 <transform
    pos="10.1805 -10.5613 25.3085"
-   quat="0 0 0 1.0"
+   quat="0 1.0 0 0"
    scale="1.0"
 />
 <render_static_mesh
@@ -849,6 +849,271 @@
 />
 <transform
    pos="-31.8362 -18.8937 0.470277"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="andamio"
+/>
+<transform
+   pos="0.347425 -24.0436 -22.8485"
+   quat="0 -0.682264 0 0.731106"
+   scale="0.0387651"
+/>
+<render_static_mesh
+   name="static_meshes/andamio.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="tabla_arriba"
+/>
+<transform
+   pos="0.347425 -24.1006 -22.8485"
+   quat="0 -0.682264 0 0.731106"
+   scale="0.0387651"
+/>
+<render_static_mesh
+   name="static_meshes/tabla_arriba.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="tabla_medio"
+/>
+<transform
+   pos="-4.67164 -13.9639 -21.0939"
+   quat="0 0.955168 0 0.296064"
+   scale="0.03566"
+/>
+<render_static_mesh
+   name="static_meshes/tabla_medio.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="tabla_abajo"
+/>
+<transform
+   pos="-0.975353 -18.0286 -20.7582"
+   quat="0 0.890787 0 -0.45442"
+   scale="0.0387651"
+/>
+<render_static_mesh
+   name="static_meshes/tabla_abajo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="LOW_tURBINE_vERTICAL_GEN"
+/>
+<transform
+   pos="-22.632 -23.6427 13.8243"
+   quat="0 0 0 1.0"
+   scale="4.09671"
+/>
+<render_static_mesh
+   name="static_meshes/LOW_tURBINE_vERTICAL_GEN.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="lamparas_derecha"
+/>
+<transform
+   pos="20.9162 -18.9816 24.463"
+   quat="0 0.999981 0 0"
+   scale="0.00875608"
+/>
+<render_static_mesh
+   name="static_meshes/lamparas_derecha.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="drone_1"
+/>
+<transform
+   pos="10.0358 -10.6841 13.8705"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone_1.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="drone_2"
+/>
+<transform
+   pos="10.0358 -10.6841 4.47689"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone_2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="drone_3"
+/>
+<transform
+   pos="10.0358 -10.6841 -4.91669"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone_3.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="drone_4"
+/>
+<transform
+   pos="10.0358 -10.6841 -14.3103"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone_4.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="3"
+   kpt0_type="seek"
+   kpt0_pos="-36.0955 -23.2517 17.2159"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-35.9552 -23.2517 -0.570453"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="-20.5864 -23.2417 -5.08278"
+   kpt2_wait="2"
+   jurisdiction="-35.8414 -23.7288 13.2654"
+   jurRadius="41.45"
+/>
+<name
+   name="guard_1"
+/>
+<transform
+   pos="-35.8414 -23.7288 13.2654"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="generator_1"
+/>
+<transform
+   pos="33.8007 -22.5807 21.62"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__generator.static_mesh"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.0"
+/>
+<generator/>
+<name
+   name="trigger_1"
+/>
+<transform
+   pos="33.8007 -22.5807 21.62"
    quat="0 0 0 1.0"
    scale="1.0"
 />
