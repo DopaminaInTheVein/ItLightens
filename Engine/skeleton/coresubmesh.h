@@ -99,7 +99,7 @@ public:
   void scale(float factor);
 
 private:
-  void UpdateTangentVector(int v0, int v1, int v2, int channel);
+  void UpdateTangentVector(int v0, int v1, int v2, int channel, std::vector<CalVector>& bitangents);
 
 private:
   std::vector<Vertex> m_vectorVertex;

@@ -569,6 +569,9 @@
     <ClCompile Include="app_modules\gui\gui_action_text.cpp">
       <Filter>app_modules\gui</Filter>
     </ClCompile>
+    <ClCompile Include="skeleton\coresubmesh.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1387,6 +1390,9 @@
     </ClInclude>
     <ClInclude Include="logic\polarity.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\coresubmesh.h">
+      <Filter>skeleton</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,7 @@
 
 
 #include "cal3d/global.h"
-#include "cal3d/coresubmesh.h"
+#include "coresubmesh.h"
 
 
 class CalCoreModel;
