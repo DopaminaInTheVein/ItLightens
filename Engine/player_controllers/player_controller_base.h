@@ -101,6 +101,8 @@ public:
 
 	virtual void update_msgs() {}
 	void renderInMenu();
+
+	bool isMoving() { return moving; }
 };
 
 #endif
