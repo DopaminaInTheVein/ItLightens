@@ -56,8 +56,12 @@ struct TResources (
 			local mat_file = createFile (materials_dir + m.name + ".material")
 			format ("<material tech=\"" + technique + ".tech\">\n") to:mat_file
 			saveTextureSlot mat_file "diffuse" m.diffusemap
-			saveTextureSlot mat_file "bump" m.bumpmap
 			saveTextureSlot mat_file "specular" m.specularmap
+			if (classof m.bumpmap) == Normal_Bump then (
+				saveTextureSlot mat_file "bump" m.bumpmap.normal
+			) else (
+				saveTextureSlot mat_file "bump" m.bumpmap
+			)
 			format "</material>\n" to:mat_file
 			close mat_file
 		) else (
