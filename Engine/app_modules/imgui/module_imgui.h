@@ -13,6 +13,7 @@ public:
 	void stop() override;
 	void update(float dt) override;
 	void render() override;
+	bool forcedUpdate() { return true; }
 	const char* getName() const {
 		return "imgui";
 	}

@@ -69,15 +69,15 @@ bool CApp::start() {
 	all_modules.push_back(logic_manager);
 	all_modules.push_back(sound_manager);
 
+	mod_update.push_back(logic_manager);
+	mod_update.push_back(entities);
 	mod_update.push_back(GameController);
 	mod_update.push_back(imgui);
 	mod_update.push_back(render_deferred);
 	mod_update.push_back(Gui);
-	mod_update.push_back(entities);
 	mod_update.push_back(g_PhysxManager);
 	mod_update.push_back(io);
 	mod_update.push_back(Debug);
-	mod_update.push_back(logic_manager);
 	
 	mod_renders.push_back(render_deferred);
 	mod_renders.push_back(entities);
@@ -167,14 +167,20 @@ void CApp::exitGame() {
 // ----------------------------------
 void CApp::update(float elapsed) {
 	PROFILE_FUNCTION("update");
-	for (auto it : mod_update) {
-		PROFILE_FUNCTION(it->getName());
-		it->update(elapsed);
-	}
-	static float ctime = 0.f;
-	ctime += elapsed* 0.01f;
+		for (auto it : mod_update) {
+			if (GameController->GetGameState() == CGameController::RUNNING) {
+				PROFILE_FUNCTION(it->getName());
+				it->update(elapsed);
+			} 
+			else if (it->forcedUpdate()) {
+				PROFILE_FUNCTION(it->getName());
+				it->update(getDeltaTime(1.0f));
+			}
+		}
+		static float ctime = 0.f;
+		ctime += elapsed* 0.01f;
 
-	CHandleManager::destroyAllPendingObjects();
+		CHandleManager::destroyAllPendingObjects();
 }
 
 // ----------------------------------

@@ -5,13 +5,16 @@
 
 //Forward Declaration
 class TCompCharacterController;
+class player_controller;
 
 
 
 class SkelControllerPlayer : public SkelController {
 	TCompCharacterController * cc;
+	player_controller * pc;
 
 	void SetCharacterController();
+	void SetPlayerController();
 	virtual void myUpdate();
 };
 

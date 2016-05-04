@@ -34,6 +34,7 @@ public:
 	bool start() override;
 	void update(float dt) override;
 	void stop() override;
+	bool forcedUpdate() { return true; }
 	const char* getName() const {
 		return "sound_manager";
 	}

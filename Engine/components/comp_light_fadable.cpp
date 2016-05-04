@@ -35,7 +35,6 @@ void TCompLightFadable::update(float dt) {
 		}
 	}
 	else {
-		auto hm3 = CHandleManager::getByName("light_fadable");
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
 	}

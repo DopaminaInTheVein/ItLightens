@@ -41,17 +41,28 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 }
 
 void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
+	//Obtenemos id de la animacion a asignar
 	int anim_id = resource_skeleton->getAnimIdByName(msg.name);
 	if (anim_id >= 0) {
+		//Encuentra la animacion con dicho nombre
 		dbg("Cambio anim: %s\n", msg.name.c_str());
 		if (msg.loop) {
+			//Cycle animation
 			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.2f);
 			model->getMixer()->blendCycle(anim_id, 1.0f, 0.2f);
 			prevCycleId = anim_id;
 		}
 		else {
+			//Action animation (no loop)
 			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.f);
-			model->getMixer()->executeAction(anim_id, 0.f, 0.f, true);
+			model->getMixer()->executeAction(anim_id, 0.f, 0.2f, true);
+
+			//Siguiente loop (si no se indica sera el actual)
+			if (msg.nextLoop != "") {
+				int nextCycleId = resource_skeleton->getAnimIdByName(msg.nextLoop);
+				if (nextCycleId >= 0) prevCycleId = nextCycleId;
+				else fatal("Animation %s doesn't exist!", msg.nextLoop.c_str());
+			}
 		}
 	} else {
 		fatal("Animation %s doesn't exist!", msg.name.c_str());
@@ -108,14 +119,24 @@ void TCompSkeleton::update(float dt) {
 }
 
 void TCompSkeleton::updateEndAction() {
+	float endTimeAction = 0.2f; // Tiempo antes de acabar animacion que empieza el blend
 	auto mixer = model->getMixer();
-	if (mixer->getAnimationActionList().size() == 0
-		&& mixer->getAnimationCycle().size() == 0)
-	{
-		if (prevCycleId >= 0) {
-			mixer->blendCycle(prevCycleId, 1.f, 0);
+	if (mixer->getAnimationActionList().size() == 1) {
+		auto lastAction = mixer->getAnimationActionList().front();
+		auto lastCoreAction = lastAction->getCoreAnimation();
+		float duration = lastCoreAction->getDuration();
+		if (duration - lastAction->getTime() < endTimeAction) {
+			model->getMixer()->blendCycle(prevCycleId, 1.0f, endTimeAction);
 		}
+
 	}
+	//if (mixer->getAnimationActionList().size() == 0
+	//	&& mixer->getAnimationCycle().size() == 0)
+	//{
+	//	if (prevCycleId >= 0) {
+	//		mixer->blendCycle(prevCycleId, 1.f, 0);
+	//	}
+	//}
 }
 
 void TCompSkeleton::render() const {
