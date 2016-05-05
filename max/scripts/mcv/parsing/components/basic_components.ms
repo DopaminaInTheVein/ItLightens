@@ -225,11 +225,11 @@ fn _parse_drone = (
 	parseWayPoints xmlDrone
 	
 	--Textures self ilumination
-	local textureLeft = getUserProp _parsingObject "textureLeft"
-	xmlDrone.addAttr "textureLeft" textureLeft
+	local textureFront = getUserProp _parsingObject "textureFront"
+	xmlDrone.addAttr "textureFront" textureFront
 	
-	local textureRight = getUserProp _parsingObject "textureRight"
-	xmlDrone.addAttr "textureRight" textureRight
+	local textureBack = getUserProp _parsingObject "textureBack"
+	xmlDrone.addAttr "textureBack" textureBack
 	
 	--Polarized Component
 	local polArea = findHelper "AreaPol"

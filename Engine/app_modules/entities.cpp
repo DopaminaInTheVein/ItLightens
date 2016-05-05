@@ -54,6 +54,7 @@ DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
+DECL_OBJ_MANAGER("drone", TCompDrone);
 DECL_OBJ_MANAGER("box", TCompBox);
 
 //Physics
@@ -129,6 +130,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 
 	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
+	getHandleManager<TCompDrone>()->init(MAX_ENTITIES);
 
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
@@ -149,6 +151,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompDrone, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
@@ -261,8 +264,9 @@ bool CEntitiesModule::start() {
 	//sala = "test_simple";
 	//sala = "test_guard";
 	//sala = "test_pol";
-	sala = "test_guard";
+	//sala = "test_guard";
 	//sala = "test_anim";
+	sala = "milestone2";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";
@@ -434,6 +438,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompLife>()->updateAll(dt);
 
 		getHandleManager<TCompPlatform>()->updateAll(dt);
+		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);

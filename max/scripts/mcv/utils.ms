@@ -29,7 +29,7 @@ fn getHierarchy obj = (
 
 fn getHierarchyRoot obj = (
 	local res = obj
-	while ( res.parent != undefined ) do (
+	while ( res.parent != undefined or (classof res.parent != Dummy) ) do (
 		res = res.parent
 	)
 	return res

@@ -569,6 +569,9 @@
     <ClCompile Include="app_modules\gui\gui_action_text.cpp">
       <Filter>app_modules\gui</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_drone.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1387,6 +1390,9 @@
     </ClInclude>
     <ClInclude Include="logic\polarity.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_drone.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
