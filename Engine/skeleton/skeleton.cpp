@@ -7,6 +7,8 @@
 #include "render/mesh_format.h"
 #include "utils/data_saver.h"
 
+#include "coresubmesh.h"
+
 using namespace MeshFormat;
 
 template<> IResource::eType getTypeOfResource<CSkeleton>() { return IResource::SKELETON; }
@@ -61,6 +63,7 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 	for (int sub_mesh_id = 0; sub_mesh_id < num_sub_meshes; ++sub_mesh_id) {
 		CalCoreSubmesh* core_sub_mesh = core_mesh->getCoreSubmesh(sub_mesh_id);
 
+		// Para calculo automatico de tangentes (cal3d)
 		core_sub_mesh->enableTangents(0, true);
 
 		// # faces & indices
@@ -81,15 +84,20 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 		// An array of all textcoord sets
 		auto& cal_all_uvs_sets = core_sub_mesh->getVectorVectorTextureCoordinate();
 
-		// An array of all tangents
-		auto& cal_tangents = core_sub_mesh->getVectorVectorTangentSpace()[0];
-
 		// We must have at least one texture coordinate set
 		std::vector<CalCoreSubmesh::TextureCoordinate>* cal_uvs = nullptr;
 
 		// Use the first texture coordinate set
 		if (!cal_all_uvs_sets.empty())
 			cal_uvs = &cal_all_uvs_sets[0];
+
+		// Para calculo automatico de tangentes (cal3d)
+		// An array of all tangents
+		auto& cal_tangents = core_sub_mesh->getVectorVectorTangentSpace()[0];
+		// Para calculo manual de tangentes
+		/*std::vector<VEC4> cal_tangents;
+		cal_tangents.resize(nvertexs);
+		CSkeleton::CalculateTangentArray(nvertexs, &cal_vtxs, &cal_all_uvs_sets, nfaces, &cal_faces, &cal_tangents);*/
 
 		// For each vertex in this submesh
 		int vtx_id = 0;
@@ -108,12 +116,19 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 			skin_vtx.normal[0] = cal_normal.x;
 			skin_vtx.normal[1] = cal_normal.y;
 			skin_vtx.normal[2] = cal_normal.z;
+			// Para calculo automatico (cal3d) de tangentes
+					
 			skin_vtx.tangent[0] = cal_tangents[vtx_id].tangent.x;
 			skin_vtx.tangent[1] = cal_tangents[vtx_id].tangent.y;
 			skin_vtx.tangent[2] = cal_tangents[vtx_id].tangent.z;
-			skin_vtx.tangent[3] = cal_tangents[vtx_id].crossFactor; 
-
-
+			skin_vtx.tangent[3] = cal_tangents[vtx_id].crossFactor;
+/*						
+			// Para calculo manual de tangentes
+			skin_vtx.tangent[0] = cal_tangents[vtx_id].x;
+			skin_vtx.tangent[1] = cal_tangents[vtx_id].y;
+			skin_vtx.tangent[2] = cal_tangents[vtx_id].z;
+			skin_vtx.tangent[3] = cal_tangents[vtx_id].w;
+*/	
 			// Texture coords...
 			if (cal_uvs) {
 				skin_vtx.uv[0] = cal_uvs->operator[](vtx_id).u;
@@ -278,4 +293,76 @@ CSkeleton::CSkeleton()
 void CSkeleton::destroy()
 {
 	delete core_model;
+}
+
+void CSkeleton::CalculateTangentArray (
+		int vertexCount, std::vector<CalCoreSubmesh::Vertex> *vertex,
+		std::vector<std::vector<CalCoreSubmesh::TextureCoordinate>> *texcoord,
+		int triangleCount, std::vector<CalCoreSubmesh::Face> *triangle,
+		// Output
+		std::vector<VEC4> *tangent
+	) {
+
+	VEC3 *tan1 = new VEC3[vertexCount * 2];
+	VEC3 *tan2 = tan1 + vertexCount;
+	ZeroMemory(tan1, vertexCount * sizeof(VEC3) * 2);
+
+	for (long a = 0; a < triangleCount; a++)
+	{
+		long i1 = triangle->at(a).vertexId[0];
+		long i2 = triangle->at(a).vertexId[1];
+		long i3 = triangle->at(a).vertexId[2];
+
+		const VEC3& v1 = VEC3(vertex->at(i1).position.x, vertex->at(i1).position.y, vertex->at(i1).position.z);
+		const VEC3& v2 = VEC3(vertex->at(i2).position.x, vertex->at(i2).position.y, vertex->at(i2).position.z);
+		const VEC3& v3 = VEC3(vertex->at(i3).position.x, vertex->at(i3).position.y, vertex->at(i3).position.z);
+
+		const VEC2& w1 = VEC2(texcoord->at(0).at(i1).u, texcoord->at(0).at(i1).v);
+		const VEC2& w2 = VEC2(texcoord->at(0).at(i2).u, texcoord->at(0).at(i2).v);
+		const VEC2& w3 = VEC2(texcoord->at(0).at(i3).u, texcoord->at(0).at(i3).v);
+
+		float x1 = v2.x - v1.x;
+		float x2 = v3.x - v1.x;
+		float y1 = v2.y - v1.y;
+		float y2 = v3.y - v1.y;
+		float z1 = v2.z - v1.z;
+		float z2 = v3.z - v1.z;
+
+		float s1 = w2.x - w1.x;
+		float s2 = w3.x - w1.x;
+		float t1 = w2.y - w1.y;
+		float t2 = w3.y - w1.y;
+
+		float r = 1.0F / (s1 * t2 - s2 * t1); 
+		VEC3 sdir((t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r);
+		VEC3 tdir((s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r);
+
+		tan1[i1] += sdir;
+		tan1[i2] += sdir;
+		tan1[i3] += sdir;
+
+		tan2[i1] += tdir;
+		tan2[i2] += tdir;
+		tan2[i3] += tdir;
+
+	}
+
+	for (long a = 0; a < vertexCount; a++)
+	{
+		const VEC3& n = VEC3(vertex->at(a).normal.x, vertex->at(a).normal.y, vertex->at(a).normal.z);
+		const VEC3& t = tan1[a];
+
+		// Gram-Schmidt orthogonalize
+		auto gram_schmidt = (t - n * n.Dot(t));
+		gram_schmidt.Normalize();
+
+		tangent->at(a).x = gram_schmidt.x;
+		tangent->at(a).y = gram_schmidt.y;
+		tangent->at(a).z = gram_schmidt.z;
+
+		// Calculate handedness
+		tangent->at(a).w = ((n.Cross(t)).Dot(tan2[a]) < 0.0F) ? -1.0F : 1.0F;
+	}
+
+	delete[] tan1;
 }
