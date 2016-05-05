@@ -44,6 +44,9 @@ void SkelControllerPlayer::myUpdate()
 		if (currentState == "jump") {
 			setAction("jump", "jumpidle");
 		}
+		else if (currentState == "idle" && prevState == "jumpland") {
+			setAction("jumplandidle", "idle");
+		}
 		else {
 			setLoop(currentState);
 		}
