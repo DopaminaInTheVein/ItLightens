@@ -86,6 +86,9 @@ void CMaterial::activateTextures() const {
   	//assert(textures[NORMALMAP]);
 	if(textures[NORMALMAP])
   		textures[NORMALMAP]->activate(TEXTURE_SLOT_NORMALS);
+	else {
+		Resources.get("textures/default_normal_map.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NORMALS);
+	}
 
 	if(textures[SELFILUM])
 		textures[SELFILUM]->activate(TEXTURE_SLOT_SELFILUM);

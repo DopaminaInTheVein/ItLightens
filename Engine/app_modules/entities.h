@@ -20,7 +20,7 @@ public:
 	void recalcNavmesh();
 	void readNavmesh();
 	bool forcedUpdate() { 
-		return GameController->GetGameState() == CGameController::STOPPED_INTRO;
+		return true;
 	}
 	const char* getName() const {
 		return "entities";

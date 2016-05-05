@@ -228,7 +228,6 @@
    mass="2"
 />
 </entity>
-<!--
 <entity>
 <name
    name="guard_1"
@@ -277,6 +276,30 @@
 
 <entity>
 <name
+   name="guard_2"
+/>
+<transform
+   pos="26.3787 -2.50928 19.4651"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<render_static_mesh
+   name="static_meshes/test_guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+
+<entity>
+<name
    name="speedy_1"
 />
 <transform
@@ -312,5 +335,5 @@
    height="1.7"
 />
 </entity>
--->
+
 </entities>

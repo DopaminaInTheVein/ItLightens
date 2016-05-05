@@ -135,7 +135,7 @@ public:
 		else if (io->joystick.rx == io->joystick.max_stick_value)
 			movement_x = 2;
 
-		rotation_sensibility = getDeltaTime()*deg2rad(45.0f);
+		rotation_sensibility = getDeltaTime(true)*deg2rad(45.0f);
 		if (x_axis_inverted)	deltaYaw -= (io->mouse.dx + movement_x)* rotation_sensibility*speed_camera;
 		else deltaYaw += (io->mouse.dx + movement_x) * rotation_sensibility*speed_camera;
 		if (y_axis_inverted) deltaPitch -= (io->mouse.dy + io->joystick.dry) * rotation_sensibility*speed_camera;
