@@ -133,6 +133,10 @@ struct TResources (
 			print res
 		) else (
 			local polyObj = copy obj --Objeto temporal solo en esta funcion
+			ConvertTo polyObj Editable_Poly
+			messagebox ("obj = " + obj as string)
+			messagebox ("polyObj = " + polyObj as string)
+			
 			try (
 				
 				for m=1 to mat.count do (

@@ -109,7 +109,7 @@ fn _parse_tracker = (
 			local numDivs =ceil (longitud * 2) -- Cada 0.5m
 			local deltaInterval = ( 1 / numDivs)
 			
-			xmlTracker = XML_PARSING.addChild "tracker"
+			local xmlTracker = XML_PARSING.addChild "tracker"
 			xmlTracker.addAttr "long" longitud
 			nspl = numSplines tracker
 		
@@ -154,7 +154,6 @@ fn _parse_tracker = (
 		delete tracker
 	)
 )
-
 ----------------------------------------------------------------------
 -- RENDER  --
 ----------------------------------------------------------------------
