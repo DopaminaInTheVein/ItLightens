@@ -64,7 +64,7 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 		CalCoreSubmesh* core_sub_mesh = core_mesh->getCoreSubmesh(sub_mesh_id);
 
 		// Para calculo automatico de tangentes (cal3d)
-		//core_sub_mesh->enableTangents(0, true);
+		core_sub_mesh->enableTangents(0, true);
 
 		// # faces & indices
 		int nfaces = core_sub_mesh->getFaceCount();
@@ -93,11 +93,11 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 
 		// Para calculo automatico de tangentes (cal3d)
 		// An array of all tangents
-		//auto& cal_tangents = core_sub_mesh->getVectorVectorTangentSpace()[0];
+		auto& cal_tangents = core_sub_mesh->getVectorVectorTangentSpace()[0];
 		// Para calculo manual de tangentes
-		std::vector<VEC4> cal_tangents;
+		/*std::vector<VEC4> cal_tangents;
 		cal_tangents.resize(nvertexs);
-		CSkeleton::CalculateTangentArray(nvertexs, &cal_vtxs, &cal_all_uvs_sets, nfaces, &cal_faces, &cal_tangents);
+		CSkeleton::CalculateTangentArray(nvertexs, &cal_vtxs, &cal_all_uvs_sets, nfaces, &cal_faces, &cal_tangents);*/
 
 		// For each vertex in this submesh
 		int vtx_id = 0;
@@ -117,18 +117,18 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 			skin_vtx.normal[1] = cal_normal.y;
 			skin_vtx.normal[2] = cal_normal.z;
 			// Para calculo automatico (cal3d) de tangentes
-			/*				
+					
 			skin_vtx.tangent[0] = cal_tangents[vtx_id].tangent.x;
 			skin_vtx.tangent[1] = cal_tangents[vtx_id].tangent.y;
 			skin_vtx.tangent[2] = cal_tangents[vtx_id].tangent.z;
 			skin_vtx.tangent[3] = cal_tangents[vtx_id].crossFactor;
-			*/		
+/*						
 			// Para calculo manual de tangentes
 			skin_vtx.tangent[0] = cal_tangents[vtx_id].x;
 			skin_vtx.tangent[1] = cal_tangents[vtx_id].y;
 			skin_vtx.tangent[2] = cal_tangents[vtx_id].z;
 			skin_vtx.tangent[3] = cal_tangents[vtx_id].w;
-
+*/	
 			// Texture coords...
 			if (cal_uvs) {
 				skin_vtx.uv[0] = cal_uvs->operator[](vtx_id).u;

@@ -81,7 +81,7 @@ void PSGBuffer(
   float3 T = normalize(iTangent.xyz);
   float3 N = normalize(iNormal);
   float3 B = cross(N, T) * iTangent.w;
-  float3x3 TBN = float3x3(T, B, N);
+  float3x3 TBN = float3x3(T, -B, N);
 
   // Leer la normal en tangent space tal como esta en la textura
   // y convertir el rango de 0..1 a -1..1
@@ -94,8 +94,6 @@ void PSGBuffer(
   o_normal.xyz = (normalize(N_world_space) + 1.) * 0.5;
   o_normal.a = 1.;
   o_wpos = float4(iWorldPos, 1.);
-  
-  //o_normal = iTangent.zzzz;
 
   o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
   if (!(o_selfIlum.r == 0 && o_selfIlum.g == 0 && o_selfIlum.b == 0))
