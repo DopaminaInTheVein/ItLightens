@@ -365,7 +365,8 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 				TCompTransform *c_tmx = e->get<TCompTransform>();
 	
 				activateWorldMatrix(c_tmx->asMatrix());
-
+				// Si algun dia tenemos mas de un slot, revisar esto!
+				assert(rsm->static_mesh->slots.size() == 1);
 				rsm->static_mesh->slots[0].material->activateTextures();
 				rsm->static_mesh->slots[0].mesh->activateAndRender();
 
