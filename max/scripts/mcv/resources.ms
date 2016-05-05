@@ -58,9 +58,9 @@ struct TResources (
 			saveTextureSlot mat_file "diffuse" m.diffusemap
 			saveTextureSlot mat_file "specular" m.specularmap
 			if (classof m.bumpmap) == Normal_Bump then (
-				saveTextureSlot mat_file "bump" m.bumpmap.normal
+				saveTextureSlot mat_file "normalmap" m.bumpmap.normal
 			) else (
-				saveTextureSlot mat_file "bump" m.bumpmap
+				saveTextureSlot mat_file "normalmap" m.bumpmap
 			)
 			format "</material>\n" to:mat_file
 			close mat_file
