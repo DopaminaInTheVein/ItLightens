@@ -198,6 +198,7 @@ struct TMsgAddTag {
 struct TMsgSetAnim {
 	std::string name;
 	bool loop;
+	std::string nextLoop;
 	DECLARE_MSG_ID();
 };
 

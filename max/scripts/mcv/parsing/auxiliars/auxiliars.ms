@@ -2,6 +2,9 @@
 --******************
 
 fn parseable = (
+	-- Es dummy?
+	if (classof _parsingObject) == Dummy then (return false)
+
 	-- Es spline?
 	if (isSpline _parsingObject) then (return false)
 	

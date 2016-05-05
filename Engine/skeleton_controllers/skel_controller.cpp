@@ -21,13 +21,14 @@ void SkelController::setState(string state)
 	currentState = state;
 }
 
-void SkelController::setAnim(string anim, bool loop)
+void SkelController::setAnim(string anim, bool loop, string nextLoop)
 {
 	if (!owner.isValid()) return;
 	CEntity* eOwner = owner;
 	TMsgSetAnim msgAnim;
 	msgAnim.name = anim;
 	msgAnim.loop = loop;
+	msgAnim.nextLoop = nextLoop;
 	eOwner->sendMsg(msgAnim);
 }
 
@@ -36,9 +37,9 @@ void SkelController::setLoop(string anim)
 	setAnim(anim, true);
 }
 
-void SkelController::setAction(string anim)
+void SkelController::setAction(string anim, string next_loop)
 {
-	setAnim(anim, false);
+	setAnim(anim, false, next_loop);
 }
 
 void SkelController::myUpdate()

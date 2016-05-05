@@ -17,8 +17,8 @@ protected:
 	std::string currentState = "";
 	std::string prevState = "";
 
-	void setAnim(std::string anim, bool loop);
-	void setAction(std::string anim);
+	void setAnim(std::string anim, bool loop, std::string nextLoop = "");
+	void setAction(std::string anim, std::string nextLoop = "");
 	void setLoop(std::string anim);
 	
 	//Virtuals

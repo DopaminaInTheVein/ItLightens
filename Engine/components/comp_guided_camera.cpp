@@ -51,7 +51,12 @@ int TCompGuidedCamera::nearCameraPoint(VEC3 playerPosition) {
 };
 
 CQuaternion TCompGuidedCamera::getNewRotationForCamera(VEC3 playerPosition, CQuaternion cameraActual, int pointOfInfluence) {
+  //if (pointOfInfluence != lastP) {
+  //  lastP = pointOfInfluence;
+  //  maxInfluence = 0.0f;
+  //}
   cameraActual.Normalize();
+
   if (pointOfInfluence < 0 || pointOfInfluence >= num_cameras) {
     return cameraActual;
   }
@@ -59,6 +64,8 @@ CQuaternion TCompGuidedCamera::getNewRotationForCamera(VEC3 playerPosition, CQua
   float dist = realDist(playerPosition, cameraPositions[pointOfInfluence]);
   float distanciaUnitaria = dist / influences[pointOfInfluence];
   distanciaUnitaria = (1 - distanciaUnitaria);
+  //distanciaUnitaria = fmaxf(maxInfluence, distanciaUnitaria);
+  //maxInfluence = distanciaUnitaria;
   CQuaternion cameraNova = CQuaternion::Slerp(cameraActual, rotations[pointOfInfluence], distanciaUnitaria);
   cameraNova.Normalize();
   return cameraNova;
