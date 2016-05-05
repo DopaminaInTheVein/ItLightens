@@ -196,7 +196,7 @@
   <entity>
     <tags tags="guided_camera" />
     <guided_camera
-      velocity="10.0"
+      velocity="5.0"
       points_size = "6"
       wpt0 = " 3.5    4.5  10.0"
       wpt1 = " 3.5    4.5  0.0"
