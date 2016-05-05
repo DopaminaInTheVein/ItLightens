@@ -8,13 +8,14 @@ class TCompGuidedCamera : public TCompBase {
   int num_points;
   int num_cameras;
   float velocity;
-  float angularVelocity;
+  //float angularVelocity;
   std::vector<CQuaternion> rotations;
   std::vector<float> influences;
   std::vector<VEC3> cameraPositions;
 
-  //float maxInfluence = 0.0f;
-  //int lastP = -1;
+  float maxInfluence = 0.0f;
+  CQuaternion last_quat;
+  int lastP = -1;
 public:
   TCompGuidedCamera() {
   }
@@ -24,10 +25,10 @@ public:
   bool load(MKeyValue& atts);
   void renderInMenu() {}
   void update(float dt) {}
-  int nearCameraPoint(VEC3 playerPosition);
+  //int nearCameraPoint(VEC3 playerPosition);
   const int getTotalPoints() const { return num_points; }
   const float getVelocity() const { return velocity; }
-  const float getAngularVelocity() const { return angularVelocity; }
+  //  const float getAngularVelocity() const { return angularVelocity; }
   const VEC3 getCameraPosition(int posi) const { return cameraPositions[posi]; }
   const VEC3 getPointPosition(int posi) const { return points[posi]; }
   CQuaternion getNewRotationForCamera(VEC3 playerPosition, CQuaternion cameraActual, int pointOfInfluence);

@@ -11,7 +11,7 @@ char nameVariable[10]; sprintf(nameVariable, "rot%d", index)
 bool TCompGuidedCamera::load(MKeyValue& atts) {
   num_points = atts.getInt("points_size", 0);
   velocity = atts.getFloat("velocity", 0);
-  angularVelocity = atts.getFloat("angularVelocity", 0);
+  //angularVelocity = atts.getFloat("angularVelocity", 0);
   num_cameras = num_points - 1;
   points.resize(num_points);
   rotations.resize(num_cameras);
@@ -26,7 +26,7 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
     CQuaternion rot = atts.getQuat(atrRot);
     rot.Normalize();
     rotations[i] = rot;
-    influences[i] = realDist(points[i], points[i + 1]) / 2;
+    influences[i] = realDist(points[i], points[i + 1]);
     VEC3 vectorBetween = (points[i + 1] - points[i]);
     vectorBetween.x /= 2;
     vectorBetween.y /= 2;
@@ -36,7 +36,7 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
 
   return true;
 };
-
+/*
 int TCompGuidedCamera::nearCameraPoint(VEC3 playerPosition) {
   int pos = -1;
   float latestInfluence = 999.9f;
@@ -49,24 +49,33 @@ int TCompGuidedCamera::nearCameraPoint(VEC3 playerPosition) {
   }
   return pos;
 };
-
+*/
 CQuaternion TCompGuidedCamera::getNewRotationForCamera(VEC3 playerPosition, CQuaternion cameraActual, int pointOfInfluence) {
-  //if (pointOfInfluence != lastP) {
-  //  lastP = pointOfInfluence;
-  //  maxInfluence = 0.0f;
-  //}
+  if (pointOfInfluence != lastP) {
+    lastP = pointOfInfluence;
+    maxInfluence = 0.0f;
+    if (pointOfInfluence > 0) {
+      last_quat = rotations[pointOfInfluence - 1];
+    }
+  }
   cameraActual.Normalize();
 
   if (pointOfInfluence < 0 || pointOfInfluence >= num_cameras) {
     return cameraActual;
   }
 
-  float dist = realDist(playerPosition, cameraPositions[pointOfInfluence]);
+  float dist = realDist(playerPosition, points[pointOfInfluence + 1]);
   float distanciaUnitaria = dist / influences[pointOfInfluence];
   distanciaUnitaria = (1 - distanciaUnitaria);
-  //distanciaUnitaria = fmaxf(maxInfluence, distanciaUnitaria);
-  //maxInfluence = distanciaUnitaria;
-  CQuaternion cameraNova = CQuaternion::Slerp(cameraActual, rotations[pointOfInfluence], distanciaUnitaria);
+  distanciaUnitaria = fmaxf(maxInfluence, distanciaUnitaria);
+  maxInfluence = distanciaUnitaria;
+  CQuaternion cameraNova;
+  if (pointOfInfluence > 0) {
+    cameraNova = CQuaternion::Slerp(last_quat, rotations[pointOfInfluence], distanciaUnitaria);
+  }
+  else {
+    cameraNova = CQuaternion::Slerp(cameraActual, rotations[pointOfInfluence], distanciaUnitaria);
+  }
   cameraNova.Normalize();
   return cameraNova;
 };
