@@ -408,7 +408,6 @@
    type_collision="static"
 />
 </entity>
-<!--
 <entity>
 <tags
    tags=""
@@ -428,7 +427,6 @@
    type_collision="static"
 />
 </entity>
--->
 <entity>
 <tags
    tags=""

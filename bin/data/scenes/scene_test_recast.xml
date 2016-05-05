@@ -5,7 +5,7 @@
 
   <entity>
     <tags tags="camera_main" />
-    <transform pos="5 5 35" quat="0.0 -1.0 0.0 0.0" />
+    <transform pos="5 5 20" quat="0.0 -1.0 0.0 0.0" />
     <name name="camara" />
     <camera znear="1" zfar="250" fov="60" />
     <controller_3rd_person />
@@ -170,11 +170,15 @@
     <render_static_mesh name="static_meshes/mole/mole.static_mesh" />
   </entity>
   <entity>
-    <transform pos="3.5  2  -25" quat="0.0 -0.707107 0.0 0.707107" scale="1.0" />
+    <transform pos="3.5  2  -25" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
     <render_static_mesh name="static_meshes/mole/mole.static_mesh" />
   </entity>
   <entity>
-    <transform pos="-5.0  2  -25" quat="0.0 0.707107 0.0 0.707107" scale="1.0" />
+    <transform pos="-5.0  2  -25" quat="0.0 0.0 0.0 -1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/mole/mole.static_mesh" />
+  </entity>
+  <entity>
+    <transform pos="-10.0  2  -25.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/mole/mole.static_mesh" />
   </entity>
   <entity>
@@ -188,15 +192,17 @@
   <entity>
     <tags tags="guided_camera" />
     <guided_camera
-      velocity="6.0"
+      velocity="2.0"
       angularVelocity="0.8"
       points_size = "4"
       wpt0 = " 3.5    4.5  10.0"
       wpt1 = " 3.5    4.5 -25.0"
       wpt2 = "-5.0    4.5 -25.0"
-      wpt3 = "-10     2.5 -12.0"
-      rot0 = " 0.0      -0.707107 0.0 0.707107"
-      rot1 = " 0.0      -0.707107 0.0 0.707107"
-      rot2 = " 0.0       0.707107 0.0 0.707107" />
+      wpt3 = "-10     4.5 -25.0"
+      wpt4 = "-10     2.5 -12.0"
+      rot0 = " 0.0      -0.707107 0.0  0.707107"
+      rot1 = " 0.0       0.707107 0.0  0.707107"
+      rot2 = " 0.0       0.0      0.0  -1.0"
+      rot3 = " 0.0       0.0      0.0   1.0" />
   </entity>
 </entities>

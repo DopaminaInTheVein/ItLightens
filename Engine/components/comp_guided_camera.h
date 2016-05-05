@@ -13,6 +13,8 @@ class TCompGuidedCamera : public TCompBase {
   std::vector<float> influences;
   std::vector<VEC3> cameraPositions;
 
+  //float maxInfluence = 0.0f;
+  //int lastP = -1;
 public:
   TCompGuidedCamera() {
   }
