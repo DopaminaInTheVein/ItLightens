@@ -392,6 +392,12 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
+
+	if (GameController->GetGameState() == CGameController::STOPPED) {
+		getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+		getHandleManager<TCompCamera>()->updateAll(dt);
+	}
+
 	if (GameController->GetGameState() == CGameController::RUNNING) {
 		CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
 		CEntity * guidedCamE = guidedCam;
@@ -409,7 +415,7 @@ void CEntitiesModule::update(float dt) {
 
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompLightDir>()->updateAll(dt);
-
+		
 		if (use_parallel)
 			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
 		else
