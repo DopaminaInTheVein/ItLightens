@@ -20,16 +20,13 @@
 #include "components\comp_render_static_mesh.h"
 #include "render\static_mesh.h"
 
-
-
-
 // ------------------------------------------------------
 bool CRenderDeferredModule::start() {
-	//xres = CApp::get().getXRes();
-	//yres = CApp::get().getYRes();
+  //xres = CApp::get().getXRes();
+  //yres = CApp::get().getYRes();
 
-	xres = Render.getXRes();
-	yres = Render.getYRes();
+  xres = Render.getXRes();
+  yres = Render.getYRes();
 
   rt_albedos = new CRenderToTexture;
   rt_normals = new CRenderToTexture;
@@ -39,7 +36,7 @@ bool CRenderDeferredModule::start() {
   rt_selfIlum_blurred = new CRenderToTexture;
   rt_depthTexture = new CRenderToTexture;
   rt_final = new CRenderToTexture;
-  
+
   //aux
   rt_data = new CRenderToTexture;
   rt_black = new CRenderToTexture;
@@ -47,23 +44,23 @@ bool CRenderDeferredModule::start() {
   if (!rt_albedos->createRT("rt_albedo", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
     return false;
   if (!rt_data->createRT("rt_data", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
-	  return false;
-  if(!rt_black->createRT("rt_black", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
-	  return false;
+    return false;
+  if (!rt_black->createRT("rt_black", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+    return false;
   if (!rt_normals->createRT("rt_normals", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
     return false;
   if (!rt_wpos->createRT("rt_wpos", xres, yres, DXGI_FORMAT_R32G32B32A32_FLOAT, DXGI_FORMAT_UNKNOWN))
     return false;
   if (!rt_selfIlum->createRT("rt_selfIlum", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
-	  return false;
+    return false;
   if (!rt_acc_light->createRT("rt_acc_light", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
     return false;
   if (!rt_selfIlum_blurred->createRT("rt_selfIlum_blurred", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
-	  return false; 
+    return false;
   if (!rt_final->createRT("rt_final", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
-	  return false;
+    return false;
   if (!rt_depthTexture->createRT("rt_depthTexture", xres, yres, DXGI_FORMAT_R32_FLOAT, DXGI_FORMAT_UNKNOWN))
-	  return false;
+    return false;
   //
   acc_light_points = Resources.get("deferred_lights_point.tech")->as<CRenderTechnique>();
   assert(acc_light_points && acc_light_points->isValid());
@@ -79,7 +76,6 @@ bool CRenderDeferredModule::start() {
   unit_cube = Resources.get("meshes/unit_frustum.mesh")->as<CMesh>();
   assert(unit_cube && unit_cube->isValid());
 
-
   shader_ctes_globals.world_time = 0.f;
   shader_ctes_globals.xres = xres;
   shader_ctes_globals.yres = yres;
@@ -94,59 +90,57 @@ void CRenderDeferredModule::stop() {
 
 // ------------------------------------------------------
 void CRenderDeferredModule::update(float dt) {
-	shader_ctes_globals.world_time += dt;
+  shader_ctes_globals.world_time += dt;
 }
 
 // ------------------------------------------------------
 void CRenderDeferredModule::renderGBuffer() {
-	PROFILE_FUNCTION("GBuffer");
-	CTraceScoped scope("GBuffer");
-	static CCamera camera;
+  PROFILE_FUNCTION("GBuffer");
+  CTraceScoped scope("GBuffer");
+  static CCamera camera;
 
-	CHandle h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
-	if (h_camera.isValid()) {
-		CEntity* e = h_camera;
-		TCompCamera* comp_cam = e->get<TCompCamera>();
-		camera = *comp_cam;
-		camera.setAspectRatio((float)xres / (float)yres);
-	}
+  CHandle h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
+  if (h_camera.isValid()) {
+    CEntity* e = h_camera;
+    TCompCamera* comp_cam = e->get<TCompCamera>();
+    camera = *comp_cam;
+    camera.setAspectRatio((float)xres / (float)yres);
+    comp_cam->setAspectRatio(camera.getAspectRatio());
+  }
 
-	// To set a default and known Render State
-	Render.ctx->RSSetState(nullptr);
-	activateZ(ZCFG_DEFAULT);
-	activateBlend(BLENDCFG_DEFAULT);
+  // To set a default and known Render State
+  Render.ctx->RSSetState(nullptr);
+  activateZ(ZCFG_DEFAULT);
+  activateBlend(BLENDCFG_DEFAULT);
 
-	// Activo la camara en la pipeline de render
-	activateCamera(&camera);
+  // Activo la camara en la pipeline de render
+  activateCamera(&camera);
 
+  // -------------------------
+  // Activar mis multiples render targets
+  ID3D11RenderTargetView* rts[4] = {
+    rt_albedos->getRenderTargetView()
+    ,	rt_normals->getRenderTargetView()
+    ,	rt_wpos->getRenderTargetView()
+    ,   rt_selfIlum->getRenderTargetView()
+  };
+  // Y el ZBuffer del backbuffer principal
+  Render.ctx->OMSetRenderTargets(4, rts, Render.depth_stencil_view);
 
-	// -------------------------
-	// Activar mis multiples render targets
-	ID3D11RenderTargetView* rts[4] = {
-		rt_albedos->getRenderTargetView()
-		,	rt_normals->getRenderTargetView()
-		,	rt_wpos->getRenderTargetView()
-		,   rt_selfIlum->getRenderTargetView()
-	};
-	// Y el ZBuffer del backbuffer principal
-	Render.ctx->OMSetRenderTargets(4, rts, Render.depth_stencil_view);
+  // Clear de los render targets y el ZBuffer
+  rt_albedos->clear(VEC4(1, 0, 0, 1));
+  rt_normals->clear(VEC4(0, 1, 0, 1));
+  rt_selfIlum->clear(VEC4(0, 0, 0, 1));
+  rt_wpos->clear(VEC4(0, 0, 1, 1));
+  rt_depthTexture->clear(VEC4(0, 0, 0, 1));
+  rt_final->clear(VEC4(0, 0, 0, 1));
+  Render.clearMainZBuffer();
 
-	// Clear de los render targets y el ZBuffer
-	rt_albedos->clear(VEC4(1, 0, 0, 1));
-	rt_normals->clear(VEC4(0, 1, 0, 1));
-	rt_selfIlum->clear(VEC4(0, 0, 0, 1));
-	rt_wpos->clear(VEC4(0, 0, 1, 1));
-	rt_depthTexture->clear(VEC4(0,0,0,1));
-	rt_final->clear(VEC4(0,0,0,1));
-	Render.clearMainZBuffer();
+  rt_acc_light->clear(VEC4(0, 0, 0, 1));
+  rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 1));
 
-	rt_acc_light->clear(VEC4(0, 0, 0, 1));
-	rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 1));
-
-
-	
-	// Activa la ctes del object
-	activateWorldMatrix(MAT44::Identity);
+  // Activa la ctes del object
+  activateWorldMatrix(MAT44::Identity);
 
   // Mandar a pintar los 'solidos'
   RenderManager.renderAll(CRenderManager::SOLID_OBJS);
@@ -156,36 +150,36 @@ void CRenderDeferredModule::renderGBuffer() {
 
 // ----------------------------------------------
 void CRenderDeferredModule::addPointLights() {
-	PROFILE_FUNCTION("addPointLights");
-	CTraceScoped scope("addPointLights");
+  PROFILE_FUNCTION("addPointLights");
+  CTraceScoped scope("addPointLights");
 
-	// Activar la tech deferred_lights_point.tech
-	acc_light_points->activate();
+  // Activar la tech deferred_lights_point.tech
+  acc_light_points->activate();
 
-	// Activar la mesh solo UNA vez
-	const CMesh* mesh = unit_sphere;
-	mesh->activate();
+  // Activar la mesh solo UNA vez
+  const CMesh* mesh = unit_sphere;
+  mesh->activate();
 
-	// Activar la mesh unit_sphere
-	getHandleManager<TCompLightPoint>()->each([mesh](TCompLightPoint* c) {
-		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
-		// la world para la mesh y las constantes en el pixel shader
-		c->activate();
-		// Pintar la mesh que hemos activado hace un momento
-		mesh->render();
-	});
-	getHandleManager<TCompLightFadable>()->each([mesh](TCompLightFadable* c) {
-		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
-		// la world para la mesh y las constantes en el pixel shader
-		c->activate();
-		// Pintar la mesh que hemos activado hace un momento
-		mesh->render();
-	});
+  // Activar la mesh unit_sphere
+  getHandleManager<TCompLightPoint>()->each([mesh](TCompLightPoint* c) {
+    // Subir todo lo que necesite la luz para pintarse en el acc light buffer
+    // la world para la mesh y las constantes en el pixel shader
+    c->activate();
+    // Pintar la mesh que hemos activado hace un momento
+    mesh->render();
+  });
+  getHandleManager<TCompLightFadable>()->each([mesh](TCompLightFadable* c) {
+    // Subir todo lo que necesite la luz para pintarse en el acc light buffer
+    // la world para la mesh y las constantes en el pixel shader
+    c->activate();
+    // Pintar la mesh que hemos activado hace un momento
+    mesh->render();
+  });
 }
 
 // ----------------------------------------------
 void CRenderDeferredModule::addDirectionalLights() {
-	  PROFILE_FUNCTION("addDirectionalLights");
+  PROFILE_FUNCTION("addDirectionalLights");
   CTraceScoped scope("addDirectionalLights");
 
   // Activar la tech acc_light_directionals.tech
@@ -206,297 +200,285 @@ void CRenderDeferredModule::addDirectionalLights() {
 }
 
 void CRenderDeferredModule::FinalRender() {
-	PROFILE_FUNCTION("final_texture");
-	CTraceScoped scope("final_texture");
+  PROFILE_FUNCTION("final_texture");
+  CTraceScoped scope("final_texture");
 
-	ID3D11RenderTargetView* rts[3] = {
-		rt_final->getRenderTargetView()
-		,	nullptr   // remove the other rt's from the pipeline
-		,	nullptr
-	};
-	// Y el ZBuffer del backbuffer principal
-	Render.ctx->OMSetRenderTargets(3, rts, nullptr);
+  ID3D11RenderTargetView* rts[3] = {
+    rt_final->getRenderTargetView()
+    ,	nullptr   // remove the other rt's from the pipeline
+    ,	nullptr
+  };
+  // Y el ZBuffer del backbuffer principal
+  Render.ctx->OMSetRenderTargets(3, rts, nullptr);
 
-	rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
-	rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
-	rt_selfIlum->activate(TEXTURE_SLOT_SELFILUM);
-	rt_wpos->activate(TEXTURE_SLOT_WORLD_POS);
-	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+  rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
+  rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
+  rt_selfIlum->activate(TEXTURE_SLOT_SELFILUM);
+  rt_wpos->activate(TEXTURE_SLOT_WORLD_POS);
+  rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
-	activateZ(ZCFG_ALL_DISABLED);
-	
-	auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_albedos, tech);
+  activateZ(ZCFG_ALL_DISABLED);
 
-	activateZ(ZCFG_DEFAULT);
+  auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
+  drawFullScreen(rt_albedos, tech);
 
-	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-	CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
-	CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
-	CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
+  activateZ(ZCFG_DEFAULT);
+
+  CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+  CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+  CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
+  CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
+  CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
 }
 
 void CRenderDeferredModule::blurEffectLights() {
-	PROFILE_FUNCTION("blurEffectLights");
-	CTraceScoped scope("blurEffectLights");
+  PROFILE_FUNCTION("blurEffectLights");
+  CTraceScoped scope("blurEffectLights");
 
-	rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 0));
+  rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 0));
 
-	ID3D11RenderTargetView* rts[3] = {
-		rt_selfIlum_blurred->getRenderTargetView()
-		,	nullptr   // remove the other rt's from the pipeline
-		,	nullptr
-	};
-	// Y el ZBuffer del backbuffer principal
-	Render.ctx->OMSetRenderTargets(3, rts, nullptr);
+  ID3D11RenderTargetView* rts[3] = {
+    rt_selfIlum_blurred->getRenderTargetView()
+    ,	nullptr   // remove the other rt's from the pipeline
+    ,	nullptr
+  };
+  // Y el ZBuffer del backbuffer principal
+  Render.ctx->OMSetRenderTargets(3, rts, nullptr);
 
-	activateZ(ZCFG_ALL_DISABLED);
+  activateZ(ZCFG_ALL_DISABLED);
 
-	//auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_selfIlum, blur_tech);
+  //auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
+  drawFullScreen(rt_selfIlum, blur_tech);
 
-	activateZ(ZCFG_DEFAULT);
-	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+  activateZ(ZCFG_DEFAULT);
+  CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 }
 
 // ----------------------------------------------
 void CRenderDeferredModule::renderAccLight() {
-	PROFILE_FUNCTION("renderAccLight");
-	CTraceScoped scope("renderAccLight");
+  PROFILE_FUNCTION("renderAccLight");
+  CTraceScoped scope("renderAccLight");
 
-	// Activar el rt para pintar las luces...
-	ID3D11RenderTargetView* rts[3] = {
-		rt_acc_light->getRenderTargetView()
-		,	nullptr   // remove the other rt's from the pipeline
-		,	nullptr
-	};
-	// Y el ZBuffer del backbuffer principal
-	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+  // Activar el rt para pintar las luces...
+  ID3D11RenderTargetView* rts[3] = {
+    rt_acc_light->getRenderTargetView()
+    ,	nullptr   // remove the other rt's from the pipeline
+    ,	nullptr
+  };
+  // Y el ZBuffer del backbuffer principal
+  Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-	// Activar las texturas del gbuffer en la pipeline para
-	// que se puedan acceder desde los siguientes shaders
-	rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
-	rt_wpos->activate(TEXTURE_SLOT_WORLD_POS);
-	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+  // Activar las texturas del gbuffer en la pipeline para
+  // que se puedan acceder desde los siguientes shaders
+  rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
+  rt_wpos->activate(TEXTURE_SLOT_WORLD_POS);
+  rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
-	rt_acc_light->clear(VEC4(0, 0, 0, 1));
+  rt_acc_light->clear(VEC4(0, 0, 0, 1));
 
-	activateBlend(BLENDCFG_ADDITIVE);
-	activateZ(ZCFG_LIGHTS_CONFIG);
-	//activateRS(RSCFG_INVERT_CULLING);
-	addPointLights();
+  activateBlend(BLENDCFG_ADDITIVE);
+  activateZ(ZCFG_LIGHTS_CONFIG);
+  //activateRS(RSCFG_INVERT_CULLING);
+  addPointLights();
 
   activateZ(ZCFG_LIGHTS_CONFIG);
   //activateRS(RSCFG_INVERT_CULLING);
   addDirectionalLights();
 
-	activateRS(RSCFG_DEFAULT);
-	activateZ(ZCFG_DEFAULT);
-	activateBlend(BLENDCFG_DEFAULT);
+  activateRS(RSCFG_DEFAULT);
+  activateZ(ZCFG_DEFAULT);
+  activateBlend(BLENDCFG_DEFAULT);
 
-	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-	CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
+  CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+  CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+  CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
 }
 
 void CRenderDeferredModule::DepthTexture() {
-	PROFILE_FUNCTION("final_texture");
-	CTraceScoped scope("final_texture");
+  PROFILE_FUNCTION("final_texture");
+  CTraceScoped scope("final_texture");
 
-	ID3D11RenderTargetView* rts[3] = {
-		rt_depthTexture->getRenderTargetView()
-		,	nullptr   // remove the other rt's from the pipeline
-		,	nullptr
-	};
-	// Y el ZBuffer del backbuffer principal
+  ID3D11RenderTargetView* rts[3] = {
+    rt_depthTexture->getRenderTargetView()
+    ,	nullptr   // remove the other rt's from the pipeline
+    ,	nullptr
+  };
+  // Y el ZBuffer del backbuffer principal
 
-	Render.ctx->OMSetRenderTargets(3, rts, nullptr);
+  Render.ctx->OMSetRenderTargets(3, rts, nullptr);
 
-	rt_final->activate(TEXTURE_SLOT_DIFFUSE);
-	rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
-	rt_selfIlum_blurred->activate(TEXTURE_SLOT_SELFILUM);
-	rt_wpos->activate(TEXTURE_SLOT_WORLD_POS);
-	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+  rt_final->activate(TEXTURE_SLOT_DIFFUSE);
+  rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
+  rt_selfIlum_blurred->activate(TEXTURE_SLOT_SELFILUM);
+  rt_wpos->activate(TEXTURE_SLOT_WORLD_POS);
+  rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
-	activateZ(ZCFG_ALL_DISABLED);
+  activateZ(ZCFG_ALL_DISABLED);
 
-	auto tech = Resources.get("depthTexture.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_final, tech);
+  auto tech = Resources.get("depthTexture.tech")->as<CRenderTechnique>();
+  drawFullScreen(rt_final, tech);
 
-	activateZ(ZCFG_DEFAULT);
+  activateZ(ZCFG_DEFAULT);
 
-	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-	CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
-	CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
-	CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
+  CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+  CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+  CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
+  CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
+  CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
 }
 
 void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
+  shader_ctes_globals.global_color = color;
+  shader_ctes_globals.uploadToGPU();
 
-	shader_ctes_globals.global_color = color;
-	shader_ctes_globals.uploadToGPU();
-	
-	//create mask
-	{
-		PROFILE_FUNCTION("referred: mask");
-		CTraceScoped scope("mask");
+  //create mask
+  {
+    PROFILE_FUNCTION("referred: mask");
+    CTraceScoped scope("mask");
 
-		//activateZ(ZCFG_DEFAULT);
-		activateZ(ZCFG_MASK_NUMBER, pol);
+    //activateZ(ZCFG_DEFAULT);
+    activateZ(ZCFG_MASK_NUMBER, pol);
 
-		ID3D11RenderTargetView* rts[3] = {
-			rt_black->getRenderTargetView()
-			,	nullptr   // remove the other rt's from the pipeline
-			,	nullptr
-		};
-		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+    ID3D11RenderTargetView* rts[3] = {
+      rt_black->getRenderTargetView()
+      ,	nullptr   // remove the other rt's from the pipeline
+      ,	nullptr
+    };
+    Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
-		tech->activate();
+    auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+    tech->activate();
 
-		getHandleManager<TCompPolarized>()->each([pol](TCompPolarized* c) {
-			if (c->force.polarity == pol) {	//render polarity designed only
+    getHandleManager<TCompPolarized>()->each([pol](TCompPolarized* c) {
+      if (c->force.polarity == pol) {	//render polarity designed only
+        CEntity *e = CHandle(c).getOwner();
+        TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
+        TCompTransform *c_tmx = e->get<TCompTransform>();
 
-				
-				CEntity *e = CHandle(c).getOwner();
-				TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
-				TCompTransform *c_tmx = e->get<TCompTransform>();
-	
-				activateWorldMatrix(c_tmx->asMatrix());
-				// Si algun dia tenemos mas de un slot, revisar esto!
-				assert(rsm->static_mesh->slots.size() == 1);
-				rsm->static_mesh->slots[0].material->activateTextures();
-				rsm->static_mesh->slots[0].mesh->activateAndRender();
+        activateWorldMatrix(c_tmx->asMatrix());
+        // Si algun dia tenemos mas de un slot, revisar esto!
+        assert(rsm->static_mesh->slots.size() == 1);
+        rsm->static_mesh->slots[0].material->activateTextures();
+        rsm->static_mesh->slots[0].mesh->activateAndRender();
 
-				rsm->static_mesh->slots[0].material->deactivateTextures();
+        rsm->static_mesh->slots[0].material->deactivateTextures();
+      }
+    });
+  }
 
-			}
-		});
-	}
+  //edge detection
+  {
+    PROFILE_FUNCTION("referred: edge detection");
+    CTraceScoped scope("edge detection final");
 
-	//edge detection
-	{
-		PROFILE_FUNCTION("referred: edge detection");
-		CTraceScoped scope("edge detection final");
+    // Activar el rt para pintar las luces...
 
-		// Activar el rt para pintar las luces...
+    ID3D11RenderTargetView* rts[3] = {
+      rt_data->getRenderTargetView()
+      ,	nullptr   // remove the other rt's from the pipeline
+      ,	nullptr
+    };
+    // Y el ZBuffer del backbuffer principal
 
-		ID3D11RenderTargetView* rts[3] = {
-			rt_data->getRenderTargetView()
-			,	nullptr   // remove the other rt's from the pipeline
-			,	nullptr
-		};
-		// Y el ZBuffer del backbuffer principal
+    Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-		
-		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+    rt_wpos->activate(TEXTURE_SLOT_WORLD_POS);
+    rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
+    rt_depthTexture->activate(45);
 
-		rt_wpos->activate(TEXTURE_SLOT_WORLD_POS);
-		rt_normals->activate(TEXTURE_SLOT_NORMALS);
+    activateZ(ZCFG_OUTLINE, pol);
+    //activateZ(ZCFG_ALL_DISABLED);
 
-		rt_depthTexture->activate(45);
+    auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
 
-		activateZ(ZCFG_OUTLINE, pol);
-		//activateZ(ZCFG_ALL_DISABLED);
-
-		auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
-
-		drawFullScreen(rt_black, tech);
-		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
-		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
-	}
+    drawFullScreen(rt_black, tech);
+    CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+    //rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
+  }
 }
 
 void CRenderDeferredModule::GlowEdges() {
-	{
-		PROFILE_FUNCTION("referred: GlowEdges");
-		CTraceScoped scope("glow edges");
+  {
+    PROFILE_FUNCTION("referred: GlowEdges");
+    CTraceScoped scope("glow edges");
 
-		ID3D11RenderTargetView* rts1[3] = {
-			rt_selfIlum->getRenderTargetView()
-			,	nullptr   // remove the other rt's from the pipeline
-			,	nullptr
-		};
-		// Y el ZBuffer del backbuffer principal
-		Render.ctx->OMSetRenderTargets(3, rts1, Render.depth_stencil_view);
+    ID3D11RenderTargetView* rts1[3] = {
+      rt_selfIlum->getRenderTargetView()
+      ,	nullptr   // remove the other rt's from the pipeline
+      ,	nullptr
+    };
+    // Y el ZBuffer del backbuffer principal
+    Render.ctx->OMSetRenderTargets(3, rts1, Render.depth_stencil_view);
 
+    auto tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
+    drawFullScreen(rt_data, tech);
 
-		auto tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
-		drawFullScreen(rt_data, tech);
+    blurEffectLights();
 
+    tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
 
-		blurEffectLights();
+    activateBlend(BLENDCFG_ADDITIVE);
+    Render.activateBackBuffer();				//render on screen
+    drawFullScreen(rt_selfIlum_blurred, tech);
 
-		tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
-
-		activateBlend(BLENDCFG_ADDITIVE);
-		Render.activateBackBuffer();				//render on screen
-		drawFullScreen(rt_selfIlum_blurred, tech);
-
-		activateBlend(BLENDCFG_DEFAULT);
-	}
+    activateBlend(BLENDCFG_DEFAULT);
+  }
 }
 
 // ----------------------------------------------
 void CRenderDeferredModule::render() {
+  //Render.clearMainZBuffer();
+  rt_black->clear(VEC4(0, 0, 0, 1));
+  rt_data->clear(VEC4(0, 0, 0, 0));
 
-	//Render.clearMainZBuffer();
-	rt_black->clear(VEC4(0, 0, 0, 1));
-	rt_data->clear(VEC4(0, 0, 0, 0));
+  shader_ctes_globals.uploadToGPU();
+  renderGBuffer();
 
-	shader_ctes_globals.uploadToGPU();
-	renderGBuffer();
+  renderAccLight();
 
-	renderAccLight();
+  blurEffectLights();
 
-	blurEffectLights();
+  FinalRender();
+  DepthTexture();
 
-	FinalRender();
-	DepthTexture();
+  // Fx
+  {
+    PROFILE_FUNCTION("referred: laser");
+    CTraceScoped scope("laser");
 
-	// Fx
-	{
-		PROFILE_FUNCTION("referred: laser");
-		CTraceScoped scope("laser");
+    ID3D11RenderTargetView* rts[3] = {
+      rt_final->getRenderTargetView()
+      ,	nullptr   // remove the other rt's from the pipeline
+      ,	nullptr
+    };
+    Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+    //Render.activateBackBuffer();
+    activateZ(ZCFG_DEFAULT);
+    ShootManager::renderAll();
+  }
 
-		ID3D11RenderTargetView* rts[3] = {
-			rt_final->getRenderTargetView()
-			,	nullptr   // remove the other rt's from the pipeline
-			,	nullptr
-		};
-		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
-		//Render.activateBackBuffer();
-		activateZ(ZCFG_DEFAULT);
-		ShootManager::renderAll();
-	}
+  Render.activateBackBuffer();
 
-	
+  activateZ(ZCFG_ALL_DISABLED);
+  drawFullScreen(rt_final);
+  activateZ(ZCFG_DEFAULT);
 
-	Render.activateBackBuffer();
+  if (GameController->GetFxPolarize()) {
+    RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
+    RenderPolarizedPP(PLUS, VEC4(0.3f, 0.3f, 1.0f, 1.0f));
+  }
+  activateZ(ZCFG_ALL_DISABLED);
 
-	activateZ(ZCFG_ALL_DISABLED);
-	drawFullScreen(rt_final);
-	activateZ(ZCFG_DEFAULT);
+  if (GameController->GetFxGlow()) GlowEdges();
 
-	if (GameController->GetFxPolarize()) {
-		RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
-		RenderPolarizedPP(PLUS, VEC4(0.3f, 0.3f, 1.0f, 1.0f));
-	}
-	activateZ(ZCFG_ALL_DISABLED);
+  CTexture::deactivate(45);
+  CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+  CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
 
-	if(GameController->GetFxGlow()) GlowEdges();
+  Render.activateBackBuffer();
+  activateZ(ZCFG_DEFAULT);
 
-	CTexture::deactivate(45);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-	CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
-
-	Render.activateBackBuffer();
-	activateZ(ZCFG_DEFAULT);
-
-	// Mandar a pintar los 'transparentes'
-	  RenderManager.renderAll(CRenderManager::TRANSPARENT_OBJS);
-
+  // Mandar a pintar los 'transparentes'
+  RenderManager.renderAll(CRenderManager::TRANSPARENT_OBJS);
 }

@@ -62,6 +62,13 @@ bool CGuiModule::start()
   //Action Text
   txtAction = new CGuiActionText(GUI::createRect(0.7f, 0.9f, .3f, .1f));
 
+  ImGui::GetStyle().WindowPadding.x = 0.0f;
+  ImGui::GetStyle().WindowPadding.y = 0.0f;
+  ImGui::GetStyle().FramePadding.x = 0.0f;
+  ImGui::GetStyle().FramePadding.y = 0.0f;
+  ImGui::GetStyle().WindowRounding = 0.0f;
+  ImGui::GetStyle().FrameRounding = 0.0f;
+
   dbg("GUI module started\n");
 
   return true;
