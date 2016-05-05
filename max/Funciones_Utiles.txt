@@ -1,4 +1,4 @@
-Exportar splines a resolución deseada
+﻿Exportar splines a resolución deseada
 =====================================
 (convertir a spline)
 [addSelection]
@@ -30,3 +30,7 @@ Para colocar objetos segun el mouse
 -- From Screen (mouse) space to Grid space:
 p2MouseScreenPos = mouse.pos -- Get Mouse Screen Position in pixels
 p3MouseGridPos = gw.getPointOnCP p2MouseScreenPos
+
+
+=============
+p.transform.rotationPart as eulerAngles

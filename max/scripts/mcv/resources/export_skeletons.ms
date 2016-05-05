@@ -124,10 +124,32 @@ struct  TSkeletonsExporter (
 		local begin_time =  animationRange.start as integer * frameRate / 4800  
 		local end_time = animationRange.end as integer  * frameRate / 4800
 		local rc = ExportCalAnim animation_file skel_file bones_to_export begin_time end_time 0 frameRate
+	),
+	
+	fn prueba = (
+		local begin_time =  animationRange.start as integer * frameRate / 4800  
+		local end_time = animationRange.end as integer  * frameRate / 4800
+	
+		local root_bones = findRootBone()
+		local root = root_bones[1]	
+		
+		local yaw = (root.transform.rotationPart as eulerAngles).z
+		local deltaYaws = #()
+		local finish = false
+		sliderTime = 1
+		while not finish do (
+			local new_yaw = (root.transform.rotationPart as eulerAngles).z
+			append deltaYaws (new_yaw - yaw)
+			yaw = new_yaw
+			sliderTime += 1
+			finish = (sliderTime >= end_time)
+		)
+		print deltaYaws
 	)
 )
 
---gc()
---se = TSkeletonsExporter();
+gc()
+se = TSkeletonsExporter();
+se.prueba()
 --se.exportSkels()
 --se.exportAnim()
