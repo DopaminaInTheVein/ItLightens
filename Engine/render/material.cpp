@@ -100,4 +100,7 @@ void CMaterial::activateTextures() const {
 // ----------------------------------------------
 void CMaterial::deactivateTextures() {
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+	CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
+	CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
 }

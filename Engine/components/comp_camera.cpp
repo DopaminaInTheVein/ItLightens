@@ -13,6 +13,8 @@
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
 #include "constants/ctes_object.h"
+#include <math.h>
+
 extern CShaderCte< TCteObject > shader_ctes_object;
 
 #include "constants/ctes_camera.h"
@@ -55,6 +57,7 @@ void TCompCamera::update(float dt) {
   if (guidedCamE) {
     TCompGuidedCamera * gc = guidedCamE->get<TCompGuidedCamera>();
     VEC3 goTo = gc->getPointPosition(lastguidedCamPoint);
+    /*
     float yaw, pitch;
     tmx->getAngles(&yaw, &pitch);
 
@@ -77,16 +80,28 @@ void TCompCamera::update(float dt) {
       }
     }
     tmx->setAngles(yaw, pitch);
-
+    */
     VEC3 pos = tmx->getPosition();
-    if (simpleDist(pos, goTo) > 2.0f) {
+    if (simpleDist(pos, goTo) > 1.0f) {
       VEC3 fro = goTo - pos;
       fro.Normalize();
-      pos = pos + (fro * gc->getVelocity() * getDeltaTime());
+
+      if (lastguidedCamPoint < 2 || lastguidedCamPoint + 1 == gc->getTotalPoints()) {
+        pos = pos + (fro * gc->getVelocity() * getDeltaTime());
+      }
+      else {
+        VEC3 pos1 = gc->getPointPosition(lastguidedCamPoint - 2), pos2 = gc->getPointPosition(lastguidedCamPoint - 1), pos3 = goTo, pos4 = gc->getPointPosition(lastguidedCamPoint + 1);
+        float veloc = gc->getVelocity() / realDist(pos3, pos2);
+
+        factor += getDeltaTime() * veloc;
+        VEC3 posNew = VEC3::CatmullRom(pos1, pos2, pos3, pos4, factor);
+        pos = posNew;
+      }
       tmx->setPosition(pos);
     }
     else {
       ++lastguidedCamPoint;
+      factor = 0.0f;
     }
 
     if (lastguidedCamPoint >= gc->getTotalPoints()) {
@@ -107,7 +122,7 @@ void TCompCamera::update(float dt) {
     }
     else if (lastguidedCamPoint > 0) {
       VEC3 campos = tmx->getPosition();
-      int influencia = gc->nearCameraPoint(campos);
+      int influencia = lastguidedCamPoint - 1; // gc->nearCameraPoint(campos);
       this->smoothUpdateInfluence(tmx, gc, influencia, getUpAux());	//smooth movement
     }
     else {

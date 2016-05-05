@@ -256,7 +256,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
-	sala = "milestone2";
+	sala = "milestone2_guardias";
 	//sala = "scene_milestone_1";
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
@@ -392,6 +392,12 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
+
+	if (GameController->GetGameState() == CGameController::STOPPED) {
+		getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+		getHandleManager<TCompCamera>()->updateAll(dt);
+	}
+
 	if (GameController->GetGameState() == CGameController::RUNNING) {
 		CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
 		CEntity * guidedCamE = guidedCam;
