@@ -1,4 +1,4 @@
 <material tech="deferred.tech">
 <texture slot="diffuse" name="textures/floor1_v_no_Cracks_AO.dds"/>
-<texture slot="bump" name="textures/floor1_v_no_Cracks_AO.dds"/>
+<texture slot="normalmap" name="textures/floor1_v_no_Cracks_AO.dds"/>
 </material>

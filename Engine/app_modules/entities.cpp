@@ -54,6 +54,7 @@ DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
+DECL_OBJ_MANAGER("drone", TCompDrone);
 DECL_OBJ_MANAGER("box", TCompBox);
 
 //Physics
@@ -93,27 +94,27 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 
-  getHandleManager<TVictoryPoint>()->init(20);
-  getHandleManager<TTriggerLua>()->init(100);
-  getHandleManager<player_controller>()->init(8);
-  getHandleManager<player_controller_speedy>()->init(8);
-  getHandleManager<player_controller_mole>()->init(8);
-  getHandleManager<player_controller_cientifico>()->init(8);
-  getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-  getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
-  getHandleManager<TCompName>()->init(MAX_ENTITIES);
-  getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
-  getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-  getHandleManager<TCompCamera>()->init(4);
-  getHandleManager<TCompController3rdPerson>()->init(4);
-  getHandleManager<TCompLife>()->init(MAX_ENTITIES);
-  getHandleManager<TCompWire>()->init(10);
-  getHandleManager<TCompGenerator>()->init(10);
-  getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
-  getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
-  getHandleManager<TCompTags>()->init(MAX_ENTITIES);
-  getHandleManager<TCompBox>()->init(MAX_ENTITIES);
-  getHandleManager<TCompGuidedCamera>()->init(16);
+	getHandleManager<TVictoryPoint>()->init(20);
+	getHandleManager<TTriggerLua>()->init(100);
+	getHandleManager<player_controller>()->init(8);
+	getHandleManager<player_controller_speedy>()->init(8);
+	getHandleManager<player_controller_mole>()->init(8);
+	getHandleManager<player_controller_cientifico>()->init(8);
+	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
+	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
+	getHandleManager<TCompName>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
+	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
+	getHandleManager<TCompCamera>()->init(4);
+	getHandleManager<TCompController3rdPerson>()->init(4);
+	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
+	getHandleManager<TCompWire>()->init(10);
+	getHandleManager<TCompGenerator>()->init(10);
+	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+	getHandleManager<TCompGuidedCamera>()->init(16);
 
 	//lights
 	getHandleManager<TCompLightDir>()->init(4);
@@ -129,6 +130,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 
 	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
+	getHandleManager<TCompDrone>()->init(MAX_ENTITIES);
 
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
@@ -149,6 +151,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompDrone, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
@@ -214,7 +217,6 @@ bool CEntitiesModule::start() {
 	//Animations
 	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, onSetAnim);
 
-
 	//polarized
 	SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgPolarize, onPolarize);
@@ -254,6 +256,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
+	sala = "milestone2_guardias";
 	//sala = "scene_milestone_1";
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
@@ -329,27 +332,27 @@ bool CEntitiesModule::start() {
 		assert(false);
 	}
 	TCompCamera * pcam = camera_e->get<TCompCamera>();
-  CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
-  CEntity * guidedCamE = guidedCam;
+	CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
+	CEntity * guidedCamE = guidedCam;
 
-  CHandle t = tags_manager.getFirstHavingTag("player");
-  CEntity * target_e = t;
+	CHandle t = tags_manager.getFirstHavingTag("player");
+	CEntity * target_e = t;
 
-  if (!guidedCamE) {
-    // Player real
+	if (!guidedCamE) {
+		// Player real
 
-    // Set the player in the 3rdPersonController
-    if (camera_e && t.isValid()) {
-      TMsgSetTarget msg;
-      msg.target = t;
-      msg.who = PLAYER;
-      camera_e->sendMsg(msg);		//set camera
+		// Set the player in the 3rdPersonController
+		if (camera_e && t.isValid()) {
+			TMsgSetTarget msg;
+			msg.target = t;
+			msg.who = PLAYER;
+			camera_e->sendMsg(msg);		//set camera
 
-      TMsgSetCamera msg_camera;
-      msg_camera.camera = camera;
-      target_e->sendMsg(msg_camera);	//set target camera
-    }
-  }
+			TMsgSetCamera msg_camera;
+			msg_camera.camera = camera;
+			target_e->sendMsg(msg_camera);	//set target camera
+		}
+	}
 	// Set the player in the Speedy AIs
 	TTagID tagIDSpeedy = getID("AI_speedy");
 	VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
@@ -391,9 +394,14 @@ void CEntitiesModule::stop() {
 
 void CEntitiesModule::update(float dt) {
 
+	if (GameController->GetGameState() == CGameController::STOPPED) {
+		getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+		getHandleManager<TCompCamera>()->updateAll(dt);
+	}
+
 	if (GameController->GetGameState() == CGameController::RUNNING) {
-  CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
-  CEntity * guidedCamE = guidedCam;
+		CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
+		CEntity * guidedCamE = guidedCam;
 		static float ia_wait = 0.0f;
 		ia_wait += getDeltaTime();
 
@@ -403,7 +411,7 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<player_controller_speedy>()->updateAll(dt);
 			getHandleManager<player_controller_mole>()->updateAll(dt);
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
-		getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 		}
 
 		getHandleManager<TCompCamera>()->updateAll(dt);
@@ -435,6 +443,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompLife>()->updateAll(dt);
 
 		getHandleManager<TCompPlatform>()->updateAll(dt);
+		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
@@ -451,14 +460,12 @@ void CEntitiesModule::update(float dt) {
 	}
 	// In this mode, only the animation of the player is updated
 	else if (GameController->GetGameState() == CGameController::STOPPED_INTRO) {
-
 		VHandles targets = tags_manager.getHandlesByTag(getID("player"));
 		CHandle player_handle = targets[targets.size() - 1];
 		CEntity* player_entity = player_handle;
 
 		TCompSkeleton* player_skeleton = player_entity->get<TCompSkeleton>();
 		player_skeleton->update(dt);
-
 	}
 }
 

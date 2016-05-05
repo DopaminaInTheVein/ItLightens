@@ -15,6 +15,24 @@ Texture2D txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
 SamplerState samLinear : register(s0);
 SamplerState samClampLinear : register(s2);
 
+//--------------------------------------------------------------------------------------
+// Null Shader
+//--------------------------------------------------------------------------------------
+void VSNull(
+	in float4 iPos : POSITION
+	, out float4 oPos : SV_POSITION
+	)
+{
+	float4 worldPos = mul(iPos, World);
+	oPos = mul(worldPos, ViewProjection);
+}
+
+//--------------------------------------------------------------------------------------
+float4 PSNull(float4 Pos : SV_POSITION
+	) : SV_Target
+{
+	return float4(0,0,0,0);
+}
 
 //--------------------------------------------------------------------------------------
 // Vertex Shader
@@ -79,14 +97,6 @@ float4 PSPostProcess(float4 Pos : SV_POSITION
 	//if (color.w == 0)
 		//discard;
 	return color;
-}
-
-//--------------------------------------------------------------------------------------
-float4 PSNull(float4 Pos : SV_POSITION
-	, float2 iTex0 : TEXCOORD0
-	) : SV_Target
-{
-	return float4(0,0,0,0);
 }
 
 //--------------------------------------------------------------------------------------

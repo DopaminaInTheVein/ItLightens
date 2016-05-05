@@ -19,7 +19,7 @@ class CUI {
 public:
 	void update() {
 		//Here goes all game UI info
-
+#ifndef NDEBUG
 		ImGui::Begin("UI", &open_main_ui, ImVec2(500, 350), -1.0f);
 
 		life_update();
@@ -28,9 +28,9 @@ public:
 		instructions_update();
 
 		ImGui::End();
-
 		ui_assist();
-	}
+#endif
+  }
 
 	void ui_assist() {
 		ImGui::Begin("Help", &open_assist, ImVec2(400, 150), -1.0f);

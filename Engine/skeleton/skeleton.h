@@ -25,6 +25,14 @@ public:
 
 	CalCoreModel* getCoreModel() { return core_model; }
 	int getAnimIdByName(std::string name) const;
+
+	static void CalculateTangentArray(	
+			int vertexCount, std::vector<CalCoreSubmesh::Vertex> *vertex,
+			std::vector<std::vector<CalCoreSubmesh::TextureCoordinate>> *texcoord,
+			int triangleCount, std::vector<CalCoreSubmesh::Face> *triangle,
+			// Output
+			std::vector<VEC4> *tangent
+		);
 };
 
 #endif

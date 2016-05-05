@@ -2,11 +2,20 @@
 --******************
 
 fn parseable = (
+	-- Es dummy?
+	if (classof _parsingObject) == Dummy then (return false)
+	
 	-- Es spline?
-	if (isSpline _parsingObject) then (return false)
+	if (isSpline _parsingObject) then (
+		if ((getUserProp _parsingObject "typeObject" ) as string) != "railCamera" then (
+			return false
+		)
+	)
 	
 	-- Comprobamos que no sea un Helper
-	if (getUserProp _parsingObject "typeHelper") != undefined then (return false)
+	if (getUserProp _parsingObject "typeHelper") != undefined then (
+		return false
+	)
 	
 	return true
 )

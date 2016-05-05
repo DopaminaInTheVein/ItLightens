@@ -97,6 +97,9 @@
       <AdditionalLibraryDirectories>$(ProjectDir)\fmod\lowlevel\lib;$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>fmodL64_vc.lib;XINPUT9_1_0.LIB;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)\Physx\dll\$(configuration)\*"  "$(TargetDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app_modules\entities.cpp" />
@@ -119,6 +122,7 @@
     <ClCompile Include="camera\camera.cpp" />
     <ClCompile Include="components\comp_camera.cpp" />
     <ClCompile Include="components\comp_charactercontroller.cpp" />
+    <ClCompile Include="components\comp_drone.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_guided_camera.cpp" />
     <ClCompile Include="components\comp_light_dir.cpp" />
@@ -248,6 +252,7 @@
     <ClCompile Include="resources\resources_manager.cpp" />
     <ClCompile Include="skeleton\comp_bone_tracker.cpp" />
     <ClCompile Include="skeleton\comp_skeleton.cpp" />
+    <ClCompile Include="skeleton\coresubmesh.cpp" />
     <ClCompile Include="skeleton\skeleton.cpp" />
     <ClCompile Include="skeleton_controllers\skc_guard.cpp" />
     <ClCompile Include="skeleton_controllers\skc_player.cpp" />
@@ -510,6 +515,7 @@
     <ClInclude Include="components\comp_camera.h" />
     <ClInclude Include="components\comp_charactercontroller.h" />
     <ClInclude Include="components\comp_controller_3rd_person.h" />
+    <ClInclude Include="components\comp_drone.h" />
     <ClInclude Include="components\comp_generator.h" />
     <ClInclude Include="components\comp_guided_camera.h" />
     <ClInclude Include="components\comp_life.h" />
@@ -551,7 +557,11 @@
     <ClInclude Include="handle\handle_manager.h" />
     <ClInclude Include="handle\msgs.h" />
     <ClInclude Include="handle\object_manager.h" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_impl_dx11.h" />
     <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\stb_textedit.h" />
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\input_manager.h" />
     <ClInclude Include="logic\aicontroller.h" />
@@ -634,6 +644,7 @@
     <ClInclude Include="resources\resources_manager.h" />
     <ClInclude Include="skeleton\comp_bone_tracker.h" />
     <ClInclude Include="skeleton\comp_skeleton.h" />
+    <ClInclude Include="skeleton\coresubmesh.h" />
     <ClInclude Include="skeleton\skeleton.h" />
     <ClInclude Include="skeleton_controllers\skc_guard.h" />
     <ClInclude Include="skeleton_controllers\skc_player.h" />

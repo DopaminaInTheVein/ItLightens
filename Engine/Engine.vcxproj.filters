@@ -569,6 +569,12 @@
     <ClCompile Include="app_modules\gui\gui_action_text.cpp">
       <Filter>app_modules\gui</Filter>
     </ClCompile>
+    <ClCompile Include="skeleton\coresubmesh.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_drone.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1387,6 +1393,24 @@
     </ClInclude>
     <ClInclude Include="logic\polarity.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\coresubmesh.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_drone.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui.h">
+      <Filter>app_modules\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_dx11.h">
+      <Filter>app_modules\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imconfig.h">
+      <Filter>app_modules\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\stb_textedit.h">
+      <Filter>app_modules\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
