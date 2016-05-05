@@ -149,7 +149,7 @@ struct  TSkeletonsExporter (
 )
 
 gc()
-se = TSkeletonsExporter();
-se.prueba()
+--se = TSkeletonsExporter();
+--se.prueba()
 --se.exportSkels()
 --se.exportAnim()
