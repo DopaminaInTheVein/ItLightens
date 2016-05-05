@@ -60,7 +60,7 @@ const IResource* CResourcesManager::get(const char* name) {
 	else if (ext == ".ps") {
 		new_obj = createObjFromName<CPixelShader>(name);
 	}
-	else if (ext == ".dds") {
+	else if (ext == ".dds" || ext == ".DDS") {
 		new_obj = createObjFromName<CTexture>(name);
 	}
 	else if (ext == ".material") {
