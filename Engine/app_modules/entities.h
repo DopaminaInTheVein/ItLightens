@@ -7,7 +7,7 @@
 
 class CEntitiesModule : public IAppModule {
 	void renderInMenu();
-	bool use_parallel = false;
+	bool use_parallel = true;
 public:
 	std::vector< CHandle > collisionables;
 	std::string sala;
