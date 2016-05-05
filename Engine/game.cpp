@@ -170,6 +170,7 @@ void CApp::update(float elapsed) {
 		for (auto it : mod_update) {
 			if (GameController->GetGameState() == CGameController::RUNNING) {
 				PROFILE_FUNCTION(it->getName());
+				auto name = it->getName();
 				it->update(elapsed);
 			} 
 			else if (it->forcedUpdate()) {

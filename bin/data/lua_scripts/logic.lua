@@ -12,7 +12,7 @@ end
 
 function triggerGuardFormation()
 	h:toggle_guard_formation()
-	p:exec_command("h:toggle_guard_formation();", 20)
+	p:exec_command("h:toggle_guard_formation();", 30)
 end
 
 --prints the specified text via the VS console

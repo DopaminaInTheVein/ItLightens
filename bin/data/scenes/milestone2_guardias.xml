@@ -114,7 +114,7 @@
 <transform
    pos="0.347425 -24.0436 -29.6796"
    quat="0 -0.682264 0 0.731106"
-   scale="0.0387651"
+   scale="1.0"
 />
 <render_static_mesh
    name="static_meshes/andamio.static_mesh"
@@ -304,7 +304,7 @@
 <transform
    pos="-22.632 -23.6427 6.99324"
    quat="0 0 0 1.0"
-   scale="4.09671"
+   scale="1.0"
 />
 <render_static_mesh
    name="static_meshes/LOW_tURBINE_vERTICAL_GEN.static_mesh"
@@ -873,8 +873,8 @@
 />
 <transform
    pos="-0.975353 -18.0286 -27.5893"
-   quat="0 0.890787 0 -0.454421"
-   scale="0.0387651"
+   quat="0 0.890787 0 -0.45442"
+   scale="1.0"
 />
 <render_static_mesh
    name="static_meshes/tabla_abajo.static_mesh"
@@ -893,7 +893,7 @@
 <transform
    pos="0.347425 -24.1006 -29.6796"
    quat="0 -0.682264 0 0.731106"
-   scale="0.0387651"
+   scale="1.0"
 />
 <render_static_mesh
    name="static_meshes/tabla_arriba.static_mesh"
@@ -912,7 +912,7 @@
 <transform
    pos="-4.67164 -13.9639 -27.9249"
    quat="0 0.955168 0 0.296064"
-   scale="0.03566"
+   scale="1.0"
 />
 <render_static_mesh
    name="static_meshes/tabla_medio.static_mesh"
@@ -935,7 +935,7 @@
    name="camController_1"
 />
 <transform
-   pos="34.4563 -14.5742 -0.283386"
+   pos="-37.7264 -20.5623 -3.3316"
    quat="0 0.707104 0 0.707104"
    scale="1.0"
 />
@@ -946,7 +946,7 @@
 />
 <drone
    wpts_size="2"
-   wpt0_pos="3.03035 -11.8267 4.39738"
+   wpt0_pos="3.03034 -11.8267 4.39738"
    wpt0_wait="2"
    wpt1_pos="17.1279 -11.8267 4.39738"
    wpt1_wait="2"
@@ -980,7 +980,7 @@
    wpts_size="2"
    wpt0_pos="17.1279 -11.8267 -14.2574"
    wpt0_wait="2"
-   wpt1_pos="3.03035 -11.8267 -14.2574"
+   wpt1_pos="3.03034 -11.8267 -14.2574"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
@@ -1012,7 +1012,7 @@
    wpts_size="2"
    wpt0_pos="38.7453 -20.6616 13.0132"
    wpt0_wait="2"
-   wpt1_pos="24.6477 -20.6616 13.0132"
+   wpt1_pos="24.6477 -23.8252 13.0132"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
@@ -1044,7 +1044,7 @@
    wpts_size="2"
    wpt0_pos="38.7453 -23.6641 6.08694"
    wpt0_wait="2"
-   wpt1_pos="24.6477 -23.6641 6.08694"
+   wpt1_pos="24.6477 -24.0046 6.08694"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
@@ -1076,7 +1076,7 @@
    wpts_size="2"
    wpt0_pos="17.1279 -11.8267 13.928"
    wpt0_wait="2"
-   wpt1_pos="3.03035 -11.8267 13.928"
+   wpt1_pos="3.03034 -11.8267 13.928"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
@@ -1106,7 +1106,7 @@
 />
 <drone
    wpts_size="2"
-   wpt0_pos="3.03035 -11.8267 -4.89916"
+   wpt0_pos="3.03034 -11.8267 -4.89916"
    wpt0_wait="2"
    wpt1_pos="17.1279 -11.8267 -4.89916"
    wpt1_wait="2"
@@ -1137,10 +1137,10 @@
    tags=""
 />
 <name
-   name="generator_1"
+   name="generator_2"
 />
 <transform
-   pos="33.8007 -22.5807 21.62"
+   pos="-36.9951 -22.9079 -7.08108"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1159,10 +1159,10 @@
 />
 <generator/>
 <name
-   name="trigger_1"
+   name="trigger_2"
 />
 <transform
-   pos="33.8007 -22.5807 21.62"
+   pos="-36.9951 -22.9079 -7.08108"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1177,27 +1177,27 @@
 <bt_guard
    kpt_size="4"
    kpt0_type="seek"
-   kpt0_pos="5.1302 -22.2941 -1.81982"
+   kpt0_pos="5.1302 -23.8064 -1.81982"
    kpt0_wait="2"
    kpt1_type="seek"
-   kpt1_pos="5.1302 -22.2941 11.1675"
+   kpt1_pos="5.1302 -23.8064 11.1675"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="-12.5302 -22.2941 11.1675"
+   kpt2_pos="-12.5302 -23.7414 11.1675"
    kpt2_wait="2"
    kpt3_type="seek"
-   kpt3_pos="-12.5302 -22.2941 -1.97247"
+   kpt3_pos="-12.5302 -23.7414 -1.97247"
    kpt3_wait="2"
-   jurisdiction="37.5426 -22.7055 -3.6815"
+   jurisdiction="37.5426 -23.6548 -3.6815"
    jurRadius="100.0"
-   formation_point="-6.33016 -21.9199 4.07596"
-   formation_dir="-6.33016 -21.9199 4.07596"
+   formation_point="-6.33016 -23.7198 4.07596"
+   formation_dir="-6.33016 -23.7198 4.07596"
 />
 <name
    name="guard_2"
 />
 <transform
-   pos="37.5426 -22.7055 -3.6815"
+   pos="37.5426 -23.6548 -3.6815"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1222,27 +1222,27 @@
 <bt_guard
    kpt_size="4"
    kpt0_type="seek"
-   kpt0_pos="-14.3585 -22.2941 -25.036"
+   kpt0_pos="-14.3585 -23.7823 -25.036"
    kpt0_wait="2"
    kpt1_type="seek"
-   kpt1_pos="5.1302 -22.2941 -25.036"
+   kpt1_pos="5.1302 -23.8473 -25.036"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="5.1302 -22.2941 -12.228"
+   kpt2_pos="5.1302 -23.8473 -12.228"
    kpt2_wait="2"
    kpt3_type="seek"
-   kpt3_pos="-14.5697 -22.2941 -12.228"
+   kpt3_pos="-14.5697 -23.7823 -12.228"
    kpt3_wait="2"
-   jurisdiction="37.5426 -22.7055 -7.79579"
+   jurisdiction="37.5426 -23.6957 -7.79579"
    jurRadius="100.0"
-   formation_point="-6.33016 -21.9199 -20.6866"
-   formation_dir="-6.33016 -21.9199 -20.6866"
+   formation_point="-6.33016 -23.7607 -20.6866"
+   formation_dir="-6.33016 -23.7607 -20.6866"
 />
 <name
    name="guard_003"
 />
 <transform
-   pos="37.5426 -22.7055 -7.79579"
+   pos="37.5426 -23.6957 -7.79579"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1267,27 +1267,27 @@
 <bt_guard
    kpt_size="4"
    kpt0_type="seek"
-   kpt0_pos="14.7984 -22.2941 -12.228"
+   kpt0_pos="14.7984 -23.9817 -12.228"
    kpt0_wait="2"
    kpt1_type="seek"
-   kpt1_pos="35.0197 -22.2941 -12.228"
+   kpt1_pos="35.0197 -24.1508 -11.7258"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="35.0197 -22.2941 -29.0069"
+   kpt2_pos="35.0197 -24.1508 -30.6163"
    kpt2_wait="2"
    kpt3_type="seek"
-   kpt3_pos="17.8965 -22.2941 -29.0069"
+   kpt3_pos="13.9356 -24.08 -30.6631"
    kpt3_wait="2"
-   jurisdiction="37.5426 -22.7055 -11.7541"
+   jurisdiction="37.5426 -23.7578 -11.7541"
    jurRadius="100.0"
-   formation_point="24.5964 -21.9199 -20.6866"
-   formation_dir="24.5964 -21.9199 -20.6866"
+   formation_point="24.5965 -24.0712 -20.6866"
+   formation_dir="24.5965 -24.0712 -20.6866"
 />
 <name
    name="guard_004"
 />
 <transform
-   pos="37.5426 -22.7055 -11.7541"
+   pos="37.5426 -23.7578 -11.7541"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1312,27 +1312,27 @@
 <bt_guard
    kpt_size="4"
    kpt0_type="seek"
-   kpt0_pos="35.0197 -22.2941 -3.76758"
+   kpt0_pos="35.0197 -24.0261 -3.26538"
    kpt0_wait="2"
    kpt1_type="seek"
-   kpt1_pos="14.7906 -22.2941 -3.76758"
+   kpt1_pos="14.7906 -23.857 -3.76758"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="14.7906 -22.2941 14.7207"
+   kpt2_pos="14.7906 -23.857 14.7207"
    kpt2_wait="2"
    kpt3_type="seek"
-   kpt3_pos="35.0091 -22.2941 14.7207"
+   kpt3_pos="35.0091 -24.0261 14.7207"
    kpt3_wait="2"
-   jurisdiction="37.5426 -22.7055 -15.9564"
+   jurisdiction="37.5426 -23.6331 -15.9564"
    jurRadius="100.0"
-   formation_point="24.5964 -21.9199 4.07596"
-   formation_dir="24.5964 -21.9199 4.07596"
+   formation_point="24.5965 -23.9289 4.07596"
+   formation_dir="24.5965 -23.9289 4.07596"
 />
 <name
    name="guard_005"
 />
 <transform
-   pos="37.5426 -22.7055 -15.9564"
+   pos="37.5426 -23.6331 -15.9564"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1359,7 +1359,7 @@
    name="player_1"
 />
 <transform
-   pos="34.3066 -21.3743 -0.426925"
+   pos="-37.243 -23.054 -9.89473"
    quat="0 0 0 1.0"
    scale="1.0"
 />
