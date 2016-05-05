@@ -3,8 +3,19 @@
 
 #include "skel_controller.h"
 
+//Forward Declaration
+class TCompCharacterController;
+class player_controller;
+
+
+
 class SkelControllerPlayer : public SkelController {
-	//virtual void myUpdate();
+	TCompCharacterController * cc;
+	player_controller * pc;
+
+	void SetCharacterController();
+	void SetPlayerController();
+	virtual void myUpdate();
 };
 
 #endif

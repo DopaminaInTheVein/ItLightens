@@ -228,7 +228,7 @@
    mass="2"
 />
 </entity>
-
+<!--
 <entity>
 <name
    name="guard_1"
@@ -312,4 +312,5 @@
    height="1.7"
 />
 </entity>
+-->
 </entities>

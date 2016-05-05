@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/turbine_gen_albedo_base1.dds"/>
+<texture slot="normalmap" name="textures/turbine_gen_normal_base1.DDS"/>
+</material>

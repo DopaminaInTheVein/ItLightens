@@ -113,6 +113,13 @@ public:
 		return m_toMove;
 	}
 
+	VEC3 GetSpeed() const {
+		return m_speed;
+	}
+
+	VEC3 GetLastSpeed() const {
+		return PhysxConversion::PxVec3ToVec3(m_last_speed);
+	}
 	//-----------------------------------------------------------------------------------------------------
 	//									physics setters
 	//-----------------------------------------------------------------------------------------------------

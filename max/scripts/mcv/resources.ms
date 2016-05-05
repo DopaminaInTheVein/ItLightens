@@ -56,8 +56,12 @@ struct TResources (
 			local mat_file = createFile (materials_dir + m.name + ".material")
 			format ("<material tech=\"" + technique + ".tech\">\n") to:mat_file
 			saveTextureSlot mat_file "diffuse" m.diffusemap
-			saveTextureSlot mat_file "bump" m.bumpmap
 			saveTextureSlot mat_file "specular" m.specularmap
+			if (classof m.bumpmap) == Normal_Bump then (
+				saveTextureSlot mat_file "normalmap" m.bumpmap.normal
+			) else (
+				saveTextureSlot mat_file "normalmap" m.bumpmap
+			)
 			format "</material>\n" to:mat_file
 			close mat_file
 		) else (
@@ -331,13 +335,15 @@ struct TResources (
 	fn exportObject obj = (
 		if (getUserProp obj "typeHelper") == undefined then (
 			--exportCompName obj
+			local canExport = true
 			if classof obj != Editable_mesh and classof obj != Editable_Poly then (
-				ConvertToMesh obj
+				if (ConvertToMesh obj) == undefined then ( canExport = false)
 			)
-			exportCompStaticMesh obj
-			--if obj.parent != undefined then exportCompHierarchy fs obj
-			
-			
+			if canExport then (
+				exportCompStaticMesh obj
+				--if obj.parent != undefined then exportCompHierarchy fs obj
+			)	
+				
 			-- Export the children
 			for c in obj.children do (
 				exportObject c 

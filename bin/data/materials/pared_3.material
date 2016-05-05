@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/occlusion_pared_3.dds"/>
+<texture slot="normalmap" name="textures/normals_pared_3.dds"/>
+</material>

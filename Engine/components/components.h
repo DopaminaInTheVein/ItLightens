@@ -14,6 +14,7 @@
 #include "comp_victory_point.h"
 #include "comp_trigger_lua.h"
 #include "comp_platform.h"
+#include "comp_drone.h"
 #include "comp_box.h"
 #include "comp_tracker.h"
 #include "comp_box_spawner.h"

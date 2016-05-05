@@ -347,7 +347,7 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 		activateZ(ZCFG_MASK_NUMBER, pol);
 
 		ID3D11RenderTargetView* rts[3] = {
-			nullptr
+			rt_black->getRenderTargetView()
 			,	nullptr   // remove the other rt's from the pipeline
 			,	nullptr
 		};
@@ -365,7 +365,8 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 				TCompTransform *c_tmx = e->get<TCompTransform>();
 	
 				activateWorldMatrix(c_tmx->asMatrix());
-
+				// Si algun dia tenemos mas de un slot, revisar esto!
+				assert(rsm->static_mesh->slots.size() == 1);
 				rsm->static_mesh->slots[0].material->activateTextures();
 				rsm->static_mesh->slots[0].mesh->activateAndRender();
 
@@ -404,6 +405,7 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 		auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
 
 		drawFullScreen(rt_black, tech);
+		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
 	}
 }

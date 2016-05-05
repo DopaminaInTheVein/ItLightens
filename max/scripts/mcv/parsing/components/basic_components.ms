@@ -188,26 +188,54 @@ fn _parse_polarized = (
 	)
 )
 
-fn _parse_polarizedArea = (
+fn parsePolarizedArea obj = (
 	--Polarized component
 	local xmlPol = XML_PARSING.addChild "polarized"
 	
 	--Polarity attribute (by color)
 	local pol
-	local r = _parsingObject.mat.diffuse.r
-	local g = _parsingObject.mat.diffuse.g
-	local b = _parsingObject.mat.diffuse.b
+	local r = obj.mat.diffuse.r
+	local g = obj.mat.diffuse.g
+	local b = obj.mat.diffuse.b
 	if r > ((g + b) * 2) then ( pol = "plus")
 	else if b > ((r + g) * 2) then ( pol = "minus")
 	else if b*4 < (r + g) then ( pol = "neutral")
-	else throw ("Cant calc polarity of " + _parsingObject.name + " from color material!")
+	else throw ("Cant calc polarity of " + obj.name + " from color material!")
 	xmlPol.addAttr "pol" pol
 
 	-- Box
 	local ss = stringstream ""
-	format "% % %" _parsingObject.Width _parsingObject.Height _parsingObject.Length to:ss
+	format "% % %" obj.Width obj.Height obj.Length to:ss
 	local size = (ss as string)
 	xmlPol.addAttr "size" size
+)
+
+fn _parse_polarizedArea = (
+	parsePolarizedArea _parsingObject
+)
+
+----------------------------------------------------------------------
+-- DRONE --
+----------------------------------------------------------------------
+fn _parse_drone = (
+	-- Drone component
+	local xmlDrone = XML_PARSING.addChild "drone"
+	
+	--Patrol
+	parseWayPoints xmlDrone
+	
+	--Textures self ilumination
+	local textureFront = getUserProp _parsingObject "textureFront"
+	xmlDrone.addAttr "textureFront" textureFront
+	
+	local textureBack = getUserProp _parsingObject "textureBack"
+	xmlDrone.addAttr "textureBack" textureBack
+	
+	--Polarized Component
+	local polArea = findHelper "AreaPol"
+	if polArea != undefined then (
+		parsePolarizedArea polArea
+	)	
 )
 
 ----------------------------------------------------------------------
