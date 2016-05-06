@@ -275,7 +275,7 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
-	//sala = "milestone2_guardias";
+	sala = "milestone2_guardias";
 	//sala = "scene_milestone_1";
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
@@ -285,7 +285,7 @@ bool CEntitiesModule::start() {
 	//sala = "test_pol";
 	//sala = "test_guard";
 	//sala = "test_anim";
-	sala = "test_column_navmesh";
+	//sala = "test_column_navmesh";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";
