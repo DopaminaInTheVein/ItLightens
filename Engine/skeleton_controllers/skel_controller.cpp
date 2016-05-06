@@ -16,10 +16,11 @@ void SkelController::init(CHandle new_owner)
 void SkelController::update()
 {
 	myUpdate();
-	float delta_yaw = (9.f * getDeltaTime()) / getAnimFrameDuration(AST_TURNL);
 
-	// yaw update during animation
+	// yaw update during animation	
 	if (currentState == AST_TURNL || currentState == AST_TURNR) {
+		//dbg("Anim Frame Duration: %f", getAnimFrameDuration(currentState));
+		float delta_yaw = (deg2rad(9.f) * getDeltaTime()) / getAnimFrameDuration(currentState);
 		if (currentState != prevState) {
 			logicYaw = getYaw();
 		}

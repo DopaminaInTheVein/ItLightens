@@ -100,6 +100,7 @@ void TCompSkeleton::renderInMenu() {
 	}
 
 	for (auto a : mixer->getAnimationCycle()) {
+		auto name = a->getCoreAnimation()->getName().c_str();
 		ImGui::Text("Cycle %s S:%d W:%1.2f Time:%1.4f"
 			, a->getCoreAnimation()->getName().c_str()
 			, a->getState()
@@ -193,8 +194,12 @@ void TCompSkeleton::uploadBonesToCteShader() const {
 
 float TCompSkeleton::getFrameDuration(std::string anim) {
 
-	for (auto a : model->getMixer()->getAnimationCycle()) {
-		if (a->getCoreAnimation()->getName() == anim) {
+	auto mixer = model->getMixer();
+	for (auto a : mixer->getAnimationCycle()) {
+		//dbg("a->getCoreAnimation()->getName(): %s\n", anim.c_str());
+		auto name = a->getCoreAnimation()->getName().c_str();
+		if (name == anim) {
+			dbg("Duration TOTAL: %f", a->getCoreAnimation()->getDuration());
 			return a->getCoreAnimation()->getDuration() / a->getCoreAnimation()->getTotalNumberOfKeyframes();
 		}
 	}

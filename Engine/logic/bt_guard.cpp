@@ -837,20 +837,25 @@ bool bt_guard::turnTo(VEC3 dest) {
 	float logic_yaw = animController.getLogicYaw();
 
 	CTransform t = *getTransform();
-	t.setAngles(logic_yaw, 0.f);
+	float yaw, pitch;
+	getTransform()->getAngles(&yaw, &pitch);
+	t.setAngles(logic_yaw, pitch);
 	float deltaYaw = t.getDeltaYawToAimTo(dest);
-
+	dbg("DeltaYaw: %f\n", rad2deg(deltaYaw));
 	float angle_epsilon = deg2rad(10);
 
-	if (abs(deltaYaw) > angle_epsilon) {
-		animController.setState(AST_TURNR);
-	}
-	else {
-		//animController.setState(AST_TURNL);
+	bool turnIsOver = abs(deltaYaw) < angle_epsilon;
+	if (!turnIsOver) {
+		if (t.isInLeft(dest)) {
+			animController.setState(AST_TURNL);
+		}
+		else {
+			animController.setState(AST_TURNR);
+		}
 	}
 
 	//Ha acabado el giro?
-	return abs(deltaYaw) < angle_epsilon;
+	return turnIsOver;
 }
 
 // -- Turn To Shooting -- //
