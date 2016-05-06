@@ -78,6 +78,8 @@ void player_controller::Init() {
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	animController.init(myEntity);
+
+	setLife(init_life);
 	//pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 	//pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
 	//pose_idle = getHandleManager<TCompRenderStaticMesh>()->createHandle();

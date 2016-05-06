@@ -970,6 +970,7 @@
 />
 <rigidbody
    type_collision="dynamic"
+   type_shape="drone"
 />
 </entity>
 <entity>
