@@ -1,0 +1,265 @@
+<entities>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="21.6"
+   out_radius="69.688"
+/>
+<name
+   name="luz_izquierda"
+/>
+<transform
+   pos="9.96491 23.3405 27.2393"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="21.6"
+   out_radius="69.688"
+/>
+<name
+   name="luz_derecha"
+/>
+<transform
+   pos="9.96491 23.3405 -23.4093"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="16.0127"
+   out_radius="34.0"
+/>
+<name
+   name="Omni005"
+/>
+<transform
+   pos="-31.8362 -18.8937 0.470277"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="Omni004"
+/>
+<transform
+   pos="51.4312 23.7925 19.0538"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="Omni003"
+/>
+<transform
+   pos="-19.5386 23.7925 19.0538"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="Omni002"
+/>
+<transform
+   pos="-19.5386 23.7925 -6.17871"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="16.0127"
+   out_radius="34.0"
+/>
+<name
+   name="Omni001"
+/>
+<transform
+   pos="-19.5386 -8.94751 0.470276"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags="camera_main"
+/>
+<camera
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"
+/>
+<controller_3rd_person/>
+<name
+   name="camController_1"
+/>
+<transform
+   pos="26.6718 -20.5623 -13.0142"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="generator_2"
+/>
+<transform
+   pos="29.072 -22.9079 -15.659"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__generator.static_mesh"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.0"
+/>
+<generator/>
+<name
+   name="trigger_2"
+/>
+<transform
+   pos="29.072 -22.9079 -15.659"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="seek"
+   kpt0_pos="13.1281 -23.6688 -5.4602"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="22.496 -23.8379 -5.38076"
+   kpt1_wait="2"
+   jurisdiction="32.3363 -23.445 -5.37691"
+   jurRadius="100.0"
+   formation_point="19.3902 -23.7407 1.46328"
+   formation_dir="19.3902 -23.7407 1.46328"
+/>
+<name
+   name="guard_005"
+/>
+<transform
+   pos="32.3363 -23.445 -5.37691"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="player"
+/>
+<player/>
+<life
+   points="10"
+/>
+<name
+   name="player_1"
+/>
+<transform
+   pos="27.1553 -23.054 -19.5773"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/player/player.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="0.7"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columnas_balcon_cuadrado_derecho"
+/>
+<transform
+   pos="10.5771 -18.0684 -5.12992"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/columnas_balcon_cuadrado_derecho.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="suelo_abajo"
+/>
+<transform
+   pos="-5.37859 -23.9436 -6.8483"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/suelo_abajo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+</entities>
