@@ -46,6 +46,7 @@ class bt_guard : public TCompBase, public bt
 	float DIST_SQ_PLAYER_DETECTION;
 	float DIST_SQ_PLAYER_LOST;
 	float SPEED_WALK;
+	float SHOOT_PREP_TIME;
 	float MIN_DIST_TO_PLAYER;
 	float CONE_VISION;
 	float SPEED_ROT;
@@ -116,6 +117,8 @@ class bt_guard : public TCompBase, public bt
 	float remove_box_time = -1.0f;
 	float removing_box_animation_time = 0.f;
 	float looking_around_time = 0.f;
+	// shoot parameters
+	float shoot_preparation_time = 0.f;
 
 	//Toggles
 	bool formation_toggle = false;
@@ -181,6 +184,7 @@ public:
 	int actionStepBack();
 	int actionReact();
 	int actionChase();
+	int actionPrepareToAbsorb();
 	int actionAbsorb();
 	int actionShootWall();
 	int actionRemoveBox();

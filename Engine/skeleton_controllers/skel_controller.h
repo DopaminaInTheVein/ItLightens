@@ -9,7 +9,8 @@
 #define AST_JUMP2	"jump2"
 #define AST_MOVE	"walk"
 #define AST_RUN		"run"
-#define AST_SHOOT	"shoot"
+#define AST_PREP_SHOOT "attackprepare"
+#define AST_SHOOT	"attack"
 // ------------------- //
 
 class SkelController {

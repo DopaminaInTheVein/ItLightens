@@ -63,6 +63,7 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(DIST_SQ_PLAYER_DETECTION, fields);
 			assignValueToVar(DIST_SQ_PLAYER_LOST, fields);
 			assignValueToVar(SPEED_WALK, fields);
+			assignValueToVar(SHOOT_PREP_TIME, fields);
 			assignValueToVar(MIN_DIST_TO_PLAYER, fields);
 			assignValueToVar(CONE_VISION, fields);
 			CONE_VISION = deg2rad(CONE_VISION);
@@ -114,6 +115,7 @@ void bt_guard::Init()
 		addChild("attack_decorator", "attack", PRIORITY, NULL, NULL);
 		addChild("attack", "chase", ACTION, (btcondition)&bt_guard::playerOutOfReach, (btaction)&bt_guard::actionChase);
 		addChild("attack", "absorbsequence", SEQUENCE, NULL, NULL);
+		addChild("absorbsequence", "preparetoabsorb", ACTION, NULL, (btaction)&bt_guard::actionPrepareToAbsorb);
 		addChild("absorbsequence", "absorb", ACTION, NULL, (btaction)&bt_guard::actionAbsorb);
 		addChild("absorbsequence", "shootwall", ACTION, NULL, (btaction)&bt_guard::actionShootWall);
 		addChild("absorbsequence", "removebox", ACTION, NULL, (btaction)&bt_guard::actionRemoveBox);
@@ -337,7 +339,7 @@ int bt_guard::actionChase() {
 	}
 	//player near?
 	else if (distance < DIST_SQ_SHOT_AREA_ENTER) {
-		animController.setState(AST_SHOOT);
+		animController.setState(AST_PREP_SHOOT);
 		return OK;
 	}
 	else {
@@ -347,6 +349,21 @@ int bt_guard::actionChase() {
 		goTo(posPlayer);
 		return STAY;
 	}
+}
+
+int bt_guard::actionPrepareToAbsorb() {
+	PROFILE_FUNCTION("guard: prepare to absorb");
+	if (!myParent.isValid()) return false;
+	shoot_preparation_time += getDeltaTime();
+	if (shoot_preparation_time > SHOOT_PREP_TIME) {
+		shoot_preparation_time = 0.f;
+		return OK;
+	}
+	else {
+		return STAY;
+	}
+	
+
 }
 
 int bt_guard::actionAbsorb() {
@@ -367,7 +384,8 @@ int bt_guard::actionAbsorb() {
 		artificialInterrupt();
 	}
 
-	turnTo(posPlayer);
+	float deltaYaw = getTransform()->getDeltaYawToAimTo(posPlayer);
+	if (abs(deltaYaw) > deg2rad(1.5)) turnTo(posPlayer);
 	if (squaredDistY(myPos, posPlayer) * 2 > dist) { //Angulo de 30 grados
 														//Si pitch muy alto me alejo
 		goForward(-SPEED_WALK);
@@ -817,6 +835,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 
 	float deltaAngle = SPEED_ROT * getDeltaTime();
 	float deltaYaw = getTransform()->getDeltaYawToAimTo(dest);
+	float angle_epsilon = deg2rad(1.5);
 
 	if (deltaYaw > 0) {
 		if (deltaAngle < deltaYaw) yaw += deltaAngle;
@@ -827,7 +846,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 		else yaw += deltaYaw;
 	}
 
-	if (!getTransform()->isHalfConeVision(dest, deg2rad(deltaAngle))) {
+	if (!getTransform()->isHalfConeVision(dest, deg2rad(deltaAngle) + angle_epsilon)) {
 		bool inLeft = getTransform()->isInLeft(dest);
 		if (inLeft) {
 			yaw += deltaAngle;
@@ -839,7 +858,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 	}
 
 	//Ha acabado el giro?
-	return abs(deltaYaw) < deltaAngle;
+	return abs(deltaYaw) < angle_epsilon;
 }
 
 VEC3 bt_guard::generateRandomPoint() {
