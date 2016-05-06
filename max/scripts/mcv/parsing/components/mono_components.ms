@@ -8,6 +8,12 @@ fn parseMonoComponent = (
 		parsed = true
 	)
 	
+	if ( (getUserProp _parsingObject "typeObject") as string) == "railCamera"  then
+	(
+		_parse_rail_camera()
+		parsed = true
+	)
+	
 	-- If parsed we add common components
 	if parsed then (
 		--Name, Transform
