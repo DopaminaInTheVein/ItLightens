@@ -385,8 +385,7 @@ int bt_guard::actionAbsorb() {
 	}
 
 	float deltaYaw = getTransform()->getDeltaYawToAimTo(posPlayer);
-	if (abs(deltaYaw) > deg2rad(1.5)) turnToShooting(posPlayer);
-
+	if (abs(deltaYaw) > deg2rad(1.5)) turnTo(posPlayer);
 	if (squaredDistY(myPos, posPlayer) * 2 > dist) { //Angulo de 30 grados
 														//Si pitch muy alto me alejo
 		goForward(-SPEED_WALK);
@@ -427,10 +426,7 @@ int bt_guard::actionShootWall() {
 	if (!myParent.isValid()) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
-
-	float deltaYaw = getTransform()->getDeltaYawToAimTo(posPlayer);
-	if (abs(deltaYaw) > deg2rad(1.5)) turnToShooting(posPlayer);
-
+	turnTo(posPlayer);
 	if (playerVisible() || boxMovingDetected()) {
 		return KO;
 	}
@@ -621,7 +617,7 @@ int bt_guard::actionSeekWpt() {
 	else if (keyPoints[curkpt].type == Look) {
 		animController.setState(AST_IDLE);
 		//Look to waypoint
-		if (turnToShooting(dest)) {
+		if (turnTo(dest)) {
 			curkpt = (curkpt + 1) % keyPoints.size();
 			return OK;
 		}
@@ -810,8 +806,8 @@ void bt_guard::goTo(const VEC3& dest) {
 	if (needsSteering(npcPos + npcFront, getTransform(), SPEED_WALK, myParent, SBB::readSala())) {
 		goForward(SPEED_WALK);
 	}
-	else if (!getTransform()->isHalfConeVision(target, deg2rad(10.f))) {
-		turnToShooting(target);
+	else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
+		turnTo(target);
 	}
 	else {
 		float distToWPT = squaredDistXZ(target, getTransform()->getPosition());
@@ -833,36 +829,6 @@ void bt_guard::goForward(float stepForward) {
 bool bt_guard::turnTo(VEC3 dest) {
 	PROFILE_FUNCTION("guard: turn to");
 	if (!myParent.isValid()) return false;
-
-	float logic_yaw = animController.getLogicYaw();
-
-	CTransform t = *getTransform();
-	float yaw, pitch;
-	getTransform()->getAngles(&yaw, &pitch);
-	t.setAngles(logic_yaw, pitch);
-	float deltaYaw = t.getDeltaYawToAimTo(dest);
-	dbg("DeltaYaw: %f\n", rad2deg(deltaYaw));
-	float angle_epsilon = deg2rad(10);
-
-	bool turnIsOver = abs(deltaYaw) < angle_epsilon;
-	if (!turnIsOver) {
-		if (t.isInLeft(dest)) {
-			animController.setState(AST_TURNL);
-		}
-		else {
-			animController.setState(AST_TURNR);
-		}
-	}
-
-	//Ha acabado el giro?
-	return turnIsOver;
-}
-
-// -- Turn To Shooting -- //
-bool bt_guard::turnToShooting(VEC3 dest) {
-	PROFILE_FUNCTION("guard: turn to shooting");
-	if (!myParent.isValid()) return false;
-
 	VEC3 myPos = getTransform()->getPosition();
 	float yaw, pitch;
 	getTransform()->getAngles(&yaw, &pitch);

@@ -48,11 +48,8 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 		dbg("Cambio anim: %s\n", msg.name.c_str());
 		if (msg.loop) {
 			//Cycle animation
-			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, msg.blendTime);
-			model->getMixer()->blendCycle(anim_id, 1.0f, msg.blendTime);
-			if (msg.blendTime == 0.f) {
-				model->update(0.f);
-			}
+			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.2f);
+			model->getMixer()->blendCycle(anim_id, 1.0f, 0.2f);
 			prevCycleId = anim_id;
 		}
 		else {
@@ -100,7 +97,6 @@ void TCompSkeleton::renderInMenu() {
 	}
 
 	for (auto a : mixer->getAnimationCycle()) {
-		auto name = a->getCoreAnimation()->getName().c_str();
 		ImGui::Text("Cycle %s S:%d W:%1.2f Time:%1.4f"
 			, a->getCoreAnimation()->getName().c_str()
 			, a->getState()
@@ -190,19 +186,4 @@ void TCompSkeleton::uploadBonesToCteShader() const {
 
 	// Already done in game.cpp
 	// shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
-}
-
-float TCompSkeleton::getFrameDuration(std::string anim) {
-
-	auto mixer = model->getMixer();
-	for (auto a : mixer->getAnimationCycle()) {
-		//dbg("a->getCoreAnimation()->getName(): %s\n", anim.c_str());
-		auto name = a->getCoreAnimation()->getName().c_str();
-		if (name == anim) {
-			dbg("Duration TOTAL: %f", a->getCoreAnimation()->getDuration());
-			return a->getCoreAnimation()->getDuration() / a->getCoreAnimation()->getTotalNumberOfKeyframes();
-		}
-	}
-
-	return -1.f;
 }

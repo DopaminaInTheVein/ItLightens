@@ -37,8 +37,6 @@ uint32_t getID(const char* text) {
 }
 
 float _deltaTimePrev = 1.0f / 60.0f;
-bool slow_mode = false;
-
 float getDeltaTime(float always) {
 	if (GameController->GetGameState() == CGameController::RUNNING || always) {
 		CApp& app = CApp::get();
@@ -49,17 +47,7 @@ float getDeltaTime(float always) {
 		else {
 			_deltaTimePrev = dt;
 		}
-#ifndef NDEBUG
-		if (io->keys[VK_F2].becomesPressed()) {
-			slow_mode = !slow_mode;
-		}
-		if (slow_mode) {
-			return 1.0f / 600.0f;
-		}
 		return dt;
-#else
-		return dt;
-#endif
 	}
 
 	return 0.0f;

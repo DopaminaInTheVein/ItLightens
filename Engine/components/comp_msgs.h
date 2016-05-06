@@ -198,7 +198,6 @@ struct TMsgAddTag {
 struct TMsgSetAnim {
 	std::string name;
 	bool loop;
-	float blendTime;
 	std::string nextLoop;
 	DECLARE_MSG_ID();
 };
