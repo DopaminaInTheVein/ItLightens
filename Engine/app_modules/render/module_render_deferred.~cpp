@@ -600,7 +600,17 @@ void CRenderDeferredModule::ShootGuardRender() {
 		tech->activate();
 
 		drawFullScreen(rt_temp, tech);
-	
+		//CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+
+		//CTexture::deactivate(45);
+
+		/*Render.activateBackBuffer();
+		
+
+		activateZ(ZCFG_ALL_DISABLED);
+		activateBlend(BLENDCFG_ADDITIVE);
+		drawFullScreen(rt_data2);
+		activateBlend(BLENDCFG_DEFAULT);*/
 
 		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	}
@@ -617,67 +627,55 @@ void CRenderDeferredModule::render() {
 
   generateShadowMaps();
 
-	rt_data2->clear(VEC4(0, 0, 0, 0));
+  shader_ctes_globals.uploadToGPU();
+  renderGBuffer();
 
-	rt_selfIlum->clear(VEC4(0, 0, 0, 0));
-	rt_selfIlum_int->clear(VEC4(0, 0, 0, 0));
-	rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 0));
-	rt_selfIlum_blurred_int->clear(VEC4(0, 0, 0, 0));
+  renderAccLight();
 
-	shader_ctes_globals.uploadToGPU();
-	renderGBuffer();
-	DepthTexture();
-	renderAccLight();
+  blurEffectLights();
 
-	//blurEffectLights();
+  FinalRender();
+  DepthTexture();
 
-	FinalRender();
-	
-	
-	Render.activateBackBuffer();
+  // Fx
+  {
+    PROFILE_FUNCTION("referred: laser");
+    CTraceScoped scope("laser");
 
-	activateZ(ZCFG_ALL_DISABLED);
-	rt_depthTexture->activate(45);
+    ID3D11RenderTargetView* rts[3] = {
+      rt_final->getRenderTargetView()
+      ,	nullptr   // remove the other rt's from the pipeline
+      ,	nullptr
+    };
+    Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+    //Render.activateBackBuffer();
+    activateZ(ZCFG_DEFAULT);
+    ShootManager::renderAll();
+  }
 
-	//AA cutre, only objects near camera
-	/*auto tech = Resources.get("aa_tech.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_final, tech);*/
+  Render.activateBackBuffer();
 
-	drawFullScreen(rt_final);
+  activateZ(ZCFG_ALL_DISABLED);
+  drawFullScreen(rt_final);
+  activateZ(ZCFG_DEFAULT);
+  
+  if (GameController->GetFxPolarize()) {
+    RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
+    RenderPolarizedPP(PLUS, VEC4(0.3f, 0.3f, 1.0f, 1.0f));
+  }
+  activateZ(ZCFG_ALL_DISABLED);
 
-	activateZ(ZCFG_DEFAULT);
-	
-	if (GameController->GetFxPolarize()) {
-		RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
-		RenderPolarizedPP(PLUS, VEC4(0.3f, 0.3f, 1.0f, 1.0f));
-	}
+  if (GameController->GetFxGlow()) GlowEdges();
 
+  
 
-	activateZ(ZCFG_DEFAULT);
+  CTexture::deactivate(45);
+  CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+  CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
+  
+  Render.activateBackBuffer();
+  activateZ(ZCFG_DEFAULT);
 
-	ShootGuardRender();
-
-	activateZ(ZCFG_ALL_DISABLED);
-
-	if (GameController->GetFxGlow()) { 
-		GlowEdgesInt();
-		GlowEdges(); 
-	}
-
-	
-
-	CTexture::deactivate(45);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-	CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
-	
-	Render.activateBackBuffer();
-	activateZ(ZCFG_DEFAULT);
-	
-	// Mandar a pintar los 'transparentes'
-	  RenderManager.renderAll(h_camera, CRenderManager::TRANSPARENT_OBJS);
-	  
-	  CTexture::deactivate(45);
-	  CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
-	  
-
+  // Mandar a pintar los 'transparentes'
+  RenderManager.renderAll(h_camera, CRenderManager::TRANSPARENT_OBJS);
 }

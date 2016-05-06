@@ -1,0 +1,5 @@
+<tech>
+    <vs fx="shoot_test" main="VSTextured" decl="positions_uv"/>
+    <ps fx="shoot_test" main="PSTestShoot_w"/>
+</tech>
+

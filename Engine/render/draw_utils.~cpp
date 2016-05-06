@@ -126,7 +126,7 @@ bool createDepthBuffer(
 }
 
 // -----------------------------------------------
-void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color) {
+/*void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color) {
   MAT44 world = MAT44::CreateLookAt(src, dst, VEC3(0, 1, 0)).Invert();
   float distance = VEC3::Distance(src, dst);
   world = MAT44::CreateScale(1, 1, -distance) * world;
@@ -137,7 +137,7 @@ void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color) {
   auto line = Resources.get("line.mesh")->as<CMesh>();
   line->activateAndRender();
   shader_ctes_object.obj_color = VEC4(1, 1, 1, 1);
-}
+}*/
 
 bool drawUtilsCreate() {
 	if (!shader_ctes_globals.create("ctes_globals"))

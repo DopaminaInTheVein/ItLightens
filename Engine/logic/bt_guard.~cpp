@@ -1093,7 +1093,7 @@ void bt_guard::drawShot(float distRay) {
 	t.setAngles(yaw, pitch);
 
 	// Add Render Instruction
-	ShootManager::shootLaser(originShot, destShot);
+	ShootManager::shootLaser(originShot, t.getRotation(), distRay);
 }
 
 void bt_guard::removeBox(CHandle box_handle) {
