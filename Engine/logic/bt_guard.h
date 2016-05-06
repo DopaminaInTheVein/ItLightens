@@ -133,6 +133,7 @@ class bt_guard : public TCompBase, public bt
 	void goTo(const VEC3& dest);
 	void goForward(float stepForward);
 	bool turnTo(VEC3 dest);
+	bool turnToShooting(VEC3 dest);
 	VEC3 generateRandomPoint();
 
 	//Aux checks
@@ -241,6 +242,7 @@ public:
 	void artificialInterrupt();
 
 	void update(float dt) {
+		Debug->DrawLine(getTransform()->getPosition(), getTransform()->getPosition() + 5.0f*getTransform()->getFront());
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
 			if (t_reduceStats <= 0.0f) {

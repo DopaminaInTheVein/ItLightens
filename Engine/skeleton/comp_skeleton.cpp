@@ -48,8 +48,11 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 		dbg("Cambio anim: %s\n", msg.name.c_str());
 		if (msg.loop) {
 			//Cycle animation
-			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.2f);
-			model->getMixer()->blendCycle(anim_id, 1.0f, 0.2f);
+			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, msg.blendTime);
+			model->getMixer()->blendCycle(anim_id, 1.0f, msg.blendTime);
+			if (msg.blendTime == 0.f) {
+				model->update(0.f);
+			}
 			prevCycleId = anim_id;
 		}
 		else {
@@ -186,4 +189,15 @@ void TCompSkeleton::uploadBonesToCteShader() const {
 
 	// Already done in game.cpp
 	// shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
+}
+
+float TCompSkeleton::getFrameDuration(std::string anim) {
+
+	for (auto a : model->getMixer()->getAnimationCycle()) {
+		if (a->getCoreAnimation()->getName() == anim) {
+			return a->getCoreAnimation()->getDuration() / a->getCoreAnimation()->getTotalNumberOfKeyframes();
+		}
+	}
+
+	return -1.f;
 }

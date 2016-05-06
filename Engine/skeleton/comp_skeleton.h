@@ -17,6 +17,7 @@ struct TCompSkeleton : public TCompBase {
 	void uploadBonesToCteShader() const;
 	void updateEndAction();
 
+	float getFrameDuration(std::string anim);
 	//Messages
 	void onSetAnim(const TMsgSetAnim&);
 };
