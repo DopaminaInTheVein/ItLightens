@@ -123,7 +123,7 @@ float dc = txDepth.Sample(samLinear, iTex0).r;
 		color.w = 1.0f;
 		
 	//update color intensit y with player life
-	color.w = color.w*0.2f+color.w*0.8f*(strenght_polarize/150.0f);
+	color.w = color.w*0.2f+color.w*0.8f*(life_player/150.0f);
 	
 	if(direction == 2){
 		if((color.b - color.r) < 0.0f)

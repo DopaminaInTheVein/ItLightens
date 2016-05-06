@@ -521,9 +521,9 @@ void CRenderDeferredModule::GlowEdges() {
 		CEntity *e = tags_manager.getFirstHavingTag("player");
 		TCompLife * life = e->get<TCompLife>();
 		if(life)
-			shader_ctes_globals.strenght_polarize = life->getCurrent();
+			shader_ctes_object.life_player = life->getCurrent();
 		else {
-			shader_ctes_globals.strenght_polarize = 100.0f;
+			shader_ctes_object.life_player = 100.0f;
 		}
 		shader_ctes_globals.uploadToGPU();
 
