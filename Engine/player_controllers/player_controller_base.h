@@ -91,7 +91,7 @@ public:
 
 	// Player states
 	virtual void Idle();
-	void Jump();
+	virtual void Jump();
 	void Die();
 	void Win();
 

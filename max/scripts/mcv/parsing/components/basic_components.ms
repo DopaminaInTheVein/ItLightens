@@ -217,6 +217,7 @@ fn _parse_polarizedArea = (
 -- DRONE --
 ----------------------------------------------------------------------
 fn _parse_drone = (
+
 	-- Drone component
 	local xmlDrone = XML_PARSING.addChild "drone"
 	

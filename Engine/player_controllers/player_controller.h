@@ -75,8 +75,8 @@ class player_controller : public CPlayerBase {
 	//CHandle					pose_jump;
 
 	//Polarity Constants
-	float	POL_RCLOSE					= 1.f;
-	float	POL_RFAR					= 25.f; // 5 Meters arround
+	float	POL_RCLOSE					= 0.5f;
+	float	POL_RFAR					= 9.0f; // 5 Meters arround
 	float	POL_HORIZONTALITY			= 1.f;
 	float	POL_INTENSITY				= 1000.f;
 	float	POL_REPULSION				= .5f;
@@ -181,11 +181,11 @@ public:
 	void myExtraIdle();
 	void readIniFileAttr();
 
-	void DoubleJump();
-	void DoubleFalling();
-
+	void Jump() override;
 	void Jumping();
+	void DoubleJump();
 	void Falling();
+	void DoubleFalling();
 
 	void update_msgs() override;
 

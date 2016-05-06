@@ -22,7 +22,7 @@ struct TCompPolarized : public TCompBase {
 	TMsgPolarize		msg_out;
 	CHandle			player_h;
 
-	float			dist_effect_squared	= 100.0f;
+	float			dist_effect_squared	= 4.f;
 	float			dist_near			= 3.0f;
 
 	PolarityForce	force;
@@ -30,12 +30,15 @@ struct TCompPolarized : public TCompBase {
 	PxTransform		m_transform;
 
 	float			mThresholdMass		= 2.5f;
+	float			mEpsilonMove		= 0.01f;
 
 	int				mType				= FIXED;
 	int				mPlayer_state		= NEUTRAL;
 
 	void init();
 	void update(float elapsed);
+	void updatePxTransform();
+
 	bool load(MKeyValue& atts);
 
 	void onCreate(const TMsgEntityCreated&);

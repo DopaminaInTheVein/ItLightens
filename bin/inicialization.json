@@ -90,8 +90,8 @@
 		"possessionReach" : 3.0,
 		"evolution_limit" : 50.0,
 		"max_life" : 150.0,
-		"init_life" : 50.0,
-		"jump_energy" : 5.0,
+		"init_life" : 150.0,
+		"jump_energy" : 1.0,
 		"stun_energy" : 5.0
 	},	
 	"controller_mole" : {

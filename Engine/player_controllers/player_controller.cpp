@@ -298,6 +298,9 @@ void player_controller::DoubleJump()
 }
 
 void player_controller::DoubleFalling() {
+	if (pol_orbit && !pol_orbit_prev) {
+		ChangeState("falling");
+	}
 	PROFILE_FUNCTION("player controller: double falling");
 	UpdateDirection();
 	UpdateMovDirection();
@@ -306,6 +309,17 @@ void player_controller::DoubleFalling() {
 		ChangeState("idle");
 		animController.setState(AST_IDLE);
 	}
+}
+
+void player_controller::Jump()
+{
+	PROFILE_FUNCTION("jump player");
+	SetCharacterController();
+
+	cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
+	energyDecreasal(jump_energy);
+	ChangeState("jumping");
+	ChangeCommonState("jumping");
 }
 
 void player_controller::Jumping()
@@ -326,7 +340,7 @@ void player_controller::Jumping()
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
-		energyDecreasal(5.0f);
+		energyDecreasal(jump_energy);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
 		animController.setState(AST_JUMP2);
@@ -344,7 +358,7 @@ void player_controller::Falling()
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
-		energyDecreasal(5.0f);
+		energyDecreasal(jump_energy);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
 		animController.setState(AST_JUMP2);
@@ -395,7 +409,7 @@ void player_controller::RecalcAttractions()
 	}
 	// Otherwise apply inertia
 	else {
-		final_forces = (lastForces * POL_INERTIA) + ( final_forces * (1 - POL_INERTIA));
+		//final_forces = (lastForces * POL_INERTIA) + ( final_forces * (1 - POL_INERTIA));
 	}
 
 	//Apply and save forces
