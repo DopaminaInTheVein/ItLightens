@@ -2,6 +2,10 @@
 --******************
 
 fn parseable = (
+	--Is hidden?
+	if _parsingObject.ishidden then (return false)
+	
+	
 	-- Es dummy?
 	if (classof _parsingObject) == Dummy then (return false)
 	

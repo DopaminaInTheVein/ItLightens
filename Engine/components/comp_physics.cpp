@@ -109,6 +109,10 @@ int TCompPhysics::getCollisionShapeValueFromString(std::string str) {
 	else if (str == "convex") {
 		return CONVEX;
 	}
+	//Provisonal?
+	else if (str == "drone") {
+		return DRONE;
+	}
 	else {
 		fatal("type object undefined - %s\n!!", str.c_str());
 		return BOX;
@@ -135,6 +139,9 @@ void TCompPhysics::onCreate(const TMsgEntityCreated &)
 		break;
 	case CONVEX:
 		createConvexShape();
+		break;
+	case DRONE:
+		createDroneShape();
 		break;
 	default:
 		fatal("object type inexistent!!\n");
@@ -243,6 +250,13 @@ bool TCompPhysics::createConvexShape() {
 
 	fatal("component without valid entity!\n");
 	return false;
+}
+
+bool TCompPhysics::createDroneShape()
+{
+	m_pShape = g_PhysxManager->CreatePxSphere(0.8f, m_staticFriction, m_dynamicFriction, m_restitution);
+	addRigidbodyScene();
+	return true;
 }
 
 bool TCompPhysics::addRigidbodyScene()

@@ -71,8 +71,6 @@ fn _parseObject parent = (
 				parseComponent c
 			)
 		)
-	) else (
-		messagebox "oops"
 	)
 )
 

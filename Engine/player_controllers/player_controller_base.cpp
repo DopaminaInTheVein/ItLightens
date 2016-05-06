@@ -235,7 +235,6 @@ void CPlayerBase::Jump()
 	SetCharacterController();
 	
 	cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
-	energyDecreasal(5.0f);
 	ChangeState("jumping");
 	ChangeCommonState("jumping");
 }

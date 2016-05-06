@@ -19,6 +19,8 @@ enum eTypeShape {
 	CAPSULE,
 	BOX,
 	CONVEX,	
+	// Provisional?
+	DRONE,
 };
 
 // ------------------------------------
@@ -48,6 +50,7 @@ class TCompPhysics : public TCompBase {
 	bool createCapsuleShape();
 	bool createSphereShape();
 	bool createConvexShape();
+	bool createDroneShape();
 
 	bool addRigidbodyScene();
 

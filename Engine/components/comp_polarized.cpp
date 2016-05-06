@@ -26,6 +26,7 @@ void TCompPolarized::init()
 
 void TCompPolarized::update(float elapsed)
 {
+	updatePxTransform();
 	CEntity *e_p = player_h;
 	if (e_p) {
 		TCompCharacterController *cc = e_p->get<TCompCharacterController>();
@@ -96,6 +97,18 @@ void TCompPolarized::update(float elapsed)
 					}
 				}
 			}
+		}
+	}
+}
+
+void TCompPolarized::updatePxTransform()
+{
+	CEntity* eMe = CHandle(this).getOwner();
+	if (eMe) {
+		TCompTransform* t = eMe->get<TCompTransform>();
+		float movement = simpleDist(t->getPosition(), last_position);
+		if (movement > mEpsilonMove) {
+			m_transform = PhysxConversion::ToPxTransform(t->getPosition(), t->getRotation());
 		}
 	}
 }
