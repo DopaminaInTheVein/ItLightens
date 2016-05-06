@@ -125,7 +125,7 @@ bool CRender::createDevice() {
 	setDXName(pBackBuffer, "BackBufferRes");
 	setDXName(render_target_view, "BackBufferRTV");
 
-	if (!createDepthBuffer(width, height, DXGI_FORMAT_D24_UNORM_S8_UINT, &depth_resource, &depth_stencil_view))
+	if (!createDepthBuffer(width, height, DXGI_FORMAT_D24_UNORM_S8_UINT, &depth_resource, &depth_stencil_view, "ZBackBuffer"))
 		return false;
 	setDXName(depth_resource, "MainZBufferRes");
 	setDXName(depth_stencil_view, "MainZBufferDSV");

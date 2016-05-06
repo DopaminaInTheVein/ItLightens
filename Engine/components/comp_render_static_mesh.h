@@ -14,6 +14,7 @@ struct TCompRenderStaticMesh : public TCompBase {
 	bool load(MKeyValue& atts);
 	void unregisterFromRender();
 	void registerToRender();
+	void onGetLocalAABB(const TMsgGetLocalAABB& msg);
 };
 
 #endif

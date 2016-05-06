@@ -6,6 +6,7 @@ CRenderToTexture::CRenderToTexture()
 : color_format( DXGI_FORMAT_UNKNOWN )
 , render_target_view( nullptr )
 , depth_stencil_view( nullptr )
+, ztexture( nullptr )
 {  }
   
 CRenderToTexture::~CRenderToTexture() {
@@ -45,7 +46,7 @@ bool CRenderToTexture::createRT(
   // Create ZBuffer 
   depth_format = new_depth_format;
   if (depth_format != DXGI_FORMAT_UNKNOWN) {
-    if (!createDepthBuffer(xres, yres, new_depth_format, &depth_resource, &depth_stencil_view))
+    if (!createDepthBuffer(xres, yres, new_depth_format, &depth_resource, &depth_stencil_view, new_name, &ztexture))
       return false;
   }
 
@@ -65,6 +66,7 @@ void CRenderToTexture::activateViewport() {
   vp.TopLeftY = 0;
   vp.MinDepth = 0.f;
   vp.MaxDepth = 1.f;
+  Render.ctx->RSSetViewports(1, &vp);
 }
 
 void CRenderToTexture::clear(VEC4 clear_color) {

@@ -66,7 +66,7 @@ public:
   void activateAndRender() const;
 
 	static FileDataMesh loadData(std::string path, CDataProvider & dp);
-
+	AABB getAABB() const { return aabb; }
 	uint32_t getNumVtxs() const {
 		return num_vertexs;
 	}
@@ -91,6 +91,8 @@ public:
 		return num_bytes_per_idx;
 	}
 
+	const CVertexDeclaration* vtx_decl;
+
 	const std::string& getName() const {
 		return name;
 	}
@@ -111,10 +113,11 @@ private:
 	uint32_t                  num_bytes_per_idx;
 	D3D_PRIMITIVE_TOPOLOGY    topology;
 
-	const CVertexDeclaration* vtx_decl;
-
 	std::string               name;
 	VGroups                   groups;
+	AABB                      aabb;
+
+	static const CMesh* curr_mesh;
 };
 
 #endif

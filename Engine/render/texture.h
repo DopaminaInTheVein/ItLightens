@@ -49,6 +49,15 @@ bool create(
     , DXGI_FORMAT nformat
     , TCreateOptions options);
 
+  // -----------------------------------------------
+  void setDXObjs(
+    ID3D11Texture2D*          new_resource
+  , ID3D11ShaderResourceView* new_res_view
+  ) {
+    resource = new_resource;
+    res_view = new_res_view;
+  }
+
 };
 
 #endif

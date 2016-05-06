@@ -34,7 +34,7 @@ public:
   // ---------------------------
   // Yes, these are not super efficient
   VEC3        getFront() const {
-    PROFILE_FUNCTION("apply geometry get front");
+   // PROFILE_FUNCTION("apply geometry get front");
     VEC3 front;
     front.x = 2 * (rotation.x*rotation.z + rotation.w*rotation.y);
     front.y = 2 * (rotation.y*rotation.z - rotation.w*rotation.x);
@@ -43,7 +43,7 @@ public:
     return front;
   }
   VEC3        getLeft() const {
-    PROFILE_FUNCTION("apply geometry get left");
+    //PROFILE_FUNCTION("apply geometry get left");
     VEC3 left;
 
     left.x = 1 - 2 * (rotation.y*rotation.y + rotation.z*rotation.z);
@@ -54,7 +54,7 @@ public:
   }
 
   VEC3			getUp() const {
-    PROFILE_FUNCTION("apply geometry get up");
+    //PROFILE_FUNCTION("apply geometry get up");
     VEC3 up;
 
     up.x = 2 * (rotation.x*rotation.y - rotation.w*rotation.z);

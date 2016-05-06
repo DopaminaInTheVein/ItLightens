@@ -16,10 +16,11 @@ enum ZConfig {
 void activateZ(enum ZConfig, UINT num = 0);
 
 enum RSConfig {
-	RSCFG_DEFAULT
-	//	, RSCFG_WIREFRAME
-	, RSCFG_INVERT_CULLING
-	, RSCFG_COUNT
+  RSCFG_DEFAULT
+  //	, RSCFG_WIREFRAME
+  , RSCFG_INVERT_CULLING
+  , RSCFG_SHADOWS
+  , RSCFG_COUNT
 };
 void activateRS(enum RSConfig);
 

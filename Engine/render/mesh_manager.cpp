@@ -222,7 +222,32 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
 		if (!createGridXZ(*mesh, 10))
 			return nullptr;
 		return mesh;
-	}
+	}else if (name == "wired_unit_cube.mesh") {
+    SimpleVertexColored vtxs[8] =
+    {
+      { -0.5f,-0.5f, -0.5f,  1, 1, 1, 1 },    // 
+      { 0.5f,-0.5f, -0.5f,   1, 1, 1, 1 },
+      { -0.5f, 0.5f, -0.5f,  1, 1, 1, 1 },
+      { 0.5f, 0.5f, -0.5f,   1, 1, 1, 1 },    // 
+      { -0.5f,-0.5f, 0.5f,   1, 1, 1, 1 },    // 
+      { 0.5f,-0.5f, 0.5f,    1, 1, 1, 1 },
+      { -0.5f, 0.5f, 0.5f,   1, 1, 1, 1 },
+      { 0.5f, 0.5f, 0.5f,    1, 1, 1, 1 },    // 
+    };
+    const uint16_t idxs[] = {
+      0, 1, 2, 3, 4, 5, 6, 7
+      , 0, 2, 1, 3, 4, 6, 5, 7
+      , 0, 4, 1, 5, 2, 6, 3, 7
+    }; 
+	if (!mesh->create(8
+      , sizeof(SimpleVertexColored)
+      , vtxs
+      , 24, sizeof(uint16_t), idxs
+      , CMesh::VTX_DECL_POSITION_COLOR
+      , CMesh::LINE_LIST))
+      return nullptr;
+    return mesh;
+  }
 	else if (name == "missing.mesh") {
 		SimpleVertexColored vtxs_axis[6] =
 		{

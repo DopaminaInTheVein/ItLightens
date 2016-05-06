@@ -6,17 +6,20 @@
 class CCamera;
 
 bool createDepthBuffer(
-	int xres
-	, int yres
-	, DXGI_FORMAT depth_format
-	, ID3D11Texture2D** out_depth_resource
-	, ID3D11DepthStencilView** out_depth_stencil_view
-	);
+    int xres
+  , int yres
+  , DXGI_FORMAT depth_format
+  , ID3D11Texture2D** out_depth_resource
+  , ID3D11DepthStencilView** out_depth_stencil_view
+  , const char* name
+  , CTexture** out_ztexture = nullptr
+  );
 
 //void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color);
 void drawFullScreen(const CTexture* texture, const CRenderTechnique* technique = nullptr);
 void activateCamera(const CCamera* camera);
 void activateWorldMatrix(const MAT44& mat);
+void drawWiredAABB(const AABB& aabb, const MAT44& world, VEC4 color);
 bool drawUtilsCreate();
 void drawUtilsDestroy();
 void activateDefaultStates();

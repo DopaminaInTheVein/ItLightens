@@ -113,6 +113,7 @@
    zfar="250.0"
    fov="60.0"
 />
+<culling />
 <controller_3rd_person/>
 <name
    name="camController_1"
@@ -124,6 +125,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags="drone platform"
 />
@@ -156,6 +158,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags="drone platform"
 />
@@ -188,6 +191,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags="drone platform"
 />
@@ -220,6 +224,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags="drone platform"
 />
@@ -252,6 +257,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags="drone platform"
 />
@@ -284,6 +290,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags="drone platform"
 />
@@ -316,6 +323,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -418,6 +426,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -437,6 +446,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -456,6 +466,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -475,6 +486,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -494,6 +506,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -513,6 +526,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -532,6 +546,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -551,6 +566,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -570,6 +586,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -589,6 +606,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -608,6 +626,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -627,6 +646,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -646,6 +666,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -665,6 +686,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -684,6 +706,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -703,6 +726,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -722,6 +746,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -741,6 +766,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -760,6 +786,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -779,6 +806,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -798,6 +826,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -817,6 +846,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -836,6 +866,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -855,6 +886,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -874,6 +906,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -893,6 +926,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -912,6 +946,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -931,6 +966,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -950,6 +986,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -969,6 +1006,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -988,6 +1026,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1007,6 +1046,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1026,6 +1066,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1045,6 +1086,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1064,6 +1106,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1083,6 +1126,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1102,6 +1146,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1121,6 +1166,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1140,6 +1186,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1159,6 +1206,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1178,6 +1226,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1197,6 +1246,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1216,6 +1266,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />

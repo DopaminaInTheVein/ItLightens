@@ -7,12 +7,12 @@
 
 class CGameController : public IAppModule {
 
-	int		game_state = 0;
+	int		game_state			= 0;
 
-	bool    fx_polarize = true;
-	bool	fx_glow		= true;
-
-	bool	free_camera = false;
+	bool    fx_polarize			= true;
+	bool	fx_glow				= true;
+	bool	render_culling_box	= false;
+	bool	free_camera			= false;
 
 public:
 	enum{
@@ -123,6 +123,14 @@ public:
 
 	bool GetFreeCamera() const {
 		return free_camera;
+	}
+
+	bool * GetCullingRenderPointer() {
+		return &render_culling_box;
+	}
+
+	bool GetCullingRender() const {
+		return render_culling_box;
 	}
 
 

@@ -29,6 +29,7 @@ public:
     return VERTEX_SHADER;
   }
   void onFileChanged(const std::string& filename);
+  const CVertexDeclaration* getVertexDecl() const { return vtx_decl; }
 };
 
 // ----------------------------------------------

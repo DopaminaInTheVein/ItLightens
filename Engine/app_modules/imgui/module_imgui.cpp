@@ -153,9 +153,12 @@ void CImGuiModule::update(float dt) {
       ImGui::Checkbox("polarize effects", GameController->GetFxPolarizePointer());
 
       ImGui::Checkbox("glow effect", GameController->GetFxGlowPointer());
-
+	  
       ImGui::TreePop();
     }
+  }if (ImGui::CollapsingHeader("Culling")) {
+	  RenderManager.renderUICulling();
+	  ImGui::Checkbox("show culling collider", GameController->GetCullingRenderPointer());
   }
 
   ImGui::End();

@@ -145,6 +145,11 @@ public:
     for (size_t i = 0; i<num_objs_used; ++i, ++o)
       cb( o );
   }
+  // -------------------------
+  // Use it with care
+  TObj* getFirstObject() {
+    return objs;
+  }
 };
 
 #define DECL_OBJ_MANAGER( obj_name, obj_class_name ) \

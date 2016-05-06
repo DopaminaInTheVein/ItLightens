@@ -5,6 +5,8 @@
 #include "technique.h"
 #include "mesh.h"
 #include "components/comp_transform.h"
+#include "components/comp_aabb.h"
+#include "components/comp_culling.h"
 #include "skeleton/comp_skeleton.h"
 #include "components/entity.h"
 #include "render/draw_utils.h"
@@ -40,6 +42,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
   CEntity* e = owner.getOwner();
   assert(e);
   CHandle h_transform = e->get<TCompTransform>();
+  CHandle h_aabb = e->get<TCompAbsAABB>();
 
   for (auto s : mesh->slots) {
     TKey k;
@@ -48,7 +51,21 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
     k.owner = owner;
     k.transform = h_transform;
     k.submesh_idx = s.submesh_idx;
+    k.aabb = h_aabb;
     all_keys.push_back(k);
+  }
+
+  // Comprobar si juntando todos los slots de mesh
+  // tengo la mesh completa...
+  // De momento, voy a asumir que si....
+  for (auto s : mesh->slots) {
+    if (s.generates_shadows) {
+      TShadowKey k;
+      k.mesh = s.mesh;
+      k.owner = owner;
+      k.transform = h_transform;
+      all_shadow_keys.push_back(k);
+    }
   }
 
   in_order = false;
@@ -66,7 +83,7 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
   }
 }
 
-void CRenderManager::renderAll(eRenderType render_type) {
+void CRenderManager::renderAll(CHandle h_camera, eRenderType render_type) {
   PROFILE_FUNCTION("RenderManager");
   CTraceScoped scope("RenderManager");
 
@@ -74,10 +91,21 @@ void CRenderManager::renderAll(eRenderType render_type) {
     // sort the keys based on....
     std::sort(all_keys.begin(), all_keys.end(), &sortByTechMatMesh);
     in_order = true;
+    ++ntimes_sorted;
   }
 
   if (all_keys.empty())
     return;
+
+  // Check if we have culling information from the camera source
+  CEntity* e_camera = h_camera;
+  TCompCulling::TCullingBits* culling_bits = nullptr;
+  TCompCulling* culling = e_camera->get<TCompCulling>();
+  if (culling)
+    culling_bits = &culling->bits;
+  // To get the index of each aabb
+  auto hm_aabbs = getHandleManager<TCompAbsAABB>();
+  const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
 
   //
   const TKey* it = nullptr;
@@ -88,8 +116,8 @@ void CRenderManager::renderAll(eRenderType render_type) {
     , all_keys.end()
     , true
     , [](const TKey &k1, bool is_transparent)->bool {
-    if (k1.material->tech->isTransparent() != is_transparent)
-      return k1.material->tech->isTransparent();
+   /* if (k1.material->tech->isTransparent() != is_transparent)
+      return k1.material->tech->isTransparent();*/
     return k1.material->tech->isTransparent();
   }
   );
@@ -110,11 +138,23 @@ void CRenderManager::renderAll(eRenderType render_type) {
   const TKey* prev_it = &null_key;
 
   bool curr_tech_used_bones = false;
-
+  int nkeys_rendered = 0;
   // Pasearse por todas las keys
   while (it != end_it) {
 
-    if (it->material != prev_it->material ) {
+    // Do the culling
+    if (culling_bits) {
+      TCompAbsAABB* aabb = it->aabb;
+      if (aabb) {
+        int idx = aabb - base_aabbs;
+        if (!culling_bits->test(idx)) {
+          ++it;
+          continue;
+        }
+      }
+    }
+
+    if (it->material != prev_it->material) {
       if (!prev_it->material || it->material->tech != prev_it->material->tech) {
         it->material->tech->activate();
         curr_tech_used_bones = it->material->tech->usesBones();
@@ -128,8 +168,8 @@ void CRenderManager::renderAll(eRenderType render_type) {
       // subir la world de it
       const TCompTransform* c_tmx = it->transform;
       assert(c_tmx);
-      
-      // For static objects, we could skip this step 
+
+      // For static objects, we could skip this step
       // if each static object had it's own shader_ctes_object
       activateWorldMatrix(c_tmx->asMatrix());
     }
@@ -142,11 +182,41 @@ void CRenderManager::renderAll(eRenderType render_type) {
       comp_skel->uploadBonesToCteShader();
     }
 
-  // it->mesh->renderGroup( it->submesh_idx );    // it->mesh->renderSubMesh( it->submesh );
-	it->mesh->render();
+    it->mesh->renderGroup( it->submesh_idx );    // it->mesh->renderSubMesh( it->submesh );
+	//it->mesh->render();
     prev_it = it;
     ++it;
+    ++nkeys_rendered;
   }
 
   CMaterial::deactivateTextures();
+
+  renderedCulling.push_back(nkeys_rendered);
+
+}
+
+void CRenderManager::renderUICulling() {
+	for (int i = 0; i < renderedCulling.size(); i++) {
+		ImGui::Text("%d/%ld keys of call %d", renderedCulling[i], all_keys.size(), i);
+	}
+
+	renderedCulling.clear();
+}
+
+// ------------------------------------------
+void CRenderManager::renderShadowCasters() {
+  auto it = all_shadow_keys.begin();
+  while (it != all_shadow_keys.end()) {
+
+    const TCompTransform* c_tmx = it->transform;
+    assert(c_tmx);
+    activateWorldMatrix(c_tmx->asMatrix());
+
+    // If the shadows_keys were sorted by mesh
+    // I could skip the activation and just call it
+    // when the mesh changed, and only call the render
+    it->mesh->activateAndRender();
+
+    ++it;
+  }
 }

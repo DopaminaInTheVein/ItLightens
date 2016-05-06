@@ -19,7 +19,16 @@ bool createDepthBuffer(
   , DXGI_FORMAT depth_format
   , ID3D11Texture2D** out_depth_resource
   , ID3D11DepthStencilView** out_depth_stencil_view
+  , const char* name
+  , CTexture** out_ztexture
   ) {
+
+  assert(depth_format == DXGI_FORMAT_R32_TYPELESS
+    || depth_format == DXGI_FORMAT_R24G8_TYPELESS
+    || depth_format == DXGI_FORMAT_R16_TYPELESS
+    || depth_format == DXGI_FORMAT_D24_UNORM_S8_UINT
+    || depth_format == DXGI_FORMAT_R8_TYPELESS);
+
   // Create depth stencil texture
   D3D11_TEXTURE2D_DESC desc;
   ZeroMemory(&desc, sizeof(desc));
@@ -32,9 +41,42 @@ bool createDepthBuffer(
   desc.SampleDesc.Quality = 0;
   desc.Usage = D3D11_USAGE_DEFAULT;
   desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-    //| D3D11_BIND_SHADER_RESOURCE;
   desc.CPUAccessFlags = 0;
   desc.MiscFlags = 0;
+
+  //  if (bind_shader_resource)
+  if(depth_format != DXGI_FORMAT_D24_UNORM_S8_UINT)
+    desc.BindFlags |= D3D11_BIND_SHADER_RESOURCE;
+
+  // SRV = Shader Resource View
+  // DSV = Depth Stencil View
+  DXGI_FORMAT texturefmt = DXGI_FORMAT_R32_TYPELESS;
+  DXGI_FORMAT SRVfmt = DXGI_FORMAT_R32_FLOAT;       // Stencil format
+  DXGI_FORMAT DSVfmt = DXGI_FORMAT_D32_FLOAT;       // Depth format
+
+  switch (depth_format) {
+  case DXGI_FORMAT_R32_TYPELESS:
+    SRVfmt = DXGI_FORMAT_R32_FLOAT;
+    DSVfmt = DXGI_FORMAT_D32_FLOAT;
+    break;
+  case DXGI_FORMAT_R24G8_TYPELESS:
+    SRVfmt = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+    DSVfmt = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    break;
+  case DXGI_FORMAT_R16_TYPELESS:
+    SRVfmt = DXGI_FORMAT_R16_UNORM;
+    DSVfmt = DXGI_FORMAT_D16_UNORM;
+    break;
+  case DXGI_FORMAT_R8_TYPELESS:
+    SRVfmt = DXGI_FORMAT_R8_UNORM;
+    DSVfmt = DXGI_FORMAT_R8_UNORM;
+    break;
+  case DXGI_FORMAT_D24_UNORM_S8_UINT:
+    SRVfmt = desc.Format;
+    DSVfmt = desc.Format;
+    break;
+  }
+
   ID3D11Texture2D* depth_resource;
   HRESULT hr = Render.device->CreateTexture2D(&desc, NULL, &depth_resource);
   if (FAILED(hr))
@@ -43,12 +85,7 @@ bool createDepthBuffer(
   // Create the depth stencil view
   D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
   ZeroMemory(&descDSV, sizeof(descDSV));
-  if (desc.Format == DXGI_FORMAT_R32_TYPELESS) {
-	  descDSV.Format = DXGI_FORMAT_D32_FLOAT;
-  }
-  else {
-	  descDSV.Format = desc.Format;
-  }
+  descDSV.Format = DSVfmt;
   descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
   descDSV.Texture2D.MipSlice = 0;
   hr = Render.device->CreateDepthStencilView(depth_resource
@@ -56,8 +93,35 @@ bool createDepthBuffer(
     , out_depth_stencil_view);
   if (FAILED(hr))
     return false;
+  setDXName((*out_depth_stencil_view), "ZTextureDSV");
 
   *out_depth_resource = depth_resource;
+  
+  // ------------------------------------------------------
+  if (desc.BindFlags & D3D11_BIND_SHADER_RESOURCE) {
+    // Setup the description of the shader resource view.
+    D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+    shaderResourceViewDesc.Format = SRVfmt;
+    shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+    shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
+    shaderResourceViewDesc.Texture2D.MipLevels = desc.MipLevels;
+
+    // Create the shader resource view to access the texture
+    ID3D11ShaderResourceView* depth_resource_view = nullptr;
+    hr = Render.device->CreateShaderResourceView(depth_resource, &shaderResourceViewDesc, &depth_resource_view);
+    if (FAILED(hr))
+      return false;
+
+    CTexture* ztexture = new CTexture();
+    ztexture->setDXObjs(depth_resource, depth_resource_view );
+    ztexture->setName(("Z" + std::string(name)).c_str());
+    Resources.registerNew( ztexture );
+    setDXName(depth_resource, ztexture->getName().c_str());
+    setDXName(depth_resource_view, ztexture->getName().c_str());
+    assert(out_ztexture);
+    *out_ztexture = ztexture;
+  }
+
   return true;
 }
 
@@ -131,6 +195,21 @@ void activateWorldMatrix(const MAT44& mat) {
   shader_ctes_object.obj_color = VEC4(1, 1, 1, 1);
   shader_ctes_object.uploadToGPU();
 }
+
+void drawWiredAABB(const AABB& aabb, const MAT44& world, VEC4 color) {
+  // Accede a una mesh que esta centrada en el origen y
+  // tiene 0.5 de half size
+  auto mesh = Resources.get("wired_unit_cube.mesh")->as<CMesh>();
+  MAT44 unit_cube_to_aabb = MAT44::CreateScale(VEC3(aabb.Extents) * 2.f)
+    * MAT44::CreateTranslation(aabb.Center)
+    * world;
+  shader_ctes_object.World = unit_cube_to_aabb;
+  shader_ctes_object.obj_color = color;
+  shader_ctes_object.uploadToGPU();
+  mesh->activateAndRender();
+}
+
+
 
 // -----------------------------------------------
 void drawFullScreen(const CTexture* texture, const CRenderTechnique* tech) {

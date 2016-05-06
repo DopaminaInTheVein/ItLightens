@@ -8,16 +8,20 @@ class CMaterial;
 class CMesh;
 
 class CStaticMesh : public IResource, public CXMLParser {
-	void onStartElement(const std::string &elem, MKeyValue &atts);
+  
+  void onStartElement(const std::string &elem, MKeyValue &atts);
+  AABB aabb;
 
 public:
 
-	struct TSlot {
-		const CMesh*     mesh;
-		int              submesh_idx;
-		const CMaterial* material;
-	};
-	std::vector<TSlot > slots;
+  struct TSlot {
+    const CMesh*     mesh;
+    int              submesh_idx;
+    const CMaterial* material;
+    bool             generates_shadows;
+  };
+  std::vector<TSlot > slots;
+  AABB getAABB() const { return aabb; }
 
 	bool isValid() const override { return true; }
 	void destroy() { }

@@ -31,11 +31,16 @@ bool TCompCamera::load(MKeyValue& atts) {
   return true;
 }
 
+void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
+  assert(msg.view_proj);
+  *msg.view_proj = this->getViewProjection();
+}
+
 void TCompCamera::render() const {
-  //auto axis = Resources.get("frustum.mesh")->as<CMesh>();
-  //shader_ctes_object.World = getViewProjection().Invert();
-  //shader_ctes_object.uploadToGPU();
-  //axis->activateAndRender();
+  auto axis = Resources.get("frustum.mesh")->as<CMesh>();
+  shader_ctes_object.World = getViewProjection().Invert();
+  shader_ctes_object.uploadToGPU();
+  axis->activateAndRender();
 }
 
 void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {

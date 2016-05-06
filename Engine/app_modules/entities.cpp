@@ -48,7 +48,11 @@ DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
+DECL_OBJ_MANAGER("abs_aabb", TCompAbsAABB);
+DECL_OBJ_MANAGER("local_aabb", TCompLocalAABB);
+DECL_OBJ_MANAGER("culling", TCompCulling);
 DECL_OBJ_MANAGER("light_dir", TCompLightDir);
+DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
@@ -96,6 +100,12 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<TVictoryPoint>()->init(20);
 	getHandleManager<TTriggerLua>()->init(100);
+//	getHandleManager<TCompHierarchy>()->init(nmax);
+ 	 getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
+  	getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
+	getHandleManager<TCompCulling>()->init(8);
+	  getHandleManager<TCompLightDir>()->init(8);
+	  getHandleManager<TCompLightDirShadows>()->init(8);
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(8);
@@ -166,6 +176,12 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
+  SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
+//  SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
+  SUBSCRIBE(TCompBoneTracker, TMsgEntityGroupCreated, onGroupCreated);
+  SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
+  SUBSCRIBE(TCompLocalAABB, TMsgEntityCreated, onCreate);
+  SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
 
 	//Trackers
@@ -255,6 +271,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_cientifico, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
+	
+
+	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
 	sala = "milestone2_guardias";
 	//sala = "scene_milestone_1";
@@ -393,6 +412,11 @@ void CEntitiesModule::stop() {
 
 void CEntitiesModule::update(float dt) {
 
+	getHandleManager<TCompLightDir>()->updateAll(dt);
+  	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
+	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
+ 	getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
+
 	if (GameController->GetGameState() == CGameController::STOPPED) {
 		getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 		getHandleManager<TCompCamera>()->updateAll(dt);
@@ -482,6 +506,11 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
+
+	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
+	  getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
+	  getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
+	  getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 
 	//Prueba BORRAR
 	getHandleManager<player_controller>()->onAll(&player_controller::render);

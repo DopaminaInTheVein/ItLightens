@@ -17,6 +17,8 @@ IResource* createObjFromName<CRenderTechnique>(const std::string& name) {
   return tech;
 }
 
+const CRenderTechnique* CRenderTechnique::curr_active = nullptr;
+
 // --------------------------------
 void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) {
   if (elem == "vs") {
@@ -35,6 +37,7 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
     vs = Resources.get(res_name.c_str() )->as<CVertexShader>();
   }
   else if (elem == "ps") {
+    assert(!ps_disabled);
     auto fx = atts["fx"];       // "basic"
     auto main = atts["main"];   // "PS"
     auto res_name = main + "@" + fx + ".ps";
@@ -50,6 +53,7 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
   else if (elem == "tech") {
     uses_bones = atts.getBool("uses_bones", false);
     is_transparent = atts.getBool("is_transparent", false);
+    ps_disabled = atts.getBool( "ps_disabled", false );
   }
 }
 
@@ -58,10 +62,17 @@ void CRenderTechnique::destroy() {
   ps = nullptr;
 }
 
+const CVertexDeclaration* CRenderTechnique::getCurrentVertexDecl() {
+  assert(curr_active);
+  return curr_active->vs->getVertexDecl();
+}
+
 void CRenderTechnique::activate() const {
 	PROFILE_FUNCTION("render technique: activate");
+curr_active = this;
   assert(isValid());
-  ps->activate();
+  if( ps )
+    ps->activate();
   vs->activate();
 }
 

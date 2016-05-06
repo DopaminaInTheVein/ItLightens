@@ -12,6 +12,8 @@ IResource::eType getTypeOfResource<CMesh>() {
 	return IResource::MESH;
 }
 
+const CMesh* CMesh::curr_mesh = nullptr;
+
 //DEFINE_RESOURCE(CMesh, MESH, "Mesh");
 
 void CMesh::renderUIDebug() {
@@ -68,6 +70,9 @@ bool CMesh::create(
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd.CPUAccessFlags = 0;
 
+	 assert(initial_vertex_data);
+  AABB::CreateFromPoints(aabb, num_vertexs, (const VEC3*) initial_vertex_data, new_num_bytes_per_vertex);
+
 	D3D11_SUBRESOURCE_DATA InitData;
 	memset(&InitData, 0x00, sizeof(InitData));
 	InitData.pSysMem = initial_vertex_data;
@@ -121,14 +126,16 @@ void CMesh::activate() const {
 	// Set primitive topology
 	Render.ctx->IASetPrimitiveTopology(topology);
 
-	if (ib) {
-		Render.ctx->IASetIndexBuffer(ib
-			, (num_bytes_per_idx == 2)
-			? DXGI_FORMAT_R16_UINT
-			: DXGI_FORMAT_R32_UINT
-			, 0
-			);
-	}
+  if (ib) {
+    Render.ctx->IASetIndexBuffer( ib
+      , (num_bytes_per_idx == 2)
+      ? DXGI_FORMAT_R16_UINT
+      : DXGI_FORMAT_R32_UINT
+      , 0
+      );
+  }
+
+  curr_mesh = this;
 }
 
 void CMesh::render() const {

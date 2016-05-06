@@ -17,12 +17,13 @@ class CRenderTechnique : public IResource, public CXMLParser {
   int                  priority;
   bool                 uses_bones;
   bool                 is_transparent;
-
-  static CRenderTechnique* curr_active;
+  bool                 ps_disabled;
 
   void onStartElement(const std::string &elem, MKeyValue &atts) override;
 
 public:
+  static const CRenderTechnique* curr_active;
+  static const CVertexDeclaration* getCurrentVertexDecl();
 
   CRenderTechnique() : vs(nullptr), ps(nullptr), priority( 100 ) { }
   CRenderTechnique(const CRenderTechnique&) = delete;
@@ -40,7 +41,7 @@ public:
   }
 
   bool isValid() const {
-    return vs && ps;
+    return vs && ( ps || ps_disabled );
   }
 
   bool usesBones() const { return uses_bones; }

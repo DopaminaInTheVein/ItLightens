@@ -120,12 +120,15 @@
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
     <ClCompile Include="camera\camera.cpp" />
+    <ClCompile Include="components\comp_aabb.cpp" />
     <ClCompile Include="components\comp_camera.cpp" />
     <ClCompile Include="components\comp_charactercontroller.cpp" />
+    <ClCompile Include="components\comp_culling.cpp" />
     <ClCompile Include="components\comp_drone.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_guided_camera.cpp" />
     <ClCompile Include="components\comp_light_dir.cpp" />
+    <ClCompile Include="components\comp_light_dir_shadows.cpp" />
     <ClCompile Include="components\comp_light_fadable.cpp" />
     <ClCompile Include="components\comp_light_point.cpp" />
     <ClCompile Include="components\comp_physics.cpp" />
@@ -507,6 +510,7 @@
     <ClInclude Include="app_modules\render\module_render_deferred.h" />
     <ClInclude Include="app_modules\sound_manager\sound_manager.h" />
     <ClInclude Include="camera\camera.h" />
+    <ClInclude Include="components\comp_aabb.h" />
     <ClInclude Include="components\comp_box_destructor.h" />
     <ClInclude Include="components\comp_box_spawner.h" />
     <ClInclude Include="components\components.h" />
@@ -515,11 +519,13 @@
     <ClInclude Include="components\comp_camera.h" />
     <ClInclude Include="components\comp_charactercontroller.h" />
     <ClInclude Include="components\comp_controller_3rd_person.h" />
+    <ClInclude Include="components\comp_culling.h" />
     <ClInclude Include="components\comp_drone.h" />
     <ClInclude Include="components\comp_generator.h" />
     <ClInclude Include="components\comp_guided_camera.h" />
     <ClInclude Include="components\comp_life.h" />
     <ClInclude Include="components\comp_light_dir.h" />
+    <ClInclude Include="components\comp_light_dir_shadows.h" />
     <ClInclude Include="components\comp_light_fadable.h" />
     <ClInclude Include="components\comp_light_point.h" />
     <ClInclude Include="components\comp_msgs.h" />

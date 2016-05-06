@@ -575,6 +575,15 @@
     <ClCompile Include="components\comp_drone.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_aabb.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_culling.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_light_dir_shadows.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1411,6 +1420,15 @@
     </ClInclude>
     <ClInclude Include="imgui\stb_textedit.h">
       <Filter>app_modules\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_aabb.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_culling.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_light_dir_shadows.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

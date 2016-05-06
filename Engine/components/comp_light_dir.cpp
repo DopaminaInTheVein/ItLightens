@@ -20,13 +20,17 @@ void TCompLightDir::renderInMenu() {
   ImGui::ColorEdit4("Color", &color.x, true);
 }
 
-void TCompLightDir::uploadShaderCtes() {
-  CEntity* e = CHandle(this).getOwner();
+void TCompLightDir::uploadShaderCtes(CEntity* e) {
   TCompTransform* trans = e->get<TCompTransform>();
   shader_ctes_lights.LightWorldPos = VEC4(trans->getPosition());
   shader_ctes_lights.LightWorldFront = VEC4(trans->getFront());
   shader_ctes_lights.LightColor = this->color;
   shader_ctes_lights.LightViewProjection = this->getViewProjection();
+
+  MAT44 offset = MAT44::CreateTranslation(0.5f, 0.5f, 0.f);
+  MAT44 scale = MAT44::CreateScale(0.5f, -0.5f, 1.f);
+  MAT44 tmx = scale * offset;
+  shader_ctes_lights.LightViewProjectionOffset = shader_ctes_lights.LightViewProjection * tmx;
   shader_ctes_lights.LightOutRadius = this->getZFar();
   shader_ctes_lights.LightInRadius = this->getZNear();
   shader_ctes_lights.LightAspectRatio = this->getAspectRatio();
@@ -43,5 +47,5 @@ void TCompLightDir::update(float dt) {
 
 void TCompLightDir::activate() {
   activateWorldMatrix(getViewProjection().Invert());
-  uploadShaderCtes();
+  uploadShaderCtes(CHandle(this).getOwner());
 }

@@ -5,6 +5,7 @@
 #include "components/entity.h"
 #include "components/comp_camera.h"
 #include "components/comp_light_dir.h"
+#include "components/comp_light_dir_shadows.h"
 #include "components/comp_light_point.h"
 #include "components/comp_light_fadable.h"
 #include "render/render.h"
@@ -70,12 +71,16 @@ bool CRenderDeferredModule::start() {
 
   blur_tech = Resources.get("blur.tech")->as<CRenderTechnique>();
 
+  acc_light_directionals_shadows = Resources.get("deferred_lights_dir_shadows.tech")->as<CRenderTechnique>();
+  assert(acc_light_directionals_shadows && acc_light_directionals_shadows->isValid());
+
   //unit_sphere = Resources.get("meshes/unit_sphere.mesh")->as<CMesh>();
   unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
   assert(unit_sphere && unit_sphere->isValid());
   unit_cube = Resources.get("meshes/unit_frustum.mesh")->as<CMesh>();
   assert(unit_cube && unit_cube->isValid());
 
+  Resources.get("textures/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE );
   shader_ctes_globals.world_time = 0.f;
   shader_ctes_globals.xres = xres;
   shader_ctes_globals.yres = yres;
@@ -99,7 +104,7 @@ void CRenderDeferredModule::renderGBuffer() {
   CTraceScoped scope("GBuffer");
   static CCamera camera;
 
-  CHandle h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
+  h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
   if (h_camera.isValid()) {
     CEntity* e = h_camera;
     TCompCamera* comp_cam = e->get<TCompCamera>();
@@ -126,7 +131,7 @@ void CRenderDeferredModule::renderGBuffer() {
   };
   // Y el ZBuffer del backbuffer principal
   Render.ctx->OMSetRenderTargets(4, rts, Render.depth_stencil_view);
-
+  rt_albedos->activateViewport();
   // Clear de los render targets y el ZBuffer
   rt_albedos->clear(VEC4(1, 0, 0, 1));
   rt_normals->clear(VEC4(0, 1, 0, 1));
@@ -143,7 +148,7 @@ void CRenderDeferredModule::renderGBuffer() {
   activateWorldMatrix(MAT44::Identity);
 
   // Mandar a pintar los 'solidos'
-  RenderManager.renderAll(CRenderManager::SOLID_OBJS);
+  RenderManager.renderAll(h_camera, CRenderManager::SOLID_OBJS);
 
   activateZ(ZCFG_DEFAULT);
 }
@@ -162,13 +167,6 @@ void CRenderDeferredModule::addPointLights() {
 
   // Activar la mesh unit_sphere
   getHandleManager<TCompLightPoint>()->each([mesh](TCompLightPoint* c) {
-    // Subir todo lo que necesite la luz para pintarse en el acc light buffer
-    // la world para la mesh y las constantes en el pixel shader
-    c->activate();
-    // Pintar la mesh que hemos activado hace un momento
-    mesh->render();
-  });
-  getHandleManager<TCompLightFadable>()->each([mesh](TCompLightFadable* c) {
     // Subir todo lo que necesite la luz para pintarse en el acc light buffer
     // la world para la mesh y las constantes en el pixel shader
     c->activate();
@@ -197,6 +195,30 @@ void CRenderDeferredModule::addDirectionalLights() {
     // Pintar la mesh que hemos activado hace un momento
     mesh->render();
   });
+}
+
+// ----------------------------------------------
+void CRenderDeferredModule::addDirectionalLightsShadows() {
+  PROFILE_FUNCTION("addDirectionalLightsShadows");
+  CTraceScoped scope("addDirectionalLightsShadows");
+
+  // Activar la tech acc_light_directionals_shadows.tech
+  acc_light_directionals_shadows->activate();
+
+  // Activar la mesh solo UNA vez
+  const CMesh* mesh = unit_cube;
+  mesh->activate();
+
+  // Activar la mesh unit_sphere
+  getHandleManager<TCompLightDirShadows>()->each([mesh](TCompLightDirShadows* c) {
+    // Subir todo lo que necesite la luz para pintarse en el acc light buffer
+    // la world para la mesh y las constantes en el pixel shader
+    c->activate();
+    // Pintar la mesh que hemos activado hace un momento
+    mesh->render();
+  });
+
+  CTexture::deactivate( TEXTURE_SLOT_SHADOWMAP );
 }
 
 void CRenderDeferredModule::FinalRender() {
@@ -285,6 +307,8 @@ void CRenderDeferredModule::renderAccLight() {
   //activateRS(RSCFG_INVERT_CULLING);
   addDirectionalLights();
 
+  addDirectionalLightsShadows();
+
   activateRS(RSCFG_DEFAULT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
@@ -292,6 +316,15 @@ void CRenderDeferredModule::renderAccLight() {
   CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
   CTexture::deactivate(TEXTURE_SLOT_NORMALS);
   CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
+}
+
+// ----------------------------------------------
+void CRenderDeferredModule::generateShadowMaps() {
+  PROFILE_FUNCTION("generateShadowMaps");
+  CTraceScoped scope("generateShadowMaps");
+  
+  // Llamar al metodo generateShadowMap para todas los components de tipo dir_shadows
+  getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::generateShadowMap);
 }
 
 void CRenderDeferredModule::DepthTexture() {
@@ -432,6 +465,8 @@ void CRenderDeferredModule::render() {
   rt_black->clear(VEC4(0, 0, 0, 1));
   rt_data->clear(VEC4(0, 0, 0, 0));
 
+  generateShadowMaps();
+
   shader_ctes_globals.uploadToGPU();
   renderGBuffer();
 
@@ -463,7 +498,7 @@ void CRenderDeferredModule::render() {
   activateZ(ZCFG_ALL_DISABLED);
   drawFullScreen(rt_final);
   activateZ(ZCFG_DEFAULT);
-
+  
   if (GameController->GetFxPolarize()) {
     RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
     RenderPolarizedPP(PLUS, VEC4(0.3f, 0.3f, 1.0f, 1.0f));
@@ -472,13 +507,15 @@ void CRenderDeferredModule::render() {
 
   if (GameController->GetFxGlow()) GlowEdges();
 
+  
+
   CTexture::deactivate(45);
   CTexture::deactivate(TEXTURE_SLOT_NORMALS);
   CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
-
+  
   Render.activateBackBuffer();
   activateZ(ZCFG_DEFAULT);
 
   // Mandar a pintar los 'transparentes'
-  RenderManager.renderAll(CRenderManager::TRANSPARENT_OBJS);
+  RenderManager.renderAll(h_camera, CRenderManager::TRANSPARENT_OBJS);
 }
