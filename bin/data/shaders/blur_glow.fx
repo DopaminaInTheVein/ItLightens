@@ -62,50 +62,51 @@ float dc = txDepth.Sample(samLinear, iTex0).r;
 	
 	float BlurWeights[13] =
 	{
-		0.002216,
-	   0.008764,
+		0.020216,
+	   0.028764,
 	   0.026995,
 	   0.064759,
-	   0.120985,
-	   0.176033,
-	   0.199471,
-	   0.176033,
-	   0.120985,
+	   0.150985,
+	   0.196033,
+	   0.239471,
+	   0.196033,
+	   0.150985,
 	   0.064759,
 	   0.026995,
-	   0.008764,
-	   0.002216,
+	   0.028764,
+	   0.020216,
 	};
 
     
 
     float4 color = {0, 0, 0, 0};
 	
-	//float3 E = normalize(CameraWorldPos.xyz - iWorldPos);
-	//float3 E = normalize(float3(0,0,0) - iWorldPos);
+	//float3 E = normalize(CameraWorldPos.xyz - Pos);
+	//float3 E = normalize(float3(0,0,0) - Pos);
 	
-    float2 blur;
-    blur.y = iTex0.y;
+    float2 blur = iTex0;
 	
 	
 	//return float4(,1);
-	//return float4(iWorldPos,1);
+	//return float4(Pos,1);
 	//return float4(E,1);
 	
-	color = txDiffuse.Sample(samLinear, iTex0.xy) ;
-	return color;
-	
+	float4 color_base = txDiffuse.Sample(samLinear, iTex0.xy) ;
+	color = color_base;
+	//return color;
+	if(direction != 1 && direction != 2){
+		return color_base;
+	}
 	//pixelWidth = strenght_polarize/(xres)/dc;
-	float2 pixelWidth = float2(1/xres, 1/yres);
+	float2 pixelWidth = float2(1.0f/xres, 1.0f/yres);
 	//pixelWidth = pixelWidth/dc;
 	
-	float sinw = 1.0f;
-	float offset_c = sinw*sinw/2;
-	offset_c = 1.0f;
+
+	float offset_c = 1.0f;
 
     for (int i = 0; i < 13; i++) 
     {
-        blur.x = iTex0.x + Pixels[i] * pixelWidth*offset_c;
+        blur.x = iTex0.x + Pixels[i] * pixelWidth.x*offset_c;
         color += txDiffuse.Sample(samLinear, blur.xy) * BlurWeights[i];
     }  
 	
@@ -113,19 +114,25 @@ float dc = txDepth.Sample(samLinear, iTex0).r;
 	
 	for (int i = 0; i < 13; i++)
 	{
-		blur.y = iTex0.y + Pixels[i] * pixelWidth*offset_c;
+		blur.y = iTex0.y + Pixels[i] * pixelWidth.y*offset_c;
 		color += txDiffuse.Sample(samLinear, blur.xy) * BlurWeights[i];
 	}
 	
-	color.w = color.w/2.0f;
-	
-	//color *= float4(1.0f,0.3f,0.3f,1.0f);
-	
-	if (color.r < 0.3 && color.g < 0.3 && color.b < 0.3)
-		color.w = 0;
+	color = color;
+	if(color.w > 1.0f)
+		color.w = 1.0f;
 		
-	//color.w = color.w/1.5f;
-		
+	//update color intensit y with player life
+	color.w = color.w*0.2f+color.w*0.8f*(strenght_polarize/150.0f);
+	
+	if(direction == 2){
+		if((color.b - color.r) < 0.0f)
+			color = color_base;
+	}else if(direction == 1){
+		if((color.r - color.b) < 0.0f)
+			color = color_base;
+	}
+	
     return color*offset_c;
 }
 

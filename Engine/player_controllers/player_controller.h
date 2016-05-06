@@ -201,6 +201,7 @@ public:
 
 	//Gets
 	string GetPolarity();
+	int GetPolarityInt() const { return pol_state; }
 
 	//Render In Menu
 	void renderInMenu();

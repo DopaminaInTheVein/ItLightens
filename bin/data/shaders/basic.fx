@@ -122,7 +122,7 @@ void PSAddAmbient(float4 Pos : SV_POSITION
 	
 	output = diff*0.2f + lights*0.8f;
 	output.a = diff.a;
-	//output = lights;
+	output = lights;
 	output.rgb += selfIlum.rgb;
 }
 

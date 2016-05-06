@@ -20,6 +20,8 @@
 #include "components\comp_transform.h"
 #include "components\comp_render_static_mesh.h"
 #include "render\static_mesh.h"
+#include "components\comp_life.h"
+#include "player_controllers\player_controller.h"
 
 // ------------------------------------------------------
 bool CRenderDeferredModule::start() {
@@ -513,7 +515,22 @@ void CRenderDeferredModule::GlowEdges() {
 
 
 		auto tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
+		activateBlend(BLENDCFG_COMBINATIVE);
 		drawFullScreen(rt_data2, tech);
+
+		CEntity *e = tags_manager.getFirstHavingTag("player");
+		TCompLife * life = e->get<TCompLife>();
+		if(life)
+			shader_ctes_globals.strenght_polarize = life->getCurrent();
+		else {
+			shader_ctes_globals.strenght_polarize = 100.0f;
+		}
+		shader_ctes_globals.uploadToGPU();
+
+
+		player_controller *player = e->get<player_controller>();
+		shader_ctes_object.direction = player->GetPolarityInt();
+		shader_ctes_object.uploadToGPU();
 
 
 		blurEffectLights(false);
@@ -521,6 +538,7 @@ void CRenderDeferredModule::GlowEdges() {
 		tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
 
 		activateBlend(BLENDCFG_COMBINATIVE);
+		//activateBlend(BLENDCFG_ADDITIVE);
 		Render.activateBackBuffer();				//render on screen
 		activateZ(ZCFG_ALL_DISABLED);
 		drawFullScreen(rt_selfIlum_blurred, tech);
@@ -585,7 +603,7 @@ void CRenderDeferredModule::ShootGuardRender() {
 		CTraceScoped scope("add laser");
 
 		Render.activateBackBuffer();
-		//rt_temp->clear(VEC4(0,0,0,0));
+		rt_data2->clear(VEC4(0,0,0,0));
 		ID3D11RenderTargetView* rts[3] = {
 			rt_data2->getRenderTargetView()
 			,	nullptr   // remove the other rt's from the pipeline

@@ -112,8 +112,9 @@ void PSGBuffer(
   o_wpos = float4(iWorldPos, 1.);
 
   o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
-  if (!(o_selfIlum.r == 0 && o_selfIlum.g == 0 && o_selfIlum.b == 0))
-	  o_selfIlum *= float4(1, 0, 0, 1);
+  float limit = 0.1f;
+  if ((o_selfIlum.r < limit && o_selfIlum.g < limit && o_selfIlum.b < limit))
+	  o_selfIlum *= float4(0, 0, 0, 0);
 }
 
 //--------------------------------------------------------------------------------------
