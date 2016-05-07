@@ -176,7 +176,7 @@ void CPhysxManager::update(float dt)
 		m_pScene->simulate(t_to_update);
 		m_pScene->fetchResults(true);
 
-		//t_to_update = 0;
+		t_to_update = 0;
 
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
 		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
