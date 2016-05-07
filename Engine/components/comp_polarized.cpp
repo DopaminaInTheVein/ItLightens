@@ -46,7 +46,7 @@ void TCompPolarized::update(float elapsed)
 				force.deltaPos = origin - player_pos;
 			}
 			
-			if (dist_effect_squared > force.distance) {
+			if (dist_effect_squared_fixed > force.distance) {
 				if (!send) {
 					send = true;
 					sendMessagePlayer(msg_in);
@@ -83,7 +83,7 @@ void TCompPolarized::update(float elapsed)
 
 
 				float dist = squaredDist(player_pos, origin);
-				if (dist_effect_squared > dist) {
+				if (dist_effect_squared_free > dist) {
 
 					VEC3 direction = player_pos - origin;
 					TCompPhysics *p = e->get<TCompPhysics>();
