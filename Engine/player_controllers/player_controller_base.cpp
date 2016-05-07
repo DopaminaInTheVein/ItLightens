@@ -118,7 +118,7 @@ void CPlayerBase::UpdateMoves()
 		player_curr_speed = 0.0f;
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
-
+	
 	SetCharacterController();
 	cc->AddMovement(direction, player_curr_speed*getDeltaTime());
 	UpdateMovingWithOther();
@@ -224,7 +224,6 @@ void CPlayerBase::Idle()
 		UpdateJumpState();
 		if (UpdateMovDirection()) {
 			ChangeState("moving");
-			ChangeCommonState("moving");
 		}
 	}
 }
