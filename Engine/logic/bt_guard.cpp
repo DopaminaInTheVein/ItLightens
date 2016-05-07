@@ -370,7 +370,9 @@ int bt_guard::actionAbsorb() {
 	PROFILE_FUNCTION("guard: absorb");
 	if (!myParent.isValid()) return false;
 	if (playerNear() && playerVisible()) {
-		goForward(-2.0f*SPEED_WALK);
+		animController.setState(AST_SHOOT_BACK);
+		goForward(-1.0f*SPEED_WALK);
+		shootToPlayer();
 		return STAY;
 	}
 
@@ -767,7 +769,7 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 		stunned = true;
 		____TIMER_RESET_(timerStunt);
 		setCurrent(NULL);
-		//animController.setState(AST_STUNNED);
+		animController.setState(AST_STUNNED);
 
 		//End Damage Message
 		sendMsgDmg = shooting = false;

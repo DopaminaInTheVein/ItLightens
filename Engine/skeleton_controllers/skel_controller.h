@@ -11,7 +11,9 @@
 #define AST_RUN		"run"
 #define AST_PREP_SHOOT "attackprepare"
 #define AST_SHOOT	"attack"
+#define AST_SHOOT_BACK	"attackgoback"
 #define AST_TURN	"turnfeetonly"
+#define AST_STUNNED "stun"
 // ------------------- //
 
 class SkelController {
