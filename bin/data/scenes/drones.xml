@@ -1,0 +1,264 @@
+<entities>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="21.6"
+   out_radius="69.688"
+/>
+<name
+   name="luz_izquierda"
+/>
+<transform
+   pos="9.96491 23.3405 27.2393"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="21.6"
+   out_radius="69.688"
+/>
+<name
+   name="luz_derecha"
+/>
+<transform
+   pos="9.96491 23.3405 -23.4093"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="16.0127"
+   out_radius="34.0"
+/>
+<name
+   name="Omni005"
+/>
+<transform
+   pos="-31.8362 -18.8937 0.470277"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="Omni004"
+/>
+<transform
+   pos="51.4312 23.7925 19.0538"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="Omni003"
+/>
+<transform
+   pos="-19.5386 23.7925 19.0538"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="Omni002"
+/>
+<transform
+   pos="-19.5386 23.7925 -6.17871"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="16.0127"
+   out_radius="34.0"
+/>
+<name
+   name="Omni001"
+/>
+<transform
+   pos="-19.5386 -8.94751 0.470276"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="suelo_abajo"
+/>
+<transform
+   pos="-5.37859 -23.9436 -0.0172624"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/suelo_abajo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags="camera_main"
+/>
+<camera
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"
+/>
+<controller_3rd_person/>
+<name
+   name="camController_1"
+/>
+<transform
+   pos="34.4563 -14.5742 -0.283386"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="25.6884 -19.0189 6.08694"
+   wpt0_wait="2"
+   wpt1_pos="37.1198 -19.0054 6.08694"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
+<name
+   name="DroneMinus_004"
+/>
+<transform
+   pos="31.6531 -19.3262 6.03405"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.0"
+/>
+<generator/>
+<name
+   name="trigger_1"
+/>
+<transform
+   pos="33.8007 -22.5807 21.62"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="3"
+   kpt0_type="seek"
+   kpt0_pos="-36.0955 -23.2517 17.2159"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-35.9552 -23.2517 -0.570453"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="-20.5864 -23.2417 -5.08278"
+   kpt2_wait="2"
+   jurisdiction="-35.8414 -23.7288 13.2654"
+   jurRadius="41.45"
+/>
+<name
+   name="guard_1"
+/>
+<transform
+   pos="-35.8414 -23.7288 13.2654"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="player"
+/>
+<player/>
+<life
+   points="10"
+/>
+<name
+   name="player_1"
+/>
+<transform
+   pos="34.3066 -21.3743 -0.426925"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/player/player.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="0.7"
+/>
+</entity>
+</entities>

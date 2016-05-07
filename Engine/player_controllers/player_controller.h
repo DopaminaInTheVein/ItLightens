@@ -75,8 +75,8 @@ class player_controller : public CPlayerBase {
 	//CHandle					pose_jump;
 
 	//Polarity Constants
-	float	POL_RCLOSE					= 0.5f;
-	float	POL_RFAR					= 9.0f; // 5 Meters arround
+	float	POL_RCLOSE					= 0.2f;
+	float	POL_RFAR					= 1.0f; // 5 Meters arround
 	float	POL_HORIZONTALITY			= 1.f;
 	float	POL_INTENSITY				= 1000.f;
 	float	POL_REPULSION				= .5f;

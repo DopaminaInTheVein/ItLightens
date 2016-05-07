@@ -128,7 +128,7 @@ void CDebug::DrawLine(VEC3 org, VEC3 end, VEC3 color)
 	new_line.end = end;
 	new_line.color = color;
 
-	lines.push_back(new_line);
+	//lines.push_back(new_line);
 }
 
 void CDebug::DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color)

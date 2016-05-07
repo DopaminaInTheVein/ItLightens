@@ -523,9 +523,18 @@ void player_controller::polarityMoveResistance(const PolarityForce& force) {
 					movementAtraction.x = -movementPlayer.x * POL_RESISTANCE;
 					movementApplied = true;
 				}
+			}
+			if (movementPlayer.z != 0) {
 				if (std::signbit(movementPlayer.z) != std::signbit(force.deltaPos.z)) {
 					//movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE * nearFactor;
 					movementAtraction.z = -movementPlayer.z * POL_RESISTANCE;
+					movementApplied = true;
+				}
+			}
+			if (movementPlayer.y != 0) {
+				if (std::signbit(movementPlayer.y) != std::signbit(force.deltaPos.y)) {
+					//movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE * nearFactor;
+					movementAtraction.y = -movementPlayer.y * POL_RESISTANCE;
 					movementApplied = true;
 				}
 			}
