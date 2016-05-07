@@ -419,11 +419,11 @@ void player_controller::RecalcAttractions()
 	cc->AddSpeed(final_forces * getDeltaTime());
 
 	//Anular gravedad
-	if (nearestForce.distance < POL_RCLOSE) {
-		VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
-		cc->AddSpeed(antigravity*getDeltaTime());
-		Debug->DrawLine(cc->GetPosition(), cc->GetPosition() + VEC3(0, 1, 0), VEC3(1, 0, 1));
+	VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
+	if (nearestForce.distance > POL_RCLOSE) {
+		antigravity.y = clamp(10.f - pow(nearestForce.distance - POL_RCLOSE, 2), 0.f, 10.f);
 	}
+	cc->AddSpeed(antigravity*getDeltaTime());
 
 	lastForces = final_forces;
 }
