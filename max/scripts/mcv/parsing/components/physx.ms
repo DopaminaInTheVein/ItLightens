@@ -46,6 +46,16 @@ fn parseRigidBodyDefault parent = (
 	)
 )
 
+fn parseRigidBodySpecial = (
+	if ((getUserProp _parsingObject "typeObject") as string) == "Drone" then (
+		local xml = XML_PARSING.addChild "rigidbody"
+		xml.addAttr "type_collision" "dynamic"
+		xml.addAttr "type_shape" "drone"
+		return true
+	)
+	return false
+)
+
 fn parseRigidBody parent collider = (
 	local xml = XML_PARSING.addChild "rigidbody"
 	
@@ -106,7 +116,7 @@ fn _parse_physx = (
 		local collider = findHelper "Collider"
 		if collider != undefined then (
 			parseRigidBody XML_PARSING collider
-		) else (
+		) else if not (parseRigidBodySpecial() ) then (
 			parseRigidBodyDefault XML_PARSING
 		)
 	)
