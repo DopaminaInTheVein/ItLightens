@@ -275,7 +275,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/columnas_balcon_cuadrado_derecho.static_mesh"
+   name="static_meshes/columnas_balcon_cuadrado_centro.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -294,7 +294,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/columnas_balcon_cuadrado_derecho.static_mesh"
+   name="static_meshes/columnas_balcon_cuadrado_izq.static_mesh"
 />
 <rigidbody
    type_collision="static"
