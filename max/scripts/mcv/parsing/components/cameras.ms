@@ -43,7 +43,8 @@ fn _parse_rail_camera = (
 				atrName = "rot" + (i2 as string)
 			
 				-- Get Rotation
-				rot = c.rotation
+				mcv_tmx = matrixMax2MCV c.transform
+				rot = mcv_tmx.rotation
 				atrValue = getAsXmlValues #(-rot.x, -rot.y, -rot.z, rot.w)
 				xml.addAttr atrName atrValue
 				i2 += 1
