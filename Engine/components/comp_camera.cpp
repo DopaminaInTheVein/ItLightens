@@ -12,6 +12,7 @@
 #include "entity.h"
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
+#include "app_modules/logic_manager/logic_manager.h"
 #include "constants/ctes_object.h"
 #include <math.h>
 
@@ -113,20 +114,21 @@ void TCompCamera::update(float dt) {
     }
 
     if (lastguidedCamPoint >= gc->getTotalPoints() || io->keys['Q'].becomesPressed()) {
-      guidedCam.destroy();
-      CHandle t = tags_manager.getFirstHavingTag("player");
-      CEntity * target_e = t;
-      // Set the player in the 3rdPersonController
-      if (e_owner && t.isValid()) {
-        TMsgSetTarget msg;
-        msg.target = t;
-        msg.who = PLAYER;
-        e_owner->sendMsg(msg);		//set camera
+		logic_manager->throwUserEvent("triggerGuardFormation();", "");
+		guidedCam.destroy();
+		CHandle t = tags_manager.getFirstHavingTag("player");
+		CEntity * target_e = t;
+		// Set the player in the 3rdPersonController
+		if (e_owner && t.isValid()) {
+			TMsgSetTarget msg;
+			msg.target = t;
+			msg.who = PLAYER;
+			e_owner->sendMsg(msg);		//set camera
 
-        TMsgSetCamera msg_camera;
-        msg_camera.camera = owner;
-        target_e->sendMsg(msg_camera);	//set target camera
-      }
+			TMsgSetCamera msg_camera;
+			msg_camera.camera = owner;
+			target_e->sendMsg(msg_camera);	//set target camera
+		 }
     }
 	else if (gc->getDefaultDirsEnabled()) {
 		this->smoothLookAt(tmx->getPosition(), nextPoint, getUpAux(), 0.5f);

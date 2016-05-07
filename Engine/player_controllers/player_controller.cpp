@@ -262,6 +262,13 @@ void player_controller::myUpdate() {
 		UpdatePossession();
 	}
 	animController.update();
+
+	if (cc->OnGround() && state != "jumping") {
+		if (player_curr_speed >= player_max_speed - 0.1f)
+			animController.setState(AST_RUN);
+		else
+			animController.setState(AST_MOVE);
+	}
 }
 
 void player_controller::Idle() {
@@ -623,13 +630,9 @@ void player_controller::UpdateMoves()
 	//}
 	//else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
-	if (player_curr_speed >= player_max_speed - 0.1f)
-		ChangeCommonState("running");
-	else
-		ChangeCommonState("moving");
-
-	if (cc->OnGround())
+	if (cc->OnGround()) {
 		cc->AddMovement(direction*player_curr_speed*getDeltaTime());
+	}
 	else {
 		cc->AddMovement(direction*player_curr_speed*getDeltaTime() / 2);
 	}
