@@ -59,12 +59,11 @@ fn _parseObject parent = (
 		-- Añadimos Entity
 		XML_PARSING = parent.addChild "entity"
 		parseId()
+		--Parseamos Tags
+		tags = _descriptorObject.getTags()
+		parseTags XML_PARSING tags
 		
-		if not parseMonoComponent() then (
-			--Parseamos Tags
-			tags = _descriptorObject.getTags()
-			parseTags XML_PARSING tags
-			
+		if not parseMonoComponent() then (			
 			--Parseamos components
 			components = _descriptorObject.getComponents()
 			for c in components do (

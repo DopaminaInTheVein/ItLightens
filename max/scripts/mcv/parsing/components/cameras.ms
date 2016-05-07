@@ -14,7 +14,7 @@ fn _parse_rail_camera = (
 		)
 		xml.addAttr "velocity" (vel as string)
 		xml.addAttr "points_size" ((numSegments _parsingObject 1) as string)
-		for i = 1 to ((numSegments $ 1)+1) do (
+		for i = 1 to ((numSegments _parsingObject 1)+1) do (
 			xml.addAttr ("wtp" + (i-1) as string) (((getKnotPoint _parsingObject 1 i).x as string)+" "+((getKnotPoint _parsingObject 1 i).z as string)+" "+((getKnotPoint _parsingObject 1 i).y as string))
 		)
 		local i2 = 0

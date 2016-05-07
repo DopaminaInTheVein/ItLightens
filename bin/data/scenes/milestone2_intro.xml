@@ -1,5 +1,8 @@
 <entities>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="21.6"
@@ -15,6 +18,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="21.6"
@@ -30,6 +36,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="16.0127"
@@ -45,6 +54,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="8.8"
@@ -60,6 +72,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="8.8"
@@ -75,6 +90,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="8.8"
@@ -90,6 +108,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="16.0127"
@@ -969,7 +990,8 @@
    name="static_meshes/drone.static_mesh"
 />
 <rigidbody
-   type_collision="static"
+   type_collision="dynamic"
+   type_shape="drone"
 />
 </entity>
 <entity>
@@ -1001,7 +1023,8 @@
    name="static_meshes/drone.static_mesh"
 />
 <rigidbody
-   type_collision="static"
+   type_collision="dynamic"
+   type_shape="drone"
 />
 </entity>
 <entity>
@@ -1033,7 +1056,8 @@
    name="static_meshes/drone.static_mesh"
 />
 <rigidbody
-   type_collision="static"
+   type_collision="dynamic"
+   type_shape="drone"
 />
 </entity>
 <entity>
@@ -1065,7 +1089,8 @@
    name="static_meshes/drone.static_mesh"
 />
 <rigidbody
-   type_collision="static"
+   type_collision="dynamic"
+   type_shape="drone"
 />
 </entity>
 <entity>
@@ -1097,7 +1122,8 @@
    name="static_meshes/drone.static_mesh"
 />
 <rigidbody
-   type_collision="static"
+   type_collision="dynamic"
+   type_shape="drone"
 />
 </entity>
 <entity>
@@ -1129,7 +1155,8 @@
    name="static_meshes/drone.static_mesh"
 />
 <rigidbody
-   type_collision="static"
+   type_collision="dynamic"
+   type_shape="drone"
 />
 </entity>
 <entity>
@@ -1191,7 +1218,7 @@
    jurisdiction="37.5426 -23.6548 -3.6815"
    jurRadius="100.0"
    formation_point="-6.33016 -23.7198 4.07596"
-   formation_dir="-6.33016 -23.7198 4.07596"
+   formation_dir="-19.3531 -22.7915 -11.9615"
 />
 <name
    name="guard_2"
@@ -1236,7 +1263,7 @@
    jurisdiction="37.5426 -23.6957 -7.79579"
    jurRadius="100.0"
    formation_point="-6.33016 -23.7607 -20.6866"
-   formation_dir="-6.33016 -23.7607 -20.6866"
+   formation_dir="-19.3531 -22.8325 -11.9615"
 />
 <name
    name="guard_003"
@@ -1281,7 +1308,7 @@
    jurisdiction="37.5426 -23.7578 -11.7541"
    jurRadius="100.0"
    formation_point="24.5965 -24.0712 -20.6866"
-   formation_dir="24.5965 -24.0712 -20.6866"
+   formation_dir="-19.3531 -22.8945 -11.9615"
 />
 <name
    name="guard_004"
@@ -1326,7 +1353,7 @@
    jurisdiction="37.5426 -23.6331 -15.9564"
    jurRadius="100.0"
    formation_point="24.5965 -23.9289 4.07596"
-   formation_dir="24.5965 -23.9289 4.07596"
+   formation_dir="-19.3531 -22.7699 -11.9615"
 />
 <name
    name="guard_005"
@@ -1375,6 +1402,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags="guided_camera"
+/>
 <guided_camera
    velocity="5.0"
    points_size="6"
