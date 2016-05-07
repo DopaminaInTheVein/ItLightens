@@ -62,7 +62,9 @@ void TCompCamera::update(float dt) {
   if (guidedCamE) {
     TCompGuidedCamera * gc = guidedCamE->get<TCompGuidedCamera>();
     VEC3 goTo = gc->getPointPosition(lastguidedCamPoint);
-	VEC3 nextPoint = gc->getPointPosition((lastguidedCamPoint + 1) % gc->getTotalPoints());
+
+	int next_point_index = (lastguidedCamPoint == gc->getTotalPoints() - 1 ? lastguidedCamPoint : (lastguidedCamPoint + 1) % gc->getTotalPoints());
+	VEC3 nextPoint = gc->getPointPosition(next_point_index);
     /*
     float yaw, pitch;
     tmx->getAngles(&yaw, &pitch);
@@ -127,7 +129,7 @@ void TCompCamera::update(float dt) {
       }
     }
 	else if (gc->getDefaultDirsEnabled()) {
-		this->smoothLookAt(tmx->getPosition(), nextPoint, getUpAux());
+		this->smoothLookAt(tmx->getPosition(), nextPoint, getUpAux(), 0.5f);
 	}
     else if (lastguidedCamPoint > 0) {
       VEC3 campos = tmx->getPosition();

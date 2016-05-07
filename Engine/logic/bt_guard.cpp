@@ -767,6 +767,7 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 		stunned = true;
 		____TIMER_RESET_(timerStunt);
 		setCurrent(NULL);
+		//animController.setState(AST_STUNNED);
 
 		//End Damage Message
 		sendMsgDmg = shooting = false;

@@ -44,8 +44,8 @@ void CCamera::applyQuat(CQuaternion quat, VEC3 p, VEC3 s) {
   updateViewProjection();
 }
 
-void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
-  float drag = getDeltaTime() * 10;
+void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux, float smooth_factor) {
+  float drag = getDeltaTime() * smooth_factor;
   float drag_i = 1 - drag;
 
   position = new_position*drag + position*drag_i;
