@@ -1,5 +1,8 @@
 <entities>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="21.6"
@@ -15,6 +18,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="21.6"
@@ -30,6 +36,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="16.0127"
@@ -45,6 +54,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="8.8"
@@ -60,6 +72,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="8.8"
@@ -75,6 +90,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="8.8"
@@ -90,6 +108,9 @@
 />
 </entity>
 <entity>
+<tags
+   tags=""
+/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="16.0127"
@@ -112,7 +133,7 @@
    name="andamio"
 />
 <transform
-   pos="0.347425 -24.0436 -22.8485"
+   pos="0.432569 -24.0436 -29.6796"
    quat="0 -0.682264 0 0.731106"
    scale="1.0"
 />
@@ -131,7 +152,7 @@
    name="balcon_redondo_pequeno"
 />
 <transform
-   pos="-15.8538 -2.53427 21.7714"
+   pos="-15.7686 -2.53427 14.9404"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -150,7 +171,7 @@
    name="barrotes_balcon_arriba"
 />
 <transform
-   pos="-35.7656 4.72012 -0.742544"
+   pos="-35.6805 4.72012 -7.57358"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -169,7 +190,7 @@
    name="barrotes_balcon_cuadrado_derecho"
 />
 <transform
-   pos="10.1268 -11.1267 -22.4202"
+   pos="10.2119 -11.1267 -29.2513"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -188,7 +209,7 @@
    name="barrotes_balcon_cuadrado_izquierdo"
 />
 <transform
-   pos="10.1842 -11.1267 22.1297"
+   pos="10.2693 -11.1267 15.2987"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -207,7 +228,7 @@
    name="barrotes_balcon_redondo_pequeno"
 />
 <transform
-   pos="-15.8396 -0.972487 21.4911"
+   pos="-15.7545 -0.972488 14.6601"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -226,7 +247,7 @@
    name="columnas_abajo"
 />
 <transform
-   pos="0.268234 -18.8261 -0.14562"
+   pos="0.353378 -18.8261 -6.97666"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -245,7 +266,7 @@
    name="columnas_balcon_cuadrado_derecho"
 />
 <transform
-   pos="10.5771 -18.0684 -22.1019"
+   pos="10.6622 -18.0684 -28.9329"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -264,7 +285,7 @@
    name="columnas_balcon_izquierdo_cuadrado"
 />
 <transform
-   pos="9.73386 -18.0684 21.8114"
+   pos="9.819 -18.0684 14.9804"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -283,9 +304,9 @@
    name="lamparas_derecha"
 />
 <transform
-   pos="20.9162 -18.9816 24.463"
+   pos="21.0014 -18.9816 17.6319"
    quat="0 0.999981 0 0"
-   scale="1.0"
+   scale="0.00875608"
 />
 <render_static_mesh
    name="static_meshes/lamparas_derecha.static_mesh"
@@ -302,7 +323,7 @@
    name="LOW_tURBINE_vERTICAL_GEN"
 />
 <transform
-   pos="-22.632 -23.6427 13.8243"
+   pos="-22.5469 -23.6427 6.99324"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -321,7 +342,7 @@
    name="marco_balcon_cuadrado_izquierdo"
 />
 <transform
-   pos="10.1765 -10.1247 25.1508"
+   pos="10.2616 -10.1247 18.3197"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -340,7 +361,7 @@
    name="marco_balcon_pequeno_arriba"
 />
 <transform
-   pos="-15.7973 0.0587932 25.1401"
+   pos="-15.7122 0.0587929 18.309"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -359,7 +380,7 @@
    name="marco_balcon_superior_redondo"
 />
 <transform
-   pos="-41.1914 6.35461 -1.22008"
+   pos="-41.1063 6.35461 -8.05112"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -378,7 +399,7 @@
    name="marco_puerta_abajo"
 />
 <transform
-   pos="41.3148 -21.2451 -0.317189"
+   pos="41.3999 -21.2451 -7.14823"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -397,7 +418,7 @@
    name="marco_puerta_balcon_cuadrado_drecho"
 />
 <transform
-   pos="10.1345 -10.1247 -25.1972"
+   pos="10.2196 -10.1247 -32.0282"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -416,7 +437,7 @@
    name="nivel"
 />
 <transform
-   pos="176.565 137.731 -692.02"
+   pos="176.65 137.731 -698.851"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -435,7 +456,7 @@
    name="pared_balcon_cuadrado_izquierdo"
 />
 <transform
-   pos="10.1805 -10.5613 25.3085"
+   pos="10.2657 -10.5613 18.4774"
    quat="0 1.0 0 0"
    scale="1.0"
 />
@@ -454,7 +475,7 @@
    name="pared_balcon_redondo_arriba"
 />
 <transform
-   pos="-15.8188 -0.0631855 25.3457"
+   pos="-15.7336 -0.0631858 18.5146"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -473,7 +494,7 @@
    name="paredes_balcon_cuadrado_derecha"
 />
 <transform
-   pos="10.1304 -10.5613 -25.3549"
+   pos="10.2155 -10.5613 -32.186"
    quat="0 1.0 0 0"
    scale="1.0"
 />
@@ -492,7 +513,7 @@
    name="paredes_balcon_redondo_grande"
 />
 <transform
-   pos="-41.3841 5.72498 -1.21404"
+   pos="-41.2989 5.72498 -8.04508"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -511,7 +532,7 @@
    name="paredes_nivel_bajo"
 />
 <transform
-   pos="0.212921 -21.5547 -0.200612"
+   pos="0.298065 -21.5547 -7.03165"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -530,7 +551,7 @@
    name="pibote_balcon_derecho _cuadrado"
 />
 <transform
-   pos="10.1255 -11.1743 -22.4681"
+   pos="10.2106 -11.1743 -29.2992"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -549,7 +570,7 @@
    name="pibotes_balcon_arriba"
 />
 <transform
-   pos="-35.8636 4.67006 -0.761221"
+   pos="-35.7784 4.67006 -7.59226"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -568,7 +589,7 @@
    name="pibotes_balcon_cuadrado-izquierdo"
 />
 <transform
-   pos="10.1855 -11.1743 22.1776"
+   pos="10.2706 -11.1743 15.3466"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -587,7 +608,7 @@
    name="pibotes_balcon_pequeno-arribo"
 />
 <transform
-   pos="-15.8339 -1.02302 21.5208"
+   pos="-15.7487 -1.02302 14.6898"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -606,7 +627,7 @@
    name="plataforma_balcon_cuadrado_izquierdo"
 />
 <transform
-   pos="10.0391 -11.9814 21.9453"
+   pos="10.1243 -11.9814 15.1142"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -625,7 +646,7 @@
    name="plataforma_balcon_derecho"
 />
 <transform
-   pos="10.2718 -11.9814 -22.2357"
+   pos="10.357 -11.9814 -29.0667"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -644,7 +665,7 @@
    name="plataforma_redonde"
 />
 <transform
-   pos="-34.4344 3.1559 -0.986563"
+   pos="-34.3493 3.1559 -7.8176"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -663,7 +684,7 @@
    name="puerta_balcon_cuadrado_derecho"
 />
 <transform
-   pos="10.1513 -10.2875 -25.1433"
+   pos="10.2365 -10.2875 -31.9743"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -682,7 +703,7 @@
    name="puerta_balcon_cuadrado_izquierdo"
 />
 <transform
-   pos="10.1596 -10.2875 25.0968"
+   pos="10.2448 -10.2875 18.2658"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -701,7 +722,7 @@
    name="puerta_balcon_redondo_grande"
 />
 <transform
-   pos="-41.1157 6.12619 -1.24364"
+   pos="-41.0305 6.12619 -8.07468"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -720,7 +741,7 @@
    name="puerta_balcon_redondo_pequeno"
 />
 <transform
-   pos="-15.8142 -0.103988 25.0861"
+   pos="-15.729 -0.103988 18.2551"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -739,7 +760,7 @@
    name="puerta_principal"
 />
 <transform
-   pos="41.2214 -21.5269 -0.287953"
+   pos="41.3065 -21.5269 -7.11899"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -758,7 +779,7 @@
    name="puertas_gigantes"
 />
 <transform
-   pos="-40.8972 -14.8815 -2.00451"
+   pos="-40.8121 -14.8815 -8.83555"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -777,7 +798,7 @@
    name="rail_derehco"
 />
 <transform
-   pos="-40.4011 -23.7037 -12.2762"
+   pos="-40.3159 -23.7037 -19.1073"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -796,7 +817,7 @@
    name="rail_izquierdo"
 />
 <transform
-   pos="-40.4011 -23.7037 9.09516"
+   pos="-40.3159 -23.7037 2.26412"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -815,7 +836,7 @@
    name="suelo_abajo"
 />
 <transform
-   pos="-5.37859 -23.9436 -0.0172624"
+   pos="-5.29344 -23.9436 -6.8483"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -834,7 +855,7 @@
    name="suelo_balcon_cuadrado_derecho"
 />
 <transform
-   pos="10.2633 -11.732 -26.6988"
+   pos="10.3484 -11.732 -33.5299"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -853,7 +874,7 @@
    name="suelo_balcon_izquierdo_cuadrado"
 />
 <transform
-   pos="10.0477 -11.732 26.4083"
+   pos="10.1328 -11.732 19.5773"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -872,7 +893,7 @@
    name="tabla_abajo"
 />
 <transform
-   pos="-0.975353 -18.0286 -20.7582"
+   pos="-0.890209 -18.0286 -27.5893"
    quat="0 0.890787 0 -0.45442"
    scale="1.0"
 />
@@ -891,7 +912,7 @@
    name="tabla_arriba"
 />
 <transform
-   pos="0.347425 -24.1006 -22.8485"
+   pos="0.432569 -24.1006 -29.6796"
    quat="0 -0.682264 0 0.731106"
    scale="1.0"
 />
@@ -910,7 +931,7 @@
    name="tabla_medio"
 />
 <transform
-   pos="-4.67164 -13.9639 -21.0939"
+   pos="-4.5865 -13.9639 -27.9249"
    quat="0 0.955168 0 0.296064"
    scale="1.0"
 />
@@ -935,7 +956,7 @@
    name="camController_1"
 />
 <transform
-   pos="34.4563 -14.5742 -0.283386"
+   pos="-37.7264 -20.5623 -3.3316"
    quat="0 0.707104 0 0.707104"
    scale="1.0"
 />
@@ -946,9 +967,108 @@
 />
 <drone
    wpts_size="2"
-   wpt0_pos="25.6884 -21.1985 6.08694"
+   wpt0_pos="3.03034 -11.8267 4.39738"
    wpt0_wait="2"
-   wpt1_pos="37.1198 -21.185 6.08694"
+   wpt1_pos="17.1279 -11.8267 4.39738"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
+<name
+   name="DroneMinus_1"
+/>
+<transform
+   pos="10.0358 -10.6841 4.47689"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="17.1279 -11.8267 -14.2574"
+   wpt0_wait="2"
+   wpt1_pos="3.03034 -11.8267 -14.2574"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
+<name
+   name="DroneMinus_2"
+/>
+<transform
+   pos="10.0358 -10.6841 -14.3103"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="38.7453 -20.6616 13.0132"
+   wpt0_wait="2"
+   wpt1_pos="24.6477 -23.8252 13.0132"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
+<name
+   name="DroneMinus_003"
+/>
+<transform
+   pos="31.6531 -19.5191 12.9603"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="38.7453 -23.6641 6.08694"
+   wpt0_wait="2"
+   wpt1_pos="24.6477 -24.0046 6.08694"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
@@ -961,7 +1081,73 @@
    name="DroneMinus_004"
 />
 <transform
-   pos="31.6531 -21.5058 6.03405"
+   pos="31.6531 -22.5215 6.03405"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="17.1279 -11.8267 13.928"
+   wpt0_wait="2"
+   wpt1_pos="3.03034 -11.8267 13.928"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<polarized
+   pol="plus"
+   size="1.7955 2.3474 4.92"
+/>
+<name
+   name="DronePlus_1"
+/>
+<transform
+   pos="10.0358 -10.6841 13.8705"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="3.03034 -11.8267 -4.89916"
+   wpt0_wait="2"
+   wpt1_pos="17.1279 -11.8267 -4.89916"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<polarized
+   pol="plus"
+   size="1.7955 2.3474 4.92"
+/>
+<name
+   name="DronePlus_2"
+/>
+<transform
+   pos="10.0358 -10.6841 -4.91669"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -978,10 +1164,10 @@
    tags=""
 />
 <name
-   name="generator_1"
+   name="generator_2"
 />
 <transform
-   pos="33.8007 -22.5807 21.62"
+   pos="-36.9951 -22.9079 -7.08108"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1000,10 +1186,10 @@
 />
 <generator/>
 <name
-   name="trigger_1"
+   name="trigger_2"
 />
 <transform
-   pos="33.8007 -22.5807 21.62"
+   pos="-36.9951 -22.9079 -7.08108"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1016,24 +1202,164 @@
    points="100"
 />
 <bt_guard
-   kpt_size="3"
+   kpt_size="4"
    kpt0_type="seek"
-   kpt0_pos="-36.0955 -23.2517 17.2159"
+   kpt0_pos="5.1302 -23.8064 -1.81982"
    kpt0_wait="2"
    kpt1_type="seek"
-   kpt1_pos="-35.9552 -23.2517 -0.570453"
+   kpt1_pos="5.1302 -23.8064 11.1675"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="-20.5864 -23.2417 -5.08278"
+   kpt2_pos="-12.5302 -23.7414 11.1675"
    kpt2_wait="2"
-   jurisdiction="-35.8414 -23.7288 13.2654"
-   jurRadius="41.45"
+   kpt3_type="seek"
+   kpt3_pos="-12.5302 -23.7414 -1.97247"
+   kpt3_wait="2"
+   jurisdiction="37.5426 -23.6548 -3.6815"
+   jurRadius="100.0"
+   formation_point="-6.33016 -23.7198 4.07596"
+   formation_dir="-19.3531 -22.7915 -11.9615"
 />
 <name
-   name="guard_1"
+   name="guard_2"
 />
 <transform
-   pos="-35.8414 -23.7288 13.2654"
+   pos="37.5426 -23.6548 -3.6815"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="-14.3585 -23.7823 -25.036"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="5.1302 -23.8473 -25.036"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="5.1302 -23.8473 -12.228"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="-14.5697 -23.7823 -12.228"
+   kpt3_wait="2"
+   jurisdiction="37.5426 -23.6957 -7.79579"
+   jurRadius="100.0"
+   formation_point="-6.33016 -23.7607 -20.6866"
+   formation_dir="-19.3531 -22.8325 -11.9615"
+/>
+<name
+   name="guard_003"
+/>
+<transform
+   pos="37.5426 -23.6957 -7.79579"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="14.7984 -23.9817 -12.228"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="35.0197 -24.1508 -11.7258"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="35.0197 -24.1508 -30.6163"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="13.9356 -24.08 -30.6631"
+   kpt3_wait="2"
+   jurisdiction="37.5426 -23.7578 -11.7541"
+   jurRadius="100.0"
+   formation_point="24.5965 -24.0712 -20.6866"
+   formation_dir="-19.3531 -22.8945 -11.9615"
+/>
+<name
+   name="guard_004"
+/>
+<transform
+   pos="37.5426 -23.7578 -11.7541"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="35.0197 -24.0261 -3.26538"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="14.7906 -23.857 -3.76758"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="14.7906 -23.857 14.7207"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="35.0091 -24.0261 14.7207"
+   kpt3_wait="2"
+   jurisdiction="37.5426 -23.6331 -15.9564"
+   jurRadius="100.0"
+   formation_point="24.5965 -23.9289 4.07596"
+   formation_dir="-19.3531 -22.7699 -11.9615"
+/>
+<name
+   name="guard_005"
+/>
+<transform
+   pos="37.5426 -23.6331 -15.9564"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1060,7 +1386,7 @@
    name="player_1"
 />
 <transform
-   pos="34.3066 -21.3743 -0.426925"
+   pos="-37.243 -23.054 -9.89473"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1073,6 +1399,36 @@
 <character_controller
    radius="0.3"
    height="0.7"
+/>
+</entity>
+<entity>
+<tags
+   tags="guided_camera"
+/>
+<guided_camera
+   velocity="5.0"
+   points_size="6"
+   wpt0="-37.7996 -19.9678 -9.95837"
+   wpt1="-8.13086 -6.03711 4.40758"
+   wpt2="24.9753 -15.3789 4.71448"
+   wpt3="27.2213 -8.68042 -20.7155"
+   wpt4="-16.5361 -17.6106 -21.1016"
+   wpt5="-13.5006 8.79179 -20.3224"
+   wpt6="8.81116 14.5726 12.1636"
+   rot0="-0.457584 0.471291 -0.676569 0.332801"
+   rot1="-0.565639 0.461792 -0.408513 0.547647"
+   rot2="0.560656 0.409411 -0.63635 -0.336313"
+   rot3="-0.47151 -0.534667 0.432818 0.551795"
+   rot4="0.213745 -0.759358 0.436069 -0.433049"
+   rot5="-0.290835 -0.641884 0.213981 0.67647"
+/>
+<name
+   name="IntroCamera"
+/>
+<transform
+   pos="8.52567 0 14.7145"
+   quat="0 0 0 1.0"
+   scale="1.0"
 />
 </entity>
 </entities>
