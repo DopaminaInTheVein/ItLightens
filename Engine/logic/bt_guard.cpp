@@ -643,7 +643,7 @@ int bt_guard::actionNextWpt() {
 		return KO;
 	}
 	//Look to waypoint
-	else if (turnTo(dest)) {
+	if (turnTo(dest)) {
 		return OK;
 	}
 	else {
@@ -809,7 +809,7 @@ void bt_guard::goTo(const VEC3& dest) {
 	if (needsSteering(npcPos + npcFront, getTransform(), SPEED_WALK, myParent, SBB::readSala())) {
 		goForward(SPEED_WALK);
 	}
-	else if (!getTransform()->isHalfConeVision(target, deg2rad(60.0f))) {
+	else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
 		turnTo(target);
 	}
 	else {

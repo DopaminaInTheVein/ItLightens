@@ -275,7 +275,7 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
-	sala = "milestone2";
+	sala = "milestone2_guardias";
 	//sala = "scene_milestone_1";
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
@@ -413,21 +413,24 @@ void CEntitiesModule::stop() {
 
 void CEntitiesModule::update(float dt) {
 
+	CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
+	CEntity * guidedCamE = guidedCam;
+	static float ia_wait = 0.0f;
+	ia_wait += getDeltaTime();
+
 	getHandleManager<TCompLightDir>()->updateAll(dt);
   	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
  	getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
 
-	if (GameController->GetGameState() == CGameController::STOPPED) {
-		getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::STOPPED_INTRO) {
+		if (!guidedCamE) {
+			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+		}
 		getHandleManager<TCompCamera>()->updateAll(dt);
 	}
 
 	if (GameController->GetGameState() == CGameController::RUNNING) {
-		CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
-		CEntity * guidedCamE = guidedCam;
-		static float ia_wait = 0.0f;
-		ia_wait += getDeltaTime();
 
 		// May need here a switch to update wich player controller takes the action - possession rulez
 		if (!guidedCamE) {
@@ -509,9 +512,9 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 
 	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
-	  getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
-	  getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
-	  getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
+	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
+	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
+	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 
 	//Prueba BORRAR
 	getHandleManager<player_controller>()->onAll(&player_controller::render);
