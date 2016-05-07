@@ -18,29 +18,28 @@ enum eTypeShape {
 	SPHERE,
 	CAPSULE,
 	BOX,
-	CONVEX,	
+	CONVEX,
 	// Provisional?
 	DRONE,
 };
 
 // ------------------------------------
 class TCompPhysics : public TCompBase {
-
 	int					m_collisionType;
 	int					m_collisionShape;
 
-	float				m_staticFriction		= 0.5f;
-	float				m_dynamicFriction		= 0.5f;
-	float				m_restitution			= 0.25f;
-	float				m_mass					= 2.0f;
+	float				m_staticFriction = 0.5f;
+	float				m_dynamicFriction = 0.5f;
+	float				m_restitution = 0.25f;
+	float				m_mass = 2.0f;
 
-	float				m_radius				= 0.0f;
-	float				m_height				= 0.0f;
-	VEC3				m_size					= VEC3(1.0f,1.0f,1.0f);	//default size for box
+	float				m_radius = 0.0f;
+	float				m_height = 0.0f;
+	VEC3				m_size = VEC3(1.0f, 1.0f, 1.0f);	//default size for box
 
-	PxShape*			m_pShape				= nullptr;
-	PxActor*			m_pActor				= nullptr;
-	PxRigidActor*		m_pRigidActor			= nullptr;
+	PxShape*			m_pShape = nullptr;
+	PxActor*			m_pActor = nullptr;
+	PxRigidActor*		m_pRigidActor = nullptr;
 
 	int getCollisionTypeValueFromString(std::string str);
 	int getCollisionShapeValueFromString(std::string str);
@@ -71,6 +70,8 @@ public:
 	void updateTagsSetupActor(PxFilterData& filter);
 
 	PxActor* getActor() { return m_pActor; }
+	PxRigidActor* getRigidActor() { return m_pRigidActor; }
+	PxShape* getShape() { return m_pShape; }
 	bool load(MKeyValue& atts);
 
 	// load Xml

@@ -100,12 +100,12 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<TVictoryPoint>()->init(20);
 	getHandleManager<TTriggerLua>()->init(100);
-//	getHandleManager<TCompHierarchy>()->init(nmax);
- 	 getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
-  	getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
+	//	getHandleManager<TCompHierarchy>()->init(nmax);
+	getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
+	getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCulling>()->init(8);
-	  getHandleManager<TCompLightDir>()->init(8);
-	  getHandleManager<TCompLightDirShadows>()->init(8);
+	getHandleManager<TCompLightDir>()->init(8);
+	getHandleManager<TCompLightDirShadows>()->init(8);
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(8);
@@ -176,12 +176,12 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
 	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
-//  SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
-  SUBSCRIBE(TCompBoneTracker, TMsgEntityGroupCreated, onGroupCreated);
-  SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompLocalAABB, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
+	//  SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
+	SUBSCRIBE(TCompBoneTracker, TMsgEntityGroupCreated, onGroupCreated);
+	SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompLocalAABB, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
 
 	//Trackers
@@ -271,11 +271,10 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_cientifico, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
-	
 
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
-	sala = "milestone2_guardias";
+	//sala = "milestone2_guardias";
 	//sala = "scene_milestone_1";
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
@@ -285,7 +284,7 @@ bool CEntitiesModule::start() {
 	//sala = "test_pol";
 	//sala = "test_guard";
 	//sala = "test_anim";
-	//sala = "test_column_navmesh";
+	sala = "test_column_navmesh";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";
@@ -295,11 +294,11 @@ bool CEntitiesModule::start() {
 	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 
-	{
-		CEntityParser ep2;
-		bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
-		assert(isok);
-	}
+	//{
+		//CEntityParser ep2;
+		//bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
+		//assert(isok);
+	//}
 
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();
@@ -318,6 +317,10 @@ bool CEntitiesModule::start() {
 			max.y = bounds.maximum.y;
 			max.z = bounds.maximum.z;
 			nav.m_input.addInput(min, max);
+
+			PxGeometryHolder geo = p->getShape()->getGeometry();
+			PxTriangleMeshGeometry mesh = geo.triangleMesh();
+			nav.m_input.addInput(mesh);
 		}
 	}
 	nav.m_input.computeBoundaries();
@@ -412,16 +415,15 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-
 	CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
 	CEntity * guidedCamE = guidedCam;
 	static float ia_wait = 0.0f;
 	ia_wait += getDeltaTime();
 
 	getHandleManager<TCompLightDir>()->updateAll(dt);
-  	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
+	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
- 	getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
+	getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
 
 	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::STOPPED_INTRO) {
 		if (!guidedCamE) {
@@ -431,7 +433,6 @@ void CEntitiesModule::update(float dt) {
 	}
 
 	if (GameController->GetGameState() == CGameController::RUNNING) {
-
 		// May need here a switch to update wich player controller takes the action - possession rulez
 		if (!guidedCamE) {
 			getHandleManager<player_controller>()->updateAll(dt);
@@ -443,7 +444,7 @@ void CEntitiesModule::update(float dt) {
 
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompLightDir>()->updateAll(dt);
-		
+
 		if (use_parallel)
 			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
 		else
