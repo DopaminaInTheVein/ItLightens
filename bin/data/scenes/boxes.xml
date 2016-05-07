@@ -1415,12 +1415,12 @@
    wpt4="-16.5361 -17.6106 -21.1016"
    wpt5="-13.5006 8.79179 -20.3224"
    wpt6="8.81116 14.5726 12.1636"
-   rot0="-0.457584 0.471291 -0.676569 0.332801"
-   rot1="-0.565639 0.461792 -0.408513 0.547647"
-   rot2="0.560656 0.409411 -0.63635 -0.336313"
-   rot3="-0.47151 -0.534667 0.432818 0.551795"
-   rot4="0.213745 -0.759358 0.436069 -0.433049"
-   rot5="-0.290835 -0.641884 0.213981 0.67647"
+   rot0="0.457584 -0.471291 0.676569 0.332801"
+   rot1="0.565639 -0.461792 0.408513 0.547647"
+   rot2="-0.560656 -0.409411 0.63635 -0.336313"
+   rot3="0.47151 0.534667 -0.432818 0.551795"
+   rot4="-0.213745 0.759358 -0.436069 -0.433049"
+   rot5="0.290835 0.641884 -0.213981 0.67647"
 />
 <name
    name="IntroCamera"
@@ -1440,7 +1440,7 @@
    name="Box_1"
 />
 <transform
-   pos="-5.32441 -5.54541 -24.2093"
+   pos="-1.77829 -21.557 -19.6566"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1450,11 +1450,55 @@
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
-   size="2.0 2.0 2.0"
+   size="1.0 1.0 1.0"
    mass="2"
 />
 <polarized
    pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags="box platform removable"
+/>
+<box/>
+<name
+   name="Box_2"
+/>
+<transform
+   pos="-19.4212 -21.1743 -24.9888"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/box2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="box"
+   size="3.0 1.5 3.0"
+   mass="5"
+/>
+<polarized
+   pol="plus"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="7.5658"
+   out_radius="12.7699"
+/>
+<name
+   name="Omni006"
+/>
+<transform
+   pos="-17.125 -12.7339 -25.308"
+   quat="0 0 0 1.0"
+   scale="1.0"
 />
 </entity>
 </entities>
