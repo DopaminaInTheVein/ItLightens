@@ -384,8 +384,7 @@ int bt_guard::actionAbsorb() {
 		artificialInterrupt();
 	}
 
-	float deltaYaw = getTransform()->getDeltaYawToAimTo(posPlayer);
-	if (abs(deltaYaw) > deg2rad(2)) turnTo(posPlayer);
+	turnTo(posPlayer);
 	if (squaredDistY(myPos, posPlayer) * 2 > dist) { //Angulo de 30 grados
 														//Si pitch muy alto me alejo
 		goForward(-SPEED_WALK);
@@ -427,8 +426,7 @@ int bt_guard::actionShootWall() {
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 
-	float deltaYaw = getTransform()->getDeltaYawToAimTo(posPlayer);
-	if (abs(deltaYaw) > deg2rad(2)) turnTo(posPlayer);
+	turnTo(posPlayer);
 
 	if (playerVisible() || boxMovingDetected()) {
 		return KO;
@@ -573,7 +571,7 @@ int bt_guard::actionLookAround() {
 	}
 	// Turn arround
 	else if (deltaYawLookingArround < 2 * M_PI && looking_around_time > 0.f) {
-		animController.setState(AST_IDLE);
+		animController.setState(AST_TURN);
 		float yaw, pitch;
 		getTransform()->getAngles(&yaw, &pitch);
 
@@ -618,7 +616,6 @@ int bt_guard::actionSeekWpt() {
 	}
 	//Look to waypoint
 	else if (keyPoints[curkpt].type == Look) {
-		animController.setState(AST_IDLE);
 		//Look to waypoint
 		if (turnTo(dest)) {
 			curkpt = (curkpt + 1) % keyPoints.size();
@@ -635,8 +632,8 @@ int bt_guard::actionSeekWpt() {
 int bt_guard::actionNextWpt() {
 	PROFILE_FUNCTION("guard: actionnextwpt");
 	if (!myParent.isValid()) return false;
+	animController.setState(AST_TURN);
 	VEC3 dest = keyPoints[curkpt].pos;
-
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
@@ -688,7 +685,6 @@ int bt_guard::actionGoToFormation() {
 		return STAY;
 	}
 
-	animController.setState(AST_IDLE);
 	return OK;
 }
 
@@ -699,9 +695,11 @@ int bt_guard::actionTurnToFormation() {
 	VEC3 dest = formation_dir;
 
 	if (turnTo(dest)) {
+		animController.setState(AST_IDLE);
 		return OK;
 	}
 	else {
+		animController.setState(AST_TURN);
 		return STAY;
 	}
 }
@@ -838,7 +836,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 
 	float deltaAngle = SPEED_ROT * getDeltaTime();
 	float deltaYaw = getTransform()->getDeltaYawToAimTo(dest);
-	float angle_epsilon = deg2rad(2);
+	float angle_epsilon = deg2rad(5);
 
 	if (deltaYaw > 0) {
 		if (deltaAngle < deltaYaw) yaw += deltaAngle;
@@ -849,7 +847,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 		else yaw += deltaYaw;
 	}
 
-	if (!getTransform()->isHalfConeVision(dest, deg2rad(deltaAngle) + angle_epsilon)) {
+	if (!getTransform()->isHalfConeVision(dest, deg2rad(5.0f))) {
 		bool inLeft = getTransform()->isInLeft(dest);
 		if (inLeft) {
 			yaw += deltaAngle;
@@ -861,7 +859,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 	}
 
 	//Ha acabado el giro?
-	return abs(deltaYaw) < angle_epsilon;
+	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
 }
 
 VEC3 bt_guard::generateRandomPoint() {
