@@ -171,7 +171,8 @@
    name="static_meshes/drone.static_mesh"
 />
 <rigidbody
-   type_collision="static"
+   type_collision="dynamic"
+   type_shape="drone"
 />
 </entity>
 <entity>

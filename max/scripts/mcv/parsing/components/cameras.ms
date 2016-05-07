@@ -14,15 +14,38 @@ fn _parse_rail_camera = (
 		)
 		xml.addAttr "velocity" (vel as string)
 		xml.addAttr "points_size" ((numSegments _parsingObject 1) as string)
-		for i = 1 to ((numSegments $ 1)+1) do (
-			xml.addAttr ("wtp" + (i-1) as string) (((getKnotPoint _parsingObject 1 i).x as string)+" "+((getKnotPoint _parsingObject 1 i).z as string)+" "+((getKnotPoint _parsingObject 1 i).y as string))
+		
+		local mcv_tmx
+		local wPoint
+		local atrName
+		local atrValue
+		for i = 1 to ((numSegments _parsingObject 1)+1) do (
+			-- Atr Name
+			atrName = ("wpt" + (i-1) as string)
+		
+			--Get Point
+			wPoint = getKnotPoint _parsingObject 1 i
+		
+			--Transform point in atrValue
+			tMatrix = matrix3 1
+			tMatrix.pos = wPoint
+			mcv_tmx = matrixMax2MCV tMatrix
+			atrValue = getTransformPosValue mcv_tmx	
+		
+			--Parse Attribute wpt
+			xml.addAttr  atrName atrValue
 		)
 		local i2 = 0
+		local rot
 		for c in _parsingObject.children do(
 			if ((classof c) == FreeCamera or (classof c) == Targetcamera) then (
+				-- Atr Name
+				atrName = "rot" + (i2 as string)
 			
-				xml.addAttr ("rot" + (i2 as string)) ((c.rotation.x as string) + " " + (c.rotation.z as string) + " " + (c.rotation.y as string) + " " + (c.rotation.w as string))
-				
+				-- Get Rotation
+				rot = c.rotation
+				atrValue = getAsXmlValues #(-rot.x, -rot.y, -rot.z, rot.w)
+				xml.addAttr atrName atrValue
 				i2 += 1
 			)
 		)
