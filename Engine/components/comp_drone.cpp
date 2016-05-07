@@ -82,5 +82,8 @@ bool TCompDrone::load(MKeyValue & atts)
 		wpts[i] = atts.getPoint(atrPos);
 		waitTimes[i] = atts.getFloat(atrWait, 0);
 	}
+
+	speed = 1.0f;
+
 	return true;
 }

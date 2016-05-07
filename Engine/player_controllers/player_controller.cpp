@@ -111,6 +111,7 @@ void player_controller::Init() {
 	animController.setState(AST_IDLE);
 	controlEnabled = true;
 	____TIMER__SET_ZERO_(timerDamaged);
+
 }
 
 bool player_controller::isDamaged() {
@@ -418,11 +419,11 @@ void player_controller::RecalcAttractions()
 	cc->AddSpeed(final_forces * getDeltaTime());
 
 	//Anular gravedad
-	if (nearestForce.distance < POL_RCLOSE) {
-		VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
-		cc->AddSpeed(antigravity*getDeltaTime());
-		Debug->DrawLine(cc->GetPosition(), cc->GetPosition() + VEC3(0, 1, 0), VEC3(1, 0, 1));
+	VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
+	if (nearestForce.distance > POL_RCLOSE) {
+		antigravity.y = clamp(10.f - pow(nearestForce.distance - POL_RCLOSE, 2), 0.f, 10.f);
 	}
+	cc->AddSpeed(antigravity*getDeltaTime());
 
 	lastForces = final_forces;
 }
@@ -1067,6 +1068,10 @@ void player_controller::renderInMenu() {
 	ImGui::SliderFloat("Force Atraction Factor in Orbita", &POL_ATRACTION_ORBITA, 0.f, 5.f);
 	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_ORBITA_UP_EXTRA_FORCE, 0.01f, 5.f);
 	ImGui::SliderFloat("Resistence to leave", &POL_RESISTANCE, 0.f, 1.f);
+
+	ImGui::Separator();
+
+	ImGui::Text(GetPolarity().c_str());
 
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }

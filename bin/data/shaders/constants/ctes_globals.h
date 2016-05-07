@@ -2,7 +2,7 @@
 
 ShaderBuffer(TCteGlobals, CTE_SHADER_GLOBALS_SLOT)
 {
-	float world_time;
+  float world_time;
   float xres;
   float yres;
   float strenght_polarize;

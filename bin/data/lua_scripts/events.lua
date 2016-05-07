@@ -6,12 +6,11 @@ p = Public( )
 
 function OnAction( param )
 	p:print( "OnAction: "..param.."\n" )
-	triggerGuardFormation();
-	--setCameraDistanteToTarget(1.0);
-	--setCameraPositionOffset(0.0, -1.5, 0.0);
-	--p:exec_command("toggleIntroState();", 0.2)
-	--p:exec_command("toggleIntroState();", 5.2)
-	--p:exec_command("setCameraDistanteToTarget(2.0); setCameraPositionOffset(0.0, -0.5, 0.0);", 5.4)
+	setCameraDistanteToTarget(1.0);
+	setCameraPositionOffset(0.0, -1.5, 0.0);
+	p:exec_command("toggleIntroState();", 0.2)
+	p:exec_command("toggleIntroState();", 5.2)
+	p:exec_command("setCameraDistanteToTarget(2.0); setCameraPositionOffset(0.0, -0.5, 0.0);", 5.4)
 	--setCameraRotationSensibility(60.5);
 	--setCameraSpeed(4.0);
 	--setCameraSpeedUnlocked(10.0);
@@ -32,6 +31,7 @@ end
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	p:play_music("data/sounds/music/It-Lightens-muestra-2.mp3")
+	triggerGuardFormation();
 end
 
 function OnGameEnd( param )

@@ -15,7 +15,13 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_final;
 
 	CRenderToTexture* rt_data;
+	CRenderToTexture* rt_data2;
 	CRenderToTexture* rt_black;
+
+	//temp
+	CRenderToTexture* rt_selfIlum_int;
+	CRenderToTexture* rt_selfIlum_blurred_int;
+	CRenderToTexture* rt_temp;
 
 	int xres, yres;
 
@@ -32,7 +38,9 @@ class CRenderDeferredModule : public IAppModule {
 	void renderAccLight();
 	void DepthTexture();
 	void RenderPolarizedPP(int pol, const VEC4& color);
+	void GlowEdgesInt();		//to remove
 	void GlowEdges();
+	void ShootGuardRender();
 	void addPointLights();
 	void addDirectionalLights();
 	void addDirectionalLightsShadows();
@@ -40,13 +48,14 @@ class CRenderDeferredModule : public IAppModule {
 
 	void FinalRender();
 
-	void blurEffectLights();
+	void blurEffectLights(bool intermitent);
 
 public:
 	bool start() override;
 	void stop() override;
 	void update(float dt);
 	void render() override;
+	bool forcedUpdate() { return true; }
 	const char* getName() const {
 		return "render_deferred";
 	}

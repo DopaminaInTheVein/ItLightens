@@ -1,0 +1,5 @@
+<tech>
+    <vs fx="_AA" main="VS_AA" decl="positions_uv"/>
+    <ps fx="_AA" main="PS_AA"/>
+</tech>
+

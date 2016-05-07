@@ -16,7 +16,7 @@ SamplerState samLinear : register(s0);
 SamplerState samClampLinear : register(s2);
 
 //--------------------------------------------------------------------------------------
-// Null Shader
+// Null vertex/pixel shader
 //--------------------------------------------------------------------------------------
 void VSNull(
 	in float4 iPos : POSITION
@@ -93,7 +93,7 @@ float4 PSPostProcess(float4 Pos : SV_POSITION
 	, float2 iTex0 : TEXCOORD0
 	) : SV_Target
 {
-	float4 color = txDiffuse.Sample(samLinear, iTex0);
+	float4 color = txDiffuse.Sample(samClampLinear, iTex0);
 	//if (color.w == 0)
 		//discard;
 	return color;
@@ -114,7 +114,7 @@ void PSAddAmbient(float4 Pos : SV_POSITION
 	) 
 {
 
-	float4 diff = txDiffuse.Sample(samLinear, iTex0);
+	float4 diff = txDiffuse.Sample(samClampLinear, iTex0);
 	float4 lights = txEnvironment.Sample(samLinear, iTex0);
 	float4 normals = txNormal.Sample(samLinear, iTex0); 
 	float4 selfIlum = txSelfIlum.Sample(samLinear, iTex0);
@@ -122,7 +122,7 @@ void PSAddAmbient(float4 Pos : SV_POSITION
 	
 	output = diff*0.2f + lights*0.8f;
 	output.a = diff.a;
-	//output = lights;
+	output = lights;
 	output.rgb += selfIlum.rgb;
 }
 

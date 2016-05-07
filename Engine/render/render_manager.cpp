@@ -15,6 +15,9 @@ CRenderManager RenderManager;
 
 #include "render/shader_cte.h"
 
+#include "resources\resources_manager.h"
+#include "fx\GuardShots.h"
+
 bool CRenderManager::sortByTechMatMesh(
     const TKey &k1
   , const TKey &k2) {
@@ -187,6 +190,12 @@ void CRenderManager::renderAll(CHandle h_camera, eRenderType render_type) {
     prev_it = it;
     ++it;
     ++nkeys_rendered;
+  }
+  
+   if (render_type == eRenderType::SOLID_OBJS) {
+	  auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+	  tech->activate();
+	  ShootManager::renderAll();
   }
 
   CMaterial::deactivateTextures();

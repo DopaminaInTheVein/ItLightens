@@ -385,7 +385,7 @@ int bt_guard::actionAbsorb() {
 	}
 
 	float deltaYaw = getTransform()->getDeltaYawToAimTo(posPlayer);
-	if (abs(deltaYaw) > deg2rad(1.5)) turnTo(posPlayer);
+	if (abs(deltaYaw) > deg2rad(2)) turnTo(posPlayer);
 	if (squaredDistY(myPos, posPlayer) * 2 > dist) { //Angulo de 30 grados
 														//Si pitch muy alto me alejo
 		goForward(-SPEED_WALK);
@@ -426,7 +426,10 @@ int bt_guard::actionShootWall() {
 	if (!myParent.isValid()) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
-	turnTo(posPlayer);
+
+	float deltaYaw = getTransform()->getDeltaYawToAimTo(posPlayer);
+	if (abs(deltaYaw) > deg2rad(2)) turnTo(posPlayer);
+
 	if (playerVisible() || boxMovingDetected()) {
 		return KO;
 	}
@@ -640,7 +643,7 @@ int bt_guard::actionNextWpt() {
 		return KO;
 	}
 	//Look to waypoint
-	else if (turnTo(dest)) {
+	if (turnTo(dest)) {
 		return OK;
 	}
 	else {
@@ -835,7 +838,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 
 	float deltaAngle = SPEED_ROT * getDeltaTime();
 	float deltaYaw = getTransform()->getDeltaYawToAimTo(dest);
-	float angle_epsilon = deg2rad(1.5);
+	float angle_epsilon = deg2rad(2);
 
 	if (deltaYaw > 0) {
 		if (deltaAngle < deltaYaw) yaw += deltaAngle;
@@ -1093,7 +1096,7 @@ void bt_guard::drawShot(float distRay) {
 	t.setAngles(yaw, pitch);
 
 	// Add Render Instruction
-	ShootManager::shootLaser(originShot, t.getRotation(), distRay);
+	ShootManager::shootLaser(originShot, destShot);
 }
 
 void bt_guard::removeBox(CHandle box_handle) {
