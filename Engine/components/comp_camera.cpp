@@ -62,6 +62,7 @@ void TCompCamera::update(float dt) {
   if (guidedCamE) {
     TCompGuidedCamera * gc = guidedCamE->get<TCompGuidedCamera>();
     VEC3 goTo = gc->getPointPosition(lastguidedCamPoint);
+	VEC3 nextPoint = gc->getPointPosition((lastguidedCamPoint + 1) % gc->getTotalPoints());
     /*
     float yaw, pitch;
     tmx->getAngles(&yaw, &pitch);
@@ -109,7 +110,7 @@ void TCompCamera::update(float dt) {
       factor = 0.0f;
     }
 
-    if (lastguidedCamPoint >= gc->getTotalPoints()) {
+    if (lastguidedCamPoint >= gc->getTotalPoints() || io->keys['Q'].becomesPressed()) {
       guidedCam.destroy();
       CHandle t = tags_manager.getFirstHavingTag("player");
       CEntity * target_e = t;
@@ -125,6 +126,9 @@ void TCompCamera::update(float dt) {
         target_e->sendMsg(msg_camera);	//set target camera
       }
     }
+	else if (gc->getDefaultDirsEnabled()) {
+		this->smoothLookAt(tmx->getPosition(), nextPoint, getUpAux());
+	}
     else if (lastguidedCamPoint > 0) {
       VEC3 campos = tmx->getPosition();
       int influencia = lastguidedCamPoint - 1; // gc->nearCameraPoint(campos);

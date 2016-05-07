@@ -33,6 +33,7 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
     vectorBetween.z /= 2;
     cameraPositions[i] = points[i] + vectorBetween;
   }
+  default_dirs = atts.getBool("default_dirs", 0);
 
   return true;
 };
