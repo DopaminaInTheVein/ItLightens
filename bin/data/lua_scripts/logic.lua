@@ -12,7 +12,6 @@ end
 
 function triggerGuardFormation()
 	h:toggle_guard_formation()
-	p:exec_command("h:toggle_guard_formation();", 60)
 end
 
 --prints the specified text via the VS console
@@ -60,4 +59,12 @@ end
 
 function toggleIntroState( )
 	p:toggle_intro_state()
+end
+
+function specialActionSettings( action_time )
+	setCameraDistanteToTarget(1.0);
+	setCameraPositionOffset(0.0, -1.5, 0.0);
+	p:exec_command("toggleIntroState();", 0.2)
+	p:exec_command("toggleIntroState();", action_time + 0.2)
+	p:exec_command("setCameraDistanteToTarget(2.0); setCameraPositionOffset(0.0, -0.5, 0.0);", action_time + 0.4)
 end
