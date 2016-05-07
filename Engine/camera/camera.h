@@ -29,7 +29,7 @@ public:
 
   // View
   void lookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
-  void smoothLookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
+  void smoothLookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0), float smooth_factor = 10);
   void smoothUpdateInfluence(TCompTransform * tmx, TCompGuidedCamera * gc, int influencia, VEC3 up = VEC3(0, 1, 0));
   void applyQuat(CQuaternion quat, VEC3 p, VEC3 s);
 

@@ -36,7 +36,7 @@ public:
 	void clearInput();
 	void addInput(const VEC3& p0, const VEC3& p1);
 	void addInput(const PxTriangleMeshGeometry& t_mesh);
-	//void prepareInput(const TInput& input);
+	void prepareInput(const TInput& input);
 	void prepareInputMesh(const PxTriangleMeshGeometry& input);
 	void unprepareInput();
 	void computeBoundaries();

@@ -8,6 +8,7 @@ class TCompGuidedCamera : public TCompBase {
   int num_points;
   int num_cameras;
   float velocity;
+  bool default_dirs;
   //float angularVelocity;
   std::vector<CQuaternion> rotations;
   std::vector<float> influences;
@@ -31,6 +32,7 @@ public:
   //  const float getAngularVelocity() const { return angularVelocity; }
   const VEC3 getCameraPosition(int posi) const { return cameraPositions[posi]; }
   const VEC3 getPointPosition(int posi) const { return points[posi]; }
+  bool getDefaultDirsEnabled() { return default_dirs; }
   CQuaternion getNewRotationForCamera(VEC3 playerPosition, CQuaternion cameraActual, int pointOfInfluence);
 };
 

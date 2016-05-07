@@ -9,6 +9,12 @@ fn parseable = (
 	-- Es dummy?
 	if (classof _parsingObject) == Dummy then (return false)
 	
+	-- FreeCameras
+	if (classof _parsingObject) == FreeCamera then (
+		local type = getUserProp _parsingObject "typeObject"
+		if type == undefined or type == "railCamera" then (return false)
+	)
+	
 	-- Es spline?
 	if (isSpline _parsingObject) then (
 		if ((getUserProp _parsingObject "typeObject" ) as string) != "railCamera" then (

@@ -104,7 +104,7 @@ fn parseFormation parent = (
 			local mcv_tmx_look = (matrixMax2MCV formationLook.transform)
 			local lookPos = (getTransformPosValue mcv_tmx_look)
 			
-			parent.addAttr "formation_dir" (getTransformPosValue mcv_tmx)		
+			parent.addAttr "formation_dir" (getTransformPosValue mcv_tmx_look)		
 		) else (
 			throw "Cannot be there was Formation Go but not Formation Look!"
 		)

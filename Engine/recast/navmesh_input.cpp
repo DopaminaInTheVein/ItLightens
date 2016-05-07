@@ -27,8 +27,8 @@ void CNavmeshInput::clearInput() {
 }
 
 void CNavmeshInput::addInput(const VEC3& p0, const VEC3& p1) {
-	//nverts_total += 8;
-	//ntris_total += 10;
+	nverts_total += 8;
+	ntris_total += 10;
 
 	TInput input;
 	input.pmin = p0;
@@ -43,7 +43,7 @@ void CNavmeshInput::addInput(const PxTriangleMeshGeometry& t_mesh) {
 }
 
 // ---------------------------------------------------
-/*void CNavmeshInput::prepareInput(const TInput& input) {
+void CNavmeshInput::prepareInput(const TInput& input) {
 	unprepareInput();
 
 	nverts = 8;
@@ -96,7 +96,7 @@ void CNavmeshInput::addInput(const PxTriangleMeshGeometry& t_mesh) {
 
 	assert(idx == ntris * 3);
 }
-*/
+
 void CNavmeshInput::prepareInputMesh(const PxTriangleMeshGeometry& input) {
 	unprepareInput();
 

@@ -254,8 +254,14 @@ bool TCompPhysics::createConvexShape() {
 
 bool TCompPhysics::createDroneShape()
 {
-	m_pShape = g_PhysxManager->CreatePxSphere(0.8f, m_staticFriction, m_dynamicFriction, m_restitution);
+	//TODO: Ojo Hardcore hardcode!
+	m_pShape = g_PhysxManager->CreatePxSphere(0.58f, m_staticFriction, m_dynamicFriction, m_restitution);
 	addRigidbodyScene();
+	PxRigidActor * ra = m_pActor->isRigidActor();
+	m_pShape = g_PhysxManager->CreatePxBox(
+		PhysxConversion::Vec3ToPxVec3(VEC3(0.3f, 0.15f, 1.7f)),
+		m_staticFriction, m_dynamicFriction, m_restitution);
+	ra->attachShape(*m_pShape);
 	return true;
 }
 

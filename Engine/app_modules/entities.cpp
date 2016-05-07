@@ -274,6 +274,8 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
+	sala = "milestone2_intro";
+	//sala = "boxes"
 	//sala = "milestone2_guardias";
 	//sala = "scene_milestone_1";
 	//sala = "scene_test_recast";
@@ -284,7 +286,7 @@ bool CEntitiesModule::start() {
 	//sala = "test_pol";
 	//sala = "test_guard";
 	//sala = "test_anim";
-	sala = "test_column_navmesh";
+	//sala = "test_column_navmesh";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";
@@ -294,11 +296,11 @@ bool CEntitiesModule::start() {
 	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 
-	//{
-		//CEntityParser ep2;
-		//bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
-		//assert(isok);
-	//}
+	{
+		CEntityParser ep2;
+		bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
+		assert(isok);
+	}
 
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();
@@ -317,10 +319,11 @@ bool CEntitiesModule::start() {
 			max.y = bounds.maximum.y;
 			max.z = bounds.maximum.z;
 			nav.m_input.addInput(min, max);
-
+			/*
 			PxGeometryHolder geo = p->getShape()->getGeometry();
 			PxTriangleMeshGeometry mesh = geo.triangleMesh();
 			nav.m_input.addInput(mesh);
+			*/
 		}
 	}
 	nav.m_input.computeBoundaries();

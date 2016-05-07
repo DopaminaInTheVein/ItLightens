@@ -112,7 +112,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 	// Allocate array that can hold triangle area types.
 	// If you have multiple meshes you need to process, allocate
 	// and array which can hold the max number of triangles you need to process.
-	/*
+
 	m_triareas = new unsigned char[m_input.ntris_total];
 	if (!m_triareas) {
 		m_ctx->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'm_triareas' (%d).", m_input.ntris_total);
@@ -132,7 +132,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 
 		m_input.unprepareInput();
 	}
-	*/
+	/*
 	// PART2 - Triangle Mesh
 	// Allocate array that can hold triangle area types.
 	// If you have multiple meshes you need to process, allocate
@@ -156,7 +156,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 
 		m_input.unprepareInput();
 	}
-
+	*/
 	if (!m_keepInterResults) {
 		delete[] m_triareas;
 		m_triareas = 0;
