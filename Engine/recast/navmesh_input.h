@@ -13,9 +13,11 @@ public:
 	};
 	static const int MAX_INPUTS = 1024;
 	typedef std::vector< TInput > VInputs;
+	typedef std::vector< PxTriangleMeshGeometry > VInputsTris;
 
 public:
 	VInputs               inputs;
+	VInputsTris               inputsTris;
 	VEC3           aabb_min;
 	VEC3           aabb_max;
 
@@ -25,13 +27,17 @@ public:
 	int                   ntris;
 	int                   nverts_total;
 	int                   ntris_total;
+	int                   nverts_total_mesh;
+	int                   ntris_total_mesh;
 
 public:
 	CNavmeshInput();
 
 	void clearInput();
 	void addInput(const VEC3& p0, const VEC3& p1);
+	void addInput(const PxTriangleMeshGeometry& t_mesh);
 	void prepareInput(const TInput& input);
+	void prepareInputMesh(const PxTriangleMeshGeometry& input);
 	void unprepareInput();
 	void computeBoundaries();
 };

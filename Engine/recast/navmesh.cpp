@@ -19,10 +19,10 @@ rcConfig CNavmesh::getRcConfig() {
 	rcVcopy(config.bmin, &m_input.aabb_min.x);
 	rcVcopy(config.bmax, &m_input.aabb_max.x);
 	config.tileSize = 32;
-	config.cs = 0.05;
-	config.ch = 0.05;
-	config.walkableHeight = 2.0;
-	config.walkableRadius = 1;
+	config.cs = 0.1;
+	config.ch = 0.1;
+	config.walkableHeight = 2;
+	config.walkableRadius = 2;
 	config.walkableClimb = 0.1;
 	config.walkableSlopeAngle = 45.0f;
 	config.minRegionArea = 4;
@@ -30,7 +30,7 @@ rcConfig CNavmesh::getRcConfig() {
 	config.maxEdgeLen = 10;
 	config.maxSimplificationError = 1.0f;
 	config.maxVertsPerPoly = 6;
-	config.detailSampleDist = 1.0f;
+	config.detailSampleDist = 2.5f;
 	config.detailSampleMaxError = 0.1f;
 	return config;
 }
@@ -108,10 +108,11 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 		m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not create solid heightfield.");
 		return nullptr;
 	}
-
+	// PART1 - Single Bounds
 	// Allocate array that can hold triangle area types.
 	// If you have multiple meshes you need to process, allocate
 	// and array which can hold the max number of triangles you need to process.
+
 	m_triareas = new unsigned char[m_input.ntris_total];
 	if (!m_triareas) {
 		m_ctx->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'm_triareas' (%d).", m_input.ntris_total);
@@ -131,7 +132,31 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 
 		m_input.unprepareInput();
 	}
+	/*
+	// PART2 - Triangle Mesh
+	// Allocate array that can hold triangle area types.
+	// If you have multiple meshes you need to process, allocate
+	// and array which can hold the max number of triangles you need to process.
+	m_triareas = new unsigned char[m_input.ntris_total_mesh];
+	if (!m_triareas) {
+		m_ctx->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'm_triareas' (%d).", m_input.ntris_total_mesh);
+		return nullptr;
+	}
 
+	// Find triangles which are walkable based on their slope and rasterize them.
+	// If your input data is multiple meshes, you can transform them here, calculate
+	// the are type for each of the meshes and rasterize them.
+	memset(m_triareas, 0, m_input.ntris_total_mesh*sizeof(unsigned char));
+
+	for (size_t i = 0; i < m_input.inputsTris.size(); ++i) {
+		m_input.prepareInputMesh(m_input.inputsTris[i]);
+
+		rcMarkWalkableTriangles(m_ctx, m_cfg.walkableSlopeAngle, m_input.verts, m_input.nverts, m_input.tris, m_input.ntris, m_triareas);
+		rcRasterizeTriangles(m_ctx, m_input.verts, m_input.nverts, m_input.tris, m_triareas, m_input.ntris, *m_solid, m_cfg.walkableClimb);
+
+		m_input.unprepareInput();
+	}
+	*/
 	if (!m_keepInterResults) {
 		delete[] m_triareas;
 		m_triareas = 0;
@@ -610,8 +635,8 @@ void CNavmesh::destroy() {
 }
 
 void CNavmesh::dumpLog() {
-	printf("\n");
-	for (int i = 0; i < m_ctx->getLogCount(); ++i)
-		printf("%s\n", m_ctx->getLogText(i));
-	printf("\n");
+	//printf("\n");
+	//for (int i = 0; i < m_ctx->getLogCount(); ++i)
+	//	printf("%s\n", m_ctx->getLogText(i));
+	//printf("\n");
 }

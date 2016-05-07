@@ -262,4 +262,42 @@
    type_collision="static"
 />
 </entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columna3"
+/>
+<transform
+   pos="10.5771 -18.0684 -5.12992"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/columnas_balcon_cuadrado_centro.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columna2"
+/>
+<transform
+   pos="10.5771 -18.0684 -5.12992"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/columnas_balcon_cuadrado_izq.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
 </entities>
