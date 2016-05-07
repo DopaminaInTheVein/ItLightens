@@ -1079,6 +1079,7 @@ void bt_guard::drawShot(float distRay) {
 	PROFILE_FUNCTION("guard bt: draw shot");
 	// Centro del personaje
 	TCompCharacterController * cc = getPlayer()->get<TCompCharacterController>();
+	TCompTransform *t = getPlayer()->get<TCompTransform>();
 	assert(cc || fatal("Player doesn't have character controller!"));
 	VEC3 posPlayer = cc->GetPosition();
 
@@ -1086,15 +1087,11 @@ void bt_guard::drawShot(float distRay) {
 	VEC4 originShot4;
 	VEC4::Transform(SHOT_OFFSET, getTransform()->asMatrix(), originShot4);
 	VEC3 originShot = VEC3(originShot4.x, originShot4.y, originShot4.z);
+	originShot += VEC3(0.0f,-0.32f,0.0f);
+	originShot += 0.15f*getTransform()->getLeft();
+	originShot += 0.15f*getTransform()->getFront();
 	VEC3 destShot = posPlayer; //algun offset?
 	VEC3 rayShot = destShot - originShot;
-
-	// Quaternion shot
-	CTransform t = (CTransform)*(getTransform());
-	float yaw, pitch;
-	t.getAngles(&yaw, &pitch);
-	pitch += atan2(rayShot.y, sqrtf(powf(rayShot.x, 2) + powf(rayShot.z, 2)));
-	t.setAngles(yaw, pitch);
 
 	// Add Render Instruction
 	ShootManager::shootLaser(originShot, destShot);
