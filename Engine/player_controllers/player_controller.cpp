@@ -904,7 +904,7 @@ void player_controller::UpdateOverCharge() {
 void player_controller::startOverCharge()
 {
 	//TODO - Estado intermedio OverCharging
-
+	animController.setState(AST_SHOOT);
 	//OverCharge Effect
 	doOverCharge();
 }
