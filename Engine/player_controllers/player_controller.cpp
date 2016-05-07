@@ -615,7 +615,6 @@ void player_controller::UpdateMoves()
 		player_curr_speed = 0.0f;
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
-
 	//if (cc->OnGround() && player_curr_speed != 0.0f) {
 	//	ChangePose(pose_run);
 	//}
@@ -623,6 +622,11 @@ void player_controller::UpdateMoves()
 	//	ChangePose(pose_jump);
 	//}
 	//else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
+
+	if (player_curr_speed >= player_max_speed - 0.1f)
+		ChangeCommonState("running");
+	else
+		ChangeCommonState("moving");
 
 	if (cc->OnGround())
 		cc->AddMovement(direction*player_curr_speed*getDeltaTime());
@@ -1091,7 +1095,11 @@ PolarityForce player_controller::getPolarityForce(CHandle forceHandle) {
 void player_controller::ChangeCommonState(std::string state) {
 	if (state == "moving") {
 		animController.setState(AST_MOVE);
-	} else if (state == "jumping") {
+	}
+	else if (state == "running") {
+		animController.setState(AST_RUN);
+	}
+	else if (state == "jumping") {
 		animController.setState(AST_JUMP);
 	}
 }
