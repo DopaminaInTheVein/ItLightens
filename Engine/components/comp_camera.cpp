@@ -69,7 +69,7 @@ void TCompCamera::update(float dt) {
 
 		TCompTransform * targettransX = target_eX->get<TCompTransform>();
 
-		VEC3 nextPoint = (lastguidedCamPoint == gc->getTotalPoints() - 1 ? targettransX->getPosition() : gc->getPointPosition((lastguidedCamPoint + 1) % gc->getTotalPoints()));
+		VEC3 nextPoint = (lastguidedCamPoint == gc->getTotalPoints() - 1 ? gc->getPointPosition(lastguidedCamPoint) : gc->getPointPosition((lastguidedCamPoint + 1) % gc->getTotalPoints()));
 		/*
 		float yaw, pitch;
 		tmx->getAngles(&yaw, &pitch);
