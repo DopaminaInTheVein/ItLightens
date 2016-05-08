@@ -180,6 +180,8 @@ bool bt_guard::playerDetected() {
 		string name = entity->getName() + string("_player_detected");
 
 		SBB::postGuardAlert(name, alert);
+
+		logic_manager->throwEvent(logic_manager->OnDetected, "");
 		return true;
 	}
 	else {

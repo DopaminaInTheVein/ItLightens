@@ -144,17 +144,18 @@ end
 
 function OnOvercharge( param )
 	p:print( "OnOvercharge: "..param.."\n" )
-	specialActionSettings(1.0);
+	p:play_sound("data/sounds/sfx/sobrecarga.wav")
+	specialActionSettings(0.7);
 end
 
 function OnJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
-	p:play_sound("data/sounds/sfx/Jump.wav")
+	p:play_sound("data/sounds/sfx/jump01.wav")
 end
 
 function OnDoubleJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
-	p:play_sound("data/sounds/sfx/Boing.wav")
+	p:play_sound("data/sounds/sfx/jump02.wav")
 end
 
 function OnDetected( param )
