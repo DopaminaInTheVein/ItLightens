@@ -37,7 +37,7 @@ end
 
 function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
-	p:play_voice("data/sounds/loopingsfx/polarity.wav")
+	p:play_voice("data/sounds/loopingsfx/gunshot.wav")
 end
 
 function OnGuardAttackEnd( reaction_time )
@@ -141,7 +141,7 @@ end
 
 function OnStunned( param )
 	p:print( "OnStunned: "..param.."\n" )
-	p:play_ambient("data/sounds/loopingsfx/polarity.wav")
+	p:play_ambient("data/sounds/loopingsfx/stun.wav")
 end
 
 function OnStunnedEnd( param )
@@ -175,7 +175,7 @@ end
 
 function OnDetected( param )
 	p:print( "OnDetected: "..param.."\n" )
-	p:play_sound("data/sounds/sfx/jump01.wav")
+	p:play_sound("data/sounds/sfx/alarm02.wav")
 end
 
 function OnBeaconDetect( param )

@@ -146,6 +146,7 @@ bool bt_guard::playerStunned() {
 	PROFILE_FUNCTION("guard: player stunned");
 	if (stunned == true) {
 		logic_manager->throwEvent(logic_manager->OnStunned, "");
+		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 		return true;
 	}
 	return false;
