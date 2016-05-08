@@ -127,518 +127,6 @@
 </entity>
 <entity>
 <tags
-   tags="camera_main"
-/>
-<camera
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"
-/>
-<controller_3rd_person/>
-<name
-   name="camController_1"
-/>
-<transform
-   pos="-37.6678 -20.5623 -35.8906"
-   quat="0 0.707104 0 0.707104"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="2"
-   wpt0_pos="3.03034 -11.8267 4.39738"
-   wpt0_wait="2"
-   wpt1_pos="17.1279 -11.8267 4.39738"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DroneMinus_1"
-/>
-<transform
-   pos="10.0358 -10.6841 4.47689"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="2"
-   wpt0_pos="17.1279 -11.8267 -14.2574"
-   wpt0_wait="2"
-   wpt1_pos="3.03034 -11.8267 -14.2574"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DroneMinus_2"
-/>
-<transform
-   pos="10.0358 -10.6841 -14.3103"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="2"
-   wpt0_pos="38.7453 -20.6616 13.0132"
-   wpt0_wait="2"
-   wpt1_pos="24.6476 -23.8252 13.0132"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DroneMinus_003"
-/>
-<transform
-   pos="31.6531 -19.5191 12.9603"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="2"
-   wpt0_pos="38.7453 -23.6641 6.08694"
-   wpt0_wait="2"
-   wpt1_pos="24.6476 -24.0046 6.08694"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DroneMinus_004"
-/>
-<transform
-   pos="31.6531 -22.5215 6.03405"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="2"
-   wpt0_pos="17.1279 -11.8267 13.928"
-   wpt0_wait="2"
-   wpt1_pos="3.03034 -11.8267 13.928"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DronePlus_1"
-/>
-<transform
-   pos="10.0358 -10.6841 13.8705"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="plus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="2"
-   wpt0_pos="3.03034 -11.8267 -4.89916"
-   wpt0_wait="2"
-   wpt1_pos="17.1279 -11.8267 -4.89916"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DronePlus_2"
-/>
-<transform
-   pos="10.0358 -10.6841 -4.91669"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="plus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="generator_2"
-/>
-<transform
-   pos="-36.9951 -22.9079 -7.08108"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/__generator.static_mesh"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="sphere"
-   radius="1.0"
-/>
-<generator/>
-<name
-   name="trigger_2"
-/>
-<transform
-   pos="-36.9951 -22.9079 -7.08108"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="5.1302 -23.8064 -1.81982"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="5.1302 -23.8064 11.1675"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="-12.5302 -23.7414 11.1675"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="-12.5302 -23.7414 -1.97247"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.6548 -3.6815"
-   jurRadius="100.0"
-   formation_point="-6.33016 -23.7198 4.07596"
-   formation_dir="-19.3531 -22.7915 -11.9615"
-/>
-<name
-   name="guard_2"
-/>
-<transform
-   pos="37.5426 -23.6548 -3.6815"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="-14.3585 -23.7823 -25.036"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="5.1302 -23.8473 -25.036"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="5.1302 -23.8473 -12.228"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="-14.5697 -23.7823 -12.228"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.6957 -7.79579"
-   jurRadius="100.0"
-   formation_point="-6.33016 -23.7607 -20.6866"
-   formation_dir="-19.3531 -22.8325 -11.9615"
-/>
-<name
-   name="guard_003"
-/>
-<transform
-   pos="37.5426 -23.6957 -7.79579"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="14.7984 -23.9817 -12.228"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="35.0197 -24.1508 -11.7258"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="35.0197 -24.1508 -30.6163"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="13.9356 -24.08 -30.6631"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.7578 -11.7541"
-   jurRadius="100.0"
-   formation_point="24.5965 -24.0712 -20.6866"
-   formation_dir="-19.3531 -22.8945 -11.9615"
-/>
-<name
-   name="guard_004"
-/>
-<transform
-   pos="37.5426 -23.7578 -11.7541"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="35.0197 -24.0261 -3.26538"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="14.7906 -23.857 -3.76758"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="14.7906 -23.857 14.7207"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="35.0091 -24.0261 14.7207"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.6331 -15.9564"
-   jurRadius="100.0"
-   formation_point="24.5965 -23.9289 4.07596"
-   formation_dir="-19.3531 -22.7699 -11.9615"
-/>
-<name
-   name="guard_005"
-/>
-<transform
-   pos="37.5426 -23.6331 -15.9564"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="guided_camera"
-/>
-<guided_camera
-   velocity="5.0"
-   default_dirs="1"
-   points_size="18"
-   wpt0="-37.7996 -21.523 -27.3995"
-   wpt1="-37.8586 -22.2872 -12.1377"
-   wpt2="-35.6298 -22.5849 -4.01839"
-   wpt3="-8.13086 -15.818 1.04637"
-   wpt4="24.0681 -15.3789 4.71448"
-   wpt5="35.5618 -17.9118 -6.51821"
-   wpt6="28.2402 -19.198 -15.6807"
-   wpt7="-0.231323 -19.8878 -12.852"
-   wpt8="-12.9742 -15.8006 -17.6664"
-   wpt9="-1.22867 -6.8418 -24.9226"
-   wpt10="7.58606 -10.0096 -26.8349"
-   wpt11="14.9592 -9.77673 -26.4688"
-   wpt12="14.7146 -11.1311 -9.61108"
-   wpt13="12.7159 -10.1844 13.2852"
-   wpt14="4.35815 -8.67456 11.4821"
-   wpt15="-6.20255 -1.10934 13.3455"
-   wpt16="-22.7698 4.31072 10.0474"
-   wpt17="-38.3197 5.84642 -6.22315"
-   rot0="0 0 0 -1.0"
-   rot1="0 0 0 -1.0"
-   rot2="0 0 0 -1.0"
-   rot3="0 0 0 -1.0"
-   rot4="0 0 0 -1.0"
-   rot5="0 0 0 -1.0"
-   rot6="0 0 0 -1.0"
-   rot7="0 0 0 -1.0"
-   rot8="0 0 0 -1.0"
-   rot9="0 0 0 -1.0"
-   rot10="0 0 0 -1.0"
-   rot11="0 0 0 -1.0"
-   rot12="0 0 0 -1.0"
-   rot13="0 0 0 -1.0"
-   rot14="0 0 0 -1.0"
-   rot15="0 0 0 -1.0"
-   rot16="0 0 0 -1.0"
-/>
-<name
-   name="Line001"
-/>
-<transform
-   pos="8.52567 0 14.7145"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags="player"
-/>
-<player/>
-<life
-   points="10"
-/>
-<name
-   name="player_1"
-/>
-<transform
-   pos="-37.243 -23.054 -9.89473"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/player/player.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/player/player.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="0.7"
-/>
-</entity>
-<entity>
-<tags
    tags=""
 />
 <name
@@ -1699,6 +1187,628 @@
 />
 <rigidbody
    type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags="camera_main"
+/>
+<camera
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"
+/>
+<controller_3rd_person/>
+<name
+   name="camController_1"
+/>
+<transform
+   pos="-37.6678 -20.5623 -35.8906"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="8.26935 -8.16554 -5.79106"
+   wpt0_wait="2"
+   wpt1_pos="11.9181 -13.687 9.60145"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<name
+   name="DroneMinus_1"
+/>
+<transform
+   pos="10.0057 -7.02298 0.996308"
+   quat="0 -0.608761 0 0.793353"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="1"
+   wpt0_pos="17.1279 -11.8267 -17.6647"
+   wpt0_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<name
+   name="DroneMinus_2"
+/>
+<transform
+   pos="10.0358 -10.6841 -17.7176"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="38.7453 -20.6616 13.0132"
+   wpt0_wait="2"
+   wpt1_pos="24.6476 -23.8252 13.0132"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<name
+   name="DroneMinus_003"
+/>
+<transform
+   pos="31.6531 -19.5191 12.9603"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="38.7453 -23.6641 6.08694"
+   wpt0_wait="2"
+   wpt1_pos="24.6476 -24.0046 6.08694"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<name
+   name="DroneMinus_004"
+/>
+<transform
+   pos="31.6531 -22.5215 6.03405"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="1"
+   wpt0_pos="3.03034 -11.8267 -7.3398"
+   wpt0_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<name
+   name="DronePlus_2"
+/>
+<transform
+   pos="10.0358 -10.6841 -7.35733"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+<polarized
+   pol="plus"
+   size="1.7955 2.3474 4.92"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="generator_2"
+/>
+<transform
+   pos="-36.9951 -22.9079 -7.08108"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__generator.static_mesh"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.0"
+/>
+<generator/>
+<name
+   name="trigger_2"
+/>
+<transform
+   pos="-36.9951 -22.9079 -7.08108"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="5.1302 -23.8064 -1.81982"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="5.1302 -23.8064 11.1675"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="-12.5302 -23.7414 11.1675"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="-12.5302 -23.7414 -1.97247"
+   kpt3_wait="2"
+   jurisdiction="37.5426 -23.6548 -3.6815"
+   jurRadius="100.0"
+   formation_point="-6.33016 -23.7198 4.07596"
+   formation_dir="-19.3531 -22.7915 -11.9615"
+/>
+<name
+   name="guard_2"
+/>
+<transform
+   pos="37.5426 -23.6548 -3.6815"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="-14.3585 -23.7823 -25.036"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="5.1302 -23.8473 -25.036"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="5.1302 -23.8473 -12.228"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="-14.5697 -23.7823 -12.228"
+   kpt3_wait="2"
+   jurisdiction="37.5426 -23.6957 -7.79579"
+   jurRadius="100.0"
+   formation_point="-6.33016 -23.7607 -20.6866"
+   formation_dir="-19.3531 -22.8325 -11.9615"
+/>
+<name
+   name="guard_003"
+/>
+<transform
+   pos="37.5426 -23.6957 -7.79579"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="14.7984 -23.9817 -12.228"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="35.0197 -24.1508 -11.7258"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="35.0197 -24.1508 -30.6163"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="13.9356 -24.08 -30.6631"
+   kpt3_wait="2"
+   jurisdiction="37.5426 -23.7578 -11.7541"
+   jurRadius="100.0"
+   formation_point="24.5965 -24.0712 -20.6866"
+   formation_dir="-19.3531 -22.8945 -11.9615"
+/>
+<name
+   name="guard_004"
+/>
+<transform
+   pos="37.5426 -23.7578 -11.7541"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="35.0197 -24.0261 -3.26538"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="14.7906 -23.857 -3.76758"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="14.7906 -23.857 14.7207"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="35.0091 -24.0261 14.7207"
+   kpt3_wait="2"
+   jurisdiction="37.5426 -23.6331 -15.9564"
+   jurRadius="100.0"
+   formation_point="24.5965 -23.9289 4.07596"
+   formation_dir="-19.3531 -22.7699 -11.9615"
+/>
+<name
+   name="guard_005"
+/>
+<transform
+   pos="37.5426 -23.6331 -15.9564"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="guided_camera"
+/>
+<guided_camera
+   velocity="5.0"
+   default_dirs="1"
+   points_size="18"
+   wpt0="-37.7996 -21.523 -27.3995"
+   wpt1="-37.8586 -22.2872 -12.1377"
+   wpt2="-35.6298 -22.5849 -4.01839"
+   wpt3="-8.13086 -15.818 1.04637"
+   wpt4="24.0681 -15.3789 4.71448"
+   wpt5="35.5618 -17.9118 -6.51821"
+   wpt6="28.2402 -19.198 -15.6807"
+   wpt7="-0.231323 -19.8878 -12.852"
+   wpt8="-12.9742 -15.8006 -17.6664"
+   wpt9="-1.22867 -6.8418 -24.9226"
+   wpt10="7.58606 -10.0096 -26.8349"
+   wpt11="14.9592 -9.77673 -26.4688"
+   wpt12="14.7146 -11.1311 -9.61108"
+   wpt13="12.7159 -10.1844 13.2852"
+   wpt14="4.35815 -8.67456 11.4821"
+   wpt15="-6.20255 -1.10934 13.3455"
+   wpt16="-22.7698 4.31072 10.0474"
+   wpt17="-38.3197 5.84642 -6.22315"
+   rot0="0 0 0 -1.0"
+   rot1="0 0 0 -1.0"
+   rot2="0 0 0 -1.0"
+   rot3="0 0 0 -1.0"
+   rot4="0 0 0 -1.0"
+   rot5="0 0 0 -1.0"
+   rot6="0 0 0 -1.0"
+   rot7="0 0 0 -1.0"
+   rot8="0 0 0 -1.0"
+   rot9="0 0 0 -1.0"
+   rot10="0 0 0 -1.0"
+   rot11="0 0 0 -1.0"
+   rot12="0 0 0 -1.0"
+   rot13="0 0 0 -1.0"
+   rot14="0 0 0 -1.0"
+   rot15="0 0 0 -1.0"
+   rot16="0 0 0 -1.0"
+/>
+<name
+   name="Line001"
+/>
+<transform
+   pos="8.52567 0 14.7145"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags="player"
+/>
+<player/>
+<life
+   points="10"
+/>
+<name
+   name="player_1"
+/>
+<transform
+   pos="-37.243 -23.054 -9.89473"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/player/player.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="0.7"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="14.753 -2.59663 14.0589"
+   wpt0_wait="2"
+   wpt1_pos="-12.4063 1.97734 15.2071"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<name
+   name="DroneMinus_005"
+/>
+<transform
+   pos="4.82355 4.52908 14.76"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
+</entity>
+<entity>
+<tags
+   tags="box platform removable"
+/>
+<box/>
+<name
+   name="Box_1"
+/>
+<transform
+   pos="14.7821 -10.8911 15.1306"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/box2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="box"
+   size="3.0 1.5 3.0"
+   mass="5"
+/>
+<polarized
+   pol="plus"
+   size="4.0 3.0 4.0"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="2"
+   wpt0_pos="-25.2871 -6.36927 14.9996"
+   wpt0_wait="2"
+   wpt1_pos="-39.3847 -6.36928 14.9996"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<name
+   name="DroneMinus_006"
+/>
+<transform
+   pos="-32.3792 -5.22671 14.9467"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="1"
+   wpt0_pos="-38.7415 -0.166516 7.95924"
+   wpt0_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<name
+   name="DronePlus_003"
+/>
+<transform
+   pos="-38.759 0.976044 15.0513"
+   quat="0 0.707107 0 0.707107"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+<polarized
+   pol="plus"
+   size="1.7955 2.3474 4.92"
+/>
+</entity>
+<entity>
+<tags
+   tags="box platform removable"
+/>
+<box/>
+<name
+   name="Box_2"
+/>
+<transform
+   pos="23.5435 -23.0581 -17.161"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/box1.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="1.0 1.0 1.0"
+   mass="2"
 />
 </entity>
 </entities>
