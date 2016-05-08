@@ -1369,162 +1369,162 @@
 <bt_guard
    kpt_size="4"
    kpt0_type="seek"
-   kpt0_pos="35.0197 -24.0261 -3.26538"
+   kpt0_pos="1.47688 -23.8064 -1.59852"
    kpt0_wait="2"
    kpt1_type="seek"
-   kpt1_pos="14.7906 -23.857 -3.76758"
+   kpt1_pos="1.47688 -23.8064 13.4029"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="14.7906 -23.857 14.7207"
+   kpt2_pos="-10.6884 -23.7414 14.6235"
    kpt2_wait="2"
    kpt3_type="seek"
-   kpt3_pos="35.0091 -24.0261 14.7207"
+   kpt3_pos="-12.4445 -23.7414 -6.08011"
    kpt3_wait="2"
-   jurisdiction="37.5426 -23.6331 -15.9564"
+   jurisdiction="33.8892 -23.6548 -5.97384"
    jurRadius="100.0"
-   formation_point="24.5965 -23.9289 4.07596"
-   formation_dir="-19.3531 -22.7699 -11.9615"
-/>
-<name
-   name="guard_005"
-/>
-<transform
-   pos="37.5426 -23.6331 -15.9564"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="14.7984 -23.9817 -12.228"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="35.0197 -24.1508 -11.7258"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="35.0197 -24.1508 -30.6163"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="13.9356 -24.08 -30.6631"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.7578 -11.7541"
-   jurRadius="100.0"
-   formation_point="24.5965 -24.0712 -20.6866"
-   formation_dir="-19.3531 -22.8945 -11.9615"
-/>
-<name
-   name="guard_004"
-/>
-<transform
-   pos="37.5426 -23.7578 -11.7541"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="-14.3585 -23.7823 -25.036"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="5.1302 -23.8473 -25.036"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="5.1302 -23.8473 -12.228"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="-14.5697 -23.7823 -12.228"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.6957 -7.79579"
-   jurRadius="100.0"
-   formation_point="-6.33016 -23.7607 -20.6866"
-   formation_dir="-19.3531 -22.8325 -11.9615"
-/>
-<name
-   name="guard_003"
-/>
-<transform
-   pos="37.5426 -23.6957 -7.79579"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="5.1302 -23.8064 -1.81982"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="5.1302 -23.8064 11.1675"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="-12.5302 -23.7414 11.1675"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="-12.5302 -23.7414 -1.97247"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.6548 -3.6815"
-   jurRadius="100.0"
-   formation_point="-6.33016 -23.7198 4.07596"
-   formation_dir="-19.3531 -22.7915 -11.9615"
+   formation_point="-9.98348 -23.7198 1.78362"
+   formation_dir="-28.8748 -22.7915 -5.9006"
 />
 <name
    name="guard_2"
 />
 <transform
-   pos="37.5426 -23.6548 -3.6815"
+   pos="33.8892 -23.6548 -5.97384"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="-10.3686 -23.7823 -17.6466"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="1.30415 -23.8473 -21.2059"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="-2.39946 -23.8473 -10.1741"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="-17.2236 -23.7823 -6.90394"
+   kpt3_wait="2"
+   jurisdiction="33.7165 -23.6957 -8.98412"
+   jurRadius="100.0"
+   formation_point="-10.1562 -23.7607 -17.6289"
+   formation_dir="-28.5338 -22.8325 -5.00278"
+/>
+<name
+   name="guard_003"
+/>
+<transform
+   pos="33.7165 -23.6957 -8.98412"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="6.50445 -23.9817 -3.63866"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="26.7257 -24.1508 -3.13647"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="18.496 -24.1508 -22.0269"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="5.64166 -24.08 -22.0738"
+   kpt3_wait="2"
+   jurisdiction="29.2486 -23.7578 -3.16473"
+   jurRadius="100.0"
+   formation_point="16.3025 -24.0712 -13.6657"
+   formation_dir="-27.647 -22.8945 -3.37218"
+/>
+<name
+   name="guard_004"
+/>
+<transform
+   pos="29.2486 -23.7578 -3.16473"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="26.4032 -24.0261 -11.984"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="6.17405 -23.857 -5.88241"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="6.17405 -23.857 11.661"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="18.2124 -24.0261 10.6334"
+   kpt3_wait="2"
+   jurisdiction="28.9261 -23.6331 -11.9906"
+   jurRadius="100.0"
+   formation_point="15.9799 -23.9289 2.24402"
+   formation_dir="-27.9696 -22.7699 -7.99575"
+/>
+<name
+   name="guard_005"
+/>
+<transform
+   pos="28.9261 -23.6331 -11.9906"
    quat="0 0 0 1.0"
    scale="1.0"
 />
