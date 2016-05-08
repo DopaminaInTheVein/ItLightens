@@ -391,11 +391,11 @@ void player_controller::RecalcAttractions()
 
 
 	// Calc all_forces & Find Orbit force if exists
+	VEC3 all_forces = VEC3(0, 0, 0); //Regular forces sum
 	pol_orbit = false; //calcForceEffect update this state
-	if (pol_state != NEUTRAL) {
+	if (pol_state != NEUTRAL && polarityForces.size() > 0) {
 		TCompTransform * t = myEntity->get<TCompTransform>();
 		VEC3 posPlayer = t->getPosition();
-		VEC3 all_forces = VEC3(0, 0, 0); //Regular forces sum
 		PolarityForce nearestForce; //Orbit force (if exists)
 		float lowestDist = FLT_MAX;
 		for (auto forceHandle : polarityForces) {
@@ -414,35 +414,32 @@ void player_controller::RecalcAttractions()
 			}
 		}
 
-		//Se aplica alguna fuerza?
-		if (all_forces != VEC3(0.f, 0.f, 0.f)) {
-			VEC3 final_forces = calcFinalForces(all_forces, nearestForce);
-			polarityMoveResistance(nearestForce);
+		VEC3 final_forces = calcFinalForces(all_forces, nearestForce);
+		polarityMoveResistance(nearestForce);
 
-			// Stop inertia if enter with attraction
-			if (pol_orbit && !pol_orbit_prev) {
-				cc->ChangeSpeed(POL_SPEED_ORBITA);
-			}
-			// Otherwise apply inertia
-			//else {
-				//final_forces = (lastForces * POL_INERTIA) + ( final_forces * (1 - POL_INERTIA));
-			//}
-
-			//Apply and save forces
-			cc->AddSpeed(final_forces * getDeltaTime());
-
-			//Anular gravedad
-			VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
-			if (nearestForce.distance > POL_RCLOSE) {
-				antigravity.y = clamp(10.f - pow(nearestForce.distance - POL_RCLOSE, 2), 0.f, 10.f);
-			}
-			cc->AddSpeed(antigravity*getDeltaTime());
-			lastForces = final_forces;
+		// Stop inertia if enter with attraction
+		if (pol_orbit && !pol_orbit_prev) {
+			cc->ChangeSpeed(POL_SPEED_ORBITA);
 		}
+		// Otherwise apply inertia
+		//else {
+			//final_forces = (lastForces * POL_INERTIA) + ( final_forces * (1 - POL_INERTIA));
+		//}
 
-		//Last forces (util for inertia, not apllied now!)
-		lastForces = all_forces;
+		//Apply and save forces
+		cc->AddSpeed(final_forces * getDeltaTime());
+
+		//Anular gravedad
+		VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
+		if (nearestForce.distance > POL_RCLOSE) {
+			antigravity.y = clamp(10.f - pow(nearestForce.distance - POL_RCLOSE, 2), 0.f, 10.f);
+		}
+		cc->AddSpeed(antigravity*getDeltaTime());
+		lastForces = final_forces;
 	}
+
+	//Last forces (util for inertia, not apllied now!)
+	lastForces = all_forces;
 }
 
 VEC3 player_controller::calcForceEffect(const PolarityForce& force){
@@ -456,7 +453,8 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 
 	//Force Effect (result)
 	VEC3 forceEffect = VEC3(0, 0, 0);
-	
+	pol_orbit = false;
+
 	//Distance and direction
 	VEC3 direction = force.deltaPos;
 	assert(isNormal(direction));
@@ -467,7 +465,7 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	}
 
 	// Attraction?
-	bool atraction = (force.polarity == pol_state);
+	bool atraction = (force.polarity != pol_state);
 
 	// In orbit space
 	if (force.distance == 0) {
@@ -495,7 +493,7 @@ VEC3 player_controller::calcFinalForces(const VEC3& all_forces, const PolarityFo
 	//Result 
 	VEC3 finalForce;
 
-	if (nearestForce.polarity == pol_state) {
+	if (nearestForce.polarity != pol_state) {
 
 		//Orbit Force
 		VEC3 orbitForce;
@@ -525,8 +523,8 @@ VEC3 player_controller::calcFinalForces(const VEC3& all_forces, const PolarityFo
 
 void player_controller::polarityMoveResistance(const PolarityForce& force) {
 	if (force.distance > 0.1f
-		&& force.distance < POL_RCLOSE
-		&& force.polarity == pol_state
+		&& force.distance < POL_RCLOSE // very near (with margin)
+		&& force.polarity != pol_state // attraction
 	) {
 		SetCharacterController();
 		VEC3 movementPlayer = cc->GetMovement();
