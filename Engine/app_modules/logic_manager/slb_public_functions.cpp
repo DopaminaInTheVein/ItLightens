@@ -229,6 +229,22 @@ void SLBPublicFunctions::setAmbientVolume(float volume) {
 	sound_manager->setVolume(CSoundManagerModule::AMBIENT, volume);
 }
 
+void SLBPublicFunctions::stopSoundChannel() {
+	sound_manager->stopChannel(CSoundManagerModule::SFX);
+}
+
+void SLBPublicFunctions::stopMusicChannel() {
+	sound_manager->stopChannel(CSoundManagerModule::MUSIC);
+}
+
+void SLBPublicFunctions::stopVoicesChannel() {
+	sound_manager->stopChannel(CSoundManagerModule::VOICES);
+}
+
+void SLBPublicFunctions::stopAmbientChannel() {
+	sound_manager->stopChannel(CSoundManagerModule::AMBIENT);
+}
+
 void SLBPublicFunctions::toggleIntroState() {
 	GameController->TogglePauseIntroState();
 }

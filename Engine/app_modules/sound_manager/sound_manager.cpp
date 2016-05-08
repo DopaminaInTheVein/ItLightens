@@ -36,13 +36,18 @@ bool CSoundManagerModule::start() {
 
 	for (std::string file : files_to_load) {
 		sounds[file] = nullptr;
-		if (file.find("music") == std::string::npos) {
-			result = system->createSound(file.c_str(), FMOD_DEFAULT, 0, &sounds[file]);
+		if (file.find("music") == std::string::npos && file.find("looping") == std::string::npos) {
+			result = system->createSound(file.c_str(), FMOD_DEFAULT | FMOD_UNIQUE, 0, &sounds[file]);
 		}
-		else {
-			// musics are loaded as streams and with loop mode on
+		else if (file.find("music") != std::string::npos) {
+			// musics are loaded as unique streams and with loop mode on
+			result = system->createStream(file.c_str(), FMOD_DEFAULT | FMOD_LOOP_NORMAL | FMOD_UNIQUE, 0, &sounds[file]);
+		}
+		else if (file.find("looping") != std::string::npos) {
+			// looping sfx are looping but not unique
 			result = system->createStream(file.c_str(), FMOD_DEFAULT | FMOD_LOOP_NORMAL, 0, &sounds[file]);
 		}
+
 		if (result != FMOD_OK)
 			return false;
 	}
@@ -101,5 +106,11 @@ void CSoundManagerModule::setVolume(CHANNEL channel, float volume) {
 		volume = 1.f;
 
 	channels[channel]->setVolume(volume);
+}
+
+void CSoundManagerModule::stopChannel(CHANNEL channel) {
+	// fit the volume to its min and max values
+
+	channels[channel]->setPaused(true);
 }
 

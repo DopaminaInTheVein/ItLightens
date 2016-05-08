@@ -37,6 +37,7 @@ public:
 
 		OnPlayerDead,
 		OnGuardAttack,
+		OnGuardAttackEnd,
 		OnGuardRemoveBox,
 		OnGuardOvercharged,
 		OnInterruptHit,
@@ -56,6 +57,7 @@ public:
 		OnUseGenerator,
 		OnStun,
 		OnStunned,
+		OnStunnedEnd,
 		OnLiquid,
 		OnBeingAttracted,
 		OnOvercharge,

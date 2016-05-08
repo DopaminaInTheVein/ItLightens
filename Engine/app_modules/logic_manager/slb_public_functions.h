@@ -77,6 +77,10 @@ public:
 	void setMusicVolume(float volume);
 	void setVoicesVolume(float volume);
 	void setAmbientVolume(float volume);
+	void stopSoundChannel();
+	void stopMusicChannel();
+	void stopVoicesChannel();
+	void stopAmbientChannel();
 	void toggleIntroState();
 
 	void test(const char* to_print);
