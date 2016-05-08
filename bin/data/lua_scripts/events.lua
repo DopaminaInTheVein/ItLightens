@@ -141,7 +141,8 @@ end
 
 function OnStunned( param )
 	p:print( "OnStunned: "..param.."\n" )
-	p:play_ambient("data/sounds/loopingsfx/stun.wav")
+	p:play_ambient("data/sounds/sfx/stun.wav")
+	p:set_ambient_volume(0.4)
 end
 
 function OnStunnedEnd( param )
