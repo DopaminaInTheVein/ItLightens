@@ -1635,10 +1635,6 @@
 <polarized
    pol="minus"
 />
-<polarized
-   pol="plus"
-   size="4.0 3.0 4.0"
-/>
 </entity>
 <entity>
 <tags
@@ -1661,6 +1657,10 @@
    type_shape="box"
    size="3.0 1.5 3.0"
    mass="5"
+/>
+<polarized
+   pol="plus"
+   size="4.0 3.0 4.0"
 />
 </entity>
 <entity>
