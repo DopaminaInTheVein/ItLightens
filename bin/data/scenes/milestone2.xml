@@ -3,222 +3,6 @@
 <tags
    tags=""
 />
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="21.6"
-   out_radius="69.688"
-/>
-<name
-   name="_Luces12"
-/>
-<transform
-   pos="9.96491 23.3405 -23.4093"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="21.6"
-   out_radius="69.688"
-/>
-<name
-   name="_Luces11"
-/>
-<transform
-   pos="9.96491 23.3405 6.01037"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="21.6"
-   out_radius="69.688"
-/>
-<name
-   name="_Luces10"
-/>
-<transform
-   pos="31.3328 23.3405 6.01037"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="21.6"
-   out_radius="69.688"
-/>
-<name
-   name="_Luces09"
-/>
-<transform
-   pos="1.42302 -5.36438 -6.22275"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="16.0127"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces08"
-/>
-<transform
-   pos="32.3767 -6.12036 9.82733"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="8.8"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces07"
-/>
-<transform
-   pos="-19.5386 23.7925 -10.2227"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="8.8"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces06"
-/>
-<transform
-   pos="-19.5386 23.7925 19.0538"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="8.8"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces05"
-/>
-<transform
-   pos="51.4312 23.7925 19.0538"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="16.0127"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces04"
-/>
-<transform
-   pos="-31.8362 -18.8937 0.470277"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="16.0127"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces03"
-/>
-<transform
-   pos="-31.8362 -18.8937 -20.5488"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="16.0127"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces02"
-/>
-<transform
-   pos="-21.3718 -3.32312 4.75385"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="16.0127"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces01"
-/>
-<transform
-   pos="19.7314 -19.276 -19.0215"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
 <name
    name="turbine_2"
 />
@@ -1874,6 +1658,114 @@
 <polarized
    pol="plus"
    size="4.0 3.0 4.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="21.6"
+   out_radius="69.688"
+/>
+<name
+   name="_Luces11"
+/>
+<transform
+   pos="9.96491 23.3405 6.01037"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="21.6"
+   out_radius="69.688"
+/>
+<name
+   name="_Luces09"
+/>
+<transform
+   pos="1.42302 -5.36438 -6.22275"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="_Luces07"
+/>
+<transform
+   pos="-19.5386 23.7925 -10.2227"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="_Luces05"
+/>
+<transform
+   pos="51.4312 23.7925 19.0538"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="16.0127"
+   out_radius="34.0"
+/>
+<name
+   name="_Luces03"
+/>
+<transform
+   pos="-31.8362 -18.8937 -20.5488"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="16.0127"
+   out_radius="34.0"
+/>
+<name
+   name="_Luces01"
+/>
+<transform
+   pos="19.7314 -19.276 -19.0215"
+   quat="0 0 0 1.0"
+   scale="1.0"
 />
 </entity>
 </entities>
