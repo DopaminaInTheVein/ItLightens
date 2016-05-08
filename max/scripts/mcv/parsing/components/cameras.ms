@@ -13,7 +13,14 @@ fn _parse_rail_camera = (
 			vel = "2.0"
 		)
 		xml.addAttr "velocity" (vel as string)
-		xml.addAttr "points_size" ((numSegments _parsingObject 1) as string)
+		
+		local default_dirs = getUserProp _parsingObject "default_dirs"
+		if (default_dirs == undefined) do (
+			default_dirs = "0"
+		)
+		xml.addAttr "default_dirs" (default_dirs as string)
+		
+		xml.addAttr "points_size" (((numSegments _parsingObject 1)+1) as string)
 		
 		local mcv_tmx
 		local wPoint
@@ -31,22 +38,26 @@ fn _parse_rail_camera = (
 			tMatrix.pos = wPoint
 			mcv_tmx = matrixMax2MCV tMatrix
 			atrValue = getTransformPosValue mcv_tmx	
-		
 			--Parse Attribute wpt
 			xml.addAttr  atrName atrValue
 		)
 		local i2 = 0
 		local rot
+		--local quatrot = quat 0 -0.7071 0 -0.7071 
 		for c in _parsingObject.children do(
-			if ((classof c) == FreeCamera or (classof c) == Targetcamera) then (
+			if ((classof c) == FreeCamera ) then (
 				-- Atr Name
 				atrName = "rot" + (i2 as string)
 			
 				-- Get Rotation
 				mcv_tmx = matrixMax2MCV c.transform
 				rot = mcv_tmx.rotation
-				atrValue = getAsXmlValues #(-rot.x, -rot.y, -rot.z, rot.w)
+				--rot = (mcv_tmx.rotation * quatrot)
+				--rot  = inverse rot
+				atrValue = getAsXmlValues #(-rot.x, rot.z, -rot.y, -rot.w)
 				xml.addAttr atrName atrValue
+				--quatValue = getTransformRotValue mcv_tmx
+				--xml.addAttr atrName quatValue
 				i2 += 1
 			)
 		)
