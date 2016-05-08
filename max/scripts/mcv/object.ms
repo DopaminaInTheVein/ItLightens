@@ -35,7 +35,7 @@ struct ObjectDescriptor (
 ----------Object Manager -----------------------------------------
 struct OM (
 	hColliders = #("colliderBox","colliderConvex","colliderSphere")
-	,hPolarized = #("pol_minus","pol_neutral","pol_plus")
+	,hPolarized = #("pol_minus","pol_neutral","pol_plus", "area_plus", "area_minus")
 	,hPatrol = #("patrol_go", "patrol_look")
 	,hNpcs = #("patrol_go", "patrol_look", "jurisdiction", "charController")
 	,allTheObjectsDescription = #(
@@ -46,7 +46,7 @@ struct OM (
 			-- Attributes
 			,#("id", "mesh", "static_mesh", "skeleton")
 			--Components
-			,#("name", "transform",  "render", "physx", "polarized", "tracker")
+			,#("name", "transform",  "render", "physx", "polarized", "tracker", "polarizedArea")
 			--Helpers
 			,hPolarized + hColliders
 		)

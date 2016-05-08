@@ -974,10 +974,6 @@
    textureFront="droneFront"
    textureBack="droneBack"
 />
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
-/>
 <name
    name="DroneMinus_1"
 />
@@ -993,6 +989,10 @@
    type_collision="dynamic"
    type_shape="drone"
 />
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
 </entity>
 <entity>
 <tags
@@ -1006,10 +1006,6 @@
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
 />
 <name
    name="DroneMinus_2"
@@ -1026,6 +1022,10 @@
    type_collision="dynamic"
    type_shape="drone"
 />
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
 </entity>
 <entity>
 <tags
@@ -1039,10 +1039,6 @@
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
 />
 <name
    name="DroneMinus_003"
@@ -1059,6 +1055,10 @@
    type_collision="dynamic"
    type_shape="drone"
 />
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
 </entity>
 <entity>
 <tags
@@ -1072,10 +1072,6 @@
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
 />
 <name
    name="DroneMinus_004"
@@ -1092,6 +1088,10 @@
    type_collision="dynamic"
    type_shape="drone"
 />
+<polarized
+   pol="minus"
+   size="1.7955 2.3474 4.92"
+/>
 </entity>
 <entity>
 <tags
@@ -1105,10 +1105,6 @@
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
-/>
-<polarized
-   pol="plus"
-   size="1.7955 2.3474 4.92"
 />
 <name
    name="DronePlus_1"
@@ -1125,6 +1121,10 @@
    type_collision="dynamic"
    type_shape="drone"
 />
+<polarized
+   pol="plus"
+   size="1.7955 2.3474 4.92"
+/>
 </entity>
 <entity>
 <tags
@@ -1138,10 +1138,6 @@
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
-/>
-<polarized
-   pol="plus"
-   size="1.7955 2.3474 4.92"
 />
 <name
    name="DronePlus_2"
@@ -1157,6 +1153,10 @@
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"
+/>
+<polarized
+   pol="plus"
+   size="1.7955 2.3474 4.92"
 />
 </entity>
 <entity>
@@ -1466,7 +1466,7 @@
    name="Box_2"
 />
 <transform
-   pos="-19.4212 -21.1743 -24.9888"
+   pos="-19.4212 -23.2242 -24.9888"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1479,9 +1479,12 @@
    size="3.0 1.5 3.0"
    mass="5"
 />
+
 <polarized
-   pol="plus"
+   pol="minus"
+   size="4.0 2.0 4.0"
 />
+
 </entity>
 <entity>
 <tags

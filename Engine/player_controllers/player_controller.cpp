@@ -277,11 +277,11 @@ void player_controller::Idle() {
 }
 
 void player_controller::myExtraIdle() {
-	if (pol_state != NEUTRAL) {
-		SetCharacterController();
-		ChangeState("falling");
-		if (!cc->OnGround()) animController.setState(AST_FALL);
-	}
+	//if (pol_state != NEUTRAL) {
+	//	SetCharacterController();
+	//	ChangeState("falling");
+	//	if (!cc->OnGround()) animController.setState(AST_FALL);
+	//}
 }
 
 void player_controller::UpdateDamage()
@@ -325,11 +325,16 @@ void player_controller::Jump()
 {
 	PROFILE_FUNCTION("jump player");
 	SetCharacterController();
-
+	bool ascending = cc->GetLastSpeed().y > 0.1f;
 	cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 	energyDecreasal(jump_energy);
-	ChangeState("jumping");
-	ChangeCommonState("jumping");
+	if (ascending) {
+		ChangeState("doublejump");
+		animController.setState(AST_JUMP2);
+	} else {
+		ChangeState("jumping");
+		animController.setState(AST_JUMP);
+	}
 }
 
 void player_controller::Jumping()
@@ -384,20 +389,20 @@ void player_controller::RecalcAttractions()
 {
 	PROFILE_FUNCTION("player controller: recalc attraction");
 
-	TCompTransform * t = myEntity->get<TCompTransform>();
-	VEC3 posPlayer = t->getPosition();
 
 	// Calc all_forces & Find Orbit force if exists
-	VEC3 all_forces = VEC3(0, 0, 0); //Regular forces sum
-	PolarityForce nearestForce; //Orbit force (if exists)
 	pol_orbit = false; //calcForceEffect update this state
-	float lowestDist = FLT_MAX;
 	if (pol_state != NEUTRAL) {
+		TCompTransform * t = myEntity->get<TCompTransform>();
+		VEC3 posPlayer = t->getPosition();
+		VEC3 all_forces = VEC3(0, 0, 0); //Regular forces sum
+		PolarityForce nearestForce; //Orbit force (if exists)
+		float lowestDist = FLT_MAX;
 		for (auto forceHandle : polarityForces) {
 
 			PolarityForce force = getPolarityForce(forceHandle);
 			if (force.polarity == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
-			
+
 			VEC3 localForce = calcForceEffect(force);
 			assert(isValid(localForce));
 			all_forces += localForce;
@@ -408,31 +413,36 @@ void player_controller::RecalcAttractions()
 				lowestDist = force.distance;
 			}
 		}
+
+		//Se aplica alguna fuerza?
+		if (all_forces != VEC3(0.f, 0.f, 0.f)) {
+			VEC3 final_forces = calcFinalForces(all_forces, nearestForce);
+			polarityMoveResistance(nearestForce);
+
+			// Stop inertia if enter with attraction
+			if (pol_orbit && !pol_orbit_prev) {
+				cc->ChangeSpeed(POL_SPEED_ORBITA);
+			}
+			// Otherwise apply inertia
+			//else {
+				//final_forces = (lastForces * POL_INERTIA) + ( final_forces * (1 - POL_INERTIA));
+			//}
+
+			//Apply and save forces
+			cc->AddSpeed(final_forces * getDeltaTime());
+
+			//Anular gravedad
+			VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
+			if (nearestForce.distance > POL_RCLOSE) {
+				antigravity.y = clamp(10.f - pow(nearestForce.distance - POL_RCLOSE, 2), 0.f, 10.f);
+			}
+			cc->AddSpeed(antigravity*getDeltaTime());
+			lastForces = final_forces;
+		}
+
+		//Last forces (util for inertia, not apllied now!)
+		lastForces = all_forces;
 	}
-
-	VEC3 final_forces = calcFinalForces(all_forces, nearestForce);
-	polarityMoveResistance(nearestForce);
-
-	// Stop inertia if enter with attraction
-	if (pol_orbit && !pol_orbit_prev) {
-		cc->ChangeSpeed(POL_SPEED_ORBITA);
-	}
-	// Otherwise apply inertia
-	else {
-		//final_forces = (lastForces * POL_INERTIA) + ( final_forces * (1 - POL_INERTIA));
-	}
-
-	//Apply and save forces
-	cc->AddSpeed(final_forces * getDeltaTime());
-
-	//Anular gravedad
-	VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
-	if (nearestForce.distance > POL_RCLOSE) {
-		antigravity.y = clamp(10.f - pow(nearestForce.distance - POL_RCLOSE, 2), 0.f, 10.f);
-	}
-	cc->AddSpeed(antigravity*getDeltaTime());
-
-	lastForces = final_forces;
 }
 
 VEC3 player_controller::calcForceEffect(const PolarityForce& force){

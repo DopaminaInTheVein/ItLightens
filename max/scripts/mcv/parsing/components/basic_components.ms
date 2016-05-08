@@ -210,7 +210,11 @@ fn parsePolarizedArea obj = (
 )
 
 fn _parse_polarizedArea = (
-	parsePolarizedArea _parsingObject
+	--Polarized Component
+	local polArea = findHelper "AreaPol"
+	if polArea != undefined then (
+		parsePolarizedArea polArea
+	)	
 )
 
 ----------------------------------------------------------------------
@@ -230,12 +234,6 @@ fn _parse_drone = (
 	
 	local textureBack = getUserProp _parsingObject "textureBack"
 	xmlDrone.addAttr "textureBack" textureBack
-	
-	--Polarized Component
-	local polArea = findHelper "AreaPol"
-	if polArea != undefined then (
-		parsePolarizedArea polArea
-	)	
 )
 
 ----------------------------------------------------------------------
