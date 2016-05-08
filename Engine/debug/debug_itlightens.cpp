@@ -24,7 +24,7 @@ void  CDebug::LogRaw(const char* msg, ...)
 {
 #ifndef NDEBUG					//performance cost
 	int old_size = Buf.size();
-	
+
 	//near max int
 	if (old_size >= 2047483647) {
 		Clear();
@@ -81,6 +81,7 @@ void CDebug::LogWithTag(const char * tag, const char * msg, ...)
 
 void CDebug::DrawLog()
 {
+#ifndef NDEBUG
 	ImGui::SetNextWindowSize(ImVec2(512, 512), ImGuiSetCond_FirstUseEver);
 	if (opened) {
 		ImGui::Begin("Log", &opened);
@@ -119,28 +120,34 @@ void CDebug::DrawLog()
 		ImGui::EndChild();
 		ImGui::End();
 	}
+#endif
 }
 
 void CDebug::DrawLine(VEC3 org, VEC3 end, VEC3 color)
 {
+#ifndef NDEBUG
 	line new_line;
 	new_line.org = org;
 	new_line.end = end;
 	new_line.color = color;
 
 	lines.push_back(new_line);
+#endif
 }
 
 void CDebug::DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color)
 {
+#ifndef NDEBUG
 	direction.Normalize();
 	VEC3 pos_end = pos;
 	pos_end += direction*dist;
 	DrawLine(pos, pos_end, color);
+#endif
 }
 
 void CDebug::RenderLine(line l)
 {
+#ifndef NDEBUG
 	SimpleVertexColored vtxs_axis[2] =
 	{
 		{ l.org.x, l.org.y, l.org.z,    l.color.x, l.color.y, l.color.z, 1 },
@@ -160,15 +167,19 @@ void CDebug::RenderLine(line l)
 
 	mesh->destroy();
 	delete mesh;
+#endif
 }
 
 void CDebug::update(float dt) {
+#ifndef NDEBUG
 	console.update();
 	DrawLog();
+#endif
 }
 
 void CDebug::render()
 {
+#ifndef NDEBUG
 	shader_ctes_object.World = MAT44::Identity;
 	shader_ctes_object.uploadToGPU();
 
@@ -183,4 +194,5 @@ void CDebug::render()
 	}
 
 	lines.clear();
+#endif
 }
