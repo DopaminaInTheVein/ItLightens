@@ -436,7 +436,8 @@
 />
 <guided_camera
    velocity="5.0"
-   points_size="6"
+   points_size="7"
+   default_dirs="1"
    wpt0="-37.7996 -19.9678 -9.95837"
    wpt1="-8.13086 -6.03711 4.40758"
    wpt2="24.9753 -15.3789 4.71448"
