@@ -353,6 +353,14 @@ void TCompPhysics::AddForce(VEC3 force)
 	}
 }
 
+void TCompPhysics::ClearForces()
+{
+	PxRigidDynamic *rb = m_pActor->isRigidDynamic();
+	if (rb) {
+		rb->clearForce();
+	}
+}
+
 void TCompPhysics::AddVelocity(VEC3 velocity)
 {
 	PxRigidDynamic *rb = m_pActor->isRigidDynamic();

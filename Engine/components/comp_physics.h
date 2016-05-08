@@ -80,6 +80,7 @@ public:
 	bool isKinematic();
 	bool setKinematic(bool isKinematic);
 	void AddForce(VEC3 force);
+	void ClearForces();
 	void AddVelocity(VEC3 velocity);
 	void setPosition(VEC3 position, CQuaternion rotation);
 

@@ -89,10 +89,29 @@ void TCompPolarized::update(float elapsed)
 					TCompPhysics *p = e->get<TCompPhysics>();
 					
 					if (p) {
-						if (force.polarity != mPlayer_state)	p->AddForce((-direction*100)/dist);		//opposite pols
+						float forceMin = 3.f;
+						float forceMax = 30.f;
+						float forceVal = 0.f;
+						float distRepulsion = 9.f;
+						float distAttraction = 9.f;
+
+						if (force.polarity == mPlayer_state) {
+							//Repulsion
+							forceVal = forceMax - (forceMax - forceMin) * clamp((dist / distRepulsion), 0, 1);
+							p->AddForce(-direction * forceVal);
+						}
 						else {
-							if(dist_near < dist)
-								p->AddForce((direction * 10)); 
+							static float forceStop = 0.f;
+							//Attraction
+							if (dist > dist_near) {
+								if (dist > distRepulsion) forceVal = forceMin;
+								else forceVal = 15.f;
+								forceStop = forceVal/2;
+							} else {
+								forceVal = -forceStop;
+								forceStop = forceStop - (0.99f * forceStop) * elapsed;
+							}
+							p->AddForce(direction * forceVal);
 						}
 					}
 				}

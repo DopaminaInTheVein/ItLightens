@@ -24,7 +24,7 @@ struct TCompPolarized : public TCompBase {
 
 	float			dist_effect_squared_free = 25.f;
 	float			dist_effect_squared_fixed	= 4.f;
-	float			dist_near			= 3.0f;
+	float			dist_near			= 5.f;
 
 	PolarityForce	force;
 	PxBoxGeometry*	m_area;
