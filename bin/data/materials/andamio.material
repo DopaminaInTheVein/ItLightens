@@ -1,0 +1,3 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/gris_pared.dds"/>
+</material>
