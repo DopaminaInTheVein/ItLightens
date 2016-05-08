@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/tuberiagorda.dds"/>
+<texture slot="normalmap" name="textures/pipe_link_90_Normal_OpenGL.dds"/>
+</material>

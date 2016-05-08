@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/andamio_difuso.dds"/>
+<texture slot="normalmap" name="textures/andamio_normals.dds"/>
+</material>

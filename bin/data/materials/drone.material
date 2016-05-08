@@ -1,4 +1,4 @@
 <material tech="deferred.tech">
 <texture slot="diffuse" name="textures/COLOR.dds"/>
-<texture slot="bump" name="textures/dron_normals.dds"/>
+<texture slot="normalmap" name="textures/dron_normals.dds"/>
 </material>
