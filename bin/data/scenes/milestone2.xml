@@ -129,6 +129,7 @@
 <tags
    tags="camera_main"
 />
+<culling/>
 <camera
    znear="0.1"
    zfar="250.0"
@@ -343,6 +344,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -359,6 +361,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -563,7 +566,7 @@
 />
 <guided_camera
    velocity="5.0"
-   default_dirs="0"
+   default_dirs="1"
    points_size="18"
    wpt0="-37.7996 -21.523 -27.3995"
    wpt1="-37.8586 -22.2872 -12.1377"
@@ -572,7 +575,7 @@
    wpt4="24.0681 -15.3789 4.71448"
    wpt5="35.5618 -17.9118 -6.51821"
    wpt6="28.2402 -19.198 -15.6807"
-   wpt7="-0.231323 -22.177 -12.852"
+   wpt7="-0.231323 -19.177 -12.852"
    wpt8="-12.9742 -15.8006 -17.6664"
    wpt9="-1.22867 -6.8418 -24.9226"
    wpt10="7.58606 -10.0096 -26.8349"
@@ -638,6 +641,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -657,6 +661,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -676,6 +681,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -695,6 +701,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -714,6 +721,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -733,6 +741,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -752,6 +761,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -771,6 +781,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -790,6 +801,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -809,6 +821,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -828,6 +841,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -847,6 +861,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -866,6 +881,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -885,6 +901,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -904,6 +921,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -923,6 +941,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -942,6 +961,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -961,6 +981,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -980,6 +1001,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -999,6 +1021,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1018,6 +1041,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1037,6 +1061,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1056,6 +1081,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1075,6 +1101,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1094,6 +1121,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1113,6 +1141,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1132,6 +1161,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1151,6 +1181,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1170,6 +1201,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1189,6 +1221,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1208,6 +1241,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1227,6 +1261,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1246,6 +1281,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1265,6 +1301,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1284,6 +1321,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1303,6 +1341,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1322,6 +1361,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1341,6 +1381,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1360,6 +1401,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1379,6 +1421,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1398,6 +1441,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1417,6 +1461,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1436,6 +1481,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1455,6 +1501,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1474,6 +1521,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1493,6 +1541,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1512,6 +1561,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1531,6 +1581,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1550,6 +1601,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1569,6 +1621,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1588,6 +1641,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1607,6 +1661,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1626,6 +1681,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1645,6 +1701,7 @@
 />
 </entity>
 <entity>
+  <abs_aabb/>
 <tags
    tags=""
 />
