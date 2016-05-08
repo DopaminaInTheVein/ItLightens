@@ -139,8 +139,8 @@
    name="camController_1"
 />
 <transform
-   pos="-37.7264 -20.5623 -3.3316"
-   quat="0 0 0 1.0"
+   pos="-37.6678 -20.5623 -35.8906"
+   quat="0 0.707104 0 0.707104"
    scale="1.0"
 />
 </entity>
@@ -218,7 +218,7 @@
    wpts_size="2"
    wpt0_pos="38.7453 -20.6616 13.0132"
    wpt0_wait="2"
-   wpt1_pos="24.6477 -23.8252 13.0132"
+   wpt1_pos="24.6476 -23.8252 13.0132"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
@@ -251,7 +251,7 @@
    wpts_size="2"
    wpt0_pos="38.7453 -23.6641 6.08694"
    wpt0_wait="2"
-   wpt1_pos="24.6477 -24.0046 6.08694"
+   wpt1_pos="24.6476 -24.0046 6.08694"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
@@ -559,6 +559,59 @@
 </entity>
 <entity>
 <tags
+   tags="guided_camera"
+/>
+<guided_camera
+   velocity="5.0"
+   default_dirs="0"
+   points_size="18"
+   wpt0="-37.7996 -21.523 -27.3995"
+   wpt1="-37.8586 -22.2872 -12.1377"
+   wpt2="-35.6298 -22.5849 -4.01839"
+   wpt3="-8.13086 -15.818 1.04637"
+   wpt4="24.0681 -15.3789 4.71448"
+   wpt5="35.5618 -17.9118 -6.51821"
+   wpt6="28.2402 -19.198 -15.6807"
+   wpt7="-0.231323 -22.177 -12.852"
+   wpt8="-12.9742 -15.8006 -17.6664"
+   wpt9="-1.22867 -6.8418 -24.9226"
+   wpt10="7.58606 -10.0096 -26.8349"
+   wpt11="14.9592 -9.77673 -26.4688"
+   wpt12="14.7146 -11.1311 -9.61108"
+   wpt13="12.7159 -10.1844 13.2852"
+   wpt14="4.35815 -8.67456 11.4821"
+   wpt15="-6.20255 -1.10934 13.3455"
+   wpt16="-22.7698 4.31072 10.0474"
+   wpt17="-38.3197 5.84642 -6.22315"
+   rot0="0 0 0 -1.0"
+   rot1="0 0 0 -1.0"
+   rot2="0 0 0 -1.0"
+   rot3="0 0 0 -1.0"
+   rot4="0 0 0 -1.0"
+   rot5="0 0 0 -1.0"
+   rot6="0 0 0 -1.0"
+   rot7="0 0 0 -1.0"
+   rot8="0 0 0 -1.0"
+   rot9="0 0 0 -1.0"
+   rot10="0 0 0 -1.0"
+   rot11="0 0 0 -1.0"
+   rot12="0 0 0 -1.0"
+   rot13="0 0 0 -1.0"
+   rot14="0 0 0 -1.0"
+   rot15="0 0 0 -1.0"
+   rot16="0 0 0 -1.0"
+/>
+<name
+   name="Line001"
+/>
+<transform
+   pos="8.52567 0 14.7145"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
    tags="player"
 />
 <player/>
@@ -586,30 +639,6 @@
 </entity>
 <entity>
 <tags
-   tags="drone platform"
-/>
-<drone
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DroneMinus_005"
-/>
-<transform
-   pos="10.0358 -10.6841 -21.703"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-</entity>
-<entity>
-<tags
    tags=""
 />
 <name
@@ -619,6 +648,9 @@
    pos="-22.2405 -20.7505 -14.9376"
    quat="0 0 0 1.0"
    scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/Andamio.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -914,25 +946,6 @@
    tags=""
 />
 <name
-   name="columnas_balcon_cuadrado_derecho"
-/>
-<transform
-   pos="10.6622 -18.0684 -28.9329"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/columnas_balcon_cuadrado_derecho.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
    name="columnas_balcon_izquierdo_cuadrado"
 />
 <transform
@@ -959,6 +972,9 @@
    quat="0 0 0 1.0"
    scale="1.0"
 />
+<render_static_mesh
+   name="static_meshes/control_panel002.static_mesh"
+/>
 <rigidbody
    type_collision="static"
 />
@@ -974,6 +990,9 @@
    pos="-4.05573 -19.191 -3.351"
    quat="0 0 0 1.0"
    scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/maquinas.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -1193,7 +1212,7 @@
    tags=""
 />
 <name
-   name="pibote_balcon_derecho_cuadrado"
+   name="pibote_balcon_derecho _cuadrado"
 />
 <transform
    pos="10.2106 -11.1743 -29.2992"
@@ -1542,6 +1561,9 @@
    quat="0 0 0 1.0"
    scale="1.0"
 />
+<render_static_mesh
+   name="static_meshes/tablones.static_mesh"
+/>
 <rigidbody
    type_collision="static"
 />
@@ -1558,6 +1580,9 @@
    quat="0 0 0 1.0"
    scale="1.0"
 />
+<render_static_mesh
+   name="static_meshes/tuberia.static_mesh"
+/>
 <rigidbody
    type_collision="static"
 />
@@ -1573,6 +1598,9 @@
    pos="22.5394 -22.8043 -26.2771"
    quat="0 0 0 1.0"
    scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/tuberia_turbina.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -1591,7 +1619,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/LOW_tURBINE_vERTICAL_GEN.static_mesh"
+   name="static_meshes/turbina_1.static_mesh"
 />
 <rigidbody
    type_collision="static"
@@ -1610,7 +1638,7 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/LOW_tURBINE_vERTICAL_GEN.static_mesh"
+   name="static_meshes/turbine_2.static_mesh"
 />
 <rigidbody
    type_collision="static"
