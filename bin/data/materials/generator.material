@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/charge_point_square_battery_albedo.dds"/>
+<texture slot="normalmap" name="textures/charge_point_square_battery_normal.dds"/>
+</material>
