@@ -1,0 +1,4 @@
+<tech>
+  <vs fx="hatching" main="VSCrossHatching" decl="positions_uv" />
+  <ps fx="hatching" main="PSCrossHatching" />
+</tech>
