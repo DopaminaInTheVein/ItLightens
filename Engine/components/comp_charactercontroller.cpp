@@ -53,9 +53,9 @@ void TCompCharacterController::renderInMenu()
 {
 	ImGui::Text("Editable values:\n");
 	ImGui::Checkbox("affectGravity", &m_affectGravity);
-	ImGui::SliderFloat("gravity", &m_gravitySpeed, -15.0, 15.0f);
+	ImGui::DragFloat("gravity", &m_gravitySpeed, -0.1f, 0.1f);
 	//ImGui::SliderFloat3("acceleration",&m_accel.x,-10.0f,10.0f);		//will be 0, cleaned each frame
-	ImGui::SliderFloat3("speed", &m_speed.x, -20.0f, 20.0f);
+	ImGui::DragFloat3("speed", &m_speed.x, -0.1f, 0.1f);
 	ImGui::Separator();
 	ImGui::Text("Will be updated by engine\n");
 	ImGui::Checkbox("OnGround", &m_OnGround);

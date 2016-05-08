@@ -29,6 +29,9 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 		else if (h.hasTag("bomb")) {
 			filter.word0 |= ItLightensFilter::eBOMB;
 		}
+		else if (h.hasTag("platform")) {
+			filter.word0 |= ItLightensFilter::ePLATFORM;
+		}
 
 		else if (m_collisionType == STATIC_OBJECT) {
 			filter.word0 |= ItLightensFilter::eSCENE;
@@ -397,11 +400,11 @@ void TCompPhysics::renderInMenu()
 
 			PxTransform trans = rigidDynamic->getGlobalPose();
 
-			if (ImGui::SliderFloat3("Pos", &trans.p.x, -50.f, 50.f)) {
+			if (ImGui::DragFloat3("Pos", &trans.p.x, -0.1f, 0.1f)) {
 				rigidDynamic->setGlobalPose(trans);
 			}
 
-			if (ImGui::SliderFloat4("rot", &trans.q.x, -1.f, 1.f)) {
+			if (ImGui::DragFloat4("rot", &trans.q.x, -0.1f, 0.1f)) {
 				trans.q.normalize();
 				rigidDynamic->setGlobalPose(trans);
 			}
@@ -478,11 +481,11 @@ void TCompPhysics::renderInMenu()
 
 			PxTransform trans = rigidStatic->getGlobalPose();
 
-			if (ImGui::SliderFloat3("Pos", &trans.p.x, -50.f, 50.f)) {
+			if (ImGui::DragFloat3("Pos", &trans.p.x, -0.1f, 0.1f)) {
 				rigidStatic->setGlobalPose(trans);
 			}
 
-			if (ImGui::SliderFloat4("rot", &trans.q.x, -1.f, 1.f)) {
+			if (ImGui::DragFloat4("rot", &trans.q.x, -0.1f, 0.1f)) {
 				trans.q.normalize();
 				rigidStatic->setGlobalPose(trans);
 			}

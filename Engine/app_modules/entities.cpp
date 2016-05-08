@@ -564,3 +564,8 @@ void CEntitiesModule::readNavmesh() {
 		SBB::postBool(sala, true);
 	}
 }
+
+void CEntitiesModule::fixedUpdate(float elapsed)
+{
+	getHandleManager<TCompDrone>()->fixedUpdateAll(elapsed);
+}

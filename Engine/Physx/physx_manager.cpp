@@ -8,6 +8,7 @@
 #include "components\comp_physics.h"
 
 #include "components\entity_tags.h"
+#include "app_modules\entities.h"
 
 
 void CPhysxManager::setFtDynamic()
@@ -173,13 +174,16 @@ void CPhysxManager::update(float dt)
 	//calculate fixed update
 	t_to_update += getDeltaTime();
 	if (t_to_update >= t_max_update) {
+
+		CEntitiesModule::fixedUpdate(t_to_update);
+
 		m_pScene->simulate(t_to_update);
 		m_pScene->fetchResults(true);
 
-		t_to_update = 0;
-
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
 		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
+
+		t_to_update = 0.0f;
 	}
 }
 
@@ -220,6 +224,8 @@ void CPhysxManager::customizeSceneDesc(PxSceneDesc& sceneDesc)
 	sceneDesc.gravity = PxVec3(0.0f, GRAVITY, 0.0f);
 	sceneDesc.filterShader = ItLightensFilter::ItLightensFilterShader;
 	sceneDesc.simulationEventCallback = this;
+	sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS;
+	sceneDesc.filterCallback = this;
 	//sceneDesc.flags |= PxSceneFlag::eREQUIRE_RW_LOCK;
 }
 
@@ -484,9 +490,64 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 	}
 }
 
+#pragma endregion
+
+//#########################################################################################################
+//									       simulation callback
+//#########################################################################################################
+#pragma region simulation callback
+
+void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 nbPairs) {
+
+	//only will treat collision with player and platforms.
+
+	//beahaviour:
+	//platform will push player
+
+	for (PxU32 i = 0; i < nbPairs; i++)
+	{
+		const PxContactPair& cp = pairs[i];
+
+		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		{
+
+			CEntity *e0 = GetEntityHandle(*pairHeader.actors[0]);
+			CEntity *e1 = GetEntityHandle(*pairHeader.actors[1]);
+
+			TCompCharacterController *cc;
+
+			//if there isnt any player, stop collision solver
+			if (e0->hasTag("player"))
+				cc = e0->get<TCompCharacterController>();
+			else if (e1->hasTag("player"))
+				cc = e1->get<TCompCharacterController>();
+			else return;
+
+			//if player dont collide with platform, stop collision solver
+			if (e1->hasTag("platform")) {
+				auto rd = pairHeader.actors[1]->isRigidDynamic();
+				cc->AddSpeed(PxVec3ToVec3(rd->getLinearVelocity())*2.0f);
+				//cc->AddMovement(VEC3(0, 1, 0));
+			}
+			else if (e0->hasTag("platform")) {
+				auto rd = pairHeader.actors[0]->isRigidDynamic();
+				cc->AddSpeed(PxVec3ToVec3(rd->getLinearVelocity())*2.0f);
+				//cc->AddMovement(VEC3(0,1,0));
+			}
+			else return;
+		}
+	}
+
+}
+
+PxFilterFlags	CPhysxManager::pairFound(PxU32 pairID, PxFilterObjectAttributes attributes0, PxFilterData filterData0, const PxActor * a0, const PxShape * s0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, const PxActor * a1, const PxShape * s1, PxPairFlags & pairFlags)
+{
+	PxFilterFlags flags = PxFilterFlag::eNOTIFY;
+	return flags;
+}
 void	CPhysxManager::onWake(PxActor **actors, PxU32 count) {}
 void	CPhysxManager::onSleep(PxActor **actors, PxU32 count) {}
-void	CPhysxManager::onContact(const PxContactPairHeader &pairHeader, const PxContactPair *pairs, PxU32 nbPairs) {}
+//void	CPhysxManager::onContact(const PxContactPairHeader &pairHeader, const PxContactPair *pairs, PxU32 nbPairs) {}
 void	CPhysxManager::onConstraintBreak(PxConstraintInfo *constraints, PxU32 count) {}
 
 #pragma endregion
@@ -623,7 +684,7 @@ PxTransform PhysxConversion::ToPxTransform(const VEC3 & pos, const CQuaternion &
 {
 	return PxTransform(Vec3ToPxVec3(pos), CQuaternionToPxQuat(rot));
 }
-CHandle PhysxConversion::GetEntityHandle(PxActor & a)
+CHandle PhysxConversion::GetEntityHandle(const PxActor & a)
 {
 	if(&a){
 		CHandle h;

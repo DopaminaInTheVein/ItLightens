@@ -25,6 +25,7 @@ public:
 		eOBJECT 			= (1 << 7),
 		eSCENE 				= (1 << 8),
 		eBIG_OBJECT			= (1 << 9),
+		ePLATFORM			= (1 << 10),
 		eALL				= ~0,
 	};
 
@@ -60,15 +61,24 @@ public:
 		// generate default contact for no-triggers
 		pairFlags = PxPairFlag::eCONTACT_DEFAULT;
 
+		if ((filterData0.word0 & ePLAYER_BASE && filterData1.word0 & ePLATFORM)) {
+			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+			pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
+			return PxFilterFlag::eCALLBACK;
+		}
+
+		if ((filterData1.word0 & ePLAYER_BASE && filterData0.word0 & ePLATFORM)) {
+			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+			pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
+			return PxFilterFlag::eCALLBACK;
+		}
+
 		//pass collision only on objects with tag eCOLLISION
 		if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1) && (filterData1.word2 & eCOLLISION) && (filterData0.word2 & eCOLLISION))
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 		else {
 			return PxFilterFlag::eDEFAULT;
 		}
-
-		
-		
 
 		return PxFilterFlag::eDEFAULT;
 	}

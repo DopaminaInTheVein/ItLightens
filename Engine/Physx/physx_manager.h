@@ -9,10 +9,10 @@
 #define DEFAULT_DATA_CC			g_PhysxManager->GetDefaultQueryTagsCC()
 
 
-#define PXM_NO_PLAYER_CRYSTAL ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_NO_CRYSTAL ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_NO_PLAYER ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_ALL_LESS_STATIC ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT
+#define PXM_NO_PLAYER_CRYSTAL ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
+#define PXM_NO_CRYSTAL ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
+#define PXM_NO_PLAYER ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
+#define PXM_ALL_LESS_STATIC ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT
 #define PXM_CAMERA_COLLISIONS ItLightensFilter::eSCENE //| ItLightensFilter::eOBJECT
 
 #define GRAVITY -10.0f
@@ -44,6 +44,7 @@ public:
 
 class CPhysxManager :	public IAppModule,
 						public PxSimulationEventCallback,
+						public PxSimulationFilterCallback,
 						public PxControllerBehaviorCallback,
 						public PxUserControllerHitReport, 
 						public PxQueryFilterCallback {
@@ -68,7 +69,7 @@ class CPhysxManager :	public IAppModule,
 #endif
 
 	PxReal t_to_update = 0.0f;
-	PxReal t_max_update = 1 / 60.0f;
+	PxReal t_max_update = 0.0f;
 
 
 	//memory raycast, used for point-to-point
@@ -269,6 +270,13 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------------------------------
+	//						virtuals from PxSimulationFilterCallback
+	//-----------------------------------------------------------------------------------------------------
+	virtual  PxFilterFlags pairFound(PxU32 pairID, PxFilterObjectAttributes attributes0, PxFilterData filterData0, const PxActor *a0, const PxShape *s0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, const PxActor *a1, const PxShape *s1, PxPairFlags &pairFlags);
+	virtual void pairLost(PxU32 pairID, PxFilterObjectAttributes attributes0, PxFilterData filterData0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, bool objectRemoved) {}
+	virtual bool statusChange(PxU32 &pairID, PxPairFlags &pairFlags, PxFilterFlags &filterFlags) { return false; }
+	
+	//-----------------------------------------------------------------------------------------------------
 	//						virtuals from PxUserControllerHitReport
 	//-----------------------------------------------------------------------------------------------------
 
@@ -405,9 +413,11 @@ namespace PhysxConversion {
 
 	PxTransform		ToPxTransform		(const VEC3& pos, const CQuaternion& rot);
 
-	CHandle			GetEntityHandle		(PxActor& a);
+	CHandle			GetEntityHandle		(const PxActor& a);
 	
 }
 
 
 #endif
+
+

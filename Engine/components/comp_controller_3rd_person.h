@@ -236,9 +236,9 @@ public:
 	}
 
 	void renderInMenu() {
-		ImGui::SliderFloat("rot_speed", &speed_camera, -2.0f, 2.0f);
-		ImGui::SliderFloat("distanceToTarget", &distance_to_target, 0.5f, 10.f);
-		ImGui::SliderFloat3("positionDiff", &position_diff.x, -5.f, 5.f);
+		ImGui::DragFloat("rot_speed", &speed_camera, -0.1f, 0.1f);
+		ImGui::DragFloat("distanceToTarget", &distance_to_target, 0.1f, 0.1f);
+		ImGui::DragFloat3("positionDiff", &position_diff.x, -0.1f, 0.1f);
 	}
 };
 

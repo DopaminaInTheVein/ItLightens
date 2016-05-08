@@ -36,7 +36,7 @@ bool TCompTransform::load(MKeyValue& atts) {
 
 void TCompTransform::renderInMenu() {
 	VEC3 pos = getPosition();
-	if (ImGui::SliderFloat3("Pos", &pos.x, -200.f, 200.f)) {
+	if (ImGui::DragFloat3("Pos", &pos.x, -0.1f, 0.1f)) {
 		setPosition(pos);
 	}
 
@@ -44,13 +44,13 @@ void TCompTransform::renderInMenu() {
 	getAngles(&yaw, &pitch);
 	yaw = rad2deg(yaw);
 	pitch = rad2deg(pitch);
-	bool yaw_changed = ImGui::SliderFloat("Yaw", &yaw, -180.f, 180.f);
-	bool pitch_changed = ImGui::SliderFloat("Pitch", &pitch, -90.f + 0.001f, 90.f - 0.001f);
+	bool yaw_changed = ImGui::DragFloat("Yaw", &yaw, -0.1f, 0.1f);
+	bool pitch_changed = ImGui::DragFloat("Pitch", &pitch, -0.1f, 0.1f);
 	if (yaw_changed || pitch_changed)
 		setAngles(deg2rad(yaw), deg2rad(pitch));
 
 	float scale = getScale().x;
-	if (ImGui::SliderFloat("Scale", &scale, 0.2f, 5.0f)) {
+	if (ImGui::DragFloat("Scale", &scale, -0.1f, 0.1f)) {
 		setScale(VEC3(scale, scale, scale));
 	}
 }

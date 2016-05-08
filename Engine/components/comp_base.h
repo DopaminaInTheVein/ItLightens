@@ -12,6 +12,10 @@ struct TCompBase {
 	void update(float elapsed) {
 		(void)(elapsed);
 	}
+
+	void fixedUpdate(float elapsed) {
+		(void)(elapsed);
+	}
 	bool load(MKeyValue& atts) {
 		(void)(atts);
 		return true;

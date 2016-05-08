@@ -22,6 +22,10 @@ public:
 	bool forcedUpdate() { 
 		return true;
 	}
+
+	static void fixedUpdate(float elapsed);
+
+	static void fixedUpdate();
 	const char* getName() const {
 		return "entities";
 	}

@@ -20,6 +20,7 @@ void TCompDrone::onCreate(const TMsgEntityCreated &)
 		// Set Kinematic
 		TCompPhysics *p = e->get<TCompPhysics>();
 		p->setKinematic(true);
+		final_pos = t->getPosition();
 	}
 	else h.destroy();
 }
@@ -56,13 +57,13 @@ void TCompDrone::moveToNext(float elapsed) {
 
 	PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
 	if (rd) {
-		PxTransform tmx = rd->getGlobalPose();
-		VEC3 curr_pos = PhysxConversion::PxVec3ToVec3(tmx.p);
-		VEC3 direction = wpts[curWpt] - curr_pos;
+		//PxTransform tmx = rd->getGlobalPose();
+		//VEC3 curr_pos = PhysxConversion::PxVec3ToVec3(tmx.p);
+		VEC3 direction = wpts[curWpt] - final_pos;
 		direction.Normalize();
-		VEC3 target = curr_pos + direction * speed * elapsed;
-		PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(target);
-		rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
+		final_pos = final_pos + direction * speed * elapsed;
+		//PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(target);
+		//rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
 	}
 }
 
@@ -83,4 +84,14 @@ bool TCompDrone::load(MKeyValue & atts)
 		waitTimes[i] = atts.getFloat(atrWait, 0);
 	}
 	return true;
+}
+
+void TCompDrone::fixedUpdate(float elapsed) {
+	PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
+	if (rd) {
+		PxTransform tmx = rd->getGlobalPose();
+		VEC3 target = final_pos;
+		PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(target);
+		rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
+	}
 }

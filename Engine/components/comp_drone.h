@@ -15,7 +15,7 @@ struct TCompDrone : public TCompBase {
 	std::vector<VEC3> wpts;
 	std::vector<float> waitTimes;
 	int curWpt;
-	float speed = .0f;
+	float speed = 1.0f;
 	float timeToWait = 0.f;
 	float mEpsilon = .1f;
 
@@ -23,11 +23,14 @@ struct TCompDrone : public TCompBase {
 	std::string self_ilum_front;
 	std::string self_ilum_back;
 
+	VEC3 final_pos;
+
 	void onCreate(const TMsgEntityCreated&);
 	bool SetMyBasicComponents();
 	void update(float elapsed);
 	void moveToNext(float elapsed);
 	bool load(MKeyValue& atts);
+	void fixedUpdate(float elapsed);
 	void renderInMenu() {
 		ImGui::Text("I am a drone!!");
 	}
