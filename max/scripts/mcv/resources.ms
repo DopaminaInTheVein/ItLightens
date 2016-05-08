@@ -133,6 +133,7 @@ struct TResources (
 			res = #(newObj)
 			print res
 		) else (
+			messagebox "MST2:Debug No deberia pasar aqui"
 			local polyObj = copy obj --Objeto temporal solo en esta funcion
 			ConvertTo polyObj Editable_Poly
 			messagebox ("obj = " + obj as string)
