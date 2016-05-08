@@ -373,6 +373,22 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play ambient function
 		.set("play_ambient", &SLBPublicFunctions::playAmbient)
 		.comment("Executes the specified ambient sound")
+		// sets the volume of the sound channel
+		.set("set_sfx_volume", &SLBPublicFunctions::setSoundVolume)
+		.comment("sets the sfx volume")
+		.param("float: volume value")
+		// sets the volume of the music channel
+		.set("set_music_volume", &SLBPublicFunctions::setMusicVolume)
+		.comment("sets the music volume")
+		.param("float: volume value")
+		// sets the volume of the voices channel
+		.set("set_voices_volume", &SLBPublicFunctions::setVoicesVolume)
+		.comment("sets the voices volume")
+		.param("float: volume value")
+		// sets the volume of the ambient channel
+		.set("set_ambient_volume", &SLBPublicFunctions::setAmbientVolume)
+		.comment("sets the ambient volume")
+		.param("float: volume value")
 		// launch intro state
 		.set("toggle_intro_state", &SLBPublicFunctions::toggleIntroState)
 		.comment("Toggles the intro game state")

@@ -73,6 +73,10 @@ public:
 	void playMusic(const char* music_route);
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);
+	void setSoundVolume(float volume);
+	void setMusicVolume(float volume);
+	void setVoicesVolume(float volume);
+	void setAmbientVolume(float volume);
 	void toggleIntroState();
 
 	void test(const char* to_print);

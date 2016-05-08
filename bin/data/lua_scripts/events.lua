@@ -27,6 +27,7 @@ end
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	p:play_music("data/sounds/music/It-Lightens-muestra-2-loop.mp3")
+	p:set_music_volume(0.7)
 	triggerGuardFormation();
 end
 
@@ -88,6 +89,7 @@ end
 
 function OnChangePolarity( param )
 	p:print( "OnChangePolarity: "..param.."\n" )
+	p:play_sound("data/sounds/sfx/polarity.wav")
 end
 
 function OnPickupBox( param )
@@ -124,6 +126,7 @@ end
 
 function OnUseGenerator( param )
 	p:print( "OnUseGenerator: "..param.."\n" )
+	p:play_sound("data/sounds/sfx/recharge.wav")
 end
 
 function OnStun( param )

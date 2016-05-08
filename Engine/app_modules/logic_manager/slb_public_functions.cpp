@@ -213,6 +213,22 @@ void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 	sound_manager->playAmbient(std::string(ambient_route));
 }
 
+void SLBPublicFunctions::setSoundVolume(float volume) {
+	sound_manager->setVolume(CSoundManagerModule::SFX, volume);
+}
+
+void SLBPublicFunctions::setMusicVolume(float volume) {
+	sound_manager->setVolume(CSoundManagerModule::MUSIC, volume);
+}
+
+void SLBPublicFunctions::setVoicesVolume(float volume) {
+	sound_manager->setVolume(CSoundManagerModule::VOICES, volume);
+}
+
+void SLBPublicFunctions::setAmbientVolume(float volume) {
+	sound_manager->setVolume(CSoundManagerModule::AMBIENT, volume);
+}
+
 void SLBPublicFunctions::toggleIntroState() {
 	GameController->TogglePauseIntroState();
 }
