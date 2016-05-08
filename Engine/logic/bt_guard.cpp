@@ -144,7 +144,11 @@ void bt_guard::Init()
 //conditions
 bool bt_guard::playerStunned() {
 	PROFILE_FUNCTION("guard: player stunned");
-	return stunned == true;
+	if (stunned == true) {
+		logic_manager->throwEvent(logic_manager->OnStunned, "");
+		return true;
+	}
+	return false;
 }
 
 bool bt_guard::playerNear() {
@@ -282,6 +286,7 @@ int bt_guard::actionStunned() {
 	if (!myParent.isValid()) return false;
 	if (timerStunt < 0) {
 		stunned = false;
+		logic_manager->throwEvent(logic_manager->OnStunnedEnd, "");
 		return OK;
 	}
 	else {
@@ -308,8 +313,6 @@ int bt_guard::actionReact() {
 		// starting the reaction time decorator
 		player_detected_start = true;
 		reaction_time = rand() % (int)MAX_REACTION_TIME;
-		// calling OnGuardAttackEvent
-		logic_manager->throwEvent(logic_manager->OnGuardAttack, "");
 	}
 
 	// stay in this state until the reaction time is over
@@ -359,6 +362,8 @@ int bt_guard::actionPrepareToAbsorb() {
 	shoot_preparation_time += getDeltaTime();
 	if (shoot_preparation_time > SHOOT_PREP_TIME) {
 		shoot_preparation_time = 0.f;
+		// calling OnGuardAttackEvent
+		logic_manager->throwEvent(logic_manager->OnGuardAttack, "");
 		return OK;
 	}
 	else {
@@ -409,6 +414,7 @@ int bt_guard::actionAbsorb() {
 		ePlayer->sendMsg(dmg);
 		// if the player went out of reach, we don't shoot the wall
 		if (squaredDistXZ(myPos, posPlayer) > DIST_SQ_PLAYER_DETECTION || !inJurisdiction(posPlayer)) {
+			logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 			return KO;
 		}
 		else {
@@ -421,6 +427,7 @@ int bt_guard::actionAbsorb() {
 		return STAY;
 	}
 
+	logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 	return KO;
 }
 
@@ -433,6 +440,7 @@ int bt_guard::actionShootWall() {
 	turnTo(posPlayer);
 
 	if (playerVisible() || boxMovingDetected()) {
+		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 		return KO;
 	}
 	else {
@@ -440,12 +448,14 @@ int bt_guard::actionShootWall() {
 		if (shootToPlayer()) {
 			removeBox(box_to_remove);
 			logic_manager->throwEvent(logic_manager->OnGuardRemoveBox, "");
+			logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 			return OK;
 		}
 		else {
 			if (timerShootingWall < 0) {
 				playerLost = true;
 				player_last_seen_point = posPlayer;
+				logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 				return KO;
 			}
 			else {

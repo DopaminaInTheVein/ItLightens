@@ -108,6 +108,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 			break;
 		}
 
+		case (OnGuardAttackEnd) : {
+			sprintf(lua_code, "OnGuardAttackEnd(%f);", 0.5f);
+			break;
+		}
+
 		case (OnGuardRemoveBox) : {
 			sprintf(lua_code, "OnGuardRemoveBox(%f);", 0.5f);
 			break;
@@ -181,6 +186,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 		}
 		case (OnStunned) : {
 			sprintf(lua_code, "OnStunned(%f);", 0.5f);
+			break;
+		}
+		case (OnStunnedEnd) : {
+			sprintf(lua_code, "OnStunnedEnd(%f);", 0.5f);
 			break;
 		}
 		case (OnLiquid) : {
@@ -389,6 +398,18 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("set_ambient_volume", &SLBPublicFunctions::setAmbientVolume)
 		.comment("sets the ambient volume")
 		.param("float: volume value")
+		// stops the sfx channel
+		.set("stop_sfx", &SLBPublicFunctions::stopSoundChannel)
+		.comment("stops the sfx channel")
+		// stops the music channel
+		.set("stop_music", &SLBPublicFunctions::stopMusicChannel)
+		.comment("stops the music channel")
+		// stops the voices channel
+		.set("stop_voices", &SLBPublicFunctions::stopVoicesChannel)
+		.comment("stops the voices channel")
+		// stops the ambient channel
+		.set("stop_ambient", &SLBPublicFunctions::stopAmbientChannel)
+		.comment("stops the ambient channel")
 		// launch intro state
 		.set("toggle_intro_state", &SLBPublicFunctions::toggleIntroState)
 		.comment("Toggles the intro game state")
