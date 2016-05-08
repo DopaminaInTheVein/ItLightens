@@ -44,6 +44,7 @@ public:
 	bool playVoice(std::string);
 	bool playAmbient(std::string);
 	void setVolume(CHANNEL, float);
+	void stopChannel(CHANNEL channel);
 
 };
 
