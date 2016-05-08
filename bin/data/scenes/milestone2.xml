@@ -1619,7 +1619,7 @@
    name="Box_2"
 />
 <transform
-   pos="23.5435 -23.0581 -17.161"
+   pos="24 -21 -15"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -1631,6 +1631,9 @@
    type_shape="box"
    size="1.0 1.0 1.0"
    mass="2"
+/>
+<polarized
+   pol="minus"
 />
 </entity>
 <entity>
@@ -1764,6 +1767,25 @@
 />
 <transform
    pos="19.7314 -19.276 -19.0215"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="7.26 3.49 16.45"
+/>
+<victory_point/>
+<name
+   name="TriggerBox_1"
+/>
+<transform
+   pos="-33.6215 4.47034 -7.67841"
    quat="0 0 0 1.0"
    scale="1.0"
 />
