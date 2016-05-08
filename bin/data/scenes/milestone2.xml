@@ -129,7 +129,6 @@
 <tags
    tags="camera_main"
 />
-<culling/>
 <camera
    znear="0.1"
    zfar="250.0"
@@ -344,7 +343,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -361,7 +359,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -575,7 +572,7 @@
    wpt4="24.0681 -15.3789 4.71448"
    wpt5="35.5618 -17.9118 -6.51821"
    wpt6="28.2402 -19.198 -15.6807"
-   wpt7="-0.231323 -19.177 -12.852"
+   wpt7="-0.231323 -19.8878 -12.852"
    wpt8="-12.9742 -15.8006 -17.6664"
    wpt9="-1.22867 -6.8418 -24.9226"
    wpt10="7.58606 -10.0096 -26.8349"
@@ -641,12 +638,11 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
 <name
-   name="Andamio"
+   name="Andamio1"
 />
 <transform
    pos="-22.2405 -20.7505 -14.9376"
@@ -654,14 +650,51 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/Andamio.static_mesh"
+   name="static_meshes/Andamio1.static_mesh"
 />
 <rigidbody
    type_collision="static"
 />
 </entity>
 <entity>
-  <abs_aabb/>
+<tags
+   tags=""
+/>
+<name
+   name="Andamio2"
+/>
+<transform
+   pos="-22.2405 -20.7505 -14.9376"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/Andamio2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="Andamio3"
+/>
+<transform
+   pos="-22.2405 -20.7505 -14.9376"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/Andamio3.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
 <tags
    tags=""
 />
@@ -681,7 +714,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -701,7 +733,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -721,7 +752,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -741,7 +771,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -761,7 +790,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -781,7 +809,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -801,7 +828,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -821,7 +847,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -841,7 +866,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -861,7 +885,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -881,7 +904,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -901,7 +923,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -921,7 +942,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -941,7 +961,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -961,7 +980,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -981,7 +999,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1001,7 +1018,25 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
+<tags
+   tags=""
+/>
+<name
+   name="lamparas_derecha"
+/>
+<transform
+   pos="21.0014 -18.9816 17.6319"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/lamparas_derecha.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
 <tags
    tags=""
 />
@@ -1021,7 +1056,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1041,7 +1075,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1061,7 +1094,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1081,7 +1113,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1101,7 +1132,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1121,7 +1151,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1141,7 +1170,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1161,7 +1189,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1181,7 +1208,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1201,7 +1227,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1221,7 +1246,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1241,12 +1265,11 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
 <name
-   name="pibote_balcon_derecho _cuadrado"
+   name="pibote_balcon_derecho_cuadrado"
 />
 <transform
    pos="10.2106 -11.1743 -29.2992"
@@ -1254,14 +1277,13 @@
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/pibote_balcon_derecho _cuadrado.static_mesh"
+   name="static_meshes/pibote_balcon_derecho_cuadrado.static_mesh"
 />
 <rigidbody
    type_collision="static"
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1281,7 +1303,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1301,7 +1322,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1321,7 +1341,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1341,7 +1360,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1361,7 +1379,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1381,7 +1398,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1401,7 +1417,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1421,7 +1436,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1441,7 +1455,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1461,7 +1474,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1481,7 +1493,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1501,7 +1512,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1521,7 +1531,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1541,7 +1550,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1561,7 +1569,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1581,7 +1588,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1601,7 +1607,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1621,7 +1626,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1641,7 +1645,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1661,7 +1664,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1681,7 +1683,6 @@
 />
 </entity>
 <entity>
-  <abs_aabb/>
 <tags
    tags=""
 />
@@ -1695,26 +1696,6 @@
 />
 <render_static_mesh
    name="static_meshes/turbine_2.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-  <abs_aabb/>
-<tags
-   tags=""
-/>
-<name
-   name="lamparas_derecha"
-/>
-<transform
-   pos="21.0014 -18.9816 17.6319"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/lamparas_derecha.static_mesh"
 />
 <rigidbody
    type_collision="static"
