@@ -651,7 +651,7 @@ void player_controller::UpdateInputActions()
 	PROFILE_FUNCTION("update input actions");
 	SetCharacterController();
 	pol_orbit = false;
-	if (isDamaged()) {
+	if (false && isDamaged()) { //MS2!
 		pol_state = NEUTRAL;
 	}
 	else {
