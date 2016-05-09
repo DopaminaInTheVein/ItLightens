@@ -15,7 +15,7 @@ struct TCompDrone : public TCompBase {
 	std::vector<VEC3> wpts;
 	std::vector<float> waitTimes;
 	int curWpt;
-	float speed = 2.0f;
+	float speed = 1.0f;
 	float timeToWait = 0.f;
 	float mEpsilon = .1f;
 
