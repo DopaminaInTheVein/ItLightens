@@ -298,6 +298,9 @@ bool CEntitiesModule::start() {
 	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 
+	is_ok = ep.xmlParseFile("data/scenes/" + sala + "_guardias.xml");
+	assert(is_ok);
+
 	/*{
 		CEntityParser ep2;
 		bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
