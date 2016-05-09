@@ -81,7 +81,7 @@ bool TCompDrone::load(MKeyValue & atts)
 		WPT_ATR_NAME(atrPos, "pos", i);
 		WPT_ATR_NAME(atrWait, "wait", i);
 		wpts[i] = atts.getPoint(atrPos);
-		waitTimes[i] = atts.getFloat(atrWait, 0);
+		waitTimes[i] = 0.5f; // MS2! atts.getFloat(atrWait, 0);
 	}
 	return true;
 }
