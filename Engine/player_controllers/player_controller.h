@@ -181,6 +181,7 @@ public:
 	void myExtraIdle();
 	void readIniFileAttr();
 
+	bool canJump() override;
 	void Jump() override;
 	void Jumping();
 	void DoubleJump();

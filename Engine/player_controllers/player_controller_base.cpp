@@ -176,10 +176,15 @@ bool CPlayerBase::UpdateMovDirection() {
 
 void CPlayerBase::UpdateJumpState() {
 	PROFILE_FUNCTION("update jump state base");
+	if (!canJump()) return;
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.isPressed()) {
 		logic_manager->throwEvent(logic_manager->OnJump, "");
 		Jump();
 	}
+}
+
+bool CPlayerBase::canJump() {
+	return false;
 }
 
 void CPlayerBase::UpdateDirection() {

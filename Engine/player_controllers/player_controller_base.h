@@ -73,6 +73,7 @@ protected:
 	virtual void UpdateAnimation() {}
 	virtual void SetCharacterController()=0;
 	virtual void ChangeCommonState(std::string) {}
+	virtual bool canJump();
 
 	void energyDecreasal(float howmuch);
 	bool checkDead();
