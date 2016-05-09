@@ -565,7 +565,7 @@
    name="tablones_Elements3"
 />
 <transform
-   pos="0.580583 -19.1235 -27.5163"
+   pos="0.580584 -19.1235 -27.5163"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -2693,7 +2693,7 @@
    name="paredes_balcon_redondo_grande_Elements4"
 />
 <transform
-   pos="-41.2989 1.91663 -0.0736023"
+   pos="-41.2989 1.91663 -0.0736028"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4536,7 +4536,7 @@
    name="lamparas_derecha_Elements37"
 />
 <transform
-   pos="0.183239 -18.3825 -31.3993"
+   pos="0.183241 -18.3825 -31.3993"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4555,7 +4555,7 @@
    name="lamparas_derecha_Elements38"
 />
 <transform
-   pos="0.183016 -18.3825 -31.2046"
+   pos="0.183018 -18.3825 -31.2046"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4574,7 +4574,7 @@
    name="lamparas_derecha_Elements39"
 />
 <transform
-   pos="0.183018 -18.3867 -31.3257"
+   pos="0.18302 -18.3867 -31.3257"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4593,7 +4593,7 @@
    name="lamparas_derecha_Elements40"
 />
 <transform
-   pos="0.183117 -18.4913 -31.1964"
+   pos="0.183119 -18.4913 -31.1964"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4612,7 +4612,7 @@
    name="lamparas_derecha_Elements41"
 />
 <transform
-   pos="0.183117 -18.3804 -31.1964"
+   pos="0.183119 -18.3804 -31.1964"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4631,7 +4631,7 @@
    name="lamparas_derecha_Elements42"
 />
 <transform
-   pos="0.183117 -18.2701 -31.1964"
+   pos="0.183119 -18.2701 -31.1964"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -10397,7 +10397,7 @@
    name="Box_2"
 />
 <transform
-   pos="23.5435 -22.0 -17.161"
+   pos="22.6079 -22.0 -17.161"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -10439,7 +10439,7 @@
 />
 <drone
    wpts_size="1"
-   wpt0_pos="8.26935 -12.6058 -2.30265"
+   wpt0_pos="6.00434 -12.6058 -1.25518"
    wpt0_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
@@ -10448,7 +10448,7 @@
    name="DroneMinus_1"
 />
 <transform
-   pos="10.0057 -11.4633 0.996308"
+   pos="10.0057 -11.4633 9.51987"
    quat="0 -0.608761 0 0.793353"
    scale="1.0"
 />
