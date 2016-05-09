@@ -565,7 +565,7 @@
    name="tablones_Elements3"
 />
 <transform
-   pos="0.580582 -19.1235 -27.5163"
+   pos="0.580583 -19.1235 -27.5163"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -2655,7 +2655,7 @@
    name="paredes_balcon_redondo_grande_Elements2"
 />
 <transform
-   pos="-41.2989 1.91663 2.95643"
+   pos="-41.2989 1.91663 2.95642"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -2693,7 +2693,7 @@
    name="paredes_balcon_redondo_grande_Elements4"
 />
 <transform
-   pos="-41.2989 1.91663 -0.0736018"
+   pos="-41.2989 1.91663 -0.0736023"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4536,7 +4536,7 @@
    name="lamparas_derecha_Elements37"
 />
 <transform
-   pos="0.183237 -18.3825 -31.3993"
+   pos="0.183239 -18.3825 -31.3993"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4555,7 +4555,7 @@
    name="lamparas_derecha_Elements38"
 />
 <transform
-   pos="0.183014 -18.3825 -31.2046"
+   pos="0.183016 -18.3825 -31.2046"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4574,7 +4574,7 @@
    name="lamparas_derecha_Elements39"
 />
 <transform
-   pos="0.183016 -18.3867 -31.3257"
+   pos="0.183018 -18.3867 -31.3257"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4593,7 +4593,7 @@
    name="lamparas_derecha_Elements40"
 />
 <transform
-   pos="0.183115 -18.4913 -31.1964"
+   pos="0.183117 -18.4913 -31.1964"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4612,7 +4612,7 @@
    name="lamparas_derecha_Elements41"
 />
 <transform
-   pos="0.183115 -18.3804 -31.1964"
+   pos="0.183117 -18.3804 -31.1964"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -4631,7 +4631,7 @@
    name="lamparas_derecha_Elements42"
 />
 <transform
-   pos="0.183115 -18.2701 -31.1964"
+   pos="0.183117 -18.2701 -31.1964"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -10397,7 +10397,7 @@
    name="Box_2"
 />
 <transform
-   pos="23.5435 -23.3639 -17.161"
+   pos="23.5435 -22.0 -17.161"
    quat="0 0 0 1.0"
    scale="1.0"
 />
