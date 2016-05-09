@@ -709,6 +709,7 @@ void player_controller::UpdateActionsTrigger() {
 		//ui.addTextInstructions("\n Press 'E' to recharge energy\n");
 		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 			rechargeEnergy();
+			animController.setState(AST_SHOOT);
 			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
 		}
 		else {
