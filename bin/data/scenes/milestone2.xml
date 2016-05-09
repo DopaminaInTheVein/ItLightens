@@ -1143,6 +1143,7 @@
    scale="1.0"
 />
 </entity>
+  <!---->
 <entity>
 <tags
    tags="AI AI_guard"
@@ -1187,8 +1188,8 @@
    radius="0.3"
    height="1.8"
 />
-</entity>
-<entity>
+</entity><!---->
+<!----><entity>
 <tags
    tags="AI AI_guard"
 />
@@ -1232,8 +1233,8 @@
    radius="0.3"
    height="1.8"
 />
-</entity>
-<entity>
+</entity><!---->
+<!--<entity>
 <tags
    tags="AI AI_guard"
 />
@@ -1277,8 +1278,8 @@
    radius="0.3"
    height="1.8"
 />
-</entity>
-<entity>
+</entity>-->
+<!--<entity>
 <tags
    tags="AI AI_guard"
 />
@@ -1322,7 +1323,7 @@
    radius="0.3"
    height="1.8"
 />
-</entity>
+</entity>-->
 <entity>
 <tags
    tags=""
