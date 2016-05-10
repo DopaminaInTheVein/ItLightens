@@ -1,9 +1,0 @@
-<model>
-	<skeleton src="skeletons/warrior/skeleton.csf"/>
-    <animation src="skeletons/warrior/skeleton_walk.caf" alias="walk" blendout="0.2"/>
-    <animation src="skeletons/warrior/skeleton_hiphop.caf"/>
-    <animation src="skeletons/warrior/skeleton_jog.caf"/>
-    <animation src="skeletons/warrior/skeleton_shoot_arrow.caf"/>
-    <mesh      src="skeletons/warrior/skeleton_chest.cmf"/>
-    <mesh      src="skeletons/warrior/skeleton_head.cmf"/>
-</model>

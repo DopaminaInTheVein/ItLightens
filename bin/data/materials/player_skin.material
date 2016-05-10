@@ -1,3 +1,0 @@
-<material tech="skin_textured.tech">
-<texture slot="diffuse" name="textures/player_d.dds"/>
-</material>

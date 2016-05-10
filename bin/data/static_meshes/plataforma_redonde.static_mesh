@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/plataforma_redonde.mesh" material="materials/plataforma_redonda_grande.material" mesh_idx="0"/>
-</static_mesh>

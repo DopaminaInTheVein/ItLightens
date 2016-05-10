@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/DronePlus_2.mesh" material="materials/dron.material" mesh_idx="0"/>
-</static_mesh>

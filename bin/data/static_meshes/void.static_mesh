@@ -1,3 +1,0 @@
-<static_mesh>
-    <slot mesh="missing.mesh" material="materials/agua.material"/>
-</static_mesh>

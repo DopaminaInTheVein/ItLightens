@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/tabla006.mesh" material="materials/andamio.material" mesh_idx="0"/>
-</static_mesh>

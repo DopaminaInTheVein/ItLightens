@@ -96,7 +96,7 @@ bool CRenderDeferredModule::start() {
   //unit_sphere = Resources.get("meshes/unit_sphere.mesh")->as<CMesh>();
   unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
   assert(unit_sphere && unit_sphere->isValid());
-  unit_cube = Resources.get("meshes/unit_frustum.mesh")->as<CMesh>();
+  unit_cube = Resources.get("meshes/engine/unit_frustum.mesh")->as<CMesh>();
   assert(unit_cube && unit_cube->isValid());
 
   Resources.get("textures/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE );

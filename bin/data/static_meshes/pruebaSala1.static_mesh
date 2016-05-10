@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/pruebaSala1__paredsala.mesh" material="materials/paredsala.material" mesh_idx="0"/>
-  <slot mesh="meshes/pruebaSala1__sala.mesh" material="materials/sala.material" mesh_idx="1"/>

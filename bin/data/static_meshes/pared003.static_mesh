@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/pared003.mesh" material="materials/scene1.material" mesh_idx="0"/>
-</static_mesh>

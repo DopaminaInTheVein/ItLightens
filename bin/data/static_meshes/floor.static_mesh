@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/floor.mesh" material="materials/scene.material"/>
-</static_mesh>

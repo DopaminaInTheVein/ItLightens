@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/bridge_1lvl.mesh" material="materials/bronze.material" mesh_idx="0"/>
-</static_mesh>

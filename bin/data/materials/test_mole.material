@@ -1,7 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/mole_albedo.dds"/>
-  <texture slot="normalmap" name="textures/mole_normals.dds"/>
-  <texture slot="specular" name="textures/mole_metalness.dds"/>
-  <texture slot="selfilum" name="textures/mole_self_ilumination.dds"/>
-  <!--<texture slot="roughness" name="textures/mole_roughness.dds"/>-->
-</material>

@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/__crystalWal.mesh" material="materials/crystal.material" mesh_idx="0"/>
-</static_mesh>

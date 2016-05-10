@@ -1,3 +1,0 @@
-<material tech="deferred_no_tangent_no_tex.tech">
-<texture type="diffuse" name="textures/box_d.dds"/>
-</material>

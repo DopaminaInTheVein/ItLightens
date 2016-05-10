@@ -1,3 +1,0 @@
-<static_mesh>
-    <slot mesh="meshes/sphere.mesh" material="materials/wb.material"/>
-</static_mesh>

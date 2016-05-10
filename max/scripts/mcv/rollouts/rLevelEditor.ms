@@ -149,11 +149,11 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 			throw()				
 		)
 		close fsm
-		
-		local fLua = createFile (lua_dir + txtExport.text + ".lua")
-		format _lua_code to:fLua
-		close fLua
-		
+		if _lua_code != "" then (
+			local fLua = createFile (lua_dir + "scenes\\" + txtExport.text + ".lua")
+			format _lua_code to:fLua
+			close fLua
+		)
 		messagebox ("Nivel exportado correctamente: \n(" + fileName + ")")
 	)
 	on ddlProperties selected sel do
@@ -202,7 +202,8 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 			
 			for obj in objs do (
 				--if (getUserProp obj ddlProperties.selected != undefined) then (
-					setUserProp obj ddlProperties.selected txtValue.text
+				messageBox "hola?"
+				setUserProp obj ddlProperties.selected txtValue.text
 				--)
 			)
 		)
