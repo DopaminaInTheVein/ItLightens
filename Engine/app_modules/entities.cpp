@@ -258,7 +258,7 @@ bool CEntitiesModule::start() {
 	//sala = "test_simple";
 	//sala = "test_guard";
 	//sala = "test_pol";
-	sala = "test_guard";
+	sala = "scene_test_recast";
 	//sala = "test_anim";
 
 	SBB::postSala(sala);

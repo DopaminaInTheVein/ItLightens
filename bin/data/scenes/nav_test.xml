@@ -1,0 +1,293 @@
+<entities>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="sc_1_box"
+/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/_sc1.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags="camera_main"
+/>
+<camera
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"
+/>
+<controller_3rd_person/>
+<name
+   name="camController_1"
+/>
+<transform
+   pos="2.37628 2.09058 17.209"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="generator_1"
+/>
+<transform
+   pos="11.5594 -0.0329694 -13.8228"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__generator.static_mesh"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.0"
+/>
+<generator/>
+<name
+   name="trigger_1"
+/>
+<transform
+   pos="11.5594 -0.0329694 -13.8228"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="6.3248 13.6088 0.84"
+/>
+<trigger_lua/>
+<name
+   name="TriggerBox_1"
+/>
+<transform
+   pos="-35.236 2.12873 -37.9019"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="Cinta"
+/>
+<transform
+   pos="28.3932 -1.08987 -6.37793"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/test_cinta.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+<tracker
+   long="21.6863"
+   point0="17.5942 1.56763 -6.50589"
+   tangent0="0.9999 0 -0.0141511"
+   point1="18.087 1.56763 -6.51286"
+   tangent1="0.9999 0 -0.0141511"
+   point2="18.5798 1.56763 -6.51984"
+   tangent2="0.9999 0 -0.0141511"
+   point3="19.0726 1.56763 -6.52681"
+   tangent3="0.9999 0 -0.0141511"
+   point4="19.5654 1.56763 -6.53379"
+   tangent4="0.9999 0 -0.0141511"
+   point5="20.0583 1.56763 -6.54076"
+   tangent5="0.9999 0 -0.0141511"
+   point6="20.5511 1.56763 -6.54774"
+   tangent6="0.9999 0 -0.014151"
+   point7="21.0439 1.56763 -6.55471"
+   tangent7="0.9999 0 -0.0141512"
+   point8="21.5367 1.56763 -6.56169"
+   tangent8="0.9999 0 -0.0141511"
+   point9="22.0295 1.56763 -6.56866"
+   tangent9="0.9999 0 -0.014151"
+   point10="22.5224 1.56763 -6.57564"
+   tangent10="0.9999 0 -0.0141512"
+   point11="23.0152 1.56763 -6.58261"
+   tangent11="0.9999 0 -0.0141511"
+   point12="23.508 1.56763 -6.58959"
+   tangent12="0.9999 0 -0.0141511"
+   point13="24.0008 1.56763 -6.59656"
+   tangent13="0.9999 0 -0.0141511"
+   point14="24.4936 1.56763 -6.60354"
+   tangent14="0.9999 0 -0.0141511"
+   point15="24.9865 1.56763 -6.61051"
+   tangent15="0.9999 0 -0.0141511"
+   point16="25.4793 1.56763 -6.61748"
+   tangent16="0.9999 0 -0.0141511"
+   point17="25.9721 1.56763 -6.62446"
+   tangent17="0.9999 0 -0.0141511"
+   point18="26.4649 1.56763 -6.63143"
+   tangent18="0.9999 0 -0.0141511"
+   point19="26.9577 1.56763 -6.63841"
+   tangent19="0.9999 0 -0.0141511"
+   point20="27.4506 1.56763 -6.64538"
+   tangent20="0.9999 0 -0.0141511"
+   point21="27.9434 1.56763 -6.65236"
+   tangent21="0.9999 0 -0.0141511"
+   point22="28.4362 1.56763 -6.65933"
+   tangent22="0.9999 0 -0.0141511"
+   point23="28.929 1.56763 -6.66631"
+   tangent23="0.9999 0 -0.0141511"
+   point24="29.4218 1.56763 -6.67328"
+   tangent24="0.9999 0 -0.0141511"
+   point25="29.9147 1.56763 -6.68026"
+   tangent25="0.9999 0 -0.0141511"
+   point26="30.4075 1.56763 -6.68723"
+   tangent26="0.9999 0 -0.0141511"
+   point27="30.9003 1.56763 -6.69421"
+   tangent27="0.9999 0 -0.0141511"
+   point28="31.3931 1.56763 -6.70118"
+   tangent28="0.9999 0 -0.0141511"
+   point29="31.8859 1.56763 -6.70815"
+   tangent29="0.9999 0 -0.0141511"
+   point30="32.3788 1.56763 -6.71513"
+   tangent30="0.9999 0 -0.0141511"
+   point31="32.8716 1.56763 -6.7221"
+   tangent31="0.9999 0 -0.0141511"
+   point32="33.3644 1.56763 -6.72908"
+   tangent32="0.9999 0 -0.0141511"
+   point33="33.8572 1.56763 -6.73605"
+   tangent33="0.9999 0 -0.0141511"
+   point34="34.35 1.56763 -6.74303"
+   tangent34="0.9999 0 -0.0141511"
+   point35="34.8428 1.56763 -6.75"
+   tangent35="0.9999 0 -0.0141512"
+   point36="35.3357 1.56763 -6.75698"
+   tangent36="0.9999 0 -0.0141511"
+   point37="35.8285 1.56763 -6.76395"
+   tangent37="0.9999 0 -0.0141511"
+   point38="36.3213 1.56763 -6.77093"
+   tangent38="0.9999 0 -0.014151"
+   point39="36.8141 1.56763 -6.7779"
+   tangent39="0.9999 0 -0.0141511"
+   point40="37.307 1.56763 -6.78488"
+   tangent40="0.9999 0 -0.014151"
+   point41="37.7998 1.56763 -6.79185"
+   tangent41="0.9999 0 -0.0141511"
+   point42="38.2926 1.56763 -6.79883"
+   tangent42="0.9999 0 -0.0141511"
+   point43="38.7854 1.56763 -6.8058"
+   tangent43="0.9999 0 -0.0141511"
+   point44="39.2782 1.56763 -6.81277"
+   tangent44="0.999903 0 -0.0139109"
+   size="45"
+/>
+</entity>
+<entity>
+<tags
+   tags="box platform removable"
+/>
+<box/>
+<name
+   name="Box_1"
+/>
+<transform
+   pos="-34.6638 2.83655 33.8342"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/__box.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="2.0 1.0 2.0"
+   mass="2"
+/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="seek"
+   kpt0_pos="29.4791 0 -19.8088"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="29.6616 0 -1.91699"
+   kpt1_wait="2"
+   jurisdiction="30.0801 0 -1.07422"
+   jurRadius="35.2"
+   formation_point="9.48535 -1.5561 -9.40161"
+   formation_dir="9.48535 -1.5561 -9.40161"
+/>
+<name
+   name="guard_2"
+/>
+<transform
+   pos="30.0801 0 -1.07422"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags="player"
+/>
+<player/>
+<life
+   points="10"
+/>
+<name
+   name="player_1"
+/>
+<transform
+   pos="11.3224 0 -12.3313"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/player_first_ev.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="0.7"
+/>
+</entity>
+</entities>
