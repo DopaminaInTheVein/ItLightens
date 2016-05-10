@@ -167,30 +167,40 @@
 
   <!-- LOGIC OBJECTS -->
   <!-- ZONE 2 -->
-  <entity>
-    <tags tags="AI AI_speedy AI_poss" />
-    <name name="speedy1" />
-    <transform pos="-10 4 -10" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
-    <life points="50" />
-    <player_speedy />
-    <bt_speedy
-      wpts_size = "2"
-      wpt0_pos = "-10  2  -10"
-      wpt1_pos = " 10  2   10" />
-    <character_controller radius ="1.0" height ="1.0" />
-  </entity>
-  <entity>
-    <tags tags="AI AI_speedy AI_poss" />
-    <name name="speedy2" />
-    <transform pos="10 4 10" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/speedy/speedy.static_mesh" />
-    <life points="50" />
-    <player_speedy />
-    <bt_speedy
-      wpts_size = "2"
-      wpt0_pos = "-10  2  -10"
-      wpt1_pos = " 10  2   10" />
-    <character_controller radius ="1.0" height ="1.0" />
-  </entity>
+<entity>
+<tags
+   tags="AI AI_guard"
+/>
+<life
+   points="100"
+/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="seek"
+   kpt0_pos = "-10  2  -10"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos = " 10  2   10"
+   formation_point="-10  2  -10"
+   formation_dir="-10  2  -10"
+/>
+<name
+   name="guard_1"
+/>
+<transform
+   pos="-10 4 -10"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
 </entities>
