@@ -1,0 +1,4 @@
+<material tech="skin_textured.tech">
+<texture slot="diffuse" name="textures/guarda_albedo_map.dds"/>
+<texture slot="normalmap" name="textures/guarda_normal_map.dds"/>
+</material>
