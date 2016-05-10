@@ -24,6 +24,7 @@ struct TCompDrone : public TCompBase {
 	std::string self_ilum_back;
 
 	VEC3 final_pos;
+	VEC3 last_direction;
 
 	void onCreate(const TMsgEntityCreated&);
 	bool SetMyBasicComponents();

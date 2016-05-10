@@ -4,21 +4,10 @@
 #include "resources/resource.h"
 #include "render/shader_cte.h"
 #include "constants/ctes_object.h"
-extern CShaderCte< TCteObject > shader_ctes_object;
+#include "logic\sbb.h"
+#include "recast\navmesh.h"
 
-struct SimpleVertexColored {
-	float x, y, z;
-	float r, g, b, a;
-	void set(VEC3 npos, VEC4 color) {
-		x = npos.x;
-		y = npos.y;
-		z = npos.z;
-		r = color.x;
-		g = color.y;
-		b = color.z;
-		a = color.w;
-	}
-};
+extern CShaderCte< TCteObject > shader_ctes_object;
 
 void  CDebug::LogRaw(const char* msg, ...)
 {
@@ -182,6 +171,10 @@ void CDebug::render()
 #ifndef NDEBUG
 	shader_ctes_object.World = MAT44::Identity;
 	shader_ctes_object.uploadToGPU();
+
+	CNavmesh nav = SBB::readNavmesh();
+	CMesh* mesh = nav.getMeshNavMesh();
+	delete mesh;
 
 	if (lines.size() == 0) return;
 

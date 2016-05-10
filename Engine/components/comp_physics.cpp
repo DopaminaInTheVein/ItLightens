@@ -158,6 +158,9 @@ void TCompPhysics::update(float dt)
 	if (m_collisionType == DYNAMIC_RB && m_pActor) {
 		// ask physics about the current pos + rotation
 		// update my sibling TCompTransform with the physics info
+
+		if (isKinematic()) return;
+
 		PxTransform curr_pose = m_pRigidActor->getGlobalPose();
 		
 		CEntity *e = CHandle(this).getOwner();
@@ -325,13 +328,19 @@ bool TCompPhysics::addRigidbodyScene()
 
 bool TCompPhysics::isKinematic()
 {
-	if (m_collisionType == STATIC_OBJECT) return true;
+	if (m_collisionType == STATIC_OBJECT) return false;
 	PxRigidDynamic *rd = m_pActor->isRigidDynamic();
 
 	if (rd) {
 		return rd->getRigidDynamicFlags().isSet(PxRigidDynamicFlag::eKINEMATIC);
 	}
 	return true;
+}
+
+bool TCompPhysics::isStatic()
+{
+	if (m_collisionType == STATIC_OBJECT) return true;
+	return false;
 }
 
 bool TCompPhysics::setKinematic(bool isKinematic)
@@ -385,6 +394,22 @@ void TCompPhysics::setPosition(VEC3 position, CQuaternion rotation)
 	else {				//if kinematic use setkinematicTarget
 		assert(rd);
 		rd->setKinematicTarget(tr);	//use physx, can push, etc
+	}
+}
+
+void TCompPhysics::fixedUpdate(float dt)
+{
+	PxRigidDynamic *rd = m_pActor->isRigidDynamic();
+
+	if (!rd) return;
+	bool isKinematic = rd->getRigidDynamicFlags().isSet(PxRigidBodyFlag::eKINEMATIC);
+
+	CEntity *e = CHandle(this).getOwner();
+	if (!e) return;
+	TCompTransform *t = e->get<TCompTransform>();
+
+	if (isKinematic) {
+		rd->setKinematicTarget(PxTransform(PhysxConversion::Vec3ToPxVec3(t->getPosition()),rd->getGlobalPose().q));
 	}
 }
 

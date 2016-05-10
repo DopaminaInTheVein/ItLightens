@@ -6,6 +6,7 @@
 #include "components\comp_name.h"
 #include "components\comp_charactercontroller.h"
 #include "components\comp_physics.h"
+#include "components\comp_transform.h"
 
 #include "components\entity_tags.h"
 #include "app_modules\entities.h"
@@ -175,16 +176,36 @@ void CPhysxManager::update(float dt)
 	t_to_update += getDeltaTime();
 	if (t_to_update >= t_max_update) {
 
-		CEntitiesModule::fixedUpdate(t_to_update);
+		//update actions that need to be done before next simulation from physx
+		CEntitiesModule::fixedUpdate(t_to_update);		
 
 		m_pScene->simulate(t_to_update);
 		m_pScene->fetchResults(true);
 
+		fixedUpdate(t_to_update);
+
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
 		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
 
-		t_to_update = 0.0f;
+		t_to_update = - t_max_update;
 	}
+}
+
+void CPhysxManager::fixedUpdate(float elapsed) {
+
+	/*PxU32 nbActiveTransforms;
+	auto activeTransforms = m_pScene->getActiveTransforms(nbActiveTransforms);
+	// update each render object with the new transform
+	for (PxU32 i = 0; i < nbActiveTransforms; ++i)
+	{
+		CHandle h_active = CHandle();
+		h_active.fromUnsigned(HandleToUlong(activeTransforms[i].userData));
+		CEntity *e = h_active;
+		if (!e) continue;
+		TCompTransform *t = e->get<TCompTransform>();
+		t->setPosition(activeTransforms[i].actor2World.p);
+		
+	}*/
 }
 
 #pragma endregion

@@ -9,6 +9,22 @@
 #include "navmesh_builder.h"
 #include "navmesh_input.h"
 
+// --------------------------------
+struct SimpleVertexColored
+{
+	float x, y, z;
+	float r, g, b, a;
+	void set(VEC3 npos, VEC4 color) {
+		x = npos.x;
+		y = npos.y;
+		z = npos.z;
+		r = color.x;
+		g = color.y;
+		b = color.z;
+		a = color.w;
+	}
+};
+
 class CNavmesh {
 private:
 	rcHeightfield*        m_solid;
@@ -21,6 +37,7 @@ private:
 	unsigned char*        m_triareas;
 
 	rcBuildContext        m_context;
+//	DebugDrawGL           m_draw;
 
 	rcConfig getRcConfig();
 	void storeExtraData(std::string path);
@@ -62,6 +79,50 @@ public:
 	CNavmesh();
 	void build(std::string salaloc);
 	bool reload(std::string salaloc);
+
+
+	CMesh* getMeshNavMesh() {
+
+		CMesh* mesh = new CMesh("navmesh");
+
+		int nvtxs = m_pmesh->npolys;
+		std::vector< SimpleVertexColored > vtxs;
+		vtxs.resize(nvtxs);
+
+		auto vtx_pointer = m_pmesh->polys;
+
+		for (int i = 0; i < nvtxs; i++) {
+			SimpleVertexColored vtx;
+			vtx.set(VEC3(0.0f, 0.0f, 0.0f), VEC4(1, 1, 1, 1));
+
+			vtx.x = *vtx_pointer;
+			vtx_pointer++;
+			vtx.y = *vtx_pointer;
+			vtx_pointer++;
+			vtx.z = *vtx_pointer;
+			vtx_pointer++;
+			//Debug->LogRaw("vtx : %f, %f, %f\n", vtx.x, vtx.y, vtx.z);
+			vtxs.push_back(vtx);
+
+		}
+
+		mesh->create((uint32_t)nvtxs,
+			(uint32_t)sizeof(SimpleVertexColored),
+			&vtxs[0],
+			0, 0, nullptr,
+			CMesh::VTX_DECL_POSITION_COLOR,
+			CMesh::LINE_LIST,
+			nullptr);
+
+		mesh->activateAndRender();
+
+		vtxs.clear();
+
+		return mesh;
+
+	}
+
+	void render(bool use_z_test);
 
 	dtNavMesh* create(const rcConfig& cfg, std::string salaloc);
 	void prepareQueries();

@@ -20,6 +20,7 @@ void TCompDrone::onCreate(const TMsgEntityCreated &)
 		// Set Kinematic
 		TCompPhysics *p = e->get<TCompPhysics>();
 		p->setKinematic(true);
+		
 		final_pos = t->getPosition();
 	}
 	else h.destroy();
@@ -62,6 +63,7 @@ void TCompDrone::moveToNext(float elapsed) {
 		VEC3 direction = wpts[curWpt] - final_pos;
 		direction.Normalize();
 		final_pos = final_pos + direction * speed * elapsed;
+		transform->setPosition(final_pos);
 		//PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(target);
 		//rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
 	}
@@ -88,6 +90,7 @@ bool TCompDrone::load(MKeyValue & atts)
 
 void TCompDrone::fixedUpdate(float elapsed) {
 	PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
+	if (!physics->isKinematic()) return;
 	if (rd) {
 		PxTransform tmx = rd->getGlobalPose();
 		VEC3 target = final_pos;

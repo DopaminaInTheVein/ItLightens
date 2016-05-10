@@ -69,7 +69,7 @@ class CPhysxManager :	public IAppModule,
 #endif
 
 	PxReal t_to_update = 0.0f;
-	PxReal t_max_update = 0.0f;
+	PxReal t_max_update = 1.0f / 60.0f;
 
 
 	//memory raycast, used for point-to-point
@@ -117,6 +117,8 @@ public:
 	bool					start() override;
 	void					stop() override;
 	void					update(float dt) override;
+
+	void fixedUpdate(float elapsed);
 
 	//set flags
 	void					setupFiltering(PxRigidActor * actor, PxFilterData& filterData);
