@@ -275,8 +275,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
 
-	sala = "tiling";
-	//sala = "milestone2";
+	//sala = "tiling";
+	sala = "milestone2";
 	//sala = "drones";
 	//sala = "boxes";
 	//sala = "milestone2_guardias";

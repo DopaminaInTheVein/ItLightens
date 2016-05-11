@@ -61,6 +61,8 @@ void TCompCharacterController::renderInMenu()
 	ImGui::Checkbox("OnGround", &m_OnGround);
 	ImGui::Checkbox("PhysxOnGround", &m_physxOnground);
 	ImGui::Checkbox("last_onground", &m_lastOnGround);
+	ImGui::DragFloat("Friction Ground", &m_friction, 0.f, 10.f);
+	ImGui::DragFloat("Friction Air", &m_friction_air, 0.f, 10.f);
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 	
 }
@@ -186,8 +188,9 @@ void TCompCharacterController::UpdateFriction(float dt) {
 	PROFILE_FUNCTION("update: friction");
 	//update speeds with friction
 	assert(isValid(m_speed));
-	if (m_speed.x != 0.0f) m_speed.x -= m_speed.x*m_friction*dt;
-	if (m_speed.z != 0.0f) m_speed.z -= m_speed.z*m_friction*dt;
+	float friction = OnGround() ? m_friction : m_friction_air;
+	if (m_speed.x != 0.0f) m_speed.x -= m_speed.x*friction*dt;
+	if (m_speed.z != 0.0f) m_speed.z -= m_speed.z*friction*dt;
 	assert(isValid(m_speed));
 }
 
@@ -338,12 +341,14 @@ void TCompCharacterController::SetFilterData(PxFilterData& filter)
 //#########################################################################################################
 #pragma region setters
 
-void TCompCharacterController::AddImpulse(const VEC3& impulse) {
+void TCompCharacterController::AddImpulse(const VEC3& impulse, bool prevalent) {
 	PROFILE_FUNCTION("add impulse");
 	assert(isValid(m_speed));
-	if (!sameSign(m_speed.x, impulse.x)) m_speed.x = 0;
-	if (!sameSign(m_speed.y, impulse.y)) m_speed.y = 0;
-	if (!sameSign(m_speed.z, impulse.z)) m_speed.z = 0;
+	if (prevalent) {
+		if (!sameSign(m_speed.x, impulse.x)) m_speed.x = 0;
+		if (!sameSign(m_speed.y, impulse.y)) m_speed.y = 0;
+		if (!sameSign(m_speed.z, impulse.z)) m_speed.z = 0;
+	}
 	m_speed.x += impulse.x;
 	m_speed.y += impulse.y;
 	m_speed.z += impulse.z;

@@ -15,6 +15,7 @@ class TCompCharacterController : public TCompBase {
 	float							m_gravitySpeed		= -10.0f;
 	float							m_maxSpeed			= 10.0f;
 	float							m_friction			= 10.0f;
+	float							m_friction_air		= 2.f;
 	float							m_eOffsetSpeed		= 0.2f;
 
 	bool							m_active			= true;
@@ -138,7 +139,7 @@ public:
 	void AddSpeed(const VEC3& direction, float speed = 1.0f);
 	void AddAccel(const VEC3& direction, float accel = 1.0f);
 	void AddMovement(const VEC3& direction, float speed = 1.0f);
-	void AddImpulse(const VEC3 & impulse);
+	void AddImpulse(const VEC3 & impulse, bool prevalent = false);
 	void ChangeSpeed(float speed);
 	void ResetMovement();
 	
