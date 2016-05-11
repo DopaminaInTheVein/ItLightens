@@ -130,6 +130,8 @@ resources_dir_watcher.start("data/shaders", getHWnd());
 
 	logic_manager->throwEvent(logic_manager->OnGameStart, "");
 
+	
+
 	return true;
 }
 

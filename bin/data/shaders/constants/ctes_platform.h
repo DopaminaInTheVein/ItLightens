@@ -7,6 +7,8 @@
 #define CTE_SHADER_LIGHT           3
 #define CTE_SHADER_GLOBALS_SLOT    4
 
+#define CTE_SHADER_HATCHING_SLOT   5
+
 #define TEXTURE_SLOT_DIFFUSE       0
 #define TEXTURE_SLOT_NORMALS       1
 #define TEXTURE_SLOT_SPECULAR      2

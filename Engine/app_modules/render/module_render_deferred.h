@@ -14,6 +14,8 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_depthTexture;
 	CRenderToTexture* rt_final;
 
+	CRenderToTexture* rt_specular;
+
 	CRenderToTexture* rt_data;
 	CRenderToTexture* rt_data2;
 	CRenderToTexture* rt_black;

@@ -1430,6 +1430,9 @@
     <ClInclude Include="components\comp_light_dir_shadows.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_hatching.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">

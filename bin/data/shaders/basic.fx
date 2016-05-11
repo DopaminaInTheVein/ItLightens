@@ -2,6 +2,7 @@
 #include "constants/ctes_object.h"
 #include "constants/ctes_light.h"
 #include "constants/ctes_globals.h"
+#include "constants/ctes_hatching.h"
 
 
 Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
@@ -120,9 +121,9 @@ void PSAddAmbient(float4 Pos : SV_POSITION
 	float4 selfIlum = txSelfIlum.Sample(samLinear, iTex0);
 	
 	
-	output = diff*0.2f + lights*0.8f;
+	output = float4(0.2f,0.2f, 0.2f, 1.0f)*normals*0.2f + lights*0.8f;
 	output.a = diff.a;
-	output = lights;
+	//output = lights;
 	output.rgb += selfIlum.rgb;
 }
 
@@ -271,8 +272,8 @@ float4 PShader2(float4 Pos : SV_POSITION
 {
 
 
-float2 e_barrier = float2(0.5f,0.001f);  // x=norm, y=depth
-float pixel_size = 1/2048.0f;	//to adjust line witdh
+float2 e_barrier = float2(0.5f,edge_lines_detection);  // x=norm, y=depth
+float2 pixel_size = float2(1.0f/xres,1.0f/yres);	//to adjust line witdh
 //float pixel_size = 1.0f;
 float2 e_weights= float2(1,1);  // x=norm, y=depth
 
@@ -280,7 +281,7 @@ float2 e_kernel = float2(1,1);   // x=norm, y=depth
 
  
 float dc = txDepth.Sample(samLinear, uv).r;
- pixel_size = pixel_size/dc; //adjust line witdh based on depth
+ pixel_size = pixel_size/(dc); //adjust line witdh based on depth
 
  float2 tc5r = -offs[5];
 
@@ -325,10 +326,10 @@ float4 a = (2*dc - dd);
  float w = (1 - de) * e_kernel.x; 
 //return float4(1,0,1,1);
 w = step(0.75f, w);
-float4 final_color = w*global_color;
+float4 final_color = w;
 //w=global_color*w;
 return final_color;
 //return global_color;	 
- return float4(w, w, w, w); ///stop here for an edge detector shader
+ return float4(w, w, w, w); 
 
 }

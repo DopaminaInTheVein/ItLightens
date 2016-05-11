@@ -13,6 +13,8 @@ Texture2D txShadowMap : USE_SHADER_REG(TEXTURE_SLOT_SHADOWMAP);
 
 TextureCube txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
 
+Texture2D txWarpLight : register(t78);
+
 // Same order as
 SamplerState samLinear : register(s0);
 SamplerState samLightBlackBorder : register(s1);
@@ -120,7 +122,8 @@ void PSGBuffer(
 //--------------------------------------------------------------------------------------
 void PSLightPoint(
   in float4 iPosition : SV_Position
-  , out float4 o_color : SV_Target
+  , out float4 o_color : SV_Target0
+  , out float4 o_specular : SV_Target1
   )
 {
   int3 ss_load_coords = uint3(iPosition.xy, 0);
@@ -141,6 +144,10 @@ void PSLightPoint(
   // Calculo luz diffuso basico
   // Saturate limita los valores de salida al rango 0..1
   float NL = saturate(dot(N, L));
+  
+ float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL, 0.0f))*2.0f;
+  
+ NL *= lightWarp.xyz;
 
   // Factor de atenuacion por distancia al centro de la
   // luz. 1 para distancias menores de LightInRadius y 0
@@ -168,6 +175,8 @@ void PSLightPoint(
   o_color.xyz += env * 0.3;
   //o_color.xyz = E_refl.xyz;
   o_color.a = 1.;
+  
+  o_specular = float4(spec_amount, spec_amount, spec_amount,1.0f);
 
   //o_color = float4(NL, NL, NL ,1) * albedo;
 }

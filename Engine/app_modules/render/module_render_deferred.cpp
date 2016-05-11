@@ -40,6 +40,8 @@ bool CRenderDeferredModule::start() {
   rt_depthTexture = new CRenderToTexture;
   rt_final = new CRenderToTexture;
 
+  rt_specular = new CRenderToTexture;
+
   //aux
   rt_data = new CRenderToTexture;
   rt_data2 = new CRenderToTexture;
@@ -50,6 +52,8 @@ bool CRenderDeferredModule::start() {
   rt_selfIlum_int = new CRenderToTexture;
   rt_selfIlum_blurred_int = new CRenderToTexture;
 
+  if (!rt_specular->createRT("rt_specular", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+	  return false;
   if (!rt_albedos->createRT("rt_albedo", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
     return false;
   if (!rt_data->createRT("rt_data", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
@@ -100,10 +104,29 @@ bool CRenderDeferredModule::start() {
   assert(unit_cube && unit_cube->isValid());
 
   Resources.get("textures/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE );
+  Resources.get("textures/hatch_0.dds")->as<CTexture>()->activate(80);
+  Resources.get("textures/hatch_1.dds")->as<CTexture>()->activate(81);
+  Resources.get("textures/hatch_2.dds")->as<CTexture>()->activate(82);
+  Resources.get("textures/hatch_3.dds")->as<CTexture>()->activate(83);
+  Resources.get("textures/hatch_4.dds")->as<CTexture>()->activate(84);
+  Resources.get("textures/hatch_5.dds")->as<CTexture>()->activate(85);
+
+  Resources.get("textures/warp_light.dds")->as<CTexture>()->activate(78);
+
+  shader_ctes_hatching.edge_lines_detection = 0.02f;
+  shader_ctes_hatching.frequency_offset = 8.0f;
+  shader_ctes_hatching.intensity_sketch = 0.2f;
+  shader_ctes_hatching.rim_strenght = 1.0f;
+  shader_ctes_hatching.specular_strenght = 50.0f;
+  shader_ctes_hatching.diffuse_strenght = 1.0f;
+  shader_ctes_hatching.frequency_texture = 10.0f;
+
   shader_ctes_globals.world_time = 0.f;
   shader_ctes_globals.xres = xres;
   shader_ctes_globals.yres = yres;
   shader_ctes_globals.strenght_polarize = 1.0f / 5.0f;
+
+  shader_ctes_hatching.uploadToGPU();
 
   return true;
 }
@@ -319,7 +342,7 @@ void CRenderDeferredModule::renderAccLight() {
   // Activar el rt para pintar las luces...
   ID3D11RenderTargetView* rts[3] = {
     rt_acc_light->getRenderTargetView()
-    ,	nullptr   // remove the other rt's from the pipeline
+    ,  rt_specular->getRenderTargetView()  
     ,	nullptr
   };
   // Y el ZBuffer del backbuffer principal
@@ -340,9 +363,9 @@ void CRenderDeferredModule::renderAccLight() {
 
   activateZ(ZCFG_LIGHTS_CONFIG);
   //activateRS(RSCFG_INVERT_CULLING);
-  addDirectionalLights();
+  //addDirectionalLights();
 
-  addDirectionalLightsShadows();
+  //addDirectionalLightsShadows();
 
   activateRS(RSCFG_DEFAULT);
   activateZ(ZCFG_DEFAULT);
@@ -629,11 +652,12 @@ void CRenderDeferredModule::ShootGuardRender() {
 
 // ----------------------------------------------
 void CRenderDeferredModule::render() {
-  //Render.clearMainZBuffer();
-  rt_black->clear(VEC4(0, 0, 0, 1));
-  rt_data->clear(VEC4(0, 0, 0, 0));
+	//Render.clearMainZBuffer();
+	rt_black->clear(VEC4(0, 0, 0, 1));
+	rt_data->clear(VEC4(0, 0, 0, 0));
+	rt_specular->clear(VEC4(0, 0, 0, 0));
 
-  generateShadowMaps();
+	generateShadowMaps();
 
 	rt_data2->clear(VEC4(0, 0, 0, 0));
 
@@ -657,19 +681,28 @@ void CRenderDeferredModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);
 	rt_depthTexture->activate(45);
 
-	//AA cutre, only objects near camera
-	/*auto tech = Resources.get("aa_tech.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_final, tech);*/
-
 	drawFullScreen(rt_final);
 
+	activateBlend(BLENDCFG_COMBINATIVE);
+	rt_specular->activate(79);
+	auto tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_final, tech);
+	
+
+	rt_wpos->activate(TEXTURE_SLOT_WORLD_POS);
+	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+
+	activateBlend(BLENDCFG_SUBSTRACT);
+	tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_final, tech);
+
+	activateBlend(BLENDCFG_DEFAULT);
 	activateZ(ZCFG_DEFAULT);
 	
-	if (GameController->GetFxPolarize()) {
+	/*if (GameController->GetFxPolarize()) {
 		RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
 		RenderPolarizedPP(PLUS, VEC4(0.3f, 0.3f, 1.0f, 1.0f));
 	}
-
 
 	activateZ(ZCFG_DEFAULT);
 
@@ -680,10 +713,10 @@ void CRenderDeferredModule::render() {
 	if (GameController->GetFxGlow()) { 
 		GlowEdgesInt();
 		GlowEdges(); 
-	}
+	}*/
 
 	
-
+	CTexture::deactivate(79);
 	CTexture::deactivate(45);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	CTexture::deactivate(TEXTURE_SLOT_WORLD_POS);
@@ -692,10 +725,10 @@ void CRenderDeferredModule::render() {
 	activateZ(ZCFG_DEFAULT);
 	
 	// Mandar a pintar los 'transparentes'
-	  RenderManager.renderAll(h_camera, CRenderManager::TRANSPARENT_OBJS);
-	  
-	  CTexture::deactivate(45);
-	  CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+	RenderManager.renderAll(h_camera, CRenderManager::TRANSPARENT_OBJS);
+	
+	CTexture::deactivate(45);
+	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	  
 
 }

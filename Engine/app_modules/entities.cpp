@@ -275,7 +275,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
 
-	//sala = "milestone2";
+	sala = "milestone2";
 	//sala = "drones";
 	//sala = "boxes";
 	//sala = "milestone2_guardias";
@@ -289,7 +289,7 @@ bool CEntitiesModule::start() {
 	//sala = "test_guard";
 	//sala = "test_anim";
 	//sala = "test_column_navmesh";
-	sala = "test_recast_milestone2";
+	//sala = "test_recast_milestone2";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";
@@ -299,14 +299,14 @@ bool CEntitiesModule::start() {
 	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 	{
-		//CEntityParser ep;
-		//is_ok = ep.xmlParseFile("data/scenes/" + sala + "_guardias.xml");
-		//assert(is_ok);
+		CEntityParser ep;
+		is_ok = ep.xmlParseFile("data/scenes/" + sala + "_guardias.xml");
+		assert(is_ok);
 	}
 	{
-		CEntityParser ep2;
-		bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
-		assert(isok);
+		//CEntityParser ep2;
+		//bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
+		//assert(isok);
 	}
 
 	// GENERATE NAVMESH
