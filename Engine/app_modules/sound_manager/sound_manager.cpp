@@ -27,6 +27,59 @@ bool CSoundManagerModule::start() {
 		return false;
 	}
 
+	result = studio_system->getLowLevelSystem(&system);
+	result = studio_system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extradriverdata);
+
+	// basic banks
+	result = studio_system->loadBankFile((sounds_folder + "Master Bank.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank);
+	result = studio_system->loadBankFile((sounds_folder + ".Master Bank.strings.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
+
+	/*// un par de bancos de ejemplo    
+	res = system->loadBankFile("./data/Weapons.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &weaponsBank);
+	res = system->loadBankFile("./data/DaniBank.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &DaniBank);
+
+
+	// Cargamos los EventDescriptors
+	Studio::EventDescription* explosionDescription = NULL;
+	Studio::EventDescription* DaniDescription = NULL;
+	res = system->getEvent("event:/Explosions/Single Explosion", &explosionDescription);
+	res = system->getEvent("event:/Dani/OnEnter", &DaniDescription);
+
+	// cacheo datos de la explosion para que no haya delays
+	res = explosionDescription->loadSampleData();
+
+	Studio::EventInstance* DaniInstance = NULL;
+	res = DaniDescription->createInstance(&DaniInstance);
+
+
+	bool end = false;
+
+	while (!end)
+	{
+		char c = getch();
+		if (c == 's')
+		{
+			// creo una explosión
+			Studio::EventInstance* eventInstance = NULL;
+			res = explosionDescription->createInstance(&eventInstance);
+			eventInstance->start();
+			// y la libero (esto se hará al acabar)
+			eventInstance->release();
+		}
+		if (c == 'm')
+		{
+			// musiquilla
+			res = DaniInstance->start();
+		}
+		if (c == 'd')
+		{
+			//musiquilla out
+			res = DaniInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+		}
+		if (c == 'q') end = true;
+		system->update();
+	}*/
+
 	result = system->init(32, FMOD_INIT_NORMAL, extradriverdata);
 	if (result != FMOD_OK)
 		return false;
@@ -71,6 +124,10 @@ void CSoundManagerModule::stop() {
 		sound_it->second->release();
 	}
 	sounds.clear();
+
+	stringsBank->unload();
+	masterBank->unload();
+
 	system->release();
 }
 

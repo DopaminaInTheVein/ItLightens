@@ -1334,30 +1334,6 @@
     <ClInclude Include="render\fx\GuardShots.h">
       <Filter>render\fx</Filter>
     </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod.hpp">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_codec.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_common.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_dsp.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_dsp_effects.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_errors.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_output.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
     <ClInclude Include="app_modules\sound_manager\sound_manager.h">
       <Filter>app_modules\sound_manager</Filter>
     </ClInclude>
@@ -1633,12 +1609,6 @@
     <Filter Include="fmod">
       <UniqueIdentifier>{528e1a57-420c-4a71-90fc-157459fc227e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="fmod\lowlevel">
-      <UniqueIdentifier>{88a60dd9-33ff-428a-bcae-4ece92ad3124}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="fmod\lowlevel\inc">
-      <UniqueIdentifier>{c5546b4e-3980-441d-b0ed-483c0c50e384}</UniqueIdentifier>
-    </Filter>
     <Filter Include="app_modules\sound_manager">
       <UniqueIdentifier>{0012f195-886a-4a8a-8113-bd4f5cb5649a}</UniqueIdentifier>
     </Filter>
@@ -1669,15 +1639,6 @@
   <ItemGroup>
     <None Include="geometry\SimpleMath.inl">
       <Filter>geometry</Filter>
-    </None>
-    <None Include="fmod\lowlevel\inc\fmod.cs">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </None>
-    <None Include="fmod\lowlevel\inc\fmod_dsp.cs">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </None>
-    <None Include="fmod\lowlevel\inc\fmod_errors.cs">
-      <Filter>fmod\lowlevel\inc</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

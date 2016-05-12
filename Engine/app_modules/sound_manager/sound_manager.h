@@ -3,23 +3,29 @@
 
 #include "app_modules/app_module.h"
 #include "fmod.hpp"
-#include "fmod_common.h"
-#include "fmod_studio.h"
+#include "fmod_studio.hpp"
 #include <stdlib.h>
 #include <conio.h>
 #include <stdio.h>
 #include <string>
 
+using namespace FMOD;
+
 class CSoundManagerModule : public IAppModule
 {
 	std::string sounds_folder = "data/sounds";
 
-	FMOD::System	 *system;
+	FMOD_RESULT       result;
+	void             *extradriverdata = 0;
+
+	System			 *system;					//low level system
+	unsigned int      version;
+	Studio::System	 *studio_system = NULL;
+	Studio::Bank	 *masterBank = NULL;
+	Studio::Bank     *stringsBank = NULL;
+
 	std::map<std::string, FMOD::Sound*>		sounds;
 	FMOD::Channel*							channels[4];
-	FMOD_RESULT       result;
-	unsigned int      version;
-	void             *extradriverdata = 0;
 
 public:
 
