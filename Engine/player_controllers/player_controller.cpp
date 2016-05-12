@@ -321,12 +321,31 @@ void player_controller::DoubleFalling() {
 	}
 }
 
+bool player_controller::canJump() {
+	bool can_jump = true;
+	if (pol_orbit) can_jump = false;
+	if (polarityForces.size() > 0) can_jump = false;
+	return can_jump;
+}
+
 void player_controller::Jump()
 {
 	PROFILE_FUNCTION("jump player");
 	SetCharacterController();
 	bool ascending = cc->GetLastSpeed().y > 0.1f;
-	cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
+	VEC3 jumpVector;
+	if (isMoving()) {
+		VEC3 curSpeed = cc->GetLastSpeed();
+		jumpVector = VEC3(
+			-curSpeed.x * 0.5f,
+			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
+			-curSpeed.z * 0.5f
+		);
+	} else {
+		jumpVector = VEC3(0.f, jimpulse, 0.f);
+	}
+	
+	cc->AddImpulse(jumpVector);
 	energyDecreasal(jump_energy);
 	if (ascending) {
 		ChangeState("doublejump");
@@ -354,7 +373,7 @@ void player_controller::Jumping()
 	}
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
+		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 		energyDecreasal(jump_energy);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
@@ -372,7 +391,7 @@ void player_controller::Falling()
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
+		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 		energyDecreasal(jump_energy);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
@@ -403,6 +422,7 @@ void player_controller::RecalcAttractions()
 			PolarityForce force = getPolarityForce(forceHandle);
 			if (force.polarity == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
 
+
 			VEC3 localForce = calcForceEffect(force);
 			assert(isValid(localForce));
 			all_forces += localForce;
@@ -431,10 +451,15 @@ void player_controller::RecalcAttractions()
 
 		//Anular gravedad
 		VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
-		if (nearestForce.distance > POL_RCLOSE) {
+		if (nearestForce.distance < POL_RCLOSE) {
+			// Near (if press button go up)
+			if (io->keys[VK_SPACE].isPressed()) antigravity.y += 5.f;
+
+		} else {
+			// Far (Interpolate antigravity from 10 to 0)
 			antigravity.y = clamp(10.f - pow(nearestForce.distance - POL_RCLOSE, 2), 0.f, 10.f);
 		}
-		cc->AddSpeed(antigravity*getDeltaTime());
+		cc->AddSpeed(antigravity * getDeltaTime());
 		lastForces = final_forces;
 	}
 

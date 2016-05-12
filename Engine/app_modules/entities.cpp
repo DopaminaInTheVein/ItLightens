@@ -275,6 +275,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
 
+	//sala = "tiling";
 	sala = "milestone2";
 	//sala = "drones";
 	//sala = "boxes";
@@ -298,11 +299,11 @@ bool CEntitiesModule::start() {
 	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 
-	{
+	/*{
 		CEntityParser ep2;
 		bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
 		assert(isok);
-	}
+	}*/
 
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();

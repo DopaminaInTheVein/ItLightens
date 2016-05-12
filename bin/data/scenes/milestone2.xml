@@ -9,10 +9,10 @@
    out_radius="69.688"
 />
 <name
-   name="luz_izquierda"
+   name="_Luces11"
 />
 <transform
-   pos="9.96491 23.3405 27.2393"
+   pos="9.96491 23.3405 6.01037"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -27,28 +27,10 @@
    out_radius="69.688"
 />
 <name
-   name="luz_derecha"
+   name="_Luces09"
 />
 <transform
-   pos="9.96491 23.3405 -23.4093"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="16.0127"
-   out_radius="34.0"
-/>
-<name
-   name="Omni005"
-/>
-<transform
-   pos="-31.8362 -18.8937 0.470277"
+   pos="1.42302 -5.36438 -6.22275"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -63,7 +45,25 @@
    out_radius="34.0"
 />
 <name
-   name="Omni004"
+   name="_Luces07"
+/>
+<transform
+   pos="-19.5386 23.7925 -10.2227"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="8.8"
+   out_radius="34.0"
+/>
+<name
+   name="_Luces05"
 />
 <transform
    pos="51.4312 23.7925 19.0538"
@@ -77,32 +77,14 @@
 />
 <light_point
    color="1.0 1.0 1.0 1.0"
-   in_radius="8.8"
+   in_radius="16.0127"
    out_radius="34.0"
 />
 <name
-   name="Omni003"
+   name="_Luces03"
 />
 <transform
-   pos="-19.5386 23.7925 19.0538"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="8.8"
-   out_radius="34.0"
-/>
-<name
-   name="Omni002"
-/>
-<transform
-   pos="-19.5386 23.7925 -6.17871"
+   pos="-31.8362 -18.8937 -20.5488"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -117,12 +99,1129 @@
    out_radius="34.0"
 />
 <name
-   name="Omni001"
+   name="_Luces01"
 />
 <transform
-   pos="-19.5386 -8.94751 0.470276"
+   pos="19.7314 -19.276 -19.0215"
    quat="0 0 0 1.0"
    scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="turbine_2"
+/>
+<transform
+   pos="5.20116 -23.6427 -10.5997"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/turbine_2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="turbina_1"
+/>
+<transform
+   pos="-22.5469 -23.6427 6.99324"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/turbina_1.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="tuberia_turbina"
+/>
+<transform
+   pos="22.5394 -22.8043 -26.2771"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/tuberia_turbina.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="tuberia"
+/>
+<transform
+   pos="-18.8178 -22.8041 -8.68526"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/tuberia.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="tablones4"
+/>
+<transform
+   pos="9.88679 -22.4112 11.7154"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/tablones4.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="tablones3"
+/>
+<transform
+   pos="9.88679 -22.4112 11.7154"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/tablones3.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="tablones_4"
+/>
+<transform
+   pos="9.88679 -22.4112 11.7154"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/tablones_4.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="tablones_2"
+/>
+<transform
+   pos="9.88679 -22.4112 11.7154"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/tablones_2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="tablones"
+/>
+<transform
+   pos="9.88679 -22.4112 11.7154"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/tablones.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="sueloarribaizquierda"
+/>
+<transform
+   pos="-5.29344 -10.9161 -6.8483"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/sueloarribaizquierda.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="suelo_abajo"
+/>
+<transform
+   pos="-5.29344 -23.9436 -6.8483"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/suelo_abajo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="puertas_derechas"
+/>
+<transform
+   pos="0.124011 -10.3717 -6.85553"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/puertas_derechas.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="puerta_balcon_redondo_pequeno004"
+/>
+<transform
+   pos="-41.1173 1.74469 -7.18756"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/puerta_balcon_redondo_pequeno004.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="plataforma_redonde"
+/>
+<transform
+   pos="-34.3493 -0.652451 -7.8176"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/plataforma_redonde.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="plataforma_balcon_derecho"
+/>
+<transform
+   pos="10.357 -11.9814 -29.0667"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/plataforma_balcon_derecho.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="plataforma_balcon_cuadrado_izquierdo"
+/>
+<transform
+   pos="10.1243 -11.9814 15.1142"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/plataforma_balcon_cuadrado_izquierdo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="pibotes_balcon_pequeno-arribo"
+/>
+<transform
+   pos="-15.7487 -4.11873 14.6898"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/pibotes_balcon_pequeno-arribo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="pibotes_balcon_cuadrado-izquierdo"
+/>
+<transform
+   pos="10.2706 -11.1743 15.3466"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/pibotes_balcon_cuadrado-izquierdo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="pibotes_balcon_arriba"
+/>
+<transform
+   pos="-35.7784 0.861709 -7.59226"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/pibotes_balcon_arriba.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="pibote_balcon_derecho_cuadrado"
+/>
+<transform
+   pos="10.2106 -11.1743 -29.2992"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/pibote_balcon_derecho_cuadrado.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="paredes_balcon_redondo_grande"
+/>
+<transform
+   pos="-41.2989 1.91663 -8.04508"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/paredes_balcon_redondo_grande.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="paredes_balcon_cuadrado_derecha"
+/>
+<transform
+   pos="10.2155 -10.5613 -32.186"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/paredes_balcon_cuadrado_derecha.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="paredes_abajo"
+/>
+<transform
+   pos="0.298065 -21.5547 -7.03165"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/paredes_abajo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="pared_balcon_redondo_arriba"
+/>
+<transform
+   pos="-15.7336 -3.15889 18.5146"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/pared_balcon_redondo_arriba.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="pared_balcon_cuadrado_izquierdo"
+/>
+<transform
+   pos="10.2657 -10.5613 18.4774"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/pared_balcon_cuadrado_izquierdo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="nivel"
+/>
+<transform
+   pos="176.65 137.731 -698.851"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/nivel.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="marcos"
+/>
+<transform
+   pos="41.3996 -22.411 -7.18647"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/marcos.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="maquinas006"
+/>
+<transform
+   pos="-4.05573 -19.191 -3.351"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/maquinas006.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="maquinas5"
+/>
+<transform
+   pos="-4.05573 -19.191 -3.351"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/maquinas5.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="maquinas4"
+/>
+<transform
+   pos="-4.05573 -19.191 -3.351"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/maquinas4.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="maquinas3"
+/>
+<transform
+   pos="-4.05573 -19.191 -3.351"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/maquinas3.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="maquinas2"
+/>
+<transform
+   pos="-4.05573 -19.191 -3.351"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/maquinas2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="maquinas"
+/>
+<transform
+   pos="-4.05573 -19.191 -3.351"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/maquinas.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="lamparas_derecha"
+/>
+<transform
+   pos="21.0014 -18.9816 17.6319"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/lamparas_derecha.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="control_panel002"
+/>
+<transform
+   pos="7.48629 -22.0235 -26.9598"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/control_panel002.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columneas_esquineras_2"
+/>
+<transform
+   pos="10.2706 -11.1743 15.3466"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/columneas_esquineras_2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columnas_esquineras_1"
+/>
+<transform
+   pos="10.2106 -11.1743 -29.2992"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/columnas_esquineras_1.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columnas_balcon_izquierdo_cuadrado"
+/>
+<transform
+   pos="9.819 -18.0684 14.9804"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/columnas_balcon_izquierdo_cuadrado.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columnas_abajo"
+/>
+<transform
+   pos="40.9559 -18.2573 -3.92087"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/columnas_abajo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columna_abajo_izquierdo_centro"
+/>
+<transform
+   pos="9.819 -18.0684 14.9804"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/columna_abajo_izquierdo_centro.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columna_abajo_derecha_izquierda"
+/>
+<transform
+   pos="10.6622 -18.0684 -28.9329"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/columna_abajo_derecha_izquierda.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columna_abajo_derecha_derecha"
+/>
+<transform
+   pos="10.6622 -18.0684 -28.9329"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/columna_abajo_derecha_derecha.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columna_abajo_derecha_centro"
+/>
+<transform
+   pos="10.6622 -18.0684 -28.9329"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/columna_abajo_derecha_centro.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="columna_abajo_derecha"
+/>
+<transform
+   pos="9.819 -18.0684 14.9804"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/columna_abajo_derecha.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="barrotes_balcon_redondo_pequeno"
+/>
+<transform
+   pos="-15.7545 -4.06819 14.6601"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/barrotes_balcon_redondo_pequeno.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="barrotes_balcon_grande_abajo"
+/>
+<transform
+   pos="-35.6805 0.911773 -7.57358"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/barrotes_balcon_grande_abajo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="barrotes_balcon_cuadrado_izquierdo_abajo"
+/>
+<transform
+   pos="10.2693 -11.1267 15.2987"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_izquierdo_abajo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="barrotes_balcon_cuadrado_izquierdo"
+/>
+<transform
+   pos="10.2693 -11.1267 15.2987"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_izquierdo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="barrotes_balcon_cuadrado_derecho"
+/>
+<transform
+   pos="10.2119 -11.1267 -29.2513"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_derecho.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="barrotes_balcon_arriba"
+/>
+<transform
+   pos="-35.6805 0.911773 -7.57358"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/barrotes_balcon_arriba.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="barrotes_abajo_derecha"
+/>
+<transform
+   pos="10.2119 -11.1267 -29.2513"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/barrotes_abajo_derecha.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="barrotes_abajo_balcon_redondo_pequeno"
+/>
+<transform
+   pos="-15.7545 -4.06819 14.6601"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/barrotes_abajo_balcon_redondo_pequeno.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="balcon_redondo_pequeno"
+/>
+<transform
+   pos="-15.7686 -5.62997 14.9404"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/balcon_redondo_pequeno.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="andamio_usable"
+/>
+<transform
+   pos="-22.2405 -20.7505 -14.9376"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/andamio_usable.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="andamio_2"
+/>
+<transform
+   pos="-22.2405 -20.7505 -14.9376"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/andamio_2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="Andamio"
+/>
+<transform
+   pos="-22.2405 -20.7505 -14.9376"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/scene_ms2/Andamio.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags="box platform removable"
+/>
+<box/>
+<name
+   name="Box1"
+/>
+<transform
+   pos="23.5435 -22.0 -17.161"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/obj/box1.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="1.0 1.0 1.0"
+   mass="2"
+/>
+<polarized
+   pol="minus"
+/>
+</entity>
+<entity>
+<tags
+   tags="box platform removable"
+/>
+<box/>
+<name
+   name="Box2"
+/>
+<transform
+   pos="14.7821 -10.8911 15.1306"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/obj/box2.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+   type_shape="box"
+   size="3.0 1.5 3.0"
+   mass="5"
+/>
+<polarized
+   pol="plus"
+   size="4.0 3.0 4.0"
 />
 </entity>
 <entity>
@@ -150,9 +1249,9 @@
 />
 <drone
    wpts_size="2"
-   wpt0_pos="3.03034 -11.8267 4.39738"
+   wpt0_pos="8.26935 -8.16554 -5.79106"
    wpt0_wait="2"
-   wpt1_pos="17.1279 -11.8267 4.39738"
+   wpt1_pos="11.9181 -13.687 9.60145"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
@@ -161,12 +1260,12 @@
    name="DroneMinus_1"
 />
 <transform
-   pos="10.0358 -10.6841 4.47689"
-   quat="0 0 0 1.0"
+   pos="10.0057 -7.02298 0.996308"
+   quat="0 -0.608761 0 0.793353"
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/drone.static_mesh"
+   name="static_meshes/obj/drone.static_mesh"
 />
 <rigidbody
    type_collision="dynamic"
@@ -182,11 +1281,9 @@
    tags="drone platform"
 />
 <drone
-   wpts_size="2"
-   wpt0_pos="17.1279 -11.8267 -14.2574"
+   wpts_size="1"
+   wpt0_pos="17.1279 -11.8267 -17.6647"
    wpt0_wait="2"
-   wpt1_pos="3.03034 -11.8267 -14.2574"
-   wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
 />
@@ -194,12 +1291,12 @@
    name="DroneMinus_2"
 />
 <transform
-   pos="10.0358 -10.6841 -14.3103"
+   pos="10.0358 -10.6841 -17.7176"
    quat="0 0 0 1.0"
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/drone.static_mesh"
+   name="static_meshes/obj/drone.static_mesh"
 />
 <rigidbody
    type_collision="dynamic"
@@ -216,23 +1313,23 @@
 />
 <drone
    wpts_size="2"
-   wpt0_pos="38.7453 -20.6616 13.0132"
+   wpt0_pos="14.753 -2.59663 14.0589"
    wpt0_wait="2"
-   wpt1_pos="24.6476 -23.8252 13.0132"
+   wpt1_pos="-12.4063 1.97734 15.2071"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
 />
 <name
-   name="DroneMinus_003"
+   name="DroneMinus_005"
 />
 <transform
-   pos="31.6531 -19.5191 12.9603"
+   pos="4.82355 4.52908 14.76"
    quat="0 0 0 1.0"
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/drone.static_mesh"
+   name="static_meshes/obj/drone.static_mesh"
 />
 <rigidbody
    type_collision="dynamic"
@@ -249,23 +1346,23 @@
 />
 <drone
    wpts_size="2"
-   wpt0_pos="38.7453 -23.6641 6.08694"
+   wpt0_pos="-25.2871 -6.36927 14.9996"
    wpt0_wait="2"
-   wpt1_pos="24.6476 -24.0046 6.08694"
+   wpt1_pos="-39.3847 -6.36928 14.9996"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
 />
 <name
-   name="DroneMinus_004"
+   name="DroneMinus_006"
 />
 <transform
-   pos="31.6531 -22.5215 6.03405"
+   pos="-32.3792 -5.22671 14.9467"
    quat="0 0 0 1.0"
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/drone.static_mesh"
+   name="static_meshes/obj/drone.static_mesh"
 />
 <rigidbody
    type_collision="dynamic"
@@ -281,44 +1378,9 @@
    tags="drone platform"
 />
 <drone
-   wpts_size="2"
-   wpt0_pos="17.1279 -11.8267 13.928"
+   wpts_size="1"
+   wpt0_pos="3.03034 -11.8267 -7.3398"
    wpt0_wait="2"
-   wpt1_pos="3.03034 -11.8267 13.928"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DronePlus_1"
-/>
-<transform
-   pos="10.0358 -10.6841 13.8705"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="plus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="2"
-   wpt0_pos="3.03034 -11.8267 -4.89916"
-   wpt0_wait="2"
-   wpt1_pos="17.1279 -11.8267 -4.89916"
-   wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"
 />
@@ -326,12 +1388,12 @@
    name="DronePlus_2"
 />
 <transform
-   pos="10.0358 -10.6841 -4.91669"
+   pos="10.0358 -10.6841 -7.35733"
    quat="0 0 0 1.0"
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/drone.static_mesh"
+   name="static_meshes/obj/drone.static_mesh"
 />
 <rigidbody
    type_collision="dynamic"
@@ -340,6 +1402,75 @@
 <polarized
    pol="plus"
    size="1.7955 2.3474 4.92"
+/>
+</entity>
+<entity>
+<tags
+   tags="drone platform"
+/>
+<drone
+   wpts_size="1"
+   wpt0_pos="-38.7415 -0.166516 7.95924"
+   wpt0_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"
+/>
+<name
+   name="DronePlus_003"
+/>
+<transform
+   pos="-38.759 0.976044 15.0513"
+   quat="0 0.707107 0 0.707107"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"
+/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"
+/>
+<polarized
+   pol="plus"
+   size="1.7955 2.3474 4.92"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="generator_1"
+/>
+<transform
+   pos="-37.0645 -23.1248 -23.4027"
+   quat="-0.256605 -0.126079 -0.0337826 0.957662"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"
+/>
+<generator/>
+<name
+   name="trigger_1"
+/>
+<transform
+   pos="-37.0645 -23.1248 -23.4027"
+   quat="-0.256605 -0.126079 -0.0337826 0.957662"
+   scale="1.0"
 />
 </entity>
 <entity>
@@ -350,12 +1481,15 @@
    name="generator_2"
 />
 <transform
-   pos="-36.9951 -22.9079 -7.08108"
-   quat="0 0 0 1.0"
+   pos="-10.5209 -3.88647 18.1304"
+   quat="0 1.0 0 0"
    scale="1.0"
 />
 <render_static_mesh
-   name="static_meshes/__generator.static_mesh"
+   name="static_meshes/obj/generator.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
 />
 </entity>
 <entity>
@@ -365,15 +1499,15 @@
 <rigidbody
    type_collision="trigger"
    type_shape="sphere"
-   radius="1.0"
+   radius="1.64"
 />
 <generator/>
 <name
    name="trigger_2"
 />
 <transform
-   pos="-36.9951 -22.9079 -7.08108"
-   quat="0 0 0 1.0"
+   pos="-10.5209 -3.88647 18.1304"
+   quat="0 1.0 0 0"
    scale="1.0"
 />
 </entity>
@@ -490,7 +1624,7 @@
    kpt3_wait="2"
    jurisdiction="37.5426 -23.7578 -11.7541"
    jurRadius="100.0"
-   formation_point="24.5965 -24.0712 -20.6866"
+   formation_point="24.5964 -24.0712 -20.6866"
    formation_dir="-19.3531 -22.8945 -11.9615"
 />
 <name
@@ -535,7 +1669,7 @@
    kpt3_wait="2"
    jurisdiction="37.5426 -23.6331 -15.9564"
    jurRadius="100.0"
-   formation_point="24.5965 -23.9289 4.07596"
+   formation_point="24.5964 -23.9289 4.07596"
    formation_dir="-19.3531 -22.7699 -11.9615"
 />
 <name
@@ -563,7 +1697,7 @@
 />
 <guided_camera
    velocity="5.0"
-   default_dirs="0"
+   default_dirs="1"
    points_size="18"
    wpt0="-37.7996 -21.523 -27.3995"
    wpt1="-37.8586 -22.2872 -12.1377"
@@ -572,7 +1706,7 @@
    wpt4="24.0681 -15.3789 4.71448"
    wpt5="35.5618 -17.9118 -6.51821"
    wpt6="28.2402 -19.198 -15.6807"
-   wpt7="-0.231323 -22.177 -12.852"
+   wpt7="-0.231323 -19.8878 -12.852"
    wpt8="-12.9742 -15.8006 -17.6664"
    wpt9="-1.22867 -6.8418 -24.9226"
    wpt10="7.58606 -10.0096 -26.8349"
@@ -622,7 +1756,7 @@
    name="player_1"
 />
 <transform
-   pos="-37.243 -23.054 -9.89473"
+   pos="8.49044 -7.64843 -26.4823"
    quat="0 0 0 1.0"
    scale="1.0"
 />
@@ -641,1026 +1775,19 @@
 <tags
    tags=""
 />
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="7.26 3.49 16.45"
+/>
+<victory_point/>
 <name
-   name="Andamio"
+   name="TriggerBox_1"
 />
 <transform
-   pos="-22.2405 -20.7505 -14.9376"
+   pos="-33.6215 4.47034 -7.67841"
    quat="0 0 0 1.0"
    scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/Andamio.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="balcon_redondo_pequeno"
-/>
-<transform
-   pos="-15.7686 -5.62997 14.9404"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/balcon_redondo_pequeno.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_abajo_balcon_redondo_pequeno"
-/>
-<transform
-   pos="-15.7545 -4.06819 14.6601"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/barrotes_abajo_balcon_redondo_pequeno.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_abajo_derecha"
-/>
-<transform
-   pos="10.2119 -11.1267 -29.2513"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/barrotes_abajo_derecha.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_arriba"
-/>
-<transform
-   pos="-35.6805 0.911773 -7.57358"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/barrotes_balcon_arriba.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_cuadrado_derecho"
-/>
-<transform
-   pos="10.2119 -11.1267 -29.2513"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/barrotes_balcon_cuadrado_derecho.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_cuadrado_izquierdo"
-/>
-<transform
-   pos="10.2693 -11.1267 15.2987"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/barrotes_balcon_cuadrado_izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_cuadrado_izquierdo_abajo"
-/>
-<transform
-   pos="10.2693 -11.1267 15.2987"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/barrotes_balcon_cuadrado_izquierdo_abajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_grande_abajo"
-/>
-<transform
-   pos="-35.6805 0.911773 -7.57358"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/barrotes_balcon_grande_abajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_redondo_pequeno"
-/>
-<transform
-   pos="-15.7545 -4.06819 14.6601"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/barrotes_balcon_redondo_pequeno.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columna_abajo_derecha"
-/>
-<transform
-   pos="9.819 -18.0684 14.9804"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/columna_abajo_derecha.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columna_abajo_derecha_centro"
-/>
-<transform
-   pos="10.6622 -18.0684 -28.9329"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/columna_abajo_derecha_centro.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columna_abajo_derecha_derecha"
-/>
-<transform
-   pos="10.6622 -18.0684 -28.9329"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/columna_abajo_derecha_derecha.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columna_abajo_derecha_izquierda"
-/>
-<transform
-   pos="10.6622 -18.0684 -28.9329"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/columna_abajo_derecha_izquierda.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columna_abajo_izquierdo_centro"
-/>
-<transform
-   pos="9.819 -18.0684 14.9804"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/columna_abajo_izquierdo_centro.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columnas_abajo"
-/>
-<transform
-   pos="0.353378 -18.8261 -6.97666"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/columnas_abajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columnas_balcon_izquierdo_cuadrado"
-/>
-<transform
-   pos="9.819 -18.0684 14.9804"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/columnas_balcon_izquierdo_cuadrado.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="control_panel002"
-/>
-<transform
-   pos="7.48629 -22.0235 -26.9598"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/control_panel002.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="maquinas"
-/>
-<transform
-   pos="-4.05573 -19.191 -3.351"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/maquinas.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="marco_balcon_cuadrado_izquierdo"
-/>
-<transform
-   pos="10.2616 -10.1247 18.3197"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/marco_balcon_cuadrado_izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="marco_balcon_pequeno_arriba"
-/>
-<transform
-   pos="-15.7122 -3.03691 18.309"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/marco_balcon_pequeno_arriba.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="marco_balcon_superior_redondo"
-/>
-<transform
-   pos="-41.1063 2.54626 -8.05112"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/marco_balcon_superior_redondo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="marco_puerta_abajo"
-/>
-<transform
-   pos="41.3999 -21.2451 -7.14823"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/marco_puerta_abajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="marco_puerta_balcon_cuadrado_drecho"
-/>
-<transform
-   pos="10.2196 -10.1247 -32.0282"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/marco_puerta_balcon_cuadrado_drecho.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="nivel"
-/>
-<transform
-   pos="176.65 137.731 -698.851"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/nivel.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pared_balcon_cuadrado_izquierdo"
-/>
-<transform
-   pos="10.2657 -10.5613 18.4774"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/pared_balcon_cuadrado_izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pared_balcon_redondo_arriba"
-/>
-<transform
-   pos="-15.7336 -3.15889 18.5146"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/pared_balcon_redondo_arriba.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="paredes_balcon_cuadrado_derecha"
-/>
-<transform
-   pos="10.2155 -10.5613 -32.186"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/paredes_balcon_cuadrado_derecha.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="paredes_balcon_redondo_grande"
-/>
-<transform
-   pos="-41.2989 1.91663 -8.04508"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/paredes_balcon_redondo_grande.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="paredes_nivel_bajo"
-/>
-<transform
-   pos="0.298065 -21.5547 -7.03165"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/paredes_nivel_bajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pibote_balcon_derecho _cuadrado"
-/>
-<transform
-   pos="10.2106 -11.1743 -29.2992"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/pibote_balcon_derecho _cuadrado.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pibotes_balcon_arriba"
-/>
-<transform
-   pos="-35.7784 0.861709 -7.59226"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/pibotes_balcon_arriba.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pibotes_balcon_cuadrado-izquierdo"
-/>
-<transform
-   pos="10.2706 -11.1743 15.3466"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/pibotes_balcon_cuadrado-izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pibotes_balcon_pequeno-arribo"
-/>
-<transform
-   pos="-15.7487 -4.11873 14.6898"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/pibotes_balcon_pequeno-arribo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="plataforma_balcon_cuadrado_izquierdo"
-/>
-<transform
-   pos="10.1243 -11.9814 15.1142"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/plataforma_balcon_cuadrado_izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="plataforma_balcon_derecho"
-/>
-<transform
-   pos="10.357 -11.9814 -29.0667"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/plataforma_balcon_derecho.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="plataforma_redonde"
-/>
-<transform
-   pos="-34.3493 -0.652451 -7.8176"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/plataforma_redonde.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="puerta_balcon_cuadrado_derecho"
-/>
-<transform
-   pos="10.2365 -10.2875 -31.9743"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/puerta_balcon_cuadrado_derecho.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="puerta_balcon_cuadrado_izquierdo"
-/>
-<transform
-   pos="10.2448 -10.2875 18.2658"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/puerta_balcon_cuadrado_izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="puerta_balcon_redondo_grande"
-/>
-<transform
-   pos="-41.0305 2.31784 -8.07468"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/puerta_balcon_redondo_grande.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="puerta_balcon_redondo_pequeno"
-/>
-<transform
-   pos="-15.729 -3.19969 18.2551"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/puerta_balcon_redondo_pequeno.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="puerta_principal"
-/>
-<transform
-   pos="41.3065 -21.5269 -7.11899"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/puerta_principal.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="puertas_gigantes"
-/>
-<transform
-   pos="-40.8121 -14.8815 -8.83555"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/puertas_gigantes.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="rail_derehco"
-/>
-<transform
-   pos="-40.3159 -23.7037 -19.1073"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/rail_derehco.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="rail_izquierdo"
-/>
-<transform
-   pos="-40.3159 -23.7037 2.26412"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/rail_izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="suelo_abajo"
-/>
-<transform
-   pos="-5.29344 -23.9436 -6.8483"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/suelo_abajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="suelo_balcon_cuadrado_derecho"
-/>
-<transform
-   pos="10.3484 -11.732 -33.5299"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/suelo_balcon_cuadrado_derecho.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="suelo_balcon_izquierdo_cuadrado"
-/>
-<transform
-   pos="10.1328 -11.732 19.5773"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/suelo_balcon_izquierdo_cuadrado.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="tablones"
-/>
-<transform
-   pos="9.88679 -22.4112 11.7154"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/tablones.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="tuberia"
-/>
-<transform
-   pos="-18.8178 -22.8041 -8.68526"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/tuberia.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="tuberia_turbina"
-/>
-<transform
-   pos="22.5394 -22.8043 -26.2771"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/tuberia_turbina.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="turbina_1"
-/>
-<transform
-   pos="-22.5469 -23.6427 6.99324"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/turbina_1.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="turbine_2"
-/>
-<transform
-   pos="5.20116 -23.6427 -10.5997"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/turbine_2.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="lamparas_derecha"
-/>
-<transform
-   pos="21.0014 -18.9816 17.6319"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/lamparas_derecha.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
 />
 </entity>
 </entities>

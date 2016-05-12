@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/test_minusPoint.mesh" material="materials/test_pol_minus.material" mesh_idx="0"/>
-</static_mesh>

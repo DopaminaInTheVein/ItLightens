@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/__guard.mesh" material="materials/skin_guard.material" mesh_idx="0"/>
-</static_mesh>

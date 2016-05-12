@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/scene_ms2/columneas_esquineras_2.mesh" material="materials/columnas_esquineras.material" mesh_idx="0"/>
+</static_mesh>

@@ -245,7 +245,18 @@ fn export_mesh given_obj meshName mat_infos = (
 				local uvA = meshop.getMapVert obj channelA uv_A[vtx_id]
 
 				-- 1-uvA.y because DX11 has the origin in the top, and gl&MAX in the bottom
-				local vtx = #(pos.x, pos.y, pos.z, normal.x, normal.y, normal.z, uvA.x, 1-uvA.y)
+				
+				--Modified 11/05/2016, Cristian --
+				--DELETED:
+				--local vtx = #(pos.x, pos.y, pos.z, normal.x, normal.y, normal.z, uvA.x, 1-uvA.y)
+				--ADDED:
+				local uTiling = obj.mat.diffusemap.coords.U_tiling
+				local vTiling = obj.mat.diffusemap.coords.V_tiling
+				local uvx = uvA.x * uTiling
+				local uvy = (1-uvA.y) * vTiling
+				local vtx = #(pos.x, pos.y, pos.z, normal.x, normal.y, normal.z, uvx, uvy)
+				-- End Modif--
+				
 				local idx = registerVertex HT all_vtxs vtx
 				append all_idxs idx
 				--format "  % % => %\n" pos uvA idx

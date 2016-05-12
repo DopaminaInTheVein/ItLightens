@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/__plus.mesh" material="materials/red.material" mesh_idx="0"/>
-</static_mesh>

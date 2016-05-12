@@ -7,11 +7,10 @@
 class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_albedos;
 	CRenderToTexture* rt_normals;
-	CRenderToTexture* rt_wpos;
+	CRenderToTexture* rt_depths;
 	CRenderToTexture* rt_selfIlum;
 	CRenderToTexture* rt_acc_light;
 	CRenderToTexture* rt_selfIlum_blurred;
-	CRenderToTexture* rt_depthTexture;
 	CRenderToTexture* rt_final;
 
 	CRenderToTexture* rt_data;
@@ -36,7 +35,6 @@ class CRenderDeferredModule : public IAppModule {
 
 	void renderGBuffer();
 	void renderAccLight();
-	void DepthTexture();
 	void RenderPolarizedPP(int pol, const VEC4& color);
 	void GlowEdgesInt();		//to remove
 	void GlowEdges();

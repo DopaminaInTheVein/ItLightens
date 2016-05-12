@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/laser.mesh" material="materials/laser.material" mesh_idx="0"/>
-</static_mesh>

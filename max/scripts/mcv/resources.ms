@@ -1,13 +1,16 @@
 struct TResources (
 	project_path = data_dir ,
 	mode = "all",
+	folder = "",
 	
 	fn getResourceName obj nameResource = (
 		local res = getUserProp obj nameResource
 		case mode of (
 			"all":
 			(
-				if res == undefined do (res = obj.name)
+				if res == undefined then (
+					res = folder + "/" + obj.name
+				)
 			)
 			"old":
 			(
@@ -16,11 +19,11 @@ struct TResources (
 			"new":
 			(
 				if res != undefined then res = undefined
-				else res = obj.name
+				else res = folder + "/" + obj.name
 			)
 			"forceNew":
 			(
-				res = obj.name
+				res = folder + "/" + obj.name
 			)
 		)
 		return res

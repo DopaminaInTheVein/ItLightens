@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/COLOR.dds"/>
-<texture slot="normalmap" name="textures/wall_lamp_1_base_normals.dds"/>
-</material>

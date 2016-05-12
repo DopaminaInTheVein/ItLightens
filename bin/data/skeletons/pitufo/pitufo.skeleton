@@ -1,5 +1,0 @@
-<model>
-	<skeleton src="skeletons/pitufo/pitufo.csf"/>
-    <animations src="skeletons/pitufo/"/>
-    <mesh      src="skeletons/pitufo/pitufo.cmf"/>
-</model>

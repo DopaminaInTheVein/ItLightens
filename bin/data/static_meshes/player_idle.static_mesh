@@ -1,3 +1,0 @@
-<static_mesh>
-    <slot mesh="meshes/pj_idle.mesh" material="materials/player.material"/>
-</static_mesh>

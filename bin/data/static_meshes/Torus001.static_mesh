@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/Torus001.mesh" material="materials/madera.material" mesh_idx="0"/>
-</static_mesh>

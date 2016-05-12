@@ -1,5 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/guarda_albedo_map.dds"/>
-  <texture slot="normalmap" name="textures/guarda_normal_map.dds"/>
-  <texture slot="specular" name="textures/guarda_specular_map.dds"/>
-</material>

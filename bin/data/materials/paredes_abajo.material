@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/albedo_pared_abajo.dds"/>
+<texture slot="normalmap" name="textures/albedo_pared_abajo_NRM.dds"/>
+</material>

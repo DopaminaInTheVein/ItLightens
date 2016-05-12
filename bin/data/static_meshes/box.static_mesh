@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/Box.mesh" material="materials/pared_mole.material" mesh_idx="0"/>
-</static_mesh>

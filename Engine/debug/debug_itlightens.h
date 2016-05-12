@@ -64,11 +64,11 @@ public:
 
 	//Console functions:
 	//-------------------------------------------------------
-	
+
 	void LogRaw(const char* msg, ...) IM_PRINTFARGS(2);
 	void LogError(const char* msg, ...) IM_PRINTFARGS(2);
 	void LogWithTag(const char* tag, const char* msg, ...);
-	
+
 	IM_PRINTFARGS(3);
 
 	void setOpen(bool newOpened) { opened = newOpened; }
@@ -83,10 +83,9 @@ public:
 	void RenderLine(line);
 	//-------------------------------------------------------
 
-	bool * GetCommandsConsoleState(){
+	bool * GetCommandsConsoleState() {
 		return console.GetOpened();
 	}
-
 
 	//Console functions:
 	void ToggleConsole() {
@@ -108,6 +107,8 @@ extern CDebug *Debug;		//global empty debug declaration --> run initDebugger() t
 */
 static void TestGameLog()
 {
+#ifndef NDEBUG
+
 	//TESTING LOG
 	//-------------------------------------------------------
 	static float last_time = -1.0f;
@@ -131,15 +132,18 @@ static void TestGameLog()
 		last_time = time;
 	}
 	//-------------------------------------------------------
+#endif
 }
 
 static void testLines() {
+#ifndef NDEBUG
 	static float var = 0;
 	var = fmodf(var + getDeltaTime(), 10);
 	Debug->DrawLine(VEC3(var, 0, 0), VEC3(-6, 0, 1), RED);
 	Debug->DrawLine(VEC3(0, var, 0), VEC3(-6, 0, 1), GREEN);
 	Debug->DrawLine(VEC3(0, 0, var), VEC3(-6, 0, 1), BLUE);
 	Debug->DrawLine(VEC3(var, 0, var), VEC3(-6, 0, 1), VEC3(0.4f, 0.3f, 0.6f));
+#endif
 }
 
 #endif

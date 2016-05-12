@@ -1,3 +1,0 @@
-<static_mesh>
-    <slot mesh="meshes/smuf_1.mesh" material="materials/scientist.material"/>
-</static_mesh>

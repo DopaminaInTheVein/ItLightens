@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/marco_balcon_pequeno_arriba.mesh" material="materials/no_mat.material" mesh_idx="0"/>
-</static_mesh>
