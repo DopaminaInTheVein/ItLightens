@@ -79,7 +79,7 @@ void TCompTracker::setFollower(const TMsgFollow &msg) {
 void TCompTracker::update(float elapsed) {
 	for (HandleTrack follower : followers) {
 		if (follower.handle.isValid()) {
-			//updateTrackMovement(follower);
+			updateTrackMovement(follower);
 		}
 	}
 }
@@ -99,8 +99,13 @@ void TCompTracker::updateTrackMovement(HandleTrack ht) {
 		//DeltaPos
 		VEC3 deltaPos = nextPos - prevPos;
 		deltaPos.Normalize();
-		
-		physic_comp->AddVelocity(deltaPos * mSpeed);
+		float deltaTime = getDeltaTime();
+		PxRigidDynamic * rd = physic_comp->getRigidActor()->isRigidDynamic();
+		VEC3 force = deltaPos * mSpeed/30.f;
+		rd->addForce(
+			PhysxConversion::Vec3ToPxVec3(force), 
+			physx::PxForceMode::eVELOCITY_CHANGE);
+			//AddVelocity(deltaPos * mSpeed * getDeltaTime());
 	}
 }
 

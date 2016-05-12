@@ -480,6 +480,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompPlatform>()->updateAll(dt);
 		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
+		getHandleManager<TCompTracker>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 		getHandleManager<TCompBoxDestructor>()->updateAll(dt);
@@ -520,12 +521,8 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 
 	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
-	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
-
-	//Prueba BORRAR
-	getHandleManager<player_controller>()->onAll(&player_controller::render);
 }
 
 void CEntitiesModule::renderInMenu() {

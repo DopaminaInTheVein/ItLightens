@@ -412,7 +412,7 @@
 <name
    name="Box_1"/>
 <transform
-   pos="36.3543 -21.1594 16.1952"
+   pos="36.3543 -19.7288 16.1952"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
