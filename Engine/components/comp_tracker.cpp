@@ -5,6 +5,7 @@
 #include "comp_transform.h"
 #include "entity.h"
 #include "entity_parser.h"
+#include "imgui/imgui.h"
 
 void TCompTracker::onCreate(const TMsgEntityCreated &)
 {
@@ -73,6 +74,9 @@ void TCompTracker::setFollower(const TMsgFollow &msg) {
 		ht.normalTime = (float) nearestIndex / size;
 
 		followers.push_back(ht);
+		TCompPhysics * physic_comp = eFollower->get<TCompPhysics>();
+		PxRigidDynamic * rd = physic_comp->getRigidActor()->isRigidDynamic();
+		if (rd) rd->setMassSpaceInertiaTensor(PxVec3(0.f, 1.f, 0.f));
 	}
 }
 
@@ -95,17 +99,14 @@ void TCompTracker::updateTrackMovement(HandleTrack ht) {
 		// Next Position
 		ht.normalTime += clamp(normalSpeed * getDeltaTime(), 0, 1);
 		VEC3 nextPos = evaluatePos(ht);
-		
+
 		//DeltaPos
 		VEC3 deltaPos = nextPos - prevPos;
 		deltaPos.Normalize();
 		float deltaTime = getDeltaTime();
 		PxRigidDynamic * rd = physic_comp->getRigidActor()->isRigidDynamic();
-		VEC3 force = deltaPos * mSpeed/30.f;
-		rd->addForce(
-			PhysxConversion::Vec3ToPxVec3(force), 
-			physx::PxForceMode::eVELOCITY_CHANGE);
-			//AddVelocity(deltaPos * mSpeed * getDeltaTime());
+		PxVec3 force = Vec3ToPxVec3(deltaPos * mSpeed);
+		rd->setLinearVelocity(force);
 	}
 }
 
@@ -114,4 +115,8 @@ VEC3 TCompTracker::evaluatePos(HandleTrack ht) {
 	float weightPrev = indexPrev - (int)(indexPrev);
 	float weightNext = 1 - weightPrev;
 	return positions[(int)indexPrev] * weightPrev + positions[(int)indexPrev + 1] * weightNext;
+}
+
+void TCompTracker::renderInMenu() {
+	ImGui::DragFloat3("Speed:", &mSpeed);
 }

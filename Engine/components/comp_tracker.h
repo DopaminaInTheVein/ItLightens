@@ -37,9 +37,7 @@ struct TCompTracker : public TCompBase {
 	void update(float elapsed);
 	void updateTrackMovement(HandleTrack ht);
 	bool load(MKeyValue& atts);
-	void renderInMenu() {
-		ImGui::Text("I am a tracker!!");
-	}
+	void renderInMenu();
 
 	VEC3 evaluatePos(HandleTrack ht);
 };
