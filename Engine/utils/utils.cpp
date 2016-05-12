@@ -182,6 +182,18 @@ std::map<std::string, float> readIniAtrData(const std::string route, std::string
 	return atributes;
 }
 
+// Obtains all the atributes of the specified element of a JSON object
+std::map<std::string, std::string> readIniAtrDataStr(const std::string route, std::string element) {
+	Document document = readJSONAtrFile(route);
+	std::map<std::string, std::string> atributes;
+
+	for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
+		atributes[it->name.GetString()] = it->value.GetString();
+	}
+
+	return atributes;
+}
+
 // Modifies the specified json element of the specified file
 void writeIniAtrData(const std::string route, std::string element, std::map<std::string, float> element_values) {
 	Document document = readJSONAtrFile(route);

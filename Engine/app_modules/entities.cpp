@@ -274,9 +274,12 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
+	CApp &app = CApp::get();
+	std::string file_options = app.file_options_json;
+	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
 
 	//sala = "tiling";
-	sala = "milestone2";
+	sala = fields["room_two"];
 	//sala = "drones";
 	//sala = "boxes";
 	//sala = "milestone2_guardias";
