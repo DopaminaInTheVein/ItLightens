@@ -276,7 +276,8 @@ bool CEntitiesModule::start() {
 
 
 	//sala = "tiling";
-	sala = "milestone2";
+	//sala = "milestone2";
+	sala = "test_cinta";
 	//sala = "drones";
 	//sala = "boxes";
 	//sala = "milestone2_guardias";

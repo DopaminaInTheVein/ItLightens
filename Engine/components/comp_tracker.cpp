@@ -35,6 +35,9 @@ bool TCompTracker::load(MKeyValue& atts) {
 		orientations[i] = atts.getPoint(nameAttr);
 	}
 
+	//Normal Speed
+	normalSpeed = mSpeed / longitude;
+
 	return true;
 }
 
@@ -52,7 +55,6 @@ void TCompTracker::setFollower(const TMsgFollow &msg) {
 	if (follower.isValid()) {
 		HandleTrack ht;
 		ht.handle = follower;
-		followers.push_back(ht);
 		
 		//Busqueda index del punto mas cercano a la spline
 		CEntity* eFollower = follower;
@@ -67,20 +69,44 @@ void TCompTracker::setFollower(const TMsgFollow &msg) {
 				nearestIndex = i;
 			}
 		}
+
+		ht.normalTime = (float) nearestIndex / size;
+
+		followers.push_back(ht);
 	}
 }
 
 void TCompTracker::update(float elapsed) {
 	for (HandleTrack follower : followers) {
-		//if (follower.isValid()) {
-		//	CEntity* e = follower;
-		//	TCompPhysics * physic_comp = e->get<TCompPhysics>();
-		//	TCompTransform* transform = e->get<TCompTransform>();
-		//	if (physic_comp) updateTrackMovement(physic_comp, transform);
-		//}
+		if (follower.handle.isValid()) {
+			//updateTrackMovement(follower);
+		}
 	}
 }
 
-void TCompTracker::updateTrackMovement(TCompPhysics* physic_comp, TCompTransform* transform) {
+void TCompTracker::updateTrackMovement(HandleTrack ht) {
+	CEntity* e = ht.handle;
+	TCompPhysics * physic_comp = e->get<TCompPhysics>();
+	TCompTransform* transform = e->get<TCompTransform>();
+	if (physic_comp && transform) {
+		// Prev position
+		VEC3 prevPos = evaluatePos(ht);
 
+		// Next Position
+		ht.normalTime += clamp(normalSpeed * getDeltaTime(), 0, 1);
+		VEC3 nextPos = evaluatePos(ht);
+		
+		//DeltaPos
+		VEC3 deltaPos = nextPos - prevPos;
+		deltaPos.Normalize();
+		
+		physic_comp->AddVelocity(deltaPos * mSpeed);
+	}
+}
+
+VEC3 TCompTracker::evaluatePos(HandleTrack ht) {
+	float indexPrev = ht.normalTime * (float)size;
+	float weightPrev = indexPrev - (int)(indexPrev);
+	float weightNext = 1 - weightPrev;
+	return positions[(int)indexPrev] * weightPrev + positions[(int)indexPrev + 1] * weightNext;
 }

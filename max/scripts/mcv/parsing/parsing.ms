@@ -30,7 +30,7 @@ _lua_code = ""
 ---------------------------------------------------------------------
 --Entity Id --
 ---------------------------------------------------------------------
-fn parseId = ( --Esto no va porque el parser solo parsea atributos de "hojas" !!!
+fn parseId = (
 	local id = getUserProp _parsingObject "id"
 	if id != undefined then (
 		id = id as integer
@@ -59,6 +59,7 @@ fn _parseObject parent = (
 		-- Añadimos Entity
 		XML_PARSING = parent.addChild "entity"
 		parseId()
+		
 		--Parseamos Tags
 		tags = _descriptorObject.getTags()
 		parseTags XML_PARSING tags
