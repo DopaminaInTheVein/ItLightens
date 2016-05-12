@@ -4,6 +4,7 @@
 #include "app_modules/app_module.h"
 #include "fmod.hpp"
 #include "fmod_common.h"
+#include "fmod_studio.h"
 #include <stdlib.h>
 #include <conio.h>
 #include <stdio.h>

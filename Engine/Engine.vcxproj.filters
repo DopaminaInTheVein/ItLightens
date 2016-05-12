@@ -1430,6 +1430,39 @@
     <ClInclude Include="components\comp_light_dir_shadows.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod.hpp">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_codec.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_common.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_dsp.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_dsp_effects.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_errors.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_output.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_studio.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_studio.hpp">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_studio_common.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1614,6 +1647,12 @@
     </Filter>
     <Filter Include="skeleton_controllers">
       <UniqueIdentifier>{443dd437-87c4-422c-8e95-0f58386a2893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fmod\studio">
+      <UniqueIdentifier>{a1c6acbc-0407-4f83-9647-55a54a4df272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fmod\studio\inc">
+      <UniqueIdentifier>{22368550-0f14-4800-801f-1b62d80fb8f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -60,7 +60,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders;.\SLB\include;.\fmod\lowlevel\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders;.\SLB\include;.\fmod\lowlevel\inc;.\fmod\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -69,7 +69,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)\fmod\lowlevel\lib;$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\fmod\lowlevel\lib;$(ProjectDir)\fmod\studio\lib;$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>fmodL64_vc.lib;XINPUT9_1_0.LIB;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -559,6 +559,17 @@
     <ClInclude Include="fmod\lowlevel\inc\fmod_dsp_effects.h" />
     <ClInclude Include="fmod\lowlevel\inc\fmod_errors.h" />
     <ClInclude Include="fmod\lowlevel\inc\fmod_output.h" />
+    <ClInclude Include="fmod\studio\inc\fmod.h" />
+    <ClInclude Include="fmod\studio\inc\fmod.hpp" />
+    <ClInclude Include="fmod\studio\inc\fmod_codec.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_common.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_dsp.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_dsp_effects.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_errors.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_output.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_studio.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_studio.hpp" />
+    <ClInclude Include="fmod\studio\inc\fmod_studio_common.h" />
     <ClInclude Include="geometry\angular.h" />
     <ClInclude Include="geometry\geometry.h" />
     <ClInclude Include="geometry\SimpleMath.h" />
