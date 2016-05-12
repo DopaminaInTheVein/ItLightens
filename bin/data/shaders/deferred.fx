@@ -1,23 +1,4 @@
-#include "constants/ctes_camera.h"
-#include "constants/ctes_object.h"
-#include "constants/ctes_light.h"
-#include "constants/ctes_globals.h"
-
-Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
-Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
-Texture2D txWorldPos  : USE_SHADER_REG(TEXTURE_SLOT_WORLD_POS);
-Texture2D txLightMask : USE_SHADER_REG(TEXTURE_SLOT_LIGHT_MASK);
-Texture2D txSelfIlum : USE_SHADER_REG(TEXTURE_SLOT_SELFILUM);
-Texture2D txNoise     : USE_SHADER_REG(TEXTURE_SLOT_NOISE);
-Texture2D txShadowMap : USE_SHADER_REG(TEXTURE_SLOT_SHADOWMAP);
-
-TextureCube txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
-
-// Same order as
-SamplerState samLinear : register(s0);
-SamplerState samLightBlackBorder : register(s1);
-SamplerState samClampLinear : register(s2);
-SamplerComparisonState samPCFShadows : register(s3);
+#include "globals.fx"
 
 //--------------------------------------------------------------------------------------
 void VS(
@@ -86,7 +67,7 @@ void PSGBuffer(
   , float3 iWorldPos : TEXCOORD1
   , out float4 o_albedo : SV_Target0
   , out float4 o_normal : SV_Target1
-  , out float4 o_wpos : SV_Target2
+  , out float1 o_depth : SV_Target2
   , out float4 o_selfIlum : SV_Target3
   )
 {
@@ -109,7 +90,8 @@ void PSGBuffer(
 
   o_normal.xyz = (normalize(N_world_space) + 1.) * 0.5;
   o_normal.a = 1.;
-  o_wpos = float4(iWorldPos, 1.);
+  float3 camera2wpos = iWorldPos - CameraWorldPos.xyz;
+  o_depth = dot( CameraFront.xyz, camera2wpos) / CameraZFar;
 
   o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
   float limit = 0.1f;
@@ -126,7 +108,8 @@ void PSLightPoint(
   int3 ss_load_coords = uint3(iPosition.xy, 0);
 
   // Recuperar la posicion de mundo para ese pixel
-  float3 wPos = txWorldPos.Load(ss_load_coords).xyz;
+  float  z = txDepths.Load(ss_load_coords).x;
+  float3 wPos = getWorldCoords(iPosition.xy, z);
 
   // Recuperar la normal en ese pixel. Sabiendo que se
   // guardó en el rango 0..1 pero las normales se mueven
@@ -180,7 +163,8 @@ float4 PSLightDir(
   int3 ss_load_coords = uint3(iPosition.xy, 0);
 
   // Recuperar la posicion de mundo para ese pixel
-  float3 wPos = txWorldPos.Load(ss_load_coords).xyz;
+  float  z = txDepths.Load(ss_load_coords).x;
+  float3 wPos = getWorldCoords(iPosition.xy, z);
 
   // Recuperar la normal en ese pixel. Sabiendo que se
   // guardó en el rango 0..1 pero las normales se mueven
@@ -270,7 +254,8 @@ float4 PSLightDirShadows(
   int3 ss_load_coords = uint3(iPosition.xy, 0);
 
   // Recuperar la posicion de mundo para ese pixel
-  float3 wPos = txWorldPos.Load(ss_load_coords).xyz;
+  float  z = txDepths.Load(ss_load_coords).x;
+  float3 wPos = getWorldCoords(iPosition.xy, z);
 
   // Recuperar la normal en ese pixel. Sabiendo que se
   // guardó en el rango 0..1 pero las normales se mueven
@@ -308,7 +293,8 @@ float4 PSWater(
    int3 ss_load_coords = uint3(iPosition.xy, 0);
 
   // Recuperar la posicion de mundo para ese pixel
-  float3 wPos = txWorldPos.Load(ss_load_coords).xyz;
+  float  z = txDepths.Load(ss_load_coords).x;
+  float3 wPos = getWorldCoords(iPosition.xy, z);
 
   // Noise values between -1..1
   float2 delta = 10*iTex0;
