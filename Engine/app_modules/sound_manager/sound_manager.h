@@ -13,19 +13,24 @@ using namespace FMOD;
 
 class CSoundManagerModule : public IAppModule
 {
-	std::string sounds_folder = "data/sounds";
+	std::string sounds_folder = "data/sounds/banks/";
 
-	FMOD_RESULT       result;
-	void             *extradriverdata = 0;
+	FMOD_RESULT												result;
+	void													*extradriverdata = 0;
 
-	System			 *system;					//low level system
-	unsigned int      version;
-	Studio::System	 *studio_system = NULL;
-	Studio::Bank	 *masterBank = NULL;
-	Studio::Bank     *stringsBank = NULL;
-
-	std::map<std::string, FMOD::Sound*>		sounds;
-	FMOD::Channel*							channels[4];
+	System													*system; //low level system
+	unsigned int											version;
+	Studio::System											*studio_system = NULL;
+	// Basic banks
+	Studio::Bank											*masterBank = NULL;
+	Studio::Bank											*stringsBank = NULL;
+	// Specific banks
+	Studio::Bank											*banks[4];
+	// Sound descriptions
+	std::map<std::string, Studio::EventDescription*>		sounds_descriptions;
+	// Deprecated
+	FMOD::Channel											*channels[4];
+	std::map<std::string, FMOD::Sound*>						sounds;
 
 public:
 

@@ -34,11 +34,15 @@ bool CSoundManagerModule::start() {
 	result = studio_system->loadBankFile((sounds_folder + "Master Bank.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank);
 	result = studio_system->loadBankFile((sounds_folder + ".Master Bank.strings.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
 
-	/*// un par de bancos de ejemplo    
-	res = system->loadBankFile("./data/Weapons.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &weaponsBank);
-	res = system->loadBankFile("./data/DaniBank.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &DaniBank);
+	// specific banks
+	result = studio_system->loadBankFile((sounds_folder + "Sfx.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &banks[SFX]);
+	result = studio_system->loadBankFile((sounds_folder + "Music.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &banks[MUSIC]);
+	result = studio_system->loadBankFile((sounds_folder + "Voices.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &banks[VOICES]);
+	result = studio_system->loadBankFile((sounds_folder + "Ambient.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &banks[AMBIENT]);
 
+	//banks[SFX]->getEventList()
 
+	/*
 	// Cargamos los EventDescriptors
 	Studio::EventDescription* explosionDescription = NULL;
 	Studio::EventDescription* DaniDescription = NULL;
