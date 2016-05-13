@@ -19,9 +19,14 @@ void CCamera::lookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
 
   view = MAT44::CreateLookAt(position, target, up_aux);
 
-  front = view.Forward();
-  up = view.Up();
-  left = view.Left();
+  front = (target - position); 
+  front.Normalize();
+  
+  left = up_aux.Cross(front);
+  left.Normalize();
+
+  up = front.Cross(left);
+  up.Normalize();
 
   updateViewProjection();
 }
@@ -54,9 +59,14 @@ void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux, 
 
   view = MAT44::CreateLookAt(position, target, up_aux);
 
-  front = view.Forward();
-  up = view.Up();
-  left = view.Left();
+  front = (target - position); 
+  front.Normalize();
+  
+  left = up_aux.Cross(front);
+  left.Normalize();
+
+  up = front.Cross(left);
+  up.Normalize();
 
   updateViewProjection();
 }

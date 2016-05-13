@@ -186,9 +186,11 @@ void activateCamera(const CCamera* camera) {
   shader_ctes_camera.ViewProjection = camera->getViewProjection();
   shader_ctes_camera.CameraWorldPos = VEC4(camera->getPosition());
   shader_ctes_camera.CameraFront = VEC4(camera->getFront());
+  shader_ctes_camera.CameraUp = VEC4(camera->getUp());
+  shader_ctes_camera.CameraLeft = VEC4(camera->getLeft());
   shader_ctes_camera.CameraZFar = camera->getZFar();
   shader_ctes_camera.CameraZNear = camera->getZNear();
-  shader_ctes_camera.CameraFov = camera->getFov();
+  shader_ctes_camera.CameraTanHalfFov = tan( camera->getFov() * 0.5f );
   shader_ctes_camera.CameraAspectRatio = camera->getAspectRatio();
 
   shader_ctes_camera.uploadToGPU();

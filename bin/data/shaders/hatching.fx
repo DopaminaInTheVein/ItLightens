@@ -1,17 +1,8 @@
-#include "constants/ctes_camera.h"
-#include "constants/ctes_object.h"
-#include "constants/ctes_light.h"
-#include "constants/ctes_globals.h"
-#include "constants/ctes_hatching.h"
+#include "globals.fx"
 
-
-Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
-Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
-Texture2D txWorldPos  : USE_SHADER_REG(TEXTURE_SLOT_WORLD_POS);
-Texture2D txSelfIlum : USE_SHADER_REG(TEXTURE_SLOT_SELFILUM);
-Texture2D txDepth : register(t45);
 
 Texture2D txSpecular : register(t79);
+Texture2D txInvShadows : register(t78);
 
 Texture2D txHatch1 : register(t80);
 Texture2D txHatch2 : register(t81);
@@ -20,12 +11,12 @@ Texture2D txHatch4 : register(t83);
 Texture2D txHatch5 : register(t84);
 Texture2D txHatch6 : register(t85);
 
-Texture2D txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
-Texture2D txNoise : USE_SHADER_REG(TEXTURE_SLOT_NOISE);
 
-SamplerState samLinear : register(s0);
-SamplerState samClampLinear : register(s2);
+Texture2D txHatch_diagonal : register(t86);
+Texture2D txHatch_diagonal2 : register(t87);
 
+Texture2D txHatch_test : register(t88);
+Texture2D txHatch_test2 : register(t89);
 
 
 
@@ -49,9 +40,10 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	, float2 iTex0 : TEXCOORD0
 	) : SV_Target
 {
+	int3 ss_load_coords = uint3(Pos.xy, 0);
+	float  z = txDepths.Load(ss_load_coords).x;
+	float3 wPos = getWorldCoords(Pos.xy, z);
 
-	float dc = txDepth.Sample(samLinear, iTex0).r;
-	//float pixel_size = xres*(dc); //adjust line witdh based on depth
 	float pixel_size = 1;
 	pixel_size *= (xres/yres);
 	//pixel_size = 1.0;
@@ -62,12 +54,12 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	float specular = txSpecular.Sample(samLinear, iTex0).r;
 	float4 diffuse = txDiffuse.Sample(samLinear, iTex0);
 	float4 normal = txNormal.Sample(samLinear, iTex0);
-	float4 wPos = txWorldPos.Sample(samLinear, iTex0);
 	
-	float dist = CameraWorldPos - wPos;
-	dist *= 1;
+	float base = step(0.1f, specular);
 	
-	dist = dist * 10;
+	//return float4(specular, specular, specular, 1.0f);
+	//if(base == 1.0f)
+		//return float4 (0.0f,0.0f,0.0f, 0.0f);
 	
 	//return CameraWorldPos;
 	
@@ -80,11 +72,12 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	
 	//return float4(1,1,1,1);
 	float2 pixel_pos = iTex0*frequency_texture;
+	//float2 pixel_pos = iTex0*5.0f;
 	
 	float freq_change = frequency_offset;
 	float var = sin(world_time*freq_change);
 	float offset = step(0.0f, var);
-	//pixel_pos += offset/2.0f;
+	pixel_pos += offset/2.0f;
 	
 	//return float4(offset,offset,offset,1.0f);
 	//pixel_pos+=noise;
@@ -99,9 +92,10 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	float rim = max( 0., abs( dot( N, -wPos.xyz ) ) );
 	//if( invertRim == 1 ) rim = 1. - rim;
 	//rim = 1 -rim;
-	rim *= 1.0f;
-	diff *= 1.0f;
-	specular *= 50.0f;
+	rim *= rim_strenght;
+	diff *= diffuse_strenght;
+	diff = 1.0f;
+	specular *= specular_strenght;
 	float shading =  diff + rim + specular;
 	//shading = shading;
 	//shading = 0;
@@ -133,6 +127,7 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	//return c;
 
 	float intensity = intensity_sketch;
+
 	float color_int = (c.r+c.g+c.b)/3.0f;
 	color_int = step(color_int, 0.5f);
 	//color_int = 1- color_int;
@@ -140,10 +135,20 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	//intensity = step(0.5f, intensity);
 	float alpha = color_int*intensity;
 	
+	/*if(c.r > 0.3f){
+		return float4(0.0f,0.0f,0.0f,0.0f);
+	}*/
+	
 	//alpha = 1.0f;
-	c.a = alpha;
+	//c.a = alpha;
 	//c = 1-c;
+	
+	float inv_shadows =  1 - txInvShadows.Sample(samLinear, iTex0).r;
+	//return float4(inv_shadows, inv_shadows, inv_shadows, 1.0f);
 	c.a = alpha;
+	c.a = c.a*(inv_shadows);
+	
+	c.rgb = float3(0,0,0);		//lines black
 	//float w = c.r;
 	//w = step(w, 0.60f);
 	//w = 1 -w;

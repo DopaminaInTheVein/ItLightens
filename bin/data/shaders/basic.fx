@@ -1,20 +1,4 @@
-#include "constants/ctes_camera.h"
-#include "constants/ctes_object.h"
-#include "constants/ctes_light.h"
-#include "constants/ctes_globals.h"
-#include "constants/ctes_hatching.h"
-
-
-Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
-Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
-Texture2D txWorldPos  : USE_SHADER_REG(TEXTURE_SLOT_WORLD_POS);
-Texture2D txSelfIlum : USE_SHADER_REG(TEXTURE_SLOT_SELFILUM);
-Texture2D txDepth : register(t45);
-
-Texture2D txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
-
-SamplerState samLinear : register(s0);
-SamplerState samClampLinear : register(s2);
+#include "globals.fx"
 
 //--------------------------------------------------------------------------------------
 // Null vertex/pixel shader
@@ -120,8 +104,8 @@ void PSAddAmbient(float4 Pos : SV_POSITION
 	float4 normals = txNormal.Sample(samLinear, iTex0); 
 	float4 selfIlum = txSelfIlum.Sample(samLinear, iTex0);
 	
-	
-	output = float4(0.2f,0.2f, 0.2f, 1.0f)*normals*0.2f + lights*0.8f;
+	output = diff*0.2f + lights*0.8f;
+	//output = float4(0.2f,0.2f, 0.2f, 1.0f)*normals*0.2f + lights*0.8f;
 	output.a = diff.a;
 	//output = lights;
 	output.rgb += selfIlum.rgb;
@@ -159,7 +143,7 @@ float4 PSBlur(float4 Pos : SV_POSITION
 			, float2 iTex0 : TEXCOORD0
 			, float3 iWorldPos : TEXCOORD1) : SV_Target
 {
-float dc = txDepth.Sample(samLinear, iTex0).r;
+float dc = txDepths.Sample(samLinear, iTex0).r;
 float pixelWidth = 1.0f;
 	float Pixels[13] =
 	{
@@ -238,41 +222,32 @@ float pixelWidth = 1.0f;
     return color*offset_c;
 }
 
-//--------------------------------------------------------------------------------------
-void PsDepthTexture(float4 Pos : SV_POSITION
-	, float2 iTex0 : TEXCOORD0
-	, out float4 output : SV_Target
-	)
-{
-	float4 wpos = txWorldPos.Sample(samLinear, iTex0);
-	
-	wpos -= CameraWorldPos;
-	float depth = wpos.z*wpos.z + wpos.x*wpos.x + wpos.y*wpos.y;
-	depth = sqrt(depth);
-	output = float4(depth, 0, 0, 1);
-	//output = CameraWorldPos;
-	//output = float4(depth,0,0,1);
-}
+
 
 //--------------------------------------------------------------
 
-const static float2 offs[7] = {
-   float2( 0.0,  0.0), //Center       0
-   float2(-1.0, -1.0), //Top Left     1
-   float2( 1.0,  1.0), //Bottom Right 5
-   float2( 1.0, -1.0), //Top Right    3
-   float2(-1.0,  1.0), //Bottom Left  7
-   float2(-1.0,  0.0),  //Left         8
-   float2( 0.0, -1.0) //Top          2
-}; 
+
 
 float4 PShader2(float4 Pos : SV_POSITION
 	, float2 uv : TEXCOORD0) : SV_TARGET
 
 {
 
+float i = 1.0f;
 
-float2 e_barrier = float2(0.5f,edge_lines_detection);  // x=norm, y=depth
+float2 offs[7] = {
+   float2( 0.0,  0.0), //Center       0
+   float2(-i, -i), //Top Left     1
+   float2( i,  i), //Bottom Right 5
+   float2( i, -i), //Top Right    3
+   float2(-i,  i), //Bottom Left  7
+   float2(-i,  0.0),  //Left         8
+   float2( 0.0, -i) //Top          2
+}; 
+
+
+//float2 e_barrier = float2(0.5f,edge_lines_detection);  // x=norm, y=depth
+float2 e_barrier = float2(0.5f,0.0001f);
 float2 pixel_size = float2(1.0f/xres,1.0f/yres);	//to adjust line witdh
 //float pixel_size = 1.0f;
 float2 e_weights= float2(1,1);  // x=norm, y=depth
@@ -280,12 +255,17 @@ float2 e_weights= float2(1,1);  // x=norm, y=depth
 float2 e_kernel = float2(1,1);   // x=norm, y=depth
 
  
-float dc = txDepth.Sample(samLinear, uv).r;
- pixel_size = pixel_size/(dc); //adjust line witdh based on depth
+float dc = txDepths.Sample(samLinear, uv).r;
+pixel_size = pixel_size/(dc*CameraZFar); //adjust line witdh based on depth
 
- float2 tc5r = -offs[5];
 
- float2 tc6r = -offs[6];
+float size_line = 1.0f;
+pixel_size *= size_line;
+
+
+float2 tc5r = -offs[5];
+
+float2 tc6r = -offs[6];
 
 
  
@@ -295,21 +275,21 @@ float dc = txDepth.Sample(samLinear, uv).r;
 
  //float2 test = float2(10,10);
  //return float4(uv.yyyyy);
- dd.x = txDepth.Sample(samLinear, uv + offs[1]*pixel_size).r +
+ dd.x = txDepths.Sample(samLinear, uv + offs[1]*pixel_size).r +
 
-         txDepth.Sample(samLinear, uv + offs[2]*pixel_size).r;
+         txDepths.Sample(samLinear, uv + offs[2]*pixel_size).r;
 
- dd.y = txDepth.Sample(samLinear, uv + offs[3]*pixel_size).r+
+ dd.y = txDepths.Sample(samLinear, uv + offs[3]*pixel_size).r+
 
-        txDepth.Sample(samLinear, uv + offs[4]*pixel_size).r;
+        txDepths.Sample(samLinear, uv + offs[4]*pixel_size).r;
 
- dd.z = txDepth.Sample(samLinear, uv + offs[5]*pixel_size).r +
+ dd.z = txDepths.Sample(samLinear, uv + offs[5]*pixel_size).r +
 
-        txDepth.Sample(samLinear, uv + tc5r*pixel_size).r;
+        txDepths.Sample(samLinear, uv + tc5r*pixel_size).r;
 
- dd.w = txDepth.Sample(samLinear,uv +  offs[6]*pixel_size).r+
+ dd.w = txDepths.Sample(samLinear,uv +  offs[6]*pixel_size).r+
 
-        txDepth.Sample(samLinear,uv +  tc6r*pixel_size).r;
+        txDepths.Sample(samLinear,uv +  tc6r*pixel_size).r;
 
 //return dd;
 float4 a = (2*dc - dd);

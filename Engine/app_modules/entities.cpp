@@ -304,9 +304,9 @@ bool CEntitiesModule::start() {
 		assert(is_ok);
 	}
 	{
-		//CEntityParser ep2;
-		//bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
-		//assert(isok);
+		CEntityParser ep2;
+		bool isok = ep2.xmlParseFile("data/scenes/milestone2_basic_lights.xml");
+		assert(isok);
 	}
 
 	// GENERATE NAVMESH

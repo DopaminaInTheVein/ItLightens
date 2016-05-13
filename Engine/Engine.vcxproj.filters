@@ -1629,6 +1629,9 @@
     <FxCompile Include="..\bin\data\shaders\deferred.fx">
       <Filter>render\shaders</Filter>
     </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\globals.fx">
+      <Filter>render\shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="geometry\SimpleMath.inl">

@@ -1,25 +1,4 @@
-#include "constants/ctes_camera.h"
-#include "constants/ctes_object.h"
-#include "constants/ctes_light.h"
-#include "constants/ctes_globals.h"
-
-Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
-Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
-Texture2D txWorldPos  : USE_SHADER_REG(TEXTURE_SLOT_WORLD_POS);
-Texture2D txLightMask : USE_SHADER_REG(TEXTURE_SLOT_LIGHT_MASK);
-Texture2D txSelfIlum : USE_SHADER_REG(TEXTURE_SLOT_SELFILUM);
-Texture2D txNoise     : USE_SHADER_REG(TEXTURE_SLOT_NOISE);
-Texture2D txShadowMap : USE_SHADER_REG(TEXTURE_SLOT_SHADOWMAP);
-
-TextureCube txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
-
-Texture2D txWarpLight : register(t78);
-
-// Same order as
-SamplerState samLinear : register(s0);
-SamplerState samLightBlackBorder : register(s1);
-SamplerState samClampLinear : register(s2);
-SamplerComparisonState samPCFShadows : register(s3);
+#include "globals.fx"
 
 //--------------------------------------------------------------------------------------
 void VS(
@@ -88,7 +67,7 @@ void PSGBuffer(
   , float3 iWorldPos : TEXCOORD1
   , out float4 o_albedo : SV_Target0
   , out float4 o_normal : SV_Target1
-  , out float4 o_wpos : SV_Target2
+  , out float1 o_depth : SV_Target2
   , out float4 o_selfIlum : SV_Target3
   )
 {
@@ -111,12 +90,13 @@ void PSGBuffer(
 
   o_normal.xyz = (normalize(N_world_space) + 1.) * 0.5;
   o_normal.a = 1.;
-  o_wpos = float4(iWorldPos, 1.);
+  float3 camera2wpos = iWorldPos - CameraWorldPos.xyz;
+  o_depth = dot( CameraFront.xyz, camera2wpos) / CameraZFar;
 
-  o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
+  /*o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
   float limit = 0.1f;
   if ((o_selfIlum.r < limit && o_selfIlum.g < limit && o_selfIlum.b < limit))
-	  o_selfIlum *= float4(0, 0, 0, 0);
+	  o_selfIlum *= float4(0, 0, 0, 0);*/
 }
 
 //--------------------------------------------------------------------------------------
@@ -124,12 +104,14 @@ void PSLightPoint(
   in float4 iPosition : SV_Position
   , out float4 o_color : SV_Target0
   , out float4 o_specular : SV_Target1
+  , out float4 o_inv_shadows : SV_Target2
   )
 {
   int3 ss_load_coords = uint3(iPosition.xy, 0);
 
   // Recuperar la posicion de mundo para ese pixel
-  float3 wPos = txWorldPos.Load(ss_load_coords).xyz;
+  float  z = txDepths.Load(ss_load_coords).x;
+  float3 wPos = getWorldCoords(iPosition.xy, z);
 
   // Recuperar la normal en ese pixel. Sabiendo que se
   // guardó en el rango 0..1 pero las normales se mueven
@@ -145,9 +127,12 @@ void PSLightPoint(
   // Saturate limita los valores de salida al rango 0..1
   float NL = saturate(dot(N, L));
   
- float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL, 0.0f))*2.0f;
+ float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL, 0.0f))*3.0f;
   
  NL *= lightWarp.xyz;
+ 
+ float inv_shadows = NL;
+ o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
 
   // Factor de atenuacion por distancia al centro de la
   // luz. 1 para distancias menores de LightInRadius y 0
@@ -165,10 +150,14 @@ void PSLightPoint(
   float  glossiness = 20.;
   float  spec_amount = pow(cos_beta, glossiness);
   spec_amount *= distance_att;
+  
+  //spec_amount /= 2.0f;
 
   // Environment. incident_vector = -E
   float3 E_refl = reflect(-E, N);
   float3 env = txEnvironment.Sample(samLinear, E_refl).xyz;
+  
+  
 
   // Aportacion final de la luz es NL x color_luz x atenuacion
   o_color.xyz = LightColor.xyz * NL * distance_att * albedo + spec_amount;
@@ -189,7 +178,8 @@ float4 PSLightDir(
   int3 ss_load_coords = uint3(iPosition.xy, 0);
 
   // Recuperar la posicion de mundo para ese pixel
-  float3 wPos = txWorldPos.Load(ss_load_coords).xyz;
+  float  z = txDepths.Load(ss_load_coords).x;
+  float3 wPos = getWorldCoords(iPosition.xy, z);
 
   // Recuperar la normal en ese pixel. Sabiendo que se
   // guardó en el rango 0..1 pero las normales se mueven
@@ -272,14 +262,17 @@ float getShadowAt(float4 wPos) {
 
 
 //--------------------------------------------------------------------------------------
-float4 PSLightDirShadows(
+void PSLightDirShadows(
   in float4 iPosition : SV_Position
-  ) : SV_Target
+  , out float4 o_color  : SV_Target0
+  , out float4 o_inv_shadows : SV_Target2
+  ) 
 {
   int3 ss_load_coords = uint3(iPosition.xy, 0);
 
   // Recuperar la posicion de mundo para ese pixel
-  float3 wPos = txWorldPos.Load(ss_load_coords).xyz;
+  float  z = txDepths.Load(ss_load_coords).x;
+  float3 wPos = getWorldCoords(iPosition.xy, z);
 
   // Recuperar la normal en ese pixel. Sabiendo que se
   // guardó en el rango 0..1 pero las normales se mueven
@@ -301,7 +294,14 @@ float4 PSLightDirShadows(
 
   att_factor *= NL;
   
-  return float4(att_factor, att_factor, att_factor, 1);
+  //o_shadows = att_factor/10.0f;
+  //o_shadows = float4(0.0f,0.0f,.0f,1.0f);
+ // o_shadows = float4(0.0f,1.0f,0.0f,1.0f);
+ float inv_shadows = att_factor;
+ o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
+  
+  //o_color = float4(att_factor, att_factor, att_factor, 1 - att_factor);
+  o_color = float4(0,0,0,0);
 }
 
 
@@ -317,7 +317,8 @@ float4 PSWater(
    int3 ss_load_coords = uint3(iPosition.xy, 0);
 
   // Recuperar la posicion de mundo para ese pixel
-  float3 wPos = txWorldPos.Load(ss_load_coords).xyz;
+  float  z = txDepths.Load(ss_load_coords).x;
+  float3 wPos = getWorldCoords(iPosition.xy, z);
 
   // Noise values between -1..1
   float2 delta = 10*iTex0;
