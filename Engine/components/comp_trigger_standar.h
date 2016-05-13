@@ -3,7 +3,7 @@
 
 #include "comp_trigger.h"
 #include "app_modules\logic_manager\logic_manager.h"
-
+/*
 struct TCompTriggerStandar : public TTrigger {
 	std::vector<std::string> m_tagsAffect;
 	std::string m_id_trigger;
@@ -33,6 +33,6 @@ struct TCompTriggerStandar : public TTrigger {
 		}
 	}
 };
-
+*/
 
 #endif

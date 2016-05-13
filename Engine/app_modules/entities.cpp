@@ -79,8 +79,6 @@ DECL_OBJ_MANAGER("tracker", TCompTracker);
 DECL_OBJ_MANAGER("box_spawn", TCompBoxSpawner);
 DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
 
-DECL_OBJ_MANAGER("trigger_lua", TCompTriggerStandar);
-
 DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
 
 CCamera * camera;
@@ -148,7 +146,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompBoxSpawner>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBoxDestructor>()->init(MAX_ENTITIES);
 
-	getHandleManager<TCompTriggerStandar>()->init(MAX_ENTITIES);
+	//getHandleManager<TCompTriggerStandar>()->init(MAX_ENTITIES);
 
 	//colliders
 	getHandleManager<TCompPhysics>()->init(MAX_ENTITIES);
@@ -220,8 +218,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompBoxDestructor, TMsgTriggerIn, onTriggerEnterCall);
 
 	//triggers
-	SUBSCRIBE(TCompTriggerStandar, TMsgTriggerIn, onTriggerEnterCall);
-	SUBSCRIBE(TCompTriggerStandar, TMsgTriggerOut, onTriggerExitCall);
+	//SUBSCRIBE(TCompTriggerStandar, TMsgTriggerIn, onTriggerEnterCall);
+	//SUBSCRIBE(TCompTriggerStandar, TMsgTriggerOut, onTriggerExitCall);
 
 	//victory point
 	SUBSCRIBE(TVictoryPoint, TMsgTriggerIn, onTriggerEnterCall);

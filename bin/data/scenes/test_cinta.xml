@@ -206,28 +206,6 @@
    height="0.7"/>
 
 </entity>
-
-<entity
-   id="1">
-<tags
-   tags="box platform removable"/>
-<box/>
-<name
-   name="Box_1"/>
-<transform
-   pos="36.3543 -19.7288 16.1952"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/box1.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="1.0 1.0 1.0"
-   mass="2"/>
-<polarized pol = "plus" />
-</entity>
-
 <entity>
 <tags
    tags=""/>
@@ -235,11 +213,11 @@
    type_collision="trigger"
    type_shape="box"
    size="7.26 3.49 16.45"/>
-<victory_point/>
+<trigger_lua/>
 <name
    name="TriggerBox_1"/>
 <transform
-   pos="-33.6215 4.47034 -7.67841"
+   pos="8.25731 -22.7269 -26.1013"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -424,6 +402,26 @@
    point81="-1.99212 -22.128 16.2863"
    tangent81="-1.0 0 0"
    size="82"/>
+
+</entity>
+<entity
+   id="1">
+<tags
+   tags="box platform removable"/>
+<box/>
+<name
+   name="Box_1"/>
+<transform
+   pos="36.3543 -19.7288 16.1952"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box1.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="1.0 1.0 1.0"
+   mass="2"/>
 
 </entity>
 

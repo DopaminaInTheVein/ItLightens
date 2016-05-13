@@ -8,6 +8,7 @@ enum eAction {
 	, RECHARGE
 	, OVERCHARGE
 	, POSSESS
+	, ACTIVATE
 	, SIZE_ACTIONS
 };
 
