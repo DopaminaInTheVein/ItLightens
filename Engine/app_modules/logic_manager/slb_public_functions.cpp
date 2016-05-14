@@ -84,6 +84,10 @@ void SLBHandle::getHandleByNameTag(const char* name, const char* tag) {
 	real_handle = handle;
 }
 
+void SLBHandle::getHandleCaller() {
+	real_handle = logic_manager->getCaller();
+}
+
 void SLBHandle::setPosition(float x, float y, float z) {
 	const PxVec3 new_position(x, y, z);
 
@@ -125,6 +129,16 @@ void SLBHandle::goToPoint(float x, float y, float z) {
 
 void SLBHandle::toggleGuardFormation() {
 	getHandleManager<bt_guard>()->onAll(&bt_guard::toggleFormation);
+}
+
+void SLBHandle::setActionable(int enabled) {
+	CHandle caller = logic_manager->getCaller();
+	if (caller.isValid()) {
+		CEntity * eCaller = caller;
+		TMsgSetActivable msg;
+		msg.activable = (enabled != 0);
+		eCaller->sendMsg(msg);
+	}
 }
 
 // camera control in LUA

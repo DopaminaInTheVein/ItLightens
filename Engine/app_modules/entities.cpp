@@ -227,6 +227,7 @@ bool CEntitiesModule::start() {
 	//trigger_lua
 	SUBSCRIBE(TTriggerLua, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TTriggerLua, TMsgTriggerOut, onTriggerExitCall);
+	SUBSCRIBE(TTriggerLua, TMsgSetActivable, onSetActionable);
 
 	//Animations
 	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, onSetAnim);
@@ -275,7 +276,7 @@ bool CEntitiesModule::start() {
 
 	//sala = "tiling";
 	//sala = "milestone2";
-	sala = "test_cinta";
+	sala = "test_lua";
 	//sala = "drones";
 	//sala = "boxes";
 	//sala = "milestone2_guardias";
@@ -489,6 +490,10 @@ void CEntitiesModule::update(float dt) {
 		//physx objects
 		getHandleManager<TCompCharacterController>()->updateAll(dt);
 		getHandleManager<TCompPhysics>()->updateAll(dt);
+
+		//Triggers
+		getHandleManager<TTriggerLua>()->updateAll(dt);
+
 
 		SBB::update(dt);
 	}

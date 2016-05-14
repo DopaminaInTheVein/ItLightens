@@ -216,4 +216,9 @@ struct TMsgGetLocalAABB {
   AABB* aabb;
   DECLARE_MSG_ID();
 };
+
+struct TMsgSetActivable {
+	bool activable;
+	DECLARE_MSG_ID();
+};
 #endif

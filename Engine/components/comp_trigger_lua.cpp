@@ -17,17 +17,37 @@ void TTriggerLua::onTriggerAction() {
 }
 
 void TTriggerLua::onTriggerInside(const TMsgTriggerIn& msg) {
-	if (actionable) {
-		Gui->setActionAvailable(action);
+	if (mActionable) {
+		Gui->setActionAvailable(mAction);
 		if (io->keys['E'].becomesPressed()) {
+			mActionable = false;
 			onTriggerAction();
-			actionable = false;
 		}
 	}
 }
+void TTriggerLua::onSetActionable(const TMsgSetActivable& msg) {
+	mActionable = msg.activable;
+}
 
+void TTriggerLua::setActionable(bool actionable) {
+	mActionable = actionable;
+}
 
 void TTriggerLua::executeTrigger(CLogicManagerModule::EVENT logicEvent) { //, CHandle handle) {
 	CEntity* eMe = CHandle(this).getOwner();
-	logic_manager->throwEvent(logicEvent, string(eMe->getName()));
+	logic_manager->throwEvent(logicEvent, string(eMe->getName()), CHandle(this).getOwner());
+}
+
+bool TTriggerLua::load(MKeyValue& atts) {
+	string action = atts.getString("action", "");
+	
+	//Action
+	if (action == "activate") {
+		mAction = ACTIVATE;
+	} else {
+		mAction = NONE;
+	}
+	mActionable = (mAction != NONE);
+
+	return true;
 }

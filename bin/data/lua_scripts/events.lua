@@ -4,24 +4,34 @@ SLB.using( SLB )
 
 p = Public( )
 
+function CallFunction(func)
+	if _G[func] then _G[func]()
+	else
+		p:print("function "..func.." does not exist!\n")
+	end
+end
+
 function OnAction( param )
 	p:print( "OnAction: "..param.."\n" )
-	specialActionSettings(0.7);
+	CallFunction("OnAction_"..param)
+	--specialActionSettings(0.7);
 	--setCameraRotationSensibility(60.5);
 	--setCameraSpeed(4.0);
 	--setCameraSpeedUnlocked(10.0);
 end
 
-function OnEnter( param, handle )
+function OnEnter( param )
 	p:print( "OnEnter: "..param.."\n" ) 
-	if _G["OnEnter_"..param] then _G["OnEnter_"..param](handle) 
-	else
-		p:print("function OnEnter_"..param.." does not exist!\n")
-	end
+	CallFunction("OnEnter_"..param)
+	--if _G["OnEnter_"..param] then _G["OnEnter_"..param](handle) 
+	--else
+	--	p:print("function OnEnter_"..param.." does not exist!\n")
+	--end
 end
 
 function OnLeave( param )
 	p:print( "OnLeave: ".. param.."\n" )
+	CallFunction("OnLeave_"..param)
 end
 
 function OnGameStart( param )

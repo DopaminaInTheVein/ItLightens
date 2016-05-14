@@ -29,6 +29,7 @@ public:
 class SLBHandle
 {
 	CHandle real_handle;
+	CHandle caller_handle;
 	std::string handle_name;
 	std::string handle_tag;
 
@@ -37,12 +38,14 @@ public:
 	// generic handle functions
 	void getHandleById(int id);
 	void getHandleByNameTag(const char* name, const char* tag);
+	void getHandleCaller();
 	void setPosition(float x, float y, float z);
 	float getX();
 	float getY();
 	float getZ();
 	void goToPoint(float x, float y, float z);
 	void toggleGuardFormation();
+	void setActionable(int);
 };
 
 // camera control in LUA

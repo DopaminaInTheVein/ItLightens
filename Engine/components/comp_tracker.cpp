@@ -9,11 +9,7 @@
 
 void TCompTracker::onCreate(const TMsgEntityCreated &)
 {
-	//Pruebas
-	CEntity* eMe = CHandle(this).getOwner();
-	TMsgFollow msg;
-	msg.follower = IdEntities::findById(1);
-	eMe->sendMsg(msg);
+
 }
 
 bool TCompTracker::load(MKeyValue& atts) {

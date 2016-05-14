@@ -46,21 +46,22 @@ void CLogicManagerModule::update(float dt) {
 	}
 }
 
-void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t handle_id) {
+void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle handle){//, uint32_t handle_id) {
 
 	char lua_code[64];
+	caller_handle = handle;
 
 	switch (evt) {
 		case (OnAction) : {
-			sprintf(lua_code, "OnAction(%f);", 0.1f);
+			sprintf(lua_code, "OnAction(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnEnter) : {
-			sprintf(lua_code, "OnEnter(\"%s\", %d);", params.c_str(), handle_id);
+			sprintf(lua_code, "OnEnter(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnLeave) : {
-			sprintf(lua_code, "OnLeave%s(%f);", params.c_str(), 0.3f);
+			sprintf(lua_code, "OnLeave%s(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnGameStart) : {
@@ -244,7 +245,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 
 }
 
-void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, uint32_t handle_id) {
+void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, CHandle handle){//, uint32_t handle_id) {
 	// construct the lua code using the event and the specified parameters
 	std::string lua_code = evt;
 
@@ -295,6 +296,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.comment("Finds the handle with the specified name and tag")
 		.param("string: handle name")
 		.param("string: handle tag")
+		// sets the handle to the event thrower
+		.set("getHandleCaller", &SLBHandle::getHandleCaller)
+		.comment("Finds the handle who called this event")
 		// set handle position function
 		.set("set_position", &SLBHandle::setPosition)
 		.comment("Sets the position of the NPC")
@@ -317,6 +321,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// toggle guards formation
 		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
 		.comment("Activates/desactivates the guard formation states.")
+		// sets actionable
+		.set("setActionable", &SLBHandle::setActionable)
+		.comment("Set if the element is actionable (0: false, otherwise: true)")
+		.param("int: enabled")
 		;
 }
 

@@ -137,28 +137,41 @@ fn _parse_trigger = (
 	-- Exit
 	local onExit = getUserProp _parsingObject "onLeave"
 	
+	-- Action
+	local onAction = getUserProp _parsingObject "onAction"
+	
 	-- Script (component)
 	if component != undefined then (
-		if (onEnter != undefined) or (onExit != undefined) then (
+		if (onEnter != undefined) or (onExit != undefined) or (onAction != undefined) then (
 			throw "No puede ser un trigger de componente y logico a la vez!"
 		)
 		XML_PARSING.addChild component
 	) else (
-		if (onEnter == undefined) and (onExit == undefined) then (
+		--Add trigger lua component
+		local xml = XML_PARSING.addChild "trigger_lua"
+			
+		if (onEnter == undefined) and (onExit == undefined) and (onAction != undefined) then (
 			throw "El trigger debe ser lógico o de componente!"
 		)
 		-- Logic trigger on enter
 		if onEnter != undefined then (
-			local nameFunc = "onEnter" + _parsingObject.name
+			local nameFunc = "OnEnter_" + _parsingObject.name
 			luaAppend nameFunc onEnter
 		)
 		
 		-- Logic trigger on exit
 		if onExit != undefined then (
-			local nameFunc = "onLeave" + _parsingObject.name
+			local nameFunc = "OnLeave_" + _parsingObject.name
 			luaAppend nameFunc onExit
 		)
 		
-		XML_PARSING.addChild "trigger_lua"	
+		-- Logic trigger on action
+		if onAction != undefined then (
+			local nameFunc = "OnAction_" + _parsingObject.name
+			luaAppend nameFunc onAction
+			local action = getUserProp _parsingObject "action"
+			if action == undefined then (action = "activate")
+			xml.addAttr "action" action
+		)
 	)
 )
