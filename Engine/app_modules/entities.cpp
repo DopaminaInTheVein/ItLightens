@@ -273,10 +273,12 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
+	CApp &app = CApp::get();
+	std::string file_options = app.file_options_json;
+	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
 
 	//sala = "tiling";
-	//sala = "milestone2";
-	sala = "test_lua";
+	sala = fields["room_two"];
 	//sala = "drones";
 	//sala = "boxes";
 	//sala = "milestone2_guardias";
@@ -479,7 +481,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompPlatform>()->updateAll(dt);
 		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
-		getHandleManager<TCompTracker>()->updateAll(dt);
+		//getHandleManager<TCompTracker>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 		getHandleManager<TCompBoxDestructor>()->updateAll(dt);

@@ -1,0 +1,418 @@
+<entities>
+<entity>
+<tags
+   tags="camera_main"
+/>
+<camera
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"
+/>
+<controller_3rd_person/>
+<name
+   name="camController_1"
+/>
+<transform
+   pos="-37.6678 -20.5623 -35.8906"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags="player"
+/>
+<player/>
+<life
+   points="10"
+/>
+<name
+   name="player_1"
+/>
+<transform
+   pos="-44.9266 1.43372 -8.94887"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<skeleton
+   model="skeletons/player/player.skeleton"
+/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"
+/>
+<character_controller
+   radius="0.3"
+   height="0.7"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"
+/>
+<name
+   name="Omni010"
+/>
+<transform
+   pos="-92.5373 1.63564 28.3671"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"
+/>
+<name
+   name="Omni009"
+/>
+<transform
+   pos="-80.6419 1.63564 28.3671"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"
+/>
+<name
+   name="Omni008"
+/>
+<transform
+   pos="-80.6419 1.63564 18.2919"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"
+/>
+<name
+   name="Omni007"
+/>
+<transform
+   pos="-81.459 1.63563 -47.844"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"
+/>
+<name
+   name="Omni006"
+/>
+<transform
+   pos="-74.0948 1.63563 -33.6174"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"
+/>
+<name
+   name="Omni005"
+/>
+<transform
+   pos="-86.7589 1.63563 -33.6174"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"
+/>
+<name
+   name="Omni004"
+/>
+<transform
+   pos="-86.7589 1.63564 -7.90521"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"
+/>
+<name
+   name="Omni003"
+/>
+<transform
+   pos="-72.6222 1.63564 -7.90521"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"
+/>
+<name
+   name="Omni002"
+/>
+<transform
+   pos="-55.3697 1.63564 -7.90521"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"
+/>
+<name
+   name="Omni001"
+/>
+<transform
+   pos="-43.6181 1.63564 -7.90521"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="ascensor"
+/>
+<transform
+   pos="-111.673 17.3784 -14.8967"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/whitebox/ascensor.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="cable"
+/>
+<transform
+   pos="-106.96 17.1642 -24.4175"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/whitebox/cable.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="cargador_de_bateria"
+/>
+<transform
+   pos="-94.0594 0.341249 23.0252"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/whitebox/cargador_de_bateria.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="cerradura_electrica"
+/>
+<transform
+   pos="-91.8181 0.344628 10.2894"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/whitebox/cerradura_electrica.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="laboratorio"
+/>
+<transform
+   pos="-135.462 0 -24.481"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/whitebox/laboratorio.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="mesa_de_trabajo"
+/>
+<transform
+   pos="-111.344 17.1641 -32.7313"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/whitebox/mesa_de_trabajo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="mesa_de_trabajo"
+/>
+<transform
+   pos="-92.8914 0.432741 34.8707"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/whitebox/mesa_de_trabajo.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="nivel"
+/>
+<transform
+   pos="176.65 137.731 -698.851"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/whitebox/nivel.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="pared_mole"
+/>
+<transform
+   pos="-94.5794 0.346788 -16.2502"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+<entity>
+<tags
+   tags=""
+/>
+<name
+   name="pila"
+/>
+<transform
+   pos="-81.4276 0.651356 33.9501"
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<render_static_mesh
+   name="static_meshes/whitebox/pila.static_mesh"
+/>
+<rigidbody
+   type_collision="static"
+/>
+</entity>
+</entities>

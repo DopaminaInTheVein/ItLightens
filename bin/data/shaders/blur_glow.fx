@@ -1,19 +1,4 @@
-#include "constants/ctes_camera.h"
-#include "constants/ctes_object.h"
-#include "constants/ctes_light.h"
-#include "constants/ctes_globals.h"
-
-
-Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
-Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
-Texture2D txWorldPos  : USE_SHADER_REG(TEXTURE_SLOT_WORLD_POS);
-Texture2D txSelfIlum : USE_SHADER_REG(TEXTURE_SLOT_SELFILUM);
-Texture2D txDepth : register(t45);
-
-Texture2D txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
-
-SamplerState samLinear : register(s0);
-SamplerState samClampLinear : register(s2);
+#include "globals.fx"
 
 
 
@@ -41,7 +26,7 @@ float4 PSBlur(float4 Pos : SV_POSITION
 			, float2 iTex0 : TEXCOORD0
 			, float3 iWorldPos : TEXCOORD1) : SV_Target
 {
-float dc = txDepth.Sample(samLinear, iTex0).r;
+float dc = txDepths.Sample(samLinear, iTex0).r;
 //float pixelWidth = 1.0f;
 	float Pixels[13] =
 	{
@@ -143,8 +128,8 @@ float4 PSBlur_int(float4 Pos : SV_POSITION
 			, float2 iTex0 : TEXCOORD0
 			, float3 iWorldPos : TEXCOORD1) : SV_Target
 {
-float dc = txDepth.Sample(samLinear, iTex0).r;
-float pixelWidth = 1.0f;
+float dc = txDepths.Sample(samLinear, iTex0).r;
+float2 pixelWidth = float2(1.0f/xres, 1.0f/yres);
 	float Pixels[13] =
 	{
 	   -6,
@@ -194,7 +179,7 @@ float pixelWidth = 1.0f;
 	//return float4(iWorldPos,1);
 	//return float4(E,1);
 	
-	pixelWidth = strenght_polarize/(xres)/dc;
+	//pixelWidth = strenght_polarize/(xres)/dc;
 	
 	float sinw = abs(sin(world_time/3));
 	float offset_c = sinw*sinw/2;
@@ -202,7 +187,7 @@ float pixelWidth = 1.0f;
 
     for (int i = 0; i < 13; i++) 
     {
-        blur.x = iTex0.x + Pixels[i] * pixelWidth*offset_c;
+        blur.x = iTex0.x + Pixels[i] * pixelWidth.x*offset_c;
         color += txDiffuse.Sample(samLinear, blur.xy) * BlurWeights[i];
     }  
 	
@@ -210,7 +195,7 @@ float pixelWidth = 1.0f;
 	
 	for (int i = 0; i < 13; i++)
 	{
-		blur.y = iTex0.y + Pixels[i] * pixelWidth*offset_c;
+		blur.y = iTex0.y + Pixels[i] * pixelWidth.y*offset_c;
 		color += txDiffuse.Sample(samLinear, blur.xy) * BlurWeights[i];
 	}
 	

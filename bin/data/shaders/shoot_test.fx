@@ -1,25 +1,4 @@
-#include "constants/ctes_camera.h"
-#include "constants/ctes_object.h"
-#include "constants/ctes_light.h"
-#include "constants/ctes_globals.h"
-
-
-Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
-Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
-Texture2D txWorldPos  : USE_SHADER_REG(TEXTURE_SLOT_WORLD_POS);
-Texture2D txData1 : USE_SHADER_REG(TEXTURE_SLOT_DATA1);
-Texture2D txData2 : USE_SHADER_REG(TEXTURE_SLOT_DATA2);
-
-Texture2D txNoise : USE_SHADER_REG(TEXTURE_SLOT_NOISE);
-
-Texture2D txDepth : register(t45);
-
-//Texture2D txFinalImage : register(t66);
-
-Texture2D txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
-
-SamplerState samLinear : register(s0);
-SamplerState samClampLinear : register(s2);
+#include "globals.fx"
 
 
 
@@ -43,7 +22,7 @@ float4 PSTestShoot_w(float4 Pos : SV_POSITION
 	, float2 iTex0 : TEXCOORD0
 	) : SV_Target
 {
-	float dc = txDepth.Sample(samLinear, iTex0).r;
+	float dc = txDepths.Sample(samLinear, iTex0).r;
 	//float background_color = txFinalImage.Sample(samLinear, iTex0);
     dc = 1.0f;
 	float4 color = txDiffuse.Sample(samLinear, iTex0);
@@ -101,7 +80,7 @@ float4 PSTestShoot(float4 Pos : SV_POSITION
 	) : SV_Target
 {
 	
-	float dc = abs(txDepth.Sample(samLinear, iTex0).r);
+	float dc = abs(txDepths.Sample(samLinear, iTex0).r);
 	
 	float4 color = txDiffuse.Sample(samClampLinear, iTex0);
 	//return color;
