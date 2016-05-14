@@ -1,4 +1,23 @@
 <entities>
+<!-- Added -->
+<entity>
+<tags
+   tags=""/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="2 1 1.15"/>
+<trigger_lua
+   action="activate"/>
+<name
+   name="tElevator"/>
+<transform
+   pos="-70.64 1.34 14.15"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+   
+</entity>
+<!-- /Added -->
 <entity>
 <tags
    tags="camera_main"
