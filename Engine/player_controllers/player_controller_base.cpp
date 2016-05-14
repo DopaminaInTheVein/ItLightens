@@ -48,8 +48,13 @@ bool CPlayerBase::checkDead() {
 	}
 	return false;
 }
+
 void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 	camera = msg.camera;
+}
+
+void CPlayerBase::onSetControllable(const TMsgSetControllable& msg) {
+	controlEnabled = msg.control;
 }
 
 void CPlayerBase::update(float elapsed) {

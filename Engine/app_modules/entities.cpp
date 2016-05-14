@@ -273,6 +273,13 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
+	//Control
+	SUBSCRIBE(player_controller, TMsgSetControllable, onSetControllable);
+	SUBSCRIBE(player_controller_cientifico, TMsgSetControllable, onSetControllable);
+	SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
+	SUBSCRIBE(player_controller_speedy, TMsgSetControllable, onSetControllable);
+
+
 	CApp &app = CApp::get();
 	std::string file_options = app.file_options_json;
 	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");

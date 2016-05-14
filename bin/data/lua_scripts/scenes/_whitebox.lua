@@ -18,6 +18,8 @@ function activateElevator( )
   end
   
   h:getHandleCaller()
+  p:setControlEnabled(0)
   p:exec_command( "h:setActionable(1);", 10 )
+  p:exec_command( "p:setControlEnabled(1);", 10 )
 end
 --------------------------------------------------

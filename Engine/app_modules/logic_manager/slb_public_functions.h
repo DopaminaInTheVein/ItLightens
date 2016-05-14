@@ -72,6 +72,7 @@ public:
 	// public functions
 	void execCommand(const char* exec_code, float exec_time);
 	void print(const char* to_print);
+	void setControlEnabled(int);
 	void playSound(const char* sound_route);
 	void playMusic(const char* music_route);
 	void playVoice(const char* voice_route);

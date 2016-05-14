@@ -211,6 +211,16 @@ void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA","%s\n",to_print);
 }
 
+void SLBPublicFunctions::setControlEnabled(int enabled) {
+	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+	if (player.isValid()) {
+		CEntity * ePlayer = player;
+		TMsgSetControllable msg;
+		msg.control = (enabled != 0);
+		ePlayer->sendMsg(msg);
+	}
+}
+
 void SLBPublicFunctions::playSound(const char* sound_route) {
 	sound_manager->playSound(std::string(sound_route));
 }
