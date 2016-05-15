@@ -185,6 +185,9 @@ bool CEntitiesModule::start() {
 	//Trackers
 	SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
+	SUBSCRIBE(TCompCamera, TMsgGuidedCamera, onGuidedCamera);
+	SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
+
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
@@ -370,27 +373,24 @@ bool CEntitiesModule::start() {
 		assert(false);
 	}
 	TCompCamera * pcam = camera_e->get<TCompCamera>();
-	CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
-	CEntity * guidedCamE = guidedCam;
+	//CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
 
 	CHandle t = tags_manager.getFirstHavingTag("player");
 	CEntity * target_e = t;
 
-	if (!guidedCamE) {
-		// Player real
+	// Set the player in the 3rdPersonController
+	if (camera_e && t.isValid()) {
+		TMsgSetTarget msg;
+		msg.target = t;
+		msg.who = PLAYER;
+		camera_e->sendMsg(msg);	//set camera
 
-		// Set the player in the 3rdPersonController
-		if (camera_e && t.isValid()) {
-			TMsgSetTarget msg;
-			msg.target = t;
-			msg.who = PLAYER;
-			camera_e->sendMsg(msg);		//set camera
-
-			TMsgSetCamera msg_camera;
-			msg_camera.camera = camera;
-			target_e->sendMsg(msg_camera);	//set target camera
-		}
+		TMsgSetCamera msg_camera;
+		msg_camera.camera = camera;
+		target_e->sendMsg(msg_camera); //set target camera
 	}
+	//}
+
 	// Set the player in the Speedy AIs
 	TTagID tagIDSpeedy = getID("AI_speedy");
 	VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);

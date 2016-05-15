@@ -20,6 +20,7 @@ public:
 	CHandle getFirstHavingTag(TTagID tag_id) const;
 	CHandle getFirstHavingTag(std::string tag_id) const;
 	void getTagFromHandle(CHandle h_match, std::vector<TTagID>& out);
+	CHandle getHandleByTagAndName(const char* name, const char* tag) const;
 
 	void renderInMenu();
 

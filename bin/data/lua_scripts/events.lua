@@ -3,6 +3,7 @@ print('This is lua')
 SLB.using( SLB )
 
 p = Public( )
+cam = Camera()
 
 function CallFunction(func)
 	if _G[func] then _G[func]()
@@ -39,6 +40,7 @@ function OnGameStart( param )
 	p:play_music("data/sounds/music/It-Lightens-muestra-2-loop.mp3")
 	p:set_music_volume(0.7)
 	triggerGuardFormation();
+	cam:run_cinematic("Line001")
 end
 
 function OnGameEnd( param )
@@ -67,8 +69,9 @@ function OnGuardRemoveBox( reaction_time )
 	p:print( "OnGuardRemoveBox: "..reaction_time.."\n" )
 end
 
-function OnLevelStart001( param )
-	p:print( "OnLevelStart001: "..param.."\n" )
+function OnLevelStart( param )
+	p:print("OnLevelStart\n")
+	CallFunction("OnLevelStart_"..param)
 end
 
 function OnZoneStart001( param )

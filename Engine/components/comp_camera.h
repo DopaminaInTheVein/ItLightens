@@ -7,12 +7,20 @@
 class CEntity;
 struct TMsgGetCullingViewProj;
 
+#define MAX_GUIDE_POINTS 64
+
 // ------------------------------------
 struct TCompCamera : public CCamera, public TCompBase {
   bool detect_colsions;
-  int lastguidedCamPoint = 0;
-  float factor = 0.0f;
+  //float factor = 0.0f;
 
+  //Guided camera
+  CHandle guidedCamera;
+  //bool guidedCamera;
+  //int lastguidedCamPoint;
+  //VEC3 guided_positions[MAX_GUIDE_POINTS];
+  //CQuaternion guided_rotations[MAX_GUIDE_POINTS];
+  
   void render() const;
   void update(float dt);
   bool checkColision(const VEC3& pos);
@@ -20,6 +28,8 @@ struct TCompCamera : public CCamera, public TCompBase {
   void renderInMenu();
   void updateFromEntityTransform(CEntity* e_owner);
   void onGetViewProj(const TMsgGetCullingViewProj& msg);
+
+  void onGuidedCamera(const TMsgGuidedCamera&);
 };
 
 #endif

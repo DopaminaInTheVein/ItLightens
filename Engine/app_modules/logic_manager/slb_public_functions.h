@@ -62,6 +62,7 @@ public:
 	void setSpeedUnlocked(float speed);
 	void setRotationSensibility(float sensibility);
 	void setPositionOffset(float x_offset, float y_offset, float z_offset);
+	void runCinematic(const char* name);
 };
 
 // public functions

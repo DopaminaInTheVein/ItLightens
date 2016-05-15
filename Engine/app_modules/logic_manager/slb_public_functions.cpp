@@ -79,9 +79,7 @@ void SLBHandle::getHandleById(int id) {
 void SLBHandle::getHandleByNameTag(const char* name, const char* tag) {
 	handle_name = std::string(name);
 	handle_tag = std::string(tag);
-	VHandles targets = tags_manager.getHandlesByTag(getID(tag));
-	CHandle handle = findByName(targets, name);
-	real_handle = handle;
+	real_handle = tags_manager.getHandleByTagAndName(tag, name);
 }
 
 void SLBHandle::getHandleCaller() {
@@ -195,6 +193,16 @@ void SLBCamera::setPositionOffset(float x_offset, float y_offset, float z_offset
 
 	VEC3 offset(x_offset, y_offset, z_offset);
 	camara3rd->setPositionOffset(offset);
+}
+
+void SLBCamera::runCinematic(const char* name) {
+	CHandle guidedCam = tags_manager.getHandleByTagAndName("guided_camera", name);
+	CEntity * guidedCamE = guidedCam;
+	if (guidedCamE) {
+		TMsgGuidedCamera msg_guided_cam;
+		msg_guided_cam.guide = guidedCam;
+		guidedCamE->sendMsg(msg_guided_cam);
+	}
 }
 
 // public generic functions

@@ -76,10 +76,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			sprintf(lua_code, "teleportPlayer(%f, %f, %f);", 0.0f, 0.0f, -22.0f);
 			break;
 		}
-		case (OnLevelStart001) : {
-			char command_code[64];
-			sprintf(command_code, "dbg('%s');", "TIMER - OLS");
-			sprintf(lua_code, "execCommandTest(\"%s\", %f);", command_code, 5.f);
+		case (OnLevelStart) : {
+			//char command_code[64];
+			//sprintf(command_code, "dbg('%s');", "TIMER - OLS");
+			sprintf(lua_code, "OnLevelStart(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnZoneStart001) : {
@@ -361,6 +361,10 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.param("float: x coord offset")
 		.param("float: y coord offset")
 		.param("float: z coord offset")
+		// run cinematic
+		.set("run_cinematic", &SLBCamera::runCinematic)
+		.comment("Run cinematic defined in the specified guided camera")
+		.param("string: guided camera name")
 		;
 }
 

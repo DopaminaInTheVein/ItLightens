@@ -31,7 +31,7 @@ public:
 		OnLeave,
 		OnGameStart,
 		OnGameEnd,
-		OnLevelStart001,
+		OnLevelStart,
 		OnZoneStart001,
 		OnZoneEnd001,
 		OnTimeout,
