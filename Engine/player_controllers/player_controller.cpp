@@ -676,19 +676,19 @@ void player_controller::UpdateInputActions()
 	PROFILE_FUNCTION("update input actions");
 	SetCharacterController();
 	pol_orbit = false;
-	if (isDamaged()) {
-		pol_state = NEUTRAL;
+	//if (isDamaged()) {
+	//	pol_state = NEUTRAL;
+	//}
+	//else {
+	if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
+		if (pol_state == PLUS) pol_state = NEUTRAL;
+		else pol_state = PLUS;
 	}
-	else {
-		if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
-			if (pol_state == PLUS) pol_state = NEUTRAL;
-			else pol_state = PLUS;
-		}
-		else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
-			if (pol_state == MINUS) pol_state = NEUTRAL;
-			else pol_state = MINUS;
-		}
+	else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
+		if (pol_state == MINUS) pol_state = NEUTRAL;
+		else pol_state = MINUS;
 	}
+	//}
 
 	if (pol_state == NEUTRAL) affectPolarized = false;
 	else {

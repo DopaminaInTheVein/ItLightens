@@ -59,6 +59,10 @@ function OnGuardOvercharged( param )
 	p:print( "OnGuardOvercharged: "..param.."\n" )
 end
 
+function OnGuardBoxHit( param )
+	p:print( "OnGuardBoxHit: "..param.."\n" )
+end
+
 function OnGuardRemoveBox( reaction_time )
 	p:print( "OnGuardRemoveBox: "..reaction_time.."\n" )
 end

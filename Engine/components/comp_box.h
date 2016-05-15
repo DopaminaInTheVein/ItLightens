@@ -42,6 +42,44 @@ struct TCompBox : public TCompBase {
 			}
 
 		}
+		stuntNpcs();
+	}
+
+	void stuntNpcs() {
+		CEntity * eMe = CHandle(this).getOwner();
+		assert(eMe);
+		TCompPhysics * pc = eMe->get<TCompPhysics>();
+		assert(pc);
+		auto rd = pc->getActor()->isRigidDynamic();
+		if (!rd) return;
+		VEC3 speed = PhysxConversion::PxVec3ToVec3(rd->isRigidDynamic()->getLinearVelocity());
+		if (speed.LengthSquared() > 10.f) {
+			TCompTransform * tMe = eMe->get<TCompTransform>();
+			assert(tMe);
+			VHandles npcs = tags_manager.getHandlesByTag(getID("AI"));
+			for (CHandle npc : npcs) {
+				if (npc.isValid()) {
+					CEntity * eNpc = npc;
+					TCompTransform * tNpc = eNpc->get<TCompTransform>();
+					assert(tNpc);
+					float dist = simpleDistXZ(tMe->getPosition(), tNpc->getPosition());
+					if (dist < 1.5f) {
+						//Check direction
+						bool testDirection = false;
+						if (abs(speed.x) > abs(speed.z)) {
+							testDirection = sameSign(speed.x, tNpc->getPosition().x - tMe->getPosition().x);
+						}
+						else {
+							testDirection = sameSign(speed.z, tNpc->getPosition().z - tMe->getPosition().z);
+						}
+						if (testDirection) {
+							TMsgBoxHit	msg;
+							eNpc->sendMsg(msg);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	void ImTooFar() {

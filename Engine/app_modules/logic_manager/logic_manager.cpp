@@ -61,7 +61,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			break;
 		}
 		case (OnLeave) : {
-			sprintf(lua_code, "OnLeave%s(\"%s\");", params.c_str());
+			sprintf(lua_code, "OnLeave(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnGameStart) : {
@@ -123,7 +123,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			sprintf(lua_code, "OnGuardOvercharged(%f);", 0.5f);
 			break;
 		}
-
+		case (OnGuardBoxHit): {
+			sprintf(lua_code, "OnGuardBoxHit(%f);", 0.5f);
+			break;
+		}
 		case (OnInterruptHit) : {
 			sprintf(lua_code, "OnInterruptHit(%f);", 0.5f);
 			break;

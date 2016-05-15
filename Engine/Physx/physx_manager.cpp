@@ -516,25 +516,38 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 
 			TCompCharacterController *cc;
 
-			//if there isnt any player, stop collision solver
+			bool isPlayer = true;
+
+			//if there isnt any player or guard, stop collision solver
 			if (e0->hasTag("player"))
 				cc = e0->get<TCompCharacterController>();
 			else if (e1->hasTag("player"))
 				cc = e1->get<TCompCharacterController>();
-			else return;
+			else {
+				isPlayer = false;
+				if (e0->hasTag("AI_guard"))
+					cc = e0->get<TCompCharacterController>();
+				else if (e1->hasTag("AI_guard"))
+					cc = e1->get<TCompCharacterController>();
+				else return;
+			}
 
-			//if player dont collide with platform, stop collision solver
-			if (e1->hasTag("platform")) {
-				auto rd = pairHeader.actors[1]->isRigidDynamic();
-				cc->AddSpeed(PxVec3ToVec3(rd->getLinearVelocity())*2.0f);
-				//cc->AddMovement(VEC3(0, 1, 0));
+			if (isPlayer) {
+				//if player dont collide with platform, stop collision solver
+				if (e1->hasTag("platform")) {
+					auto rd = pairHeader.actors[1]->isRigidDynamic();
+					cc->AddSpeed(PxVec3ToVec3(rd->getLinearVelocity())*2.0f);
+					//cc->AddMovement(VEC3(0, 1, 0));
+				}
+				else if (e0->hasTag("platform")) {
+					auto rd = pairHeader.actors[0]->isRigidDynamic();
+					cc->AddSpeed(PxVec3ToVec3(rd->getLinearVelocity())*2.0f);
+					//cc->AddMovement(VEC3(0,1,0));
+				}
+				else return;
+			} else {
+				// Send TMsgBoxHit
 			}
-			else if (e0->hasTag("platform")) {
-				auto rd = pairHeader.actors[0]->isRigidDynamic();
-				cc->AddSpeed(PxVec3ToVec3(rd->getLinearVelocity())*2.0f);
-				//cc->AddMovement(VEC3(0,1,0));
-			}
-			else return;
 		}
 	}
 

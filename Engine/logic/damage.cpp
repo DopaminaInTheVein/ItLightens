@@ -7,7 +7,7 @@ void Damage::init() {
 	//TODO: assignValueToVar(..., ...);
 	//Type, DamageOnce, DamagePerSecond, Cumulative
 	types.resize(SIZE);
-	CONFIG_DAMAGE(ABSORB, 0.f, 20.f, true);
+	CONFIG_DAMAGE(ABSORB, 0.f, 0.f, true);
 	CONFIG_DAMAGE(WATER, 0.f, 10.f, false);
 }
 

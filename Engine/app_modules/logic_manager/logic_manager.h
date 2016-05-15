@@ -42,6 +42,7 @@ public:
 		OnGuardAttackEnd,
 		OnGuardRemoveBox,
 		OnGuardOvercharged,
+		OnGuardBoxHit,
 		OnInterruptHit,
 		OnStartReceiveHit,
 		OnEndReceiveHit,
