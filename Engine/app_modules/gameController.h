@@ -13,6 +13,7 @@ class CGameController : public IAppModule {
 	bool	fx_glow				= true;
 	bool	render_culling_box	= false;
 	bool	free_camera			= false;
+	bool	cinematic			= false;
 
 public:
 	enum{
@@ -125,6 +126,13 @@ public:
 		return free_camera;
 	}
 
+	bool IsCinematic() const {
+		return cinematic;
+	}
+	void SetCinematic(bool new_cinematic) {
+		cinematic = new_cinematic;
+	}
+	
 	bool * GetCullingRenderPointer() {
 		return &render_culling_box;
 	}

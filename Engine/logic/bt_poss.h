@@ -67,6 +67,7 @@ public:
 	virtual void onStaticBomb(const TMsgStaticBomb & msg);
 	//TComponent
 	virtual CEntity* getMyEntity() = 0; //Pasar al TCompBase?
+	virtual PLAYER_TYPE whoAmI() = 0;
 	};
 
 #endif

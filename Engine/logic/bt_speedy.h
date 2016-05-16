@@ -1,7 +1,6 @@
 #ifndef _BT_SPEEDY_INC
 #define _BT_SPEEDY_INC
 
-#include "mcv_platform.h"
 #include "bt_poss.h"
 #include "sbb.h"
 #include "ai_water.h"
@@ -10,6 +9,7 @@
 #include "components/entity.h"
 #include "components/entity_tags.h"
 #include "components/comp_render_static_mesh.h"
+#include "components/comp_msgs.h"
 #include "handle/handle.h"
 #include "handle/object_manager.h"
 #include "handle/handle_manager.h"
@@ -124,6 +124,9 @@ class bt_speedy : public bt_poss, public TCompBase {
 		void resetDashTimer();
 		void updateDropWaterTimer();
 		void resetDropWaterTimer();
+
+		//Virtuals
+		PLAYER_TYPE whoAmI() { return SPEEDY; }
 
 		//Cambio Malla
 		void ChangePose(string new_pose_route);

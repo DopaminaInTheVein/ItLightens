@@ -40,6 +40,7 @@ function OnGameStart( param )
 	p:play_music("data/sounds/music/It-Lightens-muestra-2-loop.mp3")
 	p:set_music_volume(0.7)
 	triggerGuardFormation();
+	p:exec_command( "triggerGuardFormation();", 15 )
 	cam:run_cinematic("Line001", 0)
 end
 

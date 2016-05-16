@@ -108,6 +108,10 @@ void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
 }
 
 bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* cam) {
+	if (lastguidedCamPoint >= getTotalPoints() || io->keys['Q'].becomesPressed()) {
+		return false;
+	}
+
 	VEC3 goTo = getPointPosition(lastguidedCamPoint);
 
 	CHandle tX = tags_manager.getFirstHavingTag("player");
@@ -166,10 +170,7 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* c
 		factor = 0.0f;
 	}
 
-	if (lastguidedCamPoint >= getTotalPoints() || io->keys['Q'].becomesPressed()) {
-		return false;
-	}
-	else if (getDefaultDirsEnabled()) {
+	if (getDefaultDirsEnabled()) {
 		cam->smoothLookAt(camTransform->getPosition(), nextPoint, cam->getUpAux(), 0.5f);
 	}
 	else if (lastguidedCamPoint > 0) {

@@ -123,6 +123,9 @@ public:
 	bool aimToTarget(VEC3 target);
 	void moveFront(float movement_speed);
 
+	//Virtuals
+	PLAYER_TYPE whoAmI() { return MOLE; }
+
 	//Cambio Malla
 	void ChangePose(string new_pose_route);
 };

@@ -373,7 +373,6 @@ bool CEntitiesModule::start() {
 		assert(false);
 	}
 	TCompCamera * pcam = camera_e->get<TCompCamera>();
-	//CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
 
 	CHandle t = tags_manager.getFirstHavingTag("player");
 	CEntity * target_e = t;
@@ -431,8 +430,6 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-	CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
-	CEntity * guidedCamE = guidedCam;
 	static float ia_wait = 0.0f;
 	ia_wait += getDeltaTime();
 
@@ -442,7 +439,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
 
 	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::STOPPED_INTRO) {
-		if (!guidedCamE) {
+		if (!GameController->IsCinematic()) {
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 		}
 		getHandleManager<TCompCamera>()->updateAll(dt);
@@ -450,7 +447,7 @@ void CEntitiesModule::update(float dt) {
 
 	if (GameController->GetGameState() == CGameController::RUNNING) {
 		// May need here a switch to update wich player controller takes the action - possession rulez
-		if (!guidedCamE) {
+		if (!GameController->IsCinematic()) {
 			getHandleManager<player_controller>()->updateAll(dt);
 			getHandleManager<player_controller_speedy>()->updateAll(dt);
 			getHandleManager<player_controller_mole>()->updateAll(dt);

@@ -770,12 +770,6 @@ void player_controller::UpdatePossession() {
 			msg.possessed = true;
 			ePoss->sendMsg(msg);
 			possessionCooldown = 1.0f;
-			// Camara Nueva
-			CEntity * camera_e = tags_manager.getFirstHavingTag(getID("camera_main"));
-			TMsgSetTarget msgTarg;
-			msgTarg.target = ePoss;
-			msgTarg.who = PLAYER;
-			camera_e->sendMsg(msgTarg);
 
 			//Se desactiva el player
 			controlEnabled = false;

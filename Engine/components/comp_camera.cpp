@@ -34,6 +34,7 @@ bool TCompCamera::load(MKeyValue& atts) {
 
 void TCompCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
 	if (msg.guide.isValid()) guidedCamera = msg.guide;
+	GameController->SetCinematic(true);
 }
 
 void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
@@ -62,15 +63,10 @@ void TCompCamera::update(float dt) {
 	TCompTransform* tmx = e_owner->get<TCompTransform>();
 	assert(tmx);
 
-	//CHandle guidedCam = tags_manager.getFirstHavingTag("guided_camera");
-	//CEntity * guidedCamE = guidedCam;
-	//if (guidedCamE) {
 	if (guidedCamera.isValid()) {
 		CEntity * egc = guidedCamera;
 		TCompGuidedCamera * gc = egc->get<TCompGuidedCamera>();
 		if (!gc->followGuide(tmx, this)) {
-			logic_manager->throwUserEvent("triggerGuardFormation();", "");
-			guidedCamera.destroy();
 			CHandle t = tags_manager.getFirstHavingTag("player");
 			CEntity * target_e = t;
 			// Set the player in the 3rdPersonController
@@ -84,93 +80,9 @@ void TCompCamera::update(float dt) {
 				msg_camera.camera = owner;
 				target_e->sendMsg(msg_camera);	//set target camera
 			}
+			guidedCamera = CHandle();
+			GameController->SetCinematic(false);
 		}
-		//VEC3 goTo = gc->getPointPosition(lastguidedCamPoint);
-
-		//CHandle tX = tags_manager.getFirstHavingTag("player");
-		//CEntity * target_eX = tX;
-
-		//TCompTransform * targettransX = target_eX->get<TCompTransform>();
-
-		//VEC3 nextPoint = (lastguidedCamPoint == gc->getTotalPoints() - 1 ? gc->getPointPosition(lastguidedCamPoint) : gc->getPointPosition((lastguidedCamPoint + 1) % gc->getTotalPoints()));
-		///*
-		//float yaw, pitch;
-		//tmx->getAngles(&yaw, &pitch);
-
-		//if (!tmx->isHalfConeVision(goTo, deg2rad(1.0f))) {
-		//  float delta_yaw = tmx->getDeltaYawToAimTo(goTo);
-		//  if (abs(delta_yaw) > 0.001f) {
-		//	yaw += delta_yaw*getDeltaTime()*gc->getAngularVelocity();
-		//  }
-		//  else {
-		//	yaw += delta_yaw*gc->getAngularVelocity();
-		//  }
-		//}
-		//if (!tmx->isHalfConeVisionPitch(goTo, deg2rad(1.0f))) {
-		//  float delta_pitch = tmx->getDeltaPitchToAimTo(goTo);
-		//  if (abs(delta_pitch) > 0.001f) {
-		//	pitch += delta_pitch*gc->getAngularVelocity()*getDeltaTime();
-		//  }
-		//  else {
-		//	pitch += delta_pitch*gc->getAngularVelocity();
-		//  }
-		//}
-		//tmx->setAngles(yaw, pitch);
-		//*/
-		//VEC3 pos = tmx->getPosition();
-		//if (simpleDist(pos, goTo) > 0.5f) {
-		//	VEC3 fro = goTo - pos;
-		//	fro.Normalize();
-
-		//	if (lastguidedCamPoint < 2 || lastguidedCamPoint + 1 == gc->getTotalPoints()) {
-		//		pos = pos + (fro * gc->getVelocity() * getDeltaTime());
-		//	}
-		//	else {
-		//		VEC3 pos1 = gc->getPointPosition(lastguidedCamPoint - 2), 
-		//			pos2 = gc->getPointPosition(lastguidedCamPoint - 1), 
-		//			pos3 = goTo, 
-		//			pos4 = gc->getPointPosition(lastguidedCamPoint + 1);
-		//		float veloc = gc->getVelocity() / realDist(pos3, pos2);
-
-		//		factor += getDeltaTime() * veloc;
-		//		VEC3 posNew = VEC3::CatmullRom(pos1, pos2, pos3, pos4, factor);
-		//		pos = posNew;
-		//	}
-		//	tmx->setPosition(pos);
-		//}
-		//else {
-		//	++lastguidedCamPoint;
-		//	factor = 0.0f;
-		//}
-
-		//if (lastguidedCamPoint >= gc->getTotalPoints() || io->keys['Q'].becomesPressed()) {
-		//	logic_manager->throwUserEvent("triggerGuardFormation();", "");
-		//	guidedCamera.destroy();
-		//	CHandle t = tags_manager.getFirstHavingTag("player");
-		//	CEntity * target_e = t;
-		//	// Set the player in the 3rdPersonController
-		//	if (e_owner && t.isValid()) {
-		//		TMsgSetTarget msg;
-		//		msg.target = t;
-		//		msg.who = PLAYER;
-		//		e_owner->sendMsg(msg);		//set camera
-
-		//		TMsgSetCamera msg_camera;
-		//		msg_camera.camera = owner;
-		//		target_e->sendMsg(msg_camera);	//set target camera
-		//	}
-		//}
-		//else if (gc->getDefaultDirsEnabled()) {
-		//	this->smoothLookAt(tmx->getPosition(), nextPoint, getUpAux(), 0.5f);
-		//}
-		//else if (lastguidedCamPoint > 0) {
-		//	VEC3 campos = tmx->getPosition();
-		//	int influencia = lastguidedCamPoint - 1; // gc->nearCameraPoint(campos);
-		//	this->smoothUpdateInfluence(tmx, gc, influencia, getUpAux());	//smooth movement
-		//}
-		//else {
-		//	this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
-		//}
 	}
 	else {
 		TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();

@@ -79,9 +79,17 @@ int bt_poss::actionPossessing() {
 	TMsgControllerSetEnable msg;
 	msg.enabled = true;
 	me->sendMsg(msg);
-	return OK;
 
+	// Camara Nueva
+	CEntity * camera_e = tags_manager.getFirstHavingTag(getID("camera_main"));
+	TMsgSetTarget msgTarg;
+	msgTarg.target = me;
+	msgTarg.who = whoAmI();
+	camera_e->sendMsg(msgTarg);
+
+	return OK;
 }
+
 int bt_poss::actionPossessed() {
 	// Nothing to do
 	return OK;
