@@ -181,7 +181,7 @@ void bt::getPath(VEC3 startPoint, VEC3 endPoint, string nombreSala) {
 	currPathWpt = 0;
 }
 
-CEntity* bt::frontCollisionIA(VEC3 npcPos, CHandle ownHandle) {
+CEntity* bt::frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle) {
 	TTagID tagIDia = getID("AI");
 	vector<CHandle> colCandidates = tags_manager.getHandlesByTag(tagIDia);
 	for (CHandle candidateH : colCandidates) {
@@ -196,50 +196,53 @@ CEntity* bt::frontCollisionIA(VEC3 npcPos, CHandle ownHandle) {
 	return nullptr;
 }
 
-CEntity* bt::frontCollisionBOX(VEC3 npcPos, CEntity *  molePursuingBoxi) {
-	TTagID tagIDbox = getID("box");
-	vector<CHandle> colCandidates = tags_manager.getHandlesByTag(tagIDbox);
+CEntity* bt::frontCollisionBOX(const TCompTransform * transform, CEntity *  molePursuingBoxi) {
+	//TTagID tagIDbox = getID("box");
+	VEC3 npcPos = transform->getPosition();
+	vector<CHandle> colCandidates = SBB::readHandlesVector("collisionables");//tags_manager.getHandlesByTag(tagIDbox);
 	for (CHandle candidateH : colCandidates) {
 		if (!candidateH.isValid()) continue;
 		CEntity * candidateE = candidateH;
 		TCompTransform * candidateT = candidateE->get<TCompTransform>();
-		if ((molePursuingBoxi == nullptr || molePursuingBoxi != candidateE) && realDist(npcPos, candidateT->getPosition()) < 1.5f) {
+		VEC3 colPos = candidateT->getPosition();
+		if ((molePursuingBoxi == nullptr || molePursuingBoxi != candidateE) && realDist(npcPos, colPos) < 1.5f) {
+			return candidateE;
+		}
+		VEC3 dir = transform->getFront();
+		dir.Normalize();
+		PxRaycastBuffer hit;
+		bool ret = g_PhysxManager->raycast(npcPos, dir, 1.5f, hit);
+		if (ret) {
 			return candidateE;
 		}
 	}
 	return nullptr;
 }
-bool bt::avoidBoxByLeft(CEntity * candidateE, VEC3 npcPos, string nombreSala) {
-	TCompTransform * candidateT = candidateE->get<TCompTransform>();
-	CNavmesh nav = SBB::readNavmesh();
-	CNavmeshQuery query(&nav);
-	query.wallDistance(candidateT->getPosition());
-	float distanceToWallOrig = query.getCalculatesDistanceToWall();
-	VEC3 rectToPlayer = candidateT->getPosition() - npcPos;
-	VEC3 posBoxMovedLeft = candidateT->getPosition();
-	posBoxMovedLeft.x -= rectToPlayer.z;
-	posBoxMovedLeft.z += rectToPlayer.x;
-	query.wallDistance(posBoxMovedLeft);
-	float distanceToWallMoved = query.getCalculatesDistanceToWall();
-	if (distanceToWallMoved < distanceToWallOrig) {
+bool bt::avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform, string nombreSala) {
+	VEC3 npcPos = transform->getPosition();
+	VEC3 dir = transform->getLeft();
+	dir.Normalize();
+	PxRaycastBuffer hit;
+	bool ret = g_PhysxManager->raycast(npcPos, dir, 10.f, hit);
+	if (ret) {
 		return true;
 	}
 	return false;
 }
 bool bt::needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, string nombreSala, CEntity *  molePursuingBoxi) {
-	float yaw, pitch, delta_yaw = 1.0f;
+	float yaw, pitch, delta_yaw = 0.25f;
 	transform->getAngles(&yaw, &pitch);
-	CEntity * collisionBOX = frontCollisionBOX(npcPos, molePursuingBoxi);
+	CEntity * collisionBOX = frontCollisionBOX(transform, molePursuingBoxi);
 	if (frontCollisionIA(npcPos, myHandle) != nullptr) {
 		transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
 		return true;
 	}
-	else if (collisionBOX != nullptr && avoidBoxByLeft(collisionBOX, npcPos, nombreSala)) {
+	else if (collisionBOX != nullptr && avoidBoxByLeft(collisionBOX, transform, nombreSala)) {
 		transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
 		return true;
 	}
 	else if (collisionBOX != nullptr) {
-		delta_yaw = -1.0f;
+		delta_yaw = -0.25f;
 		transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
 		return true;
 	}

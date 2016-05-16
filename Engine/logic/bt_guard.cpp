@@ -12,7 +12,6 @@
 //Render shoot
 #include "render/fx/GuardShots.h"
 
-
 map<string, bt_guard::KptType> bt_guard::kptTypes = {
 	  {"seek", KptType::Seek}
 	, {"look", KptType::Look}
@@ -181,7 +180,7 @@ bool bt_guard::playerDetected() {
 		alert.alert_position = posPlayer;
 		alert.timer = GUARD_ALERT_TIME;
 
-		CEntity* entity = myHandle.getOwner();		
+		CEntity* entity = myHandle.getOwner();
 		string name = entity->getName() + string("_player_detected");
 
 		SBB::postGuardAlert(name, alert);
@@ -272,7 +271,7 @@ bool bt_guard::guardAlerted() {
 			}
 		}
 	}
-		
+
 	return false;
 }
 
@@ -309,7 +308,7 @@ int bt_guard::actionStepBack() {
 int bt_guard::actionReact() {
 	PROFILE_FUNCTION("guard: actionreact");
 	if (!myParent.isValid()) return false;
-	
+
 	if (!player_detected_start) {
 		// starting the reaction time decorator
 		player_detected_start = true;
@@ -326,7 +325,6 @@ int bt_guard::actionReact() {
 			reaction_time -= getDeltaTime();
 		return STAY;
 	}
-
 }
 
 int bt_guard::actionChase() {
@@ -370,8 +368,6 @@ int bt_guard::actionPrepareToAbsorb() {
 	else {
 		return STAY;
 	}
-	
-
 }
 
 int bt_guard::actionAbsorb() {
@@ -510,7 +506,6 @@ int bt_guard::actionSearch() {
 			search_player_point = playerPos + 1.0f * dir;
 
 			return OK;
-
 		}
 		else {
 			return STAY;
@@ -534,7 +529,6 @@ int bt_guard::actionSearch() {
 			search_player_point = playerPos + 1.0f * dir;
 			Debug->DrawLine(myPos, search_player_point);
 			return OK;
-
 		}
 		else {
 			return STAY;
@@ -558,7 +552,7 @@ int bt_guard::actionMoveAround() {
 	}
 
 	VEC3 myPos = getTransform()->getPosition();
-	
+
 	float distance_to_point = squaredDistXZ(myPos, search_player_point);
 
 	// if the player is too far, we just look around
@@ -793,7 +787,6 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 		dmg.actived = false;
 		getPlayer()->sendMsg(dmg);
 	}
-
 }
 
 /**************
@@ -819,8 +812,8 @@ void bt_guard::goTo(const VEC3& dest) {
 	if (currPathWpt < totalPathWpt) {
 		target = pathWpts[currPathWpt];
 	}
-	VEC3 npcFront = getTransform()->getFront();
-	if (needsSteering(npcPos + npcFront, getTransform(), SPEED_WALK, myParent, SBB::readSala())) {
+
+	if (needsSteering(npcPos, getTransform(), SPEED_WALK, myParent, SBB::readSala())) {
 		goForward(SPEED_WALK);
 	}
 	else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
@@ -879,7 +872,6 @@ bool bt_guard::turnTo(VEC3 dest) {
 }
 
 VEC3 bt_guard::generateRandomPoint() {
-
 	PROFILE_FUNCTION("guard: generate random point");
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 myPos = tPlayer->getPosition();
@@ -1038,7 +1030,7 @@ bool bt_guard::shootToPlayer() {
 						remove_box_time = MAX_BOX_REMOVAL_TIME;
 						remove_box_ready = false;
 						box_to_remove = h;
-						return true;				
+						return true;
 					}
 					// if not, just update the timer
 					else {
@@ -1100,7 +1092,7 @@ void bt_guard::drawShot(float distRay) {
 	VEC4 originShot4;
 	VEC4::Transform(SHOT_OFFSET, getTransform()->asMatrix(), originShot4);
 	VEC3 originShot = VEC3(originShot4.x, originShot4.y, originShot4.z);
-	originShot += VEC3(0.0f,-0.32f,0.0f);
+	originShot += VEC3(0.0f, -0.32f, 0.0f);
 	originShot += 0.15f*getTransform()->getLeft();
 	originShot += 0.15f*getTransform()->getFront();
 	VEC3 destShot = posPlayer; //algun offset?

@@ -309,13 +309,14 @@ bool CEntitiesModule::start() {
 
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();
+	SBB::postHandlesVector("collisionables", collisionables);
 	CNavmesh nav;
 	nav.m_input.clearInput();
 	for (CHandle han : collisionables) {
 		CEntity * e = han;
 		if (e) {
 			TCompPhysics * p = e->get<TCompPhysics>();
-			PxBounds3 bounds = p->getActor()->getWorldBounds();
+			const PxBounds3 bounds = p->getActor()->getWorldBounds();
 			VEC3 min, max;
 			min.x = bounds.minimum.x;
 			min.y = bounds.minimum.y;
