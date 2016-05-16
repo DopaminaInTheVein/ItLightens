@@ -1,32 +1,26 @@
 <entities>
 
   <entity>
-    <tags tags="the_camera main_camera"/>
-    <name name="the_camera"/>
-    <transform pos="10 10 10" lookat="0 0 0"/>
-    <camera znear="0.1" zfar="100" fov="60"/>
-    <controller_1st_person/>
+    <tags tags="the_camera" />
+    <name name="the_camera" />
+    <transform pos="-15 16 -12" lookat="0 0 0" />
+    <camera znear="0.1" zfar="100" fov="60" />
+    <controller_1st_person />
   </entity>
 
-    <entity prefab="bullet"/>
-    <entity prefab="bullet">
-        <life points="20"/>
-    </entity>
-    <entity prefab="bullet">
-        <life points="30"/>
-    </entity>
+  <entity prefab="bullet" />
+  <entity prefab="bullet">
+    <life points="20" />
+  </entity>
+  <entity prefab="bullet">
+    <life points="30" />
+  </entity>
 
-    <entity>
-        <tags name="player"/>
-        <transform pos="3 3 1"/>
-        <name name="john"/>
-        <life points="4"/>
-        <controller_1st_person/>
-    </entity>
-    <entity>
-        <tags name="target"/>
-        <transform pos="1 0 1"/>
-        <name name="peter"/>
-        <render_static_mesh name="static_meshes/tetera_multi.static_mesh"/>
-    </entity>
+  <entity>
+    <tags name="player" />
+    <transform pos="3 3 1" />
+    <name name="john" />
+    <life points="4" />
+    <controller_1st_person />
+  </entity>
 </entities>

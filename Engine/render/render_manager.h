@@ -9,7 +9,6 @@ class CMaterial;
 class CStaticMesh;
 
 class CRenderManager {
-
   struct TKey {
     const CMesh*            mesh;
     const CMaterial*        material;
@@ -20,19 +19,23 @@ class CRenderManager {
   };
 
   static bool sortByTechMatMesh(const TKey& k1, const TKey& k2);
-  
+
   bool in_order;
   std::vector< TKey > all_keys;
 
 public:
-  
+
   void registerToRender(const CStaticMesh* mesh, CHandle handle);
   void unregisterFromRender(CHandle handle);
-  void renderAll();
 
+  enum eRenderType {
+    SOLID_OBJS
+    , TRANSPARENT_OBJS
+  };
+
+  void renderAll(eRenderType render_type);
 };
 
 extern CRenderManager RenderManager;
 
 #endif
-

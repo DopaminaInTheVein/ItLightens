@@ -60,7 +60,7 @@ public:
   }
 
   // --------------------------------------------
-  CHandle getHandleFromObjAddr( TObj* obj_addr) {
+  CHandle getHandleFromObjAddr( const TObj* obj_addr) {
     auto internal_index = obj_addr - objs;
     if (internal_index >= num_objs_used || internal_index < 0)
       return CHandle();

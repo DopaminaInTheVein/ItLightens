@@ -44,14 +44,6 @@ void TTagsManager::registerTag(const std::string& tag_name) {
 }
 
 // ---------------------------------------
-CHandle TTagsManager::getFirstHavingTag(TTagID tag_id) const {
-  auto h = getHandlesByTag(tag_id);
-  if (h.empty())
-    return CHandle();
-  return h[0];
-}
-
-// ---------------------------------------
 void TTagsManager::addTag(CHandle h, TTagID tag_id) {
   auto it = find(tag_id);
   if (it == end()) {
@@ -60,6 +52,14 @@ void TTagsManager::addTag(CHandle h, TTagID tag_id) {
   else {
     it->second.push_back(h);
   }
+}
+
+// ---------------------------------------
+CHandle TTagsManager::getFirstHavingTag(TTagID tag_id) const {
+  auto h = getHandlesByTag(tag_id);
+  if (h.empty())
+    return CHandle();
+  return h[0];
 }
 
 // ---------------------------------------

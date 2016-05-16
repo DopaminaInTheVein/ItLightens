@@ -17,6 +17,8 @@ IResource* createObjFromName<CRenderTechnique>(const std::string& name) {
   return tech;
 }
 
+const CRenderTechnique* CRenderTechnique::curr_active = nullptr;
+
 // --------------------------------
 void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) {
   if (elem == "vs") {
@@ -49,6 +51,7 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
   }
   else if (elem == "tech") {
     uses_bones = atts.getBool("uses_bones", false);
+    is_transparent = atts.getBool("is_transparent", false);
   }
 }
 
@@ -57,9 +60,14 @@ void CRenderTechnique::destroy() {
   ps = nullptr;
 }
 
+const CVertexDeclaration* CRenderTechnique::getCurrentVertexDecl() {
+  assert(curr_active);
+  return curr_active->vs->getVertexDecl();
+}
+
 void CRenderTechnique::activate() const {
+  curr_active = this;
   assert(isValid());
   ps->activate();
   vs->activate();
 }
-

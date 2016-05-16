@@ -3,57 +3,200 @@
 
 static ID3D11RasterizerState*   rasterizer_states[RSCFG_COUNT];
 static ID3D11DepthStencilState* depth_stencil_states[ZCFG_COUNT];
+static ID3D11BlendState*        blend_states[BLENDCFG_COUNT];
 
-void createRenderStateConfigs() {
-  
+enum SMPConfig {
+  SMP_DEFAULT = 0,
+  SMP_BORDER_BLACK = 1, // light dirs
+  SMP_COUNT,
+};
+static ID3D11SamplerState*      sampler_states[SMP_COUNT];
+
+// --------------------------------------------------
+void createSamplerStates() {
+  HRESULT hr;
+  D3D11_SAMPLER_DESC desc;
+
+  // Valor por defecto, wrap textures and use mipmaps
+  ZeroMemory(&desc, sizeof(desc));
+  desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+  desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+  desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+  desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+  desc.MaxLOD = D3D11_FLOAT32_MAX;
+  hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_DEFAULT]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[SMP_DEFAULT], "SMP_DEFAULT");
+
+  // Para las luces direccionales, si me salgo del espacio homogeneo
+  // usar el color 'negro' para iluminar.
+  ZeroMemory(&desc, sizeof(desc));
+  desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+  desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+  desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+  desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+  desc.MaxLOD = D3D11_FLOAT32_MAX;
+  desc.BorderColor[0] = 0.f;
+  desc.BorderColor[1] = 0.f;
+  desc.BorderColor[2] = 0.f;
+  desc.BorderColor[3] = 0.f;
+  hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_BORDER_BLACK]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[SMP_BORDER_BLACK], "SMP_BORDER_BLACK");
+}
+
+// --------------------------------------------------
+void createZStates() {
+  HRESULT hr;
   // Create depth stencila desc
-  {
-    D3D11_DEPTH_STENCIL_DESC desc;
-    ZeroMemory(&desc, sizeof(desc));
-    desc.DepthEnable = false;
-    desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL; // Write to the ZBuffer -> YES
-    desc.DepthFunc = D3D11_COMPARISON_LESS;
-    desc.StencilEnable = false;
-    Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_DEFAULT]);
-    setDXName(depth_stencil_states[ZCFG_DEFAULT], "Z_DEFAULT");
+  D3D11_DEPTH_STENCIL_DESC desc;
+  ZeroMemory(&desc, sizeof(desc));
+  desc.DepthEnable = true;
+  desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL; // Write to the ZBuffer -> YES
+  desc.DepthFunc = D3D11_COMPARISON_LESS;
+  desc.StencilEnable = false;
+  hr = Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_DEFAULT]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[ZCFG_DEFAULT], "Z_DEFAULT");
 
-    ZeroMemory(&desc, sizeof(desc));
-    desc.DepthEnable = false;
-    desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-    desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
-    desc.StencilEnable = false;
-    Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_ALL_DISABLED]);
-    setDXName(depth_stencil_states[ZCFG_ALL_DISABLED], "Z_ALL_DISABLED");
-  }
+  ZeroMemory(&desc, sizeof(desc));
+  desc.DepthEnable = false;
+  desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+  desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+  desc.StencilEnable = false;
+  hr = Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_ALL_DISABLED]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[ZCFG_ALL_DISABLED], "Z_ALL_DISABLED");
 
-  {
-    // Create rasterize desc
-    D3D11_RASTERIZER_DESC desc;
-    ZeroMemory(&desc, sizeof(desc));
-    desc.FillMode = D3D11_FILL_SOLID;
-    desc.CullMode = D3D11_CULL_NONE;
-    desc.ScissorEnable = true;
-    desc.DepthClipEnable = true;
-    Render.device->CreateRasterizerState(&desc, &rasterizer_states[ RSCFG_DEFAULT ]);
-    setDXName(rasterizer_states[RSCFG_DEFAULT], "RS_DEFAULT");
-  }
+  ZeroMemory(&desc, sizeof(desc));
+  desc.DepthEnable = true;
+  desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+  desc.DepthFunc = D3D11_COMPARISON_LESS;
+  desc.StencilEnable = false;
+  hr = Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_TEST_BUT_NO_WRITE]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[ZCFG_TEST_BUT_NO_WRITE], "Z_TEST_BUT_NO_WRITE");
+
+  // Configuracion a usar cuando pintamos las point lights
+  // Quiero iluminar aquellos pixeles que fallen el ztest
+  // y NO quiero escribir en el zbuffer
+  ZeroMemory(&desc, sizeof(desc));
+  desc.DepthEnable = true;
+  desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+  desc.DepthFunc = D3D11_COMPARISON_ALWAYS;// D3D11_COMPARISON_GREATER;
+  desc.StencilEnable = false;
+  hr = Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_LIGHTS_CONFIG]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[ZCFG_LIGHTS_CONFIG], "Z_LIGHTS_CONFIG");
+
+  // Configuracion a usar cuando pintamos las dir lights
+  // Quiero iluminar aquellos pixeles que fallen el ztest
+  // y NO quiero escribir en el zbuffer
+  ZeroMemory(&desc, sizeof(desc));
+  desc.DepthEnable = true;
+  desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+  desc.DepthFunc = D3D11_COMPARISON_GREATER;
+  desc.StencilEnable = false;
+  hr = Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_LIGHTS_DIR_CONFIG]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[ZCFG_LIGHTS_DIR_CONFIG], "Z_LIGHTS_DIR_CONFIG");
+}
+
+// --------------------------------------------------
+void createBlendStates() {
+  HRESULT hr;
+  // Create rasterize desc
+  D3D11_BLEND_DESC desc;
+  ZeroMemory(&desc, sizeof(desc));
+  desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+  desc.RenderTarget[1].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+  //hr = Render.device->CreateBlendState(&desc, &blend_states[BLENDCFG_DEFAULT]);
+  //setDXName(blend_states[BLENDCFG_DEFAULT], "BLEND_DEFAULT");
+  blend_states[BLENDCFG_DEFAULT] = nullptr;
+
+  ZeroMemory(&desc, sizeof(desc));
+  desc.RenderTarget[0].BlendEnable = TRUE;
+  desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+  desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+  desc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+  desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+  desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+  desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+  desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+  hr = Render.device->CreateBlendState(&desc, &blend_states[BLENDCFG_ADDITIVE]);
+  assert(!FAILED(hr));
+  setDXName(blend_states[BLENDCFG_ADDITIVE], "BLEND_ADDITIVE");
+
+  ZeroMemory(&desc, sizeof(desc));
+  desc.RenderTarget[0].BlendEnable = TRUE;
+  desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+  desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+  desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+  // Usar el alpha salida del pixel shader (src_alpha)
+  // como cantidad que se tiene que modular el color salida del pixel
+  // shader antes de sumarlo a la aportacion del color destino
+  //   RGB_Final = RGB_Source * SrcBlend + RGB_Dest * DestBlend
+  // Donde SrcBlend = RGB_Source.a
+  //       DestBlend = 1-RGB_Source.a
+  desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+  desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+  desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+  desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+  hr = Render.device->CreateBlendState(&desc, &blend_states[BLENDCFG_COMBINATIVE]);
+  assert(!FAILED(hr));
+  setDXName(blend_states[BLENDCFG_COMBINATIVE], "BLEND_COMBINATIVE");
+}
+
+// ----------------------------------------------
+void createRasterizerStates() {
+  HRESULT hr;
+  D3D11_RASTERIZER_DESC desc;
+  ZeroMemory(&desc, sizeof(desc));
+  desc.FillMode = D3D11_FILL_SOLID;
+  desc.CullMode = D3D11_CULL_FRONT;
+  desc.DepthClipEnable = TRUE;
+  hr = Render.device->CreateRasterizerState(&desc, &rasterizer_states[RSCFG_INVERT_CULLING]);
+  assert(!FAILED(hr));
+  setDXName(rasterizer_states[RSCFG_INVERT_CULLING], "INVERT_CULLING");
+}
+
+// ----------------------------------------------
+void createRenderStateConfigs() {
+  createZStates();
+  createBlendStates();
+  createRasterizerStates();
+  createSamplerStates();
 }
 
 void destroyRenderStateConfigs() {
-  
   for (int i = 0; i < RSCFG_COUNT; ++i)
     SAFE_RELEASE(rasterizer_states[i]);
 
   for (int i = 0; i < ZCFG_COUNT; ++i)
     SAFE_RELEASE(depth_stencil_states[i]);
+
+  for (int i = 0; i < BLENDCFG_COUNT; ++i)
+    SAFE_RELEASE(blend_states[i]);
+
+  for (int i = 0; i < SMP_COUNT; ++i)
+    SAFE_RELEASE(sampler_states[i]);
 }
 
 void activateZ(enum ZConfig id) {
   Render.ctx->OMSetDepthStencilState(depth_stencil_states[id], 0);
 }
 
-void activateRS( enum RSConfig id) {
+void activateRS(enum RSConfig id) {
   Render.ctx->RSSetState(rasterizer_states[id]);
+}
+
+void activateBlend(enum BlendConfig id) {
+  const float blend_factor[4] = { 0,0,0,0 };
+  Render.ctx->OMSetBlendState(blend_states[id], blend_factor, 0xffffffff);
+}
+
+void activateSamplerStates() {
+  Render.ctx->PSSetSamplers(0, SMP_COUNT, sampler_states);
 }
 
 // ----------------------------------

@@ -1,0 +1,5 @@
+<material tech="water.tech">
+  <texture slot="diffuse" name="rt_acc_light" />
+  <texture slot="specular" name="textures/missing_specular.dds" />
+  <texture slot="normalmap" name="textures/wood_n.dds" />
+</material>

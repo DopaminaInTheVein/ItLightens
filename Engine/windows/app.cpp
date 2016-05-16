@@ -2,6 +2,8 @@
 #include "app.h"
 #include "app_modules/app_module.h"
 #include "utils/timer.h"
+#include "utils/directory_watcher.h"
+#include "resources/resources_manager.h"
 
 // -------------------------------------------------
 static CApp* app = nullptr;
@@ -32,16 +34,24 @@ LRESULT CALLBACK CApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 	PAINTSTRUCT ps;
 	HDC hdc;
 
-	switch (message)
-	{
-	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps);
-		EndPaint(hWnd, &ps);
-		break;
+  switch (message)
+  {
+  case WM_PAINT:
+    hdc = BeginPaint(hWnd, &ps);
+    EndPaint(hWnd, &ps);
+    break;
 
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
+  case WM_DESTROY:
+    PostQuitMessage(0);
+    break;
+
+  case CDirectoyWatcher::WM_FILE_CHANGED: {
+    char* filename = (char*)lParam;
+    if (filename) {
+      Resources.onFileChanged(filename);
+      delete[] filename;
+    }
+    break; }
 
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);

@@ -9,20 +9,21 @@ class  CVertexShader;
 class  CPixelShader;
 
 class CRenderTechnique : public IResource, public CXMLParser {
-
   const CVertexShader* vs;
   const CPixelShader*  ps;
   std::string          name;
   int                  priority;
   bool                 uses_bones;
+  bool                 is_transparent;
 
-  static CRenderTechnique* curr_active;
 
   void onStartElement(const std::string &elem, MKeyValue &atts) override;
 
 public:
+  static const CRenderTechnique* curr_active;
+  static const CVertexDeclaration* getCurrentVertexDecl();
 
-  CRenderTechnique() : vs(nullptr), ps(nullptr), priority( 100 ) { }
+  CRenderTechnique() : vs(nullptr), ps(nullptr), priority(100) { }
   CRenderTechnique(const CRenderTechnique&) = delete;
 
   void destroy();
@@ -31,6 +32,7 @@ public:
   void activate() const;
 
   int getPriority() const { return priority; }
+  bool isTransparent() const { return is_transparent; }
 
   const std::string& getName() const {
     return name;
@@ -46,4 +48,3 @@ public:
 };
 
 #endif
-

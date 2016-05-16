@@ -30,6 +30,8 @@ public:
   void registerNew(IResource* new_res);
   void renderUIDebug();
 
+  void onFileChanged(const std::string& filename);
+
 };
 
 extern CResourcesManager Resources;

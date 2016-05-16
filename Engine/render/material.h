@@ -5,37 +5,36 @@ class CTexture;
 class CRenderTechnique;
 
 class CMaterial : public IResource, public CXMLParser {
-  
-  void onStartElement(const std::string &elem, MKeyValue &atts) override;
+	void onStartElement(const std::string &elem, MKeyValue &atts) override;
 
 public:
 
-  enum TTextureSlot {
-    DIFFUSE = 0
-    , SPECULAR
-    , COUNT
-  };
-  const CRenderTechnique*   tech;
-  const CTexture*           textures[COUNT];
+	enum TTextureSlot {
+		DIFFUSE = 0
+		, SPECULAR
+    , NORMALMAP
+    , ENVIRONMENT
+		, COUNT
+	};
+	const CRenderTechnique*   tech;
+	const CTexture*           textures[COUNT];
 
-  CMaterial() 
-    : tech(nullptr)
-  {
-    for (int i = 0; i < TTextureSlot::COUNT; ++i)
-      textures[i] = nullptr;
-  }
+	CMaterial()
+		: tech(nullptr)
+	{
+		for (int i = 0; i < TTextureSlot::COUNT; ++i)
+			textures[i] = nullptr;
+	}
 
-  bool isValid() const override { return true; }
-  void destroy() { }
-  eType getType() const override { return MATERIAL; }
+	bool isValid() const override { return true; }
+	void destroy() { }
+	eType getType() const override { return MATERIAL; }
 
-  //void renderUIDebug();
-  bool load(const char* filename);
+	//void renderUIDebug();
+	bool load(const char* filename);
 
-  void activateTextures() const;
-  static void deactivateTextures();
+	void activateTextures() const;
+	static void deactivateTextures();
 };
 
 #endif
-
-

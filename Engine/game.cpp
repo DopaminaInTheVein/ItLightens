@@ -13,13 +13,12 @@
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
 #include "app_modules/io/io.h"
-
 #include "app_modules/render/module_render_deferred.h"
 #include "components/entity_parser.h"
 #include "handle/handle_manager.h"
+#include "utils/directory_watcher.h"
 
-const CRenderTechnique* tech_solid_colored = nullptr;
-const CRenderTechnique* tech_textured_colored = nullptr;
+CDirectoyWatcher resources_dir_watcher;
 
 // --------------------------------------------
 #include "app_modules/entities.h"
@@ -53,16 +52,8 @@ bool CApp::start() {
   mod_wnd_proc.push_back(imgui);
 
   // ----------------------------
-  tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
-  tech_textured_colored = Resources.get("textured.tech")->as<CRenderTechnique>();
-
-  if (!shader_ctes_camera.create("ctes_camera"))
+  if (!drawUtilsCreate())
     return false;
-  if (!shader_ctes_object.create("ctes_object"))
-    return false;
-  if (!shader_ctes_bones.create("ctes_bones"))
-    return false;
-  shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
 
   // Init modules
   for (auto it : mod_init_order) {
@@ -71,6 +62,8 @@ bool CApp::start() {
       return false;
     }
   }
+
+  resources_dir_watcher.start("data/shaders", getHWnd());
 
   //h_camera = tags_manager.getFirstHavingTag(getID("the_camera"));
 
@@ -85,9 +78,7 @@ void CApp::stop() {
     (*it)->stop();
 
   Resources.destroy();
-  shader_ctes_bones.destroy();
-  shader_ctes_camera.destroy();
-  shader_ctes_object.destroy();
+  drawUtilsDestroy();
 
   // Delete all modules
   for (auto m : all_modules)
@@ -122,6 +113,8 @@ void CApp::update(float elapsed) {
 void CApp::render() {
   PROFILE_FUNCTION("CApp::render");
   
+  activateDefaultStates();
+
   for (auto it : mod_renders) {
     PROFILE_FUNCTION(it->getName());
     CTraceScoped scope( it->getName() );

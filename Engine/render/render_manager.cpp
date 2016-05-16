@@ -7,28 +7,29 @@
 #include "components/comp_transform.h"
 #include "skeleton/comp_skeleton.h"
 #include "components/entity.h"
+#include "render/draw_utils.h"
 
 CRenderManager RenderManager;
 
 #include "render/shader_cte.h"
-#include "contants/ctes_object.h"
-extern CShaderCte< TCteObject > shader_ctes_object;
 
 bool CRenderManager::sortByTechMatMesh(
-    const TKey &k1
+  const TKey &k1
   , const TKey &k2) {
-
-  if (k1.material->tech != k2.material->tech) {
-    if (k1.material->tech->getPriority() == k2.material->tech->getPriority())
-      return k1.material->tech->getName() < k2.material->tech->getName();
-    return (k1.material->tech->getPriority() < k2.material->tech->getPriority());
+  auto* tech1 = k1.material->tech;
+  auto* tech2 = k2.material->tech;
+  if (tech1 != tech2) {
+    if (tech1->isTransparent() != tech2->isTransparent())
+      return tech1->isTransparent();
+    if (tech1->getPriority() == tech2->getPriority())
+      return tech1->getName() < tech2->getName();
+    return (tech1->getPriority() < tech2->getPriority());
   }
   // TODO: hacer esto bien...
   return k1.material < k2.material;
 }
 
 void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
-  
   CEntity* e = owner.getOwner();
   assert(e);
   CHandle h_transform = e->get<TCompTransform>();
@@ -49,7 +50,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 void CRenderManager::unregisterFromRender(CHandle owner) {
   // Pasarse por todas las keys y borrar aquellas q tengan el owner
   auto it = all_keys.begin();
-  while( it != all_keys.end() ) { 
+  while (it != all_keys.end()) {
     if (it->owner == owner) {
       it = all_keys.erase(it);
     }
@@ -58,7 +59,7 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
   }
 }
 
-void CRenderManager::renderAll() {
+void CRenderManager::renderAll(eRenderType render_type) {
   PROFILE_FUNCTION("RenderManager");
   CTraceScoped scope("RenderManager");
 
@@ -71,9 +72,30 @@ void CRenderManager::renderAll() {
   if (all_keys.empty())
     return;
 
-  // 
-  const TKey* it = &all_keys[0];
-  const TKey* end_it = it + all_keys.size();
+  //
+  const TKey* it = nullptr;
+  const TKey* end_it = nullptr;
+
+  auto it_first_solid = std::lower_bound(
+    all_keys.begin()
+    , all_keys.end()
+    , true
+    , [](const TKey &k1, bool is_transparent)->bool {
+    return k1.material->tech->isTransparent();
+  }
+  );
+
+  if (render_type == eRenderType::TRANSPARENT_OBJS) {
+    it = &all_keys[0];
+    end_it = &(*it_first_solid);
+  }
+  else {
+    it = &(*it_first_solid);
+    int idx_of_first_solid = std::distance(all_keys.begin(), it_first_solid);
+    int num_solid_keys = all_keys.size() - idx_of_first_solid;
+    end_it = it + num_solid_keys;
+  }
+
   static TKey null_key;
   memset(&null_key, 0x00, sizeof(TKey));
   const TKey* prev_it = &null_key;
@@ -82,8 +104,7 @@ void CRenderManager::renderAll() {
 
   // Pasearse por todas las keys
   while (it != end_it) {
-
-    if (it->material != prev_it->material ) {
+    if (it->material != prev_it->material) {
       if (!prev_it->material || it->material->tech != prev_it->material->tech) {
         it->material->tech->activate();
         curr_tech_used_bones = it->material->tech->usesBones();
@@ -97,15 +118,10 @@ void CRenderManager::renderAll() {
       // subir la world de it
       const TCompTransform* c_tmx = it->transform;
       assert(c_tmx);
-      
-      // For static objects, we could skip this step 
-      // if each static object had it's own shader_ctes_object
-      shader_ctes_object.World = c_tmx->asMatrix();
-      shader_ctes_object.uploadToGPU();
 
-      // We could skip this step as currently, we only
-      // have one shader_ctes_object
-      shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
+      // For static objects, we could skip this step
+      // if each static object had it's own shader_ctes_object
+      activateWorldMatrix(c_tmx->asMatrix());
     }
 
     if (curr_tech_used_bones) {
@@ -116,7 +132,7 @@ void CRenderManager::renderAll() {
       comp_skel->uploadBonesToCteShader();
     }
 
-    it->mesh->renderGroup( it->submesh_idx );    // it->mesh->renderSubMesh( it->submesh );
+    it->mesh->renderGroup(it->submesh_idx);    // it->mesh->renderSubMesh( it->submesh );
     prev_it = it;
     ++it;
   }

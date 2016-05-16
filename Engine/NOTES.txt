@@ -1,3 +1,25 @@
++ Normal map
++ Cubemap Environment
+
++ reload de shaders
++ Specular basic
+
++ Samplers
++ Directional lights diffuse
+
+- Directional lights specular
+- Shadows para directional lights
+- Distorsiones en pantalla
+- PBR
+- Particulas
+
+
+- Multithreading
+
++ Fix render when camera inside sphere
++ Combinar con el albedo
+- Leak de DX
+
 Render
 - Hierarchies
 - exportar las submeshes
@@ -16,6 +38,7 @@ Handles
 
 - Controlador de camara
 - ImGUI
+
     - Listado de entities
         - Listado de sus components
         - Borrar component/Add component?

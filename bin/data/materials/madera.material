@@ -1,3 +1,5 @@
-<material tech="textured.tech">
-	<texture type="diffuse" name="textures/wood_d.dds"/>
+<material>
+<texture slot="diffuse" name="textures/wood_d.dds"/>
+<texture slot="specular" name="textures/missing_specular.dds"/>
+<texture slot="normalmap" name="textures/wood_n.dds"/>
 </material>

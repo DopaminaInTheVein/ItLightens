@@ -12,9 +12,9 @@ public:
   // ---------------------------
   CTransform( ) : scale( 1.f, 1.f, 1.f ) {}
   MAT44       asMatrix() const {
-    MAT44 mrot = MAT44::CreateFromQuaternion(rotation);
-    mrot.Translation(position);
-    return MAT44::CreateScale(scale) * mrot;
+    return MAT44::CreateScale(scale) 
+      * MAT44::CreateFromQuaternion(rotation)
+      * MAT44::CreateTranslation(position);
   }
 
   CQuaternion getRotation() const { return rotation; }
@@ -72,6 +72,14 @@ public:
     auto m = MAT44::CreateLookAt(eye, eye - delta, up).Invert();
     m.Decompose(scale, rotation, position);
   }
+
+  void combine(const CTransform& parent, const CTransform& delta) {
+    assert(&delta != this);
+    setPosition(parent.getPosition() + VEC3::Transform(delta.getPosition(), parent.rotation));
+    setRotation(delta.getRotation() * parent.getRotation());
+    setScale(parent.getScale() * delta.getScale());
+  }
+
 };
 
 

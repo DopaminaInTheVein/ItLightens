@@ -15,19 +15,21 @@ bool TCompCamera::load(MKeyValue& atts) {
 }
 
 void TCompCamera::render() const {
-  auto axis = Resources.get("frustum.mesh")->as<CMesh>();
-  shader_ctes_object.World = getViewProjection().Invert();
-  shader_ctes_object.uploadToGPU();
-  axis->activateAndRender();
+  auto mesh = Resources.get("frustum.mesh")->as<CMesh>();
+  activateWorldMatrix(getViewProjection().Invert());
+  mesh->activateAndRender();
 }
 
-void TCompCamera::update(float dt) {
-  CHandle owner = CHandle(this).getOwner();
-  CEntity* e_owner = owner;
+void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
   assert(e_owner);
   TCompTransform* tmx = e_owner->get<TCompTransform>();
   assert(tmx);
   this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+}
+
+void TCompCamera::update(float dt) {
+  CHandle owner = CHandle(this).getOwner();
+  updateFromEntityTransform(owner);
 }
 
 void TCompCamera::renderInMenu() {

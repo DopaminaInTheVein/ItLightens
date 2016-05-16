@@ -1,0 +1,4 @@
+<tech>
+  <vs fx="deferred" main="VS_Pass" decl="positions_uv" />
+  <ps fx="deferred" main="PSLightPoint" />
+</tech>

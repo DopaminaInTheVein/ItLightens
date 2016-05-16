@@ -8,6 +8,8 @@ IResource::eType getTypeOfResource<CMesh>() {
   return IResource::MESH;
 }
 
+const CMesh* CMesh::curr_mesh = nullptr;
+
 //DEFINE_RESOURCE(CMesh, MESH, "Mesh");
 
 void CMesh::renderUIDebug() {
@@ -39,7 +41,9 @@ bool CMesh::create(
   // Translate the topology from our system to dx
   if( new_topology == TRIANGLE_LIST )
     topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-  else if(new_topology == LINE_LIST)
+  else if (new_topology == TRIANGLE_STRIP)
+    topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+  else if (new_topology == LINE_LIST)
     topology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
   else {
     fatal("Unknown topology %d\n", new_topology);
@@ -122,9 +126,22 @@ void CMesh::activate() const {
       , 0
       );
   }
+
+  curr_mesh = this;
 }
 
 void CMesh::render() const {
+
+  // La tech actual no tiene la misma vertex declaration 
+  // que la malla que estas intentando pintar.
+  // por ejemplo, usando un vs de geometria estatica con
+  // una mesh de skinning
+  assert(CRenderTechnique::getCurrentVertexDecl() == vtx_decl );
+
+  // Just in case, si falla esto es que estas mandando
+  // a pintar una malla que no ha sido activada.
+  assert(curr_mesh == this);
+
   if (ib)
     Render.ctx->DrawIndexed(num_idxs, 0, 0);
   else

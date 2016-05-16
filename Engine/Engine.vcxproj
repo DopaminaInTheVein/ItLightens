@@ -101,8 +101,12 @@
     <ClCompile Include="app_modules\io\mouse.cpp" />
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
     <ClCompile Include="camera\camera.cpp" />
+    <ClCompile Include="components\comp_aabb.cpp" />
     <ClCompile Include="components\comp_camera.cpp" />
+    <ClCompile Include="components\comp_culling.cpp" />
     <ClCompile Include="components\comp_hierarchy.cpp" />
+    <ClCompile Include="components\comp_light_dir.cpp" />
+    <ClCompile Include="components\comp_light_point.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\entity.cpp" />
@@ -170,10 +174,11 @@
     <ClCompile Include="windows\app.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_bones.h" />
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_camera.h" />
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_object.h" />
-    <ClInclude Include="..\bin\data\shaders\contants\ctes_platform.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_object.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h" />
     <ClInclude Include="app_modules\app_module.h" />
     <ClInclude Include="app_modules\entities.h" />
     <ClInclude Include="app_modules\imgui\module_imgui.h" />
@@ -184,12 +189,16 @@
     <ClInclude Include="app_modules\render\module_render_deferred.h" />
     <ClInclude Include="camera\camera.h" />
     <ClInclude Include="components\components.h" />
+    <ClInclude Include="components\comp_aabb.h" />
     <ClInclude Include="components\comp_base.h" />
     <ClInclude Include="components\comp_camera.h" />
     <ClInclude Include="components\comp_controller_1st_person.h" />
     <ClInclude Include="components\comp_controller_3rd_person.h" />
+    <ClInclude Include="components\comp_culling.h" />
     <ClInclude Include="components\comp_hierarchy.h" />
     <ClInclude Include="components\comp_life.h" />
+    <ClInclude Include="components\comp_light_dir.h" />
+    <ClInclude Include="components\comp_light_point.h" />
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
     <ClInclude Include="components\comp_physics.h" />
@@ -232,6 +241,7 @@
     <ClInclude Include="skeleton\skeleton.h" />
     <ClInclude Include="utils\data_provider.h" />
     <ClInclude Include="utils\data_saver.h" />
+    <ClInclude Include="utils\directory_watcher.h" />
     <ClInclude Include="utils\murmur3.h" />
     <ClInclude Include="utils\timer.h" />
     <ClInclude Include="utils\utils.h" />
@@ -246,6 +256,10 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\bin\data\shaders\basic.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\deferred.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

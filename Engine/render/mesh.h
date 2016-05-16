@@ -12,6 +12,7 @@ public:
 
   enum ePrimitiveType {
     TRIANGLE_LIST = 2000
+  , TRIANGLE_STRIP
   , LINE_LIST
   };
 
@@ -20,6 +21,7 @@ public:
   , VTX_DECL_POSITION_UV = 1000
   , VTX_DECL_POSITION_COLOR 
   , VTX_DECL_POSITION_NORMAL_UV = 1002
+  , VTX_DECL_POSITION_NORMAL_UV_TANGENT = 1003
   , VTX_DECL_POSITION_NORMAL_UV_SKIN = 1102
   };
 
@@ -79,6 +81,8 @@ private:
 
   std::string               name;
   VGroups                   groups;
+
+  static const CMesh* curr_mesh;
 
 };
 

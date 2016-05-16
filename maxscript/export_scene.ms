@@ -28,9 +28,26 @@ struct TSceneExporter (
 			local aname = "missing_" + slot + ".dds"
 			format "<texture slot=\"%\" name=\"%%\"/>\n" slot textures_path aname to:fs 
 		) else (
-			local full_name = bitmap_texture.bitmap.filename
-			local aname = filenameFromPath full_name
-			format "<texture slot=\"%\" name=\"%%\"/>\n" slot textures_path aname to:fs 
+			local in_full_name = bitmap_texture.bitmap.filename			-- c:\escritorio\pep.jpg
+			local in_name = getFilenameFile in_full_name				-- pep
+			local in_ext = getFilenameType in_full_name                 -- .jpg
+			local out_ext = ".dds"                                      -- .dds
+			local game_name = textures_path + in_name + out_ext         -- textures/pep.dds
+			local out_folder = project_path + textures_path              -- c:\engine...data\textures
+			local full_game_name = project_path + game_name
+			
+			if not doesFileExist full_game_name then (
+				-- Convert from jpg to .dds
+				local cmd = "\"" + (getDir #maxroot) 			--  "c:\program files\...\3ds max 2015\"
+				cmd += "texconvex.exe\""
+				cmd += " -o " + out_folder
+				cmd += " \"" + in_full_name + "\""
+				cmd = substituteString  cmd "\\" "/"
+				format "Executing '%'\n" cmd
+				DOSCommand cmd
+			)	
+			
+			format "<texture slot=\"%\" name=\"%\"/>\n" slot game_name to:fs 
 		)
 	),
 
@@ -39,6 +56,7 @@ struct TSceneExporter (
 		format "<material>\n" to:fs
 		saveTextureSlot fs "diffuse" m.diffusemap
 		saveTextureSlot fs "specular" m.specularmap
+		saveTextureSlot fs "normalmap" m.bumpmap
 		format "</material>\n" to:fs
 	),
 
@@ -89,17 +107,26 @@ struct TSceneExporter (
 	),
 	
 	fn exportStaticMesh out_filename objs = (
+	
 		
 		local fsm = createFile out_filename
 		format "<static_mesh>\n" to:fsm
 		
 		local obj
-		for obj in objs do (
-			local m = obj.mat
+		for given_obj in objs do (
+			
+			local m = given_obj.mat
 			if m == undefined then (
-				format ("Object " + obj.name + " requires a material\n")
+				format ("Object " + given_obj.name + " requires a material\n")
 				continue
 			) 
+					
+			-- Is the object valid?...
+			local obj = given_obj
+			if classof given_obj != Editable_Mesh then (
+				obj = copy given_obj
+				ConvertToMesh obj
+			)
 			
 			-- #(   #(faces_with_mat1) undef undef #(faces_with_mat4) )
 			local mat_infos = getMeshMaterialInfo obj
@@ -132,10 +159,20 @@ struct TSceneExporter (
 				)
 				
 				local mat_res_name = "materials/" + mat_name + ".material"
-				saveMaterial listener mat_used
+				
+				-- Export the material as xml
+				local out_material_filename = project_path + "materials/" + mat_used.name + ".material"
+				local fs_mat = createFile out_material_filename
+				saveMaterial fs_mat mat_used
+				close fs_mat
+				
 				format "  <slot mesh=\"%\" material=\"%\" mesh_idx=\"%\"/>\n" filename mat_res_name mesh_idx to:fsm
 				mesh_idx = mesh_idx + 1
 			)
+			
+			--if I did a copy, it's time to delete it
+			if obj != given_obj then 
+				delete obj
 			
 		)
 		format "</static_mesh>\n" to:fsm
@@ -159,9 +196,13 @@ struct TSceneExporter (
 		exportTransform fs delta "hierarchy" extras
 	),
 
-		fn exportCompTransform fs obj = (
+	fn exportCompTransform fs obj = (
 		local max_tmx = obj.transform		-- matrix3 
 		exportTransform fs max_tmx "transform" ""
+	),
+	
+	fn isGeometry obj = (
+		return  classof obj == Editable_mesh or classof obj == Editable_Poly or classof obj == Plane or classof obj ==  Teapot or classof obj == GeoSphere or classof obj ==Torus or classof obj == Box
 	),
 	
 	fn exportObject fs obj = (
@@ -169,11 +210,10 @@ struct TSceneExporter (
 		format "<entity>\n" to:fs
 		exportCompName fs obj
 		exportCompTransform fs obj
-		if classof obj == Editable_mesh or classof obj == Editable_Poly then (
-			--exportCompStaticMesh fs obj
+		if isGeometry obj then (
+			exportCompStaticMesh fs obj
 		)
 		if obj.parent != undefined then exportCompHierarchy fs obj
-		
 		
 		-- Export the children
 		for c in obj.children do (
@@ -203,7 +243,7 @@ struct TSceneExporter (
 
 gc()
 se = TSceneExporter();
---se.exportScene "scene01"
-se.exportStaticMesh "c:\\code\\tetera_multi.xml" #($)
+se.exportScene "scene_basic"
+--se.exportStaticMesh "c:\\code\\unit_sphere.xml" #($)
 --se.getMeshMaterialInfo  $
  

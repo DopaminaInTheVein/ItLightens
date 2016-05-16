@@ -1,4 +1,4 @@
 <static_mesh>
-  <slot mesh="meshes/Teapot001.mesh" material="materials/verde.material" mesh_idx="0"/>
-  <slot mesh="meshes/Teapot001.mesh" material="materials/marron.material" mesh_idx="1"/>
+  <slot mesh="meshes/Teapot001.mesh" material="materials/verdoso.material" mesh_idx="0"/>
+  <slot mesh="meshes/Teapot001.mesh" material="materials/ladrillos.material" mesh_idx="1"/>
 </static_mesh>
