@@ -11,6 +11,7 @@ class TCompGuidedCamera : public TCompBase {
   std::vector<VEC3> points;
   int num_points;
   int num_cameras;
+  float velocity_default;
   float velocity;
   bool default_dirs;
   //float angularVelocity;
@@ -45,7 +46,7 @@ public:
 
   void onGuidedCamera(const TMsgGuidedCamera&);
   bool followGuide(TCompTransform*, TCompCamera*);
-  void start();
+  void start(float speed = 0.f);
 };
 
 #endif

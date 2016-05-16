@@ -195,12 +195,13 @@ void SLBCamera::setPositionOffset(float x_offset, float y_offset, float z_offset
 	camara3rd->setPositionOffset(offset);
 }
 
-void SLBCamera::runCinematic(const char* name) {
+void SLBCamera::runCinematic(const char* name, float speed) {
 	CHandle guidedCam = tags_manager.getHandleByTagAndName("guided_camera", name);
 	CEntity * guidedCamE = guidedCam;
 	if (guidedCamE) {
 		TMsgGuidedCamera msg_guided_cam;
 		msg_guided_cam.guide = guidedCam;
+		msg_guided_cam.speed = speed;
 		guidedCamE->sendMsg(msg_guided_cam);
 	}
 }

@@ -231,6 +231,7 @@ struct TMsgBoxHit {
 };
 struct TMsgGuidedCamera {
 	CHandle guide;
+	float speed;
 	DECLARE_MSG_ID();
 };
 #endif

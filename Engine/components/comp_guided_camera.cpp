@@ -13,7 +13,7 @@ char nameVariable[10]; sprintf(nameVariable, "rot%d", index)
 
 bool TCompGuidedCamera::load(MKeyValue& atts) {
   num_points = atts.getInt("points_size", 0);
-  velocity = atts.getFloat("velocity", 0);
+  velocity_default = atts.getFloat("velocity", 0);
   //angularVelocity = atts.getFloat("angularVelocity", 0);
   num_cameras = num_points - 1;
   points.resize(num_points);
@@ -84,14 +84,16 @@ CQuaternion TCompGuidedCamera::getNewRotationForCamera(VEC3 playerPosition, CQua
   return cameraNova;
 };
 
-void TCompGuidedCamera::start() {
+void TCompGuidedCamera::start(float speed) {
 	lastguidedCamPoint = 0;
 	factor = 0.0f;
+	velocity = speed == 0.f ? velocity_default : speed;
+	
 }
 
 void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
 	//Init Guide
-	start();
+	start(msg.speed);
 
 	//Messagge to sent
 	TMsgGuidedCamera msgToMainCamera;

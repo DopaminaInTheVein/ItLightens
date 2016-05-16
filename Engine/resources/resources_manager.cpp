@@ -9,6 +9,8 @@
 #include "imgui/imgui.h"
 #include "skeleton/skeleton.h"
 
+#include "app_modules/logic_manager/logic_manager.h"
+
 
 CResourcesManager Resources;
 
@@ -28,9 +30,24 @@ const char* IResource::getTypeName( IResource::eType atype ) {
 }
 
 void CResourcesManager::onFileChanged(const std::string& filename) {
+  std::string filename_correct = filename;
+  std::replace(filename_correct.begin(), filename_correct.end(), '\\', '/'); // replace all 'x' to 'y'
   dbg("Resources file %s changed!\n", filename.c_str());
-  for (auto it : all)
-    it.second->onFileChanged(filename);
+  
+  //Check Extensions
+  std::string ext(filename_correct);
+  auto p = ext.find_last_of(".");
+  ext = ext.substr(p);
+
+  //Is LUA file
+  if (ext == ".lua") {
+	  logic_manager->reloadFile(filename_correct);
+  }
+  // Other files
+  else {
+	  for (auto it : all)
+		  it.second->onFileChanged(filename_correct);
+  }
 }
 
 const IResource* CResourcesManager::get(const char* name) {

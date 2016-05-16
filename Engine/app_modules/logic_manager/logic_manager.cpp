@@ -30,6 +30,10 @@ bool CLogicManagerModule::start() {
 	return true;
 }
 
+void CLogicManagerModule::reloadFile(std::string filename) {
+	slb_script.doFile(filename);
+}
+
 void CLogicManagerModule::update(float dt) {
 
 	// update the timer of each command
@@ -365,6 +369,7 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.set("run_cinematic", &SLBCamera::runCinematic)
 		.comment("Run cinematic defined in the specified guided camera")
 		.param("string: guided camera name")
+		.param("speed: speed of camera movement (0 means default speed)")
 		;
 }
 
