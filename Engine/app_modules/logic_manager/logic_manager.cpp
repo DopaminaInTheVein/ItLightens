@@ -30,6 +30,10 @@ bool CLogicManagerModule::start() {
 	return true;
 }
 
+void CLogicManagerModule::reloadFile(std::string filename) {
+	slb_script.doFile(filename);
+}
+
 void CLogicManagerModule::update(float dt) {
 
 	// update the timer of each command
@@ -61,7 +65,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			break;
 		}
 		case (OnLeave) : {
-			sprintf(lua_code, "OnLeave%s(\"%s\");", params.c_str());
+			sprintf(lua_code, "OnLeave(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnGameStart) : {
@@ -76,10 +80,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			sprintf(lua_code, "teleportPlayer(%f, %f, %f);", 0.0f, 0.0f, -22.0f);
 			break;
 		}
-		case (OnLevelStart001) : {
-			char command_code[64];
-			sprintf(command_code, "dbg('%s');", "TIMER - OLS");
-			sprintf(lua_code, "execCommandTest(\"%s\", %f);", command_code, 5.f);
+		case (OnLevelStart) : {
+			//char command_code[64];
+			//sprintf(command_code, "dbg('%s');", "TIMER - OLS");
+			sprintf(lua_code, "OnLevelStart(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnZoneStart001) : {
@@ -123,7 +127,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			sprintf(lua_code, "OnGuardOvercharged(%f);", 0.5f);
 			break;
 		}
-
+		case (OnGuardBoxHit): {
+			sprintf(lua_code, "OnGuardBoxHit(%f);", 0.5f);
+			break;
+		}
 		case (OnInterruptHit) : {
 			sprintf(lua_code, "OnInterruptHit(%f);", 0.5f);
 			break;
@@ -358,6 +365,11 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.param("float: x coord offset")
 		.param("float: y coord offset")
 		.param("float: z coord offset")
+		// run cinematic
+		.set("run_cinematic", &SLBCamera::runCinematic)
+		.comment("Run cinematic defined in the specified guided camera")
+		.param("string: guided camera name")
+		.param("speed: speed of camera movement (0 means default speed)")
 		;
 }
 

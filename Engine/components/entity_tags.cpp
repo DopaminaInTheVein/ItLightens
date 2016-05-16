@@ -4,6 +4,7 @@
 #include "comp_msgs.h"
 
 TTagsManager tags_manager;
+using namespace std;
 
 void TTagsManager::renderInMenu() {
   for (auto it = begin(); it != end(); ++it) {
@@ -94,6 +95,11 @@ const VHandles& TTagsManager::getHandlesByTag(TTagID tag_id) const {
 		return empty_set;
 	}
 	return it->second;
+}
+// ---------------------------------------
+CHandle TTagsManager::getHandleByTagAndName(const char* tag, const char* name) const {
+	VHandles targets = tags_manager.getHandlesByTag(getID(tag));
+	return findByName(targets, name);
 }
 
 const VHandles& TTagsManager::getHandlesByTag(std::string tag_id) const {

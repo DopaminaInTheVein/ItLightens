@@ -1,4 +1,4 @@
-print('This is lua')
+print('This is lua!')
 
 SLB.using( SLB )
 

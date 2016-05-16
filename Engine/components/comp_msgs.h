@@ -226,4 +226,12 @@ struct TMsgSetControllable {
 	bool control;
 	DECLARE_MSG_ID();
 };
+struct TMsgBoxHit {
+	DECLARE_MSG_ID();
+};
+struct TMsgGuidedCamera {
+	CHandle guide;
+	float speed;
+	DECLARE_MSG_ID();
+};
 #endif

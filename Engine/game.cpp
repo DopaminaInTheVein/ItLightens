@@ -103,7 +103,7 @@ bool CApp::start() {
   if (!drawUtilsCreate())
     return false;
 
-resources_dir_watcher.start("data/shaders", getHWnd());
+resources_dir_watcher.start("data", getHWnd());
 
 	// ----------------------------
 	tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();

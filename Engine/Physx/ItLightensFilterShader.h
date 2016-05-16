@@ -73,6 +73,19 @@ public:
 			return PxFilterFlag::eCALLBACK;
 		}
 
+		//Same for guard
+		//if ((filterData0.word0 & eGUARD && filterData1.word0 & ePLATFORM)) {
+		//	pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+		//	pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
+		//	return PxFilterFlag::eCALLBACK;
+		//}
+
+		if ((filterData1.word0 & eGUARD && filterData0.word0 & ePLATFORM)) {
+			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+			pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
+			return PxFilterFlag::eCALLBACK;
+		}
+
 		//pass collision only on objects with tag eCOLLISION
 		if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1) && (filterData1.word2 & eCOLLISION) && (filterData0.word2 & eCOLLISION))
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;

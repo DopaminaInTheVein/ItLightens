@@ -789,6 +789,29 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 	}
 }
 
+void bt_guard::onBoxHit(const TMsgBoxHit& msg) {
+	PROFILE_FUNCTION("guard: onboxhit");
+	CEntity * entity = myHandle.getOwner();
+
+	logic_manager->throwEvent(logic_manager->OnGuardBoxHit, "");
+	stunned = true;
+	____TIMER_RESET_(timerStunt);
+	setCurrent(NULL);
+	animController.setState(AST_STUNNED_BOX);
+
+	//If was shooting...
+	if (shooting) {
+		TMsgDamageSpecific dmg;
+		dmg.source = entity->getName();
+		dmg.type = Damage::ABSORB;
+		dmg.actived = false;
+		getPlayer()->sendMsg(dmg);
+
+		//End Damage Message
+		sendMsgDmg = shooting = false;
+	}
+}
+
 /**************
  * Auxiliares
  **************/

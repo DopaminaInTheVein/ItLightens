@@ -236,6 +236,8 @@ public:
 	void onMagneticBomb(const TMsgMagneticBomb& msg);
 	void onStaticBomb(const TMsgStaticBomb& msg);
 	void onOverCharged(const TMsgOverCharge& msg);
+	void onBoxHit(const TMsgBoxHit& msg);
+
 
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();

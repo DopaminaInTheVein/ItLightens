@@ -31,7 +31,7 @@ public:
 		OnLeave,
 		OnGameStart,
 		OnGameEnd,
-		OnLevelStart001,
+		OnLevelStart,
 		OnZoneStart001,
 		OnZoneEnd001,
 		OnTimeout,
@@ -42,6 +42,7 @@ public:
 		OnGuardAttackEnd,
 		OnGuardRemoveBox,
 		OnGuardOvercharged,
+		OnGuardBoxHit,
 		OnInterruptHit,
 		OnStartReceiveHit,
 		OnEndReceiveHit,
@@ -75,6 +76,7 @@ public:
 	CLogicManagerModule();
 	bool start() override;
 	void update(float dt) override;
+	void reloadFile(std::string filename);
 	void stop() override;
 	bool forcedUpdate() { return true; }
 	const char* getName() const {

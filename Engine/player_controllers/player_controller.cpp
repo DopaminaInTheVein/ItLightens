@@ -323,8 +323,8 @@ void player_controller::DoubleFalling() {
 
 bool player_controller::canJump() {
 	bool can_jump = true;
-	if (pol_orbit) can_jump = false;
-	if (polarityForces.size() > 0) can_jump = false;
+	//if (pol_orbit) can_jump = false;
+	if (polarityForces.size() > 0 && pol_state != NEUTRAL) can_jump = false;
 	return can_jump;
 }
 
@@ -411,7 +411,6 @@ void player_controller::RecalcAttractions()
 
 	// Calc all_forces & Find Orbit force if exists
 	VEC3 all_forces = VEC3(0, 0, 0); //Regular forces sum
-	pol_orbit = false; //calcForceEffect update this state
 	if (pol_state != NEUTRAL && polarityForces.size() > 0) {
 		TCompTransform * t = myEntity->get<TCompTransform>();
 		VEC3 posPlayer = t->getPosition();
@@ -676,20 +675,19 @@ void player_controller::UpdateInputActions()
 	PROFILE_FUNCTION("update input actions");
 	SetCharacterController();
 	pol_orbit = false;
-	if (isDamaged()) {
-		pol_state = NEUTRAL;
+	//if (isDamaged()) {
+	//	pol_state = NEUTRAL;
+	//}
+	//else {
+	if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
+		if (pol_state == PLUS) pol_state = NEUTRAL;
+		else pol_state = PLUS;
 	}
-	else {
-		if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
-			if (pol_state == PLUS) pol_state = NEUTRAL;
-			else pol_state = PLUS;
-		}
-		else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
-			if (pol_state == MINUS) pol_state = NEUTRAL;
-			else pol_state = MINUS;
-		}
+	else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
+		if (pol_state == MINUS) pol_state = NEUTRAL;
+		else pol_state = MINUS;
 	}
-
+	//}
 	if (pol_state == NEUTRAL) affectPolarized = false;
 	else {
 		affectPolarized = (polarityForces.size() != 0);

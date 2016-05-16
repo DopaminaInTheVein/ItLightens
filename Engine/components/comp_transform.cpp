@@ -53,4 +53,10 @@ void TCompTransform::renderInMenu() {
 	if (ImGui::DragFloat("Scale", &scale, -0.1f, 0.1f)) {
 		setScale(VEC3(scale, scale, scale));
 	}
+
+	//Show front and left
+	VEC3 f = getFront();
+	VEC3 l = getLeft();
+	ImGui::Text("Front: (%.2f, %.2f, %.2f), Left: (%.2f, %.2f, %.2f)",
+		f.x, f.y, f.z, l.x, l.y, l.z);
 }
