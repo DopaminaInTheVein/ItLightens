@@ -14,14 +14,14 @@ CNavmeshInput::CNavmeshInput()
 	, ntris(0)
 	, nverts_total(0)
 	, ntris_total(0)
-	, nverts_total_mesh(0)
-	, ntris_total_mesh(0)
+	//, nverts_total_mesh(0)
+	//, ntris_total_mesh(0)
 { }
 
 // ---------------------------------------------------
 void CNavmeshInput::clearInput() {
 	inputs.clear();
-	inputsTris.clear();
+	//inputsTris.clear();
 	nverts_total = 0;
 	ntris_total = 0;
 }
@@ -35,13 +35,13 @@ void CNavmeshInput::addInput(const VEC3& p0, const VEC3& p1) {
 	input.pmax = p1;
 	inputs.push_back(input);
 }
-
+/*
 void CNavmeshInput::addInput(const PxTriangleMeshGeometry& t_mesh) {
 	ntris_total_mesh += t_mesh.triangleMesh->getNbTriangles();
 	nverts_total_mesh += t_mesh.triangleMesh->getNbVertices();
 	inputsTris.push_back(t_mesh);
 }
-
+*/
 // ---------------------------------------------------
 void CNavmeshInput::prepareInput(const TInput& input) {
 	unprepareInput();
@@ -96,7 +96,7 @@ void CNavmeshInput::prepareInput(const TInput& input) {
 
 	assert(idx == ntris * 3);
 }
-
+/*
 void CNavmeshInput::prepareInputMesh(const PxTriangleMeshGeometry& input) {
 	unprepareInput();
 
@@ -160,6 +160,7 @@ void CNavmeshInput::prepareInputMesh(const PxTriangleMeshGeometry& input) {
 
 	assert(idx == ntris * 3);
 }
+*/
 void CNavmeshInput::unprepareInput() {
 	delete[] verts;
 	delete[] tris;

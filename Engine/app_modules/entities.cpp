@@ -283,16 +283,15 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(player_controller_speedy, TMsgSetControllable, onSetControllable);
 
-
 	CApp &app = CApp::get();
 	std::string file_options = app.file_options_json;
 	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
 
 	//sala = "tiling";
-	sala = fields["room_two"];
+	//sala = fields["room_two"];
 	//sala = "drones";
 	//sala = "boxes";
-	//sala = "milestone2_guardias";
+	sala = "milestone2";
 	//sala = "scene_milestone_1";
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
@@ -312,21 +311,16 @@ bool CEntitiesModule::start() {
 	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 
-	/*{
-		CEntityParser ep2;
-		bool isok = ep2.xmlParseFile("data/scenes/scene_basic_lights.xml");
-		assert(isok);
-	}*/
-
 	// GENERATE NAVMESH
 	collisionables = ep.getCollisionables();
+	SBB::postHandlesVector("collisionables", collisionables);
 	CNavmesh nav;
 	nav.m_input.clearInput();
 	for (CHandle han : collisionables) {
 		CEntity * e = han;
 		if (e) {
 			TCompPhysics * p = e->get<TCompPhysics>();
-			PxBounds3 bounds = p->getActor()->getWorldBounds();
+			const PxBounds3 bounds = p->getActor()->getWorldBounds();
 			VEC3 min, max;
 			min.x = bounds.minimum.x;
 			min.y = bounds.minimum.y;
@@ -500,7 +494,6 @@ void CEntitiesModule::update(float dt) {
 
 		//Triggers
 		getHandleManager<TTriggerLua>()->updateAll(dt);
-
 
 		SBB::update(dt);
 	}

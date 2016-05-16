@@ -1,1793 +1,660 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <entities>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="21.6"
-   out_radius="69.688"
-/>
-<name
-   name="_Luces11"
-/>
-<transform
-   pos="9.96491 23.3405 6.01037"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="21.6"
-   out_radius="69.688"
-/>
-<name
-   name="_Luces09"
-/>
-<transform
-   pos="1.42302 -5.36438 -6.22275"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="8.8"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces07"
-/>
-<transform
-   pos="-19.5386 23.7925 -10.2227"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="8.8"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces05"
-/>
-<transform
-   pos="51.4312 23.7925 19.0538"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="16.0127"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces03"
-/>
-<transform
-   pos="-31.8362 -18.8937 -20.5488"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="16.0127"
-   out_radius="34.0"
-/>
-<name
-   name="_Luces01"
-/>
-<transform
-   pos="19.7314 -19.276 -19.0215"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="turbine_2"
-/>
-<transform
-   pos="5.20116 -23.6427 -10.5997"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/turbine_2.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="turbina_1"
-/>
-<transform
-   pos="-22.5469 -23.6427 6.99324"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/turbina_1.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="tuberia_turbina"
-/>
-<transform
-   pos="22.5394 -22.8043 -26.2771"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/tuberia_turbina.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="tuberia"
-/>
-<transform
-   pos="-18.8178 -22.8041 -8.68526"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/tuberia.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="tablones4"
-/>
-<transform
-   pos="9.88679 -22.4112 11.7154"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/tablones4.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="tablones3"
-/>
-<transform
-   pos="9.88679 -22.4112 11.7154"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/tablones3.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="tablones_4"
-/>
-<transform
-   pos="9.88679 -22.4112 11.7154"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/tablones_4.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="tablones_2"
-/>
-<transform
-   pos="9.88679 -22.4112 11.7154"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/tablones_2.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="tablones"
-/>
-<transform
-   pos="9.88679 -22.4112 11.7154"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/tablones.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="sueloarribaizquierda"
-/>
-<transform
-   pos="-5.29344 -10.9161 -6.8483"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/sueloarribaizquierda.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="suelo_abajo"
-/>
-<transform
-   pos="-5.29344 -23.9436 -6.8483"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/suelo_abajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="puertas_derechas"
-/>
-<transform
-   pos="0.124011 -10.3717 -6.85553"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/puertas_derechas.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="puerta_balcon_redondo_pequeno004"
-/>
-<transform
-   pos="-41.1173 1.74469 -7.18756"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/puerta_balcon_redondo_pequeno004.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="plataforma_redonde"
-/>
-<transform
-   pos="-34.3493 -0.652451 -7.8176"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/plataforma_redonde.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="plataforma_balcon_derecho"
-/>
-<transform
-   pos="10.357 -11.9814 -29.0667"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/plataforma_balcon_derecho.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="plataforma_balcon_cuadrado_izquierdo"
-/>
-<transform
-   pos="10.1243 -11.9814 15.1142"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/plataforma_balcon_cuadrado_izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pibotes_balcon_pequeno-arribo"
-/>
-<transform
-   pos="-15.7487 -4.11873 14.6898"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/pibotes_balcon_pequeno-arribo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pibotes_balcon_cuadrado-izquierdo"
-/>
-<transform
-   pos="10.2706 -11.1743 15.3466"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/pibotes_balcon_cuadrado-izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pibotes_balcon_arriba"
-/>
-<transform
-   pos="-35.7784 0.861709 -7.59226"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/pibotes_balcon_arriba.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pibote_balcon_derecho_cuadrado"
-/>
-<transform
-   pos="10.2106 -11.1743 -29.2992"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/pibote_balcon_derecho_cuadrado.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="paredes_balcon_redondo_grande"
-/>
-<transform
-   pos="-41.2989 1.91663 -8.04508"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/paredes_balcon_redondo_grande.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="paredes_balcon_cuadrado_derecha"
-/>
-<transform
-   pos="10.2155 -10.5613 -32.186"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/paredes_balcon_cuadrado_derecha.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="paredes_abajo"
-/>
-<transform
-   pos="0.298065 -21.5547 -7.03165"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/paredes_abajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pared_balcon_redondo_arriba"
-/>
-<transform
-   pos="-15.7336 -3.15889 18.5146"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/pared_balcon_redondo_arriba.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="pared_balcon_cuadrado_izquierdo"
-/>
-<transform
-   pos="10.2657 -10.5613 18.4774"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/pared_balcon_cuadrado_izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="nivel"
-/>
-<transform
-   pos="176.65 137.731 -698.851"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/nivel.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="marcos"
-/>
-<transform
-   pos="41.3996 -22.411 -7.18647"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/marcos.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="maquinas006"
-/>
-<transform
-   pos="-4.05573 -19.191 -3.351"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/maquinas006.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="maquinas5"
-/>
-<transform
-   pos="-4.05573 -19.191 -3.351"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/maquinas5.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="maquinas4"
-/>
-<transform
-   pos="-4.05573 -19.191 -3.351"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/maquinas4.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="maquinas3"
-/>
-<transform
-   pos="-4.05573 -19.191 -3.351"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/maquinas3.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="maquinas2"
-/>
-<transform
-   pos="-4.05573 -19.191 -3.351"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/maquinas2.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="maquinas"
-/>
-<transform
-   pos="-4.05573 -19.191 -3.351"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/maquinas.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="lamparas_derecha"
-/>
-<transform
-   pos="21.0014 -18.9816 17.6319"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/lamparas_derecha.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="control_panel002"
-/>
-<transform
-   pos="7.48629 -22.0235 -26.9598"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/control_panel002.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columneas_esquineras_2"
-/>
-<transform
-   pos="10.2706 -11.1743 15.3466"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/columneas_esquineras_2.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columnas_esquineras_1"
-/>
-<transform
-   pos="10.2106 -11.1743 -29.2992"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/columnas_esquineras_1.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columnas_balcon_izquierdo_cuadrado"
-/>
-<transform
-   pos="9.819 -18.0684 14.9804"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/columnas_balcon_izquierdo_cuadrado.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columnas_abajo"
-/>
-<transform
-   pos="40.9559 -18.2573 -3.92087"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/columnas_abajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columna_abajo_izquierdo_centro"
-/>
-<transform
-   pos="9.819 -18.0684 14.9804"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/columna_abajo_izquierdo_centro.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columna_abajo_derecha_izquierda"
-/>
-<transform
-   pos="10.6622 -18.0684 -28.9329"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/columna_abajo_derecha_izquierda.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columna_abajo_derecha_derecha"
-/>
-<transform
-   pos="10.6622 -18.0684 -28.9329"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/columna_abajo_derecha_derecha.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columna_abajo_derecha_centro"
-/>
-<transform
-   pos="10.6622 -18.0684 -28.9329"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/columna_abajo_derecha_centro.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="columna_abajo_derecha"
-/>
-<transform
-   pos="9.819 -18.0684 14.9804"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/columna_abajo_derecha.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_redondo_pequeno"
-/>
-<transform
-   pos="-15.7545 -4.06819 14.6601"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/barrotes_balcon_redondo_pequeno.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_grande_abajo"
-/>
-<transform
-   pos="-35.6805 0.911773 -7.57358"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/barrotes_balcon_grande_abajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_cuadrado_izquierdo_abajo"
-/>
-<transform
-   pos="10.2693 -11.1267 15.2987"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_izquierdo_abajo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_cuadrado_izquierdo"
-/>
-<transform
-   pos="10.2693 -11.1267 15.2987"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_izquierdo.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_cuadrado_derecho"
-/>
-<transform
-   pos="10.2119 -11.1267 -29.2513"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_derecho.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_balcon_arriba"
-/>
-<transform
-   pos="-35.6805 0.911773 -7.57358"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/barrotes_balcon_arriba.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_abajo_derecha"
-/>
-<transform
-   pos="10.2119 -11.1267 -29.2513"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/barrotes_abajo_derecha.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="barrotes_abajo_balcon_redondo_pequeno"
-/>
-<transform
-   pos="-15.7545 -4.06819 14.6601"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/barrotes_abajo_balcon_redondo_pequeno.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="balcon_redondo_pequeno"
-/>
-<transform
-   pos="-15.7686 -5.62997 14.9404"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/balcon_redondo_pequeno.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="andamio_usable"
-/>
-<transform
-   pos="-22.2405 -20.7505 -14.9376"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/andamio_usable.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="andamio_2"
-/>
-<transform
-   pos="-22.2405 -20.7505 -14.9376"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/andamio_2.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="Andamio"
-/>
-<transform
-   pos="-22.2405 -20.7505 -14.9376"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/scene_ms2/Andamio.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags="box platform removable"
-/>
-<box/>
-<name
-   name="Box1"
-/>
-<transform
-   pos="23.5435 -22.0 -17.161"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/obj/box1.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="1.0 1.0 1.0"
-   mass="2"
-/>
-<polarized
-   pol="minus"
-/>
-</entity>
-<entity>
-<tags
-   tags="box platform removable"
-/>
-<box/>
-<name
-   name="Box2"
-/>
-<transform
-   pos="14.7821 -10.8911 15.1306"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-   type_shape="box"
-   size="3.0 1.5 3.0"
-   mass="5"
-/>
-<polarized
-   pol="plus"
-   size="4.0 3.0 4.0"
-/>
-</entity>
-<entity>
-<tags
-   tags="camera_main"
-/>
-<camera
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"
-/>
-<controller_3rd_person/>
-<name
-   name="camController_1"
-/>
-<transform
-   pos="-37.6678 -20.5623 -35.8906"
-   quat="0 0.707104 0 0.707104"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="2"
-   wpt0_pos="8.26935 -8.16554 -5.79106"
-   wpt0_wait="2"
-   wpt1_pos="11.9181 -13.687 9.60145"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DroneMinus_1"
-/>
-<transform
-   pos="10.0057 -7.02298 0.996308"
-   quat="0 -0.608761 0 0.793353"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="1"
-   wpt0_pos="17.1279 -11.8267 -17.6647"
-   wpt0_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DroneMinus_2"
-/>
-<transform
-   pos="10.0358 -10.6841 -17.7176"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="2"
-   wpt0_pos="14.753 -2.59663 14.0589"
-   wpt0_wait="2"
-   wpt1_pos="-12.4063 1.97734 15.2071"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DroneMinus_005"
-/>
-<transform
-   pos="4.82355 4.52908 14.76"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="2"
-   wpt0_pos="-25.2871 -6.36927 14.9996"
-   wpt0_wait="2"
-   wpt1_pos="-39.3847 -6.36928 14.9996"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DroneMinus_006"
-/>
-<transform
-   pos="-32.3792 -5.22671 14.9467"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="minus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="1"
-   wpt0_pos="3.03034 -11.8267 -7.3398"
-   wpt0_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DronePlus_2"
-/>
-<transform
-   pos="10.0358 -10.6841 -7.35733"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="plus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags="drone platform"
-/>
-<drone
-   wpts_size="1"
-   wpt0_pos="-38.7415 -0.166516 7.95924"
-   wpt0_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"
-/>
-<name
-   name="DronePlus_003"
-/>
-<transform
-   pos="-38.759 0.976044 15.0513"
-   quat="0 0.707107 0 0.707107"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"
-/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"
-/>
-<polarized
-   pol="plus"
-   size="1.7955 2.3474 4.92"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="generator_1"
-/>
-<transform
-   pos="-37.0645 -23.1248 -23.4027"
-   quat="-0.256605 -0.126079 -0.0337826 0.957662"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/obj/generator.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="sphere"
-   radius="1.64"
-/>
-<generator/>
-<name
-   name="trigger_1"
-/>
-<transform
-   pos="-37.0645 -23.1248 -23.4027"
-   quat="-0.256605 -0.126079 -0.0337826 0.957662"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<name
-   name="generator_2"
-/>
-<transform
-   pos="-10.5209 -3.88647 18.1304"
-   quat="0 1.0 0 0"
-   scale="1.0"
-/>
-<render_static_mesh
-   name="static_meshes/obj/generator.static_mesh"
-/>
-<rigidbody
-   type_collision="static"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="sphere"
-   radius="1.64"
-/>
-<generator/>
-<name
-   name="trigger_2"
-/>
-<transform
-   pos="-10.5209 -3.88647 18.1304"
-   quat="0 1.0 0 0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="5.1302 -23.8064 -1.81982"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="5.1302 -23.8064 11.1675"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="-12.5302 -23.7414 11.1675"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="-12.5302 -23.7414 -1.97247"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.6548 -3.6815"
-   jurRadius="100.0"
-   formation_point="-6.33016 -23.7198 4.07596"
-   formation_dir="-19.3531 -22.7915 -11.9615"
-/>
-<name
-   name="guard_2"
-/>
-<transform
-   pos="37.5426 -23.6548 -3.6815"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="-14.3585 -23.7823 -25.036"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="5.1302 -23.8473 -25.036"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="5.1302 -23.8473 -12.228"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="-14.5697 -23.7823 -12.228"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.6957 -7.79579"
-   jurRadius="100.0"
-   formation_point="-6.33016 -23.7607 -20.6866"
-   formation_dir="-19.3531 -22.8325 -11.9615"
-/>
-<name
-   name="guard_003"
-/>
-<transform
-   pos="37.5426 -23.6957 -7.79579"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="14.7984 -23.9817 -12.228"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="35.0197 -24.1508 -11.7258"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="35.0197 -24.1508 -30.6163"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="13.9356 -24.08 -30.6631"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.7578 -11.7541"
-   jurRadius="100.0"
-   formation_point="24.5964 -24.0712 -20.6866"
-   formation_dir="-19.3531 -22.8945 -11.9615"
-/>
-<name
-   name="guard_004"
-/>
-<transform
-   pos="37.5426 -23.7578 -11.7541"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="35.0197 -24.0261 -3.26538"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="14.7906 -23.857 -3.76758"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="14.7906 -23.857 14.7207"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="35.0091 -24.0261 14.7207"
-   kpt3_wait="2"
-   jurisdiction="37.5426 -23.6331 -15.9564"
-   jurRadius="100.0"
-   formation_point="24.5964 -23.9289 4.07596"
-   formation_dir="-19.3531 -22.7699 -11.9615"
-/>
-<name
-   name="guard_005"
-/>
-<transform
-   pos="37.5426 -23.6331 -15.9564"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>
-<entity>
-<tags
-   tags="guided_camera"
-/>
-<guided_camera
-   velocity="5.0"
-   default_dirs="1"
-   points_size="18"
-   wpt0="-37.7996 -21.523 -27.3995"
-   wpt1="-37.8586 -22.2872 -12.1377"
-   wpt2="-35.6298 -22.5849 -4.01839"
-   wpt3="-8.13086 -15.818 1.04637"
-   wpt4="24.0681 -15.3789 4.71448"
-   wpt5="35.5618 -17.9118 -6.51821"
-   wpt6="28.2402 -19.198 -15.6807"
-   wpt7="-0.231323 -19.8878 -12.852"
-   wpt8="-12.9742 -15.8006 -17.6664"
-   wpt9="-1.22867 -6.8418 -24.9226"
-   wpt10="7.58606 -10.0096 -26.8349"
-   wpt11="14.9592 -9.77673 -26.4688"
-   wpt12="14.7146 -11.1311 -9.61108"
-   wpt13="12.7159 -10.1844 13.2852"
-   wpt14="4.35815 -8.67456 11.4821"
-   wpt15="-6.20255 -1.10934 13.3455"
-   wpt16="-22.7698 4.31072 10.0474"
-   wpt17="-38.3197 5.84642 -6.22315"
-   rot0="0 0 0 -1.0"
-   rot1="0 0 0 -1.0"
-   rot2="0 0 0 -1.0"
-   rot3="0 0 0 -1.0"
-   rot4="0 0 0 -1.0"
-   rot5="0 0 0 -1.0"
-   rot6="0 0 0 -1.0"
-   rot7="0 0 0 -1.0"
-   rot8="0 0 0 -1.0"
-   rot9="0 0 0 -1.0"
-   rot10="0 0 0 -1.0"
-   rot11="0 0 0 -1.0"
-   rot12="0 0 0 -1.0"
-   rot13="0 0 0 -1.0"
-   rot14="0 0 0 -1.0"
-   rot15="0 0 0 -1.0"
-   rot16="0 0 0 -1.0"
-/>
-<name
-   name="Line001"
-/>
-<transform
-   pos="8.52567 0 14.7145"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
-<entity>
-<tags
-   tags="player"
-/>
-<player/>
-<life
-   points="10"
-/>
-<name
-   name="player_1"
-/>
-<transform
-   pos="8.49044 -7.64843 -26.4823"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/player/player.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/player/player.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="0.7"
-/>
-</entity>
-<entity>
-<tags
-   tags=""
-/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="7.26 3.49 16.45"
-/>
-<victory_point/>
-<name
-   name="TriggerBox_1"
-/>
-<transform
-   pos="-33.6215 4.47034 -7.67841"
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-</entity>
+  <entity>
+    <tags tags="" />
+    <light_point color="1.0 1.0 1.0 1.0" in_radius="21.6" out_radius="69.688" />
+    <name name="_Luces11" />
+    <transform pos="9.96491 23.3405 6.01037" quat="0 0 0 1.0" scale="1.0" />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <light_point color="1.0 1.0 1.0 1.0" in_radius="21.6" out_radius="69.688" />
+    <name name="_Luces09" />
+    <transform pos="1.42302 -5.36438 -6.22275" quat="0 0 0 1.0" scale="1.0" />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <light_point color="1.0 1.0 1.0 1.0" in_radius="8.8" out_radius="34.0" />
+    <name name="_Luces07" />
+    <transform pos="-19.5386 23.7925 -10.2227" quat="0 0 0 1.0" scale="1.0" />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <light_point color="1.0 1.0 1.0 1.0" in_radius="8.8" out_radius="34.0" />
+    <name name="_Luces05" />
+    <transform pos="51.4312 23.7925 19.0538" quat="0 0 0 1.0" scale="1.0" />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <light_point color="1.0 1.0 1.0 1.0" in_radius="16.0127" out_radius="34.0" />
+    <name name="_Luces03" />
+    <transform pos="-31.8362 -18.8937 -20.5488" quat="0 0 0 1.0" scale="1.0" />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <light_point color="1.0 1.0 1.0 1.0" in_radius="16.0127" out_radius="34.0" />
+    <name name="_Luces01" />
+    <transform pos="19.7314 -19.276 -19.0215" quat="0 0 0 1.0" scale="1.0" />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="turbine_2" />
+    <transform pos="5.20116 -23.6427 -10.5997" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/turbine_2.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="turbina_1" />
+    <transform pos="-22.5469 -23.6427 6.99324" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/turbina_1.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="tuberia_turbina" />
+    <transform pos="22.5394 -22.8043 -26.2771" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/tuberia_turbina.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="tuberia" />
+    <transform pos="-18.8178 -22.8041 -8.68526" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/tuberia.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="tablones4" />
+    <transform pos="9.88679 -22.4112 11.7154" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/tablones4.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="tablones3" />
+    <transform pos="9.88679 -22.4112 11.7154" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/tablones3.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="tablones_4" />
+    <transform pos="9.88679 -22.4112 11.7154" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/tablones_4.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="tablones_2" />
+    <transform pos="9.88679 -22.4112 11.7154" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/tablones_2.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="tablones" />
+    <transform pos="9.88679 -22.4112 11.7154" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/tablones.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="sueloarribaizquierda" />
+    <transform pos="-5.29344 -10.9161 -6.8483" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/sueloarribaizquierda.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="suelo_abajo" />
+    <transform pos="-5.29344 -23.9436 -6.8483" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/suelo_abajo.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="puertas_derechas" />
+    <transform pos="0.124011 -10.3717 -6.85553" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/puertas_derechas.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="puerta_balcon_redondo_pequeno004" />
+    <transform pos="-41.1173 1.74469 -7.18756" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/puerta_balcon_redondo_pequeno004.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="plataforma_redonde" />
+    <transform pos="-34.3493 -0.652451 -7.8176" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/plataforma_redonde.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="plataforma_balcon_derecho" />
+    <transform pos="10.357 -11.9814 -29.0667" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/plataforma_balcon_derecho.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="plataforma_balcon_cuadrado_izquierdo" />
+    <transform pos="10.1243 -11.9814 15.1142" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/plataforma_balcon_cuadrado_izquierdo.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="pibotes_balcon_pequeno-arribo" />
+    <transform pos="-15.7487 -4.11873 14.6898" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/pibotes_balcon_pequeno-arribo.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="pibotes_balcon_cuadrado-izquierdo" />
+    <transform pos="10.2706 -11.1743 15.3466" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/pibotes_balcon_cuadrado-izquierdo.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="pibotes_balcon_arriba" />
+    <transform pos="-35.7784 0.861709 -7.59226" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/pibotes_balcon_arriba.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="pibote_balcon_derecho_cuadrado" />
+    <transform pos="10.2106 -11.1743 -29.2992" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/pibote_balcon_derecho_cuadrado.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="paredes_balcon_redondo_grande" />
+    <transform pos="-41.2989 1.91663 -8.04508" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/paredes_balcon_redondo_grande.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="paredes_balcon_cuadrado_derecha" />
+    <transform pos="10.2155 -10.5613 -32.186" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/paredes_balcon_cuadrado_derecha.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="paredes_abajo" />
+    <transform pos="0.298065 -21.5547 -7.03165" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/paredes_abajo.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="pared_balcon_redondo_arriba" />
+    <transform pos="-15.7336 -3.15889 18.5146" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/pared_balcon_redondo_arriba.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="pared_balcon_cuadrado_izquierdo" />
+    <transform pos="10.2657 -10.5613 18.4774" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/pared_balcon_cuadrado_izquierdo.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="nivel" />
+    <transform pos="176.65 137.731 -698.851" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/nivel.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="marcos" />
+    <transform pos="41.3996 -22.411 -7.18647" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/marcos.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="maquinas006" />
+    <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/maquinas006.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="maquinas5" />
+    <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/maquinas5.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="maquinas4" />
+    <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/maquinas4.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="maquinas3" />
+    <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/maquinas3.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="maquinas2" />
+    <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/maquinas2.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="maquinas" />
+    <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/maquinas.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="lamparas_derecha" />
+    <transform pos="21.0014 -18.9816 17.6319" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/lamparas_derecha.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="control_panel002" />
+    <transform pos="7.48629 -22.0235 -26.9598" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/control_panel002.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="columneas_esquineras_2" />
+    <transform pos="10.2706 -11.1743 15.3466" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/columneas_esquineras_2.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="columnas_esquineras_1" />
+    <transform pos="10.2106 -11.1743 -29.2992" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/columnas_esquineras_1.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="columnas_balcon_izquierdo_cuadrado" />
+    <transform pos="9.819 -18.0684 14.9804" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/columnas_balcon_izquierdo_cuadrado.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="columnas_abajo" />
+    <transform pos="40.9559 -18.2573 -3.92087" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/columnas_abajo.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="columna_abajo_izquierdo_centro" />
+    <transform pos="9.819 -18.0684 14.9804" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/columna_abajo_izquierdo_centro.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="columna_abajo_derecha_izquierda" />
+    <transform pos="10.6622 -18.0684 -28.9329" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/columna_abajo_derecha_izquierda.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="columna_abajo_derecha_derecha" />
+    <transform pos="10.6622 -18.0684 -28.9329" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/columna_abajo_derecha_derecha.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="columna_abajo_derecha_centro" />
+    <transform pos="10.6622 -18.0684 -28.9329" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/columna_abajo_derecha_centro.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="columna_abajo_derecha" />
+    <transform pos="9.819 -18.0684 14.9804" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/columna_abajo_derecha.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="barrotes_balcon_redondo_pequeno" />
+    <transform pos="-15.7545 -4.06819 14.6601" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_redondo_pequeno.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="barrotes_balcon_grande_abajo" />
+    <transform pos="-35.6805 0.911773 -7.57358" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_grande_abajo.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="barrotes_balcon_cuadrado_izquierdo_abajo" />
+    <transform pos="10.2693 -11.1267 15.2987" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_izquierdo_abajo.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="barrotes_balcon_cuadrado_izquierdo" />
+    <transform pos="10.2693 -11.1267 15.2987" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_izquierdo.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="barrotes_balcon_cuadrado_derecho" />
+    <transform pos="10.2119 -11.1267 -29.2513" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_derecho.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="barrotes_balcon_arriba" />
+    <transform pos="-35.6805 0.911773 -7.57358" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_arriba.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="barrotes_abajo_derecha" />
+    <transform pos="10.2119 -11.1267 -29.2513" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/barrotes_abajo_derecha.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="barrotes_abajo_balcon_redondo_pequeno" />
+    <transform pos="-15.7545 -4.06819 14.6601" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/barrotes_abajo_balcon_redondo_pequeno.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="balcon_redondo_pequeno" />
+    <transform pos="-15.7686 -5.62997 14.9404" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/balcon_redondo_pequeno.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="andamio_usable" />
+    <transform pos="-22.2405 -20.7505 -14.9376" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/andamio_usable.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="andamio_2" />
+    <transform pos="-22.2405 -20.7505 -14.9376" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/andamio_2.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="Andamio" />
+    <transform pos="-22.2405 -20.7505 -14.9376" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/scene_ms2/Andamio.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="box platform removable" />
+    <box />
+    <name name="Box1" />
+    <transform pos="23.5435 -22.0 -17.161" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/box1.static_mesh" />
+    <rigidbody type_collision="dynamic" type_shape="box" size="1.0 1.0 1.0" mass="2" />
+    <polarized pol="minus" />
+  </entity>
+  <entity>
+    <tags tags="box platform removable" />
+    <box />
+    <name name="Box2" />
+    <transform pos="14.7821 -10.8911 15.1306" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/box2.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb type_shape="box" size="3.0 1.5 3.0" mass="5" />
+    <polarized pol="plus" size="4.0 3.0 4.0" />
+  </entity>
+  <entity>
+    <tags tags="camera_main" />
+    <camera znear="0.1" zfar="250.0" fov="60.0" />
+    <controller_3rd_person />
+    <name name="camController_1" />
+    <transform pos="-37.6678 -20.5623 -35.8906" quat="0 0.707104 0 0.707104" scale="1.0" />
+  </entity>
+  <entity>
+    <tags tags="drone platform" />
+    <drone wpts_size="2" wpt0_pos="8.26935 -8.16554 -5.79106" wpt0_wait="2" wpt1_pos="11.9181 -13.687 9.60145" wpt1_wait="2" textureFront="droneFront" textureBack="droneBack" />
+    <name name="DroneMinus_1" />
+    <transform pos="10.0057 -7.02298 0.996308" quat="0 -0.608761 0 0.793353" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/drone.static_mesh" />
+    <rigidbody type_collision="dynamic" type_shape="drone" />
+    <polarized pol="minus" size="1.7955 2.3474 4.92" />
+  </entity>
+  <entity>
+    <tags tags="drone platform" />
+    <drone wpts_size="1" wpt0_pos="17.1279 -11.8267 -17.6647" wpt0_wait="2" textureFront="droneFront" textureBack="droneBack" />
+    <name name="DroneMinus_2" />
+    <transform pos="10.0358 -10.6841 -17.7176" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/drone.static_mesh" />
+    <rigidbody type_collision="dynamic" type_shape="drone" />
+    <polarized pol="minus" size="1.7955 2.3474 4.92" />
+  </entity>
+  <entity>
+    <tags tags="drone platform" />
+    <drone wpts_size="2" wpt0_pos="14.753 -2.59663 14.0589" wpt0_wait="2" wpt1_pos="-12.4063 1.97734 15.2071" wpt1_wait="2" textureFront="droneFront" textureBack="droneBack" />
+    <name name="DroneMinus_005" />
+    <transform pos="4.82355 4.52908 14.76" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/drone.static_mesh" />
+    <rigidbody type_collision="dynamic" type_shape="drone" />
+    <polarized pol="minus" size="1.7955 2.3474 4.92" />
+  </entity>
+  <entity>
+    <tags tags="drone platform" />
+    <drone wpts_size="2" wpt0_pos="-25.2871 -6.36927 14.9996" wpt0_wait="2" wpt1_pos="-39.3847 -6.36928 14.9996" wpt1_wait="2" textureFront="droneFront" textureBack="droneBack" />
+    <name name="DroneMinus_006" />
+    <transform pos="-32.3792 -5.22671 14.9467" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/drone.static_mesh" />
+    <rigidbody type_collision="dynamic" type_shape="drone" />
+    <polarized pol="minus" size="1.7955 2.3474 4.92" />
+  </entity>
+  <entity>
+    <tags tags="drone platform" />
+    <drone wpts_size="1" wpt0_pos="3.03034 -11.8267 -7.3398" wpt0_wait="2" textureFront="droneFront" textureBack="droneBack" />
+    <name name="DronePlus_2" />
+    <transform pos="10.0358 -10.6841 -7.35733" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/drone.static_mesh" />
+    <rigidbody type_collision="dynamic" type_shape="drone" />
+    <polarized pol="plus" size="1.7955 2.3474 4.92" />
+  </entity>
+  <entity>
+    <tags tags="drone platform" />
+    <drone wpts_size="1" wpt0_pos="-38.7415 -0.166516 7.95924" wpt0_wait="2" textureFront="droneFront" textureBack="droneBack" />
+    <name name="DronePlus_003" />
+    <transform pos="-38.759 0.976044 15.0513" quat="0 0.707107 0 0.707107" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/drone.static_mesh" />
+    <rigidbody type_collision="dynamic" type_shape="drone" />
+    <polarized pol="plus" size="1.7955 2.3474 4.92" />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="generator_1" />
+    <transform pos="-37.0645 -23.1248 -23.4027" quat="-0.256605 -0.126079 -0.0337826 0.957662" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/generator.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <rigidbody type_collision="trigger" type_shape="sphere" radius="1.64" />
+    <generator />
+    <name name="trigger_1" />
+    <transform pos="-37.0645 -23.1248 -23.4027" quat="-0.256605 -0.126079 -0.0337826 0.957662" scale="1.0" />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <name name="generator_2" />
+    <transform pos="-10.5209 -3.88647 18.1304" quat="0 1.0 0 0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/generator.static_mesh" />
+    <rigidbody type_collision="static" />
+    <local_aabb /><abs_aabb />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <rigidbody type_collision="trigger" type_shape="sphere" radius="1.64" />
+    <generator />
+    <name name="trigger_2" />
+    <transform pos="-10.5209 -3.88647 18.1304" quat="0 1.0 0 0" scale="1.0" />
+  </entity>
+  <entity>
+    <tags tags="AI AI_guard" />
+    <life points="100" />
+    <bt_guard kpt_size="4" kpt0_type="seek" kpt0_pos="5.1302 -23.8064 -1.81982" kpt0_wait="2" kpt1_type="seek" kpt1_pos="5.1302 -23.8064 11.1675" kpt1_wait="2" kpt2_type="seek" kpt2_pos="-12.5302 -23.7414 11.1675" kpt2_wait="2" kpt3_type="seek" kpt3_pos="-12.5302 -23.7414 -1.97247" kpt3_wait="2" jurisdiction="37.5426 -23.6548 -3.6815" jurRadius="100.0" formation_point="-6.33016 -23.7198 4.07596" formation_dir="-19.3531 -22.7915 -11.9615" />
+    <name name="guard_2" />
+    <transform pos="37.5426 -23.6548 -3.6815" quat="0 0 0 1.0" scale="1.0" />
+    <skeleton model="skeletons/guard/guard.skeleton" />
+    <render_static_mesh name="skeletons/guard/guard.static_mesh" />
+    <character_controller radius="0.3" height="1.8" />
+  </entity>
+  <entity>
+    <tags tags="AI AI_guard" />
+    <life points="100" />
+    <bt_guard kpt_size="4" kpt0_type="seek" kpt0_pos="-14.3585 -23.7823 -25.036" kpt0_wait="2" kpt1_type="seek" kpt1_pos="5.1302 -23.8473 -25.036" kpt1_wait="2" kpt2_type="seek" kpt2_pos="5.1302 -23.8473 -12.228" kpt2_wait="2" kpt3_type="seek" kpt3_pos="-14.5697 -23.7823 -12.228" kpt3_wait="2" jurisdiction="37.5426 -23.6957 -7.79579" jurRadius="100.0" formation_point="-6.33016 -23.7607 -20.6866" formation_dir="-19.3531 -22.8325 -11.9615" />
+    <name name="guard_003" />
+    <transform pos="37.5426 -23.6957 -7.79579" quat="0 0 0 1.0" scale="1.0" />
+    <skeleton model="skeletons/guard/guard.skeleton" />
+    <render_static_mesh name="skeletons/guard/guard.static_mesh" />
+    <character_controller radius="0.3" height="1.8" />
+  </entity>
+  <entity>
+    <tags tags="AI AI_guard" />
+    <life points="100" />
+    <bt_guard kpt_size="4" kpt0_type="seek" kpt0_pos="14.7984 -23.9817 -12.228" kpt0_wait="2" kpt1_type="seek" kpt1_pos="35.0197 -24.1508 -11.7258" kpt1_wait="2" kpt2_type="seek" kpt2_pos="35.0197 -24.1508 -30.6163" kpt2_wait="2" kpt3_type="seek" kpt3_pos="13.9356 -24.08 -30.6631" kpt3_wait="2" jurisdiction="37.5426 -23.7578 -11.7541" jurRadius="100.0" formation_point="24.5964 -24.0712 -20.6866" formation_dir="-19.3531 -22.8945 -11.9615" />
+    <name name="guard_004" />
+    <transform pos="37.5426 -23.7578 -11.7541" quat="0 0 0 1.0" scale="1.0" />
+    <skeleton model="skeletons/guard/guard.skeleton" />
+    <render_static_mesh name="skeletons/guard/guard.static_mesh" />
+    <character_controller radius="0.3" height="1.8" />
+  </entity>
+  <entity>
+    <tags tags="AI AI_guard" />
+    <life points="100" />
+    <bt_guard kpt_size="4" kpt0_type="seek" kpt0_pos="35.0197 -24.0261 -3.26538" kpt0_wait="2" kpt1_type="seek" kpt1_pos="14.7906 -23.857 -3.76758" kpt1_wait="2" kpt2_type="seek" kpt2_pos="14.7906 -23.857 14.7207" kpt2_wait="2" kpt3_type="seek" kpt3_pos="35.0091 -24.0261 14.7207" kpt3_wait="2" jurisdiction="37.5426 -23.6331 -15.9564" jurRadius="100.0" formation_point="24.5964 -23.9289 4.07596" formation_dir="-19.3531 -22.7699 -11.9615" />
+    <name name="guard_005" />
+    <transform pos="37.5426 -23.6331 -15.9564" quat="0 0 0 1.0" scale="1.0" />
+    <skeleton model="skeletons/guard/guard.skeleton" />
+    <render_static_mesh name="skeletons/guard/guard.static_mesh" />
+    <character_controller radius="0.3" height="1.8" />
+  </entity>
+  <entity>
+    <tags tags="guided_camera" />
+    <guided_camera velocity="5.0" default_dirs="1" points_size="18" wpt0="-37.7996 -21.523 -27.3995" wpt1="-37.8586 -22.2872 -12.1377" wpt2="-35.6298 -22.5849 -4.01839" wpt3="-8.13086 -15.818 1.04637" wpt4="24.0681 -15.3789 4.71448" wpt5="35.5618 -17.9118 -6.51821" wpt6="28.2402 -19.198 -15.6807" wpt7="-0.231323 -19.8878 -12.852" wpt8="-12.9742 -15.8006 -17.6664" wpt9="-1.22867 -6.8418 -24.9226" wpt10="7.58606 -10.0096 -26.8349" wpt11="14.9592 -9.77673 -26.4688" wpt12="14.7146 -11.1311 -9.61108" wpt13="12.7159 -10.1844 13.2852" wpt14="4.35815 -8.67456 11.4821" wpt15="-6.20255 -1.10934 13.3455" wpt16="-22.7698 4.31072 10.0474" wpt17="-38.3197 5.84642 -6.22315" rot0="0 0 0 -1.0" rot1="0 0 0 -1.0" rot2="0 0 0 -1.0" rot3="0 0 0 -1.0" rot4="0 0 0 -1.0" rot5="0 0 0 -1.0" rot6="0 0 0 -1.0" rot7="0 0 0 -1.0" rot8="0 0 0 -1.0" rot9="0 0 0 -1.0" rot10="0 0 0 -1.0" rot11="0 0 0 -1.0" rot12="0 0 0 -1.0" rot13="0 0 0 -1.0" rot14="0 0 0 -1.0" rot15="0 0 0 -1.0" rot16="0 0 0 -1.0" />
+    <name name="Line001" />
+    <transform pos="8.52567 0 14.7145" quat="0 0 0 1.0" scale="1.0" />
+  </entity>
+  <entity>
+    <tags tags="player" />
+    <player />
+    <life points="10" />
+    <name name="player_1" />
+    <transform pos="8.49044 -7.64843 -26.4823" quat="0 0 0 1.0" scale="1.0" />
+    <skeleton model="skeletons/player/player.skeleton" />
+    <render_static_mesh name="skeletons/player/player.static_mesh" />
+    <character_controller radius="0.3" height="0.7" />
+  </entity>
+  <entity>
+    <tags tags="" />
+    <rigidbody type_collision="trigger" type_shape="box" size="7.26 3.49 16.45" />
+    <victory_point />
+    <name name="TriggerBox_1" />
+    <transform pos="-33.6215 4.47034 -7.67841" quat="0 0 0 1.0" scale="1.0" />
+  </entity>
 </entities>
