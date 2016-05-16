@@ -323,8 +323,8 @@ void player_controller::DoubleFalling() {
 
 bool player_controller::canJump() {
 	bool can_jump = true;
-	if (pol_orbit) can_jump = false;
-	if (polarityForces.size() > 0) can_jump = false;
+	//if (pol_orbit) can_jump = false;
+	if (polarityForces.size() > 0 && pol_state != NEUTRAL) can_jump = false;
 	return can_jump;
 }
 
@@ -411,7 +411,6 @@ void player_controller::RecalcAttractions()
 
 	// Calc all_forces & Find Orbit force if exists
 	VEC3 all_forces = VEC3(0, 0, 0); //Regular forces sum
-	pol_orbit = false; //calcForceEffect update this state
 	if (pol_state != NEUTRAL && polarityForces.size() > 0) {
 		TCompTransform * t = myEntity->get<TCompTransform>();
 		VEC3 posPlayer = t->getPosition();
@@ -689,7 +688,6 @@ void player_controller::UpdateInputActions()
 		else pol_state = MINUS;
 	}
 	//}
-
 	if (pol_state == NEUTRAL) affectPolarized = false;
 	else {
 		affectPolarized = (polarityForces.size() != 0);
