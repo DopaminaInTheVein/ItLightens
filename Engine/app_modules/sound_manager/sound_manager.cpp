@@ -76,9 +76,10 @@ bool CSoundManagerModule::playSound(std::string route) {
 }
 
 bool CSoundManagerModule::playMusic(std::string route) {
-	result = system->playSound(sounds[route], 0, false, &channels[MUSIC]);
+	//result = system->playSound(sounds[route], 0, false, &channels[MUSIC]);
 
-	return result == FMOD_OK;
+	//return result == FMOD_OK;
+	return true;
 }
 
 bool CSoundManagerModule::playVoice(std::string route) {

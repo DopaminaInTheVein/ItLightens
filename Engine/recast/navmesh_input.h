@@ -9,13 +9,15 @@ public:
 	struct TInput {
 		VEC3 pmin;
 		VEC3 pmax;
-		TInput() : pmin(0, 0, 0), pmax(0, 0, 0) { }
+		VEC3 origin;
+		PxTriangleMesh* mesh;
+		TInput(PxTriangleMesh* i_mesh = nullptr) : pmin(0, 0, 0), pmax(0, 0, 0), mesh(i_mesh) { }
 	};
 	static const int MAX_INPUTS = 1024;
 	typedef std::vector< TInput > VInputs;
 
 public:
-	VInputs               inputs;
+	VInputs         inputs;
 	VEC3           aabb_min;
 	VEC3           aabb_max;
 
@@ -31,6 +33,7 @@ public:
 
 	void clearInput();
 	void addInput(const VEC3& p0, const VEC3& p1);
+	void addInput(PxTriangleMesh * mesh, const VEC3& origin, const VEC3& p0, const VEC3& p1);
 	void prepareInput(const TInput& input);
 	void unprepareInput();
 	void computeBoundaries();

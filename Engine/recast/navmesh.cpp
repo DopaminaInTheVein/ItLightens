@@ -347,6 +347,7 @@ void CNavmesh::storeExtraData(std::string path) {
 			str.push_back('\n');
 		}
 	}
+	//str += "verts: \n";
 	if (nverts > 0) {
 		for (int i = 0; i < nverts * 3; ++i) {
 			str += std::to_string(m_dmesh->verts[i]);
@@ -378,6 +379,7 @@ void CNavmesh::storeExtraData(std::string path) {
 	str += std::to_string(m_pmesh->bmax[0]) + "\n";
 	str += std::to_string(m_pmesh->bmax[1]) + "\n";
 	str += std::to_string(m_pmesh->bmax[2]) + "\n";
+	//str += "verts2: \n";
 	if (numverts > 0) {
 		for (int i = 0; i < numverts * 3; ++i) {
 			str += std::to_string(m_pmesh->verts[i]) + '\n';

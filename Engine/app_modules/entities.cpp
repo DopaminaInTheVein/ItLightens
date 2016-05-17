@@ -291,7 +291,29 @@ bool CEntitiesModule::start() {
 			max.x = bounds.maximum.x;
 			max.y = bounds.maximum.y;
 			max.z = bounds.maximum.z;
-			nav.m_input.addInput(min, max);
+
+			/*TCompRenderStaticMesh *r_mesh = e->get<TCompRenderStaticMesh>();
+			if (r_mesh) {
+				nav.m_input.addInput(r_mesh->static_mesh->slots[0].mesh);
+			}*/
+
+			auto rb = p->getActor()->isRigidStatic();
+			rb = nullptr;
+			if (rb) {
+				int nBShapes = rb->getNbShapes();
+				PxShape **ptr;
+				ptr = new PxShape*[nBShapes];
+				rb->getShapes(ptr, 1);
+				for (int i = 0; i < nBShapes; i++) {
+					PxTriangleMeshGeometry meshGeom;
+					if (ptr[i]->getTriangleMeshGeometry(meshGeom)) {
+						nav.m_input.addInput(meshGeom.triangleMesh, PhysxConversion::PxVec3ToVec3(rb->getGlobalPose().p), min, max);
+					}
+				}
+			}
+			else {
+				nav.m_input.addInput(min, max);
+			}
 		}
 	}
 	nav.m_input.computeBoundaries();
@@ -434,6 +456,8 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompPhysics>()->updateAll(dt);
 
 	SBB::update(dt);
+
+	SBB::readNavmesh().render();
 }
 
 void CEntitiesModule::render() {

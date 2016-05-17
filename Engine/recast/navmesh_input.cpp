@@ -29,59 +29,137 @@ void CNavmeshInput::addInput(const VEC3& p0, const VEC3& p1) {
 	inputs.push_back(input);
 }
 
+void CNavmeshInput::addInput(PxTriangleMesh* mesh, const VEC3& origin, const VEC3& p0, const VEC3& p1) {
+
+	TInput input = TInput(mesh);
+
+	auto verts = mesh->getNbVertices();
+	auto ntris = mesh->getNbTriangles();
+
+	nverts_total += verts;
+	ntris_total += ntris;
+
+	input.origin = origin;
+	input.pmin = p0;
+	input.pmax = p1;
+	inputs.push_back(input);
+}
+
 // ---------------------------------------------------
 void CNavmeshInput::prepareInput(const TInput& input) {
 	unprepareInput();
 
-	nverts = 8;
-	ntris = 10;
+	if (!input.mesh) {
+		nverts = 8;
+		ntris = 10;
 
-	verts = new float[nverts * 3];
-	tris = new int[ntris * 3];
+		verts = new float[nverts * 3];
+		tris = new int[ntris * 3];
 
-	memset(verts, 0, nverts * 3 * sizeof(float));
-	memset(tris, 0, ntris * 3 * sizeof(int));
+		memset(verts, 0, nverts * 3 * sizeof(float));
+		memset(tris, 0, ntris * 3 * sizeof(int));
 
-	VEC3 v[8] = {
-	  VEC3(input.pmin.x, input.pmin.y, input.pmin.z)
-	  , VEC3(input.pmax.x, input.pmin.y, input.pmin.z)
-	  , VEC3(input.pmin.x, input.pmax.y, input.pmin.z)
-	  , VEC3(input.pmax.x, input.pmax.y, input.pmin.z)
-	  , VEC3(input.pmin.x, input.pmin.y, input.pmax.z)
-	  , VEC3(input.pmax.x, input.pmin.y, input.pmax.z)
-	  , VEC3(input.pmin.x, input.pmax.y, input.pmax.z)
-	  , VEC3(input.pmax.x, input.pmax.y, input.pmax.z)
-	};
+		VEC3 v[8] = {
+		  VEC3(input.pmin.x, input.pmin.y, input.pmin.z)
+		  , VEC3(input.pmax.x, input.pmin.y, input.pmin.z)
+		  , VEC3(input.pmin.x, input.pmax.y, input.pmin.z)
+		  , VEC3(input.pmax.x, input.pmax.y, input.pmin.z)
+		  , VEC3(input.pmin.x, input.pmin.y, input.pmax.z)
+		  , VEC3(input.pmax.x, input.pmin.y, input.pmax.z)
+		  , VEC3(input.pmin.x, input.pmax.y, input.pmax.z)
+		  , VEC3(input.pmax.x, input.pmax.y, input.pmax.z)
+		};
 
-	static const int idxs[6][4] = {
-		{ 4, 6, 7, 5 }
-		, { 5, 7, 3, 1 }
-		, { 1, 3, 2, 0 }
-		, { 0, 2, 6, 4 }
-		, { 3, 7, 6, 2 }
-		, { 5, 1, 0, 4 }
-	};
+		static const int idxs[6][4] = {
+			{ 4, 6, 7, 5 }
+			, { 5, 7, 3, 1 }
+			, { 1, 3, 2, 0 }
+			, { 0, 2, 6, 4 }
+			, { 3, 7, 6, 2 }
+			, { 5, 1, 0, 4 }
+		};
+		Debug->LogRaw("NEW INPUT NAVMESH\n");
+		for (int i = 0; i < 8; ++i) {
+			VEC3 p = v[i];
+			int idx = i * 3;
+			verts[idx] = p.x;
+			verts[idx + 1] = p.y;
+			verts[idx + 2] = p.z;
 
-	for (int i = 0; i < 8; ++i) {
-		VEC3 p = v[i];
-		int idx = i * 3;
-		verts[idx] = p.x;
-		verts[idx + 1] = p.y;
-		verts[idx + 2] = p.z;
+			Debug->LogRaw("vtx point = %f, %f, %f\n", p.x, p.y, p.z);
+		}
+
+		int idx = 0;
+		for (int i = 0; i < 5; ++i) {
+			tris[idx++] = idxs[i][0];
+			tris[idx++] = idxs[i][2];
+			tris[idx++] = idxs[i][1];
+
+			tris[idx++] = idxs[i][0];
+			tris[idx++] = idxs[i][3];
+			tris[idx++] = idxs[i][2];
+		}
+
+		assert(idx == ntris * 3);
 	}
+	else {
+		auto mesh = input.mesh;
+		/*std::string full_path = mesh->getDataPath() + mesh->getName();
+		CFileDataProvider dp(full_path.c_str());
+		FileDataMesh dataM = CMesh::loadData(mesh->getDataPath(), dp);
 
-	int idx = 0;
-	for (int i = 0; i < 5; ++i) {
-		tris[idx++] = idxs[i][0];
-		tris[idx++] = idxs[i][2];
-		tris[idx++] = idxs[i][1];
+		nverts = dataM.numVtx;
+		ntris = dataM.numIdx;*/
 
-		tris[idx++] = idxs[i][0];
-		tris[idx++] = idxs[i][3];
-		tris[idx++] = idxs[i][2];
+		nverts = mesh->getNbVertices();
+		ntris = mesh->getNbTriangles();
+
+		verts = new float[nverts * 3];
+		tris = new int[ntris * 3];
+
+		memset(verts, 0, nverts * 3 * sizeof(float));
+		memset(tris, 0, ntris * 3 * sizeof(int));
+
+		auto verticesPhysx = mesh->getVertices();
+		//auto trisPhysx = mesh->getTriangles();
+		//int* trisPhysxPointer = static_cast<int*>(trisPhysx);
+		Debug->LogRaw("NEW INPUT NAVMESH\n");
+		for (int i = 0; i < nverts; ++i) {
+			VEC3 p = PhysxConversion::PxVec3ToVec3(verticesPhysx[i]);
+			p += input.origin;
+			int idx = i * 3;
+			verts[idx] = p.x;
+			verts[idx + 1] = p.y;
+			verts[idx + 2] = p.z;
+
+			Debug->LogRaw("vtx point = %f, %f, %f\n", p.x,p.y,p.z);
+		}
+
+		auto trisPhysx = mesh->getTriangles();
+		auto src = (const PxU16*)trisPhysx;
+
+		/*for (PxU32 i = 0; i<ntris; i++)
+		{
+			indices[i * 3 + 0] = src[i * 3 + 0];
+			indices[i * 3 + 1] = src[i * 3 + 2];
+			indices[i * 3 + 2] = src[i * 3 + 1];
+		}*/
+
+		int idx = 0;
+		for (int i = 0; i < ntris; i++) {
+			tris[idx++] = (int)*src;
+			dbg("num = %d - ", (int)*src);
+			src++;
+			tris[idx++] = (int)*src;
+			dbg("%d - ", (int)*src);
+			src++;
+			tris[idx++] = (int)*src;
+			dbg("%d\n", (int)*src);
+			src++;
+		}
+
+		assert(idx == ntris * 3);
 	}
-
-	assert(idx == ntris * 3);
 }
 
 void CNavmeshInput::unprepareInput() {
