@@ -298,7 +298,7 @@ bool CEntitiesModule::start() {
 			}*/
 
 			auto rb = p->getActor()->isRigidStatic();
-			rb = nullptr;
+			//rb = nullptr;
 			if (rb) {
 				int nBShapes = rb->getNbShapes();
 				PxShape **ptr;

@@ -307,7 +307,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 		dtStatus status;
 
 		// store extra data
-		storeExtraData(salaloc);
+		//storeExtraData(salaloc);
 
 		// init Data
 		status = m_nav->init(navData, navDataSize, DT_TILE_FREE_DATA);
