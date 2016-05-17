@@ -292,10 +292,10 @@ bool CEntitiesModule::start() {
 	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
 
 	//sala = "tiling";
-	//sala = fields["room_two"];
+	sala = fields["room_two"];
 	//sala = "drones";
 	//sala = "boxes";
-	sala = "milestone2";
+	//sala = "milestone2";
 	//sala = "scene_milestone_1";
 	//sala = "scene_test_recast";
 	//sala = "pruebaExportador";
