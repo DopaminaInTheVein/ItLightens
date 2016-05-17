@@ -6,40 +6,38 @@
 
 class CNavmeshInput {
 public:
-	struct TInput {
-		VEC3 pmin;
-		VEC3 pmax;
-		TInput() : pmin(0, 0, 0), pmax(0, 0, 0) { }
-	};
-	static const int MAX_INPUTS = 1024;
-	typedef std::vector< TInput > VInputs;
-	//typedef std::vector< PxTriangleMeshGeometry > VInputsTris;
+  struct TInput {
+    VEC3 pmin;
+    VEC3 pmax;
+    VEC3 origin;
+    CQuaternion rotation;
+    PxTriangleMesh* mesh;
+    TInput(PxTriangleMesh* i_mesh = nullptr) : pmin(0, 0, 0), pmax(0, 0, 0), mesh(i_mesh) { }
+  };
+  static const int MAX_INPUTS = 1024;
+  typedef std::vector< TInput > VInputs;
 
 public:
-	VInputs               inputs;
-	//VInputsTris               inputsTris;
-	VEC3           aabb_min;
-	VEC3           aabb_max;
+  VInputs         inputs;
+  VEC3           aabb_min;
+  VEC3           aabb_max;
 
-	float*                verts;
-	int*                  tris;
-	int                   nverts;
-	int                   ntris;
-	int                   nverts_total;
-	int                   ntris_total;
-	//int                   nverts_total_mesh;
-	//int                   ntris_total_mesh;
+  float*                verts;
+  int*                  tris;
+  int                   nverts;
+  int                   ntris;
+  int                   nverts_total;
+  int                   ntris_total;
 
 public:
-	CNavmeshInput();
+  CNavmeshInput();
 
-	void clearInput();
-	void addInput(const VEC3& p0, const VEC3& p1);
-	//void addInput(const PxTriangleMeshGeometry& t_mesh);
-	void prepareInput(const TInput& input);
-	//void prepareInputMesh(const PxTriangleMeshGeometry& input);
-	void unprepareInput();
-	void computeBoundaries();
+  void clearInput();
+  void addInput(const VEC3& p0, const VEC3& p1);
+  void addInput(PxTriangleMesh * mesh, const VEC3& origin, const VEC3& p0, const VEC3& p1, const CQuaternion& rotat);
+  void prepareInput(const TInput& input);
+  void unprepareInput();
+  void computeBoundaries();
 };
 
 #endif
