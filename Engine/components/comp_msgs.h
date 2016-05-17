@@ -4,6 +4,7 @@
 #include "handle/msgs.h"
 #include "components/entity_tags.h"
 #include "logic/damage.h"
+#include "logic/polarity.h"
 
 struct TMsgEntityCreated {
 	DECLARE_MSG_ID();
@@ -232,6 +233,14 @@ struct TMsgBoxHit {
 struct TMsgGuidedCamera {
 	CHandle guide;
 	float speed;
+	DECLARE_MSG_ID();
+};
+struct TMsgSetPolarity {
+	pols polarity;
+	DECLARE_MSG_ID();
+};
+struct TMsgSetLocked {
+	bool locked;
 	DECLARE_MSG_ID();
 };
 #endif

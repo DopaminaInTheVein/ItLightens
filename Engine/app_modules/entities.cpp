@@ -32,6 +32,7 @@ DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
 DECL_OBJ_MANAGER("cientifico", ai_scientific);
 DECL_OBJ_MANAGER("beacon", beacon_controller);
 DECL_OBJ_MANAGER("workbench", workbench_controller);
+DECL_OBJ_MANAGER("magnet_door", magnet_door);
 /****/DECL_OBJ_MANAGER("ai_guard", ai_guard);
 DECL_OBJ_MANAGER("bt_guard", bt_guard);
 /****/DECL_OBJ_MANAGER("ai_mole", ai_mole);
@@ -192,6 +193,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
+	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
+	SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);
+	SUBSCRIBE(magnet_door, TMsgEntityCreated, onCreate);
 
 	//box
 	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);

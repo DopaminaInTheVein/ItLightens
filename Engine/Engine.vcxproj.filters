@@ -584,6 +584,9 @@
     <ClCompile Include="components\comp_light_dir_shadows.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="logic\magnet_door.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1429,6 +1432,9 @@
     </ClInclude>
     <ClInclude Include="components\comp_light_dir_shadows.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\magnet_door.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
