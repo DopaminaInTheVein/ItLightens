@@ -1,5 +1,6 @@
 #include "mcv_platform.h"
 #include "magnet_door.h"
+#include "components/comp_msgs.h"
 
 /*
 enum eMagnetismBehaviour {
@@ -84,7 +85,8 @@ bool magnet_door::getUpdateInfo() {
 	if (!player.isValid()) return false;
 	CEntity* ePlayer = myEntity;
 	playerTransform = ePlayer->get<TCompTransform>();
-	TMsgGetPolarity msgPol; msgPol.polarity = NEUTRAL;
+	TMsgGetPolarity msgPol; 
+	msgPol.polarity = NEUTRAL;
 	ePlayer->sendMsgWithReply(msgPol);
 	playerPolarity = msgPol.polarity;
 
