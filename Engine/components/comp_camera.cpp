@@ -14,6 +14,11 @@ bool TCompCamera::load(MKeyValue& atts) {
   return true;
 }
 
+void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
+  assert(msg.view_proj);
+  *msg.view_proj = this->getViewProjection();
+}
+
 void TCompCamera::render() const {
   auto mesh = Resources.get("frustum.mesh")->as<CMesh>();
   activateWorldMatrix(getViewProjection().Invert());
@@ -47,4 +52,13 @@ void TCompCamera::renderInMenu() {
   changed |= ImGui::SliderFloat("ZFar", &zfar, 10.f, 1000.f);
   if( changed )
     setProjection(fov_in_rad, znear, zfar);
+
+  VEC3 t = getFront();
+  ImGui::InputFloat3("Front", &t.x);
+  t = getUp();
+  ImGui::InputFloat3("Up", &t.x);
+  t = getLeft();
+  ImGui::InputFloat3("Left", &t.x);
+  float ratio = getAspectRatio();
+  ImGui::InputFloat("AspectRatio", &ratio);
 }

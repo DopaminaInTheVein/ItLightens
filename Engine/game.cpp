@@ -38,6 +38,7 @@ bool CApp::start() {
   all_modules.push_back(render_deferred);
   
   mod_update.push_back(imgui);
+  mod_update.push_back(render_deferred);
   mod_update.push_back(entities);
   mod_update.push_back(io);
   mod_renders.push_back(render_deferred);

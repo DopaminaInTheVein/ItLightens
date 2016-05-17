@@ -1,0 +1,8 @@
+<tech ps_disabled="1">
+  <!-- We could generate a special version of the meshes
+       which only had the positions -->
+  <vs fx="deferred" main="VSOnlyPos" decl="positions_normal_uv_tangent" />
+  <!-- No Pixel shader when rendering the shadows -->
+</tech>
+
+

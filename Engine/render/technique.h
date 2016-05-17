@@ -15,7 +15,7 @@ class CRenderTechnique : public IResource, public CXMLParser {
   int                  priority;
   bool                 uses_bones;
   bool                 is_transparent;
-
+  bool                 ps_disabled;
 
   void onStartElement(const std::string &elem, MKeyValue &atts) override;
 
@@ -39,7 +39,7 @@ public:
   }
 
   bool isValid() const {
-    return vs && ps;
+    return vs && ( ps || ps_disabled );
   }
 
   bool usesBones() const { return uses_bones; }

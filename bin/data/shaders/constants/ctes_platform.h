@@ -5,12 +5,16 @@
 #define CTE_SHADER_CAMERA_SLOT     1
 #define CTE_SHADER_BONES_SLOT      2
 #define CTE_SHADER_LIGHT           3
+#define CTE_SHADER_GLOBALS_SLOT    4
 
 #define TEXTURE_SLOT_DIFFUSE       0
 #define TEXTURE_SLOT_NORMALS       1
-#define TEXTURE_SLOT_WORLD_POS     4
+#define TEXTURE_SLOT_SHADOWMAP     3
+#define TEXTURE_SLOT_DEPTHS        4
 #define TEXTURE_SLOT_ENVIRONMENT   5
 #define TEXTURE_SLOT_LIGHT_MASK    6
+#define TEXTURE_SLOT_NOISE         7
+
 
 #ifdef INC_MCV_PLATFORM_H_
 

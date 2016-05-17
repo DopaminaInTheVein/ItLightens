@@ -5,6 +5,7 @@
 #include "camera/camera.h"
 
 class CEntity;
+struct TMsgGetCullingViewProj;
 
 // ------------------------------------
 struct TCompCamera : public CCamera, public TCompBase {
@@ -13,6 +14,7 @@ struct TCompCamera : public CCamera, public TCompBase {
   bool load(MKeyValue& atts);
   void renderInMenu();
   void updateFromEntityTransform(CEntity* e_owner);
+  void onGetViewProj(const TMsgGetCullingViewProj& msg);
 };
 
 #endif

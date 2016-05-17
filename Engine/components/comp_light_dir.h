@@ -12,7 +12,7 @@ struct TCompLightDir : public TCompCamera {
   VEC4 color;
   bool load(MKeyValue& atts);
   void renderInMenu();
-  void uploadShaderCtes();
+  void uploadShaderCtes(CEntity* e);
   void activate();
   void update(float dt);
 };

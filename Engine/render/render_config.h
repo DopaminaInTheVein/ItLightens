@@ -17,6 +17,7 @@ enum RSConfig {
   RSCFG_DEFAULT
   //	, RSCFG_WIREFRAME
   , RSCFG_INVERT_CULLING
+  , RSCFG_SHADOWS
   , RSCFG_COUNT
 };
 void activateRS(enum RSConfig);

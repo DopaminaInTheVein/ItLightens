@@ -10,11 +10,13 @@
 #include "comp_controller_1st_person.h"
 #include "comp_hierarchy.h"
 #include "comp_aabb.h"
+#include "comp_culling.h"
 #include "comp_life.h"
 #include "comp_tags.h"
 #include "skeleton/comp_skeleton.h"
 #include "skeleton/comp_bone_tracker.h"
 #include "comp_light_dir.h"
+#include "comp_light_dir_shadows.h"
 #include "comp_light_point.h"
 
 #endif

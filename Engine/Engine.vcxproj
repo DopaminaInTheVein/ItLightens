@@ -106,6 +106,7 @@
     <ClCompile Include="components\comp_culling.cpp" />
     <ClCompile Include="components\comp_hierarchy.cpp" />
     <ClCompile Include="components\comp_light_dir.cpp" />
+    <ClCompile Include="components\comp_light_dir_shadows.cpp" />
     <ClCompile Include="components\comp_light_point.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
@@ -154,6 +155,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="render\render_config.cpp" />
+    <ClCompile Include="render\render_instanced.cpp" />
     <ClCompile Include="render\render_manager.cpp" />
     <ClCompile Include="render\render_to_texture.cpp" />
     <ClCompile Include="render\shaders.cpp" />
@@ -198,6 +200,7 @@
     <ClInclude Include="components\comp_hierarchy.h" />
     <ClInclude Include="components\comp_life.h" />
     <ClInclude Include="components\comp_light_dir.h" />
+    <ClInclude Include="components\comp_light_dir_shadows.h" />
     <ClInclude Include="components\comp_light_point.h" />
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
@@ -226,6 +229,7 @@
     <ClInclude Include="render\mesh_format.h" />
     <ClInclude Include="render\render.h" />
     <ClInclude Include="render\render_config.h" />
+    <ClInclude Include="render\render_instanced.h" />
     <ClInclude Include="render\render_manager.h" />
     <ClInclude Include="render\render_to_texture.h" />
     <ClInclude Include="render\shaders.h" />
@@ -260,6 +264,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="..\bin\data\shaders\deferred.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\globals.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

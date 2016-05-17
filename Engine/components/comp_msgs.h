@@ -36,5 +36,13 @@ struct TMsgAddTag {
   DECLARE_MSG_ID();
 };
 
+struct TMsgGetCullingViewProj {
+  MAT44* view_proj;
+  DECLARE_MSG_ID();
+};
 
+struct TMsgGetLocalAABB {
+  AABB* aabb;
+  DECLARE_MSG_ID();
+};
 #endif

@@ -3,11 +3,14 @@
 ShaderBuffer(TCteCamera, CTE_SHADER_CAMERA_SLOT)
 {
   matrix ViewProjection;
+  matrix InvViewProjection;
   float4 CameraWorldPos;
   float4 CameraFront;
+  float4 CameraUp;
+  float4 CameraLeft;
 
   float  CameraZFar;
   float  CameraZNear;
-  float  CameraFov;
+  float  CameraTanHalfFov;
   float  CameraAspectRatio;
 };

@@ -6,7 +6,9 @@
 #include <bitset>
 
 struct TCompCulling : public TCompBase {
-  std::bitset<4096> bits;
+  static const size_t nbits = 4096;
+  typedef std::bitset<nbits> TCullingBits;
+  TCullingBits bits;
 
   // A single plane
   struct CPlane {
@@ -15,6 +17,19 @@ struct TCompCulling : public TCompBase {
     void from(VEC4 k) {
       n = VEC3(k.x, k.y, k.z);
       d = k.w;
+    }
+
+    // Returns true if the aabb is fully in the negative side of the plane
+    bool isCulled(const AABB* aabb) const {
+      //
+      const float r = aabb->Extents.x * fabsf(n.x)
+        + aabb->Extents.y * fabsf(n.y)
+        + aabb->Extents.z * fabsf(n.z)
+        ;
+
+      // Distance from box center to the plane
+      const float c = n.Dot(aabb->Center) + d;
+      return c < -r;
     }
   };
 
@@ -47,12 +62,13 @@ struct TCompCulling : public TCompBase {
       vp[FP_NEAR].from(mw + mz);      // + mz if frustum is 0..1
       vp[FP_FAR].from(mw - mz);
     }
+    bool isVisible(const AABB* aabb) const;
   };
 
   VPlanes planes;
 
   void renderInMenu();
-  void update( MAT44 view_proj );
+  void update( );
 };
 
 

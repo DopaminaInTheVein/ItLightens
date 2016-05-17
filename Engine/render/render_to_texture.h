@@ -13,6 +13,8 @@ class CRenderToTexture : public CTexture {
 
 	ID3D11Texture2D*        depth_resource;
 
+  CTexture*               ztexture;
+
 public:
 
 	CRenderToTexture();
@@ -33,6 +35,7 @@ public:
 	ID3D11RenderTargetView* getRenderTargetView() {
 		return render_target_view;
 	}
+  CTexture* getZTexture() { return ztexture; }
 };
 
 #endif

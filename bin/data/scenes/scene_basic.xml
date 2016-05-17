@@ -1,9 +1,9 @@
 <entities>
   <entity>
     <name name="Plane001" />
-    <transform pos="0.0 0.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <transform pos="0.0 0.0 0.0" quat="0.0 0.0 0.0 1.0" scale="3.0" />
     <render_static_mesh name="static_meshes/Plane001.static_mesh" />
-      <abs_aabb/>
+    <abs_aabb/>
   </entity>
   <entity>
     <name name="Box001" />
@@ -22,6 +22,7 @@
     <transform pos="1.60666 2.85306 10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/GeoSphere001Water.static_mesh" />
     <hierarchy pos="0 0 3" quat="0.0 0.0 0.0 1.0" scale="1.0" parent="Torus001"/>
+      <local_aabb/>
       <abs_aabb/>
   </entity>
   <entity>

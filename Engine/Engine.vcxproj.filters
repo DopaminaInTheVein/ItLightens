@@ -159,6 +159,12 @@
     <ClCompile Include="components\comp_culling.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_light_dir_shadows.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="render\render_instanced.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -378,6 +384,12 @@
     <ClInclude Include="components\comp_culling.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_light_dir_shadows.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="render\render_instanced.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -448,6 +460,9 @@
       <Filter>render\shaders</Filter>
     </FxCompile>
     <FxCompile Include="..\bin\data\shaders\deferred.fx">
+      <Filter>render\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\globals.fx">
       <Filter>render\shaders</Filter>
     </FxCompile>
   </ItemGroup>

@@ -11,6 +11,8 @@ bool createDepthBuffer(
   , DXGI_FORMAT depth_format
   , ID3D11Texture2D** out_depth_resource
   , ID3D11DepthStencilView** out_depth_stencil_view
+  , const char* name
+  , CTexture** out_ztexture = nullptr
   );
 
 void drawLine(const VEC3& src, const VEC3& dst, const VEC4& color);
@@ -30,5 +32,7 @@ extern CShaderCte< TCteObject > shader_ctes_object;
 extern CShaderCte< TCteBones > shader_ctes_bones;
 #include "constants/ctes_light.h"
 extern CShaderCte< TCteLight > shader_ctes_lights;
+#include "constants/ctes_globals.h"
+extern CShaderCte< TCteGlobals > shader_ctes_globals;
 
 #endif

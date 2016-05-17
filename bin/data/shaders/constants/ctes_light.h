@@ -5,9 +5,10 @@
 
 ShaderBuffer(TCteLight, CTE_SHADER_LIGHT)
 {
+  matrix LightViewProjection;
+  matrix LightViewProjectionOffset;
   float4 LightWorldPos;
   float4 LightWorldFront;
-  matrix LightViewProjection;
   float4 LightColor;
   float  LightInRadius;
   float  LightOutRadius;

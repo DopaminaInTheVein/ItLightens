@@ -8,15 +8,25 @@ CShaderCte< TCteCamera > shader_ctes_camera;
 CShaderCte< TCteObject > shader_ctes_object;
 CShaderCte< TCteBones >  shader_ctes_bones;
 CShaderCte< TCteLight >  shader_ctes_lights;
+CShaderCte< TCteGlobals > shader_ctes_globals;
 
 // -----------------------------------------------
 bool createDepthBuffer(
-  int xres
+    int xres
   , int yres
   , DXGI_FORMAT depth_format
   , ID3D11Texture2D** out_depth_resource
   , ID3D11DepthStencilView** out_depth_stencil_view
+  , const char* name
+  , CTexture** out_ztexture
   ) {
+
+  assert(depth_format == DXGI_FORMAT_R32_TYPELESS
+    || depth_format == DXGI_FORMAT_R24G8_TYPELESS
+    || depth_format == DXGI_FORMAT_R16_TYPELESS
+    || depth_format == DXGI_FORMAT_D24_UNORM_S8_UINT
+    || depth_format == DXGI_FORMAT_R8_TYPELESS);
+
   // Create depth stencil texture
   D3D11_TEXTURE2D_DESC desc;
   ZeroMemory(&desc, sizeof(desc));
@@ -29,9 +39,42 @@ bool createDepthBuffer(
   desc.SampleDesc.Quality = 0;
   desc.Usage = D3D11_USAGE_DEFAULT;
   desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-  //| D3D11_BIND_SHADER_RESOURCE;
   desc.CPUAccessFlags = 0;
   desc.MiscFlags = 0;
+
+  //  if (bind_shader_resource)
+  if(depth_format != DXGI_FORMAT_D24_UNORM_S8_UINT)
+    desc.BindFlags |= D3D11_BIND_SHADER_RESOURCE;
+
+  // SRV = Shader Resource View
+  // DSV = Depth Stencil View
+  DXGI_FORMAT texturefmt = DXGI_FORMAT_R32_TYPELESS;
+  DXGI_FORMAT SRVfmt = DXGI_FORMAT_R32_FLOAT;       // Stencil format
+  DXGI_FORMAT DSVfmt = DXGI_FORMAT_D32_FLOAT;       // Depth format
+
+  switch (depth_format) {
+  case DXGI_FORMAT_R32_TYPELESS:
+    SRVfmt = DXGI_FORMAT_R32_FLOAT;
+    DSVfmt = DXGI_FORMAT_D32_FLOAT;
+    break;
+  case DXGI_FORMAT_R24G8_TYPELESS:
+    SRVfmt = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+    DSVfmt = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    break;
+  case DXGI_FORMAT_R16_TYPELESS:
+    SRVfmt = DXGI_FORMAT_R16_UNORM;
+    DSVfmt = DXGI_FORMAT_D16_UNORM;
+    break;
+  case DXGI_FORMAT_R8_TYPELESS:
+    SRVfmt = DXGI_FORMAT_R8_UNORM;
+    DSVfmt = DXGI_FORMAT_R8_UNORM;
+    break;
+  case DXGI_FORMAT_D24_UNORM_S8_UINT:
+    SRVfmt = desc.Format;
+    DSVfmt = desc.Format;
+    break;
+  }
+
   ID3D11Texture2D* depth_resource;
   HRESULT hr = Render.device->CreateTexture2D(&desc, NULL, &depth_resource);
   if (FAILED(hr))
@@ -40,7 +83,7 @@ bool createDepthBuffer(
   // Create the depth stencil view
   D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
   ZeroMemory(&descDSV, sizeof(descDSV));
-  descDSV.Format = desc.Format;
+  descDSV.Format = DSVfmt;
   descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
   descDSV.Texture2D.MipSlice = 0;
   hr = Render.device->CreateDepthStencilView(depth_resource
@@ -48,8 +91,35 @@ bool createDepthBuffer(
     , out_depth_stencil_view);
   if (FAILED(hr))
     return false;
+  setDXName((*out_depth_stencil_view), "ZTextureDSV");
 
   *out_depth_resource = depth_resource;
+  
+  // ------------------------------------------------------
+  if (desc.BindFlags & D3D11_BIND_SHADER_RESOURCE) {
+    // Setup the description of the shader resource view.
+    D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+    shaderResourceViewDesc.Format = SRVfmt;
+    shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+    shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
+    shaderResourceViewDesc.Texture2D.MipLevels = desc.MipLevels;
+
+    // Create the shader resource view to access the texture
+    ID3D11ShaderResourceView* depth_resource_view = nullptr;
+    hr = Render.device->CreateShaderResourceView(depth_resource, &shaderResourceViewDesc, &depth_resource_view);
+    if (FAILED(hr))
+      return false;
+
+    CTexture* ztexture = new CTexture();
+    ztexture->setDXObjs(depth_resource, depth_resource_view );
+    ztexture->setName(("Z" + std::string(name)).c_str());
+    Resources.registerNew( ztexture );
+    setDXName(depth_resource, ztexture->getName().c_str());
+    setDXName(depth_resource_view, ztexture->getName().c_str());
+    assert(out_ztexture);
+    *out_ztexture = ztexture;
+  }
+
   return true;
 }
 
@@ -76,6 +146,8 @@ bool drawUtilsCreate() {
     return false;
   if (!shader_ctes_lights.create("ctes_light"))
     return false;
+  if (!shader_ctes_globals.create("ctes_globals"))
+    return false;
 
   activateDefaultStates();
   return true;
@@ -86,12 +158,14 @@ void activateDefaultStates() {
   shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
   shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
   shader_ctes_lights.activate(CTE_SHADER_LIGHT);
+  shader_ctes_globals.activate(CTE_SHADER_GLOBALS_SLOT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
   activateSamplerStates();
 }
 
 void drawUtilsDestroy() {
+  shader_ctes_globals.destroy();
   shader_ctes_lights.destroy();
   shader_ctes_bones.destroy();
   shader_ctes_camera.destroy();
@@ -103,9 +177,11 @@ void activateCamera(const CCamera* camera) {
   shader_ctes_camera.ViewProjection = camera->getViewProjection();
   shader_ctes_camera.CameraWorldPos = VEC4(camera->getPosition());
   shader_ctes_camera.CameraFront = VEC4(camera->getFront());
+  shader_ctes_camera.CameraUp = VEC4(camera->getUp());
+  shader_ctes_camera.CameraLeft = VEC4(camera->getLeft());
   shader_ctes_camera.CameraZFar = camera->getZFar();
   shader_ctes_camera.CameraZNear = camera->getZNear();
-  shader_ctes_camera.CameraFov = camera->getFov();
+  shader_ctes_camera.CameraTanHalfFov = tan( camera->getFov() * 0.5f );
   shader_ctes_camera.CameraAspectRatio = camera->getAspectRatio();
 
   shader_ctes_camera.uploadToGPU();

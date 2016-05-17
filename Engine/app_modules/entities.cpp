@@ -21,7 +21,9 @@ DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
 DECL_OBJ_MANAGER("abs_aabb", TCompAbsAABB);
 DECL_OBJ_MANAGER("local_aabb", TCompLocalAABB);
+DECL_OBJ_MANAGER("culling", TCompCulling);
 DECL_OBJ_MANAGER("light_dir", TCompLightDir);
+DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 
@@ -50,7 +52,9 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompTags>()->init(nmax);
 
 	getHandleManager<TCompCamera>()->init(4);
-	getHandleManager<TCompLightDir>()->init(4);
+  getHandleManager<TCompCulling>()->init(4);
+  getHandleManager<TCompLightDir>()->init(4);
+  getHandleManager<TCompLightDirShadows>()->init(4);
 	getHandleManager<TCompLightPoint>()->init(32);
 
 	getHandleManager<TCompLife>()->init(nmax);
@@ -60,10 +64,14 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
+  SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
   SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
   SUBSCRIBE(TCompBoneTracker, TMsgEntityGroupCreated, onGroupCreated);
-	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
+  SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
+  SUBSCRIBE(TCompLocalAABB, TMsgEntityCreated, onCreate);
+  SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
+  SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
 	{
 		CEntityParser ep;
@@ -106,6 +114,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompController1stPerson>()->updateAll(dt);
 	getHandleManager<TCompCamera>()->updateAll(dt);
 	getHandleManager<TCompLightDir>()->updateAll(dt);
+  getHandleManager<TCompLightDirShadows>()->updateAll(dt);
 
 	if (use_parallel)
 		getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
@@ -115,6 +124,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompBoneTracker>()->updateAll(dt);
   getHandleManager<TCompHierarchy>()->onAll(&TCompHierarchy::updateWorldFromLocal);
   getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
+  getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
 
 	// Move this line to the physics module maybe?
 	// Physics.get()..update( dt );
@@ -149,16 +159,13 @@ void CEntitiesModule::update(float dt) {
 }
 
 void CEntitiesModule::render() {
-	// for each manager
-	// if manager has debug render active
-	// manager->renderAll()
-
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
 	// All components render in this stage with this 'tech'
 	tech->activate();
 	getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
+  getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
   getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
   getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
   getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);

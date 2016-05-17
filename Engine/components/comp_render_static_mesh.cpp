@@ -2,6 +2,7 @@
 #include "comp_render_static_mesh.h"
 #include "resources/resources_manager.h"
 #include "render/render_manager.h"
+#include "render/static_mesh.h"
 
 void TCompRenderStaticMesh::onCreate(const TMsgEntityCreated&) {
   registerToRender();
@@ -25,3 +26,7 @@ void TCompRenderStaticMesh::unregisterFromRender() {
   RenderManager.unregisterFromRender(CHandle(this));
 }
 
+void TCompRenderStaticMesh::onGetLocalAABB(const TMsgGetLocalAABB& msg) {
+  if (static_mesh)
+    AABB::CreateMerged(*msg.aabb, *msg.aabb, static_mesh->getAABB());
+}

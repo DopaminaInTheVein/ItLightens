@@ -27,7 +27,7 @@ bool TCompTransform::load(MKeyValue& atts) {
 
 void TCompTransform::renderInMenu() {
   VEC3 pos = getPosition();
-  if (ImGui::SliderFloat3("Pos", &pos.x, -10.f, 10.f))
+  if (ImGui::SliderFloat3("Pos", &pos.x, -30.f, 30.f ))
     setPosition(pos);
 
   float yaw, pitch;

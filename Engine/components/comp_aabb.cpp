@@ -21,6 +21,13 @@ void TCompAABB::render() const {
   drawWiredAABB(*this, MAT44::Identity, VEC4(1, 0, 0, 1));
 }
 
+void TCompAABB::updateFromSiblingsLocalAABBs(CHandle h_entity) {
+  // Time to update our AbsAABB based on the sibling components
+  CEntity* e = h_entity;
+  // Start by computing the local aabb
+  e->sendMsg(TMsgGetLocalAABB{ this });
+}
+
 // Model * ( center +/- halfsize ) = model * center + model * half_size
 AABB getRotatedBy(AABB src, const MAT44 &model) {
   AABB new_aabb;
@@ -37,6 +44,14 @@ AABB getRotatedBy(AABB src, const MAT44 &model) {
   return new_aabb;
 }
 
+// ------------------------------------------------------
+void TCompAbsAABB::onCreate(const TMsgEntityCreated&) {
+  updateFromSiblingsLocalAABBs(CHandle(this).getOwner());
+  CEntity* e_owner = CHandle(this).getOwner();
+  TCompTransform* c_trans = e_owner->get<TCompTransform>();
+  AABB::Transform(*this, c_trans->asMatrix());
+}
+
 // Updates AbsAABB from LocalAABB and CompTransform
 void TCompLocalAABB::updateAbs() {
   CEntity *e = CHandle(this).getOwner();
@@ -45,6 +60,10 @@ void TCompLocalAABB::updateAbs() {
   TCompAbsAABB *abs_aabb = e->get<TCompAbsAABB>();
   if (abs_aabb)
     *(AABB*)abs_aabb = getRotatedBy(*this, in_tmx->asMatrix());
+}
+
+void TCompLocalAABB::onCreate(const TMsgEntityCreated&) {
+  updateFromSiblingsLocalAABBs(CHandle(this).getOwner());
 }
 
 void TCompLocalAABB::render() const {

@@ -16,13 +16,22 @@ class CRenderManager {
     //const CRenderTechnique* tech;
     CHandle                 owner;
     CHandle                 transform;
+    CHandle                 aabb;
+    //int                     aabb_idx;
   };
 
+  struct TShadowKey {
+    const CMesh*            mesh;
+    CHandle                 owner;
+    CHandle                 transform;
+  };
   static bool sortByTechMatMesh(const TKey& k1, const TKey& k2);
 
   bool in_order;
   std::vector< TKey > all_keys;
+  std::vector< TShadowKey > all_shadow_keys;
 
+  int  ntimes_sorted = 0;
 public:
 
   void registerToRender(const CStaticMesh* mesh, CHandle handle);
@@ -33,7 +42,8 @@ public:
     , TRANSPARENT_OBJS
   };
 
-  void renderAll(eRenderType render_type);
+  void renderAll(CHandle h_camera, eRenderType render_type);
+  void renderShadowCasters();
 };
 
 extern CRenderManager RenderManager;

@@ -4,8 +4,9 @@
     <tags tags="the_camera" />
     <name name="the_camera" />
     <transform pos="-15 16 -12" lookat="0 0 0" />
-    <camera znear="0.1" zfar="100" fov="60" />
+    <camera znear="0.1" zfar="500" fov="60" />
     <controller_1st_person />
+    <culling />
   </entity>
 
   <entity prefab="bullet" />

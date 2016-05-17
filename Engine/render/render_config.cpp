@@ -8,6 +8,7 @@ static ID3D11BlendState*        blend_states[BLENDCFG_COUNT];
 enum SMPConfig {
   SMP_DEFAULT = 0,
   SMP_BORDER_BLACK = 1, // light dirs
+  SMP_PCF_SHADOWS,
   SMP_COUNT,
 };
 static ID3D11SamplerState*      sampler_states[SMP_COUNT];
@@ -43,6 +44,24 @@ void createSamplerStates() {
   hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_BORDER_BLACK]);
   assert(!FAILED(hr));
   setDXName(depth_stencil_states[SMP_BORDER_BLACK], "SMP_BORDER_BLACK");
+
+  // PCF sampling
+  D3D11_SAMPLER_DESC sampler_desc = {
+    D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT,// D3D11_FILTER Filter;
+    D3D11_TEXTURE_ADDRESS_BORDER, //D3D11_TEXTURE_ADDRESS_MODE AddressU;
+    D3D11_TEXTURE_ADDRESS_BORDER, //D3D11_TEXTURE_ADDRESS_MODE AddressV;
+    D3D11_TEXTURE_ADDRESS_BORDER, //D3D11_TEXTURE_ADDRESS_MODE AddressW;
+    0,//FLOAT MipLODBias;
+    0,//UINT MaxAnisotropy;
+    D3D11_COMPARISON_LESS, //D3D11_COMPARISON_FUNC ComparisonFunc;
+    0.0, 0.0, 0.0, 0.0,//FLOAT BorderColor[ 4 ];
+    0,//FLOAT MinLOD;
+    0//FLOAT MaxLOD;   
+  };
+  hr = ::Render.device->CreateSamplerState( &sampler_desc, &sampler_states[SMP_PCF_SHADOWS]);
+  assert(!FAILED(hr));
+  setDXName(sampler_states[SMP_PCF_SHADOWS], "PCF_SHADOWS");
+
 }
 
 // --------------------------------------------------
@@ -158,6 +177,23 @@ void createRasterizerStates() {
   hr = Render.device->CreateRasterizerState(&desc, &rasterizer_states[RSCFG_INVERT_CULLING]);
   assert(!FAILED(hr));
   setDXName(rasterizer_states[RSCFG_INVERT_CULLING], "INVERT_CULLING");
+
+  // Depth bias options when rendering the shadows
+  desc = {
+    D3D11_FILL_SOLID, // D3D11_FILL_MODE FillMode;
+    D3D11_CULL_BACK,  // D3D11_CULL_MODE CullMode;
+    FALSE,            // BOOL FrontCounterClockwise;
+    13,               // INT DepthBias;
+    0.0f,             // FLOAT DepthBiasClamp;
+    2.0f,             // FLOAT SlopeScaledDepthBias;
+    TRUE,             // BOOL DepthClipEnable;
+    FALSE,            // BOOL ScissorEnable;
+    FALSE,            // BOOL MultisampleEnable;
+    FALSE,            // BOOL AntialiasedLineEnable;
+  };
+  hr = Render.device->CreateRasterizerState(&desc, &rasterizer_states[RSCFG_SHADOWS]);
+  assert(!FAILED(hr));
+  setDXName(rasterizer_states[RSCFG_SHADOWS], "RS_SHADOWS");
 }
 
 // ----------------------------------------------
