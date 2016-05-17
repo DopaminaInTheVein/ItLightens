@@ -243,4 +243,8 @@ struct TMsgSetLocked {
 	bool locked;
 	DECLARE_MSG_ID();
 };
+struct TMsgGetPolarity {
+	pols polarity;
+	DECLARE_MSG_ID();
+};
 #endif

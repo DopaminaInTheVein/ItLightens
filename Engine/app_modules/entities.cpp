@@ -243,6 +243,7 @@ bool CEntitiesModule::start() {
 	//polarized
 	SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(player_controller, TMsgPolarize, onPolarize);
+	SUBSCRIBE(player_controller, TMsgGetPolarity, onGetPolarity);
 	SUBSCRIBE(TCompPolarized, TMsgPlayerPolarize, onPolarize);
 
 	//Posesiones Mensajes

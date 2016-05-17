@@ -42,3 +42,9 @@ fn isSpline obj = (
 		return (nknots > 0 )
 	) catch ( return false)
 )
+
+--Parse generic attribute
+fn parsePropAttribute xml prop attr= (
+	local prop = getUserProp _parsingObject prop
+	if prop != undefined then (xml.addAttr attr prop)
+)
