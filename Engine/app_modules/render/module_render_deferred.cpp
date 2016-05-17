@@ -117,8 +117,13 @@ bool CRenderDeferredModule::start() {
   Resources.get("textures/primera_prueba_diagonal_menos_denso.dds")->as<CTexture>()->activate(87);
   Resources.get("textures/primera_prueba_hatching.dds")->as<CTexture>()->activate(88);
   Resources.get("textures/primera_prueba_menos_denso.dds")->as<CTexture>()->activate(89);
+  Resources.get("textures/tramado_extraño_mangastudio.dds")->as<CTexture>()->activate(90);
+  Resources.get("textures/diagonal material ligero mangastudio.dds")->as<CTexture>()->activate(92);
+  Resources.get("textures/primera_prueba_diagonal_lots.dds")->as<CTexture>()->activate(91);
+  Resources.get("textures/diagonal_material_mangastudio.dds")->as<CTexture>()->activate(93);
+  Resources.get("textures/diagonal_menos_denso_material_mangastudio.dds")->as<CTexture>()->activate(94);
 
-  Resources.get("textures/warp_light.dds")->as<CTexture>()->activate(70);
+  Resources.get("textures/rampa_prueba.dds")->as<CTexture>()->activate(70);
 
   shader_ctes_hatching.edge_lines_detection = 0.02f;
   shader_ctes_hatching.frequency_offset = 8.0f;

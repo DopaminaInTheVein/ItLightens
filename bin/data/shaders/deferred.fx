@@ -127,7 +127,7 @@ void PSLightPoint(
   // Saturate limita los valores de salida al rango 0..1
   float NL = saturate(dot(N, L));
   
- float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL, 0.0f))*3.0f;
+ float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL+0.5f, 0.0f))*2.5f;
   
  NL *= lightWarp.xyz;
  
@@ -157,14 +157,17 @@ void PSLightPoint(
   float3 E_refl = reflect(-E, N);
   float3 env = txEnvironment.Sample(samLinear, E_refl).xyz;
   
-  
+	//if(NL < 1.0f)
+		//NL = 1.0f;
 
   // Aportacion final de la luz es NL x color_luz x atenuacion
+  
   o_color.xyz = LightColor.xyz * NL * distance_att * albedo + spec_amount;
   o_color.xyz += env * 0.3;
   //o_color.xyz = E_refl.xyz;
   o_color.a = 1.;
   
+  //o_color = float4(spec_amount, spec_amount, spec_amount, 1.0f);
   o_specular = float4(spec_amount, spec_amount, spec_amount,1.0f);
 
   //o_color = float4(NL, NL, NL ,1) * albedo;

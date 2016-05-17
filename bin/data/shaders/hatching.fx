@@ -17,6 +17,11 @@ Texture2D txHatch_diagonal2 : register(t87);
 
 Texture2D txHatch_test : register(t88);
 Texture2D txHatch_test2 : register(t89);
+Texture2D txHatch_test3 : register(t90);
+Texture2D txHatch_test4 : register(t91);
+Texture2D txHatch_test5 : register(t92);
+Texture2D txHatch_test6 : register(t93);
+Texture2D txHatch_test7 : register(t94);
 
 
 
@@ -44,8 +49,8 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	float  z = txDepths.Load(ss_load_coords).x;
 	float3 wPos = getWorldCoords(Pos.xy, z);
 
-	float pixel_size = 1;
-	pixel_size *= (xres/yres);
+	float2 pixel_size = float2(1.0f/xres, 1.0f/yres);
+	//pixel_size *= (xres/yres);
 	//pixel_size = 1.0;
 	//iTex0
 	
@@ -54,7 +59,7 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	float specular = txSpecular.Sample(samLinear, iTex0).r;
 	float4 diffuse = txDiffuse.Sample(samLinear, iTex0);
 	float4 normal = txNormal.Sample(samLinear, iTex0);
-	
+	float inv_shadows = 1- txInvShadows.Sample(samLinear, iTex0).r;
 	float base = step(0.1f, specular);
 	
 	//return float4(specular, specular, specular, 1.0f);
@@ -72,7 +77,7 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	
 	//return float4(1,1,1,1);
 	float2 pixel_pos = iTex0*frequency_texture;
-	//float2 pixel_pos = iTex0*5.0f;
+	//float2 pixel_pos = iTex0*1.0f;
 	
 	float freq_change = frequency_offset;
 	float var = sin(world_time*freq_change);
@@ -104,18 +109,25 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	float4 c = float4(0,0,0,1);
 	float step_cmp = 1. / 3.;
 	
+	float limit = 0.0f;
 	
-	if (shading <= step_cmp) {
+	
+	//if (shading <= step_cmp) {
+	if (inv_shadows >= limit) {
 		//return float4(1,1,0,1);
-		c = lerp(txHatch3.Sample(samLinear, pixel_pos), txHatch2.Sample(samLinear, pixel_pos), 3.0f * (shading - 3. * step_cmp));
+		//c = lerp(txHatch_test6.Sample(samLinear, pixel_pos), txHatch_test6.Sample(samLinear, pixel_pos), 3.0f * (shading - 3. * step_cmp));
+		//c = txHatch_test6.Sample(samLinear, pixel_pos);
+		c = lerp(txHatch_test6.Sample(samLinear, pixel_pos), float4(1.0f,1.0f,1.0f,1.0f), 3.0f * (shading - 2. * inv_shadows));
 	}
-	if (shading > 3. * step_cmp && shading <= 2. * step_cmp) {
+	/*if (shading > 3. * step_cmp && shading <= 2. * step_cmp) {
 		//return float4(1,0,1,1);
-		c = lerp(txHatch2.Sample(samLinear, pixel_pos), txHatch1.Sample(samLinear, pixel_pos), 3.0f * (shading - 4. * step_cmp));
-	}
-	if (shading > 1. * step_cmp) {
+		c = lerp(txHatch_test6.Sample(samLinear, pixel_pos), txHatch_test6.Sample(samLinear, pixel_pos), 3.0f * (shading - 4. * step_cmp));
+	}*/
+	//if (shading > 1. * step_cmp) {
+	if (inv_shadows < limit) {
 		//return float4(0,1,1,1);
-		c = lerp(txHatch1.Sample(samLinear, pixel_pos), float4(1.0f,1.0f,1.0f,1.0f), 3.0f * (shading - 5. * step_cmp));
+		c = lerp(txHatch_test6.Sample(samLinear, pixel_pos), float4(1.0f,1.0f,1.0f,1.0f), 3.0f * (shading - 2. * inv_shadows));
+		//c = txHatch_test6.Sample(samLinear, pixel_pos);
 	}
 	
 	/*if((iTex0.y % 2) == 0)
@@ -143,11 +155,11 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	//c.a = alpha;
 	//c = 1-c;
 	
-	float inv_shadows =  1 - txInvShadows.Sample(samLinear, iTex0).r;
+	
 	//return float4(inv_shadows, inv_shadows, inv_shadows, 1.0f);
 	c.a = alpha;
-	c.a = c.a*(inv_shadows);
-	
+	c.a = alpha*(inv_shadows);
+	//c.a  = 1.0f;
 	c.rgb = float3(0,0,0);		//lines black
 	//float w = c.r;
 	//w = step(w, 0.60f);
@@ -158,14 +170,8 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	
 	//c = step(c, 0.5f);
 	
+	
 
-	//float4 src = lerp(lerp(diffuse, float4(1.0,1.0,1.0,1.0), c.r), c, .5);
-	//src = lerp(lerp(diffuse, float4(1.0,1.0,1.0,1.0), c.b), c, .5);
-	//src = lerp(lerp(diffuse, float4(1.0,1.0,1.0,1.0), c.b), c, .5);
-	//c = 1. - ( 1. - src ) * ( 1. - dc );
-	//c = float4( min( src.r, dc ), min( src.g, dc ), min( src.b, dc ), 1. );
-
-	//c = float4( iTex0.x / xres, iTex0.y / yres, 0., 1. );
 	return c;
 	
 	//return src;
