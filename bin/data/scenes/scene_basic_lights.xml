@@ -1,5 +1,13 @@
 <entities>
+
+    <entity>
+        <name name="light_white" />
+        <transform pos="0.0 5.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+        <light_point color="1 1 1 1" in_radius="3" out_radius="10" />
+    </entity>
+    <!--
  
+  
   <entity>
     <name name="light_red" />
     <transform pos="0.0 5.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
@@ -17,7 +25,7 @@
     <transform pos="3.0 7.0 8.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
     <light_point color="0 0 1 1" in_radius="4" out_radius="15" />
   </entity>
-    <!-- 
+ 
   <entity>
     <name name="light_dir" />
     <transform pos="7.0 3.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />

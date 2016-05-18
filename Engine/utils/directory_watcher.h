@@ -59,6 +59,7 @@ public:
 					char* full_name = new char[MAX_PATH];
 					sprintf(full_name, "%s/%s", folder_name, name);
 					
+          ::SleepEx(200, FALSE);
 					::PostMessage(hWnd, WM_FILE_CHANGED, fni.i.Action, LPARAM(full_name));
 					fni.i.Action = 0;
 				}

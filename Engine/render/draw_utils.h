@@ -34,5 +34,7 @@ extern CShaderCte< TCteBones > shader_ctes_bones;
 extern CShaderCte< TCteLight > shader_ctes_lights;
 #include "constants/ctes_globals.h"
 extern CShaderCte< TCteGlobals > shader_ctes_globals;
+#include "constants/ctes_material.h"
+extern CShaderCte< TCteMaterial > shader_ctes_material;
 
 #endif

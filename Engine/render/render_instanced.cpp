@@ -39,6 +39,7 @@ bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
 
   // This mesh has not been registered in the mesh manager
   instances_data_mesh = new CMesh("instanced_particles");
+  instances_data_mesh->setName("instanced_particles.instances_data_mesh");
   bool is_ok = instances_data_mesh->create( 
       n
     , sizeof( TParticle )
@@ -49,6 +50,8 @@ bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
     , nullptr     // Use default group information
     , true        // the buffer IS dynamic
   );
+
+  Resources.registerNew(instances_data_mesh);
 
   return is_ok;
 }

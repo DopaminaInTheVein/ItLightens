@@ -27,7 +27,7 @@ void createSamplerStates() {
   desc.MaxLOD = D3D11_FLOAT32_MAX;
   hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_DEFAULT]);
   assert(!FAILED(hr));
-  setDXName(depth_stencil_states[SMP_DEFAULT], "SMP_DEFAULT");
+  setDXName(sampler_states[SMP_DEFAULT], "SMP_DEFAULT");
 
   // Para las luces direccionales, si me salgo del espacio homogeneo
   // usar el color 'negro' para iluminar.
@@ -43,7 +43,7 @@ void createSamplerStates() {
   desc.BorderColor[3] = 0.f;
   hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_BORDER_BLACK]);
   assert(!FAILED(hr));
-  setDXName(depth_stencil_states[SMP_BORDER_BLACK], "SMP_BORDER_BLACK");
+  setDXName(sampler_states[SMP_BORDER_BLACK], "SMP_BORDER_BLACK");
 
   // PCF sampling
   D3D11_SAMPLER_DESC sampler_desc = {

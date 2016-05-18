@@ -89,7 +89,7 @@ bool CEntitiesModule::start() {
 
 	{
 		CEntityParser ep;
-    bool is_ok = ep.xmlParseFile("data/scenes/scene_basic.xml");
+    bool is_ok = ep.xmlParseFile("data/scenes/scene_pbr.xml");
     //ol is_ok = ep.xmlParseFile("data/scenes/scene_normal_map.xml");
 		assert(is_ok);
 	}
@@ -98,11 +98,11 @@ bool CEntitiesModule::start() {
     bool is_ok = ep.xmlParseFile("data/scenes/scene_basic_lights.xml");
     assert(is_ok);
   }
-  {
-    CEntityParser ep;
-    bool is_ok = ep.xmlParseFile("data/scenes/scene_aabbs.xml");
-    assert(is_ok);
-  }
+  //{
+  //  CEntityParser ep;
+  //  bool is_ok = ep.xmlParseFile("data/scenes/scene_aabbs.xml");
+  //  assert(is_ok);
+  //}
 	return true;
 }
 

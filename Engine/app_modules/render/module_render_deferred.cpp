@@ -32,7 +32,7 @@ bool CRenderDeferredModule::start() {
   if (!rt_acc_light->createRT("rt_acc_light", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
     return false;
 
-  acc_light_points = Resources.get("deferred_lights_point.tech")->as<CRenderTechnique>();
+  acc_light_points = Resources.get("pbr_point_lights.tech")->as<CRenderTechnique>();
   assert(acc_light_points && acc_light_points->isValid());
 
   acc_light_directionals = Resources.get("deferred_lights_dir.tech")->as<CRenderTechnique>();
@@ -41,8 +41,8 @@ bool CRenderDeferredModule::start() {
   acc_light_directionals_shadows = Resources.get("deferred_lights_dir_shadows.tech")->as<CRenderTechnique>();
   assert(acc_light_directionals_shadows && acc_light_directionals_shadows->isValid());
 
-  //unit_sphere = Resources.get("meshes/unit_sphere.mesh")->as<CMesh>();
-  unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
+  unit_sphere = Resources.get("meshes/unit_sphere.mesh")->as<CMesh>();
+  //unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
   assert(unit_sphere && unit_sphere->isValid());
   unit_cube = Resources.get("meshes/unit_frustum.mesh")->as<CMesh>();
   assert(unit_cube && unit_cube->isValid());
@@ -96,8 +96,8 @@ void CRenderDeferredModule::renderGBuffer() {
   // Activar mis multiples render targets
   ID3D11RenderTargetView* rts[3] = {
     rt_albedos->getRenderTargetView()
-    ,	rt_normals->getRenderTargetView()
-    ,	rt_depths->getRenderTargetView()
+  ,	rt_normals->getRenderTargetView()
+  ,	rt_depths->getRenderTargetView()
   };
   // Y el ZBuffer del backbuffer principal
   Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
@@ -186,6 +186,17 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
 
   CTexture::deactivate( TEXTURE_SLOT_SHADOWMAP );
 }
+
+void CRenderDeferredModule::addAmbientPass() {
+
+  auto tech = Resources.get("pbr_ambient.tech")->as<CRenderTechnique>();
+  tech->activate();
+
+  auto mesh = Resources.get("unitQuadXY.mesh")->as<CMesh>();
+  mesh->activateAndRender();
+
+}
+
 void CRenderDeferredModule::renderAccLight() {
   PROFILE_FUNCTION("renderAccLight");
   CTraceScoped scope("renderAccLight");
@@ -204,19 +215,21 @@ void CRenderDeferredModule::renderAccLight() {
   rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
   rt_depths->activate(TEXTURE_SLOT_DEPTHS);
   rt_normals->activate(TEXTURE_SLOT_NORMALS);
-
-  rt_acc_light->clear(VEC4(0, 0, 0, 1));
+  
+  addAmbientPass();
+  
+  //rt_acc_light->clear(VEC4(0, 0, 0, 1));
 
   activateBlend(BLENDCFG_ADDITIVE);
   activateZ(ZCFG_LIGHTS_CONFIG);
-  //activateRS(RSCFG_INVERT_CULLING);
+  activateRS(RSCFG_INVERT_CULLING);
   addPointLights();
-
+  /*
   activateZ(ZCFG_LIGHTS_CONFIG);
   //activateRS(RSCFG_INVERT_CULLING);
   addDirectionalLights();
-
   addDirectionalLightsShadows();
+  */
 
   activateRS(RSCFG_DEFAULT);
   activateZ(ZCFG_DEFAULT);

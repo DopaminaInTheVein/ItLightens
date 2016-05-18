@@ -21,6 +21,7 @@ class CRenderDeferredModule : public IAppModule {
 	void renderGBuffer();
 	void renderAccLight();
 	void addPointLights();
+  void addAmbientPass();
   void addDirectionalLights();
   void addDirectionalLightsShadows();
   void generateShadowMaps();

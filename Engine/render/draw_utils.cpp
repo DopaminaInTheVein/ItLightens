@@ -9,6 +9,7 @@ CShaderCte< TCteObject > shader_ctes_object;
 CShaderCte< TCteBones >  shader_ctes_bones;
 CShaderCte< TCteLight >  shader_ctes_lights;
 CShaderCte< TCteGlobals > shader_ctes_globals;
+CShaderCte< TCteMaterial > shader_ctes_material;
 
 // -----------------------------------------------
 bool createDepthBuffer(
@@ -91,12 +92,13 @@ bool createDepthBuffer(
     , out_depth_stencil_view);
   if (FAILED(hr))
     return false;
+  
   setDXName((*out_depth_stencil_view), "ZTextureDSV");
-
   *out_depth_resource = depth_resource;
   
   // ------------------------------------------------------
   if (desc.BindFlags & D3D11_BIND_SHADER_RESOURCE) {
+
     // Setup the description of the shader resource view.
     D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
     shaderResourceViewDesc.Format = SRVfmt;
@@ -110,6 +112,10 @@ bool createDepthBuffer(
     if (FAILED(hr))
       return false;
 
+    // as this is used by the RenderTarget with Z (for the shadows maps) and 
+    // by the ZTexture, we need to add one more ref because it will be freed twice
+    depth_resource->AddRef();
+
     CTexture* ztexture = new CTexture();
     ztexture->setDXObjs(depth_resource, depth_resource_view );
     ztexture->setName(("Z" + std::string(name)).c_str());
@@ -118,6 +124,7 @@ bool createDepthBuffer(
     setDXName(depth_resource_view, ztexture->getName().c_str());
     assert(out_ztexture);
     *out_ztexture = ztexture;
+
   }
 
   return true;
@@ -148,6 +155,8 @@ bool drawUtilsCreate() {
     return false;
   if (!shader_ctes_globals.create("ctes_globals"))
     return false;
+  if (!shader_ctes_material.create("ctes_material"))
+    return false;
 
   activateDefaultStates();
   return true;
@@ -159,12 +168,14 @@ void activateDefaultStates() {
   shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
   shader_ctes_lights.activate(CTE_SHADER_LIGHT);
   shader_ctes_globals.activate(CTE_SHADER_GLOBALS_SLOT);
+  shader_ctes_material.activate(CTE_SHADER_MATERIAL_SLOT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
   activateSamplerStates();
 }
 
 void drawUtilsDestroy() {
+  shader_ctes_material.destroy();
   shader_ctes_globals.destroy();
   shader_ctes_lights.destroy();
   shader_ctes_bones.destroy();
@@ -206,8 +217,6 @@ void drawWiredAABB(const AABB& aabb, const MAT44& world, VEC4 color) {
   shader_ctes_object.uploadToGPU();
   mesh->activateAndRender();
 }
-
-
 
 // -----------------------------------------------
 void drawFullScreen(const CTexture* texture) {

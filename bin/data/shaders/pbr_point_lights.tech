@@ -1,0 +1,5 @@
+<tech>
+    <vs fx="pbr" main="VS_pass" decl="positions_normal_uv"/>
+    <ps fx="pbr" main="PS_point_lights"/>
+</tech>
+

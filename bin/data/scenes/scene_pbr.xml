@@ -1,0 +1,21 @@
+<entities>
+  <entity>
+    <name name="Plane001" />
+    <transform pos="0.0 0.0 0.0" quat="0.0 0.0 0.0 1.0" scale="3.0" />
+    <render_static_mesh name="static_meshes/Plane001_pbr.static_mesh" />
+    <abs_aabb/>
+  </entity>
+
+  <entity>
+    <name name="GeoSphere001" />
+    <transform pos="1.60666 2.85306 10.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/GeoSphere001_pbr.static_mesh" />
+    <abs_aabb/>
+  </entity>
+  <entity>
+    <name name="Torus001" />
+    <transform pos="-10.0 4.89345 3.0037" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/Torus001_pbr.static_mesh" />
+      <abs_aabb/>
+  </entity>
+</entities>

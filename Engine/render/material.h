@@ -4,20 +4,28 @@
 class CTexture;
 class CRenderTechnique;
 
+#include "constants/ctes_material.h"
+
 class CMaterial : public IResource, public CXMLParser {
 	void onStartElement(const std::string &elem, MKeyValue &atts) override;
 
 public:
 
 	enum TTextureSlot {
-		DIFFUSE = 0
+		  DIFFUSE = 0
 		, SPECULAR
     , NORMALMAP
+    , METALLIC
+    , ROUGHNESS
+
+    , IRRADIANCE
     , ENVIRONMENT
-		, COUNT
+    , COUNT
 	};
 	const CRenderTechnique*   tech;
 	const CTexture*           textures[COUNT];
+
+  TCteMaterial              ctes_material;
 
 	CMaterial()
 		: tech(nullptr)
@@ -30,7 +38,7 @@ public:
 	void destroy() { }
 	eType getType() const override { return MATERIAL; }
 
-	//void renderUIDebug();
+	void renderUIDebug();
 	bool load(const char* filename);
 
 	void activateTextures() const;

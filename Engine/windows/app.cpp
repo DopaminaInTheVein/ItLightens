@@ -48,7 +48,9 @@ LRESULT CALLBACK CApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
   case CDirectoyWatcher::WM_FILE_CHANGED: {
     char* filename = (char*)lParam;
     if (filename) {
-      Resources.onFileChanged(filename);
+      std::string sfilename = filename;
+      //sfilename.replace(sfilename.begin(), sfilename.end(), '\\', '/');
+      Resources.onFileChanged(sfilename);
       delete[] filename;
     }
     break; }
