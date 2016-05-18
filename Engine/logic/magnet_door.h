@@ -14,28 +14,25 @@ class magnet_door : public TCompBase {
 	};
 
 	enum eCinematicState {
-		OPENED,
-		CLOSED,
-		OPENING,
-		CLOSING
+		CS_OPENED,
+		CS_CLOSED,
+		CS_OPENING,
+		CS_CLOSING
 	};
 
-	eMagnetismBehaviour prevBehaviour; //Magnetism Behaviour predomines. If MB_NONE --> openedLogic
 	bool locked;
-	bool moving;	//false false = opened, false true = opening
-					//true false = closed, true true = closing 
-	eMagnetismBehaviour magneticBehaviour, prevMagneticBehaviour;
-	bool prevMoving;
-	bool prevLocked;
-
+	eMagnetismBehaviour magneticBehaviour;
 	eCinematicState cinematicState, prevCinematicState;
 
 	VEC3 targetOpened, targetClosed;
 	pols polarity;
 	float speedOpening;
 	float speedClosing;
+	float distPolarity;
+	float epsilonTarget;
 
 	//Update info
+	CHandle myEntity;
 	TCompTransform * transform;
 	TCompPhysics * physics;
 	TCompTransform * playerTransform;
@@ -43,6 +40,10 @@ class magnet_door : public TCompBase {
 
 	//Private Funcs
 	bool getUpdateInfo();
+	void updateMagneticBehaviour();
+	void updateCinematicState();
+	void updateMove();
+	void notifyNewState();
 
 public:
 	void update(float elapsed);
@@ -50,5 +51,6 @@ public:
 	void onSetLocked(const TMsgSetLocked&);
 	bool load(MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated&);
+
 };
 #endif

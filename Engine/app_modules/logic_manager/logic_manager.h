@@ -69,6 +69,11 @@ public:
 		OnDetected,
 		OnBeaconDetect,
 
+		OnDoorOpening,
+		OnDoorOpened,
+		OnDoorClosing,
+		OnDoorClosed,
+
 		OnEnterPC,
 		OnLeavePC
 	};

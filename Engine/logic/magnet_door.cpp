@@ -41,10 +41,9 @@ bool magnet_door::load(MKeyValue& atts)
 	if (locked) targetOpened = atts.getPoint("target");
 	else targetClosed = atts.getPoint("target");
 
-	moving = prevMoving = false;
-	prevLocked = locked;
-	magneticBehaviour = prevMagneticBehaviour = MB_NONE;
-
+	magneticBehaviour = MB_NONE;
+	distPolarity = 1.f;
+	epsilonTarget = 0.001f;
 	return true;
 }
 
@@ -62,17 +61,116 @@ void magnet_door::onCreate(const TMsgEntityCreated&)
 void magnet_door::update(float elapsed)
 {
 	if (getUpdateInfo()) {
-		//TODO:
-		//updateMagneticBehaviour();
-		//updateCinematicState();
-		//updateMove();
-		//notifyNewState();
+		updateMagneticBehaviour();
+		updateCinematicState();
+		updateMove();
+		notifyNewState();
 	}
+}
+
+//Set magneticBehaviour to none, opening or closing 
+void magnet_door::updateMagneticBehaviour()
+{
+	// Default: Nothing to do because magnetism
+	magneticBehaviour = MB_NONE;
+	if (polarity != NEUTRAL){
+		// Door is not neutral
+		if (abs(playerTransform->getPosition().y - transform->getPosition().y) > 4.f) {
+			//Door and player are on the same floor (Y distance)
+			if (simpleDistXZ(transform->getPosition(), playerTransform->getPosition()) < distPolarity) {
+				//Player is close to this door
+				if (polarity != playerPolarity) {
+					//Different polarity -> Attraction -> Close
+					magneticBehaviour = MB_CLOSING;
+				}
+				else {
+					//Same polarity -> Repulsion -> Open
+					magneticBehaviour = MB_OPENING;
+				}
+			}
+		}
+	}
+}
+
+//Set opening or closing 
+void magnet_door::updateCinematicState()
+{
+	switch (magneticBehaviour) {
+	case MB_NONE:
+		cinematicState = locked ? CS_CLOSING : CS_OPENING;
+		break;
+	case MB_OPENING:
+		cinematicState = CS_OPENING;
+		break;
+	case MB_CLOSING:
+		cinematicState = CS_CLOSING;
+		break;
+	}
+}
+
+//Move door and set OPENED or CLOSED if movement ends
+void magnet_door::updateMove()
+{
+	VEC3 target;
+	float speed;
+	eCinematicState targetState;
+
+	// Set target
+	if (cinematicState == CS_OPENING) {
+		target = targetOpened;
+		speed = speedOpening;
+		targetState = CS_OPENED;
+	}
+	else {
+		target = targetClosed;
+		speed = speedClosing;
+		targetState = CS_CLOSED;
+	}
+
+	// Door has reached targed
+	if (simpleDist(target, transform->getPosition()) < epsilonTarget) {
+		cinematicState = targetState;
+	}
+	//Door has to move
+	else {
+		VEC3 delta = target - transform->getPosition();
+		float moveAmount = speed * getDeltaTime();
+		if (delta.Length() < moveAmount) {
+			physics->setPosition(target, transform->getRotation());
+		}
+		else {
+			delta.Normalize();
+			VEC3 nextPos = transform->getPosition() + delta * moveAmount;
+			physics->setPosition(nextPos, transform->getRotation());
+		}
+	}
+
+}
+
+void magnet_door::notifyNewState()
+{
+	if (prevCinematicState != cinematicState) {
+		switch (cinematicState) {
+		case CS_OPENING:
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDoorOpening, "", myEntity);
+			break;
+		case CS_OPENED:
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDoorOpened, "", myEntity);
+			break;
+		case CS_CLOSED:
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDoorClosed, "", myEntity);
+			break;
+		case CS_CLOSING:
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDoorClosing, "", myEntity);
+			break;
+		}
+	}
+	prevCinematicState = cinematicState;
 }
 
 bool magnet_door::getUpdateInfo() {
 	//My Info
-	CHandle myEntity = CHandle(this).getOwner();
+	myEntity = CHandle(this).getOwner();
 	if (!myEntity.isValid()) return false;
 	CEntity* eMe = myEntity;
 	transform = eMe->get<TCompTransform>();

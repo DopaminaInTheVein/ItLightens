@@ -237,6 +237,23 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			sprintf(lua_code, "OnLeavePC(%f);", 0.5f);
 			break;
 		}
+		case (OnDoorOpening) : {
+			sprintf(lua_code, "OnDoorOpening();");
+			break;
+		}
+		case (OnDoorOpened) : {
+			sprintf(lua_code, "OnDoorOpened();");
+			break;
+		}
+		case (OnDoorClosing) : {
+			sprintf(lua_code, "OnClosing();");
+			break;
+		}
+		case (OnDoorClosed) : {
+			sprintf(lua_code, "OnDoorClosed();");
+			break;
+		}
+
 		default : {
 			sprintf(lua_code, "dbg('The event %s does not exist!');", evt);
 		}
