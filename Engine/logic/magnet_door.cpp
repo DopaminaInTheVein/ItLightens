@@ -47,7 +47,7 @@ bool magnet_door::load(MKeyValue& atts)
 	}
 
 	magneticBehaviour = MB_NONE;
-	distPolarity = 1.f;
+	distPolarity = 5.f;
 	epsilonTarget = 0.001f;
 	return true;
 }
@@ -78,11 +78,12 @@ void magnet_door::updateMagneticBehaviour()
 {
 	// Default: Nothing to do because magnetism
 	magneticBehaviour = MB_NONE;
-	if (polarity != NEUTRAL){
+	if (polarity != NEUTRAL && playerPolarity != NEUTRAL){
 		// Door is not neutral
-		if (abs(playerTransform->getPosition().y - transform->getPosition().y) > 4.f) {
+		if (abs(playerTransform->getPosition().y - transform->getPosition().y) < 4.f) {
 			//Door and player are on the same floor (Y distance)
-			if (simpleDistXZ(transform->getPosition(), playerTransform->getPosition()) < distPolarity) {
+			float distPlayerDoor = simpleDistXZ(transform->getPosition(), playerTransform->getPosition());
+			if (distPlayerDoor < distPolarity) {
 				//Player is close to this door
 				if (polarity != playerPolarity) {
 					//Different polarity -> Attraction -> Close
@@ -186,8 +187,11 @@ bool magnet_door::getUpdateInfo() {
 	//Player Info
 	CHandle player = tags_manager.getFirstHavingTag("player");
 	if (!player.isValid()) return false;
-	CEntity* ePlayer = myEntity;
+	CEntity* ePlayer = player;
 	playerTransform = ePlayer->get<TCompTransform>();
+
+	//player_controller* pc = ePlayer->get<player_controller>();
+	//if (pc) playerPolarity = (pols)pc->GetPolarityInt();
 	TMsgGetPolarity msgPol; 
 	msgPol.polarity = NEUTRAL;
 	ePlayer->sendMsgWithReply(msgPol);

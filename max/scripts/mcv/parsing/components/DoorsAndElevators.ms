@@ -21,6 +21,10 @@ fn parseLocked xml = (
 	parsePropAttribute xml "locked" "locked"
 )
 
+fn parsePolarity xml = (
+	parsePropAttribute xml "pol" "pol"
+)
+
 --- COMPONENTS---
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -35,4 +39,6 @@ fn _parse_magnet_door = (
 	parseSpeeds xml
 	--Target
 	parseTarget xml
+	--Polarity
+	parsePolarity xml
 )

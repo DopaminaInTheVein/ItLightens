@@ -342,7 +342,8 @@
 <magnet_door
    locked="yes"
    speedOpening="1"
-   target="-79.1191 0.347638 -40.6995"/>
+   target="-79.1191 0.347638 -40.6995"
+   pol="minus"/>
 <name
    name="Door"/>
 <transform
