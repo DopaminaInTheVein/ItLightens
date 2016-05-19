@@ -1,7 +1,7 @@
 {
 	"scenes" : {
 		"room_one" : "milestone2",
-		"room_two" : "milestone2",
+		"room_two" : "whitebox",
 		"room_three" : "milestone2",
 		"room_four" : "milestone2"
 	},

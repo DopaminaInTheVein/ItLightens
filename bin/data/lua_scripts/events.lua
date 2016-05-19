@@ -208,3 +208,19 @@ end
 function OnLeavePC( param )
 	p:print( "OnLeavePC: "..param.."\n" )
 end
+
+function OnDoorClosed()
+	p:print( "OnDoorClosed\n")
+end
+
+function OnDoorOpened()
+	p:print( "OnDoorOpened\n")
+end
+
+function OnDoorClosing()
+	p:print( "OnDoorClosing\n")
+end
+
+function OnDoorOpening()
+	p:print( "OnDoorOpening\n")
+end

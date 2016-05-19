@@ -71,6 +71,7 @@ DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
+
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
 DECL_OBJ_MANAGER("trigger_lua", TTriggerLua);
 
@@ -137,6 +138,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<water_controller>()->init(MAX_ENTITIES);
+	getHandleManager<magnet_door>()->init(MAX_ENTITIES);
 
 	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompDrone>()->init(MAX_ENTITIES);
@@ -485,6 +487,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompPlatform>()->updateAll(dt);
 		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
+		getHandleManager<magnet_door>()->updateAll(dt);
 		//getHandleManager<TCompTracker>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);

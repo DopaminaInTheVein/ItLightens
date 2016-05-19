@@ -35,11 +35,16 @@ bool magnet_door::load(MKeyValue& atts)
 	else {
 		assert(false || fatal("Magnet door has an unknown polarity!\n"));
 	}
-	//polarity = atts.getString("pol", "neutral");
 	speedOpening = atts.getFloat("speedOpening", 1.f);
 	speedClosing = atts.getFloat("speedClosing", speedOpening);
-	if (locked) targetOpened = atts.getPoint("target");
-	else targetClosed = atts.getPoint("target");
+	if (locked) {
+		targetOpened = atts.getPoint("target");
+		cinematicState = prevCinematicState = CS_CLOSED;
+	}
+	else {
+		targetClosed = atts.getPoint("target");
+		cinematicState = prevCinematicState = CS_OPENED;
+	}
 
 	magneticBehaviour = MB_NONE;
 	distPolarity = 1.f;
