@@ -147,7 +147,9 @@ VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const fl
 
 void rotate_vector_by_quaternion(const VEC3& vec, const CQuaternion& q, VEC3& vprime) {
   CQuaternion inv;
-  q.Inverse(inv);
+  //q.Inverse(inv);
+  q.Conjugate(inv);
+
   CQuaternion qt = q * CQuaternion(vec.x, vec.y, vec.z, 0.0f) * inv;
 
   vprime = VEC3(qt.x, qt.y, qt.z);

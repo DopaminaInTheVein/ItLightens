@@ -181,11 +181,11 @@ void bt::getPath(VEC3 startPoint, VEC3 endPoint, string nombreSala) {
   currPathWpt = 0;
   if (totalPathWpt < 1)
     return;
-  /*
+
   for (int i = 0; i < (pathWpts.size() - 1); i++) {
     Debug->DrawLine(pathWpts[i], pathWpts[i + 1]);
   }
-  */
+
   currPathWpt = 0;
 }
 

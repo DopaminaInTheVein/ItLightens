@@ -22,7 +22,7 @@ rcConfig CNavmesh::getRcConfig() {
   config.cs = 0.05;
   config.ch = 0.05;
   config.walkableHeight = 3;
-  config.walkableRadius = 3;
+  config.walkableRadius = 1;
   config.walkableClimb = 0;
   config.walkableSlopeAngle = 20.0f;
   config.minRegionArea = 4;

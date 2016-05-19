@@ -602,7 +602,7 @@
     <transform pos="37.5426 -23.6548 -3.6815" quat="0 0 0 1.0" scale="1.0" />
     <skeleton model="skeletons/guard/guard.skeleton" />
     <render_static_mesh name="skeletons/guard/guard.static_mesh" />
-    <character_controller radius="0.3" height="1.8" />
+    <character_controller radius="0.6" height="1.8" />
   </entity>
   <entity>
     <tags tags="AI AI_guard" />
@@ -612,7 +612,7 @@
     <transform pos="37.5426 -23.6957 -7.79579" quat="0 0 0 1.0" scale="1.0" />
     <skeleton model="skeletons/guard/guard.skeleton" />
     <render_static_mesh name="skeletons/guard/guard.static_mesh" />
-    <character_controller radius="0.3" height="1.8" />
+    <character_controller radius="0.6" height="1.8" />
   </entity>
   <entity>
     <tags tags="AI AI_guard" />
@@ -622,7 +622,7 @@
     <transform pos="37.5426 -23.7578 -11.7541" quat="0 0 0 1.0" scale="1.0" />
     <skeleton model="skeletons/guard/guard.skeleton" />
     <render_static_mesh name="skeletons/guard/guard.static_mesh" />
-    <character_controller radius="0.3" height="1.8" />
+    <character_controller radius="0.6" height="1.8" />
   </entity>
   <entity>
     <tags tags="AI AI_guard" />
@@ -632,7 +632,7 @@
     <transform pos="37.5426 -23.6331 -15.9564" quat="0 0 0 1.0" scale="1.0" />
     <skeleton model="skeletons/guard/guard.skeleton" />
     <render_static_mesh name="skeletons/guard/guard.static_mesh" />
-    <character_controller radius="0.3" height="1.8" />
+    <character_controller radius="0.6" height="1.8" />
   </entity>
   <entity>
     <tags tags="guided_camera" />
@@ -648,7 +648,7 @@
     <transform pos="8.49044 -7.64843 -26.4823" quat="0 0 0 1.0" scale="1.0" />
     <skeleton model="skeletons/player/player.skeleton" />
     <render_static_mesh name="skeletons/player/player.static_mesh" />
-    <character_controller radius="0.3" height="0.7" />
+    <character_controller radius="0.6" height="0.7" />
   </entity>
   <entity>
     <tags tags="" />
