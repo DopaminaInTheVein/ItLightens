@@ -49,9 +49,9 @@ protected:
 	btnode *findNode(string);
 
 	void getPath(VEC3 startPoint, VEC3 endPoint, string nombreSala);
-	CEntity* frontCollisionIA(VEC3 npcPos, CHandle ownHandle);
-	CEntity* frontCollisionBOX(VEC3 npcPos, CEntity *  molePursuingBoxi);
-	bool avoidBoxByLeft(CEntity * candidateE, VEC3 npcPos, string nombreSala);
+	CEntity* frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle);
+	CEntity* frontCollisionBOX(const TCompTransform * transform, CEntity *  molePursuingBoxi);
+	bool avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform, string nombreSala);
 	bool needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, string nombreSala, CEntity * molePursuingBoxi = nullptr);
 public:
 	string name;

@@ -3,31 +3,44 @@ print('This is lua')
 SLB.using( SLB )
 
 p = Public( )
+cam = Camera()
+
+function CallFunction(func)
+	if _G[func] then _G[func]()
+	else
+		p:print("function "..func.." does not exist!\n")
+	end
+end
 
 function OnAction( param )
 	p:print( "OnAction: "..param.."\n" )
-	specialActionSettings(0.7);
+	CallFunction("OnAction_"..param)
+	--specialActionSettings(0.7);
 	--setCameraRotationSensibility(60.5);
 	--setCameraSpeed(4.0);
 	--setCameraSpeedUnlocked(10.0);
 end
 
-function OnEnter( param, handle )
+function OnEnter( param )
 	p:print( "OnEnter: "..param.."\n" ) 
-	if _G["OnEnter_"..param] then _G["OnEnter_"..param](handle) 
-	else
-		p:print("function OnEnter_"..param.." does not exist!\n")
-	end
+	CallFunction("OnEnter_"..param)
+	--if _G["OnEnter_"..param] then _G["OnEnter_"..param](handle) 
+	--else
+	--	p:print("function OnEnter_"..param.." does not exist!\n")
+	--end
 end
 
 function OnLeave( param )
 	p:print( "OnLeave: ".. param.."\n" )
+	CallFunction("OnLeave_"..param)
 end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	p:play_music("event:/OnGameStart")
 	triggerGuardFormation();
+	p:exec_command( "triggerGuardFormation();", 15 )
+	cam:run_cinematic("Line001", 0)
 end
 
 function OnGameEnd( param )
@@ -47,12 +60,17 @@ function OnGuardOvercharged( param )
 	p:print( "OnGuardOvercharged: "..param.."\n" )
 end
 
+function OnGuardBoxHit( param )
+	p:print( "OnGuardBoxHit: "..param.."\n" )
+end
+
 function OnGuardRemoveBox( reaction_time )
 	p:print( "OnGuardRemoveBox: "..reaction_time.."\n" )
 end
 
-function OnLevelStart001( param )
-	p:print( "OnLevelStart001: "..param.."\n" )
+function OnLevelStart( param )
+	p:print("OnLevelStart\n")
+	CallFunction("OnLevelStart_"..param)
 end
 
 function OnZoneStart001( param )

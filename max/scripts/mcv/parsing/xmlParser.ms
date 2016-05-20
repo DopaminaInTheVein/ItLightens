@@ -31,7 +31,16 @@ struct XMLNode (
 		print nombre
 		res = "<"
 		res += nombre
-		-- Tiene más elementos (pero no atributos)
+		
+		--Atributos ?
+		if attrs.count > 0 then (
+			-- Tiene más atributos
+			for atr in attrs do (
+				res += "\n" + "   " + atr.nombre + "=" + (_val atr.valor)
+			)
+		)
+		
+		-- Tiene más elementos
 		if elems.count > 0 then (
 			--Tag de abrir
 			res += ">\n"
@@ -40,25 +49,14 @@ struct XMLNode (
 			for elem in elems do (
 				res += elem.parse()
 			)
-			
 			--Tag cierre
-			res += "</"
+			res += "\n</"
 			res += nombre
 			res += ">\n"
-		-- No tiene más elementos
 		) else (
-			--No elems pero si atributos
-			if attrs.count > 0 then (
-				-- Tiene más atributos
-				for atr in attrs do (
-					res += "\n" + "   " + atr.nombre + "=" + (_val atr.valor)
-				)
-				res += "\n/>\n"
-			) else (
-				-- Ni elems ni atributos
-				res += "/>\n"
-			)
+			res += "/>\n"
 		)
+		
 		return res
 	)
 )

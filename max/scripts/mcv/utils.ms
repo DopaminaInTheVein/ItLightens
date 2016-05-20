@@ -138,7 +138,7 @@ fn findAllHelpers tHelper = (
 --Append Lua
 fn luaAppend nameFunc code = (
 	_lua_code += "function " + nameFunc + "( )" + "\n"
-	_lua_code += code
+	_lua_code += (code + "()")
 	_lua_code += "\nend\n\n"
 )
 

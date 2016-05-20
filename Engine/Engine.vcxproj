@@ -192,6 +192,7 @@
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_speedy.cpp" />
     <ClCompile Include="logic\damage.cpp" />
+    <ClCompile Include="logic\magnet_door.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physx\physx_manager.cpp" />
@@ -593,6 +594,7 @@
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_speedy.h" />
     <ClInclude Include="logic\damage.h" />
+    <ClInclude Include="logic\magnet_door.h" />
     <ClInclude Include="logic\polarity.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />

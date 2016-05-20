@@ -14,6 +14,7 @@
 #define AST_SHOOT_BACK	"attackgoback"
 #define AST_TURN	"turnfeetonly"
 #define AST_STUNNED "stun"
+#define AST_STUNNED_BOX "stun"
 // ------------------- //
 
 class SkelController {

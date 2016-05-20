@@ -28,10 +28,13 @@ void CGuiActionText::render() {
 		text = "ACTION: Overcharge";
 		break;
 	case eAction::POSSESS:
-		text = "";
+		text = "ACTION: Possess";
 		break;
 	case eAction::RECHARGE:
 		text = "ACTION: Recharge";
+		break;
+	case eAction::ACTIVATE:
+		text = "ACTION: Activate";
 		break;
 	}
 

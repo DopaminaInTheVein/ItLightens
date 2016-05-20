@@ -30,6 +30,10 @@ bool CLogicManagerModule::start() {
 	return true;
 }
 
+void CLogicManagerModule::reloadFile(std::string filename) {
+	slb_script.doFile(filename);
+}
+
 void CLogicManagerModule::update(float dt) {
 
 	// update the timer of each command
@@ -46,21 +50,22 @@ void CLogicManagerModule::update(float dt) {
 	}
 }
 
-void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t handle_id) {
+void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle handle){//, uint32_t handle_id) {
 
 	char lua_code[64];
+	caller_handle = handle;
 
 	switch (evt) {
 		case (OnAction) : {
-			sprintf(lua_code, "OnAction(%f);", 0.1f);
+			sprintf(lua_code, "OnAction(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnEnter) : {
-			sprintf(lua_code, "OnEnter(\"%s\", %d);", params.c_str(), handle_id);
+			sprintf(lua_code, "OnEnter(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnLeave) : {
-			sprintf(lua_code, "OnLeave%s(%f);", params.c_str(), 0.3f);
+			sprintf(lua_code, "OnLeave(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnGameStart) : {
@@ -75,10 +80,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 			sprintf(lua_code, "teleportPlayer(%f, %f, %f);", 0.0f, 0.0f, -22.0f);
 			break;
 		}
-		case (OnLevelStart001) : {
-			char command_code[64];
-			sprintf(command_code, "dbg('%s');", "TIMER - OLS");
-			sprintf(lua_code, "execCommandTest(\"%s\", %f);", command_code, 5.f);
+		case (OnLevelStart) : {
+			//char command_code[64];
+			//sprintf(command_code, "dbg('%s');", "TIMER - OLS");
+			sprintf(lua_code, "OnLevelStart(\"%s\");", params.c_str());
 			break;
 		}
 		case (OnZoneStart001) : {
@@ -122,7 +127,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 			sprintf(lua_code, "OnGuardOvercharged(%f);", 0.5f);
 			break;
 		}
-
+		case (OnGuardBoxHit): {
+			sprintf(lua_code, "OnGuardBoxHit(%f);", 0.5f);
+			break;
+		}
 		case (OnInterruptHit) : {
 			sprintf(lua_code, "OnInterruptHit(%f);", 0.5f);
 			break;
@@ -244,7 +252,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, uint32_t han
 
 }
 
-void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, uint32_t handle_id) {
+void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, CHandle handle){//, uint32_t handle_id) {
 	// construct the lua code using the event and the specified parameters
 	std::string lua_code = evt;
 
@@ -295,6 +303,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.comment("Finds the handle with the specified name and tag")
 		.param("string: handle name")
 		.param("string: handle tag")
+		// sets the handle to the event thrower
+		.set("getHandleCaller", &SLBHandle::getHandleCaller)
+		.comment("Finds the handle who called this event")
 		// set handle position function
 		.set("set_position", &SLBHandle::setPosition)
 		.comment("Sets the position of the NPC")
@@ -317,6 +328,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// toggle guards formation
 		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
 		.comment("Activates/desactivates the guard formation states.")
+		// sets actionable
+		.set("setActionable", &SLBHandle::setActionable)
+		.comment("Set if the element is actionable (0: false, otherwise: true)")
+		.param("int: enabled")
 		;
 }
 
@@ -350,6 +365,11 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.param("float: x coord offset")
 		.param("float: y coord offset")
 		.param("float: z coord offset")
+		// run cinematic
+		.set("run_cinematic", &SLBCamera::runCinematic)
+		.comment("Run cinematic defined in the specified guided camera")
+		.param("string: guided camera name")
+		.param("speed: speed of camera movement (0 means default speed)")
 		;
 }
 
@@ -367,6 +387,11 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
 		.param("Text to print")
+		// Enable and disable controls
+		.set("setControlEnabled", &SLBPublicFunctions::setControlEnabled)
+		.comment("Enable or disable controls\n")
+		.param("int: 0 disabled, otherwise enabled")
+		.param("float: time until execution")
 		// play sound function
 		.set("play_sound", &SLBPublicFunctions::playSound)
 		.comment("Executes the specified sound effect")

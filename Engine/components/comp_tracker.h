@@ -23,6 +23,7 @@ struct TCompTracker : public TCompBase {
 	int size;
 	float longitude;
 	float mSpeed = 1.f;
+	float normalSpeed; 
 
 	//float	mEpsilon = 0.5f;	//distance margin
 	//float	mSpeed;
@@ -34,11 +35,11 @@ struct TCompTracker : public TCompBase {
 	void onCreate(const TMsgEntityCreated&);
 	void setFollower(const TMsgFollow &msg);
 	void update(float elapsed);
-	void updateTrackMovement(TCompPhysics*, TCompTransform*);
+	void updateTrackMovement(HandleTrack ht);
 	bool load(MKeyValue& atts);
-	void renderInMenu() {
-		ImGui::Text("I am a tracker!!");
-	}
+	void renderInMenu();
+
+	VEC3 evaluatePos(HandleTrack ht);
 };
 
 

@@ -87,6 +87,7 @@ public:
 	void addBasicStates();
 
 	void onSetCamera(const TMsgSetCamera& msg);
+	void onSetControllable(const TMsgSetControllable& msg);
 	void SetMyEntity();
 	virtual void myUpdate(); // deberia ser abstracta pero peta
 

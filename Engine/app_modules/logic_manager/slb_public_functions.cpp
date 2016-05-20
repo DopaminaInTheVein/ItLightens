@@ -79,9 +79,11 @@ void SLBHandle::getHandleById(int id) {
 void SLBHandle::getHandleByNameTag(const char* name, const char* tag) {
 	handle_name = std::string(name);
 	handle_tag = std::string(tag);
-	VHandles targets = tags_manager.getHandlesByTag(getID(tag));
-	CHandle handle = findByName(targets, name);
-	real_handle = handle;
+	real_handle = tags_manager.getHandleByTagAndName(tag, name);
+}
+
+void SLBHandle::getHandleCaller() {
+	real_handle = logic_manager->getCaller();
 }
 
 void SLBHandle::setPosition(float x, float y, float z) {
@@ -125,6 +127,16 @@ void SLBHandle::goToPoint(float x, float y, float z) {
 
 void SLBHandle::toggleGuardFormation() {
 	getHandleManager<bt_guard>()->onAll(&bt_guard::toggleFormation);
+}
+
+void SLBHandle::setActionable(int enabled) {
+	CHandle caller = logic_manager->getCaller();
+	if (caller.isValid()) {
+		CEntity * eCaller = caller;
+		TMsgSetActivable msg;
+		msg.activable = (enabled != 0);
+		eCaller->sendMsg(msg);
+	}
 }
 
 // camera control in LUA
@@ -183,6 +195,17 @@ void SLBCamera::setPositionOffset(float x_offset, float y_offset, float z_offset
 	camara3rd->setPositionOffset(offset);
 }
 
+void SLBCamera::runCinematic(const char* name, float speed) {
+	CHandle guidedCam = tags_manager.getHandleByTagAndName("guided_camera", name);
+	CEntity * guidedCamE = guidedCam;
+	if (guidedCamE) {
+		TMsgGuidedCamera msg_guided_cam;
+		msg_guided_cam.guide = guidedCam;
+		msg_guided_cam.speed = speed;
+		guidedCamE->sendMsg(msg_guided_cam);
+	}
+}
+
 // public generic functions
 void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	// create the new command
@@ -195,6 +218,16 @@ void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 
 void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA","%s\n",to_print);
+}
+
+void SLBPublicFunctions::setControlEnabled(int enabled) {
+	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+	if (player.isValid()) {
+		CEntity * ePlayer = player;
+		TMsgSetControllable msg;
+		msg.control = (enabled != 0);
+		ePlayer->sendMsg(msg);
+	}
 }
 
 void SLBPublicFunctions::playSound(const char* sound_route) {
