@@ -70,6 +70,7 @@ bool CApp::start() {
 	all_modules.push_back(sound_manager);
 
 	mod_update.push_back(logic_manager);
+	mod_update.push_back(sound_manager);
 	mod_update.push_back(entities);
 	mod_update.push_back(GameController);
 	mod_update.push_back(imgui);

@@ -1,13 +1,13 @@
 #ifndef INC_SOUND_MANAGER_H_
 #define	INC_SOUND_MANAGER_H_
 
-#include "app_modules/app_module.h"
-#include "fmod.hpp"
-#include "fmod_studio.hpp"
 #include <stdlib.h>
 #include <conio.h>
 #include <stdio.h>
 #include <string>
+#include "app_modules/app_module.h"
+#include "fmod_studio.hpp"
+#include "fmod.hpp"
 
 using namespace FMOD;
 
@@ -18,7 +18,7 @@ class CSoundManagerModule : public IAppModule
 	FMOD_RESULT												result;
 	void													*extradriverdata = 0;
 
-	System													*system; //low level system
+	System													*system = NULL; //low level system
 	unsigned int											version;
 	Studio::System											*studio_system = NULL;
 	// Basic banks
@@ -26,11 +26,9 @@ class CSoundManagerModule : public IAppModule
 	Studio::Bank											*stringsBank = NULL;
 	// Specific banks
 	Studio::Bank											*banks[4];
-	// Sound descriptions
+	// Sound descriptors
+	Studio::EventDescription								**events_array[4];
 	std::map<std::string, Studio::EventDescription*>		sounds_descriptions;
-	// Deprecated
-	FMOD::Channel											*channels[4];
-	std::map<std::string, FMOD::Sound*>						sounds;
 
 public:
 
@@ -39,7 +37,8 @@ public:
 		SFX = 0,
 		MUSIC,
 		VOICES,
-		AMBIENT
+		AMBIENT,
+		DUMMY
 	};
 
 	CSoundManagerModule();
@@ -55,8 +54,6 @@ public:
 	bool playMusic(std::string);
 	bool playVoice(std::string);
 	bool playAmbient(std::string);
-	void setVolume(CHANNEL, float);
-	void stopChannel(CHANNEL channel);
 
 };
 

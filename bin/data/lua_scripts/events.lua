@@ -26,8 +26,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-	p:play_music("data/sounds/music/It-Lightens-muestra-2-loop.mp3")
-	p:set_music_volume(0.7)
+	p:play_music("event:/OnGameStart")
 	triggerGuardFormation();
 end
 
@@ -37,12 +36,11 @@ end
 
 function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
-	p:play_voice("data/sounds/loopingsfx/gunshot.wav")
+	p:play_voice("event:/OnGuardAttack")
 end
 
 function OnGuardAttackEnd( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
-	p:stop_voices()
 end
 
 function OnGuardOvercharged( param )
@@ -95,7 +93,7 @@ end
 
 function OnChangePolarity( param )
 	p:print( "OnChangePolarity: "..param.."\n" )
-	p:play_sound("data/sounds/sfx/polarity.wav")
+	p:play_sound("event:/OnChangePolarity")
 end
 
 function OnPickupBox( param )
@@ -132,7 +130,7 @@ end
 
 function OnUseGenerator( param )
 	p:print( "OnUseGenerator: "..param.."\n" )
-	p:play_sound("data/sounds/sfx/recharge.wav")
+	p:play_sound("event:/OnUseGenerator")
 end
 
 function OnStun( param )
@@ -141,13 +139,11 @@ end
 
 function OnStunned( param )
 	p:print( "OnStunned: "..param.."\n" )
-	p:play_ambient("data/sounds/sfx/stun.wav")
-	p:set_ambient_volume(0.4)
+	p:play_ambient("event:/OnStunned")
 end
 
 function OnStunnedEnd( param )
 	p:print( "OnStunnedEnd: "..param.."\n" )
-	p:stop_ambient()
 end
 
 function OnLiquid( param )
@@ -160,23 +156,23 @@ end
 
 function OnOvercharge( param )
 	p:print( "OnOvercharge: "..param.."\n" )
-	p:play_sound("data/sounds/sfx/sobrecarga.wav")
+	p:play_sound("event:/OnOvercharge")
 	specialActionSettings(0.7);
 end
 
 function OnJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
-	p:play_sound("data/sounds/sfx/jump01.wav")
+	p:play_sound("event:/OnJump")
 end
 
 function OnDoubleJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
-	p:play_sound("data/sounds/sfx/jump02.wav")
+	p:play_sound("event:/OnDoubleJump")
 end
 
 function OnDetected( param )
 	p:print( "OnDetected: "..param.."\n" )
-	p:play_sound("data/sounds/sfx/alarm02.wav")
+	p:play_sound("event:/OnDetected")
 end
 
 function OnBeaconDetect( param )

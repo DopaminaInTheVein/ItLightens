@@ -70,7 +70,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)\fmod\studio\lib;$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmodL64_vc.lib;XINPUT9_1_0.LIB;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmod_vc.lib;fmodstudioL_vc.lib;fmodstudio_vc.lib;fmodL_vc.lib;fmod64_vc.lib;fmodL64_vc.lib;fmodstudio64_vc.lib;fmodstudioL64_vc.lib;XINPUT9_1_0.LIB;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
