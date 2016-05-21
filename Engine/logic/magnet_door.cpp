@@ -35,7 +35,7 @@ bool magnet_door::load(MKeyValue& atts)
 	else {
 		assert(false || fatal("Magnet door has an unknown polarity!\n"));
 	}
-	speedOpening = atts.getFloat("speedOpening", 1.f);
+	speedOpening = atts.getFloat("speedOpening", 5.f);
 	speedClosing = atts.getFloat("speedClosing", speedOpening);
 	if (locked) {
 		targetOpened = atts.getPoint("target");
@@ -61,6 +61,9 @@ void magnet_door::onCreate(const TMsgEntityCreated&)
 	assert(transform);
 	if (locked) targetClosed = transform->getPosition();
 	else targetOpened = transform->getPosition();
+
+	physics = eMe->get<TCompPhysics>();
+	physics->setKinematic(true);
 }
 
 void magnet_door::update(float elapsed)
@@ -82,7 +85,7 @@ void magnet_door::updateMagneticBehaviour()
 		// Door is not neutral
 		if (abs(playerTransform->getPosition().y - transform->getPosition().y) < 4.f) {
 			//Door and player are on the same floor (Y distance)
-			float distPlayerDoor = simpleDistXZ(transform->getPosition(), playerTransform->getPosition());
+			float distPlayerDoor = simpleDistXZ(targetClosed, playerTransform->getPosition());
 			if (distPlayerDoor < distPolarity) {
 				//Player is close to this door
 				if (polarity != playerPolarity) {
@@ -141,16 +144,15 @@ void magnet_door::updateMove()
 	else {
 		VEC3 delta = target - transform->getPosition();
 		float moveAmount = speed * getDeltaTime();
-		if (delta.Length() < moveAmount) {
-			physics->setPosition(target, transform->getRotation());
-		}
-		else {
-			delta.Normalize();
+		PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
+		if (rd) {
+			moveAmount = min(delta.Length(), moveAmount);
 			VEC3 nextPos = transform->getPosition() + delta * moveAmount;
-			physics->setPosition(nextPos, transform->getRotation());
+			PxTransform tmx = rd->getGlobalPose();
+			PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(nextPos);
+			rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
 		}
 	}
-
 }
 
 void magnet_door::notifyNewState()
@@ -190,8 +192,6 @@ bool magnet_door::getUpdateInfo() {
 	CEntity* ePlayer = player;
 	playerTransform = ePlayer->get<TCompTransform>();
 
-	//player_controller* pc = ePlayer->get<player_controller>();
-	//if (pc) playerPolarity = (pols)pc->GetPolarityInt();
 	TMsgGetPolarity msgPol; 
 	msgPol.polarity = NEUTRAL;
 	ePlayer->sendMsgWithReply(msgPol);

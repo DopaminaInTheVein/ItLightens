@@ -64,6 +64,7 @@ fn _parseObject parent = (
 		tags = _descriptorObject.getTags()
 		parseTags XML_PARSING tags
 		
+		
 		if not parseMonoComponent() then (			
 			--Parseamos components
 			components = _descriptorObject.getComponents()
@@ -103,7 +104,8 @@ fn parseTags parent tag = (
 		parseTags parent #(t)
 	) else (
 		local xml = parent.addChild "tags"
-		local tags_list = ""
+		local tags_list = getUserProp _parsingObject "tags"
+		if tags_list == undefined then (tags_list = "")
 		for t in tag do (
 			tags_list += (" " + t)
 		)

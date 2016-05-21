@@ -150,7 +150,7 @@ fn _parse_trigger = (
 		--Add trigger lua component
 		local xml = XML_PARSING.addChild "trigger_lua"
 			
-		if (onEnter == undefined) and (onExit == undefined) and (onAction != undefined) then (
+		if (onEnter == undefined) and (onExit == undefined) and (onAction == undefined) then (
 			throw "El trigger debe ser lógico o de componente!"
 		)
 		-- Logic trigger on enter

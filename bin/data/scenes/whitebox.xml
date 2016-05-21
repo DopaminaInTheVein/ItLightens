@@ -336,24 +336,28 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity
+   id="300">
 <tags
-   tags="door"/>
+   tags="doorExit door"/>
 <magnet_door
    locked="yes"
    speedOpening="1"
-   target="-79.1191 0.347638 -40.6995"
-   pol="minus"/>
+   target="-80.9939 4.67418 -40.0527"
+   pol="neutral"/>
 <name
    name="Door"/>
 <transform
-   pos="-82.5306 0.347638 -40.6995"
+   pos="-80.9939 1.82996 -40.0527"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/Door.static_mesh"/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="dynamic"
+   type_shape="box"
+   size="3.38976 2.8574 0.12"
+   mass="5"/>
 
 </entity>
 <entity>
@@ -362,8 +366,42 @@
 <name
    name="Door_opened_pos"/>
 <transform
-   pos="-79.1191 0.347638 -40.6995"
+   pos="-80.9939 4.67418 -40.0527"
    quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags=""/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.2064 0.875 2.49"/>
+<trigger_lua
+   action="activate"/>
+<name
+   name="tElevator"/>
+<transform
+   pos="-70.8264 0.788941 14.2003"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags=""/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="5.74651 0.855 6.12052"/>
+<trigger_lua
+   action="activate"/>
+<name
+   name="tElectricLlock"/>
+<transform
+   pos="-91.6933 0.778941 10.1933"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 
 </entity>

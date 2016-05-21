@@ -246,7 +246,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			break;
 		}
 		case (OnDoorClosing) : {
-			sprintf(lua_code, "OnClosing();");
+			sprintf(lua_code, "OnDoorClosing();");
 			break;
 		}
 		case (OnDoorClosed) : {
@@ -349,6 +349,14 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("setActionable", &SLBHandle::setActionable)
 		.comment("Set if the element is actionable (0: false, otherwise: true)")
 		.param("int: enabled")
+		// sets polarity
+		.set("setPolarity", &SLBHandle::setPolarity)
+		.comment("Set new polarity")
+		.param("int:  (negative is minus, 0 is neutral, positive is plus)")
+		// sets locked
+		.set("setLocked", &SLBHandle::setLocked)
+		.comment("Set if the element is locked")
+		.param("int:  (0: false, otherwise: true")
 		;
 }
 
