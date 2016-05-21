@@ -249,8 +249,16 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			sprintf(lua_code, "OnDoorClosing();");
 			break;
 		}
-		case (OnDoorClosed) : {
+		case (OnDoorClosed): {
 			sprintf(lua_code, "OnDoorClosed();");
+			break;
+		}		
+		case (OnCinematicSkipped): {
+			sprintf(lua_code, "OnCinematicSkipped(\"%s\");", params.c_str());
+			break;
+		}		
+		case (OnCinematicEnd): {
+			sprintf(lua_code, "OnCinematicEnd(\"%s\");", params.c_str());
 			break;
 		}
 

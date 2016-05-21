@@ -64,24 +64,33 @@ void TCompCamera::update(float dt) {
 	assert(tmx);
 
 	if (guidedCamera.isValid()) {
+		//Camara guida
 		CEntity * egc = guidedCamera;
 		TCompGuidedCamera * gc = egc->get<TCompGuidedCamera>();
 		if (!gc->followGuide(tmx, this)) {
+			//Fin recorrido  ...
+			//... Guardamos guidedCamera para mensaje a Logic Manager
+			CHandle cameraFinished = guidedCamera;
+
+			//... Terminamos el modo cinematica
+			guidedCamera = CHandle();
+			GameController->SetCinematic(false);
+
+			// Set the player in the 3rdPersonController
 			CHandle t = tags_manager.getFirstHavingTag("player");
 			CEntity * target_e = t;
-			// Set the player in the 3rdPersonController
 			if (e_owner && t.isValid()) {
 				TMsgSetTarget msg;
 				msg.target = t;
-				msg.who = PLAYER;
+				msg.who = PLAYER; //TODO: Siempre player? 
 				e_owner->sendMsg(msg);		//set camera
 
 				TMsgSetCamera msg_camera;
 				msg_camera.camera = owner;
 				target_e->sendMsg(msg_camera);	//set target camera
 			}
-			guidedCamera = CHandle();
-			GameController->SetCinematic(false);
+
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(egc->getName()), guidedCamera);
 		}
 	}
 	else {

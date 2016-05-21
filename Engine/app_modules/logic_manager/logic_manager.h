@@ -75,7 +75,10 @@ public:
 		OnDoorClosed,
 
 		OnEnterPC,
-		OnLeavePC
+		OnLeavePC,
+
+		OnCinematicEnd,
+		OnCinematicSkipped
 	};
 
 	CLogicManagerModule();

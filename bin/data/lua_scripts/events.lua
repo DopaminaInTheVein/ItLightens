@@ -225,3 +225,13 @@ end
 function OnDoorOpening()
 	p:print( "OnDoorOpening\n")
 end
+
+function OnCinematicSkipped( param )
+	p:print( "OnCinematicSkipped\n")
+	CallFunction("OnCinematicSkipped_"..param)
+end
+
+function OnCinematicEnd( param )
+	p:print( "OnCinematicEnd\n")
+		CallFunction("OnCinematicEnd_"..param)
+end
