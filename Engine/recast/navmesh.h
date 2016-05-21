@@ -63,11 +63,51 @@ public:
 	void build(std::string salaloc);
 	bool reload(std::string salaloc);
 
+	void searchValidP(unsigned short* &mesh) {
+		mesh++;
+		while ((int)*mesh > 50 || (int)*mesh < -50) {
+			mesh++;
+		}
+	}
+
+	void renderNavmesh() {
+		if (!m_dmesh)
+			return;
+
+		auto verts = m_dmesh->verts;
+		for (int i = 0; i < m_dmesh->nverts; ++i) {
+			VEC3 p1 = VEC3(0,0,0);
+			p1.x = *verts;
+			verts++;
+			p1.y = *verts;
+			verts++;
+			p1.z = *verts;
+			verts++;
+
+			VEC3 p2 = VEC3(0,0,0);
+			p2.x = *verts;
+			verts++;
+			p2.y = *verts;
+			verts++;
+			p2.z = *verts;
+			verts++;
+
+
+			Debug->DrawLine(p1, p2, VEC3(0, 0, 1));
+
+			verts = verts - 3;
+		}
+
+			
+	}
+
 	dtNavMesh* create(const rcConfig& cfg, std::string salaloc);
 	void prepareQueries();
 	void destroy();
 	void dumpLog();
-	//void render(bool use_z_test) {};
+	void render() {
+		renderNavmesh();
+	};
 };
 
 #endif

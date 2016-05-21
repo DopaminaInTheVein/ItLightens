@@ -19,9 +19,9 @@ void CCamera::lookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux) {
 
   view = MAT44::CreateLookAt(position, target, up_aux);
 
-  front = (target - position); 
+  front = (target - position);
   front.Normalize();
-  
+
   left = up_aux.Cross(front);
   left.Normalize();
 
@@ -59,9 +59,9 @@ void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux, 
 
   view = MAT44::CreateLookAt(position, target, up_aux);
 
-  front = (target - position); 
+  front = (target - position);
   front.Normalize();
-  
+
   left = up_aux.Cross(front);
   left.Normalize();
 
@@ -75,14 +75,17 @@ void CCamera::smoothUpdateInfluence(TCompTransform * tmx_camera, TCompGuidedCame
   target = tmx_camera->getPosition() + tmx_camera->getFront();
   up_aux = new_up_aux;
 
-  view = MAT44::CreateLookAt(position, target, up_aux);
-
-  VEC3 p, s;
-  CQuaternion cameraActualRotation;
-  view.Decompose(s, cameraActualRotation, p);
-  cameraActualRotation.Normalize();
-  CQuaternion newquad = gc->getNewRotationForCamera(position, cameraActualRotation, influencia);
-  this->applyQuat(newquad, p, s);
+  /*
+    VEC3 p, s;
+    CQuaternion cameraActualRotation;
+    view.Decompose(s, cameraActualRotation, p);
+    cameraActualRotation.Normalize();
+  */
+  VEC3 newtarget = gc->getNewTargetForCamera(position, target, influencia);
+  /*
+    this->applyQuat(newquad, p, s);
+  */
+  view = MAT44::CreateLookAt(position, newtarget, up_aux);
 
   updateViewProjection();
 }

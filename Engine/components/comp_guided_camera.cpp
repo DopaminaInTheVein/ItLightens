@@ -26,7 +26,7 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
   }
   for (int i = 0; i < num_cameras; i++) {
     ROT_ATR_NAME(atrRot, i);
-    CQuaternion rot = atts.getQuat(atrRot);
+    VEC3 rot = atts.getPoint(atrRot);
     rot.Normalize();
     rotations[i] = rot;
     influences[i] = realDist(points[i], points[i + 1]);
@@ -53,7 +53,7 @@ int TCompGuidedCamera::nearCameraPoint(VEC3 playerPosition) {
   }
   return pos;
 };
-*/
+
 CQuaternion TCompGuidedCamera::getNewRotationForCamera(VEC3 playerPosition, CQuaternion cameraActual, int pointOfInfluence) {
   if (pointOfInfluence != lastP) {
     lastP = pointOfInfluence;
@@ -83,105 +83,135 @@ CQuaternion TCompGuidedCamera::getNewRotationForCamera(VEC3 playerPosition, CQua
   cameraNova.Normalize();
   return cameraNova;
 };
+*/
+
+VEC3 TCompGuidedCamera::getNewTargetForCamera(VEC3 playerPosition, VEC3 cameraActual, int pointOfInfluence) {
+  if (pointOfInfluence != lastP) {
+    lastP = pointOfInfluence;
+    maxInfluence = 0.0f;
+    if (pointOfInfluence > 0) {
+      last_quat = rotations[pointOfInfluence - 1];
+    }
+  }
+  cameraActual.Normalize();
+
+  if (pointOfInfluence < 0 || pointOfInfluence >= num_cameras) {
+    return cameraActual;
+  }
+
+  float dist = realDist(playerPosition, points[pointOfInfluence + 1]);
+  float distanciaUnitaria = dist / influences[pointOfInfluence];
+  distanciaUnitaria = (1 - distanciaUnitaria);
+  distanciaUnitaria = fmaxf(maxInfluence, distanciaUnitaria);
+  maxInfluence = distanciaUnitaria;
+  VEC3 cameraNova;
+  if (pointOfInfluence > 0) {
+    cameraNova = VEC3::Lerp(last_quat, rotations[pointOfInfluence], distanciaUnitaria);
+  }
+  else {
+    cameraNova = VEC3::Lerp(cameraActual, rotations[pointOfInfluence], distanciaUnitaria);
+  }
+  cameraNova.Normalize();
+  return cameraNova;
+};
 
 void TCompGuidedCamera::start(float speed) {
-	lastguidedCamPoint = 0;
-	factor = 0.0f;
-	velocity = speed == 0.f ? velocity_default : speed;
-	
+  lastguidedCamPoint = 0;
+  factor = 0.0f;
+  velocity = speed == 0.f ? velocity_default : speed;
 }
 
 void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
-	//Init Guide
-	start(msg.speed);
+  //Init Guide
+  start(msg.speed);
 
-	//Messagge to sent
-	TMsgGuidedCamera msgToMainCamera;
-	msgToMainCamera.guide = CHandle(this).getOwner();
+  //Messagge to sent
+  TMsgGuidedCamera msgToMainCamera;
+  msgToMainCamera.guide = CHandle(this).getOwner();
 
-	//Get main_camera and notify
-	CHandle mainCamera = tags_manager.getFirstHavingTag("camera_main");
-	if (mainCamera.isValid()) {
-		CEntity* eMainCamera = mainCamera;
-		eMainCamera->sendMsg(msgToMainCamera);
-	}
+  //Get main_camera and notify
+  CHandle mainCamera = tags_manager.getFirstHavingTag("camera_main");
+  if (mainCamera.isValid()) {
+    CEntity* eMainCamera = mainCamera;
+    eMainCamera->sendMsg(msgToMainCamera);
+  }
 }
 
 bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* cam) {
-	if (lastguidedCamPoint >= getTotalPoints() || io->keys['Q'].becomesPressed()) {
-		return false;
-	}
+  if (lastguidedCamPoint >= getTotalPoints() || io->keys['Q'].becomesPressed()) {
+    return false;
+  }
 
-	VEC3 goTo = getPointPosition(lastguidedCamPoint);
+  VEC3 goTo = getPointPosition(lastguidedCamPoint);
 
-	CHandle tX = tags_manager.getFirstHavingTag("player");
-	CEntity * target_eX = tX;
+  CHandle tX = tags_manager.getFirstHavingTag("player");
+  CEntity * target_eX = tX;
 
-	TCompTransform * targettransX = target_eX->get<TCompTransform>();
+  TCompTransform * targettransX = target_eX->get<TCompTransform>();
 
-	VEC3 nextPoint = (lastguidedCamPoint == getTotalPoints() - 1 ? getPointPosition(lastguidedCamPoint) : getPointPosition((lastguidedCamPoint + 1) % getTotalPoints()));
-	/*
-	float yaw, pitch;
-	tmx->getAngles(&yaw, &pitch);
+  VEC3 nextPoint = (lastguidedCamPoint == getTotalPoints() - 1 ? getPointPosition(lastguidedCamPoint) : getPointPosition((lastguidedCamPoint + 1) % getTotalPoints()));
+  /*
+  float yaw, pitch;
+  tmx->getAngles(&yaw, &pitch);
 
-	if (!tmx->isHalfConeVision(goTo, deg2rad(1.0f))) {
-	  float delta_yaw = tmx->getDeltaYawToAimTo(goTo);
-	  if (abs(delta_yaw) > 0.001f) {
-		yaw += delta_yaw*getDeltaTime()*gc->getAngularVelocity();
-	  }
-	  else {
-		yaw += delta_yaw*gc->getAngularVelocity();
-	  }
-	}
-	if (!tmx->isHalfConeVisionPitch(goTo, deg2rad(1.0f))) {
-	  float delta_pitch = tmx->getDeltaPitchToAimTo(goTo);
-	  if (abs(delta_pitch) > 0.001f) {
-		pitch += delta_pitch*gc->getAngularVelocity()*getDeltaTime();
-	  }
-	  else {
-		pitch += delta_pitch*gc->getAngularVelocity();
-	  }
-	}
-	tmx->setAngles(yaw, pitch);
-	*/
-	VEC3 pos = camTransform->getPosition();
-	if (simpleDist(pos, goTo) > 0.5f) {
-		VEC3 fro = goTo - pos;
-		fro.Normalize();
+  if (!tmx->isHalfConeVision(goTo, deg2rad(1.0f))) {
+    float delta_yaw = tmx->getDeltaYawToAimTo(goTo);
+    if (abs(delta_yaw) > 0.001f) {
+    yaw += delta_yaw*getDeltaTime()*gc->getAngularVelocity();
+    }
+    else {
+    yaw += delta_yaw*gc->getAngularVelocity();
+    }
+  }
+  if (!tmx->isHalfConeVisionPitch(goTo, deg2rad(1.0f))) {
+    float delta_pitch = tmx->getDeltaPitchToAimTo(goTo);
+    if (abs(delta_pitch) > 0.001f) {
+    pitch += delta_pitch*gc->getAngularVelocity()*getDeltaTime();
+    }
+    else {
+    pitch += delta_pitch*gc->getAngularVelocity();
+    }
+  }
+  tmx->setAngles(yaw, pitch);
+  */
+  VEC3 pos = camTransform->getPosition();
+  if (simpleDist(pos, goTo) > 0.5f) {
+    VEC3 fro = goTo - pos;
+    fro.Normalize();
 
-		if (lastguidedCamPoint < 2 || lastguidedCamPoint + 1 == getTotalPoints()) {
-			pos = pos + (fro * getVelocity() * getDeltaTime());
-		}
-		else {
-			VEC3 pos1 = getPointPosition(lastguidedCamPoint - 2), 
-				pos2 = getPointPosition(lastguidedCamPoint - 1), 
-				pos3 = goTo, 
-				pos4 = getPointPosition(lastguidedCamPoint + 1);
-			float veloc = getVelocity() / realDist(pos3, pos2);
+    if (lastguidedCamPoint < 2 || lastguidedCamPoint + 1 == getTotalPoints()) {
+      pos = pos + (fro * getVelocity() * getDeltaTime());
+    }
+    else {
+      VEC3 pos1 = getPointPosition(lastguidedCamPoint - 2),
+        pos2 = getPointPosition(lastguidedCamPoint - 1),
+        pos3 = goTo,
+        pos4 = getPointPosition(lastguidedCamPoint + 1);
+      float veloc = getVelocity() / realDist(pos3, pos2);
 
-			factor += getDeltaTime() * veloc;
-			VEC3 posNew = VEC3::CatmullRom(pos1, pos2, pos3, pos4, factor);
-			pos = posNew;
-		}
-		camTransform->setPosition(pos);
-	}
-	else {
-		++lastguidedCamPoint;
-		factor = 0.0f;
-	}
+      factor += getDeltaTime() * veloc;
+      VEC3 posNew = VEC3::CatmullRom(pos1, pos2, pos3, pos4, factor);
+      pos = posNew;
+    }
+    camTransform->setPosition(pos);
+  }
+  else {
+    ++lastguidedCamPoint;
+    factor = 0.0f;
+  }
 
-	if (getDefaultDirsEnabled()) {
-		cam->smoothLookAt(camTransform->getPosition(), nextPoint, cam->getUpAux(), 0.5f);
-	}
-	else if (lastguidedCamPoint > 0) {
-		VEC3 campos = camTransform->getPosition();
-		int influencia = lastguidedCamPoint - 1; // gc->nearCameraPoint(campos);
-		cam->smoothUpdateInfluence(camTransform, this, influencia, cam->getUpAux());	//smooth movement
-	}
-	else {
-		cam->smoothLookAt(camTransform->getPosition(), 
-			camTransform->getPosition() + camTransform->getFront(), 
-			cam->getUpAux());
-	}
-	return true;
+  if (getDefaultDirsEnabled()) {
+    cam->smoothLookAt(camTransform->getPosition(), nextPoint, cam->getUpAux(), 0.5f);
+  }
+  else if (lastguidedCamPoint > 0) {
+    VEC3 campos = camTransform->getPosition();
+    int influencia = lastguidedCamPoint - 1; // gc->nearCameraPoint(campos);
+    cam->smoothUpdateInfluence(camTransform, this, influencia, cam->getUpAux());	//smooth movement
+  }
+  else {
+    cam->smoothLookAt(camTransform->getPosition(),
+      camTransform->getPosition() + camTransform->getFront(),
+      cam->getUpAux());
+  }
+  return true;
 }

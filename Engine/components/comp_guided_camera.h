@@ -15,12 +15,12 @@ class TCompGuidedCamera : public TCompBase {
   float velocity;
   bool default_dirs;
   //float angularVelocity;
-  std::vector<CQuaternion> rotations;
+  std::vector<VEC3> rotations;
   std::vector<float> influences;
   std::vector<VEC3> cameraPositions;
 
   float maxInfluence = 0.0f;
-  CQuaternion last_quat;
+  VEC3 last_quat;
   int lastP = -1;
 
   int lastguidedCamPoint = 0;
@@ -41,8 +41,10 @@ public:
   const VEC3 getCameraPosition(int posi) const { return cameraPositions[posi]; }
   const VEC3 getPointPosition(int posi) const { return points[posi]; }
   bool getDefaultDirsEnabled() { return default_dirs; }
+  /*
   CQuaternion getNewRotationForCamera(VEC3 playerPosition, CQuaternion cameraActual, int pointOfInfluence);
-
+  */
+  VEC3 getNewTargetForCamera(VEC3 playerPosition, VEC3 targetActual, int pointOfInfluence);
 
   void onGuidedCamera(const TMsgGuidedCamera&);
   bool followGuide(TCompTransform*, TCompCamera*);

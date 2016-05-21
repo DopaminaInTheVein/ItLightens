@@ -4,7 +4,7 @@
 fn _parse_rail_camera = (
 	--_parsingObject
 	--XML_PARSING
-	if ( (numSegments _parsingObject 1) == (_parsingObject.children.count)) then (
+	if ( (numSegments _parsingObject 1) == ((_parsingObject.children.count)/2)) then (
 
 		local xml = XML_PARSING.addChild "guided_camera"
 		
@@ -42,22 +42,16 @@ fn _parse_rail_camera = (
 			xml.addAttr  atrName atrValue
 		)
 		local i2 = 0
-		local rot
-		--local quatrot = quat 0 -0.7071 0 -0.7071 
 		for c in _parsingObject.children do(
-			if ((classof c) == FreeCamera ) then (
+			if ((classof c) == Targetobject ) then (
 				-- Atr Name
 				atrName = "rot" + (i2 as string)
-			
-				-- Get Rotation
+				--format c.name
+				-- Get target Position
 				mcv_tmx = matrixMax2MCV c.transform
-				rot = mcv_tmx.rotation
-				--rot = (mcv_tmx.rotation * quatrot)
-				--rot  = inverse rot
-				atrValue = getAsXmlValues #(-rot.x, rot.z, -rot.y, -rot.w)
+				local posi = mcv_tmx.position
+				atrValue = getAsXmlValues #(posi.x, posi.z, posi.y)
 				xml.addAttr atrName atrValue
-				--quatValue = getTransformRotValue mcv_tmx
-				--xml.addAttr atrName quatValue
 				i2 += 1
 			)
 		)
