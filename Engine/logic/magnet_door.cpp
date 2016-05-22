@@ -135,20 +135,20 @@ void magnet_door::updateMove()
 		speed = speedClosing;
 		targetState = CS_CLOSED;
 	}
-
-	// Door has reached targed
-	if (simpleDist(target, transform->getPosition()) < epsilonTarget) {
-		cinematicState = targetState;
-	}
-	//Door has to move
-	else {
-		VEC3 delta = target - transform->getPosition();
-		float moveAmount = speed * getDeltaTime();
-		PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
-		if (rd) {
-			moveAmount = min(delta.Length(), moveAmount);
-			VEC3 nextPos = transform->getPosition() + delta * moveAmount;
-			PxTransform tmx = rd->getGlobalPose();
+	PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
+	if (rd) {
+		PxTransform tmx = rd->getGlobalPose();
+		VEC3 pos = PhysxConversion::PxVec3ToVec3(tmx.p);
+		// Door has reached targed
+		if (simpleDist(target, pos) < epsilonTarget) {
+			cinematicState = targetState;
+		}
+		//Door has to move
+		else {
+			VEC3 delta = target - pos;
+			float moveAmount = speed * getDeltaTime();
+			delta.Normalize();
+			VEC3 nextPos = pos + delta * moveAmount;
 			PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(nextPos);
 			rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
 		}

@@ -377,7 +377,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.2064 0.875 2.49"/>
+   size="3.71942 0.875 8.6901"/>
 <trigger_lua
    action="activate"/>
 <name

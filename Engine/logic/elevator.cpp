@@ -65,8 +65,10 @@ void elevator::updateMove()
 
 	if (rd) {
 		//moveAmount = min(delta.Length(), moveAmount);
-		VEC3 nextPos = transform->getPosition() + delta * moveAmount;
+		delta.Normalize();
 		PxTransform tmx = rd->getGlobalPose();
+		VEC3 pos = PhysxConversion::PxVec3ToVec3(tmx.p);
+		VEC3 nextPos = pos + delta * moveAmount;
 		PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(nextPos);
 		rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
 	}

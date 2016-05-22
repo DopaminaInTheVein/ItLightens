@@ -439,6 +439,10 @@ void CEntitiesModule::update(float dt) {
 	static float ia_wait = 0.0f;
 	ia_wait += getDeltaTime();
 
+	//physx objects
+	getHandleManager<TCompCharacterController>()->updateAll(dt);
+	getHandleManager<TCompPhysics>()->updateAll(dt);
+
 	getHandleManager<TCompLightDir>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
@@ -501,10 +505,6 @@ void CEntitiesModule::update(float dt) {
 
 		getHandleManager<TCompLightPoint>()->updateAll(dt);
 		getHandleManager<TCompLightFadable>()->updateAll(dt);
-
-		//physx objects
-		getHandleManager<TCompCharacterController>()->updateAll(dt);
-		getHandleManager<TCompPhysics>()->updateAll(dt);
 
 		//Triggers
 		getHandleManager<TTriggerLua>()->updateAll(dt);
