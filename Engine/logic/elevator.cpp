@@ -7,7 +7,7 @@ bool elevator::load(MKeyValue& atts)
 	speedUp = atts.getFloat("speedOpening", 1.f);
 	speedDown = atts.getFloat("speedClosing", speedUp);
 	targetDown = targetUp = atts.getPoint("target"); // Both as targets, because onCreate we will set targetUp/down as initial position
-	epsilonTarget = 0.001f;
+	epsilonTarget = 0.1f;
 	return true;
 }
 
@@ -59,23 +59,23 @@ void elevator::updateMove()
 		targetState = DOWN;
 	}
 
+	VEC3 delta = target - transform->getPosition();
+	float moveAmount = speed * getDeltaTime();
+	PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
+
+	if (rd) {
+		//moveAmount = min(delta.Length(), moveAmount);
+		VEC3 nextPos = transform->getPosition() + delta * moveAmount;
+		PxTransform tmx = rd->getGlobalPose();
+		PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(nextPos);
+		rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
+	}
+
 	// Target has reached
 	if (simpleDist(target, transform->getPosition()) < epsilonTarget) {
 		state = targetState;
 	}
-	//Elevator has to move
-	else {
-		VEC3 delta = target - transform->getPosition();
-		float moveAmount = speed * getDeltaTime();
-		PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
-		if (rd) {
-			moveAmount = min(delta.Length(), moveAmount);
-			VEC3 nextPos = transform->getPosition() + delta * moveAmount;
-			PxTransform tmx = rd->getGlobalPose();
-			PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(nextPos);
-			rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
-		}
-	}
+
 }
 
 void elevator::notifyNewState()
