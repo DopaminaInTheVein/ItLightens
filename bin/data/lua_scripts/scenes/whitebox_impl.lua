@@ -16,19 +16,24 @@ end
 
 -- Elevator --
 -------------------------------------------------
-elevatorState = "down"
+idElevator = 301
+triggerElevator = Handle()
+--elevatorState = "down"
 function activateElevator( )
-  if elevatorState == "down" then
-    p:print("Elevator Up\n")
-	elevatorState = "up"
-  else
-    p:print("Elevator Down\n")
-	elevatorState = "down"
-  end
+  --if elevatorState == "down" then
+  --  p:print("Elevator Up\n")
+  --  elevatorState = "up"
+  --else
+  --  p:print("Elevator Down\n")
+  --  elevatorState = "down"
+  --end
   
-  h:getHandleCaller()
+  triggerElevator:getHandleCaller()
   p:setControlEnabled(0)
-  p:exec_command( "h:setActionable(1);", 10 )
+  h:get_handle_by_id(idElevator)
+  h:activate()
+  
+  p:exec_command( "triggerElevator:setActionable(1);", 2 )
   p:exec_command( "p:setControlEnabled(1);", 10 )
 end
 --------------------------------------------------

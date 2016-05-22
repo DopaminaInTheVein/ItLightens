@@ -261,7 +261,22 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			sprintf(lua_code, "OnCinematicEnd(\"%s\");", params.c_str());
 			break;
 		}
-
+		case (OnElevatorUp): {
+			sprintf(lua_code, "OnElevatorUp(\"%s\");", params.c_str());
+			break;
+		}
+		case (OnElevatorDown): {
+			sprintf(lua_code, "OnElevatorDown(\"%s\");", params.c_str());
+			break;
+		}
+		case (OnElevatorGoingUp): {
+			sprintf(lua_code, "OnElevatorGoingUp(\"%s\");", params.c_str());
+			break;
+		}
+		case (OnElevatorGoingDown): {
+			sprintf(lua_code, "OnElevatorGoingDown(\"%s\");", params.c_str());
+			break;
+		}
 		default : {
 			sprintf(lua_code, "dbg('The event %s does not exist!');", evt);
 		}
@@ -357,6 +372,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("setActionable", &SLBHandle::setActionable)
 		.comment("Set if the element is actionable (0: false, otherwise: true)")
 		.param("int: enabled")
+		// activate
+		.set("activate", &SLBHandle::activate)
+		.comment("Activate the element (send TMsgActivate)")
 		// sets polarity
 		.set("setPolarity", &SLBHandle::setPolarity)
 		.comment("Set new polarity")

@@ -388,10 +388,12 @@
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity
+   id="301">
 <tags
    tags="elevator1 elevator"/>
-<elevator/>
+<elevator
+   target="-70.7158 9.45796 14.1924"/>
 <name
    name="ElevatorGround"/>
 <transform
@@ -432,6 +434,23 @@
    name="tElectricLlock"/>
 <transform
    pos="-91.8979 0.788941 10.1574"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags=""/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.2064 0.875 2.49"/>
+<trigger_lua
+   action="activate"/>
+<name
+   name="tElevator"/>
+<transform
+   pos="-70.8264 10.1974 14.2003"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

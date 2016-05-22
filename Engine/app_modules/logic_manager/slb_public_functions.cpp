@@ -139,6 +139,14 @@ void SLBHandle::setActionable(int enabled) {
 	}
 }
 
+void SLBHandle::activate() {
+	if (real_handle.isValid()) {
+		CEntity* eTarget = real_handle;
+		TMsgActivate msg;
+		eTarget->sendMsg(msg);
+	}
+}
+
 void SLBHandle::setPolarity(int polarity) {
 	if (real_handle.isValid()) {
 		CEntity* eTarget = real_handle;

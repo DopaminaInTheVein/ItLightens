@@ -200,7 +200,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
 	SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);
 	SUBSCRIBE(magnet_door, TMsgEntityCreated, onCreate);
-	//SUBSCRIBE(elevator, TMsgElevator, onElevatorAction);
+	SUBSCRIBE(elevator, TMsgActivate, onElevatorAction);
+	SUBSCRIBE(elevator, TMsgEntityCreated, onCreate);
 
 
 	//box

@@ -4,7 +4,7 @@
 
 bool elevator::load(MKeyValue& atts)
 {
-	speedUp = atts.getFloat("speedOpening", 5.f);
+	speedUp = atts.getFloat("speedOpening", 1.f);
 	speedDown = atts.getFloat("speedClosing", speedUp);
 	targetDown = targetUp = atts.getPoint("target"); // Both as targets, because onCreate we will set targetUp/down as initial position
 	epsilonTarget = 0.001f;
@@ -20,8 +20,14 @@ void elevator::onCreate(const TMsgEntityCreated&)
 	assert(transform);
 
 	VEC3 initialPos = transform->getPosition();
-	if (initialPos.y > targetUp.y) targetUp = initialPos;
-	else targetDown = initialPos;
+	if (initialPos.y > targetUp.y) {
+		targetUp = initialPos;
+		prevState = state = UP;
+	}
+	else {
+		targetDown = initialPos;
+		prevState = state = DOWN;
+	}
 	
 	physics = eMe->get<TCompPhysics>();
 	physics->setKinematic(true);
@@ -30,85 +36,68 @@ void elevator::onCreate(const TMsgEntityCreated&)
 void elevator::update(float elapsed)
 {
 	if (getUpdateInfo()) {
-		updateCinematicState();
 		updateMove();
 		notifyNewState();
 	}
 }
 
-//Set opening or closing 
-void elevator::updateCinematicState()
-{
-	//switch (magneticBehaviour) {
-	//case MB_NONE:
-	//	cinematicState = locked ? CS_CLOSING : CS_OPENING;
-	//	break;
-	//case MB_OPENING:
-	//	cinematicState = CS_OPENING;
-	//	break;
-	//case MB_CLOSING:
-	//	cinematicState = CS_CLOSING;
-	//	break;
-	//}
-}
-
 //Move door and set OPENED or CLOSED if movement ends
 void elevator::updateMove()
 {
-	//VEC3 target;
-	//float speed;
-	//eCinematicState targetState;
+	if (state == UP || state == DOWN) return;
 
-	//// Set target
-	//if (cinematicState == CS_OPENING) {
-	//	target = targetOpened;
-	//	speed = speedOpening;
-	//	targetState = CS_OPENED;
-	//}
-	//else {
-	//	target = targetClosed;
-	//	speed = speedClosing;
-	//	targetState = CS_CLOSED;
-	//}
+	VEC3 target;
+	float speed;
+	eElevatorState targetState;
+	if (state == GOING_UP) {
+		target = targetUp;
+		speed = speedUp;
+		targetState = UP;
+	} else if (state == GOING_DOWN) {
+		target = targetDown;
+		speed = speedDown;
+		targetState = DOWN;
+	}
 
-	//// Door has reached targed
-	//if (simpleDist(target, transform->getPosition()) < epsilonTarget) {
-	//	cinematicState = targetState;
-	//}
-	////Door has to move
-	//else {
-	//	VEC3 delta = target - transform->getPosition();
-	//	float moveAmount = speed * getDeltaTime();
-	//	PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
-	//	if (rd) {
-	//		moveAmount = min(delta.Length(), moveAmount);
-	//		VEC3 nextPos = transform->getPosition() + delta * moveAmount;
-	//		PxTransform tmx = rd->getGlobalPose();
-	//		PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(nextPos);
-	//		rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
-	//	}
-	//}
+	// Target has reached
+	if (simpleDist(target, transform->getPosition()) < epsilonTarget) {
+		state = targetState;
+	}
+	//Elevator has to move
+	else {
+		VEC3 delta = target - transform->getPosition();
+		float moveAmount = speed * getDeltaTime();
+		PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
+		if (rd) {
+			moveAmount = min(delta.Length(), moveAmount);
+			VEC3 nextPos = transform->getPosition() + delta * moveAmount;
+			PxTransform tmx = rd->getGlobalPose();
+			PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(nextPos);
+			rd->setKinematicTarget(PxTransform(pxTarget, tmx.q));
+		}
+	}
 }
 
 void elevator::notifyNewState()
 {
-	//if (prevCinematicState != cinematicState) {
-	//	switch (cinematicState) {
-	//	case CS_OPENING:
-	//		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDoorOpening, "", myEntity);
-	//		break;
-	//	case CS_OPENED:
-	//		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDoorOpened, "", myEntity);
-	//		break;
-	//	case CS_CLOSED:
-	//		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDoorClosed, "", myEntity);
-	//		break;
-	//	case CS_CLOSING:
-	//		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDoorClosing, "", myEntity);
-	//		break;
-	//	}
-	//}
-	//prevCinematicState = cinematicState;
+	if (prevState != state) {
+		string nameElevator = string(((CEntity*)myEntity)->getName());
+		switch (state) {
+		case UP:
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorUp, nameElevator, myEntity);
+			break;
+		case DOWN:
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorDown, nameElevator, myEntity);
+			break;
+		case GOING_UP:
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorGoingUp, nameElevator, myEntity);
+			break;
+		case GOING_DOWN:
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorGoingDown, nameElevator, myEntity);
+			break;
+		}
+	}
+	prevState = state;
 }
 
 bool elevator::getUpdateInfo() {
@@ -124,7 +113,8 @@ bool elevator::getUpdateInfo() {
 	return true;
 }
 
-//void elevator::onElevatorAction(const TMsgElevator& msg)
-//{
-//	locked = msg.locked;
-//}
+void elevator::onElevatorAction(const TMsgActivate& msg)
+{
+	state = (state == UP || state == GOING_UP) ? GOING_DOWN : GOING_UP;
+	notifyNewState();
+}

@@ -223,6 +223,10 @@ struct TMsgSetActivable {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgActivate {
+	DECLARE_MSG_ID();
+};
+
 struct TMsgSetControllable {
 	bool control;
 	DECLARE_MSG_ID();

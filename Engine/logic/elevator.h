@@ -8,10 +8,19 @@
 
 class elevator : public TCompBase {
 	
+	enum eElevatorState {
+		UP,
+		GOING_UP,
+		DOWN,
+		GOING_DOWN
+	};
+
 	VEC3 targetUp, targetDown;
 	float speedUp;
 	float speedDown;
 	float epsilonTarget;
+	eElevatorState state;
+	eElevatorState prevState;
 
 	//Update info
 	CHandle myEntity;
@@ -20,13 +29,12 @@ class elevator : public TCompBase {
 
 	//Private Funcs
 	bool getUpdateInfo();
-	void updateCinematicState();
 	void updateMove();
 	void notifyNewState();
 
 public:
 	void update(float elapsed);
-	//void onElevatorAction(const TMsgElevator&);
+	void onElevatorAction(const TMsgActivate&);
 	bool load(MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated&);
 };

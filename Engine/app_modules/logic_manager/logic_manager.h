@@ -78,7 +78,13 @@ public:
 		OnLeavePC,
 
 		OnCinematicEnd,
-		OnCinematicSkipped
+		OnCinematicSkipped,
+
+		OnElevatorUp,
+		OnElevatorDown,
+		OnElevatorGoingUp,
+		OnElevatorGoingDown,
+
 	};
 
 	CLogicManagerModule();
