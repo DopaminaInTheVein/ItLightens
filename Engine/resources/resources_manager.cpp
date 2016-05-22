@@ -37,6 +37,7 @@ void CResourcesManager::onFileChanged(const std::string& filename) {
   //Check Extensions
   std::string ext(filename_correct);
   auto p = ext.find_last_of(".");
+  if (p == std::string::npos) return;
   ext = ext.substr(p);
 
   //Is LUA file
