@@ -49,7 +49,7 @@ function activateLock( )
   h:get_handle_by_id(idDoor)
   --h:setPolarity(-1)  
   h:setLocked(0)  
-  p:exec_command( "deactivateLock();", 10 )
+  p:exec_command( "deactivateLock();", 6 )
   
   --Variable control para activaciones acumuladas
   timesActivatedLock = timesActivatedLock + 1

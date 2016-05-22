@@ -10,7 +10,7 @@
 <name
    name="camController_1"/>
 <transform
-   pos="-37.6678 -20.5623 -35.8906"
+   pos="-79.9295 -20.3454 -26.5926"
    quat="0 0.707104 0 0.707104"
    scale="1.0"/>
 
@@ -237,7 +237,7 @@
 <name
    name="cerradura_electrica"/>
 <transform
-   pos="-91.8181 0.344628 10.2894"
+   pos="-91.8181 0.0687488 10.2894"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -390,17 +390,48 @@
 </entity>
 <entity>
 <tags
+   tags="elevator1 elevator"/>
+<elevator/>
+<name
+   name="ElevatorGround"/>
+<transform
+   pos="-70.7158 -0.0216497 14.1924"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/elevator.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="3.3 0.15 2.5"
+   mass="5"
+   kinematic="yes"/>
+
+</entity>
+<entity>
+<tags
+   tags=""/>
+<name
+   name="ElevatorGround_pos_elevator_up"/>
+<transform
+   pos="-70.7158 9.45796 14.1924"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
    tags=""/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="5.74651 0.855 6.12052"/>
+   size="6.02803 0.875 5.9013"/>
 <trigger_lua
    action="activate"/>
 <name
    name="tElectricLlock"/>
 <transform
-   pos="-91.6933 0.778941 10.1933"
+   pos="-91.8979 0.788941 10.1574"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

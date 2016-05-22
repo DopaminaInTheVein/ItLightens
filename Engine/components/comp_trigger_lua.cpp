@@ -19,7 +19,7 @@ void TTriggerLua::onTriggerAction() {
 void TTriggerLua::onTriggerInside(const TMsgTriggerIn& msg) {
 	if (mActionable) {
 		Gui->setActionAvailable(mAction);
-		if (io->keys['E'].becomesPressed()) {
+		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 			mActionable = false;
 			onTriggerAction();
 		}

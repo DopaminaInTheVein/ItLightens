@@ -54,6 +54,7 @@ bool TCompPhysics::load(MKeyValue & atts)
 	readString = atts.getString("type_shape", "mesh");
 	m_collisionShape = getCollisionShapeValueFromString(readString);
 	m_mass = atts.getFloat("mass", 2.0f);		//default enough to pass polarize threshold
+	m_kinematic = atts.getBool("kinematic", false);		//default enough to pass polarize threshold
 	switch (m_collisionShape) {
 	case TRI_MESH:
 		//nothing extra needed to read
@@ -301,7 +302,7 @@ bool TCompPhysics::addRigidbodyScene()
 		//save parent handle to physx
 		m_pActor->userData = (void*)CHandle(this).getOwner().asUnsigned();
 		m_pActor->isRigidBody()->setMass(m_mass);
-		
+		if (m_kinematic) setKinematic(true);
 		return true;
 	}else if (m_collisionType == TRIGGER) {
 

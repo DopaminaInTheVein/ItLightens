@@ -77,6 +77,14 @@ fn parseRigidBody parent collider = (
 			xml.addAttr "mass" mass
 		)
 	)
+	
+	--Set Kinematic
+	if collider != undefined then (
+		local kinematic = (getUserProp collider "kinematic")
+		if kinematic != undefined then (
+			xml.addAttr "kinematic" kinematic
+		)
+	)
 )
 
 fn parseRigidBodyTrigger parent = (

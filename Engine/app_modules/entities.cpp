@@ -33,6 +33,7 @@ DECL_OBJ_MANAGER("cientifico", ai_scientific);
 DECL_OBJ_MANAGER("beacon", beacon_controller);
 DECL_OBJ_MANAGER("workbench", workbench_controller);
 DECL_OBJ_MANAGER("magnet_door", magnet_door);
+DECL_OBJ_MANAGER("elevator", elevator);
 /****/DECL_OBJ_MANAGER("ai_guard", ai_guard);
 DECL_OBJ_MANAGER("bt_guard", bt_guard);
 /****/DECL_OBJ_MANAGER("ai_mole", ai_mole);
@@ -139,6 +140,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 	getHandleManager<magnet_door>()->init(MAX_ENTITIES);
+	getHandleManager<elevator>()->init(4);
 
 	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompDrone>()->init(MAX_ENTITIES);
@@ -198,6 +200,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
 	SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);
 	SUBSCRIBE(magnet_door, TMsgEntityCreated, onCreate);
+	//SUBSCRIBE(elevator, TMsgElevator, onElevatorAction);
+
 
 	//box
 	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
@@ -488,6 +492,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
 		getHandleManager<magnet_door>()->updateAll(dt);
+		getHandleManager<elevator>()->updateAll(dt);
 		//getHandleManager<TCompTracker>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
