@@ -258,17 +258,21 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
 	SUBSCRIBE(ai_scientific, TMsgAISetStunned, onSetStunned);
 	SUBSCRIBE(player_controller_cientifico, TMsgControllerSetEnable, onSetEnable);
+	SUBSCRIBE(player_controller_cientifico, TMsgGetWhoAmI, onGetWhoAmI);
 	//..Speedy
 	SUBSCRIBE(bt_speedy, TMsgAISetPossessed, onSetPossessed);
 	SUBSCRIBE(bt_speedy, TMsgAISetStunned, onSetStunned);
 	SUBSCRIBE(player_controller_speedy, TMsgControllerSetEnable, onSetEnable);
+	//SUBSCRIBE(player_controller_speedy, TMsgGetWhoAmI, onGetWhoAmI);
 	//..Mole
 	SUBSCRIBE(bt_mole, TMsgAISetPossessed, onSetPossessed);
 	SUBSCRIBE(bt_mole, TMsgAISetStunned, onSetStunned);
 	SUBSCRIBE(player_controller_mole, TMsgControllerSetEnable, onSetEnable);
+	SUBSCRIBE(player_controller_mole, TMsgGetWhoAmI, onGetWhoAmI);
 
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
+	SUBSCRIBE(player_controller, TMsgGetWhoAmI, onGetWhoAmI);
 
 	//Dead
 	//anything for now

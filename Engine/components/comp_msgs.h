@@ -76,6 +76,11 @@ struct TMsgSetTarget {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgGetWhoAmI {
+	PLAYER_TYPE who;
+	DECLARE_MSG_ID();
+};
+
 struct TMsgSetPlayer {
 	CHandle player;
 	DECLARE_MSG_ID();

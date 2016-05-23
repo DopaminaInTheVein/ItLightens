@@ -22,6 +22,24 @@ function OnAction( param )
 	--setCameraSpeedUnlocked(10.0);
 end
 
+function OnActionSci( param )
+	p:print( "OnActionSci: "..param.."\n" )
+	CallFunction("OnActionSci_"..param)
+	--specialActionSettings(0.7);
+	--setCameraRotationSensibility(60.5);
+	--setCameraSpeed(4.0);
+	--setCameraSpeedUnlocked(10.0);
+end
+
+function OnActionMole( param )
+	p:print( "OnActionMole: "..param.."\n" )
+	CallFunction("OnActionMole_"..param)
+	--specialActionSettings(0.7);
+	--setCameraRotationSensibility(60.5);
+	--setCameraSpeed(4.0);
+	--setCameraSpeedUnlocked(10.0);
+end
+
 function OnEnter( param )
 	p:print( "OnEnter: "..param.."\n" ) 
 	CallFunction("OnEnter_"..param)

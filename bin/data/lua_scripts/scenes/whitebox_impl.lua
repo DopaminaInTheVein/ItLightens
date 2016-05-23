@@ -60,6 +60,10 @@ function activateLock( )
   timesActivatedLock = timesActivatedLock + 1
 end
 
+function putBattery( )
+  p:print("Put Battery\n")
+end
+
 function deactivateLock( )
   p:print("Deactivate Lock\n")
   timesActivatedLock = timesActivatedLock - 1

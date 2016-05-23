@@ -429,7 +429,8 @@
    type_shape="box"
    size="6.02803 0.875 5.9013"/>
 <trigger_lua
-   action="activate"/>
+   action="activate"
+   actionMole="put"/>
 <name
    name="tElectricLlock"/>
 <transform

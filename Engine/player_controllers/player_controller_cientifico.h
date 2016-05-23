@@ -93,6 +93,7 @@ public:
 	void InitControlState();
 	CEntity* getMyEntity();
 
+	void onGetWhoAmI(TMsgGetWhoAmI& msg) { msg.who = PLAYER_TYPE::SCIENTIST; }
 	void update_msgs() override;
 	void myUpdate() override;
 

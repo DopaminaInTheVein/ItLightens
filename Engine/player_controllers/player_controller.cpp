@@ -1085,6 +1085,10 @@ string player_controller::GetPolarity() {
 	return res;
 }
 
+void player_controller::onGetWhoAmI(TMsgGetWhoAmI& msg) {
+	msg.who = PLAYER_TYPE::PLAYER;
+}
+
 //Render In Menu
 void player_controller::renderInMenu() {
 	char stateTxt[256];

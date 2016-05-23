@@ -203,7 +203,8 @@ public:
 	//Gets
 	string GetPolarity();
 	int GetPolarityInt() const { return pol_state; }
-	void onGetPolarity(TMsgGetPolarity& msg) { msg.polarity = (pols) pol_state; }
+	void onGetPolarity(TMsgGetPolarity& msg) { msg.polarity = (pols)pol_state; }
+	void onGetWhoAmI(TMsgGetWhoAmI& msg);
 
 	//Render In Menu
 	void renderInMenu();

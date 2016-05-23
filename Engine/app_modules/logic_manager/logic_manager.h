@@ -27,6 +27,8 @@ public:
 
 	enum EVENT {
 		OnAction = 0,
+		OnActionSci,
+		OnActionMole,
 		OnEnter,
 		OnLeave,
 		OnGameStart,

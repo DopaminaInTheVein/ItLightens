@@ -88,6 +88,8 @@ public:
 		return SBB::readHandlesVector("wptsBreakableWall")[i];
 	}
 
+	void onGetWhoAmI(TMsgGetWhoAmI& msg) { msg.who = PLAYER_TYPE::MOLE; }
+
 	//Cambio Malla
 	void ChangePose(string new_pose_route);
 
