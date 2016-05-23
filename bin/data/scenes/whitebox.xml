@@ -306,7 +306,8 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity
+   id="302">
 <tags
    tags=""/>
 <name
@@ -452,6 +453,129 @@
    name="tElevator"/>
 <transform
    pos="-70.8264 10.1974 14.2003"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="wall1_fragment"/>
+<name
+   name="pared_mole001"/>
+<transform
+   pos="-91.8452 7.21835 -8.91365"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="wall1_fragment"/>
+<name
+   name="pared_mole002"/>
+<transform
+   pos="-91.8452 7.21835 -11.4971"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole002.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="wall1_fragment"/>
+<name
+   name="pared_mole003"/>
+<transform
+   pos="-91.8452 7.21835 -14.0019"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole003.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="wall1_fragment"/>
+<name
+   name="pared_mole004"/>
+<transform
+   pos="-91.8452 7.21835 -16.5067"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole004.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="wall1_fragment"/>
+<name
+   name="pared_mole005"/>
+<transform
+   pos="-91.8452 7.21835 -19.0114"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole005.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="wall1_fragment"/>
+<name
+   name="pared_mole006"/>
+<transform
+   pos="-91.8452 7.21835 -21.5162"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole006.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="wall1_fragment"/>
+<name
+   name="pared_mole007"/>
+<transform
+   pos="-91.8452 7.21835 -24.021"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole007.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags=""/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="6.26077 0.965 16.7178"/>
+<trigger_lua
+   action="activate"
+   actionMole="destroy"/>
+<name
+   name="tWall"/>
+<transform
+   pos="-92.8207 0.83394 -16.2075"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

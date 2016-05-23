@@ -74,7 +74,12 @@ void SLBPlayer::refillEnergy() {
 void SLBHandle::getHandleById(int id) {	
 	CHandle handle = IdEntities::findById(id);
 	real_handle = handle;
-	dbg("[LUA] getHandleById: %s\n", ((CEntity*)(real_handle))->getName());
+	if (real_handle.isValid()) {
+		dbg("[LUA] getHandleById: %s\n", ((CEntity*)(real_handle))->getName());
+	}
+	else {
+		dbg("[LUA] getHandleById: Error Unknown Id!\n");
+	}
 }
 
 void SLBHandle::getHandleByNameTag(const char* name, const char* tag) {
@@ -165,6 +170,21 @@ void SLBHandle::setLocked(int locked) {
 		msg.locked = (locked != 0);
 		eTarget->sendMsg(msg);
 	}
+}
+
+// Handle roup By Tag
+void SLBHandleGroup::getHandlesByTag(const char * tag) {
+	handle_group = tags_manager.getHandlesByTag(string(tag));
+	dbg("[LUA] getHandlesByTag: %d\n", handle_group.size());
+}
+
+
+void SLBHandleGroup::setEnabled(int enabled) {
+	for (auto h : handle_group) {
+		//TODO
+		dbg( "Set enabled %d to %s\n", enabled, ((CEntity*)h)->getName() );
+	}
+	dbg("[LUA] setEnabled (group): %d\n", enabled);
 }
 
 // camera control in LUA

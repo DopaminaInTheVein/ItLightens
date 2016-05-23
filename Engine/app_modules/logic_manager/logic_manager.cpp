@@ -18,6 +18,7 @@ bool CLogicManagerModule::start() {
 	// Binds here, if needed
 	bindPlayer(*slb_manager);
 	bindHandle(*slb_manager);
+	bindHandleGroup(*slb_manager);
 	bindCamera(*slb_manager);
 	bindPublicFunctions(*slb_manager);
 
@@ -392,6 +393,21 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("setLocked", &SLBHandle::setLocked)
 		.comment("Set if the element is locked")
 		.param("int:  (0: false, otherwise: true")
+		;
+}
+
+// Generic handle LUA functions
+void CLogicManagerModule::bindHandleGroup(SLB::Manager& m) {
+	SLB::Class<SLBHandleGroup>("HandleGroup", &m)
+		.comment("Handle Group class")
+		.constructor()
+		// sets the handle pointer to the handle with the specified id
+		.set("get_handles_by_tag", &SLBHandleGroup::getHandlesByTag)
+		.comment("Finds all handles with the specified tag")
+		.param("string: handle tag")
+		.set("setEnabled", &SLBHandleGroup::setEnabled)
+		.comment("Set Enabled the handle group")
+		.param("int: enabled (0: false, otherwise: 1)")
 		;
 }
 
