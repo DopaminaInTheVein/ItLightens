@@ -126,9 +126,6 @@
     <ClCompile Include="logic\ai_beacon.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_scientific.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="logic\bt_guard.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -590,6 +587,12 @@
     <ClCompile Include="logic\elevator.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="logic\bt_scientist.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_scientific.cpp">
+      <Filter>logic_old</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -735,9 +738,6 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\ai_beacon.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_scientific.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\bt_guard.h">
@@ -1450,6 +1450,12 @@
     </ClInclude>
     <ClInclude Include="logic\elevator.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\bt_scientist.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_scientific.h">
+      <Filter>logic_old</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

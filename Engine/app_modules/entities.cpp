@@ -14,6 +14,7 @@
 #include "logic/bt_guard.h"
 #include "logic/bt_mole.h"
 #include "logic/bt_speedy.h"
+#include "logic/bt_scientist.h"
 #include "windows/app.h"
 #include "utils/utils.h"
 #include "recast/navmesh.h"
@@ -29,7 +30,8 @@ DECL_OBJ_MANAGER("transform", TCompTransform);
 DECL_OBJ_MANAGER("camera", TCompCamera);
 DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
 DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
-DECL_OBJ_MANAGER("cientifico", ai_scientific);
+/****/DECL_OBJ_MANAGER("cientifico", ai_scientific);
+DECL_OBJ_MANAGER("bt_scientist", bt_scientist);
 DECL_OBJ_MANAGER("beacon", beacon_controller);
 DECL_OBJ_MANAGER("workbench", workbench_controller);
 DECL_OBJ_MANAGER("magnet_door", magnet_door);
@@ -135,7 +137,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
 	getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
-	getHandleManager<ai_scientific>()->init(MAX_ENTITIES);
+	getHandleManager<bt_scientist>()->init(MAX_ENTITIES);
 	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<water_controller>()->init(MAX_ENTITIES);
@@ -173,11 +175,10 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller, TMsgDamageSpecific, onSetDamage);
 	SUBSCRIBE(player_controller_speedy, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
-	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
 	SUBSCRIBE(bt_speedy, TMsgSetPlayer, onSetPlayer);
-	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
-	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
-	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
+	SUBSCRIBE(bt_scientist, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
+	SUBSCRIBE(bt_scientist, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
+	SUBSCRIBE(bt_scientist, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
 	//  SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
@@ -195,8 +196,8 @@ bool CEntitiesModule::start() {
 
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
-	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
-	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
+	SUBSCRIBE(bt_scientist, TMsgBeaconTakenByPlayer, onTakenBeacon);
+	SUBSCRIBE(bt_scientist, TMsgWBTakenByPlayer, onTakenWB);
 	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
 	SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);
 	SUBSCRIBE(magnet_door, TMsgEntityCreated, onCreate);
@@ -211,7 +212,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
 
 	//bombs
-	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
@@ -255,8 +256,8 @@ bool CEntitiesModule::start() {
 
 	//Posesiones Mensajes
 	//..Cientifico
-	SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
-	SUBSCRIBE(ai_scientific, TMsgAISetStunned, onSetStunned);
+	SUBSCRIBE(bt_scientist, TMsgAISetPossessed, onSetPossessed);
+	SUBSCRIBE(bt_scientist, TMsgAISetStunned, onSetStunned);
 	SUBSCRIBE(player_controller_cientifico, TMsgControllerSetEnable, onSetEnable);
 	//..Speedy
 	SUBSCRIBE(bt_speedy, TMsgAISetPossessed, onSetPossessed);
@@ -299,21 +300,7 @@ bool CEntitiesModule::start() {
 	std::string file_options = app.file_options_json;
 	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
 
-	//sala = "tiling";
 	sala = fields["room_two"];
-	//sala = "drones";
-	//sala = "boxes";
-	//sala = "milestone2";
-	//sala = "scene_milestone_1";
-	//sala = "scene_test_recast";
-	//sala = "pruebaExportador";
-	//sala = "scene_basic_lights";
-	//sala = "test_simple";
-	//sala = "test_guard";
-	//sala = "test_pol";
-	//sala = "test_guard";
-	//sala = "test_anim";
-	//sala = "test_column_navmesh";
 
 	SBB::postSala(sala);
 	salaloc = "data/navmeshes/" + sala + ".data";
@@ -420,7 +407,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<bt_guard>()->onAll(&bt_guard::Init);
 	getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
 	getHandleManager<bt_speedy>()->onAll(&bt_speedy::Init);
-	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
+	getHandleManager<bt_scientist>()->onAll(&bt_scientist::Init);
 	//getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
 	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
@@ -478,7 +465,7 @@ void CEntitiesModule::update(float dt) {
 		if (SBB::readBool(sala) && ia_wait > 1.0f) {
 			getHandleManager<bt_guard>()->updateAll(dt);
 			getHandleManager<bt_mole>()->updateAll(dt);
-			getHandleManager<ai_scientific>()->updateAll(dt);
+			getHandleManager<bt_scientist>()->updateAll(dt);
 			getHandleManager<beacon_controller>()->updateAll(dt);
 			getHandleManager<workbench_controller>()->updateAll(dt);
 			getHandleManager<bt_speedy>()->updateAll(dt);
