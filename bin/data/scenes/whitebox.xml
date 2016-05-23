@@ -457,7 +457,7 @@
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity slept = "yes">
 <tags
    tags="wall1_fragment"/>
 <name
@@ -472,7 +472,7 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity slept = "yes">
 <tags
    tags="wall1_fragment"/>
 <name
@@ -487,7 +487,7 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity slept = "yes">
 <tags
    tags="wall1_fragment"/>
 <name
@@ -502,7 +502,7 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity slept = "yes">
 <tags
    tags="wall1_fragment"/>
 <name
@@ -517,7 +517,7 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity slept = "yes">
 <tags
    tags="wall1_fragment"/>
 <name
@@ -532,7 +532,7 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity slept = "yes">
 <tags
    tags="wall1_fragment"/>
 <name
@@ -547,7 +547,7 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity slept = "yes">
 <tags
    tags="wall1_fragment"/>
 <name
