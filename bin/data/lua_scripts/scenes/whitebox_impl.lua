@@ -91,7 +91,7 @@ function destroyWall( )
   
   --Destruimos pared
   h:get_handle_by_id(idWall)
-  --h:destroy()
+  h:destroy()
   
   --Activamos fragmentos pared
   hg:get_handles_by_tag(tagWallFragment)
@@ -100,22 +100,5 @@ function destroyWall( )
   
   --Variable control para activaciones acumuladas
   timesActivatedLock = timesActivatedLock + 1
-end
-
-function putBattery( )
-  p:print("Put Battery\n")
-end
-
-function deactivateLock( )
-  p:print("Deactivate Lock\n")
-  timesActivatedLock = timesActivatedLock - 1
-  
-  --Ha pasado el timer de la última activacion
-  if timesActivatedLock < 1 then
-	  --Puerta vuelve a neutral
-      h:get_handle_by_id(idDoor)
-      --h:setPolarity(0)
-	  h:setLocked(1)
-  end
 end
 --------------------------------------

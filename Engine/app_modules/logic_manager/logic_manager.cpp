@@ -356,6 +356,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// sets the handle to the event thrower
 		.set("getHandleCaller", &SLBHandle::getHandleCaller)
 		.comment("Finds the handle who called this event")
+		// destroy the handler
+		.set("destroy", &SLBHandle::destroy)
+		.comment("Destroy this element")
 		// set handle position function
 		.set("set_position", &SLBHandle::setPosition)
 		.comment("Sets the position of the NPC")

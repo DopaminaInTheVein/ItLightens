@@ -40,6 +40,7 @@ public:
 	void getHandleById(int id);
 	void getHandleByNameTag(const char* name, const char* tag);
 	void getHandleCaller();
+	void destroy();
 	void setPosition(float x, float y, float z);
 	float getX();
 	float getY();

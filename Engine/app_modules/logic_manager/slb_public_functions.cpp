@@ -92,6 +92,10 @@ void SLBHandle::getHandleCaller() {
 	real_handle = logic_manager->getCaller();
 }
 
+void SLBHandle::destroy() {
+	if (real_handle.isValid()) real_handle.destroy();
+}
+
 void SLBHandle::setPosition(float x, float y, float z) {
 	const PxVec3 new_position(x, y, z);
 

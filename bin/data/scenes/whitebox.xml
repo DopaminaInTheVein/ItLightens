@@ -190,24 +190,9 @@
 <tags
    tags=""/>
 <name
-   name="ascensor"/>
-<transform
-   pos="-111.673 17.3784 -14.8967"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/ascensor.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
    name="cable"/>
 <transform
-   pos="-106.96 17.1642 -24.4175"
+   pos="-66.9216 17.1642 3.42773"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -250,24 +235,9 @@
 <tags
    tags=""/>
 <name
-   name="laboratorio"/>
-<transform
-   pos="-135.462 0 -24.481"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/laboratorio.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
    name="mesa_de_trabajo"/>
 <transform
-   pos="-111.344 17.1641 -32.7313"
+   pos="-71.3058 17.1641 -4.88602"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -337,6 +307,36 @@
    type_collision="static"/>
 
 </entity>
+<entity>
+<tags
+   tags=""/>
+<name
+   name="puerta_balcon_redondo_pequeno004"/>
+<transform
+   pos="-41.1173 1.74469 -7.18756"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/puerta_balcon_redondo_pequeno004.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags=""/>
+<name
+   name="puertas_derechas"/>
+<transform
+   pos="0.124012 -10.3717 -6.85553"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/puertas_derechas.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
 <entity
    id="300">
 <tags
@@ -394,7 +394,7 @@
 <tags
    tags="elevator1 elevator"/>
 <elevator
-   target="-70.7158 9.45796 14.1924"/>
+   target="-70.7158 17.1593 14.1924"/>
 <name
    name="ElevatorGround"/>
 <transform
@@ -417,7 +417,7 @@
 <name
    name="ElevatorGround_pos_elevator_up"/>
 <transform
-   pos="-70.7158 9.45796 14.1924"
+   pos="-70.7158 17.1593 14.1924"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -452,7 +452,7 @@
 <name
    name="tElevator"/>
 <transform
-   pos="-70.8264 10.1974 14.2003"
+   pos="-70.8264 17.6037 14.2003"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
