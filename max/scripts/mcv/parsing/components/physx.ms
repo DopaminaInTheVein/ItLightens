@@ -77,6 +77,14 @@ fn parseRigidBody parent collider = (
 			xml.addAttr "mass" mass
 		)
 	)
+	
+	--Set Kinematic
+	if collider != undefined then (
+		local kinematic = (getUserProp collider "kinematic")
+		if kinematic != undefined then (
+			xml.addAttr "kinematic" kinematic
+		)
+	)
 )
 
 fn parseRigidBodyTrigger parent = (
@@ -150,7 +158,7 @@ fn _parse_trigger = (
 		--Add trigger lua component
 		local xml = XML_PARSING.addChild "trigger_lua"
 			
-		if (onEnter == undefined) and (onExit == undefined) and (onAction != undefined) then (
+		if (onEnter == undefined) and (onExit == undefined) and (onAction == undefined) then (
 			throw "El trigger debe ser lógico o de componente!"
 		)
 		-- Logic trigger on enter

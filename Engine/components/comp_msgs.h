@@ -223,6 +223,10 @@ struct TMsgSetActivable {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgActivate {
+	DECLARE_MSG_ID();
+};
+
 struct TMsgSetControllable {
 	bool control;
 	DECLARE_MSG_ID();
@@ -241,6 +245,10 @@ struct TMsgSetPolarity {
 };
 struct TMsgSetLocked {
 	bool locked;
+	DECLARE_MSG_ID();
+};
+struct TMsgGetPolarity {
+	pols polarity;
 	DECLARE_MSG_ID();
 };
 #endif

@@ -587,6 +587,9 @@
     <ClCompile Include="logic\magnet_door.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="logic\elevator.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1443,6 +1446,9 @@
       <Filter>fmod\studio\inc</Filter>
     </ClInclude>
     <ClInclude Include="logic\magnet_door.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\elevator.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

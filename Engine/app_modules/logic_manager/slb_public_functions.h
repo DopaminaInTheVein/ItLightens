@@ -46,6 +46,9 @@ public:
 	void goToPoint(float x, float y, float z);
 	void toggleGuardFormation();
 	void setActionable(int);
+	void activate();
+	void setPolarity(int);
+	void setLocked(int);
 };
 
 // camera control in LUA

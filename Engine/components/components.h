@@ -38,6 +38,7 @@
 #include "logic/ai_guard.h"
 #include "logic/aicontroller.h"
 #include "logic/magnet_door.h"
+#include "logic/elevator.h"
 
 #include "comp_trigger_standar.h"
 

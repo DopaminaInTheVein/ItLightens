@@ -138,8 +138,14 @@ void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
 }
 
 bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* cam) {
-  if (lastguidedCamPoint >= getTotalPoints() || io->keys['Q'].becomesPressed()) {
+  if (lastguidedCamPoint >= getTotalPoints()) {
     return false;
+  }
+  if (io->keys['Q'].becomesPressed()) {
+	  CHandle me = CHandle(this).getOwner();
+	  CEntity* eMe = me;
+	  logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicSkipped, std::string(eMe->getName())), CHandle(this).getOwner();
+	  return false;
   }
 
   VEC3 goTo = getPointPosition(lastguidedCamPoint);

@@ -3,6 +3,7 @@ print('This is lua')
 SLB.using( SLB )
 
 p = Public( )
+h = Handle()
 cam = Camera()
 
 function CallFunction(func)
@@ -203,4 +204,53 @@ end
 
 function OnLeavePC( param )
 	p:print( "OnLeavePC: "..param.."\n" )
+end
+
+function OnDoorClosed()
+	p:print( "OnDoorClosed\n")
+end
+
+function OnDoorOpened()
+	p:print( "OnDoorOpened\n")
+end
+
+function OnDoorClosing()
+	p:print( "OnDoorClosing\n")
+end
+
+function OnDoorOpening()
+	p:print( "OnDoorOpening\n")
+end
+
+--Elevator
+--------------------------------
+function OnElevatorUp( param )
+	p:print( "OnElevatorUp\n")
+	CallFunction("OnElevatorUp_"..param)
+end
+
+function OnElevatorDown( param )
+	p:print( "OnElevatorDown\n")
+	CallFunction("OnElevatorDown_"..param)
+end
+
+function OnElevatorGoingUp( param )
+	p:print( "OnElevatorGoingUp\n")
+	CallFunction("OnElevatorGoingUp_"..param)
+end
+
+function OnElevatorGoingDown( param)
+	p:print( "OnElevatorGoingDown\n")
+	CallFunction("OnElevatorGoingDown_"..param)
+end
+--------------------------------
+
+function OnCinematicSkipped( param )
+	p:print( "OnCinematicSkipped\n")
+	CallFunction("OnCinematicSkipped_"..param)
+end
+
+function OnCinematicEnd( param )
+	p:print( "OnCinematicEnd\n")
+		CallFunction("OnCinematicEnd_"..param)
 end

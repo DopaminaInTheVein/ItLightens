@@ -237,6 +237,46 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			sprintf(lua_code, "OnLeavePC(%f);", 0.5f);
 			break;
 		}
+		case (OnDoorOpening) : {
+			sprintf(lua_code, "OnDoorOpening();");
+			break;
+		}
+		case (OnDoorOpened) : {
+			sprintf(lua_code, "OnDoorOpened();");
+			break;
+		}
+		case (OnDoorClosing) : {
+			sprintf(lua_code, "OnDoorClosing();");
+			break;
+		}
+		case (OnDoorClosed): {
+			sprintf(lua_code, "OnDoorClosed();");
+			break;
+		}		
+		case (OnCinematicSkipped): {
+			sprintf(lua_code, "OnCinematicSkipped(\"%s\");", params.c_str());
+			break;
+		}		
+		case (OnCinematicEnd): {
+			sprintf(lua_code, "OnCinematicEnd(\"%s\");", params.c_str());
+			break;
+		}
+		case (OnElevatorUp): {
+			sprintf(lua_code, "OnElevatorUp(\"%s\");", params.c_str());
+			break;
+		}
+		case (OnElevatorDown): {
+			sprintf(lua_code, "OnElevatorDown(\"%s\");", params.c_str());
+			break;
+		}
+		case (OnElevatorGoingUp): {
+			sprintf(lua_code, "OnElevatorGoingUp(\"%s\");", params.c_str());
+			break;
+		}
+		case (OnElevatorGoingDown): {
+			sprintf(lua_code, "OnElevatorGoingDown(\"%s\");", params.c_str());
+			break;
+		}
 		default : {
 			sprintf(lua_code, "dbg('The event %s does not exist!');", evt);
 		}
@@ -332,6 +372,17 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("setActionable", &SLBHandle::setActionable)
 		.comment("Set if the element is actionable (0: false, otherwise: true)")
 		.param("int: enabled")
+		// activate
+		.set("activate", &SLBHandle::activate)
+		.comment("Activate the element (send TMsgActivate)")
+		// sets polarity
+		.set("setPolarity", &SLBHandle::setPolarity)
+		.comment("Set new polarity")
+		.param("int:  (negative is minus, 0 is neutral, positive is plus)")
+		// sets locked
+		.set("setLocked", &SLBHandle::setLocked)
+		.comment("Set if the element is locked")
+		.param("int:  (0: false, otherwise: true")
 		;
 }
 

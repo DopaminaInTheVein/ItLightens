@@ -27,6 +27,7 @@ enum eTypeShape {
 class TCompPhysics : public TCompBase {
 	int					m_collisionType;
 	int					m_collisionShape;
+	bool				m_kinematic;
 
 	float				m_staticFriction = 0.5f;
 	float				m_dynamicFriction = 0.5f;

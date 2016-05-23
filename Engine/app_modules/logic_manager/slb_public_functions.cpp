@@ -74,6 +74,7 @@ void SLBPlayer::refillEnergy() {
 void SLBHandle::getHandleById(int id) {	
 	CHandle handle = IdEntities::findById(id);
 	real_handle = handle;
+	dbg("[LUA] getHandleById: %s\n", ((CEntity*)(real_handle))->getName());
 }
 
 void SLBHandle::getHandleByNameTag(const char* name, const char* tag) {
@@ -130,12 +131,39 @@ void SLBHandle::toggleGuardFormation() {
 }
 
 void SLBHandle::setActionable(int enabled) {
-	CHandle caller = logic_manager->getCaller();
-	if (caller.isValid()) {
-		CEntity * eCaller = caller;
+	if (real_handle.isValid()){
+		CEntity* eTarget = real_handle;
 		TMsgSetActivable msg;
 		msg.activable = (enabled != 0);
-		eCaller->sendMsg(msg);
+		eTarget->sendMsg(msg);
+	}
+}
+
+void SLBHandle::activate() {
+	if (real_handle.isValid()) {
+		CEntity* eTarget = real_handle;
+		TMsgActivate msg;
+		eTarget->sendMsg(msg);
+	}
+}
+
+void SLBHandle::setPolarity(int polarity) {
+	if (real_handle.isValid()) {
+		CEntity* eTarget = real_handle;
+		TMsgSetPolarity msg;
+		if (polarity < 0) msg.polarity = MINUS;
+		else if (polarity > 0) msg.polarity = PLUS;
+		else msg.polarity = NEUTRAL;
+		eTarget->sendMsg(msg);
+	}
+}
+
+void SLBHandle::setLocked(int locked) {
+	if (real_handle.isValid()) {
+		CEntity* eTarget = real_handle;
+		TMsgSetLocked msg;
+		msg.locked = (locked != 0);
+		eTarget->sendMsg(msg);
 	}
 }
 
