@@ -3,54 +3,53 @@
 
 #include "components\comp_base.h"
 #include "ParticleData.h"
+#include "render\render_instanced.h"
 
 using namespace physx;
 
 class CParticleSystem : public TCompBase {
+  PxParticleSystem *			     m_pParticleSystem;
+  PxParticleCreationData		   m_particleData;
 
-	PxParticleSystem *			m_pParticleSystem;
-	PxParticleCreationData		m_particleData;
+  int							             m_numParticles;
 
-	int							m_numParticles;
+  PxVec3						           m_initial_pos;
+  PxVec3						           m_initial_velocity;
 
-	PxVec3						m_initial_pos;
-	PxVec3						m_initial_velocity;
+  PxU32*						           m_pParticleValidity;
+  PxU32						             m_validParticleRange;
 
-	PxU32*						m_pParticleValidity;
-	PxU32						m_validParticleRange;
+  PxParticleExt::IndexPool*	   m_pIndexPool;
 
-	PxParticleExt::IndexPool*	m_pIndexPool;
+  const CTexture*				       m_pTexture;
 
-	const CTexture*				m_pTexture;
-	
+  TParticleData				         m_particles;
+  CRenderParticlesInstanced    m_RenderParticles;
 
-	TParticleData				m_particles;
+  const CMesh *                m_pParticle_mesh;
 
-	bool StepLifeTimeParticle(unsigned idx, float max_time, float dt);
-	void SetParticleInitialValues(unsigned idx);
+  bool StepLifeTimeParticle(unsigned idx, float max_time, float dt);
+  //void SetParticleInitialValues(unsigned idx);
 
 public:
 
-	CParticleSystem() : m_pParticleSystem(nullptr), m_pParticleValidity(nullptr) {}
-	~CParticleSystem() {}
+  CParticleSystem() : m_pParticleSystem(nullptr), m_pParticleValidity(nullptr) {}
+  ~CParticleSystem() {}
 
-	void stop() {
-		m_particles.clear();
+  void stop() {
+    m_particles.clear();
 
-		m_pParticleSystem->release();
-	}
+    m_pParticleSystem->release();
+  }
 
-	void render() {}	//not used
-	void renderParticles();
-	void init();
-	bool CreateParticles(TParticleData& particles);
-	void update(float elapsed);
-	bool load(MKeyValue& atts) {
-		(void)(atts);
-		return true;
-	}
+  void render() {}	//not used
+  void renderParticles();
+  void init();
+  bool CreateParticles(TParticleData& particles);
+  void update(float elapsed);
+  bool load(MKeyValue& atts);
 
-	void renderInMenu();
+  void renderInMenu();
 };
 
 #endif

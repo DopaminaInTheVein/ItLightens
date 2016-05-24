@@ -17,6 +17,7 @@
 #include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "app_modules/sound_manager/sound_manager.h"
+#include "particles\particles_manager.h"
 
 #include "app_modules/render/module_render_deferred.h"
 #include "components/entity_parser.h"
@@ -43,160 +44,158 @@ CGuiModule * Gui = nullptr;
 // --------------------------------------------
 
 bool CApp::start() {
+  // imgui must be the first to update and the last to render
+  auto imgui = new CImGuiModule;
+  Gui = new CGuiModule;
+  auto entities = new CEntitiesModule;
+  auto render_deferred = new CRenderDeferredModule;
+  io = new CIOModule;     // It's the global io
+  g_PhysxManager = new CPhysxManager;
+  g_particlesManager = new CParticlesManager;
+  GameController = new CGameController;
+  Debug = new CDebug();
+  logic_manager = new CLogicManagerModule;
+  sound_manager = new CSoundManagerModule;
 
-	// imgui must be the first to update and the last to render
-	auto imgui = new CImGuiModule;
-	Gui = new CGuiModule;
-	auto entities = new CEntitiesModule;
-	auto render_deferred = new CRenderDeferredModule;
-	io = new CIOModule;     // It's the global io
-	g_PhysxManager = new CPhysxManager;
-	GameController = new CGameController;
-	Debug = new CDebug();
-	logic_manager = new CLogicManagerModule;
-	sound_manager = new CSoundManagerModule;
+  // Will contain all modules created
+  all_modules.push_back(imgui);
+  all_modules.push_back(Gui);
+  all_modules.push_back(g_PhysxManager);
+  all_modules.push_back(g_particlesManager);
+  all_modules.push_back(entities);
+  all_modules.push_back(io);
+  all_modules.push_back(GameController);
+  all_modules.push_back(Debug);
+  all_modules.push_back(render_deferred);
+  all_modules.push_back(logic_manager);
+  all_modules.push_back(sound_manager);
 
+  mod_update.push_back(logic_manager);
+  mod_update.push_back(entities);
+  mod_update.push_back(g_particlesManager);
+  mod_update.push_back(GameController);
+  mod_update.push_back(imgui);
+  mod_update.push_back(render_deferred);
+  mod_update.push_back(Gui);
+  mod_update.push_back(g_PhysxManager);
+  mod_update.push_back(io);
+  mod_update.push_back(Debug);
 
-	// Will contain all modules created
-	all_modules.push_back(imgui);
-	all_modules.push_back(Gui);
-	all_modules.push_back(g_PhysxManager);
-	all_modules.push_back(entities);
-	all_modules.push_back(io);
-	all_modules.push_back(GameController);
-	all_modules.push_back(Debug);
-	all_modules.push_back(render_deferred);
-	all_modules.push_back(logic_manager);
-	all_modules.push_back(sound_manager);
+  mod_renders.push_back(render_deferred);
+  mod_renders.push_back(entities);
+  mod_renders.push_back(Debug);
+  mod_renders.push_back(Gui);
+  mod_renders.push_back(imgui);
 
-	mod_update.push_back(logic_manager);
-	mod_update.push_back(entities);
-	mod_update.push_back(GameController);
-	mod_update.push_back(imgui);
-	mod_update.push_back(render_deferred);
-	mod_update.push_back(Gui);
-	mod_update.push_back(g_PhysxManager);
-	mod_update.push_back(io);
-	mod_update.push_back(Debug);
-	
-	mod_renders.push_back(render_deferred);
-	mod_renders.push_back(entities);
-	mod_renders.push_back(Debug);
-	mod_renders.push_back(Gui);
-	mod_renders.push_back(imgui);
+  mod_renders.push_back(io);
 
-	mod_renders.push_back(io);
+  mod_init_order.push_back(Gui);
+  mod_init_order.push_back(imgui);
+  mod_init_order.push_back(render_deferred);
+  mod_init_order.push_back(io);
+  mod_init_order.push_back(g_PhysxManager);
+  mod_init_order.push_back(g_particlesManager);   //need to be initialized before the entities
+  mod_init_order.push_back(entities);
+  mod_init_order.push_back(logic_manager);
+  mod_init_order.push_back(sound_manager);
 
-	mod_init_order.push_back(Gui);
-	mod_init_order.push_back(imgui);
-	mod_init_order.push_back(render_deferred);
-	mod_init_order.push_back(io);
-	mod_init_order.push_back(g_PhysxManager);
-	mod_init_order.push_back(entities);
-	mod_init_order.push_back(logic_manager);
-	mod_init_order.push_back(sound_manager);
+  mod_wnd_proc.push_back(io);
+  mod_wnd_proc.push_back(imgui);
 
-	mod_wnd_proc.push_back(io);
-	mod_wnd_proc.push_back(imgui);
-
-// ----------------------------
+  // ----------------------------
   if (!drawUtilsCreate())
     return false;
 
-resources_dir_watcher.start("data", getHWnd());
+  resources_dir_watcher.start("data", getHWnd());
 
-	// ----------------------------
-	tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
-	tech_textured_colored = Resources.get("textured.tech")->as<CRenderTechnique>();
+  // ----------------------------
+  tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+  tech_textured_colored = Resources.get("textured.tech")->as<CRenderTechnique>();
 
-	if (!shader_ctes_camera.create("ctes_camera"))
-		return false;
-	if (!shader_ctes_object.create("ctes_object"))
-		return false;
-	if (!shader_ctes_bones.create("ctes_bones"))
-		return false;
-	shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
-	// Init modules
-	for (auto it : mod_init_order) {
-		if (!it->start()) {
-			dbg("Failed to init module %s\n", it->getName());
-			return false;
-		}
-	}
+  if (!shader_ctes_camera.create("ctes_camera"))
+    return false;
+  if (!shader_ctes_object.create("ctes_object"))
+    return false;
+  if (!shader_ctes_bones.create("ctes_bones"))
+    return false;
+  shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
+  // Init modules
+  for (auto it : mod_init_order) {
+    if (!it->start()) {
+      dbg("Failed to init module %s\n", it->getName());
+      return false;
+    }
+  }
 
-	io->mouse.toggle();
+  io->mouse.toggle();
 
-	GameController->SetGameState(CGameController::RUNNING);
+  GameController->SetGameState(CGameController::RUNNING);
 
-	logic_manager->throwEvent(logic_manager->OnGameStart, "");
+  logic_manager->throwEvent(logic_manager->OnGameStart, "");
 
-	return true;
+  return true;
 }
 
 // ----------------------------------
 void CApp::stop() {
-	// Stop modules
-	for (auto it = mod_init_order.rbegin(); it != mod_init_order.rend(); ++it)
-		(*it)->stop();
+  // Stop modules
+  for (auto it = mod_init_order.rbegin(); it != mod_init_order.rend(); ++it)
+    (*it)->stop();
 
-	Resources.destroy();
+  Resources.destroy();
 
-	shader_ctes_bones.destroy();
-	shader_ctes_camera.destroy();
-	shader_ctes_object.destroy();
+  shader_ctes_bones.destroy();
+  shader_ctes_camera.destroy();
+  shader_ctes_object.destroy();
 
-	// Delete all modules
-	for (auto m : all_modules)
-		delete m;
-	all_modules.clear();
+  // Delete all modules
+  for (auto m : all_modules)
+    delete m;
+  all_modules.clear();
 }
 
 void CApp::restart() {
-	HWND hTempWnd = getHWnd();
-	char szFileName[MAX_PATH] = "";
-	GetModuleFileName(NULL, szFileName, MAX_PATH);
-	ShellExecute(GetDesktopWindow(), "open", szFileName, NULL, NULL, SW_SHOWDEFAULT);
-	SendMessage(hTempWnd, WM_CLOSE, 0, 0);
+  HWND hTempWnd = getHWnd();
+  char szFileName[MAX_PATH] = "";
+  GetModuleFileName(NULL, szFileName, MAX_PATH);
+  ShellExecute(GetDesktopWindow(), "open", szFileName, NULL, NULL, SW_SHOWDEFAULT);
+  SendMessage(hTempWnd, WM_CLOSE, 0, 0);
 }
 
 void CApp::exitGame() {
-	HWND hTempWnd = getHWnd();
-	SendMessage(hTempWnd, WM_CLOSE, 0, 0);
+  HWND hTempWnd = getHWnd();
+  SendMessage(hTempWnd, WM_CLOSE, 0, 0);
 }
 
 // ----------------------------------
 void CApp::update(float elapsed) {
-	PROFILE_FUNCTION("update");
-		for (auto it : mod_update) {
-			if (GameController->GetGameState() == CGameController::RUNNING) {
-				PROFILE_FUNCTION(it->getName());
-				auto name = it->getName();
-				it->update(elapsed);
-			} 
-			else if (it->forcedUpdate()) {
-				PROFILE_FUNCTION(it->getName());
-				it->update(getDeltaTime(1.0f));
-			}
-		}
-		static float ctime = 0.f;
-		ctime += elapsed* 0.01f;
+  PROFILE_FUNCTION("update");
+  for (auto it : mod_update) {
+    if (GameController->GetGameState() == CGameController::RUNNING) {
+      PROFILE_FUNCTION(it->getName());
+      auto name = it->getName();
+      it->update(elapsed);
+    }
+    else if (it->forcedUpdate()) {
+      PROFILE_FUNCTION(it->getName());
+      it->update(getDeltaTime(1.0f));
+    }
+  }
+  static float ctime = 0.f;
+  ctime += elapsed* 0.01f;
 
-		CHandleManager::destroyAllPendingObjects();
+  CHandleManager::destroyAllPendingObjects();
 }
 
 // ----------------------------------
 void CApp::render() {
   PROFILE_FUNCTION("CApp::render");
-  
+
   activateDefaultStates();
 
   for (auto it : mod_renders) {
     PROFILE_FUNCTION(it->getName());
-    CTraceScoped scope( it->getName() );
+    CTraceScoped scope(it->getName());
     it->render();
   }
-
 }
-
-
-

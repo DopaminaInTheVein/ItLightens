@@ -51,6 +51,7 @@
 //Physics
 #include "comp_physics.h"
 #include "comp_charactercontroller.h"
+#include "particles\ParticlesSystem.h"
 
 //prefabs
 #include "prefabs\magnetic_bomb.h"

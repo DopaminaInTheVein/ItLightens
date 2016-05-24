@@ -4,6 +4,7 @@
 #include "render/draw_utils.h"
 #include "render/mesh.h"
 #include "resources/resources_manager.h"
+#include "particles\ParticleData.h"
 
 CRenderParticlesInstanced render_particles_instanced;
 
@@ -16,7 +17,6 @@ float random(float vmin, float vmax) {
 }
 
 bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
-
   global_time = 0.f;
 
   tech = Resources.get("particles.tech")->as<CRenderTechnique>();;
@@ -30,25 +30,26 @@ bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
     //p.center = VEC3(0, 0, 0);
     p.center = VEC3(random(-50, 50), 0, random(-50, 50));
     p.center.y = random(1.f, 20.f);
-    p.size = 0.0f;
+    p.size = 1.0f;
     p.rotation = VEC3(random(-50, 50), 0, random(-50, 50));
     //p.utime = 0.f;
     p.nframe = random(0, 15);
+    p.alpha = 1.0f;
     ++idx;
   }
 
   // This mesh has not been registered in the mesh manager
   instances_data_mesh = new CMesh("instanced_particles");
-  bool is_ok = instances_data_mesh->create( 
-      n
-    , sizeof( TParticle )
+  bool is_ok = instances_data_mesh->create(
+    n
+    , sizeof(TParticle)
     , &instances[0]
     , 0, 0, nullptr    // No indices
     , CMesh::VTX_DECL_INSTANCED_DATA  // Type of vertex
     , CMesh::POINT_LIST     // We are not using this
     , nullptr     // Use default group information
     , true        // the buffer IS dynamic
-  );
+    );
 
   return is_ok;
 }
@@ -57,8 +58,8 @@ void CRenderParticlesInstanced::render() const {
   CTraceScoped scope("CRenderParticlesInstanced");
   assert(instanced_mesh);
   activateWorldMatrix(MAT44::Identity);
-  tech->activate();
-  texture->activate(TEXTURE_SLOT_DIFFUSE);
+  //tech->activate();
+  //texture->activate(TEXTURE_SLOT_DIFFUSE);
   activateBlend(BLENDCFG_COMBINATIVE);
   activateZ(ZCFG_TEST_BUT_NO_WRITE);
   //activateZ(ZCFG_DEFAULT);
@@ -67,26 +68,31 @@ void CRenderParticlesInstanced::render() const {
   activateBlend(BLENDCFG_DEFAULT);
 }
 
-void CRenderParticlesInstanced::update(float elapsed) {
-
+void CRenderParticlesInstanced::update(float elapsed, const TParticleData& particle_data) {
   // Update particles using some cpu code
   global_time += elapsed;
   int idx = 1;
+
   for (auto& p : instances) {
     p.nframe += elapsed;
-    
+
     /*p.center.y -= random(1.f, 3.f) * elapsed* 2;
     if (p.center.y < 0)
       p.center.y += 10.f;*/
 
-	p.rotation += VEC3(1,0,0)*elapsed;
-	p.size += elapsed/10.0f;
-	if (p.size >= 1.0f)
-		p.size = 1.0f;
+    p.center = PhysxConversion::PxVec3ToVec3(particle_data.positionBuffer[idx - 1]);
+
+    //if lifetime expired, alpha = 0 to not render this particle
+    if (particle_data.lifeTimeBuffer[idx - 1] <= 0.f)
+      p.alpha = 0.f;
+
+    p.rotation += VEC3(1, 0, 0)*elapsed;
+    p.size += elapsed / 10.0f;
+    if (p.size >= 1.0f)
+      p.size = 1.0f;
 
     ++idx;
   }
 
   instances_data_mesh->updateFromCPU(&instances[0]);
-
 }
