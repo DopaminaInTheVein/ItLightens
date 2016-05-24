@@ -1,22 +1,6 @@
 <entities>
 <entity>
 <tags
-   tags="camera_main"/>
-<camera
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<controller_3rd_person/>
-<name
-   name="camController_1"/>
-<transform
-   pos="-79.9295 -20.3454 -26.5926"
-   quat="0 0.707104 0 0.707104"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
    tags="player"/>
 <player/>
 <life
@@ -276,22 +260,6 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   id="302">
-<tags
-   tags=""/>
-<name
-   name="pared_mole"/>
-<transform
-   pos="-94.5794 0.346788 -16.2502"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
 <entity>
 <tags
    tags=""/>
@@ -457,7 +425,23 @@
    scale="1.0"/>
 
 </entity>
-<entity slept = "yes">
+<entity
+   id="302">
+<tags
+   tags=""/>
+<name
+   name="pared_mole"/>
+<transform
+   pos="-94.5794 0.346788 -16.2502"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
 <tags
    tags="wall1_fragment"/>
 <name
@@ -472,7 +456,7 @@
    type_collision="static"/>
 
 </entity>
-<entity slept = "yes">
+<entity>
 <tags
    tags="wall1_fragment"/>
 <name
@@ -487,7 +471,7 @@
    type_collision="static"/>
 
 </entity>
-<entity slept = "yes">
+<entity>
 <tags
    tags="wall1_fragment"/>
 <name
@@ -502,7 +486,7 @@
    type_collision="static"/>
 
 </entity>
-<entity slept = "yes">
+<entity>
 <tags
    tags="wall1_fragment"/>
 <name
@@ -517,7 +501,7 @@
    type_collision="static"/>
 
 </entity>
-<entity slept = "yes">
+<entity>
 <tags
    tags="wall1_fragment"/>
 <name
@@ -532,7 +516,7 @@
    type_collision="static"/>
 
 </entity>
-<entity slept = "yes">
+<entity>
 <tags
    tags="wall1_fragment"/>
 <name
@@ -547,7 +531,7 @@
    type_collision="static"/>
 
 </entity>
-<entity slept = "yes">
+<entity>
 <tags
    tags="wall1_fragment"/>
 <name
@@ -576,6 +560,107 @@
    name="tWall"/>
 <transform
    pos="-92.8207 0.83394 -16.2075"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags=""/>
+<name
+   name="Camera002.Target"/>
+<transform
+   pos="-70.8724 1.23236 13.6377"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags=""/>
+<name
+   name="Camera002"/>
+<transform
+   pos="-74.7042 1.23236 7.00074"
+   quat="0.18301 -0.683013 0.683013 0.18301"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags=""/>
+<name
+   name="Camera001.Target"/>
+<transform
+   pos="-70.8724 17.963 13.6377"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags=""/>
+<name
+   name="Camera001"/>
+<transform
+   pos="-74.7042 17.963 7.00073"
+   quat="0.18301 -0.683013 0.683013 0.18301"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="camera_main"/>
+<camera
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"/>
+<controller_3rd_person/>
+<name
+   name="camController_1"/>
+<transform
+   pos="-79.9295 -20.3454 -26.5926"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"/>
+
+</entity>
+
+<entity>
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="8.0"
+   default_dirs="1"
+   points_size="13"
+   wpt0="-66.7127 17.4325 -16.8221"
+   wpt1="-31.8733 29.5113 1.30982"
+   wpt2="-28.1846 29.5113 -8.34826"
+   wpt3="-34.2317 29.5113 -21.7693"
+   wpt4="-34.032 29.5113 -32.3303"
+   wpt5="-66.1963 17.4325 -57.3353"
+   wpt6="-77.1224 17.4325 -55.4453"
+   wpt7="-80.3631 17.4325 -45.111"
+   wpt8="-77.3218 17.4325 -36.304"
+   wpt9="-95.3074 17.4325 -41.2953"
+   wpt10="-92.6414 17.4325 -7.61749"
+   wpt11="-70.66 17.4325 0.633605"
+   wpt12="-69.6924 17.4325 10.3729"
+   rot0="-113.211 6.33183 -35.1303"
+   rot1="19.5846 5.92664 16.282"
+   rot2="26.1822 -35.9688 10.1763"
+   rot3="14.2694 2.64011 28.6706"
+   rot4="24.4203 -38.2196 19.3792"
+   rot5="14.265 1.9967 26.7238"
+   rot6="22.9035 -38.3175 19.9986"
+   rot7="17.3552 3.11702 24.1576"
+   rot8="16.0673 -42.9061 33.3605"
+   rot9="7.84923 -0.789278 40.0857"
+   rot10="23.6706 -37.748 14.5122"
+   rot11="16.0234 3.37756 21.6998"/>
+<name
+   name="Line001"/>
+<transform
+   pos="-72.5766 17.4325 -28.713"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
