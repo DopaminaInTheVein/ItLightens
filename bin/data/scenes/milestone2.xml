@@ -605,6 +605,39 @@
     <character_controller radius="0.6" height="1.8" />
   </entity>
   <entity>
+<tags
+   tags="AI AI_cientifico AI_poss"
+/>
+<life
+   points="100"
+/>
+<transform 
+   pos="10.1302 -23.8064 -1.81982" 
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<name 
+	name="scientist1" 
+/>
+<render_static_mesh
+   name="static_meshes/test_mole/mole_amarilla.static_mesh"
+/>
+<bt_scientist
+  kpt_size  = "4"
+  kpt0_type = "seek" kpt0_pos = "-72.0 0.5 -16.0" kpt0_wait = "0.5"
+  kpt1_type = "look" kpt1_pos = "-72.0 0.5 -10.0" kpt1_wait = "1"
+  kpt2_type = "seek" kpt2_pos = "-78.0 0.5 -10.0" kpt2_wait = "1"
+  kpt3_type = "look" kpt3_pos = "-78.0 0.5 -16.0" kpt3_wait = "1" 
+  zmin="120"
+  zmax ="135"
+/>
+<player_cientifico />
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+  <entity>
     <tags tags="AI AI_guard" />
     <life points="100" />
     <bt_guard kpt_size="4" kpt0_type="seek" kpt0_pos="-14.3585 -23.7823 -25.036" kpt0_wait="2" kpt1_type="seek" kpt1_pos="5.1302 -23.8473 -25.036" kpt1_wait="2" kpt2_type="seek" kpt2_pos="5.1302 -23.8473 -12.228" kpt2_wait="2" kpt3_type="seek" kpt3_pos="-14.5697 -23.7823 -12.228" kpt3_wait="2" jurisdiction="37.5426 -23.6957 -7.79579" jurRadius="100.0" formation_point="-6.33016 -23.7607 -20.6866" formation_dir="-19.3531 -22.8325 -11.9615" />

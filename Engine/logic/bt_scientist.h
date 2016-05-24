@@ -45,6 +45,7 @@ class bt_scientist : public bt_poss, public TCompBase {
 
 	//distance limitations
 	//--------------------------------------
+	float reach_sq_reach_pnt;
 	float square_range_action;
 	float d_epsilon;
 	float d_beacon_simple;
@@ -75,6 +76,7 @@ class bt_scientist : public bt_poss, public TCompBase {
 	CEntity *myEntity = nullptr;
 
 	int actual_action = IDLE;
+	float timerStunt, _timerStunt;
 	//--------------------------------------
 
 	float zmin = 0.0f;
@@ -102,17 +104,26 @@ class bt_scientist : public bt_poss, public TCompBase {
 		void readIniFileAttr();
 		bool load(MKeyValue& atts);
 		//conditions
-
+		bool playerStunned();
+		bool workbenchAvailable();
+		bool beaconToAdd();
+		bool beaconToRemove();
 		//actions
-		int LookForObj();
-		int SeekWorkbench();
-		int AimToPos();
-		int MoveToPos();
-		int CreateBeaconFromWB();
-		int AddBeacon();
-		int RemoveBeacon();
-		int WaitInPos();
-		int NextKpt();
+		int actionStunned();
+		// workbench searching
+		int actionNextWB();
+		int actionSeekWB();
+		int actionCreateBeaconFromWB();
+		// beacon management
+		int actionAddBeacon();
+		int actionRemoveBeacon();
+		// movement
+		int actionAimToPos();
+		int actionMoveToPos();
+		// patrol
+		int actionNextWpt();
+		int actionSeekWpt();
+		int actionWaitWpt();
 
 		//messages function:
 		void onRemoveBeacon(const TMsgBeaconToRemove& msg);
@@ -167,6 +178,11 @@ class bt_scientist : public bt_poss, public TCompBase {
 		void SetMyEntity();
 		bool aimToTarget(VEC3 target);
 		void moveFront(float speed);
+
+		//Aux actions
+		void goTo(const VEC3& dest);
+		void goForward(float stepForward);
+		bool turnTo(VEC3 dest);
 
 		//UI Debug for scientific AI
 		void renderInMenu();

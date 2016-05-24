@@ -7,6 +7,7 @@
 	"bt_scientist" : {
 		"move_speed" : 2.0,
 		"rot_speed" : 2.0,
+		"reach_sq_reach_pnt" : 7.0,
 		"square_range_action" : 1.0,
 		"d_epsilon" : 0.1,
 		"d_beacon_simple" : 100.0,

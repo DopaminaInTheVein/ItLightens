@@ -29,6 +29,7 @@ void bt_scientist::readIniFileAttr() {
 			assignValueToVar(move_speed, fields);
 			assignValueToVar(rot_speed, fields);
 			assignValueToVar(square_range_action, fields);
+			assignValueToVar(reach_sq_reach_pnt, fields);
 			assignValueToVar(d_epsilon, fields);
 			assignValueToVar(d_beacon_simple, fields);
 			assignValueToVar(waiting_time, fields);
@@ -52,16 +53,29 @@ void bt_scientist::Init() {
 	if (tree.empty()) {
 		addBtPossStates();
 		addChild("possessable", "scientist", PRIORITY, (btcondition)&bt_scientist::npcAvailable, NULL);
-		/*addChild("speedy", "dash_start", DECORATOR_LUA, (btcondition)&bt_scientist::dashReady, logic_manager->OnDash, "PARAMETROS");
-		addChild("dash_start", "dash", RANDOM, NULL, NULL);
-		addChild("dash", "dashNextPoint", ACTION, NULL, (btaction)&bt_scientist::actionDashPoint);
-		addChild("dash", "dashNewPoint", ACTION, NULL, (btaction)&bt_scientist::actionDashNewPoint);
-		addChild("dash", "dashPlayer", ACTION, NULL, (btaction)&bt_scientist::actionDashPlayer);
-		addChild("speedy", "patrol", SEQUENCE, NULL, NULL);
-		addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_scientist::actionNextWpt);
-		addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_scientist::actionSeekWpt);*/
+		// stunned state
+		addChild("scientist", "stunned", ACTION, (btcondition)&bt_scientist::playerStunned, (btaction)&bt_scientist::actionStunned);
+		// create beacon sequence
+		addChild("scientist", "createbeacon", SEQUENCE, (btcondition)&bt_scientist::workbenchAvailable, NULL);
+		addChild("createbeacon", "aimcreate", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
+		addChild("createbeacon", "gocreate", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
+		addChild("createbeacon", "create", ACTION, NULL, (btaction)&bt_scientist::actionCreateBeaconFromWB);
+		// add beacon sequence
+		addChild("scientist", "addbeacon", SEQUENCE, (btcondition)&bt_scientist::beaconToAdd, NULL);
+		addChild("addbeacon", "aimadd", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
+		addChild("addbeacon", "goadd", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
+		addChild("addbeacon", "add", ACTION, NULL, (btaction)&bt_scientist::actionAddBeacon);
+		// remove beacon sequence
+		addChild("scientist", "removebeacon", SEQUENCE, (btcondition)&bt_scientist::beaconToRemove, NULL);
+		addChild("removebeacon", "aimremove", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
+		addChild("removebeacon", "goremove", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
+		addChild("removebeacon", "remove", ACTION, NULL, (btaction)&bt_scientist::actionRemoveBeacon);
+		// patrol sequence
+		addChild("scientist", "patrol", SEQUENCE, NULL, NULL);
+		addChild("patrol", "nextwpt", ACTION, NULL, (btaction)&bt_scientist::actionNextWpt);
+		addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_scientist::actionSeekWpt);
+		addChild("patrol", "waitwpt", ACTION, NULL, (btaction)&bt_scientist::actionWaitWpt);
 	}
-
 	// transforms for the speedy and the player
 	SetMyEntity();
 
@@ -72,6 +86,8 @@ void bt_scientist::Init() {
 	out[WANDER] = "WANDER";
 
 	SetHandleMeInit();				//need to be initialized after all handles, ¿awake/init?
+	____TIMER_REDEFINE_(timerStunt, 15);
+	t_waitInPos = 0;
 
 	curkpt = 0;
 }
@@ -109,25 +125,22 @@ bool bt_scientist::load(MKeyValue& atts) {
 
 // conditions
 
-//TODO
-
-// actions
-int bt_scientist::LookForObj() {
-	SetMyEntity(); //needed in case address Entity moved by handle_manager
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	VEC3 curr_pos = me_transform->getPosition();
-
-	if (beacon_to_go_name != "") {
-		//ChangeState("seekWB");
+bool bt_scientist::playerStunned() {
+	PROFILE_FUNCTION("scientist: player stunned");
+	if (stunned == true) {
+		logic_manager->throwEvent(logic_manager->OnStunned, "");
+		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
+		return true;
 	}
-	else if (keyPoints.size() > 0) {
-		//ChangeState("nextKpt");
-	}
-
-	return OK;
+	return false;
 }
 
-int bt_scientist::SeekWorkbench() {
+bool bt_scientist::workbenchAvailable() {
+
+	// state forced by msg
+	if (actual_action == CREATE_BEACON)
+		return true;
+
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
@@ -145,94 +158,41 @@ int bt_scientist::SeekWorkbench() {
 				wb_to_go_name = name;
 				actual_action = CREATE_BEACON;
 				SBB::postInt(name, workbench_controller::INACTIVE_TAKEN);
-				//ChangeState("aimToPos");
-				return OK;
+				return true;
 			}
 		}
 	}
 
-	//ChangeState("nextKpt");
-
-	return OK;
+	return false;
 }
-int bt_scientist::AimToPos() {
-	SetMyEntity(); //needed in case address Entity moved by handle_manager
-	if (!myEntity) return KO;
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	VEC3 curr_pos = me_transform->getPosition();
 
-	VEC3 target = obj_position;
-	float delta_time = getDeltaTime();
+bool bt_scientist::beaconToAdd() {
+	return actual_action == ADD_BEACON;
+}
 
-	//rotate
-	float yaw, pitch;
-	me_transform->getAngles(&yaw, &pitch);
-	float new_yaw;
-	float diff_yaw = me_transform->getDeltaYawToAimTo(target);
+bool bt_scientist::beaconToRemove() {
+	return actual_action == REMOVE_BEACON;
+}
 
-	if (diff_yaw < 0) {
-		new_yaw = -1;
-	}
-	else if (diff_yaw > 0) {
-		new_yaw = 1;
+// actions
+int bt_scientist::actionStunned() {
+	PROFILE_FUNCTION("scientist: actionstunned");
+	if (!myParent.isValid()) return false;
+	if (timerStunt < 0) {
+		stunned = false;
+		logic_manager->throwEvent(logic_manager->OnStunnedEnd, "");
+		return OK;
 	}
 	else {
-		new_yaw = 0;
+		if (timerStunt > -1)
+			timerStunt -= getDeltaTime();
+		return STAY;
 	}
-
-	new_yaw = delta_time*rot_speed*new_yaw;
-
-	if (fabs(new_yaw) > fabs(diff_yaw)) //if rot too big
-		new_yaw = diff_yaw;				//aim to obj point
-
-	me_transform->setAngles(new_yaw + yaw, pitch);
-
-	if (new_yaw == diff_yaw) {
-		if (actual_action != WANDER || keyPoints[curkpt].type == Seek) {
-			//ChangeState("moveToPos");
-		}
-		else {
-			//ChangeState("waitInPos");
-		}
-	}
-
 	return OK;
 }
-int bt_scientist::MoveToPos() {
-	SetMyEntity(); //needed in case address Entity moved by handle_manager
-	if (!myEntity) return KO;
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	VEC3 curr_pos = me_transform->getPosition();
-	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 
-	VEC3 target = obj_position;
-	float delta_time = getDeltaTime();
+int bt_scientist::actionCreateBeaconFromWB() {
 
-
-	cc->AddMovement(me_transform->getFront(), move_speed);
-	VEC3 new_pos = cc->GetFootPosition();
-
-
-	float dist_square = simpleDistXZ(new_pos, target);
-
-	if (dist_square < d_epsilon) {		//TODO: System to read action to do: add beacon, remove beacon, create beacon from WB
-		if (actual_action == CREATE_BEACON) {
-			//ChangeState("createBeacon");
-		}
-		else if (actual_action == ADD_BEACON) {
-			//ChangeState("addBeacon");
-		}
-		else if (actual_action == REMOVE_BEACON) {
-			//ChangeState("removeBeacon");
-		}
-		else if (actual_action == WANDER) {
-			//ChangeState("waitInPos");
-		}
-	}
-
-	return OK;
-}
-int bt_scientist::CreateBeaconFromWB() {
 	waiting_time += getDeltaTime();
 	if (waiting_time > t_createBeacon) {		//go to beacon
 		obj_position = beacon_to_go;
@@ -240,52 +200,213 @@ int bt_scientist::CreateBeaconFromWB() {
 		SBB::postInt(wb_to_go_name.c_str(), workbench_controller::INACTIVE);
 		wb_to_go_name = "";
 		waiting_time = 0.0f;
-		//ChangeState("aimToPos");
+		return OK;
 	}
 
-	return OK;
+	return STAY;
 }
-int bt_scientist::AddBeacon() {
+
+int bt_scientist::actionAimToPos() {
+	//Look to next target position
+	if (turnTo(obj_position)) {
+		return OK;
+	}
+	else {
+		return STAY;
+	}
+}
+
+int bt_scientist::actionMoveToPos() {
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return KO;
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 myPos = me_transform->getPosition();
+
+	//reach waypoint?
+	if (squaredDistXZ(myPos, obj_position) < reach_sq_reach_pnt) {
+		curkpt = (curkpt + 1) % keyPoints.size();
+		return OK;
+	}
+	else {
+		getPath(myPos, obj_position, SBB::readSala());
+		//animController.setState(AST_RUN);
+		goTo(obj_position);
+		return STAY;
+	}	
+}
+
+int bt_scientist::actionAddBeacon() {
+
 	waiting_time += getDeltaTime();
 	if (waiting_time > t_addBeacon) {		//go to new action
 		SBB::postInt(beacon_to_go_name, beacon_controller::SONAR);
 		waiting_time = 0.0f;
 		beacon_to_go_name = "";
 		actual_action = IDLE;
-		//ChangeState("lookForObj");
+		return OK;
 	}
 
-	return OK;
+	return STAY;
 }
-int bt_scientist::RemoveBeacon() {
+
+int bt_scientist::actionRemoveBeacon() {
 	waiting_time += getDeltaTime();
 	if (waiting_time > t_removeBeacon) {		//go to new action
 		SBB::postInt(beacon_to_go_name, beacon_controller::INACTIVE);
 		waiting_time = 0.0f;
 		actual_action = IDLE;
-		//ChangeState("lookForObj");
+		return OK;
+	}
+
+	return STAY;
+}
+
+int bt_scientist::actionSeekWpt() {
+	PROFILE_FUNCTION("scientist: actionseekwpt");
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return KO;
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 myPos = me_transform->getPosition();
+	VEC3 dest = keyPoints[curkpt].pos;
+	//Go to waypoint
+	if (keyPoints[curkpt].type == Seek) {
+		//reach waypoint?
+		if (squaredDistXZ(myPos, dest) < reach_sq_reach_pnt) {
+			curkpt = (curkpt + 1) % keyPoints.size();
+			return OK;
+		}
+		else {
+			getPath(myPos, dest, SBB::readSala());
+			//animController.setState(AST_RUN);
+			goTo(dest);
+			return STAY;
+		}
+	}
+	//Look to waypoint
+	else if (keyPoints[curkpt].type == Look) {
+		//Look to waypoint
+		if (turnTo(dest)) {
+			curkpt = (curkpt + 1) % keyPoints.size();
+			return OK;
+		}
+		else {
+			return STAY;
+		}
 	}
 
 	return OK;
 }
-int bt_scientist::WaitInPos() {
+
+int bt_scientist::actionNextWpt() {
+	PROFILE_FUNCTION("scientist: actionnextwpt");
+	if (!myParent.isValid()) return false;
+	//animController.setState(AST_TURN);
+	VEC3 dest = keyPoints[curkpt].pos;
+	//Look to waypoint
+	if (turnTo(dest)) {
+		return OK;
+	}
+	else {
+		return STAY;
+	}
+}
+
+int bt_scientist::actionWaitWpt() {
+	PROFILE_FUNCTION("scientist: actionwaitwpt");
+	if (!myParent.isValid()) return false;
+	//animController.setState(AST_IDLE);
+
 	if (t_waitInPos > keyPoints[curkpt].time) {
-		//ChangeState("lookForObj");
-		curkpt = (curkpt + 1) % keyPoints.size();
+		t_waitInPos = 0;
+		return OK;
 	}
 	else {
 		t_waitInPos += getDeltaTime();
+		return STAY;
+	}
+}
+
+// -- Go To -- //
+void bt_scientist::goTo(const VEC3& dest) {
+	PROFILE_FUNCTION("scientist: go to");
+	if (!SBB::readBool(SBB::readSala())) {
+		return;
+	}
+	VEC3 target = dest;
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 npcPos = me_transform->getPosition();
+	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) < 0.5f) {
+		++currPathWpt;
+	}
+	if (currPathWpt < totalPathWpt) {
+		target = pathWpts[currPathWpt];
 	}
 
-	return OK;
+	if (needsSteering(npcPos, me_transform, move_speed, myParent, SBB::readSala())) {
+		goForward(move_speed);
+	}
+	else if (!me_transform->isHalfConeVision(target, deg2rad(5.0f))) {
+		turnTo(target);
+	}
+	else {
+		float distToWPT = squaredDistXZ(target, me_transform->getPosition());
+		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 2.0f) {
+			goForward(move_speed);
+		}
+		else if (totalPathWpt == 0) {
+			goForward(-move_speed);
+		}
+	}
 }
-int bt_scientist::NextKpt() {
-	actual_action = WANDER;
-	obj_position = keyPoints[curkpt].pos;
-	t_waitInPos = 0;
-	//ChangeState("aimToPos");
 
-	return OK;
+// -- Go Forward -- //
+void bt_scientist::goForward(float stepForward) {
+	PROFILE_FUNCTION("scientist: go forward");
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 myPos = me_transform->getPosition();
+	float dt = getDeltaTime();
+	TCompCharacterController * cc = myEntity->get<TCompCharacterController>();
+	cc->AddMovement(me_transform->getFront()*stepForward*dt);
+}
+
+// -- Turn To -- //
+bool bt_scientist::turnTo(VEC3 dest) {
+	PROFILE_FUNCTION("scientist: turn to");
+	if (!myParent.isValid()) return false;
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 myPos = me_transform->getPosition();
+	float yaw, pitch;
+	me_transform->getAngles(&yaw, &pitch);
+
+	float deltaAngle = rot_speed * getDeltaTime();
+	float deltaYaw = me_transform->getDeltaYawToAimTo(dest);
+	float angle_epsilon = deg2rad(5);
+
+	if (deltaYaw > 0) {
+		if (deltaAngle < deltaYaw) yaw += deltaAngle;
+		else yaw += deltaYaw;
+	}
+	else {
+		if (deltaAngle < abs(deltaYaw)) yaw -= deltaAngle;
+		else yaw += deltaYaw;
+	}
+
+	if (!me_transform->isHalfConeVision(dest, deg2rad(5.0f))) {
+		bool inLeft = me_transform->isInLeft(dest);
+		if (inLeft) {
+			yaw += deltaAngle;
+		}
+		else {
+			yaw -= deltaAngle;
+		}
+		me_transform->setAngles(yaw, pitch);
+	}
+
+	//Ha acabado el giro?
+	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
 }
 
 //Messages:
@@ -330,7 +451,6 @@ void bt_scientist::onTakenBeacon(const TMsgBeaconTakenByPlayer & msg)
 		waiting_time = 0.0f;
 		beacon_to_go_name = "";
 		actual_action = IDLE;
-		//ChangeState("lookForObj");
 	}
 }
 
@@ -348,7 +468,7 @@ void bt_scientist::onStaticBomb(const TMsgStaticBomb & msg)
 
 	if (d < msg.r) {
 		setCurrent(NULL);
-		//ChangeState(ST_STUNT);
+		stunned = true;
 	}
 }
 
@@ -400,4 +520,3 @@ void bt_scientist::moveFront(float movement_speed) {
 	float dt = getDeltaTime();
 	cc->AddMovement(VEC3(front.x*movement_speed*dt, 0.0f, front.z*movement_speed*dt));
 }
-

@@ -472,14 +472,14 @@
 	name="scientist1" 
 />
 <render_static_mesh
-   name="static_meshes/player_first_ev.static_mesh"
+   name="static_meshes/test_mole/mole_amarilla.static_mesh"
 />
 <bt_scientist
   kpt_size  = "4"
   kpt0_type = "seek" kpt0_pos = "-72.0 0.5 -16.0" kpt0_wait = "0.5"
-  kpt1_type = "look" kpt1_pos = "-72.0 0.5 -10.0" kpt1_wait = "1"
+  kpt1_type = "look" kpt1_pos = "-72.0 0.5 -10.0" kpt1_wait = "3"
   kpt2_type = "seek" kpt2_pos = "-78.0 0.5 -10.0" kpt2_wait = "1"
-  kpt3_type = "look" kpt3_pos = "-78.0 0.5 -16.0" kpt3_wait = "1" 
+  kpt3_type = "look" kpt3_pos = "-78.0 0.5 -16.0" kpt3_wait = "3" 
   zmin="120"
   zmax ="135"
 />
@@ -490,24 +490,28 @@
 />
 </entity>
 
-<!--
-  <entity>
-    <name name="wb_final_zone" />
-    <tag name="workbench" />
-    <transform pos="8.3 4 142.7" rotation="1 2 3 3" scale="1 1 1" />
-    <render_static_mesh name="static_meshes/mesa_cientifico.static_mesh" />
-    <workbench/>
-  </entity>
- -->
-<!--
-  <entity>
-    <name name="beacon1" />
-    <tag name="beacon" />
-    <beacon />
-    <transform pos="11.7903 3.91032 124.523" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/baliza.static_mesh" />
-  </entity>
- -->
+
+<entity>
+	<name name="workbench1" />
+	<tags
+		tags="workbench"
+	/>
+	<transform pos="-80.0 0.5 -13.0" rotation="1 2 3 3" scale="1 1 1" />
+	<render_static_mesh name="static_meshes/obj/box1.static_mesh" />
+	<workbench/>
+</entity>
+
+
+<entity>
+	<name name="beacon1" />
+	<tags
+		tags="beacon"
+	/>
+	<beacon />
+	<transform pos="-70.0 0.5 -13.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+	<render_static_mesh name="static_meshes/test_mole/baliza.static_mesh" />
+</entity>
+
 <!--<entity>
 <tags
    tags="AI AI_guard"
