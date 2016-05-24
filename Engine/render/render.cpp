@@ -101,12 +101,12 @@ bool CRender::createDevice() {
 	sd.SampleDesc.Quality = 0;
 	sd.Windowed = TRUE;
 
-	hr = D3D11CreateDeviceAndSwapChain(NULL, 
-		D3D_DRIVER_TYPE_HARDWARE, NULL, 
-		createDeviceFlags, 
-		featureLevels, 
+	hr = D3D11CreateDeviceAndSwapChain(NULL,
+		D3D_DRIVER_TYPE_HARDWARE, NULL,
+		createDeviceFlags,
+		featureLevels,
 		numFeatureLevels,
-		D3D11_SDK_VERSION, 
+		D3D11_SDK_VERSION,
 		&sd, &swap_chain, &device, &featureLevel, &ctx);
 	if (!SUCCEEDED(hr))
 		return false;
@@ -130,11 +130,11 @@ bool CRender::createDevice() {
 	setDXName(depth_resource, "MainZBufferRes");
 	setDXName(depth_stencil_view, "MainZBufferDSV");
 
-  activateBackBuffer();
+	activateBackBuffer();
 
-  createRenderStateConfigs();
+	createRenderStateConfigs();
 
-  dbg("Render.device created\n");
+	dbg("Render.device created\n");
 
 	return true;
 }

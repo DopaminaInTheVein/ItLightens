@@ -131,6 +131,7 @@
     <ClCompile Include="components\comp_drone.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_guided_camera.cpp" />
+    <ClCompile Include="components\comp_hierarchy.cpp" />
     <ClCompile Include="components\comp_light_dir.cpp" />
     <ClCompile Include="components\comp_light_dir_shadows.cpp" />
     <ClCompile Include="components\comp_light_fadable.cpp" />
@@ -195,6 +196,8 @@
     <ClCompile Include="logic\magnet_door.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="particles\ParticleSystem.cpp" />
+    <ClCompile Include="particles\particles_manager.cpp" />
     <ClCompile Include="Physx\physx_manager.cpp" />
     <ClCompile Include="player_controllers\player_controller.cpp" />
     <ClCompile Include="player_controllers\player_controller_base.cpp" />
@@ -250,6 +253,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="render\render_config.cpp" />
+    <ClCompile Include="render\render_instanced.cpp" />
     <ClCompile Include="render\render_manager.cpp" />
     <ClCompile Include="render\render_to_texture.cpp" />
     <ClCompile Include="render\shaders.cpp" />
@@ -528,6 +532,7 @@
     <ClInclude Include="components\comp_drone.h" />
     <ClInclude Include="components\comp_generator.h" />
     <ClInclude Include="components\comp_guided_camera.h" />
+    <ClInclude Include="components\comp_hierarchy.h" />
     <ClInclude Include="components\comp_life.h" />
     <ClInclude Include="components\comp_light_dir.h" />
     <ClInclude Include="components\comp_light_dir_shadows.h" />
@@ -595,6 +600,11 @@
     <ClInclude Include="logic\polarity.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
+    <ClInclude Include="particles\Emitter.h" />
+    <ClInclude Include="particles\ParticleData.h" />
+    <ClInclude Include="particles\ParticlesEmitter.h" />
+    <ClInclude Include="particles\ParticlesSystem.h" />
+    <ClInclude Include="particles\particles_manager.h" />
     <ClInclude Include="Physx\ItLightensFilterShader.h" />
     <ClInclude Include="Physx\physx_manager.h" />
     <ClInclude Include="player_controllers\player_controller.h" />
@@ -644,6 +654,7 @@
     <ClInclude Include="render\mesh_format.h" />
     <ClInclude Include="render\render.h" />
     <ClInclude Include="render\render_config.h" />
+    <ClInclude Include="render\render_instanced.h" />
     <ClInclude Include="render\render_manager.h" />
     <ClInclude Include="render\render_to_texture.h" />
     <ClInclude Include="render\shaders.h" />

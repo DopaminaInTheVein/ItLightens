@@ -57,6 +57,7 @@ DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
+DECL_OBJ_MANAGER("hierarchy", TCompHierarchy);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("drone", TCompDrone);
@@ -351,8 +352,8 @@ bool CEntitiesModule::start() {
 	SBB::postBool(sala, false);
 	if (!recalc) {
 		// restore the navmesh from the archive
-		std::thread thre(&CEntitiesModule::readNavmesh, this);
-		thre.detach();
+		/*std::thread thre(&CEntitiesModule::readNavmesh, this);
+		thre.detach();*/
 	}
 	else {
 		// make mesh on a separate thread

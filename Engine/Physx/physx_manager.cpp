@@ -656,6 +656,47 @@ return false;
 
 #pragma endregion
 
+
+//#########################################################################################################
+//									Particles
+//#########################################################################################################
+#pragma region Particles
+
+PxParticleSystem * CPhysxManager::CreateParticleSystem(int max_particles)
+{
+
+	PxParticleSystem* ps = m_pPhysics->createParticleSystem(max_particles);
+	if (!ps) {
+		fatal("PxPhysics::createParticleSystem returned NULL\n");
+		return nullptr;
+	}
+
+	ps->setGridSize(3.0f);
+	ps->setMaxMotionDistance(0.43f);
+	ps->setRestOffset(0.0143f);
+	ps->setContactOffset(0.0143f * 2);
+	ps->setDamping(0.0f);
+	ps->setRestitution(0.2f);
+	ps->setDynamicFriction(0.05f);
+	ps->setParticleReadDataFlag(PxParticleReadDataFlag::eVELOCITY_BUFFER, true);
+#if PX_SUPPORT_GPU_PHYSX
+	ps->setParticleBaseFlag(PxParticleBaseFlag::eGPU, mRunOnGpu);
+#endif
+	m_pScene->addActor(*ps);
+	if (!ps->getScene()) {
+		fatal("PxScene::addActor failed\n");
+		return nullptr;
+	}
+
+#if PX_SUPPORT_GPU_PHYSX
+	//check gpu flags after adding to scene, cpu fallback might have been used.
+	mRunOnGpu = mRunOnGpu && (ps->getParticleBaseFlags() & PxParticleBaseFlag::eGPU);
+#endif
+	return ps;
+}
+
+#pragma endregion
+
 //#########################################################################################################
 //									namespace physx helper
 //#########################################################################################################

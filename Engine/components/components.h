@@ -22,6 +22,7 @@
 #include "comp_box_spawner.h"
 #include "comp_box_destructor.h"
 #include "comp_guided_camera.h"
+#include "comp_hierarchy.h"
 
 //lights
 #include "comp_light_dir.h"

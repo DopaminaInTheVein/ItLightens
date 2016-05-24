@@ -12,6 +12,7 @@
 #include "windows/app.h"
 #include "resources/resources_manager.h"
 #include "render/draw_utils.h"
+#include "render/render_instanced.h"
 
 #include "render/fx/GuardShots.h"
 
@@ -102,6 +103,10 @@ bool CRenderDeferredModule::start() {
   shader_ctes_globals.yres = yres;
   shader_ctes_globals.strenght_polarize = 1.0f / 5.0f;
 
+  auto particle_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
+  if (!render_particles_instanced.create(256, particle_mesh))
+    return false;
+
   return true;
 }
 
@@ -112,6 +117,8 @@ void CRenderDeferredModule::stop() {
 // ------------------------------------------------------
 void CRenderDeferredModule::update(float dt) {
   shader_ctes_globals.world_time += dt;
+
+render_particles_instanced.update(dt);
 }
 
 // ------------------------------------------------------
@@ -610,10 +617,13 @@ void CRenderDeferredModule::render() {
 
 	//blurEffectLights();
 
+	render_particles_instanced.render();
+
 	FinalRender();
 	
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);	
 	Render.activateBackBuffer();
+	
 
 	activateZ(ZCFG_ALL_DISABLED);
 
