@@ -95,7 +95,7 @@ function destroyWall( )
   
   --Activamos fragmentos pared
   hg:get_handles_by_tag(tagWallFragment)
-  hg:setEnabled(1)
+  hg:awake()
   p:exec_command( "deactivateLock();", 6 )
   
   --Variable control para activaciones acumuladas

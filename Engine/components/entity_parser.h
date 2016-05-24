@@ -4,7 +4,23 @@
 #include "handle/handle.h"
 #include "components/entity_tags.h"
 
-class CPrefabCompiler;
+class CPrefabCompiler {
+public:
+	struct TCall {
+		bool        is_start;
+		std::string elem;
+		MKeyValue   atts;
+	};
+	std::vector< TCall > calls;
+	void execute(CXMLParser* parser) {
+		for (auto& c : calls) {
+			if (c.is_start)
+				parser->onStartElement(c.elem, c.atts);
+			else
+				parser->onEndElement(c.elem);
+		}
+	}
+};
 
 namespace IdEntities {
   void init();

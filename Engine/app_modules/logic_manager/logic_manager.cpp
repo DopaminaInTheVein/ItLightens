@@ -408,9 +408,9 @@ void CLogicManagerModule::bindHandleGroup(SLB::Manager& m) {
 		.set("get_handles_by_tag", &SLBHandleGroup::getHandlesByTag)
 		.comment("Finds all handles with the specified tag")
 		.param("string: handle tag")
-		.set("setEnabled", &SLBHandleGroup::setEnabled)
-		.comment("Set Enabled the handle group")
-		.param("int: enabled (0: false, otherwise: 1)")
+		//
+		.set("awake", &SLBHandleGroup::awake)
+		.comment("Awake an slept element")
 		;
 }
 

@@ -139,6 +139,9 @@
     <ClCompile Include="components\comp_platform.cpp" />
     <ClCompile Include="components\comp_polarized.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
+    <ClCompile Include="components\comp_snoozer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="components\comp_tracker.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\comp_trigger_lua.cpp" />
@@ -540,6 +543,9 @@
     <ClInclude Include="components\comp_platform.h" />
     <ClInclude Include="components\comp_polarized.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
+    <ClInclude Include="components\comp_snoozer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="components\comp_tags.h" />
     <ClInclude Include="components\comp_tracker.h" />
     <ClInclude Include="components\comp_transform.h" />

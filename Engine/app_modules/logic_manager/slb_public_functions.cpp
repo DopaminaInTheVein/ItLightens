@@ -183,12 +183,14 @@ void SLBHandleGroup::getHandlesByTag(const char * tag) {
 }
 
 
-void SLBHandleGroup::setEnabled(int enabled) {
+void SLBHandleGroup::awake() {
+	TMsgAwake msgAwake;
 	for (auto h : handle_group) {
-		//TODO
-		dbg( "Set enabled %d to %s\n", enabled, ((CEntity*)h)->getName() );
+		CEntity * e = h;
+		e->sendMsg(msgAwake);
+		dbg( "Awake to %s\n", e->getName());
 	}
-	dbg("[LUA] setEnabled (group): %d\n", enabled);
+	dbg("[LUA] Awake (group): %d\n", handle_group.size());
 }
 
 // camera control in LUA

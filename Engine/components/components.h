@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "comp_name.h"
 #include "comp_transform.h"
+#include "comp_snoozer.h"
 #include "comp_camera.h"
 #include "comp_render_static_mesh.h"
 #include "comp_controller_3rd_person.h"

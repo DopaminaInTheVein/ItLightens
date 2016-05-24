@@ -26,6 +26,7 @@
 DECL_OBJ_MANAGER("entity", CEntity);		//need to be first
 DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("transform", TCompTransform);
+DECL_OBJ_MANAGER("snoozer", TCompSnoozer);
 DECL_OBJ_MANAGER("camera", TCompCamera);
 DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
 DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
@@ -115,6 +116,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
+	getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCamera>()->init(4);
 	getHandleManager<TCompController3rdPerson>()->init(4);
@@ -161,6 +163,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompTracker>()->init(100);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
+	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
+	SUBSCRIBE(TCompSnoozer, TMsgAwake, onAwake);
 	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);

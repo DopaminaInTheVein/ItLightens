@@ -59,7 +59,7 @@ class SLBHandleGroup
 
 public:
 	void getHandlesByTag(const char * tag);
-	void setEnabled(int enabled);
+	void awake();
 };
 
 // camera control in LUA

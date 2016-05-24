@@ -590,6 +590,9 @@
     <ClCompile Include="logic\elevator.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_snoozer.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1441,6 +1444,9 @@
     </ClInclude>
     <ClInclude Include="logic\elevator.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_snoozer.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
