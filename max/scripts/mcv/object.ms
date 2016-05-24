@@ -44,7 +44,7 @@ struct OM (
 			-- Tags
 			,#()
 			-- Attributes
-			,#("id", "mesh", "static_mesh", "skeleton")
+			,#("id", "slept", "mesh", "static_mesh", "skeleton")
 			--Components
 			,#("name", "transform",  "render", "physx", "polarized", "tracker", "polarizedArea")
 			--Helpers

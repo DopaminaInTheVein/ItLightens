@@ -3,8 +3,10 @@
 
 fn parseable = (
 	--Is hidden?
-	if _parsingObject.ishidden then (return false)
-	
+	if _parsingObject.ishidden then (
+		local slept = getUserProp _parsingObject "slept"
+		if (slept as string) != "yes" then ( return false)
+	)	
 	
 	-- Es dummy?
 	if (classof _parsingObject) == Dummy then (return false)
