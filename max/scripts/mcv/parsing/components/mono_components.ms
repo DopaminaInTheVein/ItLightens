@@ -19,6 +19,12 @@ fn parseMonoComponent = (
 		parsed = true
 	)
 	
+	if ( (getUserProp _parsingObject "typeObject") as string) == "helperArrow"  then
+	(
+		_parse_helper_arrow()
+		parsed = true
+	)
+	
 	-- If parsed we add common components
 	if parsed then (
 		--Name, Transform

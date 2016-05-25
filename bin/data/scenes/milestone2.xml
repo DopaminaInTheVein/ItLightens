@@ -42,7 +42,8 @@
     <transform pos="5.20116 -23.6427 -10.5997" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/turbine_2.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -50,7 +51,8 @@
     <transform pos="-22.5469 -23.6427 6.99324" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/turbina_1.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -58,7 +60,8 @@
     <transform pos="22.5394 -22.8043 -26.2771" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/tuberia_turbina.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -66,7 +69,8 @@
     <transform pos="-18.8178 -22.8041 -8.68526" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/tuberia.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -74,7 +78,8 @@
     <transform pos="9.88679 -22.4112 11.7154" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/tablones4.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -82,7 +87,8 @@
     <transform pos="9.88679 -22.4112 11.7154" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/tablones3.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -90,7 +96,8 @@
     <transform pos="9.88679 -22.4112 11.7154" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/tablones_4.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -98,7 +105,8 @@
     <transform pos="9.88679 -22.4112 11.7154" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/tablones_2.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -106,7 +114,8 @@
     <transform pos="9.88679 -22.4112 11.7154" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/tablones.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -114,7 +123,8 @@
     <transform pos="-5.29344 -10.9161 -6.8483" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/sueloarribaizquierda.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -122,7 +132,8 @@
     <transform pos="-5.29344 -23.9436 -6.8483" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/suelo_abajo.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -130,7 +141,8 @@
     <transform pos="0.124011 -10.3717 -6.85553" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/puertas_derechas.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -138,7 +150,8 @@
     <transform pos="-41.1173 1.74469 -7.18756" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/puerta_balcon_redondo_pequeno004.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -146,7 +159,8 @@
     <transform pos="-34.3493 -0.652451 -7.8176" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/plataforma_redonde.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -154,7 +168,8 @@
     <transform pos="10.357 -11.9814 -29.0667" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/plataforma_balcon_derecho.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -162,7 +177,8 @@
     <transform pos="10.1243 -11.9814 15.1142" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/plataforma_balcon_cuadrado_izquierdo.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -170,7 +186,8 @@
     <transform pos="-15.7487 -4.11873 14.6898" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/pibotes_balcon_pequeno-arribo.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -178,7 +195,8 @@
     <transform pos="10.2706 -11.1743 15.3466" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/pibotes_balcon_cuadrado-izquierdo.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -186,7 +204,8 @@
     <transform pos="-35.7784 0.861709 -7.59226" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/pibotes_balcon_arriba.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -194,7 +213,8 @@
     <transform pos="10.2106 -11.1743 -29.2992" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/pibote_balcon_derecho_cuadrado.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -202,7 +222,8 @@
     <transform pos="-41.2989 1.91663 -8.04508" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/paredes_balcon_redondo_grande.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -210,7 +231,8 @@
     <transform pos="10.2155 -10.5613 -32.186" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/paredes_balcon_cuadrado_derecha.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -218,7 +240,8 @@
     <transform pos="0.298065 -21.5547 -7.03165" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/paredes_abajo.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -226,7 +249,8 @@
     <transform pos="-15.7336 -3.15889 18.5146" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/pared_balcon_redondo_arriba.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -234,7 +258,8 @@
     <transform pos="10.2657 -10.5613 18.4774" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/pared_balcon_cuadrado_izquierdo.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -242,7 +267,8 @@
     <transform pos="176.65 137.731 -698.851" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/nivel.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -250,7 +276,8 @@
     <transform pos="41.3996 -22.411 -7.18647" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/marcos.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -258,7 +285,8 @@
     <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/maquinas006.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -266,7 +294,8 @@
     <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/maquinas5.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -274,7 +303,8 @@
     <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/maquinas4.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -282,7 +312,8 @@
     <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/maquinas3.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -290,7 +321,8 @@
     <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/maquinas2.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -298,7 +330,8 @@
     <transform pos="-4.05573 -19.191 -3.351" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/maquinas.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -306,7 +339,8 @@
     <transform pos="21.0014 -18.9816 17.6319" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/lamparas_derecha.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -314,7 +348,8 @@
     <transform pos="7.48629 -22.0235 -26.9598" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/control_panel002.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -322,7 +357,8 @@
     <transform pos="10.2706 -11.1743 15.3466" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/columneas_esquineras_2.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -330,7 +366,8 @@
     <transform pos="10.2106 -11.1743 -29.2992" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/columnas_esquineras_1.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -338,7 +375,8 @@
     <transform pos="9.819 -18.0684 14.9804" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/columnas_balcon_izquierdo_cuadrado.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -346,7 +384,8 @@
     <transform pos="40.9559 -18.2573 -3.92087" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/columnas_abajo.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -354,7 +393,8 @@
     <transform pos="9.819 -18.0684 14.9804" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/columna_abajo_izquierdo_centro.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -362,7 +402,8 @@
     <transform pos="10.6622 -18.0684 -28.9329" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/columna_abajo_derecha_izquierda.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -370,7 +411,8 @@
     <transform pos="10.6622 -18.0684 -28.9329" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/columna_abajo_derecha_derecha.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -378,7 +420,8 @@
     <transform pos="10.6622 -18.0684 -28.9329" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/columna_abajo_derecha_centro.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -386,7 +429,8 @@
     <transform pos="9.819 -18.0684 14.9804" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/columna_abajo_derecha.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -394,7 +438,8 @@
     <transform pos="-15.7545 -4.06819 14.6601" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_redondo_pequeno.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -402,7 +447,8 @@
     <transform pos="-35.6805 0.911773 -7.57358" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_grande_abajo.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -410,7 +456,8 @@
     <transform pos="10.2693 -11.1267 15.2987" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_izquierdo_abajo.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -418,7 +465,8 @@
     <transform pos="10.2693 -11.1267 15.2987" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_izquierdo.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -426,7 +474,8 @@
     <transform pos="10.2119 -11.1267 -29.2513" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_cuadrado_derecho.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -434,7 +483,8 @@
     <transform pos="-35.6805 0.911773 -7.57358" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/barrotes_balcon_arriba.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -442,7 +492,8 @@
     <transform pos="10.2119 -11.1267 -29.2513" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/barrotes_abajo_derecha.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -450,7 +501,8 @@
     <transform pos="-15.7545 -4.06819 14.6601" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/barrotes_abajo_balcon_redondo_pequeno.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -458,7 +510,8 @@
     <transform pos="-15.7686 -5.62997 14.9404" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/balcon_redondo_pequeno.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -466,7 +519,8 @@
     <transform pos="-22.2405 -20.7505 -14.9376" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/andamio_usable.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -474,7 +528,8 @@
     <transform pos="-22.2405 -20.7505 -14.9376" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/andamio_2.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -482,7 +537,8 @@
     <transform pos="-22.2405 -20.7505 -14.9376" quat="0 0 0 1.0" scale="1.0" />
     <render_static_mesh name="static_meshes/scene_ms2/Andamio.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="box platform removable" />
@@ -565,12 +621,13 @@
     <polarized pol="plus" size="1.7955 2.3474 4.92" />
   </entity>
   <entity>
-    <tags tags="" />
+    <tags tags="generator" />
     <name name="generator_1" />
     <transform pos="-37.0645 -23.1248 -23.4027" quat="-0.256605 -0.126079 -0.0337826 0.957662" scale="1.0" />
     <render_static_mesh name="static_meshes/obj/generator.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
     <tags tags="" />
@@ -580,20 +637,31 @@
     <transform pos="-37.0645 -23.1248 -23.4027" quat="-0.256605 -0.126079 -0.0337826 0.957662" scale="1.0" />
   </entity>
   <entity>
-    <tags tags="" />
+    <tags tags="generator" />
     <name name="generator_2" />
     <transform pos="-10.5209 -3.88647 18.1304" quat="0 1.0 0 0" scale="1.0" />
     <render_static_mesh name="static_meshes/obj/generator.static_mesh" />
     <rigidbody type_collision="static" />
-    <local_aabb /><abs_aabb />
+    <local_aabb />
+    <abs_aabb />
   </entity>
   <entity>
-    <tags tags="" />
+    <tags tags="generator" />
     <rigidbody type_collision="trigger" type_shape="sphere" radius="1.64" />
     <generator />
     <name name="trigger_2" />
     <transform pos="-10.5209 -3.88647 18.1304" quat="0 1.0 0 0" scale="1.0" />
   </entity>
+
+  <entity>
+    <tags tags="" />
+    <tags tags="generator trigger" />
+    <rigidbody type_collision="trigger" type_shape="sphere" radius="1.64" />
+    <generator />
+    <name name="trigger_2" />
+    <transform pos="-10.5209 -3.88647 18.1304" quat="0 1.0 0 0" scale="1.0" />
+  </entity>
+
   <entity>
     <tags tags="AI AI_guard" />
     <life points="100" />
@@ -656,5 +724,15 @@
     <victory_point />
     <name name="TriggerBox_1" />
     <transform pos="-33.6215 4.47034 -7.67841" quat="0 0 0 1.0" scale="1.0" />
+  </entity>
+  <entity slept="undefined">
+    <tags  tags="helper_arrow" />
+    <helper_arrow />
+    <render_static_mesh  name="static_meshes/helpers/helper_arrow.static_mesh" />
+    <name name="helper_arrow" />
+    <transform
+       pos="0 0 0"
+       quat="0 0 0 1.0"
+       scale="0.3" />
   </entity>
 </entities>

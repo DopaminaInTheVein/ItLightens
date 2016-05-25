@@ -196,6 +196,7 @@
     <ClCompile Include="logic\bt_speedy.cpp" />
     <ClCompile Include="logic\damage.cpp" />
     <ClCompile Include="logic\elevator.cpp" />
+    <ClCompile Include="logic\helper_arrow.cpp" />
     <ClCompile Include="logic\magnet_door.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
@@ -599,6 +600,7 @@
     <ClInclude Include="logic\bt_speedy.h" />
     <ClInclude Include="logic\damage.h" />
     <ClInclude Include="logic\elevator.h" />
+    <ClInclude Include="logic\helper_arrow.h" />
     <ClInclude Include="logic\magnet_door.h" />
     <ClInclude Include="logic\polarity.h" />
     <ClInclude Include="logic\sbb.h" />
