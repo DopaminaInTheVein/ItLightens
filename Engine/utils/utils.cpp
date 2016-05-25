@@ -270,7 +270,7 @@ CQuaternion interpolate(const CQuaternion &start, const CQuaternion &end, const 
 }
 
 // Basic math
-float max(int nargs, ...) {
+float max(int nargs = 2, ...) {
   float max_value = FLT_MIN;
   va_list listPointer;
   va_start(listPointer, nargs);
@@ -280,6 +280,18 @@ float max(int nargs, ...) {
     if (arg > max_value) max_value = arg;
   }
   return max_value;
+}
+
+float min(int nargs = 2, ...) {
+	float min_value = FLT_MAX;
+	va_list listPointer;
+	va_start(listPointer, nargs);
+	for (int i = 0; i < nargs; i++)
+	{
+		float arg = va_arg(listPointer, int);
+		if (arg < min_value) min_value = arg;
+	}
+	return min_value;
 }
 
 //Check Nan, Infinity's zero values,...

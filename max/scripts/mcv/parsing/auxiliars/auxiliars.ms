@@ -9,19 +9,23 @@ fn parseable = (
 	)	
 	
 	-- Es dummy?
-	if (classof _parsingObject) == Dummy then (return false)
+	if (classof _parsingObject) == Dummy then (
+		local type = getUserProp _parsingObject "typeObject"
+		if (type as string) != "railCamera" then (return false)
+	)
 	
 	-- FreeCameras
 	if (classof _parsingObject) == FreeCamera then (
-		local type = getUserProp _parsingObject "typeObject"
-		if type == undefined or type == "railCamera" then (return false)
+		return false
+		--local type = getUserProp _parsingObject "typeObject"
+		--if type == undefined or type == "railCamera" then (return false)
 	)
 	
 	-- Es spline?
 	if (isSpline _parsingObject) then (
-		if ((getUserProp _parsingObject "typeObject" ) as string) != "railCamera" then (
-			return false
-		)
+		--if ((getUserProp _parsingObject "typeObject" ) as string) != "railCamera" then (
+		return false
+		--)
 	)
 	
 	-- Comprobamos que no sea un Helper

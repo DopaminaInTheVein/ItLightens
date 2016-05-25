@@ -147,6 +147,16 @@ fn findClass tClass = (
 	return res
 )
 
+fn findAllClassList tClass = (
+	local res = #()
+	for child in _parsingObject.children do (
+		if ( classof child == tClass ) then (
+			append res child
+		)
+	)
+	return res
+)
+
 -- LUA --
 -----------------------------------------------------------------------------------------------------------------
 --Append Lua
