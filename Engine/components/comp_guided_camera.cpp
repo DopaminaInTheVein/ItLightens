@@ -1,6 +1,7 @@
 #include "mcv_platform.h"
 #include "comp_guided_camera.h"
 #include "comp_camera.h"
+#include "comp_controller_3rd_person.h"
 #include "comp_transform.h"
 #include "entity.h"
 
@@ -14,8 +15,11 @@ char nameVariable[10]; sprintf(nameVariable, "lpt%d", index)
 bool TCompGuidedCamera::load(MKeyValue& atts) {
   num_points = atts.getInt("points_size", 0);
   velocity_default = atts.getFloat("velocity", 0);
-  //angularVelocity = atts.getFloat("angularVelocity", 0);
-  for (int i = 0; i < num_points; i++) {
+
+  //La posicion 0 es la actual en el momento de empezar la cinematica!
+  positions.resize(num_points + 1);
+  targets.resize(num_points + 1);
+  for (int i = 1; i <= num_points; i++) {
     WPT_ATR_NAME(atrPos, i);
     positions[i] = atts.getPoint(atrPos);
 	LPT_ATR_NAME(atrLook, i);
@@ -26,7 +30,7 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
   return true;
 };
 
-//TODO: Modificar o sustituir (auxiliar de SmoothInluence)
+/*
 VEC3 TCompGuidedCamera::getNewTargetForCamera(VEC3 playerPosition, VEC3 cameraActual, int pointOfInfluence) {
   if (pointOfInfluence != lastP) {
     lastP = pointOfInfluence;
@@ -56,7 +60,7 @@ VEC3 TCompGuidedCamera::getNewTargetForCamera(VEC3 playerPosition, VEC3 cameraAc
   //cameraNova.Normalize();
   return cameraNova;
 };
-
+*/
 void TCompGuidedCamera::start(float speed) {
   curPoint = 0;
   factor = 0.0f;
@@ -76,8 +80,17 @@ void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
 	eMainCamera->sendMsg(msgToMainCamera);
 	
 	//Init Guide
-	start(msg.speed);
-	//TODO: first point = main_camera (and target/rotation)
+	TCompGuidedCamera::start(msg.speed);
+	
+	//Initial Pos
+	TCompCamera * comp_main_camera = eMainCamera->get<TCompCamera>();
+	assert(comp_main_camera);
+	positions[0] = comp_main_camera->getPosition();
+
+	//Initial Target
+	TCompController3rdPerson * camera_controller = eMainCamera->get<TCompController3rdPerson>();
+	assert(camera_controller);
+	targets[0] = positions[0] + comp_main_camera->getFront() * camera_controller->GetPositionDistance();
   }
 }
 
@@ -93,26 +106,30 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* c
   }
 
   VEC3 goTo = positions[curPoint];
-
-  CHandle tX = tags_manager.getFirstHavingTag("player");
-  CEntity * target_eX = tX;
-
-  TCompTransform * targettransX = target_eX->get<TCompTransform>();
-
-  VEC3 nextPoint = positions[min(curPoint + 1, positions.size())];
+  VEC3 nextPoint = positions[clamp(curPoint + 1, 0, positions.size()-1)];
 
   VEC3 pos = camTransform->getPosition();
-  if (simpleDist(pos, goTo) > 0.5f) {
+  VEC3 look = nextPoint;
+  float dist = simpleDist(pos, goTo);
+  dbg("dist: %f\n", dist);
+  if (dist > 1.f) {
 	//Going to target
 	std::vector<VEC3> posCmr = std::vector<VEC3>(4); //Catmull Rom positions
+	std::vector<VEC3> lookCmr = std::vector<VEC3>(4); //Catmull Rom positions
 	for (int i = 0; i < posCmr.size(); i++) {
-		posCmr[i] = positions[min(curPoint - 2 + i, positions.size())];
+		posCmr[i] = positions[clamp(curPoint - 2 + i, 0, positions.size()-1)];
+		lookCmr[i] = targets[clamp(curPoint - 2 + i, 0, positions.size()-1)];
 	}
 
 	//Factor = distancia recorrida este frame / distancia total punto actual y siguiente
-    factor += (getDeltaTime() * velocity) / (realDist(goTo, nextPoint));
-    pos = VEC3::CatmullRom(posCmr[0], posCmr[1], posCmr[2], posCmr[3], factor);
-    camTransform->setPosition(pos);
+	float moveAmount = getDeltaTime() * velocity;
+	VEC3 direction = nextPoint - pos;
+	direction.Normalize();
+	pos += direction * moveAmount;
+	Debug->DrawLine(pos, pos + camTransform->getFront() * 125);
+	//factor += (getDeltaTime() * velocity) / (realDist(goTo, nextPoint));
+	//pos = VEC3::CatmullRom(posCmr[0], posCmr[1], posCmr[2], posCmr[3], factor);
+	//look = VEC3::CatmullRom(lookCmr[0], lookCmr[1], lookCmr[2], lookCmr[3], factor);
   }
   else {
 	//New target
@@ -121,13 +138,12 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* c
   }
 
   if (default_dirs) {
-    cam->smoothLookAt(camTransform->getPosition(), nextPoint, cam->getUpAux(), 0.5f);
+	  look = nextPoint;
   }
-  else { //if (curPoint > 0) {
-    VEC3 campos = camTransform->getPosition();
-	
-	//TODO: fix this method! (Influencia??)
-    cam->smoothUpdateInfluence(camTransform, this, influencia, cam->getUpAux());	//smooth movement
+  else {
+	  cam->smoothLookAt(pos, look, cam->getUpAux(), 0.5f);
+	  camTransform->lookAt(pos, look, cam->getUpAux());
   }
+
   return true;
 }

@@ -16,8 +16,8 @@ fn parseable = (
 	
 	-- FreeCameras
 	if (classof _parsingObject) == FreeCamera then (
-		return false
-		--local type = getUserProp _parsingObject "typeObject"
+		local type = getUserProp _parsingObject "typeObject"
+		if type != "CamController" then (return false)	
 		--if type == undefined or type == "railCamera" then (return false)
 	)
 	
