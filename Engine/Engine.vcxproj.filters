@@ -593,6 +593,12 @@
     <ClCompile Include="logic\ai_scientific.cpp">
       <Filter>logic_old</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_snoozer.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\helper_arrow.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1456,6 +1462,12 @@
     </ClInclude>
     <ClInclude Include="logic\ai_scientific.h">
       <Filter>logic_old</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_snoozer.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\helper_arrow.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

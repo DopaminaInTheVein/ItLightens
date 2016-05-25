@@ -44,7 +44,7 @@ struct OM (
 			-- Tags
 			,#()
 			-- Attributes
-			,#("id", "mesh", "static_mesh", "skeleton")
+			,#("id", "slept", "mesh", "static_mesh", "skeleton")
 			--Components
 			,#("name", "transform",  "render", "physx", "polarized", "tracker", "polarizedArea")
 			--Helpers
@@ -200,6 +200,16 @@ struct OM (
 			,#(speed)
 			--Components
 			,#("guided_camera")
+			--Helpers
+			,#()
+		)----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("helperArrow"
+			-- Tags
+			,#("helper_arrow")
+			-- Attributes
+			,#(speed)
+			--Components
+			,#("helper_arrow")
 			--Helpers
 			,#()
 		)

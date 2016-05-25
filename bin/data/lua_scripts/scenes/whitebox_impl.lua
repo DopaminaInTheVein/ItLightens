@@ -4,6 +4,7 @@ SLB.using( SLB )
 
 p = Public( )
 h = Handle( )
+hg = HandleGroup()
 
 function OnEnter_tElevator( )
   --Nothing to do
@@ -60,6 +61,10 @@ function activateLock( )
   timesActivatedLock = timesActivatedLock + 1
 end
 
+function putBattery( )
+  p:print("Put Battery\n")
+end
+
 function deactivateLock( )
   p:print("Deactivate Lock\n")
   timesActivatedLock = timesActivatedLock - 1
@@ -71,5 +76,29 @@ function deactivateLock( )
       --h:setPolarity(0)
 	  h:setLocked(1)
   end
+end
+--------------------------------------
+
+-- Wall --
+--------------------------------------
+idWall = 302
+tagWallFragment = "wall1_fragment"
+triggerWall_1 = Handle()
+function destroyWall( )
+  p:print("Destroy Wall\n")
+  triggerWall_1:getHandleCaller()
+  p:exec_command( "triggerWall_1:setActionable(1);", 1 ) --test
+  
+  --Destruimos pared
+  h:get_handle_by_id(idWall)
+  h:destroy()
+  
+  --Activamos fragmentos pared
+  hg:get_handles_by_tag(tagWallFragment)
+  hg:awake()
+  p:exec_command( "deactivateLock();", 6 )
+  
+  --Variable control para activaciones acumuladas
+  timesActivatedLock = timesActivatedLock + 1
 end
 --------------------------------------

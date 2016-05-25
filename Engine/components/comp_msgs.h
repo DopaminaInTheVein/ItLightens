@@ -10,6 +10,15 @@ struct TMsgEntityCreated {
 	DECLARE_MSG_ID();
 };
 
+class CPrefabCompiler;
+struct TMsgPreload {
+	CPrefabCompiler * comps;
+	DECLARE_MSG_ID();
+};
+struct TMsgAwake {
+	DECLARE_MSG_ID();
+};
+
 // Sent to all entities from a parsed file once all the entities
 // in that file has been created. Used to link entities between them
 struct TMsgEntityGroupCreated {
@@ -72,6 +81,11 @@ enum PLAYER_TYPE {
 };
 struct TMsgSetTarget {
 	CHandle target;
+	PLAYER_TYPE who;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgGetWhoAmI {
 	PLAYER_TYPE who;
 	DECLARE_MSG_ID();
 };

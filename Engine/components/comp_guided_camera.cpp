@@ -27,7 +27,7 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
   for (int i = 0; i < num_cameras; i++) {
     ROT_ATR_NAME(atrRot, i);
     VEC3 rot = atts.getPoint(atrRot);
-    rot.Normalize();
+    //rot.Normalize();
     rotations[i] = rot;
     influences[i] = realDist(points[i], points[i + 1]);
     VEC3 vectorBetween = (points[i + 1] - points[i]);
@@ -93,7 +93,7 @@ VEC3 TCompGuidedCamera::getNewTargetForCamera(VEC3 playerPosition, VEC3 cameraAc
       last_quat = rotations[pointOfInfluence - 1];
     }
   }
-  cameraActual.Normalize();
+ // cameraActual.Normalize();
 
   if (pointOfInfluence < 0 || pointOfInfluence >= num_cameras) {
     return cameraActual;
@@ -111,7 +111,7 @@ VEC3 TCompGuidedCamera::getNewTargetForCamera(VEC3 playerPosition, VEC3 cameraAc
   else {
     cameraNova = VEC3::Lerp(cameraActual, rotations[pointOfInfluence], distanciaUnitaria);
   }
-  cameraNova.Normalize();
+  //cameraNova.Normalize();
   return cameraNova;
 };
 

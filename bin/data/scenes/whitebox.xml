@@ -1,459 +1,997 @@
 <entities>
-<entity>
-<tags
-   tags="camera_main"/>
-<camera
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<controller_3rd_person/>
-<name
-   name="camController_1"/>
-<transform
-   pos="-79.9295 -20.3454 -26.5926"
-   quat="0 0.707104 0 0.707104"
-   scale="1.0"/>
+  <entity
+     slept="undefined">
+    <tags
+       tags="player" />
+    <player />
+    <life
+       points="10" />
+    <name
+       name="player_1" />
+    <transform
+       pos="-44.9266 1.43372 -8.94887"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <skeleton
+       model="skeletons/player/player.skeleton" />
+    <render_static_mesh
+       name="skeletons/player/player.static_mesh" />
+    <character_controller
+       radius="0.3"
+       height="0.7" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <light_point
+       color="1.0 1.0 1.0 1.0"
+       in_radius="80.0"
+       out_radius="200.0" />
+    <name
+       name="Omni010" />
+    <transform
+       pos="-92.5373 1.63564 28.3671"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <light_point
+       color="1.0 1.0 1.0 1.0"
+       in_radius="80.0"
+       out_radius="200.0" />
+    <name
+       name="Omni009" />
+    <transform
+       pos="-80.6419 1.63564 28.3671"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <light_point
+       color="1.0 1.0 1.0 1.0"
+       in_radius="80.0"
+       out_radius="200.0" />
+    <name
+       name="Omni008" />
+    <transform
+       pos="-80.6419 1.63564 18.2919"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <light_point
+       color="1.0 1.0 1.0 1.0"
+       in_radius="80.0"
+       out_radius="200.0" />
+    <name
+       name="Omni007" />
+    <transform
+       pos="-81.459 1.63563 -47.844"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <light_point
+       color="1.0 1.0 1.0 1.0"
+       in_radius="80.0"
+       out_radius="200.0" />
+    <name
+       name="Omni006" />
+    <transform
+       pos="-74.0948 1.63563 -33.6174"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <light_point
+       color="1.0 1.0 1.0 1.0"
+       in_radius="80.0"
+       out_radius="200.0" />
+    <name
+       name="Omni005" />
+    <transform
+       pos="-86.7589 1.63563 -33.6174"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <light_point
+       color="1.0 1.0 1.0 1.0"
+       in_radius="80.0"
+       out_radius="200.0" />
+    <name
+       name="Omni004" />
+    <transform
+       pos="-86.7589 1.63564 -7.90521"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <light_point
+       color="1.0 1.0 1.0 1.0"
+       in_radius="80.0"
+       out_radius="200.0" />
+    <name
+       name="Omni003" />
+    <transform
+       pos="-72.6222 1.63564 -7.90521"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <light_point
+       color="1.0 1.0 1.0 1.0"
+       in_radius="80.0"
+       out_radius="200.0" />
+    <name
+       name="Omni002" />
+    <transform
+       pos="-55.3697 1.63564 -7.90521"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <light_point
+       color="1.0 1.0 1.0 1.0"
+       in_radius="80.0"
+       out_radius="200.0" />
+    <name
+       name="Omni001" />
+    <transform
+       pos="-43.6181 1.63564 -7.90521"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="cable" />
+    <transform
+       pos="-66.9216 17.1642 3.42773"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/cable.static_mesh" />
+    <rigidbody
+       type_collision="static" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="cargador_de_bateria" />
+    <transform
+       pos="-94.0594 0.341249 23.0252"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/cargador_de_bateria.static_mesh" />
+    <rigidbody
+       type_collision="static" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="cerradura_electrica" />
+    <transform
+       pos="-91.8181 0.0687488 10.2894"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/cerradura_electrica.static_mesh" />
+    <rigidbody
+       type_collision="static" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="mesa_de_trabajo" />
+    <transform
+       pos="-71.3058 17.1641 -4.88602"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/mesa_de_trabajo.static_mesh" />
+    <rigidbody
+       type_collision="static" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="mesa_de_trabajo" />
+    <transform
+       pos="-92.8914 0.432741 34.8707"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/mesa_de_trabajo.static_mesh" />
+    <rigidbody
+       type_collision="static" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="nivel" />
+    <transform
+       pos="176.65 137.731 -698.851"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/nivel.static_mesh" />
+    <rigidbody
+       type_collision="static" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="pila" />
+    <transform
+       pos="-81.4276 0.651356 33.9501"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pila.static_mesh" />
+    <rigidbody
+       type_collision="static" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="puerta_balcon_redondo_pequeno004" />
+    <transform
+       pos="-41.1173 1.74469 -7.18756"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/puerta_balcon_redondo_pequeno004.static_mesh" />
+    <rigidbody
+       type_collision="static" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="puertas_derechas" />
+    <transform
+       pos="0.124012 -10.3717 -6.85553"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/puertas_derechas.static_mesh" />
+    <rigidbody
+       type_collision="static" />
+  </entity>
+  <entity
+     id="300"
+     slept="undefined">
+    <tags
+       tags="doorExit door" />
+    <magnet_door
+       locked="yes"
+       speedOpening="1"
+       target="-80.9939 4.67418 -40.0527"
+       pol="neutral" />
+    <name
+       name="Door" />
+    <transform
+       pos="-80.9939 1.82996 -40.0527"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/Door.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="3.38976 2.8574 0.12"
+       mass="5" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="Door_opened_pos" />
+    <transform
+       pos="-80.9939 4.67418 -40.0527"
+       quat="0.708405 0 0 0.705806"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <rigidbody
+       type_collision="trigger"
+       type_shape="box"
+       size="3.71942 0.875 8.6901" />
+    <trigger_lua
+       action="activate" />
+    <name
+       name="tElevator" />
+    <transform
+       pos="-70.8264 0.788941 14.2003"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     id="301"
+     slept="undefined">
+    <tags
+       tags="elevator1 elevator" />
+    <elevator
+       target="-70.7158 17.1593 14.1924" />
+    <name
+       name="ElevatorGround" />
+    <transform
+       pos="-70.7158 -0.0216497 14.1924"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/elevator.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="3.3 0.15 2.5"
+       mass="5"
+       kinematic="yes" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="ElevatorGround_pos_elevator_up" />
+    <transform
+       pos="-70.7158 17.1593 14.1924"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <rigidbody
+       type_collision="trigger"
+       type_shape="box"
+       size="6.02803 0.875 5.9013" />
+    <trigger_lua
+       action="activate"
+       actionMole="put" />
+    <name
+       name="tElectricLlock" />
+    <transform
+       pos="-91.8979 0.788941 10.1574"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <rigidbody
+       type_collision="trigger"
+       type_shape="box"
+       size="3.2064 0.875 2.49" />
+    <trigger_lua
+       action="activate" />
+    <name
+       name="tElevator" />
+    <transform
+       pos="-70.8264 17.6037 14.2003"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="camera_main" />
+    <camera
+       znear="0.1"
+       zfar="250.0"
+       fov="60.0" />
+    <controller_3rd_person />
+    <name
+       name="camController_1" />
+    <transform
+       pos="-79.9295 -20.3454 -26.5926"
+       quat="0 0.707104 0 0.707104"
+       scale="1.0" />
+  </entity>
+  <entity
+     id="302"
+     slept="undefined">
+    <tags
+       tags="" />
+    <name
+       name="pared_mole" />
+    <transform
+       pos="-93.9419 0.346788 -16.2502"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole.static_mesh" />
+    <rigidbody
+       type_collision="static" />
+  </entity>
+  <entity
+     slept="undefined">
+    <tags
+       tags="" />
+    <rigidbody
+       type_collision="trigger"
+       type_shape="box"
+       size="6.26077 0.965 16.7178" />
+    <trigger_lua
+       action="activate"
+       actionMole="destroy" />
+    <name
+       name="tWall" />
+    <transform
+       pos="-92.8207 0.83394 -16.2075"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole028" />
+    <transform
+       pos="-94.0399 7.17221 -8.71999"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole001.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole027" />
+    <transform
+       pos="-94.0399 7.17221 -11.3035"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole002.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole026" />
+    <transform
+       pos="-94.0399 7.17221 -13.8082"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole003.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole025" />
+    <transform
+       pos="-94.0399 7.17221 -16.313"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole004.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.15 1.15 1.2"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole024" />
+    <transform
+       pos="-94.0399 7.17221 -18.8178"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole005.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole023" />
+    <transform
+       pos="-94.0399 7.17221 -21.3225"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole006.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole022" />
+    <transform
+       pos="-94.0399 7.17221 -23.8273"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole007.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole021" />
+    <transform
+       pos="-94.0399 5.3436 -8.71999"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole001.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole020" />
+    <transform
+       pos="-94.0399 5.3436 -11.3035"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole002.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole019" />
+    <transform
+       pos="-94.0399 5.3436 -13.8082"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole003.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole018" />
+    <transform
+       pos="-94.0399 5.3436 -16.313"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole004.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.15 1.15 1.2"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole017" />
+    <transform
+       pos="-94.0399 5.3436 -18.8178"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole005.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole016" />
+    <transform
+       pos="-94.0399 5.3436 -21.3225"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole006.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole015" />
+    <transform
+       pos="-94.0399 5.3436 -23.8273"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole007.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole014" />
+    <transform
+       pos="-94.0399 3.51498 -8.71999"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole001.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole013" />
+    <transform
+       pos="-94.0399 3.51498 -11.3035"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole002.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole012" />
+    <transform
+       pos="-94.0399 3.51498 -13.8082"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole003.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole011" />
+    <transform
+       pos="-94.0399 3.51498 -16.313"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole004.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.15 1.15 1.2"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole010" />
+    <transform
+       pos="-94.0399 3.51498 -18.8178"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole005.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole009" />
+    <transform
+       pos="-94.0399 3.51498 -21.3225"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole006.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole008" />
+    <transform
+       pos="-94.0399 3.51498 -23.8273"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole007.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole007" />
+    <transform
+       pos="-94.0399 1.68637 -23.8273"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole007.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole006" />
+    <transform
+       pos="-94.0399 1.68637 -21.3225"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole006.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole005" />
+    <transform
+       pos="-94.0399 1.68637 -18.8178"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole005.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole004" />
+    <transform
+       pos="-94.0399 1.68637 -16.313"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole004.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.15 1.15 1.2"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole003" />
+    <transform
+       pos="-94.0399 1.68637 -13.8082"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole003.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole002" />
+    <transform
+       pos="-94.0399 1.68637 -11.3035"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole002.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
+  <entity
+     slept="yes">
+    <tags
+       tags="wall1_fragment" />
+    <name
+       name="pared_mole001" />
+    <transform
+       pos="-94.0399 1.68637 -8.71999"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+    <render_static_mesh
+       name="static_meshes/whitebox/pared_mole001.static_mesh" />
+    <rigidbody
+       type_collision="dynamic"
+       type_shape="box"
+       size="1.0 1.0 1.0"
+       mass="5" />
+  </entity>
 
-</entity>
-<entity>
-<tags
-   tags="player"/>
-<player/>
-<life
-   points="10"/>
-<name
-   name="player_1"/>
-<transform
-   pos="-44.9266 1.43372 -8.94887"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/player/player.skeleton"/>
-<render_static_mesh
-   name="skeletons/player/player.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="0.7"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni010"/>
-<transform
-   pos="-92.5373 1.63564 28.3671"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni009"/>
-<transform
-   pos="-80.6419 1.63564 28.3671"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni008"/>
-<transform
-   pos="-80.6419 1.63564 18.2919"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni007"/>
-<transform
-   pos="-81.459 1.63563 -47.844"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni006"/>
-<transform
-   pos="-74.0948 1.63563 -33.6174"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni005"/>
-<transform
-   pos="-86.7589 1.63563 -33.6174"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni004"/>
-<transform
-   pos="-86.7589 1.63564 -7.90521"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni003"/>
-<transform
-   pos="-72.6222 1.63564 -7.90521"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni002"/>
-<transform
-   pos="-55.3697 1.63564 -7.90521"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni001"/>
-<transform
-   pos="-43.6181 1.63564 -7.90521"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="ascensor"/>
-<transform
-   pos="-111.673 17.3784 -14.8967"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/ascensor.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="cable"/>
-<transform
-   pos="-106.96 17.1642 -24.4175"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/cable.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="cargador_de_bateria"/>
-<transform
-   pos="-94.0594 0.341249 23.0252"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/cargador_de_bateria.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="cerradura_electrica"/>
-<transform
-   pos="-91.8181 0.0687488 10.2894"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/cerradura_electrica.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="laboratorio"/>
-<transform
-   pos="-135.462 0 -24.481"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/laboratorio.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="mesa_de_trabajo"/>
-<transform
-   pos="-111.344 17.1641 -32.7313"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/mesa_de_trabajo.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="mesa_de_trabajo"/>
-<transform
-   pos="-92.8914 0.432741 34.8707"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/mesa_de_trabajo.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="nivel"/>
-<transform
-   pos="176.65 137.731 -698.851"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/nivel.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="pared_mole"/>
-<transform
-   pos="-94.5794 0.346788 -16.2502"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="pila"/>
-<transform
-   pos="-81.4276 0.651356 33.9501"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pila.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity
-   id="300">
-<tags
-   tags="doorExit door"/>
-<magnet_door
-   locked="yes"
-   speedOpening="1"
-   target="-80.9939 4.67418 -40.0527"
-   pol="neutral"/>
-<name
-   name="Door"/>
-<transform
-   pos="-80.9939 1.82996 -40.0527"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/Door.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="3.38976 2.8574 0.12"
-   mass="5"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="Door_opened_pos"/>
-<transform
-   pos="-80.9939 4.67418 -40.0527"
-   quat="0.708405 0 0 0.705806"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="3.71942 0.875 8.6901"/>
-<trigger_lua
-   action="activate"/>
-<name
-   name="tElevator"/>
-<transform
-   pos="-70.8264 0.788941 14.2003"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   id="301">
-<tags
-   tags="elevator1 elevator"/>
-<elevator
-   target="-70.7158 9.45796 14.1924"/>
-<name
-   name="ElevatorGround"/>
-<transform
-   pos="-70.7158 -0.0216497 14.1924"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/elevator.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="3.3 0.15 2.5"
-   mass="5"
-   kinematic="yes"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<name
-   name="ElevatorGround_pos_elevator_up"/>
-<transform
-   pos="-70.7158 9.45796 14.1924"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="6.02803 0.875 5.9013"/>
-<trigger_lua
-   action="activate"/>
-<name
-   name="tElectricLlock"/>
-<transform
-   pos="-91.8979 0.788941 10.1574"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags=""/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="3.2064 0.875 2.49"/>
-<trigger_lua
-   action="activate"/>
-<name
-   name="tElevator"/>
-<transform
-   pos="-70.8264 10.1974 14.2003"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-
+  <entity
+   slept="undefined">
+    <tags
+       tags="helper_arrow" />
+    <helper_arrow />
+    <render_static_mesh
+       name="static_meshes/whitebox/pila.static_mesh" />
+    <name
+       name="helper_arrow" />
+    <transform
+       pos="0.584282 0 9.03619"
+       quat="0 0 0 1.0"
+       scale="1.0" />
+  </entity>
 </entities>

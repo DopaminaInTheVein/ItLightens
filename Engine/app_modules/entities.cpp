@@ -27,6 +27,7 @@
 DECL_OBJ_MANAGER("entity", CEntity);		//need to be first
 DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("transform", TCompTransform);
+DECL_OBJ_MANAGER("snoozer", TCompSnoozer);
 DECL_OBJ_MANAGER("camera", TCompCamera);
 DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
 DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
@@ -74,7 +75,6 @@ DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
 
-
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
 DECL_OBJ_MANAGER("trigger_lua", TTriggerLua);
 
@@ -86,13 +86,15 @@ DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
 
 DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
 
+DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
+
 CCamera * camera;
 
 // The global dict of all msgs
 MMsgSubscriptions msg_subscriptions;
 TMsgID generateUniqueMsgID() {
-	static TMsgID next_msg_id = 1;
-	return next_msg_id++;
+  static TMsgID next_msg_id = 1;
+  return next_msg_id++;
 }
 
 bool CEntitiesModule::start() {
@@ -510,66 +512,66 @@ void CEntitiesModule::update(float dt) {
 }
 
 void CEntitiesModule::render() {
-	// for each manager
-	// if manager has debug render active
-	// manager->renderAll()
-	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
-	tech->activate();
+  // for each manager
+  // if manager has debug render active
+  // manager->renderAll()
+  auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+  tech->activate();
 
 #ifdef _DEBUG
-	//getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
+  //getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 #endif
 
-	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
-	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
-	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
+  getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
+  getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
+  getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 
-	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
-	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
-	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
+  getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
+  getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
+  getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 }
 
 void CEntitiesModule::renderInMenu() {
-	ImGui::Begin("Entities");
-	if (ImGui::TreeNode("All entities...")) {
-		getHandleManager<CEntity>()->onAll(&CEntity::renderInMenu);
-		ImGui::TreePop();
-	}
-	if (ImGui::TreeNode("Entities by Tag...")) {
-		// Show all defined tags
-		ImGui::TreePop();
-	}
+  ImGui::Begin("Entities");
+  if (ImGui::TreeNode("All entities...")) {
+    getHandleManager<CEntity>()->onAll(&CEntity::renderInMenu);
+    ImGui::TreePop();
+  }
+  if (ImGui::TreeNode("Entities by Tag...")) {
+    // Show all defined tags
+    ImGui::TreePop();
+  }
 
-	if (ImGui::TreeNode("Entities by Tag...")) {
-		tags_manager.renderInMenu();
-		// Show all defined tags
-		ImGui::TreePop();
-	}
-	ImGui::End();
+  if (ImGui::TreeNode("Entities by Tag...")) {
+    tags_manager.renderInMenu();
+    // Show all defined tags
+    ImGui::TreePop();
+  }
+  ImGui::End();
 }
 
 void CEntitiesModule::recalcNavmesh() {
-	// GENERATE NAVMESH
-	CNavmesh nav = SBB::readNavmesh();
-	nav.build(salaloc);
-	SBB::postNavmesh(nav);
-	SBB::postBool(sala, true);
+  // GENERATE NAVMESH
+  CNavmesh nav = SBB::readNavmesh();
+  nav.build(salaloc);
+  SBB::postNavmesh(nav);
+  SBB::postBool(sala, true);
 }
 
 void CEntitiesModule::readNavmesh() {
-	// GENERATE NAVMESH
-	CNavmesh nav = SBB::readNavmesh();
-	bool recalc = !nav.reload(salaloc);
-	if (recalc) {
-		recalcNavmesh();
-	}
-	else {
-		SBB::postNavmesh(nav);
-		SBB::postBool(sala, true);
-	}
+  // GENERATE NAVMESH
+  CNavmesh nav = SBB::readNavmesh();
+  bool recalc = !nav.reload(salaloc);
+  if (recalc) {
+    recalcNavmesh();
+  }
+  else {
+    SBB::postNavmesh(nav);
+    SBB::postBool(sala, true);
+  }
 }
 
 void CEntitiesModule::fixedUpdate(float elapsed)
 {
-	getHandleManager<TCompDrone>()->fixedUpdateAll(elapsed);
+  getHandleManager<TCompDrone>()->fixedUpdateAll(elapsed);
 }

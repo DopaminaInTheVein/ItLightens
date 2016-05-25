@@ -18,6 +18,7 @@ bool CLogicManagerModule::start() {
 	// Binds here, if needed
 	bindPlayer(*slb_manager);
 	bindHandle(*slb_manager);
+	bindHandleGroup(*slb_manager);
 	bindCamera(*slb_manager);
 	bindPublicFunctions(*slb_manager);
 
@@ -68,6 +69,15 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			sprintf(lua_code, "OnLeave(\"%s\");", params.c_str());
 			break;
 		}
+		case (OnActionSci): {
+			sprintf(lua_code, "OnActionSci(\"%s\");", params.c_str());
+			break;
+		}
+		case (OnActionMole): {
+			sprintf(lua_code, "OnActionMole(\"%s\");", params.c_str());
+			break;
+		}
+
 		case (OnGameStart) : {
 			sprintf(lua_code, "OnGameStart(%f);", 0.4f);
 			/*char command_code[64];
@@ -346,6 +356,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// sets the handle to the event thrower
 		.set("getHandleCaller", &SLBHandle::getHandleCaller)
 		.comment("Finds the handle who called this event")
+		// destroy the handler
+		.set("destroy", &SLBHandle::destroy)
+		.comment("Destroy this element")
 		// set handle position function
 		.set("set_position", &SLBHandle::setPosition)
 		.comment("Sets the position of the NPC")
@@ -383,6 +396,21 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("setLocked", &SLBHandle::setLocked)
 		.comment("Set if the element is locked")
 		.param("int:  (0: false, otherwise: true")
+		;
+}
+
+// Generic handle LUA functions
+void CLogicManagerModule::bindHandleGroup(SLB::Manager& m) {
+	SLB::Class<SLBHandleGroup>("HandleGroup", &m)
+		.comment("Handle Group class")
+		.constructor()
+		// sets the handle pointer to the handle with the specified id
+		.set("get_handles_by_tag", &SLBHandleGroup::getHandlesByTag)
+		.comment("Finds all handles with the specified tag")
+		.param("string: handle tag")
+		//
+		.set("awake", &SLBHandleGroup::awake)
+		.comment("Awake an slept element")
 		;
 }
 

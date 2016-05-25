@@ -138,19 +138,25 @@ fn _parse_trigger = (
 
 	-- Component
 	local component = getUserProp _parsingObject "component"
-
+	parseTags XML_PARSING #(component, "trigger")
 	--Enter
 	local onEnter = getUserProp _parsingObject "onEnter"
 
 	-- Exit
 	local onExit = getUserProp _parsingObject "onLeave"
 	
-	-- Action
+	-- Action Player
 	local onAction = getUserProp _parsingObject "onAction"
+	
+	-- Action Scientist
+	local onActionSci = getUserProp _parsingObject "onActionSci"
+	
+	-- Action Mole
+	local onActionMole = getUserProp _parsingObject "onActionMole"
 	
 	-- Script (component)
 	if component != undefined then (
-		if (onEnter != undefined) or (onExit != undefined) or (onAction != undefined) then (
+		if (onEnter != undefined) or (onExit != undefined) or (onAction != undefined) or (onActionSci != undefined) or (onActionMole != undefined) then (
 			throw "No puede ser un trigger de componente y logico a la vez!"
 		)
 		XML_PARSING.addChild component
@@ -180,6 +186,24 @@ fn _parse_trigger = (
 			local action = getUserProp _parsingObject "action"
 			if action == undefined then (action = "activate")
 			xml.addAttr "action" action
+		)
+		
+		-- Logic trigger on action Scientist
+		if onActionSci != undefined then (
+			local nameFunc = "OnActionSci_" + _parsingObject.name
+			luaAppend nameFunc onActionSci
+			local action = getUserProp _parsingObject "actionSci"
+			if action == undefined then (action = "activate")
+			xml.addAttr "actionSci" action
+		)
+		
+		-- Logic trigger on action Mole
+		if onActionMole != undefined then (
+			local nameFunc = "OnActionMole_" + _parsingObject.name
+			luaAppend nameFunc onActionMole
+			local action = getUserProp _parsingObject "actionMole"
+			if action == undefined then (action = "activate")
+			xml.addAttr "actionMole" action
 		)
 	)
 )

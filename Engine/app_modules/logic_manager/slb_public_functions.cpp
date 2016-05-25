@@ -74,7 +74,12 @@ void SLBPlayer::refillEnergy() {
 void SLBHandle::getHandleById(int id) {	
 	CHandle handle = IdEntities::findById(id);
 	real_handle = handle;
-	dbg("[LUA] getHandleById: %s\n", ((CEntity*)(real_handle))->getName());
+	if (real_handle.isValid()) {
+		dbg("[LUA] getHandleById: %s\n", ((CEntity*)(real_handle))->getName());
+	}
+	else {
+		dbg("[LUA] getHandleById: Error Unknown Id!\n");
+	}
 }
 
 void SLBHandle::getHandleByNameTag(const char* name, const char* tag) {
@@ -85,6 +90,10 @@ void SLBHandle::getHandleByNameTag(const char* name, const char* tag) {
 
 void SLBHandle::getHandleCaller() {
 	real_handle = logic_manager->getCaller();
+}
+
+void SLBHandle::destroy() {
+	if (real_handle.isValid()) real_handle.destroy();
 }
 
 void SLBHandle::setPosition(float x, float y, float z) {
@@ -165,6 +174,23 @@ void SLBHandle::setLocked(int locked) {
 		msg.locked = (locked != 0);
 		eTarget->sendMsg(msg);
 	}
+}
+
+// Handle roup By Tag
+void SLBHandleGroup::getHandlesByTag(const char * tag) {
+	handle_group = tags_manager.getHandlesByTag(string(tag));
+	dbg("[LUA] getHandlesByTag: %d\n", handle_group.size());
+}
+
+
+void SLBHandleGroup::awake() {
+	TMsgAwake msgAwake;
+	for (auto h : handle_group) {
+		CEntity * e = h;
+		e->sendMsg(msgAwake);
+		dbg( "Awake to %s\n", e->getName());
+	}
+	dbg("[LUA] Awake (group): %d\n", handle_group.size());
 }
 
 // camera control in LUA

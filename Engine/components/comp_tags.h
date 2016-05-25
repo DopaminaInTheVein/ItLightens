@@ -36,7 +36,10 @@ struct TCompTags : public TCompBase {
     return true;
   }
 
+  bool created = false;
   void onCreate(const TMsgEntityCreated&) {
+	if (created) return;
+	created = true;
     CHandle h_entity = CHandle(this).getOwner();
     for(uint32_t i=0; i<max_tags; ++i)
       if( tags[i] )

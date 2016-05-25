@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "comp_name.h"
 #include "comp_transform.h"
+#include "comp_snoozer.h"
 #include "comp_camera.h"
 #include "comp_render_static_mesh.h"
 #include "comp_controller_3rd_person.h"
@@ -39,6 +40,7 @@
 #include "logic/aicontroller.h"
 #include "logic/magnet_door.h"
 #include "logic/elevator.h"
+#include "logic/helper_arrow.h"
 
 #include "comp_trigger_standar.h"
 

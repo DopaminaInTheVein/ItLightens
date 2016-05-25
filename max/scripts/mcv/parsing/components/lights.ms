@@ -22,8 +22,11 @@ fn _parse_light_resolution xml = (
 
 -- Resolution
 fn _parse_light_mask xml = (
-	local mascara = getUserProp _parsingObject "mask"
-	if mascara != undefined then (xml.addAttr "light_mask" ("textures/" + mascara as string))
+	local mascara = _parsingObject.projectorMap
+	if mascara != undefined then (
+		local mascara_file = fileNameFromPath (mascara.filename)
+		xml.addAttr "light_mask" mascara_file
+	)
 )
 
 -- Light Point

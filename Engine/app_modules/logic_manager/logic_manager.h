@@ -27,6 +27,8 @@ public:
 
 	enum EVENT {
 		OnAction = 0,
+		OnActionSci,
+		OnActionMole,
 		OnEnter,
 		OnLeave,
 		OnGameStart,
@@ -107,6 +109,7 @@ public:
 	void throwUserEvent(std::string evt, std::string params, CHandle handle = CHandle());//, uint32_t handle_id = 0);
 	void bindPlayer(SLB::Manager& m);
 	void bindHandle(SLB::Manager& m);
+	void bindHandleGroup(SLB::Manager& m);
 	void bindCamera(SLB::Manager& m);
 	void bindPublicFunctions(SLB::Manager& m);
 	CHandle getCaller() { return caller_handle; }

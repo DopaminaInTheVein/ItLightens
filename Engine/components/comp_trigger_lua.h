@@ -9,13 +9,17 @@
 class TTriggerLua : public TTrigger {
 	bool mActionable;
 	eAction mAction;
+	eAction mActionSci;
+	eAction mActionMole;
+	PLAYER_TYPE playerType = PLAYER;
 
 public:
 	void mUpdate(float dt) override {} //not needed
+	eAction getActionAvailable();
 	void onTriggerInside(const TMsgTriggerIn& msg) override;
 	void onTriggerEnter(const TMsgTriggerIn& msg) override;
 	void onTriggerExit(const TMsgTriggerOut& msg) override;
-	void onTriggerAction();
+	void onTriggerAction(PLAYER_TYPE playerType = PLAYER);
 	void executeTrigger(CLogicManagerModule::EVENT logicEvent); //, CHandle handle);
 	void setActionable(bool);
 	void render() {}

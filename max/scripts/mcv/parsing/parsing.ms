@@ -46,6 +46,11 @@ fn parseId = (
 	)	
 )
 
+fn parseSlept = (
+	local slept = getUserProp _parsingObject "slept"
+	XML_PARSING.addAttr "slept" (slept as string)
+)
+
 ---------------------------------------------------------------------
 -- OBJECT --
 ---------------------------------------------------------------------
@@ -59,6 +64,7 @@ fn _parseObject parent = (
 		-- Añadimos Entity
 		XML_PARSING = parent.addChild "entity"
 		parseId()
+		parseSlept()
 		
 		--Parseamos Tags
 		tags = _descriptorObject.getTags()

@@ -7,6 +7,7 @@
 #include "logic_manager.h"
 #include "app_modules\sound_manager\sound_manager.h"
 #include "handle\handle.h"
+#include "components/entity.h"
 
 // player handle control in LUA
 class SLBPlayer
@@ -39,6 +40,7 @@ public:
 	void getHandleById(int id);
 	void getHandleByNameTag(const char* name, const char* tag);
 	void getHandleCaller();
+	void destroy();
 	void setPosition(float x, float y, float z);
 	float getX();
 	float getY();
@@ -49,6 +51,15 @@ public:
 	void activate();
 	void setPolarity(int);
 	void setLocked(int);
+};
+
+class SLBHandleGroup
+{
+	VHandles handle_group;
+
+public:
+	void getHandlesByTag(const char * tag);
+	void awake();
 };
 
 // camera control in LUA
