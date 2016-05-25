@@ -209,7 +209,7 @@ void TCompCharacterController::ApplyPendingMoves(float dt) {
 		PROFILE_FUNCTION(name.c_str());
 		assert(isValid(m_toMove));
 		PxVec3 moved = PxVec3(m_toMove.x, m_toMove.y, m_toMove.z);
-		m_last_speed = m_pActor->getActor()->getLinearVelocity();
+		//m_last_speed = m_pActor->getActor()->getLinearVelocity();
 		m_flagsCollisions = m_pActor->move(moved, 0.0f, dt, m_filterController);
 		//clean acceleration & pendent displacement
 		m_toMove = VEC3(0.0f, 0.0f, 0.0f);
@@ -230,8 +230,10 @@ void TCompCharacterController::RecalcOnGround()
 	}
 	else {
 		//raycast to look for down distance
+		PxQueryFilterData filterData;
+		filterData.data.word0 = ItLightensFilter::eSCENE | ItLightensFilter::eOBJECT;
 		PxRaycastBuffer hit;
-		bool hit_ground = g_PhysxManager->raycast(GetFootPosition(), PhysxConversion::PxVec3ToVec3(-m_pActor->getUpDirection()), 0.1f, hit);
+		bool hit_ground = g_PhysxManager->raycast(GetFootPosition(), PhysxConversion::PxVec3ToVec3(-m_pActor->getUpDirection()), 0.1f, hit, filterData);
 		m_OnGround = hit_ground;
 		m_physxOnground = false;
 	}

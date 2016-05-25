@@ -29,7 +29,8 @@ public:
   void update(float dt) {}
 
   const int getTotalPoints() const { return num_points; }
-  const float getVelocity() const { return velocity; }
+  const float 
+	  ocity() const { return velocity; }
 
   void onGuidedCamera(const TMsgGuidedCamera&);
   bool followGuide(TCompTransform*, TCompCamera*);

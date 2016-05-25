@@ -335,12 +335,18 @@ void player_controller::Jump()
 	bool ascending = cc->GetLastSpeed().y > 0.1f;
 	VEC3 jumpVector;
 	if (isMoving()) {
+		//TODO CLH
+		//foraward_jump = true;
+		//to move at move and use it UpdateMoves
+		//set false when on ground
+		//-------------------------------------
 		VEC3 curSpeed = cc->GetLastSpeed();
 		jumpVector = VEC3(
 			-curSpeed.x * 0.5f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
 			-curSpeed.z * 0.5f
 		);
+		//--------------------------------------
 	} else {
 		jumpVector = VEC3(0.f, jimpulse, 0.f);
 	}
@@ -662,12 +668,12 @@ void player_controller::UpdateMoves()
 	//}
 	//else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
-	if (cc->OnGround()) {
+	//if (cc->OnGround()) {
 		cc->AddMovement(direction*player_curr_speed*getDeltaTime());
-	}
-	else {
-		cc->AddMovement(direction*player_curr_speed*getDeltaTime() / 2);
-	}
+	//}
+	//else {
+		//cc->AddMovement(direction*player_curr_speed*getDeltaTime() / 2);
+	//}
 }
 
 void player_controller::UpdateInputActions()

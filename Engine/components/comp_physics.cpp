@@ -18,6 +18,8 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
+		if (h.hasTag("trigger"))
+			return;
 		if (h.hasTag("crystal")) {
 			filter.word0 |= ItLightensFilter::eCRYSTAL;
 		}
