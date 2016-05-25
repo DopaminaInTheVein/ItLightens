@@ -29,6 +29,8 @@ void bt_scientist::readIniFileAttr() {
 			assignValueToVar(move_speed, fields);
 			assignValueToVar(rot_speed, fields);
 			assignValueToVar(square_range_action, fields);
+			assignValueToVar(max_wb_distance, fields);
+			assignValueToVar(max_beacon_distance, fields);
 			assignValueToVar(reach_sq_reach_pnt, fields);
 			assignValueToVar(d_epsilon, fields);
 			assignValueToVar(d_beacon_simple, fields);
@@ -55,21 +57,21 @@ void bt_scientist::Init() {
 		addChild("possessable", "scientist", PRIORITY, (btcondition)&bt_scientist::npcAvailable, NULL);
 		// stunned state
 		addChild("scientist", "stunned", ACTION, (btcondition)&bt_scientist::playerStunned, (btaction)&bt_scientist::actionStunned);
-		// create beacon sequence
-		addChild("scientist", "createbeacon", SEQUENCE, (btcondition)&bt_scientist::workbenchAvailable, NULL);
-		addChild("createbeacon", "aimcreate", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
-		addChild("createbeacon", "gocreate", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
-		addChild("createbeacon", "create", ACTION, NULL, (btaction)&bt_scientist::actionCreateBeaconFromWB);
-		// add beacon sequence
-		addChild("scientist", "addbeacon", SEQUENCE, (btcondition)&bt_scientist::beaconToAdd, NULL);
-		addChild("addbeacon", "aimadd", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
-		addChild("addbeacon", "goadd", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
-		addChild("addbeacon", "add", ACTION, NULL, (btaction)&bt_scientist::actionAddBeacon);
 		// remove beacon sequence
 		addChild("scientist", "removebeacon", SEQUENCE, (btcondition)&bt_scientist::beaconToRemove, NULL);
 		addChild("removebeacon", "aimremove", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
 		addChild("removebeacon", "goremove", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
 		addChild("removebeacon", "remove", ACTION, NULL, (btaction)&bt_scientist::actionRemoveBeacon);
+		// add beacon sequence
+		addChild("scientist", "addbeacon", SEQUENCE, (btcondition)&bt_scientist::beaconToAdd, NULL);
+		addChild("addbeacon", "aimadd", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
+		addChild("addbeacon", "goadd", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
+		addChild("addbeacon", "add", ACTION, NULL, (btaction)&bt_scientist::actionAddBeacon);
+		// create beacon sequence
+		addChild("scientist", "createbeacon", SEQUENCE, (btcondition)&bt_scientist::workbenchAvailable, NULL);
+		addChild("createbeacon", "aimcreate", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
+		addChild("createbeacon", "gocreate", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
+		addChild("createbeacon", "create", ACTION, NULL, (btaction)&bt_scientist::actionCreateBeaconFromWB);
 		// patrol sequence
 		addChild("scientist", "patrol", SEQUENCE, NULL, NULL);
 		addChild("patrol", "nextwpt", ACTION, NULL, (btaction)&bt_scientist::actionNextWpt);
@@ -84,6 +86,8 @@ void bt_scientist::Init() {
 	out[ADD_BEACON] = "ADD_BEACON";
 	out[REMOVE_BEACON] = "REMOVE_BEACON";
 	out[WANDER] = "WANDER";
+
+	actual_action = IDLE;
 
 	SetHandleMeInit();				//need to be initialized after all handles, ¿awake/init?
 	____TIMER_REDEFINE_(timerStunt, 15);
@@ -153,13 +157,14 @@ bool bt_scientist::workbenchAvailable() {
 		std::string name = base_name + std::to_string(i);
 		if (SBB::readInt(name) == workbench_controller::INACTIVE) {
 			VEC3 wb_pos = SBB::readVEC3(name);
-			if (wb_pos.z > zmin && wb_pos.z < zmax) {
-				obj_position = wb_pos;
-				wb_to_go_name = name;
-				actual_action = CREATE_BEACON;
-				SBB::postInt(name, workbench_controller::INACTIVE_TAKEN);
-				return true;
-			}
+			float square_dist = squaredDistXZ(curr_pos, wb_pos);
+			if (square_dist > max_wb_distance)
+				continue;
+			obj_position = wb_pos;
+			wb_to_go_name = name;
+			actual_action = CREATE_BEACON;
+			SBB::postInt(name, workbench_controller::INACTIVE_TAKEN);
+			return true;
 		}
 	}
 
@@ -193,6 +198,13 @@ int bt_scientist::actionStunned() {
 
 int bt_scientist::actionCreateBeaconFromWB() {
 
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 curr_pos = me_transform->getPosition();
+	float square_dist = squaredDistXZ(curr_pos, beacon_to_go);
+	if (square_dist > max_beacon_distance)
+		return OK;
+
 	waiting_time += getDeltaTime();
 	if (waiting_time > t_createBeacon) {		//go to beacon
 		obj_position = beacon_to_go;
@@ -222,8 +234,10 @@ int bt_scientist::actionMoveToPos() {
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 myPos = me_transform->getPosition();
 
+	float square_dist = squaredDistXZ(myPos, obj_position);
+
 	//reach waypoint?
-	if (squaredDistXZ(myPos, obj_position) < reach_sq_reach_pnt) {
+	if (square_dist < reach_sq_reach_pnt) {
 		curkpt = (curkpt + 1) % keyPoints.size();
 		return OK;
 	}
@@ -412,33 +426,24 @@ bool bt_scientist::turnTo(VEC3 dest) {
 //Messages:
 void bt_scientist::onRemoveBeacon(const TMsgBeaconToRemove& msg)
 {
-	if (actual_action == IDLE || actual_action == WANDER) {
-		//TODO: preference for closest objectives
-		if (SBB::readInt(msg.name_beacon) != beacon_controller::TO_REMOVE_TAKEN) {
-			if (msg.pos_beacon.z > zmin && msg.pos_beacon.z < zmax) {
-				SBB::postInt(msg.name_beacon, beacon_controller::TO_REMOVE_TAKEN);
-				obj_position = beacon_to_go = msg.pos_beacon;
-				beacon_to_go_name = msg.name_beacon;
-				actual_action = REMOVE_BEACON;
-				//ChangeState("aimToPos");
-			}
-		}
+	if (SBB::readInt(msg.name_beacon) != beacon_controller::TO_REMOVE_TAKEN) {
+		SBB::postInt(msg.name_beacon, beacon_controller::TO_REMOVE_TAKEN);
+		obj_position = beacon_to_go = msg.pos_beacon;
+		beacon_to_go_name = msg.name_beacon;
+		actual_action = REMOVE_BEACON;
+		//ChangeState("aimToPos");
 	}
 }
 
 void bt_scientist::onEmptyBeacon(const TMsgBeaconEmpty & msg)
 {
-	if (actual_action == IDLE || actual_action == WANDER) {
-		if (SBB::readInt(msg.name) != beacon_controller::INACTIVE_TAKEN) {
-			if (msg.pos.z > zmin && msg.pos.z < zmax) {
-				beacon_to_go = msg.pos;
-				beacon_to_go_name = msg.name;
-				actual_action = CREATE_BEACON;
-				SBB::postInt(msg.name, beacon_controller::INACTIVE_TAKEN);	//disable beacon for other bots
-				//ChangeState("seekWB");
-			}
-		}
-	}
+	if (SBB::readInt(msg.name) != beacon_controller::INACTIVE_TAKEN) {
+		beacon_to_go = msg.pos;
+		beacon_to_go_name = msg.name;
+		actual_action = CREATE_BEACON;
+		SBB::postInt(msg.name, beacon_controller::INACTIVE_TAKEN);	//disable beacon for other bots
+		//ChangeState("seekWB");
+	}	
 }
 
 void bt_scientist::onEmptyWB(const TMsgWBEmpty & msg)

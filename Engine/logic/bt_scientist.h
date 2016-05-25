@@ -49,6 +49,8 @@ class bt_scientist : public bt_poss, public TCompBase {
 	float square_range_action;
 	float d_epsilon;
 	float d_beacon_simple;
+	float max_wb_distance;
+	float max_beacon_distance;
 	//--------------------------------------
 
 	//Map points, TEMP, TODO: look for positions from object_manager

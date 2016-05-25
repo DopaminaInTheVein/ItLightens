@@ -492,24 +492,25 @@
 
 
 <entity>
-	<name name="workbench1" />
+	<name name="workbench_1" />
 	<tags
 		tags="workbench"
 	/>
 	<transform pos="-80.0 0.5 -13.0" rotation="1 2 3 3" scale="1 1 1" />
 	<render_static_mesh name="static_meshes/obj/box1.static_mesh" />
+	<rigidbody type_collision="static" />
 	<workbench/>
 </entity>
 
-
 <entity>
-	<name name="beacon1" />
+	<name name="beacon_1" />
 	<tags
 		tags="beacon"
 	/>
 	<beacon />
-	<transform pos="-70.0 0.5 -13.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+	<transform pos="-70.0 0.5 -13.0" quat="0.0 0.0 0.0 1.0" scale="1 1 1" />
 	<render_static_mesh name="static_meshes/test_mole/baliza.static_mesh" />
+	<rigidbody type_collision="static" />
 </entity>
 
 <!--<entity>
