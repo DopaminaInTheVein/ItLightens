@@ -1481,7 +1481,7 @@
 <tags
    tags="guided_camera"/>
 <guided_camera
-   velocity="20.0"
+   velocity="2.0"
    default_dirs="0"
    points_size="9"
    wpt1="-16.3915 18.7175 -8.06018"

@@ -110,6 +110,7 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* c
 
   VEC3 pos = camTransform->getPosition();
   VEC3 look = nextPoint;
+  Debug->DrawLine(pos, pos + camTransform->getFront() * 125);
   float dist = simpleDist(pos, goTo);
   dbg("dist: %f\n", dist);
   if (dist > 1.f) {
@@ -123,13 +124,12 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* c
 
 	//Factor = distancia recorrida este frame / distancia total punto actual y siguiente
 	float moveAmount = getDeltaTime() * velocity;
-	VEC3 direction = nextPoint - pos;
+	VEC3 direction = goTo - pos;
 	direction.Normalize();
 	pos += direction * moveAmount;
-	Debug->DrawLine(pos, pos + camTransform->getFront() * 125);
 	//factor += (getDeltaTime() * velocity) / (realDist(goTo, nextPoint));
 	//pos = VEC3::CatmullRom(posCmr[0], posCmr[1], posCmr[2], posCmr[3], factor);
-	//look = VEC3::CatmullRom(lookCmr[0], lookCmr[1], lookCmr[2], lookCmr[3], factor);
+	look = VEC3::CatmullRom(lookCmr[0], lookCmr[1], lookCmr[2], lookCmr[3], factor);
   }
   else {
 	//New target
@@ -141,8 +141,8 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* c
 	  look = nextPoint;
   }
   else {
-	  cam->smoothLookAt(pos, look, cam->getUpAux(), 0.5f);
-	  camTransform->lookAt(pos, look, cam->getUpAux());
+	 cam->smoothLookAt(pos, look, cam->getUpAux(), 0.5f);
+	 camTransform->lookAt(pos, look, cam->getUpAux());
   }
 
   return true;
