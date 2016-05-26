@@ -61,19 +61,6 @@ struct XMLNode (
 	)
 )
 
-/* xml = XMLNode()
-xml.nombre = "entities"
-ent1 = xml.addChild "entity"
-ent2 = xml.addChild "entity"
-ent1Name = ent1.addChild "TCompName"
-ent1Name.addAttr "name" "pepito"
-ent1Name.addAttr "lastName" "grillo"
-ent2Name = ent2.addChild "TCompTransform"
-ent2Name.addAttr "pos" "0 0 0"
-ent2Name.addAttr "quad" "1 0 0 0"
-xml.parse() */
-
-
 
 
 

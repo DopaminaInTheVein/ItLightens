@@ -40,6 +40,7 @@
 #include "logic/aicontroller.h"
 #include "logic/magnet_door.h"
 #include "logic/elevator.h"
+#include "logic/helper_arrow.h"
 
 #include "comp_trigger_standar.h"
 

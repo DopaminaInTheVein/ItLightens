@@ -138,7 +138,7 @@ fn _parse_trigger = (
 
 	-- Component
 	local component = getUserProp _parsingObject "component"
-
+	parseTags XML_PARSING #(component, "trigger")
 	--Enter
 	local onEnter = getUserProp _parsingObject "onEnter"
 
