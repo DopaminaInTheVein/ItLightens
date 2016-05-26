@@ -25,7 +25,8 @@ public:
 		eOBJECT 			= (1 << 7),
 		eSCENE 				= (1 << 8),
 		eBIG_OBJECT			= (1 << 9),
-		ePLATFORM			= (1 << 10),
+		eFRAGMENT 			= (1 << 10),
+		ePLATFORM			= (1 << 11),
 		eALL				= ~0,
 	};
 

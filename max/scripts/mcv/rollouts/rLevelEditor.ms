@@ -202,7 +202,6 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 			
 			for obj in objs do (
 				--if (getUserProp obj ddlProperties.selected != undefined) then (
-				messageBox "hola?"
 				setUserProp obj ddlProperties.selected txtValue.text
 				--)
 			)
