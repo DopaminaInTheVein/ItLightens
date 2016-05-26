@@ -640,7 +640,7 @@ void player_controller::UpdateMoves()
 
 	direction.Normalize();
 
-	float yaw_to_stop = deg2rad(90.f);
+	float yaw_to_stop = deg2rad(80.f);
 	float new_yaw = player_transform->getDeltaYawToAimDirection(direction);
 
 	player_transform->getAngles(&yaw, &pitch);
@@ -652,7 +652,9 @@ void player_controller::UpdateMoves()
 	}
 
 	//Set current velocity with friction
+	float player_prev_speed = player_curr_speed;
 	float drag = 2.5f*getDeltaTime();
+	if (!cc->OnGround()) drag *= 0.33f;
 	float drag_i = (1 - drag);
 
 	if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
@@ -663,6 +665,10 @@ void player_controller::UpdateMoves()
 		player_curr_speed = 0.0f;
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
+	//else {
+	//	float inertia = 0.7f;
+	//	player_curr_speed = player_prev_speed * inertia + player_curr_speed
+	//}
 
 	//if (cc->OnGround() && player_curr_speed != 0.0f) {
 	//	ChangePose(pose_run);
@@ -672,14 +678,8 @@ void player_controller::UpdateMoves()
 	//}
 	//else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
-	//if (cc->OnGround()) {
-	VEC3 inertia = VEC3(0.7f, 0.f, 0.7f);
-	VEC3 newMovement = cc->GetLastSpeed()*inertia + (direction*player_curr_speed) * (VEC3(1,1,1) - inertia);
+	VEC3 newMovement = direction*player_curr_speed;
 	cc->AddMovement( newMovement * getDeltaTime());
-	//}
-	//else {
-		//cc->AddMovement(direction*player_curr_speed*getDeltaTime() / 2);
-	//}
 }
 
 void player_controller::UpdateInputActions()
