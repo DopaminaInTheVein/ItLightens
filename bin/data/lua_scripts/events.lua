@@ -60,7 +60,7 @@ function OnGameStart( param )
 	p:set_music_volume(0.7)
 	triggerGuardFormation();
 	p:exec_command( "triggerGuardFormation();", 15 )
-	cam:run_cinematic("CinematicIntro", 0)
+	cam:run_cinematic("CinematicIntro", 10)
 end
 
 function OnGameEnd( param )

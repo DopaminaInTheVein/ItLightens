@@ -37,6 +37,9 @@ fn _parse_rail_camera = (
 	local atrName
 	local atrValue
 	for i = 1 to all_cameras.count do (
+		--Debug
+		messagebox(all_cameras[i].name)
+		
 		-- Atr Name
 		atrName = ("wpt" + (i) as string)
 		
@@ -55,6 +58,9 @@ fn _parse_rail_camera = (
 	
 	-- Parse targets
 	for i = 1 to all_targets.count do (
+		--Debug
+		messagebox(all_targets[i].name)
+		
 		-- Atr Name
 		atrName = ("lpt" + (i) as string)
 		

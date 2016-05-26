@@ -400,7 +400,7 @@ bool CEntitiesModule::start() {
     msg.target = t;
     msg.who = PLAYER;
     camera_e->sendMsg(msg);	//set camera
-    helper_arrow_e->sendMsg(msg);
+    if (helper_arrow.isValid()) helper_arrow_e->sendMsg(msg);
 
     TMsgSetCamera msg_camera;
     msg_camera.camera = camera;
