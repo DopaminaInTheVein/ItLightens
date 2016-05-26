@@ -84,6 +84,7 @@ end
 idWall = 302
 tagWallFragment = "wall1_fragment"
 triggerWall_1 = Handle()
+all_fragments1 = HandleGroup()
 function destroyWall( )
   p:print("Destroy Wall\n")
   triggerWall_1:getHandleCaller()
@@ -94,9 +95,9 @@ function destroyWall( )
   h:destroy()
   
   --Activamos fragmentos pared
-  hg:get_handles_by_tag(tagWallFragment)
-  hg:awake()
-  p:exec_command( "deactivateLock();", 6 )
+  all_fragments1:get_handles_by_tag(tagWallFragment)
+  all_fragments1:awake()
+  p:exec_command( "all_fragments1:remove_physics();", 5 )
   
   --Variable control para activaciones acumuladas
   timesActivatedLock = timesActivatedLock + 1

@@ -60,6 +60,7 @@ class SLBHandleGroup
 public:
 	void getHandlesByTag(const char * tag);
 	void awake();
+	void removePhysics();
 };
 
 // camera control in LUA

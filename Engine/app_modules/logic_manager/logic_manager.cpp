@@ -408,9 +408,12 @@ void CLogicManagerModule::bindHandleGroup(SLB::Manager& m) {
 		.set("get_handles_by_tag", &SLBHandleGroup::getHandlesByTag)
 		.comment("Finds all handles with the specified tag")
 		.param("string: handle tag")
-		//
+		// awake elements
 		.set("awake", &SLBHandleGroup::awake)
-		.comment("Awake an slept element")
+		.comment("Awake slept elements")
+		// Remove Physics
+		.set("remove_physics", &SLBHandleGroup::removePhysics)
+		.comment("Remove their physic components")
 		;
 }
 

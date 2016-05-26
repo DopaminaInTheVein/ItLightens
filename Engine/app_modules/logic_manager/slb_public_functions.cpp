@@ -176,21 +176,30 @@ void SLBHandle::setLocked(int locked) {
 	}
 }
 
-// Handle roup By Tag
+// Handle group By Tag
 void SLBHandleGroup::getHandlesByTag(const char * tag) {
 	handle_group = tags_manager.getHandlesByTag(string(tag));
 	dbg("[LUA] getHandlesByTag: %d\n", handle_group.size());
 }
 
-
+// Awake group
 void SLBHandleGroup::awake() {
 	TMsgAwake msgAwake;
 	for (auto h : handle_group) {
+		if (!h.isValid()) continue;
 		CEntity * e = h;
 		e->sendMsg(msgAwake);
 		dbg( "Awake to %s\n", e->getName());
 	}
 	dbg("[LUA] Awake (group): %d\n", handle_group.size());
+}
+
+// Remove physics to the group
+void SLBHandleGroup::removePhysics() {
+	for (auto h : handle_group) {
+		CHandle hPhysics = ((CEntity*)h)->get<TCompPhysics>();
+		if (hPhysics.isValid()) hPhysics.destroy();
+	}
 }
 
 // camera control in LUA

@@ -36,7 +36,7 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 		}
 
 		else if (h.hasTag("fragment")) {
-			filter.word1 = PXM_NO_PLAYER;
+			filter.word1 = PXM_NO_PLAYER_NPC;
 		}
 		else if (m_collisionType == STATIC_OBJECT) {
 			filter.word1 |= ItLightensFilter::eSCENE;

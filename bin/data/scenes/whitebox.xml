@@ -386,6 +386,8 @@
    type_collision="trigger"
    type_shape="box"
    size="3.71942 0.875 8.6901"/>
+<tags
+   tags="trigger"/>
 <trigger_lua
    action="activate"/>
 <name
@@ -439,6 +441,8 @@
    type_collision="trigger"
    type_shape="box"
    size="6.02803 0.875 5.9013"/>
+<tags
+   tags="trigger"/>
 <trigger_lua
    action="activate"
    actionMole="put"/>
@@ -458,6 +462,8 @@
    type_collision="trigger"
    type_shape="box"
    size="3.2064 0.875 2.49"/>
+<tags
+   tags="trigger"/>
 <trigger_lua
    action="activate"/>
 <name
@@ -505,11 +511,13 @@
 <entity
    slept="undefined">
 <tags
-   tags="trigger"/>
+   tags=""/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
    size="6.26077 0.965 16.7178"/>
+<tags
+   tags="trigger"/>
 <trigger_lua
    action="activate"
    actionMole="destroy"/>
@@ -524,7 +532,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole028"/>
 <transform
@@ -543,7 +551,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole027"/>
 <transform
@@ -562,7 +570,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole026"/>
 <transform
@@ -581,7 +589,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole025"/>
 <transform
@@ -600,7 +608,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole024"/>
 <transform
@@ -619,7 +627,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole023"/>
 <transform
@@ -638,7 +646,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole022"/>
 <transform
@@ -657,7 +665,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole021"/>
 <transform
@@ -676,7 +684,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole020"/>
 <transform
@@ -695,7 +703,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole019"/>
 <transform
@@ -714,7 +722,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole018"/>
 <transform
@@ -733,7 +741,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole017"/>
 <transform
@@ -752,7 +760,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole016"/>
 <transform
@@ -771,7 +779,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole015"/>
 <transform
@@ -790,7 +798,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole014"/>
 <transform
@@ -809,7 +817,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole013"/>
 <transform
@@ -828,7 +836,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole012"/>
 <transform
@@ -847,7 +855,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole011"/>
 <transform
@@ -866,7 +874,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole010"/>
 <transform
@@ -885,7 +893,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole009"/>
 <transform
@@ -904,7 +912,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole008"/>
 <transform
@@ -923,7 +931,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole007"/>
 <transform
@@ -942,7 +950,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole006"/>
 <transform
@@ -961,7 +969,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole005"/>
 <transform
@@ -980,7 +988,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole004"/>
 <transform
@@ -999,7 +1007,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole003"/>
 <transform
@@ -1018,7 +1026,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole002"/>
 <transform
@@ -1037,7 +1045,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole001"/>
 <transform
