@@ -381,6 +381,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// toggle guards formation
 		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
 		.comment("Activates/desactivates the guard formation states.")
+		// toggle scientist busy
+		.set("toggle_scientist_busy", &SLBHandle::toggleScientistBusy)
+		.comment("Activates/desactivates the scientist busy states.")
 		// sets actionable
 		.set("setActionable", &SLBHandle::setActionable)
 		.comment("Set if the element is actionable (0: false, otherwise: true)")

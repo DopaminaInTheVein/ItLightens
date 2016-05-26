@@ -8,6 +8,7 @@
 #include "components/comp_charactercontroller.h"
 #include "components/comp_life.h"
 #include "logic/bt_guard.h"
+#include "logic/bt_scientist.h"
 
 using namespace IdEntities;
 
@@ -137,6 +138,10 @@ void SLBHandle::goToPoint(float x, float y, float z) {
 
 void SLBHandle::toggleGuardFormation() {
 	getHandleManager<bt_guard>()->onAll(&bt_guard::toggleFormation);
+}
+
+void SLBHandle::toggleScientistBusy() {
+	getHandleManager<bt_scientist>()->onAll(&bt_scientist::toggleBusyState);
 }
 
 void SLBHandle::setActionable(int enabled) {

@@ -10,6 +10,7 @@
 #include "components/entity_tags.h"
 #include "components/comp_render_static_mesh.h"
 #include "components/comp_msgs.h"
+#include "components/comp_workstation.h"
 #include "handle/handle.h"
 #include "handle/object_manager.h"
 #include "handle/handle_manager.h"
@@ -70,6 +71,13 @@ class bt_scientist : public bt_poss, public TCompBase {
 	float t_waitInPos;
 	//--------------------------------------
 
+	//Toggles
+	bool busy_state_toggle = true;
+	VEC3 ws_to_go;
+	float ws_time_waited = 0.f;
+	float ws_wait_time;
+	float ws_wait_time_offset;
+
 	//general pointers
 	//--------------------------------------
 	CObjectManager<bt_scientist> * om = nullptr;
@@ -110,11 +118,10 @@ class bt_scientist : public bt_poss, public TCompBase {
 		bool workbenchAvailable();
 		bool beaconToAdd();
 		bool beaconToRemove();
+		//toggle conditions
+		bool checkBusy();
 		//actions
 		int actionStunned();
-		// workbench searching
-		int actionNextWB();
-		int actionSeekWB();
 		int actionCreateBeaconFromWB();
 		// beacon management
 		int actionAddBeacon();
@@ -126,6 +133,15 @@ class bt_scientist : public bt_poss, public TCompBase {
 		int actionNextWpt();
 		int actionSeekWpt();
 		int actionWaitWpt();
+		//toggle actions
+		int actionSelectWorkstation();
+		int actionGoToWorkstation();
+		int actionWaitInWorkstation();
+		//Toggle enabling/disabling functions
+		void toggleBusyState() {
+			setCurrent(NULL);
+			busy_state_toggle = !busy_state_toggle;
+		}
 
 		//messages function:
 		void onRemoveBeacon(const TMsgBeaconToRemove& msg);

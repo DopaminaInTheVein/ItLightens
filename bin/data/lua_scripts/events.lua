@@ -14,12 +14,13 @@ function CallFunction(func)
 end
 
 function OnAction( param )
-	p:print( "OnAction: "..param.."\n" )
-	CallFunction("OnAction_"..param)
+	--p:print( "OnAction: "..param.."\n" )
+	--CallFunction("OnAction_"..param)
 	--specialActionSettings(0.7);
 	--setCameraRotationSensibility(60.5);
 	--setCameraSpeed(4.0);
 	--setCameraSpeedUnlocked(10.0);
+	triggerScientistBusy();
 end
 
 function OnActionSci( param )

@@ -513,41 +513,39 @@
 	<rigidbody type_collision="static" />
 </entity>
 
-<!--<entity>
-<tags
-   tags="AI AI_guard"
-/>
-<life
-   points="100"
-/>
-<bt_guard
-	kpt_size  = "4"
-	kpt0_type = "seek" kpt0_pos = "-70.0 0.5 -18.0" kpt0_wait = "0.5"
-	kpt1_type = "look" kpt1_pos = "-70.0 0.5 -8.0" kpt1_wait = "1"
-	kpt2_type = "seek" kpt2_pos = "-80.0 0.5 -8.0" kpt2_wait = "1"
-	kpt3_type = "look" kpt3_pos = "-80.0 0.5 -13.0" kpt3_wait = "1" 
-	jurisdiction="33.8892 -23.6548 -5.97384"
-	jurRadius="100.0"
-	formation_point="-9.98348 -23.7198 1.78362"
-	formation_dir="-28.8748 -22.7915 -5.9006"
-/>
-<name
-   name="guard_2"
-/>
-<transform 
-   pos="-75.0 0.5 -13.0" 
-   quat="0 0 0 1.0"
-   scale="1.0"
-/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"
-/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"
-/>
-<character_controller
-   radius="0.3"
-   height="1.8"
-/>
-</entity>-->
+  <entity>
+    <tags tags="workstation" />
+    <workstation />
+    <name name="pc1" />
+    <transform pos="-85.0 0.5 -10.0" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/box1.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  
+  <entity>
+    <tags tags="workstation" />
+    <workstation />
+    <name name="comp1" />
+    <transform pos="-65.0 0.5 -16.0" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/box1.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  
+    <entity>
+    <tags tags="workstation" />
+    <workstation />
+    <name name="pc2" />
+    <transform pos="-78.0 0.5 -0.0" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/box1.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
+  
+    <entity>
+    <tags tags="workstation" />
+    <workstation />
+    <name name="comp2" />
+    <transform pos="-73.0 0.5 -30.0" quat="0 0 0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/box1.static_mesh" />
+    <rigidbody type_collision="static" />
+  </entity>
 </entities>

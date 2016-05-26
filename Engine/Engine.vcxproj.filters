@@ -1469,6 +1469,9 @@
     <ClInclude Include="logic\helper_arrow.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_workstation.h">
+      <Filter>components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">

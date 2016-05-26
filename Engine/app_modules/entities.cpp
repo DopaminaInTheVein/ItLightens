@@ -4,6 +4,7 @@
 #include "components/entity_parser.h"
 #include "components/comp_msgs.h"
 #include "components/entity_tags.h"
+#include "components/comp_workstation.h"
 #include "handle/handle_manager.h"
 #include "handle/msgs.h"
 #include "render/technique.h"
@@ -65,6 +66,7 @@ DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("drone", TCompDrone);
 DECL_OBJ_MANAGER("box", TCompBox);
+DECL_OBJ_MANAGER("workstation", TCompWorkstation);
 
 //Physics
 DECL_OBJ_MANAGER("rigidbody", TCompPhysics);
@@ -129,6 +131,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+	getHandleManager<TCompWorkstation>()->init(MAX_ENTITIES);
 	getHandleManager<TCompGuidedCamera>()->init(16);
 
 	//lights
@@ -417,6 +420,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
+	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
 	return true;
 }
@@ -485,6 +489,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompPlatform>()->updateAll(dt);
 		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
+		getHandleManager<TCompWorkstation>()->updateAll(dt);
 		getHandleManager<magnet_door>()->updateAll(dt);
 		getHandleManager<elevator>()->updateAll(dt);
 		//getHandleManager<TCompTracker>()->updateAll(dt);

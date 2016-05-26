@@ -39,6 +39,8 @@ void bt_scientist::readIniFileAttr() {
 			assignValueToVar(t_createBeacon, fields);
 			assignValueToVar(t_removeBeacon, fields);
 			assignValueToVar(t_waitInPos, fields);
+			assignValueToVar(ws_wait_time, fields);
+			assignValueToVar(ws_wait_time_offset, fields);
 
 		}
 	}
@@ -55,6 +57,11 @@ void bt_scientist::Init() {
 	if (tree.empty()) {
 		addBtPossStates();
 		addChild("possessable", "scientist", PRIORITY, (btcondition)&bt_scientist::npcAvailable, NULL);
+		// formation toggle
+		addChild("scientist", "busystate", SEQUENCE, (btcondition)&bt_scientist::checkBusy, NULL);
+		addChild("busystate", "selectworkstation", ACTION, NULL, (btaction)&bt_scientist::actionSelectWorkstation);
+		addChild("busystate", "gotoworkstation", ACTION, NULL, (btaction)&bt_scientist::actionGoToWorkstation);
+		addChild("busystate", "waitinworkstation", ACTION, NULL, (btaction)&bt_scientist::actionWaitInWorkstation);
 		// stunned state
 		addChild("scientist", "stunned", ACTION, (btcondition)&bt_scientist::playerStunned, (btaction)&bt_scientist::actionStunned);
 		// remove beacon sequence
@@ -177,6 +184,11 @@ bool bt_scientist::beaconToAdd() {
 
 bool bt_scientist::beaconToRemove() {
 	return actual_action == REMOVE_BEACON;
+}
+
+//toggle conditions
+bool bt_scientist::checkBusy() {
+	return busy_state_toggle;
 }
 
 // actions
@@ -338,6 +350,95 @@ int bt_scientist::actionWaitWpt() {
 		t_waitInPos += getDeltaTime();
 		return STAY;
 	}
+}
+
+// toggle actions
+int bt_scientist::actionSelectWorkstation() {
+	PROFILE_FUNCTION("scientist: selectworkbench");
+	if (!myParent.isValid()) return false;	
+
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return KO;
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 myPos = me_transform->getPosition();
+
+	VHandles stations = tags_manager.getHandlesByTag(getID("workstation"));
+	int num_stations = stations.size();
+
+	vector<int> visited;
+
+	while (visited.size() < num_stations) {
+
+		int posi = rand() % num_stations;
+		auto it = std::find(visited.begin(), visited.end(), posi);
+		// if we already visited this workstation, go to the next
+		if (it != visited.end())
+			continue;
+		// if we are close enough, we go to this workbench
+		CEntity* entity = stations[posi];
+		TCompWorkstation* workstation = entity->get<TCompWorkstation>();
+		VEC3 station_pos = workstation->getPosition();
+
+		float dist_to_ws = squaredDistXZ(myPos, station_pos);
+		//if the workstation is not close enough, go the the next
+		if (dist_to_ws > max_wb_distance)
+			continue;
+
+		ws_to_go = station_pos;
+		return OK;
+
+	}
+
+	return KO;
+}
+
+int bt_scientist::actionGoToWorkstation() {
+	PROFILE_FUNCTION("scientist: gotoworkbench");
+	if (!myParent.isValid()) return false;
+
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	if (!myEntity) return KO;
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 myPos = me_transform->getPosition();
+	//reach waypoint?
+	if (squaredDistXZ(myPos, ws_to_go) < reach_sq_reach_pnt) {
+		return OK;
+	}
+	else {
+		getPath(myPos, ws_to_go, SBB::readSala());
+		//animController.setState(AST_RUN);
+		goTo(ws_to_go);
+		return STAY;
+	}
+
+	return OK;
+}
+
+int bt_scientist::actionWaitInWorkstation() {
+	PROFILE_FUNCTION("scientist: waitinworkbench");
+	if (!myParent.isValid()) return false;
+
+	// we add a randomly generated offset to the waiting time
+	int sign = rand() % 100;
+	int offset = rand() % (int)ws_wait_time_offset;
+
+	float total_wait_time = ws_wait_time;
+
+	if (sign < 50)
+		total_wait_time -= offset;
+	else
+		total_wait_time += offset;
+
+	if (ws_time_waited > total_wait_time) {
+		ws_time_waited = 0.f;
+		return OK;
+	}
+	else {
+		ws_time_waited += getDeltaTime();
+		return STAY;
+	}
+
+	return OK;
 }
 
 // -- Go To -- //

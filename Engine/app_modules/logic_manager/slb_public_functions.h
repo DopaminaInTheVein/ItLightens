@@ -47,6 +47,7 @@ public:
 	float getZ();
 	void goToPoint(float x, float y, float z);
 	void toggleGuardFormation();
+	void toggleScientistBusy();
 	void setActionable(int);
 	void activate();
 	void setPolarity(int);
