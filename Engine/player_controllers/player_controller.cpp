@@ -600,28 +600,11 @@ void player_controller::UpdateMoves()
 	SetMyEntity();
 	SetCharacterController();
 
-	//tests
-	if (io->keys['B'].becomesPressed()) {
-		cc->SetCollisions(false);
-		Debug->LogRaw("collisions false\n");
-	}
-
-	if (io->keys['V'].becomesPressed()) {
-		cc->SetCollisions(true);
-		Debug->LogRaw("collisions true\n");
-	}
-
-	if (io->keys['F'].becomesPressed()) {
-		logic_manager->throwEvent(logic_manager->OnAction, "");
-	}
-
-	//endtests
-
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
 	VEC3 direction = directionForward + directionLateral;
-
+	assert(isValid(direction));
 	CEntity * camera_e = camera;
 
 	TCompTransform* camera_comp = camera_e->get<TCompTransform>();
@@ -636,9 +619,14 @@ void player_controller::UpdateMoves()
 	new_z = -direction.x * sinf(yaw) + direction.z*cosf(yaw);
 
 	direction.x = new_x;
+	if (!isValid(direction)) return; //TEST
+	assert(isValid(direction));
+
 	direction.z = new_z;
+	assert(isValid(direction));
 
 	direction.Normalize();
+	assert(isValid(direction));
 
 	float yaw_to_stop = deg2rad(80.f);
 	float new_yaw = player_transform->getDeltaYawToAimDirection(direction);
@@ -677,7 +665,7 @@ void player_controller::UpdateMoves()
 	//	ChangePose(pose_jump);
 	//}
 	//else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
-
+	assert(isValid(direction));
 	VEC3 newMovement = direction*player_curr_speed;
 	cc->AddMovement( newMovement * getDeltaTime());
 }

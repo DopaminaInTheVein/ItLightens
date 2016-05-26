@@ -62,12 +62,13 @@ void TCompCamera::update(float dt) {
 	assert(e_owner);
 	TCompTransform* tmx = e_owner->get<TCompTransform>();
 	assert(tmx);
-
+	bool cameraIsGuided = false;
 	if (guidedCamera.isValid()) {
 		//Camara guida
 		CEntity * egc = guidedCamera;
 		TCompGuidedCamera * gc = egc->get<TCompGuidedCamera>();
-		if (!gc->followGuide(tmx, this)) {
+		cameraIsGuided = gc->followGuide(tmx, this);
+		if (!cameraIsGuided) {
 			//Fin recorrido  ...
 			//... Guardamos guidedCamera para mensaje a Logic Manager
 			CHandle cameraFinished = guidedCamera;
@@ -90,10 +91,10 @@ void TCompCamera::update(float dt) {
 				target_e->sendMsg(msg_camera);	//set target camera
 			}
 
-			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(egc->getName()), guidedCamera);
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(egc->getName()), cameraFinished);
 		}
 	}
-	else {
+	if (!cameraIsGuided) {
 		TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
 		CHandle targetowner = obtarged->target;
 		CEntity* targeted = targetowner;

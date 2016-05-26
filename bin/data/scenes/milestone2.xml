@@ -1489,7 +1489,7 @@
 <guided_camera
    velocity="2.0"
    default_dirs="0"
-   points_size="9"
+   points_size="11"
    wpt1="38.2047 -13.4768 15.5052"
    wpt2="29.1655 -15.8719 -5.17196"
    wpt3="-8.32307 -15.4007 -10.3777"
@@ -1499,6 +1499,8 @@
    wpt7="-7.50961 0 0.442322"
    wpt8="-18.7825 0 2.22986"
    wpt9="-16.3915 18.7175 -8.06018"
+   wpt10="-11.5862 7.54639 -24.3113"
+   wpt11="9.40025 -7.67432 -31.5012"
    lpt1="41.4988 -20.7917 -7.18227"
    lpt2="23.4031 -21.9424 -17.0359"
    lpt3="-2.37333 -22.6775 -24.8037"
@@ -1507,7 +1509,9 @@
    lpt6="4.81918 4.90283 14.756"
    lpt7="-10.6559 -3.09448 17.4776"
    lpt8="-36.262 -3.16284 16.0815"
-   lpt9="-38.898 4.10547 -7.89615"/>
+   lpt9="-38.898 4.10547 -7.89615"
+   lpt10="-38.9538 4.10547 -7.89615"
+   lpt11="9.92575 -9.67993 -27.1629"/>
 <name
    name="CinematicIntro"/>
 <transform
@@ -1729,6 +1733,54 @@
 <transform
    pos="38.2047 -13.4768 15.5052"
    quat="0.588393 -0.0581618 0.0424928 0.80536"
+   scale="1.0"/>
+
+</entity>
+<entity
+   slept="undefined">
+<tags
+   tags=""/>
+<name
+   name="CinematicIntro_Camera010.Target"/>
+<transform
+   pos="-38.9538 4.10547 -7.89615"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   slept="undefined">
+<tags
+   tags=""/>
+<name
+   name="CinematicIntro_Camera010"/>
+<transform
+   pos="-11.5862 7.54639 -24.3113"
+   quat="0.32923 0.64744 -0.581384 0.366636"
+   scale="1.0"/>
+
+</entity>
+<entity
+   slept="undefined">
+<tags
+   tags=""/>
+<name
+   name="CinematicIntro_Camera011"/>
+<transform
+   pos="9.40025 -7.67432 -31.5012"
+   quat="-0.0325181 0.84023 -0.538873 -0.0507033"
+   scale="1.0"/>
+
+</entity>
+<entity
+   slept="undefined">
+<tags
+   tags=""/>
+<name
+   name="CinematicIntro_Camera011.Target"/>
+<transform
+   pos="9.92575 -9.67993 -27.1629"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 
 </entity>
