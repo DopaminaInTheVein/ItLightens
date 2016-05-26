@@ -71,6 +71,7 @@ void writeIniAtrData(const std::string route, std::string element_name, std::map
 
 //Math basic
 float max(int nargs, ...);
+float min(int nargs, ...);
 
 //Check nan VEC3
 bool isNan(VEC3 vec);

@@ -129,8 +129,12 @@ fn findAllHelpersList tHelper = (
 )
 
 fn findAllHelpers tHelper = (
-	if (classof tHelper) == Array then return (findAllHelpersList tHelper)
-	else return (findAllHelpersList #(tHelper))
+	if (classof tHelper) == Array then (
+		local res = (findAllHelpersList tHelper)
+		return (sortByName res)
+	) else (
+		return (findAllHelpersList #(tHelper))
+	)
 )
 
 ---------------------------------------------------------
@@ -144,7 +148,18 @@ fn findClass tClass = (
 			exit
 		)
 	)
+	
 	return res
+)
+
+fn findAllClassList tClass = (
+	local res = #()
+	for child in _parsingObject.children do (
+		if ( classof child == tClass ) then (
+			append res child
+		)
+	)
+	return sortByName res
 )
 
 -- LUA --
@@ -164,4 +179,18 @@ fn strReplace str strOld strNew = (
 		str = replace str i strNew.count strNew
 	)
 	return str
+)
+
+fn sortByName arr = (
+  res = #()
+  nameOrdered = sort(for i in arr collect i.name)
+  for nom in nameOrdered do (
+	for elem in arr do (
+		if elem.name == nom then (
+			append res elem
+			exit
+		)
+	)
+  )
+  return res
 )

@@ -8,22 +8,15 @@ class TCompCamera;
 class TCompTransform;
 
 class TCompGuidedCamera : public TCompBase {
-  std::vector<VEC3> points;
   int num_points;
-  int num_cameras;
-  float velocity_default;
   float velocity;
+  float velocity_default;
   bool default_dirs;
-  //float angularVelocity;
-  std::vector<VEC3> rotations;
-  std::vector<float> influences;
-  std::vector<VEC3> cameraPositions;
 
-  float maxInfluence = 0.0f;
-  VEC3 last_quat;
-  int lastP = -1;
+  std::vector<VEC3> positions;
+  std::vector<VEC3> targets;
 
-  int lastguidedCamPoint = 0;
+  int curPoint = 0;
   float factor = 0.0f;
 public:
   TCompGuidedCamera() {
@@ -34,17 +27,10 @@ public:
   bool load(MKeyValue& atts);
   void renderInMenu() {}
   void update(float dt) {}
-  //int nearCameraPoint(VEC3 playerPosition);
+
   const int getTotalPoints() const { return num_points; }
-  const float getVelocity() const { return velocity; }
-  //  const float getAngularVelocity() const { return angularVelocity; }
-  const VEC3 getCameraPosition(int posi) const { return cameraPositions[posi]; }
-  const VEC3 getPointPosition(int posi) const { return points[posi]; }
-  bool getDefaultDirsEnabled() { return default_dirs; }
-  /*
-  CQuaternion getNewRotationForCamera(VEC3 playerPosition, CQuaternion cameraActual, int pointOfInfluence);
-  */
-  VEC3 getNewTargetForCamera(VEC3 playerPosition, VEC3 targetActual, int pointOfInfluence);
+  const float 
+	  ocity() const { return velocity; }
 
   void onGuidedCamera(const TMsgGuidedCamera&);
   bool followGuide(TCompTransform*, TCompCamera*);

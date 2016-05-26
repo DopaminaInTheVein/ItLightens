@@ -103,6 +103,7 @@ class player_controller : public CPlayerBase {
 	bool					pol_orbit_prev = false;
 
 	bool					affectPolarized = false;
+	bool					forward_jump = false;
 
 	bool					canRecEnergy = false;
 	bool					canPassWire = false;

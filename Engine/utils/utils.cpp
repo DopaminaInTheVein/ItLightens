@@ -282,6 +282,18 @@ float max(int nargs, ...) {
   return max_value;
 }
 
+float min(int nargs, ...) {
+	float min_value = FLT_MAX;
+	va_list listPointer;
+	va_start(listPointer, nargs);
+	for (int i = 0; i < nargs; i++)
+	{
+		float arg = va_arg(listPointer, int);
+		if (arg < min_value) min_value = arg;
+	}
+	return min_value;
+}
+
 //Check Nan, Infinity's zero values,...
 
 //Is nan?

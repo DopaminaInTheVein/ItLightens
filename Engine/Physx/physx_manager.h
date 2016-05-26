@@ -69,7 +69,7 @@ class CPhysxManager :	public IAppModule,
 #endif
 
 	PxReal t_to_update = 0.0f;
-	PxReal t_max_update = 0.0f;
+	PxReal t_max_update = 1/60.0f;
 
 
 	//memory raycast, used for point-to-point

@@ -115,13 +115,13 @@ void TCompCharacterController::RecalcSpeed(float dt)
 	assert(isValid(m_speed));
 
 	//calc if there are some speed to sum at speed from own rigidbdy speed
-	if (!m_OnGround && m_lastOnGround) {
+	/*if (!m_OnGround && m_lastOnGround) {
 		assert(isValid(m_speed));
 		VEC3 speed = PhysxConversion::PxVec3ToVec3(m_last_speed);
 		speed.y = 0;
 		m_speed += speed;
 		assert(isValid(m_speed));
-	}
+	}*/
 
 	//calc if some speed is too low. if true, will be assigned at 0
 	float abs_x = abs(m_speed.x);
@@ -230,8 +230,10 @@ void TCompCharacterController::RecalcOnGround()
 	}
 	else {
 		//raycast to look for down distance
+		PxQueryFilterData filterData;
+		filterData.data.word0 = ItLightensFilter::eSCENE | ItLightensFilter::eOBJECT;
 		PxRaycastBuffer hit;
-		bool hit_ground = g_PhysxManager->raycast(GetFootPosition(), PhysxConversion::PxVec3ToVec3(-m_pActor->getUpDirection()), 0.1f, hit);
+		bool hit_ground = g_PhysxManager->raycast(GetFootPosition(), PhysxConversion::PxVec3ToVec3(-m_pActor->getUpDirection()), 0.1f, hit, filterData);
 		m_OnGround = hit_ground;
 		m_physxOnground = false;
 	}
