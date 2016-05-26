@@ -15,7 +15,7 @@ class TCompCharacterController : public TCompBase {
 	float							m_gravitySpeed		= -10.0f;
 	float							m_maxSpeed			= 10.0f;
 	float							m_friction			= 10.0f;
-	float							m_friction_air		= 2.f;
+	float							m_friction_air		= 2.0f;
 	float							m_eOffsetSpeed		= 0.2f;
 
 	bool							m_active			= true;

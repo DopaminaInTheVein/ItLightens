@@ -335,22 +335,19 @@ void player_controller::Jump()
 	bool ascending = cc->GetLastSpeed().y > 0.1f;
 	VEC3 jumpVector;
 	if (isMoving()) {
-		//TODO CLH
-		//foraward_jump = true;
-		//to move at move and use it UpdateMoves
+		forward_jump = true;
 		//set false when on ground
 		//-------------------------------------
 		VEC3 curSpeed = cc->GetLastSpeed();
 		jumpVector = VEC3(
-			-curSpeed.x * 0.5f,
+			-curSpeed.x * 0.1f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
-			-curSpeed.z * 0.5f
+			-curSpeed.z * 0.1f
 		);
 		//--------------------------------------
 	} else {
 		jumpVector = VEC3(0.f, jimpulse, 0.f);
 	}
-	
 	cc->AddImpulse(jumpVector);
 	energyDecreasal(jump_energy);
 	if (ascending) {
@@ -643,11 +640,16 @@ void player_controller::UpdateMoves()
 
 	direction.Normalize();
 
+	float yaw_to_stop = deg2rad(90.f);
 	float new_yaw = player_transform->getDeltaYawToAimDirection(direction);
 
 	player_transform->getAngles(&yaw, &pitch);
+	player_transform->setAngles(new_yaw*0.1f + yaw, pitch);		//control rotate transfom, not needed for the character controller
 
-	player_transform->setAngles(new_yaw + yaw, pitch);		//control rotate transfom, not needed for the character controller
+	if (abs(new_yaw) >= yaw_to_stop) {
+		player_curr_speed = 0.0f;
+		directionForward = directionLateral = VEC3(0, 0, 0);
+	}
 
 	//Set current velocity with friction
 	float drag = 2.5f*getDeltaTime();
@@ -656,10 +658,12 @@ void player_controller::UpdateMoves()
 	if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
 	else player_curr_speed = drag_i*player_curr_speed - drag*player_max_speed;
 
+
 	if (player_curr_speed < 0) {
 		player_curr_speed = 0.0f;
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
+
 	//if (cc->OnGround() && player_curr_speed != 0.0f) {
 	//	ChangePose(pose_run);
 	//}
@@ -669,7 +673,9 @@ void player_controller::UpdateMoves()
 	//else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
 
 	//if (cc->OnGround()) {
-		cc->AddMovement(direction*player_curr_speed*getDeltaTime());
+	VEC3 inertia = VEC3(0.7f, 0.f, 0.7f);
+	VEC3 newMovement = cc->GetLastSpeed()*inertia + (direction*player_curr_speed) * (VEC3(1,1,1) - inertia);
+	cc->AddMovement( newMovement * getDeltaTime());
 	//}
 	//else {
 		//cc->AddMovement(direction*player_curr_speed*getDeltaTime() / 2);

@@ -115,13 +115,13 @@ void TCompCharacterController::RecalcSpeed(float dt)
 	assert(isValid(m_speed));
 
 	//calc if there are some speed to sum at speed from own rigidbdy speed
-	if (!m_OnGround && m_lastOnGround) {
+	/*if (!m_OnGround && m_lastOnGround) {
 		assert(isValid(m_speed));
 		VEC3 speed = PhysxConversion::PxVec3ToVec3(m_last_speed);
 		speed.y = 0;
 		m_speed += speed;
 		assert(isValid(m_speed));
-	}
+	}*/
 
 	//calc if some speed is too low. if true, will be assigned at 0
 	float abs_x = abs(m_speed.x);
@@ -209,7 +209,7 @@ void TCompCharacterController::ApplyPendingMoves(float dt) {
 		PROFILE_FUNCTION(name.c_str());
 		assert(isValid(m_toMove));
 		PxVec3 moved = PxVec3(m_toMove.x, m_toMove.y, m_toMove.z);
-		//m_last_speed = m_pActor->getActor()->getLinearVelocity();
+		m_last_speed = m_pActor->getActor()->getLinearVelocity();
 		m_flagsCollisions = m_pActor->move(moved, 0.0f, dt, m_filterController);
 		//clean acceleration & pendent displacement
 		m_toMove = VEC3(0.0f, 0.0f, 0.0f);
