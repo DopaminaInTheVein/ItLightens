@@ -599,6 +599,9 @@
     <ClCompile Include="particles\particles_manager.cpp">
       <Filter>particles</Filter>
     </ClCompile>
+    <ClCompile Include="particles\ParticlesEmitter.cpp">
+      <Filter>particles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">

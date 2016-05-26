@@ -16,49 +16,48 @@ void CParticleSystem::renderParticles()
 
 bool CParticleSystem::load(MKeyValue & atts)
 {
-	std::string tex_particles = atts.getString("texture_particles", "textures/fire.dds");
-	m_pTexture = Resources.get(tex_particles.c_str())->as<CTexture>();
+  std::string tex_particles = atts.getString("texture_particles", "textures/fire.dds");
+  m_pTexture = Resources.get(tex_particles.c_str())->as<CTexture>();
 
-	return true;
+  return true;
 }
 
 void CParticleSystem::SetBufferData() {
+  g_PhysxManager->GetActiveScene()->removeActor(*m_pParticleSystem);
 
-	g_PhysxManager->GetActiveScene()->removeActor(*m_pParticleSystem);
+  m_pParticleSystem = g_PhysxManager->CreateParticleSystem(m_numParticles);
 
-	m_pParticleSystem = g_PhysxManager->CreateParticleSystem(m_numParticles);
+  m_particles.initialize(m_numParticles);
 
-	m_particles.initialize(m_numParticles);
+  for (int i = 0; i < m_numParticles; i++) {
+    m_particles.indexBuffer[i] = i;
+    m_particles.maxLifeTimeBuffer[i] = m_initial_lifeTime; //max time
+    m_particles.positionBuffer[i] = m_initial_pos;
+    m_particles.velocityBuffer[i] = m_initial_velocity;
+    m_particles.negativeVelocityBuffer[i] = -m_initial_velocity;
+    m_particles.lifeTimeBuffer[i] = m_particles.maxLifeTimeBuffer[i];
 
-	for (int i = 0; i < m_numParticles; i++) {
-		m_particles.indexBuffer[i] = i;
-		m_particles.maxLifeTimeBuffer[i] = m_initial_lifeTime; //max time
-		m_particles.positionBuffer[i] = m_initial_pos;
-		m_particles.velocityBuffer[i] = m_initial_velocity;
-		m_particles.negativeVelocityBuffer[i] = -m_initial_velocity;
-		m_particles.lifeTimeBuffer[i] = m_particles.maxLifeTimeBuffer[i];
+    m_particles.positionInitBuffer[i] = m_initial_pos;
+    m_particles.velocityInitBuffer[i] = m_initial_velocity;
+  }
 
-		m_particles.positionInitBuffer[i] = m_initial_pos;
-		m_particles.velocityInitBuffer[i] = m_initial_velocity;
-	}
+  m_pIndexPool = PxParticleExt::createIndexPool(m_numParticles);
+  //m_pParticleValidity = (PxU32*)PX_ALLOC(((m_pParticleSystem->getMaxParticles() + 31) >> 5) << 2, "validParticleBitmap");
+  m_pParticleValidity = std::vector<PxU32>(((m_pParticleSystem->getMaxParticles() + 31) >> 5) << 2).data();
 
-	m_pIndexPool = PxParticleExt::createIndexPool(m_numParticles);
-	//m_pParticleValidity = (PxU32*)PX_ALLOC(((m_pParticleSystem->getMaxParticles() + 31) >> 5) << 2, "validParticleBitmap");
-	m_pParticleValidity = std::vector<PxU32>(((m_pParticleSystem->getMaxParticles() + 31) >> 5) << 2).data();
-
-	m_particles.numParticles = m_numParticles;
-	bool ret = CreateParticles(m_particles);
-	if (!ret) {
-		fatal("particles not created\n");
-		return;
-	}
+  m_particles.numParticles = m_numParticles;
+  bool ret = CreateParticles(m_particles);
+  if (!ret) {
+    fatal("particles not created\n");
+    return;
+  }
 }
 
 void CParticleSystem::init() {
-  m_numParticles = 250;
-  int max_particles = 250;
+  m_numParticles = 1;
+  int max_particles = 1;
   m_pParticleSystem = g_PhysxManager->CreateParticleSystem(max_particles);
-  
+
   m_pParticle_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 
   CEntity * e = CHandle(this).getOwner();
@@ -85,7 +84,7 @@ void CParticleSystem::init() {
     m_particles.maxLifeTimeBuffer[i] = m_initial_lifeTime; //max time
     m_particles.positionBuffer[i] = m_initial_pos;
     m_particles.velocityBuffer[i] = m_initial_velocity;
-	m_particles.negativeVelocityBuffer[i] = -m_initial_velocity;
+    m_particles.negativeVelocityBuffer[i] = -m_initial_velocity;
     m_particles.lifeTimeBuffer[i] = m_particles.maxLifeTimeBuffer[i];
 
     m_particles.positionInitBuffer[i] = m_initial_pos;
@@ -103,14 +102,17 @@ void CParticleSystem::init() {
     return;
   }
 
+  m_Emitter.m_useSkeleton = false;
+  m_Emitter.SetSize(1.0f);
+
   g_particlesManager->AddParticlesSystem(this);
 
   m_RenderParticles.create(m_pParticleSystem->getMaxParticles(), m_pParticle_mesh);
 }
 
 bool CParticleSystem::CreateParticles(TParticleData& particles) {
-	particles.numParticles = PxMin(particles.numParticles, m_pParticleSystem->getMaxParticles() - m_numParticles);
- particles.numParticles = m_numParticles;
+  particles.numParticles = PxMin(particles.numParticles, m_pParticleSystem->getMaxParticles() - m_numParticles);
+  particles.numParticles = m_numParticles;
   if (particles.numParticles > 0)
   {
     std::vector<PxU32> mTmpIndexArray;
@@ -129,10 +131,10 @@ bool CParticleSystem::CreateParticles(TParticleData& particles) {
     //m_numParticles = particles.numParticles;
     bool ok = m_pParticleSystem->createParticles(particleCreationData);
 
-	if(*m_Emitter.GetGravity())
-		m_pParticleSystem->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);  
-	else
-		m_pParticleSystem->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+    if (*m_Emitter.GetGravity())
+      m_pParticleSystem->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);
+    else
+      m_pParticleSystem->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 
     PX_UNUSED(ok);
     PX_ASSERT(ok);
@@ -176,66 +178,65 @@ void CParticleSystem::update(float elapsed) {
     PxStrideIterator<const PxVec3> velocities(data->velocityBuffer);
     PxStrideIterator<const PxParticleFlags> particleFlags(data->flagsBuffer);
     PxMemCopy(m_pParticleValidity, data->validParticleBitmap, ((data->validParticleRange + 31) >> 5) << 2);
-	
+
     // copy particles positions
-	for (PxU32 w = 0; w <= (data->validParticleRange - 1) >> 5; w++)
-	{
-		for (PxU32 b = data->validParticleBitmap[w]; b; b &= b - 1)
-		{
-			bool removed = false;
-			PxU32 idx = (w << 5 | lowestSetBit(b));
+    for (PxU32 w = 0; w <= (data->validParticleRange - 1) >> 5; w++)
+    {
+      for (PxU32 b = data->validParticleBitmap[w]; b; b &= b - 1)
+      {
+        bool removed = false;
+        PxU32 idx = (w << 5 | lowestSetBit(b));
 
-			//check if particle has time limit
-			if (m_particles.maxLifeTimeBuffer[idx] > 0)
-			{
-			  //check if particle has surprassed its time limit
-			  if (m_particles.lifeTimeBuffer[idx] <= 0.0f)
-			  {
-				m_particles.lifeTimeBuffer[idx] = m_particles.maxLifeTimeBuffer[idx];
-				mTmpIndexArray.push_back(idx);
-				removed = true;
-				to_remove = true;
-			  }
-			}
+        //check if particle has time limit
+        if (m_particles.maxLifeTimeBuffer[idx] > 0)
+        {
+          //check if particle has surprassed its time limit
+          if (m_particles.lifeTimeBuffer[idx] <= 0.0f)
+          {
+            m_particles.lifeTimeBuffer[idx] = m_particles.maxLifeTimeBuffer[idx];
+            mTmpIndexArray.push_back(idx);
+            removed = true;
+            to_remove = true;
+          }
+        }
 
-			//if particle is not removed
-			if (!removed)
-			{
-			  m_particles.positionBuffer[idx] = positions[idx];
-			  m_particles.velocityBuffer[idx] = velocities.ptr() ? velocities[idx] : PxVec3(0.0f);
-			  m_particles.negativeVelocityBuffer[idx] = -m_particles.velocityBuffer[idx];
+        //if particle is not removed
+        if (!removed)
+        {
+          m_particles.positionBuffer[idx] = positions[idx];
+          m_particles.velocityBuffer[idx] = velocities.ptr() ? velocities[idx] : PxVec3(0.0f);
+          m_particles.negativeVelocityBuffer[idx] = -m_particles.velocityBuffer[idx];
 
-			  //add dt to particle lifetime
-			  if (m_particles.maxLifeTimeBuffer[idx] > 0)
-			  {
-				m_particles.lifeTimeBuffer[idx] -= elapsed;
-			  }
+          //add dt to particle lifetime
+          if (m_particles.maxLifeTimeBuffer[idx] > 0)
+          {
+            m_particles.lifeTimeBuffer[idx] -= elapsed;
+          }
 
-			  //draw particle, disabled for now
-			  //VEC3 pos = PhysxConversion::PxVec3ToVec3(positions[idx]);
-			  //Debug->DrawLine(pos, forward, 2);
+          //draw particle, disabled for now
+          //VEC3 pos = PhysxConversion::PxVec3ToVec3(positions[idx]);
+          //Debug->DrawLine(pos, forward, 2);
 
-			  //m_numParticles++;
-			  newValidRange = idx;
-			}
+          //m_numParticles++;
+          newValidRange = idx;
+        }
 
-			//if removed mark particle as invalid
-			//else
-		//	{
-			 // m_pParticleValidity[w] &= (b - 1);
-			//}
+        //if removed mark particle as invalid
+        //else
+      //	{
+         // m_pParticleValidity[w] &= (b - 1);
+        //}
 
-			/*dbg("%f-", m_pParticleValidity[w]);
+        /*dbg("%f-", m_pParticleValidity[w]);
 
-			if (data->validParticleBitmap[w])
-				dbg("%f ",data->validParticleBitmap[w]);
-			else
-				dbg("%f ", data->validParticleBitmap[w]);*/
-		}
-	}
+        if (data->validParticleBitmap[w])
+          dbg("%f ",data->validParticleBitmap[w]);
+        else
+          dbg("%f ", data->validParticleBitmap[w]);*/
+      }
+    }
   }
-  dbg("end\n");
-  
+  //dbg("end\n");
 
   m_validParticleRange = newValidRange;
   data->unlock();
@@ -243,8 +244,7 @@ void CParticleSystem::update(float elapsed) {
   //free removed particles
   if (to_remove)
   {
-
-	  UpdateRandomsAttr();
+    UpdateRandomsAttr();
 
     PxStrideIterator<const PxU32> indexData(&mTmpIndexArray[0]);
 
@@ -254,130 +254,193 @@ void CParticleSystem::update(float elapsed) {
     auto initPos = PxStrideIterator<const PxVec3>(&m_particles.positionInitBuffer[0]);
     auto initVel = PxStrideIterator<const PxVec3>(&m_particles.velocityInitBuffer[0]);
 
-
-
-	auto negativeVel = PxStrideIterator<const PxVec3>(&m_particles.negativeVelocityBuffer[0]);
+    auto negativeVel = PxStrideIterator<const PxVec3>(&m_particles.negativeVelocityBuffer[0]);
 
     m_pParticleSystem->setPositions(static_cast<PxU32>(mTmpIndexArray.size()), indexData, initPos);
-	m_pParticleSystem->setVelocities(static_cast<PxU32>(mTmpIndexArray.size()), indexData, initVel);
+    m_pParticleSystem->setVelocities(static_cast<PxU32>(mTmpIndexArray.size()), indexData, initVel);
     //m_pParticleSystem->addForces(static_cast<PxU32>(mTmpIndexArray.size()), indexData, negativeVel, PxForceMode::eVELOCITY_CHANGE);
   }
 
   //bool ret = CreateParticles(m_particles);
   //if (!ret) {
     //fatal("particles not created\n");
-	//return;
+  //return;
   //}
 
   //update particle render data
-  m_RenderParticles.update(elapsed, m_particles);
+  m_RenderParticles.update(elapsed, m_particles, *m_Emitter.GetSize());
 }
 
 void CParticleSystem::UpdateRandomsAttr() {
-	for (int i = 0; i < m_numParticles; i++) {
+  if (random_value_position) {
+    for (int i = 0; i < m_numParticles; i++) {
+      PxVec3 pos_random = *m_Emitter.GetPosition();
+      PxVec3 max_limit = *m_Emitter.GetPositionRandomMax();
+      PxVec3 min_limit = *m_Emitter.GetPositionRandomMin();
 
-	}
+      pos_random.x += random(max_limit.x, min_limit.x);
+      pos_random.y += random(max_limit.y, min_limit.y);
+      pos_random.z += random(max_limit.z, min_limit.z);
+
+      m_particles.positionInitBuffer[i] = pos_random;
+    }
+  }
+
+  if (random_value_velocity) {
+    for (int i = 0; i < m_numParticles; i++) {
+      PxVec3 vel_random = *m_Emitter.GetVelocity();
+      PxVec3 max_limit = *m_Emitter.GetVelocityRandomMax();
+      PxVec3 min_limit = *m_Emitter.GetVelocityRandomMin();
+
+      vel_random.x += random(max_limit.x, min_limit.x);
+      vel_random.y += random(max_limit.y, min_limit.y);
+      vel_random.z += random(max_limit.z, min_limit.z);
+
+      m_particles.velocityInitBuffer[i] = vel_random;
+    }
+  }
 }
 
 void CParticleSystem::renderInMenu()
 {
-	PxParticleReadData *data = m_pParticleSystem->lockParticleReadData();
+  PxParticleReadData *data = m_pParticleSystem->lockParticleReadData();
 
-	ImGui::Text("num valid particles: %d\n", data->nbValidParticles);
-	ImGui::Text("valid range: %d\n", data->validParticleRange);
+  ImGui::Text("num valid particles: %d\n", data->nbValidParticles);
+  ImGui::Text("valid range: %d\n", data->validParticleRange);
 
-	PxStrideIterator<const PxVec3> positions(data->positionBuffer);
-	PxStrideIterator<const PxVec3> velocities(data->velocityBuffer);
-	PxStrideIterator<const PxParticleFlags> particleFlags(data->flagsBuffer);
+  PxStrideIterator<const PxVec3> positions(data->positionBuffer);
+  PxStrideIterator<const PxVec3> velocities(data->velocityBuffer);
+  PxStrideIterator<const PxParticleFlags> particleFlags(data->flagsBuffer);
 
-	ImGui::Separator();
+  ImGui::Separator();
 
-	if (ImGui::TreeNode("Particles System editor")) {
+  if (ImGui::TreeNode("Particles System editor")) {
+    if (ImGui::Checkbox("collisions(only with PC)", m_Emitter.GetCollisions())) {
+      bool collisions = *m_Emitter.GetCollisions();
+      if (collisions) {
+        m_pParticleSystem->setParticleBaseFlag(PxParticleBaseFlag::eCOLLISION_WITH_DYNAMIC_ACTORS, true);
+      }
+      else {
+        m_pParticleSystem->setParticleBaseFlag(PxParticleBaseFlag::eCOLLISION_WITH_DYNAMIC_ACTORS, false);
+      }
+    }
 
-		if (ImGui::Checkbox("collisions(only with PC)", m_Emitter.GetCollisions())) {
-			bool collisions = *m_Emitter.GetCollisions();
-			if (collisions) {
-				m_pParticleSystem->setParticleBaseFlag(PxParticleBaseFlag::eCOLLISION_WITH_DYNAMIC_ACTORS, true);
-			}
-			else {
-				m_pParticleSystem->setParticleBaseFlag(PxParticleBaseFlag::eCOLLISION_WITH_DYNAMIC_ACTORS, false);
-			}
-		}
+    if (ImGui::Checkbox("gravity", m_Emitter.GetGravity())) {
+      bool gravity = *m_Emitter.GetGravity();
+      m_pParticleSystem->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, !gravity);
+    }
 
-		if (ImGui::Checkbox("gravity", m_Emitter.GetGravity())) {
-			bool gravity = *m_Emitter.GetGravity();
-			m_pParticleSystem->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, !gravity);
-		}
+    if (ImGui::DragInt("Number particles", &m_numParticles, 1)) {
+      m_RenderParticles.clear();
+      m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
+      SetBufferData();
+    }
+    ImGui::Checkbox("random velocity range", &random_value_velocity);
+    if (!random_value_velocity) {
+      if (ImGui::DragFloat3("initial velocity particles", &m_initial_velocity.x, 0.1f)) {
+        for (int i = 0; i < m_particles.numParticles; i++) {
+          m_particles.velocityInitBuffer[i] = m_initial_velocity;
+        }
+      }
+    }
+    else {
+      ImGui::Text("Random vector between 2 vectors");
+      if (ImGui::DragFloat3("max limit random", &m_Emitter.GetVelocityRandomMax()->x)) {
+        //nothing
+      }
+      if (ImGui::DragFloat3("min limit random", &m_Emitter.GetVelocityRandomMin()->x)) {
+        //nothing
+      }
+    }
 
-		if (ImGui::DragInt("Number particles", &m_numParticles, 1)) {
-			m_RenderParticles.clear();
-			m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
-			SetBufferData();
-		}
-		ImGui::Checkbox("random velocity range", &random_value_velocity);
-		if (!random_value_velocity) {
-			if (ImGui::DragFloat3("initial velocity particles", &m_initial_velocity.x, 0.1f)) {
-				for (int i = 0; i < m_particles.numParticles; i++) {
-					m_particles.velocityInitBuffer[i] = m_initial_velocity;
-				}
-			}
-		}
-		else {
-			//random value
-		}
+    ImGui::Checkbox("random position range", &random_value_position);
+    if (!random_value_position) {
+      if (ImGui::DragFloat3("initial position particles", &m_initial_pos.x, 0.1f)) {
+        for (int i = 0; i < m_particles.numParticles; i++) {
+          m_particles.positionInitBuffer[i] = m_initial_pos;
+          m_Emitter.SetPosition(m_initial_pos);
+        }
+      }
+    }
+    else {
+      ImGui::Text("Random vector between 2 vectors");
+      if (ImGui::DragFloat3("max limit random", &m_Emitter.GetPositionRandomMax()->x)) {
+        //nothing
+      }
+      if (ImGui::DragFloat3("min limit random", &m_Emitter.GetPositionRandomMin()->x)) {
+        //nothing
+      }
+    }
 
-		ImGui::Checkbox("random position range", &random_value_position);
-		if (!random_value_position) {
-			if (ImGui::DragFloat3("initial position particles", &m_initial_pos.x, 0.1f)) {
-				for (int i = 0; i < m_particles.numParticles; i++) {
-					m_particles.positionInitBuffer[i] = m_initial_pos;
-				}
-			}
-		}
-		else {
-			//random value
-		}
+    ImGui::Checkbox("random lifeTime range", &random_value_lifeTime);
+    if (!random_value_lifeTime) {
+      if (ImGui::DragFloat("initial lifeTime particles", &m_initial_lifeTime, 0.1f)) {
+        //changes applied when particles born again
+        for (unsigned idx = 0; idx < data->validParticleRange; ++idx) {
+          m_particles.maxLifeTimeBuffer[idx] = m_initial_lifeTime;
+        }
+      }
+    }
+    else {
+      ImGui::Text("Random vector between 2 values");
+      if (ImGui::DragFloat("max limit random", m_Emitter.GetLifeTimeRandomMax())) {
+        //changes applied when particles born again
+        for (unsigned idx = 0; idx < data->validParticleRange; ++idx) {
+          m_particles.maxLifeTimeBuffer[idx] = random(*m_Emitter.GetLifeTimeRandomMin(), *m_Emitter.GetLifeTimeRandomMax());
+        }
+      }
+      if (ImGui::DragFloat("min limit random", m_Emitter.GetLifeTimeRandomMin())) {
+        //changes applied when particles born again
+        for (unsigned idx = 0; idx < data->validParticleRange; ++idx) {
+          m_particles.maxLifeTimeBuffer[idx] = random(*m_Emitter.GetLifeTimeRandomMin(), *m_Emitter.GetLifeTimeRandomMax());
+        }
+      }
+    }
 
-		ImGui::Checkbox("random lifeTime range", &random_value_lifeTime);
-		if (!random_value_lifeTime) {
-			if (ImGui::DragFloat("initial lifeTime particles", &m_initial_lifeTime, 0.1f)) {
-				//changes applied when particles born again
-				for (unsigned idx = 0; idx < data->validParticleRange; ++idx, ++particleFlags, ++positions, ++velocities) {
-					m_particles.maxLifeTimeBuffer[idx] = m_initial_lifeTime;
-				}
-			}
-		}
-		else {
-			//random value
-		}
+    ImGui::DragFloat("size", m_Emitter.GetSize());
 
-		ImGui::TreePop();
-	}
+    static int num_bone = 1;
+    static std::string name_bone = "nothing";
+    static VEC3 traslacion = VEC3(0, 0, 0);
 
+    ImGui::Checkbox("enable", &m_Emitter.m_useSkeleton);
 
-	ImGui::Separator();
+    if (m_Emitter.m_useSkeleton) {
+      ImGui::DragInt("num bone id", &num_bone);
+      PxVec3 new_position = PhysxConversion::Vec3ToPxVec3(m_Emitter.testBones(num_bone, &name_bone, &traslacion));
+      ImGui::Text("position for bone %s is: %f, %f, %f\n", name_bone.c_str(), new_position.x, new_position.y, new_position.z);
+      ImGui::Text("traslacion of bone from core is: %f, %f, %f\n", traslacion.x, traslacion.y, traslacion.z);
+      for (int i = 0; i < m_particles.numParticles; i++) {
+        m_particles.positionInitBuffer[i] = new_position;
+        m_Emitter.SetPosition(new_position);
+      }
+    }
 
-	ImGui::Text("Particles info");
+    ImGui::TreePop();
+  }
 
-	if (ImGui::TreeNode("Particles info")) {
+  ImGui::Separator();
 
-		for (unsigned idx = 0; idx < data->validParticleRange; ++idx, ++particleFlags, ++positions, ++velocities) {
-			if (data->validParticleBitmap[idx] & PxParticleFlag::eVALID) {
-				std::string title = "particle: " + std::to_string(idx);
+  ImGui::Text("Particles info");
 
-				//particle data
-				if (ImGui::TreeNode(title.c_str())) {
-					ImGui::Text("Particle position: %f, %f, %f\n", positions[idx].x, positions[idx].y, positions[idx].z);
-					ImGui::Text("Particle velocity: %f, %f, %f\n", velocities[idx].x, velocities[idx].y, velocities[idx].z);
-					ImGui::Text("Particle lifetime: %f\n", m_particles.lifeTimeBuffer[idx]);
+  if (ImGui::TreeNode("Particles info")) {
+    for (unsigned idx = 0; idx < data->validParticleRange; ++idx, ++particleFlags, ++positions, ++velocities) {
+      if (data->validParticleBitmap[idx] & PxParticleFlag::eVALID) {
+        std::string title = "particle: " + std::to_string(idx);
 
-					ImGui::TreePop();
-				}
-			}
-		}
+        //particle data
+        if (ImGui::TreeNode(title.c_str())) {
+          ImGui::Text("Particle position: %f, %f, %f\n", positions[idx].x, positions[idx].y, positions[idx].z);
+          ImGui::Text("Particle velocity: %f, %f, %f\n", velocities[idx].x, velocities[idx].y, velocities[idx].z);
+          ImGui::Text("Particle lifetime: %f\n", m_particles.lifeTimeBuffer[idx]);
 
-		ImGui::TreePop();
-	}
+          ImGui::TreePop();
+        }
+      }
+    }
 
-	data->unlock();
+    ImGui::TreePop();
+  }
+
+  data->unlock();
 }

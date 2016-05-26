@@ -196,6 +196,7 @@
     <ClCompile Include="logic\magnet_door.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="particles\ParticlesEmitter.cpp" />
     <ClCompile Include="particles\ParticleSystem.cpp" />
     <ClCompile Include="particles\particles_manager.cpp" />
     <ClCompile Include="Physx\physx_manager.cpp" />

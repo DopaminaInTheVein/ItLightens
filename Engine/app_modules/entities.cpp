@@ -356,13 +356,13 @@ bool CEntitiesModule::start() {
   SBB::postBool(sala, false);
   if (!recalc) {
     // restore the navmesh from the archive
-    /*std::thread thre(&CEntitiesModule::readNavmesh, this);
-    thre.detach();*/
+    //std::thread thre(&CEntitiesModule::readNavmesh, this);
+    //thre.detach();
   }
   else {
     // make mesh on a separate thread
-    std::thread thre(&CEntitiesModule::recalcNavmesh, this);
-    thre.detach();
+    //std::thread thre(&CEntitiesModule::recalcNavmesh, this);
+    //thre.detach();
   }
   TTagID tagIDcamera = getID("camera_main");
   TTagID tagIDwall = getID("breakable_wall");

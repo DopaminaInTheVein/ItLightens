@@ -7,14 +7,14 @@
 #include "particles\ParticleData.h"
 
 CRenderParticlesInstanced render_particles_instanced;
-
+/*
 float urandom() {
   return (float)rand() / (float)RAND_MAX;
 }
 
 float random(float vmin, float vmax) {
   return vmin + urandom() * (vmax - vmin);
-}
+}*/
 
 bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
   global_time = 0.f;
@@ -41,7 +41,7 @@ bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
   // This mesh has not been registered in the mesh manager
   instances_data_mesh = new CMesh("instanced_particles");
   if (!instances_data_mesh)
-	  return false;
+    return false;
   bool is_ok = instances_data_mesh->create(
     n
     , sizeof(TParticle)
@@ -59,7 +59,7 @@ bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
 void CRenderParticlesInstanced::render() const {
   CTraceScoped scope("CRenderParticlesInstanced");
   if (!instanced_mesh)
-	  return;	//mesh can be cleared by others
+    return;	//mesh can be cleared by others
 
   activateWorldMatrix(MAT44::Identity);
   //tech->activate();
@@ -72,7 +72,7 @@ void CRenderParticlesInstanced::render() const {
   activateBlend(BLENDCFG_DEFAULT);
 }
 
-void CRenderParticlesInstanced::update(float elapsed, const TParticleData& particle_data) {
+void CRenderParticlesInstanced::update(float elapsed, const TParticleData& particle_data, float size, float modifier_size) {
   // Update particles using some cpu code
   global_time += elapsed;
   int idx = 1;
@@ -85,23 +85,22 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
       p.center.y += 10.f;*/
 
     p.center = PhysxConversion::PxVec3ToVec3(particle_data.positionBuffer[idx - 1]);
+    float modifier_over_lifetime = (particle_data.maxLifeTimeBuffer[idx - 1] - particle_data.lifeTimeBuffer[idx - 1]) * modifier_size;
 
     //if lifetime expired, alpha = 0 to not render this particle
     if (particle_data.lifeTimeBuffer[idx - 1] <= 0.f)
       p.alpha = 0.f;
 
     p.rotation += VEC3(1, 0, 0)*elapsed;
-    p.size += elapsed / 10.0f;
-    if (p.size >= 1.0f)
-      p.size = 1.0f;
+    p.size = size*modifier_over_lifetime;
 
     ++idx;
   }
 
-  if(instances_data_mesh) instances_data_mesh->updateFromCPU(&instances[0]);
+  if (instances_data_mesh) instances_data_mesh->updateFromCPU(&instances[0]);
 }
 
 void CRenderParticlesInstanced::clear()
 {
-	instances_data_mesh->destroy();
+  instances_data_mesh->destroy();
 }

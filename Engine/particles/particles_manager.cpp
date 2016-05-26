@@ -64,15 +64,13 @@ void CParticlesManager::renderInMenu()
 
   ImGui::Separator();
 
-  ImGui::Text("Add particles, only temporal particles");
-  if (ImGui::SmallButton("Add particles(doesnt work yet)")) {
+  if (ImGui::SmallButton("Create particles system(doesnt work yet)")) {
     //nothing
   }
 
   ImGui::Separator();
 
-  if (ImGui::TreeNode("Particles systems")) {
-    ImGui::Text("all particles systems...");
+  if (ImGui::TreeNode("Particles systems list")) {
     for (auto& p : m_Particles) {
       std::string name;
       CHandle h = CHandle(p).getOwner();

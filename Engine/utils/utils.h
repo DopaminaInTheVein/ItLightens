@@ -31,6 +31,7 @@ bool		fatal(const char* fmt, ...);
 uint32_t	getID(const char* text);
 
 float		getDeltaTime(float always = false);
+float random(float vmin, float vmax);
 
 float squared(float i);
 
