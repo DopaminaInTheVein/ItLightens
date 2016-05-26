@@ -11,5 +11,6 @@ void SkelControllerGuard::myUpdate()
 	if (prevState == "idle" && currentState == "walk") {
 		dbg("Now walk!\n");
 	}
+	/****PROVISIONAL*****/currentState = "idle";
 	SkelController::myUpdate();
 }
