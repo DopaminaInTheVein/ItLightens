@@ -162,7 +162,7 @@ void CMesh::renderGroup(uint32_t group_idx) const {
 
 void CMesh::renderInstanced(const CMesh* instances_data, size_t ninstances) const {
   assert(isValid());
-  assert(instances_data->isValid());
+  if (!instances_data->isValid()) return;
 
   // Set the buffer strides.
   unsigned int strides[2];
@@ -198,7 +198,8 @@ void CMesh::renderInstanced(const CMesh* instances_data, size_t ninstances) cons
 void CMesh::updateFromCPU(const void *new_cpu_data, size_t num_bytes_to_update) {
 	if (num_bytes_to_update == 0)
 		num_bytes_to_update = num_vertexs * vtx_decl->bytes_per_vertex;
-	assert(vb);
+	if (!vb)
+		return;
 
 	D3D11_MAPPED_SUBRESOURCE mapped_resource;
 

@@ -1,85 +1,133 @@
 #ifndef	INC_PARTICLES_EMITTER_H_
 #define INC_PARTICLES_EMITTER_H_
 
-class CParticlesEmitter {
+struct TParticlesEmitter {
+	
+	//Position
+	PxVec3			m_RandomMaxPos;		//randoms are modifiers from initalPosition
+	PxVec3			m_RandomMinPos;
+
+	PxVec3			m_initialPosition;
+
+	//velocity
+	PxVec3			m_RandomMaxVel;	//randoms are modifiers from initialVelocity
+	PxVec3			m_RandomMinVel;
+
+	PxVec3			m_initialVelocity;	
+	PxVec3			m_velocityOverLifeTime;
+
+	//velocity changes (acceleration) on particle lifetime
+	PxVec3			m_acceleration;
+	PxVec3			m_accel_modifier;
+
+	//size
+	PxReal			m_size;
+	PxReal			m_modifier_lifetime;
+
+	//lifeTime
+	PxReal			m_lifeTimeMax;
+	PxReal			m_delay_start;
+
+	//color
+	PxReal			m_modifier_color;	//based on lifetime always
+
+	bool			m_collisions;
+	bool			m_gravity;
+	
 
 public:
-	struct Shape
-	{
-		enum Enum
-		{
-			eBOX = 0,
-		};
-	};
+	TParticlesEmitter() {
+		m_initialPosition = PxVec3(0, 0, 0);
+		m_RandomMaxPos = PxVec3(0, 0, 0);
+		m_RandomMinPos = PxVec3(0, 0, 0);
 
-private:
-	PxTransform			m_LocalPose;
-	PxRigidDynamic*		m_FrameBody;
+		m_gravity = false;
+		m_collisions = false;
+	}
+	TParticlesEmitter(PxVec3 position, bool gravity = false, bool collisions = true) {
+		m_RandomMaxPos = PxVec3(0,0,0);
+		m_RandomMinPos = PxVec3(0, 0, 0);
 
-	PxReal				m_ExtentX;
-	PxReal				m_ExtentY;
-	Shape::Enum			m_Shape;
+		m_initialPosition = position;
+		m_gravity = gravity;
+		m_collisions = collisions;
+	}
+	~TParticlesEmitter() {}
 
-	//state derived quantities
-	PxReal				m_EllipseRadius2;
-	PxReal				m_EllipseConstX0;
-	PxReal				m_EllipseConstX1;
-	PxReal				m_EllipseConstY0;
-	PxReal				m_EllipseConstY1;
+	//Position
+	//-----------------------------------------------------------------
+	PxVec3* GetPosition() { return &m_initialPosition; }
+	void SetPosition(const PxVec3& new_position) {
+		m_initialPosition = new_position;
+	}
+	//-----------------------------------------------------------------
 
-	//only needed during step computations.
-	PxVec3				m_BodyAngVel;
-	PxVec3				m_BodyLinVel;
-	PxVec3				m_BodyCenter;
-	PxTransform			m_GlobalPose;
-	PxVec3				m_LinMomentum;
-	PxVec3				m_AngMomentum;
+	//Velocity
+	//-----------------------------------------------------------------
+	PxVec3* GetVelocity() { return &m_initialVelocity; }
+	void SetVelocity(const PxVec3& new_velocity) {
+		m_initialVelocity = new_velocity;
+	}
 
-protected:
+	PxVec3* GetVelocityModifier() { return &m_velocityOverLifeTime; }
+	void SetVelocityModifier(const PxVec3& new_modif) {
+		m_velocityOverLifeTime = new_modif;
+	}
+	//-----------------------------------------------------------------
 
-	PxVec3				m_RandomPos;
-	PxReal				m_RandomAngle;
-	PxReal				m_Velocity;
-	PxReal				m_ParticleMass;
-						 
-	//derived quantities 
-	PxU32				m_NumSites;
-	PxU32				m_NumX;
-	PxU32				m_NumY;
-	PxReal				m_SpacingX;
-	PxReal				m_SpacingY;
-	PxReal				m_SpacingZ;
-						 
-	//only needed during step computations.
-	PxVec3				m_AxisX;
-	PxVec3				m_AxisY;
-	PxVec3				m_AxisZ;
-	PxVec3				m_BasePos;
+	//Acceleration
+	//-----------------------------------------------------------------
+	PxVec3* GetAcceleration() { return &m_acceleration; }
+	void SetAcceleration(const PxVec3& new_accel) {
+		m_initialVelocity = new_accel;
+	}
 
-public:
-	CParticlesEmitter(Shape::Enum shape, PxReal extentX, PxReal extentY, PxReal spacing);
-	~CParticlesEmitter();
+	PxVec3* GetAccelModifier() { return &m_accel_modifier; }
+	void SetAccelModifier(const PxVec3& new_modif) {
+		m_accel_modifier = new_modif;
+	}
+	//-----------------------------------------------------------------
 
-	void				setLocalPose(const PxTransform& pose) { m_LocalPose = pose; }
-	PxTransform			getLocalPose()						const { return m_LocalPose; }
+	//Gravity
+	//-----------------------------------------------------------------
+	bool* GetGravity() { return &m_gravity; }
+	void SetGravity(bool new_gravity) {
+		m_gravity = new_gravity;
+	}
+	//-----------------------------------------------------------------
 
-	void				setFrameRigidBody(PxRigidDynamic* rigidBody) { m_FrameBody = rigidBody; }
-	PxRigidDynamic*		getFrameRigidBody()					const { return m_FrameBody; }
+	//Collisions
+	//-----------------------------------------------------------------
+	bool* GetCollisions() { return &m_collisions; }
+	void SetCollisions(bool new_collisions) {
+		m_collisions = new_collisions;
+	}
+	//-----------------------------------------------------------------
 
-	void 				setRandomPos(PxVec3 t) { m_RandomPos = t; }
-	PxVec3 				getRandomPos()						const { return m_RandomPos; }
+	//LifeTime
+	//-----------------------------------------------------------------
+	float* GetLifeTime() { return &m_lifeTimeMax; }
+	void SetLifeTime(float new_lifeTime) {
+		m_lifeTimeMax = new_lifeTime;
+	}
+	//-----------------------------------------------------------------
 
-	void 				setRandomAngle(PxReal t) { m_RandomAngle = t; }
-	PxReal 				getRandomAngle()					const { return m_RandomAngle; }
+	//Delay at new start
+	//-----------------------------------------------------------------
+	float* GetDelayStart() { return &m_delay_start; }
+	void SetDelayStart(float new_delay) {
+		m_delay_start = new_delay;
+	}
+	//-----------------------------------------------------------------
 
-	void 				setVelocity(PxReal t) { m_Velocity = t; }
-	PxReal 				getVelocity()						const { return m_Velocity; }
+	//Modifier texture color, base on lifetime always
+	//-----------------------------------------------------------------
+	float* GetModifierColor() { return &m_modifier_color; }
+	void SetModifierColor(float new_modifier) {
+		m_modifier_color = new_modifier;
+	}
+	//-----------------------------------------------------------------
 
-	// Used for two way interaction, zero meaning, there is none
-	void				setParticleMass(PxReal m) { m_ParticleMass = m; }
-	PxReal 				getParticleMass()						const { return m_ParticleMass; }
-
-	void				step(PxParticleSystem& particles, PxReal dt, const PxVec3& externalAcceleration, PxReal maxParticleVelocity);
 };
 
 #endif

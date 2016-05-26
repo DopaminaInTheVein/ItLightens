@@ -1454,9 +1454,6 @@
     <ClInclude Include="render\render_instanced.h">
       <Filter>render</Filter>
     </ClInclude>
-    <ClInclude Include="particles\Emitter.h">
-      <Filter>particles</Filter>
-    </ClInclude>
     <ClInclude Include="particles\ParticleData.h">
       <Filter>particles</Filter>
     </ClInclude>

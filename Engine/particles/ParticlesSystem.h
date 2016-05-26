@@ -4,32 +4,48 @@
 #include "components\comp_base.h"
 #include "ParticleData.h"
 #include "render\render_instanced.h"
+#include "ParticlesEmitter.h"
 
 using namespace physx;
 
 class CParticleSystem : public TCompBase {
-  PxParticleSystem *			     m_pParticleSystem;
-  PxParticleCreationData		   m_particleData;
+  PxParticleSystem *			    m_pParticleSystem;
+  PxParticleCreationData			m_particleData;
 
-  int							             m_numParticles;
+  int							    m_numParticles;
 
-  PxVec3						           m_initial_pos;
-  PxVec3						           m_initial_velocity;
+  PxVec3						    m_initial_pos;
+  PxVec3						    m_initial_velocity;
 
-  PxU32*						           m_pParticleValidity;
-  PxU32						             m_validParticleRange;
+  PxU32*							m_pParticleValidity;
+  PxU32						        m_validParticleRange;
+  float								m_initial_lifeTime;
 
-  PxParticleExt::IndexPool*	   m_pIndexPool;
+  PxParticleExt::IndexPool*			m_pIndexPool;
 
-  const CTexture*				       m_pTexture;
+  const CTexture*				    m_pTexture;
 
-  TParticleData				         m_particles;
-  CRenderParticlesInstanced    m_RenderParticles;
+  TParticleData				        m_particles;
+  CRenderParticlesInstanced			m_RenderParticles;
+  TParticlesEmitter					m_Emitter;
 
-  const CMesh *                m_pParticle_mesh;
+  const CMesh *						m_pParticle_mesh;
 
   bool StepLifeTimeParticle(unsigned idx, float max_time, float dt);
   //void SetParticleInitialValues(unsigned idx);
+
+  
+
+
+  //debug ui values
+  //------------------------------------------------------------------
+  bool random_value_velocity = false;
+  bool random_value_position = false;
+  bool random_value_lifeTime = false;
+  //------------------------------------------------------------------
+
+  void UpdateRandomsAttr();
+  void SetBufferData();
 
 public:
 
@@ -47,6 +63,7 @@ public:
   void init();
   bool CreateParticles(TParticleData& particles);
   void update(float elapsed);
+  
   bool load(MKeyValue& atts);
 
   void renderInMenu();

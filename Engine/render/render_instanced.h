@@ -36,6 +36,7 @@ public:
 
   bool create(size_t max_instances, const CMesh* new_instanced_mesh);
   void update(float dt, const TParticleData& particle_data);
+  void clear();
 
   void render() const;
 };

@@ -40,6 +40,8 @@ bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
 
   // This mesh has not been registered in the mesh manager
   instances_data_mesh = new CMesh("instanced_particles");
+  if (!instances_data_mesh)
+	  return false;
   bool is_ok = instances_data_mesh->create(
     n
     , sizeof(TParticle)
@@ -56,7 +58,9 @@ bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
 
 void CRenderParticlesInstanced::render() const {
   CTraceScoped scope("CRenderParticlesInstanced");
-  assert(instanced_mesh);
+  if (!instanced_mesh)
+	  return;	//mesh can be cleared by others
+
   activateWorldMatrix(MAT44::Identity);
   //tech->activate();
   //texture->activate(TEXTURE_SLOT_DIFFUSE);
@@ -94,5 +98,10 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
     ++idx;
   }
 
-  instances_data_mesh->updateFromCPU(&instances[0]);
+  if(instances_data_mesh) instances_data_mesh->updateFromCPU(&instances[0]);
+}
+
+void CRenderParticlesInstanced::clear()
+{
+	instances_data_mesh->destroy();
 }

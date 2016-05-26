@@ -600,7 +600,6 @@
     <ClInclude Include="logic\polarity.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="mcv_platform.h" />
-    <ClInclude Include="particles\Emitter.h" />
     <ClInclude Include="particles\ParticleData.h" />
     <ClInclude Include="particles\ParticlesEmitter.h" />
     <ClInclude Include="particles\ParticlesSystem.h" />

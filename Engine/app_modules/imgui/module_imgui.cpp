@@ -175,7 +175,7 @@ void CImGuiModule::update(float dt) {
   //bool open = true;
   //ShowExampleAppConsole(&open);		//test console commands
 
-  ui.update();			//update ui
+  //ui.update();			//update ui
   //Debug->update();		//update log
 }
 
