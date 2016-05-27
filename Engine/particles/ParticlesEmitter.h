@@ -52,7 +52,7 @@ public:
     m_accel_modifier = PxVec3(0, 0, 0);
 
     m_size = 1.0f;
-    m_modifier_lifetime = 1.0f;
+    m_modifier_lifetime = -1.0f;
 
     m_lifeTimeMax = 1.0f;
     m_randomLifeTimeMax = 0.0f;

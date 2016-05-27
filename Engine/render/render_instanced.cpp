@@ -85,7 +85,11 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
       p.center.y += 10.f;*/
 
     p.center = PhysxConversion::PxVec3ToVec3(particle_data.positionBuffer[idx - 1]);
-    float modifier_over_lifetime = (particle_data.maxLifeTimeBuffer[idx - 1] - particle_data.lifeTimeBuffer[idx - 1]) * modifier_size;
+	float modifier_over_lifetime;
+	if (modifier_size < 0)
+		modifier_over_lifetime = 1;
+	else
+        modifier_over_lifetime = (particle_data.maxLifeTimeBuffer[idx - 1] - particle_data.lifeTimeBuffer[idx - 1]) * modifier_size;
 
     //if lifetime expired, alpha = 0 to not render this particle
     if (particle_data.lifeTimeBuffer[idx - 1] <= 0.f)

@@ -46,6 +46,7 @@ void CParticleSystem::SetBufferData() {
   m_pParticleValidity = std::vector<PxU32>(((m_pParticleSystem->getMaxParticles() + 31) >> 5) << 2).data();
 
   m_particles.numParticles = m_numParticles;
+
   bool ret = CreateParticles(m_particles);
   if (!ret) {
     fatal("particles not created\n");
@@ -104,6 +105,7 @@ void CParticleSystem::init() {
 
   m_Emitter.m_useSkeleton = false;
   m_Emitter.SetSize(1.0f);
+  m_Emitter.SetModifierSize(-1);
 
   g_particlesManager->AddParticlesSystem(this);
 
@@ -268,7 +270,7 @@ void CParticleSystem::update(float elapsed) {
   //}
 
   //update particle render data
-  m_RenderParticles.update(elapsed, m_particles, *m_Emitter.GetSize());
+  m_RenderParticles.update(elapsed, m_particles, *m_Emitter.GetSize(), *m_Emitter.GetModifierSize());
 }
 
 void CParticleSystem::UpdateRandomsAttr() {
@@ -300,6 +302,30 @@ void CParticleSystem::UpdateRandomsAttr() {
     }
   }
 }
+
+//#########################################################################################################
+//									File manager functions
+//#########################################################################################################
+
+#pragma region File manager functions
+
+void CParticleSystem::saveToFile(std::string fileName)
+{
+
+}
+
+void CParticleSystem::loadFromFile(std::string fileName)
+{
+
+}
+
+#pragma endregion
+
+//#########################################################################################################
+//									Particles System editor & debug
+//#########################################################################################################
+
+#pragma region Particles System editor & debug
 
 void CParticleSystem::renderInMenu()
 {
@@ -399,6 +425,8 @@ void CParticleSystem::renderInMenu()
 
     ImGui::DragFloat("size", m_Emitter.GetSize());
 
+	ImGui::DragFloat("size modifier, change on lifetime", m_Emitter.GetModifierSize());
+
     static int num_bone = 1;
     static std::string name_bone = "nothing";
     static VEC3 traslacion = VEC3(0, 0, 0);
@@ -444,3 +472,5 @@ void CParticleSystem::renderInMenu()
 
   data->unlock();
 }
+
+#pragma endregion

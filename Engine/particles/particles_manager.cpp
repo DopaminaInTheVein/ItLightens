@@ -9,11 +9,15 @@
 #include "resources/resources_manager.h"
 #include "components\comp_name.h"
 
+#include "app_modules\imgui\module_imgui.h"
+
 CParticlesManager *g_particlesManager;
 
 bool CParticlesManager::start()
 {
   m_pTechniqueParticles = Resources.get("particles.tech")->as<CRenderTechnique>();
+  m_particleEditor = false;
+  m_pNewParticleSystem = nullptr;
 
   /*auto hs = tags_manager.getHandlesByTag("particles");
 
@@ -28,9 +32,14 @@ bool CParticlesManager::start()
 
 void CParticlesManager::update(float dt)
 {
-  for (auto& particles : m_Particles) {
-    particles->update(dt);
-  }
+	for (auto& particles : m_Particles) {
+		particles->update(dt);
+	}
+#ifdef _DEBUG
+	if (io->keys[VK_F10].becomesPressed()) {
+		m_particleEditor = !m_particleEditor;
+	}
+#endif
 }
 
 void CParticlesManager::renderParticles()
@@ -58,15 +67,51 @@ void CParticlesManager::DeleteParticleSytem(CParticleSystem * particle_system)
 {
 }
 
+void CParticlesManager::RenderParticlesEditor()
+{
+	ImGui::SetNextWindowSize(ImVec2(512, 512), ImGuiSetCond_FirstUseEver);
+	if (m_particleEditor) {
+		static std::string file = "NOT_LOAD";
+		static std::string new_file = "default_particles";
+		ImGui::Begin("ParticleEditor", &m_particleEditor);
+
+		if (ImGui::SmallButton("New Particles System")) {
+
+		}
+		
+		ImGui::SameLine();
+		if (ImGui::SmallButton("Load Particles System")) {
+			file = CImGuiModule::getFilePath();
+		}
+
+		if (file != "NOT_LOAD") {
+			ImGui::Text("File loaded from %s\n", file.c_str());
+		}
+
+
+
+		
+
+		if (m_pNewParticleSystem) {
+
+			ImGui::Separator();
+
+			m_pNewParticleSystem->renderInMenu();
+
+			ImGui::Separator();
+
+			if (ImGui::SmallButton("Save Particles System")) {
+				//TODO: save particles system to file
+			}
+		}
+
+		ImGui::End();
+	}
+}
+
 void CParticlesManager::renderInMenu()
 {
   ImGui::Text("num particles system = %d\n", m_Particles.size());
-
-  ImGui::Separator();
-
-  if (ImGui::SmallButton("Create particles system(doesnt work yet)")) {
-    //nothing
-  }
 
   ImGui::Separator();
 

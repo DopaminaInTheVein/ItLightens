@@ -36,15 +36,18 @@ void CImGuiModule::update(float dt) {
   ImGui::Begin("Debug UI", &menu, ImVec2(800, 512), -1.0f, window_flags);
   ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 
-  //Console log
+  //Engine Apps
   //---------------------------------------
   if (ImGui::BeginMenuBar())
   {
-    if (ImGui::BeginMenu("Console Debug"))
+    if (ImGui::BeginMenu("Apps"))
     {
       ImGui::MenuItem("Log (L)", NULL, Debug->getStatus());
       ImGui::MenuItem("Commands (O)", NULL, Debug->GetCommandsConsoleState());
-      //Debug->OpenConsole();
+#ifdef _DEBUG
+	  ImGui::MenuItem("Particle editor (F10)", NULL, g_particlesManager->GetParticleEditorState());
+#endif
+	  //Debug->OpenConsole();
       ImGui::EndMenu();
     }
     ImGui::EndMenuBar();

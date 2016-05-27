@@ -84,6 +84,7 @@ bool CApp::start() {
   mod_renders.push_back(render_deferred);
   mod_renders.push_back(entities);
   mod_renders.push_back(Debug);
+  mod_renders.push_back(g_particlesManager);
   mod_renders.push_back(Gui);
   mod_renders.push_back(imgui);
 
