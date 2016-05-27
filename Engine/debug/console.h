@@ -3,6 +3,7 @@
 
 #include "imgui\imgui.h"
 #include "app_modules\io\io.h"
+#include "utils/utils.h"
 #include <stdlib.h>   
 #include <stdio.h> 
 #include <ctype.h>
@@ -49,6 +50,34 @@ class CConsole
 	void Command_TeleportXYZ(std::vector<char*>& args);
 
 	void Command_Teleport(std::vector<char*> &args);
+	void Command_Lua(std::vector<char*> &args);
+
+	//Paste
+	//Clipboard text
+	std::string GetClipboardText()
+	{
+		// Try opening the clipboard
+		if (!OpenClipboard(nullptr)) return "";
+
+		// Get handle of clipboard object for ANSI text
+		HANDLE hData = GetClipboardData(CF_TEXT);
+		if (hData == nullptr) return "";
+
+		// Lock the handle to get the actual text pointer
+		char * pszText = static_cast<char*>(GlobalLock(hData));
+		if (pszText == nullptr) return "";
+
+		// Save text in a string class instance
+		std::string text(pszText);
+
+		// Release the lock
+		GlobalUnlock(hData);
+
+		// Release the clipboard
+		CloseClipboard();
+
+		return text;
+	}
 
 public:
 
@@ -159,6 +188,10 @@ public:
 			//(ImGui::IsRootWindowOrAnyChildFocused() && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(0))
 			/*if (ImGui::IsItemHovered() || (ImGui::IsRootWindowOrAnyChildFocused() && !ImGui::IsAnyItemActive()))
 				ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget*/
+			if (ImGui::Button("Paste")) {
+				std::string clipboard = GetClipboardText();
+				strcpy(InputBuf, clipboard.c_str());
+			}
 		}
 		ImGui::End();
 	}
@@ -219,8 +252,10 @@ public:
 		else if (Stricmp(command_line, "TELEPORT") == 0) {
 			Command_Teleport(args);
 		}
-		else
-		{
+		else if (Stricmp(command_line, "LUA") == 0) {
+			Command_Lua(args);
+		}
+		else {
 			AddLog("[error]Unknown command: '%s'\n", command_line);
 		}
 

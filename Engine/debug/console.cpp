@@ -6,6 +6,7 @@
 #include "components\comp_charactercontroller.h"
 #include "components\comp_transform.h"
 #include "components\entity.h"
+#include "app_modules/logic_manager/logic_manager.h"
 
 void CConsole::Command_TeleportXYZ(std::vector<char*> &args) {
 	CEntity *e = tags_manager.getFirstHavingTag(getID("player"));
@@ -56,4 +57,14 @@ void CConsole::Command_Teleport(std::vector<char*> &args) {
 
 	Command_TeleportXYZ(args);
 
+}
+
+
+void CConsole::Command_Lua(std::vector<char*> &args) {
+	if (args.size() == 0) {
+		AddLog("[error] syntax error\n");
+		AddLog("# format: LUA need a list of lua commands\n");
+		return;
+	}
+	for (auto arg : args) logic_manager->throwUserEvent(arg, "");
 }

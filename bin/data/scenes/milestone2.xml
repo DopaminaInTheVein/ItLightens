@@ -1240,7 +1240,7 @@
    type_shape="sphere"
    radius="1.64"/>
 <tags
-   tags="generator trigger"/>
+   tags="trigger generator"/>
 <generator/>
 <name
    name="trigger_1"/>
@@ -1275,7 +1275,7 @@
    type_shape="sphere"
    radius="1.64"/>
 <tags
-   tags="generator trigger"/>
+   tags="trigger generator"/>
 <generator/>
 <name
    name="trigger_2"/>
@@ -1472,7 +1472,7 @@
    type_shape="box"
    size="7.26 3.49 16.45"/>
 <tags
-   tags="victory_point trigger"/>
+   tags="trigger victory_point"/>
 <victory_point/>
 <name
    name="TriggerBox_1"/>

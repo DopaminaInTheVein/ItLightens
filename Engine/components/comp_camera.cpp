@@ -29,6 +29,7 @@ bool TCompCamera::load(MKeyValue& atts) {
 	float fov_in_degs = atts.getFloat("fov", 70.f);
 	setProjection(deg2rad(fov_in_degs), znear, zfar);
 	detect_colsions = atts.getBool("collision", false);
+	smoothDefault = smoothCurrent = 10.f;
 	return true;
 }
 
@@ -91,6 +92,7 @@ void TCompCamera::update(float dt) {
 				target_e->sendMsg(msg_camera);	//set target camera
 			}
 
+			smoothCurrent = 1.f; //Return to player smoothly
 			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(egc->getName()), cameraFinished);
 		}
 	}
@@ -108,7 +110,10 @@ void TCompCamera::update(float dt) {
 				if (!checkColision(pos))
 					this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
 			}
-			else this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());	//smooth movement
+			if (!detect_colsions || !checkColision(pos)) {
+				if (abs(smoothCurrent-smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
+				this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux(), smoothCurrent);
+			}
 		}
 		else if (GameController->GetFreeCamera()) {
 			CHandle owner = CHandle(this).getOwner();

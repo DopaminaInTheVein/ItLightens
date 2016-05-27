@@ -34,7 +34,7 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
 };
 
 void TCompGuidedCamera::start(float speed) {
-  curPoint = 0;
+  curPoint = 1;
   factor = 0.0f;
   velocity = speed == 0.f ? velocity_default : speed;
 }
@@ -78,37 +78,36 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* c
   }
 
   VEC3 goTo = positions[curPoint];
-  VEC3 nextPoint = positions[clamp(curPoint + 1, 0, positions.size()-1)];
+  VEC3 comeFrom = positions[curPoint-1];
+  VEC3 lookTo = targets[curPoint];
+  VEC3 lookFrom = targets[curPoint-1];
 
-  VEC3 pos = camTransform->getPosition();
-  assert(isValid(pos));
-  VEC3 look = nextPoint;
-  float dist = simpleDist(pos, goTo);
-  dbg("dist: %f\n", dist);
-  if (dist > 1.f) {
+  if (factor < 1.1f) {
 	//Going to target
 	std::vector<VEC3> posCmr = std::vector<VEC3>(4); //Catmull Rom positions
 	std::vector<VEC3> lookCmr = std::vector<VEC3>(4); //Catmull Rom positions
 	for (int i = 0; i < posCmr.size(); i++) {
-		posCmr[i] = positions[clamp(curPoint - 2 + i, 0, positions.size()-1)];
-		lookCmr[i] = targets[clamp(curPoint - 2 + i, 0, positions.size()-1)];
+		int index = clamp(curPoint - 2 + i, 0, positions.size() - 1);
+		posCmr[i] = positions[index];
+		lookCmr[i] = targets[index];
 	}
 	//Factor = distancia recorrida este frame / distancia total punto actual y siguiente
 	float moveAmount = getDeltaTime() * velocity;
 
-	//TODO: factor para look distinto!
-	factor += (getDeltaTime() * velocity) / (realDist(goTo, nextPoint));
-	pos = VEC3::CatmullRom(posCmr[0], posCmr[1], posCmr[2], posCmr[3], factor);
-	assert(isValid(pos));
-	look = default_dirs 
-		? nextPoint 
+	factor += (getDeltaTime() * velocity) / (realDist(comeFrom, goTo));
+	VEC3 pos = VEC3::CatmullRom(posCmr[0], posCmr[1], posCmr[2], posCmr[3], factor);
+	VEC3 look = default_dirs
+		? positions[clamp(curPoint + 1, 0, positions.size()-1)]
 		: VEC3::CatmullRom(lookCmr[0], lookCmr[1], lookCmr[2], lookCmr[3], factor);
 	cam->smoothLookAt(pos, look, cam->getUpAux(), 0.5f);
 	camTransform->lookAt(pos, look, cam->getUpAux());
+	Debug->DrawLine(comeFrom, goTo);
+	Debug->DrawLine(lookFrom, lookTo, VEC3(0,0,1));
   }
   else {
 	//New target
     ++curPoint;
+	dbg("End point, factor = %f.3\n", factor);
     factor = 0.0f;
   }
   return true;

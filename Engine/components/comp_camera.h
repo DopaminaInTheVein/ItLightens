@@ -12,7 +12,8 @@ struct TMsgGetCullingViewProj;
 // ------------------------------------
 struct TCompCamera : public CCamera, public TCompBase {
   bool detect_colsions;
-  //float factor = 0.0f;
+  float smoothDefault;
+  float smoothCurrent;
 
   //Guided camera
   CHandle guidedCamera;
