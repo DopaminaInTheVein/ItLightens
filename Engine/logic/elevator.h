@@ -28,11 +28,11 @@ class elevator : public TCompBase {
 	TCompPhysics * physics;
 
 	//Private Funcs
-	bool getUpdateInfo();
 	void updateMove();
 	void notifyNewState();
 
 public:
+	bool getUpdateInfo(CHandle parent);
 	void update(float elapsed);
 	void onElevatorAction(const TMsgActivate&);
 	bool load(MKeyValue& atts);

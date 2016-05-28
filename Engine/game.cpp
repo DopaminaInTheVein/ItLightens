@@ -32,6 +32,7 @@ CDirectoyWatcher resources_dir_watcher;
 
 // --------------------------------------------
 #include "app_modules/entities.h"
+CEntitiesModule * entities = nullptr;
 
 //DEBUG
 CDebug *	  Debug = nullptr;
@@ -47,7 +48,7 @@ bool CApp::start() {
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
 	Gui = new CGuiModule;
-	auto entities = new CEntitiesModule;
+	entities = new CEntitiesModule;
 	auto render_deferred = new CRenderDeferredModule;
 	io = new CIOModule;     // It's the global io
 	g_PhysxManager = new CPhysxManager;
@@ -151,6 +152,13 @@ void CApp::stop() {
 	all_modules.clear();
 }
 
+//----------------------------------
+void CApp::changeScene() {
+	dbg("Destroying scene...\n");
+	entities->destroyAllEntities();
+	sceneToLoad = "room_one";
+}
+
 void CApp::restart() {
 	HWND hTempWnd = getHWnd();
 	char szFileName[MAX_PATH] = "";
@@ -180,8 +188,11 @@ void CApp::update(float elapsed) {
 		}
 		static float ctime = 0.f;
 		ctime += elapsed* 0.01f;
-
 		CHandleManager::destroyAllPendingObjects();
+		if (sceneToLoad != "" && entities->size() == 0) {
+			entities->initLevel(sceneToLoad);
+			sceneToLoad = "";
+		}
 }
 
 // ----------------------------------

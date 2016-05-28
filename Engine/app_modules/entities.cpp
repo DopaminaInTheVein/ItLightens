@@ -24,6 +24,7 @@
 #include <fstream>
 
 DECL_OBJ_MANAGER("entity", CEntity);		//need to be first
+
 DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("transform", TCompTransform);
 DECL_OBJ_MANAGER("snoozer", TCompSnoozer);
@@ -303,154 +304,186 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
   SUBSCRIBE(player_controller_speedy, TMsgSetControllable, onSetControllable);
 
-  CApp &app = CApp::get();
-  std::string file_options = app.file_options_json;
-  map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
-
-  //sala = "tiling";
-  sala = fields["room_one"];
-  //sala = "drones";
-  //sala = "boxes";
-  //sala = "milestone2";
-  //sala = "scene_milestone_1";
-  //sala = "scene_test_recast";
-  //sala = "pruebaExportador";
-  //sala = "scene_basic_lights";
-  //sala = "test_simple";
-  //sala = "test_guard";
-  //sala = "test_pol";
-  //sala = "test_guard";
-  //sala = "test_anim";
-  //sala = "test_column_navmesh";
-
-  SBB::postSala(sala);
-  salaloc = "data/navmeshes/" + sala + ".data";
-
-  CEntityParser ep;
-
-  bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
-  assert(is_ok);
-
-  // GENERATE NAVMESH
-  collisionables = ep.getCollisionables();
-  SBB::postHandlesVector("collisionables", collisionables);
-  CNavmesh nav;
-  nav.m_input.clearInput();
-  for (CHandle han : collisionables) {
-    CEntity * e = han;
-    if (e) {
-      TCompPhysics * p = e->get<TCompPhysics>();
-      const PxBounds3 bounds = p->getActor()->getWorldBounds();
-      VEC3 min, max;
-      min.x = bounds.minimum.x;
-      min.y = bounds.minimum.y;
-      min.z = bounds.minimum.z;
-      max.x = bounds.maximum.x;
-      max.y = bounds.maximum.y;
-      max.z = bounds.maximum.z;
-      nav.m_input.addInput(min, max);
-      /*
-      PxGeometryHolder geo = p->getShape()->getGeometry();
-      PxTriangleMeshGeometry mesh = geo.triangleMesh();
-      nav.m_input.addInput(mesh);
-      */
-    }
-  }
-  nav.m_input.computeBoundaries();
-  SBB::postNavmesh(nav);
-  std::ifstream is(salaloc.c_str());
-  bool recalc = !is.is_open();
-  is.close();
-  SBB::postBool(sala, false);
-  if (!recalc) {
-    // restore the navmesh from the archive
-    //std::thread thre(&CEntitiesModule::readNavmesh, this);
-    //thre.detach();
-  }
-  else {
-    // make mesh on a separate thread
-    //std::thread thre(&CEntitiesModule::recalcNavmesh, this);
-    //thre.detach();
-  }
-  TTagID tagIDcamera = getID("camera_main");
-  TTagID tagIDwall = getID("breakable_wall");
-  TTagID tagIDminus = getID("minus_wall");
-  TTagID tagIDplus = getID("plus_wall");
-  TTagID tagIDrec = getID("recover_point");
-
-  // Camara del player
-  CHandle camera = tags_manager.getFirstHavingTag("camera_main");
-  CEntity * camera_e = camera;
-  if (!camera_e) {
-    //main camera needed
-    fatal("main camera needed!!\n");
-    assert(false);
-  }
-  TCompCamera * pcam = camera_e->get<TCompCamera>();
-
-  CHandle t = tags_manager.getFirstHavingTag("player");
-  CEntity * target_e = t;
-
-  CHandle helper_arrow = tags_manager.getFirstHavingTag("helper_arrow");
-  CEntity * helper_arrow_e = helper_arrow;
-
-  // Set the player in the 3rdPersonController
-  if (camera_e && t.isValid()) {
-    TMsgSetTarget msg;
-    msg.target = t;
-    msg.who = PLAYER;
-    camera_e->sendMsg(msg);	//set camera
-    if (helper_arrow.isValid()) helper_arrow_e->sendMsg(msg);
-
-    TMsgSetCamera msg_camera;
-    msg_camera.camera = camera;
-    target_e->sendMsg(msg_camera); //set target camera
-  }
-  //}
-  TTagID generators = getID("generator");
-  VHandles generatorsHandles = tags_manager.getHandlesByTag(generators);
-  SBB::postHandlesVector("generatorsHandles", generatorsHandles);
-
-  // Set the player in the Speedy AIs
-  TTagID tagIDSpeedy = getID("AI_speedy");
-  VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
-
-  for (CHandle speedyHandle : speedyHandles) {
-    CEntity * speedy_e = speedyHandle;
-    TMsgSetPlayer msg_player;
-    msg_player.player = t;
-    speedy_e->sendMsg(msg_player);
-  }
-
-  SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
-  SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
-  SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
-  SBB::postHandlesVector("wptsRecoverPoint", tags_manager.getHandlesByTag(tagIDrec));
-
-  getHandleManager<player_controller>()->onAll(&player_controller::Init);
-  getHandleManager<player_controller_speedy>()->onAll(&player_controller_speedy::Init);
-  getHandleManager<player_controller_cientifico>()->onAll(&player_controller_cientifico::Init);
-  getHandleManager<player_controller_mole>()->onAll(&player_controller_mole::Init);
-
-  getHandleManager<bt_guard>()->onAll(&bt_guard::Init);
-  getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
-  getHandleManager<bt_speedy>()->onAll(&bt_speedy::Init);
-  getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
-  //getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
-  getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
-  getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
-  getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
-  getHandleManager<TCompWire>()->onAll(&TCompWire::init);
-  getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
-  getHandleManager<TCompBox>()->onAll(&TCompBox::init);
+  initLevel("room_one");
 
   return true;
+}
+
+void CEntitiesModule::initLevel(string level) {
+	CApp &app = CApp::get();
+	std::string file_options = app.file_options_json;
+	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
+
+	//sala = "tiling";
+	sala = fields[level];
+	//sala = "drones";
+	//sala = "boxes";
+	//sala = "milestone2";
+	//sala = "scene_milestone_1";
+	//sala = "scene_test_recast";
+	//sala = "pruebaExportador";
+	//sala = "scene_basic_lights";
+	//sala = "test_simple";
+	//sala = "test_guard";
+	//sala = "test_pol";
+	//sala = "test_guard";
+	//sala = "test_anim";
+	//sala = "test_column_navmesh";
+
+	SBB::postSala(sala);
+	salaloc = "data/navmeshes/" + sala + ".data";
+
+	CEntityParser ep;
+
+	dbg("Loading scene... (%d entities)\n", size());
+	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
+	assert(is_ok);
+	dbg("Scene Loaded! (%d entities)\n", size());
+
+	// GENERATE NAVMESH
+	collisionables = ep.getCollisionables();
+	SBB::postHandlesVector("collisionables", collisionables);
+	CNavmesh nav;
+	nav.m_input.clearInput();
+	for (CHandle han : collisionables) {
+		CEntity * e = han;
+		if (e) {
+			TCompPhysics * p = e->get<TCompPhysics>();
+			const PxBounds3 bounds = p->getActor()->getWorldBounds();
+			VEC3 min, max;
+			min.x = bounds.minimum.x;
+			min.y = bounds.minimum.y;
+			min.z = bounds.minimum.z;
+			max.x = bounds.maximum.x;
+			max.y = bounds.maximum.y;
+			max.z = bounds.maximum.z;
+			nav.m_input.addInput(min, max);
+			/*
+			PxGeometryHolder geo = p->getShape()->getGeometry();
+			PxTriangleMeshGeometry mesh = geo.triangleMesh();
+			nav.m_input.addInput(mesh);
+			*/
+		}
+	}
+	nav.m_input.computeBoundaries();
+	SBB::postNavmesh(nav);
+	std::ifstream is(salaloc.c_str());
+	bool recalc = !is.is_open();
+	is.close();
+	SBB::postBool(sala, false);
+	if (!recalc) {
+		// restore the navmesh from the archive
+		//std::thread thre(&CEntitiesModule::readNavmesh, this);
+		//thre.detach();
+	}
+	else {
+		// make mesh on a separate thread
+		//std::thread thre(&CEntitiesModule::recalcNavmesh, this);
+		//thre.detach();
+	}
+	TTagID tagIDcamera = getID("camera_main");
+	TTagID tagIDwall = getID("breakable_wall");
+	TTagID tagIDminus = getID("minus_wall");
+	TTagID tagIDplus = getID("plus_wall");
+	TTagID tagIDrec = getID("recover_point");
+
+	// Camara del player
+	CHandle camera = tags_manager.getFirstHavingTag("camera_main");
+	CEntity * camera_e = camera;
+	if (!camera_e) {
+		//main camera needed
+		fatal("main camera needed!!\n");
+		assert(false);
+	}
+	TCompCamera * pcam = camera_e->get<TCompCamera>();
+
+	CHandle t = tags_manager.getFirstHavingTag("player");
+	CEntity * target_e = t;
+
+	CHandle helper_arrow = tags_manager.getFirstHavingTag("helper_arrow");
+	CEntity * helper_arrow_e = helper_arrow;
+
+	// Set the player in the 3rdPersonController
+	if (camera_e && t.isValid()) {
+		TMsgSetTarget msg;
+		msg.target = t;
+		msg.who = PLAYER;
+		camera_e->sendMsg(msg);	//set camera
+		if (helper_arrow.isValid()) helper_arrow_e->sendMsg(msg);
+
+		TMsgSetCamera msg_camera;
+		msg_camera.camera = camera;
+		target_e->sendMsg(msg_camera); //set target camera
+	}
+	//}
+	TTagID generators = getID("generator");
+	VHandles generatorsHandles = tags_manager.getHandlesByTag(generators);
+	SBB::postHandlesVector("generatorsHandles", generatorsHandles);
+
+	// Set the player in the Speedy AIs
+	TTagID tagIDSpeedy = getID("AI_speedy");
+	VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
+
+	for (CHandle speedyHandle : speedyHandles) {
+		CEntity * speedy_e = speedyHandle;
+		TMsgSetPlayer msg_player;
+		msg_player.player = t;
+		speedy_e->sendMsg(msg_player);
+	}
+
+	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
+	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
+	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
+	SBB::postHandlesVector("wptsRecoverPoint", tags_manager.getHandlesByTag(tagIDrec));
+
+	getHandleManager<player_controller>()->onAll(&player_controller::Init);
+	getHandleManager<player_controller_speedy>()->onAll(&player_controller_speedy::Init);
+	getHandleManager<player_controller_cientifico>()->onAll(&player_controller_cientifico::Init);
+	getHandleManager<player_controller_mole>()->onAll(&player_controller_mole::Init);
+
+	getHandleManager<bt_guard>()->onAll(&bt_guard::Init);
+	getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
+	getHandleManager<bt_speedy>()->onAll(&bt_speedy::Init);
+	getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
+	//getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
+	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
+	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
+	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
+	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
+	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
+	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
+}
+
+void CEntitiesModule::destroyAllEntities() {
+  getHandleManager<CEntity>()->each([](CEntity * e) {
+	  CHandle(e).destroy();
+  });
+}
+
+void CEntitiesModule::destroyRandomEntity(float percent) {
+	float currentSize = (float)size();
+	getHandleManager<CEntity>()->each([currentSize, percent](CEntity * e) {
+		int r = rand() % (int)currentSize;
+		if ((float)r / currentSize < percent) {
+			dbg("Elimino entidad %s\n", e->getName());
+			CHandle(e).destroy();
+		}
+	});
 }
 
 void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
+  
+  //Test
+  //if (io->keys['Z'].becomesPressed()) {
+	 // for (int i = 0; i < 1; i++) {
+		//  if (size() == 0) break;
+		//  destroyRandomEntity(0.1f);
+	 // }
+  //}
+
   static float ia_wait = 0.0f;
   ia_wait += getDeltaTime();
 
@@ -601,4 +634,8 @@ void CEntitiesModule::readNavmesh() {
 void CEntitiesModule::fixedUpdate(float elapsed)
 {
   getHandleManager<TCompDrone>()->fixedUpdateAll(elapsed);
+}
+
+int CEntitiesModule::size() {
+	return getHandleManager<CEntity>()->size();
 }

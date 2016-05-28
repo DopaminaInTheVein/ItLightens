@@ -59,7 +59,8 @@ void CPlayerBase::onSetControllable(const TMsgSetControllable& msg) {
 
 void CPlayerBase::update(float elapsed) {
 	PROFILE_FUNCTION("update base");
-	if (controlEnabled) {
+	if (!SetMyEntity()) return;
+	if (camera.isValid() && controlEnabled) {
 		bool alive = !checkDead();
 		if (alive) {
 			UpdateMoves();
@@ -315,9 +316,10 @@ void CPlayerBase::Moving()
 //##########################################################################
 
 // Sets the entity
-void CPlayerBase::SetMyEntity() {
+bool CPlayerBase::SetMyEntity() {
 	PROFILE_FUNCTION("set enitity base");
 	myEntity = myParent;
+	return myEntity;
 }
 
 void CPlayerBase::renderInMenu()

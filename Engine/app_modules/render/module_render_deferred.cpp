@@ -163,7 +163,7 @@ void CRenderDeferredModule::renderGBuffer() {
   activateWorldMatrix(MAT44::Identity);
 
   // Mandar a pintar los 'solidos'
-  RenderManager.renderAll(h_camera, CRenderManager::SOLID_OBJS);
+  if (h_camera.isValid())  RenderManager.renderAll(h_camera, CRenderManager::SOLID_OBJS);
 
   activateZ(ZCFG_DEFAULT);
 }
@@ -467,6 +467,7 @@ void CRenderDeferredModule::GlowEdges() {
 		PROFILE_FUNCTION("referred: GlowEdges");
 		CTraceScoped scope("glow edges");
 
+
 		ID3D11RenderTargetView* rts1[3] = {
 			rt_selfIlum->getRenderTargetView()
 			,	nullptr   // remove the other rt's from the pipeline
@@ -480,31 +481,33 @@ void CRenderDeferredModule::GlowEdges() {
 		activateBlend(BLENDCFG_COMBINATIVE);
 		drawFullScreen(rt_data2, tech);
 
+		//TODO: ReviewPedro
 		CEntity *e = tags_manager.getFirstHavingTag("player");
-		TCompLife * life = e->get<TCompLife>();
-		if(life)
-			shader_ctes_object.life_player = life->getCurrent();
-		else {
-			shader_ctes_object.life_player = 100.0f;
+		if (e) {
+			TCompLife * life = e->get<TCompLife>();
+			if (life)
+				shader_ctes_object.life_player = life->getCurrent();
+			else {
+				shader_ctes_object.life_player = 100.0f;
+			}
+			shader_ctes_globals.uploadToGPU();
+
+
+			player_controller *player = e->get<player_controller>();
+			shader_ctes_object.direction = player->GetPolarityInt();
+			shader_ctes_object.uploadToGPU();
+
+
+			blurEffectLights(false);
+
+			tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
+
+			activateBlend(BLENDCFG_COMBINATIVE);
+			//activateBlend(BLENDCFG_ADDITIVE);
+			Render.activateBackBuffer();				//render on screen
+			activateZ(ZCFG_ALL_DISABLED);
+			drawFullScreen(rt_selfIlum_blurred, tech);
 		}
-		shader_ctes_globals.uploadToGPU();
-
-
-		player_controller *player = e->get<player_controller>();
-		shader_ctes_object.direction = player->GetPolarityInt();
-		shader_ctes_object.uploadToGPU();
-
-
-		blurEffectLights(false);
-
-		tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
-
-		activateBlend(BLENDCFG_COMBINATIVE);
-		//activateBlend(BLENDCFG_ADDITIVE);
-		Render.activateBackBuffer();				//render on screen
-		activateZ(ZCFG_ALL_DISABLED);
-		drawFullScreen(rt_selfIlum_blurred, tech);
-
 		activateBlend(BLENDCFG_DEFAULT);
 	}
 }

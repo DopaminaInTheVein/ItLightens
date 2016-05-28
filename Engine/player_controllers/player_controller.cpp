@@ -251,8 +251,6 @@ void player_controller::createDevolveLight() {
 
 void player_controller::myUpdate() {
 	PROFILE_FUNCTION("player controller: MY_update");
-	SetMyEntity();
-
 	UpdateDamage();
 	____TIMER__UPDATE_(timerDamaged);
 	if (isDamaged()) {
@@ -606,7 +604,6 @@ void player_controller::UpdateMoves()
 	VEC3 direction = directionForward + directionLateral;
 	assert(isValid(direction));
 	CEntity * camera_e = camera;
-
 	TCompTransform* camera_comp = camera_e->get<TCompTransform>();
 
 	direction.Normalize();

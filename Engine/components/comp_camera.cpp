@@ -97,11 +97,6 @@ void TCompCamera::update(float dt) {
 		}
 	}
 	if (!cameraIsGuided) {
-		TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
-		CHandle targetowner = obtarged->target;
-		CEntity* targeted = targetowner;
-		TCompTransform * targettrans = targeted->get<TCompTransform>();
-
 		if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
 			VEC3 pos = tmx->getPosition();
 			pos.y += 2;
@@ -124,7 +119,15 @@ void TCompCamera::update(float dt) {
 			this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
 		}
 		else {
-			this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());	//smooth movement
+			if (e_owner) {
+				TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
+				CHandle targetowner = obtarged->target;
+				if (targetowner.isValid()) {
+					CEntity* targeted = targetowner;
+					TCompTransform * targettrans = targeted->get<TCompTransform>();
+					if (targettrans) this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());
+				}
+			}
 		}
 	}
 }

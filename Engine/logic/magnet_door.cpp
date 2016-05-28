@@ -68,12 +68,10 @@ void magnet_door::onCreate(const TMsgEntityCreated&)
 
 void magnet_door::update(float elapsed)
 {
-	if (getUpdateInfo()) {
-		updateMagneticBehaviour();
-		updateCinematicState();
-		updateMove();
-		notifyNewState();
-	}
+	updateMagneticBehaviour();
+	updateCinematicState();
+	updateMove();
+	notifyNewState();
 }
 
 //Set magneticBehaviour to none, opening or closing 
@@ -176,9 +174,9 @@ void magnet_door::notifyNewState()
 	prevCinematicState = cinematicState;
 }
 
-bool magnet_door::getUpdateInfo() {
+bool magnet_door::getUpdateInfo(CHandle parent) {
 	//My Info
-	myEntity = CHandle(this).getOwner();
+	myEntity = compBaseEntity;
 	if (!myEntity.isValid()) return false;
 	CEntity* eMe = myEntity;
 	transform = eMe->get<TCompTransform>();

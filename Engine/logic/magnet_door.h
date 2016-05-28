@@ -39,13 +39,13 @@ class magnet_door : public TCompBase {
 	pols playerPolarity;
 
 	//Private Funcs
-	bool getUpdateInfo();
 	void updateMagneticBehaviour();
 	void updateCinematicState();
 	void updateMove();
 	void notifyNewState();
 
 public:
+	bool getUpdateInfo(CHandle parent) override;
 	void update(float elapsed);
 	void onSetPolarity(const TMsgSetPolarity&);
 	void onSetLocked(const TMsgSetLocked&);

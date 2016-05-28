@@ -15,7 +15,6 @@ class CObjectManager;
 template<class TObj>
 CObjectManager<TObj>* getHandleManager();
 
-
 // ---------------------------------
 class CHandle {
 
@@ -41,6 +40,13 @@ public:
   CHandle( TObj* obj_addr ) {
     auto hm = getHandleManager<std::remove_const<TObj>::type>();
     *this = hm->getHandleFromObjAddr( obj_addr );
+  }
+
+  template< class TObj>
+  CHandle(TObj* obj_addr, uint32_t type) {
+	  auto hm = (CHandleManager::getByType(type));
+	  //auto hm2 = getHandleManager<std::remove_const<TObj>::type>();
+	  *this = hm->getHandleFromObjAddr(obj_addr);
   }
 
 	uint32_t getType()          const { return type; }

@@ -35,10 +35,8 @@ void elevator::onCreate(const TMsgEntityCreated&)
 
 void elevator::update(float elapsed)
 {
-	if (getUpdateInfo()) {
-		updateMove();
-		notifyNewState();
-	}
+	updateMove();
+	notifyNewState();
 }
 
 //Move door and set OPENED or CLOSED if movement ends
@@ -102,9 +100,9 @@ void elevator::notifyNewState()
 	prevState = state;
 }
 
-bool elevator::getUpdateInfo() {
+bool elevator::getUpdateInfo(CHandle parent) {
 	//My Info
-	myEntity = CHandle(this).getOwner();
+	myEntity = compBaseEntity;
 	if (!myEntity.isValid()) return false;
 	CEntity* eMe = myEntity;
 	transform = eMe->get<TCompTransform>();

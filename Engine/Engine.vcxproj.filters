@@ -596,6 +596,9 @@
     <ClCompile Include="logic\helper_arrow.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_base.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
