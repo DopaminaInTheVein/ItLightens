@@ -92,221 +92,221 @@ CCamera * camera;
 // The global dict of all msgs
 MMsgSubscriptions msg_subscriptions;
 TMsgID generateUniqueMsgID() {
-  static TMsgID next_msg_id = 1;
-  return next_msg_id++;
+	static TMsgID next_msg_id = 1;
+	return next_msg_id++;
 }
 
 bool CEntitiesModule::start() {
-  SBB::init();
-  Damage::init();
+	SBB::init();
+	Damage::init();
 
-  getHandleManager<CEntity>()->init(MAX_ENTITIES);
+	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 
-  getHandleManager<TVictoryPoint>()->init(20);
-  getHandleManager<TTriggerLua>()->init(100);
-  //	getHandleManager<TCompHierarchy>()->init(nmax);
-  getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
-  getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
-  getHandleManager<TCompCulling>()->init(8);
-  getHandleManager<TCompLightDir>()->init(8);
-  getHandleManager<TCompLightDirShadows>()->init(8);
-  getHandleManager<player_controller>()->init(8);
-  getHandleManager<player_controller_speedy>()->init(8);
-  getHandleManager<player_controller_mole>()->init(8);
-  getHandleManager<player_controller_cientifico>()->init(8);
-  getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-  getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
-  getHandleManager<TCompName>()->init(MAX_ENTITIES);
-  getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
-  getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
-  getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-  getHandleManager<TCompCamera>()->init(4);
-  getHandleManager<TCompController3rdPerson>()->init(4);
-  getHandleManager<TCompLife>()->init(MAX_ENTITIES);
-  getHandleManager<TCompWire>()->init(10);
-  getHandleManager<TCompGenerator>()->init(10);
-  getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
-  getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
-  getHandleManager<TCompTags>()->init(MAX_ENTITIES);
-  getHandleManager<TCompBox>()->init(MAX_ENTITIES);
-  getHandleManager<TCompGuidedCamera>()->init(16);
-  getHandleManager<LogicHelperArrow>()->init(4);
-  //lights
-  getHandleManager<TCompLightDir>()->init(4);
-  getHandleManager<TCompLightFadable>()->init(4);
-  getHandleManager<TCompLightPoint>()->init(32);
+	getHandleManager<TVictoryPoint>()->init(20);
+	getHandleManager<TTriggerLua>()->init(100);
+	//	getHandleManager<TCompHierarchy>()->init(nmax);
+	getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
+	getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
+	getHandleManager<TCompCulling>()->init(8);
+	getHandleManager<TCompLightDir>()->init(8);
+	getHandleManager<TCompLightDirShadows>()->init(8);
+	getHandleManager<player_controller>()->init(8);
+	getHandleManager<player_controller_speedy>()->init(8);
+	getHandleManager<player_controller_mole>()->init(8);
+	getHandleManager<player_controller_cientifico>()->init(8);
+	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
+	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
+	getHandleManager<TCompName>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
+	getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
+	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
+	getHandleManager<TCompCamera>()->init(4);
+	getHandleManager<TCompController3rdPerson>()->init(4);
+	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
+	getHandleManager<TCompWire>()->init(10);
+	getHandleManager<TCompGenerator>()->init(10);
+	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+	getHandleManager<TCompGuidedCamera>()->init(16);
+	getHandleManager<LogicHelperArrow>()->init(4);
+	//lights
+	getHandleManager<TCompLightDir>()->init(4);
+	getHandleManager<TCompLightFadable>()->init(4);
+	getHandleManager<TCompLightPoint>()->init(32);
 
-  getHandleManager<bt_guard>()->init(MAX_ENTITIES);
-  getHandleManager<bt_mole>()->init(MAX_ENTITIES);
-  getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
-  getHandleManager<ai_scientific>()->init(MAX_ENTITIES);
-  getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
-  getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
-  getHandleManager<water_controller>()->init(MAX_ENTITIES);
-  getHandleManager<magnet_door>()->init(MAX_ENTITIES);
-  getHandleManager<elevator>()->init(4);
+	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
+	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
+	getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
+	getHandleManager<ai_scientific>()->init(MAX_ENTITIES);
+	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
+	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
+	getHandleManager<water_controller>()->init(MAX_ENTITIES);
+	getHandleManager<magnet_door>()->init(MAX_ENTITIES);
+	getHandleManager<elevator>()->init(4);
 
-  getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
-  getHandleManager<TCompDrone>()->init(MAX_ENTITIES);
+	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
+	getHandleManager<TCompDrone>()->init(MAX_ENTITIES);
 
-  getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
-  getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
+	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
+	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
 
-  getHandleManager<TCompBoxSpawner>()->init(MAX_ENTITIES);
-  getHandleManager<TCompBoxDestructor>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoxSpawner>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoxDestructor>()->init(MAX_ENTITIES);
 
-  //getHandleManager<TCompTriggerStandar>()->init(MAX_ENTITIES);
+	//getHandleManager<TCompTriggerStandar>()->init(MAX_ENTITIES);
 
-  //colliders
-  getHandleManager<TCompPhysics>()->init(MAX_ENTITIES);
-  getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
+	//colliders
+	getHandleManager<TCompPhysics>()->init(MAX_ENTITIES);
+	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
 
-  //Trackers
-  getHandleManager<TCompTracker>()->init(100);
+	//Trackers
+	getHandleManager<TCompTracker>()->init(100);
 
-  //SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
-  SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
-  SUBSCRIBE(TCompSnoozer, TMsgAwake, onAwake);
-  SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompDrone, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
-  SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(LogicHelperArrow, TMsgSetTarget, onSetTarget);
-  SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
-  SUBSCRIBE(player_controller, TMsgDamageSpecific, onSetDamage);
-  SUBSCRIBE(player_controller_speedy, TMsgSetCamera, onSetCamera);
-  SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
-  SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
-  SUBSCRIBE(bt_speedy, TMsgSetPlayer, onSetPlayer);
-  SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
-  SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
-  SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
-  SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
-  //  SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
-  SUBSCRIBE(TCompBoneTracker, TMsgEntityGroupCreated, onGroupCreated);
-  SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompLocalAABB, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
+	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
+	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
+	SUBSCRIBE(TCompSnoozer, TMsgAwake, onAwake);
+	SUBSCRIBE(TCompTransform, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompPhysics, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompDrone, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
+	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(LogicHelperArrow, TMsgSetTarget, onSetTarget);
+	SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
+	SUBSCRIBE(player_controller, TMsgDamageSpecific, onSetDamage);
+	SUBSCRIBE(player_controller_speedy, TMsgSetCamera, onSetCamera);
+	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
+	SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
+	SUBSCRIBE(bt_speedy, TMsgSetPlayer, onSetPlayer);
+	SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
+	SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
+	SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
+	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
+	//  SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
+	SUBSCRIBE(TCompBoneTracker, TMsgEntityGroupCreated, onGroupCreated);
+	SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompLocalAABB, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
 
-  //Trackers
-  SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
-  SUBSCRIBE(TCompCamera, TMsgGuidedCamera, onGuidedCamera);
-  SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
+	//Trackers
+	SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
+	SUBSCRIBE(TCompCamera, TMsgGuidedCamera, onGuidedCamera);
+	SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
 
-  SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
-  SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
-  SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
-  SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
-  SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);
-  SUBSCRIBE(magnet_door, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(elevator, TMsgActivate, onElevatorAction);
-  SUBSCRIBE(elevator, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
+	SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
+	SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
+	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
+	SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);
+	SUBSCRIBE(magnet_door, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(elevator, TMsgActivate, onElevatorAction);
+	SUBSCRIBE(elevator, TMsgEntityCreated, onCreate);
 
-  //box
-  SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
+	//box
+	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
 
-  //water
-  SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
+	//water
+	SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
 
-  //bombs
-  SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
-  SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
-  SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
-  SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
-  SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
-  SUBSCRIBE(bt_guard, TMsgNoise, noise);
-  SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
-  SUBSCRIBE(bt_guard, TMsgBoxHit, onBoxHit);
+	//bombs
+	SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
+	SUBSCRIBE(bt_guard, TMsgNoise, noise);
+	SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
+	SUBSCRIBE(bt_guard, TMsgBoxHit, onBoxHit);
 
-  //WIRES
-  SUBSCRIBE(TCompWire, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(player_controller, TMsgWirePass, onWirePass);
+	//WIRES
+	SUBSCRIBE(TCompWire, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(player_controller, TMsgWirePass, onWirePass);
 
-  //generator
-  SUBSCRIBE(TCompGenerator, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(player_controller, TMsgCanRec, onCanRec);
-  SUBSCRIBE(TCompGenerator, TMsgTriggerIn, onTriggerEnterCall);
-  SUBSCRIBE(TCompGenerator, TMsgTriggerOut, onTriggerExitCall);
+	//generator
+	SUBSCRIBE(TCompGenerator, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(player_controller, TMsgCanRec, onCanRec);
+	SUBSCRIBE(TCompGenerator, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TCompGenerator, TMsgTriggerOut, onTriggerExitCall);
 
-  SUBSCRIBE(TCompBoxDestructor, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TCompBoxDestructor, TMsgTriggerIn, onTriggerEnterCall);
 
-  //triggers
-  //SUBSCRIBE(TCompTriggerStandar, TMsgTriggerIn, onTriggerEnterCall);
-  //SUBSCRIBE(TCompTriggerStandar, TMsgTriggerOut, onTriggerExitCall);
+	//triggers
+	//SUBSCRIBE(TCompTriggerStandar, TMsgTriggerIn, onTriggerEnterCall);
+	//SUBSCRIBE(TCompTriggerStandar, TMsgTriggerOut, onTriggerExitCall);
 
-  //victory point
-  SUBSCRIBE(TVictoryPoint, TMsgTriggerIn, onTriggerEnterCall);
+	//victory point
+	SUBSCRIBE(TVictoryPoint, TMsgTriggerIn, onTriggerEnterCall);
 
-  //trigger_lua
-  SUBSCRIBE(TTriggerLua, TMsgTriggerIn, onTriggerEnterCall);
-  SUBSCRIBE(TTriggerLua, TMsgTriggerOut, onTriggerExitCall);
-  SUBSCRIBE(TTriggerLua, TMsgSetActivable, onSetActionable);
+	//trigger_lua
+	SUBSCRIBE(TTriggerLua, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TTriggerLua, TMsgTriggerOut, onTriggerExitCall);
+	SUBSCRIBE(TTriggerLua, TMsgSetActivable, onSetActionable);
 
-  //Animations
-  SUBSCRIBE(TCompSkeleton, TMsgSetAnim, onSetAnim);
+	//Animations
+	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, onSetAnim);
 
-  //polarized
-  SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);
-  SUBSCRIBE(player_controller, TMsgPolarize, onPolarize);
-  SUBSCRIBE(player_controller, TMsgGetPolarity, onGetPolarity);
-  SUBSCRIBE(TCompPolarized, TMsgPlayerPolarize, onPolarize);
+	//polarized
+	SUBSCRIBE(TCompPolarized, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(player_controller, TMsgPolarize, onPolarize);
+	SUBSCRIBE(player_controller, TMsgGetPolarity, onGetPolarity);
+	SUBSCRIBE(TCompPolarized, TMsgPlayerPolarize, onPolarize);
 
-  //Posesiones Mensajes
-  //..Cientifico
-  SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
-  SUBSCRIBE(ai_scientific, TMsgAISetStunned, onSetStunned);
-  SUBSCRIBE(player_controller_cientifico, TMsgControllerSetEnable, onSetEnable);
-  SUBSCRIBE(player_controller_cientifico, TMsgGetWhoAmI, onGetWhoAmI);
-  //..Speedy
-  SUBSCRIBE(bt_speedy, TMsgAISetPossessed, onSetPossessed);
-  SUBSCRIBE(bt_speedy, TMsgAISetStunned, onSetStunned);
-  SUBSCRIBE(player_controller_speedy, TMsgControllerSetEnable, onSetEnable);
-  //SUBSCRIBE(player_controller_speedy, TMsgGetWhoAmI, onGetWhoAmI);
-  //..Mole
-  SUBSCRIBE(bt_mole, TMsgAISetPossessed, onSetPossessed);
-  SUBSCRIBE(bt_mole, TMsgAISetStunned, onSetStunned);
-  SUBSCRIBE(player_controller_mole, TMsgControllerSetEnable, onSetEnable);
-  SUBSCRIBE(player_controller_mole, TMsgGetWhoAmI, onGetWhoAmI);
+	//Posesiones Mensajes
+	//..Cientifico
+	SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
+	SUBSCRIBE(ai_scientific, TMsgAISetStunned, onSetStunned);
+	SUBSCRIBE(player_controller_cientifico, TMsgControllerSetEnable, onSetEnable);
+	SUBSCRIBE(player_controller_cientifico, TMsgGetWhoAmI, onGetWhoAmI);
+	//..Speedy
+	SUBSCRIBE(bt_speedy, TMsgAISetPossessed, onSetPossessed);
+	SUBSCRIBE(bt_speedy, TMsgAISetStunned, onSetStunned);
+	SUBSCRIBE(player_controller_speedy, TMsgControllerSetEnable, onSetEnable);
+	//SUBSCRIBE(player_controller_speedy, TMsgGetWhoAmI, onGetWhoAmI);
+	//..Mole
+	SUBSCRIBE(bt_mole, TMsgAISetPossessed, onSetPossessed);
+	SUBSCRIBE(bt_mole, TMsgAISetStunned, onSetStunned);
+	SUBSCRIBE(player_controller_mole, TMsgControllerSetEnable, onSetEnable);
+	SUBSCRIBE(player_controller_mole, TMsgGetWhoAmI, onGetWhoAmI);
 
-  //..PJ Principal
-  SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
-  SUBSCRIBE(player_controller, TMsgGetWhoAmI, onGetWhoAmI);
+	//..PJ Principal
+	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
+	SUBSCRIBE(player_controller, TMsgGetWhoAmI, onGetWhoAmI);
 
-  //Dead
-  //anything for now
-  /*SUBSCRIBE(player_controller, TMsgDie, onDie);
-  SUBSCRIBE(player_controller_cientifico, TMsgDie, onDie);
-  SUBSCRIBE(player_controller_speedy, TMsgDie, onDie);
-  SUBSCRIBE(player_controller_mole, TMsgDie, onDie);*/
+	//Dead
+	//anything for now
+	/*SUBSCRIBE(player_controller, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_cientifico, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_speedy, TMsgDie, onDie);
+	SUBSCRIBE(player_controller_mole, TMsgDie, onDie);*/
 
-  //Damage
-  SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);		//init damage scales
-  SUBSCRIBE(TCompLife, TMsgDamageSave, onSetSaveDamage);
-  SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
-  SUBSCRIBE(TCompLife, TMsgSetDamage, onReciveDamage);
-  SUBSCRIBE(TCompLife, TMsgStopDamage, onStopDamage);
-  SUBSCRIBE(player_controller_cientifico, TMsgUnpossesDamage, onForceUnPosses);
-  SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
-  SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
+	//Damage
+	SUBSCRIBE(TCompLife, TMsgEntityCreated, onCreate);		//init damage scales
+	SUBSCRIBE(TCompLife, TMsgDamageSave, onSetSaveDamage);
+	SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
+	SUBSCRIBE(TCompLife, TMsgSetDamage, onReciveDamage);
+	SUBSCRIBE(TCompLife, TMsgStopDamage, onStopDamage);
+	SUBSCRIBE(player_controller_cientifico, TMsgUnpossesDamage, onForceUnPosses);
+	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
+	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
-  SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
+	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
-  //Control
-  SUBSCRIBE(player_controller, TMsgSetControllable, onSetControllable);
-  SUBSCRIBE(player_controller_cientifico, TMsgSetControllable, onSetControllable);
-  SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
-  SUBSCRIBE(player_controller_speedy, TMsgSetControllable, onSetControllable);
+	//Control
+	SUBSCRIBE(player_controller, TMsgSetControllable, onSetControllable);
+	SUBSCRIBE(player_controller_cientifico, TMsgSetControllable, onSetControllable);
+	SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
+	SUBSCRIBE(player_controller_speedy, TMsgSetControllable, onSetControllable);
 
-  initLevel("room_one");
+	initLevel("room_one");
 
-  return true;
+	return true;
 }
 
 void CEntitiesModule::initLevel(string level) {
@@ -455,9 +455,9 @@ void CEntitiesModule::initLevel(string level) {
 }
 
 void CEntitiesModule::destroyAllEntities() {
-  getHandleManager<CEntity>()->each([](CEntity * e) {
-	  CHandle(e).destroy();
-  });
+	getHandleManager<CEntity>()->each([](CEntity * e) {
+		CHandle(e).destroy();
+	});
 }
 
 void CEntitiesModule::destroyRandomEntity(float percent) {
@@ -475,165 +475,164 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-  
-  //Test
-  //if (io->keys['Z'].becomesPressed()) {
-	 // for (int i = 0; i < 1; i++) {
-		//  if (size() == 0) break;
-		//  destroyRandomEntity(0.1f);
-	 // }
-  //}
+	//Test
+	//if (io->keys['Z'].becomesPressed()) {
+	   // for (int i = 0; i < 1; i++) {
+		  //  if (size() == 0) break;
+		  //  destroyRandomEntity(0.1f);
+	   // }
+	//}
 
-  static float ia_wait = 0.0f;
-  ia_wait += getDeltaTime();
+	static float ia_wait = 0.0f;
+	ia_wait += getDeltaTime();
 
-  //physx objects
-  getHandleManager<TCompCharacterController>()->updateAll(dt);
-  getHandleManager<TCompPhysics>()->updateAll(dt);
+	//physx objects
+	getHandleManager<TCompCharacterController>()->updateAll(dt);
+	getHandleManager<TCompPhysics>()->updateAll(dt);
 
-  getHandleManager<TCompLightDir>()->updateAll(dt);
-  getHandleManager<TCompLightDirShadows>()->updateAll(dt);
-  getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
-  getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
+	getHandleManager<TCompLightDir>()->updateAll(dt);
+	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
+	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
+	getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
 
-  if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::STOPPED_INTRO) {
-    if (!GameController->IsCinematic()) {
-      getHandleManager<TCompController3rdPerson>()->updateAll(dt);
-    }
-    getHandleManager<TCompCamera>()->updateAll(dt);
-  }
+	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::STOPPED_INTRO) {
+		if (!GameController->IsCinematic()) {
+			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+		}
+		getHandleManager<TCompCamera>()->updateAll(dt);
+	}
 
-  if (GameController->GetGameState() == CGameController::RUNNING) {
-    // May need here a switch to update wich player controller takes the action - possession rulez
-    if (!GameController->IsCinematic()) {
-      getHandleManager<player_controller>()->updateAll(dt);
-      getHandleManager<player_controller_speedy>()->updateAll(dt);
-      getHandleManager<player_controller_mole>()->updateAll(dt);
-      getHandleManager<player_controller_cientifico>()->updateAll(dt);
-      getHandleManager<TCompController3rdPerson>()->updateAll(dt);
-      getHandleManager<LogicHelperArrow>()->updateAll(dt);
-    }
+	if (GameController->GetGameState() == CGameController::RUNNING) {
+		// May need here a switch to update wich player controller takes the action - possession rulez
+		if (!GameController->IsCinematic()) {
+			getHandleManager<player_controller>()->updateAll(dt);
+			getHandleManager<player_controller_speedy>()->updateAll(dt);
+			getHandleManager<player_controller_mole>()->updateAll(dt);
+			getHandleManager<player_controller_cientifico>()->updateAll(dt);
+			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+			getHandleManager<LogicHelperArrow>()->updateAll(dt);
+		}
 
-    getHandleManager<TCompCamera>()->updateAll(dt);
-    getHandleManager<TCompLightDir>()->updateAll(dt);
+		getHandleManager<TCompCamera>()->updateAll(dt);
+		getHandleManager<TCompLightDir>()->updateAll(dt);
 
-    if (use_parallel)
-      getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
-    else
-      getHandleManager<TCompSkeleton>()->updateAll(dt);
+		if (use_parallel)
+			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
+		else
+			getHandleManager<TCompSkeleton>()->updateAll(dt);
 
-    getHandleManager<TCompBoneTracker>()->updateAll(dt);
+		getHandleManager<TCompBoneTracker>()->updateAll(dt);
 
-    if (SBB::readBool(sala) && ia_wait > 1.0f) {
-      getHandleManager<bt_guard>()->updateAll(dt);
-      getHandleManager<bt_mole>()->updateAll(dt);
-      getHandleManager<ai_scientific>()->updateAll(dt);
-      getHandleManager<beacon_controller>()->updateAll(dt);
-      getHandleManager<workbench_controller>()->updateAll(dt);
-      getHandleManager<bt_speedy>()->updateAll(dt);
-      getHandleManager<water_controller>()->updateAll(dt);
-    }
-    getHandleManager<CStaticBomb>()->updateAll(dt);
-    getHandleManager<CMagneticBomb>()->updateAll(dt);
+		if (SBB::readBool(sala) && ia_wait > 1.0f) {
+			getHandleManager<bt_guard>()->updateAll(dt);
+			getHandleManager<bt_mole>()->updateAll(dt);
+			getHandleManager<ai_scientific>()->updateAll(dt);
+			getHandleManager<beacon_controller>()->updateAll(dt);
+			getHandleManager<workbench_controller>()->updateAll(dt);
+			getHandleManager<bt_speedy>()->updateAll(dt);
+			getHandleManager<water_controller>()->updateAll(dt);
+		}
+		getHandleManager<CStaticBomb>()->updateAll(dt);
+		getHandleManager<CMagneticBomb>()->updateAll(dt);
 
-    getHandleManager<TCompWire>()->updateAll(dt);
-    getHandleManager<TCompGenerator>()->updateAll(dt);
-    getHandleManager<TCompPolarized>()->updateAll(dt);
+		getHandleManager<TCompWire>()->updateAll(dt);
+		getHandleManager<TCompGenerator>()->updateAll(dt);
+		getHandleManager<TCompPolarized>()->updateAll(dt);
 
-    getHandleManager<TCompLife>()->updateAll(dt);
+		getHandleManager<TCompLife>()->updateAll(dt);
 
-    getHandleManager<TCompPlatform>()->updateAll(dt);
-    getHandleManager<TCompDrone>()->updateAll(dt);
-    getHandleManager<TCompBox>()->updateAll(dt);
-    getHandleManager<magnet_door>()->updateAll(dt);
-    getHandleManager<elevator>()->updateAll(dt);
-    //getHandleManager<TCompTracker>()->updateAll(dt);
+		getHandleManager<TCompPlatform>()->updateAll(dt);
+		getHandleManager<TCompDrone>()->updateAll(dt);
+		getHandleManager<TCompBox>()->updateAll(dt);
+		getHandleManager<magnet_door>()->updateAll(dt);
+		getHandleManager<elevator>()->updateAll(dt);
+		//getHandleManager<TCompTracker>()->updateAll(dt);
 
-    getHandleManager<TCompBoxSpawner>()->updateAll(dt);
-    getHandleManager<TCompBoxDestructor>()->updateAll(dt);
+		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
+		getHandleManager<TCompBoxDestructor>()->updateAll(dt);
 
-    getHandleManager<TCompLightPoint>()->updateAll(dt);
-    getHandleManager<TCompLightFadable>()->updateAll(dt);
+		getHandleManager<TCompLightPoint>()->updateAll(dt);
+		getHandleManager<TCompLightFadable>()->updateAll(dt);
 
-    //Triggers
-    getHandleManager<TTriggerLua>()->updateAll(dt);
+		//Triggers
+		getHandleManager<TTriggerLua>()->updateAll(dt);
 
-    SBB::update(dt);
-  }
-  // In this mode, only the animation of the player is updated
-  else if (GameController->GetGameState() == CGameController::STOPPED_INTRO) {
-    VHandles targets = tags_manager.getHandlesByTag(getID("player"));
-    CHandle player_handle = targets[targets.size() - 1];
-    CEntity* player_entity = player_handle;
+		SBB::update(dt);
+	}
+	// In this mode, only the animation of the player is updated
+	else if (GameController->GetGameState() == CGameController::STOPPED_INTRO) {
+		VHandles targets = tags_manager.getHandlesByTag(getID("player"));
+		CHandle player_handle = targets[targets.size() - 1];
+		CEntity* player_entity = player_handle;
 
-    TCompSkeleton* player_skeleton = player_entity->get<TCompSkeleton>();
-    player_skeleton->update(dt);
-  }
+		TCompSkeleton* player_skeleton = player_entity->get<TCompSkeleton>();
+		player_skeleton->update(dt);
+	}
 }
 
 void CEntitiesModule::render() {
-  // for each manager
-  // if manager has debug render active
-  // manager->renderAll()
-  auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
-  tech->activate();
+	// for each manager
+	// if manager has debug render active
+	// manager->renderAll()
+	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+	tech->activate();
 
 #ifdef _DEBUG
-  //getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
+	//getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 #endif
 
-  getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
-  getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
-  getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
+	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
+	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
+	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 
-  getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
-  getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
-  getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
+	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
+	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
+	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 }
 
 void CEntitiesModule::renderInMenu() {
-  ImGui::Begin("Entities");
-  if (ImGui::TreeNode("All entities...")) {
-    getHandleManager<CEntity>()->onAll(&CEntity::renderInMenu);
-    ImGui::TreePop();
-  }
-  if (ImGui::TreeNode("Entities by Tag...")) {
-    // Show all defined tags
-    ImGui::TreePop();
-  }
+	ImGui::Begin("Entities");
+	if (ImGui::TreeNode("All entities...")) {
+		getHandleManager<CEntity>()->onAll(&CEntity::renderInMenu);
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("Entities by Tag...")) {
+		// Show all defined tags
+		ImGui::TreePop();
+	}
 
-  if (ImGui::TreeNode("Entities by Tag...")) {
-    tags_manager.renderInMenu();
-    // Show all defined tags
-    ImGui::TreePop();
-  }
-  ImGui::End();
+	if (ImGui::TreeNode("Entities by Tag...")) {
+		tags_manager.renderInMenu();
+		// Show all defined tags
+		ImGui::TreePop();
+	}
+	ImGui::End();
 }
 
 void CEntitiesModule::recalcNavmesh() {
-  // GENERATE NAVMESH
-  CNavmesh nav = SBB::readNavmesh();
-  nav.build(salaloc);
-  SBB::postNavmesh(nav);
-  SBB::postBool(sala, true);
+	// GENERATE NAVMESH
+	CNavmesh nav = SBB::readNavmesh();
+	nav.build(salaloc);
+	SBB::postNavmesh(nav);
+	SBB::postBool(sala, true);
 }
 
 void CEntitiesModule::readNavmesh() {
-  // GENERATE NAVMESH
-  CNavmesh nav = SBB::readNavmesh();
-  bool recalc = !nav.reload(salaloc);
-  if (recalc) {
-    recalcNavmesh();
-  }
-  else {
-    SBB::postNavmesh(nav);
-    SBB::postBool(sala, true);
-  }
+	// GENERATE NAVMESH
+	CNavmesh nav = SBB::readNavmesh();
+	bool recalc = !nav.reload(salaloc);
+	if (recalc) {
+		recalcNavmesh();
+	}
+	else {
+		SBB::postNavmesh(nav);
+		SBB::postBool(sala, true);
+	}
 }
 
 void CEntitiesModule::fixedUpdate(float elapsed)
 {
-  getHandleManager<TCompDrone>()->fixedUpdateAll(elapsed);
+	getHandleManager<TCompDrone>()->fixedUpdateAll(elapsed);
 }
 
 int CEntitiesModule::size() {
