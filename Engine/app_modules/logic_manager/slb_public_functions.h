@@ -49,7 +49,7 @@ public:
 	float getY();
 	float getZ();
 	void goToPoint(float x, float y, float z);
-	void goAndLookAs(SLBHandle target);
+	void goAndLookAs(SLBHandle target, std::string code_arrived);
 	void toggleGuardFormation();
 	void setActionable(int);
 	void activate();

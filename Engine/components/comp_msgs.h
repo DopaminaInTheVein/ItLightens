@@ -267,6 +267,7 @@ struct TMsgGetPolarity {
 };
 struct TMsgGoAndLook {
 	CHandle target;
+	std::string code_arrived;
 	DECLARE_MSG_ID();
 };
 #endif

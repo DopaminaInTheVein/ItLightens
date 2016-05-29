@@ -68,6 +68,7 @@ protected:
 	VEC3 cinematicTargetPos;
 	float cinematicTargetYaw;
 	bool onCinematic = false;
+	std::string cinematicEndCode;
 	float epsilonPos = 0.05f;
 	float epsilonYaw = deg2rad(1);
 

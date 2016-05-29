@@ -302,8 +302,10 @@ void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, CH
 	// construct the lua code using the event and the specified parameters
 	std::string lua_code = evt;
 
+	// Ojo! Params no se usa!
+
 	// execute the string generated
-	slb_script.doString(lua_code);
+	if (lua_code != "")	slb_script.doString(lua_code);
 }
 
 void CLogicManagerModule::stop() {
@@ -380,7 +382,8 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// go to and orientate as another handle
 		.set("go_and_look_as", &SLBHandle::goAndLookAs)
 		.comment("The Player or NPC moves to h and look as h")
-		.param("h: handle")
+		.param("handle: target")
+		.param("string: code executed when target was reached")
 
 		// toggle guards formation
 		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)

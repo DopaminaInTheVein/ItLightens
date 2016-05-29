@@ -78,6 +78,7 @@ void CPlayerBase::onGoAndLook(const TMsgGoAndLook& msg) {
 			float pitch;
 			transform->getAngles(&cinematicTargetYaw, &pitch);
 			cinematicTargetPos = transform->getPosition();
+			cinematicEndCode = msg.code_arrived;
 			onCinematic = true;
 		}
 	}
@@ -116,9 +117,9 @@ void CPlayerBase::UpdateCinematic(float elapsed) {
 		// Reach position
 		float deltaYaw = cinematicTargetYaw - yaw;
 		if (abs(deltaYaw) < epsilonYaw) {
-			//Oriented
-			//Message TODO
+			//In position and Oriented
 			onCinematic = false;
+			logic_manager->throwUserEvent(cinematicEndCode);
 		}
 		else {
 			//Orientation to target

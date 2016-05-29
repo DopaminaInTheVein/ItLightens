@@ -86,7 +86,6 @@ public:
 		OnElevatorDown,
 		OnElevatorGoingUp,
 		OnElevatorGoingDown,
-
 	};
 
 	CLogicManagerModule();
@@ -106,7 +105,7 @@ public:
 
 	// module specific functions
 	void throwEvent(EVENT evt, std::string params, CHandle handle = CHandle());//, uint32_t handle_id = 0);
-	void throwUserEvent(std::string evt, std::string params, CHandle handle = CHandle());//, uint32_t handle_id = 0);
+	void throwUserEvent(std::string evt, std::string params = "", CHandle handle = CHandle());//, uint32_t handle_id = 0);
 	void bindPlayer(SLB::Manager& m);
 	void bindHandle(SLB::Manager& m);
 	void bindHandleGroup(SLB::Manager& m);

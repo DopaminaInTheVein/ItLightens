@@ -1,4 +1,3 @@
-
 #include "mcv_platform.h"
 #include "comp_trigger_lua.h"
 #include "components/entity.h"
@@ -29,7 +28,7 @@ void TTriggerLua::onTriggerAction(PLAYER_TYPE playerType) {
 
 void TTriggerLua::onTriggerInside(const TMsgTriggerIn& msg) {
 	eAction actionAvalable = getActionAvailable();
-	if (actionAvalable != NONE) {
+	if (actionAvalable != NONE && mActionable) {
 		Gui->setActionAvailable(actionAvalable);
 		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 			mActionable = false;
@@ -72,7 +71,7 @@ eAction TTriggerLua::getActionAvailable() {
 }
 
 void TTriggerLua::onSetActionable(const TMsgSetActivable& msg) {
-	mActionable = msg.activable;
+	setActionable(msg.activable);
 }
 
 void TTriggerLua::setActionable(bool actionable) {

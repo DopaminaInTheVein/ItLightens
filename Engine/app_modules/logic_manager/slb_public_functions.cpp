@@ -145,11 +145,12 @@ void SLBHandle::goToPoint(float x, float y, float z) {
 		guard->goToPoint(dest);
 	}
 }
-void SLBHandle::goAndLookAs(SLBHandle target) {
+void SLBHandle::goAndLookAs(SLBHandle target, std::string code_arrived) {
 	CHandle hTarget = target.getHandle();
 	if (hTarget.isValid() && real_handle.isValid()) {
 		TMsgGoAndLook msg;
 		msg.target = hTarget;
+		msg.code_arrived = code_arrived;
 		real_handle.sendMsg(msg);
 	}
 }
