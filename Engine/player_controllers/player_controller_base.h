@@ -52,6 +52,7 @@ protected:
 	CHandle myHandle;
 	CHandle myParent;
 	CEntity *myEntity = nullptr;
+	TCompTransform *transform;
 
 	VEC3 directionLateral = VEC3(0, 0, 0);
 	VEC3 directionForward = VEC3(0, 0, 1);
@@ -63,6 +64,13 @@ protected:
 
 	TCompCharacterController *cc = nullptr;
 
+	// Cinematic Target
+	VEC3 cinematicTargetPos;
+	float cinematicTargetYaw;
+	bool onCinematic = false;
+	float epsilonPos = 0.05f;
+	float epsilonYaw = deg2rad(1);
+
 	//virtual needed for poses right now
 	virtual void UpdateInputActions();
 	virtual void UpdateMoves();
@@ -71,14 +79,15 @@ protected:
 	virtual void UpdateJumpState();
 	virtual void UpdateDirection();
 	virtual void UpdateAnimation() {}
-	virtual void SetCharacterController()=0;
+	virtual void UpdateCinematic(float elapsed);
+	virtual void SetCharacterController() = 0;
 	virtual void ChangeCommonState(std::string) {}
 	virtual bool canJump();
 
 	void energyDecreasal(float howmuch);
 	bool checkDead();
 	void orbitCameraDeath();
-
+	bool getUpdateInfo() override;
 public:
 
 	CPlayerBase();
@@ -88,6 +97,8 @@ public:
 
 	void onSetCamera(const TMsgSetCamera& msg);
 	void onSetControllable(const TMsgSetControllable& msg);
+	void onGoAndLook(const TMsgGoAndLook& msg);
+
 	bool SetMyEntity();
 	virtual void myUpdate(); // deberia ser abstracta pero peta
 

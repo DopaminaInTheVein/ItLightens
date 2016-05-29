@@ -5,7 +5,6 @@
 #include "geometry/geometry.h"
 #include "logic/polarity.h"
 
-
 class magnet_door : public TCompBase {
 	enum eMagnetismBehaviour {
 		MB_OPENING,
@@ -45,12 +44,11 @@ class magnet_door : public TCompBase {
 	void notifyNewState();
 
 public:
-	bool getUpdateInfo(CHandle parent) override;
+	bool getUpdateInfo() override;
 	void update(float elapsed);
 	void onSetPolarity(const TMsgSetPolarity&);
 	void onSetLocked(const TMsgSetLocked&);
 	bool load(MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated&);
-
 };
 #endif

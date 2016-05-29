@@ -71,7 +71,18 @@ void SLBPlayer::refillEnergy() {
 }
 
 // generic handle function
-void SLBHandle::getHandleById(int id) {	
+CHandle SLBHandle::getHandle() {
+	return real_handle;
+}
+
+// We need ti aply generic actions to player as well
+void SLBHandle::getPlayer() {
+	VHandles targets = tags_manager.getHandlesByTag(getID("player"));
+	CHandle thePlayer = targets[targets.size() - 1];
+	real_handle = thePlayer;
+}
+
+void SLBHandle::getHandleById(int id) {
 	CHandle handle = IdEntities::findById(id);
 	real_handle = handle;
 	if (real_handle.isValid()) {
@@ -134,13 +145,21 @@ void SLBHandle::goToPoint(float x, float y, float z) {
 		guard->goToPoint(dest);
 	}
 }
+void SLBHandle::goAndLookAs(SLBHandle target) {
+	CHandle hTarget = target.getHandle();
+	if (hTarget.isValid() && real_handle.isValid()) {
+		TMsgGoAndLook msg;
+		msg.target = hTarget;
+		real_handle.sendMsg(msg);
+	}
+}
 
 void SLBHandle::toggleGuardFormation() {
 	getHandleManager<bt_guard>()->onAll(&bt_guard::toggleFormation);
 }
 
 void SLBHandle::setActionable(int enabled) {
-	if (real_handle.isValid()){
+	if (real_handle.isValid()) {
 		CEntity* eTarget = real_handle;
 		TMsgSetActivable msg;
 		msg.activable = (enabled != 0);
@@ -189,7 +208,7 @@ void SLBHandleGroup::awake() {
 		if (!h.isValid()) continue;
 		CEntity * e = h;
 		e->sendMsg(msgAwake);
-		dbg( "Awake to %s\n", e->getName());
+		dbg("Awake to %s\n", e->getName());
 	}
 	dbg("[LUA] Awake (group): %d\n", handle_group.size());
 }
@@ -280,7 +299,7 @@ void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 }
 
 void SLBPublicFunctions::print(const char* to_print) {
-	Debug->LogWithTag("LUA","%s\n",to_print);
+	Debug->LogWithTag("LUA", "%s\n", to_print);
 }
 
 void SLBPublicFunctions::setControlEnabled(int enabled) {
@@ -347,7 +366,6 @@ void SLBPublicFunctions::toggleIntroState() {
 
 //test
 void SLBPublicFunctions::test(const char* to_print) {
-
 	//CHandle h = CHandle();
 	//h.fromUnsigned(h_num);
 
@@ -357,4 +375,3 @@ void SLBPublicFunctions::test(const char* to_print) {
 	Debug->LogWithTag("LUA", "%s\n", to_print);
 	//}
 }
-

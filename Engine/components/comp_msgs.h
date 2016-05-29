@@ -223,13 +223,13 @@ struct TMsgFollow {
 };
 
 struct TMsgGetCullingViewProj {
-  MAT44* view_proj;
-  DECLARE_MSG_ID();
+	MAT44* view_proj;
+	DECLARE_MSG_ID();
 };
 
 struct TMsgGetLocalAABB {
-  AABB* aabb;
-  DECLARE_MSG_ID();
+	AABB* aabb;
+	DECLARE_MSG_ID();
 };
 
 struct TMsgSetActivable {
@@ -263,6 +263,10 @@ struct TMsgSetLocked {
 };
 struct TMsgGetPolarity {
 	pols polarity;
+	DECLARE_MSG_ID();
+};
+struct TMsgGoAndLook {
+	CHandle target;
 	DECLARE_MSG_ID();
 };
 #endif

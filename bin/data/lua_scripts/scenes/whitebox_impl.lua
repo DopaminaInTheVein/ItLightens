@@ -82,24 +82,28 @@ end
 -- Wall --
 --------------------------------------
 idWall = 302
-tagWallFragment = "wall1_fragment"
+tagWallFragment1 = "wall1_fragment"
 triggerWall_1 = Handle()
 all_fragments1 = HandleGroup()
+actionWallTarget = Handle()
 function destroyWall( )
   p:print("Destroy Wall\n")
   triggerWall_1:getHandleCaller()
   p:exec_command( "triggerWall_1:setActionable(1);", 1 ) --test
   
+  --Llevamos el player al punto de accion
+  actionWallTarget:get_handle_by_name_tag("tWall_pAction", "target")
+  player = Handle()
+  player:get_player()
+  player:go_and_look_as(actionWallTarget)
+  
   --Destruimos pared
-  h:get_handle_by_id(idWall)
-  h:destroy()
+  --h:get_handle_by_id(idWall)
+  --h:destroy()
   
   --Activamos fragmentos pared
-  all_fragments1:get_handles_by_tag(tagWallFragment)
-  all_fragments1:awake()
-  p:exec_command( "all_fragments1:remove_physics();", 5 )
-  
-  --Variable control para activaciones acumuladas
-  timesActivatedLock = timesActivatedLock + 1
+  --all_fragments1:get_handles_by_tag(tagWallFragment1)
+  --all_fragments1:awake()
+  --p:exec_command( "all_fragments1:remove_physics();", 5 )
 end
 --------------------------------------

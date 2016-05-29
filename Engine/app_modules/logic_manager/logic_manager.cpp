@@ -10,7 +10,6 @@ extern CLogicManagerModule* logic_manager = nullptr;
 CLogicManagerModule::CLogicManagerModule() {}
 
 bool CLogicManagerModule::start() {
-
 	slb_manager = slb_script.getManager();
 
 	assert(slb_manager);
@@ -36,7 +35,6 @@ void CLogicManagerModule::reloadFile(std::string filename) {
 }
 
 void CLogicManagerModule::update(float dt) {
-
 	// update the timer of each command
 	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ) {
 		command_it->execution_time -= dt;
@@ -51,245 +49,244 @@ void CLogicManagerModule::update(float dt) {
 	}
 }
 
-void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle handle){//, uint32_t handle_id) {
-
+void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
 	char lua_code[64];
 	caller_handle = handle;
 
 	switch (evt) {
-		case (OnAction) : {
-			sprintf(lua_code, "OnAction(\"%s\");", params.c_str());
-			break;
-		}
-		case (OnEnter) : {
-			sprintf(lua_code, "OnEnter(\"%s\");", params.c_str());
-			break;
-		}
-		case (OnLeave) : {
-			sprintf(lua_code, "OnLeave(\"%s\");", params.c_str());
-			break;
-		}
-		case (OnActionSci): {
-			sprintf(lua_code, "OnActionSci(\"%s\");", params.c_str());
-			break;
-		}
-		case (OnActionMole): {
-			sprintf(lua_code, "OnActionMole(\"%s\");", params.c_str());
-			break;
-		}
+	case (OnAction): {
+		sprintf(lua_code, "OnAction(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnEnter): {
+		sprintf(lua_code, "OnEnter(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnLeave): {
+		sprintf(lua_code, "OnLeave(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnActionSci): {
+		sprintf(lua_code, "OnActionSci(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnActionMole): {
+		sprintf(lua_code, "OnActionMole(\"%s\");", params.c_str());
+		break;
+	}
 
-		case (OnGameStart) : {
-			sprintf(lua_code, "OnGameStart(%f);", 0.4f);
-			/*char command_code[64];
-			sprintf(command_code, "dbg('%s');", "TIMER - OGS");
-			sprintf(lua_code, "execCommandTest(\"%s\", %f);", command_code, 5.f);*/
-			break;
-		}
-		case (OnGameEnd) : {
-			//sprintf(lua_code, "OnGameEnd(%f);", 0.5f);
-			sprintf(lua_code, "teleportPlayer(%f, %f, %f);", 0.0f, 0.0f, -22.0f);
-			break;
-		}
-		case (OnLevelStart) : {
-			//char command_code[64];
-			//sprintf(command_code, "dbg('%s');", "TIMER - OLS");
-			sprintf(lua_code, "OnLevelStart(\"%s\");", params.c_str());
-			break;
-		}
-		case (OnZoneStart001) : {
-			sprintf(lua_code, "teleportSpeedy('%s', %f, %f, %f);", "speedy1", 0.0f, 0.0f, -22.0f);
-			break;
-		}
-		case (OnZoneEnd001) : {
-			sprintf(lua_code, "OnZoneEnd001(%f);", 0.5f);
-			break;
-		}
-		case (OnTimeout) : {
-			sprintf(lua_code, "OnTimeout(%f);", 0.5f);
-			break;
-		}
-		case (OntTimerStart) : {
-			sprintf(lua_code, "OntTimerStart(%f);", 0.5f);
-			break;
-		}
+	case (OnGameStart): {
+		sprintf(lua_code, "OnGameStart(%f);", 0.4f);
+		/*char command_code[64];
+		sprintf(command_code, "dbg('%s');", "TIMER - OGS");
+		sprintf(lua_code, "execCommandTest(\"%s\", %f);", command_code, 5.f);*/
+		break;
+	}
+	case (OnGameEnd): {
+		//sprintf(lua_code, "OnGameEnd(%f);", 0.5f);
+		sprintf(lua_code, "teleportPlayer(%f, %f, %f);", 0.0f, 0.0f, -22.0f);
+		break;
+	}
+	case (OnLevelStart): {
+		//char command_code[64];
+		//sprintf(command_code, "dbg('%s');", "TIMER - OLS");
+		sprintf(lua_code, "OnLevelStart(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnZoneStart001): {
+		sprintf(lua_code, "teleportSpeedy('%s', %f, %f, %f);", "speedy1", 0.0f, 0.0f, -22.0f);
+		break;
+	}
+	case (OnZoneEnd001): {
+		sprintf(lua_code, "OnZoneEnd001(%f);", 0.5f);
+		break;
+	}
+	case (OnTimeout): {
+		sprintf(lua_code, "OnTimeout(%f);", 0.5f);
+		break;
+	}
+	case (OntTimerStart): {
+		sprintf(lua_code, "OntTimerStart(%f);", 0.5f);
+		break;
+	}
 
-		case (OnPlayerDead) : {
-			sprintf(lua_code, "OnPlayerDead(%f);", 0.5f);
-			break;
-		}
+	case (OnPlayerDead): {
+		sprintf(lua_code, "OnPlayerDead(%f);", 0.5f);
+		break;
+	}
 
-		case (OnGuardAttack) : {
-			sprintf(lua_code, "OnGuardAttack(%f);", 0.5f);
-			break;
-		}
+	case (OnGuardAttack): {
+		sprintf(lua_code, "OnGuardAttack(%f);", 0.5f);
+		break;
+	}
 
-		case (OnGuardAttackEnd) : {
-			sprintf(lua_code, "OnGuardAttackEnd(%f);", 0.5f);
-			break;
-		}
+	case (OnGuardAttackEnd): {
+		sprintf(lua_code, "OnGuardAttackEnd(%f);", 0.5f);
+		break;
+	}
 
-		case (OnGuardRemoveBox) : {
-			sprintf(lua_code, "OnGuardRemoveBox(%f);", 0.5f);
-			break;
-		}
+	case (OnGuardRemoveBox): {
+		sprintf(lua_code, "OnGuardRemoveBox(%f);", 0.5f);
+		break;
+	}
 
-		case (OnGuardOvercharged) : {
-			sprintf(lua_code, "OnGuardOvercharged(%f);", 0.5f);
-			break;
-		}
-		case (OnGuardBoxHit): {
-			sprintf(lua_code, "OnGuardBoxHit(%f);", 0.5f);
-			break;
-		}
-		case (OnInterruptHit) : {
-			sprintf(lua_code, "OnInterruptHit(%f);", 0.5f);
-			break;
-		}
-		case (OnStartReceiveHit) : {
-			sprintf(lua_code, "OnStartReceiveHit(%f);", 0.5f);
-			break;
-		}
-		case (OnEndReceiveHit) : {
-			sprintf(lua_code, "OnEndReceiveHit(%f);", 0.5f);
-			break;
-		}
+	case (OnGuardOvercharged): {
+		sprintf(lua_code, "OnGuardOvercharged(%f);", 0.5f);
+		break;
+	}
+	case (OnGuardBoxHit): {
+		sprintf(lua_code, "OnGuardBoxHit(%f);", 0.5f);
+		break;
+	}
+	case (OnInterruptHit): {
+		sprintf(lua_code, "OnInterruptHit(%f);", 0.5f);
+		break;
+	}
+	case (OnStartReceiveHit): {
+		sprintf(lua_code, "OnStartReceiveHit(%f);", 0.5f);
+		break;
+	}
+	case (OnEndReceiveHit): {
+		sprintf(lua_code, "OnEndReceiveHit(%f);", 0.5f);
+		break;
+	}
 
-		case (OnEmitParticles) : {
-			sprintf(lua_code, "OnEmitParticles(%f);", 0.5f);
-			break;
-		}
-		case (OnChangePolarity) : {
-			sprintf(lua_code, "OnChangePolarity(\"%s\");", params.c_str());
-			break;
-		}
-		case (OnPickupBox) : {
-			sprintf(lua_code, "OnPickupBox(%f);", 0.5f);
-			break;
-		}
-		case (OnLeaveBox) : {
-			sprintf(lua_code, "OnLeaveBox(%f);", 0.5f);
-			break;
-		}
-		case (OnPossess) : {
-			sprintf(lua_code, "OnPossess(%f);", 0.5f);
-			break;
-		}
-		case (OnUnpossess) : {
-			sprintf(lua_code, "OnUnpossess(%f);", 0.5f);
-			break;
-		}
-		case (OnDash) : {
-			sprintf(lua_code, "OnDash(%f);", 0.5f);
-			break;
-		}
-		case (OnBlink) : {
-			sprintf(lua_code, "OnBlink(%f);", 0.5f);
-			break;
-		}
-		case (OnBreakWall) : {
-			sprintf(lua_code, "OnBreakWall(%f);", 0.5f);
-			break;
-		}
-		case (OnUseCable) : {
-			sprintf(lua_code, "OnUseCable(%f);", 0.5f);
-			break;
-		}
-		case (OnUseGenerator) : {
-			sprintf(lua_code, "OnUseGenerator(%f);", 0.5f);
-			break;
-		}
-		case (OnStun) : {
-			sprintf(lua_code, "OnStun(%f);", 0.5f);
-			break;
-		}
-		case (OnStunned) : {
-			sprintf(lua_code, "OnStunned(%f);", 0.5f);
-			break;
-		}
-		case (OnStunnedEnd) : {
-			sprintf(lua_code, "OnStunnedEnd(%f);", 0.5f);
-			break;
-		}
-		case (OnLiquid) : {
-			sprintf(lua_code, "OnLiquid(%f);", 0.5f);
-			break;
-		}
-		case (OnBeingAttracted) : {
-			sprintf(lua_code, "OnBeingAttracted(%f);", 0.5f);
-			break;
-		}
-		case (OnOvercharge) : {
-			sprintf(lua_code, "OnOvercharge(%f);", 0.5f);
-			break;
-		}
-		case (OnJump) : {
-			sprintf(lua_code, "OnJump(%f);", 0.5f);
-			break;
-		}
-		case (OnDoubleJump) : {
-			sprintf(lua_code, "OnDoubleJump(%f);", 0.5f);
-			break;
-		}
-		case (OnDetected) : {
-			sprintf(lua_code, "OnDetected(%f);", 0.5f);
-			break;
-		}
-		case (OnBeaconDetect) : {
-			sprintf(lua_code, "OnBeaconDetect(%f);", 0.5f);
-			break;
-		}
+	case (OnEmitParticles): {
+		sprintf(lua_code, "OnEmitParticles(%f);", 0.5f);
+		break;
+	}
+	case (OnChangePolarity): {
+		sprintf(lua_code, "OnChangePolarity(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnPickupBox): {
+		sprintf(lua_code, "OnPickupBox(%f);", 0.5f);
+		break;
+	}
+	case (OnLeaveBox): {
+		sprintf(lua_code, "OnLeaveBox(%f);", 0.5f);
+		break;
+	}
+	case (OnPossess): {
+		sprintf(lua_code, "OnPossess(%f);", 0.5f);
+		break;
+	}
+	case (OnUnpossess): {
+		sprintf(lua_code, "OnUnpossess(%f);", 0.5f);
+		break;
+	}
+	case (OnDash): {
+		sprintf(lua_code, "OnDash(%f);", 0.5f);
+		break;
+	}
+	case (OnBlink): {
+		sprintf(lua_code, "OnBlink(%f);", 0.5f);
+		break;
+	}
+	case (OnBreakWall): {
+		sprintf(lua_code, "OnBreakWall(%f);", 0.5f);
+		break;
+	}
+	case (OnUseCable): {
+		sprintf(lua_code, "OnUseCable(%f);", 0.5f);
+		break;
+	}
+	case (OnUseGenerator): {
+		sprintf(lua_code, "OnUseGenerator(%f);", 0.5f);
+		break;
+	}
+	case (OnStun): {
+		sprintf(lua_code, "OnStun(%f);", 0.5f);
+		break;
+	}
+	case (OnStunned): {
+		sprintf(lua_code, "OnStunned(%f);", 0.5f);
+		break;
+	}
+	case (OnStunnedEnd): {
+		sprintf(lua_code, "OnStunnedEnd(%f);", 0.5f);
+		break;
+	}
+	case (OnLiquid): {
+		sprintf(lua_code, "OnLiquid(%f);", 0.5f);
+		break;
+	}
+	case (OnBeingAttracted): {
+		sprintf(lua_code, "OnBeingAttracted(%f);", 0.5f);
+		break;
+	}
+	case (OnOvercharge): {
+		sprintf(lua_code, "OnOvercharge(%f);", 0.5f);
+		break;
+	}
+	case (OnJump): {
+		sprintf(lua_code, "OnJump(%f);", 0.5f);
+		break;
+	}
+	case (OnDoubleJump): {
+		sprintf(lua_code, "OnDoubleJump(%f);", 0.5f);
+		break;
+	}
+	case (OnDetected): {
+		sprintf(lua_code, "OnDetected(%f);", 0.5f);
+		break;
+	}
+	case (OnBeaconDetect): {
+		sprintf(lua_code, "OnBeaconDetect(%f);", 0.5f);
+		break;
+	}
 
-		case (OnEnterPC) : {
-			sprintf(lua_code, "OnEnterPC(%f);", 0.5f);
-			break;
-		}
-		case (OnLeavePC) : {
-			sprintf(lua_code, "OnLeavePC(%f);", 0.5f);
-			break;
-		}
-		case (OnDoorOpening) : {
-			sprintf(lua_code, "OnDoorOpening();");
-			break;
-		}
-		case (OnDoorOpened) : {
-			sprintf(lua_code, "OnDoorOpened();");
-			break;
-		}
-		case (OnDoorClosing) : {
-			sprintf(lua_code, "OnDoorClosing();");
-			break;
-		}
-		case (OnDoorClosed): {
-			sprintf(lua_code, "OnDoorClosed();");
-			break;
-		}		
-		case (OnCinematicSkipped): {
-			sprintf(lua_code, "OnCinematicSkipped(\"%s\");", params.c_str());
-			break;
-		}		
-		case (OnCinematicEnd): {
-			sprintf(lua_code, "OnCinematicEnd(\"%s\");", params.c_str());
-			break;
-		}
-		case (OnElevatorUp): {
-			sprintf(lua_code, "OnElevatorUp(\"%s\");", params.c_str());
-			break;
-		}
-		case (OnElevatorDown): {
-			sprintf(lua_code, "OnElevatorDown(\"%s\");", params.c_str());
-			break;
-		}
-		case (OnElevatorGoingUp): {
-			sprintf(lua_code, "OnElevatorGoingUp(\"%s\");", params.c_str());
-			break;
-		}
-		case (OnElevatorGoingDown): {
-			sprintf(lua_code, "OnElevatorGoingDown(\"%s\");", params.c_str());
-			break;
-		}
-		default : {
-			sprintf(lua_code, "dbg('The event %s does not exist!');", evt);
-		}
+	case (OnEnterPC): {
+		sprintf(lua_code, "OnEnterPC(%f);", 0.5f);
+		break;
+	}
+	case (OnLeavePC): {
+		sprintf(lua_code, "OnLeavePC(%f);", 0.5f);
+		break;
+	}
+	case (OnDoorOpening): {
+		sprintf(lua_code, "OnDoorOpening();");
+		break;
+	}
+	case (OnDoorOpened): {
+		sprintf(lua_code, "OnDoorOpened();");
+		break;
+	}
+	case (OnDoorClosing): {
+		sprintf(lua_code, "OnDoorClosing();");
+		break;
+	}
+	case (OnDoorClosed): {
+		sprintf(lua_code, "OnDoorClosed();");
+		break;
+	}
+	case (OnCinematicSkipped): {
+		sprintf(lua_code, "OnCinematicSkipped(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnCinematicEnd): {
+		sprintf(lua_code, "OnCinematicEnd(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnElevatorUp): {
+		sprintf(lua_code, "OnElevatorUp(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnElevatorDown): {
+		sprintf(lua_code, "OnElevatorDown(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnElevatorGoingUp): {
+		sprintf(lua_code, "OnElevatorGoingUp(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnElevatorGoingDown): {
+		sprintf(lua_code, "OnElevatorGoingDown(\"%s\");", params.c_str());
+		break;
+	}
+	default: {
+		sprintf(lua_code, "dbg('The event %s does not exist!');", evt);
+	}
 	}
 
 	try {
@@ -299,10 +296,9 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 	catch (int e) {
 		dbg("Exception %d occurred!", e);
 	}
-
 }
 
-void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, CHandle handle){//, uint32_t handle_id) {
+void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
 	// construct the lua code using the event and the specified parameters
 	std::string lua_code = evt;
 
@@ -344,6 +340,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 	SLB::Class<SLBHandle>("Handle", &m)
 		.comment("Handle class")
 		.constructor()
+		// sets the handle pointer to the player
+		.set("get_player", &SLBHandle::getPlayer)
+		.comment("Sets the handle pointer to the player")
 		// sets the handle pointer to the handle with the specified id
 		.set("get_handle_by_id", &SLBHandle::getHandleById)
 		.comment("Finds the handle with the specified id")
@@ -378,6 +377,11 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.param("float: x coordinate")
 		.param("float: y coordinate")
 		.param("float: z coordinate")
+		// go to and orientate as another handle
+		.set("go_and_look_as", &SLBHandle::goAndLookAs)
+		.comment("The Player or NPC moves to h and look as h")
+		.param("h: handle")
+
 		// toggle guards formation
 		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
 		.comment("Activates/desactivates the guard formation states.")

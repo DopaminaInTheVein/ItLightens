@@ -304,6 +304,14 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(player_controller_speedy, TMsgSetControllable, onSetControllable);
 
+	//Go And Look
+	SUBSCRIBE(player_controller, TMsgGoAndLook, onGoAndLook);
+	SUBSCRIBE(player_controller_cientifico, TMsgGoAndLook, onGoAndLook);
+	SUBSCRIBE(player_controller_mole, TMsgGoAndLook, onGoAndLook);
+	//SUBSCRIBE(player_controller_speedy, TMsgGoAndLook, onGoAndLook);
+	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
+	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
+
 	initLevel("room_one");
 
 	return true;

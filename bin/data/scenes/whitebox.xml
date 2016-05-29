@@ -1,6 +1,5 @@
 <entities>
-<entity
-   slept="undefined">
+<entity>
 <tags
    tags="player"/>
 <player/>
@@ -21,10 +20,8 @@
    height="0.7"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -37,10 +34,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -53,10 +48,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -69,10 +62,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -85,10 +76,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -101,10 +90,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -117,10 +104,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -133,10 +118,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -149,10 +132,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -165,10 +146,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -181,10 +160,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="ascensor"/>
 <transform
@@ -197,10 +174,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="cable"/>
 <transform
@@ -213,10 +188,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="cargador_de_bateria"/>
 <transform
@@ -229,10 +202,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="cerradura_electrica"/>
 <transform
@@ -245,10 +216,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="mesa_de_trabajo"/>
 <transform
@@ -261,10 +230,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="mesa_de_trabajo"/>
 <transform
@@ -277,10 +244,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="nivel"/>
 <transform
@@ -293,10 +258,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="pila"/>
 <transform
@@ -309,10 +272,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="puerta_balcon_redondo_pequeno004"/>
 <transform
@@ -325,10 +286,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="puertas_derechas"/>
 <transform
@@ -342,8 +301,7 @@
 
 </entity>
 <entity
-   id="300"
-   slept="undefined">
+   id="300">
 <tags
    tags="doorExit door"/>
 <magnet_door
@@ -366,10 +324,8 @@
    mass="5"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="Door_opened_pos"/>
 <transform
@@ -378,10 +334,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
@@ -399,8 +353,7 @@
 
 </entity>
 <entity
-   id="301"
-   slept="undefined">
+   id="301">
 <tags
    tags="elevator1 elevator"/>
 <elevator
@@ -421,10 +374,8 @@
    kinematic="yes"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="ElevatorGround_pos_elevator_up"/>
 <transform
@@ -433,10 +384,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
@@ -454,10 +403,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
@@ -474,8 +421,7 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
+<entity>
 <tags
    tags="camera_main"/>
 <camera
@@ -492,10 +438,8 @@
 
 </entity>
 <entity
-   id="302"
-   slept="undefined">
-<tags
-   tags=""/>
+   id="302">
+<tags/>
 <name
    name="pared_mole"/>
 <transform
@@ -508,10 +452,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
@@ -526,6 +468,17 @@
 <transform
    pos="-92.8207 0.83394 -16.2075"
    quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="target"/>
+<name
+   name="tWall_pAction"/>
+<transform
+   pos="-92.9597 0.944696 -15.6276"
+   quat="0 -0.707107 0 0.707107"
    scale="1.0"/>
 
 </entity>

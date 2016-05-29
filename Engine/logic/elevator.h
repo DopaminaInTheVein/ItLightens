@@ -5,9 +5,7 @@
 #include "geometry/geometry.h"
 #include "logic/polarity.h"
 
-
 class elevator : public TCompBase {
-	
 	enum eElevatorState {
 		UP,
 		GOING_UP,
@@ -32,7 +30,7 @@ class elevator : public TCompBase {
 	void notifyNewState();
 
 public:
-	bool getUpdateInfo(CHandle parent);
+	bool getUpdateInfo();
 	void update(float elapsed);
 	void onElevatorAction(const TMsgActivate&);
 	bool load(MKeyValue& atts);

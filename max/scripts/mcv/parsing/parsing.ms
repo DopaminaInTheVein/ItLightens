@@ -48,7 +48,9 @@ fn parseId = (
 
 fn parseSlept = (
 	local slept = getUserProp _parsingObject "slept"
-	XML_PARSING.addAttr "slept" (slept as string)
+	if slept != undefined then (
+		XML_PARSING.addAttr "slept" (slept as string)
+	)
 )
 
 ---------------------------------------------------------------------
@@ -115,7 +117,7 @@ fn parseTags parent tag = (
 		for t in tag do (
 			tags_list += (" " + t)
 		)
-		xml.addAttr "tags" tags_list
+		if tags_list != "" then (xml.addAttr "tags" tags_list)
 	)
 )
 
