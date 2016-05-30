@@ -7,6 +7,7 @@ struct VS_TEXTURED_OUTPUT
   float2 UV   : TEXCOORD0;
   float3 wPos : TEXCOORD1;
   float4 ins1 : OUTPUTO;
+  float4 color : COLOR1;
 };
 
 //--------------------------------------------------------------------------------------
@@ -18,6 +19,7 @@ VS_TEXTURED_OUTPUT VS(
   , float3 InstancePos : POSITION1    // Stream 1
   , float2  InstanceData : TEXCOORD1    // Stream 1
   , float3  InstanceRot : ROTATION1    // Stream 1
+  , float4  InstanceColor : COLOR1
   )
 {
   //instanceData.r = frames
@@ -42,6 +44,7 @@ VS_TEXTURED_OUTPUT VS(
       )*size;
 
   output.Pos = mul(float4(wpos, 1), ViewProjection);
+  output.color = InstanceColor;
 
   // Animate the UV's. Assuming 4x4 frames
   float nmod16 = fmod(nframe * 32, 16.0);
@@ -80,6 +83,8 @@ float4 PS(VS_TEXTURED_OUTPUT input
 //return float4(input.ins2.yyy, 1.0f);
 
 float4 color = txDiffuse.Sample(samLinear, input.UV);
+color.xyz *= color.xyz;
+color.a = input.color.a;
 color.a *= length(color.xyz);
 return color;
 }

@@ -59,6 +59,7 @@ CHandle createPrefab(const std::string& prefab) {
     // Compile it
     prefab_compiler = new CPrefabCompiler;
     CEntityParser ep;
+
     ep.setPrefabCompiler(prefab_compiler);
     std::string prefab_filename = "data/prefabs/" + prefab + ".prefab";
     // This will 'CREATE' the entities in the prefab

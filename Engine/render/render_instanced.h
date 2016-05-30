@@ -14,10 +14,12 @@ struct TParticle {
   float nframe;
   float size;
   //float utime;
-  float alpha;
 
   //rotation
   VEC3 rotation;
+
+  //color
+  VEC4 color;
 };
 
 // ------------------------------

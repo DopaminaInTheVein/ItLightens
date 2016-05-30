@@ -719,6 +719,16 @@ CQuaternion PhysxConversion::PxQuatToCQuaternion(const PxQuat & quat)
   return CQuaternion(quat.x, quat.y, quat.z, quat.w);
 }
 
+VEC4 PhysxConversion::PxVec4ToVec4(const PxVec4 & vec)
+{
+	return VEC4(vec.x, vec.y, vec.z, vec.w);
+}
+
+PxVec4 PhysxConversion::VEC4ToPxVec4(const VEC4 & vec)
+{
+	return PxVec4(vec.x, vec.y, vec.z, vec.w);
+}
+
 PxTransform PhysxConversion::ToPxTransform(const VEC3 & pos, const CQuaternion & rot)
 {
   return PxTransform(Vec3ToPxVec3(pos), CQuaternionToPxQuat(rot));

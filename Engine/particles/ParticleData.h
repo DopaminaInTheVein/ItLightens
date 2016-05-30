@@ -20,6 +20,9 @@ struct TParticleData {
 	std::vector<float>		currDelayStart;
 	std::vector<bool>		started;
 
+	std::vector<VEC4>		colorBuffer;
+	std::vector<VEC4>		colorOriginBuffer;
+
 	std::vector<float>		lifeTimeBuffer;
 	std::vector<float>		maxLifeTimeBuffer;
 
@@ -60,6 +63,10 @@ struct TParticleData {
 
 		//size
 		sizeBuffer.resize(maxParticles);
+
+		//color
+		colorBuffer.resize(maxParticles);
+		colorOriginBuffer.resize(maxParticles);
 	}
 
 	void clear() {
@@ -70,6 +77,7 @@ struct TParticleData {
 		sizeBuffer.clear();
 		started.clear();
 		currDelayStart.clear();
+		colorBuffer.clear();
 	}
 };
 

@@ -420,6 +420,8 @@ namespace PhysxConversion {
 	VEC3			PxExVec3ToVec3		(const PxExtendedVec3& vec);
 	PxQuat			CQuaternionToPxQuat	(const CQuaternion& quat);
 	CQuaternion		PxQuatToCQuaternion	(const PxQuat& quat);
+	VEC4			PxVec4ToVec4		(const PxVec4& vec);
+	PxVec4			VEC4ToPxVec4		(const VEC4& vec);
 
 	PxTransform		ToPxTransform		(const VEC3& pos, const CQuaternion& rot);
 

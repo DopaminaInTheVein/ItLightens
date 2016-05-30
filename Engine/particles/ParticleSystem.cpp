@@ -44,6 +44,9 @@ void CParticleSystem::SetBufferData() {
 
     m_particles.positionInitBuffer[i] = m_initial_pos;
     m_particles.velocityInitBuffer[i] = m_initial_velocity;
+
+	m_particles.colorBuffer[i] = PhysxConversion::PxVec4ToVec4(*m_Emitter.GetColor());
+	m_particles.colorOriginBuffer[i] = m_particles.colorBuffer[i];
   }
 
   m_pIndexPool = PxParticleExt::createIndexPool(m_numParticles);
@@ -83,6 +86,7 @@ void CParticleSystem::init() {
   m_Emitter = CParticlesEmitter(m_initial_pos);
   m_Emitter.SetVelocity(v);
   m_Emitter.SetUsePhysx(true);
+  m_Emitter.SetColor(PxVec4(1,1,1,1));
 
   m_particles.initialize(max_particles);
 
@@ -103,6 +107,9 @@ void CParticleSystem::init() {
 
     m_particles.positionInitBuffer[i] = m_initial_pos;
     m_particles.velocityInitBuffer[i] = m_initial_velocity;
+
+	m_particles.colorBuffer[i] = PhysxConversion::PxVec4ToVec4(*m_Emitter.GetColor());
+	m_particles.colorOriginBuffer[i] = m_particles.colorBuffer[i];
   }
 
   m_pIndexPool = PxParticleExt::createIndexPool(max_particles);
@@ -257,6 +264,8 @@ void CParticleSystem::update(float elapsed) {
 				  m_particles.positionBuffer[idx] = positions[idx];
 				  m_particles.velocityBuffer[idx] = velocities.ptr() ? velocities[idx] : PxVec3(0.0f);
 				  m_particles.negativeVelocityBuffer[idx] = -m_particles.velocityBuffer[idx];
+				  m_particles.colorBuffer[idx] = m_particles.colorOriginBuffer[idx] * m_particles.lifeTimeBuffer[idx]* *m_Emitter.GetModifierColor();
+				  //m_particles.colorBuffer[idx] = max(m_);
 
 				  //add dt to particle lifetime
 				  if (m_particles.maxLifeTimeBuffer[idx] > 0)
@@ -374,6 +383,7 @@ void CParticleSystem::saveToFile(std::string fileName)
 	std::string full_path = "data/particles/" + fileName + ".particles";
 	FILE* f = fopen(full_path.c_str(), "w+b");
 	fclose(f);
+
 }
 
 void CParticleSystem::loadFromFile(std::string fileName)
@@ -503,6 +513,28 @@ void CParticleSystem::renderInMenu()
         //nothing
       }
     }
+
+	ImGui::Text("\n");
+	ImGui::Checkbox("random color range", &random_value_color);
+	if (!random_value_color) {
+		
+		if (ImGui::DragFloat4("initial velocity particles", &m_Emitter.GetColor()->x, 0.1f)) {
+			for (int i = 0; i < m_particles.numParticles; i++) {
+				m_particles.colorBuffer[i] = PhysxConversion::PxVec4ToVec4(*m_Emitter.GetColor());
+			}
+		}
+	}
+	else {
+		/*ImGui::Text("Random vector between 2 vectors");
+		if (ImGui::DragFloat3("max limit random", &m_Emitter.GetVelocityRandomMax()->x)) {
+			//nothing
+		}
+		if (ImGui::DragFloat3("min limit random", &m_Emitter.GetVelocityRandomMin()->x)) {
+			//nothing
+		}*/
+	}
+
+	ImGui::DragFloat("modifier color over lifeTime", m_Emitter.GetModifierColor());
 
 	ImGui::Text("\n");
 
@@ -635,14 +667,6 @@ void CParticleSystem::RenderMenuSkeletonParticles() {
 			m_Emitter.SetPosition(new_position);
 		}
 	}
-	/*ImGui::DragInt("num bone id", &num_bone);
-	PxVec3 new_position = PhysxConversion::Vec3ToPxVec3(m_Emitter.testBones(num_bone, &name_bone, &traslacion));
-	ImGui::Text("position for bone %s is: %f, %f, %f\n", name_bone.c_str(), new_position.x, new_position.y, new_position.z);
-	ImGui::Text("traslacion of bone from core is: %f, %f, %f\n", traslacion.x, traslacion.y, traslacion.z);
-	for (int i = 0; i < m_particles.numParticles; i++) {
-		m_particles.positionInitBuffer[i] = new_position;
-		m_Emitter.SetPosition(new_position);
-	}*/
 }
 
 void CParticleSystem::printListChilds(int bone, CalCoreSkeleton* skeleton, std::vector<int>& bones_activated, int& idx) {

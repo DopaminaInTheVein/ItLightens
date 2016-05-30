@@ -45,6 +45,7 @@ class CParticleSystem : public TCompBase {
   bool random_value_velocity = false;
   bool random_value_position = false;
   bool random_value_lifeTime = false;
+  bool random_value_color	 = false;
   //------------------------------------------------------------------
 
   std::vector<int> list_bones;

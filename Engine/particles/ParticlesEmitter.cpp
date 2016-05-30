@@ -55,12 +55,12 @@ PxVec3 CParticlesEmitter::GetInitialPosByShape(const VEC3& front, const VEC3& up
 			return init_pos;
 			break;
 		case SHAPE_CONE:
-			random_angle = random(-2 * PI, 2*PI);
+			/*random_angle = random(-2 * PI, 2*PI);
 			random_radius = random(-m_shape_emitter.radius, m_shape_emitter.radius);
 			random_angle = deg2rad(random_angle);
 			init_pos.x += random_radius*sinf(random_angle)*m_shape_emitter.direction.x;
 			init_pos.y += random_radius*cosf(random_angle)*m_shape_emitter.direction.y;
-			init_pos.z += random_radius*tanf(random_angle)*m_shape_emitter.direction.z;
+			init_pos.z += random_radius*tanf(random_angle)*m_shape_emitter.direction.z;*/
 			return init_pos;
 			break;
 		case SHAPE_EDGE:
@@ -88,6 +88,7 @@ PxVec3 CParticlesEmitter::GetInitialPosByShape(const VEC3& front, const VEC3& up
 PxVec3 CParticlesEmitter::GetInitialVelByShape(const VEC3& front, const VEC3& up)
 {
 	PxVec3 init_vel = m_initialVelocity;
+	float random_angle = random(-m_shape_emitter.angle, m_shape_emitter.angle);
 	if (init_vel.x == 0.0f && init_vel.y == 0.0f && init_vel.z == 0.0f)
 		return m_initialVelocity;
 
@@ -96,7 +97,12 @@ PxVec3 CParticlesEmitter::GetInitialVelByShape(const VEC3& front, const VEC3& up
 		return init_vel;
 		break;
 	case SHAPE_CONE:
-		//init_vel = 
+		random_angle = deg2rad(random_angle);
+		init_vel = PhysxConversion::Vec3ToPxVec3( m_shape_emitter.direction);
+		init_vel.x += random_angle*(1 - up.x);
+		init_vel.y += random_angle*(1 - up.y);
+		init_vel.z += random_angle*(1 - up.z);
+
 		return init_vel;
 		break;
 	case SHAPE_EDGE:
