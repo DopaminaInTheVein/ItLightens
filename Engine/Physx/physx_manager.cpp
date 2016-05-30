@@ -224,7 +224,7 @@ void CPhysxManager::customizeSceneDesc(PxSceneDesc& sceneDesc)
 	sceneDesc.gravity = PxVec3(0.0f, GRAVITY, 0.0f);
 	sceneDesc.filterShader = ItLightensFilter::ItLightensFilterShader;
 	sceneDesc.simulationEventCallback = this;
-	sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS;
+	sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS | PxSceneFlag::eENABLE_CCD;
 	sceneDesc.filterCallback = this;
 	//sceneDesc.flags |= PxSceneFlag::eREQUIRE_RW_LOCK;
 }
@@ -649,7 +649,8 @@ PxControllerBehaviorFlag::
 PxFixedJoint *joint = PxFixedJointCreate(*m_pPhysics, a1, tmx1, a2, tmx2);
 //joint->setMotion(PxD6Axis::eX, PxD6Motion::eLIMITED);
 
-joint->setConstraintFlag(PxConstraintFlag::eVISUALIZATION, true);
+joint->setConstraintFlag(PxConstraintFlag::
+IZATION, true);
 return false;
 }
 */

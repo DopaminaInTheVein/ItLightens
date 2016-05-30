@@ -62,6 +62,14 @@ public:
 		// generate default contact for no-triggers
 		pairFlags = PxPairFlag::eCONTACT_DEFAULT;
 
+		//Continuos Collision Detction
+		//if ((filterData0.word0 & eFRAGMENT || filterData1.word0 & eFRAGMENT)) {
+		//	pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+		//	pairFlags |= PxPairFlag::eCCD_LINEAR;
+		//	pairFlags |= PxPairFlag::eDETECT_CCD_CONTACT;
+		//	return PxFilterFlag::eDEFAULT;
+		//}
+
 		if ((filterData0.word0 & ePLAYER_BASE && filterData1.word0 & ePLATFORM)) {
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;

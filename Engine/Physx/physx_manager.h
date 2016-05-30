@@ -9,12 +9,12 @@
 #define DEFAULT_DATA_CC			g_PhysxManager->GetDefaultQueryTagsCC()
 
 
-#define PXM_NO_PLAYER_CRYSTAL ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_NO_CRYSTAL ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_NO_PLAYER ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_NO_PLAYER_NPC ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eCRYSTAL | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_ALL_LESS_STATIC ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT
-#define PXM_CAMERA_COLLISIONS ItLightensFilter::eSCENE //| ItLightensFilter::eOBJECT
+#define PXM_NO_PLAYER_CRYSTAL (ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
+#define PXM_NO_CRYSTAL (ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
+#define PXM_NO_PLAYER (ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
+#define PXM_NO_PLAYER_NPC (ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eCRYSTAL | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
+#define PXM_ALL_LESS_STATIC (ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eFRAGMENT)
+#define PXM_CAMERA_COLLISIONS (ItLightensFilter::eSCENE) //| ItLightensFilter::eOBJECT
 
 #define GRAVITY -10.0f
 

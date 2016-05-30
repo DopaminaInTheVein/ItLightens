@@ -36,6 +36,11 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 		}
 
 		else if (h.hasTag("fragment")) {
+			filter.word0 = ItLightensFilter::eFRAGMENT;
+			filter.word1 = PXM_NO_PLAYER_NPC;
+		}
+		else if (h.hasTag("box")) {
+			filter.word0 = ItLightensFilter::eFRAGMENT;
 			filter.word1 = PXM_NO_PLAYER_NPC;
 		}
 		else if (m_collisionType == STATIC_OBJECT) {
@@ -48,7 +53,21 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 	}
 	if (!m_pActor) return;
 	PxRigidActor *actor = m_pActor->isRigidActor();
-	if(actor) g_PhysxManager->setupFiltering(actor,filter);
+	if (actor) {
+		g_PhysxManager->setupFiltering(actor, filter);
+		//if (h.hasTag("fragment")) {
+		//	PxRigidDynamic * rd = actor->isRigidDynamic();
+		//	if (rd) {
+		//		rd->setRigidDynamicFlag(PxRigidDynamicFlag::eENABLE_CCD, true);
+		//		rd->setRigidDynamicFlag(PxRigidDynamicFlag::eENABLE_CCD_FRICTION, true);
+		//	}
+		//	PxRigidBody * rb = actor->isRigidBody();
+		//	if (rb) {
+		//		rb->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_CCD, true);
+		//		rb->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_CCD_FRICTION, true);
+		//	}
+		//}
+	}
 }
 
 //read init values
