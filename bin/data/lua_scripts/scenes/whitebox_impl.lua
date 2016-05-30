@@ -107,6 +107,6 @@ function destroyWallEffect()
   --Activamos fragmentos pared
   all_fragments1:get_handles_by_tag(tagWallFragment1)
   all_fragments1:awake()
- -- p:exec_command( "all_fragments1:remove_physics();", 5 )
+  --p:exec_command( "all_fragments1:remove_physics();", 5 )
 end
 --------------------------------------

@@ -26,7 +26,7 @@ class CHandle;
 
 class PxAllocatorCallback
 {
-public:
+public:	
 	virtual ~PxAllocatorCallback() {}
 	virtual void* allocate(size_t size, const char* typeName, const char* filename,
 		int line) = 0;
@@ -49,7 +49,6 @@ class CPhysxManager :	public IAppModule,
 						public PxControllerBehaviorCallback,
 						public PxUserControllerHitReport, 
 						public PxQueryFilterCallback {
-
 
 	PxFoundation			*m_pFoundation				= nullptr;
 	PxProfileZoneManager	*m_pProfileZoneManager		= nullptr;
@@ -112,6 +111,9 @@ public:
 	{}
 
 	~CPhysxManager() { stop(); }
+
+	//Test CCD
+	bool ccdActive = true;
 
 	//runtime funcions
 

@@ -77,6 +77,7 @@ void CImGuiModule::update(float dt) {
 	}
 
 	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
+	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
 	ImGui::Text("WARNING: The player will still move, pause the game to stop moving the player");
