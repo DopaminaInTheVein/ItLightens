@@ -8,11 +8,14 @@
 
 using namespace physx;
 
+class CalCoreSkeleton;
+
 class CParticleSystem : public TCompBase {
   PxParticleSystem *			    m_pParticleSystem;
   PxParticleCreationData			m_particleData;
 
   int							    m_numParticles;
+  int								m_numberFrames;
 
   PxVec3						    m_initial_pos;
   PxVec3						    m_initial_velocity;
@@ -27,7 +30,7 @@ class CParticleSystem : public TCompBase {
 
   TParticleData				        m_particles;
   CRenderParticlesInstanced			m_RenderParticles;
-  TParticlesEmitter					m_Emitter;
+  CParticlesEmitter					m_Emitter;
 
   const CMesh *						m_pParticle_mesh;
 
@@ -44,6 +47,8 @@ class CParticleSystem : public TCompBase {
   bool random_value_lifeTime = false;
   //------------------------------------------------------------------
 
+  std::vector<int> list_bones;
+
   void UpdateRandomsAttr();
   void SetBufferData();
 
@@ -54,8 +59,8 @@ public:
 
   void stop() {
     m_particles.clear();
-
-    m_pParticleSystem->release();
+    PX_SAFE_RELEASE(m_pParticleSystem);
+	PX_SAFE_RELEASE(m_pIndexPool);
   }
 
   void render() {}	//not used
@@ -76,6 +81,9 @@ public:
   //										Particles system editor
   //-----------------------------------------------------------------------------------------------------
   void renderInMenu();
+  void RenderMenuSkeletonParticles();
+  void printListChilds(int bone, CalCoreSkeleton * skeleton, std::vector<int>& bones_activated, int & idx);
+  void ShowListBones(CEntity* owner, std::vector<int>& bones_activated);
 };
 
 #endif

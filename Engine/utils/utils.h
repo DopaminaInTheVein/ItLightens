@@ -20,6 +20,7 @@ void		dbg(const char* fmt, ...);
 
 #endif
 
+#define PI 3.14159265359
 #define MOD_YAW(a) ((a > deg2rad(180.0f)) ? (a - deg2rad(360.0f)) : ((a < deg2rad(-180.0f)) ? (a + deg2rad(360.0f)) : a))
 #define assignValueToVar(name, data_map) assingValueFromMap(&name, #name, data_map)
 

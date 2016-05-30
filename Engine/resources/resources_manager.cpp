@@ -37,13 +37,18 @@ void CResourcesManager::onFileChanged(const std::string& filename) {
   //Check Extensions
   std::string ext(filename_correct);
   auto p = ext.find_last_of(".");
+
+  //only files with end extensions are valid
+  if (p == std::string::npos) {
+	  return;
+  }
   ext = ext.substr(p);
 
   //Is LUA file
   if (ext == ".lua") {
 	  logic_manager->reloadFile(filename_correct);
+	  // Other files
   }
-  // Other files
   else {
 	  for (auto it : all)
 		  it.second->onFileChanged(filename_correct);
@@ -61,6 +66,9 @@ const IResource* CResourcesManager::get(const char* name) {
 	// Try to load...
 	std::string ext(name);
 	auto p = ext.find_last_of(".");
+	if (p == std::string::npos) {
+		return nullptr;
+	}
 	ext = ext.substr(p);
 
 	IResource* new_obj = nullptr;

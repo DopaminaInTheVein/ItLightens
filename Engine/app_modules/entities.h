@@ -18,6 +18,7 @@ public:
 	void update(float dt) override;
 	void render() override;
 	void recalcNavmesh();
+	void destroyAllEntities();
 	void readNavmesh();
 	bool forcedUpdate() { 
 		return true;

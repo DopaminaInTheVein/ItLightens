@@ -153,6 +153,17 @@ void CApp::stop() {
   for (auto m : all_modules)
     delete m;
   all_modules.clear();
+  mod_renders.clear();
+  mod_init_order.clear();
+  mod_update.clear();
+
+  mod_wnd_proc.clear();
+}
+
+void CApp::changeScene(std::string room) {
+	dbg("Destroying scene...\n");
+	//entities->destroyAllEntities();
+	sceneToLoad = room;
 }
 
 void CApp::restart() {
@@ -188,6 +199,7 @@ void CApp::update(float elapsed) {
   CHandleManager::destroyAllPendingObjects();
 }
 
+
 // ----------------------------------
 void CApp::render() {
   PROFILE_FUNCTION("CApp::render");
@@ -199,4 +211,11 @@ void CApp::render() {
     CTraceScoped scope(it->getName());
     it->render();
   }
+}
+
+// ----------------------------------
+void CApp::loadMode(enum engine_mode mode) {
+	if (mode == ePARTICLES_EDITOR) {
+		::PostMessage(hWnd, WM_CALL_RESTART, 0, 0);
+	}
 }

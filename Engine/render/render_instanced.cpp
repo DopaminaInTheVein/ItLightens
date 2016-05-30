@@ -72,7 +72,7 @@ void CRenderParticlesInstanced::render() const {
   activateBlend(BLENDCFG_DEFAULT);
 }
 
-void CRenderParticlesInstanced::update(float elapsed, const TParticleData& particle_data, float size, float modifier_size) {
+void CRenderParticlesInstanced::update(float elapsed, const TParticleData& particle_data) {
   // Update particles using some cpu code
   global_time += elapsed;
   int idx = 1;
@@ -86,17 +86,13 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
 
     p.center = PhysxConversion::PxVec3ToVec3(particle_data.positionBuffer[idx - 1]);
 	float modifier_over_lifetime;
-	if (modifier_size < 0)
-		modifier_over_lifetime = 1;
-	else
-        modifier_over_lifetime = (particle_data.maxLifeTimeBuffer[idx - 1] - particle_data.lifeTimeBuffer[idx - 1]) * modifier_size;
 
     //if lifetime expired, alpha = 0 to not render this particle
     if (particle_data.lifeTimeBuffer[idx - 1] <= 0.f)
       p.alpha = 0.f;
 
     p.rotation += VEC3(1, 0, 0)*elapsed;
-    p.size = size*modifier_over_lifetime;
+    p.size = particle_data.sizeBuffer[idx-1];
 
     ++idx;
   }

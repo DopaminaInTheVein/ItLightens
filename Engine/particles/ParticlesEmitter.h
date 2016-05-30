@@ -1,7 +1,68 @@
 #ifndef	INC_PARTICLES_EMITTER_H_
 #define INC_PARTICLES_EMITTER_H_
 
-struct TParticlesEmitter {
+class CParticlesEmitter {
+public:
+	enum EShapeEmitter {
+		SHAPE_NOTHING = 0,
+		SHAPE_CIRCLE,
+		SHAPE_SPHERE,
+		SHAPE_CONE,
+		SHAPE_BOX,
+		SHAPE_EDGE,
+	};
+
+	//Definition of types of emitter shapes
+	//-----------------------------------------------------------------
+	struct TShapeEmitter {
+		VEC3 min;
+		VEC3 max;
+		VEC3 direction;
+		float radius;
+		float angle;
+		TShapeEmitter() 
+		{
+			min = VEC3(0,0,0);
+			max = VEC3(0,0,0);
+			radius = 1.0f;
+			angle = 45.0f;
+		}
+		~TShapeEmitter() {}
+		
+		void CreateBoxShape(VEC3 new_min, VEC3 new_max) {
+			min = new_min;
+			max = new_max;
+		}
+
+		void CreateConeShape(float new_angle, float new_rad = 1.0f) {
+			radius = new_rad;
+			angle = new_angle;
+		}
+
+		void CreateEdgeShape(VEC3 line_direction) {
+			direction = line_direction;
+		}
+
+		void CreateCircleShape(float new_radius, VEC3 up_vector = VEC3(0,1,0)) {
+			radius = new_radius;
+			direction = up_vector;
+		}
+
+		void CreateSphereShape(float new_radius) {
+			radius = new_radius;
+		}
+	};
+
+	TShapeEmitter	m_shape_emitter;
+
+
+private:
+	//Emitter attributes
+	//-----------------------------------------------------------------
+
+	//shape
+  int				m_shape_type;
+
   //Position
   PxVec3			m_RandomMaxPos;		//randoms are modifiers from initalPosition
   PxVec3			m_RandomMinPos;
@@ -25,25 +86,33 @@ struct TParticlesEmitter {
 
   //lifeTime
   PxReal			m_lifeTimeMax;
-  PxReal      m_randomLifeTimeMax;
-  PxReal      m_randomLifeTimeMin;
+  PxReal			m_randomLifeTimeMax;
+  PxReal			m_randomLifeTimeMin;
 
   PxReal			m_delay_start;
+  PxReal			m_delay_start_particles;
 
   //color
-  PxVec4      m_color;
+  PxVec4			m_color;
   PxReal			m_modifier_color;	//based on lifetime always
 
-  bool			m_collisions;
-  bool			m_gravity;
+  PxVec3			m_front_transform;
+  
+
+  bool				m_collisions;
+  bool				m_gravity;
+  bool				m_usePhysx;
 
 public:
-  TParticlesEmitter() {
+	CParticlesEmitter() {
     m_initialPosition = PxVec3(0, 0, 0);
     m_RandomMaxPos = PxVec3(0, 0, 0);
     m_RandomMinPos = PxVec3(0, 0, 0);
     m_RandomMaxVel = PxVec3(0, 0, 0);
     m_RandomMinVel = PxVec3(0, 0, 0);
+
+	m_shape_type = SHAPE_NOTHING;
+	m_shape_emitter = TShapeEmitter();
 
     m_initialVelocity = PxVec3(0, 0, 0);
     m_velocityOverLifeTime = PxVec3(0, 0, 0);
@@ -57,7 +126,8 @@ public:
     m_lifeTimeMax = 1.0f;
     m_randomLifeTimeMax = 0.0f;
     m_randomLifeTimeMin = 0.0f;
-    m_delay_start = 0.0f;
+	m_delay_start = 0.0f;			//absolute delay
+	m_delay_start_particles = 5.0f;	//this delay is generated randomly internal by each particle to give continuity
 
     m_color = PxVec4(1, 1, 1, 1);
     m_modifier_color = 1.0f;
@@ -65,8 +135,12 @@ public:
     m_gravity = false;
     m_collisions = false;
   }
-  TParticlesEmitter(PxVec3 position, bool gravity = false, bool collisions = true) {
+	CParticlesEmitter(PxVec3 position, bool gravity = false, bool collisions = true) {
     m_initialPosition = position;
+	m_shape_type = SHAPE_NOTHING;
+	m_shape_emitter = TShapeEmitter();
+
+	m_front_transform = PxVec3(0, 0, 0);
 
     m_RandomMaxPos = PxVec3(0, 0, 0);
     m_RandomMinPos = PxVec3(0, 0, 0);
@@ -85,7 +159,8 @@ public:
     m_lifeTimeMax = 1.0f;
     m_randomLifeTimeMax = 0.0f;
     m_randomLifeTimeMin = 0.0f;
-    m_delay_start = 0.0f;
+	m_delay_start = 0.0f;			//absolute delay
+	m_delay_start_particles = 5.0f;	//this delay is generated randomly internal by each particle to give continuity
 
     m_color = PxVec4(1, 1, 1, 1);
     m_modifier_color = 1.0f;
@@ -93,10 +168,16 @@ public:
     m_gravity = gravity;
     m_collisions = collisions;
   }
-  ~TParticlesEmitter() {}
+  ~CParticlesEmitter() {}
 
   //particles attached to bones
   bool      m_useSkeleton;
+
+  //use physx for particle simulation
+  bool* GetUsePhysx() { return &m_usePhysx; }
+  void SetUsePhysx(bool new_physx) {
+	  m_usePhysx = new_physx;
+  }
 
   //Position
   //-----------------------------------------------------------------
@@ -221,9 +302,33 @@ public:
     m_modifier_color = new_modifier;
   }
 
+
+  //Shape
   //-----------------------------------------------------------------
+  void SetShape(EShapeEmitter type_shape) {
+	  m_shape_type = type_shape;
+  }
+
+  int* GetShape() { return &m_shape_type; }
+
+  PxVec3 GetInitialPosByShape(const VEC3& front, const VEC3& up);
+  PxVec3 GetInitialVelByShape(const VEC3& front, const VEC3& up);
+
+
+  //delays
+  //-----------------------------------------------------------------
+  float* GetAbsoluteDelay() { return &m_delay_start; }
+  void SetAbsoluteDelay(float new_modifier) {
+	  m_delay_start = new_modifier;
+  }
+
+  float* GetRandomDelay() { return &m_delay_start_particles; }
+  void SetRandomDelay(float new_modifier) {
+	  m_delay_start_particles = new_modifier;
+  }
 
   //TESTING BONES
+  //-----------------------------------------------------------------
   VEC3 testBones(int num, std::string* name, VEC3* traslacion);
 };
 

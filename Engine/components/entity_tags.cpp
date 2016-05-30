@@ -6,6 +6,10 @@
 TTagsManager tags_manager;
 using namespace std;
 
+void TTagsManager::clearTags() {
+	clear();
+}
+
 void TTagsManager::renderInMenu() {
   for (auto it = begin(); it != end(); ++it) {
     TTagID tag_id = it->first;

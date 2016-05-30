@@ -115,6 +115,7 @@ bool CRenderDeferredModule::start() {
 
 // ------------------------------------------------------
 void CRenderDeferredModule::stop() {
+	RenderManager.clear();
 }
 
 // ------------------------------------------------------

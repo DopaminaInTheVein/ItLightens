@@ -299,6 +299,8 @@ bool CEntitiesModule::start() {
   std::string file_options = app.file_options_json;
   map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
 
+
+
   //sala = "tiling";
   sala = fields["room_two"];
   //sala = "drones";
@@ -376,7 +378,7 @@ bool CEntitiesModule::start() {
   if (!camera_e) {
     //main camera needed
     fatal("main camera needed!!\n");
-    assert(false);
+    assert(false=="main camera entity not found");
   }
   TCompCamera * pcam = camera_e->get<TCompCamera>();
 
@@ -435,6 +437,8 @@ bool CEntitiesModule::start() {
 }
 
 void CEntitiesModule::stop() {
+	tags_manager.clearTags();
+	//CHandleManager::cleanAllManagers();
 }
 
 void CEntitiesModule::update(float dt) {
@@ -571,6 +575,10 @@ void CEntitiesModule::recalcNavmesh() {
   nav.build(salaloc);
   SBB::postNavmesh(nav);
   SBB::postBool(sala, true);
+}
+
+void CEntitiesModule::destroyAllEntities()
+{
 }
 
 void CEntitiesModule::readNavmesh() {

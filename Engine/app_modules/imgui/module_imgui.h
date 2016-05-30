@@ -19,6 +19,13 @@ public:
 	}
 	bool onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 	static std::string getFilePath(char *filter = "All Files (*.*)\0*.*\0", HWND owner = NULL);		//open file path
+
+	//get current path
+	static std::string getexepath()
+	{
+		char result[MAX_PATH];
+		return std::string(result, GetModuleFileName(NULL, result, MAX_PATH));
+	}
 };
 
 #endif

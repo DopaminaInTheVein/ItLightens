@@ -1,6 +1,8 @@
 #ifndef INC_WINDOWS_APP_H_
 #define INC_WINDOWS_APP_H_
 
+#define WM_CALL_RESTART WM_USER + 1
+
 #include <windows.h>
 #include "utils\timer.h"
 
@@ -10,6 +12,14 @@ class IAppModule;
 // ------------------------------------------------------
 class CApp {
 public:
+
+
+	enum engine_mode {
+		eGAME = 0,
+		eMENU,
+		ePARTICLES_EDITOR,
+	};
+
 	typedef std::vector<IAppModule*> VModules;
 
 	// Remove copy ctor
@@ -32,6 +42,7 @@ public:
 	bool start();
 	void stop();
 	void restart();
+	void changeScene(std::string scene);
 	void exitGame();
 
 	VModules& getModulesToWndProc() {
@@ -43,6 +54,7 @@ public:
 	CTimer timer_app;
 
 private:
+	std::string sceneToLoad = "";
 
 	// Windows stuff
 	HINSTANCE hInstance;
@@ -61,10 +73,11 @@ private:
 
 	void generateFrame();
 	void update(float elapsed);
+	
 	void render();
 
 public:
-
+	void loadMode(engine_mode mode);
 };
 
 #endif

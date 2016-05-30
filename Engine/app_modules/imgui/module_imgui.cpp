@@ -199,10 +199,11 @@ std::string CImGuiModule::getFilePath(char * filter, HWND owner)
   ZeroMemory(&ofn, sizeof(ofn));
   ofn.lStructSize = sizeof(OPENFILENAME);
   ofn.hwndOwner = owner;
+  ofn.lpstrInitialDir = NULL;
   ofn.lpstrFilter = filter;
   ofn.lpstrFile = fileName;
   ofn.nMaxFile = MAX_PATH;
-  ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+  ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_NOCHANGEDIR;
   ofn.lpstrDefExt = "";
   std::string fileNameStr;
   if (GetOpenFileName(&ofn))

@@ -22,6 +22,8 @@ public:
 	void getTagFromHandle(CHandle h_match, std::vector<TTagID>& out);
 	CHandle getHandleByTagAndName(const char* name, const char* tag) const;
 
+	void clearTags();
+
 	void renderInMenu();
 
 	const char* getNameOfTag(TTagID tag_id) const;

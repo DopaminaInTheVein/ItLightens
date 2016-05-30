@@ -48,6 +48,12 @@ public:
   void renderAll(CHandle h_camera, eRenderType render_type);
   void renderUICulling();
   void renderShadowCasters();
+  void clear() {
+	  all_keys.clear();
+	  all_shadow_keys.clear();
+	  renderedCulling.clear();
+
+  }
 };
 
 extern CRenderManager RenderManager;

@@ -181,6 +181,10 @@ void CApp::mainLoop() {
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+			if (msg.message == WM_CALL_RESTART) {
+				stop();
+				start();
+			}
 		}
 		else
 		{

@@ -14,6 +14,12 @@ struct TParticleData {
 	std::vector<PxVec3>		velocityBuffer;
 	std::vector<PxVec3>		negativeVelocityBuffer;	//used to reset velocity
 	std::vector<PxVec3>		velocityInitBuffer;
+
+	std::vector<float>		sizeBuffer;
+
+	std::vector<float>		currDelayStart;
+	std::vector<bool>		started;
+
 	std::vector<float>		lifeTimeBuffer;
 	std::vector<float>		maxLifeTimeBuffer;
 
@@ -47,6 +53,13 @@ struct TParticleData {
 		//lifetime
 		lifeTimeBuffer.resize(maxParticles);
 		maxLifeTimeBuffer.resize(maxParticles);
+
+		//delay
+		started.resize(maxParticles);
+		currDelayStart.resize(maxParticles);
+
+		//size
+		sizeBuffer.resize(maxParticles);
 	}
 
 	void clear() {
@@ -54,6 +67,9 @@ struct TParticleData {
 		positionBuffer.clear();
 		velocityBuffer.clear();
 		lifeTimeBuffer.clear();
+		sizeBuffer.clear();
+		started.clear();
+		currDelayStart.clear();
 	}
 };
 

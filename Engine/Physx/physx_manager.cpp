@@ -143,24 +143,33 @@ bool CPhysxManager::start()
 //stop function: release memory
 void CPhysxManager::stop()
 {
-  if (m_pPhysics)m_pPhysics->release();
-  if (m_pFoundation)m_pFoundation->release();
-  if (m_pCooking)m_pCooking->release();
-  if (m_pProfileZoneManager)m_pProfileZoneManager->release();
-  if (m_pManagerControllers) {
-    //m_pManagerControllers->purgeControllers();	//TODO: free memory
+
+  
+  PX_SAFE_RELEASE(m_pManagerControllers);
+  PX_SAFE_RELEASE(m_pScene);
+  PX_SAFE_RELEASE(m_pCpuDispatcher);
+  
+#ifndef NDEBUG
+  if (m_pConnection != NULL)
+	  PX_SAFE_RELEASE(m_pConnection);
+
+ // auto pvdconnection = m_pPhysics->getPvdConnectionManager();
+  //PX_SAFE_RELEASE(pvdconnection);
+#endif
+
+  PX_SAFE_RELEASE(m_pCooking);
+  PX_SAFE_RELEASE(m_pCudaContextManager);
+  //PX_SAFE_RELEASE(m_pGeomQuerys);
+  if (m_pGeomQuerys) {
+	  delete m_pGeomQuerys;
   }
 
-  if (m_pGeomQuerys) delete m_pGeomQuerys;
+  PxCloseExtensions();
 
-#ifndef NDEBUG
+  PX_SAFE_RELEASE(m_pPhysics);
+  PX_SAFE_RELEASE(m_pProfileZoneManager);
+  PX_SAFE_RELEASE(m_pFoundation);
 
-  //memory already free¿?
-  /*if (mConnection) {
-    if (mConnection->isConnected()) mConnection->disconnect();
-    mConnection->release();
-  }*/
-#endif
 }
 
 //update function: to update at fixed rate

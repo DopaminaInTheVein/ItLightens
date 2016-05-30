@@ -68,6 +68,16 @@ public:
 			delete[] internal_to_external;
 	}
 
+	static void cleanAllManagers() {
+		all_manager_by_name.clear();
+		/*for (int i=0; i < CHandle::max_types; i++) {
+			if (all_managers[i]) {
+				delete all_managers[i];
+				all_managers[i] = nullptr;
+			}
+		}*/
+	}
+
 	// ---------------------------------------
 	virtual void init(uint32_t max_objects) {
 		assert(max_objects < max_total_objects_allowed);

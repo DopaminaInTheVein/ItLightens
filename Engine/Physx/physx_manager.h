@@ -8,6 +8,8 @@
 #define DEFAULT_DATA_STATIC		g_PhysxManager->GetDefaultQueryTagsStatic()
 #define DEFAULT_DATA_CC			g_PhysxManager->GetDefaultQueryTagsCC()
 
+#define PX_SAFE_RELEASE(p)  if (p) p->release(), p = nullptr
+
 
 #define PXM_NO_PLAYER_CRYSTAL ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
 #define PXM_NO_CRYSTAL ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
@@ -30,7 +32,7 @@ public:
 	virtual void* allocate(size_t size, const char* typeName, const char* filename,
 		int line) = 0;
 	virtual void deallocate(void* ptr) = 0;
-};*/
+};
 
 class UserErrorCallback : public PxErrorCallback
 {
@@ -40,7 +42,7 @@ public:
 	{
 		fatal("PHYSX ERROR - %d: %s\n",code,message);
 	}
-};
+};*/
 
 class CPhysxManager :	public IAppModule,
 						public PxSimulationEventCallback,

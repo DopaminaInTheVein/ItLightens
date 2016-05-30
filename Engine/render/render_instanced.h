@@ -35,7 +35,7 @@ class CRenderParticlesInstanced {
 public:
 
   bool create(size_t max_instances, const CMesh* new_instanced_mesh);
-  void update(float dt, const TParticleData& particle_data, float size = 1.0f, float modifier_size = 1.0f);
+  void update(float dt, const TParticleData& particle_data);
   void clear();
 
   void render() const;
