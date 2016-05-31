@@ -96,6 +96,18 @@ void CParticlesManager::RenderParticlesEditor()
 		ImGui::SameLine();
 		if (ImGui::SmallButton("Load Particles System")) {
 			file = CImGuiModule::getFilePath();
+			auto p = file.find_last_of("\\");		//get last part from path
+			file = file.substr(p + 1);
+
+			if (file != "") {		//valid entry
+
+				file = "data/particles/" + file;
+			}
+
+			bool is_ok = m_pNewParticleSystem->loadFromFile(file);
+			if (!is_ok) {
+				file = "NOT_LOAD";
+			}
 		}
 
 		if (file != "NOT_LOAD") {

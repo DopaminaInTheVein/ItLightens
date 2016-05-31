@@ -305,7 +305,7 @@ public:
 
   //Shape
   //-----------------------------------------------------------------
-  void SetShape(EShapeEmitter type_shape) {
+  void SetShape(int type_shape) {
 	  m_shape_type = type_shape;
   }
 

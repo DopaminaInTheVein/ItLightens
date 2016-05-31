@@ -602,6 +602,9 @@
     <ClCompile Include="particles\ParticlesEmitter.cpp">
       <Filter>particles</Filter>
     </ClCompile>
+    <ClCompile Include="particles\ParticlesLoader.cpp">
+      <Filter>particles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1467,6 +1470,9 @@
       <Filter>particles</Filter>
     </ClInclude>
     <ClInclude Include="particles\particles_manager.h">
+      <Filter>particles</Filter>
+    </ClInclude>
+    <ClInclude Include="particles\ParticlesLoader.h">
       <Filter>particles</Filter>
     </ClInclude>
   </ItemGroup>

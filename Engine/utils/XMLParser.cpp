@@ -129,6 +129,7 @@ void putKey(MKeyValue &k, const char *what, T value) {
 	k[what] = buf;
 }
 
+//write VEC3
 void putPoint(MKeyValue &k, const char *what, VEC3 data) {
 	/*std::ostrstream oss;
 	oss << value << '\0';
@@ -137,6 +138,21 @@ void putPoint(MKeyValue &k, const char *what, VEC3 data) {
 	delete buf;*/
 	// Nos libramos del delete?
 	std::string value = std::to_string(data.x) + " " + std::to_string(data.y) + " " + std::to_string(data.z);
+	std::ostringstream oss;
+	oss << value;
+	const std::string &buf = oss.str();
+	k[what] = buf;
+}
+
+//write VEC4
+void putQuat(MKeyValue &k, const char *what, VEC4 data) {
+	/*std::ostrstream oss;
+	oss << value << '\0';
+	char *buf = oss.str( );
+	k[ what ] = buf;
+	delete buf;*/
+	// Nos libramos del delete?
+	std::string value = std::to_string(data.x) + " " + std::to_string(data.y) + " " + std::to_string(data.z) + " " + std::to_string(data.w);
 	std::ostringstream oss;
 	oss << value;
 	const std::string &buf = oss.str();
@@ -157,9 +173,9 @@ void MKeyValue::put(const char *what, float value) {
 	putKey(*this, what, value);
 }
 
-/*void MKeyValue::put(const char *what, float value) {
-	putKey(*this, what, value);
-}*/
+void MKeyValue::put(const char *what, VEC4 value) {
+	putQuat(*this, what, value);
+}
 
 
 
@@ -337,6 +353,7 @@ bool CXMLParser::xmlParseStream(std::istream &is, const char *stream_name) {
 	do {
 		is.read(buf, sizeof(buf));
 		size_t len = is.gcount();
+		int len_buffer = sizeof(buf);
 		done = len < sizeof(buf);
 		if (!XML_Parse(parser, buf, (int)len, done)) {
 			char msg[512];

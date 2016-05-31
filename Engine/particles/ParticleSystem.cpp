@@ -7,6 +7,7 @@
 #include "render\draw_utils.h"
 #include "resources\resources_manager.h"
 #include "particles\particles_manager.h"
+#include "ParticlesLoader.h"
 
 #include "skeleton\comp_skeleton.h"
 #include "skeleton\skeleton.h"
@@ -23,8 +24,99 @@ bool CParticleSystem::load(MKeyValue & atts)
 {
   std::string tex_particles = atts.getString("texture_particles", "textures/fire.dds");
   m_pTexture = Resources.get(tex_particles.c_str())->as<CTexture>();
+  
+  std::string file_particles = atts.getString("file", "particles/particles_default.particles");
+  CParticleLoader parser = CParticleLoader(CHandle(this));
+  m_Emitter = CParticlesEmitter();
+  bool is_ok = parser.xmlParseFile(file_particles);
+  return is_ok;
 
-  return true;
+  //return true;
+}
+
+bool CParticleSystem::loadFileValues(MKeyValue& atts, std::string element) {
+	//FORMAT:
+	/*
+	<particles_emitter num_particles = "int">
+		<collisions value = "bool"/>
+		<gravity value = "bool"/>
+		<use_physx value = "bool"/>
+		<shape type = "int" angle = "float" radius = "flaot" max = "x y z" min = "x y z" />
+		<position value = "x y z" randmax = "x y z" randmin = "x y z"/>
+		<velocity value = "x y z" randmax = "x y z" randmin = "x y z"/>
+		<size value = "float" modifier = "float"/>
+		<lifetime value = "float" max_rand = "float" min_rand = "float"/>
+		<acceleration value = "x y z" modifier = "x y z"/>
+		<delay delay_start = "float" delay_particle_rand = "float"/>
+		<color value = "x y z w" modifier = "float"/>
+	<particles_emitter/>
+	*/
+	if (element == "particles_emitter") 
+		m_numParticles = atts.getInt("num_particles", 1);
+
+	if (element == "collisions")
+		m_Emitter.SetCollisions(atts.getBool("value", true));
+
+	if(element == "gravity")
+		m_Emitter.SetGravity(atts.getBool("value", false));
+
+	if(element == "use_physx")
+		m_Emitter.SetUsePhysx(atts.getBool("value", true));
+
+	if (element == "shape") {
+		m_Emitter.SetShape(atts.getInt("type", 0));
+		m_Emitter.m_shape_emitter.angle = atts.getFloat("angle", 45);
+		m_Emitter.m_shape_emitter.direction = atts.getPoint("direction");
+		m_Emitter.m_shape_emitter.max = atts.getPoint("max");
+		m_Emitter.m_shape_emitter.min = atts.getPoint("min");
+	}
+
+	if (element == "position")
+	{
+		m_Emitter.SetPosition();
+		m_Emitter.SetPositionRandomMin();
+		m_Emitter.SetPositionRandomMax();
+	}
+
+	if (element == "velocity")
+	{
+		m_Emitter.SetVelocity();
+		m_Emitter.SetVelocityRandomMax();
+		m_Emitter.SetVelocityRandomMin();
+	}
+
+	if (element == "size")
+	{
+		m_Emitter.SetSize();
+		m_Emitter.SetModifierSize();
+	}
+
+	if (element == "lifetime")
+	{
+		m_Emitter.SetLifeTime();
+		m_Emitter.SetLifeTimeRandmoMax();
+		m_Emitter.SetLifeTimeRandomMin();
+	}
+
+	if (element == "acceleration")
+	{
+		m_Emitter.SetAcceleration();
+		m_Emitter.SetAccelModifier();
+	}
+	if (element == "delay")
+	{
+		m_Emitter.SetDelayStart();
+		m_Emitter.SetRandomDelay();
+	}
+
+	if (element == "color")
+	{
+		m_Emitter.SetColor();
+		m_Emitter.SetModifierColor();
+	}
+
+	return true;
+
 }
 
 void CParticleSystem::SetBufferData() {
@@ -386,35 +478,115 @@ void CParticleSystem::saveToFile(std::string fileName)
 
 	//FORMAT:
 	/*
-	<particles_emitter>
-		
+	<particles_emitter num_particles = "int">
+		<collisions value = "bool"/>
+		<gravity value = "bool"/>
+		<use_physx value = "bool"/>
 		<shape type = "int" angle = "float" radius = "flaot" max = "x y z" min = "x y z" />
-		<position init = "x y z" randmax = "x y z" randmin = "x y z"/>
-		<velocity init = "x y z" randmax = "x y z" randmin = "x y z"/>
+		<position value = "x y z" randmax = "x y z" randmin = "x y z"/>
+		<velocity value = "x y z" randmax = "x y z" randmin = "x y z"/>
+		<size value = "float" modifier = "float"/>
+		<lifetime value = "float" max_rand = "float" min_rand = "float"/>
+		<acceleration value = "x y z" modifier = "x y z"/>
+		<delay delay_start = "float" delay_particle_rand = "float"/>
+		<color value = "x y z w" modifier = "float"/> 
 	<particles_emitter/>
 
 	*/
+
+	//file buffer
 	std::filebuf fb;
 	fb.open(full_path.c_str(), std::ios::out);
 	std::ostream file(&fb);
+
+	//start_element
+	atts.put("num_particles", m_numParticles);
 	atts.writeStartElement(file, "particles_emitter");
 
-	PxVec3 data = *m_Emitter.GetPosition();
+	//collisions
+	atts.put("value", *m_Emitter.GetCollisions());
+	atts.writeSingle(file, "collisions");
+
+	//gravity
+	atts.put("value", *m_Emitter.GetGravity());
+	atts.writeSingle(file, "gravity");
+
+	//use_physx
+	atts.put("value", *m_Emitter.GetUsePhysx());
+	atts.writeSingle(file, "use_physx");
+
+	//shape
+	atts.put("type", *m_Emitter.GetShape());
 	atts.put("angle", m_Emitter.m_shape_emitter.angle);
-	std::string attr = to_string(data.x) + " " + to_string(data.y) + " " + to_string(data.z);
-	atts.put("init", PhysxConversion::PxVec3ToVec3(data));
+	atts.put("radius", m_Emitter.m_shape_emitter.radius);
+	atts.put("max", m_Emitter.m_shape_emitter.max);
+	atts.put("min", m_Emitter.m_shape_emitter.min);
+	atts.writeSingle(file, "shape");
+
+	//position
+	PxVec3 data = *m_Emitter.GetPosition();
+	atts.put("value", PhysxConversion::PxVec3ToVec3(data));
+	data = *m_Emitter.GetPositionRandomMax();
+	atts.put("randmax", PhysxConversion::PxVec3ToVec3(data));
+	data = *m_Emitter.GetPositionRandomMin();
+	atts.put("randmin", PhysxConversion::PxVec3ToVec3(data));
 	atts.writeSingle(file ,"position");
 	
+	//velocity
+	data = *m_Emitter.GetVelocity();
+	atts.put("value", PhysxConversion::PxVec3ToVec3(data));
+	data = *m_Emitter.GetVelocityRandomMax();
+	atts.put("randmax", PhysxConversion::PxVec3ToVec3(data));
+	data = *m_Emitter.GetVelocityRandomMin();
+	atts.put("randmin", PhysxConversion::PxVec3ToVec3(data));
+	atts.writeSingle(file, "velocity");
 
+	//size
+	atts.put("value", *m_Emitter.GetSize());
+	atts.put("modifier", *m_Emitter.GetModifierSize());
+	atts.writeSingle(file, "size");
+
+	//lifetime
+	atts.put("value", *m_Emitter.GetLifeTime());
+	atts.put("max_rand", *m_Emitter.GetLifeTimeRandomMax());
+	atts.put("min_rand", *m_Emitter.GetLifeTimeRandomMin());
+	atts.writeSingle(file, "lifetime");
+
+	//acceleration
+	data = *m_Emitter.GetAcceleration();
+	atts.put("value", PhysxConversion::PxVec3ToVec3(data));
+	data = *m_Emitter.GetAccelModifier();
+	atts.put("modifier", PhysxConversion::PxVec3ToVec3(data));
+	atts.writeSingle(file, "acceleration");
+
+	//delay
+	atts.put("delay_start", *m_Emitter.GetDelayStart());
+	atts.put("delay_particle_rand", *m_Emitter.GetRandomDelay());
+	atts.writeSingle(file, "delay");
+
+	//color
+	atts.put("value", PhysxConversion::PxVec4ToVec4(*m_Emitter.GetColor()));
+	atts.put("modifier", *m_Emitter.GetModifierColor());
+	atts.writeSingle(file, "color");
+
+	//end element
 	atts.writeEndElement(file, "particles_emitter");
-
+	
+	fb.close();
 	
 
 }
 
-void CParticleSystem::loadFromFile(std::string fileName)
+bool CParticleSystem::loadFromFile(std::string fileName)
 {
+	CParticleLoader ep = CParticleLoader(CHandle(this));
+	bool is_ok = ep.xmlParseFile(fileName);
+	if (!is_ok) {
+		fatal("error reading particle system %s file, the file wont be loaded\n", fileName.c_str());
+		return false;
+	}
 
+	return true;
 }
 
 #pragma endregion

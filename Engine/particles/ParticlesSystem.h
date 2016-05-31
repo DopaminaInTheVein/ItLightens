@@ -72,11 +72,13 @@ public:
   
   bool load(MKeyValue& atts);
 
+  bool loadFileValues(MKeyValue & atts, std::string element);
+
   //-----------------------------------------------------------------------------------------------------
   //										Particles systems file manager
   //-----------------------------------------------------------------------------------------------------
   void saveToFile(std::string fileName);
-  void loadFromFile(std::string fileName);
+  bool loadFromFile(std::string fileName);
 
   //-----------------------------------------------------------------------------------------------------
   //										Particles system editor

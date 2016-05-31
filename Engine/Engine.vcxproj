@@ -197,6 +197,7 @@
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="particles\ParticlesEmitter.cpp" />
+    <ClCompile Include="particles\ParticlesLoader.cpp" />
     <ClCompile Include="particles\ParticleSystem.cpp" />
     <ClCompile Include="particles\particles_manager.cpp" />
     <ClCompile Include="Physx\physx_manager.cpp" />
@@ -603,6 +604,7 @@
     <ClInclude Include="mcv_platform.h" />
     <ClInclude Include="particles\ParticleData.h" />
     <ClInclude Include="particles\ParticlesEmitter.h" />
+    <ClInclude Include="particles\ParticlesLoader.h" />
     <ClInclude Include="particles\ParticlesSystem.h" />
     <ClInclude Include="particles\particles_manager.h" />
     <ClInclude Include="Physx\ItLightensFilterShader.h" />
