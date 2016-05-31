@@ -123,6 +123,6 @@ function activeWire1( )
 end
 function wireGoUp( )
   p:print("Wire Go Up")
-  cam:run_cinematic("CineWireGoUp", 5)
+  cam:run_cinematic("CineWireGoUp", 10)
   p:exec_command( "triggerWire_1:setActionable(1);", 1 ) --test
 end
