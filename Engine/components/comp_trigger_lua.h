@@ -29,11 +29,10 @@ public:
 		(void)(elapsed);
 	}
 	bool load(MKeyValue& atts);
-	void renderInMenu() {}
+	void renderInMenu();
 
 	//Messages
 	void onSetActionable(const TMsgSetActivable& msg);
-
 };
 
 #endif

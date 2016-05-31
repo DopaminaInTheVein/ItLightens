@@ -1,4 +1,384 @@
 <entities>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole025"/>
+<transform
+   pos="-94.4563 2.80368 -14.6115"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole025.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole024"/>
+<transform
+   pos="-94.4563 2.80368 -15.3402"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole024.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole023"/>
+<transform
+   pos="-94.4563 2.80368 -16.0876"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole023.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole022"/>
+<transform
+   pos="-94.5168 3.14126 -14.94"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole022.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole021"/>
+<transform
+   pos="-94.5168 3.14126 -15.7506"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole021.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole020"/>
+<transform
+   pos="-94.4563 2.10477 -14.6115"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole020.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole019"/>
+<transform
+   pos="-94.4563 2.10477 -15.3402"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole019.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole018"/>
+<transform
+   pos="-94.4563 2.10477 -16.0876"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole018.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole017"/>
+<transform
+   pos="-94.5168 2.44177 -14.94"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole017.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole016"/>
+<transform
+   pos="-94.5168 2.44177 -15.7506"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole016.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole015"/>
+<transform
+   pos="-94.4563 1.38782 -14.6115"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole015.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole014"/>
+<transform
+   pos="-94.4563 1.38782 -15.3402"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole014.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole013"/>
+<transform
+   pos="-94.4563 1.38782 -16.0876"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole013.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole012"/>
+<transform
+   pos="-94.5168 1.73379 -14.94"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole012.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole011"/>
+<transform
+   pos="-94.5168 1.73379 -15.7506"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole011.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole007"/>
+<transform
+   pos="-94.5168 0.960632 -14.94"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole007.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole006"/>
+<transform
+   pos="-94.5168 0.960632 -15.7064"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole006.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole003"/>
+<transform
+   pos="-94.4563 0.614349 -16.1059"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole003.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole002"/>
+<transform
+   pos="-94.4563 0.614349 -15.3494"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole002.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole001"/>
+<transform
+   pos="-94.4563 0.614349 -14.6115"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole001.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
 <entity>
 <tags
    tags="player"/>
@@ -193,7 +573,7 @@
 <name
    name="cargador_de_bateria"/>
 <transform
-   pos="-94.0594 0.341249 23.0252"
+   pos="-94.0594 0.34125 23.0252"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -207,7 +587,7 @@
 <name
    name="cerradura_electrica"/>
 <transform
-   pos="-91.8181 0.0687488 10.2894"
+   pos="-91.8181 0.0687489 10.2894"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -438,107 +818,12 @@
 
 </entity>
 <entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole041"/>
-<transform
-   pos="-93.0511 5.11826 -13.2177"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole041.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="1.893 1.933 2.301"
-   mass="50"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole040"/>
-<transform
-   pos="-92.8571 4.92978 -14.8205"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole001.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.833 0.661"
-   mass="100"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole003"/>
-<transform
-   pos="-93.9013 0.614349 -16.3148"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole003.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole002"/>
-<transform
-   pos="-93.9013 0.614349 -15.5583"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole002.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole001"/>
-<transform
-   pos="-93.9013 0.614349 -14.8205"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole001.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
    id="302">
 <tags/>
 <name
    name="pared_mole"/>
 <transform
-   pos="-93.9419 0.346788 -16.2502"
+   pos="-94.7339 0.0379498 -15.4414"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -552,7 +837,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="2.40539 0.805 3.84509"/>
+   size="2.40539 0.185 3.84509"/>
 <tags
    tags="trigger"/>
 <trigger_lua
@@ -561,7 +846,7 @@
 <name
    name="tWall"/>
 <transform
-   pos="-93.395 0.75394 -20.052"
+   pos="-93.395 0.15622 -15.419"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -572,8 +857,41 @@
 <name
    name="tWall_pAction"/>
 <transform
-   pos="-93.154 0.944695 -20.0362"
+   pos="-93.154 0.656976 -15.4031"
    quat="0 -0.707107 0 0.707107"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="WireDown"/>
+<transform
+   pos="-94.8917 1.03061 -15.1849"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/WireDown.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.08242 0.185 3.84509"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   actived="false"
+   action="activate"/>
+<name
+   name="tWireDown"/>
+<transform
+   pos="-94.0688 0.552949 -15.419"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 
 </entity>
