@@ -381,8 +381,34 @@ void CParticleSystem::UpdateRandomsAttr() {
 void CParticleSystem::saveToFile(std::string fileName)
 {
 	std::string full_path = "data/particles/" + fileName + ".particles";
-	FILE* f = fopen(full_path.c_str(), "w+b");
-	fclose(f);
+
+	MKeyValue atts;
+
+	//FORMAT:
+	/*
+	<particles_emitter>
+		
+		<shape type = "int" angle = "float" radius = "flaot" max = "x y z" min = "x y z" />
+		<position init = "x y z" randmax = "x y z" randmin = "x y z"/>
+		<velocity init = "x y z" randmax = "x y z" randmin = "x y z"/>
+	<particles_emitter/>
+
+	*/
+	std::filebuf fb;
+	fb.open(full_path.c_str(), std::ios::out);
+	std::ostream file(&fb);
+	atts.writeStartElement(file, "particles_emitter");
+
+	PxVec3 data = *m_Emitter.GetPosition();
+	atts.put("angle", m_Emitter.m_shape_emitter.angle);
+	std::string attr = to_string(data.x) + " " + to_string(data.y) + " " + to_string(data.z);
+	atts.put("init", PhysxConversion::PxVec3ToVec3(data));
+	atts.writeSingle(file ,"position");
+	
+
+	atts.writeEndElement(file, "particles_emitter");
+
+	
 
 }
 

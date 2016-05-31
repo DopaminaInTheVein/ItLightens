@@ -122,7 +122,7 @@ void CParticlesManager::RenderParticlesEditor()
 
 			ImGui::SameLine();
 			if (ImGui::SmallButton("Save Particles System")) {
-				CApp::get().loadMode(CApp::ePARTICLES_EDITOR);
+				//CApp::get().loadMode(CApp::ePARTICLES_EDITOR);
 				m_pNewParticleSystem->saveToFile(name_file);
 			}
 			
