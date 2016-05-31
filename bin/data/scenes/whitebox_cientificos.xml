@@ -548,4 +548,35 @@
     <render_static_mesh name="static_meshes/obj/box1.static_mesh" />
     <rigidbody type_collision="static" />
   </entity>
+  <!--<entity
+   slept="undefined">
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type = "seek" kpt0_pos = "-72.0 0.5 -16.0" kpt0_wait = "0.5"
+   kpt1_type = "look" kpt1_pos = "-72.0 0.5 -10.0" kpt1_wait = "3"
+   kpt2_type = "seek" kpt2_pos = "-78.0 0.5 -10.0" kpt2_wait = "1"
+   kpt3_type = "look" kpt3_pos = "-78.0 0.5 -16.0" kpt3_wait = "3"
+   jurisdiction="-65.0 0.5 -18.0"
+   jurRadius="100.0"
+   formation_point="-65.33016 0.5 -9.0"
+   formation_dir="-65.33016 0.5 -9.0"/>
+<name
+   name="guard_2"/>
+<transform
+   pos="-65.0 0.5 -18.0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>-->
 </entities>

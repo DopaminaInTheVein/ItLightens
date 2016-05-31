@@ -9,6 +9,7 @@ struct TCompWorkstation : public TCompBase {
 
 	CHandle mParent;	
 	VEC3 position;
+	std::string anim_name;
 
 	void init() {
 		mParent = CHandle(this).getOwner();		
@@ -21,8 +22,17 @@ struct TCompWorkstation : public TCompBase {
 		// nothing to be done
 	}
 
+	bool load(MKeyValue& atts) {
+		anim_name = atts.getString("animation", "idle");
+		return true;
+	}
+
 	VEC3 getPosition() {
 		return position;
+	}
+
+	std::string getAnimation() {
+		return anim_name;
 	}
 };
 

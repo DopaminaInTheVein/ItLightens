@@ -133,6 +133,7 @@ bool CEntitiesModule::start() {
   getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
   getHandleManager<TCompTags>()->init(MAX_ENTITIES);
   getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+  getHandleManager<TCompWorkstation>()->init(MAX_ENTITIES);
   getHandleManager<TCompGuidedCamera>()->init(16);
   getHandleManager<LogicHelperArrow>()->init(4);
   //lights
@@ -143,7 +144,7 @@ bool CEntitiesModule::start() {
   getHandleManager<bt_guard>()->init(MAX_ENTITIES);
   getHandleManager<bt_mole>()->init(MAX_ENTITIES);
   getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
-  getHandleManager<ai_scientific>()->init(MAX_ENTITIES);
+  getHandleManager<bt_scientist>()->init(MAX_ENTITIES);
   getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
   getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
   getHandleManager<water_controller>()->init(MAX_ENTITIES);
@@ -186,9 +187,9 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
   SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
   SUBSCRIBE(bt_speedy, TMsgSetPlayer, onSetPlayer);
-  SUBSCRIBE(ai_scientific, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
-  SUBSCRIBE(ai_scientific, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
-  SUBSCRIBE(ai_scientific, TMsgWBEmpty, onEmptyWB);						//Workbench empty
+  SUBSCRIBE(bt_scientist, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
+  SUBSCRIBE(bt_scientist, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
+  SUBSCRIBE(bt_scientist, TMsgWBEmpty, onEmptyWB);						//Workbench empty
   SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
   SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
   //  SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
@@ -205,8 +206,8 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
 
   SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
-  SUBSCRIBE(ai_scientific, TMsgBeaconTakenByPlayer, onTakenBeacon);
-  SUBSCRIBE(ai_scientific, TMsgWBTakenByPlayer, onTakenWB);
+  SUBSCRIBE(bt_scientist, TMsgBeaconTakenByPlayer, onTakenBeacon);
+  SUBSCRIBE(bt_scientist, TMsgWBTakenByPlayer, onTakenWB);
   SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
   SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);
   SUBSCRIBE(magnet_door, TMsgEntityCreated, onCreate);
@@ -220,7 +221,7 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
 
   //bombs
-  SUBSCRIBE(ai_scientific, TMsgStaticBomb, onStaticBomb);
+  SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
   SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
   SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
   SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
@@ -264,8 +265,8 @@ bool CEntitiesModule::start() {
 
   //Posesiones Mensajes
   //..Cientifico
-  SUBSCRIBE(ai_scientific, TMsgAISetPossessed, onSetPossessed);
-  SUBSCRIBE(ai_scientific, TMsgAISetStunned, onSetStunned);
+  SUBSCRIBE(bt_scientist, TMsgAISetPossessed, onSetPossessed);
+  SUBSCRIBE(bt_scientist, TMsgAISetStunned, onSetStunned);
   SUBSCRIBE(player_controller_cientifico, TMsgControllerSetEnable, onSetEnable);
   SUBSCRIBE(player_controller_cientifico, TMsgGetWhoAmI, onGetWhoAmI);
   //..Speedy
@@ -313,7 +314,7 @@ bool CEntitiesModule::start() {
   map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
 
   //sala = "tiling";
-  sala = fields["room_one"];
+  sala = fields["room_two"];
   //sala = "drones";
   //sala = "boxes";
   //sala = "milestone2";
@@ -440,7 +441,7 @@ bool CEntitiesModule::start() {
   getHandleManager<bt_guard>()->onAll(&bt_guard::Init);
   getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
   getHandleManager<bt_speedy>()->onAll(&bt_speedy::Init);
-  getHandleManager<ai_scientific>()->onAll(&ai_scientific::Init);
+  getHandleManager<bt_scientist>()->onAll(&bt_scientist::Init);
   //getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
   getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
   getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
@@ -448,6 +449,7 @@ bool CEntitiesModule::start() {
   getHandleManager<TCompWire>()->onAll(&TCompWire::init);
   getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
   getHandleManager<TCompBox>()->onAll(&TCompBox::init);
+  getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
   return true;
 }
