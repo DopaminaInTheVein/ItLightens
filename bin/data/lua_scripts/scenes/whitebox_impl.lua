@@ -5,7 +5,7 @@ SLB.using( SLB )
 p = Public( )
 h = Handle( )
 hg = HandleGroup()
-
+cam = Camera()
 function OnEnter_tElevator( )
   --Nothing to do
 end
@@ -123,4 +123,6 @@ function activeWire1( )
 end
 function wireGoUp( )
   p:print("Wire Go Up")
+  cam:run_cinematic("CineWireGoUp", 5)
+  p:exec_command( "triggerWire_1:setActionable(1);", 1 ) --test
 end
