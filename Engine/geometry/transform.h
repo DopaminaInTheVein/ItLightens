@@ -69,10 +69,20 @@ public:
     VEC3 f = getFront();
     getYawPitchFromVector(f, yaw, pitch);
   }
+  float       getYaw() const {
+	  float yaw, pitch;
+	  VEC3 f = getFront();
+	  getYawPitchFromVector(f, &yaw, &pitch);
+	  return yaw;
+  }
   void setAngles(float new_yaw, float new_pitch) {
     rotation = CQuaternion::CreateFromYawPitchRoll(new_yaw, -new_pitch, 0.f);
   }
-
+  void setYaw(float new_yaw) {
+	  float yaw, pitch;
+	  getAngles(&yaw, &pitch);
+	  setAngles(new_yaw, pitch);
+  }
   float getDeltaYawToAimTo(VEC3 target) const;
   float getDeltaPitchToAimTo(VEC3 target) const;
   float getDeltaYawToAimDirection(VEC3 direction) const;

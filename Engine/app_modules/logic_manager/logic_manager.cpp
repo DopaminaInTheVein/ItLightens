@@ -327,6 +327,11 @@ void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
 		.param("float: x coordinate")
 		.param("float: y coordinate")
 		.param("float: z coordinate")
+		// teleport and orientate player
+		.set("teleport", &SLBPlayer::teleport)
+		.comment("Teleport player")
+		.param("Point name to teleport")
+
 		// basic coordinates functions
 		.set("get_x", &SLBPlayer::getPlayerX)
 		.comment("returns the X coordinate")

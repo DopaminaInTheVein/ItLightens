@@ -6,6 +6,8 @@ p = Public( )
 h = Handle( )
 hg = HandleGroup()
 cam = Camera()
+player = Player()
+
 function OnEnter_tElevator( )
   --Nothing to do
 end
@@ -117,12 +119,18 @@ end
 --------------------------------------
 triggerWire_1 = Handle()
 wireName_1 = "tWireDown"
+wire_pos_up = "WirePosUp"
 function activeWire1( )
   triggerWire_1:get_handle_by_name_tag(wireName_1, "trigger")
   triggerWire_1:setActionable(1);
 end
 function wireGoUp( )
   p:print("Wire Go Up")
-  cam:run_cinematic("CineWireGoUp", 10)
-  p:exec_command( "triggerWire_1:setActionable(1);", 1 ) --test
+  player = Player()
+  player:get_player()
+  cmd_teleport = "player:teleport(\""..wire_pos_up.."\")"
+  cam:run_cinematic("CineWireGoUp", 5)
+  p:exec_command( "player:set_position(0,-1000,0);", 2 )
+  p:exec_command( "triggerWire_1:setActionable(1);", 10 )
+  p:exec_command( cmd_teleport, 10 )
 end

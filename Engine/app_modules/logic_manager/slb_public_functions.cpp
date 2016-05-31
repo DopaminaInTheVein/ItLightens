@@ -28,6 +28,20 @@ void SLBPlayer::setPlayerPosition(float x, float y, float z) {
 	entity_controller->teleport(new_position);
 }
 
+void SLBPlayer::teleport(const char * point_name) {
+	getPlayer();
+	if (player_handle.isValid()) {
+		CHandle target = tags_manager.getHandleByTagAndName("teleport", "WirePosUp");
+		GET_COMP(tTarget, target, TCompTransform);
+		GET_COMP(tPlayer, player_handle, TCompTransform);
+		GET_COMP(ccPlayer, player_handle, TCompCharacterController);
+		if (tPlayer && tTarget && ccPlayer) {
+			ccPlayer->teleport(tTarget->getPosition());
+			tPlayer->setYaw(tTarget->getYaw());
+		}
+	}
+}
+
 float SLBPlayer::getPlayerX() {
 	getPlayer();
 	CEntity* entity = player_handle;

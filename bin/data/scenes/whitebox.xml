@@ -6,7 +6,7 @@
 <name
    name="pared_mole025"/>
 <transform
-   pos="-94.4563 2.80368 -14.6115"
+   pos="-94.4563 2.80368 -20.3439"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -25,7 +25,7 @@
 <name
    name="pared_mole024"/>
 <transform
-   pos="-94.4563 2.80368 -15.3402"
+   pos="-94.4563 2.80368 -21.0727"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -44,7 +44,7 @@
 <name
    name="pared_mole023"/>
 <transform
-   pos="-94.4563 2.80368 -16.0876"
+   pos="-94.4563 2.80368 -21.82"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -63,7 +63,7 @@
 <name
    name="pared_mole022"/>
 <transform
-   pos="-94.5168 3.14126 -14.94"
+   pos="-94.5168 3.14126 -20.6724"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -82,7 +82,7 @@
 <name
    name="pared_mole021"/>
 <transform
-   pos="-94.5168 3.14126 -15.7506"
+   pos="-94.5168 3.14126 -21.483"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -101,7 +101,7 @@
 <name
    name="pared_mole020"/>
 <transform
-   pos="-94.4563 2.10477 -14.6115"
+   pos="-94.4563 2.10477 -20.3439"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -120,7 +120,7 @@
 <name
    name="pared_mole019"/>
 <transform
-   pos="-94.4563 2.10477 -15.3402"
+   pos="-94.4563 2.10477 -21.0727"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -139,7 +139,7 @@
 <name
    name="pared_mole018"/>
 <transform
-   pos="-94.4563 2.10477 -16.0876"
+   pos="-94.4563 2.10477 -21.82"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -158,7 +158,7 @@
 <name
    name="pared_mole017"/>
 <transform
-   pos="-94.5168 2.44177 -14.94"
+   pos="-94.5168 2.44177 -20.6724"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -177,7 +177,7 @@
 <name
    name="pared_mole016"/>
 <transform
-   pos="-94.5168 2.44177 -15.7506"
+   pos="-94.5168 2.44177 -21.483"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -196,7 +196,7 @@
 <name
    name="pared_mole015"/>
 <transform
-   pos="-94.4563 1.38782 -14.6115"
+   pos="-94.4563 1.38782 -20.3439"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -215,7 +215,7 @@
 <name
    name="pared_mole014"/>
 <transform
-   pos="-94.4563 1.38782 -15.3402"
+   pos="-94.4563 1.38782 -21.0727"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -234,7 +234,7 @@
 <name
    name="pared_mole013"/>
 <transform
-   pos="-94.4563 1.38782 -16.0876"
+   pos="-94.4563 1.38782 -21.82"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -253,7 +253,7 @@
 <name
    name="pared_mole012"/>
 <transform
-   pos="-94.5168 1.73379 -14.94"
+   pos="-94.5168 1.73379 -20.6724"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -272,7 +272,7 @@
 <name
    name="pared_mole011"/>
 <transform
-   pos="-94.5168 1.73379 -15.7506"
+   pos="-94.5168 1.73379 -21.483"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -291,7 +291,7 @@
 <name
    name="pared_mole007"/>
 <transform
-   pos="-94.5168 0.960632 -14.94"
+   pos="-94.5168 0.960631 -20.6724"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -310,7 +310,7 @@
 <name
    name="pared_mole006"/>
 <transform
-   pos="-94.5168 0.960632 -15.7064"
+   pos="-94.5168 0.960631 -21.4388"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -329,7 +329,7 @@
 <name
    name="pared_mole003"/>
 <transform
-   pos="-94.4563 0.614349 -16.1059"
+   pos="-94.4563 0.614348 -21.8383"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -348,7 +348,7 @@
 <name
    name="pared_mole002"/>
 <transform
-   pos="-94.4563 0.614349 -15.3494"
+   pos="-94.4563 0.614348 -21.0818"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -367,7 +367,7 @@
 <name
    name="pared_mole001"/>
 <transform
-   pos="-94.4563 0.614349 -14.6115"
+   pos="-94.4563 0.614348 -20.3439"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -901,33 +901,31 @@
 <guided_camera
    velocity="2.0"
    default_dirs="0"
-   points_size="13"
+   points_size="12"
    wpt1="-87.1488 0.48355 -16.4786"
    wpt2="-88.3501 1.84512 -21.2435"
    wpt3="-84.3651 3.83865 -15.079"
    wpt4="-78.242 4.88089 -12.119"
    wpt5="-76.5927 8.17905 -10.3229"
-   wpt6="-76.18 13.2981 -7.17423"
-   wpt7="-76.18 14.8739 -3.88688"
-   wpt8="-76.0505 18.4563 -2.72999"
-   wpt9="-76.0505 20.2622 2.93749"
-   wpt10="-76.0505 19.4219 7.34057"
-   wpt11="-71.7706 18.4563 9.6151"
-   wpt12="-68.3162 18.4563 9.6151"
-   wpt13="-68.3162 19.8252 9.6151"
+   wpt6="-76.18 13.2981 -7.17426"
+   wpt7="-76.18 14.8739 -3.8869"
+   wpt8="-76.0505 18.7657 -2.72998"
+   wpt9="-76.0505 20.5716 2.9375"
+   wpt10="-76.0505 19.7312 7.34058"
+   wpt11="-71.7706 18.7657 9.61511"
+   wpt12="-68.3162 18.7657 9.61511"
    lpt1="-94.0372 2.09982 -15.529"
-   lpt2="-94.1611 2.3179 -9.47598"
-   lpt3="-94.1611 2.3179 1.2457"
+   lpt2="-94.1611 2.3179 -9.47595"
+   lpt3="-94.1611 2.3179 1.24573"
    lpt4="-94.1611 2.88284 11.9039"
    lpt5="-81.5226 10.5338 11.2877"
-   lpt6="-70.53 11.2121 10.7779"
-   lpt7="-68.965 18.5873 3.07816"
-   lpt8="-68.965 18.5873 3.76951"
-   lpt9="-68.965 18.5873 3.53965"
-   lpt10="-68.965 18.5873 3.30833"
-   lpt11="-68.965 18.5873 3.30833"
-   lpt12="-68.9861 18.5873 3.30833"
-   lpt13="-68.2521 17.5641 3.30833"/>
+   lpt6="-70.53 11.2121 10.778"
+   lpt7="-68.965 18.5873 3.07819"
+   lpt8="-68.965 18.8966 3.76953"
+   lpt9="-68.965 18.8966 3.53967"
+   lpt10="-68.965 18.8966 3.30835"
+   lpt11="-68.965 18.8966 3.30835"
+   lpt12="-68.9861 18.672 3.30835"/>
 <name
    name="CineWireGoUp"/>
 <transform
@@ -938,7 +936,7 @@
 </entity>
 <entity>
 <tags
-   tags="target"/>
+   tags="teleport"/>
 <name
    name="WirePosUp"/>
 <transform
