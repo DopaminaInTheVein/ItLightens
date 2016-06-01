@@ -91,6 +91,7 @@ public:
 	CLogicManagerModule();
 	bool start() override;
 	void update(float dt) override;
+	void resetTimers();
 	void reloadFile(std::string filename);
 	void stop() override;
 	bool forcedUpdate() { return true; }

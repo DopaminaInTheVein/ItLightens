@@ -327,6 +327,9 @@ bool CEntitiesModule::start() {
 }
 
 void CEntitiesModule::initLevel(string level) {
+	// Restart Timers LUA
+	logic_manager->resetTimers();
+
 	CApp &app = CApp::get();
 	std::string file_options = app.file_options_json;
 	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
@@ -487,6 +490,9 @@ void CEntitiesModule::initLevel(string level) {
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
+
+	//TODO: Message LevelStart
+	
 }
 
 void CEntitiesModule::destroyAllEntities() {

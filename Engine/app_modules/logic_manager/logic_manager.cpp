@@ -49,6 +49,10 @@ void CLogicManagerModule::update(float dt) {
 	}
 }
 
+void CLogicManagerModule::resetTimers() {
+	command_queue.clear();
+}
+
 void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
 	char lua_code[64];
 	caller_handle = handle;

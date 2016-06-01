@@ -519,6 +519,7 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 
 			CEntity *e0 = GetEntityHandle(*pairHeader.actors[0]);
 			CEntity *e1 = GetEntityHandle(*pairHeader.actors[1]);
+			if (!e0 || !e1) return;
 
 			TCompCharacterController *cc;
 

@@ -236,8 +236,10 @@ void SLBHandleGroup::awake() {
 // Remove physics to the group
 void SLBHandleGroup::removePhysics() {
 	for (auto h : handle_group) {
-		CHandle hPhysics = ((CEntity*)h)->get<TCompPhysics>();
-		if (hPhysics.isValid()) hPhysics.destroy();
+		if (h.isValid()) {
+			CHandle hPhysics = ((CEntity*)h)->get<TCompPhysics>();
+			if (hPhysics.isValid()) hPhysics.destroy();
+		}
 	}
 }
 

@@ -608,7 +608,9 @@
     <ClCompile Include="components\comp_hierarchy.cpp">
       <Filter>components</Filter>
     </ClCompile>
-    <ClCompile Include="components\comp_tracker_cinta.cpp" />
+    <ClCompile Include="components\comp_tracker_cinta.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1488,7 +1490,9 @@
     <ClInclude Include="components\comp_hierarchy.h">
       <Filter>components</Filter>
     </ClInclude>
-    <ClInclude Include="components\comp_tracker_cinta.h" />
+    <ClInclude Include="components\comp_tracker_cinta.h">
+      <Filter>components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
