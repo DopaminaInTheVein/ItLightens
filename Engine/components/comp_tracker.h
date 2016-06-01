@@ -1,4 +1,4 @@
-/*
+
 #ifndef INC_TRACKER_H_
 #define INC_TRACKER_H_
 
@@ -15,7 +15,7 @@ struct HandleTrack {
 };
 typedef std::vector<HandleTrack> VHandleTracks;
 
-struct TCompTrackerCinta : public TCompBase {
+struct TCompTracker : public TCompBase {
 	
 	VHandleTracks followers;
 	VEC3 positions[MAX_TRACK_POINTS];
@@ -45,4 +45,3 @@ struct TCompTrackerCinta : public TCompBase {
 
 
 #endif
-*/

@@ -193,14 +193,13 @@ void CApp::update(float elapsed) {
 // ----------------------------------
 void CApp::render() {
   PROFILE_FUNCTION("CApp::render");
- //PRUEBA CLH 
-  //activateDefaultStates();
+  activateDefaultStates();
 
-  //for (auto it : mod_renders) {
-  //  PROFILE_FUNCTION(it->getName());
-  //  CTraceScoped scope( it->getName() );
-  //  it->render();
-  //}
+  for (auto it : mod_renders) {
+    PROFILE_FUNCTION(it->getName());
+    CTraceScoped scope( it->getName() );
+    it->render();
+  }
 
 }
 

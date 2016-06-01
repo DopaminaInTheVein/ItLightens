@@ -85,7 +85,7 @@ DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
 DECL_OBJ_MANAGER("trigger_lua", TTriggerLua);
 
 //Tracker
-//DECL_OBJ_MANAGER("tracker", TCompTracker);
+DECL_OBJ_MANAGER("tracker", TCompTracker);
 
 DECL_OBJ_MANAGER("box_spawn", TCompBoxSpawner);
 DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
@@ -171,7 +171,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
 
 	//Trackers
-	//getHandleManager<TCompTracker>()->init(100);
+	getHandleManager<TCompTracker>()->init(100);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -204,8 +204,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
 
 	//Trackers
-	//SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
-	//SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
+	SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
 	SUBSCRIBE(TCompCamera, TMsgGuidedCamera, onGuidedCamera);
 	SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
 
@@ -582,7 +582,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompWorkstation>()->updateAll(dt);
 		getHandleManager<magnet_door>()->updateAll(dt);
 		getHandleManager<elevator>()->updateAll(dt);
-		//getHandleManager<TCompTracker>()->updateAll(dt);
+		getHandleManager<TCompTracker>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 		getHandleManager<TCompBoxDestructor>()->updateAll(dt);

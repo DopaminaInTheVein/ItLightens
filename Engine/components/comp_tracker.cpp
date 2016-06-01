@@ -1,19 +1,19 @@
-/*
+
 #include "mcv_platform.h"
 
-#include "comp_tracker_cinta.h"
+#include "comp_tracker.h"
 #include "comp_physics.h"
 #include "comp_transform.h"
 #include "entity.h"
 #include "entity_parser.h"
 #include "imgui/imgui.h"
 
-void TCompTrackerCinta::onCreate(const TMsgEntityCreated &)
+void TCompTracker::onCreate(const TMsgEntityCreated &)
 {
 
 }
 
-bool TCompTrackerCinta::load(MKeyValue& atts) {
+bool TCompTracker::load(MKeyValue& atts) {
 	// Size & Longitude
 	longitude = atts.getFloat("long", -1);
 	assert(longitude > 0);
@@ -39,7 +39,7 @@ bool TCompTrackerCinta::load(MKeyValue& atts) {
 	return true;
 }
 
-void TCompTrackerCinta::setFollower(const TMsgFollow &msg) {
+void TCompTracker::setFollower(const TMsgFollow &msg) {
 
 	//dbg("---------- Tracker -----------------------------------\n");
 	//dbg("Longitude = %f\n", longitude);
@@ -77,7 +77,7 @@ void TCompTrackerCinta::setFollower(const TMsgFollow &msg) {
 	}
 }
 
-void TCompTrackerCinta::update(float elapsed) {
+void TCompTracker::update(float elapsed) {
 	for (HandleTrack follower : followers) {
 		if (follower.handle.isValid()) {
 			updateTrackMovement(follower);
@@ -85,7 +85,7 @@ void TCompTrackerCinta::update(float elapsed) {
 	}
 }
 
-void TCompTrackerCinta::updateTrackMovement(HandleTrack ht) {
+void TCompTracker::updateTrackMovement(HandleTrack ht) {
 	CEntity* e = ht.handle;
 	TCompPhysics * physic_comp = e->get<TCompPhysics>();
 	TCompTransform* transform = e->get<TCompTransform>();
@@ -107,14 +107,13 @@ void TCompTrackerCinta::updateTrackMovement(HandleTrack ht) {
 	}
 }
 
-VEC3 TCompTrackerCinta::evaluatePos(HandleTrack ht) {
+VEC3 TCompTracker::evaluatePos(HandleTrack ht) {
 	float indexPrev = ht.normalTime * (float)size;
 	float weightPrev = indexPrev - (int)(indexPrev);
 	float weightNext = 1 - weightPrev;
 	return positions[(int)indexPrev] * weightPrev + positions[(int)indexPrev + 1] * weightNext;
 }
 
-void TCompTrackerCinta::renderInMenu() {
+void TCompTracker::renderInMenu() {
 	ImGui::DragFloat3("Speed:", &mSpeed);
 }
-*/

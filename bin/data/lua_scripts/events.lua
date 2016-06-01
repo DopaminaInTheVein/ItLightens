@@ -14,8 +14,8 @@ function CallFunction(func)
 end
 
 function OnAction( param )
-	--p:print( "OnAction: "..param.."\n" )
-	--CallFunction("OnAction_"..param)
+	p:print( "OnAction: "..param.."\n" )
+	CallFunction("OnAction_"..param)
 	--specialActionSettings(0.7);
 	--setCameraRotationSensibility(60.5);
 	--setCameraSpeed(4.0);
@@ -57,16 +57,9 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-<<<<<<< HEAD
-	p:play_music("data/sounds/music/It-Lightens-muestra-2-loop.mp3")
-	p:set_music_volume(0.7)
-	--triggerGuardFormation();
-	--p:exec_command( "triggerGuardFormation();", 15 )
-=======
 	p:play_music("event:/OnGameStart")
 	triggerGuardFormation();
 	p:exec_command( "triggerGuardFormation();", 15 )
->>>>>>> dev
 	cam:run_cinematic("CinematicIntro", 10)
 end
 
