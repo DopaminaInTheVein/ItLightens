@@ -1,0 +1,103 @@
+<entities>
+<entity>
+<tags
+   tags=""/>
+<name
+   name="Box001"/>
+<transform
+   pos="0 0 -0.0234375"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<rigidbody
+   type_collision="static"/>
+<render_static_mesh
+   name="static_meshes/test_mole/cubo_mole.static_mesh"
+/>
+</entity>
+<entity>
+<tags
+   tags="camera_main"/>
+<camera
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"/>
+<controller_3rd_person/>
+<name
+   name="camController_1"/>
+<transform
+   pos="-2.9295 0.3454 2.5926"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="player"/>
+<player/>
+<life
+   points="10"/>
+<name
+   name="player_1"/>
+<transform
+   pos="-2.9266 1.43372 2.94887"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/player/player.skeleton"/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="0.7"/>
+
+</entity>
+<!--CIENTIFICO-->
+<entity>
+<tags
+   tags="AI AI_cientifico AI_poss"
+/>
+<life
+   points="100"
+/>
+<transform 
+   pos="1.0 0.5 1.0" 
+   quat="0 0 0 1.0"
+   scale="1.0"
+/>
+<name 
+	name="scientist1" 
+/>
+<render_static_mesh
+   name="static_meshes/test_mole/mole_amarilla.static_mesh"
+/>
+<bt_scientist
+  kpt_size  = "4"
+  kpt0_type = "seek" kpt0_pos = "-72.0 0.5 -16.0" kpt0_wait = "0.5"
+  kpt1_type = "look" kpt1_pos = "-72.0 0.5 -10.0" kpt1_wait = "1"
+  kpt2_type = "seek" kpt2_pos = "-78.0 0.5 -10.0" kpt2_wait = "1"
+  kpt3_type = "look" kpt3_pos = "-78.0 0.5 -16.0" kpt3_wait = "1" 
+  zmin="120"
+  zmax ="135"
+/>
+<player_cientifico />
+<character_controller
+   radius="0.3"
+   height="1.8"
+/>
+</entity>
+<entity>
+<tags
+   tags=""/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"/>
+<name
+   name="Omni010"/>
+<transform
+   pos="0.5373 1.63564 0.3671"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+</entities>

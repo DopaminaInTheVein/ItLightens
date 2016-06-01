@@ -1,8 +1,7 @@
 #include "mcv_platform.h"
 #include "sound_manager.h"
-#include "app_modules\io\io.h"
-
-#include "utils\utils.h"
+#include "app_modules/io/io.h"
+#include "utils/utils.h"
 
 extern CSoundManagerModule* sound_manager = nullptr;
 
@@ -27,90 +26,117 @@ bool CSoundManagerModule::start() {
 		return false;
 	}
 
-	result = system->init(32, FMOD_INIT_NORMAL, extradriverdata);
-	if (result != FMOD_OK)
-		return false;
+	result = Studio::System::create(&studio_system);
+	result = studio_system->getLowLevelSystem(&system);
+	result = studio_system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extradriverdata);
 
-	// load the scripts
-	std::vector<std::string> files_to_load = list_files_recursively(sounds_folder);
+	// basic banks
+	result = studio_system->loadBankFile((sounds_folder + "Master Bank.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank);
+	result = studio_system->loadBankFile((sounds_folder + "Master Bank.strings.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank);
 
-	for (std::string file : files_to_load) {
-		sounds[file] = nullptr;
-		if (file.find("music") == std::string::npos && file.find("looping") == std::string::npos) {
-			result = system->createSound(file.c_str(), FMOD_DEFAULT | FMOD_UNIQUE, 0, &sounds[file]);
-		}
-		else if (file.find("music") != std::string::npos) {
-			// musics are loaded as unique streams and with loop mode on
-			result = system->createStream(file.c_str(), FMOD_DEFAULT | FMOD_LOOP_NORMAL | FMOD_UNIQUE, 0, &sounds[file]);
-		}
-		else if (file.find("looping") != std::string::npos) {
-			// looping sfx are looping but not unique
-			result = system->createStream(file.c_str(), FMOD_DEFAULT | FMOD_LOOP_NORMAL, 0, &sounds[file]);
-		}
+	// specific banks
+	result = studio_system->loadBankFile((sounds_folder + "Sfx.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &banks[SFX]);
+	result = studio_system->loadBankFile((sounds_folder + "Music.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &banks[MUSIC]);
+	result = studio_system->loadBankFile((sounds_folder + "Voices.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &banks[VOICES]);
+	result = studio_system->loadBankFile((sounds_folder + "Ambient.bank").c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &banks[AMBIENT]);
 
-		if (result != FMOD_OK)
-			return false;
+	// get all events of every bank
+	for (int channel = SFX; channel != DUMMY; channel++)
+	{
+		int eventCount = 0;
+		Studio::Bank* bank = banks[channel];
+
+		bank->getEventCount(&eventCount);
+		Studio::EventDescription** array = (Studio::EventDescription**)malloc(eventCount * sizeof(void*));
+		bank->getEventList(array, eventCount, &eventCount);
+
+		for (int i = 0; i < eventCount; i++) {
+			int maxLen = 255;
+			char buffer[256];
+			int retrieved;
+			// get the path of the descriptor
+			auto res = array[i]->getPath(buffer, maxLen, &retrieved);
+			// store the descriptor in the map
+			sounds_descriptions[std::string(buffer)] = NULL;
+			result = studio_system->getEvent(buffer, &sounds_descriptions[std::string(buffer)]);
+
+			// cacheo datos de la explosion para que no haya delays
+			//result = sounds_descriptions[std::string(buffer)]->loadSampleData();
+		}
 	}
-
-	// init channels
-	channels[SFX] = 0;
-	channels[MUSIC] = 0;
-	channels[VOICES] = 0;
-	channels[AMBIENT] = 0;
 
 	return true;
 }
 
 void CSoundManagerModule::update(float dt) {
-
+	studio_system->update();
 }
 
 void CSoundManagerModule::stop() {
 	// release sounds and system
-	for (std::map<std::string, FMOD::Sound*>::iterator sound_it = sounds.begin(); sound_it != sounds.end(); sound_it++) {
-		sound_it->second->release();
+	for (std::map<std::string, Studio::EventDescription*>::iterator sound_it = sounds_descriptions.begin(); sound_it != sounds_descriptions.end(); sound_it++) {
+		sound_it->second->unloadSampleData();
 	}
-	sounds.clear();
+
+	stringsBank->unload();
+	masterBank->unload();
+
+	for (int channel = SFX; channel != DUMMY; channel++)
+		banks[channel]->unload();
+
+	studio_system->release();
 	system->release();
 }
 
 bool CSoundManagerModule::playSound(std::string route) {
-	result = system->playSound(sounds[route], 0, false, &channels[SFX]);
+	Studio::EventInstance* sound_instance = NULL;
+	result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
 
-	return result == FMOD_OK;
+	if (result == FMOD_OK) {
+		sound_instance->start();
+		sound_instance->release();
+		return true;
+	}
+
+	return false;
 }
 
 bool CSoundManagerModule::playMusic(std::string route) {
-	result = system->playSound(sounds[route], 0, false, &channels[MUSIC]);
+	Studio::EventInstance* music_instance = NULL;
+	result = sounds_descriptions[std::string(route)]->createInstance(&music_instance);
 
-	return result == FMOD_OK;
+	if (result == FMOD_OK) {
+		music_instance->start();
+		return true;
+	}
+
+	return false;
 }
 
 bool CSoundManagerModule::playVoice(std::string route) {
-	result = system->playSound(sounds[route], 0, false, &channels[VOICES]);
+	Studio::EventInstance* voice_instance = NULL;
+	result = sounds_descriptions[std::string(route)]->createInstance(&voice_instance);
 
-	return result == FMOD_OK;
+	if (result == FMOD_OK) {
+		voice_instance->start();
+		voice_instance->release();
+		return true;
+	}
+
+	return false;
 }
 
 bool CSoundManagerModule::playAmbient(std::string route) {
-	result = system->playSound(sounds[route], 0, false, &channels[AMBIENT]);
+	Studio::EventInstance* ambient_instance = NULL;
+	result = sounds_descriptions[std::string(route)]->createInstance(&ambient_instance);
 
-	return result == FMOD_OK;
+	if (result == FMOD_OK) {
+		ambient_instance->start();
+		ambient_instance->release();
+		return true;
+	}
+
+	return false;
 }
 
-void CSoundManagerModule::setVolume(CHANNEL channel, float volume) {
-	// fit the volume to its min and max values
-	if (volume < 0.f)
-		volume = 0.f;
-	else if (volume > 1.f)
-		volume = 1.f;
-
-	channels[channel]->setVolume(volume);
-}
-
-void CSoundManagerModule::stopChannel(CHANNEL channel) {
-	// fit the volume to its min and max values
-
-	channels[channel]->setPaused(true);
-}
 

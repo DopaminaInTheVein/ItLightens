@@ -4,9 +4,12 @@
 		"static_friction" : 0.5,
 		"restitution" : 0.25
 	}, 	
-	"ai_scientist" : {
+	"bt_scientist" : {
 		"move_speed" : 2.0,
 		"rot_speed" : 2.0,
+		"reach_sq_reach_pnt" : 2.0,
+		"max_wb_distance" : 1000.0,
+		"max_beacon_distance" : 1000.0,
 		"square_range_action" : 1.0,
 		"d_epsilon" : 0.1,
 		"d_beacon_simple" : 100.0,
@@ -14,7 +17,9 @@
 		"t_addBeacon" : 2.5,
 		"t_createBeacon" : 5.0,
 		"t_removeBeacon" : 1.5,
-		"t_waitInPos" : 0.0
+		"t_waitInPos" : 0.0,
+		"ws_wait_time" : 10.0,
+		"ws_wait_time_offset" : 2.0
 	},
 	"bt_guard" : {
 		"SPEED_WALK" : 3.0,

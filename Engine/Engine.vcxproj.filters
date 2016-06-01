@@ -126,9 +126,6 @@
     <ClCompile Include="logic\ai_beacon.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_scientific.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="logic\bt_guard.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -584,6 +581,33 @@
     <ClCompile Include="components\comp_light_dir_shadows.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="logic\magnet_door.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\elevator.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\bt_scientist.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\ai_scientific.cpp">
+      <Filter>logic_old</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_snoozer.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\helper_arrow.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_base.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_render_glow.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_hierarchy.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -729,9 +753,6 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\ai_beacon.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_scientific.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\bt_guard.h">
@@ -1334,30 +1355,6 @@
     <ClInclude Include="render\fx\GuardShots.h">
       <Filter>render\fx</Filter>
     </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod.hpp">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_codec.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_common.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_dsp.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_dsp_effects.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_errors.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod\lowlevel\inc\fmod_output.h">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </ClInclude>
     <ClInclude Include="app_modules\sound_manager\sound_manager.h">
       <Filter>app_modules\sound_manager</Filter>
     </ClInclude>
@@ -1428,6 +1425,66 @@
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_light_dir_shadows.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod.hpp">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_codec.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_common.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_dsp.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_dsp_effects.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_errors.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_output.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_studio.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_studio.hpp">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod\studio\inc\fmod_studio_common.h">
+      <Filter>fmod\studio\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\magnet_door.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\elevator.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\bt_scientist.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_scientific.h">
+      <Filter>logic_old</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_snoozer.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\helper_arrow.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_workstation.h">
+      <Filter>components</Filter>
+	</ClInclude>
+    <ClInclude Include="components\comp_render_glow.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_hierarchy.h">
       <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1600,12 +1657,6 @@
     <Filter Include="fmod">
       <UniqueIdentifier>{528e1a57-420c-4a71-90fc-157459fc227e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="fmod\lowlevel">
-      <UniqueIdentifier>{88a60dd9-33ff-428a-bcae-4ece92ad3124}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="fmod\lowlevel\inc">
-      <UniqueIdentifier>{c5546b4e-3980-441d-b0ed-483c0c50e384}</UniqueIdentifier>
-    </Filter>
     <Filter Include="app_modules\sound_manager">
       <UniqueIdentifier>{0012f195-886a-4a8a-8113-bd4f5cb5649a}</UniqueIdentifier>
     </Filter>
@@ -1614,6 +1665,12 @@
     </Filter>
     <Filter Include="skeleton_controllers">
       <UniqueIdentifier>{443dd437-87c4-422c-8e95-0f58386a2893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fmod\studio">
+      <UniqueIdentifier>{a1c6acbc-0407-4f83-9647-55a54a4df272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fmod\studio\inc">
+      <UniqueIdentifier>{22368550-0f14-4800-801f-1b62d80fb8f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1630,15 +1687,6 @@
   <ItemGroup>
     <None Include="geometry\SimpleMath.inl">
       <Filter>geometry</Filter>
-    </None>
-    <None Include="fmod\lowlevel\inc\fmod.cs">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </None>
-    <None Include="fmod\lowlevel\inc\fmod_dsp.cs">
-      <Filter>fmod\lowlevel\inc</Filter>
-    </None>
-    <None Include="fmod\lowlevel\inc\fmod_errors.cs">
-      <Filter>fmod\lowlevel\inc</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

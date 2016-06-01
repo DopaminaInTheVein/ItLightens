@@ -68,7 +68,6 @@ switch (type)
 		if (res==STAY) { tree->setCurrent(this); return; }// looping vs. on-shot actions
 		// climb tree iteratively, look for the next unfinished sequence to complete
 		btnode *cand=this;
-
 		while (cand->parent!=NULL)
 			{
 			btnode *daddy=cand->parent;

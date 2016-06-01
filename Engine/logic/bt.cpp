@@ -164,6 +164,7 @@ map<string, btevent>* bt::getEvents() {
 btnode** bt::getRoot() {
   return nullptr;
 }
+
 void bt::getPath(VEC3 startPoint, VEC3 endPoint, string nombreSala) {
   CNavmesh nav = SBB::readNavmesh();
   CNavmeshQuery query(&nav);

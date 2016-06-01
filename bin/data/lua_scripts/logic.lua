@@ -14,6 +14,10 @@ function triggerGuardFormation()
 	h:toggle_guard_formation()
 end
 
+function triggerScientistBusy()
+	h:toggle_scientist_busy()
+end
+
 --prints the specified text via the VS console
 function dbg( text )
     p:print( "DBG: "..text.."\n" )

@@ -393,6 +393,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// toggle guards formation
 		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
 		.comment("Activates/desactivates the guard formation states.")
+		// toggle scientist busy
+		.set("toggle_scientist_busy", &SLBHandle::toggleScientistBusy)
+		.comment("Activates/desactivates the scientist busy states.")
 		// sets actionable
 		.set("setActionable", &SLBHandle::setActionable)
 		.comment("Set if the element is actionable (0: false, otherwise: true)")
@@ -501,34 +504,6 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play ambient function
 		.set("play_ambient", &SLBPublicFunctions::playAmbient)
 		.comment("Executes the specified ambient sound")
-		// sets the volume of the sound channel
-		.set("set_sfx_volume", &SLBPublicFunctions::setSoundVolume)
-		.comment("sets the sfx volume")
-		.param("float: volume value")
-		// sets the volume of the music channel
-		.set("set_music_volume", &SLBPublicFunctions::setMusicVolume)
-		.comment("sets the music volume")
-		.param("float: volume value")
-		// sets the volume of the voices channel
-		.set("set_voices_volume", &SLBPublicFunctions::setVoicesVolume)
-		.comment("sets the voices volume")
-		.param("float: volume value")
-		// sets the volume of the ambient channel
-		.set("set_ambient_volume", &SLBPublicFunctions::setAmbientVolume)
-		.comment("sets the ambient volume")
-		.param("float: volume value")
-		// stops the sfx channel
-		.set("stop_sfx", &SLBPublicFunctions::stopSoundChannel)
-		.comment("stops the sfx channel")
-		// stops the music channel
-		.set("stop_music", &SLBPublicFunctions::stopMusicChannel)
-		.comment("stops the music channel")
-		// stops the voices channel
-		.set("stop_voices", &SLBPublicFunctions::stopVoicesChannel)
-		.comment("stops the voices channel")
-		// stops the ambient channel
-		.set("stop_ambient", &SLBPublicFunctions::stopAmbientChannel)
-		.comment("stops the ambient channel")
 		// launch intro state
 		.set("toggle_intro_state", &SLBPublicFunctions::toggleIntroState)
 		.comment("Toggles the intro game state")

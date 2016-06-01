@@ -131,6 +131,7 @@ void bt_guard::Init()
   }
 
   curkpt = 0;
+  animController.setState(AST_IDLE);
 
   //Other info
   ____TIMER_REDEFINE_(timerShootingWall, 1);
@@ -138,6 +139,7 @@ void bt_guard::Init()
   timeWaiting = 0;
   deltaYawLookingArround = 0;
   stunned = false;
+  formation_toggle = false;
 }
 
 //conditions
@@ -827,7 +829,7 @@ void bt_guard::goTo(const VEC3& dest) {
   if (!SBB::readBool(SBB::readSala())) {
     return;
   }
-  VEC3 target = VEC3(dest);
+  VEC3 target = dest;
   VEC3 npcPos = getTransform()->getPosition();
   while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) < 0.5f) {
     ++currPathWpt;
