@@ -6,7 +6,7 @@
 <name
    name="pared_mole025"/>
 <transform
-   pos="-94.4563 2.80368 -20.3439"
+   pos="-94.4563 2.80368 -14.5227"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -25,7 +25,7 @@
 <name
    name="pared_mole024"/>
 <transform
-   pos="-94.4563 2.80368 -21.0727"
+   pos="-94.4563 2.80368 -15.2514"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -44,7 +44,7 @@
 <name
    name="pared_mole023"/>
 <transform
-   pos="-94.4563 2.80368 -21.82"
+   pos="-94.4563 2.80368 -15.9987"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -63,7 +63,7 @@
 <name
    name="pared_mole022"/>
 <transform
-   pos="-94.5168 3.14126 -20.6724"
+   pos="-94.5168 3.14126 -14.8512"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -82,7 +82,7 @@
 <name
    name="pared_mole021"/>
 <transform
-   pos="-94.5168 3.14126 -21.483"
+   pos="-94.5168 3.14126 -15.6617"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -101,7 +101,7 @@
 <name
    name="pared_mole020"/>
 <transform
-   pos="-94.4563 2.10477 -20.3439"
+   pos="-94.4563 2.10477 -14.5227"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -120,7 +120,7 @@
 <name
    name="pared_mole019"/>
 <transform
-   pos="-94.4563 2.10477 -21.0727"
+   pos="-94.4563 2.10477 -15.2514"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -139,7 +139,7 @@
 <name
    name="pared_mole018"/>
 <transform
-   pos="-94.4563 2.10477 -21.82"
+   pos="-94.4563 2.10477 -15.9987"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -158,7 +158,7 @@
 <name
    name="pared_mole017"/>
 <transform
-   pos="-94.5168 2.44177 -20.6724"
+   pos="-94.5168 2.44177 -14.8512"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -177,7 +177,7 @@
 <name
    name="pared_mole016"/>
 <transform
-   pos="-94.5168 2.44177 -21.483"
+   pos="-94.5168 2.44177 -15.6617"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -196,7 +196,7 @@
 <name
    name="pared_mole015"/>
 <transform
-   pos="-94.4563 1.38782 -20.3439"
+   pos="-94.4563 1.38782 -14.5227"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -215,7 +215,7 @@
 <name
    name="pared_mole014"/>
 <transform
-   pos="-94.4563 1.38782 -21.0727"
+   pos="-94.4563 1.38782 -15.2514"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -234,7 +234,7 @@
 <name
    name="pared_mole013"/>
 <transform
-   pos="-94.4563 1.38782 -21.82"
+   pos="-94.4563 1.38782 -15.9987"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -253,7 +253,7 @@
 <name
    name="pared_mole012"/>
 <transform
-   pos="-94.5168 1.73379 -20.6724"
+   pos="-94.5168 1.73379 -14.8512"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -272,7 +272,7 @@
 <name
    name="pared_mole011"/>
 <transform
-   pos="-94.5168 1.73379 -21.483"
+   pos="-94.5168 1.73379 -15.6617"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -291,7 +291,7 @@
 <name
    name="pared_mole007"/>
 <transform
-   pos="-94.5168 0.960631 -20.6724"
+   pos="-94.5168 0.960632 -14.8512"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -310,7 +310,7 @@
 <name
    name="pared_mole006"/>
 <transform
-   pos="-94.5168 0.960631 -21.4388"
+   pos="-94.5168 0.960632 -15.6175"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -329,7 +329,7 @@
 <name
    name="pared_mole003"/>
 <transform
-   pos="-94.4563 0.614348 -21.8383"
+   pos="-94.4563 0.614349 -16.017"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -348,7 +348,7 @@
 <name
    name="pared_mole002"/>
 <transform
-   pos="-94.4563 0.614348 -21.0818"
+   pos="-94.4563 0.614349 -15.2605"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -367,7 +367,7 @@
 <name
    name="pared_mole001"/>
 <transform
-   pos="-94.4563 0.614348 -20.3439"
+   pos="-94.4563 0.614349 -14.5227"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -398,146 +398,6 @@
 <character_controller
    radius="0.3"
    height="0.7"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni010"/>
-<transform
-   pos="-92.5373 1.63564 28.3671"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni009"/>
-<transform
-   pos="-80.6419 1.63564 28.3671"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni008"/>
-<transform
-   pos="-80.6419 1.63564 18.2919"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni007"/>
-<transform
-   pos="-81.459 1.63563 -47.844"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni006"/>
-<transform
-   pos="-74.0948 1.63563 -33.6174"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni005"/>
-<transform
-   pos="-86.7589 1.63563 -33.6174"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni004"/>
-<transform
-   pos="-86.7589 1.63564 -7.90521"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni003"/>
-<transform
-   pos="-72.6222 1.63564 -7.90521"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni002"/>
-<transform
-   pos="-55.3697 1.63564 -7.90521"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="80.0"
-   out_radius="200.0"/>
-<name
-   name="Omni001"/>
-<transform
-   pos="-43.6181 1.63564 -7.90521"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
 
 </entity>
 <entity>
