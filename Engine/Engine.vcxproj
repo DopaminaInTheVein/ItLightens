@@ -125,6 +125,7 @@
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
     <ClCompile Include="camera\camera.cpp" />
     <ClCompile Include="components\comp_aabb.cpp" />
+    <ClCompile Include="components\comp_base.cpp" />
     <ClCompile Include="components\comp_camera.cpp" />
     <ClCompile Include="components\comp_charactercontroller.cpp" />
     <ClCompile Include="components\comp_culling.cpp" />

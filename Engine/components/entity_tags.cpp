@@ -31,6 +31,13 @@ CHandle findByName(const VHandles& handles, const char* entity_name) {
   return CHandle();
 }
 
+void TTagsManager::removeAllTags(CHandle h)
+{
+	for (auto& it_m : tags_manager) {
+		it_m.second.erase(std::remove(it_m.second.begin(), it_m.second.end(), h), it_m.second.end());
+	}
+}
+
 void TTagsManager::removeTag(CHandle h, TTagID tag_id)
 {
 	for (auto& it_m : tags_manager) {
@@ -65,10 +72,9 @@ void TTagsManager::registerTag(const std::string& tag_name) {
 
 // ---------------------------------------
 CHandle TTagsManager::getFirstHavingTag(TTagID tag_id) const {
+	CHandle result;
 	auto h = getHandlesByTag(tag_id);
-	if (h.empty())
-		return CHandle();
-	return h[0];
+	return h.size() > 0 ? h[0] : CHandle();
 }
 
 CHandle TTagsManager::getFirstHavingTag(std::string tag_id) const {
@@ -94,6 +100,7 @@ const VHandles& TTagsManager::getHandlesByTag(TTagID tag_id) const {
 		static VHandles empty_set;
 		return empty_set;
 	}
+	//auto result = it->second;
 	return it->second;
 }
 // ---------------------------------------

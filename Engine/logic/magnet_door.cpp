@@ -68,20 +68,18 @@ void magnet_door::onCreate(const TMsgEntityCreated&)
 
 void magnet_door::update(float elapsed)
 {
-	if (getUpdateInfo()) {
-		updateMagneticBehaviour();
-		updateCinematicState();
-		updateMove();
-		notifyNewState();
-	}
+	updateMagneticBehaviour();
+	updateCinematicState();
+	updateMove();
+	notifyNewState();
 }
 
-//Set magneticBehaviour to none, opening or closing 
+//Set magneticBehaviour to none, opening or closing
 void magnet_door::updateMagneticBehaviour()
 {
 	// Default: Nothing to do because magnetism
 	magneticBehaviour = MB_NONE;
-	if (polarity != NEUTRAL && playerPolarity != NEUTRAL){
+	if (polarity != NEUTRAL && playerPolarity != NEUTRAL) {
 		// Door is not neutral
 		if (abs(playerTransform->getPosition().y - transform->getPosition().y) < 4.f) {
 			//Door and player are on the same floor (Y distance)
@@ -101,7 +99,7 @@ void magnet_door::updateMagneticBehaviour()
 	}
 }
 
-//Set opening or closing 
+//Set opening or closing
 void magnet_door::updateCinematicState()
 {
 	switch (magneticBehaviour) {
@@ -178,8 +176,8 @@ void magnet_door::notifyNewState()
 
 bool magnet_door::getUpdateInfo() {
 	//My Info
-	myEntity = CHandle(this).getOwner();
-	if (!myEntity.isValid()) return false;
+	myEntity = compBaseEntity;
+
 	CEntity* eMe = myEntity;
 	transform = eMe->get<TCompTransform>();
 	if (!transform) return false;
@@ -192,7 +190,7 @@ bool magnet_door::getUpdateInfo() {
 	CEntity* ePlayer = player;
 	playerTransform = ePlayer->get<TCompTransform>();
 
-	TMsgGetPolarity msgPol; 
+	TMsgGetPolarity msgPol;
 	msgPol.polarity = NEUTRAL;
 	ePlayer->sendMsgWithReply(msgPol);
 	playerPolarity = msgPol.polarity;

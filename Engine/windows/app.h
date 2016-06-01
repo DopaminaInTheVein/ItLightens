@@ -31,6 +31,7 @@ public:
 	HWND getHWnd() { return hWnd; }
 	bool start();
 	void stop();
+	void changeScene();
 	void restart();
 	void exitGame();
 
@@ -43,6 +44,7 @@ public:
 	CTimer timer_app;
 
 private:
+	std::string sceneToLoad = "";
 
 	// Windows stuff
 	HINSTANCE hInstance;

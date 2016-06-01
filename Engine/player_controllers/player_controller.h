@@ -28,16 +28,15 @@ class player_controller : public CPlayerBase {
 		first = 0,
 		second,
 	};
-	const string polarize_name[3] = {"neutral", "minus", "plus" };
+	const string polarize_name[3] = { "neutral", "minus", "plus" };
 	//--------------------------------------------------------------------
-	
+
 	//Polarity
 	//--------------------------------------------------------------------
 	VHandles polarityForces;
 	//--------------------------------------------------------------------
 
 	CObjectManager<player_controller> *om;
-
 
 	float					pol_speed = 0;
 
@@ -75,19 +74,19 @@ class player_controller : public CPlayerBase {
 	//CHandle					pose_jump;
 
 	//Polarity Constants
-	float	POL_RCLOSE					= 0.5f;
-	float	POL_RFAR					= 9.0f; // 5 Meters arround
-	float	POL_HORIZONTALITY			= 1.f;
-	float	POL_INTENSITY				= 1000.f;
-	float	POL_REPULSION				= .5f;
-	float	POL_RESISTANCE				= .5f;
-	float	POL_INERTIA					= 0.5f;
-	float	POL_SPEED_ORBITA			= 0.2f;
-	float	POL_ATRACTION_ORBITA		= 1.f;
-	float	POL_NO_LEAVING_FORCE		= 0.99f;
-	float	POL_ORBITA_UP_EXTRA_FORCE	= 1.f;
-	float	POL_REAL_FORCE_Y_ORBITA		= 0.05f;
-	float	POL_OSCILE_Y				= .2f;
+	float	POL_RCLOSE = 0.5f;
+	float	POL_RFAR = 9.0f; // 5 Meters arround
+	float	POL_HORIZONTALITY = 1.f;
+	float	POL_INTENSITY = 1000.f;
+	float	POL_REPULSION = .5f;
+	float	POL_RESISTANCE = .5f;
+	float	POL_INERTIA = 0.5f;
+	float	POL_SPEED_ORBITA = 0.2f;
+	float	POL_ATRACTION_ORBITA = 1.f;
+	float	POL_NO_LEAVING_FORCE = 0.99f;
+	float	POL_ORBITA_UP_EXTRA_FORCE = 1.f;
+	float	POL_REAL_FORCE_Y_ORBITA = 0.05f;
+	float	POL_OSCILE_Y = .2f;
 
 	//Damage Fonts Actived
 	float damageCurrent = 0.f;
@@ -190,6 +189,7 @@ public:
 	void DoubleFalling();
 
 	void update_msgs() override;
+	void UpdateAnimation() { animController.update(); }
 
 	//input Messages
 	void onLeaveFromPossession(const TMsgPossessionLeave&);

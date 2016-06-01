@@ -111,7 +111,6 @@ void player_controller::Init() {
 	animController.setState(AST_IDLE);
 	controlEnabled = true;
 	____TIMER__SET_ZERO_(timerDamaged);
-
 }
 
 bool player_controller::isDamaged() {
@@ -251,8 +250,6 @@ void player_controller::createDevolveLight() {
 
 void player_controller::myUpdate() {
 	PROFILE_FUNCTION("player controller: MY_update");
-	SetMyEntity();
-
 	UpdateDamage();
 	____TIMER__UPDATE_(timerDamaged);
 	if (isDamaged()) {
@@ -261,7 +258,6 @@ void player_controller::myUpdate() {
 	else {
 		UpdatePossession();
 	}
-	animController.update();
 
 	if (cc->OnGround() && state != "jumping") {
 		if (player_curr_speed >= player_max_speed - 0.1f)
@@ -345,7 +341,8 @@ void player_controller::Jump()
 			-curSpeed.z * 0.1f
 		);
 		//--------------------------------------
-	} else {
+	}
+	else {
 		jumpVector = VEC3(0.f, jimpulse, 0.f);
 	}
 	cc->AddImpulse(jumpVector);
@@ -353,7 +350,8 @@ void player_controller::Jump()
 	if (ascending) {
 		ChangeState("doublejump");
 		animController.setState(AST_JUMP2);
-	} else {
+	}
+	else {
 		ChangeState("jumping");
 		animController.setState(AST_JUMP);
 	}
@@ -411,7 +409,6 @@ void player_controller::RecalcAttractions()
 {
 	PROFILE_FUNCTION("player controller: recalc attraction");
 
-
 	// Calc all_forces & Find Orbit force if exists
 	VEC3 all_forces = VEC3(0, 0, 0); //Regular forces sum
 	if (pol_state != NEUTRAL && polarityForces.size() > 0) {
@@ -420,10 +417,8 @@ void player_controller::RecalcAttractions()
 		PolarityForce nearestForce; //Orbit force (if exists)
 		float lowestDist = FLT_MAX;
 		for (auto forceHandle : polarityForces) {
-
 			PolarityForce force = getPolarityForce(forceHandle);
 			if (force.polarity == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
-
 
 			VEC3 localForce = calcForceEffect(force);
 			assert(isValid(localForce));
@@ -456,8 +451,8 @@ void player_controller::RecalcAttractions()
 		if (nearestForce.distance < POL_RCLOSE) {
 			// Near (if press button go up)
 			if (io->keys[VK_SPACE].isPressed()) antigravity.y += 5.f;
-
-		} else {
+		}
+		else {
 			// Far (Interpolate antigravity from 10 to 0)
 			antigravity.y = clamp(10.f - pow(nearestForce.distance - POL_RCLOSE, 2), 0.f, 10.f);
 		}
@@ -469,7 +464,7 @@ void player_controller::RecalcAttractions()
 	lastForces = all_forces;
 }
 
-VEC3 player_controller::calcForceEffect(const PolarityForce& force){
+VEC3 player_controller::calcForceEffect(const PolarityForce& force) {
 	PROFILE_FUNCTION("player controller: attract move");
 
 	{
@@ -497,11 +492,11 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	// In orbit space
 	if (force.distance == 0) {
 		if (atraction) pol_orbit = true;
-		else forceEffect = POL_INTENSITY * direction; 
+		else forceEffect = POL_INTENSITY * direction;
 	}
 	else {
 		//Regular force calc
-		forceEffect = POL_INTENSITY * direction /(force.distance); //We know is not zero
+		forceEffect = POL_INTENSITY * direction / (force.distance); //We know is not zero
 		//dbg("forceEffect: %f %f %f\n", forceEffect.x, forceEffect.y, forceEffect.z);
 		assert(isValid(forceEffect));
 	}
@@ -510,18 +505,17 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force){
 	if (!atraction) {
 		forceEffect = -forceEffect * POL_REPULSION;
 	}
-	
-	Debug->DrawLine(cc->GetPosition(), cc->GetPosition() + forceEffect, VEC3(1,1,0));
+
+	Debug->DrawLine(cc->GetPosition(), cc->GetPosition() + forceEffect, VEC3(1, 1, 0));
 
 	return forceEffect;
 }
 
 VEC3 player_controller::calcFinalForces(const VEC3& all_forces, const PolarityForce& nearestForce) {
-	//Result 
+	//Result
 	VEC3 finalForce;
 
 	if (nearestForce.polarity != pol_state) {
-
 		//Orbit Force
 		VEC3 orbitForce;
 		orbitForce.y = nearestForce.deltaPos.y * POL_OSCILE_Y;//sinf(getDeltaTime() * POL_OSCILE_Y);
@@ -552,7 +546,7 @@ void player_controller::polarityMoveResistance(const PolarityForce& force) {
 	if (force.distance > 0.1f
 		&& force.distance < POL_RCLOSE // very near (with margin)
 		&& force.polarity != pol_state // attraction
-	) {
+		) {
 		SetCharacterController();
 		VEC3 movementPlayer = cc->GetMovement();
 		VEC3 movementAtraction = VEC3(0, 0, 0);
@@ -584,7 +578,7 @@ void player_controller::polarityMoveResistance(const PolarityForce& force) {
 
 			//Getting closer -> player up a little
 			if (gettingCloser) {
-				cc->AddMovement(  VEC3(0, 1, 0), POL_ORBITA_UP_EXTRA_FORCE * max( abs(movementPlayer.z), abs(movementPlayer.x) )  );
+				cc->AddMovement(VEC3(0, 1, 0), POL_ORBITA_UP_EXTRA_FORCE * max(abs(movementPlayer.z), abs(movementPlayer.x)));
 			}
 
 			if (movementApplied) {
@@ -600,30 +594,12 @@ void player_controller::UpdateMoves()
 	SetMyEntity();
 	SetCharacterController();
 
-	//tests
-	if (io->keys['B'].becomesPressed()) {
-		cc->SetCollisions(false);
-		Debug->LogRaw("collisions false\n");
-	}
-
-	if (io->keys['V'].becomesPressed()) {
-		cc->SetCollisions(true);
-		Debug->LogRaw("collisions true\n");
-	}
-
-	if (io->keys['F'].becomesPressed()) {
-		logic_manager->throwEvent(logic_manager->OnAction, "");
-	}
-
-	//endtests
-
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
 	VEC3 direction = directionForward + directionLateral;
-
+	assert(isValid(direction));
 	CEntity * camera_e = camera;
-
 	TCompTransform* camera_comp = camera_e->get<TCompTransform>();
 
 	direction.Normalize();
@@ -636,9 +612,14 @@ void player_controller::UpdateMoves()
 	new_z = -direction.x * sinf(yaw) + direction.z*cosf(yaw);
 
 	direction.x = new_x;
+	if (!isValid(direction)) return; //TEST
+	assert(isValid(direction));
+
 	direction.z = new_z;
+	assert(isValid(direction));
 
 	direction.Normalize();
+	assert(isValid(direction));
 
 	float yaw_to_stop = deg2rad(80.f);
 	float new_yaw = player_transform->getDeltaYawToAimDirection(direction);
@@ -660,7 +641,6 @@ void player_controller::UpdateMoves()
 	if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
 	else player_curr_speed = drag_i*player_curr_speed - drag*player_max_speed;
 
-
 	if (player_curr_speed < 0) {
 		player_curr_speed = 0.0f;
 		directionForward = directionLateral = VEC3(0, 0, 0);
@@ -677,9 +657,9 @@ void player_controller::UpdateMoves()
 	//	ChangePose(pose_jump);
 	//}
 	//else if (player_curr_speed == 0.0f) ChangePose(pose_idle);
-
+	assert(isValid(direction));
 	VEC3 newMovement = direction*player_curr_speed;
-	cc->AddMovement( newMovement * getDeltaTime());
+	cc->AddMovement(newMovement * getDeltaTime());
 }
 
 void player_controller::UpdateInputActions()

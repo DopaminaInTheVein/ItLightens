@@ -34,6 +34,18 @@ void CPlayerBase::addBasicStates() {
 	AddState("win", (statehandler)&CPlayerBase::Win);
 }
 
+bool CPlayerBase::getUpdateInfo() {
+	myEntity = compBaseEntity;
+
+	cc = compBaseEntity->get<TCompCharacterController>();
+	if (!cc) return false;
+
+	transform = compBaseEntity->get<TCompTransform>();
+	if (!transform) return false;
+
+	return true;
+}
+
 bool CPlayerBase::checkDead() {
 	PROFILE_FUNCTION("checkdead");
 
@@ -57,20 +69,72 @@ void CPlayerBase::onSetControllable(const TMsgSetControllable& msg) {
 	controlEnabled = msg.control;
 }
 
+void CPlayerBase::onGoAndLook(const TMsgGoAndLook& msg) {
+	if (msg.target.isValid()) {
+		CEntity* e = msg.target;
+		//TCompTransform * transform = e->get<TCompTransform>();
+		GET_COMP(transform, msg.target, TCompTransform);
+		if (transform) {
+			float pitch;
+			transform->getAngles(&cinematicTargetYaw, &pitch);
+			cinematicTargetPos = transform->getPosition();
+			cinematicEndCode = msg.code_arrived;
+			onCinematic = true;
+		}
+	}
+}
+
 void CPlayerBase::update(float elapsed) {
 	PROFILE_FUNCTION("update base");
-	if (controlEnabled) {
-		bool alive = !checkDead();
-		if (alive) {
-			UpdateMoves();
-			UpdateInputActions();
+	if (!SetMyEntity()) return;
+	if (camera.isValid()) {
+		if (onCinematic) {
+			UpdateCinematic(elapsed);
 		}
-		Recalc();
-		if (alive) {
-			//UpdateMoves();
-			myUpdate();
-			update_msgs();
+		else if (controlEnabled) {
+			bool alive = !checkDead();
+			if (alive) {
+				UpdateMoves();
+				UpdateInputActions();
+			}
+			Recalc();
+			if (alive) {
+				//UpdateMoves();
+				myUpdate();
+				update_msgs();
+			}
 		}
+		UpdateAnimation();
+	}
+}
+
+void CPlayerBase::UpdateCinematic(float elapsed) {
+	TCompTransform* player_transform = myEntity->get<TCompTransform>();
+	float yaw, pitch;
+	transform->getAngles(&yaw, &pitch);
+	float dist = simpleDistXZ(cc->GetPosition(), cinematicTargetPos);
+	if (dist < epsilonPos) {
+		// Reach position
+		float deltaYaw = cinematicTargetYaw - yaw;
+		if (abs(deltaYaw) < epsilonYaw) {
+			//In position and Oriented
+			onCinematic = false;
+			logic_manager->throwUserEvent(cinematicEndCode);
+		}
+		else {
+			//Orientation to target
+			transform->setAngles(yaw * 0.9f + 0.1f * cinematicTargetYaw, pitch);
+		}
+	}
+	else {
+		// Go to target
+		float deltaYaw = transform->getDeltaYawToAimTo(cinematicTargetPos);
+		if (deltaYaw > epsilonYaw) transform->setAngles(yaw + 0.1f * deltaYaw, pitch);
+		VEC3 dir = cinematicTargetPos - cc->GetPosition();
+		dir.Normalize();
+		cc->AddMovement(dir, player_max_speed * getDeltaTime());
+		moving = true;
+		ChangeCommonState("moving");
 	}
 }
 
@@ -123,7 +187,7 @@ void CPlayerBase::UpdateMoves()
 		player_curr_speed = 0.0f;
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
-	
+
 	SetCharacterController();
 	cc->AddMovement(direction, player_curr_speed*getDeltaTime());
 	UpdateMovingWithOther();
@@ -174,7 +238,6 @@ bool CPlayerBase::UpdateMovDirection() {
 
 		else if (!horizontal && moving)
 			directionLateral = VEC3(0, 0, 0);
-
 	}
 	return moving;
 }
@@ -220,7 +283,7 @@ void CPlayerBase::UpdateMovingWithOther() {
 void CPlayerBase::energyDecreasal(float howmuch) {
 	PROFILE_FUNCTION("player base: energy dec function");
 	SetMyEntity();
-	
+
 	TMsgSetDamage msg;
 	msg.dmg = howmuch;
 	this->myEntity->sendMsg(msg);
@@ -242,8 +305,8 @@ void CPlayerBase::Jump()
 {
 	PROFILE_FUNCTION("jump base");
 	SetCharacterController();
-	
-	cc->AddImpulse(VEC3(0.0f,jimpulse,0.0f));
+
+	cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 	ChangeState("jumping");
 	ChangeCommonState("jumping");
 }
@@ -275,7 +338,6 @@ void CPlayerBase::Win()
 	orbitCameraDeath();
 	ChangeState("idle");
 }
-
 
 void CPlayerBase::Falling()
 {
@@ -315,9 +377,10 @@ void CPlayerBase::Moving()
 //##########################################################################
 
 // Sets the entity
-void CPlayerBase::SetMyEntity() {
+bool CPlayerBase::SetMyEntity() {
 	PROFILE_FUNCTION("set enitity base");
 	myEntity = myParent;
+	return myEntity;
 }
 
 void CPlayerBase::renderInMenu()

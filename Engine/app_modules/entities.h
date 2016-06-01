@@ -16,6 +16,11 @@ public:
 	bool start() override;
 	void stop() override;
 	void update(float dt) override;
+
+	void initLevel(std::string);
+	void destroyAllEntities();
+	void destroyRandomEntity(float percent);
+
 	void render() override;
 	void recalcNavmesh();
 	void readNavmesh();
@@ -29,6 +34,7 @@ public:
 	const char* getName() const {
 		return "entities";
 	}
+	int size();
 };
 
 #endif

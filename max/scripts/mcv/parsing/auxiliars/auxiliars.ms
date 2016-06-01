@@ -14,11 +14,18 @@ fn parseable = (
 		if (type as string) != "railCamera" then (return false)
 	)
 	
-	-- FreeCameras
+	-- FreeCameras & TargetCameras
 	if (classof _parsingObject) == FreeCamera then (
 		local type = getUserProp _parsingObject "typeObject"
 		if type != "CamController" then (return false)	
 		--if type == undefined or type == "railCamera" then (return false)
+	)
+	if (classof _parsingObject) == TargetCamera then (
+		return false
+	)
+	--TargetObject
+	if (classof _parsingObject) == TargetObject then (
+		return false
 	)
 	
 	-- Es spline?

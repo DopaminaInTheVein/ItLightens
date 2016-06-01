@@ -65,7 +65,6 @@ public:
 
 	// --------------------------------------------
 	TObj* getAddrFromHandle(CHandle h) {
-
 		if (!h.getType())
 			return nullptr;
 
@@ -75,7 +74,7 @@ public:
 				"a class of type %s"
 				, CHandleManager::getByType(h.getType())->getName()
 				, getName()
-				);
+			);
 			return nullptr;
 		}
 
@@ -96,11 +95,11 @@ public:
 		auto o = objs;
 		for (size_t i = 0; i < num_objs_used; ++i, ++o) {
 			PROFILE_FUNCTION("object");
-			o->update(dt);
+			if (o->getUpdateInfoBase(CHandle(o).getOwner())) o->update(dt);
 		}
 	}
 
-	void fixedUpdateAll(float dt) override{
+	void fixedUpdateAll(float dt) override {
 		PROFILE_FUNCTION(getName());
 		auto o = objs;
 		for (size_t i = 0; i < num_objs_used; ++i, ++o) {
@@ -117,15 +116,15 @@ public:
 		}
 	}
 
- // -------------------------
-  void updateAllInParallel(float dt) {
-    PROFILE_FUNCTION(getName());
-    #pragma omp parallel for
-    for (int i = 0; i<(int)num_objs_used; ++i) {
-      PROFILE_FUNCTION("object");
-      objs[i].update(dt);
-    }
-  }
+	// -------------------------
+	void updateAllInParallel(float dt) {
+		PROFILE_FUNCTION(getName());
+#pragma omp parallel for
+		for (int i = 0; i < (int)num_objs_used; ++i) {
+			PROFILE_FUNCTION("object");
+			objs[i].update(dt);
+		}
+	}
 
 	// -------------------------
 	void renderInMenu(CHandle h) override {
@@ -147,18 +146,18 @@ public:
 			(o->*member_fn)();
 	}
 
-// -------------------------
-  template< typename CB >
-  void each( CB cb ) {
-    auto o = objs;
-    for (size_t i = 0; i<num_objs_used; ++i, ++o)
-      cb( o );
-  }
-  // -------------------------
-  // Use it with care
-  TObj* getFirstObject() {
-    return objs;
-  }
+	// -------------------------
+	template< typename CB >
+	void each(CB cb) {
+		auto o = objs;
+		for (size_t i = 0; i < num_objs_used; ++i, ++o)
+			cb(o);
+	}
+	// -------------------------
+	// Use it with care
+	TObj* getFirstObject() {
+		return objs;
+	}
 };
 
 #define DECL_OBJ_MANAGER( obj_name, obj_class_name ) \

@@ -121,7 +121,7 @@ class bt_guard : public TCompBase, public bt
 	float shoot_preparation_time = 0.f;
 
 	//Toggles
-	bool formation_toggle = false;
+	bool formation_toggle;
 	VEC3 formation_point;
 	VEC3 formation_dir;
 

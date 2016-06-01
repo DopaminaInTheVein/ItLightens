@@ -96,6 +96,7 @@ void renderInMenu();
 			if (comps[i].isValid())
 				comps[i].destroy();
 		}
+		tags_manager.removeAllTags(CHandle(this));
 	}
 };
 

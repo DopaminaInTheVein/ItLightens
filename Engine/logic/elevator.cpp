@@ -28,17 +28,15 @@ void elevator::onCreate(const TMsgEntityCreated&)
 		targetDown = initialPos;
 		prevState = state = DOWN;
 	}
-	
+
 	physics = eMe->get<TCompPhysics>();
 	physics->setKinematic(true);
 }
 
 void elevator::update(float elapsed)
 {
-	if (getUpdateInfo()) {
-		updateMove();
-		notifyNewState();
-	}
+	updateMove();
+	notifyNewState();
 }
 
 //Move door and set OPENED or CLOSED if movement ends
@@ -53,7 +51,8 @@ void elevator::updateMove()
 		target = targetUp;
 		speed = speedUp;
 		targetState = UP;
-	} else if (state == GOING_DOWN) {
+	}
+	else if (state == GOING_DOWN) {
 		target = targetDown;
 		speed = speedDown;
 		targetState = DOWN;
@@ -77,7 +76,6 @@ void elevator::updateMove()
 	if (simpleDist(target, transform->getPosition()) < epsilonTarget) {
 		state = targetState;
 	}
-
 }
 
 void elevator::notifyNewState()
@@ -104,8 +102,8 @@ void elevator::notifyNewState()
 
 bool elevator::getUpdateInfo() {
 	//My Info
-	myEntity = CHandle(this).getOwner();
-	if (!myEntity.isValid()) return false;
+	myEntity = compBaseEntity;
+
 	CEntity* eMe = myEntity;
 	transform = eMe->get<TCompTransform>();
 	if (!transform) return false;

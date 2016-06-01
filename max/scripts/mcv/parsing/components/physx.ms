@@ -137,8 +137,10 @@ fn _parse_trigger = (
 	parseRigidBodyTrigger XML_PARSING
 
 	-- Component
+	local tags_list = #("trigger")
 	local component = getUserProp _parsingObject "component"
-	parseTags XML_PARSING #(component, "trigger")
+	if (component != undefined) then ( append tags_list (component as string) )
+	parseTags XML_PARSING tags_list
 	--Enter
 	local onEnter = getUserProp _parsingObject "onEnter"
 

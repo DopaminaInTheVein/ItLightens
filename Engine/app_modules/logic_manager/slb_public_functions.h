@@ -35,8 +35,11 @@ class SLBHandle
 	std::string handle_tag;
 
 public:
+	// Gets
+	CHandle getHandle();
 
 	// generic handle functions
+	void getPlayer();
 	void getHandleById(int id);
 	void getHandleByNameTag(const char* name, const char* tag);
 	void getHandleCaller();
@@ -46,6 +49,7 @@ public:
 	float getY();
 	float getZ();
 	void goToPoint(float x, float y, float z);
+	void goAndLookAs(SLBHandle target, std::string code_arrived);
 	void toggleGuardFormation();
 	void toggleScientistBusy();
 	void setActionable(int);
@@ -61,6 +65,7 @@ class SLBHandleGroup
 public:
 	void getHandlesByTag(const char * tag);
 	void awake();
+	void removePhysics();
 };
 
 // camera control in LUA
@@ -96,7 +101,6 @@ public:
 	void toggleIntroState();
 
 	void test(const char* to_print);
-
 };
 
 #endif

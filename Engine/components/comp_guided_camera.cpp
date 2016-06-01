@@ -17,8 +17,9 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
   velocity_default = atts.getFloat("velocity", 0);
 
   //La posicion 0 es la actual en el momento de empezar la cinematica!
-  positions.resize(num_points + 1);
-  targets.resize(num_points + 1);
+  //Y anadimos otro punto extra inventado al final para catmull rom
+  positions.resize(num_points + 2);
+  targets.resize(num_points + 2);
   for (int i = 1; i <= num_points; i++) {
     WPT_ATR_NAME(atrPos, i);
     positions[i] = atts.getPoint(atrPos);
@@ -26,43 +27,14 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
 	targets[i] = atts.getPoint(atrLook);
   }
 
+  positions[num_points + 1] = positions[num_points - 1] +
+	  (positions[num_points] - positions[num_points - 1]) * 2;
   default_dirs = atts.getBool("default_dirs", 0);
   return true;
 };
 
-/*
-VEC3 TCompGuidedCamera::getNewTargetForCamera(VEC3 playerPosition, VEC3 cameraActual, int pointOfInfluence) {
-  if (pointOfInfluence != lastP) {
-    lastP = pointOfInfluence;
-    maxInfluence = 0.0f;
-    if (pointOfInfluence > 0) {
-      last_quat = rotations[pointOfInfluence - 1];
-    }
-  }
- // cameraActual.Normalize();
-
-  if (pointOfInfluence < 0 || pointOfInfluence >= num_cameras) {
-    return cameraActual;
-  }
-
-  float dist = realDist(playerPosition, points[pointOfInfluence + 1]);
-  float distanciaUnitaria = dist / influences[pointOfInfluence];
-  distanciaUnitaria = (1 - distanciaUnitaria);
-  distanciaUnitaria = fmaxf(maxInfluence, distanciaUnitaria);
-  maxInfluence = distanciaUnitaria;
-  VEC3 cameraNova;
-  if (pointOfInfluence > 0) {
-    cameraNova = VEC3::Lerp(last_quat, rotations[pointOfInfluence], distanciaUnitaria);
-  }
-  else {
-    cameraNova = VEC3::Lerp(cameraActual, rotations[pointOfInfluence], distanciaUnitaria);
-  }
-  //cameraNova.Normalize();
-  return cameraNova;
-};
-*/
 void TCompGuidedCamera::start(float speed) {
-  curPoint = 0;
+  curPoint = 1;
   factor = 0.0f;
   velocity = speed == 0.f ? velocity_default : speed;
 }
@@ -95,7 +67,7 @@ void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
 }
 
 bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* cam) {
-  if (curPoint >= positions.size()) {
+  if (curPoint > positions.size() - 2) {
     return false;
   }
   if (io->keys['Q'].becomesPressed()) {
@@ -106,44 +78,37 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCamera* c
   }
 
   VEC3 goTo = positions[curPoint];
-  VEC3 nextPoint = positions[clamp(curPoint + 1, 0, positions.size()-1)];
+  VEC3 comeFrom = positions[curPoint-1];
+  VEC3 lookTo = targets[curPoint];
+  VEC3 lookFrom = targets[curPoint-1];
 
-  VEC3 pos = camTransform->getPosition();
-  VEC3 look = nextPoint;
-  Debug->DrawLine(pos, pos + camTransform->getFront() * 125);
-  float dist = simpleDist(pos, goTo);
-  dbg("dist: %f\n", dist);
-  if (dist > 1.f) {
+  if (factor < 1.1f) {
 	//Going to target
 	std::vector<VEC3> posCmr = std::vector<VEC3>(4); //Catmull Rom positions
 	std::vector<VEC3> lookCmr = std::vector<VEC3>(4); //Catmull Rom positions
 	for (int i = 0; i < posCmr.size(); i++) {
-		posCmr[i] = positions[clamp(curPoint - 2 + i, 0, positions.size()-1)];
-		lookCmr[i] = targets[clamp(curPoint - 2 + i, 0, positions.size()-1)];
+		int index = clamp(curPoint - 2 + i, 0, positions.size() - 1);
+		posCmr[i] = positions[index];
+		lookCmr[i] = targets[index];
 	}
-
 	//Factor = distancia recorrida este frame / distancia total punto actual y siguiente
 	float moveAmount = getDeltaTime() * velocity;
-	//VEC3 direction = goTo - pos;
-	//direction.Normalize();
-	//pos += direction * moveAmount;
-	factor += (getDeltaTime() * velocity) / (realDist(goTo, nextPoint));
-	pos = VEC3::CatmullRom(posCmr[0], posCmr[1], posCmr[2], posCmr[3], factor);
-	look = VEC3::CatmullRom(lookCmr[0], lookCmr[1], lookCmr[2], lookCmr[3], factor);
+
+	factor += (getDeltaTime() * velocity) / (realDist(comeFrom, goTo));
+	VEC3 pos = VEC3::CatmullRom(posCmr[0], posCmr[1], posCmr[2], posCmr[3], factor);
+	VEC3 look = default_dirs
+		? positions[clamp(curPoint + 1, 0, positions.size()-1)]
+		: VEC3::CatmullRom(lookCmr[0], lookCmr[1], lookCmr[2], lookCmr[3], factor);
+	cam->smoothLookAt(pos, look, cam->getUpAux(), 0.5f);
+	camTransform->lookAt(pos, look, cam->getUpAux());
+	Debug->DrawLine(comeFrom, goTo);
+	Debug->DrawLine(lookFrom, lookTo, VEC3(0,0,1));
   }
   else {
 	//New target
     ++curPoint;
+	dbg("End point, factor = %f.3\n", factor);
     factor = 0.0f;
   }
-
-  if (default_dirs) {
-	  look = nextPoint;
-  }
-  else {
-	 cam->smoothLookAt(pos, look, cam->getUpAux(), 0.5f);
-	 camTransform->lookAt(pos, look, cam->getUpAux());
-  }
-
   return true;
 }

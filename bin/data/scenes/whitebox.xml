@@ -1,6 +1,5 @@
 <entities>
-<entity
-   slept="undefined">
+<entity>
 <tags
    tags="player"/>
 <player/>
@@ -21,10 +20,8 @@
    height="0.7"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -37,10 +34,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -53,10 +48,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -69,10 +62,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -85,10 +76,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -101,10 +90,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -117,10 +104,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -133,10 +118,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -149,10 +132,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -165,10 +146,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <light_point
    color="1.0 1.0 1.0 1.0"
    in_radius="80.0"
@@ -181,10 +160,8 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="ascensor"/>
 <transform
@@ -197,10 +174,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="cable"/>
 <transform
@@ -213,10 +188,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="cargador_de_bateria"/>
 <transform
@@ -229,10 +202,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="cerradura_electrica"/>
 <transform
@@ -245,10 +216,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="mesa_de_trabajo"/>
 <transform
@@ -261,10 +230,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="mesa_de_trabajo"/>
 <transform
@@ -277,10 +244,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="nivel"/>
 <transform
@@ -293,10 +258,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="pila"/>
 <transform
@@ -309,10 +272,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="puerta_balcon_redondo_pequeno004"/>
 <transform
@@ -325,10 +286,8 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="puertas_derechas"/>
 <transform
@@ -342,8 +301,7 @@
 
 </entity>
 <entity
-   id="300"
-   slept="undefined">
+   id="300">
 <tags
    tags="doorExit door"/>
 <magnet_door
@@ -366,10 +324,8 @@
    mass="5"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="Door_opened_pos"/>
 <transform
@@ -378,14 +334,14 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
    size="3.71942 0.875 8.6901"/>
+<tags
+   tags="trigger"/>
 <trigger_lua
    action="activate"/>
 <name
@@ -397,8 +353,7 @@
 
 </entity>
 <entity
-   id="301"
-   slept="undefined">
+   id="301">
 <tags
    tags="elevator1 elevator"/>
 <elevator
@@ -419,10 +374,8 @@
    kinematic="yes"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <name
    name="ElevatorGround_pos_elevator_up"/>
 <transform
@@ -431,14 +384,14 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
    size="6.02803 0.875 5.9013"/>
+<tags
+   tags="trigger"/>
 <trigger_lua
    action="activate"
    actionMole="put"/>
@@ -450,14 +403,14 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags=""/>
+<entity>
+<tags/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
    size="3.2064 0.875 2.49"/>
+<tags
+   tags="trigger"/>
 <trigger_lua
    action="activate"/>
 <name
@@ -468,8 +421,7 @@
    scale="1.0"/>
 
 </entity>
-<entity
-   slept="undefined">
+<entity>
 <tags
    tags="camera_main"/>
 <camera
@@ -486,10 +438,8 @@
 
 </entity>
 <entity
-   id="302"
-   slept="undefined">
-<tags
-   tags=""/>
+   id="302">
+<tags/>
 <name
    name="pared_mole"/>
 <transform
@@ -502,14 +452,14 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   slept="undefined">
-<tags
-   tags="trigger"/>
+<entity>
+<tags/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
    size="6.26077 0.965 16.7178"/>
+<tags
+   tags="trigger"/>
 <trigger_lua
    action="activate"
    actionMole="destroy"/>
@@ -521,10 +471,21 @@
    scale="1.0"/>
 
 </entity>
+<entity>
+<tags
+   tags="target"/>
+<name
+   name="tWall_pAction"/>
+<transform
+   pos="-92.9597 0.944696 -15.6276"
+   quat="0 -0.707107 0 0.707107"
+   scale="1.0"/>
+
+</entity>
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole028"/>
 <transform
@@ -543,7 +504,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole027"/>
 <transform
@@ -562,7 +523,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole026"/>
 <transform
@@ -581,7 +542,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole025"/>
 <transform
@@ -600,7 +561,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole024"/>
 <transform
@@ -619,7 +580,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole023"/>
 <transform
@@ -638,7 +599,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole022"/>
 <transform
@@ -657,7 +618,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole021"/>
 <transform
@@ -676,7 +637,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole020"/>
 <transform
@@ -695,7 +656,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole019"/>
 <transform
@@ -714,7 +675,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole018"/>
 <transform
@@ -733,7 +694,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole017"/>
 <transform
@@ -752,7 +713,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole016"/>
 <transform
@@ -771,7 +732,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole015"/>
 <transform
@@ -790,7 +751,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole014"/>
 <transform
@@ -809,7 +770,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole013"/>
 <transform
@@ -828,7 +789,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole012"/>
 <transform
@@ -847,7 +808,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole011"/>
 <transform
@@ -866,7 +827,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole010"/>
 <transform
@@ -885,7 +846,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole009"/>
 <transform
@@ -904,7 +865,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole008"/>
 <transform
@@ -923,7 +884,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole007"/>
 <transform
@@ -942,7 +903,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole006"/>
 <transform
@@ -961,7 +922,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole005"/>
 <transform
@@ -980,7 +941,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole004"/>
 <transform
@@ -999,7 +960,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole003"/>
 <transform
@@ -1018,7 +979,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole002"/>
 <transform
@@ -1037,7 +998,7 @@
 <entity
    slept="yes">
 <tags
-   tags="wall1_fragment"/>
+   tags="fragment wall1_fragment"/>
 <name
    name="pared_mole001"/>
 <transform
