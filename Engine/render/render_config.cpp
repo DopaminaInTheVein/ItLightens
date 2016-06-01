@@ -28,7 +28,7 @@ void createSamplerStates() {
   desc.MaxLOD = D3D11_FLOAT32_MAX;
   hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_DEFAULT]);
   assert(!FAILED(hr));
-  setDXName(depth_stencil_states[SMP_DEFAULT], "SMP_DEFAULT");
+  setDXName(sampler_states[SMP_DEFAULT], "SMP_DEFAULT");
 
   ZeroMemory(&desc, sizeof(desc));
   desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
@@ -40,7 +40,7 @@ void createSamplerStates() {
   desc.MaxLOD = D3D11_FLOAT32_MAX;
   hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_CLAMP]);
   assert(!FAILED(hr));
-  setDXName(depth_stencil_states[SMP_CLAMP], "SMP_CLAMP");
+  setDXName(sampler_states[SMP_CLAMP], "SMP_CLAMP");
 
   // Para las luces direccionales, si me salgo del espacio homogeneo
   // usar el color 'negro' para iluminar.
@@ -56,7 +56,7 @@ void createSamplerStates() {
   desc.BorderColor[3] = 0.f;
   hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_BORDER_BLACK]);
   assert(!FAILED(hr));
-  setDXName(depth_stencil_states[SMP_BORDER_BLACK], "SMP_BORDER_BLACK");
+  setDXName(sampler_states[SMP_BORDER_BLACK], "SMP_BORDER_BLACK");
 
   // PCF sampling
   D3D11_SAMPLER_DESC sampler_desc = {
@@ -213,6 +213,19 @@ void createBlendStates() {
 	hr = Render.device->CreateBlendState(&desc, &blend_states[BLENDCFG_ADDITIVE]);
 	assert(!FAILED(hr));
 	setDXName(blend_states[BLENDCFG_ADDITIVE], "BLEND_ADDITIVE");
+
+	ZeroMemory(&desc, sizeof(desc));
+	desc.RenderTarget[0].BlendEnable = TRUE;
+	desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_REV_SUBTRACT;
+	desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_REV_SUBTRACT;
+	desc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+	desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+	desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+	desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	hr = Render.device->CreateBlendState(&desc, &blend_states[BLENDCFG_SUBSTRACT]);
+	assert(!FAILED(hr));
+	setDXName(blend_states[BLENDCFG_SUBSTRACT], "BLEND_SUBSTRACT");
 
   ZeroMemory(&desc, sizeof(desc));
   desc.RenderTarget[0].BlendEnable = TRUE;

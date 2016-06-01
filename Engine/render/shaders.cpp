@@ -29,7 +29,7 @@ IResource* createObjFromName<CPixelShader>(const std::string& name) {
 //--------------------------------------------------------------------------------------
 // Helper for compiling shaders with D3DX11
 //--------------------------------------------------------------------------------------
-bool compileShaderFromFile(
+bool compileShaderFromFileReal(
     const char* szFileName
   , const char* szEntryPoint
   , const char* szShaderModel
@@ -77,12 +77,30 @@ bool compileShaderFromFile(
       , szFileName
       , szShaderModel
       , err );
+    MessageBox(NULL, err, szEntryPoint, MB_OK);
     if (pErrorBlob) pErrorBlob->Release();
     return false;
   }
   if (pErrorBlob) pErrorBlob->Release();
   return true;
 }
+
+bool compileShaderFromFile(
+  const char* szFileName
+  , const char* szEntryPoint
+  , const char* szShaderModel
+  , ID3DBlob** ppBlobOut)
+{
+  while (true) {
+    bool is_ok = compileShaderFromFileReal(szFileName, szEntryPoint, szShaderModel, ppBlobOut);
+    if (is_ok)
+      return true;
+  }
+  return false;
+}
+
+
+
 
 void CVertexShader::destroy() {
   SAFE_RELEASE(vs);

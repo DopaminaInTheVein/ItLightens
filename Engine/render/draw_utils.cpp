@@ -9,6 +9,8 @@ CShaderCte< TCteObject > shader_ctes_object;
 CShaderCte< TCteBones >  shader_ctes_bones;
 CShaderCte< TCteLight >  shader_ctes_lights;
 CShaderCte< TCteGlobals > shader_ctes_globals;
+CShaderCte< TCteBlur >     shader_ctes_blur;
+CShaderCte< TCteHatching > shader_ctes_hatching;
 
 const CTexture* all_black;
 
@@ -112,6 +114,10 @@ bool createDepthBuffer(
     if (FAILED(hr))
       return false;
 
+    // as this is used by the RenderTarget with Z (for the shadows maps) and 
+    // by the ZTexture, we need to add one more ref because it will be freed twice
+    depth_resource->AddRef();
+
     CTexture* ztexture = new CTexture();
     ztexture->setDXObjs(depth_resource, depth_resource_view );
     ztexture->setName(("Z" + std::string(name)).c_str());
@@ -150,6 +156,10 @@ bool drawUtilsCreate() {
     return false;
   if (!shader_ctes_lights.create("ctes_light"))
     return false;
+if (!shader_ctes_blur.create("ctes_blur"))
+    return false;
+if (!shader_ctes_hatching.create("ctes_hatching"))
+	  return false;
 
   all_black = Resources.get("textures/missing_black.dds")->as<CTexture>();
   
@@ -163,6 +173,8 @@ void activateDefaultStates() {
   shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
   shader_ctes_lights.activate(CTE_SHADER_LIGHT);
   shader_ctes_globals.activate(CTE_SHADER_GLOBALS_SLOT);
+shader_ctes_blur.activate(CTE_SHADER_BLUR_SLOT);
+shader_ctes_hatching.activate(CTE_SHADER_HATCHING_SLOT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
   activateSamplerStates();
@@ -174,6 +186,8 @@ void drawUtilsDestroy() {
   shader_ctes_bones.destroy();
   shader_ctes_camera.destroy();
   shader_ctes_object.destroy();
+  shader_ctes_hatching.destroy();
+  shader_ctes_blur.destroy();
 }
 
 // Activo la camara en la pipeline de render

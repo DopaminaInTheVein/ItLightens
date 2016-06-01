@@ -1,4 +1,5 @@
 <entities>
+<!--
 <entity
    slept="undefined">
 <tags
@@ -1036,6 +1037,8 @@
    size="4.0 3.0 4.0"/>
 
 </entity>
+
+
 <entity
    slept="undefined">
 <tags
@@ -1053,6 +1056,7 @@
    scale="1.0"/>
 
 </entity>
+
 <entity
    slept="undefined">
 <tags
@@ -1285,6 +1289,7 @@
    scale="1.0"/>
 
 </entity>
+-->
 <entity
    slept="undefined">
 <tags
@@ -1442,7 +1447,7 @@
    height="1.8"/>
 
 </entity>
--->
+
 <entity
    slept="undefined">
 <tags
@@ -1522,5 +1527,5 @@
    scale="1.0"/>
 
 </entity>
-
+-->
 </entities>

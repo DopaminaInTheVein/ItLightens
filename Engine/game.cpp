@@ -110,13 +110,6 @@ resources_dir_watcher.start("data", getHWnd());
 	tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
 	tech_textured_colored = Resources.get("textured.tech")->as<CRenderTechnique>();
 
-	if (!shader_ctes_camera.create("ctes_camera"))
-		return false;
-	if (!shader_ctes_object.create("ctes_object"))
-		return false;
-	if (!shader_ctes_bones.create("ctes_bones"))
-		return false;
-	shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
 	// Init modules
 	for (auto it : mod_init_order) {
 		if (!it->start()) {
@@ -141,10 +134,11 @@ void CApp::stop() {
 		(*it)->stop();
 
 	Resources.destroy();
+	drawUtilsDestroy();
 
-	shader_ctes_bones.destroy();
-	shader_ctes_camera.destroy();
-	shader_ctes_object.destroy();
+	getHandleManager<TCompLightDirShadows>()->each([](TCompLightDirShadows* c) {
+		c->destroy();
+	});
 
 	// Delete all modules
 	for (auto m : all_modules)
@@ -198,14 +192,14 @@ void CApp::update(float elapsed) {
 // ----------------------------------
 void CApp::render() {
   PROFILE_FUNCTION("CApp::render");
-  
-  activateDefaultStates();
+ //PRUEBA CLH 
+  //activateDefaultStates();
 
-  for (auto it : mod_renders) {
-    PROFILE_FUNCTION(it->getName());
-    CTraceScoped scope( it->getName() );
-    it->render();
-  }
+  //for (auto it : mod_renders) {
+  //  PROFILE_FUNCTION(it->getName());
+  //  CTraceScoped scope( it->getName() );
+  //  it->render();
+  //}
 
 }
 

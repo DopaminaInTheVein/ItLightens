@@ -111,6 +111,14 @@ public:
     auto m = MAT44::CreateLookAt(eye, eye - delta, up).Invert();
     m.Decompose(scale, rotation, position);
   }
+
+  void combine(const CTransform& parent, const CTransform& delta) {
+    assert(&delta != this);
+    setPosition(parent.getPosition() + VEC3::Transform(delta.getPosition(), parent.rotation));
+    setRotation(delta.getRotation() * parent.getRotation());
+    setScale(parent.getScale() * delta.getScale());
+  }
+
 };
 
 #endif

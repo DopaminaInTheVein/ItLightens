@@ -12,6 +12,7 @@
 #include "windows/app.h"
 #include "resources/resources_manager.h"
 #include "render/draw_utils.h"
+#include "components/comp_render_glow.h"
 
 #include "render/fx/GuardShots.h"
 
@@ -39,6 +40,9 @@ bool CRenderDeferredModule::start() {
   rt_selfIlum_blurred = new CRenderToTexture;
   rt_final = new CRenderToTexture;
 
+  rt_specular = new CRenderToTexture;
+  rt_shadows = new CRenderToTexture;
+
   //aux
   rt_data = new CRenderToTexture;
   rt_data2 = new CRenderToTexture;
@@ -49,6 +53,8 @@ bool CRenderDeferredModule::start() {
   rt_selfIlum_int = new CRenderToTexture;
   rt_selfIlum_blurred_int = new CRenderToTexture;
 
+  if (!rt_specular->createRT("rt_specular", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+	  return false;
   if (!rt_albedos->createRT("rt_albedo", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
     return false;
   if (!rt_data->createRT("rt_data", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
@@ -77,6 +83,8 @@ bool CRenderDeferredModule::start() {
 	  return false;
   if (!rt_temp->createRT("rt_temp", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 	  return false;
+  if (!rt_shadows->createRT("rt_shadows", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+	  return false;
 
   //
   acc_light_points = Resources.get("deferred_lights_point.tech")->as<CRenderTechnique>();
@@ -85,28 +93,61 @@ bool CRenderDeferredModule::start() {
   acc_light_directionals = Resources.get("deferred_lights_dir.tech")->as<CRenderTechnique>();
   assert(acc_light_directionals && acc_light_directionals->isValid());
 
-  blur_tech = Resources.get("blur.tech")->as<CRenderTechnique>();
+  blur_tech = Resources.get("blur_glow.tech")->as<CRenderTechnique>();
 
   acc_light_directionals_shadows = Resources.get("deferred_lights_dir_shadows.tech")->as<CRenderTechnique>();
   assert(acc_light_directionals_shadows && acc_light_directionals_shadows->isValid());
 
-  //unit_sphere = Resources.get("meshes/unit_sphere.mesh")->as<CMesh>();
+//  unit_sphere = Resources.get("meshes/engine/unit_sphere.mesh")->as<CMesh>();
   unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
   assert(unit_sphere && unit_sphere->isValid());
   unit_cube = Resources.get("meshes/engine/unit_frustum.mesh")->as<CMesh>();
   assert(unit_cube && unit_cube->isValid());
 
   Resources.get("textures/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE );
+  Resources.get("textures/hatch_0.dds")->as<CTexture>()->activate(80);
+  Resources.get("textures/hatch_1.dds")->as<CTexture>()->activate(81);
+  Resources.get("textures/hatch_2.dds")->as<CTexture>()->activate(82);
+  Resources.get("textures/hatch_3.dds")->as<CTexture>()->activate(83);
+  Resources.get("textures/hatch_4.dds")->as<CTexture>()->activate(84);
+  Resources.get("textures/hatch_5.dds")->as<CTexture>()->activate(85);
+
+  //tests hatching
+  Resources.get("textures/primera_prueba_diagonal.dds")->as<CTexture>()->activate(86);
+  Resources.get("textures/primera_prueba_diagonal_menos_denso.dds")->as<CTexture>()->activate(87);
+  Resources.get("textures/primera_prueba_hatching.dds")->as<CTexture>()->activate(88);
+  Resources.get("textures/primera_prueba_menos_denso.dds")->as<CTexture>()->activate(89);
+  Resources.get("textures/tramado_extraño_mangastudio.dds")->as<CTexture>()->activate(90);
+  Resources.get("textures/diagonal material ligero mangastudio.dds")->as<CTexture>()->activate(92);
+  Resources.get("textures/primera_prueba_diagonal_lots.dds")->as<CTexture>()->activate(91);
+  Resources.get("textures/diagonal_material_mangastudio.dds")->as<CTexture>()->activate(93);
+  Resources.get("textures/diagonal_menos_denso_material_mangastudio.dds")->as<CTexture>()->activate(94);
+
+  Resources.get("textures/rampa_prueba.dds")->as<CTexture>()->activate(70);
+
+  shader_ctes_hatching.edge_lines_detection = 0.02f;
+  shader_ctes_hatching.frequency_offset = 8.0f;
+  shader_ctes_hatching.intensity_sketch = 0.2f;
+  shader_ctes_hatching.rim_strenght = 1.0f;
+  shader_ctes_hatching.specular_strenght = 50.0f;
+  shader_ctes_hatching.diffuse_strenght = 1.0f;
+  shader_ctes_hatching.frequency_texture = 10.0f;
+  shader_ctes_hatching.color_ramp = 0.0f;
+  shader_ctes_hatching.specular_force = 0.2f;
+
   shader_ctes_globals.world_time = 0.f;
   shader_ctes_globals.xres = xres;
   shader_ctes_globals.yres = yres;
   shader_ctes_globals.strenght_polarize = 1.0f / 5.0f;
+
+  shader_ctes_hatching.uploadToGPU();
 
   return true;
 }
 
 // ------------------------------------------------------
 void CRenderDeferredModule::stop() {
+	//RenderManager.clear();
 }
 
 // ------------------------------------------------------
@@ -157,15 +198,33 @@ void CRenderDeferredModule::renderGBuffer() {
   Render.clearMainZBuffer();
 
   rt_acc_light->clear(VEC4(0, 0, 0, 1));
+  rt_shadows->clear(VEC4(0, 0, 0, 0));
   rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 1));
 
   // Activa la ctes del object
   activateWorldMatrix(MAT44::Identity);
 
   // Mandar a pintar los 'solidos'
-  if (h_camera.isValid())  RenderManager.renderAll(h_camera, CRenderManager::SOLID_OBJS);
+  RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS);
 
   activateZ(ZCFG_DEFAULT);
+}
+
+// ----------------------------------------------
+void CRenderDeferredModule::activateRenderCamera3D() {
+  CEntity* e = h_camera;
+  TCompCamera* comp_cam = e->get<TCompCamera>();
+  comp_cam->setAspectRatio((float)xres / (float)yres);
+
+  // Copy the render aspect ratio back to the comp_camera
+  // of the entity, so the culling uses the real view_proj
+  comp_cam->setAspectRatio(comp_cam->getAspectRatio());
+
+  // Activo la camara en la pipeline de render
+  activateCamera(comp_cam);
+
+  // Activa la ctes del object
+  activateWorldMatrix(MAT44::Identity);
 }
 
 // ----------------------------------------------
@@ -234,6 +293,18 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
   });
 
   CTexture::deactivate( TEXTURE_SLOT_SHADOWMAP );
+}
+
+void CRenderDeferredModule::addAmbientPass() {
+  
+  /*activateZ(ZCFG_ALL_DISABLED);
+
+  auto tech = Resources.get("pbr_ambient.tech")->as<CRenderTechnique>();
+  tech->activate();
+
+  auto mesh = Resources.get("unitQuadXY.mesh")->as<CMesh>();
+  mesh->activateAndRender();*/
+
 }
 
 void CRenderDeferredModule::FinalRender() {
@@ -315,8 +386,8 @@ void CRenderDeferredModule::renderAccLight() {
   // Activar el rt para pintar las luces...
   ID3D11RenderTargetView* rts[3] = {
     rt_acc_light->getRenderTargetView()
-    ,	nullptr   // remove the other rt's from the pipeline
-    ,	nullptr
+    ,  rt_specular->getRenderTargetView()  
+    ,  rt_shadows->getRenderTargetView()
   };
   // Y el ZBuffer del backbuffer principal
   Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
@@ -329,6 +400,8 @@ void CRenderDeferredModule::renderAccLight() {
 
   rt_acc_light->clear(VEC4(0, 0, 0, 1));
 
+  //addAmbientPass();
+
   activateBlend(BLENDCFG_ADDITIVE);
   activateZ(ZCFG_LIGHTS_CONFIG);
   //activateRS(RSCFG_INVERT_CULLING);
@@ -336,7 +409,7 @@ void CRenderDeferredModule::renderAccLight() {
 
   activateZ(ZCFG_LIGHTS_CONFIG);
   //activateRS(RSCFG_INVERT_CULLING);
-  addDirectionalLights();
+  //addDirectionalLights();
 
   addDirectionalLightsShadows();
 
@@ -594,11 +667,12 @@ void CRenderDeferredModule::ShootGuardRender() {
 
 // ----------------------------------------------
 void CRenderDeferredModule::render() {
-  //Render.clearMainZBuffer();
-  rt_black->clear(VEC4(0, 0, 0, 1));
-  rt_data->clear(VEC4(0, 0, 0, 0));
+	//Render.clearMainZBuffer();
+	rt_black->clear(VEC4(0, 0, 0, 1));
+	rt_data->clear(VEC4(0, 0, 0, 0));
+	rt_specular->clear(VEC4(0, 0, 0, 0));
 
-  generateShadowMaps();
+	generateShadowMaps();
 
 	rt_data2->clear(VEC4(0, 0, 0, 0));
 
@@ -626,12 +700,27 @@ void CRenderDeferredModule::render() {
 
 	drawFullScreen(rt_final);
 
+	activateBlend(BLENDCFG_COMBINATIVE);
+	rt_specular->activate(79);
+	rt_shadows->activate(78);
+	auto tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_final, tech);
+	
+
+	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+
+	activateBlend(BLENDCFG_SUBSTRACT);
+	tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_final, tech);
+
+	activateBlend(BLENDCFG_DEFAULT);
 	activateZ(ZCFG_DEFAULT);
 	
-	if (GameController->GetFxPolarize()) {
+	/*if (GameController->GetFxPolarize()) {
 		RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
 		RenderPolarizedPP(PLUS, VEC4(0.3f, 0.3f, 1.0f, 1.0f));
-	}
+	}*/
 
 	activateZ(ZCFG_DEFAULT);
 
@@ -639,12 +728,14 @@ void CRenderDeferredModule::render() {
 
 	activateZ(ZCFG_ALL_DISABLED);
 
-	if (GameController->GetFxGlow()) { 
+	/*if (GameController->GetFxGlow()) { 
 		GlowEdgesInt();
 		GlowEdges(); 
-	}
+	}*/
 
 	
+	CTexture::deactivate(78);
+	CTexture::deactivate(79);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	
 	Render.activateBackBuffer();
@@ -652,10 +743,87 @@ void CRenderDeferredModule::render() {
 	
 	// Mandar a pintar los 'transparentes'
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-  RenderManager.renderAll(h_camera, CRenderManager::TRANSPARENT_OBJS);
+  RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
   CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 	
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	  
+
+}
+
+void CRenderDeferredModule::applyPostFX() {
+  CTraceScoped scope("applyPostFX");
+  CEntity* e_camera = h_camera;
+  if( !e_camera )
+    return;
+  
+  CTexture* next_step = rt_acc_light;
+
+  TCompRenderGlow* glow = e_camera->get< TCompRenderGlow >();
+  if (glow) 
+    next_step = glow->apply(next_step);
+
+  // ------------------------
+  Render.activateBackBuffer();
+
+  activateZ(ZCFG_ALL_DISABLED);
+  drawFullScreen(next_step);
+  activateZ(ZCFG_DEFAULT);
+
+  // Mandar a pintar los 'transparentes'
+  rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+  RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
+  CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
+}
+
+void CRenderDeferredModule::renderUI() {
+  CTraceScoped scope("renderUI");
+  /*activateZ(ZCFG_ALL_DISABLED);
+  activateBlend(BLENDCFG_DEFAULT);
+
+  CHandle h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
+  if (!h_ui_camera.isValid())
+    return;
+  CEntity* e_ui_camera = h_ui_camera;
+
+  TCompCamera* ortho = e_ui_camera->get<TCompCamera>();
+  //ortho->setOrtho(xres, yres, ortho->getZNear(), ortho->getZFar());
+  ortho->setOrtho(10, 10, ortho->getZNear(), ortho->getZFar());
+  activateCamera(ortho);
+  */
+  /*
+
+  CCamera ortho;
+  ortho.setProjection(deg2rad(60), -1.f, 1.f);
+  ortho.setOrtho(xres, yres);
+  activateCamera(&ortho);
+
+  // 
+  auto tech = Resources.get("ui.tech")->as<CRenderTechnique>();
+  tech->activate();
+
+  auto texture = Resources.get("textures/logo.dds")->as<CTexture>();
+  texture->activate(TEXTURE_SLOT_DIFFUSE);
+
+  MAT44 world;
+  world =
+    MAT44::CreateTranslation(1, 1, 0)
+    * MAT44::CreateScale(0.5, 0.5, 1)
+    * MAT44::CreateScale(512, 400, 1)
+    * MAT44::CreateTranslation(0, 400, 0)
+    ;  
+  
+  world =
+    MAT44::CreateTranslation(1, 1, 0)
+    * MAT44::CreateScale(0.5, 0.5, 1)
+    * MAT44::CreateScale(2, 2, 1)
+    * MAT44::CreateTranslation(1, 1, 0)
+    ;
+  activateWorldMatrix(world);
+
+  auto mesh = Resources.get("unitQuadXY.mesh")->as<CMesh>();
+  mesh->activateAndRender();
+  */
+  //RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS);*/
 
 }

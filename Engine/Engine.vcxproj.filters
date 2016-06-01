@@ -602,6 +602,12 @@
     <ClCompile Include="components\comp_tracker.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_render_glow.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_hierarchy.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1461,6 +1467,13 @@
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_tracker.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    </ClInclude>
+    <ClInclude Include="components\comp_render_glow.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_hierarchy.h">
       <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>

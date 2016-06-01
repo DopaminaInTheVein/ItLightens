@@ -9,7 +9,7 @@ class CMaterial;
 class CStaticMesh;
 
 class CRenderManager {
-
+public:
   struct TKey {
     const CMesh*            mesh;
     const CMaterial*        material;
@@ -18,8 +18,8 @@ class CRenderManager {
     CHandle                 owner;
     CHandle                 transform;
     CHandle                 aabb;
-    //int                     aabb_idx;
   };
+private:
 
   struct TShadowKey {
     const CMesh*            mesh;
@@ -27,30 +27,22 @@ class CRenderManager {
     CHandle                 transform;
   };
   static bool sortByTechMatMesh(const TKey& k1, const TKey& k2);
-  static bool sortByTransparency(const TKey &k1, bool is_transparent);
 
   bool in_order;
   std::vector< TKey > all_keys;
   std::vector< TShadowKey > all_shadow_keys;
+  std::vector<int> renderedCulling;
 
   int  ntimes_sorted = 0;
-  std::vector<int> renderedCulling;
 public:
-  
+
   void registerToRender(const CStaticMesh* mesh, CHandle handle);
   void unregisterFromRender(CHandle handle);
-
-  enum eRenderType {
-    SOLID_OBJS
-    , TRANSPARENT_OBJS
-  };
-
-  void renderAll(CHandle h_camera, eRenderType render_type);
   void renderUICulling();
+  void renderAll(CHandle h_camera, CRenderTechnique::eCategory category);
   void renderShadowCasters();
 };
 
 extern CRenderManager RenderManager;
 
 #endif
-

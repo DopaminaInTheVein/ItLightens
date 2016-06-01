@@ -151,12 +151,79 @@ void CImGuiModule::update(float dt) {
 		}
 
 		if (ImGui::TreeNode("Grafic options")) {
-			ImGui::Checkbox("polarize effects", GameController->GetFxPolarizePointer());
+			ImGui::Checkbox("polarize effects(disabled)", GameController->GetFxPolarizePointer());
 
-			ImGui::Checkbox("glow effect", GameController->GetFxGlowPointer());
+			ImGui::Checkbox("glow effect(disabled)", GameController->GetFxGlowPointer());
+
+
+
+			if (ImGui::DragFloat("Specular force", &shader_ctes_hatching.specular_force)) {
+				shader_ctes_hatching.uploadToGPU();
+			}
 
 			ImGui::TreePop();
 		}
+
+
+		if (ImGui::TreeNode("Hatching test")) {
+			ImGui::Text("Limit lines hatching (DISABLED, not working)");
+			if (ImGui::DragFloat("Rim strength", &shader_ctes_hatching.rim_strenght, 0.1f)) {
+				shader_ctes_hatching.uploadToGPU();
+			}
+			if (ImGui::DragFloat("Specular strength", &shader_ctes_hatching.specular_strenght, 0.1f)) {
+				shader_ctes_hatching.uploadToGPU();
+			}
+			if (ImGui::DragFloat("Diffuse strength", &shader_ctes_hatching.diffuse_strenght, 0.1f)) {
+				shader_ctes_hatching.uploadToGPU();
+			}
+
+			ImGui::Separator();
+			ImGui::Text("Lines hatching options");
+			if (ImGui::DragFloat("Size hatching lines", &shader_ctes_hatching.frequency_texture, 0.1f)) {
+				shader_ctes_hatching.uploadToGPU();
+			}
+			if (ImGui::DragFloat("Intensity transparency lines", &shader_ctes_hatching.intensity_sketch, 0.1f)) {
+				shader_ctes_hatching.uploadToGPU();
+			}
+			if (ImGui::DragFloat("Frequency change offset", &shader_ctes_hatching.frequency_offset, 0.1f)) {
+				shader_ctes_hatching.uploadToGPU();
+			}
+			
+			ImGui::Separator();
+			ImGui::Text("Outline options");
+			ImGui::Text("Quantity lines: more low to more lines. Will do strange things");
+			if (ImGui::DragFloat("Quantity lines found", &shader_ctes_hatching.edge_lines_detection, 0.0001f, 0.0000000001f)) {
+				shader_ctes_hatching.uploadToGPU();
+			}
+
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Ramp shading options")) {
+			ImGui::Text("Color influence from ramp, will work better with white lights, will mix lights");
+
+			bool color_ramp = false;
+
+			if (shader_ctes_hatching.color_ramp == 0.0f)
+				color_ramp = false;
+			else
+				color_ramp = true;
+
+			if (ImGui::Checkbox("color from ramp", &color_ramp)) {
+				if (color_ramp) {
+					shader_ctes_hatching.color_ramp = 1.0f;
+					shader_ctes_hatching.uploadToGPU();
+				}
+				else {
+					shader_ctes_hatching.color_ramp = 0.0f;
+					shader_ctes_hatching.uploadToGPU();
+				}
+			}
+			
+
+			ImGui::TreePop();
+		}
+
 	}if (ImGui::CollapsingHeader("Culling")) {
 		RenderManager.renderUICulling();
 		ImGui::Checkbox("show culling collider", GameController->GetCullingRenderPointer());

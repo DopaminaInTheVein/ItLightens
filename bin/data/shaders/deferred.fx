@@ -93,16 +93,18 @@ void PSGBuffer(
   float3 camera2wpos = iWorldPos - CameraWorldPos.xyz;
   o_depth = dot( CameraFront.xyz, camera2wpos) / CameraZFar;
 
-  o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
+  /*o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
   float limit = 0.1f;
   if ((o_selfIlum.r < limit && o_selfIlum.g < limit && o_selfIlum.b < limit))
-	  o_selfIlum *= float4(0, 0, 0, 0);
+	  o_selfIlum *= float4(0, 0, 0, 0);*/
 }
 
 //--------------------------------------------------------------------------------------
 void PSLightPoint(
   in float4 iPosition : SV_Position
-  , out float4 o_color : SV_Target
+  , out float4 o_color : SV_Target0
+  , out float4 o_specular : SV_Target1
+  , out float4 o_inv_shadows : SV_Target2
   )
 {
   int3 ss_load_coords = uint3(iPosition.xy, 0);
@@ -124,6 +126,13 @@ void PSLightPoint(
   // Calculo luz diffuso basico
   // Saturate limita los valores de salida al rango 0..1
   float NL = saturate(dot(N, L));
+  
+ float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL, 0.0f))*2.0f;
+  
+ NL = lightWarp.xyz;
+ 
+ float inv_shadows = NL;
+ o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
 
   // Factor de atenuacion por distancia al centro de la
   // luz. 1 para distancias menores de LightInRadius y 0
@@ -141,16 +150,32 @@ void PSLightPoint(
   float  glossiness = 20.;
   float  spec_amount = pow(cos_beta, glossiness);
   spec_amount *= distance_att;
+  
+  //spec_amount /= 2.0f;
 
   // Environment. incident_vector = -E
   float3 E_refl = reflect(-E, N);
   float3 env = txEnvironment.Sample(samLinear, E_refl).xyz;
+  
+	//if(NL < 1.0f)
+		//NL = 1.0f;
 
   // Aportacion final de la luz es NL x color_luz x atenuacion
-  o_color.xyz = LightColor.xyz * NL * distance_att * albedo + spec_amount;
+  float3 lightCol = LightColor.xyz;
+  
+  if(color_ramp != 0.0f){
+	lightCol *= lightWarp.xyz;
+  }
+  
+  spec_amount *= specular_force;
+  
+  o_color.xyz = lightCol * NL * distance_att * albedo + spec_amount;
   o_color.xyz += env * 0.3;
   //o_color.xyz = E_refl.xyz;
   o_color.a = 1.;
+  
+  //o_color = float4(spec_amount, spec_amount, spec_amount, 1.0f);
+  o_specular = float4(spec_amount, spec_amount, spec_amount,1.0f);
 
   //o_color = float4(NL, NL, NL ,1) * albedo;
 }
@@ -229,16 +254,16 @@ float getShadowAt(float4 wPos) {
 
   float amount = tapAt(center, depth);
  
-  float sz = 2. / 512.;
-  amount += tapAt(center + float2(sz, sz), depth);
-  amount += tapAt(center + float2(-sz, sz), depth);
-  amount += tapAt(center + float2(sz, -sz), depth);
-  amount += tapAt(center + float2(-sz, -sz), depth);
+  float2 sz = float2(2. / xres, 2./yres);
+  amount += tapAt(center + float2(sz.x, sz.y), depth);
+  amount += tapAt(center + float2(-sz.x, sz.y), depth);
+  amount += tapAt(center + float2(sz.x, -sz.y), depth);
+  amount += tapAt(center + float2(-sz.x, -sz.y), depth);
 
-  amount += tapAt(center + float2(sz, 0), depth);
-  amount += tapAt(center + float2(-sz, 0), depth);
-  amount += tapAt(center + float2(0, -sz), depth);
-  amount += tapAt(center + float2(0, sz), depth);
+  amount += tapAt(center + float2(sz.x, 0), depth);
+  amount += tapAt(center + float2(-sz.x, 0), depth);
+  amount += tapAt(center + float2(0, -sz.y), depth);
+  amount += tapAt(center + float2(0, sz.y), depth);
  
   amount *= 1.f / 9.;
  
@@ -247,9 +272,11 @@ float getShadowAt(float4 wPos) {
 
 
 //--------------------------------------------------------------------------------------
-float4 PSLightDirShadows(
+void PSLightDirShadows(
   in float4 iPosition : SV_Position
-  ) : SV_Target
+  , out float4 o_color  : SV_Target0
+  , out float4 o_inv_shadows : SV_Target2
+  ) 
 {
   int3 ss_load_coords = uint3(iPosition.xy, 0);
 
@@ -270,6 +297,10 @@ float4 PSLightDirShadows(
   // Calculo luz diffuso basico
   // Saturate limita los valores de salida al rango 0..1
   float NL = saturate(dot(N, L));
+  
+  float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL, 1.0f))*2.0f;
+  
+   //NL = lightWarp.xyz;
 
   // Currently, no attenuation based on distance
   // Attenuation based on shadowmap
@@ -277,7 +308,35 @@ float4 PSLightDirShadows(
 
   att_factor *= NL;
   
-  return float4(att_factor, att_factor, att_factor, 1);
+  
+  
+  //o_shadows = att_factor/10.0f;
+  //o_shadows = float4(0.0f,0.0f,.0f,1.0f);
+ // o_shadows = float4(0.0f,1.0f,0.0f,1.0f);
+ float inv_shadows = att_factor;
+ o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, 1);
+  
+  o_color = float4(att_factor, att_factor, att_factor, 1 - att_factor);
+  
+  float4 lightSpacePos = mul(float4(wPos,1), LightViewProjection);
+  lightSpacePos.xyz /= lightSpacePos.w;
+  lightSpacePos.x = (lightSpacePos.x + 1) * 0.5;
+  lightSpacePos.y = (1 - lightSpacePos.y) * 0.5;
+
+  float4 light_mask = txLightMask.Sample(samLightBlackBorder, lightSpacePos.xy );
+  if( lightSpacePos.w < 0 )
+	light_mask.xyzw = .0;
+
+  float4 final_color = light_mask * att_factor;
+
+  float4 albedo = txDiffuse.Load(ss_load_coords);
+
+  //return final_color * albedo;
+  
+  o_color = albedo*final_color;
+  //o_color = txWarpLight.Sample(samClampLinear, float2(att_factor, 1.0f))*2.0f;
+  
+  //o_color = float4(0,0,0,0);
 }
 
 
