@@ -58,8 +58,8 @@ end
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	p:play_music("event:/OnGameStart")
-	triggerGuardFormation();
-	p:exec_command( "triggerGuardFormation();", 15 )
+	--triggerGuardFormation();
+	--p:exec_command( "triggerGuardFormation();", 15 )
 	cam:run_cinematic("CinematicIntro", 10)
 end
 

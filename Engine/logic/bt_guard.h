@@ -36,7 +36,7 @@ public:
 	float timer;
 };
 
-class bt_guard : public TCompBase, public bt
+class bt_guard : public bt, public TCompBase
 {
 	//Main attritbutes
 	float DIST_SQ_REACH_PNT;
