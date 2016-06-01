@@ -419,30 +419,30 @@ void CEntitiesModule::initLevel(string level) {
 	// Camara del player
 	CHandle camera = tags_manager.getFirstHavingTag("camera_main");
 	CEntity * camera_e = camera;
-	if (!camera_e) {
-		//main camera needed
-		fatal("main camera needed!!\n");
-		assert(false);
-	}
-	TCompCamera * pcam = camera_e->get<TCompCamera>();
-
 	CHandle t = tags_manager.getFirstHavingTag("player");
-	CEntity * target_e = t;
+	if (camera_e) {
+		//main camera needed
+		//fatal("main camera needed!!\n");
+		//assert(false);
+		TCompCamera * pcam = camera_e->get<TCompCamera>();
 
-	CHandle helper_arrow = tags_manager.getFirstHavingTag("helper_arrow");
-	CEntity * helper_arrow_e = helper_arrow;
+		CEntity * target_e = t;
 
-	// Set the player in the 3rdPersonController
-	if (camera_e && t.isValid()) {
-		TMsgSetTarget msg;
-		msg.target = t;
-		msg.who = PLAYER;
-		camera_e->sendMsg(msg);	//set camera
-		if (helper_arrow.isValid()) helper_arrow_e->sendMsg(msg);
+		CHandle helper_arrow = tags_manager.getFirstHavingTag("helper_arrow");
+		CEntity * helper_arrow_e = helper_arrow;
 
-		TMsgSetCamera msg_camera;
-		msg_camera.camera = camera;
-		target_e->sendMsg(msg_camera); //set target camera
+		// Set the player in the 3rdPersonController
+		if (camera_e && t.isValid()) {
+			TMsgSetTarget msg;
+			msg.target = t;
+			msg.who = PLAYER;
+			camera_e->sendMsg(msg);	//set camera
+			if (helper_arrow.isValid()) helper_arrow_e->sendMsg(msg);
+
+			TMsgSetCamera msg_camera;
+			msg_camera.camera = camera;
+			target_e->sendMsg(msg_camera); //set target camera
+		}
 	}
 	//}
 	TTagID generators = getID("generator");
@@ -450,15 +450,15 @@ void CEntitiesModule::initLevel(string level) {
 	SBB::postHandlesVector("generatorsHandles", generatorsHandles);
 
 	// Set the player in the Speedy AIs
-	TTagID tagIDSpeedy = getID("AI_speedy");
-	VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
+	//TTagID tagIDSpeedy = getID("AI_speedy");
+	//VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
 
-	for (CHandle speedyHandle : speedyHandles) {
-		CEntity * speedy_e = speedyHandle;
-		TMsgSetPlayer msg_player;
-		msg_player.player = t;
-		speedy_e->sendMsg(msg_player);
-	}
+	//for (CHandle speedyHandle : speedyHandles) {
+	//	CEntity * speedy_e = speedyHandle;
+	//	TMsgSetPlayer msg_player;
+	//	msg_player.player = t;
+	//	speedy_e->sendMsg(msg_player);
+	//}
 
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
 	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));

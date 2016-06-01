@@ -514,6 +514,9 @@
     <ClCompile Include="components\comp_trigger_lua.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_tracker.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
     <ClCompile Include="logic\damage.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -579,33 +582,6 @@
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="components\comp_light_dir_shadows.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\magnet_door.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\elevator.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="components\comp_snoozer.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\helper_arrow.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="components\comp_base.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="components\comp_tracker_cinta.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="components\comp_tracker.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="components\comp_render_glow.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="components\comp_hierarchy.cpp">
       <Filter>components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1310,6 +1286,9 @@
     <ClInclude Include="components\comp_trigger_standar.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_tracker.h">
+      <Filter>components</Filter>
+    </ClInclude>
     <ClInclude Include="logic\damage.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -1449,31 +1428,6 @@
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_light_dir_shadows.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\magnet_door.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\elevator.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="components\comp_snoozer.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\helper_arrow.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="components\comp_tracker_cinta.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\comp_tracker.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    </ClInclude>
-    <ClInclude Include="components\comp_render_glow.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\comp_hierarchy.h">
       <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
