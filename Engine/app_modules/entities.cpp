@@ -327,6 +327,9 @@ bool CEntitiesModule::start() {
 }
 
 void CEntitiesModule::initLevel(string level) {
+	// Restart Timers LUA
+	logic_manager->resetTimers();
+
 	CApp &app = CApp::get();
 	std::string file_options = app.file_options_json;
 	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
@@ -424,30 +427,30 @@ void CEntitiesModule::initLevel(string level) {
 	// Camara del player
 	CHandle camera = tags_manager.getFirstHavingTag("camera_main");
 	CEntity * camera_e = camera;
-	if (!camera_e) {
-		//main camera needed
-		fatal("main camera needed!!\n");
-		assert(false);
-	}
-	TCompCamera * pcam = camera_e->get<TCompCamera>();
-
 	CHandle t = tags_manager.getFirstHavingTag("player");
-	CEntity * target_e = t;
+	if (camera_e) {
+		//main camera needed
+		//fatal("main camera needed!!\n");
+		//assert(false);
+		TCompCamera * pcam = camera_e->get<TCompCamera>();
 
-	CHandle helper_arrow = tags_manager.getFirstHavingTag("helper_arrow");
-	CEntity * helper_arrow_e = helper_arrow;
+		CEntity * target_e = t;
 
-	// Set the player in the 3rdPersonController
-	if (camera_e && t.isValid()) {
-		TMsgSetTarget msg;
-		msg.target = t;
-		msg.who = PLAYER;
-		camera_e->sendMsg(msg);	//set camera
-		if (helper_arrow.isValid()) helper_arrow_e->sendMsg(msg);
+		CHandle helper_arrow = tags_manager.getFirstHavingTag("helper_arrow");
+		CEntity * helper_arrow_e = helper_arrow;
 
-		TMsgSetCamera msg_camera;
-		msg_camera.camera = camera;
-		target_e->sendMsg(msg_camera); //set target camera
+		// Set the player in the 3rdPersonController
+		if (camera_e && t.isValid()) {
+			TMsgSetTarget msg;
+			msg.target = t;
+			msg.who = PLAYER;
+			camera_e->sendMsg(msg);	//set camera
+			if (helper_arrow.isValid()) helper_arrow_e->sendMsg(msg);
+
+			TMsgSetCamera msg_camera;
+			msg_camera.camera = camera;
+			target_e->sendMsg(msg_camera); //set target camera
+		}
 	}
 	//}
 	TTagID generators = getID("generator");
@@ -455,15 +458,15 @@ void CEntitiesModule::initLevel(string level) {
 	SBB::postHandlesVector("generatorsHandles", generatorsHandles);
 
 	// Set the player in the Speedy AIs
-	TTagID tagIDSpeedy = getID("AI_speedy");
-	VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
+	//TTagID tagIDSpeedy = getID("AI_speedy");
+	//VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
 
-	for (CHandle speedyHandle : speedyHandles) {
-		CEntity * speedy_e = speedyHandle;
-		TMsgSetPlayer msg_player;
-		msg_player.player = t;
-		speedy_e->sendMsg(msg_player);
-	}
+	//for (CHandle speedyHandle : speedyHandles) {
+	//	CEntity * speedy_e = speedyHandle;
+	//	TMsgSetPlayer msg_player;
+	//	msg_player.player = t;
+	//	speedy_e->sendMsg(msg_player);
+	//}
 
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
 	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
@@ -487,6 +490,9 @@ void CEntitiesModule::initLevel(string level) {
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
+
+	//TODO: Message LevelStart
+	
 }
 
 void CEntitiesModule::destroyAllEntities() {
@@ -520,26 +526,23 @@ void CEntitiesModule::update(float dt) {
 
 	static float ia_wait = 0.0f;
 	ia_wait += getDeltaTime();
-	/****************/CHandle guard_handle = tags_manager.getHandleByTagAndName("AI_guard", "guard_2");
-	/****************/CEntity * guard_entity = guard_handle;
-	/****************/bt_guard * guard = guard_entity->get<bt_guard>();
-	/****************/VEC3 formation_point = guard->getFormationPoint();
+
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);
 	getHandleManager<TCompPhysics>()->updateAll(dt);
-	/****************/formation_point = guard->getFormationPoint();
+
 	getHandleManager<TCompLightDir>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
 	getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
-	/****************/formation_point = guard->getFormationPoint();
+
 	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::STOPPED_INTRO) {
 		if (!GameController->IsCinematic()) {
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 		}
 		getHandleManager<TCompCamera>()->updateAll(dt);
 	}
-	/****************/formation_point = guard->getFormationPoint();
+
 	if (GameController->GetGameState() == CGameController::RUNNING) {
 		// May need here a switch to update wich player controller takes the action - possession rulez
 		if (!GameController->IsCinematic()) {
@@ -550,17 +553,17 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
 		}
-		/****************/formation_point = guard->getFormationPoint();
+
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompLightDir>()->updateAll(dt);
-		/****************/formation_point = guard->getFormationPoint();
+
 		if (use_parallel)
 			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
 		else
 			getHandleManager<TCompSkeleton>()->updateAll(dt);
 
 		getHandleManager<TCompBoneTracker>()->updateAll(dt);
-		/****************/formation_point = guard->getFormationPoint();
+
 		if (SBB::readBool(sala) && ia_wait > 1.0f) {
 			getHandleManager<bt_guard>()->updateAll(dt);
 			getHandleManager<bt_mole>()->updateAll(dt);
@@ -570,33 +573,32 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<bt_speedy>()->updateAll(dt);
 			getHandleManager<water_controller>()->updateAll(dt);
 		}
-		/****************/formation_point = guard->getFormationPoint();
 		getHandleManager<CStaticBomb>()->updateAll(dt);
 		getHandleManager<CMagneticBomb>()->updateAll(dt);
-		/****************/formation_point = guard->getFormationPoint();
+
 		getHandleManager<TCompWire>()->updateAll(dt);
 		getHandleManager<TCompGenerator>()->updateAll(dt);
 		getHandleManager<TCompPolarized>()->updateAll(dt);
-		/****************/formation_point = guard->getFormationPoint();
+
 		getHandleManager<TCompLife>()->updateAll(dt);
-		/****************/formation_point = guard->getFormationPoint();
+
 		getHandleManager<TCompPlatform>()->updateAll(dt);
 		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
 		getHandleManager<TCompWorkstation>()->updateAll(dt);
 		getHandleManager<magnet_door>()->updateAll(dt);
 		getHandleManager<elevator>()->updateAll(dt);
-		//getHandleManager<TCompTracker>()->updateAll(dt);
-		/****************/formation_point = guard->getFormationPoint();
+		getHandleManager<TCompTracker>()->updateAll(dt);
+
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 		getHandleManager<TCompBoxDestructor>()->updateAll(dt);
-		/****************/formation_point = guard->getFormationPoint();
+
 		getHandleManager<TCompLightPoint>()->updateAll(dt);
 		getHandleManager<TCompLightFadable>()->updateAll(dt);
-		/****************/formation_point = guard->getFormationPoint();
+
 		//Triggers
 		getHandleManager<TTriggerLua>()->updateAll(dt);
-		/****************/formation_point = guard->getFormationPoint();
+
 		SBB::update(dt);
 	}
 	// In this mode, only the animation of the player is updated

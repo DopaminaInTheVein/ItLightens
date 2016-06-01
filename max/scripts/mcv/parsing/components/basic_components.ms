@@ -140,7 +140,7 @@ fn _parse_tracker = (
 				mcv_tmx = matrixMax2MCV tMatrix
 				atrName = "tangent" + (curPoint as string)
 				atrValue = getTransformPosValue mcv_tmx
-				xmlTracker.addAttr atrName atrValue
+				--xmlTracker.addAttr atrName atrValue
 				
 				-- Next
 				x += deltaInterval

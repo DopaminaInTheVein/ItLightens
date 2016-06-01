@@ -156,6 +156,8 @@ fn _parse_trigger = (
 	-- Action Mole
 	local onActionMole = getUserProp _parsingObject "onActionMole"
 	
+	local actived = getUserProp _parsingObject "actived"
+	
 	-- Script (component)
 	if component != undefined then (
 		if (onEnter != undefined) or (onExit != undefined) or (onAction != undefined) or (onActionSci != undefined) or (onActionMole != undefined) then (
@@ -165,7 +167,11 @@ fn _parse_trigger = (
 	) else (
 		--Add trigger lua component
 		local xml = XML_PARSING.addChild "trigger_lua"
-			
+		
+		if actived != undefined then (
+			xml.addAttr "actived" actived
+		)
+		
 		if (onEnter == undefined) and (onExit == undefined) and (onAction == undefined) then (
 			throw "El trigger debe ser lógico o de componente!"
 		)

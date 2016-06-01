@@ -19,6 +19,7 @@ public:
 	// player functions
 	void getPlayer();
 	void setPlayerPosition(float x, float y, float z);
+	void teleport(const char * point_name);
 	float getPlayerX();
 	float getPlayerY();
 	float getPlayerZ();

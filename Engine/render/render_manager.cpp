@@ -207,14 +207,16 @@ void CRenderManager::renderShadowCasters() {
   while (it != all_shadow_keys.end()) {
 
     const TCompTransform* c_tmx = it->transform;
-    assert(c_tmx);
-    activateWorldMatrix(c_tmx->asMatrix());
+    //TODO: Review Pedro!
+	//assert(c_tmx);
+	if (c_tmx) {
+		activateWorldMatrix(c_tmx->asMatrix());
 
-    // If the shadows_keys were sorted by mesh
-    // I could skip the activation and just call it
-    // when the mesh changed, and only call the render
-    it->mesh->activateAndRender();
-
-    ++it;
+		// If the shadows_keys were sorted by mesh
+		// I could skip the activation and just call it
+		// when the mesh changed, and only call the render
+		it->mesh->activateAndRender();
+	}
+	++it;
   }
 }

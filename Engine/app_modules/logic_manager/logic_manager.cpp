@@ -49,6 +49,10 @@ void CLogicManagerModule::update(float dt) {
 	}
 }
 
+void CLogicManagerModule::resetTimers() {
+	command_queue.clear();
+}
+
 void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
 	char lua_code[64];
 	caller_handle = handle;
@@ -327,6 +331,11 @@ void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
 		.param("float: x coordinate")
 		.param("float: y coordinate")
 		.param("float: z coordinate")
+		// teleport and orientate player
+		.set("teleport", &SLBPlayer::teleport)
+		.comment("Teleport player")
+		.param("Point name to teleport")
+
 		// basic coordinates functions
 		.set("get_x", &SLBPlayer::getPlayerX)
 		.comment("returns the X coordinate")

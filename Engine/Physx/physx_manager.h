@@ -11,12 +11,12 @@
 #define PX_SAFE_RELEASE(p)  if (p) p->release(), p = nullptr
 
 
-#define PXM_NO_PLAYER_CRYSTAL ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_NO_CRYSTAL ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_NO_PLAYER ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_NO_PLAYER_NPC ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eCRYSTAL | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
-#define PXM_ALL_LESS_STATIC ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT
-#define PXM_CAMERA_COLLISIONS ItLightensFilter::eSCENE //| ItLightensFilter::eOBJECT
+#define PXM_NO_PLAYER_CRYSTAL (ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
+#define PXM_NO_CRYSTAL (ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
+#define PXM_NO_PLAYER (ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
+#define PXM_NO_PLAYER_NPC (ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eCRYSTAL | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
+#define PXM_ALL_LESS_STATIC (ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eFRAGMENT)
+#define PXM_CAMERA_COLLISIONS (ItLightensFilter::eSCENE) //| ItLightensFilter::eOBJECT
 
 #define GRAVITY -10.0f
 
@@ -28,7 +28,7 @@ class CHandle;
 
 /*class PxAllocatorCallback
 {
-public:
+public:	
 	virtual ~PxAllocatorCallback() {}
 	virtual void* allocate(size_t size, const char* typeName, const char* filename,
 		int line) = 0;
@@ -51,7 +51,6 @@ class CPhysxManager :	public IAppModule,
 						public PxControllerBehaviorCallback,
 						public PxUserControllerHitReport, 
 						public PxQueryFilterCallback {
-
 
 	PxFoundation			*m_pFoundation				= nullptr;
 	PxProfileZoneManager	*m_pProfileZoneManager		= nullptr;
@@ -114,6 +113,9 @@ public:
 	{}
 
 	~CPhysxManager() { stop(); }
+
+	//Test CCD
+	bool ccdActive = true;
 
 	//runtime funcions
 

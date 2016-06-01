@@ -18,6 +18,7 @@ class TCompGuidedCamera : public TCompBase {
 
   int curPoint = 0;
   float factor = 0.0f;
+  float smoothFactor = 0.9f;
 public:
   TCompGuidedCamera() {
   }

@@ -189,7 +189,7 @@ void CPhysxManager::update(float dt)
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
 		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
 
-		t_to_update = 0.0f;
+		t_to_update -= t_max_update;
 	}
 }
 
@@ -230,7 +230,7 @@ void CPhysxManager::customizeSceneDesc(PxSceneDesc& sceneDesc)
 	sceneDesc.gravity = PxVec3(0.0f, GRAVITY, 0.0f);
 	sceneDesc.filterShader = ItLightensFilter::ItLightensFilterShader;
 	sceneDesc.simulationEventCallback = this;
-	sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS;
+	sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS | PxSceneFlag::eENABLE_CCD;
 	sceneDesc.filterCallback = this;
 	//sceneDesc.flags |= PxSceneFlag::eREQUIRE_RW_LOCK;
 }
@@ -519,6 +519,7 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 
 			CEntity *e0 = GetEntityHandle(*pairHeader.actors[0]);
 			CEntity *e1 = GetEntityHandle(*pairHeader.actors[1]);
+			if (!e0 || !e1) return;
 
 			TCompCharacterController *cc;
 
@@ -655,7 +656,8 @@ PxControllerBehaviorFlag::
 PxFixedJoint *joint = PxFixedJointCreate(*m_pPhysics, a1, tmx1, a2, tmx2);
 //joint->setMotion(PxD6Axis::eX, PxD6Motion::eLIMITED);
 
-joint->setConstraintFlag(PxConstraintFlag::eVISUALIZATION, true);
+joint->setConstraintFlag(PxConstraintFlag::
+IZATION, true);
 return false;
 }
 */

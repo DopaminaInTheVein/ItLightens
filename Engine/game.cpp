@@ -193,7 +193,6 @@ void CApp::update(float elapsed) {
 // ----------------------------------
 void CApp::render() {
   PROFILE_FUNCTION("CApp::render");
-  
   activateDefaultStates();
 
   for (auto it : mod_renders) {
