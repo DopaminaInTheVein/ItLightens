@@ -2,6 +2,7 @@
 #include "constants/ctes_object.h"
 #include "constants/ctes_light.h"
 #include "constants/ctes_globals.h"
+#include "constants/ctes_hatching.h"
 
 Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
 Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
@@ -12,6 +13,8 @@ Texture2D txNoise     : USE_SHADER_REG(TEXTURE_SLOT_NOISE);
 Texture2D txShadowMap : USE_SHADER_REG(TEXTURE_SLOT_SHADOWMAP);
 
 Texture2D txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
+
+Texture2D txWarpLight : register(t70);
 
 // Same order as
 SamplerState samLinear : register(s0);

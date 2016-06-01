@@ -203,7 +203,9 @@ public:
 		setCurrent(NULL);
 		formation_toggle = !formation_toggle;
 	}
-
+	VEC3 getFormationPoint() {
+		return formation_point;
+	}
 	//functions that allow access to the static maps
 	map<string, btnode *>* getTree() override {
 		return &tree;

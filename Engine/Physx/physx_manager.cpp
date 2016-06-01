@@ -40,63 +40,60 @@ void CPhysxManager::setFtCC()
 //start function: called at start from engine, to init PhysxManager
 bool CPhysxManager::start()
 {
+  static PxDefaultErrorCallback	gDefaultErrorCallback;
+  static PxDefaultAllocator		gDefaultAllocatorCallback;
+  PxTolerancesScale scale = PxTolerancesScale();
 
-	static PxDefaultErrorCallback	gDefaultErrorCallback;
-	static PxDefaultAllocator		gDefaultAllocatorCallback;
-	PxTolerancesScale scale = PxTolerancesScale();
+  //init foundation
+  m_pFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback,
+    gDefaultErrorCallback);
 
-	//init foundation
-	m_pFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback,
-		gDefaultErrorCallback);
+  assert(m_pFoundation);
+  if (!m_pFoundation)
+    fatal("PxCreateFoundation failed!");
 
-	assert(m_pFoundation);
-	if (!m_pFoundation)
-		fatal("PxCreateFoundation failed!");
+  //init ProfileZoneManager
+  bool recordMemoryAllocations = true;
+  m_pProfileZoneManager = &PxProfileZoneManager::createProfileZoneManager(m_pFoundation);
+  if (!m_pProfileZoneManager)
+    fatal("PxProfileZoneManager::createProfileZoneManager failed!");
 
-	//init ProfileZoneManager
-	bool recordMemoryAllocations = true;
-	m_pProfileZoneManager = &PxProfileZoneManager::createProfileZoneManager(m_pFoundation);
-	if (!m_pProfileZoneManager)
-		fatal("PxProfileZoneManager::createProfileZoneManager failed!");
+  //init Physics
+  m_pPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pFoundation,
+    PxTolerancesScale(), recordMemoryAllocations, m_pProfileZoneManager);
 
+  assert(m_pPhysics);
+  if (!m_pPhysics)
+    fatal("PxCreatePhysics failed!");
 
-	//init Physics
-	m_pPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pFoundation,
-		PxTolerancesScale(), recordMemoryAllocations, m_pProfileZoneManager);
+  //init cooking
+  m_pCooking = PxCreateCooking(PX_PHYSICS_VERSION, *m_pFoundation, PxCookingParams(scale));
 
-	assert(m_pPhysics);
-	if (!m_pPhysics)
-		fatal("PxCreatePhysics failed!");
+  assert(m_pCooking);
+  if (!m_pCooking)
+    fatal("PxCreateCooking failed!");
 
-	//init cooking
-	m_pCooking = PxCreateCooking(PX_PHYSICS_VERSION, *m_pFoundation, PxCookingParams(scale));
+  //init extensions
+  if (!PxInitExtensions(*m_pPhysics))
+    fatal("PxInitExtensions failed!");
 
-	assert(m_pCooking);
-	if (!m_pCooking)
-		fatal("PxCreateCooking failed!");
+  //init scene
+  PxSceneDesc sceneDesc(m_pPhysics->getTolerancesScale());
+  customizeSceneDesc(sceneDesc);
 
-	//init extensions
-	if (!PxInitExtensions(*m_pPhysics))
-		fatal("PxInitExtensions failed!");
+  if (!sceneDesc.cpuDispatcher)
+  {
+    m_pCpuDispatcher = PxDefaultCpuDispatcherCreate(m_NbThreads);
+    if (!m_pCpuDispatcher)
+      fatal("PxDefaultCpuDispatcherCreate failed!");
 
-	//init scene
-	PxSceneDesc sceneDesc(m_pPhysics->getTolerancesScale());
-	customizeSceneDesc(sceneDesc);
+    assert(m_pCpuDispatcher);
+    sceneDesc.cpuDispatcher = m_pCpuDispatcher;
+  }
 
-	if (!sceneDesc.cpuDispatcher)
-	{
-		m_pCpuDispatcher = PxDefaultCpuDispatcherCreate(m_NbThreads);
-		if (!m_pCpuDispatcher)
-			fatal("PxDefaultCpuDispatcherCreate failed!");
-
-		assert(m_pCpuDispatcher);
-		sceneDesc.cpuDispatcher = m_pCpuDispatcher;
-	}
-	
-	PxSimulationFilterShader gDefaultFilterShader = PxDefaultSimulationFilterShader;
-	if (!sceneDesc.filterShader)
-		sceneDesc.filterShader = gDefaultFilterShader;
-
+  PxSimulationFilterShader gDefaultFilterShader = PxDefaultSimulationFilterShader;
+  if (!sceneDesc.filterShader)
+    sceneDesc.filterShader = gDefaultFilterShader;
 
 #ifdef PX_WINDOWS
 	if (!sceneDesc.gpuDispatcher && m_pCudaContextManager)
@@ -148,24 +145,33 @@ bool CPhysxManager::start()
 //stop function: release memory
 void CPhysxManager::stop()
 {
-	if(m_pPhysics)m_pPhysics->release();
-	if(m_pFoundation)m_pFoundation->release();
-	if(m_pCooking)m_pCooking->release();
-	if(m_pProfileZoneManager)m_pProfileZoneManager->release();
-	if (m_pManagerControllers) {
-		//m_pManagerControllers->purgeControllers();	//TODO: free memory
-	}
 
-	if (m_pGeomQuerys) delete m_pGeomQuerys;
-
+  
+  PX_SAFE_RELEASE(m_pManagerControllers);
+  PX_SAFE_RELEASE(m_pScene);
+  PX_SAFE_RELEASE(m_pCpuDispatcher);
+  
 #ifndef NDEBUG
-		
-	//memory already free¿?
-	/*if (mConnection) {
-		if (mConnection->isConnected()) mConnection->disconnect();
-		mConnection->release();
-	}*/
+  if (m_pConnection != NULL)
+	  PX_SAFE_RELEASE(m_pConnection);
+
+ // auto pvdconnection = m_pPhysics->getPvdConnectionManager();
+  //PX_SAFE_RELEASE(pvdconnection);
 #endif
+
+  PX_SAFE_RELEASE(m_pCooking);
+  PX_SAFE_RELEASE(m_pCudaContextManager);
+  //PX_SAFE_RELEASE(m_pGeomQuerys);
+  if (m_pGeomQuerys) {
+	  delete m_pGeomQuerys;
+  }
+
+  PxCloseExtensions();
+
+  PX_SAFE_RELEASE(m_pPhysics);
+  PX_SAFE_RELEASE(m_pProfileZoneManager);
+  PX_SAFE_RELEASE(m_pFoundation);
+
 }
 
 //update function: to update at fixed rate

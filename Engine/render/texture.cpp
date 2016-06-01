@@ -30,8 +30,11 @@ void CTexture::renderUIDebug() {
 	ImVec2 tex_screen_pos = ImGui::GetCursorScreenPos();
 	float tex_w = IMAGE_W_DEBUG;
 	float tex_h = IMAGE_H_DEBUG;
+	static int zoom_w = 127;
+	static int zoom_h = 127;
 	ImTextureID tex_id = (ImTextureID*)res_view;
 	ImGui::Image(tex_id, ImVec2(IMAGE_W_DEBUG, IMAGE_H_DEBUG));
+
 	if (ImGui::IsItemHovered())
 	{
 		ImGui::BeginTooltip();
@@ -42,9 +45,12 @@ void CTexture::renderUIDebug() {
 		ImGui::Text("Max: (%.2f, %.2f)", focus_x + focus_sz, focus_y + focus_sz);
 		ImVec2 uv0 = ImVec2((focus_x) / tex_w, (focus_y) / tex_h);
 		ImVec2 uv1 = ImVec2((focus_x + focus_sz) / tex_w, (focus_y + focus_sz) / tex_h);
-		ImGui::Image(tex_id, ImVec2(128, 128), uv0, uv1, ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+		ImGui::Image(tex_id, ImVec2(zoom_w, zoom_h), uv0, uv1, ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 		ImGui::EndTooltip();
 	}
+
+	ImGui::DragInt("zoom with", &zoom_w);
+	ImGui::DragInt("zoom height", &zoom_h);
 	//renderTexture();
 
 	if (ImGui::Button("new texture path")) {
