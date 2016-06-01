@@ -1,6 +1,6 @@
-/*
-#include "mcv_platform.h"
 
+#include "mcv_platform.h"
+/*
 #include "comp_tracker_cinta.h"
 #include "comp_physics.h"
 #include "comp_transform.h"

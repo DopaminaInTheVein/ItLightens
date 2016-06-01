@@ -1324,6 +1324,7 @@
    height="1.8"/>
 
 </entity>
+<!--
 <entity
    slept="undefined">
 <tags
@@ -1441,6 +1442,7 @@
    height="1.8"/>
 
 </entity>
+-->
 <entity
    slept="undefined">
 <tags

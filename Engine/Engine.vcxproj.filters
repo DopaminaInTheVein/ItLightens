@@ -514,9 +514,6 @@
     <ClCompile Include="components\comp_trigger_lua.cpp">
       <Filter>components</Filter>
     </ClCompile>
-    <ClCompile Include="components\comp_tracker.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
     <ClCompile Include="logic\damage.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -597,6 +594,12 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="components\comp_base.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_tracker_cinta.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_tracker.cpp">
       <Filter>components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1301,9 +1304,6 @@
     <ClInclude Include="components\comp_trigger_standar.h">
       <Filter>components</Filter>
     </ClInclude>
-    <ClInclude Include="components\comp_tracker.h">
-      <Filter>components</Filter>
-    </ClInclude>
     <ClInclude Include="logic\damage.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -1456,6 +1456,12 @@
     </ClInclude>
     <ClInclude Include="logic\helper_arrow.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tracker_cinta.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tracker.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

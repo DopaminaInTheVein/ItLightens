@@ -78,7 +78,7 @@ DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
 DECL_OBJ_MANAGER("trigger_lua", TTriggerLua);
 
 //Tracker
-DECL_OBJ_MANAGER("tracker", TCompTracker);
+//DECL_OBJ_MANAGER("tracker", TCompTracker);
 
 DECL_OBJ_MANAGER("box_spawn", TCompBoxSpawner);
 DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
@@ -162,7 +162,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompCharacterController>()->init(MAX_ENTITIES);
 
 	//Trackers
-	getHandleManager<TCompTracker>()->init(100);
+	//getHandleManager<TCompTracker>()->init(100);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -195,8 +195,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
 
 	//Trackers
-	SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
-	SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
+	//SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
+	//SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
 	SUBSCRIBE(TCompCamera, TMsgGuidedCamera, onGuidedCamera);
 	SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
 
@@ -380,14 +380,14 @@ void CEntitiesModule::initLevel(string level) {
 	is.close();
 	SBB::postBool(sala, false);
 	if (!recalc) {
-		// restore the navmesh from the archive
-		//std::thread thre(&CEntitiesModule::readNavmesh, this);
-		//thre.detach();
+		//restore the navmesh from the archive
+		std::thread thre(&CEntitiesModule::readNavmesh, this);
+		thre.detach();
 	}
 	else {
 		// make mesh on a separate thread
-		//std::thread thre(&CEntitiesModule::recalcNavmesh, this);
-		//thre.detach();
+		std::thread thre(&CEntitiesModule::recalcNavmesh, this);
+		thre.detach();
 	}
 	TTagID tagIDcamera = getID("camera_main");
 	TTagID tagIDwall = getID("breakable_wall");
