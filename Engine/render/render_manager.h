@@ -9,6 +9,7 @@ class CMaterial;
 class CStaticMesh;
 
 class CRenderManager {
+public:
   struct TKey {
     const CMesh*            mesh;
     const CMaterial*        material;
@@ -17,8 +18,8 @@ class CRenderManager {
     CHandle                 owner;
     CHandle                 transform;
     CHandle                 aabb;
-    //int                     aabb_idx;
   };
+private:
 
   struct TShadowKey {
     const CMesh*            mesh;
@@ -37,12 +38,7 @@ public:
   void registerToRender(const CStaticMesh* mesh, CHandle handle);
   void unregisterFromRender(CHandle handle);
 
-  enum eRenderType {
-    SOLID_OBJS
-    , TRANSPARENT_OBJS
-  };
-
-  void renderAll(CHandle h_camera, eRenderType render_type);
+  void renderAll(CHandle h_camera, CRenderTechnique::eCategory category);
   void renderShadowCasters();
 };
 

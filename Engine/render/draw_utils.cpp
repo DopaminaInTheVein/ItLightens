@@ -10,6 +10,7 @@ CShaderCte< TCteBones >  shader_ctes_bones;
 CShaderCte< TCteLight >  shader_ctes_lights;
 CShaderCte< TCteGlobals > shader_ctes_globals;
 CShaderCte< TCteMaterial > shader_ctes_material;
+CShaderCte< TCteBlur >     shader_ctes_blur;
 
 // -----------------------------------------------
 bool createDepthBuffer(
@@ -157,6 +158,8 @@ bool drawUtilsCreate() {
     return false;
   if (!shader_ctes_material.create("ctes_material"))
     return false;
+  if (!shader_ctes_blur.create("ctes_blur"))
+    return false;
 
   activateDefaultStates();
   return true;
@@ -169,12 +172,14 @@ void activateDefaultStates() {
   shader_ctes_lights.activate(CTE_SHADER_LIGHT);
   shader_ctes_globals.activate(CTE_SHADER_GLOBALS_SLOT);
   shader_ctes_material.activate(CTE_SHADER_MATERIAL_SLOT);
+  shader_ctes_blur.activate(CTE_SHADER_BLUR_SLOT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
   activateSamplerStates();
 }
 
 void drawUtilsDestroy() {
+  shader_ctes_blur.destroy();
   shader_ctes_material.destroy();
   shader_ctes_globals.destroy();
   shader_ctes_lights.destroy();

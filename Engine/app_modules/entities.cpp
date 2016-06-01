@@ -26,6 +26,7 @@ DECL_OBJ_MANAGER("light_dir", TCompLightDir);
 DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
+DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
 
 DECL_OBJ_MANAGER("life", TCompLife);
 
@@ -55,7 +56,8 @@ bool CEntitiesModule::start() {
   getHandleManager<TCompCulling>()->init(4);
   getHandleManager<TCompLightDir>()->init(4);
   getHandleManager<TCompLightDirShadows>()->init(4);
-	getHandleManager<TCompLightPoint>()->init(32);
+  getHandleManager<TCompLightPoint>()->init(32);
+  getHandleManager<TCompRenderGlow>()->init(4);
 
 	getHandleManager<TCompLife>()->init(nmax);
 
@@ -96,6 +98,11 @@ bool CEntitiesModule::start() {
   {
     CEntityParser ep;
     bool is_ok = ep.xmlParseFile("data/scenes/scene_basic_lights.xml");
+    assert(is_ok);
+  }
+  {
+    CEntityParser ep;
+    bool is_ok = ep.xmlParseFile("data/scenes/scene_ui.xml");
     assert(is_ok);
   }
   //{
@@ -169,7 +176,10 @@ void CEntitiesModule::render() {
   getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
   getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
   getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
-	//getHandleManager<TCompLife>()->renderAll();
+
+  RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
+  RenderManager.renderAll( CHandle(), CRenderTechnique::UI_OBJS);
+
 }
 
 void CEntitiesModule::renderInMenu() {

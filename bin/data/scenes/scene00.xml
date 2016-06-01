@@ -7,9 +7,20 @@
     <camera znear="0.1" zfar="500" fov="60" />
     <controller_1st_person />
     <culling />
+    <render_glow max_steps="4" active_steps="2" box_filter="1"/>
   </entity>
 
-  <entity prefab="bullet" />
+    <entity >
+        <name name="grid"/>
+        <transform pos="0.01 0 0.01"/>
+        <render_static_mesh name="static_meshes/dbg/grid.static_mesh"/>
+    </entity>
+    <entity >
+        <name name="origin"/>
+        <transform pos="0.0 0 0.0"/>
+        <render_static_mesh name="static_meshes/dbg/axis.static_mesh"/>
+    </entity>
+  
   <entity prefab="bullet">
     <life points="20" />
   </entity>

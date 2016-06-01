@@ -15,19 +15,29 @@ CRenderManager RenderManager;
 
 #include "render/shader_cte.h"
 
+// -------------------------------------------------
+// We need to implement both operators
+bool operator<(const CRenderManager::TKey& k, const CRenderTechnique::eCategory cat) {
+  return k.material->tech->getCategory() < cat;
+}
+
+bool operator<(const CRenderTechnique::eCategory cat, const CRenderManager::TKey& k) {
+  return cat < k.material->tech->getCategory();
+}
+
+// -------------------------------------------------
 bool CRenderManager::sortByTechMatMesh(
   const TKey &k1
-  , const TKey &k2) {
+, const TKey &k2) {
   auto* tech1 = k1.material->tech;
   auto* tech2 = k2.material->tech;
   if (tech1 != tech2) {
-    if (tech1->isTransparent() != tech2->isTransparent())
-      return tech1->isTransparent();
+    if (tech1->getCategory() != tech2->getCategory())
+      return tech1->getCategory() < tech2->getCategory();
     if (tech1->getPriority() == tech2->getPriority())
       return tech1->getName() < tech2->getName();
     return (tech1->getPriority() < tech2->getPriority());
   }
-  // TODO: hacer esto bien...
   return k1.material < k2.material;
 }
 
@@ -76,9 +86,18 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
   }
 }
 
-void CRenderManager::renderAll(CHandle h_camera, eRenderType render_type) {
-  PROFILE_FUNCTION("RenderManager");
-  CTraceScoped scope("RenderManager");
+void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory category) {
+  char cat_name[32];
+  if (category == CRenderTechnique::DBG_OBJS)
+    strcpy(cat_name, "DEBUG_OBJS");
+  else if (category == CRenderTechnique::SOLID_OBJS)
+    strcpy(cat_name, "SOLID_OBJS");
+  else if (category == CRenderTechnique::TRANSPARENT_OBJS)
+    strcpy(cat_name, "TRANSPARENT_OBJS");
+  else if (category == CRenderTechnique::UI_OBJS)
+    strcpy(cat_name, "UI_OBJS");
+  PROFILE_FUNCTION(cat_name);
+  CTraceScoped scope(cat_name);
 
   if (!in_order) {
     // sort the keys based on....
@@ -93,7 +112,9 @@ void CRenderManager::renderAll(CHandle h_camera, eRenderType render_type) {
   // Check if we have culling information from the camera source
   CEntity* e_camera = h_camera;
   TCompCulling::TCullingBits* culling_bits = nullptr;
-  TCompCulling* culling = e_camera->get<TCompCulling>();
+  TCompCulling* culling = nullptr;
+  if( e_camera )
+    culling = e_camera->get<TCompCulling>();
   if (culling)
     culling_bits = &culling->bits;
   // To get the index of each aabb
@@ -101,29 +122,16 @@ void CRenderManager::renderAll(CHandle h_camera, eRenderType render_type) {
   const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
 
   //
-  const TKey* it = nullptr;
-  const TKey* end_it = nullptr;
-
-  auto it_first_solid = std::lower_bound(
+  auto r = std::equal_range(
     all_keys.begin()
-    , all_keys.end()
-    , true
-    , [](const TKey &k1, bool is_transparent)->bool {
-    return k1.material->tech->isTransparent();
-  }
+  , all_keys.end()
+  , category
   );
-
-  if (render_type == eRenderType::TRANSPARENT_OBJS) {
-    it = &all_keys[0];
-    end_it = &(*it_first_solid);
-  }
-  else {
-    it = &(*it_first_solid);
-    int idx_of_first_solid = std::distance(all_keys.begin(), it_first_solid);
-    int num_solid_keys = all_keys.size() - idx_of_first_solid;
-    end_it = it + num_solid_keys;
-  }
-
+  auto d0 = std::distance(all_keys.begin(), r.first);
+  auto d1 = std::distance( all_keys.begin(), r.second);
+  const TKey* it = &all_keys[0] + d0;
+  const TKey* end_it = &all_keys[0] + d1;
+  
   static TKey null_key;
   memset(&null_key, 0x00, sizeof(TKey));
   const TKey* prev_it = &null_key;
@@ -138,7 +146,7 @@ void CRenderManager::renderAll(CHandle h_camera, eRenderType render_type) {
     if (culling_bits) {
       TCompAbsAABB* aabb = it->aabb;
       if (aabb) {
-        int idx = aabb - base_aabbs;
+        intptr_t idx = aabb - base_aabbs;
         if (!culling_bits->test(idx)) {
           ++it;
           continue;
@@ -183,7 +191,7 @@ void CRenderManager::renderAll(CHandle h_camera, eRenderType render_type) {
   CMaterial::deactivateTextures();
 
   ImGui::Begin("Entities");
-  ImGui::Text("%d/%ld keys of type %d", nkeys_rendered, all_keys.size(), render_type);
+  ImGui::Text("%d/%ld keys of category %d (%s)", nkeys_rendered, all_keys.size(), category, cat_name);
   ImGui::End();
 
 }

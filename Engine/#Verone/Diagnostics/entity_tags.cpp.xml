@@ -6,18 +6,7 @@
 			<Type>Note</Type>
 			<Locations>
 				<Location>
-					<File>C:\Code\engine\Engine\components\entity_tags.cpp</File>
-					<Line>25</Line>
-					<Column>8</Column>
-				</Location>
-			</Locations>
-		</Diagnostic>
-		<Diagnostic>
-			<Message>To avoid unnecessary copying, try to change type of variable to &quot;auto&amp;&quot;</Message>
-			<Type>Note</Type>
-			<Locations>
-				<Location>
-					<File>C:\Code\engine\Engine\components\entity_tags.cpp</File>
+					<File>D:\Code\mcv_2015\day32_blur_and_ui_basic\Engine\components\entity_tags.cpp</File>
 					<Line>13</Line>
 					<Column>12</Column>
 				</Location>
@@ -28,7 +17,18 @@
 			<Type>Note</Type>
 			<Locations>
 				<Location>
-					<File>C:\Code\engine\Engine\components\entity_tags.cpp</File>
+					<File>D:\Code\mcv_2015\day32_blur_and_ui_basic\Engine\components\entity_tags.cpp</File>
+					<Line>25</Line>
+					<Column>8</Column>
+				</Location>
+			</Locations>
+		</Diagnostic>
+		<Diagnostic>
+			<Message>To avoid unnecessary copying, try to change type of variable to &quot;auto&amp;&quot;</Message>
+			<Type>Note</Type>
+			<Locations>
+				<Location>
+					<File>D:\Code\mcv_2015\day32_blur_and_ui_basic\Engine\components\entity_tags.cpp</File>
 					<Line>59</Line>
 					<Column>3</Column>
 				</Location>

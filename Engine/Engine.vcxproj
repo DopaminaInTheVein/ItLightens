@@ -108,6 +108,7 @@
     <ClCompile Include="components\comp_light_dir.cpp" />
     <ClCompile Include="components\comp_light_dir_shadows.cpp" />
     <ClCompile Include="components\comp_light_point.cpp" />
+    <ClCompile Include="components\comp_render_glow.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\entity.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="windows\app.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_blur.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h" />
@@ -205,6 +207,7 @@
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
     <ClInclude Include="components\comp_physics.h" />
+    <ClInclude Include="components\comp_render_glow.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
     <ClInclude Include="components\comp_tags.h" />
     <ClInclude Include="components\comp_transform.h" />
@@ -263,11 +266,19 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\blur.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="..\bin\data\shaders\deferred.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="..\bin\data\shaders\globals.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\pbr.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

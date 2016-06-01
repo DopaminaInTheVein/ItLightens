@@ -264,4 +264,4 @@ fn export_mesh given_obj outfilename mat_infos = (
 	print all_vtxs
 )
 
-export_mesh $unit_frustum undefined undefined
+--export_mesh $unit_frustum undefined undefined

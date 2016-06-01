@@ -36,7 +36,7 @@ public:
 
 	bool isValid() const override { return true; }
 	void destroy() { }
-	eType getType() const override { return MATERIAL; }
+  eType getType() const override { return MATERIAL; }
 
 	void renderUIDebug();
 	bool load(const char* filename);

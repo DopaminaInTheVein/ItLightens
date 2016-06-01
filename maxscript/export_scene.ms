@@ -190,7 +190,9 @@ struct TSceneExporter (
 		--local my_tmx = obj.transform
 		--local parent_tmx = obj.parent.transform
 		--local delta = in sys_local
-		local delta = matrix3 1   -- esto esta mal!!
+		local my_transform = obj.transform
+		local parent_transform = obj.parent.transform
+		local delta = my_transform * (inverse parent_transform)
 		
 		local extras = "parent=\"" + obj.parent.name + "\""
 		exportTransform fs delta "hierarchy" extras
@@ -243,7 +245,7 @@ struct TSceneExporter (
 
 gc()
 se = TSceneExporter();
-se.exportScene "scene_basic"
+se.exportScene "scene_ui"
 --se.exportStaticMesh "c:\\code\\unit_sphere.xml" #($)
 --se.getMeshMaterialInfo  $
  

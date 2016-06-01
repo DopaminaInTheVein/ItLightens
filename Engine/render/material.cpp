@@ -100,9 +100,10 @@ bool CMaterial::load(const char* filename) {
 
 // ----------------------------------------------
 void CMaterial::activateTextures() const {
-  textures[DIFFUSE]->activate(TEXTURE_SLOT_DIFFUSE);
-  assert(textures[NORMALMAP]);
-  textures[NORMALMAP]->activate(TEXTURE_SLOT_NORMALS);
+  if (textures[DIFFUSE])
+    textures[DIFFUSE]->activate(TEXTURE_SLOT_DIFFUSE);
+  if (textures[NORMALMAP])
+    textures[NORMALMAP]->activate(TEXTURE_SLOT_NORMALS);
   if (textures[METALLIC])
     textures[METALLIC]->activate(TEXTURE_SLOT_METALLIC);
   if (textures[ROUGHNESS])
