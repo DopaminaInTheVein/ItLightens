@@ -8,6 +8,7 @@
 #include "comp_camera.h"
 #include "comp_render_static_mesh.h"
 #include "comp_controller_3rd_person.h"
+#include "comp_hierarchy.h"
 #include "comp_aabb.h"
 #include "comp_culling.h"
 #include "comp_life.h"
@@ -23,6 +24,8 @@
 #include "comp_box_spawner.h"
 #include "comp_box_destructor.h"
 #include "comp_guided_camera.h"
+
+#include "comp_render_glow.h"
 
 //lights
 #include "comp_light_dir.h"

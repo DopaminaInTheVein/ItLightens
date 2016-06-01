@@ -34,6 +34,7 @@ DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
 DECL_OBJ_MANAGER("cientifico", ai_scientific);
 DECL_OBJ_MANAGER("beacon", beacon_controller);
 DECL_OBJ_MANAGER("workbench", workbench_controller);
+DECL_OBJ_MANAGER("hierarchy", TCompHierarchy);
 DECL_OBJ_MANAGER("magnet_door", magnet_door);
 DECL_OBJ_MANAGER("elevator", elevator);
 /****/DECL_OBJ_MANAGER("ai_guard", ai_guard);
@@ -60,6 +61,7 @@ DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
+DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("drone", TCompDrone);
@@ -73,6 +75,7 @@ DECL_OBJ_MANAGER("character_controller", TCompCharacterController);
 DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
+
 
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
 DECL_OBJ_MANAGER("trigger_lua", TTriggerLua);
@@ -145,6 +148,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 	getHandleManager<magnet_door>()->init(MAX_ENTITIES);
 	getHandleManager<elevator>()->init(4);
+	getHandleManager<TCompRenderGlow>()->init(4);
 
 	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompDrone>()->init(MAX_ENTITIES);
@@ -346,6 +350,11 @@ void CEntitiesModule::initLevel(string level) {
 	dbg("Loading scene... (%d entities)\n", size());
 	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
+	{
+		CEntityParser ep;
+		is_ok = ep.xmlParseFile("data/scenes/test_lights.xml");
+		assert(is_ok);
+	}
 	dbg("Scene Loaded! (%d entities)\n", size());
 
 	// GENERATE NAVMESH
@@ -356,8 +365,9 @@ void CEntitiesModule::initLevel(string level) {
 	for (CHandle han : collisionables) {
 		CEntity * e = han;
 		if (e) {
+			TCompTransform * trans = e->get<TCompTransform>();
 			TCompPhysics * p = e->get<TCompPhysics>();
-			const PxBounds3 bounds = p->getActor()->getWorldBounds();
+			PxBounds3 bounds = p->getActor()->getWorldBounds();
 			VEC3 min, max;
 			min.x = bounds.minimum.x;
 			min.y = bounds.minimum.y;
@@ -365,12 +375,23 @@ void CEntitiesModule::initLevel(string level) {
 			max.x = bounds.maximum.x;
 			max.y = bounds.maximum.y;
 			max.z = bounds.maximum.z;
-			nav.m_input.addInput(min, max);
-			/*
-			PxGeometryHolder geo = p->getShape()->getGeometry();
-			PxTriangleMeshGeometry mesh = geo.triangleMesh();
-			nav.m_input.addInput(mesh);
-			*/
+
+			auto rb = p->getActor()->isRigidStatic();
+			if (rb) {
+				int nBShapes = rb->getNbShapes();
+				PxShape **ptr;
+				ptr = new PxShape*[nBShapes];
+				rb->getShapes(ptr, 1);
+				for (int i = 0; i < nBShapes; i++) {
+					PxTriangleMeshGeometry meshGeom;
+					if (ptr[i]->getTriangleMeshGeometry(meshGeom)) {
+						nav.m_input.addInput(meshGeom.triangleMesh, PhysxConversion::PxVec3ToVec3(rb->getGlobalPose().p), min, max, trans->getRotation());
+					}
+				}
+			}
+			else {
+				nav.m_input.addInput(min, max);
+			}
 		}
 	}
 	nav.m_input.computeBoundaries();
@@ -596,6 +617,9 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
+
+	//RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
+  	//RenderManager.renderAll( CHandle(), CRenderTechnique::UI_OBJS);
 }
 
 void CEntitiesModule::renderInMenu() {

@@ -52,7 +52,15 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
   }
   else if (elem == "tech") {
     uses_bones = atts.getBool("uses_bones", false);
-    is_transparent = atts.getBool("is_transparent", false);
+
+    category = SOLID_OBJS;
+    if (atts.getBool("is_transparent", false))
+      category = TRANSPARENT_OBJS;
+    if (atts.getBool("is_ui", false))
+      category = UI_OBJS;
+    if (atts.getBool("is_dbg", false))
+      category = DBG_OBJS;
+
     ps_disabled = atts.getBool( "ps_disabled", false );
   }
 }
@@ -68,8 +76,7 @@ const CVertexDeclaration* CRenderTechnique::getCurrentVertexDecl() {
 }
 
 void CRenderTechnique::activate() const {
-	PROFILE_FUNCTION("render technique: activate");
-curr_active = this;
+  curr_active = this;
   assert(isValid());
   if( ps )
     ps->activate();

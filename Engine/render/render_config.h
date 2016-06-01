@@ -28,6 +28,7 @@ enum BlendConfig {
 	BLENDCFG_DEFAULT
 	, BLENDCFG_ADDITIVE
 	, BLENDCFG_COMBINATIVE
+	, BLENDCFG_SUBSTRACT
 	, BLENDCFG_COUNT
 };
 void activateBlend(enum BlendConfig);

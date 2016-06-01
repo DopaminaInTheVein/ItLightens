@@ -13,6 +13,10 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_selfIlum_blurred;
 	CRenderToTexture* rt_final;
 
+	CRenderToTexture* rt_specular;
+
+	CRenderToTexture* rt_shadows;
+
 	CRenderToTexture* rt_data;
 	CRenderToTexture* rt_data2;
 	CRenderToTexture* rt_black;
@@ -34,6 +38,7 @@ class CRenderDeferredModule : public IAppModule {
 	const CMesh*            unit_cube;
 
 	void renderGBuffer();
+	void activateRenderCamera3D();
 	void renderAccLight();
 	void RenderPolarizedPP(int pol, const VEC4& color);
 	void GlowEdgesInt();		//to remove
@@ -42,6 +47,7 @@ class CRenderDeferredModule : public IAppModule {
 	void addPointLights();
 	void addDirectionalLights();
 	void addDirectionalLightsShadows();
+	void addAmbientPass();
   	void generateShadowMaps();
 
 	void FinalRender();
@@ -53,6 +59,8 @@ public:
 	void stop() override;
 	void update(float dt);
 	void render() override;
+	void applyPostFX();
+	void renderUI();
 	bool forcedUpdate() { return true; }
 	const char* getName() const {
 		return "render_deferred";

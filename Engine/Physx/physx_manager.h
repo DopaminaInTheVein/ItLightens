@@ -8,6 +8,8 @@
 #define DEFAULT_DATA_STATIC		g_PhysxManager->GetDefaultQueryTagsStatic()
 #define DEFAULT_DATA_CC			g_PhysxManager->GetDefaultQueryTagsCC()
 
+#define PX_SAFE_RELEASE(p)  if (p) p->release(), p = nullptr
+
 
 #define PXM_NO_PLAYER_CRYSTAL ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
 #define PXM_NO_CRYSTAL ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE
@@ -24,7 +26,7 @@ class CMesh;
 class CEntity;
 class CHandle;
 
-class PxAllocatorCallback
+/*class PxAllocatorCallback
 {
 public:
 	virtual ~PxAllocatorCallback() {}
@@ -41,7 +43,7 @@ public:
 	{
 		fatal("PHYSX ERROR - %d: %s\n",code,message);
 	}
-};
+};*/
 
 class CPhysxManager :	public IAppModule,
 						public PxSimulationEventCallback,
@@ -411,6 +413,8 @@ namespace PhysxConversion {
 	VEC3			PxExVec3ToVec3		(const PxExtendedVec3& vec);
 	PxQuat			CQuaternionToPxQuat	(const CQuaternion& quat);
 	CQuaternion		PxQuatToCQuaternion	(const PxQuat& quat);
+	VEC4			PxVec4ToVec4		(const PxVec4& vec);
+	PxVec4			VEC4ToPxVec4		(const VEC4& vec);
 
 	PxTransform		ToPxTransform		(const VEC3& pos, const CQuaternion& rot);
 

@@ -1,7 +1,7 @@
 #include "globals.fx"
 
 //--------------------------------------------------------------------------------------
-// Null vertex/pixel shader 
+// Null vertex/pixel shader
 //--------------------------------------------------------------------------------------
 void VSNull(
 	in float4 iPos : POSITION
@@ -106,9 +106,10 @@ void PSAddAmbient(float4 Pos : SV_POSITION
 	
 	
 	output = diff*0.2f + lights*0.8f;
+	//output = float4(0.2f,0.2f, 0.2f, 1.0f)*normals*0.2f + lights*0.8f;
 	output.a = diff.a;
-	output = lights;
-	output.rgb += selfIlum.rgb;
+	//output = lights;
+	//output.rgb += selfIlum.rgb;
 }
 
 //--------------------------------------------------------------------------------------
@@ -308,7 +309,7 @@ float4 a = (2*dc - dd);
 w = step(0.75f, w);
 float4 final_color = w;
 //w=global_color*w;
-return final_color*global_color;
+return final_color;
 //return global_color;	 
  return float4(w, w, w, w); 
 

@@ -48,7 +48,11 @@ extern CRender Render;
 //#define setDXName(dx_obj,new_name) 
 //#else
 #define setDXName(dx_obj,new_name) \
+        dbg( "DXObj %p will have name %s\n", dx_obj, new_name ); \
         dx_obj->SetPrivateData(WKPDID_D3DDebugObjectName, (UINT)strlen(new_name), new_name);
+
+#define setObjName(obj, new_name) \
+		dbg( "DXObj %p will have name %s\n", obj, new_name );
 //#endif
 
 #include "gpu_trace.h"

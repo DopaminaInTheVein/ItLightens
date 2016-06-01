@@ -12,7 +12,9 @@ bool TCompLightDirShadows::load(MKeyValue& atts) {
   rt_shadows = new CRenderToTexture();
   // I don't need a color buffer, just the ZBuffer
   bool is_ok = rt_shadows->createRT("ShadowMap", res, res, DXGI_FORMAT_UNKNOWN, DXGI_FORMAT_R32_TYPELESS);
+  setObjName(rt_shadows, "rt_shadows");
   assert(is_ok);
+
 
   enabled = atts.getBool("enabled", true);
 
@@ -52,4 +54,8 @@ void TCompLightDirShadows::generateShadowMap() {
   RenderManager.renderShadowCasters();
 
   activateRS(RSCFG_DEFAULT);
+}
+
+void TCompLightDirShadows::destroy() {
+	rt_shadows->destroy();
 }
