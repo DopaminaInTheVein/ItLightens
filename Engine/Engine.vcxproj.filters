@@ -611,6 +611,9 @@
     <ClCompile Include="components\comp_fading_message.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_tracker_cinta.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1488,6 +1491,9 @@
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_hierarchy.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tracker_cinta.h">
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_fading_message.h">

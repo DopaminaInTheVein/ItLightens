@@ -22,3 +22,7 @@ function OnActionMole_tWall( )
 destroyWall()
 end
 
+function OnAction_tWireDown( )
+wireGoUp()
+end
+

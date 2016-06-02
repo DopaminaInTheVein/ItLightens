@@ -14,17 +14,26 @@ struct TTrigger : public TCompBase {
 	}
 
 	void onTriggerEnterCall(const TMsgTriggerIn& msg) {
-		Debug->LogRaw("OnTriggerEnter\n");
-		last_msg_in = msg;
-		triggered = true;
-		onTriggerEnter(last_msg_in);
+		CHandle hEnter = msg.other;
+		if (hEnter.isValid()) {
+			if (hEnter.hasTag("player")) {
+				Debug->LogRaw("OnTriggerEnter\n");
+				last_msg_in = msg;
+				triggered = true;
+				onTriggerEnter(last_msg_in);
+			}
+		}
 	}
 
 	void onTriggerExitCall(const TMsgTriggerOut& msg) {
-		Debug->LogRaw("OnTriggerExit\n");
-		last_msg_out = msg;
-		triggered = false;
-		onTriggerExit(last_msg_out);
+		CHandle hExit = msg.other;
+		if (hExit.isValid()) {
+			if(hExit.hasTag("player"))
+			Debug->LogRaw("OnTriggerExit\n");
+			last_msg_out = msg;
+			triggered = false;
+			onTriggerExit(last_msg_out);
+		}
 	}
 
 	virtual void mUpdate(float dt) = 0;

@@ -5,6 +5,8 @@ SLB.using( SLB )
 p = Public( )
 h = Handle( )
 hg = HandleGroup()
+cam = Camera()
+player = Player()
 
 function OnEnter_tElevator( )
   --Nothing to do
@@ -110,5 +112,27 @@ function destroyWallEffect()
   all_fragments1:get_handles_by_tag(tagWallFragment1)
   all_fragments1:awake()
   p:exec_command( "all_fragments1:remove_physics();", 5 )
+  p:exec_command( "activeWire1();", 2 )
 end
 --------------------------------------
+
+
+-- Wires --
+--------------------------------------
+triggerWire_1 = Handle()
+wireName_1 = "tWireDown"
+wire_pos_up = "WirePosUp"
+function activeWire1( )
+  triggerWire_1:get_handle_by_name_tag(wireName_1, "trigger")
+  triggerWire_1:setActionable(1);
+end
+function wireGoUp( )
+  p:print("Wire Go Up")
+  player = Player()
+  player:get_player()
+  cmd_teleport = "player:teleport(\""..wire_pos_up.."\")"
+  cam:run_cinematic("CineWireGoUp", 5)
+  p:exec_command( "player:set_position(0,-1000,0);", 2 )
+  p:exec_command( "triggerWire_1:setActionable(1);", 10 )
+  p:exec_command( cmd_teleport, 10 )
+end

@@ -103,5 +103,24 @@ bool TTriggerLua::load(MKeyValue& atts) {
 	loadAction("action", mAction);
 	loadAction("actionSci", mActionSci);
 	loadAction("actionMole", mActionMole);
+
+	//Desactivado inicialmente?
+	if (mActionable) {
+		mActionable = atts.getBool("actived", true);
+	}
+
 	return true;
+}
+
+//bool mActionable;
+//eAction mAction;
+//eAction mActionSci;
+//eAction mActionMole;
+//PLAYER_TYPE playerType = PLAYER;
+void TTriggerLua::renderInMenu() {
+	ImGui::Checkbox("Actionable", &mActionable);
+	ImGui::Text("Player Type: %d", playerType);
+	ImGui::Text("action player: %d", mAction);
+	ImGui::Text("action mole: %d", mActionMole);
+	ImGui::Text("action scientist: %d", mActionSci);
 }
