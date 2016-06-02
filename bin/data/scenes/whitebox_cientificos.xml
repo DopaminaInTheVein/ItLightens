@@ -36,6 +36,7 @@
    height="0.7"/>
 
 </entity>
+<!--
 <entity>
 <tags
    tags=""/>
@@ -186,6 +187,7 @@
    scale="1.0"/>
 
 </entity>
+-->
 <entity>
 <tags
    tags=""/>

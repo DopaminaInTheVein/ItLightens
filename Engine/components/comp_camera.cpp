@@ -63,52 +63,53 @@ void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
 }
 
 void TCompCamera::update(float dt) {
+	
 	CHandle owner = CHandle(this).getOwner();
 	CEntity* e_owner = owner;
-	assert(e_owner);
-	TCompTransform* tmx = e_owner->get<TCompTransform>();
-	assert(tmx);
-	bool cameraIsGuided = false;
-	if (guidedCamera.isValid()) {
-		//Camara guida
-		CEntity * egc = guidedCamera;
-		TCompGuidedCamera * gc = egc->get<TCompGuidedCamera>();
-		cameraIsGuided = gc->followGuide(tmx, this);
-		if (!cameraIsGuided) {
-			//Fin recorrido  ...
-			//... Guardamos guidedCamera para mensaje a Logic Manager
-			CHandle cameraFinished = guidedCamera;
+	
+	if (owner.hasTag("camera_main") ){
+		assert(e_owner);
+		TCompTransform* tmx = e_owner->get<TCompTransform>();
+		assert(tmx);
+		bool cameraIsGuided = false;
+		if (guidedCamera.isValid()) {
+			//Camara guida
+			CEntity * egc = guidedCamera;
+			TCompGuidedCamera * gc = egc->get<TCompGuidedCamera>();
+			cameraIsGuided = gc->followGuide(tmx, this);
+			if (!cameraIsGuided) {
+				//Fin recorrido  ...
+				//... Guardamos guidedCamera para mensaje a Logic Manager
+				CHandle cameraFinished = guidedCamera;
 
-			//... Terminamos el modo cinematica
-			guidedCamera = CHandle();
-			GameController->SetCinematic(false);
+				//... Terminamos el modo cinematica
+				guidedCamera = CHandle();
+				GameController->SetCinematic(false);
 
-			// Set the player in the 3rdPersonController
-			CHandle t = tags_manager.getFirstHavingTag("player");
-			CEntity * target_e = t;
-			if (e_owner && t.isValid()) {
-				TMsgSetTarget msg;
-				msg.target = t;
-				msg.who = PLAYER; //TODO: Siempre player? 
-				e_owner->sendMsg(msg);		//set camera
+				// Set the player in the 3rdPersonController
+				CHandle t = tags_manager.getFirstHavingTag("player");
+				CEntity * target_e = t;
+				if (e_owner && t.isValid()) {
+					TMsgSetTarget msg;
+					msg.target = t;
+					msg.who = PLAYER; //TODO: Siempre player? 
+					e_owner->sendMsg(msg);		//set camera
 
-				TMsgSetCamera msg_camera;
-				msg_camera.camera = owner;
-				target_e->sendMsg(msg_camera);	//set target camera
-			}
-
-			smoothCurrent = 1.f; //Return to player smoothly
-			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(egc->getName()), cameraFinished);
-		}
-	}
-	if (!cameraIsGuided) {
-
-		if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
-			//if (owner.hasTag("camera_main")) {
-				VEC3 pos = tmx->getPosition();
-				if (owner.hasTag("camera_main")) {
-					pos.y += 2;
+					TMsgSetCamera msg_camera;
+					msg_camera.camera = owner;
+					target_e->sendMsg(msg_camera);	//set target camera
 				}
+
+				smoothCurrent = 1.f; //Return to player smoothly
+				logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(egc->getName()), cameraFinished);
+			}
+		}
+		if (!cameraIsGuided) {
+
+			if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
+				//if (owner.hasTag("camera_main")) {
+				VEC3 pos = tmx->getPosition();
+				pos.y += 2;
 				tmx->setPosition(pos);
 				if (detect_colsions) {
 					if (!checkColision(pos))
@@ -118,27 +119,31 @@ void TCompCamera::update(float dt) {
 					if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
 					this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux(), smoothCurrent);
 				}
-			//}
-		}
-		else if (GameController->GetFreeCamera()) {
-			CHandle owner = CHandle(this).getOwner();
-			CEntity* e_owner = owner;
-			assert(e_owner);
-			TCompTransform* tmx = e_owner->get<TCompTransform>();
-			assert(tmx);
-			this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
-		}
-		else {
-			if (e_owner) {
-				TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
-				CHandle targetowner = obtarged->target;
-				if (targetowner.isValid()) {
-					CEntity* targeted = targetowner;
-					TCompTransform * targettrans = targeted->get<TCompTransform>();
-					if (targettrans) this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());
+				//}
+			}
+			else if (GameController->GetFreeCamera()) {
+				CHandle owner = CHandle(this).getOwner();
+				CEntity* e_owner = owner;
+				assert(e_owner);
+				TCompTransform* tmx = e_owner->get<TCompTransform>();
+				assert(tmx);
+				this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+			}
+			else {
+				if (e_owner) {
+					TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
+					CHandle targetowner = obtarged->target;
+					if (targetowner.isValid()) {
+						CEntity* targeted = targetowner;
+						TCompTransform * targettrans = targeted->get<TCompTransform>();
+						if (targettrans) this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());
+					}
 				}
 			}
 		}
+	}
+	else {
+		updateFromEntityTransform(e_owner);
 	}
 }
 
