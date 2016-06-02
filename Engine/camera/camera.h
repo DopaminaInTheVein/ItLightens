@@ -19,6 +19,8 @@ class CCamera {
   float zfar;
   float znear;
 
+  bool  is_ortho;
+
   MAT44 view_projection;
   void updateViewProjection();
 
@@ -27,7 +29,7 @@ public:
   CCamera();
 
   // View
-  void lookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
+  void  lookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
 
   MAT44 getView() const { return view; }
   VEC3  getPosition() const { return position; }
@@ -40,6 +42,8 @@ public:
   // Projection
   void setProjection(float fov_v_vertical_rads, float znear, float zfar);
   void setAspectRatio(float new_ratio);
+  void setOrtho(int xres, int yres, float znear, float zfar);
+  bool isOrtho() const { return is_ortho; }
 
   MAT44 getProjection() const { return projection; }
   float getAspectRatio() const { return aspect_ratio; }

@@ -7,6 +7,10 @@
 #define CTE_SHADER_LIGHT           3
 #define CTE_SHADER_GLOBALS_SLOT    4
 #define CTE_SHADER_MATERIAL_SLOT   5
+<<<<<<< HEAD
+=======
+#define CTE_SHADER_BLUR_SLOT       6
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
 #define TEXTURE_SLOT_DIFFUSE       0
 #define TEXTURE_SLOT_NORMALS       1
@@ -29,6 +33,10 @@
 #define ShaderBuffer(name,cte) struct name
 #define matrix    MAT44
 #define float4    VEC4
+<<<<<<< HEAD
+=======
+#define float2    VEC2
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 #define USE_SHADER_REG(nreg)
 
 #else

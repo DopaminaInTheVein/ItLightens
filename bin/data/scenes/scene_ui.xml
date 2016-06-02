@@ -1,0 +1,19 @@
+<entities>
+  <entity>
+    <tags tags="ui_camera" />
+    <name name="ui_camera" />
+    <transform pos="0 0 3" yaw="180"/>
+    <camera znear="0" zfar="10" is_ortho="1"/>
+  </entity>
+<entity>
+  <name name="ui_top_right"/>
+  <transform pos="900 600 0" quat="0 0 0 1" scale="1.0" />
+</entity>
+<entity>
+  <name name="ui_logo"/>
+    <transform pos="2 2 0" quat="0 0 0 1" scale="1.0" />
+    transform pos="900 600 0" quat="0 0 0 1" scale="100.0" />
+    <render_static_mesh name="static_meshes/ui/unit_logo.static_mesh"/>
+  hierarchy pos="-500 0 0" quat="0.0 0.0 0.0 1.0" scale="100.0" parent="ui_top_right"/>
+</entity>
+</entities>

@@ -9,6 +9,7 @@ class  CVertexShader;
 class  CPixelShader;
 
 class CRenderTechnique : public IResource, public CXMLParser {
+<<<<<<< HEAD
   const CVertexShader* vs;
   const CPixelShader*  ps;
   std::string          name;
@@ -18,6 +19,8 @@ class CRenderTechnique : public IResource, public CXMLParser {
   bool                 ps_disabled;
 
   void onStartElement(const std::string &elem, MKeyValue &atts) override;
+=======
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
 public:
   static const CRenderTechnique* curr_active;
@@ -27,10 +30,16 @@ public:
   CRenderTechnique(const CRenderTechnique&) = delete;
 
   void destroy();
-  bool create(const char* new_name, const CVertexShader* new_vs, const CPixelShader* new_ps);
-
   void activate() const;
 
+  // -----------------------------------------------------
+  enum eCategory {
+    SOLID_OBJS
+  , TRANSPARENT_OBJS
+  , DBG_OBJS
+  , UI_OBJS
+  };
+  eCategory getCategory() const { return category; }
   int getPriority() const { return priority; }
   bool isTransparent() const { return is_transparent; }
 
@@ -45,6 +54,19 @@ public:
   bool usesBones() const { return uses_bones; }
 
   eType getType() const { return TECHNIQUE; }
+
+private:
+
+  const CVertexShader* vs;
+  const CPixelShader*  ps;
+  std::string          name;
+  eCategory            category;
+  int                  priority;
+  bool                 uses_bones;
+  bool                 ps_disabled;
+
+  void onStartElement(const std::string &elem, MKeyValue &atts) override;
+
 };
 
 #endif

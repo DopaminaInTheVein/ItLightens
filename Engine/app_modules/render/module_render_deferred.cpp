@@ -7,6 +7,10 @@
 #include "components/comp_light_dir.h"
 #include "components/comp_light_dir_shadows.h"
 #include "components/comp_light_point.h"
+<<<<<<< HEAD
+=======
+#include "components/comp_render_glow.h"
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 #include "render/render.h"
 #include "windows/app.h"
 #include "resources/resources_manager.h"
@@ -72,12 +76,16 @@ void CRenderDeferredModule::renderGBuffer() {
 
   PROFILE_FUNCTION("GBuffer");
   CTraceScoped scope("GBuffer");
+<<<<<<< HEAD
   static CCamera camera;
+=======
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
   h_camera = tags_manager.getFirstHavingTag(getID("the_camera"));
   if (!h_camera.isValid())
     return;
 
+<<<<<<< HEAD
   CEntity* e = h_camera;
   TCompCamera* comp_cam = e->get<TCompCamera>();
   camera = *comp_cam;
@@ -87,6 +95,8 @@ void CRenderDeferredModule::renderGBuffer() {
   // of the entity, so the culling uses the real view_proj
   comp_cam->setAspectRatio(camera.getAspectRatio());
 
+=======
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
   // To set a default and known Render State
   Render.ctx->RSSetState(nullptr);
   activateZ(ZCFG_DEFAULT);
@@ -109,6 +119,7 @@ void CRenderDeferredModule::renderGBuffer() {
   rt_depths->clear(VEC4(1, 1, 1, 1));
   Render.clearMainZBuffer();
 
+<<<<<<< HEAD
   // Activo la camara en la pipeline de render
   activateCamera(&camera);
 
@@ -117,6 +128,29 @@ void CRenderDeferredModule::renderGBuffer() {
 
   // Mandar a pintar los 'solidos'
   RenderManager.renderAll(h_camera, CRenderManager::SOLID_OBJS);
+=======
+  activateRenderCamera3D();
+
+  // Mandar a pintar los 'solidos'
+  RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS);
+}
+
+// ----------------------------------------------
+void CRenderDeferredModule::activateRenderCamera3D() {
+  CEntity* e = h_camera;
+  TCompCamera* comp_cam = e->get<TCompCamera>();
+  comp_cam->setAspectRatio((float)xres / (float)yres);
+
+  // Copy the render aspect ratio back to the comp_camera
+  // of the entity, so the culling uses the real view_proj
+  comp_cam->setAspectRatio(comp_cam->getAspectRatio());
+
+  // Activo la camara en la pipeline de render
+  activateCamera(comp_cam);
+
+  // Activa la ctes del object
+  activateWorldMatrix(MAT44::Identity);
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 }
 
 // ----------------------------------------------
@@ -188,6 +222,11 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
 }
 
 void CRenderDeferredModule::addAmbientPass() {
+<<<<<<< HEAD
+=======
+  
+  activateZ(ZCFG_ALL_DISABLED);
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
   auto tech = Resources.get("pbr_ambient.tech")->as<CRenderTechnique>();
   tech->activate();
@@ -251,7 +290,10 @@ void CRenderDeferredModule::generateShadowMaps() {
 
 // ----------------------------------------------
 void CRenderDeferredModule::render() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
   generateShadowMaps();
 
   shader_ctes_globals.uploadToGPU();
@@ -267,14 +309,102 @@ void CRenderDeferredModule::render() {
   render_particles_instanced.render();
   activateZ(ZConfig::ZCFG_DEFAULT);
 
+<<<<<<< HEAD
   Render.activateBackBuffer();
 
   activateZ(ZCFG_ALL_DISABLED);
   drawFullScreen(rt_acc_light);
+=======
+  applyPostFX();
+
+  renderUI();
+
+  // Leave the 3D Camera active
+  activateRenderCamera3D();
+
+}
+
+void CRenderDeferredModule::applyPostFX() {
+  CTraceScoped scope("applyPostFX");
+  CEntity* e_camera = h_camera;
+  if( !e_camera )
+    return;
+  
+  CTexture* next_step = rt_acc_light;
+
+  TCompRenderGlow* glow = e_camera->get< TCompRenderGlow >();
+  if (glow) 
+    next_step = glow->apply(next_step);
+
+  // ------------------------
+  Render.activateBackBuffer();
+
+  activateZ(ZCFG_ALL_DISABLED);
+  drawFullScreen(next_step);
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
   activateZ(ZCFG_DEFAULT);
 
   // Mandar a pintar los 'transparentes'
   rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+<<<<<<< HEAD
   RenderManager.renderAll(h_camera, CRenderManager::TRANSPARENT_OBJS);
   CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 }
+=======
+  RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
+  CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
+}
+
+
+void CRenderDeferredModule::renderUI() {
+  CTraceScoped scope("renderUI");
+  activateZ(ZCFG_ALL_DISABLED);
+  activateBlend(BLENDCFG_DEFAULT);
+
+  CHandle h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
+  if (!h_ui_camera.isValid())
+    return;
+  CEntity* e_ui_camera = h_ui_camera;
+
+  TCompCamera* ortho = e_ui_camera->get<TCompCamera>();
+  //ortho->setOrtho(xres, yres, ortho->getZNear(), ortho->getZFar());
+  ortho->setOrtho(10, 10, ortho->getZNear(), ortho->getZFar());
+  activateCamera(ortho);
+
+  /*
+
+  CCamera ortho;
+  ortho.setProjection(deg2rad(60), -1.f, 1.f);
+  ortho.setOrtho(xres, yres);
+  activateCamera(&ortho);
+
+  // 
+  auto tech = Resources.get("ui.tech")->as<CRenderTechnique>();
+  tech->activate();
+
+  auto texture = Resources.get("textures/logo.dds")->as<CTexture>();
+  texture->activate(TEXTURE_SLOT_DIFFUSE);
+
+  MAT44 world;
+  world =
+    MAT44::CreateTranslation(1, 1, 0)
+    * MAT44::CreateScale(0.5, 0.5, 1)
+    * MAT44::CreateScale(512, 400, 1)
+    * MAT44::CreateTranslation(0, 400, 0)
+    ;  
+  
+  world =
+    MAT44::CreateTranslation(1, 1, 0)
+    * MAT44::CreateScale(0.5, 0.5, 1)
+    * MAT44::CreateScale(2, 2, 1)
+    * MAT44::CreateTranslation(1, 1, 0)
+    ;
+  activateWorldMatrix(world);
+
+  auto mesh = Resources.get("unitQuadXY.mesh")->as<CMesh>();
+  mesh->activateAndRender();
+  */
+  RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS);
+
+}
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427

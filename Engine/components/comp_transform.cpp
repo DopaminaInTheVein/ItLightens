@@ -18,7 +18,16 @@ bool TCompTransform::load(MKeyValue& atts) {
   setPosition(p);
   setRotation(q);
   setScale(VEC3(s));
-  if (atts.getString("lookat", "") != "") {
+
+  if (atts.has("yaw") || atts.has("pitch")) {
+    float yaw, pitch;
+    getAngles(&yaw, &pitch);
+    yaw = deg2rad(atts.getFloat("yaw", rad2deg(yaw)));
+    pitch = deg2rad(atts.getFloat("pitch", rad2deg(pitch)));
+    setAngles(yaw, pitch);
+  }
+
+  if (atts.has("lookat")) {
     auto target = atts.getPoint("lookat");
     lookAt(p, target, getUp());
   }
@@ -27,19 +36,37 @@ bool TCompTransform::load(MKeyValue& atts) {
 
 void TCompTransform::renderInMenu() {
   VEC3 pos = getPosition();
+<<<<<<< HEAD
   if (ImGui::SliderFloat3("Pos", &pos.x, -30.f, 30.f ))
+=======
+  float limit = 30.f;
+  if (fabsf(pos.x) >= limit || fabsf(pos.y) >= limit || fabsf(pos.z) >= limit)
+    limit = 300.f;
+  if (fabsf(pos.x) >= limit || fabsf(pos.y) >= limit || fabsf(pos.z) >= limit)
+    limit = 1000.f;
+  if (ImGui::SliderFloat3("Pos", &pos.x, -limit, limit))
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
     setPosition(pos);
 
-  float yaw, pitch;
-  getAngles(&yaw, &pitch);
+  float yaw, pitch, roll;
+  getAngles(&yaw, &pitch, &roll);
+  
   yaw = rad2deg(yaw);
   pitch = rad2deg(pitch);
+  roll = rad2deg(roll);
   bool yaw_changed = ImGui::SliderFloat("Yaw", &yaw, -180.f, 180.f);
   bool pitch_changed = ImGui::SliderFloat("Pitch", &pitch, -90.f + 0.001f, 90.f - 0.001f);
-  if (yaw_changed || pitch_changed)
-    setAngles(deg2rad(yaw), deg2rad(pitch));
+  bool roll_changed = ImGui::SliderFloat("Roll", &roll, -180.f, 180.f);
+  if (yaw_changed || pitch_changed || roll_changed) 
+    setAngles(deg2rad(yaw), deg2rad(pitch), deg2rad(roll));
 
   VEC3 scale = getScale();
   if (ImGui::SliderFloat3("Scale", &scale.x, -10.f, 10.f))
     setScale(scale);
+
+  // Drag to change the scale uniformily
+  float unit_scale = 1.0f;
+  float a = 0.01f;
+  if (ImGui::SliderFloat("Uniform Scale", &unit_scale, 1.0f / ( 1.f + a ), 1.f + a))
+    setScale(scale * unit_scale);
 }

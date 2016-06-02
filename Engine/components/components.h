@@ -18,5 +18,9 @@
 #include "comp_light_dir.h"
 #include "comp_light_dir_shadows.h"
 #include "comp_light_point.h"
+<<<<<<< HEAD
+=======
+#include "comp_render_glow.h"
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
 #endif

@@ -52,7 +52,19 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
   }
   else if (elem == "tech") {
     uses_bones = atts.getBool("uses_bones", false);
+<<<<<<< HEAD
     is_transparent = atts.getBool("is_transparent", false);
+=======
+
+    category = SOLID_OBJS;
+    if (atts.getBool("is_transparent", false))
+      category = TRANSPARENT_OBJS;
+    if (atts.getBool("is_ui", false))
+      category = UI_OBJS;
+    if (atts.getBool("is_dbg", false))
+      category = DBG_OBJS;
+
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
     ps_disabled = atts.getBool( "ps_disabled", false );
   }
 }

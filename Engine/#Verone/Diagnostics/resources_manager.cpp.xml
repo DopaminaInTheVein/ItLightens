@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Verone>
+	<Diagnostics>
+		<Diagnostic>
+			<Message>To avoid unnecessary copying, try to change type of variable to &quot;auto&amp;&quot;</Message>
+			<Type>Note</Type>
+			<Locations>
+				<Location>
+					<File>D:\Code\mcv_2015\day32_blur_and_ui_basic\Engine\resources\resources_manager.cpp</File>
+					<Line>105</Line>
+					<Column>12</Column>
+				</Location>
+			</Locations>
+		</Diagnostic>
+		<Diagnostic>
+			<Message>To avoid unnecessary copying, try to change type of variable to &quot;auto&amp;&quot;</Message>
+			<Type>Note</Type>
+			<Locations>
+				<Location>
+					<File>D:\Code\mcv_2015\day32_blur_and_ui_basic\Engine\resources\resources_manager.cpp</File>
+					<Line>30</Line>
+					<Column>8</Column>
+				</Location>
+			</Locations>
+		</Diagnostic>
+	</Diagnostics>
+</Verone>

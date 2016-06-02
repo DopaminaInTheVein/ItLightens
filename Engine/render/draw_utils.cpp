@@ -10,6 +10,10 @@ CShaderCte< TCteBones >  shader_ctes_bones;
 CShaderCte< TCteLight >  shader_ctes_lights;
 CShaderCte< TCteGlobals > shader_ctes_globals;
 CShaderCte< TCteMaterial > shader_ctes_material;
+<<<<<<< HEAD
+=======
+CShaderCte< TCteBlur >     shader_ctes_blur;
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
 // -----------------------------------------------
 bool createDepthBuffer(
@@ -157,6 +161,11 @@ bool drawUtilsCreate() {
     return false;
   if (!shader_ctes_material.create("ctes_material"))
     return false;
+<<<<<<< HEAD
+=======
+  if (!shader_ctes_blur.create("ctes_blur"))
+    return false;
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
   activateDefaultStates();
   return true;
@@ -169,12 +178,20 @@ void activateDefaultStates() {
   shader_ctes_lights.activate(CTE_SHADER_LIGHT);
   shader_ctes_globals.activate(CTE_SHADER_GLOBALS_SLOT);
   shader_ctes_material.activate(CTE_SHADER_MATERIAL_SLOT);
+<<<<<<< HEAD
+=======
+  shader_ctes_blur.activate(CTE_SHADER_BLUR_SLOT);
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
   activateSamplerStates();
 }
 
 void drawUtilsDestroy() {
+<<<<<<< HEAD
+=======
+  shader_ctes_blur.destroy();
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
   shader_ctes_material.destroy();
   shader_ctes_globals.destroy();
   shader_ctes_lights.destroy();

@@ -1,0 +1,219 @@
+﻿  animation.cpp
+  animation_action.cpp
+  animation_cycle.cpp
+  bone.cpp
+  buffersource.cpp
+buffersource.cpp(163): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data
+  cal3d_wrapper.cpp
+cal3d_wrapper.cpp(1023): warning C4800: 'Boolean': forcing value to bool 'true' or 'false' (performance warning)
+  coreanimation.cpp
+coreanimation.cpp(87): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+  corebone.cpp
+  corekeyframe.cpp
+  corematerial.cpp
+corematerial.cpp(62): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  coremesh.cpp
+coremesh.cpp(67): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+coremesh.cpp(109): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  coremodel.cpp
+coremodel.cpp(72): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+coremodel.cpp(94): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+coremodel.cpp(116): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+coremodel.cpp(138): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+coremodel.cpp(222): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+coremodel.cpp(236): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+coremodel.cpp(274): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+coremodel.cpp(350): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  coremorphanimation.cpp
+  coreskeleton.cpp
+coreskeleton.cpp(52): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  coresubmesh.cpp
+coresubmesh.cpp(82): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+coresubmesh.cpp(108): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+coresubmesh.cpp(311): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+coresubmesh.cpp(568): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+coresubmesh.cpp(608): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  coresubmorphtarget.cpp
+coresubmorphtarget.cpp(44): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  coretrack.cpp
+coretrack.cpp(60): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+coretrack.cpp(177): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+coretrack.cpp(234): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  error.cpp
+  global.cpp
+  hardwaremodel.cpp
+hardwaremodel.cpp(388): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+hardwaremodel.cpp(439): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+hardwaremodel.cpp(499): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+hardwaremodel.cpp(773): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+hardwaremodel.cpp(810): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+hardwaremodel.cpp(816): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  Compiling...
+  loader.cpp
+loader.cpp(72): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(112): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(155): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(199): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1336): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1338): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1353): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1359): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1383): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1395): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1422): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1450): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1477): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1504): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1565): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1639): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1641): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1656): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1662): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1701): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1744): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1753): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1779): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1886): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1888): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1902): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1908): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1937): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1985): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(1995): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2021): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2047): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2066): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2105): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2160): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2201): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2240): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2265): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2525): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+loader.cpp(2342): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2344): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2359): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2365): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2385): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2412): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2441): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2469): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+loader.cpp(2502): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+  matrix.cpp
+  mesh.cpp
+mesh.cpp(44): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+mesh.cpp(124): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  mixer.cpp
+  model.cpp
+  morphtargetmixer.cpp
+morphtargetmixer.cpp(192): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+morphtargetmixer.cpp(213): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  physique.cpp
+  platform.cpp
+platform.cpp(381): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  quaternion.cpp
+  renderer.cpp
+renderer.cpp(264): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  saver.cpp
+saver.cpp(53): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+saver.cpp(181): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(323): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(268): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+saver.cpp(396): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(366): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+saver.cpp(465): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(438): warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _stricmp. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(568): note: see declaration of 'stricmp'
+saver.cpp(525): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(526): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(534): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(578): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(738): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(750): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(989): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(1009): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+saver.cpp(1193): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  skeleton.cpp
+skeleton.cpp(43): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  springsystem.cpp
+  streamsource.cpp
+  submesh.cpp
+submesh.cpp(348): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+submesh.cpp(351): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+submesh.cpp(441): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  tinyxml.cpp
+tinyxml.cpp(98): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+tinyxml.cpp(118): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+tinyxml.cpp(534): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+tinyxml.cpp(719): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+tinyxml.cpp(764): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+tinyxml.cpp(874): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(2254): note: see declaration of 'sscanf'
+tinyxml.cpp(881): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(2254): note: see declaration of 'sscanf'
+tinyxml.cpp(889): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+tinyxml.cpp(896): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+  tinyxmlerror.cpp
+  tinyxmlparser.cpp
+tinyxmlparser.cpp(400): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+tinyxmlparser.cpp(641): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  vector.cpp
+  Generating Code...
+  cal3d.vcxproj -> C:\Users\Pedro\Desktop\ENGINE\day19\cal3d\lib\Release\Cal3D.lib

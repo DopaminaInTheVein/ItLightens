@@ -25,6 +25,12 @@ class CRenderDeferredModule : public IAppModule {
   void addDirectionalLights();
   void addDirectionalLightsShadows();
   void generateShadowMaps();
+<<<<<<< HEAD
+=======
+  void applyPostFX();
+  void renderUI();
+  void activateRenderCamera3D();
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
 public:
   void update(float dt) override;

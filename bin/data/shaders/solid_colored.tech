@@ -1,4 +1,4 @@
-<tech>
+<tech is_dbg="1">
     <vs fx="basic" main="VS" decl="positions_color"/>
     <ps fx="basic" main="PS"/>
 </tech>

@@ -26,6 +26,10 @@ DECL_OBJ_MANAGER("light_dir", TCompLightDir);
 DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
+<<<<<<< HEAD
+=======
+DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
 DECL_OBJ_MANAGER("life", TCompLife);
 
@@ -55,7 +59,12 @@ bool CEntitiesModule::start() {
   getHandleManager<TCompCulling>()->init(4);
   getHandleManager<TCompLightDir>()->init(4);
   getHandleManager<TCompLightDirShadows>()->init(4);
+<<<<<<< HEAD
 	getHandleManager<TCompLightPoint>()->init(32);
+=======
+  getHandleManager<TCompLightPoint>()->init(32);
+  getHandleManager<TCompRenderGlow>()->init(4);
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
 	getHandleManager<TCompLife>()->init(nmax);
 
@@ -93,9 +102,20 @@ bool CEntitiesModule::start() {
     //ol is_ok = ep.xmlParseFile("data/scenes/scene_normal_map.xml");
 		assert(is_ok);
 	}
+<<<<<<< HEAD
   {
     CEntityParser ep;
     bool is_ok = ep.xmlParseFile("data/scenes/scene_basic_lights.xml");
+=======
+  {
+    CEntityParser ep;
+    bool is_ok = ep.xmlParseFile("data/scenes/scene_basic_lights.xml");
+    assert(is_ok);
+  }
+  {
+    CEntityParser ep;
+    bool is_ok = ep.xmlParseFile("data/scenes/scene_ui.xml");
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
     assert(is_ok);
   }
   //{
@@ -169,7 +189,14 @@ void CEntitiesModule::render() {
   getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
   getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
   getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
+<<<<<<< HEAD
 	//getHandleManager<TCompLife>()->renderAll();
+=======
+
+  RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
+  RenderManager.renderAll( CHandle(), CRenderTechnique::UI_OBJS);
+
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 }
 
 void CEntitiesModule::renderInMenu() {

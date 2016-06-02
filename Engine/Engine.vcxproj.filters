@@ -165,6 +165,12 @@
     <ClCompile Include="render\render_instanced.cpp">
       <Filter>render</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="components\comp_render_glow.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -389,6 +395,15 @@
     </ClInclude>
     <ClInclude Include="render\render_instanced.h">
       <Filter>render</Filter>
+<<<<<<< HEAD
+=======
+    </ClInclude>
+    <ClInclude Include="components\comp_render_glow.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_blur.h">
+      <Filter>render\constants</Filter>
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -465,5 +480,14 @@
     <FxCompile Include="..\bin\data\shaders\globals.fx">
       <Filter>render\shaders</Filter>
     </FxCompile>
+<<<<<<< HEAD
+=======
+    <FxCompile Include="..\bin\data\shaders\pbr.fx">
+      <Filter>render\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\blur.fx">
+      <Filter>render\shaders</Filter>
+    </FxCompile>
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
   </ItemGroup>
 </Project>

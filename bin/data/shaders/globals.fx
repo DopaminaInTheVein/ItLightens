@@ -3,6 +3,10 @@
 #include "constants/ctes_light.h"
 #include "constants/ctes_globals.h"
 #include "constants/ctes_material.h"
+<<<<<<< HEAD
+=======
+#include "constants/ctes_blur.h"
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
 Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
 Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
@@ -19,8 +23,14 @@ TextureCube txIrradiance  : USE_SHADER_REG(TEXTURE_SLOT_IRRADIANCE);
 
 // Same order as
 SamplerState samLinear : register(s0);
+<<<<<<< HEAD
 SamplerState samLightBlackBorder : register(s1);
 SamplerComparisonState samPCFShadows : register(s2);
+=======
+SamplerState samClampLinear : register(s1);
+SamplerState samLightBlackBorder : register(s2);
+SamplerComparisonState samPCFShadows : register(s3);
+>>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
 // ------------------------------------------------------
 // screen_coords va entre 0..1024
