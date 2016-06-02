@@ -24,7 +24,6 @@ public:
 	};
 	const CRenderTechnique*   tech;
 	const CTexture*           textures[COUNT];
-<<<<<<< HEAD
 
   TCteMaterial              ctes_material;
 
@@ -46,27 +45,4 @@ public:
 	static void deactivateTextures();
 };
 
-=======
-
-  TCteMaterial              ctes_material;
-
-	CMaterial()
-		: tech(nullptr)
-	{
-		for (int i = 0; i < TTextureSlot::COUNT; ++i)
-			textures[i] = nullptr;
-	}
-
-	bool isValid() const override { return true; }
-	void destroy() { }
-  eType getType() const override { return MATERIAL; }
-
-	void renderUIDebug();
-	bool load(const char* filename);
-
-	void activateTextures() const;
-	static void deactivateTextures();
-};
-
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 #endif

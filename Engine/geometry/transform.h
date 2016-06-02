@@ -39,20 +39,12 @@ public:
   }
 
   // ---------------------------
-  void       getAngles( float* yaw, float* pitch, float* roll = nullptr ) const {
+  void       getAngles( float* yaw, float* pitch ) const {
     VEC3 f = getFront();
     getYawPitchFromVector(f, yaw, pitch);
-
-    // If requested...
-    if (roll) {
-      VEC3 roll_zero_left = VEC3(0, 1, 0).Cross(getFront());
-      VEC3 roll_zero_up = getFront().Cross(roll_zero_left);
-      *roll = atan2(getLeft().Dot(roll_zero_up), getLeft().Dot(roll_zero_left));
-    }
-
   }
-  void setAngles(float new_yaw, float new_pitch, float new_roll = 0.f) {
-    rotation = CQuaternion::CreateFromYawPitchRoll(new_yaw, -new_pitch, new_roll);
+  void setAngles(float new_yaw, float new_pitch) {
+    rotation = CQuaternion::CreateFromYawPitchRoll(new_yaw, -new_pitch, 0.f);
   }
 
   float getDeltaYawToAimTo(VEC3 target) const;

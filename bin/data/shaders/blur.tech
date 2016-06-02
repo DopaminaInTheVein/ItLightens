@@ -1,4 +1,0 @@
-<tech>
-  <vs fx="blur" main="VS" decl="positions_uv" />
-  <ps fx="blur" main="PS" />
-</tech>	

@@ -7,26 +7,9 @@
     <camera znear="0.1" zfar="500" fov="60" />
     <controller_1st_person />
     <culling />
-<<<<<<< HEAD
   </entity>
 
   <entity prefab="bullet" />
-=======
-    <render_glow max_steps="4" active_steps="2" box_filter="1"/>
-  </entity>
-
-    <entity >
-        <name name="grid"/>
-        <transform pos="0.01 0 0.01"/>
-        <render_static_mesh name="static_meshes/dbg/grid.static_mesh"/>
-    </entity>
-    <entity >
-        <name name="origin"/>
-        <transform pos="0.0 0 0.0"/>
-        <render_static_mesh name="static_meshes/dbg/axis.static_mesh"/>
-    </entity>
-  
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
   <entity prefab="bullet">
     <life points="20" />
   </entity>

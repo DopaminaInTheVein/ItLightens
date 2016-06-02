@@ -10,11 +10,7 @@ bool TCompCamera::load(MKeyValue& atts) {
   float znear = atts.getFloat("znear", 0.1f);
   float zfar = atts.getFloat("zfar", 1000.f);
   float fov_in_degs = atts.getFloat("fov", 70.f);
-  bool is_ortho = atts.getBool("is_ortho", false);
-  if( !is_ortho )
-    setProjection(deg2rad(fov_in_degs), znear, zfar);
-  else
-    setOrtho(1024, 800, znear, zfar);
+  setProjection(deg2rad(fov_in_degs), znear, zfar);
   return true;
 }
 
@@ -47,12 +43,10 @@ void TCompCamera::renderInMenu() {
   float zfar = getZFar();
 
   bool changed = false;
-  if (!isOrtho()) {
-    float fov_in_deg = rad2deg(fov_in_rad);
-    if (ImGui::SliderFloat("Fov", &fov_in_deg, 30.f, 110.f)) {
-      changed = true;
-      fov_in_rad = deg2rad(fov_in_deg);
-    }
+  float fov_in_deg = rad2deg(fov_in_rad);
+  if (ImGui::SliderFloat("Fov", &fov_in_deg, 30.f, 110.f)) {
+    changed = true;
+    fov_in_rad = deg2rad(fov_in_deg);
   }
   changed |= ImGui::SliderFloat("ZNear", &znear, 0.01f, 2.f);
   changed |= ImGui::SliderFloat("ZFar", &zfar, 10.f, 1000.f);

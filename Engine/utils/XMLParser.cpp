@@ -161,10 +161,6 @@ bool MKeyValue::getBool (const char *what, bool default_value) const {
   return false;
 }
 
-bool MKeyValue::has(const char* what) const {
-  return find(what) != end();
-}
-
 VEC3 MKeyValue::getPoint (const char *what ) const {
 	const_iterator it = find (what);
 	if (it == end())

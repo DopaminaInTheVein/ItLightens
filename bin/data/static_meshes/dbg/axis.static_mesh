@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="axis.mesh" material="materials/dbg.material"/>
-</static_mesh>

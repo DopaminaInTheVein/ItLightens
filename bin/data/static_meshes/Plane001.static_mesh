@@ -1,6 +1,3 @@
 <static_mesh>
-<<<<<<< HEAD
   <slot mesh="meshes/Plane001.mesh" material="materials/madera.material" mesh_idx="0"/>
-=======
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 </static_mesh>

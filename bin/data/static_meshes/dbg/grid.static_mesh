@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="grid.mesh" material="materials/dbg.material"/>
-</static_mesh>

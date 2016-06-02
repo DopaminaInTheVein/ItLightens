@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="unitQuadXY.mesh" material="materials/logo.material" mesh_idx="0"/>
-</static_mesh>

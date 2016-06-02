@@ -4,11 +4,7 @@
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-<<<<<<< HEAD
     <LocalDebuggerWorkingDirectory>C:\code\engine\bin</LocalDebuggerWorkingDirectory>
-=======
-    <LocalDebuggerWorkingDirectory>D:\Code\mcv_2015\day32_blur_and_ui_basic\bin</LocalDebuggerWorkingDirectory>
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

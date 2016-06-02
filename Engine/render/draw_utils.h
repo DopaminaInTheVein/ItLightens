@@ -36,10 +36,5 @@ extern CShaderCte< TCteLight > shader_ctes_lights;
 extern CShaderCte< TCteGlobals > shader_ctes_globals;
 #include "constants/ctes_material.h"
 extern CShaderCte< TCteMaterial > shader_ctes_material;
-<<<<<<< HEAD
-=======
-#include "constants/ctes_blur.h"
-extern CShaderCte< TCteBlur > shader_ctes_blur;
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
 
 #endif

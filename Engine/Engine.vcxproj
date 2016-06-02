@@ -108,10 +108,6 @@
     <ClCompile Include="components\comp_light_dir.cpp" />
     <ClCompile Include="components\comp_light_dir_shadows.cpp" />
     <ClCompile Include="components\comp_light_point.cpp" />
-<<<<<<< HEAD
-=======
-    <ClCompile Include="components\comp_render_glow.cpp" />
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\entity.cpp" />
@@ -180,10 +176,6 @@
     <ClCompile Include="windows\app.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-=======
-    <ClInclude Include="..\bin\data\shaders\constants\ctes_blur.h" />
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
     <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h" />
@@ -213,7 +205,6 @@
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
     <ClInclude Include="components\comp_physics.h" />
-    <ClInclude Include="components\comp_render_glow.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
     <ClInclude Include="components\comp_tags.h" />
     <ClInclude Include="components\comp_transform.h" />
@@ -272,13 +263,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-<<<<<<< HEAD
-=======
-    <FxCompile Include="..\bin\data\shaders\blur.fx">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </FxCompile>
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
     <FxCompile Include="..\bin\data\shaders\deferred.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -287,13 +271,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-<<<<<<< HEAD
-=======
-    <FxCompile Include="..\bin\data\shaders\pbr.fx">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </FxCompile>
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
     <FxCompile Include="..\bin\data\shaders\skin.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

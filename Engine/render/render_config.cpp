@@ -7,12 +7,7 @@ static ID3D11BlendState*        blend_states[BLENDCFG_COUNT];
 
 enum SMPConfig {
   SMP_DEFAULT = 0,
-<<<<<<< HEAD
   SMP_BORDER_BLACK = 1, // light dirs
-=======
-  SMP_CLAMP_LINEAR,
-  SMP_BORDER_BLACK, // light dirs
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
   SMP_PCF_SHADOWS,
   SMP_COUNT,
 };
@@ -34,20 +29,6 @@ void createSamplerStates() {
   assert(!FAILED(hr));
   setDXName(sampler_states[SMP_DEFAULT], "SMP_DEFAULT");
 
-<<<<<<< HEAD
-=======
-  // clamp textures and use mipmaps
-  ZeroMemory(&desc, sizeof(desc));
-  desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-  desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-  desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-  desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-  desc.MaxLOD = D3D11_FLOAT32_MAX;
-  hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_CLAMP_LINEAR]);
-  assert(!FAILED(hr));
-  setDXName(sampler_states[SMP_CLAMP_LINEAR], "SMP_CLAMP_LINEAR");
-
->>>>>>> d6b4e6803fa82f01d5c091b986f30dbebbb8b427
   // Para las luces direccionales, si me salgo del espacio homogeneo
   // usar el color 'negro' para iluminar.
   ZeroMemory(&desc, sizeof(desc));

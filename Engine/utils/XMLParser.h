@@ -24,7 +24,6 @@ public:
 	VEC3   getPoint (const char *what ) const;
   CQuaternion   getQuat (const char *what ) const;
 	std::string getString(const std::string &what, const std::string default_value) const;
-  bool has(const char* what) const;
 };
 
 class CXMLParser {
