@@ -889,5 +889,14 @@
    scale="1.0"/>
 
 </entity>
-
+<entity slept="undefined">
+    <tags  tags="helper_arrow" />
+    <helper_arrow />
+    <render_static_mesh  name="static_meshes/helpers/helper_arrow.static_mesh" />
+    <name name="helper_arrow" />
+    <transform
+       pos="0 0 0"
+       quat="0 0 0 1.0"
+       scale="0.3" />
+  </entity>
 </entities>

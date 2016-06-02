@@ -92,7 +92,9 @@ DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
 
 DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
 
+/* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
+DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
 
 CCamera * camera;
 
@@ -109,40 +111,42 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 
-	getHandleManager<TVictoryPoint>()->init(20);
-	getHandleManager<TTriggerLua>()->init(100);
-	//	getHandleManager<TCompHierarchy>()->init(nmax);
-	getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
-	getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
-	getHandleManager<TCompCulling>()->init(8);
-	getHandleManager<TCompLightDir>()->init(8);
-	getHandleManager<TCompLightDirShadows>()->init(8);
-	getHandleManager<player_controller>()->init(8);
-	getHandleManager<player_controller_speedy>()->init(8);
-	getHandleManager<player_controller_mole>()->init(8);
-	getHandleManager<player_controller_cientifico>()->init(8);
-	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
-	getHandleManager<TCompName>()->init(MAX_ENTITIES);
-	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
-	getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
-	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-	getHandleManager<TCompCamera>()->init(4);
-	getHandleManager<TCompController3rdPerson>()->init(4);
-	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
-	getHandleManager<TCompWire>()->init(10);
-	getHandleManager<TCompGenerator>()->init(10);
-	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
-	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
-	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
-	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
-	getHandleManager<TCompWorkstation>()->init(MAX_ENTITIES);
-	getHandleManager<TCompGuidedCamera>()->init(16);
-	getHandleManager<LogicHelperArrow>()->init(4);
-	//lights
-	getHandleManager<TCompLightDir>()->init(4);
-	getHandleManager<TCompLightFadable>()->init(4);
-	getHandleManager<TCompLightPoint>()->init(32);
+  getHandleManager<TVictoryPoint>()->init(20);
+  getHandleManager<TTriggerLua>()->init(100);
+  //	getHandleManager<TCompHierarchy>()->init(nmax);
+  getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
+  getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
+  getHandleManager<TCompCulling>()->init(8);
+  getHandleManager<TCompLightDir>()->init(8);
+  getHandleManager<TCompLightDirShadows>()->init(8);
+  getHandleManager<player_controller>()->init(8);
+  getHandleManager<player_controller_speedy>()->init(8);
+  getHandleManager<player_controller_mole>()->init(8);
+  getHandleManager<player_controller_cientifico>()->init(8);
+  getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
+  getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
+  getHandleManager<TCompName>()->init(MAX_ENTITIES);
+  getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
+  getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
+  getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
+  getHandleManager<TCompCamera>()->init(4);
+  getHandleManager<TCompController3rdPerson>()->init(4);
+  getHandleManager<TCompLife>()->init(MAX_ENTITIES);
+  getHandleManager<TCompWire>()->init(10);
+  getHandleManager<TCompGenerator>()->init(10);
+  getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
+  getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
+  getHandleManager<TCompTags>()->init(MAX_ENTITIES);
+  getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+  getHandleManager<TCompWorkstation>()->init(MAX_ENTITIES);
+  getHandleManager<TCompGuidedCamera>()->init(16);
+  //helpers
+  getHandleManager<TCompFadingMessage>()->init(32);
+  getHandleManager<LogicHelperArrow>()->init(4);
+  //lights
+  getHandleManager<TCompLightDir>()->init(4);
+  getHandleManager<TCompLightFadable>()->init(4);
+  getHandleManager<TCompLightPoint>()->init(32);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -557,6 +561,7 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<player_controller_mole>()->updateAll(dt);
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+			getHandleManager<TCompFadingMessage>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
 		}
 
@@ -633,9 +638,10 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 
-	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
-	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
-	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
+  getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
+  getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
+  getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
+  getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
 
 	RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
   	RenderManager.renderAll( CHandle(), CRenderTechnique::UI_OBJS);

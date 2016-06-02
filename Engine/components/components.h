@@ -43,7 +43,10 @@
 #include "logic/aicontroller.h"
 #include "logic/magnet_door.h"
 #include "logic/elevator.h"
+
+//helpers
 #include "logic/helper_arrow.h"
+#include "components/comp_fading_message.h"
 
 #include "comp_trigger_standar.h"
 

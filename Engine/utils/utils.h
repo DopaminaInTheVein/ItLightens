@@ -56,6 +56,9 @@ void rotate_vector_by_quaternion(const VEC3& vec, const CQuaternion& q, VEC3& vp
 ///	 @param[in]		factor	The interpolation factor. [Limits: 0 <= value <= 1.0]
 CQuaternion interpolate(const CQuaternion &start, const CQuaternion &end, const float factor);
 
+// STRING TO COLOR
+ImColor obtainColorFromString(std::string color);
+
 //template<class TObj>
 typedef uint32_t TTagID;
 bool isInVector(std::vector<TTagID>& v, TTagID obj);
