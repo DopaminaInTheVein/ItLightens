@@ -492,6 +492,7 @@ void CEntitiesModule::initLevel(string level) {
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
 	//TODO: Message LevelStart
+	GameController->SetGameState(CGameController::RUNNING);
 	
 }
 
