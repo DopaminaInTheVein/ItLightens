@@ -259,7 +259,7 @@ void player_controller::myUpdate() {
 		UpdatePossession();
 	}
 
-	if (cc->OnGround() && state != "jumping") {
+	if (cc->OnGround() && state == "moving") {
 		if (player_curr_speed >= player_max_speed - 0.1f)
 			animController.setState(AST_RUN);
 		else
@@ -269,6 +269,12 @@ void player_controller::myUpdate() {
 
 void player_controller::Idle() {
 	CPlayerBase::Idle();
+	if (cc->GetYAxisSpeed() < -0.1f) {
+		animController.setState(AST_FALL);
+	}
+	else {
+		animController.setState(AST_IDLE);
+	}
 	myExtraIdle();
 }
 
@@ -306,6 +312,7 @@ void player_controller::DoubleJump()
 void player_controller::DoubleFalling() {
 	if (pol_orbit && !pol_orbit_prev) {
 		ChangeState("falling");
+		animController.setState(AST_FALL);
 	}
 	PROFILE_FUNCTION("player controller: double falling");
 	UpdateDirection();
@@ -388,7 +395,6 @@ void player_controller::Falling()
 	UpdateDirection();
 	UpdateMovDirection();
 	SetCharacterController();
-
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
