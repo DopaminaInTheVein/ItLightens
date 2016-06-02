@@ -202,7 +202,7 @@ bool bt_guard::playerOutOfReach() {
   VEC3 myPos = getTransform()->getPosition();
   float distance = squaredDistXZ(myPos, posPlayer);
   if (distance > DIST_SQ_SHOT_AREA_ENTER) {
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     return true;
   }
   else {
@@ -300,7 +300,7 @@ int bt_guard::actionStunned() {
 
 int bt_guard::actionStepBack() {
   PROFILE_FUNCTION("guard: actionstepback");
-  animController.setState(AST_RUN);
+  animController.setState(AST_MOVE);
   goForward(-2.f*SPEED_WALK);
 
   if (playerNear()) return STAY;
@@ -351,7 +351,7 @@ int bt_guard::actionChase() {
   else {
     getPath(myPos, posPlayer, SBB::readSala());
 
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     goTo(posPlayer);
     return STAY;
   }
@@ -494,7 +494,7 @@ int bt_guard::actionSearch() {
   else if (playerLost) {
     float distance = squaredDistXZ(myPos, player_last_seen_point);
     getPath(myPos, player_last_seen_point, SBB::readSala());
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     goTo(player_last_seen_point);
     //Noise Point Reached ?
     if (distance < DIST_SQ_REACH_PNT) {
@@ -517,7 +517,7 @@ int bt_guard::actionSearch() {
   else if (noiseHeard) {
     float distance = squaredDistXZ(myPos, noisePoint);
     getPath(myPos, noisePoint, SBB::readSala());
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     goTo(noisePoint);
     //Noise Point Reached ?
     if (distance < DIST_SQ_REACH_PNT) {
@@ -564,7 +564,7 @@ int bt_guard::actionMoveAround() {
 
   if (distance_to_point > DIST_SQ_REACH_PNT) {
     getPath(myPos, search_player_point, SBB::readSala());
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     goTo(search_player_point);
     return STAY;
   }
@@ -620,7 +620,7 @@ int bt_guard::actionSeekWpt() {
     }
     else {
       getPath(myPos, dest, SBB::readSala());
-      animController.setState(AST_RUN);
+      animController.setState(AST_MOVE);
       goTo(dest);
       return STAY;
     }
@@ -691,7 +691,7 @@ int bt_guard::actionGoToFormation() {
   // if we didn't reach the point
   if (distance_to_point > DIST_SQ_REACH_PNT) {
     getPath(myPos, formation_point, SBB::readSala());
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     goTo(formation_point);
     return STAY;
   }
@@ -1268,7 +1268,7 @@ void bt_guard::goToPoint(VEC3 dest) {
   PROFILE_FUNCTION("guard: go to point");
   if (!myParent.isValid()) return;
 
-  animController.setState(AST_RUN);
+  animController.setState(AST_MOVE);
   forced_move = true;
 
   // if we didn't reach the point
