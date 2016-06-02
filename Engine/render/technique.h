@@ -3,27 +3,27 @@
 
 #include "render/render.h"
 #include "resources/resource.h"
-#include "utils/XMLParser.h"
 
 struct CVertexDeclaration;
 class  CVertexShader;
 class  CPixelShader;
 
 class CRenderTechnique : public IResource, public CXMLParser {
-
   const CVertexShader* vs;
   const CPixelShader*  ps;
   std::string          name;
   int                  priority;
   bool                 uses_bones;
-
-  static CRenderTechnique* curr_active;
+  bool                 is_transparent;
+  bool                 ps_disabled;
 
   void onStartElement(const std::string &elem, MKeyValue &atts) override;
 
 public:
+  static const CRenderTechnique* curr_active;
+  static const CVertexDeclaration* getCurrentVertexDecl();
 
-  CRenderTechnique() : vs(nullptr), ps(nullptr), priority( 100 ) { }
+  CRenderTechnique() : vs(nullptr), ps(nullptr), priority(100) { }
   CRenderTechnique(const CRenderTechnique&) = delete;
 
   void destroy();
@@ -32,13 +32,14 @@ public:
   void activate() const;
 
   int getPriority() const { return priority; }
+  bool isTransparent() const { return is_transparent; }
 
   const std::string& getName() const {
     return name;
   }
 
   bool isValid() const {
-    return vs && ps;
+    return vs && ( ps || ps_disabled );
   }
 
   bool usesBones() const { return uses_bones; }
@@ -47,4 +48,3 @@ public:
 };
 
 #endif
-

@@ -1,6 +1,5 @@
 #include "mcv_platform.h"
 #include "io.h"
-#include "imgui/imgui.h"
 #include "windows/app.h"
 #include <windowsx.h>
 

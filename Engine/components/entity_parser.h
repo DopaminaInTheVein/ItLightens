@@ -1,8 +1,8 @@
 #ifndef INC_ENTITY_PARSER_H_
 #define INC_ENTITY_PARSER_H_
 
-#include "utils/XMLParser.h"
 #include "handle/handle.h"
+#include "components/entity_tags.h"
 
 class CPrefabCompiler;
 
@@ -10,6 +10,7 @@ class CEntityParser : public CXMLParser {
   CHandle curr_entity;
   CHandle root_entity;
   CPrefabCompiler* curr_prefab_compiler;
+  VHandles handles;
 public:
   CEntityParser() : curr_prefab_compiler( nullptr ) { }
   CHandle getRootEntity() { return root_entity; }

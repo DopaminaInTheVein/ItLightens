@@ -131,7 +131,6 @@ public:
 
   // ---------------------------------------
   virtual void renderAll() const { }
-  virtual void updateAll( float dt ) { }
   virtual bool load(CHandle h, MKeyValue& atts) { return true; }
   virtual void renderInMenu(CHandle h) { }
 

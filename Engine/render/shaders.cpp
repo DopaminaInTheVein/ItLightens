@@ -29,7 +29,7 @@ IResource* createObjFromName<CPixelShader>(const std::string& name) {
 //--------------------------------------------------------------------------------------
 // Helper for compiling shaders with D3DX11
 //--------------------------------------------------------------------------------------
-bool compileShaderFromFile(
+bool compileShaderFromFileReal(
     const char* szFileName
   , const char* szEntryPoint
   , const char* szShaderModel
@@ -77,12 +77,30 @@ bool compileShaderFromFile(
       , szFileName
       , szShaderModel
       , err );
+    MessageBox(NULL, err, szEntryPoint, MB_OK);
     if (pErrorBlob) pErrorBlob->Release();
     return false;
   }
   if (pErrorBlob) pErrorBlob->Release();
   return true;
 }
+
+bool compileShaderFromFile(
+  const char* szFileName
+  , const char* szEntryPoint
+  , const char* szShaderModel
+  , ID3DBlob** ppBlobOut)
+{
+  while (true) {
+    bool is_ok = compileShaderFromFileReal(szFileName, szEntryPoint, szShaderModel, ppBlobOut);
+    if (is_ok)
+      return true;
+  }
+  return false;
+}
+
+
+
 
 void CVertexShader::destroy() {
   SAFE_RELEASE(vs);
@@ -91,21 +109,26 @@ void CVertexShader::destroy() {
 
 bool CVertexShader::create(
     const char* fx_filename
-  , const char* entry_point
-  , const CVertexDeclaration* vtx_decl
+  , const char* new_entry_point
+  , const CVertexDeclaration* new_vtx_decl
   ) {
-  
-  setName( fx_filename );
+  src_fx_filename = fx_filename;
+  entry_point = new_entry_point;
+  vtx_decl = new_vtx_decl;
+
   HRESULT hr;
 
   assert(fx_filename);
-  assert(entry_point);
+  assert(!entry_point.empty());
   assert(vtx_decl);
   
   // Compilar shader
   ID3DBlob* pBlob = NULL;
-  if( !compileShaderFromFile(fx_filename, entry_point, "vs_4_0", &pBlob))
+  if( !compileShaderFromFile(fx_filename, entry_point.c_str(), "vs_4_0", &pBlob))
     return false;
+
+  // In case we are reloading....
+  destroy();
 
   // Create the vertex shader
   hr = Render.device->CreateVertexShader(
@@ -125,7 +148,7 @@ bool CVertexShader::create(
   SAFE_RELEASE(pBlob);
   if (FAILED(hr)) {
     fatal("Vertex declaration %s given for vtx shader %s@%s is not compatible."
-      , vtx_decl->name, entry_point, fx_filename);
+      , vtx_decl->name, entry_point.c_str(), fx_filename);
     return false;
   }
   setDXName(vertex_layout, vtx_decl->name);
@@ -146,26 +169,36 @@ void CVertexShader::activate() const {
 // --------------------------------------------
 bool CPixelShader::create(
   const char* fx_filename
-  , const char* entry_point
+  , const char* new_entry_point
   ) {
-  setName(fx_filename);   // entry_point + "@" + fx_filename;
+  src_fx_filename = fx_filename;
+  entry_point = new_entry_point;
 
   HRESULT hr;
 
   // Compilar shader
   ID3DBlob* pBlob = NULL;
-  if (!compileShaderFromFile(fx_filename, entry_point, "ps_4_0", &pBlob))
+  if (!compileShaderFromFile(fx_filename, entry_point.c_str(), "ps_4_0", &pBlob))
     return false;
+
+  ID3D11PixelShader *new_ps = nullptr;
 
   // Create the vertex shader
   hr = Render.device->CreatePixelShader(
     pBlob->GetBufferPointer()
     , pBlob->GetBufferSize()
     , NULL
-    , &ps);
+    , &new_ps);
   SAFE_RELEASE(pBlob);
-  if (FAILED(hr))
+  if (FAILED(hr)) {
+    dbg("CreatePixelShader failed\n");
     return false;
+  }
+
+  // In case we are reloading....
+  destroy();
+  
+  ps = new_ps;
 
   std::string dx_name = entry_point + std::string("@") + fx_filename;
   setDXName(ps, dx_name.c_str());
@@ -182,3 +215,14 @@ void CPixelShader::activate() const {
   Render.ctx->PSSetShader(ps, NULL, 0);
 }
 
+void CPixelShader::onFileChanged(const std::string& filename) {
+  if (filename == src_fx_filename) {
+    create(src_fx_filename.c_str(), entry_point.c_str());
+  }
+}
+
+void CVertexShader::onFileChanged(const std::string& filename) {
+  if (filename == src_fx_filename) {
+    create(src_fx_filename.c_str(), entry_point.c_str(), vtx_decl);
+  }
+}

@@ -60,7 +60,7 @@ public:
   }
 
   // --------------------------------------------
-  CHandle getHandleFromObjAddr(const TObj* obj_addr) {
+  CHandle getHandleFromObjAddr( const TObj* obj_addr) {
     auto internal_index = obj_addr - objs;
     if (internal_index >= num_objs_used || internal_index < 0)
       return CHandle();
@@ -97,12 +97,22 @@ public:
   }
 
   // -------------------------
-  void updateAll( float dt ) override {
+  void updateAll( float dt ) {
     PROFILE_FUNCTION( getName() );
     auto o = objs;
     for (size_t i = 0; i<num_objs_used; ++i, ++o) {
       PROFILE_FUNCTION("object");
       o->update( dt );
+    }
+  }
+
+  // -------------------------
+  void updateAllInParallel(float dt) {
+    PROFILE_FUNCTION(getName());
+    #pragma omp parallel for
+    for (int i = 0; i<(int)num_objs_used; ++i) {
+      PROFILE_FUNCTION("object");
+      objs[i].update(dt);
     }
   }
 
@@ -124,6 +134,18 @@ public:
     auto o = objs;
     for (size_t i = 0; i<num_objs_used; ++i, ++o)
       (o->*member_fn)();
+  }
+  // -------------------------
+  template< typename CB >
+  void each( CB cb ) {
+    auto o = objs;
+    for (size_t i = 0; i<num_objs_used; ++i, ++o)
+      cb( o );
+  }
+  // -------------------------
+  // Use it with care
+  TObj* getFirstObject() {
+    return objs;
   }
 };
 

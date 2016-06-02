@@ -1,0 +1,9 @@
+<material tech="pbr.tech">
+  <texture slot="albedo" name="textures/pbr/Albedo.dds"/>
+  <texture slot="normalmap" name="textures/pbr/Normal.dds"/>
+  <texture slot="specular" name="textures/pbr/Specular.dds"/>
+  <texture slot="metallic" name="textures/pbr/Metallic.dds"/>
+  <texture slot="roughness" name="textures/pbr/Roughness.dds"/>
+  <texture slot="irradiance" name="textures/pbr/Irradiance.dds"/>
+  <texture slot="environment" name="textures/pbr/CubeMap.dds"/>
+</material>

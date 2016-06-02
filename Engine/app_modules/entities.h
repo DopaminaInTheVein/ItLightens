@@ -5,6 +5,7 @@
 
 class CEntitiesModule : public IAppModule {
   void renderInMenu();
+  bool use_parallel = false;
 public:
   bool start() override;
   void stop() override;

@@ -1,0 +1,20 @@
+<entities>
+    <entity>
+        <name name="AABB00"/>
+        <transform pos="0 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+        <abs_aabb/>
+        <local_aabb center="0 0 0" half_size="1 1 1"/>
+    </entity>
+    <entity>
+        <name name="AABB01"/>
+        <transform pos="5 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+        <abs_aabb/>
+        <local_aabb center="0 0 0" half_size="2 1 1"/>
+    </entity>
+    <entity>
+        <name name="AABB02"/>
+        <transform pos="-5 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+        <abs_aabb/>
+        <local_aabb center="0 0 0" half_size="1 1 2"/>
+    </entity>
+</entities>

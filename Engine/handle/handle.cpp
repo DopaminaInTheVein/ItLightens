@@ -1,5 +1,5 @@
 #include "mcv_platform.h"
-#include "handle_manager.h"
+#include "handle.h"
 
 // ------------------------------------
 bool CHandle::isValid() const {
@@ -33,7 +33,7 @@ void CHandle::setOwner(CHandle new_owner) {
     hm->setOwner(*this, new_owner);
 }
 
-CHandle CHandle::getOwner() {
+CHandle CHandle::getOwner() const {
   auto hm = CHandleManager::getByType(type);
   if (hm)
     return hm->getOwner(*this);

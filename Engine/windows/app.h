@@ -29,6 +29,9 @@ public:
 
   static CApp& get();
 
+  int getXRes() const { return xres; }
+  int getYRes() const { return yres; }
+
 private:
 
 	// Windows stuff

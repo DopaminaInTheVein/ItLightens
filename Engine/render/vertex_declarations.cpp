@@ -39,6 +39,14 @@ D3D11_INPUT_ELEMENT_DESC layout_positions_color[] =
 DECL_VERTEX_DECLARATION(positions_color, CMesh::VTX_DECL_POSITION_COLOR, (3+4) * 4);
 
 // ------------------------------------
+D3D11_INPUT_ELEMENT_DESC layout_positions_uv[] =
+{
+  { "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT, 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+  { "TEXCOORD",  0, DXGI_FORMAT_R32G32_FLOAT,    0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+};
+DECL_VERTEX_DECLARATION(positions_uv, CMesh::VTX_DECL_POSITION_UV, (3 + 2) * 4);
+
+// ------------------------------------
 D3D11_INPUT_ELEMENT_DESC layout_positions_normal_uv[] =
 {
   { "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT, 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -46,6 +54,16 @@ D3D11_INPUT_ELEMENT_DESC layout_positions_normal_uv[] =
   { "TEXCOORD",  0, DXGI_FORMAT_R32G32_FLOAT,    0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 };
 DECL_VERTEX_DECLARATION(positions_normal_uv, CMesh::VTX_DECL_POSITION_NORMAL_UV, (3 + 3 + 2) * 4);
+
+// ------------------------------------
+D3D11_INPUT_ELEMENT_DESC layout_positions_normal_uv_tangent[] =
+{
+  { "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+  { "NORMAL",    0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+  { "TEXCOORD",  0, DXGI_FORMAT_R32G32_FLOAT,       0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+  { "NORMAL",    1, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+};
+DECL_VERTEX_DECLARATION(positions_normal_uv_tangent, CMesh::VTX_DECL_POSITION_NORMAL_UV_TANGENT, (3 + 3 + 2 + 4) * 4);
 
 // ------------------------------------
 D3D11_INPUT_ELEMENT_DESC layout_positions_normal_uv_skin[] =
@@ -57,6 +75,31 @@ D3D11_INPUT_ELEMENT_DESC layout_positions_normal_uv_skin[] =
   { "WEIGHTS",   0, DXGI_FORMAT_R8G8B8A8_UNORM,  0, 36, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 };
 DECL_VERTEX_DECLARATION(positions_normal_uv_skin, CMesh::VTX_DECL_POSITION_NORMAL_UV_SKIN, (3 + 3 + 2 + 1 + 1) * 4);
+
+// ------------------------------------
+D3D11_INPUT_ELEMENT_DESC layout_instanced_position_uv[] =
+{
+  // Mesh information   20
+  { "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT, 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+  { "TEXCOORD",  0, DXGI_FORMAT_R32G32_FLOAT,    0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+  // Instance information 16
+  { "POSITION",  1, DXGI_FORMAT_R32G32B32_FLOAT, 1,  0, D3D11_INPUT_PER_INSTANCE_DATA, 1 }, // Centro
+  { "TEXCOORD",  1, DXGI_FORMAT_R32_FLOAT,       1, 12, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+};
+DECL_VERTEX_DECLARATION(instanced_position_uv, CMesh::VTX_DECL_INSTANCED_PARTICLES, 20 + 16);
+
+
+// ------------------------------------
+D3D11_INPUT_ELEMENT_DESC layout_instanced_data[] =
+{
+  // Instance information
+  { "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 }, // Centro
+  { "TEXCOORD",  0, DXGI_FORMAT_R32_FLOAT,          0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },    // Size, RotZ, time
+};
+DECL_VERTEX_DECLARATION(instanced_data, CMesh::VTX_DECL_INSTANCED_DATA, 16);
+
+
+
 
 // ---------------------------------
 const CVertexDeclaration* CVertexDeclarationMgr::getByName( const std::string& name) {

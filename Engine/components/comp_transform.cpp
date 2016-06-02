@@ -3,16 +3,11 @@
 #include "resources/resources_manager.h"
 #include "render/mesh.h"
 #include "render/shader_cte.h"
-#include "utils/XMLParser.h"
-#include "imgui/imgui.h"
-
-#include "contants/ctes_object.h"
-extern CShaderCte< TCteObject > shader_ctes_object;
+#include "render/draw_utils.h"
 
 void TCompTransform::render() const {
   auto axis = Resources.get("axis.mesh")->as<CMesh>();
-  shader_ctes_object.World = asMatrix();
-  shader_ctes_object.uploadToGPU();
+  activateWorldMatrix(asMatrix());
   axis->activateAndRender();
 }
 
@@ -32,7 +27,7 @@ bool TCompTransform::load(MKeyValue& atts) {
 
 void TCompTransform::renderInMenu() {
   VEC3 pos = getPosition();
-  if (ImGui::SliderFloat3("Pos", &pos.x, -10.f, 10.f))
+  if (ImGui::SliderFloat3("Pos", &pos.x, -30.f, 30.f ))
     setPosition(pos);
 
   float yaw, pitch;

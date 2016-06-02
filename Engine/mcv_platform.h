@@ -29,8 +29,10 @@
 #include "utils/data_provider.h"
 #include "utils/utils.h"
 #include "geometry/geometry.h"
+#include "utils/XMLParser.h"
 #include "render/render.h"
 
+#include "imgui/imgui.h"
 
 #endif
 

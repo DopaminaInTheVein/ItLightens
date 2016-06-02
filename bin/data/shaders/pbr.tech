@@ -1,0 +1,5 @@
+<tech>
+    <vs fx="pbr" main="VS_GBuffer" decl="positions_normal_uv_tangent"/>
+    <ps fx="pbr" main="PS_GBuffer"/>
+</tech>
+

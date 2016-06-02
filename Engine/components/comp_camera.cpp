@@ -5,8 +5,6 @@
 #include "render/mesh.h"
 #include "render/draw_utils.h"
 #include "entity.h"
-#include "utils/XMLParser.h"
-#include "imgui/imgui.h"
 
 bool TCompCamera::load(MKeyValue& atts) {
   float znear = atts.getFloat("znear", 0.1f);
@@ -16,20 +14,27 @@ bool TCompCamera::load(MKeyValue& atts) {
   return true;
 }
 
-void TCompCamera::render() const {
-  auto axis = Resources.get("frustum.mesh")->as<CMesh>();
-  shader_ctes_object.World = getViewProjection().Invert();
-  shader_ctes_object.uploadToGPU();
-  axis->activateAndRender();
+void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
+  assert(msg.view_proj);
+  *msg.view_proj = this->getViewProjection();
 }
 
-void TCompCamera::update(float dt) {
-  CHandle owner = CHandle(this).getOwner();
-  CEntity* e_owner = owner;
+void TCompCamera::render() const {
+  auto mesh = Resources.get("frustum.mesh")->as<CMesh>();
+  activateWorldMatrix(getViewProjection().Invert());
+  mesh->activateAndRender();
+}
+
+void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
   assert(e_owner);
   TCompTransform* tmx = e_owner->get<TCompTransform>();
   assert(tmx);
   this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+}
+
+void TCompCamera::update(float dt) {
+  CHandle owner = CHandle(this).getOwner();
+  updateFromEntityTransform(owner);
 }
 
 void TCompCamera::renderInMenu() {
@@ -47,4 +52,13 @@ void TCompCamera::renderInMenu() {
   changed |= ImGui::SliderFloat("ZFar", &zfar, 10.f, 1000.f);
   if( changed )
     setProjection(fov_in_rad, znear, zfar);
+
+  VEC3 t = getFront();
+  ImGui::InputFloat3("Front", &t.x);
+  t = getUp();
+  ImGui::InputFloat3("Up", &t.x);
+  t = getLeft();
+  ImGui::InputFloat3("Left", &t.x);
+  float ratio = getAspectRatio();
+  ImGui::InputFloat("AspectRatio", &ratio);
 }

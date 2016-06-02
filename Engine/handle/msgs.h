@@ -4,7 +4,6 @@
 #include <map>
 #include <cinttypes>
 #include "handle.h"
-#include "object_manager.h"
 
 struct IFunctorBase {
   virtual ~IFunctorBase() {}
@@ -63,6 +62,7 @@ struct TComponentMsgHandler {
 typedef std::multimap< TMsgID, TComponentMsgHandler > MMsgSubscriptions;
 extern MMsgSubscriptions msg_subscriptions;
 
+#include "object_manager.h"
 template< class TObj >
 void subscribeToMsg(TMsgID msg_id, IFunctorBase* method) {
   std::pair<TMsgID, TComponentMsgHandler> e;

@@ -97,6 +97,21 @@ struct SimpleVertexColored
   }
 };
 
+// --------------------------------
+struct SimpleVertexUV
+{
+  float x, y, z;
+  float u, v;
+  void set(VEC3 npos, VEC2 uv) {
+    x = npos.x;
+    y = npos.y;
+    z = npos.z;
+    u = uv.x;
+    v = uv.y;
+  }
+};
+
+
 bool createGridXZ(CMesh& mesh, int nsteps) {
   assert(nsteps > 0);
   std::vector< SimpleVertexColored > vtxs;
@@ -129,8 +144,24 @@ bool createGridXZ(CMesh& mesh, int nsteps) {
     );
 }
 
-
-
+bool createUnitQuadXY(CMesh& mesh) {
+  std::vector< SimpleVertexUV > vtxs;
+  // Two halfs + zero, two sides, two axis
+  size_t nvtxs = 4;
+  vtxs.resize(nvtxs);
+  vtxs[0].set(VEC3(-1.f, 1.f, 0.f), VEC2(0,0));
+  vtxs[1].set(VEC3(1.f, 1.f, 0.f), VEC2(1, 0));
+  vtxs[2].set(VEC3(-1.f, -1.f, 0.f), VEC2(0, 1));
+  vtxs[3].set(VEC3( 1.f,-1.f, 0.f), VEC2(1, 1));
+  return mesh.create(
+    (uint32_t)nvtxs,
+    (uint32_t)sizeof(SimpleVertexUV),
+    &vtxs[0],
+    0, 0, nullptr,
+    CMesh::VTX_DECL_POSITION_UV,
+    CMesh::TRIANGLE_STRIP
+    );
+}
 
 // ------------------------------------------
 template<>
@@ -175,6 +206,51 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
     return mesh;
   }
   // ----------------------------------
+  else if (name == "wired_unit_cube.mesh") {
+    SimpleVertexColored vtxs[8] =
+    {
+      { -0.5f,-0.5f, -0.5f,  1, 1, 1, 1 },    // 
+      { 0.5f,-0.5f, -0.5f,   1, 1, 1, 1 },
+      { -0.5f, 0.5f, -0.5f,  1, 1, 1, 1 },
+      { 0.5f, 0.5f, -0.5f,   1, 1, 1, 1 },    // 
+      { -0.5f,-0.5f, 0.5f,   1, 1, 1, 1 },    // 
+      { 0.5f,-0.5f, 0.5f,    1, 1, 1, 1 },
+      { -0.5f, 0.5f, 0.5f,   1, 1, 1, 1 },
+      { 0.5f, 0.5f, 0.5f,    1, 1, 1, 1 },    // 
+    };
+    const uint16_t idxs[] = {
+      0, 1, 2, 3, 4, 5, 6, 7
+      , 0, 2, 1, 3, 4, 6, 5, 7
+      , 0, 4, 1, 5, 2, 6, 3, 7
+    };
+    if (!mesh->create(8
+      , sizeof(SimpleVertexColored)
+      , vtxs
+      , 24, sizeof(uint16_t), idxs
+      , CMesh::VTX_DECL_POSITION_COLOR
+      , CMesh::LINE_LIST))
+      return nullptr;
+    return mesh;
+  }
+  // ----------------------------------
+  else if (name == "textured_quad_xy_centered.mesh") {
+    SimpleVertexUV vtxs[4] =
+    {
+      { -0.5f,-0.5f, 0.f,  0, 0 },    // 
+      {  0.5f,-0.5f, 0.f,  1, 0 },
+      { -0.5f, 0.5f, 0.f,  0, 1 },
+      {  0.5f, 0.5f, 0.f,  1, 1 },    // 
+    };
+    if (!mesh->create(4
+      , sizeof(SimpleVertexUV)
+      , vtxs
+      , 0, 0, nullptr
+      , CMesh::VTX_DECL_POSITION_UV
+      , CMesh::TRIANGLE_STRIP))
+      return nullptr;
+    return mesh;
+  }
+  // ----------------------------------
   else if (name == "frustum.mesh") {
     float zfar = 1.f;
     float znear = 0.f;
@@ -211,6 +287,12 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
   // ----------------------------------
   else if (name == "grid.mesh") {
     if (!createGridXZ(*mesh, 10))
+      return nullptr;
+    return mesh;
+  }
+  // ----------------------------------
+  else if (name == "unitQuadXY.mesh") {
+    if (!createUnitQuadXY(*mesh ))
       return nullptr;
     return mesh;
   }

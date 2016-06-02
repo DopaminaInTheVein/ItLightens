@@ -1,0 +1,5 @@
+<tech>
+  <!-- Pq usamos la unit_frustum que lleva todo los datos de una malla -->
+  <vs fx="deferred" main="VSOnlyPos" decl="positions_normal_uv_tangent" />
+  <ps fx="deferred" main="PSLightDir" />
+</tech>

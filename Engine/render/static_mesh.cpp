@@ -21,6 +21,7 @@ IResource* createObjFromName<CStaticMesh>(const std::string& name) {
 }
 
 void CStaticMesh::onStartElement(const std::string &elem, MKeyValue &atts) {
+
   if (elem == "slot") {
     auto mat_name = atts["material"];
     auto mesh_name = atts["mesh"];
@@ -28,6 +29,16 @@ void CStaticMesh::onStartElement(const std::string &elem, MKeyValue &atts) {
     s.mesh = Resources.get(mesh_name.c_str())->as<CMesh>();
     s.material = Resources.get(mat_name.c_str())->as<CMaterial>();
     s.submesh_idx = atts.getInt("mesh_idx", 0);
+
+    // Si soy el slot0 SI genero shadows por defecto
+    s.generates_shadows = atts.getBool("generates_shadows", ( s.submesh_idx == 0 ));
+	
+    // Expand with the AABB of each draw mesh
+    if (slots.empty())
+      aabb = s.mesh->getAABB();
+    else
+      AABB::CreateMerged(aabb, aabb, s.mesh->getAABB());
+
     slots.push_back(s);
   }
 }

@@ -3,7 +3,6 @@
 
 #include "comp_base.h"
 #include "comp_msgs.h"
-#include "imgui/imgui.h"
 
 // ------------------------------------
 struct TCompLife : public TCompBase {

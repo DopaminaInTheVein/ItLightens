@@ -4,17 +4,34 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine.vcxproj", "{88CE4A41-2CA4-4E85-AD28-CA87769ACAAF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{097683E6-F426-4F7A-AAC9-B46DED04BFDD} = {097683E6-F426-4F7A-AAC9-B46DED04BFDD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cal3D", "..\cal3d\cal3d.vcxproj", "{097683E6-F426-4F7A-AAC9-B46DED04BFDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{88CE4A41-2CA4-4E85-AD28-CA87769ACAAF}.Debug|x64.ActiveCfg = Debug|x64
 		{88CE4A41-2CA4-4E85-AD28-CA87769ACAAF}.Debug|x64.Build.0 = Debug|x64
+		{88CE4A41-2CA4-4E85-AD28-CA87769ACAAF}.Debug|x86.ActiveCfg = Debug|x64
 		{88CE4A41-2CA4-4E85-AD28-CA87769ACAAF}.Release|x64.ActiveCfg = Release|x64
 		{88CE4A41-2CA4-4E85-AD28-CA87769ACAAF}.Release|x64.Build.0 = Release|x64
+		{88CE4A41-2CA4-4E85-AD28-CA87769ACAAF}.Release|x86.ActiveCfg = Release|x64
+		{097683E6-F426-4F7A-AAC9-B46DED04BFDD}.Debug|x64.ActiveCfg = Debug|x64
+		{097683E6-F426-4F7A-AAC9-B46DED04BFDD}.Debug|x64.Build.0 = Debug|x64
+		{097683E6-F426-4F7A-AAC9-B46DED04BFDD}.Debug|x86.ActiveCfg = Debug|Win32
+		{097683E6-F426-4F7A-AAC9-B46DED04BFDD}.Debug|x86.Build.0 = Debug|Win32
+		{097683E6-F426-4F7A-AAC9-B46DED04BFDD}.Release|x64.ActiveCfg = Release|x64
+		{097683E6-F426-4F7A-AAC9-B46DED04BFDD}.Release|x64.Build.0 = Release|x64
+		{097683E6-F426-4F7A-AAC9-B46DED04BFDD}.Release|x86.ActiveCfg = Release|Win32
+		{097683E6-F426-4F7A-AAC9-B46DED04BFDD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

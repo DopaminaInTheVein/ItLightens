@@ -19,7 +19,7 @@ struct TCompController3rdPerson : public TCompBase {
   : yaw(deg2rad(0.f))
   , pitch(deg2rad(0.f))
   , distance_to_target( 5.0f )
-  , rotation_sensibility( deg2rad( 90.0f ) / 250.0f )
+  , rotation_sensibility( deg2rad( 90.0f ) / 25.0f )
   {} 
 
   void onSetTarget(const TMsgSetTarget& msg) {

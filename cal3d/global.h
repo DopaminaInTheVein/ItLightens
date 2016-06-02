@@ -28,7 +28,6 @@
 //****************************************************************************//
 
 //Uncomment this if you want to use 16bit indices or configure the compiler
-
 #define CAL_16BIT_INDICES
 
 #ifdef CAL_16BIT_INDICES 

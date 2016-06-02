@@ -10,20 +10,15 @@
 #include "render/draw_utils.h"
 #include "resources/resources_manager.h"
 #include "camera/camera.h"
-#include "components/entity_tags.h"
-#include "components/entity.h"
-#include "components/comp_camera.h"
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
 #include "app_modules/io/io.h"
+#include "app_modules/render/module_render_deferred.h"
 #include "components/entity_parser.h"
 #include "handle/handle_manager.h"
+#include "utils/directory_watcher.h"
 
-CHandle       h_camera;
-
-const CRenderTechnique* tech_solid_colored = nullptr;
-const CRenderTechnique* tech_textured_colored = nullptr;
-const CTexture*         texture1 = nullptr;
+CDirectoyWatcher resources_dir_watcher;
 
 // --------------------------------------------
 #include "app_modules/entities.h"
@@ -34,36 +29,32 @@ bool CApp::start() {
   auto imgui = new CImGuiModule;
   auto entities = new CEntitiesModule;
   io = new CIOModule;     // It's the global io
+  auto render_deferred = new CRenderDeferredModule;
   
   // Will contain all modules created
   all_modules.push_back(imgui);
   all_modules.push_back(entities);
   all_modules.push_back(io);
+  all_modules.push_back(render_deferred);
   
   mod_update.push_back(imgui);
-  mod_update.push_back(io);
+  mod_update.push_back(render_deferred);
   mod_update.push_back(entities);
+  mod_update.push_back(io);
+  mod_renders.push_back(render_deferred);
   mod_renders.push_back(entities);
   mod_renders.push_back(imgui);
   mod_renders.push_back(io);
   mod_init_order.push_back(imgui);
-  mod_init_order.push_back(entities);
+  mod_init_order.push_back(render_deferred);
   mod_init_order.push_back(io);
+  mod_init_order.push_back(entities);
   mod_wnd_proc.push_back(io);
   mod_wnd_proc.push_back(imgui);
 
   // ----------------------------
-  tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
-  tech_textured_colored = Resources.get("textured.tech")->as<CRenderTechnique>();
-  texture1 = Resources.get("textures/wood_d.dds")->as<CTexture>();
-
-  if (!shader_ctes_camera.create("ctes_camera"))
+  if (!drawUtilsCreate())
     return false;
-  if (!shader_ctes_object.create("ctes_object"))
-    return false;
-  if (!shader_ctes_bones.create("ctes_bones"))
-    return false;
-  shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
 
   // Init modules
   for (auto it : mod_init_order) {
@@ -73,9 +64,9 @@ bool CApp::start() {
     }
   }
 
-  h_camera = tags_manager.getFirstHavingTag(getID("the_camera"));
+  resources_dir_watcher.start("data/shaders", getHWnd());
 
-  CHandle h = createPrefab("bullet");
+  //h_camera = tags_manager.getFirstHavingTag(getID("the_camera"));
 
   return true;
 }
@@ -88,9 +79,7 @@ void CApp::stop() {
     (*it)->stop();
 
   Resources.destroy();
-  shader_ctes_bones.destroy();
-  shader_ctes_camera.destroy();
-  shader_ctes_object.destroy();
+  drawUtilsDestroy();
 
   // Delete all modules
   for (auto m : all_modules)
@@ -124,40 +113,8 @@ void CApp::update(float elapsed) {
 // ----------------------------------
 void CApp::render() {
   PROFILE_FUNCTION("CApp::render");
-  {
-    PROFILE_FUNCTION("initFrame");
-    CTraceScoped scope("initFrame");
-    static CCamera camera;
-    if (h_camera.isValid()) {
-      CEntity* e = h_camera;
-      TCompCamera* comp_cam = e->get<TCompCamera>();
-      camera = *comp_cam;
-    }
-
-    // To set a default and known Render State
-    Render.ctx->RSSetState(nullptr);
-
-    // Clear the back buffer 
-    float ClearColor[4] = { 0.3f, 0.3f, 0.3f, 1.0f }; // red,green,blue,alpha
-    Render.ctx->ClearRenderTargetView(Render.renderTargetView, ClearColor);
-    camera.setAspectRatio((float)xres / (float)yres);
-
-    shader_ctes_camera.activate(CTE_SHADER_CAMERA_SLOT);
-    shader_ctes_camera.ViewProjection = camera.getViewProjection();
-    shader_ctes_camera.uploadToGPU();
-
-    tech_solid_colored->activate();
-
-    shader_ctes_object.activate(CTE_SHADER_OBJECT_SLOT);
-    shader_ctes_object.World = MAT44::Identity;
-    shader_ctes_object.uploadToGPU();
-    auto axis = Resources.get("axis.mesh")->as<CMesh>();
-
-    axis->activateAndRender();
-    Resources.get("grid.mesh")->as<CMesh>()->activateAndRender();
-  }
-
-  RenderManager.renderAll();
+  
+  activateDefaultStates();
 
   for (auto it : mod_renders) {
     PROFILE_FUNCTION(it->getName());

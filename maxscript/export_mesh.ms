@@ -27,7 +27,7 @@ fn saveBinaryMesh obj vtxs idxs groups full_path = (
 	local num_bytes_of_header = 9 * 4
 	local version = 1
 	local primitive_type = 2000
-	local vertex_type = 1002		-- Pos, N, UV
+	local vertex_type = 1003		-- Pos, N, UV, Tangent
 	local bytes_per_float = 4		-- Assuming all vtxs are float
 	local bytes_per_vertex = vtxs[1].count * bytes_per_float
 	local bytes_per_index = if idxs.count > 65535 then 4 else 2
@@ -64,7 +64,7 @@ fn saveBinaryMesh obj vtxs idxs groups full_path = (
 	WriteLong fs ( bytes_per_index * idxs.count )
 	for i in idxs do (
 		if bytes_per_index == 2 then (
-			WriteShort fs (i-1)			-- Base 0
+			WriteShort fs (i-1)			-- save in base 0, were stored in base 1
 		) else (
 			WriteLong fs (i-1)
 		)
@@ -84,10 +84,95 @@ fn saveBinaryMesh obj vtxs idxs groups full_path = (
 	FClose fs
 )
 
+---------------------------------------------
+-- Translated to maxscript from
+-- http://www.terathon.com/code/tangent.html
+---------------------------------------------
+fn computeTangentSpace vtxs idxs = (
+	
+	local vertexCount = vtxs.count
+	local triangleCount = idxs.count / 3
+		
+    local tan1 = #()
+    local tan2 = #()
+	local i =0
+	for i = 1 to vertexCount do (
+		tan1[i] = [0,0,0]
+		tan2[i] = [0,0,0]
+	)
+	
+	local a = 0
+	for a = 0 to triangleCount-1 do (
+		local i1 = idxs[ a*3 + 1]
+		local i2 = idxs[ a*3 + 2]
+		local i3 = idxs[ a*3 + 3]
+        
+		-- Each vertexs is: x,y,z,  nx,ny,nz,  u,v ,...
+		local full_v1 = vtxs[ i1 ]
+		local full_v2 = vtxs[ i2 ]
+		local full_v3 = vtxs[ i3 ]
+		
+		-- Access to the x,y,z of each vertex
+		local v1 = [ full_v1[1], full_v1[2], full_v1[3] ]
+		local v2 = [ full_v2[1], full_v2[2], full_v2[3] ]
+		local v3 = [ full_v3[1], full_v3[2], full_v3[3] ]
+		
+		-- Access to the u,v of each vertex
+		local w1 = [ full_v1[7], full_v1[8] ]
+		local w2 = [ full_v2[7], full_v2[8] ]
+		local w3 = [ full_v3[7], full_v3[8] ]
+		
+        local x1 = v2.x - v1.x;
+        local x2 = v3.x - v1.x;
+        local y1 = v2.y - v1.y;
+        local y2 = v3.y - v1.y;
+        local z1 = v2.z - v1.z;
+        local z2 = v3.z - v1.z;
+        
+        local s1 = w2.x - w1.x;
+        local s2 = w3.x - w1.x;
+        local t1 = w2.y - w1.y;
+        local t2 = w3.y - w1.y;
+        
+        local r = 1.0 / (s1 * t2 - s2 * t1);
+        local sdir = [(t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r]
+        local tdir = [(s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r]
+        
+        tan1[i1] += sdir;
+        tan1[i2] += sdir;
+        tan1[i3] += sdir;
+        
+        tan2[i1] += tdir;
+        tan2[i2] += tdir;
+        tan2[i3] += tdir;
+    )
+    
+	for a = 1 to vertexCount do (
+		local v = vtxs[a]
+		
+        local n = [ v[4], v[5], v[6] ];
+        local t = tan1[a];
+        
+        -- Gram-Schmidt orthogonalize
+		local dot_n_t = dot n t
+        local tangent = normalize( t - n * dot_n_t )
+        
+        -- Calculate handedness
+		local cross_n_t = cross n t
+		local dot_c_t2 = dot cross_n_t tan2[a]
+        local w = 1.0
+		if dot_c_t2 < 0.0 then w = -1.0
+			
+		join vtxs[a] #(tangent.x, tangent.y, tangent.z, w )
+	)
+    
+)
+
+-- ---------------------------------------------
 fn export_mesh given_obj outfilename mat_infos = (
 
 	if outfilename == undefined then (
-		outfilename = "c:/code/engine/bin/data/meshes/" + obj.name + ".mesh"
+		outfilename = "c:/code/engine/bin/data/meshes/" + given_obj.name + ".mesh"
 	)
 	
 	-- Is the object valid?...
@@ -111,6 +196,16 @@ fn export_mesh given_obj outfilename mat_infos = (
 	
 	if not meshop.getMapSupport obj channelA then (
 		throw ("Object " + given_obj.name + " does not have tex coords for channel " + channelA )
+	)
+	
+	-- If not mat info is given, generate a single one
+	-- which represents 'all the vertexs in a single draw call'
+	if mat_infos == undefined then (
+		local num_faces = getNumFaces obj
+		local all_faces = #()
+		for i = 1 to num_faces do all_faces[i] = i
+		-- A single group with all the faces
+		mat_infos = #( all_faces )
 	)
 	
 	-- Pasearse por todos los grupos de caras
@@ -160,11 +255,13 @@ fn export_mesh given_obj outfilename mat_infos = (
 	if obj != given_obj then 
 		delete obj
 
+	computeTangentSpace all_vtxs all_idxs
+	
 	---------------------------------------------
 	-- Save everything
 	---------------------------------------------
 	saveBinaryMesh given_obj all_vtxs all_idxs all_groups outfilename
-	
+	print all_vtxs
 )
 
---export_mesh $
+export_mesh $unit_frustum undefined undefined
