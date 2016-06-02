@@ -8,10 +8,12 @@ hg = HandleGroup()
 
 function OnEnter_tElevator( )
   --Nothing to do
+  p:player_talks("I'm in an elevator! \nI'm so cool!!! \nI wanna die my hair red!", 3)
 end
 
 function OnLeave_tElevator( )
   --Nothing to do
+  p:player_talks_color("I'm out of an elevator! \nI'm not so cool!!! \nI wanna die my hair black!", 3, "#FF2222FF","#22FF22FF")
 end
 
 

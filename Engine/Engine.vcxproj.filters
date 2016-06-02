@@ -608,6 +608,9 @@
     <ClCompile Include="components\comp_hierarchy.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_fading_message.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1480,11 +1483,14 @@
     </ClInclude>
     <ClInclude Include="components\comp_workstation.h">
       <Filter>components</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="components\comp_render_glow.h">
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_hierarchy.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_fading_message.h">
       <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
