@@ -18,6 +18,21 @@
    mass="5"/>
 
 </entity>
+  <entity>
+    <tags
+       tags=""/>
+    <name
+       name="pila"/>
+    <transform
+       pos="-85.3697 1.13564 0.90521"
+       quat="0 0 0 1.0"
+       scale="2.0"/>
+    <render_static_mesh
+       name="static_meshes/whitebox/pila.static_mesh"/>
+    <rigidbody
+       type_collision="static"/>
+
+  </entity>
 <entity
    slept="yes">
 <tags

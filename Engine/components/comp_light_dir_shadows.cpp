@@ -57,5 +57,5 @@ void TCompLightDirShadows::generateShadowMap() {
 }
 
 void TCompLightDirShadows::destroy() {
-	rt_shadows->destroy();
+	//rt_shadows->destroy();
 }

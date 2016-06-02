@@ -93,13 +93,13 @@ bool CRenderDeferredModule::start() {
   acc_light_directionals = Resources.get("deferred_lights_dir.tech")->as<CRenderTechnique>();
   assert(acc_light_directionals && acc_light_directionals->isValid());
 
-  blur_tech = Resources.get("blur_glow.tech")->as<CRenderTechnique>();
+  //blur_tech = Resources.get("blur_glow.tech")->as<CRenderTechnique>();
 
   acc_light_directionals_shadows = Resources.get("deferred_lights_dir_shadows.tech")->as<CRenderTechnique>();
   assert(acc_light_directionals_shadows && acc_light_directionals_shadows->isValid());
 
-//  unit_sphere = Resources.get("meshes/engine/unit_sphere.mesh")->as<CMesh>();
-  unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
+  unit_sphere = Resources.get("meshes/engine/unit_sphere.mesh")->as<CMesh>();
+//  unit_sphere = Resources.get("unitQuadXY.mesh")->as<CMesh>();
   assert(unit_sphere && unit_sphere->isValid());
   unit_cube = Resources.get("meshes/engine/unit_frustum.mesh")->as<CMesh>();
   assert(unit_cube && unit_cube->isValid());
@@ -134,6 +134,7 @@ bool CRenderDeferredModule::start() {
   shader_ctes_hatching.frequency_texture = 10.0f;
   shader_ctes_hatching.color_ramp = 0.0f;
   shader_ctes_hatching.specular_force = 0.2f;
+  shader_ctes_hatching.rim_specular = 1.5f;
 
   shader_ctes_globals.world_time = 0.f;
   shader_ctes_globals.xres = xres;
@@ -159,24 +160,17 @@ void CRenderDeferredModule::update(float dt) {
 void CRenderDeferredModule::renderGBuffer() {
   PROFILE_FUNCTION("GBuffer");
   CTraceScoped scope("GBuffer");
-  static CCamera camera;
 
   h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
-  if (h_camera.isValid()) {
-    CEntity* e = h_camera;
-    TCompCamera* comp_cam = e->get<TCompCamera>();
-    camera = *comp_cam;
-    camera.setAspectRatio((float)xres / (float)yres);
-    comp_cam->setAspectRatio(camera.getAspectRatio());
-  }
+  if (!h_camera.isValid())
+    return;
 
   // To set a default and known Render State
   Render.ctx->RSSetState(nullptr);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
 
-  // Activo la camara en la pipeline de render
-  activateCamera(&camera);
+  
 
   // -------------------------
   // Activar mis multiples render targets
@@ -201,13 +195,10 @@ void CRenderDeferredModule::renderGBuffer() {
   rt_shadows->clear(VEC4(0, 0, 0, 0));
   rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 1));
 
-  // Activa la ctes del object
-  activateWorldMatrix(MAT44::Identity);
+activateRenderCamera3D();
 
   // Mandar a pintar los 'solidos'
   RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS);
-
-  activateZ(ZCFG_DEFAULT);
 }
 
 // ----------------------------------------------
@@ -296,14 +287,16 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
 }
 
 void CRenderDeferredModule::addAmbientPass() {
-  
-  /*activateZ(ZCFG_ALL_DISABLED);
+	PROFILE_FUNCTION("addAmbientPass");
+	CTraceScoped scope("addAmbientPass");
+  activateZ(ZCFG_ALL_DISABLED);
 
-  auto tech = Resources.get("pbr_ambient.tech")->as<CRenderTechnique>();
+  auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
   tech->activate();
 
-  auto mesh = Resources.get("unitQuadXY.mesh")->as<CMesh>();
-  mesh->activateAndRender();*/
+  drawFullScreen(rt_albedos, tech);
+
+  
 
 }
 
@@ -320,22 +313,22 @@ void CRenderDeferredModule::FinalRender() {
   Render.ctx->OMSetRenderTargets(3, rts, nullptr);
 
   rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
-  rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
+  //rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
   rt_selfIlum->activate(TEXTURE_SLOT_SELFILUM);
   rt_depths->activate(TEXTURE_SLOT_DEPTHS);
   rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
   activateZ(ZCFG_ALL_DISABLED);
-
-  auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
-  drawFullScreen(rt_albedos, tech);
+  activateBlend(BLENDCFG_DEFAULT);
+  //auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
+  drawFullScreen(rt_acc_light);
 
   activateZ(ZCFG_DEFAULT);
 
   CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
   CTexture::deactivate(TEXTURE_SLOT_NORMALS);
   CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
-  CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
+  //CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
   CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 }
 
@@ -394,23 +387,25 @@ void CRenderDeferredModule::renderAccLight() {
 
   // Activar las texturas del gbuffer en la pipeline para
   // que se puedan acceder desde los siguientes shaders
-  rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
+  //rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);	//activated on addAmbientPass
   rt_depths->activate(TEXTURE_SLOT_DEPTHS);
   rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
-  rt_acc_light->clear(VEC4(0, 0, 0, 1));
+  //rt_acc_light->clear(VEC4(0, 0, 0, 1));
 
-  //addAmbientPass();
+  activateBlend(BLENDCFG_DEFAULT);
+  addAmbientPass();
 
   activateBlend(BLENDCFG_ADDITIVE);
   activateZ(ZCFG_LIGHTS_CONFIG);
-  //activateRS(RSCFG_INVERT_CULLING);
+  activateRS(RSCFG_INVERT_CULLING);
   addPointLights();
 
   activateZ(ZCFG_LIGHTS_CONFIG);
   //activateRS(RSCFG_INVERT_CULLING);
   //addDirectionalLights();
 
+  activateRS(RSCFG_DEFAULT);
   addDirectionalLightsShadows();
 
   activateRS(RSCFG_DEFAULT);
@@ -540,7 +535,7 @@ void CRenderDeferredModule::GlowEdges() {
 		PROFILE_FUNCTION("referred: GlowEdges");
 		CTraceScoped scope("glow edges");
 
-
+/*
 		ID3D11RenderTargetView* rts1[3] = {
 			rt_selfIlum->getRenderTargetView()
 			,	nullptr   // remove the other rt's from the pipeline
@@ -581,7 +576,7 @@ void CRenderDeferredModule::GlowEdges() {
 			activateZ(ZCFG_ALL_DISABLED);
 			drawFullScreen(rt_selfIlum_blurred, tech);
 		}
-		activateBlend(BLENDCFG_DEFAULT);
+		activateBlend(BLENDCFG_DEFAULT);*/
 	}
 }
 
@@ -672,7 +667,9 @@ void CRenderDeferredModule::render() {
 	rt_data->clear(VEC4(0, 0, 0, 0));
 	rt_specular->clear(VEC4(0, 0, 0, 0));
 
+	//rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	generateShadowMaps();
+	//CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 
 	rt_data2->clear(VEC4(0, 0, 0, 0));
 
@@ -724,7 +721,7 @@ void CRenderDeferredModule::render() {
 
 	activateZ(ZCFG_DEFAULT);
 
-	ShootGuardRender();
+	//ShootGuardRender();
 
 	activateZ(ZCFG_ALL_DISABLED);
 

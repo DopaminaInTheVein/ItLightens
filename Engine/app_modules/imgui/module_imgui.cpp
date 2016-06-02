@@ -161,6 +161,22 @@ void CImGuiModule::update(float dt) {
 				shader_ctes_hatching.uploadToGPU();
 			}
 
+			static bool rim_specular = true;
+			if (ImGui::Checkbox("Rim lighting", &rim_specular)) {
+				if (rim_specular) {
+					shader_ctes_hatching.rim_specular = 1.5f;
+				}
+				else
+					shader_ctes_hatching.rim_specular = 0.0f;
+
+				shader_ctes_hatching.uploadToGPU();
+			}
+
+			if (rim_specular) {
+				if (ImGui::DragFloat("rim specular force", &shader_ctes_hatching.rim_specular, 0.01f))
+					shader_ctes_hatching.uploadToGPU();
+			}
+
 			ImGui::TreePop();
 		}
 

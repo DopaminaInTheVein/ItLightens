@@ -216,6 +216,9 @@ void CRenderManager::renderShadowCasters() {
 		// I could skip the activation and just call it
 		// when the mesh changed, and only call the render
 		it->mesh->activateAndRender();
+	}else{
+		fatal("render__manager: tranfrom from shadowcaster null");
+
 	}
 	++it;
   }

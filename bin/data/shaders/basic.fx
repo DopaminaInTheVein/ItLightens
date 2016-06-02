@@ -108,7 +108,8 @@ void PSAddAmbient(float4 Pos : SV_POSITION
 	output = diff*0.2f + lights*0.8f;
 	//output = float4(0.2f,0.2f, 0.2f, 1.0f)*normals*0.2f + lights*0.8f;
 	output.a = diff.a;
-	//output = lights;
+	output = lights;
+	output = diff*0.5f;
 	//output.rgb += selfIlum.rgb;
 }
 

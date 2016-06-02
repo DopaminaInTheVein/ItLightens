@@ -35,8 +35,6 @@ void createSamplerStates() {
   desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
   desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
   desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-  desc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-  desc.MinLOD = 0;
   desc.MaxLOD = D3D11_FLOAT32_MAX;
   hr = Render.device->CreateSamplerState(&desc, &sampler_states[SMP_CLAMP]);
   assert(!FAILED(hr));
