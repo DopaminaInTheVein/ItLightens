@@ -103,7 +103,9 @@ std::string MKeyValue::getString(const std::string &what, const std::string defa
 		return default_value;
 	return decodeFromUTF8(it->second.c_str(), strlen(it->second.c_str()));
 }
-
+bool MKeyValue::has(const char* what) const {
+	return find(what) != end();
+}
 /*------------------------------------------------------------------
 |
 \------------------------------------------------------------------*/

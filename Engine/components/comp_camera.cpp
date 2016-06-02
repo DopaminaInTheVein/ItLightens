@@ -27,6 +27,11 @@ bool TCompCamera::load(MKeyValue& atts) {
 	float znear = atts.getFloat("znear", 0.1f);
 	float zfar = atts.getFloat("zfar", 1000.f);
 	float fov_in_degs = atts.getFloat("fov", 70.f);
+	
+	bool is_ortho = atts.getBool("is_ortho", false);
+	if (is_ortho) setOrtho(1024, 800, znear, zfar);
+	else setProjection(deg2rad(fov_in_degs), znear, zfar);
+
 	setProjection(deg2rad(fov_in_degs), znear, zfar);
 	detect_colsions = atts.getBool("collision", false);
 	smoothDefault = smoothCurrent = 10.f;
@@ -44,10 +49,10 @@ void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
 }
 
 void TCompCamera::render() const {
-	//auto axis = Resources.get("frustum.mesh")->as<CMesh>();
-	//shader_ctes_object.World = getViewProjection().Invert();
-	//shader_ctes_object.uploadToGPU();
-	//axis->activateAndRender();
+	auto axis = Resources.get("frustum.mesh")->as<CMesh>();
+	shader_ctes_object.World = getViewProjection().Invert();
+	shader_ctes_object.uploadToGPU();
+	axis->activateAndRender();
 }
 
 void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
@@ -97,18 +102,23 @@ void TCompCamera::update(float dt) {
 		}
 	}
 	if (!cameraIsGuided) {
+
 		if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
-			VEC3 pos = tmx->getPosition();
-			pos.y += 2;
-			tmx->setPosition(pos);
-			if (detect_colsions) {
-				if (!checkColision(pos))
-					this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
-			}
-			if (!detect_colsions || !checkColision(pos)) {
-				if (abs(smoothCurrent-smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
-				this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux(), smoothCurrent);
-			}
+			//if (owner.hasTag("camera_main")) {
+				VEC3 pos = tmx->getPosition();
+				if (owner.hasTag("camera_main")) {
+					pos.y += 2;
+				}
+				tmx->setPosition(pos);
+				if (detect_colsions) {
+					if (!checkColision(pos))
+						this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
+				}
+				if (!detect_colsions || !checkColision(pos)) {
+					if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
+					this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux(), smoothCurrent);
+				}
+			//}
 		}
 		else if (GameController->GetFreeCamera()) {
 			CHandle owner = CHandle(this).getOwner();
@@ -186,10 +196,17 @@ void TCompCamera::renderInMenu() {
 	float ar = getAspectRatio();
 
 	bool changed = false;
-	float fov_in_deg = rad2deg(fov_in_rad);
-	if (ImGui::SliderFloat("Fov", &fov_in_deg, 30.f, 110.f)) {
-		changed = true;
-		fov_in_rad = deg2rad(fov_in_deg);
+	//float fov_in_deg = rad2deg(fov_in_rad);
+	//if (ImGui::SliderFloat("Fov", &fov_in_deg, 30.f, 110.f)) {
+	//	changed = true;
+	//	fov_in_rad = deg2rad(fov_in_deg);
+	//}
+	if (!isOrtho()) {
+		float fov_in_deg = rad2deg(fov_in_rad);
+		if (ImGui::SliderFloat("Fov", &fov_in_deg, 30.f, 110.f)) {
+			changed = true;
+			fov_in_rad = deg2rad(fov_in_deg);
+		}
 	}
 	changed |= ImGui::SliderFloat("ZNear", &znear, 0.01f, 2.f);
 	changed |= ImGui::SliderFloat("ZFar", &zfar, 10.f, 1000.f);

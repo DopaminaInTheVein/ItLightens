@@ -363,6 +363,11 @@ void CEntitiesModule::initLevel(string level) {
 		is_ok = ep.xmlParseFile("data/scenes/test_lights.xml");
 		assert(is_ok);
 	}
+	{
+		CEntityParser ep;
+		bool is_ok = ep.xmlParseFile("data/scenes/scene_ui.xml");
+		assert(is_ok);
+	}
 	dbg("Scene Loaded! (%d entities)\n", size());
 
 	// GENERATE NAVMESH
@@ -632,8 +637,8 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 
-	//RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
-  	//RenderManager.renderAll( CHandle(), CRenderTechnique::UI_OBJS);
+	RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
+  	RenderManager.renderAll( CHandle(), CRenderTechnique::UI_OBJS);
 }
 
 void CEntitiesModule::renderInMenu() {
