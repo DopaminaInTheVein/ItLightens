@@ -23,7 +23,7 @@ void SkelControllerPlayer::SetPlayerController() {
 
 void SkelControllerPlayer::myUpdate()
 {
-	if (currentState == "walk") {
+	if (currentState == "walk" || currentState == "run") {
 		SetPlayerController();
 		if (!pc->isMoving()) {
 			currentState = "idle";
@@ -49,6 +49,10 @@ void SkelControllerPlayer::myUpdate()
 		}
 		else if (currentState == "attack") {
 			setAction("attack", "idle");
+		}
+		else if (currentState == "recharge") {
+			setAction("recharge", "idle");
+			currentState = "idle";
 		}
 		else {
 			setLoop(currentState);

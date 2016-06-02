@@ -245,7 +245,7 @@ public:
 	void artificialInterrupt();
 
 	void update(float dt) {
-		dbg("%f %f %f\n", formation_point.x, formation_point.y, formation_point.z);
+
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
 			if (t_reduceStats <= 0.0f) {
@@ -253,12 +253,9 @@ public:
 				resetStats();
 			}
 		}
-		dbg("%f %f %f\n", formation_point.x, formation_point.y, formation_point.z);
-		if (!forced_move) Recalc();
-		dbg("%f %f %f\n", formation_point.x, formation_point.y, formation_point.z);
-		animController.update();
-		dbg("%f %f %f\n", formation_point.x, formation_point.y, formation_point.z);
 
+		if (!forced_move) Recalc();
+		animController.update();
 	}
 
 	void render();

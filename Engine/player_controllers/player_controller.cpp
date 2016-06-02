@@ -259,7 +259,11 @@ void player_controller::myUpdate() {
 		UpdatePossession();
 	}
 
-	if (cc->OnGround() && state == "moving") {
+	if (cc->GetYAxisSpeed() < -0.2f) {
+		ChangeState("falling");
+		animController.setState(AST_FALL);
+	}
+	else if (cc->OnGround() && state == "moving") {
 		if (player_curr_speed >= player_max_speed - 0.1f)
 			animController.setState(AST_RUN);
 		else
@@ -269,12 +273,6 @@ void player_controller::myUpdate() {
 
 void player_controller::Idle() {
 	CPlayerBase::Idle();
-	if (cc->GetYAxisSpeed() < -0.1f) {
-		animController.setState(AST_FALL);
-	}
-	else {
-		animController.setState(AST_IDLE);
-	}
 	myExtraIdle();
 }
 
@@ -730,6 +728,7 @@ void player_controller::UpdateActionsTrigger() {
 		//ui.addTextInstructions("\n Press 'E' to recharge energy\n");
 		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 			rechargeEnergy();
+			animController.setState(AST_RECHARGE);
 			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
 		}
 		else {
