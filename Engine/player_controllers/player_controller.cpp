@@ -259,7 +259,7 @@ void player_controller::myUpdate() {
 		UpdatePossession();
 	}
 
-	if (cc->GetYAxisSpeed() < -0.2f) {
+	if (cc->GetYAxisSpeed() < -0.5f) {
 		ChangeState("falling");
 		animController.setState(AST_FALL);
 	}
