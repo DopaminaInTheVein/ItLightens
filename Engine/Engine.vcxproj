@@ -130,6 +130,7 @@
     <ClCompile Include="components\comp_charactercontroller.cpp" />
     <ClCompile Include="components\comp_culling.cpp" />
     <ClCompile Include="components\comp_drone.cpp" />
+    <ClCompile Include="components\comp_fading_message.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_guided_camera.cpp" />
     <ClCompile Include="components\comp_hierarchy.cpp" />
@@ -540,6 +541,7 @@
     <ClInclude Include="components\comp_controller_3rd_person.h" />
     <ClInclude Include="components\comp_culling.h" />
     <ClInclude Include="components\comp_drone.h" />
+    <ClInclude Include="components\comp_fading_message.h" />
     <ClInclude Include="components\comp_generator.h" />
     <ClInclude Include="components\comp_guided_camera.h" />
     <ClInclude Include="components\comp_hierarchy.h" />

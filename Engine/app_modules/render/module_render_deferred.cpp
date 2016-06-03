@@ -159,16 +159,17 @@ void CRenderDeferredModule::update(float dt) {
 void CRenderDeferredModule::renderGBuffer() {
   PROFILE_FUNCTION("GBuffer");
   CTraceScoped scope("GBuffer");
-  static CCamera camera;
-
   h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
-  if (h_camera.isValid()) {
-    CEntity* e = h_camera;
-    TCompCamera* comp_cam = e->get<TCompCamera>();
-    camera = *comp_cam;
-    camera.setAspectRatio((float)xres / (float)yres);
-    comp_cam->setAspectRatio(camera.getAspectRatio());
-  }
+  
+  //static CCamera camera;
+
+  //if (h_camera.isValid()) {
+  //  CEntity* e = h_camera;
+  //  TCompCamera* comp_cam = e->get<TCompCamera>();
+  //  camera = *comp_cam;
+  //  camera.setAspectRatio((float)xres / (float)yres);
+  //  comp_cam->setAspectRatio(camera.getAspectRatio());
+  //}
 
   // To set a default and known Render State
   Render.ctx->RSSetState(nullptr);
@@ -176,7 +177,8 @@ void CRenderDeferredModule::renderGBuffer() {
   activateBlend(BLENDCFG_DEFAULT);
 
   // Activo la camara en la pipeline de render
-  activateCamera(&camera);
+  //activateCamera(&camera);
+  activateRenderCamera3D();
 
   // -------------------------
   // Activar mis multiples render targets
@@ -205,13 +207,15 @@ void CRenderDeferredModule::renderGBuffer() {
   activateWorldMatrix(MAT44::Identity);
 
   // Mandar a pintar los 'solidos'
-  RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS);
+  if (h_camera.isValid())
+	RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS);
 
   activateZ(ZCFG_DEFAULT);
 }
 
 // ----------------------------------------------
 void CRenderDeferredModule::activateRenderCamera3D() {
+  if (!h_camera.isValid()) return;
   CEntity* e = h_camera;
   TCompCamera* comp_cam = e->get<TCompCamera>();
   comp_cam->setAspectRatio((float)xres / (float)yres);
@@ -748,7 +752,10 @@ void CRenderDeferredModule::render() {
 	
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	  
+	renderUI();
 
+	// Leave the 3D Camera active
+	activateRenderCamera3D();
 }
 
 void CRenderDeferredModule::applyPostFX() {
@@ -778,7 +785,7 @@ void CRenderDeferredModule::applyPostFX() {
 
 void CRenderDeferredModule::renderUI() {
   CTraceScoped scope("renderUI");
-  /*activateZ(ZCFG_ALL_DISABLED);
+  activateZ(ZCFG_ALL_DISABLED);
   activateBlend(BLENDCFG_DEFAULT);
 
   CHandle h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
@@ -790,7 +797,7 @@ void CRenderDeferredModule::renderUI() {
   //ortho->setOrtho(xres, yres, ortho->getZNear(), ortho->getZFar());
   ortho->setOrtho(10, 10, ortho->getZNear(), ortho->getZFar());
   activateCamera(ortho);
-  */
+  
   /*
 
   CCamera ortho;
@@ -824,6 +831,5 @@ void CRenderDeferredModule::renderUI() {
   auto mesh = Resources.get("unitQuadXY.mesh")->as<CMesh>();
   mesh->activateAndRender();
   */
-  //RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS);*/
-
+  RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS);
 }

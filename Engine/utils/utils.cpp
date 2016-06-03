@@ -269,6 +269,17 @@ CQuaternion interpolate(const CQuaternion &start, const CQuaternion &end, const 
   return result;
 }
 
+// COLOR
+
+ImColor obtainColorFromString(std::string color) {
+  int red = stoi(color.substr(1, 2), 0, 16);
+  int green = stoi(color.substr(3, 2), 0, 16);
+  int blue = stoi(color.substr(5, 2), 0, 16);
+  int alpha = stoi(color.substr(7, 2), 0, 16);
+
+  return ImColor(red, green, blue, alpha);
+}
+
 // Basic math
 float max(int nargs, ...) {
   float max_value = FLT_MIN;
@@ -283,15 +294,15 @@ float max(int nargs, ...) {
 }
 
 float min(int nargs, ...) {
-	float min_value = FLT_MAX;
-	va_list listPointer;
-	va_start(listPointer, nargs);
-	for (int i = 0; i < nargs; i++)
-	{
-		float arg = va_arg(listPointer, int);
-		if (arg < min_value) min_value = arg;
-	}
-	return min_value;
+  float min_value = FLT_MAX;
+  va_list listPointer;
+  va_start(listPointer, nargs);
+  for (int i = 0; i < nargs; i++)
+  {
+    float arg = va_arg(listPointer, int);
+    if (arg < min_value) min_value = arg;
+  }
+  return min_value;
 }
 
 //Check Nan, Infinity's zero values,...

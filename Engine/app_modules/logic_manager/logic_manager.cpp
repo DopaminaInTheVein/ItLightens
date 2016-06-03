@@ -508,6 +508,18 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play ambient function
 		.set("play_ambient", &SLBPublicFunctions::playAmbient)
 		.comment("Executes the specified ambient sound")
+    // launch text span related to npc talks
+    .set("player_talks", &SLBPublicFunctions::playerTalks)
+    .comment("Shows the specified text for aq limited time")
+    .param("string: text to show")
+    .param("float: time until desaparition")
+    // launch text span related to npc talks with colors
+    .set("player_talks_color", &SLBPublicFunctions::playerTalksWithColor)
+    .comment("Shows the specified text for aq limited time")
+    .param("string: text to show")
+    .param("float: time until desaparition")
+    .param("string: HEX BACKGROUND COLOR -> #RRGGBBAA")
+    .param("string: HEX TEXT COLOR -> #RRGGBBAA")
 		// launch intro state
 		.set("toggle_intro_state", &SLBPublicFunctions::toggleIntroState)
 		.comment("Toggles the intro game state")

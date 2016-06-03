@@ -32,8 +32,10 @@ bool CRenderManager::sortByTechMatMesh(
   auto* tech1 = k1.material->tech;
   auto* tech2 = k2.material->tech;
   if (tech1 != tech2) {
-    if (tech1->getCategory() != tech2->getCategory())
-      return tech1->getCategory() < tech2->getCategory();
+    //if (tech1->getCategory() != tech2->getCategory())
+    //  return tech1->getCategory() < tech2->getCategory();
+	if (tech1->getCategory() != tech2->getCategory())
+	  return tech1->getCategory() < tech2->getCategory();
     if (tech1->getPriority() == tech2->getPriority())
       return tech1->getName() < tech2->getName();
     return (tech1->getPriority() < tech2->getPriority());

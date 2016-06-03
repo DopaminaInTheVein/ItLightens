@@ -52,7 +52,7 @@ namespace GUI {
 
 	
 	Rect createRect(float x, float y, float sx, float sy);
-	void drawRect(Rect, ImColor);
+	void drawRect(const Rect&, const ImColor&);
 	void drawText(float x, float y, ImFont * font, float size, ImColor color, const char * text);
 	void drawText(Pixel p, ImFont * font, float size, ImColor color, const char * text);
 }

@@ -27,6 +27,11 @@ bool TCompCamera::load(MKeyValue& atts) {
 	float znear = atts.getFloat("znear", 0.1f);
 	float zfar = atts.getFloat("zfar", 1000.f);
 	float fov_in_degs = atts.getFloat("fov", 70.f);
+	
+	bool is_ortho = atts.getBool("is_ortho", false);
+	if (is_ortho) setOrtho(1024, 800, znear, zfar);
+	else setProjection(deg2rad(fov_in_degs), znear, zfar);
+
 	setProjection(deg2rad(fov_in_degs), znear, zfar);
 	detect_colsions = atts.getBool("collision", false);
 	smoothDefault = smoothCurrent = 10.f;
@@ -44,10 +49,10 @@ void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
 }
 
 void TCompCamera::render() const {
-	//auto axis = Resources.get("frustum.mesh")->as<CMesh>();
-	//shader_ctes_object.World = getViewProjection().Invert();
-	//shader_ctes_object.uploadToGPU();
-	//axis->activateAndRender();
+	auto axis = Resources.get("frustum.mesh")->as<CMesh>();
+	shader_ctes_object.World = getViewProjection().Invert();
+	shader_ctes_object.uploadToGPU();
+	axis->activateAndRender();
 }
 
 void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
@@ -58,77 +63,87 @@ void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
 }
 
 void TCompCamera::update(float dt) {
+	
 	CHandle owner = CHandle(this).getOwner();
 	CEntity* e_owner = owner;
-	assert(e_owner);
-	TCompTransform* tmx = e_owner->get<TCompTransform>();
-	assert(tmx);
-	bool cameraIsGuided = false;
-	if (guidedCamera.isValid()) {
-		//Camara guida
-		CEntity * egc = guidedCamera;
-		TCompGuidedCamera * gc = egc->get<TCompGuidedCamera>();
-		cameraIsGuided = gc->followGuide(tmx, this);
+	
+	if (owner.hasTag("camera_main") ){
+		assert(e_owner);
+		TCompTransform* tmx = e_owner->get<TCompTransform>();
+		assert(tmx);
+		bool cameraIsGuided = false;
+		if (guidedCamera.isValid()) {
+			//Camara guida
+			CEntity * egc = guidedCamera;
+			TCompGuidedCamera * gc = egc->get<TCompGuidedCamera>();
+			cameraIsGuided = gc->followGuide(tmx, this);
+			if (!cameraIsGuided) {
+				//Fin recorrido  ...
+				//... Guardamos guidedCamera para mensaje a Logic Manager
+				CHandle cameraFinished = guidedCamera;
+
+				//... Terminamos el modo cinematica
+				guidedCamera = CHandle();
+				GameController->SetCinematic(false);
+
+				// Set the player in the 3rdPersonController
+				CHandle t = tags_manager.getFirstHavingTag("player");
+				CEntity * target_e = t;
+				if (e_owner && t.isValid()) {
+					TMsgSetTarget msg;
+					msg.target = t;
+					msg.who = PLAYER; //TODO: Siempre player? 
+					e_owner->sendMsg(msg);		//set camera
+
+					TMsgSetCamera msg_camera;
+					msg_camera.camera = owner;
+					target_e->sendMsg(msg_camera);	//set target camera
+				}
+
+				smoothCurrent = 1.f; //Return to player smoothly
+				logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(egc->getName()), cameraFinished);
+			}
+		}
 		if (!cameraIsGuided) {
-			//Fin recorrido  ...
-			//... Guardamos guidedCamera para mensaje a Logic Manager
-			CHandle cameraFinished = guidedCamera;
 
-			//... Terminamos el modo cinematica
-			guidedCamera = CHandle();
-			GameController->SetCinematic(false);
-
-			// Set the player in the 3rdPersonController
-			CHandle t = tags_manager.getFirstHavingTag("player");
-			CEntity * target_e = t;
-			if (e_owner && t.isValid()) {
-				TMsgSetTarget msg;
-				msg.target = t;
-				msg.who = PLAYER; //TODO: Siempre player? 
-				e_owner->sendMsg(msg);		//set camera
-
-				TMsgSetCamera msg_camera;
-				msg_camera.camera = owner;
-				target_e->sendMsg(msg_camera);	//set target camera
+			if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
+				//if (owner.hasTag("camera_main")) {
+				VEC3 pos = tmx->getPosition();
+				pos.y += 2;
+				tmx->setPosition(pos);
+				if (detect_colsions) {
+					if (!checkColision(pos))
+						this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
+				}
+				if (!detect_colsions || !checkColision(pos)) {
+					if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
+					this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux(), smoothCurrent);
+				}
+				//}
 			}
-
-			smoothCurrent = 1.f; //Return to player smoothly
-			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(egc->getName()), cameraFinished);
-		}
-	}
-	if (!cameraIsGuided) {
-		if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
-			VEC3 pos = tmx->getPosition();
-			pos.y += 2;
-			tmx->setPosition(pos);
-			if (detect_colsions) {
-				if (!checkColision(pos))
-					this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
+			else if (GameController->GetFreeCamera()) {
+				CHandle owner = CHandle(this).getOwner();
+				CEntity* e_owner = owner;
+				assert(e_owner);
+				TCompTransform* tmx = e_owner->get<TCompTransform>();
+				assert(tmx);
+				this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
 			}
-			if (!detect_colsions || !checkColision(pos)) {
-				if (abs(smoothCurrent-smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
-				this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux(), smoothCurrent);
-			}
-		}
-		else if (GameController->GetFreeCamera()) {
-			CHandle owner = CHandle(this).getOwner();
-			CEntity* e_owner = owner;
-			assert(e_owner);
-			TCompTransform* tmx = e_owner->get<TCompTransform>();
-			assert(tmx);
-			this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
-		}
-		else {
-			if (e_owner) {
-				TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
-				CHandle targetowner = obtarged->target;
-				if (targetowner.isValid()) {
-					CEntity* targeted = targetowner;
-					TCompTransform * targettrans = targeted->get<TCompTransform>();
-					if (targettrans) this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());
+			else {
+				if (e_owner) {
+					TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
+					CHandle targetowner = obtarged->target;
+					if (targetowner.isValid()) {
+						CEntity* targeted = targetowner;
+						TCompTransform * targettrans = targeted->get<TCompTransform>();
+						if (targettrans) this->smoothLookAt(tmx->getPosition(), targettrans->getPosition(), getUpAux());
+					}
 				}
 			}
 		}
+	}
+	else {
+		updateFromEntityTransform(e_owner);
 	}
 }
 
@@ -186,10 +201,17 @@ void TCompCamera::renderInMenu() {
 	float ar = getAspectRatio();
 
 	bool changed = false;
-	float fov_in_deg = rad2deg(fov_in_rad);
-	if (ImGui::SliderFloat("Fov", &fov_in_deg, 30.f, 110.f)) {
-		changed = true;
-		fov_in_rad = deg2rad(fov_in_deg);
+	//float fov_in_deg = rad2deg(fov_in_rad);
+	//if (ImGui::SliderFloat("Fov", &fov_in_deg, 30.f, 110.f)) {
+	//	changed = true;
+	//	fov_in_rad = deg2rad(fov_in_deg);
+	//}
+	if (!isOrtho()) {
+		float fov_in_deg = rad2deg(fov_in_rad);
+		if (ImGui::SliderFloat("Fov", &fov_in_deg, 30.f, 110.f)) {
+			changed = true;
+			fov_in_rad = deg2rad(fov_in_deg);
+		}
 	}
 	changed |= ImGui::SliderFloat("ZNear", &znear, 0.01f, 2.f);
 	changed |= ImGui::SliderFloat("ZFar", &zfar, 10.f, 1000.f);
