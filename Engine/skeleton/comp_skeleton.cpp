@@ -35,37 +35,58 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 	// To get the bones updated right now, otherwis, trying to render will find all bones collapsed in the zero
 	model->update(0.f);
 
-	prevCycleId = -1;
-
 	return true;
 }
 
 void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 	//Obtenemos id de la animacion a asignar
-	int anim_id = resource_skeleton->getAnimIdByName(msg.name);
-	if (anim_id >= 0) {
-		//Encuentra la animacion con dicho nombre
-		dbg("Cambio anim: %s\n", msg.name.c_str());
+    std::vector<std::string> anim_names = msg.name;
+	std::vector<std::string> next_loop = msg.nextLoop;
+
+	// desactivacion de animaciones anteriores
+	for (auto prevCycleId : prevCycleIds) {
 		if (msg.loop) {
-			//Cycle animation
 			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.2f);
-			model->getMixer()->blendCycle(anim_id, 1.0f, 0.2f);
-			prevCycleId = anim_id;
 		}
 		else {
-			//Action animation (no loop)
 			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.f);
-			model->getMixer()->executeAction(anim_id, 0.f, 0.2f, true);
+		}
+	}
+	prevCycleIds.clear();
+	// activacion nuevas animacinoes
+	for (auto name : anim_names) {
 
-			//Siguiente loop (si no se indica sera el actual)
-			if (msg.nextLoop != "") {
-				int nextCycleId = resource_skeleton->getAnimIdByName(msg.nextLoop);
-				if (nextCycleId >= 0) prevCycleId = nextCycleId;
-				else fatal("Animation %s doesn't exist!", msg.nextLoop.c_str());
+		int anim_id = resource_skeleton->getAnimIdByName(name);
+		if (anim_id >= 0) {
+			//Encuentra la animacion con dicho nombre
+			dbg("Cambio anim: %s\n", name.c_str());
+			if (msg.loop) {
+				//Cycle animation
+				model->getMixer()->blendCycle(anim_id, 1.0f, 0.2f);
+				prevCycleIds.push_back(anim_id);
+			}
+			else {
+				//Action animation (no loop)
+				model->getMixer()->executeAction(anim_id, 0.f, 0.2f, true);
+
+				//Siguiente loop (si no se indica sera el actual)
+				if (next_loop[0] != "") {
+					std::vector<int> nextCycleIds;
+					for (auto next : next_loop) {
+						int nextCycleId = resource_skeleton->getAnimIdByName(next);						
+						if (nextCycleId >= 0) nextCycleIds.push_back(nextCycleId);
+						else fatal("Animation %s doesn't exist!", next.c_str());
+					}
+					for (auto nextCycleId : nextCycleIds) {
+						prevCycleIds.push_back(nextCycleId);
+					}
+				}
 			}
 		}
-	} else {
-		fatal("Animation %s doesn't exist!", msg.name.c_str());
+		else {
+			fatal("Animation %s doesn't exist!", name.c_str());
+		}
+
 	}
 }
 
@@ -126,7 +147,8 @@ void TCompSkeleton::updateEndAction() {
 		auto lastCoreAction = lastAction->getCoreAnimation();
 		float duration = lastCoreAction->getDuration();
 		if (duration - lastAction->getTime() < endTimeAction) {
-			model->getMixer()->blendCycle(prevCycleId, 1.0f, endTimeAction);
+			for (auto prevCycleId : prevCycleIds)
+				model->getMixer()->blendCycle(prevCycleId, 1.0f, endTimeAction);
 		}
 
 	}

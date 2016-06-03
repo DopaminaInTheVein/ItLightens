@@ -27,6 +27,10 @@ protected:
 	void setAnim(std::string anim, bool loop, std::string nextLoop = "");
 	void setAction(std::string anim, std::string nextLoop = "");
 	void setLoop(std::string anim);
+	//animaciones parciales
+	void setAnim(std::vector<std::string> anim, bool loop, std::vector<std::string> nextLoop);
+	void setAction(std::vector<std::string> anim, std::vector<std::string> nextLoop);
+	void setLoop(std::vector<std::string> anim);
 	
 	//Virtuals
 	virtual void myUpdate();

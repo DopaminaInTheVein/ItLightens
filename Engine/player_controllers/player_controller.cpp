@@ -260,7 +260,7 @@ void player_controller::myUpdate() {
 	}
 
 	if (cc->GetYAxisSpeed() < -0.5f) {
-		ChangeState("falling");
+		ChangeState("doublefalling");
 		animController.setState(AST_FALL);
 	}
 	else if (cc->OnGround() && state == "moving") {
