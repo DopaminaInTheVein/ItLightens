@@ -377,14 +377,17 @@ int bt_scientist::actionSelectWorkstation() {
 		// if we are close enough, we go to this workbench
 		CEntity* entity = stations[posi];
 		TCompWorkstation* workstation = entity->get<TCompWorkstation>();
-		VEC3 station_pos = workstation->getPosition();
+		VEC3 station_pos = workstation->getActionPosition();
 
 		float dist_to_ws = squaredDistXZ(myPos, station_pos);
 		//if the workstation is not close enough, go the the next
 		if (dist_to_ws > max_wb_distance)
 			continue;
 
+		ws_anim = workstation->getAnimation();
 		ws_to_go = station_pos;
+		ws_yaw = workstation->getActionYaw();
+
 		return OK;
 
 	}
@@ -401,7 +404,7 @@ int bt_scientist::actionGoToWorkstation() {
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 myPos = me_transform->getPosition();
 	//reach waypoint?
-	if (squaredDistXZ(myPos, ws_to_go) < reach_sq_reach_pnt) {
+	if (squaredDistXZ(myPos, ws_to_go) < 0.5f) {
 		return OK;
 	}
 	else {
@@ -418,6 +421,14 @@ int bt_scientist::actionWaitInWorkstation() {
 	PROFILE_FUNCTION("scientist: waitinworkbench");
 	if (!myParent.isValid()) return false;
 
+	// Turn to the workstation
+	if (!turnToYaw(ws_yaw)) {
+		return STAY;
+	}
+
+	// Execute the workstation animation
+	//animController.setAnim(ws_anim);
+	
 	// we add a randomly generated offset to the waiting time
 	int sign = rand() % 100;
 	int offset = rand() % (int)ws_wait_time_offset;
@@ -518,6 +529,33 @@ bool bt_scientist::turnTo(VEC3 dest) {
 			yaw -= deltaAngle;
 		}
 		me_transform->setAngles(yaw, pitch);
+	}
+
+	//Ha acabado el giro?
+	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
+}
+
+// -- Turn To -- //
+bool bt_scientist::turnToYaw(float yaw_dest) {
+	PROFILE_FUNCTION("scientist: turn to");
+	if (!myParent.isValid()) return false;
+	SetMyEntity(); //needed in case address Entity moved by handle_manager
+	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	VEC3 myPos = me_transform->getPosition();
+	float yaw, pitch;
+	me_transform->getAngles(&yaw, &pitch);
+
+	float deltaAngle = rot_speed * getDeltaTime();
+	float deltaYaw = yaw_dest - yaw;
+	float angle_epsilon = deg2rad(5);
+
+	if (deltaYaw > 0) {
+		if (deltaAngle < deltaYaw) yaw += deltaAngle;
+		else yaw += deltaYaw;
+	}
+	else {
+		if (deltaAngle < abs(deltaYaw)) yaw -= deltaAngle;
+		else yaw -= deltaYaw;
 	}
 
 	//Ha acabado el giro?

@@ -71,9 +71,11 @@ class bt_scientist : public bt_poss, public TCompBase {
 	float t_waitInPos;
 	//--------------------------------------
 
-	//Toggles
+	//Workstation Toggles
 	bool busy_state_toggle = true;
+	std::string ws_anim;
 	VEC3 ws_to_go;
+	float ws_yaw;
 	float ws_time_waited = 0.f;
 	float ws_wait_time;
 	float ws_wait_time_offset;
@@ -201,6 +203,7 @@ class bt_scientist : public bt_poss, public TCompBase {
 		void goTo(const VEC3& dest);
 		void goForward(float stepForward);
 		bool turnTo(VEC3 dest);
+		bool turnToYaw(float yaw_dest);
 
 		//UI Debug for scientific AI
 		void renderInMenu();

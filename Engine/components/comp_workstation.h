@@ -35,6 +35,14 @@ struct TCompWorkstation : public TCompBase {
 		return position;
 	}
 
+	VEC3 getActionPosition() {
+		return pos_action;
+	}
+
+	float getActionYaw() {
+		return yaw_action;
+	}
+
 	std::string getAnimation() {
 		return anim_name;
 	}
