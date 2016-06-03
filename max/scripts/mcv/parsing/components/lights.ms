@@ -14,7 +14,7 @@ fn _parse_light_common xml = (
 	xml.addAttr "out_radius" _parsingObject.farAttenEnd
 	
 	--Use ramp color?
-	parsePropAttribute "ramp" "ramp"
+	parsePropAttribute xml "ramp" "ramp"
 )
 
 -- Resolution

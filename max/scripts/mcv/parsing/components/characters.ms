@@ -114,7 +114,20 @@ fn parseFormation parent = (
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 --- Components ---
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+----------------------------------------------------------------------
+-- WORKSTATION --
+----------------------------------------------------------------------
+fn _parse_workstation = (
+	xml = XML_PARSING.addChild "workstation"
+	local keyPoint = (findHelper "keyPoint")
+	if keyPoint != undefined then (
+		--Key Point
+		local mcv_tmx = (matrixMax2MCV keyPoint.transform)
+		xml.addAttr "actionPos" (getTransformPosValue mcv_tmx)
+		xml.addAttr "actionYaw" (degtorad (mcv_tmx.rotation as eulerangles).x)
+		parsePropAttribute xml "animation" "animation"
+	)
+)
 ----------------------------------------------------------------------
 -- LIFE --
 ----------------------------------------------------------------------
