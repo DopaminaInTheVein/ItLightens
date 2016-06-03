@@ -44,7 +44,6 @@ CGuiModule * Gui = nullptr;
 // --------------------------------------------
 
 bool CApp::start() {
-
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
 	Gui = new CGuiModule;
@@ -56,7 +55,6 @@ bool CApp::start() {
 	Debug = new CDebug();
 	logic_manager = new CLogicManagerModule;
 	sound_manager = new CSoundManagerModule;
-
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
@@ -80,7 +78,7 @@ bool CApp::start() {
 	mod_update.push_back(g_PhysxManager);
 	mod_update.push_back(io);
 	mod_update.push_back(Debug);
-	
+
 	mod_renders.push_back(render_deferred);
 	mod_renders.push_back(entities);
 	mod_renders.push_back(Debug);
@@ -101,11 +99,11 @@ bool CApp::start() {
 	mod_wnd_proc.push_back(io);
 	mod_wnd_proc.push_back(imgui);
 
-// ----------------------------
-  if (!drawUtilsCreate())
-    return false;
+	// ----------------------------
+	if (!drawUtilsCreate())
+		return false;
 
-resources_dir_watcher.start("data", getHWnd());
+	resources_dir_watcher.start("data", getHWnd());
 
 	// ----------------------------
 	tech_solid_colored = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
@@ -170,38 +168,34 @@ void CApp::exitGame() {
 // ----------------------------------
 void CApp::update(float elapsed) {
 	PROFILE_FUNCTION("update");
-		for (auto it : mod_update) {
-			if (GameController->GetGameState() == CGameController::RUNNING) {
-				PROFILE_FUNCTION(it->getName());
-				auto name = it->getName();
-				it->update(elapsed);
-			} 
-			else if (it->forcedUpdate()) {
-				PROFILE_FUNCTION(it->getName());
-				it->update(getDeltaTime(1.0f));
-			}
+	for (auto it : mod_update) {
+		if (GameController->GetGameState() == CGameController::RUNNING) {
+			PROFILE_FUNCTION(it->getName());
+			auto name = it->getName();
+			it->update(elapsed);
 		}
-		static float ctime = 0.f;
-		ctime += elapsed* 0.01f;
-		CHandleManager::destroyAllPendingObjects();
-		if (sceneToLoad != "" && entities->size() == 0) {
-			entities->initLevel(sceneToLoad);
-			sceneToLoad = "";
+		else if (it->forcedUpdate()) {
+			PROFILE_FUNCTION(it->getName());
+			it->update(getDeltaTime(1.0f));
 		}
+	}
+	static float ctime = 0.f;
+	ctime += elapsed* 0.01f;
+	CHandleManager::destroyAllPendingObjects();
+	if (sceneToLoad != "" && entities->size() == 0) {
+		entities->initLevel(sceneToLoad);
+		sceneToLoad = "";
+	}
 }
 
 // ----------------------------------
 void CApp::render() {
-  PROFILE_FUNCTION("CApp::render");
-  activateDefaultStates();
+	PROFILE_FUNCTION("CApp::render");
+	activateDefaultStates();
 
-  for (auto it : mod_renders) {
-    PROFILE_FUNCTION(it->getName());
-    CTraceScoped scope( it->getName() );
-    it->render();
-  }
-
+	for (auto it : mod_renders) {
+		PROFILE_FUNCTION(it->getName());
+		CTraceScoped scope(it->getName());
+		it->render();
+	}
 }
-
-
-

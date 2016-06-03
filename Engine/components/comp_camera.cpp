@@ -27,7 +27,7 @@ bool TCompCamera::load(MKeyValue& atts) {
 	float znear = atts.getFloat("znear", 0.1f);
 	float zfar = atts.getFloat("zfar", 1000.f);
 	float fov_in_degs = atts.getFloat("fov", 70.f);
-	
+
 	bool is_ortho = atts.getBool("is_ortho", false);
 	if (is_ortho) setOrtho(1024, 800, znear, zfar);
 	else setProjection(deg2rad(fov_in_degs), znear, zfar);
@@ -49,10 +49,12 @@ void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
 }
 
 void TCompCamera::render() const {
+	/*
 	auto axis = Resources.get("frustum.mesh")->as<CMesh>();
 	shader_ctes_object.World = getViewProjection().Invert();
 	shader_ctes_object.uploadToGPU();
 	axis->activateAndRender();
+	*/
 }
 
 void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
@@ -89,7 +91,7 @@ void TCompCamera::update(float dt) {
 			if (e_owner && t.isValid()) {
 				TMsgSetTarget msg;
 				msg.target = t;
-				msg.who = PLAYER; //TODO: Siempre player? 
+				msg.who = PLAYER; //TODO: Siempre player?
 				e_owner->sendMsg(msg);		//set camera
 
 				TMsgSetCamera msg_camera;
@@ -102,22 +104,21 @@ void TCompCamera::update(float dt) {
 		}
 	}
 	if (!cameraIsGuided) {
-
 		if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
 			//if (owner.hasTag("camera_main")) {
-				VEC3 pos = tmx->getPosition();
-				if (owner.hasTag("camera_main")) {
-					pos.y += 2;
-				}
-				tmx->setPosition(pos);
-				if (detect_colsions) {
-					if (!checkColision(pos))
-						this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
-				}
-				if (!detect_colsions || !checkColision(pos)) {
-					if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
-					this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux(), smoothCurrent);
-				}
+			VEC3 pos = tmx->getPosition();
+			if (owner.hasTag("camera_main")) {
+				pos.y += 2;
+			}
+			tmx->setPosition(pos);
+			if (detect_colsions) {
+				if (!checkColision(pos))
+					this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux());
+			}
+			if (!detect_colsions || !checkColision(pos)) {
+				if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
+				this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront(), getUpAux(), smoothCurrent);
+			}
 			//}
 		}
 		else if (GameController->GetFreeCamera()) {
