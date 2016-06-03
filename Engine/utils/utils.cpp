@@ -48,7 +48,7 @@ float getDeltaTime(float always) {
       _deltaTimePrev = dt;
     }
     if (GameController->GetGameState() == CGameController::STOPPED_INTRO)
-      return dt / 5.0f;
+      return dt / 2.5f;
     else
       return dt;
   }

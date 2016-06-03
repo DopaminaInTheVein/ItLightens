@@ -47,7 +47,7 @@ class bt_guard : public bt, public TCompBase
 	float DIST_SQ_PLAYER_LOST;
 	float SPEED_WALK;
 	float SHOOT_PREP_TIME;
-	float MIN_DIST_TO_PLAYER;
+	float MIN_SQ_DIST_TO_PLAYER;
 	float CONE_VISION;
 	float SPEED_ROT;
 	float DAMAGE_LASER;
@@ -245,7 +245,7 @@ public:
 	void artificialInterrupt();
 
 	void update(float dt) {
-		dbg("%f %f %f\n", formation_point.x, formation_point.y, formation_point.z);
+
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
 			if (t_reduceStats <= 0.0f) {
@@ -253,12 +253,9 @@ public:
 				resetStats();
 			}
 		}
-		dbg("%f %f %f\n", formation_point.x, formation_point.y, formation_point.z);
-		if (!forced_move) Recalc();
-		dbg("%f %f %f\n", formation_point.x, formation_point.y, formation_point.z);
-		animController.update();
-		dbg("%f %f %f\n", formation_point.x, formation_point.y, formation_point.z);
 
+		if (!forced_move) Recalc();
+		animController.update();
 	}
 
 	void render();
