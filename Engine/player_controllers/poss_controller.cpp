@@ -136,5 +136,6 @@ void PossController::onSetEnable(bool enabled) {
 		TMsgSetTag msgTag;
 		msgTag.add = true;
 		msgTag.tag_id = getID("player");
+		eTarget->sendMsg(msgTag);
 	}
 }

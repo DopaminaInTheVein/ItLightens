@@ -87,8 +87,8 @@ struct TCompTags : public TCompBase {
 				nextTag--;
 				tags[i] = tags[nextTag];
 				tags[nextTag] = 0x00; // if i == nextTag first assignation dont do anything
+				break;
 			}
-			break;
 		}
 	}
   }

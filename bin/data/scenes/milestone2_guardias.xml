@@ -1639,7 +1639,7 @@
 </entity>
 <entity>
 <tags
-   tags="player"
+   tags="player raijin"
 />
 <player/>
 <life
