@@ -6,7 +6,7 @@
 #define AST_FALL			"jumpland"
 #define AST_LAND			"jumplandidle"
 #define AST_JUMP			"jump"
-#define AST_JUMP2			"jump2"
+#define AST_JUMP2			"jump"
 #define AST_MOVE			"walk"
 #define AST_RUN				"run"
 #define AST_PREP_SHOOT		"attackprepare"
