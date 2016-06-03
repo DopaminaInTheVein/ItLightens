@@ -893,8 +893,8 @@
 <tags
    tags="workstation"/>
 <workstation
-   actionPos="-68.9267 17.6637 -0.744651"
-   actionYaw="1.5708"
+   posAction="-68.9267 17.6637 -0.744651"
+   yawAction="1.5708"
    animation="idle"/>
 <name
    name="workstationTest002"/>
@@ -912,8 +912,8 @@
 <tags
    tags="workstation"/>
 <workstation
-   actionPos="-73.5737 17.6637 -0.722515"
-   actionYaw="-1.5708"
+   posAction="-73.5737 17.6637 -0.722515"
+   yawAction="-1.5708"
    animation="idle"/>
 <name
    name="workstationTest001"/>

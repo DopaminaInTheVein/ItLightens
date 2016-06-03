@@ -381,8 +381,10 @@ int bt_scientist::actionSelectWorkstation() {
 
 		float dist_to_ws = squaredDistXZ(myPos, station_pos);
 		//if the workstation is not close enough, go the the next
-		if (dist_to_ws > max_wb_distance)
+		if (dist_to_ws > max_wb_distance) {
+			visited.push_back(posi);
 			continue;
+		}
 
 		ws_anim = workstation->getAnimation();
 		ws_to_go = station_pos;
@@ -404,7 +406,7 @@ int bt_scientist::actionGoToWorkstation() {
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 myPos = me_transform->getPosition();
 	//reach waypoint?
-	if (squaredDistXZ(myPos, ws_to_go) < 0.5f) {
+	if (squaredDistXZ(myPos, ws_to_go) < reach_sq_reach_pnt) {
 		return OK;
 	}
 	else {
@@ -547,7 +549,7 @@ bool bt_scientist::turnToYaw(float yaw_dest) {
 
 	float deltaAngle = rot_speed * getDeltaTime();
 	float deltaYaw = yaw_dest - yaw;
-	float angle_epsilon = deg2rad(5);
+	float angle_epsilon = deg2rad(10);
 
 	if (deltaYaw > 0) {
 		if (deltaAngle < deltaYaw) yaw += deltaAngle;
@@ -558,8 +560,10 @@ bool bt_scientist::turnToYaw(float yaw_dest) {
 		else yaw -= deltaYaw;
 	}
 
+	me_transform->setAngles(yaw, pitch);
+
 	//Ha acabado el giro?
-	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
+	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(350);
 }
 
 //Messages:

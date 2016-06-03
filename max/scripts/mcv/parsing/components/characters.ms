@@ -123,8 +123,8 @@ fn _parse_workstation = (
 	if keyPoint != undefined then (
 		--Key Point
 		local mcv_tmx = (matrixMax2MCV keyPoint.transform)
-		xml.addAttr "actionPos" (getTransformPosValue mcv_tmx)
-		xml.addAttr "actionYaw" (degtorad (mcv_tmx.rotation as eulerangles).x)
+		xml.addAttr "posAction" (getTransformPosValue mcv_tmx)
+		xml.addAttr "yawAction" (degtorad (mcv_tmx.rotation as eulerangles).x)
 		parsePropAttribute xml "animation" "animation"
 	)
 )
