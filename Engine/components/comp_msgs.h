@@ -205,8 +205,9 @@ struct TMsgPlayerPolarize {
 	DECLARE_MSG_ID();
 };
 
-struct TMsgAddTag {
+struct TMsgSetTag {
 	uint32_t tag_id;
+	bool add;
 	DECLARE_MSG_ID();
 };
 

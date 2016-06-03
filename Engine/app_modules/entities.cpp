@@ -205,7 +205,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompLocalAABB, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
-	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
+	SUBSCRIBE(TCompTags, TMsgSetTag, onSetTag);
 
 	//Trackers
 	SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);

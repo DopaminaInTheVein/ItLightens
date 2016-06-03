@@ -929,6 +929,8 @@ VEC3 bt_guard::generateRandomPoint() {
 // -- Player Visible? -- //
 bool bt_guard::playerVisible() {
   if (!myParent.isValid()) return false;
+  CEntity * ePlayer = getPlayer();
+  if (!ePlayer) return false;
   TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
   VEC3 posPlayer = tPlayer->getPosition();
   VEC3 myPos = getTransform()->getPosition();

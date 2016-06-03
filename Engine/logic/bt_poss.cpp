@@ -29,6 +29,10 @@ void bt_poss::onSetPossessed(const TMsgAISetPossessed& msg) {
 		stunning = true;
 		possessed = false;
 	}
+	TMsgSetTag msgTag;
+	msgTag.add = possessed;
+	msgTag.tag_id = getID("player");
+	getMyEntity()->sendMsg(msgTag);
 }
 
 void bt_poss::onSetStunned(const TMsgAISetStunned& msg) {
@@ -79,7 +83,6 @@ int bt_poss::actionPossessing() {
 	TMsgControllerSetEnable msg;
 	msg.enabled = true;
 	me->sendMsg(msg);
-	tags_manager.addTag(CHandle(me), getID("player"));
 
 	// Camara Nueva
 	CEntity * camera_e = tags_manager.getFirstHavingTag(getID("camera_main"));
@@ -90,7 +93,9 @@ int bt_poss::actionPossessing() {
 
 	CHandle hRaijin = tags_manager.getFirstHavingTag("raijin");
 	GET_COMP(cc, hRaijin, TCompCharacterController);
+	GET_COMP(tRaijin, hRaijin, TCompTransform);
 	cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
+	tRaijin->setPosition(VEC3(0, 200, 0));
 	return OK;
 }
 

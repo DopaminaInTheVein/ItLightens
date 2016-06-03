@@ -766,7 +766,11 @@ void player_controller::UpdatePossession() {
 			//Se desactiva el player
 			controlEnabled = false;
 			SBB::postBool("possMode", true);
-			tags_manager.removeTag(myHandle, getID("player"));
+			TMsgSetTag msgTag;
+			msgTag.add = false;
+			msgTag.tag_id = getID("player");
+			compBaseEntity->sendMsg(msgTag);
+			msgTag.add = true;
 
 			//TODO: Desactivar render
 			SetCharacterController();
