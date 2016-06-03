@@ -20,7 +20,7 @@ function OnAction( param )
 	--setCameraRotationSensibility(60.5);
 	--setCameraSpeed(4.0);
 	--setCameraSpeedUnlocked(10.0);
-	triggerScientistBusy();
+	--triggerScientistBusy();
 end
 
 function OnActionSci( param )

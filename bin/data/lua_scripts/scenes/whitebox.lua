@@ -15,7 +15,7 @@ activateElevator()
 end
 
 function OnAction_tWall( )
-destroyWall()
+  destroyWall()
 end
 
 function OnActionMole_tWall( )

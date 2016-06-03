@@ -93,7 +93,7 @@ actionWallTarget = Handle()
 function destroyWall( )
   p:print("Destroy Wall\n")
   triggerWall_1:getHandleCaller()
-  --p:exec_command( "triggerWall_1:setActionable(1);", 1 ) --test
+  p:exec_command( "triggerWall_1:setActionable(1);", 1 ) --test
   
   --Llevamos el player al punto de accion
   actionWallTarget:get_handle_by_name_tag("tWall_pAction", "target")

@@ -897,7 +897,7 @@
    actionYaw="1.5708"
    animation="idle"/>
 <name
-   name="workstationTest"/>
+   name="workstationTest002"/>
 <transform
    pos="-69.6108 17.8708 -0.722291"
    quat="0 -0.707107 0 0.707107"
@@ -925,6 +925,26 @@
    name="static_meshes/whitebox/workstationTest001.static_mesh"/>
 <rigidbody
    type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_cientifico AI_poss"/>
+<bt_scientist/>
+<player_cientifico/>
+<life
+   points="100"/>
+<name
+   name="scientist_1"/>
+<transform
+   pos="-71.3086 17.2249 -2.45815"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test_mole/mole_amarilla.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="2.01"/>
 
 </entity>
 
