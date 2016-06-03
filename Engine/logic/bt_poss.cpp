@@ -79,6 +79,7 @@ int bt_poss::actionPossessing() {
 	TMsgControllerSetEnable msg;
 	msg.enabled = true;
 	me->sendMsg(msg);
+	tags_manager.addTag(CHandle(me), getID("player"));
 
 	// Camara Nueva
 	CEntity * camera_e = tags_manager.getFirstHavingTag(getID("camera_main"));
@@ -87,6 +88,9 @@ int bt_poss::actionPossessing() {
 	msgTarg.who = whoAmI();
 	camera_e->sendMsg(msgTarg);
 
+	CHandle hRaijin = tags_manager.getFirstHavingTag("raijin");
+	GET_COMP(cc, hRaijin, TCompCharacterController);
+	cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
 	return OK;
 }
 

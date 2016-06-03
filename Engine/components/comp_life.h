@@ -76,20 +76,7 @@ struct TCompLife : public TCompBase {
 
 			if (currentlife < 0 && !dead) {
 				dead = true;
-				//TMsgDie msg;
-				CHandle player = tags_manager.getFirstHavingTag("player");
-				CHandle h = CHandle(this).getOwner();
-
-				/*
-				if (player != h) {
-					player.sendMsg(msg);
-				}
-
-				h.sendMsg(msg);
-				*/
-
 				GameController->SetGameState(CGameController::LOSE);
-
 				currentlife = 0;
 			}
 

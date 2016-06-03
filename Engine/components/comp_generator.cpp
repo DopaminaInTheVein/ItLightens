@@ -21,7 +21,7 @@ void TCompGenerator::onTriggerEnter(const TMsgTriggerIn & msg)
 {
 	
 	CHandle h_in = msg.other;
-	if (h_in.hasTag("player")) {
+	if (h_in.hasTag("raijin")) {
 		CanRec(true);
 	}
 }
@@ -30,7 +30,7 @@ void TCompGenerator::onTriggerExit(const TMsgTriggerOut & msg)
 {
 	
 	CHandle h_in = msg.other;
-	if (h_in.hasTag("player")) {
+	if (h_in.hasTag("raijin")) {
 		CanRec(false);
 	}
 }
@@ -46,7 +46,7 @@ void TCompGenerator::onCreate(const TMsgEntityCreated & msg)
 
 void TCompGenerator::init()
 {
-	player = tags_manager.getFirstHavingTag(getID("player"));
+	player = tags_manager.getFirstHavingTag(getID("raijin"));
 }
 
 void TCompGenerator::CanRec(bool new_range)

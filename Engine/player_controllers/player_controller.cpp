@@ -766,13 +766,14 @@ void player_controller::UpdatePossession() {
 			//Se desactiva el player
 			controlEnabled = false;
 			SBB::postBool("possMode", true);
+			tags_manager.removeTag(myHandle, getID("player"));
 
 			//TODO: Desactivar render
 			SetCharacterController();
 			cc->SetActive(false);
-			cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
-			TCompTransform *t = myEntity->get<TCompTransform>();
-			t->setPosition(VEC3(0, 200, 0));
+			//cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
+			//TCompTransform *t = myEntity->get<TCompTransform>();
+			//t->setPosition(VEC3(0, 200, 0));
 			player_curr_speed = 0;
 
 			logic_manager->throwEvent(logic_manager->OnPossess, "");

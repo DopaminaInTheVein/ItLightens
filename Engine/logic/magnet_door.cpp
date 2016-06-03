@@ -185,7 +185,7 @@ bool magnet_door::getUpdateInfo() {
 	if (!physics) return false;
 
 	//Player Info
-	CHandle player = tags_manager.getFirstHavingTag("player");
+	CHandle player = tags_manager.getFirstHavingTag("raijin");
 	if (!player.isValid()) return false;
 	CEntity* ePlayer = player;
 	playerTransform = ePlayer->get<TCompTransform>();

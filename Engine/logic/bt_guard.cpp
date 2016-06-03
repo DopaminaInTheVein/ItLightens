@@ -41,8 +41,7 @@ TCompCharacterController* bt_guard::getCC() {
 
 CEntity* bt_guard::getPlayer() {
   PROFILE_FUNCTION("guard: get player");
-  VHandles targets = tags_manager.getHandlesByTag(getID("player"));
-  thePlayer = targets[targets.size() - 1];
+  thePlayer = tags_manager.getFirstHavingTag("player");
   CEntity* player = thePlayer;
   return player;
 }
