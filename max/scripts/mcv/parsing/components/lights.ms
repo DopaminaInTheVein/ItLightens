@@ -2,7 +2,7 @@
 
 --Common
 fn _parse_light_common xml = (
-		--Color attribute
+	--Color attribute
 	local col = _parsingObject.rgb/255
 	local colorValue = getAsXmlValues #(col.r, col.g, col.b, _parsingObject.multiplier)
 	xml.addAttr "color" colorValue
@@ -12,6 +12,9 @@ fn _parse_light_common xml = (
 	
 	--Out_radius
 	xml.addAttr "out_radius" _parsingObject.farAttenEnd
+	
+	--Use ramp color?
+	parsePropAttribute xml "ramp" "ramp"
 )
 
 -- Resolution

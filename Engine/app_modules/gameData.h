@@ -21,8 +21,9 @@ public:
 		if (player.isValid()) {
 			CEntity* ePlayer = player;
 			player_controller * pc = ePlayer->get<player_controller>();
-			assert(pc || fatal("Player doesn't have player_controller component!"));
-			return pc->getMaxLife();
+			//assert(pc || fatal("Player doesn't have player_controller component!"));
+			if (pc)	return pc->getMaxLife();
+			else return 100.f;
 		}
 	}
 

@@ -14,8 +14,7 @@ using namespace IdEntities;
 
 // player functions
 void SLBPlayer::getPlayer() {
-  VHandles targets = tags_manager.getHandlesByTag(getID("player"));
-  CHandle thePlayer = targets[targets.size() - 1];
+  CHandle thePlayer = tags_manager.getFirstHavingTag("player");
   player_handle = thePlayer;
 }
 
@@ -92,8 +91,7 @@ CHandle SLBHandle::getHandle() {
 
 // We need ti aply generic actions to player as well
 void SLBHandle::getPlayer() {
-  VHandles targets = tags_manager.getHandlesByTag(getID("player"));
-  CHandle thePlayer = targets[targets.size() - 1];
+  CHandle thePlayer = tags_manager.getFirstHavingTag("player");
   real_handle = thePlayer;
 }
 

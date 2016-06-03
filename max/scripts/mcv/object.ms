@@ -119,7 +119,7 @@ struct OM (
 		----------------------------------------------------------------------------------------------------------------------------------------------------
 		,#("Player"
 			-- Tags
-			,#(TAG_PLAYER)
+			,#(TAG_PLAYER, "raijin")
 			-- Attributes
 			,#("life")
 			--Components
@@ -232,6 +232,17 @@ struct OM (
 			,#("speedUp", "speedDown")
 			--Components
 			,#("elevator")
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("workstation"
+			-- Tags
+			,#("workstation")
+			-- Attributes
+			,#("animation")
+			--Components
+			,#("workstation")
 			--Helpers
 			,#()
 		)

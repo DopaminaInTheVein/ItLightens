@@ -46,7 +46,7 @@ void water_controller::Init() {
 	}
 
 	SetHandleMeInit();
-	player = tags_manager.getFirstHavingTag(getID("player"));
+	player = tags_manager.getFirstHavingTag(getID("raijin"));
 
 	ChangeState("idle");
 }

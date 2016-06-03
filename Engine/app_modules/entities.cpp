@@ -205,7 +205,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompLocalAABB, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
-	SUBSCRIBE(TCompTags, TMsgAddTag, onTagAdded);
+	SUBSCRIBE(TCompTags, TMsgSetTag, onSetTag);
 
 	//Trackers
 	SUBSCRIBE(TCompTracker, TMsgEntityCreated, onCreate);
@@ -614,9 +614,8 @@ void CEntitiesModule::update(float dt) {
 	}
 	// In this mode, only the animation of the player is updated
 	else if (GameController->GetGameState() == CGameController::STOPPED_INTRO) {
-		VHandles targets = tags_manager.getHandlesByTag(getID("player"));
-		CHandle player_handle = targets[targets.size() - 1];
-		CEntity* player_entity = player_handle;
+		CHandle player_handle = tags_manager.getFirstHavingTag("player");
+		CEntity * player_entity = player_handle;
 
 		TCompSkeleton* player_skeleton = player_entity->get<TCompSkeleton>();
 		player_skeleton->update(dt);

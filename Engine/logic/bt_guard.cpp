@@ -41,8 +41,7 @@ TCompCharacterController* bt_guard::getCC() {
 
 CEntity* bt_guard::getPlayer() {
   PROFILE_FUNCTION("guard: get player");
-  VHandles targets = tags_manager.getHandlesByTag(getID("player"));
-  thePlayer = targets[targets.size() - 1];
+  thePlayer = tags_manager.getFirstHavingTag("player");
   CEntity* player = thePlayer;
   return player;
 }
@@ -63,7 +62,7 @@ void bt_guard::readIniFileAttr() {
       assignValueToVar(DIST_SQ_PLAYER_LOST, fields);
       assignValueToVar(SPEED_WALK, fields);
       assignValueToVar(SHOOT_PREP_TIME, fields);
-      assignValueToVar(MIN_DIST_TO_PLAYER, fields);
+      assignValueToVar(MIN_SQ_DIST_TO_PLAYER, fields);
       assignValueToVar(CONE_VISION, fields);
       CONE_VISION = deg2rad(CONE_VISION);
       assignValueToVar(SPEED_ROT, fields);
@@ -160,7 +159,7 @@ bool bt_guard::playerNear() {
   VEC3 myPos = getTransform()->getPosition();
 
   float distance = squaredDistXZ(myPos, posPlayer);
-  if (distance < MIN_DIST_TO_PLAYER) {
+  if (distance < MIN_SQ_DIST_TO_PLAYER) {
     return true;
   }
   else {
@@ -202,7 +201,7 @@ bool bt_guard::playerOutOfReach() {
   VEC3 myPos = getTransform()->getPosition();
   float distance = squaredDistXZ(myPos, posPlayer);
   if (distance > DIST_SQ_SHOT_AREA_ENTER) {
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     return true;
   }
   else {
@@ -300,7 +299,7 @@ int bt_guard::actionStunned() {
 
 int bt_guard::actionStepBack() {
   PROFILE_FUNCTION("guard: actionstepback");
-  animController.setState(AST_RUN);
+  animController.setState(AST_MOVE);
   goForward(-2.f*SPEED_WALK);
 
   if (playerNear()) return STAY;
@@ -351,7 +350,7 @@ int bt_guard::actionChase() {
   else {
     getPath(myPos, posPlayer, SBB::readSala());
 
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     goTo(posPlayer);
     return STAY;
   }
@@ -361,6 +360,7 @@ int bt_guard::actionPrepareToAbsorb() {
   PROFILE_FUNCTION("guard: prepare to absorb");
   if (!myParent.isValid()) return false;
   shoot_preparation_time += getDeltaTime();
+  dbg("PREPARING TO SHOOT!\n");
   if (shoot_preparation_time > SHOOT_PREP_TIME) {
     shoot_preparation_time = 0.f;
     // calling OnGuardAttackEvent
@@ -376,8 +376,9 @@ int bt_guard::actionAbsorb() {
   PROFILE_FUNCTION("guard: absorb");
   if (!myParent.isValid()) return false;
   if (playerNear() && playerVisible()) {
+	  dbg("SHOOTING BACKWARDS!\n");
     animController.setState(AST_SHOOT_BACK);
-    goForward(-1.0f*SPEED_WALK);
+    goForward(-0.9f*SPEED_WALK);
     shootToPlayer();
     return STAY;
   }
@@ -494,7 +495,7 @@ int bt_guard::actionSearch() {
   else if (playerLost) {
     float distance = squaredDistXZ(myPos, player_last_seen_point);
     getPath(myPos, player_last_seen_point, SBB::readSala());
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     goTo(player_last_seen_point);
     //Noise Point Reached ?
     if (distance < DIST_SQ_REACH_PNT) {
@@ -517,7 +518,7 @@ int bt_guard::actionSearch() {
   else if (noiseHeard) {
     float distance = squaredDistXZ(myPos, noisePoint);
     getPath(myPos, noisePoint, SBB::readSala());
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     goTo(noisePoint);
     //Noise Point Reached ?
     if (distance < DIST_SQ_REACH_PNT) {
@@ -564,7 +565,7 @@ int bt_guard::actionMoveAround() {
 
   if (distance_to_point > DIST_SQ_REACH_PNT) {
     getPath(myPos, search_player_point, SBB::readSala());
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     goTo(search_player_point);
     return STAY;
   }
@@ -620,7 +621,7 @@ int bt_guard::actionSeekWpt() {
     }
     else {
       getPath(myPos, dest, SBB::readSala());
-      animController.setState(AST_RUN);
+      animController.setState(AST_MOVE);
       goTo(dest);
       return STAY;
     }
@@ -691,7 +692,7 @@ int bt_guard::actionGoToFormation() {
   // if we didn't reach the point
   if (distance_to_point > DIST_SQ_REACH_PNT) {
     getPath(myPos, formation_point, SBB::readSala());
-    animController.setState(AST_RUN);
+    animController.setState(AST_MOVE);
     goTo(formation_point);
     return STAY;
   }
@@ -930,6 +931,8 @@ VEC3 bt_guard::generateRandomPoint() {
 // -- Player Visible? -- //
 bool bt_guard::playerVisible() {
   if (!myParent.isValid()) return false;
+  CEntity * ePlayer = getPlayer();
+  if (!ePlayer) return false;
   TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
   VEC3 posPlayer = tPlayer->getPosition();
   VEC3 myPos = getTransform()->getPosition();
@@ -951,10 +954,10 @@ bool bt_guard::playerVisible() {
             PxRaycastBuffer hit;
             bool ret = rayCastToPlayer(1, distRay, hit);
             if (ret) { //No bloquea vision
-              CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
-              if (h.hasTag("player")) { //player?
-                return true;
-              }
+				CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+				if (h.hasTag("player")) { //player?
+					return true;
+				}
             }
           }
         }
@@ -997,8 +1000,8 @@ bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hi
   //rcQuery.types = types;
   CEntity *e = myParent;
   TCompCharacterController *cc = e->get<TCompCharacterController>();
-  Debug->DrawLine(origin + VEC3(0, 0.5f, 0), getTransform()->getFront(), 10.0f);
-  bool ret = g_PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
+  Debug->DrawLine(origin + direction*(cc->GetRadius() + 0.1f), getTransform()->getFront(), 10.0f);
+  bool ret = g_PhysxManager->raycast(origin + direction*(cc->GetRadius() + 0.1f), direction, dist, hit);
 
   if (ret)
     distRay = hit.getAnyHit(0).distance;
@@ -1015,8 +1018,8 @@ bool bt_guard::rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit) {
   //rcQuery.types = types;
   CEntity *e = myParent;
   TCompCharacterController *cc = e->get<TCompCharacterController>();
-  Debug->DrawLine(origin + VEC3(0, 0.5f, 0), getTransform()->getFront(), 10.0f);
-  bool ret = g_PhysxManager->raycast(origin + direction*cc->GetRadius(), direction, dist, hit);
+  Debug->DrawLine(origin + direction*(cc->GetRadius() + 0.1f), getTransform()->getFront(), 10.0f);
+  bool ret = g_PhysxManager->raycast(origin + direction*(cc->GetRadius() + 0.1f), direction, dist, hit);
 
   if (ret)
     distRay = hit.getAnyHit(0).distance;
@@ -1268,7 +1271,7 @@ void bt_guard::goToPoint(VEC3 dest) {
   PROFILE_FUNCTION("guard: go to point");
   if (!myParent.isValid()) return;
 
-  animController.setState(AST_RUN);
+  animController.setState(AST_MOVE);
   forced_move = true;
 
   // if we didn't reach the point

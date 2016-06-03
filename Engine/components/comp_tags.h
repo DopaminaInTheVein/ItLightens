@@ -17,8 +17,9 @@ void split(const std::string& str, CB cb) {
 
 // ----------------------------------------------------------------
 struct TCompTags : public TCompBase {
-  static const uint32_t max_tags = 4;
+  static const uint32_t max_tags = 16;
   TTagID   tags[max_tags];
+  int nextTag = 0;
 
   TCompTags() {
     for (uint32_t i = 0; i < max_tags; ++i)
@@ -27,11 +28,10 @@ struct TCompTags : public TCompBase {
 
   bool load(MKeyValue& atts) {
     auto all_tags = atts.getString("tags", "");
-    int n = 0;
-    split(all_tags, [this,&n](const std::string& word) {
+    split(all_tags, [this](const std::string& word) {
       auto tag_id = getID(word.c_str());
       tags_manager.registerTag(word);
-      tags[n++] = tag_id;
+      tags[nextTag++] = tag_id;
     });
     return true;
   }
@@ -62,19 +62,35 @@ struct TCompTags : public TCompBase {
     }
   }
 
-  void onTagAdded( const TMsgAddTag& msg) {
-    CHandle h_entity = CHandle(this).getOwner();
-    for (int i = 0; i < max_tags; ++i) {
-      // Already found?
-      if (tags[i] == msg.tag_id)
-        return;
-      // Once we found an empty slot, fill it
-      if (!tags[i]) {
-        tags[i] = msg.tag_id;
-        tags_manager.addTag(h_entity, msg.tag_id);
-        break;
-      }
-    }
+  void onSetTag( const TMsgSetTag& msg) {
+	CHandle h_entity = CHandle(this).getOwner();
+	if (msg.add) {
+		for (int i = 0; i < max_tags; ++i) {
+			// Already found?
+			if (tags[i] == msg.tag_id)
+				return;
+			// Once we found an empty slot, fill it
+			if (!tags[i]) {
+				assert(nextTag < max_tags);
+				tags[i] = msg.tag_id;
+				tags_manager.addTag(h_entity, msg.tag_id);
+				nextTag++;
+				break;
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < max_tags; ++i) {
+			// Already found?
+			if (tags[i] == msg.tag_id) {
+				tags_manager.removeTag(h_entity, msg.tag_id);
+				nextTag--;
+				tags[i] = tags[nextTag];
+				tags[nextTag] = 0x00; // if i == nextTag first assignation dont do anything
+				break;
+			}
+		}
+	}
   }
 };
 

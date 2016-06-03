@@ -205,15 +205,16 @@ struct TMsgPlayerPolarize {
 	DECLARE_MSG_ID();
 };
 
-struct TMsgAddTag {
+struct TMsgSetTag {
 	uint32_t tag_id;
+	bool add;
 	DECLARE_MSG_ID();
 };
 
 struct TMsgSetAnim {
-	std::string name;
+	std::vector<std::string> name;
 	bool loop;
-	std::string nextLoop;
+	std::vector<std::string> nextLoop;
 	DECLARE_MSG_ID();
 };
 

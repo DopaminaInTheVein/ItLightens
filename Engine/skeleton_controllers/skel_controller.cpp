@@ -23,6 +23,40 @@ void SkelController::setState(string state)
 
 void SkelController::setAnim(string anim, bool loop, string nextLoop)
 {
+	std::vector<std::string> anims;
+	anims.push_back(anim);
+
+	std::vector<std::string> next;
+	next.push_back(nextLoop);
+
+	setAnim(anims, loop, next);
+}
+
+void SkelController::setLoop(string anim)
+{
+	std::vector<std::string> anims;
+	anims.push_back(anim);
+
+	std::vector<std::string> next;
+	next.push_back("");
+
+	setAnim(anims, true, next);
+}
+
+void SkelController::setAction(string anim, string next_loop)
+{
+	std::vector<std::string> anims;
+	anims.push_back(anim);
+
+	std::vector<std::string> next;
+	next.push_back(next_loop);
+
+	setAnim(anims, false, next);
+}
+
+//animaciones parciales
+void SkelController::setAnim(std::vector<std::string> anim, bool loop, std::vector<std::string> nextLoop) {
+
 	if (!owner.isValid()) return;
 	CEntity* eOwner = owner;
 	TMsgSetAnim msgAnim;
@@ -30,16 +64,22 @@ void SkelController::setAnim(string anim, bool loop, string nextLoop)
 	msgAnim.loop = loop;
 	msgAnim.nextLoop = nextLoop;
 	eOwner->sendMsg(msgAnim);
+
 }
 
-void SkelController::setLoop(string anim)
-{
-	setAnim(anim, true);
+void SkelController::setAction(std::vector<std::string> anim, std::vector<std::string> nextLoop)  {
+
+	setAnim(anim, false, nextLoop);
+
 }
 
-void SkelController::setAction(string anim, string next_loop)
-{
-	setAnim(anim, false, next_loop);
+void SkelController::setLoop(std::vector<std::string> anim) {
+
+	std::vector<std::string> next;
+	next.push_back("");
+
+	setAnim(anim, true, next);
+
 }
 
 void SkelController::myUpdate()

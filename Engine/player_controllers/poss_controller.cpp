@@ -104,21 +104,18 @@ void PossController::onSetEnable(bool enabled) {
 		camera = camera3;
 	}
 	else {
-		CHandle hTarget = tags_manager.getFirstHavingTag(getID("player"));
+		CHandle hTarget = tags_manager.getFirstHavingTag(getID("raijin"));
 		//CHandle hTarget = player;
 
 		CEntity * camera3 = tags_manager.getFirstHavingTag(getID("camera_main"));
-
 		TMsgSetTarget msgTarg;
 		msgTarg.target = hTarget;
 		msgTarg.who = PLAYER;
-
 		camera3->sendMsg(msgTarg);
 
 		CEntity* eTarget = hTarget;
 		CEntity* eMe = hMe;
 		TCompTransform* tMe = eMe->get<TCompTransform>();
-
 
 		//set flag of possessable for physx queries and simulation collisions
 		TCompCharacterController* cc = eMe->get<TCompCharacterController>();
@@ -134,5 +131,11 @@ void PossController::onSetEnable(bool enabled) {
 		msg.npcFront = tMe->getFront();
 		msg.npcPos = tMe->getPosition();
 		eTarget->sendMsg(msg);
+
+		//Recover Tag Player
+		TMsgSetTag msgTag;
+		msgTag.add = true;
+		msgTag.tag_id = getID("player");
+		eTarget->sendMsg(msgTag);
 	}
 }

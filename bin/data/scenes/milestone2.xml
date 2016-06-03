@@ -1371,7 +1371,7 @@
   <entity
      slept="undefined">
     <tags
-       tags="player" />
+       tags="player raijin" />
     <player />
     <life points="10" />
     <name

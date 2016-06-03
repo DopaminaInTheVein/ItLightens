@@ -29,6 +29,10 @@ void bt_poss::onSetPossessed(const TMsgAISetPossessed& msg) {
 		stunning = true;
 		possessed = false;
 	}
+	TMsgSetTag msgTag;
+	msgTag.add = msg.possessed;
+	msgTag.tag_id = getID("player");
+	getMyEntity()->sendMsg(msgTag);
 }
 
 void bt_poss::onSetStunned(const TMsgAISetStunned& msg) {
@@ -87,6 +91,11 @@ int bt_poss::actionPossessing() {
 	msgTarg.who = whoAmI();
 	camera_e->sendMsg(msgTarg);
 
+	CHandle hRaijin = tags_manager.getFirstHavingTag("raijin");
+	GET_COMP(cc, hRaijin, TCompCharacterController);
+	GET_COMP(tRaijin, hRaijin, TCompTransform);
+	cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
+	tRaijin->setPosition(VEC3(0, 200, 0));
 	return OK;
 }
 

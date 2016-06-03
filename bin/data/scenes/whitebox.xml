@@ -381,7 +381,7 @@
 </entity>
 <entity>
 <tags
-   tags="player"/>
+   tags="player raijin"/>
 <player/>
 <life
    points="10"/>
@@ -889,14 +889,43 @@
    scale="1.0"/>
 
 </entity>
-<entity slept="undefined">
-    <tags  tags="helper_arrow" />
-    <helper_arrow />
-    <render_static_mesh  name="static_meshes/helpers/helper_arrow.static_mesh" />
-    <name name="helper_arrow" />
-    <transform
-       pos="0 0 0"
-       quat="0 0 0 1.0"
-       scale="0.3" />
-  </entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   actionPos="-68.9267 17.6637 -0.744651"
+   actionYaw="1.5708"
+   animation="idle"/>
+<name
+   name="workstationTest"/>
+<transform
+   pos="-69.6108 17.8708 -0.722291"
+   quat="0 -0.707107 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/workstationTest.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   actionPos="-73.5737 17.6637 -0.722515"
+   actionYaw="-1.5708"
+   animation="idle"/>
+<name
+   name="workstationTest001"/>
+<transform
+   pos="-72.8895 17.8708 -0.744875"
+   quat="0 0.707107 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/workstationTest001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+
 </entities>

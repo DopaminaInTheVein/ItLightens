@@ -259,7 +259,11 @@ void player_controller::myUpdate() {
 		UpdatePossession();
 	}
 
-	if (cc->OnGround() && state != "jumping") {
+	if (cc->GetYAxisSpeed() < -0.5f) {
+		ChangeState("doublefalling");
+		animController.setState(AST_FALL);
+	}
+	else if (cc->OnGround() && state == "moving") {
 		if (player_curr_speed >= player_max_speed - 0.1f)
 			animController.setState(AST_RUN);
 		else
@@ -306,6 +310,7 @@ void player_controller::DoubleJump()
 void player_controller::DoubleFalling() {
 	if (pol_orbit && !pol_orbit_prev) {
 		ChangeState("falling");
+		animController.setState(AST_FALL);
 	}
 	PROFILE_FUNCTION("player controller: double falling");
 	UpdateDirection();
@@ -388,7 +393,6 @@ void player_controller::Falling()
 	UpdateDirection();
 	UpdateMovDirection();
 	SetCharacterController();
-
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
@@ -724,6 +728,7 @@ void player_controller::UpdateActionsTrigger() {
 		//ui.addTextInstructions("\n Press 'E' to recharge energy\n");
 		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 			rechargeEnergy();
+			animController.setState(AST_RECHARGE);
 			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
 		}
 		else {
@@ -766,13 +771,18 @@ void player_controller::UpdatePossession() {
 			//Se desactiva el player
 			controlEnabled = false;
 			SBB::postBool("possMode", true);
+			TMsgSetTag msgTag;
+			msgTag.add = false;
+			msgTag.tag_id = getID("player");
+			compBaseEntity->sendMsg(msgTag);
+			msgTag.add = true;
 
 			//TODO: Desactivar render
 			SetCharacterController();
 			cc->SetActive(false);
-			cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
-			TCompTransform *t = myEntity->get<TCompTransform>();
-			t->setPosition(VEC3(0, 200, 0));
+			//cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
+			//TCompTransform *t = myEntity->get<TCompTransform>();
+			//t->setPosition(VEC3(0, 200, 0));
 			player_curr_speed = 0;
 
 			logic_manager->throwEvent(logic_manager->OnPossess, "");
