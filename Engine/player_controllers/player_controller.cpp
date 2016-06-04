@@ -286,7 +286,6 @@ void player_controller::myExtraIdle() {
 
 void player_controller::UpdateDamage()
 {
-	SetMyEntity();
 	TCompLife * life = myEntity->get<TCompLife>();
 	if (life->energyDamageScale > 0.2f) {
 		____TIMER_RESET_(timerDamaged);
@@ -298,8 +297,6 @@ void player_controller::DoubleJump()
 	PROFILE_FUNCTION("player controller: double jump");
 	UpdateDirection();
 	UpdateMovDirection();
-
-	SetCharacterController();
 
 	if (cc->GetYAxisSpeed() < 0.0f) {
 		ChangeState("doublefalling");
@@ -315,7 +312,6 @@ void player_controller::DoubleFalling() {
 	PROFILE_FUNCTION("player controller: double falling");
 	UpdateDirection();
 	UpdateMovDirection();
-	SetCharacterController();
 	if (cc->OnGround()) {
 		ChangeState("idle");
 		animController.setState(AST_IDLE);
@@ -332,7 +328,6 @@ bool player_controller::canJump() {
 void player_controller::Jump()
 {
 	PROFILE_FUNCTION("jump player");
-	SetCharacterController();
 	bool ascending = cc->GetLastSpeed().y > 0.1f;
 	VEC3 jumpVector;
 	if (isMoving()) {
@@ -367,7 +362,6 @@ void player_controller::Jumping()
 	PROFILE_FUNCTION("player controller: jumping");
 	UpdateDirection();
 	UpdateMovDirection();
-	SetCharacterController();
 
 	if (cc->GetYAxisSpeed() <= 0.0f) {
 		ChangeState("falling");
@@ -392,7 +386,6 @@ void player_controller::Falling()
 	PROFILE_FUNCTION("player controller: falling");
 	UpdateDirection();
 	UpdateMovDirection();
-	SetCharacterController();
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
@@ -473,7 +466,6 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force) {
 
 	{
 		//Debug
-		SetCharacterController();
 		Debug->DrawLine(cc->GetPosition(), cc->GetPosition() + force.deltaPos);
 	}
 
@@ -551,7 +543,6 @@ void player_controller::polarityMoveResistance(const PolarityForce& force) {
 		&& force.distance < POL_RCLOSE // very near (with margin)
 		&& force.polarity != pol_state // attraction
 		) {
-		SetCharacterController();
 		VEC3 movementPlayer = cc->GetMovement();
 		VEC3 movementAtraction = VEC3(0, 0, 0);
 		bool movementApplied = false;
@@ -595,8 +586,6 @@ void player_controller::polarityMoveResistance(const PolarityForce& force) {
 void player_controller::UpdateMoves()
 {
 	PROFILE_FUNCTION("player controller: update moves");
-	SetMyEntity();
-	SetCharacterController();
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -669,7 +658,6 @@ void player_controller::UpdateMoves()
 void player_controller::UpdateInputActions()
 {
 	PROFILE_FUNCTION("update input actions");
-	SetCharacterController();
 	pol_orbit = false;
 	//if (isDamaged()) {
 	//	pol_state = NEUTRAL;
@@ -739,19 +727,10 @@ void player_controller::UpdateActionsTrigger() {
 		ui.addTextInstructions("\n Press 'E' to pass by the wire\n");
 
 		if (io->keys['E'].becomesPressed()) {
-			SetMyEntity();
-			SetCharacterController();
 			cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(endPointWire));
 			logic_manager->throwEvent(logic_manager->OnUseCable, "");
 		}
 	}
-}
-
-void player_controller::SetCharacterController()
-{
-	PROFILE_FUNCTION("set cc");
-	SetMyEntity();
-	cc = myEntity->get<TCompCharacterController>();
 }
 
 float CPlayerBase::possessionCooldown;
@@ -778,7 +757,6 @@ void player_controller::UpdatePossession() {
 			msgTag.add = true;
 
 			//TODO: Desactivar render
-			SetCharacterController();
 			cc->SetActive(false);
 			//cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
 			//TCompTransform *t = myEntity->get<TCompTransform>();
@@ -890,6 +868,7 @@ bool player_controller::nearStunable() {
 
 void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	PROFILE_FUNCTION("on leave poss");
+	getUpdateInfo();
 	// Handles y entities necesarias
 	CHandle  hMe = CHandle(this).getOwner();
 	CEntity* eMe = hMe;
@@ -897,7 +876,6 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	CEntity* eCamera = hCamera;
 
 	//Colocamos el player
-	SetCharacterController();
 	VEC3 pos = msg.npcPos + VEC3(0.0f, cc->GetHeight(), 0.0f);	//to be sure the collider will be above the ground, add height from collider, origin on center shape
 	TCompTransform* tMe = eMe->get<TCompTransform>();
 	cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(pos + msg.npcFront * DIST_LEAVING_POSSESSION));	//set collider position

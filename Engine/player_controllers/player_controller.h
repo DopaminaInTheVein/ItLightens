@@ -116,9 +116,7 @@ class player_controller : public CPlayerBase {
 	//--------------------------------------------------------------------
 
 	TCompTransform * getEntityTransform() {
-		SetMyEntity();
-		CEntity * ent = myParent;
-		return ent->get<TCompTransform>();
+		return transform;
 	}
 
 	CHandle getMinusPointHandle(int i) {
@@ -152,7 +150,6 @@ class player_controller : public CPlayerBase {
 	void doOverCharge();
 	void Evolve(eEvol);
 	void UpdateActionsTrigger();
-	void SetCharacterController();
 
 	void RecalcAttractions();
 	VEC3 calcForceEffect(const PolarityForce& force);//VEC3 point_pos, bool atraction);

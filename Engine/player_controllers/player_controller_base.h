@@ -81,7 +81,6 @@ protected:
 	virtual void UpdateDirection();
 	virtual void UpdateAnimation() {}
 	virtual void UpdateCinematic(float elapsed);
-	virtual void SetCharacterController() = 0;
 	virtual void ChangeCommonState(std::string) {}
 	virtual bool canJump();
 
@@ -100,7 +99,6 @@ public:
 	void onSetControllable(const TMsgSetControllable& msg);
 	void onGoAndLook(const TMsgGoAndLook& msg);
 
-	bool SetMyEntity();
 	virtual void myUpdate(); // deberia ser abstracta pero peta
 
 	// Player states

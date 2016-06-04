@@ -21,7 +21,6 @@ void player_controller_mole::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_mole")) {
-
 			CApp &app = CApp::get();
 			std::string file_ini = app.file_initAttr_json;
 			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
@@ -37,13 +36,11 @@ void player_controller_mole::readIniFileAttr() {
 
 			assignValueToVar(grab_box_energy, fields_mole);
 			assignValueToVar(destroy_wall_energy, fields_mole);
-
 		}
 	}
 }
 
 void player_controller_mole::Init() {
-
 	// read main attributes from file
 	readIniFileAttr();
 	mole_max_speed = player_max_speed;
@@ -63,41 +60,31 @@ void player_controller_mole::Init() {
 	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
 
-	CEntity* myEntity = myParent;
-
-	mesh = myEntity->get<TCompRenderStaticMesh>();
-
-	pose_idle_route = "static_meshes/mole/mole.static_mesh";
-	pose_jump_route = "static_meshes/mole/mole_jump.static_mesh";
-	pose_run_route = "static_meshes/mole/mole_run.static_mesh";
-	pose_box_route = "static_meshes/mole/mole_box.static_mesh";
-	pose_wall_route = "static_meshes/mole/mole_wall.static_mesh";
-
 	ChangeState("idle");
 }
 
 void player_controller_mole::UpdateInputActions() {
-	if (state == "moving")
-		ChangePose(pose_run_route);
-	else if (state == "jumping" || state == "falling")
-		ChangePose(pose_jump_route);
-	else if (state == "idle")
-		ChangePose(pose_idle_route);
+	//if (state == "moving")
+	//	ChangePose(pose_run_route);
+	//else if (state == "jumping" || state == "falling")
+	//	ChangePose(pose_jump_route);
+	//else if (state == "idle")
+	//	ChangePose(pose_idle_route);
 
 	if (io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) {
 		if (boxGrabbed) {
-			ChangePose(pose_idle_route);
+			//ChangePose(pose_idle_route);
 			logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
 			ChangeState("leaveBox");
 		}
 		else {
 			if (this->nearToBox()) {
-				ChangePose(pose_box_route);
+				//ChangePose(pose_box_route);
 				logic_manager->throwEvent(logic_manager->OnPickupBox, "");
 				ChangeState("grabBox");
 			}
 			else if (this->nearToWall()) {
-				ChangePose(pose_wall_route);
+				//ChangePose(pose_wall_route);
 				logic_manager->throwEvent(logic_manager->OnBreakWall, "");
 				ChangeState("destroyWall");
 			}
@@ -107,11 +94,11 @@ void player_controller_mole::UpdateInputActions() {
 
 void player_controller_mole::UpdateMovingWithOther() {
 	if (boxGrabbed) {
-		ChangePose(pose_box_route);
+		//ChangePose(pose_box_route);
 		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 		TCompTransform* box_t = box->get<TCompTransform>();
 		TCompPhysics* box_p = box->get<TCompPhysics>();
-		SetMyEntity();
+
 		CEntity* p = myParent;
 		TCompTransform* p_t = p->get<TCompTransform>();
 		VEC3 posPlayer = p_t->getPosition();
@@ -140,7 +127,7 @@ void player_controller_mole::GrabBox() {
 	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
 	TCompTransform* box_t = box->get<TCompTransform>();
 	TCompPhysics* box_p = box->get<TCompPhysics>();
-	SetMyEntity();
+
 	CEntity* p = myParent;
 	TCompTransform* p_t = p->get<TCompTransform>();
 	VEC3 posPlayer = p_t->getPosition();
@@ -155,7 +142,7 @@ void player_controller_mole::GrabBox() {
 	myEntity->sendMsg(dmg);
 	boxGrabbed = true;
 	mole_max_speed /= 2;
-	ChangePose(pose_idle_route);
+	//ChangePose(pose_idle_route);
 	ChangeState("idle");
 }
 
@@ -165,7 +152,7 @@ void player_controller_mole::DestroyWall() {
 	handles.erase(handles.begin() + selectedWallToBreaki);
 	getHandleManager<CEntity>()->destroyHandle(getEntityWallHandle(selectedWallToBreaki));
 	SBB::postHandlesVector("wptsBreakableWall", handles);
-	ChangePose(pose_idle_route);
+	//ChangePose(pose_idle_route);
 	ChangeState("idle");
 }
 
@@ -194,7 +181,7 @@ void player_controller_mole::LeaveBox() {
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = false;
 	mole_max_speed *= 2;
-	ChangePose(pose_idle_route);
+	//ChangePose(pose_idle_route);
 	ChangeState("idle");
 }
 
@@ -258,17 +245,10 @@ void player_controller_mole::update_msgs()
 }
 
 //Cambio de malla
-void player_controller_mole::ChangePose(string new_pose_route) {
-
-	mesh->unregisterFromRender();
-	MKeyValue atts_mesh;
-	atts_mesh["name"] = new_pose_route;
-	mesh->load(atts_mesh);
-	mesh->registerToRender();
-}
-
-void player_controller_mole::SetCharacterController()
-{
-	SetMyEntity();
-	cc = myEntity->get<TCompCharacterController>();
-}
+//void player_controller_mole::ChangePose(string new_pose_route) {
+//	mesh->unregisterFromRender();
+//	MKeyValue atts_mesh;
+//	atts_mesh["name"] = new_pose_route;
+//	mesh->load(atts_mesh);
+//	mesh->registerToRender();
+//}

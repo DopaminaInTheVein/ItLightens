@@ -96,6 +96,9 @@ else if (s##actionEnum == "put"){							\
 else if (s##actionEnum == "examinate"){						\
 	actionEnum = EXAMINATE;									\
 }															\
+else if (s##actionEnum == "destroy"){						\
+	actionEnum = DESTROY;									\
+}															\
 else {														\
 	actionEnum = NONE;										\
 }															\

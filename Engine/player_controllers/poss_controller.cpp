@@ -44,9 +44,9 @@ void PossController::UpdatePossession() {
 
 void PossController::onForceUnPosses(const TMsgUnpossesDamage& msg) {
 	PROFILE_FUNCTION("poss controller: onUnposses");
+	getUpdateInfo(); //You can receive a message without the update info loaded!
 	UpdateUnpossess();
 	TMsgDamageSave msg_unpss;
-	SetMyEntity();
 	myEntity->sendMsg(msg_unpss);
 	msg_unpss.modif = -0.1f;
 	onSetEnable(false);
@@ -57,8 +57,7 @@ void PossController::onSetEnable(const TMsgControllerSetEnable& msg) {
 	if (msg.enabled) {
 		TMsgDamageSave msg_pss;
 		msg_pss.modif = 0.1f;
-		SetMyEntity();
-		myEntity->sendMsg(msg_pss);
+		getMyEntity()->sendMsg(msg_pss);
 	}
 }
 
@@ -66,6 +65,10 @@ void PossController::UpdateUnpossess() {
 }
 
 void PossController::onSetEnable(bool enabled) {
+	//You can receive a message without the update info loaded!
+	compBaseEntity = getMyEntity();
+	getUpdateInfo();
+
 	dbg("PossController::setEnable(%d)", enabled);
 	npcIsPossessed = enabled;
 	this->controlEnabled = enabled;
@@ -92,9 +95,11 @@ void PossController::onSetEnable(bool enabled) {
 		else if (hMe.hasTag("AI_speedy")) {
 			msg3rdController.who = SPEEDY;
 		}
+		else if (hMe.hasTag("AI_cientifico")) {
+			msg3rdController.who = SCIENTIST;
+		}
 
 		//set flag of controlled for physx queries and simulation collisions
-		TCompCharacterController* cc = eMe->get<TCompCharacterController>();
 		PxFilterData fd = cc->GetFilterData();
 		fd.word0 = ItLightensFilter::ePLAYER_CONTROLLED;
 		cc->SetFilterData(fd);
@@ -113,12 +118,7 @@ void PossController::onSetEnable(bool enabled) {
 		msgTarg.who = PLAYER;
 		camera3->sendMsg(msgTarg);
 
-		CEntity* eTarget = hTarget;
-		CEntity* eMe = hMe;
-		TCompTransform* tMe = eMe->get<TCompTransform>();
-
 		//set flag of possessable for physx queries and simulation collisions
-		TCompCharacterController* cc = eMe->get<TCompCharacterController>();
 		PxFilterData fd = cc->GetFilterData();
 		fd.word0 = ItLightensFilter::ePOSSESSABLE;
 		cc->SetFilterData(fd);
@@ -128,14 +128,14 @@ void PossController::onSetEnable(bool enabled) {
 
 		//Volver control al player
 		TMsgPossessionLeave msg;
-		msg.npcFront = tMe->getFront();
-		msg.npcPos = tMe->getPosition();
-		eTarget->sendMsg(msg);
+		msg.npcFront = transform->getFront();
+		msg.npcPos = transform->getPosition();
+		hTarget.sendMsg(msg);
 
 		//Recover Tag Player
 		TMsgSetTag msgTag;
 		msgTag.add = true;
 		msgTag.tag_id = getID("player");
-		eTarget->sendMsg(msgTag);
+		hTarget.sendMsg(msgTag);
 	}
 }

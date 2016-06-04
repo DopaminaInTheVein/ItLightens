@@ -18,7 +18,6 @@ void player_controller_speedy::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_speedy")) {
-
 			CApp &app = CApp::get();
 			std::string file_ini = app.file_initAttr_json;
 			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
@@ -40,7 +39,6 @@ void player_controller_speedy::readIniFileAttr() {
 			assignValueToVar(blink_distance, fields_speedy);
 			assignValueToVar(blink_energy, fields_speedy);
 			assignValueToVar(drop_water_timer_reset, fields_speedy);
-
 		}
 	}
 }
@@ -212,7 +210,6 @@ void player_controller_speedy::Dashing()
 void player_controller_speedy::Blink()
 {
 	if (blink_ready) {
-		SetMyEntity();
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 		VEC3 player_position = player_transform->getPosition();
@@ -238,12 +235,11 @@ bool player_controller_speedy::dashFront()
 {
 	float dt = getDeltaTime();
 	dash_duration += dt;
-	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 	VEC3 player_position = player_transform->getPosition();
 	VEC3 player_front = player_transform->getFront();
-	cc->AddMovement(VEC3(player_front.x*dash_speed,0.0f, player_front.z*dash_speed)*dt);
+	cc->AddMovement(VEC3(player_front.x*dash_speed, 0.0f, player_front.z*dash_speed)*dt);
 
 	/*if (drop_water_ready) {
 		// CREATE WATER
@@ -304,7 +300,7 @@ bool player_controller_speedy::dashFront()
 		resetDropWaterTimer();
 	}*/
 
-	if (dash_duration > dash_max_duration ) {
+	if (dash_duration > dash_max_duration) {
 		dash_duration = 0;
 		TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 		cc->SetGravity(true);
@@ -345,7 +341,7 @@ bool player_controller_speedy::rayCastToFront(int types, float reach, float& dis
 	//END PROV
 
 	PxRaycastBuffer hit;
-	bool ret = g_PhysxManager->raycast(origin,direction,dist,hit,filter);
+	bool ret = g_PhysxManager->raycast(origin, direction, dist, hit, filter);
 	distRay = hit.getAnyHit(0).distance;	//first hit
 	return ret;
 }
@@ -422,6 +418,5 @@ void player_controller_speedy::ChangePose(string new_pose_route) {
 
 void player_controller_speedy::SetCharacterController()
 {
-	SetMyEntity();
 	cc = myEntity->get<TCompCharacterController>();
 }

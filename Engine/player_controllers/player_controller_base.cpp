@@ -86,7 +86,6 @@ void CPlayerBase::onGoAndLook(const TMsgGoAndLook& msg) {
 
 void CPlayerBase::update(float elapsed) {
 	PROFILE_FUNCTION("update base");
-	if (!SetMyEntity()) return;
 	if (camera.isValid()) {
 		if (onCinematic) {
 			UpdateCinematic(elapsed);
@@ -146,7 +145,6 @@ void CPlayerBase::UpdateCinematic(float elapsed) {
 void CPlayerBase::UpdateMoves()
 {
 	PROFILE_FUNCTION("update moves base");
-	SetMyEntity();
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -188,7 +186,6 @@ void CPlayerBase::UpdateMoves()
 		directionForward = directionLateral = VEC3(0, 0, 0);
 	}
 
-	SetCharacterController();
 	cc->AddMovement(direction, player_curr_speed*getDeltaTime());
 	UpdateMovingWithOther();
 }
@@ -282,7 +279,6 @@ void CPlayerBase::UpdateMovingWithOther() {
 #pragma region Player States
 void CPlayerBase::energyDecreasal(float howmuch) {
 	PROFILE_FUNCTION("player base: energy dec function");
-	SetMyEntity();
 
 	TMsgSetDamage msg;
 	msg.dmg = howmuch;
@@ -304,7 +300,6 @@ void CPlayerBase::Idle()
 void CPlayerBase::Jump()
 {
 	PROFILE_FUNCTION("jump base");
-	SetCharacterController();
 
 	cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 	ChangeState("jumping");
@@ -314,8 +309,7 @@ void CPlayerBase::Jump()
 void CPlayerBase::Die()
 {
 	PROFILE_FUNCTION("die base");
-	SetMyEntity();
-	SetCharacterController();
+
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	if (!cc->OnGround()) {
@@ -328,8 +322,7 @@ void CPlayerBase::Die()
 void CPlayerBase::Win()
 {
 	PROFILE_FUNCTION("win base");
-	SetMyEntity();
-	SetCharacterController();
+
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	if (!cc->OnGround()) {
@@ -344,8 +337,6 @@ void CPlayerBase::Falling()
 	PROFILE_FUNCTION("falling base");
 	UpdateDirection();
 	UpdateMovDirection();
-
-	SetCharacterController();
 
 	if (cc->OnGround()) {
 		jspeed = 0.0f;
@@ -376,13 +367,6 @@ void CPlayerBase::Moving()
 
 //##########################################################################
 
-// Sets the entity
-bool CPlayerBase::SetMyEntity() {
-	PROFILE_FUNCTION("set enitity base");
-	myEntity = myParent;
-	return myEntity;
-}
-
 void CPlayerBase::renderInMenu()
 {
 	PROFILE_FUNCTION("render in menu base");
@@ -390,7 +374,6 @@ void CPlayerBase::renderInMenu()
 	direction.Normalize();
 	direction = direction + directionJump;
 
-	SetMyEntity();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 

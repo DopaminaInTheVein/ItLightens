@@ -388,7 +388,7 @@
 <name
    name="player_1"/>
 <transform
-   pos="-92.5698 1.43372 -20.3877"
+   pos="-45.3891 1.53723 -7.84438"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -693,12 +693,12 @@
 <tags
    tags="trigger"/>
 <trigger_lua
-   action="activate"
+   action="examinate"
    actionMole="destroy"/>
 <name
    name="tWall"/>
 <transform
-   pos="-93.395 0.15622 -15.419"
+   pos="-93.395 0.542878 -15.419"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -709,7 +709,7 @@
 <name
    name="tWall_pAction"/>
 <transform
-   pos="-93.154 0.656976 -15.4031"
+   pos="-93.154 1.04363 -15.4031"
    quat="0 -0.707107 0 0.707107"
    scale="1.0"/>
 
@@ -997,6 +997,33 @@
 <character_controller
    radius="0.3"
    height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_mole AI_poss"/>
+<bt_mole
+   wpts_size="3"
+   wpt0_pos="-88.0122 0.656251 23.5733"
+   wpt0_wait="2"
+   wpt1_pos="-85.0471 0.656251 23.627"
+   wpt1_wait="2"
+   wpt2_pos="-86.9768 0.656251 26.9229"
+   wpt2_wait="2"/>
+<player_mole/>
+<life
+   points="100"/>
+<name
+   name="mole_1"/>
+<transform
+   pos="-94.3621 0.414796 29.0396"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test_mole/mole_amarilla.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="2.01"/>
 
 </entity>
 

@@ -20,16 +20,6 @@
 map<string, statehandler> player_controller_cientifico::statemap = {};
 map<int, string> player_controller_cientifico::out = {};
 
-bool player_controller_cientifico::getUpdateInfo() {
-	myEntity = compBaseEntity;
-	cc = myEntity->get<TCompCharacterController>();
-	if (!cc) return false;
-	myTransform = myEntity->get<TCompTransform>();
-	if (!myTransform) return false;
-
-	return true;
-}
-
 void player_controller_cientifico::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
@@ -93,7 +83,7 @@ void player_controller_cientifico::Init() {
 #pragma region Inputs
 
 void player_controller_cientifico::WorkBenchActions() {
-	VEC3 myPos = myTransform->getPosition();
+	VEC3 myPos = transform->getPosition();
 
 	// Find nearest workbench
 	//====================================================
@@ -303,10 +293,10 @@ void player_controller_cientifico::createMagneticBombEntity()
 	CHandle bomb_handle = spawnPrefab("magnetic_bomb");
 
 	GET_COMP(mag_trans, bomb_handle, TCompTransform);
-	mag_trans->setPosition(myTransform->getPosition());
+	mag_trans->setPosition(transform->getPosition());
 
 	float yaw, pitch;
-	myTransform->getAngles(&yaw, &pitch);
+	transform->getAngles(&yaw, &pitch);
 	mag_trans->setAngles(yaw, pitch);
 
 	GET_COMP(bomb_component, bomb_handle, CMagneticBomb);
@@ -316,7 +306,7 @@ void player_controller_cientifico::createMagneticBombEntity()
 void player_controller_cientifico::createStaticBombEntity()
 {
 	PROFILE_FUNCTION("player cientifico: create static bomb entity");
-	VEC3 player_position = myTransform->getPosition();
+	VEC3 player_position = transform->getPosition();
 
 	auto hm_e = CHandleManager::getByName("entity");
 	CHandle new_h_e = hm_e->createHandle();
@@ -352,7 +342,7 @@ void player_controller_cientifico::createStaticBombEntity()
 	name_c->setName("static_bomb");
 
 	float yaw, pitch;
-	myTransform->getAngles(&yaw, &pitch);
+	transform->getAngles(&yaw, &pitch);
 	static_trans->setAngles(yaw, pitch);
 }
 

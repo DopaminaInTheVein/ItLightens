@@ -19,7 +19,6 @@ class player_controller_cientifico : public PossController {
 	// Map for debug on ImGui
 	static std::map<int, std::string> out;
 	//static std::vector<VEC3> wb_positions;
-	TCompTransform * myTransform;
 
 	VEC3 directionLateral = VEC3(0, 0, 0);
 	VEC3 directionForward = VEC3(0, 0, 1);
@@ -72,8 +71,6 @@ public:
 	void Idle() override;
 	void Moving() override;
 	void RecalcScientist();
-	//void onSetCamera(const TMsgSetCamera& msg);
-	void SetMyEntity() { }
 
 	//Create game objects
 	void createMagneticBombEntity();
@@ -100,8 +97,6 @@ public:
 	void renderInMenu();
 
 	void UpdateUnpossess() override;
-
-	bool getUpdateInfo() override;
 	//Overload function for handler_manager
 	player_controller_cientifico& player_controller_cientifico::operator=(player_controller_cientifico arg) { return arg; }
 };

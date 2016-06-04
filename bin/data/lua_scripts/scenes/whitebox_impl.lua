@@ -39,7 +39,7 @@ function activateElevator( )
   h:activate()
   
   p:exec_command( "triggerElevator:setActionable(1);", 2 )
-  p:exec_command( "p:setControlEnabled(1);", 10 )
+  p:exec_command( "p:setControlEnabled(1);", 7 )
 end
 
 function activateElevatorPlayer( )
@@ -96,6 +96,13 @@ tagWallFragment1 = "wall1_fragment"
 triggerWall_1 = Handle()
 all_fragments1 = HandleGroup()
 actionWallTarget = Handle()
+function lookWall( )
+  p:print("Look Wall\n")
+  triggerWall_1:getHandleCaller()
+  p:player_talks("I feel some energy behind this wall...", 3)
+  p:exec_command( "triggerWall_1:setActionable(1);", 2 )
+end
+
 function destroyWall( )
   p:print("Destroy Wall\n")
   triggerWall_1:getHandleCaller()
@@ -117,7 +124,8 @@ function destroyWallEffect()
   all_fragments1:get_handles_by_tag(tagWallFragment1)
   all_fragments1:awake()
   p:exec_command( "all_fragments1:remove_physics();", 5 )
-  p:exec_command( "activeWire1();", 0.5 )
+  activeWire1();
+  --p:exec_command( "activeWire1();", 0.5 )
 end
 --------------------------------------
 
