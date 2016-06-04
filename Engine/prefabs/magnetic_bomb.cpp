@@ -9,50 +9,17 @@ map<string, statehandler> CMagneticBomb::statemap = {};
 
 void CMagneticBomb::update(float elapsed)
 {
-	Recalc();
+	CountDown();
 }
 
 void CMagneticBomb::Init() {
-	auto om = getHandleManager<CMagneticBomb>();
-	myHandle = om->getHandleFromObjAddr(this);
-	myParent = myHandle.getOwner();
-
-	AddState("going_up", (statehandler)&CMagneticBomb::GoingUp);
-	AddState("countDown", (statehandler)&CMagneticBomb::CountDown);
-	AddState("going_down", (statehandler)&CMagneticBomb::GoingDown);
-	AddState("explode", (statehandler)&CMagneticBomb::Explode);
-
-	ChangeState("going_up");
 }
 
 void CMagneticBomb::CountDown() {
 	t_waiting += getDeltaTime();
 	if (t_waiting >= t_explode) {
-		ChangeState("explode");
+		Explode();
 	}
-}
-
-void CMagneticBomb::GoingUp() {
-	SetMyEntity();
-	TCompTransform *mtx = myEntity->get<TCompTransform>();
-	
-	//TODO simulate physx
-
-	UpdatePosition();
-	float altura = 2.0f;
-	//if (d >= altura / 2) {
-		ChangeState("going_down");
-	//}
-}
-
-void CMagneticBomb::GoingDown() {
-	SetMyEntity();
-	TCompTransform *mtx = myEntity->get<TCompTransform>();
-
-	UpdatePosition();
-	//TODO simulate physx
-	ChangeState("countDown");
-
 }
 
 void CMagneticBomb::UpdatePosition() {
@@ -70,10 +37,6 @@ void CMagneticBomb::UpdatePosition() {
 	mtx->setPosition(curr_position);
 }
 
-void CMagneticBomb::toExplode() {
-	ChangeState("explode");
-}
-
 void CMagneticBomb::Explode()
 {
 	myHandle = CHandle(this);
@@ -83,13 +46,12 @@ void CMagneticBomb::Explode()
 		SendMsg();
 		//TODO: animation
 		dbg("MAGNETIC BOMB -> exploded\n");
-		destroy();
+		myParent.destroy();
 	}
 }
 
 void CMagneticBomb::SendMsg()
 {
-
 	TMsgStaticBomb msg;
 	float rad = 10.0f;
 	CEntity *p_e = myParent;
@@ -99,8 +61,7 @@ void CMagneticBomb::SendMsg()
 	msg.pos = org;
 	msg.r = rad;
 
-	//TODO: for each NPC, tag NPC
-	VHandles ets = tags_manager.getHandlesByTag(getID("AI_guard"));
+	VHandles ets = tags_manager.getHandlesByTag(getID("AI"));
 	for (CEntity *e : ets) {
 		e->sendMsg(msg);
 	}

@@ -16,10 +16,12 @@ map<string, VEC3> SBB::sbbVEC3;
 map<string, bt_mole*> SBB::sbbMole;
 map<string, CHandle> SBB::sbbHandle;
 map<string, vector<CHandle>> SBB::sbbHandlesVector;
+map<string, vector<VEC3> > SBB::sbbVEC3Vector;
 map<string, guard_alert> SBB::sbbGuardAlerts;
 
 void SBB::init() {
 	postBool("possMode", false);
+	postVEC3Vector("wb_pos", vector<VEC3>());
 }
 
 void SBB::update(float dt) {
@@ -136,6 +138,30 @@ vector<CHandle> SBB::readHandlesVector(string name) {
 		fatal("sbbHandlesVector: Se intenta leer String que no existe!");
 	}
 	return sbbHandlesVector[name];
+}
+
+void SBB::postVEC3Vector(string name, vector<VEC3> value) {
+	sbbVEC3Vector[name] = value;
+}
+
+vector<VEC3> SBB::readVEC3Vector(string name) {
+	if (sbbVEC3Vector.find(name) == sbbVEC3Vector.end())
+	{
+		fatal("sbbVEC3Vector: Se intenta leer String que no existe!");
+	}
+	return sbbVEC3Vector[name];
+}
+
+void SBB::addVEC3ToVector(string name, VEC3 value) {
+	if (sbbVEC3Vector.find(name) == sbbVEC3Vector.end())
+	{
+		fatal("sbbVEC3Vector: Se intenta leer String que no existe!");
+	}
+	sbbVEC3Vector[name].push_back(value);
+}
+
+void SBB::removeVEC3ToVector(string name, VEC3 value) {
+	assert(false || fatal("Not implemented function!"));
 }
 
 // sbbGuardAlerts

@@ -51,6 +51,7 @@ DECL_OBJ_MANAGER("player", player_controller);
 DECL_OBJ_MANAGER("player_speedy", player_controller_speedy);
 DECL_OBJ_MANAGER("player_mole", player_controller_mole);
 DECL_OBJ_MANAGER("player_cientifico", player_controller_cientifico);
+DECL_OBJ_MANAGER("workbench", workbench);
 DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
@@ -79,7 +80,6 @@ DECL_OBJ_MANAGER("character_controller", TCompCharacterController);
 DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
-
 
 DECL_OBJ_MANAGER("victory_point", TVictoryPoint);
 DECL_OBJ_MANAGER("trigger_lua", TTriggerLua);
@@ -111,42 +111,42 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 
-  getHandleManager<TVictoryPoint>()->init(20);
-  getHandleManager<TTriggerLua>()->init(100);
-  //	getHandleManager<TCompHierarchy>()->init(nmax);
-  getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
-  getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
-  getHandleManager<TCompCulling>()->init(8);
-  getHandleManager<TCompLightDir>()->init(8);
-  getHandleManager<TCompLightDirShadows>()->init(8);
-  getHandleManager<player_controller>()->init(8);
-  getHandleManager<player_controller_speedy>()->init(8);
-  getHandleManager<player_controller_mole>()->init(8);
-  getHandleManager<player_controller_cientifico>()->init(8);
-  getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-  getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
-  getHandleManager<TCompName>()->init(MAX_ENTITIES);
-  getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
-  getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
-  getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
-  getHandleManager<TCompCamera>()->init(4);
-  getHandleManager<TCompController3rdPerson>()->init(4);
-  getHandleManager<TCompLife>()->init(MAX_ENTITIES);
-  getHandleManager<TCompWire>()->init(10);
-  getHandleManager<TCompGenerator>()->init(10);
-  getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
-  getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
-  getHandleManager<TCompTags>()->init(MAX_ENTITIES);
-  getHandleManager<TCompBox>()->init(MAX_ENTITIES);
-  getHandleManager<TCompWorkstation>()->init(MAX_ENTITIES);
-  getHandleManager<TCompGuidedCamera>()->init(16);
-  //helpers
-  getHandleManager<TCompFadingMessage>()->init(32);
-  getHandleManager<LogicHelperArrow>()->init(4);
-  //lights
-  getHandleManager<TCompLightDir>()->init(4);
-  getHandleManager<TCompLightFadable>()->init(4);
-  getHandleManager<TCompLightPoint>()->init(32);
+	getHandleManager<TVictoryPoint>()->init(20);
+	getHandleManager<TTriggerLua>()->init(100);
+	//	getHandleManager<TCompHierarchy>()->init(nmax);
+	getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
+	getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
+	getHandleManager<TCompCulling>()->init(8);
+	getHandleManager<TCompLightDir>()->init(8);
+	getHandleManager<TCompLightDirShadows>()->init(8);
+	getHandleManager<player_controller>()->init(8);
+	getHandleManager<player_controller_speedy>()->init(8);
+	getHandleManager<player_controller_mole>()->init(8);
+	getHandleManager<player_controller_cientifico>()->init(8);
+	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
+	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
+	getHandleManager<TCompName>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
+	getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
+	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
+	getHandleManager<TCompCamera>()->init(4);
+	getHandleManager<TCompController3rdPerson>()->init(4);
+	getHandleManager<TCompLife>()->init(MAX_ENTITIES);
+	getHandleManager<TCompWire>()->init(10);
+	getHandleManager<TCompGenerator>()->init(10);
+	getHandleManager<TCompPolarized>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+	getHandleManager<TCompWorkstation>()->init(MAX_ENTITIES);
+	getHandleManager<TCompGuidedCamera>()->init(16);
+	//helpers
+	getHandleManager<TCompFadingMessage>()->init(32);
+	getHandleManager<LogicHelperArrow>()->init(4);
+	//lights
+	getHandleManager<TCompLightDir>()->init(4);
+	getHandleManager<TCompLightFadable>()->init(4);
+	getHandleManager<TCompLightPoint>()->init(32);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -154,6 +154,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<bt_scientist>()->init(MAX_ENTITIES);
 	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
+	getHandleManager<workbench>()->init(MAX_ENTITIES);
 	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 	getHandleManager<magnet_door>()->init(MAX_ENTITIES);
 	getHandleManager<elevator>()->init(4);
@@ -221,6 +222,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(magnet_door, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(elevator, TMsgActivate, onElevatorAction);
 	SUBSCRIBE(elevator, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(workbench, TMsgEntityCreated, onCreate);
 
 	//box
 	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
@@ -502,7 +504,6 @@ void CEntitiesModule::initLevel(string level) {
 
 	//TODO: Message LevelStart
 	GameController->SetGameState(CGameController::RUNNING);
-	
 }
 
 void CEntitiesModule::destroyAllEntities() {
@@ -637,13 +638,13 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 
-  getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
-  getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
-  getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
-  getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
+	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
+	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
+	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
+	getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
 
 	RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
-  	RenderManager.renderAll( CHandle(), CRenderTechnique::UI_OBJS);
+	RenderManager.renderAll(CHandle(), CRenderTechnique::UI_OBJS);
 }
 
 void CEntitiesModule::renderInMenu() {

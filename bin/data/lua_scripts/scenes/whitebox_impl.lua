@@ -10,12 +10,12 @@ player = Player()
 
 function OnEnter_tElevator( )
   --Nothing to do
-  p:player_talks("I'm in an elevator! \nI'm so cool!!! \nI wanna die my hair red!", 3)
+  --p:player_talks("I'm in an elevator! \nI'm so cool!!! \nI wanna die my hair red!", 3)
 end
 
 function OnLeave_tElevator( )
   --Nothing to do
-  p:player_talks_color("I'm out of an elevator! \nI'm not so cool!!! \nI wanna die my hair black!", 3, "#FF2222FF","#22FF22FF")
+  --p:player_talks_color("I'm out of an elevator! \nI'm not so cool!!! \nI wanna die my hair black!", 3, "#FF2222FF","#22FF22FF")
 end
 
 
@@ -40,6 +40,12 @@ function activateElevator( )
   
   p:exec_command( "triggerElevator:setActionable(1);", 2 )
   p:exec_command( "p:setControlEnabled(1);", 10 )
+end
+
+function activateElevatorPlayer( )
+  triggerElevator:getHandleCaller()
+  p:player_talks("I don't know how this mechanism works :(", 3)
+  p:exec_command( "triggerElevator:setActionable(1);", 2 )
 end
 --------------------------------------------------
 
@@ -93,7 +99,6 @@ actionWallTarget = Handle()
 function destroyWall( )
   p:print("Destroy Wall\n")
   triggerWall_1:getHandleCaller()
-  p:exec_command( "triggerWall_1:setActionable(1);", 1 ) --test
   
   --Llevamos el player al punto de accion
   actionWallTarget:get_handle_by_name_tag("tWall_pAction", "target")
@@ -112,7 +117,7 @@ function destroyWallEffect()
   all_fragments1:get_handles_by_tag(tagWallFragment1)
   all_fragments1:awake()
   p:exec_command( "all_fragments1:remove_physics();", 5 )
-  p:exec_command( "activeWire1();", 2 )
+  p:exec_command( "activeWire1();", 0.5 )
 end
 --------------------------------------
 
@@ -127,12 +132,13 @@ function activeWire1( )
   triggerWire_1:setActionable(1);
 end
 function wireGoUp( )
+  factorWireGoUp = 2
   p:print("Wire Go Up")
   player = Player()
   player:get_player()
   cmd_teleport = "player:teleport(\""..wire_pos_up.."\")"
-  cam:run_cinematic("CineWireGoUp", 5)
-  p:exec_command( "player:set_position(0,-1000,0);", 2 )
-  p:exec_command( "triggerWire_1:setActionable(1);", 10 )
-  p:exec_command( cmd_teleport, 10 )
+  cam:run_cinematic("CineWireGoUp", factorWireGoUp * 5)
+  p:exec_command( "player:set_position(0,-1000,0);", 2 / factorWireGoUp )
+  p:exec_command( "triggerWire_1:setActionable(1);", 3)
+  p:exec_command( cmd_teleport, 10 / factorWireGoUp )
 end

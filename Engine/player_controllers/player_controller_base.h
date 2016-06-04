@@ -111,7 +111,7 @@ public:
 
 	void Jumping();
 	void Falling();
-	void Moving();
+	virtual void Moving();
 
 	virtual void update_msgs() {}
 	void renderInMenu();

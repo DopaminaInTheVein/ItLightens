@@ -8,8 +8,7 @@
 
 class CEntity;
 
-class CMagneticBomb : public TCompBase, public aicontroller {
-
+class CMagneticBomb : public TCompBase {
 	float t_explode = 5.0f;
 	float t_waiting = 0.0f;
 	float x_local = 0.0f;
@@ -27,18 +26,11 @@ protected:
 
 public:
 
-	map<string, statehandler>* getStatemap() override {
-		return &statemap;
-	}
-
 	void Init();
-	void GoingUp();
-	void GoingDown();
 	void CountDown();
 	void Explode();
 
 	void UpdatePosition();
-	void toExplode();
 	void update(float elapsed);
 	void destroy() {
 		myParent.destroy();

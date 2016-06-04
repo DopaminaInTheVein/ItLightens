@@ -403,20 +403,6 @@
 <entity>
 <tags/>
 <name
-   name="ascensor"/>
-<transform
-   pos="-71.6343 17.3784 12.9485"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/ascensor.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="cable"/>
 <transform
    pos="-66.9216 17.1642 3.42773"
@@ -457,7 +443,9 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="workbench"/>
+<workbench/>
 <name
    name="mesa_de_trabajo"/>
 <transform
@@ -583,7 +571,8 @@
 <tags
    tags="trigger"/>
 <trigger_lua
-   action="activate"/>
+   action="examinate"
+   actionSci="activate"/>
 <name
    name="tElevator"/>
 <transform
@@ -597,11 +586,13 @@
 <tags
    tags="elevator1 elevator"/>
 <elevator
-   target="-70.7158 17.1593 14.1924"/>
+   speedUp="7"
+   speedDown="7"
+   target="-70.7158 -0.130597 14.1924"/>
 <name
    name="ElevatorGround"/>
 <transform
-   pos="-70.7158 -0.0216497 14.1924"
+   pos="-70.7158 17.1223 14.1924"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -619,7 +610,7 @@
 <name
    name="ElevatorGround_pos_elevator_up"/>
 <transform
-   pos="-70.7158 17.1593 14.1924"
+   pos="-70.7158 -0.130597 14.1924"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -652,7 +643,8 @@
 <tags
    tags="trigger"/>
 <trigger_lua
-   action="activate"/>
+   action="examinate"
+   actionSci="activate"/>
 <name
    name="tElevator"/>
 <transform
@@ -945,6 +937,66 @@
 <character_controller
    radius="0.3"
    height="2.01"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="seek"
+   kpt0_pos="-83.7427 0 -37.6742"
+   kpt0_wait="2"
+   kpt1_type="look"
+   kpt1_pos="-83.7305 0 -36.4345"
+   kpt1_wait="2"
+   jurisdiction="-81.3587 0.129999 -31.1417"
+   jurRadius="18.09"/>
+<name
+   name="guard_1"/>
+<transform
+   pos="-83.6731 0.129998 -38.864"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="seek"
+   kpt0_pos="-78.5663 0 -37.5545"
+   kpt0_wait="2"
+   kpt1_type="look"
+   kpt1_pos="-78.5541 0 -36.3148"
+   kpt1_wait="2"
+   jurisdiction="-82.1829 0.129999 -31.1417"
+   jurRadius="18.09"/>
+<name
+   name="guard_002"/>
+<transform
+   pos="-78.5133 0.129998 -38.864"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
 
 </entity>
 

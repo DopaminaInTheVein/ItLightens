@@ -1,8 +1,6 @@
 #ifndef INC_PLAYER_CONTROLLER_CIENTIFICO_H_
 #define INC_PLAYER_CONTROLLER_CIENTIFICO_H_
 
-
-
 #include "components\comp_base.h"
 #include "handle\handle.h"
 #include "components\comp_msgs.h"
@@ -12,19 +10,16 @@
 #include "player_controller_base.h"
 #include "poss_controller.h"
 
-
-
 class CEntity;
 
 template< class TObj >
 class CObjectManager;
 
 class player_controller_cientifico : public PossController {
-
 	// Map for debug on ImGui
 	static std::map<int, std::string> out;
-
-	CObjectManager<player_controller_cientifico> * om = nullptr;
+	//static std::vector<VEC3> wb_positions;
+	TCompTransform * myTransform;
 
 	VEC3 directionLateral = VEC3(0, 0, 0);
 	VEC3 directionForward = VEC3(0, 0, 1);
@@ -37,9 +32,10 @@ class player_controller_cientifico : public PossController {
 		MAGNETIC_BOMB,
 		MAGNETIC_BOMB_GAME,
 		STATIC_BOMB,
-		STATIC_BOMB_GAME
+		STATIC_BOMB_GAME,
+		OBJ_SCI_SIZE
 	};
-
+	int objs_amoung[OBJ_SCI_SIZE];
 
 	int obj = EMPTY;
 	CHandle bomb_handle;
@@ -57,7 +53,7 @@ class player_controller_cientifico : public PossController {
 
 	void UpdateInputActions() override;
 	void ExplodeBomb();
-
+	void WorkBenchActions();
 
 protected:
 	// the states, as maps to functions
@@ -73,9 +69,11 @@ public:
 	void Init() override;
 	void init() { Init(); }
 	void readIniFileAttr();
-
+	void Idle() override;
+	void Moving() override;
+	void RecalcScientist();
 	//void onSetCamera(const TMsgSetCamera& msg);
-	void SetMyEntity();
+	void SetMyEntity() { }
 
 	//Create game objects
 	void createMagneticBombEntity();
@@ -83,26 +81,27 @@ public:
 
 	// Player states
 	void CreateMagneticBomb();
-	void CreateDisableBeacon();
-	void CreateStaticBomb();
-	void AddDisableBeacon();
 	void UseMagneticBomb();
-	void UseStaticBomb();
+	//void CreateDisableBeacon();
+	//void CreateStaticBomb();
+	//void AddDisableBeacon();
+	//void UseStaticBomb();
 
 	void DisabledState();
 	void InitControlState();
 	CEntity* getMyEntity();
 
 	void onGetWhoAmI(TMsgGetWhoAmI& msg) { msg.who = PLAYER_TYPE::SCIENTIST; }
-	void update_msgs() override;
 	void myUpdate() override;
+	//void update_msgs() override;
 
-	void SetCharacterController();
+	void SetCharacterController() {}
 
 	void renderInMenu();
 
 	void UpdateUnpossess() override;
 
+	bool getUpdateInfo() override;
 	//Overload function for handler_manager
 	player_controller_cientifico& player_controller_cientifico::operator=(player_controller_cientifico arg) { return arg; }
 };

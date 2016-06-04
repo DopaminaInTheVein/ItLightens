@@ -4,8 +4,8 @@
 
 bool elevator::load(MKeyValue& atts)
 {
-	speedUp = atts.getFloat("speedOpening", 1.f);
-	speedDown = atts.getFloat("speedClosing", speedUp);
+	speedUp = atts.getFloat("speedUp", 7.f);
+	speedDown = atts.getFloat("speedDown", speedUp);
 	targetDown = targetUp = atts.getPoint("target"); // Both as targets, because onCreate we will set targetUp/down as initial position
 	epsilonTarget = 0.1f;
 	return true;

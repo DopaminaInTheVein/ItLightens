@@ -39,6 +39,15 @@ void CGuiActionText::render() {
 	case eAction::PUT:
 		text = "ACTION: Put";
 		break;
+	case eAction::EXAMINATE:
+		text = "ACTION: Examinate";
+		break;
+	case eAction::CREATE_MAGNETIC_BOMB:
+		text = "ACTION: Create Bomb";
+		break;
+	case eAction::CREATING:
+		text = "Creating...";
+		break;
 	}
 
 	if (text != "") {

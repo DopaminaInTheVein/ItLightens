@@ -614,6 +614,9 @@
     <ClCompile Include="components\comp_tracker_cinta.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="logic\workbench.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1498,6 +1501,9 @@
     </ClInclude>
     <ClInclude Include="components\comp_fading_message.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\workbench.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

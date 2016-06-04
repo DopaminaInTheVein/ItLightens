@@ -209,6 +209,7 @@
     <ClCompile Include="logic\helper_arrow.cpp" />
     <ClCompile Include="logic\magnet_door.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
+    <ClCompile Include="logic\workbench.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physx\physx_manager.cpp" />
     <ClCompile Include="player_controllers\player_controller.cpp" />
@@ -627,6 +628,7 @@
     <ClInclude Include="logic\magnet_door.h" />
     <ClInclude Include="logic\polarity.h" />
     <ClInclude Include="logic\sbb.h" />
+    <ClInclude Include="logic\workbench.h" />
     <ClInclude Include="mcv_platform.h" />
     <ClInclude Include="Physx\ItLightensFilterShader.h" />
     <ClInclude Include="Physx\physx_manager.h" />

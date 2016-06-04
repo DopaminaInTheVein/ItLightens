@@ -1,0 +1,10 @@
+<entity>
+    <tags tags="magnetic_bomb"/>
+    <name name="magnetic_bomb"/>
+	<transform pos="1 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/obj/bomb.static_mesh"/>
+	<magnetic_bomb/>
+</entity>
+
+
+

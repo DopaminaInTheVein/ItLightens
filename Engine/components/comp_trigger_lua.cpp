@@ -93,6 +93,9 @@ if (s##actionEnum == "activate") {							\
 else if (s##actionEnum == "put"){							\
 	actionEnum = PUT;										\
 }															\
+else if (s##actionEnum == "examinate"){						\
+	actionEnum = EXAMINATE;									\
+}															\
 else {														\
 	actionEnum = NONE;										\
 }															\

@@ -43,6 +43,7 @@
 #include "logic/aicontroller.h"
 #include "logic/magnet_door.h"
 #include "logic/elevator.h"
+#include "logic/workbench.h"
 
 //helpers
 #include "logic/helper_arrow.h"

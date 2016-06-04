@@ -1,6 +1,8 @@
 #ifndef INC_LOGIC_SBB_H
 #define INC_LOGIC_SBB_H
 
+//#include "geometry/geometry.h"
+
 using namespace std;
 
 class CNavmesh;
@@ -19,6 +21,7 @@ private:
 	static map<string, CHandle> sbbHandle;
 	static map<string, bt_mole*> sbbMole;
 	static map<string, vector<CHandle> > sbbHandlesVector;
+	static map<string, vector<VEC3> > sbbVEC3Vector;
 
 public:
 	static map<string, guard_alert> sbbGuardAlerts;
@@ -54,6 +57,11 @@ public:
 	// sbbHandleVector
 	static void postHandlesVector(string, vector<CHandle>);
 	static vector<CHandle> readHandlesVector(string);
+	// sbbVEC3Vector
+	static void postVEC3Vector(string, vector<VEC3>);
+	static vector<VEC3> readVEC3Vector(string);
+	static void addVEC3ToVector(string, VEC3);
+	static void removeVEC3ToVector(string, VEC3);
 	// sbbGuardAlerts
 	static void postGuardAlert(string, guard_alert);
 	static guard_alert readGuardAlert(string);
