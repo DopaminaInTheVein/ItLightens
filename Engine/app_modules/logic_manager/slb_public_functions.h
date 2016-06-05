@@ -91,17 +91,17 @@ class SLBPublicFunctions
 {
 public:
 
-  // public functions
-  void execCommand(const char* exec_code, float exec_time);
-  void print(const char* to_print);
-  void setControlEnabled(int);
-  void playSound(const char* sound_route);
-  void playMusic(const char* music_route);
-  void playVoice(const char* voice_route);
-  void playAmbient(const char* ambient_route);
-  void playerTalks(const char* text, const float ttl);
-  void playerTalksWithColor(const char* text, const float ttl, const char* background, const char* textColor);
-  void toggleIntroState();
+	// public functions
+	void execCommand(const char* exec_code, float exec_time);
+	void print(const char* to_print);
+	void setControlEnabled(int);
+	void playSound(const char* sound_route);
+	void playMusic(const char* music_route);
+	void playVoice(const char* voice_route);
+	void playAmbient(const char* ambient_route);
+	void playerTalks(const char* text);
+	void playerTalksWithColor(const char* text, const char* background, const char* textColor);
+	void toggleIntroState();
 
 	void test(const char* to_print);
 };
