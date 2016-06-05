@@ -43,6 +43,9 @@ CEntity* bt_guard::getPlayer() {
 	PROFILE_FUNCTION("guard: get player");
 	thePlayer = tags_manager.getFirstHavingTag("player");
 	CEntity* player = thePlayer;
+	if (!player) {
+		dbg("GUARD CAUTION: PLAYER NOT FOUND!\n");
+	}
 	return player;
 }
 
@@ -198,18 +201,27 @@ bool bt_guard::playerDetected() {
 
 bool bt_guard::playerOutOfReach() {
 	PROFILE_FUNCTION("guard: player out of reach");
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
-	VEC3 myPos = getTransform()->getPosition();
-	float distance = squaredDistXZ(myPos, posPlayer);
-	if (distance > DIST_SQ_SHOT_AREA_ENTER) {
-		animController.setState(AST_MOVE);
-		return true;
+	CEntity * ePlayer = getPlayer();
+
+	//Calc out of reach
+	bool res;
+	if (!ePlayer) {
+		res = true;
 	}
 	else {
-		animController.setState(AST_SHOOT);
-		return false;
+		TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
+		VEC3 posPlayer = tPlayer->getPosition();
+		VEC3 myPos = getTransform()->getPosition();
+		float distance = squaredDistXZ(myPos, posPlayer);
+		res = (distance > DIST_SQ_SHOT_AREA_ENTER);
 	}
+
+	//Update animation
+	if (res) animController.setState(AST_MOVE);
+	else animController.setState(AST_SHOOT);
+
+	//Return calc
+	return res;
 }
 
 bool bt_guard::guardAlerted() {
@@ -224,14 +236,16 @@ bool bt_guard::guardAlerted() {
 	CEntity* entity = myHandle.getOwner();
 
 	if (playerLost) {
-		TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-		VEC3 posPlayer = tPlayer->getPosition();
-		player_last_seen_point = posPlayer;
-		// send an alert for the nearest guards with the player last position
-		alert.alert_position = player_last_seen_point;
-		string name = entity->getName() + string("_player_lost");
-		SBB::postGuardAlert(name, alert);
-
+		CEntity* ePlayer = getPlayer();
+		if (ePlayer) {
+			TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
+			VEC3 posPlayer = tPlayer->getPosition();
+			player_last_seen_point = posPlayer;
+			// send an alert for the nearest guards with the player last position
+			alert.alert_position = player_last_seen_point;
+			string name = entity->getName() + string("_player_lost");
+			SBB::postGuardAlert(name, alert);
+		}
 		return true;
 	}
 	else if (noiseHeard) {
@@ -332,8 +346,10 @@ int bt_guard::actionReact() {
 
 int bt_guard::actionChase() {
 	PROFILE_FUNCTION("guard: chase");
+	CEntity * ePlayer = getPlayer();
+	if (!ePlayer) return STAY;
 	if (!myParent.isValid()) return false;
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
@@ -388,7 +404,7 @@ int bt_guard::actionAbsorb() {
 	if (!ePlayer) {
 		return STAY;
 	}
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
 	float dist = squaredDistXZ(posPlayer, getTransform()->getPosition());
@@ -439,7 +455,11 @@ int bt_guard::actionAbsorb() {
 int bt_guard::actionShootWall() {
 	PROFILE_FUNCTION("guard: shootwall");
 	if (!myParent.isValid()) return false;
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+
+	CEntity* ePlayer = getPlayer();
+	if (!ePlayer) return STAY;
+
+	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 
 	turnTo(posPlayer);
@@ -490,6 +510,8 @@ int bt_guard::actionRemoveBox() {
 int bt_guard::actionSearch() {
 	PROFILE_FUNCTION("guard: search");
 	if (!myParent.isValid()) return false;
+	CEntity * ePlayer = getPlayer();
+	if (!ePlayer) return STAY;
 	VEC3 myPos = getTransform()->getPosition();
 
 	//Player Visible?
@@ -754,9 +776,8 @@ void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 {
 	PROFILE_FUNCTION("guard: onmagneticbomb");
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
-	if (squaredDist(msg.pos, posPlayer) < msg.r * msg.r) {
+	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
 		setCurrent(NULL);
@@ -772,10 +793,8 @@ void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 
 void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	PROFILE_FUNCTION("guard: onstaticbomb");
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
-	if (squaredDist(msg.pos, posPlayer) < msg.r * msg.r) {
+	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
 		setCurrent(NULL);
@@ -801,7 +820,8 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 		dmg.source = entity->getName();
 		dmg.type = Damage::ABSORB;
 		dmg.actived = false;
-		getPlayer()->sendMsg(dmg);
+		CEntity * ePlayer = getPlayer();
+		if (ePlayer) ePlayer->sendMsg(dmg);
 	}
 }
 
@@ -821,8 +841,9 @@ void bt_guard::onBoxHit(const TMsgBoxHit& msg) {
 		dmg.source = entity->getName();
 		dmg.type = Damage::ABSORB;
 		dmg.actived = false;
-		getPlayer()->sendMsg(dmg);
-
+		CEntity * ePlayer = getPlayer();
+		if (ePlayer) ePlayer->sendMsg(dmg);
+		else fatal("Cannot send end damage message to player!");
 		//End Damage Message
 		sendMsgDmg = shooting = false;
 	}
@@ -913,33 +934,34 @@ bool bt_guard::turnTo(VEC3 dest) {
 	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
 }
 
-VEC3 bt_guard::generateRandomPoint() {
-	PROFILE_FUNCTION("guard: generate random point");
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	VEC3 myPos = tPlayer->getPosition();
-
-	// generate random increments for x and z coords
-	float x_diff = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / RANDOM_POINT_MAX_DISTANCE));
-	float z_diff = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / RANDOM_POINT_MAX_DISTANCE));
-
-	// randomly decide x sign
-	if (rand() % 10 < 5) {
-		myPos.x += x_diff;
-	}
-	else {
-		myPos.x -= x_diff;
-	}
-
-	// randomly decide z sign
-	if (rand() % 10 < 5) {
-		myPos.z += z_diff;
-	}
-	else {
-		myPos.z -= z_diff;
-	}
-
-	return myPos;
-}
+//THI IS NOT USED!
+//VEC3 bt_guard::generateRandomPoint() {
+//	PROFILE_FUNCTION("guard: generate random point");
+//	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+//	VEC3 myPos = tPlayer->getPosition();
+//
+//	// generate random increments for x and z coords
+//	float x_diff = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / RANDOM_POINT_MAX_DISTANCE));
+//	float z_diff = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / RANDOM_POINT_MAX_DISTANCE));
+//
+//	// randomly decide x sign
+//	if (rand() % 10 < 5) {
+//		myPos.x += x_diff;
+//	}
+//	else {
+//		myPos.x -= x_diff;
+//	}
+//
+//	// randomly decide z sign
+//	if (rand() % 10 < 5) {
+//		myPos.z += z_diff;
+//	}
+//	else {
+//		myPos.z -= z_diff;
+//	}
+//
+//	return myPos;
+//}
 
 // -- Player Visible? -- //
 bool bt_guard::playerVisible() {
@@ -999,6 +1021,8 @@ bool bt_guard::boxMovingDetected() {
 }
 
 bool bt_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) {
+	CEntity* ePlayer = getPlayer();
+	if (!ePlayer) return false;
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	return rayCastToTransform(types, distRay, hit, tPlayer);
 }
@@ -1043,9 +1067,11 @@ bool bt_guard::rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit) {
 bool bt_guard::shootToPlayer() {
 	//If cant shoot returns
 	if (noShoot) return false;
+	CEntity* ePlayer = getPlayer();
+	if (!ePlayer) return false;
 
 	//Values
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
@@ -1098,7 +1124,6 @@ bool bt_guard::shootToPlayer() {
 			) {
 			shooting = sendMsgDmg = true;
 
-			CEntity* ePlayer = getPlayer();
 			TMsgDamageSpecific dmg;
 			dmg.source = entity->getName();
 			dmg.type = Damage::ABSORB;
@@ -1108,7 +1133,7 @@ bool bt_guard::shootToPlayer() {
 	}
 	else {
 		TMsgUnpossesDamage msgUnpossess;
-		getPlayer()->sendMsg(msgUnpossess);
+		ePlayer->sendMsg(msgUnpossess);
 	}
 
 	//Render Debug
@@ -1126,9 +1151,11 @@ bool bt_guard::shootToPlayer() {
 
 void bt_guard::drawShot(float distRay) {
 	PROFILE_FUNCTION("guard bt: draw shot");
+	CEntity * ePlayer = getPlayer();
+	if (!ePlayer) return;
 	// Centro del personaje
-	TCompCharacterController * cc = getPlayer()->get<TCompCharacterController>();
-	TCompTransform *t = getPlayer()->get<TCompTransform>();
+	TCompCharacterController * cc = ePlayer->get<TCompCharacterController>();
+	TCompTransform *t = ePlayer->get<TCompTransform>();
 	assert(cc || fatal("Player doesn't have character controller!"));
 	VEC3 posPlayer = cc->GetPosition();
 

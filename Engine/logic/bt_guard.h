@@ -133,7 +133,7 @@ class bt_guard : public bt, public TCompBase
 	void goTo(const VEC3& dest);
 	void goForward(float stepForward);
 	bool turnTo(VEC3 dest);
-	VEC3 generateRandomPoint();
+	//VEC3 generateRandomPoint(); THIS IS NOT USED!
 
 	//Aux checks
 	bool playerVisible();
@@ -240,12 +240,12 @@ public:
 	void onOverCharged(const TMsgOverCharge& msg);
 	void onBoxHit(const TMsgBoxHit& msg);
 
-
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();
 
 	void update(float dt) {
-
+		TCompTransform * t = compBaseEntity->get<TCompTransform>();
+		Debug->DrawLine(t->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
 			if (t_reduceStats <= 0.0f) {
@@ -264,7 +264,6 @@ public:
 
 	//Cambio Malla
 	//void ChangePose(string new_pose_route);
-
 
 	float timerStunt, _timerStunt;
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)
