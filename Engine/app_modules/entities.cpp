@@ -369,11 +369,11 @@ void CEntitiesModule::initLevel(string level) {
 		is_ok = ep.xmlParseFile("data/scenes/test_lights.xml");
 		assert(is_ok);
 	}
-	{
-		CEntityParser ep;
-		bool is_ok = ep.xmlParseFile("data/scenes/scene_ui.xml");
-		assert(is_ok);
-	}
+	//{
+	//	CEntityParser ep;
+	//	bool is_ok = ep.xmlParseFile("data/scenes/scene_ui.xml");
+	//	assert(is_ok);
+	//}
 	dbg("Scene Loaded! (%d entities)\n", size());
 
 	// GENERATE NAVMESH

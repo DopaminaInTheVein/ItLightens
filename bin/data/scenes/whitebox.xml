@@ -388,7 +388,7 @@
 <name
    name="player_1"/>
 <transform
-   pos="-45.3891 1.53723 -7.84438"
+   pos="-44.4184 1.43372 -8.99342"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -1004,11 +1004,11 @@
    tags="AI AI_mole AI_poss"/>
 <bt_mole
    wpts_size="3"
-   wpt0_pos="-88.0122 0.656251 23.5733"
+   wpt0_pos="-96.0276 0.656251 27.5069"
    wpt0_wait="2"
-   wpt1_pos="-85.0471 0.656251 23.627"
+   wpt1_pos="-80.6697 0.656251 23.627"
    wpt1_wait="2"
-   wpt2_pos="-86.9768 0.656251 26.9229"
+   wpt2_pos="-86.9768 0.656251 34.4211"
    wpt2_wait="2"/>
 <player_mole/>
 <life
