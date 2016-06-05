@@ -1017,14 +1017,13 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 		msgDamagePerSecond.modif = damageCurrent;
 		eMe->sendMsg(msgDamagePerSecond);
 		if (type == Damage::ABSORB) {
+			if (msg.actived) {
+				damage_source = msg.source;
+			}
+			else {
+				damage_source = "none";
+			}
 			//LogicManager
-			//TODO?: No se esta usando el string damage_source (p. ej. "guard1")
-			//if (msg.actived) {
-			//	damage_source = msg.source;
-			//}
-			//else {
-			//	damage_source = "none";
-			//}
 			if (damageFonts[type] > 0) {
 				//TMsgDamageSave msgDamagePerSecond;
 				//msgDamagePerSecond.modif = 0.1f;
