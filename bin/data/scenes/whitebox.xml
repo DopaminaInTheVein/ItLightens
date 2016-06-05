@@ -950,10 +950,10 @@
    kpt0_pos="-83.7427 0 -37.6742"
    kpt0_wait="2"
    kpt1_type="look"
-   kpt1_pos="-83.7305 0 -36.4345"
+   kpt1_pos="-83.7305 0 -29.1161"
    kpt1_wait="2"
    jurisdiction="-81.3587 0.129999 -31.1417"
-   jurRadius="18.09"/>
+   jurRadius="26.3285"/>
 <name
    name="guard_1"/>
 <transform
@@ -980,10 +980,10 @@
    kpt0_pos="-78.5663 0 -37.5545"
    kpt0_wait="2"
    kpt1_type="look"
-   kpt1_pos="-78.5541 0 -36.3148"
+   kpt1_pos="-78.5541 0 -29.3975"
    kpt1_wait="2"
    jurisdiction="-82.1829 0.129999 -31.1417"
-   jurRadius="18.09"/>
+   jurRadius="25.0988"/>
 <name
    name="guard_002"/>
 <transform
@@ -1020,7 +1020,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_mole/mole_amarilla.static_mesh"/>
+   name="static_meshes/test_mole/mole.static_mesh"/>
 <character_controller
    radius="0.3"
    height="2.01"/>
