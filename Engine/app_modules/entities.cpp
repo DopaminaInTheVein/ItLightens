@@ -577,13 +577,13 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompBoneTracker>()->updateAll(dt);
 
 		if (SBB::readBool(sala) && ia_wait > 1.0f) {
-			getHandleManager<bt_guard>()->updateAll(dt);
 			getHandleManager<bt_mole>()->updateAll(dt);
 			getHandleManager<bt_scientist>()->updateAll(dt);
 			getHandleManager<beacon_controller>()->updateAll(dt);
 			getHandleManager<workbench_controller>()->updateAll(dt);
 			getHandleManager<bt_speedy>()->updateAll(dt);
 			getHandleManager<water_controller>()->updateAll(dt);
+			getHandleManager<bt_guard>()->updateAll(dt);
 		}
 		getHandleManager<CStaticBomb>()->updateAll(dt);
 		getHandleManager<CMagneticBomb>()->updateAll(dt);

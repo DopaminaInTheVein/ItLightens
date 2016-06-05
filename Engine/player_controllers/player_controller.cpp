@@ -1013,21 +1013,22 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 	//Cumulative add always, otherwise when change to 0 or 1
 	if (DMG_IS_CUMULATIVE(type) || damageFonts[type] < 2) {
 		damageCurrent += DMG_PER_SECOND(type) * signDamage;
-		TMsgDamageSave msgDamagePerSecond;
+		TMsgDamage msgDamagePerSecond;
 		msgDamagePerSecond.modif = damageCurrent;
 		eMe->sendMsg(msgDamagePerSecond);
 		if (type == Damage::ABSORB) {
 			//LogicManager
-			if (msg.actived) {
-				damage_source = msg.source;
-			}
-			else {
-				damage_source = "none";
-				TMsgDamageSave msgDamagePerSecond;
-				msgDamagePerSecond.modif = 0.1f;
-				eMe->sendMsg(msgDamagePerSecond);
-			}
+			//TODO?: No se esta usando el string damage_source (p. ej. "guard1")
+			//if (msg.actived) {
+			//	damage_source = msg.source;
+			//}
+			//else {
+			//	damage_source = "none";
+			//}
 			if (damageFonts[type] > 0) {
+				//TMsgDamageSave msgDamagePerSecond;
+				//msgDamagePerSecond.modif = 0.1f;
+				//eMe->sendMsg(msgDamagePerSecond);
 				logic_manager->throwEvent(logic_manager->OnStartReceiveHit, "");
 			}
 			else {

@@ -8,10 +8,9 @@
 
 // ------------------------------------
 struct TCompLife : public TCompBase {
-
 	float currentlife;
 	float maxlife;
-	float modifier	= 1.0f;
+	float modifier = 1.0f;
 
 	float energyDamageScale = 0.1f;
 	float last_modif = energyDamageScale;
@@ -55,11 +54,10 @@ struct TCompLife : public TCompBase {
 			assert(false);
 		}
 
-
 		//init damage scales by time
-		if (me.hasTag("player")) {
-			energyDamageScale = 0.1f;
-			last_modif = 0.1f;
+		if (me.hasTag("player")) { //El player ya gestiona su damage
+			energyDamageScale = 0.f;
+			last_modif = 0.f;
 		}
 
 		//for NPC will gain life until full life if not possessed
@@ -79,7 +77,6 @@ struct TCompLife : public TCompBase {
 				GameController->SetGameState(CGameController::LOSE);
 				currentlife = 0;
 			}
-
 
 			else if (currentlife > maxlife)
 				currentlife = maxlife;

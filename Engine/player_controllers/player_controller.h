@@ -89,7 +89,7 @@ class player_controller : public CPlayerBase {
 	float	POL_OSCILE_Y = .2f;
 
 	//Damage Fonts Actived
-	float damageCurrent = 0.f;
+	float damageCurrent = 0.1f;
 	int damageFonts[Damage::SIZE] = { 0 };
 
 	//TCompRenderStaticMesh*	actual_render = nullptr;

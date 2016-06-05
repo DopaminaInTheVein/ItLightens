@@ -384,7 +384,10 @@ int bt_guard::actionAbsorb() {
 		shootToPlayer();
 		return STAY;
 	}
-
+	CEntity * ePlayer = getPlayer();
+	if (!ePlayer) {
+		return STAY;
+	}
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
