@@ -40,24 +40,19 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 
 void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 	//Obtenemos id de la animacion a asignar
-    std::vector<std::string> anim_names = msg.name;
+	std::vector<std::string> anim_names = msg.name;
 	std::vector<std::string> next_loop = msg.nextLoop;
 
-	// desactivacion de animaciones anteriores
-	for (auto prevCycleId : prevCycleIds) {
-		if (msg.loop) {
-			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.2f);
-		}
-		else {
-			if (prevCycleId >= 0) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.f);
-		}
-	}
-	prevCycleIds.clear();
 	// activacion nuevas animacinoes
+	bool prev_anims_cleared = false;
 	for (auto name : anim_names) {
-
 		int anim_id = resource_skeleton->getAnimIdByName(name);
 		if (anim_id >= 0) {
+			if (!prev_anims_cleared) {
+				prev_anims_cleared = true;
+				clearPrevAnims(!msg.loop);
+			}
+
 			//Encuentra la animacion con dicho nombre
 			dbg("Cambio anim: %s\n", name.c_str());
 			if (msg.loop) {
@@ -73,7 +68,7 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 				if (next_loop[0] != "") {
 					std::vector<int> nextCycleIds;
 					for (auto next : next_loop) {
-						int nextCycleId = resource_skeleton->getAnimIdByName(next);						
+						int nextCycleId = resource_skeleton->getAnimIdByName(next);
 						if (nextCycleId >= 0) nextCycleIds.push_back(nextCycleId);
 						else fatal("Animation %s doesn't exist!", next.c_str());
 					}
@@ -86,10 +81,19 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 		else {
 			fatal("Animation %s doesn't exist!", name.c_str());
 		}
-
 	}
 }
 
+void TCompSkeleton::clearPrevAnims(bool instant)
+{
+	// desactivacion de animaciones anteriores
+	for (auto prevCycleId : prevCycleIds) {
+		if (prevCycleId >= 0) {
+			if (instant) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.f);
+			else model->getMixer()->blendCycle(prevCycleId, 0.f, 0.2f);
+		}
+	}
+}
 void TCompSkeleton::renderInMenu() {
 	static int anim_id = 0;
 	static float in_delay = 0.3f;
@@ -114,7 +118,7 @@ void TCompSkeleton::renderInMenu() {
 			, a->getWeight()
 			, a->getTime()
 			, a->getCoreAnimation()->getDuration()
-			);
+		);
 	}
 
 	for (auto a : mixer->getAnimationCycle()) {
@@ -123,7 +127,7 @@ void TCompSkeleton::renderInMenu() {
 			, a->getState()
 			, a->getWeight()
 			, a->getCoreAnimation()->getDuration()
-			);
+		);
 	}
 }
 
@@ -150,7 +154,6 @@ void TCompSkeleton::updateEndAction() {
 			for (auto prevCycleId : prevCycleIds)
 				model->getMixer()->blendCycle(prevCycleId, 1.0f, endTimeAction);
 		}
-
 	}
 	//if (mixer->getAnimationActionList().size() == 0
 	//	&& mixer->getAnimationCycle().size() == 0)

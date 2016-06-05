@@ -16,6 +16,7 @@ struct TCompSkeleton : public TCompBase {
 	void renderInMenu();
 	void uploadBonesToCteShader() const;
 	void updateEndAction();
+	void clearPrevAnims(bool instant);
 
 	//Messages
 	void onSetAnim(const TMsgSetAnim&);
