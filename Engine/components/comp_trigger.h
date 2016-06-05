@@ -28,11 +28,12 @@ struct TTrigger : public TCompBase {
 	void onTriggerExitCall(const TMsgTriggerOut& msg) {
 		CHandle hExit = msg.other;
 		if (hExit.isValid()) {
-			if(hExit.hasTag("player"))
-			Debug->LogRaw("OnTriggerExit\n");
-			last_msg_out = msg;
-			triggered = false;
-			onTriggerExit(last_msg_out);
+			if (hExit.hasTag("player")) {
+				Debug->LogRaw("OnTriggerExit\n");
+				last_msg_out = msg;
+				triggered = false;
+				onTriggerExit(last_msg_out);
+			}
 		}
 	}
 
