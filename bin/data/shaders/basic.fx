@@ -101,7 +101,7 @@ void PSAddAmbient(float4 Pos : SV_POSITION
 
 	float4 diff = txDiffuse.Sample(samClampLinear, iTex0);
 	float4 lights = txEnvironment.Sample(samLinear, iTex0);
-	float4 normals = txNormal.Sample(samLinear, iTex0); 
+	float4 normals = txNormal.Sample(samLinear, iTex0)*2 - 1; 
 	float4 selfIlum = txSelfIlum.Sample(samLinear, iTex0);
 	
 	
@@ -109,8 +109,10 @@ void PSAddAmbient(float4 Pos : SV_POSITION
 	//output = float4(0.2f,0.2f, 0.2f, 1.0f)*normals*0.2f + lights*0.8f;
 	output.a = diff.a;
 	output = lights;
-	output = diff*0.5f;
+	float4 NAmbient = dot(normals,float4(0,1,0,1));
+	output = diff*NAmbient*0.5f;
 	//output.rgb += selfIlum.rgb;
+	//output = diff*0.5f;
 }
 
 //--------------------------------------------------------------------------------------

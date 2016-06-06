@@ -667,9 +667,7 @@ void CRenderDeferredModule::render() {
 	rt_data->clear(VEC4(0, 0, 0, 0));
 	rt_specular->clear(VEC4(0, 0, 0, 0));
 
-	//rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	generateShadowMaps();
-	//CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 
 	rt_data2->clear(VEC4(0, 0, 0, 0));
 

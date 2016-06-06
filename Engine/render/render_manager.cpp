@@ -67,7 +67,10 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
       k.mesh = s.mesh;
       k.owner = owner;
       k.transform = h_transform;
-      all_shadow_keys.push_back(k);
+	  if (!s.material->tech->usesBones())
+		all_shadow_keys.push_back(k);
+	  else
+		all_shadow_skinning_keys.push_back(k);
     }
   }
 
@@ -211,7 +214,9 @@ void CRenderManager::renderShadowCasters() {
 	//assert(c_tmx);
 	if (c_tmx) {
 		activateWorldMatrix(c_tmx->asMatrix());
-
+		if (it->owner.hasTag("player")) {
+			int i = 0;
+		}
 		// If the shadows_keys were sorted by mesh
 		// I could skip the activation and just call it
 		// when the mesh changed, and only call the render
@@ -222,4 +227,30 @@ void CRenderManager::renderShadowCasters() {
 	}
 	++it;
   }
+}
+
+// ------------------------------------------
+void CRenderManager::renderShadowCastersSkin() {
+	auto it = all_shadow_skinning_keys.begin();
+	while (it != all_shadow_skinning_keys.end()) {
+
+		const TCompTransform* c_tmx = it->transform;
+		//TODO: Review Pedro!
+		//assert(c_tmx);
+		if (c_tmx) {
+			activateWorldMatrix(c_tmx->asMatrix());
+			if (it->owner.hasTag("player")) {
+				int i = 0;
+			}
+			// If the shadows_keys were sorted by mesh
+			// I could skip the activation and just call it
+			// when the mesh changed, and only call the render
+			it->mesh->activateAndRender();
+		}
+		else {
+			fatal("render__manager: tranfrom from shadowcaster null");
+
+		}
+		++it;
+	}
 }

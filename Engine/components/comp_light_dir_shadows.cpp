@@ -53,6 +53,12 @@ void TCompLightDirShadows::generateShadowMap() {
   // Pintar los shadow casters
   RenderManager.renderShadowCasters();
 
+  // activar la tech de shadow map generation
+  Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
+
+  // Pintar los shadow casters
+  RenderManager.renderShadowCastersSkin();
+
   activateRS(RSCFG_DEFAULT);
 }
 

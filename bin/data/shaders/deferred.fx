@@ -51,6 +51,28 @@ void VSOnlyPos(
   oPos = mul(worldPos, ViewProjection);
 }
 
+//--------------------------------------------------------------------------------------
+void VSOnlyPosSkin(
+	in float4 iPos : POSITION
+	, in float3 iNormal : NORMAL
+	, in float2 iTex0 : TEXCOORD0
+	, in float4 iTangent : NORMAL1
+	, in int4   iBones : BONES
+	, in float4 iWeights : WEIGHTS
+	, out float4 oPos : SV_POSITION
+	)
+{
+	// This matrix will be reused for the position, Normal, Tangent, etc
+	float4x4 skin_mtx = Bones[iBones.x] * iWeights.x
+		+ Bones[iBones.y] * iWeights.y
+		+ Bones[iBones.z] * iWeights.z
+		+ Bones[iBones.w] * iWeights.w;
+
+	//Position
+	float4 skinned_Pos = mul(iPos, skin_mtx);
+	oPos = mul(skinned_Pos, ViewProjection);
+}
+
 void VSLightDir(
   in float4 iPos : POSITION
   , out float4 oPos : SV_POSITION
@@ -259,11 +281,13 @@ float getShadowAt(float4 wPos) {
   if (light_proj_coords.z < 1e-3)
     return 0.;
 
+	float2 rand = txNoise.Sample(samLinear, float2(wPos.xy)).xy ;/// light_proj_coords.z ;
   float2 center = light_proj_coords.xy;
   float depth = light_proj_coords.z - 0.001;	
   float amount = tapAt(center, depth);
  
-  float2 sz = float2(2. / xres, 2./yres);
+  float2 sz = float2(2.0/ xres, 2.0/yres)*light_proj_coords.z;
+  sz = float2(rand.x/xres, rand.y/yres);
   amount += tapAt(center + float2(sz.x, sz.y), depth);
   amount += tapAt(center + float2(-sz.x, sz.y), depth);
   amount += tapAt(center + float2(sz.x, -sz.y), depth);
@@ -274,8 +298,22 @@ float getShadowAt(float4 wPos) {
   amount += tapAt(center + float2(0, -sz.y), depth);
   amount += tapAt(center + float2(0, sz.y), depth);
  
-  amount *= 1.f / 9.;
+  /*amount += tapAt(center + float2(sz.x, sz.y)*2, depth);
+  amount += tapAt(center + float2(-sz.x, sz.y)*2, depth);
+  amount += tapAt(center + float2(sz.x, -sz.y)*2, depth);
+  amount += tapAt(center + float2(-sz.x, -sz.y)*2, depth);
+
+  amount += tapAt(center + float2(sz.x, 0)*2, depth);
+  amount += tapAt(center + float2(-sz.x, 0)*2, depth);
+  amount += tapAt(center + float2(0, -sz.y)*2, depth);
+  amount += tapAt(center + float2(0, sz.y)*2, depth);
  
+  amount *= 1.f / 18.;*/
+  
+  amount *= 1.f / 9.;
+  
+  return amount * 1/depth;
+  return amount *0.5f + 0.5*depth;
   return amount;
 }
 

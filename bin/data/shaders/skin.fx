@@ -31,8 +31,9 @@ void VSSkin(
 	oNormal = mul(iNormal, (float3x3)skin_mtx);
 	oTangent.xyz = mul(iTangent.xyz, (float3x3)World);
 	oTangent.w = iTangent.w;
-
+	
 	// Las uv's se pasan directamente al ps
 	oTex0 = iTex0;
 	oWorldPos = skinned_Pos;
+	//oWorldPos = float4(1,1,1,1);
 }

@@ -31,6 +31,9 @@ private:
   bool in_order;
   std::vector< TKey > all_keys;
   std::vector< TShadowKey > all_shadow_keys;
+
+  //will use another tech for skinning from defaul shadowcasters
+  std::vector< TShadowKey > all_shadow_skinning_keys;
   std::vector<int> renderedCulling;
 
   int  ntimes_sorted = 0;
@@ -41,6 +44,7 @@ public:
   void renderUICulling();
   void renderAll(CHandle h_camera, CRenderTechnique::eCategory category);
   void renderShadowCasters();
+  void renderShadowCastersSkin();
 };
 
 extern CRenderManager RenderManager;
