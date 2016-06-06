@@ -1,0 +1,93 @@
+<entities>
+<entity>
+<tags
+   tags="player raijin"/>
+<player/>
+<life
+   points="10"/>
+<name
+   name="player_1"/>
+<transform
+   pos="-83.5112 17.9513 0.586669"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/player/player.skeleton"/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="0.7"/>
+
+</entity>
+<entity>
+<tags
+   tags="camera_main"/>
+<camera
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"/>
+<controller_3rd_person/>
+<name
+   name="camController_1"/>
+<transform
+   pos="-82.9453 25.9102 2.68672"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-72.9741 17.229 4.40804"
+   yawAction="-3.12925"
+   animation="idle"/>
+<name
+   name="workstationTest001"/>
+<transform
+   pos="-72.8895 17.8708 -6.08264"
+   quat="0 1.0 0 0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/workstationTest001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_cientifico AI_poss"/>
+<bt_scientist/>
+<player_cientifico/>
+<life
+   points="100"/>
+<name
+   name="scientist_1"/>
+<transform
+   pos="-72.7931 17.2493 -8.57621"
+   quat="0 0 0 1.0"
+   scale="0.00929856"/>
+<render_static_mesh
+   name="static_meshes/test/scientist.static_mesh"/>
+<character_controller
+   radius="0.147"
+   height="1.71312"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="Box001"/>
+<transform
+   pos="-82.3428 10.8723 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test/testGround.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+
+</entities>
