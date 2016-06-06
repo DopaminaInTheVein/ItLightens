@@ -12,6 +12,7 @@ CNavmesh::CNavmesh()
 {
   m_navQuery = dtAllocNavMeshQuery();
   m_ctx = &m_context;
+  m_ctx->enableLog(false);
 }
 
 rcConfig CNavmesh::getRcConfig() {

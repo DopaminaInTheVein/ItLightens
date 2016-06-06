@@ -165,11 +165,21 @@ btnode** bt::getRoot() {
   return nullptr;
 }
 
-void bt::getPath(VEC3 startPoint, VEC3 endPoint, string nombreSala) {
+void bt::getPath(const VEC3& startPoint, const VEC3& endPoint, string nombreSala) {
+  PROFILE_FUNCTION("bt Get Path");
   CNavmesh nav = SBB::readNavmesh();
   CNavmeshQuery query(&nav);
-  query.updatePosIni(startPoint);
-  query.updatePosEnd(endPoint);
+
+  //No permite const!
+  VEC3 startPointValue = startPoint;
+  VEC3 endPointValue = endPoint;
+  //TODO: Arreglar esto. Dar punto mas cercano!
+  if (abs(startPointValue.y - endPointValue.y) < 5.f) {
+	  endPointValue.y = startPointValue.y;
+  }
+  query.updatePosIni(startPointValue);
+  query.updatePosEnd(endPointValue);
+  Debug->DrawLine(startPointValue, endPointValue);
   query.findPath(query.p1, query.p2);
   const float * path = query.getVertexSmoothPath();
   pathWpts.clear();
@@ -184,7 +194,7 @@ void bt::getPath(VEC3 startPoint, VEC3 endPoint, string nombreSala) {
     return;
 
   for (int i = 0; i < (pathWpts.size() - 1); i++) {
-    Debug->DrawLine(pathWpts[i], pathWpts[i + 1]);
+    Debug->DrawLine(pathWpts[i], pathWpts[i + 1], VEC3(1,0,1));
   }
 
   currPathWpt = 0;
