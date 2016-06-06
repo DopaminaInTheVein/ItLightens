@@ -288,6 +288,7 @@ void CPlayerBase::energyDecreasal(float howmuch) {
 void CPlayerBase::Idle()
 {
 	PROFILE_FUNCTION("idle base");
+	ChangeCommonState("idle");
 	if (!checkDead()) {
 		UpdateDirection();
 		UpdateJumpState();
@@ -358,9 +359,14 @@ void CPlayerBase::Jumping()
 void CPlayerBase::Moving()
 {
 	PROFILE_FUNCTION("moving base");
+	checkFalling();
 	UpdateDirection();
 	UpdateJumpState();
 	if (!UpdateMovDirection()) ChangeState("idle");
+}
+
+void CPlayerBase::checkFalling() {
+	if (!cc->OnGround() && cc->GetYAxisSpeed() < -.5f) ChangeState("falling");
 }
 
 #pragma endregion

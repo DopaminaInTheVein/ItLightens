@@ -88,6 +88,7 @@ protected:
 	bool checkDead();
 	void orbitCameraDeath();
 	bool getUpdateInfo() override;
+	void checkFalling();
 public:
 
 	CPlayerBase();
