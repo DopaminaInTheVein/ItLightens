@@ -42,15 +42,32 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 	//Obtenemos id de la animacion a asignar
 	std::vector<std::string> anim_names = msg.name;
 	std::vector<std::string> next_loop = msg.nextLoop;
+	std::vector<int> nextCycleIds;
+	bool prev_anims_cleared = false;
+
+	//Siguiente Loop
+	if (next_loop[0] != "") {
+		for (auto next : next_loop) {
+			int nextCycleId = resource_skeleton->getAnimIdByName(next);
+			if (nextCycleId >= 0) {
+				nextCycleIds.push_back(nextCycleId);
+			}
+			else fatal("Animation %s doesn't exist!", next.c_str());
+		}
+	}
+
+	//Si no hay siguiente loop, usamos el anterior
+	if (nextCycleIds.size() == 0) {
+		nextCycleIds = prevCycleIds;
+	}
 
 	// activacion nuevas animacinoes
-	bool prev_anims_cleared = false;
 	for (auto name : anim_names) {
 		int anim_id = resource_skeleton->getAnimIdByName(name);
 		if (anim_id >= 0) {
 			if (!prev_anims_cleared) {
+				clearPrevAnims(msg.loop);
 				prev_anims_cleared = true;
-				clearPrevAnims(!msg.loop);
 			}
 
 			//Encuentra la animacion con dicho nombre
@@ -63,36 +80,29 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 			else {
 				//Action animation (no loop)
 				model->getMixer()->executeAction(anim_id, 0.f, 0.2f, true);
-
-				//Siguiente loop (si no se indica sera el actual)
-				if (next_loop[0] != "") {
-					std::vector<int> nextCycleIds;
-					for (auto next : next_loop) {
-						int nextCycleId = resource_skeleton->getAnimIdByName(next);
-						if (nextCycleId >= 0) nextCycleIds.push_back(nextCycleId);
-						else fatal("Animation %s doesn't exist!", next.c_str());
-					}
-					for (auto nextCycleId : nextCycleIds) {
-						prevCycleIds.push_back(nextCycleId);
-					}
-				}
 			}
 		}
 		else {
 			fatal("Animation %s doesn't exist!", name.c_str());
 		}
 	}
+
+	//Si las nuevas animaciones no son loops, preparamos el siguiente loop
+	if (!msg.loop) {
+		prevCycleIds = nextCycleIds;
+	}
 }
 
-void TCompSkeleton::clearPrevAnims(bool instant)
+void TCompSkeleton::clearPrevAnims(bool isLoop)
 {
 	// desactivacion de animaciones anteriores
 	for (auto prevCycleId : prevCycleIds) {
 		if (prevCycleId >= 0) {
-			if (instant) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.f);
-			else model->getMixer()->blendCycle(prevCycleId, 0.f, 0.2f);
+			if (isLoop) model->getMixer()->blendCycle(prevCycleId, 0.f, 0.2f);
+			else model->getMixer()->blendCycle(prevCycleId, 0.f, 0.0f);
 		}
 	}
+	if (isLoop) prevCycleIds.clear();
 }
 void TCompSkeleton::renderInMenu() {
 	static int anim_id = 0;

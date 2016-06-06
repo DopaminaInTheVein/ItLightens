@@ -80,32 +80,7 @@ void player_controller::Init() {
 	animController.init(myEntity);
 
 	setLife(init_life);
-	//pose_run = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	//pose_jump = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-	//pose_idle = getHandleManager<TCompRenderStaticMesh>()->createHandle();
-
-	//pose_no_ev = myEntity->get<TCompRenderStaticMesh>();		//defined on xml
-	//actual_render = pose_no_ev;
-
-	//pose_no_ev.setOwner(myEntity);
-	//pose_idle.setOwner(myEntity);
-	//pose_run.setOwner(myEntity);
-	//pose_jump.setOwner(myEntity);
-
-	//TCompRenderStaticMesh *mesh;
-
-	//mesh = pose_idle;
-	//mesh->static_mesh = Resources.get("static_meshes/player_idle.static_mesh")->as<CStaticMesh>();
-
-	//mesh = pose_jump;
-	//mesh->static_mesh = Resources.get("static_meshes/player_jump.static_mesh")->as<CStaticMesh>();
-
-	//mesh = pose_run;
-	//mesh->static_mesh = Resources.get("static_meshes/player_run.static_mesh")->as<CStaticMesh>();
-
 	lastForces = VEC3(0, 0, 0);
-
-	//actual_render->registerToRender();
 
 	ChangeState("idle");
 	animController.setState(AST_IDLE);
@@ -140,41 +115,7 @@ void player_controller::rechargeEnergy()
 {
 	PROFILE_FUNCTION("recharge_energy");
 	Evolve(eEvol::second);
-	//ChangePose(pose_idle);
 }
-
-/*
-void player_controller::ChangePose(CHandle new_pos_h)
-{
-	PROFILE_FUNCTION("player controller: change pose player");
-	SetMyEntity();
-	TCompLife *life = myEntity->get<TCompLife>();
-	if (life->currentlife > evolution_limit && curr_evol == 0) {
-		createEvolveLight();
-	}
-
-	if (life->currentlife < evolution_limit && curr_evol > 0) {
-		SetCharacterController();
-		new_pos_h = pose_no_ev;
-		cc->GetController()->resize(min_height);	//update collider size to new form
-		curr_evol = 0;
-
-		actual_render->unregisterFromRender();
-		TCompRenderStaticMesh *new_pose = new_pos_h;
-		actual_render = new_pose;
-		actual_render->registerToRender();
-		createDevolveLight();
-	}
-	else if (curr_evol > 0) {
-		TCompRenderStaticMesh *new_pose = new_pos_h;
-		if (new_pose == actual_render) return;		//no change
-
-		actual_render->unregisterFromRender();
-		actual_render = new_pose;
-		actual_render->registerToRender();
-	}
-}
-*/
 
 void player_controller::createEvolveLight() {
 	TCompTransform * trans = myEntity->get<TCompTransform>();
@@ -259,11 +200,7 @@ void player_controller::myUpdate() {
 		UpdatePossession();
 	}
 
-	if (cc->GetYAxisSpeed() < -0.5f) {
-		ChangeState("doublefalling");
-		animController.setState(AST_FALL);
-	}
-	else if (cc->OnGround() && state == "moving") {
+	if (cc->OnGround() && state == "moving") {
 		if (player_curr_speed >= player_max_speed - 0.1f)
 			animController.setState(AST_RUN);
 		else
@@ -277,11 +214,6 @@ void player_controller::Idle() {
 }
 
 void player_controller::myExtraIdle() {
-	//if (pol_state != NEUTRAL) {
-	//	SetCharacterController();
-	//	ChangeState("falling");
-	//	if (!cc->OnGround()) animController.setState(AST_FALL);
-	//}
 }
 
 void player_controller::UpdateDamage()
@@ -305,6 +237,7 @@ void player_controller::DoubleJump()
 }
 
 void player_controller::DoubleFalling() {
+	animController.setState(AST_FALL);
 	if (pol_orbit && !pol_orbit_prev) {
 		ChangeState("falling");
 		animController.setState(AST_FALL);
@@ -388,6 +321,7 @@ void player_controller::Falling()
 	UpdateMovDirection();
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
+	animController.setState(AST_FALL);
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 		energyDecreasal(jump_energy);
@@ -1113,6 +1047,9 @@ void player_controller::ChangeCommonState(std::string state) {
 	}
 	else if (state == "jumping") {
 		animController.setState(AST_JUMP);
+	}
+	else if (state == "idle") {
+		animController.setState(AST_IDLE);
 	}
 }
 
