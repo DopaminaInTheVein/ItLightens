@@ -10,12 +10,12 @@ player = Player()
 
 function OnEnter_tElevator( )
   --Nothing to do
-  --p:player_talks("I'm in an elevator! \nI'm so cool!!! \nI wanna die my hair red!")
+  --p:player_talks("I'm in an elevator! \nI'm so cool!!! \nI wanna die my hair red!","scientific.dds","SCI")
 end
 
 function OnLeave_tElevator( )
   --Nothing to do
-  --p:player_talks_color("I'm out of an elevator! \nI'm not so cool!!! \nI wanna die my hair black!", "#FF2222FF","#22FF22FF")
+  --p:player_talks_color("I'm out of an elevator! \nI'm not so cool!!! \nI wanna die my hair black!","scientific.dds","SCI", "#FF2222FF","#22FF22FF")
 end
 
 
@@ -44,7 +44,7 @@ end
 
 function activateElevatorPlayer( )
   triggerElevator:getHandleCaller()
-  p:player_talks("I don't know how this mechanism works :(")
+  p:player_talks("I don't know how this mechanism works\n\n","scientific.dds","SCI")
   p:exec_command( "triggerElevator:setActionable(1);", 2 )
 end
 --------------------------------------------------
@@ -99,7 +99,7 @@ actionWallTarget = Handle()
 function lookWall( )
   p:print("Look Wall\n")
   triggerWall_1:getHandleCaller()
-  p:player_talks("I feel some energy behind this wall...")
+  p:player_talks("I feel some energy behind this wall...","scientific.dds","SCI")
   p:exec_command( "triggerWall_1:setActionable(1);", 2 )
 end
 
