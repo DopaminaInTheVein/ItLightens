@@ -281,14 +281,14 @@ float getShadowAt(float4 wPos) {
   if (light_proj_coords.z < 1e-3)
     return 0.;
 
-	float2 rand = txNoise.Sample(samLinear, float2(wPos.xy)).xy ;/// light_proj_coords.z ;
+	//float2 rand = txNoise.Sample(samLinear, float2(wPos.xy)).xy ;/// light_proj_coords.z ;
   float2 center = light_proj_coords.xy;
   float depth = light_proj_coords.z - 0.001;	
   float amount = tapAt(center, depth);
  
   float2 sz = float2(2.0/ xres, 2.0/yres)*light_proj_coords.z;
-  sz = float2(rand.x/xres, rand.y/yres);
-  amount += tapAt(center + float2(sz.x, sz.y), depth);
+  //sz = float2(rand.x/xres, rand.y/yres);
+  /*amount += tapAt(center + float2(sz.x, sz.y), depth);
   amount += tapAt(center + float2(-sz.x, sz.y), depth);
   amount += tapAt(center + float2(sz.x, -sz.y), depth);
   amount += tapAt(center + float2(-sz.x, -sz.y), depth);
@@ -296,7 +296,7 @@ float getShadowAt(float4 wPos) {
   amount += tapAt(center + float2(sz.x, 0), depth);
   amount += tapAt(center + float2(-sz.x, 0), depth);
   amount += tapAt(center + float2(0, -sz.y), depth);
-  amount += tapAt(center + float2(0, sz.y), depth);
+  amount += tapAt(center + float2(0, sz.y), depth);*/
  
   /*amount += tapAt(center + float2(sz.x, sz.y)*2, depth);
   amount += tapAt(center + float2(-sz.x, sz.y)*2, depth);
@@ -310,10 +310,39 @@ float getShadowAt(float4 wPos) {
  
   amount *= 1.f / 18.;*/
   
-  amount *= 1.f / 9.;
+  //amount *= 1.f / 9.;
   
-  return amount * 1/depth;
-  return amount *0.5f + 0.5*depth;
+  float steps = 4.0f;
+  sz = float2(0,0);
+  float2 offset = float2(-steps/2., -steps/2.);
+  
+  float4 rnd = txNoise.Sample(samLinear, float2(wPos.xy)) ;/// light_proj_coords.z ;
+  
+  for(int i= 0; i< steps; i++)
+  {
+	sz.xy = rnd.xy * float2(1./xres,1./yres) + center + float2(offset.x, offset.y)* float2(1./xres,1./yres);
+	
+	amount += tapAt(sz, depth);
+	
+	sz.xy = rnd.zw * float2(1./xres,1./yres) + center + float2(-offset.x, -offset.y)* float2(1./xres,1./yres);
+	
+	amount += tapAt(float2(sz.x,sz.y), depth);
+	
+	sz.xy = rnd.zw * float2(1./xres,1./yres) + center + float2(offset.x, -offset.y)* float2(1./xres,1./yres);
+	
+	amount += tapAt(float2(sz.x,sz.y), depth);
+	
+	sz.xy = rnd.zw * float2(1./xres,1./yres) + center + float2(-offset.x, offset.y)* float2(1./xres,1./yres);
+	
+	amount += tapAt(float2(sz.x,sz.y), depth);
+	
+	offset.xy += float2(1,1);
+  }
+  
+  amount *= 1/(steps*4.);
+  
+  return amount * 1./depth;
+  //return amount *0.5f + 0.5*depth;
   return amount;
 }
 
