@@ -98,954 +98,6 @@
 
 </entity>
 <entity>
-<tags
-   tags="camera_main"/>
-<camera
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<controller_3rd_person/>
-<name
-   name="camController_1"/>
-<transform
-   pos="-80.1237 -16.298 -19.8656"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags="guided_camera"/>
-<guided_camera
-   velocity="2.0"
-   default_dirs="0"
-   points_size="12"
-   wpt1="-87.3431 4.53094 -9.75157"
-   wpt2="-88.5443 5.89251 -14.5165"
-   wpt3="-84.5593 7.88604 -8.35194"
-   wpt4="-78.4362 8.92828 -5.39198"
-   wpt5="-76.7869 12.2264 -3.59583"
-   wpt6="-76.3743 17.3455 -0.447213"
-   wpt7="-76.3743 18.9213 2.84014"
-   wpt8="-76.2448 22.813 3.99706"
-   wpt9="-76.2448 24.6189 9.66454"
-   wpt10="-76.2448 23.7786 14.0676"
-   wpt11="-71.9648 22.813 16.3422"
-   wpt12="-68.5105 22.813 16.3422"
-   lpt1="-94.2315 6.14721 -8.80194"
-   lpt2="-94.3553 6.36529 -2.74891"
-   lpt3="-94.3553 6.36529 7.97277"
-   lpt4="-94.3553 6.93023 18.631"
-   lpt5="-81.7168 14.5812 18.0148"
-   lpt6="-70.7242 15.2595 17.505"
-   lpt7="-69.1593 22.6347 9.80523"
-   lpt8="-69.1593 22.944 10.4966"
-   lpt9="-69.1593 22.944 10.2667"
-   lpt10="-69.1593 22.944 10.0354"
-   lpt11="-69.1593 22.944 10.0354"
-   lpt12="-69.1804 22.7194 10.0354"/>
-<name
-   name="CineWireGoUp"/>
-<transform
-   pos="-106.386 31.9339 -37.6813"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   id="300">
-<tags
-   tags="doorExit door"/>
-<magnet_door
-   locked="yes"
-   speedOpening="1"
-   target="-81.1882 8.72156 -33.3257"
-   pol="neutral"/>
-<name
-   name="Door"/>
-<transform
-   pos="-81.1882 5.87734 -33.3257"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/Door.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="3.38976 2.8574 0.12"
-   mass="5"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="Door_opened_pos"/>
-<transform
-   pos="-81.1882 8.72156 -33.3257"
-   quat="0.708405 0 0 0.705806"
-   scale="1.0"/>
-
-</entity>
-<entity
-   id="301">
-<tags
-   tags="elevator1 elevator"/>
-<elevator
-   speedUp="4"
-   speedDown="4"
-   target="-70.91 4.38945 20.9195"/>
-<name
-   name="elevator"/>
-<transform
-   pos="-70.9949 21.1607 21.0484"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/elevator.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="3.3 0.15 2.5"
-   mass="5"
-   kinematic="yes"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="elevator_pos_elevator_down"/>
-<transform
-   pos="-70.91 4.38945 20.9195"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="generator_1"/>
-<transform
-   pos="33.8007 -22.5807 21.62"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/generator_1.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="sphere"
-   radius="1.0"/>
-<tags
-   tags="trigger generator"/>
-<generator/>
-<name
-   name="trigger_1"/>
-<transform
-   pos="33.8007 -22.5807 21.62"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="2"
-   kpt0_type="seek"
-   kpt0_pos="-83.9369 4.04738 -30.9472"
-   kpt0_wait="2"
-   kpt1_type="look"
-   kpt1_pos="-83.9248 4.04738 -29.7075"
-   kpt1_wait="2"
-   jurisdiction="-81.553 4.17739 -24.4147"
-   jurRadius="18.09"/>
-<name
-   name="guard_1"/>
-<transform
-   pos="-83.8673 4.17738 -32.137"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="2"
-   kpt0_type="seek"
-   kpt0_pos="-78.7606 4.04738 -30.8275"
-   kpt0_wait="2"
-   kpt1_type="look"
-   kpt1_pos="-78.7484 4.04738 -29.5878"
-   kpt1_wait="2"
-   jurisdiction="-82.3771 4.17739 -24.4147"
-   jurRadius="18.09"/>
-<name
-   name="guard_002"/>
-<transform
-   pos="-78.7076 4.17738 -32.137"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
-
-</entity>
-<entity>
-<tags
-   tags="workbench"/>
-<workbench/>
-<name
-   name="mesa_cientifico"/>
-<transform
-   pos="-73.1749 21.3016 1.71967"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/mesa_cientifico.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags="workbench"/>
-<workbench/>
-<name
-   name="mesa_cientifico001"/>
-<transform
-   pos="-91.1955 4.52187 41.494"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/mesa_cientifico001.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_mole AI_poss"/>
-<bt_mole
-   wpts_size="3"
-   wpt0_pos="-88.2065 4.70364 30.3004"
-   wpt0_wait="2"
-   wpt1_pos="-85.2414 4.70364 30.3541"
-   wpt1_wait="2"
-   wpt2_pos="-87.1711 4.70364 33.6499"
-   wpt2_wait="2"/>
-<player_mole/>
-<life
-   points="100"/>
-<name
-   name="mole_1"/>
-<transform
-   pos="-94.5563 4.46218 35.7666"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/test_mole/mole_amarilla.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="2.01"/>
-
-</entity>
-<entity
-   id="302">
-<tags/>
-<name
-   name="pared_mole"/>
-<transform
-   pos="-94.7422 4.18018 -8.84007"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/pared_mole.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags="player raijin"/>
-<player/>
-<life
-   points="10"/>
-<name
-   name="player_1"/>
-<transform
-   pos="-74.5995 21.7013 11.914"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/player/player.skeleton"/>
-<render_static_mesh
-   name="skeletons/player/player.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="0.7"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_cientifico AI_poss"/>
-<bt_scientist/>
-<player_cientifico/>
-<life
-   points="100"/>
-<name
-   name="scientist_1"/>
-<transform
-   pos="-72.7122 21.3046 3.77496"
-   quat="0 0 0 1.0"
-   scale="0.00929856"/>
-<render_static_mesh
-   name="static_meshes/test/scientist.static_mesh"/>
-<character_controller
-   radius="0.147"
-   height="1.71312"/>
-
-</entity>
-<entity>
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="6.02803 0.875 5.9013"/>
-<tags
-   tags="trigger"/>
-<trigger_lua
-   action="activate"
-   actionMole="put"/>
-<name
-   name="tElectricLlock"/>
-<transform
-   pos="-92.0921 4.83633 16.8844"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="3.08712 0.875 1.99872"/>
-<tags
-   tags="trigger"/>
-<trigger_lua
-   action="examinate"
-   actionSci="activate"/>
-<name
-   name="tElevator"/>
-<transform
-   pos="-71.0206 4.83633 21.3446"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="3.08712 0.875 1.99872"/>
-<tags
-   tags="trigger"/>
-<trigger_lua
-   action="examinate"
-   actionSci="activate"/>
-<name
-   name="tElevator"/>
-<transform
-   pos="-71.0206 21.6825 21.3446"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="2.40539 0.185 3.84509"/>
-<tags
-   tags="trigger"/>
-<trigger_lua
-   action="examinate"
-   actionMole="destroy"/>
-<name
-   name="tWall"/>
-<transform
-   pos="-93.5892 4.59026 -8.69194"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags="target"/>
-<name
-   name="tWall_pAction"/>
-<transform
-   pos="-93.3483 5.09102 -8.67608"
-   quat="0 -0.707107 0 0.707107"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="1.08242 0.185 3.84509"/>
-<tags
-   tags="trigger"/>
-<trigger_lua
-   actived="false"
-   action="activate"/>
-<name
-   name="tWireDown"/>
-<transform
-   pos="-94.263 4.60033 -8.69194"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<tracker
-   long="35.0293"
-   point0="-94.8579 5.63927 -6.66742"
-   point1="-94.8579 5.63927 -6.17405"
-   point2="-94.8579 5.63927 -5.68068"
-   point3="-94.8579 5.63927 -5.18731"
-   point4="-94.8579 5.63927 -4.69394"
-   point5="-94.8579 5.63927 -4.20057"
-   point6="-94.8579 5.63927 -3.7072"
-   point7="-94.8579 5.63927 -3.21383"
-   point8="-94.8579 5.63927 -2.72046"
-   point9="-94.8579 5.63927 -2.22709"
-   point10="-94.8579 5.63927 -1.73372"
-   point11="-94.8579 5.63927 -1.24035"
-   point12="-94.8579 5.63927 -0.746982"
-   point13="-94.8579 5.63927 -0.253612"
-   point14="-94.8579 5.63927 0.239757"
-   point15="-94.8579 5.63927 0.733127"
-   point16="-94.8579 5.63927 1.2265"
-   point17="-94.8579 5.63927 1.71987"
-   point18="-94.8579 5.63927 2.21324"
-   point19="-94.8579 5.63927 2.70661"
-   point20="-94.8579 5.63927 3.19998"
-   point21="-94.8579 5.63927 3.69335"
-   point22="-94.8579 5.63927 4.18672"
-   point23="-94.8579 5.63927 4.68009"
-   point24="-94.8579 5.63927 5.17346"
-   point25="-94.8579 5.63927 5.66683"
-   point26="-94.8579 5.63927 6.1602"
-   point27="-94.8579 5.63927 6.65357"
-   point28="-94.8579 5.63927 7.14694"
-   point29="-94.8579 5.63927 7.64031"
-   point30="-94.8579 5.63927 8.13368"
-   point31="-94.8579 5.63927 8.62705"
-   point32="-94.8579 5.63927 9.12042"
-   point33="-94.8579 5.63927 9.61379"
-   point34="-94.8579 5.63927 10.1072"
-   point35="-94.8579 5.63927 10.6005"
-   point36="-94.8579 5.63927 11.0939"
-   point37="-94.8579 5.63927 11.5873"
-   point38="-94.8579 5.63927 12.0806"
-   point39="-94.8579 5.63927 12.574"
-   point40="-94.8579 5.63927 13.0674"
-   point41="-94.8579 5.63927 13.5607"
-   point42="-94.8579 5.63927 14.0541"
-   point43="-94.8579 5.63927 14.5475"
-   point44="-94.8579 5.63927 15.0409"
-   point45="-94.8579 5.63927 15.5342"
-   point46="-94.8579 5.63927 16.0276"
-   point47="-94.8579 5.63927 16.521"
-   point48="-94.8579 5.63927 17.0143"
-   point49="-94.8579 5.63927 17.5077"
-   point50="-94.8579 5.7869 17.8534"
-   point51="-94.8579 6.28027 17.8534"
-   point52="-94.8579 6.77364 17.8534"
-   point53="-94.8579 7.26701 17.8534"
-   point54="-94.8579 7.76038 17.8534"
-   point55="-94.8579 8.25375 17.8534"
-   point56="-94.8579 8.74712 17.8534"
-   point57="-94.8579 9.24049 17.8534"
-   point58="-94.8579 9.73386 17.8534"
-   point59="-94.8579 10.2272 17.8534"
-   point60="-94.8579 10.7206 17.8534"
-   point61="-94.8579 11.214 17.8534"
-   point62="-94.8579 11.7073 17.8534"
-   point63="-94.8579 12.2007 17.8534"
-   point64="-94.8579 12.6941 17.8534"
-   point65="-94.8579 13.1875 17.8534"
-   point66="-94.8579 13.6808 17.8534"
-   point67="-94.8579 14.1742 17.8534"
-   point68="-94.8579 14.6676 17.8534"
-   point69="-94.8579 15.1609 17.8534"
-   point70="-94.8579 15.6543 17.8534"
-   size="71"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="tWireDown_WireParticlesUp"/>
-<transform
-   pos="-94.8579 9.14207 9.67982"
-   quat="-0.5 -0.5 0.5 -0.5"
-   scale="1.0"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole025"/>
-<transform
-   pos="-94.6505 6.85107 -7.79562"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole025.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole024"/>
-<transform
-   pos="-94.6505 6.85107 -8.52434"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole024.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole023"/>
-<transform
-   pos="-94.6505 6.85107 -9.27167"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole023.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole022"/>
-<transform
-   pos="-94.711 7.18865 -8.12411"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole022.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole021"/>
-<transform
-   pos="-94.711 7.18865 -8.93465"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole021.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole020"/>
-<transform
-   pos="-94.6505 6.15215 -7.79562"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole020.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole019"/>
-<transform
-   pos="-94.6505 6.15215 -8.52434"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole019.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole018"/>
-<transform
-   pos="-94.6505 6.15215 -9.27167"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole018.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole017"/>
-<transform
-   pos="-94.711 6.48916 -8.12411"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole017.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole016"/>
-<transform
-   pos="-94.711 6.48916 -8.93465"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole016.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole015"/>
-<transform
-   pos="-94.6505 5.4352 -7.79562"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole015.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole014"/>
-<transform
-   pos="-94.6505 5.4352 -8.52434"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole014.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole013"/>
-<transform
-   pos="-94.6505 5.4352 -9.27167"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole013.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole012"/>
-<transform
-   pos="-94.711 5.78118 -8.12411"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole012.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole011"/>
-<transform
-   pos="-94.711 5.78118 -8.93465"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole011.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole007"/>
-<transform
-   pos="-94.711 5.00802 -8.12411"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole007.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole006"/>
-<transform
-   pos="-94.711 5.00802 -8.89045"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole006.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole003"/>
-<transform
-   pos="-94.6505 4.66174 -9.28999"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole003.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole002"/>
-<transform
-   pos="-94.6505 4.66174 -8.53349"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole002.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_mole001"/>
-<transform
-   pos="-94.6505 4.66174 -7.79562"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole001.static_mesh"/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
-   mass="5"/>
-
-</entity>
-<entity>
-<tags
-   tags="teleport"/>
-<name
-   name="WirePosUp"/>
-<transform
-   pos="-68.0691 21.5946 10.1405"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags="workstation"/>
-<workstation
-   posAction="-73.7679 21.7111 6.00453"
-   yawAction="-1.57679"
-   animation="idle"/>
-<name
-   name="workstationTest001"/>
-<transform
-   pos="-73.0838 21.9182 5.98217"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/workstationTest001.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags="workstation"/>
-<workstation
-   posAction="-69.1209 21.7111 5.98239"
-   yawAction="1.55579"
-   animation="idle"/>
-<name
-   name="workstationTest002"/>
-<transform
-   pos="-69.8051 21.9182 6.00475"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/workstationTest002.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
 <tags/>
 <name
    name="andamio_usable"/>
@@ -2280,20 +1332,6 @@
 <entity>
 <tags/>
 <name
-   name="vitrina001"/>
-<transform
-   pos="-71.8791 22.274 1.10341"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/vitrina001.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="vitrina"/>
 <transform
    pos="-92.4827 5.44461 42.1124"
@@ -2308,6 +1346,20 @@
 <entity>
 <tags/>
 <name
+   name="vitrina001"/>
+<transform
+   pos="-71.8791 22.274 1.10341"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/vitrina001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="WireDown"/>
 <transform
    pos="-95.086 5.078 -8.45787"
@@ -2315,6 +1367,954 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/WireDown.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="camera_main"/>
+<camera
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"/>
+<controller_3rd_person/>
+<name
+   name="camController_1"/>
+<transform
+   pos="-80.1237 -16.298 -19.8656"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="12"
+   wpt1="-87.3431 4.53094 -9.75157"
+   wpt2="-88.5443 5.89251 -14.5165"
+   wpt3="-84.5593 7.88604 -8.35194"
+   wpt4="-78.4362 8.92828 -5.39198"
+   wpt5="-76.7869 12.2264 -3.59583"
+   wpt6="-76.3743 17.3455 -0.447213"
+   wpt7="-76.3743 18.9213 2.84014"
+   wpt8="-76.2448 22.813 3.99706"
+   wpt9="-76.2448 24.6189 9.66454"
+   wpt10="-76.2448 23.7786 14.0676"
+   wpt11="-71.9648 22.813 16.3422"
+   wpt12="-68.5105 22.813 16.3422"
+   lpt1="-94.2315 6.14721 -8.80194"
+   lpt2="-94.3553 6.36529 -2.74891"
+   lpt3="-94.3553 6.36529 7.97277"
+   lpt4="-94.3553 6.93023 18.631"
+   lpt5="-81.7168 14.5812 18.0148"
+   lpt6="-70.7242 15.2595 17.505"
+   lpt7="-69.1593 22.6347 9.80523"
+   lpt8="-69.1593 22.944 10.4966"
+   lpt9="-69.1593 22.944 10.2667"
+   lpt10="-69.1593 22.944 10.0354"
+   lpt11="-69.1593 22.944 10.0354"
+   lpt12="-69.1804 22.7194 10.0354"/>
+<name
+   name="CineWireGoUp"/>
+<transform
+   pos="-106.386 31.9339 -37.6813"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   id="300">
+<tags
+   tags="doorExit door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-81.1882 8.72156 -33.3257"
+   pol="neutral"/>
+<name
+   name="Door"/>
+<transform
+   pos="-81.1882 5.87734 -33.3257"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/Door.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="3.38976 2.8574 0.12"
+   mass="5"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="Door_opened_pos"/>
+<transform
+   pos="-81.1882 8.72156 -33.3257"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+
+</entity>
+<entity
+   id="301">
+<tags
+   tags="elevator1 elevator"/>
+<elevator
+   speedUp="4"
+   speedDown="4"
+   target="-70.91 4.38945 20.9195"/>
+<name
+   name="elevator"/>
+<transform
+   pos="-70.9949 21.1607 21.0484"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/elevator.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="3.3 0.15 2.5"
+   mass="5"
+   kinematic="yes"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="elevator_pos_elevator_down"/>
+<transform
+   pos="-70.91 4.38945 20.9195"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_1"/>
+<transform
+   pos="33.8007 -22.5807 21.62"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/generator_1.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.0"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_1"/>
+<transform
+   pos="33.8007 -22.5807 21.62"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="seek"
+   kpt0_pos="-83.9369 4.04738 -30.9472"
+   kpt0_wait="2"
+   kpt1_type="look"
+   kpt1_pos="-83.9248 4.04738 -29.7075"
+   kpt1_wait="2"
+   jurisdiction="-81.553 4.17739 -24.4147"
+   jurRadius="18.09"/>
+<name
+   name="guard_1"/>
+<transform
+   pos="-83.8673 4.17738 -32.137"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="seek"
+   kpt0_pos="-78.7606 4.04738 -30.8275"
+   kpt0_wait="2"
+   kpt1_type="look"
+   kpt1_pos="-78.7484 4.04738 -29.5878"
+   kpt1_wait="2"
+   jurisdiction="-82.3771 4.17739 -24.4147"
+   jurRadius="18.09"/>
+<name
+   name="guard_002"/>
+<transform
+   pos="-78.7076 4.17738 -32.137"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="workbench"/>
+<workbench/>
+<name
+   name="mesa_cientifico"/>
+<transform
+   pos="-73.1749 21.3016 1.71967"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/mesa_cientifico.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="workbench"/>
+<workbench/>
+<name
+   name="mesa_cientifico001"/>
+<transform
+   pos="-91.1955 4.52187 41.494"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/mesa_cientifico001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_mole AI_poss"/>
+<bt_mole
+   wpts_size="3"
+   wpt0_pos="-88.2065 4.70364 30.3004"
+   wpt0_wait="2"
+   wpt1_pos="-85.2414 4.70364 30.3541"
+   wpt1_wait="2"
+   wpt2_pos="-87.1711 4.70364 33.6499"
+   wpt2_wait="2"/>
+<player_mole/>
+<life
+   points="100"/>
+<name
+   name="mole_1"/>
+<transform
+   pos="-94.5563 4.46218 35.7666"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test_mole/mole_amarilla.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="2.01"/>
+
+</entity>
+<entity
+   id="302">
+<tags/>
+<name
+   name="pared_mole"/>
+<transform
+   pos="-94.7422 4.18018 -8.84007"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/pared_mole.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="player raijin"/>
+<player/>
+<life
+   points="10"/>
+<name
+   name="player_1"/>
+<transform
+   pos="-57.5729 5.16104 -4.88007"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/player/player.skeleton"/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="0.7"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_cientifico AI_poss"/>
+<bt_scientist/>
+<player_cientifico/>
+<life
+   points="100"/>
+<name
+   name="scientist_1"/>
+<transform
+   pos="-72.7122 21.3046 3.77496"
+   quat="0 0 0 1.0"
+   scale="0.00929856"/>
+<render_static_mesh
+   name="static_meshes/test/scientist.static_mesh"/>
+<character_controller
+   radius="0.147"
+   height="1.71312"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="6.02803 0.875 5.9013"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="activate"
+   actionMole="put"/>
+<name
+   name="tElectricLlock"/>
+<transform
+   pos="-92.0921 4.83633 16.8844"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.08712 0.875 1.99872"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionSci="activate"/>
+<name
+   name="tElevator"/>
+<transform
+   pos="-71.0206 4.83633 21.3446"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.08712 0.875 1.99872"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionSci="activate"/>
+<name
+   name="tElevator"/>
+<transform
+   pos="-71.0206 21.6825 21.3446"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="2.40539 0.185 3.84509"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionMole="destroy"/>
+<name
+   name="tWall"/>
+<transform
+   pos="-93.5892 4.59026 -8.69194"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="target"/>
+<name
+   name="tWall_pAction"/>
+<transform
+   pos="-93.3483 5.09102 -8.67608"
+   quat="0 -0.707107 0 0.707107"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.08242 0.185 3.84509"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   actived="false"
+   action="activate"/>
+<name
+   name="tWireDown"/>
+<transform
+   pos="-94.263 4.60033 -8.69194"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<tracker
+   long="35.0293"
+   point0="-94.8579 5.63927 -6.66742"
+   point1="-94.8579 5.63927 -6.17405"
+   point2="-94.8579 5.63927 -5.68068"
+   point3="-94.8579 5.63927 -5.18731"
+   point4="-94.8579 5.63927 -4.69394"
+   point5="-94.8579 5.63927 -4.20057"
+   point6="-94.8579 5.63927 -3.7072"
+   point7="-94.8579 5.63927 -3.21383"
+   point8="-94.8579 5.63927 -2.72046"
+   point9="-94.8579 5.63927 -2.22709"
+   point10="-94.8579 5.63927 -1.73372"
+   point11="-94.8579 5.63927 -1.24035"
+   point12="-94.8579 5.63927 -0.746982"
+   point13="-94.8579 5.63927 -0.253612"
+   point14="-94.8579 5.63927 0.239757"
+   point15="-94.8579 5.63927 0.733127"
+   point16="-94.8579 5.63927 1.2265"
+   point17="-94.8579 5.63927 1.71987"
+   point18="-94.8579 5.63927 2.21324"
+   point19="-94.8579 5.63927 2.70661"
+   point20="-94.8579 5.63927 3.19998"
+   point21="-94.8579 5.63927 3.69335"
+   point22="-94.8579 5.63927 4.18672"
+   point23="-94.8579 5.63927 4.68009"
+   point24="-94.8579 5.63927 5.17346"
+   point25="-94.8579 5.63927 5.66683"
+   point26="-94.8579 5.63927 6.1602"
+   point27="-94.8579 5.63927 6.65357"
+   point28="-94.8579 5.63927 7.14694"
+   point29="-94.8579 5.63927 7.64031"
+   point30="-94.8579 5.63927 8.13368"
+   point31="-94.8579 5.63927 8.62705"
+   point32="-94.8579 5.63927 9.12042"
+   point33="-94.8579 5.63927 9.61379"
+   point34="-94.8579 5.63927 10.1072"
+   point35="-94.8579 5.63927 10.6005"
+   point36="-94.8579 5.63927 11.0939"
+   point37="-94.8579 5.63927 11.5873"
+   point38="-94.8579 5.63927 12.0806"
+   point39="-94.8579 5.63927 12.574"
+   point40="-94.8579 5.63927 13.0674"
+   point41="-94.8579 5.63927 13.5607"
+   point42="-94.8579 5.63927 14.0541"
+   point43="-94.8579 5.63927 14.5475"
+   point44="-94.8579 5.63927 15.0409"
+   point45="-94.8579 5.63927 15.5342"
+   point46="-94.8579 5.63927 16.0276"
+   point47="-94.8579 5.63927 16.521"
+   point48="-94.8579 5.63927 17.0143"
+   point49="-94.8579 5.63927 17.5077"
+   point50="-94.8579 5.7869 17.8534"
+   point51="-94.8579 6.28027 17.8534"
+   point52="-94.8579 6.77364 17.8534"
+   point53="-94.8579 7.26701 17.8534"
+   point54="-94.8579 7.76038 17.8534"
+   point55="-94.8579 8.25375 17.8534"
+   point56="-94.8579 8.74712 17.8534"
+   point57="-94.8579 9.24049 17.8534"
+   point58="-94.8579 9.73386 17.8534"
+   point59="-94.8579 10.2272 17.8534"
+   point60="-94.8579 10.7206 17.8534"
+   point61="-94.8579 11.214 17.8534"
+   point62="-94.8579 11.7073 17.8534"
+   point63="-94.8579 12.2007 17.8534"
+   point64="-94.8579 12.6941 17.8534"
+   point65="-94.8579 13.1875 17.8534"
+   point66="-94.8579 13.6808 17.8534"
+   point67="-94.8579 14.1742 17.8534"
+   point68="-94.8579 14.6676 17.8534"
+   point69="-94.8579 15.1609 17.8534"
+   point70="-94.8579 15.6543 17.8534"
+   size="71"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="tWireDown_WireParticlesUp"/>
+<transform
+   pos="-94.8579 9.14207 9.67982"
+   quat="-0.5 -0.5 0.5 -0.5"
+   scale="1.0"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole025"/>
+<transform
+   pos="-94.6505 6.85107 -7.79562"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole025.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole024"/>
+<transform
+   pos="-94.6505 6.85107 -8.52434"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole024.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole023"/>
+<transform
+   pos="-94.6505 6.85107 -9.27167"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole023.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole022"/>
+<transform
+   pos="-94.711 7.18865 -8.12411"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole022.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole021"/>
+<transform
+   pos="-94.711 7.18865 -8.93465"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole021.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole020"/>
+<transform
+   pos="-94.6505 6.15215 -7.79562"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole020.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole019"/>
+<transform
+   pos="-94.6505 6.15215 -8.52434"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole019.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole018"/>
+<transform
+   pos="-94.6505 6.15215 -9.27167"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole018.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole017"/>
+<transform
+   pos="-94.711 6.48916 -8.12411"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole017.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole016"/>
+<transform
+   pos="-94.711 6.48916 -8.93465"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole016.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole015"/>
+<transform
+   pos="-94.6505 5.4352 -7.79562"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole015.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole014"/>
+<transform
+   pos="-94.6505 5.4352 -8.52434"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole014.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole013"/>
+<transform
+   pos="-94.6505 5.4352 -9.27167"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole013.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole012"/>
+<transform
+   pos="-94.711 5.78118 -8.12411"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole012.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole011"/>
+<transform
+   pos="-94.711 5.78118 -8.93465"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole011.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole007"/>
+<transform
+   pos="-94.711 5.00802 -8.12411"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole007.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole006"/>
+<transform
+   pos="-94.711 5.00802 -8.89045"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole006.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole003"/>
+<transform
+   pos="-94.6505 4.66174 -9.28999"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole003.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole002"/>
+<transform
+   pos="-94.6505 4.66174 -8.53349"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole002.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_mole001"/>
+<transform
+   pos="-94.6505 4.66174 -7.79562"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole001.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="0.163 0.283 0.661"
+   mass="5"/>
+
+</entity>
+<entity>
+<tags
+   tags="teleport"/>
+<name
+   name="WirePosUp"/>
+<transform
+   pos="-68.0691 21.5946 10.1405"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-73.7679 21.7111 6.00453"
+   yawAction="-1.57679"
+   animation="idle"/>
+<name
+   name="workstationTest001"/>
+<transform
+   pos="-73.0838 21.9182 5.98217"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/workstationTest001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-69.1209 21.7111 5.98239"
+   yawAction="1.55579"
+   animation="idle"/>
+<name
+   name="workstationTest002"/>
+<transform
+   pos="-69.8051 21.9182 6.00475"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/workstationTest002.static_mesh"/>
 <rigidbody
    type_collision="static"/>
 
