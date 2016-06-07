@@ -533,6 +533,8 @@ int bt_guard::actionSearch() {
 			VEC3 playerPos = tPlayer->getPosition();
 
 			VEC3 dir = playerPos - myPos;
+			dir.Normalize();
+			
 			search_player_point = playerPos + 1.0f * dir;
 
 			return OK;
@@ -556,6 +558,8 @@ int bt_guard::actionSearch() {
 			VEC3 playerPos = tPlayer->getPosition();
 
 			VEC3 dir = playerPos - myPos;
+			dir.Normalize();
+
 			search_player_point = playerPos + 1.0f * dir;
 			Debug->DrawLine(myPos, search_player_point);
 			return OK;
@@ -910,6 +914,9 @@ bool bt_guard::turnTo(VEC3 dest) {
 	float deltaYaw = getTransform()->getDeltaYawToAimTo(dest);
 	float angle_epsilon = deg2rad(5);
 
+	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355))
+		return true;
+
 	if (deltaYaw > 0) {
 		if (deltaAngle < deltaYaw) yaw += deltaAngle;
 		else yaw += deltaYaw;
@@ -934,7 +941,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
 }
 
-//THI IS NOT USED!
+//THIS IS NOT USED!
 //VEC3 bt_guard::generateRandomPoint() {
 //	PROFILE_FUNCTION("guard: generate random point");
 //	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
@@ -974,7 +981,10 @@ bool bt_guard::playerVisible() {
 	if (SBB::readBool("possMode") && squaredDistXZ(myPos, posPlayer) > 25.f) {
 		return false;
 	}
-	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos) * 2) { //Pitch < 30
+
+	float distancia_vertical = squaredDistY(posPlayer, myPos);
+
+	if (distancia_vertical < squaredDistXZ(posPlayer, myPos) * 0.5f) { //Pitch < 30
 		if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
 			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) { //Distancia
 				if (inJurisdiction(posPlayer)) { //Jurisdiccion
