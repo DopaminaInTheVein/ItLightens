@@ -39,7 +39,7 @@ function activateElevator( )
   h:activate()
   
   p:exec_command( "triggerElevator:setActionable(1);", 2 )
-  p:exec_command( "p:setControlEnabled(1);", 7 )
+  p:exec_command( "p:setControlEnabled(1);", 5 )
 end
 
 function activateElevatorPlayer( )
