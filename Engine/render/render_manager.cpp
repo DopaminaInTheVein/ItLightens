@@ -10,6 +10,7 @@
 #include "skeleton/comp_skeleton.h"
 #include "components/entity.h"
 #include "render/draw_utils.h"
+#include "components\comp_polarized.h"
 
 CRenderManager RenderManager;
 
@@ -55,6 +56,11 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
     k.transform = h_transform;
     k.submesh_idx = s.submesh_idx;
     k.aabb = h_aabb;
+	if (owner.hasTag("raijin"))
+		k.isPlayer = true;
+	else
+		k.isPlayer = false;
+
     all_keys.push_back(k);
   }
 
@@ -167,6 +173,18 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
     if (it->mesh != prev_it->mesh)
       it->mesh->activate();
 
+	//upload polarity info general objects
+	CEntity *e = it->owner.getOwner();
+	TCompPolarized * polarized = e->get<TCompPolarized>();
+	if (polarized) {
+		shader_ctes_object.polarity = polarized->getForce().polarity;
+	}
+
+	//upload polarity info player
+	if (it->isPlayer) {
+
+	}
+
     if (it->owner != prev_it->owner) {
       // subir la world de it
       const TCompTransform* c_tmx = it->transform;
@@ -230,13 +248,14 @@ void CRenderManager::renderShadowCasters() {
 }
 
 // ------------------------------------------
+
+//render shadowcaster with skinning tech 
 void CRenderManager::renderShadowCastersSkin() {
 	auto it = all_shadow_skinning_keys.begin();
 	while (it != all_shadow_skinning_keys.end()) {
 
 		const TCompTransform* c_tmx = it->transform;
-		//TODO: Review Pedro!
-		//assert(c_tmx);
+
 		if (c_tmx) {
 			activateWorldMatrix(c_tmx->asMatrix());
 			if (it->owner.hasTag("player")) {

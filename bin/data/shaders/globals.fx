@@ -15,7 +15,7 @@ Texture2D txShadowMap : USE_SHADER_REG(TEXTURE_SLOT_SHADOWMAP);
 
 Texture2D txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
 
-Texture2D txWarpLight : register(t70);
+Texture2D txWarpLight : USE_SHADER_REG(TEXTURE_SLOT_RAMP);
 
 // Same order as
 SamplerState samLinear : register(s0);

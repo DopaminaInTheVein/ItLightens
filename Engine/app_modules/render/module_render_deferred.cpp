@@ -104,26 +104,23 @@ bool CRenderDeferredModule::start() {
   unit_cube = Resources.get("meshes/engine/unit_frustum.mesh")->as<CMesh>();
   assert(unit_cube && unit_cube->isValid());
 
-  Resources.get("textures/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE );
-  Resources.get("textures/hatch_0.dds")->as<CTexture>()->activate(80);
-  Resources.get("textures/hatch_1.dds")->as<CTexture>()->activate(81);
-  Resources.get("textures/hatch_2.dds")->as<CTexture>()->activate(82);
-  Resources.get("textures/hatch_3.dds")->as<CTexture>()->activate(83);
-  Resources.get("textures/hatch_4.dds")->as<CTexture>()->activate(84);
-  Resources.get("textures/hatch_5.dds")->as<CTexture>()->activate(85);
+
+  Resources.get("textures/general/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE );
+
+  //hatching texture
+  Resources.get("textures/hatching/hatch_0.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
 
   //tests hatching
-  Resources.get("textures/primera_prueba_diagonal.dds")->as<CTexture>()->activate(86);
-  Resources.get("textures/primera_prueba_diagonal_menos_denso.dds")->as<CTexture>()->activate(87);
-  Resources.get("textures/primera_prueba_hatching.dds")->as<CTexture>()->activate(88);
-  Resources.get("textures/primera_prueba_menos_denso.dds")->as<CTexture>()->activate(89);
-  Resources.get("textures/tramado_extraño_mangastudio.dds")->as<CTexture>()->activate(90);
-  Resources.get("textures/diagonal material ligero mangastudio.dds")->as<CTexture>()->activate(92);
-  Resources.get("textures/primera_prueba_diagonal_lots.dds")->as<CTexture>()->activate(91);
-  Resources.get("textures/diagonal_material_mangastudio.dds")->as<CTexture>()->activate(93);
-  Resources.get("textures/diagonal_menos_denso_material_mangastudio.dds")->as<CTexture>()->activate(94);
+//#ifdef _DEBUG
+  //Resources.get("textures/hatching/hatching_tileable.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST1);
+  //Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST2);
+//#endif
+  
+  Resources.get("textures/hatching/hatching_tileable.dds")->as<CTexture>()->activate(63);
+  Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(64);
 
-  Resources.get("textures/rampa_prueba.dds")->as<CTexture>()->activate(70);
+
+  Resources.get("textures/ramps/rampa_prueba.dds")->as<CTexture>()->activate(TEXTURE_SLOT_RAMP);
 
   shader_ctes_hatching.edge_lines_detection = 0.02f;
   shader_ctes_hatching.frequency_offset = 8.0f;
@@ -696,8 +693,8 @@ void CRenderDeferredModule::render() {
 	drawFullScreen(rt_final);
 
 	activateBlend(BLENDCFG_COMBINATIVE);
-	rt_specular->activate(79);
-	rt_shadows->activate(78);
+	rt_specular->activate(TEXTURE_SLOT_SPECULAR_GL);
+	rt_shadows->activate(TEXTURE_SLOT_SHADOWS);
 	auto tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
 	drawFullScreen(rt_final, tech);
 	
@@ -729,8 +726,8 @@ void CRenderDeferredModule::render() {
 	}*/
 
 	
-	CTexture::deactivate(78);
-	CTexture::deactivate(79);
+	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
+	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	
 	Render.activateBackBuffer();

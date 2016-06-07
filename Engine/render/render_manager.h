@@ -18,6 +18,7 @@ public:
     CHandle                 owner;
     CHandle                 transform;
     CHandle                 aabb;
+	bool					isPlayer;
   };
 private:
 

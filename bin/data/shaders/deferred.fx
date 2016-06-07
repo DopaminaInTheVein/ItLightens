@@ -288,7 +288,7 @@ float getShadowAt(float4 wPos) {
  
   float2 sz = float2(2.0/ xres, 2.0/yres)*light_proj_coords.z;
   //sz = float2(rand.x/xres, rand.y/yres);
-  /*amount += tapAt(center + float2(sz.x, sz.y), depth);
+  amount += tapAt(center + float2(sz.x, sz.y), depth);
   amount += tapAt(center + float2(-sz.x, sz.y), depth);
   amount += tapAt(center + float2(sz.x, -sz.y), depth);
   amount += tapAt(center + float2(-sz.x, -sz.y), depth);
@@ -296,7 +296,7 @@ float getShadowAt(float4 wPos) {
   amount += tapAt(center + float2(sz.x, 0), depth);
   amount += tapAt(center + float2(-sz.x, 0), depth);
   amount += tapAt(center + float2(0, -sz.y), depth);
-  amount += tapAt(center + float2(0, sz.y), depth);*/
+  amount += tapAt(center + float2(0, sz.y), depth);
  
   /*amount += tapAt(center + float2(sz.x, sz.y)*2, depth);
   amount += tapAt(center + float2(-sz.x, sz.y)*2, depth);
@@ -310,9 +310,9 @@ float getShadowAt(float4 wPos) {
  
   amount *= 1.f / 18.;*/
   
-  //amount *= 1.f / 9.;
+  amount *= 1.f / 9.;
   
-  float steps = 4.0f;
+ /* float steps = 4.0f;
   sz = float2(0,0);
   float2 offset = float2(-steps/2., -steps/2.);
   
@@ -339,7 +339,7 @@ float getShadowAt(float4 wPos) {
 	offset.xy += float2(1,1);
   }
   
-  amount *= 1/(steps*4.);
+  amount *= 1/(steps*4.);*/
   
   return amount * 1./depth;
   //return amount *0.5f + 0.5*depth;
@@ -424,10 +424,14 @@ void PSLightDirShadows(
 	
   o_inv_shadows += o_inv_shadows*rim;
   o_specular = float4(rim,rim,rim,0.f) * att_factor;
+  o_specular.a = 1.0f;
+  
+  //o_specular = float4(1,1,1,1);
+  
   //rim = 0.0f;
   //return final_color * albedo;
  // o_inv_shadows = float4(rim, rim, rim , 1.0f);
- o_color = NL * final_color * albedo + o_specular;
+ o_color = (NL * final_color * albedo + o_specular) * att_factor;
   //o_color = albedo*final_color + o_specular;
   //o_color = txWarpLight.Sample(samClampLinear, float2(att_factor, 1.0f))*2.0f;
   
