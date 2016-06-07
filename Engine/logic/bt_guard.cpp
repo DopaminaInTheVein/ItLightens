@@ -57,7 +57,7 @@ void bt_guard::readIniFileAttr() {
 			std::string file_ini = app.file_initAttr_json;
 			map<std::string, float> fields = readIniAtrData(file_ini, "bt_guard");
 
-			assignValueToVar(DIST_SQ_REACH_PNT, fields);
+			assignValueToVar(DIST_REACH_PNT, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_ENTER, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_LEAVE, fields);
 			assignValueToVar(DIST_RAYSHOT, fields);
@@ -520,12 +520,12 @@ int bt_guard::actionSearch() {
 		return KO;
 	}
 	else if (playerLost) {
-		float distance = squaredDistXZ(myPos, player_last_seen_point);
+		float distance = simpleDistXZ(myPos, player_last_seen_point);
 		getPath(myPos, player_last_seen_point, SBB::readSala());
 		animController.setState(AST_MOVE);
 		goTo(player_last_seen_point);
 		//Noise Point Reached ?
-		if (distance < DIST_SQ_REACH_PNT) {
+		if (distance < DIST_REACH_PNT) {
 			playerLost = false;
 			looking_around_time = LOOK_AROUND_TIME;
 
@@ -543,12 +543,12 @@ int bt_guard::actionSearch() {
 	}
 	// If we heared a noise, we go to the point and look around
 	else if (noiseHeard) {
-		float distance = squaredDistXZ(myPos, noisePoint);
+		float distance = simpleDistXZ(myPos, noisePoint);
 		getPath(myPos, noisePoint, SBB::readSala());
 		animController.setState(AST_MOVE);
 		goTo(noisePoint);
 		//Noise Point Reached ?
-		if (distance < DIST_SQ_REACH_PNT) {
+		if (distance < DIST_REACH_PNT) {
 			noiseHeard = false;
 			looking_around_time = LOOK_AROUND_TIME;
 
@@ -583,14 +583,14 @@ int bt_guard::actionMoveAround() {
 
 	VEC3 myPos = getTransform()->getPosition();
 
-	float distance_to_point = squaredDistXZ(myPos, search_player_point);
+	float distance_to_point = simpleDistXZ(myPos, search_player_point);
 
 	// if the player is too far, we just look around
 	if (distance_to_point > MAX_SEARCH_DISTANCE) {
 		return OK;
 	}
 
-	if (distance_to_point > DIST_SQ_REACH_PNT) {
+	if (distance_to_point > DIST_REACH_PNT) {
 		getPath(myPos, search_player_point, SBB::readSala());
 		animController.setState(AST_MOVE);
 		goTo(search_player_point);
@@ -642,7 +642,7 @@ int bt_guard::actionSeekWpt() {
 	//Go to waypoint
 	else if (keyPoints[curkpt].type == Seek) {
 		//reach waypoint?
-		if (squaredDistXZ(myPos, dest) < DIST_SQ_REACH_PNT) {
+		if (simpleDistXZ(myPos, dest) < DIST_REACH_PNT) {
 			curkpt = (curkpt + 1) % keyPoints.size();
 			return OK;
 		}
@@ -714,10 +714,10 @@ int bt_guard::actionGoToFormation() {
 
 	VEC3 myPos = getTransform()->getPosition();
 
-	float distance_to_point = squaredDistXZ(myPos, formation_point);
+	float distance_to_point = simpleDistXZ(myPos, formation_point);
 
 	// if we didn't reach the point
-	if (distance_to_point > DIST_SQ_REACH_PNT) {
+	if (distance_to_point > DIST_REACH_PNT) {
 		getPath(myPos, formation_point, SBB::readSala());
 		animController.setState(AST_MOVE);
 		goTo(formation_point);
@@ -780,6 +780,8 @@ void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
+		animController.setState(AST_STUNNED);
+		checkStopDamage();
 		setCurrent(NULL);
 	}
 	//VEC3 myPos = getTransform()->getPosition();
@@ -797,6 +799,8 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
+		animController.setState(AST_STUNNED);
+		checkStopDamage();
 		setCurrent(NULL);
 	}
 }
@@ -814,14 +818,24 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 		animController.setState(AST_STUNNED);
 
 		//End Damage Message
-		sendMsgDmg = shooting = false;
+		checkStopDamage();
+	}
+}
 
-		TMsgDamageSpecific dmg;
-		dmg.source = entity->getName();
-		dmg.type = Damage::ABSORB;
-		dmg.actived = false;
+void bt_guard::checkStopDamage() {
+	if(sendMsgDmg){
 		CEntity * ePlayer = getPlayer();
-		if (ePlayer) ePlayer->sendMsg(dmg);
+		if (ePlayer) {
+			//End Damage Message
+			sendMsgDmg = shooting = false;
+
+			TMsgDamageSpecific dmg;
+			dmg.source = compBaseEntity->getName();
+			dmg.type = Damage::ABSORB;
+			dmg.actived = false;
+		
+			ePlayer->sendMsg(dmg);
+		}
 	}
 }
 
@@ -880,8 +894,8 @@ void bt_guard::goTo(const VEC3& dest) {
 		turnTo(target);
 	}
 	else {
-		float distToWPT = squaredDistXZ(target, getTransform()->getPosition());
-		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 2.0f) {
+		float distToWPT = simpleDistXZ(target, getTransform()->getPosition());
+		if (fabsf(distToWPT) > 0.1f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 0.2f) {
 			goForward(SPEED_WALK);
 		}
 		else if (totalPathWpt == 0) {
@@ -1240,7 +1254,7 @@ void bt_guard::renderInMenu() {
 	ImGui::SliderFloat("Speed Walk", &SPEED_WALK, 0, 1);
 	ImGui::SliderFloat("Speed Rot (rad/s)", &SPEED_ROT, 0, 2 * (float)M_PI);
 	ImGui::SliderFloat("Cone Vision 1/2 (rads)", &CONE_VISION, 0, (float)M_PI);
-	ImGui::SliderFloat("Distance Reach", &DIST_SQ_REACH_PNT, 0, 1);
+	ImGui::SliderFloat("Distance Reach", &DIST_REACH_PNT, 0, 1);
 	ImGui::SliderFloat("Detection Area", &DIST_SQ_PLAYER_DETECTION, 0, 500);
 	ImGui::SliderFloat("Shot Area Enter", &DIST_SQ_SHOT_AREA_ENTER, 0, 500);
 	ImGui::SliderFloat("Shot Area Leave", &DIST_SQ_SHOT_AREA_LEAVE, 0, 500);
@@ -1259,7 +1273,7 @@ void bt_guard::renderInMenu() {
 void bt_guard::reduceStats()
 {
 	noShoot = true;
-	DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI / reduce_factor;
+	DIST_REACH_PNT = DIST_SQ_REACH_PNT_INI / reduce_factor;
 	DIST_SQ_SHOT_AREA_ENTER = DIST_SQ_SHOT_AREA_ENTER_INI / reduce_factor;
 	DIST_SQ_SHOT_AREA_LEAVE = DIST_SQ_SHOT_AREA_LEAVE_INI / reduce_factor;
 	DIST_RAYSHOT = DIST_RAYSHOT_INI / reduce_factor;
@@ -1272,7 +1286,7 @@ void bt_guard::reduceStats()
 
 void bt_guard::resetStats()
 {
-	DIST_SQ_REACH_PNT = DIST_SQ_REACH_PNT_INI;
+	DIST_REACH_PNT = DIST_SQ_REACH_PNT_INI;
 	DIST_SQ_SHOT_AREA_ENTER = DIST_SQ_SHOT_AREA_ENTER_INI;
 	DIST_SQ_SHOT_AREA_LEAVE = DIST_SQ_SHOT_AREA_LEAVE_INI;
 	DIST_RAYSHOT = DIST_RAYSHOT_INI;
@@ -1315,7 +1329,7 @@ void bt_guard::goToPoint(VEC3 dest) {
 	forced_move = true;
 
 	// if we didn't reach the point
-	while (squaredDistXZ(getTransform()->getPosition(), dest) > DIST_SQ_REACH_PNT) {
+	while (simpleDistXZ(getTransform()->getPosition(), dest) > DIST_REACH_PNT) {
 		getPath(getTransform()->getPosition(), dest, SBB::readSala());
 		goTo(dest);
 	}

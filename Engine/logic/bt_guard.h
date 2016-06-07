@@ -39,7 +39,7 @@ public:
 class bt_guard : public bt, public TCompBase
 {
 	//Main attritbutes
-	float DIST_SQ_REACH_PNT;
+	float DIST_REACH_PNT;
 	float DIST_SQ_SHOT_AREA_ENTER;
 	float DIST_SQ_SHOT_AREA_LEAVE;
 	float DIST_RAYSHOT;
@@ -231,7 +231,7 @@ public:
 	void noise(const TMsgNoise& msg);
 	void readIniFileAttr();
 	void goToPoint(VEC3 dest);
-
+	void checkStopDamage();
 	//From bombs
 	void reduceStats();
 	void resetStats();
