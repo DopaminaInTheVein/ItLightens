@@ -164,6 +164,11 @@ end
 
 function OnRechargeDrone( param )
 	p:print( "OnRechargeDrone: "..param.."\n" )
+	p:player_talks("I hope a scientific may get this repaired...","scientific.dds","SCI")
+end
+
+function OnNotRechargeDrone( param )
+	p:print( "OnRechargeDrone: "..param.."\n" )
 	p:play_sound("event:/OnUseGenerator")
 end
 

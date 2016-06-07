@@ -59,6 +59,7 @@ public:
     OnBlink,
     OnBreakWall,
     OnRechargeDrone,
+    OnNotRechargeDrone,
     OnUseCable,
     OnUseGenerator,
     OnStun,

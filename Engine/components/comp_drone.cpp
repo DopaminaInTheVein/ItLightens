@@ -61,7 +61,7 @@ bool TCompDrone::SetMyBasicComponents()
 void TCompDrone::update(float elapsed)
 {
   if (!SetMyBasicComponents()) return;
-  if (!life || life->currentlife > 0.0f) {
+  if (!espatllat && (!life || life->currentlife > 0.0f)) {
     if (life) { life->currentlife -= elapsed; }
     if (timeToWait > 0) {
       //Waiting
@@ -93,13 +93,21 @@ void TCompDrone::update(float elapsed)
       CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
       CEntity *player_e = player;
       TCompTransform * p_transform = player_e->get<TCompTransform>();
-      if (!playerInDistance && realDist(transform->getPosition(), p_transform->getPosition()) < 2.0f) {
+      if (!espatllat && !playerInDistance && realDist(transform->getPosition(), p_transform->getPosition()) < 2.0f) {
         playerInDistance = true;
         CanRechargeDrone(playerInDistance);
       }
-      else if (playerInDistance && realDist(transform->getPosition(), p_transform->getPosition()) > 2.0f) {
+      else if (!espatllat && playerInDistance && realDist(transform->getPosition(), p_transform->getPosition()) > 2.0f) {
         playerInDistance = false;
         CanRechargeDrone(playerInDistance);
+      }
+      else if (espatllat && !playerInDistance && realDist(transform->getPosition(), p_transform->getPosition()) < 2.0f) {
+        playerInDistance = true;
+        CanNotRechargeDrone(playerInDistance);
+      }
+      else if (espatllat && playerInDistance && realDist(transform->getPosition(), p_transform->getPosition()) > 2.0f) {
+        playerInDistance = false;
+        CanNotRechargeDrone(playerInDistance);
       }
     }
   }
@@ -120,6 +128,7 @@ char nameVariable[10]; sprintf(nameVariable, "wpt%d_%s", index, nameSufix);
 
 bool TCompDrone::load(MKeyValue & atts)
 {
+  espatllat = atts.getInt("espatllat", false);
   int n = atts.getInt("wpts_size", 0);
   wpts.resize(n + 1);
   waitTimes.resize(n + 1);
@@ -145,6 +154,15 @@ void TCompDrone::fixedUpdate(float elapsed) {
 void TCompDrone::CanRechargeDrone(bool new_range)
 {
   TMsgCanRechargeDrone msg;
+  msg.range = new_range;
+  msg.han = CHandle(this).getOwner();
+  CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
+  CEntity *player_e = player;
+  player_e->sendMsg(msg);
+}
+void TCompDrone::CanNotRechargeDrone(bool new_range)
+{
+  TMsgCanNotRechargeDrone msg;
   msg.range = new_range;
   msg.han = CHandle(this).getOwner();
   CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));

@@ -190,6 +190,12 @@ struct TMsgCanRechargeDrone {
   DECLARE_MSG_ID();
 };
 
+struct TMsgCanNotRechargeDrone {
+  bool range;
+  CHandle han;
+  DECLARE_MSG_ID();
+};
+
 struct TMsgTriggerIn {
   CHandle other;
   DECLARE_MSG_ID();

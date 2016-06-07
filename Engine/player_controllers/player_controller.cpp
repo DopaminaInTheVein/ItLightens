@@ -673,6 +673,11 @@ void player_controller::UpdateActionsTrigger() {
       Gui->setActionAvailable(eAction::RECHARGE_DRONE);
     }
   }
+  else if (canNotRechargeDrone) {
+    if (io->keys['E'].becomesPressed()) {
+      logic_manager->throwEvent(logic_manager->OnNotRechargeDrone, "");
+    }
+  }
 }
 
 float CPlayerBase::possessionCooldown;
@@ -913,6 +918,11 @@ void player_controller::onCanRec(const TMsgCanRec & msg)
 void player_controller::onCanRechargeDrone(const TMsgCanRechargeDrone & msg)
 {
   canRechargeDrone = msg.range;
+  drone = msg.han;
+}
+void player_controller::onCanNotRechargeDrone(const TMsgCanNotRechargeDrone & msg)
+{
+  canNotRechargeDrone = msg.range;
   drone = msg.han;
 }
 

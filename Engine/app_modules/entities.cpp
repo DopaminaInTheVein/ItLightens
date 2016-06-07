@@ -247,6 +247,7 @@ bool CEntitiesModule::start() {
 
   // RECHARGING DRONES
   SUBSCRIBE(player_controller, TMsgCanRechargeDrone, onCanRechargeDrone);
+  SUBSCRIBE(player_controller, TMsgCanNotRechargeDrone, onCanNotRechargeDrone);
   SUBSCRIBE(TCompGenerator, TMsgTriggerIn, onTriggerEnterCall);
   SUBSCRIBE(TCompGenerator, TMsgTriggerOut, onTriggerExitCall);
 
@@ -676,7 +677,7 @@ void CEntitiesModule::renderInMenu() {
 void CEntitiesModule::recalcNavmesh() {
   // GENERATE NAVMESH
   CNavmesh nav = SBB::readNavmesh();
-  nav.build(salaloc);
+  //nav.build(salaloc);
   SBB::postNavmesh(nav);
   SBB::postBool(sala, true);
 }

@@ -21,6 +21,8 @@ struct TCompDrone : public TTrigger {
   float timeToWait = 0.f;
   float mEpsilon = .1f;
   bool playerInDistance = false;
+  bool espatllat = false;
+
   std::string self_ilum_front;
   std::string self_ilum_back;
 
@@ -29,6 +31,7 @@ struct TCompDrone : public TTrigger {
   void onCreate(const TMsgEntityCreated&);
   void onRecharge(const TMsgActivate &);
   void CanRechargeDrone(bool new_range);
+  void CanNotRechargeDrone(bool new_range);
 
   void onTriggerInside(const TMsgTriggerIn& msg) {} //will do nothing, particles effect, ui message or something
   void onTriggerEnter(const TMsgTriggerIn& msg);

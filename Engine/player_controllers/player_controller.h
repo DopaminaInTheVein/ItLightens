@@ -107,6 +107,7 @@ class player_controller : public CPlayerBase {
   bool					canRecEnergy = false;
   bool					canPassWire = false;
   bool					canRechargeDrone = false;
+  bool					canNotRechargeDrone = false;
 
   CHandle       drone;
 
@@ -196,6 +197,7 @@ public:
   void onWirePass(const TMsgWirePass& msg);
   void onCanRec(const TMsgCanRec& msg);
   void onCanRechargeDrone(const TMsgCanRechargeDrone& msg);
+  void onCanNotRechargeDrone(const TMsgCanNotRechargeDrone& msg);
   void onPolarize(const TMsgPolarize& msg);
   void onSetDamage(const TMsgDamageSpecific& msg);
 
