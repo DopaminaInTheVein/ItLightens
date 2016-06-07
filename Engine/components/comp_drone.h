@@ -30,6 +30,7 @@ struct TCompDrone : public TTrigger {
 
   void onCreate(const TMsgEntityCreated&);
   void onRecharge(const TMsgActivate &);
+  void onRepair(const TMsgActivate &);
   void CanRechargeDrone(bool new_range);
   void CanNotRechargeDrone(bool new_range);
 

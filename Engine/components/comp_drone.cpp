@@ -47,6 +47,15 @@ void TCompDrone::onRecharge(const TMsgActivate &)
   }
 }
 
+void TCompDrone::onRepair(const TMsgActivate &)
+{
+  CHandle h = CHandle(this).getOwner();
+  CEntity *e = h;
+  if (e) {
+    CanNotRechargeDrone(playerInDistance);
+  }
+}
+
 bool TCompDrone::SetMyBasicComponents()
 {
   CHandle h = CHandle(this).getOwner();
