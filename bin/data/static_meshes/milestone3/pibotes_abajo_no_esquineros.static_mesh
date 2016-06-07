@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/milestone3/pibotes_abajo_no_esquineros.mesh" material="materials/pibotes.material" mesh_idx="0"/>
+</static_mesh>

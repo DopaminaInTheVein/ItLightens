@@ -13,17 +13,17 @@ public:
 
   enum TCreateOptions {
     CREATE_STATIC
-  , CREATE_DYNAMIC
-  , CREATE_RENDER_TARGET
+    , CREATE_DYNAMIC
+    , CREATE_RENDER_TARGET
   };
 
   void renderUIDebug();
 
-  CTexture( ) 
-  : resource( nullptr )
-  , res_view( nullptr )
-  , xres(0)
-  , yres(0)
+  CTexture()
+    : resource(nullptr)
+    , res_view(nullptr)
+    , xres(0)
+    , yres(0)
   { }
 
   bool isValid() const override {
@@ -43,7 +43,7 @@ public:
   static void deactivate(int slot);
   bool reload() override;
 
-bool create(
+  bool create(
     int nxres
     , int nyres
     , DXGI_FORMAT nformat
@@ -52,12 +52,14 @@ bool create(
   // -----------------------------------------------
   void setDXObjs(
     ID3D11Texture2D*          new_resource
-  , ID3D11ShaderResourceView* new_res_view
-  ) {
+    , ID3D11ShaderResourceView* new_res_view
+    ) {
     resource = new_resource;
     res_view = new_res_view;
   }
-
+  ID3D11ShaderResourceView* getResView() const {
+    return res_view;
+  }
 };
 
 #endif

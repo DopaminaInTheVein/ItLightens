@@ -136,15 +136,16 @@ struct TResources (
 			res = #(newObj)
 			print res
 		) else (
-			messagebox "MST2:Debug No deberia pasar aqui"
+			--messagebox "Multi material"
 			local polyObj = copy obj --Objeto temporal solo en esta funcion
 			ConvertTo polyObj Editable_Poly
-			messagebox ("obj = " + obj as string)
-			messagebox ("polyObj = " + polyObj as string)
+			--messagebox ("obj = " + obj as string)
+			--messagebox ("polyObj = " + polyObj as string)
 			
 			try (
 				
 				for m=1 to mat.count do (
+					--messagebox ("Mat")
 					local subMesh = undefined
 					if mat[m] != undefined then(
 						polyObj.selectByMaterial m
@@ -152,9 +153,12 @@ struct TResources (
 						
 						if faces.count > 0 then (
 							local the_name = meshPrefix + "__" + (mat[m].name)
+							--messagebox("The name: " + (the_name as string) )
 							polyOp.detachFaces polyObj faces asnode:true keepOriginal:on name:the_name
 							subMesh = (getnodebyname the_name)
-							setUserProp subMesh "mesh" the_name
+							if (subMesh != undefined) then (
+								setUserProp subMesh "mesh" the_name
+							)
 						)
 					)
 					append res subMesh
@@ -236,6 +240,7 @@ struct TResources (
 					-- Name of mesh and material
 					local mat_name = mat_used.name
 					local meshName = obj.name
+					--messagebox("Mat Name: " + (mat_name as string))
 					
 					-- Check material is correct
 					checkMaterialName mat_name

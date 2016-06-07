@@ -55,6 +55,7 @@ float rcSqrt(float x)
 /// @endcode
 void rcContext::log(const rcLogCategory category, const char* format, ...)
 {
+	m_logEnabled = false; //to return
 	if (!m_logEnabled)
 		return;
 	static const int MSG_SIZE = 512;

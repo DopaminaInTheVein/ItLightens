@@ -54,6 +54,9 @@ namespace GUI {
   void drawRect(const Rect&, const ImColor&);
   void drawText(float x, float y, ImFont * font, float size, ImColor color, const char * text);
   void drawText(Pixel p, ImFont * font, float size, ImColor color, const char * text);
+  void drawImage(float x1, float y1, float x2, float y2, ImTextureID id_tex);
+  void drawImage(Pixel p, Pixel q, ImTextureID id_tex);
+
 }
 
 #endif

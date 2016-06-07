@@ -885,58 +885,19 @@
 <tags
    tags="workstation"/>
 <workstation
-   posAction="-68.9267 17.6637 -0.744651"
-   yawAction="1.5708"
-   animation="idle"/>
-<name
-   name="workstationTest002"/>
-<transform
-   pos="-69.6108 17.8708 -0.722291"
-   quat="0 -0.707107 0 0.707107"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/workstationTest.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags="workstation"/>
-<workstation
-   posAction="-73.5737 17.6637 -0.722515"
-   yawAction="-1.5708"
+   posAction="-73.6075 17.1925 1.57692"
+   yawAction="0.000358124"
    animation="idle"/>
 <name
    name="workstationTest001"/>
 <transform
-   pos="-72.8895 17.8708 -0.744875"
+   pos="-72.8895 17.8708 1.6615"
    quat="0 0.707107 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/workstationTest001.static_mesh"/>
 <rigidbody
    type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_cientifico AI_poss"/>
-<bt_scientist/>
-<player_cientifico/>
-<life
-   points="100"/>
-<name
-   name="scientist_1"/>
-<transform
-   pos="-71.3086 17.2249 -2.45815"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/test_mole/mole_amarilla.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="2.01"/>
 
 </entity>
 <entity>
@@ -1024,6 +985,26 @@
 <character_controller
    radius="0.3"
    height="2.01"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_cientifico AI_poss"/>
+<bt_scientist/>
+<player_cientifico/>
+<life
+   points="100"/>
+<name
+   name="scientist_1"/>
+<transform
+   pos="-74.8433 17.2493 -5.4954"
+   quat="0 0 0 1.0"
+   scale="0.00929856"/>
+<render_static_mesh
+   name="static_meshes/test/scientist.static_mesh"/>
+<character_controller
+   radius="0.147"
+   height="1.71312"/>
 
 </entity>
 
