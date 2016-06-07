@@ -650,7 +650,7 @@ void player_controller::UpdateActionsTrigger() {
 		//ui.addTextInstructions("\n Press 'E' to recharge energy\n");
 		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 			rechargeEnergy();
-			animController.setState(AST_RECHARGE);
+			animController.setState(AST_RECHARGE, true);
 			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
 		}
 		else {
@@ -850,7 +850,7 @@ void player_controller::UpdateOverCharge() {
 void player_controller::startOverCharge()
 {
 	//TODO - Estado intermedio OverCharging
-	animController.setState(AST_SHOOT);
+	animController.setState(AST_SHOOT, true);
 	//OverCharge Effect
 	doOverCharge();
 }

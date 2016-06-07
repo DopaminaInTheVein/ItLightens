@@ -31,7 +31,7 @@ void bt_scientist::readIniFileAttr() {
 			assignValueToVar(square_range_action, fields);
 			assignValueToVar(max_wb_distance, fields);
 			assignValueToVar(max_beacon_distance, fields);
-			assignValueToVar(reach_sq_reach_pnt, fields);
+			assignValueToVar(reach_dist_pnt, fields);
 			assignValueToVar(d_epsilon, fields);
 			assignValueToVar(d_beacon_simple, fields);
 			assignValueToVar(waiting_time, fields);
@@ -246,10 +246,10 @@ int bt_scientist::actionMoveToPos() {
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 myPos = me_transform->getPosition();
 
-	float square_dist = squaredDistXZ(myPos, obj_position);
+	float dist = simpleDistXZ(myPos, obj_position);
 
 	//reach waypoint?
-	if (square_dist < reach_sq_reach_pnt) {
+	if (dist < reach_dist_pnt) {
 		curkpt = (curkpt + 1) % keyPoints.size();
 		return OK;
 	}
@@ -297,7 +297,7 @@ int bt_scientist::actionSeekWpt() {
 	//Go to waypoint
 	if (keyPoints[curkpt].type == Seek) {
 		//reach waypoint?
-		if (squaredDistXZ(myPos, dest) < reach_sq_reach_pnt) {
+		if (simpleDistXZ(myPos, dest) < reach_dist_pnt) {
 			curkpt = (curkpt + 1) % keyPoints.size();
 			return OK;
 		}
@@ -406,7 +406,7 @@ int bt_scientist::actionGoToWorkstation() {
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 myPos = me_transform->getPosition();
 	//reach waypoint?
-	if (squaredDistXZ(myPos, ws_to_go) < reach_sq_reach_pnt) {
+	if (simpleDistXZ(myPos, ws_to_go) < reach_dist_pnt) {
 		return OK;
 	}
 	else {
@@ -478,8 +478,8 @@ void bt_scientist::goTo(const VEC3& dest) {
 		turnTo(target);
 	}
 	else {
-		float distToWPT = squaredDistXZ(target, me_transform->getPosition());
-		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 2.0f) {
+		float distToWPT = simpleDistXZ(target, me_transform->getPosition());
+		if (fabsf(distToWPT) > 0.1f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 0.2f) {
 			goForward(move_speed);
 		}
 		else if (totalPathWpt == 0) {
@@ -512,6 +512,9 @@ bool bt_scientist::turnTo(VEC3 dest) {
 	float deltaAngle = rot_speed * getDeltaTime();
 	float deltaYaw = me_transform->getDeltaYawToAimTo(dest);
 	float angle_epsilon = deg2rad(5);
+
+	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355))
+		return true;
 
 	if (deltaYaw > 0) {
 		if (deltaAngle < deltaYaw) yaw += deltaAngle;
@@ -549,7 +552,10 @@ bool bt_scientist::turnToYaw(float yaw_dest) {
 
 	float deltaAngle = rot_speed * getDeltaTime();
 	float deltaYaw = yaw_dest - yaw;
-	float angle_epsilon = deg2rad(10);
+	float angle_epsilon = deg2rad(5);
+
+	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355))
+		return true;
 
 	if (deltaYaw > 0) {
 		if (deltaAngle < deltaYaw) yaw += deltaAngle;
@@ -563,7 +569,7 @@ bool bt_scientist::turnToYaw(float yaw_dest) {
 	me_transform->setAngles(yaw, pitch);
 
 	//Ha acabado el giro?
-	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(350);
+	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
 }
 
 //Messages:

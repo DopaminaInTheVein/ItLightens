@@ -104,6 +104,7 @@ void TCompSkeleton::clearPrevAnims(bool isLoop)
 	}
 	if (isLoop) prevCycleIds.clear();
 }
+
 void TCompSkeleton::renderInMenu() {
 	static int anim_id = 0;
 	static float in_delay = 0.3f;

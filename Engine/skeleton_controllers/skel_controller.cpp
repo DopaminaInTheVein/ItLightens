@@ -16,9 +16,12 @@ void SkelController::update()
 	prevState = currentState;
 }
 
-void SkelController::setState(string state)
+void SkelController::setState(string state, bool prio)
 {
-	currentState = state;
+	if (!priority) {
+		priority = prio;
+		currentState = state;
+	}
 }
 
 void SkelController::setAnim(string anim, bool loop, string nextLoop)
