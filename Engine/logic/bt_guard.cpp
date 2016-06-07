@@ -780,6 +780,8 @@ void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
+		animController.setState(AST_STUNNED);
+		checkStopDamage();
 		setCurrent(NULL);
 	}
 	//VEC3 myPos = getTransform()->getPosition();
@@ -797,6 +799,8 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
+		animController.setState(AST_STUNNED);
+		checkStopDamage();
 		setCurrent(NULL);
 	}
 }
@@ -814,14 +818,24 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 		animController.setState(AST_STUNNED);
 
 		//End Damage Message
-		sendMsgDmg = shooting = false;
+		checkStopDamage();
+	}
+}
 
-		TMsgDamageSpecific dmg;
-		dmg.source = entity->getName();
-		dmg.type = Damage::ABSORB;
-		dmg.actived = false;
+void bt_guard::checkStopDamage() {
+	if(sendMsgDmg){
 		CEntity * ePlayer = getPlayer();
-		if (ePlayer) ePlayer->sendMsg(dmg);
+		if (ePlayer) {
+			//End Damage Message
+			sendMsgDmg = shooting = false;
+
+			TMsgDamageSpecific dmg;
+			dmg.source = compBaseEntity->getName();
+			dmg.type = Damage::ABSORB;
+			dmg.actived = false;
+		
+			ePlayer->sendMsg(dmg);
+		}
 	}
 }
 

@@ -100,6 +100,582 @@
 <entity>
 <tags/>
 <name
+   name="mesa_cientifico001"/>
+<transform
+   pos="-91.1955 4.52187 41.494"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/mesa_cientifico001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="workbench"/>
+<workbench/>
+<name
+   name="mesa_cientifico"/>
+<transform
+   pos="-73.1749 21.3016 1.71967"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/mesa_cientifico.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="andamio_usable"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/andamio_usable.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_redondo_grave"/>
+<transform
+   pos="0 0 0.0625"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/balcon_redondo_grave.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_redondo_pequeno"/>
+<transform
+   pos="-15.8538 -2.53427 21.7714"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/balcon_redondo_pequeno.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barrotes_balcon_arriba"/>
+<transform
+   pos="-35.7656 4.72012 -0.742544"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/barrotes_balcon_arriba.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barrotes_balcon_cuadrado_derecho"/>
+<transform
+   pos="10.1268 -11.1267 -22.4202"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/barrotes_balcon_cuadrado_derecho.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barrotes_balcon_cuadrado_izquierdo"/>
+<transform
+   pos="10.1842 -11.1267 22.1297"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/barrotes_balcon_cuadrado_izquierdo.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barrotes_balcon_redondo_pequeno"/>
+<transform
+   pos="-15.8396 -0.972487 21.4911"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/barrotes_balcon_redondo_pequeno.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bote_mediano"/>
+<transform
+   pos="14.1134 -24.0313 -6.3633"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/bote_mediano.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bote_pequeno"/>
+<transform
+   pos="13.6983 -23.8483 -6.61611"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/bote_pequeno.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cable"/>
+<transform
+   pos="-67.1158 21.2116 10.1548"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/cable.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="caja_de_herramientas"/>
+<transform
+   pos="-76.8867 21.1639 0.908956"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/caja_de_herramientas.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="caja_de_herramientas001"/>
+<transform
+   pos="-87.4751 4.33457 42.3069"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/caja_de_herramientas001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cajas_de_herramientas"/>
+<transform
+   pos="-87.8302 4.71603 42.2858"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/cajas_de_herramientas.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cargador_de_bateria"/>
+<transform
+   pos="-94.2537 4.38864 29.7522"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/cargador_de_bateria.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cascote"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/cascote.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cerradura_electrica"/>
+<transform
+   pos="-92.0123 4.11614 17.0164"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/cerradura_electrica.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columna"/>
+<transform
+   pos="-15.4827 -23.9115 -16.9714"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/columna.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columna_out_of_nowhere"/>
+<transform
+   pos="-15.4827 -23.9115 -16.9714"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/columna_out_of_nowhere.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columna_rota"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/columna_rota.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columna001"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/columna001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columnas_abajo"/>
+<transform
+   pos="0.268234 -18.8261 -0.14562"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/columnas_abajo.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columnas_balcon_cuadrado_derecho"/>
+<transform
+   pos="10.5771 -18.246 -22.1019"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/columnas_balcon_cuadrado_derecho.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columnas_balcon_izquierdo_cuadrado"/>
+<transform
+   pos="9.73386 -18.0684 21.8114"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/columnas_balcon_izquierdo_cuadrado.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columnas_caida"/>
+<transform
+   pos="-15.4827 -23.9115 -16.9714"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/columnas_caida.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columnas_rota"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/columnas_rota.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel"/>
+<transform
+   pos="21.5488 -23.9999 5.65816"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/control_panel.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel_var1"/>
+<transform
+   pos="21.7 -23.9999 -6.6908"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/control_panel_var1.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cosa_de_cientifico"/>
+<transform
+   pos="-71.8807 22.0038 1.10458"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/cosa_de_cientifico.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cosa_de_cientificos"/>
+<transform
+   pos="-92.4811 5.17449 42.1112"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/cosa_de_cientificos.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cubo"/>
+<transform
+   pos="12.1106 -23.5866 -0.175312"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/cubo.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cubo_de_pintura_grande"/>
+<transform
+   pos="12.1106 -23.5866 -0.175312"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/cubo_de_pintura_grande.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="destornilladores"/>
+<transform
+   pos="-76.2973 21.2484 0.995545"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/destornilladores.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="destornilladores001"/>
+<transform
+   pos="-88.0646 4.41906 42.2203"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/destornilladores001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="escombro_2"/>
+<transform
+   pos="-24.3932 0 5.30615"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/escombro_2.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="lamparas_derecha"/>
+<transform
+   pos="20.9162 -18.9816 24.4629"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/lamparas_derecha.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="libro"/>
+<transform
+   pos="-71.2039 22.0348 1.43043"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/libro.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="libro2"/>
+<transform
+   pos="-71.2039 22.1404 1.43043"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/libro2.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="libro003"/>
+<transform
+   pos="-93.158 5.20542 41.7854"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/libro003.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="libro004"/>
+<transform
+   pos="-93.158 5.3111 41.7854"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/libro004.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="low_machine_low_machine_table"/>
 <transform
    pos="22.1834 -23.9999 -5.77497"
@@ -177,34 +753,6 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/marco_puerta_balcon_cuadrado_drecho.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="mesa_cientifico"/>
-<transform
-   pos="-70.6769 21.6844 2.98603"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/mesa_cientifico.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="mesa_cientifico001"/>
-<transform
-   pos="-93.6849 4.8551 40.2298"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/mesa_cientifico001.static_mesh"/>
 <rigidbody
    type_collision="static"/>
 
@@ -816,7 +1364,7 @@
 <name
    name="vitrina"/>
 <transform
-   pos="-72.3238 21.1639 2.16856"
+   pos="-92.038 4.33457 41.0473"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -830,7 +1378,7 @@
 <name
    name="vitrina"/>
 <transform
-   pos="-92.038 4.33457 41.0473"
+   pos="-72.3238 21.1639 2.16856"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -849,571 +1397,6 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/WireDown.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="libro004"/>
-<transform
-   pos="-93.158 5.3111 41.7854"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/libro004.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="libro003"/>
-<transform
-   pos="-93.158 5.20542 41.7854"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/libro003.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="libro2"/>
-<transform
-   pos="-71.2039 22.1404 1.43043"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/libro2.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="libro"/>
-<transform
-   pos="-71.2039 22.0348 1.43043"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/libro.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="lamparas_derecha"/>
-<transform
-   pos="20.9162 -18.9816 24.4629"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/lamparas_derecha.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="escombro_2"/>
-<transform
-   pos="-24.3932 0 5.30615"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/escombro_2.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity
-   id="301">
-<tags
-   tags="elevator1 elevator"/>
-<elevator
-   speedUp="7"
-   speedDown="7"/>
-<name
-   name="ElevatorGround"/>
-<transform
-   pos="-70.9101 21.1697 20.9195"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/ElevatorGround.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="destornilladores001"/>
-<transform
-   pos="-88.0646 4.41906 42.2203"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/destornilladores001.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="destornilladores"/>
-<transform
-   pos="-76.2973 21.2484 0.995545"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/destornilladores.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cubo_de_pintura_grande"/>
-<transform
-   pos="12.1106 -23.5866 -0.175312"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/cubo_de_pintura_grande.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cubo"/>
-<transform
-   pos="12.1106 -23.5866 -0.175312"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/cubo.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cosa_de_cientificos"/>
-<transform
-   pos="-92.4811 5.17449 42.1112"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/cosa_de_cientificos.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cosa_de_cientifico"/>
-<transform
-   pos="-71.8807 22.0038 1.10458"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/cosa_de_cientifico.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="control_panel_var1"/>
-<transform
-   pos="21.7 -23.9999 -6.6908"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/control_panel_var1.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="control_panel"/>
-<transform
-   pos="21.5488 -23.9999 5.65816"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/control_panel.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columnas_rota"/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/columnas_rota.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columnas_caida"/>
-<transform
-   pos="-15.4827 -23.9115 -16.9714"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/columnas_caida.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columnas_balcon_izquierdo_cuadrado"/>
-<transform
-   pos="9.73386 -18.0684 21.8114"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/columnas_balcon_izquierdo_cuadrado.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columnas_balcon_cuadrado_derecho"/>
-<transform
-   pos="10.5771 -18.246 -22.1019"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/columnas_balcon_cuadrado_derecho.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columnas_abajo"/>
-<transform
-   pos="0.268234 -18.8261 -0.14562"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/columnas_abajo.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columna001"/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/columna001.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columna_rota"/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/columna_rota.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columna_out_of_nowhere"/>
-<transform
-   pos="-15.4827 -23.9115 -16.9714"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/columna_out_of_nowhere.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columna"/>
-<transform
-   pos="-15.4827 -23.9115 -16.9714"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/columna.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cerradura_electrica"/>
-<transform
-   pos="-92.0123 4.11614 17.0164"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/cerradura_electrica.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cascote"/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/cascote.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cargador_de_bateria"/>
-<transform
-   pos="-94.2537 4.38864 29.7522"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/cargador_de_bateria.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cajas_de_herramientas"/>
-<transform
-   pos="-87.8302 4.71603 42.2858"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/cajas_de_herramientas.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="caja_de_herramientas001"/>
-<transform
-   pos="-87.4751 4.33457 42.3069"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/caja_de_herramientas001.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="caja_de_herramientas"/>
-<transform
-   pos="-76.8867 21.1639 0.908956"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/caja_de_herramientas.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cable"/>
-<transform
-   pos="-67.1158 21.2116 10.1548"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/cable.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="bote_pequeno"/>
-<transform
-   pos="13.6983 -23.8483 -6.61611"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/bote_pequeno.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="bote_mediano"/>
-<transform
-   pos="14.1134 -24.0313 -6.3633"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/bote_mediano.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="barrotes_balcon_redondo_pequeno"/>
-<transform
-   pos="-15.8396 -0.972487 21.4911"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/barrotes_balcon_redondo_pequeno.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="barrotes_balcon_cuadrado_izquierdo"/>
-<transform
-   pos="10.1842 -11.1267 22.1297"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/barrotes_balcon_cuadrado_izquierdo.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="barrotes_balcon_cuadrado_derecho"/>
-<transform
-   pos="10.1268 -11.1267 -22.4202"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/barrotes_balcon_cuadrado_derecho.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="barrotes_balcon_arriba"/>
-<transform
-   pos="-35.7656 4.72012 -0.742544"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/barrotes_balcon_arriba.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="balcon_redondo_pequeno"/>
-<transform
-   pos="-15.8538 -2.53427 21.7714"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/balcon_redondo_pequeno.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="balcon_redondo_grave"/>
-<transform
-   pos="0 0 0.0625"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/balcon_redondo_grave.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="andamio_usable"/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/andamio_usable.static_mesh"/>
 <rigidbody
    type_collision="static"/>
 
@@ -1507,12 +1490,18 @@
    scale="1.0"/>
 
 </entity>
-<entity>
-<tags/>
+<entity
+   id="301">
+<tags
+   tags="elevator1 elevator"/>
+<elevator
+   speedUp="7"
+   speedDown="7"
+   target="-70.91 4.38945 20.9195"/>
 <name
    name="elevator"/>
 <transform
-   pos="-906.115 17.041 -86.7673"
+   pos="-70.9949 21.1607 21.0484"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -1528,9 +1517,9 @@
 <entity>
 <tags/>
 <name
-   name="pos_elevator_down"/>
+   name="elevator_pos_elevator_down"/>
 <transform
-   pos="-70.91 3.91679 20.9195"
+   pos="-70.91 4.38945 20.9195"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -1690,6 +1679,26 @@
 
 </entity>
 <entity>
+<tags
+   tags="AI AI_cientifico AI_poss"/>
+<bt_scientist/>
+<player_cientifico/>
+<life
+   points="100"/>
+<name
+   name="scientist_1"/>
+<transform
+   pos="-72.7122 21.3046 3.77496"
+   quat="0 0 0 1.0"
+   scale="0.00929856"/>
+<render_static_mesh
+   name="static_meshes/test/scientist.static_mesh"/>
+<character_controller
+   radius="0.147"
+   height="1.71312"/>
+
+</entity>
+<entity>
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -1713,7 +1722,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.71942 0.875 8.6901"/>
+   size="3.08712 0.875 1.99872"/>
 <tags
    tags="trigger"/>
 <trigger_lua
@@ -1722,7 +1731,7 @@
 <name
    name="tElevator"/>
 <transform
-   pos="-71.0206 4.83633 20.9274"
+   pos="-71.0206 21.6825 21.3446"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -1732,7 +1741,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.2064 1.515 2.49"/>
+   size="3.08712 0.875 1.99872"/>
 <tags
    tags="trigger"/>
 <trigger_lua
@@ -1741,7 +1750,7 @@
 <name
    name="tElevator"/>
 <transform
-   pos="-71.0206 21.9711 20.9274"
+   pos="-71.0206 4.83633 21.3446"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -1879,55 +1888,6 @@
    scale="1.0"/>
 
 </entity>
-<entity>
-<tags
-   tags="teleport"/>
-<name
-   name="WirePosUp"/>
-<transform
-   pos="-68.0691 21.5946 10.1405"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags="workstation"/>
-<workstation
-   posAction="-73.7679 21.7111 6.00453"
-   yawAction="-1.57679"
-   animation="idle"/>
-<name
-   name="workstationTest001"/>
-<transform
-   pos="-73.0838 21.9182 5.98217"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/workstationTest001.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags="workstation"/>
-<workstation
-   posAction="-69.1209 21.7111 5.98239"
-   yawAction="1.55579"
-   animation="idle"/>
-<name
-   name="workstationTest002"/>
-<transform
-   pos="-69.8051 21.9182 6.00475"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/workstationTest002.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
 <entity
    slept="yes">
 <tags
@@ -1992,7 +1952,7 @@
 <name
    name="pared_mole022"/>
 <transform
-   pos="-94.7111 7.18865 -8.12411"
+   pos="-94.711 7.18865 -8.12411"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2011,7 +1971,7 @@
 <name
    name="pared_mole021"/>
 <transform
-   pos="-94.7111 7.18865 -8.93465"
+   pos="-94.711 7.18865 -8.93465"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2087,7 +2047,7 @@
 <name
    name="pared_mole017"/>
 <transform
-   pos="-94.7111 6.48916 -8.12411"
+   pos="-94.711 6.48916 -8.12411"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2106,7 +2066,7 @@
 <name
    name="pared_mole016"/>
 <transform
-   pos="-94.7111 6.48916 -8.93465"
+   pos="-94.711 6.48916 -8.93465"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2182,7 +2142,7 @@
 <name
    name="pared_mole012"/>
 <transform
-   pos="-94.7111 5.78118 -8.12411"
+   pos="-94.711 5.78118 -8.12411"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2201,7 +2161,7 @@
 <name
    name="pared_mole011"/>
 <transform
-   pos="-94.7111 5.78118 -8.93465"
+   pos="-94.711 5.78118 -8.93465"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2220,7 +2180,7 @@
 <name
    name="pared_mole007"/>
 <transform
-   pos="-94.7111 5.00802 -8.12411"
+   pos="-94.711 5.00802 -8.12411"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2239,7 +2199,7 @@
 <name
    name="pared_mole006"/>
 <transform
-   pos="-94.7111 5.00802 -8.89045"
+   pos="-94.711 5.00802 -8.89045"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2310,22 +2270,51 @@
 </entity>
 <entity>
 <tags
-   tags="AI AI_cientifico AI_poss"/>
-<bt_scientist/>
-<player_cientifico/>
-<life
-   points="100"/>
+   tags="teleport"/>
 <name
-   name="scientist_1"/>
+   name="WirePosUp"/>
 <transform
-   pos="-72.7122 21.3046 3.77496"
+   pos="-68.0691 21.5946 10.1405"
    quat="0 0 0 1.0"
-   scale="0.00929856"/>
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-73.7679 21.7111 6.00453"
+   yawAction="-1.57679"
+   animation="idle"/>
+<name
+   name="workstationTest001"/>
+<transform
+   pos="-73.0838 21.9182 5.98217"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test/scientist.static_mesh"/>
-<character_controller
-   radius="0.147"
-   height="1.71312"/>
+   name="static_meshes/milestone3/workstationTest001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-69.1209 21.7111 5.98239"
+   yawAction="1.55579"
+   animation="idle"/>
+<name
+   name="workstationTest002"/>
+<transform
+   pos="-69.8051 21.9182 6.00475"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/workstationTest002.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 
