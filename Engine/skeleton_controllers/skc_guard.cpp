@@ -3,16 +3,20 @@
 
 void SkelControllerGuard::myUpdate()
 {
+	if (currentState == prevState) return;	
+
 	// the guard only walks
 	if (currentState == "run") currentState = "walk";
 	// the attackgoback state combines 2 animations: walk backwards and attack
 	else if (currentState == "attackgoback") {
 		std::vector<std::string> anims;
+		anims.push_back("attackgobackbody");
 		anims.push_back("attackgoback");
-		anims.push_back("attack");
-
 		setLoop(anims);
+		return;
 	}
 
-	SkelController::myUpdate();
+	setLoop(currentState);
+	priority = false;
+	//SkelController::myUpdate();
 }

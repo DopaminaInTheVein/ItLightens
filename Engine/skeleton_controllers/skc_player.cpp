@@ -58,4 +58,6 @@ void SkelControllerPlayer::myUpdate()
 			setLoop(currentState);
 		}
 	}
+
+	priority = false;
 }
