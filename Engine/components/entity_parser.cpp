@@ -180,7 +180,7 @@ void CEntityParser::onEndElement(const std::string &elem) {
   if (elem == "entities" || elem == "prefab") {
     for (auto h : handles) {
       CEntity*e = h;
-      dbg("Entity created!!\n");
+      dbg("Entity created!! [%s]\n", e->getName());
       e->sendMsg(TMsgEntityCreated());
     }
 
