@@ -1,4 +1,3 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/pipe_link_90_Base_Color.dds"/>
-<texture slot="normalmap" name="textures/pipe_link_90_Normal_OpenGL.dds"/>
+<texture slot="diffuse" name="textures/long_pipe_96_tris_albedo_2048x2048.dds"/>
 </material>

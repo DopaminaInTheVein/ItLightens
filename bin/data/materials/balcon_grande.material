@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/textura_plataforma_redonda_arriba.dds"/>
+<texture slot="normalmap" name="textures/textura_plataforma_redonda_arriba_NRM.dds"/>
+</material>
