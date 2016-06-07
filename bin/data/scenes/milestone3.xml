@@ -100,36 +100,6 @@
 <entity>
 <tags/>
 <name
-   name="mesa_cientifico001"/>
-<transform
-   pos="-91.1955 4.52187 41.494"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/mesa_cientifico001.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags="workbench"/>
-<workbench/>
-<name
-   name="mesa_cientifico"/>
-<transform
-   pos="-73.1749 21.3016 1.71967"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/milestone3/mesa_cientifico.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="andamio_usable"/>
 <transform
    pos="0 0 0"
@@ -1364,7 +1334,7 @@
 <name
    name="vitrina"/>
 <transform
-   pos="-92.038 4.33457 41.0473"
+   pos="-92.4827 5.44461 42.1124"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -1376,13 +1346,13 @@
 <entity>
 <tags/>
 <name
-   name="vitrina"/>
+   name="vitrina001"/>
 <transform
-   pos="-72.3238 21.1639 2.16856"
+   pos="-71.8791 22.274 1.10341"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/milestone3/vitrina.static_mesh"/>
+   name="static_meshes/milestone3/vitrina001.static_mesh"/>
 <rigidbody
    type_collision="static"/>
 
@@ -1495,8 +1465,8 @@
 <tags
    tags="elevator1 elevator"/>
 <elevator
-   speedUp="7"
-   speedDown="7"
+   speedUp="4"
+   speedDown="4"
    target="-70.91 4.38945 20.9195"/>
 <name
    name="elevator"/>
@@ -1617,6 +1587,38 @@
 </entity>
 <entity>
 <tags
+   tags="workbench"/>
+<workbench/>
+<name
+   name="mesa_cientifico"/>
+<transform
+   pos="-73.1749 21.3016 1.71967"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/mesa_cientifico.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="workbench"/>
+<workbench/>
+<name
+   name="mesa_cientifico001"/>
+<transform
+   pos="-91.1955 4.52187 41.494"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/mesa_cientifico001.static_mesh"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
    tags="AI AI_mole AI_poss"/>
 <bt_mole
    wpts_size="3"
@@ -1666,7 +1668,7 @@
 <name
    name="player_1"/>
 <transform
-   pos="-74.5995 21.7013 11.914"
+   pos="-57.5729 5.16104 -4.88007"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -1731,7 +1733,7 @@
 <name
    name="tElevator"/>
 <transform
-   pos="-71.0206 21.6825 21.3446"
+   pos="-71.0206 4.83633 21.3446"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -1750,7 +1752,7 @@
 <name
    name="tElevator"/>
 <transform
-   pos="-71.0206 4.83633 21.3446"
+   pos="-71.0206 21.6825 21.3446"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

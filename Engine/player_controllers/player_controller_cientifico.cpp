@@ -91,10 +91,12 @@ void player_controller_cientifico::WorkBenchActions() {
 	float dist_wb = FLT_MAX;
 	//====================================================
 	for (VEC3 wb_pos : SBB::readVEC3Vector("wb_pos")) {
-		float dist = simpleDistXZ(myPos, wb_pos);
-		if (dist < dist_wb) {
-			dist_wb = dist;
-			nearest_wb = wb_pos;
+		if (distY(myPos, wb_pos) < 5.f) {
+			float dist = simpleDistXZ(myPos, wb_pos);
+			if (dist < dist_wb) {
+				dist_wb = dist;
+				nearest_wb = wb_pos;
+			}
 		}
 	}
 	//----------------------------------------------------
