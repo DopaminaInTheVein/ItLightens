@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/machine_2_control_panel_albedo_var_1.dds"/>
+<texture slot="normalmap" name="textures/machine_2_control_panel_normal_var_1l.dds"/>
+</material>

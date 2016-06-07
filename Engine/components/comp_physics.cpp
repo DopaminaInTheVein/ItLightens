@@ -205,7 +205,8 @@ bool TCompPhysics::createTriMeshShape()
 	if (e) {
 
 		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
-		assert(comp_static_mesh || fatal("Cant load static mesh on %s", e->getName()));
+		auto name = e->getName();
+		dbg("[Physx]: Cooking static mesh on %s", name);
 		PxTriangleMesh *cookedMesh = g_PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0
 		m_pShape = g_PhysxManager->CreateTriangleMesh(cookedMesh,m_staticFriction, m_dynamicFriction, m_restitution);
 		addRigidbodyScene();
