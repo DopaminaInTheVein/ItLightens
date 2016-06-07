@@ -7,7 +7,7 @@
 	"bt_scientist" : {
 		"move_speed" : 2.0,
 		"rot_speed" : 2.0,
-		"reach_sq_reach_pnt" : 0.1,
+		"reach_dist_pnt" : 0.2,
 		"max_wb_distance" : 1000.0,
 		"max_beacon_distance" : 1000.0,
 		"square_range_action" : 1.0,
@@ -26,7 +26,7 @@
 		"DIST_RAYSHOT" : 20,
 		"DAMAGE_LASER" : 30,
 		"MIN_SQ_DIST_TO_PLAYER" : 16,
-		"DIST_SQ_REACH_PNT" : 7,
+		"DIST_REACH_PNT" : 0.2,
 		"DIST_SQ_SHOT_AREA_ENTER" : 50,
 		"DIST_SQ_SHOT_AREA_LEAVE" : 100,
 		"DIST_SQ_PLAYER_DETECTION" : 500,

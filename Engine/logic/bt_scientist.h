@@ -46,7 +46,7 @@ class bt_scientist : public bt_poss, public TCompBase {
 
 	//distance limitations
 	//--------------------------------------
-	float reach_sq_reach_pnt;
+	float reach_dist_pnt;
 	float square_range_action;
 	float d_epsilon;
 	float d_beacon_simple;
