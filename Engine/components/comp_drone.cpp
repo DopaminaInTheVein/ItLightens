@@ -54,6 +54,16 @@ void TCompDrone::onRepair(const TMsgRepair &)
   CEntity *e = h;
   if (e) {
     espatllat = false;
+    sciInDistance = false;
+    CEntity * scie = nullptr;
+    for (CHandle sci : tags_manager.getHandlesByTag(getID("AI_cientifico"))) {
+      CEntity * sci_e = sci;
+      player_controller_cientifico * sci_e_controller = sci_e->get<player_controller_cientifico>();
+      if (sci_e_controller && sci_e_controller->npcIsPossessed) {
+        CanRepairDrone(sci, sciInDistance);
+        break;
+      }
+    }
   }
 }
 
