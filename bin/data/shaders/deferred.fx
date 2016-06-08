@@ -117,6 +117,8 @@ void PSGBuffer(
   float3 camera2wpos = iWorldPos - CameraWorldPos.xyz;
   o_depth = dot( CameraFront.xyz, camera2wpos) / CameraZFar;
 
+  
+  
   /*o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
   float limit = 0.1f;
   if ((o_selfIlum.r < limit && o_selfIlum.g < limit && o_selfIlum.b < limit))
@@ -281,14 +283,16 @@ float getShadowAt(float4 wPos) {
   if (light_proj_coords.z < 1e-3)
     return 0.;
 
-	//float2 rand = txNoise.Sample(samLinear, float2(wPos.xy)).xy ;/// light_proj_coords.z ;
+	float2 rand = txNoise.Sample(samLinear, float2(wPos.xy)).xy ;/// light_proj_coords.z ;
   float2 center = light_proj_coords.xy;
   float depth = light_proj_coords.z - 0.001;	
   float amount = tapAt(center, depth);
+  
+  float3 N = txNormal.Sample(samLinear, float2(wPos.xy)).xyz;
  
-  float2 sz = float2(2.0/ xres, 2.0/yres)*light_proj_coords.z;
-  //sz = float2(rand.x/xres, rand.y/yres);
-  amount += tapAt(center + float2(sz.x, sz.y), depth);
+  float2 sz; //= float2(2.0/ xres, 2.0/yres)*light_proj_coords.z;
+  sz = float2(rand.x/xres, rand.y/yres);
+  /*amount += tapAt(center + float2(sz.x, sz.y), depth);
   amount += tapAt(center + float2(-sz.x, sz.y), depth);
   amount += tapAt(center + float2(sz.x, -sz.y), depth);
   amount += tapAt(center + float2(-sz.x, -sz.y), depth);
@@ -296,7 +300,7 @@ float getShadowAt(float4 wPos) {
   amount += tapAt(center + float2(sz.x, 0), depth);
   amount += tapAt(center + float2(-sz.x, 0), depth);
   amount += tapAt(center + float2(0, -sz.y), depth);
-  amount += tapAt(center + float2(0, sz.y), depth);
+  amount += tapAt(center + float2(0, sz.y), depth);*/
  
   /*amount += tapAt(center + float2(sz.x, sz.y)*2, depth);
   amount += tapAt(center + float2(-sz.x, sz.y)*2, depth);
@@ -310,36 +314,35 @@ float getShadowAt(float4 wPos) {
  
   amount *= 1.f / 18.;*/
   
-  amount *= 1.f / 9.;
+  //amount *= 1.f / 9.;
   
- /* float steps = 4.0f;
+  float steps = 1.0f;
   sz = float2(0,0);
   float2 offset = float2(-steps/2., -steps/2.);
   
   float4 rnd = txNoise.Sample(samLinear, float2(wPos.xy)) ;/// light_proj_coords.z ;
   
+  amount += center * 0.16;
+  
+  float r = length(N); 
+  float blur = (1./xres)  * smoothstep(0., 1., r);
+  //blur = 1.0f;
   for(int i= 0; i< steps; i++)
   {
-	sz.xy = rnd.xy * float2(1./xres,1./yres) + center + float2(offset.x, offset.y)* float2(1./xres,1./yres);
-	
-	amount += tapAt(sz, depth);
-	
-	sz.xy = rnd.zw * float2(1./xres,1./yres) + center + float2(-offset.x, -offset.y)* float2(1./xres,1./yres);
-	
-	amount += tapAt(float2(sz.x,sz.y), depth);
-	
-	sz.xy = rnd.zw * float2(1./xres,1./yres) + center + float2(offset.x, -offset.y)* float2(1./xres,1./yres);
-	
-	amount += tapAt(float2(sz.x,sz.y), depth);
-	
-	sz.xy = rnd.zw * float2(1./xres,1./yres) + center + float2(-offset.x, offset.y)* float2(1./xres,1./yres);
-	
-	amount += tapAt(float2(sz.x,sz.y), depth);
-	
-	offset.xy += float2(1,1);
-  }
   
-  amount *= 1/(steps*4.);*/
+	amount += tapAt(center + float2(sz.x - 4.0*blur, sz.y), depth)* 0.05;
+    amount += tapAt(center + float2(sz.x - 3.0*blur, sz.y), depth)* 0.09;
+    amount += tapAt(center + float2(sz.x - 2.0*blur, sz.y), depth)* 0.12;
+    amount += tapAt(center + float2(sz.x - 1.0*blur, sz.y), depth)* 0.15;   
+                                                                  
+    amount += tapAt(center + float2(sz.x + 1.0*blur, sz.y), depth)* 0.15;
+    amount += tapAt(center + float2(sz.x + 2.0*blur, sz.y), depth)* 0.12;
+    amount += tapAt(center + float2(sz.x + 3.0*blur, sz.y), depth)* 0.09;
+    amount += tapAt(center + float2(sz.x + 4.0*blur, sz.y), depth)* 0.05;
+    amount += tapAt(center + float2(sz.x + 4.0*blur, sz.y), depth)* 0.05;
+  }
+  amount += 10.0f;
+  amount *= 1/(steps*9.);
   
   return amount * 1./depth;
   //return amount *0.5f + 0.5*depth;

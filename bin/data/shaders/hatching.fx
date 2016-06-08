@@ -71,8 +71,9 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	float freq_change = frequency_offset;
 	float var = sin(world_time*freq_change);
 	float offset = step(0.0f, var);
-	offset = 0;
-	pixel_pos += offset/2.0f;
+	//offset = 0;
+	offset =  offset/2.0f;
+	pixel_pos += float2(-offset, offset/2.0f);
 	
 	//return float4(offset,offset,offset,1.0f);
 	//pixel_pos+=noise;
@@ -124,11 +125,18 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	//txHatch1
 	//tests:
 	//tx_test1
-	c = tx_test2.Sample(samLinear, pixel_pos);
-
+	c = tx_test1.Sample(samLinear, pixel_pos);
+	//return float4(c.a, c.a, c.a, 1.0f);
+	
+	//return c;
+	c.r = c.r - 1;
+	c.b = c.b - 1;
+	c.g = c.g - 1;
+	
+	float alpha = c.a;
 	float amount = 2.0f * (shading - 2. * inv_shadows);	
-	c.a = lerp(tx_test2.Sample(samLinear, pixel_pos), float4(1.0f,1.0f,1.0f,0.0f), amount);
-	return 1-amount;
+	//c.a = lerp(tx_test1.Sample(samLinear, pixel_pos), float4(1.0f,1.0f,1.0f,0.0f), amount);
+	//return 1-amount;
 	//return float4(c.rgb, 1.0f);
 	//return float4(c.a, c.a, c.a, 1.0f);
 	
@@ -139,6 +147,8 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	//c = 1 - c;
 	//return float4(1,1,1,1);
 	//return c;
+	
+	//return float4(alpha, alpha, alpha, 1);
 
 	float intensity = intensity_sketch;
 
@@ -148,7 +158,7 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	//color_int = 1- color_int;
 	//return float4(color_int, color_int, color_int, 1.0f);
 	//intensity = step(0.5f, intensity);
-	float alpha = color_int*intensity;
+	//alpha *= color_int*intensity;
 	//return float4(alpha, alpha, alpha, 1.0f);
 	/*if(c.r > 0.3f){
 		return float4(0.0f,0.0f,0.0f,0.0f);
@@ -161,11 +171,14 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	
 	//return float4(inv_shadows, inv_shadows, inv_shadows, 1.0f);
 	//c.a = alpha;
-	c.a = alpha*(1 - inv_shadows);
-	c.a = inv_shadows;
-	float LC = 1 - length(c.rgb);
-	c.a *= step(0.2, inv_shadows) * LC;
-
+	//return float4(alpha, alpha, alpha, 1);
+	//return float4(inv_shadows, inv_shadows, inv_shadows, 1.0f);
+	float shadow_limit = step(0.08f, inv_shadows);
+	c.a = alpha*(shadow_limit*inv_shadows);
+	//c.a = inv_shadows;
+	//float LC = 1 - length(c.rgb);
+	//c.a *= step(0.2, inv_shadows); //* LC;
+	
 	
 	//c.a  = 1.0f;
 	
@@ -179,7 +192,7 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	//c = float4(c.r,c.r,c.r,c.r);
 	
 	//c = step(c, 0.5f);
-	LC *= 2.0f;
+	//LC *= 2.0f;
 	//return float4(LC,LC, LC, 1.0f);
 	//return float4(c.a, c.a, c.a, 1.0f);
 	return c;

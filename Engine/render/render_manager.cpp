@@ -11,6 +11,7 @@
 #include "components/entity.h"
 #include "render/draw_utils.h"
 #include "components\comp_polarized.h"
+//#include "player_controllers\player_controller.h"
 
 CRenderManager RenderManager;
 
@@ -174,7 +175,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
       it->mesh->activate();
 
 	//upload polarity info general objects
-	CEntity *e = it->owner.getOwner();
+	/*CEntity *e = it->owner.getOwner();
 	TCompPolarized * polarized = e->get<TCompPolarized>();
 	if (polarized) {
 		shader_ctes_object.polarity = polarized->getForce().polarity;
@@ -182,8 +183,9 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 	//upload polarity info player
 	if (it->isPlayer) {
-
-	}
+		player_controller* pc = e->get<player_controller>();
+		shader_ctes_object.polarity = pc->GetPolarityInt();
+	}*/
 
     if (it->owner != prev_it->owner) {
       // subir la world de it

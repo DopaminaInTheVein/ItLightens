@@ -15,6 +15,8 @@ public:
     	, NORMALMAP
     	, ENVIRONMENT
 		, SELFILUM
+		, PLUS_POLARITY		//customized selfium, only activated on plus
+		, MINUS_POLARITY	//customized selfium, only activated on minus
 		, COUNT
 	};
 	const CRenderTechnique*   tech;

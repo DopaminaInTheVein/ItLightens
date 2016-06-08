@@ -14,6 +14,8 @@
 #define TEXTURE_SLOT_NORMALS       1
 #define TEXTURE_SLOT_SPECULAR      2
 #define TEXTURE_SLOT_SELFILUM      3
+#define TEXTURE_SLOT_PLUS		   4
+#define TEXTURE_SLOT_MINUS		   5
 
 
 //texture globals, range 10-39

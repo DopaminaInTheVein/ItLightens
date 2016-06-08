@@ -116,7 +116,7 @@ bool CRenderDeferredModule::start() {
   //Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST2);
 //#endif
   
-  Resources.get("textures/hatching/hatching_tileable.dds")->as<CTexture>()->activate(63);
+  Resources.get("textures/hatching/hatching_tileable_ALPHAS.dds")->as<CTexture>()->activate(63);
   Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(64);
 
 
