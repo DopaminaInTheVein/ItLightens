@@ -162,6 +162,11 @@ function OnBreakWall( param )
 	p:print( "OnBreakWall: "..param.."\n" )
 end
 
+function OnRechargeDrone( param )
+	p:print( "OnRechargeDrone: "..param.."\n" )
+	p:play_sound("event:/OnUseGenerator")
+end
+
 function OnUseCable( param )
 	p:print( "OnUseCable: "..param.."\n" )
 end

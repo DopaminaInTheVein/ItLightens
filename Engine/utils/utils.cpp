@@ -63,7 +63,9 @@ float getDeltaTime(float always) {
 float squared(float i) {
   return i*i;
 }
-
+float distY(const VEC3 &init, const VEC3 &dest) {
+	return abs(init.y - dest.y);
+}
 float realDist(const VEC3 &init, const VEC3 &dest) {
   return sqrtf(squaredDist(init, dest));
 }

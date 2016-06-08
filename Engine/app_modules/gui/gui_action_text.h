@@ -4,32 +4,34 @@
 #include "gui_utils.h"
 
 enum eAction {
-	NONE = 0
-	, RECHARGE
-	, OVERCHARGE
-	, POSSESS
-	, ACTIVATE
-	, PUT
-	, EXAMINATE
-	, DESTROY
-	, CREATE_MAGNETIC_BOMB
-	, CREATING
-	, SIZE_ACTIONS
+  NONE = 0
+  , RECHARGE
+  , RECHARGE_DRONE
+  , OVERCHARGE
+  , POSSESS
+  , ACTIVATE
+  , PUT
+  , EXAMINATE
+  , DESTROY
+  , CREATE_MAGNETIC_BOMB
+  , CREATING
+  , TRAVEL_WIRE
+  , SIZE_ACTIONS
 };
 
 //Forward Declaration
 class Rect;
 
 class CGuiActionText {
-	Rect rect;
-	float sizeFont;
-	eAction action;
+  Rect rect;
+  float sizeFont;
+  eAction action;
 public:
-	CGuiActionText(Rect r);
+  CGuiActionText(Rect r);
 
-	void setState(eAction action);
-	void update(float dt);
-	void render();
+  void setState(eAction action);
+  void update(float dt);
+  void render();
 };
 
 #endif

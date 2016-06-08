@@ -231,7 +231,7 @@ public:
 	void noise(const TMsgNoise& msg);
 	void readIniFileAttr();
 	void goToPoint(VEC3 dest);
-
+	void checkStopDamage();
 	//From bombs
 	void reduceStats();
 	void resetStats();

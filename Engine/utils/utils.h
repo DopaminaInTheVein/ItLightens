@@ -34,6 +34,7 @@ float		getDeltaTime(float always = false);
 
 float squared(float i);
 
+float distY(const VEC3& init, const VEC3& dest);
 float realDist(const VEC3& init, const VEC3& dest);
 float realDistXZ(const VEC3& init, const VEC3& dest);
 
