@@ -42,7 +42,7 @@ bool rcErodeWalkableArea(rcContext* ctx, int radius, rcCompactHeightfield& chf)
 	const int w = chf.width;
 	const int h = chf.height;
 	
-	rcScopedTimer timer(ctx, RC_TIMER_ERODE_AREA);
+	//rcScopedTimer timer(ctx, RC_TIMER_ERODE_AREA);
 	
 	unsigned char* dist = (unsigned char*)rcAlloc(sizeof(unsigned char)*chf.spanCount, RC_ALLOC_TEMP);
 	if (!dist)
@@ -244,7 +244,7 @@ bool rcMedianFilterWalkableArea(rcContext* ctx, rcCompactHeightfield& chf)
 	const int w = chf.width;
 	const int h = chf.height;
 	
-	rcScopedTimer timer(ctx, RC_TIMER_MEDIAN_AREA);
+	//rcScopedTimer timer(ctx, RC_TIMER_MEDIAN_AREA);
 	
 	unsigned char* areas = (unsigned char*)rcAlloc(sizeof(unsigned char)*chf.spanCount, RC_ALLOC_TEMP);
 	if (!areas)
@@ -319,7 +319,7 @@ void rcMarkBoxArea(rcContext* ctx, const float* bmin, const float* bmax, unsigne
 {
 	rcAssert(ctx);
 	
-	rcScopedTimer timer(ctx, RC_TIMER_MARK_BOX_AREA);
+	//rcScopedTimer timer(ctx, RC_TIMER_MARK_BOX_AREA);
 
 	int minx = (int)((bmin[0]-chf.bmin[0])/chf.cs);
 	int miny = (int)((bmin[1]-chf.bmin[1])/chf.ch);
@@ -385,7 +385,7 @@ void rcMarkConvexPolyArea(rcContext* ctx, const float* verts, const int nverts,
 {
 	rcAssert(ctx);
 	
-	rcScopedTimer timer(ctx, RC_TIMER_MARK_CONVEXPOLY_AREA);
+//rcScopedTimer timer(ctx, RC_TIMER_MARK_CONVEXPOLY_AREA);
 
 	float bmin[3], bmax[3];
 	rcVcopy(bmin, verts);
@@ -533,7 +533,7 @@ void rcMarkCylinderArea(rcContext* ctx, const float* pos,
 {
 	rcAssert(ctx);
 	
-	rcScopedTimer timer(ctx, RC_TIMER_MARK_CYLINDER_AREA);
+	//rcScopedTimer timer(ctx, RC_TIMER_MARK_CYLINDER_AREA);
 	
 	float bmin[3], bmax[3];
 	bmin[0] = pos[0] - r;
