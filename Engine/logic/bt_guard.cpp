@@ -58,6 +58,7 @@ void bt_guard::readIniFileAttr() {
 			map<std::string, float> fields = readIniAtrData(file_ini, "bt_guard");
 
 			assignValueToVar(DIST_REACH_PNT, fields);
+			assignValueToVar(PLAYER_DETECTION_RADIUS, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_ENTER, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_LEAVE, fields);
 			assignValueToVar(DIST_RAYSHOT, fields);
@@ -415,7 +416,7 @@ int bt_guard::actionAbsorb() {
 	}
 
 	turnTo(posPlayer);
-	if (squaredDistY(myPos, posPlayer) * 2 > dist) { //Angulo de 30 grados
+	if (squaredDistY(myPos, posPlayer) * 2.0f > dist) { //Angulo de 30 grados
 							  //Si pitch muy alto me alejo
 		goForward(-SPEED_WALK);
 	}
@@ -984,6 +985,17 @@ bool bt_guard::turnTo(VEC3 dest) {
 //	return myPos;
 //}
 
+bool bt_guard::playerTooNear() {
+	if (!myParent.isValid()) return false;
+	CEntity * ePlayer = getPlayer();
+	if (!ePlayer) return false;
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	VEC3 posPlayer = tPlayer->getPosition();
+	VEC3 myPos = getTransform()->getPosition();
+
+	return simpleDist(posPlayer, myPos) < PLAYER_DETECTION_RADIUS;
+}
+
 // -- Player Visible? -- //
 bool bt_guard::playerVisible() {
 	if (!myParent.isValid()) return false;
@@ -994,6 +1006,10 @@ bool bt_guard::playerVisible() {
 	VEC3 myPos = getTransform()->getPosition();
 	if (SBB::readBool("possMode") && squaredDistXZ(myPos, posPlayer) > 25.f) {
 		return false;
+	}
+
+	if (simpleDist(posPlayer, myPos) < PLAYER_DETECTION_RADIUS) {
+		return true;
 	}
 
 	float distancia_vertical = squaredDistY(posPlayer, myPos);
@@ -1206,13 +1222,15 @@ void bt_guard::removeBox(CHandle box_handle) {
 
 // -- Jurisdiction -- //
 bool bt_guard::inJurisdiction(VEC3 posPlayer) {
-	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur < jurRadiusSq;
+	/*float distanceJur = squaredDistXZ(jurCenter, posPlayer);
+	return distanceJur < jurRadiusSq;*/
+	return true;
 }
 
 bool bt_guard::outJurisdiction(VEC3 posPlayer) {
-	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
+	/*float distanceJur = squaredDistXZ(jurCenter, posPlayer);
+	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;*/
+	return false;
 }
 
 // -- Reset Timers-- //

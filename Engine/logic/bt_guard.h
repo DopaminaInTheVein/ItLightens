@@ -40,6 +40,7 @@ class bt_guard : public bt, public TCompBase
 {
 	//Main attritbutes
 	float DIST_REACH_PNT;
+	float PLAYER_DETECTION_RADIUS;
 	float DIST_SQ_SHOT_AREA_ENTER;
 	float DIST_SQ_SHOT_AREA_LEAVE;
 	float DIST_RAYSHOT;
@@ -137,6 +138,7 @@ class bt_guard : public bt, public TCompBase
 
 	//Aux checks
 	bool playerVisible();
+	bool playerTooNear();
 	bool boxMovingDetected();
 	bool inJurisdiction(VEC3);
 	bool outJurisdiction(VEC3);
