@@ -367,11 +367,14 @@ int bt_guard::actionChase() {
 		return OK;
 	}
 	else {
-		getPath(myPos, posPlayer, SBB::readSala());
-
-		animController.setState(AST_MOVE);
-		goTo(posPlayer);
-		return STAY;
+		bool accesible = getPath(myPos, posPlayer, SBB::readSala());
+		if (!accesible)
+			return OK;
+		else {
+			animController.setState(AST_MOVE);
+			goTo(posPlayer);
+			return STAY;
+		}
 	}
 }
 
@@ -596,10 +599,14 @@ int bt_guard::actionMoveAround() {
 	}
 
 	if (distance_to_point > DIST_REACH_PNT) {
-		getPath(myPos, search_player_point, SBB::readSala());
-		animController.setState(AST_MOVE);
-		goTo(search_player_point);
-		return STAY;
+		bool accesible = getPath(myPos, search_player_point, SBB::readSala());
+		if (!accesible)
+			return OK;
+		else {
+			animController.setState(AST_MOVE);
+			goTo(search_player_point);
+			return STAY;
+		}
 	}
 
 	return OK;
@@ -677,12 +684,16 @@ int bt_guard::actionNextWpt() {
 	PROFILE_FUNCTION("guard: actionnextwpt");
 	if (!myParent.isValid()) return false;
 	animController.setState(AST_TURN);
+	VEC3 myPos = getTransform()->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
 		return KO;
 	}
+	//If we are already there, we continue
+	if (simpleDistXZ(myPos, dest) < DIST_REACH_PNT)
+		return OK;
 	//Look to waypoint
 	if (turnTo(dest)) {
 		return OK;
