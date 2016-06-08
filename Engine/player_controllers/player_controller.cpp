@@ -677,6 +677,9 @@ void player_controller::UpdateActionsTrigger() {
     if (io->keys['E'].becomesPressed()) {
       logic_manager->throwEvent(logic_manager->OnNotRechargeDrone, "");
     }
+    else {
+      Gui->setActionAvailable(eAction::RECHARGE_DRONE);
+    }
   }
 }
 

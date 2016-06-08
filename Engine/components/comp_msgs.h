@@ -253,6 +253,9 @@ struct TMsgSetActivable {
 struct TMsgActivate {
   DECLARE_MSG_ID();
 };
+struct TMsgRepair {
+  DECLARE_MSG_ID();
+};
 
 struct TMsgSetControllable {
   bool control;

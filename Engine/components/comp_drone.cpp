@@ -5,6 +5,7 @@
 #include "comp_physics.h"
 #include "comp_life.h"
 #include "handle\handle.h"
+#include "player_controllers/player_controller_cientifico.h"
 #include "entity.h"
 
 void TCompDrone::onCreate(const TMsgEntityCreated &)
@@ -47,12 +48,12 @@ void TCompDrone::onRecharge(const TMsgActivate &)
   }
 }
 
-void TCompDrone::onRepair(const TMsgActivate &)
+void TCompDrone::onRepair(const TMsgRepair &)
 {
   CHandle h = CHandle(this).getOwner();
   CEntity *e = h;
   if (e) {
-    CanNotRechargeDrone(playerInDistance);
+    espatllat = false;
   }
 }
 
@@ -92,6 +93,12 @@ void TCompDrone::update(float elapsed)
     // Going down
     VEC3 direction = VEC3(0.0f, -1.0f, 0.0f);
     VEC3 npcPos = transform->getPosition();
+
+    CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
+    CEntity *player_e = player;
+    TCompTransform * p_transform = player_e->get<TCompTransform>();
+    float distToDrone = realDist(npcPos, p_transform->getPosition());
+
     npcPos.y -= 1.0f;
     PxRaycastBuffer hit;
     bool ret = g_PhysxManager->raycast(npcPos, direction, fabsf(fallingSpeed * elapsed) + .50f, hit);
@@ -99,24 +106,47 @@ void TCompDrone::update(float elapsed)
       final_pos = final_pos + direction * fallingSpeed * elapsed;
     }
     else {
-      CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
-      CEntity *player_e = player;
-      TCompTransform * p_transform = player_e->get<TCompTransform>();
-      if (!espatllat && !playerInDistance && realDist(transform->getPosition(), p_transform->getPosition()) < 2.0f) {
+      CHandle scih;
+      CEntity * scie = nullptr;
+      for (CHandle sci : tags_manager.getHandlesByTag(getID("AI_cientifico"))) {
+        CEntity * sci_e = sci;
+        player_controller_cientifico * sci_e_controller = sci_e->get<player_controller_cientifico>();
+        if (sci_e_controller && sci_e_controller->npcIsPossessed) {
+          scih = sci;
+          scie = sci_e;
+          break;
+        }
+      }
+
+      float sciDist = 99.9f;
+      if (scie) {
+        TCompTransform * scie_transform = scie->get<TCompTransform>();
+        sciDist = realDist(transform->getPosition(), scie_transform->getPosition());
+      }
+
+      if (!espatllat && !playerInDistance && distToDrone < 3.0f) {
         playerInDistance = true;
         CanRechargeDrone(playerInDistance);
       }
-      else if (!espatllat && playerInDistance && realDist(transform->getPosition(), p_transform->getPosition()) > 2.0f) {
+      else if (!espatllat && playerInDistance && distToDrone > 3.0f) {
         playerInDistance = false;
         CanRechargeDrone(playerInDistance);
       }
-      else if (espatllat && !playerInDistance && realDist(transform->getPosition(), p_transform->getPosition()) < 2.0f) {
+      else if (espatllat && !playerInDistance && distToDrone < 3.0f) {
         playerInDistance = true;
         CanNotRechargeDrone(playerInDistance);
       }
-      else if (espatllat && playerInDistance && realDist(transform->getPosition(), p_transform->getPosition()) > 2.0f) {
+      else if (espatllat && playerInDistance && distToDrone > 3.0f) {
         playerInDistance = false;
         CanNotRechargeDrone(playerInDistance);
+      }
+      else if (scie && espatllat && !sciInDistance && sciDist < 3.0f) {
+        sciInDistance = true;
+        CanRepairDrone(scih, sciInDistance);
+      }
+      else if (scie && espatllat && sciInDistance && sciDist > 3.0f) {
+        sciInDistance = false;
+        CanRepairDrone(scih, sciInDistance);
       }
     }
   }
@@ -137,7 +167,7 @@ char nameVariable[10]; sprintf(nameVariable, "wpt%d_%s", index, nameSufix);
 
 bool TCompDrone::load(MKeyValue & atts)
 {
-  espatllat = atts.getInt("espatllat", false);
+  espatllat = atts.getBool("espatllat", false);
   int n = atts.getInt("wpts_size", 0);
   wpts.resize(n + 1);
   waitTimes.resize(n + 1);
@@ -177,6 +207,14 @@ void TCompDrone::CanNotRechargeDrone(bool new_range)
   CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
   CEntity *player_e = player;
   player_e->sendMsg(msg);
+}
+void TCompDrone::CanRepairDrone(CHandle sci, bool new_range) {
+  TMsgCanRechargeDrone msg;
+  msg.range = new_range;
+  msg.han = CHandle(this).getOwner();
+
+  CEntity * scie = sci;
+  scie->sendMsg(msg);
 }
 
 void TCompDrone::onTriggerEnter(const TMsgTriggerIn & msg)

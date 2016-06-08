@@ -164,12 +164,18 @@ end
 
 function OnRechargeDrone( param )
 	p:print( "OnRechargeDrone: "..param.."\n" )
-	p:player_talks("I hope a scientific may get this repaired...","scientific.dds","SCI")
+	p:play_sound("event:/OnUseGenerator")
+end
+
+function OnRepairDrone( param )
+	p:print( "OnRepairDrone: "..param.."\n" )
+	p:play_sound("event:/OnUseGenerator")
+	p:player_talks("I just repaired that useful thing to make a full working one...\but battery may fail as well, that is unreparable....","scientific.dds","SCI")
 end
 
 function OnNotRechargeDrone( param )
 	p:print( "OnRechargeDrone: "..param.."\n" )
-	p:play_sound("event:/OnUseGenerator")
+	p:player_talks("I hope a scientific may get this repaired...","scientific.dds","SCI")
 end
 
 function OnUseCable( param )

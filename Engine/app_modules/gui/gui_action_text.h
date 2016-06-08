@@ -7,6 +7,7 @@ enum eAction {
   NONE = 0
   , RECHARGE
   , RECHARGE_DRONE
+  , REPAIR_DRONE
   , OVERCHARGE
   , POSSESS
   , ACTIVATE

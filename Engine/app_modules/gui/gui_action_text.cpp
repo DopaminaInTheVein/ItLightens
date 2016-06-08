@@ -36,6 +36,9 @@ void CGuiActionText::render() {
   case eAction::RECHARGE_DRONE:
     text = "ACTION: Recharge Drone";
     break;
+  case eAction::REPAIR_DRONE:
+    text = "ACTION: Repair Drone";
+    break;
   case eAction::ACTIVATE:
     text = "ACTION: Activate";
     break;

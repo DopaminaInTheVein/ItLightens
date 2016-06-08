@@ -186,6 +186,7 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
   SUBSCRIBE(TCompDrone, TMsgEntityCreated, onCreate);
   SUBSCRIBE(TCompDrone, TMsgActivate, onRecharge);
+  SUBSCRIBE(TCompDrone, TMsgRepair, onRepair);
   SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
   SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
   SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
@@ -286,6 +287,7 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(bt_scientist, TMsgAISetStunned, onSetStunned);
   SUBSCRIBE(player_controller_cientifico, TMsgControllerSetEnable, onSetEnable);
   SUBSCRIBE(player_controller_cientifico, TMsgGetWhoAmI, onGetWhoAmI);
+  SUBSCRIBE(player_controller_cientifico, TMsgCanRechargeDrone, onCanRepairDrone);
   //..Speedy
   SUBSCRIBE(bt_speedy, TMsgAISetPossessed, onSetPossessed);
   SUBSCRIBE(bt_speedy, TMsgAISetStunned, onSetStunned);

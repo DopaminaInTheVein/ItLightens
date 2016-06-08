@@ -199,6 +199,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
     sprintf(lua_code, "OnNotRechargeDrone(%f);", 0.5);
     break;
   }
+  case (OnRepairDrone) : {
+    sprintf(lua_code, "OnRepairDrone(%f);", 0.5);
+    break;
+  }
   case (OnUseCable) : {
     sprintf(lua_code, "OnUseCable(%f);", 0.5f);
     break;

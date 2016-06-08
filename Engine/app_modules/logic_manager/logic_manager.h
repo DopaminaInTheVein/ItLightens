@@ -60,6 +60,7 @@ public:
     OnBreakWall,
     OnRechargeDrone,
     OnNotRechargeDrone,
+    OnRepairDrone,
     OnUseCable,
     OnUseGenerator,
     OnStun,
