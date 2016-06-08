@@ -58,6 +58,7 @@ void bt_guard::readIniFileAttr() {
 			map<std::string, float> fields = readIniAtrData(file_ini, "bt_guard");
 
 			assignValueToVar(DIST_REACH_PNT, fields);
+			assignValueToVar(PLAYER_DETECTION_RADIUS, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_ENTER, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_LEAVE, fields);
 			assignValueToVar(DIST_RAYSHOT, fields);
@@ -366,11 +367,14 @@ int bt_guard::actionChase() {
 		return OK;
 	}
 	else {
-		getPath(myPos, posPlayer, SBB::readSala());
-
-		animController.setState(AST_MOVE);
-		goTo(posPlayer);
-		return STAY;
+		bool accesible = getPath(myPos, posPlayer, SBB::readSala());
+		if (!accesible)
+			return OK;
+		else {
+			animController.setState(AST_MOVE);
+			goTo(posPlayer);
+			return STAY;
+		}
 	}
 }
 
@@ -415,7 +419,7 @@ int bt_guard::actionAbsorb() {
 	}
 
 	turnTo(posPlayer);
-	if (squaredDistY(myPos, posPlayer) * 2 > dist) { //Angulo de 30 grados
+	if (squaredDistY(myPos, posPlayer) * 2.0f > dist) { //Angulo de 30 grados
 							  //Si pitch muy alto me alejo
 		goForward(-SPEED_WALK);
 	}
@@ -533,6 +537,8 @@ int bt_guard::actionSearch() {
 			VEC3 playerPos = tPlayer->getPosition();
 
 			VEC3 dir = playerPos - myPos;
+			dir.Normalize();
+			
 			search_player_point = playerPos + 1.0f * dir;
 
 			return OK;
@@ -556,6 +562,8 @@ int bt_guard::actionSearch() {
 			VEC3 playerPos = tPlayer->getPosition();
 
 			VEC3 dir = playerPos - myPos;
+			dir.Normalize();
+
 			search_player_point = playerPos + 1.0f * dir;
 			Debug->DrawLine(myPos, search_player_point);
 			return OK;
@@ -591,10 +599,14 @@ int bt_guard::actionMoveAround() {
 	}
 
 	if (distance_to_point > DIST_REACH_PNT) {
-		getPath(myPos, search_player_point, SBB::readSala());
-		animController.setState(AST_MOVE);
-		goTo(search_player_point);
-		return STAY;
+		bool accesible = getPath(myPos, search_player_point, SBB::readSala());
+		if (!accesible)
+			return OK;
+		else {
+			animController.setState(AST_MOVE);
+			goTo(search_player_point);
+			return STAY;
+		}
 	}
 
 	return OK;
@@ -672,12 +684,16 @@ int bt_guard::actionNextWpt() {
 	PROFILE_FUNCTION("guard: actionnextwpt");
 	if (!myParent.isValid()) return false;
 	animController.setState(AST_TURN);
+	VEC3 myPos = getTransform()->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
 		return KO;
 	}
+	//If we are already there, we continue
+	if (simpleDistXZ(myPos, dest) < DIST_REACH_PNT)
+		return OK;
 	//Look to waypoint
 	if (turnTo(dest)) {
 		return OK;
@@ -924,6 +940,9 @@ bool bt_guard::turnTo(VEC3 dest) {
 	float deltaYaw = getTransform()->getDeltaYawToAimTo(dest);
 	float angle_epsilon = deg2rad(5);
 
+	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355))
+		return true;
+
 	if (deltaYaw > 0) {
 		if (deltaAngle < deltaYaw) yaw += deltaAngle;
 		else yaw += deltaYaw;
@@ -948,7 +967,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
 }
 
-//THI IS NOT USED!
+//THIS IS NOT USED!
 //VEC3 bt_guard::generateRandomPoint() {
 //	PROFILE_FUNCTION("guard: generate random point");
 //	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
@@ -977,6 +996,17 @@ bool bt_guard::turnTo(VEC3 dest) {
 //	return myPos;
 //}
 
+bool bt_guard::playerTooNear() {
+	if (!myParent.isValid()) return false;
+	CEntity * ePlayer = getPlayer();
+	if (!ePlayer) return false;
+	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	VEC3 posPlayer = tPlayer->getPosition();
+	VEC3 myPos = getTransform()->getPosition();
+
+	return simpleDist(posPlayer, myPos) < PLAYER_DETECTION_RADIUS;
+}
+
 // -- Player Visible? -- //
 bool bt_guard::playerVisible() {
 	if (!myParent.isValid()) return false;
@@ -988,7 +1018,14 @@ bool bt_guard::playerVisible() {
 	if (SBB::readBool("possMode") && squaredDistXZ(myPos, posPlayer) > 25.f) {
 		return false;
 	}
-	if (squaredDistY(posPlayer, myPos) < squaredDistXZ(posPlayer, myPos) * 2) { //Pitch < 30
+
+	if (simpleDist(posPlayer, myPos) < PLAYER_DETECTION_RADIUS) {
+		return true;
+	}
+
+	float distancia_vertical = squaredDistY(posPlayer, myPos);
+
+	if (distancia_vertical < squaredDistXZ(posPlayer, myPos) * 0.5f) { //Pitch < 30
 		if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
 			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) { //Distancia
 				if (inJurisdiction(posPlayer)) { //Jurisdiccion
@@ -1196,13 +1233,15 @@ void bt_guard::removeBox(CHandle box_handle) {
 
 // -- Jurisdiction -- //
 bool bt_guard::inJurisdiction(VEC3 posPlayer) {
-	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur < jurRadiusSq;
+	/*float distanceJur = squaredDistXZ(jurCenter, posPlayer);
+	return distanceJur < jurRadiusSq;*/
+	return true;
 }
 
 bool bt_guard::outJurisdiction(VEC3 posPlayer) {
-	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
+	/*float distanceJur = squaredDistXZ(jurCenter, posPlayer);
+	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;*/
+	return false;
 }
 
 // -- Reset Timers-- //
