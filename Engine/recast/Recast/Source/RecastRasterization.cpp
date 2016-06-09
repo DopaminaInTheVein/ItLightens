@@ -370,7 +370,7 @@ bool rcRasterizeTriangles(rcContext* ctx, const float* verts, const int /*nv*/,
 {
 	rcAssert(ctx);
 
-	rcScopedTimer timer(ctx, RC_TIMER_RASTERIZE_TRIANGLES);
+	//rcScopedTimer timer(ctx, RC_TIMER_RASTERIZE_TRIANGLES);
 	
 	const float ics = 1.0f/solid.cs;
 	const float ich = 1.0f/solid.ch;

@@ -679,7 +679,7 @@ void CEntitiesModule::renderInMenu() {
 void CEntitiesModule::recalcNavmesh() {
   // GENERATE NAVMESH
   CNavmesh nav = SBB::readNavmesh();
-  //nav.build(salaloc);
+  nav.build(salaloc);
   SBB::postNavmesh(nav);
   SBB::postBool(sala, true);
 }

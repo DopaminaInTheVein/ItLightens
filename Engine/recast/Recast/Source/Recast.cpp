@@ -331,7 +331,7 @@ bool rcBuildCompactHeightfield(rcContext* ctx, const int walkableHeight, const i
 {
 	rcAssert(ctx);
 	
-	rcScopedTimer timer(ctx, RC_TIMER_BUILD_COMPACTHEIGHTFIELD);
+	//rcScopedTimer timer(ctx, RC_TIMER_BUILD_COMPACTHEIGHTFIELD);
 	
 	const int w = hf.width;
 	const int h = hf.height;

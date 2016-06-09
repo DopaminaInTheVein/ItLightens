@@ -994,7 +994,7 @@ bool rcBuildPolyMesh(rcContext* ctx, rcContourSet& cset, const int nvp, rcPolyMe
 {
 	rcAssert(ctx);
 	
-	rcScopedTimer timer(ctx, RC_TIMER_BUILD_POLYMESH);
+	//rcScopedTimer timer(ctx, RC_TIMER_BUILD_POLYMESH);
 
 	rcVcopy(mesh.bmin, cset.bmin);
 	rcVcopy(mesh.bmax, cset.bmax);
@@ -1316,7 +1316,7 @@ bool rcMergePolyMeshes(rcContext* ctx, rcPolyMesh** meshes, const int nmeshes, r
 	if (!nmeshes || !meshes)
 		return true;
 
-	rcScopedTimer timer(ctx, RC_TIMER_MERGE_POLYMESH);
+	//rcScopedTimer timer(ctx, RC_TIMER_MERGE_POLYMESH);
 
 	mesh.nvp = meshes[0]->nvp;
 	mesh.cs = meshes[0]->cs;
