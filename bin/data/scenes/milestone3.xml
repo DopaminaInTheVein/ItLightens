@@ -1613,6 +1613,44 @@ size="1.7955 2.3474 4.92" />
 <life
    points="100"/>
 <bt_guard
+   kpt_size="5"
+   kpt0_type="seek"
+   kpt0_pos="-19.8673 -24.17738 -3.137"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="2.5 -24.04738 1.5"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="14.0 -24.04738 15.0"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="24.0 -24.04738 -7.3"
+   kpt3_wait="2"
+   kpt4_type="seek"
+   kpt4_pos="-2.0 -24.04738 -13.5"
+   kpt4_wait="2"
+   jurisdiction="-81.553 4.17739 -24.4147"
+   jurRadius="18.09"/>
+<name
+   name="guard_3"/>
+<transform
+   pos="-19.8673 -24.17738 -3.137"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
    kpt_size="2"
    kpt0_type="seek"
    kpt0_pos="-78.7606 4.04738 -30.8275"
