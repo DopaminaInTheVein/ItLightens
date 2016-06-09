@@ -1574,183 +1574,6 @@
 </entity>
 <entity>
 <tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="2"
-   kpt0_type="seek"
-   kpt0_pos="-83.9369 4.04738 -30.9472"
-   kpt0_wait="2"
-   kpt1_type="look"
-   kpt1_pos="-83.9248 4.04738 -29.7075"
-   kpt1_wait="2"
-   jurisdiction="-81.553 4.17739 -24.4147"
-   jurRadius="18.09"/>
-<name
-   name="guard_1"/>
-<transform
-   pos="-83.8673 4.17738 -32.137"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="2"
-   kpt0_type="seek"
-   kpt0_pos="-78.7606 4.04738 -30.8275"
-   kpt0_wait="2"
-   kpt1_type="look"
-   kpt1_pos="-78.7484 4.04738 -29.5878"
-   kpt1_wait="2"
-   jurisdiction="-82.3771 4.17739 -24.4147"
-   jurRadius="18.09"/>
-<name
-   name="guard_002"/>
-<transform
-   pos="-78.7076 4.17738 -32.137"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="3.47929 -23.9559 0.320804"
-   kpt0_wait="2"
-   kpt1_type="look"
-   kpt1_pos="-1.10084 -23.9559 6.82941"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="12.5191 -23.9559 -3.53607"
-   kpt2_wait="2"
-   kpt3_type="look"
-   kpt3_pos="10.7111 -23.9559 -14.8659"
-   kpt3_wait="2"
-   jurisdiction="34.657 -23.0107 2.92342"
-   jurRadius="15.7"/>
-<name
-   name="guard_2"/>
-<transform
-   pos="34.7235 -23.0107 2.9348"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="5"
-   kpt0_type="seek"
-   kpt0_pos="-12.4176 -23.7801 -22.7542"
-   kpt0_wait="2"
-   kpt1_type="look"
-   kpt1_pos="-11.4777 -23.7801 -17.7984"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="-27.3278 -23.7801 -21.8571"
-   kpt2_wait="2"
-   kpt3_type="look"
-   kpt3_pos="-30.4038 -23.7901 -16.9867"
-   kpt3_wait="2"
-   kpt4_type="look"
-   kpt4_pos="-21.0048 -23.7801 -17.1576"
-   kpt4_wait="2"
-   jurisdiction="33.3607 -22.4324 -0.53546"
-   jurRadius="5.0"/>
-<name
-   name="guard_3"/>
-<transform
-   pos="33.3607 -22.4324 -0.53546"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="6"
-   kpt0_type="seek"
-   kpt0_pos="29.5229 -23.8501 -10.1608"
-   kpt0_wait="2"
-   kpt1_type="look"
-   kpt1_pos="28.6305 -23.8501 -15.0083"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="20.1958 -23.8501 -5.93676"
-   kpt2_wait="2"
-   kpt3_type="look"
-   kpt3_pos="17.57 -23.8501 -14.8492"
-   kpt3_wait="2"
-   kpt4_type="seek"
-   kpt4_pos="26.2433 -23.8501 3.13484"
-   kpt4_wait="2"
-   kpt5_type="look"
-   kpt5_pos="15.1828 -23.8501 4.8855"
-   kpt5_wait="2"
-   jurisdiction="34.7208 -23.429 -3.49259"
-   jurRadius="5.0"/>
-<name
-   name="guard_4"/>
-<transform
-   pos="34.7208 -23.429 -3.49259"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
-
-</entity>
-<entity>
-<tags
    tags="workbench"/>
 <workbench/>
 <name
@@ -2509,6 +2332,16 @@
 <polarized
    pol="plus"
    size="1.7955 2.3474 4.92"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="Box001"/>
+<transform
+   pos="-4.95 -23.87 4.24"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
 </entity>
 

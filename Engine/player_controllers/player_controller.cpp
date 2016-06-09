@@ -589,9 +589,39 @@ void player_controller::UpdateMoves()
   cc->AddMovement(newMovement * getDeltaTime());
 }
 
+//Test CLH borrar!!
+//---------
+VEC3 startPoint;
+VEC3 endPoint;
+#include "logic/bt.h"
+//---------
 void player_controller::UpdateInputActions()
 {
   PROFILE_FUNCTION("update input actions");
+
+  //Test borrar CLH!!!
+  //----------------------
+  //if (io->keys['8'].becomesPressed()) {
+	 // CHandle player = tags_manager.getFirstHavingTag("raijin");
+	 // GET_COMP(tPlayer, player, TCompTransform);
+	 // startPoint = tPlayer->getPosition();
+	 // dbg("Set StartPoint\n");
+  //}
+  //if (io->keys['9'].becomesPressed()) {
+	 // CHandle player = tags_manager.getFirstHavingTag("raijin");
+	 // GET_COMP(tPlayer, player, TCompTransform);
+	 // endPoint = tPlayer->getPosition();
+	 // dbg("Set EndPoint\n");
+  //}
+  //if (io->keys['0'].becomesPressed()) {
+	 // bt btTest = bt();
+	 // int res = btTest.getPathDebug(startPoint, endPoint, SBB::readSala());
+	 // dbg("get path result: %d", res);
+	 // dbg("\n", res);
+  //}
+  //---------------------
+
+
   pol_orbit = false;
   //if (isDamaged()) {
   //	pol_state = NEUTRAL;

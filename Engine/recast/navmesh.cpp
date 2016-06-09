@@ -23,7 +23,7 @@ rcConfig CNavmesh::getRcConfig() {
   config.cs = 0.05;
   config.ch = 0.05;
   config.walkableHeight = 3;
-  config.walkableRadius = 1;
+  config.walkableRadius = 0;
   config.walkableClimb = 0;
   config.walkableSlopeAngle = 20.0f;
   config.minRegionArea = 4;
@@ -33,6 +33,7 @@ rcConfig CNavmesh::getRcConfig() {
   config.maxVertsPerPoly = 4;
   config.detailSampleDist = 1.5f;
   config.detailSampleMaxError = 0.1f;
+  config.borderSize = 0;
   return config;
 }
 
@@ -77,6 +78,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
   m_cfg.maxVertsPerPoly = (int)cfg.maxVertsPerPoly;
   m_cfg.detailSampleDist = cfg.detailSampleDist < 0.9f ? 0 : cfg.cs * cfg.detailSampleDist;
   m_cfg.detailSampleMaxError = cfg.ch * cfg.detailSampleMaxError;
+  m_cfg.borderSize = cfg.borderSize;
 
   // Set the area where the navigation will be build.
   // Here the bounds of the input mesh are used, but the
@@ -86,10 +88,10 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
   rcCalcGridSize(m_cfg.bmin, m_cfg.bmax, m_cfg.cs, &m_cfg.width, &m_cfg.height);
 
   // Reset build times gathering.
-  m_ctx->resetTimers();
+  //m_ctx->resetTimers();
 
   // Start the build process.
-  m_ctx->startTimer(RC_TIMER_TOTAL);
+  //m_ctx->startTimer(RC_TIMER_TOTAL);
 
   m_ctx->log(RC_LOG_PROGRESS, "Building navigation:");
   m_ctx->log(RC_LOG_PROGRESS, " - %d x %d cells", m_cfg.width, m_cfg.height);
@@ -205,7 +207,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
   if (m_monotonePartitioning) {
     // Partition the walkable surface into simple regions without holes.
     // Monotone partitioning does not need distancefield.
-    if (!rcBuildRegionsMonotone(m_ctx, *m_chf, 0, m_cfg.minRegionArea, m_cfg.mergeRegionArea)) {
+    if (!rcBuildRegionsMonotone(m_ctx, *m_chf, m_cfg.borderSize, m_cfg.minRegionArea, m_cfg.mergeRegionArea)) {
       m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not build regions.");
       return nullptr;
     }
@@ -218,7 +220,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
     }
 
     // Partition the walkable surface into simple regions without holes.
-    if (!rcBuildRegions(m_ctx, *m_chf, 0, m_cfg.minRegionArea, m_cfg.mergeRegionArea)) {
+    if (!rcBuildRegions(m_ctx, *m_chf, m_cfg.borderSize, m_cfg.minRegionArea, m_cfg.mergeRegionArea)) {
       m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not build regions.");
       return nullptr;
     }
@@ -344,7 +346,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
     }
   }
 
-  m_ctx->stopTimer(RC_TIMER_TOTAL);
+  //m_ctx->stopTimer(RC_TIMER_TOTAL);
 
   // Show performance stats.
   //duLogBuildTimes(*m_ctx, m_ctx->getAccumulatedTime(RC_TIMER_TOTAL));
@@ -537,6 +539,7 @@ bool CNavmesh::reload(std::string salaloc) {
   memset(&m_cfg, 0, sizeof(m_cfg));
   m_cfg.cs = cfg.cs;
   m_cfg.ch = cfg.ch;
+  m_cfg.borderSize = cfg.borderSize;
   m_cfg.walkableSlopeAngle = cfg.walkableSlopeAngle;
   m_cfg.walkableHeight = (int)ceilf(cfg.walkableHeight / m_cfg.ch);
   m_cfg.walkableClimb = (int)floorf(cfg.walkableClimb / m_cfg.ch);

@@ -186,6 +186,8 @@ void CApp::update(float elapsed) {
 		entities->initLevel(sceneToLoad);
 		sceneToLoad = "";
 	}
+
+
 }
 
 // ----------------------------------
