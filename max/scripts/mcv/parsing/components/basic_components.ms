@@ -218,25 +218,6 @@ fn _parse_polarizedArea = (
 )
 
 ----------------------------------------------------------------------
--- DRONE --
-----------------------------------------------------------------------
-fn _parse_drone = (
-
-	-- Drone component
-	local xmlDrone = XML_PARSING.addChild "drone"
-	
-	--Patrol
-	parseWayPoints xmlDrone
-	
-	--Textures self ilumination
-	local textureFront = getUserProp _parsingObject "textureFront"
-	xmlDrone.addAttr "textureFront" textureFront
-	
-	local textureBack = getUserProp _parsingObject "textureBack"
-	xmlDrone.addAttr "textureBack" textureBack
-)
-
-----------------------------------------------------------------------
 -- BOX --
 ----------------------------------------------------------------------
 fn _parse_box = (

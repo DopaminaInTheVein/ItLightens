@@ -161,3 +161,31 @@ fn _parse_bt_speedy = (
 	btXml = XML_PARSING.addChild "bt_speedy"
 	parseWayPoints btXml
 )
+
+----------------------------------------------------------------------
+-- DRONE --
+----------------------------------------------------------------------
+fn _parse_drone = (
+
+	-- Drone component
+	local xmlDrone = XML_PARSING.addChild "drone"
+	
+	--Espatllat
+	parsePropAttribute xmlDrone "espatllat" "espatllat"
+	
+	--Life
+	life = getUserProp _parsingObject "life"
+	if (life != undefined) then (
+		_parse_life()
+	)
+	
+	--Patrol
+	parseWayPoints xmlDrone
+	
+	--Textures self ilumination
+	local textureFront = getUserProp _parsingObject "textureFront"
+	xmlDrone.addAttr "textureFront" textureFront
+	
+	local textureBack = getUserProp _parsingObject "textureBack"
+	xmlDrone.addAttr "textureBack" textureBack
+)
