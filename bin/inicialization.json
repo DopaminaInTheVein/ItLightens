@@ -42,7 +42,7 @@
 		"MAX_SEARCH_DISTANCE" : 500,
 		"LOOK_AROUND_TIME" : 10,
 		"GUARD_ALERT_TIME" : 15,
-		"GUARD_ALERT_RADIUS" : 20,
+		"GUARD_ALERT_RADIUS" : 5,
 		"RANDOM_POINT_MAX_DISTANCE" : 2.0,
 		"reduce_factor" : 3.0,
 		"t_reduceStats_max" : 15,

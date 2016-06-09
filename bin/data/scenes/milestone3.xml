@@ -1,56 +1,4 @@
 <entities>
-<entity slept="undefined">
-<tags tags="drone platform" />
-<drone
-wpts_size="2"
-wpt0_pos="-35.0 6.0 -18.0"
-wpt0_wait="2"
-wpt1_pos="-32.0 6.0 -18.0"
-wpt1_wait="2"
-textureFront="droneFront"
-textureBack="droneBack" />
-<name name="Drone_1_broken" />
-<life points="30" />
-<transform
-pos="-33.0 6.0 -18.0"
-quat="0 -0.608761 0 0.793353"
-scale="1.0" />
-<render_static_mesh
-name="static_meshes/obj/drone.static_mesh" />
-<rigidbody
-type_collision="dynamic"
-type_shape="drone" />
-<polarized
-pol="minus"
-size="1.7955 2.3474 4.92" />
-</entity>
-
-<entity slept="undefined">
-<tags tags="drone platform" />
-<drone
-espatllat="true"
-wpts_size="2"
-wpt0_pos="-35.0 6.0 18.0"
-wpt0_wait="2"
-wpt1_pos="-32.0 6.0 18.0"
-wpt1_wait="2"
-textureFront="droneFront"
-textureBack="droneBack" />
-<name name="Drone_2" />
-<life points="30" />
-<transform
-pos="-32.5 6.0 18.0"
-quat="0 -0.608761 0 0.793353"
-scale="1.0" />
-<render_static_mesh
-name="static_meshes/obj/drone.static_mesh" />
-<rigidbody
-type_collision="dynamic"
-type_shape="drone" />
-<polarized
-pol="minus"
-size="1.7955 2.3474 4.92" />
-</entity>
 <entity>
 <tags/>
 <light_point
@@ -2347,7 +2295,7 @@ size="1.7955 2.3474 4.92" />
 <name
    name="Box_1"/>
 <transform
-   pos="29.6254 -21.0049 -15.7126"
+   pos="29.6254 -23.4734 -15.7126"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2357,6 +2305,8 @@ size="1.7955 2.3474 4.92" />
    type_shape="box"
    size="1.0 1.0 1.0"
    mass="2"/>
+<polarized
+   pol="minus"/>
 
 </entity>
 <entity>
@@ -2365,7 +2315,7 @@ size="1.7955 2.3474 4.92" />
 <life
    points="100"/>
 <bt_guard
-   kpt_size="7"
+   kpt_size="4"
    kpt0_type="seek"
    kpt0_pos="3.47929 -23.9559 0.320804"
    kpt0_wait="2"
@@ -2373,20 +2323,11 @@ size="1.7955 2.3474 4.92" />
    kpt1_pos="-1.10084 -23.9559 6.82941"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="-2.06508 -23.9559 -10.7679"
+   kpt2_pos="12.5191 -23.9559 -3.53607"
    kpt2_wait="2"
    kpt3_type="look"
-   kpt3_pos="-10.1406 -23.9559 -12.8169"
+   kpt3_pos="10.7111 -23.9559 -14.8659"
    kpt3_wait="2"
-   kpt4_type="seek"
-   kpt4_pos="6.85416 -23.9559 -14.1427"
-   kpt4_wait="2"
-   kpt5_type="seek"
-   kpt5_pos="12.5191 -23.9559 -3.53607"
-   kpt5_wait="2"
-   kpt6_type="look"
-   kpt6_pos="10.7111 -23.9559 -14.8659"
-   kpt6_wait="2"
    jurisdiction="34.657 -23.0107 2.92342"
    jurRadius="15.7"/>
 <name
