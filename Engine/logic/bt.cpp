@@ -165,7 +165,7 @@ btnode** bt::getRoot() {
 	return nullptr;
 }
 
-void bt::getPath(const VEC3& startPoint, const VEC3& endPoint, string nombreSala) {
+bool bt::getPath(const VEC3& startPoint, const VEC3& endPoint, string nombreSala) {
 	PROFILE_FUNCTION("bt Get Path");
 	CNavmesh nav = SBB::readNavmesh();
 	CNavmeshQuery query(&nav);
@@ -191,13 +191,15 @@ void bt::getPath(const VEC3& startPoint, const VEC3& endPoint, string nombreSala
 	}
 	currPathWpt = 0;
 	if (totalPathWpt < 1)
-		return;
+		return false;
 
 	for (int i = 0; i < (pathWpts.size() - 1); i++) {
 		Debug->DrawLine(pathWpts[i], pathWpts[i + 1], VEC3(1, 0, 1));
 	}
 
 	currPathWpt = 0;
+
+	return true;
 }
 
 CEntity* bt::frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle) {

@@ -48,7 +48,7 @@ protected:
 	btnode *createNode(string);
 	btnode *findNode(string);
 
-	void getPath(const VEC3& startPoint, const VEC3& endPoint, string nombreSala);
+	bool getPath(const VEC3& startPoint, const VEC3& endPoint, string nombreSala);
 	CEntity* frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle);
 	CEntity* frontCollisionBOX(const TCompTransform * transform, CEntity *  molePursuingBoxi);
 	bool avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform, string nombreSala);

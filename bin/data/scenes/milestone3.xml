@@ -1,4 +1,56 @@
 <entities>
+<entity slept="undefined">
+<tags tags="drone platform" />
+<drone
+wpts_size="2"
+wpt0_pos="-35.0 6.0 -18.0"
+wpt0_wait="2"
+wpt1_pos="-32.0 6.0 -18.0"
+wpt1_wait="2"
+textureFront="droneFront"
+textureBack="droneBack" />
+<name name="Drone_1_broken" />
+<life points="30" />
+<transform
+pos="-33.0 6.0 -18.0"
+quat="0 -0.608761 0 0.793353"
+scale="1.0" />
+<render_static_mesh
+name="static_meshes/obj/drone.static_mesh" />
+<rigidbody
+type_collision="dynamic"
+type_shape="drone" />
+<polarized
+pol="minus"
+size="1.7955 2.3474 4.92" />
+</entity>
+
+<entity slept="undefined">
+<tags tags="drone platform" />
+<drone
+espatllat="true"
+wpts_size="2"
+wpt0_pos="-35.0 6.0 18.0"
+wpt0_wait="2"
+wpt1_pos="-32.0 6.0 18.0"
+wpt1_wait="2"
+textureFront="droneFront"
+textureBack="droneBack" />
+<name name="Drone_2" />
+<life points="30" />
+<transform
+pos="-32.5 6.0 18.0"
+quat="0 -0.608761 0 0.793353"
+scale="1.0" />
+<render_static_mesh
+name="static_meshes/obj/drone.static_mesh" />
+<rigidbody
+type_collision="dynamic"
+type_shape="drone" />
+<polarized
+pol="minus"
+size="1.7955 2.3474 4.92" />
+</entity>
 <entity>
 <tags/>
 <light_point

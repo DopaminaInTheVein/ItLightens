@@ -1173,7 +1173,7 @@ bool rcBuildPolyMeshDetail(rcContext* ctx, const rcPolyMesh& mesh, const rcCompa
 {
 	rcAssert(ctx);
 	
-	rcScopedTimer timer(ctx, RC_TIMER_BUILD_POLYMESHDETAIL);
+	//rcScopedTimer timer(ctx, RC_TIMER_BUILD_POLYMESHDETAIL);
 	
 	if (mesh.nverts == 0 || mesh.npolys == 0)
 		return true;
@@ -1390,7 +1390,7 @@ bool rcMergePolyMeshDetails(rcContext* ctx, rcPolyMeshDetail** meshes, const int
 {
 	rcAssert(ctx);
 	
-	rcScopedTimer timer(ctx, RC_TIMER_MERGE_POLYMESHDETAIL);
+	//rcScopedTimer timer(ctx, RC_TIMER_MERGE_POLYMESHDETAIL);
 	
 	int maxVerts = 0;
 	int maxTris = 0;
