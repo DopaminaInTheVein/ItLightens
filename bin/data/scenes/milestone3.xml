@@ -1598,7 +1598,7 @@
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
 <character_controller
-   radius="0.3"
+   radius="0.1"
    height="1.8"/>
 
 </entity>
@@ -1628,7 +1628,7 @@
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
 <character_controller
-   radius="0.3"
+   radius="0.1"
    height="1.8"/>
 
 </entity>
@@ -1703,7 +1703,7 @@
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
 <character_controller
-   radius="0.3"
+   radius="0.1"
    height="1.8"/>
 
 </entity>
@@ -1745,7 +1745,7 @@
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
 <character_controller
-   radius="0.3"
+   radius="0.1"
    height="1.8"/>
 
 </entity>
