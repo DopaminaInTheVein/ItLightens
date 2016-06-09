@@ -203,7 +203,8 @@ bool bt_guard::playerDetected() {
 bool bt_guard::playerOutOfReach() {
 	PROFILE_FUNCTION("guard: player out of reach");
 	CEntity * ePlayer = getPlayer();
-
+	if (!playerVisible())
+		return true;
 	//Calc out of reach
 	bool res;
 	if (!ePlayer) {
@@ -1020,7 +1021,15 @@ bool bt_guard::playerVisible() {
 	}
 
 	if (simpleDist(posPlayer, myPos) < PLAYER_DETECTION_RADIUS) {
-		return true;
+		float distRay;
+		PxRaycastBuffer hit;
+		bool ret = rayCastToPlayer(1, distRay, hit);
+		if (ret) { //No bloquea vision
+			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+			if (h.hasTag("player")) { //player?
+				return true;
+			}
+		}
 	}
 
 	float distancia_vertical = squaredDistY(posPlayer, myPos);
@@ -1088,8 +1097,8 @@ bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hi
 	//rcQuery.types = types;
 	CEntity *e = myParent;
 	TCompCharacterController *cc = e->get<TCompCharacterController>();
-	Debug->DrawLine(origin + direction*(cc->GetRadius() + 0.1f), getTransform()->getFront(), 10.0f);
-	bool ret = g_PhysxManager->raycast(origin + direction*(cc->GetRadius() + 0.1f), direction, dist, hit);
+	Debug->DrawLine(origin + direction*(cc->GetRadius() + 0.05f), getTransform()->getFront(), 10.0f);
+	bool ret = g_PhysxManager->raycast(origin + direction*(cc->GetRadius() + 0.05f), direction, dist, hit);
 
 	if (ret)
 		distRay = hit.getAnyHit(0).distance;
