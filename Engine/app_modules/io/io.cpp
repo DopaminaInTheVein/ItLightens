@@ -36,6 +36,15 @@ bool CIOModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	int x = GET_X_LPARAM(lParam);
 	int y = GET_Y_LPARAM(lParam);
 	switch (message) {
+	case WM_SETFOCUS:
+		mouse.capture();
+		return true;
+		break;
+	case WM_KILLFOCUS:
+		mouse.release();
+		return true;
+		break;
+		
 	case WM_MOUSEMOVE:
 		mouse.setSysMouseLoc(x, y);
 		return true;

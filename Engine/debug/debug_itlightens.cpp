@@ -187,8 +187,9 @@ void CDebug::render()
 
 	line l = lines.back();
 	while (true) {
-		if (io->keys['L'].isPressed())
+		if (io->keys['N'].isPressed() || io->keys['L'].isPressed()) {
 			RenderLine(l);
+		}
 		lines.pop_back();
 		if (lines.size() > 0) l = lines.back();
 		else break;

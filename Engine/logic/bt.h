@@ -54,6 +54,12 @@ protected:
 	bool avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform, string nombreSala);
 	bool needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, string nombreSala, CEntity * molePursuingBoxi = nullptr);
 public:
+	//Prueba
+	int getPathDebug(const VEC3& startPoint, const VEC3& endPoint, string nombreSala) {
+		if (getPath(startPoint, endPoint, nombreSala)) return totalPathWpt;
+		else return -1;
+	}
+
 	string name;
 	// use a derived create to declare BT nodes for your specific BTs
 	virtual void create(string);
