@@ -12,6 +12,7 @@ CNavmesh::CNavmesh()
 {
 	m_navQuery = dtAllocNavMeshQuery();
 	m_ctx = &m_context;
+	m_ctx->enableLog(false);
 }
 
 rcConfig CNavmesh::getRcConfig() {
@@ -19,19 +20,20 @@ rcConfig CNavmesh::getRcConfig() {
 	rcVcopy(config.bmin, &m_input.aabb_min.x);
 	rcVcopy(config.bmax, &m_input.aabb_max.x);
 	config.tileSize = 32;
-	config.cs = 0.1;
-	config.ch = 0.1;
-	config.walkableHeight = 2;
-	config.walkableRadius = 2;
-	config.walkableClimb = 0.1;
-	config.walkableSlopeAngle = 45.0f;
+	config.cs = 0.05;
+	config.ch = 0.05;
+	config.walkableHeight = 3;
+	config.walkableRadius = 0;
+	config.walkableClimb = 0;
+	config.walkableSlopeAngle = 20.0f;
 	config.minRegionArea = 4;
-	config.mergeRegionArea = 1;
+	config.mergeRegionArea = 6;
 	config.maxEdgeLen = 10;
-	config.maxSimplificationError = 1.0f;
-	config.maxVertsPerPoly = 6;
-	config.detailSampleDist = 2.5f;
+	config.maxSimplificationError = 1.5f;
+	config.maxVertsPerPoly = 4;
+	config.detailSampleDist = 1.5f;
 	config.detailSampleMaxError = 0.1f;
+	config.borderSize = 0;
 	return config;
 }
 
@@ -76,6 +78,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 	m_cfg.maxVertsPerPoly = (int)cfg.maxVertsPerPoly;
 	m_cfg.detailSampleDist = cfg.detailSampleDist < 0.9f ? 0 : cfg.cs * cfg.detailSampleDist;
 	m_cfg.detailSampleMaxError = cfg.ch * cfg.detailSampleMaxError;
+	m_cfg.borderSize = cfg.borderSize;
 
 	// Set the area where the navigation will be build.
 	// Here the bounds of the input mesh are used, but the
@@ -85,10 +88,10 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 	rcCalcGridSize(m_cfg.bmin, m_cfg.bmax, m_cfg.cs, &m_cfg.width, &m_cfg.height);
 
 	// Reset build times gathering.
-	m_ctx->resetTimers();
+	//m_ctx->resetTimers();
 
 	// Start the build process.
-	m_ctx->startTimer(RC_TIMER_TOTAL);
+	//m_ctx->startTimer(RC_TIMER_TOTAL);
 
 	m_ctx->log(RC_LOG_PROGRESS, "Building navigation:");
 	m_ctx->log(RC_LOG_PROGRESS, " - %d x %d cells", m_cfg.width, m_cfg.height);
@@ -122,7 +125,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 	// Find triangles which are walkable based on their slope and rasterize them.
 	// If your input data is multiple meshes, you can transform them here, calculate
 	// the are type for each of the meshes and rasterize them.
-	memset(m_triareas, 0, m_input.ntris*sizeof(unsigned char));
+	memset(m_triareas, 0, m_input.ntris_total*sizeof(unsigned char));
 
 	for (size_t i = 0; i < m_input.inputs.size(); ++i) {
 		m_input.prepareInput(m_input.inputs[i]);
@@ -204,7 +207,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 	if (m_monotonePartitioning) {
 		// Partition the walkable surface into simple regions without holes.
 		// Monotone partitioning does not need distancefield.
-		if (!rcBuildRegionsMonotone(m_ctx, *m_chf, 0, m_cfg.minRegionArea, m_cfg.mergeRegionArea)) {
+		if (!rcBuildRegionsMonotone(m_ctx, *m_chf, m_cfg.borderSize, m_cfg.minRegionArea, m_cfg.mergeRegionArea)) {
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not build regions.");
 			return nullptr;
 		}
@@ -217,7 +220,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 		}
 
 		// Partition the walkable surface into simple regions without holes.
-		if (!rcBuildRegions(m_ctx, *m_chf, 0, m_cfg.minRegionArea, m_cfg.mergeRegionArea)) {
+		if (!rcBuildRegions(m_ctx, *m_chf, m_cfg.borderSize, m_cfg.minRegionArea, m_cfg.mergeRegionArea)) {
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not build regions.");
 			return nullptr;
 		}
@@ -343,11 +346,11 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 		}
 	}
 
-	m_ctx->stopTimer(RC_TIMER_TOTAL);
+	//m_ctx->stopTimer(RC_TIMER_TOTAL);
 
 	// Show performance stats.
-	duLogBuildTimes(*m_ctx, m_ctx->getAccumulatedTime(RC_TIMER_TOTAL));
-	m_ctx->log(RC_LOG_PROGRESS, ">> Polymesh: %d vertices  %d polygons", m_pmesh->nverts, m_pmesh->npolys);
+	//duLogBuildTimes(*m_ctx, m_ctx->getAccumulatedTime(RC_TIMER_TOTAL));
+	//m_ctx->log(RC_LOG_PROGRESS, ">> Polymesh: %d vertices  %d polygons", m_pmesh->nverts, m_pmesh->npolys);
 
 	return m_nav;
 }
@@ -547,6 +550,7 @@ bool CNavmesh::reload(std::string salaloc) {
 	m_cfg.maxVertsPerPoly = (int)cfg.maxVertsPerPoly;
 	m_cfg.detailSampleDist = cfg.detailSampleDist < 0.9f ? 0 : cfg.cs * cfg.detailSampleDist;
 	m_cfg.detailSampleMaxError = cfg.ch * cfg.detailSampleMaxError;
+	m_cfg.borderSize = cfg.borderSize;
 
 	restoreExtraData(salaloc);
 
