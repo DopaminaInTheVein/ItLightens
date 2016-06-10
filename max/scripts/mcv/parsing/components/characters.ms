@@ -170,6 +170,10 @@ fn _parse_drone = (
 	-- Drone component
 	local xmlDrone = XML_PARSING.addChild "drone"
 	
+	
+	--Speed
+	parsePropAttribute xmlDrone "speed" "speed"
+	
 	--Espatllat
 	parsePropAttribute xmlDrone "espatllat" "espatllat"
 	

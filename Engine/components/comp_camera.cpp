@@ -49,7 +49,7 @@ void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
 }
 
 void TCompCamera::render() const {
-	auto axis = Resources.get("frustum.mesh")->as<CMesh>();
+	//auto axis = Resources.get("frustum.mesh")->as<CMesh>();
 	shader_ctes_object.World = getViewProjection().Invert();
 	shader_ctes_object.uploadToGPU();
 	//axis->activateAndRender();
