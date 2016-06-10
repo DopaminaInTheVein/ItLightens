@@ -120,7 +120,7 @@
    type_shape="drone"/>
 <polarized
    pol="minus"
-   size="1.7955 2.3474 4.92"/>
+   offset="0 1.62207 0"/>
 
 </entity>
 <entity>
@@ -1415,7 +1415,8 @@
    size="1.0 1.0 1.0"
    mass="2"/>
 <polarized
-   pol="minus"/>
+   pol="minus"
+   offset="0 0.493896 0"/>
 
 </entity>
 <entity>
@@ -1495,6 +1496,8 @@
    type_shape="box"
    size="3.38976 2.8574 0.12"
    mass="5"/>
+<polarized
+   pol="neutral"/>
 
 </entity>
 <entity>
@@ -1598,7 +1601,7 @@
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
 <character_controller
-   radius="0.1"
+   radius="0.3"
    height="1.8"/>
 
 </entity>
@@ -1628,7 +1631,7 @@
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
 <character_controller
-   radius="0.1"
+   radius="0.3"
    height="1.8"/>
 
 </entity>
@@ -1703,7 +1706,7 @@
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
 <character_controller
-   radius="0.1"
+   radius="0.3"
    height="1.8"/>
 
 </entity>
@@ -1745,7 +1748,7 @@
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
 <character_controller
-   radius="0.1"
+   radius="0.3"
    height="1.8"/>
 
 </entity>
@@ -2508,7 +2511,17 @@
    type_shape="drone"/>
 <polarized
    pol="plus"
-   size="1.7955 2.3474 4.92"/>
+   offset="0 1.62207 0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="Box001"/>
+<transform
+   pos="1.0 3.0 -2.0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
 </entity>
 

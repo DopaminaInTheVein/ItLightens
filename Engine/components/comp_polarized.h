@@ -27,8 +27,9 @@ struct TCompPolarized : public TCompBase {
 	float			dist_near			= 5.f;
 
 	PolarityForce	force;
-	PxBoxGeometry*	m_area;
-	PxTransform		m_transform;
+	VEC3 offset_pos;
+	//PxBoxGeometry*	m_area;
+	//PxTransform		m_transform;
 
 	float			mThresholdMass		= 2.5f;
 	float			mEpsilonMove		= 0.01f;
@@ -37,6 +38,7 @@ struct TCompPolarized : public TCompBase {
 	int				mPlayer_state		= NEUTRAL;
 
 	void init();
+	bool getUpdateInfo() override;
 	void update(float elapsed);
 	void updatePxTransform();
 

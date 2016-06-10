@@ -180,10 +180,22 @@ fn _parse_render = (
 -- POLARIZED --
 ----------------------------------------------------------------------
 fn _parse_polarized = (
+	
+
+	
 	local polarized = findHelper "Polarized"
 	if (polarized != undefined) then (
 		local xmlPol = XML_PARSING.addChild "polarized"
 		xmlPol.addAttr "pol" (getUserProp polarized "pol")
+		local offset = polarized.pos - _parsingObject.pos
+		local offsetValues = #(offset.x, offset.z,-offset.y)
+		xmlPol.addAttr "offset" (getAsXmlValues offsetValues)		
+	) else (
+		local polarized = getUserProp _parsingObject "pol"
+		if (polarized != undefined) then (
+			local xmlPol = XML_PARSING.addChild "polarized"
+			xmlPol.addAttr "pol" polarized
+		)		
 	)
 )
 

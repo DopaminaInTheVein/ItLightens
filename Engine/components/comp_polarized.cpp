@@ -24,9 +24,15 @@ void TCompPolarized::init()
 	msg_out.range = false;
 }
 
+bool TCompPolarized::getUpdateInfo() {
+	GET_COMP(t, CHandle(this).getOwner(), TCompTransform);
+	if (!t) return false;
+	origin = t->getPosition() + offset_pos;
+}
+
 void TCompPolarized::update(float elapsed)
 {
-	updatePxTransform();
+	//updatePxTransform();
 	CEntity *e_p = player_h;
 	if (e_p) {
 		TCompCharacterController *cc = e_p->get<TCompCharacterController>();
@@ -34,18 +40,19 @@ void TCompPolarized::update(float elapsed)
 		VEC3 player_pos = cc->GetPosition();
 
 		if (mType == FIXED) {
-			PxVec3* pxClosestPoint = new PxVec3();
-			PxVec3 pxPlayerPos = PhysxConversion::Vec3ToPxVec3(player_pos);
-			force.distance = PxGeometryQuery::pointDistance(pxPlayerPos, *m_area, m_transform, pxClosestPoint);
-			if (force.distance > 0.f) {
-				VEC3 closestPoint = PhysxConversion::PxVec3ToVec3(*pxClosestPoint);
-				force.deltaPos = closestPoint - player_pos;
-				//force.deltaPos = origin - player_pos;
-				assert(isNormal(force.deltaPos));
-			} else {
-				force.deltaPos = origin - player_pos;
-			}
-			
+			//PxVec3* pxClosestPoint = new PxVec3();
+			//PxVec3 pxPlayerPos = PhysxConversion::Vec3ToPxVec3(player_pos);
+			//force.distance = PxGeometryQuery::pointDistance(pxPlayerPos, *m_area, m_transform, pxClosestPoint);
+			//if (force.distance > 0.f) {
+			//	VEC3 closestPoint = PhysxConversion::PxVec3ToVec3(*pxClosestPoint);
+			//	force.deltaPos = closestPoint - player_pos;
+			//	//force.deltaPos = origin - player_pos;
+			//	assert(isNormal(force.deltaPos));
+			//} else {
+			force.deltaPos = origin - player_pos;
+			//}
+			force.distance = force.deltaPos.LengthSquared();
+
 			if (dist_effect_squared_fixed > force.distance) {
 				if (!send) {
 					send = true;
@@ -119,18 +126,18 @@ void TCompPolarized::update(float elapsed)
 		}
 	}
 }
-
-void TCompPolarized::updatePxTransform()
-{
-	CEntity* eMe = CHandle(this).getOwner();
-	if (eMe) {
-		TCompTransform* t = eMe->get<TCompTransform>();
-		float movement = simpleDist(t->getPosition(), last_position);
-		if (movement > mEpsilonMove) {
-			m_transform = PhysxConversion::ToPxTransform(t->getPosition(), t->getRotation());
-		}
-	}
-}
+//
+//void TCompPolarized::updatePxTransform()
+//{
+//	CEntity* eMe = CHandle(this).getOwner();
+//	if (eMe) {
+//		TCompTransform* t = eMe->get<TCompTransform>();
+//		float movement = simpleDist(t->getPosition(), last_position);
+//		if (movement > mEpsilonMove) {
+//			m_transform = PhysxConversion::ToPxTransform(t->getPosition(), t->getRotation());
+//		}
+//	}
+//}
 
 bool TCompPolarized::load(MKeyValue & atts)
 {
@@ -147,12 +154,17 @@ bool TCompPolarized::load(MKeyValue & atts)
 	}
 
 	//Area
-	const VEC3 size = atts.getPoint("size");
-	if (size.x != 0 || size.y != 0 | size.z != 0) {
-		PxVec3 pxSize = PhysxConversion::Vec3ToPxVec3(size);
-		m_area = new PxBoxGeometry();
-		g_PhysxManager->CreateBoxGeometry(pxSize, *m_area);
+	offset_pos = atts.getPoint("offset");
+	if (offset_pos == VEC3(0.f, 0.f, 0.f)) {
+		offset_pos = VEC3(0.f, 0.5f, 0.f);
 	}
+
+	//const VEC3 size = atts.getPoint("size");
+	//if (size.x != 0 || size.y != 0 | size.z != 0) {
+	//	PxVec3 pxSize = PhysxConversion::Vec3ToPxVec3(size);
+	//	m_area = new PxBoxGeometry();
+	//	g_PhysxManager->CreateBoxGeometry(pxSize, *m_area);
+	//}
 	return true;
 }
 
@@ -181,15 +193,15 @@ void TCompPolarized::onCreate(const TMsgEntityCreated &)
 			if (t) {
 				//Set origin (remains at the moment for FREE behaviour)
 				origin = t->getPosition();
-
-				//Set pxTransform (for FIXED behaviour)
-				if (m_area) {
-					m_transform = PhysxConversion::ToPxTransform(
-						t->getPosition(),
-						t->getRotation()
-					);
-				}
 			}
+			//	//Set pxTransform (for FIXED behaviour)
+			//	if (m_area) {
+			//		m_transform = PhysxConversion::ToPxTransform(
+			//			t->getPosition(),
+			//			t->getRotation()
+			//		);
+			//	}
+			//}
 		}
 	}
 }
