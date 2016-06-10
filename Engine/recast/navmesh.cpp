@@ -23,7 +23,7 @@ rcConfig CNavmesh::getRcConfig() {
   config.cs = 0.05;
   config.ch = 0.05;
   config.walkableHeight = 3;
-  config.walkableRadius = 0;
+  config.walkableRadius = 1;
   config.walkableClimb = 0;
   config.walkableSlopeAngle = 20.0f;
   config.minRegionArea = 4;
@@ -68,10 +68,13 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
   m_cfg.cs = cfg.cs;
   m_cfg.ch = cfg.ch;
   m_cfg.walkableSlopeAngle = cfg.walkableSlopeAngle;
-  m_cfg.walkableHeight = (int)ceilf(cfg.walkableHeight / m_cfg.ch);
-  m_cfg.walkableClimb = (int)floorf(cfg.walkableClimb / m_cfg.ch);
-  m_cfg.walkableRadius = (int)ceilf(cfg.walkableRadius / m_cfg.cs);
-  m_cfg.maxEdgeLen = (int)(cfg.maxEdgeLen / cfg.cs);
+  //Antes eran divisiones! (cambio clh)
+  //---------------------------------------------------------------
+  m_cfg.walkableHeight = (int)ceilf(cfg.walkableHeight * m_cfg.ch);
+  m_cfg.walkableClimb = (int)floorf(cfg.walkableClimb * m_cfg.ch);
+  m_cfg.walkableRadius = (int)ceilf(cfg.walkableRadius * m_cfg.cs);
+  //---------------------------------------------------------------
+  m_cfg.maxEdgeLen = (int)(cfg.maxEdgeLen * cfg.cs);
   m_cfg.maxSimplificationError = cfg.maxSimplificationError;
   m_cfg.minRegionArea = (int)rcSqr(cfg.minRegionArea);		// Note: area = size*size
   m_cfg.mergeRegionArea = (int)rcSqr(cfg.mergeRegionArea);	// Note: area = size*size
@@ -541,10 +544,13 @@ bool CNavmesh::reload(std::string salaloc) {
   m_cfg.ch = cfg.ch;
   m_cfg.borderSize = cfg.borderSize;
   m_cfg.walkableSlopeAngle = cfg.walkableSlopeAngle;
-  m_cfg.walkableHeight = (int)ceilf(cfg.walkableHeight / m_cfg.ch);
-  m_cfg.walkableClimb = (int)floorf(cfg.walkableClimb / m_cfg.ch);
-  m_cfg.walkableRadius = (int)ceilf(cfg.walkableRadius / m_cfg.cs);
-  m_cfg.maxEdgeLen = (int)(cfg.maxEdgeLen / cfg.cs);
+  //Antes eran divisiones! (cambio clh)
+  //---------------------------------------------------------------
+  m_cfg.walkableHeight = (int)ceilf(cfg.walkableHeight * m_cfg.ch);
+  m_cfg.walkableClimb = (int)floorf(cfg.walkableClimb * m_cfg.ch);
+  m_cfg.walkableRadius = (int)ceilf(cfg.walkableRadius * m_cfg.cs);
+  //---------------------------------------------------------------
+  m_cfg.maxEdgeLen = (int)(cfg.maxEdgeLen * cfg.cs);
   m_cfg.maxSimplificationError = cfg.maxSimplificationError;
   m_cfg.minRegionArea = (int)rcSqr(cfg.minRegionArea);		// Note: area = size*size
   m_cfg.mergeRegionArea = (int)rcSqr(cfg.mergeRegionArea);	// Note: area = size*size
