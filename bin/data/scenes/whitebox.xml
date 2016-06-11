@@ -550,6 +550,8 @@
    type_shape="box"
    size="3.38976 2.8574 0.12"
    mass="5"/>
+<polarized
+   pol="neutral"/>
 
 </entity>
 <entity>
@@ -656,7 +658,7 @@
 <entity>
 <tags
    tags="camera_main"/>
-<camera
+<camera_main
    znear="0.1"
    zfar="250.0"
    fov="60.0"/>

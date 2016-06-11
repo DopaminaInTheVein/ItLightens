@@ -67,12 +67,22 @@ fn _parse_transform = (
 ----------------------------------------------------------------------
 -- CAMERA  --
 ----------------------------------------------------------------------
+fn parseCameraCommon xml = (
+	xml.addAttr "znear" _parsingObject.nearrange
+	xml.addAttr "zfar" _parsingObject.farrange
+	xml.addAttr "fov" _parsingObject.fov
+)
+
 fn _parse_camera = (
 	-- Camera
 	xmlCamera = XML_PARSING.addChild "camera"
-	xmlCamera.addAttr "znear" _parsingObject.nearrange
-	xmlCamera.addAttr "zfar" _parsingObject.farrange
-	xmlCamera.addAttr "fov" _parsingObject.fov
+	parseCameraCommon xmlCamera
+)
+
+fn _parse_camera_main = (
+	-- Camera Main
+	xmlCamera = XML_PARSING.addChild "camera_main"
+	parseCameraCommon xmlCamera
 )
 
 ----------------------------------------------------------------------
