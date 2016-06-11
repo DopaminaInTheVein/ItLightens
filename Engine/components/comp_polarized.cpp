@@ -88,13 +88,11 @@ void TCompPolarized::update(float elapsed)
 					}
 				}
 
-
 				float dist = squaredDist(player_pos, origin);
 				if (dist_effect_squared_free > dist) {
-
 					VEC3 direction = player_pos - origin;
 					TCompPhysics *p = e->get<TCompPhysics>();
-					
+
 					if (p) {
 						float forceMin = 3.f;
 						float forceMax = 30.f;
@@ -113,8 +111,9 @@ void TCompPolarized::update(float elapsed)
 							if (dist > dist_near) {
 								if (dist > distRepulsion) forceVal = forceMin;
 								else forceVal = 15.f;
-								forceStop = forceVal/2;
-							} else {
+								forceStop = forceVal / 2;
+							}
+							else {
 								forceVal = -forceStop;
 								forceStop = forceStop - (0.99f * forceStop) * elapsed;
 							}
@@ -159,6 +158,9 @@ bool TCompPolarized::load(MKeyValue & atts)
 		offset_pos = VEC3(0.f, 0.5f, 0.f);
 	}
 
+	//Test borrar CLH
+	//offset_pos = VEC3(0.f, 0.5f, 0.f);
+
 	//const VEC3 size = atts.getPoint("size");
 	//if (size.x != 0 || size.y != 0 | size.z != 0) {
 	//	PxVec3 pxSize = PhysxConversion::Vec3ToPxVec3(size);
@@ -172,7 +174,7 @@ void TCompPolarized::onCreate(const TMsgEntityCreated &)
 {
 	CHandle me_h = CHandle(this).getOwner();
 
-	origin = VEC3(0.0f,0.0f,0.0f);
+	origin = VEC3(0.0f, 0.0f, 0.0f);
 	if (me_h.isValid()) {
 		CEntity *me_e = me_h;
 		if (me_e) {
@@ -222,6 +224,3 @@ void TCompPolarized::sendMessagePlayer(const TMsgPolarize & msg)
 PolarityForce TCompPolarized::getForce() {
 	return force;
 }
-
-
-

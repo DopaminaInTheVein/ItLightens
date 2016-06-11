@@ -101,10 +101,10 @@
 <tags
    tags="drone platform"/>
 <drone
-   speed="5"
+   speed="2"
    wpts_size="1"
-   wpt0_pos="9.89158 -10.489 15.6933"
-   wpt0_wait="2"
+   wpt0_pos="9.89158 -10.489 -3.82536"
+   wpt0_wait="1"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
@@ -120,7 +120,7 @@
    type_shape="drone"/>
 <polarized
    pol="minus"
-   offset="0 1.62207 0"/>
+   offset="0 0.570343 0"/>
 
 </entity>
 <entity>
@@ -2511,17 +2511,33 @@
    type_shape="drone"/>
 <polarized
    pol="plus"
-   offset="0 1.62207 0"/>
+   offset="0 0.570343 0"/>
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="drone platform"/>
+<drone
+   speed="2"
+   wpts_size="1"
+   wpt0_pos="9.58858 -10.489 3.48476"
+   wpt0_wait="1"
+   textureFront="droneFront"
+   textureBack="droneBack"/>
 <name
-   name="Box001"/>
+   name="DroneMinus_003"/>
 <transform
-   pos="1.0 3.0 -2.0"
-   quat="0 0 0 1.0"
+   pos="9.92021 -10.1372 13.6696"
+   quat="0 -0.699825 0 0.714314"
    scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<polarized
+   pol="minus"
+   offset="0 0.570343 0"/>
 
 </entity>
 
