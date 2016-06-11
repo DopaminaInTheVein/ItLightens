@@ -27,7 +27,6 @@ struct TCompPolarized : public TCompBase {
 	float			dist_near = 5.f;
 
 	PolarityForce	force;
-	VEC3 offset_pos;
 	//PxBoxGeometry*	m_area;
 	//PxTransform		m_transform;
 

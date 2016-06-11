@@ -27,7 +27,7 @@ void TCompPolarized::init()
 bool TCompPolarized::getUpdateInfo() {
 	GET_COMP(t, CHandle(this).getOwner(), TCompTransform);
 	if (!t) return false;
-	origin = t->getPosition() + offset_pos;
+	origin = t->getPosition();
 }
 
 void TCompPolarized::update(float elapsed)
@@ -153,9 +153,9 @@ bool TCompPolarized::load(MKeyValue & atts)
 	}
 
 	//Area
-	offset_pos = atts.getPoint("offset");
-	if (offset_pos == VEC3(0.f, 0.f, 0.f)) {
-		offset_pos = VEC3(0.f, 0.5f, 0.f);
+	force.offset = atts.getPoint("offset");
+	if (force.offset == VEC3(0.f, 0.f, 0.f)) {
+		force.offset = VEC3(0.f, 0.5f, 0.f);
 	}
 
 	//Test borrar CLH
