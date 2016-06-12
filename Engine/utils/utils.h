@@ -44,6 +44,7 @@ float squaredDistY(const VEC3& init, const VEC3& dest);
 
 float simpleDistXZ(const VEC3& init, const VEC3& dest);
 float simpleDist(const VEC3& init, const VEC3& dest);
+bool inSquaredRangeXZ_Y(const VEC3& init, const VEC3& dest, const float& xz, const float& y);
 
 void getRotationMatrix(const float roll, const float pitch, const float yaw, MAT44 &R);
 VEC3 productVectorMatrix(const VEC4& vec, const MAT44& matrix);

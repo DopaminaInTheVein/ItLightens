@@ -220,7 +220,10 @@
     <ClCompile Include="player_controllers\player_controller_speedy.cpp" />
     <ClCompile Include="player_controllers\poss_controller.cpp" />
     <ClCompile Include="prefabs\magnetic_bomb.cpp" />
-    <ClCompile Include="prefabs\static_bomb.cpp" />
+    <ClCompile Include="prefabs\static_bomb.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="prefabs\throw_bomb.cpp" />
     <ClCompile Include="profiling\profiling.cpp" />
     <ClCompile Include="recast\DebugUtils\Source\DebugDraw.cpp" />
     <ClCompile Include="recast\DebugUtils\Source\DetourDebugDraw.cpp" />
@@ -430,7 +433,10 @@
     <ClInclude Include="player_controllers\player_controller_speedy.h" />
     <ClInclude Include="player_controllers\poss_controller.h" />
     <ClInclude Include="prefabs\magnetic_bomb.h" />
-    <ClInclude Include="prefabs\static_bomb.h" />
+    <ClInclude Include="prefabs\static_bomb.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="prefabs\throw_bomb.h" />
     <ClInclude Include="profiling\profiling.h" />
     <ClInclude Include="recast\DebugUtils\Include\DebugDraw.h" />
     <ClInclude Include="recast\DebugUtils\Include\DetourDebugDraw.h" />

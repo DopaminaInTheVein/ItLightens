@@ -21,6 +21,7 @@ class player_controller_cientifico : public PossController {
 		DISABLE_BEACON,
 		MAGNETIC_BOMB,
 		STATIC_BOMB,
+		THROW_BOMB,
 		OBJ_SCI_SIZE
 	};
 
@@ -74,7 +75,7 @@ public:
 	void RecalcScientist();
 
 	//Create game objects
-	void spawnBomb(const std::string& prefab);
+	void spawnBomb();
 
 	// Player states
 	void CreateBomb();

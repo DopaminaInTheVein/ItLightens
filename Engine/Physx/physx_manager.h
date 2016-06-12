@@ -10,7 +10,6 @@
 
 #define PX_SAFE_RELEASE(p)  if (p) p->release(), p = nullptr
 
-
 #define PXM_NO_PLAYER_CRYSTAL (ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
 #define PXM_NO_CRYSTAL (ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
 #define PXM_NO_PLAYER (ItLightensFilter::eLIQUID | ItLightensFilter::ePLATFORM | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eSCENE)
@@ -28,7 +27,7 @@ class CHandle;
 
 /*class PxAllocatorCallback
 {
-public:	
+public:
 	virtual ~PxAllocatorCallback() {}
 	virtual void* allocate(size_t size, const char* typeName, const char* filename,
 		int line) = 0;
@@ -45,34 +44,31 @@ public:
 	}
 };*/
 
-class CPhysxManager :	public IAppModule,
-						public PxSimulationEventCallback,
-						public PxSimulationFilterCallback,
-						public PxControllerBehaviorCallback,
-						public PxUserControllerHitReport, 
-						public PxQueryFilterCallback {
+class CPhysxManager : public IAppModule,
+	public PxSimulationEventCallback,
+	public PxSimulationFilterCallback,
+	public PxControllerBehaviorCallback,
+	public PxUserControllerHitReport,
+	public PxQueryFilterCallback {
+	PxFoundation			*m_pFoundation = nullptr;
+	PxProfileZoneManager	*m_pProfileZoneManager = nullptr;
+	PxPhysics				*m_pPhysics = nullptr;
+	PxCooking				*m_pCooking = nullptr;
+	PxScene					*m_pScene = nullptr;
+	PxDefaultCpuDispatcher  *m_pCpuDispatcher = nullptr;
 
-	PxFoundation			*m_pFoundation				= nullptr;
-	PxProfileZoneManager	*m_pProfileZoneManager		= nullptr;
-	PxPhysics				*m_pPhysics					= nullptr;
-	PxCooking				*m_pCooking					= nullptr;
-	PxScene					*m_pScene					= nullptr;
-	PxDefaultCpuDispatcher  *m_pCpuDispatcher			= nullptr;
+	PxControllerManager		*m_pManagerControllers = nullptr;		//Characters controllers manager
 
-	PxControllerManager		*m_pManagerControllers		= nullptr;		//Characters controllers manager
+	PxCudaContextManager	*m_pCudaContextManager = nullptr;
 
-	PxCudaContextManager	*m_pCudaContextManager		= nullptr;
-
-	PxGeometryQuery			*m_pGeomQuerys				= nullptr;
-
+	PxGeometryQuery			*m_pGeomQuerys = nullptr;
 
 #ifndef NDEBUG
-	PxVisualDebuggerConnection *m_pConnection			= nullptr;		//physx debugger
+	PxVisualDebuggerConnection *m_pConnection = nullptr;		//physx debugger
 #endif
 
 	PxReal t_to_update = 0.0f;
-	PxReal t_max_update = 1/60.0f;
-
+	PxReal t_max_update = 1 / 60.0f;
 
 	//memory raycast, used for point-to-point
 	PxReal m_last_distance = 0.0f;
@@ -101,15 +97,15 @@ class CPhysxManager :	public IAppModule,
 
 public:
 
-	CPhysxManager() :	m_pCooking(nullptr),
-						m_pCpuDispatcher(nullptr),
-						m_pCudaContextManager(nullptr),
-						m_pFoundation(nullptr),
-						m_pManagerControllers(nullptr),
-						m_pPhysics(nullptr),
-						m_pProfileZoneManager(nullptr),
-						m_pScene(nullptr),
-						m_pGeomQuerys(nullptr)
+	CPhysxManager() : m_pCooking(nullptr),
+		m_pCpuDispatcher(nullptr),
+		m_pCudaContextManager(nullptr),
+		m_pFoundation(nullptr),
+		m_pManagerControllers(nullptr),
+		m_pPhysics(nullptr),
+		m_pProfileZoneManager(nullptr),
+		m_pScene(nullptr),
+		m_pGeomQuerys(nullptr)
 	{}
 
 	~CPhysxManager() { stop(); }
@@ -144,11 +140,9 @@ public:
 	void					CreateCapsuleGeometry(const PxReal& radius, const PxReal& halfheight, PxCapsuleGeometry& g) const;
 	void					CreatePlaneGeometry(const PxReal& radius, const PxReal& halfheight, PxPlaneGeometry& g) const;
 
-
 	//-----------------------------------------------------------------------------------------------------
 	//							Primitives PxShapes
 	//-----------------------------------------------------------------------------------------------------
-
 
 	/**
 	\brief							Create and return the shape of a sphere with material.
@@ -159,8 +153,8 @@ public:
 	\param[in] restitution			Quantity of energy absorbed on contact. Bigger values, bigger the rebound.
 	\return							Pointer to a sphere shape.
 	*/
-	PxShape*						CreatePxSphere	(PxReal radius, PxReal staticFriction = 0.5f, PxReal dynamicFriction = 0.5f, PxReal restitution = 0.5f);
-	
+	PxShape*						CreatePxSphere(PxReal radius, PxReal staticFriction = 0.5f, PxReal dynamicFriction = 0.5f, PxReal restitution = 0.5f);
+
 	/**
 	\brief							Create and return the shape of a capsule with material.
 
@@ -172,7 +166,7 @@ public:
 	\return							Pointer to a capsule shape.
 	*/
 	PxShape*						CreatePxCapsule(PxReal radius, PxReal halfHeight, PxReal staticFriction = 0.5f, PxReal dynamicFriction = 0.5f, PxReal restitution = 0.5f);
-	
+
 	/**
 	\brief							Create and return the shape of a box with material.
 
@@ -182,9 +176,7 @@ public:
 	\param[in] restitution			Quantity of energy absorbed on contact. Bigger values, bigger the rebound.
 	\return							Pointer to a box shape.
 	*/
-	PxShape*						CreatePxBox	(const PxVec3& size_from_center = PxVec3(1,1,1), PxReal staticFriction = 0.5f, PxReal dynamicFriction = 0.5f, PxReal restitution = 0.5f);
-
-
+	PxShape*						CreatePxBox(const PxVec3& size_from_center = PxVec3(1, 1, 1), PxReal staticFriction = 0.5f, PxReal dynamicFriction = 0.5f, PxReal restitution = 0.5f);
 
 	//-----------------------------------------------------------------------------------------------------
 	//										complex shapes
@@ -192,9 +184,7 @@ public:
 
 	PxShape*			CreateTriangleMesh(PxTriangleMesh *mesh, PxReal staticFriction = 0.5f, PxReal dynamicFriction = 0.5f, PxReal restitution = 0.5f);
 	PxShape*			CreateConvexShape(const CMesh * mesh, PxReal staticFriction = 0.5f, PxReal dynamicFriction = 0.5f, PxReal restitution = 0.5f);
-	
 
-	
 	//-----------------------------------------------------------------------------------------------------
 	//							game components, create and add to scene
 	//-----------------------------------------------------------------------------------------------------
@@ -229,7 +219,7 @@ public:
 	\param[in] shape		Shape of the collider.
 	\return					Pointer to the actor added to the scene.
 	*/
-	PxActor*				CreateAndAddRigidStatic	(const PxTransform *transform, PxShape *shape);
+	PxActor*				CreateAndAddRigidStatic(const PxTransform *transform, PxShape *shape);
 
 	/**
 	\brief					Create and add a trigger actor to the scene.
@@ -238,7 +228,7 @@ public:
 	\param[in] shape		Shape of the collider for the trigger.
 	\return					Pointer to the actor added to the scene.
 	*/
-	PxActor *				CreateAndAddTrigger		(const PxTransform *transform, PxShape* shape);
+	PxActor *				CreateAndAddTrigger(const PxTransform *transform, PxShape* shape);
 
 	//-----------------------------------------------------------------------------------------------------
 	//								Cooking meshes
@@ -280,7 +270,7 @@ public:
 	virtual  PxFilterFlags pairFound(PxU32 pairID, PxFilterObjectAttributes attributes0, PxFilterData filterData0, const PxActor *a0, const PxShape *s0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, const PxActor *a1, const PxShape *s1, PxPairFlags &pairFlags);
 	virtual void pairLost(PxU32 pairID, PxFilterObjectAttributes attributes0, PxFilterData filterData0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, bool objectRemoved) {}
 	virtual bool statusChange(PxU32 &pairID, PxPairFlags &pairFlags, PxFilterFlags &filterFlags) { return false; }
-	
+
 	//-----------------------------------------------------------------------------------------------------
 	//						virtuals from PxUserControllerHitReport
 	//-----------------------------------------------------------------------------------------------------
@@ -316,12 +306,12 @@ public:
 	\param[out] hitCall					Raycast hit buffer or callback object used to report raycast hits.
 	\param[in] filterData(optional)		Tags against who will be checked.
 	\param[in] hitFlags(optional)		Specifies which properties per hit should be computed and returned via the hit callback.
-	
+
 	\return True if any touching or blocking hits were found or any hit was found in case PxQueryFlag::eANY_HIT was specified.
 	*/
 	bool raycast(PxVec3 origin, PxVec3 unitDir, PxReal maxDistance, PxRaycastBuffer& hit,
-							PxQueryFilterData filterData = PxQueryFilterData(), 
-							const PxHitFlags outputFlags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
+		PxQueryFilterData filterData = PxQueryFilterData(),
+		const PxHitFlags outputFlags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
 
 	/**
 	\param[in] origin					Origin of the ray.
@@ -334,9 +324,8 @@ public:
 	\return True if any touching or blocking hits were found or any hit was found in case PxQueryFlag::eANY_HIT was specified.
 	*/
 	bool raycast(VEC3 origin, VEC3 unitDir, PxReal maxDistance, PxRaycastBuffer& hit,
-							PxQueryFilterData filterData = PxQueryFilterData(),
-							const PxHitFlags outputFlags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
-
+		PxQueryFilterData filterData = PxQueryFilterData(),
+		const PxHitFlags outputFlags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
 
 	/**
 	\brief								Sqrt calc, use direction if you can
@@ -349,10 +338,8 @@ public:
 	\return True if any touching or blocking hits were found or any hit was found in case PxQueryFlag::eANY_HIT was specified.
 	*/
 	bool raycast(PxVec3 origin, PxVec3 end, PxRaycastBuffer& hit,
-							PxQueryFilterData filterData = PxQueryFilterData(),
-							const PxHitFlags outputFlags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
-
-
+		PxQueryFilterData filterData = PxQueryFilterData(),
+		const PxHitFlags outputFlags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
 
 	/**
 	\brief								WARNING: high cost. Sqrt calc, use direction if you can
@@ -365,21 +352,19 @@ public:
 	\return True if any touching or blocking hits were found or any hit was found in case PxQueryFlag::eANY_HIT was specified.
 	*/
 	bool raycast(VEC3 origin, VEC3 end, PxRaycastBuffer& hit,
-							PxQueryFilterData filterData = PxQueryFilterData(),
-							const PxHitFlags outputFlags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
-
+		PxQueryFilterData filterData = PxQueryFilterData(),
+		const PxHitFlags outputFlags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
 
 	bool raySphere(PxReal radius, PxVec3 & start, PxVec3 & direction, PxReal distance, PxSweepCallback & hit,
-																					PxQueryFilterData filter = PxQueryFilterData(), 
-																					const PxHitFlags outputflags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
+		PxQueryFilterData filter = PxQueryFilterData(),
+		const PxHitFlags outputflags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
 
 	bool raySphere(PxReal radius, VEC3 & start, VEC3 & direction, PxReal distance, PxSweepCallback & hit,
-																					PxQueryFilterData filter = PxQueryFilterData(),
-																					const PxHitFlags outputflags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
+		PxQueryFilterData filter = PxQueryFilterData(),
+		const PxHitFlags outputflags = PxHitFlag::eDISTANCE | PxHitFlag::ePOSITION);
 
 	float SquaredDistancePointToGeometry(const PxVec3& point, const PxGeometry& geometry, const PxVec3& originGeometry, const PxQuat& quaternionGeometry = PxQuat(0, 0, 0, 1));
 	float SquaredDistancePointToGeometry(const VEC3& point, const PxGeometry& geometry, const VEC3& originGeometry, const CQuaternion& quaternionGeometry = CQuaternion(0, 0, 0, 1));
-
 
 	//-----------------------------------------------------------------------------------------------------
 	//								joints
@@ -403,28 +388,23 @@ public:
 	}
 };
 
-
 //-----------------------------------------------------------------------------------------------------
 //							nameSpace for conversions
 //-----------------------------------------------------------------------------------------------------
 
 namespace PhysxConversion {
-	PxVec3			Vec3ToPxVec3		(const VEC3& vec);
-	VEC3			PxVec3ToVec3		(const PxVec3& vec);
-	PxExtendedVec3	Vec3ToPxExVec3		(const VEC3& vec);
-	VEC3			PxExVec3ToVec3		(const PxExtendedVec3& vec);
-	PxQuat			CQuaternionToPxQuat	(const CQuaternion& quat);
-	CQuaternion		PxQuatToCQuaternion	(const PxQuat& quat);
-	VEC4			PxVec4ToVec4		(const PxVec4& vec);
-	PxVec4			VEC4ToPxVec4		(const VEC4& vec);
+	PxVec3			Vec3ToPxVec3(const VEC3& vec);
+	VEC3			PxVec3ToVec3(const PxVec3& vec);
+	PxExtendedVec3	Vec3ToPxExVec3(const VEC3& vec);
+	VEC3			PxExVec3ToVec3(const PxExtendedVec3& vec);
+	PxQuat			CQuaternionToPxQuat(const CQuaternion& quat);
+	CQuaternion		PxQuatToCQuaternion(const PxQuat& quat);
+	VEC4			PxVec4ToVec4(const PxVec4& vec);
+	PxVec4			VEC4ToPxVec4(const VEC4& vec);
 
-	PxTransform		ToPxTransform		(const VEC3& pos, const CQuaternion& rot);
+	PxTransform		ToPxTransform(const VEC3& pos, const CQuaternion& rot);
 
-	CHandle			GetEntityHandle		(const PxActor& a);
-	
+	CHandle			GetEntityHandle(const PxActor& a);
 }
 
-
 #endif
-
-

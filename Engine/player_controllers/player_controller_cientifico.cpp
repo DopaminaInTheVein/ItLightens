@@ -76,6 +76,7 @@ void player_controller_cientifico::Init() {
 		objs_names[eObjSci::DISABLE_BEACON] = "disable_beacon";
 		objs_names[eObjSci::MAGNETIC_BOMB] = "magnetic_bomb"; //Only this is used at the moment!
 		objs_names[eObjSci::STATIC_BOMB] = "static_bomb";
+		objs_names[eObjSci::THROW_BOMB] = "throw_bomb";
 	}
 
 	myHandle = CHandle(this);
@@ -111,7 +112,7 @@ void player_controller_cientifico::WorkBenchActions() {
 
 	if (dist_wb < 1.5f) {
 		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) { //io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
-			obj = MAGNETIC_BOMB;
+			obj = THROW_BOMB;
 			ChangeState("createBomb");
 			moving = false;
 		}
@@ -214,7 +215,7 @@ void player_controller_cientifico::CreateBomb()
 	if (t_waiting >= t_create_MagneticBomb) {
 		dbg("bomb created!\n");
 		t_waiting = 0;
-		objs_amoung[obj] = 3;
+		objs_amoung[obj] = 5;
 		ChangeState("idle");
 	}
 	else {
@@ -226,11 +227,11 @@ void player_controller_cientifico::UseBomb()
 {
 	PROFILE_FUNCTION("player cientifico: use mag bomb");
 	if (objs_amoung[obj] > 0) {
-		spawnBomb(objs_names[obj]);
+		spawnBomb();
 		objs_amoung[obj]--;
 	}
 	else {
-		dbg("No magnetic bombs remain!");
+		dbg("No bombs remain!");
 		//TODO
 	}
 	ChangeState("idle");
@@ -312,21 +313,41 @@ void player_controller_cientifico::RepairDrone()
 
 #pragma region Game objects creators
 
-void player_controller_cientifico::spawnBomb(const std::string& prefab)
+void player_controller_cientifico::spawnBomb()
 {
 	PROFILE_FUNCTION("player cientifico: create mag bomb");
 
-	CHandle bomb_handle = spawnPrefab("magnetic_bomb");
+	CHandle bomb_handle = spawnPrefab(objs_names[obj]);
 
-	GET_COMP(mag_trans, bomb_handle, TCompTransform);
-	mag_trans->setPosition(transform->getPosition());
-
+	GET_COMP(bomb_trans, bomb_handle, TCompTransform);
 	float yaw, pitch;
+	bomb_trans->setPosition(transform->getPosition());
 	transform->getAngles(&yaw, &pitch);
-	mag_trans->setAngles(yaw, pitch);
+	bomb_trans->setAngles(yaw, pitch);
 
-	GET_COMP(bomb_component, bomb_handle, CMagneticBomb);
-	bomb_component->Init();
+	switch (obj) {
+	case STATIC_BOMB:
+	{
+		GET_COMP(bomb_component, bomb_handle, CStaticBomb);
+		bomb_component->Init();
+	}
+	break;
+	case MAGNETIC_BOMB:
+	{
+		GET_COMP(bomb_component, bomb_handle, CMagneticBomb);
+		bomb_component->Init();
+	}
+	break;
+	case THROW_BOMB:
+	{
+		GET_COMP(bomb_component, bomb_handle, CThrowBomb);
+		bomb_component->Init(3.f, 1.f);
+	}
+	break;
+	default:
+		assert(false || fatal("Error: unknown bomb type\n"));
+		break;
+	}
 }
 
 //void player_controller_cientifico::spawnStaticBombEntity()

@@ -799,7 +799,7 @@ void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 	PROFILE_FUNCTION("guard: onmagneticbomb");
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 myPos = getTransform()->getPosition();
-	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
+	if (inSquaredRangeXZ_Y(msg.pos, myPos, msg.r, 5.f)) {
 		resetTimers();
 		stunned = true;
 		animController.setState(AST_STUNNED);

@@ -10,9 +10,8 @@
 #include "components\entity_tags.h"
 #include "app_modules\entities.h"
 
-
 void CPhysxManager::setFtDynamic()
-{	
+{
 	m_ft_dynamic.word0 = 0;
 	m_ft_dynamic.word1 = ItLightensFilter::eALL;
 	m_ft_dynamic.word2 = ItLightensFilter::eCAN_TRIGGER | ItLightensFilter::eCOLLISION;
@@ -40,60 +39,60 @@ void CPhysxManager::setFtCC()
 //start function: called at start from engine, to init PhysxManager
 bool CPhysxManager::start()
 {
-  static PxDefaultErrorCallback	gDefaultErrorCallback;
-  static PxDefaultAllocator		gDefaultAllocatorCallback;
-  PxTolerancesScale scale = PxTolerancesScale();
+	static PxDefaultErrorCallback	gDefaultErrorCallback;
+	static PxDefaultAllocator		gDefaultAllocatorCallback;
+	PxTolerancesScale scale = PxTolerancesScale();
 
-  //init foundation
-  m_pFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback,
-    gDefaultErrorCallback);
+	//init foundation
+	m_pFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gDefaultAllocatorCallback,
+		gDefaultErrorCallback);
 
-  assert(m_pFoundation);
-  if (!m_pFoundation)
-    fatal("PxCreateFoundation failed!");
+	assert(m_pFoundation);
+	if (!m_pFoundation)
+		fatal("PxCreateFoundation failed!");
 
-  //init ProfileZoneManager
-  bool recordMemoryAllocations = true;
-  m_pProfileZoneManager = &PxProfileZoneManager::createProfileZoneManager(m_pFoundation);
-  if (!m_pProfileZoneManager)
-    fatal("PxProfileZoneManager::createProfileZoneManager failed!");
+	//init ProfileZoneManager
+	bool recordMemoryAllocations = true;
+	m_pProfileZoneManager = &PxProfileZoneManager::createProfileZoneManager(m_pFoundation);
+	if (!m_pProfileZoneManager)
+		fatal("PxProfileZoneManager::createProfileZoneManager failed!");
 
-  //init Physics
-  m_pPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pFoundation,
-    PxTolerancesScale(), recordMemoryAllocations, m_pProfileZoneManager);
+	//init Physics
+	m_pPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pFoundation,
+		PxTolerancesScale(), recordMemoryAllocations, m_pProfileZoneManager);
 
-  assert(m_pPhysics);
-  if (!m_pPhysics)
-    fatal("PxCreatePhysics failed!");
+	assert(m_pPhysics);
+	if (!m_pPhysics)
+		fatal("PxCreatePhysics failed!");
 
-  //init cooking
-  m_pCooking = PxCreateCooking(PX_PHYSICS_VERSION, *m_pFoundation, PxCookingParams(scale));
+	//init cooking
+	m_pCooking = PxCreateCooking(PX_PHYSICS_VERSION, *m_pFoundation, PxCookingParams(scale));
 
-  assert(m_pCooking);
-  if (!m_pCooking)
-    fatal("PxCreateCooking failed!");
+	assert(m_pCooking);
+	if (!m_pCooking)
+		fatal("PxCreateCooking failed!");
 
-  //init extensions
-  if (!PxInitExtensions(*m_pPhysics))
-    fatal("PxInitExtensions failed!");
+	//init extensions
+	if (!PxInitExtensions(*m_pPhysics))
+		fatal("PxInitExtensions failed!");
 
-  //init scene
-  PxSceneDesc sceneDesc(m_pPhysics->getTolerancesScale());
-  customizeSceneDesc(sceneDesc);
+	//init scene
+	PxSceneDesc sceneDesc(m_pPhysics->getTolerancesScale());
+	customizeSceneDesc(sceneDesc);
 
-  if (!sceneDesc.cpuDispatcher)
-  {
-    m_pCpuDispatcher = PxDefaultCpuDispatcherCreate(m_NbThreads);
-    if (!m_pCpuDispatcher)
-      fatal("PxDefaultCpuDispatcherCreate failed!");
+	if (!sceneDesc.cpuDispatcher)
+	{
+		m_pCpuDispatcher = PxDefaultCpuDispatcherCreate(m_NbThreads);
+		if (!m_pCpuDispatcher)
+			fatal("PxDefaultCpuDispatcherCreate failed!");
 
-    assert(m_pCpuDispatcher);
-    sceneDesc.cpuDispatcher = m_pCpuDispatcher;
-  }
+		assert(m_pCpuDispatcher);
+		sceneDesc.cpuDispatcher = m_pCpuDispatcher;
+	}
 
-  PxSimulationFilterShader gDefaultFilterShader = PxDefaultSimulationFilterShader;
-  if (!sceneDesc.filterShader)
-    sceneDesc.filterShader = gDefaultFilterShader;
+	PxSimulationFilterShader gDefaultFilterShader = PxDefaultSimulationFilterShader;
+	if (!sceneDesc.filterShader)
+		sceneDesc.filterShader = gDefaultFilterShader;
 
 #ifdef PX_WINDOWS
 	if (!sceneDesc.gpuDispatcher && m_pCudaContextManager)
@@ -113,7 +112,6 @@ bool CPhysxManager::start()
 		fatal("manager controllers failed!");
 
 	m_pGeomQuerys = new PxGeometryQuery();
-
 
 #ifndef NDEBUG
 	//Physx Debbuger
@@ -145,33 +143,30 @@ bool CPhysxManager::start()
 //stop function: release memory
 void CPhysxManager::stop()
 {
+	PX_SAFE_RELEASE(m_pManagerControllers);
+	PX_SAFE_RELEASE(m_pScene);
+	PX_SAFE_RELEASE(m_pCpuDispatcher);
 
-  
-  PX_SAFE_RELEASE(m_pManagerControllers);
-  PX_SAFE_RELEASE(m_pScene);
-  PX_SAFE_RELEASE(m_pCpuDispatcher);
-  
 #ifndef NDEBUG
-  if (m_pConnection != NULL)
-	  PX_SAFE_RELEASE(m_pConnection);
+	if (m_pConnection != NULL)
+		PX_SAFE_RELEASE(m_pConnection);
 
- // auto pvdconnection = m_pPhysics->getPvdConnectionManager();
-  //PX_SAFE_RELEASE(pvdconnection);
+	// auto pvdconnection = m_pPhysics->getPvdConnectionManager();
+	 //PX_SAFE_RELEASE(pvdconnection);
 #endif
 
-  PX_SAFE_RELEASE(m_pCooking);
-  PX_SAFE_RELEASE(m_pCudaContextManager);
-  //PX_SAFE_RELEASE(m_pGeomQuerys);
-  if (m_pGeomQuerys) {
-	  delete m_pGeomQuerys;
-  }
+	PX_SAFE_RELEASE(m_pCooking);
+	PX_SAFE_RELEASE(m_pCudaContextManager);
+	//PX_SAFE_RELEASE(m_pGeomQuerys);
+	if (m_pGeomQuerys) {
+		delete m_pGeomQuerys;
+	}
 
-  PxCloseExtensions();
+	PxCloseExtensions();
 
-  PX_SAFE_RELEASE(m_pPhysics);
-  PX_SAFE_RELEASE(m_pProfileZoneManager);
-  PX_SAFE_RELEASE(m_pFoundation);
-
+	PX_SAFE_RELEASE(m_pPhysics);
+	PX_SAFE_RELEASE(m_pProfileZoneManager);
+	PX_SAFE_RELEASE(m_pFoundation);
 }
 
 //update function: to update at fixed rate
@@ -180,7 +175,6 @@ void CPhysxManager::update(float dt)
 	//calculate fixed update
 	t_to_update += getDeltaTime();
 	if (t_to_update >= t_max_update) {
-
 		CEntitiesModule::fixedUpdate(t_to_update);
 
 		m_pScene->simulate(t_to_update);
@@ -269,25 +263,25 @@ void CPhysxManager::CreatePlaneGeometry(const PxReal & radius, const PxReal & ha
 
 PxShape * CPhysxManager::CreatePxSphere(PxReal radius, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
-	PxShape *sphere = m_pPhysics->createShape(PxSphereGeometry(radius), 
-											*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
-	
+	PxShape *sphere = m_pPhysics->createShape(PxSphereGeometry(radius),
+		*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution), true);
+
 	return sphere;
 }
 
 PxShape * CPhysxManager::CreatePxCapsule(PxReal radius, PxReal halfHeight, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
-	PxShape *capsule = m_pPhysics->createShape(PxCapsuleGeometry(radius,halfHeight),
-											*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
-	
+	PxShape *capsule = m_pPhysics->createShape(PxCapsuleGeometry(radius, halfHeight),
+		*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution), true);
+
 	return capsule;
 }
 
 PxShape * CPhysxManager::CreatePxBox(const PxVec3& size, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
-	PxShape *box = m_pPhysics->createShape(PxBoxGeometry(size), 
-										*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
-	
+	PxShape *box = m_pPhysics->createShape(PxBoxGeometry(size),
+		*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution), true);
+
 	return box;
 }
 
@@ -302,22 +296,19 @@ PxShape * CPhysxManager::CreatePxBox(const PxVec3& size, PxReal staticFriction, 
 
 PxShape * CPhysxManager::CreateTriangleMesh(PxTriangleMesh * mesh, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
-		PxTriangleMeshGeometry meshGeometry(mesh);
-		PxShape* triMesh = m_pPhysics->createShape(meshGeometry,
-												*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
+	PxTriangleMeshGeometry meshGeometry(mesh);
+	PxShape* triMesh = m_pPhysics->createShape(meshGeometry,
+		*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution), true);
 
-		return triMesh;
+	return triMesh;
 }
 
 PxShape * CPhysxManager::CreateConvexShape(const CMesh * mesh, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution) {
-
-	
 	PxConvexMesh* convexMesh = CreateCookedConvexMesh(mesh);
-	PxShape* aConvexShape = m_pPhysics->createShape(PxConvexMeshGeometry(convexMesh), 
-												*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
+	PxShape* aConvexShape = m_pPhysics->createShape(PxConvexMeshGeometry(convexMesh),
+		*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution), true);
 
 	return aConvexShape;
-
 }
 
 #pragma endregion
@@ -350,7 +341,7 @@ PxController * CPhysxManager::CreateCharacterController(PxReal radius, PxReal he
 //create actor with dynamic rigidbody
 PxActor * CPhysxManager::CreateAndAddRigidDynamic(const PxTransform *transform, PxShape *shape, PxReal density)
 {
-	PxRigidDynamic *actor = PxCreateDynamic(*m_pPhysics,*transform,*shape,density);
+	PxRigidDynamic *actor = PxCreateDynamic(*m_pPhysics, *transform, *shape, density);
 	AddToActiveScene(*actor);
 	return actor;
 }
@@ -395,7 +386,6 @@ PxTriangleMesh * CPhysxManager::CreateCookedTriangleMesh(const CMesh * mesh)
 	meshDesc.triangles.stride = 3 * dataM.numIdxPerBytes;
 
 	meshDesc.triangles.data = dataM.idxs.data();
-
 
 	meshDesc.flags = PxMeshFlag::eFLIPNORMALS | PxMeshFlag::e16_BIT_INDICES;
 
@@ -448,11 +438,8 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 		if (pair.flags & (PxTriggerPairFlag::eDELETED_SHAPE_TRIGGER | PxTriggerPairFlag::eDELETED_SHAPE_OTHER))
 			continue;
 
-
-		
 		PxFilterData fd = pair.otherShape->getQueryFilterData();
 		if (fd.word2 & (ItLightensFilter::eCAN_TRIGGER)) {
-
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_LOST)) {
 				CHandle h_active = CHandle();
 				h_active.fromUnsigned(HandleToUlong(pair.otherActor->userData));
@@ -471,8 +458,6 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 			}
 
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_FOUND)) {
-
-
 				CHandle h_active = CHandle();
 				h_active.fromUnsigned(HandleToUlong(pair.otherActor->userData));
 
@@ -487,12 +472,8 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 				TMsgTriggerIn msg;
 				msg.other = CHandle(e_active);
 				e_trigger->sendMsg(msg);
-	
 			}
-
 		}
-
-		
 	}
 }
 
@@ -504,7 +485,6 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 #pragma region simulation callback
 
 void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 nbPairs) {
-
 	//only will treat collision with player and platforms.
 
 	//beahaviour:
@@ -516,10 +496,14 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 
 		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
-
 			CEntity *e0 = GetEntityHandle(*pairHeader.actors[0]);
 			CEntity *e1 = GetEntityHandle(*pairHeader.actors[1]);
 			if (!e0 || !e1) return;
+
+			CEntity* throw_bomb;
+			if ((throw_bomb = e0)->hasTag("throw_bomb") || (throw_bomb = e1)->hasTag("throw_bomb")) {
+				throw_bomb->sendMsg(TMsgActivate());
+			}
 
 			TCompCharacterController *cc;
 
@@ -552,12 +536,12 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 					//cc->AddMovement(VEC3(0,1,0));
 				}
 				else return;
-			} else {
+			}
+			else {
 				// Send TMsgBoxHit
 			}
 		}
 	}
-
 }
 
 PxFilterFlags	CPhysxManager::pairFound(PxU32 pairID, PxFilterObjectAttributes attributes0, PxFilterData filterData0, const PxActor * a0, const PxShape * s0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, const PxActor * a1, const PxShape * s1, PxPairFlags & pairFlags)
@@ -579,7 +563,6 @@ void	CPhysxManager::onConstraintBreak(PxConstraintInfo *constraints, PxU32 count
 
 bool CPhysxManager::raycast(PxVec3 origin, PxVec3 unitDir, PxReal maxDistance, PxRaycastBuffer& hit, PxQueryFilterData filterData, const PxHitFlags outputFlags)
 {
-
 	bool status = m_pScene->raycast(origin, unitDir, maxDistance, hit, outputFlags, filterData);
 
 	return status;
@@ -599,7 +582,7 @@ bool CPhysxManager::raycast(PxVec3 origin, PxVec3 end, PxRaycastBuffer& hit, PxQ
 		m_last_distance = sqrt(squared(m_last_direction.x) + squared(m_last_direction.y) + squared(m_last_direction.z));
 	}
 
-	bool status = raycast(origin, m_last_direction,m_last_distance, hit, filterData, outputFlags);
+	bool status = raycast(origin, m_last_direction, m_last_distance, hit, filterData, outputFlags);
 	return status;
 }
 
@@ -612,7 +595,7 @@ bool CPhysxManager::raySphere(PxReal radius, PxVec3& start, PxVec3& direction, P
 {
 	PxSphereGeometry sphere;
 	CreateSphereGeometry(radius, sphere);
-	PxTransform transform = PxTransform(start,PxQuat(0,0,0,1));
+	PxTransform transform = PxTransform(start, PxQuat(0, 0, 0, 1));
 
 	bool status = m_pScene->sweep(sphere, transform, direction, distance, hit, outputflags, filter);
 
@@ -673,7 +656,7 @@ return false;
 //----------------------------------------------------------
 PxVec3 PhysxConversion::Vec3ToPxVec3(const VEC3 & vec)
 {
-	return PxVec3(vec.x,vec.y,vec.z);
+	return PxVec3(vec.x, vec.y, vec.z);
 }
 
 VEC3 PhysxConversion::PxVec3ToVec3(const PxVec3 & vec)
@@ -683,7 +666,7 @@ VEC3 PhysxConversion::PxVec3ToVec3(const PxVec3 & vec)
 
 PxExtendedVec3 PhysxConversion::Vec3ToPxExVec3(const VEC3 & vec)
 {
-	return PxExtendedVec3(vec.x,vec.y,vec.z);
+	return PxExtendedVec3(vec.x, vec.y, vec.z);
 }
 
 VEC3 PhysxConversion::PxExVec3ToVec3(const PxExtendedVec3 & vec)
@@ -693,12 +676,12 @@ VEC3 PhysxConversion::PxExVec3ToVec3(const PxExtendedVec3 & vec)
 
 PxQuat PhysxConversion::CQuaternionToPxQuat(const CQuaternion & quat)
 {
-	return PxQuat(quat.x,quat.y,quat.z,quat.w);
+	return PxQuat(quat.x, quat.y, quat.z, quat.w);
 }
 
 CQuaternion PhysxConversion::PxQuatToCQuaternion(const PxQuat & quat)
 {
-	return CQuaternion(quat.x,quat.y, quat.z, quat.w);
+	return CQuaternion(quat.x, quat.y, quat.z, quat.w);
 }
 
 PxTransform PhysxConversion::ToPxTransform(const VEC3 & pos, const CQuaternion & rot)
@@ -707,12 +690,12 @@ PxTransform PhysxConversion::ToPxTransform(const VEC3 & pos, const CQuaternion &
 }
 CHandle PhysxConversion::GetEntityHandle(const PxActor & a)
 {
-	if(&a){
+	if (&a) {
 		CHandle h;
 		h.fromUnsigned(HandleToUlong(a.userData));
 		return h;
 	}
-	else{
+	else {
 		return CHandle(); //handle not valid
 	}
 }

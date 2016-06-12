@@ -467,6 +467,9 @@
     <ClCompile Include="components\comp_camera_main.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="prefabs\throw_bomb.cpp">
+      <Filter>prefabs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1285,6 +1288,9 @@
     </ClInclude>
     <ClInclude Include="components\comp_camera_main.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="prefabs\throw_bomb.h">
+      <Filter>prefabs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
