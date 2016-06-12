@@ -101,10 +101,10 @@
 <tags
    tags="drone platform"/>
 <drone
-   speed="5"
+   speed="2"
    wpts_size="1"
-   wpt0_pos="9.89158 -10.489 15.6933"
-   wpt0_wait="2"
+   wpt0_pos="9.89158 -10.489 -3.82536"
+   wpt0_wait="1"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
@@ -120,7 +120,7 @@
    type_shape="drone"/>
 <polarized
    pol="minus"
-   size="1.7955 2.3474 4.92"/>
+   offset="0 0.570343 0"/>
 
 </entity>
 <entity>
@@ -1415,13 +1415,14 @@
    size="1.0 1.0 1.0"
    mass="2"/>
 <polarized
-   pol="minus"/>
+   pol="minus"
+   offset="0 0.493896 0"/>
 
 </entity>
 <entity>
 <tags
    tags="camera_main"/>
-<camera
+<camera_main
    znear="0.1"
    zfar="250.0"
    fov="60.0"/>
@@ -1495,6 +1496,8 @@
    type_shape="box"
    size="3.38976 2.8574 0.12"
    mass="5"/>
+<polarized
+   pol="neutral"/>
 
 </entity>
 <entity>
@@ -2508,7 +2511,54 @@
    type_shape="drone"/>
 <polarized
    pol="plus"
-   size="1.7955 2.3474 4.92"/>
+   offset="0 0.570343 0"/>
+
+</entity>
+<entity>
+<tags
+   tags="drone platform"/>
+<drone
+   speed="2"
+   wpts_size="1"
+   wpt0_pos="9.58858 -10.489 3.48476"
+   wpt0_wait="1"
+   textureFront="droneFront"
+   textureBack="droneBack"/>
+<name
+   name="DroneMinus_003"/>
+<transform
+   pos="9.92021 -10.1372 13.6696"
+   quat="0 -0.699825 0 0.714314"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<polarized
+   pol="minus"
+   offset="0 0.570343 0"/>
+
+</entity>
+<entity>
+<tags
+   tags="box platform removable"/>
+<box/>
+<name
+   name="Box_2"/>
+<transform
+   pos="-2.63612 -23.2771 -14.9353"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box2.static_mesh"/>
+<rigidbody
+   type_collision="static"
+   type_shape="box"
+   size="3.0 1.5 3.0"
+   mass="5"/>
+<polarized
+   pol="plus"/>
 
 </entity>
 

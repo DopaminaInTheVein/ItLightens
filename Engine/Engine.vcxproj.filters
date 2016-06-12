@@ -464,6 +464,9 @@
     <ClCompile Include="logic\workbench.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_camera_main.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1279,6 +1282,9 @@
     </ClInclude>
     <ClInclude Include="SLB\include\SLB\lua\lualib.h">
       <Filter>SLB\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_camera_main.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

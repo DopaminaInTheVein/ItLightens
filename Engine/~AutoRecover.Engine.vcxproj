@@ -1,0 +1,596 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{88CE4A41-2CA4-4E85-AD28-CA87769ACAAF}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Engine</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\bin\</OutDir>
+    <IntDir>..\build\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>..\build\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\bin\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders;.\SLB\include;.\fmod\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)\fmod\studio\lib;$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod_vc.lib;fmodstudioL_vc.lib;fmodstudio_vc.lib;fmodL_vc.lib;fmod64_vc.lib;fmodL64_vc.lib;fmodstudio64_vc.lib;fmodstudioL64_vc.lib;XINPUT9_1_0.LIB;SLB_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>.;.\physx\inc;..\bin\data\shaders;.\SLB\include;.\fmod\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>mcv_platform.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)\fmod\studio\lib;$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod_vc.lib;fmodstudioL_vc.lib;fmodstudio_vc.lib;fmodL_vc.lib;fmod64_vc.lib;fmodL64_vc.lib;fmodstudio64_vc.lib;fmodstudioL64_vc.lib;XINPUT9_1_0.LIB;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SLB.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)\Physx\dll\$(configuration)\*"  "$(TargetDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="app_modules\entities.cpp" />
+    <ClCompile Include="app_modules\gui\gui.cpp" />
+    <ClCompile Include="app_modules\gui\gui_action_text.cpp" />
+    <ClCompile Include="app_modules\gui\gui_bar_color.cpp" />
+    <ClCompile Include="app_modules\gui\gui_button_std.cpp" />
+    <ClCompile Include="app_modules\gui\gui_hud_player.cpp" />
+    <ClCompile Include="app_modules\gui\gui_menu_pause.cpp" />
+    <ClCompile Include="app_modules\gui\gui_utils.cpp" />
+    <ClCompile Include="app_modules\imgui\module_imgui.cpp" />
+    <ClCompile Include="app_modules\io\io.cpp" />
+    <ClCompile Include="app_modules\io\joystick.cpp" />
+    <ClCompile Include="app_modules\io\keyboard.cpp" />
+    <ClCompile Include="app_modules\io\mouse.cpp" />
+    <ClCompile Include="app_modules\logic_manager\logic_manager.cpp" />
+    <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
+    <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
+    <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
+    <ClCompile Include="camera\camera.cpp" />
+    <ClCompile Include="components\comp_aabb.cpp" />
+    <ClCompile Include="components\comp_base.cpp" />
+    <ClCompile Include="components\comp_camera.cpp" />
+    <ClCompile Include="components\comp_camera_main.cpp" />
+    <ClCompile Include="components\comp_charactercontroller.cpp" />
+    <ClCompile Include="components\comp_culling.cpp" />
+    <ClCompile Include="components\comp_drone.cpp" />
+    <ClCompile Include="components\comp_fading_message.cpp" />
+    <ClCompile Include="components\comp_generator.cpp" />
+    <ClCompile Include="components\comp_guided_camera.cpp" />
+    <ClCompile Include="components\comp_hierarchy.cpp" />
+    <ClCompile Include="components\comp_light_dir.cpp" />
+    <ClCompile Include="components\comp_light_dir_shadows.cpp" />
+    <ClCompile Include="components\comp_light_fadable.cpp" />
+    <ClCompile Include="components\comp_light_point.cpp" />
+    <ClCompile Include="components\comp_physics.cpp" />
+    <ClCompile Include="components\comp_platform.cpp" />
+    <ClCompile Include="components\comp_polarized.cpp" />
+    <ClCompile Include="components\comp_render_glow.cpp" />
+    <ClCompile Include="components\comp_render_static_mesh.cpp" />
+    <ClCompile Include="components\comp_snoozer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="components\comp_tracker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="components\comp_tracker_cinta.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="components\comp_transform.cpp" />
+    <ClCompile Include="components\comp_trigger_lua.cpp" />
+    <ClCompile Include="components\comp_wire.cpp" />
+    <ClCompile Include="components\entity.cpp" />
+    <ClCompile Include="components\entity_parser.cpp" />
+    <ClCompile Include="components\entity_tags.cpp" />
+    <ClCompile Include="debug\console.cpp" />
+    <ClCompile Include="debug\debug_itlightens.cpp" />
+    <ClCompile Include="expat\xmlparse.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="expat\xmlrole.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="expat\xmltok.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="expat\xmltok_impl.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="expat\xmltok_ns.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="geometry\angular.cpp" />
+    <ClCompile Include="geometry\SimpleMath.cpp" />
+    <ClCompile Include="geometry\transform.cpp" />
+    <ClCompile Include="handle\handle.cpp" />
+    <ClCompile Include="handle\handle_manager.cpp" />
+    <ClCompile Include="input\input.cpp" />
+    <ClCompile Include="input\input_manager.cpp" />
+    <ClCompile Include="logic\aicontroller.cpp" />
+    <ClCompile Include="logic\ai_beacon.cpp" />
+    <ClCompile Include="logic\ai_guard.cpp" />
+    <ClCompile Include="logic\ai_mole.cpp" />
+    <ClCompile Include="logic\ai_poss.cpp" />
+    <ClCompile Include="logic\ai_scientific.cpp" />
+    <ClCompile Include="logic\ai_speedy.cpp" />
+    <ClCompile Include="logic\ai_water.cpp" />
+    <ClCompile Include="logic\ai_workbench.cpp" />
+    <ClCompile Include="logic\bt.cpp" />
+    <ClCompile Include="logic\btnode.cpp" />
+    <ClCompile Include="logic\bt_guard.cpp" />
+    <ClCompile Include="logic\bt_mole.cpp" />
+    <ClCompile Include="logic\bt_poss.cpp" />
+    <ClCompile Include="logic\bt_scientist.cpp" />
+    <ClCompile Include="logic\bt_speedy.cpp" />
+    <ClCompile Include="logic\damage.cpp" />
+    <ClCompile Include="logic\elevator.cpp" />
+    <ClCompile Include="logic\helper_arrow.cpp" />
+    <ClCompile Include="logic\magnet_door.cpp" />
+    <ClCompile Include="logic\sbb.cpp" />
+    <ClCompile Include="logic\workbench.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Physx\physx_manager.cpp" />
+    <ClCompile Include="player_controllers\player_controller.cpp" />
+    <ClCompile Include="player_controllers\player_controller_base.cpp" />
+    <ClCompile Include="player_controllers\player_controller_cientifico.cpp" />
+    <ClCompile Include="player_controllers\player_controller_mole.cpp" />
+    <ClCompile Include="player_controllers\player_controller_speedy.cpp" />
+    <ClCompile Include="player_controllers\poss_controller.cpp" />
+    <ClCompile Include="prefabs\magnetic_bomb.cpp" />
+    <ClCompile Include="prefabs\static_bomb.cpp" />
+    <ClCompile Include="profiling\profiling.cpp" />
+    <ClCompile Include="recast\DebugUtils\Source\DebugDraw.cpp" />
+    <ClCompile Include="recast\DebugUtils\Source\DetourDebugDraw.cpp" />
+    <ClCompile Include="recast\DebugUtils\Source\RecastDebugDraw.cpp" />
+    <ClCompile Include="recast\DebugUtils\Source\RecastDump.cpp" />
+    <ClCompile Include="recast\DetourCrowd\Source\DetourCrowd.cpp" />
+    <ClCompile Include="recast\DetourCrowd\Source\DetourLocalBoundary.cpp" />
+    <ClCompile Include="recast\DetourCrowd\Source\DetourObstacleAvoidance.cpp" />
+    <ClCompile Include="recast\DetourCrowd\Source\DetourPathCorridor.cpp" />
+    <ClCompile Include="recast\DetourCrowd\Source\DetourPathQueue.cpp" />
+    <ClCompile Include="recast\DetourCrowd\Source\DetourProximityGrid.cpp" />
+    <ClCompile Include="recast\DetourTileCache\Source\DetourTileCache.cpp" />
+    <ClCompile Include="recast\DetourTileCache\Source\DetourTileCacheBuilder.cpp" />
+    <ClCompile Include="recast\Detour\Source\DetourAlloc.cpp" />
+    <ClCompile Include="recast\Detour\Source\DetourCommon.cpp" />
+    <ClCompile Include="recast\Detour\Source\DetourNavMesh.cpp" />
+    <ClCompile Include="recast\Detour\Source\DetourNavMeshBuilder.cpp" />
+    <ClCompile Include="recast\Detour\Source\DetourNavMeshQuery.cpp" />
+    <ClCompile Include="recast\Detour\Source\DetourNode.cpp" />
+    <ClCompile Include="recast\navmesh.cpp" />
+    <ClCompile Include="recast\navmesh_builder.cpp" />
+    <ClCompile Include="recast\navmesh_input.cpp" />
+    <ClCompile Include="recast\navmesh_query.cpp" />
+    <ClCompile Include="recast\PerfTimer.cpp" />
+    <ClCompile Include="recast\Recast\Source\Recast.cpp" />
+    <ClCompile Include="recast\Recast\Source\RecastAlloc.cpp" />
+    <ClCompile Include="recast\Recast\Source\RecastArea.cpp" />
+    <ClCompile Include="recast\Recast\Source\RecastContour.cpp" />
+    <ClCompile Include="recast\Recast\Source\RecastFilter.cpp" />
+    <ClCompile Include="recast\Recast\Source\RecastLayers.cpp" />
+    <ClCompile Include="recast\Recast\Source\RecastMesh.cpp" />
+    <ClCompile Include="recast\Recast\Source\RecastMeshDetail.cpp" />
+    <ClCompile Include="recast\Recast\Source\RecastRasterization.cpp" />
+    <ClCompile Include="recast\Recast\Source\RecastRegion.cpp" />
+    <ClCompile Include="render\DDSTextureLoader.cpp" />
+    <ClCompile Include="render\draw_utils.cpp" />
+    <ClCompile Include="render\fx\GuardShots.cpp" />
+    <ClCompile Include="render\material.cpp" />
+    <ClCompile Include="render\mesh.cpp" />
+    <ClCompile Include="render\mesh_manager.cpp" />
+    <ClCompile Include="render\render.cpp" />
+    <ClCompile Include="mcv_platform.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="render\render_config.cpp" />
+    <ClCompile Include="render\render_manager.cpp" />
+    <ClCompile Include="render\render_to_texture.cpp" />
+    <ClCompile Include="render\shaders.cpp" />
+    <ClCompile Include="render\static_mesh.cpp" />
+    <ClCompile Include="render\technique.cpp" />
+    <ClCompile Include="render\texture.cpp" />
+    <ClCompile Include="render\vertex_declarations.cpp" />
+    <ClCompile Include="resources\resources_manager.cpp" />
+    <ClCompile Include="skeleton\comp_bone_tracker.cpp" />
+    <ClCompile Include="skeleton\comp_skeleton.cpp" />
+    <ClCompile Include="skeleton\coresubmesh.cpp" />
+    <ClCompile Include="skeleton\skeleton.cpp" />
+    <ClCompile Include="skeleton_controllers\skc_guard.cpp" />
+    <ClCompile Include="skeleton_controllers\skc_player.cpp" />
+    <ClCompile Include="skeleton_controllers\skel_controller.cpp" />
+    <ClCompile Include="utils\murmur3.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="utils\utils.cpp" />
+    <ClCompile Include="utils\XMLParser.cpp" />
+    <ClCompile Include="windows\app.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_object.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h" />
+    <ClInclude Include="app_modules\app_module.h" />
+    <ClInclude Include="app_modules\entities.h" />
+    <ClInclude Include="app_modules\gameController.h" />
+    <ClInclude Include="app_modules\gameData.h" />
+    <ClInclude Include="app_modules\gui\gui.h" />
+    <ClInclude Include="app_modules\gui\gui_action_text.h" />
+    <ClInclude Include="app_modules\gui\gui_bar.h" />
+    <ClInclude Include="app_modules\gui\gui_bar_color.h" />
+    <ClInclude Include="app_modules\gui\gui_button.h" />
+    <ClInclude Include="app_modules\gui\gui_button_std.h" />
+    <ClInclude Include="app_modules\gui\gui_hud_player.h" />
+    <ClInclude Include="app_modules\gui\gui_menu_pause.h" />
+    <ClInclude Include="app_modules\gui\gui_utils.h" />
+    <ClInclude Include="app_modules\imgui\module_imgui.h" />
+    <ClInclude Include="app_modules\io\digital_button.h" />
+    <ClInclude Include="app_modules\io\io.h" />
+    <ClInclude Include="app_modules\io\joystick.h" />
+    <ClInclude Include="app_modules\io\keyboard.h" />
+    <ClInclude Include="app_modules\io\mouse.h" />
+    <ClInclude Include="app_modules\logic_manager\logic_manager.h" />
+    <ClInclude Include="app_modules\logic_manager\slb_public_functions.h" />
+    <ClInclude Include="app_modules\render\module_render_deferred.h" />
+    <ClInclude Include="app_modules\sound_manager\sound_manager.h" />
+    <ClInclude Include="camera\camera.h" />
+    <ClInclude Include="components\comp_aabb.h" />
+    <ClInclude Include="components\comp_box_destructor.h" />
+    <ClInclude Include="components\comp_box_spawner.h" />
+    <ClInclude Include="components\components.h" />
+    <ClInclude Include="components\comp_base.h" />
+    <ClInclude Include="components\comp_box.h" />
+    <ClInclude Include="components\comp_camera.h" />
+    <ClInclude Include="components\comp_camera_main.h" />
+    <ClInclude Include="components\comp_charactercontroller.h" />
+    <ClInclude Include="components\comp_controller_3rd_person.h" />
+    <ClInclude Include="components\comp_culling.h" />
+    <ClInclude Include="components\comp_drone.h" />
+    <ClInclude Include="components\comp_fading_message.h" />
+    <ClInclude Include="components\comp_generator.h" />
+    <ClInclude Include="components\comp_guided_camera.h" />
+    <ClInclude Include="components\comp_hierarchy.h" />
+    <ClInclude Include="components\comp_life.h" />
+    <ClInclude Include="components\comp_light_dir.h" />
+    <ClInclude Include="components\comp_light_dir_shadows.h" />
+    <ClInclude Include="components\comp_light_fadable.h" />
+    <ClInclude Include="components\comp_light_point.h" />
+    <ClInclude Include="components\comp_msgs.h" />
+    <ClInclude Include="components\comp_name.h" />
+    <ClInclude Include="components\comp_physics.h" />
+    <ClInclude Include="components\comp_platform.h" />
+    <ClInclude Include="components\comp_polarized.h" />
+    <ClInclude Include="components\comp_render_glow.h" />
+    <ClInclude Include="components\comp_render_static_mesh.h" />
+    <ClInclude Include="components\comp_snoozer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="components\comp_tags.h" />
+    <ClInclude Include="components\comp_tracker.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="components\comp_tracker_cinta.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="components\comp_transform.h" />
+    <ClInclude Include="components\comp_trigger.h" />
+    <ClInclude Include="components\comp_trigger_standar.h" />
+    <ClInclude Include="components\comp_trigger_lua.h" />
+    <ClInclude Include="components\comp_victory_point.h" />
+    <ClInclude Include="components\comp_wire.h" />
+    <ClInclude Include="components\comp_workstation.h" />
+    <ClInclude Include="components\entity.h" />
+    <ClInclude Include="components\entity_parser.h" />
+    <ClInclude Include="components\entity_tags.h" />
+    <ClInclude Include="debug\console.h" />
+    <ClInclude Include="debug\debug_itlightens.h" />
+    <ClInclude Include="fmod\studio\inc\fmod.h" />
+    <ClInclude Include="fmod\studio\inc\fmod.hpp" />
+    <ClInclude Include="fmod\studio\inc\fmod_codec.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_common.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_dsp.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_dsp_effects.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_errors.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_output.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_studio.h" />
+    <ClInclude Include="fmod\studio\inc\fmod_studio.hpp" />
+    <ClInclude Include="fmod\studio\inc\fmod_studio_common.h" />
+    <ClInclude Include="geometry\angular.h" />
+    <ClInclude Include="geometry\geometry.h" />
+    <ClInclude Include="geometry\SimpleMath.h" />
+    <ClInclude Include="geometry\transform.h" />
+    <ClInclude Include="handle\handle.h" />
+    <ClInclude Include="handle\handle_manager.h" />
+    <ClInclude Include="handle\msgs.h" />
+    <ClInclude Include="handle\object_manager.h" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\stb_textedit.h" />
+    <ClInclude Include="input\input.h" />
+    <ClInclude Include="input\input_manager.h" />
+    <ClInclude Include="logic\aicontroller.h" />
+    <ClInclude Include="logic\ai_beacon.h" />
+    <ClInclude Include="logic\ai_guard.h" />
+    <ClInclude Include="logic\ai_mole.h" />
+    <ClInclude Include="logic\ai_poss.h" />
+    <ClInclude Include="logic\ai_scientific.h" />
+    <ClInclude Include="logic\ai_speedy.h" />
+    <ClInclude Include="logic\ai_water.h" />
+    <ClInclude Include="logic\ai_workbench.h" />
+    <ClInclude Include="logic\bt.h" />
+    <ClInclude Include="logic\btnode.h" />
+    <ClInclude Include="logic\bt_guard.h" />
+    <ClInclude Include="logic\bt_mole.h" />
+    <ClInclude Include="logic\bt_poss.h" />
+    <ClInclude Include="logic\bt_scientist.h" />
+    <ClInclude Include="logic\bt_speedy.h" />
+    <ClInclude Include="logic\damage.h" />
+    <ClInclude Include="logic\elevator.h" />
+    <ClInclude Include="logic\helper_arrow.h" />
+    <ClInclude Include="logic\magnet_door.h" />
+    <ClInclude Include="logic\polarity.h" />
+    <ClInclude Include="logic\sbb.h" />
+    <ClInclude Include="logic\workbench.h" />
+    <ClInclude Include="mcv_platform.h" />
+    <ClInclude Include="Physx\ItLightensFilterShader.h" />
+    <ClInclude Include="Physx\physx_manager.h" />
+    <ClInclude Include="player_controllers\player_controller.h" />
+    <ClInclude Include="player_controllers\player_controller_base.h" />
+    <ClInclude Include="player_controllers\player_controller_cientifico.h" />
+    <ClInclude Include="player_controllers\player_controller_mole.h" />
+    <ClInclude Include="player_controllers\player_controller_speedy.h" />
+    <ClInclude Include="player_controllers\poss_controller.h" />
+    <ClInclude Include="prefabs\magnetic_bomb.h" />
+    <ClInclude Include="prefabs\static_bomb.h" />
+    <ClInclude Include="profiling\profiling.h" />
+    <ClInclude Include="recast\DebugUtils\Include\DebugDraw.h" />
+    <ClInclude Include="recast\DebugUtils\Include\DetourDebugDraw.h" />
+    <ClInclude Include="recast\DebugUtils\Include\RecastDebugDraw.h" />
+    <ClInclude Include="recast\DebugUtils\Include\RecastDump.h" />
+    <ClInclude Include="recast\DetourCrowd\Include\DetourCrowd.h" />
+    <ClInclude Include="recast\DetourCrowd\Include\DetourLocalBoundary.h" />
+    <ClInclude Include="recast\DetourCrowd\Include\DetourObstacleAvoidance.h" />
+    <ClInclude Include="recast\DetourCrowd\Include\DetourPathCorridor.h" />
+    <ClInclude Include="recast\DetourCrowd\Include\DetourPathQueue.h" />
+    <ClInclude Include="recast\DetourCrowd\Include\DetourProximityGrid.h" />
+    <ClInclude Include="recast\DetourTileCache\Include\DetourTileCache.h" />
+    <ClInclude Include="recast\DetourTileCache\Include\DetourTileCacheBuilder.h" />
+    <ClInclude Include="recast\Detour\Include\DetourAlloc.h" />
+    <ClInclude Include="recast\Detour\Include\DetourAssert.h" />
+    <ClInclude Include="recast\Detour\Include\DetourCommon.h" />
+    <ClInclude Include="recast\Detour\Include\DetourMath.h" />
+    <ClInclude Include="recast\Detour\Include\DetourNavMesh.h" />
+    <ClInclude Include="recast\Detour\Include\DetourNavMeshBuilder.h" />
+    <ClInclude Include="recast\Detour\Include\DetourNavMeshQuery.h" />
+    <ClInclude Include="recast\Detour\Include\DetourNode.h" />
+    <ClInclude Include="recast\Detour\Include\DetourStatus.h" />
+    <ClInclude Include="recast\navmesh.h" />
+    <ClInclude Include="recast\navmesh_builder.h" />
+    <ClInclude Include="recast\navmesh_input.h" />
+    <ClInclude Include="recast\navmesh_query.h" />
+    <ClInclude Include="recast\PerfTimer.h" />
+    <ClInclude Include="recast\Recast\Include\Recast.h" />
+    <ClInclude Include="recast\Recast\Include\RecastAlloc.h" />
+    <ClInclude Include="recast\Recast\Include\RecastAssert.h" />
+    <ClInclude Include="render\DDSTextureLoader.h" />
+    <ClInclude Include="render\draw_utils.h" />
+    <ClInclude Include="render\fx\GuardShots.h" />
+    <ClInclude Include="render\gpu_trace.h" />
+    <ClInclude Include="render\material.h" />
+    <ClInclude Include="render\mesh.h" />
+    <ClInclude Include="render\mesh_format.h" />
+    <ClInclude Include="render\render.h" />
+    <ClInclude Include="render\render_config.h" />
+    <ClInclude Include="render\render_manager.h" />
+    <ClInclude Include="render\render_to_texture.h" />
+    <ClInclude Include="render\shaders.h" />
+    <ClInclude Include="render\shader_cte.h" />
+    <ClInclude Include="render\static_mesh.h" />
+    <ClInclude Include="render\technique.h" />
+    <ClInclude Include="render\texture.h" />
+    <ClInclude Include="render\vertex_declarations.h" />
+    <ClInclude Include="resources\resource.h" />
+    <ClInclude Include="resources\resources_manager.h" />
+    <ClInclude Include="skeleton\comp_bone_tracker.h" />
+    <ClInclude Include="skeleton\comp_skeleton.h" />
+    <ClInclude Include="skeleton\coresubmesh.h" />
+    <ClInclude Include="skeleton\skeleton.h" />
+    <ClInclude Include="skeleton_controllers\skc_guard.h" />
+    <ClInclude Include="skeleton_controllers\skc_player.h" />
+    <ClInclude Include="skeleton_controllers\skel_controller.h" />
+    <ClInclude Include="SLB\include\SLB\Allocator.hpp" />
+    <ClInclude Include="SLB\include\SLB\Class.hpp" />
+    <ClInclude Include="SLB\include\SLB\ClassHelpers.hpp" />
+    <ClInclude Include="SLB\include\SLB\ClassInfo.hpp" />
+    <ClInclude Include="SLB\include\SLB\Conversor.hpp" />
+    <ClInclude Include="SLB\include\SLB\Debug.hpp" />
+    <ClInclude Include="SLB\include\SLB\Error.hpp" />
+    <ClInclude Include="SLB\include\SLB\Export.hpp" />
+    <ClInclude Include="SLB\include\SLB\FuncCall.hpp" />
+    <ClInclude Include="SLB\include\SLB\FuncCall_inline.hpp" />
+    <ClInclude Include="SLB\include\SLB\Hybrid.hpp" />
+    <ClInclude Include="SLB\include\SLB\Instance.hpp" />
+    <ClInclude Include="SLB\include\SLB\Iterator.hpp" />
+    <ClInclude Include="SLB\include\SLB\lua.hpp" />
+    <ClInclude Include="SLB\include\SLB\LuaCall.hpp" />
+    <ClInclude Include="SLB\include\SLB\lua\lauxlib.h" />
+    <ClInclude Include="SLB\include\SLB\lua\lua.h" />
+    <ClInclude Include="SLB\include\SLB\lua\luaconf.h" />
+    <ClInclude Include="SLB\include\SLB\lua\lualib.h" />
+    <ClInclude Include="SLB\include\SLB\Manager.hpp" />
+    <ClInclude Include="SLB\include\SLB\Mutex.hpp" />
+    <ClInclude Include="SLB\include\SLB\Object.hpp" />
+    <ClInclude Include="SLB\include\SLB\Private_FuncCall.hpp" />
+    <ClInclude Include="SLB\include\SLB\Property.hpp" />
+    <ClInclude Include="SLB\include\SLB\PushGet.hpp" />
+    <ClInclude Include="SLB\include\SLB\ref_ptr.hpp" />
+    <ClInclude Include="SLB\include\SLB\Script.hpp" />
+    <ClInclude Include="SLB\include\SLB\SLB.hpp" />
+    <ClInclude Include="SLB\include\SLB\SPP.hpp" />
+    <ClInclude Include="SLB\include\SLB\StatefulHybrid.hpp" />
+    <ClInclude Include="SLB\include\SLB\String.hpp" />
+    <ClInclude Include="SLB\include\SLB\Table.hpp" />
+    <ClInclude Include="SLB\include\SLB\Type.hpp" />
+    <ClInclude Include="SLB\include\SLB\TypeInfoWrapper.hpp" />
+    <ClInclude Include="SLB\include\SLB\util.hpp" />
+    <ClInclude Include="SLB\include\SLB\Value.hpp" />
+    <ClInclude Include="ui\ui_interface.h" />
+    <ClInclude Include="utils\data_provider.h" />
+    <ClInclude Include="utils\data_saver.h" />
+    <ClInclude Include="utils\directory_watcher.h" />
+    <ClInclude Include="utils\macros\macros.h" />
+    <ClInclude Include="utils\macros\timers.h" />
+    <ClInclude Include="utils\murmur3.h" />
+    <ClInclude Include="utils\rapidjson\allocators.h" />
+    <ClInclude Include="utils\rapidjson\document.h" />
+    <ClInclude Include="utils\rapidjson\encodedstream.h" />
+    <ClInclude Include="utils\rapidjson\encodings.h" />
+    <ClInclude Include="utils\rapidjson\error\en.h" />
+    <ClInclude Include="utils\rapidjson\error\error.h" />
+    <ClInclude Include="utils\rapidjson\filereadstream.h" />
+    <ClInclude Include="utils\rapidjson\filewritestream.h" />
+    <ClInclude Include="utils\rapidjson\fwd.h" />
+    <ClInclude Include="utils\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="utils\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="utils\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="utils\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="utils\rapidjson\internal\itoa.h" />
+    <ClInclude Include="utils\rapidjson\internal\meta.h" />
+    <ClInclude Include="utils\rapidjson\internal\pow10.h" />
+    <ClInclude Include="utils\rapidjson\internal\regex.h" />
+    <ClInclude Include="utils\rapidjson\internal\stack.h" />
+    <ClInclude Include="utils\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="utils\rapidjson\internal\strtod.h" />
+    <ClInclude Include="utils\rapidjson\internal\swap.h" />
+    <ClInclude Include="utils\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="utils\rapidjson\memorybuffer.h" />
+    <ClInclude Include="utils\rapidjson\memorystream.h" />
+    <ClInclude Include="utils\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="utils\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="utils\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="utils\rapidjson\pointer.h" />
+    <ClInclude Include="utils\rapidjson\prettywriter.h" />
+    <ClInclude Include="utils\rapidjson\rapidjson.h" />
+    <ClInclude Include="utils\rapidjson\reader.h" />
+    <ClInclude Include="utils\rapidjson\schema.h" />
+    <ClInclude Include="utils\rapidjson\stream.h" />
+    <ClInclude Include="utils\rapidjson\stringbuffer.h" />
+    <ClInclude Include="utils\rapidjson\writer.h" />
+    <ClInclude Include="utils\timer.h" />
+    <ClInclude Include="utils\utils.h" />
+    <ClInclude Include="utils\XMLParser.h" />
+    <ClInclude Include="windows\app.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="geometry\SimpleMath.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\bin\data\shaders\basic.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\deferred.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\bin\data\shaders\skin.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="NOTES.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -14,8 +14,8 @@ struct TCompPolarized : public TCompBase {
 	};
 
 	VEC3				origin;
-	bool				send					= false;
-	bool				moving					= false;
+	bool				send = false;
+	bool				moving = false;
 	VEC3				last_position;
 
 	TMsgPolarize		msg_in;
@@ -23,22 +23,22 @@ struct TCompPolarized : public TCompBase {
 	CHandle			player_h;
 
 	float			dist_effect_squared_free = 25.f;
-	float			dist_effect_squared_fixed	= 4.f;
-	float			dist_near			= 5.f;
+	float			dist_effect_squared_fixed = 4.f;
+	float			dist_near = 5.f;
 
 	PolarityForce	force;
-	PxBoxGeometry*	m_area;
-	PxTransform		m_transform;
+	//PxBoxGeometry*	m_area;
+	//PxTransform		m_transform;
 
-	float			mThresholdMass		= 2.5f;
-	float			mEpsilonMove		= 0.01f;
+	float			mThresholdMass = 2.5f;
+	float			mEpsilonMove = 0.01f;
 
-	int				mType				= FIXED;
-	int				mPlayer_state		= NEUTRAL;
+	int				mType = FIXED;
+	int				mPlayer_state = NEUTRAL;
 
 	void init();
+	bool getUpdateInfo() override;
 	void update(float elapsed);
-	void updatePxTransform();
 
 	bool load(MKeyValue& atts);
 

@@ -6,6 +6,8 @@
 #include "comp_transform.h"
 #include "comp_snoozer.h"
 #include "comp_camera.h"
+#include "comp_camera_main.h"
+#include "comp_guided_camera.h"
 #include "comp_render_static_mesh.h"
 #include "comp_controller_3rd_person.h"
 #include "comp_hierarchy.h"
@@ -23,7 +25,6 @@
 #include "comp_tracker.h"
 #include "comp_box_spawner.h"
 #include "comp_box_destructor.h"
-#include "comp_guided_camera.h"
 
 #include "comp_render_glow.h"
 

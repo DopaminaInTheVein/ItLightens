@@ -127,6 +127,7 @@
     <ClCompile Include="components\comp_aabb.cpp" />
     <ClCompile Include="components\comp_base.cpp" />
     <ClCompile Include="components\comp_camera.cpp" />
+    <ClCompile Include="components\comp_camera_main.cpp" />
     <ClCompile Include="components\comp_charactercontroller.cpp" />
     <ClCompile Include="components\comp_culling.cpp" />
     <ClCompile Include="components\comp_drone.cpp" />
@@ -327,6 +328,7 @@
     <ClInclude Include="components\comp_base.h" />
     <ClInclude Include="components\comp_box.h" />
     <ClInclude Include="components\comp_camera.h" />
+    <ClInclude Include="components\comp_camera_main.h" />
     <ClInclude Include="components\comp_charactercontroller.h" />
     <ClInclude Include="components\comp_controller_3rd_person.h" />
     <ClInclude Include="components\comp_culling.h" />
