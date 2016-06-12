@@ -93,6 +93,7 @@ void bt_guard::readIniFileAttr() {
 **************/
 void bt_guard::Init()
 {
+	initParent();
 	// read main attributes from file
 	readIniFileAttr();
 
@@ -539,7 +540,7 @@ int bt_guard::actionSearch() {
 
 			VEC3 dir = playerPos - myPos;
 			dir.Normalize();
-			
+
 			search_player_point = playerPos + 1.0f * dir;
 
 			return OK;
@@ -844,7 +845,7 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 }
 
 void bt_guard::checkStopDamage() {
-	if(sendMsgDmg){
+	if (sendMsgDmg) {
 		CEntity * ePlayer = getPlayer();
 		if (ePlayer) {
 			//End Damage Message
@@ -854,7 +855,7 @@ void bt_guard::checkStopDamage() {
 			dmg.source = compBaseEntity->getName();
 			dmg.type = Damage::ABSORB;
 			dmg.actived = false;
-		
+
 			ePlayer->sendMsg(dmg);
 		}
 	}

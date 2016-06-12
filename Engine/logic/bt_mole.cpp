@@ -29,6 +29,7 @@ void bt_mole::readIniFileAttr() {
 
 void bt_mole::Init()
 {
+	initParent();
 	// read main attributes from file
 	readIniFileAttr();
 

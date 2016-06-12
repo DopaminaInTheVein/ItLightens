@@ -25,10 +25,6 @@
 #define ST_LOOK_ARROUND		"look_arround"
 #define ST_SHOOTING_WALL	"shootingWall"
 
-//Cambio malla
-struct TCompRenderStaticMesh;
-class TCompCharacterController;
-
 class guard_alert {
 public:
 	VEC3 guard_position;

@@ -79,6 +79,10 @@ public:
 	int execEvent(string);
 	void setCurrent(btnode *);
 
+	void initParent() {
+		currPathWpt = totalPathWpt = 0;
+	}
+
 	// call this once per frame to compute the AI. No need to derive this one,
 	// as the behaviours are derived via btactions and the tree is declared on create
 	void Recalc();
