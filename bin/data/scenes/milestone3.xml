@@ -1828,27 +1828,6 @@
 </entity>
 <entity>
 <tags
-   tags="player raijin"/>
-<player/>
-<life
-   points="10"/>
-<name
-   name="player_1"/>
-<transform
-   pos="9.02275 -10.5182 -22.5792"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/player/player.skeleton"/>
-<render_static_mesh
-   name="skeletons/player/player.static_mesh"/>
-<character_controller
-   radius="0.3"
-   height="0.7"/>
-
-</entity>
-<entity>
-<tags
    tags="AI AI_cientifico AI_poss"/>
 <bt_scientist/>
 <player_cientifico/>
@@ -2559,6 +2538,27 @@
    mass="5"/>
 <polarized
    pol="plus"/>
+
+</entity>
+<entity>
+<tags
+   tags="player raijin"/>
+<player/>
+<life
+   points="10"/>
+<name
+   name="player_1"/>
+<transform
+   pos="-72.8 22.0822 13.8036"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/player/player.skeleton"/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="0.7"/>
 
 </entity>
 

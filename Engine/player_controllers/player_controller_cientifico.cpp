@@ -19,60 +19,68 @@
 
 map<string, statehandler> player_controller_cientifico::statemap = {};
 map<int, string> player_controller_cientifico::out = {};
+std::vector<std::string> player_controller_cientifico::objs_names;
 
 void player_controller_cientifico::readIniFileAttr() {
-  CHandle h = CHandle(this).getOwner();
-  if (h.isValid()) {
-    if (h.hasTag("AI_cientifico")) {
-      CApp &app = CApp::get();
-      std::string file_ini = app.file_initAttr_json;
-      map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
+	CHandle h = CHandle(this).getOwner();
+	if (h.isValid()) {
+		if (h.hasTag("AI_cientifico")) {
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
-      assignValueToVar(player_max_speed, fields_base);
-      assignValueToVar(player_rotation_speed, fields_base);
-      assignValueToVar(jimpulse, fields_base);
-      assignValueToVar(left_stick_sensibility, fields_base);
-      assignValueToVar(camera_max_height, fields_base);
-      assignValueToVar(camera_min_height, fields_base);
+			assignValueToVar(player_max_speed, fields_base);
+			assignValueToVar(player_rotation_speed, fields_base);
+			assignValueToVar(jimpulse, fields_base);
+			assignValueToVar(left_stick_sensibility, fields_base);
+			assignValueToVar(camera_max_height, fields_base);
+			assignValueToVar(camera_min_height, fields_base);
 
-      map<std::string, float> fields_scientist = readIniAtrData(file_ini, "controller_scientist");
+			map<std::string, float> fields_scientist = readIniAtrData(file_ini, "controller_scientist");
 
-      assignValueToVar(t_waiting, fields_scientist);
-      assignValueToVar(t_to_explode, fields_scientist);
-      assignValueToVar(t_create_beacon, fields_scientist);
-      assignValueToVar(t_create_StaticBomb, fields_scientist);
-      assignValueToVar(t_create_MagneticBomb, fields_scientist);
-      assignValueToVar(t_explode_static_bomb, fields_scientist);
-      assignValueToVar(t_create_beacon_energy, fields_scientist);
-      assignValueToVar(t_create_StaticBomb_energy, fields_scientist);
-      assignValueToVar(t_create_MagneticBomb_energy, fields_scientist);
-    }
-  }
+			assignValueToVar(t_waiting, fields_scientist);
+			assignValueToVar(t_to_explode, fields_scientist);
+			assignValueToVar(t_create_beacon, fields_scientist);
+			assignValueToVar(t_create_StaticBomb, fields_scientist);
+			assignValueToVar(t_create_MagneticBomb, fields_scientist);
+			assignValueToVar(t_explode_static_bomb, fields_scientist);
+			assignValueToVar(t_create_beacon_energy, fields_scientist);
+			assignValueToVar(t_create_StaticBomb_energy, fields_scientist);
+			assignValueToVar(t_create_MagneticBomb_energy, fields_scientist);
+		}
+	}
 }
 
 void player_controller_cientifico::Init() {
-  // read main attributes from file
-  readIniFileAttr();
+	// read main attributes from file
+	readIniFileAttr();
 
-  for (int amoung : objs_amoung) amoung = 0;
+	for (int amoung : objs_amoung) amoung = 0;
 
-  if (statemap.empty()) {
-    //States from controller base and poss controller
-    addBasicStates();
-    addPossStates();
+	if (statemap.empty()) {
+		//States from controller base and poss controller
+		addBasicStates();
+		addPossStates();
 
-    //Specific Scientist nodes
-    AddState("createMagneticBomb", (statehandler)&player_controller_cientifico::CreateMagneticBomb);
-    AddState("useMagneticBomb", (statehandler)&player_controller_cientifico::UseMagneticBomb);
-    AddState("repairDrone", (statehandler)&player_controller_cientifico::RepairDrone);
-    //AddState("createStaticBomb", (statehandler)&player_controller_cientifico::CreateStaticBomb);
-    //AddState("addDisableBeacon", (statehandler)&player_controller_cientifico::AddDisableBeacon);
-    //AddState("useStaticBomb", (statehandler)&player_controller_cientifico::UseStaticBomb);
-  }
+		//Specific Scientist nodes
+		AddState("createBomb", (statehandler)&player_controller_cientifico::CreateBomb);
+		AddState("useBomb", (statehandler)&player_controller_cientifico::UseBomb);
+		AddState("repairDrone", (statehandler)&player_controller_cientifico::RepairDrone);
+		//AddState("createStaticBomb", (statehandler)&player_controller_cientifico::CreateStaticBomb);
+		//AddState("addDisableBeacon", (statehandler)&player_controller_cientifico::AddDisableBeacon);
+		//AddState("useStaticBomb", (statehandler)&player_controller_cientifico::UseStaticBomb);
+	}
+	if (objs_names.empty()) {
+		objs_names.resize(eObjSci::OBJ_SCI_SIZE);
+		objs_names[eObjSci::EMPTY] = "empty";
+		objs_names[eObjSci::DISABLE_BEACON] = "disable_beacon";
+		objs_names[eObjSci::MAGNETIC_BOMB] = "magnetic_bomb"; //Only this is used at the moment!
+		objs_names[eObjSci::STATIC_BOMB] = "static_bomb";
+	}
 
-  myHandle = CHandle(this);
-  myParent = myHandle.getOwner();
-  ChangeState("idle");
+	myHandle = CHandle(this);
+	myParent = myHandle.getOwner();
+	ChangeState("idle");
 }
 
 //##########################################################################
@@ -83,73 +91,74 @@ void player_controller_cientifico::Init() {
 #pragma region Inputs
 
 void player_controller_cientifico::WorkBenchActions() {
-  VEC3 myPos = transform->getPosition();
+	VEC3 myPos = transform->getPosition();
 
-  // Find nearest workbench
-  //====================================================
-  VEC3 nearest_wb;
-  float dist_wb = FLT_MAX;
-  //====================================================
-  for (VEC3 wb_pos : SBB::readVEC3Vector("wb_pos")) {
-    if (distY(myPos, wb_pos) < 5.f) {
-      float dist = simpleDistXZ(myPos, wb_pos);
-      if (dist < dist_wb) {
-        dist_wb = dist;
-        nearest_wb = wb_pos;
-      }
-    }
-  }
-  //----------------------------------------------------
+	// Find nearest workbench
+	//====================================================
+	VEC3 nearest_wb;
+	float dist_wb = FLT_MAX;
+	//====================================================
+	for (VEC3 wb_pos : SBB::readVEC3Vector("wb_pos")) {
+		if (distY(myPos, wb_pos) < 5.f) {
+			float dist = simpleDistXZ(myPos, wb_pos);
+			if (dist < dist_wb) {
+				dist_wb = dist;
+				nearest_wb = wb_pos;
+			}
+		}
+	}
+	//----------------------------------------------------
 
-  if (dist_wb < 1.5f) {
-    if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) { //io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
-      ChangeState("createMagneticBomb");
-      moving = false;
-    }
-    else {
-      Gui->setActionAvailable(eAction::CREATE_MAGNETIC_BOMB);
-    }
-  }
-  else if (canRepairDrone) {
-    if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
-      logic_manager->throwEvent(logic_manager->OnRepairDrone, "");
-      ChangeState("repairDrone");
-    }
-    else {
-      Gui->setActionAvailable(eAction::REPAIR_DRONE);
-    }
-  }
+	if (dist_wb < 1.5f) {
+		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) { //io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
+			obj = MAGNETIC_BOMB;
+			ChangeState("createBomb");
+			moving = false;
+		}
+		else {
+			Gui->setActionAvailable(eAction::CREATE_MAGNETIC_BOMB);
+		}
+	}
+	else if (canRepairDrone) {
+		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
+			logic_manager->throwEvent(logic_manager->OnRepairDrone, "");
+			ChangeState("repairDrone");
+		}
+		else {
+			Gui->setActionAvailable(eAction::REPAIR_DRONE);
+		}
+	}
 }
 
 void player_controller_cientifico::UpdateInputActions() {
-  PROFILE_FUNCTION("player cientifico: energy dec");
-  //if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
-  //	ChangeState("createDisableBeacon");
-  //}
+	PROFILE_FUNCTION("player cientifico: energy dec");
+	//if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
+	//	ChangeState("createDisableBeacon");
+	//}
 
-  //if (io->keys['2'].becomesPressed() || io->joystick.button_B.becomesPressed()) {
-  //	ChangeState("addDisableBeacon");
-  //}
+	//if (io->keys['2'].becomesPressed() || io->joystick.button_B.becomesPressed()) {
+	//	ChangeState("addDisableBeacon");
+	//}
 
-  //if (io->keys['3'].becomesPressed() || io->joystick.button_Y.becomesPressed()) {
-  //	energyDecreasal(5.0f);
-  //	ChangeState("createStaticBomb");
-  //}
+	//if (io->keys['3'].becomesPressed() || io->joystick.button_Y.becomesPressed()) {
+	//	energyDecreasal(5.0f);
+	//	ChangeState("createStaticBomb");
+	//}
 
-  //if (io->keys['5'].becomesPressed() || io->joystick.button_L.becomesPressed()) {
-  //	energyDecreasal(5.0f);
-  //	ChangeState("createMagneticBomb");
-  //}
-  //if (io->keys['6'].becomesPressed() || io->joystick.button_LT > io->joystick.max_trigger_value / 2) {
-  //	energyDecreasal(10.0f);
-  //	ChangeState("useMagneticBomb");
-  //}
-  //if (io->keys['4'].becomesPressed() || io->joystick.button_RT > io->joystick.max_trigger_value / 2) {
-  //	energyDecreasal(10.0f);
-  //	ChangeState("useStaticBomb");
-  //}
-  //if (io->keys['R'].becomesPressed() || io->joystick.button_R.becomesPressed())
-  //	ExplodeBomb();
+	//if (io->keys['5'].becomesPressed() || io->joystick.button_L.becomesPressed()) {
+	//	energyDecreasal(5.0f);
+	//	ChangeState("createMagneticBomb");
+	//}
+	//if (io->keys['6'].becomesPressed() || io->joystick.button_LT > io->joystick.max_trigger_value / 2) {
+	//	energyDecreasal(10.0f);
+	//	ChangeState("useMagneticBomb");
+	//}
+	//if (io->keys['4'].becomesPressed() || io->joystick.button_RT > io->joystick.max_trigger_value / 2) {
+	//	energyDecreasal(10.0f);
+	//	ChangeState("useStaticBomb");
+	//}
+	//if (io->keys['R'].becomesPressed() || io->joystick.button_R.becomesPressed())
+	//	ExplodeBomb();
 }
 
 //void player_controller_cientifico::ExplodeBomb()
@@ -179,62 +188,60 @@ void player_controller_cientifico::UpdateInputActions() {
 
 void player_controller_cientifico::Idle()
 {
-  PROFILE_FUNCTION("player cientifico: idle state");
-  CPlayerBase::Idle();
-  RecalcScientist();
+	PROFILE_FUNCTION("player cientifico: idle state");
+	CPlayerBase::Idle();
+	RecalcScientist();
 }
 
 void player_controller_cientifico::Moving()
 {
-  PROFILE_FUNCTION("player cientifico: idle state");
-  CPlayerBase::Idle();
-  RecalcScientist();
+	PROFILE_FUNCTION("player cientifico: idle state");
+	CPlayerBase::Idle();
+	RecalcScientist();
 }
 
 void player_controller_cientifico::RecalcScientist() {
-  if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
-    ChangeState("useMagneticBomb");
-  }
-  WorkBenchActions();
+	if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
+		ChangeState("useBomb");
+	}
+	WorkBenchActions();
 }
 
-void player_controller_cientifico::CreateMagneticBomb()
+void player_controller_cientifico::CreateBomb()
 {
-  PROFILE_FUNCTION("player cientifico: create mag bomb");
-  t_waiting += getDeltaTime();
-  if (t_waiting >= t_create_MagneticBomb) {
-    dbg("magnetic bomb created!\n");
-    t_waiting = 0;
-    obj = MAGNETIC_BOMB;
-    objs_amoung[obj] = 3;
-    ChangeState("idle");
-  }
-  else {
-    Gui->setActionAvailable(eAction::CREATING);
-  }
+	PROFILE_FUNCTION("player cientifico: create bomb");
+	t_waiting += getDeltaTime();
+	if (t_waiting >= t_create_MagneticBomb) {
+		dbg("bomb created!\n");
+		t_waiting = 0;
+		objs_amoung[obj] = 3;
+		ChangeState("idle");
+	}
+	else {
+		Gui->setActionAvailable(eAction::CREATING);
+	}
 }
 
-void player_controller_cientifico::UseMagneticBomb()
+void player_controller_cientifico::UseBomb()
 {
-  PROFILE_FUNCTION("player cientifico: use mag bomb");
-  if (objs_amoung[MAGNETIC_BOMB] > 0) {
-    createMagneticBombEntity();
-    objs_amoung[MAGNETIC_BOMB]--;
-  }
-  else {
-    dbg("No mahgnetic bombs remain!");
-    //TODO
-  }
-  obj = MAGNETIC_BOMB_GAME;
-  ChangeState("idle");
+	PROFILE_FUNCTION("player cientifico: use mag bomb");
+	if (objs_amoung[obj] > 0) {
+		spawnBomb(objs_names[obj]);
+		objs_amoung[obj]--;
+	}
+	else {
+		dbg("No magnetic bombs remain!");
+		//TODO
+	}
+	ChangeState("idle");
 }
 
 void player_controller_cientifico::RepairDrone()
 {
-  TMsgRepair msg;
-  CEntity *drone_e = drone;
-  drone_e->sendMsg(msg);
-  ChangeState("idle");
+	TMsgRepair msg;
+	CEntity *drone_e = drone;
+	drone_e->sendMsg(msg);
+	ChangeState("idle");
 }
 
 //void player_controller_cientifico::CreateStaticBomb()
@@ -305,65 +312,65 @@ void player_controller_cientifico::RepairDrone()
 
 #pragma region Game objects creators
 
-void player_controller_cientifico::createMagneticBombEntity()
+void player_controller_cientifico::spawnBomb(const std::string& prefab)
 {
-  PROFILE_FUNCTION("player cientifico: create mag bomb");
+	PROFILE_FUNCTION("player cientifico: create mag bomb");
 
-  CHandle bomb_handle = spawnPrefab("magnetic_bomb");
+	CHandle bomb_handle = spawnPrefab("magnetic_bomb");
 
-  GET_COMP(mag_trans, bomb_handle, TCompTransform);
-  mag_trans->setPosition(transform->getPosition());
+	GET_COMP(mag_trans, bomb_handle, TCompTransform);
+	mag_trans->setPosition(transform->getPosition());
 
-  float yaw, pitch;
-  transform->getAngles(&yaw, &pitch);
-  mag_trans->setAngles(yaw, pitch);
+	float yaw, pitch;
+	transform->getAngles(&yaw, &pitch);
+	mag_trans->setAngles(yaw, pitch);
 
-  GET_COMP(bomb_component, bomb_handle, CMagneticBomb);
-  bomb_component->Init();
+	GET_COMP(bomb_component, bomb_handle, CMagneticBomb);
+	bomb_component->Init();
 }
 
-void player_controller_cientifico::createStaticBombEntity()
-{
-  PROFILE_FUNCTION("player cientifico: create static bomb entity");
-  VEC3 player_position = transform->getPosition();
-
-  auto hm_e = CHandleManager::getByName("entity");
-  CHandle new_h_e = hm_e->createHandle();
-
-  auto hm_n = CHandleManager::getByName("name");
-  CHandle new_h_n = hm_n->createHandle();
-
-  auto hm_t = CHandleManager::getByName("transform");
-  CHandle new_h_t = hm_t->createHandle();
-
-  auto hm_mb = CHandleManager::getByName("static_bomb");
-  CHandle new_h_mb = hm_mb->createHandle();
-
-  auto hm_sm = CHandleManager::getByName("render_static_mesh");
-  CHandle new_h_sm = hm_sm->createHandle();
-
-  CEntity *e = new_h_e;
-  bomb_handle = new_h_mb;
-
-  e->add(new_h_n);
-  e->add(new_h_mb);
-  e->add(new_h_t);
-  e->add(new_h_sm);
-
-  TCompRenderStaticMesh *sm = new_h_sm;
-  sm->static_mesh = Resources.get("static_meshes/bomb_static.static_mesh")->as<CStaticMesh>();
-  sm->registerToRender();
-
-  TCompTransform *static_trans = e->get<TCompTransform>();
-  static_trans->setPosition(player_position);
-
-  TCompName *name_c = e->get<TCompName>();
-  name_c->setName("static_bomb");
-
-  float yaw, pitch;
-  transform->getAngles(&yaw, &pitch);
-  static_trans->setAngles(yaw, pitch);
-}
+//void player_controller_cientifico::spawnStaticBombEntity()
+//{
+//	PROFILE_FUNCTION("player cientifico: create static bomb entity");
+//	VEC3 player_position = transform->getPosition();
+//
+//	auto hm_e = CHandleManager::getByName("entity");
+//	CHandle new_h_e = hm_e->createHandle();
+//
+//	auto hm_n = CHandleManager::getByName("name");
+//	CHandle new_h_n = hm_n->createHandle();
+//
+//	auto hm_t = CHandleManager::getByName("transform");
+//	CHandle new_h_t = hm_t->createHandle();
+//
+//	auto hm_mb = CHandleManager::getByName("static_bomb");
+//	CHandle new_h_mb = hm_mb->createHandle();
+//
+//	auto hm_sm = CHandleManager::getByName("render_static_mesh");
+//	CHandle new_h_sm = hm_sm->createHandle();
+//
+//	CEntity *e = new_h_e;
+//	bomb_handle = new_h_mb;
+//
+//	e->add(new_h_n);
+//	e->add(new_h_mb);
+//	e->add(new_h_t);
+//	e->add(new_h_sm);
+//
+//	TCompRenderStaticMesh *sm = new_h_sm;
+//	sm->static_mesh = Resources.get("static_meshes/bomb_static.static_mesh")->as<CStaticMesh>();
+//	sm->registerToRender();
+//
+//	TCompTransform *static_trans = e->get<TCompTransform>();
+//	static_trans->setPosition(player_position);
+//
+//	TCompName *name_c = e->get<TCompName>();
+//	name_c->setName("static_bomb");
+//
+//	float yaw, pitch;
+//	transform->getAngles(&yaw, &pitch);
+//	static_trans->setAngles(yaw, pitch);
+//}
 
 #pragma endregion
 
@@ -371,37 +378,37 @@ void player_controller_cientifico::createStaticBombEntity()
 
 void player_controller_cientifico::renderInMenu()
 {
-  PROFILE_FUNCTION("player cientifico: render in menu");
-  VEC3 direction = directionForward + directionLateral;
-  direction.Normalize();
-  direction = direction + directionJump;
+	PROFILE_FUNCTION("player cientifico: render in menu");
+	VEC3 direction = directionForward + directionLateral;
+	direction.Normalize();
+	direction = direction + directionJump;
 
-  ImGui::Text("NODE: %s\n", state.c_str());
-  ImGui::Text("direction: %.4f, %.4f, %.4f", direction.x, direction.y, direction.z);
-  ImGui::Text("jump: %.5f", jspeed);
-  ImGui::Text("object: %d\n", obj);
+	ImGui::Text("NODE: %s\n", state.c_str());
+	ImGui::Text("direction: %.4f, %.4f, %.4f", direction.x, direction.y, direction.z);
+	ImGui::Text("jump: %.5f", jspeed);
+	ImGui::Text("object: %d\n", obj);
 }
 
 void player_controller_cientifico::UpdateUnpossess() {
-  PROFILE_FUNCTION("player cientifico: update unposses");
-  CHandle h = CHandle(this);
-  tags_manager.removeTag(h.getOwner(), getID("player"));
+	PROFILE_FUNCTION("player cientifico: update unposses");
+	CHandle h = CHandle(this);
+	tags_manager.removeTag(h.getOwner(), getID("player"));
 }
 
 void player_controller_cientifico::DisabledState() {
-  PROFILE_FUNCTION("player cientifico: disabled satte");
+	PROFILE_FUNCTION("player cientifico: disabled satte");
 }
 void player_controller_cientifico::InitControlState() {
-  PROFILE_FUNCTION("player cientifico: init control state");
-  //CHandle h = CHandle(this);
-  //tags_manager.addTag(h.getOwner(), getID("player"));
-  ChangeState("idle");
+	PROFILE_FUNCTION("player cientifico: init control state");
+	//CHandle h = CHandle(this);
+	//tags_manager.addTag(h.getOwner(), getID("player"));
+	ChangeState("idle");
 }
 
 CEntity* player_controller_cientifico::getMyEntity() {
-  PROFILE_FUNCTION("player cientifico: get my entity");
-  CHandle me = CHandle(this);
-  return me.getOwner();
+	PROFILE_FUNCTION("player cientifico: get my entity");
+	CHandle me = CHandle(this);
+	return me.getOwner();
 }
 
 //void player_controller_cientifico::update_msgs()
@@ -446,20 +453,20 @@ CEntity* player_controller_cientifico::getMyEntity() {
 
 void player_controller_cientifico::myUpdate()
 {
-  PROFILE_FUNCTION("player cientifico: myUpdate");
+	PROFILE_FUNCTION("player cientifico: myUpdate");
 
-  //Update del componente?
-  //if (obj == STATIC_BOMB_GAME || obj == MAGNETIC_BOMB_GAME) {
-  //	t_to_explode -= getDeltaTime();
-  //	if (t_to_explode <= 0.0f) {
-  //		obj = EMPTY;
-  //		t_to_explode = 5.0f;
-  //	}
-  //}
+	//Update del componente?
+	//if (obj == STATIC_BOMB_GAME || obj == MAGNETIC_BOMB_GAME) {
+	//	t_to_explode -= getDeltaTime();
+	//	if (t_to_explode <= 0.0f) {
+	//		obj = EMPTY;
+	//		t_to_explode = 5.0f;
+	//	}
+	//}
 }
 
 void player_controller_cientifico::onCanRepairDrone(const TMsgCanRechargeDrone & msg)
 {
-  canRepairDrone = msg.range;
-  drone = msg.han;
+	canRepairDrone = msg.range;
+	drone = msg.han;
 }
