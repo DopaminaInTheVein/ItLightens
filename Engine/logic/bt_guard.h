@@ -130,6 +130,7 @@ class bt_guard : public bt, public TCompBase
 	void goTo(const VEC3& dest);
 	void goForward(float stepForward);
 	bool turnTo(VEC3 dest);
+	bool turnToPlayer();
 	//VEC3 generateRandomPoint(); THIS IS NOT USED!
 
 	//Aux checks

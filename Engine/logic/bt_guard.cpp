@@ -320,6 +320,7 @@ int bt_guard::actionStepBack() {
 	PROFILE_FUNCTION("guard: actionstepback");
 	animController.setState(AST_MOVE);
 	goForward(-2.f*SPEED_WALK);
+	turnToPlayer();
 
 	if (playerNear()) return STAY;
 	else return OK;
@@ -403,6 +404,7 @@ int bt_guard::actionAbsorb() {
 		dbg("SHOOTING BACKWARDS!\n");
 		animController.setState(AST_SHOOT_BACK);
 		goForward(-0.9f*SPEED_WALK);
+		turnToPlayer();
 		shootToPlayer();
 		return STAY;
 	}
@@ -1006,6 +1008,16 @@ bool bt_guard::turnTo(VEC3 dest) {
 
 	//Ha acabado el giro?
 	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
+}
+
+bool bt_guard::turnToPlayer()
+{
+	CEntity* ePlayer = getPlayer();
+	if (ePlayer) {
+		GET_COMP(tPlayer, CHandle(ePlayer), TCompTransform);
+		return turnTo(tPlayer->getPosition());
+	}
+	return true;
 }
 
 //THIS IS NOT USED!
