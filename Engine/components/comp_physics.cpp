@@ -35,12 +35,12 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 			filter.word0 |= ItLightensFilter::ePLATFORM;
 		}
 
-		else if (h.hasTag("fragment")) {
+		/*else if (h.hasTag("fragment")) {
 			filter.word0 = ItLightensFilter::eFRAGMENT;
 			filter.word1 = PXM_NO_PLAYER_NPC;
-		}
+		}*/
 		else if (m_collisionType == STATIC_OBJECT) {
-			filter.word1 |= ItLightensFilter::eSCENE;
+			filter.word0 |= ItLightensFilter::eSCENE;
 		}
 		else {
 			filter.word0 |= ItLightensFilter::eOBJECT;
@@ -51,14 +51,18 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 	PxRigidActor *actor = m_pActor->isRigidActor();
 	if (actor) {
 		filter.word1 = ItLightensFilter::eALL;
-		g_PhysxManager->setupFiltering(actor, filter);
+		
 		if (h.hasTag("fragment")) {
 			PxRigidDynamic * rd = actor->isRigidDynamic();
 			if (rd) {
-				rd->setRigidDynamicFlag(PxRigidDynamicFlag::eENABLE_CCD, true);
-				rd->setRigidDynamicFlag(PxRigidDynamicFlag::eENABLE_CCD_FRICTION, true);
+				//rd->setRigidDynamicFlag(PxRigidDynamicFlag::eENABLE_CCD, true);
+				//rd->setRigidDynamicFlag(PxRigidDynamicFlag::eENABLE_CCD_FRICTION, true);
 			}
+
+			//filter.word2 |= ItLightensFilter::eCCD;
 		}
+
+		g_PhysxManager->setupFiltering(actor, filter);
 	}
 	//filter.word0 = ItLightensFilter::eALL;
 	
@@ -83,7 +87,7 @@ bool TCompPhysics::load(MKeyValue & atts)
 		break;
 	case BOX:
 		m_size = atts.getPoint("size");
-		m_size = m_size/2;
+		m_size = m_size/2.0f;
 		break;
 	case CAPSULE:
 		m_radius = atts.getFloat("radius", 0.5f);
@@ -188,7 +192,6 @@ void TCompPhysics::update(float dt)
 		//quat.CreateFromAxisAngle(anglesEuler,0.0f);
 		VEC3 up_mesh = tmx->getUp();
 		VEC3 pos = PxVec3ToVec3(curr_pose.p);
-		//if (m_collisionShape == BOX) pos -= 0.5*up_mesh; 		//TODO: Origin from shape at center!!!!! mesh center at foot, FIX THAT, temp solution
 		tmx->setPosition(pos);
 		
 	}
@@ -202,6 +205,7 @@ bool TCompPhysics::createTriMeshShape()
 	CHandle entity_h = CHandle(this).getOwner();
 	CEntity *e = nullptr;
 	if(entity_h.isValid()) e = entity_h;
+	m_restitution = 0;
 	if (e) {
 
 		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
@@ -230,7 +234,11 @@ bool TCompPhysics::createTriMeshShape()
 
 bool TCompPhysics::createBoxShape()
 {
-	m_pShape = g_PhysxManager->CreatePxBox(Vec3ToPxVec3(m_size), m_staticFriction, m_dynamicFriction, m_restitution);
+	PxVec3 size = Vec3ToPxVec3(m_size);
+	m_staticFriction = 1.0;
+	m_dynamicFriction = 1.0;
+	m_restitution = 0.f;
+	m_pShape = g_PhysxManager->CreatePxBox(size, m_staticFriction, m_dynamicFriction, m_restitution);
 	addRigidbodyScene();
 	return true;
 }

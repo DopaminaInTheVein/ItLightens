@@ -69,7 +69,7 @@ class CPhysxManager :	public IAppModule,
 #endif
 
 	PxReal t_to_update = 0.0f;
-	PxReal t_max_update = 1/60.0f;
+	PxReal t_max_update = 1 / 30.0f;
 
 
 	//memory raycast, used for point-to-point
@@ -122,7 +122,7 @@ public:
 	void					update(float dt) override;
 
 	//set flags
-	void					setupFiltering(PxRigidActor * actor, PxFilterData& filterData);
+	void					setupFiltering(PxRigidActor * actor, const PxFilterData& filterData);
 
 	//gets
 
@@ -260,13 +260,13 @@ public:
 	//-----------------------------------------------------------------------------------------------------
 
 	virtual PxQueryHitType::Enum postFilter(const PxFilterData& filterData, const PxQueryHit& hit) {
-		if (filterData.word1 & ItLightensFilter::eCOLLISION)
+		if (filterData.word2 & ItLightensFilter::eCOLLISION)
 			return PxSceneQueryHitType::eBLOCK;
 		else
 			return PxSceneQueryHitType::eNONE;
 	}
 	virtual PxQueryHitType::Enum preFilter(const PxFilterData& filterData, const PxShape* shape, const PxRigidActor* actor, PxHitFlags& queryFlags) {
-		if (filterData.word1 & ItLightensFilter::eCOLLISION)
+		if (filterData.word2 & ItLightensFilter::eCOLLISION)
 			return PxSceneQueryHitType::eBLOCK;
 		else
 			return PxSceneQueryHitType::eNONE;
@@ -293,6 +293,7 @@ public:
 
 	virtual PxControllerBehaviorFlags getBehaviorFlags(const PxShape& shape, const PxActor& actor) {
 		//TODO: filter platforms
+		return PxControllerBehaviorFlags(0);
 		return PxControllerBehaviorFlag::eCCT_SLIDE | PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
 	}
 	virtual PxControllerBehaviorFlags getBehaviorFlags(const PxController& controller) {
@@ -300,6 +301,7 @@ public:
 	}
 	virtual PxControllerBehaviorFlags getBehaviorFlags(const PxObstacle& obstacle) {
 		//TODO: filter platforms
+		return PxControllerBehaviorFlags(0);
 		return PxControllerBehaviorFlag::eCCT_SLIDE | PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT;
 	}
 

@@ -249,12 +249,15 @@
 <name
    name="nivel"/>
 <transform
-   pos="176.65 137.731 -698.851"
+   pos="-92.5698 -5.43372 -20.3877"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/nivel.static_mesh"/>
-<rigidbody
+<!--<render_static_mesh
+   name="static_meshes/whitebox/nivel.static_mesh"/>-->
+ <rigidbody
+   type_shape="box"
+   size="100.38976 10.8574 100.12"
+   mass="5"
    type_collision="static"/>
 
 </entity>
@@ -437,6 +440,7 @@
    scale="1.0"/>
 
 </entity>
+  <!--
 <entity
    slept="yes">
 <tags
@@ -470,7 +474,7 @@
    name="static_meshes/whitebox/pared_mole001.static_mesh"/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
+   type_shape="sphere"
    size="0.163 0.833 0.661"
    mass="100"/>
 
@@ -489,27 +493,29 @@
    name="static_meshes/whitebox/pared_mole003.static_mesh"/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
+   type_shape="sphere"
+   radius ="0.05"
    size="0.163 0.283 0.661"
    mass="5"/>
 
 </entity>
+-->
 <entity
-   slept="yes">
+   slept="no">
 <tags
    tags="fragment wall1_fragment"/>
 <name
    name="pared_mole002"/>
 <transform
    pos="-93.9013 0.614349 -15.5583"
-   quat="0 0 0 1.0"
+   quat="0.0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole002.static_mesh"/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
-   size="0.163 0.283 0.661"
+   size="0.5 0.5 0.5"
    mass="5"/>
 
 </entity>
@@ -527,7 +533,7 @@
    name="static_meshes/whitebox/pared_mole001.static_mesh"/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
+   type_shape="sphere"
    size="0.163 0.283 0.661"
    mass="5"/>
 

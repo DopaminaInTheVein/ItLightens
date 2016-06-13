@@ -54,7 +54,7 @@ bool CPhysxManager::start()
 		fatal("PxCreateFoundation failed!");
 
 	//init ProfileZoneManager
-	bool recordMemoryAllocations = true;
+	/*bool recordMemoryAllocations = true;
 	m_pProfileZoneManager = &PxProfileZoneManager::createProfileZoneManager(m_pFoundation);
 	if (!m_pProfileZoneManager)
 		fatal("PxProfileZoneManager::createProfileZoneManager failed!");
@@ -62,14 +62,21 @@ bool CPhysxManager::start()
 
 	//init Physics
 	m_pPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pFoundation,
-		PxTolerancesScale(), recordMemoryAllocations, m_pProfileZoneManager);
+		scale, recordMemoryAllocations, m_pProfileZoneManager);
+		*/
+
+	m_pPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pFoundation,
+		scale);
 
 	assert(m_pPhysics);
 	if (!m_pPhysics)
 		fatal("PxCreatePhysics failed!");
 
 	//init cooking
-	m_pCooking = PxCreateCooking(PX_PHYSICS_VERSION, *m_pFoundation, PxCookingParams(scale));
+	PxCookingParams params(scale);
+	params.meshWeldTolerance = 0.001f;
+	params.meshPreprocessParams = PxMeshPreprocessingFlags(PxMeshPreprocessingFlag::eWELD_VERTICES | PxMeshPreprocessingFlag::eREMOVE_UNREFERENCED_VERTICES | PxMeshPreprocessingFlag::eREMOVE_DUPLICATED_TRIANGLES);
+	m_pCooking = PxCreateCooking(PX_PHYSICS_VERSION, *m_pFoundation, params);
 
 	assert(m_pCooking);
 	if (!m_pCooking)
@@ -80,7 +87,7 @@ bool CPhysxManager::start()
 		fatal("PxInitExtensions failed!");
 
 	//init scene
-	PxSceneDesc sceneDesc(m_pPhysics->getTolerancesScale());
+	PxSceneDesc sceneDesc(scale);
 	customizeSceneDesc(sceneDesc);
 
 	if (!sceneDesc.cpuDispatcher)
@@ -175,15 +182,16 @@ void CPhysxManager::update(float dt)
 	t_to_update += getDeltaTime();
 	if (t_to_update >= t_max_update) {
 
-		CEntitiesModule::fixedUpdate(t_to_update);
+		CEntitiesModule::fixedUpdate(t_max_update);
 
-		m_pScene->simulate(t_to_update);
+		m_pScene->simulate(t_max_update);
 		m_pScene->fetchResults(true);
 
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
 		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
 
 		t_to_update -= t_max_update;
+		t_to_update = 0;
 	}
 }
 
@@ -195,7 +203,7 @@ void CPhysxManager::update(float dt)
 #pragma region customize functions
 
 // set filter tags
-void CPhysxManager::setupFiltering(PxRigidActor* actor, PxFilterData& filterData)
+void CPhysxManager::setupFiltering(PxRigidActor* actor, const PxFilterData& filterData)
 {
 	const PxU32 numShapes = actor->getNbShapes();
 	PxShape **ptr;
@@ -209,7 +217,7 @@ void CPhysxManager::setupFiltering(PxRigidActor* actor, PxFilterData& filterData
 		shape->setQueryFilterData(filterData);
 	}
 
-	free(ptr);
+	//free(ptr);
 }
 
 #pragma endregion
@@ -279,9 +287,17 @@ PxShape * CPhysxManager::CreatePxCapsule(PxReal radius, PxReal halfHeight, PxRea
 
 PxShape * CPhysxManager::CreatePxBox(const PxVec3& size, PxReal staticFriction, PxReal dynamicFriction, PxReal restitution)
 {
-	PxShape *box = m_pPhysics->createShape(PxBoxGeometry(size), 
-										*m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution),true);
+	PxMaterial *material = m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution);
+	material->setRestitutionCombineMode(PxCombineMode::eMIN);
+	PxBoxGeometry geom = PxBoxGeometry(size);
+	if (!geom.isValid()) {
+		int i = 0;
+	}
+	PxShape *box = m_pPhysics->createShape(geom,
+		*material, true);
 	
+	
+
 	return box;
 }
 

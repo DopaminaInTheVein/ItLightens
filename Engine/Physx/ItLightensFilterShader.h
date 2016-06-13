@@ -34,6 +34,7 @@ public:
 	enum descObjectBehaviour {
 		eCOLLISION 		= (1 << 0),
 		eCAN_TRIGGER 		= (1 << 1),
+		eCCD			= (1 << 2),
 	};
 
 
@@ -52,6 +53,7 @@ public:
 		PxFilterObjectAttributes attributes1, PxFilterData filterData1,
 		PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
 	{
+
 		// let triggers through
 		if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
 		{
@@ -64,15 +66,15 @@ public:
 
 		//Continuos Collision Detction
 		//if (g_PhysxManager->ccdActive) {
-		if ((filterData0.word0 & eFRAGMENT || filterData1.word0 & eFRAGMENT)) {
+		/*if ((filterData0.word0 & eFRAGMENT || filterData1.word0 & eFRAGMENT)) {
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			pairFlags |= PxPairFlag::eCCD_LINEAR;
 			pairFlags |= PxPairFlag::eDETECT_CCD_CONTACT;
 			return PxFilterFlag::eDEFAULT;
-		}
+		}*/
 		//}
 
-		if ((filterData0.word0 & ePLAYER_BASE && filterData1.word0 & ePLATFORM)) {
+		/*if ((filterData0.word0 & ePLAYER_BASE && filterData1.word0 & ePLATFORM)) {
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
 			return PxFilterFlag::eCALLBACK;
@@ -82,7 +84,7 @@ public:
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
 			return PxFilterFlag::eCALLBACK;
-		}
+		}*/
 
 		//Same for guard
 		//if ((filterData0.word0 & eGUARD && filterData1.word0 & ePLATFORM)) {
@@ -91,20 +93,31 @@ public:
 		//	return PxFilterFlag::eCALLBACK;
 		//}
 
-		if ((filterData1.word0 & eGUARD && filterData0.word0 & ePLATFORM)) {
+		/*if ((filterData1.word0 & eGUARD && filterData0.word0 & ePLATFORM)) {
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
 			return PxFilterFlag::eCALLBACK;
-		}
+		}*/
 
 		//pass collision only on objects with tag eCOLLISION
-		if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1) && (filterData1.word2 & eCOLLISION) && (filterData0.word2 & eCOLLISION))
+		if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1) && (filterData1.word2 & eCOLLISION) && (filterData0.word2 & eCOLLISION)){
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+			/*if (filterData0.word2 & eCCD || filterData1.word2 & eCCD) {
+				pairFlags |= PxPairFlag::eCCD_LINEAR;
+				//pairFlags |= PxPairFlag::eDETECT_CCD_CONTACT;
+				pairFlags |= PxPairFlag::eNOTIFY_TOUCH_CCD;
+			}*/
+
+			//pairFlags |= PxPairFlag::eNOTIFY_TOUCH_PERSISTS;
+
+			return PxFilterFlag::eDEFAULT;
+		}
 		else {
 			return PxFilterFlag::eDEFAULT;
 		}
 
-		return PxFilterFlag::eDEFAULT;
+		//collision not recognized
+		return PxFilterFlag::eSUPPRESS;
 	}
 };
 
