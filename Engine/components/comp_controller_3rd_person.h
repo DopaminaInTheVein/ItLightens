@@ -12,6 +12,7 @@
 #include "input\input.h"
 #include "app_modules/io/io.h"
 #include "comp_charactercontroller.h"
+#include "comp_camera_main.h"
 
 #define THIRD_PERSON_CONTROLLER_PLAYER_DIST				2.0f
 #define THIRD_PERSON_CONTROLLER_SPEEDY_DIST				5.f
@@ -82,7 +83,7 @@ public:
 		CEntity* e_owner = CHandle(this).getOwner();
 
 		//init aspect/ratio from screen
-		TCompCamera *camera = e_owner->get<TCompCamera>();
+		TCompCameraMain *camera = e_owner->get<TCompCameraMain>();
 		float ar = (float)app.getXRes() / (float)app.getYRes();
 		camera->setAspectRatio(ar);
 
@@ -119,11 +120,9 @@ public:
 		CEntity* e_owner = CHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
 		my_tmx->setPosition(hit);
-
 	}*/
 
 	void updateInput() {
-
 		float deltaYaw = 0.f;
 		float deltaPitch = 0.f;
 		int movement_x = 0;
@@ -162,7 +161,7 @@ public:
 		if (!GameController->GetFreeCamera())
 			personThirdController(dt);
 
-		else 
+		else
 			unlockedCameraController();
 	}
 
@@ -171,7 +170,7 @@ public:
 		CEntity* e_target = target;
 		if (!e_target)
 			return;
-		
+
 		updateInput();
 
 		TCompTransform* target_tmx = e_target->get<TCompTransform>();
@@ -193,14 +192,11 @@ public:
 		my_tmx->lookAt(origin, target_loc);
 		//Aplicar offset
 		my_tmx->setPosition(my_tmx->getPosition() + position_diff);
-
-
 	}
 
 	VEC3 GetOffset() const { return offset; }
-	
-	void unlockedCameraController() {
 
+	void unlockedCameraController() {
 		CEntity* e_owner = CHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
 		VEC3 origin = my_tmx->getPosition();
@@ -219,7 +215,6 @@ public:
 				origin.y += dt * speed_camera_unlocked;
 			if (io->keys['E'].isPressed())
 				origin.y -= dt * speed_camera_unlocked;
-		
 
 			if (io->mouse.wheel != 0) {
 				speed_camera_unlocked += io->mouse.wheel * 20 * dt;

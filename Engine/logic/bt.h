@@ -54,6 +54,12 @@ protected:
 	bool avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform, string nombreSala);
 	bool needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, string nombreSala, CEntity * molePursuingBoxi = nullptr);
 public:
+	//Prueba
+	int getPathDebug(const VEC3& startPoint, const VEC3& endPoint, string nombreSala) {
+		if (getPath(startPoint, endPoint, nombreSala)) return totalPathWpt;
+		else return -1;
+	}
+
 	string name;
 	// use a derived create to declare BT nodes for your specific BTs
 	virtual void create(string);
@@ -72,6 +78,10 @@ public:
 	void addEvent(string, btevent);
 	int execEvent(string);
 	void setCurrent(btnode *);
+
+	void initParent() {
+		currPathWpt = totalPathWpt = 0;
+	}
 
 	// call this once per frame to compute the AI. No need to derive this one,
 	// as the behaviours are derived via btactions and the tree is declared on create

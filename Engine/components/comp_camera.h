@@ -11,26 +11,12 @@ struct TMsgGetCullingViewProj;
 
 // ------------------------------------
 struct TCompCamera : public CCamera, public TCompBase {
-  bool detect_colsions;
-  float smoothDefault;
-  float smoothCurrent;
-
-  //Guided camera
-  CHandle guidedCamera;
-  //bool guidedCamera;
-  //int lastguidedCamPoint;
-  //VEC3 guided_positions[MAX_GUIDE_POINTS];
-  //CQuaternion guided_rotations[MAX_GUIDE_POINTS];
-  
-  void render() const;
-  void update(float dt);
-  bool checkColision(const VEC3& pos);
-  bool load(MKeyValue& atts);
-  void renderInMenu();
-  void updateFromEntityTransform(CEntity* e_owner);
-  void onGetViewProj(const TMsgGetCullingViewProj& msg);
-
-  void onGuidedCamera(const TMsgGuidedCamera&);
+	void render() const;
+	void update(float dt);
+	bool load(MKeyValue& atts);
+	void renderInMenu();
+	void updateFromEntityTransform(CEntity* e_owner);
+	void onGetViewProj(const TMsgGetCullingViewProj& msg);
 };
 
 #endif

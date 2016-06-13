@@ -67,12 +67,22 @@ fn _parse_transform = (
 ----------------------------------------------------------------------
 -- CAMERA  --
 ----------------------------------------------------------------------
+fn parseCameraCommon xml = (
+	xml.addAttr "znear" _parsingObject.nearrange
+	xml.addAttr "zfar" _parsingObject.farrange
+	xml.addAttr "fov" _parsingObject.fov
+)
+
 fn _parse_camera = (
 	-- Camera
 	xmlCamera = XML_PARSING.addChild "camera"
-	xmlCamera.addAttr "znear" _parsingObject.nearrange
-	xmlCamera.addAttr "zfar" _parsingObject.farrange
-	xmlCamera.addAttr "fov" _parsingObject.fov
+	parseCameraCommon xmlCamera
+)
+
+fn _parse_camera_main = (
+	-- Camera Main
+	xmlCamera = XML_PARSING.addChild "camera_main"
+	parseCameraCommon xmlCamera
 )
 
 ----------------------------------------------------------------------
@@ -180,10 +190,22 @@ fn _parse_render = (
 -- POLARIZED --
 ----------------------------------------------------------------------
 fn _parse_polarized = (
+	
+
+	
 	local polarized = findHelper "Polarized"
 	if (polarized != undefined) then (
 		local xmlPol = XML_PARSING.addChild "polarized"
 		xmlPol.addAttr "pol" (getUserProp polarized "pol")
+		local offset = polarized.pos - _parsingObject.pos
+		local offsetValues = #(offset.x, offset.z,-offset.y)
+		xmlPol.addAttr "offset" (getAsXmlValues offsetValues)		
+	) else (
+		local polarized = getUserProp _parsingObject "pol"
+		if (polarized != undefined) then (
+			local xmlPol = XML_PARSING.addChild "polarized"
+			xmlPol.addAttr "pol" polarized
+		)		
 	)
 )
 

@@ -36,10 +36,6 @@
 #define ST_LOOK_ARROUND		"look_arround"
 #define ST_SHOOTING_WALL	"shootingWall"
 
-//Cambio malla
-struct TCompRenderStaticMesh;
-class TCompCharacterController;
-
 class guard_alert {
 public:
 	VEC3 guard_position;
@@ -145,6 +141,7 @@ class bt_guard : public bt, public TCompBase
 	void goTo(const VEC3& dest);
 	void goForward(float stepForward);
 	bool turnTo(VEC3 dest);
+	bool turnToPlayer();
 	//VEC3 generateRandomPoint(); THIS IS NOT USED!
 
 	//Aux checks

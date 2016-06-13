@@ -4,7 +4,7 @@
 #include "comp_base.h"
 
 //Forward declaration
-class TCompCamera;
+class TCompCameraMain;
 class TCompTransform;
 
 class TCompGuidedCamera : public TCompBase {
@@ -34,7 +34,7 @@ public:
 	  ocity() const { return velocity; }
 
   void onGuidedCamera(const TMsgGuidedCamera&);
-  bool followGuide(TCompTransform*, TCompCamera*);
+  bool followGuide(TCompTransform*, TCompCameraMain*);
   void start(float speed = 0.f);
 };
 

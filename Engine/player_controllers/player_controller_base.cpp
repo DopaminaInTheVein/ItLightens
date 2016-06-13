@@ -12,7 +12,7 @@
 #include "components/entity_tags.h"
 
 #include "components/comp_msgs.h"
-#include "components/comp_camera.h"
+#include "components/comp_camera_main.h"
 
 #include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
@@ -401,7 +401,7 @@ void CPlayerBase::orbitCameraDeath() {
 	CEntity * camera_e = camera;
 	//TCompCamera* camera_transform = camera_e->get<TCompCamera>();
 	TCompTransform* player_transform = camera_e->get<TCompTransform>();
-	TCompCamera* player_cam = camera_e->get<TCompCamera>();
+	TCompCameraMain* player_cam = camera_e->get<TCompCameraMain>();
 
 	VEC3 entPos = player_transform->getPosition();
 	entPos.x -= target_transform->getPosition().x;

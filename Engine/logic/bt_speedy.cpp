@@ -30,6 +30,7 @@ void bt_speedy::readIniFileAttr() {
 }
 
 void bt_speedy::Init() {
+	initParent();
 	//read main attributes from file
 	readIniFileAttr();
 

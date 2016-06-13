@@ -93,6 +93,7 @@ void bt_guard::readIniFileAttr() {
 **************/
 void bt_guard::Init()
 {
+	initParent();
 	// read main attributes from file
 	readIniFileAttr();
 
@@ -203,7 +204,8 @@ bool bt_guard::playerDetected() {
 bool bt_guard::playerOutOfReach() {
 	PROFILE_FUNCTION("guard: player out of reach");
 	CEntity * ePlayer = getPlayer();
-
+	if (!playerVisible())
+		return true;
 	//Calc out of reach
 	bool res;
 	if (!ePlayer) {
@@ -318,6 +320,7 @@ int bt_guard::actionStepBack() {
 	PROFILE_FUNCTION("guard: actionstepback");
 	animController.setState(AST_MOVE);
 	goForward(-2.f*SPEED_WALK);
+	turnToPlayer();
 
 	if (playerNear()) return STAY;
 	else return OK;
@@ -401,6 +404,7 @@ int bt_guard::actionAbsorb() {
 		dbg("SHOOTING BACKWARDS!\n");
 		animController.setState(AST_SHOOT_BACK);
 		goForward(-0.9f*SPEED_WALK);
+		turnToPlayer();
 		shootToPlayer();
 		return STAY;
 	}
@@ -538,7 +542,7 @@ int bt_guard::actionSearch() {
 
 			VEC3 dir = playerPos - myPos;
 			dir.Normalize();
-			
+
 			search_player_point = playerPos + 1.0f * dir;
 
 			return OK;
@@ -656,10 +660,14 @@ int bt_guard::actionSeekWpt() {
 			return OK;
 		}
 		else {
-			getPath(myPos, dest, SBB::readSala());
-			animController.setState(AST_MOVE);
-			goTo(dest);
-			return STAY;
+			bool accesible = getPath(myPos, dest, SBB::readSala());
+			if (!accesible)
+				return OK;
+			else {
+				animController.setState(AST_MOVE);
+				goTo(dest);
+				return STAY;
+			}
 		}
 	}
 	//Look to waypoint
@@ -791,7 +799,7 @@ void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 	PROFILE_FUNCTION("guard: onmagneticbomb");
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 myPos = getTransform()->getPosition();
-	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
+	if (inSquaredRangeXZ_Y(msg.pos, myPos, msg.r, 5.f)) {
 		resetTimers();
 		stunned = true;
 		animController.setState(AST_STUNNED);
@@ -837,7 +845,7 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 }
 
 void bt_guard::checkStopDamage() {
-	if(sendMsgDmg){
+	if (sendMsgDmg) {
 		CEntity * ePlayer = getPlayer();
 		if (ePlayer) {
 			//End Damage Message
@@ -847,7 +855,7 @@ void bt_guard::checkStopDamage() {
 			dmg.source = compBaseEntity->getName();
 			dmg.type = Damage::ABSORB;
 			dmg.actived = false;
-		
+
 			ePlayer->sendMsg(dmg);
 		}
 	}
@@ -900,6 +908,44 @@ void bt_guard::goTo(const VEC3& dest) {
 	if (currPathWpt < totalPathWpt) {
 		target = pathWpts[currPathWpt];
 	}
+	/*else if (totalPathWpt == 0) {
+		TCompTransform * player_transform = getPlayer()->get<TCompTransform>();
+		VEC3 posPlayer = player_transform->getPosition();
+		VEC3 myPos = getTransform()->getPosition();
+
+		VEC3 dir = getTransform()->getPosition() - myPos;
+		dir.Normalize();
+
+		std::vector<VEC3> candidates;
+		bool trobat = false;
+
+		target = posPlayer + 2.0f * dir;
+		candidates.push_back(target);
+		target = posPlayer - 2.0f * dir;
+		candidates.push_back(target);
+
+		dir = player_transform->getLeft();
+		target = posPlayer + 2.0f * dir;
+		candidates.push_back(target);
+		target = posPlayer - 2.0f * dir;
+		candidates.push_back(target);
+
+		for (auto cand : candidates) {
+			bool accesible = getPath(myPos, cand, SBB::readSala());
+			if (!accesible)
+				continue;
+			else {
+				target = cand;
+				trobat = true;
+				break;
+			}
+		}
+
+		if (!trobat) {
+			setCurrent(NULL);
+			return;
+		}
+	}*/
 
 	if (needsSteering(npcPos, getTransform(), SPEED_WALK, myParent, SBB::readSala())) {
 		goForward(SPEED_WALK);
@@ -911,9 +957,6 @@ void bt_guard::goTo(const VEC3& dest) {
 		float distToWPT = simpleDistXZ(target, getTransform()->getPosition());
 		if (fabsf(distToWPT) > 0.1f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 0.2f) {
 			goForward(SPEED_WALK);
-		}
-		else if (totalPathWpt == 0) {
-			goForward(-SPEED_WALK);
 		}
 	}
 }
@@ -963,6 +1006,16 @@ bool bt_guard::turnTo(VEC3 dest) {
 
 	//Ha acabado el giro?
 	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
+}
+
+bool bt_guard::turnToPlayer()
+{
+	CEntity* ePlayer = getPlayer();
+	if (ePlayer) {
+		GET_COMP(tPlayer, CHandle(ePlayer), TCompTransform);
+		return turnTo(tPlayer->getPosition());
+	}
+	return true;
 }
 
 //THIS IS NOT USED!
@@ -1018,7 +1071,15 @@ bool bt_guard::playerVisible() {
 	}
 
 	if (simpleDist(posPlayer, myPos) < PLAYER_DETECTION_RADIUS) {
-		return true;
+		float distRay;
+		PxRaycastBuffer hit;
+		bool ret = rayCastToPlayer(1, distRay, hit);
+		if (ret) { //No bloquea vision
+			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+			if (h.hasTag("player")) { //player?
+				return true;
+			}
+		}
 	}
 
 	float distancia_vertical = squaredDistY(posPlayer, myPos);
@@ -1086,8 +1147,8 @@ bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hi
 	//rcQuery.types = types;
 	CEntity *e = myParent;
 	TCompCharacterController *cc = e->get<TCompCharacterController>();
-	Debug->DrawLine(origin + direction*(cc->GetRadius() + 0.1f), getTransform()->getFront(), 10.0f);
-	bool ret = g_PhysxManager->raycast(origin + direction*(cc->GetRadius() + 0.1f), direction, dist, hit);
+	Debug->DrawLine(origin + direction*(cc->GetRadius() + 0.05f), getTransform()->getFront(), 10.0f);
+	bool ret = g_PhysxManager->raycast(origin + direction*(cc->GetRadius() + 0.05f), direction, dist, hit);
 
 	if (ret)
 		distRay = hit.getAnyHit(0).distance;

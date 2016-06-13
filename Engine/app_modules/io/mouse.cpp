@@ -11,18 +11,19 @@ TMouse::TMouse()
 }
 
 void TMouse::update(float dt) {
-  if(captured_by_app)
-    centerSysMouse();
-  
-  left.setCurrentStatus(isKeyPressed(VK_LBUTTON));
-  left.update(dt);
-  right.setCurrentStatus(isKeyPressed(VK_RBUTTON));
-  right.update(dt);
-  middle.setCurrentStatus(isKeyPressed(VK_MBUTTON));
-  middle.update(dt);
+	if (captured_by_app) {
+		centerSysMouse();
 
-  if (io->keys[VK_TOGGLE_CONSOLE].becomesPressed())
-    toggle();
+		left.setCurrentStatus(isKeyPressed(VK_LBUTTON));
+		left.update(dt);
+		right.setCurrentStatus(isKeyPressed(VK_RBUTTON));
+		right.update(dt);
+		middle.setCurrentStatus(isKeyPressed(VK_MBUTTON));
+		middle.update(dt);
+	}
+
+	if (io->keys[VK_TOGGLE_CONSOLE].becomesPressed())
+		toggle();
 }
 
 void TMouse::start(HWND app_hWnd) {

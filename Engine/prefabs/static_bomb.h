@@ -2,25 +2,36 @@
 #define	INC_STATIC_BOMB_H_
 
 #include "components\comp_base.h"
+#include "logic\aicontroller.h"
 
 #include "handle\handle.h"
 
-class CStaticBomb : public TCompBase {
+class CEntity;
 
+class CStaticBomb : public TCompBase {
 	float t_explode = 5.0f;
 	float t_waiting = 0.0f;
-
-	float rad = 15.0f;
+	float x_local = 0.0f;
 
 	CHandle myHandle;
 	CHandle myParent;
 
+	CEntity *myEntity;
+
+	void SetMyEntity();
+
+protected:
+	// the states, as maps to functions
+	static map<string, statehandler> statemap;
 
 public:
-	void update(float elapsed);
-	void Explode();
-	void toExplode();
 
+	void Init();
+	void CountDown();
+	void Explode();
+
+	void UpdatePosition();
+	void update(float elapsed);
 	void destroy() {
 		myParent.destroy();
 	}

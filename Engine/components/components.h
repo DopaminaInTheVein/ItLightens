@@ -6,6 +6,8 @@
 #include "comp_transform.h"
 #include "comp_snoozer.h"
 #include "comp_camera.h"
+#include "comp_camera_main.h"
+#include "comp_guided_camera.h"
 #include "comp_render_static_mesh.h"
 #include "comp_controller_3rd_person.h"
 #include "comp_hierarchy.h"
@@ -23,7 +25,6 @@
 #include "comp_tracker.h"
 #include "comp_box_spawner.h"
 #include "comp_box_destructor.h"
-#include "comp_guided_camera.h"
 
 #include "comp_render_glow.h"
 
@@ -56,10 +57,12 @@
 //Physics
 #include "comp_physics.h"
 #include "comp_charactercontroller.h"
+#include "particles\ParticlesSystem.h"
 
 //prefabs
 #include "prefabs\magnetic_bomb.h"
 #include "prefabs\static_bomb.h"
+#include "prefabs\throw_bomb.h"
 #include "comp_wire.h"
 #include "comp_generator.h"
 #include "comp_polarized.h"
