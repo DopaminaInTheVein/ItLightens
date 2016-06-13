@@ -16,7 +16,7 @@
 #define PXM_ALL_LESS_STATIC (ItLightensFilter::ePLAYER_CONTROLLED | ItLightensFilter::ePLATFORM | ItLightensFilter::ePLAYER_BASE | ItLightensFilter::eLIQUID | ItLightensFilter::eCRYSTAL | ItLightensFilter::eGUARD | ItLightensFilter::ePOSSESSABLE | ItLightensFilter::eBOMB | ItLightensFilter::eOBJECT | ItLightensFilter::eFRAGMENT)
 #define PXM_CAMERA_COLLISIONS (ItLightensFilter::eSCENE) //| ItLightensFilter::eOBJECT
 
-#define GRAVITY -10.0f
+#define GRAVITY -9.8f
 
 using namespace physx;
 

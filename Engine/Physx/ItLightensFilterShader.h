@@ -117,7 +117,7 @@ public:
 		}
 
 		//collision not recognized
-		return PxFilterFlag::eSUPPRESS;
+		return PxFilterFlag::eKILL;
 	}
 };
 

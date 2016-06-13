@@ -78,6 +78,7 @@ bool TCompPhysics::load(MKeyValue & atts)
 	m_collisionShape = getCollisionShapeValueFromString(readString);
 	m_mass = atts.getFloat("mass", 2.0f);		//default enough to pass polarize threshold
 	m_kinematic = atts.getBool("kinematic", false);		//default enough to pass polarize threshold
+	int i;
 	switch (m_collisionShape) {
 	case TRI_MESH:
 		//nothing extra needed to read
@@ -87,6 +88,7 @@ bool TCompPhysics::load(MKeyValue & atts)
 		break;
 	case BOX:
 		m_size = atts.getPoint("size");
+		i = 0;
 		m_size = m_size/2.0f;
 		break;
 	case CAPSULE:

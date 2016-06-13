@@ -232,7 +232,7 @@ void CPhysxManager::customizeSceneDesc(PxSceneDesc& sceneDesc)
 	sceneDesc.gravity = PxVec3(0.0f, GRAVITY, 0.0f);
 	sceneDesc.filterShader = ItLightensFilter::ItLightensFilterShader;
 	sceneDesc.simulationEventCallback = this;
-	sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS | PxSceneFlag::eENABLE_CCD;
+	//sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS | PxSceneFlag::eENABLE_CCD;
 	sceneDesc.filterCallback = this;
 	//sceneDesc.flags |= PxSceneFlag::eREQUIRE_RW_LOCK;
 }
@@ -290,13 +290,9 @@ PxShape * CPhysxManager::CreatePxBox(const PxVec3& size, PxReal staticFriction, 
 	PxMaterial *material = m_pPhysics->createMaterial(staticFriction, dynamicFriction, restitution);
 	material->setRestitutionCombineMode(PxCombineMode::eMIN);
 	PxBoxGeometry geom = PxBoxGeometry(size);
-	if (!geom.isValid()) {
-		int i = 0;
-	}
+	assert(geom.isValid());
 	PxShape *box = m_pPhysics->createShape(geom,
 		*material, true);
-	
-	
 
 	return box;
 }
