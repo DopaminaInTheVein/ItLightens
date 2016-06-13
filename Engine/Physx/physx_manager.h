@@ -382,6 +382,14 @@ public:
 	//Not needed for now
 	//bool Createjoint(PxRigidActor* a1, PxRigidActor* a2, const PxTransform& tmx1, const PxTransform& tmx2, int typeJoint= eFixed);
 
+
+
+	//-----------------------------------------------------------------------------------------------------
+	//								Particles
+	//-----------------------------------------------------------------------------------------------------
+
+	PxParticleSystem * CreateParticleSystem(int max_particles);
+
 	//name for module
 	const char* getName() const {
 		return "physx";

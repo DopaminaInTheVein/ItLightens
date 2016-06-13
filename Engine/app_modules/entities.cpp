@@ -94,6 +94,9 @@ DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
 
 DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
 
+//particles
+DECL_OBJ_MANAGER("particles_system", CParticleSystem);
+
 /* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
@@ -181,6 +184,9 @@ bool CEntitiesModule::start() {
 
 	//Trackers
 	getHandleManager<TCompTracker>()->init(100);
+
+	//particles
+  	getHandleManager<CParticleSystem>()->init(MAX_ENTITIES);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -614,6 +620,9 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<magnet_door>()->updateAll(dt);
 		getHandleManager<elevator>()->updateAll(dt);
 		getHandleManager<TCompTracker>()->updateAll(dt);
+
+		//particles
+    		getHandleManager<CParticleSystem>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 		getHandleManager<TCompBoxDestructor>()->updateAll(dt);

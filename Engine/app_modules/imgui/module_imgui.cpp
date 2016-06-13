@@ -13,6 +13,8 @@
 #include "handle/object_manager.h"
 #include "render/draw_utils.h"
 
+#include "particles\particles_manager.h"
+
 #include <Commdlg.h>
 
 bool CImGuiModule::start() {
@@ -34,15 +36,18 @@ void CImGuiModule::update(float dt) {
   ImGui::Begin("Debug UI", &menu, ImVec2(800, 512), -1.0f, window_flags);
   ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 
-  //Console log
+  //Engine Apps
   //---------------------------------------
   if (ImGui::BeginMenuBar())
   {
-    if (ImGui::BeginMenu("Console Debug"))
+    if (ImGui::BeginMenu("Apps"))
     {
       ImGui::MenuItem("Log (L)", NULL, Debug->getStatus());
       ImGui::MenuItem("Commands (O)", NULL, Debug->GetCommandsConsoleState());
-      //Debug->OpenConsole();
+#ifdef _DEBUG
+	  ImGui::MenuItem("Particle editor (F8)", NULL, g_particlesManager->GetParticleEditorState());
+#endif
+	  //Debug->OpenConsole();
       ImGui::EndMenu();
     }
     ImGui::EndMenuBar();
@@ -224,6 +229,10 @@ void CImGuiModule::update(float dt) {
     ImGui::Checkbox("show culling collider", GameController->GetCullingRenderPointer());
   }
 
+  if (ImGui::CollapsingHeader("Particles")) {
+    g_particlesManager->renderInMenu();
+  }
+
   ImGui::End();
 #endif
   //TESTS DEBUG:
@@ -253,10 +262,11 @@ std::string CImGuiModule::getFilePath(char * filter, HWND owner)
   ZeroMemory(&ofn, sizeof(ofn));
   ofn.lStructSize = sizeof(OPENFILENAME);
   ofn.hwndOwner = owner;
+  ofn.lpstrInitialDir = NULL;
   ofn.lpstrFilter = filter;
   ofn.lpstrFile = fileName;
   ofn.nMaxFile = MAX_PATH;
-  ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+  ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_NOCHANGEDIR;
   ofn.lpstrDefExt = "";
   std::string fileNameStr;
   if (GetOpenFileName(&ofn))

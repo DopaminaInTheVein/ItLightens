@@ -1,0 +1,119 @@
+<particles_emitter
+	num_particles="200"
+>
+<collisions
+	num_particles="200"
+	value="1"
+	/>
+<gravity
+	num_particles="200"
+	value="0"
+	/>
+<use_physx
+	num_particles="200"
+	value="1"
+	/>
+<shape
+	angle="45"
+	max="1.000000 0.000000 1.000000"
+	min="-1.000000 0.000000 -1.000000"
+	num_particles="200"
+	radius="1"
+	type="4"
+	value="1"
+	/>
+<position
+	angle="45"
+	max="1.000000 0.000000 1.000000"
+	min="-1.000000 0.000000 -1.000000"
+	num_particles="200"
+	radius="1"
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	type="4"
+	value="0.000000 0.000000 0.000000"
+	/>
+<velocity
+	angle="45"
+	max="1.000000 0.000000 1.000000"
+	min="-1.000000 0.000000 -1.000000"
+	num_particles="200"
+	radius="1"
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	type="4"
+	value="0.000000 1.000000 0.000000"
+	/>
+<size
+	angle="45"
+	max="1.000000 0.000000 1.000000"
+	min="-1.000000 0.000000 -1.000000"
+	modifier="-1"
+	num_particles="200"
+	radius="1"
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	type="4"
+	value="1"
+	/>
+<lifetime
+	angle="45"
+	max="1.000000 0.000000 1.000000"
+	max_rand="0"
+	min="-1.000000 0.000000 -1.000000"
+	min_rand="0"
+	modifier="-1"
+	num_particles="200"
+	radius="1"
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	type="4"
+	value="1"
+	/>
+<acceleration
+	angle="45"
+	max="1.000000 0.000000 1.000000"
+	max_rand="0"
+	min="-1.000000 0.000000 -1.000000"
+	min_rand="0"
+	modifier="0.000000 0.000000 0.000000"
+	num_particles="200"
+	radius="1"
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	type="4"
+	value="0.000000 0.000000 0.000000"
+	/>
+<delay
+	angle="45"
+	delay_particle_rand="5"
+	delay_start="0"
+	max="1.000000 0.000000 1.000000"
+	max_rand="0"
+	min="-1.000000 0.000000 -1.000000"
+	min_rand="0"
+	modifier="0.000000 0.000000 0.000000"
+	num_particles="200"
+	radius="1"
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	type="4"
+	value="0.000000 0.000000 0.000000"
+	/>
+<color
+	angle="45"
+	delay_particle_rand="5"
+	delay_start="0"
+	max="1.000000 0.000000 1.000000"
+	max_rand="0"
+	min="-1.000000 0.000000 -1.000000"
+	min_rand="0"
+	modifier="1"
+	num_particles="200"
+	radius="1"
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	type="4"
+	value="1.000000 1.000000 1.000000 1.000000"
+	/>
+</particles_emitter>

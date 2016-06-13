@@ -1,0 +1,4 @@
+<tech>
+  <vs fx="particles" main="VS" decl="instanced_position_uv" />
+  <ps fx="particles" main="PS" />
+</tech>	
