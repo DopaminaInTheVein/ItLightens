@@ -60,6 +60,15 @@ float getDeltaTime(float always) {
 	return 0.0f;
 }
 
+float urandom() {
+  return (float)rand() / (float)RAND_MAX;
+}
+
+float random(float vmin, float vmax) {
+  return vmin + urandom() * (vmax - vmin);
+}
+
+
 float squared(float i) {
 	return i*i;
 }

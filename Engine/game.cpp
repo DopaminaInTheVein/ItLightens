@@ -17,6 +17,7 @@
 #include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "app_modules/sound_manager/sound_manager.h"
+#include "particles\particles_manager.h"
 
 #include "app_modules/render/module_render_deferred.h"
 #include "components/entity_parser.h"
@@ -51,26 +52,29 @@ bool CApp::start() {
 	auto render_deferred = new CRenderDeferredModule;
 	io = new CIOModule;     // It's the global io
 	g_PhysxManager = new CPhysxManager;
+	g_particlesManager = new CParticlesManager;
 	GameController = new CGameController;
 	Debug = new CDebug();
 	logic_manager = new CLogicManagerModule;
 	sound_manager = new CSoundManagerModule;
 
-	// Will contain all modules created
-	all_modules.push_back(imgui);
-	all_modules.push_back(Gui);
-	all_modules.push_back(g_PhysxManager);
-	all_modules.push_back(entities);
-	all_modules.push_back(io);
-	all_modules.push_back(GameController);
-	all_modules.push_back(Debug);
-	all_modules.push_back(render_deferred);
-	all_modules.push_back(logic_manager);
-	all_modules.push_back(sound_manager);
+  // Will contain all modules created
+  all_modules.push_back(imgui);
+  all_modules.push_back(Gui);
+  all_modules.push_back(g_PhysxManager);
+  all_modules.push_back(g_particlesManager);
+  all_modules.push_back(entities);
+  all_modules.push_back(io);
+  all_modules.push_back(GameController);
+  all_modules.push_back(Debug);
+  all_modules.push_back(render_deferred);
+  all_modules.push_back(logic_manager);
+  all_modules.push_back(sound_manager);
 
 	mod_update.push_back(logic_manager);
 	mod_update.push_back(sound_manager);
 	mod_update.push_back(entities);
+	mod_update.push_back(g_particlesManager);
 	mod_update.push_back(GameController);
 	mod_update.push_back(imgui);
 	mod_update.push_back(render_deferred);
@@ -82,6 +86,7 @@ bool CApp::start() {
 	mod_renders.push_back(render_deferred);
 	mod_renders.push_back(entities);
 	mod_renders.push_back(Debug);
+	mod_renders.push_back(g_particlesManager);
 	mod_renders.push_back(Gui);
 	mod_renders.push_back(imgui);
 
@@ -92,6 +97,7 @@ bool CApp::start() {
 	mod_init_order.push_back(render_deferred);
 	mod_init_order.push_back(io);
 	mod_init_order.push_back(g_PhysxManager);
+	mod_init_order.push_back(g_particlesManager);   //need to be initialized before the entities
 	mod_init_order.push_back(entities);
 	mod_init_order.push_back(logic_manager);
 	mod_init_order.push_back(sound_manager);

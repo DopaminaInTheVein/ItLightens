@@ -22,6 +22,7 @@ public:
     TRIANGLE_LIST = 2000
   , TRIANGLE_STRIP
   , LINE_LIST
+  , POINT_LIST
   };
 
   enum eVertexDecl {
@@ -32,6 +33,8 @@ public:
   , VTX_DECL_POSITION_NORMAL_UV_TANGENT = 1003
   , VTX_DECL_POSITION_NORMAL_UV_SKIN = 1102
   , VTX_DECL_POSITION_NORMAL_UV_TANGENT_SKIN = 1103
+  , VTX_DECL_INSTANCED_PARTICLES = 2000
+  , VTX_DECL_INSTANCED_DATA = 2001
   };
 
 	struct TGroup {
@@ -59,11 +62,15 @@ public:
     , eVertexDecl new_enum_vtx_decl
     , ePrimitiveType new_topology
     , const VGroups* groups = nullptr
+    , bool mesh_is_dynamic = false
     );
   void activate() const;
   void render() const;
   void renderGroup( uint32_t group_idx ) const;
   void activateAndRender() const;
+
+  void updateFromCPU(const void *new_cpu_data, size_t num_bytes_to_update = 0);
+  void renderInstanced(const CMesh* instances_data, size_t ninstances) const;
 
 	static FileDataMesh loadData(std::string path, CDataProvider & dp);
 	AABB getAABB() const { return aabb; }
