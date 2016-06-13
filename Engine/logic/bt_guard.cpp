@@ -558,13 +558,10 @@ int bt_guard::actionSearch() {
 			noiseHeard = false;
 			looking_around_time = LOOK_AROUND_TIME;
 
-			TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-			VEC3 playerPos = tPlayer->getPosition();
-
-			VEC3 dir = playerPos - myPos;
+			VEC3 dir = noisePoint - myPos;
 			dir.Normalize();
 
-			search_player_point = playerPos + 1.0f * dir;
+			search_player_point = noisePoint + 1.0f * dir;
 			Debug->DrawLine(myPos, search_player_point);
 			return OK;
 		}
@@ -785,6 +782,7 @@ void bt_guard::noise(const TMsgNoise& msg) {
 		resetTimers();
 		noisePoint = msg.source;
 		noiseHeard = true;
+    setCurrent(NULL);
 	}
 }
 
@@ -885,7 +883,7 @@ void bt_guard::onBoxHit(const TMsgBoxHit& msg) {
 
  // -- Go To -- //
 bool bt_guard::canHear(VEC3 position, float intensity) {
-	return (squaredDistXZ(getTransform()->getPosition(), position) < DIST_SQ_SOUND_DETECTION);
+	return (realDist(getTransform()->getPosition(), position) < DIST_SQ_SOUND_DETECTION);
 }
 
 // -- Go To -- //

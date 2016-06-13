@@ -344,7 +344,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
     }
   }
 
-  m_ctx->stopTimer(RC_TIMER_TOTAL);
+  //m_ctx->stopTimer(RC_TIMER_TOTAL);
 
   // Show performance stats.
   //duLogBuildTimes(*m_ctx, m_ctx->getAccumulatedTime(RC_TIMER_TOTAL));

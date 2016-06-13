@@ -10,7 +10,6 @@
 #include "components/entity.h"
 #include "handle/handle.h"
 #include "components/comp_msgs.h"
-#include "logic/ai_mole.h"
 #include "components/comp_render_static_mesh.h"
 #include "resources/resources_manager.h"
 #include "render/mesh.h"

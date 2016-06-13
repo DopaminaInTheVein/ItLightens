@@ -33,18 +33,14 @@ DECL_OBJ_MANAGER("snoozer", TCompSnoozer);
 DECL_OBJ_MANAGER("camera", TCompCamera);
 DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
 DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
-/****/DECL_OBJ_MANAGER("cientifico", ai_scientific);
 DECL_OBJ_MANAGER("bt_scientist", bt_scientist);
 DECL_OBJ_MANAGER("beacon", beacon_controller);
 DECL_OBJ_MANAGER("workbench", workbench_controller);
 DECL_OBJ_MANAGER("hierarchy", TCompHierarchy);
 DECL_OBJ_MANAGER("magnet_door", magnet_door);
 DECL_OBJ_MANAGER("elevator", elevator);
-/****/DECL_OBJ_MANAGER("ai_guard", ai_guard);
 DECL_OBJ_MANAGER("bt_guard", bt_guard);
-/****/DECL_OBJ_MANAGER("ai_mole", ai_mole);
 DECL_OBJ_MANAGER("bt_mole", bt_mole);
-/****/DECL_OBJ_MANAGER("ai_speedy", ai_speedy);
 DECL_OBJ_MANAGER("bt_speedy", bt_speedy);
 DECL_OBJ_MANAGER("water", water_controller);
 DECL_OBJ_MANAGER("player", player_controller);
@@ -117,8 +113,6 @@ bool CEntitiesModule::start() {
   getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
   getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
   getHandleManager<TCompCulling>()->init(8);
-  getHandleManager<TCompLightDir>()->init(8);
-  getHandleManager<TCompLightDirShadows>()->init(8);
   getHandleManager<player_controller>()->init(8);
   getHandleManager<player_controller_speedy>()->init(8);
   getHandleManager<player_controller_mole>()->init(8);
@@ -147,6 +141,7 @@ bool CEntitiesModule::start() {
   getHandleManager<TCompLightDir>()->init(4);
   getHandleManager<TCompLightFadable>()->init(4);
   getHandleManager<TCompLightPoint>()->init(32);
+  getHandleManager<TCompLightDirShadows>()->init(8);
 
   getHandleManager<bt_guard>()->init(MAX_ENTITIES);
   getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -196,10 +191,8 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(player_controller, TMsgDamageSpecific, onSetDamage);
   SUBSCRIBE(player_controller_speedy, TMsgSetCamera, onSetCamera);
   SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
-  SUBSCRIBE(ai_speedy, TMsgSetPlayer, onSetPlayer);
-  SUBSCRIBE(bt_speedy, TMsgSetPlayer, onSetPlayer);
-  SUBSCRIBE(bt_scientist, TMsgBeaconToRemove, onRemoveBeacon);			//Beacon to remove
-  SUBSCRIBE(bt_scientist, TMsgBeaconEmpty, onEmptyBeacon);				//Beacon empty
+  //	SUBSCRIBE(bt_speedy, TMsgSetPlayer, onSetPlayer);
+
   SUBSCRIBE(bt_scientist, TMsgWBEmpty, onEmptyWB);						//Workbench empty
   SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
   SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
@@ -539,8 +532,8 @@ void CEntitiesModule::update(float dt) {
   //Test
   //if (io->keys['Z'].becomesPressed()) {
      // for (int i = 0; i < 1; i++) {
-      //  if (size() == 0) break;
-      //  destroyRandomEntity(0.1f);
+    //  if (size() == 0) break;
+    //  destroyRandomEntity(0.1f);
      // }
   //}
 

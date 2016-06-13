@@ -199,18 +199,6 @@
     <ClCompile Include="logic\btnode.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_guard.cpp">
-      <Filter>logic_old</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\ai_mole.cpp">
-      <Filter>logic_old</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\ai_poss.cpp">
-      <Filter>logic_old</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\ai_speedy.cpp">
-      <Filter>logic_old</Filter>
-    </ClCompile>
     <ClCompile Include="input\input.cpp">
       <Filter>input</Filter>
     </ClCompile>
@@ -436,9 +424,6 @@
     </ClCompile>
     <ClCompile Include="logic\bt_scientist.cpp">
       <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\ai_scientific.cpp">
-      <Filter>logic_old</Filter>
     </ClCompile>
     <ClCompile Include="components\comp_snoozer.cpp">
       <Filter>components</Filter>
@@ -694,18 +679,6 @@
     </ClInclude>
     <ClInclude Include="logic\btnode.h">
       <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_guard.h">
-      <Filter>logic_old</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_mole.h">
-      <Filter>logic_old</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_poss.h">
-      <Filter>logic_old</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_speedy.h">
-      <Filter>logic_old</Filter>
     </ClInclude>
     <ClInclude Include="input\input.h">
       <Filter>input</Filter>
@@ -1145,9 +1118,6 @@
     <ClInclude Include="logic\bt_scientist.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\ai_scientific.h">
-      <Filter>logic_old</Filter>
-    </ClInclude>
     <ClInclude Include="components\comp_snoozer.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -1344,9 +1314,6 @@
     </Filter>
     <Filter Include="physx">
       <UniqueIdentifier>{16d1a48c-1e04-411f-8706-8555b3d2c0b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="logic_old">
-      <UniqueIdentifier>{cfd37209-5b4f-484a-a06d-56d3541bf572}</UniqueIdentifier>
     </Filter>
     <Filter Include="input">
       <UniqueIdentifier>{3cada1c5-734d-4cb7-a898-3db5437867da}</UniqueIdentifier>
