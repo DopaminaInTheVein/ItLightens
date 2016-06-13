@@ -46,6 +46,7 @@ void CThrowBomb::Init(float lmax, float hmax) {
 		PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
 		PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
 	));
+	rd->setSleepThreshold(0.00001f);
 	/*rd->setKinematicTarget(PxTransform(
 		PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
 		PhysxConversion::CQuaternionToPxQuat(transform->getRotation())

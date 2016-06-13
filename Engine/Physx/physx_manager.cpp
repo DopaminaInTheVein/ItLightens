@@ -177,7 +177,8 @@ void CPhysxManager::update(float dt)
 	if (t_to_update >= t_max_update) {
 		CEntitiesModule::fixedUpdate(t_to_update);
 
-		m_pScene->simulate(t_to_update);
+		//m_pScene->simulate(t_to_update);
+		m_pScene->simulate(t_max_update);
 		m_pScene->fetchResults(true);
 
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
