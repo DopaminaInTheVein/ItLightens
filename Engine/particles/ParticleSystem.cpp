@@ -51,9 +51,12 @@ bool CParticleSystem::loadFileValues(MKeyValue& atts, std::string element) {
 		<color value = "x y z w" modifier = "float"/>
 	<particles_emitter/>
 	*/
-	if (element == "particles_emitter") 
+	if (element == "particles_emitter") {
 		m_numParticles = atts.getInt("num_particles", 1);
-
+		m_particles = TParticleData(m_numParticles);
+		m_RenderParticles.clear();
+		m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
+	}
 	if (element == "collisions")
 		m_Emitter.SetCollisions(atts.getBool("value", true));
 
@@ -73,46 +76,46 @@ bool CParticleSystem::loadFileValues(MKeyValue& atts, std::string element) {
 
 	if (element == "position")
 	{
-		m_Emitter.SetPosition();
-		m_Emitter.SetPositionRandomMin();
-		m_Emitter.SetPositionRandomMax();
+		m_Emitter.SetPosition(PhysxConversion::Vec3ToPxVec3(atts.getPoint("value")));
+		m_Emitter.SetPositionRandomMin(PhysxConversion::Vec3ToPxVec3(atts.getPoint("randmin")));
+		m_Emitter.SetPositionRandomMax(PhysxConversion::Vec3ToPxVec3(atts.getPoint("randmax")));
 	}
 
 	if (element == "velocity")
 	{
-		m_Emitter.SetVelocity();
-		m_Emitter.SetVelocityRandomMax();
-		m_Emitter.SetVelocityRandomMin();
+		m_Emitter.SetVelocity(PhysxConversion::Vec3ToPxVec3(atts.getPoint("value")));
+		m_Emitter.SetVelocityRandomMin(PhysxConversion::Vec3ToPxVec3(atts.getPoint("randmin")));
+		m_Emitter.SetVelocityRandomMax(PhysxConversion::Vec3ToPxVec3(atts.getPoint("randmax")));
 	}
 
 	if (element == "size")
 	{
-		m_Emitter.SetSize();
-		m_Emitter.SetModifierSize();
+		m_Emitter.SetSize(atts.getFloat("value", 1.0f));
+		m_Emitter.SetModifierSize(atts.getFloat("modifier", 1.0f));
 	}
 
 	if (element == "lifetime")
 	{
-		m_Emitter.SetLifeTime();
-		m_Emitter.SetLifeTimeRandmoMax();
-		m_Emitter.SetLifeTimeRandomMin();
+		m_Emitter.SetLifeTime(atts.getFloat("value", 1.0f));
+		m_Emitter.SetLifeTimeRandmoMax(atts.getFloat("max_rand", 1.0f));
+		m_Emitter.SetLifeTimeRandomMin(atts.getFloat("min_rand", 1.0f));
 	}
 
 	if (element == "acceleration")
 	{
-		m_Emitter.SetAcceleration();
-		m_Emitter.SetAccelModifier();
+		m_Emitter.SetAcceleration(PhysxConversion::Vec3ToPxVec3(atts.getPoint("value")));
+		m_Emitter.SetAccelModifier(PhysxConversion::Vec3ToPxVec3(atts.getPoint("modifier")));
 	}
 	if (element == "delay")
 	{
-		m_Emitter.SetDelayStart();
-		m_Emitter.SetRandomDelay();
+		m_Emitter.SetDelayStart(atts.getFloat("delay_start", 0.0f));
+		m_Emitter.SetRandomDelay(atts.getFloat("delay_particle_rand", 1.0f));
 	}
 
 	if (element == "color")
 	{
-		m_Emitter.SetColor();
-		m_Emitter.SetModifierColor();
+		m_Emitter.SetColor(PhysxConversion::VEC4ToPxVec4(atts.getQuat("color")));
+		m_Emitter.SetModifierColor(atts.getFloat("modifier", 1.0f));
 	}
 
 	return true;
@@ -674,8 +677,8 @@ void CParticleSystem::renderInMenu()
 
     ImGui::Checkbox("random velocity range", &random_value_velocity);
     if (!random_value_velocity) {
-      if (ImGui::DragFloat3("initial velocity particles", &m_initial_velocity.x, 0.1f)) {
-		  m_Emitter.SetVelocity(m_initial_velocity);
+      if (ImGui::DragFloat3("initial velocity particles", &m_Emitter.GetVelocity()->x, 0.1f)) {
+		  m_initial_velocity = *m_Emitter.GetVelocity();
         for (int i = 0; i < m_particles.numParticles; i++) {
           m_particles.velocityInitBuffer[i] = m_initial_velocity;
         }
@@ -695,7 +698,7 @@ void CParticleSystem::renderInMenu()
 
     ImGui::Checkbox("random position range", &random_value_position);
     if (!random_value_position) {
-      if (ImGui::DragFloat3("initial position particles", &m_initial_pos.x, 0.1f)) {
+      if (ImGui::DragFloat3("initial position particles", &m_Emitter.GetPosition()->x, 0.1f)) {
 		  m_Emitter.SetPosition(m_initial_pos);
         for (int i = 0; i < m_particles.numParticles; i++) {
           m_particles.positionInitBuffer[i] = m_initial_pos;
@@ -716,7 +719,7 @@ void CParticleSystem::renderInMenu()
 	ImGui::Checkbox("random color range", &random_value_color);
 	if (!random_value_color) {
 		
-		if (ImGui::DragFloat4("initial velocity particles", &m_Emitter.GetColor()->x, 0.1f)) {
+		if (ImGui::DragFloat4("color influence particles", &m_Emitter.GetColor()->x, 0.1f)) {
 			for (int i = 0; i < m_particles.numParticles; i++) {
 				m_particles.colorBuffer[i] = PhysxConversion::PxVec4ToVec4(*m_Emitter.GetColor());
 			}

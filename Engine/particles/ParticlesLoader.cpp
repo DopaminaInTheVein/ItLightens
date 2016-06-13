@@ -10,12 +10,13 @@ void CParticleLoader::onStartElement(const std::string & elem, MKeyValue & atts)
 		return;
 	}
 
-	if (elem == "particles_emitter") {
+	//if (elem == "particles_emitter") {
 		m_pParticles_system->loadFileValues(atts, elem);
-	}
+	//}
 }
 
 void CParticleLoader::onEndElement(const std::string & elem)
 {
-	//nothing
+	if (elem == "particles_emitter")
+		m_pParticles_system->SetBufferData();
 }

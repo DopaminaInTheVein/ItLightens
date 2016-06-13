@@ -18,7 +18,7 @@ float random(float vmin, float vmax) {
 
 bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
   global_time = 0.f;
-
+  if (n < 1) return false;
   tech = Resources.get("particles.tech")->as<CRenderTechnique>();;
   texture = Resources.get("textures/fire.dds")->as<CTexture>();;
 
@@ -76,6 +76,8 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
   // Update particles using some cpu code
   global_time += elapsed;
   int idx = 1;
+
+  if (particle_data.indexBuffer.size() != instances.size()) return;
 
   for (auto& p : instances) {
     p.nframe += elapsed;

@@ -224,7 +224,7 @@ public:
   //-----------------------------------------------------------------
   PxVec3* GetAcceleration() { return &m_acceleration; }
   void SetAcceleration(const PxVec3& new_accel) {
-    m_initialVelocity = new_accel;
+	  m_acceleration = new_accel;
   }
 
   PxVec3* GetAccelModifier() { return &m_accel_modifier; }

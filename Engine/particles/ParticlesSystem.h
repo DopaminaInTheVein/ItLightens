@@ -51,7 +51,7 @@ class CParticleSystem : public TCompBase {
   std::vector<int> list_bones;
 
   void UpdateRandomsAttr();
-  void SetBufferData();
+  
 
 public:
 
@@ -70,6 +70,7 @@ public:
   bool CreateParticles(TParticleData& particles);
   void update(float elapsed);
   
+  void SetBufferData();
   bool load(MKeyValue& atts);
 
   bool loadFileValues(MKeyValue & atts, std::string element);
