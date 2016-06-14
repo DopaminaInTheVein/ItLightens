@@ -80,7 +80,6 @@ void player_controller::Init() {
 	animController.init(myEntity);
 
 	setLife(init_life);
-	lastForces = VEC3(0, 0, 0);
 
 	ChangeState("idle");
 	animController.setState(AST_IDLE);
@@ -238,10 +237,6 @@ void player_controller::DoubleJump()
 
 void player_controller::DoubleFalling() {
 	animController.setState(AST_FALL);
-	if (pol_orbit && !pol_orbit_prev) {
-		ChangeState("falling");
-		animController.setState(AST_FALL);
-	}
 	PROFILE_FUNCTION("player controller: double falling");
 	UpdateDirection();
 	UpdateMovDirection();
@@ -341,103 +336,59 @@ void player_controller::RecalcAttractions()
 	PROFILE_FUNCTION("player controller: recalc attraction");
 
 	// Calc all_forces & Find Orbit force if exists
-	VEC3 all_forces = VEC3(0, 0, 0); //Regular forces sum
 	if (pol_state != NEUTRAL && polarityForces.size() > 0) {
+		// Remove gravity, we will control the player
+		cc->SetGravity(false);
+
 		TCompTransform * t = myEntity->get<TCompTransform>();
 		VEC3 posPlayer = t->getPosition();
-		PolarityForce nearestForce; //Orbit force (if exists)
-		float lowestDist = FLT_MAX;
+		
 		for (auto forceHandle : polarityForces) {
-			PolarityForce force = getPolarityForce(forceHandle);
 
-#ifndef NDEBUG
-			{
-				Debug->DrawLine(transform->getPosition(), transform->getPosition() + force.deltaPos, VEC3(1.f, 0, 0));
-				VEC3 deltaNorm = force.deltaPos;
-				deltaNorm.Normalize();
-				Debug->DrawLine(transform->getPosition() + VEC3(0.f, 0.1f, 0.f), transform->getPosition() + deltaNorm * sqrt(force.distance), VEC3(0.f, 1.f, 0));
-			}
-#endif
+			PolarityForce force = getPolarityForce(forceHandle);
 
 			if (force.polarity == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
 
 			VEC3 localForce = calcForceEffect(force);
 			assert(isValid(localForce));
-			all_forces += localForce;
+			all_forces.push_back(localForce);
+			force_ponderations.push_back(1.0f);
 
-			// The first near force discard other forces (we asume no points too close)
-			if (force.distance < lowestDist) {
-				nearestForce = force;
-				lowestDist = force.distance;
-			}
 		}
 
-		VEC3 final_forces = calcFinalForces(all_forces, nearestForce);
-		polarityMoveResistance(nearestForce);
-
-		// Stop inertia if enter with attraction
-		if (pol_orbit && !pol_orbit_prev) {
-			cc->ChangeSpeed(POL_SPEED_ORBITA);
-		}
-		// Otherwise apply inertia
-		//else {
-		  //final_forces = (lastForces * POL_INERTIA) + ( final_forces * (1 - POL_INERTIA));
-		//}
+		// Calculo de la fuerza resultante
+		VEC3 final_forces = calcFinalForces(all_forces,	force_ponderations);
 
 		//Apply and save forces
-		cc->AddSpeed(final_forces * getDeltaTime());
+		cc->AddMovement(final_forces * getDeltaTime());
 
-		//Anular gravedad
-		VEC3 antigravity = VEC3(0.f, 10.f, 0.f);
-		if (nearestForce.distance < POL_RCLOSE) {
-			// Near (if press button go up)
-			if (io->keys[VK_SPACE].isPressed()) antigravity.y += 5.f;
-		}
-		else {
-			// Far (Interpolate antigravity from 10 to 0)
-			antigravity.y = clamp(10.f - pow(nearestForce.distance - POL_RCLOSE, 2), 0.f, 10.f);
-		}
-		cc->AddSpeed(antigravity * getDeltaTime());
-		lastForces = final_forces;
 	}
 
-	//Last forces (util for inertia, not apllied now!)
-	lastForces = all_forces;
 }
 
+// Calculo de la fuerza que ejerce 1 objeto sobre el player
 VEC3 player_controller::calcForceEffect(const PolarityForce& force) {
 	PROFILE_FUNCTION("player controller: attract move");
 
-	{
-		//Debug
-		Debug->DrawLine(cc->GetPosition(), cc->GetPosition() + force.deltaPos);
-	}
-
-	//Force Effect (result)
-	VEC3 forceEffect = VEC3(0, 0, 0);
-	pol_orbit = false;
+	VEC3 forceEffect;
 
 	//Distance and direction
 	VEC3 direction = force.deltaPos;
 	assert(isNormal(direction));
 	direction.Normalize();
-	// Si la direccion es bastante horizontal, lo acentuamos más
-	if (direction.y < POL_HORIZONTALITY) {
-		//direction.x *= 2; direction.z *= 2;
-	}
 
 	// Attraction?
 	bool atraction = (force.polarity != pol_state);
 
 	// In orbit space
 	if (force.distance == 0) {
-		if (atraction) pol_orbit = true;
+		if (atraction) forceEffect = VEC3(0,0,0);
 		else forceEffect = POL_INTENSITY * direction;
 	}
 	else {
 		//Regular force calc
-		forceEffect = POL_INTENSITY * direction / (force.distance); //We know is not zero
-		//dbg("forceEffect: %f %f %f\n", forceEffect.x, forceEffect.y, forceEffect.z);
+		forceEffect = POL_INTENSITY * direction / (force.distance); 
+																	
 		assert(isValid(forceEffect));
 	}
 
@@ -446,40 +397,18 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force) {
 		forceEffect = -forceEffect * POL_REPULSION;
 	}
 
-	Debug->DrawLine(cc->GetPosition(), cc->GetPosition() + forceEffect, VEC3(1, 1, 0));
-
 	return forceEffect;
 }
 
-VEC3 player_controller::calcFinalForces(const VEC3& all_forces, const PolarityForce& nearestForce) {
-	//Result
-	VEC3 finalForce;
+VEC3 player_controller::calcFinalForces(vector<VEC3>& forces, vector<float>& ponderations) {
 
-	if (nearestForce.polarity != pol_state) {
-		//Orbit Force
-		VEC3 orbitForce;
-		orbitForce.y = nearestForce.deltaPos.y * POL_OSCILE_Y;//sinf(getDeltaTime() * POL_OSCILE_Y);
-		if (nearestForce.distance < POL_RCLOSE) {
-			finalForce = orbitForce;
+	VEC3 total_force = VEC3(0,0,0);
 
-			//Not orbit force
-		}
-		else if (nearestForce.distance > POL_RFAR) {
-			finalForce = all_forces;
-		}
-
-		//Both forces interpolation
-		else {
-			float deltaClose = nearestForce.distance - POL_RCLOSE;
-			float range = POL_RFAR - POL_RCLOSE;
-			float alfa = deltaClose / range;
-			finalForce = (1 - alfa) * orbitForce + (alfa)* all_forces;
-		}
+	for (int i = 0; i < forces.size(); i++) {
+		total_force += forces.at(i) * ponderations.at(i);
 	}
-	else {
-		finalForce = all_forces;
-	}
-	return finalForce;
+
+	return total_force;
 }
 
 void player_controller::polarityMoveResistance(const PolarityForce& force) {
@@ -631,17 +560,22 @@ void player_controller::UpdateInputActions()
 	//}
 	//---------------------
 
-	pol_orbit = false;
 	//if (isDamaged()) {
 	//	pol_state = NEUTRAL;
 	//}
 	//else {
 	if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
-		if (pol_state == PLUS) pol_state = NEUTRAL;
+		if (pol_state == PLUS) {
+			pol_state = NEUTRAL;
+			cc->SetGravity(true);
+		}
 		else pol_state = PLUS;
 	}
 	else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
-		if (pol_state == MINUS) pol_state = NEUTRAL;
+		if (pol_state == MINUS) {
+			pol_state = NEUTRAL;
+			cc->SetGravity(true);
+		}
 		else pol_state = MINUS;
 	}
 	//}
@@ -673,10 +607,6 @@ void player_controller::UpdateInputActions()
 	if (last_pol_state != pol_state) {
 		last_pol_state = pol_state;
 		SendMessagePolarizeState();
-	}
-	if (pol_orbit_prev != pol_orbit) {
-		pol_orbit_prev = pol_orbit;
-		//Logic Manager, extra behaviour/animation ...?
 	}
 
 	UpdateActionsTrigger();

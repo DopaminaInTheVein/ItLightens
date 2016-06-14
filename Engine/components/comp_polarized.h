@@ -20,15 +20,13 @@ struct TCompPolarized : public TCompBase {
 
 	TMsgPolarize		msg_in;
 	TMsgPolarize		msg_out;
-	CHandle			player_h;
+	CHandle				player_h;
 
 	float			dist_effect_squared_free = 25.f;
 	float			dist_effect_squared_fixed = 4.f;
 	float			dist_near = 5.f;
 
 	PolarityForce	force;
-	//PxBoxGeometry*	m_area;
-	//PxTransform		m_transform;
 
 	float			mThresholdMass = 2.5f;
 	float			mEpsilonMove = 0.01f;

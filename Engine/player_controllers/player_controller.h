@@ -77,7 +77,7 @@ class player_controller : public CPlayerBase {
   float	POL_RCLOSE = 0.5f;
   float	POL_RFAR = 9.0f; // 5 Meters arround
   float	POL_HORIZONTALITY = 1.f;
-  float	POL_INTENSITY = 1000.f;
+  float	POL_INTENSITY = 10.f;
   float	POL_REPULSION = .5f;
   float	POL_RESISTANCE = .5f;
   float	POL_INERTIA = 0.5f;
@@ -94,12 +94,10 @@ class player_controller : public CPlayerBase {
 
   //TCompRenderStaticMesh*	actual_render = nullptr;
 
-  int						curr_evol = 0;
-  int						pol_state = 0;
-  int						pol_state_prev = 0;
-  int						last_pol_state = 0;
-  bool					pol_orbit = false;
-  bool					pol_orbit_prev = false;
+  int					curr_evol = 0;
+  int					pol_state = 0;
+  int					pol_state_prev = 0;
+  int					last_pol_state = 0;
 
   bool					affectPolarized = false;
   bool					forward_jump = false;
@@ -109,12 +107,13 @@ class player_controller : public CPlayerBase {
   bool					canRechargeDrone = false;
   bool					canNotRechargeDrone = false;
 
-  CHandle       drone;
+  CHandle				drone;
 
   VEC3					endPointWire = VEC3(0, 0, 0);
-  VEC3					lastForces;
+  vector<VEC3>			all_forces;
+  vector<float>			force_ponderations;
 
-  std::string				damage_source = "none";
+  std::string			damage_source = "none";
 
   //private functions
   //--------------------------------------------------------------------
@@ -157,7 +156,7 @@ class player_controller : public CPlayerBase {
 
   void RecalcAttractions();
   VEC3 calcForceEffect(const PolarityForce& force);//VEC3 point_pos, bool atraction);
-  VEC3 calcFinalForces(const VEC3& all_forces, const PolarityForce& nearestForce);
+  VEC3 calcFinalForces(vector<VEC3>& forces, vector<float>& ponderations);
   void polarityMoveResistance(const PolarityForce& force);
   //--------------------------------------------------------------------
 
