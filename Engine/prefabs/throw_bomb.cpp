@@ -30,11 +30,30 @@ bool CThrowBomb::load(MKeyValue & atts)
 	return true;
 }
 
+bool CThrowBomb::ImpactWhenBorn() {
+	PxQueryFilterData filterData;
+	filterData.data.word0 = ItLightensFilter::eALL;
+	PxRaycastBuffer hit;
+	VEC3 posThrower = transform->getPosition() + VEC3_UP*2.f;
+	VEC3 posBorn = transform->getPosition()
+		+ front_offset * transform->getFront()
+		+ height_offset * VEC3_UP;
+	VEC3 rayDir = posBorn - posThrower;
+	float rayLong = rayDir.Length();
+	rayDir.Normalize();
+	Debug->DrawLine(posThrower, posBorn, VEC3(0, 0, 1), 10.f);
+	impact = g_PhysxManager->raycast(posThrower, rayDir, rayLong, hit, filterData);
+	if (impact) onImpact(TMsgActivate());
+	return impact;
+}
+
 void CThrowBomb::Init(float lmax, float hmax) {
+	getUpdateInfoBase(CHandle(this).getOwner());
+	if (ImpactWhenBorn()) return;
+
 	this->lmax = lmax;
 	this->hmax = hmax;
 	lcurrent = hcurrent = 0;
-	getUpdateInfoBase(CHandle(this).getOwner());
 	transform->setPosition(
 		transform->getPosition()
 		+ front_offset * transform->getFront()

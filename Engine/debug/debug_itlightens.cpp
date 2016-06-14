@@ -123,25 +123,26 @@ void CDebug::DrawLog()
 #endif
 }
 
-void CDebug::DrawLine(VEC3 org, VEC3 end, VEC3 color)
+void CDebug::DrawLine(VEC3 org, VEC3 end, VEC3 color, float time)
 {
 #ifndef NDEBUG
-	line new_line;
-	new_line.org = org;
-	new_line.end = end;
-	new_line.color = color;
-
-	lines.push_back(new_line);
+	lines[next_line].org = org;
+	lines[next_line].org = org;
+	lines[next_line].end = end;
+	lines[next_line].color = color;
+	lines[next_line++].time = time;
+	dbg("Next line: %d\n", next_line);
+	assert(next_line < MAX_DBG_LINES);
 #endif
 }
 
-void CDebug::DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color)
+void CDebug::DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color, float time)
 {
 #ifndef NDEBUG
 	direction.Normalize();
 	VEC3 pos_end = pos;
 	pos_end += direction*dist;
-	DrawLine(pos, pos_end, color);
+	DrawLine(pos, pos_end, color, time);
 #endif
 }
 
@@ -183,18 +184,44 @@ void CDebug::render()
 	shader_ctes_object.World = MAT44::Identity;
 	shader_ctes_object.uploadToGPU();
 
-	if (lines.size() == 0) return;
-
-	line l = lines.back();
-	while (true) {
+	//Render Lines
+	for (int i = 0; i < next_line; i++) {
 		if (io->keys['N'].isPressed() || io->keys['L'].isPressed()) {
-			RenderLine(l);
+			RenderLine(lines[i]);
 		}
-		lines.pop_back();
-		if (lines.size() > 0) l = lines.back();
-		else break;
 	}
 
-	lines.clear();
+	//Clear lines
+	int new_next_line = 0;
+	int i = 0;
+	while (i < next_line) {
+		lines[i].time -= getDeltaTime();
+		// Loop finish because in remove next_line--, otherwhise i++
+		if (lines[i].time <= 0.f) {
+			removeLine(i);
+		}
+		else {
+			i++;
+		}
+	}
+
+	//line l = lines.back();
+	//while (true) {
+	//	if (io->keys['N'].isPressed() || io->keys['L'].isPressed()) {
+	//		RenderLine(l);
+	//	}
+	//	lines.pop_back();
+	//	if (lines.size() > 0) l = lines.back();
+	//	else break;
+	//}
+
+	//lines.clear();
 #endif
+}
+
+void CDebug::removeLine(int i)
+{
+	next_line--;
+	assert(next_line >= 0);
+	if (i != next_line) lines[i] = lines[next_line];
 }
