@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/dron_albedo.dds"/>
+<texture slot="normalmap" name="textures/dron_normals.dds"/>
+</material>
