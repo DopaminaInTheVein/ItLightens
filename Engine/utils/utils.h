@@ -20,6 +20,7 @@ void		dbg(const char* fmt, ...);
 
 #endif
 
+#define PI 3.14159265359
 #define MOD_YAW(a) ((a > deg2rad(180.0f)) ? (a - deg2rad(360.0f)) : ((a < deg2rad(-180.0f)) ? (a + deg2rad(360.0f)) : a))
 #define assignValueToVar(name, data_map) assingValueFromMap(&name, #name, data_map)
 
@@ -31,6 +32,7 @@ bool		fatal(const char* fmt, ...);
 uint32_t	getID(const char* text);
 
 float		getDeltaTime(float always = false);
+float random(float vmin, float vmax);
 
 float squared(float i);
 
@@ -44,6 +46,7 @@ float squaredDistY(const VEC3& init, const VEC3& dest);
 
 float simpleDistXZ(const VEC3& init, const VEC3& dest);
 float simpleDist(const VEC3& init, const VEC3& dest);
+bool inSquaredRangeXZ_Y(const VEC3& init, const VEC3& dest, const float& xz, const float& y);
 
 void getRotationMatrix(const float roll, const float pitch, const float yaw, MAT44 &R);
 VEC3 productVectorMatrix(const VEC4& vec, const MAT44& matrix);

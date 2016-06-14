@@ -52,7 +52,7 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 			if (nextCycleId >= 0) {
 				nextCycleIds.push_back(nextCycleId);
 			}
-			else fatal("Animation %s doesn't exist!", next.c_str());
+			//else fatal("Animation %s doesn't exist!", next.c_str());
 		}
 	}
 
@@ -71,7 +71,7 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 			}
 
 			//Encuentra la animacion con dicho nombre
-			dbg("Cambio anim: %s\n", name.c_str());
+			//dbg("Cambio anim: %s\n", name.c_str());
 			if (msg.loop) {
 				//Cycle animation
 				model->getMixer()->blendCycle(anim_id, 1.0f, 0.2f);
@@ -83,7 +83,7 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 			}
 		}
 		else {
-			fatal("Animation %s doesn't exist!", name.c_str());
+			//fatal("Animation %s doesn't exist!", name.c_str());
 		}
 	}
 

@@ -62,6 +62,9 @@ const IResource* CResourcesManager::get(const char* name) {
 	// Try to load...
 	std::string ext(name);
 	auto p = ext.find_last_of(".");
+	if (p == std::string::npos) {
+		return nullptr;
+	}
 	ext = ext.substr(p);
 
 	IResource* new_obj = nullptr;

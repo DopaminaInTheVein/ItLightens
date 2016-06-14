@@ -1,0 +1,17 @@
+<entity>
+    <tags tags="throw_bomb"/>
+    <name name="throw_bomb"/>
+	<transform pos="0 1000 0" quat="0.0 0.0 0.0 1.0" scale="0.2" />
+    <render_static_mesh name="static_meshes/obj/bomb.static_mesh"/>
+
+	<rigidbody
+		type_collision="dynamic"
+		type_shape="sphere"
+		radius="0.1"
+	/>
+	<throw_bomb
+		front="0.6"
+		speed="3.0"
+		radius="2.0"
+	/>
+</entity>

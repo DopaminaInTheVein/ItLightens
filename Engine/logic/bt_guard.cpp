@@ -93,6 +93,7 @@ void bt_guard::readIniFileAttr() {
 **************/
 void bt_guard::Init()
 {
+	initParent();
 	// read main attributes from file
 	readIniFileAttr();
 
@@ -319,6 +320,7 @@ int bt_guard::actionStepBack() {
 	PROFILE_FUNCTION("guard: actionstepback");
 	animController.setState(AST_MOVE);
 	goForward(-2.f*SPEED_WALK);
+	turnToPlayer();
 
 	if (playerNear()) return STAY;
 	else return OK;
@@ -402,6 +404,7 @@ int bt_guard::actionAbsorb() {
 		dbg("SHOOTING BACKWARDS!\n");
 		animController.setState(AST_SHOOT_BACK);
 		goForward(-0.9f*SPEED_WALK);
+		turnToPlayer();
 		shootToPlayer();
 		return STAY;
 	}
@@ -539,7 +542,7 @@ int bt_guard::actionSearch() {
 
 			VEC3 dir = playerPos - myPos;
 			dir.Normalize();
-			
+
 			search_player_point = playerPos + 1.0f * dir;
 
 			return OK;
@@ -798,7 +801,7 @@ void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 	PROFILE_FUNCTION("guard: onmagneticbomb");
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 myPos = getTransform()->getPosition();
-	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
+	if (inSquaredRangeXZ_Y(msg.pos, myPos, msg.r, 5.f)) {
 		resetTimers();
 		stunned = true;
 		animController.setState(AST_STUNNED);
@@ -844,7 +847,7 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 }
 
 void bt_guard::checkStopDamage() {
-	if(sendMsgDmg){
+	if (sendMsgDmg) {
 		CEntity * ePlayer = getPlayer();
 		if (ePlayer) {
 			//End Damage Message
@@ -854,7 +857,7 @@ void bt_guard::checkStopDamage() {
 			dmg.source = compBaseEntity->getName();
 			dmg.type = Damage::ABSORB;
 			dmg.actived = false;
-		
+
 			ePlayer->sendMsg(dmg);
 		}
 	}
@@ -1007,6 +1010,16 @@ bool bt_guard::turnTo(VEC3 dest) {
 	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
 }
 
+bool bt_guard::turnToPlayer()
+{
+	CEntity* ePlayer = getPlayer();
+	if (ePlayer) {
+		GET_COMP(tPlayer, CHandle(ePlayer), TCompTransform);
+		return turnTo(tPlayer->getPosition());
+	}
+	return true;
+}
+
 //THIS IS NOT USED!
 //VEC3 bt_guard::generateRandomPoint() {
 //	PROFILE_FUNCTION("guard: generate random point");
@@ -1128,9 +1141,8 @@ bool bt_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) 
 
 bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform) {
 	VEC3 myPos = getTransform()->getPosition();
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 origin = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
-	VEC3 direction = tPlayer->getPosition() - myPos;
+	VEC3 direction = transform->getPosition() - myPos;
 	direction.Normalize();
 	float dist = DIST_RAYSHOT;
 	//rcQuery.types = types;

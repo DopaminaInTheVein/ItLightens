@@ -78,6 +78,7 @@ DECL_OBJ_MANAGER("rigidbody", TCompPhysics);
 DECL_OBJ_MANAGER("character_controller", TCompCharacterController);
 
 //prefabs
+DECL_OBJ_MANAGER("throw_bomb", CThrowBomb);
 DECL_OBJ_MANAGER("magnetic_bomb", CMagneticBomb);
 DECL_OBJ_MANAGER("static_bomb", CStaticBomb);
 DECL_OBJ_MANAGER("polarized", TCompPolarized);
@@ -92,6 +93,9 @@ DECL_OBJ_MANAGER("box_spawn", TCompBoxSpawner);
 DECL_OBJ_MANAGER("box_destructor", TCompBoxDestructor);
 
 DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
+
+//particles
+DECL_OBJ_MANAGER("particles_system", CParticleSystem);
 
 /* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
@@ -167,6 +171,7 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<CStaticBomb>()->init(MAX_ENTITIES);
 	getHandleManager<CMagneticBomb>()->init(MAX_ENTITIES);
+	getHandleManager<CThrowBomb>()->init(MAX_ENTITIES);
 
 	getHandleManager<TCompBoxSpawner>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBoxDestructor>()->init(MAX_ENTITIES);
@@ -179,6 +184,9 @@ bool CEntitiesModule::start() {
 
 	//Trackers
 	getHandleManager<TCompTracker>()->init(100);
+
+	//particles
+  	getHandleManager<CParticleSystem>()->init(MAX_ENTITIES);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -235,6 +243,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
 
 	//bombs
+	SUBSCRIBE(CThrowBomb, TMsgActivate, onImpact);
 	SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
@@ -596,7 +605,7 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<bt_guard>()->updateAll(dt);
 		}
 		getHandleManager<CStaticBomb>()->updateAll(dt);
-		getHandleManager<CMagneticBomb>()->updateAll(dt);
+		getHandleManager<CThrowBomb>()->updateAll(dt);
 
 		getHandleManager<TCompWire>()->updateAll(dt);
 		getHandleManager<TCompGenerator>()->updateAll(dt);
@@ -611,6 +620,9 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<magnet_door>()->updateAll(dt);
 		getHandleManager<elevator>()->updateAll(dt);
 		getHandleManager<TCompTracker>()->updateAll(dt);
+
+		//particles
+    		getHandleManager<CParticleSystem>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 		getHandleManager<TCompBoxDestructor>()->updateAll(dt);

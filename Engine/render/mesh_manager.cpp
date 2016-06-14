@@ -232,6 +232,24 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
 		return mesh;
 	}
 	// ----------------------------------
+else if (name == "textured_quad_xy_centered.mesh") {
+    SimpleVertexUV vtxs[4] =
+    {
+      { -0.5f,-0.5f, 0.f,  0, 0 },    // 
+      {  0.5f,-0.5f, 0.f,  1, 0 },
+      { -0.5f, 0.5f, 0.f,  0, 1 },
+      {  0.5f, 0.5f, 0.f,  1, 1 },    // 
+    };
+    if (!mesh->create(4
+      , sizeof(SimpleVertexUV)
+      , vtxs
+      , 0, 0, nullptr
+      , CMesh::VTX_DECL_POSITION_UV
+      , CMesh::TRIANGLE_STRIP))
+      return nullptr;
+    return mesh;
+  }
+  // ----------------------------------
 	else if (name == "grid.mesh") {
 		if (!createGridXZ(*mesh, 10))
 			return nullptr;

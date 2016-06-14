@@ -467,6 +467,24 @@
     <ClCompile Include="components\comp_camera_main.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="prefabs\throw_bomb.cpp">
+      <Filter>prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="particles\ParticlesEmitter.cpp">
+      <Filter>particles</Filter>
+    </ClCompile>
+    <ClCompile Include="particles\ParticlesLoader.cpp">
+      <Filter>particles</Filter>
+    </ClCompile>
+    <ClCompile Include="particles\ParticleSystem.cpp">
+      <Filter>particles</Filter>
+    </ClCompile>
+    <ClCompile Include="particles\particles_manager.cpp">
+      <Filter>app_modules\particles</Filter>
+    </ClCompile>
+    <ClCompile Include="render\render_instanced.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1286,6 +1304,30 @@
     <ClInclude Include="components\comp_camera_main.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="prefabs\throw_bomb.h">
+      <Filter>prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="particles\ParticleData.h">
+      <Filter>particles</Filter>
+    </ClInclude>
+    <ClInclude Include="particles\ParticlesEmitter.h">
+      <Filter>particles</Filter>
+    </ClInclude>
+    <ClInclude Include="particles\ParticlesLoader.h">
+      <Filter>particles</Filter>
+    </ClInclude>
+    <ClInclude Include="particles\ParticlesSystem.h">
+      <Filter>particles</Filter>
+    </ClInclude>
+    <ClInclude Include="particles\Emitter.h">
+      <Filter>particles</Filter>
+    </ClInclude>
+    <ClInclude Include="particles\particles_manager.h">
+      <Filter>app_modules\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="render\render_instanced.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1458,6 +1500,12 @@
     </Filter>
     <Filter Include="SLB\lua">
       <UniqueIdentifier>{bd7adbbd-c819-4dc1-b003-c25939210c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="particles">
+      <UniqueIdentifier>{c816dddb-6e22-453a-bef0-4848c9436e4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\particles">
+      <UniqueIdentifier>{39998eac-d4cc-4be4-bbba-a3a4d8b79e2e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

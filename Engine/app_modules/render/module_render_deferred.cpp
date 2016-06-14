@@ -16,6 +16,9 @@
 
 #include "render/fx/GuardShots.h"
 
+//Particles
+#include "particles\particles_manager.h"
+
 //POLARIZE
 #include "components/comp_polarized.h"
 #include "components\comp_transform.h"
@@ -670,6 +673,9 @@ void CRenderDeferredModule::render() {
 	renderAccLight();
 
 	//blurEffectLights();
+	
+	 //render_particles_instanced.render();
+  	g_particlesManager->renderParticles();   //render all particles systems
 
 	FinalRender();
 

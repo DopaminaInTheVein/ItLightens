@@ -41,12 +41,12 @@ void bt_scientist::readIniFileAttr() {
 			assignValueToVar(t_waitInPos, fields);
 			assignValueToVar(ws_wait_time, fields);
 			assignValueToVar(ws_wait_time_offset, fields);
-
 		}
 	}
 }
 
 void bt_scientist::Init() {
+	initParent();
 	//read main attributes from file
 	readIniFileAttr();
 
@@ -125,7 +125,7 @@ bool bt_scientist::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-			);
+		);
 	}
 
 	zmin = atts.getFloat("zmin", 0.0f);
@@ -147,7 +147,6 @@ bool bt_scientist::playerStunned() {
 }
 
 bool bt_scientist::workbenchAvailable() {
-
 	// state forced by msg
 	if (actual_action == CREATE_BEACON)
 		return true;
@@ -209,7 +208,6 @@ int bt_scientist::actionStunned() {
 }
 
 int bt_scientist::actionCreateBeaconFromWB() {
-
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
@@ -258,11 +256,10 @@ int bt_scientist::actionMoveToPos() {
 		//animController.setState(AST_RUN);
 		goTo(obj_position);
 		return STAY;
-	}	
+	}
 }
 
 int bt_scientist::actionAddBeacon() {
-
 	waiting_time += getDeltaTime();
 	if (waiting_time > t_addBeacon) {		//go to new action
 		SBB::postInt(beacon_to_go_name, beacon_controller::SONAR);
@@ -355,7 +352,7 @@ int bt_scientist::actionWaitWpt() {
 // toggle actions
 int bt_scientist::actionSelectWorkstation() {
 	PROFILE_FUNCTION("scientist: selectworkbench");
-	if (!myParent.isValid()) return false;	
+	if (!myParent.isValid()) return false;
 
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	if (!myEntity) return KO;
@@ -368,7 +365,6 @@ int bt_scientist::actionSelectWorkstation() {
 	vector<int> visited;
 
 	while (visited.size() < num_stations) {
-
 		int posi = rand() % num_stations;
 		auto it = std::find(visited.begin(), visited.end(), posi);
 		// if we already visited this workstation, go to the next
@@ -391,7 +387,6 @@ int bt_scientist::actionSelectWorkstation() {
 		ws_yaw = workstation->getActionYaw();
 
 		return OK;
-
 	}
 
 	return KO;
@@ -430,7 +425,7 @@ int bt_scientist::actionWaitInWorkstation() {
 
 	// Execute the workstation animation
 	//animController.setAnim(ws_anim);
-	
+
 	// we add a randomly generated offset to the waiting time
 	int sign = rand() % 100;
 	int offset = rand() % (int)ws_wait_time_offset;
@@ -592,7 +587,7 @@ void bt_scientist::onEmptyBeacon(const TMsgBeaconEmpty & msg)
 		actual_action = CREATE_BEACON;
 		SBB::postInt(msg.name, beacon_controller::INACTIVE_TAKEN);	//disable beacon for other bots
 		//ChangeState("seekWB");
-	}	
+	}
 }
 
 void bt_scientist::onEmptyWB(const TMsgWBEmpty & msg)
