@@ -2561,5 +2561,17 @@
    height="0.7"/>
 
 </entity>
-
+<entity>
+    <name name="beacon1" />
+    <tags tags="beacon" />
+    <beacon beacon_light="beacon_light" />
+    <transform pos="-80.7606 4.04738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/test/baliza.static_mesh" />
+</entity>
+<entity>
+    <name name="beacon_light" />
+    <tags tags="beacon_light" />
+    <light_dir_shadows color="1 0 0 1" znear=".1" zfar="10" fov="45" resolution="512" />
+    <transform pos="-80.7606 6.504738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
+</entity>
 </entities>
