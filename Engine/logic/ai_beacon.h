@@ -7,7 +7,6 @@
 #include "components\comp_base.h"
 #include "handle\handle.h"
 #include "components\comp_msgs.h"
-#include "components\comp_light_dir.h"
 
 //forward declarations
 //--------------------------------------
@@ -55,7 +54,7 @@ public:
   void init() { Init(); }
   void readIniFileAttr();
   bool load(MKeyValue& atts);
-
+  float getRange() const { return range; }
   //Overload functions from TCompBase, needed to loop AI Component
   //--------------------------------------
   void update(float elapsed) { Recalc(); }  //Called from object_manager

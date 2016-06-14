@@ -5,9 +5,7 @@
 #include "handle\object_manager.h"
 #include "components\comp_transform.h"
 #include "components\comp_name.h"
-#include "components\comp_light_dir_shadows.h"
 #include "components\entity.h"
-
 #include "components\entity_tags.h"
 
 map<string, statehandler> beacon_controller::statemap = {};
@@ -31,7 +29,7 @@ void beacon_controller::readIniFileAttr() {
 }
 
 bool beacon_controller::load(MKeyValue& atts) {
-  beacon_light = atts.getString("beacon_light", "");
+  //beacon_light = atts.getString("beacon_light", "");
   return true;
 }
 
@@ -48,7 +46,9 @@ void beacon_controller::Init() {
   }
   om = getHandleManager<beacon_controller>();
   SetHandleMeInit();				//need to be initialized after all handles, ¿awake/init?
+  SetMyEntity();
   idle_wait = 0.0f;
+
   ChangeState("Rotating");
 }
 
@@ -60,28 +60,6 @@ void beacon_controller::Idle() {
   }
   else {
     idle_wait += getDeltaTime();
-
-    TCompTransform *me_transform = myEntity->get<TCompTransform>();
-    VEC3 lookingPoint = me_transform->getPosition() + me_transform->getFront()*range;
-
-    if (beacon_light != "") {
-      for (CHandle aux : tags_manager.getHandlesByTag(getID("beacon_light"))) {
-        CEntity * auxe = aux;
-        if (auxe) {
-          TCompName * n = auxe->get<TCompName>();
-          if (n->name == beacon_light) {
-            TCompLightDirShadows * compl = auxe->get<TCompLightDirShadows>();
-            TCompTransform * compt = auxe->get<TCompTransform>();
-            VEC3 lpos = compt->getPosition();
-            lpos.x += me_transform->getFront().x / 2;
-            lpos.z += me_transform->getFront().z / 2;
-            compl->smoothLookAt(lpos, lookingPoint);
-            compl->activate();
-            break;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -99,26 +77,6 @@ void beacon_controller::Rotating() {
   me_transform->setAngles(yaw + rot_speed_sonar*getDeltaTime(), pitch);
 
   VEC3 lookingPoint = me_transform->getPosition() + me_transform->getFront()*range;
-
-  if (beacon_light != "") {
-    for (CHandle aux : tags_manager.getHandlesByTag(getID("beacon_light"))) {
-      CEntity * auxe = aux;
-      if (auxe) {
-        TCompName * n = auxe->get<TCompName>();
-        if (n->name == beacon_light) {
-          TCompLightDirShadows * compl = auxe->get<TCompLightDirShadows>();
-          TCompTransform * compt = auxe->get<TCompTransform>();
-          VEC3 lpos = compt->getPosition();
-          lpos.x += me_transform->getFront().x/2;
-          lpos.z += me_transform->getFront().z/2;
-          compl->smoothLookAt(lpos, lookingPoint);
-          compl->activate();
-          break;
-        }
-      }
-    }
-  }
-
   // player detection
   CHandle hPlayer = tags_manager.getFirstHavingTag("raijin");
   CEntity * eplayer = hPlayer;
@@ -156,24 +114,7 @@ void beacon_controller::AimPlayer()
   me_transform->setAngles(yaw + aimtoplayer, pitch);
 
   VEC3 lookingPoint = me_transform->getPosition() + me_transform->getFront()*range;
-
-  if (beacon_light != "") {
-    CHandle aux = tags_manager.getHandleByTagAndName(beacon_light.c_str(), "beacon_light");
-    CEntity * auxe = aux;
-    if (auxe) {
-      TCompName * n = auxe->get<TCompName>();
-      if (n->name == beacon_light) {
-        TCompLightDirShadows * compl = auxe->get<TCompLightDirShadows>();
-        TCompTransform * compt = auxe->get<TCompTransform>();
-        VEC3 lpos = compt->getPosition();
-        lpos.x += me_transform->getFront().x / 2;
-        lpos.z += me_transform->getFront().z / 2;
-        compl->smoothLookAt(lpos, lookingPoint);
-        compl->activate();
-      }
-    }
-  }
-
+ 
   if (realDistXZ(tplayer->getPosition(), lookingPoint) < width) {
     TMsgNoise msg;
     msg.source = tplayer->getPosition();

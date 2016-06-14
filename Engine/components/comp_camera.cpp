@@ -12,6 +12,7 @@
 #include "entity.h"
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
+#include "logic/ai_beacon.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "constants/ctes_object.h"
 #include <math.h>
@@ -50,9 +51,19 @@ void TCompCamera::render() const {
 
 void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
 	assert(e_owner);
-	TCompTransform* tmx = e_owner->get<TCompTransform>();
-	assert(tmx);
-	this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+  TCompTransform* tmx = e_owner->get<TCompTransform>();
+  beacon_controller* beacon = e_owner->get<beacon_controller>();
+  assert(tmx);
+  if (beacon) {
+    VEC3 lpos = tmx->getPosition();
+    lpos.x += tmx->getFront().x / 2;
+    lpos.y += 2.5f;
+    lpos.z += tmx->getFront().z / 2;
+    this->smoothLookAt(lpos, tmx->getPosition() + tmx->getFront()*beacon->getRange());
+  }
+  else {
+    this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+  }
 }
 
 void TCompCamera::update(float dt) {
