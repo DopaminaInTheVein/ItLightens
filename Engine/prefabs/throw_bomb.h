@@ -37,6 +37,7 @@ public:
 	bool getUpdateInfo() override;
 	void update(float elapsed);
 	void onImpact(const TMsgActivate&);
+	bool ImpactWhenBorn();
 	void SendMsg();
 };
 

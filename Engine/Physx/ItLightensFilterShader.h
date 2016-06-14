@@ -28,6 +28,7 @@ public:
 		eFRAGMENT = (1 << 10),
 		eTHROW = (1 << 11),
 		ePLATFORM = (1 << 12),
+		eIGNORE_PLAYER = (1 << 13), //No se usa ahora!
 		eALL = ~0,
 	};
 
@@ -97,6 +98,7 @@ public:
 			return PxFilterFlag::eCALLBACK;
 		}
 
+		//Proyectiles
 		PxU32 me, other;
 		if ((me = filterData0.word0) & eTHROW || (me = filterData1.word0) & eTHROW) {
 			other = (me == filterData0.word0) ? filterData1.word0 : filterData1.word0;
@@ -125,7 +127,7 @@ public:
 			}
 			return PxFilterFlag::eDEFAULT;
 		}
-		return PxFilterFlag::eDEFAULT;
+		return PxFilterFlag::eKILL;
 	}
 };
 

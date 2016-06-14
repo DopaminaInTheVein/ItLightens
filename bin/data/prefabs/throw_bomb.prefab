@@ -6,8 +6,8 @@
 
 	<rigidbody
 		type_collision="dynamic"
-		type_shape="box"
-		size="0.5 0.5 0.5" 
+		type_shape="sphere"
+		radius="0.1"
 	/>
 	<throw_bomb
 		front="0.6"

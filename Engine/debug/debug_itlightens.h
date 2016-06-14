@@ -31,6 +31,8 @@ class CDebug : public IAppModule {
 		VEC3 org;
 		VEC3 end;
 		VEC3 color;
+		float time;
+		line() : time(0.f) {}
 	};
 
 	//Console debug attributes:
@@ -43,13 +45,20 @@ class CDebug : public IAppModule {
 	//-------------------------------------------------------
 
 	//Debug lines attributes:
+#ifndef NDEBUG
+#define MAX_DBG_LINES (2<<14)
+#else
+#define MAX_DBG_LINES (1)
+#endif
 	//-------------------------------------------------------
-	std::vector<line> lines;
+	line lines[MAX_DBG_LINES];
+	int next_line = 0;
+	//std::vector<line> lines;
 	//-------------------------------------------------------
 
 	void DrawLog();
 	void Clear() { Buf.clear(); LineOffsets.clear(); }
-
+	void removeLine(int i);
 	//Console attributes:
 	//-------------------------------------------------------
 	CConsole console;
@@ -78,8 +87,8 @@ public:
 
 	//Draw lines functions:
 	//-------------------------------------------------------
-	void DrawLine(VEC3 org, VEC3 end, VEC3 color = RED);
-	void DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color = RED);
+	void DrawLine(VEC3 org, VEC3 end, VEC3 color = RED, float time = 0.f);
+	void DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color = RED, float time = 0.f);
 	void RenderLine(line);
 	//-------------------------------------------------------
 

@@ -1139,9 +1139,8 @@ bool bt_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) 
 
 bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform) {
 	VEC3 myPos = getTransform()->getPosition();
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 origin = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
-	VEC3 direction = tPlayer->getPosition() - myPos;
+	VEC3 direction = transform->getPosition() - myPos;
 	direction.Normalize();
 	float dist = DIST_RAYSHOT;
 	//rcQuery.types = types;

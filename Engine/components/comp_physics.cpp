@@ -55,7 +55,9 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 		}
 		else if (h.hasTag("throw_bomb")) {
 			filter.word0 = ItLightensFilter::eTHROW;
-			//filter.word1 = PXM_NO_PLAYER_NPC;
+			filter.word1 = 0;
+			filter.word2 &= ~(ItLightensFilter::eCOLLISION | ItLightensFilter::eCAN_TRIGGER);
+			filter.word2 |= ItLightensFilter::eIGNORE_PLAYER; // No se usa ahora
 		}
 		else if (m_collisionType == STATIC_OBJECT) {
 			filter.word1 |= ItLightensFilter::eSCENE;

@@ -252,6 +252,9 @@ public:
 	//-----------------------------------------------------------------------------------------------------
 
 	virtual PxQueryHitType::Enum postFilter(const PxFilterData& filterData, const PxQueryHit& hit) {
+		if (filterData.word0 & ItLightensFilter::eCOLLISION
+			&& hit.shape->getSimulationFilterData().word2 & ItLightensFilter::eIGNORE_PLAYER)
+			return PxSceneQueryHitType::eNONE;
 		if (filterData.word1 & ItLightensFilter::eCOLLISION)
 			return PxSceneQueryHitType::eBLOCK;
 		else
@@ -381,8 +384,6 @@ public:
 
 	//Not needed for now
 	//bool Createjoint(PxRigidActor* a1, PxRigidActor* a2, const PxTransform& tmx1, const PxTransform& tmx2, int typeJoint= eFixed);
-
-
 
 	//-----------------------------------------------------------------------------------------------------
 	//								Particles
