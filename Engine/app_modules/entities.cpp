@@ -94,6 +94,10 @@ DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
 
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 
+//fx
+DECL_OBJ_MANAGER("");
+
+
 CCamera * camera;
 
 // The global dict of all msgs

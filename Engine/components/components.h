@@ -64,4 +64,8 @@
 #include "comp_generator.h"
 #include "comp_polarized.h"
 
+
+//FX
+#include "comp_render_fade_screen.h"
+
 #endif

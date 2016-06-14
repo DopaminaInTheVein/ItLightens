@@ -611,6 +611,12 @@
     <ClCompile Include="components\comp_tracker_cinta.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_render_fade_screen.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\render\module_render_postproccess.cpp">
+      <Filter>app_modules\render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1498,6 +1504,15 @@
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_blur.h">
       <Filter>render\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_data.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_render_fade_screen.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\render\module_render_postproccess.h">
+      <Filter>app_modules\render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

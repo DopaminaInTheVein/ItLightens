@@ -122,6 +122,7 @@
     <ClCompile Include="app_modules\logic_manager\logic_manager.cpp" />
     <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
+    <ClCompile Include="app_modules\render\module_render_postproccess.cpp" />
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
     <ClCompile Include="camera\camera.cpp" />
     <ClCompile Include="components\comp_aabb.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="components\comp_physics.cpp" />
     <ClCompile Include="components\comp_platform.cpp" />
     <ClCompile Include="components\comp_polarized.cpp" />
+    <ClCompile Include="components\comp_render_fade_screen.cpp" />
     <ClCompile Include="components\comp_render_glow.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
     <ClCompile Include="components\comp_snoozer.cpp">
@@ -502,6 +504,7 @@
     <ClInclude Include="..\bin\data\shaders\constants\ctes_blur.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_data.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_hatching.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h" />
@@ -529,6 +532,7 @@
     <ClInclude Include="app_modules\logic_manager\logic_manager.h" />
     <ClInclude Include="app_modules\logic_manager\slb_public_functions.h" />
     <ClInclude Include="app_modules\render\module_render_deferred.h" />
+    <ClInclude Include="app_modules\render\module_render_postproccess.h" />
     <ClInclude Include="app_modules\sound_manager\sound_manager.h" />
     <ClInclude Include="camera\camera.h" />
     <ClInclude Include="components\comp_aabb.h" />
@@ -555,6 +559,7 @@
     <ClInclude Include="components\comp_physics.h" />
     <ClInclude Include="components\comp_platform.h" />
     <ClInclude Include="components\comp_polarized.h" />
+    <ClInclude Include="components\comp_render_fade_screen.h" />
     <ClInclude Include="components\comp_render_glow.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
     <ClInclude Include="components\comp_snoozer.h">

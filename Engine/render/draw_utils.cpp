@@ -150,6 +150,8 @@ bool drawUtilsCreate() {
 		return false;
   if (!shader_ctes_camera.create("ctes_camera"))
     return false;
+  if (!shader_ctes_data.create("ctes_data"))
+	  return false;
   if (!shader_ctes_object.create("ctes_object"))
     return false;
   if (!shader_ctes_bones.create("ctes_bones"))
@@ -173,21 +175,23 @@ void activateDefaultStates() {
   shader_ctes_bones.activate(CTE_SHADER_BONES_SLOT);
   shader_ctes_lights.activate(CTE_SHADER_LIGHT);
   shader_ctes_globals.activate(CTE_SHADER_GLOBALS_SLOT);
-shader_ctes_blur.activate(CTE_SHADER_BLUR_SLOT);
-shader_ctes_hatching.activate(CTE_SHADER_HATCHING_SLOT);
+  shader_ctes_blur.activate(CTE_SHADER_BLUR_SLOT); 
+  shader_ctes_hatching.activate(CTE_SHADER_HATCHING_SLOT);
+  shader_ctes_data.activate(CTE_SHADER_DATA_SLOT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
   activateSamplerStates();
 }
 
 void drawUtilsDestroy() {
-	shader_ctes_globals.destroy();
+  shader_ctes_globals.destroy();
   shader_ctes_lights.destroy();
   shader_ctes_bones.destroy();
   shader_ctes_camera.destroy();
   shader_ctes_object.destroy();
   shader_ctes_hatching.destroy();
   shader_ctes_blur.destroy();
+  shader_ctes_data.destroy();
 }
 
 // Activo la camara en la pipeline de render

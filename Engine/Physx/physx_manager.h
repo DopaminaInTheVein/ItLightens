@@ -262,13 +262,13 @@ public:
 	//-----------------------------------------------------------------------------------------------------
 
 	virtual PxQueryHitType::Enum postFilter(const PxFilterData& filterData, const PxQueryHit& hit) {
-		if (filterData.word1 & ItLightensFilter::eCOLLISION)
+		if (filterData.word2 & ItLightensFilter::eCOLLISION)
 			return PxSceneQueryHitType::eBLOCK;
 		else
 			return PxSceneQueryHitType::eNONE;
 	}
 	virtual PxQueryHitType::Enum preFilter(const PxFilterData& filterData, const PxShape* shape, const PxRigidActor* actor, PxHitFlags& queryFlags) {
-		if (filterData.word1 & ItLightensFilter::eCOLLISION)
+		if (filterData.word2 & ItLightensFilter::eCOLLISION)
 			return PxSceneQueryHitType::eBLOCK;
 		else
 			return PxSceneQueryHitType::eNONE;

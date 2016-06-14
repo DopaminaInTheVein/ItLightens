@@ -14,6 +14,8 @@
 #include "render/draw_utils.h"
 #include "components/comp_render_glow.h"
 
+#include "components\comp_render_fade_screen.h"
+
 #include "render/fx/GuardShots.h"
 
 //POLARIZE
@@ -739,6 +741,12 @@ void CRenderDeferredModule::render() {
   CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 	
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+
+	CEntity* ec = h_camera.getOwner();
+	TCompFadeScreen* e = ec->get<TCompFadeScreen>();
+	if (e) {
+		e->render();
+	}
 	  
 
 }
