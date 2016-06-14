@@ -28,6 +28,18 @@ void TCompBoneTracker::onGroupCreated(const TMsgEntityGroupCreated& msg) {
 	bone_id = skel->model->getSkeleton()->getCoreSkeleton()->getCoreBoneId(bone_name);
 }
 
+void TCompBoneTracker::onAttach(const TMsgAttach& msg) {
+	h_entity = msg.handle;
+	strcpy(bone_name, msg.bone_name.c_str());
+	CEntity* e = h_entity;
+	if (!e)
+		return;
+	TCompSkeleton* skel = e->get<TCompSkeleton>();
+	if (!skel)
+		return;
+	bone_id = skel->model->getSkeleton()->getCoreSkeleton()->getCoreBoneId(bone_name);
+}
+
 void TCompBoneTracker::renderInMenu() {
 	bool changed = false;
 	changed |= ImGui::InputText("Bone Name", bone_name, sizeof(bone_name));

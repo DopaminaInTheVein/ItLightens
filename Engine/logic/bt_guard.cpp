@@ -691,6 +691,7 @@ int bt_guard::actionSeekWpt() {
 int bt_guard::actionNextWpt() {
 	PROFILE_FUNCTION("guard: actionnextwpt");
 	if (!myParent.isValid()) return false;
+	if (keyPoints.size() == 0) return false;
 	animController.setState(AST_TURN);
 	VEC3 myPos = getTransform()->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;

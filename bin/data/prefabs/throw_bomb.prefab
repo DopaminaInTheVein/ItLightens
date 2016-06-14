@@ -10,8 +10,10 @@
 		radius="0.1"
 	/>
 	<throw_bomb
-		front="0.6"
+		front="0.1"
+		height="1.0"
 		speed="3.0"
 		radius="2.0"
 	/>
+	<bone_tracker/>
 </entity>

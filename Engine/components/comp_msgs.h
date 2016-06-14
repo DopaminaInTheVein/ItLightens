@@ -21,10 +21,18 @@ struct TMsgAwake {
 
 // Sent to all entities from a parsed file once all the entities
 // in that file has been created. Used to link entities between them
-struct TMsgEntityGroupCreated {
-  VHandles* handles;
+struct TMsgAttach {
+  CHandle handle;
+  std::string bone_name;
   DECLARE_MSG_ID();
 };
+
+// Attach to skeleton bone
+struct TMsgEntityGroupCreated {
+	VHandles* handles;
+	DECLARE_MSG_ID();
+};
+
 
 struct TMsgBoxDestroyed {
   DECLARE_MSG_ID();

@@ -82,6 +82,14 @@ void player_controller_cientifico::Init() {
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 	ChangeState("idle");
+	animController.setState(AST_IDLE);
+
+	//Provisional
+	ChangeState(ST_INIT_CONTROL);
+	npcIsPossessed = true;
+	this->controlEnabled = true;
+	possessionCooldown = 99999.f;
+	camera = tags_manager.getFirstHavingTag("camera_main");
 }
 
 //##########################################################################
@@ -113,6 +121,7 @@ void player_controller_cientifico::WorkBenchActions() {
 	if (dist_wb < 1.5f) {
 		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) { //io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
 			obj = THROW_BOMB;
+			//TODO: Destruir bomba actual
 			ChangeState("createBomb");
 			moving = false;
 		}
@@ -216,6 +225,7 @@ void player_controller_cientifico::CreateBomb()
 		dbg("bomb created!\n");
 		t_waiting = 0;
 		objs_amoung[obj] = 5;
+		spawnBomb();
 		ChangeState("idle");
 	}
 	else {
@@ -319,29 +329,32 @@ void player_controller_cientifico::spawnBomb()
 
 	CHandle bomb_handle = spawnPrefab(objs_names[obj]);
 
-	GET_COMP(bomb_trans, bomb_handle, TCompTransform);
-	float yaw, pitch;
-	bomb_trans->setPosition(transform->getPosition());
-	transform->getAngles(&yaw, &pitch);
-	bomb_trans->setAngles(yaw, pitch);
+	TMsgAttach msg;
+	msg.handle = CHandle(this).getOwner();
+	msg.bone_name = "Guard R Hand";
+	bomb_handle.sendMsg(msg); //TODO por aqui
+	//float yaw, pitch;
+	//bomb_trans->setPosition(transform->getPosition());
+	//transform->getAngles(&yaw, &pitch);
+	//bomb_trans->setAngles(yaw, pitch);
 
 	switch (obj) {
 	case STATIC_BOMB:
 	{
 		GET_COMP(bomb_component, bomb_handle, CStaticBomb);
-		bomb_component->Init();
+		//bomb_component->Init();
 	}
 	break;
 	case MAGNETIC_BOMB:
 	{
 		GET_COMP(bomb_component, bomb_handle, CMagneticBomb);
-		bomb_component->Init();
+		//bomb_component->Init();
 	}
 	break;
 	case THROW_BOMB:
 	{
 		GET_COMP(bomb_component, bomb_handle, CThrowBomb);
-		bomb_component->Init(3.f, 1.f);
+		//bomb_component->Init(3.f, 1.f);
 	}
 	break;
 	default:

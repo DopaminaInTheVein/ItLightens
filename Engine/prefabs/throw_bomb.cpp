@@ -31,41 +31,43 @@ bool CThrowBomb::load(MKeyValue & atts)
 }
 
 bool CThrowBomb::ImpactWhenBorn() {
-	PxQueryFilterData filterData;
-	filterData.data.word0 = ItLightensFilter::eALL;
-	PxRaycastBuffer hit;
-	VEC3 posThrower = transform->getPosition() + VEC3_UP*2.f;
-	VEC3 posBorn = transform->getPosition()
-		+ front_offset * transform->getFront()
-		+ height_offset * VEC3_UP;
-	VEC3 rayDir = posBorn - posThrower;
-	float rayLong = rayDir.Length();
-	rayDir.Normalize();
-	Debug->DrawLine(posThrower, posBorn, VEC3(0, 0, 1), 10.f);
-	impact = g_PhysxManager->raycast(posThrower, rayDir, rayLong, hit, filterData);
-	if (impact) onImpact(TMsgActivate());
-	return impact;
+	//PxQueryFilterData filterData;
+	//filterData.data.word0 = 384;
+	//PxRaycastBuffer hit;
+	//VEC3 posThrower = transform->getPosition() + VEC3_UP* 4.f;
+	//VEC3 posBorn = transform->getPosition()
+	//	+ front_offset * transform->getFront()
+	//	+ height_offset * VEC3_UP;
+	//VEC3 rayDir = posBorn - posThrower;
+	//float rayLong = rayDir.Length();
+	//rayDir.Normalize();
+	//Debug->DrawLine(posThrower, rayDir, rayLong, VEC3(1,0,0), 10.f);
+	//impact = g_PhysxManager->raycast(posThrower, rayDir, rayLong, hit, filterData);
+	//if (impact) onImpact(TMsgActivate());
+	//return impact;
+	return false;
 }
 
 void CThrowBomb::Init(float lmax, float hmax) {
-	getUpdateInfoBase(CHandle(this).getOwner());
-	if (ImpactWhenBorn()) return;
+	//getUpdateInfoBase(CHandle(this).getOwner());
+	//if (ImpactWhenBorn()) return;
 
-	this->lmax = lmax;
-	this->hmax = hmax;
-	lcurrent = hcurrent = 0;
-	transform->setPosition(
-		transform->getPosition()
-		+ front_offset * transform->getFront()
-		+ height_offset * VEC3_UP);
-	initial_pos = transform->getPosition();
-	final_pos = initial_pos + transform->getFront() * lmax;
-	rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
-	rd->setGlobalPose(PxTransform(
-		PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
-		PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
-	));
-	rd->setSleepThreshold(0.00001f);
+	//this->lmax = lmax;
+	//this->hmax = hmax;
+	//lcurrent = hcurrent = 0;
+	//transform->setPosition(
+	//	transform->getPosition()
+	//	+ front_offset * transform->getFront()
+	//	+ height_offset * VEC3_UP);
+	//initial_pos = transform->getPosition();
+	//final_pos = initial_pos + transform->getFront() * lmax;
+	//rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+	//rd->setGlobalPose(PxTransform(
+	//	PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
+	//	PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
+	//));
+
+
 	/*rd->setKinematicTarget(PxTransform(
 		PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
 		PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
@@ -74,10 +76,10 @@ void CThrowBomb::Init(float lmax, float hmax) {
 
 void CThrowBomb::update(float elapsed)
 {
-	if (!impact) {
-		UpdatePosition();
-	}
-	CountDown();
+	//if (!impact) {
+	//	UpdatePosition();
+	//}
+	//CountDown();
 }
 
 void CThrowBomb::UpdatePosition() {
