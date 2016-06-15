@@ -742,10 +742,12 @@ void CRenderDeferredModule::render() {
 	
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 
-	CEntity* ec = h_camera.getOwner();
+	CEntity* ec = h_camera;
 	TCompFadeScreen* e = ec->get<TCompFadeScreen>();
 	if (e) {
+		activateBlend(BLENDCFG_COMBINATIVE);
 		e->render();
+		activateBlend(BLENDCFG_DEFAULT);
 	}
 	  
 

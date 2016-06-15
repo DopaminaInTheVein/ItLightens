@@ -95,7 +95,7 @@ DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 
 //fx
-DECL_OBJ_MANAGER("");
+DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
 
 
 CCamera * camera;
@@ -176,6 +176,9 @@ bool CEntitiesModule::start() {
 
 	//Trackers
 	getHandleManager<TCompTracker>()->init(100);
+
+	//fx
+	getHandleManager<TCompFadeScreen>()->init(4);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -495,6 +498,9 @@ void CEntitiesModule::initLevel(string level) {
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
+	//fx
+	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
+
 	//TODO: Message LevelStart
 	
 }
@@ -602,6 +608,9 @@ void CEntitiesModule::update(float dt) {
 
 		//Triggers
 		getHandleManager<TTriggerLua>()->updateAll(dt);
+
+		//Fx
+		getHandleManager<TCompFadeScreen>()->updateAll(dt);
 
 		SBB::update(dt);
 	}

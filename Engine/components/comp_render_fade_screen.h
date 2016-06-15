@@ -19,7 +19,7 @@ struct TCompFadeScreen : public TCompBase {
   void renderInMenu();
   void ActiveFade();
   void update(float elapsed);
-
+  void SetMaxTime(float new_time);
   void DeactivateFade();
 
   void render();

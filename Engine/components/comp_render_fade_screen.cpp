@@ -8,6 +8,7 @@ void TCompFadeScreen::renderInMenu() {
 
 	ImGui::Checkbox("start fade", &enabled);
 	ImGui::DragFloat("max timer fade", &t_max_fade);
+	ImGui::Text("curr time: %f\n", t_curr_fade);
   
 }
 
@@ -35,8 +36,12 @@ void TCompFadeScreen::DeactivateFade()
 
 void TCompFadeScreen::render()
 {
-	shader_ctes_data.fade_black_screen = t_curr_fade;
-	tech->activate();
+	if (enabled) {
+		shader_ctes_data.fade_black_screen = t_curr_fade / t_max_fade;
+		shader_ctes_data.uploadToGPU();
+		tech->activate();
+		drawFullScreen(all_black, tech);	//wont use texture all_black
+	}
 }
 
 
@@ -51,6 +56,6 @@ bool TCompFadeScreen::load(MKeyValue& atts) {
 
 void TCompFadeScreen::init()
 {
-	tech = Resources.get("blur_glow.tech")->as<CRenderTechnique>();
+	tech = Resources.get("fade_screen.tech")->as<CRenderTechnique>();
 }
 

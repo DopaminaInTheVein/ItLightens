@@ -22,8 +22,10 @@ float4 PSFade(float4 Pos : SV_POSITION
 	) : SV_Target
 {
 	float4 o_color = float4(0,0,0,0);
-
-	o_color += float4(1,1,1,1) * fade_black_screen;
+	
+	o_color.a += 1 * fade_black_screen;
+	
+	//o_color.a = 1 - o_color.a;
 	
 	return o_color;
 }

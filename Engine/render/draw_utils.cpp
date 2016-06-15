@@ -11,6 +11,7 @@ CShaderCte< TCteLight >  shader_ctes_lights;
 CShaderCte< TCteGlobals > shader_ctes_globals;
 CShaderCte< TCteBlur >     shader_ctes_blur;
 CShaderCte< TCteHatching > shader_ctes_hatching;
+CShaderCte< TCteData > shader_ctes_data;
 
 const CTexture* all_black;
 
