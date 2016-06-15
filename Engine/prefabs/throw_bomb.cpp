@@ -4,8 +4,10 @@
 #include "components\entity.h"
 #include "components\comp_transform.h"
 #include "components\comp_physics.h"
+#include "skeleton/comp_bone_tracker.h"
 
 #include "components\entity_tags.h"
+#include "app_modules/logic_manager/logic_manager.h"
 
 map<string, statehandler> CThrowBomb::statemap = {};
 
@@ -22,8 +24,8 @@ bool CThrowBomb::getUpdateInfo() {
 
 bool CThrowBomb::load(MKeyValue & atts)
 {
-	front_offset = atts.getFloat("front", 0.3f);
-	height_offset = atts.getFloat("height", 1.f);
+	lmax = atts.getFloat("lmax", 3.0f);
+	hmax = atts.getFloat("hmax", 1.f);
 	speed = atts.getFloat("speed", 1.f);
 	t_explode = atts.getFloat("timer", 2.5f);
 	rad_squared = powf(atts.getFloat("radius", 2.f), 2);
@@ -48,41 +50,92 @@ bool CThrowBomb::ImpactWhenBorn() {
 	return false;
 }
 
-void CThrowBomb::Init(float lmax, float hmax) {
-	//getUpdateInfoBase(CHandle(this).getOwner());
-	//if (ImpactWhenBorn()) return;
-
-	//this->lmax = lmax;
-	//this->hmax = hmax;
-	//lcurrent = hcurrent = 0;
-	//transform->setPosition(
-	//	transform->getPosition()
-	//	+ front_offset * transform->getFront()
-	//	+ height_offset * VEC3_UP);
-	//initial_pos = transform->getPosition();
-	//final_pos = initial_pos + transform->getFront() * lmax;
-	//rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
-	//rd->setGlobalPose(PxTransform(
-	//	PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
-	//	PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
-	//));
-
-
-	/*rd->setKinematicTarget(PxTransform(
-		PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
-		PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
-	));*/
+void CThrowBomb::onCreate(const TMsgEntityCreated& msg) {
+	if (statemap.empty()) {
+		//Specific Bomb nodes
+		AddState("born", (statehandler)&CThrowBomb::Born);
+		AddState("idle", (statehandler)&CThrowBomb::Idle);
+		AddState("throwing", (statehandler)&CThrowBomb::Throwing);
+		AddState("throwed", (statehandler)&CThrowBomb::Throwed);
+		AddState("impacted", (statehandler)&CThrowBomb::Impacted);
+		AddState("explode", (statehandler)&CThrowBomb::Explode);
+		AddState("dead", (statehandler)&CThrowBomb::Dead);
+	}
+	____TIMER_REDEFINE_(t_explode, 2.5f);
+	ChangeState("born");
 }
 
 void CThrowBomb::update(float elapsed)
 {
-	//if (!impact) {
-	//	UpdatePosition();
-	//}
-	//CountDown();
+	Recalc();
 }
 
-void CThrowBomb::UpdatePosition() {
+void CThrowBomb::Born()
+{
+	nextState = false;
+	ChangeState("idle");
+}
+
+void CThrowBomb::Idle()
+{
+	checkNextState("throwing");
+}
+
+void CThrowBomb::Throwing()
+{
+	if (checkNextState("throwed")) {
+		initThrow();
+		//#define ((CEntity*GET_BROTHER(type) )(CHandle(this).getOwner()))->get<type>()
+		//#define GET_BROTHER(var, type) type * var = GET_BROTHER(type)
+		GETH_MY(TCompBoneTracker).destroy();
+		//((CEntity*)(CHandle(this).getOwner()))->get<TCompBoneTracker>();
+		//CHandle(bone_tracker).destroy();
+	}
+}
+
+void CThrowBomb::Throwed() {
+	throwMovement();
+	countDown();
+	/*if (checkNextState("impacted")) {
+		rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);
+		rd->addForce(PhysxConversion::Vec3ToPxVec3(transform->getFront()*speed) * 10);
+		return;
+	}
+	else {
+		throwMovement();
+	}
+	countDown();*/
+}
+
+void CThrowBomb::Impacted() {
+	countDown();
+}
+
+void CThrowBomb::Explode()
+{
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnExplode, "throw_bomb", CHandle(this).getOwner());
+	SendMsg();
+	ChangeState("dead");
+	CHandle(this).getOwner().destroy();
+}
+
+void CThrowBomb::Dead()
+{
+	return; //Nothing to do
+}
+
+void CThrowBomb::initThrow() {
+	lcurrent = hcurrent = 0;
+
+	initial_pos = transform->getPosition();
+	rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+	rd->setGlobalPose(PxTransform(
+		PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
+		PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
+	));
+}
+
+void CThrowBomb::throwMovement() {
 	PxTransform tmx;
 	lcurrent = lcurrent + speed * getDeltaTime();
 	//static int i = 0;
@@ -94,6 +147,7 @@ void CThrowBomb::UpdatePosition() {
 	else {
 		hcurrent = (lmax - lcurrent) * 1.5f;
 	}
+	dbg("Lcur = %f, Hcur = %f\n", lcurrent, hcurrent);
 	tmx = PxTransform(
 		PhysxConversion::Vec3ToPxVec3(initial_pos + lcurrent * transform->getFront() + hcurrent * VEC3_UP),
 		PhysxConversion::CQuaternionToPxQuat(transform->getRotation()));
@@ -101,22 +155,12 @@ void CThrowBomb::UpdatePosition() {
 	rd->setGlobalPose(tmx);
 }
 
-void CThrowBomb::CountDown() {
-	if (exploded) return;
-	t_waiting += getDeltaTime();
-	if (t_waiting >= t_explode) {
-		Explode();
-	}
-}
-
-void CThrowBomb::Explode()
-{
-	dbg("THROW BOMB -> I am going to explode\n");
-	SendMsg();
-	//TODO: animation
-	dbg("THROW BOMB -> exploded\n");
-	CHandle(this).getOwner().destroy();
-	exploded = true;
+bool CThrowBomb::countDown() {
+	____TIMER_CHECK_DO_(t_explode);
+	ChangeState("explode");
+	return true;
+	____TIMER_CHECK_DONE_(t_explode);
+	return false;
 }
 
 void CThrowBomb::SendMsg()
@@ -132,12 +176,17 @@ void CThrowBomb::SendMsg()
 	}
 }
 
-void CThrowBomb::onImpact(const TMsgActivate& msg) {
-	impact = true;
-	rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);
-	rd->addForce(PhysxConversion::Vec3ToPxVec3(transform->getFront()*speed) * 10);
-	//TMsgSetTag msgTag;
-	//msgTag.add = false;
-	//msgTag.tag_id = getID("throw_bomb");
-	//physics->updateTagsSetupActor();
+void CThrowBomb::onNextState(const TMsgActivate& msg) {
+	nextState = true;
+}
+
+bool CThrowBomb::checkNextState(string new_st)
+{
+	bool changed = false;
+	if (nextState) {
+		ChangeState(new_st);
+		changed = true;
+	}
+	nextState = false;
+	return changed;
 }

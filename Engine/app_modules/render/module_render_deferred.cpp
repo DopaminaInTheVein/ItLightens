@@ -219,8 +219,8 @@ void CRenderDeferredModule::renderGBuffer() {
 // ----------------------------------------------
 void CRenderDeferredModule::activateRenderCamera3D() {
 	if (!h_camera.isValid()) return;
-	GET_COMP(comp_cam, h_camera, TCompCameraMain)
-		comp_cam->setAspectRatio((float)xres / (float)yres);
+	GET_COMP(comp_cam, h_camera, TCompCameraMain);
+	comp_cam->setAspectRatio((float)xres / (float)yres);
 
 	// Copy the render aspect ratio back to the comp_camera
 	// of the entity, so the culling uses the real view_proj
@@ -673,9 +673,9 @@ void CRenderDeferredModule::render() {
 	renderAccLight();
 
 	//blurEffectLights();
-	
+
 	 //render_particles_instanced.render();
-  	g_particlesManager->renderParticles();   //render all particles systems
+	g_particlesManager->renderParticles();   //render all particles systems
 
 	FinalRender();
 

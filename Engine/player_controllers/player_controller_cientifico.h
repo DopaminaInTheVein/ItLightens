@@ -47,7 +47,6 @@ class player_controller_cientifico : public PossController {
 
 	//Main attributes
 	float t_waiting;
-	float t_to_explode;
 	float t_create_beacon;
 	float t_create_StaticBomb;
 	float t_create_MagneticBomb;
@@ -59,10 +58,14 @@ class player_controller_cientifico : public PossController {
 	void UpdateInputActions() override;
 	void WorkBenchActions();
 
+	//imers
+	____TIMER_DECLARE_(t_throwing);
+	____TIMER_DECLARE_(t_nextBomb);
+
 protected:
 	// the states, as maps to functions
 	static map<string, statehandler> statemap;
-	
+
 	//Anims, provisional
 	SkelControllerPlayer animController;
 public:
@@ -85,6 +88,8 @@ public:
 	// Player states
 	void CreateBomb();
 	void UseBomb();
+	void Throwing();
+	void NextBomb();
 	void RepairDrone();
 	//void CreateStaticBomb();
 	//void AddDisableBeacon();

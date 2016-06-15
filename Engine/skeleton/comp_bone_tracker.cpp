@@ -3,6 +3,7 @@
 #include "components/entity_tags.h"
 #include "components/entity.h"
 #include "components/comp_transform.h"
+#include "components/comp_physics.h"
 #include "skeleton/comp_skeleton.h"
 #include "cal3d/cal3d.h"
 
@@ -64,4 +65,10 @@ void TCompBoneTracker::update(float dt) {
 	assert(tmx);
 	tmx->setPosition(trans);
 	tmx->setRotation(rot);
+
+	GET_COMP(physics, CHandle(this).getOwner(), TCompPhysics);
+	PxRigidDynamic *rd;
+	if (rd = physics->getActor()->isRigidDynamic()) {
+		rd->setGlobalPose(PhysxConversion::ToPxTransform(trans, rot));
+	}
 }

@@ -186,7 +186,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompTracker>()->init(100);
 
 	//particles
-  	getHandleManager<CParticleSystem>()->init(MAX_ENTITIES);
+	getHandleManager<CParticleSystem>()->init(MAX_ENTITIES);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -225,6 +225,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
 	SUBSCRIBE(TCompCameraMain, TMsgGuidedCamera, onGuidedCamera);
 	SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
+	SUBSCRIBE(TCompBoneTracker, TMsgAttach, onAttach);
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(bt_scientist, TMsgBeaconTakenByPlayer, onTakenBeacon);
@@ -243,7 +244,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
 
 	//bombs
-	SUBSCRIBE(CThrowBomb, TMsgActivate, onImpact);
+	SUBSCRIBE(CThrowBomb, TMsgActivate, onNextState);
+	SUBSCRIBE(CThrowBomb, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
@@ -622,7 +624,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompTracker>()->updateAll(dt);
 
 		//particles
-    		getHandleManager<CParticleSystem>()->updateAll(dt);
+		getHandleManager<CParticleSystem>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 		getHandleManager<TCompBoxDestructor>()->updateAll(dt);

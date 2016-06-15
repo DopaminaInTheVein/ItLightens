@@ -9,38 +9,34 @@ using namespace PhysxConversion;
 
 //Character controller, for now only support to capsules collision
 class TCompCharacterController : public TCompBase {
-	float							m_radius			= 0.0f;
-	float							m_height			= 0.0f;
-	float							m_mass				= 80.0f;
-	float							m_gravitySpeed		= -10.0f;
-	float							m_maxSpeed			= 10.0f;
-	float							m_friction			= 10.0f;
-	float							m_friction_air		= 2.0f;
-	float							m_eOffsetSpeed		= 0.2f;
+	float							m_radius = 0.0f;
+	float							m_height = 0.0f;
+	float							m_mass = 80.0f;
+	float							m_gravitySpeed = -10.0f;
+	float							m_maxSpeed = 10.0f;
+	float							m_friction = 10.0f;
+	float							m_friction_air = 2.0f;
+	float							m_eOffsetSpeed = 0.2f;
 
-	bool							m_active			= true;
-	bool							m_affectGravity		= true;
-	bool							m_physxOnground		= false;
-	bool							m_OnGround			= false;
-	bool							m_lastOnGround		= m_OnGround;
+	bool							m_active = true;
+	bool							m_affectGravity = true;
+	bool							m_physxOnground = false;
+	bool							m_OnGround = false;
+	bool							m_lastOnGround = m_OnGround;
 
-	VEC3							m_toMove			= VEC3(0.0f, 0.0f, 0.0f);
-	VEC3							m_accel				= VEC3(0.0f,0.0f,0.0f);
-	VEC3							m_speed				= VEC3(0.0f, 0.0f, 0.0f);
-	PxVec3							m_last_speed		= PxVec3(0.0f,0.0f,0.0f);
+	VEC3							m_toMove = VEC3(0.0f, 0.0f, 0.0f);
+	VEC3							m_accel = VEC3(0.0f, 0.0f, 0.0f);
+	VEC3							m_speed = VEC3(0.0f, 0.0f, 0.0f);
+	PxVec3							m_last_speed = PxVec3(0.0f, 0.0f, 0.0f);
 
-	PxController*					m_pActor			= nullptr;
+	PxController*					m_pActor = nullptr;
 
-	PxFilterData					m_filter			= PxFilterData();
+	PxFilterData					m_filter = PxFilterData();
 
 	PxControllerCollisionFlags		m_flagsCollisions;
-	PxControllerFilters				m_filterController	= PxControllerFilters(&m_filter, g_PhysxManager);
-
+	PxControllerFilters				m_filterController = PxControllerFilters(&m_filter, g_PhysxManager);
 
 	std::string name = "defaul name";
-
-
-	void UpdateTags();
 
 	//-----------------------------------------------------------------------------------------------------
 	//							Internal update movement values
@@ -52,18 +48,19 @@ class TCompCharacterController : public TCompBase {
 	void RecalcMovement(float dt);
 	void ApplyPendingMoves(float dt);
 
-
 	void UpdateMeshTransform();
-	
 
 public:
 	// physics id
-	TCompCharacterController() : m_pActor(nullptr){}
+	TCompCharacterController() : m_pActor(nullptr) {}
 	~TCompCharacterController() {
 		// Destroy physics obj
 
 		if (m_pActor)	m_pActor->release();
 	}
+
+	//Tags physx
+	void UpdateTags();
 
 	// load Xml
 	void onCreate(const TMsgEntityCreated&);
@@ -85,7 +82,7 @@ public:
 	float GetYAxisSpeed() const {
 		return m_speed.y;
 	}
-	float GetHeight() const{
+	float GetHeight() const {
 		return m_height;
 	}
 	float GetRadius() const {
@@ -142,8 +139,6 @@ public:
 	void AddImpulse(const VEC3 & impulse, bool prevalent = false);
 	void ChangeSpeed(float speed);
 	void ResetMovement();
-	
 };
-
 
 #endif

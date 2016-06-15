@@ -257,6 +257,19 @@ function OnDoorOpening()
 	p:print( "OnDoorOpening\n")
 end
 
+--Bombs
+--------------------------------
+function OnExplode( param )
+	p:print( "OnExplode\n")
+	CallFunction("OnExplode_"..param)
+end
+
+function OnExplode_throw_bomb()
+	p:print( "OnExplode_throw_bomb\n")
+	p:play_sound("event:/OnChangePolarity")
+end
+
+
 --Elevator
 --------------------------------
 function OnElevatorUp( param )
@@ -287,5 +300,5 @@ end
 
 function OnCinematicEnd( param )
 	p:print( "OnCinematicEnd\n")
-		CallFunction("OnCinematicEnd_"..param)
+	CallFunction("OnCinematicEnd_"..param)
 end

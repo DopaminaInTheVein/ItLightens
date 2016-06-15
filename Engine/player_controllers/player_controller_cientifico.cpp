@@ -39,7 +39,6 @@ void player_controller_cientifico::readIniFileAttr() {
 			map<std::string, float> fields_scientist = readIniAtrData(file_ini, "controller_scientist");
 
 			assignValueToVar(t_waiting, fields_scientist);
-			assignValueToVar(t_to_explode, fields_scientist);
 			assignValueToVar(t_create_beacon, fields_scientist);
 			assignValueToVar(t_create_StaticBomb, fields_scientist);
 			assignValueToVar(t_create_MagneticBomb, fields_scientist);
@@ -65,6 +64,8 @@ void player_controller_cientifico::Init() {
 		//Specific Scientist nodes
 		AddState("createBomb", (statehandler)&player_controller_cientifico::CreateBomb);
 		AddState("useBomb", (statehandler)&player_controller_cientifico::UseBomb);
+		AddState("throwing", (statehandler)&player_controller_cientifico::Throwing);
+		AddState("next_bomb", (statehandler)&player_controller_cientifico::NextBomb);
 		AddState("repairDrone", (statehandler)&player_controller_cientifico::RepairDrone);
 		//AddState("createStaticBomb", (statehandler)&player_controller_cientifico::CreateStaticBomb);
 		//AddState("addDisableBeacon", (statehandler)&player_controller_cientifico::AddDisableBeacon);
@@ -84,6 +85,10 @@ void player_controller_cientifico::Init() {
 	ChangeState("idle");
 	animController.setState(AST_IDLE);
 
+	//Test
+	____TIMER_REDEFINE_(t_throwing, 1.f);
+	____TIMER_REDEFINE_(t_nextBomb, 1.f);
+
 	//Provisional
 	ChangeState(ST_INIT_CONTROL);
 	npcIsPossessed = true;
@@ -100,6 +105,7 @@ void player_controller_cientifico::Init() {
 #pragma region Inputs
 
 void player_controller_cientifico::WorkBenchActions() {
+	PROFILE_FUNCTION("player cientifico: WorbBenchActions");
 	VEC3 myPos = transform->getPosition();
 
 	// Find nearest workbench
@@ -219,13 +225,23 @@ void player_controller_cientifico::RecalcScientist() {
 
 void player_controller_cientifico::CreateBomb()
 {
+	//Provisional!!
+	TMsgSetTag msgTag;
+	msgTag.add = true;
+	msgTag.tag_id = getID("player");
+	compBaseEntity->sendMsg(msgTag);
+	cc->UpdateTags();
+	//----------
+
 	PROFILE_FUNCTION("player cientifico: create bomb");
 	t_waiting += getDeltaTime();
 	if (t_waiting >= t_create_MagneticBomb) {
 		dbg("bomb created!\n");
 		t_waiting = 0;
 		objs_amoung[obj] = 5;
+		if (bomb_handle.isValid()) bomb_handle.destroy();
 		spawnBomb();
+		//bomb_handle.sendMsg(TMsgActivate());
 		ChangeState("idle");
 	}
 	else {
@@ -235,16 +251,43 @@ void player_controller_cientifico::CreateBomb()
 
 void player_controller_cientifico::UseBomb()
 {
-	PROFILE_FUNCTION("player cientifico: use mag bomb");
+	PROFILE_FUNCTION("player cientifico: use bomb");
 	if (objs_amoung[obj] > 0) {
-		spawnBomb();
 		objs_amoung[obj]--;
 	}
 	else {
 		dbg("No bombs remain!");
 		//TODO
 	}
+	ChangeState("throwing");
+	bomb_handle.sendMsg(TMsgActivate()); //Notify throwing
+	//if (objs_amoung[obj] > 0) spawnBomb();
+	//ChangeState("idle");
+}
+
+void player_controller_cientifico::Throwing()
+{
+	PROFILE_FUNCTION("player cientifico: throwing bomb");
+	//Animacion lanzar bomba
+
+	//Test mover bomba
+	____TIMER_CHECK_DO_(t_throwing);
+	bomb_handle.sendMsg(TMsgActivate()); //Notify throwed (in the air)
+	if (objs_amoung[obj] > 0) ChangeState("next_bomb");
+	else ChangeState("idle");
+	____TIMER_CHECK_DONE_(t_throwing);
+}
+
+void player_controller_cientifico::NextBomb()
+{
+	PROFILE_FUNCTION("player cientifico: next bomb");
+	//Animacion sacar bomba?
+
+	//Test mover bomba
+	____TIMER_CHECK_DO_(t_nextBomb);
+	spawnBomb();
 	ChangeState("idle");
+	____TIMER_CHECK_DONE_(t_nextBomb);
 }
 
 void player_controller_cientifico::RepairDrone()
@@ -327,7 +370,7 @@ void player_controller_cientifico::spawnBomb()
 {
 	PROFILE_FUNCTION("player cientifico: create mag bomb");
 
-	CHandle bomb_handle = spawnPrefab(objs_names[obj]);
+	bomb_handle = spawnPrefab(objs_names[obj]);
 
 	TMsgAttach msg;
 	msg.handle = CHandle(this).getOwner();
