@@ -28,6 +28,10 @@ void TCompFadeScreen::update(float elapsed)
 	}
 }
 
+void TCompFadeScreen::SetMaxTime(float new_time) {
+	t_max_fade = new_time;
+}
+
 void TCompFadeScreen::DeactivateFade()
 {
 	t_curr_fade = 0.0f;
