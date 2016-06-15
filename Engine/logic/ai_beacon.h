@@ -54,6 +54,7 @@ public:
   void init() { Init(); }
   void readIniFileAttr();
   bool load(MKeyValue& atts);
+  bool playerInRange();
   float getRange() const { return range; }
   //Overload functions from TCompBase, needed to loop AI Component
   //--------------------------------------
