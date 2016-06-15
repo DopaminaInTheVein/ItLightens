@@ -2576,4 +2576,19 @@
 
 </entity>
 
+
+<entity>
+<tags
+   tags="brecha1"/>
+<name
+   name="brecha1"/>
+<transform
+   pos="-70 4.4 -5.339"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/brecha1.static_mesh"/>
+
+</entity>
+
 </entities>

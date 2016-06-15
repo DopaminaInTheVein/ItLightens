@@ -1,0 +1,4 @@
+<material tech="brechas.tech">
+<texture slot="diffuse" name="textures/prueba_grises_alphas.dds"/>
+<texture slot="normalmap" name="textures/prueba_grises_alphas_NRM.dds"/>
+</material>

@@ -126,7 +126,10 @@ void PSBrechas(
   //N_tangent_space.xy *= 0.5;
   //N_tangent_space = normalize(N_tangent_space);
   float3 N_world_space = mul(N_tangent_space, TBN);
-
+ //o_albedo.rgb = o_albedo.a;
+ //o_albedo.a = 1;
+ 
+  
   o_normal.xyz = (normalize(N_world_space) + 1.) * 0.5;
   o_normal.a = o_albedo.a;
 }
