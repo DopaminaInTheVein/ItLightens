@@ -1,0 +1,4 @@
+<material tech="brechas.tech">
+<texture slot="diffuse" name="textures/grieta_alpha.dds"/>
+<texture slot="normalmap" name="textures/grieta_alpha_NRM.dds"/>
+</material>

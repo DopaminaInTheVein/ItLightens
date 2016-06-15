@@ -99,6 +99,38 @@ void PSGBuffer(
 	  o_selfIlum *= float4(0, 0, 0, 0);*/
 }
 
+
+void PSBrechas(
+  float4 Pos : SV_POSITION
+  , float3 iNormal : NORMAL0
+  , float4 iTangent : NORMAL1
+  , float2 iTex0 : TEXCOORD0
+  , float3 iWorldPos : TEXCOORD1
+  , out float4 o_albedo : SV_Target0
+  , out float4 o_normal : SV_Target1
+  )
+{
+  o_albedo = txDiffuse.Sample(samLinear, iTex0);
+
+  // Generar la matrix TBN usando la informacion interpolada
+  // desde los 3 vertices del triangulo
+  float3 T = normalize(iTangent.xyz);
+  float3 N = normalize(iNormal);
+  float3 B = cross(N, T) * iTangent.w;
+  float3x3 TBN = float3x3(T, -B, N);
+
+  // Leer la normal en tangent space tal como esta en la textura
+  // y convertir el rango de 0..1 a -1..1
+  float3 N_tangent_space = txNormal.Sample(samLinear, iTex0).xyz * 2. - 1.;
+  // Cambiar la intensidad del normal map
+  //N_tangent_space.xy *= 0.5;
+  //N_tangent_space = normalize(N_tangent_space);
+  float3 N_world_space = mul(N_tangent_space, TBN);
+
+  o_normal.xyz = (normalize(N_world_space) + 1.) * 0.5;
+  o_normal.a = o_albedo.a;
+}
+
 //--------------------------------------------------------------------------------------
 void PSLightPoint(
   in float4 iPosition : SV_Position

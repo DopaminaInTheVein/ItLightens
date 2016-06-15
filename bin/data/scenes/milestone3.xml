@@ -2549,7 +2549,7 @@
 <name
    name="player_1"/>
 <transform
-   pos="-72.8 22.0822 13.8036"
+   pos="-72.8 6.0822 -3.8036"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -2559,6 +2559,20 @@
 <character_controller
    radius="0.3"
    height="0.7"/>
+
+</entity>
+
+<entity>
+<tags
+   tags="brecha"/>
+<name
+   name="brecha"/>
+<transform
+   pos="-70 4.4 -6.339"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/brecha.static_mesh"/>
 
 </entity>
 
