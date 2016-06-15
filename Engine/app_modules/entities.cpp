@@ -36,6 +36,7 @@ DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
 DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
 DECL_OBJ_MANAGER("bt_scientist", bt_scientist);
 DECL_OBJ_MANAGER("beacon", beacon_controller);
+DECL_OBJ_MANAGER("ai_cam", ai_cam);
 DECL_OBJ_MANAGER("workbench", workbench_controller);
 DECL_OBJ_MANAGER("hierarchy", TCompHierarchy);
 DECL_OBJ_MANAGER("magnet_door", magnet_door);
@@ -155,6 +156,7 @@ bool CEntitiesModule::start() {
   getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
   getHandleManager<bt_scientist>()->init(MAX_ENTITIES);
   getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
+  getHandleManager<ai_cam>()->init(MAX_ENTITIES);
   getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
   getHandleManager<workbench>()->init(MAX_ENTITIES);
   getHandleManager<water_controller>()->init(MAX_ENTITIES);
@@ -505,6 +507,7 @@ void CEntitiesModule::initLevel(string level) {
   getHandleManager<bt_scientist>()->onAll(&bt_scientist::Init);
   //getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
   getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
+  getHandleManager<ai_cam>()->onAll(&ai_cam::Init);
   getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
   getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
   getHandleManager<TCompWire>()->onAll(&TCompWire::init);
@@ -592,6 +595,7 @@ void CEntitiesModule::update(float dt) {
       getHandleManager<bt_mole>()->updateAll(dt);
       getHandleManager<bt_scientist>()->updateAll(dt);
       getHandleManager<beacon_controller>()->updateAll(dt);
+      getHandleManager<ai_cam>()->updateAll(dt);
       getHandleManager<workbench_controller>()->updateAll(dt);
       getHandleManager<bt_speedy>()->updateAll(dt);
       getHandleManager<water_controller>()->updateAll(dt);

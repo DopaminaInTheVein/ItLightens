@@ -36,6 +36,7 @@
 
 //Logic
 #include "logic/ai_beacon.h"
+#include "logic/ai_cam.h"
 #include "logic/ai_workbench.h"
 #include "logic/aicontroller.h"
 #include "logic/magnet_door.h"

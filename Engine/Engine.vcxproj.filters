@@ -470,6 +470,9 @@
     <ClCompile Include="render\render_instanced.cpp">
       <Filter>render</Filter>
     </ClCompile>
+    <ClCompile Include="logic\ai_cam.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1297,6 +1300,9 @@
     </ClInclude>
     <ClInclude Include="render\render_instanced.h">
       <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\ai_cam.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
