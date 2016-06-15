@@ -1829,7 +1829,7 @@
 <entity>
 <tags
    tags="AI AI_cientifico AI_poss"/>
-<bt_guard/> <!-- ojo sci-->
+<bt_scientist/>
 <player_cientifico/>
 <life
    points="100"/>
@@ -1839,10 +1839,8 @@
    pos="-72.7122 21.3046 3.77496"
    quat="0 0 0 1.0"
    scale="0.00929856"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="static_meshes/test/scientist.static_mesh"/>
 <character_controller
    radius="0.147"
    height="1.71312"/>

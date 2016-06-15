@@ -73,6 +73,7 @@ void CThrowBomb::update(float elapsed)
 void CThrowBomb::Born()
 {
 	nextState = false;
+	rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 	ChangeState("idle");
 }
 
@@ -83,28 +84,18 @@ void CThrowBomb::Idle()
 
 void CThrowBomb::Throwing()
 {
-	if (checkNextState("throwed")) {
-		initThrow();
-		//#define ((CEntity*GET_BROTHER(type) )(CHandle(this).getOwner()))->get<type>()
-		//#define GET_BROTHER(var, type) type * var = GET_BROTHER(type)
-		GETH_MY(TCompBoneTracker).destroy();
-		//((CEntity*)(CHandle(this).getOwner()))->get<TCompBoneTracker>();
-		//CHandle(bone_tracker).destroy();
-	}
+	//Nothing to do (bone tracker move this)
+	return;
 }
 
 void CThrowBomb::Throwed() {
-	throwMovement();
-	countDown();
-	/*if (checkNextState("impacted")) {
+	if (checkNextState("impacted")) {
 		rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);
-		rd->addForce(PhysxConversion::Vec3ToPxVec3(transform->getFront()*speed) * 10);
-		return;
 	}
 	else {
 		throwMovement();
 	}
-	countDown();*/
+	countDown();
 }
 
 void CThrowBomb::Impacted() {
@@ -128,7 +119,6 @@ void CThrowBomb::initThrow() {
 	lcurrent = hcurrent = 0;
 
 	initial_pos = transform->getPosition();
-	rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 	rd->setGlobalPose(PxTransform(
 		PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
 		PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
@@ -149,7 +139,7 @@ void CThrowBomb::throwMovement() {
 	}
 	dbg("Lcur = %f, Hcur = %f\n", lcurrent, hcurrent);
 	tmx = PxTransform(
-		PhysxConversion::Vec3ToPxVec3(initial_pos + lcurrent * transform->getFront() + hcurrent * VEC3_UP),
+		PhysxConversion::Vec3ToPxVec3(initial_pos + lcurrent * dir_throw + hcurrent * VEC3_UP),
 		PhysxConversion::CQuaternionToPxQuat(transform->getRotation()));
 	//rd->setKinematicTarget(tmx);
 	rd->setGlobalPose(tmx);
@@ -178,6 +168,13 @@ void CThrowBomb::SendMsg()
 
 void CThrowBomb::onNextState(const TMsgActivate& msg) {
 	nextState = true;
+}
+
+void CThrowBomb::onThrow(const TMsgThrow& msg) {
+	dir_throw = msg.dir;
+	initThrow();
+	GETH_MY(TCompBoneTracker).destroy();
+	ChangeState("throwed");
 }
 
 bool CThrowBomb::checkNextState(string new_st)

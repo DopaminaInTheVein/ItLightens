@@ -268,6 +268,7 @@ void TCompCharacterController::UpdateTags()
 	if (h.isValid()) {
 		if (h.hasTag("player")) { //player
 			m_filter.word0 |= ItLightensFilter::ePLAYER_BASE;
+			m_filter.word0 |= ItLightensFilter::ePLAYER_CONTROLLED;
 			m_mass = 50.0f;
 
 		}

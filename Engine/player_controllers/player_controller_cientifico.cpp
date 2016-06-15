@@ -83,18 +83,11 @@ void player_controller_cientifico::Init() {
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 	ChangeState("idle");
-	animController.setState(AST_IDLE);
+	//animController.setState(AST_IDLE);
 
 	//Test
 	____TIMER_REDEFINE_(t_throwing, 1.f);
 	____TIMER_REDEFINE_(t_nextBomb, 1.f);
-
-	//Provisional
-	ChangeState(ST_INIT_CONTROL);
-	npcIsPossessed = true;
-	this->controlEnabled = true;
-	possessionCooldown = 99999.f;
-	camera = tags_manager.getFirstHavingTag("camera_main");
 }
 
 //##########################################################################
@@ -225,14 +218,6 @@ void player_controller_cientifico::RecalcScientist() {
 
 void player_controller_cientifico::CreateBomb()
 {
-	//Provisional!!
-	TMsgSetTag msgTag;
-	msgTag.add = true;
-	msgTag.tag_id = getID("player");
-	compBaseEntity->sendMsg(msgTag);
-	cc->UpdateTags();
-	//----------
-
 	PROFILE_FUNCTION("player cientifico: create bomb");
 	t_waiting += getDeltaTime();
 	if (t_waiting >= t_create_MagneticBomb) {
@@ -257,7 +242,7 @@ void player_controller_cientifico::UseBomb()
 	}
 	else {
 		dbg("No bombs remain!");
-		//TODO
+		//TODO?
 	}
 	ChangeState("throwing");
 	bomb_handle.sendMsg(TMsgActivate()); //Notify throwing
@@ -272,7 +257,9 @@ void player_controller_cientifico::Throwing()
 
 	//Test mover bomba
 	____TIMER_CHECK_DO_(t_throwing);
-	bomb_handle.sendMsg(TMsgActivate()); //Notify throwed (in the air)
+	TMsgThrow msgThrow;
+	msgThrow.dir = transform->getFront();
+	bomb_handle.sendMsg(msgThrow); //Notify throwed (in the air)
 	if (objs_amoung[obj] > 0) ChangeState("next_bomb");
 	else ChangeState("idle");
 	____TIMER_CHECK_DONE_(t_throwing);

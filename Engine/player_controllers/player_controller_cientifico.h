@@ -10,9 +10,6 @@
 #include "player_controller_base.h"
 #include "poss_controller.h"
 
-//Provisional
-#include "skeleton_controllers/skc_player.h"
-
 class CEntity;
 
 template< class TObj >
@@ -58,7 +55,7 @@ class player_controller_cientifico : public PossController {
 	void UpdateInputActions() override;
 	void WorkBenchActions();
 
-	//imers
+	//Timers
 	____TIMER_DECLARE_(t_throwing);
 	____TIMER_DECLARE_(t_nextBomb);
 
@@ -66,8 +63,6 @@ protected:
 	// the states, as maps to functions
 	static map<string, statehandler> statemap;
 
-	//Anims, provisional
-	SkelControllerPlayer animController;
 public:
 
 	map<string, statehandler>* getStatemap() override {
@@ -101,7 +96,7 @@ public:
 
 	void onGetWhoAmI(TMsgGetWhoAmI& msg) { msg.who = PLAYER_TYPE::SCIENTIST; }
 	void myUpdate() override;
-	void UpdateAnimation() override { animController.update(); }
+	//void UpdateAnimation() override { animController.update(); }
 
 	//void update_msgs() override;
 

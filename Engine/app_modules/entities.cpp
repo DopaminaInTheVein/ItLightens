@@ -245,6 +245,7 @@ bool CEntitiesModule::start() {
 
 	//bombs
 	SUBSCRIBE(CThrowBomb, TMsgActivate, onNextState);
+	SUBSCRIBE(CThrowBomb, TMsgThrow, onThrow);
 	SUBSCRIBE(CThrowBomb, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);

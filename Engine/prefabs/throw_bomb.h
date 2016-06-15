@@ -23,7 +23,7 @@ protected:
 	TCompPhysics * physics;
 	PxRigidDynamic * rd;
 	float lmax, hmax, speed;
-	VEC3 initial_pos, final_pos;
+	VEC3 initial_pos, dir_throw;
 	float lcurrent, hcurrent;
 	bool nextState = false;
 public:
@@ -50,6 +50,7 @@ public:
 	void throwMovement();
 
 	void onNextState(const TMsgActivate&);
+	void onThrow(const TMsgThrow&);
 
 	bool ImpactWhenBorn();
 	void SendMsg();
