@@ -91,6 +91,16 @@ void createZStates() {
 	assert(!FAILED(hr));
 	setDXName(depth_stencil_states[ZCFG_DEFAULT], "Z_DEFAULT");
 
+	// Z test less or equal
+	ZeroMemory(&desc, sizeof(desc));
+	desc.DepthEnable = true;
+	desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; // Write to the ZBuffer -> YES
+	desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+	desc.StencilEnable = false;
+	hr = Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_Z_TEST_LESS_EQUAL]);
+	assert(!FAILED(hr));
+	setDXName(depth_stencil_states[ZCFG_Z_TEST_LESS_EQUAL], "Z_TEST_EQUAL");
+
 	ZeroMemory(&desc, sizeof(desc));
 	desc.DepthEnable = false;
 	desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;

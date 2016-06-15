@@ -24,6 +24,7 @@ public:
   // -----------------------------------------------------
   enum eCategory {
     SOLID_OBJS
+  , DETAIL_OBJS
   , TRANSPARENT_OBJS
   , DBG_OBJS
   , UI_OBJS

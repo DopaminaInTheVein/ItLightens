@@ -44,6 +44,7 @@ class CRenderDeferredModule : public IAppModule {
 	void GlowEdgesInt();		//to remove
 	void GlowEdges();
 	void ShootGuardRender();
+	void renderDetails();
 	void addPointLights();
 	void addDirectionalLights();
 	void addDirectionalLightsShadows();

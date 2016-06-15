@@ -1,4 +1,4 @@
-<tech>
+<tech is_details="1">
   <vs fx="deferred" main="VS" decl="positions_normal_uv_tangent" />
   <ps fx="deferred" main="PSBrechas" />
 </tech>

@@ -131,7 +131,6 @@ void CDebug::DrawLine(VEC3 org, VEC3 end, VEC3 color, float time)
 	lines[next_line].end = end;
 	lines[next_line].color = color;
 	lines[next_line++].time = time;
-	dbg("Next line: %d\n", next_line);
 	assert(next_line < MAX_DBG_LINES);
 #endif
 }

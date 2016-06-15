@@ -60,6 +60,8 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
       category = UI_OBJS;
     if (atts.getBool("is_dbg", false))
       category = DBG_OBJS;
+	if (atts.getBool("is_details", false))
+		category = DETAIL_OBJS;
 
     ps_disabled = atts.getBool( "ps_disabled", false );
   }

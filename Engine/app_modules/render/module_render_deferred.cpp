@@ -652,6 +652,26 @@ void CRenderDeferredModule::ShootGuardRender() {
 	if (GameController->GetGameState() == CGameController::RUNNING)ShootManager::shots.clear();
 }
 
+void CRenderDeferredModule::renderDetails() {
+
+	// -------------------------
+	// Activar mis multiples render targets
+	ID3D11RenderTargetView* rts[3] = {
+		rt_albedos->getRenderTargetView()
+		,	rt_normals->getRenderTargetView()
+		,	nullptr
+	};
+
+	Render.activateBackBuffer();
+
+	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+
+	activateZ(ZCFG_Z_TEST_LESS_EQUAL);
+	activateBlend(BLENDCFG_COMBINATIVE);
+
+	RenderManager.renderAll(h_camera, CRenderTechnique::DETAIL_OBJS);
+}
+
 // ----------------------------------------------
 void CRenderDeferredModule::render() {
 	//Render.clearMainZBuffer();
@@ -670,6 +690,9 @@ void CRenderDeferredModule::render() {
 
 	shader_ctes_globals.uploadToGPU();
 	renderGBuffer();
+
+	renderDetails();
+
 	renderAccLight();
 
 	//blurEffectLights();
