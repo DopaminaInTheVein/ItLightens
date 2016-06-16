@@ -1,6 +1,8 @@
 #ifndef INC_SKELETON_CONTROLLER_H_
 #define INC_SKELETON_CONTROLLER_H_
 
+#include "components/comp_base.h"
+
 // --- Anims State --- //
 #define AST_IDLE				"idle"
 #define AST_FALL				"jumpland"
@@ -19,7 +21,10 @@
 #define AST_RECHARGE			"recharge"
 // ------------------- //
 
-class SkelController {
+template< class TObj >
+class CObjectManager;
+
+class TCompSkelController {
 protected:
 	CHandle owner;
 	std::string currentState = "";
@@ -33,14 +38,17 @@ protected:
 	void setAnim(std::vector<std::string> anim, bool loop, std::vector<std::string> nextLoop);
 	void setAction(std::vector<std::string> anim, std::vector<std::string> nextLoop);
 	void setLoop(std::vector<std::string> anim);
-	
+
+	void update();
 	//Virtuals
 	virtual void myUpdate();
+
 public:
-	void init(CHandle new_owner);
 	void setState(std::string state, bool prio = false);
-	void update();
 
 };
+
+#define SET_ANIM_STATE(skc, state) {if (skc) skc->setState(state);}
+#define SET_ANIM_STATE_P(skc, state) {if (skc) skc->setState(state, true);}
 
 #endif

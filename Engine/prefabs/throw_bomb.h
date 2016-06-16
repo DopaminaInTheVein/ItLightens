@@ -10,9 +10,10 @@ class CEntity;
 class TCompTransform;
 class TCompPhysics;
 
-class CThrowBomb : public TCompBase {
-	float t_explode = 2.5f;
-	float t_waiting = 0.0f;
+class CThrowBomb : public aicontroller, public TCompBase {
+	____TIMER_DECLARE_(t_explode);
+	//float t_explode = 2.5f;
+	//float t_waiting = 0.0f;
 	float rad_squared = 4.f;
 
 protected:
@@ -21,22 +22,36 @@ protected:
 	TCompTransform * transform;
 	TCompPhysics * physics;
 	PxRigidDynamic * rd;
-	float front_offset, height_offset;
 	float lmax, hmax, speed;
-	VEC3 initial_pos, final_pos;
+	VEC3 initial_pos, dir_throw;
 	float lcurrent, hcurrent;
-	bool impact = false;
-	bool exploded = false;
+	bool nextState = false;
 public:
+	map<string, statehandler>* getStatemap() override {
+		return &statemap;
+	}
 	bool load(MKeyValue & atts);
-	void Init(float lmax, float hmax);
-	void CountDown();
-	void Explode();
-
-	void UpdatePosition();
+	void onCreate(const TMsgEntityCreated&);
 	bool getUpdateInfo() override;
 	void update(float elapsed);
-	void onImpact(const TMsgActivate&);
+
+	//States
+	void Born();
+	void Idle();
+	void Throwing();
+	void Throwed();
+	void Impacted();
+	void Explode();
+	void Dead();
+
+	bool countDown();
+	bool checkNextState(std::string new_st);
+	void initThrow();
+	void throwMovement();
+
+	void onNextState(const TMsgActivate&);
+	void onThrow(const TMsgThrow&);
+
 	bool ImpactWhenBorn();
 	void SendMsg();
 };

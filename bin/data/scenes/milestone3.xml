@@ -1590,6 +1590,7 @@
    kpt1_wait="2"
    jurisdiction="-81.553 4.17739 -24.4147"
    jurRadius="18.09"/>
+<skc_guard/>
 <name
    name="guard_1"/>
 <transform
@@ -1620,6 +1621,7 @@
    kpt1_wait="2"
    jurisdiction="-82.3771 4.17739 -24.4147"
    jurRadius="18.09"/>
+<skc_guard/>
 <name
    name="guard_002"/>
 <transform
@@ -1656,6 +1658,7 @@
    kpt3_wait="2"
    jurisdiction="34.657 -23.0107 2.92342"
    jurRadius="15.7"/>
+<skc_guard/>
 <name
    name="guard_2"/>
 <transform
@@ -1695,6 +1698,7 @@
    kpt4_wait="2"
    jurisdiction="33.3607 -22.4324 -0.53546"
    jurRadius="5.0"/>
+<skc_guard/>
 <name
    name="guard_3"/>
 <transform
@@ -1737,6 +1741,7 @@
    kpt5_wait="2"
    jurisdiction="34.7208 -23.429 -3.49259"
    jurRadius="5.0"/>
+<skc_guard/>
 <name
    name="guard_4"/>
 <transform
@@ -2546,6 +2551,7 @@
 <player/>
 <life
    points="10"/>
+<skc_player/>
 <name
    name="player_1"/>
 <transform

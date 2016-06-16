@@ -3,6 +3,7 @@
 #include "components/entity_tags.h"
 #include "components/entity.h"
 #include "components/comp_transform.h"
+#include "components/comp_physics.h"
 #include "skeleton/comp_skeleton.h"
 #include "cal3d/cal3d.h"
 
@@ -19,6 +20,18 @@ bool TCompBoneTracker::load(MKeyValue& atts) {
 
 void TCompBoneTracker::onGroupCreated(const TMsgEntityGroupCreated& msg) {
 	h_entity = findByName(*msg.handles, entity_name);
+	CEntity* e = h_entity;
+	if (!e)
+		return;
+	TCompSkeleton* skel = e->get<TCompSkeleton>();
+	if (!skel)
+		return;
+	bone_id = skel->model->getSkeleton()->getCoreSkeleton()->getCoreBoneId(bone_name);
+}
+
+void TCompBoneTracker::onAttach(const TMsgAttach& msg) {
+	h_entity = msg.handle;
+	strcpy(bone_name, msg.bone_name.c_str());
 	CEntity* e = h_entity;
 	if (!e)
 		return;
@@ -52,4 +65,10 @@ void TCompBoneTracker::update(float dt) {
 	assert(tmx);
 	tmx->setPosition(trans);
 	tmx->setRotation(rot);
+
+	GET_COMP(physics, CHandle(this).getOwner(), TCompPhysics);
+	PxRigidDynamic *rd;
+	if (rd = physics->getActor()->isRigidDynamic()) {
+		rd->setGlobalPose(PhysxConversion::ToPxTransform(trans, rot));
+	}
 }

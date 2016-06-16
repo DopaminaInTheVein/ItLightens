@@ -4,7 +4,7 @@
 <name
    name="nivel"/>
 <transform
-   pos="0 0 0"
+   pos="-110.521 0 -20.1342"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -22,7 +22,7 @@
 <name
    name="player_1"/>
 <transform
-   pos="-37.3129 4.50757 -1.44043"
+   pos="-97.4756 4.14385 5.40273"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -45,8 +45,22 @@
 <name
    name="camController_1"/>
 <transform
-   pos="-69.9693 12.7576 -10.6239"
+   pos="-99.2429 6.65717 4.64972"
    quat="0 0.707104 0 0.707104"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"/>
+<name
+   name="Omni001"/>
+<transform
+   pos="-105.44 10.2285 21.8949"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 
 </entity>
@@ -59,177 +73,79 @@
 <name
    name="Omni002"/>
 <transform
-   pos="-149.494 5.83597 -13.7931"
+   pos="-90.2786 10.2285 0.748535"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
 </entity>
 <entity>
 <tags/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"/>
 <name
-   name="Box001"/>
+   name="Omni003"/>
 <transform
-   pos="-83.6419 4.19308 4.00363"
-   quat="0 -0.707107 0 0.707107"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box001.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="Box002"/>
-<transform
-   pos="-72.5031 4.19308 -6.85497"
-   quat="0 0.707107 0 0.707107"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box002.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="Box003"/>
-<transform
-   pos="-91.8122 4.09839 -21.891"
+   pos="-107.13 10.2285 -14.3086"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box003.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 <entity>
 <tags/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"/>
 <name
-   name="Box004"/>
+   name="Omni004"/>
 <transform
-   pos="-115.54 4.09839 -9.11782"
+   pos="-146.859 10.2285 -5.60327"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box004.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 <entity>
 <tags/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"/>
 <name
-   name="Box005"/>
+   name="Omni005"/>
 <transform
-   pos="-110.258 4.09839 -9.11782"
+   pos="-91.5925 10.2285 -34.6484"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box005.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 <entity>
 <tags/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"/>
 <name
-   name="Box006"/>
+   name="Omni006"/>
 <transform
-   pos="-110.258 4.09839 -11.2764"
+   pos="-67.5234 10.2285 -9.86243"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box006.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 <entity>
 <tags/>
+<light_point
+   color="1.0 1.0 1.0 1.0"
+   in_radius="80.0"
+   out_radius="200.0"/>
 <name
-   name="Box007"/>
+   name="Omni007"/>
 <transform
-   pos="-115.54 4.09839 -11.2764"
+   pos="-21.9106 10.2285 6.18665"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box007.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="Box008"/>
-<transform
-   pos="-110.258 4.09839 -16.0102"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box008.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="Box009"/>
-<transform
-   pos="-115.54 4.09839 -16.0102"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box009.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="Box010"/>
-<transform
-   pos="-115.54 4.09839 -13.7984"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box010.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="Box011"/>
-<transform
-   pos="-110.258 4.09839 -13.7984"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box011.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="Box012"/>
-<transform
-   pos="-102.494 4.19308 -2.08739"
-   quat="0 1.0 0 0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/office/Box012.static_mesh"/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 

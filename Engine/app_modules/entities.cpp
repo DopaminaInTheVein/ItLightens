@@ -54,6 +54,8 @@ DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
+DECL_OBJ_MANAGER("skc_player", SkelControllerPlayer);
+DECL_OBJ_MANAGER("skc_guard", SkelControllerGuard);
 DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
 DECL_OBJ_MANAGER("abs_aabb", TCompAbsAABB);
 DECL_OBJ_MANAGER("local_aabb", TCompLocalAABB);
@@ -127,6 +129,8 @@ bool CEntitiesModule::start() {
   getHandleManager<player_controller_cientifico>()->init(8);
   getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
   getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
+  getHandleManager<SkelControllerPlayer>()->init(MAX_ENTITIES);
+  getHandleManager<SkelControllerGuard>()->init(MAX_ENTITIES);
   getHandleManager<TCompName>()->init(MAX_ENTITIES);
   getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
   getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
@@ -220,6 +224,7 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(TCompTracker, TMsgFollow, setFollower);
   SUBSCRIBE(TCompCameraMain, TMsgGuidedCamera, onGuidedCamera);
   SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
+  SUBSCRIBE(TCompBoneTracker, TMsgAttach, onAttach);
 
   SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
   SUBSCRIBE(bt_scientist, TMsgBeaconTakenByPlayer, onTakenBeacon);
@@ -237,16 +242,18 @@ bool CEntitiesModule::start() {
   //water
   SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
 
-  //bombs
-  SUBSCRIBE(CThrowBomb, TMsgActivate, onImpact);
-  SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
-  SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
-  SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
-  SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
-  SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
-  SUBSCRIBE(bt_guard, TMsgNoise, noise);
-  SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
-  SUBSCRIBE(bt_guard, TMsgBoxHit, onBoxHit);
+	//bombs
+	SUBSCRIBE(CThrowBomb, TMsgActivate, onNextState);
+	SUBSCRIBE(CThrowBomb, TMsgThrow, onThrow);
+	SUBSCRIBE(CThrowBomb, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
+	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
+	SUBSCRIBE(bt_guard, TMsgNoise, noise);
+	SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
+	SUBSCRIBE(bt_guard, TMsgBoxHit, onBoxHit);
 
   //WIRES
   SUBSCRIBE(TCompWire, TMsgEntityCreated, onCreate);
@@ -583,6 +590,9 @@ void CEntitiesModule::update(float dt) {
     getHandleManager<TCompCamera>()->updateAll(dt);
     getHandleManager<TCompCameraMain>()->updateAll(dt);
     getHandleManager<TCompLightDir>()->updateAll(dt);
+
+	getHandleManager<SkelControllerGuard>()->updateAll(dt);
+	getHandleManager<SkelControllerPlayer>()->updateAll(dt);
 
     if (use_parallel)
       getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);

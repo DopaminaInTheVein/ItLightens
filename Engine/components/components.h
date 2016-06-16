@@ -17,6 +17,8 @@
 #include "comp_tags.h"
 #include "skeleton/comp_skeleton.h"
 #include "skeleton/comp_bone_tracker.h"
+#include "skeleton_controllers/skc_player.h"
+#include "skeleton_controllers/skc_guard.h"
 #include "comp_victory_point.h"
 #include "comp_trigger_lua.h"
 #include "comp_platform.h"

@@ -44,7 +44,6 @@ class player_controller_cientifico : public PossController {
 
 	//Main attributes
 	float t_waiting;
-	float t_to_explode;
 	float t_create_beacon;
 	float t_create_StaticBomb;
 	float t_create_MagneticBomb;
@@ -55,6 +54,10 @@ class player_controller_cientifico : public PossController {
 
 	void UpdateInputActions() override;
 	void WorkBenchActions();
+
+	//Timers
+	____TIMER_DECLARE_(t_throwing);
+	____TIMER_DECLARE_(t_nextBomb);
 
 protected:
 	// the states, as maps to functions
@@ -80,6 +83,8 @@ public:
 	// Player states
 	void CreateBomb();
 	void UseBomb();
+	void Throwing();
+	void NextBomb();
 	void RepairDrone();
 	//void CreateStaticBomb();
 	//void AddDisableBeacon();
@@ -91,6 +96,8 @@ public:
 
 	void onGetWhoAmI(TMsgGetWhoAmI& msg) { msg.who = PLAYER_TYPE::SCIENTIST; }
 	void myUpdate() override;
+	//void UpdateAnimation() override { animController.update(); }
+
 	//void update_msgs() override;
 
 	void SetCharacterController() {}

@@ -103,7 +103,7 @@ void CPlayerBase::update(float elapsed) {
 				update_msgs();
 			}
 		}
-		UpdateAnimation();
+		//UpdateAnimation();
 	}
 }
 
