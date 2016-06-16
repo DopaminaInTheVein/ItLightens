@@ -2570,7 +2570,7 @@
     <name name="beacon" />
     <tags tags="ai_cam" />
     <light_dir_shadows color="1 0 0 1" znear=".1" zfar="10" fov="45" resolution="512" />
-    <ai_cam max_rotation="120.0" range="3" width="2.5" rot_speed_sonar="0.5" />
+    <ai_cam max_rotation="120.0" range="2" width="1.5" rot_speed_sonar="0.5" rotating_left="true" />
     <transform pos="-80.7606 8.54738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
     <render_static_mesh name="static_meshes/test/baliza.static_mesh" />
 </entity>
@@ -2579,8 +2579,17 @@
     <name name="beacon" />
     <tags tags="beacon" />
     <light_dir_shadows color="1 0 0 1" znear=".1" zfar="10" fov="45" resolution="512" />
-    <beacon range="5" width="2"  rot_speed_sonar="0.5"/>
+    <beacon range="6" width="4"  rot_speed_sonar="0.5" rotating_left="true"/>
     <transform pos="-75.7606 4.04738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/test/baliza.static_mesh" />
+ </entity>
+ 
+ <entity>
+    <name name="beacon" />
+    <tags tags="beacon" />
+    <light_dir_shadows color="1 0 0 1" znear=".1" zfar="10" fov="45" resolution="512" />
+    <beacon range="6" width="4"  rot_speed_sonar="0.5" rotating_left="false"/>
+    <transform pos="-85.7606 4.04738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
     <render_static_mesh name="static_meshes/test/baliza.static_mesh" />
  </entity>
 </entities>

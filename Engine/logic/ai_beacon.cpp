@@ -18,6 +18,7 @@ bool beacon_controller::load(MKeyValue& atts) {
   width = atts.getFloat("width", width);
   rot_speed_sonar = atts.getFloat("rot_speed_sonar", rot_speed_sonar);
   max_idle_waiting = atts.getFloat("max_idle_waiting", max_idle_waiting);
+  rotatingR = atts.getBool("rotating_left", true);
   return true;
 }
 
@@ -206,7 +207,12 @@ void beacon_controller::Rotating() {
 
   float yaw, pitch;
   me_transform->getAngles(&yaw, &pitch);
-  me_transform->setAngles(yaw + rot_speed_sonar*getDeltaTime(), pitch);
+  if (rotatingR) {
+    me_transform->setAngles(yaw + rot_speed_sonar*getDeltaTime(), pitch);
+  }
+  else {
+    me_transform->setAngles(yaw - rot_speed_sonar*getDeltaTime(), pitch);
+  }
   if (playerInRange()) {
     ChangeState("AimPlayer");
   }

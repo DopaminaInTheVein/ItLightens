@@ -19,6 +19,7 @@ bool ai_cam::load(MKeyValue& atts) {
   width = atts.getFloat("width", width);
   rot_speed_sonar = atts.getFloat("rot_speed_sonar", rot_speed_sonar);
   max_idle_waiting = atts.getFloat("max_idle_waiting", max_idle_waiting);
+  rotatingR = atts.getBool("rotating_left", true);
   return true;
 }
 

@@ -25,6 +25,7 @@ class beacon_controller : public aicontroller, public TCompBase {
   float width = 1.0f; ;		// width sonar
   float rot_speed_sonar = 3.0f;
   int id_beacon = 0;
+  bool rotatingR = true;
 
   std::string full_name = "";
   std::string beacon_light = "";
