@@ -6,6 +6,17 @@ struct  TSkeletonsExporter (
 	skel_root_path,
 	skel_file, 
 
+	-- Search all bones
+	fn findAllBones = (
+		local obj_bones = #()
+		for obj in $* do (
+			if classof obj == Biped_Object then (
+				append obj_bones obj
+			)
+		)
+		return obj_bones
+	),
+	
 	fn exportModel obj = (
 		local modelFilePath = (skel_root_path + skel_name + ".skeleton")
 		local fsm = createFile modelFilePath
@@ -14,6 +25,16 @@ struct  TSkeletonsExporter (
 			format "  <skeleton    src =\"%\"/>\n" ("skeletons/" + skel_name + "/" + skel_name + ".csf") to:fsm
 			format "  <animations src =\"%\"/>\n" ("skeletons/" + skel_name + "/") to:fsm
 			format "  <mesh     src=\"%\"/>\n" ("skeletons/" + skel_name + "/" + skel_name + ".cmf") to:fsm
+			
+			local all_bones = findAllBones()
+			format "  <key_bones \n" to:fsm
+			for b in all_bones do (
+				local kb = getUserProp b "key_bone"
+				if kb != undefined then (
+					format ("    " + kb + "=\"" + b.name + "\"\n") to:fsm
+				)
+			)
+			format "  />\n" to:fsm
 			format "</model>\n" to:fsm
 		) catch (
 			throw()

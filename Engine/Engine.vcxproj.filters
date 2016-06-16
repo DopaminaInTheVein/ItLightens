@@ -473,6 +473,12 @@
     <ClCompile Include="logic\ai_cam.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="skeleton_controllers\skc_mole.cpp">
+      <Filter>skeleton_controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton_controllers\skc_scientist.cpp">
+      <Filter>skeleton_controllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1303,6 +1309,12 @@
     </ClInclude>
     <ClInclude Include="logic\ai_cam.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton_controllers\skc_mole.h">
+      <Filter>skeleton_controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton_controllers\skc_scientist.h">
+      <Filter>skeleton_controllers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

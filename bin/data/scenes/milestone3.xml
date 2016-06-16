@@ -1844,8 +1844,11 @@
    pos="-72.7122 21.3046 3.77496"
    quat="0 0 0 1.0"
    scale="0.00929856"/>
+<skeleton
+   model="skeletons/player/player.skeleton"/>
+<skc_player/>
 <render_static_mesh
-   name="static_meshes/test/scientist.static_mesh"/>
+   name="skeletons/player/player.static_mesh"/>
 <character_controller
    radius="0.147"
    height="1.71312"/>
@@ -2566,6 +2569,7 @@
    radius="0.3"
    height="0.7"/>
 </entity>
+<!--
 <entity>
     <name name="beacon" />
     <tags tags="ai_cam" />
@@ -2574,4 +2578,5 @@
     <transform pos="-80.7606 6.54738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
     <render_static_mesh name="static_meshes/test/baliza.static_mesh" />
 </entity>
+-->
 </entities>

@@ -56,6 +56,8 @@ DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 DECL_OBJ_MANAGER("skc_player", SkelControllerPlayer);
 DECL_OBJ_MANAGER("skc_guard", SkelControllerGuard);
+DECL_OBJ_MANAGER("skc_scientist", SkelControllerScientist);
+DECL_OBJ_MANAGER("skc_mole", SkelControllerMole);
 DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
 DECL_OBJ_MANAGER("abs_aabb", TCompAbsAABB);
 DECL_OBJ_MANAGER("local_aabb", TCompLocalAABB);
@@ -131,6 +133,8 @@ bool CEntitiesModule::start() {
   getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
   getHandleManager<SkelControllerPlayer>()->init(MAX_ENTITIES);
   getHandleManager<SkelControllerGuard>()->init(MAX_ENTITIES);
+  getHandleManager<SkelControllerScientist>()->init(MAX_ENTITIES);
+  getHandleManager<SkelControllerMole>()->init(MAX_ENTITIES);
   getHandleManager<TCompName>()->init(MAX_ENTITIES);
   getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
   getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
@@ -593,6 +597,8 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<SkelControllerGuard>()->updateAll(dt);
 	getHandleManager<SkelControllerPlayer>()->updateAll(dt);
+	getHandleManager<SkelControllerScientist>()->updateAll(dt);
+	getHandleManager<SkelControllerMole>()->updateAll(dt);
 
     if (use_parallel)
       getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);

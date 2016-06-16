@@ -62,6 +62,7 @@ bool player_controller::getUpdateInfo()
 {
 	if (!CPlayerBase::getUpdateInfo()) return false;
 	animController = GETH_MY(SkelControllerPlayer);
+	return true;
 }
 
 void player_controller::Init() {

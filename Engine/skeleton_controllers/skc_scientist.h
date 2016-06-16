@@ -1,18 +1,18 @@
-#ifndef INC_SKC_PLAYER_H_
-#define INC_SKC_PLAYER_H_
+#ifndef INC_SKC_SCIENTIST_H_
+#define INC_SKC_SCIENTIST_H_
 
 #include "skel_controller.h"
 
 //Forward Declaration
 class TCompCharacterController;
-class player_controller;
+class player_controller_cientifico;
 
 
 
-class SkelControllerPlayer : public TCompSkelController, public TCompBase{
+class SkelControllerScientist : public TCompSkelController, public TCompBase{
 protected:
 	TCompCharacterController * cc;
-	player_controller * pc;
+	player_controller_cientifico * pc;
 
 	void SetCharacterController();
 	void SetPlayerController();
@@ -28,7 +28,7 @@ public:
 	void renderInMenu() {}
 
 	//Overload function for handler_manager
-	//SkelControllerPlayer& SkelControllerPlayer::operator=(SkelControllerPlayer arg) { return arg; }
+	//SkelControllerScientist& SkelControllerScientist::operator=(SkelControllerScientist arg) { return arg; }
 };
 
 #endif

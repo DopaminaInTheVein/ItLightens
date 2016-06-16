@@ -266,6 +266,16 @@ void CSkeleton::onStartElement(const std::string &elem, MKeyValue &atts) {
 		// load the mesh_file
 		//auto engine_mesh = Resources.get(mesh_file.c_str())->as<CMesh>();
 	}
+	else if (elem == "key_bones") {
+		for (auto val : atts) {
+			key_bones[val.first] = val.second;
+		}
+	}
+}
+
+std::string CSkeleton::getKeyBoneName(std::string name)
+{
+	return key_bones[name];
 }
 
 void CSkeleton::saveAnimId(std::string src, int anim_id) {

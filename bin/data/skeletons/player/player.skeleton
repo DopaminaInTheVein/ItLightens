@@ -2,4 +2,7 @@
   <skeleton    src ="skeletons/player/player.csf"/>
   <animations src ="skeletons/player/"/>
   <mesh     src="skeletons/player/player.cmf"/>
+  <key_bones 
+    right_hand="Raijin R Hand"
+  />
 </model>

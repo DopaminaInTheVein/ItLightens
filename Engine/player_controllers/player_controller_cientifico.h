@@ -1,14 +1,16 @@
 #ifndef INC_PLAYER_CONTROLLER_CIENTIFICO_H_
 #define INC_PLAYER_CONTROLLER_CIENTIFICO_H_
 
-#include "components\comp_base.h"
-#include "handle\handle.h"
-#include "components\comp_msgs.h"
+#include "components/comp_base.h"
+#include "handle/handle.h"
+#include "components/comp_msgs.h"
+#include "components/comp_msgs.h"
 
-#include "camera\camera.h"
+#include "camera/camera.h"
 
 #include "player_controller_base.h"
 #include "poss_controller.h"
+#include "skeleton_controllers/skc_player.h"
 
 class CEntity;
 
@@ -24,6 +26,8 @@ class player_controller_cientifico : public PossController {
 		THROW_BOMB,
 		OBJ_SCI_SIZE
 	};
+	//Anims
+	SkelControllerPlayer * animController;
 
 	int objs_amoung[OBJ_SCI_SIZE];
 
@@ -69,6 +73,8 @@ public:
 		return &statemap;
 	}
 
+	bool getUpdateInfo() override;
+
 	player_controller_cientifico() {}
 	void Init() override;
 	void init() { Init(); }
@@ -106,6 +112,8 @@ public:
 	void renderInMenu();
 
 	void UpdateUnpossess() override;
+	void ChangeCommonState(std::string);
+
 	//Overload function for handler_manager
 	player_controller_cientifico& player_controller_cientifico::operator=(player_controller_cientifico arg) { return arg; }
 };
