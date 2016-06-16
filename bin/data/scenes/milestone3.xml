@@ -2565,7 +2565,13 @@
 <character_controller
    radius="0.3"
    height="0.7"/>
-
 </entity>
-
+<entity>
+    <name name="beacon" />
+    <tags tags="ai_cam" />
+    <light_dir_shadows color="1 0 0 1" znear=".1" zfar="10" fov="45" resolution="512" />
+    <ai_cam max_rotation="180.0" />
+    <transform pos="-80.7606 6.54738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/test/baliza.static_mesh" />
+</entity>
 </entities>

@@ -38,11 +38,8 @@
 
 //Logic
 #include "logic/ai_beacon.h"
+#include "logic/ai_cam.h"
 #include "logic/ai_workbench.h"
-#include "logic/ai_mole.h"
-#include "logic/ai_scientific.h"
-#include "logic/ai_speedy.h"
-#include "logic/ai_guard.h"
 #include "logic/aicontroller.h"
 #include "logic/magnet_door.h"
 #include "logic/elevator.h"

@@ -1,5 +1,5 @@
-#ifndef INC_BEACON_H_
-#define INC_BEACON_H_
+#ifndef INC_AI_CAM_H_
+#define INC_AI_CAM_H_
 
 #include "aicontroller.h"
 #include "sbb.h"
@@ -16,7 +16,7 @@ template< class TObj >
 class CObjectManager;
 //--------------------------------------
 
-class beacon_controller : public aicontroller, public TCompBase {
+class ai_cam : public aicontroller, public TCompBase {
   static std::map<int, std::string> out;
 
   //main attributes
@@ -24,11 +24,14 @@ class beacon_controller : public aicontroller, public TCompBase {
   float range = 2.0f;		// range sonar
   float width = 1.0f; ;		// width sonar
   float rot_speed_sonar = 3.0f;
-  int id_beacon = 0;
-
+  int id_camera = 0;
+  bool rotatingR = true;
+  float rotatedTo = 0.0f;
+  float maxRot = deg2rad(90.0f);
+  float distToFloor = 0.0f;
   std::string full_name = "";
-  std::string beacon_light = "";
-  CObjectManager<beacon_controller> * om = nullptr;
+  std::string camera_light = "";
+  CObjectManager<ai_cam> * om = nullptr;
 
   CHandle myHandle;
   CHandle	myParent;
@@ -36,9 +39,6 @@ class beacon_controller : public aicontroller, public TCompBase {
 
   float max_idle_waiting = 5.0f;
   float idle_wait;
-
-  bool active = true;
-
 protected:
   // the states, as maps to functions
   static map<string, statehandler>statemap;
@@ -49,7 +49,7 @@ public:
     return &statemap;
   }
 
-  beacon_controller() {}		//needed to create obj at load
+  ai_cam() {}		//needed to create obj at load
   void Init() override;
   void init() { Init(); }
   void readIniFileAttr();
@@ -67,12 +67,9 @@ public:
   //Functions AI Nodes:
   //--------------------------------------
   void Idle();
-  void Rotating();	// beacon rotating, looking for player
-  void AimPlayer();   // beacon reached player and aims him
-
-  //Messages:
-  //--------------------------------------
-  void onPlayerAction(TMsgBeaconBusy& msg); // We actiate or deactivate Beacon
+  void RotatingLeft();	// camera rotating left,  looking for player
+  void RotatingRight();	// camera rotating right, looking for player
+  void AimPlayer();     // camera reached player and aims him
 
   void renderInMenu();
 };

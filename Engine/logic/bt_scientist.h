@@ -24,8 +24,6 @@
 #include <windows.h>
 
 class bt_scientist : public bt_poss, public TCompBase {
-
-
 	//Enum actions for bot
 	enum {
 		IDLE = 0,
@@ -110,107 +108,104 @@ class bt_scientist : public bt_poss, public TCompBase {
 	// tree root
 	static btnode* root;
 
-	public:
-		void Init();
-		void update(float elapsed);
-		void readIniFileAttr();
-		bool load(MKeyValue& atts);
-		//conditions
-		bool playerStunned();
-		bool workbenchAvailable();
-		bool beaconToAdd();
-		bool beaconToRemove();
-		//toggle conditions
-		bool checkBusy();
-		//actions
-		int actionStunned();
-		int actionCreateBeaconFromWB();
-		// beacon management
-		int actionAddBeacon();
-		int actionRemoveBeacon();
-		// movement
-		int actionAimToPos();
-		int actionMoveToPos();
-		// patrol
-		int actionNextWpt();
-		int actionSeekWpt();
-		int actionWaitWpt();
-		//toggle actions
-		int actionSelectWorkstation();
-		int actionGoToWorkstation();
-		int actionWaitInWorkstation();
-		//Toggle enabling/disabling functions
-		void toggleBusyState() {
-			setCurrent(NULL);
-			busy_state_toggle = !busy_state_toggle;
-		}
+public:
+	void Init();
+	void update(float elapsed);
+	void readIniFileAttr();
+	bool load(MKeyValue& atts);
+	//conditions
+	bool playerStunned();
+	bool workbenchAvailable();
+	bool beaconToAdd();
+	bool beaconToRemove();
+	//toggle conditions
+	bool checkBusy();
+	//actions
+	int actionStunned();
+	int actionCreateBeaconFromWB();
+	// beacon management
+	int actionAddBeacon();
+	int actionRemoveBeacon();
+	// movement
+	int actionAimToPos();
+	int actionMoveToPos();
+	// patrol
+	int actionNextWpt();
+	int actionSeekWpt();
+	int actionWaitWpt();
+	//toggle actions
+	int actionSelectWorkstation();
+	int actionGoToWorkstation();
+	int actionWaitInWorkstation();
+	//Toggle enabling/disabling functions
+	void toggleBusyState() {
+		setCurrent(NULL);
+		busy_state_toggle = !busy_state_toggle;
+	}
 
-		//messages function:
-		void onRemoveBeacon(const TMsgBeaconToRemove& msg);
-		void onEmptyBeacon(const TMsgBeaconEmpty& msg);
-		void onEmptyWB(const TMsgWBEmpty& msg);
-		void onTakenBeacon(const TMsgBeaconTakenByPlayer & msg);
-		void onTakenWB(const TMsgWBTakenByPlayer & msg);
-		void onStaticBomb(const TMsgStaticBomb & msg) override;		//need to override to clean old states and reserved objects
+	//messages function:
+	void onEmptyWB(const TMsgWBEmpty& msg);
+	void onTakenBeacon(const TMsgBeaconTakenByPlayer & msg);
+	void onTakenWB(const TMsgWBTakenByPlayer & msg);
+	void onStaticBomb(const TMsgStaticBomb & msg) override;		//need to override to clean old states and reserved objects
 
-		//functions that allow access to the static maps
-		map<string, btnode *>* getTree() override {
-			return &tree;
-		}
+	//functions that allow access to the static maps
+	map<string, btnode *>* getTree() override {
+		return &tree;
+	}
 
-		map<string, btaction>* getActions() override {
-			return &actions;
-		}
+	map<string, btaction>* getActions() override {
+		return &actions;
+	}
 
-		map<string, btcondition>* getConditions() override {
-			return &conditions;
-		}
+	map<string, btcondition>* getConditions() override {
+		return &conditions;
+	}
 
-		map<string, btevent>* getEvents() override {
-			return &events;
-		}
+	map<string, btevent>* getEvents() override {
+		return &events;
+	}
 
-		btnode** getRoot() override {
-			return &root;
-		}
+	btnode** getRoot() override {
+		return &root;
+	}
 
-		//--------------------------------------
+	//--------------------------------------
 
-		//Patrulla
-		//--------------------------------------
-		enum KptTipo { Seek, Look };
-		struct KeyPoint {
-			KptTipo type;
-			VEC3 pos;
-			float time;
-			KeyPoint() : type(KptTipo::Seek), pos(VEC3(0, 0, 0)), time(0) {};
-			KeyPoint(VEC3 p) : type(KptTipo::Seek), pos(p), time(0) {};
-			KeyPoint(KptTipo t, VEC3 p) : type(t), pos(p), time(0) {};
-			KeyPoint(KptTipo t, VEC3 p, float temps) : type(t), pos(p), time(temps) {};
-		};
-		static map<string, KptTipo > kptTypes;
-		std::vector<KeyPoint> keyPoints;
-		int curkpt;
-		//--------------------------------------
-
-		//Movement
-		void SetHandleMeInit();
-		void SetMyEntity();
-		bool aimToTarget(VEC3 target);
-		void moveFront(float speed);
-
-		//Aux actions
-		void goTo(const VEC3& dest);
-		void goForward(float stepForward);
-		bool turnTo(VEC3 dest);
-		bool turnToYaw(float yaw_dest);
-
-		//UI Debug for scientific AI
-		void renderInMenu();
-
-		//Virtuals
-		PLAYER_TYPE whoAmI() { return SPEEDY; }
-
+	//Patrulla
+	//--------------------------------------
+	enum KptTipo { Seek, Look };
+	struct KeyPoint {
+		KptTipo type;
+		VEC3 pos;
+		float time;
+		KeyPoint() : type(KptTipo::Seek), pos(VEC3(0, 0, 0)), time(0) {};
+		KeyPoint(VEC3 p) : type(KptTipo::Seek), pos(p), time(0) {};
+		KeyPoint(KptTipo t, VEC3 p) : type(t), pos(p), time(0) {};
+		KeyPoint(KptTipo t, VEC3 p, float temps) : type(t), pos(p), time(temps) {};
 	};
+	static map<string, KptTipo > kptTypes;
+	std::vector<KeyPoint> keyPoints;
+	int curkpt;
+	//--------------------------------------
+
+	//Movement
+	void SetHandleMeInit();
+	void SetMyEntity();
+	bool aimToTarget(VEC3 target);
+	void moveFront(float speed);
+
+	//Aux actions
+	void goTo(const VEC3& dest);
+	void goForward(float stepForward);
+	bool turnTo(VEC3 dest);
+	bool turnToYaw(float yaw_dest);
+
+	//UI Debug for scientific AI
+	void renderInMenu();
+
+	//Virtuals
+	PLAYER_TYPE whoAmI() { return SPEEDY; }
+};
 
 #endif

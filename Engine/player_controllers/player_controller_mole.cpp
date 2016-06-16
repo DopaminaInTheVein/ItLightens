@@ -11,7 +11,6 @@
 #include "components\comp_msgs.h"
 
 #include "ui\ui_interface.h"
-#include "logic\ai_mole.h"
 #include "components/comp_charactercontroller.h"
 #include "components\comp_physics.h"
 

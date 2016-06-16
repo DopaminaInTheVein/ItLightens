@@ -1,5 +1,5 @@
 #include "mcv_platform.h"
-#include "ai_beacon.h"
+#include "ai_cam.h"
 
 #include <windows.h>
 #include "handle\object_manager.h"
@@ -9,17 +9,17 @@
 #include "components\entity.h"
 #include "components\entity_tags.h"
 
-map<string, statehandler> beacon_controller::statemap = {};
+map<string, statehandler> ai_cam::statemap = {};
 
-map<int, string> beacon_controller::out = {};
+map<int, string> ai_cam::out = {};
 
-void beacon_controller::readIniFileAttr() {
+void ai_cam::readIniFileAttr() {
   CHandle h = CHandle(this).getOwner();
   if (h.isValid()) {
-    if (h.hasTag("beacon")) {
+    if (h.hasTag("ai_cam")) {
       CApp &app = CApp::get();
       std::string file_ini = app.file_initAttr_json;
-      map<std::string, float> fields = readIniAtrData(file_ini, "ai_beacon");
+      map<std::string, float> fields = readIniAtrData(file_ini, "ai_cam");
 
       assignValueToVar(range, fields);
       assignValueToVar(width, fields);
@@ -29,53 +29,73 @@ void beacon_controller::readIniFileAttr() {
   }
 }
 
-bool beacon_controller::load(MKeyValue& atts) {
-  //beacon_light = atts.getString("beacon_light", "");
+bool ai_cam::load(MKeyValue& atts) {
+  maxRot = deg2rad(atts.getFloat("max_rotation", 120.0f));
   return true;
 }
 
-void beacon_controller::Init() {
+void ai_cam::Init() {
   //read main attributes from file
   readIniFileAttr();
 
-  full_name = "beacon_" + to_string(id_beacon);
+  full_name = "ai_cam_" + to_string(id_camera);
 
   if (statemap.empty()) {
-    AddState("idle", (statehandler)&beacon_controller::Idle);
-    AddState("Rotating", (statehandler)&beacon_controller::Rotating);
-    AddState("AimPlayer", (statehandler)&beacon_controller::AimPlayer);
+    AddState("idle", (statehandler)&ai_cam::Idle);
+    AddState("RotatingLeft", (statehandler)&ai_cam::RotatingLeft);
+    AddState("RotatingRight", (statehandler)&ai_cam::RotatingRight);
+    AddState("AimPlayer", (statehandler)&ai_cam::AimPlayer);
   }
-  om = getHandleManager<beacon_controller>();
+  om = getHandleManager<ai_cam>();
   SetHandleMeInit();				//need to be initialized after all handles, ¿awake/init?
   SetMyEntity();
   idle_wait = 0.0f;
 
-  ChangeState("Rotating");
+  TCompTransform *me_transform = myEntity->get<TCompTransform>();
+  PxRaycastBuffer hit;
+
+  bool ret = g_PhysxManager->raycast(me_transform->getPosition(), VEC3(0.0f, -1.0f, 0.0f), 20.0f, hit);
+  if (ret) {
+    distToFloor = hit.getAnyHit(0).distance;
+  }
+
+  if (rotatingR) {
+    ChangeState("RotatingRight");
+  }
+  else {
+    ChangeState("RotatingLeft");
+  }
 }
 
-void beacon_controller::Idle() {
+void ai_cam::Idle() {
   //Nothing to do
   if (idle_wait > max_idle_waiting) {
     idle_wait = 0.0f;
-    ChangeState("Rotating");
+    if (rotatingR) {
+      ChangeState("RotatingRight");
+    }
+    else {
+      ChangeState("RotatingLeft");
+    }
   }
   else {
     idle_wait += getDeltaTime();
   }
 }
-bool beacon_controller::playerInRange() {
+bool ai_cam::playerInRange() {
   TCompTransform *me_transform = myEntity->get<TCompTransform>();
   // player detection
   CHandle hPlayer = tags_manager.getFirstHavingTag("raijin");
   CEntity * eplayer = hPlayer;
   TCompTransform * tplayer = eplayer->get<TCompTransform>();
-
-  if (!me_transform->isHalfConeVision(tplayer->getPosition(), deg2rad(15.0f)) || squaredDist(tplayer->getPosition(), me_transform->getPosition()) > 100) {
+  VEC3 myposinitial = me_transform->getPosition();
+  myposinitial.y -= distToFloor;
+  if (!me_transform->isHalfConeVision(tplayer->getPosition(), deg2rad(15.0f)) || squaredDist(tplayer->getPosition(), myposinitial) > 100) {
     return false;
   }
 
-  VEC3 destiny = me_transform->getPosition() + me_transform->getFront()*range;
-  VEC3 origin = me_transform->getPosition();
+  VEC3 destiny = myposinitial + me_transform->getFront()*range;
+  VEC3 origin = myposinitial;
   origin.x += me_transform->getFront().x / 2;
   origin.y += 2.5f;
   origin.z += me_transform->getFront().z / 2;
@@ -83,14 +103,14 @@ bool beacon_controller::playerInRange() {
 #ifndef NDEBUG
   // raycasts
   Debug->DrawLine(origin, destiny, VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, me_transform->getPosition() + me_transform->getFront()*(range + width), VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, me_transform->getPosition() + me_transform->getFront()*(range + width / 2), VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, me_transform->getPosition() + me_transform->getFront()*(range - width), VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, me_transform->getPosition() + me_transform->getFront()*(range - width / 2), VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, me_transform->getPosition() + me_transform->getFront()*range + me_transform->getLeft() * width, VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, me_transform->getPosition() + me_transform->getFront()*range + me_transform->getLeft() * (width / 2), VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, me_transform->getPosition() + me_transform->getFront()*range - me_transform->getLeft() * width, VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, me_transform->getPosition() + me_transform->getFront()*range - me_transform->getLeft() * (width / 2), VEC3(1.0f, 0.0f, 0.0f));
+  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*(range + width), VEC3(1.0f, 0.0f, 0.0f));
+  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*(range + width / 2), VEC3(1.0f, 0.0f, 0.0f));
+  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*(range - width), VEC3(1.0f, 0.0f, 0.0f));
+  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*(range - width / 2), VEC3(1.0f, 0.0f, 0.0f));
+  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*range + me_transform->getLeft() * width, VEC3(1.0f, 0.0f, 0.0f));
+  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*range + me_transform->getLeft() * (width / 2), VEC3(1.0f, 0.0f, 0.0f));
+  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*range - me_transform->getLeft() * width, VEC3(1.0f, 0.0f, 0.0f));
+  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*range - me_transform->getLeft() * (width / 2), VEC3(1.0f, 0.0f, 0.0f));
 #endif
 
   VEC3 direction = origin - destiny;
@@ -121,49 +141,49 @@ bool beacon_controller::playerInRange() {
     bool hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
     if (hitted) return true;
     // half front
-    d1 = (me_transform->getPosition() + me_transform->getFront()*(range + width / 2)) - origin;
+    d1 = (myposinitial + me_transform->getFront()*(range + width / 2)) - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
     if (hitted) return true;
     //front
-    d1 = (me_transform->getPosition() + me_transform->getFront()*(range + width)) - origin;
+    d1 = (myposinitial + me_transform->getFront()*(range + width)) - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
     if (hitted) return true;
     //half back
-    d1 = (me_transform->getPosition() + me_transform->getFront()*(range - width / 2)) - origin;
+    d1 = (myposinitial + me_transform->getFront()*(range - width / 2)) - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
     if (hitted) return true;
     //back
-    d1 = (me_transform->getPosition() + me_transform->getFront()*(range - width)) - origin;
+    d1 = (myposinitial + me_transform->getFront()*(range - width)) - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
     if (hitted) return true;
     // half left
-    d1 = (me_transform->getPosition() + me_transform->getFront()*range + me_transform->getLeft() * (width / 2)) - origin;
+    d1 = (myposinitial + me_transform->getFront()*range + me_transform->getLeft() * (width / 2)) - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
     if (hitted) return true;
     //left
-    d1 = (me_transform->getPosition() + me_transform->getFront()*range + me_transform->getLeft() * width) - origin;
+    d1 = (myposinitial + me_transform->getFront()*range + me_transform->getLeft() * width) - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
     if (hitted) return true;
     //right
-    d1 = (me_transform->getPosition() + me_transform->getFront()*range - me_transform->getLeft() * width) - origin;
+    d1 = (myposinitial + me_transform->getFront()*range - me_transform->getLeft() * width) - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
     if (hitted) return true;
     // half right
-    d1 = (me_transform->getPosition() + me_transform->getFront()*range - me_transform->getLeft() * (width / 2)) - origin;
+    d1 = (myposinitial + me_transform->getFront()*range - me_transform->getLeft() * (width / 2)) - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
@@ -172,31 +192,49 @@ bool beacon_controller::playerInRange() {
   return false;
 }
 
-void beacon_controller::Rotating() {
+void ai_cam::RotatingLeft() {
   SetMyEntity(); //needed in case address Entity moved by handle_manager
   if (!myEntity) return;
-  if (!active) {
-    idle_wait = 0.0f;
-    ChangeState("idle");
-  }
   TCompTransform *me_transform = myEntity->get<TCompTransform>();
 
   float yaw, pitch;
   me_transform->getAngles(&yaw, &pitch);
+  float rot = rot_speed_sonar*getDeltaTime();
+  rotatedTo += rot;
+  me_transform->setAngles(yaw - rot, pitch);
+  if (playerInRange()) {
+    ChangeState("AimPlayer");
+  }
+  else if (rotatedTo > maxRot) {
+    rotatedTo = 0.0f;
+    rotatingR = true;
+    ChangeState("RotatingRight");
+  }
+}
+
+void ai_cam::RotatingRight() {
+  SetMyEntity(); //needed in case address Entity moved by handle_manager
+  if (!myEntity) return;
+  TCompTransform *me_transform = myEntity->get<TCompTransform>();
+
+  float yaw, pitch;
+  me_transform->getAngles(&yaw, &pitch);
+  float rot = rot_speed_sonar*getDeltaTime();
+  rotatedTo += rot;
   me_transform->setAngles(yaw + rot_speed_sonar*getDeltaTime(), pitch);
   if (playerInRange()) {
     ChangeState("AimPlayer");
   }
+  else if (rotatedTo > maxRot) {
+    rotatedTo = 0.0f;
+    rotatingR = false;
+    ChangeState("RotatingLeft");
+  }
 }
-
-void beacon_controller::AimPlayer()
+void ai_cam::AimPlayer()
 {
   SetMyEntity(); //needed in case address Entity moved by handle_manager
   if (!myEntity) return;
-  if (!active) {
-    idle_wait = 0.0f;
-    ChangeState("idle");
-  }
   TCompTransform *me_transform = myEntity->get<TCompTransform>();
   CHandle hPlayer = tags_manager.getFirstHavingTag("raijin");
   CEntity * eplayer = hPlayer;
@@ -213,9 +251,10 @@ void beacon_controller::AimPlayer()
   else {
     aimtoplayer = fmaxf(aimtoplayer, -rot_speed_sonar * getDeltaTime());
   }
-
-  me_transform->setAngles(yaw + aimtoplayer, pitch);
-
+  rotatedTo += aimtoplayer;
+  if (rotatedTo > 0.0f && rotatedTo < maxRot) {
+    me_transform->setAngles(yaw + aimtoplayer, pitch);
+  }
   if (playerInRange()) {
     TMsgNoise msg;
     msg.source = tplayer->getPosition();
@@ -230,23 +269,17 @@ void beacon_controller::AimPlayer()
   }
 }
 
-void beacon_controller::onPlayerAction(TMsgBeaconBusy & msg)
-{
-  SetMyEntity();
-  active = *(msg.reply);
-}
-
-void beacon_controller::renderInMenu()
+void ai_cam::renderInMenu()
 {
   ImGui::Text("Node : %s", out[SBB::readInt(full_name)].c_str());
 }
 
-void beacon_controller::SetHandleMeInit()
+void ai_cam::SetHandleMeInit()
 {
   myHandle = om->getHandleFromObjAddr(this);
   myParent = myHandle.getOwner();
 }
 
-void beacon_controller::SetMyEntity() {
+void ai_cam::SetMyEntity() {
   myEntity = myParent;
 }

@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "render/draw_utils.h"
 #include "resources/resources_manager.h"
+#include "logic\ai_beacon.h"
 
 bool TCompLightDir::load(MKeyValue& atts) {
   TCompCamera::load(atts);
@@ -22,7 +23,14 @@ void TCompLightDir::renderInMenu() {
 
 void TCompLightDir::uploadShaderCtes(CEntity* e) {
   TCompTransform* trans = e->get<TCompTransform>();
-  shader_ctes_lights.LightWorldPos = VEC4(trans->getPosition());
+  beacon_controller* beacon = e->get<beacon_controller>();
+  VEC3 lpos = trans->getPosition();
+  if (beacon) {
+    lpos.x += trans->getFront().x / 2;
+    lpos.y += 2.5f;
+    lpos.z += trans->getFront().z / 2;
+  }
+  shader_ctes_lights.LightWorldPos = VEC4(lpos);
   shader_ctes_lights.LightWorldFront = VEC4(trans->getFront());
   shader_ctes_lights.LightColor = this->color;
   shader_ctes_lights.LightViewProjection = this->getViewProjection();
