@@ -3,8 +3,20 @@
 
 #include "skel_controller.h"
 
-class SkelControllerGuard : public SkelController {
-	virtual void myUpdate();
+class SkelControllerGuard : public TCompSkelController, public TCompBase {
+protected:
+	void myUpdate();
+
+public:
+	bool load(MKeyValue& atts) { return true; }
+	//void onCreate(const TMsgEntityCreated&);
+
+	bool getUpdateInfo() override;
+	void update(float elapsed) { TCompSkelController::update(); };
+
+	void renderInMenu() {}
+
+	SkelControllerGuard& SkelControllerGuard::operator=(SkelControllerGuard arg) { return arg; }
 };
 
 #endif

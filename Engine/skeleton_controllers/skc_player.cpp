@@ -5,6 +5,14 @@
 #include "player_controllers/player_controller.h"
 #include "components/entity.h"
 
+
+bool SkelControllerPlayer::getUpdateInfo()
+{
+	owner = CHandle(this).getOwner();
+	if (!owner.isValid()) return false;
+	return true;
+}
+
 void SkelControllerPlayer::SetCharacterController() {
 	if (owner.isValid()) {
 		CEntity* eMe = owner;

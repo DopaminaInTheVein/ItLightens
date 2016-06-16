@@ -21,6 +21,11 @@
 
 #define DELTA_YAW_SELECTION		deg2rad(10)
 
+//if (animController) animController->setState(AST_IDLE, [prio])
+#define SET_ANIM_PLAYER(state) SET_ANIM_STATE(animController, state)
+#define SET_ANIM_PLAYER_P(state) SET_ANIM_STATE_P(animController, state)
+
+
 map<string, statehandler> player_controller::statemap = {};
 
 void player_controller::readIniFileAttr() {
@@ -53,6 +58,12 @@ void player_controller::readIniFileAttr() {
 	}
 }
 
+bool player_controller::getUpdateInfo()
+{
+	if (!CPlayerBase::getUpdateInfo()) return false;
+	animController = GETH_MY(SkelControllerPlayer);
+}
+
 void player_controller::Init() {
 	//read main attributes from file
 	readIniFileAttr();
@@ -77,13 +88,13 @@ void player_controller::Init() {
 	myParent = myHandle.getOwner();
 	myEntity = myParent;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	animController.init(myEntity);
+	//animController.init(myEntity);
 
 	setLife(init_life);
 	lastForces = VEC3(0, 0, 0);
 
 	ChangeState("idle");
-	animController.setState(AST_IDLE);
+	SET_ANIM_PLAYER(AST_IDLE);
 	controlEnabled = true;
 	____TIMER__SET_ZERO_(timerDamaged);
 }
@@ -202,9 +213,13 @@ void player_controller::myUpdate() {
 
 	if (cc->OnGround() && state == "moving") {
 		if (player_curr_speed >= player_max_speed - 0.1f)
-			animController.setState(AST_RUN);
+		{
+			SET_ANIM_PLAYER(AST_RUN);
+		}
 		else
-			animController.setState(AST_MOVE);
+		{
+			SET_ANIM_PLAYER(AST_MOVE);
+		}
 	}
 }
 
@@ -232,22 +247,22 @@ void player_controller::DoubleJump()
 
 	if (cc->GetYAxisSpeed() < 0.0f) {
 		ChangeState("doublefalling");
-		animController.setState(AST_FALL);
+		SET_ANIM_PLAYER(AST_FALL);
 	}
 }
 
 void player_controller::DoubleFalling() {
-	animController.setState(AST_FALL);
+	SET_ANIM_PLAYER(AST_FALL);
 	if (pol_orbit && !pol_orbit_prev) {
 		ChangeState("falling");
-		animController.setState(AST_FALL);
+		SET_ANIM_PLAYER(AST_FALL);
 	}
 	PROFILE_FUNCTION("player controller: double falling");
 	UpdateDirection();
 	UpdateMovDirection();
 	if (cc->OnGround()) {
 		ChangeState("idle");
-		animController.setState(AST_IDLE);
+		SET_ANIM_PLAYER(AST_IDLE);
 	}
 }
 
@@ -282,11 +297,11 @@ void player_controller::Jump()
 	energyDecreasal(jump_energy);
 	if (ascending) {
 		ChangeState("doublejump");
-		animController.setState(AST_JUMP2);
+		SET_ANIM_PLAYER(AST_JUMP2);
 	}
 	else {
 		ChangeState("jumping");
-		animController.setState(AST_JUMP);
+		SET_ANIM_PLAYER(AST_JUMP);
 	}
 }
 
@@ -298,11 +313,11 @@ void player_controller::Jumping()
 
 	if (cc->GetYAxisSpeed() <= 0.0f) {
 		ChangeState("falling");
-		animController.setState(AST_FALL);
+		SET_ANIM_PLAYER(AST_FALL);
 	}
 	if (cc->OnGround() && !(cc->GetYAxisSpeed() > 0.0f)) {
 		ChangeState("idle");
-		animController.setState(AST_IDLE);
+		SET_ANIM_PLAYER(AST_IDLE);
 	}
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
@@ -310,7 +325,7 @@ void player_controller::Jumping()
 		energyDecreasal(jump_energy);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
-		animController.setState(AST_JUMP2);
+		SET_ANIM_PLAYER(AST_JUMP2);
 	}
 }
 
@@ -321,18 +336,18 @@ void player_controller::Falling()
 	UpdateMovDirection();
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
-	animController.setState(AST_FALL);
+	SET_ANIM_PLAYER(AST_FALL);
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
 		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 		energyDecreasal(jump_energy);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
 		ChangeState("doublejump");
-		animController.setState(AST_JUMP2);
+		SET_ANIM_PLAYER(AST_JUMP2);
 	}
 
 	if (cc->OnGround()) {
 		ChangeState("idle");
-		animController.setState(AST_IDLE);
+		SET_ANIM_PLAYER(AST_IDLE);
 	}
 }
 
@@ -688,7 +703,7 @@ void player_controller::UpdateActionsTrigger() {
 	if (canRecEnergy) {
 		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 			rechargeEnergy();
-			animController.setState(AST_RECHARGE, true);
+			SET_ANIM_PLAYER_P(AST_RECHARGE);
 			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
 		}
 		else {
@@ -905,7 +920,7 @@ void player_controller::UpdateOverCharge() {
 void player_controller::startOverCharge()
 {
 	//TODO - Estado intermedio OverCharging
-	animController.setState(AST_SHOOT, true);
+	SET_ANIM_PLAYER(AST_SHOOT);
 	//OverCharge Effect
 	doOverCharge();
 }
@@ -1106,16 +1121,16 @@ PolarityForce player_controller::getPolarityForce(CHandle forceHandle) {
 //Anims
 void player_controller::ChangeCommonState(std::string state) {
 	if (state == "moving") {
-		animController.setState(AST_MOVE);
+		SET_ANIM_PLAYER(AST_MOVE);
 	}
 	else if (state == "running") {
-		animController.setState(AST_RUN);
+		SET_ANIM_PLAYER(AST_RUN);
 	}
 	else if (state == "jumping") {
-		animController.setState(AST_JUMP);
+		SET_ANIM_PLAYER(AST_JUMP);
 	}
 	else if (state == "idle") {
-		animController.setState(AST_IDLE);
+		SET_ANIM_PLAYER(AST_IDLE);
 	}
 }
 

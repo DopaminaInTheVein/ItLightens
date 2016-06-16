@@ -2552,6 +2552,7 @@
    pos="-72.8 22.0822 13.8036"
    quat="0 0 0 1.0"
    scale="1.0"/>
+<skc_player/>
 <skeleton
    model="skeletons/player/player.skeleton"/>
 <render_static_mesh

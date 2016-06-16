@@ -169,13 +169,15 @@ protected:
   static map<string, statehandler> statemap;
 
   //Anims
-  SkelControllerPlayer animController;
+  SkelControllerPlayer * animController;
 
 public:
   // Added because GUI
   float getMaxLife() { return max_life; }
 
   map<string, statehandler>* getStatemap();
+
+  bool getUpdateInfo() override;
 
   void Init();
   void Idle();
@@ -190,7 +192,7 @@ public:
   void DoubleFalling();
 
   void update_msgs() override;
-  void UpdateAnimation() { animController.update(); }
+  //void UpdateAnimation() { animController.update(); }
 
   //input Messages
   void onLeaveFromPossession(const TMsgPossessionLeave&);

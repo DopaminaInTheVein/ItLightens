@@ -78,7 +78,7 @@ class bt_guard : public bt, public TCompBase
 	//string last_pose = "";
 
 	//Cambio anim
-	SkelControllerGuard animController;
+	SkelControllerGuard * animController;
 
 	//Debug
 	//____TIMER_DECLARE_(timerDebug, 2.0f);
@@ -242,6 +242,11 @@ public:
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();
 
+	bool getUpdateInfo() {
+		animController = GETH_MY(SkelControllerGuard);
+		return true;
+	}
+
 	void update(float dt) {
 		TCompTransform * t = compBaseEntity->get<TCompTransform>();
 		Debug->DrawLine(t->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
@@ -254,7 +259,7 @@ public:
 		}
 
 		if (!forced_move) Recalc();
-		animController.update();
+		//animController.update();
 	}
 
 	void render();
