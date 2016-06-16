@@ -301,11 +301,13 @@ void player_controller::Jumping()
 	}
 
 	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
-		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
-		energyDecreasal(jump_energy);
-		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
-		ChangeState("doublejump");
-		animController.setState(AST_JUMP2);
+		if (gravity_active) {
+			cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
+			energyDecreasal(jump_energy);
+			logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
+			ChangeState("doublejump");
+			animController.setState(AST_JUMP2);
+		}
 	}
 }
 
@@ -338,10 +340,8 @@ void player_controller::RecalcAttractions()
 	// Calc all_forces & Find Orbit force if exists
 	if (pol_state != NEUTRAL && polarityForces.size() > 0) {
 		// Remove gravity, we will control the player
-		cc->SetGravity(false);
-
-		TCompTransform * t = myEntity->get<TCompTransform>();
-		VEC3 posPlayer = t->getPosition();
+		/*cc->SetGravity(false);
+		gravity_active = false;*/
 		
 		for (auto forceHandle : polarityForces) {
 
@@ -363,6 +363,13 @@ void player_controller::RecalcAttractions()
 		cc->AddMovement(final_forces * getDeltaTime());
 
 	}
+	else {
+		//cc->SetGravity(true);
+		//gravity_active = true;
+	}
+
+	all_forces.clear();
+	force_ponderations.clear();
 
 }
 
@@ -374,26 +381,35 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force) {
 
 	//Distance and direction
 	VEC3 direction = force.deltaPos;
+	dbg("DIRECTION: %f %f %f\n", direction.x, direction.y, direction.z);
 	assert(isNormal(direction));
-	direction.Normalize();
+	//direction.Normalize();
 
 	// Attraction?
 	bool atraction = (force.polarity != pol_state);
 
-	// In orbit space
-	if (force.distance == 0) {
-		if (atraction) forceEffect = VEC3(0,0,0);
-		else forceEffect = POL_INTENSITY * direction;
+	// Different scenario depending on the distance
+	if (force.distance <= POL_MIN_DISTANCE) {
+		if (atraction) {
+			forceEffect = VEC3(0, 0, 0);
+		}
+		else {
+			forceEffect = POL_INTENSITY * direction;
+		}
 	}
-	else {
+	else if (force.distance <= POL_MAX_DISTANCE) {
 		//Regular force calc
 		forceEffect = POL_INTENSITY * direction / (force.distance); 
 																	
 		assert(isValid(forceEffect));
 	}
+	else {
+		forceEffect = VEC3(0,0,0);
+	}
 
 	//Repulsion -> Invertimos fuerza
 	if (!atraction) {
+		dbg("REPULSION!\n");
 		forceEffect = -forceEffect * POL_REPULSION;
 	}
 
@@ -412,7 +428,7 @@ VEC3 player_controller::calcFinalForces(vector<VEC3>& forces, vector<float>& pon
 }
 
 void player_controller::polarityMoveResistance(const PolarityForce& force) {
-	if (force.distance > 0.1f
+	/*if (force.distance > 0.1f
 		&& force.distance < POL_RCLOSE // very near (with margin)
 		&& force.polarity != pol_state // attraction
 		) {
@@ -453,7 +469,7 @@ void player_controller::polarityMoveResistance(const PolarityForce& force) {
 				cc->AddMovement(movementAtraction);
 			}
 		}
-	}
+	}*/
 }
 
 void player_controller::UpdateMoves()
@@ -568,15 +584,27 @@ void player_controller::UpdateInputActions()
 		if (pol_state == PLUS) {
 			pol_state = NEUTRAL;
 			cc->SetGravity(true);
+			gravity_active = true;
 		}
-		else pol_state = PLUS;
+		else {
+			pol_state = PLUS;
+			cc->SetGravity(false);
+			gravity_active = false;
+			dbg("POLARIDAD POSITIVA!\n");
+		}
 	}
 	else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
 		if (pol_state == MINUS) {
 			pol_state = NEUTRAL;
 			cc->SetGravity(true);
+			gravity_active = true;
 		}
-		else pol_state = MINUS;
+		else {
+			pol_state = MINUS;
+			cc->SetGravity(false);
+			gravity_active = false;
+			dbg("POLARIDAD NEGATIVA!\n");
+		}
 	}
 	//}
 	if (pol_state == NEUTRAL) affectPolarized = false;
@@ -1005,8 +1033,8 @@ void player_controller::renderInMenu() {
 	sprintf(stateTxt, "STATE: %s", getState().c_str());
 	ImGui::Text(stateTxt);
 	ImGui::Text("Editable values (polarity):\n");
-	ImGui::SliderFloat("Radius1", &POL_RCLOSE, 1.f, 10.f);
-	ImGui::SliderFloat("Radius2", &POL_RFAR, 10.f, 100.f);
+	ImGui::SliderFloat("Radius1", &POL_MIN_DISTANCE, 1.f, 10.f);
+	ImGui::SliderFloat("Radius2", &POL_MAX_DISTANCE, 10.f, 100.f);
 	ImGui::SliderFloat("Intensity", &POL_INTENSITY, 100.f, 5000.f);
 	ImGui::SliderFloat("Repulsion Factor", &POL_REPULSION, 0.f, 5.f);
 	ImGui::SliderFloat("Inertia", &POL_INERTIA, 0.f, 0.99f);

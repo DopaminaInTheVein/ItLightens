@@ -74,11 +74,10 @@ class player_controller : public CPlayerBase {
   //CHandle					pose_jump;
 
   //Polarity Constants
-  float	POL_RCLOSE = 0.5f;
-  float	POL_RFAR = 9.0f; // 5 Meters arround
-  float	POL_HORIZONTALITY = 1.f;
-  float	POL_INTENSITY = 10.f;
-  float	POL_REPULSION = .5f;
+  float	POL_MIN_DISTANCE = 1.5f;
+  float	POL_MAX_DISTANCE = 30.0f; 
+  float	POL_INTENSITY = 5.0f;
+  float	POL_REPULSION = 1.0f;
   float	POL_RESISTANCE = .5f;
   float	POL_INERTIA = 0.5f;
   float	POL_SPEED_ORBITA = 0.2f;
@@ -112,6 +111,7 @@ class player_controller : public CPlayerBase {
   VEC3					endPointWire = VEC3(0, 0, 0);
   vector<VEC3>			all_forces;
   vector<float>			force_ponderations;
+  bool					gravity_active = true;
 
   std::string			damage_source = "none";
 

@@ -1842,7 +1842,7 @@
 <render_static_mesh
    name="static_meshes/test/scientist.static_mesh"/>
 <character_controller
-   radius="0.147"
+   radius="0.3"
    height="1.71312"/>
 
 </entity>

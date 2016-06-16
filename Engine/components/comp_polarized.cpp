@@ -32,7 +32,18 @@ bool TCompPolarized::getUpdateInfo() {
 
 void TCompPolarized::update(float elapsed)
 {
-	//updatePxTransform();
+	/*
+	CHandle me_h = CHandle(this).getOwner();
+
+	origin = VEC3(0.0f, 0.0f, 0.0f);
+	CEntity *me_e = me_h;
+	TCompTransform *t = me_e->get<TCompTransform>();
+	if (t) {
+		auto my_position = t->getPosition();
+		origin = my_position + force.offset;
+		Debug->DrawLine(my_position, origin);
+	}
+	*/
 	CEntity *e_p = player_h;
 	if (e_p) {
 		TCompCharacterController *cc = e_p->get<TCompCharacterController>();
@@ -40,20 +51,10 @@ void TCompPolarized::update(float elapsed)
 		VEC3 player_pos = cc->GetPosition();
 
 		if (mType == FIXED) {
-			//PxVec3* pxClosestPoint = new PxVec3();
-			//PxVec3 pxPlayerPos = PhysxConversion::Vec3ToPxVec3(player_pos);
-			//force.distance = PxGeometryQuery::pointDistance(pxPlayerPos, *m_area, m_transform, pxClosestPoint);
-			//if (force.distance > 0.f) {
-			//	VEC3 closestPoint = PhysxConversion::PxVec3ToVec3(*pxClosestPoint);
-			//	force.deltaPos = closestPoint - player_pos;
-			//	//force.deltaPos = origin - player_pos;
-			//	assert(isNormal(force.deltaPos));
-			//} else {
 			force.deltaPos = origin - player_pos;
-			//}
-			force.distance = force.deltaPos.LengthSquared();
+			force.distance = simpleDist(origin, player_pos);
 
-			if (dist_effect_squared_fixed > force.distance) {
+			if (dist_effect_fixed > force.distance) {
 				if (!send) {
 					send = true;
 					sendMessagePlayer(msg_in);
@@ -88,8 +89,8 @@ void TCompPolarized::update(float elapsed)
 					}
 				}
 
-				float dist = squaredDist(player_pos, origin);
-				if (dist_effect_squared_free > dist) {
+				float dist = simpleDist(player_pos, origin);
+				if (dist_effect_free > dist) {
 					VEC3 direction = player_pos - origin;
 					TCompPhysics *p = e->get<TCompPhysics>();
 
@@ -125,18 +126,6 @@ void TCompPolarized::update(float elapsed)
 		}
 	}
 }
-//
-//void TCompPolarized::updatePxTransform()
-//{
-//	CEntity* eMe = CHandle(this).getOwner();
-//	if (eMe) {
-//		TCompTransform* t = eMe->get<TCompTransform>();
-//		float movement = simpleDist(t->getPosition(), last_position);
-//		if (movement > mEpsilonMove) {
-//			m_transform = PhysxConversion::ToPxTransform(t->getPosition(), t->getRotation());
-//		}
-//	}
-//}
 
 bool TCompPolarized::load(MKeyValue & atts)
 {
@@ -158,15 +147,6 @@ bool TCompPolarized::load(MKeyValue & atts)
 		force.offset = VEC3(0.f, 0.5f, 0.f);
 	}
 
-	//Test borrar CLH
-	//offset_pos = VEC3(0.f, 0.5f, 0.f);
-
-	//const VEC3 size = atts.getPoint("size");
-	//if (size.x != 0 || size.y != 0 | size.z != 0) {
-	//	PxVec3 pxSize = PhysxConversion::Vec3ToPxVec3(size);
-	//	m_area = new PxBoxGeometry();
-	//	g_PhysxManager->CreateBoxGeometry(pxSize, *m_area);
-	//}
 	return true;
 }
 
@@ -194,16 +174,9 @@ void TCompPolarized::onCreate(const TMsgEntityCreated &)
 			TCompTransform *t = me_e->get<TCompTransform>();
 			if (t) {
 				//Set origin (remains at the moment for FREE behaviour)
-				origin = t->getPosition();
+				auto my_position = t->getPosition();
+				origin = my_position + force.offset;
 			}
-			//	//Set pxTransform (for FIXED behaviour)
-			//	if (m_area) {
-			//		m_transform = PhysxConversion::ToPxTransform(
-			//			t->getPosition(),
-			//			t->getRotation()
-			//		);
-			//	}
-			//}
 		}
 	}
 }

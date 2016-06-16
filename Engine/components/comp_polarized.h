@@ -22,8 +22,8 @@ struct TCompPolarized : public TCompBase {
 	TMsgPolarize		msg_out;
 	CHandle				player_h;
 
-	float			dist_effect_squared_free = 25.f;
-	float			dist_effect_squared_fixed = 4.f;
+	float			dist_effect_free = 5.0f;
+	float			dist_effect_fixed = 5.0f;
 	float			dist_near = 5.f;
 
 	PolarityForce	force;
