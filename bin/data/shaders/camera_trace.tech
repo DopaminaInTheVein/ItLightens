@@ -1,0 +1,5 @@
+<tech>
+    <vs fx="camera_trace" main="VS" decl="positions_uv"/>
+    <ps fx="camera_trace" main="PS"/>
+</tech>
+

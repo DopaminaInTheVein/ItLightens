@@ -272,6 +272,7 @@ void createRasterizerStates() {
     FALSE,            // BOOL MultisampleEnable;
     FALSE,            // BOOL AntialiasedLineEnable;
   };
+
   hr = Render.device->CreateRasterizerState(&desc, &rasterizer_states[RSCFG_SHADOWS]);
   assert(!FAILED(hr));
   setDXName(rasterizer_states[RSCFG_SHADOWS], "RS_SHADOWS");

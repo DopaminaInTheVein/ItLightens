@@ -50,7 +50,7 @@ void TCompTransform::renderInMenu() {
 		limit = 300.f;
 	if (fabsf(pos.x) >= limit || fabsf(pos.y) >= limit || fabsf(pos.z) >= limit)
 		limit = 1000.f;
-	if (ImGui::SliderFloat3("Pos", &pos.x, -limit, limit)){
+	if (ImGui::DragFloat3("Pos", &pos.x, 0.1)){
 		setPosition(pos);
 	}
 

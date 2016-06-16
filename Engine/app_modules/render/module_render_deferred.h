@@ -59,6 +59,7 @@ public:
 	void stop() override;
 	void update(float dt);
 	void render() override;
+	void test_trace_camera();
 	void applyPostFX();
 	void renderUI();
 	bool forcedUpdate() { return true; }

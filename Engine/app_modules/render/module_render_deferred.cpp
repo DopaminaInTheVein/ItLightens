@@ -722,6 +722,10 @@ void CRenderDeferredModule::render() {
 	  GlowEdges();
 	}*/
 
+
+	test_trace_camera();
+
+
 	CTexture::deactivate(78);
 	CTexture::deactivate(79);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
@@ -741,6 +745,26 @@ void CRenderDeferredModule::render() {
 	// Leave the 3D Camera active
 	activateRenderCamera3D();
 }
+
+//--------------------------------------------------
+//testing ai_cam trace rays
+#include "logic\ai_cam.h"
+
+void CRenderDeferredModule::test_trace_camera() {
+
+	Render.activateBackBuffer();
+
+	CEntity* e_c = tags_manager.getFirstHavingTag("ai_cam");	//test with 1 camera
+	if (!e_c) return;
+	TCompLightDirShadows* camera_light = e_c->get<TCompLightDirShadows>();
+	if (!camera_light) return;
+	camera_light->uploadShaderCtes(e_c);	//upload camera info
+
+	auto tech = Resources.get("camera_trace.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_final, tech);
+}
+
+//end test
 
 void CRenderDeferredModule::applyPostFX() {
 	CTraceScoped scope("applyPostFX");
