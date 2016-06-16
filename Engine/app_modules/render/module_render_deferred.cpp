@@ -695,6 +695,11 @@ void CRenderDeferredModule::render() {
 
 	drawFullScreen(rt_final);
 
+	applyPostFX();
+
+
+	Render.activateBackBuffer();
+
 	activateBlend(BLENDCFG_COMBINATIVE);
 	rt_specular->activate(79);
 	rt_shadows->activate(78);
@@ -734,7 +739,10 @@ void CRenderDeferredModule::render() {
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	
 	Render.activateBackBuffer();
+
 	activateZ(ZCFG_DEFAULT);
+
+	
 	
 	// Mandar a pintar los 'transparentes'
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
@@ -748,18 +756,23 @@ void CRenderDeferredModule::render() {
 
 void CRenderDeferredModule::applyPostFX() {
   CTraceScoped scope("applyPostFX");
+
   CEntity* e_camera = h_camera;
   if( !e_camera )
     return;
   
-  CTexture* next_step = rt_acc_light;
+  CTexture* next_step = rt_shadows;
 
   TCompRenderGlow* glow = e_camera->get< TCompRenderGlow >();
   if (glow) 
     next_step = glow->apply(next_step);
 
+ /* Render.activateBackBuffer();
+  auto tech = Resources.get("aa_tech.tech")->as<CRenderTechnique>();
+  drawFullScreen(rt_final, tech);*/
+
   // ------------------------
-  Render.activateBackBuffer();
+ /* Render.activateBackBuffer();
 
   activateZ(ZCFG_ALL_DISABLED);
   drawFullScreen(next_step);
@@ -768,7 +781,11 @@ void CRenderDeferredModule::applyPostFX() {
   // Mandar a pintar los 'transparentes'
   rt_depths->activate(TEXTURE_SLOT_DEPTHS);
   RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
-  CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
+  CTexture::deactivate(TEXTURE_SLOT_DEPTHS);*/
+
+
+
+
 }
 
 void CRenderDeferredModule::renderUI() {

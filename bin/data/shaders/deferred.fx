@@ -281,23 +281,55 @@ float getShadowAt(float4 wPos) {
   if (light_proj_coords.z < 1e-3)
     return 0.;
 
-	//float2 rand = txNoise.Sample(samLinear, float2(wPos.xy)).xy ;/// light_proj_coords.z ;
+	float2 rand = txNoise.Sample(samLinear, float2(wPos.xy)).xy ;/// light_proj_coords.z ;
   float2 center = light_proj_coords.xy;
-  float depth = light_proj_coords.z - 0.001;	
-  float amount = tapAt(center, depth);
+  float bias = 0.001;
+  float depth = light_proj_coords.z - bias;	
+  
+  
+  float amount = tapAt(center, depth);	//initial value, center shadow
+  
+  
+ float steps = 3.;	//Steps iteration
  
-  float2 sz = float2(2.0/ xres, 2.0/yres)*light_proj_coords.z;
-  //sz = float2(rand.x/xres, rand.y/yres);
-  /*amount += tapAt(center + float2(sz.x, sz.y), depth);
-  amount += tapAt(center + float2(-sz.x, sz.y), depth);
-  amount += tapAt(center + float2(sz.x, -sz.y), depth);
-  amount += tapAt(center + float2(-sz.x, -sz.y), depth);
+ 
+ //size betwen step
+ float xstep = xres/2.;
+ float ystep = xres/2.;
+  float2 sz = float2(1.0/ xstep, 1.0/ystep)*light_proj_coords.z;
+  float x,y;
+  
+  float index[5] = {
+	0.25,
+	0.1,
+	0.07,
+	0.03,
+	0.01
+  };
+  
+  float dsteps = steps*steps;
+  for(x=-steps; x<steps; x++){
+	for(y = -steps; y <steps; y++){
+	
+	  float2 pos;
+	  pos.x = sz.x * x;
+	  pos.y = sz.y * y;
+	  rand = txNoise.Sample(samLinear, pos).xy ;
+	  //pos+=rand;
+	  amount += tapAt(center + pos + rand*sz, depth)*1./(2*(abs(x)+abs(y)+1));
+	}
+  
+  }
+  
+ amount *= 1./ (steps);
 
-  amount += tapAt(center + float2(sz.x, 0), depth);
-  amount += tapAt(center + float2(-sz.x, 0), depth);
-  amount += tapAt(center + float2(0, -sz.y), depth);
-  amount += tapAt(center + float2(0, sz.y), depth);*/
- 
+//sum of 1.0 -> in light, 0.0 -> in shadow
+
+//multiply the summed amount by our distance, which gives us a radial falloff
+//then multiply by vertex (light) color  
+//gl_FragColor = vColor * vec4(vec3(1.0), sum * smoothstep(1.0, 0.0, r));
+  
+  
   /*amount += tapAt(center + float2(sz.x, sz.y)*2, depth);
   amount += tapAt(center + float2(-sz.x, sz.y)*2, depth);
   amount += tapAt(center + float2(sz.x, -sz.y)*2, depth);
@@ -306,42 +338,40 @@ float getShadowAt(float4 wPos) {
   amount += tapAt(center + float2(sz.x, 0)*2, depth);
   amount += tapAt(center + float2(-sz.x, 0)*2, depth);
   amount += tapAt(center + float2(0, -sz.y)*2, depth);
-  amount += tapAt(center + float2(0, sz.y)*2, depth);
+  amount += tapAt(center + float2(0, sz.y)*2, depth);*/
  
-  amount *= 1.f / 18.;*/
+  //amount *= 1.f / 18.;
   
   //amount *= 1.f / 9.;
   
+/*float2 poissonDisk[4] = {
+  float2( -0.94201624, -0.39906216 ),
+  float2( 0.94558609, -0.76890725 ),
+  float2( -0.094184101, -0.92938870 ),
+  float2( 0.34495938, 0.29387760 )
+};
+
+float visibility = 0;
   float steps = 4.0f;
   sz = float2(0,0);
   float2 offset = float2(-steps/2., -steps/2.);
   
-  float4 rnd = txNoise.Sample(samLinear, float2(wPos.xy)) ;/// light_proj_coords.z ;
+  float rnd = txNoise.Sample(samLinear, float2(wPos.xy)).r ;/// light_proj_coords.z ;
   
-  for(int i= 0; i< steps; i++)
-  {
-	sz.xy = rnd.xy * float2(1./xres,1./yres) + center + float2(offset.x, offset.y)* float2(1./xres,1./yres);
+
+	float x,y;
+	for (y = -5. ; y <=5. ; y+=0.5){
+		for (x = -5. ; x <=5. ; x+=0.5){
+			rnd = txNoise.Sample(samLinear, float2(x,y)).r ;/// light_proj_coords.z ;
+			amount += tapAt(center + float2(x,y)*(1+rnd.r), depth);
+		}
+	}
 	
-	amount += tapAt(sz, depth);
-	
-	sz.xy = rnd.zw * float2(1./xres,1./yres) + center + float2(-offset.x, -offset.y)* float2(1./xres,1./yres);
-	
-	amount += tapAt(float2(sz.x,sz.y), depth);
-	
-	sz.xy = rnd.zw * float2(1./xres,1./yres) + center + float2(offset.x, -offset.y)* float2(1./xres,1./yres);
-	
-	amount += tapAt(float2(sz.x,sz.y), depth);
-	
-	sz.xy = rnd.zw * float2(1./xres,1./yres) + center + float2(-offset.x, offset.y)* float2(1./xres,1./yres);
-	
-	amount += tapAt(float2(sz.x,sz.y), depth);
-	
-	offset.xy += float2(1,1);
-  }
-  
-  amount *= 1/(steps*4.);
-  
-  return amount * 1./depth;
+	amount *= 1.f / 2.;*/
+
+  //amount *= 1/(9.);
+ //amount+=1; 
+ //visibility *=  1./depth;
   //return amount *0.5f + 0.5*depth;
   return amount;
 }

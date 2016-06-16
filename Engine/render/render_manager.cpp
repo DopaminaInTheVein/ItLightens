@@ -214,7 +214,7 @@ void CRenderManager::renderShadowCasters() {
 	//assert(c_tmx);
 	if (c_tmx) {
 		activateWorldMatrix(c_tmx->asMatrix());
-		if (it->owner.hasTag("player")) {
+		if (it->owner.getOwner().hasTag("player")) {
 			int i = 0;
 		}
 		// If the shadows_keys were sorted by mesh
@@ -239,7 +239,7 @@ void CRenderManager::renderShadowCastersSkin() {
 		//assert(c_tmx);
 		if (c_tmx) {
 			activateWorldMatrix(c_tmx->asMatrix());
-			if (it->owner.hasTag("player")) {
+			if (it->owner.getOwner().hasTag("player")) {
 				int i = 0;
 			}
 			// If the shadows_keys were sorted by mesh

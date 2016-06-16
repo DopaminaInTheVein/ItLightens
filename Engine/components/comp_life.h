@@ -97,6 +97,8 @@ struct TCompLife : public TCompBase {
 			else if (currentlife > maxlife)
 				currentlife = maxlife;
 		}
+
+		currentlife = 100;
 	}
 
 	void onDamage(const TMsgDamage& msg) {
