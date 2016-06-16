@@ -61,18 +61,6 @@
 		"dash_timer_reset" : 10.0,
 		"drop_water_timer_reset" : 3.0
 	},	
-	"ai_beacon" : {
-		"range" : 2.0,
-		"width" : 1.0,
-		"rot_speed_sonar" : 2.0,
-		"max_idle_waiting" : 5.0
-	},	
-	"ai_cam" : {
-		"range" : 2.0,
-		"width" : 1.0,
-		"rot_speed_sonar" : 2.0,
-		"max_idle_waiting" : 5.0
-	},	
 	"ai_water" : {
 		"permanent_water_damage" : 1000,
 		"dropped_water_damage" : 15,

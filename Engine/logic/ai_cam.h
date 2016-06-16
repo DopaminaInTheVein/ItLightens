@@ -52,10 +52,11 @@ public:
   ai_cam() {}		//needed to create obj at load
   void Init() override;
   void init() { Init(); }
-  void readIniFileAttr();
   bool load(MKeyValue& atts);
   bool playerInRange();
-  float getRange() const { return range; }
+  float getRange() { return range; }
+  float getWidth() { return width; }
+  float getDistToFloor() { return distToFloor; }
   //Overload functions from TCompBase, needed to loop AI Component
   //--------------------------------------
   void update(float elapsed) { Recalc(); }  //Called from object_manager

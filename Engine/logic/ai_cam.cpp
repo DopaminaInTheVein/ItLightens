@@ -5,7 +5,7 @@
 #include "handle\object_manager.h"
 #include "components\comp_transform.h"
 #include "components\comp_charactercontroller.h"
-#include "components\comp_name.h"
+#include "components\comp_light_dir_shadows.h"
 #include "components\entity.h"
 #include "components\entity_tags.h"
 
@@ -13,31 +13,17 @@ map<string, statehandler> ai_cam::statemap = {};
 
 map<int, string> ai_cam::out = {};
 
-void ai_cam::readIniFileAttr() {
-  CHandle h = CHandle(this).getOwner();
-  if (h.isValid()) {
-    if (h.hasTag("ai_cam")) {
-      CApp &app = CApp::get();
-      std::string file_ini = app.file_initAttr_json;
-      map<std::string, float> fields = readIniAtrData(file_ini, "ai_cam");
-
-      assignValueToVar(range, fields);
-      assignValueToVar(width, fields);
-      assignValueToVar(rot_speed_sonar, fields);
-      assignValueToVar(max_idle_waiting, fields);
-    }
-  }
-}
-
 bool ai_cam::load(MKeyValue& atts) {
   maxRot = deg2rad(atts.getFloat("max_rotation", 120.0f));
+  range = atts.getFloat("range", range);
+  width = atts.getFloat("width", width);
+  rot_speed_sonar = atts.getFloat("rot_speed_sonar", rot_speed_sonar);
+  max_idle_waiting = atts.getFloat("max_idle_waiting", max_idle_waiting);
   return true;
 }
 
 void ai_cam::Init() {
   //read main attributes from file
-  readIniFileAttr();
-
   full_name = "ai_cam_" + to_string(id_camera);
 
   if (statemap.empty()) {
@@ -52,6 +38,7 @@ void ai_cam::Init() {
   idle_wait = 0.0f;
 
   TCompTransform *me_transform = myEntity->get<TCompTransform>();
+  TCompLightDirShadows *lshd = myEntity->get<TCompLightDirShadows>();
   PxRaycastBuffer hit;
 
   bool ret = g_PhysxManager->raycast(me_transform->getPosition(), VEC3(0.0f, -1.0f, 0.0f), 20.0f, hit);
@@ -59,6 +46,24 @@ void ai_cam::Init() {
     distToFloor = hit.getAnyHit(0).distance;
   }
 
+  if (lshd) {
+    VEC3 myposinitial = me_transform->getPosition();
+    VEC3 origin = myposinitial;
+    origin.x += me_transform->getFront().x / 2;
+    origin.z += me_transform->getFront().z / 2;
+    myposinitial.y -= distToFloor;
+    VEC3 vec1 = origin - (myposinitial + me_transform->getFront()*(range + width));
+    VEC3 vec2 = origin - (myposinitial + me_transform->getFront()*(range - width));
+
+    float dot = vec1.x*vec2.x + vec1.y*vec2.y + vec1.z*vec2.z;
+    float lenSq1 = vec1.x*vec1.x + vec1.y*vec1.y + vec1.z*vec1.z;
+    float lenSq2 = vec2.x*vec2.x + vec2.y*vec2.y + vec2.z*vec2.z;
+    float fov_in_rads = acos(dot / sqrt(lenSq1 * lenSq2));
+    lshd->setNewFov(fov_in_rads);
+  }
+  else {
+    fatal("camera needs a shadow camera component");
+  }
   if (rotatingR) {
     ChangeState("RotatingRight");
   }
@@ -97,21 +102,7 @@ bool ai_cam::playerInRange() {
   VEC3 destiny = myposinitial + me_transform->getFront()*range;
   VEC3 origin = myposinitial;
   origin.x += me_transform->getFront().x / 2;
-  origin.y += 2.5f;
   origin.z += me_transform->getFront().z / 2;
-
-#ifndef NDEBUG
-  // raycasts
-  Debug->DrawLine(origin, destiny, VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*(range + width), VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*(range + width / 2), VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*(range - width), VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*(range - width / 2), VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*range + me_transform->getLeft() * width, VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*range + me_transform->getLeft() * (width / 2), VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*range - me_transform->getLeft() * width, VEC3(1.0f, 0.0f, 0.0f));
-  Debug->DrawLine(origin, myposinitial + me_transform->getFront()*range - me_transform->getLeft() * (width / 2), VEC3(1.0f, 0.0f, 0.0f));
-#endif
 
   VEC3 direction = origin - destiny;
   float height = origin.y - destiny.y;
@@ -133,61 +124,80 @@ bool ai_cam::playerInRange() {
   if (realDistXZ(minplayerPos, lookingPointMin) < width || realDistXZ(maxplayerPos, lookingPointMax) < width) {
     //raycast to look for down distance
     PxRaycastBuffer hit;
+    CHandle hanHitted;
+    VEC3 playerPos = minplayerPos;
+    VEC3 playerPosUp = maxplayerPos;
+    playerPosUp.y -= 0.1;
+    VEC3 playerPosDown = minplayerPos;
+    playerPosDown.y += 0.1f;
+    playerPos.y += playerHeight / 2;
+    VEC3 playerPosRight = (playerPos + me_transform->getLeft() * (cplayer->GetRadius()*0.9));
+    VEC3 playerPosLeft = (playerPos + me_transform->getLeft() * (cplayer->GetRadius()*0.9));
 
-    //center
-    VEC3 d1 = destiny - origin;
+    // raycasts
+#ifndef NDEBUG
+    Debug->DrawLine(origin, playerPos, VEC3(1.0f, 0.0f, 0.0f));
+    Debug->DrawLine(origin, playerPosUp, VEC3(1.0f, 0.0f, 0.0f));
+    Debug->DrawLine(origin, playerPosDown, VEC3(1.0f, 0.0f, 0.0f));
+    Debug->DrawLine(origin, playerPosRight, VEC3(1.0f, 0.0f, 0.0f));
+    Debug->DrawLine(origin, playerPosLeft, VEC3(1.0f, 0.0f, 0.0f));
+#endif
+
+    // player center
+    VEC3 d1 = playerPos - origin;
     float dist1 = d1.Length();
     d1.Normalize();
     bool hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
-    if (hitted) return true;
-    // half front
-    d1 = (myposinitial + me_transform->getFront()*(range + width / 2)) - origin;
+    if (hitted) {
+      hanHitted = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+      if (hPlayer == hanHitted) {
+        return true;
+      }
+    }
+    // player up
+    d1 = playerPosUp - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
-    if (hitted) return true;
-    //front
-    d1 = (myposinitial + me_transform->getFront()*(range + width)) - origin;
+    if (hitted) {
+      hanHitted = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+      if (hPlayer == hanHitted) {
+        return true;
+      }
+    }
+    // player down
+    d1 = playerPosDown - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
-    if (hitted) return true;
-    //half back
-    d1 = (myposinitial + me_transform->getFront()*(range - width / 2)) - origin;
+    if (hitted) {
+      hanHitted = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+      if (hPlayer == hanHitted) {
+        return true;
+      }
+    }
+    // player left
+    d1 = playerPosLeft - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
-    if (hitted) return true;
-    //back
-    d1 = (myposinitial + me_transform->getFront()*(range - width)) - origin;
+    if (hitted) {
+      hanHitted = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+      if (hPlayer == hanHitted) {
+        return true;
+      }
+    }
+    // player right
+    d1 = playerPosRight - origin;
     dist1 = d1.Length();
     d1.Normalize();
     hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
-    if (hitted) return true;
-    // half left
-    d1 = (myposinitial + me_transform->getFront()*range + me_transform->getLeft() * (width / 2)) - origin;
-    dist1 = d1.Length();
-    d1.Normalize();
-    hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
-    if (hitted) return true;
-    //left
-    d1 = (myposinitial + me_transform->getFront()*range + me_transform->getLeft() * width) - origin;
-    dist1 = d1.Length();
-    d1.Normalize();
-    hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
-    if (hitted) return true;
-    //right
-    d1 = (myposinitial + me_transform->getFront()*range - me_transform->getLeft() * width) - origin;
-    dist1 = d1.Length();
-    d1.Normalize();
-    hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
-    if (hitted) return true;
-    // half right
-    d1 = (myposinitial + me_transform->getFront()*range - me_transform->getLeft() * (width / 2)) - origin;
-    dist1 = d1.Length();
-    d1.Normalize();
-    hitted = g_PhysxManager->raycast(origin, d1, dist1, hit);
-    if (hitted) return true;
+    if (hitted) {
+      hanHitted = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+      if (hPlayer == hanHitted) {
+        return true;
+      }
+    }
   }
   return false;
 }
@@ -196,6 +206,16 @@ void ai_cam::RotatingLeft() {
   SetMyEntity(); //needed in case address Entity moved by handle_manager
   if (!myEntity) return;
   TCompTransform *me_transform = myEntity->get<TCompTransform>();
+
+#ifndef NDEBUG
+  VEC3 myposinitial = me_transform->getPosition();
+  VEC3 origin = myposinitial;
+  origin.x += me_transform->getFront().x / 2;
+  origin.z += me_transform->getFront().z / 2;
+  myposinitial.y -= distToFloor;
+  Debug->DrawLine(origin, (myposinitial + me_transform->getFront()*(range + width)), VEC3(1.0f, 0.0f, 0.0f));
+  Debug->DrawLine(origin, (myposinitial + me_transform->getFront()*(range - width)), VEC3(1.0f, 0.0f, 0.0f));
+#endif
 
   float yaw, pitch;
   me_transform->getAngles(&yaw, &pitch);
@@ -216,6 +236,16 @@ void ai_cam::RotatingRight() {
   SetMyEntity(); //needed in case address Entity moved by handle_manager
   if (!myEntity) return;
   TCompTransform *me_transform = myEntity->get<TCompTransform>();
+
+#ifndef NDEBUG
+  VEC3 myposinitial = me_transform->getPosition();
+  VEC3 origin = myposinitial;
+  origin.x += me_transform->getFront().x / 2;
+  origin.z += me_transform->getFront().z / 2;
+  myposinitial.y -= distToFloor;
+  Debug->DrawLine(origin, (myposinitial + me_transform->getFront()*(range + width)), VEC3(1.0f, 0.0f, 0.0f));
+  Debug->DrawLine(origin, (myposinitial + me_transform->getFront()*(range - width)), VEC3(1.0f, 0.0f, 0.0f));
+#endif
 
   float yaw, pitch;
   me_transform->getAngles(&yaw, &pitch);

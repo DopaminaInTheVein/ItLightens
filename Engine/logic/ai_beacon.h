@@ -52,7 +52,6 @@ public:
   beacon_controller() {}		//needed to create obj at load
   void Init() override;
   void init() { Init(); }
-  void readIniFileAttr();
   bool load(MKeyValue& atts);
   bool playerInRange();
   float getRange() const { return range; }

@@ -34,7 +34,8 @@ bool TCompCamera::load(MKeyValue& atts) {
   if (is_ortho) setOrtho(1024, 800, znear, zfar);
   else setProjection(deg2rad(fov_in_degs), znear, zfar);
 
-  setProjection(deg2rad(fov_in_degs), znear, zfar);
+  //setProjection(deg2rad(fov_in_degs), znear, zfar);
+
   return true;
 }
 
@@ -68,7 +69,7 @@ void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
     lpos.x += tmx->getFront().x / 2;
     lpos.z += tmx->getFront().z / 2;
     VEC3 destPos = tmx->getPosition() + tmx->getFront()*aicam->getRange();
-    destPos.y -= 2.5f;
+    destPos.y -= aicam->getDistToFloor();
     this->smoothLookAt(lpos, destPos);
   }
   else {
