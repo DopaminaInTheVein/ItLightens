@@ -17,6 +17,10 @@
 #include "components/comp_charactercontroller.h"
 #include "app_modules/gui/gui.h"
 
+//if (animController) animController->setState(AST_IDLE, [prio])
+#define SET_ANIM_SCIENTIST(state) SET_ANIM_STATE(animController, state)
+#define SET_ANIM_SCIENTIST_P(state) SET_ANIM_STATE_P(animController, state)
+
 map<string, statehandler> player_controller_cientifico::statemap = {};
 map<int, string> player_controller_cientifico::out = {};
 std::vector<std::string> player_controller_cientifico::objs_names;
@@ -48,6 +52,13 @@ void player_controller_cientifico::readIniFileAttr() {
 			assignValueToVar(t_create_MagneticBomb_energy, fields_scientist);
 		}
 	}
+}
+
+bool player_controller_cientifico::getUpdateInfo()
+{
+	if (!CPlayerBase::getUpdateInfo()) return false;
+	animController = GETH_MY(SkelControllerPlayer);
+	return true;
 }
 
 void player_controller_cientifico::Init() {
@@ -83,6 +94,9 @@ void player_controller_cientifico::Init() {
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 	ChangeState("idle");
+	
+	getUpdateInfoBase(CHandle(this).getOwner());
+	SET_ANIM_SCIENTIST(AST_IDLE);
 	//animController.setState(AST_IDLE);
 
 	//Test
@@ -239,15 +253,16 @@ void player_controller_cientifico::UseBomb()
 	PROFILE_FUNCTION("player cientifico: use bomb");
 	if (objs_amoung[obj] > 0) {
 		objs_amoung[obj]--;
+		ChangeState("throwing");
+		bomb_handle.sendMsg(TMsgActivate()); //Notify throwing
+		moving = false;
+		//if (objs_amoung[obj] > 0) spawnBomb();
+		//ChangeState("idle");
 	}
 	else {
 		dbg("No bombs remain!");
 		//TODO?
 	}
-	ChangeState("throwing");
-	bomb_handle.sendMsg(TMsgActivate()); //Notify throwing
-	//if (objs_amoung[obj] > 0) spawnBomb();
-	//ChangeState("idle");
 }
 
 void player_controller_cientifico::Throwing()
@@ -361,7 +376,7 @@ void player_controller_cientifico::spawnBomb()
 
 	TMsgAttach msg;
 	msg.handle = CHandle(this).getOwner();
-	msg.bone_name = "Guard R Hand";
+	msg.bone_name = SK_RHAND;
 	bomb_handle.sendMsg(msg); //TODO por aqui
 	//float yaw, pitch;
 	//bomb_trans->setPosition(transform->getPosition());
@@ -533,4 +548,20 @@ void player_controller_cientifico::onCanRepairDrone(const TMsgCanRechargeDrone &
 {
 	canRepairDrone = msg.range;
 	drone = msg.han;
+}
+
+//Anims
+void player_controller_cientifico::ChangeCommonState(std::string state) {
+	if (state == "moving") {
+		SET_ANIM_SCIENTIST(AST_MOVE);
+	}
+	else if (state == "running") {
+		SET_ANIM_SCIENTIST(AST_RUN);
+	}
+	else if (state == "jumping") {
+		SET_ANIM_SCIENTIST(AST_JUMP);
+	}
+	else if (state == "idle") {
+		SET_ANIM_SCIENTIST(AST_IDLE);
+	}
 }

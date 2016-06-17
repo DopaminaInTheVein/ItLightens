@@ -38,6 +38,13 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 	return true;
 }
 
+
+std::string TCompSkeleton::getKeyBoneName(std::string name)
+{
+	auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
+	return non_const_skel->getKeyBoneName(name);
+}
+
 void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 	//Obtenemos id de la animacion a asignar
 	std::vector<std::string> anim_names = msg.name;

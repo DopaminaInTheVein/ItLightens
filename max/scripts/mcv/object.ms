@@ -145,7 +145,7 @@ struct OM (
 			-- Attributes
 			,#("life")
 			--Components
-			,#("bt_mole", "player_mole", "life")
+			,#("bt_mole", "player_mole", "life", "skc_mole")
 			--Helpers
 			,hNpcs
 		)
@@ -156,7 +156,7 @@ struct OM (
 			-- Attributes
 			,#("life")
 			--Components
-			,#("bt_scientist", "player_cientifico", "life")
+			,#("bt_scientist", "player_cientifico", "life", "skc_scientist")
 			--Helpers
 			,hNpcs
 		)

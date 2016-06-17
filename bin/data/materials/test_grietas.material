@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/prueba_varias_grietas_una_escena.dds"/>
+<texture slot="normalmap" name="textures/prueba_varias_grietas_una_escena_NRM.dds"/>
+</material>

@@ -51,11 +51,13 @@ bool CPlayerBase::checkDead() {
 
 	if (GameController->GetGameState() == CGameController::LOSE) {
 		ChangeState("die");
+		ChangeCommonState("die");
 		return true;
 	}
 
 	if (GameController->GetGameState() == CGameController::VICTORY) {
 		ChangeState("win");
+		ChangeCommonState("win");
 		return true;
 	}
 	return false;
@@ -293,6 +295,7 @@ void CPlayerBase::Idle()
 		UpdateDirection();
 		UpdateJumpState();
 		if (UpdateMovDirection()) {
+			ChangeCommonState("moving");
 			ChangeState("moving");
 		}
 	}
@@ -318,6 +321,7 @@ void CPlayerBase::Die()
 	}
 	orbitCameraDeath();
 	ChangeState("idle");
+	ChangeCommonState("idle");
 }
 
 void CPlayerBase::Win()
@@ -331,6 +335,7 @@ void CPlayerBase::Win()
 	}
 	orbitCameraDeath();
 	ChangeState("idle");
+	ChangeCommonState("idle");
 }
 
 void CPlayerBase::Falling()
@@ -342,6 +347,7 @@ void CPlayerBase::Falling()
 	if (cc->OnGround()) {
 		jspeed = 0.0f;
 		ChangeState("idle");
+		ChangeCommonState("idle");
 	}
 }
 
@@ -353,6 +359,7 @@ void CPlayerBase::Jumping()
 
 	if (cc->GetYAxisSpeed() < 0) {
 		ChangeState("falling");
+		ChangeCommonState("falling");
 	}
 }
 
@@ -362,11 +369,17 @@ void CPlayerBase::Moving()
 	checkFalling();
 	UpdateDirection();
 	UpdateJumpState();
-	if (!UpdateMovDirection()) ChangeState("idle");
+	if (!UpdateMovDirection()) {
+		ChangeState("idle");
+		ChangeCommonState("idle");
+	}
 }
 
 void CPlayerBase::checkFalling() {
-	if (!cc->OnGround() && cc->GetYAxisSpeed() < -.5f) ChangeState("falling");
+	if (!cc->OnGround() && cc->GetYAxisSpeed() < -.5f) {
+		ChangeState("falling");
+		ChangeCommonState("falling");
+	}
 }
 
 #pragma endregion

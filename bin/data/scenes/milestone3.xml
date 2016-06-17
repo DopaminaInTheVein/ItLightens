@@ -1803,14 +1803,17 @@
 <player_mole/>
 <life
    points="100"/>
+<skc_mole/>
 <name
    name="mole_1"/>
 <transform
    pos="-94.5563 4.46218 35.7666"
    quat="0 0 0 1.0"
    scale="1.0"/>
+<skeleton
+   model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
-   name="static_meshes/test_mole/mole_amarilla.static_mesh"/>
+   name="skeletons/mole/mole.static_mesh"/>
 <character_controller
    radius="0.3"
    height="2.01"/>
@@ -1838,14 +1841,17 @@
 <player_cientifico/>
 <life
    points="100"/>
+<skc_scientist/>
 <name
    name="scientist_1"/>
 <transform
    pos="-72.7122 21.3046 3.77496"
    quat="0 0 0 1.0"
    scale="0.00929856"/>
+<skeleton
+   model="skeletons/scientist/scientist.skeleton"/>
 <render_static_mesh
-   name="static_meshes/test/scientist.static_mesh"/>
+   name="skeletons/scientist/scientist.static_mesh"/>
 <character_controller
    radius="0.147"
    height="1.71312"/>
@@ -2565,6 +2571,7 @@
 <character_controller
    radius="0.3"
    height="0.7"/>
+
 </entity>
 <entity>
     <name name="beacon" />

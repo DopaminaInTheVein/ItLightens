@@ -5,7 +5,6 @@
 #include "player_controllers/player_controller.h"
 #include "components/entity.h"
 
-
 bool SkelControllerPlayer::getUpdateInfo()
 {
 	owner = CHandle(this).getOwner();
@@ -44,7 +43,7 @@ void SkelControllerPlayer::myUpdate()
 		//dbg("Player Speed, Last: %f, %f\n", speed.LengthSquared(), lastSpeed.LengthSquared());
 
 		//if ( !isNormal(speed) || speed.LengthSquared() <= 0.0001f) {
-		//	
+		//
 		//}
 	}
 

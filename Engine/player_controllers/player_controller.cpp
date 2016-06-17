@@ -25,7 +25,6 @@
 #define SET_ANIM_PLAYER(state) SET_ANIM_STATE(animController, state)
 #define SET_ANIM_PLAYER_P(state) SET_ANIM_STATE_P(animController, state)
 
-
 map<string, statehandler> player_controller::statemap = {};
 
 void player_controller::readIniFileAttr() {
@@ -62,6 +61,7 @@ bool player_controller::getUpdateInfo()
 {
 	if (!CPlayerBase::getUpdateInfo()) return false;
 	animController = GETH_MY(SkelControllerPlayer);
+	return true;
 }
 
 void player_controller::Init() {

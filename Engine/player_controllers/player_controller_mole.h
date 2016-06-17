@@ -18,6 +18,7 @@
 #include "camera/camera.h"
 
 class CEntity;
+class SkelControllerMole;
 
 template< class TObj >
 class CObjectManager;
@@ -25,6 +26,7 @@ class CObjectManager;
 class player_controller_mole : public PossController {
 	CObjectManager<player_controller_mole> *om;
 	float mole_max_speed;
+	SkelControllerMole * animController;
 
 protected:
 	// the states, as maps to functions
@@ -43,6 +45,7 @@ public:
 
 	void Init();
 	void readIniFileAttr();
+	bool getUpdateInfo() override;
 
 	void GrabBox();
 	void LeaveBox();

@@ -17,9 +17,12 @@ struct TCompSkeleton : public TCompBase {
 	void uploadBonesToCteShader() const;
 	void updateEndAction();
 	void clearPrevAnims(bool instant);
+	std::string getKeyBoneName(std::string);
 
 	//Messages
 	void onSetAnim(const TMsgSetAnim&);
 };
+
+#define SK_RHAND "right_hand"
 
 #endif

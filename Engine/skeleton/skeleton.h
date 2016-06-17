@@ -14,9 +14,13 @@ class CSkeleton : public IResource, public CXMLParser {
 	void saveAnimId(std::string src, int anim_id);
 
 	void onStartElement(const std::string &elem, MKeyValue &atts);
+
+	std::map<std::string, std::string> key_bones;
 public:
 	CSkeleton();
 	eType getType() const { return SKELETON; }
+
+	std::string getKeyBoneName(std::string);
 
 	bool isValid() const {
 		return core_model != nullptr;

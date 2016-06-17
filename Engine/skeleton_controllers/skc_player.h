@@ -28,7 +28,7 @@ public:
 	void renderInMenu() {}
 
 	//Overload function for handler_manager
-	SkelControllerPlayer& SkelControllerPlayer::operator=(SkelControllerPlayer arg) { return arg; }
+	//SkelControllerPlayer& SkelControllerPlayer::operator=(SkelControllerPlayer arg) { return arg; }
 };
 
 #endif

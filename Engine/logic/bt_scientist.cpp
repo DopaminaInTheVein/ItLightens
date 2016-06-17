@@ -6,6 +6,9 @@
 #include "ai_beacon.h"
 #include "ai_workbench.h"
 
+#define SET_ANIM_SCI_BT(state) SET_ANIM_STATE(animController, state)
+#define SET_ANIM_SCI_BT_P(state) SET_ANIM_STATE_P(animController, state)
+
 map<int, std::string> bt_scientist::out = {};
 map<string, bt_scientist::KptTipo> bt_scientist::kptTypes = {
 	{ "seek", KptTipo::Seek }
@@ -100,7 +103,18 @@ void bt_scientist::Init() {
 	____TIMER_REDEFINE_(timerStunt, 15);
 	t_waitInPos = 0;
 
+	getUpdateInfoBase(CHandle(this).getOwner());
+	if (animController) {
+		animController->setState(AST_IDLE);
+	}
+	SET_ANIM_SCI_BT(AST_IDLE);
 	curkpt = 0;
+}
+
+bool bt_scientist::getUpdateInfo()
+{
+	animController = GETH_MY(SkelControllerScientist);
+	return true;
 }
 
 void bt_scientist::update(float elapsed) {
