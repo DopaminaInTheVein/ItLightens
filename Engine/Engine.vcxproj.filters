@@ -5,7 +5,6 @@
     <ClCompile Include="windows\app.cpp">
       <Filter>windows</Filter>
     </ClCompile>
-    <ClCompile Include="mcv_platform.cpp" />
     <ClCompile Include="geometry\SimpleMath.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
@@ -479,6 +478,7 @@
     <ClCompile Include="skeleton_controllers\skc_scientist.cpp">
       <Filter>skeleton_controllers</Filter>
     </ClCompile>
+    <ClCompile Include="mcv_platform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">

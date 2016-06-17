@@ -11,6 +11,7 @@
 #include "components/comp_render_static_mesh.h"
 #include "components/comp_msgs.h"
 #include "components/comp_workstation.h"
+#include "skeleton_controllers/skc_scientist.h"
 #include "handle/handle.h"
 #include "handle/object_manager.h"
 #include "handle/handle_manager.h"
@@ -85,6 +86,8 @@ class bt_scientist : public bt_poss, public TCompBase {
 	CHandle myParent;
 	CEntity *myEntity = nullptr;
 
+	SkelControllerScientist * animController;
+
 	int actual_action = IDLE;
 	float timerStunt, _timerStunt;
 	//--------------------------------------
@@ -110,6 +113,7 @@ class bt_scientist : public bt_poss, public TCompBase {
 
 public:
 	void Init();
+	bool getUpdateInfo() override;
 	void update(float elapsed);
 	void readIniFileAttr();
 	bool load(MKeyValue& atts);
