@@ -15,7 +15,6 @@ bool TCompLightDirShadows::load(MKeyValue& atts) {
   setObjName(rt_shadows, "rt_shadows");
   assert(is_ok);
 
-
   enabled = atts.getBool("enabled", true);
 
   return is_ok;
@@ -37,7 +36,7 @@ void TCompLightDirShadows::generateShadowMap() {
   if (!enabled)
     return;
   assert(rt_shadows);
-  
+
   // Vamos a empezar a pintar en el shadow map
   rt_shadows->activateRT();
   rt_shadows->clearZ();
@@ -57,5 +56,10 @@ void TCompLightDirShadows::generateShadowMap() {
 }
 
 void TCompLightDirShadows::destroy() {
-	rt_shadows->destroy();
+  rt_shadows->destroy();
+}
+
+void TCompLightDirShadows::setNewFov(float fov_in_rads) {
+  float fov_in_degs = rad2deg(fov_in_rads);
+  setProjection(fov_in_rads, getZNear(), getZFar());
 }

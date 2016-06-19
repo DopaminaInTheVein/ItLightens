@@ -5,7 +5,6 @@
     <ClCompile Include="windows\app.cpp">
       <Filter>windows</Filter>
     </ClCompile>
-    <ClCompile Include="mcv_platform.cpp" />
     <ClCompile Include="geometry\SimpleMath.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
@@ -198,18 +197,6 @@
     </ClCompile>
     <ClCompile Include="logic\btnode.cpp">
       <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\ai_guard.cpp">
-      <Filter>logic_old</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\ai_mole.cpp">
-      <Filter>logic_old</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\ai_poss.cpp">
-      <Filter>logic_old</Filter>
-    </ClCompile>
-    <ClCompile Include="logic\ai_speedy.cpp">
-      <Filter>logic_old</Filter>
     </ClCompile>
     <ClCompile Include="input\input.cpp">
       <Filter>input</Filter>
@@ -437,9 +424,6 @@
     <ClCompile Include="logic\bt_scientist.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_scientific.cpp">
-      <Filter>logic_old</Filter>
-    </ClCompile>
     <ClCompile Include="components\comp_snoozer.cpp">
       <Filter>components</Filter>
     </ClCompile>
@@ -485,6 +469,16 @@
     <ClCompile Include="render\render_instanced.cpp">
       <Filter>render</Filter>
     </ClCompile>
+    <ClCompile Include="logic\ai_cam.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton_controllers\skc_mole.cpp">
+      <Filter>skeleton_controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton_controllers\skc_scientist.cpp">
+      <Filter>skeleton_controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="mcv_platform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -715,18 +709,6 @@
     </ClInclude>
     <ClInclude Include="logic\btnode.h">
       <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_guard.h">
-      <Filter>logic_old</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_mole.h">
-      <Filter>logic_old</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_poss.h">
-      <Filter>logic_old</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_speedy.h">
-      <Filter>logic_old</Filter>
     </ClInclude>
     <ClInclude Include="input\input.h">
       <Filter>input</Filter>
@@ -1166,9 +1148,6 @@
     <ClInclude Include="logic\bt_scientist.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\ai_scientific.h">
-      <Filter>logic_old</Filter>
-    </ClInclude>
     <ClInclude Include="components\comp_snoozer.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -1328,6 +1307,15 @@
     <ClInclude Include="render\render_instanced.h">
       <Filter>render</Filter>
     </ClInclude>
+    <ClInclude Include="logic\ai_cam.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton_controllers\skc_mole.h">
+      <Filter>skeleton_controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton_controllers\skc_scientist.h">
+      <Filter>skeleton_controllers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1392,9 +1380,6 @@
     </Filter>
     <Filter Include="physx">
       <UniqueIdentifier>{16d1a48c-1e04-411f-8706-8555b3d2c0b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="logic_old">
-      <UniqueIdentifier>{cfd37209-5b4f-484a-a06d-56d3541bf572}</UniqueIdentifier>
     </Filter>
     <Filter Include="input">
       <UniqueIdentifier>{3cada1c5-734d-4cb7-a898-3db5437867da}</UniqueIdentifier>

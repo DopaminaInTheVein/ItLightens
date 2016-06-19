@@ -59,6 +59,7 @@ public:
 	void stop() override;
 	void update(float dt);
 	void render() override;
+	void renderDetails();
 	void applyPostFX();
 	void renderUI();
 	bool forcedUpdate() { return true; }

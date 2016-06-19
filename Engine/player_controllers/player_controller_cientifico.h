@@ -1,14 +1,16 @@
 #ifndef INC_PLAYER_CONTROLLER_CIENTIFICO_H_
 #define INC_PLAYER_CONTROLLER_CIENTIFICO_H_
 
-#include "components\comp_base.h"
-#include "handle\handle.h"
-#include "components\comp_msgs.h"
+#include "components/comp_base.h"
+#include "handle/handle.h"
+#include "components/comp_msgs.h"
+#include "components/comp_msgs.h"
 
-#include "camera\camera.h"
+#include "camera/camera.h"
 
 #include "player_controller_base.h"
 #include "poss_controller.h"
+#include "skeleton_controllers/skc_player.h"
 
 class CEntity;
 
@@ -24,6 +26,8 @@ class player_controller_cientifico : public PossController {
 		THROW_BOMB,
 		OBJ_SCI_SIZE
 	};
+	//Anims
+	SkelControllerPlayer * animController;
 
 	int objs_amoung[OBJ_SCI_SIZE];
 
@@ -44,7 +48,6 @@ class player_controller_cientifico : public PossController {
 
 	//Main attributes
 	float t_waiting;
-	float t_to_explode;
 	float t_create_beacon;
 	float t_create_StaticBomb;
 	float t_create_MagneticBomb;
@@ -56,6 +59,10 @@ class player_controller_cientifico : public PossController {
 	void UpdateInputActions() override;
 	void WorkBenchActions();
 
+	//Timers
+	____TIMER_DECLARE_(t_throwing);
+	____TIMER_DECLARE_(t_nextBomb);
+
 protected:
 	// the states, as maps to functions
 	static map<string, statehandler> statemap;
@@ -65,6 +72,8 @@ public:
 	map<string, statehandler>* getStatemap() override {
 		return &statemap;
 	}
+
+	bool getUpdateInfo() override;
 
 	player_controller_cientifico() {}
 	void Init() override;
@@ -80,6 +89,8 @@ public:
 	// Player states
 	void CreateBomb();
 	void UseBomb();
+	void Throwing();
+	void NextBomb();
 	void RepairDrone();
 	//void CreateStaticBomb();
 	//void AddDisableBeacon();
@@ -91,6 +102,8 @@ public:
 
 	void onGetWhoAmI(TMsgGetWhoAmI& msg) { msg.who = PLAYER_TYPE::SCIENTIST; }
 	void myUpdate() override;
+	//void UpdateAnimation() override { animController.update(); }
+
 	//void update_msgs() override;
 
 	void SetCharacterController() {}
@@ -99,6 +112,8 @@ public:
 	void renderInMenu();
 
 	void UpdateUnpossess() override;
+	void ChangeCommonState(std::string);
+
 	//Overload function for handler_manager
 	player_controller_cientifico& player_controller_cientifico::operator=(player_controller_cientifico arg) { return arg; }
 };

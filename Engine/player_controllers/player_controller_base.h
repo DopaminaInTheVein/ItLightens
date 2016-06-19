@@ -79,7 +79,7 @@ protected:
 	virtual void UpdateMovingWithOther();
 	virtual void UpdateJumpState();
 	virtual void UpdateDirection();
-	virtual void UpdateAnimation() {}
+	//virtual void UpdateAnimation() {}
 	virtual void UpdateCinematic(float elapsed);
 	virtual void ChangeCommonState(std::string) {}
 	virtual bool canJump();

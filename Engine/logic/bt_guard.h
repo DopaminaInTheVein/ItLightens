@@ -11,8 +11,19 @@
 #include "handle/handle_manager.h"
 #include <vector>
 
-#define DIST_SQ_SOUND_DETECTION			400
+#define DIST_SQ_SOUND_DETECTION			35
 #define PLAYER_CENTER_Y					0.5f
+
+#define DIST_SQ_REACH_PNT_INI			10
+#define DIST_SQ_SHOT_AREA_ENTER_INI		50
+#define DIST_SQ_SHOT_AREA_LEAVE_INI		100
+#define DIST_RAYSHOT_INI				20
+#define DIST_SQ_PLAYER_DETECTION_INI	150
+#define DIST_SQ_PLAYER_LOST_INI			200
+#define SPEED_WALK_INI					3
+#define CONE_VISION_INI					deg2rad(60)
+#define SPEED_ROT_INI					deg2rad(100)
+#define DAMAGE_LASER_INI				30
 
 #define ST_SELECT_ACTION	"select_action"
 #define ST_NEXT_ACTION		"next_action"
@@ -78,7 +89,7 @@ class bt_guard : public bt, public TCompBase
 	//string last_pose = "";
 
 	//Cambio anim
-	SkelControllerGuard animController;
+	SkelControllerGuard * animController;
 
 	//Debug
 	//____TIMER_DECLARE_(timerDebug, 2.0f);
@@ -242,6 +253,11 @@ public:
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();
 
+	bool getUpdateInfo() {
+		animController = GETH_MY(SkelControllerGuard);
+		return true;
+	}
+
 	void update(float dt) {
 		TCompTransform * t = compBaseEntity->get<TCompTransform>();
 		Debug->DrawLine(t->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
@@ -254,7 +270,7 @@ public:
 		}
 
 		if (!forced_move) Recalc();
-		animController.update();
+		//animController.update();
 	}
 
 	void render();

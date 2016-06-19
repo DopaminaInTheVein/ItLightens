@@ -11,11 +11,14 @@
 #include "components\comp_msgs.h"
 
 #include "ui\ui_interface.h"
-#include "logic\ai_mole.h"
 #include "components/comp_charactercontroller.h"
 #include "components\comp_physics.h"
 
 map<string, statehandler> player_controller_mole::statemap = {};
+
+//if (animController) animController->setState(AST_IDLE, [prio])
+#define SET_ANIM_MOLE(state) SET_ANIM_STATE(animController, state)
+#define SET_ANIM_MOLE_P(state) SET_ANIM_STATE_P(animController, state)
 
 void player_controller_mole::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
@@ -41,6 +44,8 @@ void player_controller_mole::readIniFileAttr() {
 }
 
 void player_controller_mole::Init() {
+	getUpdateInfoBase(CHandle(this).getOwner());
+
 	// read main attributes from file
 	readIniFileAttr();
 	mole_max_speed = player_max_speed;
@@ -61,6 +66,14 @@ void player_controller_mole::Init() {
 	myParent = myHandle.getOwner();
 
 	ChangeState("idle");
+	SET_ANIM_MOLE(AST_IDLE);
+}
+
+bool player_controller_mole::getUpdateInfo()
+{
+	if (!CPlayerBase::getUpdateInfo()) return false;
+	animController = GETH_MY(SkelControllerMole);
+	return true;
 }
 
 void player_controller_mole::UpdateInputActions() {

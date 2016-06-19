@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="skeletons/player/player.mesh" material="materials/skin_player.material" />
+</static_mesh>

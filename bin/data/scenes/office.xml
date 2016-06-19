@@ -19,6 +19,7 @@
 <player/>
 <life
    points="10"/>
+<skc_player/>
 <name
    name="player_1"/>
 <transform
@@ -48,6 +49,141 @@
    pos="-69.9693 12.7576 -10.6239"
    quat="0 0.707104 0 0.707104"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="6"
+   kpt0_type="seek"
+   kpt0_pos="-92.4604 4.30737 2.91519"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-99.7464 4.30737 -1.17267"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="-99.7464 4.30737 -17.6532"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="-75.1321 4.30737 -17.6532"
+   kpt3_wait="2"
+   kpt4_type="seek"
+   kpt4_pos="-67.4794 4.30737 -6.42807"
+   kpt4_wait="2"
+   kpt5_type="seek"
+   kpt5_pos="-74.4083 4.30737 3.73965"
+   kpt5_wait="2"
+   jurisdiction="-98.1483 4.26628 3.4245"
+   jurRadius="5.0"/>
+<skc_guard/>
+<name
+   name="guard_1"/>
+<transform
+   pos="-98.1483 4.26628 3.4245"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="look"
+   kpt0_pos="-90.2761 4.18903 -0.766121"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-90.677 4.33179 -32.4386"
+   kpt1_wait="2"
+   jurisdiction="-95.0112 4.15121 -32.9944"
+   jurRadius="5.0"/>
+<skc_guard/>
+<name
+   name="guard_2"/>
+<transform
+   pos="-95.0112 4.15121 -32.9944"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="seek"
+   kpt0_pos="-94.8476 4.33179 -33.0596"
+   kpt0_wait="2"
+   kpt1_type="look"
+   kpt1_pos="-94.4468 4.18903 -1.38715"
+   kpt1_wait="2"
+   jurisdiction="-90.2794 4.16293 -33.6155"
+   jurRadius="5.0"/>
+<skc_guard/>
+<name
+   name="guard_003"/>
+<transform
+   pos="-90.2794 4.16293 -33.6155"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_mole AI_poss"/>
+<bt_mole
+   wpts_size="3"
+   wpt0_pos="-149.088 4.15924 -10.6498"
+   wpt0_wait="2"
+   wpt1_pos="-139.962 4.15924 0.532615"
+   wpt1_wait="2"
+   wpt2_pos="-151.916 4.15924 -0.367119"
+   wpt2_wait="2"/>
+<player_mole/>
+<life
+   points="100"/>
+<skc_mole/>
+<name
+   name="mole_1"/>
+<transform
+   pos="-151.222 6.36182 -10.4986"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/mole/mole.skeleton"/>
+<render_static_mesh
+   name="skeletons/mole/mole.static_mesh"/>
+<character_controller
+   radius="0.3"
+   height="2.01"/>
 
 </entity>
 <entity>

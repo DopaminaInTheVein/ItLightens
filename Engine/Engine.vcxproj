@@ -191,21 +191,7 @@
     <ClCompile Include="input\input_manager.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
     <ClCompile Include="logic\ai_beacon.cpp" />
-    <ClCompile Include="logic\ai_guard.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="logic\ai_mole.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="logic\ai_poss.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="logic\ai_scientific.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="logic\ai_speedy.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="logic\ai_cam.cpp" />
     <ClCompile Include="logic\ai_water.cpp" />
     <ClCompile Include="logic\ai_workbench.cpp" />
     <ClCompile Include="logic\bt.cpp" />
@@ -298,7 +284,9 @@
     <ClCompile Include="skeleton\coresubmesh.cpp" />
     <ClCompile Include="skeleton\skeleton.cpp" />
     <ClCompile Include="skeleton_controllers\skc_guard.cpp" />
+    <ClCompile Include="skeleton_controllers\skc_mole.cpp" />
     <ClCompile Include="skeleton_controllers\skc_player.cpp" />
+    <ClCompile Include="skeleton_controllers\skc_scientist.cpp" />
     <ClCompile Include="skeleton_controllers\skel_controller.cpp" />
     <ClCompile Include="utils\murmur3.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -417,21 +405,7 @@
     <ClInclude Include="input\input_manager.h" />
     <ClInclude Include="logic\aicontroller.h" />
     <ClInclude Include="logic\ai_beacon.h" />
-    <ClInclude Include="logic\ai_guard.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="logic\ai_mole.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="logic\ai_poss.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="logic\ai_scientific.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="logic\ai_speedy.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="logic\ai_cam.h" />
     <ClInclude Include="logic\ai_water.h" />
     <ClInclude Include="logic\ai_workbench.h" />
     <ClInclude Include="logic\bt.h" />
@@ -523,7 +497,9 @@
     <ClInclude Include="skeleton\coresubmesh.h" />
     <ClInclude Include="skeleton\skeleton.h" />
     <ClInclude Include="skeleton_controllers\skc_guard.h" />
+    <ClInclude Include="skeleton_controllers\skc_mole.h" />
     <ClInclude Include="skeleton_controllers\skc_player.h" />
+    <ClInclude Include="skeleton_controllers\skc_scientist.h" />
     <ClInclude Include="skeleton_controllers\skel_controller.h" />
     <ClInclude Include="SLB\include\SLB\Allocator.hpp" />
     <ClInclude Include="SLB\include\SLB\Class.hpp" />

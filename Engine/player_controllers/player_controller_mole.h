@@ -10,7 +10,6 @@
 #include "components/entity.h"
 #include "handle/handle.h"
 #include "components/comp_msgs.h"
-#include "logic/ai_mole.h"
 #include "components/comp_render_static_mesh.h"
 #include "resources/resources_manager.h"
 #include "render/mesh.h"
@@ -19,6 +18,7 @@
 #include "camera/camera.h"
 
 class CEntity;
+class SkelControllerMole;
 
 template< class TObj >
 class CObjectManager;
@@ -26,6 +26,7 @@ class CObjectManager;
 class player_controller_mole : public PossController {
 	CObjectManager<player_controller_mole> *om;
 	float mole_max_speed;
+	SkelControllerMole * animController;
 
 protected:
 	// the states, as maps to functions
@@ -44,6 +45,7 @@ public:
 
 	void Init();
 	void readIniFileAttr();
+	bool getUpdateInfo() override;
 
 	void GrabBox();
 	void LeaveBox();

@@ -4,7 +4,6 @@
 #include "player_controller_base.h"
 #include "components/comp_base.h"
 #include "components/entity.h"
-#include "logic/ai_poss.h"
 
 #define ST_DISABLED	"disabled"
 #define ST_INIT_CONTROL "initControl"

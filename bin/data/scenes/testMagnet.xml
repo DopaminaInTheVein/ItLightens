@@ -19,6 +19,7 @@
 <player/>
 <life
    points="10"/>
+<skc_player/>
 <name
    name="player_1"/>
 <transform

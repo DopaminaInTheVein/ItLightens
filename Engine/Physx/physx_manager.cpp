@@ -503,6 +503,9 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 
 			CEntity* throw_bomb;
 			if ((throw_bomb = e0)->hasTag("throw_bomb") || (throw_bomb = e1)->hasTag("throw_bomb")) {
+				CEntity * other = throw_bomb == e0 ? e1 : e0;
+				if (other->hasTag("player")) return;
+				if (other->hasTag("throw_bomb")) return;
 				throw_bomb->sendMsg(TMsgActivate());
 			}
 

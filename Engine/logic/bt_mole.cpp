@@ -5,6 +5,10 @@
 #include "components\comp_box.h"
 #include "app_modules\logic_manager\logic_manager.h"
 
+//if (animController) animController->setState(AST_IDLE, [prio])
+#define SET_ANIM_MOLE_BT(state) SET_ANIM_STATE(animController, state)
+#define SET_ANIM_MOLE_BT_P(state) SET_ANIM_STATE_P(animController, state)
+
 map<string, btnode *> bt_mole::tree = {};
 map<string, btaction> bt_mole::actions = {};
 map<string, btcondition> bt_mole::conditions = {};
@@ -29,6 +33,7 @@ void bt_mole::readIniFileAttr() {
 
 void bt_mole::Init()
 {
+	getUpdateInfoBase(CHandle(this).getOwner());
 	initParent();
 	// read main attributes from file
 	readIniFileAttr();
@@ -53,15 +58,13 @@ void bt_mole::Init()
 	towptleave = -1;
 	// current wpt
 	curwpt = 0;
-	CEntity* myEntity = myParent;
+	SET_ANIM_MOLE_BT(AST_IDLE);
+}
 
-	mesh = myEntity->get<TCompRenderStaticMesh>();
-
-	pose_idle_route = "static_meshes/mole/mole.static_mesh";
-	pose_jump_route = "static_meshes/mole/mole_jump.static_mesh";
-	pose_run_route = "static_meshes/mole/mole_run.static_mesh";
-	pose_box_route = "static_meshes/mole/mole_box.static_mesh";
-	pose_wall_route = "static_meshes/mole/mole_wall.static_mesh";
+bool bt_mole::getUpdateInfo()
+{
+	animController = GETH_MY(SkelControllerMole);
+	return true;
 }
 
 void bt_mole::update(float elapsed) {
@@ -173,7 +176,8 @@ bool bt_mole::checkBoxes() {
 			SBB::postMole(key_final, this);
 
 			getPath(initial, destiny, SBB::readSala());
-			ChangePose(pose_run_route);
+			//ChangePose(pose_run_route);
+			SET_ANIM_MOLE_BT(AST_RUN);
 			return true;
 		}
 	}
@@ -209,7 +213,7 @@ int bt_mole::actionFollowBoxWpt()
 				return STAY;
 			}
 			else {
-				ChangePose(pose_box_route);
+				//ChangePose(pose_box_route);
 				logic_manager->throwEvent(logic_manager->OnPickupBox, "");
 				return OK;
 			}
@@ -300,7 +304,7 @@ int bt_mole::actionUngrabBox() {
 
 	SBB::postBool(nameBox->name, false);
 	carryingBox = false;
-	ChangePose(pose_idle_route);
+	SET_ANIM_MOLE_BT(AST_IDLE); //Leave box!
 
 	TMsgLeaveBox msg;
 	myBox.sendMsg(msg);
@@ -423,16 +427,4 @@ void bt_mole::moveFront(float movement_speed) {
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 	float dt = getDeltaTime();
 	cc->AddMovement(VEC3(front.x*movement_speed*dt, 0.0f, front.z*movement_speed*dt));
-}
-
-//Cambio de malla
-void bt_mole::ChangePose(string new_pose_route) {
-	if (last_pose != new_pose_route) {
-		mesh->unregisterFromRender();
-		MKeyValue atts_mesh;
-		atts_mesh["name"] = new_pose_route;
-		mesh->load(atts_mesh);
-		mesh->registerToRender();
-		last_pose = new_pose_route;
-	}
 }

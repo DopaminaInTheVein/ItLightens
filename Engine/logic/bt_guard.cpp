@@ -12,6 +12,10 @@
 //Render shoot
 #include "render/fx/GuardShots.h"
 
+//if (animController) animController->setState(AST_IDLE, [prio])
+#define SET_ANIM_GUARD(state) SET_ANIM_STATE(animController, state)
+#define SET_ANIM_GUARD_P(state) SET_ANIM_STATE_P(animController, state)
+
 map<string, bt_guard::KptType> bt_guard::kptTypes = {
 	{"seek", KptType::Seek}
   , {"look", KptType::Look}
@@ -100,7 +104,7 @@ void bt_guard::Init()
 	//Handles
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
-	animController.init(myParent);
+	//animController.init(myParent);
 	thePlayer = tags_manager.getFirstHavingTag(getID("player"));
 
 	if (tree.empty()) {
@@ -135,7 +139,7 @@ void bt_guard::Init()
 	}
 
 	curkpt = 0;
-	animController.setState(AST_IDLE);
+	SET_ANIM_GUARD(AST_IDLE);
 
 	//Other info
 	____TIMER_REDEFINE_(timerShootingWall, 1);
@@ -220,8 +224,8 @@ bool bt_guard::playerOutOfReach() {
 	}
 
 	//Update animation
-	if (res) animController.setState(AST_MOVE);
-	else animController.setState(AST_SHOOT);
+	if (res) SET_ANIM_GUARD(AST_MOVE)
+	else SET_ANIM_GUARD(AST_SHOOT)
 
 	//Return calc
 	return res;
@@ -318,7 +322,7 @@ int bt_guard::actionStunned() {
 
 int bt_guard::actionStepBack() {
 	PROFILE_FUNCTION("guard: actionstepback");
-	animController.setState(AST_MOVE);
+	SET_ANIM_GUARD(AST_MOVE);
 	goForward(-2.f*SPEED_WALK);
 	turnToPlayer();
 
@@ -361,12 +365,12 @@ int bt_guard::actionChase() {
 	if (distance > DIST_SQ_PLAYER_LOST || outJurisdiction(posPlayer)) {
 		playerLost = true;
 		player_last_seen_point = posPlayer;
-		animController.setState(AST_IDLE);
+		SET_ANIM_GUARD(AST_IDLE);
 		return OK;
 	}
 	//player near?
 	else if (distance < DIST_SQ_SHOT_AREA_ENTER) {
-		animController.setState(AST_PREP_SHOOT);
+		SET_ANIM_GUARD(AST_PREP_SHOOT);
 		return OK;
 	}
 	else {
@@ -374,7 +378,7 @@ int bt_guard::actionChase() {
 		if (!accesible)
 			return OK;
 		else {
-			animController.setState(AST_MOVE);
+			SET_ANIM_GUARD(AST_MOVE);
 			goTo(posPlayer);
 			return STAY;
 		}
@@ -402,7 +406,7 @@ int bt_guard::actionAbsorb() {
 	if (!myParent.isValid()) return false;
 	if (playerNear() && playerVisible()) {
 		dbg("SHOOTING BACKWARDS!\n");
-		animController.setState(AST_SHOOT_BACK);
+		SET_ANIM_GUARD(AST_SHOOT_BACK);
 		goForward(-0.9f*SPEED_WALK);
 		turnToPlayer();
 		shootToPlayer();
@@ -451,7 +455,7 @@ int bt_guard::actionAbsorb() {
 		}
 	}
 	else if (playerVisible()) {
-		animController.setState(AST_SHOOT);
+		SET_ANIM_GUARD(AST_SHOOT);
 		shootToPlayer();
 		return STAY;
 	}
@@ -530,7 +534,7 @@ int bt_guard::actionSearch() {
 	else if (playerLost) {
 		float distance = simpleDistXZ(myPos, player_last_seen_point);
 		getPath(myPos, player_last_seen_point, SBB::readSala());
-		animController.setState(AST_MOVE);
+		SET_ANIM_GUARD(AST_MOVE);
 		goTo(player_last_seen_point);
 		//Noise Point Reached ?
 		if (distance < DIST_REACH_PNT) {
@@ -555,20 +559,17 @@ int bt_guard::actionSearch() {
 	else if (noiseHeard) {
 		float distance = simpleDistXZ(myPos, noisePoint);
 		getPath(myPos, noisePoint, SBB::readSala());
-		animController.setState(AST_MOVE);
+		SET_ANIM_GUARD(AST_MOVE);
 		goTo(noisePoint);
 		//Noise Point Reached ?
 		if (distance < DIST_REACH_PNT) {
 			noiseHeard = false;
 			looking_around_time = LOOK_AROUND_TIME;
 
-			TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-			VEC3 playerPos = tPlayer->getPosition();
-
-			VEC3 dir = playerPos - myPos;
+			VEC3 dir = noisePoint - myPos;
 			dir.Normalize();
 
-			search_player_point = playerPos + 1.0f * dir;
+			search_player_point = noisePoint + 1.0f * dir;
 			Debug->DrawLine(myPos, search_player_point);
 			return OK;
 		}
@@ -607,7 +608,7 @@ int bt_guard::actionMoveAround() {
 		if (!accesible)
 			return OK;
 		else {
-			animController.setState(AST_MOVE);
+			SET_ANIM_GUARD(AST_MOVE);
 			goTo(search_player_point);
 			return STAY;
 		}
@@ -626,7 +627,7 @@ int bt_guard::actionLookAround() {
 	}
 	// Turn arround
 	else if (deltaYawLookingArround < 2 * M_PI && looking_around_time > 0.f) {
-		animController.setState(AST_TURN);
+		SET_ANIM_GUARD(AST_TURN);
 		float yaw, pitch;
 		getTransform()->getAngles(&yaw, &pitch);
 
@@ -667,7 +668,7 @@ int bt_guard::actionSeekWpt() {
 			if (!accesible)
 				return OK;
 			else {
-				animController.setState(AST_MOVE);
+				SET_ANIM_GUARD(AST_MOVE);
 				goTo(dest);
 				return STAY;
 			}
@@ -691,7 +692,8 @@ int bt_guard::actionSeekWpt() {
 int bt_guard::actionNextWpt() {
 	PROFILE_FUNCTION("guard: actionnextwpt");
 	if (!myParent.isValid()) return false;
-	animController.setState(AST_TURN);
+	if (keyPoints.size() == 0) return false;
+	SET_ANIM_GUARD(AST_TURN);
 	VEC3 myPos = getTransform()->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Player Visible?
@@ -714,7 +716,7 @@ int bt_guard::actionNextWpt() {
 int bt_guard::actionWaitWpt() {
 	//PROFILE_FUNCTION("guard: actionwaitwpt");
 	if (!myParent.isValid()) return false;
-	animController.setState(AST_IDLE);
+	SET_ANIM_GUARD(AST_IDLE);
 
 	//player visible?
 	if (playerVisible() || boxMovingDetected()) {
@@ -743,7 +745,7 @@ int bt_guard::actionGoToFormation() {
 	// if we didn't reach the point
 	if (distance_to_point > DIST_REACH_PNT) {
 		getPath(myPos, formation_point, SBB::readSala());
-		animController.setState(AST_MOVE);
+		SET_ANIM_GUARD(AST_MOVE);
 		goTo(formation_point);
 		return STAY;
 	}
@@ -758,11 +760,11 @@ int bt_guard::actionTurnToFormation() {
 	VEC3 dest = formation_dir;
 
 	if (turnTo(dest)) {
-		animController.setState(AST_IDLE);
+		SET_ANIM_GUARD(AST_IDLE);
 		return OK;
 	}
 	else {
-		animController.setState(AST_TURN);
+		SET_ANIM_GUARD(AST_TURN);
 		return STAY;
 	}
 }
@@ -793,6 +795,7 @@ void bt_guard::noise(const TMsgNoise& msg) {
 		resetTimers();
 		noisePoint = msg.source;
 		noiseHeard = true;
+    setCurrent(NULL);
 	}
 }
 
@@ -804,7 +807,7 @@ void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 	if (inSquaredRangeXZ_Y(msg.pos, myPos, msg.r, 5.f)) {
 		resetTimers();
 		stunned = true;
-		animController.setState(AST_STUNNED);
+		SET_ANIM_GUARD(AST_STUNNED);
 		checkStopDamage();
 		setCurrent(NULL);
 	}
@@ -823,7 +826,7 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
-		animController.setState(AST_STUNNED);
+		SET_ANIM_GUARD(AST_STUNNED);
 		checkStopDamage();
 		setCurrent(NULL);
 	}
@@ -839,7 +842,7 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 		stunned = true;
 		____TIMER_RESET_(timerStunt);
 		setCurrent(NULL);
-		animController.setState(AST_STUNNED);
+		SET_ANIM_GUARD(AST_STUNNED);
 
 		//End Damage Message
 		checkStopDamage();
@@ -871,7 +874,7 @@ void bt_guard::onBoxHit(const TMsgBoxHit& msg) {
 	stunned = true;
 	____TIMER_RESET_(timerStunt);
 	setCurrent(NULL);
-	animController.setState(AST_STUNNED_BOX);
+	SET_ANIM_GUARD(AST_STUNNED_BOX);
 
 	//If was shooting...
 	if (shooting) {
@@ -893,7 +896,7 @@ void bt_guard::onBoxHit(const TMsgBoxHit& msg) {
 
  // -- Go To -- //
 bool bt_guard::canHear(VEC3 position, float intensity) {
-	return (squaredDistXZ(getTransform()->getPosition(), position) < DIST_SQ_SOUND_DETECTION);
+	return (realDist(getTransform()->getPosition(), position) < DIST_SQ_SOUND_DETECTION);
 }
 
 // -- Go To -- //
@@ -1424,7 +1427,7 @@ void bt_guard::goToPoint(VEC3 dest) {
 	PROFILE_FUNCTION("guard: go to point");
 	if (!myParent.isValid()) return;
 
-	animController.setState(AST_MOVE);
+	SET_ANIM_GUARD(AST_MOVE);
 	forced_move = true;
 
 	// if we didn't reach the point
@@ -1433,6 +1436,6 @@ void bt_guard::goToPoint(VEC3 dest) {
 		goTo(dest);
 	}
 
-	animController.setState(AST_IDLE);
+	SET_ANIM_GUARD(AST_IDLE);
 	forced_move = false;
 }

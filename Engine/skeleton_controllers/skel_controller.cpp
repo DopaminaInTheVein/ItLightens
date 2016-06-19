@@ -5,18 +5,13 @@
 
 using namespace std;
 
-void SkelController::init(CHandle new_owner)
-{
-	owner = new_owner;
-}
-
-void SkelController::update()
+void TCompSkelController::update()
 {
 	myUpdate();
 	prevState = currentState;
 }
 
-void SkelController::setState(string state, bool prio)
+void TCompSkelController::setState(string state, bool prio)
 {
 	if (!priority) {
 		priority = prio;
@@ -24,7 +19,7 @@ void SkelController::setState(string state, bool prio)
 	}
 }
 
-void SkelController::setAnim(string anim, bool loop, string nextLoop)
+void TCompSkelController::setAnim(string anim, bool loop, string nextLoop)
 {
 	std::vector<std::string> anims;
 	anims.push_back(anim);
@@ -35,7 +30,7 @@ void SkelController::setAnim(string anim, bool loop, string nextLoop)
 	setAnim(anims, loop, next);
 }
 
-void SkelController::setLoop(string anim)
+void TCompSkelController::setLoop(string anim)
 {
 	std::vector<std::string> anims;
 	anims.push_back(anim);
@@ -46,7 +41,7 @@ void SkelController::setLoop(string anim)
 	setAnim(anims, true, next);
 }
 
-void SkelController::setAction(string anim, string next_loop)
+void TCompSkelController::setAction(string anim, string next_loop)
 {
 	std::vector<std::string> anims;
 	anims.push_back(anim);
@@ -58,8 +53,8 @@ void SkelController::setAction(string anim, string next_loop)
 }
 
 //animaciones parciales
-void SkelController::setAnim(std::vector<std::string> anim, bool loop, std::vector<std::string> nextLoop) {
-
+void TCompSkelController::setAnim(std::vector<std::string> anim, bool loop, std::vector<std::string> nextLoop)
+{
 	if (!owner.isValid()) return;
 	CEntity* eOwner = owner;
 	TMsgSetAnim msgAnim;
@@ -67,25 +62,21 @@ void SkelController::setAnim(std::vector<std::string> anim, bool loop, std::vect
 	msgAnim.loop = loop;
 	msgAnim.nextLoop = nextLoop;
 	eOwner->sendMsg(msgAnim);
-
 }
 
-void SkelController::setAction(std::vector<std::string> anim, std::vector<std::string> nextLoop)  {
-
+void TCompSkelController::setAction(std::vector<std::string> anim, std::vector<std::string> nextLoop)
+{
 	setAnim(anim, false, nextLoop);
-
 }
 
-void SkelController::setLoop(std::vector<std::string> anim) {
-
+void TCompSkelController::setLoop(std::vector<std::string> anim)
+{
 	std::vector<std::string> next;
 	next.push_back("");
-
 	setAnim(anim, true, next);
-
 }
 
-void SkelController::myUpdate()
+void TCompSkelController::myUpdate()
 {
 	if (currentState == prevState) return;
 	setLoop(currentState);

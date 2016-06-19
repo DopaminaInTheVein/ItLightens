@@ -24,6 +24,9 @@
 #include <chrono>
 #include <windows.h>
 
+//Anim
+class SkelControllerMole;
+
 class bt_mole : public bt_poss, public TCompBase {
 	// Main attributes
 	float speed;
@@ -60,14 +63,15 @@ class bt_mole : public bt_poss, public TCompBase {
 	}
 	bool isBoxAtLeavePoint(VEC3 posBox);
 
-	//Cambio Malla
-	TCompRenderStaticMesh* mesh;
-	string pose_idle_route;
-	string pose_run_route;
-	string pose_jump_route;
-	string pose_box_route;
-	string pose_wall_route;
-	string last_pose = "";
+	//Cambio Anim
+	SkelControllerMole * animController;
+	//TCompRenderStaticMesh* mesh;
+	//string pose_idle_route;
+	//string pose_run_route;
+	//string pose_jump_route;
+	//string pose_box_route;
+	//string pose_wall_route;
+	//string last_pose = "";
 
 	// the nodes
 	static map<string, btnode *>tree;
@@ -82,6 +86,7 @@ class bt_mole : public bt_poss, public TCompBase {
 
 public:
 	void Init();
+	bool getUpdateInfo() override;
 	void update(float elapsed);
 	void readIniFileAttr();
 	//conditions
@@ -125,9 +130,6 @@ public:
 
 	//Virtuals
 	PLAYER_TYPE whoAmI() { return MOLE; }
-
-	//Cambio Malla
-	void ChangePose(string new_pose_route);
 };
 
 #endif

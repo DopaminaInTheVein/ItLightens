@@ -1,6 +1,13 @@
 #include "mcv_platform.h"
 #include "skc_guard.h"
 
+bool SkelControllerGuard::getUpdateInfo()
+{
+	owner = CHandle(this).getOwner();
+	if (!owner.isValid()) return false;
+	return true;
+}
+
 void SkelControllerGuard::myUpdate()
 {
 	if (currentState == prevState) return;	

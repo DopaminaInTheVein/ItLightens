@@ -123,7 +123,7 @@ struct OM (
 			-- Attributes
 			,#("life")
 			--Components
-			,#("player", "life")
+			,#("player", "life", "skc_player")
 			--Helpers
 			,#("charController")
 		)
@@ -134,7 +134,7 @@ struct OM (
 			-- Attributes
 			,#("life", "skeleton")
 			--Components
-			,#("life","bt_guard")
+			,#("life","bt_guard", "skc_guard")
 			--Helpers
 			,hNpcs + #("Formation_Go", "Formation_Look")
 		)
@@ -145,7 +145,7 @@ struct OM (
 			-- Attributes
 			,#("life")
 			--Components
-			,#("bt_mole", "player_mole", "life")
+			,#("bt_mole", "player_mole", "life", "skc_mole")
 			--Helpers
 			,hNpcs
 		)
@@ -156,7 +156,7 @@ struct OM (
 			-- Attributes
 			,#("life")
 			--Components
-			,#("bt_scientist", "player_cientifico", "life")
+			,#("bt_scientist", "player_cientifico", "life", "skc_scientist")
 			--Helpers
 			,hNpcs
 		)

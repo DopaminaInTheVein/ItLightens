@@ -3,7 +3,6 @@
 #include <string>
 #include "sbb.h"
 #include "handle/handle.h"
-#include "logic/ai_mole.h"
 #include "logic/bt_mole.h"
 #include "logic/bt_guard.h"
 #include "recast/navmesh.h"

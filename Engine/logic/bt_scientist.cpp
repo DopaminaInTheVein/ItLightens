@@ -6,6 +6,9 @@
 #include "ai_beacon.h"
 #include "ai_workbench.h"
 
+#define SET_ANIM_SCI_BT(state) SET_ANIM_STATE(animController, state)
+#define SET_ANIM_SCI_BT_P(state) SET_ANIM_STATE_P(animController, state)
+
 map<int, std::string> bt_scientist::out = {};
 map<string, bt_scientist::KptTipo> bt_scientist::kptTypes = {
 	{ "seek", KptTipo::Seek }
@@ -100,7 +103,18 @@ void bt_scientist::Init() {
 	____TIMER_REDEFINE_(timerStunt, 15);
 	t_waitInPos = 0;
 
+	getUpdateInfoBase(CHandle(this).getOwner());
+	if (animController) {
+		animController->setState(AST_IDLE);
+	}
+	SET_ANIM_SCI_BT(AST_IDLE);
 	curkpt = 0;
+}
+
+bool bt_scientist::getUpdateInfo()
+{
+	animController = GETH_MY(SkelControllerScientist);
+	return true;
 }
 
 void bt_scientist::update(float elapsed) {
@@ -262,7 +276,7 @@ int bt_scientist::actionMoveToPos() {
 int bt_scientist::actionAddBeacon() {
 	waiting_time += getDeltaTime();
 	if (waiting_time > t_addBeacon) {		//go to new action
-		SBB::postInt(beacon_to_go_name, beacon_controller::SONAR);
+		//SBB::postInt(beacon_to_go_name, beacon_controller::SONAR);
 		waiting_time = 0.0f;
 		beacon_to_go_name = "";
 		actual_action = IDLE;
@@ -275,7 +289,7 @@ int bt_scientist::actionAddBeacon() {
 int bt_scientist::actionRemoveBeacon() {
 	waiting_time += getDeltaTime();
 	if (waiting_time > t_removeBeacon) {		//go to new action
-		SBB::postInt(beacon_to_go_name, beacon_controller::INACTIVE);
+		//SBB::postInt(beacon_to_go_name, beacon_controller::INACTIVE);
 		waiting_time = 0.0f;
 		actual_action = IDLE;
 		return OK;
@@ -565,29 +579,6 @@ bool bt_scientist::turnToYaw(float yaw_dest) {
 
 	//Ha acabado el giro?
 	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
-}
-
-//Messages:
-void bt_scientist::onRemoveBeacon(const TMsgBeaconToRemove& msg)
-{
-	if (SBB::readInt(msg.name_beacon) != beacon_controller::TO_REMOVE_TAKEN) {
-		SBB::postInt(msg.name_beacon, beacon_controller::TO_REMOVE_TAKEN);
-		obj_position = beacon_to_go = msg.pos_beacon;
-		beacon_to_go_name = msg.name_beacon;
-		actual_action = REMOVE_BEACON;
-		//ChangeState("aimToPos");
-	}
-}
-
-void bt_scientist::onEmptyBeacon(const TMsgBeaconEmpty & msg)
-{
-	if (SBB::readInt(msg.name) != beacon_controller::INACTIVE_TAKEN) {
-		beacon_to_go = msg.pos;
-		beacon_to_go_name = msg.name;
-		actual_action = CREATE_BEACON;
-		SBB::postInt(msg.name, beacon_controller::INACTIVE_TAKEN);	//disable beacon for other bots
-		//ChangeState("seekWB");
-	}
 }
 
 void bt_scientist::onEmptyWB(const TMsgWBEmpty & msg)

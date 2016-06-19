@@ -15,6 +15,8 @@ struct TCompLightDirShadows : public TCompLightDir {
   void update(float dt);
   void generateShadowMap();
   void destroy();
+
+  void setNewFov(float fov);
 };
 
 #endif
