@@ -8,34 +8,35 @@ class TCompCameraMain;
 class TCompTransform;
 
 class TCompGuidedCamera : public TCompBase {
-  int num_points;
-  float velocity;
-  float velocity_default;
-  bool default_dirs;
+	int num_points;
+	float velocity;
+	float velocity_default;
+	bool default_dirs;
+	bool reversed;
 
-  std::vector<VEC3> positions;
-  std::vector<VEC3> targets;
+	std::vector<VEC3> positions;
+	std::vector<VEC3> targets;
 
-  int curPoint = 0;
-  float factor = 0.0f;
-  float smoothFactor = 0.9f;
+	int curPoint = 0;
+	float factor = 0.0f;
+	float smoothFactor = 0.9f;
 public:
-  TCompGuidedCamera() {
-  }
-  ~TCompGuidedCamera() {
-  }
+	TCompGuidedCamera() {
+	}
+	~TCompGuidedCamera() {
+	}
 
-  bool load(MKeyValue& atts);
-  void renderInMenu() {}
-  void update(float dt) {}
+	bool load(MKeyValue& atts);
+	void renderInMenu() {}
+	void update(float dt) {}
 
-  const int getTotalPoints() const { return num_points; }
-  const float 
-	  ocity() const { return velocity; }
+	const int getTotalPoints() const { return num_points; }
+	const float
+		ocity() const { return velocity; }
 
-  void onGuidedCamera(const TMsgGuidedCamera&);
-  bool followGuide(TCompTransform*, TCompCameraMain*);
-  void start(float speed = 0.f);
+	void onGuidedCamera(const TMsgGuidedCamera&);
+	bool followGuide(TCompTransform*, TCompCameraMain*);
+	void start(float speed = 0.f);
 };
 
 #endif

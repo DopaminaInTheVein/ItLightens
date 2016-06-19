@@ -73,7 +73,7 @@ void TCompTracker::update(float elapsed) {
 	for (auto follower_it = followers.begin(); follower_it != followers.end(); ) {
 		if (follower_it->handle.isValid()) {
 			updateTrackMovement(*follower_it);
-			if (follower_it->normalTime >= 1.f) {
+			if (follower_it->arrived()) {
 				follower_it = unfollow(*follower_it);
 			}
 			else follower_it++;
@@ -91,9 +91,6 @@ void TCompTracker::updateTrackMovement(HandleTrack& ht) {
 
 		// Next Position
 		ht.normalTime += ht.normalSpeed * getDeltaTime();
-		if (ht.normalTime >= 1.f) {
-			dbg("last update...\n");
-		}
 		clamp_me(ht.normalTime, 0.f, 1.f);
 		VEC3 nextPos = evaluatePos(ht);
 		transform->setPosition(transform->getPosition() + nextPos - prevPos);

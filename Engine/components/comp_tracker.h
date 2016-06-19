@@ -17,6 +17,12 @@ struct HandleTrack {
 	{
 		return handle == other.handle;
 	}
+
+	bool HandleTrack::arrived()
+	{
+		if (speed > 0) return (normalTime >= 1.f);
+		else return (normalTime <= 0.f);
+	}
 };
 
 typedef std::vector<HandleTrack> VHandleTracks;

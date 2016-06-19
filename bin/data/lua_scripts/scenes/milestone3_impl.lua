@@ -154,8 +154,11 @@ function activeWire1( )
 end
 
 function wireGoUp( )
-  factorWireGoUp = 2
+--  wirePart_1_h:follow_tracker(triggerWire_1, 15*toogle_test)
+--  cam:run_cinematic("CineWireGoUp", 10*toogle_test)
+--  toogle_test = -toogle_test
   p:print("Wire Go Up")
+  factorWireGoUp = 2
   player = Player()
   player:get_player()
   cmd_teleport = "player:teleport(\""..wire_pos_up.."\")"
@@ -168,6 +171,6 @@ function wireGoUp( )
 end
 
 function wireParticlesUp( )
-  wirePart_1_h:set_pos(posParticleBefore)
+  --wirePart_1_h:set_pos(posParticleBefore)
   wirePart_1_h:follow_tracker(triggerWire_1, 15)
 end
