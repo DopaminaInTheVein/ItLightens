@@ -1,4 +1,3 @@
-
 #include "mcv_platform.h"
 
 #include "comp_tracker.h"
@@ -10,7 +9,6 @@
 
 void TCompTracker::onCreate(const TMsgEntityCreated &)
 {
-
 }
 
 bool TCompTracker::load(MKeyValue& atts) {
@@ -18,7 +16,7 @@ bool TCompTracker::load(MKeyValue& atts) {
 	longitude = atts.getFloat("long", -1);
 	assert(longitude > 0);
 	size = atts.getInt("size", -1);
-	assert(size > 0);
+	assert(size > 1);
 	assert(size <= MAX_TRACK_POINTS);
 
 	//Positions & Orientations
@@ -27,20 +25,16 @@ bool TCompTracker::load(MKeyValue& atts) {
 		//Position
 		sprintf(nameAttr, "point%d", i);
 		positions[i] = atts.getPoint(nameAttr);
-		
-		//Orientation
-		sprintf(nameAttr, "tangent%d", i); // Quaternions!?
-		orientations[i] = atts.getPoint(nameAttr);
-	}
 
-	//Normal Speed
-	normalSpeed = mSpeed / longitude;
+		//Orientation
+		//sprintf(nameAttr, "tangent%d", i); // Quaternions!?
+		//orientations[i] = atts.getPoint(nameAttr);
+	}
 
 	return true;
 }
 
 void TCompTracker::setFollower(const TMsgFollow &msg) {
-
 	//dbg("---------- Tracker -----------------------------------\n");
 	//dbg("Longitude = %f\n", longitude);
 	//for (int i = 0; i < size; i++) {
@@ -53,7 +47,8 @@ void TCompTracker::setFollower(const TMsgFollow &msg) {
 	if (follower.isValid()) {
 		HandleTrack ht;
 		ht.handle = follower;
-		
+		ht.speed = msg.speed;
+
 		//Busqueda index del punto mas cercano a la spline
 		CEntity* eFollower = follower;
 		TCompTransform* transform = eFollower->get<TCompTransform>();
@@ -68,52 +63,72 @@ void TCompTracker::setFollower(const TMsgFollow &msg) {
 			}
 		}
 
-		ht.normalTime = (float) nearestIndex / size;
-
+		ht.normalTime = (float)nearestIndex / (size - 1);
+		ht.normalSpeed = ht.speed / longitude;
 		followers.push_back(ht);
-		TCompPhysics * physic_comp = eFollower->get<TCompPhysics>();
-		PxRigidDynamic * rd = physic_comp->getRigidActor()->isRigidDynamic();
-		if (rd) rd->setMassSpaceInertiaTensor(PxVec3(0.f, 1.f, 0.f));
 	}
 }
 
 void TCompTracker::update(float elapsed) {
-	for (HandleTrack follower : followers) {
-		if (follower.handle.isValid()) {
-			updateTrackMovement(follower);
+	for (auto follower_it = followers.begin(); follower_it != followers.end(); ) {
+		if (follower_it->handle.isValid()) {
+			updateTrackMovement(*follower_it);
+			if (follower_it->normalTime >= 1.f) {
+				follower_it = unfollow(*follower_it);
+			}
+			else follower_it++;
 		}
 	}
 }
 
-void TCompTracker::updateTrackMovement(HandleTrack ht) {
+void TCompTracker::updateTrackMovement(HandleTrack& ht) {
 	CEntity* e = ht.handle;
-	TCompPhysics * physic_comp = e->get<TCompPhysics>();
+	//TCompPhysics * physic_comp = e->get<TCompPhysics>();
 	TCompTransform* transform = e->get<TCompTransform>();
-	if (physic_comp && transform) {
+	if (transform) { //&& physic_comp) {
 		// Prev position
 		VEC3 prevPos = evaluatePos(ht);
 
 		// Next Position
-		ht.normalTime += clamp(normalSpeed * getDeltaTime(), 0, 1);
+		ht.normalTime += ht.normalSpeed * getDeltaTime();
+		if (ht.normalTime >= 1.f) {
+			dbg("last update...\n");
+		}
+		clamp_me(ht.normalTime, 0.f, 1.f);
 		VEC3 nextPos = evaluatePos(ht);
-
+		transform->setPosition(transform->getPosition() + nextPos - prevPos);
+		GET_COMP(phys, ht.handle, TCompPhysics);
+		if (phys) {
+			phys->setPosition(transform->getPosition(), transform->getRotation());
+		}
 		//DeltaPos
-		VEC3 deltaPos = nextPos - prevPos;
-		deltaPos.Normalize();
-		float deltaTime = getDeltaTime();
-		PxRigidDynamic * rd = physic_comp->getRigidActor()->isRigidDynamic();
-		PxVec3 force = Vec3ToPxVec3(deltaPos * mSpeed);
-		rd->setLinearVelocity(force);
+		//VEC3 deltaPos = nextPos - prevPos;
+		//deltaPos.Normalize();
+		//float deltaTime = getDeltaTime();
+		//PxRigidDynamic * rd = physic_comp->getRigidActor()->isRigidDynamic();
+		//PxVec3 force = Vec3ToPxVec3(deltaPos * mSpeed);
+		//rd->setLinearVelocity(force);
 	}
 }
 
+std::vector<HandleTrack>::iterator TCompTracker::unfollow(HandleTrack ht)
+{
+	return followers.erase(
+		std::remove(
+			followers.begin(),
+			followers.end(),
+			ht
+		),
+		followers.end()
+	);
+}
+
 VEC3 TCompTracker::evaluatePos(HandleTrack ht) {
-	float indexPrev = ht.normalTime * (float)size;
-	float weightPrev = indexPrev - (int)(indexPrev);
-	float weightNext = 1 - weightPrev;
+	float indexPrev = ht.normalTime * ((float)size - 1);
+	float weightNext = indexPrev - (int)(indexPrev);
+	float weightPrev = 1 - weightNext;
 	return positions[(int)indexPrev] * weightPrev + positions[(int)indexPrev + 1] * weightNext;
 }
 
 void TCompTracker::renderInMenu() {
-	ImGui::DragFloat3("Speed:", &mSpeed);
 }

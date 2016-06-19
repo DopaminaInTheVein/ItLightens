@@ -15,6 +15,7 @@ bool CLogicManagerModule::start() {
 	assert(slb_manager);
 
 	// Binds here, if needed
+	bindPosition(*slb_manager);
 	bindPlayer(*slb_manager);
 	bindHandle(*slb_manager);
 	bindHandleGroup(*slb_manager);
@@ -47,6 +48,11 @@ void CLogicManagerModule::update(float dt) {
 			command_it++;
 		}
 	}
+
+	for (auto c : command_queue_to_add) {
+		command_queue.push_back(c);
+	}
+	command_queue_to_add.clear();
 }
 
 void CLogicManagerModule::resetTimers() {
@@ -334,6 +340,26 @@ void CLogicManagerModule::stop() {
 }
 
 // Player LUA functions
+void CLogicManagerModule::bindPosition(SLB::Manager& m) {
+	SLB::Class<SLBPosition>("Pos", &m)
+		.comment("Position class")
+		.constructor()
+		// gets position coords (x)
+		.set("x", &SLBPosition::X)
+		.comment("Get x pos")
+		// gets position coords (y)
+		.set("y", &SLBPosition::Y)
+		.comment("Get y pos")
+		// gets position coords (z)
+		.set("z", &SLBPosition::Z)
+		.comment("Get z pos")
+		// set position coords
+		.set("set_xyz", &SLBPosition::setXYZ)
+		.comment("Set xyz pos")
+		;
+}
+
+// Player LUA functions
 void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
 	SLB::Class<SLBPlayer>("Player", &m)
 		.comment("Player class")
@@ -385,12 +411,20 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// destroy the handler
 		.set("destroy", &SLBHandle::destroy)
 		.comment("Destroy this element")
-		// set handle position function
+		// set handle position function (coords)
 		.set("set_position", &SLBHandle::setPosition)
 		.comment("Sets the position of the NPC")
 		.param("float: x coordinate")
 		.param("float: y coordinate")
 		.param("float: z coordinate")
+		// set handle position function (object)
+		.set("set_pos", &SLBHandle::setPos)
+		.comment("Sets the position of the NPC")
+		.param("position: position object")
+		// get handle position function (object)
+		.set("get_pos", &SLBHandle::getPos)
+		.comment("Get the position of the NPC")
+
 		// basic coordinates functions
 		.set("get_x", &SLBHandle::getX)
 		.comment("returns the X coordinate")
@@ -409,7 +443,11 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.comment("The Player or NPC moves to h and look as h")
 		.param("handle: target")
 		.param("string: code executed when target was reached")
-
+		// follow a tracker
+		.set("follow_tracker", &SLBHandle::followTracker)
+		.comment("This starts to follow a tracker")
+		.param("handle: handle that contains the target tracker")
+		.param("speed: linear velocity following the tracker")
 		// toggle guards formation
 		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
 		.comment("Activates/desactivates the guard formation states.")

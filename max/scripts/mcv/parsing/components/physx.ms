@@ -35,7 +35,7 @@ fn parseTypeShape xml collider = (
 	)
 )
 fn parseRigidBodyDefault parent = (
-	-- Si es mesh, rigidbody
+	-- Si es mesh, rigidbody (a menos que collision = no)
 	local clase = classof _parsingObject
 	if clase == Editable_Mesh or clase == Editable_Poly then (
 		local colision = getUserProp _parsingObject "collision"

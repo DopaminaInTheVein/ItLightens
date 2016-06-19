@@ -17,6 +17,7 @@ class CLogicManagerModule : public IAppModule
 	std::string lua_script_folder = "data/lua_scripts";
 
 	std::deque<command> command_queue;
+	std::deque<command> command_queue_to_add;
 
 	CHandle caller_handle;
 
@@ -108,9 +109,14 @@ public:
 		return &command_queue;
 	}
 
+	void addCommand(command com) {
+		command_queue_to_add.push_back(com);
+	}
+
 	// module specific functions
 	void throwEvent(EVENT evt, std::string params, CHandle handle = CHandle());//, uint32_t handle_id = 0);
 	void throwUserEvent(std::string evt, std::string params = "", CHandle handle = CHandle());//, uint32_t handle_id = 0);
+	void bindPosition(SLB::Manager& m);
 	void bindPlayer(SLB::Manager& m);
 	void bindHandle(SLB::Manager& m);
 	void bindHandleGroup(SLB::Manager& m);

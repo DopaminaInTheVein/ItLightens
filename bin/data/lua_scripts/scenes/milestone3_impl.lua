@@ -133,12 +133,26 @@ end
 -- Wires --
 --------------------------------------
 triggerWire_1 = Handle()
+tagWireParticle = "wire_particle"
 wireName_1 = "tWireDown"
+wirePart_1 = wireName_1.."_part"
+wirePart_1_h = Handle()
 wire_pos_up = "WirePosUp"
+posParticleBefore = Pos()
+
+function test()
+  --Es porque testeando no activo el cable, y no tengo su handle
+  triggerWire_1:get_handle_by_name_tag(wireName_1, "trigger")
+  p:exec_command( "wireParticlesUp();", 2 )
+end
+
 function activeWire1( )
+  wirePart_1_h:get_handle_by_name_tag(wirePart_1, tagWireParticle)
+  posParticleBefore = wirePart_1_h:get_pos()
   triggerWire_1:get_handle_by_name_tag(wireName_1, "trigger")
   triggerWire_1:setActionable(1);
 end
+
 function wireGoUp( )
   factorWireGoUp = 2
   p:print("Wire Go Up")
@@ -146,7 +160,14 @@ function wireGoUp( )
   player:get_player()
   cmd_teleport = "player:teleport(\""..wire_pos_up.."\")"
   cam:run_cinematic("CineWireGoUp", factorWireGoUp * 5)
+  
+  p:exec_command( "wireParticlesUp();", 2.5 / factorWireGoUp )
   p:exec_command( "player:set_position(0,-1000,0);", 2 / factorWireGoUp )
   p:exec_command( "triggerWire_1:setActionable(1);", 3)
   p:exec_command( cmd_teleport, 10 / factorWireGoUp )
+end
+
+function wireParticlesUp( )
+  wirePart_1_h:set_pos(posParticleBefore)
+  wirePart_1_h:follow_tracker(triggerWire_1, 15)
 end

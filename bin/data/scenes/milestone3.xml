@@ -1794,11 +1794,11 @@
    tags="AI AI_mole AI_poss"/>
 <bt_mole
    wpts_size="3"
-   wpt0_pos="-88.2065 4.70364 30.3004"
+   wpt0_pos="-85.4164 4.70364 -5.44108"
    wpt0_wait="2"
-   wpt1_pos="-85.2414 4.70364 30.3541"
+   wpt1_pos="-82.4513 4.70364 -5.38737"
    wpt1_wait="2"
-   wpt2_pos="-87.1711 4.70364 33.6499"
+   wpt2_pos="-84.381 4.70364 -2.09156"
    wpt2_wait="2"/>
 <player_mole/>
 <life
@@ -1807,7 +1807,7 @@
 <name
    name="mole_1"/>
 <transform
-   pos="-94.5563 4.46218 35.7666"
+   pos="-91.7663 4.46218 0.0251387"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -2040,11 +2040,24 @@
 <entity>
 <tags/>
 <name
-   name="tWireDown_WireParticlesUp"/>
+   name="tWireDown_guide"/>
 <transform
    pos="-94.8579 9.14207 9.67982"
    quat="-0.5 -0.5 0.5 -0.5"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="wire_particle"/>
+<name
+   name="tWireDown_part"/>
+<transform
+   pos="-93.8396 5.6749 -4.87451"
+   quat="-0.498584 -0.501412 0.501415 -0.498581"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/milestone3/part.static_mesh"/>
 
 </entity>
 <entity
@@ -2561,7 +2574,7 @@
 <name
    name="player_1"/>
 <transform
-   pos="-72.8 22.0822 13.8036"
+   pos="-89.4101 4.90833 3.15031"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -2573,30 +2586,5 @@
    height="0.7"/>
 
 </entity>
-<entity>
-    <name name="beacon" />
-    <tags tags="ai_cam" />
-    <light_dir_shadows color="1 0 0 1" znear=".1" zfar="10" fov="45" resolution="512" />
-    <ai_cam max_rotation="120.0" range="2" width="1.5" rot_speed_sonar="0.5" rotating_left="true" />
-    <transform pos="-80.7606 8.54738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/test/baliza.static_mesh" />
-</entity>
 
-<entity>
-    <name name="beacon" />
-    <tags tags="beacon" />
-    <light_dir_shadows color="1 0 0 1" znear=".1" zfar="10" fov="45" resolution="512" />
-    <beacon range="6" width="4"  rot_speed_sonar="0.5" rotating_left="true"/>
-    <transform pos="-75.7606 4.04738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/test/baliza.static_mesh" />
- </entity>
- 
- <entity>
-    <name name="beacon" />
-    <tags tags="beacon" />
-    <light_dir_shadows color="1 0 0 1" znear=".1" zfar="10" fov="45" resolution="512" />
-    <beacon range="6" width="4"  rot_speed_sonar="0.5" rotating_left="false"/>
-    <transform pos="-85.7606 4.04738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/test/baliza.static_mesh" />
- </entity>
 </entities>
