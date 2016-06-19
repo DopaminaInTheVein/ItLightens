@@ -220,7 +220,7 @@ version:1
 -- Apply attribute class to an object
 fn assign_default_room_to_all = (
 	for obj in $* do (
-		if obj.room_name == undefined then (
+		if not (hasProperty obj "room_name") then (
 			add_attribute = custAttributes.add obj v_room_data baseobject:True
 		)
 	)
