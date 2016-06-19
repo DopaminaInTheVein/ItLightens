@@ -25,6 +25,18 @@ fn parseMonoComponent = (
 		parsed = true
 	)
 	
+	if ( (getUserProp _parsingObject "typeObject") as string) == "beacon"  then
+	(
+		_parse_beacon()
+		parsed = true
+	)
+	
+	if ( (getUserProp _parsingObject "typeObject") as string) == "detection_cam"  then
+	(
+		_parse_detection_cam()
+		parsed = true
+	)
+	
 	-- If parsed we add common components
 	if parsed then (
 		--Name, Transform
