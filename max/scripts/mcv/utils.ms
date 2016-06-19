@@ -181,6 +181,17 @@ fn strReplace str strOld strNew = (
 	return str
 )
 
+fn getSuffixAfter str keyword = (
+	local index = findString str keyword
+	local res
+	if index == undefined then (
+		res = undefined
+	) else (
+		res = substring str (index + keyword.count) -1
+	)
+	return res
+)	
+
 fn sortByName arr = (
   res = #()
   nameOrdered = sort(for i in arr collect i.name)
