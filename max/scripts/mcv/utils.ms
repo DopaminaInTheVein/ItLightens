@@ -205,3 +205,31 @@ fn sortByName arr = (
   )
   return res
 )
+
+
+-- Attributes for room configuration
+v_room_data = attributes v_room_data
+version:1
+(
+	parameters room_data
+	(
+		room_name  type:#string  default:"none" 
+	)
+)
+
+-- Apply attribute class to an object
+fn assign_default_room_to_all = (
+	for obj in $* do (
+		if obj.room_name == undefined then (
+			add_attribute = custAttributes.add obj v_room_data baseobject:True
+		)
+	)
+)
+
+fn assign_room_name_to selected rname = (
+		selected.room_name = rname
+)
+
+fn assign_room_name_to_selected rname = (
+		assign_room_name_to $ rname
+)
