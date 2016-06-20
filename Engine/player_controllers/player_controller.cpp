@@ -315,7 +315,7 @@ void player_controller::Jumping()
 		SET_ANIM_PLAYER(AST_IDLE);
 	}
 
-	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
+	if ((io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) && gravity_active) {
 		if (gravity_active) {
 			cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 			energyDecreasal(jump_energy);
@@ -334,7 +334,7 @@ void player_controller::Falling()
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	SET_ANIM_PLAYER(AST_FALL);
-	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) {
+	if ((io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) && gravity_active) {
 		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 		energyDecreasal(jump_energy);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
@@ -355,8 +355,9 @@ void player_controller::RecalcAttractions()
 	// Calc all_forces & Find Orbit force if exists
 	if (pol_state != NEUTRAL && polarityForces.size() > 0) {
 		// Remove gravity, we will control the player
-		/*cc->SetGravity(false);
-		gravity_active = false;*/
+		inertia_time = 0.f;
+		cc->SetGravity(false);
+		gravity_active = false;
 		
 		for (auto forceHandle : polarityForces) {
 
@@ -377,10 +378,19 @@ void player_controller::RecalcAttractions()
 		//Apply and save forces
 		cc->AddMovement(final_forces * getDeltaTime());
 
+		inertia_force = final_forces;
+
 	}
 	else {
-		//cc->SetGravity(true);
-		//gravity_active = true;
+		cc->AddMovement(inertia_force * getDeltaTime());
+		cc->SetGravity(true);
+		gravity_active = true;
+		if (inertia_time > POL_INERTIA_TIME) {
+			inertia_force = VEC3(0, 0, 0);
+		}
+		else {
+			inertia_time += getDeltaTime();
+		}
 	}
 
 	all_forces.clear();
@@ -420,6 +430,8 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force) {
 	}
 	else {
 		forceEffect = VEC3(0,0,0);
+		cc->SetGravity(true);
+		gravity_active = true;
 	}
 
 	//Repulsion -> Invertimos fuerza
@@ -442,51 +454,6 @@ VEC3 player_controller::calcFinalForces(vector<VEC3>& forces, vector<float>& pon
 	return total_force;
 }
 
-void player_controller::polarityMoveResistance(const PolarityForce& force) {
-	/*if (force.distance > 0.1f
-		&& force.distance < POL_RCLOSE // very near (with margin)
-		&& force.polarity != pol_state // attraction
-		) {
-		VEC3 movementPlayer = cc->GetMovement();
-		VEC3 movementAtraction = VEC3(0, 0, 0);
-		bool movementApplied = false;
-		float moveAmoung = movementPlayer.LengthSquared();
-		if (moveAmoung > 0.f) {
-			//Playing trying to go away?
-			if (movementPlayer.x != 0) {
-				if (std::signbit(movementPlayer.x) != std::signbit(force.deltaPos.x)) {
-					//movementAtraction.x = -movementPlayer.x * POL_NO_LEAVING_FORCE * nearFactor;
-					movementAtraction.x = -movementPlayer.x * POL_RESISTANCE;
-					movementApplied = true;
-				}
-				if (std::signbit(movementPlayer.z) != std::signbit(force.deltaPos.z)) {
-					//movementAtraction.z = -movementPlayer.z * POL_NO_LEAVING_FORCE * nearFactor;
-					movementAtraction.z = -movementPlayer.z * POL_RESISTANCE;
-					movementApplied = true;
-				}
-			}
-
-			//Playing getting closer?
-			bool gettingCloser = false;
-			if (abs(movementPlayer.x) > abs(movementPlayer.z)) {
-				gettingCloser = (std::signbit(movementPlayer.x) == std::signbit(force.deltaPos.x));
-			}
-			else {
-				gettingCloser = (std::signbit(movementPlayer.z) == std::signbit(force.deltaPos.z));
-			}
-
-			//Getting closer -> player up a little
-			if (gettingCloser) {
-				cc->AddMovement(VEC3(0, 1, 0), POL_ORBITA_UP_EXTRA_FORCE * max(abs(movementPlayer.z), abs(movementPlayer.x)));
-			}
-
-			if (movementApplied) {
-				cc->AddMovement(movementAtraction);
-			}
-		}
-	}*/
-}
-
 void player_controller::UpdateMoves()
 {
 	PROFILE_FUNCTION("player controller: update moves");
@@ -494,7 +461,7 @@ void player_controller::UpdateMoves()
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 
-	VEC3 direction = directionForward + directionLateral;
+	VEC3 direction = directionForward + directionLateral + directionVertical;
 	assert(isValid(direction));
 	CEntity * camera_e = camera;
 	TCompTransform* camera_comp = camera_e->get<TCompTransform>();
@@ -526,7 +493,7 @@ void player_controller::UpdateMoves()
 
 	if (abs(new_yaw) >= yaw_to_stop) {
 		player_curr_speed = 0.0f;
-		directionForward = directionLateral = VEC3(0, 0, 0);
+		directionForward = directionLateral = directionVertical = VEC3(0, 0, 0);
 	}
 
 	//Set current velocity with friction
@@ -540,7 +507,7 @@ void player_controller::UpdateMoves()
 
 	if (player_curr_speed < 0) {
 		player_curr_speed = 0.0f;
-		directionForward = directionLateral = VEC3(0, 0, 0);
+		directionForward = directionLateral = directionVertical = VEC3(0, 0, 0);
 	}
 	//else {
 	//	float inertia = 0.7f;
@@ -603,8 +570,6 @@ void player_controller::UpdateInputActions()
 		}
 		else {
 			pol_state = PLUS;
-			cc->SetGravity(false);
-			gravity_active = false;
 			dbg("POLARIDAD POSITIVA!\n");
 		}
 	}
@@ -616,8 +581,6 @@ void player_controller::UpdateInputActions()
 		}
 		else {
 			pol_state = MINUS;
-			cc->SetGravity(false);
-			gravity_active = false;
 			dbg("POLARIDAD NEGATIVA!\n");
 		}
 	}
@@ -1052,11 +1015,6 @@ void player_controller::renderInMenu() {
 	ImGui::SliderFloat("Radius2", &POL_MAX_DISTANCE, 10.f, 100.f);
 	ImGui::SliderFloat("Intensity", &POL_INTENSITY, 100.f, 5000.f);
 	ImGui::SliderFloat("Repulsion Factor", &POL_REPULSION, 0.f, 5.f);
-	ImGui::SliderFloat("Inertia", &POL_INERTIA, 0.f, 0.99f);
-	ImGui::SliderFloat("Speed OnEnter", &POL_SPEED_ORBITA, 0.f, 10.f);
-	ImGui::SliderFloat("Force Atraction Factor in Orbita", &POL_ATRACTION_ORBITA, 0.f, 5.f);
-	ImGui::SliderFloat("Extra Up Force in Orbita", &POL_ORBITA_UP_EXTRA_FORCE, 0.01f, 5.f);
-	ImGui::SliderFloat("Resistence to leave", &POL_RESISTANCE, 0.f, 1.f);
 
 	ImGui::Separator();
 

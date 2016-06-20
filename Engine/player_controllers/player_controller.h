@@ -78,14 +78,7 @@ class player_controller : public CPlayerBase {
   float	POL_MAX_DISTANCE = 30.0f; 
   float	POL_INTENSITY = 5.0f;
   float	POL_REPULSION = 1.0f;
-  float	POL_RESISTANCE = .5f;
-  float	POL_INERTIA = 0.5f;
-  float	POL_SPEED_ORBITA = 0.2f;
-  float	POL_ATRACTION_ORBITA = 1.f;
-  float	POL_NO_LEAVING_FORCE = 0.99f;
-  float	POL_ORBITA_UP_EXTRA_FORCE = 1.f;
-  float	POL_REAL_FORCE_Y_ORBITA = 0.05f;
-  float	POL_OSCILE_Y = .2f;
+  float	POL_INERTIA_TIME = 2.0f;
 
   //Damage Fonts Actived
   float damageCurrent = 0.1f;
@@ -110,8 +103,9 @@ class player_controller : public CPlayerBase {
 
   VEC3					endPointWire = VEC3(0, 0, 0);
   vector<VEC3>			all_forces;
+  VEC3					inertia_force;
+  float					inertia_time = 0.f;
   vector<float>			force_ponderations;
-  bool					gravity_active = true;
 
   std::string			damage_source = "none";
 
@@ -157,7 +151,6 @@ class player_controller : public CPlayerBase {
   void RecalcAttractions();
   VEC3 calcForceEffect(const PolarityForce& force);//VEC3 point_pos, bool atraction);
   VEC3 calcFinalForces(vector<VEC3>& forces, vector<float>& ponderations);
-  void polarityMoveResistance(const PolarityForce& force);
   //--------------------------------------------------------------------
 
 protected:

@@ -231,12 +231,27 @@ bool CPlayerBase::UpdateMovDirection() {
 			moving = true;
 			horizontal = true;
 		}
+		if ((io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed()) && !gravity_active) {
+			directionVertical = VEC3(0, 0.25, 0);
+			//TODO: xbobx
+			moving = true;
+			vertical = true;
+		}
+		if ((io->keys[VK_MENU].isPressed() || io->joystick.button_A.isPressed()) && !gravity_active) {
+			directionVertical = VEC3(0, -0.25, 0);
+			//TODO: xbobx
+			moving = true;
+			vertical = true;
+		}
 
 		if (!vertical && moving)
 			directionForward = VEC3(0, 0, 0);
 
 		else if (!horizontal && moving)
 			directionLateral = VEC3(0, 0, 0);
+
+		else if (gravity_active)
+			directionVertical = VEC3(0, 0, 0);
 	}
 	return moving;
 }
@@ -389,7 +404,7 @@ void CPlayerBase::checkFalling() {
 void CPlayerBase::renderInMenu()
 {
 	PROFILE_FUNCTION("render in menu base");
-	VEC3 direction = directionForward + directionLateral;
+	VEC3 direction = directionForward + directionLateral + directionVertical;
 	direction.Normalize();
 	direction = direction + directionJump;
 

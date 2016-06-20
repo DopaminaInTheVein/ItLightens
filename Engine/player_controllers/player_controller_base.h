@@ -55,12 +55,14 @@ protected:
 	TCompTransform *transform;
 
 	VEC3 directionLateral = VEC3(0, 0, 0);
+	VEC3 directionVertical = VEC3(0, 0, 0);
 	VEC3 directionForward = VEC3(0, 0, 1);
 	VEC3 directionJump = VEC3(0, 0, 0);
 	float rotate = 0;
 	float rotateXY = 0;
 	float starting_player_y = 0;
 	float player_y = 0;
+	bool gravity_active = true;
 
 	TCompCharacterController *cc = nullptr;
 
