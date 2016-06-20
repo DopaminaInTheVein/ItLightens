@@ -628,7 +628,6 @@ void CRenderDeferredModule::ShootGuardRender() {
 	{
 		PROFILE_FUNCTION("referred: add laser");
 		CTraceScoped scope("add laser");
-
 		Render.activateBackBuffer();
 		rt_data2->clear(VEC4(0, 0, 0, 0));
 		ID3D11RenderTargetView* rts[3] = {
@@ -743,7 +742,6 @@ void CRenderDeferredModule::render() {
 }
 
 void CRenderDeferredModule::renderDetails() {
-
 	// -------------------------
 	// Activar mis multiples render targets
 	ID3D11RenderTargetView* rts[3] = {
@@ -788,6 +786,7 @@ void CRenderDeferredModule::applyPostFX() {
 }
 
 void CRenderDeferredModule::renderUI() {
+	PROFILE_FUNCTION("renderUI");
 	CTraceScoped scope("renderUI");
 	activateZ(ZCFG_ALL_DISABLED);
 	activateBlend(BLENDCFG_DEFAULT);

@@ -3,6 +3,8 @@
 #include "resources/resources_manager.h"
 #include "render/render_manager.h"
 #include "render/static_mesh.h"
+#include "components/comp_charactercontroller.h"
+#include "components/entity.h"
 
 void TCompRenderStaticMesh::onCreate(const TMsgEntityCreated&) {
 	registerToRender();
@@ -23,10 +25,10 @@ void TCompRenderStaticMesh::registerToRender() {
 }
 
 void TCompRenderStaticMesh::unregisterFromRender() {
-  RenderManager.unregisterFromRender(CHandle(this));
+	RenderManager.unregisterFromRender(CHandle(this));
 }
 
 void TCompRenderStaticMesh::onGetLocalAABB(const TMsgGetLocalAABB& msg) {
-  if (static_mesh)
-    AABB::CreateMerged(*msg.aabb, *msg.aabb, static_mesh->getAABB());
+	if (GETH_MY(TCompCharacterController).isValid()) return;
+	AABB::CreateMerged(*msg.aabb, *msg.aabb, static_mesh->getAABB());
 }

@@ -176,6 +176,8 @@ fn _parse_render = (
 		
 		local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
 		xmlStMesh.addAttr "name" ("skeletons/" + skel + "/" + skel + staticMesh_ext)
+		XML_PARSING.addChild "abs_aabb"
+		XML_PARSING.addChild "local_aabb"
 	) else (
 		--Tiene staticMesh?
 		stMesh = getUserProp _parsingObject "staticMesh"
