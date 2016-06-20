@@ -38,6 +38,12 @@ void TCompGuidedCamera::start(float speed) {
 	curPoint = 1;
 	factor = 0.0f;
 	velocity = speed == 0.f ? velocity_default : speed;
+	reversed = (velocity < 0.f);
+	if (reversed) {
+		std::reverse(positions.begin(), positions.end());
+		std::reverse(targets.begin(), targets.end());
+		velocity = -velocity;
+	}
 }
 
 void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
@@ -68,13 +74,22 @@ void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
 }
 
 bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMain* cam) {
+	bool finish = false;
 	if (curPoint > positions.size() - 2) {
-		return false;
+		finish = true;
 	}
 	if (io->keys['Q'].becomesPressed()) {
 		CHandle me = CHandle(this).getOwner();
 		CEntity* eMe = me;
 		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicSkipped, std::string(eMe->getName())), CHandle(this).getOwner();
+		finish = true;
+	}
+
+	if (finish) {
+		if (reversed) {
+			std::reverse(positions.begin(), positions.end());
+			std::reverse(targets.begin(), targets.end());
+		}
 		return false;
 	}
 

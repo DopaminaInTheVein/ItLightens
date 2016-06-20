@@ -17,6 +17,7 @@ fn _parse_camera_main = (
 	-- Camera Main
 	xmlCamera = XML_PARSING.addChild "camera_main"
 	parseCameraCommon xmlCamera
+	XML_PARSING.addChild "culling"
 )
 
 ----------------------------------------------------------------------

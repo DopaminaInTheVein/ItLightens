@@ -337,6 +337,7 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
   SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
+  SUBSCRIBE(TCompCameraMain, TMsgGetCullingViewProj, onGetViewProj);
   SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
   //Control

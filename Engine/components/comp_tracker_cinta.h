@@ -35,7 +35,7 @@ struct TCompTrackerCinta : public TCompBase {
   void onCreate(const TMsgEntityCreated&);
   void setFollower(const TMsgFollow &msg);
   void update(float elapsed);
-  void updateTrackMovement(HandleTrack ht);
+  void updateTrackMovement(HandleTrack& ht);
   bool load(MKeyValue& atts);
   void renderInMenu();
 

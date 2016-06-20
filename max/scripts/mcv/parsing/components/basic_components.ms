@@ -182,6 +182,7 @@ fn _parse_render = (
 		if (stMesh != undefined) do (
 			local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
 			xmlStMesh.addAttr "name" ("static_meshes/" + stMesh + staticMesh_ext)
+			XML_PARSING.addChild "abs_aabb"
 		)
 	)
 )

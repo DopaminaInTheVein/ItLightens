@@ -181,6 +181,17 @@ fn strReplace str strOld strNew = (
 	return str
 )
 
+fn getSuffixAfter str keyword = (
+	local index = findString str keyword
+	local res
+	if index == undefined then (
+		res = undefined
+	) else (
+		res = substring str (index + keyword.count) -1
+	)
+	return res
+)	
+
 fn sortByName arr = (
   res = #()
   nameOrdered = sort(for i in arr collect i.name)
@@ -193,4 +204,32 @@ fn sortByName arr = (
 	)
   )
   return res
+)
+
+
+-- Attributes for room configuration
+v_room_data = attributes v_room_data
+version:1
+(
+	parameters room_data
+	(
+		room_name  type:#string  default:"none" 
+	)
+)
+
+-- Apply attribute class to an object
+fn assign_default_room_to_all = (
+	for obj in $* do (
+		if not (hasProperty obj "room_name") then (
+			add_attribute = custAttributes.add obj v_room_data baseobject:True
+		)
+	)
+)
+
+fn assign_room_name_to selected rname = (
+		selected.room_name = rname
+)
+
+fn assign_room_name_to_selected rname = (
+		assign_room_name_to $ rname
 )

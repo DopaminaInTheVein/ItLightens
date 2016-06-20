@@ -57,7 +57,14 @@ struct TResources (
 		if (m != undefined) then (
 			if classof m != Standardmaterial then (throw "Invalid material recv")
 			local mat_file = createFile (materials_dir + m.name + ".material")
-			format ("<material tech=\"" + technique + ".tech\">\n") to:mat_file
+			
+			--Special tech by material name
+			local tech = technique
+			local tech_by_name = getSuffixAfter m.name "_tech_"
+			if tech_by_name != undefined then tech = tech_by_name
+			
+			--Write material file
+			format ("<material tech=\"" + tech + ".tech\">\n") to:mat_file
 			saveTextureSlot mat_file "diffuse" m.diffusemap
 			saveTextureSlot mat_file "specular" m.specularmap
 			saveTextureSlot mat_file "selfilum" m.selfillummap
