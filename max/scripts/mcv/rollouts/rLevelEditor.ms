@@ -138,6 +138,9 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 	)
 	on btnExport pressed do
 	(
+		-- Fill default values
+		assign_default_room_to_all()
+		
 		local xml = _parseLevel()
 		local fileName = (scenes_dir + txtExport.text + ".xml")
 		local fsm = createFile fileName

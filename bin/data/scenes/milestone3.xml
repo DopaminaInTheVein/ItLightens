@@ -115,6 +115,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
@@ -133,6 +134,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/andamio_usable.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -147,6 +149,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/balcon_redondo_grave.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -161,6 +164,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/balcon_redondo_pequeno.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -175,6 +179,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/barrotes_balcon_arriba.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -189,6 +194,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/barrotes_balcon_cuadrado_derecho.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -203,6 +209,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/barrotes_balcon_cuadrado_izquierdo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -217,6 +224,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/barrotes_balcon_redondo_pequeno.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -231,6 +239,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/bote_mediano.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -245,6 +254,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/bote_pequeno.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -259,6 +269,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/cable.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -273,6 +284,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/caja_de_herramientas.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -287,6 +299,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/caja_de_herramientas001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -301,6 +314,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/cajas_de_herramientas.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -315,6 +329,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/cargador_de_bateria.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -329,6 +344,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/cascote.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -343,6 +359,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/cerradura_electrica.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -357,6 +374,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/columna.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -371,6 +389,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/columna_out_of_nowhere.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -385,6 +404,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/columna_rota.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -399,6 +419,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/columna001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -413,6 +434,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/columnas_abajo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -427,6 +449,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/columnas_balcon_cuadrado_derecho.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -441,6 +464,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/columnas_balcon_izquierdo_cuadrado.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -455,6 +479,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/columnas_caida.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -469,6 +494,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/columnas_rota.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -483,6 +509,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/control_panel.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -497,6 +524,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/control_panel_var1.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -511,6 +539,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/cosa_de_cientifico.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -525,6 +554,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/cosa_de_cientificos.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -539,6 +569,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/cubo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -553,6 +584,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/cubo_de_pintura_grande.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -567,6 +599,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/destornilladores.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -581,6 +614,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/destornilladores001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -595,6 +629,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/escombro_2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -609,6 +644,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/lamparas_derecha.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -623,6 +659,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/libro.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -637,6 +674,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/libro2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -651,6 +689,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/libro003.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -665,6 +704,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/libro004.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -679,6 +719,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/low_machine_low_machine_table.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -693,6 +734,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/marco_balcon_cuadrado_izquierdo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -707,6 +749,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/marco_balcon_pequeno_arriba.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -721,6 +764,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/marco_balcon_superior_redondo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -735,6 +779,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/marco_puerta_abajo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -749,6 +794,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/marco_puerta_balcon_cuadrado_drecho.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -763,6 +809,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/montanha_de_escombro.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -777,6 +824,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pantallas.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -791,6 +839,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pantallas001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -805,6 +854,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pared_balcon_cuadrado_izquierdo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -819,6 +869,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pared_balcon_redondo_arriba.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -833,6 +884,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pared_balcon_redondo_arriba001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -847,6 +899,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pared_derruida_2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -861,6 +914,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pared_derruida_3.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -875,6 +929,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pared_rota.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -889,6 +944,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/paredes_balcon_cuadrado_derecha.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -903,6 +959,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/paredes_balcon_redondo_grande.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -917,6 +974,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/paredes_nivel_bajo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -931,6 +989,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pibote_balcon_derecho _cuadrado.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -945,6 +1004,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pibotes_abajo_no_esquineros.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -959,6 +1019,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pibotes_balcon_arriba.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -973,6 +1034,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pibotes_balcon_cuadrado-izquierdo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -987,6 +1049,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pibotes_balcon_pequeno-arribo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1001,6 +1064,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pibotes_esquineros_2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1015,6 +1079,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pila.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1029,6 +1094,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pipetas.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1043,6 +1109,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pipetas001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1057,6 +1124,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/Plane001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1071,6 +1139,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/plataforma_balcon_cuadrado_izquierdo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1085,6 +1154,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/plataforma_balcon_derecho.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1099,6 +1169,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/plataforma_rota.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1113,6 +1184,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/puerta_balcon_cuadrado_derecho.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1127,6 +1199,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/puerta_balcon_cuadrado_izquierdo.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1141,6 +1214,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/puerta_balcon_redondo_pequeno.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1155,6 +1229,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/puerta_gigante.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1169,6 +1244,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/puerta_principal.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1183,6 +1259,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/puertas_derechas.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1197,6 +1274,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/soporte_2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1211,6 +1289,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/soporte_plataforma.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1225,6 +1304,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/tabla_arriba.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1239,6 +1319,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/techo_y_lampara.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1253,6 +1334,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/teclado.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1267,6 +1349,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/teclado001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1281,6 +1364,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/trozo_nivel.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1295,6 +1379,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/trozo_plataforma_1.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1309,6 +1394,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/trozo_plataforma_2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1323,6 +1409,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/tuberia.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1337,6 +1424,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/tuberia_turbina.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1351,6 +1439,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/turbina_.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1365,6 +1454,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/vitrina.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1379,6 +1469,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/vitrina001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1393,6 +1484,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/WireDown.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1409,6 +1501,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/box1.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -1426,6 +1519,7 @@
    znear="0.1"
    zfar="250.0"
    fov="60.0"/>
+<culling/>
 <controller_3rd_person/>
 <name
    name="camController_1"/>
@@ -1491,6 +1585,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/Door.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -1526,6 +1621,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/elevator.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -1554,6 +1650,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1769,6 +1866,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/mesa_cientifico.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1785,6 +1883,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/mesa_cientifico001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -1830,6 +1929,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/pared_mole.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -2058,6 +2158,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/part.static_mesh"/>
+<abs_aabb/>
 
 </entity>
 <entity
@@ -2072,6 +2173,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole025.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2091,6 +2193,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole024.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2110,6 +2213,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole023.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2129,6 +2233,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole022.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2148,6 +2253,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole021.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2167,6 +2273,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole020.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2186,6 +2293,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole019.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2205,6 +2313,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole018.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2224,6 +2333,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole017.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2243,6 +2353,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole016.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2262,6 +2373,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole015.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2281,6 +2393,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole014.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2300,6 +2413,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole013.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2319,6 +2433,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole012.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2338,6 +2453,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole011.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2357,6 +2473,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole007.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2376,6 +2493,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole006.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2395,6 +2513,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole003.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2414,6 +2533,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole002.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2433,6 +2553,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/whitebox/pared_mole001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="box"
@@ -2466,6 +2587,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/workstationTest001.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -2485,6 +2607,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/milestone3/workstationTest002.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -2509,6 +2632,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
@@ -2535,6 +2659,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
@@ -2555,6 +2680,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/box2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"
    type_shape="box"
