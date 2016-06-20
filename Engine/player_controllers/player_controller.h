@@ -67,18 +67,12 @@ class player_controller : public CPlayerBase {
   CHandle					currentPossessable;
   CHandle					currentStunable;
 
-  //poses handles
-  //CHandle					pose_no_ev;
-  //CHandle					pose_idle;
-  //CHandle					pose_run;
-  //CHandle					pose_jump;
-
   //Polarity Constants
   float	POL_MIN_DISTANCE = 1.5f;
   float	POL_MAX_DISTANCE = 30.0f; 
   float	POL_INTENSITY = 5.0f;
   float	POL_REPULSION = 1.0f;
-  float	POL_INERTIA_TIME = 2.0f;
+  float	POL_INERTIA_TIME = 1.0f;
 
   //Damage Fonts Actived
   float damageCurrent = 0.1f;
