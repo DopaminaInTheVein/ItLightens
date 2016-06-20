@@ -101,7 +101,7 @@ bool ai_cam::playerInRange() {
   }
 
   VEC3 destiny = myposinitial + me_transform->getFront()*range;
-  VEC3 origin = myposinitial;
+  VEC3 origin = me_transform->getPosition();
   origin.x += me_transform->getFront().x / 2;
   origin.z += me_transform->getFront().z / 2;
 
@@ -116,8 +116,8 @@ bool ai_cam::playerInRange() {
   VEC3 maxplayerPos = tplayer->getPosition();
   maxplayerPos.y += playerHeight;
 
-  float factorMin = (height - (origin.y - minplayerPos.y)) / height;
-  float factorMax = (height - (origin.y - maxplayerPos.y)) / height;
+  float factorMin = (minplayerPos.y - destiny.y) / height;
+  float factorMax = (maxplayerPos.y - destiny.y) / height;
 
   VEC3 lookingPointMin = destiny + direction * factorMin;
   VEC3 lookingPointMax = destiny + direction * factorMax;

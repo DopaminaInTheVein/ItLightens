@@ -1316,6 +1316,9 @@
     <ClInclude Include="skeleton_controllers\skc_scientist.h">
       <Filter>skeleton_controllers</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_room.h">
+      <Filter>components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">

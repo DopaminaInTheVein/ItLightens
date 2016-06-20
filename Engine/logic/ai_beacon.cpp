@@ -99,8 +99,8 @@ bool beacon_controller::playerInRange() {
   VEC3 maxplayerPos = tplayer->getPosition();
   maxplayerPos.y += playerHeight;
 
-  float factorMin = (height - (origin.y - minplayerPos.y)) / height;
-  float factorMax = (height - (origin.y - maxplayerPos.y)) / height;
+  float factorMin = (minplayerPos.y - destiny.y) / height;
+  float factorMax = (maxplayerPos.y - destiny.y) / height;
 
   VEC3 lookingPointMin = destiny + direction * factorMin;
   VEC3 lookingPointMax = destiny + direction * factorMax;

@@ -3,6 +3,7 @@
 
 #include "entity.h"
 #include "comp_name.h"
+#include "comp_room.h"
 #include "comp_transform.h"
 #include "comp_snoozer.h"
 #include "comp_camera.h"

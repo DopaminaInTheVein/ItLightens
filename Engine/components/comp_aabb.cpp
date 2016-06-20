@@ -18,9 +18,9 @@ void TCompAABB::renderInMenu() {
 }
 
 void TCompAABB::render() const {
-	if (GameController->GetCullingRender()) {
-		drawWiredAABB(*this, MAT44::Identity, VEC4(1, 0, 0, 1));
-	}
+  if (GameController->GetCullingRender()) {
+    drawWiredAABB(*this, MAT44::Identity, VEC4(1, 0, 0, 1));
+  }
 }
 
 void TCompAABB::updateFromSiblingsLocalAABBs(CHandle h_entity) {
@@ -69,9 +69,9 @@ void TCompLocalAABB::onCreate(const TMsgEntityCreated&) {
 }
 
 void TCompLocalAABB::render() const {
-	if (GameController->GetCullingRender()) {
-		CEntity *e = CHandle(this).getOwner();
-		const TCompTransform *in_tmx = e->get< TCompTransform >();
-		drawWiredAABB(*this, in_tmx->asMatrix(), VEC4(1, 1, 0, 1));
-	}
+  if (GameController->GetCullingRender()) {
+    CEntity *e = CHandle(this).getOwner();
+    const TCompTransform *in_tmx = e->get< TCompTransform >();
+    drawWiredAABB(*this, in_tmx->asMatrix(), VEC4(1, 1, 0, 1));
+  }
 }

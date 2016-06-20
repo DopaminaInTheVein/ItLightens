@@ -59,7 +59,7 @@ public:
   float getDistToFloor() { return distToFloor; }
   //Overload functions from TCompBase, needed to loop AI Component
   //--------------------------------------
-  void update(float elapsed) { Recalc(); }  //Called from object_manager
+  void update(float elapsed) { if (!isInRoom(myParent))return; Recalc(); }  //Called from object_manager
 
   void SetHandleMeInit();
   void SetMyEntity();

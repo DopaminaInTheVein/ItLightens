@@ -45,9 +45,9 @@ void CImGuiModule::update(float dt) {
       ImGui::MenuItem("Log (L)", NULL, Debug->getStatus());
       ImGui::MenuItem("Commands (O)", NULL, Debug->GetCommandsConsoleState());
 #ifdef _DEBUG
-	  ImGui::MenuItem("Particle editor (F8)", NULL, g_particlesManager->GetParticleEditorState());
+      ImGui::MenuItem("Particle editor (F8)", NULL, g_particlesManager->GetParticleEditorState());
 #endif
-	  //Debug->OpenConsole();
+      //Debug->OpenConsole();
       ImGui::EndMenu();
     }
     ImGui::EndMenuBar();

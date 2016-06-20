@@ -355,6 +355,7 @@
     <ClInclude Include="components\comp_polarized.h" />
     <ClInclude Include="components\comp_render_glow.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
+    <ClInclude Include="components\comp_room.h" />
     <ClInclude Include="components\comp_snoozer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

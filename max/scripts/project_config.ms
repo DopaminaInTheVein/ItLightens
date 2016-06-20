@@ -69,8 +69,6 @@ fn startUp = (
 	(
 		fileIn f
 	)
-	
-	assign_default_room_to_all()
 )
 
 startUp()
