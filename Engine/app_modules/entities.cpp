@@ -102,6 +102,9 @@ DECL_OBJ_MANAGER("particles_system", CParticleSystem);
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
 
+//fx
+DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
+
 CCamera * camera;
 
 // The global dict of all msgs
@@ -193,6 +196,9 @@ bool CEntitiesModule::start() {
 
 	//particles
 	getHandleManager<CParticleSystem>()->init(MAX_ENTITIES);
+
+	//fx
+	getHandleManager<TCompFadeScreen>()->init(4);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -528,6 +534,9 @@ void CEntitiesModule::initLevel(string level) {
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
+	//fx
+	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
+
 	//TODO: Message LevelStart
 	GameController->SetGameState(CGameController::RUNNING);
 }
@@ -647,6 +656,9 @@ void CEntitiesModule::update(float dt) {
 
 		//Triggers
 		getHandleManager<TTriggerLua>()->updateAll(dt);
+
+		//Fx
+		getHandleManager<TCompFadeScreen>()->updateAll(dt);
 
 		SBB::update(dt);
 	}

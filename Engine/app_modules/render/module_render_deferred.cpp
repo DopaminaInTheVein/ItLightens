@@ -14,6 +14,8 @@
 #include "render/draw_utils.h"
 #include "components/comp_render_glow.h"
 
+#include "components\comp_render_fade_screen.h"
+
 #include "render/fx/GuardShots.h"
 
 //Particles
@@ -734,6 +736,14 @@ void CRenderDeferredModule::render() {
 	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+
+	CEntity* ec = h_camera;
+	TCompFadeScreen* e = ec->get<TCompFadeScreen>();
+	if (e) {
+		activateBlend(BLENDCFG_COMBINATIVE);
+		e->render();
+		activateBlend(BLENDCFG_DEFAULT);
+	}
 
 	renderUI();
 

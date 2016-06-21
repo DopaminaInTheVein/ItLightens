@@ -1527,7 +1527,7 @@
    pos="-80.1237 -16.298 -19.8656"
    quat="0 0 0 1.0"
    scale="1.0"/>
-
+<FX_fade_screen />
 </entity>
 <entity>
 <tags
