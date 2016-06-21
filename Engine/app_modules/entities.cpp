@@ -664,7 +664,7 @@ void CEntitiesModule::render() {
 	// for each manager
 	// if manager has debug render active
 	// manager->renderAll()
-	if (io->keys['N'].isPressed()) {
+	if (io->keys['N'].isPressed() && io->keys[VK_CONTROL].isPressed()) {
 		SBB::readNavmesh().render();
 	}
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();

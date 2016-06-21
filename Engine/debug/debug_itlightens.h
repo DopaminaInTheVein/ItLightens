@@ -31,8 +31,11 @@ class CDebug : public IAppModule {
 		VEC3 org;
 		VEC3 end;
 		VEC3 color;
+	};
+	struct line_timed :line {
+	public:
 		float time;
-		line() : time(0.f) {}
+		line_timed() : time(0.f) {}
 	};
 
 	//Console debug attributes:
@@ -42,23 +45,27 @@ class CDebug : public IAppModule {
 	ImVector<int>       LineOffsets;        // Index to lines offset
 	bool                ScrollToBottom;
 	bool opened = false;					//define initial opened console
+	bool draw_lines = false;
 	//-------------------------------------------------------
 
 	//Debug lines attributes:
 #ifndef NDEBUG
 #define MAX_DBG_LINES (2<<14)
+#define MAX_DBG_TIMED_LINES (2<<10)
 #else
 #define MAX_DBG_LINES (1)
 #endif
 	//-------------------------------------------------------
+	line_timed lines_timed[MAX_DBG_TIMED_LINES];
 	line lines[MAX_DBG_LINES];
 	int next_line = 0;
+	int next_timed_line = 0;
 	//std::vector<line> lines;
 	//-------------------------------------------------------
 
 	void DrawLog();
 	void Clear() { Buf.clear(); LineOffsets.clear(); }
-	void removeLine(int i);
+	void removeTimedLine(int i);
 	//Console attributes:
 	//-------------------------------------------------------
 	CConsole console;

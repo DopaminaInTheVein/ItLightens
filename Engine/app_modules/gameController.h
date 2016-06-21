@@ -6,17 +6,16 @@
 #include "io\io.h"
 
 class CGameController : public IAppModule {
+	int		game_state = 0;
 
-	int		game_state			= 0;
-
-	bool    fx_polarize			= true;
-	bool	fx_glow				= true;
-	bool	render_culling_box	= false;
-	bool	free_camera			= false;
-	bool	cinematic			= false;
+	bool    fx_polarize = true;
+	bool	fx_glow = true;
+	bool	render_culling_box = false;
+	bool	free_camera = false;
+	bool	cinematic = false;
 
 public:
-	enum{
+	enum {
 		STARTING = 0,
 		RUNNING,
 		STOPPED,
@@ -48,7 +47,6 @@ public:
 
 	void UpdateGeneralInputs() {
 		if (!ImGui::GetIO().WantTextInput) { //not input wanted from imgui
-
 			//exit game
 			if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
 				if (game_state == RUNNING) {
@@ -133,7 +131,7 @@ public:
 	void SetCinematic(bool new_cinematic) {
 		cinematic = new_cinematic;
 	}
-	
+
 	bool * GetCullingRenderPointer() {
 		return &render_culling_box;
 	}
@@ -142,12 +140,9 @@ public:
 		return render_culling_box;
 	}
 
-
 	const char* getName() const {
 		return "game_controller";
 	}
-
-
 };
 
 extern CGameController* GameController;
