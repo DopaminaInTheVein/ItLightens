@@ -54,6 +54,7 @@ class CDebug : public IAppModule {
 #define MAX_DBG_TIMED_LINES (2<<10)
 #else
 #define MAX_DBG_LINES (1)
+#define MAX_DBG_TIMED_LINES (1)
 #endif
 	//-------------------------------------------------------
 	line_timed lines_timed[MAX_DBG_TIMED_LINES];

@@ -3,27 +3,26 @@
 
 #include "comp_base.h"
 
-
-
 // ------------------------------------
 struct TCompFadeScreen : public TCompBase {
-  bool enabled;
-  bool load(MKeyValue& atts);
-  const CRenderTechnique *tech;
+	bool fade_in;
+	bool fade_out;
 
-  float t_max_fade;
-  float t_curr_fade;
-  
-  void init();
+	bool load(MKeyValue& atts);
+	const CRenderTechnique *tech;
 
-  void renderInMenu();
-  void ActiveFade();
-  void update(float elapsed);
-  void SetMaxTime(float new_time);
-  void DeactivateFade();
+	float t_max_fade, t_max_fade_default;
+	float t_curr_fade;
 
-  void render();
+	void init();
 
+	void renderInMenu();
+	void update(float elapsed);
+	void SetMaxTime(float new_time);
+	void FadeIn();
+	void FadeOut();
+
+	void render();
 };
 
 #endif

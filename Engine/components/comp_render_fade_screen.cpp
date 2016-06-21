@@ -5,42 +5,51 @@
 
 // ---------------------
 void TCompFadeScreen::renderInMenu() {
-
-	ImGui::Checkbox("start fade", &enabled);
+	if (ImGui::Checkbox("fade_in", &fade_in)) fade_out = !fade_in;
+	if (ImGui::Checkbox("fade_out", &fade_out)) fade_in = !fade_out;
 	ImGui::DragFloat("max timer fade", &t_max_fade);
 	ImGui::Text("curr time: %f\n", t_curr_fade);
-  
-}
-
-void TCompFadeScreen::ActiveFade()
-{
-	t_curr_fade = 0.0f;
-	enabled = true;
 }
 
 void TCompFadeScreen::update(float elapsed)
 {
-	if (enabled) {
+	if (fade_out) {
 		t_curr_fade += elapsed;
 		if (t_curr_fade > t_max_fade) {
-			DeactivateFade();
+			fade_out = false;
 		}
 	}
+	else if (fade_in) {
+		t_curr_fade -= elapsed;
+		if (t_curr_fade < 0) {
+			fade_in = false;
+		}
+	}
+	else {
+		return;
+	}
+	clamp_me(t_curr_fade, 0.f, t_max_fade);
 }
 
 void TCompFadeScreen::SetMaxTime(float new_time) {
-	t_max_fade = new_time;
+	t_max_fade = (new_time > 0) ? new_time : t_max_fade_default;
 }
 
-void TCompFadeScreen::DeactivateFade()
+void TCompFadeScreen::FadeIn()
 {
-	t_curr_fade = 0.0f;
-	enabled = false;
+	fade_in = true;
+	fade_out = false;
+}
+
+void TCompFadeScreen::FadeOut()
+{
+	fade_in = false;
+	fade_out = true;
 }
 
 void TCompFadeScreen::render()
 {
-	if (enabled) {
+	if (t_curr_fade > 0) {
 		shader_ctes_data.fade_black_screen = t_curr_fade / t_max_fade;
 		shader_ctes_data.uploadToGPU();
 		tech->activate();
@@ -48,18 +57,16 @@ void TCompFadeScreen::render()
 	}
 }
 
-
 bool TCompFadeScreen::load(MKeyValue& atts) {
-  enabled = atts.getBool("enabled", false);		//by default false on start
-  t_max_fade = atts.getFloat("max time", 5.0f);
-  t_curr_fade = 0.0f;
+	fade_in = atts.getBool("enabled", true);		//by default false on start
+	fade_out = !fade_in;
+	t_max_fade = t_max_fade_default = atts.getFloat("max time", 2.0f);
+	t_curr_fade = 0.0f;
 
-  return true;
-
+	return true;
 }
 
 void TCompFadeScreen::init()
 {
 	tech = Resources.get("fade_screen.tech")->as<CRenderTechnique>();
 }
-

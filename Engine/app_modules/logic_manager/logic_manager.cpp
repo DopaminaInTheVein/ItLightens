@@ -525,6 +525,14 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.comment("Run cinematic defined in the specified guided camera")
 		.param("string: guided camera name")
 		.param("speed: speed of camera movement (0 means default speed)")
+		// Fade In
+		.set("fade_in", &SLBCamera::fadeIn)
+		.comment("Start fade in")
+		.param("float: time fade, if time <= 0 set default")
+		// Fade Out
+		.set("fade_out", &SLBCamera::fadeOut)
+		.comment("Start fade out")
+		.param("float: time fade, if time <= 0 set default")
 		;
 }
 
