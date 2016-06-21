@@ -104,7 +104,7 @@ public:
 		auto o = objs;
 		for (size_t i = 0; i < num_objs_used; ++i, ++o) {
 			PROFILE_FUNCTION("object");
-			o->fixedUpdate(dt);
+			if (o->getUpdateInfoBase(CHandle(o).getOwner())) o->fixedUpdate(dt);
 		}
 	}
 

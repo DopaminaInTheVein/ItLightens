@@ -24,7 +24,7 @@ bool TCompCulling::VPlanes::isVisible(const AABB* aabb) const {
 }
 
 void TCompCulling::update() {
-	PROFILE_FUNCTION("TCompCulling: Update");
+	//PROFILE_FUNCTION("TCompCulling: Update");
 	// Get access to the comp_camera in a sibling component
 	CEntity* e_owner = CHandle(this).getOwner();
 	MAT44 view_proj;

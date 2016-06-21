@@ -119,6 +119,7 @@
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="minus"
    offset="0 0.570343 0"/>
@@ -1507,6 +1508,7 @@
    type_shape="box"
    size="1.0 1.0 1.0"
    mass="2"/>
+<local_aabb/>
 <polarized
    pol="minus"
    offset="0 0.493896 0"/>
@@ -1521,6 +1523,7 @@
    fov="60.0"/>
 <culling/>
 <controller_3rd_person/>
+<FX_fade_screen/>
 <name
    name="camController_1"/>
 <transform
@@ -1591,6 +1594,7 @@
    type_shape="box"
    size="3.38976 2.8574 0.12"
    mass="5"/>
+<local_aabb/>
 <polarized
    pol="neutral"/>
 
@@ -1628,6 +1632,7 @@
    size="3.3 0.15 2.5"
    mass="5"
    kinematic="yes"/>
+<local_aabb/>
 
 </entity>
 <entity>
@@ -1698,6 +1703,8 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
+<abs_aabb/>
+<local_aabb/>
 <character_controller
    radius="0.3"
    height="1.8"/>
@@ -1729,6 +1736,8 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
+<abs_aabb/>
+<local_aabb/>
 <character_controller
    radius="0.3"
    height="1.8"/>
@@ -1766,6 +1775,8 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
+<abs_aabb/>
+<local_aabb/>
 <character_controller
    radius="0.3"
    height="1.8"/>
@@ -1806,6 +1817,8 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
+<abs_aabb/>
+<local_aabb/>
 <character_controller
    radius="0.3"
    height="1.8"/>
@@ -1849,6 +1862,8 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
+<abs_aabb/>
+<local_aabb/>
 <character_controller
    radius="0.3"
    height="1.8"/>
@@ -1913,6 +1928,8 @@
    model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
    name="skeletons/mole/mole.static_mesh"/>
+<abs_aabb/>
+<local_aabb/>
 <character_controller
    radius="0.3"
    height="2.01"/>
@@ -1952,6 +1969,8 @@
    model="skeletons/scientist/scientist.skeleton"/>
 <render_static_mesh
    name="skeletons/scientist/scientist.static_mesh"/>
+<abs_aabb/>
+<local_aabb/>
 <character_controller
    radius="0.3"
    height="1.71312"/>
@@ -2159,6 +2178,7 @@
 <render_static_mesh
    name="static_meshes/milestone3/part.static_mesh"/>
 <abs_aabb/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2179,6 +2199,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2199,6 +2220,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2219,6 +2241,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2239,6 +2262,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2259,6 +2283,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2279,6 +2304,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2299,6 +2325,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2319,6 +2346,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2339,6 +2367,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2359,6 +2388,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2379,6 +2409,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2399,6 +2430,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2419,6 +2451,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2439,6 +2472,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2459,6 +2493,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2479,6 +2514,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2499,6 +2535,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2519,6 +2556,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2539,6 +2577,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity
@@ -2559,6 +2598,7 @@
    type_shape="box"
    size="0.163 0.283 0.661"
    mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity>
@@ -2567,8 +2607,8 @@
 <name
    name="WirePosUp"/>
 <transform
-   pos="-68.0691 21.5946 10.1405"
-   quat="0 0 0 1.0"
+   pos="-69.0402 21.5946 10.1405"
+   quat="0 -0.419953 0 0.907546"
    scale="1.0"/>
 
 </entity>
@@ -2636,6 +2676,7 @@
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="plus"
    offset="0 0.570343 0"/>
@@ -2663,6 +2704,7 @@
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="minus"
    offset="0 0.570343 0"/>
@@ -2686,6 +2728,7 @@
    type_shape="box"
    size="3.0 1.5 3.0"
    mass="5"/>
+<local_aabb/>
 <polarized
    pol="plus"/>
 
@@ -2707,6 +2750,8 @@
    model="skeletons/player/player.skeleton"/>
 <render_static_mesh
    name="skeletons/player/player.static_mesh"/>
+<abs_aabb/>
+<local_aabb/>
 <character_controller
    radius="0.3"
    height="0.7"/>

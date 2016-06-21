@@ -163,9 +163,11 @@ function wireGoUp( )
   player:get_player()
   cmd_teleport = "player:teleport(\""..wire_pos_up.."\")"
   cam:run_cinematic("CineWireGoUp", factorWireGoUp * 5)
-  
-  p:exec_command( "wireParticlesUp();", 2.5 / factorWireGoUp )
+
   p:exec_command( "player:set_position(0,-1000,0);", 2 / factorWireGoUp )
+  p:exec_command( "wireParticlesUp();", 2.5 / factorWireGoUp )
+  p:exec_command( "cam:fade_out(1);", 2.5)
+  p:exec_command( "cam:fade_in(1);", 4.5)
   p:exec_command( "triggerWire_1:setActionable(1);", 3)
   p:exec_command( cmd_teleport, 10 / factorWireGoUp )
 end

@@ -308,8 +308,16 @@ void SLBCamera::getCamera() {
 	camera_h = tags_manager.getFirstHavingTag("camera_main");
 }
 
+bool SLBCamera::checkCamera() {
+	if (!camera_h.isValid()) {
+		getCamera();
+		return camera_h.isValid();
+	}
+	return true;
+}
+
 void SLBCamera::setDistanceToTarget(float distance) {
-	if (!camera_h.isValid()) return;
+	if (!checkCamera()) return;
 	CEntity * camera_e = camera_h;
 	if (!camera_e) return;
 
@@ -319,7 +327,7 @@ void SLBCamera::setDistanceToTarget(float distance) {
 }
 
 void SLBCamera::setSpeed(float speed) {
-	if (!camera_h.isValid()) return;
+	if (!checkCamera()) return;
 	CEntity * camera_e = camera_h;
 	if (!camera_e) return;
 
@@ -329,7 +337,7 @@ void SLBCamera::setSpeed(float speed) {
 }
 
 void SLBCamera::setSpeedUnlocked(float speed) {
-	if (!camera_h.isValid()) return;
+	if (!checkCamera()) return;
 	CEntity * camera_e = camera_h;
 	if (!camera_e) return;
 
@@ -339,7 +347,7 @@ void SLBCamera::setSpeedUnlocked(float speed) {
 }
 
 void SLBCamera::setRotationSensibility(float sensibility) {
-	if (!camera_h.isValid()) return;
+	if (!checkCamera()) return;
 	CEntity * camera_e = camera_h;
 	if (!camera_e) return;
 
@@ -349,7 +357,7 @@ void SLBCamera::setRotationSensibility(float sensibility) {
 }
 
 void SLBCamera::setPositionOffset(float x_offset, float y_offset, float z_offset) {
-	if (!camera_h.isValid()) return;
+	if (!checkCamera()) return;
 	CEntity * camera_e = camera_h;
 	if (!camera_e) return;
 
@@ -368,6 +376,20 @@ void SLBCamera::runCinematic(const char* name, float speed) {
 		msg_guided_cam.speed = speed;
 		guidedCamE->sendMsg(msg_guided_cam);
 	}
+}
+
+void SLBCamera::fadeIn(float speed) {
+	if (!checkCamera()) return;
+	GET_COMP(fx, camera_h, TCompFadeScreen);
+	fx->SetMaxTime(speed);
+	fx->FadeIn();
+}
+
+void SLBCamera::fadeOut(float speed) {
+	if (!checkCamera()) return;
+	GET_COMP(fx, camera_h, TCompFadeScreen);
+	fx->SetMaxTime(speed);
+	fx->FadeOut();
 }
 
 // public generic functions

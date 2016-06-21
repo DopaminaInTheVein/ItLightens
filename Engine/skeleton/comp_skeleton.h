@@ -5,15 +5,28 @@
 
 class CalModel;
 class CSkeleton;
+class TCompAbsAABB;
+class TCompTransform;
 
 struct TCompSkeleton : public TCompBase {
 	const CSkeleton* resource_skeleton;
 	CalModel*  model;
+	CHandle culling;
+	TCompAbsAABB * aabb;
+	TCompTransform * tmx;
+
+	//Render debug
+	static float dt_frame;
+	static int total_skeletons;
+	static int updated_skeletons;
+
 	std::vector<int> prevCycleIds;
 	bool load(MKeyValue& atts);
+	bool getUpdateInfo();
 	void update(float dt);
 	void render() const;
 	void renderInMenu();
+	static void renderUICulling();
 	void uploadBonesToCteShader() const;
 	void updateEndAction();
 	void clearPrevAnims(bool instant);

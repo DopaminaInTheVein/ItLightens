@@ -38,6 +38,8 @@ extern CShaderCte< TCteGlobals > shader_ctes_globals;
 extern CShaderCte< TCteBlur > shader_ctes_blur;
 #include "constants/ctes_hatching.h"
 extern CShaderCte< TCteHatching > shader_ctes_hatching;
+#include "constants/ctes_data.h"
+extern CShaderCte< TCteData > shader_ctes_data;
 
 extern const CTexture* all_black;
 

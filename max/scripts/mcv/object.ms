@@ -101,7 +101,7 @@ struct OM (
 			--- Attributes
 			,#()
 			--Components
-			,#("camera_main", "controller_3rd_person")
+			,#("camera_main", "controller_3rd_person", "FX_fade_screen")
 			--Helpers
 			,#()
 		)
