@@ -126,6 +126,7 @@ void CDebug::DrawLog()
 void CDebug::DrawLine(VEC3 org, VEC3 end, VEC3 color, float time)
 {
 #ifndef NDEBUG
+	PROFILE_FUNCTION("Debug draw lines");
 	if (time <= 0.f) {
 		lines[next_line].org = org;
 		lines[next_line].org = org;

@@ -90,6 +90,7 @@ public:
 	void setOpen(bool newOpened) { opened = newOpened; }
 	bool isOpen() { return opened; }
 	bool * getStatus() { return &opened; }
+	bool isDrawLines() { return draw_lines; }
 	//-------------------------------------------------------
 
 	//Draw lines functions:
