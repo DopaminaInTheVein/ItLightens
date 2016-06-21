@@ -27,7 +27,7 @@ void TCompPolarized::init()
 bool TCompPolarized::getUpdateInfo() {
 	GET_COMP(t, CHandle(this).getOwner(), TCompTransform);
 	if (!t) return false;
-	origin = t->getPosition();
+	origin = t->getPosition() + force.offset;
 }
 
 void TCompPolarized::update(float elapsed)

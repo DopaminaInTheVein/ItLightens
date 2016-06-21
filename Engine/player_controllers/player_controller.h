@@ -68,10 +68,10 @@ class player_controller : public CPlayerBase {
   CHandle					currentStunable;
 
   //Polarity Constants
-  float	POL_MIN_DISTANCE = 1.5f;
-  float	POL_MAX_DISTANCE = 30.0f; 
-  float	POL_INTENSITY = 5.0f;
-  float	POL_REPULSION = 1.0f;
+  float	POL_MIN_DISTANCE = 0.5f;
+  float	POL_MAX_DISTANCE = 20.0f; 
+  float	POL_INTENSITY = 4.0f;
+  float	POL_REPULSION = 1.25f;
   float	POL_INERTIA_TIME = 1.0f;
 
   //Damage Fonts Actived

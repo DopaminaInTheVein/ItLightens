@@ -9,6 +9,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/test/Test_Magnet.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -30,6 +31,8 @@
    model="skeletons/player/player.skeleton"/>
 <render_static_mesh
    name="skeletons/player/player.static_mesh"/>
+<abs_aabb/>
+<local_aabb/>
 <character_controller
    radius="0.3"
    height="0.7"/>
@@ -42,7 +45,9 @@
    znear="0.1"
    zfar="250.0"
    fov="60.0"/>
+<culling/>
 <controller_3rd_person/>
+<FX_fade_screen/>
 <name
    name="camController_1"/>
 <transform
@@ -65,9 +70,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="minus"
    offset="0 1.11499 0"/>
@@ -87,9 +94,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="minus"
    offset="0 1.11499 0"/>
@@ -109,9 +118,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="plus"
    offset="0 1.11499 0"/>
@@ -131,9 +142,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="plus"
    offset="0 1.11499 0"/>
@@ -153,9 +166,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="plus"
    offset="0 1.11499 0"/>
@@ -175,9 +190,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="minus"
    offset="0 1.11499 0"/>
@@ -197,9 +214,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="minus"
    offset="0 1.11499 0"/>
@@ -219,9 +238,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="plus"
    offset="0 1.11499 0"/>
@@ -241,9 +262,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="minus"
    offset="0 1.11499 0"/>
@@ -263,9 +286,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="plus"
    offset="0 1.11499 0"/>
@@ -285,9 +310,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="minus"
    offset="0 1.11499 0"/>
@@ -307,9 +334,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="plus"
    offset="0 1.11499 0"/>
@@ -329,9 +358,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="minus"
    offset="0 1.11499 0"/>
@@ -351,9 +382,11 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
+<local_aabb/>
 <polarized
    pol="plus"
    offset="0 1.11499 0"/>

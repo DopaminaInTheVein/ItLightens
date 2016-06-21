@@ -358,6 +358,7 @@ void player_controller::RecalcAttractions()
 		inertia_time = 0.f;
 		cc->SetGravity(false);
 		gravity_active = false;
+		ChangeState("idle");
 		
 		for (auto forceHandle : polarityForces) {
 
@@ -393,6 +394,7 @@ void player_controller::RecalcAttractions()
 		}
 	}
 
+	inertia_force = VEC3(0, 0, 0);
 	all_forces.clear();
 	force_ponderations.clear();
 
@@ -403,15 +405,21 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force) {
 	PROFILE_FUNCTION("player controller: attract move");
 
 	VEC3 forceEffect;
-
-	//Distance and direction
-	VEC3 direction = force.deltaPos;
-	dbg("DIRECTION: %f %f %f\n", direction.x, direction.y, direction.z);
-	assert(isNormal(direction));
-	//direction.Normalize();
-
 	// Attraction?
 	bool atraction = (force.polarity != pol_state);
+
+	//Distance and direction
+	VEC3 direction = VEC3(0, 0, 0);
+
+	if (atraction) {
+		direction = force.deltaPos;
+	}
+	else {
+		direction = force.deltaPos - force.offset;
+	}
+
+	dbg("DIRECTION: %f %f %f\n", direction.x, direction.y, direction.z);
+	assert(isNormal(direction));
 
 	// Different scenario depending on the distance
 	if (force.distance <= POL_MIN_DISTANCE) {
@@ -430,8 +438,6 @@ VEC3 player_controller::calcForceEffect(const PolarityForce& force) {
 	}
 	else {
 		forceEffect = VEC3(0,0,0);
-		cc->SetGravity(true);
-		gravity_active = true;
 	}
 
 	//Repulsion -> Invertimos fuerza
