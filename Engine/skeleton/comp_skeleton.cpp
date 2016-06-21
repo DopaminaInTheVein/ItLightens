@@ -5,9 +5,11 @@
 #include "cal3d/cal3d.h"
 #include "render/draw_utils.h"
 #include "components\comp_transform.h"
+#include "components\comp_culling.h"
 
 #include "imgui/imgui.h"
-#include "components\entity.h"
+#include "components/entity.h"
+#include "components/comp_aabb.h"
 
 #pragma comment(lib, "cal3d.lib" )
 
@@ -25,6 +27,10 @@ CQuaternion Cal2Engine(CalQuaternion q) {
 	return CQuaternion(q.x, q.y, q.z, -q.w);
 }
 
+float TCompSkeleton::dt_frame = 0;
+int TCompSkeleton::total_skeletons = 0;
+int TCompSkeleton::updated_skeletons = 0;
+
 // --------------------------------------------------
 bool TCompSkeleton::load(MKeyValue& atts) {
 	std::string res_name = atts.getString("model", "");   // warrior.skeleton
@@ -37,7 +43,6 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 
 	return true;
 }
-
 
 std::string TCompSkeleton::getKeyBoneName(std::string name)
 {
@@ -112,6 +117,10 @@ void TCompSkeleton::clearPrevAnims(bool isLoop)
 	if (isLoop) prevCycleIds.clear();
 }
 
+void TCompSkeleton::renderUICulling()
+{
+	ImGui::Text("Updated Skels: %d / %d\n", updated_skeletons, total_skeletons);
+}
 void TCompSkeleton::renderInMenu() {
 	static int anim_id = 0;
 	static float in_delay = 0.3f;
@@ -150,15 +159,51 @@ void TCompSkeleton::renderInMenu() {
 }
 
 // --------------------------------------------------
+
+bool TCompSkeleton::getUpdateInfo()
+{
+	tmx = GETH_MY(TCompTransform);
+	if (!tmx) return false;
+
+	if (!culling.isValid()) {
+		CHandle camera_main = tags_manager.getFirstHavingTag("camera_main");
+		if (!camera_main.isValid()) return false;
+		culling = GETH_COMP(camera_main, TCompCulling);
+		if (!culling.isValid()) return false;
+	}
+
+	aabb = GETH_MY(TCompAbsAABB);
+	if (!aabb) return false;
+
+	return true;
+}
+
 void TCompSkeleton::update(float dt) {
-	// Transfer our current world location to the cal3d model
-	CEntity* e = CHandle(this).getOwner();
-	if (!e) return;
-	TCompTransform* tmx = e->get<TCompTransform>();
+	if (!getUpdateInfoBase(CHandle(this).getOwner()))
+		return; //El updateAllInParallel no llama infobase
+
 	updateEndAction();
-	model->getMixer()->extra_trans = Engine2Cal(tmx->getPosition());
-	model->getMixer()->extra_rotation = Engine2Cal(tmx->getRotation());
-	model->update(dt);
+	TCompCulling * cculling = culling;
+	TCompCulling::TCullingBits* culling_bits = nullptr;
+	culling_bits = &cculling->bits;
+
+	// To get the index of each aabb
+	auto hm_aabbs = getHandleManager<TCompAbsAABB>();
+	const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
+
+	intptr_t idx = aabb - base_aabbs;
+	if (dt_frame != dt) {
+		dt_frame = dt;
+		total_skeletons = 0;
+		updated_skeletons = 0;
+	}
+	if (culling_bits->test(idx)) {
+		updated_skeletons++;
+		model->getMixer()->extra_trans = Engine2Cal(tmx->getPosition());
+		model->getMixer()->extra_rotation = Engine2Cal(tmx->getRotation());
+		model->update(dt);
+	}
+	total_skeletons++;
 }
 
 void TCompSkeleton::updateEndAction() {
