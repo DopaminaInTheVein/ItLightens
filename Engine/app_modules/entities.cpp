@@ -63,7 +63,6 @@ DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
 DECL_OBJ_MANAGER("skeleton_ik", TCompSkeletonIK);
 DECL_OBJ_MANAGER("skeleton_lookat", TCompSkeletonLookAt);
 
-
 DECL_OBJ_MANAGER("abs_aabb", TCompAbsAABB);
 DECL_OBJ_MANAGER("local_aabb", TCompLocalAABB);
 DECL_OBJ_MANAGER("culling", TCompCulling);
@@ -139,6 +138,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<player_controller_cientifico>()->init(8);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
+	getHandleManager<TCompSkeletonIK>()->init(MAX_ENTITIES);
 	getHandleManager<SkelControllerPlayer>()->init(MAX_ENTITIES);
 	getHandleManager<SkelControllerGuard>()->init(MAX_ENTITIES);
 	getHandleManager<SkelControllerScientist>()->init(MAX_ENTITIES);
@@ -241,6 +241,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompCameraMain, TMsgGuidedCamera, onGuidedCamera);
 	SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
 	SUBSCRIBE(TCompBoneTracker, TMsgAttach, onAttach);
+
+	//Skeleton IK
+	SUBSCRIBE(TCompSkeletonIK, TMsgEntityCreated, onCreate);
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(bt_scientist, TMsgBeaconTakenByPlayer, onTakenBeacon);
@@ -616,11 +619,14 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<SkelControllerScientist>()->updateAll(dt);
 		getHandleManager<SkelControllerMole>()->updateAll(dt);
 
-		if (use_parallel)
+		if (use_parallel) {
 			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
-		else
+			getHandleManager<TCompSkeletonIK>()->updateAllInParallel(dt);
+		}
+		else {
 			getHandleManager<TCompSkeleton>()->updateAll(dt);
-
+			getHandleManager<TCompSkeletonIK>()->updateAll(dt);
+		}
 		getHandleManager<TCompBoneTracker>()->updateAll(dt);
 
 		if (SBB::readBool(sala) && ia_wait > 1.0f) {

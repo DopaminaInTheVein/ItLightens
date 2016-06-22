@@ -61,13 +61,12 @@ float getDeltaTime(float always) {
 }
 
 float urandom() {
-  return (float)rand() / (float)RAND_MAX;
+	return (float)rand() / (float)RAND_MAX;
 }
 
 float random(float vmin, float vmax) {
-  return vmin + urandom() * (vmax - vmin);
+	return vmin + urandom() * (vmax - vmin);
 }
-
 
 float squared(float i) {
 	return i*i;
@@ -172,6 +171,12 @@ void rotate_vector_by_quaternion(const VEC3& vec, const CQuaternion& q, VEC3& vp
 	CQuaternion qt = q * CQuaternion(vec.x, vec.y, vec.z, 0.0f) * inv;
 
 	vprime = VEC3(qt.x, qt.y, qt.z);
+}
+
+float angleBetween(const VEC3& u, const VEC3& v)
+{
+	float dot = u.Dot(v);
+	return acosf(dot / (v.Length() * u.Length()));
 }
 
 //template<class TObj>

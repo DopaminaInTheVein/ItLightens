@@ -52,6 +52,7 @@ void getRotationMatrix(const float roll, const float pitch, const float yaw, MAT
 VEC3 productVectorMatrix(const VEC4& vec, const MAT44& matrix);
 VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const float yaw);
 void rotate_vector_by_quaternion(const VEC3& vec, const CQuaternion& q, VEC3& vprime);
+float angleBetween(const VEC3&, const VEC3&);
 
 ///  Performs a linear interpolation between two vectors. (@p v1 toward @p v2)
 ///  return					The result vector. [(x, y, z)]

@@ -31,13 +31,13 @@ public:
 	CalCoreModel* getCoreModel() { return core_model; }
 	int getAnimIdByName(std::string name) const;
 
-	static void CalculateTangentArray(	
-			int vertexCount, std::vector<CalCoreSubmesh::Vertex> *vertex,
-			std::vector<std::vector<CalCoreSubmesh::TextureCoordinate>> *texcoord,
-			int triangleCount, std::vector<CalCoreSubmesh::Face> *triangle,
-			// Output
-			std::vector<VEC4> *tangent
-		);
+	static void CalculateTangentArray(
+		int vertexCount, std::vector<CalCoreSubmesh::Vertex> *vertex,
+		std::vector<std::vector<CalCoreSubmesh::TextureCoordinate>> *texcoord,
+		int triangleCount, std::vector<CalCoreSubmesh::Face> *triangle,
+		// Output
+		std::vector<VEC4> *tangent
+	);
 
 	struct TBoneCorrector {
 		int         bone_id;
@@ -55,10 +55,4 @@ public:
 	typedef std::vector <TBoneCorrector> VBoneCorrections;
 	VBoneCorrections bone_corrections;
 };
-
-CalVector Engine2Cal(VEC3 v);
-CalQuaternion Engine2Cal(CQuaternion q);
-VEC3 Cal2Engine(CalVector v);
-CQuaternion Cal2Engine(CalQuaternion q);
-
 #endif

@@ -2748,6 +2748,7 @@
    scale="1.0"/>
 <skeleton
    model="skeletons/player/player.skeleton"/>
+<skeleton_ik/>
 <render_static_mesh
    name="skeletons/player/player.static_mesh"/>
 <abs_aabb/>
