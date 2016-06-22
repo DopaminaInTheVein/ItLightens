@@ -2599,12 +2599,12 @@
 <entity>
 	<rigidbody type_collision="trigger"
 	   type_shape="box"
-	   size="10.0 10.0 1.0"/>
+	   size="10.0 10.0 0.10"/>
 	<tags tags="trigger room_switcher"/>
 	<room_switcher front_room="sala2" back_room="sala1"/>
 	<name name="TriggerBox_1"/>
 	<transform
-	   pos="-57.3 4 -4.5"
+	   pos="-57.915 4.396 -5.678"
 	   quat="0 -0.707107 0 0.707107"
 	   scale="1.0"/>
 	<room name="none"/>
