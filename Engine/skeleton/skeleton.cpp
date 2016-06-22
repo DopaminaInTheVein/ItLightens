@@ -33,6 +33,22 @@ struct TSkinVertex {
 	unsigned char weights[4];
 };
 
+// --------------------------------------------------
+CalVector Engine2Cal(VEC3 v) {
+	return CalVector(v.x, v.y, v.z);
+}
+CalQuaternion Engine2Cal(CQuaternion q) {
+	return CalQuaternion(q.x, q.y, q.z, -q.w);
+}
+VEC3 Cal2Engine(CalVector v) {
+	return VEC3(v.x, v.y, v.z);
+}
+CQuaternion Cal2Engine(CalQuaternion q) {
+	return CQuaternion(q.x, q.y, q.z, -q.w);
+}
+// --------------------------------------------------
+
+
 void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::string& ofilename) {
 	CalCoreMesh* core_mesh = core_model->getCoreMesh(mesh_id);
 	int num_sub_meshes = core_mesh->getCoreSubmeshCount();
@@ -297,7 +313,7 @@ CSkeleton::CSkeleton()
 	: core_model(nullptr)
 {
 	CalLoader::setLoadingMode(LOADER_ROTATE_X_AXIS | LOADER_INVERT_V_COORD);
-	core_model = new CalCoreModel("unknown");
+	core_model = new CCoreModel();
 }
 
 void CSkeleton::destroy()

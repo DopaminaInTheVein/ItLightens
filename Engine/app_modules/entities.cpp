@@ -53,12 +53,17 @@ DECL_OBJ_MANAGER("workbench", workbench);
 DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
+//Skeletons
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 DECL_OBJ_MANAGER("skc_player", SkelControllerPlayer);
 DECL_OBJ_MANAGER("skc_guard", SkelControllerGuard);
 DECL_OBJ_MANAGER("skc_scientist", SkelControllerScientist);
 DECL_OBJ_MANAGER("skc_mole", SkelControllerMole);
 DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
+DECL_OBJ_MANAGER("skeleton_ik", TCompSkeletonIK);
+DECL_OBJ_MANAGER("skeleton_lookat", TCompSkeletonLookAt);
+
+
 DECL_OBJ_MANAGER("abs_aabb", TCompAbsAABB);
 DECL_OBJ_MANAGER("local_aabb", TCompLocalAABB);
 DECL_OBJ_MANAGER("culling", TCompCulling);

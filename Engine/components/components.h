@@ -17,6 +17,8 @@
 #include "comp_tags.h"
 #include "skeleton/comp_skeleton.h"
 #include "skeleton/comp_bone_tracker.h"
+#include "skeleton/comp_skeleton_ik.h"
+#include "skeleton/comp_skeleton_lookat.h"
 #include "skeleton_controllers/skc_player.h"
 #include "skeleton_controllers/skc_guard.h"
 #include "skeleton_controllers/skc_scientist.h"

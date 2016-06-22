@@ -482,6 +482,15 @@
     <ClCompile Include="components\comp_render_fade_screen.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="skeleton\comp_skeleton_ik.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\comp_skeleton_lookat.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\skeleton_manager.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1321,6 +1330,15 @@
     </ClInclude>
     <ClInclude Include="components\comp_render_fade_screen.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\comp_skeleton_ik.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\comp_skeleton_lookat.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\skeleton_manager.h">
+      <Filter>skeleton</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

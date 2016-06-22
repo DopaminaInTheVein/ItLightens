@@ -1,8 +1,6 @@
 #include "mcv_platform.h"
 #include "resources/resources_manager.h"
 #include "comp_skeleton.h"
-#include "skeleton.h"
-#include "cal3d/cal3d.h"
 #include "render/draw_utils.h"
 #include "components\comp_transform.h"
 #include "components\comp_culling.h"
@@ -12,20 +10,6 @@
 #include "components/comp_aabb.h"
 
 #pragma comment(lib, "cal3d.lib" )
-
-// --------------------------------------------------
-CalVector Engine2Cal(VEC3 v) {
-	return CalVector(v.x, v.y, v.z);
-}
-CalQuaternion Engine2Cal(CQuaternion q) {
-	return CalQuaternion(q.x, q.y, q.z, -q.w);
-}
-VEC3 Cal2Engine(CalVector v) {
-	return VEC3(v.x, v.y, v.z);
-}
-CQuaternion Cal2Engine(CalQuaternion q) {
-	return CQuaternion(q.x, q.y, q.z, -q.w);
-}
 
 float TCompSkeleton::dt_frame = 0;
 int TCompSkeleton::total_skeletons = 0;
