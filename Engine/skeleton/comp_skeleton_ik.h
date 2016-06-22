@@ -8,7 +8,7 @@ struct TCompSkeletonIK : public TCompBase{
 
   struct TBoneMod {
     VEC3  normal;
-    int       bone_id;
+    int   bone_id;
   };
 
   TBoneMod  mods[2];

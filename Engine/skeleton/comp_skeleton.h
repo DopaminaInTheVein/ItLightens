@@ -33,6 +33,7 @@ struct TCompSkeleton : public TCompBase {
 	void updateEndAction();
 	void clearPrevAnims(bool instant);
 	std::string getKeyBoneName(std::string);
+	int getKeyBoneId(std::string);
 
 	//Messages
 	void onSetAnim(const TMsgSetAnim&);

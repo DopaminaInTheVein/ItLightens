@@ -125,9 +125,9 @@ void TCompSkeletonIK::solveBone(TBoneMod* bm) {
   //float distance_of_c0_to_ground = ground.distanceToGround(ik.C);
   //float distance_of_cf_to_ground = ground.distanceToGround(ik.C + Cal2DX(abs_front));
   //float distance_of_cl_to_ground = ground.distanceToGround(ik.C + Cal2DX(abs_left));
-  float distance_of_c0_to_ground = 1.f;
-  float distance_of_cf_to_ground = 1.5f;
-  float distance_of_cl_to_ground = 1.5f;
+  float distance_of_c0_to_ground = 0.5f;
+  float distance_of_cf_to_ground = 0.5f;
+  float distance_of_cl_to_ground = 0.5f;
 
   // Fix the front direction, using a bone corrector that will make the old 'local front'
   // look at the new abs front

@@ -38,8 +38,7 @@ void TCompBoneTracker::onAttach(const TMsgAttach& msg) {
 	TCompSkeleton* skel = e->get<TCompSkeleton>();
 	if (!skel)
 		return;
-	std::string real_bone_name = skel->getKeyBoneName(bone_name);
-	bone_id = skel->model->getSkeleton()->getCoreSkeleton()->getCoreBoneId(real_bone_name);
+	bone_id = skel->getKeyBoneId(bone_name);
 }
 
 void TCompBoneTracker::renderInMenu() {
