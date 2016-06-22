@@ -54,6 +54,7 @@ DECL_OBJ_MANAGER("workbench", workbench);
 DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
+DECL_OBJ_MANAGER("room_switcher", TCompRoomSwitch);
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 DECL_OBJ_MANAGER("skc_player", SkelControllerPlayer);
 DECL_OBJ_MANAGER("skc_guard", SkelControllerGuard);
@@ -138,6 +139,7 @@ bool CEntitiesModule::start() {
   getHandleManager<SkelControllerMole>()->init(MAX_ENTITIES);
   getHandleManager<TCompName>()->init(MAX_ENTITIES);
   getHandleManager<TCompRoom>()->init(MAX_ENTITIES);
+  getHandleManager<TCompRoomSwitch>()->init(4);
   getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
   getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
   getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
@@ -276,6 +278,11 @@ bool CEntitiesModule::start() {
   SUBSCRIBE(player_controller, TMsgCanRec, onCanRec);
   SUBSCRIBE(TCompGenerator, TMsgTriggerIn, onTriggerEnterCall);
   SUBSCRIBE(TCompGenerator, TMsgTriggerOut, onTriggerExitCall);
+
+  // room switcher
+  SUBSCRIBE(TCompRoomSwitch, TMsgEntityCreated, onCreate);
+  SUBSCRIBE(TCompRoomSwitch, TMsgTriggerIn, onTriggerEnterCall);
+  SUBSCRIBE(TCompRoomSwitch, TMsgTriggerOut, onTriggerExitCall);
 
   SUBSCRIBE(TCompBoxDestructor, TMsgTriggerIn, onTriggerEnterCall);
 

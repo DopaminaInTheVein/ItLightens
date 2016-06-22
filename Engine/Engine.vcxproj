@@ -144,6 +144,7 @@
     <ClCompile Include="components\comp_polarized.cpp" />
     <ClCompile Include="components\comp_render_glow.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
+    <ClCompile Include="components\comp_room_switch.cpp" />
     <ClCompile Include="components\comp_snoozer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -356,6 +357,7 @@
     <ClInclude Include="components\comp_render_glow.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
     <ClInclude Include="components\comp_room.h" />
+    <ClInclude Include="components\comp_room_switch.h" />
     <ClInclude Include="components\comp_snoozer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

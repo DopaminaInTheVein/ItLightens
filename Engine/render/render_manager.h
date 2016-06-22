@@ -18,7 +18,8 @@ public:
 		CHandle                 owner;
 		CHandle                 transform;
 		CHandle                 aabb;
-		std::string				room;
+		std::string				      room;
+    bool                    isPlayer;
 	};
 private:
 
@@ -26,8 +27,9 @@ private:
 		const CMesh*            mesh;
 		CHandle                 owner;
 		CHandle                 transform;
-		std::string				room;
-	};
+		std::string				      room;
+    bool                    isPlayer;
+  };
 	static bool sortByTechMatMesh(const TKey& k1, const TKey& k2);
 
 	bool in_order;

@@ -12,6 +12,11 @@ struct TCompRoom : public TCompBase {
     return true;
   }
 
+  bool setName(std::string newName) {
+    strcpy(name, newName.c_str());
+    return true;
+  }
+
   void renderInMenu() {
     ImGui::Text(name);
   }
