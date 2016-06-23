@@ -122,9 +122,6 @@
     <ClCompile Include="logic\bt_mole.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_beacon.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="logic\bt_guard.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -479,6 +476,9 @@
       <Filter>skeleton_controllers</Filter>
     </ClCompile>
     <ClCompile Include="mcv_platform.cpp" />
+    <ClCompile Include="components\comp_room_switch.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
     <ClCompile Include="components\comp_render_fade_screen.cpp">
       <Filter>components</Filter>
     </ClCompile>
@@ -633,9 +633,6 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\bt_mole.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_beacon.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\bt_guard.h">
@@ -1327,6 +1324,12 @@
     </ClInclude>
     <ClInclude Include="skeleton_controllers\skc_scientist.h">
       <Filter>skeleton_controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_room.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_room_switch.h">
+      <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_render_fade_screen.h">
       <Filter>components</Filter>

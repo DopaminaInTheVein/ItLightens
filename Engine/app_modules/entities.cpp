@@ -28,6 +28,7 @@
 DECL_OBJ_MANAGER("entity", CEntity);		//need to be first
 
 DECL_OBJ_MANAGER("name", TCompName);
+DECL_OBJ_MANAGER("room", TCompRoom);
 DECL_OBJ_MANAGER("transform", TCompTransform);
 DECL_OBJ_MANAGER("snoozer", TCompSnoozer);
 DECL_OBJ_MANAGER("camera", TCompCamera);
@@ -35,7 +36,6 @@ DECL_OBJ_MANAGER("camera_main", TCompCameraMain);
 DECL_OBJ_MANAGER("controller_3rd_person", TCompController3rdPerson);
 DECL_OBJ_MANAGER("render_static_mesh", TCompRenderStaticMesh);
 DECL_OBJ_MANAGER("bt_scientist", bt_scientist);
-DECL_OBJ_MANAGER("beacon", beacon_controller);
 DECL_OBJ_MANAGER("ai_cam", ai_cam);
 DECL_OBJ_MANAGER("workbench", workbench_controller);
 DECL_OBJ_MANAGER("hierarchy", TCompHierarchy);
@@ -53,6 +53,7 @@ DECL_OBJ_MANAGER("workbench", workbench);
 DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
+DECL_OBJ_MANAGER("room_switcher", TCompRoomSwitch);
 //Skeletons
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 DECL_OBJ_MANAGER("skc_player", SkelControllerPlayer);
@@ -144,6 +145,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<SkelControllerScientist>()->init(MAX_ENTITIES);
 	getHandleManager<SkelControllerMole>()->init(MAX_ENTITIES);
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
+	getHandleManager<TCompRoom>()->init(MAX_ENTITIES);
+	getHandleManager<TCompRoomSwitch>()->init(4);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
@@ -171,7 +174,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
 	getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
 	getHandleManager<bt_scientist>()->init(MAX_ENTITIES);
-	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
 	getHandleManager<ai_cam>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench>()->init(MAX_ENTITIES);
@@ -245,8 +247,6 @@ bool CEntitiesModule::start() {
 	//Skeleton IK
 	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
 
-	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
-	SUBSCRIBE(bt_scientist, TMsgBeaconTakenByPlayer, onTakenBeacon);
 	SUBSCRIBE(bt_scientist, TMsgWBTakenByPlayer, onTakenWB);
 	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
 	SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);
@@ -289,6 +289,11 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller, TMsgCanRec, onCanRec);
 	SUBSCRIBE(TCompGenerator, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TCompGenerator, TMsgTriggerOut, onTriggerExitCall);
+
+	// room switcher
+	SUBSCRIBE(TCompRoomSwitch, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompRoomSwitch, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TCompRoomSwitch, TMsgTriggerOut, onTriggerExitCall);
 
 	SUBSCRIBE(TCompBoxDestructor, TMsgTriggerIn, onTriggerEnterCall);
 
@@ -382,23 +387,9 @@ void CEntitiesModule::initLevel(string level) {
 	std::string file_options = app.file_options_json;
 	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
 
-	//sala = "tiling";
 	sala = fields[level];
-	//sala = "drones";
-	//sala = "boxes";
-	//sala = "milestone2";
-	//sala = "scene_milestone_1";
-	//sala = "scene_test_recast";
-	//sala = "pruebaExportador";
-	//sala = "scene_basic_lights";
-	//sala = "test_simple";
-	//sala = "test_guard";
-	//sala = "test_pol";
-	//sala = "test_guard";
-	//sala = "test_anim";
-	//sala = "test_column_navmesh";
 
-	SBB::postSala(sala);
+	SBB::postBool("navmesh", false);
 	salaloc = "data/navmeshes/" + sala + ".data";
 
 	CEntityParser ep;
@@ -411,11 +402,7 @@ void CEntitiesModule::initLevel(string level) {
 		is_ok = ep.xmlParseFile("data/scenes/test_lights.xml");
 		assert(is_ok);
 	}
-	//{
-	//	CEntityParser ep;
-	//	bool is_ok = ep.xmlParseFile("data/scenes/scene_ui.xml");
-	//	assert(is_ok);
-	//}
+
 	dbg("Scene Loaded! (%d entities)\n", size());
 
 	// GENERATE NAVMESH
@@ -481,10 +468,9 @@ void CEntitiesModule::initLevel(string level) {
 	CHandle camera = tags_manager.getFirstHavingTag("camera_main");
 	CEntity * camera_e = camera;
 	CHandle t = tags_manager.getFirstHavingTag("player");
+	CEntity * target_e = t;
 	if (camera_e) {
 		TCompCameraMain * pcam = camera_e->get<TCompCameraMain>();
-
-		CEntity * target_e = t;
 
 		CHandle helper_arrow = tags_manager.getFirstHavingTag("helper_arrow");
 		CEntity * helper_arrow_e = helper_arrow;
@@ -502,6 +488,16 @@ void CEntitiesModule::initLevel(string level) {
 			target_e->sendMsg(msg_camera); //set target camera
 		}
 	}
+	// SET PLAYER INITIAL ROOM
+	string room_name = "none";
+	if (target_e) {
+		TCompRoom * player_room = target_e->get<TCompRoom>();
+		if (player_room) {
+			room_name = player_room->name;
+		}
+	}
+	SBB::postSala(room_name);
+
 	//}
 	TTagID generators = getID("generator");
 	VHandles generatorsHandles = tags_manager.getHandlesByTag(generators);
@@ -533,7 +529,6 @@ void CEntitiesModule::initLevel(string level) {
 	getHandleManager<bt_speedy>()->onAll(&bt_speedy::Init);
 	getHandleManager<bt_scientist>()->onAll(&bt_scientist::Init);
 	//getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
-	getHandleManager<beacon_controller>()->onAll(&beacon_controller::Init);
 	getHandleManager<ai_cam>()->onAll(&ai_cam::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
 	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
@@ -570,14 +565,6 @@ void CEntitiesModule::stop() {
 }
 
 void CEntitiesModule::update(float dt) {
-	//Test
-	//if (io->keys['Z'].becomesPressed()) {
-	   // for (int i = 0; i < 1; i++) {
-	  //  if (size() == 0) break;
-	  //  destroyRandomEntity(0.1f);
-	   // }
-	//}
-
 	static float ia_wait = 0.0f;
 	ia_wait += getDeltaTime();
 
@@ -629,10 +616,9 @@ void CEntitiesModule::update(float dt) {
 		}
 		getHandleManager<TCompBoneTracker>()->updateAll(dt);
 
-		if (SBB::readBool(sala) && ia_wait > 1.0f) {
+		if (SBB::readBool("navmesh") && ia_wait > 1.0f) {
 			getHandleManager<bt_mole>()->updateAll(dt);
 			getHandleManager<bt_scientist>()->updateAll(dt);
-			getHandleManager<beacon_controller>()->updateAll(dt);
 			getHandleManager<ai_cam>()->updateAll(dt);
 			getHandleManager<workbench_controller>()->updateAll(dt);
 			getHandleManager<bt_speedy>()->updateAll(dt);
@@ -747,7 +733,7 @@ void CEntitiesModule::readNavmesh() {
 	}
 	else {
 		SBB::postNavmesh(nav);
-		SBB::postBool(sala, true);
+		SBB::postBool("navmesh", true);
 	}
 }
 

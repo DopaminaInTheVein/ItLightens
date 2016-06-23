@@ -151,6 +151,7 @@
     <ClCompile Include="components\comp_render_fade_screen.cpp" />
     <ClCompile Include="components\comp_render_glow.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
+    <ClCompile Include="components\comp_room_switch.cpp" />
     <ClCompile Include="components\comp_snoozer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -197,7 +198,6 @@
     <ClCompile Include="input\input.cpp" />
     <ClCompile Include="input\input_manager.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
-    <ClCompile Include="logic\ai_beacon.cpp" />
     <ClCompile Include="logic\ai_cam.cpp" />
     <ClCompile Include="logic\ai_water.cpp" />
     <ClCompile Include="logic\ai_workbench.cpp" />
@@ -366,6 +366,8 @@
     <ClInclude Include="components\comp_render_fade_screen.h" />
     <ClInclude Include="components\comp_render_glow.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
+    <ClInclude Include="components\comp_room.h" />
+    <ClInclude Include="components\comp_room_switch.h" />
     <ClInclude Include="components\comp_snoozer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -415,7 +417,6 @@
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\input_manager.h" />
     <ClInclude Include="logic\aicontroller.h" />
-    <ClInclude Include="logic\ai_beacon.h" />
     <ClInclude Include="logic\ai_cam.h" />
     <ClInclude Include="logic\ai_water.h" />
     <ClInclude Include="logic\ai_workbench.h" />

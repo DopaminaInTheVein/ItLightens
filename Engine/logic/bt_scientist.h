@@ -28,9 +28,6 @@ class bt_scientist : public bt_poss, public TCompBase {
 	//Enum actions for bot
 	enum {
 		IDLE = 0,
-		CREATE_BEACON,
-		ADD_BEACON,
-		REMOVE_BEACON,
 		WANDER
 	};
 
@@ -56,17 +53,12 @@ class bt_scientist : public bt_poss, public TCompBase {
 	//Map points, TEMP, TODO: look for positions from object_manager
 	//--------------------------------------
 	VEC3 obj_position;					//Where to move
-	VEC3 beacon_to_go;
-	std::string beacon_to_go_name = "";
 	std::string wb_to_go_name = "";
 	//--------------------------------------
 
 	//Timer counts
 	//--------------------------------------
 	float waiting_time;
-	float t_addBeacon;
-	float t_createBeacon;
-	float t_removeBeacon;
 	float t_waitInPos;
 	//--------------------------------------
 
@@ -120,16 +112,10 @@ public:
 	//conditions
 	bool playerStunned();
 	bool workbenchAvailable();
-	bool beaconToAdd();
-	bool beaconToRemove();
 	//toggle conditions
 	bool checkBusy();
 	//actions
 	int actionStunned();
-	int actionCreateBeaconFromWB();
-	// beacon management
-	int actionAddBeacon();
-	int actionRemoveBeacon();
 	// movement
 	int actionAimToPos();
 	int actionMoveToPos();
@@ -149,7 +135,6 @@ public:
 
 	//messages function:
 	void onEmptyWB(const TMsgWBEmpty& msg);
-	void onTakenBeacon(const TMsgBeaconTakenByPlayer & msg);
 	void onTakenWB(const TMsgWBTakenByPlayer & msg);
 	void onStaticBomb(const TMsgStaticBomb & msg) override;		//need to override to clean old states and reserved objects
 
@@ -209,7 +194,7 @@ public:
 	void renderInMenu();
 
 	//Virtuals
-	PLAYER_TYPE whoAmI() { return SPEEDY; }
+	PLAYER_TYPE whoAmI() { return SCIENTIST; }
 };
 
 #endif

@@ -5,6 +5,8 @@
 #include "imgui/imgui.h"
 #include "windows/app.h"
 
+#include "handle/handle.h"
+
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/filewritestream.h"
@@ -33,6 +35,8 @@ uint32_t	getID(const char* text);
 
 float		getDeltaTime(float always = false);
 float random(float vmin, float vmax);
+
+bool isInRoom(CHandle handle);
 
 float squared(float i);
 

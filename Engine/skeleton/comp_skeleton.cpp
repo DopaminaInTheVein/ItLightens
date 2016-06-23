@@ -170,9 +170,12 @@ bool TCompSkeleton::getUpdateInfo()
 }
 
 void TCompSkeleton::update(float dt) {
-	if (!getUpdateInfoBase(CHandle(this).getOwner()))
+	CHandle ownerHandle = CHandle(this).getOwner();	
+	if (!getUpdateInfoBase(ownerHandle))
 		return; //El updateAllInParallel no llama infobase
-
+	CEntity* e = ownerHandle;
+	if (!e) return;
+	if (!isInRoom(ownerHandle)) return;
 	updateEndAction();
 	TCompCulling * cculling = culling;
 	TCompCulling::TCullingBits* culling_bits = nullptr;
@@ -198,15 +201,17 @@ void TCompSkeleton::update(float dt) {
 }
 
 void TCompSkeleton::updateEndAction() {
-	float endTimeAction = 0.2f; // Tiempo antes de acabar animacion que empieza el blend
-	auto mixer = model->getMixer();
-	if (mixer->getAnimationActionList().size() == 1) {
-		auto lastAction = mixer->getAnimationActionList().front();
-		auto lastCoreAction = lastAction->getCoreAnimation();
-		float duration = lastCoreAction->getDuration();
-		if (duration - lastAction->getTime() < endTimeAction) {
-			for (auto prevCycleId : prevCycleIds)
-				model->getMixer()->blendCycle(prevCycleId, 1.0f, endTimeAction);
+	if (isInRoom(CHandle(this).getOwner())) {
+		float endTimeAction = 0.2f; // Tiempo antes de acabar animacion que empieza el blend
+		auto mixer = model->getMixer();
+		if (mixer->getAnimationActionList().size() == 1) {
+			auto lastAction = mixer->getAnimationActionList().front();
+			auto lastCoreAction = lastAction->getCoreAnimation();
+			float duration = lastCoreAction->getDuration();
+			if (duration - lastAction->getTime() < endTimeAction) {
+				for (auto prevCycleId : prevCycleIds)
+					model->getMixer()->blendCycle(prevCycleId, 1.0f, endTimeAction);
+			}
 		}
 	}
 	//if (mixer->getAnimationActionList().size() == 0
@@ -220,6 +225,7 @@ void TCompSkeleton::updateEndAction() {
 
 void TCompSkeleton::render() const {
 #ifndef NDEBUG
+	if (!isInRoom(CHandle(this).getOwner())) return;
 	if (!Debug->isDrawLines()) return;
 	PROFILE_FUNCTION("TCompSkeleton render");
 	auto skel = model->getSkeleton();

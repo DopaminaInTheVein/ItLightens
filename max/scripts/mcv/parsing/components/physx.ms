@@ -170,7 +170,13 @@ fn _parse_trigger = (
 		if (onEnter != undefined) or (onExit != undefined) or (onAction != undefined) or (onActionSci != undefined) or (onActionMole != undefined) then (
 			throw "No puede ser un trigger de componente y logico a la vez!"
 		)
-		XML_PARSING.addChild component
+		local compi = XML_PARSING.addChild component
+		local fr = getUserProp _parsingObject "front_room"
+		local br = getUserProp _parsingObject "back_room"
+		if (component == "room_switcher" and fr != undefined and br != undefined) then(
+			compi.addAttr "front_room" fr
+			compi.addAttr "back_room" br
+		)
 	) else (
 		--Add trigger lua component
 		local xml = XML_PARSING.addChild "trigger_lua"

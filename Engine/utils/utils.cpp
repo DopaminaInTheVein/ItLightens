@@ -4,6 +4,9 @@
 #include <windows.h>
 #include <algorithm>
 #include "timer.h"
+#include "logic/sbb.h"
+#include "components/comp_room.h"
+#include "components/entity.h"
 #include "windows\app.h"
 
 #ifndef NDEBUG
@@ -66,6 +69,15 @@ float urandom() {
 
 float random(float vmin, float vmax) {
 	return vmin + urandom() * (vmax - vmin);
+}
+
+bool isInRoom(CHandle h) {
+	if (SBB::readSala() == "none") return true;
+	CEntity * e = h;
+	if (!e) return true;
+	TCompRoom * room = e->get<TCompRoom>();
+	if (!room) return true;
+	return room->name == SBB::readSala();
 }
 
 float squared(float i) {

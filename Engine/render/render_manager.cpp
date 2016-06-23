@@ -9,6 +9,8 @@
 #include "components/comp_culling.h"
 #include "skeleton/comp_skeleton.h"
 #include "components/entity.h"
+#include "components/comp_room.h"
+#include "logic/sbb.h"
 #include "render/draw_utils.h"
 
 CRenderManager RenderManager;
@@ -44,11 +46,17 @@ bool CRenderManager::sortByTechMatMesh(
 }
 
 void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
-	CEntity* e = owner.getOwner();
+	CHandle ow = owner.getOwner();
+	CEntity* e = ow;
 	assert(e);
 	CHandle h_transform = e->get<TCompTransform>();
 	CHandle h_aabb = e->get<TCompAbsAABB>();
-
+	TCompRoom * comproom = e->get<TCompRoom>();
+	std::string oroom = "none";
+	if (comproom) {
+		oroom = comproom->name;
+	}
+	bool playercandidate = ow.hasTag("player") || ow.hasTag("AI_poss");
 	for (auto s : mesh->slots) {
 		TKey k;
 		k.material = s.material;
@@ -57,6 +65,8 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 		k.transform = h_transform;
 		k.submesh_idx = s.submesh_idx;
 		k.aabb = h_aabb;
+		k.room = oroom;
+		k.isPlayer = playercandidate;
 		all_keys.push_back(k);
 	}
 
@@ -69,6 +79,8 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 			k.mesh = s.mesh;
 			k.owner = owner;
 			k.transform = h_transform;
+			k.room = oroom;
+			k.isPlayer = playercandidate;
 			all_shadow_keys.push_back(k);
 		}
 	}
@@ -144,7 +156,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 		all_keys.begin()
 		, all_keys.end()
 		, category
-	);
+		);
 	auto d0 = std::distance(all_keys.begin(), r.first);
 	auto d1 = std::distance(all_keys.begin(), r.second);
 	const TKey* it = &all_keys[0] + d0;
@@ -156,53 +168,52 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 	bool curr_tech_used_bones = false;
 	int  nkeys_rendered = 0;
-
+	std::string pj_room = SBB::readSala();
 	// Pasearse por todas las keys
 	while (it != end_it) {
 		// Do the culling
-		if (culling_bits) {
-			TCompAbsAABB* aabb = it->aabb;
-			if (aabb) {
-				intptr_t idx = aabb - base_aabbs;
-				if (!culling_bits->test(idx)) {
-					++it;
-					continue;
+		if (it->isPlayer || pj_room == "none" || it->room == "none" || pj_room == it->room) {
+			if (culling_bits) {
+				TCompAbsAABB* aabb = it->aabb;
+				if (aabb) {
+					intptr_t idx = aabb - base_aabbs;
+					if (!culling_bits->test(idx)) {
+						++it;
+						continue;
+					}
 				}
 			}
-		}
 
-		if (it->material != prev_it->material) {
-			if (!prev_it->material || it->material->tech != prev_it->material->tech) {
-				it->material->tech->activate();
-				curr_tech_used_bones = it->material->tech->usesBones();
+			if (it->material != prev_it->material) {
+				if (!prev_it->material || it->material->tech != prev_it->material->tech) {
+					it->material->tech->activate();
+					curr_tech_used_bones = it->material->tech->usesBones();
+				}
+				it->material->activateTextures();
 			}
-			it->material->activateTextures();
+			if (it->mesh != prev_it->mesh)
+				it->mesh->activate();
+			if (it->owner != prev_it->owner) {
+				// subir la world de it
+				const TCompTransform* c_tmx = it->transform;
+				assert(c_tmx);
+
+				// For static objects, we could skip this step
+				// if each static object had it's own shader_ctes_object
+				activateWorldMatrix(c_tmx->asMatrix());
+			}
+			if (curr_tech_used_bones) {
+				const CEntity* e = it->owner.getOwner();
+				assert(e);
+				const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+				assert(comp_skel);
+				comp_skel->uploadBonesToCteShader();
+			}
+			it->mesh->renderGroup(it->submesh_idx);    // it->mesh->renderSubMesh( it->submesh );
+			prev_it = it;
+			++nkeys_rendered;
 		}
-		if (it->mesh != prev_it->mesh)
-			it->mesh->activate();
-
-		if (it->owner != prev_it->owner) {
-			// subir la world de it
-			const TCompTransform* c_tmx = it->transform;
-			assert(c_tmx);
-
-			// For static objects, we could skip this step
-			// if each static object had it's own shader_ctes_object
-			activateWorldMatrix(c_tmx->asMatrix());
-		}
-
-		if (curr_tech_used_bones) {
-			const CEntity* e = it->owner.getOwner();
-			assert(e);
-			const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
-			assert(comp_skel);
-			comp_skel->uploadBonesToCteShader();
-		}
-
-		it->mesh->renderGroup(it->submesh_idx);    // it->mesh->renderSubMesh( it->submesh );
-		prev_it = it;
 		++it;
-		++nkeys_rendered;
 	}
 
 	CMaterial::deactivateTextures();
@@ -222,18 +233,22 @@ void CRenderManager::renderUICulling() {
 void CRenderManager::renderShadowCasters() {
 	CTraceScoped scope("Shadow Casters");
 	auto it = all_shadow_keys.begin();
-	while (it != all_shadow_keys.end()) {
-		const TCompTransform* c_tmx = it->transform;
-		//TODO: Review Pedro!
-		//assert(c_tmx);
-		if (c_tmx) {
-			activateWorldMatrix(c_tmx->asMatrix());
+	std::string pj_room = SBB::readSala();
 
-			// If the shadows_keys were sorted by mesh
-			// I could skip the activation and just call it
-			// when the mesh changed, and only call the render
-			CTraceScoped scope("ShadowCasterElem");
-			it->mesh->activateAndRender();
+	while (it != all_shadow_keys.end()) {
+		if (it->isPlayer || pj_room == "none" || it->room == "none" || pj_room == it->room) {
+			const TCompTransform* c_tmx = it->transform;
+			//TODO: Review Pedro!
+			//assert(c_tmx);
+			if (c_tmx) {
+				activateWorldMatrix(c_tmx->asMatrix());
+
+				// If the shadows_keys were sorted by mesh
+				// I could skip the activation and just call it
+				// when the mesh changed, and only call the render
+				CTraceScoped scope("ShadowCasterElem");
+				it->mesh->activateAndRender();
+			}
 		}
 		++it;
 	}
