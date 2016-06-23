@@ -12,21 +12,20 @@ struct TCompSkeletonIK : public TCompBase {
 		int   bone_id_a;
 		float dist_ab;
 		float dist_bc;
+		float time;
+		float time_max;
+		bool enabled;
 
-		//TIKHandle ik;
 		CHandle h_solver;
 		IK::bone_solver f_solver;
 	};
 
-	float     amount;
 	std::vector<TBoneMod>  mods;
 	void  solveBone(TBoneMod* bm);
-	//IK_DECL_SOLVER(heilTest);
 
-	TCompSkeletonIK() : amount(1.0f) {}
-	bool load(MKeyValue &atts);
+	TCompSkeletonIK() {}
 	void update(float elapsed);
-	void onCreate(const TMsgEntityCreated&);
+	void onSetIKSolver(const TMsgSetIKSolver&);
 	TBoneMod getBoneModInvariant(std::string);
 };
 

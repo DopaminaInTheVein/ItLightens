@@ -28,5 +28,6 @@ namespace IK {
 }
 //IK::ResultSolver heilTest(const IK::InfoSolver&);
 #define IK_DECL_SOLVER(name) void name(const IK::InfoSolver&, IK::ResultSolver&)
+#define IK_IMPL_SOLVER(name, info, result) void name(const IK::InfoSolver& info, IK::ResultSolver& result)
 
 #endif

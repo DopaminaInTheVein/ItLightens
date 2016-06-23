@@ -17,6 +17,7 @@ protected:
 	void SetCharacterController();
 	void SetPlayerController();
 	void myUpdate();
+	void myUpdateIK();
 
 public:
 	bool load(MKeyValue& atts) { return true; }

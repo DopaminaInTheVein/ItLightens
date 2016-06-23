@@ -39,6 +39,4 @@ struct TCompSkeleton : public TCompBase {
 	void onSetAnim(const TMsgSetAnim&);
 };
 
-#define SK_RHAND "right_hand"
-
 #endif

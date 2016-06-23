@@ -42,6 +42,7 @@ protected:
 	void update();
 	//Virtuals
 	virtual void myUpdate();
+	virtual void myUpdateIK();
 
 public:
 	void setState(std::string state, bool prio = false);

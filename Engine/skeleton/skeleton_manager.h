@@ -34,4 +34,6 @@ public:
 	VBoneCorrections bone_corrections;
 };
 
+#define SK_RHAND "right_hand"
+
 #endif

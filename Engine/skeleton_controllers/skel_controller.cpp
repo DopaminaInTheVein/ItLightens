@@ -8,6 +8,7 @@ using namespace std;
 void TCompSkelController::update()
 {
 	myUpdate();
+	myUpdateIK();
 	prevState = currentState;
 }
 
@@ -80,4 +81,9 @@ void TCompSkelController::myUpdate()
 {
 	if (currentState == prevState) return;
 	setLoop(currentState);
+}
+
+void TCompSkelController::myUpdateIK()
+{
+	//Nothing to do
 }

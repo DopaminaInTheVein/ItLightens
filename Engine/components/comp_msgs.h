@@ -5,6 +5,7 @@
 #include "components/entity_tags.h"
 #include "logic/damage.h"
 #include "logic/polarity.h"
+#include "skeleton/ik.h"
 
 struct TMsgEntityCreated {
 	DECLARE_MSG_ID();
@@ -19,15 +20,25 @@ struct TMsgAwake {
 	DECLARE_MSG_ID();
 };
 
-// Sent to all entities from a parsed file once all the entities
-// in that file has been created. Used to link entities between them
+// Attach to skeleton bone
 struct TMsgAttach {
 	CHandle handle;
 	std::string bone_name;
 	DECLARE_MSG_ID();
 };
 
-// Attach to skeleton bone
+// Subscribe an IK bone solver
+struct TMsgSetIKSolver {
+	CHandle handle;
+	IK::bone_solver function;
+	std::string bone_name;
+	bool enable;
+	float time;
+	DECLARE_MSG_ID();
+};
+
+// Sent to all entities from a parsed file once all the entities
+// in that file has been created. Used to link entities between them
 struct TMsgEntityGroupCreated {
 	VHandles* handles;
 	DECLARE_MSG_ID();

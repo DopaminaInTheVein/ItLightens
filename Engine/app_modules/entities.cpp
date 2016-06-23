@@ -243,7 +243,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompBoneTracker, TMsgAttach, onAttach);
 
 	//Skeleton IK
-	SUBSCRIBE(TCompSkeletonIK, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
 
 	SUBSCRIBE(beacon_controller, TMsgBeaconBusy, onPlayerAction);
 	SUBSCRIBE(bt_scientist, TMsgBeaconTakenByPlayer, onTakenBeacon);

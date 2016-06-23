@@ -11,34 +11,53 @@
 using namespace IK;
 using namespace std;
 
-bool TCompSkeletonIK::load(MKeyValue &atts) {
-	return true;
-}
-
 void TCompSkeletonIK::update(float elapsed) {
-	for (auto mod : mods) {
-		if (mod.bone_id_c != -1)
-			solveBone(&mod);
+	for (auto mod = mods.begin(); mod != mods.end();) {
+		if (mod->bone_id_c != -1) {
+			solveBone(&(*mod));
+			if (mod->enabled) {
+				mod->time += elapsed;
+				clamp_me(mod->time, 0, mod->time_max);
+				mod++;
+			}
+			else {
+				mod->time -= elapsed;
+				if (mod->time < 0.f) {
+					mod = mods.erase(mod);
+				}
+				else {
+					mod++;
+				}
+			}
+			break;
+		}
 	}
 }
 
-void heilTest(const InfoSolver& info, ResultSolver& result)
+void TCompSkeletonIK::onSetIKSolver(const TMsgSetIKSolver& msg)
 {
-	CEntity * e = info.handle;
-	auto name = e->getName();
-	dbg("Name caller: %s\n", name);
-	result.offset_pos = VEC3(0.f, 0.3f, 0.f);
-}
-
-void TCompSkeletonIK::onCreate(const TMsgEntityCreated& msg)
-{
-	TBoneMod mod = getBoneModInvariant(SK_RHAND);
-	if (mod.bone_id_c < 0) return;
-
-	mod.normal = VEC3(1.f, 0.f, 0.f);
-	mod.f_solver = &heilTest;
-	mod.h_solver = CHandle(this).getOwner();
-	mods.push_back(mod);
+	if (msg.enable) {
+		TBoneMod mod = getBoneModInvariant(SK_RHAND);
+		if (mod.bone_id_c < 0) return;
+		mod.normal = VEC3(1.f, 0.f, 0.f);
+		mod.f_solver = msg.function;
+		mod.h_solver = msg.handle;
+		mod.time_max = msg.time;
+		mods.push_back(mod);
+	}
+	else {
+		GET_COMP(skel, msg.handle, TCompSkeleton);
+		int bone_id = skel->getKeyBoneId(msg.bone_name);
+		for (auto mod = mods.begin(); mod != mods.end(); mod++){
+			if (mod->bone_id_c == bone_id) {
+				if (mod->h_solver == msg.handle) {
+					mod->enabled = false;
+					break;
+				}
+			}
+		}
+	}
+	
 }
 
 TCompSkeletonIK::TBoneMod TCompSkeletonIK::getBoneModInvariant(string name)
@@ -80,13 +99,19 @@ TCompSkeletonIK::TBoneMod TCompSkeletonIK::getBoneModInvariant(string name)
 		- bone_b->getCoreBone()->getTranslationAbsolute();
 	mod.dist_bc = cal_bc.length();
 
+	mod.enabled = true,
+	mod.time = 0;
+
 	return mod;
 }
 
 void TCompSkeletonIK::solveBone(TBoneMod* bm) {
 	if (!bm->h_solver.isValid()) return;
+	if (bm->time == 0.f) return;
 	GET_MY(comp_skel, TCompSkeleton);
 	if (!comp_skel) return;
+
+	float amount = bm->time / bm->time_max;
 
 	//// Get end of IK, 'middle' and 'up' bones (c,b,a)
 	CalModel* model = comp_skel->model;
@@ -108,13 +133,11 @@ void TCompSkeletonIK::solveBone(TBoneMod* bm) {
 	solver.handle = bm->h_solver;
 	ResultSolver res;
 	bm->f_solver(solver, res);
-	ik.C += res.offset_pos;
+	ik.C += res.offset_pos * amount;
 	//-- End specific function --
 
 	ik.normal = bm->normal;
 	ik.solveB();
-	if (amount == 0.f)
-		return;
 
 	//// Correct A to point to B
 	CCoreModel::TBoneCorrector bc;
