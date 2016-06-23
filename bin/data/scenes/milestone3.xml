@@ -1492,30 +1492,6 @@
 </entity>
 <entity>
 <tags
-   tags="box platform removable"/>
-<box/>
-<name
-   name="Box_1"/>
-<transform
-   pos="29.6254 -23.4734 -15.7126"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/box1.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="1.0 1.0 1.0"
-   mass="2"/>
-<local_aabb/>
-<polarized
-   pol="minus"
-   offset="0 0.493896 0"/>
-
-</entity>
-<entity>
-<tags
    tags="camera_main"/>
 <camera_main
    znear="0.1"
@@ -1591,8 +1567,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="3.38976 2.8574 0.12"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 <polarized
@@ -1628,8 +1603,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="3.3 0.15 2.5"
+   type_shape="convex"
    mass="5"
    kinematic="yes"/>
 <local_aabb/>
@@ -1703,6 +1677,7 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
 <character_controller
@@ -1736,6 +1711,7 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
 <character_controller
@@ -1775,6 +1751,7 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
 <character_controller
@@ -1817,6 +1794,7 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
 <character_controller
@@ -1862,6 +1840,7 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
 <character_controller
@@ -1928,6 +1907,7 @@
    model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
    name="skeletons/mole/mole.static_mesh"/>
+<skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
 <character_controller
@@ -1969,6 +1949,7 @@
    model="skeletons/scientist/scientist.skeleton"/>
 <render_static_mesh
    name="skeletons/scientist/scientist.static_mesh"/>
+<skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
 <character_controller
@@ -2196,8 +2177,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2217,8 +2197,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2238,8 +2217,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2259,8 +2237,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2280,8 +2257,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2301,8 +2277,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2322,8 +2297,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2343,8 +2317,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2364,8 +2337,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2385,8 +2357,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2406,8 +2377,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2427,8 +2397,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2448,8 +2417,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2469,8 +2437,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2490,8 +2457,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2511,8 +2477,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2532,8 +2497,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2553,8 +2517,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2574,8 +2537,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2595,8 +2557,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="box"
-   size="0.163 0.283 0.661"
+   type_shape="convex"
    mass="5"/>
 <local_aabb/>
 
@@ -2712,29 +2673,6 @@
 </entity>
 <entity>
 <tags
-   tags="box platform removable"/>
-<box/>
-<name
-   name="Box_2"/>
-<transform
-   pos="-2.63612 -23.2771 -14.9353"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   type_shape="box"
-   size="3.0 1.5 3.0"
-   mass="5"/>
-<local_aabb/>
-<polarized
-   pol="plus"/>
-
-</entity>
-<entity>
-<tags
    tags="player raijin"/>
 <player/>
 <life
@@ -2748,14 +2686,34 @@
    scale="1.0"/>
 <skeleton
    model="skeletons/player/player.skeleton"/>
-<skeleton_ik/>
 <render_static_mesh
    name="skeletons/player/player.static_mesh"/>
+<skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
 <character_controller
    radius="0.3"
    height="0.7"/>
+
+</entity>
+<entity>
+<tags
+   tags="box platform removable"/>
+<box/>
+<name
+   name="Box_3"/>
+<transform
+   pos="-86.1871 6.2449 14.8866"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
 
 </entity>
 

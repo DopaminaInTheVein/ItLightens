@@ -84,7 +84,7 @@ void player_controller_mole::UpdateInputActions() {
 	//else if (state == "idle")
 	//	ChangePose(pose_idle_route);
 
-	if (io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) {
+	if (io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()) {
 		if (boxGrabbed) {
 			//ChangePose(pose_idle_route);
 			logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
