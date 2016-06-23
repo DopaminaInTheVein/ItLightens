@@ -1343,6 +1343,7 @@
     <ClInclude Include="skeleton\ik.h">
       <Filter>skeleton</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1538,5 +1539,11 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="NOTES.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\bin\data\icons\bolt.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc" />
   </ItemGroup>
 </Project>

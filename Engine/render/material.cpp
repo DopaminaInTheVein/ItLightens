@@ -96,6 +96,13 @@ void CMaterial::activateTextures() const {
 		all_black->activate(TEXTURE_SLOT_SELFILUM);
 	}
 
+	if (textures[SPECULAR]) {
+		textures[SPECULAR]->activate(TEXTURE_SLOT_SPECULAR);
+	}
+	else {
+		all_black->activate(TEXTURE_SLOT_SPECULAR);	//no specular by default?
+	}
+
   	if( textures[ENVIRONMENT] )
     	textures[ENVIRONMENT]->activate(TEXTURE_SLOT_ENVIRONMENT);
 }

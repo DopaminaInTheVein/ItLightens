@@ -1,7 +1,7 @@
 #include "globals.fx"
 
 
-Texture2D txSpecular : register(t79);
+Texture2D txSpeculars : register(t79);
 Texture2D txInvShadows : register(t78);
 
 Texture2D txHatch1 : register(t80);
@@ -56,7 +56,7 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	
 	
 	//return float4(1,1,1,1);
-	float specular = txSpecular.Sample(samLinear, iTex0).r;
+	float specular = txSpeculars.Sample(samLinear, iTex0).r;
 	float4 diffuse = txDiffuse.Sample(samLinear, iTex0);
 	float4 normal = txNormal.Sample(samLinear, iTex0);
 	float inv_shadows = 1- txInvShadows.Sample(samLinear, iTex0).r;

@@ -169,6 +169,9 @@ void PSLightPoint(
   
   spec_amount *= specular_force;
   
+  spec_amount *= txSpecular.Load(ss_load_coords).xyz;
+  
+  
   o_color.xyz = lightCol * NL * distance_att * albedo + spec_amount;
   o_color.xyz += env * 0.3;
   //o_color.xyz = E_refl.xyz;

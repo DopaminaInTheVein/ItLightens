@@ -77,6 +77,9 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <ResourceCompile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -104,6 +107,9 @@
     <PostBuildEvent>
       <Command>copy "$(ProjectDir)\Physx\dll\$(configuration)\*"  "$(TargetDir)"</Command>
     </PostBuildEvent>
+    <ResourceCompile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app_modules\entities.cpp" />
@@ -495,6 +501,7 @@
     <ClInclude Include="render\technique.h" />
     <ClInclude Include="render\texture.h" />
     <ClInclude Include="render\vertex_declarations.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="resources\resources_manager.h" />
     <ClInclude Include="skeleton\comp_bone_tracker.h" />
@@ -612,6 +619,12 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="NOTES.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\bin\data\icons\bolt.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
