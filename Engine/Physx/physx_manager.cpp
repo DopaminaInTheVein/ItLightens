@@ -210,7 +210,7 @@ void CPhysxManager::setupFiltering(PxRigidActor* actor, PxFilterData& filterData
 		shape->setQueryFilterData(filterData);
 	}
 
-	free(ptr);
+	//free(ptr);
 }
 
 #pragma endregion

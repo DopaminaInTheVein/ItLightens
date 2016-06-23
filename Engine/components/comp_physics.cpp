@@ -60,7 +60,7 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
       filter.word2 |= ItLightensFilter::eIGNORE_PLAYER; // No se usa ahora
     }
     else if (m_collisionType == STATIC_OBJECT) {
-      filter.word1 |= ItLightensFilter::eSCENE;
+      filter.word0 |= ItLightensFilter::eSCENE;
     }
     else {
       filter.word0 |= ItLightensFilter::eOBJECT;
@@ -69,15 +69,15 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
   if (!m_pActor) return;
   PxRigidActor *actor = m_pActor->isRigidActor();
   if (actor) {
-    //filter.word1 = ItLightensFilter::eALL;
+   filter.word1 = ItLightensFilter::eALL;
     g_PhysxManager->setupFiltering(actor, filter);
-    if (h.hasTag("fragment") || h.hasTag("throw_bomb")) {
+    /*if (h.hasTag("fragment") || h.hasTag("throw_bomb")) {
       PxRigidDynamic * rd = actor->isRigidDynamic();
-      if (rd) {
-        rd->setRigidDynamicFlag(PxRigidDynamicFlag::eENABLE_CCD, true);
+      //if (rd) {
+        //rd->setRigidDynamicFlag(PxRigidDynamicFlag::eENABLE_CCD, true);
         //rd->setRigidDynamicFlag(PxRigidDynamicFlag::eENABLE_CCD_FRICTION, true);
       }
-    }
+    }*/
   }
   //filter.word0 = ItLightensFilter::eALL;
 }
@@ -234,7 +234,8 @@ bool TCompPhysics::createTriMeshShape()
           ra->attachShape(*m_pShape);
       }
     }
-
+	PxFilterData mFilterData = DEFAULT_DATA_DYNAMIC;
+	updateTagsSetupActor(mFilterData);
     return true;
   }
 
