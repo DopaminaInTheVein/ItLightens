@@ -3,6 +3,8 @@
 #include "app_modules/app_module.h"
 //#include "utils/timer.h"
 
+#include "resource.h"
+
 #include "utils/directory_watcher.h"
 #include "resources/resources_manager.h"
 
@@ -128,12 +130,12 @@ bool CApp::createWindow(HINSTANCE new_hInstance, int nCmdShow)
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
 	wcex.hInstance = hInstance;
-	wcex.hIcon = NULL;
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 	wcex.lpszMenuName = NULL;
 	wcex.lpszClassName = "It Lightens";
-	wcex.hIconSm = NULL;
+	wcex.hIcon = LoadIcon(new_hInstance, MAKEINTRESOURCE(ID_ICON));
+	wcex.hIconSm = LoadIcon(new_hInstance, MAKEINTRESOURCE(ID_ICON_SM));
 	if (!RegisterClassEx(&wcex))
 		return false;
 
