@@ -49,6 +49,9 @@ void ai_cam::Init() {
 
 	if (lshd) {
 		VEC3 initialFront = me_transform->getFront();
+		initialFront.y = 0.0f;
+		initialFront.Normalize();
+
 		VEC3 myposinitial = me_transform->getPosition();
 		VEC3 origin = me_transform->getPosition();
 		myposinitial.y -= distToFloor;
