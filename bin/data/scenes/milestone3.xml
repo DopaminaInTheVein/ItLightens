@@ -2605,7 +2605,7 @@
 	<name name="TriggerBox_1"/>
 	<transform
 	   pos="-57.915 4.396 -5.678"
-	   quat="0 -0.707107 0 0.707107"
+	   quat="0.0 1.0 0.0 0.0"
 	   scale="1.0"/>
 	<room name="none"/>
 </entity>

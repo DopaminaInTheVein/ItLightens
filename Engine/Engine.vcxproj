@@ -191,7 +191,6 @@
     <ClCompile Include="input\input.cpp" />
     <ClCompile Include="input\input_manager.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
-    <ClCompile Include="logic\ai_beacon.cpp" />
     <ClCompile Include="logic\ai_cam.cpp" />
     <ClCompile Include="logic\ai_water.cpp" />
     <ClCompile Include="logic\ai_workbench.cpp" />
@@ -407,7 +406,6 @@
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\input_manager.h" />
     <ClInclude Include="logic\aicontroller.h" />
-    <ClInclude Include="logic\ai_beacon.h" />
     <ClInclude Include="logic\ai_cam.h" />
     <ClInclude Include="logic\ai_water.h" />
     <ClInclude Include="logic\ai_workbench.h" />

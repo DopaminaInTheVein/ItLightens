@@ -122,9 +122,6 @@
     <ClCompile Include="logic\bt_mole.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_beacon.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="logic\bt_guard.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -624,9 +621,6 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\bt_mole.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_beacon.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\bt_guard.h">

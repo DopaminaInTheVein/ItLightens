@@ -41,7 +41,6 @@
 #include "comp_light_fadable.h"
 
 //Logic
-#include "logic/ai_beacon.h"
 #include "logic/ai_cam.h"
 #include "logic/ai_workbench.h"
 #include "logic/aicontroller.h"

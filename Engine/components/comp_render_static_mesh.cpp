@@ -23,10 +23,10 @@ void TCompRenderStaticMesh::registerToRender() {
 }
 
 void TCompRenderStaticMesh::unregisterFromRender() {
-  RenderManager.unregisterFromRender(CHandle(this));
+	RenderManager.unregisterFromRender(CHandle(this));
 }
 
 void TCompRenderStaticMesh::onGetLocalAABB(const TMsgGetLocalAABB& msg) {
-  if (static_mesh)
-    AABB::CreateMerged(*msg.aabb, *msg.aabb, static_mesh->getAABB());
+	if (static_mesh)
+		AABB::CreateMerged(*msg.aabb, *msg.aabb, static_mesh->getAABB());
 }
