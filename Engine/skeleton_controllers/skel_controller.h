@@ -2,6 +2,7 @@
 #define INC_SKELETON_CONTROLLER_H_
 
 #include "components/comp_base.h"
+#include "skeleton/skeleton_manager.h"
 
 // --- Anims State --- //
 #define AST_IDLE				"idle"
@@ -43,10 +44,11 @@ protected:
 	//Virtuals
 	virtual void myUpdate();
 	virtual void myUpdateIK();
+	void enableIK(std::string bone_name, IK::bone_solver solver, float delay);
+	void disableIK(std::string bone_name);
 
 public:
 	void setState(std::string state, bool prio = false);
-
 };
 
 #define SET_ANIM_STATE(skc, state) {if (skc) skc->setState(state);}
