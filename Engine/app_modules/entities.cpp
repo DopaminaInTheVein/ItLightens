@@ -174,7 +174,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
 	getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
 	getHandleManager<bt_scientist>()->init(MAX_ENTITIES);
-	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
 	getHandleManager<ai_cam>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench>()->init(MAX_ENTITIES);
