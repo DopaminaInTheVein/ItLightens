@@ -502,6 +502,7 @@
     <ClInclude Include="skeleton\comp_skeleton_ik.h" />
     <ClInclude Include="skeleton\comp_skeleton_lookat.h" />
     <ClInclude Include="skeleton\coresubmesh.h" />
+    <ClInclude Include="skeleton\ik.h" />
     <ClInclude Include="skeleton\skeleton.h" />
     <ClInclude Include="skeleton\skeleton_manager.h" />
     <ClInclude Include="skeleton_controllers\skc_guard.h" />

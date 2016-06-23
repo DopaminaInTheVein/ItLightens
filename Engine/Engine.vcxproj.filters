@@ -1340,6 +1340,9 @@
     <ClInclude Include="skeleton\skeleton_manager.h">
       <Filter>skeleton</Filter>
     </ClInclude>
+    <ClInclude Include="skeleton\ik.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
