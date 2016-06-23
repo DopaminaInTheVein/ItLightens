@@ -54,12 +54,16 @@ DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("room_switcher", TCompRoomSwitch);
+//Skeletons
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 DECL_OBJ_MANAGER("skc_player", SkelControllerPlayer);
 DECL_OBJ_MANAGER("skc_guard", SkelControllerGuard);
 DECL_OBJ_MANAGER("skc_scientist", SkelControllerScientist);
 DECL_OBJ_MANAGER("skc_mole", SkelControllerMole);
 DECL_OBJ_MANAGER("bone_tracker", TCompBoneTracker);
+DECL_OBJ_MANAGER("skeleton_ik", TCompSkeletonIK);
+DECL_OBJ_MANAGER("skeleton_lookat", TCompSkeletonLookAt);
+
 DECL_OBJ_MANAGER("abs_aabb", TCompAbsAABB);
 DECL_OBJ_MANAGER("local_aabb", TCompLocalAABB);
 DECL_OBJ_MANAGER("culling", TCompCulling);
@@ -103,6 +107,9 @@ DECL_OBJ_MANAGER("particles_system", CParticleSystem);
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
 
+//fx
+DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
+
 CCamera * camera;
 
 // The global dict of all msgs
@@ -132,6 +139,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<player_controller_cientifico>()->init(8);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
+	getHandleManager<TCompSkeletonIK>()->init(MAX_ENTITIES);
 	getHandleManager<SkelControllerPlayer>()->init(MAX_ENTITIES);
 	getHandleManager<SkelControllerGuard>()->init(MAX_ENTITIES);
 	getHandleManager<SkelControllerScientist>()->init(MAX_ENTITIES);
@@ -166,6 +174,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
 	getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
 	getHandleManager<bt_scientist>()->init(MAX_ENTITIES);
+	getHandleManager<beacon_controller>()->init(MAX_ENTITIES);
 	getHandleManager<ai_cam>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench>()->init(MAX_ENTITIES);
@@ -196,6 +205,9 @@ bool CEntitiesModule::start() {
 	//particles
 	getHandleManager<CParticleSystem>()->init(MAX_ENTITIES);
 
+	//fx
+	getHandleManager<TCompFadeScreen>()->init(4);
+
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
 	SUBSCRIBE(TCompSnoozer, TMsgAwake, onAwake);
@@ -218,6 +230,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(bt_scientist, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
+	SUBSCRIBE(TCompCharacterController, TMsgGetLocalAABB, onGetLocalAABB);
 	//  SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
 	SUBSCRIBE(TCompBoneTracker, TMsgEntityGroupCreated, onGroupCreated);
 	SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
@@ -231,6 +244,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompCameraMain, TMsgGuidedCamera, onGuidedCamera);
 	SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
 	SUBSCRIBE(TCompBoneTracker, TMsgAttach, onAttach);
+
+	//Skeleton IK
+	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
 
 	SUBSCRIBE(bt_scientist, TMsgWBTakenByPlayer, onTakenWB);
 	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
@@ -342,6 +358,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
+	SUBSCRIBE(TCompCameraMain, TMsgGetCullingViewProj, onGetViewProj);
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
 	//Control
@@ -521,6 +538,9 @@ void CEntitiesModule::initLevel(string level) {
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
+	//fx
+	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
+
 	//TODO: Message LevelStart
 	GameController->SetGameState(CGameController::RUNNING);
 }
@@ -587,11 +607,14 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<SkelControllerScientist>()->updateAll(dt);
 		getHandleManager<SkelControllerMole>()->updateAll(dt);
 
-		if (use_parallel)
+		if (use_parallel) {
 			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
-		else
+			getHandleManager<TCompSkeletonIK>()->updateAllInParallel(dt);
+		}
+		else {
 			getHandleManager<TCompSkeleton>()->updateAll(dt);
-
+			getHandleManager<TCompSkeletonIK>()->updateAll(dt);
+		}
 		getHandleManager<TCompBoneTracker>()->updateAll(dt);
 
 		if (SBB::readBool("navmesh") && ia_wait > 1.0f) {
@@ -632,6 +655,9 @@ void CEntitiesModule::update(float dt) {
 		//Triggers
 		getHandleManager<TTriggerLua>()->updateAll(dt);
 
+		//Fx
+		getHandleManager<TCompFadeScreen>()->updateAll(dt);
+
 		SBB::update(dt);
 	}
 	// In this mode, only the animation of the player is updated
@@ -648,7 +674,7 @@ void CEntitiesModule::render() {
 	// for each manager
 	// if manager has debug render active
 	// manager->renderAll()
-	if (io->keys['N'].isPressed()) {
+	if (io->keys['N'].isPressed() && io->keys[VK_CONTROL].isPressed()) {
 		SBB::readNavmesh().render();
 	}
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();

@@ -116,6 +116,6 @@ void CHandle::sendMsg(const TMsg& msg) {
 #define GETH_COMP(handle, type) ((CEntity*)handle)->get<type>()
 #define GET_COMP(var, handle, type) type * var = ((CEntity*)handle)->get<type>()
 #define GETH_MY(type) ((CEntity*)(CHandle(this).getOwner()))->get<type>()
-#define GET_MY(var, type) type * var = GET_MY(type)
+#define GET_MY(var, type) type * var = ((CEntity*)(CHandle(this).getOwner()))->get<type>()
 
 #endif

@@ -101,17 +101,33 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
 }
 
 void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory category) {
-	char cat_name[32];
-	if (category == CRenderTechnique::DBG_OBJS)
-		strcpy(cat_name, "DEBUG_OBJS");
-	else if (category == CRenderTechnique::SOLID_OBJS)
-		strcpy(cat_name, "SOLID_OBJS");
-	else if (category == CRenderTechnique::TRANSPARENT_OBJS)
-		strcpy(cat_name, "TRANSPARENT_OBJS");
-	else if (category == CRenderTechnique::UI_OBJS)
-		strcpy(cat_name, "UI_OBJS");
-	PROFILE_FUNCTION(cat_name);
-	CTraceScoped scope(cat_name);
+	std::string name;
+	PROFILE_FUNCTION("OBJS");
+	if (category == CRenderTechnique::DBG_OBJS) {
+		name = "DEBUG_OBJS";
+		PROFILE_FUNCTION("DEBUG_OBJS");
+	}
+	else if (category == CRenderTechnique::SOLID_OBJS) {
+		name = "SOLID_OBJS";
+		PROFILE_FUNCTION("SOLID_OBJS");
+	}
+	else if (category == CRenderTechnique::TRANSPARENT_OBJS) {
+		name = "TRANSPARENT_OBJS";
+		PROFILE_FUNCTION("TRANSPARENT_OBJS");
+	}
+	else if (category == CRenderTechnique::UI_OBJS) {
+		name = "UI_OBJS";
+		PROFILE_FUNCTION("UI_OBJS");
+	}
+	else if (category == CRenderTechnique::DETAIL_OBJS) {
+		name = "DETAIL_OBJS";
+		PROFILE_FUNCTION("DETAIL_OBJS");
+	}
+	else {
+		name = "UNKNOWN_OBJS";
+		PROFILE_FUNCTION("UNKNOWN_OBJS");
+	}
+	CTraceScoped scope(name.c_str());
 
 	if (!in_order) {
 		// sort the keys based on....

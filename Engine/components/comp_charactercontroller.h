@@ -4,6 +4,7 @@
 #include "comp_base.h"
 #include "comp_msgs.h"
 #include "physx\physx_manager.h"
+#include "comp_aabb.h"
 
 using namespace PhysxConversion;
 
@@ -37,6 +38,7 @@ class TCompCharacterController : public TCompBase {
 	PxControllerFilters				m_filterController = PxControllerFilters(&m_filter, g_PhysxManager);
 
 	std::string name = "defaul name";
+	AABB aabb;
 
 	//-----------------------------------------------------------------------------------------------------
 	//							Internal update movement values
@@ -49,6 +51,7 @@ class TCompCharacterController : public TCompBase {
 	void ApplyPendingMoves(float dt);
 
 	void UpdateMeshTransform();
+	void InitAABB();
 
 public:
 	// physics id
@@ -139,6 +142,12 @@ public:
 	void AddImpulse(const VEC3 & impulse, bool prevalent = false);
 	void ChangeSpeed(float speed);
 	void ResetMovement();
+
+	//-----------------------------------------------------------------------------------------------------
+	//									AABB Recalc
+	//-----------------------------------------------------------------------------------------------------
+
+	void onGetLocalAABB(const TMsgGetLocalAABB& msg);
 };
 
 #endif

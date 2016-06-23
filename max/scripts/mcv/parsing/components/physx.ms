@@ -51,6 +51,7 @@ fn parseRigidBodySpecial = (
 		local xml = XML_PARSING.addChild "rigidbody"
 		xml.addAttr "type_collision" "dynamic"
 		xml.addAttr "type_shape" "drone"
+		XML_PARSING.addChild "local_aabb"
 		return true
 	)
 	return false
@@ -64,6 +65,7 @@ fn parseRigidBody parent collider = (
 	if collider != undefined then (
 		local dynamic = getUserProp collider "dynamic"
 		if dynamic == "yes" then typeCollision = "dynamic"
+		XML_PARSING.addChild "local_aabb"
 	)
 	xml.addAttr "type_collision" typeCollision
 	

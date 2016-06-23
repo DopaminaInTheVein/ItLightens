@@ -185,6 +185,12 @@ void rotate_vector_by_quaternion(const VEC3& vec, const CQuaternion& q, VEC3& vp
 	vprime = VEC3(qt.x, qt.y, qt.z);
 }
 
+float angleBetween(const VEC3& u, const VEC3& v)
+{
+	float dot = u.Dot(v);
+	return acosf(dot / (v.Length() * u.Length()));
+}
+
 //template<class TObj>
 #include "components\entity_tags.h"
 //template<class  TObj>

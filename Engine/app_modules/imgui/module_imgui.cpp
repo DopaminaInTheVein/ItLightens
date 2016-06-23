@@ -226,6 +226,7 @@ void CImGuiModule::update(float dt) {
 		}
 	}if (ImGui::CollapsingHeader("Culling")) {
 		RenderManager.renderUICulling();
+		TCompSkeleton::renderUICulling();
 		ImGui::Checkbox("show culling collider", GameController->GetCullingRenderPointer());
 	}
 

@@ -479,6 +479,18 @@
     <ClCompile Include="components\comp_room_switch.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_render_fade_screen.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\comp_skeleton_ik.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\comp_skeleton_lookat.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="skeleton\skeleton_manager.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1319,6 +1331,22 @@
     <ClInclude Include="components\comp_room_switch.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_render_fade_screen.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\comp_skeleton_ik.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\comp_skeleton_lookat.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\skeleton_manager.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="skeleton\ik.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1514,5 +1542,11 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="NOTES.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\bin\data\icons\bolt.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc" />
   </ItemGroup>
 </Project>

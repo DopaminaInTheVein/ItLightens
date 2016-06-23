@@ -9,6 +9,8 @@
 #include "handle\handle.h"
 #include "app_modules\io\io.h"
 
+#define FACTOR_HEIGHT_AABB	1.4f
+#define FACTOR_WIDTH_AABB	1.5f
 
 //#########################################################################################################
 //									general functions
@@ -22,10 +24,8 @@ bool TCompCharacterController::load(MKeyValue & atts)
 	return true;
 }
 
-
 void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 {
-
 	m_pActor = g_PhysxManager->CreateCharacterController(m_radius, m_height);
 	m_affectGravity = true;
 	m_gravitySpeed = -10.0f;
@@ -47,6 +47,8 @@ void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 		m_filter = DEFAULT_DATA_CC;
 		UpdateTags();
 	}
+
+	InitAABB();
 }
 
 void TCompCharacterController::renderInMenu()
@@ -64,7 +66,6 @@ void TCompCharacterController::renderInMenu()
 	ImGui::DragFloat("Friction Ground", &m_friction, 0.f, 10.f);
 	ImGui::DragFloat("Friction Air", &m_friction_air, 0.f, 10.f);
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
-	
 }
 
 VEC3 TCompCharacterController::GetCameraPointFocus() const
@@ -78,14 +79,12 @@ void TCompCharacterController::update(float dt)
 {
 	PROFILE_FUNCTION("update");
 	if (m_active) {
-
 		RecalcOnGround();
 		UpdateFriction(dt);
 		RecalcSpeed(dt);
 		RecalcMovement(dt);
 		ApplyPendingMoves(dt);
 		UpdateMeshTransform();
-
 	}
 }
 
@@ -132,7 +131,6 @@ void TCompCharacterController::RecalcSpeed(float dt)
 
 	if (abs_z < m_eOffsetSpeed)
 		m_speed.z = 0;
-
 }
 
 //recalc how much have to move from speed
@@ -151,7 +149,7 @@ void TCompCharacterController::RecalcMovement(float dt)
 
 	//check is some speed is too big
 	//speed x axis
-	if (m_speed.x >  m_maxSpeed) {
+	if (m_speed.x > m_maxSpeed) {
 		m_speed.x = m_maxSpeed;
 	}
 	else if (m_speed.x < -m_maxSpeed) {
@@ -159,7 +157,7 @@ void TCompCharacterController::RecalcMovement(float dt)
 	}
 
 	//speed y axis
-	if (m_speed.y >  m_maxSpeed) {
+	if (m_speed.y > m_maxSpeed) {
 		m_speed.y = m_maxSpeed;
 	}
 	else if (m_speed.y < -m_maxSpeed) {
@@ -167,15 +165,12 @@ void TCompCharacterController::RecalcMovement(float dt)
 	}
 
 	//speed z axis
-	if (m_speed.z >  m_maxSpeed) {
+	if (m_speed.z > m_maxSpeed) {
 		m_speed.z = m_maxSpeed;
 	}
 	else if (m_speed.z < -m_maxSpeed) {
 		m_speed.z = -m_maxSpeed;
 	}
-
-
-
 
 	//update final movement
 	assert(isValid(m_toMove));
@@ -204,7 +199,6 @@ void TCompCharacterController::ApplyPendingMoves(float dt) {
 		int i = 0;
 	}
 
-	
 	if (m_toMove != VEC3(0.0f, 0.0f, 0.0f)) {
 		PROFILE_FUNCTION(name.c_str());
 		assert(isValid(m_toMove));
@@ -216,7 +210,6 @@ void TCompCharacterController::ApplyPendingMoves(float dt) {
 		m_accel = m_toMove;
 	}
 }
-
 
 //recalc if the controller is on ground
 void TCompCharacterController::RecalcOnGround()
@@ -239,7 +232,6 @@ void TCompCharacterController::RecalcOnGround()
 	}
 }
 
-
 //update position from render mesh
 void TCompCharacterController::UpdateMeshTransform()
 {
@@ -252,7 +244,6 @@ void TCompCharacterController::UpdateMeshTransform()
 	tmx->setPosition(PxExVec3ToVec3(curr_pos));
 	//tmx->setRotation(PxQuatToCQuaternion(curr_pose.q));
 }
-
 
 #pragma endregion
 
@@ -270,7 +261,6 @@ void TCompCharacterController::UpdateTags()
 			m_filter.word0 |= ItLightensFilter::ePLAYER_BASE;
 			m_filter.word0 |= ItLightensFilter::ePLAYER_CONTROLLED;
 			m_mass = 50.0f;
-
 		}
 		if (h.hasTag("AI_guard")) {
 			m_filter.word0 |= ItLightensFilter::eGUARD;
@@ -281,7 +271,6 @@ void TCompCharacterController::UpdateTags()
 	}
 
 	g_PhysxManager->setupFiltering(m_pActor->getActor(), m_filter);
-
 }
 
 void TCompCharacterController::teleport(const VEC3& pos)
@@ -356,7 +345,6 @@ void TCompCharacterController::AddImpulse(const VEC3& impulse, bool prevalent) {
 	m_speed.y += impulse.y;
 	m_speed.z += impulse.z;
 	assert(isValid(m_speed));
-
 }
 
 void TCompCharacterController::AddSpeed(const VEC3 & direction, float speed)
@@ -364,7 +352,6 @@ void TCompCharacterController::AddSpeed(const VEC3 & direction, float speed)
 	assert(isValid(m_speed));
 	m_speed += direction*speed;
 	assert(isValid(m_speed));
-
 }
 
 void TCompCharacterController::AddAccel(const VEC3 & direction, float accel)
@@ -381,8 +368,8 @@ void TCompCharacterController::AddMovement(const VEC3& direction, float speed) {
 
 void TCompCharacterController::ResetMovement()
 {
-	m_accel = VEC3(0,0,0);
-	m_speed = VEC3(0,0,0);
+	m_accel = VEC3(0, 0, 0);
+	m_speed = VEC3(0, 0, 0);
 }
 
 void TCompCharacterController::ChangeSpeed(float speed)
@@ -394,15 +381,18 @@ void TCompCharacterController::ChangeSpeed(float speed)
 	assert(isValid(m_speed));
 }
 
+void TCompCharacterController::InitAABB()
+{
+	aabb.Center = VEC3(0, m_height / 2.f * FACTOR_HEIGHT_AABB, 0);
+	aabb.Extents.x = aabb.Extents.z = m_radius * FACTOR_WIDTH_AABB;
+	aabb.Extents.y = m_height / 2 * FACTOR_HEIGHT_AABB;
+}
+
+void TCompCharacterController::onGetLocalAABB(const TMsgGetLocalAABB& msg)
+{
+	// Ojo, aabb de charcontroller manda sobre el resto (no las combino)
+	msg.aabb->Center = aabb.Center;
+	msg.aabb->Extents = aabb.Extents;
+}
+
 #pragma endregion
-
-
-
-
-
-
-
-
-
-
-

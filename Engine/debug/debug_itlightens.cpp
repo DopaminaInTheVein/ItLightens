@@ -126,13 +126,22 @@ void CDebug::DrawLog()
 void CDebug::DrawLine(VEC3 org, VEC3 end, VEC3 color, float time)
 {
 #ifndef NDEBUG
-	lines[next_line].org = org;
-	lines[next_line].org = org;
-	lines[next_line].end = end;
-	lines[next_line].color = color;
-	lines[next_line++].time = time;
-	//dbg("Next line: %d\n", next_line);
-	assert(next_line < MAX_DBG_LINES);
+	PROFILE_FUNCTION("Debug draw lines");
+	if (time <= 0.f) {
+		lines[next_line].org = org;
+		lines[next_line].org = org;
+		lines[next_line].end = end;
+		lines[next_line++].color = color;
+		assert(next_line < MAX_DBG_LINES);
+	}
+	else {
+		lines_timed[next_timed_line].org = org;
+		lines_timed[next_timed_line].org = org;
+		lines_timed[next_timed_line].end = end;
+		lines_timed[next_timed_line].color = color;
+		lines_timed[next_timed_line++].time = time;
+		assert(next_timed_line < MAX_DBG_TIMED_LINES);
+	}
 #endif
 }
 
@@ -175,35 +184,49 @@ void CDebug::update(float dt) {
 #ifndef NDEBUG
 	console.update();
 	DrawLog();
+	draw_lines = io->keys['N'].isPressed();
 #endif
 }
 
 void CDebug::render()
 {
 #ifndef NDEBUG
-	shader_ctes_object.World = MAT44::Identity;
-	shader_ctes_object.uploadToGPU();
-
-	//Render Lines
-	for (int i = 0; i < next_line; i++) {
-		if (io->keys['N'].isPressed() || io->keys['L'].isPressed()) {
+	if (draw_lines) {
+		shader_ctes_object.World = MAT44::Identity;
+		shader_ctes_object.uploadToGPU();
+		//Render Lines
+		//---------------------------------
+		//No timed
+		for (int i = 0; i < next_line; i++) {
 			RenderLine(lines[i]);
 		}
+
+		//Timed
+		for (int i = 0; i < next_timed_line; i++) {
+			RenderLine(lines_timed[i]);
+		}
+		//----------------------------------
 	}
 
 	//Clear lines
+	//----------------------------------
+	//No timed
+	next_line = 0;
+
+	//Timed line
 	int new_next_line = 0;
 	int i = 0;
 	while (i < next_line) {
-		lines[i].time -= getDeltaTime();
+		lines_timed[i].time -= getDeltaTime();
 		// Loop finish because in remove next_line--, otherwhise i++
-		if (lines[i].time <= 0.f) {
-			removeLine(i);
+		if (lines_timed[i].time <= 0.f) {
+			removeTimedLine(i);
 		}
 		else {
 			i++;
 		}
 	}
+	//----------------------------------
 
 	//line l = lines.back();
 	//while (true) {
@@ -219,9 +242,9 @@ void CDebug::render()
 #endif
 }
 
-void CDebug::removeLine(int i)
+void CDebug::removeTimedLine(int i)
 {
-	next_line--;
-	assert(next_line >= 0);
-	if (i != next_line) lines[i] = lines[next_line];
+	next_timed_line--;
+	assert(next_timed_line >= 0);
+	if (i != next_timed_line) lines_timed[i] = lines_timed[next_line];
 }

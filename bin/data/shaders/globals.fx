@@ -3,9 +3,12 @@
 #include "constants/ctes_light.h"
 #include "constants/ctes_globals.h"
 #include "constants/ctes_hatching.h"
+#include "constants/ctes_bones.h"
+#include "constants/ctes_data.h"
 
 Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
 Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
+Texture2D txSpecular  : USE_SHADER_REG(TEXTURE_SLOT_SPECULAR);
 Texture2D txDepths    : USE_SHADER_REG(TEXTURE_SLOT_DEPTHS);
 Texture2D txLightMask : USE_SHADER_REG(TEXTURE_SLOT_LIGHT_MASK);
 Texture2D txSelfIlum  : USE_SHADER_REG(TEXTURE_SLOT_SELFILUM);
