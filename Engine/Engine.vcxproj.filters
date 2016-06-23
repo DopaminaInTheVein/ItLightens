@@ -1322,6 +1322,7 @@
     <ClInclude Include="components\comp_render_fade_screen.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1517,5 +1518,11 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="NOTES.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\bin\data\icons\bolt.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc" />
   </ItemGroup>
 </Project>
