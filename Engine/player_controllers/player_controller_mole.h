@@ -36,6 +36,13 @@ protected:
 	//energies
 	float grab_box_energy;
 	float destroy_wall_energy;
+	struct GrabOffset {
+		float y;
+		float dist;
+		float yaw;
+		GrabOffset() : y(1.f), dist(1.f), yaw(0.f) {}
+	};
+	GrabOffset grabOffset;
 
 public:
 
@@ -46,17 +53,22 @@ public:
 	void Init();
 	void readIniFileAttr();
 	bool getUpdateInfo() override;
-
-	void GrabBox();
+	void myUpdate();
+	void ChangeCommonState(std::string) override;
+	void TurnToGrab();
+	void GrabbingBox1();
+	void GrabbingBox2();
+	void GrabbedBox();
 	void LeaveBox();
 	void DestroyWall();
 
 	void InitControlState();
 	bool nearToBox();
 	bool nearToWall();
-	bool boxGrabbed = false;
+	CHandle boxGrabbed; // = false;
+	CHandle boxNear; // = false;
 	string selectedBox = "";
-	int selectedBoxi = 0;
+	//int selectedBoxi = 0;
 	int selectedWallToBreaki = 0;
 
 	//Cambio Malla

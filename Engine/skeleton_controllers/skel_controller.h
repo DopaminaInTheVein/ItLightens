@@ -44,10 +44,10 @@ protected:
 	//Virtuals
 	virtual void myUpdate();
 	virtual void myUpdateIK();
-	void enableIK(std::string bone_name, IK::bone_solver solver, float delay);
-	void disableIK(std::string bone_name);
 
 public:
+	void enableIK(std::string bone_name, IK::bone_solver solver, float delay);
+	void disableIK(std::string bone_name);
 	void setState(std::string state, bool prio = false);
 };
 

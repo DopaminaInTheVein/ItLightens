@@ -491,6 +491,9 @@
     <ClCompile Include="skeleton\skeleton_manager.cpp">
       <Filter>skeleton</Filter>
     </ClCompile>
+    <ClCompile Include="logic\comp_box.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -980,9 +983,6 @@
     <ClInclude Include="debug\debug_itlightens.h">
       <Filter>debug</Filter>
     </ClInclude>
-    <ClInclude Include="components\comp_box.h">
-      <Filter>components</Filter>
-    </ClInclude>
     <ClInclude Include="components\comp_trigger_lua.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -1347,6 +1347,9 @@
       <Filter>skeleton</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="logic\comp_box.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">

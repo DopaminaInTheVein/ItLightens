@@ -89,4 +89,9 @@ float min(int nargs, ...);
 bool isNan(VEC3 vec);
 bool isValid(VEC3 vec);
 bool isNormal(VEC3 vec);
+
+//STD operations
+
+#define removeFromVector(v, elem) v.erase(std::remove(v.begin(), v.end(), elem), v.end())
+
 #endif

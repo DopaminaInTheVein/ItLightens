@@ -20,6 +20,14 @@ map<string, statehandler> player_controller_mole::statemap = {};
 #define SET_ANIM_MOLE(state) SET_ANIM_STATE(animController, state)
 #define SET_ANIM_MOLE_P(state) SET_ANIM_STATE_P(animController, state)
 
+//State names
+#define ST_MOLE_GRAB "grabbedBox"
+#define ST_MOLE_GRAB_TURN "turnToGrab"
+#define ST_MOLE_GRABBING_1 "grabbing1"
+#define ST_MOLE_GRABBING_2 "grabbing2"
+#define ST_MOLE_UNGRAB "leaveBox"
+#define ST_MOLE_DESTROY "destroyWall"
+
 void player_controller_mole::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
@@ -43,6 +51,7 @@ void player_controller_mole::readIniFileAttr() {
 	}
 }
 
+#define AddStMole(name, func) AddState(name, (statehandler)&player_controller_mole::func)
 void player_controller_mole::Init() {
 	getUpdateInfoBase(CHandle(this).getOwner());
 
@@ -56,10 +65,12 @@ void player_controller_mole::Init() {
 		//States from controller base and poss controller
 		addBasicStates();
 		addPossStates();
-
-		AddState("grabBox", (statehandler)&player_controller_mole::GrabBox);
-		AddState("leaveBox", (statehandler)&player_controller_mole::LeaveBox);
-		AddState("destroyWall", (statehandler)&player_controller_mole::DestroyWall);
+		AddStMole(ST_MOLE_GRAB_TURN, TurnToGrab);
+		AddStMole(ST_MOLE_GRABBING_1, GrabbingBox1);
+		AddStMole(ST_MOLE_GRABBING_2, GrabbingBox2);
+		AddStMole(ST_MOLE_GRAB, GrabbedBox);
+		AddStMole(ST_MOLE_UNGRAB, LeaveBox);
+		AddStMole(ST_MOLE_DESTROY, DestroyWall);
 	}
 
 	myHandle = om->getHandleFromObjAddr(this);
@@ -72,51 +83,48 @@ void player_controller_mole::Init() {
 bool player_controller_mole::getUpdateInfo()
 {
 	if (!CPlayerBase::getUpdateInfo()) return false;
+	myParent = CHandle(this).getOwner();
 	animController = GETH_MY(SkelControllerMole);
 	return true;
 }
 
-void player_controller_mole::UpdateInputActions() {
-	//if (state == "moving")
-	//	ChangePose(pose_run_route);
-	//else if (state == "jumping" || state == "falling")
-	//	ChangePose(pose_jump_route);
-	//else if (state == "idle")
-	//	ChangePose(pose_idle_route);
+void player_controller_mole::myUpdate()
+{
+	Debug->DrawLine(transform->getPosition(), transform->getFront(), 1.f);
+}
 
+void player_controller_mole::UpdateInputActions() {
 	if (io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()) {
-		if (boxGrabbed) {
-			//ChangePose(pose_idle_route);
+		if (boxGrabbed.isValid()) {
 			logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
-			ChangeState("leaveBox");
+			ChangeState(ST_MOLE_UNGRAB);
 		}
 		else {
 			if (this->nearToBox()) {
 				//ChangePose(pose_box_route);
 				logic_manager->throwEvent(logic_manager->OnPickupBox, "");
-				ChangeState("grabBox");
+				ChangeState(ST_MOLE_GRAB_TURN);
 			}
 			else if (this->nearToWall()) {
 				//ChangePose(pose_wall_route);
 				logic_manager->throwEvent(logic_manager->OnBreakWall, "");
-				ChangeState("destroyWall");
+				ChangeState(ST_MOLE_DESTROY);
 			}
 		}
 	}
 }
 
 void player_controller_mole::UpdateMovingWithOther() {
-	if (boxGrabbed) {
-		//ChangePose(pose_box_route);
-		CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
-		TCompTransform* box_t = box->get<TCompTransform>();
-		TCompPhysics* box_p = box->get<TCompPhysics>();
+	if (boxGrabbed.isValid()) {
+		GET_COMP(box_t, boxGrabbed, TCompTransform);
+		GET_COMP(box_p, boxGrabbed, TCompPhysics);
 
-		CEntity* p = myParent;
-		TCompTransform* p_t = p->get<TCompTransform>();
-		VEC3 posPlayer = p_t->getPosition();
-		posPlayer.y += 4;
-		box_p->setPosition(posPlayer, box_t->getRotation());
+		float yawPlayer = transform->getYaw();
+		VEC3 posPlayer = transform->getPosition();
+		VEC3 posBox = posPlayer + transform->getFront() * grabOffset.dist;
+		posBox.y += grabOffset.y;
+		box_t->setYaw(yawPlayer + grabOffset.yaw);
+		box_p->setPosition(posBox, box_t->getRotation());
 	}
 }
 
@@ -124,36 +132,33 @@ void player_controller_mole::UpdateUnpossess() {
 	CHandle h = CHandle(this);
 	tags_manager.removeTag(h.getOwner(), getID("player"));
 
-	if (boxGrabbed) {
+	if (boxGrabbed.isValid()) {
 		LeaveBox();
 	}
 }
 
-void player_controller_mole::GrabBox() {
-	if (SBB::readBool(selectedBox)) {
-		bt_mole * mole = SBB::readMole(selectedBox);
-		//mole->ChangeState("idle");
-	}
-	else {
+void player_controller_mole::GrabbedBox() {
+	if (!SBB::readBool(selectedBox)) {
 		SBB::postBool(selectedBox, true);
 	}
-	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
-	TCompTransform* box_t = box->get<TCompTransform>();
-	TCompPhysics* box_p = box->get<TCompPhysics>();
 
-	CEntity* p = myParent;
-	TCompTransform* p_t = p->get<TCompTransform>();
-	VEC3 posPlayer = p_t->getPosition();
-	posPlayer.y += 4;
+	GET_COMP(box_t, boxNear, TCompTransform);
+	GET_COMP(box_p, boxNear, TCompPhysics);
 
+	VEC3 posPlayer = transform->getPosition();
+	VEC3 posBox = box_t->getPosition();
+	posBox.y += 1.f;
 	box_p->setKinematic(true);
-	box_p->setPosition(posPlayer, box_t->getRotation());
+	box_p->setPosition(posBox, box_t->getRotation());
+	grabOffset.dist = realDistXZ(posPlayer, posBox);
+	grabOffset.y = posBox.y - posPlayer.y;
+	grabOffset.yaw = transform->getDeltaYawToAimTo(posBox);
 
 	energyDecreasal(5.0f);
 	TMsgDamage dmg;
 	dmg.modif = 0.5f;
 	myEntity->sendMsg(dmg);
-	boxGrabbed = true;
+	boxGrabbed = boxNear;
 	mole_max_speed /= 2;
 	//ChangePose(pose_idle_route);
 	ChangeState("idle");
@@ -170,8 +175,7 @@ void player_controller_mole::DestroyWall() {
 }
 
 void player_controller_mole::LeaveBox() {
-	CEntity* box = SBB::readHandlesVector("wptsBoxes")[selectedBoxi];
-	TCompTransform* box_t = box->get<TCompTransform>();
+	GET_COMP(box_t, boxGrabbed, TCompTransform);
 	VEC3 posboxIni = box_t->getPosition();
 	CEntity* p = myParent;
 	TCompTransform* p_t = p->get<TCompTransform>();
@@ -186,13 +190,12 @@ void player_controller_mole::LeaveBox() {
 		posbox.x = posboxIni.x + p_t->getFront().x * sin(angle) * 3;
 		posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;
 	}*/
-
-	TCompPhysics *box_p = box->get<TCompPhysics>();
+	GET_COMP(box_p, boxGrabbed, TCompPhysics);
 	box_p->setKinematic(false);
 	box_p->setPosition(posbox, box_t->getRotation());
 
 	SBB::postBool(selectedBox, false);
-	boxGrabbed = false;
+	boxGrabbed = CHandle();
 	mole_max_speed *= 2;
 	//ChangePose(pose_idle_route);
 	ChangeState("idle");
@@ -222,24 +225,21 @@ bool player_controller_mole::nearToWall() {
 }
 bool player_controller_mole::nearToBox() {
 	bool found = false;
-	if (SBB::readHandlesVector("wptsBoxes").size() > 0) {
-		float distMax = 2.0f;
-		float higher = -999.9f;
-		string key_final = "";
-		for (int i = 0; i < SBB::readHandlesVector("wptsBoxes").size(); i++) {
-			CEntity * entTransform = this->getEntityBoxPointer(i);
-			TCompTransform * transformBox = entTransform->get<TCompTransform>();
-			TCompName * nameBox = entTransform->get<TCompName>();
-			VEC3 wpt = transformBox->getPosition();
-			float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
-			string key = nameBox->name;
-			if (disttowpt < distMax + 2 && wpt.y >= higher) {
-				distMax = disttowpt;
-				higher = wpt.y;
-				selectedBox = key;
-				selectedBoxi = i;
-				found = true;
-			}
+	float distMax = 2.0f;
+	float higher = -999.9f;
+	string key_final = "";
+	for (auto h : TCompBox::all_boxes) {
+		if (!h.isValid()) continue;
+		GET_COMP(tBox, h, TCompTransform);
+		string key = ((CEntity*)h)->getName();
+		VEC3 wpt = tBox->getPosition();
+		float disttowpt = simpleDistXZ(wpt, getEntityTransform()->getPosition());
+		if (disttowpt < distMax + 2 && wpt.y >= higher) {
+			distMax = disttowpt;
+			higher = wpt.y;
+			boxNear = h;
+			selectedBox = key;
+			found = true;
 		}
 	}
 	return found;
@@ -257,11 +257,55 @@ void player_controller_mole::update_msgs()
 	ui.addTextInstructions("Click Left Mouse      -> Grab/Throw near Box or Break Wall");
 }
 
-//Cambio de malla
-//void player_controller_mole::ChangePose(string new_pose_route) {
-//	mesh->unregisterFromRender();
-//	MKeyValue atts_mesh;
-//	atts_mesh["name"] = new_pose_route;
-//	mesh->load(atts_mesh);
-//	mesh->registerToRender();
-//}
+void player_controller_mole::TurnToGrab()
+{
+	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
+	if (faced) {
+		ChangeState(ST_MOLE_GRABBING_1);
+	}
+}
+
+void player_controller_mole::GrabbingBox1()
+{
+	//Player bring hands to the box (static yet)
+	//IK stuff
+
+	//Provisional
+	static float t_grab1 = 1.f;
+	t_grab1 -= getDeltaTime();
+	if (t_grab1 < 0) {
+		t_grab1 = 1.f;
+		ChangeState(ST_MOLE_GRABBING_2);
+	}
+}
+
+void player_controller_mole::GrabbingBox2()
+{
+	//Player return to idlebox pose
+	//End IK Stuff progressively
+	//Box track player hands
+
+	//Provisional
+	static float t_grab2 = 1.5f;
+	t_grab2 -= getDeltaTime();
+	if (t_grab2 < 0) {
+		t_grab2 = 1.5f;
+		ChangeState(ST_MOLE_GRAB);
+	}
+}
+
+void player_controller_mole::ChangeCommonState(std::string st)
+{
+	if (st == "moving") {
+		SET_ANIM_MOLE(AST_MOVE);
+	}
+	else if (st == "running") {
+		SET_ANIM_MOLE(AST_RUN);
+	}
+	else if (st == "jumping") {
+		SET_ANIM_MOLE(AST_JUMP);
+	}
+	else if (st == "idle") {
+		SET_ANIM_MOLE(AST_IDLE);
+	}
+}
