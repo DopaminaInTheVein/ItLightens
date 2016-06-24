@@ -152,6 +152,10 @@ fn _parse_bt_guard = (
 fn _parse_bt_mole = (
 	btXml = XML_PARSING.addChild "bt_mole"
 	parseWayPoints btXml
+	local max_patrol = getUserProp _parsingObject "max_patrol"
+	if (max_patrol != undefined) then (
+		btXml.addAttr "max_patrol" max_patrol
+	)
 )
 
 ----------------------------------------------------------------------
