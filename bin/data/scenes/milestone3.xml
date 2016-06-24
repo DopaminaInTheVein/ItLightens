@@ -1953,7 +1953,7 @@
 <abs_aabb/>
 <local_aabb/>
 <character_controller
-   radius="0.147"
+   radius="0.3"
    height="1.71312"/>
 
 </entity>
