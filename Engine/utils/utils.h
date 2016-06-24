@@ -5,6 +5,8 @@
 #include "imgui/imgui.h"
 #include "windows/app.h"
 
+#include "handle/handle.h"
+
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/filewritestream.h"
@@ -34,6 +36,8 @@ uint32_t	getID(const char* text);
 float		getDeltaTime(float always = false);
 float random(float vmin, float vmax);
 
+bool isInRoom(CHandle handle);
+
 float squared(float i);
 
 float distY(const VEC3& init, const VEC3& dest);
@@ -52,6 +56,7 @@ void getRotationMatrix(const float roll, const float pitch, const float yaw, MAT
 VEC3 productVectorMatrix(const VEC4& vec, const MAT44& matrix);
 VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const float yaw);
 void rotate_vector_by_quaternion(const VEC3& vec, const CQuaternion& q, VEC3& vprime);
+float angleBetween(const VEC3&, const VEC3&);
 
 ///  Performs a linear interpolation between two vectors. (@p v1 toward @p v2)
 ///  return					The result vector. [(x, y, z)]

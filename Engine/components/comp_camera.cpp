@@ -11,9 +11,6 @@
 #include "render/shader_cte.h"
 #include "entity.h"
 #include "imgui/imgui.h"
-#include "logic/sbb.h"
-#include "logic/ai_beacon.h"
-#include "logic/ai_cam.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "constants/ctes_object.h"
 #include <math.h>
@@ -55,27 +52,8 @@ void TCompCamera::render() const {
 void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
 	assert(e_owner);
 	TCompTransform* tmx = e_owner->get<TCompTransform>();
-	beacon_controller* beacon = e_owner->get<beacon_controller>();
-	ai_cam* aicam = e_owner->get<ai_cam>();
 	assert(tmx);
-	if (beacon) {
-		VEC3 lpos = tmx->getPosition();
-		lpos.x += tmx->getFront().x / 2;
-		lpos.y += 2.5f;
-		lpos.z += tmx->getFront().z / 2;
-		this->smoothLookAt(lpos, tmx->getPosition() + tmx->getFront()*beacon->getRange());
-	}
-	else if (aicam) {
-		VEC3 lpos = tmx->getPosition();
-		lpos.x += tmx->getFront().x / 2;
-		lpos.z += tmx->getFront().z / 2;
-		VEC3 destPos = tmx->getPosition() + tmx->getFront()*aicam->getRange();
-		destPos.y -= aicam->getDistToFloor();
-		this->smoothLookAt(lpos, destPos);
-	}
-	else {
-		this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
-	}
+	this->smoothLookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
 }
 
 void TCompCamera::update(float dt) {

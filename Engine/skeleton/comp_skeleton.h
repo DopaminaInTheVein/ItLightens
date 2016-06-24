@@ -2,6 +2,8 @@
 #define INC_COMPONENT_SKELETON_H_
 
 #include "components/comp_base.h"
+#include "cal3d/cal3d.h"
+#include "skeleton.h"
 
 class CalModel;
 class CSkeleton;
@@ -31,11 +33,10 @@ struct TCompSkeleton : public TCompBase {
 	void updateEndAction();
 	void clearPrevAnims(bool instant);
 	std::string getKeyBoneName(std::string);
+	int getKeyBoneId(std::string);
 
 	//Messages
 	void onSetAnim(const TMsgSetAnim&);
 };
-
-#define SK_RHAND "right_hand"
 
 #endif

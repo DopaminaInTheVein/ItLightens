@@ -3,7 +3,6 @@
 #include "components\comp_charactercontroller.h"
 #include "components\entity_parser.h"
 #include "app_modules\logic_manager\logic_manager.h"
-#include "ai_beacon.h"
 #include "ai_workbench.h"
 
 #define SET_ANIM_SCI_BT(state) SET_ANIM_STATE(animController, state)
@@ -11,8 +10,8 @@
 
 map<int, std::string> bt_scientist::out = {};
 map<string, bt_scientist::KptTipo> bt_scientist::kptTypes = {
-	{ "seek", KptTipo::Seek }
-	,{ "look", KptTipo::Look }
+  { "seek", KptTipo::Seek }
+  ,{ "look", KptTipo::Look }
 };
 
 map<string, btnode *> bt_scientist::tree = {};
@@ -38,9 +37,6 @@ void bt_scientist::readIniFileAttr() {
 			assignValueToVar(d_epsilon, fields);
 			assignValueToVar(d_beacon_simple, fields);
 			assignValueToVar(waiting_time, fields);
-			assignValueToVar(t_addBeacon, fields);
-			assignValueToVar(t_createBeacon, fields);
-			assignValueToVar(t_removeBeacon, fields);
 			assignValueToVar(t_waitInPos, fields);
 			assignValueToVar(ws_wait_time, fields);
 			assignValueToVar(ws_wait_time_offset, fields);
@@ -67,21 +63,10 @@ void bt_scientist::Init() {
 		addChild("busystate", "waitinworkstation", ACTION, NULL, (btaction)&bt_scientist::actionWaitInWorkstation);
 		// stunned state
 		addChild("scientist", "stunned", ACTION, (btcondition)&bt_scientist::playerStunned, (btaction)&bt_scientist::actionStunned);
-		// remove beacon sequence
-		addChild("scientist", "removebeacon", SEQUENCE, (btcondition)&bt_scientist::beaconToRemove, NULL);
-		addChild("removebeacon", "aimremove", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
-		addChild("removebeacon", "goremove", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
-		addChild("removebeacon", "remove", ACTION, NULL, (btaction)&bt_scientist::actionRemoveBeacon);
-		// add beacon sequence
-		addChild("scientist", "addbeacon", SEQUENCE, (btcondition)&bt_scientist::beaconToAdd, NULL);
-		addChild("addbeacon", "aimadd", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
-		addChild("addbeacon", "goadd", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
-		addChild("addbeacon", "add", ACTION, NULL, (btaction)&bt_scientist::actionAddBeacon);
 		// create beacon sequence
 		addChild("scientist", "createbeacon", SEQUENCE, (btcondition)&bt_scientist::workbenchAvailable, NULL);
 		addChild("createbeacon", "aimcreate", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
 		addChild("createbeacon", "gocreate", ACTION, NULL, (btaction)&bt_scientist::actionMoveToPos);
-		addChild("createbeacon", "create", ACTION, NULL, (btaction)&bt_scientist::actionCreateBeaconFromWB);
 		// patrol sequence
 		addChild("scientist", "patrol", SEQUENCE, NULL, NULL);
 		addChild("patrol", "nextwpt", ACTION, NULL, (btaction)&bt_scientist::actionNextWpt);
@@ -92,9 +77,6 @@ void bt_scientist::Init() {
 	SetMyEntity();
 
 	out[IDLE] = "IDLE";
-	out[CREATE_BEACON] = "CREATE_BEACON";
-	out[ADD_BEACON] = "ADD_BEACON";
-	out[REMOVE_BEACON] = "REMOVE_BEACON";
 	out[WANDER] = "WANDER";
 
 	actual_action = IDLE;
@@ -119,6 +101,8 @@ bool bt_scientist::getUpdateInfo()
 
 void bt_scientist::update(float elapsed) {
 	// If we become possessed, reset the tree and stop all actions
+	if (!isInRoom(myParent))return;
+
 	if (possessing)
 		setCurrent(NULL);
 	Recalc();
@@ -139,7 +123,7 @@ bool bt_scientist::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-		);
+			);
 	}
 
 	zmin = atts.getFloat("zmin", 0.0f);
@@ -161,10 +145,6 @@ bool bt_scientist::playerStunned() {
 }
 
 bool bt_scientist::workbenchAvailable() {
-	// state forced by msg
-	if (actual_action == CREATE_BEACON)
-		return true;
-
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 curr_pos = me_transform->getPosition();
@@ -182,21 +162,12 @@ bool bt_scientist::workbenchAvailable() {
 				continue;
 			obj_position = wb_pos;
 			wb_to_go_name = name;
-			actual_action = CREATE_BEACON;
 			SBB::postInt(name, workbench_controller::INACTIVE_TAKEN);
 			return true;
 		}
 	}
 
 	return false;
-}
-
-bool bt_scientist::beaconToAdd() {
-	return actual_action == ADD_BEACON;
-}
-
-bool bt_scientist::beaconToRemove() {
-	return actual_action == REMOVE_BEACON;
 }
 
 //toggle conditions
@@ -219,27 +190,6 @@ int bt_scientist::actionStunned() {
 		return STAY;
 	}
 	return OK;
-}
-
-int bt_scientist::actionCreateBeaconFromWB() {
-	SetMyEntity(); //needed in case address Entity moved by handle_manager
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	VEC3 curr_pos = me_transform->getPosition();
-	float square_dist = squaredDistXZ(curr_pos, beacon_to_go);
-	if (square_dist > max_beacon_distance)
-		return OK;
-
-	waiting_time += getDeltaTime();
-	if (waiting_time > t_createBeacon) {		//go to beacon
-		obj_position = beacon_to_go;
-		actual_action = ADD_BEACON;
-		SBB::postInt(wb_to_go_name.c_str(), workbench_controller::INACTIVE);
-		wb_to_go_name = "";
-		waiting_time = 0.0f;
-		return OK;
-	}
-
-	return STAY;
 }
 
 int bt_scientist::actionAimToPos() {
@@ -266,36 +216,11 @@ int bt_scientist::actionMoveToPos() {
 		return OK;
 	}
 	else {
-		getPath(myPos, obj_position, SBB::readSala());
+		getPath(myPos, obj_position);
 		//animController.setState(AST_RUN);
 		goTo(obj_position);
 		return STAY;
 	}
-}
-
-int bt_scientist::actionAddBeacon() {
-	waiting_time += getDeltaTime();
-	if (waiting_time > t_addBeacon) {		//go to new action
-		//SBB::postInt(beacon_to_go_name, beacon_controller::SONAR);
-		waiting_time = 0.0f;
-		beacon_to_go_name = "";
-		actual_action = IDLE;
-		return OK;
-	}
-
-	return STAY;
-}
-
-int bt_scientist::actionRemoveBeacon() {
-	waiting_time += getDeltaTime();
-	if (waiting_time > t_removeBeacon) {		//go to new action
-		//SBB::postInt(beacon_to_go_name, beacon_controller::INACTIVE);
-		waiting_time = 0.0f;
-		actual_action = IDLE;
-		return OK;
-	}
-
-	return STAY;
 }
 
 int bt_scientist::actionSeekWpt() {
@@ -313,7 +238,7 @@ int bt_scientist::actionSeekWpt() {
 			return OK;
 		}
 		else {
-			getPath(myPos, dest, SBB::readSala());
+			getPath(myPos, dest);
 			//animController.setState(AST_RUN);
 			goTo(dest);
 			return STAY;
@@ -419,7 +344,7 @@ int bt_scientist::actionGoToWorkstation() {
 		return OK;
 	}
 	else {
-		getPath(myPos, ws_to_go, SBB::readSala());
+		getPath(myPos, ws_to_go);
 		//animController.setState(AST_RUN);
 		goTo(ws_to_go);
 		return STAY;
@@ -480,7 +405,7 @@ void bt_scientist::goTo(const VEC3& dest) {
 		target = pathWpts[currPathWpt];
 	}
 
-	if (needsSteering(npcPos, me_transform, move_speed, myParent, SBB::readSala())) {
+	if (needsSteering(npcPos, me_transform, move_speed, myParent)) {
 		goForward(move_speed);
 	}
 	else if (!me_transform->isHalfConeVision(target, deg2rad(5.0f))) {
@@ -585,15 +510,6 @@ void bt_scientist::onEmptyWB(const TMsgWBEmpty & msg)
 {
 }
 
-void bt_scientist::onTakenBeacon(const TMsgBeaconTakenByPlayer & msg)
-{
-	if (msg.name == beacon_to_go_name) {
-		waiting_time = 0.0f;
-		beacon_to_go_name = "";
-		actual_action = IDLE;
-	}
-}
-
 void bt_scientist::onTakenWB(const TMsgWBTakenByPlayer & msg)
 {
 }
@@ -617,7 +533,6 @@ void bt_scientist::renderInMenu()
 {
 	ImGui::Text("Node: %s", out[actual_action].c_str());
 	ImGui::Text("Timer: %.4f", waiting_time);
-	ImGui::Text("Objective: %s", beacon_to_go_name.c_str());
 }
 
 // Aux functions

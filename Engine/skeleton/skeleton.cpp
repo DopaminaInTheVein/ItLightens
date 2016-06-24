@@ -117,18 +117,18 @@ void convertToEngineFormat(CalCoreModel* core_model, int mesh_id, const std::str
 			skin_vtx.normal[1] = cal_normal.y;
 			skin_vtx.normal[2] = cal_normal.z;
 			// Para calculo automatico (cal3d) de tangentes
-					
+
 			skin_vtx.tangent[0] = cal_tangents[vtx_id].tangent.x;
 			skin_vtx.tangent[1] = cal_tangents[vtx_id].tangent.y;
 			skin_vtx.tangent[2] = cal_tangents[vtx_id].tangent.z;
 			skin_vtx.tangent[3] = cal_tangents[vtx_id].crossFactor;
-/*						
-			// Para calculo manual de tangentes
-			skin_vtx.tangent[0] = cal_tangents[vtx_id].x;
-			skin_vtx.tangent[1] = cal_tangents[vtx_id].y;
-			skin_vtx.tangent[2] = cal_tangents[vtx_id].z;
-			skin_vtx.tangent[3] = cal_tangents[vtx_id].w;
-*/	
+			/*
+						// Para calculo manual de tangentes
+						skin_vtx.tangent[0] = cal_tangents[vtx_id].x;
+						skin_vtx.tangent[1] = cal_tangents[vtx_id].y;
+						skin_vtx.tangent[2] = cal_tangents[vtx_id].z;
+						skin_vtx.tangent[3] = cal_tangents[vtx_id].w;
+			*/
 			// Texture coords...
 			if (cal_uvs) {
 				skin_vtx.uv[0] = cal_uvs->operator[](vtx_id).u;
@@ -297,7 +297,7 @@ CSkeleton::CSkeleton()
 	: core_model(nullptr)
 {
 	CalLoader::setLoadingMode(LOADER_ROTATE_X_AXIS | LOADER_INVERT_V_COORD);
-	core_model = new CalCoreModel("unknown");
+	core_model = new CCoreModel();
 }
 
 void CSkeleton::destroy()
@@ -305,14 +305,13 @@ void CSkeleton::destroy()
 	delete core_model;
 }
 
-void CSkeleton::CalculateTangentArray (
-		int vertexCount, std::vector<CalCoreSubmesh::Vertex> *vertex,
-		std::vector<std::vector<CalCoreSubmesh::TextureCoordinate>> *texcoord,
-		int triangleCount, std::vector<CalCoreSubmesh::Face> *triangle,
-		// Output
-		std::vector<VEC4> *tangent
-	) {
-
+void CSkeleton::CalculateTangentArray(
+	int vertexCount, std::vector<CalCoreSubmesh::Vertex> *vertex,
+	std::vector<std::vector<CalCoreSubmesh::TextureCoordinate>> *texcoord,
+	int triangleCount, std::vector<CalCoreSubmesh::Face> *triangle,
+	// Output
+	std::vector<VEC4> *tangent
+) {
 	VEC3 *tan1 = new VEC3[vertexCount * 2];
 	VEC3 *tan2 = tan1 + vertexCount;
 	ZeroMemory(tan1, vertexCount * sizeof(VEC3) * 2);
@@ -343,7 +342,7 @@ void CSkeleton::CalculateTangentArray (
 		float t1 = w2.y - w1.y;
 		float t2 = w3.y - w1.y;
 
-		float r = 1.0F / (s1 * t2 - s2 * t1); 
+		float r = 1.0F / (s1 * t2 - s2 * t1);
 		VEC3 sdir((t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r);
 		VEC3 tdir((s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r);
 
@@ -354,7 +353,6 @@ void CSkeleton::CalculateTangentArray (
 		tan2[i1] += tdir;
 		tan2[i2] += tdir;
 		tan2[i3] += tdir;
-
 	}
 
 	for (long a = 0; a < vertexCount; a++)

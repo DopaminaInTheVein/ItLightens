@@ -28,203 +28,203 @@
 map<string, statehandler> player_controller::statemap = {};
 
 void player_controller::readIniFileAttr() {
-	CHandle h = CHandle(this).getOwner();
-	if (h.isValid()) {
-		if (h.hasTag("player")) {
-			CApp &app = CApp::get();
-			std::string file_ini = app.file_initAttr_json;
-			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
+  CHandle h = CHandle(this).getOwner();
+  if (h.isValid()) {
+    if (h.hasTag("player")) {
+      CApp &app = CApp::get();
+      std::string file_ini = app.file_initAttr_json;
+      map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
-			assignValueToVar(player_max_speed, fields_base);
-			assignValueToVar(player_rotation_speed, fields_base);
-			assignValueToVar(jimpulse, fields_base);
-			assignValueToVar(left_stick_sensibility, fields_base);
-			assignValueToVar(camera_max_height, fields_base);
-			assignValueToVar(camera_min_height, fields_base);
+      assignValueToVar(player_max_speed, fields_base);
+      assignValueToVar(player_rotation_speed, fields_base);
+      assignValueToVar(jimpulse, fields_base);
+      assignValueToVar(left_stick_sensibility, fields_base);
+      assignValueToVar(camera_max_height, fields_base);
+      assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_player = readIniAtrData(file_ini, "controller_player");
+      map<std::string, float> fields_player = readIniAtrData(file_ini, "controller_player");
 
-			assignValueToVar(full_height, fields_player);
-			assignValueToVar(min_height, fields_player);
-			assignValueToVar(DIST_LEAVING_POSSESSION, fields_player);
-			assignValueToVar(possessionReach, fields_player);
-			assignValueToVar(evolution_limit, fields_player);
-			assignValueToVar(max_life, fields_player);
-			assignValueToVar(init_life, fields_player);
-			assignValueToVar(jump_energy, fields_player);
-			assignValueToVar(stun_energy, fields_player);
-		}
-	}
+      assignValueToVar(full_height, fields_player);
+      assignValueToVar(min_height, fields_player);
+      assignValueToVar(DIST_LEAVING_POSSESSION, fields_player);
+      assignValueToVar(possessionReach, fields_player);
+      assignValueToVar(evolution_limit, fields_player);
+      assignValueToVar(max_life, fields_player);
+      assignValueToVar(init_life, fields_player);
+      assignValueToVar(jump_energy, fields_player);
+      assignValueToVar(stun_energy, fields_player);
+    }
+  }
 }
 
 bool player_controller::getUpdateInfo()
 {
-	if (!CPlayerBase::getUpdateInfo()) return false;
-	animController = GETH_MY(SkelControllerPlayer);
-	return true;
+  if (!CPlayerBase::getUpdateInfo()) return false;
+  animController = GETH_MY(SkelControllerPlayer);
+  return true;
 }
 
 void player_controller::Init() {
-	//read main attributes from file
-	readIniFileAttr();
+  //read main attributes from file
+  readIniFileAttr();
 
-	om = getHandleManager<player_controller>();	//player
+  om = getHandleManager<player_controller>();	//player
 
-	if (statemap.empty()) {
-		//States from controller base
-		addBasicStates();
+  if (statemap.empty()) {
+    //States from controller base
+    addBasicStates();
 
-		DeleteState("jumping");
-		DeleteState("falling");
+    DeleteState("jumping");
+    DeleteState("falling");
 
-		AddState("doublefalling", (statehandler)&player_controller::DoubleFalling);		//needed to disable double jump on falling
-		AddState("doublejump", (statehandler)&player_controller::DoubleJump);
+    AddState("doublefalling", (statehandler)&player_controller::DoubleFalling);		//needed to disable double jump on falling
+    AddState("doublejump", (statehandler)&player_controller::DoubleJump);
 
-		AddState("falling", (statehandler)&player_controller::Falling);
-		AddState("jumping", (statehandler)&player_controller::Jumping);
-	}
+    AddState("falling", (statehandler)&player_controller::Falling);
+    AddState("jumping", (statehandler)&player_controller::Jumping);
+  }
 
-	myHandle = om->getHandleFromObjAddr(this);
-	myParent = myHandle.getOwner();
-	myEntity = myParent;
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	//animController.init(myEntity);
+  myHandle = om->getHandleFromObjAddr(this);
+  myParent = myHandle.getOwner();
+  myEntity = myParent;
+  TCompTransform* player_transform = myEntity->get<TCompTransform>();
+  //animController.init(myEntity);
 
-	setLife(init_life);
+  setLife(init_life);
 
-	ChangeState("idle");
-	SET_ANIM_PLAYER(AST_IDLE);
-	controlEnabled = true;
-	____TIMER__SET_ZERO_(timerDamaged);
+  ChangeState("idle");
+  SET_ANIM_PLAYER(AST_IDLE);
+  controlEnabled = true;
+  ____TIMER__SET_ZERO_(timerDamaged);
 }
 
 bool player_controller::isDamaged() {
-	PROFILE_FUNCTION("player controller: is damaged");
-	return !____TIMER__END_(timerDamaged);
+  PROFILE_FUNCTION("player controller: is damaged");
+  return !____TIMER__END_(timerDamaged);
 }
 
 float player_controller::getLife()
 {
-	CEntity * eMe = CHandle(this).getOwner();
-	assert(eMe);
-	TCompLife * life = eMe->get<TCompLife>();
-	assert(life || fatal("Player doesnt have life component!"));
-	return life->getCurrent();
+  CEntity * eMe = CHandle(this).getOwner();
+  assert(eMe);
+  TCompLife * life = eMe->get<TCompLife>();
+  assert(life || fatal("Player doesnt have life component!"));
+  return life->getCurrent();
 }
 
 void player_controller::setLife(float new_life)
 {
-	CEntity * eMe = CHandle(this).getOwner();
-	assert(eMe);
-	TCompLife * life = eMe->get<TCompLife>();
-	assert(life || fatal("Player doesnt have life component!"));
-	life->setCurrent(new_life);
+  CEntity * eMe = CHandle(this).getOwner();
+  assert(eMe);
+  TCompLife * life = eMe->get<TCompLife>();
+  assert(life || fatal("Player doesnt have life component!"));
+  life->setCurrent(new_life);
 }
 
 void player_controller::rechargeEnergy()
 {
-	PROFILE_FUNCTION("recharge_energy");
-	Evolve(eEvol::second);
+  PROFILE_FUNCTION("recharge_energy");
+  Evolve(eEvol::second);
 }
 
 void player_controller::createEvolveLight() {
-	TCompTransform * trans = myEntity->get<TCompTransform>();
+  TCompTransform * trans = myEntity->get<TCompTransform>();
 
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
+  auto hm = CHandleManager::getByName("entity");
+  CHandle new_hp = hm->createHandle();
+  CEntity* entity = new_hp;
 
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "light_evolve");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-	auto hm2 = CHandleManager::getByName("transform");
-	CHandle new_ht = hm2->createHandle();
-	MKeyValue atts2;
-	VEC3 positio = trans->getPosition(), scal = trans->getScale();
-	VEC4 rota = trans->getRotation();
-	atts2["pos"] = std::to_string(positio.x) + " " + std::to_string(positio.y + 1.0f) + " " + std::to_string(positio.z);
-	atts2["quat"] = std::to_string(rota.x) + " " + std::to_string(rota.y) + " " + std::to_string(rota.z) + " " + std::to_string(rota.w);
-	atts2["scale"] = std::to_string(scal.x) + " " + std::to_string(scal.y) + " " + std::to_string(scal.z);
-	new_ht.load(atts2);
-	entity->add(new_ht);
-	auto hm3 = CHandleManager::getByName("light_fadable");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["color"] = "0 255 0 255";
-	atts3["in_radius"] = "1.0";
-	atts3["out_radius"] = "1.5";
-	atts3["ttl"] = "3.5";
-	new_hl.load(atts3);
-	entity->add(new_hl);
-	TCompLightFadable * tclp = new_hl;
-	tclp->activate();
+  auto hm1 = CHandleManager::getByName("name");
+  CHandle new_hn = hm1->createHandle();
+  MKeyValue atts1;
+  atts1.put("name", "light_evolve");
+  new_hn.load(atts1);
+  entity->add(new_hn);
+  auto hm2 = CHandleManager::getByName("transform");
+  CHandle new_ht = hm2->createHandle();
+  MKeyValue atts2;
+  VEC3 positio = trans->getPosition(), scal = trans->getScale();
+  VEC4 rota = trans->getRotation();
+  atts2["pos"] = std::to_string(positio.x) + " " + std::to_string(positio.y + 1.0f) + " " + std::to_string(positio.z);
+  atts2["quat"] = std::to_string(rota.x) + " " + std::to_string(rota.y) + " " + std::to_string(rota.z) + " " + std::to_string(rota.w);
+  atts2["scale"] = std::to_string(scal.x) + " " + std::to_string(scal.y) + " " + std::to_string(scal.z);
+  new_ht.load(atts2);
+  entity->add(new_ht);
+  auto hm3 = CHandleManager::getByName("light_fadable");
+  CHandle new_hl = hm3->createHandle();
+  MKeyValue atts3;
+  atts3["color"] = "0 255 0 255";
+  atts3["in_radius"] = "1.0";
+  atts3["out_radius"] = "1.5";
+  atts3["ttl"] = "3.5";
+  new_hl.load(atts3);
+  entity->add(new_hl);
+  TCompLightFadable * tclp = new_hl;
+  tclp->activate();
 }
 void player_controller::createDevolveLight() {
-	TCompTransform * trans = myEntity->get<TCompTransform>();
+  TCompTransform * trans = myEntity->get<TCompTransform>();
 
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-	IdEntities::saveIdEntity(CHandle(entity), -1900);
+  auto hm = CHandleManager::getByName("entity");
+  CHandle new_hp = hm->createHandle();
+  CEntity* entity = new_hp;
+  IdEntities::saveIdEntity(CHandle(entity), -1900);
 
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "light_evolve");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-	auto hm2 = CHandleManager::getByName("transform");
-	CHandle new_ht = hm2->createHandle();
-	MKeyValue atts2;
-	VEC3 positio = trans->getPosition(), scal = trans->getScale();
-	VEC4 rota = trans->getRotation();
-	atts2["pos"] = std::to_string(positio.x) + " " + std::to_string(positio.y + 1.0f) + " " + std::to_string(positio.z);
-	atts2["quat"] = std::to_string(rota.x) + " " + std::to_string(rota.y) + " " + std::to_string(rota.z) + " " + std::to_string(rota.w);
-	atts2["scale"] = std::to_string(scal.x) + " " + std::to_string(scal.y) + " " + std::to_string(scal.z);
-	new_ht.load(atts2);
-	entity->add(new_ht);
-	auto hm3 = CHandleManager::getByName("light_fadable");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["color"] = "255 0 0 255";
-	atts3["in_radius"] = "1.0";
-	atts3["out_radius"] = "1.5";
-	atts3["ttl"] = "3.5";
-	new_hl.load(atts3);
-	entity->add(new_hl);
-	TCompLightFadable * tclp = new_hl;
-	tclp->activate();
+  auto hm1 = CHandleManager::getByName("name");
+  CHandle new_hn = hm1->createHandle();
+  MKeyValue atts1;
+  atts1.put("name", "light_evolve");
+  new_hn.load(atts1);
+  entity->add(new_hn);
+  auto hm2 = CHandleManager::getByName("transform");
+  CHandle new_ht = hm2->createHandle();
+  MKeyValue atts2;
+  VEC3 positio = trans->getPosition(), scal = trans->getScale();
+  VEC4 rota = trans->getRotation();
+  atts2["pos"] = std::to_string(positio.x) + " " + std::to_string(positio.y + 1.0f) + " " + std::to_string(positio.z);
+  atts2["quat"] = std::to_string(rota.x) + " " + std::to_string(rota.y) + " " + std::to_string(rota.z) + " " + std::to_string(rota.w);
+  atts2["scale"] = std::to_string(scal.x) + " " + std::to_string(scal.y) + " " + std::to_string(scal.z);
+  new_ht.load(atts2);
+  entity->add(new_ht);
+  auto hm3 = CHandleManager::getByName("light_fadable");
+  CHandle new_hl = hm3->createHandle();
+  MKeyValue atts3;
+  atts3["color"] = "255 0 0 255";
+  atts3["in_radius"] = "1.0";
+  atts3["out_radius"] = "1.5";
+  atts3["ttl"] = "3.5";
+  new_hl.load(atts3);
+  entity->add(new_hl);
+  TCompLightFadable * tclp = new_hl;
+  tclp->activate();
 }
 
 void player_controller::myUpdate() {
-	PROFILE_FUNCTION("player controller: MY_update");
-	UpdateDamage();
-	____TIMER__UPDATE_(timerDamaged);
-	if (isDamaged()) {
-		UpdateOverCharge();
-	}
-	else {
-		UpdatePossession();
-	}
+  PROFILE_FUNCTION("player controller: MY_update");
+  UpdateDamage();
+  ____TIMER__UPDATE_(timerDamaged);
+  if (isDamaged()) {
+    UpdateOverCharge();
+  }
+  else {
+    UpdatePossession();
+  }
 
-	if (cc->OnGround() && state == "moving") {
-		if (player_curr_speed >= player_max_speed - 0.1f)
-		{
-			SET_ANIM_PLAYER(AST_RUN);
-		}
-		else
-		{
-			SET_ANIM_PLAYER(AST_MOVE);
-		}
-	}
+  if (cc->OnGround() && state == "moving") {
+    if (player_curr_speed >= player_max_speed - 0.1f)
+    {
+      SET_ANIM_PLAYER(AST_RUN);
+    }
+    else
+    {
+      SET_ANIM_PLAYER(AST_MOVE);
+    }
+  }
 }
 
 void player_controller::Idle() {
-	CPlayerBase::Idle();
-	myExtraIdle();
+  CPlayerBase::Idle();
+  myExtraIdle();
 }
 
 void player_controller::myExtraIdle() {
@@ -232,22 +232,22 @@ void player_controller::myExtraIdle() {
 
 void player_controller::UpdateDamage()
 {
-	TCompLife * life = myEntity->get<TCompLife>();
-	if (life->energyDamageScale > 0.2f) {
-		____TIMER_RESET_(timerDamaged);
-	}
+  TCompLife * life = myEntity->get<TCompLife>();
+  if (life->energyDamageScale > 0.2f) {
+    ____TIMER_RESET_(timerDamaged);
+  }
 }
 
 void player_controller::DoubleJump()
 {
-	PROFILE_FUNCTION("player controller: double jump");
-	UpdateDirection();
-	UpdateMovDirection();
+  PROFILE_FUNCTION("player controller: double jump");
+  UpdateDirection();
+  UpdateMovDirection();
 
-	if (cc->GetYAxisSpeed() < 0.0f) {
-		ChangeState("doublefalling");
-		SET_ANIM_PLAYER(AST_FALL);
-	}
+  if (cc->GetYAxisSpeed() < 0.0f) {
+    ChangeState("doublefalling");
+    SET_ANIM_PLAYER(AST_FALL);
+  }
 }
 
 void player_controller::DoubleFalling() {
@@ -262,42 +262,42 @@ void player_controller::DoubleFalling() {
 }
 
 bool player_controller::canJump() {
-	bool can_jump = true;
-	//if (pol_orbit) can_jump = false;
-	if (polarityForces.size() > 0 && pol_state != NEUTRAL) can_jump = false;
-	return can_jump;
+  bool can_jump = true;
+  //if (pol_orbit) can_jump = false;
+  if (polarityForces.size() > 0 && pol_state != NEUTRAL) can_jump = false;
+  return can_jump;
 }
 
 void player_controller::Jump()
 {
-	PROFILE_FUNCTION("jump player");
-	bool ascending = cc->GetLastSpeed().y > 0.1f;
-	VEC3 jumpVector;
-	if (isMoving()) {
-		forward_jump = true;
-		//set false when on ground
-		//-------------------------------------
-		VEC3 curSpeed = cc->GetLastSpeed();
-		jumpVector = VEC3(
-			-curSpeed.x * 0.1f,
-			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
-			-curSpeed.z * 0.1f
-		);
-		//--------------------------------------
-	}
-	else {
-		jumpVector = VEC3(0.f, jimpulse, 0.f);
-	}
-	cc->AddImpulse(jumpVector);
-	energyDecreasal(jump_energy);
-	if (ascending) {
-		ChangeState("doublejump");
-		SET_ANIM_PLAYER(AST_JUMP2);
-	}
-	else {
-		ChangeState("jumping");
-		SET_ANIM_PLAYER(AST_JUMP);
-	}
+  PROFILE_FUNCTION("jump player");
+  bool ascending = cc->GetLastSpeed().y > 0.1f;
+  VEC3 jumpVector;
+  if (isMoving()) {
+    forward_jump = true;
+    //set false when on ground
+    //-------------------------------------
+    VEC3 curSpeed = cc->GetLastSpeed();
+    jumpVector = VEC3(
+      -curSpeed.x * 0.1f,
+      clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
+      -curSpeed.z * 0.1f
+      );
+    //--------------------------------------
+  }
+  else {
+    jumpVector = VEC3(0.f, jimpulse, 0.f);
+  }
+  cc->AddImpulse(jumpVector);
+  energyDecreasal(jump_energy);
+  if (ascending) {
+    ChangeState("doublejump");
+    SET_ANIM_PLAYER(AST_JUMP2);
+  }
+  else {
+    ChangeState("jumping");
+    SET_ANIM_PLAYER(AST_JUMP);
+  }
 }
 
 void player_controller::Jumping()
@@ -328,6 +328,7 @@ void player_controller::Jumping()
 
 void player_controller::Falling()
 {
+
 	PROFILE_FUNCTION("player controller: falling");
 	UpdateDirection();
 	UpdateMovDirection();
@@ -346,6 +347,7 @@ void player_controller::Falling()
 		ChangeState("idle");
 		SET_ANIM_PLAYER(AST_IDLE);
 	}
+
 }
 
 void player_controller::RecalcAttractions()
@@ -529,6 +531,7 @@ void player_controller::UpdateMoves()
 	assert(isValid(direction));
 	VEC3 newMovement = direction*player_curr_speed;
 	cc->AddMovement(newMovement * getDeltaTime());
+
 }
 
 //Test CLH borrar!!
@@ -624,390 +627,390 @@ void player_controller::UpdateInputActions()
 }
 
 void player_controller::UpdateActionsTrigger() {
-	PROFILE_FUNCTION("player_controller: update Actions trigger");
+  PROFILE_FUNCTION("player_controller: update Actions trigger");
 
-	if (canRecEnergy) {
-		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
-			rechargeEnergy();
-			SET_ANIM_PLAYER_P(AST_RECHARGE);
-			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
-		}
-		else {
-			Gui->setActionAvailable(eAction::RECHARGE);
-		}
-	}
-	else if (canPassWire) {
-		if (io->keys['E'].becomesPressed()) {
-			cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(endPointWire));
-			logic_manager->throwEvent(logic_manager->OnUseCable, "");
-		}
-	}
-	else if (canRechargeDrone) {
-		if (io->keys['E'].becomesPressed()) {
-			TMsgActivate msg;
-			CEntity *drone_e = drone;
-			drone_e->sendMsg(msg);
-			logic_manager->throwEvent(logic_manager->OnRechargeDrone, "");
-		}
-		else {
-			Gui->setActionAvailable(eAction::RECHARGE_DRONE);
-		}
-	}
-	else if (canNotRechargeDrone) {
-		if (io->keys['E'].becomesPressed()) {
-			logic_manager->throwEvent(logic_manager->OnNotRechargeDrone, "");
-		}
-		else {
-			Gui->setActionAvailable(eAction::RECHARGE_DRONE);
-		}
-	}
+  if (canRecEnergy) {
+    if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
+      rechargeEnergy();
+      SET_ANIM_PLAYER_P(AST_RECHARGE);
+      logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
+    }
+    else {
+      Gui->setActionAvailable(eAction::RECHARGE);
+    }
+  }
+  else if (canPassWire) {
+    if (io->keys['E'].becomesPressed()) {
+      cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(endPointWire));
+      logic_manager->throwEvent(logic_manager->OnUseCable, "");
+    }
+  }
+  else if (canRechargeDrone) {
+    if (io->keys['E'].becomesPressed()) {
+      TMsgActivate msg;
+      CEntity *drone_e = drone;
+      drone_e->sendMsg(msg);
+      logic_manager->throwEvent(logic_manager->OnRechargeDrone, "");
+    }
+    else {
+      Gui->setActionAvailable(eAction::RECHARGE_DRONE);
+    }
+  }
+  else if (canNotRechargeDrone) {
+    if (io->keys['E'].becomesPressed()) {
+      logic_manager->throwEvent(logic_manager->OnNotRechargeDrone, "");
+    }
+    else {
+      Gui->setActionAvailable(eAction::RECHARGE_DRONE);
+    }
+  }
 }
 
 float CPlayerBase::possessionCooldown;
 //Possession
 void player_controller::UpdatePossession() {
-	PROFILE_FUNCTION("update poss");
-	recalcPossassable();
-	if (currentPossessable.isValid()) {
-		if (io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) {
-			// Se avisa el ai_poss que ha sido poseído
-			CEntity* ePoss = currentPossessable;
-			TMsgAISetPossessed msg;
-			msg.possessed = true;
-			ePoss->sendMsg(msg);
-			possessionCooldown = 1.0f;
+  PROFILE_FUNCTION("update poss");
+  recalcPossassable();
+  if (currentPossessable.isValid()) {
+    if (io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) {
+      // Se avisa el ai_poss que ha sido poseído
+      CEntity* ePoss = currentPossessable;
+      TMsgAISetPossessed msg;
+      msg.possessed = true;
+      ePoss->sendMsg(msg);
+      possessionCooldown = 1.0f;
 
-			//Se desactiva el player
-			controlEnabled = false;
-			SBB::postBool("possMode", true);
-			TMsgSetTag msgTag;
-			msgTag.add = false;
-			msgTag.tag_id = getID("player");
-			compBaseEntity->sendMsg(msgTag);
-			msgTag.add = true;
+      //Se desactiva el player
+      controlEnabled = false;
+      SBB::postBool("possMode", true);
+      TMsgSetTag msgTag;
+      msgTag.add = false;
+      msgTag.tag_id = getID("player");
+      compBaseEntity->sendMsg(msgTag);
+      msgTag.add = true;
 
-			//TODO: Desactivar render
-			cc->SetActive(false);
-			//cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
-			//TCompTransform *t = myEntity->get<TCompTransform>();
-			//t->setPosition(VEC3(0, 200, 0));
-			player_curr_speed = 0;
+      //TODO: Desactivar render
+      cc->SetActive(false);
+      //cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));
+      //TCompTransform *t = myEntity->get<TCompTransform>();
+      //t->setPosition(VEC3(0, 200, 0));
+      player_curr_speed = 0;
 
-			logic_manager->throwEvent(logic_manager->OnPossess, "");
-		}
-	}
+      logic_manager->throwEvent(logic_manager->OnPossess, "");
+    }
+  }
 }
 
 // Recalcula el mejor candidato para poseer
 void player_controller::recalcPossassable() {
-	PROFILE_FUNCTION("recalc possessable");
-	float minDeltaYaw = FLT_MAX;
-	float minDistance = FLT_MAX;
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-	currentPossessable = CHandle();
-	VHandles possessables = tags_manager.getHandlesByTag(getID("AI_poss"));
-	for (CHandle hPoss : possessables) {
-		if (!hPoss.isValid()) continue;
-		CEntity* ePoss = hPoss;
-		if (!ePoss) continue;
-		TCompTransform* tPoss = ePoss->get<TCompTransform>();
-		VEC3 posPoss = tPoss->getPosition();
-		float dist = realDist(player_position, posPoss);
-		if (dist < possessionReach) {
-			float yaw = player_transform->getDeltaYawToAimTo(posPoss);
-			yaw = abs(yaw);
-			if (yaw > deg2rad(90)) continue;
+  PROFILE_FUNCTION("recalc possessable");
+  float minDeltaYaw = FLT_MAX;
+  float minDistance = FLT_MAX;
+  TCompTransform* player_transform = myEntity->get<TCompTransform>();
+  VEC3 player_position = player_transform->getPosition();
+  currentPossessable = CHandle();
+  VHandles possessables = tags_manager.getHandlesByTag(getID("AI_poss"));
+  for (CHandle hPoss : possessables) {
+    if (!hPoss.isValid()) continue;
+    CEntity* ePoss = hPoss;
+    if (!ePoss) continue;
+    TCompTransform* tPoss = ePoss->get<TCompTransform>();
+    VEC3 posPoss = tPoss->getPosition();
+    float dist = realDist(player_position, posPoss);
+    if (dist < possessionReach) {
+      float yaw = player_transform->getDeltaYawToAimTo(posPoss);
+      yaw = abs(yaw);
+      if (yaw > deg2rad(90)) continue;
 
-			float improvementDeltaYaw = minDeltaYaw - yaw;
-			bool isBetter = false;
-			if (improvementDeltaYaw > DELTA_YAW_SELECTION) {
-				isBetter = true;
-			}
-			else if (improvementDeltaYaw < DELTA_YAW_SELECTION) {
-				isBetter = false;
-			}
-			else {
-				isBetter = dist < minDistance;
-			}
-			if (isBetter) {
-				currentPossessable = hPoss;
-				minDeltaYaw = abs(yaw);
-				minDistance = dist;
-			}
-		}
-	}
+      float improvementDeltaYaw = minDeltaYaw - yaw;
+      bool isBetter = false;
+      if (improvementDeltaYaw > DELTA_YAW_SELECTION) {
+        isBetter = true;
+      }
+      else if (improvementDeltaYaw < DELTA_YAW_SELECTION) {
+        isBetter = false;
+      }
+      else {
+        isBetter = dist < minDistance;
+      }
+      if (isBetter) {
+        currentPossessable = hPoss;
+        minDeltaYaw = abs(yaw);
+        minDistance = dist;
+      }
+    }
+  }
 
-	//Debug
-	if (currentPossessable.isValid()) {
-		CEntity* ePoss = currentPossessable;
-		TCompTransform* tPoss = ePoss->get<TCompTransform>();
-		VEC3 posPoss = tPoss->getPosition();
-		Debug->DrawLine(posPoss + VEC3(-0.1f, 1.5f, -0.1f), posPoss + VEC3(0.1f, 1.5f, 0.1f), BLUE);
-		Debug->DrawLine(posPoss + VEC3(0.1f, 1.5f, -0.1f), posPoss + VEC3(-0.1f, 1.5f, 0.1f), BLUE);
-	}
+  //Debug
+  if (currentPossessable.isValid()) {
+    CEntity* ePoss = currentPossessable;
+    TCompTransform* tPoss = ePoss->get<TCompTransform>();
+    VEC3 posPoss = tPoss->getPosition();
+    Debug->DrawLine(posPoss + VEC3(-0.1f, 1.5f, -0.1f), posPoss + VEC3(0.1f, 1.5f, 0.1f), BLUE);
+    Debug->DrawLine(posPoss + VEC3(0.1f, 1.5f, -0.1f), posPoss + VEC3(-0.1f, 1.5f, 0.1f), BLUE);
+  }
 }
 
 //TODO: near Stunneable, currentStunneable es LO MISMO que possessable, dejar sólo una de ellas
 // Calcula el mejor candidato para stunear
 bool player_controller::nearStunable() {
-	PROFILE_FUNCTION("near stunnable");
-	float minDeltaYaw = FLT_MAX;
-	float minDistance = FLT_MAX;
-	TCompTransform* player_transform = myEntity->get<TCompTransform>();
-	VEC3 player_position = player_transform->getPosition();
-	currentStunable = CHandle();
-	VHandles stuneables = tags_manager.getHandlesByTag(getID("AI_poss"));
-	for (CHandle hPoss : stuneables) {
-		if (!hPoss.isValid()) continue;
-		CEntity* ePoss = hPoss;
-		if (!ePoss) continue;
-		TCompTransform* tPoss = ePoss->get<TCompTransform>();
-		VEC3 posPoss = tPoss->getPosition();
-		float dist = realDist(player_position, posPoss);
-		if (dist < possessionReach) {
-			float yaw = player_transform->getDeltaYawToAimTo(posPoss);
-			yaw = abs(yaw);
-			if (yaw > deg2rad(90)) continue;
+  PROFILE_FUNCTION("near stunnable");
+  float minDeltaYaw = FLT_MAX;
+  float minDistance = FLT_MAX;
+  TCompTransform* player_transform = myEntity->get<TCompTransform>();
+  VEC3 player_position = player_transform->getPosition();
+  currentStunable = CHandle();
+  VHandles stuneables = tags_manager.getHandlesByTag(getID("AI_poss"));
+  for (CHandle hPoss : stuneables) {
+    if (!hPoss.isValid()) continue;
+    CEntity* ePoss = hPoss;
+    if (!ePoss) continue;
+    TCompTransform* tPoss = ePoss->get<TCompTransform>();
+    VEC3 posPoss = tPoss->getPosition();
+    float dist = realDist(player_position, posPoss);
+    if (dist < possessionReach) {
+      float yaw = player_transform->getDeltaYawToAimTo(posPoss);
+      yaw = abs(yaw);
+      if (yaw > deg2rad(90)) continue;
 
-			float improvementDeltaYaw = minDeltaYaw - yaw;
-			bool isBetter = false;
-			if (improvementDeltaYaw > DELTA_YAW_SELECTION) {
-				isBetter = true;
-			}
-			else if (improvementDeltaYaw < DELTA_YAW_SELECTION) {
-				isBetter = false;
-			}
-			else {
-				isBetter = dist < minDistance;
-			}
-			if (isBetter) {
-				currentStunable = hPoss;
-				minDeltaYaw = abs(yaw);
-				minDistance = dist;
-			}
-		}
-	}
+      float improvementDeltaYaw = minDeltaYaw - yaw;
+      bool isBetter = false;
+      if (improvementDeltaYaw > DELTA_YAW_SELECTION) {
+        isBetter = true;
+      }
+      else if (improvementDeltaYaw < DELTA_YAW_SELECTION) {
+        isBetter = false;
+      }
+      else {
+        isBetter = dist < minDistance;
+      }
+      if (isBetter) {
+        currentStunable = hPoss;
+        minDeltaYaw = abs(yaw);
+        minDistance = dist;
+      }
+    }
+  }
 
-	//Debug
-	if (currentStunable.isValid()) {
-		return true;
-	}
-	return false;
+  //Debug
+  if (currentStunable.isValid()) {
+    return true;
+  }
+  return false;
 }
 
 void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
-	PROFILE_FUNCTION("on leave poss");
-	getUpdateInfo();
-	// Handles y entities necesarias
-	CHandle  hMe = CHandle(this).getOwner();
-	CEntity* eMe = hMe;
-	CHandle hCamera = tags_manager.getFirstHavingTag(getID("camera_main"));
-	CEntity* eCamera = hCamera;
+  PROFILE_FUNCTION("on leave poss");
+  getUpdateInfo();
+  // Handles y entities necesarias
+  CHandle  hMe = CHandle(this).getOwner();
+  CEntity* eMe = hMe;
+  CHandle hCamera = tags_manager.getFirstHavingTag(getID("camera_main"));
+  CEntity* eCamera = hCamera;
 
-	//Colocamos el player
-	VEC3 pos = msg.npcPos + VEC3(0.0f, cc->GetHeight(), 0.0f);	//to be sure the collider will be above the ground, add height from collider, origin on center shape
-	TCompTransform* tMe = eMe->get<TCompTransform>();
-	cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(pos + msg.npcFront * DIST_LEAVING_POSSESSION));	//set collider position
-	tMe->setPosition(msg.npcPos + msg.npcFront * DIST_LEAVING_POSSESSION);												//set render position
-	cc->SetActive(true);
+  //Colocamos el player
+  VEC3 pos = msg.npcPos + VEC3(0.0f, cc->GetHeight(), 0.0f);	//to be sure the collider will be above the ground, add height from collider, origin on center shape
+  TCompTransform* tMe = eMe->get<TCompTransform>();
+  cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(pos + msg.npcFront * DIST_LEAVING_POSSESSION));	//set collider position
+  tMe->setPosition(msg.npcPos + msg.npcFront * DIST_LEAVING_POSSESSION);												//set render position
+  cc->SetActive(true);
 
-	//Set 3rd Person Controller
-	TMsgSetTarget msg3rdController;
-	msg3rdController.target = hMe;
-	eCamera->sendMsg(msg3rdController);
+  //Set 3rd Person Controller
+  TMsgSetTarget msg3rdController;
+  msg3rdController.target = hMe;
+  eCamera->sendMsg(msg3rdController);
 
-	//Set Camera
-	camera = CHandle(eCamera);
+  //Set Camera
+  camera = CHandle(eCamera);
 
-	//Habilitamos control
-	controlEnabled = true;
+  //Habilitamos control
+  controlEnabled = true;
 
-	//Notificamos presencia de Player
-	SBB::postBool("possMode", false);
+  //Notificamos presencia de Player
+  SBB::postBool("possMode", false);
 }
 
 void player_controller::UpdateOverCharge() {
-	if (damageFonts[Damage::ABSORB] > 0) {
-		float currentLife = getLife();
+  if (damageFonts[Damage::ABSORB] > 0) {
+    float currentLife = getLife();
 
-		if (currentLife > evolution_limit) {
-			if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
-				startOverCharge();
-			}
-			else {
-				Gui->setActionAvailable(eAction::OVERCHARGE);
-				//ui.addTextInstructions("Press ACTION to OVERCHARGE guard weapon\n");
-			}
-		}
-	}
+    if (currentLife > evolution_limit) {
+      if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
+        startOverCharge();
+      }
+      else {
+        Gui->setActionAvailable(eAction::OVERCHARGE);
+        //ui.addTextInstructions("Press ACTION to OVERCHARGE guard weapon\n");
+      }
+    }
+  }
 }
 
 void player_controller::startOverCharge()
 {
-	//TODO - Estado intermedio OverCharging
-	SET_ANIM_PLAYER(AST_SHOOT);
-	//OverCharge Effect
-	doOverCharge();
+  //TODO - Estado intermedio OverCharging
+  SET_ANIM_PLAYER(AST_SHOOT);
+  //OverCharge Effect
+  doOverCharge();
 }
 
 void player_controller::doOverCharge()
 {
-	VHandles guards = tags_manager.getHandlesByTag(getID("AI_guard"));
-	TMsgOverCharge msg;
-	logic_manager->throwEvent(logic_manager->OnOvercharge, "");
-	for (auto guard : guards) {
-		if (guard.isValid()) {
-			CEntity* eGuard = guard;
-			msg.guard_name = damage_source;
-			eGuard->sendMsg(msg);
-		}
-	}
-	Evolve(eEvol::first);
+  VHandles guards = tags_manager.getHandlesByTag(getID("AI_guard"));
+  TMsgOverCharge msg;
+  logic_manager->throwEvent(logic_manager->OnOvercharge, "");
+  for (auto guard : guards) {
+    if (guard.isValid()) {
+      CEntity* eGuard = guard;
+      msg.guard_name = damage_source;
+      eGuard->sendMsg(msg);
+    }
+  }
+  Evolve(eEvol::first);
 }
 
 void player_controller::Evolve(eEvol evolution) {
-	switch (evolution) {
-	case eEvol::first:
-		setLife(evolution_limit);
-		break;
-	case eEvol::second:
-		TCompCharacterController *p = myEntity->get<TCompCharacterController>();
-		PxController *cc = p->GetController();
-		cc->resize(full_height);
-		setLife(max_life);
-		break;
-	}
-	curr_evol = evolution;
+  switch (evolution) {
+  case eEvol::first:
+    setLife(evolution_limit);
+    break;
+  case eEvol::second:
+    TCompCharacterController *p = myEntity->get<TCompCharacterController>();
+    PxController *cc = p->GetController();
+    cc->resize(full_height);
+    setLife(max_life);
+    break;
+  }
+  curr_evol = evolution;
 }
 
 void player_controller::update_msgs()
 {
-	PROFILE_FUNCTION("updat mesgs");
-	ui.addTextInstructions("Press 'l-shift' to possess someone\n");
+  PROFILE_FUNCTION("updat mesgs");
+  ui.addTextInstructions("Press 'l-shift' to possess someone\n");
 }
 
 void player_controller::onWirePass(const TMsgWirePass & msg)
 {
-	canPassWire = msg.range;
-	endPointWire = msg.dst;
+  canPassWire = msg.range;
+  endPointWire = msg.dst;
 }
 
 void player_controller::onCanRec(const TMsgCanRec & msg)
 {
-	canRecEnergy = msg.range;
+  canRecEnergy = msg.range;
 }
 
 void player_controller::onCanRechargeDrone(const TMsgCanRechargeDrone & msg)
 {
-	canRechargeDrone = msg.range;
-	drone = msg.han;
+  canRechargeDrone = msg.range;
+  drone = msg.han;
 }
 void player_controller::onCanNotRechargeDrone(const TMsgCanNotRechargeDrone & msg)
 {
-	canNotRechargeDrone = msg.range;
-	drone = msg.han;
+  canNotRechargeDrone = msg.range;
+  drone = msg.han;
 }
 
 void player_controller::onPolarize(const TMsgPolarize & msg)
 {
-	//TODO
-	if (!msg.range) {
-		polarityForces.erase(
-			std::remove(
-				polarityForces.begin(),
-				polarityForces.end(),
-				msg.handle
-			),
-			polarityForces.end()
-		);
-		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
-		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
-	}
-	else {
-		polarityForces.push_back(msg.handle);
-		//TForcePoint newForce = TForcePoint(msg.origin, msg.pol);
-		//force_points.push_back(newForce);
-	}
+  //TODO
+  if (!msg.range) {
+    polarityForces.erase(
+      std::remove(
+        polarityForces.begin(),
+        polarityForces.end(),
+        msg.handle
+        ),
+      polarityForces.end()
+      );
+    //TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
+    //force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
+  }
+  else {
+    polarityForces.push_back(msg.handle);
+    //TForcePoint newForce = TForcePoint(msg.origin, msg.pol);
+    //force_points.push_back(newForce);
+  }
 }
 
 void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
-	CEntity* eMe = CHandle(this).getOwner();
+  CEntity* eMe = CHandle(this).getOwner();
 
-	assert(eMe);
-	Damage::DMG_TYPE type = msg.type;
+  assert(eMe);
+  Damage::DMG_TYPE type = msg.type;
 
-	int signDamage = msg.actived ? 1 : -1;
+  int signDamage = msg.actived ? 1 : -1;
 
-	//Damage Once
-	float dmgOnce = DMG_ONCE(type);
-	if (abs(dmgOnce) > 0.001f) {
-		TMsgSetDamage msgDamageOnce;
-		msgDamageOnce.dmg = dmgOnce * signDamage;
-		eMe->sendMsg(msgDamageOnce);
-	}
+  //Damage Once
+  float dmgOnce = DMG_ONCE(type);
+  if (abs(dmgOnce) > 0.001f) {
+    TMsgSetDamage msgDamageOnce;
+    msgDamageOnce.dmg = dmgOnce * signDamage;
+    eMe->sendMsg(msgDamageOnce);
+  }
 
-	//Update damage fonts
-	if (DMG_IS_CUMULATIVE(type)) damageFonts[type] += signDamage;
-	assert(damageFonts[type] >= 0); // Number fonts can't be negative
+  //Update damage fonts
+  if (DMG_IS_CUMULATIVE(type)) damageFonts[type] += signDamage;
+  assert(damageFonts[type] >= 0); // Number fonts can't be negative
 
-	//Cumulative add always, otherwise when change to 0 or 1
-	if (DMG_IS_CUMULATIVE(type) || damageFonts[type] < 2) {
-		damageCurrent += DMG_PER_SECOND(type) * signDamage;
-		TMsgDamage msgDamagePerSecond;
-		msgDamagePerSecond.modif = damageCurrent;
-		eMe->sendMsg(msgDamagePerSecond);
-		if (type == Damage::ABSORB) {
-			if (msg.actived) {
-				damage_source = msg.source;
-			}
-			else {
-				damage_source = "none";
-			}
-			//LogicManager
-			if (damageFonts[type] > 0) {
-				//TMsgDamageSave msgDamagePerSecond;
-				//msgDamagePerSecond.modif = 0.1f;
-				//eMe->sendMsg(msgDamagePerSecond);
-				logic_manager->throwEvent(logic_manager->OnStartReceiveHit, "");
-			}
-			else {
-				logic_manager->throwEvent(logic_manager->OnEndReceiveHit, "");
-			}
-		}
-	}
+  //Cumulative add always, otherwise when change to 0 or 1
+  if (DMG_IS_CUMULATIVE(type) || damageFonts[type] < 2) {
+    damageCurrent += DMG_PER_SECOND(type) * signDamage;
+    TMsgDamage msgDamagePerSecond;
+    msgDamagePerSecond.modif = damageCurrent;
+    eMe->sendMsg(msgDamagePerSecond);
+    if (type == Damage::ABSORB) {
+      if (msg.actived) {
+        damage_source = msg.source;
+      }
+      else {
+        damage_source = "none";
+      }
+      //LogicManager
+      if (damageFonts[type] > 0) {
+        //TMsgDamageSave msgDamagePerSecond;
+        //msgDamagePerSecond.modif = 0.1f;
+        //eMe->sendMsg(msgDamagePerSecond);
+        logic_manager->throwEvent(logic_manager->OnStartReceiveHit, "");
+      }
+      else {
+        logic_manager->throwEvent(logic_manager->OnEndReceiveHit, "");
+      }
+    }
+  }
 
-	//Player is damaged (cant possess, etc.)
-	____TIMER_RESET_(timerDamaged);
+  //Player is damaged (cant possess, etc.)
+  ____TIMER_RESET_(timerDamaged);
 }
 
 void player_controller::SendMessagePolarizeState()
 {
-	TMsgPlayerPolarize msg;
-	msg.type = pol_state;
-	VHandles hs = tags_manager.getHandlesByTag(getID("box"));
-	for (CHandle h : hs) {
-		if (h.isValid()) {
-			h.sendMsg(msg);
-		}
-	}
+  TMsgPlayerPolarize msg;
+  msg.type = pol_state;
+  VHandles hs = tags_manager.getHandlesByTag(getID("box"));
+  for (CHandle h : hs) {
+    if (h.isValid()) {
+      h.sendMsg(msg);
+    }
+  }
 }
 
 //Gets
 string player_controller::GetPolarity() {
-	string res = "Neutral";
-	switch (pol_state) {
-	case PLUS:
-		res = "Plus (RED)";
-		break;
-	case MINUS:
-		res = "Minus (BLUE)";
-	}
-	return res;
+  string res = "Neutral";
+  switch (pol_state) {
+  case PLUS:
+    res = "Plus (RED)";
+    break;
+  case MINUS:
+    res = "Minus (BLUE)";
+  }
+  return res;
 }
 
 void player_controller::onGetWhoAmI(TMsgGetWhoAmI& msg) {
-	msg.who = PLAYER_TYPE::PLAYER;
+  msg.who = PLAYER_TYPE::PLAYER;
 }
 
 //Render In Menu
@@ -1029,32 +1032,32 @@ void player_controller::renderInMenu() {
 }
 
 PolarityForce player_controller::getPolarityForce(CHandle forceHandle) {
-	PolarityForce pf;
-	if (forceHandle.isValid()) {
-		CEntity* eForce = forceHandle;
-		TCompPolarized * polarized = eForce->get<TCompPolarized>();
-		assert(polarized);
-		pf = polarized->getForce();
-	}
-	return pf;
+  PolarityForce pf;
+  if (forceHandle.isValid()) {
+    CEntity* eForce = forceHandle;
+    TCompPolarized * polarized = eForce->get<TCompPolarized>();
+    assert(polarized);
+    pf = polarized->getForce();
+  }
+  return pf;
 }
 
 //Anims
 void player_controller::ChangeCommonState(std::string state) {
-	if (state == "moving") {
-		SET_ANIM_PLAYER(AST_MOVE);
-	}
-	else if (state == "running") {
-		SET_ANIM_PLAYER(AST_RUN);
-	}
-	else if (state == "jumping") {
-		SET_ANIM_PLAYER(AST_JUMP);
-	}
-	else if (state == "idle") {
-		SET_ANIM_PLAYER(AST_IDLE);
-	}
+  if (state == "moving") {
+    SET_ANIM_PLAYER(AST_MOVE);
+  }
+  else if (state == "running") {
+    SET_ANIM_PLAYER(AST_RUN);
+  }
+  else if (state == "jumping") {
+    SET_ANIM_PLAYER(AST_JUMP);
+  }
+  else if (state == "idle") {
+    SET_ANIM_PLAYER(AST_IDLE);
+  }
 }
 
 map<string, statehandler>* player_controller::getStatemap() {
-	return &statemap;
+  return &statemap;
 }

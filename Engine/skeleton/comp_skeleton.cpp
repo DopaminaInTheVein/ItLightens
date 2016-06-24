@@ -1,8 +1,6 @@
 #include "mcv_platform.h"
 #include "resources/resources_manager.h"
 #include "comp_skeleton.h"
-#include "skeleton.h"
-#include "cal3d/cal3d.h"
 #include "render/draw_utils.h"
 #include "components\comp_transform.h"
 #include "components\comp_culling.h"
@@ -12,20 +10,6 @@
 #include "components/comp_aabb.h"
 
 #pragma comment(lib, "cal3d.lib" )
-
-// --------------------------------------------------
-CalVector Engine2Cal(VEC3 v) {
-	return CalVector(v.x, v.y, v.z);
-}
-CalQuaternion Engine2Cal(CQuaternion q) {
-	return CalQuaternion(q.x, q.y, q.z, -q.w);
-}
-VEC3 Cal2Engine(CalVector v) {
-	return VEC3(v.x, v.y, v.z);
-}
-CQuaternion Cal2Engine(CalQuaternion q) {
-	return CQuaternion(q.x, q.y, q.z, -q.w);
-}
 
 float TCompSkeleton::dt_frame = 0;
 int TCompSkeleton::total_skeletons = 0;
@@ -48,6 +32,13 @@ std::string TCompSkeleton::getKeyBoneName(std::string name)
 {
 	auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
 	return non_const_skel->getKeyBoneName(name);
+}
+
+int TCompSkeleton::getKeyBoneId(std::string name)
+{
+	auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
+	auto real_bone_name = non_const_skel->getKeyBoneName(name);
+	return model->getSkeleton()->getCoreSkeleton()->getCoreBoneId(real_bone_name);
 }
 
 void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
@@ -179,9 +170,12 @@ bool TCompSkeleton::getUpdateInfo()
 }
 
 void TCompSkeleton::update(float dt) {
-	if (!getUpdateInfoBase(CHandle(this).getOwner()))
+	CHandle ownerHandle = CHandle(this).getOwner();	
+	if (!getUpdateInfoBase(ownerHandle))
 		return; //El updateAllInParallel no llama infobase
-
+	CEntity* e = ownerHandle;
+	if (!e) return;
+	if (!isInRoom(ownerHandle)) return;
 	updateEndAction();
 	TCompCulling * cculling = culling;
 	TCompCulling::TCullingBits* culling_bits = nullptr;
@@ -207,15 +201,17 @@ void TCompSkeleton::update(float dt) {
 }
 
 void TCompSkeleton::updateEndAction() {
-	float endTimeAction = 0.2f; // Tiempo antes de acabar animacion que empieza el blend
-	auto mixer = model->getMixer();
-	if (mixer->getAnimationActionList().size() == 1) {
-		auto lastAction = mixer->getAnimationActionList().front();
-		auto lastCoreAction = lastAction->getCoreAnimation();
-		float duration = lastCoreAction->getDuration();
-		if (duration - lastAction->getTime() < endTimeAction) {
-			for (auto prevCycleId : prevCycleIds)
-				model->getMixer()->blendCycle(prevCycleId, 1.0f, endTimeAction);
+	if (isInRoom(CHandle(this).getOwner())) {
+		float endTimeAction = 0.2f; // Tiempo antes de acabar animacion que empieza el blend
+		auto mixer = model->getMixer();
+		if (mixer->getAnimationActionList().size() == 1) {
+			auto lastAction = mixer->getAnimationActionList().front();
+			auto lastCoreAction = lastAction->getCoreAnimation();
+			float duration = lastCoreAction->getDuration();
+			if (duration - lastAction->getTime() < endTimeAction) {
+				for (auto prevCycleId : prevCycleIds)
+					model->getMixer()->blendCycle(prevCycleId, 1.0f, endTimeAction);
+			}
 		}
 	}
 	//if (mixer->getAnimationActionList().size() == 0
@@ -229,6 +225,7 @@ void TCompSkeleton::updateEndAction() {
 
 void TCompSkeleton::render() const {
 #ifndef NDEBUG
+	if (!isInRoom(CHandle(this).getOwner())) return;
 	if (!Debug->isDrawLines()) return;
 	PROFILE_FUNCTION("TCompSkeleton render");
 	auto skel = model->getSkeleton();
