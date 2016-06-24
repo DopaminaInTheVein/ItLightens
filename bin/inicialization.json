@@ -51,7 +51,8 @@
 	"bt_mole" : {
 		"speed" : 2.0,
 		"rotation_speed" : 200,
-		"distMaxToBox" : 10.0
+		"distMaxToBox" : 10.0,
+		"rechTime" : 10.0
 	},	
 	"bt_speedy" : { 
 		"speed" : 4.0,
