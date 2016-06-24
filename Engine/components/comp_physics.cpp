@@ -13,6 +13,12 @@ PxMaterial* getMaterial(PxShape* shape) {
 	return ms[0];
 }
 
+void TCompPhysics::setBehaviour(ItLightensFilter::descObjectBehaviour tag, bool enabled)
+{
+	auto ra = m_pActor->isRigidActor();
+	if (ra) g_PhysxManager->setBehaviour(ra, tag, enabled);
+}
+
 void TCompPhysics::updateTagsSetupActor()
 {
 	PxFilterData mFilterData;

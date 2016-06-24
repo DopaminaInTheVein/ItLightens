@@ -3,7 +3,8 @@
 
 #include "comp_base.h"
 #include "comp_msgs.h"
-#include "physx\physx_manager.h"
+#include "physx/physx_manager.h"
+#include "Physx/ItLightensFilterShader.h"
 
 using namespace PhysxConversion;
 
@@ -54,6 +55,9 @@ class TCompPhysics : public TCompBase {
 
 	bool addRigidbodyScene();
 
+	void updateTagsSetupActor();
+	void updateTagsSetupActor(PxFilterData& filter);
+
 public:
 	// physics id
 	TCompPhysics() {
@@ -68,16 +72,15 @@ public:
 		//if (rigidActor) rigidActor->release();
 	}
 
-	void updateTagsSetupActor();
-	void updateTagsSetupActor(PxFilterData& filter);
-
 	PxActor* getActor() { return m_pActor; }
 	PxRigidActor* getRigidActor() { return m_pRigidActor; }
 	PxShape* getShape() { return m_pShape; }
-	bool load(MKeyValue& atts);
 
 	// load Xml
+	bool load(MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated&);
+
+	void setBehaviour(ItLightensFilter::descObjectBehaviour tag, bool enabled);
 
 	bool isKinematic();
 	bool setKinematic(bool isKinematic);

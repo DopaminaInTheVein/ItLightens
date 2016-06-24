@@ -153,6 +153,7 @@ void player_controller_mole::GrabbedBox() {
 	grabOffset.dist = realDistXZ(posPlayer, posBox);
 	grabOffset.y = posBox.y - posPlayer.y;
 	grabOffset.yaw = transform->getDeltaYawToAimTo(posBox);
+	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, true);
 
 	energyDecreasal(5.0f);
 	TMsgDamage dmg;
@@ -193,6 +194,7 @@ void player_controller_mole::LeaveBox() {
 	GET_COMP(box_p, boxGrabbed, TCompPhysics);
 	box_p->setKinematic(false);
 	box_p->setPosition(posbox, box_t->getRotation());
+	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
 
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = CHandle();

@@ -121,6 +121,7 @@ public:
 
 	//set flags
 	void					setupFiltering(PxRigidActor * actor, PxFilterData& filterData);
+	void					setBehaviour(PxRigidActor* actor, ItLightensFilter::descObjectBehaviour tag, bool enabled);
 
 	//gets
 

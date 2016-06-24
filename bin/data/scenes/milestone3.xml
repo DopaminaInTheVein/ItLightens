@@ -2783,4 +2783,27 @@
 	<room name="sala1"/>
 </entity>
 
+<entity>
+<tags
+   tags="box platform removable"/>
+<box/>
+<name
+   name="Box_3"/>
+<transform
+   pos="-86.1871 6.2449 14.8866"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+
+
+
 </entities>

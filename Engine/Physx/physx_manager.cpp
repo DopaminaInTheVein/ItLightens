@@ -213,6 +213,26 @@ void CPhysxManager::setupFiltering(PxRigidActor* actor, PxFilterData& filterData
 	//free(ptr);
 }
 
+void CPhysxManager::setBehaviour(PxRigidActor* actor, ItLightensFilter::descObjectBehaviour tag, bool enabled)
+{
+	const PxU32 numShapes = actor->getNbShapes();
+	PxShape **ptr;
+	ptr = new PxShape*[numShapes];
+
+	actor->getShapes(ptr, numShapes);
+	for (PxU32 i = 0; i < numShapes; i++)
+	{
+		PxShape* shape = ptr[i];
+		PxFilterData filterData = shape->getSimulationFilterData();
+		if (enabled) filterData.word2 |= tag;
+		else filterData.word2 &= ~tag;
+		shape->setSimulationFilterData(filterData);
+		shape->setQueryFilterData(filterData);
+	}
+
+	//free(ptr);
+}
+
 #pragma endregion
 
 //#########################################################################################################

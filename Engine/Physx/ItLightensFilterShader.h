@@ -36,6 +36,7 @@ public:
 	enum descObjectBehaviour {
 		eCOLLISION = (1 << 0),
 		eCAN_TRIGGER = (1 << 1),
+		eUSER_CALLBACK = (1 << 2),
 	};
 
 	//-----------------------------------------------------------------------------------------------------
@@ -130,5 +131,8 @@ public:
 		return PxFilterFlag::eKILL;
 	}
 };
+
+#define PHYS_TAG ItLightensFilter::descObjectFlags
+#define PHYS_BEHAVIOUR ItLightensFilter::descObjectBehaviour
 
 #endif
