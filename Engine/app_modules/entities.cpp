@@ -247,6 +247,9 @@ bool CEntitiesModule::start() {
 	//Skeleton IK
 	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
 
+	//Grab Objects Hit
+	SUBSCRIBE(player_controller_mole, TMsgGrabHit, onGrabHit);
+
 	SUBSCRIBE(bt_scientist, TMsgWBTakenByPlayer, onTakenWB);
 	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
 	SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);

@@ -36,13 +36,14 @@ protected:
 	//energies
 	float grab_box_energy;
 	float destroy_wall_energy;
-	struct GrabOffset {
+	struct GrabInfo {
 		float y;
 		float dist;
 		float yaw;
-		GrabOffset() : y(1.f), dist(1.f), yaw(0.f) {}
+		VEC3 last_correct_pos;
+		GrabInfo() : y(1.f), dist(1.f), yaw(0.f) {}
 	};
-	GrabOffset grabOffset;
+	GrabInfo grabInfo;
 
 public:
 
@@ -58,6 +59,9 @@ public:
 	void TurnToGrab();
 	void GrabbingBox1();
 	void GrabbingBox2();
+	void GrabbingImpact();
+	void GrabbingImpact1();
+	void GrabbingImpact2();
 	void GrabbedBox();
 	void LeaveBox();
 	void DestroyWall();
@@ -70,6 +74,7 @@ public:
 	string selectedBox = "";
 	//int selectedBoxi = 0;
 	int selectedWallToBreaki = 0;
+	____TIMER_DECLARE_(t_grab_hit);
 
 	//Cambio Malla
 	//TCompRenderStaticMesh* mesh;
@@ -107,6 +112,9 @@ public:
 	//void ChangePose(string new_pose_route);
 
 	void SetCharacterController() {};
+
+	//Messages
+	void onGrabHit(const TMsgGrabHit&);
 
 	//Overload function for handler_manager
 	player_controller_mole& player_controller_mole::operator=(player_controller_mole arg) { return arg; }

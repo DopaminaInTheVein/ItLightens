@@ -43,6 +43,8 @@ class TCompPhysics : public TCompBase {
 	PxActor*			m_pActor = nullptr;
 	PxRigidActor*		m_pRigidActor = nullptr;
 
+	float				m_smooth = 0.0f;
+
 	int getCollisionTypeValueFromString(std::string str);
 	int getCollisionShapeValueFromString(std::string str);
 
@@ -57,7 +59,6 @@ class TCompPhysics : public TCompBase {
 
 	void updateTagsSetupActor();
 	void updateTagsSetupActor(PxFilterData& filter);
-
 public:
 	// physics id
 	TCompPhysics() {
@@ -81,6 +82,11 @@ public:
 	void onCreate(const TMsgEntityCreated&);
 
 	void setBehaviour(ItLightensFilter::descObjectBehaviour tag, bool enabled);
+	VEC3 getLinearVelocity();
+	void setLinearVelocity(VEC3 speed);
+	VEC3 getAngularVelocity();
+	void setAngularVelocity(VEC3 speed);
+	void setGravity(bool);
 
 	bool isKinematic();
 	bool setKinematic(bool isKinematic);

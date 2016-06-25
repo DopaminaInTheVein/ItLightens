@@ -17,8 +17,8 @@
 #define dbg(...)
 
 #else
-
 void		dbg(const char* fmt, ...);
+#define VEC3_VALUES(name) name.x, name.y, name.z
 
 #endif
 

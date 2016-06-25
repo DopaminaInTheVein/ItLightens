@@ -28,7 +28,7 @@ public:
 		eFRAGMENT = (1 << 10),
 		eTHROW = (1 << 11),
 		ePLATFORM = (1 << 12),
-		eIGNORE_PLAYER = (1 << 13), //No se usa ahora!
+		eIGNORE_PLAYER = (1 << 13),
 		eALL = ~0,
 	};
 
@@ -42,18 +42,25 @@ public:
 	//-----------------------------------------------------------------------------------------------------
 	//							      Filter shader
 	//-----------------------------------------------------------------------------------------------------
-
 	// customized filter shader
 	// - Triggers dont collide
 	// - only eCOLLISION objects can collide
 	// - mask0: identity of object
 	// - mask1: collisions against who can collider
 	// - mask2: collisions activated
+#define ILFS_FIRST filterData0
+#define ILFS_SECOND filterData1
+#define ILFS_SOME_HAS(flag, numWord) ILFS_FIRST.word##numWord & flag || ILFS_SECOND.word##numWord & flag
 	static PxFilterFlags ItLightensFilterShader(
 		PxFilterObjectAttributes attributes0, PxFilterData filterData0,
 		PxFilterObjectAttributes attributes1, PxFilterData filterData1,
 		PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
 	{
+#ifndef NDEBUG
+		if (filterData0.word2 & eUSER_CALLBACK || filterData1.word2 & eUSER_CALLBACK) {
+			dbg("Colision caja callback\n");
+		}
+#endif
 		// let triggers through
 		if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
 		{
@@ -126,8 +133,16 @@ public:
 				pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
 				return PxFilterFlag::eCALLBACK;
 			}
-			return PxFilterFlag::eDEFAULT;
+			//Check if has user callback
+			if (filterData0.word2 & eUSER_CALLBACK || filterData1.word2 & eUSER_CALLBACK) {
+				pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
+				pairFlags |= PxPairFlag::eNOTIFY_CONTACT_POINTS;
+				pairFlags |= PxPairFlag::eDETECT_DISCRETE_CONTACT;
+				return PxFilterFlag::eCALLBACK;
+			}
+			else return PxFilterFlag::eDEFAULT;
 		}
+
 		return PxFilterFlag::eKILL;
 	}
 };

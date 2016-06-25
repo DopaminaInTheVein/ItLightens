@@ -25,6 +25,9 @@ map<string, statehandler> player_controller_mole::statemap = {};
 #define ST_MOLE_GRAB_TURN "turnToGrab"
 #define ST_MOLE_GRABBING_1 "grabbing1"
 #define ST_MOLE_GRABBING_2 "grabbing2"
+#define ST_MOLE_GRABBING_IMPACT "grabbing_impact"
+#define ST_MOLE_GRABBING_IMPACT_1 "grabbing_impact_1" //Lose box control
+#define ST_MOLE_GRABBING_IMPACT_2 "grabbing_impact_2" //Recovery box control
 #define ST_MOLE_UNGRAB "leaveBox"
 #define ST_MOLE_DESTROY "destroyWall"
 
@@ -58,6 +61,8 @@ void player_controller_mole::Init() {
 	// read main attributes from file
 	readIniFileAttr();
 	mole_max_speed = player_max_speed;
+	____TIMER_REDEFINE_(t_grab_hit, 0.2f);
+	____TIMER__SET_ZERO_(t_grab_hit);
 
 	om = getHandleManager<player_controller_mole>();	//player
 
@@ -68,6 +73,9 @@ void player_controller_mole::Init() {
 		AddStMole(ST_MOLE_GRAB_TURN, TurnToGrab);
 		AddStMole(ST_MOLE_GRABBING_1, GrabbingBox1);
 		AddStMole(ST_MOLE_GRABBING_2, GrabbingBox2);
+		AddStMole(ST_MOLE_GRABBING_IMPACT, GrabbingImpact);
+		AddStMole(ST_MOLE_GRABBING_IMPACT_1, GrabbingImpact1);
+		AddStMole(ST_MOLE_GRABBING_IMPACT_2, GrabbingImpact2);
 		AddStMole(ST_MOLE_GRAB, GrabbedBox);
 		AddStMole(ST_MOLE_UNGRAB, LeaveBox);
 		AddStMole(ST_MOLE_DESTROY, DestroyWall);
@@ -119,12 +127,18 @@ void player_controller_mole::UpdateMovingWithOther() {
 		GET_COMP(box_t, boxGrabbed, TCompTransform);
 		GET_COMP(box_p, boxGrabbed, TCompPhysics);
 
-		float yawPlayer = transform->getYaw();
-		VEC3 posPlayer = transform->getPosition();
-		VEC3 posBox = posPlayer + transform->getFront() * grabOffset.dist;
-		posBox.y += grabOffset.y;
-		box_t->setYaw(yawPlayer + grabOffset.yaw);
-		box_p->setPosition(posBox, box_t->getRotation());
+		if (____TIMER_IS_RUNNING(t_grab_hit)) {
+			ChangeState(ST_MOLE_GRABBING_IMPACT);
+		}
+		else {
+			//Box follow player. TODO: IK for this
+			float yawPlayer = transform->getYaw();
+			VEC3 posPlayer = transform->getPosition();
+			VEC3 posBox = posPlayer + transform->getFront() * grabInfo.dist;
+			posBox.y += grabInfo.y;
+			box_t->setYaw(yawPlayer + grabInfo.yaw);
+			box_p->setPosition(posBox, box_t->getRotation());
+		}
 	}
 }
 
@@ -135,34 +149,6 @@ void player_controller_mole::UpdateUnpossess() {
 	if (boxGrabbed.isValid()) {
 		LeaveBox();
 	}
-}
-
-void player_controller_mole::GrabbedBox() {
-	if (!SBB::readBool(selectedBox)) {
-		SBB::postBool(selectedBox, true);
-	}
-
-	GET_COMP(box_t, boxNear, TCompTransform);
-	GET_COMP(box_p, boxNear, TCompPhysics);
-
-	VEC3 posPlayer = transform->getPosition();
-	VEC3 posBox = box_t->getPosition();
-	posBox.y += 1.f;
-	box_p->setKinematic(true);
-	box_p->setPosition(posBox, box_t->getRotation());
-	grabOffset.dist = realDistXZ(posPlayer, posBox);
-	grabOffset.y = posBox.y - posPlayer.y;
-	grabOffset.yaw = transform->getDeltaYawToAimTo(posBox);
-	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, true);
-
-	energyDecreasal(5.0f);
-	TMsgDamage dmg;
-	dmg.modif = 0.5f;
-	myEntity->sendMsg(dmg);
-	boxGrabbed = boxNear;
-	mole_max_speed /= 2;
-	//ChangePose(pose_idle_route);
-	ChangeState("idle");
 }
 
 void player_controller_mole::DestroyWall() {
@@ -192,9 +178,9 @@ void player_controller_mole::LeaveBox() {
 		posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;
 	}*/
 	GET_COMP(box_p, boxGrabbed, TCompPhysics);
-	box_p->setKinematic(false);
 	box_p->setPosition(posbox, box_t->getRotation());
 	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
+	box_p->setGravity(true);
 
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = CHandle();
@@ -294,6 +280,72 @@ void player_controller_mole::GrabbingBox2()
 		t_grab2 = 1.5f;
 		ChangeState(ST_MOLE_GRAB);
 	}
+}
+
+void player_controller_mole::GrabbedBox() {
+	if (!SBB::readBool(selectedBox)) {
+		SBB::postBool(selectedBox, true);
+	}
+
+	GET_COMP(box_t, boxNear, TCompTransform);
+	GET_COMP(box_p, boxNear, TCompPhysics);
+
+	VEC3 posPlayer = transform->getPosition();
+	VEC3 posBox = box_t->getPosition();
+	posBox.y += 1.f;
+	//box_p->setKinematic(true);
+	box_p->setPosition(posBox, box_t->getRotation());
+	grabInfo.dist = realDistXZ(posPlayer, posBox);
+	grabInfo.y = posBox.y - posPlayer.y;
+	grabInfo.yaw = transform->getDeltaYawToAimTo(posBox);
+	grabInfo.last_correct_pos = posBox;
+
+	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, true);
+	box_p->setGravity(false);
+
+	energyDecreasal(5.0f);
+	TMsgDamage dmg;
+	dmg.modif = 0.5f;
+	myEntity->sendMsg(dmg);
+	boxGrabbed = boxNear;
+	mole_max_speed /= 2;
+	//ChangePose(pose_idle_route);
+	ChangeState("idle");
+}
+
+void player_controller_mole::onGrabHit(const TMsgGrabHit& msg)
+{
+	____TIMER_RESET_(t_grab_hit);
+	//TODO tratar estos puntos para corregir posicion player y caja
+}
+
+void player_controller_mole::GrabbingImpact()
+{
+	GET_COMP(box_p, boxGrabbed, TCompPhysics);
+	GET_COMP(box_t, boxGrabbed, TCompTransform);
+	box_p->setPosition(grabInfo.last_correct_pos, box_t->getRotation());
+	auto rd = box_p->getActor()->isRigidDynamic();
+
+	ChangeState(ST_MOLE_GRABBING_IMPACT_1);
+	moving = false;
+}
+
+void player_controller_mole::GrabbingImpact1()
+{
+	moving = false;
+	GET_COMP(box_p, boxGrabbed, TCompPhysics);
+	bool recovered_control = ____TIMER__END_(t_grab_hit);
+	if (recovered_control) {
+		ChangeState(ST_MOLE_GRABBING_IMPACT_2);
+	}
+	else {
+		____TIMER__UPDATE_(t_grab_hit);
+	}
+}
+void player_controller_mole::GrabbingImpact2()
+{
+	//UpdateMovingWithOther();
+	ChangeState("idle");
 }
 
 void player_controller_mole::ChangeCommonState(std::string st)

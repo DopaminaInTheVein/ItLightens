@@ -19,6 +19,40 @@ void TCompPhysics::setBehaviour(ItLightensFilter::descObjectBehaviour tag, bool 
 	if (ra) g_PhysxManager->setBehaviour(ra, tag, enabled);
 }
 
+void TCompPhysics::setGravity(bool enabled)
+{
+	auto rd = m_pActor->isRigidDynamic();
+	if (rd) rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, !enabled);
+}
+
+VEC3 TCompPhysics::getLinearVelocity()
+{
+	VEC3 result = VEC3(0.f, 0.f, 0.f);
+	auto rd = m_pActor->isRigidDynamic();
+	if (rd)	result = PhysxConversion::PxVec3ToVec3(rd->getLinearVelocity());
+	return result;
+}
+
+void TCompPhysics::setLinearVelocity(VEC3 speed)
+{
+	auto rd = m_pActor->isRigidDynamic();
+	if (rd) rd->setLinearVelocity(PhysxConversion::Vec3ToPxVec3(speed));
+}
+
+VEC3 TCompPhysics::getAngularVelocity()
+{
+	VEC3 result = VEC3(0.f, 0.f, 0.f);
+	auto rd = m_pActor->isRigidDynamic();
+	if (rd)	result = PhysxConversion::PxVec3ToVec3(rd->getAngularVelocity());
+	return result;
+}
+
+void TCompPhysics::setAngularVelocity(VEC3 speed)
+{
+	auto rd = m_pActor->isRigidDynamic();
+	if (rd) rd->setAngularVelocity(PhysxConversion::Vec3ToPxVec3(speed));
+}
+
 void TCompPhysics::updateTagsSetupActor()
 {
 	PxFilterData mFilterData;
@@ -54,7 +88,6 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 		else if (h.hasTag("platform")) {
 			filter.word0 |= ItLightensFilter::ePLATFORM;
 		}
-
 		else if (h.hasTag("fragment")) {
 			filter.word0 = ItLightensFilter::eFRAGMENT;
 			filter.word1 = PXM_NO_PLAYER_NPC;
@@ -72,6 +105,7 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 			filter.word0 |= ItLightensFilter::eOBJECT;
 		}
 	}
+
 	if (!m_pActor) return;
 	PxRigidActor *actor = m_pActor->isRigidActor();
 	if (actor) {
@@ -97,6 +131,7 @@ bool TCompPhysics::load(MKeyValue & atts)
 	m_collisionShape = getCollisionShapeValueFromString(readString);
 	m_mass = atts.getFloat("mass", 2.0f);		//default enough to pass polarize threshold
 	m_kinematic = atts.getBool("kinematic", false);		//default enough to pass polarize threshold
+	m_smooth = atts.getFloat("smooth", 0.0f);
 	switch (m_collisionShape) {
 	case TRI_MESH:
 		//nothing extra needed to read
@@ -212,9 +247,8 @@ void TCompPhysics::update(float dt)
 		CQuaternion phys_rot = PxQuatToCQuaternion(curr_pose.q);
 
 		//New render transform
-		float smooth = 0.9f;
-		VEC3 render_pos_new = render_pos * smooth + phys_pos * (1.f - smooth);
-		CQuaternion render_rot_new = render_rot * smooth + phys_rot * (1.f - smooth);
+		VEC3 render_pos_new = render_pos * m_smooth + phys_pos * (1.f - m_smooth);
+		CQuaternion render_rot_new = render_rot * m_smooth + phys_rot * (1.f - m_smooth);
 		render_rot_new.Normalize();
 		tmx->setPosition(render_pos_new);
 		tmx->setRotation(render_rot_new);
