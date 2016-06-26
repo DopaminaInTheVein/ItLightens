@@ -99,6 +99,13 @@ bool player_controller_mole::getUpdateInfo()
 void player_controller_mole::myUpdate()
 {
 	//dbg("mole frame\n");
+	if (!isZero(grabInfo.impact)) {
+		GET_COMP(box_p, boxGrabbed, TCompPhysics);
+		cc->AddMovement(grabInfo.impact);
+		transform->addPosition(grabInfo.impact);
+		box_p->AddMovement(grabInfo.impact);
+		grabInfo.impact = VEC3(0.f, 0.f, 0.f);
+	}
 	Debug->DrawLine(transform->getPosition(), transform->getFront(), 1.f);
 }
 
@@ -339,11 +346,10 @@ void player_controller_mole::onGrabHit(const TMsgGrabHit& msg)
 	float impactLength = dif.Length() + 0.2f;
 	dif.Normalize();
 	impact = dif * impactLength;
-	//grabInfo.impact = impact;
 	grabInfo.impact = impact;
-	cc->AddMovement(impact);
-	transform->addPosition(impact);
-	box_p->AddMovement(impact);
+	//cc->AddMovement(impact);
+	//transform->addPosition(impact);
+	//box_p->AddMovement(impact);
 
 	VEC3 boxPos = box_t->getPosition();
 	impact.Normalize();
