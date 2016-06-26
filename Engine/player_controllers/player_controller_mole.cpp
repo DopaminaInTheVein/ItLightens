@@ -183,6 +183,7 @@ void player_controller_mole::LeaveBox() {
 	box_p->setPosition(posbox, box_t->getRotation());
 	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
 	box_p->setGravity(true);
+	box_p->setKinematic(false);
 
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = CHandle();
@@ -295,7 +296,7 @@ void player_controller_mole::GrabbedBox() {
 	VEC3 posPlayer = transform->getPosition();
 	VEC3 posBox = box_t->getPosition();
 	posBox.y += 1.f;
-	//box_p->setKinematic(true);
+	box_p->setKinematic(true);
 	box_p->setPosition(posBox, box_t->getRotation());
 	grabInfo.dist = realDistXZ(posPlayer, posBox);
 	grabInfo.y = posBox.y - posPlayer.y;

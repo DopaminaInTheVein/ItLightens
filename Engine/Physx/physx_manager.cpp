@@ -245,7 +245,7 @@ void CPhysxManager::customizeSceneDesc(PxSceneDesc& sceneDesc)
 	sceneDesc.gravity = PxVec3(0.0f, GRAVITY, 0.0f);
 	sceneDesc.filterShader = ItLightensFilter::ItLightensFilterShader;
 	sceneDesc.simulationEventCallback = this;
-	sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS | PxSceneFlag::eENABLE_CCD;
+	sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS | PxSceneFlag::eENABLE_CCD | PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS;
 	sceneDesc.filterCallback = this;
 	//sceneDesc.flags |= PxSceneFlag::eREQUIRE_RW_LOCK;
 }
