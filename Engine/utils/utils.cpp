@@ -191,6 +191,23 @@ float angleBetween(const VEC3& u, const VEC3& v)
 	return acosf(dot / (v.Length() * u.Length()));
 }
 
+VEC3 movementUnion(const VEC3& u, const VEC3& v)
+{
+	VEC3 res = u;
+	//if (u.x != 0.f && v.x != 0.f) assert(sameSign(u.x, v.x));
+	//if (u.y != 0.f && v.y != 0.f) assert(sameSign(u.y, v.y));
+	//if (u.z != 0.f && v.z != 0.f) assert(sameSign(u.z, v.z));
+	if (abs(u.x) < abs(v.x)) res.x = v.x;
+	if (abs(u.y) < abs(v.y)) res.y = v.y;
+	if (abs(u.z) < abs(v.z)) res.z = v.z;
+	return res;
+}
+
+bool isZero(VEC3 u)
+{
+	return u.x == 0.f && u.y == 0.f && u.z == 0.f;
+}
+
 //template<class TObj>
 #include "components\entity_tags.h"
 //template<class  TObj>

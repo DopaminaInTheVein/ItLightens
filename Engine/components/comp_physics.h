@@ -90,6 +90,7 @@ public:
 
 	bool isKinematic();
 	bool setKinematic(bool isKinematic);
+	void AddMovement(VEC3 movement);
 	void AddForce(VEC3 force);
 	void ClearForces();
 	void AddVelocity(VEC3 velocity);

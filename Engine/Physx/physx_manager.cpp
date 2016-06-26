@@ -551,11 +551,18 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 						TMsgGrabHit msgGrabHit;
 						msgGrabHit.npoints = numContacts;
 						msgGrabHit.points = new VEC3[numContacts];
+						msgGrabHit.normals = new VEC3[numContacts];
+						msgGrabHit.impulses = new VEC3[numContacts];
+						msgGrabHit.separations = new float[numContacts];
 						for (int i = 0; i < numContacts; i++) {
 							msgGrabHit.points[i] = PhysxConversion::PxVec3ToVec3(contacts[i].position);
+							msgGrabHit.normals[i] = PhysxConversion::PxVec3ToVec3(contacts[i].normal);
+							msgGrabHit.impulses[i] = PhysxConversion::PxVec3ToVec3(contacts[i].impulse);
+							msgGrabHit.separations[i] = contacts[i].separation;
 							dbg("Pos contact %d: (%f, %f, %f)\n", i, VEC3_VALUES(msgGrabHit.points[i]));
 						}
 						auto hPlayer = tags_manager.getFirstHavingTag("player");
+						dbg("Send msgGranHit\n");
 						hPlayer.sendMsg(msgGrabHit);
 					}
 				}

@@ -61,7 +61,7 @@ void player_controller_mole::Init() {
 	// read main attributes from file
 	readIniFileAttr();
 	mole_max_speed = player_max_speed;
-	____TIMER_REDEFINE_(t_grab_hit, 0.2f);
+	____TIMER_REDEFINE_(t_grab_hit, 0.05f);
 	____TIMER__SET_ZERO_(t_grab_hit);
 
 	om = getHandleManager<player_controller_mole>();	//player
@@ -98,6 +98,7 @@ bool player_controller_mole::getUpdateInfo()
 
 void player_controller_mole::myUpdate()
 {
+	//dbg("mole frame\n");
 	Debug->DrawLine(transform->getPosition(), transform->getFront(), 1.f);
 }
 
@@ -138,6 +139,7 @@ void player_controller_mole::UpdateMovingWithOther() {
 			posBox.y += grabInfo.y;
 			box_t->setYaw(yawPlayer + grabInfo.yaw);
 			box_p->setPosition(posBox, box_t->getRotation());
+			grabInfo.last_correct_pos = posBox;
 		}
 	}
 }
@@ -316,16 +318,45 @@ void player_controller_mole::GrabbedBox() {
 void player_controller_mole::onGrabHit(const TMsgGrabHit& msg)
 {
 	____TIMER_RESET_(t_grab_hit);
+	VEC3 impact = VEC3(0.f, 0.f, 0.f);
+	//dbg("--- IMPACT ------------------------------------------\n");
+	//for (int i = 0; i < msg.npoints; i++) {
+	//	dbg("Point %d, pos = (%f,%f,%f)\n---\n", i, VEC3_VALUES(msg.points[i]));
+	//	dbg("Normal = (%f,%f,%f)\n", VEC3_VALUES(msg.normals[i]));
+	//	dbg("Separation = %f\n", msg.separations[i]);
+	//	dbg("---\n");
+	//	float amoung = msg.separations[i] > 0 ? msg.separations[i] : msg.separations[i] * -2.f;
+	//	VEC3 local_corr = msg.normals[i] * amoung;
+	//	impact = movementUnion(impact, local_corr);
+	//	Debug->DrawLine(msg.points[i], msg.points[i] + local_corr, VEC3(1, 1, 0), 10.f);
+	//}
+	//dbg("------------------------------------- FIN IMPACT ----\n");
+	GET_COMP(box_p, boxGrabbed, TCompPhysics);
+	GET_COMP(box_t, boxGrabbed, TCompTransform);
+	//impact *= 5.f;
+	VEC3 dif = box_t->getPosition() - grabInfo.last_correct_pos;
+	float impactLength = dif.Length() + 0.2f;
+	dif.Normalize();
+	impact = dif * impactLength;
+	//grabInfo.impact = impact;
+	grabInfo.impact = impact;
+	cc->AddMovement(impact);
+	transform->addPosition(impact);
+	box_p->AddMovement(impact);
+
+	VEC3 boxPos = box_t->getPosition();
+	impact.Normalize();
+	Debug->DrawLine(boxPos, impact + VEC3(0.f, 0.2f, 0.f), 1.f, VEC3(0, 0, 1), 10.f);
+
 	//TODO tratar estos puntos para corregir posicion player y caja
 }
 
 void player_controller_mole::GrabbingImpact()
 {
-	GET_COMP(box_p, boxGrabbed, TCompPhysics);
-	GET_COMP(box_t, boxGrabbed, TCompTransform);
-	box_p->setPosition(grabInfo.last_correct_pos, box_t->getRotation());
-	auto rd = box_p->getActor()->isRigidDynamic();
-
+	//GET_COMP(box_p, boxGrabbed, TCompPhysics);
+	//GET_COMP(box_t, boxGrabbed, TCompTransform);
+	//box_p->setPosition(grabInfo.last_correct_pos, box_t->getRotation());
+	//auto rd = box_p->getActor()->isRigidDynamic();
 	ChangeState(ST_MOLE_GRABBING_IMPACT_1);
 	moving = false;
 }

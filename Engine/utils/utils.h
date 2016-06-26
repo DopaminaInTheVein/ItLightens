@@ -58,6 +58,8 @@ VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const fl
 void rotate_vector_by_quaternion(const VEC3& vec, const CQuaternion& q, VEC3& vprime);
 float angleBetween(const VEC3&, const VEC3&);
 
+VEC3 movementUnion(const VEC3& u, const VEC3& v);
+bool isZero(VEC3);
 ///  Performs a linear interpolation between two vectors. (@p v1 toward @p v2)
 ///  return					The result vector. [(x, y, z)]
 ///  @param[in]		start	The starting vector.

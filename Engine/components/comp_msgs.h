@@ -40,6 +40,9 @@ struct TMsgSetIKSolver {
 // Notify Player grabbed object hit
 struct TMsgGrabHit {
 	VEC3 * points;
+	VEC3 * normals;
+	VEC3 * impulses;
+	float * separations;
 	int npoints;
 	DECLARE_MSG_ID();
 };

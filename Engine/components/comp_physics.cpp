@@ -426,6 +426,15 @@ bool TCompPhysics::setKinematic(bool isKinematic)
 	}
 	return false;
 }
+void TCompPhysics::AddMovement(VEC3 movement)
+{
+	PxRigidDynamic *rd = m_pActor->isRigidDynamic();
+	if (rd) {
+		PxTransform tmx = rd->getGlobalPose();
+		tmx.p += PhysxConversion::Vec3ToPxVec3(movement);
+		rd->setGlobalPose(tmx);
+	}
+}
 
 void TCompPhysics::AddForce(VEC3 force)
 {

@@ -41,7 +41,13 @@ protected:
 		float dist;
 		float yaw;
 		VEC3 last_correct_pos;
-		GrabInfo() : y(1.f), dist(1.f), yaw(0.f) {}
+		VEC3 impact;
+		GrabInfo() : y(1.f)
+			, dist(1.f)
+			, yaw(0.f)
+			, last_correct_pos(VEC3(0.f, 0.f, 0.f))
+			, impact(VEC3(0.f, 0.f, 0.f)
+			) {}
 	};
 	GrabInfo grabInfo;
 

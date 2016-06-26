@@ -137,7 +137,8 @@ public:
 			if (filterData0.word2 & eUSER_CALLBACK || filterData1.word2 & eUSER_CALLBACK) {
 				pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
 				pairFlags |= PxPairFlag::eNOTIFY_CONTACT_POINTS;
-				pairFlags |= PxPairFlag::eDETECT_DISCRETE_CONTACT;
+				pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+				pairFlags |= PxPairFlag::eDETECT_CCD_CONTACT;
 				return PxFilterFlag::eCALLBACK;
 			}
 			else return PxFilterFlag::eDEFAULT;
