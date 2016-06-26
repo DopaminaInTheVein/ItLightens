@@ -432,7 +432,7 @@ void TCompPhysics::AddMovement(VEC3 movement)
 	if (rd) {
 		PxTransform tmx = rd->getGlobalPose();
 		tmx.p += PhysxConversion::Vec3ToPxVec3(movement);
-		setPosition(movement, PhysxConversion::PxQuatToCQuaternion(tmx.q));
+		setPosition(PhysxConversion::PxVec3ToVec3(tmx.p), PhysxConversion::PxQuatToCQuaternion(tmx.q));
 		//rd->setGlobalPose(tmx);
 	}
 }
