@@ -82,7 +82,7 @@ bool CPhysxManager::start()
 
 	if (!sceneDesc.cpuDispatcher)
 	{
-		m_pCpuDispatcher = PxDefaultCpuDispatcherCreate(m_NbThreads);
+		m_pCpuDispatcher = PxDefaultCpuDispatcherCreate(0);
 		if (!m_pCpuDispatcher)
 			fatal("PxDefaultCpuDispatcherCreate failed!");
 

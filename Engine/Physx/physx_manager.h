@@ -262,6 +262,7 @@ public:
 			return PxSceneQueryHitType::eNONE;
 	}
 	virtual PxQueryHitType::Enum preFilter(const PxFilterData& filterData, const PxShape* shape, const PxRigidActor* actor, PxHitFlags& queryFlags) {
+		queryFlags |= PxHitFlag::eASSUME_NO_INITIAL_OVERLAP;
 		if (filterData.word1 & ItLightensFilter::eCOLLISION)
 			return PxSceneQueryHitType::eBLOCK;
 		else
