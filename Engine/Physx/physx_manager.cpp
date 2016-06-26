@@ -184,7 +184,7 @@ void CPhysxManager::update(float dt)
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
 		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
 
-		t_to_update -= t_max_update;
+		t_to_update = 0;
 	}
 }
 
