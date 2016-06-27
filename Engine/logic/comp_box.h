@@ -10,6 +10,7 @@ struct TCompBox : public TCompBase {
 	bool carePosition = true;
 	bool removable = true;
 	bool added = false;
+	VEC3 size;
 
 	CHandle mParent;
 	VEC3 originPoint;
@@ -25,6 +26,11 @@ struct TCompBox : public TCompBase {
 	VEC3 GetLeavePoint() const;
 	bool isRemovable();
 	void onUnLeaveBox(const TMsgLeaveBox& msg);
+	bool getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right);
+	
+#ifndef NDEBUG
+	void render();
+#endif
 };
 
 #endif

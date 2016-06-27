@@ -12,15 +12,20 @@ class SkelControllerMole : public TCompSkelController, public TCompBase {
 protected:
 	TCompCharacterController * cc;
 	player_controller_mole * pc;
+	CHandle grabbed;
+	VEC3 left_h_target, right_h_target;
 
 	void SetCharacterController();
 	void SetPlayerController();
 	void myUpdate();
 
 public:
+	void grabObject(CHandle);
+	VEC3 getGrabLeft();
+	VEC3 getGrabRight();
+
 	bool load(MKeyValue& atts) { return true; }
 	//void onCreate(const TMsgEntityCreated&);
-
 	bool getUpdateInfo() override;
 	void update(float elapsed) { TCompSkelController::update(); }
 

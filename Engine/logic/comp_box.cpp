@@ -79,6 +79,7 @@ void TCompBox::ImTooFar() {
 bool TCompBox::load(MKeyValue& atts) {
 	carePosition = atts.getBool("fixed", false);
 	removable = atts.getBool("removable", false);
+	size = atts.getPoint("size");
 	return true;
 }
 
@@ -101,4 +102,65 @@ void TCompBox::onUnLeaveBox(const TMsgLeaveBox& msg) {
 
 TCompBox::~TCompBox() {
 	removeFromVector(all_boxes, CHandle(this).getOwner());
+}
+
+#ifndef NDEBUG
+void TCompBox::render() {
+	//VEC3 up, front, left;
+	//VEC3 upf, frontf, leftf;
+
+	//GET_MY(t, TCompTransform);
+	//VEC3 pos = t->getPosition();
+	//up = (t->getUp() * size.y / 2);
+	//up += pos;
+	//upf = pos + t->getUp() * size;
+
+	//front = (t->getFront() * size.z / 2);
+	//front += pos;
+	//frontf = pos + t->getFront() * size;
+
+	//left = (t->getLeft() * size.z / 2);
+	//left += pos;
+	//leftf = pos + t->getLeft() * size;
+
+	//Debug->DrawLine(up, upf);
+	//Debug->DrawLine(left, leftf, VEC3(0, 1, 0));
+	//Debug->DrawLine(front, frontf, VEC3(0,0,1));
+}
+#endif
+
+bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right) {
+	GET_MY(t, TCompTransform);
+	VEC3 pos = t->getPosition();
+	// Four directions
+	VEC3 directions[4];
+	float sizes[4];
+	directions[0] = t->getFront();
+	directions[1] = -t->getLeft();
+	directions[2] = -t->getFront();
+	directions[3] = t->getLeft();
+	sizes[0] = sizes[2] = size.z;
+	sizes[1] = sizes[3] = size.x;
+
+
+	//Get the best direction
+	float max_dot = FLT_MIN;
+	int max_dot_index = -1;
+	VEC3 actor_dir = pos - actor_pos;
+	actor_dir.Normalize();	
+	for (int i = 0; i < 4; i++) {
+		float dot = actor_dir.Dot(directions[i]);
+		if (dot > max_dot) {
+			max_dot = dot;
+			max_dot_index = i;
+		}
+	}
+
+	//Calc position
+	VEC3 left_actor = directions[(max_dot_index + 3) % 4];
+	left = left_actor * sizes[max_dot_index] / 2;
+	right = (left_actor * -sizes[max_dot_index] / 2);
+	left += pos;
+	right += pos;
+	return true;
 }

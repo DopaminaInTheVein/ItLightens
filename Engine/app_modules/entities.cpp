@@ -696,6 +696,10 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 	getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
 
+#ifndef NDEBUG
+	getHandleManager<TCompBox>()->onAll(&TCompBox::render);
+#endif
+
 	RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
 	RenderManager.renderAll(CHandle(), CRenderTechnique::UI_OBJS);
 }

@@ -5,6 +5,21 @@
 #include "player_controllers/player_controller_mole.h"
 #include "components/entity.h"
 
+#include "logic/comp_box.h"
+
+//IK Solvers
+IK_DECL_SOLVER(grabLeftIK);
+IK_DECL_SOLVER(grabRightIK);
+
+void SkelControllerMole::grabObject(CHandle h)
+{
+	grabbed = h;
+	GET_COMP(box, h, TCompBox);
+	GET_COMP(tMe, owner, TCompTransform);
+	box->getGrabPoints(tMe->getPosition(), left_h_target, right_h_target);
+	enableIK(SK_LHAND, grabLeftIK, 3.f);
+	enableIK(SK_LHAND, grabRightIK, 2.f);
+}
 
 bool SkelControllerMole::getUpdateInfo()
 {
@@ -68,4 +83,25 @@ void SkelControllerMole::myUpdate()
 	}
 
 	priority = false;
+}
+
+VEC3 SkelControllerMole::getGrabLeft()
+{
+	return left_h_target;
+}
+
+VEC3 SkelControllerMole::getGrabRight()
+{
+	return right_h_target;
+}
+
+
+IK_IMPL_SOLVER(grabLeftIK, info, result) {
+	GET_COMP(skc, info.handle, SkelControllerMole);
+	result.offset_pos = skc->getGrabLeft() - info.bone_pos;
+}
+
+IK_IMPL_SOLVER(grabRightIK, info, result) {
+	GET_COMP(skc, info.handle, SkelControllerMole);
+	result.offset_pos = skc->getGrabRight() - info.bone_pos;
 }

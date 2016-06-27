@@ -106,6 +106,15 @@ void player_controller_mole::myUpdate()
 		box_p->AddMovement(grabInfo.impact);
 		grabInfo.impact = VEC3(0.f, 0.f, 0.f);
 	}
+
+	if (this->nearToBox()) {
+		GET_COMP(box, boxNear, TCompBox);
+		VEC3 left, right;
+		box->getGrabPoints(transform->getPosition(), left, right);
+		Debug->DrawLine(transform->getPosition(), left, VEC3(1,1,0));
+		Debug->DrawLine(transform->getPosition(), right, VEC3(0,0,1));
+	}
+
 	Debug->DrawLine(transform->getPosition(), transform->getFront(), 1.f);
 }
 
@@ -257,10 +266,11 @@ void player_controller_mole::update_msgs()
 
 void player_controller_mole::TurnToGrab()
 {
-	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
-	if (faced) {
+	//bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
+	//if (faced) {
+		animController->grabObject(boxNear);
 		ChangeState(ST_MOLE_GRABBING_1);
-	}
+	//}
 }
 
 void player_controller_mole::GrabbingBox1()
@@ -288,7 +298,8 @@ void player_controller_mole::GrabbingBox2()
 	t_grab2 -= getDeltaTime();
 	if (t_grab2 < 0) {
 		t_grab2 = 1.5f;
-		ChangeState(ST_MOLE_GRAB);
+		//ChangeState(ST_MOLE_GRAB);
+		ChangeState("idle");
 	}
 }
 

@@ -1,8 +1,9 @@
 <model>
-  <skeleton    src ="skeletons/player/player.csf"/>
-  <animations src ="skeletons/player/"/>
-  <mesh     src="skeletons/player/player.cmf"/>
+  <skeleton    src ="skeletons/mole/mole.csf"/>
+  <animations src ="skeletons/mole/"/>
+  <mesh     src="skeletons/mole/mole.cmf"/>
   <key_bones 
-    right_hand="Raijin R Hand"
+    left_hand="mole L Hand"
+    right_hand="mole R Hand"
   />
 </model>

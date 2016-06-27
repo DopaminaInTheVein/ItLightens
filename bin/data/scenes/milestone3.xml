@@ -2699,7 +2699,8 @@
 <entity>
 <tags
    tags="box platform removable"/>
-<box/>
+<box
+   size="3.0 1.5 3.0"/>
 <name
    name="Box_3"/>
 <transform
@@ -2713,6 +2714,27 @@
    type_collision="dynamic"
    type_shape="convex"
    mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="box platform removable"/>
+<box
+   size="1.0 1.0 1.0"/>
+<name
+   name="Box_1"/>
+<transform
+   pos="-83.2007 5.16296 7.03352"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="2"/>
 <local_aabb/>
 
 </entity>
