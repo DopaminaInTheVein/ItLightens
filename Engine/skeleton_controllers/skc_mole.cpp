@@ -18,7 +18,7 @@ void SkelControllerMole::grabObject(CHandle h)
 	GET_COMP(tMe, owner, TCompTransform);
 	box->getGrabPoints(tMe->getPosition(), left_h_target, right_h_target);
 	enableIK(SK_LHAND, grabLeftIK, 3.f);
-	enableIK(SK_LHAND, grabRightIK, 2.f);
+	enableIK(SK_RHAND, grabRightIK, 2.f);
 }
 
 bool SkelControllerMole::getUpdateInfo()
@@ -95,13 +95,22 @@ VEC3 SkelControllerMole::getGrabRight()
 	return right_h_target;
 }
 
+CHandle SkelControllerMole::getGrabbed()
+{
+	return grabbed;
+}
+
 
 IK_IMPL_SOLVER(grabLeftIK, info, result) {
 	GET_COMP(skc, info.handle, SkelControllerMole);
+	GET_COMP(tmx, skc->getGrabbed(), TCompTransform);
+	result.bone_front = tmx->getPosition();
 	result.offset_pos = skc->getGrabLeft() - info.bone_pos;
 }
 
 IK_IMPL_SOLVER(grabRightIK, info, result) {
 	GET_COMP(skc, info.handle, SkelControllerMole);
+	GET_COMP(tmx, skc->getGrabbed(), TCompTransform);
+	result.bone_front = tmx->getPosition();
 	result.offset_pos = skc->getGrabRight() - info.bone_pos;
 }

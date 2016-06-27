@@ -129,7 +129,7 @@ void TCompBox::render() {
 }
 #endif
 
-bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right) {
+bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, float offset_separation) {
 	GET_MY(t, TCompTransform);
 	VEC3 pos = t->getPosition();
 	// Four directions
@@ -158,8 +158,8 @@ bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right) {
 
 	//Calc position
 	VEC3 left_actor = directions[(max_dot_index + 3) % 4];
-	left = left_actor * sizes[max_dot_index] / 2;
-	right = (left_actor * -sizes[max_dot_index] / 2);
+	left = left_actor * (sizes[max_dot_index] / 2 + offset_separation);
+	right = -left_actor * (sizes[max_dot_index] / 2 + offset_separation);
 	left += pos;
 	right += pos;
 	return true;

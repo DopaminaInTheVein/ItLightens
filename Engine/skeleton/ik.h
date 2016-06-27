@@ -8,9 +8,11 @@ namespace IK {
 	struct InfoSolver {
 		CHandle handle;
 		VEC3 bone_pos;
+		VEC3 bone_front;
 	};
 	struct ResultSolver {
 		VEC3 offset_pos;
+		VEC3 bone_front;
 	};
 
 	//template<typename TObj>

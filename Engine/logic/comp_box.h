@@ -26,7 +26,7 @@ struct TCompBox : public TCompBase {
 	VEC3 GetLeavePoint() const;
 	bool isRemovable();
 	void onUnLeaveBox(const TMsgLeaveBox& msg);
-	bool getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right);
+	bool getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, float offset_separation = 0.3f);
 	
 #ifndef NDEBUG
 	void render();

@@ -23,6 +23,7 @@ public:
 	void grabObject(CHandle);
 	VEC3 getGrabLeft();
 	VEC3 getGrabRight();
+	CHandle getGrabbed();
 
 	bool load(MKeyValue& atts) { return true; }
 	//void onCreate(const TMsgEntityCreated&);
