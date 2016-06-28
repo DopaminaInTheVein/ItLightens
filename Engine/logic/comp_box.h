@@ -11,6 +11,10 @@ struct TCompBox : public TCompBase {
 	bool removable = true;
 	bool added = false;
 	VEC3 size;
+	enum eTypeBox {
+		SMALL = 0,
+		MEDIUM
+	} type_box;
 
 	CHandle mParent;
 	VEC3 originPoint;

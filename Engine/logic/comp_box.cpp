@@ -80,6 +80,8 @@ bool TCompBox::load(MKeyValue& atts) {
 	carePosition = atts.getBool("fixed", false);
 	removable = atts.getBool("removable", false);
 	size = atts.getPoint("size");
+	if (size.x < 1.5f) type_box = eTypeBox::SMALL;
+	else type_box = eTypeBox::MEDIUM;
 	return true;
 }
 
@@ -157,10 +159,23 @@ bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, VEC
 
 	//Calc position
 	VEC3 left_actor = directions[(max_dot_index + 3) % 4];
-	left = left_actor * (sizes[max_dot_index] / 2 + offset_separation);
-	right = -left_actor * (sizes[max_dot_index] / 2 + offset_separation);
+	VEC3 right_actor = -left_actor;
+	front_dir = directions[(max_dot_index + 4) % 4];
+	if (type_box == eTypeBox::SMALL) {
+		left = left_actor * (sizes[max_dot_index] / 2 + offset_separation);
+		right = right_actor * (sizes[max_dot_index] / 2 + offset_separation);
+	}
+	else {
+		float size_front = sizes[max_dot_index + 1 % 4];
+		left = left_actor * (sizes[max_dot_index] / 4);
+		left.y -= size.y;
+		left -= front_dir * size_front / 2.f;
+
+		right = right_actor * (sizes[max_dot_index] / 4);
+		right.y -= size.y;
+		right -= front_dir * size_front / 2.f;
+	}
 	left += pos;
 	right += pos;
-	front_dir = directions[(max_dot_index + 4) % 4];
 	return true;
 }
