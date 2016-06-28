@@ -4,6 +4,8 @@
 #include "skel_controller.h"
 #include "player_controllers/player_controller_mole.h"
 
+#define SK_MOLE_TIME_TO_GRAB 1.1f
+
 //Forward Declaration
 class TCompCharacterController;
 class player_controller_mole;
@@ -13,7 +15,7 @@ protected:
 	TCompCharacterController * cc;
 	player_controller_mole * pc;
 	CHandle grabbed;
-	VEC3 left_h_target, right_h_target;
+	VEC3 left_h_target, right_h_target, front_h_dir;
 
 	void SetCharacterController();
 	void SetPlayerController();
@@ -23,6 +25,7 @@ public:
 	void grabObject(CHandle);
 	VEC3 getGrabLeft();
 	VEC3 getGrabRight();
+	VEC3 getGrabFrontDir();
 	CHandle getGrabbed();
 
 	bool load(MKeyValue& atts) { return true; }

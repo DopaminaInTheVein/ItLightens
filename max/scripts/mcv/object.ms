@@ -68,7 +68,7 @@ struct OM (
 			-- Attributes
 			,#("fixed")
 			--Components
-			,#("box")
+			,#("box", "bone_tracker")
 			--Helpers
 			,#()
 		)

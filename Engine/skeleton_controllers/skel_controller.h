@@ -20,6 +20,9 @@
 #define AST_STUNNED				"stun"
 #define AST_STUNNED_BOX			"stun"
 #define AST_RECHARGE			"recharge"
+#define AST_GRAB_1				"grab_box"
+#define AST_GRAB_2				"grab_box_2"
+#define AST_GRAB_IDLE			"grab_box_idle"
 // ------------------- //
 
 template< class TObj >

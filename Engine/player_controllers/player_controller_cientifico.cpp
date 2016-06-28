@@ -94,7 +94,7 @@ void player_controller_cientifico::Init() {
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 	ChangeState("idle");
-	
+
 	getUpdateInfoBase(CHandle(this).getOwner());
 	SET_ANIM_SCIENTIST(AST_IDLE);
 	//animController.setState(AST_IDLE);
@@ -377,7 +377,9 @@ void player_controller_cientifico::spawnBomb()
 	TMsgAttach msg;
 	msg.handle = CHandle(this).getOwner();
 	msg.bone_name = SK_RHAND;
-	bomb_handle.sendMsg(msg); //TODO por aqui
+	msg.save_local_tmx = false;
+	bomb_handle.sendMsg(msg);
+
 	//float yaw, pitch;
 	//bomb_trans->setPosition(transform->getPosition());
 	//transform->getAngles(&yaw, &pitch);

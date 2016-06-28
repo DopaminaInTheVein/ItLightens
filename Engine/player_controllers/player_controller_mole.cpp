@@ -109,10 +109,10 @@ void player_controller_mole::myUpdate()
 
 	if (this->nearToBox()) {
 		GET_COMP(box, boxNear, TCompBox);
-		VEC3 left, right;
-		box->getGrabPoints(transform->getPosition(), left, right);
-		Debug->DrawLine(transform->getPosition(), left, VEC3(1,1,0));
-		Debug->DrawLine(transform->getPosition(), right, VEC3(0,0,1));
+		VEC3 left, right, front_dir;
+		box->getGrabPoints(transform->getPosition(), left, right, front_dir);
+		Debug->DrawLine(transform->getPosition(), left, VEC3(1, 1, 0));
+		Debug->DrawLine(transform->getPosition(), right, VEC3(0, 0, 1));
 	}
 
 	Debug->DrawLine(transform->getPosition(), transform->getFront(), 1.f);
@@ -266,11 +266,11 @@ void player_controller_mole::update_msgs()
 
 void player_controller_mole::TurnToGrab()
 {
-	//bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
-	//if (faced) {
+	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
+	if (faced) {
 		animController->grabObject(boxNear);
 		ChangeState(ST_MOLE_GRABBING_1);
-	//}
+	}
 }
 
 void player_controller_mole::GrabbingBox1()
@@ -279,11 +279,12 @@ void player_controller_mole::GrabbingBox1()
 	//IK stuff
 
 	//Provisional
-	static float t_grab1 = 1.f;
+	static float t_grab1 = SK_MOLE_TIME_TO_GRAB;
 	t_grab1 -= getDeltaTime();
 	if (t_grab1 < 0) {
-		t_grab1 = 1.f;
+		t_grab1 = SK_MOLE_TIME_TO_GRAB;
 		ChangeState(ST_MOLE_GRABBING_2);
+		animController->setState(AST_GRAB_IDLE);
 	}
 }
 
@@ -294,12 +295,11 @@ void player_controller_mole::GrabbingBox2()
 	//Box track player hands
 
 	//Provisional
-	static float t_grab2 = 1.5f;
+	static float t_grab2 = SK_MOLE_TIME_TO_GRAB;
 	t_grab2 -= getDeltaTime();
 	if (t_grab2 < 0) {
-		t_grab2 = 1.5f;
-		//ChangeState(ST_MOLE_GRAB);
-		ChangeState("idle");
+		t_grab2 = SK_MOLE_TIME_TO_GRAB;
+		ChangeState(ST_MOLE_GRAB);
 	}
 }
 

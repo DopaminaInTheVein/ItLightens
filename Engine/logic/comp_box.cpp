@@ -129,7 +129,7 @@ void TCompBox::render() {
 }
 #endif
 
-bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, float offset_separation) {
+bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, VEC3& front_dir, float offset_separation) {
 	GET_MY(t, TCompTransform);
 	VEC3 pos = t->getPosition();
 	// Four directions
@@ -142,12 +142,11 @@ bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, flo
 	sizes[0] = sizes[2] = size.z;
 	sizes[1] = sizes[3] = size.x;
 
-
 	//Get the best direction
 	float max_dot = FLT_MIN;
 	int max_dot_index = -1;
 	VEC3 actor_dir = pos - actor_pos;
-	actor_dir.Normalize();	
+	actor_dir.Normalize();
 	for (int i = 0; i < 4; i++) {
 		float dot = actor_dir.Dot(directions[i]);
 		if (dot > max_dot) {
@@ -162,5 +161,6 @@ bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, flo
 	right = -left_actor * (sizes[max_dot_index] / 2 + offset_separation);
 	left += pos;
 	right += pos;
+	front_dir = directions[(max_dot_index + 4) % 4];
 	return true;
 }

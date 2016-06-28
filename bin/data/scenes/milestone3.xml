@@ -2701,6 +2701,7 @@
    tags="box platform removable"/>
 <box
    size="3.0 1.5 3.0"/>
+<bone_tracker/>
 <name
    name="Box_3"/>
 <transform
@@ -2722,6 +2723,7 @@
    tags="box platform removable"/>
 <box
    size="1.0 1.0 1.0"/>
+<bone_tracker/>
 <name
    name="Box_1"/>
 <transform

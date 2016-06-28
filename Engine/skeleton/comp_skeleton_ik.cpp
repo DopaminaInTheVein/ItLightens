@@ -47,7 +47,7 @@ void TCompSkeletonIK::onSetIKSolver(const TMsgSetIKSolver& msg)
 	else {
 		GET_COMP(skel, msg.handle, TCompSkeleton);
 		int bone_id = skel->getKeyBoneId(msg.bone_name);
-		for (auto mod = mods.begin(); mod != mods.end(); mod++){
+		for (auto mod = mods.begin(); mod != mods.end(); mod++) {
 			if (mod->bone_id_c == bone_id) {
 				if (mod->h_solver == msg.handle) {
 					mod->enabled = false;
@@ -56,7 +56,6 @@ void TCompSkeletonIK::onSetIKSolver(const TMsgSetIKSolver& msg)
 			}
 		}
 	}
-	
 }
 
 TCompSkeletonIK::TBoneMod TCompSkeletonIK::getBoneModInvariant(string name)
@@ -99,7 +98,7 @@ TCompSkeletonIK::TBoneMod TCompSkeletonIK::getBoneModInvariant(string name)
 	mod.dist_bc = cal_bc.length();
 
 	mod.enabled = true,
-	mod.time = 0;
+		mod.time = 0;
 
 	return mod;
 }
@@ -139,7 +138,7 @@ void TCompSkeletonIK::solveBone(TBoneMod* bm) {
 	ResultSolver res;
 	solver.bone_pos = ik.C;
 	solver.handle = bm->h_solver;
-	solver.bone_front = res.bone_front = Cal2Engine(abs_front);
+	//solver.bone_front = res.bone_front = Cal2Engine(abs_front);
 	bm->f_solver(solver, res);
 	ik.C += res.offset_pos * amount;
 	//-- End specific function --
@@ -165,9 +164,9 @@ void TCompSkeletonIK::solveBone(TBoneMod* bm) {
 
 	// Bone orientation
 
-	CCoreModel::TBoneCorrector front_fix(bm->bone_id_c, local_front);
-	CalVector front_target = bone_c->getTranslationAbsolute() + Engine2Cal(res.bone_front);
-	front_fix.apply(model, front_target, amount);
+	//CCoreModel::TBoneCorrector front_fix(bm->bone_id_c, local_front);
+	//CalVector front_target = bone_c->getTranslationAbsolute() + Engine2Cal(res.bone_front);
+	//front_fix.apply(model, front_target, amount);
 
 	// Apply post correction? (another bone_solver)?
 	// Example: restart orientation foot

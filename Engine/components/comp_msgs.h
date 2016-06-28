@@ -24,6 +24,7 @@ struct TMsgAwake {
 struct TMsgAttach {
 	CHandle handle;
 	std::string bone_name;
+	bool save_local_tmx;
 	DECLARE_MSG_ID();
 };
 

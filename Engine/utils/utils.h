@@ -19,6 +19,7 @@
 #else
 void		dbg(const char* fmt, ...);
 #define VEC3_VALUES(name) name.x, name.y, name.z
+#define VEC4_VALUES(name) name.x, name.y, name.z, name.w
 
 #endif
 

@@ -12,7 +12,7 @@ namespace IK {
 	};
 	struct ResultSolver {
 		VEC3 offset_pos;
-		VEC3 bone_front;
+		//VEC3 bone_front;
 	};
 
 	//template<typename TObj>
