@@ -4,7 +4,7 @@
 #include "skel_controller.h"
 #include "player_controllers/player_controller_mole.h"
 
-#define SK_MOLE_TIME_TO_GRAB 1.1f
+#define SK_MOLE_TIME_TO_GRAB 0.5f
 
 //Forward Declaration
 class TCompCharacterController;
@@ -20,6 +20,8 @@ protected:
 	void SetCharacterController();
 	void SetPlayerController();
 	void myUpdate();
+	void updateGrabPoints();
+	bool isMovingBox();
 
 public:
 	void grabObject(CHandle);

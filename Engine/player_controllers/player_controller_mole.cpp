@@ -269,6 +269,7 @@ void player_controller_mole::TurnToGrab()
 	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
 	if (faced) {
 		animController->grabObject(boxNear);
+		animController->setState(AST_GRAB_DOWN);
 		ChangeState(ST_MOLE_GRABBING_1);
 	}
 }
@@ -284,7 +285,7 @@ void player_controller_mole::GrabbingBox1()
 	if (t_grab1 < 0) {
 		t_grab1 = SK_MOLE_TIME_TO_GRAB;
 		ChangeState(ST_MOLE_GRABBING_2);
-		animController->setState(AST_GRAB_IDLE);
+		animController->setState(AST_GRAB_UP);
 	}
 }
 

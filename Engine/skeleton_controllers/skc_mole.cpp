@@ -46,6 +46,7 @@ void SkelControllerMole::SetPlayerController() {
 
 void SkelControllerMole::myUpdate()
 {
+	updateGrabPoints();
 	if (currentState == "walk" || currentState == "run") {
 		SetPlayerController();
 		if (!pc->isMoving()) {
@@ -77,17 +78,13 @@ void SkelControllerMole::myUpdate()
 			setAction("recharge", "idle");
 			currentState = "idle";
 		}
-		else if (currentState == AST_GRAB_1) {
-			setAction("grab_box", "idle");
-			currentState = "idle";
-		}
-		else if (currentState == AST_GRAB_IDLE) {
-			//setAction("grab_box", "grab_box");
+		else if (currentState == AST_GRAB_UP) {
+			setAction("grab_box_up", "grab_box");
 			currentState = AST_GRAB_IDLE;
 			disableIK(SK_RHAND);
-			disableIK(SK_LHAND);
+			//disableIK(SK_LHAND);
 			TMsgAttach msgAttach;
-			msgAttach.bone_name = SK_LHAND;
+			msgAttach.bone_name = SK_RHAND;
 			msgAttach.handle = owner;
 			msgAttach.save_local_tmx = true;
 			grabbed.sendMsg(msgAttach);
@@ -98,6 +95,21 @@ void SkelControllerMole::myUpdate()
 	}
 
 	priority = false;
+}
+
+void SkelControllerMole::updateGrabPoints()
+{
+	if (isMovingBox()) {
+		GET_COMP(box, grabbed, TCompBox);
+		GET_COMP(tMe, grabbed, TCompTransform);
+		box->getGrabPoints(tMe->getPosition(), left_h_target, right_h_target, front_h_dir, 0.3f, false);
+	}
+}
+
+bool SkelControllerMole::isMovingBox()
+{
+	if (!grabbed.isValid()) return false;
+	return currentState == AST_GRAB_UP || currentState == AST_GRAB_IDLE;
 }
 
 VEC3 SkelControllerMole::getGrabLeft()

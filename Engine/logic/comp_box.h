@@ -11,6 +11,7 @@ struct TCompBox : public TCompBase {
 	bool removable = true;
 	bool added = false;
 	VEC3 size;
+	int max_dot_index;
 	enum eTypeBox {
 		SMALL = 0,
 		MEDIUM
@@ -30,7 +31,7 @@ struct TCompBox : public TCompBase {
 	VEC3 GetLeavePoint() const;
 	bool isRemovable();
 	void onUnLeaveBox(const TMsgLeaveBox& msg);
-	bool getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, VEC3& front_dir, float offset_separation = 0.3f);
+	bool getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, VEC3& front_dir, float offset_separation = 0.3f, bool recalc = true);
 
 #ifndef NDEBUG
 	void render();
