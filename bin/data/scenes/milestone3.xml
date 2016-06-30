@@ -1603,7 +1603,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="convex"
+   type_shape="box"
+   size="3.3 0.15 2.5"
    mass="5"
    kinematic="yes"/>
 <local_aabb/>

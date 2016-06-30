@@ -323,6 +323,7 @@ void player_controller_mole::GrabbedBox() {
 	grabInfo.last_correct_pos = posBox;
 
 	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, true);
+	box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, true);
 	box_p->setGravity(false);
 
 	energyDecreasal(5.0f);
