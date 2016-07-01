@@ -21,7 +21,7 @@ void PossController::addPossStates() {
 
 void PossController::UpdatePossession() {
 	if (npcIsPossessed) {
-		if ((io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) && possessionCooldown <= 0.0f) {
+		if (controlEnabled && (io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) && possessionCooldown <= 0.0f) {
 			CEntity* myParent = getMyEntity();
 			TCompName * myParentName = myParent->get<TCompName>();
 			string name = myParentName->name;

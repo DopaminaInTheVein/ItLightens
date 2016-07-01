@@ -39,7 +39,13 @@ function activateElevator( )
   h:activate()
   
   p:exec_command( "triggerElevator:setActionable(1);", 2 )
-  p:exec_command( "p:setControlEnabled(1);", 5 )
+  p:exec_command( "p:setControlEnabled(0);", 5 )
+  
+  --cam:run_cinematic("CineWireGoUp", factorWireGoUp * 5)
+
+  p:exec_command( "cam:fade_out(1);", 0.5)
+  p:exec_command( "cam:fade_in(1);", 5.0)
+  
 end
 
 function activateElevatorPlayer( )
