@@ -551,6 +551,13 @@ void player_controller_cientifico::onCanRepairDrone(const TMsgCanRechargeDrone &
 	canRepairDrone = msg.range;
 	drone = msg.han;
 }
+// JUMP
+
+bool player_controller_cientifico::canJump() {
+	bool ascending = cc->GetLastSpeed().y > 0.1f;
+	bool descending = cc->GetLastSpeed().y < -0.1f;
+	return !ascending && !descending;
+}
 
 //Anims
 void player_controller_cientifico::ChangeCommonState(std::string state) {

@@ -5,6 +5,7 @@
 #include "constants/ctes_hatching.h"
 #include "constants/ctes_bones.h"
 #include "constants/ctes_data.h"
+#include "constants/ctes_blur.h"
 
 Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
 Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
