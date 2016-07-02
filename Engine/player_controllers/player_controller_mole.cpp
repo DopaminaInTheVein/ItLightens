@@ -257,11 +257,6 @@ void player_controller_mole::update_msgs()
 	ui.addTextInstructions("Click Left Mouse      -> Grab/Throw near Box or Break Wall");
 }
 
-//Cambio de malla
-//void player_controller_mole::ChangePose(string new_pose_route) {
-//	mesh->unregisterFromRender();
-//	MKeyValue atts_mesh;
-//	atts_mesh["name"] = new_pose_route;
-//	mesh->load(atts_mesh);
-//	mesh->registerToRender();
-//}
+bool player_controller_mole::canJump() {
+	return !boxGrabbed && jspeed < 0.01f && jspeed > -0.01f;
+}

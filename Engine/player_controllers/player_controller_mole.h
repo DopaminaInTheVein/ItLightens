@@ -73,6 +73,9 @@ public:
 	void UpdateMovingWithOther();
 	void UpdateUnpossess();
 
+	// JUMP
+	bool canJump() override;
+
 	TCompTransform * getEntityTransform() {
 		return transform;
 	}

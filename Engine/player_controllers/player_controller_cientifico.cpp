@@ -94,7 +94,7 @@ void player_controller_cientifico::Init() {
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 	ChangeState("idle");
-	
+
 	getUpdateInfoBase(CHandle(this).getOwner());
 	SET_ANIM_SCIENTIST(AST_IDLE);
 	//animController.setState(AST_IDLE);
@@ -548,6 +548,13 @@ void player_controller_cientifico::onCanRepairDrone(const TMsgCanRechargeDrone &
 {
 	canRepairDrone = msg.range;
 	drone = msg.han;
+}
+// JUMP
+
+bool player_controller_cientifico::canJump() {
+	bool ascending = cc->GetLastSpeed().y > 0.1f;
+	bool descending = cc->GetLastSpeed().y < -0.1f;
+	return !ascending && !descending;
 }
 
 //Anims
