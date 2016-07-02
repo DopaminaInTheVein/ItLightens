@@ -72,12 +72,13 @@ float random(float vmin, float vmax) {
 }
 
 bool isInRoom(CHandle h) {
-	if (SBB::readSala() == "none") return true;
+	std::string pjSala = SBB::readSala();
+	if (pjSala == "none") return true;
 	CEntity * e = h;
 	if (!e) return true;
 	TCompRoom * room = e->get<TCompRoom>();
 	if (!room) return true;
-	return room->name == SBB::readSala();
+	return room->name == pjSala;
 }
 
 float squared(float i) {

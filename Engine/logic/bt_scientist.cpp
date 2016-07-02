@@ -195,6 +195,11 @@ int bt_scientist::actionStunned() {
 int bt_scientist::actionAimToPos() {
 	//Look to next target position
 	if (turnTo(obj_position)) {
+		SetMyEntity(); //needed in case address Entity moved by handle_manager
+		if (!myEntity) return KO;
+		TCompTransform *me_transform = myEntity->get<TCompTransform>();
+		VEC3 myPos = me_transform->getPosition();
+		getPath(myPos, obj_position);
 		return OK;
 	}
 	else {
@@ -216,7 +221,7 @@ int bt_scientist::actionMoveToPos() {
 		return OK;
 	}
 	else {
-		getPath(myPos, obj_position);
+		//getPath(myPos, obj_position);
 		//animController.setState(AST_RUN);
 		goTo(obj_position);
 		return STAY;
@@ -238,7 +243,7 @@ int bt_scientist::actionSeekWpt() {
 			return OK;
 		}
 		else {
-			getPath(myPos, dest);
+			//getPath(myPos, dest);
 			//animController.setState(AST_RUN);
 			goTo(dest);
 			return STAY;
@@ -266,6 +271,11 @@ int bt_scientist::actionNextWpt() {
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Look to waypoint
 	if (turnTo(dest)) {
+		SetMyEntity(); //needed in case address Entity moved by handle_manager
+		if (!myEntity) return KO;
+		TCompTransform *me_transform = myEntity->get<TCompTransform>();
+		VEC3 myPos = me_transform->getPosition();
+		getPath(myPos, dest);
 		return OK;
 	}
 	else {
@@ -325,6 +335,7 @@ int bt_scientist::actionSelectWorkstation() {
 		ws_to_go = station_pos;
 		ws_yaw = workstation->getActionYaw();
 
+		getPath(myPos, ws_to_go);
 		return OK;
 	}
 
@@ -344,7 +355,7 @@ int bt_scientist::actionGoToWorkstation() {
 		return OK;
 	}
 	else {
-		getPath(myPos, ws_to_go);
+		//getPath(myPos, ws_to_go);
 		//animController.setState(AST_RUN);
 		goTo(ws_to_go);
 		return STAY;
@@ -391,7 +402,7 @@ int bt_scientist::actionWaitInWorkstation() {
 // -- Go To -- //
 void bt_scientist::goTo(const VEC3& dest) {
 	PROFILE_FUNCTION("scientist: go to");
-	if (!SBB::readBool(SBB::readSala())) {
+	if (!SBB::readBool("navmesh")) {
 		return;
 	}
 	VEC3 target = dest;

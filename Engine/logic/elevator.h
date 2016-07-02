@@ -17,6 +17,7 @@ class elevator : public TCompBase {
 	float speedUp;
 	float speedDown;
 	float epsilonTarget;
+	float lastSpeed = 0.0f;
 	eElevatorState state;
 	eElevatorState prevState;
 
