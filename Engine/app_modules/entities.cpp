@@ -73,7 +73,6 @@ DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
-DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("drone", TCompDrone);
@@ -110,6 +109,7 @@ DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
 
 //fx
 DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
+DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
 
 CCamera * camera;
 

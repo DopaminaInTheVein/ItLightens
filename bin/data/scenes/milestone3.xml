@@ -1524,6 +1524,7 @@
 <culling/>
 <controller_3rd_person/>
 <FX_fade_screen/>
+<render_glow/>
 <name
    name="camController_1"/>
 <transform
