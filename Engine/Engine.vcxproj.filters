@@ -9,16 +9,16 @@
       <Filter>geometry</Filter>
     </ClCompile>
     <ClCompile Include="render\shaders.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="render\render.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="render\mesh.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="render\vertex_declarations.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="camera\camera.cpp">
       <Filter>camera</Filter>
@@ -36,19 +36,19 @@
       <Filter>geometry</Filter>
     </ClCompile>
     <ClCompile Include="render\mesh_manager.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="resources\resources_manager.cpp">
       <Filter>resources</Filter>
     </ClCompile>
     <ClCompile Include="render\technique.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="render\texture.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="render\DDSTextureLoader.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="handle\handle.cpp">
       <Filter>handle</Filter>
@@ -99,16 +99,16 @@
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="render\material.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="render\static_mesh.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="components\comp_render_static_mesh.cpp">
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="render\render_manager.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="logic\sbb.cpp">
       <Filter>logic</Filter>
@@ -310,7 +310,7 @@
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="render\draw_utils.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="debug\console.cpp">
       <Filter>debug</Filter>
@@ -322,10 +322,10 @@
       <Filter>skeleton</Filter>
     </ClCompile>
     <ClCompile Include="render\render_config.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="render\render_to_texture.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="app_modules\render\module_render_deferred.cpp">
       <Filter>app_modules\render</Filter>
@@ -376,7 +376,7 @@
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="render\fx\GuardShots.cpp">
-      <Filter>recast\render\fx</Filter>
+      <Filter>render\fx</Filter>
     </ClCompile>
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp">
       <Filter>app_modules\sound_manager</Filter>
@@ -464,7 +464,7 @@
       <Filter>app_modules\particles</Filter>
     </ClCompile>
     <ClCompile Include="render\render_instanced.cpp">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="logic\ai_cam.cpp">
       <Filter>logic</Filter>
@@ -491,13 +491,8 @@
     <ClCompile Include="skeleton\skeleton_manager.cpp">
       <Filter>skeleton</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="logic\comp_box.cpp">
-      <Filter>logic</Filter>
-=======
     <ClCompile Include="components\comp_room_limit.cpp">
       <Filter>components</Filter>
->>>>>>> dev
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -512,19 +507,19 @@
       <Filter>geometry</Filter>
     </ClInclude>
     <ClInclude Include="render\shaders.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\render.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\mesh.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\vertex_declarations.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\shader_cte.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="camera\camera.h">
       <Filter>camera</Filter>
@@ -551,16 +546,16 @@
       <Filter>utils</Filter>
     </ClInclude>
     <ClInclude Include="render\technique.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\texture.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\DDSTextureLoader.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\gpu_trace.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="handle\handle.h">
       <Filter>handle</Filter>
@@ -620,16 +615,16 @@
       <Filter>app_modules\imgui</Filter>
     </ClInclude>
     <ClInclude Include="render\material.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\static_mesh.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_render_static_mesh.h">
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="render\render_manager.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="logic\sbb.h">
       <Filter>logic</Filter>
@@ -839,10 +834,10 @@
       <Filter>app_modules\game</Filter>
     </ClInclude>
     <ClInclude Include="render\mesh_format.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\draw_utils.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="utils\data_saver.h">
       <Filter>utils</Filter>
@@ -863,10 +858,10 @@
       <Filter>skeleton</Filter>
     </ClInclude>
     <ClInclude Include="render\render_config.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\render_to_texture.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="app_modules\render\module_render_deferred.h">
       <Filter>app_modules\render</Filter>
@@ -988,6 +983,9 @@
     <ClInclude Include="debug\debug_itlightens.h">
       <Filter>debug</Filter>
     </ClInclude>
+    <ClInclude Include="components\comp_box.h">
+      <Filter>components</Filter>
+    </ClInclude>
     <ClInclude Include="components\comp_trigger_lua.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -1046,7 +1044,7 @@
       <Filter>app_modules\gui</Filter>
     </ClInclude>
     <ClInclude Include="render\fx\GuardShots.h">
-      <Filter>recast\render\fx</Filter>
+      <Filter>render\fx</Filter>
     </ClInclude>
     <ClInclude Include="app_modules\sound_manager\sound_manager.h">
       <Filter>app_modules\sound_manager</Filter>
@@ -1058,19 +1056,19 @@
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h">
-      <Filter>recast\render\constants</Filter>
+      <Filter>render\constants</Filter>
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h">
-      <Filter>recast\render\constants</Filter>
+      <Filter>render\constants</Filter>
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h">
-      <Filter>recast\render\constants</Filter>
+      <Filter>render\constants</Filter>
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_object.h">
-      <Filter>recast\render\constants</Filter>
+      <Filter>render\constants</Filter>
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h">
-      <Filter>recast\render\constants</Filter>
+      <Filter>render\constants</Filter>
     </ClInclude>
     <ClInclude Include="skeleton_controllers\skel_controller.h">
       <Filter>skeleton_controllers</Filter>
@@ -1085,7 +1083,7 @@
       <Filter>app_modules\gui</Filter>
     </ClInclude>
     <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h">
-      <Filter>recast\render\constants</Filter>
+      <Filter>render\constants</Filter>
     </ClInclude>
     <ClInclude Include="logic\polarity.h">
       <Filter>logic</Filter>
@@ -1319,7 +1317,7 @@
       <Filter>app_modules\particles</Filter>
     </ClInclude>
     <ClInclude Include="render\render_instanced.h">
-      <Filter>recast\render</Filter>
+      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="logic\ai_cam.h">
       <Filter>logic</Filter>
@@ -1352,18 +1350,19 @@
       <Filter>skeleton</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-<<<<<<< HEAD
-    <ClInclude Include="logic\comp_box.h">
-      <Filter>logic</Filter>
-=======
     <ClInclude Include="components\comp_room_limit.h">
       <Filter>components</Filter>
->>>>>>> dev
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
       <UniqueIdentifier>{001cbc38-e382-49ea-b01f-ab847fd8b239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{79867027-4de9-4a41-839a-f7ac987877eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render\shaders">
+      <UniqueIdentifier>{865620ba-b159-49d0-b912-472a7603202c}</UniqueIdentifier>
     </Filter>
     <Filter Include="geometry">
       <UniqueIdentifier>{6ac4c3d5-f010-4f38-8161-11f5beca9294}</UniqueIdentifier>
@@ -1497,11 +1496,17 @@
     <Filter Include="app_modules\gui">
       <UniqueIdentifier>{063e8cb1-512e-494c-a79a-0f13c83dfb31}</UniqueIdentifier>
     </Filter>
+    <Filter Include="render\fx">
+      <UniqueIdentifier>{9d0f3ef4-490d-4188-99c0-692744ec2cc1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="fmod">
       <UniqueIdentifier>{528e1a57-420c-4a71-90fc-157459fc227e}</UniqueIdentifier>
     </Filter>
     <Filter Include="app_modules\sound_manager">
       <UniqueIdentifier>{0012f195-886a-4a8a-8113-bd4f5cb5649a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render\constants">
+      <UniqueIdentifier>{61448c20-12c5-409f-a50b-43ba674d0122}</UniqueIdentifier>
     </Filter>
     <Filter Include="skeleton_controllers">
       <UniqueIdentifier>{443dd437-87c4-422c-8e95-0f58386a2893}</UniqueIdentifier>
@@ -1524,28 +1529,16 @@
     <Filter Include="app_modules\particles">
       <UniqueIdentifier>{39998eac-d4cc-4be4-bbba-a3a4d8b79e2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="recast\render">
-      <UniqueIdentifier>{79867027-4de9-4a41-839a-f7ac987877eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="recast\render\shaders">
-      <UniqueIdentifier>{865620ba-b159-49d0-b912-472a7603202c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="recast\render\fx">
-      <UniqueIdentifier>{9d0f3ef4-490d-4188-99c0-692744ec2cc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="recast\render\constants">
-      <UniqueIdentifier>{61448c20-12c5-409f-a50b-43ba674d0122}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\bin\data\shaders\basic.fx">
-      <Filter>recast\render\shaders</Filter>
+      <Filter>render\shaders</Filter>
     </FxCompile>
     <FxCompile Include="..\bin\data\shaders\skin.fx">
-      <Filter>recast\render\shaders</Filter>
+      <Filter>render\shaders</Filter>
     </FxCompile>
     <FxCompile Include="..\bin\data\shaders\deferred.fx">
-      <Filter>recast\render\shaders</Filter>
+      <Filter>render\shaders</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
