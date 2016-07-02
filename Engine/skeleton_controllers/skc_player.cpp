@@ -86,5 +86,5 @@ void SkelControllerPlayer::myUpdateIK()
 }
 
 IK_IMPL_SOLVER(heilTest, info, result) {
-	result.offset_pos = VEC3(0.f, 0.3f, 0.f);
+	result.new_pos = info.bone_pos + VEC3(0.f, 0.3f, 0.f);
 }

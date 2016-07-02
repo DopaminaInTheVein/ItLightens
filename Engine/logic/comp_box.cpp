@@ -163,17 +163,20 @@ bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, VEC
 	VEC3 left_actor = directions[(max_dot_index + 3) % 4];
 	VEC3 right_actor = -left_actor;
 	front_dir = directions[(max_dot_index + 4) % 4];
+	float size_sides = sizes[max_dot_index];
+	float size_front = sizes[max_dot_index + 1 % 4];
 	if (type_box == eTypeBox::SMALL) {
-		left = left_actor * (sizes[max_dot_index] / 2 + offset_separation);
-		right = right_actor * (sizes[max_dot_index] / 2 + offset_separation);
+		left = left_actor * (size_sides / 2 + offset_separation);
+		right = right_actor * (size_sides / 2 + offset_separation);
+		//left -= front_dir * size_front / 4;
+		//right -= front_dir * size_front / 4;
 	}
 	else {
-		float size_front = sizes[max_dot_index + 1 % 4];
-		left = left_actor * (sizes[max_dot_index] / 4);
+		left = left_actor * (size_sides / 4);
 		left.y -= size.y;
 		left -= front_dir * size_front / 2.f;
 
-		right = right_actor * (sizes[max_dot_index] / 4);
+		right = right_actor * (size_sides / 4);
 		right.y -= size.y;
 		right -= front_dir * size_front / 2.f;
 	}

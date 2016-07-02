@@ -611,13 +611,14 @@ void CEntitiesModule::update(float dt) {
 
 		if (use_parallel) {
 			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
+			getHandleManager<TCompBoneTracker>()->updateAllInParallel(dt);
 			getHandleManager<TCompSkeletonIK>()->updateAllInParallel(dt);
 		}
 		else {
 			getHandleManager<TCompSkeleton>()->updateAll(dt);
+			getHandleManager<TCompBoneTracker>()->updateAll(dt);
 			getHandleManager<TCompSkeletonIK>()->updateAll(dt);
 		}
-		getHandleManager<TCompBoneTracker>()->updateAll(dt);
 
 		if (SBB::readBool("navmesh") && ia_wait > 1.0f) {
 			getHandleManager<bt_mole>()->updateAll(dt);

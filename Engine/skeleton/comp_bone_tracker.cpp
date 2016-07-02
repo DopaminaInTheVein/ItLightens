@@ -5,6 +5,7 @@
 #include "components/comp_transform.h"
 #include "components/comp_physics.h"
 #include "skeleton/comp_skeleton.h"
+#include "skeleton/comp_skeleton_ik.h"
 #include "cal3d/cal3d.h"
 
 extern VEC3 Cal2Engine(CalVector v);
@@ -117,4 +118,8 @@ void TCompBoneTracker::update(float dt) {
 	if (rd = physics->getActor()->isRigidDynamic()) {
 		rd->setGlobalPose(PhysxConversion::ToPxTransform(trans, rot));
 	}
+
+	////If I follow a bone and other bone is following me IK needs an extra update!
+	//GET_COMP(comp_ik, h_entity, TCompSkeletonIK);
+	//if (comp_ik) comp_ik->update(dt);
 }

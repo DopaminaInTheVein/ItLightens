@@ -20,6 +20,7 @@ protected:
 	void SetCharacterController();
 	void SetPlayerController();
 	void myUpdate();
+	void updateGrab();
 	void updateGrabPoints();
 	bool isMovingBox();
 
@@ -35,7 +36,7 @@ public:
 	bool getUpdateInfo() override;
 	void update(float elapsed) { TCompSkelController::update(); }
 
-	void renderInMenu() {}
+	void renderInMenu() { TCompSkelController::renderInMenu(); }
 
 	//Overload function for handler_manager
 	//SkelControllerMole& SkelControllerMole::operator=(SkelControllerMole arg) { return arg; }

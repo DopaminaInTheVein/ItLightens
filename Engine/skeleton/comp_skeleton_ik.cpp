@@ -131,6 +131,10 @@ void TCompSkeletonIK::solveBone(TBoneMod* bm) {
 	CalVector abs_left = Engine2Cal(tmx->getLeft());
 	CalQuaternion abs_rot_c = bone_c->getRotationAbsolute();
 	CalQuaternion inv_abs_rot_c = abs_rot_c;
+	CalQuaternion abs_rot_b = bone_b->getRotationAbsolute();
+	CalQuaternion inv_abs_rot_b = abs_rot_b;
+	CalQuaternion abs_rot_a = bone_a->getRotationAbsolute();
+	CalQuaternion inv_abs_rot_a = abs_rot_a;
 	inv_abs_rot_c.invert();
 
 	//-- Call specific function --
@@ -138,27 +142,36 @@ void TCompSkeletonIK::solveBone(TBoneMod* bm) {
 	ResultSolver res;
 	solver.bone_pos = ik.C;
 	solver.handle = bm->h_solver;
-	//solver.bone_front = res.bone_front = Cal2Engine(abs_front);
+	//solver.bone_normal = res.bone_front = Cal2Engine(abs_front);
 	bm->f_solver(solver, res);
-	ik.C += res.offset_pos * amount;
+	VEC3 offset_pos = res.new_pos - solver.bone_pos;
+	ik.C += offset_pos * amount;
 	//-- End specific function --
 
 	// These are the local directions that forms the plane of the foot
 	CalVector local_front = abs_front;  local_front *= inv_abs_rot_c;
 	CalVector local_left = abs_left;   local_left *= inv_abs_rot_c;
+	CalVector local_dir_ab = bone_b->getTranslationAbsolute() - bone_a->getTranslationAbsolute();
+	local_dir_ab.normalize();
+	local_dir_ab *= inv_abs_rot_a;
+	CalVector local_dir_bc = bone_c->getTranslationAbsolute() - bone_b->getTranslationAbsolute();
+	local_dir_bc.normalize();
+	local_dir_bc *= inv_abs_rot_b;
 
-	ik.normal = bm->normal;
+	ik.normal = isNormal(res.bone_normal) ? res.bone_normal : bm->normal;
 	ik.solveB();
 
 	//// Correct A to point to B
 	CCoreModel::TBoneCorrector bc;
 	bc.bone_id = bm->bone_id_a;
 	bc.local_dir.set(1, 0, 0);
+	//bc.local_dir.set(local_dir_ab);
 	bc.apply(model, Engine2Cal(ik.B), amount);
 
 	//// Correct B to point to C
 	bc.bone_id = bm->bone_id_b;
 	bc.local_dir.set(1, 0, 0);
+	//bc.local_dir.set(local_dir_bc);
 	bc.apply(model, Engine2Cal(ik.C), amount);
 	// -------------------------------------------------------------------------
 

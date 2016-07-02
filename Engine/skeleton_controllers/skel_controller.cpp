@@ -103,3 +103,8 @@ void TCompSkelController::disableIK(std::string bone_name)
 	msgIK.handle = owner;
 	owner.sendMsg(msgIK);
 }
+
+void TCompSkelController::renderInMenu()
+{
+	ImGui::Text("STATE: %s", currentState.c_str());
+}

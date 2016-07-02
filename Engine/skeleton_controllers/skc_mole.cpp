@@ -46,6 +46,7 @@ void SkelControllerMole::SetPlayerController() {
 
 void SkelControllerMole::myUpdate()
 {
+	updateGrab();
 	updateGrabPoints();
 	if (currentState == "walk" || currentState == "run") {
 		SetPlayerController();
@@ -79,7 +80,7 @@ void SkelControllerMole::myUpdate()
 			currentState = "idle";
 		}
 		else if (currentState == AST_GRAB_UP) {
-			setAction("grab_box_up", "grab_box");
+			setAction("grab_box_up", "grab_box_idle");
 			currentState = AST_GRAB_IDLE;
 			disableIK(SK_RHAND);
 			//disableIK(SK_LHAND);
@@ -97,6 +98,16 @@ void SkelControllerMole::myUpdate()
 	priority = false;
 }
 
+void SkelControllerMole::updateGrab()
+{
+	if (!grabbed.isValid()) return;
+	if (currentState == AST_IDLE) currentState = AST_GRAB_IDLE;
+	else if (currentState == AST_RUN) currentState = AST_GRAB_WALK;
+	else if (currentState == AST_MOVE) currentState = AST_GRAB_WALK;
+	if (isMovingBox()) {
+		updateGrabPoints();
+	}
+}
 void SkelControllerMole::updateGrabPoints()
 {
 	if (isMovingBox()) {
@@ -108,8 +119,10 @@ void SkelControllerMole::updateGrabPoints()
 
 bool SkelControllerMole::isMovingBox()
 {
-	if (!grabbed.isValid()) return false;
-	return currentState == AST_GRAB_UP || currentState == AST_GRAB_IDLE;
+	return currentState == AST_GRAB_UP
+		|| currentState == AST_GRAB_IDLE
+		|| currentState == AST_GRAB_WALK
+		;
 }
 
 VEC3 SkelControllerMole::getGrabLeft()
@@ -135,13 +148,20 @@ CHandle SkelControllerMole::getGrabbed()
 IK_IMPL_SOLVER(grabLeftIK, info, result) {
 	GET_COMP(skc, info.handle, SkelControllerMole);
 	GET_COMP(tmx, skc->getGrabbed(), TCompTransform);
-	//result.bone_front = skc->getGrabFrontDir();//tmx->getPosition();
-	result.offset_pos = skc->getGrabLeft() - info.bone_pos;
+	GET_COMP(tmx_mole, info.handle, TCompTransform);
+	result.new_pos = skc->getGrabLeft();
+	//result.bone_normal = VEC3(0, 1, 0);
+	//result.bone_normal = result.new_pos - tmx->getPosition();
+	result.bone_normal = tmx_mole->getLeft();
+	result.bone_normal.Normalize();
 }
 
 IK_IMPL_SOLVER(grabRightIK, info, result) {
 	GET_COMP(skc, info.handle, SkelControllerMole);
 	GET_COMP(tmx, skc->getGrabbed(), TCompTransform);
-	//result.bone_front = skc->getGrabFrontDir();//tmx->getPosition();
-	result.offset_pos = skc->getGrabRight() - info.bone_pos;
+	GET_COMP(tmx_mole, info.handle, TCompTransform);
+	result.new_pos = skc->getGrabRight();
+	//result.bone_normal = result.new_pos - tmx->getPosition();
+	result.bone_normal = -tmx_mole->getLeft();
+	result.bone_normal.Normalize();
 }

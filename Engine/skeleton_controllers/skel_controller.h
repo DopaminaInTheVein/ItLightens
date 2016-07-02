@@ -22,7 +22,8 @@
 #define AST_RECHARGE			"recharge"
 #define AST_GRAB_DOWN			"grab_box_down"
 #define AST_GRAB_UP				"grab_box_up"
-#define AST_GRAB_IDLE			"idle"//"grab_box_idle" // ojo!
+#define AST_GRAB_IDLE			"grab_box_idle"
+#define AST_GRAB_WALK			"grab_box_walk"
 // ------------------- //
 
 template< class TObj >
@@ -52,6 +53,7 @@ public:
 	void enableIK(std::string bone_name, IK::bone_solver solver, float delay);
 	void disableIK(std::string bone_name);
 	void setState(std::string state, bool prio = false);
+	void renderInMenu();
 };
 
 #define SET_ANIM_STATE(skc, state) {if (skc) skc->setState(state);}

@@ -149,13 +149,13 @@ void player_controller_mole::UpdateMovingWithOther() {
 		}
 		else {
 			//Box follow player. TODO: IK for this
-			float yawPlayer = transform->getYaw();
-			VEC3 posPlayer = transform->getPosition();
-			VEC3 posBox = posPlayer + transform->getFront() * grabInfo.dist;
-			posBox.y += grabInfo.y;
-			box_t->setYaw(yawPlayer + grabInfo.yaw);
-			box_p->setPosition(posBox, box_t->getRotation());
-			grabInfo.last_correct_pos = posBox;
+			//float yawPlayer = transform->getYaw();
+			//VEC3 posPlayer = transform->getPosition();
+			//VEC3 posBox = posPlayer + transform->getFront() * grabInfo.dist;
+			//posBox.y += grabInfo.y;
+			//box_t->setYaw(yawPlayer + grabInfo.yaw);
+			//box_p->setPosition(posBox, box_t->getRotation());
+			grabInfo.last_correct_pos = box_t->getPosition();
 		}
 	}
 }
@@ -301,6 +301,7 @@ void player_controller_mole::GrabbingBox2()
 	if (t_grab2 < 0) {
 		t_grab2 = SK_MOLE_TIME_TO_GRAB;
 		ChangeState(ST_MOLE_GRAB);
+		animController->setState(AST_GRAB_IDLE);
 	}
 }
 
