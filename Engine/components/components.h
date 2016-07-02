@@ -5,6 +5,7 @@
 #include "comp_name.h"
 #include "comp_room.h"
 #include "comp_room_switch.h"
+#include "comp_room_limit.h"
 #include "comp_transform.h"
 #include "comp_snoozer.h"
 #include "comp_camera.h"

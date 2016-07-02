@@ -491,8 +491,13 @@
     <ClCompile Include="skeleton\skeleton_manager.cpp">
       <Filter>skeleton</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="logic\comp_box.cpp">
       <Filter>logic</Filter>
+=======
+    <ClCompile Include="components\comp_room_limit.cpp">
+      <Filter>components</Filter>
+>>>>>>> dev
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1347,8 +1352,13 @@
       <Filter>skeleton</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+<<<<<<< HEAD
     <ClInclude Include="logic\comp_box.h">
       <Filter>logic</Filter>
+=======
+    <ClInclude Include="components\comp_room_limit.h">
+      <Filter>components</Filter>
+>>>>>>> dev
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
