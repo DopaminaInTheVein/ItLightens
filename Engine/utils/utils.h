@@ -17,8 +17,9 @@
 #define dbg(...)
 
 #else
-
 void		dbg(const char* fmt, ...);
+#define VEC3_VALUES(name) name.x, name.y, name.z
+#define VEC4_VALUES(name) name.x, name.y, name.z, name.w
 
 #endif
 
@@ -58,6 +59,8 @@ VEC3 rotateAround(const VEC3 &pos, const float roll, const float pitch, const fl
 void rotate_vector_by_quaternion(const VEC3& vec, const CQuaternion& q, VEC3& vprime);
 float angleBetween(const VEC3&, const VEC3&);
 
+VEC3 movementUnion(const VEC3& u, const VEC3& v);
+bool isZero(VEC3);
 ///  Performs a linear interpolation between two vectors. (@p v1 toward @p v2)
 ///  return					The result vector. [(x, y, z)]
 ///  @param[in]		start	The starting vector.
@@ -89,4 +92,9 @@ float min(int nargs, ...);
 bool isNan(VEC3 vec);
 bool isValid(VEC3 vec);
 bool isNormal(VEC3 vec);
+
+//STD operations
+
+#define removeFromVector(v, elem) v.erase(std::remove(v.begin(), v.end(), elem), v.end())
+
 #endif

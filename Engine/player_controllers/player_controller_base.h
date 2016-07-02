@@ -91,6 +91,9 @@ protected:
 	void orbitCameraDeath();
 	bool getUpdateInfo() override;
 	void checkFalling();
+
+	bool turnTo(TCompTransform*);
+
 public:
 
 	CPlayerBase();

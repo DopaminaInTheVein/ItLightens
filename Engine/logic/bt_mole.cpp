@@ -2,7 +2,7 @@
 #include "bt_mole.h"
 #include "components\comp_charactercontroller.h"
 #include "components\comp_physics.h"
-#include "components\comp_box.h"
+#include "comp_box.h"
 #include "app_modules\logic_manager\logic_manager.h"
 
 //if (animController) animController->setState(AST_IDLE, [prio])
@@ -110,6 +110,7 @@ int bt_mole::actionLookForWpt() {
 	if (!SBB::readBool("navmesh")) {
 		return STAY;
 	}
+	if (fixedWpts.size() <= 0) return OK;
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
 	if (pointsToRechargePoint == currToRechargePoint) {
@@ -125,6 +126,8 @@ int bt_mole::actionFollowPathToWpt() {
 		setCurrent(NULL);
 		return OK;
 	}
+	if (fixedWpts.size() <= 0) return OK;
+
 	VEC3 target = fixedWpts[curwpt];
 	if (pointsToRechargePoint == currToRechargePoint) {
 		target = rechargePoint;
@@ -169,8 +172,10 @@ int bt_mole::actionEndPathToWpt() {
 	recharging = 0.0f;
 	setCurrent(NULL);
 	int lastcurwpt = curwpt;
-	while (lastcurwpt == curwpt) {
-		curwpt = rand() % fixedWpts.size();
+	if (fixedWpts.size() > 0) {
+		while (lastcurwpt == curwpt) {
+			curwpt = rand() % fixedWpts.size();
+		}
 	}
 	currToRechargePoint++;
 	if (pointsToRechargePoint < currToRechargePoint) {

@@ -36,6 +36,20 @@ protected:
 	//energies
 	float grab_box_energy;
 	float destroy_wall_energy;
+	struct GrabInfo {
+		float y;
+		float dist;
+		float yaw;
+		VEC3 last_correct_pos;
+		VEC3 impact;
+		GrabInfo() : y(1.f)
+			, dist(1.f)
+			, yaw(0.f)
+			, last_correct_pos(VEC3(0.f, 0.f, 0.f))
+			, impact(VEC3(0.f, 0.f, 0.f)
+			) {}
+	};
+	GrabInfo grabInfo;
 
 public:
 
@@ -46,18 +60,27 @@ public:
 	void Init();
 	void readIniFileAttr();
 	bool getUpdateInfo() override;
-
-	void GrabBox();
+	void myUpdate();
+	void ChangeCommonState(std::string) override;
+	void TurnToGrab();
+	void GrabbingBox1();
+	void GrabbingBox2();
+	void GrabbingImpact();
+	void GrabbingImpact1();
+	void GrabbingImpact2();
+	void GrabbedBox();
 	void LeaveBox();
 	void DestroyWall();
 
 	void InitControlState();
 	bool nearToBox();
 	bool nearToWall();
-	bool boxGrabbed = false;
+	CHandle boxGrabbed; // = false;
+	CHandle boxNear; // = false;
 	string selectedBox = "";
-	int selectedBoxi = 0;
+	//int selectedBoxi = 0;
 	int selectedWallToBreaki = 0;
+	____TIMER_DECLARE_(t_grab_hit);
 
 	//Cambio Malla
 	//TCompRenderStaticMesh* mesh;
@@ -98,6 +121,9 @@ public:
 	//void ChangePose(string new_pose_route);
 
 	void SetCharacterController() {};
+
+	//Messages
+	void onGrabHit(const TMsgGrabHit&);
 
 	//Overload function for handler_manager
 	player_controller_mole& player_controller_mole::operator=(player_controller_mole arg) { return arg; }

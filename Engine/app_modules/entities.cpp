@@ -249,6 +249,9 @@ bool CEntitiesModule::start() {
 	//Skeleton IK
 	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
 
+	//Grab Objects Hit
+	SUBSCRIBE(player_controller_mole, TMsgGrabHit, onGrabHit);
+
 	SUBSCRIBE(bt_scientist, TMsgWBTakenByPlayer, onTakenWB);
 	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
 	SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);
@@ -614,13 +617,14 @@ void CEntitiesModule::update(float dt) {
 
 		if (use_parallel) {
 			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
+			getHandleManager<TCompBoneTracker>()->updateAllInParallel(dt);
 			getHandleManager<TCompSkeletonIK>()->updateAllInParallel(dt);
 		}
 		else {
 			getHandleManager<TCompSkeleton>()->updateAll(dt);
+			getHandleManager<TCompBoneTracker>()->updateAll(dt);
 			getHandleManager<TCompSkeletonIK>()->updateAll(dt);
 		}
-		getHandleManager<TCompBoneTracker>()->updateAll(dt);
 
 		if (SBB::readBool("navmesh") && ia_wait > 1.0f) {
 			getHandleManager<bt_mole>()->updateAll(dt);
@@ -698,6 +702,10 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 	getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
+
+#ifndef NDEBUG
+	getHandleManager<TCompBox>()->onAll(&TCompBox::render);
+#endif
 
 	RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
 	RenderManager.renderAll(CHandle(), CRenderTechnique::UI_OBJS);

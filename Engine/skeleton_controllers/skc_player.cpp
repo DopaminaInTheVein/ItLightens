@@ -4,7 +4,6 @@
 #include "components/comp_charactercontroller.h"
 #include "player_controllers/player_controller.h"
 #include "components/entity.h"
-#include "skeleton/skeleton_manager.h"
 
 //IK Solvers
 IK_DECL_SOLVER(heilTest);
@@ -77,33 +76,15 @@ void SkelControllerPlayer::myUpdateIK()
 {
 	if (currentState != prevState) {
 		if (currentState == "jump") {
-			TMsgSetIKSolver msgIK;
-			msgIK.enable = true;
-			msgIK.bone_name = SK_RHAND;
-			msgIK.handle = CHandle(this).getOwner();
-			msgIK.function = &heilTest;
-			msgIK.time = 0.5f;
-			compBaseEntity->sendMsg(msgIK);
+			enableIK(SK_RHAND, &heilTest, 0.5f);
 		}
-		//else if ( currentState == "" ) {
-
-		//}
-		//else {
-
-		//}
 
 		if (prevState == "jump") {
-			TMsgSetIKSolver msgIK;
-			msgIK.enable = false;
-			msgIK.bone_name = SK_RHAND;
-			msgIK.handle = CHandle(this).getOwner();
-			msgIK.function = &heilTest;
-			compBaseEntity->sendMsg(msgIK);
+			disableIK(SK_RHAND);
 		}
 	}
-
 }
 
 IK_IMPL_SOLVER(heilTest, info, result) {
-	result.offset_pos = VEC3(0.f, 0.3f, 0.f);
+	result.new_pos = info.bone_pos + VEC3(0.f, 0.3f, 0.f);
 }

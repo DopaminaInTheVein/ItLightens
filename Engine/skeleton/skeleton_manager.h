@@ -35,5 +35,6 @@ public:
 };
 
 #define SK_RHAND "right_hand"
+#define SK_LHAND "left_hand"
 
 #endif

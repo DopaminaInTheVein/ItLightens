@@ -665,7 +665,7 @@ void player_controller::UpdatePossession() {
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
 		if (controlEnabled && (io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed())) {
-			// Se avisa el ai_poss que ha sido poseído
+			// Se avisa el ai_poss que ha sido pose\EDdo
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;
 			msg.possessed = true;
@@ -743,7 +743,7 @@ void player_controller::recalcPossassable() {
 	}
 }
 
-//TODO: near Stunneable, currentStunneable es LO MISMO que possessable, dejar sólo una de ellas
+//TODO: near Stunneable, currentStunneable es LO MISMO que possessable, dejar s\F3lo una de ellas
 // Calcula el mejor candidato para stunear
 bool player_controller::nearStunable() {
 	PROFILE_FUNCTION("near stunnable");

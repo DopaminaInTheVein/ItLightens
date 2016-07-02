@@ -170,7 +170,7 @@ bool TCompSkeleton::getUpdateInfo()
 }
 
 void TCompSkeleton::update(float dt) {
-	CHandle ownerHandle = CHandle(this).getOwner();	
+	CHandle ownerHandle = CHandle(this).getOwner();
 	if (!getUpdateInfoBase(ownerHandle))
 		return; //El updateAllInParallel no llama infobase
 	CEntity* e = ownerHandle;

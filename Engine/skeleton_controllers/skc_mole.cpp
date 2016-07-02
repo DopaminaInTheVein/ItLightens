@@ -5,6 +5,21 @@
 #include "player_controllers/player_controller_mole.h"
 #include "components/entity.h"
 
+#include "logic/comp_box.h"
+
+//IK Solvers
+IK_DECL_SOLVER(grabLeftIK);
+IK_DECL_SOLVER(grabRightIK);
+
+void SkelControllerMole::grabObject(CHandle h)
+{
+	grabbed = h;
+	GET_COMP(box, h, TCompBox);
+	GET_COMP(tMe, owner, TCompTransform);
+	box->getGrabPoints(tMe->getPosition(), left_h_target, right_h_target, front_h_dir);
+	enableIK(SK_LHAND, grabLeftIK, SK_MOLE_TIME_TO_GRAB);
+	enableIK(SK_RHAND, grabRightIK, SK_MOLE_TIME_TO_GRAB);
+}
 
 bool SkelControllerMole::getUpdateInfo()
 {
@@ -31,6 +46,8 @@ void SkelControllerMole::SetPlayerController() {
 
 void SkelControllerMole::myUpdate()
 {
+	updateGrab();
+	updateGrabPoints();
 	if (currentState == "walk" || currentState == "run") {
 		SetPlayerController();
 		if (!pc->isMoving()) {
@@ -44,7 +61,7 @@ void SkelControllerMole::myUpdate()
 		//dbg("Player Speed, Last: %f, %f\n", speed.LengthSquared(), lastSpeed.LengthSquared());
 
 		//if ( !isNormal(speed) || speed.LengthSquared() <= 0.0001f) {
-		//	
+		//
 		//}
 	}
 
@@ -62,10 +79,89 @@ void SkelControllerMole::myUpdate()
 			setAction("recharge", "idle");
 			currentState = "idle";
 		}
+		else if (currentState == AST_GRAB_UP) {
+			setAction("grab_box_up", "grab_box_idle");
+			currentState = AST_GRAB_IDLE;
+			disableIK(SK_RHAND);
+			//disableIK(SK_LHAND);
+			TMsgAttach msgAttach;
+			msgAttach.bone_name = SK_RHAND;
+			msgAttach.handle = owner;
+			msgAttach.save_local_tmx = true;
+			grabbed.sendMsg(msgAttach);
+		}
 		else {
 			setLoop(currentState);
 		}
 	}
 
 	priority = false;
+}
+
+void SkelControllerMole::updateGrab()
+{
+	if (!grabbed.isValid()) return;
+	if (currentState == AST_IDLE) currentState = AST_GRAB_IDLE;
+	else if (currentState == AST_RUN) currentState = AST_GRAB_WALK;
+	else if (currentState == AST_MOVE) currentState = AST_GRAB_WALK;
+	if (isMovingBox()) {
+		updateGrabPoints();
+	}
+}
+void SkelControllerMole::updateGrabPoints()
+{
+	if (isMovingBox()) {
+		GET_COMP(box, grabbed, TCompBox);
+		GET_COMP(tMe, grabbed, TCompTransform);
+		box->getGrabPoints(tMe->getPosition(), left_h_target, right_h_target, front_h_dir, 0.3f, false);
+	}
+}
+
+bool SkelControllerMole::isMovingBox()
+{
+	return currentState == AST_GRAB_UP
+		|| currentState == AST_GRAB_IDLE
+		|| currentState == AST_GRAB_WALK
+		;
+}
+
+VEC3 SkelControllerMole::getGrabLeft()
+{
+	return left_h_target;
+}
+
+VEC3 SkelControllerMole::getGrabRight()
+{
+	return right_h_target;
+}
+
+VEC3 SkelControllerMole::getGrabFrontDir()
+{
+	return front_h_dir;
+}
+
+CHandle SkelControllerMole::getGrabbed()
+{
+	return grabbed;
+}
+
+IK_IMPL_SOLVER(grabLeftIK, info, result) {
+	GET_COMP(skc, info.handle, SkelControllerMole);
+	GET_COMP(tmx, skc->getGrabbed(), TCompTransform);
+	GET_COMP(tmx_mole, info.handle, TCompTransform);
+	result.new_pos = skc->getGrabLeft();
+	//result.bone_normal = VEC3(0, 1, 0);
+	//result.bone_normal = result.new_pos - tmx->getPosition();
+	result.bone_normal = tmx_mole->getLeft();
+	result.bone_normal.Normalize();
+}
+
+IK_IMPL_SOLVER(grabRightIK, info, result) {
+	GET_COMP(skc, info.handle, SkelControllerMole);
+	GET_COMP(tmx, skc->getGrabbed(), TCompTransform);
+	GET_COMP(tmx_mole, info.handle, TCompTransform);
+	result.new_pos = skc->getGrabRight();
+	//result.bone_normal = result.new_pos - tmx->getPosition();
+	result.bone_normal = -tmx_mole->getLeft();
+	result.bone_normal.Normalize();
 }

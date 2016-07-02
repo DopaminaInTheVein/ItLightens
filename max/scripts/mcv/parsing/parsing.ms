@@ -144,6 +144,9 @@ fn parseComponent comp = (
 ---------------------------------------------------------------------
 --Test (ver el xml generado por un objeto)
 fn xmlTest obj = (
+	-- Fill default values
+	assign_default_room_to_all()
+	
 	local xml = XMLNode()
 	xml.nombre = "entities"
 	_parsingObject = obj

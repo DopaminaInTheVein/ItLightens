@@ -29,7 +29,6 @@ void TCompSkeletonIK::update(float elapsed) {
 					mod++;
 				}
 			}
-			break;
 		}
 	}
 }
@@ -37,7 +36,7 @@ void TCompSkeletonIK::update(float elapsed) {
 void TCompSkeletonIK::onSetIKSolver(const TMsgSetIKSolver& msg)
 {
 	if (msg.enable) {
-		TBoneMod mod = getBoneModInvariant(SK_RHAND);
+		TBoneMod mod = getBoneModInvariant(msg.bone_name);
 		if (mod.bone_id_c < 0) return;
 		mod.normal = VEC3(1.f, 0.f, 0.f);
 		mod.f_solver = msg.function;
@@ -48,7 +47,7 @@ void TCompSkeletonIK::onSetIKSolver(const TMsgSetIKSolver& msg)
 	else {
 		GET_COMP(skel, msg.handle, TCompSkeleton);
 		int bone_id = skel->getKeyBoneId(msg.bone_name);
-		for (auto mod = mods.begin(); mod != mods.end(); mod++){
+		for (auto mod = mods.begin(); mod != mods.end(); mod++) {
 			if (mod->bone_id_c == bone_id) {
 				if (mod->h_solver == msg.handle) {
 					mod->enabled = false;
@@ -57,7 +56,6 @@ void TCompSkeletonIK::onSetIKSolver(const TMsgSetIKSolver& msg)
 			}
 		}
 	}
-	
 }
 
 TCompSkeletonIK::TBoneMod TCompSkeletonIK::getBoneModInvariant(string name)
@@ -100,7 +98,7 @@ TCompSkeletonIK::TBoneMod TCompSkeletonIK::getBoneModInvariant(string name)
 	mod.dist_bc = cal_bc.length();
 
 	mod.enabled = true,
-	mod.time = 0;
+		mod.time = 0;
 
 	return mod;
 }
@@ -127,29 +125,62 @@ void TCompSkeletonIK::solveBone(TBoneMod* bm) {
 	ik.AB = bm->dist_ab;
 	ik.BC = bm->dist_bc;
 
+	// Obtain the current abs front and left directions in local coords
+	GET_MY(tmx, TCompTransform);
+	CalVector abs_front = Engine2Cal(tmx->getFront());
+	CalVector abs_left = Engine2Cal(tmx->getLeft());
+	CalQuaternion abs_rot_c = bone_c->getRotationAbsolute();
+	CalQuaternion inv_abs_rot_c = abs_rot_c;
+	CalQuaternion abs_rot_b = bone_b->getRotationAbsolute();
+	CalQuaternion inv_abs_rot_b = abs_rot_b;
+	CalQuaternion abs_rot_a = bone_a->getRotationAbsolute();
+	CalQuaternion inv_abs_rot_a = abs_rot_a;
+	inv_abs_rot_c.invert();
+
 	//-- Call specific function --
 	InfoSolver solver;
+	ResultSolver res;
 	solver.bone_pos = ik.C;
 	solver.handle = bm->h_solver;
-	ResultSolver res;
+	//solver.bone_normal = res.bone_front = Cal2Engine(abs_front);
 	bm->f_solver(solver, res);
-	ik.C += res.offset_pos * amount;
+	VEC3 offset_pos = res.new_pos - solver.bone_pos;
+	ik.C += offset_pos * amount;
 	//-- End specific function --
 
-	ik.normal = bm->normal;
+	// These are the local directions that forms the plane of the foot
+	CalVector local_front = abs_front;  local_front *= inv_abs_rot_c;
+	CalVector local_left = abs_left;   local_left *= inv_abs_rot_c;
+	CalVector local_dir_ab = bone_b->getTranslationAbsolute() - bone_a->getTranslationAbsolute();
+	local_dir_ab.normalize();
+	local_dir_ab *= inv_abs_rot_a;
+	CalVector local_dir_bc = bone_c->getTranslationAbsolute() - bone_b->getTranslationAbsolute();
+	local_dir_bc.normalize();
+	local_dir_bc *= inv_abs_rot_b;
+
+	ik.normal = isNormal(res.bone_normal) ? res.bone_normal : bm->normal;
 	ik.solveB();
 
 	//// Correct A to point to B
 	CCoreModel::TBoneCorrector bc;
 	bc.bone_id = bm->bone_id_a;
 	bc.local_dir.set(1, 0, 0);
+	//bc.local_dir.set(local_dir_ab);
 	bc.apply(model, Engine2Cal(ik.B), amount);
 
 	//// Correct B to point to C
 	bc.bone_id = bm->bone_id_b;
 	bc.local_dir.set(1, 0, 0);
+	//bc.local_dir.set(local_dir_bc);
 	bc.apply(model, Engine2Cal(ik.C), amount);
 	// -------------------------------------------------------------------------
+
+	// Bone orientation
+
+	//CCoreModel::TBoneCorrector front_fix(bm->bone_id_c, local_front);
+	//CalVector front_target = bone_c->getTranslationAbsolute() + Engine2Cal(res.bone_front);
+	//front_fix.apply(model, front_target, amount);
+
 	// Apply post correction? (another bone_solver)?
 	// Example: restart orientation foot
 }

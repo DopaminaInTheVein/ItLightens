@@ -8,6 +8,11 @@ fn parseable = (
 		if (slept as string) != "yes" then ( return false)
 	)	
 	
+	-- Es container?
+	if (classof _parsingObject) == Container then (
+		return false
+	)	
+	
 	-- Es dummy?
 	if (classof _parsingObject) == Dummy then (
 		local type = getUserProp _parsingObject "typeObject"

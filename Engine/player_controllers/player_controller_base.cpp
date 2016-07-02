@@ -189,7 +189,7 @@ void CPlayerBase::UpdateMoves()
 	}
 
 	cc->AddMovement(direction, player_curr_speed*getDeltaTime());
-	UpdateMovingWithOther();
+	if (moving) UpdateMovingWithOther();
 }
 #pragma endregion
 //##########################################################################
@@ -455,4 +455,20 @@ void CPlayerBase::myUpdate() {
 map<string, statehandler>* CPlayerBase::getStatemap() {
 	//Must implement in subclasses
 	return nullptr;
+}
+
+//Aux
+bool CPlayerBase::turnTo(TCompTransform * t)
+{
+	float yaw, pitch;
+	transform->getAngles(&yaw, &pitch);
+	float deltaYaw = transform->getDeltaYawToAimTo(t->getPosition());
+	if (abs(deltaYaw) > epsilonYaw) {
+		float yaw_added = deltaYaw * getDeltaTime() * player_rotation_speed;
+		clampAbs_me(yaw_added, abs(deltaYaw));
+		float new_yaw = yaw + yaw_added;
+		transform->setAngles(new_yaw, pitch);
+		return abs(yaw_added) >= (abs(deltaYaw) - epsilonYaw);
+	}
+	return true;
 }

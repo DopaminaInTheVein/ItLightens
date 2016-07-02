@@ -209,6 +209,7 @@
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_scientist.cpp" />
     <ClCompile Include="logic\bt_speedy.cpp" />
+    <ClCompile Include="logic\comp_box.cpp" />
     <ClCompile Include="logic\damage.cpp" />
     <ClCompile Include="logic\elevator.cpp" />
     <ClCompile Include="logic\helper_arrow.cpp" />
@@ -343,7 +344,6 @@
     <ClInclude Include="components\comp_box_spawner.h" />
     <ClInclude Include="components\components.h" />
     <ClInclude Include="components\comp_base.h" />
-    <ClInclude Include="components\comp_box.h" />
     <ClInclude Include="components\comp_camera.h" />
     <ClInclude Include="components\comp_camera_main.h" />
     <ClInclude Include="components\comp_charactercontroller.h" />
@@ -429,6 +429,7 @@
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_scientist.h" />
     <ClInclude Include="logic\bt_speedy.h" />
+    <ClInclude Include="logic\comp_box.h" />
     <ClInclude Include="logic\damage.h" />
     <ClInclude Include="logic\elevator.h" />
     <ClInclude Include="logic\helper_arrow.h" />

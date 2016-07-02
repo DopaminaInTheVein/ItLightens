@@ -9,8 +9,13 @@
 
 #define ____TIMER_CHECK_DO_(name)				if (____TIMER__END_(name)) {
 #define ____TIMER_CHECK_DONE_(name)				____TIMER_RESET_(name); } else {	____TIMER__UPDATE_(name); }
+#define ____TIMER_RUNNING_DO(name)				if (!____TIMER__END_(name)) {
+#define ____TIMER_RUNNING_DONE(name)			____TIMER__UPDATE_(name);}
+#define ____TIMER_IS_RUNNING(name)				!____TIMER__END_(name)
+
 #define ____TIMER__END_(name)					(name < 0)
 #define ____TIMER__SET_ZERO_(name)				name = -1
+#define ____TIMER_NORMALIZED(name)				clamp(name / _##name, 0.f, 1.f)
 //____TIMER_CHECK_DO_ and ____TIMER_CHECK_DONE_
 //If timer ends, doSometing and reset timer
 //else update timer

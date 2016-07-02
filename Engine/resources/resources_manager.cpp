@@ -11,44 +11,43 @@
 
 #include "app_modules/logic_manager/logic_manager.h"
 
-
 CResourcesManager Resources;
 
-const char* IResource::getTypeName( IResource::eType atype ) {
-  switch (atype) {
-  case IResource::UNDEFINED: return "undefined";
-  case IResource::MESH:      return "Meshes";
-  case IResource::TECHNIQUE: return "Techniques";
-  case IResource::VERTEX_SHADER: return "VertexShaders";
-  case IResource::PIXEL_SHADER: return "PixelShaders";
-  case IResource::TEXTURE: return "Textures";
-  case IResource::MATERIAL: return "Materials";
-  case IResource::STATIC_MESH: return "StaticMeshes";
-  case IResource::SKELETON: return "Skeletons";
-  }
-  return "invalid";
+const char* IResource::getTypeName(IResource::eType atype) {
+	switch (atype) {
+	case IResource::UNDEFINED: return "undefined";
+	case IResource::MESH:      return "Meshes";
+	case IResource::TECHNIQUE: return "Techniques";
+	case IResource::VERTEX_SHADER: return "VertexShaders";
+	case IResource::PIXEL_SHADER: return "PixelShaders";
+	case IResource::TEXTURE: return "Textures";
+	case IResource::MATERIAL: return "Materials";
+	case IResource::STATIC_MESH: return "StaticMeshes";
+	case IResource::SKELETON: return "Skeletons";
+	}
+	return "invalid";
 }
 
 void CResourcesManager::onFileChanged(const std::string& filename) {
-  std::string filename_correct = filename;
-  std::replace(filename_correct.begin(), filename_correct.end(), '\\', '/'); // replace all 'x' to 'y'
-  dbg("Resources file %s changed!\n", filename.c_str());
-  
-  //Check Extensions
-  std::string ext(filename_correct);
-  auto p = ext.find_last_of(".");
-  if (p == std::string::npos) return;
-  ext = ext.substr(p);
+	std::string filename_correct = filename;
+	std::replace(filename_correct.begin(), filename_correct.end(), '\\', '/'); // replace all 'x' to 'y'
+	dbg("Resources file %s changed!\n", filename.c_str());
 
-  //Is LUA file
-  if (ext == ".lua") {
-	  logic_manager->reloadFile(filename_correct);
-  }
-  // Other files
-  else {
-	  for (auto it : all)
-		  it.second->onFileChanged(filename_correct);
-  }
+	//Check Extensions
+	std::string ext(filename_correct);
+	auto p = ext.find_last_of(".");
+	if (p == std::string::npos) return;
+	ext = ext.substr(p);
+
+	//Is LUA file
+	if (ext == ".lua") {
+		logic_manager->reloadFile(filename_correct);
+	}
+	// Other files
+	else {
+		for (auto it : all)
+			it.second->onFileChanged(filename_correct);
+	}
 }
 
 const IResource* CResourcesManager::get(const char* name) {
@@ -82,6 +81,12 @@ const IResource* CResourcesManager::get(const char* name) {
 		new_obj = createObjFromName<CPixelShader>(name);
 	}
 	else if (ext == ".dds" || ext == ".DDS") {
+#ifndef NDEBUG
+		std::string str = std::string(name);
+		int found = str.find("caja_2_difuso");
+		if (found != std::string::npos)
+			dbg("Aqui estas\n");
+#endif
 		new_obj = createObjFromName<CTexture>(name);
 	}
 	else if (ext == ".material") {
@@ -91,8 +96,8 @@ const IResource* CResourcesManager::get(const char* name) {
 		new_obj = createObjFromName<CStaticMesh>(name);
 	}
 	else if (ext == ".skeleton") {
-	    new_obj = createObjFromName<CSkeleton>(name);
-  	}
+		new_obj = createObjFromName<CSkeleton>(name);
+	}
 	else {
 		fatal("Invalid resource type %s at %s\n", ext.c_str(), name);
 	}
@@ -103,9 +108,9 @@ const IResource* CResourcesManager::get(const char* name) {
 
 // -------------------------------------
 void CResourcesManager::registerNew(IResource* new_res) {
-  assert(new_res);
-  assert(!new_res->getName().empty());
-  all[new_res->getName()] = new_res;
+	assert(new_res);
+	assert(!new_res->getName().empty());
+	all[new_res->getName()] = new_res;
 }
 
 void CResourcesManager::renderUIDebug(ImGuiTextFilter * filter) {
