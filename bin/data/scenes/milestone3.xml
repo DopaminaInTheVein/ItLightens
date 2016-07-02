@@ -2759,6 +2759,7 @@
    height="2.01"/>
 
 <room name="sala1"/></entity>
+<!--
 <entity>
 	<rigidbody type_collision="trigger"
 	   type_shape="box"
@@ -2772,6 +2773,21 @@
 	   scale="1.0"/>
 	<room name="none"/>
 </entity>
+-->
+<entity>
+	<rigidbody type_collision="trigger"
+	   type_shape="box"
+	   size="10.0 10.0 0.10"/>
+	<tags tags="trigger limit"/>
+	<limit />
+	<name name="TriggerBox_1"/>
+	<transform
+	   pos="-57.915 4.396 -5.678"
+	   quat="0.0 1.0 0.0 0.0"
+	   scale="1.0"/>
+	<room name="none"/>
+</entity>
+
 
 <entity>
     <name name="beacon" />

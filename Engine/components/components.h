@@ -5,6 +5,7 @@
 #include "comp_name.h"
 #include "comp_room.h"
 #include "comp_room_switch.h"
+#include "comp_room_limit.h"
 #include "comp_transform.h"
 #include "comp_snoozer.h"
 #include "comp_camera.h"
@@ -74,7 +75,6 @@
 #include "comp_wire.h"
 #include "comp_generator.h"
 #include "comp_polarized.h"
-
 
 //FX
 #include "comp_render_fade_screen.h"

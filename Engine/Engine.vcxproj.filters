@@ -491,6 +491,9 @@
     <ClCompile Include="skeleton\skeleton_manager.cpp">
       <Filter>skeleton</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_room_limit.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1347,6 +1350,9 @@
       <Filter>skeleton</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="components\comp_room_limit.h">
+      <Filter>components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
