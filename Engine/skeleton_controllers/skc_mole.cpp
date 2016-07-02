@@ -121,7 +121,7 @@ void SkelControllerMole::updateGrabPoints()
 		GET_COMP(box, grabbed, TCompBox);
 		GET_MY(tMe, TCompTransform);
 		VEC3 pos_grab_dummy;
-		box->getGrabPoints(tMe, left_h_target, right_h_target, front_h_dir, pos_grab_dummy);
+		box->getGrabPoints(tMe, left_h_target, right_h_target, front_h_dir, pos_grab_dummy, 0.3f, false);
 	}
 }
 

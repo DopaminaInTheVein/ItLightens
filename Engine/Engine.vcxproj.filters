@@ -494,7 +494,9 @@
     <ClCompile Include="components\comp_room_limit.cpp">
       <Filter>components</Filter>
     </ClCompile>
-    <ClCompile Include="logic\comp_box.cpp" />
+    <ClCompile Include="logic\comp_box.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1351,9 +1353,11 @@
     <ClInclude Include="components\comp_room_limit.h">
       <Filter>components</Filter>
     </ClInclude>
-    <ClInclude Include="logic\comp_box.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_blur.h">
       <Filter>render\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\comp_box.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

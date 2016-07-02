@@ -157,7 +157,7 @@ bool TCompBox::getGrabPoints(
 	directions[2] = t->getFront(); //z
 
 	//Get the best direction
-	if (true) {
+	if (recalc) {
 		max_dot_index = -1;
 		max_dot = 0;
 		VEC3 actor_dir = VEC3(pos.x - actor_pos.x, 0, pos.z - actor_pos.z);
