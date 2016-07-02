@@ -42,12 +42,15 @@ protected:
 		float yaw;
 		VEC3 last_correct_pos;
 		VEC3 impact;
+		VEC3 pos_to_grab;
+		VEC3 dir_to_grab;
 		GrabInfo() : y(1.f)
 			, dist(1.f)
 			, yaw(0.f)
 			, last_correct_pos(VEC3(0.f, 0.f, 0.f))
-			, impact(VEC3(0.f, 0.f, 0.f)
-			) {}
+			, impact(VEC3(0.f, 0.f, 0.f))
+			, pos_to_grab(VEC3(0.f, 0.f, 0.f))
+			, dir_to_grab(VEC3(1.f, 0.f, 0.f)) {}
 	};
 	GrabInfo grabInfo;
 
@@ -62,7 +65,8 @@ public:
 	bool getUpdateInfo() override;
 	void myUpdate();
 	void ChangeCommonState(std::string) override;
-	void TurnToGrab();
+	void GoToGrab();
+	void FaceToGrab();
 	void GrabbingBox1();
 	void GrabbingBox2();
 	void GrabbingImpact();

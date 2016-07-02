@@ -22,7 +22,8 @@ map<string, statehandler> player_controller_mole::statemap = {};
 
 //State names
 #define ST_MOLE_GRAB "grabbedBox"
-#define ST_MOLE_GRAB_TURN "turnToGrab"
+#define ST_MOLE_GRAB_GO "goToGrab"
+#define ST_MOLE_GRAB_FACE "faceToGrab"
 #define ST_MOLE_GRABBING_1 "grabbing1"
 #define ST_MOLE_GRABBING_2 "grabbing2"
 #define ST_MOLE_GRABBING_IMPACT "grabbing_impact"
@@ -70,7 +71,8 @@ void player_controller_mole::Init() {
 		//States from controller base and poss controller
 		addBasicStates();
 		addPossStates();
-		AddStMole(ST_MOLE_GRAB_TURN, TurnToGrab);
+		AddStMole(ST_MOLE_GRAB_GO, GoToGrab);
+		AddStMole(ST_MOLE_GRAB_FACE, FaceToGrab);
 		AddStMole(ST_MOLE_GRABBING_1, GrabbingBox1);
 		AddStMole(ST_MOLE_GRABBING_2, GrabbingBox2);
 		AddStMole(ST_MOLE_GRABBING_IMPACT, GrabbingImpact);
@@ -108,13 +110,12 @@ void player_controller_mole::myUpdate()
 	}
 
 	if (this->nearToBox()) {
+		VEC3 left, right, front_dir, pos_grab;
 		GET_COMP(box, boxNear, TCompBox);
-		VEC3 left, right, front_dir;
-		box->getGrabPoints(transform->getPosition(), left, right, front_dir);
-		Debug->DrawLine(transform->getPosition(), left, VEC3(1, 1, 0));
-		Debug->DrawLine(transform->getPosition(), right, VEC3(0, 0, 1));
+		box->getGrabPoints(transform, left, right, front_dir, pos_grab);
+		Debug->DrawLine(pos_grab, left, VEC3(1, 1, 0));
+		Debug->DrawLine(pos_grab, right, VEC3(0, 0, 1));
 	}
-
 	Debug->DrawLine(transform->getPosition(), transform->getFront(), 1.f);
 }
 
@@ -127,8 +128,12 @@ void player_controller_mole::UpdateInputActions() {
 		else {
 			if (this->nearToBox()) {
 				//ChangePose(pose_box_route);
-				logic_manager->throwEvent(logic_manager->OnPickupBox, "");
-				ChangeState(ST_MOLE_GRAB_TURN);
+				GET_COMP(box, boxNear, TCompBox);
+				VEC3 h_target_dummy;
+				box->getGrabPoints(transform, h_target_dummy, h_target_dummy, grabInfo.dir_to_grab, grabInfo.pos_to_grab);
+				float pitch_dummy;
+				getYawPitchFromVector(grabInfo.dir_to_grab, &grabInfo.yaw, &pitch_dummy);
+				ChangeState(ST_MOLE_GRAB_GO);
 			}
 			else if (this->nearToWall()) {
 				//ChangePose(pose_wall_route);
@@ -198,8 +203,10 @@ void player_controller_mole::LeaveBox() {
 	GET_COMP(box_p, boxGrabbed, TCompPhysics);
 	box_p->setPosition(posbox, box_t->getRotation());
 	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
+	box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 	box_p->setGravity(true);
 	box_p->setKinematic(false);
+	animController->ungrabObject();
 
 	SBB::postBool(selectedBox, false);
 	boxGrabbed = CHandle();
@@ -251,20 +258,27 @@ bool player_controller_mole::nearToBox() {
 	}
 	return found;
 }
-
-void player_controller_mole::InitControlState() {
-	CHandle h = CHandle(this);
-	tags_manager.addTag(h.getOwner(), getID("player"));
-	ChangeState("idle");
-}
-
-void player_controller_mole::update_msgs()
+void player_controller_mole::GoToGrab()
 {
-	ui.addTextInstructions("Left Shift            -> Exit possession State");
-	ui.addTextInstructions("Click Left Mouse      -> Grab/Throw near Box or Break Wall");
+	inputEnabled = false;
+	float yaw, pitch;
+	transform->getAngles(&yaw, &pitch);
+	float dist = simpleDistXZ(cc->GetPosition(), grabInfo.pos_to_grab);
+	if (dist > epsilonPos) {
+		// Go to target
+		float deltaYaw = transform->getDeltaYawToAimTo(grabInfo.pos_to_grab);
+		if (deltaYaw > epsilonYaw) transform->setAngles(yaw + 0.1f * deltaYaw, pitch);
+		VEC3 dir = grabInfo.pos_to_grab - cc->GetPosition();
+		dir.Normalize();
+		cc->AddMovement(dir, player_max_speed * getDeltaTime());
+		moving = true;
+		ChangeCommonState("moving");
+	}
+	else {
+		ChangeState(ST_MOLE_GRAB_FACE);
+	}
 }
-
-void player_controller_mole::TurnToGrab()
+void player_controller_mole::FaceToGrab()
 {
 	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
 	if (faced) {
@@ -302,6 +316,7 @@ void player_controller_mole::GrabbingBox2()
 		t_grab2 = SK_MOLE_TIME_TO_GRAB;
 		ChangeState(ST_MOLE_GRAB);
 		animController->setState(AST_GRAB_IDLE);
+		inputEnabled = true;
 	}
 }
 
@@ -333,8 +348,9 @@ void player_controller_mole::GrabbedBox() {
 	myEntity->sendMsg(dmg);
 	boxGrabbed = boxNear;
 	mole_max_speed /= 2;
-	//ChangePose(pose_idle_route);
+
 	ChangeState("idle");
+	logic_manager->throwEvent(logic_manager->OnPickupBox, "");
 }
 
 void player_controller_mole::onGrabHit(const TMsgGrabHit& msg)
@@ -398,6 +414,18 @@ void player_controller_mole::GrabbingImpact2()
 {
 	//UpdateMovingWithOther();
 	ChangeState("idle");
+}
+
+void player_controller_mole::InitControlState() {
+	CHandle h = CHandle(this);
+	tags_manager.addTag(h.getOwner(), getID("player"));
+	ChangeState("idle");
+}
+
+void player_controller_mole::update_msgs()
+{
+	ui.addTextInstructions("Left Shift            -> Exit possession State");
+	ui.addTextInstructions("Click Left Mouse      -> Grab/Throw near Box or Break Wall");
 }
 
 void player_controller_mole::ChangeCommonState(std::string st)

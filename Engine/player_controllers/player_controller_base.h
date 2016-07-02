@@ -23,6 +23,7 @@ protected:
 
 	//Enabled
 	bool controlEnabled = false;
+	bool inputEnabled = true;
 
 	// CountDown To Unpossess
 	static float possessionCooldown;

@@ -32,10 +32,10 @@ void TCompBoneTracker::onGroupCreated(const TMsgEntityGroupCreated& msg) {
 
 void TCompBoneTracker::onAttach(const TMsgAttach& msg) {
 	h_entity = msg.handle;
-	strcpy(bone_name, msg.bone_name.c_str());
 	CEntity* e = h_entity;
 	if (!e)
 		return;
+	strcpy(bone_name, msg.bone_name.c_str());
 	TCompSkeleton* skel = e->get<TCompSkeleton>();
 	if (!skel)
 		return;

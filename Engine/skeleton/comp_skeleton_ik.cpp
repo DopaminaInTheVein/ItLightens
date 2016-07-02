@@ -23,6 +23,9 @@ void TCompSkeletonIK::update(float elapsed) {
 			else {
 				mod->time -= elapsed;
 				if (mod->time < 0.f) {
+					InfoSolver info;
+					info.handle = mod->h_solver;
+					if (mod->f_ender) mod->f_ender(info, ResultSolver());
 					mod = mods.erase(mod);
 				}
 				else {
@@ -51,6 +54,8 @@ void TCompSkeletonIK::onSetIKSolver(const TMsgSetIKSolver& msg)
 			if (mod->bone_id_c == bone_id) {
 				if (mod->h_solver == msg.handle) {
 					mod->enabled = false;
+					mod->time_max = mod->time = msg.time;
+					mod->f_ender = msg.function;
 					break;
 				}
 			}

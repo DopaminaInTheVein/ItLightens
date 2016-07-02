@@ -131,56 +131,84 @@ void TCompBox::render() {
 }
 #endif
 
-bool TCompBox::getGrabPoints(const VEC3& actor_pos, VEC3& left, VEC3& right, VEC3& front_dir, float offset_separation, bool recalc) {
+bool TCompBox::getGrabPoints(
+	TCompTransform* t_actor
+	, VEC3& left
+	, VEC3& right
+	, VEC3& front_dir
+	, VEC3& pos_grab
+	, float offset_separation
+	, bool recalc)
+{
 	GET_MY(t, TCompTransform);
 	VEC3 pos = t->getPosition();
-	// Four directions
-	VEC3 directions[4];
-	float sizes[4];
-	directions[0] = t->getFront();
-	directions[1] = -t->getLeft();
-	directions[2] = -t->getFront();
-	directions[3] = t->getLeft();
-	sizes[0] = sizes[2] = size.z;
-	sizes[1] = sizes[3] = size.x;
+	VEC3 actor_pos = t_actor->getPosition();
+	VEC3 actor_up = t_actor->getUp();
+
+	// Previous calc variables
+	VEC3 left_actor, right_actor;
+	float size_side, size_front;
+
+	//6 direction (3 * 2)
+	VEC3 directions[3];
+	float sizes[3] = { size.x, size.y, size.z };
+	directions[0] = t->getLeft(); //x
+	directions[1] = t->getUp(); //y
+	directions[2] = t->getFront(); //z
 
 	//Get the best direction
-	if (recalc) {
+	if (true) {
 		max_dot_index = -1;
-		float max_dot = FLT_MIN;
-		VEC3 actor_dir = pos - actor_pos;
+		max_dot = 0;
+		VEC3 actor_dir = VEC3(pos.x - actor_pos.x, 0, pos.z - actor_pos.z);
 		actor_dir.Normalize();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			float dot = actor_dir.Dot(directions[i]);
-			if (dot > max_dot) {
+			if (abs(dot) > abs(max_dot)) {
 				max_dot = dot;
 				max_dot_index = i;
 			}
 		}
 	}
+	front_dir = directions[max_dot_index];
+	if (max_dot < 0) front_dir *= -1;
 
 	//Calc position
-	VEC3 left_actor = directions[(max_dot_index + 3) % 4];
-	VEC3 right_actor = -left_actor;
-	front_dir = directions[(max_dot_index + 4) % 4];
-	float size_sides = sizes[max_dot_index];
-	float size_front = sizes[max_dot_index + 1 % 4];
+	//TODO: left and right must be calc using t_actor->getUp() [cross] front_dir
+	//Casuistica actual fallara cuando la cara superior no esté mirando hacia arriba
+
+	left_actor = actor_up.Cross(front_dir);
+	left_actor.Normalize();
+	right_actor = -left_actor;
+
+	float dot_4 = left_actor.Dot(directions[(max_dot_index + 4) % 3]);
+	float dot_5 = left_actor.Dot(directions[(max_dot_index + 5) % 3]);
+	int left_index = abs(dot_4) > abs(dot_5) ? (max_dot_index + 4) % 3 : (max_dot_index + 5) % 3;
+
+	size_side = sizes[left_index];
+	size_front = sizes[max_dot_index];
+
+	//SMALL BOX
 	if (type_box == eTypeBox::SMALL) {
-		left = left_actor * (size_sides / 2 + offset_separation);
-		right = right_actor * (size_sides / 2 + offset_separation);
+		left = left_actor * (size_side / 2 + offset_separation);
+		right = right_actor * (size_side / 2 + offset_separation);
 		//left -= front_dir * size_front / 4;
 		//right -= front_dir * size_front / 4;
 	}
+	//BIG BOX
 	else {
-		left = left_actor * (size_sides / 4);
+		left = left_actor * (size_side / 4);
 		left.y -= size.y;
 		left -= front_dir * size_front / 2.f;
 
-		right = right_actor * (size_sides / 4);
+		right = right_actor * (size_side / 4);
 		right.y -= size.y;
 		right -= front_dir * size_front / 2.f;
 	}
+
 	left += pos;
 	right += pos;
+	pos_grab = pos - front_dir * (size_front + 0.1f);
+
 	return true;
 }

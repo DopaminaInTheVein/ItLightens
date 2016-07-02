@@ -94,7 +94,7 @@ void CPlayerBase::update(float elapsed) {
 		}
 		else if (controlEnabled) {
 			bool alive = !checkDead();
-			if (alive) {
+			if (alive && inputEnabled) {
 				UpdateMoves();
 				UpdateInputActions();
 			}

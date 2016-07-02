@@ -5,6 +5,7 @@
 #include "player_controllers/player_controller_mole.h"
 
 #define SK_MOLE_TIME_TO_GRAB 0.5f
+#define SK_MOLE_TIME_TO_UNGRAB 0.1f
 
 //Forward Declaration
 class TCompCharacterController;
@@ -26,6 +27,8 @@ protected:
 
 public:
 	void grabObject(CHandle);
+	void ungrabObject(); // Funcion para soltarlo
+	void removeGrab() { grabbed = CHandle(); } //"Private" func
 	VEC3 getGrabLeft();
 	VEC3 getGrabRight();
 	VEC3 getGrabFrontDir();

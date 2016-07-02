@@ -51,7 +51,7 @@ protected:
 
 public:
 	void enableIK(std::string bone_name, IK::bone_solver solver, float delay);
-	void disableIK(std::string bone_name);
+	void disableIK(std::string bone_name, float delay = 0.f, IK::bone_solver function = nullptr);
 	void setState(std::string state, bool prio = false);
 	void renderInMenu();
 };

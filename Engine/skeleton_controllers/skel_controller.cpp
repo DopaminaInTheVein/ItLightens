@@ -95,12 +95,14 @@ void TCompSkelController::enableIK(std::string bone_name, IK::bone_solver solver
 	msgIK.time = delay;
 	owner.sendMsg(msgIK);
 }
-void TCompSkelController::disableIK(std::string bone_name)
+void TCompSkelController::disableIK(std::string bone_name, float delay, IK::bone_solver function)
 {
 	TMsgSetIKSolver msgIK;
 	msgIK.enable = false;
 	msgIK.bone_name = bone_name;
 	msgIK.handle = owner;
+	msgIK.function = function;
+	msgIK.time = delay;
 	owner.sendMsg(msgIK);
 }
 

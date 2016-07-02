@@ -10,17 +10,24 @@
 //IK Solvers
 IK_DECL_SOLVER(grabLeftIK);
 IK_DECL_SOLVER(grabRightIK);
+IK_DECL_SOLVER(ungrabbed);
 
 void SkelControllerMole::grabObject(CHandle h)
 {
 	grabbed = h;
 	GET_COMP(box, h, TCompBox);
 	GET_COMP(tMe, owner, TCompTransform);
-	box->getGrabPoints(tMe->getPosition(), left_h_target, right_h_target, front_h_dir);
-	enableIK(SK_LHAND, grabLeftIK, SK_MOLE_TIME_TO_GRAB);
-	enableIK(SK_RHAND, grabRightIK, SK_MOLE_TIME_TO_GRAB);
+	VEC3 pos_grab_dummy;
+	box->getGrabPoints(tMe, left_h_target, right_h_target, front_h_dir, pos_grab_dummy);
+	enableIK(SK_LHAND, grabLeftIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
+	enableIK(SK_RHAND, grabRightIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 }
 
+void SkelControllerMole::ungrabObject()
+{
+	disableIK(SK_LHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
+	//(SK_RHAND, SK_MOLE_TIME_TO_UNGRAB, );
+}
 bool SkelControllerMole::getUpdateInfo()
 {
 	owner = CHandle(this).getOwner();
@@ -112,8 +119,9 @@ void SkelControllerMole::updateGrabPoints()
 {
 	if (isMovingBox()) {
 		GET_COMP(box, grabbed, TCompBox);
-		GET_COMP(tMe, grabbed, TCompTransform);
-		box->getGrabPoints(tMe->getPosition(), left_h_target, right_h_target, front_h_dir, 0.3f, false);
+		GET_MY(tMe, TCompTransform);
+		VEC3 pos_grab_dummy;
+		box->getGrabPoints(tMe, left_h_target, right_h_target, front_h_dir, pos_grab_dummy);
 	}
 }
 
@@ -154,6 +162,7 @@ IK_IMPL_SOLVER(grabLeftIK, info, result) {
 	//result.bone_normal = result.new_pos - tmx->getPosition();
 	result.bone_normal = tmx_mole->getLeft();
 	result.bone_normal.Normalize();
+	Debug->DrawLine(VEC3(0, 100, 0), result.new_pos);
 }
 
 IK_IMPL_SOLVER(grabRightIK, info, result) {
@@ -164,4 +173,12 @@ IK_IMPL_SOLVER(grabRightIK, info, result) {
 	//result.bone_normal = result.new_pos - tmx->getPosition();
 	result.bone_normal = -tmx_mole->getLeft();
 	result.bone_normal.Normalize();
+}
+
+IK_IMPL_SOLVER(ungrabbed, info, result) {
+	GET_COMP(skc, info.handle, SkelControllerMole);
+	TMsgAttach msg;
+	msg.handle = CHandle();
+	skc->getGrabbed().sendMsg(msg);
+	skc->removeGrab();
 }
