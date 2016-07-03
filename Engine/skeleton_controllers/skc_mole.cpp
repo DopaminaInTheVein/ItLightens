@@ -98,7 +98,12 @@ void SkelControllerMole::myUpdate()
 			grabbed.sendMsg(msgAttach);
 		}
 		else {
-			setLoop(currentState);
+			//Test borrar!
+			//------------
+			if (currentState == AST_IDLE) setLoop(AST_GRAB_IDLE);
+			else
+				//---------------------------------------------------
+				setLoop(currentState);
 		}
 	}
 

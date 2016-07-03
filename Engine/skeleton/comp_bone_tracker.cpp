@@ -114,10 +114,13 @@ void TCompBoneTracker::update(float dt) {
 	tmx->setRotation(rot);
 
 	GET_COMP(physics, CHandle(this).getOwner(), TCompPhysics);
-	PxRigidDynamic *rd;
-	if (rd = physics->getActor()->isRigidDynamic()) {
-		rd->setGlobalPose(PhysxConversion::ToPxTransform(trans, rot));
+	if (physics) {
+		physics->setPosition(trans, rot);
 	}
+	//PxRigidDynamic *rd;
+	//if (rd = physics->getActor()->isRigidDynamic()) {
+	//	rd->setGlobalPose(PhysxConversion::ToPxTransform(trans, rot));
+	//}
 
 	////If I follow a bone and other bone is following me IK needs an extra update!
 	//GET_COMP(comp_ik, h_entity, TCompSkeletonIK);

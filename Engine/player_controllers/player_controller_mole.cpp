@@ -203,7 +203,7 @@ void player_controller_mole::LeaveBox() {
 	GET_COMP(box_p, boxGrabbed, TCompPhysics);
 	box_p->setPosition(posbox, box_t->getRotation());
 	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
-	box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
+	//box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false); ojo! activar de nuevo
 	box_p->setGravity(true);
 	box_p->setKinematic(false);
 	animController->ungrabObject();
@@ -316,6 +316,12 @@ void player_controller_mole::GrabbingBox2()
 		t_grab2 = SK_MOLE_TIME_TO_GRAB;
 		ChangeState(ST_MOLE_GRAB);
 		animController->setState(AST_GRAB_IDLE);
+		GET_COMP(box_p, boxNear, TCompPhysics);
+		box_p->setKinematic(true);
+		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, true);
+		box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, true);
+		box_p->setGravity(false);
+
 		inputEnabled = true;
 	}
 }
@@ -325,22 +331,14 @@ void player_controller_mole::GrabbedBox() {
 		SBB::postBool(selectedBox, true);
 	}
 
+	//TODO: Revisar esto, fisica caja
 	GET_COMP(box_t, boxNear, TCompTransform);
-	GET_COMP(box_p, boxNear, TCompPhysics);
-
 	VEC3 posPlayer = transform->getPosition();
 	VEC3 posBox = box_t->getPosition();
-	posBox.y += 1.f;
-	box_p->setKinematic(true);
-	box_p->setPosition(posBox, box_t->getRotation());
 	grabInfo.dist = realDistXZ(posPlayer, posBox);
 	grabInfo.y = posBox.y - posPlayer.y;
 	grabInfo.yaw = transform->getDeltaYawToAimTo(posBox);
 	grabInfo.last_correct_pos = posBox;
-
-	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, true);
-	box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, true);
-	box_p->setGravity(false);
 
 	energyDecreasal(5.0f);
 	TMsgDamage dmg;

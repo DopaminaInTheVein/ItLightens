@@ -538,6 +538,14 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 			//	throw_bomb->sendMsg(TMsgActivate());
 			//}
 
+			//Test
+			bool user_callback = filterData0.word2 & PHYS_BEHAVIOUR::eUSER_CALLBACK
+				|| filterData1.word2 & PHYS_BEHAVIOUR::eUSER_CALLBACK;
+			if (user_callback) {
+				dbg("User callback collision: %s. %s\n", e0->getName(), e1->getName());
+			}
+
+			//----------
 			if (pairHasTag(e0, e1, "box", me, other)) {
 				if (!other->hasTag("player")) {
 					//dbg("Trato colision caja!\n");
@@ -754,7 +762,7 @@ PxParticleSystem * CPhysxManager::CreateParticleSystem(int max_particles)
 	mRunOnGpu = mRunOnGpu && (ps->getParticleBaseFlags() & PxParticleBaseFlag::eGPU);
 #endif
 	return ps;
-}
+	}
 
 #pragma endregion
 

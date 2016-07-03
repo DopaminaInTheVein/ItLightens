@@ -429,12 +429,9 @@ bool TCompPhysics::setKinematic(bool isKinematic)
 void TCompPhysics::AddMovement(VEC3 movement)
 {
 	PxRigidDynamic *rd = m_pActor->isRigidDynamic();
-	if (rd) {
-		PxTransform tmx = rd->getGlobalPose();
-		tmx.p += PhysxConversion::Vec3ToPxVec3(movement);
-		setPosition(PhysxConversion::PxVec3ToVec3(tmx.p), PhysxConversion::PxQuatToCQuaternion(tmx.q));
-		//rd->setGlobalPose(tmx);
-	}
+	PxTransform tmx = rd->getGlobalPose();
+	tmx.p += PhysxConversion::Vec3ToPxVec3(movement);
+	setPosition(PhysxConversion::PxVec3ToVec3(tmx.p), PhysxConversion::PxQuatToCQuaternion(tmx.q));
 }
 
 void TCompPhysics::AddForce(VEC3 force)
