@@ -30,6 +30,7 @@ map<string, statehandler> player_controller_mole::statemap = {};
 #define ST_MOLE_GRABBING_IMPACT_1 "grabbing_impact_1" //Lose box control
 #define ST_MOLE_GRABBING_IMPACT_2 "grabbing_impact_2" //Recovery box control
 #define ST_MOLE_UNGRAB "leaveBox"
+#define ST_MOLE_UNGRABBING "leavingBox"
 #define ST_MOLE_DESTROY "destroyWall"
 
 void player_controller_mole::readIniFileAttr() {
@@ -62,7 +63,7 @@ void player_controller_mole::Init() {
 	// read main attributes from file
 	readIniFileAttr();
 	mole_max_speed = player_max_speed;
-	____TIMER_REDEFINE_(t_grab_hit, 0.05f);
+	____TIMER_REDEFINE_(t_grab_hit, 1.0f);
 	____TIMER__SET_ZERO_(t_grab_hit);
 
 	om = getHandleManager<player_controller_mole>();	//player
@@ -80,6 +81,7 @@ void player_controller_mole::Init() {
 		AddStMole(ST_MOLE_GRABBING_IMPACT_2, GrabbingImpact2);
 		AddStMole(ST_MOLE_GRAB, GrabbedBox);
 		AddStMole(ST_MOLE_UNGRAB, LeaveBox);
+		AddStMole(ST_MOLE_UNGRABBING, LeavingBox);
 		AddStMole(ST_MOLE_DESTROY, DestroyWall);
 	}
 
@@ -101,13 +103,6 @@ bool player_controller_mole::getUpdateInfo()
 void player_controller_mole::myUpdate()
 {
 	//dbg("mole frame\n");
-	if (!isZero(grabInfo.impact)) {
-		GET_COMP(box_p, boxGrabbed, TCompPhysics);
-		cc->AddMovement(grabInfo.impact);
-		transform->addPosition(grabInfo.impact);
-		box_p->AddMovement(grabInfo.impact);
-		grabInfo.impact = VEC3(0.f, 0.f, 0.f);
-	}
 
 	if (this->nearToBox()) {
 		VEC3 left, right, front_dir, pos_grab;
@@ -161,6 +156,7 @@ void player_controller_mole::UpdateMovingWithOther() {
 			//box_t->setYaw(yawPlayer + grabInfo.yaw);
 			//box_p->setPosition(posBox, box_t->getRotation());
 			grabInfo.last_correct_pos = box_t->getPosition();
+			grabInfo.yaw = transform->getYaw();
 		}
 	}
 }
@@ -212,7 +208,20 @@ void player_controller_mole::LeaveBox() {
 	boxGrabbed = CHandle();
 	mole_max_speed *= 2;
 	//ChangePose(pose_idle_route);
-	ChangeState("idle");
+	ChangeState(ST_MOLE_UNGRABBING);
+	stopMovement();
+	inputEnabled = false;
+}
+
+void player_controller_mole::LeavingBox()
+{
+	static float t_ungrab = SK_MOLE_TIME_TO_UNGRAB;
+	t_ungrab -= getDeltaTime();
+	if (t_ungrab < 0) {
+		t_ungrab = SK_MOLE_TIME_TO_UNGRAB;
+		ChangeState("idle");
+		inputEnabled = true;
+	}
 }
 
 bool player_controller_mole::nearToWall() {
@@ -370,10 +379,10 @@ void player_controller_mole::onGrabHit(const TMsgGrabHit& msg)
 	GET_COMP(box_p, boxGrabbed, TCompPhysics);
 	GET_COMP(box_t, boxGrabbed, TCompTransform);
 	//impact *= 5.f;
-	VEC3 dif = box_t->getPosition() - grabInfo.last_correct_pos;
-	float impactLength = dif.Length() + 0.2f;
-	dif.Normalize();
-	impact = dif * impactLength;
+	VEC3 dif = grabInfo.last_correct_pos - box_t->getPosition();
+	//float impactLength = dif.Length() + 0.0f;
+	//dif.Normalize();
+	impact = dif;// impactLength;
 	grabInfo.impact = impact;
 	//cc->AddMovement(impact);
 	//transform->addPosition(impact);
@@ -388,17 +397,24 @@ void player_controller_mole::onGrabHit(const TMsgGrabHit& msg)
 
 void player_controller_mole::GrabbingImpact()
 {
-	//GET_COMP(box_p, boxGrabbed, TCompPhysics);
-	//GET_COMP(box_t, boxGrabbed, TCompTransform);
-	//box_p->setPosition(grabInfo.last_correct_pos, box_t->getRotation());
-	//auto rd = box_p->getActor()->isRigidDynamic();
+	GET_COMP(box_p, boxGrabbed, TCompPhysics);
+	cc->AddMovement(grabInfo.impact);
+	transform->addPosition(grabInfo.impact);
+	box_p->AddMovement(grabInfo.impact);
+	float yaw = transform->getYaw();
+	float deltaYaw = grabInfo.yaw - yaw;
+	transform->setYaw(yaw + deltaYaw*1.2f);
+	grabInfo.last_correct_pos = transform->getPosition();
+	grabInfo.impact = VEC3(0.f, 0.f, 0.f);
+
 	ChangeState(ST_MOLE_GRABBING_IMPACT_1);
-	moving = false;
+	stopMovement();
+	inputEnabled = false;
 }
 
 void player_controller_mole::GrabbingImpact1()
 {
-	moving = false;
+	stopMovement();
 	GET_COMP(box_p, boxGrabbed, TCompPhysics);
 	bool recovered_control = ____TIMER__END_(t_grab_hit);
 	if (recovered_control) {
@@ -411,6 +427,7 @@ void player_controller_mole::GrabbingImpact1()
 void player_controller_mole::GrabbingImpact2()
 {
 	//UpdateMovingWithOther();
+	inputEnabled = true;
 	ChangeState("idle");
 }
 

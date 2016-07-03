@@ -86,6 +86,11 @@ void CPlayerBase::onGoAndLook(const TMsgGoAndLook& msg) {
 	}
 }
 
+void CPlayerBase::stopMovement() {
+	moving = false;
+	directionForward = directionLateral = VEC3(0.f, 0.f, 0.f);
+}
+
 void CPlayerBase::update(float elapsed) {
 	PROFILE_FUNCTION("update base");
 	if (camera.isValid()) {
@@ -171,7 +176,7 @@ void CPlayerBase::UpdateMoves()
 	direction.Normalize();
 
 	float new_yaw = player_transform->getDeltaYawToAimDirection(direction);
-
+	clampAbs_me(new_yaw, player_rotation_speed * getDeltaTime());
 	player_transform->getAngles(&yaw, &pitch);
 
 	player_transform->setAngles(new_yaw + yaw, pitch);

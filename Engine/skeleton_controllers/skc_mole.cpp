@@ -122,7 +122,8 @@ void SkelControllerMole::updateGrab()
 }
 void SkelControllerMole::updateGrabPoints()
 {
-	if (isMovingBox()) {
+	if (!grabbed.isValid()) return;
+	if (isMovingBox()){
 		GET_COMP(box, grabbed, TCompBox);
 		GET_MY(tMe, TCompTransform);
 		VEC3 pos_grab_dummy;

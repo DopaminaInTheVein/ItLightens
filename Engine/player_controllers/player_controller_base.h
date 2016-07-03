@@ -105,7 +105,7 @@ public:
 	void onSetCamera(const TMsgSetCamera& msg);
 	void onSetControllable(const TMsgSetControllable& msg);
 	void onGoAndLook(const TMsgGoAndLook& msg);
-
+	void stopMovement();
 	virtual void myUpdate(); // deberia ser abstracta pero peta
 
 	// Player states

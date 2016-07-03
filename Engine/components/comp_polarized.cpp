@@ -83,7 +83,7 @@ void TCompPolarized::update(float elapsed)
 								last_position = origin;
 							}
 							else {
-								moving = false;
+								moving = false; //stopMovement() ?
 							}
 						}
 					}

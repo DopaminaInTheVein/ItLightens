@@ -136,7 +136,7 @@ void player_controller_cientifico::WorkBenchActions() {
 			obj = THROW_BOMB;
 			//TODO: Destruir bomba actual
 			ChangeState("createBomb");
-			moving = false;
+			stopMovement();
 		}
 		else {
 			Gui->setActionAvailable(eAction::CREATE_MAGNETIC_BOMB);
@@ -255,7 +255,7 @@ void player_controller_cientifico::UseBomb()
 		objs_amoung[obj]--;
 		ChangeState("throwing");
 		bomb_handle.sendMsg(TMsgActivate()); //Notify throwing
-		moving = false;
+		stopMovement();
 		//if (objs_amoung[obj] > 0) spawnBomb();
 		//ChangeState("idle");
 	}

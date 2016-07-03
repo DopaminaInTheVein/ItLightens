@@ -2697,5 +2697,53 @@
    scale="1.0"/>
 
 </entity>
+<entity>
+<tags
+   tags="AI AI_mole AI_poss"/>
+<bt_mole/>
+<player_mole/>
+<life
+   points="100"/>
+<skc_mole/>
+<name
+   name="mole_1"/>
+<transform
+   pos="-71.3139 0 -18.907"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/mole/mole.skeleton"/>
+<render_static_mesh
+   name="skeletons/mole/mole.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="2.01"/>
+
+</entity>
+<entity>
+<tags
+   tags="box platform removable"/>
+<box
+   size="1.0 1.0 1.0"/>
+<bone_tracker/>
+<name
+   name="Box_1"/>
+<transform
+   pos="-73.8368 0 -16.4196"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="2"/>
+<local_aabb/>
+
+</entity>
 
 </entities>

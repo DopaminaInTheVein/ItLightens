@@ -74,6 +74,7 @@ public:
 	void GrabbingImpact2();
 	void GrabbedBox();
 	void LeaveBox();
+	void LeavingBox();
 	void DestroyWall();
 
 	void InitControlState();
