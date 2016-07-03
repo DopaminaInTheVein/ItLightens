@@ -33,6 +33,8 @@ map<string, statehandler> player_controller_mole::statemap = {};
 #define ST_MOLE_UNGRABBING "leavingBox"
 #define ST_MOLE_DESTROY "destroyWall"
 
+#define MOLE_TIME_OUT_GO_GRAB	4.f
+
 void player_controller_mole::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
@@ -63,7 +65,7 @@ void player_controller_mole::Init() {
 	// read main attributes from file
 	readIniFileAttr();
 	mole_max_speed = player_max_speed;
-	____TIMER_REDEFINE_(t_grab_hit, 1.0f);
+	____TIMER_REDEFINE_(t_grab_hit, 0.1f);
 	____TIMER__SET_ZERO_(t_grab_hit);
 
 	om = getHandleManager<player_controller_mole>();	//player
@@ -128,6 +130,7 @@ void player_controller_mole::UpdateInputActions() {
 				box->getGrabPoints(transform, h_target_dummy, h_target_dummy, grabInfo.dir_to_grab, grabInfo.pos_to_grab);
 				float pitch_dummy;
 				getYawPitchFromVector(grabInfo.dir_to_grab, &grabInfo.yaw, &pitch_dummy);
+				inputEnabled = false;
 				ChangeState(ST_MOLE_GRAB_GO);
 			}
 			else if (this->nearToWall()) {
@@ -145,18 +148,10 @@ void player_controller_mole::UpdateMovingWithOther() {
 		GET_COMP(box_p, boxGrabbed, TCompPhysics);
 
 		if (____TIMER_IS_RUNNING(t_grab_hit)) {
-			ChangeState(ST_MOLE_GRABBING_IMPACT);
-		}
-		else {
-			//Box follow player. TODO: IK for this
-			//float yawPlayer = transform->getYaw();
-			//VEC3 posPlayer = transform->getPosition();
-			//VEC3 posBox = posPlayer + transform->getFront() * grabInfo.dist;
-			//posBox.y += grabInfo.y;
-			//box_t->setYaw(yawPlayer + grabInfo.yaw);
-			//box_p->setPosition(posBox, box_t->getRotation());
-			grabInfo.last_correct_pos = box_t->getPosition();
-			grabInfo.yaw = transform->getYaw();
+			//VEC3 speed = cc->GetLastSpeed();
+			//float amoung = speed.Dot(grabInfo.impact);
+			//cc->AddSpeed(-grabInfo.impact * amoung * 10);
+			//grabInfo.yaw = transform->getYaw();
 		}
 	}
 }
@@ -269,7 +264,14 @@ bool player_controller_mole::nearToBox() {
 }
 void player_controller_mole::GoToGrab()
 {
-	inputEnabled = false;
+	static float time_out_to_grab = MOLE_TIME_OUT_GO_GRAB;
+	time_out_to_grab -= getDeltaTime();
+	if (time_out_to_grab < 0) {
+		inputEnabled = true;
+		ChangeState("idle");
+		time_out_to_grab = MOLE_TIME_OUT_GO_GRAB;
+	}
+
 	float yaw, pitch;
 	transform->getAngles(&yaw, &pitch);
 	float dist = simpleDistXZ(cc->GetPosition(), grabInfo.pos_to_grab);
@@ -285,6 +287,7 @@ void player_controller_mole::GoToGrab()
 	}
 	else {
 		ChangeState(ST_MOLE_GRAB_FACE);
+		time_out_to_grab = MOLE_TIME_OUT_GO_GRAB;
 	}
 }
 void player_controller_mole::FaceToGrab()
@@ -362,60 +365,54 @@ void player_controller_mole::GrabbedBox() {
 
 void player_controller_mole::onGrabHit(const TMsgGrabHit& msg)
 {
-	____TIMER_RESET_(t_grab_hit);
-	VEC3 impact = VEC3(0.f, 0.f, 0.f);
-	//dbg("--- IMPACT ------------------------------------------\n");
-	//for (int i = 0; i < msg.npoints; i++) {
-	//	dbg("Point %d, pos = (%f,%f,%f)\n---\n", i, VEC3_VALUES(msg.points[i]));
-	//	dbg("Normal = (%f,%f,%f)\n", VEC3_VALUES(msg.normals[i]));
-	//	dbg("Separation = %f\n", msg.separations[i]);
-	//	dbg("---\n");
-	//	float amoung = msg.separations[i] > 0 ? msg.separations[i] : msg.separations[i] * -2.f;
-	//	VEC3 local_corr = msg.normals[i] * amoung;
-	//	impact = movementUnion(impact, local_corr);
-	//	Debug->DrawLine(msg.points[i], msg.points[i] + local_corr, VEC3(1, 1, 0), 10.f);
-	//}
-	//dbg("------------------------------------- FIN IMPACT ----\n");
 	GET_COMP(box_p, boxGrabbed, TCompPhysics);
 	GET_COMP(box_t, boxGrabbed, TCompTransform);
-	//impact *= 5.f;
+	VEC3 impact = VEC3(0.f, 0.f, 0.f);
+	//dbg("--- IMPACT ------------------------------------------\n");
+	for (int i = 0; i < msg.npoints; i++) {
+		dbg("Point %d, pos = (%f,%f,%f)\n---\n", i, VEC3_VALUES(msg.points[i]));
+		dbg("Normal = (%f,%f,%f)\n", VEC3_VALUES(msg.normals[i]));
+		dbg("Separation = %f\n", msg.separations[i]);
+		dbg("---\n");
+		float amoung = msg.separations[i] > 0 ? msg.separations[i] : msg.separations[i] * -2.f;
+		VEC3 local_corr = msg.normals[i] * amoung;
+		impact = movementUnion(impact, local_corr);
+		Debug->DrawLine(msg.points[i], msg.points[i] + local_corr + VEC3(0, 2.f, 0), VEC3(1, 1, 0), 10.f);
+	}
+	//dbg("------------------------------------- FIN IMPACT ----\n");
 	VEC3 dif = grabInfo.last_correct_pos - box_t->getPosition();
-	//float impactLength = dif.Length() + 0.0f;
-	//dif.Normalize();
-	impact = dif;// impactLength;
+	impact.y = 0;
+	impact.Normalize();
 	grabInfo.impact = impact;
-	//cc->AddMovement(impact);
-	//transform->addPosition(impact);
-	//box_p->AddMovement(impact);
 
 	VEC3 boxPos = box_t->getPosition();
 	impact.Normalize();
 	Debug->DrawLine(boxPos, impact + VEC3(0.f, 0.2f, 0.f), 1.f, VEC3(0, 0, 1), 10.f);
 
-	//TODO tratar estos puntos para corregir posicion player y caja
+	____TIMER_RESET_(t_grab_hit);
+	ChangeState(ST_MOLE_GRABBING_IMPACT);
 }
 
 void player_controller_mole::GrabbingImpact()
 {
-	GET_COMP(box_p, boxGrabbed, TCompPhysics);
-	cc->AddMovement(grabInfo.impact);
-	transform->addPosition(grabInfo.impact);
-	box_p->AddMovement(grabInfo.impact);
-	float yaw = transform->getYaw();
-	float deltaYaw = grabInfo.yaw - yaw;
-	transform->setYaw(yaw + deltaYaw*1.2f);
-	grabInfo.last_correct_pos = transform->getPosition();
-	grabInfo.impact = VEC3(0.f, 0.f, 0.f);
-
+	//GET_COMP(box_p, boxGrabbed, TCompPhysics);
+	//cc->AddMovement(grabInfo.impact);
+	//transform->addPosition(grabInfo.impact);
+	//box_p->AddMovement(grabInfo.impact);
+	//float yaw = transform->getYaw();
+	//float deltaYaw = grabInfo.yaw - yaw;
+	//transform->setYaw(yaw + deltaYaw*1.2f);
+	//grabInfo.last_correct_pos = transform->getPosition();
+	//grabInfo.impact = VEC3(0.f, 0.f, 0.f);
 	ChangeState(ST_MOLE_GRABBING_IMPACT_1);
+	cc->AddImpulse(grabInfo.impact* 4.f);
 	stopMovement();
 	inputEnabled = false;
 }
 
 void player_controller_mole::GrabbingImpact1()
 {
-	stopMovement();
-	GET_COMP(box_p, boxGrabbed, TCompPhysics);
+	//stopMovement();
 	bool recovered_control = ____TIMER__END_(t_grab_hit);
 	if (recovered_control) {
 		ChangeState(ST_MOLE_GRABBING_IMPACT_2);
