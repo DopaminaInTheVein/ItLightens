@@ -10,12 +10,13 @@ VHandles TCompBox::all_boxes;
 
 void TCompBox::init() {
 	mParent = CHandle(this).getOwner();
+	if (!mParent.isValid()) return;
 	if (carePosition) {
 		CEntity *e = mParent;
 		TCompTransform *t = e->get<TCompTransform>();
 		originPoint = t->getPosition();
 	}
-	if (mParent.isValid()) all_boxes.push_back(mParent);
+	all_boxes.push_back(mParent);
 }
 
 void TCompBox::update(float elapsed) {
@@ -87,7 +88,15 @@ bool TCompBox::load(MKeyValue& atts) {
 
 VEC3 TCompBox::GetLeavePoint() const { return originPoint; }
 bool TCompBox::isRemovable() { return removable; }
-
+void TCompBox::UnGrab()
+{
+	GET_MY(box_p, TCompPhysics);
+	GET_MY(box_t, TCompTransform);
+	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
+	box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
+	box_p->setGravity(true);
+	box_p->setKinematic(false);
+}
 void TCompBox::onUnLeaveBox(const TMsgLeaveBox& msg) {
 	added = !added;
 	VHandles hs;
@@ -106,37 +115,14 @@ TCompBox::~TCompBox() {
 	removeFromVector(all_boxes, CHandle(this).getOwner());
 }
 
-#ifndef NDEBUG
-void TCompBox::render() {
-	//VEC3 up, front, left;
-	//VEC3 upf, frontf, leftf;
-
-	//GET_MY(t, TCompTransform);
-	//VEC3 pos = t->getPosition();
-	//up = (t->getUp() * size.y / 2);
-	//up += pos;
-	//upf = pos + t->getUp() * size;
-
-	//front = (t->getFront() * size.z / 2);
-	//front += pos;
-	//frontf = pos + t->getFront() * size;
-
-	//left = (t->getLeft() * size.z / 2);
-	//left += pos;
-	//leftf = pos + t->getLeft() * size;
-
-	//Debug->DrawLine(up, upf);
-	//Debug->DrawLine(left, leftf, VEC3(0, 1, 0));
-	//Debug->DrawLine(front, frontf, VEC3(0,0,1));
-}
-#endif
-
 bool TCompBox::getGrabPoints(
 	TCompTransform* t_actor
 	, VEC3& left
 	, VEC3& right
 	, VEC3& front_dir
 	, VEC3& pos_grab
+	, VEC3& normal_left
+	, VEC3& normal_right
 	, float offset_separation
 	, bool recalc)
 {
@@ -146,8 +132,8 @@ bool TCompBox::getGrabPoints(
 	VEC3 actor_up = t_actor->getUp();
 
 	// Previous calc variables
-	VEC3 left_actor, right_actor;
-	float size_side, size_front;
+	VEC3 left_actor, right_actor, up_actor;
+	float size_side, size_front, size_up;
 
 	//6 direction (3 * 2)
 	VEC3 directions[3];
@@ -173,42 +159,58 @@ bool TCompBox::getGrabPoints(
 	front_dir = directions[max_dot_index];
 	if (max_dot < 0) front_dir *= -1;
 
-	//Calc position
-	//TODO: left and right must be calc using t_actor->getUp() [cross] front_dir
-	//Casuistica actual fallara cuando la cara superior no esté mirando hacia arriba
-
+	//Left and right vector of the box from actor perspective
 	left_actor = actor_up.Cross(front_dir);
 	left_actor.Normalize();
 	right_actor = -left_actor;
+	up_actor = front_dir.Cross(left_actor);
+	up_actor.Normalize();
 
-	float dot_4 = left_actor.Dot(directions[(max_dot_index + 4) % 3]);
-	float dot_5 = left_actor.Dot(directions[(max_dot_index + 5) % 3]);
-	int left_index = abs(dot_4) > abs(dot_5) ? (max_dot_index + 4) % 3 : (max_dot_index + 5) % 3;
-
+	// Sizes side, front and top from actor perspective
+	int cand_1 = (max_dot_index + 4) % 3;
+	int cand_2 = (max_dot_index + 5) % 3;
+	float dot_1 = left_actor.Dot(directions[(max_dot_index + 4) % 3]);
+	float dot_2 = left_actor.Dot(directions[(max_dot_index + 5) % 3]);
+	int left_index, up_index;
+	if (abs(dot_1) > abs(dot_2)) {
+		left_index = cand_1;
+		up_index = cand_2;
+	}
+	else {
+		left_index = cand_2;
+		up_index = cand_1;
+	}
 	size_side = sizes[left_index];
+	size_up = sizes[up_index];
 	size_front = sizes[max_dot_index];
 
 	//SMALL BOX
 	if (type_box == eTypeBox::SMALL) {
 		left = left_actor * (size_side / 2 + offset_separation);
 		right = right_actor * (size_side / 2 + offset_separation);
-		//left -= front_dir * size_front / 4;
-		//right -= front_dir * size_front / 4;
+		normal_left = left_actor;
+		normal_right = right_actor;
+		pos_grab = pos - front_dir * (size_front / 2.f + 0.4f);
 	}
-	//BIG BOX
-	else {
+	//MEDIUM BOX
+	else if (type_box == eTypeBox::MEDIUM) {
 		left = left_actor * (size_side / 4);
-		left.y -= size.y;
+		left -= up_actor * size_up / 2.f;
 		left -= front_dir * size_front / 2.f;
-
 		right = right_actor * (size_side / 4);
-		right.y -= size.y;
+		right -= up_actor * size_up / 2.f;
 		right -= front_dir * size_front / 2.f;
+		normal_left = normal_right = -up_actor;
+		pos_grab = pos - front_dir * (size_front / 2.f + 1.f);
 	}
 
 	left += pos;
 	right += pos;
-	pos_grab = pos - front_dir * (size_front + 0.1f);
+
+	Debug->DrawLine(pos_grab, left, VEC3(0.f, 1.f, 0.f));
+	Debug->DrawLine(pos_grab, right, VEC3(1.f, 1.f, 0.5f));
+	Debug->DrawLine(left, normal_left, 0.2f, VEC3(0.f, 1.f, 0.f));
+	Debug->DrawLine(right, normal_right, 0.2f, VEC3(1.f, 1.f, 0.f));
 
 	return true;
 }

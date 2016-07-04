@@ -50,6 +50,7 @@
 #include "logic/elevator.h"
 #include "logic/workbench.h"
 #include "logic/comp_box.h"
+#include "logic/pila.h"
 
 //helpers
 #include "logic/helper_arrow.h"

@@ -147,7 +147,6 @@ void TCompSkeletonIK::solveBone(TBoneMod* bm) {
 	ResultSolver res;
 	solver.bone_pos = ik.C;
 	solver.handle = bm->h_solver;
-	//solver.bone_normal = res.bone_front = Cal2Engine(abs_front);
 	bm->f_solver(solver, res);
 	VEC3 offset_pos = res.new_pos - solver.bone_pos;
 	ik.C += offset_pos * amount;

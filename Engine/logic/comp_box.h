@@ -17,7 +17,7 @@ struct TCompBox : public TCompBase {
 	float max_dot;
 	enum eTypeBox {
 		SMALL = 0,
-		MEDIUM
+		MEDIUM,
 	} type_box;
 
 	CHandle mParent;
@@ -33,12 +33,17 @@ struct TCompBox : public TCompBase {
 	void ImTooFar();
 	VEC3 GetLeavePoint() const;
 	bool isRemovable();
+	void UnGrab();
 	void onUnLeaveBox(const TMsgLeaveBox& msg);
-	bool getGrabPoints(TCompTransform * t_actor, VEC3& left, VEC3& right, VEC3& front_dir, VEC3& pos_grab, float offset_separation = 0.3f, bool recalc = true);
-
-#ifndef NDEBUG
-	void render();
-#endif
+	bool getGrabPoints(TCompTransform * t_actor
+		, VEC3& left
+		, VEC3& right
+		, VEC3& front_dir
+		, VEC3& pos_grab
+		, VEC3& normal_left
+		, VEC3& normal_right
+		, float offset_separation = 0.3f
+		, bool recalc = true);
 };
 
 #endif

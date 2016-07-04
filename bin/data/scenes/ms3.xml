@@ -1592,21 +1592,6 @@
 <entity>
 <tags/>
 <name
-   name="panel"/>
-<transform
-   pos="-72.6722 8.69011 1.9557"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/panel.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="fuenteagua"/>
 <transform
    pos="-67.531 17.3056 20.2309"
@@ -1989,21 +1974,6 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/wc_boxlp.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="mesita"/>
-<transform
-   pos="-70.4773 -0.899074 18.4302"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/mesita.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -2743,6 +2713,79 @@
    type_shape="convex"
    mass="2"/>
 <local_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="box platform removable"/>
+<box
+   size="3.0 1.5 3.0"/>
+<bone_tracker/>
+<name
+   name="Box_2"/>
+<transform
+   pos="-66.9967 -0.0268367 -16.8744"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="box platform pila"/>
+<pila/>
+<bone_tracker/>
+<name
+   name="pila"/>
+<transform
+   pos="-121.537 -0.242203 -5.41684"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pila.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="2"/>
+<local_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="mesita"/>
+<transform
+   pos="-70.4773 -0.899074 18.4302"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/mesita.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="panel"/>
+<transform
+   pos="-72.6722 8.69011 1.9557"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/panel.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 

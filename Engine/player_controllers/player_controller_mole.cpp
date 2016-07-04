@@ -22,15 +22,21 @@ map<string, statehandler> player_controller_mole::statemap = {};
 
 //State names
 #define ST_MOLE_GRAB "grabbedBox"
+#define ST_MOLE_PILA "grabbedPila"
 #define ST_MOLE_GRAB_GO "goToGrab"
 #define ST_MOLE_GRAB_FACE "faceToGrab"
+#define ST_MOLE_PILA_FACE "faceToPila"
 #define ST_MOLE_GRABBING_1 "grabbing1"
 #define ST_MOLE_GRABBING_2 "grabbing2"
+#define ST_MOLE_PILING_1 "grabbingPila1"
+#define ST_MOLE_PILING_2 "grabbingPila2"
 #define ST_MOLE_GRABBING_IMPACT "grabbing_impact"
 #define ST_MOLE_GRABBING_IMPACT_1 "grabbing_impact_1" //Lose box control
 #define ST_MOLE_GRABBING_IMPACT_2 "grabbing_impact_2" //Recovery box control
 #define ST_MOLE_UNGRAB "leaveBox"
+#define ST_MOLE_UNPILA "leavePila"
 #define ST_MOLE_UNGRABBING "leavingBox"
+#define ST_MOLE_UNPILING "leavingPila"
 #define ST_MOLE_DESTROY "destroyWall"
 
 #define MOLE_TIME_OUT_GO_GRAB	4.f
@@ -77,13 +83,18 @@ void player_controller_mole::Init() {
 		AddStMole(ST_MOLE_GRAB_GO, GoToGrab);
 		AddStMole(ST_MOLE_GRAB_FACE, FaceToGrab);
 		AddStMole(ST_MOLE_GRABBING_1, GrabbingBox1);
+		AddStMole(ST_MOLE_PILING_1, GrabbingPila1);
 		AddStMole(ST_MOLE_GRABBING_2, GrabbingBox2);
+		AddStMole(ST_MOLE_PILING_2, GrabbingPila2);
 		AddStMole(ST_MOLE_GRABBING_IMPACT, GrabbingImpact);
 		AddStMole(ST_MOLE_GRABBING_IMPACT_1, GrabbingImpact1);
 		AddStMole(ST_MOLE_GRABBING_IMPACT_2, GrabbingImpact2);
 		AddStMole(ST_MOLE_GRAB, GrabbedBox);
+		AddStMole(ST_MOLE_PILA, GrabbedPila);
 		AddStMole(ST_MOLE_UNGRAB, LeaveBox);
+		AddStMole(ST_MOLE_UNPILA, LeavePila);
 		AddStMole(ST_MOLE_UNGRABBING, LeavingBox);
+		AddStMole(ST_MOLE_UNPILING, LeavingPila);
 		AddStMole(ST_MOLE_DESTROY, DestroyWall);
 	}
 
@@ -106,12 +117,15 @@ void player_controller_mole::myUpdate()
 {
 	//dbg("mole frame\n");
 
-	if (this->nearToBox()) {
+	if (!boxGrabbed.isValid() && this->nearToBox()) {
 		VEC3 left, right, front_dir, pos_grab;
+		VEC3 nleft, nright;
 		GET_COMP(box, boxNear, TCompBox);
-		box->getGrabPoints(transform, left, right, front_dir, pos_grab);
+		box->getGrabPoints(transform, left, right, front_dir, pos_grab, nleft, nright);
 		Debug->DrawLine(pos_grab, left, VEC3(1, 1, 0));
 		Debug->DrawLine(pos_grab, right, VEC3(0, 0, 1));
+		Debug->DrawLine(left, nleft, 0.2f, VEC3(1, 1, 0));
+		Debug->DrawLine(right, nright, 0.2f, VEC3(0, 0, 1));
 	}
 	Debug->DrawLine(transform->getPosition(), transform->getFront(), 1.f);
 }
@@ -122,12 +136,29 @@ void player_controller_mole::UpdateInputActions() {
 			logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
 			ChangeState(ST_MOLE_UNGRAB);
 		}
+		else if (pilaGrabbed.isValid()) {
+			//logic_manager
+			ChangeState(ST_MOLE_UNPILA);
+		}
 		else {
-			if (this->nearToBox()) {
+			if (this->nearToPila()) {
+				float pitch_dummy;
+				getYawPitchFromVector(grabInfo.dir_to_grab, &grabInfo.yaw, &pitch_dummy);
+				inputEnabled = false;
+				ChangeState(ST_MOLE_PILA_FACE);
+			}
+			else if (this->nearToBox()) {
 				//ChangePose(pose_box_route);
 				GET_COMP(box, boxNear, TCompBox);
 				VEC3 h_target_dummy;
-				box->getGrabPoints(transform, h_target_dummy, h_target_dummy, grabInfo.dir_to_grab, grabInfo.pos_to_grab);
+				box->getGrabPoints(transform
+					, h_target_dummy
+					, h_target_dummy
+					, grabInfo.dir_to_grab
+					, grabInfo.pos_to_grab
+					, h_target_dummy
+					, h_target_dummy
+				);
 				float pitch_dummy;
 				getYawPitchFromVector(grabInfo.dir_to_grab, &grabInfo.yaw, &pitch_dummy);
 				inputEnabled = false;
@@ -176,27 +207,8 @@ void player_controller_mole::DestroyWall() {
 }
 
 void player_controller_mole::LeaveBox() {
-	GET_COMP(box_t, boxGrabbed, TCompTransform);
-	VEC3 posboxIni = box_t->getPosition();
-	CEntity* p = myParent;
-	TCompTransform* p_t = p->get<TCompTransform>();
-	VEC3 posbox;
-	posbox.x = posboxIni.x + p_t->getFront().x * 3;
-	posbox.y = posboxIni.y - 2;
-	posbox.z = posboxIni.z + p_t->getFront().z * 3;
-	float angle = 0.0f;
-	//TODO PHYSX OBJECT
-	/*while (!box_t->setPosition(posbox)) {
-		angle += 0.1;
-		posbox.x = posboxIni.x + p_t->getFront().x * sin(angle) * 3;
-		posbox.z = posboxIni.z + p_t->getFront().z * cos(angle) * 3;
-	}*/
+	GET_COMP(box, boxGrabbed, TCompBox);
 	GET_COMP(box_p, boxGrabbed, TCompPhysics);
-	box_p->setPosition(posbox, box_t->getRotation());
-	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
-	//box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false); ojo! activar de nuevo
-	box_p->setGravity(true);
-	box_p->setKinematic(false);
 	animController->ungrabObject();
 
 	SBB::postBool(selectedBox, false);
@@ -208,6 +220,9 @@ void player_controller_mole::LeaveBox() {
 	inputEnabled = false;
 }
 
+void player_controller_mole::LeavePila() {
+	//TODO
+}
 void player_controller_mole::LeavingBox()
 {
 	static float t_ungrab = SK_MOLE_TIME_TO_UNGRAB;
@@ -217,6 +232,11 @@ void player_controller_mole::LeavingBox()
 		ChangeState("idle");
 		inputEnabled = true;
 	}
+}
+
+void player_controller_mole::LeavingPila()
+{
+	//TODO
 }
 
 bool player_controller_mole::nearToWall() {
@@ -262,20 +282,37 @@ bool player_controller_mole::nearToBox() {
 	}
 	return found;
 }
+
+bool player_controller_mole::nearToPila() {
+	bool found = false;
+	float distMax = 2.0f;
+	float highest = -999.9f;
+	for (auto h : TCompPila::all_pilas) {
+		if (!h.isValid()) continue;
+		GET_COMP(tPila, h, TCompTransform);
+		VEC3 pilaPos = tPila->getPosition();
+		VEC3 myPos = transform->getPosition();
+		if (distY(myPos, pilaPos) < 5.f) {
+			float disttowpt = simpleDistXZ(pilaPos, getEntityTransform()->getPosition());
+			if (disttowpt < distMax + 2 && pilaPos.y >= highest) {
+				highest = pilaPos.y;
+				pilaNear = h;
+				found = true;
+			}
+		}
+	}
+	return found;
+}
+
 void player_controller_mole::GoToGrab()
 {
 	static float time_out_to_grab = MOLE_TIME_OUT_GO_GRAB;
 	time_out_to_grab -= getDeltaTime();
-	if (time_out_to_grab < 0) {
-		inputEnabled = true;
-		ChangeState("idle");
-		time_out_to_grab = MOLE_TIME_OUT_GO_GRAB;
-	}
 
 	float yaw, pitch;
 	transform->getAngles(&yaw, &pitch);
 	float dist = simpleDistXZ(cc->GetPosition(), grabInfo.pos_to_grab);
-	if (dist > epsilonPos) {
+	if (dist > epsilonPos && time_out_to_grab > 0) {
 		// Go to target
 		float deltaYaw = transform->getDeltaYawToAimTo(grabInfo.pos_to_grab);
 		if (deltaYaw > epsilonYaw) transform->setAngles(yaw + 0.1f * deltaYaw, pitch);
@@ -300,12 +337,18 @@ void player_controller_mole::FaceToGrab()
 	}
 }
 
+void player_controller_mole::FaceToPila()
+{
+	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
+	if (faced) {
+		animController->grabPila(pilaNear);
+		animController->setState(AST_GRAB_PILA1);
+		ChangeState(ST_MOLE_PILING_1);
+	}
+}
+
 void player_controller_mole::GrabbingBox1()
 {
-	//Player bring hands to the box (static yet)
-	//IK stuff
-
-	//Provisional
 	static float t_grab1 = SK_MOLE_TIME_TO_GRAB;
 	t_grab1 -= getDeltaTime();
 	if (t_grab1 < 0) {
@@ -315,13 +358,23 @@ void player_controller_mole::GrabbingBox1()
 	}
 }
 
+void player_controller_mole::GrabbingPila1()
+{
+	static float t_grab_pila1 = SK_MOLE_TIME_TO_GRAB;
+	t_grab_pila1 -= getDeltaTime();
+	if (t_grab_pila1 < 0) {
+		t_grab_pila1 = SK_MOLE_TIME_TO_GRAB;
+		ChangeState(ST_MOLE_PILING_2);
+		animController->setState(AST_GRAB_PILA2);
+	}
+}
+
 void player_controller_mole::GrabbingBox2()
 {
 	//Player return to idlebox pose
 	//End IK Stuff progressively
 	//Box track player hands
 
-	//Provisional
 	static float t_grab2 = SK_MOLE_TIME_TO_GRAB;
 	t_grab2 -= getDeltaTime();
 	if (t_grab2 < 0) {
@@ -336,6 +389,12 @@ void player_controller_mole::GrabbingBox2()
 
 		inputEnabled = true;
 	}
+}
+
+void player_controller_mole::GrabbingPila2()
+{
+	//TODO
+	ChangeState("idle");
 }
 
 void player_controller_mole::GrabbedBox() {
@@ -361,6 +420,11 @@ void player_controller_mole::GrabbedBox() {
 
 	ChangeState("idle");
 	logic_manager->throwEvent(logic_manager->OnPickupBox, "");
+}
+
+void player_controller_mole::GrabbedPila()
+{
+	//TODO
 }
 
 void player_controller_mole::onGrabHit(const TMsgGrabHit& msg)

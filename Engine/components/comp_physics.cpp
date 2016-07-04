@@ -434,6 +434,11 @@ void TCompPhysics::AddMovement(VEC3 movement)
 	setPosition(PhysxConversion::PxVec3ToVec3(tmx.p), PhysxConversion::PxQuatToCQuaternion(tmx.q));
 }
 
+void TCompPhysics::DisableRotationXZ()
+{
+	PxRigidDynamic *rd = m_pActor->isRigidDynamic();
+	if (rd) rd->setMassSpaceInertiaTensor(PxVec3(0.f, 1.f, 0.f));
+}
 void TCompPhysics::AddForce(VEC3 force)
 {
 	PxRigidDynamic *rb = m_pActor->isRigidDynamic();

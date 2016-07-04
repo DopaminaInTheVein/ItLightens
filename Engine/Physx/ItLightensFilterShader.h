@@ -137,25 +137,11 @@ public:
 					pairFlags &= ~PxPairFlag::eNOTIFY_TOUCH_FOUND;
 					pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
 					dbg("Ignoro colision player\n");
-					return PxFilterFlag::eKILL;
+					return PxFilterFlag::eSUPPRESS;
 				}
 			}
 			//Check if has user callback
 			if (ILFS_SOME_HAS(eUSER_CALLBACK, 2)) {
-				//Temp
-				dbg("[%d] vs. [%d]\n", filterData0.word0, filterData1.word0);
-				dbg("Word2: [%d] vs. [%d]\n", filterData0.word2, filterData1.word2);
-				if ((me = filterData0.word0) & ePLAYER_CONTROLLED || (me = filterData1.word0) & ePLAYER_CONTROLLED) {
-					other = (me == filterData0.word0) ? filterData1.word2 : filterData0.word2;
-					if (other & eIGNORE_PLAYER) {
-						pairFlags &= ~PxPairFlag::eNOTIFY_TOUCH_FOUND;
-						pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
-						dbg("Ignoro colision player\n");
-						return PxFilterFlag::eSUPPRESS;
-					}
-				}
-				//--Temp
-
 				pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
 				pairFlags |= PxPairFlag::eNOTIFY_CONTACT_POINTS;
 				pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;

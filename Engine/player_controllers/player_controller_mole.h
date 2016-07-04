@@ -67,21 +67,30 @@ public:
 	void ChangeCommonState(std::string) override;
 	void GoToGrab();
 	void FaceToGrab();
+	void FaceToPila();
 	void GrabbingBox1();
+	void GrabbingPila1(); //-----
 	void GrabbingBox2();
+	void GrabbingPila2(); //-----
 	void GrabbingImpact();
 	void GrabbingImpact1();
 	void GrabbingImpact2();
 	void GrabbedBox();
+	void GrabbedPila(); //-----
 	void LeaveBox();
+	void LeavePila(); //-----
 	void LeavingBox();
+	void LeavingPila(); //-----
 	void DestroyWall();
 
 	void InitControlState();
 	bool nearToBox();
+	bool nearToPila();
 	bool nearToWall();
 	CHandle boxGrabbed; // = false;
 	CHandle boxNear; // = false;
+	CHandle pilaGrabbed; // = false;
+	CHandle pilaNear; // = false;
 	string selectedBox = "";
 	//int selectedBoxi = 0;
 	int selectedWallToBreaki = 0;

@@ -16,7 +16,9 @@ protected:
 	TCompCharacterController * cc;
 	player_controller_mole * pc;
 	CHandle grabbed;
+	CHandle grabbedPila;
 	VEC3 left_h_target, right_h_target, front_h_dir;
+	VEC3 left_h_normal, right_h_normal;
 
 	void SetCharacterController();
 	void SetPlayerController();
@@ -27,12 +29,18 @@ protected:
 
 public:
 	void grabObject(CHandle);
+	void grabPila(CHandle);
 	void ungrabObject(); // Funcion para soltarlo
+	void ungrabPila(); // Funcion para soltarlo
 	void removeGrab() { grabbed = CHandle(); } //"Private" func
+	void removePila() { grabbedPila = CHandle(); } //"Private" func
 	VEC3 getGrabLeft();
 	VEC3 getGrabRight();
+	VEC3 getGrabNormalLeft();
+	VEC3 getGrabNormalRight();
 	VEC3 getGrabFrontDir();
 	CHandle getGrabbed();
+	CHandle getGrabbedPila();
 
 	bool load(MKeyValue& atts) { return true; }
 	//void onCreate(const TMsgEntityCreated&);
