@@ -81,7 +81,7 @@ void player_controller_mole::Init() {
 		addBasicStates();
 		addPossStates();
 		AddStMole(ST_MOLE_GRAB_GO, GoToGrab);
-		AddStMole(ST_MOLE_GRAB_FACE, FaceToGrab);
+		AddStMole(ST_MOLE_PILA_FACE, FaceToGrab);
 		AddStMole(ST_MOLE_GRABBING_1, GrabbingBox1);
 		AddStMole(ST_MOLE_PILING_1, GrabbingPila1);
 		AddStMole(ST_MOLE_GRABBING_2, GrabbingBox2);
