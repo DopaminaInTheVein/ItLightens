@@ -1,4 +1,5 @@
 <entities>
+<!--
 <entity>
 <tags
    tags=""/>
@@ -149,6 +150,7 @@
    scale="1.0"/>
 
 </entity>-
+-->
   <entity>
     <name name="light_dir_shadows" />
     <transform pos="-88.3697 9.13564 -37.90521" lookat="-79 0 -7" />
