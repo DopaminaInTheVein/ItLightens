@@ -36,7 +36,7 @@ void SkelControllerMole::grabObject(CHandle h)
 void SkelControllerMole::grabPila(CHandle h)
 {
 	grabbedPila = h;
-	enableIK(SK_RHAND, grabRightIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
+	enableIK(SK_RHAND, grabPilaIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 }
 void SkelControllerMole::ungrabObject()
 {
@@ -45,6 +45,17 @@ void SkelControllerMole::ungrabObject()
 	disableIK(SK_LHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
 	//(SK_RHAND, SK_MOLE_TIME_TO_UNGRAB, );
 }
+
+void SkelControllerMole::ungrabPila()
+{
+	GET_COMP(pila, grabbedPila, TCompBox);
+	TMsgAttach msg;
+	msg.handle = CHandle();
+	grabbedPila.sendMsg(msg);
+	//disableIK(SK_LHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
+	//(SK_RHAND, SK_MOLE_TIME_TO_UNGRAB, );
+}
+
 bool SkelControllerMole::getUpdateInfo()
 {
 	owner = CHandle(this).getOwner();
@@ -113,6 +124,17 @@ void SkelControllerMole::myUpdate()
 			msgAttach.handle = owner;
 			msgAttach.save_local_tmx = true;
 			grabbed.sendMsg(msgAttach);
+		}
+		else if (currentState == AST_GRAB_PILA2) {
+			setAction("grab_pila_2", "grab_box_idle");
+			currentState = AST_PILA_IDLE;
+			disableIK(SK_RHAND);
+			//disableIK(SK_LHAND);
+			TMsgAttach msgAttach;
+			msgAttach.bone_name = SK_RHAND;
+			msgAttach.handle = owner;
+			msgAttach.save_local_tmx = true;
+			grabbedPila.sendMsg(msgAttach);
 		}
 		else {
 			//Test borrar!
@@ -224,9 +246,14 @@ IK_IMPL_SOLVER(ungrabbed, info, result) {
 }
 
 IK_IMPL_SOLVER(grabPilaIK, info, result) {
+	GET_COMP(mole_t, info.handle, TCompTransform);
 	GET_COMP(skc, info.handle, SkelControllerMole);
-	result.new_pos = skc->getGrabRight();
-	result.bone_normal = skc->getGrabNormalLeft();
+	GET_COMP(pila_t, skc->getGrabbedPila(), TCompTransform);
+	VEC3 right = -mole_t->getLeft();
+	right.Normalize();
+	result.new_pos = pila_t->getPosition() + right * 0.3f;
+
+	//result.bone_normal = skc->getGrabNormalLeft();
 }
 
 IK_IMPL_SOLVER(ungrabbedPila, info, result) {

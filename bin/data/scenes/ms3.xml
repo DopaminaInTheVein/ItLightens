@@ -1577,6 +1577,21 @@
 <entity>
 <tags/>
 <name
+   name="panel"/>
+<transform
+   pos="-72.6722 8.69011 1.9557"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/panel.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="fuenteagua"/>
 <transform
    pos="-67.531 17.3056 20.2309"
@@ -1967,6 +1982,21 @@
 <entity>
 <tags/>
 <name
+   name="mesita"/>
+<transform
+   pos="-70.4773 -0.899074 18.4302"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/mesita.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="enchufe"/>
 <transform
    pos="-121.537 -0.242203 -5.41684"
@@ -2280,7 +2310,10 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="box platform pila"/>
+<pila/>
+<bone_tracker/>
 <name
    name="__pila"/>
 <transform
@@ -2291,7 +2324,11 @@
    name="static_meshes/ms3/pila.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"
+   kinematic="yes"/>
+<local_aabb/>
 
 </entity>
 <entity>
@@ -2304,7 +2341,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="-45.2467 0 -0.935596"
+   pos="-120.603 -1.23584 -12.0201"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -3207,9 +3244,9 @@
    points="100"/>
 <skc_mole/>
 <name
-   name="mole_1"/>
+   name="__mole_1"/>
 <transform
-   pos="-74.5876 -1.23584 -20.3184"
+   pos="-122.124 -1.23584 -10.3693"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -3222,79 +3259,6 @@
 <character_controller
    radius="0.3"
    height="2.1"/>
-
-</entity>
-<entity>
-<tags
-   tags="box platform removable"/>
-<box
-   size="3.0 1.5 3.0"/>
-<bone_tracker/>
-<name
-   name="Box_2"/>
-<transform
-   pos="-66.9967 -0.0268367 -16.8744"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-
-</entity>
-<entity>
-<tags
-   tags="box platform pila"/>
-<pila/>
-<bone_tracker/>
-<name
-   name="pila"/>
-<transform
-   pos="-121.537 -0.242203 -5.41684"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pila.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="2"/>
-<local_aabb/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="mesita"/>
-<transform
-   pos="-70.4773 -0.899074 18.4302"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/mesita.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="panel"/>
-<transform
-   pos="-72.6722 8.69011 1.9557"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/panel.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 

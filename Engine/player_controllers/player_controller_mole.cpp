@@ -207,8 +207,6 @@ void player_controller_mole::DestroyWall() {
 }
 
 void player_controller_mole::LeaveBox() {
-	GET_COMP(box, boxGrabbed, TCompBox);
-	GET_COMP(box_p, boxGrabbed, TCompPhysics);
 	animController->ungrabObject();
 
 	SBB::postBool(selectedBox, false);
@@ -221,7 +219,12 @@ void player_controller_mole::LeaveBox() {
 }
 
 void player_controller_mole::LeavePila() {
-	//TODO
+	animController->ungrabPila();
+	pilaGrabbed = CHandle();
+	mole_max_speed *= 2;
+	ChangeState(ST_MOLE_UNPILING);
+	stopMovement();
+	inputEnabled = false;
 }
 void player_controller_mole::LeavingBox()
 {
@@ -236,7 +239,14 @@ void player_controller_mole::LeavingBox()
 
 void player_controller_mole::LeavingPila()
 {
-	//TODO
+	LeavingBox(); //Son identicos!! (por ahora)
+	//static float t_ungrab_pila = SK_MOLE_TIME_TO_UNGRAB;
+	//t_ungrab_pila -= getDeltaTime();
+	//if (t_ungrab_pila < 0) {
+	//	t_ungrab_pila = SK_MOLE_TIME_TO_UNGRAB;
+	//	ChangeState("idle");
+	//	inputEnabled = true;
+	//}
 }
 
 bool player_controller_mole::nearToWall() {
@@ -285,7 +295,7 @@ bool player_controller_mole::nearToBox() {
 
 bool player_controller_mole::nearToPila() {
 	bool found = false;
-	float distMax = 2.0f;
+	float distMax = 1.f;
 	float highest = -999.9f;
 	for (auto h : TCompPila::all_pilas) {
 		if (!h.isValid()) continue;
@@ -294,7 +304,7 @@ bool player_controller_mole::nearToPila() {
 		VEC3 myPos = transform->getPosition();
 		if (distY(myPos, pilaPos) < 5.f) {
 			float disttowpt = simpleDistXZ(pilaPos, getEntityTransform()->getPosition());
-			if (disttowpt < distMax + 2 && pilaPos.y >= highest) {
+			if (disttowpt < distMax && pilaPos.y >= highest) {
 				highest = pilaPos.y;
 				pilaNear = h;
 				found = true;
@@ -329,11 +339,11 @@ void player_controller_mole::GoToGrab()
 }
 void player_controller_mole::FaceToGrab()
 {
-	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
+	bool faced = turnTo(GETH_COMP(pilaNear, TCompTransform));
 	if (faced) {
-		animController->grabObject(boxNear);
-		animController->setState(AST_GRAB_DOWN);
-		ChangeState(ST_MOLE_GRABBING_1);
+		animController->grabPila(pilaNear);
+		animController->setState(AST_GRAB_PILA1);
+		ChangeState(ST_MOLE_PILING_1);
 	}
 }
 
@@ -380,7 +390,7 @@ void player_controller_mole::GrabbingBox2()
 	if (t_grab2 < 0) {
 		t_grab2 = SK_MOLE_TIME_TO_GRAB;
 		ChangeState(ST_MOLE_GRAB);
-		animController->setState(AST_GRAB_IDLE);
+		animController->setState(AST_PILA_IDLE);
 		GET_COMP(box_p, boxNear, TCompPhysics);
 		box_p->setKinematic(true);
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, true);
@@ -394,7 +404,8 @@ void player_controller_mole::GrabbingBox2()
 void player_controller_mole::GrabbingPila2()
 {
 	//TODO
-	ChangeState("idle");
+	ChangeState(ST_MOLE_PILA);
+	inputEnabled = true;
 }
 
 void player_controller_mole::GrabbedBox() {
@@ -424,7 +435,15 @@ void player_controller_mole::GrabbedBox() {
 
 void player_controller_mole::GrabbedPila()
 {
-	//TODO
+	energyDecreasal(5.0f);
+	TMsgDamage dmg;
+	dmg.modif = 0.5f;
+	myEntity->sendMsg(dmg);
+	pilaGrabbed = pilaNear;
+	mole_max_speed /= 2;
+
+	ChangeState("idle");
+	//logic_manager->throwEvent(logic_manager->OnPickupBox, "");
 }
 
 void player_controller_mole::onGrabHit(const TMsgGrabHit& msg)
