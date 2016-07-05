@@ -2310,10 +2310,7 @@
 
 </entity>
 <entity>
-<tags
-   tags="box platform pila"/>
-<pila/>
-<bone_tracker/>
+<tags/>
 <name
    name="__pila"/>
 <transform
@@ -2324,11 +2321,7 @@
    name="static_meshes/ms3/pila.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"
-   kinematic="yes"/>
-<local_aabb/>
+   type_collision="static"/>
 
 </entity>
 <entity>
@@ -2341,7 +2334,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="-120.603 -1.23584 -12.0201"
+   pos="-45.2467 0 -0.935596"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -2832,7 +2825,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2846,7 +2839,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2860,7 +2853,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2874,7 +2867,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2888,7 +2881,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2902,7 +2895,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2916,7 +2909,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2930,7 +2923,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2944,7 +2937,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2958,7 +2951,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2972,7 +2965,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -2986,7 +2979,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3000,7 +2993,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3014,7 +3007,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3028,7 +3021,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3042,7 +3035,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3056,13 +3049,13 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
    name="Omni019"/>
 <transform
-   pos="-111.66 1.63284 -10.0189"
+   pos="-108.437 1.81828 -10.0189"
    quat="-0.429313 0.56785 -0.532812 -0.457545"
    scale="1.0"/>
 
@@ -3070,7 +3063,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3084,7 +3077,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3098,7 +3091,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3112,7 +3105,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3126,7 +3119,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3140,7 +3133,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3154,7 +3147,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3168,7 +3161,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3182,7 +3175,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3196,7 +3189,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3210,7 +3203,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3224,7 +3217,7 @@
 <entity>
 <tags/>
 <light_point
-   color="0.694118 0.560784 0.415686 0.4"
+   color="0.694118 0.560784 0.415686 0.2"
    in_radius="7.0"
    out_radius="55.0"/>
 <name
@@ -3236,29 +3229,62 @@
 
 </entity>
 <entity>
-<tags
-   tags="AI AI_mole AI_poss"/>
-<bt_mole/>
-<player_mole/>
-<life
-   points="100"/>
-<skc_mole/>
+<tags/>
 <name
-   name="__mole_1"/>
+   name="biombos_abajo"/>
 <transform
-   pos="-122.124 -1.23584 -10.3693"
+   pos="-88.4023 0.097167 21.5525"
+   quat="0 0 0 1.0"
+   scale="0.70141"/>
+<render_static_mesh
+   name="static_meshes/ms3/biombos_abajo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pirulo_cargador_bateria_derecho"/>
+<transform
+   pos="-91.7531 -0.888125 13.893"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<skeleton
-   model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
-   name="skeletons/mole/mole.static_mesh"/>
-<skeleton_ik/>
+   name="static_meshes/ms3/pirulo_cargador_bateria_derecho.static_mesh"/>
 <abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.3"
-   height="2.1"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.2"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni032"/>
+<transform
+   pos="-115.831 1.81828 -10.0189"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="antenitas_cargador"/>
+<transform
+   pos="-90.8368 -0.419937 14.4301"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/antenitas_cargador.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 
