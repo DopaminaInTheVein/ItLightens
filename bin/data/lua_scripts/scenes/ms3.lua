@@ -1,16 +1,16 @@
-function OnAction_tElevator( )
+function OnAction___tElevator( )
 activateElevatorPlayer()
 end
 
-function OnActionSci_tElevator( )
+function OnActionSci___tElevator( )
 activateElevator()
 end
 
-function OnAction_tElevator( )
+function OnAction___tElevator( )
 activateElevatorPlayer()
 end
 
-function OnActionSci_tElevator( )
+function OnActionSci___tElevator( )
 activateElevator()
 end
 

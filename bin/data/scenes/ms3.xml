@@ -124,7 +124,7 @@
 <name
    name="barrotes_balcon_arriba"/>
 <transform
-   pos="-35.6352 -0.685669 -0.744385"
+   pos="-34.9403 -0.685649 -1.29331"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -274,7 +274,7 @@
 <name
    name="marco_balcon_superior_redondo"/>
 <transform
-   pos="-41.2381 0.865537 -0.812689"
+   pos="-41.4063 0.865537 -0.812689"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -394,7 +394,7 @@
 <name
    name="pibotes_balcon_arriba"/>
 <transform
-   pos="-35.7331 -0.735733 -0.763061"
+   pos="-35.0434 -0.736112 -1.33485"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -474,21 +474,6 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/puerta_balcon_cuadrado_derecho.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="puerta_balcon_cuadrado_izquierdo"/>
-<transform
-   pos="10.2901 -10.2875 25.095"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/puerta_balcon_cuadrado_izquierdo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -1097,13 +1082,13 @@
 <entity>
 <tags/>
 <name
-   name="barrotes_balcon_arriba"/>
+   name="barrotes_balcon_arriba_adorno"/>
 <transform
    pos="4.2751 -2.23531 -22.1088"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/barrotes_balcon_arriba.static_mesh"/>
+   name="static_meshes/ms3/barrotes_balcon_arriba_adorno.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -1234,7 +1219,7 @@
 <name
    name="balcon_redondo"/>
 <transform
-   pos="-110.521 -0.539308 -20.1342"
+   pos="-34.6137 -2.2547 -0.896849"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2205,6 +2190,189 @@
 
 </entity>
 <entity>
+<tags
+   tags="camera_main"/>
+<camera_main
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"/>
+<culling/>
+<controller_3rd_person/>
+<FX_fade_screen/>
+<name
+   name="__camController_1"/>
+<transform
+   pos="-45.0788 5.35219 -0.918759"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   id="300">
+<tags
+   tags="doorExit door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-82.841 4.37253 -29.8566"
+   pol="neutral"/>
+<name
+   name="__Door"/>
+<transform
+   pos="-82.841 0.575218 -29.8566"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/logic/Door.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__Door___opened_pos"/>
+<transform
+   pos="-82.841 4.37253 -29.8566"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+
+</entity>
+<entity
+   id="301">
+<tags
+   tags="elevator1 elevator"/>
+<elevator
+   speedUp="7"
+   speedDown="7"
+   target="-65.5449 -1.25345 20.4724"/>
+<name
+   name="__elevator"/>
+<transform
+   pos="-65.5449 15.7081 20.4724"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/logic/elevator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"
+   kinematic="yes"/>
+<local_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__elevator___pos_elevator_down"/>
+<transform
+   pos="-65.5449 -1.25345 20.4724"
+   quat="0 0 0 1.0"
+   scale="0.547495"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__pila"/>
+<transform
+   pos="-121.537 -0.242203 -5.41684"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pila.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="player raijin"/>
+<player/>
+<life
+   points="10"/>
+<skc_player/>
+<name
+   name="__player_1"/>
+<transform
+   pos="-45.2467 0 -0.935596"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/player/player.skeleton"/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="0.7"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.2064 0.875 2.49"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionSci="activate"/>
+<name
+   name="__tElevator"/>
+<transform
+   pos="-65.4501 16.063 19.6681"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.22755 0.875 1.28148"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionSci="activate"/>
+<name
+   name="__tElevator"/>
+<transform
+   pos="-65.6524 -0.482764 18.6604"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__camara"/>
+<transform
+   pos="-68.4072 18.7886 10.0999"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/logic/camara.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
 <tags/>
 <name
    name="camara_centro"/>
@@ -2625,45 +2793,408 @@
 
 </entity>
 <entity>
-<tags
-   tags="player raijin"/>
-<player/>
-<life
-   points="10"/>
-<skc_player/>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
 <name
-   name="player_1"/>
+   name="Omni001"/>
 <transform
-   pos="-53.8063 0 -0.970322"
-   quat="0 0 0 1.0"
+   pos="-88.4677 0.951569 21.5601"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
    scale="1.0"/>
-<skeleton
-   model="skeletons/player/player.skeleton"/>
-<render_static_mesh
-   name="skeletons/player/player.static_mesh"/>
-<skeleton_ik/>
-<abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.3"
-   height="0.7"/>
 
 </entity>
 <entity>
-<tags
-   tags="camera_main"/>
-<camera_main
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<culling/>
-<controller_3rd_person/>
-<FX_fade_screen/>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
 <name
-   name="camController_1"/>
+   name="Omni003"/>
 <transform
-   pos="-54.722 0 -0.93689"
-   quat="0 0.707104 0 0.707104"
+   pos="-89.9982 2.064 16.6065"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni004"/>
+<transform
+   pos="-91.0556 4.82803 2.45131"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni005"/>
+<transform
+   pos="-91.8613 4.82803 -10.0189"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni007"/>
+<transform
+   pos="-76.9082 4.82803 2.45131"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni008"/>
+<transform
+   pos="-77.2906 4.82803 -14.8931"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni009"/>
+<transform
+   pos="-70.3717 4.82803 -6.88677"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni010"/>
+<transform
+   pos="-79.8062 4.82803 -25.7337"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni011"/>
+<transform
+   pos="-86.5671 4.82803 -25.7337"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni012"/>
+<transform
+   pos="-92.3876 5.26333 -17.8474"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni013"/>
+<transform
+   pos="-99.9072 4.82803 -10.0189"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni014"/>
+<transform
+   pos="-69.5727 5.10345 7.90419"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni015"/>
+<transform
+   pos="-64.737 5.10345 16.7377"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni016"/>
+<transform
+   pos="-65.5972 18.5703 17.9763"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni017"/>
+<transform
+   pos="-65.5972 18.5703 13.2047"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni018"/>
+<transform
+   pos="-65.7584 17.7416 8.94429"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni019"/>
+<transform
+   pos="-111.66 1.63284 -10.0189"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni020"/>
+<transform
+   pos="-122.191 1.63284 -10.0189"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni021"/>
+<transform
+   pos="-82.7751 4.82803 -38.4444"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni022"/>
+<transform
+   pos="-76.1604 4.82803 -42.2205"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni023"/>
+<transform
+   pos="-9.26134 -3.17584 -1.27001"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni024"/>
+<transform
+   pos="-4.71288 -6.58136 0.921652"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni025"/>
+<transform
+   pos="-6.61168 -6.48627 -5.32213"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni026"/>
+<transform
+   pos="-12.9618 -6.48627 -4.85997"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni027"/>
+<transform
+   pos="-14.7108 -6.48627 -0.0966661"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni028"/>
+<transform
+   pos="-10.0603 -6.31574 4.37965"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni029"/>
+<transform
+   pos="0.452164 -18.5472 24.2437"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni030"/>
+<transform
+   pos="0.189438 -18.5472 -24.2676"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.4"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni031"/>
+<transform
+   pos="27.032 -18.5472 -1.55589"
+   quat="-0.429313 0.56785 -0.532812 -0.457545"
    scale="1.0"/>
 
 </entity>
@@ -2678,7 +3209,7 @@
 <name
    name="mole_1"/>
 <transform
-   pos="-71.3139 0 -18.907"
+   pos="-74.5876 -1.23584 -20.3184"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -2690,29 +3221,7 @@
 <local_aabb/>
 <character_controller
    radius="0.3"
-   height="2.01"/>
-
-</entity>
-<entity>
-<tags
-   tags="box platform removable"/>
-<box
-   size="1.0 1.0 1.0"/>
-<bone_tracker/>
-<name
-   name="Box_1"/>
-<transform
-   pos="-73.8368 0 -16.4196"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/box1.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="2"/>
-<local_aabb/>
+   height="2.1"/>
 
 </entity>
 <entity>
