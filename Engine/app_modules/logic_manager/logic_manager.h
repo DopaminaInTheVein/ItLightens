@@ -30,6 +30,7 @@ public:
 		OnAction = 0,
 		OnActionSci,
 		OnActionMole,
+		OnActionPila,
 		OnEnter,
 		OnLeave,
 		OnGameStart,

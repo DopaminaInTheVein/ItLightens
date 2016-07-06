@@ -12,6 +12,7 @@ protected:
 	eAction mAction;
 	eAction mActionSci;
 	eAction mActionMole;
+	eAction mActionPila;
 	PLAYER_TYPE playerType = PLAYER;
 
 public:

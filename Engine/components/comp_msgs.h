@@ -186,6 +186,11 @@ struct TMsgOverCharge {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgCanDoActions {
+	bool enabled;
+	DECLARE_MSG_ID();
+};
+
 struct TMsgControllerSetEnable {
 	bool enabled;
 	DECLARE_MSG_ID();

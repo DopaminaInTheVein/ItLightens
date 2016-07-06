@@ -500,6 +500,9 @@
     <ClCompile Include="logic\pila.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="logic\pila_container.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1363,6 +1366,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="logic\pila.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\pila_container.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

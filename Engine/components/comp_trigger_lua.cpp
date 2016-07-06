@@ -1,6 +1,7 @@
 #include "mcv_platform.h"
 #include "comp_trigger_lua.h"
 #include "components/entity.h"
+#include "player_controllers/player_controller_mole.h"
 
 using namespace std;
 
@@ -60,7 +61,7 @@ eAction TTriggerLua::getActionAvailable() {
 			action = mAction;
 			break;
 		case PLAYER_TYPE::MOLE:
-			action = mActionMole;
+			mAction = mActionMole;
 			break;
 		case PLAYER_TYPE::SCIENTIST:
 			action = mActionSci;
@@ -109,6 +110,7 @@ bool TTriggerLua::load(MKeyValue& atts) {
 	loadAction("action", mAction);
 	loadAction("actionSci", mActionSci);
 	loadAction("actionMole", mActionMole);
+	loadAction("actionPila", mActionPila);
 
 	//Desactivado inicialmente?
 	if (mActionable) {

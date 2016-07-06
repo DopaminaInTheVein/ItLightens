@@ -35,6 +35,8 @@ void TCompPila::onCreate(const TMsgEntityCreated& msg)
 	AddStPila(ST_PILA_GROUND, OnGround);
 	AddStPila(ST_PILA_GRABBED, Grabbed);
 	AddStPila(ST_PILA_FALLING, Falling);
+
+	place = VEC3();
 	ChangeState(ST_PILA_GROUND);
 }
 
@@ -47,6 +49,12 @@ void TCompPila::OnGround()
 {
 	keepVertical();
 	checkActions();
+	if (!isZero(place)) {
+		GET_MY(tmx, TCompTransform);
+		GET_MY(phys, TCompPhysics);
+		tmx->setPosition(place);
+		phys->setPosition(tmx);
+	}
 }
 
 void TCompPila::Grabbed()
