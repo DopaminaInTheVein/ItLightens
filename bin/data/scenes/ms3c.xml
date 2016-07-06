@@ -3274,7 +3274,7 @@
 </entity>
 <entity>
 <tags
-   tags="box platform pila"/>
+   tags="platform pila"/>
 <pila/>
 <bone_tracker/>
 <name

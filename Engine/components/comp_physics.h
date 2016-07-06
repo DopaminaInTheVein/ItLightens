@@ -24,6 +24,9 @@ enum eTypeShape {
 	DRONE,
 };
 
+//Forward declaration
+class TCompTransform;
+
 // ------------------------------------
 class TCompPhysics : public TCompBase {
 	int					m_collisionType;
@@ -95,6 +98,7 @@ public:
 	void AddForce(VEC3 force);
 	void ClearForces();
 	void AddVelocity(VEC3 velocity);
+	void setPosition(TCompTransform *);
 	void setPosition(VEC3 position, CQuaternion rotation);
 
 	float GetMass() const { return m_mass; }

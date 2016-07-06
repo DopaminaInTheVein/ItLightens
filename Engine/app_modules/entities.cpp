@@ -255,6 +255,9 @@ bool CEntitiesModule::start() {
 	//Grab Objects Hit
 	SUBSCRIBE(player_controller_mole, TMsgGrabHit, onGrabHit);
 
+	//On contact
+	SUBSCRIBE(TCompPila, TMsgContact, onContact);
+
 	SUBSCRIBE(bt_scientist, TMsgWBTakenByPlayer, onTakenWB);
 	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
 	SUBSCRIBE(magnet_door, TMsgSetPolarity, onSetPolarity);
@@ -650,6 +653,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompPlatform>()->updateAll(dt);
 		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
+		getHandleManager<TCompPila>()->updateAll(dt);
 		getHandleManager<TCompWorkstation>()->updateAll(dt);
 		getHandleManager<magnet_door>()->updateAll(dt);
 		getHandleManager<elevator>()->updateAll(dt);

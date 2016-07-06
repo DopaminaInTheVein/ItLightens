@@ -5,6 +5,7 @@
 #include "player_controllers/player_controller_mole.h"
 #include "components/entity.h"
 #include "components/comp_physics.h"
+#include "logic/pila.h"
 
 #include "logic/comp_box.h"
 
@@ -48,10 +49,11 @@ void SkelControllerMole::ungrabObject()
 
 void SkelControllerMole::ungrabPila()
 {
-	GET_COMP(pila, grabbedPila, TCompBox);
+	GET_COMP(pila, grabbedPila, TCompPila);
 	TMsgAttach msg;
 	msg.handle = CHandle();
 	grabbedPila.sendMsg(msg);
+	pila->setFalling();
 	//disableIK(SK_LHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
 	//(SK_RHAND, SK_MOLE_TIME_TO_UNGRAB, );
 }

@@ -66,6 +66,7 @@ public:
 	void myUpdate();
 	void ChangeCommonState(std::string) override;
 	void GoToGrab();
+	void GoToPila();
 	void FaceToGrab();
 	void FaceToPila();
 	void GrabbingBox1();

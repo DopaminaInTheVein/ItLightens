@@ -24,6 +24,7 @@ map<string, statehandler> player_controller_mole::statemap = {};
 #define ST_MOLE_GRAB "grabbedBox"
 #define ST_MOLE_PILA "grabbedPila"
 #define ST_MOLE_GRAB_GO "goToGrab"
+#define ST_MOLE_PILA_GO "goToPila"
 #define ST_MOLE_GRAB_FACE "faceToGrab"
 #define ST_MOLE_PILA_FACE "faceToPila"
 #define ST_MOLE_GRABBING_1 "grabbing1"
@@ -81,6 +82,7 @@ void player_controller_mole::Init() {
 		addBasicStates();
 		addPossStates();
 		AddStMole(ST_MOLE_GRAB_GO, GoToGrab);
+		AddStMole(ST_MOLE_PILA_GO, GoToPila);
 		AddStMole(ST_MOLE_PILA_FACE, FaceToGrab);
 		AddStMole(ST_MOLE_GRABBING_1, GrabbingBox1);
 		AddStMole(ST_MOLE_PILING_1, GrabbingPila1);
@@ -145,7 +147,7 @@ void player_controller_mole::UpdateInputActions() {
 				float pitch_dummy;
 				getYawPitchFromVector(grabInfo.dir_to_grab, &grabInfo.yaw, &pitch_dummy);
 				inputEnabled = false;
-				ChangeState(ST_MOLE_PILA_FACE);
+				ChangeState(ST_MOLE_PILA_GO);
 			}
 			else if (this->nearToBox()) {
 				//ChangePose(pose_box_route);
@@ -210,7 +212,6 @@ void player_controller_mole::LeaveBox() {
 	animController->ungrabObject();
 
 	SBB::postBool(selectedBox, false);
-	boxGrabbed = CHandle();
 	mole_max_speed *= 2;
 	//ChangePose(pose_idle_route);
 	ChangeState(ST_MOLE_UNGRABBING);
@@ -220,7 +221,6 @@ void player_controller_mole::LeaveBox() {
 
 void player_controller_mole::LeavePila() {
 	animController->ungrabPila();
-	pilaGrabbed = CHandle();
 	mole_max_speed *= 2;
 	ChangeState(ST_MOLE_UNPILING);
 	stopMovement();
@@ -234,19 +234,25 @@ void player_controller_mole::LeavingBox()
 		t_ungrab = SK_MOLE_TIME_TO_UNGRAB;
 		ChangeState("idle");
 		inputEnabled = true;
+		GET_COMP(box_p, boxGrabbed, TCompPhysics);
+		box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
+		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
+		boxGrabbed = CHandle();
 	}
 }
 
 void player_controller_mole::LeavingPila()
 {
-	LeavingBox(); //Son identicos!! (por ahora)
-	//static float t_ungrab_pila = SK_MOLE_TIME_TO_UNGRAB;
-	//t_ungrab_pila -= getDeltaTime();
-	//if (t_ungrab_pila < 0) {
-	//	t_ungrab_pila = SK_MOLE_TIME_TO_UNGRAB;
-	//	ChangeState("idle");
-	//	inputEnabled = true;
-	//}
+	static float t_ungrab_pila = SK_MOLE_TIME_TO_UNGRAB;
+	t_ungrab_pila -= getDeltaTime();
+	if (t_ungrab_pila < 0) {
+		t_ungrab_pila = SK_MOLE_TIME_TO_UNGRAB;
+		ChangeState("idle");
+		inputEnabled = true;
+		GET_COMP(pila_p, pilaGrabbed, TCompPhysics);
+		pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
+		pilaGrabbed = CHandle();
+	}
 }
 
 bool player_controller_mole::nearToWall() {
@@ -295,7 +301,7 @@ bool player_controller_mole::nearToBox() {
 
 bool player_controller_mole::nearToPila() {
 	bool found = false;
-	float distMax = 1.f;
+	float distMax = 4.f;
 	float highest = -999.9f;
 	for (auto h : TCompPila::all_pilas) {
 		if (!h.isValid()) continue;
@@ -328,7 +334,7 @@ void player_controller_mole::GoToGrab()
 		if (deltaYaw > epsilonYaw) transform->setAngles(yaw + 0.1f * deltaYaw, pitch);
 		VEC3 dir = grabInfo.pos_to_grab - cc->GetPosition();
 		dir.Normalize();
-		cc->AddMovement(dir, player_max_speed * getDeltaTime());
+		cc->AddMovement(dir, mole_max_speed * getDeltaTime());
 		moving = true;
 		ChangeCommonState("moving");
 	}
@@ -337,6 +343,32 @@ void player_controller_mole::GoToGrab()
 		time_out_to_grab = MOLE_TIME_OUT_GO_GRAB;
 	}
 }
+
+void player_controller_mole::GoToPila()
+{
+	static float time_out_to_grab = MOLE_TIME_OUT_GO_GRAB;
+	time_out_to_grab -= getDeltaTime();
+	GET_COMP(pila_t, pilaNear, TCompTransform);
+	VEC3 pila_pos = pila_t->getPosition();
+	float dist = simpleDistXZ(cc->GetPosition(), pila_pos);
+	if (dist > 1.f) {
+		float yaw, pitch;
+		transform->getAngles(&yaw, &pitch);
+		// Go to target
+		float deltaYaw = transform->getDeltaYawToAimTo(pila_pos);
+		if (deltaYaw > epsilonYaw) transform->setAngles(yaw + 0.1f * deltaYaw, pitch);
+		VEC3 dir = pila_pos - cc->GetPosition();
+		dir.Normalize();
+		cc->AddMovement(dir, mole_max_speed * getDeltaTime());
+		moving = true;
+		ChangeCommonState("moving");
+	}
+	else {
+		ChangeState(ST_MOLE_PILA_FACE);
+		time_out_to_grab = MOLE_TIME_OUT_GO_GRAB;
+	}
+}
+
 void player_controller_mole::FaceToGrab()
 {
 	bool faced = turnTo(GETH_COMP(pilaNear, TCompTransform));
@@ -405,6 +437,9 @@ void player_controller_mole::GrabbingPila2()
 {
 	//TODO
 	ChangeState(ST_MOLE_PILA);
+	GET_COMP(pila_p, pilaNear, TCompPhysics);
+	pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, true);
+
 	inputEnabled = true;
 }
 
