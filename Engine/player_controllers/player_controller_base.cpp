@@ -465,9 +465,14 @@ map<string, statehandler>* CPlayerBase::getStatemap() {
 //Aux
 bool CPlayerBase::turnTo(TCompTransform * t)
 {
+	return turnTo(t->getPosition());
+}
+
+bool CPlayerBase::turnTo(VEC3 target)
+{
 	float yaw, pitch;
 	transform->getAngles(&yaw, &pitch);
-	float deltaYaw = transform->getDeltaYawToAimTo(t->getPosition());
+	float deltaYaw = transform->getDeltaYawToAimTo(target);
 	if (abs(deltaYaw) > epsilonYaw) {
 		float yaw_added = deltaYaw * getDeltaTime() * player_rotation_speed;
 		clampAbs_me(yaw_added, abs(deltaYaw));

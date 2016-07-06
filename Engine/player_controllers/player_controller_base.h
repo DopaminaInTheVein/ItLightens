@@ -94,6 +94,7 @@ protected:
 	void checkFalling();
 
 	bool turnTo(TCompTransform*);
+	bool turnTo(VEC3 target);
 
 public:
 

@@ -1,1 +1,3 @@
 - pila
+- cargador_bateria
+- tCargador

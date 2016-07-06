@@ -17,6 +17,7 @@ struct TCompPila : public aicontroller, public TTriggerLua {
 
 	static VHandles all_pilas;
 	CHandle player;
+	VEC3 place;
 
 	~TCompPila();
 	void onCreate(const TMsgEntityCreated& msg);

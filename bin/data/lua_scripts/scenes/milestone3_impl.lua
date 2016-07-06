@@ -31,6 +31,15 @@ function OnActionSci___pila( )
   p:player_talks("This cell is exhausted. And too heavy for me...", "scientific.dds", "SCI")
 end
 
+-- Cargador --
+---------------------------------------------------------------------------------------------
+idCargador = 303
+triggerCargador = Handle()
+
+function activateCargadorPlayer()
+  p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
+end
+
 --------------------------------------------------------------------------------------------
 
 -- Elevator --

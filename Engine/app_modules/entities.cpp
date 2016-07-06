@@ -78,6 +78,7 @@ DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("drone", TCompDrone);
 DECL_OBJ_MANAGER("box", TCompBox);
 DECL_OBJ_MANAGER("pila", TCompPila);
+DECL_OBJ_MANAGER("pila_container", TCompPilaContainer);
 DECL_OBJ_MANAGER("workstation", TCompWorkstation);
 
 //Physics
@@ -164,6 +165,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
 	getHandleManager<TCompPila>()->init(MAX_ENTITIES);
+	getHandleManager<TCompPilaContainer>()->init(MAX_ENTITIES);
 	getHandleManager<TCompWorkstation>()->init(MAX_ENTITIES);
 	getHandleManager<TCompGuidedCamera>()->init(16);
 	//helpers
@@ -222,6 +224,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompDrone, TMsgRepair, onRepair);
 	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPila, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompPilaContainer, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);

@@ -38,6 +38,8 @@ void SkelControllerMole::grabPila(CHandle h)
 {
 	grabbedPila = h;
 	enableIK(SK_RHAND, grabPilaIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
+	GET_COMP(pila, grabbedPila, TCompPila);
+	if (pila) pila->place = VEC3();
 }
 void SkelControllerMole::ungrabObject()
 {
@@ -137,6 +139,10 @@ void SkelControllerMole::myUpdate()
 			msgAttach.handle = owner;
 			msgAttach.save_local_tmx = true;
 			grabbedPila.sendMsg(msgAttach);
+		}
+		else if (currentState == AST_PUT_PILA) {
+			setAction("put_pila", "idle");
+			currentState = AST_IDLE;
 		}
 		else {
 			//Test borrar!

@@ -1829,8 +1829,11 @@
    type_collision="static"/>
 
 </entity>
-<entity>
-<tags/>
+<entity
+   id="303">
+<tags
+   tags="pila_container"/>
+<pila_container/>
 <name
    name="cargador_bateria"/>
 <transform
@@ -3318,6 +3321,25 @@
 <character_controller
    radius="0.3"
    height="2.1"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="2.17851 1.1715 2.40955"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionSci="activate"/>
+<name
+   name="__tCargador"/>
+<transform
+   pos="-90.8076 -0.719524 14.492"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
 </entity>
 
