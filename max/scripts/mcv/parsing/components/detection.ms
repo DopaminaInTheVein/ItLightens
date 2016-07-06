@@ -12,6 +12,8 @@ fn _parse_detection_cam = (
 
 		local camtags = XML_PARSING.addChild "tags"
 		camtags.addAttr "tags" "ai_cam"
+		local camroom = XML_PARSING.addChild "room"
+		camroom.addAttr "name" _parsingObject.room_name
 		
 		local camdetect = XML_PARSING.addChild "ai_cam"
 		
