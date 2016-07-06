@@ -7,6 +7,7 @@
 #include "app_modules/logic_manager/logic_manager.h"
 
 class TTriggerLua : public TTrigger {
+protected:
 	bool mActionable;
 	eAction mAction;
 	eAction mActionSci;
@@ -15,12 +16,12 @@ class TTriggerLua : public TTrigger {
 
 public:
 	void mUpdate(float dt) override {} //not needed
-	eAction getActionAvailable();
+	virtual eAction getActionAvailable();
 	void onTriggerInside(const TMsgTriggerIn& msg) override;
 	void onTriggerEnter(const TMsgTriggerIn& msg) override;
 	void onTriggerExit(const TMsgTriggerOut& msg) override;
 	void onTriggerAction(PLAYER_TYPE playerType = PLAYER);
-	void executeTrigger(CLogicManagerModule::EVENT logicEvent); //, CHandle handle);
+	virtual void executeTrigger(CLogicManagerModule::EVENT logicEvent); //, CHandle handle);
 	void setActionable(bool);
 	void render() {}
 	void init() {}

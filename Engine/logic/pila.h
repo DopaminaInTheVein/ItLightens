@@ -5,15 +5,18 @@
 #include "handle/handle.h"
 
 #include "components/comp_msgs.h"
+#include "components/comp_trigger_lua.h"
 #include "logic/aicontroller.h"
+
 class TCompTransform;
 class TCompPhysics;
-struct TCompPila : public aicontroller, public TCompBase {
+struct TCompPila : public aicontroller, public TTriggerLua {
 	// the states, as maps to functions
 	static map<string, statehandler> statemap;
 	virtual map<string, statehandler>* getStatemap() { return &statemap; }
 
 	static VHandles all_pilas;
+	CHandle player;
 
 	~TCompPila();
 	void onCreate(const TMsgEntityCreated& msg);
@@ -23,8 +26,11 @@ struct TCompPila : public aicontroller, public TCompBase {
 	bool load(MKeyValue& atts);
 	void setFalling();
 	void onContact(const TMsgContact& msg);
-
-	//States
+	void checkActions();
+	bool getPlayer();
+	bool isPlayerNear();
+	eAction getActionAvailable() override;
+	void executeTrigger(CLogicManagerModule::EVENT logicEvent) override;
 	void OnGround();
 	void Grabbed();
 	void Falling();
