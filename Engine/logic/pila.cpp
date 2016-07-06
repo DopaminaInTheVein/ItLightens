@@ -26,7 +26,11 @@ void TCompPila::setFalling()
 void TCompPila::onCreate(const TMsgEntityCreated& msg)
 {
 	all_pilas.push_back(CHandle(this).getOwner());
-	GET_MY(phys, TCompPhysics);
+
+	mActionable = true;
+	mAction = EXAMINATE;
+	mActionSci = EXAMINATE;
+	mActionMole = NONE;
 
 	AddStPila(ST_PILA_GROUND, OnGround);
 	AddStPila(ST_PILA_GRABBED, Grabbed);
@@ -39,6 +43,29 @@ void TCompPila::update(float elapsed) {
 	//updateFalling(elapsed);
 }
 
+void TCompPila::OnGround()
+{
+	keepVertical();
+	checkActions();
+}
+
+void TCompPila::Grabbed()
+{
+}
+
+void TCompPila::Falling()
+{
+	auto phys = keepVertical();
+	phys->AddMovement(VEC3(0.f, getDeltaTime() * -10.f, 0.f));
+}
+
+void TCompPila::onContact(const TMsgContact& msg)
+{
+	GET_MY(phys, TCompPhysics);
+	phys->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
+	ChangeState(ST_PILA_GROUND);
+}
+
 TCompPhysics* TCompPila::keepVertical() {
 	GET_MY(phys, TCompPhysics);
 	GET_MY(tmx, TCompTransform);
@@ -47,33 +74,53 @@ TCompPhysics* TCompPila::keepVertical() {
 	return phys;
 }
 
-void TCompPila::OnGround()
+void TCompPila::checkActions()
 {
-	keepVertical();
+	if (!isPlayerNear()) return;
+	onTriggerInside(TMsgTriggerIn());
 }
-void TCompPila::Falling()
-{
-	auto phys = keepVertical();
-	phys->AddMovement(VEC3(0.f, getDeltaTime() * -10.f, 0.f));
-}
-void TCompPila::Grabbed()
-{
-}
-//void TCompPila::updateFalling(float elapsed) {
-//	if (falling) {
-//		GET_MY(phys, TCompPhysics);
-//		GET_MY(tmx, TCompTransform);
-//		tmx->setPitch(0.f);
-//		phys->setPosition(tmx);
-//		phys->AddMovement(VEC3(0.f, elapsed * -10.f, 0.f));
-//	}
-//}
 
-void TCompPila::onContact(const TMsgContact& msg)
+eAction TCompPila::getActionAvailable()
 {
-	GET_MY(phys, TCompPhysics);
-	phys->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
-	ChangeState(ST_PILA_GROUND);
+	//Resultado
+	eAction action = NONE;
+
+	TMsgGetWhoAmI msg;
+	player.sendMsgWithReply(msg);
+	playerType = msg.who;
+
+	switch (playerType) {
+	case PLAYER_TYPE::PLAYER:
+		action = mAction;
+		break;
+	case PLAYER_TYPE::MOLE:
+		action = mActionMole;
+		break;
+	case PLAYER_TYPE::SCIENTIST:
+		action = mActionSci;
+		break;
+	}
+	return action;
+}
+
+void TCompPila::executeTrigger(CLogicManagerModule::EVENT logicEvent) { //, CHandle handle) {
+	CEntity* eMe = CHandle(this).getOwner();
+	logic_manager->throwEvent(logicEvent, string(eMe->getName()), CHandle(this).getOwner());
+}
+
+bool TCompPila::getPlayer()
+{
+	if (player.isValid()) return true;
+	player = tags_manager.getFirstHavingTag("player");
+	return player.isValid();
+}
+
+bool TCompPila::isPlayerNear()
+{
+	if (!getPlayer()) return false;
+	GET_COMP(tmx_player, player, TCompTransform);
+	GET_MY(tmx, TCompTransform);
+	return inSquaredRangeXZ_Y(tmx->getPosition(), tmx_player->getPosition(), 4.f, 5.f);
 }
 
 bool TCompPila::load(MKeyValue& atts) {

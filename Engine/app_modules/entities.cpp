@@ -323,6 +323,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TTriggerLua, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TTriggerLua, TMsgTriggerOut, onTriggerExitCall);
 	SUBSCRIBE(TTriggerLua, TMsgSetActivable, onSetActionable);
+	SUBSCRIBE(TCompPila, TMsgSetActivable, onSetActionable);
 
 	//Animations
 	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, onSetAnim);

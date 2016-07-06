@@ -18,6 +18,20 @@ function OnLeave_tElevator( )
   --p:player_talks_color("I'm out of an elevator! \nI'm not so cool!!! \nI wanna die my hair black!","scientific.dds","SCI", "#FF2222FF","#22FF22FF")
 end
 
+pila = Handle()
+-- Pila --
+--------------------------------------------------------------------------------------------
+function OnAction___pila( )
+  p:player_talks("This object contained energy in some past...", "scientific.dds", "SCI")
+  pila:getHandleCaller()
+  p:exec_command("pila:setActionable(1);", 4.5)
+end
+
+function OnActionSci___pila( )
+  p:player_talks("This cell is exhausted. And too heavy for me...", "scientific.dds", "SCI")
+end
+
+--------------------------------------------------------------------------------------------
 
 -- Elevator --
 -------------------------------------------------
