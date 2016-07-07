@@ -1997,7 +1997,8 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity
+   id="304">
 <tags
    tags="pila_container"/>
 <pila_container/>

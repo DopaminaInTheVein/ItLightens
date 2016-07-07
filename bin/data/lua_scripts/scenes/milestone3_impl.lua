@@ -38,7 +38,14 @@ idCargador = 303
 triggerCargador = Handle()
 
 function activateCargadorPlayer()
-  p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
+  h:get_handle_by_id(idCargador)
+
+  if h:has_pila() then
+	p:player_talks("The cell fits perfectly.\nI don't know how this machine works though...", "scientific.dds", "SCI")
+  else
+	p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
+  end
+  
   triggerCargador:getHandleCaller()
   p:exec_command("triggerCargador:setActionable(1);", 4.5)
 end
@@ -51,7 +58,7 @@ end
 
 -- Enchufe --
 --------------------------------------------------------------------------------------------
-idCargador = 304
+idEnchufe = 304
 triggerEnchufe = Handle()
 
 function activateEnchufePlayer()

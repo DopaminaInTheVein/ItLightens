@@ -16,6 +16,7 @@ struct TTrigger : public TCompBase {
 	void onTriggerEnterCall(const TMsgTriggerIn& msg) {
 		CHandle hEnter = msg.other;
 		if (hEnter.isValid()) {
+			dbg("Entro en trigger!\n");
 			if (hEnter.hasTag("player")) {
 				Debug->LogRaw("OnTriggerEnter\n");
 				last_msg_in = msg;
@@ -28,6 +29,7 @@ struct TTrigger : public TCompBase {
 	void onTriggerExitCall(const TMsgTriggerOut& msg) {
 		CHandle hExit = msg.other;
 		if (hExit.isValid()) {
+			dbg("Salgo de trigger!\n");
 			if (hExit.hasTag("player")) {
 				Debug->LogRaw("OnTriggerExit\n");
 				last_msg_out = msg;

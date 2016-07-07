@@ -101,6 +101,7 @@ public:
 	CHandle boxNear; // = false;
 	CHandle pilaGrabbed; // = false;
 	CHandle pilaNear; // = false;
+	CHandle pilaContainer;
 	VEC3 pilaContainerPos;
 
 	string selectedBox = "";

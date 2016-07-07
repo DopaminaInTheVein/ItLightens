@@ -9,6 +9,7 @@
 #include "components/comp_life.h"
 #include "logic/bt_guard.h"
 #include "logic/bt_scientist.h"
+#include "logic/pila_container.h"
 
 using namespace IdEntities;
 
@@ -272,6 +273,15 @@ void SLBHandle::setLocked(int locked) {
 		TMsgSetLocked msg;
 		msg.locked = (locked != 0);
 		eTarget->sendMsg(msg);
+	}
+}
+
+bool SLBHandle::hasPila() {
+	if (real_handle.isValid()) {
+		GET_COMP(pilaContainer, real_handle, TCompPilaContainer);
+		CEntity* e = real_handle;
+		dbg("Pregunto por pila a [%s]\n", e->getName());
+		return pilaContainer->HasPila();
 	}
 }
 

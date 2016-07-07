@@ -18,9 +18,11 @@ struct TCompPila : public aicontroller, public TTriggerLua {
 	static VHandles all_pilas;
 	CHandle player;
 	VEC3 place;
+	CHandle container;
 
 	~TCompPila();
 	void onCreate(const TMsgEntityCreated& msg);
+	void init();
 
 	void update(float elapsed);
 	TCompPhysics* keepVertical();
@@ -35,6 +37,9 @@ struct TCompPila : public aicontroller, public TTriggerLua {
 	void OnGround();
 	void Grabbed();
 	void Falling();
+	void PutIn(CHandle);
+	void RemoveFromContainer(CHandle);
+	void Grab();
 };
 
 #endif

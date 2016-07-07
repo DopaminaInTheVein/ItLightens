@@ -554,6 +554,7 @@ void CEntitiesModule::initLevel(string level) {
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
+	getHandleManager<TCompPila>()->onAll(&TCompPila::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
 	//fx

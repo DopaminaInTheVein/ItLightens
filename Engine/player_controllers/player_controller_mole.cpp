@@ -314,9 +314,8 @@ void player_controller_mole::PuttingPila()
 		GET_COMP(pila, pilaGrabbed, TCompPila);
 
 		//pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
+		pila->PutIn(pilaContainer);
 		pilaGrabbed = CHandle();
-		pila->place = pilaContainerPos;
-		pila->ChangeState("on_ground");
 		mole_max_speed *= 2;
 	}
 }
@@ -386,27 +385,23 @@ bool player_controller_mole::nearToPila() {
 	return found;
 }
 
-//Copy paste near to pila (Dios me perdone)
 bool player_controller_mole::nearToPilaContainer() {
-	bool found = false;
 	float distMax = 4.f;
-	float highest = -999.9f;
-	pilaContainerPos = VEC3();
+	pilaContainer = CHandle();
 	for (auto h : TCompPilaContainer::all_pila_containers) {
 		if (!h.isValid()) continue;
-		GET_COMP(tPila, h, TCompTransform);
-		VEC3 pilaPos = tPila->getPosition();
+		GET_COMP(tContainer, h, TCompTransform);
+		VEC3 containerPos = tContainer->getPosition();
 		VEC3 myPos = transform->getPosition();
-		if (distY(myPos, pilaPos) < 5.f) {
-			float disttowpt = simpleDistXZ(pilaPos, getEntityTransform()->getPosition());
-			if (disttowpt < distMax && pilaPos.y >= highest) {
-				highest = pilaPos.y;
-				pilaContainerPos = tPila->getPosition();
-				found = true;
+		if (distY(myPos, containerPos) < 5.f) {
+			float disttowpt = simpleDistXZ(containerPos, getEntityTransform()->getPosition());
+			if (disttowpt < distMax) {
+				pilaContainer = h;
+				pilaContainerPos = containerPos;
 			}
 		}
 	}
-	return found;
+	return pilaContainer.isValid();
 }
 
 void player_controller_mole::GoToGrab()

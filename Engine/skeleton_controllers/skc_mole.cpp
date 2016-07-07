@@ -39,7 +39,7 @@ void SkelControllerMole::grabPila(CHandle h)
 	grabbedPila = h;
 	enableIK(SK_RHAND, grabPilaIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 	GET_COMP(pila, grabbedPila, TCompPila);
-	if (pila) pila->place = VEC3();
+	if (pila) pila->Grab();
 }
 void SkelControllerMole::ungrabObject()
 {

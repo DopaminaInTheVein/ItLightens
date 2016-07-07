@@ -61,7 +61,7 @@ eAction TTriggerLua::getActionAvailable() {
 			action = mAction;
 			break;
 		case PLAYER_TYPE::MOLE:
-			mAction = mActionMole;
+			action = mActionMole;
 			break;
 		case PLAYER_TYPE::SCIENTIST:
 			action = mActionSci;

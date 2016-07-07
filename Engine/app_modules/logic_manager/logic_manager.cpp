@@ -472,6 +472,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("setLocked", &SLBHandle::setLocked)
 		.comment("Set if the element is locked")
 		.param("int:  (0: false, otherwise: true")
+		// Ask Pila Container
+		.set("has_pila", &SLBHandle::hasPila)
+		.comment("Get true if the handle contains a pila")
 		;
 }
 

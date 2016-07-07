@@ -73,6 +73,7 @@ public:
 	void activate();
 	void setPolarity(int);
 	void setLocked(int);
+	bool hasPila();
 };
 
 class SLBHandleGroup

@@ -4,6 +4,7 @@
 #include "components/comp_physics.h"
 #include "components/entity.h"
 #include "components/comp_transform.h"
+#include "logic/pila_container.h"
 
 #define ST_PILA_GROUND "on_ground"
 #define ST_PILA_GRABBED "grabbed"
@@ -37,7 +38,22 @@ void TCompPila::onCreate(const TMsgEntityCreated& msg)
 	AddStPila(ST_PILA_FALLING, Falling);
 
 	place = VEC3();
+	container = CHandle();
 	ChangeState(ST_PILA_GROUND);
+}
+
+void TCompPila::init()
+{
+	GET_MY(tmx, TCompTransform);
+	VEC3 my_pos = tmx->getPosition();
+	for (auto h : TCompPilaContainer::all_pila_containers) {
+		GET_COMP(tmx_container, h, TCompTransform);
+		VEC3 pos_container = tmx_container->getPosition();
+		if (simpleDist(my_pos, pos_container) < 0.01f) {
+			place = pos_container;
+			container = h;
+		}
+	}
 }
 
 void TCompPila::update(float elapsed) {
@@ -132,8 +148,31 @@ bool TCompPila::isPlayerNear()
 	return inSquaredRangeXZ_Y(tmx->getPosition(), tmx_player->getPosition(), 4.f, 5.f);
 }
 
+void TCompPila::PutIn(CHandle pilaContainer)
+{
+	GET_COMP(tmx_container, pilaContainer, TCompTransform);
+	GET_COMP(container_comp, pilaContainer, TCompPilaContainer);
+	if (!tmx_container || !container_comp) return;
+	container = pilaContainer;
+	place = tmx_container->getPosition();
+
+	container_comp->PutPila(CHandle(this).getOwner());
+	ChangeState("on_ground");
+}
+
 bool TCompPila::load(MKeyValue& atts) {
 	return true;
+}
+
+void TCompPila::Grab()
+{
+	place = VEC3();
+	if (container.isValid()) {
+		GET_COMP(container_comp, container, TCompPilaContainer);
+		container_comp->RemovePila();
+		container = CHandle();
+	}
+	ChangeState(ST_PILA_GRABBED);
 }
 
 TCompPila::~TCompPila() {
