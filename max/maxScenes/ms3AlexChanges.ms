@@ -1,45 +1,45 @@
 function addAlexLogicCamaras = (
 	-- CAMARAS DETECTORAS
-	local auxobj =  $camara_centro
+	local auxobj =  $camera_1
 	setUserProp auxobj "typeObject" "detection_cam"
-	setUserProp auxobj "staticMesh" "ms3/camara_derecha"
+	setUserProp auxobj "staticMesh" "ms3/logic/camera"
 	setUserProp auxobj "range" 4
 	setUserProp auxobj "width" 2
-	setUserProp auxobj "rot_speed_sonar" 0.5
+	setUserProp auxobj "rot_speed_sonar" 0.9
 	setUserProp auxobj "rotating_left" false
-	setUserProp auxobj "max_rotation" 130
+	setUserProp auxobj "max_rotation" 162
 	local currentMatrix = auxobj.transform
-	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 155))
+	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 -9))
 	auxobj.transform = currentMatrix
 		
-	auxobj =  $camara_derecha
+	auxobj =  $camera_2
 	setUserProp auxobj "typeObject" "detection_cam"
-	setUserProp auxobj "staticMesh" "ms3/camara_derecha"
+	setUserProp auxobj "staticMesh" "ms3/logic/camera"
 	setUserProp auxobj "range" 4
 	setUserProp auxobj "width" 2
 	setUserProp auxobj "rot_speed_sonar" 0.5
 	setUserProp auxobj "rotating_left" false
 	setUserProp auxobj "max_rotation" 90
 	currentMatrix = auxobj.transform
-	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 90))
+	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 225))
 	auxobj.transform = currentMatrix
 
-	auxobj =  $camara_izquierdaq
+	auxobj =  $camera_3
 	setUserProp auxobj "typeObject" "detection_cam"
-	setUserProp auxobj "staticMesh" "ms3/camara_derecha"
+	setUserProp auxobj "staticMesh" "ms3/logic/camera"
 	setUserProp auxobj "range" 4
 	setUserProp auxobj "width" 2
 	setUserProp auxobj "rot_speed_sonar" 0.5
 	setUserProp auxobj "rotating_left" true
 	setUserProp auxobj "max_rotation" 90
 	currentMatrix = auxobj.transform
-	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 90))
+	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 315))
 	auxobj.transform = currentMatrix
 )
 
 fn assign_room_to_all_from_x sala1 sala2= (
 	for obj in $* do (
-		if (not (hasProperty obj "room_name") and (obj.name != "suelo_003") and (obj.name != "rodapies") and (obj.name != "paredes_milestone_3") and (obj.name != "Techo_milestone_3") )then (
+		if (not (hasProperty obj "room_name") and (obj.name != "suelo_003") and (obj.name != "suelo_2") and (obj.name != "rodapies") and (obj.name != "paredes_milestone_3") and (obj.name != "Techo_milestone_3") )then (
 			add_attribute = custAttributes.add obj v_room_data baseobject:True
 			local trans = obj.transform
 			if trans.position.x < -45 then (
