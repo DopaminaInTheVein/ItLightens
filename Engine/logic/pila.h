@@ -38,7 +38,7 @@ struct TCompPila : public aicontroller, public TTriggerLua {
 	void OnGround();
 	void Grabbed();
 	void Falling();
-	void PutIn(CHandle);
+	void PutIn(CHandle, bool notify = true);
 	void Grab();
 	void onRecharge(const TMsgActivate&);
 	void isCharged(TMsgIsCharged&);

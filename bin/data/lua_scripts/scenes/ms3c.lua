@@ -15,8 +15,7 @@ activateElevator()
 end
 
 function OnAction___tCargador( )
---activateCargadorPlayer()
-activateCargadorSci()
+activateCargadorPlayer()
 end
 
 function OnActionSci___tCargador( )

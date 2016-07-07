@@ -92,6 +92,9 @@ public:
 		OnElevatorDown,
 		OnElevatorGoingUp,
 		OnElevatorGoingDown,
+
+		OnPutPila,
+		OnRemovePila,
 	};
 
 	CLogicManagerModule();

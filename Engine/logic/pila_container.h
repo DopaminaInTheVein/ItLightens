@@ -10,7 +10,7 @@ struct TCompPilaContainer : public TCompBase {
 
 	~TCompPilaContainer();
 	void onCreate(const TMsgEntityCreated& msg);
-	void PutPila(CHandle);
+	void PutPila(CHandle, bool notify = true);
 	void RemovePila();
 	bool HasPila();
 	bool HasPilaCharged();

@@ -74,7 +74,7 @@ function activateCargadorSci()
 		sci:go_and_look_as(hCargadorTarget, "rechargeCell();")
 	end
   else
-	p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
+	p:player_talks("There is nothing to charge", "scientific.dds", "SCI")
   end
 
   triggerCargador:getHandleCaller()
@@ -128,6 +128,30 @@ function activateEnchufeSci()
   p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
 end
 
+idDoor = 300
+function OnPutPila_enchufe()
+  pila:getHandleCaller()
+  if pila:is_charged() then
+	-- Evento abrir puerta
+	-- Faltaria cinematica, etc.
+	
+	--Abril
+	h:get_handle_by_id(idDoor)
+	h:setLocked(0)
+  end
+end
+
+function OnRemovePila_enchufe()
+  pila:getHandleCaller()
+  if pila:is_charged() then
+	-- Evento cerrar puerta
+	-- Faltaria cinematica, etc.
+	
+	--Cerral (:P)
+	h:get_handle_by_id(idDoor)
+	h:setLocked(1)
+  end
+end
 -- Elevator --
 -------------------------------------------------
 idElevator = 301
@@ -166,42 +190,42 @@ end
 
 -- Electric Lock --
 --------------------------------------
-idDoor = 300
-triggerLock = Handle()
-timesActivatedLock = 0
-function activateLock( )
-  p:print("Activate Lock\n")
+-- idDoor = 300
+-- triggerLock = Handle()
+-- timesActivatedLock = 0
+-- function activateLock( )
+  -- p:print("Activate Lock\n")
   
-  --Accionable a los 2 segundos
-  triggerLock:getHandleCaller()
-  p:exec_command( "triggerLock:setActionable(1);", 2 )
+  -- --Accionable a los 2 segundos
+  -- triggerLock:getHandleCaller()
+  -- p:exec_command( "triggerLock:setActionable(1);", 2 )
   
-  --Modificamos polaridad durante 10 segundos
-  h:get_handle_by_id(idDoor)
-  --h:setPolarity(-1)  
-  h:setLocked(0)  
-  p:exec_command( "deactivateLock();", 6 )
+  -- --Modificamos polaridad durante 10 segundos
+  -- h:get_handle_by_id(idDoor)
+  -- --h:setPolarity(-1)  
+  -- h:setLocked(0)  
+  -- p:exec_command( "deactivateLock();", 6 )
   
-  --Variable control para activaciones acumuladas
-  timesActivatedLock = timesActivatedLock + 1
-end
+  -- --Variable control para activaciones acumuladas
+  -- timesActivatedLock = timesActivatedLock + 1
+-- end
 
-function putBattery( )
-  p:print("Put Battery\n")
-end
+-- function putBattery( )
+  -- p:print("Put Battery\n")
+-- end
 
-function deactivateLock( )
-  p:print("Deactivate Lock\n")
-  timesActivatedLock = timesActivatedLock - 1
+-- function deactivateLock( )
+  -- p:print("Deactivate Lock\n")
+  -- timesActivatedLock = timesActivatedLock - 1
   
-  --Ha pasado el timer de la última activacion
-  if timesActivatedLock < 1 then
-	  --Puerta vuelve a neutral
-      h:get_handle_by_id(idDoor)
-      --h:setPolarity(0)
-	  h:setLocked(1)
-  end
-end
+  -- --Ha pasado el timer de la última activacion
+  -- if timesActivatedLock < 1 then
+	  -- --Puerta vuelve a neutral
+      -- h:get_handle_by_id(idDoor)
+      -- --h:setPolarity(0)
+	  -- h:setLocked(1)
+  -- end
+-- end
 --------------------------------------
 
 -- Wall --

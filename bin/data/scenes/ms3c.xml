@@ -3375,5 +3375,31 @@
    scale="1.0"/>
 
 </entity>
+<entity>
+<tags
+   tags="AI AI_cientifico AI_poss"/>
+<bt_scientist/>
+<player_cientifico/>
+<life
+   points="100"/>
+<skc_scientist/>
+<name
+   name="scientist_1"/>
+<transform
+   pos="-86.3171 0 1.35698"
+   quat="0 0 0 1.0"
+   scale="0.00929856"/>
+<skeleton
+   model="skeletons/scientist/scientist.skeleton"/>
+<render_static_mesh
+   name="skeletons/scientist/scientist.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.147"
+   height="1.71312"/>
+
+</entity>
 
 </entities>

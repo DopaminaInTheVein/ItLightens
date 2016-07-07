@@ -88,6 +88,14 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnActionPila(\"%s\");", params.c_str());
 		break;
 	}
+	case (OnPutPila): {
+		sprintf(lua_code, "OnPutPila(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnRemovePila): {
+		sprintf(lua_code, "OnRemovePila(\"%s\");", params.c_str());
+		break;
+	}
 	case (OnGameStart): {
 		sprintf(lua_code, "OnGameStart(%f);", 0.4f);
 		/*char command_code[64];

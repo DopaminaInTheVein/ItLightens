@@ -50,8 +50,8 @@ void TCompPila::init()
 		GET_COMP(tmx_container, h, TCompTransform);
 		VEC3 pos_container = tmx_container->getPosition();
 		if (simpleDist(my_pos, pos_container) < 0.01f) {
-			place = pos_container;
-			container = h;
+			PutIn(h, false);
+			break; //Cant be in two containers at the same time
 		}
 	}
 }
@@ -135,7 +135,7 @@ void TCompPila::executeTrigger(CLogicManagerModule::EVENT logicEvent) { //, CHan
 
 bool TCompPila::getPlayer()
 {
-	if (player.isValid()) return true;
+	if (player.isValid() && player.hasTag("player")) return true;
 	player = tags_manager.getFirstHavingTag("player");
 	return player.isValid();
 }
@@ -148,7 +148,7 @@ bool TCompPila::isPlayerNear()
 	return inSquaredRangeXZ_Y(tmx->getPosition(), tmx_player->getPosition(), 4.f, 5.f);
 }
 
-void TCompPila::PutIn(CHandle pilaContainer)
+void TCompPila::PutIn(CHandle pilaContainer, bool notify)
 {
 	GET_COMP(tmx_container, pilaContainer, TCompTransform);
 	GET_COMP(container_comp, pilaContainer, TCompPilaContainer);
@@ -156,7 +156,7 @@ void TCompPila::PutIn(CHandle pilaContainer)
 	container = pilaContainer;
 	place = tmx_container->getPosition();
 
-	container_comp->PutPila(CHandle(this).getOwner());
+	container_comp->PutPila(CHandle(this).getOwner(), notify);
 	ChangeState("on_ground");
 }
 
