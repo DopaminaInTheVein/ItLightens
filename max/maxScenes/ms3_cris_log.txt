@@ -1,6 +1,7 @@
 Modif
 - pila 
-- cargador_bateria 
+- cargador_bateria
+	+ pAction
 - enchufe 
 
 New

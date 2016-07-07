@@ -221,6 +221,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompDrone, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompDrone, TMsgActivate, onRecharge);
+	SUBSCRIBE(TCompPila, TMsgIsCharged, isCharged);
+	SUBSCRIBE(TCompPila, TMsgActivate, onRecharge);
+	SUBSCRIBE(TCompPilaContainer, TMsgSetCharged, onRecharge);
 	SUBSCRIBE(TCompDrone, TMsgRepair, onRepair);
 	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPila, TMsgEntityCreated, onCreate);

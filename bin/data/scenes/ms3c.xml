@@ -1848,6 +1848,17 @@
 
 </entity>
 <entity>
+<tags
+   tags="target"/>
+<name
+   name="cargador_bateria_pAction"/>
+<transform
+   pos="-91.6796 -0.419937 14.2709"
+   quat="0 0.959077 0 0.283145"
+   scale="1.0"/>
+
+</entity>
+<entity>
 <tags/>
 <name
    name="cables_cargador"/>

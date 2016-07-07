@@ -285,6 +285,32 @@ bool SLBHandle::hasPila() {
 	}
 }
 
+bool SLBHandle::hasPilaCharged() {
+	if (real_handle.isValid()) {
+		GET_COMP(pilaContainer, real_handle, TCompPilaContainer);
+		CEntity* e = real_handle;
+		dbg("Pregunto por pila a [%s]\n", e->getName());
+		return pilaContainer->HasPilaCharged();
+	}
+}
+
+void SLBHandle::setCharged(bool charged) {
+	if (real_handle.isValid()) {
+		TMsgSetCharged msg;
+		msg.charged = charged;
+		real_handle.sendMsg(msg);
+	}
+}
+
+bool SLBHandle::isCharged() {
+	if (real_handle.isValid()) {
+		TMsgIsCharged msg;
+		real_handle.sendMsgWithReply(msg);
+		return msg.charged;
+	}
+	return false;
+}
+
 // Handle group By Tag
 void SLBHandleGroup::getHandlesByTag(const char * tag) {
 	handle_group = tags_manager.getHandlesByTag(string(tag));

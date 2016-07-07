@@ -1,6 +1,9 @@
 #include "mcv_platform.h"
 #include "pila_container.h"
 
+#include "components/entity.h"
+#include "app_modules/logic_manager/logic_manager.h"
+
 VHandles TCompPilaContainer::all_pila_containers;
 
 void TCompPilaContainer::onCreate(const TMsgEntityCreated& msg)
@@ -18,6 +21,22 @@ void TCompPilaContainer::RemovePila() {
 
 bool TCompPilaContainer::HasPila() {
 	return pila.isValid();
+}
+
+bool TCompPilaContainer::HasPilaCharged() {
+	if (pila.isValid()) {
+		TMsgIsCharged msg;
+		pila.sendMsgWithReply(msg);
+		return msg.charged;
+	}
+	return false;
+}
+
+void TCompPilaContainer::onRecharge(const TMsgSetCharged& msg) {
+	if (pila.isValid()) {
+		assert(msg.charged || fatal("Cannot empty the cell! (not supported)\n"));
+		if (msg.charged) pila.sendMsg(TMsgActivate());
+	}
 }
 
 TCompPilaContainer::~TCompPilaContainer() {

@@ -475,6 +475,16 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// Ask Pila Container
 		.set("has_pila", &SLBHandle::hasPila)
 		.comment("Get true if the handle contains a pila")
+		// Ask Pila Container Charged
+		.set("has_pila_charged", &SLBHandle::hasPilaCharged)
+		.comment("Return true if the handle has a charged cell")
+		// Charge Pila
+		.set("set_charged", &SLBHandle::setCharged)
+		.comment("Set its cell charged/empty")
+		.param("boolean: charged")
+		// Ask pila charged
+		.set("is_charged", &SLBHandle::isCharged)
+		.comment("return true if the handle is charged")
 		;
 }
 

@@ -13,6 +13,8 @@ struct TCompPilaContainer : public TCompBase {
 	void PutPila(CHandle);
 	void RemovePila();
 	bool HasPila();
+	bool HasPilaCharged();
+	void onRecharge(const TMsgSetCharged&);
 };
 
 #endif

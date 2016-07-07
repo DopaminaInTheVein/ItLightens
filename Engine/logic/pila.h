@@ -19,6 +19,7 @@ struct TCompPila : public aicontroller, public TTriggerLua {
 	CHandle player;
 	VEC3 place;
 	CHandle container;
+	bool charged;
 
 	~TCompPila();
 	void onCreate(const TMsgEntityCreated& msg);
@@ -38,8 +39,9 @@ struct TCompPila : public aicontroller, public TTriggerLua {
 	void Grabbed();
 	void Falling();
 	void PutIn(CHandle);
-	void RemoveFromContainer(CHandle);
 	void Grab();
+	void onRecharge(const TMsgActivate&);
+	void isCharged(TMsgIsCharged&);
 };
 
 #endif

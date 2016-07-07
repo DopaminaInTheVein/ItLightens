@@ -18,13 +18,17 @@ function OnLeave_tElevator( )
   --p:player_talks_color("I'm out of an elevator! \nI'm not so cool!!! \nI wanna die my hair black!","scientific.dds","SCI", "#FF2222FF","#22FF22FF")
 end
 
-pila = Handle()
-
 -- Pila --
 --------------------------------------------------------------------------------------------
+pila = Handle()
 function OnAction___pila( )
-  p:player_talks("This object contained energy in some past...", "scientific.dds", "SCI")
   pila:getHandleCaller()
+  
+  if pila:is_charged() then
+	p:player_talks("Where can I use this cell?", "scientific.dds", "SCI")
+  else
+    p:player_talks("This object contained energy in some past...", "scientific.dds", "SCI")
+  end
   p:exec_command("pila:setActionable(1);", 4.5)
 end
 
@@ -36,40 +40,91 @@ end
 ---------------------------------------------------------------------------------------------
 idCargador = 303
 triggerCargador = Handle()
-
+hCargador = Handle()
+hCargadorTarget = Handle()
 function activateCargadorPlayer()
-  h:get_handle_by_id(idCargador)
+  hCargador:get_handle_by_id(idCargador)
 
-  if h:has_pila() then
-	p:player_talks("The cell fits perfectly.\nI don't know how this machine works though...", "scientific.dds", "SCI")
+  if hCargador:has_pila() then
+    if hCargador:has_pila_charged() then
+		p:player_talks("The cell is full of energy now", "scientific.dds", "SCI")
+	else
+		p:player_talks("The cell fits perfectly.\nI don't know how this machine works though...", "scientific.dds", "SCI")
+		
+	end
   else
 	p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
   end
   
   triggerCargador:getHandleCaller()
   p:exec_command("triggerCargador:setActionable(1);", 4.5)
+ 
 end
 
 function activateCargadorSci()
-  --p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
+  hCargador:get_handle_by_id(idCargador)
+  if hCargador:has_pila() then
+    if hCargador:has_pila_charged() then
+		p:player_talks("The cell is full thanks to my hard work", "scientific.dds", "SCI")
+	else
+		hCargadorTarget:get_handle_by_name_tag("cargador_bateria_pAction", "target")
+		p:player_talks("Here we go!", "scientific.dds", "SCI")
+	    sci = Handle()
+		sci:get_player()
+		sci:go_and_look_as(hCargadorTarget, "rechargeCell();")
+	end
+  else
+	p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
+  end
+
   triggerCargador:getHandleCaller()
   p:exec_command("triggerCargador:setActionable(1);", 4.5)
+end
+
+function rechargeCell()
+  p:player_talks("*CLAC*", "scientific.dds", "SCI")
+  hCargador:set_charged(1)
 end
 
 -- Enchufe --
 --------------------------------------------------------------------------------------------
 idEnchufe = 304
 triggerEnchufe = Handle()
-
+hEnchufe = Handle()
+hEnchufeTarget = Handle()
 function activateEnchufePlayer()
-  p:player_talks("This needs energy to work.", "scientific.dds", "SCI")
   triggerEnchufe:getHandleCaller()
+  hEnchufe:get_handle_by_id(idCargador)
+
+  if hEnchufe:has_pila() then
+    if hEnchufe:has_pila_charged() then
+		p:player_talks("I did it! The door is open now!", "scientific.dds", "SCI")
+	else
+		p:player_talks("The object on it has no energy...", "scientific.dds", "SCI")
+	end
+  else
+	p:player_talks("This needs energy to work.", "scientific.dds", "SCI")
+  end
+  
+  triggerCargador:getHandleCaller()
   p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
 end
 
 function activateEnchufeSci()
-  --p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
   triggerEnchufe:getHandleCaller()
+  hEnchufe:get_handle_by_id(idCargador)
+
+  if hEnchufe:has_pila() then
+    if hEnchufe:has_pila_charged() then
+		p:player_talks("I don't like to brag, but THIS is a good work", "scientific.dds", "SCI")
+	else
+		p:player_talks("The cell is empty, and too heavy for me...", "scientific.dds", "SCI")
+	end
+  else
+	p:player_talks("This needs a cell to work.", "scientific.dds", "SCI")
+  end
+  
+  triggerCargador:getHandleCaller()
   p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
 end
 

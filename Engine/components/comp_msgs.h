@@ -332,4 +332,14 @@ struct TMsgGoAndLook {
 	std::string code_arrived;
 	DECLARE_MSG_ID();
 };
+
+struct TMsgSetCharged {
+	bool charged;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgIsCharged {
+	bool charged;
+	DECLARE_MSG_ID();
+};
 #endif

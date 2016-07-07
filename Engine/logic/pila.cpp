@@ -161,6 +161,7 @@ void TCompPila::PutIn(CHandle pilaContainer)
 }
 
 bool TCompPila::load(MKeyValue& atts) {
+	charged = false;
 	return true;
 }
 
@@ -173,6 +174,16 @@ void TCompPila::Grab()
 		container = CHandle();
 	}
 	ChangeState(ST_PILA_GRABBED);
+}
+
+void TCompPila::onRecharge(const TMsgActivate&)
+{
+	charged = true;
+}
+
+void TCompPila::isCharged(TMsgIsCharged& msg)
+{
+	msg.charged = charged;
 }
 
 TCompPila::~TCompPila() {
