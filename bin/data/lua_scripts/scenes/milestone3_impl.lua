@@ -19,6 +19,7 @@ function OnLeave_tElevator( )
 end
 
 pila = Handle()
+
 -- Pila --
 --------------------------------------------------------------------------------------------
 function OnAction___pila( )
@@ -38,9 +39,32 @@ triggerCargador = Handle()
 
 function activateCargadorPlayer()
   p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
+  triggerCargador:getHandleCaller()
+  p:exec_command("triggerCargador:setActionable(1);", 4.5)
 end
 
+function activateCargadorSci()
+  --p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
+  triggerCargador:getHandleCaller()
+  p:exec_command("triggerCargador:setActionable(1);", 4.5)
+end
+
+-- Enchufe --
 --------------------------------------------------------------------------------------------
+idCargador = 304
+triggerEnchufe = Handle()
+
+function activateEnchufePlayer()
+  p:player_talks("This needs energy to work.", "scientific.dds", "SCI")
+  triggerEnchufe:getHandleCaller()
+  p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
+end
+
+function activateEnchufeSci()
+  --p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
+  triggerEnchufe:getHandleCaller()
+  p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
+end
 
 -- Elevator --
 -------------------------------------------------

@@ -90,6 +90,7 @@ void TCompPila::checkActions()
 
 eAction TCompPila::getActionAvailable()
 {
+	if (!isZero(place)) return NONE;
 	//Resultado
 	eAction action = NONE;
 
