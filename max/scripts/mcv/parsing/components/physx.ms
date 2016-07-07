@@ -3,19 +3,25 @@
 
 --- Auxiliares ---
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
-fn parseTypeShape xml collider = (
+fn parseTypeShape xml collider isTrigger = (
 	local typeShape = undefined
 	local sizeShape = undefined
 	local radiusShape = undefined
 	
 	if collider != undefined then (
-		 if ( classof collider == Pyramid )  then (
+		local theClass = classof collider
+		if ( theClass == Pyramid )  then (
 			 typeShape = "convex"
 		 ) else if (classof collider == Box) then (
-			typeShape = "box"
-			local ss = stringstream ""
-			format "% % %" collider.Width collider.Height collider.Length to:ss
-			sizeShape = (ss as string)
+			local box_forced = ((getUserProp collider "box_forced") as string) == "yes"
+			if isTrigger or box_forced then(
+				typeShape = "box"
+				local ss = stringstream ""
+				format "% % %" collider.Width collider.Height collider.Length to:ss
+				sizeShape = (ss as string)
+			) else ( -- Si es caja lo hacemos convexo por bug
+				typeShape = "convex"
+			)
 		 ) else if (classof collider == Sphere) then (
 			 typeShape = "sphere"
 			 radiusShape = collider.radius
@@ -70,7 +76,7 @@ fn parseRigidBody parent collider = (
 	xml.addAttr "type_collision" typeCollision
 	
 	--Type Shape (Convex, box, etc.)
-	parseTypeShape xml collider
+	parseTypeShape xml collider false
 	
 	--Mass
 	if collider != undefined then (
@@ -96,7 +102,7 @@ fn parseRigidBodyTrigger parent = (
 	xml.addAttr "type_collision" "trigger"
 	
 	--Type Shape (Convex, box, etc.)
-	parseTypeShape xml _parsingObject
+	parseTypeShape xml _parsingObject true
 )
 
 fn parseCharController parent charController = (

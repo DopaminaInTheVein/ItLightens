@@ -28,7 +28,6 @@ public:
 		eFRAGMENT = (1 << 10),
 		eTHROW = (1 << 11),
 		ePLATFORM = (1 << 12),
-		eIGNORE_PLAYER = (1 << 13), //No se usa ahora!
 		eALL = ~0,
 	};
 
@@ -36,99 +35,128 @@ public:
 	enum descObjectBehaviour {
 		eCOLLISION = (1 << 0),
 		eCAN_TRIGGER = (1 << 1),
+		eUSER_CALLBACK = (1 << 2),
+		eIGNORE_PLAYER = (1 << 3),
 	};
 
 	//-----------------------------------------------------------------------------------------------------
 	//							      Filter shader
 	//-----------------------------------------------------------------------------------------------------
-
 	// customized filter shader
 	// - Triggers dont collide
 	// - only eCOLLISION objects can collide
 	// - mask0: identity of object
 	// - mask1: collisions against who can collider
 	// - mask2: collisions activated
+#define ILFS_FIRST filterData0
+#define ILFS_SECOND filterData1
+#define ILFS_SOME_HAS(flag, numWord) ILFS_FIRST.word##numWord & flag || ILFS_SECOND.word##numWord & flag
+#define ILFS_BOTH_HAS(flag, numWord) ILFS_FIRST.word##numWord & flag && ILFS_SECOND.word##numWord & flag
+#define ILFS_PAIR_OF(flag1, flag2) (ILFS_FIRST.word0 & flag1 && ILFS_SECOND.word0 & flag2) || (ILFS_FIRST.word0 & flag2 && ILFS_SECOND.word0 & flag1)
+
 	static PxFilterFlags ItLightensFilterShader(
 		PxFilterObjectAttributes attributes0, PxFilterData filterData0,
 		PxFilterObjectAttributes attributes1, PxFilterData filterData1,
 		PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
 	{
-		// let triggers through
+		PxFilterFlags result = PxFilterFlag::eKILL;
+		PxU32 me, other;
+
+		// TRIGGERS
+		// -------------------------------------------------------------------------------
 		if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
 		{
 			pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
 			return PxFilterFlag::eDEFAULT;
 		}
+		// -------------------------------------------------------------------------------
 
-		// generate default contact for no-triggers
 		pairFlags = PxPairFlag::eCONTACT_DEFAULT;
 
-		//Continuos Collision Detction
-		//if (g_PhysxManager->ccdActive) {
-		if ((filterData0.word0 & eFRAGMENT || filterData1.word0 & eFRAGMENT)) {
+		// FRAGMENT
+		//--------------------------------------------------------------------------------
+		if (ILFS_SOME_HAS(eFRAGMENT, 0)) {
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			pairFlags |= PxPairFlag::eCCD_LINEAR;
 			pairFlags |= PxPairFlag::eDETECT_CCD_CONTACT;
-			return PxFilterFlag::eDEFAULT;
+			result = PxFilterFlag::eDEFAULT;
 		}
-		//}
+		//--------------------------------------------------------------------------------
 
-		if ((filterData0.word0 & ePLAYER_BASE && filterData1.word0 & ePLATFORM)) {
+		// PLAYER vs PLATFORM
+		//--------------------------------------------------------------------------------
+		else if (ILFS_PAIR_OF(ePLAYER_BASE, ePLATFORM, 0)) {
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
-			return PxFilterFlag::eCALLBACK;
+			result = PxFilterFlag::eCALLBACK;
 		}
+		//--------------------------------------------------------------------------------
 
-		if ((filterData1.word0 & ePLAYER_BASE && filterData0.word0 & ePLATFORM)) {
+		// GUARD vs PLATFORM (?)
+		//--------------------------------------------------------------------------------
+		else if (ILFS_PAIR_OF(eGUARD, ePLATFORM)) {
 			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
-			return PxFilterFlag::eCALLBACK;
+			result = PxFilterFlag::eCALLBACK;
 		}
+		//--------------------------------------------------------------------------------
 
-		//Same for guard
-		//if ((filterData0.word0 & eGUARD && filterData1.word0 & ePLATFORM)) {
-		//	pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
-		//	pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
-		//	return PxFilterFlag::eCALLBACK;
-		//}
-
-		if ((filterData1.word0 & eGUARD && filterData0.word0 & ePLATFORM)) {
-			pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
-			pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
-			return PxFilterFlag::eCALLBACK;
-		}
-
-		//Proyectiles
-		PxU32 me, other;
-		if ((me = filterData0.word0) & eTHROW || (me = filterData1.word0) & eTHROW) {
+		//BULLETS
+		//--------------------------------------------------------------------------------
+		else if ((me = filterData0.word0) & eTHROW || (me = filterData1.word0) & eTHROW) {
 			other = (me == filterData0.word0) ? filterData1.word0 : filterData1.word0;
 			if (other & eTHROW || other & ePLAYER_CONTROLLED) {
 				pairFlags &= ~PxPairFlag::eCONTACT_DEFAULT;
 				pairFlags &= ~PxPairFlag::eNOTIFY_TOUCH_FOUND;
 				pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
-				return PxFilterFlag::eKILL;
+				result = PxFilterFlag::eKILL;
 			}
 			else {
 				pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 				pairFlags |= PxPairFlag::eSOLVE_CONTACT;
-				return PxFilterFlag::eCALLBACK;
+				result = PxFilterFlag::eCALLBACK;
 			}
 		}
+		//--------------------------------------------------------------------------------
 
-		//pass collision only on objects with tag eCOLLISION
-		if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1)) {
-			if ((filterData1.word2 & eCOLLISION) && (filterData0.word2 & eCOLLISION)) {
+		//REGULAR COLLISION
+		//--------------------------------------------------------------------------------
+		else if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1)) {
+			result = PxFilterFlag::eDEFAULT;
+			if (ILFS_BOTH_HAS(eCOLLISION, 2)) {
 				pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 			}
-			else if ((filterData0.word0 & eTHROW) || (filterData1.word0 & eTHROW)) {
+			if (ILFS_SOME_HAS(eTHROW, 0)) {
 				pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
 				pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
-				return PxFilterFlag::eCALLBACK;
+				result = PxFilterFlag::eCALLBACK;
 			}
-			return PxFilterFlag::eDEFAULT;
+			if ((me = filterData0.word0) & ePLAYER_CONTROLLED || (me = filterData1.word0) & ePLAYER_CONTROLLED) {
+				other = (me == filterData0.word0) ? filterData1.word2 : filterData0.word2;
+				if (other & eIGNORE_PLAYER) {
+					pairFlags &= ~PxPairFlag::eNOTIFY_TOUCH_FOUND;
+					pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
+					dbg("Ignoro colision player\n");
+					return PxFilterFlag::eSUPPRESS;
+				}
+			}
+			//Check if has user callback
+			if (ILFS_SOME_HAS(eUSER_CALLBACK, 2)) {
+				pairFlags &= ~PxPairFlag::eSOLVE_CONTACT;
+				pairFlags |= PxPairFlag::eNOTIFY_CONTACT_POINTS;
+				pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+				pairFlags |= PxPairFlag::eDETECT_CCD_CONTACT;
+				result = PxFilterFlag::eCALLBACK;
+				dbg("User callback\n");
+			}
 		}
-		return PxFilterFlag::eKILL;
+		//--------------------------------------------------------------------------------
+
+		return result;
 	}
 };
+
+#define PHYS_TAG ItLightensFilter::descObjectFlags
+#define PHYS_BEHAVIOUR ItLightensFilter::descObjectBehaviour
 
 #endif

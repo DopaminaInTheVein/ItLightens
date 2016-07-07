@@ -20,6 +20,7 @@ CalQuaternion getRotationFromAToB(CalVector a, CalVector b, float unit_amount) {
 	VEC3 da = Cal2Engine(a);
 	VEC3 db = Cal2Engine(b);
 	VEC3 normal = da.Cross(db);
+	if (!isNormal(normal)) return Engine2Cal(CQuaternion::Identity);
 
 	float angle = angleBetween(da, db);
 	CQuaternion q = CQuaternion::CreateFromAxisAngle(normal, angle);

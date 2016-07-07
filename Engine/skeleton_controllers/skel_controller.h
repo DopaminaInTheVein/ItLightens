@@ -2,6 +2,7 @@
 #define INC_SKELETON_CONTROLLER_H_
 
 #include "components/comp_base.h"
+#include "skeleton/skeleton_manager.h"
 
 // --- Anims State --- //
 #define AST_IDLE				"idle"
@@ -19,6 +20,13 @@
 #define AST_STUNNED				"stun"
 #define AST_STUNNED_BOX			"stun"
 #define AST_RECHARGE			"recharge"
+#define AST_GRAB_DOWN			"grab_box_down"
+#define AST_GRAB_UP				"grab_box_up"
+#define AST_GRAB_PILA1			"grab_pila_1"
+#define AST_GRAB_PILA2			"grab_pila_2"
+#define AST_GRAB_IDLE			"grab_box_idle"
+#define AST_PILA_IDLE			"grab_pila_idle"
+#define AST_GRAB_WALK			"grab_box_walk"
 // ------------------- //
 
 template< class TObj >
@@ -45,8 +53,10 @@ protected:
 	virtual void myUpdateIK();
 
 public:
+	void enableIK(std::string bone_name, IK::bone_solver solver, float delay);
+	void disableIK(std::string bone_name, float delay = 0.f, IK::bone_solver function = nullptr);
 	void setState(std::string state, bool prio = false);
-
+	void renderInMenu();
 };
 
 #define SET_ANIM_STATE(skc, state) {if (skc) skc->setState(state);}

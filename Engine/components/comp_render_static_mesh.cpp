@@ -12,7 +12,13 @@ void TCompRenderStaticMesh::onCreate(const TMsgEntityCreated&) {
 
 bool TCompRenderStaticMesh::load(MKeyValue& atts) {
 	auto res_name = atts["name"];
+#ifndef NDEBUG
+	if (res_name == "static_meshes/obj/box2.static_mesh") {
+		dbg("Cargando malla buscada...\n");
+	}
+#endif
 	static_mesh = Resources.get(res_name.c_str())->as<CStaticMesh>();
+	assert(static_mesh);
 	return true;
 }
 

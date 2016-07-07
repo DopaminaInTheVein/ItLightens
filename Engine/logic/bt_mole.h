@@ -32,6 +32,7 @@ class bt_mole : public bt_poss, public TCompBase {
 	float speed;
 	float rotation_speed;
 	float distMaxToBox;
+	float rechTime;
 
 	int towptbox;
 	int towptleave;
@@ -40,6 +41,10 @@ class bt_mole : public bt_poss, public TCompBase {
 
 	vector<VEC3> fixedWpts;
 	int curwpt;
+
+	int currToRechargePoint = 0;
+	int pointsToRechargePoint;
+	VEC3 rechargePoint;
 
 	CObjectManager<bt_mole> * om = nullptr;
 	CHandle myHandle;
@@ -61,17 +66,10 @@ class bt_mole : public bt_poss, public TCompBase {
 		CHandle me = CHandle(this);
 		return me.getOwner();
 	}
-	bool isBoxAtLeavePoint(VEC3 posBox);
+	//bool isBoxAtLeavePoint(VEC3 posBox);
 
 	//Cambio Anim
 	SkelControllerMole * animController;
-	//TCompRenderStaticMesh* mesh;
-	//string pose_idle_route;
-	//string pose_run_route;
-	//string pose_jump_route;
-	//string pose_box_route;
-	//string pose_wall_route;
-	//string last_pose = "";
 
 	// the nodes
 	static map<string, btnode *>tree;
@@ -90,14 +88,17 @@ public:
 	void update(float elapsed);
 	void readIniFileAttr();
 	//conditions
-	bool checkBoxes();
+	//bool checkBoxes();
 	//actions
+	/*
 	int actionFollowBoxWpt();
 	int actionGrabBox();
 	int actionFollowNextBoxLeavepointWpt();
 	int actionUngrabBox();
+	*/
 	int actionLookForWpt();
 	int actionFollowPathToWpt();
+	int actionEndPathToWpt();
 
 	//functions that allow access to the static maps
 	map<string, btnode *>* getTree() override {

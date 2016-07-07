@@ -63,7 +63,7 @@ struct TBlurStep {
     shader_ctes_blur.blur_d.z = distances.z;
     shader_ctes_blur.blur_d.w = distances.w;  // Not used
 
-    auto tech = Resources.get("pbr_ambient.tech")->as<CRenderTechnique>();
+    auto tech = Resources.get("solid_textured.tech")->as<CRenderTechnique>();
     tech->activate();
 
     rt_half_y->activateRT();

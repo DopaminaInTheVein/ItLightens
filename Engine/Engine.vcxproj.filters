@@ -491,6 +491,16 @@
     <ClCompile Include="skeleton\skeleton_manager.cpp">
       <Filter>skeleton</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_room_limit.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\comp_box.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\pila.cpp" />
+    <ClCompile Include="components\comp_fading_globe.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -980,9 +990,6 @@
     <ClInclude Include="debug\debug_itlightens.h">
       <Filter>debug</Filter>
     </ClInclude>
-    <ClInclude Include="components\comp_box.h">
-      <Filter>components</Filter>
-    </ClInclude>
     <ClInclude Include="components\comp_trigger_lua.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -1347,6 +1354,19 @@
       <Filter>skeleton</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="components\comp_room_limit.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_blur.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\comp_box.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\pila.h" />
+    <ClInclude Include="components\comp_fading_globe.h">
+      <Filter>components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">

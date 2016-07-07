@@ -224,9 +224,10 @@ function OnDoubleJump( param )
 	p:play_sound("event:/OnDoubleJump")
 end
 
-function OnDetected( param )
-	p:print( "OnDetected: "..param.."\n" )
+function OnDetected( distance, posx, posy, posz )
+	p:print( "OnDetected: "..distance.." "..posx.." "..posy.." "..posz.."\n" )
 	p:play_sound("event:/OnDetected")
+	--p:character_globe("Intruder detected!", distance, posx, posy, posz)
 end
 
 function OnBeaconDetect( param )

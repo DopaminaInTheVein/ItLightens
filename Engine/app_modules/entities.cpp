@@ -54,6 +54,7 @@ DECL_OBJ_MANAGER("life", TCompLife);
 DECL_OBJ_MANAGER("wire", TCompWire);
 DECL_OBJ_MANAGER("generator", TCompGenerator);
 DECL_OBJ_MANAGER("room_switcher", TCompRoomSwitch);
+DECL_OBJ_MANAGER("limit", TCompRoomLimit);
 //Skeletons
 DECL_OBJ_MANAGER("skeleton", TCompSkeleton);
 DECL_OBJ_MANAGER("skc_player", SkelControllerPlayer);
@@ -72,11 +73,11 @@ DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
-DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
 
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("drone", TCompDrone);
 DECL_OBJ_MANAGER("box", TCompBox);
+DECL_OBJ_MANAGER("pila", TCompPila);
 DECL_OBJ_MANAGER("workstation", TCompWorkstation);
 
 //Physics
@@ -106,9 +107,11 @@ DECL_OBJ_MANAGER("particles_system", CParticleSystem);
 /* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
+DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
 
 //fx
 DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
+DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
 
 CCamera * camera;
 
@@ -147,6 +150,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRoom>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRoomSwitch>()->init(4);
+	getHandleManager<TCompRoomLimit>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
@@ -160,10 +164,12 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompBoneTracker>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
+	getHandleManager<TCompPila>()->init(MAX_ENTITIES);
 	getHandleManager<TCompWorkstation>()->init(MAX_ENTITIES);
 	getHandleManager<TCompGuidedCamera>()->init(16);
 	//helpers
 	getHandleManager<TCompFadingMessage>()->init(32);
+	getHandleManager<TCompFadingGlobe>()->init(32);
 	getHandleManager<LogicHelperArrow>()->init(4);
 	//lights
 	getHandleManager<TCompLightDir>()->init(4);
@@ -217,6 +223,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompDrone, TMsgActivate, onRecharge);
 	SUBSCRIBE(TCompDrone, TMsgRepair, onRepair);
 	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompPila, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
@@ -246,6 +253,9 @@ bool CEntitiesModule::start() {
 
 	//Skeleton IK
 	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
+
+	//Grab Objects Hit
+	SUBSCRIBE(player_controller_mole, TMsgGrabHit, onGrabHit);
 
 	SUBSCRIBE(bt_scientist, TMsgWBTakenByPlayer, onTakenWB);
 	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
@@ -294,6 +304,10 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompRoomSwitch, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompRoomSwitch, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TCompRoomSwitch, TMsgTriggerOut, onTriggerExitCall);
+	// room limiter
+	SUBSCRIBE(TCompRoomLimit, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompRoomLimit, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TCompRoomLimit, TMsgTriggerOut, onTriggerExitCall);
 
 	SUBSCRIBE(TCompBoxDestructor, TMsgTriggerIn, onTriggerEnterCall);
 
@@ -594,6 +608,7 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 			getHandleManager<TCompFadingMessage>()->updateAll(dt);
+			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
 		}
 
@@ -608,13 +623,14 @@ void CEntitiesModule::update(float dt) {
 
 		if (use_parallel) {
 			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
+			getHandleManager<TCompBoneTracker>()->updateAllInParallel(dt);
 			getHandleManager<TCompSkeletonIK>()->updateAllInParallel(dt);
 		}
 		else {
 			getHandleManager<TCompSkeleton>()->updateAll(dt);
+			getHandleManager<TCompBoneTracker>()->updateAll(dt);
 			getHandleManager<TCompSkeletonIK>()->updateAll(dt);
 		}
-		getHandleManager<TCompBoneTracker>()->updateAll(dt);
 
 		if (SBB::readBool("navmesh") && ia_wait > 1.0f) {
 			getHandleManager<bt_mole>()->updateAll(dt);
@@ -692,6 +708,11 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 	getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
+	getHandleManager<TCompFadingGlobe>()->onAll(&TCompFadingGlobe::render);
+
+#ifndef NDEBUG
+	getHandleManager<TCompBox>()->onAll(&TCompBox::render);
+#endif
 
 	RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
 	RenderManager.renderAll(CHandle(), CRenderTechnique::UI_OBJS);

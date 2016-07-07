@@ -5,6 +5,7 @@
 #include "comp_name.h"
 #include "comp_room.h"
 #include "comp_room_switch.h"
+#include "comp_room_limit.h"
 #include "comp_transform.h"
 #include "comp_snoozer.h"
 #include "comp_camera.h"
@@ -29,7 +30,6 @@
 #include "comp_trigger_lua.h"
 #include "comp_platform.h"
 #include "comp_drone.h"
-#include "comp_box.h"
 #include "comp_tracker.h"
 #include "comp_box_spawner.h"
 #include "comp_box_destructor.h"
@@ -49,10 +49,13 @@
 #include "logic/magnet_door.h"
 #include "logic/elevator.h"
 #include "logic/workbench.h"
+#include "logic/comp_box.h"
+#include "logic/pila.h"
 
 //helpers
 #include "logic/helper_arrow.h"
 #include "components/comp_fading_message.h"
+#include "components/comp_fading_globe.h"
 
 #include "comp_trigger_standar.h"
 
@@ -74,7 +77,6 @@
 #include "comp_wire.h"
 #include "comp_generator.h"
 #include "comp_polarized.h"
-
 
 //FX
 #include "comp_render_fade_screen.h"

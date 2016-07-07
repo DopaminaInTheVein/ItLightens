@@ -250,7 +250,22 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnDetected): {
-		sprintf(lua_code, "OnDetected(%f);", 0.5f);
+		char * pars = new char[params.size() + 1];
+		std::copy(params.begin(), params.end(), pars);
+		pars[params.size()] = '\0';
+
+		char *p = strtok(pars, " ");
+		std::vector<float> float_params;
+
+		while (p) {
+			float_params.push_back(atof(p));
+			p = strtok(NULL, " ");
+		}
+
+		delete[] pars;
+
+		sprintf(lua_code, "OnDetected(%f,%f,%f,%f);", float_params[0], float_params[1], float_params[2], float_params[3]);		
+
 		break;
 	}
 	case (OnBeaconDetect): {
@@ -582,6 +597,24 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("string: text to show")
 		.param("string: icon to show")
 		.param("string: text to show if icon not loaded")
+		.param("string: HEX BACKGROUND COLOR -> #RRGGBBAA")
+		.param("string: HEX TEXT COLOR -> #RRGGBBAA")
+		// launch text span related to npc talks with colors
+		.set("character_globe", &SLBPublicFunctions::characterGlobe)
+		.comment("Shows the specified globe for a limited time")
+		.param("string: text to show")
+		.param("float: distance to the player")
+		.param("float: x coord of the character")
+		.param("float: y coord of the character")
+		.param("float: z coord of the character")
+		// launch text span related to npc talks with colors
+		.set("character_globe_color", &SLBPublicFunctions::characterGlobeWithColor)
+		.comment("Shows the specified globe for a limited time")
+		.param("string: text to show")
+		.param("float: distance to the player")
+		.param("float: x coord of the character")
+		.param("float: y coord of the character")
+		.param("float: z coord of the character")
 		.param("string: HEX BACKGROUND COLOR -> #RRGGBBAA")
 		.param("string: HEX TEXT COLOR -> #RRGGBBAA")
 		// launch intro state

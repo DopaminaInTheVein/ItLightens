@@ -93,10 +93,10 @@ void PSGBuffer(
   float3 camera2wpos = iWorldPos - CameraWorldPos.xyz;
   o_depth = dot( CameraFront.xyz, camera2wpos) / CameraZFar;
 
-  /*o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
-  float limit = 0.1f;
-  if ((o_selfIlum.r < limit && o_selfIlum.g < limit && o_selfIlum.b < limit))
-	  o_selfIlum *= float4(0, 0, 0, 0);*/
+  o_selfIlum = txSelfIlum.Sample(samLinear, iTex0);
+  float limit = 0.15f;
+  if (length(o_selfIlum.xyz) > limit)
+	  o_albedo = o_selfIlum;
 }
 
 //--------------------------------------------------------------------------------------

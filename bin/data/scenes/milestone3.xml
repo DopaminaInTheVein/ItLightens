@@ -1524,6 +1524,7 @@
 <culling/>
 <controller_3rd_person/>
 <FX_fade_screen/>
+<render_glow/>
 <name
    name="camController_1"/>
 <transform
@@ -1903,38 +1904,7 @@
    type_collision="static"/>
 
 <room name="sala1"/></entity>
-<entity>
-<tags
-   tags="AI AI_mole AI_poss"/>
-<bt_mole
-   wpts_size="3"
-   wpt0_pos="-85.4164 4.70364 -5.44108"
-   wpt0_wait="2"
-   wpt1_pos="-82.4513 4.70364 -5.38737"
-   wpt1_wait="2"
-   wpt2_pos="-84.381 4.70364 -2.09156"
-   wpt2_wait="2"/>
-<player_mole/>
-<life
-   points="100"/>
-<skc_mole/>
-<name
-   name="mole_1"/>
-<transform
-   pos="-91.7663 4.46218 0.0251387"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/mole/mole.skeleton"/>
-<render_static_mesh
-   name="skeletons/mole/mole.static_mesh"/>
-<abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.3"
-   height="2.01"/>
 
-<room name="sala1"/></entity>
 <entity
    id="302">
 <tags/>
@@ -2759,15 +2729,38 @@
 <room name="sala1"/></entity>
 
 <entity>
-    <name name="beacon" />
-    <tags tags="ai_cam" />
-    <light_dir_shadows color="1 0 0 1" znear=".1" zfar="10" fov="45" resolution="512" />
-    <ai_cam max_rotation="120.0" range="3" width="1" rot_speed_sonar="0.5" max_idle_waiting="3"/>
-    <transform pos="-80.7606 8.54738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
-	<room name="sala1"/>
-</entity>
+<tags
+   tags="AI AI_mole AI_poss"/>
+<bt_mole
+   wpts_size="3"
+   wpt0_pos="-85.4164 4.90833 -5.44108"
+   wpt0_wait="2"
+   wpt1_pos="-82.4513 4.90833 -5.38737"
+   wpt1_wait="2"
+   wpt2_pos="-84.381 4.90833 -2.09156"
+   wpt2_wait="2"/>
+<player_mole/>
+<life
+   points="100"/>
+<skc_mole/>
+<name
+   name="mole_1"/>
+<transform
+   pos="-91.7663 4.90833 0.0251387"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/mole/mole.skeleton"/>
+<render_static_mesh
+   name="skeletons/mole/mole.static_mesh"/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="2.01"/>
 
+<room name="sala1"/></entity>
+<!--
 <entity>
 	<rigidbody type_collision="trigger"
 	   type_shape="box"
@@ -2780,6 +2773,31 @@
 	   quat="0.0 1.0 0.0 0.0"
 	   scale="1.0"/>
 	<room name="none"/>
+</entity>
+-->
+<entity>
+	<rigidbody type_collision="trigger"
+	   type_shape="box"
+	   size="10.0 10.0 0.10"/>
+	<tags tags="trigger limit"/>
+	<limit />
+	<name name="TriggerBox_1"/>
+	<transform
+	   pos="-57.915 4.396 -5.678"
+	   quat="0.0 1.0 0.0 0.0"
+	   scale="1.0"/>
+	<room name="none"/>
+</entity>
+
+
+<entity>
+    <name name="beacon" />
+    <tags tags="ai_cam" />
+    <light_dir_shadows color="1 0 0 1" znear=".1" zfar="10" fov="45" resolution="512" />
+    <ai_cam max_rotation="120.0" range="3" width="1" rot_speed_sonar="0.5" max_idle_waiting="3"/>
+    <transform pos="-80.7606 8.54738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
+    <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
+	<room name="sala1"/>
 </entity>
 
 </entities>

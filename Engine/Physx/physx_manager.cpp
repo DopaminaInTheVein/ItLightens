@@ -82,7 +82,7 @@ bool CPhysxManager::start()
 
 	if (!sceneDesc.cpuDispatcher)
 	{
-		m_pCpuDispatcher = PxDefaultCpuDispatcherCreate(m_NbThreads);
+		m_pCpuDispatcher = PxDefaultCpuDispatcherCreate(0);
 		if (!m_pCpuDispatcher)
 			fatal("PxDefaultCpuDispatcherCreate failed!");
 
@@ -184,7 +184,7 @@ void CPhysxManager::update(float dt)
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
 		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
 
-		t_to_update -= t_max_update;
+		t_to_update = 0;
 	}
 }
 
@@ -210,7 +210,27 @@ void CPhysxManager::setupFiltering(PxRigidActor* actor, PxFilterData& filterData
 		shape->setQueryFilterData(filterData);
 	}
 
-	free(ptr);
+	//free(ptr);
+}
+
+void CPhysxManager::setBehaviour(PxRigidActor* actor, ItLightensFilter::descObjectBehaviour tag, bool enabled)
+{
+	const PxU32 numShapes = actor->getNbShapes();
+	PxShape **ptr;
+	ptr = new PxShape*[numShapes];
+
+	actor->getShapes(ptr, numShapes);
+	for (PxU32 i = 0; i < numShapes; i++)
+	{
+		PxShape* shape = ptr[i];
+		PxFilterData filterData = shape->getSimulationFilterData();
+		if (enabled) filterData.word2 |= tag;
+		else filterData.word2 &= ~tag;
+		shape->setSimulationFilterData(filterData);
+		shape->setQueryFilterData(filterData);
+	}
+
+	//free(ptr);
 }
 
 #pragma endregion
@@ -225,7 +245,7 @@ void CPhysxManager::customizeSceneDesc(PxSceneDesc& sceneDesc)
 	sceneDesc.gravity = PxVec3(0.0f, GRAVITY, 0.0f);
 	sceneDesc.filterShader = ItLightensFilter::ItLightensFilterShader;
 	sceneDesc.simulationEventCallback = this;
-	sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS | PxSceneFlag::eENABLE_CCD;
+	sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS | PxSceneFlag::eENABLE_CCD | PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS;
 	sceneDesc.filterCallback = this;
 	//sceneDesc.flags |= PxSceneFlag::eREQUIRE_RW_LOCK;
 }
@@ -494,6 +514,10 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 	for (PxU32 i = 0; i < nbPairs; i++)
 	{
 		const PxContactPair& cp = pairs[i];
+		auto filterData0 = cp.shapes[0]->getSimulationFilterData();
+		auto filterData1 = cp.shapes[1]->getSimulationFilterData();
+		CEntity *me, *other;
+		me = other = nullptr;
 
 		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
@@ -501,12 +525,55 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 			CEntity *e1 = GetEntityHandle(*pairHeader.actors[1]);
 			if (!e0 || !e1) return;
 
-			CEntity* throw_bomb;
-			if ((throw_bomb = e0)->hasTag("throw_bomb") || (throw_bomb = e1)->hasTag("throw_bomb")) {
-				CEntity * other = throw_bomb == e0 ? e1 : e0;
+			if (pairHasTag(e0, e1, "throw_bomb", me, other)) {
 				if (other->hasTag("player")) return;
 				if (other->hasTag("throw_bomb")) return;
-				throw_bomb->sendMsg(TMsgActivate());
+				me->sendMsg(TMsgActivate());
+			}
+			//CEntity* throw_bomb;
+			//if ((throw_bomb = e0)->hasTag("throw_bomb") || (throw_bomb = e1)->hasTag("throw_bomb")) {
+			//	CEntity * other = throw_bomb == e0 ? e1 : e0;
+			//	if (other->hasTag("player")) return;
+			//	if (other->hasTag("throw_bomb")) return;
+			//	throw_bomb->sendMsg(TMsgActivate());
+			//}
+
+			//Test
+			bool user_callback = filterData0.word2 & PHYS_BEHAVIOUR::eUSER_CALLBACK
+				|| filterData1.word2 & PHYS_BEHAVIOUR::eUSER_CALLBACK;
+			if (user_callback) {
+				dbg("User callback collision: %s. %s\n", e0->getName(), e1->getName());
+			}
+
+			//----------
+			if (pairHasTag(e0, e1, "box", me, other)) {
+				if (!other->hasTag("player")) {
+					//dbg("Trato colision caja!\n");
+					auto myFilterData = (me == e0) ? &(filterData0) : &(filterData1);
+					if (myFilterData->word2 & PHYS_BEHAVIOUR::eUSER_CALLBACK) {
+						//auto myShape = (me == e0) ? cp.shapes[0] : cp.shapes[1];
+						dbg("Contacts = %d\n", cp.contactCount);
+						PxContactPairPoint * contacts = new PxContactPairPoint[cp.contactCount];
+						int numContacts = cp.extractContacts(contacts, cp.contactCount);
+
+						TMsgGrabHit msgGrabHit;
+						msgGrabHit.npoints = numContacts;
+						msgGrabHit.points = new VEC3[numContacts];
+						msgGrabHit.normals = new VEC3[numContacts];
+						msgGrabHit.impulses = new VEC3[numContacts];
+						msgGrabHit.separations = new float[numContacts];
+						for (int i = 0; i < numContacts; i++) {
+							msgGrabHit.points[i] = PhysxConversion::PxVec3ToVec3(contacts[i].position);
+							msgGrabHit.normals[i] = PhysxConversion::PxVec3ToVec3(contacts[i].normal);
+							msgGrabHit.impulses[i] = PhysxConversion::PxVec3ToVec3(contacts[i].impulse);
+							msgGrabHit.separations[i] = contacts[i].separation;
+							dbg("Pos contact %d: (%f, %f, %f)\n", i, VEC3_VALUES(msgGrabHit.points[i]));
+						}
+						auto hPlayer = tags_manager.getFirstHavingTag("player");
+						dbg("Send msgGranHit\n");
+						hPlayer.sendMsg(msgGrabHit);
+					}
+				}
 			}
 
 			TCompCharacterController *cc;
@@ -546,6 +613,15 @@ void CPhysxManager::onContact(const PxContactPairHeader& pairHeader, const PxCon
 			}
 		}
 	}
+}
+
+bool CPhysxManager::pairHasTag(CEntity* e0, CEntity* e1, std::string tag, CEntity*& eTag, CEntity*& eOther)
+{
+	if ((eTag = e0)->hasTag(tag) || (eTag = e1)->hasTag(tag)) {
+		eOther = (eTag == e0 ? e1 : e0);
+		return true;
+	}
+	return false;
 }
 
 PxFilterFlags	CPhysxManager::pairFound(PxU32 pairID, PxFilterObjectAttributes attributes0, PxFilterData filterData0, const PxActor * a0, const PxShape * s0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, const PxActor * a1, const PxShape * s1, PxPairFlags & pairFlags)
@@ -686,7 +762,7 @@ PxParticleSystem * CPhysxManager::CreateParticleSystem(int max_particles)
 	mRunOnGpu = mRunOnGpu && (ps->getParticleBaseFlags() & PxParticleBaseFlag::eGPU);
 #endif
 	return ps;
-}
+	}
 
 #pragma endregion
 

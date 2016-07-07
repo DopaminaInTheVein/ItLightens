@@ -72,12 +72,13 @@ float random(float vmin, float vmax) {
 }
 
 bool isInRoom(CHandle h) {
-	if (SBB::readSala() == "none") return true;
+	std::string pjSala = SBB::readSala();
+	if (pjSala == "none") return true;
 	CEntity * e = h;
 	if (!e) return true;
 	TCompRoom * room = e->get<TCompRoom>();
 	if (!room) return true;
-	return room->name == SBB::readSala();
+	return room->name == pjSala;
 }
 
 float squared(float i) {
@@ -189,6 +190,23 @@ float angleBetween(const VEC3& u, const VEC3& v)
 {
 	float dot = u.Dot(v);
 	return acosf(dot / (v.Length() * u.Length()));
+}
+
+VEC3 movementUnion(const VEC3& u, const VEC3& v)
+{
+	VEC3 res = u;
+	//if (u.x != 0.f && v.x != 0.f) assert(sameSign(u.x, v.x));
+	//if (u.y != 0.f && v.y != 0.f) assert(sameSign(u.y, v.y));
+	//if (u.z != 0.f && v.z != 0.f) assert(sameSign(u.z, v.z));
+	if (abs(u.x) < abs(v.x)) res.x = v.x;
+	if (abs(u.y) < abs(v.y)) res.y = v.y;
+	if (abs(u.z) < abs(v.z)) res.z = v.z;
+	return res;
+}
+
+bool isZero(VEC3 u)
+{
+	return u.x == 0.f && u.y == 0.f && u.z == 0.f;
 }
 
 //template<class TObj>

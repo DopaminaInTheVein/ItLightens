@@ -44,7 +44,7 @@ struct OM (
 			-- Tags
 			,#()
 			-- Attributes
-			,#("id", "slept", "mesh", "static_mesh", "skeleton")
+			,#("id", "slept", "mesh", "static_mesh", "skeleton", "logic")
 			--Components
 			,#("name", "transform",  "render", "physx", "polarized", "tracker", "polarizedArea", "room")
 			--Helpers
@@ -68,7 +68,18 @@ struct OM (
 			-- Attributes
 			,#("fixed")
 			--Components
-			,#("box")
+			,#("box", "bone_tracker")
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("Pila"
+			-- Tags
+			,#("box","platform", "pila")
+			-- Attributes
+			,#()
+			--Components
+			,#("pila", "bone_tracker")
 			--Helpers
 			,#()
 		)

@@ -1,0 +1,4 @@
+<material tech="skin_textured.tech">
+<texture slot="diffuse" name="textures/mole_albedo.dds"/>
+<texture slot="normalmap" name="textures/mole_normals.dds"/>
+</material>

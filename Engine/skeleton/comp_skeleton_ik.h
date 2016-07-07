@@ -18,6 +18,7 @@ struct TCompSkeletonIK : public TCompBase {
 
 		CHandle h_solver;
 		IK::bone_solver f_solver;
+		IK::bone_solver f_ender;
 	};
 
 	std::vector<TBoneMod>  mods;

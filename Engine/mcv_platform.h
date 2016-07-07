@@ -3,6 +3,7 @@
 
 // Global settings
 #define _CRT_SECURE_NO_WARNINGS
+#define _SCL_SECURE_NO_WARNINGS
 #define WIN32_LEAN_AND_MEAN
 #define _USE_MATH_DEFINES
 #define NOMINMAX

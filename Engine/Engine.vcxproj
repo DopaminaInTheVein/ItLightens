@@ -125,7 +125,9 @@
     <ClCompile Include="app_modules\io\joystick.cpp" />
     <ClCompile Include="app_modules\io\keyboard.cpp" />
     <ClCompile Include="app_modules\io\mouse.cpp" />
-    <ClCompile Include="app_modules\logic_manager\logic_manager.cpp" />
+    <ClCompile Include="app_modules\logic_manager\logic_manager.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
@@ -137,6 +139,7 @@
     <ClCompile Include="components\comp_charactercontroller.cpp" />
     <ClCompile Include="components\comp_culling.cpp" />
     <ClCompile Include="components\comp_drone.cpp" />
+    <ClCompile Include="components\comp_fading_globe.cpp" />
     <ClCompile Include="components\comp_fading_message.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_guided_camera.cpp" />
@@ -151,6 +154,7 @@
     <ClCompile Include="components\comp_render_fade_screen.cpp" />
     <ClCompile Include="components\comp_render_glow.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
+    <ClCompile Include="components\comp_room_limit.cpp" />
     <ClCompile Include="components\comp_room_switch.cpp" />
     <ClCompile Include="components\comp_snoozer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -208,10 +212,12 @@
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_scientist.cpp" />
     <ClCompile Include="logic\bt_speedy.cpp" />
+    <ClCompile Include="logic\comp_box.cpp" />
     <ClCompile Include="logic\damage.cpp" />
     <ClCompile Include="logic\elevator.cpp" />
     <ClCompile Include="logic\helper_arrow.cpp" />
     <ClCompile Include="logic\magnet_door.cpp" />
+    <ClCompile Include="logic\pila.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
     <ClCompile Include="logic\workbench.cpp" />
     <ClCompile Include="main.cpp" />
@@ -307,6 +313,7 @@
     <ClCompile Include="windows\app.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_blur.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h" />
@@ -342,13 +349,13 @@
     <ClInclude Include="components\comp_box_spawner.h" />
     <ClInclude Include="components\components.h" />
     <ClInclude Include="components\comp_base.h" />
-    <ClInclude Include="components\comp_box.h" />
     <ClInclude Include="components\comp_camera.h" />
     <ClInclude Include="components\comp_camera_main.h" />
     <ClInclude Include="components\comp_charactercontroller.h" />
     <ClInclude Include="components\comp_controller_3rd_person.h" />
     <ClInclude Include="components\comp_culling.h" />
     <ClInclude Include="components\comp_drone.h" />
+    <ClInclude Include="components\comp_fading_globe.h" />
     <ClInclude Include="components\comp_fading_message.h" />
     <ClInclude Include="components\comp_generator.h" />
     <ClInclude Include="components\comp_guided_camera.h" />
@@ -367,6 +374,7 @@
     <ClInclude Include="components\comp_render_glow.h" />
     <ClInclude Include="components\comp_render_static_mesh.h" />
     <ClInclude Include="components\comp_room.h" />
+    <ClInclude Include="components\comp_room_limit.h" />
     <ClInclude Include="components\comp_room_switch.h" />
     <ClInclude Include="components\comp_snoozer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -427,10 +435,12 @@
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_scientist.h" />
     <ClInclude Include="logic\bt_speedy.h" />
+    <ClInclude Include="logic\comp_box.h" />
     <ClInclude Include="logic\damage.h" />
     <ClInclude Include="logic\elevator.h" />
     <ClInclude Include="logic\helper_arrow.h" />
     <ClInclude Include="logic\magnet_door.h" />
+    <ClInclude Include="logic\pila.h" />
     <ClInclude Include="logic\polarity.h" />
     <ClInclude Include="logic\sbb.h" />
     <ClInclude Include="logic\workbench.h" />

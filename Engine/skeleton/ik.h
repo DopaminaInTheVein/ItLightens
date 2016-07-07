@@ -10,7 +10,8 @@ namespace IK {
 		VEC3 bone_pos;
 	};
 	struct ResultSolver {
-		VEC3 offset_pos;
+		VEC3 new_pos;
+		VEC3 bone_normal;
 	};
 
 	//template<typename TObj>

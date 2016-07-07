@@ -94,7 +94,7 @@ void player_controller_cientifico::Init() {
 	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 	ChangeState("idle");
-	
+
 	getUpdateInfoBase(CHandle(this).getOwner());
 	SET_ANIM_SCIENTIST(AST_IDLE);
 	//animController.setState(AST_IDLE);
@@ -136,7 +136,7 @@ void player_controller_cientifico::WorkBenchActions() {
 			obj = THROW_BOMB;
 			//TODO: Destruir bomba actual
 			ChangeState("createBomb");
-			moving = false;
+			stopMovement();
 		}
 		else {
 			Gui->setActionAvailable(eAction::CREATE_MAGNETIC_BOMB);
@@ -255,7 +255,7 @@ void player_controller_cientifico::UseBomb()
 		objs_amoung[obj]--;
 		ChangeState("throwing");
 		bomb_handle.sendMsg(TMsgActivate()); //Notify throwing
-		moving = false;
+		stopMovement();
 		//if (objs_amoung[obj] > 0) spawnBomb();
 		//ChangeState("idle");
 	}
@@ -377,7 +377,9 @@ void player_controller_cientifico::spawnBomb()
 	TMsgAttach msg;
 	msg.handle = CHandle(this).getOwner();
 	msg.bone_name = SK_RHAND;
-	bomb_handle.sendMsg(msg); //TODO por aqui
+	msg.save_local_tmx = false;
+	bomb_handle.sendMsg(msg);
+
 	//float yaw, pitch;
 	//bomb_trans->setPosition(transform->getPosition());
 	//transform->getAngles(&yaw, &pitch);
@@ -548,6 +550,13 @@ void player_controller_cientifico::onCanRepairDrone(const TMsgCanRechargeDrone &
 {
 	canRepairDrone = msg.range;
 	drone = msg.han;
+}
+// JUMP
+
+bool player_controller_cientifico::canJump() {
+	bool ascending = cc->GetLastSpeed().y > 0.1f;
+	bool descending = cc->GetLastSpeed().y < -0.1f;
+	return !ascending && !descending;
 }
 
 //Anims

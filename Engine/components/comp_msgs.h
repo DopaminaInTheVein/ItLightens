@@ -24,6 +24,7 @@ struct TMsgAwake {
 struct TMsgAttach {
 	CHandle handle;
 	std::string bone_name;
+	bool save_local_tmx;
 	DECLARE_MSG_ID();
 };
 
@@ -34,6 +35,16 @@ struct TMsgSetIKSolver {
 	std::string bone_name;
 	bool enable;
 	float time;
+	DECLARE_MSG_ID();
+};
+
+// Notify Player grabbed object hit
+struct TMsgGrabHit {
+	VEC3 * points;
+	VEC3 * normals;
+	VEC3 * impulses;
+	float * separations;
+	int npoints;
 	DECLARE_MSG_ID();
 };
 
