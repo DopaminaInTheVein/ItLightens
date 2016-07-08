@@ -8,6 +8,9 @@ function addAlexLogicCamaras = (
 	setUserProp auxobj "rot_speed_sonar" 0.9
 	setUserProp auxobj "rotating_left" false
 	setUserProp auxobj "max_rotation" 162
+	auxobj.rotation.x_rotation = 0
+	auxobj.rotation.y_rotation = 0
+	auxobj.rotation.z_rotation = 0
 	local currentMatrix = auxobj.transform
 	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 -9))
 	auxobj.transform = currentMatrix
@@ -20,6 +23,9 @@ function addAlexLogicCamaras = (
 	setUserProp auxobj "rot_speed_sonar" 0.5
 	setUserProp auxobj "rotating_left" false
 	setUserProp auxobj "max_rotation" 90
+	auxobj.rotation.x_rotation = 0
+	auxobj.rotation.y_rotation = 0
+	auxobj.rotation.z_rotation = 0
 	currentMatrix = auxobj.transform
 	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 225))
 	auxobj.transform = currentMatrix
@@ -32,6 +38,9 @@ function addAlexLogicCamaras = (
 	setUserProp auxobj "rot_speed_sonar" 0.5
 	setUserProp auxobj "rotating_left" true
 	setUserProp auxobj "max_rotation" 90
+	auxobj.rotation.x_rotation = 0
+	auxobj.rotation.y_rotation = 0
+	auxobj.rotation.z_rotation = 0
 	currentMatrix = auxobj.transform
 	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 315))
 	auxobj.transform = currentMatrix
@@ -52,6 +61,9 @@ fn assign_room_to_all_from_x sala1 sala2= (
 )
 
 fn createRoomSwitcherTrigger sala1 sala2 = (
+	if $Trigger_Cambio_Sala != undefined then (
+		delete $Trigger_Cambio_Sala
+	)
 	local nouObj = undefined
 	local filePath = (objMax_dir+"TriggerBox.max")
 	local objectes = getmaxfileobjectnames filePath
@@ -86,6 +98,9 @@ fn createRoomSwitcherTrigger sala1 sala2 = (
 )
 
 fn createRoomLimiterForPossession = (
+	if $Trigger_Escupe_Posessiones != undefined then (
+		delete $Trigger_Escupe_Posessiones
+	)
 	local nouObj = undefined
 	local filePath = (objMax_dir+"TriggerBox.max")
 	local objectes = getmaxfileobjectnames filePath
@@ -117,7 +132,7 @@ fn createRoomLimiterForPossession = (
 	) 
 )
 
---addAlexLogicCamaras()
---assign_room_to_all_from_x "sala1" "sala2"
---createRoomSwitcherTrigger "sala1" "sala2"
---createRoomLimiterForPossession()
+addAlexLogicCamaras()
+assign_room_to_all_from_x "sala1" "sala2"
+createRoomSwitcherTrigger "sala1" "sala2"
+createRoomLimiterForPossession()
