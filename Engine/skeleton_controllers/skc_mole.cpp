@@ -86,6 +86,7 @@ void SkelControllerMole::SetPlayerController() {
 void SkelControllerMole::myUpdate()
 {
 	updateGrab();
+	updatePila();
 	updateGrabPoints();
 	if (currentState == "walk" || currentState == "run") {
 		SetPlayerController();
@@ -130,7 +131,7 @@ void SkelControllerMole::myUpdate()
 			grabbed.sendMsg(msgAttach);
 		}
 		else if (currentState == AST_GRAB_PILA2) {
-			setAction("grab_pila_2", "grab_box_idle");
+			setAction("grab_pila_2", "grab_pila_idle");
 			currentState = AST_PILA_IDLE;
 			disableIK(SK_RHAND);
 			//disableIK(SK_LHAND);
@@ -162,6 +163,18 @@ void SkelControllerMole::updateGrab()
 		updateGrabPoints();
 	}
 }
+
+void SkelControllerMole::updatePila()
+{
+	if (!grabbedPila.isValid()) return;
+	if (currentState == AST_IDLE) currentState = AST_PILA_IDLE;
+	else if (currentState == AST_RUN) currentState = AST_PILA_WALK;
+	else if (currentState == AST_MOVE) currentState = AST_PILA_WALK;
+	//if (isMovingBox()) {
+	//	updateGrabPoints();
+	//}
+}
+
 void SkelControllerMole::updateGrabPoints()
 {
 	if (!grabbed.isValid()) return;

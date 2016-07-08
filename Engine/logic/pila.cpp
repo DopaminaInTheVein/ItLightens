@@ -18,6 +18,7 @@ map<string, statehandler> TCompPila::statemap = {};
 void TCompPila::setFalling()
 {
 	GET_MY(phys, TCompPhysics);
+	phys->AddMovement(VEC3(0.f, 0.5f, 0.f));
 	phys->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, true);
 	ChangeState(ST_PILA_FALLING);
 }

@@ -24,6 +24,7 @@ protected:
 	void SetPlayerController();
 	void myUpdate();
 	void updateGrab();
+	void updatePila();
 	void updateGrabPoints();
 	bool isMovingBox();
 
