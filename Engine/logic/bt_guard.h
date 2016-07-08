@@ -72,6 +72,7 @@ class bt_guard : public bt, public TCompBase
 	float reduce_factor;
 	float t_reduceStats_max;
 	float t_reduceStats;
+	float MAX_STUCK_TIME;
 
 	//Handles & More
 	CHandle myHandle;
@@ -114,8 +115,16 @@ class bt_guard : public bt, public TCompBase
 	VEC3 player_last_seen_point;
 	VEC3 noisePoint;
 	VEC3 search_player_point;
+	bool player_detected = false;
 	bool noiseHeard = false;
 	bool playerLost = false;
+	// stuck management
+	float stuck_time = 0.f;
+	float unstuck_time = 0.f;
+	bool stuck = false;
+	bool reoriented = false;
+	int direction = 0;
+	VEC3 last_position;
 	// reaction time management
 	bool player_detected_start = false;
 	float reaction_time = -1.0f;
@@ -151,8 +160,8 @@ class bt_guard : public bt, public TCompBase
 	bool inJurisdiction(VEC3);
 	bool outJurisdiction(VEC3);
 	bool canHear(VEC3, float);
-	bool isPathObtained = false;
-	bool isPathObtainedAccessible = false;
+	/*bool isPathObtained = false;
+	bool isPathObtainedAccessible = false;*/
 
 	//Times and similars
 	float timeWaiting;
@@ -184,6 +193,7 @@ class bt_guard : public bt, public TCompBase
 
 public:
 	//conditions
+	bool guardStuck();
 	bool playerStunned();
 	bool playerNear();
 	bool playerDetected();
@@ -192,6 +202,7 @@ public:
 	//toggle conditions
 	bool checkFormation();
 	//actions
+	int actionUnstuck();
 	int actionStunned();
 	int actionStepBack();
 	int actionReact();
@@ -271,6 +282,21 @@ public:
 				resetStats();
 			}
 		}
+		// stuck management
+		float distance = simpleDistXZ(last_position, t->getPosition());
+		if (distance <= 0.5f*getDeltaTime()*SPEED_WALK) {
+			stuck_time += getDeltaTime();
+			if (stuck_time > MAX_STUCK_TIME) {
+				setCurrent(NULL);
+				stuck = true;
+			}
+		}
+		else {
+			stuck_time = 0.f;
+			stuck = false;
+		}
+
+		last_position = t->getPosition();
 
 		if (!forced_move) Recalc();
 		//animController.update();

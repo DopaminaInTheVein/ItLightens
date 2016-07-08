@@ -108,6 +108,7 @@ DECL_OBJ_MANAGER("particles_system", CParticleSystem);
 /* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
+DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
 
 //fx
 DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
@@ -170,6 +171,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompGuidedCamera>()->init(16);
 	//helpers
 	getHandleManager<TCompFadingMessage>()->init(32);
+	getHandleManager<TCompFadingGlobe>()->init(32);
 	getHandleManager<LogicHelperArrow>()->init(4);
 	//lights
 	getHandleManager<TCompLightDir>()->init(4);
@@ -617,6 +619,7 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 			getHandleManager<TCompFadingMessage>()->updateAll(dt);
+			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
 		}
 
@@ -717,6 +720,7 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 	getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
+	getHandleManager<TCompFadingGlobe>()->onAll(&TCompFadingGlobe::render);
 
 #ifndef NDEBUG
 	getHandleManager<TCompBox>()->onAll(&TCompBox::render);

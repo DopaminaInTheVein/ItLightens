@@ -57,7 +57,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-	p:play_music("event:/OnGameStart")
+    p:play_music("event:/OnGameStart")
 	--triggerGuardFormation();
 	--p:exec_command( "triggerGuardFormation();", 15 )
 	cam:run_cinematic("CinematicIntro", 10)
@@ -224,9 +224,10 @@ function OnDoubleJump( param )
 	p:play_sound("event:/OnDoubleJump")
 end
 
-function OnDetected( param )
-	p:print( "OnDetected: "..param.."\n" )
+function OnDetected( distance, posx, posy, posz )
+	p:print( "OnDetected: "..distance.." "..posx.." "..posy.." "..posz.."\n" )
 	p:play_sound("event:/OnDetected")
+	--p:character_globe("Intruder detected!", distance, posx, posy, posz)
 end
 
 function OnBeaconDetect( param )

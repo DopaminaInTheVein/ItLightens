@@ -125,7 +125,9 @@
     <ClCompile Include="app_modules\io\joystick.cpp" />
     <ClCompile Include="app_modules\io\keyboard.cpp" />
     <ClCompile Include="app_modules\io\mouse.cpp" />
-    <ClCompile Include="app_modules\logic_manager\logic_manager.cpp" />
+    <ClCompile Include="app_modules\logic_manager\logic_manager.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
@@ -137,6 +139,7 @@
     <ClCompile Include="components\comp_charactercontroller.cpp" />
     <ClCompile Include="components\comp_culling.cpp" />
     <ClCompile Include="components\comp_drone.cpp" />
+    <ClCompile Include="components\comp_fading_globe.cpp" />
     <ClCompile Include="components\comp_fading_message.cpp" />
     <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_guided_camera.cpp" />
@@ -353,6 +356,7 @@
     <ClInclude Include="components\comp_controller_3rd_person.h" />
     <ClInclude Include="components\comp_culling.h" />
     <ClInclude Include="components\comp_drone.h" />
+    <ClInclude Include="components\comp_fading_globe.h" />
     <ClInclude Include="components\comp_fading_message.h" />
     <ClInclude Include="components\comp_generator.h" />
     <ClInclude Include="components\comp_guided_camera.h" />
