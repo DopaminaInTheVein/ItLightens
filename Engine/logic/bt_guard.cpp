@@ -87,6 +87,7 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
+			assignValueToVar(MAX_STUCK_TIME, fields);
 			SHOT_OFFSET = VEC4(0, 1.5f, 0.5f, 1);
 		}
 	}
@@ -110,6 +111,8 @@ void bt_guard::Init()
 	if (tree.empty()) {
 		// insert all states in the map
 		createRoot("guard", PRIORITY, NULL, NULL);
+		// stuck management
+		addChild("guard", "stuck", ACTION, (btcondition)&bt_guard::guardStuck, (btaction)&bt_guard::actionUnstuck);
 		// formation toggle
 		addChild("guard", "formationsequence", SEQUENCE, (btcondition)&bt_guard::checkFormation, NULL);
 		addChild("formationsequence", "gotoformation", ACTION, NULL, (btaction)&bt_guard::actionGoToFormation);
@@ -151,6 +154,11 @@ void bt_guard::Init()
 }
 
 //conditions
+bool bt_guard::guardStuck() {
+	PROFILE_FUNCTION("guard: guard stuck");
+	return stuck;
+}
+
 bool bt_guard::playerStunned() {
 	PROFILE_FUNCTION("guard: player stunned");
 	if (stunned == true) {
@@ -181,7 +189,7 @@ bool bt_guard::playerNear() {
 bool bt_guard::playerDetected() {
 	PROFILE_FUNCTION("guard: player detected");
 	// if the player is visible
-	if (playerVisible() || boxMovingDetected()) {
+	if ((playerVisible() || boxMovingDetected()) && !player_detected) {
 		TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 		VEC3 posPlayer = tPlayer->getPosition();
 		VEC3 myPos = getTransform()->getPosition();
@@ -306,6 +314,14 @@ bool bt_guard::checkFormation() {
 }
 
 //actions
+int bt_guard::actionUnstuck() {
+	PROFILE_FUNCTION("guard: actionunstuck");
+	if (!myParent.isValid()) return false;
+	setCurrent(NULL);
+	stuck_time = 0.f;
+	stuck = false;
+}
+
 int bt_guard::actionStunned() {
 	PROFILE_FUNCTION("guard: actionstunned");
 	if (!myParent.isValid()) return false;
@@ -338,7 +354,7 @@ int bt_guard::actionReact() {
 	if (!player_detected_start) {
 		// starting the reaction time decorator
 		player_detected_start = true;
-		reaction_time = rand() % (int)MAX_REACTION_TIME;
+		reaction_time = (rand() % (int)MAX_REACTION_TIME);
 	}
 
 	// stay in this state until the reaction time is over
@@ -367,21 +383,21 @@ int bt_guard::actionChase() {
 		playerLost = true;
 		player_last_seen_point = posPlayer;
 		SET_ANIM_GUARD(AST_IDLE);
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 		return OK;
 	}
 	//player near?
 	else if (distance < DIST_SQ_SHOT_AREA_ENTER) {
 		SET_ANIM_GUARD(AST_PREP_SHOOT);
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 		return OK;
 	}
 	else {
-		if (!isPathObtained) {
-			isPathObtainedAccessible = getPath(myPos, posPlayer);
-			isPathObtained = true;
+		/*if (!isPathObtained) {
+			isPathObtainedAccessible = */getPath(myPos, posPlayer);
+			/*isPathObtained = true;
 		}
 
 		if (!isPathObtainedAccessible) {
@@ -389,11 +405,11 @@ int bt_guard::actionChase() {
 			isPathObtained = false;
 			return OK;
 		}
-		else {
+		else {*/
 			SET_ANIM_GUARD(AST_MOVE);
 			goTo(posPlayer);
 			return STAY;
-		}
+		//}
 	}
 }
 
@@ -541,16 +557,16 @@ int bt_guard::actionSearch() {
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 		return KO;
 	}
 	else if (playerLost) {
 		float distance = simpleDistXZ(myPos, player_last_seen_point);
-		if (!isPathObtained) {
-			isPathObtainedAccessible = getPath(myPos, player_last_seen_point);
-			isPathObtained = true;
-		}
+		/*if (!isPathObtained) {
+			isPathObtainedAccessible = */getPath(myPos, player_last_seen_point);
+			/*isPathObtained = true;
+		}*/
 		SET_ANIM_GUARD(AST_MOVE);
 		goTo(player_last_seen_point);
 		//Noise Point Reached ?
@@ -565,8 +581,8 @@ int bt_guard::actionSearch() {
 			dir.Normalize();
 
 			search_player_point = playerPos + 1.0f * dir;
-			isPathObtainedAccessible = false;
-			isPathObtained = false;
+			/*isPathObtainedAccessible = false;
+			isPathObtained = false;*/
 			return OK;
 		}
 		else {
@@ -576,10 +592,10 @@ int bt_guard::actionSearch() {
 	// If we heared a noise, we go to the point and look around
 	else if (noiseHeard) {
 		float distance = simpleDistXZ(myPos, noisePoint);
-		if (!isPathObtained) {
-			isPathObtainedAccessible = getPath(myPos, noisePoint);
-			isPathObtained = true;
-		}
+		/*if (!isPathObtained) {
+			isPathObtainedAccessible = */getPath(myPos, noisePoint);
+			/*isPathObtained = true;
+		}*/
 		SET_ANIM_GUARD(AST_MOVE);
 		goTo(noisePoint);
 		//Noise Point Reached ?
@@ -592,8 +608,8 @@ int bt_guard::actionSearch() {
 
 			search_player_point = noisePoint + 1.0f * dir;
 			Debug->DrawLine(myPos, search_player_point);
-			isPathObtainedAccessible = false;
-			isPathObtained = false;
+			/*isPathObtainedAccessible = false;
+			isPathObtained = false;*/
 			return OK;
 		}
 		else {
@@ -603,8 +619,8 @@ int bt_guard::actionSearch() {
 	// If player was lost, we simply move and look around
 	else {
 		looking_around_time = LOOK_AROUND_TIME;
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 		return OK;
 	}
 }
@@ -616,8 +632,8 @@ int bt_guard::actionMoveAround() {
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 		return KO;
 	}
 
@@ -627,30 +643,30 @@ int bt_guard::actionMoveAround() {
 
 	// if the player is too far, we just look around
 	if (distance_to_point > MAX_SEARCH_DISTANCE) {
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 		return OK;
 	}
 
 	if (distance_to_point > DIST_REACH_PNT) {
-		if (!isPathObtained) {
-			isPathObtainedAccessible = getPath(myPos, search_player_point);
-			isPathObtained = true;
-		}
+		/*if (!isPathObtained) {
+			isPathObtainedAccessible = */getPath(myPos, search_player_point);
+			/*isPathObtained = true;
+		}*/
 
-		if (!isPathObtainedAccessible) {
+		/*if (!isPathObtainedAccessible) {
 			isPathObtainedAccessible = false;
 			isPathObtained = false;
 			return OK;
 		}
-		else {
+		else {*/
 			SET_ANIM_GUARD(AST_MOVE);
 			goTo(search_player_point);
 			return STAY;
-		}
+		//}
 	}
-	isPathObtainedAccessible = false;
-	isPathObtained = false;
+	/*isPathObtainedAccessible = false;
+	isPathObtained = false;*/
 	return OK;
 }
 
@@ -660,8 +676,8 @@ int bt_guard::actionLookAround() {
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 		return KO;
 	}
 	// Turn arround
@@ -693,8 +709,8 @@ int bt_guard::actionSeekWpt() {
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 		return KO;
 	}
 	//Go to waypoint
@@ -702,25 +718,25 @@ int bt_guard::actionSeekWpt() {
 		//reach waypoint?
 		if (simpleDistXZ(myPos, dest) < DIST_REACH_PNT) {
 			curkpt = (curkpt + 1) % keyPoints.size();
-			isPathObtainedAccessible = false;
-			isPathObtained = false;
+			/*isPathObtainedAccessible = false;
+			isPathObtained = false;*/
 			return OK;
 		}
 		else {
-			if (!isPathObtained) {
-				isPathObtainedAccessible = getPath(myPos, dest);
-				isPathObtained = true;
-			}
-			if (!isPathObtainedAccessible) {
+			/*if (!isPathObtained) {
+				isPathObtainedAccessible = */getPath(myPos, dest);
+				/*isPathObtained = true;
+			}*/
+			/*if (!isPathObtainedAccessible) {
 				isPathObtainedAccessible = false;
 				isPathObtained = false;
 				return OK;
 			}
-			else {
+			else {*/
 				SET_ANIM_GUARD(AST_MOVE);
 				goTo(dest);
 				return STAY;
-			}
+			//}
 		}
 	}
 	//Look to waypoint
@@ -728,16 +744,16 @@ int bt_guard::actionSeekWpt() {
 		//Look to waypoint
 		if (turnTo(dest)) {
 			curkpt = (curkpt + 1) % keyPoints.size();
-			isPathObtainedAccessible = false;
-			isPathObtained = false;
+			/*isPathObtainedAccessible = false;
+			isPathObtained = false;*/
 			return OK;
 		}
 		else {
 			return STAY;
 		}
 	}
-	isPathObtainedAccessible = false;
-	isPathObtained = false;
+	/*isPathObtainedAccessible = false;
+	isPathObtained = false;*/
 	return OK;
 }
 
@@ -751,8 +767,8 @@ int bt_guard::actionNextWpt() {
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 		return KO;
 	}
 	//If we are already there, we continue
@@ -775,8 +791,8 @@ int bt_guard::actionWaitWpt() {
 	//player visible?
 	if (playerVisible() || boxMovingDetected()) {
 		setCurrent(NULL);
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 		return KO;
 	}
 	else if (timeWaiting > keyPoints[curkpt].time) {
@@ -800,16 +816,16 @@ int bt_guard::actionGoToFormation() {
 
 	// if we didn't reach the point
 	if (distance_to_point > DIST_REACH_PNT) {
-		if (!isPathObtained) {
-			isPathObtainedAccessible = getPath(myPos, formation_point);
-			isPathObtained = true;
-		}
+		/*if (!isPathObtained) {
+			isPathObtainedAccessible = */getPath(myPos, formation_point);
+			/*isPathObtained = true;
+		}*/
 		SET_ANIM_GUARD(AST_MOVE);
 		goTo(formation_point);
 		return STAY;
 	}
-	isPathObtainedAccessible = false;
-	isPathObtained = false;
+	/*isPathObtainedAccessible = false;
+	isPathObtained = false;*/
 
 	return OK;
 }
@@ -857,8 +873,8 @@ void bt_guard::noise(const TMsgNoise& msg) {
 		noisePoint = msg.source;
 		noiseHeard = true;
 		setCurrent(NULL);
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 	}
 }
 
@@ -872,8 +888,8 @@ void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 		stunned = true;
 		SET_ANIM_GUARD(AST_STUNNED);
 		checkStopDamage();
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 
 		setCurrent(NULL);
 	}
@@ -894,8 +910,8 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 		stunned = true;
 		SET_ANIM_GUARD(AST_STUNNED);
 		checkStopDamage();
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 
 		setCurrent(NULL);
 	}
@@ -910,8 +926,8 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 		logic_manager->throwEvent(logic_manager->OnGuardOvercharged, "");
 		stunned = true;
 		____TIMER_RESET_(timerStunt);
-		isPathObtainedAccessible = false;
-		isPathObtained = false;
+		/*isPathObtainedAccessible = false;
+		isPathObtained = false;*/
 
 		setCurrent(NULL);
 		SET_ANIM_GUARD(AST_STUNNED);
@@ -945,8 +961,8 @@ void bt_guard::onBoxHit(const TMsgBoxHit& msg) {
 	logic_manager->throwEvent(logic_manager->OnGuardBoxHit, "");
 	stunned = true;
 	____TIMER_RESET_(timerStunt);
-	isPathObtainedAccessible = false;
-	isPathObtained = false;
+	/*isPathObtainedAccessible = false;
+	isPathObtained = false;*/
 	setCurrent(NULL);
 	SET_ANIM_GUARD(AST_STUNNED_BOX);
 
@@ -1496,8 +1512,8 @@ void bt_guard::artificialInterrupt()
 	t->getAngles(&yaw, &pitch);
 	t->setAngles(-yaw, pitch);
 	setCurrent(NULL);
-	isPathObtainedAccessible = false;
-	isPathObtained = false;
+	/*isPathObtainedAccessible = false;
+	isPathObtained = false;*/
 }
 
 // function that will be used from LUA
@@ -1511,10 +1527,10 @@ void bt_guard::goToPoint(VEC3 dest) {
 	// if we didn't reach the point
 	// Will it really work? It will work like teleport....
 	while (simpleDistXZ(getTransform()->getPosition(), dest) > DIST_REACH_PNT) {
-		if (!isPathObtained) {
-			isPathObtained = true;
+		/*if (!isPathObtained) {
+			isPathObtained = true;*/
 			getPath(getTransform()->getPosition(), dest);
-		}
+		//}
 		goTo(dest);
 	}
 
