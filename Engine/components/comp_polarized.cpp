@@ -28,6 +28,7 @@ bool TCompPolarized::getUpdateInfo() {
 	GET_COMP(t, CHandle(this).getOwner(), TCompTransform);
 	if (!t) return false;
 	origin = t->getPosition() + force.offset;
+	Debug->DrawLine(t->getPosition(), t->getPosition() + force.offset);
 }
 
 void TCompPolarized::update(float elapsed)
@@ -53,7 +54,7 @@ void TCompPolarized::update(float elapsed)
 		if (mType == FIXED) {
 			force.deltaPos = origin - player_pos;
 			force.distance = simpleDist(origin, player_pos);
-
+			Debug->DrawLine(origin, player_pos);
 			if (dist_effect_fixed > force.distance) {
 				if (!send) {
 					send = true;
@@ -83,7 +84,7 @@ void TCompPolarized::update(float elapsed)
 								last_position = origin;
 							}
 							else {
-								moving = false; //stopMovement() ?
+								moving = false;
 							}
 						}
 					}
@@ -153,6 +154,8 @@ bool TCompPolarized::load(MKeyValue & atts)
 void TCompPolarized::onCreate(const TMsgEntityCreated &)
 {
 	CHandle me_h = CHandle(this).getOwner();
+	CEntity* e = me_h;
+	dbg("on create polarized [%s]\n", e->getName());
 
 	origin = VEC3(0.0f, 0.0f, 0.0f);
 	if (me_h.isValid()) {
@@ -162,7 +165,7 @@ void TCompPolarized::onCreate(const TMsgEntityCreated &)
 			TCompPhysics * p = me_e->get<TCompPhysics>();
 			if (p) {
 				if (p->GetMass() > mThresholdMass) mType = FIXED;
-				if (p->isKinematic()) mType = FIXED;
+				else if (p->isKinematic()) mType = FIXED;
 				else mType = FREE;
 			}
 			else {
