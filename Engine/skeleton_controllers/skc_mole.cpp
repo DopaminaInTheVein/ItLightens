@@ -145,12 +145,7 @@ void SkelControllerMole::myUpdate()
 			currentState = AST_IDLE;
 		}
 		else {
-			//Test borrar!
-			//------------
-			if (currentState == AST_IDLE) setLoop(AST_GRAB_IDLE);
-			else
-				//---------------------------------------------------
-				setLoop(currentState);
+			setLoop(currentState);
 		}
 	}
 
