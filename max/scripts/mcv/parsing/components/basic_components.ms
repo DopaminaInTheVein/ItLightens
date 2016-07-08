@@ -198,9 +198,6 @@ fn _parse_render = (
 -- POLARIZED --
 ----------------------------------------------------------------------
 fn _parse_polarized = (
-	
-
-	
 	local polarized = findHelper "Polarized"
 	if (polarized != undefined) then (
 		local xmlPol = XML_PARSING.addChild "polarized"

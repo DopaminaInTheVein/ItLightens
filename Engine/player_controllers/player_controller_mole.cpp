@@ -87,7 +87,8 @@ void player_controller_mole::Init() {
 		addPossStates();
 		AddStMole(ST_MOLE_GRAB_GO, GoToGrab);
 		AddStMole(ST_MOLE_PILA_GO, GoToPila);
-		AddStMole(ST_MOLE_PILA_FACE, FaceToGrab);
+		AddStMole(ST_MOLE_GRAB_FACE, FaceToGrab);
+		AddStMole(ST_MOLE_PILA_FACE, FaceToPila);
 		AddStMole(ST_MOLE_GRABBING_1, GrabbingBox1);
 		AddStMole(ST_MOLE_PILING_1, GrabbingPila1);
 		AddStMole(ST_MOLE_GRABBING_2, GrabbingBox2);
@@ -470,17 +471,17 @@ bool player_controller_mole::goAndTurnTo(VEC3 target)
 
 void player_controller_mole::FaceToGrab()
 {
-	bool faced = turnTo(GETH_COMP(pilaNear, TCompTransform));
+	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
 	if (faced) {
-		animController->grabPila(pilaNear);
-		animController->setState(AST_GRAB_PILA1);
-		ChangeState(ST_MOLE_PILING_1);
+		animController->grabObject(boxNear);
+		animController->setState(AST_GRAB_DOWN);
+		ChangeState(ST_MOLE_GRABBING_1);
 	}
 }
 
 void player_controller_mole::FaceToPila()
 {
-	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
+	bool faced = turnTo(GETH_COMP(pilaNear, TCompTransform));
 	if (faced) {
 		animController->grabPila(pilaNear);
 		animController->setState(AST_GRAB_PILA1);
@@ -521,7 +522,7 @@ void player_controller_mole::GrabbingBox2()
 	if (t_grab2 < 0) {
 		t_grab2 = SK_MOLE_TIME_TO_GRAB;
 		ChangeState(ST_MOLE_GRAB);
-		animController->setState(AST_PILA_IDLE);
+		animController->setState(AST_GRAB_IDLE);
 		GET_COMP(box_p, boxNear, TCompPhysics);
 		box_p->setKinematic(true);
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, true);
