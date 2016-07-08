@@ -5,9 +5,6 @@
 #include "player_controllers/player_controller.h"
 #include "components/entity.h"
 
-//IK Solvers
-IK_DECL_SOLVER(heilTest);
-
 bool SkelControllerPlayer::getUpdateInfo()
 {
 	owner = CHandle(this).getOwner();
@@ -74,17 +71,4 @@ void SkelControllerPlayer::myUpdate()
 
 void SkelControllerPlayer::myUpdateIK()
 {
-	if (currentState != prevState) {
-		if (currentState == "jump") {
-			enableIK(SK_RHAND, &heilTest, 0.5f);
-		}
-
-		if (prevState == "jump") {
-			disableIK(SK_RHAND);
-		}
-	}
-}
-
-IK_IMPL_SOLVER(heilTest, info, result) {
-	result.new_pos = info.bone_pos + VEC3(0.f, 0.3f, 0.f);
 }
