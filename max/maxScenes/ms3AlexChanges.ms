@@ -2,7 +2,7 @@ function addAlexLogicCamaras = (
 	-- CAMARAS DETECTORAS
 	local auxobj =  $camera_1
 	setUserProp auxobj "typeObject" "detection_cam"
-	setUserProp auxobj "staticMesh" "ms3/logic/camera"
+	-- no! caca! setUserProp auxobj "staticMesh" "ms3/logic/camera"
 	setUserProp auxobj "range" 4
 	setUserProp auxobj "width" 2
 	setUserProp auxobj "rot_speed_sonar" 0.9
@@ -14,7 +14,7 @@ function addAlexLogicCamaras = (
 		
 	auxobj =  $camera_2
 	setUserProp auxobj "typeObject" "detection_cam"
-	setUserProp auxobj "staticMesh" "ms3/logic/camera"
+	-- no! caca! setUserProp auxobj "staticMesh" "ms3/logic/camera"
 	setUserProp auxobj "range" 4
 	setUserProp auxobj "width" 2
 	setUserProp auxobj "rot_speed_sonar" 0.5
@@ -26,7 +26,7 @@ function addAlexLogicCamaras = (
 
 	auxobj =  $camera_3
 	setUserProp auxobj "typeObject" "detection_cam"
-	setUserProp auxobj "staticMesh" "ms3/logic/camera"
+	-- no! caca! setUserProp auxobj "staticMesh" "ms3/logic/camera"
 	setUserProp auxobj "range" 4
 	setUserProp auxobj "width" 2
 	setUserProp auxobj "rot_speed_sonar" 0.5
@@ -117,7 +117,7 @@ fn createRoomLimiterForPossession = (
 	) 
 )
 
---addAlexLogicCamaras()
+addAlexLogicCamaras()
 --assign_room_to_all_from_x "sala1" "sala2"
 --createRoomSwitcherTrigger "sala1" "sala2"
 --createRoomLimiterForPossession()

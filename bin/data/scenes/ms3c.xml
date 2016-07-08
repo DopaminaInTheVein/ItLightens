@@ -2289,7 +2289,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="-36.4498 -21.7898 1.40215"
+   pos="10.459 -11.4715 -21.7585"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -2347,56 +2347,11 @@
 <name
    name="__camara"/>
 <transform
-   pos="-68.4072 18.7886 10.0999"
+   pos="-84.9792 10.8774 -2.89537"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/logic/camara.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camara_centro"/>
-<transform
-   pos="-104.56 5.17204 -10.0285"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_centro.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camara_izquierdaq"/>
-<transform
-   pos="-99.6426 6.09816 -3.77469"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_izquierdaq.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camara_derecha"/>
-<transform
-   pos="-100.319 6.05234 -17.3462"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_derecha.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3298,23 +3253,23 @@
 <bt_guard
    kpt_size="3"
    kpt0_type="seek"
-   kpt0_pos="-11.8584 -23.8712 -21.422"
+   kpt0_pos="-14.2303 -23.8712 -7.35578"
    kpt0_wait="2"
    kpt1_type="seek"
-   kpt1_pos="-12.0553 -23.8712 -16.2828"
+   kpt1_pos="-33.6709 -23.8712 4.3483"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="-25.2935 -23.8712 -19.6937"
+   kpt2_pos="-18.8372 -23.8712 16.6996"
    kpt2_wait="2"
-   jurisdiction="-25.4008 -23.9 -20.1941"
+   jurisdiction="-33.7782 -23.9 3.84785"
    jurRadius="5.0"
-   formation_point="-28.0805 -24.0251 -22.0796"
-   formation_dir="-27.4386 -23.9678 -21.9073"/>
+   formation_point="-36.4579 -24.0251 1.96243"
+   formation_dir="-35.8161 -23.9678 2.13469"/>
 <skc_guard/>
 <name
    name="guard_1"/>
 <transform
-   pos="-25.4008 -23.9 -20.1941"
+   pos="-33.7782 -23.9 3.84785"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -3946,6 +3901,93 @@
 <character_controller
    radius="0.3"
    height="2.01"/>
+
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   color="1 0 0 1"
+   znear="1.1"
+   zfar="10"
+   fov="45"
+    resolution="512"/>
+<tags
+   tags="ai_cam"/>
+<room
+   name="none"/>
+<ai_cam
+   range="4"
+   width="2"
+   rot_speed_sonar="0.9"
+   rotating_left="false"
+   max_rotation="162"/>
+<render_static_mesh
+   name="static_meshes/logic/camera.static_mesh"/>
+<abs_aabb/>
+<name
+   name="camera_1"/>
+<transform
+   pos="-99.6426 6.09816 -3.77469"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   color="1 0 0 1"
+   znear="1.1"
+   zfar="10"
+   fov="45"
+    resolution="512"/>
+<tags
+   tags="ai_cam"/>
+<room
+   name="none"/>
+<ai_cam
+   range="4"
+   width="2"
+   rot_speed_sonar="0.5"
+   rotating_left="false"
+   max_rotation="90"/>
+<render_static_mesh
+   name="static_meshes/logic/camera.static_mesh"/>
+<abs_aabb/>
+<name
+   name="camera_2"/>
+<transform
+   pos="-104.56 5.17204 -10.0285"
+   quat="-0.0816354 -0.669062 -0.0894699 0.733271"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   color="1 0 0 1"
+   znear="1.1"
+   zfar="10"
+   fov="45"
+    resolution="512"/>
+<tags
+   tags="ai_cam"/>
+<room
+   name="none"/>
+<ai_cam
+   range="4"
+   width="2"
+   rot_speed_sonar="0.5"
+   rotating_left="true"
+   max_rotation="90"/>
+<render_static_mesh
+   name="static_meshes/logic/camera.static_mesh"/>
+<abs_aabb/>
+<name
+   name="camera_3"/>
+<transform
+   pos="-100.319 6.05234 -17.3462"
+   quat="0 0.993958 0.0801436 -0.0747553"
+   scale="1.0"/>
 
 </entity>
 
