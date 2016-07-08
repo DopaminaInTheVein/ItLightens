@@ -38,3 +38,7 @@ function OnActionSci___tEnchufe( )
 activateEnchufeSci()
 end
 
+function OnAction_tWireDown( )
+wireGoUp()
+end
+
