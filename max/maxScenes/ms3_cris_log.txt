@@ -7,3 +7,7 @@ Modif
 New
 - tCargador 
 - tEnchufe
+- box_para_andamio
+	+ Collider
+	
+

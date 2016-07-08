@@ -2336,7 +2336,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="-93.2206 0 -11.7533"
+   pos="2.82465 -23.2744 -13.5302"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -3399,6 +3399,30 @@
 <character_controller
    radius="0.147"
    height="1.71312"/>
+
+</entity>
+<entity>
+<tags
+   tags="box platform removable"/>
+<box
+   size="3.0 1.5 3.0"/>
+<bone_tracker/>
+<name
+   name="box_para_andamio"/>
+<transform
+   pos="-4.71652 -23.0781 -15.1908"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="minus"/>
 
 </entity>
 
