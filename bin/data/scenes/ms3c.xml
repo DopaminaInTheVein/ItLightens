@@ -3915,12 +3915,12 @@
    tags="ai_cam"/>
 <room
    name="none"/>
-<ai_cam
+<!--<ai_cam
    range="4"
    width="2"
    rot_speed_sonar="0.9"
    rotating_left="false"
-   max_rotation="162"/>
+   max_rotation="162"/>-->
 <render_static_mesh
    name="static_meshes/logic/camera.static_mesh"/>
 <abs_aabb/>
