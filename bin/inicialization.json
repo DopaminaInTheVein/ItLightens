@@ -46,7 +46,8 @@
 		"RANDOM_POINT_MAX_DISTANCE" : 2.0,
 		"reduce_factor" : 3.0,
 		"t_reduceStats_max" : 15,
-		"t_reduceStats" : 0.0
+		"t_reduceStats" : 0.0,
+		"MAX_STUCK_TIME" : 5.0
 	},	
 	"bt_mole" : {
 		"speed" : 2.0,

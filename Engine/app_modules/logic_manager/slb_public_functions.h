@@ -124,6 +124,8 @@ public:
 	void playAmbient(const char* ambient_route);
 	void playerTalks(const char* text, const char* iconName, const char* iconText);
 	void playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor);
+	void characterGlobe(const char* text, float distance, float char_x, float char_y, float char_z);
+	void characterGlobeWithColor(const char* text, float distance, float char_x, float char_y, float char_z, const char* background, const char* textColor);
 	void toggleIntroState();
 
 	void test(const char* to_print);

@@ -1829,6 +1829,35 @@
    type_collision="static"/>
 
 </entity>
+<entity
+   id="303">
+<tags
+   tags="pila_container"/>
+<pila_container/>
+<name
+   name="cargador_bateria"/>
+<transform
+   pos="-90.8368 -0.419937 14.4301"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="target"/>
+<name
+   name="cargador_bateria_pAction"/>
+<transform
+   pos="-91.6796 -0.419937 14.2709"
+   quat="0 0.959077 0 0.283145"
+   scale="1.0"/>
+
+</entity>
 <entity>
 <tags/>
 <name
@@ -1979,6 +2008,24 @@
    type_collision="static"/>
 
 </entity>
+<entity
+   id="304">
+<tags
+   tags="pila_container"/>
+<pila_container/>
+<name
+   name="enchufe"/>
+<transform
+   pos="-121.537 -0.242203 -5.41684"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/enchufe.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
 <entity>
 <tags/>
 <name
@@ -2059,7 +2106,7 @@
 <name
    name="suelo_003"/>
 <transform
-   pos="-97.2611 -0.600098 -16.654"
+   pos="-97.2604 -0.600098 -16.655"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2289,7 +2336,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="10.459 -11.4715 -21.7585"
+   pos="2.82465 -23.2744 -13.5302"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -2347,7 +2394,7 @@
 <name
    name="__camara"/>
 <transform
-   pos="-84.9792 10.8774 -2.89537"
+   pos="-68.4072 18.7886 10.0999"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -3230,7 +3277,7 @@
 <name
    name="__mole_1"/>
 <transform
-   pos="-122.124 -1.23584 -10.3693"
+   pos="-94.5505 -1.23584 -10.3693"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -3554,263 +3601,6 @@
    name="static_meshes/obj/drone.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-<polarized
-   pol="minus"
-   offset="-0.0106277 0.965812 0.101485"/>
-
-</entity>
-<entity>
-<tags
-   tags="drone platform"/>
-<drone
-   wpts_size="2"
-   wpt0_pos="3.42032 -11.8015 -2.78732"
-   wpt0_wait="2"
-   wpt1_pos="16.6116 -11.8015 -2.78732"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"/>
-<name
-   name="DronePlus_1"/>
-<transform
-   pos="10.4543 -11.2448 -2.66798"
-   quat="0 -0.707107 0 0.707107"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-<polarized
-   pol="plus"
-   offset="0 0.966293 -0.0321448"/>
-
-</entity>
-<entity>
-<tags
-   tags="drone platform"/>
-<drone
-   wpts_size="2"
-   wpt0_pos="16.6998 -11.8015 5.15044"
-   wpt0_wait="2"
-   wpt1_pos="3.59094 -11.8015 5.15044"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"/>
-<name
-   name="DroneMinus_002"/>
-<transform
-   pos="10.59 -11.2973 4.95717"
-   quat="0 0.708986 0 0.705223"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-<polarized
-   pol="minus"
-   offset="-0.0106277 0.965812 -0.0448165"/>
-
-</entity>
-<entity>
-<tags
-   tags="drone platform"/>
-<drone
-   wpts_size="2"
-   wpt0_pos="3.42032 -11.8015 14.0664"
-   wpt0_wait="2"
-   wpt1_pos="16.6116 -11.8015 14.0664"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"/>
-<name
-   name="DronePlus_002"/>
-<transform
-   pos="10.4543 -11.2448 13.9719"
-   quat="0 -0.707107 0 0.707107"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-<polarized
-   pol="plus"
-   offset="-0.0168667 0.966293 -0.293303"/>
-
-</entity>
-<entity>
-<tags
-   tags="box platform removable"/>
-<box
-   size="3.0 1.5 3.0"/>
-<bone_tracker/>
-<name
-   name="Box_1"/>
-<transform
-   pos="15.2648 -10.9233 22.0796"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<polarized
-   pol="plus"
-   offset="-0.0670452 0.874261 -0.143208"/>
-
-</entity>
-<entity>
-<tags
-   tags="drone platform"/>
-<drone
-   wpts_size="2"
-   wpt0_pos="-3.17764 -3.08729 21.393"
-   wpt0_wait="2"
-   wpt1_pos="10.0325 -5.1532 21.3712"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"/>
-<name
-   name="DroneMinus_003"/>
-<transform
-   pos="3.79343 -3.53051 21.0883"
-   quat="0 0.999985 0 0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-<polarized
-   pol="plus"
-   offset="-0.0738666 0.934383 0.100378"/>
-
-</entity>
-<entity>
-<tags
-   tags="drone platform"/>
-<drone
-   wpts_size="2"
-   wpt0_pos="-30.8294 4.31167 22.1604"
-   wpt0_wait="2"
-   wpt1_pos="-18.9379 1.30144 21.7727"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"/>
-<name
-   name="DroneMinus_004"/>
-<transform
-   pos="-24.9983 3.5994 22.0196"
-   quat="0 0.99998 0 0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-<polarized
-   pol="minus"
-   offset="-0.0447369 0.965812 0.0109615"/>
-
-</entity>
-<entity>
-<tags
-   tags="drone platform"/>
-<drone
-   wpts_size="2"
-   wpt0_pos="-34.4096 4.27551 22.2125"
-   wpt0_wait="2"
-   wpt1_pos="-34.4886 2.20959 8.4864"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"/>
-<name
-   name="DroneMinus_005"/>
-<transform
-   pos="-34.7445 3.83228 15.2428"
-   quat="0 -0.701693 0 0.712479"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-<polarized
-   pol="plus"
-   offset="0.100697 0.934383 0.073431"/>
-
-</entity>
-<entity
-   id="303">
-<tags
-   tags="pila_container"/>
-<pila_container/>
-<name
-   name="cargador_bateria"/>
-<transform
-   pos="-90.8368 -0.419937 14.4301"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags="target"/>
-<name
-   name="cargador_bateria_pAction"/>
-<transform
-   pos="-91.6796 -0.419937 14.2709"
-   quat="0 0.959077 0 0.283145"
-   scale="1.0"/>
-
-</entity>
-<entity
-   id="304">
-<tags
-   tags="pila_container"/>
-<pila_container/>
-<name
-   name="enchufe"/>
-<transform
-   pos="-121.537 -0.242203 -5.41684"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/enchufe.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<rigidbody
    type_collision="trigger"
    type_shape="box"
    size="2.17851 1.1715 2.40955"/>
@@ -3825,6 +3615,51 @@
    pos="-90.8076 -0.719524 14.492"
    quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camera_1"/>
+<transform
+   pos="-104.56 5.17204 -10.0285"
+   quat="-0.0645929 -0.66558 -0.0617206 0.74096"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/camera.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camera_2"/>
+<transform
+   pos="-100.319 6.05234 -17.3462"
+   quat="0 0.991365 0.10232 -0.0815773"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/camera.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camera_3"/>
+<transform
+   pos="-99.6426 6.09816 -3.77469"
+   quat="-0.10835 0 0 0.994113"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/camera.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 <entity>
@@ -3844,6 +3679,32 @@
    pos="-121.536 -0.719525 -6.02005"
    quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_cientifico AI_poss"/>
+<bt_scientist/>
+<player_cientifico/>
+<life
+   points="100"/>
+<skc_scientist/>
+<name
+   name="scientist_1"/>
+<transform
+   pos="-86.3171 0 1.35698"
+   quat="0 0 0 1.0"
+   scale="0.00929856"/>
+<skeleton
+   model="skeletons/scientist/scientist.skeleton"/>
+<render_static_mesh
+   name="skeletons/scientist/scientist.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.147"
+   height="1.71312"/>
 
 </entity>
 <entity>
@@ -3874,13 +3735,11 @@
 <tags
    tags="AI AI_mole AI_poss"/>
 <bt_mole
-   wpts_size="3"
-   wpt0_pos="13.5691 -23.5343 2.18772"
+   wpts_size="2"
+   wpt0_pos="15.656 -23.5343 -16.6259"
    wpt0_wait="2"
-   wpt1_pos="6.66092 -23.5343 1.0016"
-   wpt1_wait="2"
-   wpt2_pos="13.5691 -23.5343 -5.08493"
-   wpt2_wait="2"/>
+   wpt1_pos="6.66092 -23.5343 -14.1191"
+   wpt1_wait="2"/>
 <player_mole/>
 <life
    points="100"/>
@@ -3888,7 +3747,7 @@
 <name
    name="mole_1"/>
 <transform
-   pos="10.3939 -23.5343 -3.54001"
+   pos="10.3939 -23.5343 -14.6646"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -3901,93 +3760,6 @@
 <character_controller
    radius="0.3"
    height="2.01"/>
-
-</entity>
-<entity>
-<tags/>
-<light_dir_shadows
-   color="1 0 0 1"
-   znear="1.1"
-   zfar="10"
-   fov="45"
-    resolution="512"/>
-<tags
-   tags="ai_cam"/>
-<room
-   name="none"/>
-<!--<ai_cam
-   range="4"
-   width="2"
-   rot_speed_sonar="0.9"
-   rotating_left="false"
-   max_rotation="162"/>-->
-<render_static_mesh
-   name="static_meshes/logic/camera.static_mesh"/>
-<abs_aabb/>
-<name
-   name="camera_1"/>
-<transform
-   pos="-99.6426 6.09816 -3.77469"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_dir_shadows
-   color="1 0 0 1"
-   znear="1.1"
-   zfar="10"
-   fov="45"
-    resolution="512"/>
-<tags
-   tags="ai_cam"/>
-<room
-   name="none"/>
-<ai_cam
-   range="4"
-   width="2"
-   rot_speed_sonar="0.5"
-   rotating_left="false"
-   max_rotation="90"/>
-<render_static_mesh
-   name="static_meshes/logic/camera.static_mesh"/>
-<abs_aabb/>
-<name
-   name="camera_2"/>
-<transform
-   pos="-104.56 5.17204 -10.0285"
-   quat="-0.0816354 -0.669062 -0.0894699 0.733271"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_dir_shadows
-   color="1 0 0 1"
-   znear="1.1"
-   zfar="10"
-   fov="45"
-    resolution="512"/>
-<tags
-   tags="ai_cam"/>
-<room
-   name="none"/>
-<ai_cam
-   range="4"
-   width="2"
-   rot_speed_sonar="0.5"
-   rotating_left="true"
-   max_rotation="90"/>
-<render_static_mesh
-   name="static_meshes/logic/camera.static_mesh"/>
-<abs_aabb/>
-<name
-   name="camera_3"/>
-<transform
-   pos="-100.319 6.05234 -17.3462"
-   quat="0 0.993958 0.0801436 -0.0747553"
-   scale="1.0"/>
 
 </entity>
 
