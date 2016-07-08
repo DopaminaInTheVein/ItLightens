@@ -57,7 +57,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-	p:play_music("event:/OnGameStart")
+	--p:play_music("event:/OnGameStart")
 	--triggerGuardFormation();
 	--p:exec_command( "triggerGuardFormation();", 15 )
 	cam:run_cinematic("CinematicIntro", 10)
@@ -288,12 +288,25 @@ function OnElevatorGoingUp( param )
 	CallFunction("OnElevatorGoingUp_"..param)
 end
 
-function OnElevatorGoingDown( param)
+function OnElevatorGoingDown( param )
 	p:print( "OnElevatorGoingDown\n")
 	CallFunction("OnElevatorGoingDown_"..param)
 end
---------------------------------
 
+--Pila
+--------------------------------
+function OnPutPila( param )
+	p:print( "OnPutPila\n")
+	CallFunction("OnPutPila_"..param)
+end
+
+function OnRemovePila( param )
+	p:print( "OnRemovePila\n")
+	CallFunction("OnRemovePila_"..param)
+end
+
+--Cinematics
+---------------------------------------------------
 function OnCinematicSkipped( param )
 	p:print( "OnCinematicSkipped\n")
 	CallFunction("OnCinematicSkipped_"..param)

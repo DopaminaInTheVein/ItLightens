@@ -1829,8 +1829,11 @@
    type_collision="static"/>
 
 </entity>
-<entity>
-<tags/>
+<entity
+   id="303">
+<tags
+   tags="pila_container"/>
+<pila_container/>
 <name
    name="cargador_bateria"/>
 <transform
@@ -2310,21 +2313,6 @@
 
 </entity>
 <entity>
-<tags/>
-<name
-   name="__pila"/>
-<transform
-   pos="-121.537 -0.242203 -5.41684"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pila.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
 <tags
    tags="player raijin"/>
 <player/>
@@ -2334,7 +2322,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="-45.2467 0 -0.935596"
+   pos="-93.2206 0 -11.7533"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -3285,6 +3273,73 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="platform pila"/>
+<pila/>
+<bone_tracker/>
+<name
+   name="__pila"/>
+<transform
+   pos="-121.537 -0.242203 -5.41684"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pila.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"
+   kinematic="yes"/>
+<local_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_mole AI_poss"/>
+<bt_mole/>
+<player_mole/>
+<life
+   points="100"/>
+<skc_mole/>
+<name
+   name="__mole_1"/>
+<transform
+   pos="-94.5505 -1.23584 -10.3693"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/mole/mole.skeleton"/>
+<render_static_mesh
+   name="skeletons/mole/mole.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="2.1"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="2.17851 1.1715 2.40955"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionSci="activate"/>
+<name
+   name="__tCargador"/>
+<transform
+   pos="-90.8076 -0.719524 14.492"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
 </entity>
 

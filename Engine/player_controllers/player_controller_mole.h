@@ -54,6 +54,9 @@ protected:
 	};
 	GrabInfo grabInfo;
 
+	//Auxi
+	bool goAndTurnTo(VEC3 target);
+
 public:
 
 	map<string, statehandler>* getStatemap() override {
@@ -66,31 +69,41 @@ public:
 	void myUpdate();
 	void ChangeCommonState(std::string) override;
 	void GoToGrab();
+	void GoToPila();
 	void FaceToGrab();
 	void FaceToPila();
 	void GrabbingBox1();
-	void GrabbingPila1(); //-----
+	void GrabbingPila1();
 	void GrabbingBox2();
-	void GrabbingPila2(); //-----
+	void GrabbingPila2();
 	void GrabbingImpact();
 	void GrabbingImpact1();
 	void GrabbingImpact2();
 	void GrabbedBox();
-	void GrabbedPila(); //-----
+	void GrabbedPila();
 	void LeaveBox();
-	void LeavePila(); //-----
+	void LeavePila();
 	void LeavingBox();
-	void LeavingPila(); //-----
+	void LeavingPila();
+	void PuttingPila();
 	void DestroyWall();
 
 	void InitControlState();
 	bool nearToBox();
 	bool nearToPila();
+	bool nearToPilaContainer();
 	bool nearToWall();
+
+	void GoToPilaContainer();
+	void FaceToPilaContainer();
+
 	CHandle boxGrabbed; // = false;
 	CHandle boxNear; // = false;
 	CHandle pilaGrabbed; // = false;
 	CHandle pilaNear; // = false;
+	CHandle pilaContainer;
+	VEC3 pilaContainerPos;
+
 	string selectedBox = "";
 	//int selectedBoxi = 0;
 	int selectedWallToBreaki = 0;
@@ -129,7 +142,9 @@ public:
 		return SBB::readHandlesVector("wptsBreakableWall")[i];
 	}
 
-	void onGetWhoAmI(TMsgGetWhoAmI& msg) { msg.who = PLAYER_TYPE::MOLE; }
+	void onGetWhoAmI(TMsgGetWhoAmI& msg) {
+		msg.who = PLAYER_TYPE::MOLE;
+	}
 
 	//Cambio Malla
 	//void ChangePose(string new_pose_route);
@@ -138,6 +153,8 @@ public:
 
 	//Messages
 	void onGrabHit(const TMsgGrabHit&);
+
+	bool hasPila() { return pilaGrabbed.isValid(); }
 
 	//Overload function for handler_manager
 	player_controller_mole& player_controller_mole::operator=(player_controller_mole arg) { return arg; }

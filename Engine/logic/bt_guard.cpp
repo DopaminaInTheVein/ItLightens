@@ -156,7 +156,7 @@ void bt_guard::Init()
 //conditions
 bool bt_guard::guardStuck() {
 	PROFILE_FUNCTION("guard: guard stuck");
-	return stuck;
+	return stuck && keyPoints.size() > 2;
 }
 
 bool bt_guard::playerStunned() {
@@ -317,9 +317,33 @@ bool bt_guard::checkFormation() {
 int bt_guard::actionUnstuck() {
 	PROFILE_FUNCTION("guard: actionunstuck");
 	if (!myParent.isValid()) return false;
+	// move to get unstuck
+	VEC3 unstuck_target;	
+	SET_ANIM_GUARD(AST_IDLE);
+	if (!reoriented) {
+		if (direction == 0) {
+			unstuck_target = getTransform()->getLeft() + getTransform()->getPosition();
+			direction = 1;
+		}
+		else {
+			unstuck_target = -getTransform()->getLeft() + getTransform()->getPosition();
+			direction = 0;
+		}
+		reoriented = true;
+	}
+	if (!turnTo(unstuck_target))
+		return STAY;
+	while (unstuck_time < 2.f) {
+		unstuck_time += getDeltaTime();
+		goForward(SPEED_WALK);
+	}
+	// reset the state
 	setCurrent(NULL);
 	stuck_time = 0.f;
+	unstuck_time = 0.f;
 	stuck = false;
+	reoriented = false;
+	return OK;
 }
 
 int bt_guard::actionStunned() {
@@ -1102,7 +1126,8 @@ bool bt_guard::turnTo(VEC3 dest) {
 	}
 
 	//Ha acabado el giro?
-	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
+	bool done = abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
+	return done;
 }
 
 bool bt_guard::turnToPlayer()

@@ -78,6 +78,7 @@ DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("drone", TCompDrone);
 DECL_OBJ_MANAGER("box", TCompBox);
 DECL_OBJ_MANAGER("pila", TCompPila);
+DECL_OBJ_MANAGER("pila_container", TCompPilaContainer);
 DECL_OBJ_MANAGER("workstation", TCompWorkstation);
 
 //Physics
@@ -165,6 +166,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompTags>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBox>()->init(MAX_ENTITIES);
 	getHandleManager<TCompPila>()->init(MAX_ENTITIES);
+	getHandleManager<TCompPilaContainer>()->init(MAX_ENTITIES);
 	getHandleManager<TCompWorkstation>()->init(MAX_ENTITIES);
 	getHandleManager<TCompGuidedCamera>()->init(16);
 	//helpers
@@ -221,9 +223,13 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompPlatform, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompDrone, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompDrone, TMsgActivate, onRecharge);
+	SUBSCRIBE(TCompPila, TMsgIsCharged, isCharged);
+	SUBSCRIBE(TCompPila, TMsgActivate, onRecharge);
+	SUBSCRIBE(TCompPilaContainer, TMsgSetCharged, onRecharge);
 	SUBSCRIBE(TCompDrone, TMsgRepair, onRepair);
 	SUBSCRIBE(TCompTags, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompPila, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompPilaContainer, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
@@ -256,6 +262,9 @@ bool CEntitiesModule::start() {
 
 	//Grab Objects Hit
 	SUBSCRIBE(player_controller_mole, TMsgGrabHit, onGrabHit);
+
+	//On contact
+	SUBSCRIBE(TCompPila, TMsgContact, onContact);
 
 	SUBSCRIBE(bt_scientist, TMsgWBTakenByPlayer, onTakenWB);
 	SUBSCRIBE(magnet_door, TMsgSetLocked, onSetLocked);
@@ -322,6 +331,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TTriggerLua, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TTriggerLua, TMsgTriggerOut, onTriggerExitCall);
 	SUBSCRIBE(TTriggerLua, TMsgSetActivable, onSetActionable);
+	SUBSCRIBE(TCompPila, TMsgSetActivable, onSetActionable);
 
 	//Animations
 	SUBSCRIBE(TCompSkeleton, TMsgSetAnim, onSetAnim);
@@ -549,6 +559,7 @@ void CEntitiesModule::initLevel(string level) {
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
+	getHandleManager<TCompPila>()->onAll(&TCompPila::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
 	//fx
@@ -653,6 +664,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompPlatform>()->updateAll(dt);
 		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
+		getHandleManager<TCompPila>()->updateAll(dt);
 		getHandleManager<TCompWorkstation>()->updateAll(dt);
 		getHandleManager<magnet_door>()->updateAll(dt);
 		getHandleManager<elevator>()->updateAll(dt);

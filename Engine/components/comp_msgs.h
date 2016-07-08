@@ -48,6 +48,11 @@ struct TMsgGrabHit {
 	DECLARE_MSG_ID();
 };
 
+// Notify object contact
+struct TMsgContact {
+	DECLARE_MSG_ID();
+};
+
 // Sent to all entities from a parsed file once all the entities
 // in that file has been created. Used to link entities between them
 struct TMsgEntityGroupCreated {
@@ -178,6 +183,11 @@ struct TMsgNoise {
 
 struct TMsgOverCharge {
 	std::string guard_name;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgCanDoActions {
+	bool enabled;
 	DECLARE_MSG_ID();
 };
 
@@ -320,6 +330,16 @@ struct TMsgGetPolarity {
 struct TMsgGoAndLook {
 	CHandle target;
 	std::string code_arrived;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgSetCharged {
+	bool charged;
+	DECLARE_MSG_ID();
+};
+
+struct TMsgIsCharged {
+	bool charged;
 	DECLARE_MSG_ID();
 };
 #endif

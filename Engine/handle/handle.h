@@ -86,6 +86,9 @@ public:
 	template< class TMsg >
 	void sendMsg(const TMsg& msg);
 
+	template< class TMsg >
+	void sendMsgWithReply(TMsg& msg);
+
 	uint32_t asUnsigned() const {
 		return *(unsigned*)this;
 	}
@@ -111,6 +114,13 @@ void CHandle::sendMsg(const TMsg& msg) {
 	CEntity* e = getHandleManager< std::remove_const<CEntity>::type >()->getAddrFromHandle(*this);
 	if (e)
 		e->sendMsg(msg);
+}
+
+template< class TMsg >
+void CHandle::sendMsgWithReply(TMsg& msg) {
+	CEntity* e = getHandleManager< std::remove_const<CEntity>::type >()->getAddrFromHandle(*this);
+	if (e)
+		e->sendMsgWithReply(msg);
 }
 
 #define GETH_COMP(handle, type) ((CEntity*)handle)->get<type>()

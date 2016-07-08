@@ -18,7 +18,140 @@ function OnLeave_tElevator( )
   --p:player_talks_color("I'm out of an elevator! \nI'm not so cool!!! \nI wanna die my hair black!","scientific.dds","SCI", "#FF2222FF","#22FF22FF")
 end
 
+-- Pila --
+--------------------------------------------------------------------------------------------
+pila = Handle()
+function OnAction___pila( )
+  pila:getHandleCaller()
+  
+  if pila:is_charged() then
+	p:player_talks("Where can I use this cell?", "scientific.dds", "SCI")
+  else
+    p:player_talks("This object contained energy in some past...", "scientific.dds", "SCI")
+  end
+  p:exec_command("pila:setActionable(1);", 4.5)
+end
 
+function OnActionSci___pila( )
+  p:player_talks("This cell is exhausted. And too heavy for me...", "scientific.dds", "SCI")
+end
+
+-- Cargador --
+---------------------------------------------------------------------------------------------
+idCargador = 303
+triggerCargador = Handle()
+hCargador = Handle()
+hCargadorTarget = Handle()
+function activateCargadorPlayer()
+  hCargador:get_handle_by_id(idCargador)
+
+  if hCargador:has_pila() then
+    if hCargador:has_pila_charged() then
+		p:player_talks("The cell is full of energy now", "scientific.dds", "SCI")
+	else
+		p:player_talks("The cell fits perfectly.\nI don't know how this machine works though...", "scientific.dds", "SCI")
+		
+	end
+  else
+	p:player_talks("I can feel a lot of energy inside this.", "scientific.dds", "SCI")
+  end
+  
+  triggerCargador:getHandleCaller()
+  p:exec_command("triggerCargador:setActionable(1);", 4.5)
+ 
+end
+
+function activateCargadorSci()
+  hCargador:get_handle_by_id(idCargador)
+  if hCargador:has_pila() then
+    if hCargador:has_pila_charged() then
+		p:player_talks("The cell is full thanks to my hard work", "scientific.dds", "SCI")
+	else
+		hCargadorTarget:get_handle_by_name_tag("cargador_bateria_pAction", "target")
+		p:player_talks("Here we go!", "scientific.dds", "SCI")
+	    sci = Handle()
+		sci:get_player()
+		sci:go_and_look_as(hCargadorTarget, "rechargeCell();")
+	end
+  else
+	p:player_talks("There is nothing to charge", "scientific.dds", "SCI")
+  end
+
+  triggerCargador:getHandleCaller()
+  p:exec_command("triggerCargador:setActionable(1);", 4.5)
+end
+
+function rechargeCell()
+  p:player_talks("*CLAC*", "scientific.dds", "SCI")
+  hCargador:set_charged(1)
+end
+
+-- Enchufe --
+--------------------------------------------------------------------------------------------
+idEnchufe = 304
+triggerEnchufe = Handle()
+hEnchufe = Handle()
+hEnchufeTarget = Handle()
+function activateEnchufePlayer()
+  triggerEnchufe:getHandleCaller()
+  hEnchufe:get_handle_by_id(idCargador)
+
+  if hEnchufe:has_pila() then
+    if hEnchufe:has_pila_charged() then
+		p:player_talks("I did it! The door is open now!", "scientific.dds", "SCI")
+	else
+		p:player_talks("The object on it has no energy...", "scientific.dds", "SCI")
+	end
+  else
+	p:player_talks("This needs energy to work.", "scientific.dds", "SCI")
+  end
+  
+  triggerCargador:getHandleCaller()
+  p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
+end
+
+function activateEnchufeSci()
+  triggerEnchufe:getHandleCaller()
+  hEnchufe:get_handle_by_id(idCargador)
+
+  if hEnchufe:has_pila() then
+    if hEnchufe:has_pila_charged() then
+		p:player_talks("I don't like to brag, but THIS is a good work", "scientific.dds", "SCI")
+	else
+		p:player_talks("The cell is empty, and too heavy for me...", "scientific.dds", "SCI")
+	end
+  else
+	p:player_talks("This needs a cell to work.", "scientific.dds", "SCI")
+  end
+  
+  triggerCargador:getHandleCaller()
+  p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
+end
+
+idDoor = 300
+function OnPutPila_enchufe()
+  pila:getHandleCaller()
+  if pila:is_charged() then
+	-- Evento abrir puerta
+	-- Faltaria cinematica, etc.
+	
+	--Abril
+	h:get_handle_by_id(idDoor)
+	h:setLocked(0)
+  end
+end
+
+function OnRemovePila_enchufe()
+  pila:getHandleCaller()
+  if pila:is_charged() then
+	-- Evento cerrar puerta
+	-- Faltaria cinematica, etc.
+	
+	--Cerral (:P)
+	h:get_handle_by_id(idDoor)
+	h:setLocked(1)
+  end
+end
 -- Elevator --
 -------------------------------------------------
 idElevator = 301
@@ -57,42 +190,42 @@ end
 
 -- Electric Lock --
 --------------------------------------
-idDoor = 300
-triggerLock = Handle()
-timesActivatedLock = 0
-function activateLock( )
-  p:print("Activate Lock\n")
+-- idDoor = 300
+-- triggerLock = Handle()
+-- timesActivatedLock = 0
+-- function activateLock( )
+  -- p:print("Activate Lock\n")
   
-  --Accionable a los 2 segundos
-  triggerLock:getHandleCaller()
-  p:exec_command( "triggerLock:setActionable(1);", 2 )
+  -- --Accionable a los 2 segundos
+  -- triggerLock:getHandleCaller()
+  -- p:exec_command( "triggerLock:setActionable(1);", 2 )
   
-  --Modificamos polaridad durante 10 segundos
-  h:get_handle_by_id(idDoor)
-  --h:setPolarity(-1)  
-  h:setLocked(0)  
-  p:exec_command( "deactivateLock();", 6 )
+  -- --Modificamos polaridad durante 10 segundos
+  -- h:get_handle_by_id(idDoor)
+  -- --h:setPolarity(-1)  
+  -- h:setLocked(0)  
+  -- p:exec_command( "deactivateLock();", 6 )
   
-  --Variable control para activaciones acumuladas
-  timesActivatedLock = timesActivatedLock + 1
-end
+  -- --Variable control para activaciones acumuladas
+  -- timesActivatedLock = timesActivatedLock + 1
+-- end
 
-function putBattery( )
-  p:print("Put Battery\n")
-end
+-- function putBattery( )
+  -- p:print("Put Battery\n")
+-- end
 
-function deactivateLock( )
-  p:print("Deactivate Lock\n")
-  timesActivatedLock = timesActivatedLock - 1
+-- function deactivateLock( )
+  -- p:print("Deactivate Lock\n")
+  -- timesActivatedLock = timesActivatedLock - 1
   
-  --Ha pasado el timer de la última activacion
-  if timesActivatedLock < 1 then
-	  --Puerta vuelve a neutral
-      h:get_handle_by_id(idDoor)
-      --h:setPolarity(0)
-	  h:setLocked(1)
-  end
-end
+  -- --Ha pasado el timer de la última activacion
+  -- if timesActivatedLock < 1 then
+	  -- --Puerta vuelve a neutral
+      -- h:get_handle_by_id(idDoor)
+      -- --h:setPolarity(0)
+	  -- h:setLocked(1)
+  -- end
+-- end
 --------------------------------------
 
 -- Wall --

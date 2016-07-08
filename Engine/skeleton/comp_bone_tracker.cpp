@@ -112,11 +112,6 @@ void TCompBoneTracker::update(float dt) {
 
 	tmx->setPosition(trans);
 	tmx->setRotation(rot);
-	if (true) {
-		float yaw, pitch;
-		tmx->getAngles(&yaw, &pitch);
-		tmx->setAngles(yaw, 0);
-	}
 
 	GET_COMP(physics, CHandle(this).getOwner(), TCompPhysics);
 	if (physics) {

@@ -1829,8 +1829,11 @@
    type_collision="static"/>
 
 </entity>
-<entity>
-<tags/>
+<entity
+   id="303">
+<tags
+   tags="pila_container"/>
+<pila_container/>
 <name
    name="cargador_bateria"/>
 <transform
@@ -1842,6 +1845,17 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="target"/>
+<name
+   name="cargador_bateria_pAction"/>
+<transform
+   pos="-91.6796 -0.419937 14.2709"
+   quat="0 0.959077 0 0.283145"
+   scale="1.0"/>
 
 </entity>
 <entity>
@@ -1994,8 +2008,11 @@
    type_collision="static"/>
 
 </entity>
-<entity>
-<tags/>
+<entity
+   id="304">
+<tags
+   tags="pila_container"/>
+<pila_container/>
 <name
    name="enchufe"/>
 <transform
@@ -2382,51 +2399,6 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/logic/camara.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camara_centro"/>
-<transform
-   pos="-104.56 5.17204 -10.0285"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_centro.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camara_izquierdaq"/>
-<transform
-   pos="-99.6426 6.09816 -3.77469"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_izquierdaq.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camara_derecha"/>
-<transform
-   pos="-100.319 6.05234 -17.3462"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_derecha.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3274,7 +3246,7 @@
 </entity>
 <entity>
 <tags
-   tags="box platform pila"/>
+   tags="platform pila"/>
 <pila/>
 <bone_tracker/>
 <name
@@ -3318,6 +3290,115 @@
 <character_controller
    radius="0.3"
    height="2.1"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="2.17851 1.1715 2.40955"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionSci="activate"/>
+<name
+   name="__tCargador"/>
+<transform
+   pos="-90.8076 -0.719524 14.492"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camera_1"/>
+<transform
+   pos="-104.56 5.17204 -10.0285"
+   quat="-0.0645929 -0.66558 -0.0617206 0.74096"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/camera.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camera_2"/>
+<transform
+   pos="-100.319 6.05234 -17.3462"
+   quat="0 0.991365 0.10232 -0.0815773"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/camera.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camera_3"/>
+<transform
+   pos="-99.6426 6.09816 -3.77469"
+   quat="-0.10835 0 0 0.994113"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/camera.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.4596 1.1715 1.49103"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionSci="activate"/>
+<name
+   name="__tEnchufe"/>
+<transform
+   pos="-121.536 -0.719525 -6.02005"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_cientifico AI_poss"/>
+<bt_scientist/>
+<player_cientifico/>
+<life
+   points="100"/>
+<skc_scientist/>
+<name
+   name="scientist_1"/>
+<transform
+   pos="-86.3171 0 1.35698"
+   quat="0 0 0 1.0"
+   scale="0.00929856"/>
+<skeleton
+   model="skeletons/scientist/scientist.skeleton"/>
+<render_static_mesh
+   name="skeletons/scientist/scientist.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.147"
+   height="1.71312"/>
 
 </entity>
 

@@ -89,6 +89,11 @@ public:
 		getAngles(&yaw, &pitch);
 		setAngles(new_yaw, pitch);
 	}
+	void setPitch(float new_pitch) {
+		float yaw, pitch;
+		getAngles(&yaw, &pitch);
+		setAngles(yaw, new_pitch);
+	}
 	float getDeltaYawToAimTo(VEC3 target) const;
 	float getDeltaPitchToAimTo(VEC3 target) const;
 	float getDeltaYawToAimDirection(VEC3 direction) const;

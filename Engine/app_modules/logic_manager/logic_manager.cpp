@@ -84,7 +84,18 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnActionMole(\"%s\");", params.c_str());
 		break;
 	}
-
+	case (OnActionPila): {
+		sprintf(lua_code, "OnActionPila(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnPutPila): {
+		sprintf(lua_code, "OnPutPila(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnRemovePila): {
+		sprintf(lua_code, "OnRemovePila(\"%s\");", params.c_str());
+		break;
+	}
 	case (OnGameStart): {
 		sprintf(lua_code, "OnGameStart(%f);", 0.4f);
 		/*char command_code[64];
@@ -484,6 +495,19 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("setLocked", &SLBHandle::setLocked)
 		.comment("Set if the element is locked")
 		.param("int:  (0: false, otherwise: true")
+		// Ask Pila Container
+		.set("has_pila", &SLBHandle::hasPila)
+		.comment("Get true if the handle contains a pila")
+		// Ask Pila Container Charged
+		.set("has_pila_charged", &SLBHandle::hasPilaCharged)
+		.comment("Return true if the handle has a charged cell")
+		// Charge Pila
+		.set("set_charged", &SLBHandle::setCharged)
+		.comment("Set its cell charged/empty")
+		.param("boolean: charged")
+		// Ask pila charged
+		.set("is_charged", &SLBHandle::isCharged)
+		.comment("return true if the handle is charged")
 		;
 }
 

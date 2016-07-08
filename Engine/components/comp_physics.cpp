@@ -463,6 +463,11 @@ void TCompPhysics::AddVelocity(VEC3 velocity)
 	}
 }
 
+void TCompPhysics::setPosition(TCompTransform * tr)
+{
+	setPosition(tr->getPosition(), tr->getRotation());
+}
+
 void TCompPhysics::setPosition(VEC3 position, CQuaternion rotation)
 {
 	bool isKinematic = false;	//by default no kinematic

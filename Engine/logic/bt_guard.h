@@ -120,7 +120,10 @@ class bt_guard : public bt, public TCompBase
 	bool playerLost = false;
 	// stuck management
 	float stuck_time = 0.f;
+	float unstuck_time = 0.f;
 	bool stuck = false;
+	bool reoriented = false;
+	int direction = 0;
 	VEC3 last_position;
 	// reaction time management
 	bool player_detected_start = false;
@@ -280,9 +283,11 @@ public:
 			}
 		}
 		// stuck management
-		if (last_position == t->getPosition()) {
+		float distance = simpleDistXZ(last_position, t->getPosition());
+		if (distance <= 0.5f*getDeltaTime()*SPEED_WALK) {
 			stuck_time += getDeltaTime();
 			if (stuck_time > MAX_STUCK_TIME) {
+				setCurrent(NULL);
 				stuck = true;
 			}
 		}

@@ -1,1 +1,9 @@
-- pila
+Modif
+- pila 
+- cargador_bateria
+	+ pAction
+- enchufe 
+
+New
+- tCargador 
+- tEnchufe

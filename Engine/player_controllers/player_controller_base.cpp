@@ -115,11 +115,15 @@ void CPlayerBase::update(float elapsed) {
 }
 
 void CPlayerBase::UpdateCinematic(float elapsed) {
+	static float time_out = 2.f;
+	time_out -= getDeltaTime();
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	float yaw, pitch;
 	transform->getAngles(&yaw, &pitch);
 	float dist = simpleDistXZ(cc->GetPosition(), cinematicTargetPos);
-	if (dist < epsilonPos) {
+	if (dist < epsilonPos || time_out <= 0.f) {
+		if (time_out <= 0.f) cc->teleport(cinematicTargetPos);
+		time_out = 2.f;
 		// Reach position
 		float deltaYaw = cinematicTargetYaw - yaw;
 		if (abs(deltaYaw) < epsilonYaw) {
@@ -465,9 +469,14 @@ map<string, statehandler>* CPlayerBase::getStatemap() {
 //Aux
 bool CPlayerBase::turnTo(TCompTransform * t)
 {
+	return turnTo(t->getPosition());
+}
+
+bool CPlayerBase::turnTo(VEC3 target)
+{
 	float yaw, pitch;
 	transform->getAngles(&yaw, &pitch);
-	float deltaYaw = transform->getDeltaYawToAimTo(t->getPosition());
+	float deltaYaw = transform->getDeltaYawToAimTo(target);
 	if (abs(deltaYaw) > epsilonYaw) {
 		float yaw_added = deltaYaw * getDeltaTime() * player_rotation_speed;
 		clampAbs_me(yaw_added, abs(deltaYaw));

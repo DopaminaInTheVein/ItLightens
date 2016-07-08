@@ -30,6 +30,7 @@ public:
 		OnAction = 0,
 		OnActionSci,
 		OnActionMole,
+		OnActionPila,
 		OnEnter,
 		OnLeave,
 		OnGameStart,
@@ -91,6 +92,9 @@ public:
 		OnElevatorDown,
 		OnElevatorGoingUp,
 		OnElevatorGoingDown,
+
+		OnPutPila,
+		OnRemovePila,
 	};
 
 	CLogicManagerModule();
