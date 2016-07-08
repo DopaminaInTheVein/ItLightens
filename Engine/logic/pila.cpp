@@ -32,10 +32,11 @@ void TCompPila::onCreate(const TMsgEntityCreated& msg)
 	mAction = EXAMINATE;
 	mActionSci = EXAMINATE;
 	mActionMole = NONE;
-
-	AddStPila(ST_PILA_GROUND, OnGround);
-	AddStPila(ST_PILA_GRABBED, Grabbed);
-	AddStPila(ST_PILA_FALLING, Falling);
+	if (statemap.empty()) {
+		AddStPila(ST_PILA_GROUND, OnGround);
+		AddStPila(ST_PILA_GRABBED, Grabbed);
+		AddStPila(ST_PILA_FALLING, Falling);
+	}
 
 	place = VEC3();
 	container = CHandle();

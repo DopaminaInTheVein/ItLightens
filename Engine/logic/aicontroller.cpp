@@ -19,7 +19,8 @@ void aicontroller::ChangeState(std::string newstate)
 	if (getStatemap()->find(newstate) == getStatemap()->end())
 	{
 		// the state we wish to jump to does not exist. we abort
-		exit(-1);
+		//exit(-1);
+		assert(false || fatal("state doesnt exist!\n"));
 	}
 	state = newstate;
 }
@@ -30,7 +31,8 @@ void aicontroller::AddState(std::string name, statehandler sh)
 	if (getStatemap()->find(name) != getStatemap()->end())
 	{
 		// the state we wish to jump to does exist. we abort
-		exit(-1);
+		//exit(-1);
+		assert(false || fatal("state doesnt exist!\n"));
 	}
 	(*getStatemap())[name] = sh;
 }

@@ -52,7 +52,7 @@
 		"speed" : 2.0,
 		"rotation_speed" : 200,
 		"distMaxToBox" : 10.0,
-		"rechTime" : 10.0
+		"rechTime" : 1.0
 	},	
 	"bt_speedy" : { 
 		"speed" : 4.0,
@@ -90,7 +90,7 @@
 		"evolution_limit" : 50.0,
 		"max_life" : 150.0,
 		"init_life" : 150.0,
-		"jump_energy" : 1.0,
+		"jump_energy" : 0.25,
 		"stun_energy" : 5.0
 	},	
 	"controller_mole" : {

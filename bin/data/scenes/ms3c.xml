@@ -1829,35 +1829,6 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   id="303">
-<tags
-   tags="pila_container"/>
-<pila_container/>
-<name
-   name="cargador_bateria"/>
-<transform
-   pos="-90.8368 -0.419937 14.4301"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags
-   tags="target"/>
-<name
-   name="cargador_bateria_pAction"/>
-<transform
-   pos="-91.6796 -0.419937 14.2709"
-   quat="0 0.959077 0 0.283145"
-   scale="1.0"/>
-
-</entity>
 <entity>
 <tags/>
 <name
@@ -2008,24 +1979,6 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   id="304">
-<tags
-   tags="pila_container"/>
-<pila_container/>
-<name
-   name="enchufe"/>
-<transform
-   pos="-121.537 -0.242203 -5.41684"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/enchufe.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
 <entity>
 <tags/>
 <name
@@ -2106,7 +2059,7 @@
 <name
    name="suelo_003"/>
 <transform
-   pos="-97.2604 -0.600098 -16.655"
+   pos="-97.2611 -0.600098 -16.654"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2336,7 +2289,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="2.82465 -23.2744 -13.5302"
+   pos="-36.4498 -21.7898 1.40215"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -2399,6 +2352,51 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/logic/camara.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camara_centro"/>
+<transform
+   pos="-104.56 5.17204 -10.0285"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/camara_centro.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camara_izquierdaq"/>
+<transform
+   pos="-99.6426 6.09816 -3.77469"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/camara_izquierdaq.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camara_derecha"/>
+<transform
+   pos="-100.319 6.05234 -17.3462"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/camara_derecha.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3277,7 +3275,7 @@
 <name
    name="__mole_1"/>
 <transform
-   pos="-94.5505 -1.23584 -10.3693"
+   pos="-122.124 -1.23584 -10.3693"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -3290,6 +3288,569 @@
 <character_controller
    radius="0.3"
    height="2.1"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="3"
+   kpt0_type="seek"
+   kpt0_pos="-11.8584 -23.8712 -21.422"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-12.0553 -23.8712 -16.2828"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="-25.2935 -23.8712 -19.6937"
+   kpt2_wait="2"
+   jurisdiction="-25.4008 -23.9 -20.1941"
+   jurRadius="5.0"
+   formation_point="-28.0805 -24.0251 -22.0796"
+   formation_dir="-27.4386 -23.9678 -21.9073"/>
+<skc_guard/>
+<name
+   name="guard_1"/>
+<transform
+   pos="-25.4008 -23.9 -20.1941"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="13.3487 -23.8712 16.4845"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="2.40446 -23.8712 2.58889"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="26.1755 -23.8712 -4.6136"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="10.8511 -23.8712 -13.6583"
+   kpt3_wait="2"
+   jurisdiction="26.0682 -23.9 -5.11404"
+   jurRadius="5.0"
+   formation_point="25.5739 -24.0251 -6.9732"
+   formation_dir="26.2157 -23.9678 -6.80094"/>
+<skc_guard/>
+<name
+   name="guard_002"/>
+<transform
+   pos="26.0682 -23.9 -5.11404"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="3"
+   kpt0_type="seek"
+   kpt0_pos="5.8479 -23.8712 22.4545"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="6.83898 -23.8712 -21.0227"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="2.70562 -23.8712 1.62904"
+   kpt2_wait="2"
+   jurisdiction="-1.58059 -23.9 3.84785"
+   jurRadius="5.0"
+   formation_point="-4.26029 -24.0251 1.96243"
+   formation_dir="-3.61846 -23.9678 2.13469"/>
+<skc_guard/>
+<name
+   name="guard_003"/>
+<transform
+   pos="-1.58059 -23.9 3.84785"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="look"
+   kpt0_pos="-84.3259 -1.27954 -28.0575"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-84.3393 -1.28589 -28.4518"
+   kpt1_wait="2"
+   jurisdiction="-84.3522 -1.19972 -28.422"
+   jurRadius="5.0"
+   formation_point="-87.0319 -1.32482 -30.3074"
+   formation_dir="-86.3901 -1.26751 -30.1352"/>
+<skc_guard/>
+<name
+   name="guard_004"/>
+<transform
+   pos="-84.3522 -1.19972 -28.422"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="look"
+   kpt0_pos="-81.6327 -1.27954 -28.0575"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-81.6461 -1.28589 -28.4518"
+   kpt1_wait="2"
+   jurisdiction="-81.659 -1.19972 -28.422"
+   jurRadius="5.0"
+   formation_point="-84.3387 -1.32482 -30.3074"
+   formation_dir="-83.6969 -1.26751 -30.1352"/>
+<skc_guard/>
+<name
+   name="guard_005"/>
+<transform
+   pos="-81.659 -1.19972 -28.422"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="6"
+   kpt0_type="look"
+   kpt0_pos="-100.586 -1.27954 -5.80638"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-100.726 -1.28589 -14.3003"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="-92.8546 -1.28589 -14.3658"
+   kpt2_wait="2"
+   kpt3_type="look"
+   kpt3_pos="-90.7359 -1.27954 -17.2999"
+   kpt3_wait="2"
+   kpt4_type="seek"
+   kpt4_pos="-70.0602 -1.28589 -14.3658"
+   kpt4_wait="2"
+   kpt5_type="look"
+   kpt5_pos="-72.2655 -1.27954 -17.2999"
+   kpt5_wait="2"
+   jurisdiction="-96.7845 -1.19972 -10.605"
+   jurRadius="5.0"
+   formation_point="-99.4642 -1.32482 -12.4904"
+   formation_dir="-98.8223 -1.26751 -12.3182"/>
+<skc_guard/>
+<name
+   name="guard_006"/>
+<transform
+   pos="-96.7845 -1.19972 -10.605"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="6"
+   kpt0_type="look"
+   kpt0_pos="-67.1094 -1.27954 10.7064"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-67.1231 -1.28589 11.4189"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="-62.9841 -1.28589 -8.10853"
+   kpt2_wait="2"
+   kpt3_type="look"
+   kpt3_pos="-57.9167 -1.27954 -7.76042"
+   kpt3_wait="2"
+   kpt4_type="seek"
+   kpt4_pos="-88.3649 -1.28589 1.81971"
+   kpt4_wait="2"
+   kpt5_type="look"
+   kpt5_pos="-88.5043 -1.27954 -8.20765"
+   kpt5_wait="2"
+   jurisdiction="-66.9139 -1.19972 7.81328"
+   jurRadius="5.0"
+   formation_point="-69.5936 -1.32482 5.92785"
+   formation_dir="-68.9518 -1.26751 6.10012"/>
+<skc_guard/>
+<name
+   name="guard_007"/>
+<transform
+   pos="-66.9139 -1.19972 7.81328"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity>
+<tags
+   tags="drone platform"/>
+<drone
+   wpts_size="2"
+   wpt0_pos="16.7547 -11.8015 -11.5295"
+   wpt0_wait="2"
+   wpt1_pos="3.38652 -11.8015 -11.5295"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"/>
+<name
+   name="DroneMinus_1"/>
+<transform
+   pos="10.59 -11.2973 -11.6827"
+   quat="0 0.708986 0 0.705223"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<local_aabb/>
+<polarized
+   pol="minus"
+   offset="-0.0106277 0.965812 0.101485"/>
+
+</entity>
+<entity>
+<tags
+   tags="drone platform"/>
+<drone
+   wpts_size="2"
+   wpt0_pos="3.42032 -11.8015 -2.78732"
+   wpt0_wait="2"
+   wpt1_pos="16.6116 -11.8015 -2.78732"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"/>
+<name
+   name="DronePlus_1"/>
+<transform
+   pos="10.4543 -11.2448 -2.66798"
+   quat="0 -0.707107 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<local_aabb/>
+<polarized
+   pol="plus"
+   offset="0 0.966293 -0.0321448"/>
+
+</entity>
+<entity>
+<tags
+   tags="drone platform"/>
+<drone
+   wpts_size="2"
+   wpt0_pos="16.6998 -11.8015 5.15044"
+   wpt0_wait="2"
+   wpt1_pos="3.59094 -11.8015 5.15044"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"/>
+<name
+   name="DroneMinus_002"/>
+<transform
+   pos="10.59 -11.2973 4.95717"
+   quat="0 0.708986 0 0.705223"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<local_aabb/>
+<polarized
+   pol="minus"
+   offset="-0.0106277 0.965812 -0.0448165"/>
+
+</entity>
+<entity>
+<tags
+   tags="drone platform"/>
+<drone
+   wpts_size="2"
+   wpt0_pos="3.42032 -11.8015 14.0664"
+   wpt0_wait="2"
+   wpt1_pos="16.6116 -11.8015 14.0664"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"/>
+<name
+   name="DronePlus_002"/>
+<transform
+   pos="10.4543 -11.2448 13.9719"
+   quat="0 -0.707107 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<local_aabb/>
+<polarized
+   pol="plus"
+   offset="-0.0168667 0.966293 -0.293303"/>
+
+</entity>
+<entity>
+<tags
+   tags="box platform removable"/>
+<box
+   size="3.0 1.5 3.0"/>
+<bone_tracker/>
+<name
+   name="Box_1"/>
+<transform
+   pos="15.2648 -10.9233 22.0796"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="plus"
+   offset="-0.0670452 0.874261 -0.143208"/>
+
+</entity>
+<entity>
+<tags
+   tags="drone platform"/>
+<drone
+   wpts_size="2"
+   wpt0_pos="-3.17764 -3.08729 21.393"
+   wpt0_wait="2"
+   wpt1_pos="10.0325 -5.1532 21.3712"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"/>
+<name
+   name="DroneMinus_003"/>
+<transform
+   pos="3.79343 -3.53051 21.0883"
+   quat="0 0.999985 0 0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<local_aabb/>
+<polarized
+   pol="plus"
+   offset="-0.0738666 0.934383 0.100378"/>
+
+</entity>
+<entity>
+<tags
+   tags="drone platform"/>
+<drone
+   wpts_size="2"
+   wpt0_pos="-30.8294 4.31167 22.1604"
+   wpt0_wait="2"
+   wpt1_pos="-18.9379 1.30144 21.7727"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"/>
+<name
+   name="DroneMinus_004"/>
+<transform
+   pos="-24.9983 3.5994 22.0196"
+   quat="0 0.99998 0 0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<local_aabb/>
+<polarized
+   pol="minus"
+   offset="-0.0447369 0.965812 0.0109615"/>
+
+</entity>
+<entity>
+<tags
+   tags="drone platform"/>
+<drone
+   wpts_size="2"
+   wpt0_pos="-34.4096 4.27551 22.2125"
+   wpt0_wait="2"
+   wpt1_pos="-34.4886 2.20959 8.4864"
+   wpt1_wait="2"
+   textureFront="droneFront"
+   textureBack="droneBack"/>
+<name
+   name="DroneMinus_005"/>
+<transform
+   pos="-34.7445 3.83228 15.2428"
+   quat="0 -0.701693 0 0.712479"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<local_aabb/>
+<polarized
+   pol="plus"
+   offset="0.100697 0.934383 0.073431"/>
+
+</entity>
+<entity
+   id="303">
+<tags
+   tags="pila_container"/>
+<pila_container/>
+<name
+   name="cargador_bateria"/>
+<transform
+   pos="-90.8368 -0.419937 14.4301"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="target"/>
+<name
+   name="cargador_bateria_pAction"/>
+<transform
+   pos="-91.6796 -0.419937 14.2709"
+   quat="0 0.959077 0 0.283145"
+   scale="1.0"/>
+
+</entity>
+<entity
+   id="304">
+<tags
+   tags="pila_container"/>
+<pila_container/>
+<name
+   name="enchufe"/>
+<transform
+   pos="-121.537 -0.242203 -5.41684"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/enchufe.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 <entity>
@@ -3313,51 +3874,6 @@
 </entity>
 <entity>
 <tags/>
-<name
-   name="camera_1"/>
-<transform
-   pos="-104.56 5.17204 -10.0285"
-   quat="-0.0645929 -0.66558 -0.0617206 0.74096"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/camera.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camera_2"/>
-<transform
-   pos="-100.319 6.05234 -17.3462"
-   quat="0 0.991365 0.10232 -0.0815773"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/camera.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camera_3"/>
-<transform
-   pos="-99.6426 6.09816 -3.77469"
-   quat="-0.10835 0 0 0.994113"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/camera.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
 <rigidbody
    type_collision="trigger"
    type_shape="box"
@@ -3373,32 +3889,6 @@
    pos="-121.536 -0.719525 -6.02005"
    quat="0 0 0 1.0"
    scale="1.0"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_cientifico AI_poss"/>
-<bt_scientist/>
-<player_cientifico/>
-<life
-   points="100"/>
-<skc_scientist/>
-<name
-   name="scientist_1"/>
-<transform
-   pos="-86.3171 0 1.35698"
-   quat="0 0 0 1.0"
-   scale="0.00929856"/>
-<skeleton
-   model="skeletons/scientist/scientist.skeleton"/>
-<render_static_mesh
-   name="skeletons/scientist/scientist.static_mesh"/>
-<skeleton_ik/>
-<abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.147"
-   height="1.71312"/>
 
 </entity>
 <entity>
@@ -3429,11 +3919,13 @@
 <tags
    tags="AI AI_mole AI_poss"/>
 <bt_mole
-   wpts_size="2"
-   wpt0_pos="15.656 -23.5343 -16.6259"
+   wpts_size="3"
+   wpt0_pos="13.5691 -23.5343 2.18772"
    wpt0_wait="2"
-   wpt1_pos="6.66092 -23.5343 -14.1191"
-   wpt1_wait="2"/>
+   wpt1_pos="6.66092 -23.5343 1.0016"
+   wpt1_wait="2"
+   wpt2_pos="13.5691 -23.5343 -5.08493"
+   wpt2_wait="2"/>
 <player_mole/>
 <life
    points="100"/>
@@ -3441,7 +3933,7 @@
 <name
    name="mole_1"/>
 <transform
-   pos="10.3939 -23.5343 -14.6646"
+   pos="10.3939 -23.5343 -3.54001"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
