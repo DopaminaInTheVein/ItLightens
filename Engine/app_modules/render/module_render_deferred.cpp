@@ -743,6 +743,7 @@ void CRenderDeferredModule::render() {
 	CEntity* ec = h_camera;
 	TCompFadeScreen* e = ec->get<TCompFadeScreen>();
 	if (e) {
+		activateZ(ZCFG_ALL_DISABLED);
 		activateBlend(BLENDCFG_COMBINATIVE);
 		e->render();
 		activateBlend(BLENDCFG_DEFAULT);
