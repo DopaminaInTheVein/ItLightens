@@ -612,7 +612,6 @@ int bt_guard::actionSearch() {
 
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
-		setCurrent(NULL);
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
 		return KO;
@@ -687,7 +686,6 @@ int bt_guard::actionMoveAround() {
 
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
-		setCurrent(NULL);
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
 		return KO;
@@ -731,7 +729,6 @@ int bt_guard::actionLookAround() {
 	if (!myParent.isValid()) return false;
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
-		setCurrent(NULL);
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
 		return KO;
@@ -764,7 +761,6 @@ int bt_guard::actionSeekWpt() {
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
-		setCurrent(NULL);
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
 		return KO;
@@ -822,7 +818,6 @@ int bt_guard::actionNextWpt() {
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
-		setCurrent(NULL);
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
 		return KO;
@@ -846,7 +841,6 @@ int bt_guard::actionWaitWpt() {
 
 	//player visible?
 	if (playerVisible() || boxMovingDetected()) {
-		setCurrent(NULL);
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
 		return KO;
