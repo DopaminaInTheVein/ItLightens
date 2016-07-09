@@ -2590,7 +2590,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.2064 0.875 2.49"/>
+   size="3.04608 0.875 1.9173"/>
 <tags
    tags="trigger"/>
 <trigger_lua
@@ -2599,7 +2599,7 @@
 <name
    name="__tElevator"/>
 <transform
-   pos="-65.698 16.063 20.6469"
+   pos="-65.8433 16.063 20.7697"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room
@@ -2620,7 +2620,7 @@
 <name
    name="__tElevator"/>
 <transform
-   pos="-65.6524 -0.632667 20.2466"
+   pos="-65.6524 -0.632667 20.4715"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room
@@ -4561,11 +4561,11 @@
 
 </entity>
 <entity
-   id="308">
+   id="306">
 <tags
    tags="door"/>
 <magnet_door
-   locked="no"
+   locked="yes"
    speedOpening="1"
    target="-67.4927 0.32264 19.4268"
    pol="neutral"/>
@@ -4606,12 +4606,12 @@
 <magnet_door
    locked="no"
    speedOpening="1"
-   target="-64.9312 16.9651 19.4268"
+   target="-64.8125 16.9651 19.4268"
    pol="neutral"/>
 <name
    name="__DoorElev_LeftUp"/>
 <transform
-   pos="-63.5279 16.9651 19.4268"
+   pos="-63.888 16.9651 19.4268"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -4631,7 +4631,7 @@
 <name
    name="__DoorElev_LeftUp___opened_pos003"/>
 <transform
-   pos="-64.9312 16.9651 19.4268"
+   pos="-64.8125 16.9651 19.4268"
    quat="0.708405 0 0 0.705806"
    scale="1.0"/>
 <room
@@ -4639,22 +4639,22 @@
 
 </entity>
 <entity
-   id="306">
+   id="308">
 <tags
    tags="door"/>
 <magnet_door
-   locked="yes"
+   locked="no"
    speedOpening="1"
-   target="-66.2562 16.9651 19.4268"
+   target="-66.1481 16.9651 19.4268"
    pol="neutral"/>
 <name
-   name="__DoorElev_RighUp"/>
+   name="__DoorElev_RightUp"/>
 <transform
-   pos="-67.543 16.9651 19.4268"
+   pos="-67.1209 16.9651 19.4268"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/__DoorElev_RighUp.static_mesh"/>
+   name="static_meshes/ms3/__DoorElev_RightUp.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -4668,9 +4668,9 @@
 <entity>
 <tags/>
 <name
-   name="__DoorElev_RighUp___opened_pos004"/>
+   name="__DoorElev_RightUp___opened_pos004"/>
 <transform
-   pos="-66.2562 16.9651 19.4268"
+   pos="-66.1481 16.9651 19.4268"
    quat="0.708405 0 0 0.705806"
    scale="1.0"/>
 <room

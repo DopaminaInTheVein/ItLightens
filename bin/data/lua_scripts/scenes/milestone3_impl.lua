@@ -158,24 +158,54 @@ end
 -- Elevator --
 -------------------------------------------------
 idElevator = 301
+idDoorElevLeft = 305
+idDoorElevRight = 306
+idDoorElevLeftUp = 307
+idDoorElevRightUp = 308
+hDoorElevLeft = Handle()
+hDoorElevRight = Handle()
+hDoorElevLeftUp = Handle()
+hDoorElevRightUp = Handle()
+
 triggerElevator = Handle()
+stateElevator = 1 -- 1= up , 0 = down
 function activateElevator( )  
   triggerElevator:getHandleCaller()
   p:setControlEnabled(0)
-  h:get_handle_by_id(idElevator)
-  elevatorState = h:activate()
   
-  p:exec_command( "triggerElevator:setActionable(1);", 2 )
-  p:exec_command( "p:setControlEnabled(0);", 5 )
+  -- Get handles
+  h:get_handle_by_id(idElevator)
+  hDoorElevLeftUp:get_handle_by_id(idDoorElevLeftUp)
+  hDoorElevRightUp:get_handle_by_id(idDoorElevRightUp)
+  hDoorElevLeft:get_handle_by_id(idDoorElevLeft)
+  hDoorElevRight:get_handle_by_id(idDoorElevRight)
+  
+  
+  if stateElevator == 1 then
+	hDoorElevLeftUp:setLocked(1)
+	hDoorElevRightUp:setLocked(1)
+	p:exec_command("hDoorElevLeft:setLocked(0);", 7)
+	p:exec_command("hDoorElevRight:setLocked(0);", 7)
+  else
+	hDoorElevLeft:setLocked(1)
+	hDoorElevRight:setLocked(1)  
+	p:exec_command("hDoorElevLeftUp:setLocked(0);", 7)
+	p:exec_command("hDoorElevRightUp:setLocked(0);", 7)
+  end
+  stateElevator = 1 - stateElevator
+  
+  p:exec_command("h:activate();", 2)
+  p:exec_command( "cam:fade_out(1);", 2.5)
+  p:exec_command( "triggerElevator:setActionable(1);", 4 )
+  p:exec_command( "cam:fade_in(1);", 7.0)
+  
+  p:exec_command( "p:setControlEnabled(1);", 9 )
   --cambio sala cientifico
   --if elevatorState == 0 then
   --  p:playerRoom("sala3")
   --else if elevatorState == 2
   --  p:playerRoom("sala2")
   --end
-  p:exec_command( "cam:fade_out(1);", 0.5)
-  p:exec_command( "cam:fade_in(1);", 5.0)
-  
 end
 
 function activateElevatorPlayer( )
