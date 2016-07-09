@@ -4,6 +4,8 @@
 #include "app_modules/app_module.h"
 #include "render/render.h"
 
+#include "render\render_instanced.h"
+
 class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_albedos;
 	CRenderToTexture* rt_normals;
@@ -36,6 +38,10 @@ class CRenderDeferredModule : public IAppModule {
 	const CRenderTechnique* acc_light_directionals_shadows;
 	const CMesh*            unit_sphere;
 	const CMesh*            unit_cube;
+	const CMesh*			particles_mesh;
+
+	//fast fix
+	CRenderParticlesInstanced helpers;
 
 	void renderGBuffer();
 	void activateRenderCamera3D();
@@ -61,6 +67,7 @@ public:
 	void render() override;
 	void renderDetails();
 	void applyPostFX();
+	void RenderHelpGenLoc();
 	void renderUI();
 	bool forcedUpdate() { return true; }
 	const char* getName() const {

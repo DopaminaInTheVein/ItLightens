@@ -50,6 +50,8 @@ bool CMesh::create(
     topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
   else if (new_topology == LINE_LIST)
     topology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
+  else if (new_topology == POINT_LIST)
+	  topology = D3D_PRIMITIVE_TOPOLOGY_POINTLIST;
   else {
     fatal("Unknown topology %d\n", new_topology);
   }
