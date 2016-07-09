@@ -270,6 +270,7 @@ public:
 
 	bool getUpdateInfo() {
 		animController = GETH_MY(SkelControllerGuard);
+		dbg("Time looking for: %f\n", looking_around_time);
 		return true;
 	}
 
@@ -277,8 +278,8 @@ public:
 		if (!isInRoom(myParent))return;
 		TCompTransform * t = compBaseEntity->get<TCompTransform>();
 		Debug->DrawLine(t->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
-		Debug->DrawLine(t->getPosition(), t->getPosition()+t->getFront(), VEC3(1, 1, 0));
-		Debug->DrawLine(t->getPosition(), t->getPosition()+t->getLeft(), VEC3(1, 1, 0));
+		Debug->DrawLine(t->getPosition(), t->getPosition() + t->getFront(), VEC3(1, 1, 0));
+		Debug->DrawLine(t->getPosition(), t->getPosition() + t->getLeft(), VEC3(1, 1, 0));
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
 			if (t_reduceStats <= 0.0f) {

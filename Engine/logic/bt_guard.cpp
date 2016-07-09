@@ -320,32 +320,32 @@ bool bt_guard::checkFormation() {
 int bt_guard::actionUnstuckTurn() {
 	PROFILE_FUNCTION("guard: actionunstuckturn");
 	if (!myParent.isValid()) return false;
-	// turn to get unstuck	
+	// turn to get unstuck
 	SET_ANIM_GUARD(AST_IDLE);
 	if (!reoriented) {
 		VEC3 left = getTransform()->getLeft();
 		VEC3 front = getTransform()->getFront();
 		switch (direction) {
-			case 0: {
-				unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-				direction = 2;
-				break;
-			}
-			case 1: {
-				unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-				direction = 1;
-				break;
-			}
-			case 2: {
-				unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
-				direction = 0;
-				break;
-			}
-			default: {
-				unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-				direction = 0;
-				break;
-			}
+		case 0: {
+			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 2;
+			break;
+		}
+		case 1: {
+			unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 1;
+			break;
+		}
+		case 2: {
+			unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 0;
+			break;
+		}
+		default: {
+			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 0;
+			break;
+		}
 		}
 		reoriented = true;
 	}
@@ -388,7 +388,6 @@ int bt_guard::actionStunned() {
 			timerStunt -= getDeltaTime();
 		return STAY;
 	}
-
 }
 
 int bt_guard::actionStepBack() {
@@ -460,10 +459,10 @@ int bt_guard::actionChase() {
 			return OK;
 		}
 		else {*/
-			SET_ANIM_GUARD(AST_MOVE);
-			goTo(posPlayer);
-			return STAY;
-		//}
+	SET_ANIM_GUARD(AST_MOVE);
+	goTo(posPlayer);
+	return STAY;
+	//}
 	}
 }
 
@@ -716,10 +715,10 @@ int bt_guard::actionMoveAround() {
 			return OK;
 		}
 		else {*/
-			SET_ANIM_GUARD(AST_MOVE);
-			goTo(search_player_point);
-			return STAY;
-		//}
+	SET_ANIM_GUARD(AST_MOVE);
+	goTo(search_player_point);
+	return STAY;
+	//}
 	}
 	/*isPathObtainedAccessible = false;
 	isPathObtained = false;*/
@@ -728,16 +727,20 @@ int bt_guard::actionMoveAround() {
 
 int bt_guard::actionLookAround() {
 	PROFILE_FUNCTION("guard: lookaround");
+	dbg("---Action Looking Arround---\n");
 	if (!myParent.isValid()) return false;
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
+		dbg("::Player visible!\n");
 		setCurrent(NULL);
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
+		dbg("---\n");
 		return KO;
 	}
 	// Turn arround
 	else if (deltaYawLookingArround < 2 * M_PI && looking_around_time > 0.f) {
+		dbg("::Looking Arround\n");
 		SET_ANIM_GUARD(AST_TURN);
 		float yaw, pitch;
 		getTransform()->getAngles(&yaw, &pitch);
@@ -748,11 +751,13 @@ int bt_guard::actionLookAround() {
 		getTransform()->setAngles(yaw, pitch);
 
 		looking_around_time -= getDeltaTime();
+		dbg("---\n");
 
 		return STAY;
 	}
 	else {
 		deltaYawLookingArround = 0;
+		dbg("---\n");
 		return OK;
 	}
 }
@@ -789,10 +794,10 @@ int bt_guard::actionSeekWpt() {
 				return OK;
 			}
 			else {*/
-				SET_ANIM_GUARD(AST_MOVE);
-				goTo(dest);
-				return STAY;
-			//}
+		SET_ANIM_GUARD(AST_MOVE);
+		goTo(dest);
+		return STAY;
+		//}
 		}
 	}
 	//Look to waypoint
@@ -876,9 +881,9 @@ int bt_guard::actionGoToFormation() {
 			isPathObtainedAccessible = */getPath(myPos, formation_point);
 			/*isPathObtained = true;
 		}*/
-		SET_ANIM_GUARD(AST_MOVE);
-		goTo(formation_point);
-		return STAY;
+	SET_ANIM_GUARD(AST_MOVE);
+	goTo(formation_point);
+	return STAY;
 	}
 	/*isPathObtainedAccessible = false;
 	isPathObtained = false;*/
@@ -1485,7 +1490,7 @@ bool bt_guard::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-			);
+		);
 	}
 	noShoot = atts.getBool("noShoot", false);
 
@@ -1518,6 +1523,8 @@ void bt_guard::renderInMenu() {
 	ImGui::SliderFloat("Time Shooting Wall before leave", &_timerShootingWall, 0, 15);
 	ImGui::Separator();
 	ImGui::SliderFloat3("Offset Starting Shot", &SHOT_OFFSET.x, 0.f, 2.f);
+	if (bt::current) ImGui::Text("NODE: %s", bt::current->getName().c_str());
+	else ImGui::Text("NODE: %s", "???\n");
 }
 
 /**************/
@@ -1589,7 +1596,7 @@ void bt_guard::goToPoint(VEC3 dest) {
 	while (simpleDistXZ(getTransform()->getPosition(), dest) > DIST_REACH_PNT) {
 		/*if (!isPathObtained) {
 			isPathObtained = true;*/
-			getPath(getTransform()->getPosition(), dest);
+		getPath(getTransform()->getPosition(), dest);
 		//}
 		goTo(dest);
 	}
