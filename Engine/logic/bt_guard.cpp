@@ -328,7 +328,7 @@ int bt_guard::actionUnstuckTurn() {
 		switch (direction) {
 			case 0: {
 				unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-				direction = 0;
+				direction = 2;
 				break;
 			}
 			case 1: {
@@ -338,7 +338,7 @@ int bt_guard::actionUnstuckTurn() {
 			}
 			case 2: {
 				unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
-				direction = 2;
+				direction = 0;
 				break;
 			}
 			default: {

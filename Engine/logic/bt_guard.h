@@ -288,7 +288,7 @@ public:
 		}
 		// stuck management
 		float distance = simpleDistXZ(last_position, t->getPosition());
-		if (distance <= 0.5f*getDeltaTime()*SPEED_WALK) {
+		if (distance <= 0.75f*getDeltaTime()*SPEED_WALK) {
 			stuck_time += getDeltaTime();
 			if (stuck_time > MAX_STUCK_TIME && !stuck) {
 				stuck = true;

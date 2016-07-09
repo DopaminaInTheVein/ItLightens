@@ -91,9 +91,6 @@ void SkelControllerMole::myUpdate()
 	updateGrabPoints();
 	if (currentState == "walk" || currentState == "run") {
 		SetPlayerController();
-		if (!pc->isMoving()) {
-			currentState = "idle";
-		}
 		////TODO: read moving param!
 		//VEC3 speed = cc->GetSpeed();
 		//VEC3 lastSpeed = cc->GetLastSpeed();

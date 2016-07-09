@@ -82,6 +82,8 @@ void bt_mole::update(float elapsed) {
 	// If we become possessed, reset the tree and stop all actions
 	if (possessing)
 		setCurrent(NULL);
+	if (stunned)
+		SET_ANIM_MOLE_BT(AST_IDLE);
 	Recalc();
 }
 
@@ -110,6 +112,7 @@ int bt_mole::actionLookForWpt() {
 	if (!SBB::readBool("navmesh")) {
 		return STAY;
 	}
+	SET_ANIM_MOLE_BT(AST_IDLE);
 	if (fixedWpts.size() <= 0) return OK;
 	VEC3 front = transform->getFront();
 	VEC3 target = fixedWpts[curwpt];
@@ -141,16 +144,19 @@ int bt_mole::actionFollowPathToWpt() {
 	VEC3 npcPos = transform->getPosition();
 	VEC3 npcFront = transform->getFront();
 	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent)) {
+		SET_ANIM_MOLE_BT(AST_MOVE);
 		moveFront(speed);
 		return STAY;
 	}
 	else if (!transform->isHalfConeVision(target, deg2rad(5.0f))) {
+		SET_ANIM_MOLE_BT(AST_IDLE);
 		aimToTarget(target);
 		return STAY;
 	}
 	else {
 		float distToWPT = squaredDistXZ(target, transform->getPosition());
 		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
+			SET_ANIM_MOLE_BT(AST_MOVE);
 			moveFront(speed);
 			return STAY;
 		}
@@ -163,6 +169,7 @@ int bt_mole::actionFollowPathToWpt() {
 int bt_mole::actionEndPathToWpt() {
 	static float recharging = 0.0f;
 	recharging += getDeltaTime();
+	SET_ANIM_MOLE_BT(AST_IDLE);
 	if (pointsToRechargePoint == currToRechargePoint && rechTime > recharging) {
 		return STAY;
 	}
