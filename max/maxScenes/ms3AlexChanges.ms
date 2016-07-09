@@ -54,15 +54,17 @@ function addAlexLogicCamaras = (
 
 fn assign_room_to_all_from_x sala1 sala2= (
 	for obj in $* do (
-		if ( (obj.name != "suelo_003") and (obj.name != "suelo_2") and (obj.name != "rodapies") and (obj.name != "paredes_milestone_3") and (obj.name != "Techo_milestone_3") and (obj.name != "sofa2") and (obj.name != "__elevator") and (obj.name != "__cElevatoGround") )then (
+		if ( (obj.name != "suelo_003") and (obj.name != "suelo_2") and (obj.name != "rodapies") and (obj.name != "paredes_milestone_3") and (obj.name != "Techo_milestone_3") and (obj.name != "sofa2") )then (
 			add_attribute = custAttributes.add obj v_room_data baseobject:True
 			local trans = obj.transform
-			if trans.position.x < -45 then (
+			if obj.name == "nivel" then (
+					obj.room_name = sala1
+			) else if trans.position.x < -45 then (
 				obj.room_name = sala2
 			) else (
 				obj.room_name = sala1
-			)
-		)
+			)			
+		)		
 	)
 )
 
