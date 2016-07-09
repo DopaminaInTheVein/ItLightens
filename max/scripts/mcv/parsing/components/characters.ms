@@ -118,10 +118,14 @@ fn parseFormation parent = (
 -- WORKSTATION --
 ----------------------------------------------------------------------
 fn _parse_workstation = (
-	xml = XML_PARSING.addChild "workstation"
-	local keyPoint = (findHelper "keyPoint")
+	local keyPoint
+	if (classof _parsingObject) == Delegate then (
+		keyPoint = _parsingObject
+	) else(
+		keyPoint = (findHelper "keyPoint")
+	)
 	if keyPoint != undefined then (
-		--Key Point
+		xml = XML_PARSING.addChild "workstation"
 		local mcv_tmx = (matrixMax2MCV keyPoint.transform)
 		xml.addAttr "posAction" (getTransformPosValue mcv_tmx)
 		xml.addAttr "yawAction" (degtorad (mcv_tmx.rotation as eulerangles).x)

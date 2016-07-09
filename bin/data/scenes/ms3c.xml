@@ -1395,7 +1395,9 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="workbench"/>
+<workbench/>
 <name
    name="mesa_cientifico"/>
 <transform
@@ -1614,21 +1616,6 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/bandejas.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="valla"/>
-<transform
-   pos="-71.6378 16.8129 17.5351"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/valla.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -2175,7 +2162,9 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="workbench"/>
+<workbench/>
 <name
    name="mesa_cientifico_up"/>
 <transform
@@ -2263,7 +2252,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="convex"
+   type_shape="box"
+   size="4.6299 0.15 3.25725"
    mass="5"
    kinematic="yes"/>
 <local_aabb/>
@@ -4190,7 +4180,75 @@
    name="WirePosUp"/>
 <transform
    pos="-65.7222 17.2847 17.9972"
-   quat="0 -0.737277 0 0.67559"
+   quat="0 0.99907 0 0.0431127"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_cientifico AI_poss"/>
+<bt_scientist/>
+<player_cientifico/>
+<life
+   points="100"/>
+<skc_scientist/>
+<name
+   name="scientist_1"/>
+<transform
+   pos="-66.2184 16.129 12.5512"
+   quat="0 0 0 1.0"
+   scale="0.00929856"/>
+<skeleton
+   model="skeletons/scientist/scientist.skeleton"/>
+<render_static_mesh
+   name="skeletons/scientist/scientist.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.147"
+   height="1.71312"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-64.4584 16.2979 13.2277"
+   yawAction="-3.14159"/>
+<name
+   name="Workstation02"/>
+<transform
+   pos="-64.4584 16.2979 13.2277"
+   quat="0 0.922127 0 0.386888"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-66.745 16.2979 16.787"
+   yawAction="0.0"/>
+<name
+   name="Workstation01"/>
+<transform
+   pos="-66.745 16.2979 16.787"
+   quat="0 -0.357009 0 0.934101"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-63.2201 16.2979 17.4363"
+   yawAction="0.0"/>
+<name
+   name="Workstation03"/>
+<transform
+   pos="-63.2201 16.2979 17.4363"
+   quat="0 0.410464 0 0.911877"
    scale="1.0"/>
 
 </entity>
