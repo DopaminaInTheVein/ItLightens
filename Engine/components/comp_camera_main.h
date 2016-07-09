@@ -11,6 +11,8 @@ struct TCompCameraMain : public TCompCamera {
 	float smoothDefault;
 	float smoothCurrent;
 
+	VEC3 origin_camera;
+
 	//Guided camera
 	CHandle guidedCamera;
 	TCompTransform * transform;

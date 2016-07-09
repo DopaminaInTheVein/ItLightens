@@ -98,7 +98,7 @@ bool CRenderDeferredModule::start() {
 	acc_light_directionals = Resources.get("deferred_lights_dir.tech")->as<CRenderTechnique>();
 	assert(acc_light_directionals && acc_light_directionals->isValid());
 
-	blur_tech = Resources.get("blur_glow.tech")->as<CRenderTechnique>();
+	//blur_tech = Resources.get("blur_glow.tech")->as<CRenderTechnique>();
 
 	acc_light_directionals_shadows = Resources.get("deferred_lights_dir_shadows.tech")->as<CRenderTechnique>();
 	assert(acc_light_directionals_shadows && acc_light_directionals_shadows->isValid());
@@ -109,45 +109,43 @@ bool CRenderDeferredModule::start() {
 	unit_cube = Resources.get("meshes/engine/unit_frustum.mesh")->as<CMesh>();
 	assert(unit_cube && unit_cube->isValid());
 
-	Resources.get("textures/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE);
-	Resources.get("textures/hatch_0.dds")->as<CTexture>()->activate(80);
-	Resources.get("textures/hatch_1.dds")->as<CTexture>()->activate(81);
-	Resources.get("textures/hatch_2.dds")->as<CTexture>()->activate(82);
-	Resources.get("textures/hatch_3.dds")->as<CTexture>()->activate(83);
-	Resources.get("textures/hatch_4.dds")->as<CTexture>()->activate(84);
-	Resources.get("textures/hatch_5.dds")->as<CTexture>()->activate(85);
 
-	//tests hatching
-	Resources.get("textures/primera_prueba_diagonal.dds")->as<CTexture>()->activate(86);
-	Resources.get("textures/primera_prueba_diagonal_menos_denso.dds")->as<CTexture>()->activate(87);
-	Resources.get("textures/primera_prueba_hatching.dds")->as<CTexture>()->activate(88);
-	Resources.get("textures/primera_prueba_menos_denso.dds")->as<CTexture>()->activate(89);
-	Resources.get("textures/tramado_extraño_mangastudio.dds")->as<CTexture>()->activate(90);
-	Resources.get("textures/diagonal material ligero mangastudio.dds")->as<CTexture>()->activate(92);
-	Resources.get("textures/primera_prueba_diagonal_lots.dds")->as<CTexture>()->activate(91);
-	Resources.get("textures/diagonal_material_mangastudio.dds")->as<CTexture>()->activate(93);
-	Resources.get("textures/diagonal_menos_denso_material_mangastudio.dds")->as<CTexture>()->activate(94);
+  Resources.get("textures/general/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE );
 
-	Resources.get("textures/rampa_prueba.dds")->as<CTexture>()->activate(70);
+  //hatching texture
+  Resources.get("textures/hatching/hatch_0.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
 
-	shader_ctes_hatching.edge_lines_detection = 0.02f;
-	shader_ctes_hatching.frequency_offset = 8.0f;
-	shader_ctes_hatching.intensity_sketch = 0.2f;
-	shader_ctes_hatching.rim_strenght = 1.0f;
-	shader_ctes_hatching.specular_strenght = 50.0f;
-	shader_ctes_hatching.diffuse_strenght = 1.0f;
-	shader_ctes_hatching.frequency_texture = 10.0f;
-	shader_ctes_hatching.color_ramp = 0.0f;
-	shader_ctes_hatching.specular_force = 0.2f;
+  //tests hatching
+//#ifdef _DEBUG
+  //Resources.get("textures/hatching/hatching_tileable.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST1);
+  //Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST2);
+//#endif
+  
+  Resources.get("textures/hatching/hatching_tileable_ALPHAS.dds")->as<CTexture>()->activate(63);
+  Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(64);
 
-	shader_ctes_globals.world_time = 0.f;
-	shader_ctes_globals.xres = xres;
-	shader_ctes_globals.yres = yres;
-	shader_ctes_globals.strenght_polarize = 1.0f / 5.0f;
 
-	shader_ctes_hatching.uploadToGPU();
+  Resources.get("textures/ramps/rampa_prueba.dds")->as<CTexture>()->activate(TEXTURE_SLOT_RAMP);
 
-	return true;
+  shader_ctes_hatching.edge_lines_detection = 0.02f;
+  shader_ctes_hatching.frequency_offset = 8.0f;
+  shader_ctes_hatching.intensity_sketch = 0.2f;
+  shader_ctes_hatching.rim_strenght = 1.0f;
+  shader_ctes_hatching.specular_strenght = 50.0f;
+  shader_ctes_hatching.diffuse_strenght = 1.0f;
+  shader_ctes_hatching.frequency_texture = 10.0f;
+  shader_ctes_hatching.color_ramp = 0.0f;
+  shader_ctes_hatching.specular_force = 0.2f;
+  shader_ctes_hatching.rim_specular = 1.5f;
+
+  shader_ctes_globals.world_time = 0.f;
+  shader_ctes_globals.xres = xres;
+  shader_ctes_globals.yres = yres;
+  shader_ctes_globals.strenght_polarize = 1.0f / 5.0f;
+
+  shader_ctes_hatching.uploadToGPU();
+
+  return true;
 }
 
 // ------------------------------------------------------
@@ -201,7 +199,7 @@ void CRenderDeferredModule::renderGBuffer() {
 	rt_normals->clear(VEC4(0, 1, 0, 1));
 	rt_selfIlum->clear(VEC4(0, 0, 0, 1));
 	rt_depths->clear(VEC4(1, 1, 1, 1));
-	rt_final->clear(VEC4(0, 0, 0, 1));
+	rt_final->clear(VEC4(0, 0, 0, 0));
 	Render.clearMainZBuffer();
 
 	rt_acc_light->clear(VEC4(0, 0, 0, 1));
@@ -304,13 +302,17 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
 }
 
 void CRenderDeferredModule::addAmbientPass() {
-	/*activateZ(ZCFG_ALL_DISABLED);
+	PROFILE_FUNCTION("addAmbientPass");
+	CTraceScoped scope("addAmbientPass");
+  activateZ(ZCFG_ALL_DISABLED);
 
-	auto tech = Resources.get("pbr_ambient.tech")->as<CRenderTechnique>();
-	tech->activate();
+  auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
+  tech->activate();
 
-	auto mesh = Resources.get("unitQuadXY.mesh")->as<CMesh>();
-	mesh->activateAndRender();*/
+  drawFullScreen(rt_albedos, tech);
+
+  
+
 }
 
 void CRenderDeferredModule::FinalRender() {
@@ -322,6 +324,10 @@ void CRenderDeferredModule::FinalRender() {
 	  ,	nullptr   // remove the other rt's from the pipeline
 	  ,	nullptr
 	};
+
+
+	Render.activateBackBuffer();	//reset size to default
+
 	// Y el ZBuffer del backbuffer principal
 	Render.ctx->OMSetRenderTargets(3, rts, nullptr);
 
@@ -331,18 +337,19 @@ void CRenderDeferredModule::FinalRender() {
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
+
 	activateZ(ZCFG_ALL_DISABLED);
+  activateBlend(BLENDCFG_DEFAULT);
+  //auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
+  drawFullScreen(rt_acc_light);
 
-	auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_albedos, tech);
+  activateZ(ZCFG_DEFAULT);
 
-	activateZ(ZCFG_DEFAULT);
-
-	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-	CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
-	CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
-	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
+  CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+  CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+  CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
+  CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
+  CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 }
 
 void CRenderDeferredModule::blurEffectLights(bool intermitent) {
@@ -381,6 +388,7 @@ void CRenderDeferredModule::blurEffectLights(bool intermitent) {
 
 	activateZ(ZCFG_DEFAULT);
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+
 }
 
 // ----------------------------------------------
@@ -397,26 +405,28 @@ void CRenderDeferredModule::renderAccLight() {
 	// Y el ZBuffer del backbuffer principal
 	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-	// Activar las texturas del gbuffer en la pipeline para
-	// que se puedan acceder desde los siguientes shaders
-	rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
-	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+  // Activar las texturas del gbuffer en la pipeline para
+  // que se puedan acceder desde los siguientes shaders
+  //rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);	//activated on addAmbientPass
+  rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+  rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
-	rt_acc_light->clear(VEC4(0, 0, 0, 1));
+  //rt_acc_light->clear(VEC4(0, 0, 0, 1));
 
-	//addAmbientPass();
+  activateBlend(BLENDCFG_DEFAULT);
+  addAmbientPass();
 
-	activateBlend(BLENDCFG_ADDITIVE);
+  activateBlend(BLENDCFG_ADDITIVE);
+  activateZ(ZCFG_LIGHTS_CONFIG);
+  //activateRS(RSCFG_INVERT_CULLING);
+  addPointLights();
+
 	activateZ(ZCFG_LIGHTS_CONFIG);
 	//activateRS(RSCFG_INVERT_CULLING);
-	addPointLights();
+	addDirectionalLights();
 
-	activateZ(ZCFG_LIGHTS_CONFIG);
-	//activateRS(RSCFG_INVERT_CULLING);
-	//addDirectionalLights();
-
-	addDirectionalLightsShadows();
+  activateRS(RSCFG_DEFAULT);
+  addDirectionalLightsShadows();
 
 	activateRS(RSCFG_DEFAULT);
 	activateZ(ZCFG_DEFAULT);
@@ -549,31 +559,6 @@ void CRenderDeferredModule::GlowEdges() {
 		activateBlend(BLENDCFG_COMBINATIVE);
 		drawFullScreen(rt_data2, tech);
 
-		//TODO: ReviewPedro
-		CEntity *e = tags_manager.getFirstHavingTag("player");
-		if (e) {
-			TCompLife * life = e->get<TCompLife>();
-			if (life)
-				shader_ctes_object.life_player = life->getCurrent();
-			else {
-				shader_ctes_object.life_player = 100.0f;
-			}
-			shader_ctes_globals.uploadToGPU();
-
-			player_controller *player = e->get<player_controller>();
-			shader_ctes_object.direction = player->GetPolarityInt();
-			shader_ctes_object.uploadToGPU();
-
-			blurEffectLights(false);
-
-			tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
-
-			activateBlend(BLENDCFG_COMBINATIVE);
-			//activateBlend(BLENDCFG_ADDITIVE);
-			Render.activateBackBuffer();				//render on screen
-			activateZ(ZCFG_ALL_DISABLED);
-			drawFullScreen(rt_selfIlum_blurred, tech);
-		}
 		activateBlend(BLENDCFG_DEFAULT);
 	}
 }
@@ -671,7 +656,19 @@ void CRenderDeferredModule::render() {
 
 	shader_ctes_globals.uploadToGPU();
 	renderGBuffer();
+	renderDetails();
 	renderAccLight();
+	
+	CTexture* blurred_shadows = rt_shadows;
+
+	CEntity* e_camera = h_camera;
+	if (!e_camera)
+		return;
+
+	//blur shadows
+	TCompRenderGlow* glow = e_camera->get< TCompRenderGlow >();
+	if (glow)
+		blurred_shadows = glow->apply(blurred_shadows);
 
 	//blurEffectLights();
 
@@ -682,7 +679,6 @@ void CRenderDeferredModule::render() {
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	Render.activateBackBuffer();
-
 	activateZ(ZCFG_ALL_DISABLED);
 
 	//AA cutre, only objects near camera
@@ -692,13 +688,17 @@ void CRenderDeferredModule::render() {
 	drawFullScreen(rt_final);
 
 	activateBlend(BLENDCFG_COMBINATIVE);
-	rt_specular->activate(79);
-	rt_shadows->activate(78);
+	rt_specular->activate(TEXTURE_SLOT_SPECULAR_GL);
+
+	blurred_shadows->activate(TEXTURE_SLOT_SHADOWS);
+	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+	//rt_shadows->activate(TEXTURE_SLOT_SHADOWS);
 	auto tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
 	drawFullScreen(rt_final, tech);
+	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+	
 
 	activateBlend(BLENDCFG_SUBSTRACT);
 	tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
@@ -723,8 +723,9 @@ void CRenderDeferredModule::render() {
 	  GlowEdges();
 	}*/
 
-	CTexture::deactivate(78);
-	CTexture::deactivate(79);
+	
+	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
+	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 
 	Render.activateBackBuffer();

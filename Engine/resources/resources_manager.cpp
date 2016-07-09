@@ -110,7 +110,13 @@ const IResource* CResourcesManager::get(const char* name) {
 void CResourcesManager::registerNew(IResource* new_res) {
 	assert(new_res);
 	assert(!new_res->getName().empty());
-	all[new_res->getName()] = new_res;
+	std::string name = new_res->getName();
+	static int i = 0;
+	if (!(all.find(new_res->getName()) == all.end())) {
+		name = std::to_string(i);
+		i++;
+	}
+	all[name] = new_res;
 }
 
 void CResourcesManager::renderUIDebug(ImGuiTextFilter * filter) {

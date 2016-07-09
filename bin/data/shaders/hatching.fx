@@ -1,28 +1,17 @@
 #include "globals.fx"
 
 
-Texture2D txSpeculars : register(t79);
-Texture2D txInvShadows : register(t78);
+Texture2D txSpecular_GL : USE_SHADER_REG(TEXTURE_SLOT_SPECULAR_GL);
+Texture2D txShadows : USE_SHADER_REG(TEXTURE_SLOT_SHADOWS);
 
-Texture2D txHatch1 : register(t80);
-Texture2D txHatch2 : register(t81);
-Texture2D txHatch3 : register(t82);
-Texture2D txHatch4 : register(t83);
-Texture2D txHatch5 : register(t84);
-Texture2D txHatch6 : register(t85);
+Texture2D txHatch1 : USE_SHADER_REG(TEXTURE_SLOT_HATCHING);
 
 
-Texture2D txHatch_test8 : register(t86);
-Texture2D txHatch_test9 : register(t87);
+//Texture2D tx_test1 : USE_SHADER_REG(TEXTURE_SLOT_HATCHING_TEST1);
+//Texture2D tx_test2 : USE_SHADER_REG(TEXTURE_SLOT_HATCHING_TEST2);
 
-Texture2D txHatch_test : register(t88);
-Texture2D txHatch_test2 : register(t89);
-Texture2D txHatch_test3 : register(t90);
-Texture2D txHatch_test4 : register(t91);
-Texture2D txHatch_test5 : register(t92);
-Texture2D texture_hatch : register(t93);
-Texture2D txHatch_test7 : register(t94);
-
+Texture2D tx_test1 : register(t63);
+Texture2D tx_test2 : register(t64);
 
 
 //--------------------------------------------------------------------------------------
@@ -58,31 +47,31 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	//return float4(1,1,1,1);
 	float specular = txSpeculars.Sample(samLinear, iTex0).r;
 	float4 diffuse = txDiffuse.Sample(samLinear, iTex0);
-	float4 normal = txNormal.Sample(samLinear, iTex0);
-	float inv_shadows = 1- txInvShadows.Sample(samLinear, iTex0).r;
+	float4 N = txNormal.Sample(samLinear, iTex0);
+	float inv_shadows = 1- txShadows.Sample(samLinear, iTex0).r;
 	float base = step(0.1f, specular);
 	
-	//return float4(specular, specular, specular, 1.0f);
-	//if(base == 1.0f)
-		//return float4 (0.0f,0.0f,0.0f, 0.0f);
 	
-	//return CameraWorldPos;
+	float4 val = diffuse*0.3 + specular.xxxx*0.3 + inv_shadows.xxxx*1.0;
+	//val*= rim;
+	if(val.x > 1)
+		val = float4(1,1,1,1);
+	val = val*2 -1.6;
 	
-	//return float4(dist,dist,dist,dist);
+	//return float4(val.xxx,1);
 
-	//if(dist > 1000)
-	// return float4(0,0,0,0);
-	
 	float2 noise = txNoise.Sample(samLinear, iTex0).rg;
 	
 	//return float4(1,1,1,1);
-	float2 pixel_pos = iTex0*frequency_texture;
-	//float2 pixel_pos = iTex0*1.0f;
+	//float2 pixel_pos = iTex0*frequency_texture;
+	float2 pixel_pos = iTex0*3.0f;
 	
 	float freq_change = frequency_offset;
 	float var = sin(world_time*freq_change);
 	float offset = step(0.0f, var);
-	pixel_pos += offset/2.0f;
+	//offset = 0;
+	offset =  offset/2.0f;
+	pixel_pos += float2(-offset, offset/2.0f);
 	
 	//return float4(offset,offset,offset,1.0f);
 	//pixel_pos+=noise;
@@ -92,86 +81,63 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	
 	
 	float diff = saturate(diffuse);
-	float N = normal;
+	//float N = normal;
 
-	float rim = max( 0., abs( dot( N, -wPos.xyz ) ) );
-	//if( invertRim == 1 ) rim = 1. - rim;
-	//rim = 1 -rim;
-	rim *= rim_strenght;
-	diff *= diffuse_strenght;
-	diff = 1.0f;
-	specular *= specular_strenght;
-	float shading =  diff + rim + specular;
-	//shading = shading;
-	//shading = 0;
-	//return float4(shading, shading, shading, 1.0f);
 
 	float4 c = float4(0,0,0,1);
 	float step_cmp = 1. / 3.;
-	
+	//shading = specular;
 	float limit = 0.0f;
 	
 	
-	//if (shading <= step_cmp) {
-	if (inv_shadows >= limit) {
-		//return float4(1,1,0,1);
-		//c = lerp(txHatch_test6.Sample(samLinear, pixel_pos), txHatch_test6.Sample(samLinear, pixel_pos), 3.0f * (shading - 3. * step_cmp));
-		//c = txHatch_test6.Sample(samLinear, pixel_pos);
-		c = lerp(txHatch1.Sample(samLinear, pixel_pos), float4(1.0f,1.0f,1.0f,1.0f), 3.0f * (shading - 2. * inv_shadows));
-	}
-	/*if (shading > 3. * step_cmp && shading <= 2. * step_cmp) {
-		//return float4(1,0,1,1);
-		c = lerp(txHatch_test6.Sample(samLinear, pixel_pos), txHatch_test6.Sample(samLinear, pixel_pos), 3.0f * (shading - 4. * step_cmp));
-	}*/
-	//if (shading > 1. * step_cmp) {
-	if (inv_shadows < limit) {
-		//return float4(0,1,1,1);
-		c = lerp(txHatch1.Sample(samLinear, pixel_pos), float4(1.0f,1.0f,1.0f,1.0f), 3.0f * (shading - 2. * inv_shadows));
-		//c = txHatch_test6.Sample(samLinear, pixel_pos);
-	}
+	//txHatch1
+	//tests:
+	//tx_test1
+	c = tx_test1.Sample(samLinear, pixel_pos);
+	//return float4(c.a, c.a, c.a, 1.0f);
 	
-	/*if((iTex0.y % 2) == 0)
-		return float4(0,0,0,0);*/
 	
-	//return float4(1,1,1,1);
-	//c = 1 - c;
-	//return float4(1,1,1,1);
+	c.r = c.r - 1;
+	c.b = c.b - 1;
+	c.g = c.g - 1;
+	c.a = c.a;
 	//return c;
+	float alpha = c.a;
+	
+	
 
 	float intensity = intensity_sketch;
 
 	float color_int = (c.r+c.g+c.b)/3.0f;
 	color_int = step(color_int, 0.5f);
-	//color_int = 1- color_int;
-	//return float4(color_int, color_int, color_int, 1.0f);
-	//intensity = step(0.5f, intensity);
-	float alpha = color_int*intensity;
-	
-	/*if(c.r > 0.3f){
-		return float4(0.0f,0.0f,0.0f,0.0f);
-	}*/
-	
-	//alpha = 1.0f;
-	//c.a = alpha;
-	//c = 1-c;
-	
-	
-	//return float4(inv_shadows, inv_shadows, inv_shadows, 1.0f);
-	c.a = alpha;
-	c.a = alpha*(inv_shadows);
-	//c.a  = 1.0f;
-	c.rgb = float3(0,0,0);		//lines black
-	//float w = c.r;
-	//w = step(w, 0.60f);
-	//w = 1 -w;
-	//w *= 0.2f;
-	//return float4(w,w,w,w);
-	//c = float4(c.r,c.r,c.r,c.r);
-	
-	//c = step(c, 0.5f);
-	
-	
 
+	//*diff
+	float inv_specular = (1 - specular);
+	inv_specular = pow(inv_specular,5);
+	diff = 1 - diff;
+	float shading = inv_specular*0.2f+diff*0.8f;
+	//return float4(specular,specular,specular,1);
+	//return float4(inv_specular,inv_specular,inv_specular,1);
+	
+	//return float4(diff, diff, diff, 1);
+	shading = shading*5 - 3;
+	//return float4(shading,shading,shading,1);
+	//return float4(alpha, alpha, alpha, 1);
+	
+	
+	c.a = alpha*(inv_shadows*inv_shadows)*shading;
+	c.a = alpha*val;
+	//return float4(inv_shadows, inv_shadows, inv_shadows, 1);
+	//c.a = inv_shadows;
+	//float LC = 1 - length(c.rgb);
+	//c.a *= step(0.2, inv_shadows); //* LC;
+	
+	//c.a = c.a*2 - 1*c.a;
+	//c.a  = 1.0f;
+	//return float4(c.a, c.a, c.a, 1.0f);
+	//c.a = 0;
+	
+	c.rgb = diffuse.xyz*0.5f;
 	return c;
 	
 	//return src;

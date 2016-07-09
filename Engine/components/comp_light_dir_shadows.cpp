@@ -11,7 +11,7 @@ bool TCompLightDirShadows::load(MKeyValue& atts) {
   int res = atts.getInt("resolution", 256);
   rt_shadows = new CRenderToTexture();
   // I don't need a color buffer, just the ZBuffer
-  bool is_ok = rt_shadows->createRT("ShadowMap", res, res, DXGI_FORMAT_UNKNOWN, DXGI_FORMAT_R32_TYPELESS);
+  bool is_ok = rt_shadows->createRT("ShadowMap", Render.getXRes(), Render.getYRes(), DXGI_FORMAT_UNKNOWN, DXGI_FORMAT_R32_TYPELESS);
   setObjName(rt_shadows, "rt_shadows");
   assert(is_ok);
 
@@ -50,13 +50,19 @@ void TCompLightDirShadows::generateShadowMap() {
   Resources.get("shadow_gen.tech")->as<CRenderTechnique>()->activate();
 
   // Pintar los shadow casters
-  RenderManager.renderShadowCasters();
+  RenderManager.renderShadowCasters(CHandle(this).getOwner());
+
+  // activar la tech de shadow map generation
+  Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
+
+  // Pintar los shadow casters
+  RenderManager.renderShadowCastersSkin();
 
   activateRS(RSCFG_DEFAULT);
 }
 
 void TCompLightDirShadows::destroy() {
-  rt_shadows->destroy();
+	//if(rt_shadows)rt_shadows->destroy();
 }
 
 void TCompLightDirShadows::setNewFov(float fov_in_rads) {

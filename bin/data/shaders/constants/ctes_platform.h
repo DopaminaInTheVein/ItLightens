@@ -10,19 +10,38 @@
 #define CTE_SHADER_HATCHING_SLOT   6
 #define CTE_SHADER_DATA_SLOT	   7
 
+//textures object, 0-19
 #define TEXTURE_SLOT_DIFFUSE       0
 #define TEXTURE_SLOT_NORMALS       1
 #define TEXTURE_SLOT_SPECULAR      2
 #define TEXTURE_SLOT_SELFILUM      3
-#define TEXTURE_SLOT_SHADOWMAP     4
+#define TEXTURE_SLOT_PLUS		   4
+#define TEXTURE_SLOT_MINUS		   5
 
-#define TEXTURE_SLOT_DEPTHS        5
-#define TEXTURE_SLOT_ENVIRONMENT   6
-#define TEXTURE_SLOT_LIGHT_MASK    7
-#define TEXTURE_SLOT_NOISE         8
-#define TEXTURE_SLOT_SPECULARS	   9
-#define TEXTURE_SLOT_DATA1		   10
-#define TEXTURE_SLOT_DATA2		   11
+
+//texture globals, range 10-39
+#define TEXTURE_SLOT_SHADOWMAP     10
+#define TEXTURE_SLOT_DEPTHS        11
+#define TEXTURE_SLOT_ENVIRONMENT   12
+#define TEXTURE_SLOT_LIGHT_MASK    13
+#define TEXTURE_SLOT_NOISE         14
+#define TEXTURE_SLOT_HATCHING	   15
+#define TEXTURE_SLOT_SPECULAR_GL   16
+#define TEXTURE_SLOT_RAMP		   17
+#define TEXTURE_SLOT_SHADOWS	   18
+#define TEXTURE_SLOT_FADE_SCREEN   19
+
+
+//#ifdef _DEBUG
+//texture tests, range 40-49
+#define TEXTURE_SLOT_HATCHING_TEST1	95
+#define TEXTURE_SLOT_HATCHING_TEST2	96
+
+//#endif
+
+//textures temporals, range 50+
+#define TEXTURE_SLOT_DATA1		   50
+#define TEXTURE_SLOT_DATA2		   51
 
 
 #ifdef INC_MCV_PLATFORM_H_

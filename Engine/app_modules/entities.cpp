@@ -134,9 +134,9 @@ bool CEntitiesModule::start() {
 	//	getHandleManager<TCompHierarchy>()->init(nmax);
 	getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
 	getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
-	getHandleManager<TCompCulling>()->init(8);
+	getHandleManager<TCompCulling>()->init(40);
 	getHandleManager<TCompLightDir>()->init(8);
-	getHandleManager<TCompLightDirShadows>()->init(8);
+	getHandleManager<TCompLightDirShadows>()->init(MAX_ENTITIES);
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(8);
@@ -174,9 +174,9 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompFadingGlobe>()->init(32);
 	getHandleManager<LogicHelperArrow>()->init(4);
 	//lights
-	getHandleManager<TCompLightDir>()->init(4);
+	getHandleManager<TCompLightDir>()->init(MAX_ENTITIES);
 	getHandleManager<TCompLightFadable>()->init(4);
-	getHandleManager<TCompLightPoint>()->init(32);
+	getHandleManager<TCompLightPoint>()->init(MAX_ENTITIES);
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
@@ -382,6 +382,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	SUBSCRIBE(TCompCameraMain, TMsgGetCullingViewProj, onGetViewProj);
+	SUBSCRIBE(TCompLightDirShadows, TMsgGetCullingViewProj, onGetViewProj);
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
 	//Control

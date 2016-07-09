@@ -58,6 +58,8 @@ void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux, 
   target = new_target*drag + target*drag_i;
   up_aux = new_up_aux;
 
+  
+
   view = MAT44::CreateLookAt(position, target, up_aux);
 
   front = (target - position);

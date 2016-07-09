@@ -45,7 +45,7 @@ void CRender::activateBackBuffer() {
 
 void CRender::clearMainZBuffer() {
   ctx->ClearDepthStencilView(depth_stencil_view, D3D11_CLEAR_DEPTH, 1.0f, 0);
-  ctx->ClearDepthStencilView(depth_stencil_view, D3D11_CLEAR_STENCIL, 1.0f, 0);
+  //ctx->ClearDepthStencilView(depth_stencil_view, D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
 void CRender::destroyDevice() {

@@ -49,6 +49,28 @@ void VSOnlyPos(
   oPos = mul(worldPos, ViewProjection);
 }
 
+//--------------------------------------------------------------------------------------
+void VSOnlyPosSkin(
+	in float4 iPos : POSITION
+	, in float3 iNormal : NORMAL
+	, in float2 iTex0 : TEXCOORD0
+	, in float4 iTangent : NORMAL1
+	, in int4   iBones : BONES
+	, in float4 iWeights : WEIGHTS
+	, out float4 oPos : SV_POSITION
+	)
+{
+	// This matrix will be reused for the position, Normal, Tangent, etc
+	float4x4 skin_mtx = Bones[iBones.x] * iWeights.x
+		+ Bones[iBones.y] * iWeights.y
+		+ Bones[iBones.z] * iWeights.z
+		+ Bones[iBones.w] * iWeights.w;
+
+	//Position
+	float4 skinned_Pos = mul(iPos, skin_mtx);
+	oPos = mul(skinned_Pos, ViewProjection);
+}
+
 void VSLightDir(
   in float4 iPos : POSITION
   , out float4 oPos : SV_POSITION
@@ -69,10 +91,11 @@ void PSGBuffer(
   , out float4 o_normal : SV_Target1
   , out float1 o_depth : SV_Target2
   , out float4 o_selfIlum : SV_Target3
+  , out float4 o_speculars : SV_Target4
   )
 {
   o_albedo = txDiffuse.Sample(samLinear, iTex0);
-
+  o_speculars = txSpecular.Sample(samLinear, iTex0);
   // Generar la matrix TBN usando la informacion interpolada
   // desde los 3 vertices del triangulo
   float3 T = normalize(iTangent.xyz);
@@ -129,10 +152,7 @@ void PSLightPoint(
   
  float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL, 0.0f))*2.0f;
   
- NL = lightWarp.xyz;
- 
- float inv_shadows = NL;
- o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
+ //NL *= lightWarp.xyz;
 
   // Factor de atenuacion por distancia al centro de la
   // luz. 1 para distancias menores de LightInRadius y 0
@@ -155,7 +175,7 @@ void PSLightPoint(
 
   // Environment. incident_vector = -E
   float3 E_refl = reflect(-E, N);
-  float3 env = txEnvironment.Sample(samLinear, E_refl).xyz;
+  //float3 env = txEnvironment.Sample(samLinear, E_refl).xyz;
   
 	//if(NL < 1.0f)
 		//NL = 1.0f;
@@ -169,24 +189,35 @@ void PSLightPoint(
   
   spec_amount *= specular_force;
   
-  spec_amount *= txSpecular.Load(ss_load_coords).xyz;
-  
+  float inv_shadows = NL*distance_att;
+  if(inv_shadows > 1)
+	inv_shadows = 1;
+	
+  //inv_shadows = 1 - inv_shadows;
+  //inv_shadows = 1 - saturate(inv_shadows);
+ // inv_shadows /= 2;
+  o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
   
   o_color.xyz = lightCol * NL * distance_att * albedo + spec_amount;
-  o_color.xyz += env * 0.3;
+  //o_color.xyz += env * 0.3;
   //o_color.xyz = E_refl.xyz;
   o_color.a = 1.;
   
   //o_color = float4(spec_amount, spec_amount, spec_amount, 1.0f);
   o_specular = float4(spec_amount, spec_amount, spec_amount,1.0f);
+  
+  //o_color = float4(wPos, 1);
+  
+  
 
   //o_color = float4(NL, NL, NL ,1) * albedo;
 }
 
 //--------------------------------------------------------------------------------------
-float4 PSLightDir(
+void PSLightDir(
   in float4 iPosition : SV_Position
-  ) : SV_Target
+  , out float4 o_color : SV_Target0
+  , out float4 o_specular : SV_Target1)
 {
   int3 ss_load_coords = uint3(iPosition.xy, 0);
 
@@ -228,10 +259,26 @@ float4 PSLightDir(
 	light_mask.xyzw = .0;
 
   float4 final_color = light_mask * NL;
+  
+  //rim specular
+  //rim specular_force
+  float3 eye = - (CameraWorldPos.xyz - wPos);
+  eye = normalize(eye);
+  float rim = 2.0f - NL;
+  rim = smoothstep(0.6, 1.0, rim);
+  
+  float rim_force = rim_specular;
+  if(rim_force > 0)
+	rim *= max(N.y - length(N.xz)/rim_force, 0);	//rim only vector up
+  else
+	rim = 0;
+	
+  o_specular = float4(rim,rim,rim,0.f) * distance_att;
+  o_specular.a = 1.0f;
 
   float4 albedo = txDiffuse.Load(ss_load_coords);
 
-  return final_color * albedo;
+  o_color = final_color * albedo;
   
 }
 
@@ -252,25 +299,35 @@ float getShadowAt(float4 wPos) {
   if (light_proj_coords.z < 1e-3)
     return 0.;
 
+	float2 rand = txNoise.Sample(samLinear, float2(wPos.xy)).xy ;/// light_proj_coords.z ;
   float2 center = light_proj_coords.xy;
-  float depth = light_proj_coords.z - 0.001;
-
+  float depth = light_proj_coords.z - 0.001;	
   float amount = tapAt(center, depth);
+  
  
-  float2 sz = float2(2. / xres, 2./yres);
-  amount += tapAt(center + float2(sz.x, sz.y), depth);
-  amount += tapAt(center + float2(-sz.x, sz.y), depth);
-  amount += tapAt(center + float2(sz.x, -sz.y), depth);
-  amount += tapAt(center + float2(-sz.x, -sz.y), depth);
+  float2 sz; //= float2(2.0/ xres, 2.0/yres)*light_proj_coords.z;
 
-  amount += tapAt(center + float2(sz.x, 0), depth);
-  amount += tapAt(center + float2(-sz.x, 0), depth);
-  amount += tapAt(center + float2(0, -sz.y), depth);
-  amount += tapAt(center + float2(0, sz.y), depth);
- 
-  amount *= 1.f / 9.;
- 
-  return amount;
+  float step_sz = 2.0f;
+  sz = float2(step_sz/xres, step_sz/yres);
+  float steps = 1.0f;
+  float2 pos = center;
+  for(int i=1; i<= steps; i++){
+	 pos = center + txNoise.Sample(samLinear, pos).xy * sz ;
+  
+	  amount += tapAt(pos + float2(sz.x, sz.y)*i, depth);
+	  amount += tapAt(pos + float2(-sz.x, sz.y)*i, depth);
+	  amount += tapAt(pos + float2(sz.x, -sz.y)*i, depth);
+	  amount += tapAt(pos + float2(-sz.x, -sz.y)*i, depth);
+
+	  amount += tapAt(pos + float2(sz.x, 0)*i, depth);
+	  amount += tapAt(pos + float2(-sz.x, 0)*i, depth);
+	  amount += tapAt(pos + float2(0, -sz.y)*i, depth);
+	  amount += tapAt(pos + float2(0, sz.y)*i, depth);
+ }
+  
+  amount *= 1.f / (8. * steps + 1);
+  
+  return amount/2.;
 }
 
 
@@ -278,6 +335,7 @@ float getShadowAt(float4 wPos) {
 void PSLightDirShadows(
   in float4 iPosition : SV_Position
   , out float4 o_color  : SV_Target0
+  , out float4 o_specular : SV_Target1
   , out float4 o_inv_shadows : SV_Target2
   ) 
 {
@@ -302,24 +360,8 @@ void PSLightDirShadows(
   float NL = saturate(dot(N, L));
   
   float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL, 1.0f))*2.0f;
-  
-   //NL = lightWarp.xyz;
-
-  // Currently, no attenuation based on distance
-  // Attenuation based on shadowmap
-  float att_factor = getShadowAt(float4(wPos, 1));
-
-  att_factor *= NL;
-  
-  
-  
-  //o_shadows = att_factor/10.0f;
-  //o_shadows = float4(0.0f,0.0f,.0f,1.0f);
- // o_shadows = float4(0.0f,1.0f,0.0f,1.0f);
- float inv_shadows = att_factor;
- o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, 1);
-  
-  o_color = float4(att_factor, att_factor, att_factor, 1 - att_factor);
+  float NLWarped = lightWarp.xyz;
+  NLWarped = pow((NLWarped*0.5f + 0.5f),2);
   
   float4 lightSpacePos = mul(float4(wPos,1), LightViewProjection);
   lightSpacePos.xyz /= lightSpacePos.w;
@@ -329,6 +371,25 @@ void PSLightDirShadows(
   float4 light_mask = txLightMask.Sample(samLightBlackBorder, lightSpacePos.xy );
   if( lightSpacePos.w < 0 )
 	light_mask.xyzw = .0;
+  
+  // Currently, no attenuation based on distance
+  // Attenuation based on shadowmap
+  float att_factor = getShadowAt(float4(wPos, 1));
+
+  att_factor *= NLWarped * light_mask;
+  
+  
+  
+  //o_shadows = att_factor/10.0f;
+  //o_shadows = float4(0.0f,0.0f,.0f,1.0f);
+ // o_shadows = float4(0.0f,1.0f,0.0f,1.0f);
+ float inv_shadows = att_factor;
+ if(inv_shadows > 1)
+	inv_shadows = 1;
+
+ o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, 1);
+  
+  o_color = float4(att_factor, att_factor, att_factor, att_factor);
 
   float4 final_color = light_mask * att_factor;
 
@@ -336,10 +397,40 @@ void PSLightDirShadows(
 
   //return final_color * albedo;
   
-  o_color = albedo*final_color;
+  
+  //rim specular_force
+  float3 eye = - (CameraWorldPos.xyz - wPos);
+  eye = normalize(eye);
+  float rim = 2.0f - NL;
+  rim = smoothstep(0.6, 1.0, rim);
+  
+  float rim_force = rim_specular;
+  if(rim_force > 0)
+	rim *= max(N.y - length(N.xz)/rim_force, 0);	//rim only vector up
+  else
+	rim = 0;
+	
+	
+	
+  //o_inv_shadows += o_inv_shadows*rim;
+  
+  o_specular = float4(rim,rim,rim,0.f) * att_factor;
+  o_specular.a = 1.0f;
+  
+  //o_specular = float4(1,1,1,1);
+  o_specular = float4(0,0,0,1);
+  
+  //rim = 0.0f;
+  //return final_color * albedo;
+ // o_inv_shadows = float4(rim, rim, rim , 1.0f);
+ o_color = (NL * final_color * albedo + o_specular) * att_factor;
+  //o_color = albedo*final_color + o_specular;
   //o_color = txWarpLight.Sample(samClampLinear, float2(att_factor, 1.0f))*2.0f;
   
   //o_color = float4(0,0,0,0);
+  //o_color = float4(1,1,1,1);
+  //o_color = light_mask;
+  
 }
 
 

@@ -14,7 +14,9 @@ ShaderBuffer(TCteHatching, CTE_SHADER_HATCHING_SLOT)
 	float color_ramp;
 
 	float specular_force;
-	float dummy_hatch1;
+
+	float rim_specular;
+
 	float dummy_hatch2;
 	float dummy_hatch3;
 

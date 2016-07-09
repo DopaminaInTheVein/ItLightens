@@ -1,6 +1,7 @@
 #include "mcv_platform.h"
 #include "render_to_texture.h"
 #include "draw_utils.h"
+#include "resources/resources_manager.h"
 
 CRenderToTexture::CRenderToTexture() 
 : color_format( DXGI_FORMAT_UNKNOWN )
@@ -35,12 +36,15 @@ bool CRenderToTexture::createRT(
   // Create color buffer
   color_format = new_color_format;
   if (color_format != DXGI_FORMAT_UNKNOWN) {
-    if (!create(new_xres, new_yres, color_format, CREATE_RENDER_TARGET))
-      return false;
-    HRESULT hr = Render.device->CreateRenderTargetView(resource, nullptr, &render_target_view);
-    if (FAILED(hr))
-      return false;
-    setDXName(render_target_view, getName().c_str());
+	  if (!create(new_xres, new_yres, color_format, CREATE_RENDER_TARGET))
+		  return false;
+	  HRESULT hr = Render.device->CreateRenderTargetView(resource, nullptr, &render_target_view);
+	  if (FAILED(hr))
+		  return false;
+	  setDXName(render_target_view, getName().c_str());
+  }
+  else {
+	  Resources.registerNew(this);
   }
 
   // Create ZBuffer 

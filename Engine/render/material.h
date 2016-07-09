@@ -15,6 +15,8 @@ public:
     	, NORMALMAP
     	, ENVIRONMENT
 		, SELFILUM
+		, PLUS_POLARITY		//customized selfium, only activated on plus
+		, MINUS_POLARITY	//customized selfium, only activated on minus
 		, COUNT
 	};
 	const CRenderTechnique*   tech;
@@ -34,7 +36,7 @@ public:
 	//void renderUIDebug();
 	bool load(const char* filename);
 
-  void activateTextures() const;
+  void activateTextures(int pol_ilum = 0) const;
   static void deactivateTextures();
 };
 

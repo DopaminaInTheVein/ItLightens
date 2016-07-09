@@ -17,6 +17,10 @@ CRenderManager RenderManager;
 
 #include "render/shader_cte.h"
 
+//polarity
+#include "player_controllers\player_controller.h"	//for player
+#include "components\comp_polarized.h"				//for polarized objects
+
 // -------------------------------------------------
 // We need to implement both operators
 bool operator<(const CRenderManager::TKey& k, const CRenderTechnique::eCategory cat) {
@@ -80,8 +84,12 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 			k.owner = owner;
 			k.transform = h_transform;
 			k.room = oroom;
+			k.aabb = h_aabb;
 			k.isPlayer = playercandidate;
-			all_shadow_keys.push_back(k);
+			if (!s.material->tech->usesBones())
+				all_shadow_keys.push_back(k);
+			 else
+				all_shadow_skinning_keys.push_back(k);
 		}
 	}
 
@@ -159,8 +167,8 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 		);
 	auto d0 = std::distance(all_keys.begin(), r.first);
 	auto d1 = std::distance(all_keys.begin(), r.second);
-	const TKey* it = &all_keys[0] + d0;
-	const TKey* end_it = &all_keys[0] + d1;
+	TKey* it = &all_keys[0] + d0;
+	TKey* end_it = &all_keys[0] + d1;
 
 	static TKey null_key;
 	memset(&null_key, 0x00, sizeof(TKey));
@@ -184,12 +192,41 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 				}
 			}
 
+			if (it->isPlayer) {
+				CEntity* e_p = it->owner.getOwner();
+				if (e_p) {
+					player_controller* pc = e_p->get<player_controller>();
+					if (pc) {
+						it->polarity = pc->GetPolarityInt();
+					}
+					else
+						it->polarity = 0;
+				}
+				else {
+					it->polarity = 0;
+				}
+			}
+			else {
+				CEntity* e_o = it->owner.getOwner();
+				if (e_o) {
+					TCompPolarized* op = e_o->get<player_controller>();
+					if (op) {
+						it->polarity = op->force.polarity;
+					}
+					else
+						it->polarity = 0;
+				}
+				else {
+					it->polarity = 0;
+				}
+			}
+
 			if (it->material != prev_it->material) {
 				if (!prev_it->material || it->material->tech != prev_it->material->tech) {
 					it->material->tech->activate();
 					curr_tech_used_bones = it->material->tech->usesBones();
 				}
-				it->material->activateTextures();
+				it->material->activateTextures(it->polarity);
 			}
 			if (it->mesh != prev_it->mesh)
 				it->mesh->activate();
@@ -230,24 +267,88 @@ void CRenderManager::renderUICulling() {
 }
 
 // ------------------------------------------
-void CRenderManager::renderShadowCasters() {
+void CRenderManager::renderShadowCasters(CHandle h_light) {
 	CTraceScoped scope("Shadow Casters");
+	PROFILE_FUNCTION("SHADOW CASTERS OBJ");
 	auto it = all_shadow_keys.begin();
 	std::string pj_room = SBB::readSala();
 
+	// Check if we have culling information from the camera source
+	CEntity* e_camera = h_light;
+	TCompCulling::TCullingBits* culling_bits = nullptr;
+	TCompCulling* culling = nullptr;
+	if (e_camera)
+		culling = e_camera->get<TCompCulling>();
+	if (culling)
+		culling_bits = &culling->bits;
+	// To get the index of each aabb
+	auto hm_aabbs = getHandleManager<TCompAbsAABB>();
+	const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
+	int nkeys_rendered = 0;
 	while (it != all_shadow_keys.end()) {
-		if (it->isPlayer || pj_room == "none" || it->room == "none" || pj_room == it->room) {
+		if (pj_room == "none" || it->room == "none" || pj_room == it->room) {
+
+			if (culling_bits) {
+				TCompAbsAABB* aabb = it->aabb;
+				if (aabb) {
+					intptr_t idx = aabb - base_aabbs;
+					if (!culling_bits->test(idx)) {
+						++it;
+						continue;
+					}
+					nkeys_rendered++;
+				}
+			}
+
 			const TCompTransform* c_tmx = it->transform;
 			//TODO: Review Pedro!
 			//assert(c_tmx);
 			if (c_tmx) {
 				activateWorldMatrix(c_tmx->asMatrix());
+				// If the shadows_keys were sorted by mesh
+				// I could skip the activation and just call it
+				// when the mesh changed, and only call the render
+				it->mesh->activateAndRender();
+			}
+			else {
+				fatal("render__manager: tranfrom from shadowcaster null");
+			}
+		}
+
+		++it;
+	}
+
+	renderedCulling.push_back(nkeys_rendered);
+}
+
+// ------------------------------------------
+
+//render shadowcaster with skinning tech 
+void CRenderManager::renderShadowCastersSkin() {
+	PROFILE_FUNCTION("SHADOW CASTER SKIN");
+	auto it = all_shadow_skinning_keys.begin();
+	std::string pj_room = SBB::readSala();
+	while (it != all_shadow_skinning_keys.end()) {
+		if (it->isPlayer || pj_room == "none" || it->room == "none" || pj_room == it->room) {
+			const TCompTransform* c_tmx = it->transform;
+
+			if (c_tmx) {
+				activateWorldMatrix(c_tmx->asMatrix());
+
+				const CEntity* e = it->owner.getOwner();
+				assert(e);
+				const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+				assert(comp_skel);
+				comp_skel->uploadBonesToCteShader();
 
 				// If the shadows_keys were sorted by mesh
 				// I could skip the activation and just call it
 				// when the mesh changed, and only call the render
-				CTraceScoped scope("ShadowCasterElem");
 				it->mesh->activateAndRender();
+			}
+			else {
+				fatal("render__manager: tranfrom from shadowcaster null");
+
 			}
 		}
 		++it;

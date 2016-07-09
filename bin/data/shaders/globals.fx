@@ -15,10 +15,11 @@ Texture2D txLightMask : USE_SHADER_REG(TEXTURE_SLOT_LIGHT_MASK);
 Texture2D txSelfIlum  : USE_SHADER_REG(TEXTURE_SLOT_SELFILUM);
 Texture2D txNoise     : USE_SHADER_REG(TEXTURE_SLOT_NOISE);
 Texture2D txShadowMap : USE_SHADER_REG(TEXTURE_SLOT_SHADOWMAP);
+Texture2D txSpeculars : USE_SHADER_REG(TEXTURE_SLOT_SPECULAR_GL);
 
 Texture2D txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
 
-Texture2D txWarpLight : register(t70);
+Texture2D txWarpLight : USE_SHADER_REG(TEXTURE_SLOT_RAMP);
 
 // Same order as
 SamplerState samLinear : register(s0);

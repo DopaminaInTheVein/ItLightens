@@ -51,6 +51,12 @@ void CMaterial::onStartElement(const std::string &elem, MKeyValue &atts) {
 		else if (type_name == "selfilum") {
 			type_slot = TTextureSlot::SELFILUM;
 		}
+		else if (type_name == "selfilum_plus") {
+			type_slot = TTextureSlot::PLUS_POLARITY;
+		}
+		else if (type_name == "selfilum_minus") {
+			type_slot = TTextureSlot::MINUS_POLARITY;
+		}
 		else {
 			fatal("Invalid texture slot type %s found at material definition\n", type_name.c_str());
 			return;
@@ -70,7 +76,7 @@ bool CMaterial::load(const char* filename) {
 }
 
 // ----------------------------------------------
-void CMaterial::activateTextures() const {
+void CMaterial::activateTextures(int pol_ilum) const {
 	PROFILE_FUNCTION("render material: activate textures");
 	/*
 	for (int i = 0; i < TTextureSlot::COUNT; i++) {
@@ -90,11 +96,33 @@ void CMaterial::activateTextures() const {
 		Resources.get("textures/default_normal_map.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NORMALS);
 	}
 
-	if(textures[SELFILUM])
-		textures[SELFILUM]->activate(TEXTURE_SLOT_SELFILUM);
-	else {
-		all_black->activate(TEXTURE_SLOT_SELFILUM);
+	//sel ilumination
+	switch (pol_ilum) {
+	case 0: //neutral pol
+		if (textures[SELFILUM])
+			textures[SELFILUM]->activate(TEXTURE_SLOT_SELFILUM);
+		else {
+			all_black->activate(TEXTURE_SLOT_SELFILUM);
+		}
+		break;
+
+	case 2: //positive
+		if (textures[PLUS_POLARITY])
+			textures[PLUS_POLARITY]->activate(TEXTURE_SLOT_SELFILUM);
+		else {
+			all_black->activate(TEXTURE_SLOT_SELFILUM);
+		}
+		break;
+
+	case 1:  //negative
+		if (textures[MINUS_POLARITY])
+			textures[MINUS_POLARITY]->activate(TEXTURE_SLOT_SELFILUM);
+		else {
+			all_black->activate(TEXTURE_SLOT_SELFILUM);
+		}
+		break;
 	}
+	
 
 	if (textures[SPECULAR]) {
 		textures[SPECULAR]->activate(TEXTURE_SLOT_SPECULAR);

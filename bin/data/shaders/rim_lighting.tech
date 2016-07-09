@@ -1,0 +1,4 @@
+<tech>
+  <vs fx="deferred" main="VSTextured" decl="positions_uv" />
+  <ps fx="deferred" main="PSRimLighting" />
+</tech>
