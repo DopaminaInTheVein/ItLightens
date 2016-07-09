@@ -1,24 +1,31 @@
 function addAlexLogicCamaras = (
+	if $__camara != undefined then (
+		delete $__camara
+	)
 	-- CAMARAS DETECTORAS
 	local auxobj =  $camara_centro
 	setUserProp auxobj "typeObject" "detection_cam"
-	setUserProp auxobj "range" 4
-	setUserProp auxobj "width" 2
-	setUserProp auxobj "rot_speed_sonar" 0.9
+	setUserProp auxobj "staticMesh" "ms3/camara_derecha"
+	setUserProp auxobj "mesh" "ms3/camara_derecha"
+	setUserProp auxobj "range" 6
+	setUserProp auxobj "width" 3
+	setUserProp auxobj "rot_speed_sonar" 0.45
 	setUserProp auxobj "rotating_left" false
 	setUserProp auxobj "max_rotation" 162
 	auxobj.rotation.x_rotation = 0
 	auxobj.rotation.y_rotation = 0
 	auxobj.rotation.z_rotation = 0
 	local currentMatrix = auxobj.transform
-	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 81))
+	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 171))
 	auxobj.transform = currentMatrix
 		
 	auxobj =  $camara_derecha
 	setUserProp auxobj "typeObject" "detection_cam"
-	setUserProp auxobj "range" 4
-	setUserProp auxobj "width" 2
-	setUserProp auxobj "rot_speed_sonar" 0.5
+	setUserProp auxobj "staticMesh" "ms3/camara_derecha"
+	setUserProp auxobj "mesh" "ms3/camara_derecha"
+	setUserProp auxobj "range" 6
+	setUserProp auxobj "width" 3
+	setUserProp auxobj "rot_speed_sonar" 0.25
 	setUserProp auxobj "rotating_left" false
 	setUserProp auxobj "max_rotation" 90
 	auxobj.rotation.x_rotation = 0
@@ -30,22 +37,24 @@ function addAlexLogicCamaras = (
 
 	auxobj =  $camara_izquierdaq
 	setUserProp auxobj "typeObject" "detection_cam"
-	setUserProp auxobj "range" 4
-	setUserProp auxobj "width" 2
-	setUserProp auxobj "rot_speed_sonar" 0.5
+	setUserProp auxobj "staticMesh" "ms3/camara_derecha"
+	setUserProp auxobj "mesh" "ms3/camara_derecha"
+	setUserProp auxobj "range" 6
+	setUserProp auxobj "width" 3
+	setUserProp auxobj "rot_speed_sonar" 0.25
 	setUserProp auxobj "rotating_left" true
 	setUserProp auxobj "max_rotation" 90
 	auxobj.rotation.x_rotation = 0
 	auxobj.rotation.y_rotation = 0
 	auxobj.rotation.z_rotation = 0
 	currentMatrix = auxobj.transform
-	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 315))
+	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 135))
 	auxobj.transform = currentMatrix
 )
 
 fn assign_room_to_all_from_x sala1 sala2= (
 	for obj in $* do (
-		if (not (hasProperty obj "room_name") and (obj.name != "suelo_003") and (obj.name != "suelo_2") and (obj.name != "rodapies") and (obj.name != "paredes_milestone_3") and (obj.name != "Techo_milestone_3") and (obj.name != "sofa2") and (obj.name != "__elevator") and (obj.name != "__cElevatoGround") )then (
+		if ( (obj.name != "suelo_003") and (obj.name != "suelo_2") and (obj.name != "rodapies") and (obj.name != "paredes_milestone_3") and (obj.name != "Techo_milestone_3") and (obj.name != "sofa2") and (obj.name != "__elevator") and (obj.name != "__cElevatoGround") )then (
 			add_attribute = custAttributes.add obj v_room_data baseobject:True
 			local trans = obj.transform
 			if trans.position.x < -45 then (
@@ -130,7 +139,7 @@ fn createRoomLimiterForPossession = (
 	) 
 )
 
---addAlexLogicCamaras()
+addAlexLogicCamaras()
 assign_room_to_all_from_x "sala1" "sala2"
---createRoomSwitcherTrigger "sala1" "sala2"
---createRoomLimiterForPossession()
+createRoomSwitcherTrigger "sala1" "sala2"
+createRoomLimiterForPossession()
