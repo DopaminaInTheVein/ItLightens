@@ -56,6 +56,7 @@ void SkelControllerMole::ungrabPila()
 	msg.handle = CHandle();
 	grabbedPila.sendMsg(msg);
 	pila->setFalling();
+	grabbedPila = CHandle();
 	//disableIK(SK_LHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
 	//(SK_RHAND, SK_MOLE_TIME_TO_UNGRAB, );
 }
@@ -155,10 +156,16 @@ void SkelControllerMole::myUpdate()
 
 void SkelControllerMole::updateGrab()
 {
-	if (!grabbed.isValid()) return;
-	if (currentState == AST_IDLE) currentState = AST_GRAB_IDLE;
-	else if (currentState == AST_RUN) currentState = AST_GRAB_WALK;
-	else if (currentState == AST_MOVE) currentState = AST_GRAB_WALK;
+	if (grabbed.isValid()) {
+		if (currentState == AST_IDLE) currentState = AST_GRAB_IDLE;
+		else if (currentState == AST_RUN) currentState = AST_GRAB_WALK;
+		else if (currentState == AST_MOVE) currentState = AST_GRAB_WALK;
+	}
+	else {
+		if (currentState == AST_GRAB_IDLE) currentState = AST_IDLE;
+		else if (currentState == AST_GRAB_WALK) currentState = AST_MOVE;
+	}
+
 	if (isMovingBox()) {
 		updateGrabPoints();
 	}
@@ -166,13 +173,15 @@ void SkelControllerMole::updateGrab()
 
 void SkelControllerMole::updatePila()
 {
-	if (!grabbedPila.isValid()) return;
-	if (currentState == AST_IDLE) currentState = AST_PILA_IDLE;
-	else if (currentState == AST_RUN) currentState = AST_PILA_WALK;
-	else if (currentState == AST_MOVE) currentState = AST_PILA_WALK;
-	//if (isMovingBox()) {
-	//	updateGrabPoints();
-	//}
+	if (grabbedPila.isValid()) {
+		if (currentState == AST_IDLE) currentState = AST_PILA_IDLE;
+		else if (currentState == AST_RUN) currentState = AST_PILA_WALK;
+		else if (currentState == AST_MOVE) currentState = AST_PILA_WALK;
+	}
+	else {
+		if (currentState == AST_PILA_IDLE) currentState = AST_IDLE;
+		else if (currentState == AST_PILA_WALK) currentState = AST_MOVE;
+	}
 }
 
 void SkelControllerMole::updateGrabPoints()
