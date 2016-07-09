@@ -9,6 +9,7 @@
 #define ST_PILA_GROUND "on_ground"
 #define ST_PILA_GRABBED "grabbed"
 #define ST_PILA_FALLING "falling"
+#define ST_PILA_FALLING_BEGIN "start_falling"
 
 using namespace std;
 
@@ -18,9 +19,9 @@ map<string, statehandler> TCompPila::statemap = {};
 void TCompPila::setFalling()
 {
 	GET_MY(phys, TCompPhysics);
-	phys->AddMovement(VEC3(0.f, 0.5f, 0.f));
+	//phys->AddMovement(VEC3(0.f, 0.5f, 0.f));
 	phys->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, true);
-	ChangeState(ST_PILA_FALLING);
+	ChangeState(ST_PILA_FALLING_BEGIN);
 }
 
 #define AddStPila(name, func) AddState(name, (statehandler)&TCompPila::func)
@@ -36,6 +37,7 @@ void TCompPila::onCreate(const TMsgEntityCreated& msg)
 	if (statemap.empty()) {
 		AddStPila(ST_PILA_GROUND, OnGround);
 		AddStPila(ST_PILA_GRABBED, Grabbed);
+		AddStPila(ST_PILA_FALLING_BEGIN, StartFalling);
 		AddStPila(ST_PILA_FALLING, Falling);
 	}
 
@@ -78,11 +80,19 @@ void TCompPila::OnGround()
 void TCompPila::Grabbed()
 {
 }
+void TCompPila::StartFalling()
+{
+	auto phys = keepVertical();
+	//GET_MY(tmx, TCompTransform);
+	//phys->AddMovement(VEC3(0.f, 1.5f, 0.f));
+	//tmx->addPosition(VEC3(0.f, 1.5f, 0.f));
+	ChangeState(ST_PILA_FALLING);
+}
 
 void TCompPila::Falling()
 {
 	auto phys = keepVertical();
-	phys->AddMovement(VEC3(0.f, getDeltaTime() * -10.f, 0.f));
+	phys->AddMovement(VEC3(0.f, getDeltaTime() * -5.f, 0.f));
 }
 
 void TCompPila::onContact(const TMsgContact& msg)

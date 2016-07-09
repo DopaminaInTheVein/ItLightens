@@ -288,6 +288,7 @@ void player_controller_mole::LeavingPila()
 
 		pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		pilaGrabbed = CHandle();
+		animController->setState(AST_IDLE);
 	}
 }
 
@@ -537,6 +538,7 @@ void player_controller_mole::GrabbingPila2()
 {
 	//TODO
 	ChangeState(ST_MOLE_PILA);
+
 	GET_COMP(pila_p, pilaNear, TCompPhysics);
 	pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, true);
 
@@ -578,6 +580,8 @@ void player_controller_mole::GrabbedPila()
 	mole_max_speed /= 2;
 
 	ChangeState("idle");
+	animController->setState(AST_PILA_IDLE);
+
 	//logic_manager->throwEvent(logic_manager->OnPickupBox, "");
 }
 

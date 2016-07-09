@@ -37,6 +37,7 @@ struct TCompPila : public aicontroller, public TTriggerLua {
 	void executeTrigger(CLogicManagerModule::EVENT logicEvent) override;
 	void OnGround();
 	void Grabbed();
+	void StartFalling();
 	void Falling();
 	void PutIn(CHandle, bool notify = true);
 	void Grab();
