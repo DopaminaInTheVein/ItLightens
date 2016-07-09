@@ -42,3 +42,7 @@ function OnAction_tWireDown( )
 wireGoUp()
 end
 
+function OnAction_tWireUp( )
+wireGoDown()
+end
+

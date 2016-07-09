@@ -2568,7 +2568,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="-120.529 -1.12088 -9.90433"
+   pos="10.5155 -10.8784 -22.1313"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -4193,8 +4193,8 @@
 <name
    name="WirePosUp"/>
 <transform
-   pos="-65.7222 17.2847 17.9972"
-   quat="0 0.99907 0 0.0431127"
+   pos="-68.5186 16.212 16.4784"
+   quat="0 0.753234 0 0.657752"
    scale="1.0"/>
 <room
    name="sala2"/>
@@ -4310,6 +4310,232 @@
    pos="-62.2198 0.753134 -5.47724"
    quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_1"/>
+<transform
+   pos="-17.8101 -1.54614 24.6676"
+   quat="0 0.999986 0 0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_1"/>
+<transform
+   pos="-17.8101 -1.54614 24.6676"
+   quat="0 0.999986 0 0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_2"/>
+<transform
+   pos="29.6176 -23.2889 16.4296"
+   quat="0 0.99999 0 0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_2"/>
+<transform
+   pos="29.6176 -23.2889 16.4296"
+   quat="0 0.99999 0 0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_3"/>
+<transform
+   pos="-6.74973 -12.2363 -19.6071"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_3"/>
+<transform
+   pos="-6.74973 -12.2363 -19.6071"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_4"/>
+<transform
+   pos="-40.825 -0.555909 -7.16371"
+   quat="0 0.705949 0 0.708263"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_4"/>
+<transform
+   pos="-40.825 -0.555908 -7.16371"
+   quat="0 0.705949 0 0.708263"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_5"/>
+<transform
+   pos="-73.5068 -0.588134 8.45465"
+   quat="0 0.846634 0 0.532176"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_5"/>
+<transform
+   pos="-73.5068 -0.588134 8.45465"
+   quat="0 0.846634 0 0.532176"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_6"/>
+<transform
+   pos="-119.645 -0.582276 -12.5256"
+   quat="0 -0.695415 0 0.718609"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_6"/>
+<transform
+   pos="-119.645 -0.582276 -12.5256"
+   quat="0 -0.695415 0 0.718609"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.714291 0.725 0.922822"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   actived="true"
+   action="activate"/>
+<name
+   name="tWireUp"/>
+<transform
+   pos="-69.2854 16.398 16.661"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags
+   tags="teleport"/>
+<name
+   name="WirePosDown"/>
+<transform
+   pos="-85.4879 -0.533921 -7.74967"
+   quat="0 0.753234 0 0.657752"
+   scale="1.0"/>
+<room
+   name="sala2"/>
 
 </entity>
 
