@@ -1,8 +1,7 @@
 function addAlexLogicCamaras = (
 	-- CAMARAS DETECTORAS
-	local auxobj =  $camera_1
+	local auxobj =  $camara_centro
 	setUserProp auxobj "typeObject" "detection_cam"
-	-- no! caca! setUserProp auxobj "staticMesh" "ms3/logic/camera"
 	setUserProp auxobj "range" 4
 	setUserProp auxobj "width" 2
 	setUserProp auxobj "rot_speed_sonar" 0.9
@@ -12,12 +11,11 @@ function addAlexLogicCamaras = (
 	auxobj.rotation.y_rotation = 0
 	auxobj.rotation.z_rotation = 0
 	local currentMatrix = auxobj.transform
-	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 -9))
+	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 81))
 	auxobj.transform = currentMatrix
 		
-	auxobj =  $camera_2
+	auxobj =  $camara_derecha
 	setUserProp auxobj "typeObject" "detection_cam"
-	-- no! caca! setUserProp auxobj "staticMesh" "ms3/logic/camera"
 	setUserProp auxobj "range" 4
 	setUserProp auxobj "width" 2
 	setUserProp auxobj "rot_speed_sonar" 0.5
@@ -27,12 +25,11 @@ function addAlexLogicCamaras = (
 	auxobj.rotation.y_rotation = 0
 	auxobj.rotation.z_rotation = 0
 	currentMatrix = auxobj.transform
-	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 225))
+	preRotate currentMatrix (eulertoquat (eulerAngles 0 0 45))
 	auxobj.transform = currentMatrix
 
-	auxobj =  $camera_3
+	auxobj =  $camara_izquierdaq
 	setUserProp auxobj "typeObject" "detection_cam"
-	-- no! caca! setUserProp auxobj "staticMesh" "ms3/logic/camera"
 	setUserProp auxobj "range" 4
 	setUserProp auxobj "width" 2
 	setUserProp auxobj "rot_speed_sonar" 0.5
@@ -48,7 +45,7 @@ function addAlexLogicCamaras = (
 
 fn assign_room_to_all_from_x sala1 sala2= (
 	for obj in $* do (
-		if (not (hasProperty obj "room_name") and (obj.name != "suelo_003") and (obj.name != "suelo_2") and (obj.name != "rodapies") and (obj.name != "paredes_milestone_3") and (obj.name != "Techo_milestone_3") )then (
+		if (not (hasProperty obj "room_name") and (obj.name != "suelo_003") and (obj.name != "suelo_2") and (obj.name != "rodapies") and (obj.name != "paredes_milestone_3") and (obj.name != "Techo_milestone_3") and (obj.name != "sofa2") and (obj.name != "__elevator") and (obj.name != "__cElevatoGround") )then (
 			add_attribute = custAttributes.add obj v_room_data baseobject:True
 			local trans = obj.transform
 			if trans.position.x < -45 then (
@@ -61,6 +58,10 @@ fn assign_room_to_all_from_x sala1 sala2= (
 )
 
 fn createRoomSwitcherTrigger sala1 sala2 = (
+	if $Trigger_Cambio_Sala != undefined then (
+		delete $Trigger_Cambio_Sala
+	)
+	
 	local nouObj = undefined
 	local filePath = (objMax_dir+"TriggerBox.max")
 	local objectes = getmaxfileobjectnames filePath
@@ -129,7 +130,7 @@ fn createRoomLimiterForPossession = (
 	) 
 )
 
---addAlexLogicCamaras()
---assign_room_to_all_from_x "sala1" "sala2"
---createRoomSwitcherTrigger "sala1" "sala2"
---createRoomLimiterForPossession()
+addAlexLogicCamaras()
+assign_room_to_all_from_x "sala1" "sala2"
+createRoomSwitcherTrigger "sala1" "sala2"
+createRoomLimiterForPossession()

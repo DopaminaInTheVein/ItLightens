@@ -18,7 +18,7 @@ class elevator : public TCompBase {
 	float speedDown;
 	float epsilonTarget;
 	float lastSpeed = 0.0f;
-	eElevatorState state;
+
 	eElevatorState prevState;
 
 	//Update info
@@ -31,6 +31,7 @@ class elevator : public TCompBase {
 	void notifyNewState();
 
 public:
+	eElevatorState state;
 	bool getUpdateInfo();
 	void update(float elapsed);
 	void onElevatorAction(const TMsgActivate&);

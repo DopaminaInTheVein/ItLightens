@@ -275,7 +275,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 
 		delete[] pars;
 
-		sprintf(lua_code, "OnDetected(%f,%f,%f,%f);", float_params[0], float_params[1], float_params[2], float_params[3]);		
+		sprintf(lua_code, "OnDetected(%f,%f,%f,%f);", float_params[0], float_params[1], float_params[2], float_params[3]);
 
 		break;
 	}
@@ -609,6 +609,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play ambient function
 		.set("play_ambient", &SLBPublicFunctions::playAmbient)
 		.comment("Executes the specified ambient sound")
+		// Change Player Room
+		.set("player_room", &SLBPublicFunctions::playerRoom)
+		.comment("Change Player Room")
+		.param("string: new room")
 		// launch text span related to npc talks
 		.set("player_talks", &SLBPublicFunctions::playerTalks)
 		.comment("Shows the specified text for aq limited time")

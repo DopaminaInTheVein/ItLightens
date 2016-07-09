@@ -156,26 +156,20 @@ end
 -------------------------------------------------
 idElevator = 301
 triggerElevator = Handle()
---elevatorState = "down"
-function activateElevator( )
-  --if elevatorState == "down" then
-  --  p:print("Elevator Up\n")
-  --  elevatorState = "up"
-  --else
-  --  p:print("Elevator Down\n")
-  --  elevatorState = "down"
-  --end
-  
+function activateElevator( )  
   triggerElevator:getHandleCaller()
   p:setControlEnabled(0)
   h:get_handle_by_id(idElevator)
-  h:activate()
+  elevatorState = h:activate()
   
   p:exec_command( "triggerElevator:setActionable(1);", 2 )
   p:exec_command( "p:setControlEnabled(0);", 5 )
-  
-  --cam:run_cinematic("CineWireGoUp", factorWireGoUp * 5)
-
+  --cambio sala cientifico
+  --if elevatorState == 0 then
+  --  p:playerRoom("sala3")
+  --else if elevatorState == 2
+  --  p:playerRoom("sala2")
+  --end
   p:exec_command( "cam:fade_out(1);", 0.5)
   p:exec_command( "cam:fade_in(1);", 5.0)
   

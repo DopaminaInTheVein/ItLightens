@@ -248,12 +248,16 @@ void SLBHandle::setActionable(int enabled) {
 	}
 }
 
-void SLBHandle::activate() {
+int SLBHandle::activate() {
+	int ret = -1;
 	if (real_handle.isValid()) {
 		CEntity* eTarget = real_handle;
+		elevator * elev = eTarget->get<elevator>();
+		if (elev) ret = elev->state;
 		TMsgActivate msg;
 		eTarget->sendMsg(msg);
 	}
+	return ret;
 }
 
 void SLBHandle::setPolarity(int polarity) {
@@ -467,6 +471,16 @@ void SLBPublicFunctions::playVoice(const char* voice_route) {
 
 void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 	sound_manager->playAmbient(std::string(ambient_route));
+}
+
+void SLBPublicFunctions::playerRoom(const char* newRoom) {
+	CHandle p = tags_manager.getFirstHavingTag("player");
+	CEntity * pe = p;
+	TCompRoom * room = pe->get<TCompRoom>();
+	std::string strRoom(newRoom);
+	if (room->setName(strRoom)) {
+		SBB::postSala(strRoom);
+	}
 }
 
 void SLBPublicFunctions::playerTalks(const char* text, const char* iconName, const char* iconText) {
