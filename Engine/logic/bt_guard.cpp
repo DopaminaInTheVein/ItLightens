@@ -209,7 +209,7 @@ bool bt_guard::playerDetected() {
 
 		SBB::postGuardAlert(name, alert);
 
-		logic_manager->throwEvent(logic_manager->OnDetected, std::to_string(distance) + " " + std::to_string(myPos.x) + " " + std::to_string(myPos.y) + " " + std::to_string(myPos.z));
+		logic_manager->throwEvent(logic_manager->OnDetected, std::to_string(distance) + " " + std::to_string(myPos.x) + " " + std::to_string(myPos.y) + " " + std::to_string(myPos.z), CHandle(this).getOwner());
 		return true;
 	}
 	else {
@@ -320,32 +320,32 @@ bool bt_guard::checkFormation() {
 int bt_guard::actionUnstuckTurn() {
 	PROFILE_FUNCTION("guard: actionunstuckturn");
 	if (!myParent.isValid()) return false;
-	// turn to get unstuck	
+	// turn to get unstuck
 	SET_ANIM_GUARD(AST_IDLE);
 	if (!reoriented) {
 		VEC3 left = getTransform()->getLeft();
 		VEC3 front = getTransform()->getFront();
 		switch (direction) {
-			case 0: {
-				unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-				direction = 2;
-				break;
-			}
-			case 1: {
-				unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-				direction = 1;
-				break;
-			}
-			case 2: {
-				unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
-				direction = 0;
-				break;
-			}
-			default: {
-				unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-				direction = 0;
-				break;
-			}
+		case 0: {
+			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 2;
+			break;
+		}
+		case 1: {
+			unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 1;
+			break;
+		}
+		case 2: {
+			unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 0;
+			break;
+		}
+		default: {
+			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 0;
+			break;
+		}
 		}
 		reoriented = true;
 	}
@@ -388,7 +388,6 @@ int bt_guard::actionStunned() {
 			timerStunt -= getDeltaTime();
 		return STAY;
 	}
-
 }
 
 int bt_guard::actionStepBack() {
@@ -460,10 +459,10 @@ int bt_guard::actionChase() {
 			return OK;
 		}
 		else {*/
-			SET_ANIM_GUARD(AST_MOVE);
-			goTo(posPlayer);
-			return STAY;
-		//}
+	SET_ANIM_GUARD(AST_MOVE);
+	goTo(posPlayer);
+	return STAY;
+	//}
 	}
 }
 
@@ -714,10 +713,10 @@ int bt_guard::actionMoveAround() {
 			return OK;
 		}
 		else {*/
-			SET_ANIM_GUARD(AST_MOVE);
-			goTo(search_player_point);
-			return STAY;
-		//}
+	SET_ANIM_GUARD(AST_MOVE);
+	goTo(search_player_point);
+	return STAY;
+	//}
 	}
 	/*isPathObtainedAccessible = false;
 	isPathObtained = false;*/
@@ -791,10 +790,10 @@ int bt_guard::actionSeekWpt() {
 				return OK;
 			}
 			else {*/
-				SET_ANIM_GUARD(AST_MOVE);
-				goTo(dest);
-				return STAY;
-			//}
+		SET_ANIM_GUARD(AST_MOVE);
+		goTo(dest);
+		return STAY;
+		//}
 		}
 	}
 	//Look to waypoint
@@ -876,9 +875,9 @@ int bt_guard::actionGoToFormation() {
 			isPathObtainedAccessible = */getPath(myPos, formation_point);
 			/*isPathObtained = true;
 		}*/
-		SET_ANIM_GUARD(AST_MOVE);
-		goTo(formation_point);
-		return STAY;
+	SET_ANIM_GUARD(AST_MOVE);
+	goTo(formation_point);
+	return STAY;
 	}
 	/*isPathObtainedAccessible = false;
 	isPathObtained = false;*/
@@ -1485,7 +1484,7 @@ bool bt_guard::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-			);
+		);
 	}
 	noShoot = atts.getBool("noShoot", false);
 
@@ -1591,7 +1590,7 @@ void bt_guard::goToPoint(VEC3 dest) {
 	while (simpleDistXZ(getTransform()->getPosition(), dest) > DIST_REACH_PNT) {
 		/*if (!isPathObtained) {
 			isPathObtained = true;*/
-			getPath(getTransform()->getPosition(), dest);
+		getPath(getTransform()->getPosition(), dest);
 		//}
 		goTo(dest);
 	}
