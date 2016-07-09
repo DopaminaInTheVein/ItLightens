@@ -73,6 +73,7 @@ class bt_guard : public bt, public TCompBase
 	float t_reduceStats_max;
 	float t_reduceStats;
 	float MAX_STUCK_TIME;
+	float UNSTUCK_DISTANCE;
 
 	//Handles & More
 	CHandle myHandle;
@@ -120,10 +121,10 @@ class bt_guard : public bt, public TCompBase
 	bool playerLost = false;
 	// stuck management
 	float stuck_time = 0.f;
-	float unstuck_time = 0.f;
 	bool stuck = false;
 	bool reoriented = false;
 	int direction = 0;
+	VEC3 unstuck_target;
 	VEC3 last_position;
 	// reaction time management
 	bool player_detected_start = false;
@@ -149,7 +150,7 @@ class bt_guard : public bt, public TCompBase
 	//Aux actions
 	void goTo(const VEC3& dest);
 	void goForward(float stepForward);
-	bool turnTo(VEC3 dest);
+	bool turnTo(VEC3 dest, bool wide = false);
 	bool turnToPlayer();
 	//VEC3 generateRandomPoint(); THIS IS NOT USED!
 
@@ -202,7 +203,8 @@ public:
 	//toggle conditions
 	bool checkFormation();
 	//actions
-	int actionUnstuck();
+	int actionUnstuckTurn();
+	int actionUnstuckMove();
 	int actionStunned();
 	int actionStepBack();
 	int actionReact();
@@ -275,6 +277,8 @@ public:
 		if (!isInRoom(myParent))return;
 		TCompTransform * t = compBaseEntity->get<TCompTransform>();
 		Debug->DrawLine(t->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
+		Debug->DrawLine(t->getPosition(), t->getPosition()+t->getFront(), VEC3(1, 1, 0));
+		Debug->DrawLine(t->getPosition(), t->getPosition()+t->getLeft(), VEC3(1, 1, 0));
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
 			if (t_reduceStats <= 0.0f) {
@@ -286,14 +290,13 @@ public:
 		float distance = simpleDistXZ(last_position, t->getPosition());
 		if (distance <= 0.5f*getDeltaTime()*SPEED_WALK) {
 			stuck_time += getDeltaTime();
-			if (stuck_time > MAX_STUCK_TIME) {
-				setCurrent(NULL);
+			if (stuck_time > MAX_STUCK_TIME && !stuck) {
 				stuck = true;
+				setCurrent(NULL);
 			}
 		}
 		else {
 			stuck_time = 0.f;
-			stuck = false;
 		}
 
 		last_position = t->getPosition();
