@@ -130,7 +130,7 @@ fn createRoomLimiterForPossession = (
 	) 
 )
 
-addAlexLogicCamaras()
+--addAlexLogicCamaras()
 assign_room_to_all_from_x "sala1" "sala2"
-createRoomSwitcherTrigger "sala1" "sala2"
-createRoomLimiterForPossession()
+--createRoomSwitcherTrigger "sala1" "sala2"
+--createRoomLimiterForPossession()
