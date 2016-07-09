@@ -2582,7 +2582,7 @@
    radius="0.3"
    height="0.7"/>
 <room
-   name="sala1"/>
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -4193,8 +4193,8 @@
 <name
    name="WirePosUp"/>
 <transform
-   pos="-65.7222 17.2847 17.9972"
-   quat="0 0.99907 0 0.0431127"
+   pos="-68.5186 16.212 16.4784"
+   quat="0 0.753234 0 0.657752"
    scale="1.0"/>
 <room
    name="sala2"/>
@@ -4502,6 +4502,40 @@
    pos="-119.645 -0.582276 -12.5256"
    quat="0 -0.695415 0 0.718609"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.714291 0.725 0.922822"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   actived="true"
+   action="activate"/>
+<name
+   name="tWireUp"/>
+<transform
+   pos="-69.2854 16.398 16.661"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags
+   tags="teleport"/>
+<name
+   name="WirePosDown"/>
+<transform
+   pos="-85.4879 -0.533921 -7.74967"
+   quat="0 0.753234 0 0.657752"
+   scale="1.0"/>
+<room
+   name="sala2"/>
 
 </entity>
 
