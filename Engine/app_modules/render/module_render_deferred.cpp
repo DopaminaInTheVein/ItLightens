@@ -109,6 +109,7 @@ bool CRenderDeferredModule::start() {
 	unit_cube = Resources.get("meshes/engine/unit_frustum.mesh")->as<CMesh>();
 	assert(unit_cube && unit_cube->isValid());
 
+	particles_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 
   Resources.get("textures/general/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE );
 
@@ -156,6 +157,46 @@ void CRenderDeferredModule::stop() {
 // ------------------------------------------------------
 void CRenderDeferredModule::update(float dt) {
 	shader_ctes_globals.world_time += dt;
+	if (io->keys['H'].isPressed()) {
+
+		auto gs = tags_manager.getHandlesByTag("generator");
+
+		
+		helpers.create(gs.size(), particles_mesh);
+		TParticleData  pd = TParticleData();
+		pd.initialize(gs.size());
+		for (int i = 0; i < pd.indexBuffer.size(); i++) {
+
+			CEntity *eg = gs[i];
+
+			if (!eg) continue;
+
+			TCompTransform *et = eg->get<TCompTransform>();
+
+			if (!et) continue;
+
+			PxVec3 pos = PhysxConversion::Vec3ToPxVec3(et->getPosition());
+
+			pd.indexBuffer[i] = i;
+			pd.maxLifeTimeBuffer[i] = 1.f; //max time
+			pd.positionBuffer[i] = pos;
+			pd.velocityBuffer[i] = PxVec3(0, 0, 0);
+			pd.negativeVelocityBuffer[i] = PxVec3(0,0,0);
+			pd.lifeTimeBuffer[i] = 1.f;
+
+			pd.sizeBuffer[i] = 1.f;
+
+			pd.started[i] = true;
+			pd.currDelayStart[i] = 0.f;
+
+			pd.positionInitBuffer[i] = pos;
+			pd.velocityInitBuffer[i] = PxVec3(0, 0, 0);
+
+			pd.colorBuffer[i] = VEC4(1,1,1,1);
+			pd.colorOriginBuffer[i] = VEC4(1, 1, 1, 1);
+		}
+		helpers.update(dt, pd);
+	}
 }
 
 // ------------------------------------------------------
@@ -796,7 +837,28 @@ void CRenderDeferredModule::applyPostFX() {
 	activateBlend(BLENDCFG_ADDITIVE);
 
 	drawFullScreen(next_step);
+
+	RenderHelpGenLoc();
+
 	activateZ(ZCFG_DEFAULT);
+}
+
+void CRenderDeferredModule::RenderHelpGenLoc() {
+	PROFILE_FUNCTION("referred: particle generator");
+	CTraceScoped scope("particle generator");
+
+	activateZ(ZCFG_ALL_DISABLED);
+
+	//TEST_HELP
+	if (io->keys['H'].isPressed()) {
+		//helpers_gen | ui
+		Resources.get("textures/general/triangle1.dds")->as<CTexture>()->activate(TEXTURE_SLOT_DIFFUSE);
+		Resources.get("textures/fire.dds")->as<CTexture>()->activate(TEXTURE_SLOT_DIFFUSE);
+		auto tech = Resources.get("particles.tech")->as<CRenderTechnique>();
+		tech->activate();
+		helpers.render();
+		helpers.clear();
+	}
 }
 
 void CRenderDeferredModule::renderUI() {

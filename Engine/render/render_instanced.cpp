@@ -65,7 +65,8 @@ void CRenderParticlesInstanced::render() const {
   //tech->activate();
   //texture->activate(TEXTURE_SLOT_DIFFUSE);
   activateBlend(BLENDCFG_COMBINATIVE);
-  activateZ(ZCFG_TEST_BUT_NO_WRITE);
+  //activateZ(ZCFG_TEST_BUT_NO_WRITE);
+  activateZ(ZCFG_ALL_DISABLED);
   //activateZ(ZCFG_DEFAULT);
   instanced_mesh->renderInstanced(instances_data_mesh, instances.size());
   activateZ(ZCFG_DEFAULT);
