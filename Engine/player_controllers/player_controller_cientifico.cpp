@@ -234,6 +234,7 @@ void player_controller_cientifico::CreateBomb()
 {
 	PROFILE_FUNCTION("player cientifico: create bomb");
 	t_waiting += getDeltaTime();
+	SET_ANIM_SCIENTIST(AST_WORK);
 	if (t_waiting >= t_create_MagneticBomb) {
 		dbg("bomb created!\n");
 		t_waiting = 0;
@@ -269,7 +270,7 @@ void player_controller_cientifico::Throwing()
 {
 	PROFILE_FUNCTION("player cientifico: throwing bomb");
 	//Animacion lanzar bomba
-
+	SET_ANIM_SCIENTIST(AST_THROW);
 	//Test mover bomba
 	____TIMER_CHECK_DO_(t_throwing);
 	TMsgThrow msgThrow;

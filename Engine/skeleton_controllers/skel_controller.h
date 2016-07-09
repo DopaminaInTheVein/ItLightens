@@ -29,6 +29,8 @@
 #define AST_PILA_IDLE			"grab_pila_idle"
 #define AST_GRAB_WALK			"grab_box_walk"
 #define AST_PILA_WALK			"grab_pila_walk"
+#define AST_WORK				"work"
+#define AST_THROW				"throw"
 // ------------------- //
 
 template< class TObj >

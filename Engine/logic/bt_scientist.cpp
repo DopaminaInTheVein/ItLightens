@@ -185,6 +185,7 @@ int bt_scientist::actionStunned() {
 		return OK;
 	}
 	else {
+		SET_ANIM_SCI_BT(AST_STUNNED);
 		if (timerStunt > -1)
 			timerStunt -= getDeltaTime();
 		return STAY;
@@ -203,6 +204,7 @@ int bt_scientist::actionAimToPos() {
 		return OK;
 	}
 	else {
+		SET_ANIM_SCI_BT(AST_IDLE);
 		return STAY;
 	}
 }
@@ -222,7 +224,7 @@ int bt_scientist::actionMoveToPos() {
 	}
 	else {
 		//getPath(myPos, obj_position);
-		//animController.setState(AST_RUN);
+		SET_ANIM_SCI_BT(AST_MOVE);
 		goTo(obj_position);
 		return STAY;
 	}
@@ -246,6 +248,7 @@ int bt_scientist::actionSeekWpt() {
 			//getPath(myPos, dest);
 			//animController.setState(AST_RUN);
 			goTo(dest);
+			SET_ANIM_SCI_BT(AST_MOVE);
 			return STAY;
 		}
 	}
@@ -257,6 +260,7 @@ int bt_scientist::actionSeekWpt() {
 			return OK;
 		}
 		else {
+			SET_ANIM_SCI_BT(AST_IDLE);
 			return STAY;
 		}
 	}
@@ -279,6 +283,7 @@ int bt_scientist::actionNextWpt() {
 		return OK;
 	}
 	else {
+		SET_ANIM_SCI_BT(AST_IDLE);
 		return STAY;
 	}
 }
@@ -294,6 +299,7 @@ int bt_scientist::actionWaitWpt() {
 	}
 	else {
 		t_waitInPos += getDeltaTime();
+		SET_ANIM_SCI_BT(AST_IDLE);
 		return STAY;
 	}
 }
@@ -357,6 +363,7 @@ int bt_scientist::actionGoToWorkstation() {
 	else {
 		//getPath(myPos, ws_to_go);
 		//animController.setState(AST_RUN);
+		SET_ANIM_SCI_BT(AST_MOVE);
 		goTo(ws_to_go);
 		return STAY;
 	}
@@ -393,6 +400,7 @@ int bt_scientist::actionWaitInWorkstation() {
 	}
 	else {
 		ws_time_waited += getDeltaTime();
+		SET_ANIM_SCI_BT(AST_WORK);
 		return STAY;
 	}
 
