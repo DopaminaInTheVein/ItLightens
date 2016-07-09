@@ -282,7 +282,7 @@ void player_controller::Jump()
 			-curSpeed.x * 0.1f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
 			-curSpeed.z * 0.1f
-			);
+		);
 		//--------------------------------------
 	}
 	else {
@@ -621,7 +621,7 @@ void player_controller::UpdateInputActions()
 void player_controller::UpdateActionsTrigger() {
 	PROFILE_FUNCTION("player_controller: update Actions trigger");
 
-	if (canRecEnergy) {
+	if (canRecharge()) {
 		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
 			rechargeEnergy();
 			SET_ANIM_PLAYER_P(AST_RECHARGE);
@@ -696,11 +696,12 @@ void player_controller::UpdatePossession() {
 // Recalcula el mejor candidato para poseer
 void player_controller::recalcPossassable() {
 	PROFILE_FUNCTION("recalc possessable");
+	currentPossessable = CHandle();
+	if (isDamaged()) return;
 	float minDeltaYaw = FLT_MAX;
 	float minDistance = FLT_MAX;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	currentPossessable = CHandle();
 	VHandles possessables = tags_manager.getHandlesByTag(getID("AI_poss"));
 	for (CHandle hPoss : possessables) {
 		if (!hPoss.isValid()) continue;
@@ -893,6 +894,11 @@ void player_controller::onCanRec(const TMsgCanRec & msg)
 	canRecEnergy = msg.range;
 }
 
+bool player_controller::canRecharge()
+{
+	return canRecEnergy && !isDamaged();
+}
+
 void player_controller::onCanRechargeDrone(const TMsgCanRechargeDrone & msg)
 {
 	canRechargeDrone = msg.range;
@@ -913,9 +919,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-				),
+			),
 			polarityForces.end()
-			);
+		);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}
