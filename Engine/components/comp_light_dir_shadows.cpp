@@ -21,11 +21,13 @@ bool TCompLightDirShadows::load(MKeyValue& atts) {
 }
 
 void TCompLightDirShadows::update(float dt) {
+  PROFILE_FUNCTION("shadows: update");
   CHandle owner = CHandle(this).getOwner();
   updateFromEntityTransform(owner);
 }
 
 void TCompLightDirShadows::activate() {
+	PROFILE_FUNCTION("shadows: activate");
   CHandle owner = CHandle(this).getOwner();
   activateWorldMatrix(getViewProjection().Invert());
   rt_shadows->getZTexture()->activate(TEXTURE_SLOT_SHADOWMAP);
@@ -56,7 +58,7 @@ void TCompLightDirShadows::generateShadowMap() {
   Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
 
   // Pintar los shadow casters
-  RenderManager.renderShadowCastersSkin();
+  RenderManager.renderShadowCastersSkin(CHandle(this).getOwner());
 
   activateRS(RSCFG_DEFAULT);
 }

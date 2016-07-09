@@ -45,12 +45,7 @@ bool TCompTransform::load(MKeyValue& atts) {
 void TCompTransform::renderInMenu() {
 	VEC3 pos = getPosition();
 	//if (ImGui::DragFloat3("Pos", &pos.x, -0.1f, 0.1f)) {
-	float limit = 30.f;
-	if (fabsf(pos.x) >= limit || fabsf(pos.y) >= limit || fabsf(pos.z) >= limit)
-		limit = 300.f;
-	if (fabsf(pos.x) >= limit || fabsf(pos.y) >= limit || fabsf(pos.z) >= limit)
-		limit = 1000.f;
-	if (ImGui::SliderFloat3("Pos", &pos.x, -limit, limit)){
+	if (ImGui::DragFloat3("Pos", &pos.x, 0.1f)){
 		setPosition(pos);
 	}
 

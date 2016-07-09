@@ -4,6 +4,8 @@
 #include "comp_camera.h"
 #include "comp_msgs.h"
 #include "entity.h"
+#include "comp_room.h"
+#include "logic\sbb.h"
 
 void TCompCulling::renderInMenu() {
 	// Show how many AABB's we are seeing...
@@ -14,6 +16,7 @@ void TCompCulling::renderInMenu() {
 // Si algun plano tiene la caja en la parte negativa
 // completamente, el aabb no esta dentro del set de planos
 bool TCompCulling::VPlanes::isVisible(const AABB* aabb) const {
+	PROFILE_FUNCTION("TCompCulling: isVisible func");
 	auto it = begin();
 	while (it != end()) {
 		if (it->isCulled(aabb))
@@ -26,7 +29,35 @@ bool TCompCulling::VPlanes::isVisible(const AABB* aabb) const {
 void TCompCulling::update() {
 	//PROFILE_FUNCTION("TCompCulling: Update");
 	// Get access to the comp_camera in a sibling component
+
 	CEntity* e_owner = CHandle(this).getOwner();
+	if (!e_owner) return;
+	TCompRoom* room = e_owner->get<TCompRoom>();
+	if (room) {
+
+		if (SBB::readSala() != room->name)
+			return;			//light on diferent room
+		else {
+			//fast fix for room3
+			if (SBB::readSala() == "sala2") {
+				CEntity* ep = tags_manager.getFirstHavingTag("player");
+				if (ep) {
+					TCompTransform* t = ep->get<TCompTransform>();
+					TCompTransform* tl = e_owner->get<TCompTransform>();
+
+					if (t->getPosition().y > 10) {
+						if (tl->getPosition().y < 12)
+							return;
+					}
+					else {
+						if (tl->getPosition().y > 12)
+							return;
+					}
+				}
+			}
+		}
+	}
+
 	MAT44 view_proj;
 	e_owner->sendMsg(TMsgGetCullingViewProj{ &view_proj });
 
@@ -41,6 +72,7 @@ void TCompCulling::update() {
 	auto hm = getHandleManager<TCompAbsAABB>();
 	TCompAbsAABB* aabb = hm->getFirstObject();
 	for (size_t i = 0; i < hm->size(); ++i, ++aabb) {
+		PROFILE_FUNCTION("TCompCulling: isVisible bucle");
 		if (planes.isVisible(aabb))
 			bits.set(i);
 	}

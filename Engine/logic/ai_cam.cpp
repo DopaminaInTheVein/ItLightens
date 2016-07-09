@@ -97,6 +97,7 @@ void ai_cam::Idle() {
 	}
 }
 bool ai_cam::playerInRange() {
+	PROFILE_FUNCTION("ai_cam: player in range");
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	// player detection
 	CHandle hPlayer = tags_manager.getFirstHavingTag("raijin");

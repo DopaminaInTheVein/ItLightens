@@ -59,6 +59,7 @@ void TCompAbsAABB::onCreate(const TMsgEntityCreated&) {
 
 // Updates AbsAABB from LocalAABB and CompTransform
 void TCompLocalAABB::updateAbs() {
+	PROFILE_FUNCTION("aabb: updatelocals");
 	CEntity *e = CHandle(this).getOwner();
 	assert(e);
 	const TCompTransform *in_tmx = e->get< TCompTransform >();

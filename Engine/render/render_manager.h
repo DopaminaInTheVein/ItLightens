@@ -51,7 +51,7 @@ public:
   void renderUICulling();
   void renderAll(CHandle h_camera, CRenderTechnique::eCategory category);
   void renderShadowCasters(CHandle h_light);
-  void renderShadowCastersSkin();
+  void renderShadowCastersSkin(CHandle h_light);
 };
 
 extern CRenderManager RenderManager;

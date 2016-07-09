@@ -14,6 +14,7 @@ void LogicHelperArrow::onSetTarget(const TMsgSetTarget & tasr)
 }
 
 void LogicHelperArrow::update(float elapsed) {
+	PROFILE_FUNCTION("helper arrow: update");
   std::vector<CHandle> generators = SBB::readHandlesVector("generatorsHandles");
   CEntity * targete = target;
   TCompTransform * targett = targete->get<TCompTransform>();

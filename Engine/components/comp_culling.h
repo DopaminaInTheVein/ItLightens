@@ -48,6 +48,7 @@ struct TCompCulling : public TCompBase {
   class VPlanes : std::vector< CPlane > {
   public:
     void fromViewProjection(MAT44 view_proj) {
+	   PROFILE_FUNCTION("TCompCulling: fromView");
       resize(FP_NPLANES);
       MAT44 m = view_proj.Transpose();
       VEC4 mx = VEC4(m.m[0]);

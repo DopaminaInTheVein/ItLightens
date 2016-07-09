@@ -17,6 +17,7 @@
 #include "components\comp_render_fade_screen.h"
 
 #include "render/fx/GuardShots.h"
+#include "components\comp_room.h"
 
 //Particles
 #include "particles\particles_manager.h"
@@ -288,6 +289,32 @@ void CRenderDeferredModule::addPointLights() {
 
 	// Activar la mesh unit_sphere
 	getHandleManager<TCompLightPoint>()->each([mesh](TCompLightPoint* c) {
+		PROFILE_FUNCTION("upload point light");
+		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
+		if (room) {
+
+			if (SBB::readSala() != room->name)
+				return;			//light on diferent room
+			else {
+				//fast fix for room3
+				if (SBB::readSala() == "sala2") {
+					CEntity* ep = tags_manager.getFirstHavingTag("player");
+					if (ep) {
+						TCompTransform* t = ep->get<TCompTransform>();
+						TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
+
+						if (t->getPosition().y > 10) {
+							if (tl->getPosition().y < 12)
+								return;
+						}
+						else {
+							if (tl->getPosition().y > 12)
+								return;
+						}
+					}
+				}
+			}
+		}
 		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
 		// la world para la mesh y las constantes en el pixel shader
 		c->activate();
@@ -312,6 +339,33 @@ void CRenderDeferredModule::addDirectionalLights() {
 	getHandleManager<TCompLightDir>()->each([mesh](TCompLightDir* c) {
 		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
 		// la world para la mesh y las constantes en el pixel shader
+		PROFILE_FUNCTION("upload light dir");
+		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
+		if (room) {
+
+			if (SBB::readSala() != room->name)
+				return;			//light on diferent room
+			else {
+				//fast fix for room3
+				if (SBB::readSala() == "sala2") {
+					CEntity* ep = tags_manager.getFirstHavingTag("player");
+					if (ep) {
+						TCompTransform* t = ep->get<TCompTransform>();
+						TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
+
+						if (t->getPosition().y > 10) {
+							if (tl->getPosition().y < 12)
+								return;
+						}
+						else {
+							if (tl->getPosition().y > 12)
+								return;
+						}
+					}
+				}
+			}
+		}
+
 		c->activate();
 		// Pintar la mesh que hemos activado hace un momento
 		mesh->render();
@@ -334,6 +388,34 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
 	getHandleManager<TCompLightDirShadows>()->each([mesh](TCompLightDirShadows* c) {
 		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
 		// la world para la mesh y las constantes en el pixel shader
+		PROFILE_FUNCTION("upload shadow dir");
+
+		/*TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
+		if (room) {
+
+			if (SBB::readSala() != room->name)
+				return;			//light on diferent room
+			else {
+				//fast fix for room3
+				if (SBB::readSala() == "sala2") {
+					CEntity* ep = tags_manager.getFirstHavingTag("player");
+					if (ep) {
+						TCompTransform* t = ep->get<TCompTransform>();
+						TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
+
+						if (t->getPosition().y > 10) {
+							if (tl->getPosition().y < 12)
+								return;
+						}
+						else {
+							if (tl->getPosition().y > 12)
+								return;
+						}
+					}
+				}
+			}
+		}
+		*/
 		c->activate();
 		// Pintar la mesh que hemos activado hace un momento
 		mesh->render();
@@ -484,7 +566,41 @@ void CRenderDeferredModule::generateShadowMaps() {
 	CTraceScoped scope("generateShadowMaps");
 
 	// Llamar al metodo generateShadowMap para todas los components de tipo dir_shadows
-	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::generateShadowMap);
+	//getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::generateShadowMap);
+
+	getHandleManager<TCompLightDirShadows>()->each([](TCompLightDirShadows* c) {
+		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
+		// la world para la mesh y las constantes en el pixel shader
+		PROFILE_FUNCTION("check gen shadow");
+
+		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
+		if (room) {
+
+			if (SBB::readSala() != room->name)
+				return;			//light on diferent room
+			else {
+				//fast fix for room3
+				if (SBB::readSala() == "sala2") {
+					CEntity* ep = tags_manager.getFirstHavingTag("player");
+					if (ep) {
+						TCompTransform* t = ep->get<TCompTransform>();
+						TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
+
+						if (t->getPosition().y > 10) {
+							if (tl->getPosition().y < 12)
+								return;
+						}
+						else {
+							if (tl->getPosition().y > 12)
+								return;
+						}
+					}
+				}
+			}
+		}
+
+		c->generateShadowMap();
+	});
 }
 
 void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {

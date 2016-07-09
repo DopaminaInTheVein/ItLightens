@@ -277,8 +277,24 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 	CEntity* e_camera = h_light;
 	TCompCulling::TCullingBits* culling_bits = nullptr;
 	TCompCulling* culling = nullptr;
-	if (e_camera)
+
+	TCompRoom* room;
+
+	if (e_camera) {
 		culling = e_camera->get<TCompCulling>();
+		room = e_camera->get<TCompRoom>();
+	}
+	else {
+		return;
+	}
+
+	//check room
+	std::string room_str;
+	if (room) {
+		room_str = room->name;
+	}
+
+	//culling
 	if (culling)
 		culling_bits = &culling->bits;
 	// To get the index of each aabb
@@ -324,10 +340,49 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 // ------------------------------------------
 
 //render shadowcaster with skinning tech 
-void CRenderManager::renderShadowCastersSkin() {
+void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 	PROFILE_FUNCTION("SHADOW CASTER SKIN");
 	auto it = all_shadow_skinning_keys.begin();
 	std::string pj_room = SBB::readSala();
+
+	CEntity* e_camera = h_light;
+	TCompRoom* room;
+
+	if (e_camera) {
+		room = e_camera->get<TCompRoom>();
+	}
+	else
+		return;
+
+	//check room
+	std::string room_str;
+	if (room) {
+		room_str = room->name;
+	}
+
+	if (SBB::readSala() != room_str)
+		return;			//shadows on diferent room
+	else {
+		//fast fix for room3
+		if (SBB::readSala() == "sala2") {
+			CEntity* ep = tags_manager.getFirstHavingTag("player");
+			if (ep) {
+				TCompTransform* t = ep->get<TCompTransform>();
+				TCompTransform* tl = e_camera->get<TCompTransform>();
+
+				if (t->getPosition().y > 10) {
+					if (tl->getPosition().y < 12)
+						return;
+				}
+				else {
+					if (tl->getPosition().y > 12)
+						return;
+				}
+			}
+		}
+	}
+
+
 	while (it != all_shadow_skinning_keys.end()) {
 		if (it->isPlayer || pj_room == "none" || it->room == "none" || pj_room == it->room) {
 			const TCompTransform* c_tmx = it->transform;
