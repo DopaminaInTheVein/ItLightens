@@ -2599,7 +2599,7 @@
 <name
    name="__tElevator"/>
 <transform
-   pos="-65.4501 16.063 19.6681"
+   pos="-65.698 16.063 20.6469"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room
@@ -2611,7 +2611,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.22755 0.875 1.28148"/>
+   size="1.80743 0.875 1.28148"/>
 <tags
    tags="trigger"/>
 <trigger_lua
@@ -2620,7 +2620,7 @@
 <name
    name="__tElevator"/>
 <transform
-   pos="-65.6524 -0.482764 18.6604"
+   pos="-65.6524 -0.632667 20.2466"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room
@@ -3033,23 +3033,6 @@
    type_collision="static"/>
 <room
    name="sala1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="puertas_ascensor"/>
-<transform
-   pos="-65.5715 0.322644 19.4268"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/puertas_ascensor.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="sala2"/>
 
 </entity>
 <entity>
@@ -4533,6 +4516,162 @@
 <transform
    pos="-85.4879 -0.533921 -7.74967"
    quat="0 0.753234 0 0.657752"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   id="305">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-63.6948 0.32264 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_Left"/>
+<transform
+   pos="-64.9312 0.32264 19.4268"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/__DoorElev_Left.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__DoorElev_Left___opened_pos001"/>
+<transform
+   pos="-63.6948 0.32264 19.4268"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   id="308">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="no"
+   speedOpening="1"
+   target="-67.4927 0.32264 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_Right"/>
+<transform
+   pos="-66.2562 0.32264 19.4268"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/__DoorElev_Right.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__DoorElev_Right___opened_pos002"/>
+<transform
+   pos="-67.4927 0.32264 19.4268"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   id="307">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="no"
+   speedOpening="1"
+   target="-64.9312 16.9651 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_LeftUp"/>
+<transform
+   pos="-63.5279 16.9651 19.4268"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/__DoorElev_LeftUp.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__DoorElev_LeftUp___opened_pos003"/>
+<transform
+   pos="-64.9312 16.9651 19.4268"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   id="306">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-66.2562 16.9651 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_RighUp"/>
+<transform
+   pos="-67.543 16.9651 19.4268"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/__DoorElev_RighUp.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__DoorElev_RighUp___opened_pos004"/>
+<transform
+   pos="-66.2562 16.9651 19.4268"
+   quat="0.708405 0 0 0.705806"
    scale="1.0"/>
 <room
    name="sala2"/>
