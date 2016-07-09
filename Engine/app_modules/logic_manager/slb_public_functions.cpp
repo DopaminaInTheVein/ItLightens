@@ -64,7 +64,7 @@ void SLBPlayer::setPlayerPosition(float x, float y, float z) {
 void SLBPlayer::teleport(const char * point_name) {
 	getPlayer();
 	if (player_handle.isValid()) {
-		CHandle target = tags_manager.getHandleByTagAndName("teleport", "WirePosUp");
+		CHandle target = tags_manager.getHandleByTagAndName("teleport", point_name);
 		GET_COMP(tTarget, target, TCompTransform);
 		GET_COMP(tPlayer, player_handle, TCompTransform);
 		GET_COMP(ccPlayer, player_handle, TCompCharacterController);

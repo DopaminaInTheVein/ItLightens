@@ -265,6 +265,7 @@ end
 
 -- Wires --
 --------------------------------------
+--Cable abajo info
 triggerWire_1 = Handle()
 tagWireParticle = "wire_particle"
 wireName_1 = "tWireDown"
@@ -273,6 +274,16 @@ wirePart_1_h = Handle()
 wire_pos_up = "WirePosUp"
 posParticleBefore = Pos()
 
+--Cable arriba info
+triggerWire_2 = Handle()
+wire_pos_down = "WirePosDown"
+----------------------------------------
+
+--wireName_2 = "tWireUp" -- No lo necesitamos activar
+--posParticleBefore = Pos() -- No hay "particulas" arriba ahora
+--tagWireParticle = "wire_particle"
+--wirePart_1 = wireName_1.."_part"
+--wirePart_1_h = Handle()
 function test()
   --Es porque testeando no activo el cable, y no tengo su handle
   triggerWire_1:get_handle_by_name_tag(wireName_1, "trigger")
@@ -303,6 +314,23 @@ function wireGoUp( )
   p:exec_command( "cam:fade_in(1);", 4.5)
   p:exec_command( "triggerWire_1:setActionable(1);", 3)
   p:exec_command( cmd_teleport, 10 / factorWireGoUp )
+end
+
+function wireGoDown( )
+  p:print("Wire Go Down")
+  factorWireGoDown = 2
+  player = Player()
+  player:get_player()
+  triggerWire_2:getHandleCaller()
+  cmd_teleport = "player:teleport(\""..wire_pos_down.."\")"
+  cam:run_cinematic("CineWireGoUp", factorWireGoDown * -5)
+
+  p:exec_command( "player:set_position(0,-1000,0);", 2 / factorWireGoDown )
+  --p:exec_command( "wireParticlesUp();", 2.5 / factorWireGoDown )
+  p:exec_command( "cam:fade_out(1);", 2.5)
+  p:exec_command( "cam:fade_in(1);", 4.5)
+  p:exec_command( "triggerWire_2:setActionable(1);", 3)
+  p:exec_command( cmd_teleport, 10 / factorWireGoDown )
 end
 
 function wireParticlesUp( )
