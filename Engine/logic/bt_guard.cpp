@@ -88,6 +88,7 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
 			assignValueToVar(MAX_STUCK_TIME, fields);
+			assignValueToVar(UNSTUCK_DISTANCE, fields);
 			SHOT_OFFSET = VEC4(0, 1.5f, 0.5f, 1);
 		}
 	}
@@ -112,7 +113,9 @@ void bt_guard::Init()
 		// insert all states in the map
 		createRoot("guard", PRIORITY, NULL, NULL);
 		// stuck management
-		addChild("guard", "stuck", ACTION, (btcondition)&bt_guard::guardStuck, (btaction)&bt_guard::actionUnstuck);
+		addChild("guard", "stucksequence", SEQUENCE, (btcondition)&bt_guard::guardStuck, NULL);
+		addChild("stucksequence", "unstuckturn", ACTION, NULL, (btaction)&bt_guard::actionUnstuckTurn);
+		addChild("stucksequence", "unstuckmove", ACTION, NULL, (btaction)&bt_guard::actionUnstuckMove);
 		// formation toggle
 		addChild("guard", "formationsequence", SEQUENCE, (btcondition)&bt_guard::checkFormation, NULL);
 		addChild("formationsequence", "gotoformation", ACTION, NULL, (btaction)&bt_guard::actionGoToFormation);
@@ -314,36 +317,62 @@ bool bt_guard::checkFormation() {
 }
 
 //actions
-int bt_guard::actionUnstuck() {
-	PROFILE_FUNCTION("guard: actionunstuck");
+int bt_guard::actionUnstuckTurn() {
+	PROFILE_FUNCTION("guard: actionunstuckturn");
 	if (!myParent.isValid()) return false;
-	// move to get unstuck
-	VEC3 unstuck_target;	
+	// turn to get unstuck	
 	SET_ANIM_GUARD(AST_IDLE);
 	if (!reoriented) {
-		if (direction == 0) {
-			unstuck_target = getTransform()->getLeft() + getTransform()->getPosition();
-			direction = 1;
-		}
-		else {
-			unstuck_target = -getTransform()->getLeft() + getTransform()->getPosition();
-			direction = 0;
+		VEC3 left = getTransform()->getLeft();
+		VEC3 front = getTransform()->getFront();
+		switch (direction) {
+			case 0: {
+				unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+				direction = 0;
+				break;
+			}
+			case 1: {
+				unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+				direction = 1;
+				break;
+			}
+			case 2: {
+				unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
+				direction = 2;
+				break;
+			}
+			default: {
+				unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+				direction = 0;
+				break;
+			}
 		}
 		reoriented = true;
 	}
 	if (!turnTo(unstuck_target))
 		return STAY;
-	while (unstuck_time < 2.f) {
-		unstuck_time += getDeltaTime();
-		goForward(SPEED_WALK);
+	else {
+		reoriented = false;
+		stuck_time = 0.f;
+		stuck = false;
+		return OK;
 	}
-	// reset the state
-	setCurrent(NULL);
-	stuck_time = 0.f;
-	unstuck_time = 0.f;
-	stuck = false;
-	reoriented = false;
-	return OK;
+}
+
+int bt_guard::actionUnstuckMove() {
+	PROFILE_FUNCTION("guard: actionunstuckmove");
+	if (!myParent.isValid()) return false;
+	// move to get unstuck
+	VEC3 myPos = getTransform()->getPosition();
+	if (simpleDistXZ(myPos, unstuck_target) > DIST_REACH_PNT) {
+		getPath(myPos, unstuck_target);
+		SET_ANIM_GUARD(AST_MOVE);
+		goTo(unstuck_target);
+		return STAY;
+	}
+	else {
+		return OK;
+	}
 }
 
 int bt_guard::actionStunned() {
@@ -359,6 +388,7 @@ int bt_guard::actionStunned() {
 			timerStunt -= getDeltaTime();
 		return STAY;
 	}
+
 }
 
 int bt_guard::actionStepBack() {
@@ -459,7 +489,7 @@ int bt_guard::actionAbsorb() {
 	if (playerNear() && playerVisible()) {
 		dbg("SHOOTING BACKWARDS!\n");
 		SET_ANIM_GUARD(AST_SHOOT_BACK);
-		goForward(-0.9f*SPEED_WALK);
+		goForward(-0.75f*SPEED_WALK);
 		turnToPlayer();
 		shootToPlayer();
 		return STAY;
@@ -509,6 +539,7 @@ int bt_guard::actionAbsorb() {
 	else if (playerVisible()) {
 		SET_ANIM_GUARD(AST_SHOOT);
 		shootToPlayer();
+		stuck_time = 0.f;
 		return STAY;
 	}
 
@@ -550,6 +581,7 @@ int bt_guard::actionShootWall() {
 			else {
 				if (timerShootingWall > -1)
 					timerShootingWall -= getDeltaTime();
+				stuck_time = 0.f;
 				return STAY;
 			}
 		}
@@ -1091,18 +1123,21 @@ void bt_guard::goForward(float stepForward) {
 }
 
 // -- Turn To -- //
-bool bt_guard::turnTo(VEC3 dest) {
+bool bt_guard::turnTo(VEC3 dest, bool wide) {
 	PROFILE_FUNCTION("guard: turn to");
 	if (!myParent.isValid()) return false;
+	int angle = 5;
+	if (wide)
+		angle = 30;
 	VEC3 myPos = getTransform()->getPosition();
 	float yaw, pitch;
 	getTransform()->getAngles(&yaw, &pitch);
 
 	float deltaAngle = SPEED_ROT * getDeltaTime();
 	float deltaYaw = getTransform()->getDeltaYawToAimTo(dest);
-	float angle_epsilon = deg2rad(5);
+	float angle_epsilon = deg2rad(angle);
 
-	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355))
+	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(360 - angle))
 		return true;
 
 	if (deltaYaw > 0) {
@@ -1126,7 +1161,7 @@ bool bt_guard::turnTo(VEC3 dest) {
 	}
 
 	//Ha acabado el giro?
-	bool done = abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
+	bool done = abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(360 - angle);
 	return done;
 }
 
