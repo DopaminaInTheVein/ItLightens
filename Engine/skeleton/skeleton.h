@@ -6,7 +6,7 @@
 #include "cal3d/cal3d.h"
 #include "skeleton_manager.h"
 
-#define MAX_NUMBER_ANIMS	32
+#define MAX_NUMBER_ANIMS	64
 
 class CSkeleton : public IResource, public CXMLParser {
 	CCoreModel*   core_model;

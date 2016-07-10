@@ -3,9 +3,9 @@
 
 --------------------------- COMENTAR CODIGO TEST!!!! ---------------------------------------
 function test_dbg()
-  h:get_handle_by_id(idDoor)
-  h:setLocked(0)
-  isDoorOpen = true
+  --h:get_handle_by_id(idDoor)
+  --h:setLocked(0)
+  --isDoorOpen = true
 end
 --------------------------- COMENTAR CODIGO TEST!!!! ---------------------------------------
 
