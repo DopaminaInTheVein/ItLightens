@@ -27,6 +27,7 @@ class player_controller_cientifico : public PossController {
 		OBJ_SCI_SIZE
 	};
 	//Anims
+	CObjectManager<player_controller_cientifico> *om;
 	SkelControllerPlayer * animController;
 
 	int objs_amoung[OBJ_SCI_SIZE];

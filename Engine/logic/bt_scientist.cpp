@@ -45,6 +45,8 @@ void bt_scientist::readIniFileAttr() {
 }
 
 void bt_scientist::Init() {
+
+	getUpdateInfoBase(CHandle(this).getOwner());
 	initParent();
 	//read main attributes from file
 	readIniFileAttr();
@@ -85,7 +87,6 @@ void bt_scientist::Init() {
 	____TIMER_REDEFINE_(timerStunt, 15);
 	t_waitInPos = 0;
 
-	getUpdateInfoBase(CHandle(this).getOwner());
 	if (animController) {
 		animController->setState(AST_IDLE);
 	}
@@ -101,10 +102,15 @@ bool bt_scientist::getUpdateInfo()
 
 void bt_scientist::update(float elapsed) {
 	// If we become possessed, reset the tree and stop all actions
+	SetMyEntity();
+	if (!myEntity) return;
 	if (!isInRoom(myParent))return;
 
 	if (possessing)
 		setCurrent(NULL);
+	if (stunned)
+		//SET_ANIM_MOLE_BT(AST_STUNNED);
+		SET_ANIM_SCI_BT(AST_IDLE);
 	Recalc();
 }
 

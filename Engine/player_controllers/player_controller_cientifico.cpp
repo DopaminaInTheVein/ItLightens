@@ -67,6 +67,7 @@ void player_controller_cientifico::Init() {
 	readIniFileAttr();
 
 	for (int amoung : objs_amoung) amoung = 0;
+	om = getHandleManager<player_controller_cientifico>();	//player
 
 	if (statemap.empty()) {
 		//States from controller base and poss controller
@@ -92,15 +93,12 @@ void player_controller_cientifico::Init() {
 		objs_names[eObjSci::THROW_BOMB] = "throw_bomb";
 	}
 
-	myHandle = CHandle(this);
+	myHandle = om->getHandleFromObjAddr(this);
 	myParent = myHandle.getOwner();
+
 	ChangeState("idle");
-
-	getUpdateInfoBase(CHandle(this).getOwner());
 	SET_ANIM_SCIENTIST(AST_IDLE);
-	//animController.setState(AST_IDLE);
 
-	//Test
 	____TIMER_REDEFINE_(t_throwing, 1.f);
 	____TIMER_REDEFINE_(t_nextBomb, 1.f);
 }
@@ -482,9 +480,8 @@ void player_controller_cientifico::DisabledState() {
 	PROFILE_FUNCTION("player cientifico: disabled satte");
 }
 void player_controller_cientifico::InitControlState() {
-	PROFILE_FUNCTION("player cientifico: init control state");
-	//CHandle h = CHandle(this);
-	//tags_manager.addTag(h.getOwner(), getID("player"));
+	CHandle h = CHandle(this);
+	tags_manager.addTag(h.getOwner(), getID("player"));
 	ChangeState("idle");
 }
 
