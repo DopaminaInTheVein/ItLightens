@@ -326,6 +326,13 @@ bool SLBHandle::isCharged() {
 	return false;
 }
 
+bool SLBHandle::isPatrolling() {
+	if (real_handle.isValid()) {
+		auto guard = getHandleManager<bt_guard>()->getAddrFromHandle(real_handle);
+		return guard->isPatrolling();
+	}
+}
+
 // Handle group By Tag
 void SLBHandleGroup::getHandlesByTag(const char * tag) {
 	handle_group = tags_manager.getHandlesByTag(string(tag));

@@ -515,6 +515,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// Ask pila charged
 		.set("is_charged", &SLBHandle::isCharged)
 		.comment("return true if the handle is charged")
+		// Ask guard patrolling
+		.set("is_patrolling", &SLBHandle::isPatrolling)
+		.comment("return true if the handle is patrolling")
 		;
 }
 
