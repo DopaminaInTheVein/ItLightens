@@ -431,12 +431,12 @@ function wireGoUp( )
   cmd_teleport = "player:teleport(\""..wire_pos_up.."\")"
   cam:run_cinematic("CineWireGoUp", factorWireGoUp * 5)
 
-  p:exec_command( "player:set_position(0,-1000,0);", 2 / factorWireGoUp )
+  p:exec_command( "player:set_position(0,-1000,0);", 2 )
   p:exec_command( "wireParticlesUp();", 2.5 / factorWireGoUp )
-  p:exec_command( "cam:fade_out(1);", 2.5)
-  p:exec_command( "cam:fade_in(1);", 4.5)
+  p:exec_command( "cam:fade_out(0.5);", 7.5)
+  p:exec_command( "cam:fade_in(0.5);", 9.5)
   p:exec_command( "triggerWire_1:setActionable(1);", 3)
-  p:exec_command( cmd_teleport, 10 / factorWireGoUp )
+  p:exec_command( cmd_teleport, 7.5 )
 end
 
 function wireGoDown( )
@@ -448,12 +448,13 @@ function wireGoDown( )
   cmd_teleport = "player:teleport(\""..wire_pos_down.."\")"
   cam:run_cinematic("CineWireGoUp", factorWireGoDown * -5)
 
-  p:exec_command( "player:set_position(0,-1000,0);", 2 / factorWireGoDown )
+  p:exec_command( cmd_teleport, 1.9 )
+  p:exec_command( "player:set_position(0,-1000,0);", 5.0 )
   --p:exec_command( "wireParticlesUp();", 2.5 / factorWireGoDown )
-  p:exec_command( "cam:fade_out(1);", 2.5)
-  p:exec_command( "cam:fade_in(1);", 4.5)
+  cam:fade_out(0.2)
+  p:exec_command( "cam:fade_in(1);", 3.0)
   p:exec_command( "triggerWire_2:setActionable(1);", 3)
-  p:exec_command( cmd_teleport, 10 / factorWireGoDown )
+  p:exec_command( cmd_teleport, 9.5 )
 end
 
 function wireParticlesUp( )
