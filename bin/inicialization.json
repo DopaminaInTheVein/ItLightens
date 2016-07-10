@@ -47,7 +47,7 @@
 		"reduce_factor" : 3.0,
 		"t_reduceStats_max" : 15,
 		"t_reduceStats" : 0.0,
-		"MAX_STUCK_TIME" : 4.0,
+		"MAX_STUCK_TIME" : 2.0,
 		"UNSTUCK_DISTANCE" : 5.0
 	},	
 	"bt_mole" : {

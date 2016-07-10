@@ -12,6 +12,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -27,6 +29,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -42,6 +46,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -57,6 +63,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -72,6 +80,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -87,6 +97,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -102,6 +114,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -117,6 +131,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -132,6 +148,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -147,6 +165,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -162,6 +182,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -177,6 +199,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -192,6 +216,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -207,6 +233,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -222,6 +250,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -237,6 +267,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -252,6 +284,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -267,6 +301,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -282,6 +318,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -297,6 +335,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -312,6 +352,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -327,6 +369,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -342,6 +386,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -357,6 +403,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -372,6 +420,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -387,6 +437,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -402,6 +454,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -417,6 +471,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -432,6 +488,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -447,6 +505,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -462,6 +522,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -477,6 +539,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -492,6 +556,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -507,6 +573,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -522,6 +590,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -537,6 +607,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -552,6 +624,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -567,6 +641,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -582,6 +658,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -597,6 +675,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -612,6 +692,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -627,6 +709,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -642,6 +726,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -657,6 +743,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -672,6 +760,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -687,6 +777,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -702,6 +794,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -717,6 +811,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -732,6 +828,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -747,6 +845,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -762,6 +862,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -777,6 +879,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -792,6 +896,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -807,6 +913,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -822,6 +930,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -837,6 +947,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -852,6 +964,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -867,6 +981,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -882,6 +998,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -897,6 +1015,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -912,6 +1032,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -927,6 +1049,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -942,6 +1066,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -957,6 +1083,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -972,6 +1100,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -987,6 +1117,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1002,6 +1134,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1017,6 +1151,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1032,6 +1168,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1047,6 +1185,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1062,6 +1202,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1077,6 +1219,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1092,6 +1236,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1107,6 +1253,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1122,6 +1270,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1137,6 +1287,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1152,6 +1304,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1167,6 +1321,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1182,6 +1338,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1197,6 +1355,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1212,6 +1372,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1227,6 +1389,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1242,6 +1406,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1257,6 +1423,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1272,6 +1440,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1287,6 +1457,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -1302,6 +1474,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1317,6 +1491,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1332,6 +1508,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1347,6 +1525,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1362,6 +1542,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1377,6 +1559,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1392,10 +1576,14 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="workbench interactive"/>
+<workbench/>
 <name
    name="mesa_cientifico"/>
 <transform
@@ -1407,6 +1595,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1422,6 +1612,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1437,6 +1629,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1452,6 +1646,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1467,6 +1663,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1482,6 +1680,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1497,6 +1697,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1512,6 +1714,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1527,6 +1731,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1542,6 +1748,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1557,6 +1765,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1572,6 +1782,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1587,6 +1799,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1602,6 +1816,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1617,21 +1833,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="valla"/>
-<transform
-   pos="-71.6378 16.8129 17.5351"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/valla.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1647,6 +1850,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1662,6 +1867,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1677,6 +1884,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1692,6 +1901,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1722,6 +1933,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1737,6 +1950,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1752,6 +1967,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1767,6 +1984,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1782,6 +2001,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1797,6 +2018,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1812,6 +2035,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1827,21 +2052,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cargador_bateria"/>
-<transform
-   pos="-90.8368 -0.419937 14.4301"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1857,6 +2069,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1872,6 +2086,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1887,6 +2103,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1902,6 +2120,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1917,6 +2137,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1932,6 +2154,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1947,6 +2171,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1962,6 +2188,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1977,6 +2205,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -1992,21 +2222,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="enchufe"/>
-<transform
-   pos="-121.537 -0.242203 -5.41684"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/enchufe.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2022,6 +2239,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2037,6 +2256,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2052,6 +2273,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2112,6 +2335,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2127,6 +2352,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2142,6 +2369,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2172,6 +2401,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2187,6 +2418,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2202,10 +2435,14 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="workbench interactive"/>
+<workbench/>
 <name
    name="mesa_cientifico_up"/>
 <transform
@@ -2217,6 +2454,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2227,6 +2466,7 @@
    zfar="250.0"
    fov="60.0"/>
 <culling/>
+<render_glow/>
 <controller_3rd_person/>
 <FX_fade_screen/>
 <name
@@ -2235,6 +2475,8 @@
    pos="-45.0788 5.35219 -0.918759"
    quat="0 0 0 1.0"
    scale="1.0"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity
@@ -2262,6 +2504,8 @@
 <local_aabb/>
 <polarized
    pol="neutral"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2272,12 +2516,14 @@
    pos="-82.841 4.37253 -29.8566"
    quat="0.708405 0 0 0.705806"
    scale="1.0"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity
    id="301">
 <tags
-   tags="elevator1 elevator"/>
+   tags="elevator1 elevator interactive"/>
 <elevator
    speedUp="7"
    speedDown="7"
@@ -2293,7 +2539,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="convex"
+   type_shape="box"
+   size="4.6299 0.15 3.25725"
    mass="5"
    kinematic="yes"/>
 <local_aabb/>
@@ -2307,6 +2554,8 @@
    pos="-65.5449 -1.25345 20.4724"
    quat="0 0 0 1.0"
    scale="0.547495"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2319,7 +2568,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="10.459 -11.4715 -21.7585"
+   pos="-42.9043 -0.58853 -0.614542"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -2332,6 +2581,8 @@
 <character_controller
    radius="0.3"
    height="0.7"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2339,7 +2590,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.2064 0.875 2.49"/>
+   size="3.04608 0.875 1.9173"/>
 <tags
    tags="trigger"/>
 <trigger_lua
@@ -2348,9 +2599,11 @@
 <name
    name="__tElevator"/>
 <transform
-   pos="-65.4501 16.063 19.6681"
+   pos="-65.8433 16.063 20.7697"
    quat="0 0 0 1.0"
    scale="1.0"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2358,7 +2611,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.22755 0.875 1.28148"/>
+   size="1.80743 0.875 1.28148"/>
 <tags
    tags="trigger"/>
 <trigger_lua
@@ -2367,9 +2620,11 @@
 <name
    name="__tElevator"/>
 <transform
-   pos="-65.6524 -0.482764 18.6604"
+   pos="-65.6524 -0.632667 20.4715"
    quat="0 0 0 1.0"
    scale="1.0"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2385,6 +2640,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2400,6 +2657,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2415,6 +2674,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2430,66 +2691,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="trozo_destruible_abajo"/>
-<transform
-   pos="-97.2604 -0.600098 -16.655"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_abajo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="trozo_destruible_arriba"/>
-<transform
-   pos="-97.2604 -0.600098 -16.655"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_arriba.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="trozo_destruible_derec"/>
-<transform
-   pos="-97.2604 -0.600098 -16.655"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_derec.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="trozo_destruible_iz"/>
-<transform
-   pos="-97.2604 -0.600098 -16.655"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_iz.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -2505,6 +2708,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2520,6 +2725,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2535,6 +2742,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2550,6 +2759,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2565,6 +2776,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2580,6 +2793,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2595,6 +2810,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2610,6 +2827,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2625,6 +2844,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2640,6 +2861,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2655,6 +2878,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2670,6 +2895,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2685,6 +2912,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2700,6 +2929,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2715,6 +2946,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2730,6 +2963,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2745,6 +2980,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2760,6 +2997,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2775,6 +3014,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -2790,21 +3031,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="puertas_ascensor"/>
-<transform
-   pos="-65.5715 0.322644 19.4268"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/puertas_ascensor.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -3226,6 +3454,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -3241,6 +3471,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -3270,11 +3502,13 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
 <tags
-   tags="platform pila"/>
+   tags="platform pila interactive"/>
 <pila/>
 <bone_tracker/>
 <name
@@ -3292,6 +3526,8 @@
    mass="5"
    kinematic="yes"/>
 <local_aabb/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -3318,45 +3554,8 @@
 <character_controller
    radius="0.3"
    height="2.1"/>
-
-</entity>
-<entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="3"
-   kpt0_type="seek"
-   kpt0_pos="-14.2303 -23.8712 -7.35578"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="-33.6709 -23.8712 4.3483"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="-18.8372 -23.8712 16.6996"
-   kpt2_wait="2"
-   jurisdiction="-33.7782 -23.9 3.84785"
-   jurRadius="5.0"
-   formation_point="-36.4579 -24.0251 1.96243"
-   formation_dir="-35.8161 -23.9678 2.13469"/>
-<skc_guard/>
-<name
-   name="guard_1"/>
-<transform
-   pos="-33.7782 -23.9 3.84785"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<skeleton_ik/>
-<abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -3379,7 +3578,7 @@
    kpt3_pos="10.8511 -23.8712 -13.6583"
    kpt3_wait="2"
    jurisdiction="26.0682 -23.9 -5.11404"
-   jurRadius="5.0"
+   jurRadius="35.0"
    formation_point="25.5739 -24.0251 -6.9732"
    formation_dir="26.2157 -23.9678 -6.80094"/>
 <skc_guard/>
@@ -3399,6 +3598,8 @@
 <character_controller
    radius="0.3"
    height="1.8"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -3418,7 +3619,7 @@
    kpt2_pos="2.70562 -23.8712 1.62904"
    kpt2_wait="2"
    jurisdiction="-1.58059 -23.9 3.84785"
-   jurRadius="5.0"
+   jurRadius="35.0"
    formation_point="-4.26029 -24.0251 1.96243"
    formation_dir="-3.61846 -23.9678 2.13469"/>
 <skc_guard/>
@@ -3438,6 +3639,8 @@
 <character_controller
    radius="0.3"
    height="1.8"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -3453,8 +3656,8 @@
    kpt1_type="seek"
    kpt1_pos="-84.3393 -1.28589 -28.4518"
    kpt1_wait="2"
-   jurisdiction="-84.3522 -1.19972 -28.422"
-   jurRadius="5.0"
+   jurisdiction="-82.8302 -1.19972 -25.2863"
+   jurRadius="7.15"
    formation_point="-87.0319 -1.32482 -30.3074"
    formation_dir="-86.3901 -1.26751 -30.1352"/>
 <skc_guard/>
@@ -3474,6 +3677,8 @@
 <character_controller
    radius="0.3"
    height="1.8"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -3489,8 +3694,8 @@
    kpt1_type="seek"
    kpt1_pos="-81.6461 -1.28589 -28.4518"
    kpt1_wait="2"
-   jurisdiction="-81.659 -1.19972 -28.422"
-   jurRadius="5.0"
+   jurisdiction="-82.8302 -1.19972 -25.2863"
+   jurRadius="7.2"
    formation_point="-84.3387 -1.32482 -30.3074"
    formation_dir="-83.6969 -1.26751 -30.1352"/>
 <skc_guard/>
@@ -3510,6 +3715,8 @@
 <character_controller
    radius="0.3"
    height="1.8"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -3538,7 +3745,7 @@
    kpt5_pos="-72.2655 -1.27954 -17.2999"
    kpt5_wait="2"
    jurisdiction="-96.7845 -1.19972 -10.605"
-   jurRadius="5.0"
+   jurRadius="25.0"
    formation_point="-99.4642 -1.32482 -12.4904"
    formation_dir="-98.8223 -1.26751 -12.3182"/>
 <skc_guard/>
@@ -3558,6 +3765,8 @@
 <character_controller
    radius="0.3"
    height="1.8"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -3586,7 +3795,7 @@
    kpt5_pos="-88.5043 -1.27954 -8.20765"
    kpt5_wait="2"
    jurisdiction="-66.9139 -1.19972 7.81328"
-   jurRadius="5.0"
+   jurRadius="25.0"
    formation_point="-69.5936 -1.32482 5.92785"
    formation_dir="-68.9518 -1.26751 6.10012"/>
 <skc_guard/>
@@ -3606,6 +3815,8 @@
 <character_controller
    radius="0.3"
    height="1.8"/>
+<room
+   name="sala2"/>
 
 </entity>
 <entity>
@@ -3635,6 +3846,8 @@
 <polarized
    pol="minus"
    offset="-0.0106277 0.965812 0.101485"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -3664,6 +3877,8 @@
 <polarized
    pol="plus"
    offset="0 0.966293 -0.0321448"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -3693,6 +3908,8 @@
 <polarized
    pol="minus"
    offset="-0.0106277 0.965812 -0.0448165"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -3722,11 +3939,13 @@
 <polarized
    pol="plus"
    offset="-0.0168667 0.966293 -0.293303"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
 <tags
-   tags="box platform removable"/>
+   tags="box platform removable interactive"/>
 <box
    size="3.0 1.5 3.0"/>
 <bone_tracker/>
@@ -3747,6 +3966,8 @@
 <polarized
    pol="plus"
    offset="-0.0670452 0.874261 -0.143208"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -3776,6 +3997,8 @@
 <polarized
    pol="plus"
    offset="-0.0738666 0.934383 0.100378"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -3805,6 +4028,8 @@
 <polarized
    pol="minus"
    offset="-0.0447369 0.965812 0.0109615"/>
+<room
+   name="sala1"/>
 
 </entity>
 <entity>
@@ -3834,6 +4059,1303 @@
 <polarized
    pol="plus"
    offset="0.100697 0.934383 0.073431"/>
+<room
+   name="sala1"/>
+
+</entity>
+<entity>
+<tags
+   tags="box platform removable interactive"/>
+<box
+   size="3.0 1.5 3.0"/>
+<bone_tracker/>
+<name
+   name="Box_2"/>
+<transform
+   pos="27.4042 -23.1963 -14.4337"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="minus"
+   offset="0 1.00513 0"/>
+<room
+   name="sala1"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_mole AI_poss"/>
+<bt_mole
+   wpts_size="5"
+   wpt0_pos="32.9416 -23.859 -8.19215"
+   wpt0_wait="2"
+   wpt1_pos="32.9416 -23.859 12.2672"
+   wpt1_wait="2"
+   wpt2_pos="27.2736 -23.859 12.2672"
+   wpt2_wait="2"
+   wpt3_pos="31.3085 -23.859 7.67587"
+   wpt3_wait="2"
+   wpt4_pos="33.2816 -23.859 0.208357"
+   wpt4_wait="2"/>
+<player_mole/>
+<life
+   points="100"/>
+<skc_mole/>
+<name
+   name="mole_1"/>
+<transform
+   pos="34.2279 -23.859 -12.2899"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/mole/mole.skeleton"/>
+<render_static_mesh
+   name="skeletons/mole/mole.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="2.01"/>
+<room
+   name="sala1"/>
+
+</entity>
+<entity
+   id="302">
+<tags
+   tags="interactive"/>
+<name
+   name="pared_rompible"/>
+<transform
+   pos="-97.2604 -0.600098 -16.655"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pared_rompible.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="2.40539 0.185 3.84509"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionMole="destroy"/>
+<name
+   name="tWall"/>
+<transform
+   pos="-85.8371 -0.524505 -7.80409"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags
+   tags="target"/>
+<name
+   name="tWall_pAction"/>
+<transform
+   pos="-85.5962 -0.023749 -7.78823"
+   quat="0 -0.707107 0 0.707107"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible00"/>
+<transform
+   pos="-87.122 -0.265351 -7.12929"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible01"/>
+<transform
+   pos="-87.122 1.92398 -7.12929"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole025.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible02"/>
+<transform
+   pos="-87.122 1.92398 -7.85801"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole024.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible03"/>
+<transform
+   pos="-87.122 1.92398 -8.60534"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole023.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible04"/>
+<transform
+   pos="-87.1826 2.26157 -7.45778"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole022.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible05"/>
+<transform
+   pos="-87.1826 2.26157 -8.26832"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole021.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible06"/>
+<transform
+   pos="-87.122 1.22507 -7.12929"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole020.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible07"/>
+<transform
+   pos="-87.122 1.22507 -7.85801"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole019.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible08"/>
+<transform
+   pos="-87.122 1.22507 -8.60534"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole018.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible09"/>
+<transform
+   pos="-87.1826 1.56207 -7.45778"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole017.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible10"/>
+<transform
+   pos="-87.1826 1.56207 -8.26832"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole016.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible11"/>
+<transform
+   pos="-87.122 0.508117 -7.12929"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole015.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible12"/>
+<transform
+   pos="-87.122 0.508117 -7.85801"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole014.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible13"/>
+<transform
+   pos="-87.122 0.508117 -8.60534"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole013.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible14"/>
+<transform
+   pos="-87.1826 0.854095 -7.45778"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole012.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible15"/>
+<transform
+   pos="-87.1826 0.854095 -8.26832"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole011.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible16"/>
+<transform
+   pos="-87.1826 0.0809323 -7.45778"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole007.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible17"/>
+<transform
+   pos="-87.1826 0.0809323 -8.22412"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole006.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible18"/>
+<transform
+   pos="-87.122 -0.265351 -8.62366"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole003.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="pared_rompible19"/>
+<transform
+   pos="-87.122 -0.265351 -7.86716"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/whitebox/pared_mole002.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   id="303">
+<tags
+   tags="pila_container interactive"/>
+<pila_container/>
+<name
+   name="cargador_bateria"/>
+<transform
+   pos="-90.8368 -0.419937 14.4301"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags
+   tags="target"/>
+<name
+   name="cargador_bateria_pAction"/>
+<transform
+   pos="-91.6796 -0.419937 14.2709"
+   quat="0 0.959077 0 0.283145"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   id="304">
+<tags
+   tags="pila_container interactive"/>
+<pila_container/>
+<name
+   name="enchufe"/>
+<transform
+   pos="-121.537 -0.242203 -5.41684"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/enchufe.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="2.17851 1.1715 2.40955"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionSci="activate"/>
+<name
+   name="__tCargador"/>
+<transform
+   pos="-90.8076 -0.719524 14.492"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.4596 1.1715 1.49103"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionSci="activate"/>
+<name
+   name="__tEnchufe"/>
+<transform
+   pos="-121.536 -0.719525 -6.02005"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.08242 0.185 3.84509"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   actived="false"
+   action="activate"/>
+<name
+   name="tWireDown"/>
+<transform
+   pos="-86.4728 -0.331161 -7.4832"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<tracker
+   long="35.0293"
+   point0="-87.0677 0.707772 -5.45867"
+   point1="-87.0677 0.707772 -4.9653"
+   point2="-87.0677 0.707772 -4.47193"
+   point3="-87.0677 0.707773 -3.97856"
+   point4="-87.0677 0.707772 -3.48519"
+   point5="-87.0677 0.707772 -2.99182"
+   point6="-87.0677 0.707773 -2.49845"
+   point7="-87.0677 0.707772 -2.00508"
+   point8="-87.0677 0.707772 -1.51171"
+   point9="-87.0677 0.707772 -1.01834"
+   point10="-87.0677 0.707773 -0.524974"
+   point11="-87.0677 0.707772 -0.0316038"
+   point12="-87.0677 0.707772 0.461766"
+   point13="-87.0677 0.707772 0.955136"
+   point14="-87.0677 0.707772 1.44851"
+   point15="-87.0677 0.707772 1.94188"
+   point16="-87.0677 0.707772 2.43524"
+   point17="-87.0677 0.707772 2.92862"
+   point18="-87.0677 0.707772 3.42198"
+   point19="-87.0677 0.707772 3.91536"
+   point20="-87.0677 0.707772 4.40873"
+   point21="-87.0677 0.707772 4.9021"
+   point22="-87.0677 0.707772 5.39547"
+   point23="-87.0677 0.707772 5.88884"
+   point24="-87.0677 0.707772 6.38221"
+   point25="-87.0677 0.707772 6.87558"
+   point26="-87.0677 0.707772 7.36895"
+   point27="-87.0677 0.707773 7.86232"
+   point28="-87.0677 0.707773 8.35569"
+   point29="-87.0677 0.707773 8.84906"
+   point30="-87.0677 0.707773 9.34243"
+   point31="-87.0677 0.707773 9.8358"
+   point32="-87.0677 0.707773 10.3292"
+   point33="-87.0677 0.707773 10.8225"
+   point34="-87.0677 0.707773 11.3159"
+   point35="-87.0677 0.707773 11.8093"
+   point36="-87.0677 0.707773 12.3026"
+   point37="-87.0677 0.707773 12.796"
+   point38="-87.0677 0.707773 13.2894"
+   point39="-87.0677 0.707773 13.7828"
+   point40="-87.0677 0.707773 14.2761"
+   point41="-87.0677 0.707773 14.7695"
+   point42="-87.0677 0.707773 15.2629"
+   point43="-87.0677 0.707773 15.7562"
+   point44="-87.0677 0.707773 16.2496"
+   point45="-87.0677 0.707773 16.743"
+   point46="-87.0677 0.707773 17.2363"
+   point47="-87.0677 0.707773 17.7297"
+   point48="-87.0677 0.707773 18.2231"
+   point49="-87.0677 0.707773 18.7165"
+   point50="-87.0677 0.855405 19.0622"
+   point51="-87.0677 1.34878 19.0622"
+   point52="-87.0677 1.84215 19.0622"
+   point53="-87.0677 2.33552 19.0622"
+   point54="-87.0677 2.82889 19.0622"
+   point55="-87.0677 3.32226 19.0622"
+   point56="-87.0677 3.81563 19.0622"
+   point57="-87.0677 4.309 19.0622"
+   point58="-87.0677 4.80237 19.0622"
+   point59="-87.0677 5.29574 19.0622"
+   point60="-87.0677 5.78911 19.0622"
+   point61="-87.0677 6.28248 19.0622"
+   point62="-87.0677 6.77585 19.0622"
+   point63="-87.0677 7.26922 19.0622"
+   point64="-87.0677 7.76259 19.0622"
+   point65="-87.0677 8.25596 19.0622"
+   point66="-87.0677 8.74933 19.0622"
+   point67="-87.0677 9.2427 19.0622"
+   point68="-87.0677 9.73607 19.0622"
+   point69="-87.0677 10.2294 19.0622"
+   point70="-87.0677 10.7228 19.0622"
+   size="71"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="12"
+   wpt1="-72.9468 0.48355 -16.4786"
+   wpt2="-74.148 1.84512 -21.2435"
+   wpt3="-70.163 3.83865 -15.079"
+   wpt4="-64.0399 4.88089 -12.119"
+   wpt5="-62.3907 8.17905 -10.3229"
+   wpt6="-61.978 13.2981 -7.17426"
+   wpt7="-61.978 14.8739 -3.8869"
+   wpt8="-61.8485 18.7657 -2.72998"
+   wpt9="-61.8485 20.5716 2.9375"
+   wpt10="-61.8485 19.7312 7.34058"
+   wpt11="-57.5686 18.7657 9.61511"
+   wpt12="-54.1142 18.7657 9.61511"
+   lpt1="-79.8352 2.09982 -15.529"
+   lpt2="-79.959 2.3179 -9.47595"
+   lpt3="-79.959 2.3179 1.24573"
+   lpt4="-79.959 2.88284 11.9039"
+   lpt5="-67.3206 10.5338 11.2877"
+   lpt6="-56.3279 11.2121 10.778"
+   lpt7="-54.763 18.5873 3.07819"
+   lpt8="-54.763 18.8966 3.76953"
+   lpt9="-54.763 18.8966 3.53967"
+   lpt10="-54.763 18.8966 3.30835"
+   lpt11="-54.763 18.8966 3.30835"
+   lpt12="-54.7841 18.672 3.30835"/>
+<name
+   name="CineWireGoUp"/>
+<transform
+   pos="-91.9901 27.8865 -44.4083"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="teleport"/>
+<name
+   name="WirePosUp"/>
+<transform
+   pos="-68.5186 16.212 16.4784"
+   quat="0 0.753234 0 0.657752"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_cientifico AI_poss"/>
+<bt_scientist/>
+<player_cientifico/>
+<life
+   points="100"/>
+<skc_scientist/>
+<name
+   name="scientist_1"/>
+<transform
+   pos="-66.2184 16.129 12.5512"
+   quat="0 0 0 1.0"
+   scale="0.00929856"/>
+<skeleton
+   model="skeletons/scientist/scientist.skeleton"/>
+<render_static_mesh
+   name="skeletons/scientist/scientist.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.147"
+   height="1.71312"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-64.4584 16.2979 13.2277"
+   yawAction="-3.14159"/>
+<name
+   name="Workstation02"/>
+<transform
+   pos="-64.4584 16.2979 13.2277"
+   quat="0 0.922127 0 0.386888"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-66.745 16.2979 16.787"
+   yawAction="0.0"/>
+<name
+   name="Workstation01"/>
+<transform
+   pos="-66.745 16.2979 16.787"
+   quat="0 -0.357009 0 0.934101"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-63.2201 16.2979 17.4363"
+   yawAction="0.0"/>
+<name
+   name="Workstation03"/>
+<transform
+   pos="-63.2201 16.2979 17.4363"
+   quat="0 0.410464 0 0.911877"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.0 4.0 0.1"/>
+<tags
+   tags="trigger room_switcher"/>
+<room_switcher
+   front_room="sala1"
+   back_room="sala2"/>
+<name
+   name="Trigger_Cambio_Sala"/>
+<transform
+   pos="-54.4765 0.753134 -5.47724"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.1 4.0 12.0"/>
+<tags
+   tags="trigger limit"/>
+<limit/>
+<name
+   name="Trigger_Escupe_Posessiones"/>
+<transform
+   pos="-62.2198 0.753134 -5.47724"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_1"/>
+<transform
+   pos="-17.8101 -1.54614 24.6676"
+   quat="0 0.999986 0 0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_1"/>
+<transform
+   pos="-17.8101 -1.54614 24.6676"
+   quat="0 0.999986 0 0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_2"/>
+<transform
+   pos="29.6176 -23.2889 16.4296"
+   quat="0 0.99999 0 0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_2"/>
+<transform
+   pos="29.6176 -23.2889 16.4296"
+   quat="0 0.99999 0 0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_3"/>
+<transform
+   pos="-6.74973 -12.2363 -19.6071"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_3"/>
+<transform
+   pos="-6.74973 -12.2363 -19.6071"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_4"/>
+<transform
+   pos="-40.825 -0.555909 -7.16371"
+   quat="0 0.705949 0 0.708263"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_4"/>
+<transform
+   pos="-40.825 -0.555908 -7.16371"
+   quat="0 0.705949 0 0.708263"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_5"/>
+<transform
+   pos="-73.5068 -0.588134 8.45465"
+   quat="0 0.846634 0 0.532176"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_5"/>
+<transform
+   pos="-73.5068 -0.588134 8.45465"
+   quat="0 0.846634 0 0.532176"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator_6"/>
+<transform
+   pos="-119.645 -0.582276 -12.5256"
+   quat="0 -0.695415 0 0.718609"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="trigger_6"/>
+<transform
+   pos="-119.645 -0.582276 -12.5256"
+   quat="0 -0.695415 0 0.718609"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.714291 0.725 0.922822"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   actived="true"
+   action="activate"/>
+<name
+   name="tWireUp"/>
+<transform
+   pos="-69.2854 16.398 16.661"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity>
+<tags
+   tags="teleport"/>
+<name
+   name="WirePosDown"/>
+<transform
+   pos="-85.4879 -0.533921 -7.74967"
+   quat="0 0.753234 0 0.657752"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   id="305">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-63.6948 0.32264 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_Left"/>
+<transform
+   pos="-64.9312 0.32264 19.4268"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/__DoorElev_Left.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__DoorElev_Left___opened_pos001"/>
+<transform
+   pos="-63.6948 0.32264 19.4268"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   id="306">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-67.4927 0.32264 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_Right"/>
+<transform
+   pos="-66.2562 0.32264 19.4268"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/__DoorElev_Right.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__DoorElev_Right___opened_pos002"/>
+<transform
+   pos="-67.4927 0.32264 19.4268"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   id="307">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="no"
+   speedOpening="1"
+   target="-64.8125 16.9651 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_LeftUp"/>
+<transform
+   pos="-63.888 16.9651 19.4268"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/__DoorElev_LeftUp.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__DoorElev_LeftUp___opened_pos003"/>
+<transform
+   pos="-64.8125 16.9651 19.4268"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="sala2"/>
+
+</entity>
+<entity
+   id="308">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="no"
+   speedOpening="1"
+   target="-66.1481 16.9651 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_RightUp"/>
+<transform
+   pos="-67.1209 16.9651 19.4268"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/__DoorElev_RightUp.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__DoorElev_RightUp___opened_pos004"/>
+<transform
+   pos="-66.1481 16.9651 19.4268"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="sala2"/>
 
 </entity>
 
