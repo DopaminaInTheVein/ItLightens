@@ -74,7 +74,6 @@ bool bt_poss::beingUnpossessed() {
 }
 //actions
 int bt_poss::actionPossessing() {
-	
 	CEntity* me;
 	possessed = true;
 	possessing = false;
