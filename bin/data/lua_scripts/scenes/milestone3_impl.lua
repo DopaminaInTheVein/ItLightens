@@ -1,6 +1,14 @@
 -- Last id 305, 306
 -- Next 307, 308
 
+--------------------------- COMENTAR CODIGO TEST!!!! ---------------------------------------
+function test_dbg()
+  h:get_handle_by_id(idDoor)
+  h:setLocked(0)
+  isDoorOpen = true
+end
+--------------------------- COMENTAR CODIGO TEST!!!! ---------------------------------------
+
 print('This is lua')
 
 SLB.using( SLB )
@@ -159,39 +167,58 @@ function OnRemovePila_enchufe()
   end
 end
 
--- On Detected Door_centinels
+-- On Detected Door_centinels --
+--------------------------------
+
 hDoor = Handle()
-alerts = 0
+alert = true
+centinel_1 = Handle()
+centinel_2 = Handle()
+
 function centinelDetection( )
-  if alerts < 1 then
+  if not alert then
+	alert = true
 	hDoor:get_handle_by_id(idDoor)
-	hDoor:setLocked(-10) -- Means close speed 10, (negative value = close at that speed)
-	alerts = alerts + 1
-	p:exec_command("centinelRelax();", 20)
+	p:exec_command("hDoor:setLocked(-10)", 1)
+	p:exec_command("centinelRelax();", 2)
   end
 end
 
 function centinelRelax( )
-  alerts = alerts - 1
-  if alerts < 1 then
-	if isDoorOpen then
-		hDoor:get_handle_by_id(idDoor)
-		hDoor:setLocked(0);
+  alert = false
+
+  if centinel_1:is_valid() then
+	if not centinel_1:is_patroling() then
+		alert = true
 	end
+  end
+  
+  if centinel_2:is_valid() then
+	if not centinel_2:is_patroling() then
+		alert = true
+	end
+  end
+  
+  if alert then
+	p:exec_command("centinelRelax();", 2)
+  else
+    p:exec_command("alert_finish()", 2)
   end
 end
 
-function test_dbg()
-  h:get_handle_by_id(idDoor)
-  h:setLocked(0)
-  isDoorOpen = true
+function alert_finish( )
+  if not alert then
+	hDoor:setLocked(0);
+  end
 end
 
 function OnDetected_guard_004( )
+	centinel_1:getHandleCaller()
 	centinelDetection()
 end
 
 function OnDetected_guard_005( )
+	centinel_2:getHandleCaller()
 	centinelDetection()
 end
 
@@ -317,16 +344,27 @@ function destroyWall( )
   actionWallTarget:get_handle_by_name_tag("tWall_pAction", "target")
   player = Handle()
   player:get_player()
-  player:go_and_look_as(actionWallTarget, "destroyWallEffect();")
+  player:go_and_look_as(actionWallTarget, "destroyWallAnim();")
+end
+
+function destroyWallAnim( )
+  p:print("Destroy Wall Animation")
+  --Animacion Player
+  player = Handle()
+  player:get_player()
+  player:set_anim("attack")
+  p:exec_command("destroyWallEffect();", 1.5)
 end
 
 function destroyWallEffect()
   p:print("Destroy Wall Effect\n")
+  
   --Destruimos pared
   h:get_handle_by_id(idWall)
   h:destroy()
   
   --Activamos fragmentos pared
+  
   all_fragments1:get_handles_by_tag(tagWallFragment1)
   all_fragments1:awake()
   p:exec_command( "all_fragments1:remove_physics();", 5 )

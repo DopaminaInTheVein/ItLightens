@@ -153,6 +153,10 @@ void SLBHandle::destroy() {
 	if (real_handle.isValid()) real_handle.destroy();
 }
 
+bool SLBHandle::isValid() {
+	return real_handle.isValid();
+}
+
 const char* SLBHandle::getName() {
 	if (real_handle.isValid()) return ((CEntity*)real_handle)->getName();
 	return "";
@@ -324,6 +328,15 @@ bool SLBHandle::isCharged() {
 		return msg.charged;
 	}
 	return false;
+}
+
+void SLBHandle::setAnim(const char* name) {
+	if (real_handle.isValid()) {
+		TMsgSetAnim msg;
+		msg.loop = false;
+		msg.name = vector<string>(1, string(name));
+		real_handle.sendMsg(msg);
+	}
 }
 
 // Handle group By Tag

@@ -59,6 +59,7 @@ public:
 	void getHandleCaller();
 	void destroy();
 	const char* getName();
+	bool isValid();
 	SLBPosition getPos();
 	void setPos(SLBPosition);
 	void setPosition(float x, float y, float z);
@@ -78,6 +79,7 @@ public:
 	bool hasPilaCharged();
 	void setCharged(bool);
 	bool isCharged();
+	void setAnim(const char* name);
 };
 
 class SLBHandleGroup

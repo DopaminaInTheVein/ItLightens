@@ -423,6 +423,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 	SLB::Class<SLBHandle>("Handle", &m)
 		.comment("Handle class")
 		.constructor()
+		// is valid
+		.set("is_valid", &SLBHandle::isValid)
+		.comment("return true if the entity handle is valid")
 		// get name
 		.set("get_name", &SLBHandle::getName)
 		.comment("Get the name of the entity handle")
@@ -484,6 +487,7 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// toggle guards formation
 		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
 		.comment("Activates/desactivates the guard formation states.")
+		//.set
 		// toggle scientist busy
 		.set("toggle_scientist_busy", &SLBHandle::toggleScientistBusy)
 		.comment("Activates/desactivates the scientist busy states.")
@@ -515,6 +519,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// Ask pila charged
 		.set("is_charged", &SLBHandle::isCharged)
 		.comment("return true if the handle is charged")
+		// Set Anim
+		.set("set_anim", &SLBHandle::setAnim)
+		.param("string: animation name")
+		.comment("set an animation to the skeleton of that handle")
 		;
 }
 
