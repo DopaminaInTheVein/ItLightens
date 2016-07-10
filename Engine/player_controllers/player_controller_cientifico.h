@@ -10,7 +10,7 @@
 
 #include "player_controller_base.h"
 #include "poss_controller.h"
-#include "skeleton_controllers/skc_player.h"
+#include "skeleton_controllers/skc_scientist.h"
 
 class CEntity;
 
@@ -28,7 +28,7 @@ class player_controller_cientifico : public PossController {
 	};
 	//Anims
 	CObjectManager<player_controller_cientifico> *om;
-	SkelControllerPlayer * animController;
+	SkelControllerScientist * animController;
 
 	int objs_amoung[OBJ_SCI_SIZE];
 

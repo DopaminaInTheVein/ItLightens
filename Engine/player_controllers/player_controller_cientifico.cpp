@@ -58,7 +58,8 @@ bool player_controller_cientifico::getUpdateInfo()
 {
 	if (!CPlayerBase::getUpdateInfo()) return false;
 	myParent = CHandle(this).getOwner();
-	animController = GETH_MY(SkelControllerPlayer);
+
+	animController = GETH_MY(SkelControllerScientist);
 	return true;
 }
 
