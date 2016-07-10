@@ -159,7 +159,7 @@ void bt_guard::Init()
 //conditions
 bool bt_guard::guardStuck() {
 	PROFILE_FUNCTION("guard: guard stuck");
-	return stuck && keyPoints.size() > 2;
+	return stuck;
 }
 
 bool bt_guard::playerStunned() {
