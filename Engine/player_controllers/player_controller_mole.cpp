@@ -320,6 +320,7 @@ void player_controller_mole::PuttingPila()
 		pila->PutIn(pilaContainer);
 		pilaGrabbed = CHandle();
 		mole_max_speed *= 2;
+		animController->setState(AST_IDLE);
 	}
 }
 
