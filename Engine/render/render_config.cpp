@@ -147,7 +147,7 @@ void createZStates() {
   //-------------------------------------------------------------------------
   desc.DepthEnable = true;
   desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-  desc.DepthFunc = D3D11_COMPARISON_EQUAL;
+  desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 
   desc.StencilEnable = true;
   desc.StencilReadMask = 0xFF;

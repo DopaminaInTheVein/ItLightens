@@ -3,7 +3,7 @@
 #include "resources/resources_manager.h"
 
 std::vector<Shot> ShootManager::shots = std::vector<Shot>();
-void ShootManager::shootLaser(VEC3 origin, VEC3 reach)
+void ShootManager::shootLaser(const VEC3& origin, const VEC3& reach)
 {
 	PROFILE_FUNCTION("ShootManager: shootLaser");
 	/*MAT44 mat = MAT44::Identity;

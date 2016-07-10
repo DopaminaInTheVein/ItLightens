@@ -736,7 +736,8 @@ void CRenderDeferredModule::ShootGuardRender() {
 		};
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+		//auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+		auto tech = Resources.get("solid_textured.tech")->as<CRenderTechnique>();
 		tech->activate();
 
 		//Render.activateBackBuffer();
@@ -775,15 +776,15 @@ void CRenderDeferredModule::ShootGuardRender() {
 		Render.activateBackBuffer();
 		rt_data2->clear(VEC4(0, 0, 0, 0));
 		ID3D11RenderTargetView* rts[3] = {
-		  rt_data2->getRenderTargetView()
+		  rt_selfIlum->getRenderTargetView()
 		  ,	nullptr   // remove the other rt's from the pipeline
 		  ,	nullptr
 		};
 		Render.ctx->OMSetRenderTargets(3, rts, nullptr);
-		//activateBlend(BLENDCFG_ADDITIVE);
+		//ractivateBlend(BLENDCFG_ADDITIVE);
 
 		activateZ(ZCFG_ALL_DISABLED);
-		activateBlend(BLENDCFG_DEFAULT);
+		activateBlend(BLENDCFG_COMBINATIVE);
 		auto tech = Resources.get("test_shoot.tech")->as<CRenderTechnique>();
 		tech->activate();
 
@@ -862,7 +863,6 @@ void CRenderDeferredModule::render() {
 	drawFullScreen(rt_final, tech);
 
 	activateBlend(BLENDCFG_DEFAULT);
-	activateZ(ZCFG_DEFAULT);
 
 	/*if (GameController->GetFxPolarize()) {
 	  RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
@@ -872,14 +872,6 @@ void CRenderDeferredModule::render() {
 	activateZ(ZCFG_DEFAULT);
 
 	ShootGuardRender();
-
-	activateZ(ZCFG_ALL_DISABLED);
-
-	/*if (GameController->GetFxGlow()) {
-	  GlowEdgesInt();
-	  GlowEdges();
-	}*/
-
 	
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);

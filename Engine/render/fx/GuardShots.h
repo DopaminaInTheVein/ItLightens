@@ -12,14 +12,14 @@ struct Shot {
 	VEC3 origin;
 	VEC3 end;
 
-	Shot(VEC3 src, VEC3 dst) : origin(src), end(dst) {}
+	Shot(const VEC3& src, const VEC3& dst) : origin(src), end(dst) {}
 };
 
 class ShootManager
 {
 public:
 	//static void shootLaser(VEC3 origin, CQuaternion quat, float reach);
-	static void shootLaser(VEC3 origin, VEC3 reach);
+	static void shootLaser(const VEC3& origin, const VEC3& reach);
 	static void renderAll();
 //private:
 	static std::vector<Shot> shots;
