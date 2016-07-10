@@ -34,12 +34,11 @@ void TCompCulling::update() {
 	if (!e_owner) return;
 	TCompRoom* room = e_owner->get<TCompRoom>();
 	if (room) {
-
 		if (SBB::readSala() != room->name)
 			return;			//light on diferent room
 		else {
 			//fast fix for room3
-			if (SBB::readSala() == "sala2") {
+			if (SBB::readSala() == 2) {
 				CEntity* ep = tags_manager.getFirstHavingTag("player");
 				if (ep) {
 					TCompTransform* t = ep->get<TCompTransform>();

@@ -80,6 +80,7 @@ public:
 	void setCharged(bool);
 	bool isCharged();
 	void setAnim(const char* name);
+	bool isPatrolling();
 };
 
 class SLBHandleGroup
@@ -125,7 +126,7 @@ public:
 	void playMusic(const char* music_route);
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);
-	void playerRoom(const char* newRoom);
+	void playerRoom(int newRoom);
 	void playerTalks(const char* text, const char* iconName, const char* iconText);
 	void playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor);
 	void characterGlobe(const char* text, float distance, float char_x, float char_y, float char_z);

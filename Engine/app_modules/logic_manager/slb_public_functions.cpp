@@ -338,7 +338,12 @@ void SLBHandle::setAnim(const char* name) {
 		real_handle.sendMsg(msg);
 	}
 }
-
+bool SLBHandle::isPatrolling() {
+	if (real_handle.isValid()) {
+		auto guard = getHandleManager<bt_guard>()->getAddrFromHandle(real_handle);
+		return guard->isPatrolling();
+	}
+}
 // Handle group By Tag
 void SLBHandleGroup::getHandlesByTag(const char * tag) {
 	handle_group = tags_manager.getHandlesByTag(string(tag));
@@ -497,13 +502,12 @@ void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 	sound_manager->playAmbient(std::string(ambient_route));
 }
 
-void SLBPublicFunctions::playerRoom(const char* newRoom) {
+void SLBPublicFunctions::playerRoom(int newRoom) {
 	CHandle p = tags_manager.getFirstHavingTag("player");
 	CEntity * pe = p;
 	TCompRoom * room = pe->get<TCompRoom>();
-	std::string strRoom(newRoom);
-	if (room->setName(strRoom)) {
-		SBB::postSala(strRoom);
+	if (room->setName(newRoom)) {
+		SBB::postSala(newRoom);
 	}
 }
 

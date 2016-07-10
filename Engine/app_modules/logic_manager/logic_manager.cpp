@@ -487,7 +487,6 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// toggle guards formation
 		.set("toggle_guard_formation", &SLBHandle::toggleGuardFormation)
 		.comment("Activates/desactivates the guard formation states.")
-		//.set
 		// toggle scientist busy
 		.set("toggle_scientist_busy", &SLBHandle::toggleScientistBusy)
 		.comment("Activates/desactivates the scientist busy states.")
@@ -519,6 +518,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// Ask pila charged
 		.set("is_charged", &SLBHandle::isCharged)
 		.comment("return true if the handle is charged")
+		// Ask guard patrolling
+		.set("is_patrolling", &SLBHandle::isPatrolling)
+		.comment("return true if the handle is patrolling")
 		// Set Anim
 		.set("set_anim", &SLBHandle::setAnim)
 		.param("string: animation name")
@@ -627,7 +629,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// Change Player Room
 		.set("player_room", &SLBPublicFunctions::playerRoom)
 		.comment("Change Player Room")
-		.param("string: new room")
+		.param("int: new room")
 		// launch text span related to npc talks
 		.set("player_talks", &SLBPublicFunctions::playerTalks)
 		.comment("Shows the specified text for aq limited time")

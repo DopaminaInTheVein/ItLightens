@@ -7,7 +7,7 @@
 #include "logic/bt_guard.h"
 #include "recast/navmesh.h"
 
-string SBB::sbbSala;
+int SBB::sbbSala;
 CNavmesh SBB::sbbNav;
 map<string, int> SBB::sbbInt;
 map<string, bool> SBB::sbbBool;
@@ -27,10 +27,10 @@ void SBB::update(float dt) {
 	updateGuardAlerts(dt);
 }
 
-void SBB::postSala(string sala) {
+void SBB::postSala(int sala) {
 	sbbSala = sala;
 }
-string SBB::readSala() {
+int SBB::readSala() {
 	return sbbSala;
 }
 

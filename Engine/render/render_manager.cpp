@@ -56,7 +56,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 	CHandle h_transform = e->get<TCompTransform>();
 	CHandle h_aabb = e->get<TCompAbsAABB>();
 	TCompRoom * comproom = e->get<TCompRoom>();
-	std::string oroom = "none";
+	int oroom = -1;
 	if (comproom) {
 		oroom = comproom->name;
 	}
@@ -88,7 +88,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 			k.isPlayer = playercandidate;
 			if (!s.material->tech->usesBones())
 				all_shadow_keys.push_back(k);
-			 else
+			else
 				all_shadow_skinning_keys.push_back(k);
 		}
 	}
@@ -176,11 +176,11 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 	bool curr_tech_used_bones = false;
 	int  nkeys_rendered = 0;
-	std::string pj_room = SBB::readSala();
+	int pj_room = SBB::readSala();
 	// Pasearse por todas las keys
 	while (it != end_it) {
 		// Do the culling
-		if (it->isPlayer || pj_room == "none" || it->room == "none" || pj_room == it->room) {
+		if (it->isPlayer || pj_room == -1 || it->room == -1 || pj_room == it->room) {
 			if (culling_bits) {
 				TCompAbsAABB* aabb = it->aabb;
 				if (aabb) {
@@ -271,7 +271,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 	CTraceScoped scope("Shadow Casters");
 	PROFILE_FUNCTION("SHADOW CASTERS OBJ");
 	auto it = all_shadow_keys.begin();
-	std::string pj_room = SBB::readSala();
+	int pj_room = SBB::readSala();
 
 	// Check if we have culling information from the camera source
 	CEntity* e_camera = h_light;
@@ -289,7 +289,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 	}
 
 	//check room
-	std::string room_str;
+	int room_str = -1;
 	if (room) {
 		room_str = room->name;
 	}
@@ -302,8 +302,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 	const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
 	int nkeys_rendered = 0;
 	while (it != all_shadow_keys.end()) {
-		if (pj_room == "none" || it->room == "none" || pj_room == it->room) {
-
+		if (pj_room == -1 || it->room == -1 || pj_room == it->room) {
 			if (culling_bits) {
 				TCompAbsAABB* aabb = it->aabb;
 				if (aabb) {
@@ -339,11 +338,11 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 
 // ------------------------------------------
 
-//render shadowcaster with skinning tech 
+//render shadowcaster with skinning tech
 void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 	PROFILE_FUNCTION("SHADOW CASTER SKIN");
 	auto it = all_shadow_skinning_keys.begin();
-	std::string pj_room = SBB::readSala();
+	int pj_room = SBB::readSala();
 
 	CEntity* e_camera = h_light;
 	TCompRoom* room;
@@ -355,7 +354,7 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 		return;
 
 	//check room
-	std::string room_str;
+	int room_str = -1;
 	if (room) {
 		room_str = room->name;
 	}
@@ -364,7 +363,7 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 		return;			//shadows on diferent room
 	else {
 		//fast fix for room3
-		if (SBB::readSala() == "sala2") {
+		if (SBB::readSala() == 2) {
 			CEntity* ep = tags_manager.getFirstHavingTag("player");
 			if (ep) {
 				TCompTransform* t = ep->get<TCompTransform>();
@@ -382,9 +381,8 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 		}
 	}
 
-
 	while (it != all_shadow_skinning_keys.end()) {
-		if (it->isPlayer || pj_room == "none" || it->room == "none" || pj_room == it->room) {
+		if (it->isPlayer || pj_room == -1 || it->room == -1 || pj_room == it->room) {
 			const TCompTransform* c_tmx = it->transform;
 
 			if (c_tmx) {
@@ -403,7 +401,6 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 			}
 			else {
 				fatal("render__manager: tranfrom from shadowcaster null");
-
 			}
 		}
 		++it;

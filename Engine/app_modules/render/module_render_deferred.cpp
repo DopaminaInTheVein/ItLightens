@@ -112,42 +112,41 @@ bool CRenderDeferredModule::start() {
 
 	particles_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 
-  Resources.get("textures/general/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE );
+	Resources.get("textures/general/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE);
 
-  //hatching texture
-  Resources.get("textures/hatching/hatch_0.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
+	//hatching texture
+	Resources.get("textures/hatching/hatch_0.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
 
-  //tests hatching
-//#ifdef _DEBUG
-  //Resources.get("textures/hatching/hatching_tileable.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST1);
-  //Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST2);
-//#endif
-  
-  Resources.get("textures/hatching/hatching_tileable_ALPHAS.dds")->as<CTexture>()->activate(63);
-  Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(64);
+	//tests hatching
+  //#ifdef _DEBUG
+	//Resources.get("textures/hatching/hatching_tileable.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST1);
+	//Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST2);
+  //#endif
 
+	Resources.get("textures/hatching/hatching_tileable_ALPHAS.dds")->as<CTexture>()->activate(63);
+	Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(64);
 
-  Resources.get("textures/ramps/rampa_prueba.dds")->as<CTexture>()->activate(TEXTURE_SLOT_RAMP);
+	Resources.get("textures/ramps/rampa_prueba.dds")->as<CTexture>()->activate(TEXTURE_SLOT_RAMP);
 
-  shader_ctes_hatching.edge_lines_detection = 0.02f;
-  shader_ctes_hatching.frequency_offset = 8.0f;
-  shader_ctes_hatching.intensity_sketch = 0.2f;
-  shader_ctes_hatching.rim_strenght = 1.0f;
-  shader_ctes_hatching.specular_strenght = 50.0f;
-  shader_ctes_hatching.diffuse_strenght = 1.0f;
-  shader_ctes_hatching.frequency_texture = 10.0f;
-  shader_ctes_hatching.color_ramp = 0.0f;
-  shader_ctes_hatching.specular_force = 0.2f;
-  shader_ctes_hatching.rim_specular = 1.5f;
+	shader_ctes_hatching.edge_lines_detection = 0.02f;
+	shader_ctes_hatching.frequency_offset = 8.0f;
+	shader_ctes_hatching.intensity_sketch = 0.2f;
+	shader_ctes_hatching.rim_strenght = 1.0f;
+	shader_ctes_hatching.specular_strenght = 50.0f;
+	shader_ctes_hatching.diffuse_strenght = 1.0f;
+	shader_ctes_hatching.frequency_texture = 10.0f;
+	shader_ctes_hatching.color_ramp = 0.0f;
+	shader_ctes_hatching.specular_force = 0.2f;
+	shader_ctes_hatching.rim_specular = 1.5f;
 
-  shader_ctes_globals.world_time = 0.f;
-  shader_ctes_globals.xres = xres;
-  shader_ctes_globals.yres = yres;
-  shader_ctes_globals.strenght_polarize = 1.0f / 5.0f;
+	shader_ctes_globals.world_time = 0.f;
+	shader_ctes_globals.xres = xres;
+	shader_ctes_globals.yres = yres;
+	shader_ctes_globals.strenght_polarize = 1.0f / 5.0f;
 
-  shader_ctes_hatching.uploadToGPU();
+	shader_ctes_hatching.uploadToGPU();
 
-  return true;
+	return true;
 }
 
 // ------------------------------------------------------
@@ -159,15 +158,12 @@ void CRenderDeferredModule::stop() {
 void CRenderDeferredModule::update(float dt) {
 	shader_ctes_globals.world_time += dt;
 	if (io->keys['H'].isPressed()) {
-
 		auto gs = tags_manager.getHandlesByTag("generator");
 
-		
 		helpers.create(gs.size(), particles_mesh);
 		TParticleData  pd = TParticleData();
 		pd.initialize(gs.size());
 		for (int i = 0; i < pd.indexBuffer.size(); i++) {
-
 			CEntity *eg = gs[i];
 
 			if (!eg) continue;
@@ -182,7 +178,7 @@ void CRenderDeferredModule::update(float dt) {
 			pd.maxLifeTimeBuffer[i] = 1.f; //max time
 			pd.positionBuffer[i] = pos;
 			pd.velocityBuffer[i] = PxVec3(0, 0, 0);
-			pd.negativeVelocityBuffer[i] = PxVec3(0,0,0);
+			pd.negativeVelocityBuffer[i] = PxVec3(0, 0, 0);
 			pd.lifeTimeBuffer[i] = 1.f;
 
 			pd.sizeBuffer[i] = 1.f;
@@ -193,7 +189,7 @@ void CRenderDeferredModule::update(float dt) {
 			pd.positionInitBuffer[i] = pos;
 			pd.velocityInitBuffer[i] = PxVec3(0, 0, 0);
 
-			pd.colorBuffer[i] = VEC4(1,1,1,1);
+			pd.colorBuffer[i] = VEC4(1, 1, 1, 1);
 			pd.colorOriginBuffer[i] = VEC4(1, 1, 1, 1);
 		}
 		helpers.update(dt, pd);
@@ -292,12 +288,11 @@ void CRenderDeferredModule::addPointLights() {
 		PROFILE_FUNCTION("upload point light");
 		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
-
 			if (SBB::readSala() != room->name)
 				return;			//light on diferent room
 			else {
 				//fast fix for room3
-				if (SBB::readSala() == "sala2") {
+				if (SBB::readSala() == 2) {
 					CEntity* ep = tags_manager.getFirstHavingTag("player");
 					if (ep) {
 						TCompTransform* t = ep->get<TCompTransform>();
@@ -342,12 +337,11 @@ void CRenderDeferredModule::addDirectionalLights() {
 		PROFILE_FUNCTION("upload light dir");
 		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
-
 			if (SBB::readSala() != room->name)
 				return;			//light on diferent room
 			else {
 				//fast fix for room3
-				if (SBB::readSala() == "sala2") {
+				if (SBB::readSala() == 2) {
 					CEntity* ep = tags_manager.getFirstHavingTag("player");
 					if (ep) {
 						TCompTransform* t = ep->get<TCompTransform>();
@@ -392,12 +386,11 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
 
 		/*TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
-
 			if (SBB::readSala() != room->name)
 				return;			//light on diferent room
 			else {
 				//fast fix for room3
-				if (SBB::readSala() == "sala2") {
+				if (SBB::readSala() == 2) {
 					CEntity* ep = tags_manager.getFirstHavingTag("player");
 					if (ep) {
 						TCompTransform* t = ep->get<TCompTransform>();
@@ -427,15 +420,12 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
 void CRenderDeferredModule::addAmbientPass() {
 	PROFILE_FUNCTION("addAmbientPass");
 	CTraceScoped scope("addAmbientPass");
-  activateZ(ZCFG_ALL_DISABLED);
+	activateZ(ZCFG_ALL_DISABLED);
 
-  auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
-  tech->activate();
+	auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
+	tech->activate();
 
-  drawFullScreen(rt_albedos, tech);
-
-  
-
+	drawFullScreen(rt_albedos, tech);
 }
 
 void CRenderDeferredModule::FinalRender() {
@@ -448,7 +438,6 @@ void CRenderDeferredModule::FinalRender() {
 	  ,	nullptr
 	};
 
-
 	Render.activateBackBuffer();	//reset size to default
 
 	// Y el ZBuffer del backbuffer principal
@@ -460,19 +449,18 @@ void CRenderDeferredModule::FinalRender() {
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
-
 	activateZ(ZCFG_ALL_DISABLED);
-  activateBlend(BLENDCFG_DEFAULT);
-  //auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
-  drawFullScreen(rt_acc_light);
+	activateBlend(BLENDCFG_DEFAULT);
+	//auto tech = Resources.get("deferred_add_ambient.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_acc_light);
 
-  activateZ(ZCFG_DEFAULT);
+	activateZ(ZCFG_DEFAULT);
 
-  CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
-  CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-  CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
-  CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
-  CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
+	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+	CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
+	CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
+	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 }
 
 void CRenderDeferredModule::blurEffectLights(bool intermitent) {
@@ -511,7 +499,6 @@ void CRenderDeferredModule::blurEffectLights(bool intermitent) {
 
 	activateZ(ZCFG_DEFAULT);
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
-
 }
 
 // ----------------------------------------------
@@ -528,28 +515,28 @@ void CRenderDeferredModule::renderAccLight() {
 	// Y el ZBuffer del backbuffer principal
 	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-  // Activar las texturas del gbuffer en la pipeline para
-  // que se puedan acceder desde los siguientes shaders
-  //rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);	//activated on addAmbientPass
-  rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-  rt_normals->activate(TEXTURE_SLOT_NORMALS);
+	// Activar las texturas del gbuffer en la pipeline para
+	// que se puedan acceder desde los siguientes shaders
+	//rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);	//activated on addAmbientPass
+	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+	rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
-  //rt_acc_light->clear(VEC4(0, 0, 0, 1));
+	//rt_acc_light->clear(VEC4(0, 0, 0, 1));
 
-  activateBlend(BLENDCFG_DEFAULT);
-  addAmbientPass();
+	activateBlend(BLENDCFG_DEFAULT);
+	addAmbientPass();
 
-  activateBlend(BLENDCFG_ADDITIVE);
-  activateZ(ZCFG_LIGHTS_CONFIG);
-  //activateRS(RSCFG_INVERT_CULLING);
-  addPointLights();
+	activateBlend(BLENDCFG_ADDITIVE);
+	activateZ(ZCFG_LIGHTS_CONFIG);
+	//activateRS(RSCFG_INVERT_CULLING);
+	addPointLights();
 
 	activateZ(ZCFG_LIGHTS_CONFIG);
 	//activateRS(RSCFG_INVERT_CULLING);
 	addDirectionalLights();
 
-  activateRS(RSCFG_DEFAULT);
-  addDirectionalLightsShadows();
+	activateRS(RSCFG_DEFAULT);
+	addDirectionalLightsShadows();
 
 	activateRS(RSCFG_DEFAULT);
 	activateZ(ZCFG_DEFAULT);
@@ -575,12 +562,11 @@ void CRenderDeferredModule::generateShadowMaps() {
 
 		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
-
 			if (SBB::readSala() != room->name)
 				return;			//light on diferent room
 			else {
 				//fast fix for room3
-				if (SBB::readSala() == "sala2") {
+				if (SBB::readSala() == 2) {
 					CEntity* ep = tags_manager.getFirstHavingTag("player");
 					if (ep) {
 						TCompTransform* t = ep->get<TCompTransform>();
@@ -673,11 +659,10 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 	}
 }
 
-
 void CRenderDeferredModule::MarkInteractives(const VEC4& color) {
 	shader_ctes_globals.global_color = color;
 	shader_ctes_globals.uploadToGPU();
-	
+
 	//create mask
 	{
 		PROFILE_FUNCTION("referred: mask");
@@ -698,7 +683,7 @@ void CRenderDeferredModule::MarkInteractives(const VEC4& color) {
 
 		auto hs = tags_manager.getHandlesByTag("interactive");
 
-		for(CEntity* e : hs ){
+		for (CEntity* e : hs) {
 			if (!e) continue;
 			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
 			TCompTransform *c_tmx = e->get<TCompTransform>();
@@ -727,7 +712,7 @@ void CRenderDeferredModule::MarkInteractives(const VEC4& color) {
 		CTraceScoped scope("edge detection final");
 
 		// Activar el rt para pintar las luces...
-		
+
 		ID3D11RenderTargetView* rts[3] = {
 			rt_selfIlum->getRenderTargetView()
 			,	nullptr   // remove the other rt's from the pipeline
@@ -740,7 +725,6 @@ void CRenderDeferredModule::MarkInteractives(const VEC4& color) {
 		rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 		rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
-		
 		//activateZ(ZCFG_ALL_DISABLED);
 
 		auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
@@ -750,7 +734,6 @@ void CRenderDeferredModule::MarkInteractives(const VEC4& color) {
 		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	}
 }
-
 
 void CRenderDeferredModule::ShootGuardRender() {
 	// Fx
@@ -848,7 +831,7 @@ void CRenderDeferredModule::render() {
 	renderGBuffer();
 	renderDetails();
 	renderAccLight();
-	
+
 	CTexture* blurred_shadows = rt_shadows;
 
 	CEntity* e_camera = h_camera;
@@ -890,8 +873,8 @@ void CRenderDeferredModule::render() {
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-	
-	shader_ctes_globals.global_color = VEC4(1,1,1,1);
+
+	shader_ctes_globals.global_color = VEC4(1, 1, 1, 1);
 	shader_ctes_globals.uploadToGPU();
 	activateBlend(BLENDCFG_SUBSTRACT);
 	tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
@@ -900,8 +883,8 @@ void CRenderDeferredModule::render() {
 	activateBlend(BLENDCFG_DEFAULT);
 
 	if (GameController->GetFxPolarize()) {
-	  RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
-	  RenderPolarizedPP(PLUS, VEC4(0.3f, 0.3f, 1.0f, 1.0f));
+		RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
+		RenderPolarizedPP(PLUS, VEC4(0.3f, 0.3f, 1.0f, 1.0f));
 	}
 
 	activateZ(ZCFG_DEFAULT);

@@ -52,26 +52,23 @@ function addAlexLogicCamaras = (
 	auxobj.transform = currentMatrix
 )
 
-fn assign_room_to_all_from_x sala1 sala2= (
+fn assign_room_to_all_from_x = (
 	for obj in $* do (
-		if ( (obj.name != "suelo_003") and (obj.name != "suelo_2") and (obj.name != "rodapies") and (obj.name != "paredes_milestone_3") and (obj.name != "Techo_milestone_3") and (obj.name != "sofa2") )then (
-			add_attribute = custAttributes.add obj v_room_data baseobject:True
+		if ( (obj.name != "suelo_003") and (obj.name != "nivel") and (obj.name != "__camController_1") and (obj.name != "suelo_2") and (obj.name != "rodapies") and (obj.name != "nivel") and (obj.name != "paredes_milestone_3") and (obj.name != "Techo_milestone_3") and (obj.name != "sofa2") )then (
 			local trans = obj.transform
-			if obj.name == "nivel" then (
-					obj.room_name = sala1
-			) else if trans.position.x < -45 then (
-				obj.room_name = sala2
+			if trans.position.x < -45 then (
+				obj.room_name = "2"
 			) else (
-				obj.room_name = sala1
+				obj.room_name = "1"
 			)			
-		)		
+		) else (
+			obj.room_name = "-1"
+		)
 	)
 )
 
 fn createRoomSwitcherTrigger sala1 sala2 = (
-	if $Trigger_Cambio_Sala != undefined then (
-		delete $Trigger_Cambio_Sala
-	)
+
 	
 	local nouObj = undefined
 	local filePath = (objMax_dir+"TriggerBox.max")
@@ -101,15 +98,13 @@ fn createRoomSwitcherTrigger sala1 sala2 = (
 		
 		setUserProp nouObj "typeObject" "Trigger"
 		setUserProp nouObj "component" "room_switcher"
-		setUserProp nouObj "front_room" "sala1"
-		setUserProp nouObj "back_room" "sala2"
+		setUserProp nouObj "front_room" sala1
+		setUserProp nouObj "back_room" sala2
 	) 
 )
 
 fn createRoomLimiterForPossession = (
-	if $Trigger_Escupe_Posessiones != undefined then (
-		delete $Trigger_Escupe_Posessiones
-	)
+
 	local nouObj = undefined
 	local filePath = (objMax_dir+"TriggerBox.max")
 	local objectes = getmaxfileobjectnames filePath
@@ -141,7 +136,18 @@ fn createRoomLimiterForPossession = (
 	) 
 )
 
-addAlexLogicCamaras()
-assign_room_to_all_from_x "sala1" "sala2"
-createRoomSwitcherTrigger "sala1" "sala2"
-createRoomLimiterForPossession()
+fn loadAll = (
+	if $Trigger_Escupe_Posessiones != undefined then (
+		delete $Trigger_Escupe_Posessiones
+	)
+	if $Trigger_Cambio_Sala != undefined then (
+		delete $Trigger_Cambio_Sala
+	)
+	addAlexLogicCamaras()
+	assign_room_to_all_from_x()
+	createRoomSwitcherTrigger "1" "2"
+	createRoomLimiterForPossession()
+	
+)
+
+loadAll()

@@ -18,7 +18,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
   <room
-     name="sala1"/>
+     name="1"/>
 </entity>
 
 <entity>
@@ -35,7 +35,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
   <room
-     name="sala1"/>
+     name="1"/>
 </entity>
 
 <entity>
@@ -52,7 +52,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
   <room
-     name="sala1"/>
+     name="1"/>
 </entity>
 
 <entity>
@@ -69,7 +69,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
   <room
-     name="sala1"/>
+     name="1"/>
 </entity>
 
 <entity>
@@ -86,7 +86,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
   <room
-     name="sala1"/>
+     name="1"/>
 </entity>
 
 <entity>
@@ -103,7 +103,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
   <room
-     name="sala1"/>
+     name="1"/>
 </entity>
 
 <!-- shadows -->
@@ -114,7 +114,7 @@
     <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="30" fov="45" resolution="512"/>
 	<culling/>
   <room
-   name="sala1"/>
+   name="1"/>
   </entity>
 
 
@@ -135,7 +135,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 
 </entity>
 
@@ -153,7 +153,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -170,7 +170,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -187,7 +187,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -204,7 +204,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -221,7 +221,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -238,7 +238,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -255,7 +255,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -272,7 +272,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -289,7 +289,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -306,7 +306,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -323,7 +323,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -340,7 +340,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -357,7 +357,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -374,7 +374,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -391,7 +391,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -408,7 +408,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -425,7 +425,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 
@@ -443,7 +443,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -460,7 +460,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -477,7 +477,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <entity>
@@ -494,7 +494,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <!-- Directional Shadows -->
@@ -505,7 +505,7 @@
     <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="12" fov="45" resolution="512"/>
 	<culling/>
     <room
- name="sala2"/>
+ name="2"/>
   </entity>
   
   <entity>
@@ -514,7 +514,7 @@
     <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="12" fov="45" resolution="512"/>
 	<culling/>
     <room
- name="sala2"/>
+ name="2"/>
   </entity>
   
   <entity>
@@ -523,7 +523,7 @@
     <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="12" fov="45" resolution="512"/>
 	<culling/>
     <room
- name="sala2"/>
+ name="2"/>
   </entity>
   
   <entity>
@@ -532,7 +532,7 @@
     <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="12" fov="45" resolution="512"/>
 	<culling/>
     <room
- name="sala2"/>
+ name="2"/>
   </entity>
   
   <entity>
@@ -541,7 +541,7 @@
     <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="12" fov="45" resolution="512"/>
 	<culling/>
     <room
- name="sala2"/>
+ name="2"/>
   </entity>
   
     <entity>
@@ -550,7 +550,7 @@
     <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="8" fov="40" resolution="512"/>
 	<culling/>
       <room
- name="sala2"/>
+ name="2"/>
   </entity>
   
   <entity>
@@ -559,7 +559,7 @@
     <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="8" fov="40" resolution="512"/>
 	<culling/>
     <room
- name="sala2"/>
+ name="2"/>
   </entity>
   
   <entity>
@@ -568,7 +568,7 @@
     <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="8" fov="40" resolution="512"/>
 	<culling/>
     <room
- name="sala2"/>
+ name="2"/>
   </entity>
   
   
@@ -590,7 +590,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
   <entity>
@@ -607,7 +607,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
   <entity>
@@ -624,7 +624,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
   <entity>
@@ -641,7 +641,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
   <entity>
@@ -658,7 +658,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
      <room
-     name="sala2"/>
+     name="2"/>
 </entity>
 
 <!-- helper arrow -->
