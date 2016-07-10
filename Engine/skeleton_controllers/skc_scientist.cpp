@@ -55,9 +55,8 @@ void SkelControllerScientist::myUpdate()
 		else if (currentState == "attack") {
 			setAction("attack", "idle");
 		}
-		else if (currentState == "recharge") {
-			setAction("recharge", "idle");
-			currentState = "idle";
+		else if (currentState == "throw") {
+			setAction("throw", "idle");
 		}
 		else {
 			setLoop(currentState);
