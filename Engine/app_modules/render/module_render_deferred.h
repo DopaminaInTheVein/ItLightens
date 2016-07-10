@@ -47,8 +47,7 @@ class CRenderDeferredModule : public IAppModule {
 	void activateRenderCamera3D();
 	void renderAccLight();
 	void RenderPolarizedPP(int pol, const VEC4& color);
-	void GlowEdgesInt();		//to remove
-	void GlowEdges();
+	void MarkInteractives(const VEC4 & color);
 	void ShootGuardRender();
 	void addPointLights();
 	void addDirectionalLights();

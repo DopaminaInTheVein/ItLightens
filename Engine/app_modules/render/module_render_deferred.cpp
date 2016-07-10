@@ -671,54 +671,75 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 	}
 }
 
-void CRenderDeferredModule::GlowEdgesInt() {
-	{
-		PROFILE_FUNCTION("referred: GlowEdges");
-		CTraceScoped scope("glow edges");
 
-		ID3D11RenderTargetView* rts1[3] = {
-		  rt_selfIlum_int->getRenderTargetView()
-		  ,	nullptr   // remove the other rt's from the pipeline
-		  ,	nullptr
+void CRenderDeferredModule::MarkInteractives(const VEC4& color) {
+	shader_ctes_globals.global_color = color;
+	shader_ctes_globals.uploadToGPU();
+
+	//create mask
+	{
+		PROFILE_FUNCTION("referred: mask");
+		CTraceScoped scope("mask");
+
+		//activateZ(ZCFG_DEFAULT);
+		activateZ(ZCFG_MASK_NUMBER, 1);
+
+		ID3D11RenderTargetView* rts[3] = {
+			rt_data->getRenderTargetView()
+			,	nullptr   // remove the other rt's from the pipeline
+			,	nullptr
+		};
+		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+
+		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+		tech->activate();
+
+		auto hs = tags_manager.getHandlesByTag("interactive");
+
+		for(CEntity* e : hs ){
+			if (!e) continue;
+			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
+			TCompTransform *c_tmx = e->get<TCompTransform>();
+			if (!c_tmx || !rsm) continue;
+			activateWorldMatrix(c_tmx->asMatrix());
+
+			//rsm->static_mesh->slots[0].material->activateTextures();
+			rsm->static_mesh->slots[0].mesh->activateAndRender();
+
+			//rsm->static_mesh->slots[0].material->deactivateTextures();
+		}
+	}
+
+	//edge detection
+	{
+		PROFILE_FUNCTION("referred: edge detection");
+		CTraceScoped scope("edge detection final");
+
+		// Activar el rt para pintar las luces...
+		
+		ID3D11RenderTargetView* rts[3] = {
+			rt_selfIlum->getRenderTargetView()
+			,	nullptr   // remove the other rt's from the pipeline
+			,	nullptr
 		};
 		// Y el ZBuffer del backbuffer principal
-		Render.ctx->OMSetRenderTargets(3, rts1, Render.depth_stencil_view);
 
-		auto tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
-		drawFullScreen(rt_data, tech);
+		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-		blurEffectLights(true);
+		rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+		rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
-		tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
+		activateZ(ZCFG_OUTLINE, 1);
+		//activateZ(ZCFG_ALL_DISABLED);
 
-		activateBlend(BLENDCFG_COMBINATIVE);
-		Render.activateBackBuffer();				//render on screen
-		activateZ(ZCFG_ALL_DISABLED);
-		drawFullScreen(rt_selfIlum_blurred_int, tech);
-		activateBlend(BLENDCFG_DEFAULT);
+		auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
+
+		drawFullScreen(rt_black, tech);
+		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
+		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	}
 }
 
-void CRenderDeferredModule::GlowEdges() {
-	{
-		PROFILE_FUNCTION("referred: GlowEdges");
-		CTraceScoped scope("glow edges");
-
-		ID3D11RenderTargetView* rts1[3] = {
-		  rt_selfIlum->getRenderTargetView()
-		  ,	nullptr   // remove the other rt's from the pipeline
-		  ,	nullptr
-		};
-		// Y el ZBuffer del backbuffer principal
-		Render.ctx->OMSetRenderTargets(3, rts1, Render.depth_stencil_view);
-
-		auto tech = Resources.get("solid_PP.tech")->as<CRenderTechnique>();
-		activateBlend(BLENDCFG_COMBINATIVE);
-		drawFullScreen(rt_data2, tech);
-
-		activateBlend(BLENDCFG_DEFAULT);
-	}
-}
 
 void CRenderDeferredModule::ShootGuardRender() {
 	// Fx
@@ -872,6 +893,7 @@ void CRenderDeferredModule::render() {
 	activateZ(ZCFG_DEFAULT);
 
 	ShootGuardRender();
+	MarkInteractives(VEC4(1,1,0,1));
 	
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
