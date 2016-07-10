@@ -215,6 +215,14 @@ public:
 				origin.y += dt * speed_camera_unlocked;
 			if (io->keys['E'].isPressed())
 				origin.y -= dt * speed_camera_unlocked;
+			if (io->keys['T'].becomesPressed() && io->keys[VK_CONTROL].isPressed()) {
+				CHandle player = tags_manager.getFirstHavingTag("player");
+				if (player.isValid()) {
+					GET_COMP(cc, player, TCompCharacterController);
+					if (cc) cc->teleport(my_tmx->getPosition() + my_tmx->getFront() * 2);
+				}
+				origin.y -= dt * speed_camera_unlocked;
+			}
 
 			if (io->mouse.wheel != 0) {
 				speed_camera_unlocked += io->mouse.wheel * 20 * dt;
