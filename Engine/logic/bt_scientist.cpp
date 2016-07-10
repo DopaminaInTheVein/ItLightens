@@ -400,7 +400,7 @@ int bt_scientist::actionWaitInWorkstation() {
 	}
 	else {
 		ws_time_waited += getDeltaTime();
-		SET_ANIM_SCI_BT(AST_WORK);
+		SET_ANIM_SCI_BT(AST_IDLE);
 		return STAY;
 	}
 

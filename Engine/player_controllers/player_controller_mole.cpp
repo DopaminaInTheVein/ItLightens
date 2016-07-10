@@ -679,6 +679,7 @@ void player_controller_mole::ChangeCommonState(std::string st)
 		SET_ANIM_MOLE(AST_IDLE);
 	}
 }
+
 bool player_controller_mole::canJump() {
 	bool ascending = cc->GetLastSpeed().y > 0.1f;
 	bool descending = cc->GetLastSpeed().y < -0.1f;
