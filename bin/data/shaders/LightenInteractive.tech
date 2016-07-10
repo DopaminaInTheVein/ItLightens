@@ -1,0 +1,4 @@
+<tech>
+  <vs fx="lighten_interactive" main="VSTextureScreen" decl="positions_uv" />
+  <ps fx="lighten_interactive" main="PSLighten" />
+</tech>

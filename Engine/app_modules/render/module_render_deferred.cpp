@@ -649,7 +649,7 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 		// Activar el rt para pintar las luces...
 
 		ID3D11RenderTargetView* rts[3] = {
-		  rt_data->getRenderTargetView()
+		  rt_selfIlum->getRenderTargetView()
 		  ,	nullptr   // remove the other rt's from the pipeline
 		  ,	nullptr
 		};
@@ -675,14 +675,14 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 void CRenderDeferredModule::MarkInteractives(const VEC4& color) {
 	shader_ctes_globals.global_color = color;
 	shader_ctes_globals.uploadToGPU();
-
+	
 	//create mask
 	{
 		PROFILE_FUNCTION("referred: mask");
 		CTraceScoped scope("mask");
 
 		//activateZ(ZCFG_DEFAULT);
-		activateZ(ZCFG_MASK_NUMBER, 1);
+		activateZ(ZCFG_MASK_NUMBER, 4);
 
 		ID3D11RenderTargetView* rts[3] = {
 			rt_data->getRenderTargetView()
@@ -710,6 +710,15 @@ void CRenderDeferredModule::MarkInteractives(const VEC4& color) {
 		}
 	}
 
+	activateZ(ZCFG_OUTLINE, 4);
+	{
+		activateBlend(BLENDCFG_ADDITIVE);
+		Render.activateBackBuffer();
+		auto tech = Resources.get("LightenInteractive.tech")->as<CRenderTechnique>();
+		drawFullScreen(rt_final, tech);
+		activateBlend(BLENDCFG_COMBINATIVE);
+	}
+
 	//edge detection
 	{
 		PROFILE_FUNCTION("referred: edge detection");
@@ -729,7 +738,7 @@ void CRenderDeferredModule::MarkInteractives(const VEC4& color) {
 		rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 		rt_normals->activate(TEXTURE_SLOT_NORMALS);
 
-		activateZ(ZCFG_OUTLINE, 1);
+		
 		//activateZ(ZCFG_ALL_DISABLED);
 
 		auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
@@ -854,6 +863,8 @@ void CRenderDeferredModule::render() {
 	 //render_particles_instanced.render();
 	g_particlesManager->renderParticles();   //render all particles systems
 
+	//MarkInteractives(VEC4(1, 1, 0, 1));
+
 	FinalRender();
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
@@ -893,8 +904,8 @@ void CRenderDeferredModule::render() {
 	activateZ(ZCFG_DEFAULT);
 
 	ShootGuardRender();
-	MarkInteractives(VEC4(1,1,0,1));
-	
+	MarkInteractives(VEC4(1, 1, 0, 1));
+
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
