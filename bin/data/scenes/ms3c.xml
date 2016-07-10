@@ -12,8 +12,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>
