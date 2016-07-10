@@ -57,6 +57,7 @@ void player_controller_cientifico::readIniFileAttr() {
 bool player_controller_cientifico::getUpdateInfo()
 {
 	if (!CPlayerBase::getUpdateInfo()) return false;
+	myParent = CHandle(this).getOwner();
 	animController = GETH_MY(SkelControllerPlayer);
 	return true;
 }
