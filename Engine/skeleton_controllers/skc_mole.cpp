@@ -171,13 +171,13 @@ void SkelControllerMole::updateGrab()
 void SkelControllerMole::updatePila()
 {
 	if (grabbedPila.isValid()) {
-		if (currentState == AST_IDLE) currentState = AST_PILA_IDLE;
-		else if (currentState == AST_RUN) currentState = AST_PILA_WALK;
-		else if (currentState == AST_MOVE) currentState = AST_PILA_WALK;
+		if (currentState == AST_IDLE) currentState = AST_GRAB_IDLE_SMALL;
+		else if (currentState == AST_RUN) currentState = AST_GRAB_WALK_SMALL;
+		else if (currentState == AST_MOVE) currentState = AST_GRAB_WALK_SMALL;
 	}
 	else {
-		if (currentState == AST_PILA_IDLE) currentState = AST_IDLE;
-		else if (currentState == AST_PILA_WALK) currentState = AST_MOVE;
+		if (currentState == AST_GRAB_IDLE_SMALL) currentState = AST_IDLE;
+		else if (currentState == AST_GRAB_WALK_SMALL) currentState = AST_MOVE;
 	}
 }
 

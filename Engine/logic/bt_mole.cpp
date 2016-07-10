@@ -83,7 +83,8 @@ void bt_mole::update(float elapsed) {
 	if (possessing)
 		setCurrent(NULL);
 	if (stunned)
-		SET_ANIM_MOLE_BT(AST_STUNNED);
+		//SET_ANIM_MOLE_BT(AST_STUNNED);
+		SET_ANIM_MOLE_BT(AST_IDLE);
 	Recalc();
 }
 
