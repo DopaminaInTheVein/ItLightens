@@ -65,6 +65,7 @@ void TCompCharacterController::renderInMenu()
 	ImGui::Checkbox("last_onground", &m_lastOnGround);
 	ImGui::DragFloat("Friction Ground", &m_friction, 0.f, 10.f);
 	ImGui::DragFloat("Friction Air", &m_friction_air, 0.f, 10.f);
+	ImGui::Text("Position collider: %f - %f - %f\n", GetFootPosition().x, GetFootPosition().y, GetFootPosition().z);
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
 
@@ -216,7 +217,7 @@ void TCompCharacterController::RecalcOnGround()
 {
 	PROFILE_FUNCTION("recalc: onground");
 	m_lastOnGround = m_OnGround;
-
+	if (!m_affectGravity) return;
 	if (m_flagsCollisions & PxControllerFlag::eCOLLISION_DOWN) {
 		m_OnGround = true;
 		m_physxOnground = true;
