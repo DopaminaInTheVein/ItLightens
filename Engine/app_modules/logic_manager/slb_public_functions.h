@@ -81,6 +81,7 @@ public:
 	bool isCharged();
 	void setAnim(const char* name);
 	bool isPatrolling();
+	bool isComeBack();
 };
 
 class SLBHandleGroup

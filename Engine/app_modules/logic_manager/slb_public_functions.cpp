@@ -349,6 +349,16 @@ bool SLBHandle::isPatrolling() {
 	dbg("SLBHANDLE::isPatroling: %d", patrol);
 	return patrol;
 }
+bool SLBHandle::isComeBack() {
+	bool comeback = false;
+	if (real_handle.isValid()) {
+		GET_COMP(guard, real_handle, bt_guard);
+		if (guard) comeback = guard->isInFirstSeekPoint();
+	}
+	dbg("SLBHANDLE::isPatroling: %d", comeback);
+	return comeback;
+}
+
 // Handle group By Tag
 void SLBHandleGroup::getHandlesByTag(const char * tag) {
 	handle_group = tags_manager.getHandlesByTag(string(tag));

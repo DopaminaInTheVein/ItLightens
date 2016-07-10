@@ -193,6 +193,9 @@ class bt_guard : public bt, public TCompBase
 	static btnode* root;
 
 public:
+	//public for LUA
+	bool isInFirstSeekPoint();
+
 	//conditions
 	bool guardStuck();
 	bool playerStunned();

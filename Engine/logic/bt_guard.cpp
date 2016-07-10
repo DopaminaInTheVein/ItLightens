@@ -159,7 +159,7 @@ void bt_guard::Init()
 //conditions
 bool bt_guard::guardStuck() {
 	PROFILE_FUNCTION("guard: guard stuck");
-	return stuck && keyPoints.size() > 2;
+	return stuck;
 }
 
 bool bt_guard::playerStunned() {
@@ -1617,4 +1617,17 @@ void bt_guard::goToPoint(VEC3 dest) {
 
 bool bt_guard::isPatrolling() {
 	return patrolling;
+}
+
+bool bt_guard::isInFirstSeekPoint()
+{
+	bool res = false;
+	for (auto kp : keyPoints) {
+		if (kp.type == KptType::Seek) {
+			GET_MY(tmx, TCompTransform);
+			res = inSquaredRangeXZ_Y(kp.pos, tmx->getPosition(), 0.5f, 5.f);
+			break;
+		}
+	}
+	return res;
 }

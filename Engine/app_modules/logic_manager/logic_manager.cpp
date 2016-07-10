@@ -521,6 +521,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// Ask guard patrolling
 		.set("is_patrolling", &SLBHandle::isPatrolling)
 		.comment("return true if the handle is patrolling")
+		// Ask guard if is near to first seek point
+		.set("is_come_back", &SLBHandle::isComeBack)
+		.comment("return true if guard is near to first seek point")
 		// Set Anim
 		.set("set_anim", &SLBHandle::setAnim)
 		.param("string: animation name")
