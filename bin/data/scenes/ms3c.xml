@@ -12,8 +12,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="sala2"/>
 
 </entity>
 <entity>
@@ -2475,8 +2473,6 @@
    pos="-45.0788 5.35219 -0.918759"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<room
-   name="sala2"/>
 
 </entity>
 <entity
