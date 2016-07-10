@@ -228,6 +228,11 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 				}
 				it->material->activateTextures(it->polarity);
 			}
+			else {
+				if (it->polarity != prev_it->polarity) {
+					it->material->activateTextures(it->polarity);
+				}
+			}
 			if (it->mesh != prev_it->mesh)
 				it->mesh->activate();
 			if (it->owner != prev_it->owner) {
