@@ -233,6 +233,7 @@ void player_controller_mole::UpdateUnpossess() {
 
 void player_controller_mole::DestroyWall() {
 	energyDecreasal(10.0f);
+	SET_ANIM_MOLE(AST_SHOOT);
 	vector<CHandle> handles = SBB::readHandlesVector("wptsBreakableWall");
 	handles.erase(handles.begin() + selectedWallToBreaki);
 	getHandleManager<CEntity>()->destroyHandle(getEntityWallHandle(selectedWallToBreaki));

@@ -116,7 +116,7 @@ class bt_guard : public bt, public TCompBase
 	VEC3 player_last_seen_point;
 	VEC3 noisePoint;
 	VEC3 search_player_point;
-	bool player_detected = false;
+	bool patrolling = false;
 	bool noiseHeard = false;
 	bool playerLost = false;
 	// stuck management
@@ -257,6 +257,7 @@ public:
 	void readIniFileAttr();
 	void goToPoint(VEC3 dest);
 	void checkStopDamage();
+	bool isPatrolling();
 	//From bombs
 	void reduceStats();
 	void resetStats();

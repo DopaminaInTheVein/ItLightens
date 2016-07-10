@@ -192,7 +192,7 @@ bool bt_guard::playerNear() {
 bool bt_guard::playerDetected() {
 	PROFILE_FUNCTION("guard: player detected");
 	// if the player is visible
-	if ((playerVisible() || boxMovingDetected()) && !player_detected) {
+	if (playerVisible() || boxMovingDetected()) {
 		TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 		VEC3 posPlayer = tPlayer->getPosition();
 		VEC3 myPos = getTransform()->getPosition();
@@ -247,6 +247,15 @@ bool bt_guard::guardAlerted() {
 	PROFILE_FUNCTION("guard: guardalert");
 
 	VEC3 myPos = getTransform()->getPosition();
+	// if the player is out of jurisdiction, we dont search him
+	CEntity* ePlayer = getPlayer();
+	if (ePlayer) {
+		TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
+		VEC3 posPlayer = tPlayer->getPosition();
+		if (outJurisdiction(posPlayer)) {
+			return false;
+		}
+	}
 
 	// we send a new alert with our position and the player position
 	guard_alert alert;
@@ -255,7 +264,6 @@ bool bt_guard::guardAlerted() {
 	CEntity* entity = myHandle.getOwner();
 
 	if (playerLost) {
-		CEntity* ePlayer = getPlayer();
 		if (ePlayer) {
 			TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
 			VEC3 posPlayer = tPlayer->getPosition();
@@ -265,6 +273,7 @@ bool bt_guard::guardAlerted() {
 			string name = entity->getName() + string("_player_lost");
 			SBB::postGuardAlert(name, alert);
 		}
+		looking_around_time = LOOK_AROUND_TIME;
 		return true;
 	}
 	else if (noiseHeard) {
@@ -272,7 +281,7 @@ bool bt_guard::guardAlerted() {
 		alert.alert_position = noisePoint;
 		string name = entity->getName() + string("_noise_heard");
 		SBB::postGuardAlert(name, alert);
-
+		looking_around_time = LOOK_AROUND_TIME;
 		return true;
 	}
 	// check alerts from other guards
@@ -291,16 +300,19 @@ bool bt_guard::guardAlerted() {
 					if (alert_it->first.find(string("_player_lost")) != string::npos) {
 						playerLost = true;
 						player_last_seen_point = alert_point;
+						looking_around_time = LOOK_AROUND_TIME;
 						return true;
 					}
 					else if (alert_it->first.find(string("_noise_heard")) != string::npos) {
 						noiseHeard = true;
 						noisePoint = alert_point;
+						looking_around_time = LOOK_AROUND_TIME;
 						return true;
 					}
 					else if (alert_it->first.find(string("_player_detected")) != string::npos) {
 						playerLost = true;
 						player_last_seen_point = alert_point;
+						looking_around_time = LOOK_AROUND_TIME;
 						return true;
 					}
 				}
@@ -432,7 +444,7 @@ int bt_guard::actionChase() {
 	VEC3 myPos = getTransform()->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 	//player lost?
-	if (distance > DIST_SQ_PLAYER_LOST || outJurisdiction(posPlayer)) {
+	if (distance > DIST_SQ_PLAYER_LOST) {
 		playerLost = true;
 		player_last_seen_point = posPlayer;
 		SET_ANIM_GUARD(AST_IDLE);
@@ -607,10 +619,11 @@ int bt_guard::actionSearch() {
 	if (!myParent.isValid()) return STAY;
 	CEntity * ePlayer = getPlayer();
 	if (!ePlayer) return STAY;
+	looking_around_time -= getDeltaTime();
 	VEC3 myPos = getTransform()->getPosition();
 
 	//Player Visible?
-	if (playerVisible() || boxMovingDetected()) {
+	if (playerVisible() || boxMovingDetected() || looking_around_time < 0.f) {
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
 		return KO;
@@ -626,7 +639,6 @@ int bt_guard::actionSearch() {
 		//Noise Point Reached ?
 		if (distance < DIST_REACH_PNT) {
 			playerLost = false;
-			looking_around_time = LOOK_AROUND_TIME;
 
 			TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 			VEC3 playerPos = tPlayer->getPosition();
@@ -655,7 +667,6 @@ int bt_guard::actionSearch() {
 		//Noise Point Reached ?
 		if (distance < DIST_REACH_PNT) {
 			noiseHeard = false;
-			looking_around_time = LOOK_AROUND_TIME;
 
 			VEC3 dir = noisePoint - myPos;
 			dir.Normalize();
@@ -672,7 +683,6 @@ int bt_guard::actionSearch() {
 	}
 	// If player was lost, we simply move and look around
 	else {
-		looking_around_time = LOOK_AROUND_TIME;
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
 		return OK;
@@ -682,9 +692,9 @@ int bt_guard::actionSearch() {
 int bt_guard::actionMoveAround() {
 	PROFILE_FUNCTION("guard: movearound");
 	if (!myParent.isValid()) return false;
-
+	looking_around_time -= getDeltaTime();
 	//Player Visible?
-	if (playerVisible() || boxMovingDetected()) {
+	if (playerVisible() || boxMovingDetected() || looking_around_time <= 0.f) {
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
 		return KO;
@@ -727,6 +737,7 @@ int bt_guard::actionLookAround() {
 	PROFILE_FUNCTION("guard: lookaround");
 	dbg("---Action Looking Arround---\n");
 	if (!myParent.isValid()) return false;
+	looking_around_time -= getDeltaTime();
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		dbg("::Player visible!\n");
@@ -764,10 +775,12 @@ int bt_guard::actionSeekWpt() {
 	if (!myParent.isValid()) return 0;
 	VEC3 myPos = getTransform()->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;
+	patrolling = true;
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
+		patrolling = false;
 		return KO;
 	}
 	//Go to waypoint
@@ -825,6 +838,7 @@ int bt_guard::actionNextWpt() {
 	if (playerVisible() || boxMovingDetected()) {
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
+		patrolling = false;
 		return KO;
 	}
 	//If we are already there, we continue
@@ -848,10 +862,12 @@ int bt_guard::actionWaitWpt() {
 	if (playerVisible() || boxMovingDetected()) {
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
+		patrolling = false;
 		return KO;
 	}
 	else if (timeWaiting > keyPoints[curkpt].time) {
 		timeWaiting = 0;
+		patrolling = false;
 		return OK;
 	}
 	else {
@@ -1453,9 +1469,8 @@ bool bt_guard::inJurisdiction(VEC3 posPlayer) {
 }
 
 bool bt_guard::outJurisdiction(VEC3 posPlayer) {
-	/*float distanceJur = squaredDistXZ(jurCenter, posPlayer);
-	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;*/
-	return false;
+	float distanceJur = squaredDistXZ(jurCenter, posPlayer);
+	return distanceJur > jurRadiusSq + DIST_SQ_SHOT_AREA_ENTER;
 }
 
 // -- Reset Timers-- //
@@ -1597,4 +1612,8 @@ void bt_guard::goToPoint(VEC3 dest) {
 
 	SET_ANIM_GUARD(AST_IDLE);
 	forced_move = false;
+}
+
+bool bt_guard::isPatrolling() {
+	return patrolling;
 }

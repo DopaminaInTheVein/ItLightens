@@ -78,6 +78,7 @@ public:
 	bool hasPilaCharged();
 	void setCharged(bool);
 	bool isCharged();
+	bool isPatrolling();
 };
 
 class SLBHandleGroup
