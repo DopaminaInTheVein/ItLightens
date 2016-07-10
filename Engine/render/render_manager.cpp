@@ -209,7 +209,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 			else {
 				CEntity* e_o = it->owner.getOwner();
 				if (e_o) {
-					TCompPolarized* op = e_o->get<player_controller>();
+					TCompPolarized* op = e_o->get<TCompPolarized>();
 					if (op) {
 						it->polarity = op->force.polarity;
 					}
