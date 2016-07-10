@@ -154,7 +154,9 @@ void SLBHandle::destroy() {
 }
 
 bool SLBHandle::isValid() {
-	return real_handle.isValid();
+	bool valid = real_handle.isValid();
+	dbg("SLBHANDLE: Is valid?: %d\n", valid);
+	return valid;
 }
 
 const char* SLBHandle::getName() {
@@ -339,10 +341,13 @@ void SLBHandle::setAnim(const char* name) {
 	}
 }
 bool SLBHandle::isPatrolling() {
+	bool patrol = false;
 	if (real_handle.isValid()) {
-		auto guard = getHandleManager<bt_guard>()->getAddrFromHandle(real_handle);
-		return guard->isPatrolling();
+		GET_COMP(guard, real_handle, bt_guard);
+		if (guard) patrol = guard->isPatrolling();
 	}
+	dbg("SLBHANDLE::isPatroling: %d", patrol);
+	return patrol;
 }
 // Handle group By Tag
 void SLBHandleGroup::getHandlesByTag(const char * tag) {

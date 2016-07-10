@@ -171,7 +171,7 @@ end
 --------------------------------
 
 hDoor = Handle()
-alert = true
+alert = false
 centinel_1 = Handle()
 centinel_2 = Handle()
 
@@ -185,24 +185,36 @@ function centinelDetection( )
 end
 
 function centinelRelax( )
-  alert = false
-
-  if centinel_1:is_valid() then
-	if not centinel_1:is_patroling() then
-		alert = true
-	end
-  end
-  
-  if centinel_2:is_valid() then
-	if not centinel_2:is_patroling() then
-		alert = true
-	end
-  end
-  
+  p:print("Centinel relax?")
   if alert then
-	p:exec_command("centinelRelax();", 2)
-  else
-    p:exec_command("alert_finish()", 2)
+	alert = false
+	cent1_ok = centinel_1:is_valid()
+	cent2_ok = centinel_1:is_valid()
+	if cent1_ok then
+		patrol_1 = centinel_1:is_patrolling()
+		if not patrol_1 then
+			alert = true
+		else
+			--Guard in his position?
+			p:print("cent1 is patroling")
+		end
+	end
+	  
+	if cent2_ok then
+		patrol_2 = centinel_2:is_patrolling()
+		if not patrol_2 then
+			alert = true
+		else
+			--Guard in his position?
+			p:print("cent2 is patroling")
+		end
+	end
+	  
+	if alert then
+		p:exec_command("centinelRelax();", 2)
+	else
+		p:exec_command("alert_finish()", 2)
+	end
   end
 end
 
