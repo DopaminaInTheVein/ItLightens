@@ -141,6 +141,7 @@ void SkelControllerMole::myUpdate()
 		}
 		else if (currentState == AST_PUT_PILA) {
 			setAction("put_pila", "idle");
+			//setAction("grab_pila_2", "idle");
 			currentState = AST_IDLE;
 		}
 		else {

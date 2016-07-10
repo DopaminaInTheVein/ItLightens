@@ -48,6 +48,14 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 	std::vector<int> nextCycleIds;
 	bool prev_anims_cleared = false;
 
+	//dbg("--------- MsgSetAnim: ----------\n");
+	//dbg("New anims:");
+	//for (auto animName : msg.name) dbg(" %s", animName.c_str());
+	//dbg("\nLoop:%d\n", msg.loop);
+	//dbg("Next loops: ");
+	//for (auto animName : msg.nextLoop) dbg(" %s", animName.c_str());
+	//dbg("\n------------------------------------\n");
+
 	//Siguiente Loop
 	if (next_loop.size() > 0 && next_loop[0] != "") {
 		for (auto next : next_loop) {

@@ -274,7 +274,7 @@ public:
 
 	bool getUpdateInfo() {
 		animController = GETH_MY(SkelControllerGuard);
-		dbg("Time looking for: %f\n", looking_around_time);
+		//dbg("Time looking for: %f\n", looking_around_time);
 		return true;
 	}
 
