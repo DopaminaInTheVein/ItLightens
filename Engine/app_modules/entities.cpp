@@ -514,7 +514,7 @@ void CEntitiesModule::initLevel(string level) {
 		}
 	}
 	// SET PLAYER INITIAL ROOM
-	string room_name = "none";
+	int room_name = -1;
 	if (target_e) {
 		TCompRoom * player_room = target_e->get<TCompRoom>();
 		if (player_room) {

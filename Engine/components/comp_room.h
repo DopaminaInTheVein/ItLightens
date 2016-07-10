@@ -5,20 +5,19 @@
 #include "comp_base.h"
 
 struct TCompRoom : public TCompBase {
-	static const size_t max_name_length = 64;
-	char name[max_name_length];
+	int name;
 	bool load(MKeyValue& atts) {
-		strcpy(name, atts.getString("name", "none").c_str());
+		name = atts.getInt("name", -1);
 		return true;
 	}
 
-	bool setName(std::string newName) {
-		strcpy(name, newName.c_str());
+	bool setName(int newName) {
+		name = newName;
 		return true;
 	}
 
 	void renderInMenu() {
-		ImGui::Text(name);
+		ImGui::Text(std::to_string(name).c_str());
 	}
 };
 

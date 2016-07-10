@@ -14,7 +14,7 @@ class SBB
 {
 private:
 	static CNavmesh sbbNav;
-	static string sbbSala;
+	static int sbbSala;
 	static map<string, bool > sbbBool;
 	static map<string, int > sbbInt;
 	static map<string, VEC3> sbbVEC3;
@@ -31,8 +31,8 @@ public:
 	static void update(float);
 
 	// Sala
-	static void postSala(string);
-	static string readSala();
+	static void postSala(int);
+	static int readSala();
 
 	// NavMesh
 	static void postNavmesh(CNavmesh);

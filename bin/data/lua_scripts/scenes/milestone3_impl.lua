@@ -240,11 +240,11 @@ function activateElevator( )
   p:exec_command( "cam:fade_in(1);", 7.0)
   
   p:exec_command( "p:setControlEnabled(1);", 9 )
-  --cambio sala cientifico
+  --cambio  cientifico
   --if elevatorState == 0 then
-  --  p:playerRoom("sala3")
+  --  p:playerRoom("3")
   --else if elevatorState == 2
-  --  p:playerRoom("sala2")
+  --  p:playerRoom("2")
   --end
 end
 

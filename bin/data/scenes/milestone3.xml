@@ -12,7 +12,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <light_point
@@ -26,7 +26,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <light_point
@@ -40,7 +40,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <light_point
@@ -54,7 +54,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <light_point
@@ -68,7 +68,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <light_point
@@ -82,7 +82,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <light_point
@@ -96,7 +96,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="drone platform"/>
@@ -124,7 +124,7 @@
    pol="minus"
    offset="0 0.570343 0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -139,7 +139,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -154,7 +154,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -169,7 +169,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -184,7 +184,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -199,7 +199,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -214,7 +214,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -229,7 +229,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -244,7 +244,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -259,7 +259,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -289,7 +289,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -304,7 +304,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -319,7 +319,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -334,7 +334,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -349,7 +349,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -364,7 +364,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -379,7 +379,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -394,7 +394,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -409,7 +409,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -424,7 +424,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -439,7 +439,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -454,7 +454,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -469,7 +469,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -484,7 +484,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -499,7 +499,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -514,7 +514,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -529,7 +529,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -544,7 +544,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -559,7 +559,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -574,7 +574,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -589,7 +589,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -604,7 +604,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -619,7 +619,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -634,7 +634,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -649,7 +649,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -664,7 +664,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -679,7 +679,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -694,7 +694,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -709,7 +709,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -724,7 +724,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -739,7 +739,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -754,7 +754,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -769,7 +769,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -784,7 +784,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -799,7 +799,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -814,7 +814,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -829,7 +829,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -844,7 +844,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -859,7 +859,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -874,7 +874,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -889,7 +889,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -904,7 +904,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -919,7 +919,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -934,7 +934,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -949,7 +949,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -964,7 +964,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -979,7 +979,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -994,7 +994,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1009,7 +1009,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1024,7 +1024,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1039,7 +1039,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1054,7 +1054,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1069,7 +1069,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1084,7 +1084,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1099,7 +1099,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1114,7 +1114,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1129,7 +1129,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1144,7 +1144,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1159,7 +1159,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1174,7 +1174,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1189,7 +1189,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1204,7 +1204,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1219,7 +1219,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1234,7 +1234,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1249,7 +1249,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1264,7 +1264,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1279,7 +1279,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1294,7 +1294,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1309,7 +1309,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1324,7 +1324,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1339,7 +1339,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1354,7 +1354,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1369,7 +1369,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1384,7 +1384,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1399,7 +1399,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1414,7 +1414,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1429,7 +1429,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1444,7 +1444,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1459,7 +1459,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1474,7 +1474,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1489,7 +1489,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="box platform removable"/>
@@ -1513,7 +1513,7 @@
    pol="minus"
    offset="0 0.493896 0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="camera_main"/>
@@ -1531,8 +1531,7 @@
    pos="-80.1237 -16.298 -19.8656"
    quat="0 0 0 1.0"
    scale="1.0"/>
-
-<room name="sala1"/></entity>
+</entity>
 <entity>
 <tags
    tags="guided_camera"/>
@@ -1571,7 +1570,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    id="300">
 <tags
@@ -1599,7 +1598,7 @@
 <polarized
    pol="neutral"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1609,7 +1608,7 @@
    quat="0.708405 0 0 0.705806"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    id="301">
 <tags
@@ -1635,7 +1634,7 @@
    kinematic="yes"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1645,7 +1644,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -1660,7 +1659,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <rigidbody
@@ -1677,7 +1676,7 @@
    quat="0 -0.732399 0.0105818 0.680784"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="AI AI_guard"/>
@@ -1709,7 +1708,7 @@
 <character_controller
    radius="0.3"
    height="1.8"/>
-<room name="sala1"/>
+<room name="1"/>
 </entity>
 <entity>
 <tags
@@ -1742,7 +1741,7 @@
 <character_controller
    radius="0.3"
    height="1.8"/>
-<room name="sala1"/>
+<room name="1"/>
 </entity>
 <entity>
 <tags
@@ -1782,7 +1781,7 @@
    radius="0.3"
    height="1.8"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="AI AI_guard"/>
@@ -1824,7 +1823,7 @@
    radius="0.3"
    height="1.8"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="AI AI_guard"/>
@@ -1869,7 +1868,7 @@
    radius="0.3"
    height="1.8"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="workbench"/>
@@ -1886,7 +1885,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="workbench"/>
@@ -1903,7 +1902,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 
 <entity
    id="302">
@@ -1920,7 +1919,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="AI AI_cientifico AI_poss"/>
@@ -1945,7 +1944,7 @@
    radius="0.3"
    height="1.71312"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <rigidbody
@@ -1964,7 +1963,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <rigidbody
@@ -1983,7 +1982,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <rigidbody
@@ -2002,7 +2001,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <rigidbody
@@ -2021,7 +2020,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="target"/>
@@ -2032,7 +2031,7 @@
    quat="0 -0.707107 0 0.707107"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <rigidbody
@@ -2125,7 +2124,7 @@
    point70="-94.8579 15.6543 17.8534"
    size="71"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags/>
 <name
@@ -2135,7 +2134,7 @@
    quat="-0.5 -0.5 0.5 -0.5"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="wire_particle"/>
@@ -2150,7 +2149,7 @@
 <abs_aabb/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2171,7 +2170,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2192,7 +2191,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2213,7 +2212,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2234,7 +2233,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2255,7 +2254,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2276,7 +2275,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2297,7 +2296,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2318,7 +2317,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2339,7 +2338,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2360,7 +2359,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2381,7 +2380,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2402,7 +2401,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2423,7 +2422,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2444,7 +2443,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2465,7 +2464,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2486,7 +2485,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2507,7 +2506,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2528,7 +2527,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2549,7 +2548,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity
    slept="yes">
 <tags
@@ -2570,7 +2569,7 @@
    mass="5"/>
 <local_aabb/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="teleport"/>
@@ -2581,7 +2580,7 @@
    quat="0 -0.419953 0 0.907546"
    scale="1.0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="workstation"/>
@@ -2601,7 +2600,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="workstation"/>
@@ -2621,7 +2620,7 @@
 <rigidbody
    type_collision="static"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="drone platform"/>
@@ -2651,7 +2650,7 @@
    pol="plus"
    offset="0 0.570343 0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="drone platform"/>
@@ -2679,7 +2678,7 @@
    pol="minus"
    offset="0 0.570343 0"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="box platform removable"/>
@@ -2702,7 +2701,7 @@
 <polarized
    pol="plus"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <entity>
 <tags
    tags="player raijin"/>
@@ -2726,7 +2725,7 @@
 <character_controller
    radius="0.3"
    height="0.7"/>
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 
 <entity>
 <tags
@@ -2759,14 +2758,14 @@
    radius="0.3"
    height="2.01"/>
 
-<room name="sala1"/></entity>
+<room name="1"/></entity>
 <!--
 <entity>
 	<rigidbody type_collision="trigger"
 	   type_shape="box"
 	   size="10.0 10.0 0.10"/>
 	<tags tags="trigger room_switcher"/>
-	<room_switcher front_room="sala2" back_room="sala1"/>
+	<room_switcher front_room="2" back_room="1"/>
 	<name name="TriggerBox_1"/>
 	<transform
 	   pos="-57.915 4.396 -5.678"
@@ -2797,7 +2796,7 @@
     <ai_cam max_rotation="120.0" range="3" width="1" rot_speed_sonar="0.5" max_idle_waiting="3"/>
     <transform pos="-80.7606 8.54738 -3.8275" quat="0.0 1.0 0.0 0.0" scale="1.0" />
     <render_static_mesh name="static_meshes/player_first_ev.static_mesh" />
-	<room name="sala1"/>
+	<room name="1"/>
 </entity>
 
 </entities>

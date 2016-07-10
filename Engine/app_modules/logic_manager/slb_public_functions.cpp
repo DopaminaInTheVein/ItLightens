@@ -484,13 +484,12 @@ void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 	sound_manager->playAmbient(std::string(ambient_route));
 }
 
-void SLBPublicFunctions::playerRoom(const char* newRoom) {
+void SLBPublicFunctions::playerRoom(int newRoom) {
 	CHandle p = tags_manager.getFirstHavingTag("player");
 	CEntity * pe = p;
 	TCompRoom * room = pe->get<TCompRoom>();
-	std::string strRoom(newRoom);
-	if (room->setName(strRoom)) {
-		SBB::postSala(strRoom);
+	if (room->setName(newRoom)) {
+		SBB::postSala(newRoom);
 	}
 }
 

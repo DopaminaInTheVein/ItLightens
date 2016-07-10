@@ -12,8 +12,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>
@@ -2542,6 +2540,8 @@
    mass="5"
    kinematic="yes"/>
 <local_aabb/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
@@ -2566,7 +2566,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="10.7629 -11.519 -22.2575"
+   pos="-42.9043 -0.58853 -0.614542"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -2588,7 +2588,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.2064 0.875 2.49"/>
+   size="3.04608 0.875 1.9173"/>
 <tags
    tags="trigger"/>
 <trigger_lua
@@ -2597,7 +2597,7 @@
 <name
    name="__tElevator"/>
 <transform
-   pos="-65.4501 16.063 19.6681"
+   pos="-65.8433 16.063 20.7697"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room
@@ -2609,7 +2609,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.22755 0.875 1.28148"/>
+   size="1.80743 0.875 1.28148"/>
 <tags
    tags="trigger"/>
 <trigger_lua
@@ -2618,7 +2618,7 @@
 <name
    name="__tElevator"/>
 <transform
-   pos="-65.6524 -0.482764 18.6604"
+   pos="-65.6524 -0.632667 20.4715"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room
@@ -2627,70 +2627,89 @@
 </entity>
 <entity>
 <tags/>
-<name
-   name="__camara"/>
-<transform
-   pos="-68.4072 18.7886 10.0999"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
+<light_dir_shadows
+   color="1 0 0 1"
+   znear="1.1"
+   zfar="10"
+   fov="45"
+    resolution="512"/>
+<tags
+   tags="ai_cam"/>
+<room
+   name="2"/>
+<ai_cam
+   range="6"
+   width="3"
+   rot_speed_sonar="0.45"
+   rotating_left="false"
+   max_rotation="162"/>
 <render_static_mesh
-   name="static_meshes/ms3/logic/camara.static_mesh"/>
+   name="static_meshes/ms3/camara_derecha.static_mesh"/>
 <abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
 <name
    name="camara_centro"/>
 <transform
    pos="-104.56 5.17204 -10.0285"
-   quat="0 0 0 1.0"
+   quat="0 0.996917 0 0.0784591"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_centro.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>
 <tags/>
+<light_dir_shadows
+   color="1 0 0 1"
+   znear="1.1"
+   zfar="10"
+   fov="45"
+    resolution="512"/>
+<tags
+   tags="ai_cam"/>
+<room
+   name="2"/>
+<ai_cam
+   range="6"
+   width="3"
+   rot_speed_sonar="0.25"
+   rotating_left="true"
+   max_rotation="90"/>
+<render_static_mesh
+   name="static_meshes/ms3/camara_derecha.static_mesh"/>
+<abs_aabb/>
 <name
    name="camara_izquierdaq"/>
 <transform
    pos="-99.6426 6.09816 -3.77469"
-   quat="0 0 0 1.0"
+   quat="0 0.92388 0 0.382683"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_izquierdaq.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>
 <tags/>
+<light_dir_shadows
+   color="1 0 0 1"
+   znear="1.1"
+   zfar="10"
+   fov="45"
+    resolution="512"/>
+<tags
+   tags="ai_cam"/>
+<room
+   name="2"/>
+<ai_cam
+   range="6"
+   width="3"
+   rot_speed_sonar="0.25"
+   rotating_left="false"
+   max_rotation="90"/>
+<render_static_mesh
+   name="static_meshes/ms3/camara_derecha.static_mesh"/>
+<abs_aabb/>
 <name
    name="camara_derecha"/>
 <transform
    pos="-100.319 6.05234 -17.3462"
-   quat="0 0 0 1.0"
+   quat="0 0.382683 0 0.92388"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_derecha.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>
@@ -3036,23 +3055,6 @@
 <entity>
 <tags/>
 <name
-   name="puertas_ascensor"/>
-<transform
-   pos="-65.5715 0.322644 19.4268"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/puertas_ascensor.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="biombos_abajo"/>
 <transform
    pos="-88.4023 0.097167 21.5525"
@@ -3149,6 +3151,82 @@
 <character_controller
    radius="0.3"
    height="2.1"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="look"
+   kpt0_pos="-84.3259 -1.27954 -28.0575"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-84.3393 -1.28589 -28.4518"
+   kpt1_wait="2"
+   jurisdiction="-82.8302 -1.19972 -25.2863"
+   jurRadius="7.15"
+   formation_point="-87.0319 -1.32482 -30.3074"
+   formation_dir="-86.3901 -1.26751 -30.1352"/>
+<skc_guard/>
+<name
+   name="guard_004"/>
+<transform
+   pos="-84.3522 -1.19972 -28.422"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="look"
+   kpt0_pos="-81.6327 -1.27954 -28.0575"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-81.6461 -1.28589 -28.4518"
+   kpt1_wait="2"
+   jurisdiction="-82.8302 -1.19972 -25.2863"
+   jurRadius="7.2"
+   formation_point="-84.3387 -1.32482 -30.3074"
+   formation_dir="-83.6969 -1.26751 -30.1352"/>
+<skc_guard/>
+<name
+   name="guard_005"/>
+<transform
+   pos="-81.659 -1.19972 -28.422"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
 <room
    name="2"/>
 
@@ -3280,8 +3358,7 @@
 <entity>
 <tags
    tags="box platform removable interactive"/>
-<box
-   size="3.0 1.5 3.0"/>
+<box/>
 <bone_tracker/>
 <name
    name="Box_1"/>
@@ -3400,8 +3477,7 @@
 <entity>
 <tags
    tags="box platform removable interactive"/>
-<box
-   size="3.0 1.5 3.0"/>
+<box/>
 <bone_tracker/>
 <name
    name="Box_2"/>
@@ -4276,42 +4352,6 @@
 </entity>
 <entity>
 <tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="3.0 4.0 0.1"/>
-<tags
-   tags="trigger room_switcher"/>
-<room_switcher
-   front_room="1"
-   back_room="2"/>
-<name
-   name="Trigger_Cambio_Sala"/>
-<transform
-   pos="-54.4765 0.753134 -5.47724"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.1 4.0 12.0"/>
-<tags
-   tags="trigger limit"/>
-<limit/>
-<name
-   name="Trigger_Escupe_Posessiones"/>
-<transform
-   pos="-62.2198 0.753134 -5.47724"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
 <name
    name="generator_1"/>
 <transform
@@ -4323,6 +4363,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="1"/>
 
 </entity>
 <entity>
@@ -4340,6 +4382,8 @@
    pos="-17.8101 -1.54614 24.6676"
    quat="0 0.999986 0 0"
    scale="1.0"/>
+<room
+   name="1"/>
 
 </entity>
 <entity>
@@ -4355,6 +4399,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="1"/>
 
 </entity>
 <entity>
@@ -4372,6 +4418,8 @@
    pos="29.6176 -23.2889 16.4296"
    quat="0 0.99999 0 0"
    scale="1.0"/>
+<room
+   name="1"/>
 
 </entity>
 <entity>
@@ -4387,6 +4435,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="1"/>
 
 </entity>
 <entity>
@@ -4404,6 +4454,8 @@
    pos="-6.74973 -12.2363 -19.6071"
    quat="0 0 0 1.0"
    scale="1.0"/>
+<room
+   name="1"/>
 
 </entity>
 <entity>
@@ -4419,6 +4471,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="1"/>
 
 </entity>
 <entity>
@@ -4436,6 +4490,8 @@
    pos="-40.825 -0.555908 -7.16371"
    quat="0 0.705949 0 0.708263"
    scale="1.0"/>
+<room
+   name="1"/>
 
 </entity>
 <entity>
@@ -4451,6 +4507,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
@@ -4468,6 +4526,8 @@
    pos="-73.5068 -0.588134 8.45465"
    quat="0 0.846634 0 0.532176"
    scale="1.0"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
@@ -4483,6 +4543,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
@@ -4500,6 +4562,8 @@
    pos="-119.645 -0.582276 -12.5256"
    quat="0 -0.695415 0 0.718609"
    scale="1.0"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
@@ -4536,292 +4600,205 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   id="305">
 <tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="3"
-   kpt0_type="seek"
-   kpt0_pos="-14.2303 -23.8712 -7.35578"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="-33.6709 -23.8712 4.3483"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="-18.8372 -23.8712 16.6996"
-   kpt2_wait="2"
-   jurisdiction="-33.7782 -23.9 3.84785"
-   jurRadius="5.0"
-   formation_point="-36.4579 -24.0251 1.96243"
-   formation_dir="-35.8161 -23.9678 2.13469"/>
-<skc_guard/>
+   tags="door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-63.6948 0.32264 19.4268"
+   pol="neutral"/>
 <name
-   name="guard_1"/>
+   name="__DoorElev_Left"/>
 <transform
-   pos="-33.7782 -23.9 3.84785"
+   pos="-64.9312 0.32264 19.4268"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<skeleton_ik/>
+   name="static_meshes/ms3/__DoorElev_Left.static_mesh"/>
 <abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
 <local_aabb/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
+<polarized
+   pol="neutral"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="4"
-   kpt0_type="seek"
-   kpt0_pos="13.3487 -23.8712 16.4845"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="2.40446 -23.8712 2.58889"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="26.1755 -23.8712 -4.6136"
-   kpt2_wait="2"
-   kpt3_type="seek"
-   kpt3_pos="10.8511 -23.8712 -13.6583"
-   kpt3_wait="2"
-   jurisdiction="26.0682 -23.9 -5.11404"
-   jurRadius="5.0"
-   formation_point="25.5739 -24.0251 -6.9732"
-   formation_dir="26.2157 -23.9678 -6.80094"/>
-<skc_guard/>
+<tags/>
 <name
-   name="guard_002"/>
+   name="__DoorElev_Left___opened_pos001"/>
 <transform
-   pos="26.0682 -23.9 -5.11404"
+   pos="-63.6948 0.32264 19.4268"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   id="306">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-67.4927 0.32264 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_Right"/>
+<transform
+   pos="-66.2562 0.32264 19.4268"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<skeleton_ik/>
+   name="static_meshes/ms3/__DoorElev_Right.static_mesh"/>
 <abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
 <local_aabb/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
+<polarized
+   pol="neutral"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="3"
-   kpt0_type="seek"
-   kpt0_pos="5.8479 -23.8712 22.4545"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="6.83898 -23.8712 -21.0227"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="2.70562 -23.8712 1.62904"
-   kpt2_wait="2"
-   jurisdiction="-1.58059 -23.9 3.84785"
-   jurRadius="5.0"
-   formation_point="-4.26029 -24.0251 1.96243"
-   formation_dir="-3.61846 -23.9678 2.13469"/>
-<skc_guard/>
+<tags/>
 <name
-   name="guard_003"/>
+   name="__DoorElev_Right___opened_pos002"/>
 <transform
-   pos="-1.58059 -23.9 3.84785"
+   pos="-67.4927 0.32264 19.4268"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   id="307">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="no"
+   speedOpening="1"
+   target="-64.8125 16.9651 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_LeftUp"/>
+<transform
+   pos="-63.888 16.9651 19.4268"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<skeleton_ik/>
+   name="static_meshes/ms3/__DoorElev_LeftUp.static_mesh"/>
 <abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
 <local_aabb/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
+<polarized
+   pol="neutral"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="2"
-   kpt0_type="look"
-   kpt0_pos="-84.3259 -1.27954 -28.0575"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="-84.3393 -1.28589 -28.4518"
-   kpt1_wait="2"
-   jurisdiction="-84.3522 -1.19972 -28.422"
-   jurRadius="5.0"
-   formation_point="-87.0319 -1.32482 -30.3074"
-   formation_dir="-86.3901 -1.26751 -30.1352"/>
-<skc_guard/>
+<tags/>
 <name
-   name="guard_004"/>
+   name="__DoorElev_LeftUp___opened_pos003"/>
 <transform
-   pos="-84.3522 -1.19972 -28.422"
+   pos="-64.8125 16.9651 19.4268"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   id="308">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="no"
+   speedOpening="1"
+   target="-66.1481 16.9651 19.4268"
+   pol="neutral"/>
+<name
+   name="__DoorElev_RightUp"/>
+<transform
+   pos="-67.1209 16.9651 19.4268"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<skeleton_ik/>
+   name="static_meshes/ms3/__DoorElev_RightUp.static_mesh"/>
 <abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
 <local_aabb/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
+<polarized
+   pol="neutral"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
-<tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="2"
-   kpt0_type="look"
-   kpt0_pos="-81.6327 -1.27954 -28.0575"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="-81.6461 -1.28589 -28.4518"
-   kpt1_wait="2"
-   jurisdiction="-81.659 -1.19972 -28.422"
-   jurRadius="5.0"
-   formation_point="-84.3387 -1.32482 -30.3074"
-   formation_dir="-83.6969 -1.26751 -30.1352"/>
-<skc_guard/>
+<tags/>
 <name
-   name="guard_005"/>
+   name="__DoorElev_RightUp___opened_pos004"/>
 <transform
-   pos="-81.659 -1.19972 -28.422"
-   quat="0 0 0 1.0"
+   pos="-66.1481 16.9651 19.4268"
+   quat="0.708405 0 0 0.705806"
    scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<skeleton_ik/>
-<abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.0 4.0 0.1"/>
 <tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="6"
-   kpt0_type="look"
-   kpt0_pos="-100.586 -1.27954 -5.80638"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="-100.726 -1.28589 -14.3003"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="-92.8546 -1.28589 -14.3658"
-   kpt2_wait="2"
-   kpt3_type="look"
-   kpt3_pos="-90.7359 -1.27954 -17.2999"
-   kpt3_wait="2"
-   kpt4_type="seek"
-   kpt4_pos="-70.0602 -1.28589 -14.3658"
-   kpt4_wait="2"
-   kpt5_type="look"
-   kpt5_pos="-72.2655 -1.27954 -17.2999"
-   kpt5_wait="2"
-   jurisdiction="-96.7845 -1.19972 -10.605"
-   jurRadius="5.0"
-   formation_point="-99.4642 -1.32482 -12.4904"
-   formation_dir="-98.8223 -1.26751 -12.3182"/>
-<skc_guard/>
+   tags="trigger room_switcher"/>
+<room_switcher
+   front_room="sala1"
+   back_room="sala2"/>
 <name
-   name="guard_006"/>
+   name="Trigger_Cambio_Sala"/>
 <transform
-   pos="-96.7845 -1.19972 -10.605"
+   pos="-54.4765 0.753134 -5.47724"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<skeleton_ik/>
-<abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
 
 </entity>
 <entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.1 4.0 12.0"/>
 <tags
-   tags="AI AI_guard"/>
-<life
-   points="100"/>
-<bt_guard
-   kpt_size="6"
-   kpt0_type="look"
-   kpt0_pos="-67.1094 -1.27954 10.7064"
-   kpt0_wait="2"
-   kpt1_type="seek"
-   kpt1_pos="-67.1231 -1.28589 11.4189"
-   kpt1_wait="2"
-   kpt2_type="seek"
-   kpt2_pos="-62.9841 -1.28589 -8.10853"
-   kpt2_wait="2"
-   kpt3_type="look"
-   kpt3_pos="-57.9167 -1.27954 -7.76042"
-   kpt3_wait="2"
-   kpt4_type="seek"
-   kpt4_pos="-88.3649 -1.28589 1.81971"
-   kpt4_wait="2"
-   kpt5_type="look"
-   kpt5_pos="-88.5043 -1.27954 -8.20765"
-   kpt5_wait="2"
-   jurisdiction="-66.9139 -1.19972 7.81328"
-   jurRadius="5.0"
-   formation_point="-69.5936 -1.32482 5.92785"
-   formation_dir="-68.9518 -1.26751 6.10012"/>
-<skc_guard/>
+   tags="trigger limit"/>
+<limit/>
 <name
-   name="guard_007"/>
+   name="Trigger_Escupe_Posessiones"/>
 <transform
-   pos="-66.9139 -1.19972 7.81328"
+   pos="-62.2198 0.753134 -5.47724"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<skeleton_ik/>
-<abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
 
 </entity>
+
 </entities>

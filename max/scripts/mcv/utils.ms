@@ -208,7 +208,7 @@ fn sortByName arr = (
 
 
 -- Attributes for room configuration
-v_room_data = attributes v_room_data version:1 ( 	parameters room_data 	( 		room_name  type:#string  default:"none"  	) ) 
+v_room_data = attributes v_room_data version:1 ( 	parameters room_data 	( 		room_name  type:#string  default:"-1"  	) ) 
 
 -- Apply attribute class to an object
 fn assign_default_room_to_all = (

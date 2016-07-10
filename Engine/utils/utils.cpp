@@ -72,8 +72,8 @@ float random(float vmin, float vmax) {
 }
 
 bool isInRoom(CHandle h) {
-	std::string pjSala = SBB::readSala();
-	if (pjSala == "none") return true;
+	int pjSala = SBB::readSala();
+	if (pjSala == -1) return true;
 	CEntity * e = h;
 	if (!e) return true;
 	TCompRoom * room = e->get<TCompRoom>();
