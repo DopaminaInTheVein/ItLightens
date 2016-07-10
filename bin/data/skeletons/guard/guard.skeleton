@@ -2,4 +2,6 @@
   <skeleton    src ="skeletons/guard/guard.csf"/>
   <animations src ="skeletons/guard/"/>
   <mesh     src="skeletons/guard/guard.cmf"/>
+  <key_bones 
+  />
 </model>

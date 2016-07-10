@@ -857,7 +857,8 @@ int bt_guard::actionWaitWpt() {
 	//PROFILE_FUNCTION("guard: actionwaitwpt");
 	if (!myParent.isValid()) return false;
 	SET_ANIM_GUARD(AST_IDLE);
-
+	stuck = false;
+	stuck_time = 0.f;
 	//player visible?
 	if (playerVisible() || boxMovingDetected()) {
 		/*isPathObtainedAccessible = false;
