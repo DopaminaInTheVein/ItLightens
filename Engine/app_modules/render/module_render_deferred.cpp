@@ -607,6 +607,8 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 	shader_ctes_globals.global_color = color;
 	shader_ctes_globals.uploadToGPU();
 
+	activateBlend(BLENDCFG_COMBINATIVE);
+
 	//create mask
 	{
 		PROFILE_FUNCTION("referred: mask");
@@ -889,22 +891,23 @@ void CRenderDeferredModule::render() {
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	
-
+	shader_ctes_globals.global_color = VEC4(1,1,1,1);
+	shader_ctes_globals.uploadToGPU();
 	activateBlend(BLENDCFG_SUBSTRACT);
 	tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
 	drawFullScreen(rt_final, tech);
 
 	activateBlend(BLENDCFG_DEFAULT);
 
-	/*if (GameController->GetFxPolarize()) {
+	if (GameController->GetFxPolarize()) {
 	  RenderPolarizedPP(MINUS, VEC4(1.0f, 0.3f, 0.3f, 1.0f));
 	  RenderPolarizedPP(PLUS, VEC4(0.3f, 0.3f, 1.0f, 1.0f));
-	}*/
+	}
 
 	activateZ(ZCFG_DEFAULT);
 
 	ShootGuardRender();
-	MarkInteractives(VEC4(1, 1, 0, 1));
+	MarkInteractives(VEC4(1, 1, 1, 1));
 
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);

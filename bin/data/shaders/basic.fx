@@ -307,10 +307,10 @@ float4 a = (2*dc - dd);
  float w = (1 - de) * e_kernel.x; 
 //return float4(1,0,1,1);
 w = step(0.75f, w);
-float4 final_color = w;
 //w=global_color*w;
+float4 final_color = w*global_color;
 return final_color;
-//return global_color;	 
+return global_color;	 
  return float4(w, w, w, w); 
 
 }
