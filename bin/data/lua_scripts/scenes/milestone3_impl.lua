@@ -353,7 +353,7 @@ function destroyWallAnim( )
   player = Handle()
   player:get_player()
   player:set_anim("attack")
-  p:exec_command("destroyWallEffect();", 1.5)
+  p:exec_command("destroyWallEffect();", 0.5)
 end
 
 function destroyWallEffect()

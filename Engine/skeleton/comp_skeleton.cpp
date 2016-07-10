@@ -49,7 +49,7 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 	bool prev_anims_cleared = false;
 
 	//Siguiente Loop
-	if (next_loop[0] != "") {
+	if (next_loop.size() > 0 && next_loop[0] != "") {
 		for (auto next : next_loop) {
 			int nextCycleId = resource_skeleton->getAnimIdByName(next);
 			if (nextCycleId >= 0) {
