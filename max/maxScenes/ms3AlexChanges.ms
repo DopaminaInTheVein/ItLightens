@@ -100,8 +100,8 @@ fn createRoomSwitcherTrigger sala1 sala2 = (
 		
 		setUserProp nouObj "typeObject" "Trigger"
 		setUserProp nouObj "component" "room_switcher"
-		setUserProp nouObj "front_room" "sala1"
-		setUserProp nouObj "back_room" "sala2"
+		setUserProp nouObj "front_room" sala1
+		setUserProp nouObj "back_room" sala2
 	) 
 )
 

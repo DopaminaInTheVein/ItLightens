@@ -4773,8 +4773,8 @@
 <tags
    tags="trigger room_switcher"/>
 <room_switcher
-   front_room="sala1"
-   back_room="sala2"/>
+   front_room="1"
+   back_room="2"/>
 <name
    name="Trigger_Cambio_Sala"/>
 <transform
