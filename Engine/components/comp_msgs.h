@@ -321,6 +321,7 @@ struct TMsgSetPolarity {
 };
 struct TMsgSetLocked {
 	bool locked;
+	float speed;
 	DECLARE_MSG_ID();
 };
 struct TMsgGetPolarity {

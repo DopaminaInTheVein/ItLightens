@@ -48,7 +48,7 @@ bool magnet_door::load(MKeyValue& atts)
 
 	magneticBehaviour = MB_NONE;
 	distPolarity = 5.f;
-	epsilonTarget = 0.02f;
+	epsilonTarget = 0.001f;
 	return true;
 }
 
@@ -132,21 +132,24 @@ void magnet_door::updateMove()
 	}
 	else {
 		target = targetClosed;
-		speed = speedClosing;
+		speed = speedClosing_sp == 0.f ? speedClosing : speedClosing_sp;
 		targetState = CS_CLOSED;
 	}
 	PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
+	float dist;
 	if (rd) {
 		PxTransform tmx = rd->getGlobalPose();
 		VEC3 pos = PhysxConversion::PxVec3ToVec3(tmx.p);
+		dist = simpleDist(target, pos);
 		// Door has reached targed
-		if (simpleDist(target, pos) < epsilonTarget) {
+
+		if (dist < epsilonTarget) {
 			cinematicState = targetState;
 		}
 		//Door has to move
 		else {
 			VEC3 delta = target - pos;
-			float moveAmount = speed * getDeltaTime();
+			float moveAmount = min(speed * getDeltaTime(), dist);
 			delta.Normalize();
 			VEC3 nextPos = pos + delta * moveAmount;
 			PxVec3 pxTarget = PhysxConversion::Vec3ToPxVec3(nextPos);
@@ -207,4 +210,5 @@ void magnet_door::onSetPolarity(const TMsgSetPolarity& msg)
 void magnet_door::onSetLocked(const TMsgSetLocked& msg)
 {
 	locked = msg.locked;
+	speedClosing_sp = msg.speed;
 }

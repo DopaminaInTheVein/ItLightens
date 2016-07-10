@@ -27,6 +27,7 @@ class magnet_door : public TCompBase {
 	pols polarity;
 	float speedOpening;
 	float speedClosing;
+	float speedClosing_sp;
 	float distPolarity;
 	float epsilonTarget;
 

@@ -279,6 +279,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 
 		break;
 	}
+	case (OnNextPatrol): {
+		sprintf(lua_code, "OnNextPatrol(\"%s\");", params.c_str());
+		break;
+	}
 	case (OnBeaconDetect): {
 		sprintf(lua_code, "OnBeaconDetect(%f);", 0.5f);
 		break;
@@ -419,6 +423,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 	SLB::Class<SLBHandle>("Handle", &m)
 		.comment("Handle class")
 		.constructor()
+		// get name
+		.set("get_name", &SLBHandle::getName)
+		.comment("Get the name of the entity handle")
 		// sets the handle pointer to the player
 		.set("get_player", &SLBHandle::getPlayer)
 		.comment("Sets the handle pointer to the player")

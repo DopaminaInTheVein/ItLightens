@@ -61,6 +61,7 @@ function OnGameStart( param )
 	--triggerGuardFormation();
 	--p:exec_command( "triggerGuardFormation();", 15 )
 	cam:run_cinematic("CinematicIntro", 10)
+	CallFunction("test_dbg")
 end
 
 function OnGameEnd( param )
@@ -227,7 +228,15 @@ end
 function OnDetected( distance, posx, posy, posz )
 	p:print( "OnDetected: "..distance.." "..posx.." "..posy.." "..posz.."\n" )
 	p:play_sound("event:/OnDetected")
+	h:getHandleCaller()
+	name_guard = h:get_name()
+	CallFunction("OnDetected_"..name_guard)
 	--p:character_globe("Intruder detected!", distance, posx, posy, posz)
+end
+
+function OnNextPatrol( guard_name )
+	p:print ("OnNextPatrol: "..guard_name.."\n")
+	CallFunction("OnNextPatrol_"..guard_name)
 end
 
 function OnBeaconDetect( param )

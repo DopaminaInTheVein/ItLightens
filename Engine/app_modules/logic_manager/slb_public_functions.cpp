@@ -153,6 +153,11 @@ void SLBHandle::destroy() {
 	if (real_handle.isValid()) real_handle.destroy();
 }
 
+const char* SLBHandle::getName() {
+	if (real_handle.isValid()) return ((CEntity*)real_handle)->getName();
+	return "";
+}
+
 SLBPosition SLBHandle::getPos() {
 	SLBPosition p;
 	if (real_handle.isValid()) {
@@ -272,10 +277,16 @@ void SLBHandle::setPolarity(int polarity) {
 }
 
 void SLBHandle::setLocked(int locked) {
+	float speed = 0.f;
+	if (locked < 0) {
+		speed = -locked;
+	}
+
 	if (real_handle.isValid()) {
 		CEntity* eTarget = real_handle;
 		TMsgSetLocked msg;
 		msg.locked = (locked != 0);
+		msg.speed = speed;
 		eTarget->sendMsg(msg);
 	}
 }

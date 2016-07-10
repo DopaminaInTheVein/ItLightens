@@ -58,6 +58,7 @@ public:
 	void getHandleByNameTag(const char* name, const char* tag);
 	void getHandleCaller();
 	void destroy();
+	const char* getName();
 	SLBPosition getPos();
 	void setPos(SLBPosition);
 	void setPosition(float x, float y, float z);

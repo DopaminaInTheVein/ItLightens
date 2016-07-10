@@ -74,6 +74,7 @@ public:
 		OnJump,
 		OnDoubleJump,
 		OnDetected,
+		OnNextPatrol,
 		OnBeaconDetect,
 		OnExplode,
 

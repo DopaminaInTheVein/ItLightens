@@ -132,6 +132,7 @@ function activateEnchufeSci()
 end
 
 idDoor = 300
+isDoorOpen = false
 function OnPutPila_enchufe()
   pila:getHandleCaller()
   if pila:is_charged() then
@@ -141,6 +142,7 @@ function OnPutPila_enchufe()
 	--Abril
 	h:get_handle_by_id(idDoor)
 	h:setLocked(0)
+	isDoorOpen = true
   end
 end
 
@@ -153,8 +155,46 @@ function OnRemovePila_enchufe()
 	--Cerral (:P)
 	h:get_handle_by_id(idDoor)
 	h:setLocked(1)
+	isDoorOpen = false
   end
 end
+
+-- On Detected Door_centinels
+hDoor = Handle()
+alerts = 0
+function centinelDetection( )
+  if alerts < 1 then
+	hDoor:get_handle_by_id(idDoor)
+	hDoor:setLocked(-10) -- Means close speed 10, (negative value = close at that speed)
+	alerts = alerts + 1
+	p:exec_command("centinelRelax();", 20)
+  end
+end
+
+function centinelRelax( )
+  alerts = alerts - 1
+  if alerts < 1 then
+	if isDoorOpen then
+		hDoor:get_handle_by_id(idDoor)
+		hDoor:setLocked(0);
+	end
+  end
+end
+
+function test_dbg()
+  h:get_handle_by_id(idDoor)
+  h:setLocked(0)
+  isDoorOpen = true
+end
+
+function OnDetected_guard_004( )
+	centinelDetection()
+end
+
+function OnDetected_guard_005( )
+	centinelDetection()
+end
+
 -- Elevator --
 -------------------------------------------------
 idElevator = 301
