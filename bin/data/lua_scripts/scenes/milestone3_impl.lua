@@ -117,7 +117,7 @@ function activateEnchufePlayer()
 	p:player_talks("This needs energy to work.", "scientific.dds", "SCI")
   end
   
-  triggerCargador:getHandleCaller()
+  triggerEnchufe:getHandleCaller()
   p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
 end
 
@@ -135,7 +135,7 @@ function activateEnchufeSci()
 	p:player_talks("This needs a cell to work.", "scientific.dds", "SCI")
   end
   
-  triggerCargador:getHandleCaller()
+  triggerEnchufe:getHandleCaller()
   p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
 end
 
@@ -149,8 +149,10 @@ function OnPutPila_enchufe()
 	
 	--Abril
 	h:get_handle_by_id(idDoor)
-	h:setLocked(0)
 	isDoorOpen = true
+	if not alert then
+		h:setLocked(0)
+	end
   end
 end
 
@@ -228,7 +230,9 @@ end
 
 function alert_finish( )
   if not alert then
-	hDoor:setLocked(0);
+    if isDoorOpen then
+		hDoor:setLocked(0);
+	end
   end
 end
 
