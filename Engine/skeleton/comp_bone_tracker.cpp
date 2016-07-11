@@ -31,6 +31,59 @@ void TCompBoneTracker::onGroupCreated(const TMsgEntityGroupCreated& msg) {
 }
 
 void TCompBoneTracker::onAttach(const TMsgAttach& msg) {
+	if (!isZero(msg.offset)) {
+		onAttachWithOffset(msg); // Parche rapido!
+		return;
+	}
+	h_entity = msg.handle;
+	CEntity* e = h_entity;
+	if (!e)
+		return;
+	strcpy(bone_name, msg.bone_name.c_str());
+	TCompSkeleton* skel = e->get<TCompSkeleton>();
+	if (!skel)
+		return;
+	bone_id = skel->getKeyBoneId(bone_name);
+	local_tmx_saved = msg.save_local_tmx;
+	if (msg.save_local_tmx) {
+		auto bone = skel->model->getSkeleton()->getBone(bone_id);
+		VEC3 pos_bone_abs = Cal2Engine(bone->getTranslationAbsolute());
+		CQuaternion rot_bone_abs = Cal2Engine(bone->getRotationAbsolute());
+		dbg("Descompose bone abs. (%f, %f, %f), (%f, %f, %f, %f)\n"
+			, VEC3_VALUES(pos_bone_abs)
+			, VEC4_VALUES(rot_bone_abs));
+
+		// BoneWorld inv
+		MAT44 bone_world = MAT44::CreateFromQuaternion(rot_bone_abs);
+		bone_world.Translation(pos_bone_abs);
+		VEC3 scale, pos; CQuaternion rot;
+		bone_world.Decompose(scale, rot, pos);
+		dbg("Descompose bone_world. (%f, %f, %f), (%f, %f, %f, %f)\n"
+			, VEC3_VALUES(pos)
+			, VEC4_VALUES(rot));
+		MAT44 bone_world_inv = bone_world.Invert();
+		bone_world_inv.Decompose(scale, rot, pos);
+		dbg("Descompose bone_world invert. (%f, %f, %f), (%f, %f, %f, %f)\n"
+			, VEC3_VALUES(pos)
+			, VEC4_VALUES(rot));
+
+		// My World now
+		GET_MY(tmx, TCompTransform);
+		MAT44 my_world = tmx->asMatrix();
+		my_world.Decompose(scale, rot, pos);
+		dbg("Descompose my_world. (%f, %f, %f), (%f, %f, %f, %f)\n"
+			, VEC3_VALUES(pos)
+			, VEC4_VALUES(rot));
+		// Local bone transform
+		local_tmx = my_world * bone_world_inv;
+		local_tmx.Decompose(scale, rot, pos);
+		dbg("Descompose local_tmx. (%f, %f, %f), (%f, %f, %f, %f)\n"
+			, VEC3_VALUES(pos)
+			, VEC4_VALUES(rot));
+	}
+}
+
+void TCompBoneTracker::onAttachWithOffset(const TMsgAttach& msg) {
 	h_entity = msg.handle;
 	CEntity* e = h_entity;
 	if (!e)
@@ -95,8 +148,7 @@ void TCompBoneTracker::renderInMenu() {
 
 void TCompBoneTracker::update(float dt) {
 	CEntity* e = h_entity;
-	CEntity* my_e = CHandle(this).getOwner();
-	if (!e || !my_e)
+	if (!e)
 		return;
 	TCompSkeleton* skel = e->get<TCompSkeleton>();
 	if (!skel || bone_id == -1)
@@ -105,6 +157,8 @@ void TCompBoneTracker::update(float dt) {
 	auto rot = Cal2Engine(bone->getRotationAbsolute());
 	auto trans = Cal2Engine(bone->getTranslationAbsolute());
 
+	CEntity* my_e = CHandle(this).getOwner();
+	if (!my_e) return;
 	TCompTransform* tmx = my_e->get<TCompTransform>();
 	assert(tmx);
 

@@ -26,6 +26,7 @@ struct TCompBoneTracker : public TCompBase {
 	void update(float dt);
 	void onGroupCreated(const TMsgEntityGroupCreated& msg);
 	void onAttach(const TMsgAttach& msg);
+	void onAttachWithOffset(const TMsgAttach& msg);
 };
 
 #endif

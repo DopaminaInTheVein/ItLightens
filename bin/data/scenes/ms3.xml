@@ -390,23 +390,6 @@
 <entity>
 <tags/>
 <name
-   name="banner"/>
-<transform
-   pos="-41.1588 -1.47866 0.273315"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/banner.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="barandilla_mapeaaado"/>
 <transform
    pos="-89.2474 -0.82739 -9.23426"
