@@ -10,7 +10,7 @@
 <light_point
    color="0.5 0.5 0.3 0.3"
    in_radius="25.0"
-   out_radius="50.0"/>
+   out_radius="70.0"/>
 <name
    name="Omni100"/>
 <transform
@@ -27,7 +27,7 @@
 <light_point
    color="0.3 0.3 0.1 0.1"
    in_radius="15.0"
-   out_radius="30.0"/>
+   out_radius="70.0"/>
 <name
    name="Omni101"/>
 <transform
@@ -44,7 +44,7 @@
 <light_point
    color="0.3 0.3 0.1 0.1"
    in_radius="15.0"
-   out_radius="30.0"/>
+   out_radius="70.0"/>
 <name
    name="Omni102"/>
 <transform
@@ -61,7 +61,7 @@
 <light_point
    color="0.3 0.3 0.1 0.1"
    in_radius="15.0"
-   out_radius="30.0"/>
+   out_radius="70.0"/>
 <name
    name="Omni103"/>
 <transform
@@ -78,7 +78,7 @@
 <light_point
    color="0.3 0.3 0.1 0.1"
    in_radius="15.0"
-   out_radius="30.0"/>
+   out_radius="70.0"/>
 <name
    name="Omni104"/>
 <transform
@@ -95,7 +95,7 @@
 <light_point
    color="0.3 0.3 0.1 0.1"
    in_radius="15.0"
-   out_radius="30.0"/>
+   out_radius="70.0"/>
 <name
    name="Omni104"/>
 <transform
