@@ -96,6 +96,8 @@ public:
 
 		OnPutPila,
 		OnRemovePila,
+
+		OnVictory,
 	};
 
 	CLogicManagerModule();

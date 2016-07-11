@@ -325,3 +325,10 @@ function OnCinematicEnd( param )
 	p:print( "OnCinematicEnd\n")
 	CallFunction("OnCinematicEnd_"..param)
 end
+
+--Game Ending
+---------------------------------------------------
+function OnVictory( param )
+	p:print( "OnVictory\n")
+	launchVictoryState();
+end

@@ -65,6 +65,10 @@ function toggleIntroState( )
 	p:toggle_intro_state()
 end
 
+function launchVictoryState( )
+	p:launch_victory_state()
+end
+
 function specialActionSettings( action_time )
 	setCameraDistanteToTarget(1.0);
 	setCameraPositionOffset(0.0, -1.5, 0.0);

@@ -638,6 +638,10 @@ void SLBPublicFunctions::toggleIntroState() {
 	GameController->TogglePauseIntroState();
 }
 
+void SLBPublicFunctions::launchVictoryState() {
+	GameController->SetGameState(CGameController::VICTORY);
+}
+
 //test
 void SLBPublicFunctions::test(const char* to_print) {
 	//CHandle h = CHandle();
