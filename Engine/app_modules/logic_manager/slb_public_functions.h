@@ -133,6 +133,7 @@ public:
 	void characterGlobe(const char* text, float distance, float char_x, float char_y, float char_z);
 	void characterGlobeWithColor(const char* text, float distance, float char_x, float char_y, float char_z, const char* background, const char* textColor);
 	void toggleIntroState();
+	void launchVictoryState();
 
 	void test(const char* to_print);
 };

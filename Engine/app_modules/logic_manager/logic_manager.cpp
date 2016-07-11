@@ -340,6 +340,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnExplode(\"%s\");", params.c_str());
 		break;
 	}
+	case (OnVictory) : {
+		sprintf(lua_code, "OnVictory();");
+		break;
+	}
 	default: {
 		sprintf(lua_code, "dbg('The event %s does not exist!');", evt);
 	}
@@ -668,5 +672,8 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// launch intro state
 		.set("toggle_intro_state", &SLBPublicFunctions::toggleIntroState)
 		.comment("Toggles the intro game state")
+		// launch victory state
+		.set("launch_victory_state", &SLBPublicFunctions::launchVictoryState)
+		.comment("Launches the victory game state")
 		;
 }
