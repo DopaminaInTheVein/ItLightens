@@ -338,9 +338,11 @@ int bt_scientist::actionSelectWorkstation() {
 
 		float dist_to_ws = squaredDistXZ(myPos, station_pos);
 		//if the workstation is not close enough, go the the next
-		if (dist_to_ws > max_wb_distance) {
-			visited.push_back(posi);
-			continue;
+		//if (dist_to_ws > max_wb_distance) {
+		if (fabs(myPos.y - station_pos.y) > 2.0f) {
+			//visited.push_back(posi);
+			//continue
+			return KO;
 		}
 
 		ws_anim = workstation->getAnimation();
