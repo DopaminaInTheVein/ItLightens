@@ -145,6 +145,17 @@ void player_controller_mole::myUpdate()
 		Debug->DrawLine(myPos, pilaContainerPos);
 	}
 	//Debug->DrawLine(transform->getPosition(), transform->getFront(), 1.f);
+
+	if (cc->OnGround() && state == "moving") {
+		if (player_curr_speed >= player_max_speed - 0.1f)
+		{
+			SET_ANIM_MOLE(AST_RUN);
+		}
+		else
+		{
+			SET_ANIM_MOLE(AST_MOVE);
+		}
+	}
 }
 
 void player_controller_mole::UpdateInputActions() {

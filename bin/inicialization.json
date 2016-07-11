@@ -100,7 +100,7 @@
 		"destroy_wall_energy" : 10.0
 	},	
 	"controller_scientist" : {
-		"player_max_speed" : 2.5,
+		"player_max_speed" : 4.5,
 		"t_waiting" : 0.0,
 		"t_to_explode" : 5.0,
 		"t_create_beacon" : 1.0,

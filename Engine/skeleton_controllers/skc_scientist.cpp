@@ -58,6 +58,10 @@ void SkelControllerScientist::myUpdate()
 		else if (currentState == "throw") {
 			setAction("throw", "idle");
 		}
+		else if (currentState == AST_FALL) {
+			setAction("jumpland", "idle");
+			currentState = AST_IDLE;
+		}
 		else {
 			setLoop(currentState);
 		}

@@ -113,10 +113,6 @@ void SkelControllerMole::myUpdate()
 		else if (currentState == "attack") {
 			setAction("attack", "idle");
 		}
-		else if (currentState == "recharge") {
-			setAction("recharge", "idle");
-			currentState = "idle";
-		}
 		else if (currentState == AST_GRAB_UP) {
 			setAction("grab_box_up", "grab_box_idle");
 			currentState = AST_GRAB_IDLE;
@@ -147,7 +143,6 @@ void SkelControllerMole::myUpdate()
 		}
 		else if (currentState == AST_FALL) {
 			setAction("jumpland", "idle");
-			//setAction("grab_pila_2", "idle");
 			currentState = AST_IDLE;
 		}
 		else {

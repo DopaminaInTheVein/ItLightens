@@ -390,6 +390,8 @@ int bt_guard::actionUnstuckMove() {
 int bt_guard::actionStunned() {
 	PROFILE_FUNCTION("guard: actionstunned");
 	if (!myParent.isValid()) return false;
+	stuck = false;
+	stuck_time = 0.f;
 	if (timerStunt < 0) {
 		stunned = false;
 		logic_manager->throwEvent(logic_manager->OnStunnedEnd, "");

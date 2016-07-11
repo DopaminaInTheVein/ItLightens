@@ -482,6 +482,7 @@ void player_controller_cientifico::UpdateUnpossess() {
 	PROFILE_FUNCTION("player cientifico: update unposses");
 	CHandle h = CHandle(this);
 	tags_manager.removeTag(h.getOwner(), getID("player"));
+	SET_ANIM_SCIENTIST(AST_STUNNED);
 }
 
 void player_controller_cientifico::DisabledState() {
@@ -551,6 +552,23 @@ void player_controller_cientifico::myUpdate()
 	//		t_to_explode = 5.0f;
 	//	}
 	//}
+
+	if (cc->OnGround() && state == "moving") {
+		if (player_curr_speed >= player_max_speed - 0.1f)
+		{
+			SET_ANIM_SCIENTIST(AST_RUN);
+		}
+		else if (player_curr_speed <= 0.1f)
+		{
+			ChangeState("idle");
+			ChangeCommonState("idle");
+			SET_ANIM_SCIENTIST(AST_IDLE);
+		}
+		else
+		{
+			SET_ANIM_SCIENTIST(AST_MOVE);
+		}
+	}
 }
 
 void player_controller_cientifico::onCanRepairDrone(const TMsgCanRechargeDrone & msg)
@@ -576,6 +594,9 @@ void player_controller_cientifico::ChangeCommonState(std::string state) {
 	}
 	else if (state == "jumping") {
 		SET_ANIM_SCIENTIST(AST_JUMP);
+	}
+	else if (state == "falling") {
+		SET_ANIM_SCIENTIST(AST_FALL);
 	}
 	else if (state == "idle") {
 		SET_ANIM_SCIENTIST(AST_IDLE);
