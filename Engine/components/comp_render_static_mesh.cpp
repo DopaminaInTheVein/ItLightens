@@ -16,7 +16,7 @@ void TCompRenderStaticMesh::onCreate(const TMsgEntityCreated&) {
 bool TCompRenderStaticMesh::load(MKeyValue& atts) {
 	auto res_name = atts["name"];
 #ifndef NDEBUG
-	if (res_name == "static_meshes/obj/box2.static_mesh") {
+	if (res_name == "static_meshes/ms3/cable.static_mesh") {
 		dbg("Cargando malla buscada...\n");
 	}
 #endif

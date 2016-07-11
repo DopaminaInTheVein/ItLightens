@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ms3/valla_arriba_1.mesh" material="materials/test_gray.material" mesh_idx="0"/>
+</static_mesh>

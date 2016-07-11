@@ -1,29 +1,79 @@
 <entities>
-<entity>
-<tags/>
+<entity
+   id="300">
+<tags
+   tags="doorExit door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-82.841 4.37253 -29.8566"
+   pol="neutral"/>
 <name
-   name="nivel"/>
+   name="__Door"/>
 <transform
-   pos="-110.521 0 -20.1342"
+   pos="-82.841 0.575238 -29.8566"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/nivel.static_mesh"/>
+   name="static_meshes/ms3/__Door.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
 <tags/>
 <name
-   name="escritorio"/>
+   name="__Door___opened_pos"/>
 <transform
-   pos="-79.7448 -1.28692 -5.76586"
+   pos="-82.841 4.37253 -29.8566"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags
+   tags="platform pila interactive"/>
+<pila/>
+<bone_tracker/>
+<name
+   name="__pila"/>
+<transform
+   pos="-121.537 -0.242203 -5.41684"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/escritorio.static_mesh"/>
+   name="static_meshes/ms3/__pila.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"
+   kinematic="yes"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="alarma_mapeada"/>
+<transform
+   pos="-93.4887 0.0968893 -4.23804"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/alarma_mapeada.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -34,13 +84,30 @@
 <entity>
 <tags/>
 <name
-   name="escritorio_2"/>
+   name="andamio_usable"/>
 <transform
-   pos="-79.6134 -1.289 -9.9957"
+   pos="-20.9689 -16.4851 2.39012"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/escritorio_2.static_mesh"/>
+   name="static_meshes/ms3/andamio_usable.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="antenitas_cargador"/>
+<transform
+   pos="-90.8368 -0.419937 14.4301"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/antenitas_cargador.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -51,13 +118,13 @@
 <entity>
 <tags/>
 <name
-   name="escritorio_1"/>
+   name="arbol_arriba_1"/>
 <transform
-   pos="-84.0394 -1.29169 -5.7843"
+   pos="-74.4543 0.655554 -5.66782"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/escritorio_1.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -68,18 +135,154 @@
 <entity>
 <tags/>
 <name
-   name="bookcase_door2_LP"/>
+   name="arbol_arriba_2"/>
 <transform
-   pos="-82.9261 -0.540968 -3.91317"
+   pos="-68.8567 0.674109 18.9647"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/bookcase_door2_LP.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
 <room
    name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_3"/>
+<transform
+   pos="-89.6447 0.702673 5.77587"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/arbol_arriba_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_5"/>
+<transform
+   pos="-80.2451 0.61649 -28.6096"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/arbol_arriba_5.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_6"/>
+<transform
+   pos="-85.6904 0.61649 -28.7055"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/arbol_arriba_6.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_derecho"/>
+<transform
+   pos="10.2064 -9.89572 -24.5997"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/arboles_balcon_cuadrado_derecho.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_izquierdo_abajo"/>
+<transform
+   pos="11.0636 -9.72945 24.6214"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/arboles_balcon_cuadrado_izquierdo_abajo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_decorativo"/>
+<transform
+   pos="9.87597 3.14677 24.6222"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/arboles_balcon_decorativo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_grande"/>
+<transform
+   pos="-40.6128 0.725866 -0.804768"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/arboles_balcon_redondo_grande.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_izquierdo"/>
+<transform
+   pos="-17.6526 -0.368005 24.5795"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/arboles_balcon_redondo_izquierdo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
 
 </entity>
 <entity>
@@ -102,18 +305,35 @@
 <entity>
 <tags/>
 <name
-   name="sillas"/>
+   name="balcon_decorativo_arboles"/>
 <transform
-   pos="-80.2125 -1.2868 -4.69843"
+   pos="-13.2767 -0.845668 -24.5244"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/sillas.static_mesh"/>
+   name="static_meshes/ms3/balcon_decorativo_arboles.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
 <room
-   name="2"/>
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_redondo"/>
+<transform
+   pos="-34.6137 -2.2547 -0.896849"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/balcon_redondo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
 
 </entity>
 <entity>
@@ -136,6 +356,176 @@
 <entity>
 <tags/>
 <name
+   name="balcon_redondo_pequeno001"/>
+<transform
+   pos="10.0144 0.53369 22.5109"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/balcon_redondo_pequeno001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bandejas_mapeadas"/>
+<transform
+   pos="-77.1706 7.79687 15.6181"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/bandejas_mapeadas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="banner"/>
+<transform
+   pos="-41.1588 -1.47866 0.273315"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/banner.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla_mapeaaado"/>
+<transform
+   pos="-89.2474 -0.82739 -9.23426"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla_mapeaaado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla4"/>
+<transform
+   pos="-66.8816 16.2484 18.6188"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla4.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla005"/>
+<transform
+   pos="-67.671 16.2484 16.9526"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla005.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla006"/>
+<transform
+   pos="-64.6155 16.2722 14.3309"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla006.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla007"/>
+<transform
+   pos="-66.2139 16.2722 13.8865"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla007.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla008"/>
+<transform
+   pos="-63.8707 16.2722 15.6266"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla008.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandillas2"/>
+<transform
+   pos="-86.6447 -0.842288 4.75572"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandillas2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="barrotes_balcon_arriba"/>
 <transform
    pos="-34.9403 -0.685649 -1.29331"
@@ -153,9 +543,26 @@
 <entity>
 <tags/>
 <name
+   name="barrotes_balcon_arriba_adorno"/>
+<transform
+   pos="-14.9018 -2.2353 -23.5313"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barrotes_balcon_arriba_adorno.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="barrotes_balcon_cuadrado_derecho"/>
 <transform
-   pos="10.2572 -11.1267 -22.4221"
+   pos="10.2572 -11.2681 -22.4221"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -172,7 +579,7 @@
 <name
    name="barrotes_balcon_cuadrado_izquierdo"/>
 <transform
-   pos="10.3146 -11.1267 22.1279"
+   pos="7.54811 -17.4135 3.79728"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -204,9 +611,521 @@
 <entity>
 <tags/>
 <name
+   name="biombo_mapeado_arriba"/>
+<transform
+   pos="-63.9873 16.6386 8.90742"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/biombo_mapeado_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="biombo_mapeadoabajo"/>
+<transform
+   pos="-76.7653 8.29892 15.5208"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/biombo_mapeadoabajo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bookcase_door2_LP"/>
+<transform
+   pos="-82.9261 -0.540968 -3.91781"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/bookcase_door2_LP.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bookcase_door2_LP002"/>
+<transform
+   pos="-80.4115 -0.391431 8.25591"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/bookcase_door2_LP002.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bookcaseLP002"/>
+<transform
+   pos="-105.471 -0.679752 -7.85363"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/bookcaseLP002.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bookshelf_2_deformed"/>
+<transform
+   pos="-97.1786 8.28088 1.70162"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/bookshelf_2_deformed.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bote_mediano"/>
+<transform
+   pos="15.3595 -23.8362 -6.36514"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/bote_mediano.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bote_pequeno"/>
+<transform
+   pos="15.3386 -23.8946 -6.61795"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/bote_pequeno.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="botegrande"/>
+<transform
+   pos="11.3318 -23.7532 -18.9539"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/botegrande.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags
+   tags="interactive"/>
+<name
+   name="cable"/>
+<transform
+   pos="-84.651 3.81581 -8.19577"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cable.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags
+   tags="interactive"/>
+<name
+   name="cable_arriba"/>
+<transform
+   pos="-69.5244 16.6723 16.5945"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cable_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cables_cacharro_labo_arriba"/>
+<transform
+   pos="-65.5341 19.0529 15.569"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cables_cacharro_labo_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cables_cargador"/>
+<transform
+   pos="-90.8881 1.57642 13.6707"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cables_cargador.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cacharro_cientificomapeadoabajo"/>
+<transform
+   pos="-94.6248 -0.308192 18.1998"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cacharro_cientificomapeadoabajo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cacharro_cientificomapeadoarriba"/>
+<transform
+   pos="-62.2043 16.7526 13.8225"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cacharro_cientificomapeadoarriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="caja_de_herramientas"/>
+<transform
+   pos="-62.8277 16.6607 14.3358"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/caja_de_herramientas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="caja_de_herramientasabajo"/>
+<transform
+   pos="-93.8549 -0.395488 18.4124"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/caja_de_herramientasabajo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cajas_de_herramientas_ms1"/>
+<transform
+   pos="-4.54254 -20.144 -6.03417"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cajas_de_herramientas_ms1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camara_centro_mapeado001"/>
+<transform
+   pos="-104.03 5.91496 -10.2432"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/camara_centro_mapeado001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camara_derecha_mapeado002"/>
+<transform
+   pos="-100.815 5.92014 -16.9572"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/camara_derecha_mapeado002.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camara_izquierda_mapeado"/>
+<transform
+   pos="-99.6426 6.31101 -4.11235"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/camara_izquierda_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camilla_mapeada_arriba"/>
+<transform
+   pos="-66.4265 16.3576 9.58373"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/camilla_mapeada_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="camilla_mapeo"/>
+<transform
+   pos="-88.2322 -0.815452 20.9401"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/camilla_mapeo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cartel_puerta003"/>
+<transform
+   pos="-74.1957 10.0844 -2.17441"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cartel_puerta003.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cascote"/>
+<transform
+   pos="-7.03263 -23.6552 -9.46919"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cascote.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="coluimnas_balcon_superior"/>
+<transform
+   pos="-8.40997 2.82897 -24.4516"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/coluimnas_balcon_superior.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columna_rota_003"/>
+<transform
+   pos="-16.1181 -23.1474 -12.2797"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/columna_rota_003.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columna_rota_abajo2"/>
+<transform
+   pos="-8.75711 -20.5012 -4.0787"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/columna_rota_abajo2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columna_rota001"/>
+<transform
+   pos="-37.0865 -20.7983 -18.2052"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/columna_rota001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columna_rota002"/>
+<transform
+   pos="-27.0482 -18.3084 -15.3785"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/columna_rota002.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="columnas_abajo"/>
 <transform
-   pos="0.398693 -18.8261 -0.14746"
+   pos="-2.48191 -18.3519 -0.0327999"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -240,7 +1159,7 @@
 <name
    name="columnas_balcon_izquierdo_cuadrado"/>
 <transform
-   pos="9.86432 -18.0684 21.8096"
+   pos="9.86432 -18.0684 21.8095"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -255,13 +1174,13 @@
 <entity>
 <tags/>
 <name
-   name="lamparas_derecha"/>
+   name="columnas_caida"/>
 <transform
-   pos="21.0467 -18.9816 24.4611"
+   pos="-35.5131 -23.5615 10.0076"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/lamparas_derecha.static_mesh"/>
+   name="static_meshes/ms3/columnas_caida.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -272,13 +1191,594 @@
 <entity>
 <tags/>
 <name
-   name="turbina_"/>
+   name="columnas_rota"/>
 <transform
-   pos="-22.5016 -23.6427 13.8224"
+   pos="-20.4778 -9.95706 -3.94824"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/turbina_.static_mesh"/>
+   name="static_meshes/ms3/columnas_rota.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel"/>
+<transform
+   pos="-7.03202 -22.6676 9.66177"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/control_panel.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel_var1"/>
+<transform
+   pos="13.199 -23.2558 -23.7632"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/control_panel_var1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cubo"/>
+<transform
+   pos="-5.57598 -20.2973 2.07459"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cubo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cubo_de_pintura_grande"/>
+<transform
+   pos="-7.20531 -20.2553 -7.44415"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cubo_de_pintura_grande.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cubo_mapeado_verdad"/>
+<transform
+   pos="-122.901 -1.02655 -11.1265"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cubo_mapeado_verdad.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cubo_mapeado_verdad001"/>
+<transform
+   pos="-82.445 -1.02655 -17.8484"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cubo_mapeado_verdad001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="desk_2"/>
+<transform
+   pos="-79.5588 -0.870112 -9.93335"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/desk_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="desk_3"/>
+<transform
+   pos="-84.1083 -0.85107 -5.87314"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/desk_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="destornilladores"/>
+<transform
+   pos="-73.6602 18.9851 4.8912"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/destornilladores.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="elemento_central_labos"/>
+<transform
+   pos="-65.4955 18.0716 15.6155"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/elemento_central_labos.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="elevator"/>
+<transform
+   pos="-65.3498 15.808 20.8289"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/elevator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="box"
+   size="4.6299 0.15 3.25725"
+   mass="5"
+   kinematic="yes"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="__pos_elevator_down"/>
+<transform
+   pos="-65.3498 -1.27052 20.8289"
+   quat="0 0 0 1.0"
+   scale="0.547495"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="elevator_door_frame"/>
+<transform
+   pos="-65.3498 0.427601 19.3601"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/elevator_door_frame.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="elevator_door_frame001"/>
+<transform
+   pos="-65.3918 17.4351 19.4009"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/elevator_door_frame001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="elevator_door_frame002"/>
+<transform
+   pos="-86.6891 0.897755 6.51269"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/elevator_door_frame002.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   id="304">
+<tags
+   tags="pila_container interactive"/>
+<pila_container/>
+<name
+   name="enchufe_mapeado"/>
+<transform
+   pos="-121.537 0.0748136 -5.41684"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/enchufe_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="escombro_2"/>
+<transform
+   pos="-17.2605 -23.4682 -7.30235"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/escombro_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="escritorio"/>
+<transform
+   pos="-79.6289 -0.826788 -5.10955"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/escritorio.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="estanteria"/>
+<transform
+   pos="-86.3541 0.529439 1.71997"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/estanteria.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="extintor_mapeado"/>
+<transform
+   pos="-93.0386 8.8715 -3.41037"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/extintor_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="farolillos"/>
+<transform
+   pos="-2.57341 -8.5371 -0.0198628"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/farolillos.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="fotocopiadora_mapeado"/>
+<transform
+   pos="-80.5402 -0.71 -5.6907"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/fotocopiadora_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="fregona_mapeada"/>
+<transform
+   pos="-82.026 -0.756625 -18.0357"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/fregona_mapeada.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="fregona_mapeada001"/>
+<transform
+   pos="-122.438 -0.728329 -11.3056"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/fregona_mapeada001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="fuente_agua_mapeada"/>
+<transform
+   pos="-77.9224 8.25228 -3.39425"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/fuente_agua_mapeada.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="hierro001"/>
+<transform
+   pos="-9.60305 2.84581 -0.725681"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/hierro001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="laboratorio_arriba"/>
+<transform
+   pos="-65.7799 19.2312 12.4431"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/laboratorio_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="lampara001"/>
+<transform
+   pos="-9.70243 -4.14077 -0.378581"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/lampara001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="libro_mapeado"/>
+<transform
+   pos="-78.9682 8.55917 4.67176"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/libro_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="maquina_1"/>
+<transform
+   pos="-72.0698 -0.399615 13.5715"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/maquina_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="maquina_2"/>
+<transform
+   pos="-72.0668 -0.399615 15.02"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/maquina_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="maquina_3"/>
+<transform
+   pos="-81.8748 -0.398456 5.74212"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/maquina_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="maquina_004"/>
+<transform
+   pos="-93.4638 -0.399615 -0.808108"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/maquina_004.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="maquinas_abajo"/>
+<transform
+   pos="-5.8235 -22.9851 1.74293"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/maquinas_abajo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -306,9 +1806,43 @@
 <entity>
 <tags/>
 <name
+   name="marco_balcon_pequeno_arriba"/>
+<transform
+   pos="-17.6757 -0.643757 25.1383"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/marco_balcon_pequeno_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="marco_balcon_pequeno_arriba001"/>
+<transform
+   pos="10.1155 2.71592 25.1383"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/marco_balcon_pequeno_arriba001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="marco_balcon_superior_redondo"/>
 <transform
-   pos="-41.4063 0.865537 -0.812689"
+   pos="-41.4063 0.865544 -0.812665"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -323,9 +1857,43 @@
 <entity>
 <tags/>
 <name
+   name="marco_balcon_superior_redondo001"/>
+<transform
+   pos="-23.4396 -0.557641 -24.9885"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/marco_balcon_superior_redondo001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="marco_balcon_superior_redondo002"/>
+<transform
+   pos="-1.38001 -0.557641 -24.9885"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/marco_balcon_superior_redondo002.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="marco_puerta_abajo"/>
 <transform
-   pos="41.4452 -21.2451 -0.31903"
+   pos="36.3521 -21.2451 -0.319006"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -342,7 +1910,7 @@
 <name
    name="marco_puerta_balcon_cuadrado_drecho"/>
 <transform
-   pos="10.2649 -10.1247 -25.199"
+   pos="10.2649 -10.265 -25.1991"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -352,6 +1920,391 @@
    type_collision="static"/>
 <room
    name="1"/>
+
+</entity>
+<entity>
+<tags
+   tags="workbench interactive"/>
+<workbench/>
+<name
+   name="mesa_cientifico_up_mapeado"/>
+<transform
+   pos="-63.6833 18.5947 13.4627"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/mesa_cientifico_up_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags
+   tags="workbench interactive"/>
+<workbench/>
+<name
+   name="mesa_cientifico_up_mapeado001"/>
+<transform
+   pos="-93.8211 1.51317 19.4723"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/mesa_cientifico_up_mapeado001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="mesita"/>
+<transform
+   pos="-70.4773 -0.992488 17.9763"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/mesita.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="montanha_de_escombro"/>
+<transform
+   pos="3.5541 -21.3218 -6.78418"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/montanha_de_escombro.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="montanha_escombro_map"/>
+<transform
+   pos="-27.2267 -21.9344 16.8093"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/montanha_escombro_map.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="montanha_escombros_mapeada"/>
+<transform
+   pos="20.4325 -21.4157 11.7074"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/montanha_escombros_mapeada.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="nivel_ms2"/>
+<transform
+   pos="-2.6115 -6.89124 0.152153"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/nivel_ms2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="nivel001"/>
+<transform
+   pos="-2.6115 -6.89124 0.152153"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/nivel001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.2"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni023"/>
+<transform
+   pos="-9.26134 -3.17584 -1.27001"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.2"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni024"/>
+<transform
+   pos="-4.71288 -6.58136 0.921652"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.2"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni025"/>
+<transform
+   pos="-6.61168 -6.48627 -5.32213"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.2"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni026"/>
+<transform
+   pos="-12.9618 -6.48627 -4.85997"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.2"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni027"/>
+<transform
+   pos="-14.7108 -6.48627 -0.0966661"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.2"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni028"/>
+<transform
+   pos="-10.0603 -6.31574 4.37965"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.2"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni029"/>
+<transform
+   pos="0.452164 -18.5472 24.2437"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.2"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni030"/>
+<transform
+   pos="0.189438 -18.5472 -24.2676"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.694118 0.560784 0.415686 0.2"
+   in_radius="7.0"
+   out_radius="55.0"/>
+<name
+   name="Omni031"/>
+<transform
+   pos="27.032 -18.5472 -1.55589"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="panel_mapeado"/>
+<transform
+   pos="-85.7992 8.65631 -0.144349"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/panel_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="panel_seguridad_mapeado"/>
+<transform
+   pos="-65.6593 -0.056076 -0.0373535"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/panel_seguridad_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="panel_seguridad_mapeado003"/>
+<transform
+   pos="-68.3378 16.9222 10.642"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/panel_seguridad_mapeado003.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="panel_seguridad_mapeado004"/>
+<transform
+   pos="-67.0488 16.9718 19.6735"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/panel_seguridad_mapeado004.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pantallas"/>
+<transform
+   pos="-63.4117 17.0046 12.322"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pantallas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pantallas001"/>
+<transform
+   pos="-94.8226 -0.0789329 20.0649"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pantallas001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="papelera_mapeada"/>
+<transform
+   pos="-84.1967 7.628 11.5601"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/papelera_mapeada.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>
@@ -376,11 +2329,96 @@
 <name
    name="pared_balcon_redondo_arriba"/>
 <transform
-   pos="-17.6971 -0.765731 25.3438"
+   pos="-17.6971 -0.765727 25.3438"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/pared_balcon_redondo_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pared_balcon_redondo_arriba001"/>
+<transform
+   pos="-2.38253 -22.3579 0.0879941"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pared_balcon_redondo_arriba001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pared_balcon_redondo_arriba002"/>
+<transform
+   pos="10.0867 2.65664 25.3438"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pared_balcon_redondo_arriba002.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pared_derruida_2"/>
+<transform
+   pos="8.62358 -21.5653 9.96606"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pared_derruida_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pared_derruida_3"/>
+<transform
+   pos="-23.927 -21.0205 4.47159"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pared_derruida_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pared_rota"/>
+<transform
+   pos="15.9914 -21.7099 -5.63918"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pared_rota.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -410,7 +2448,7 @@
 <name
    name="paredes_balcon_redondo_grande"/>
 <transform
-   pos="-41.2528 0.235966 -0.731469"
+   pos="-41.2528 0.235969 -0.807577"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -425,13 +2463,79 @@
 <entity>
 <tags/>
 <name
-   name="pibote_balcon_derecho _cuadrado"/>
+   name="paredes_milestone_3"/>
 <transform
-   pos="10.2559 -11.1743 -22.47"
+   pos="-83.1094 9.10116 -9.22597"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/pibote_balcon_derecho _cuadrado.static_mesh"/>
+   name="static_meshes/ms3/paredes_milestone_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="paredes_nivel_bajo001"/>
+<transform
+   pos="-14.8507 -1.03338 -25.0323"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/paredes_nivel_bajo001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="paredes_nivel_bajo002"/>
+<transform
+   pos="-10.3488 -21.4888 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/paredes_nivel_bajo002.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pibotes_abajo_no_esquineros"/>
+<transform
+   pos="10.315 -11.2074 22.1815"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pibotes_abajo_no_esquineros.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pibotes_balcon_adorno"/>
+<transform
+   pos="-14.9066 -2.28227 -23.5892"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pibotes_balcon_adorno.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -461,7 +2565,7 @@
 <name
    name="pibotes_balcon_cuadrado-izquierdo"/>
 <transform
-   pos="10.3159 -11.1743 22.1758"
+   pos="10.3159 -17.3309 20.6669"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -476,9 +2580,26 @@
 <entity>
 <tags/>
 <name
+   name="pibotes_balcon_cuadrado-izquierdo001"/>
+<transform
+   pos="-14.9224 -2.282 -22.1096"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pibotes_balcon_cuadrado-izquierdo001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="pibotes_balcon_pequeno-arribo"/>
 <transform
-   pos="-17.7122 -1.72557 21.519"
+   pos="-17.7122 -1.72558 21.519"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -493,6 +2614,125 @@
 <entity>
 <tags/>
 <name
+   name="pibotes_esquineros_2"/>
+<transform
+   pos="10.2559 -11.3128 -22.47"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pibotes_esquineros_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pipetas"/>
+<transform
+   pos="-69.4621 16.9465 16.0049"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pipetas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pirulos_cargador_bateria_mapeado"/>
+<transform
+   pos="-92.4057 0.473134 13.6057"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pirulos_cargador_bateria_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pirulos_cargador_bateria_mapeado001"/>
+<transform
+   pos="-89.3156 0.473134 13.6057"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pirulos_cargador_bateria_mapeado001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pizarra"/>
+<transform
+   pos="-84.622 -0.416829 3.58546"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pizarra.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="plafoncitos"/>
+<transform
+   pos="-93.4477 10.3579 0.739616"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/plafoncitos.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="plafones"/>
+<transform
+   pos="-81.8853 12.4216 -4.80314"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/plafones.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="plataforma_balcon_cuadrado_izquierdo"/>
 <transform
    pos="10.1696 -11.9814 21.9434"
@@ -500,6 +2740,23 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/plataforma_balcon_cuadrado_izquierdo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="plataforma_balcon_cuadrado_izquierdo001"/>
+<transform
+   pos="-15.0113 -3.08759 -23.495"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/plataforma_balcon_cuadrado_izquierdo001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -527,213 +2784,9 @@
 <entity>
 <tags/>
 <name
-   name="puerta_balcon_cuadrado_derecho"/>
-<transform
-   pos="10.2818 -10.2875 -25.1451"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/puerta_balcon_cuadrado_derecho.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="puerta_balcon_redondo_pequeno"/>
-<transform
-   pos="-17.6925 -0.806533 25.0843"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/puerta_balcon_redondo_pequeno.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="puerta_principal"/>
-<transform
-   pos="16.7028 -10.7132 -31.873"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/puerta_principal.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pared_balcon_redondo_arriba001"/>
-<transform
-   pos="41.411 -18.7358 -0.995483"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pared_balcon_redondo_arriba001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="soportes"/>
-<transform
-   pos="-17.8704 -10.7523 22.8559"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/soportes.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="techo_y_lampara"/>
-<transform
-   pos="0.134621 -4.57108 -0.216535"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/techo_y_lampara.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pared_derruida_3"/>
-<transform
-   pos="-15.3523 -23.9115 -16.9733"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pared_derruida_3.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columnas_rota"/>
-<transform
-   pos="-15.3523 -23.9115 -16.9733"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/columnas_rota.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="trozos_columnas_rotas"/>
-<transform
-   pos="-15.3523 -23.9115 -16.9733"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozos_columnas_rotas.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="montanha_de_escombro"/>
-<transform
-   pos="-15.3523 -23.9115 -16.9733"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/montanha_de_escombro.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cascote"/>
-<transform
-   pos="0.130459 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cascote.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="escombro_2"/>
-<transform
-   pos="-24.2628 0 5.30431"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/escombro_2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="plataforma_rota"/>
 <transform
-   pos="0.130459 0 0"
+   pos="-14.564 -23.7587 -6.18174"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -745,276 +2798,185 @@
    name="1"/>
 
 </entity>
-<entity>
-<tags/>
+<entity
+   id="306">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-66.748 -0.2036 19.6751"
+   pol="neutral"/>
 <name
-   name="trozo_plataforma_1"/>
+   name="puerta_Ascensor_derecha"/>
 <transform
-   pos="0.130459 0 0"
+   pos="-66.01 -0.2036 19.6751"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/trozo_plataforma_1.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_derecha.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
 <room
-   name="1"/>
+   name="2"/>
 
 </entity>
 <entity>
 <tags/>
 <name
-   name="trozo_plataforma_2"/>
+   name="puerta_Ascensor_derecha___opened_pos001"/>
 <transform
-   pos="0.130459 0 0"
+   pos="-66.748 -0.2036 19.6751"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   id="308">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="no"
+   speedOpening="1"
+   target="-66.0781 16.8798 19.739"
+   pol="neutral"/>
+<name
+   name="puerta_Ascensor_derecha_arriba"/>
+<transform
+   pos="-66.8968 16.8798 19.739"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/trozo_plataforma_2.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_derecha_arriba.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
 <room
-   name="1"/>
+   name="2"/>
 
 </entity>
 <entity>
 <tags/>
 <name
-   name="pared_derruida_2"/>
+   name="puerta_Ascensor_derecha_arriba___opened_pos002"/>
 <transform
-   pos="-5.08366 0 -30.2709"
+   pos="-66.0781 16.8798 19.739"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   id="305">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-64.0595 -0.2036 19.6751"
+   pol="neutral"/>
+<name
+   name="puerta_Ascensor_izquierda"/>
+<transform
+   pos="-64.7107 -0.2036 19.6751"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/pared_derruida_2.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_izquierda.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
 <room
-   name="1"/>
+   name="2"/>
 
 </entity>
 <entity>
 <tags/>
 <name
-   name="tabla_arriba"/>
+   name="puerta_Ascensor_izquierda___opened_pos003"/>
 <transform
-   pos="-12.9994 0 2.06017"
+   pos="-64.0595 -0.2036 19.6751"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   id="307">
+<tags
+   tags="door"/>
+<magnet_door
+   locked="no"
+   speedOpening="1"
+   target="-64.7441 16.8798 19.724"
+   pol="neutral"/>
+<name
+   name="puerta_Ascensor_izquierda_arriba"/>
+<transform
+   pos="-63.9488 16.8798 19.724"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/tabla_arriba.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_izquierda_arriba.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
 <room
-   name="1"/>
+   name="2"/>
 
 </entity>
 <entity>
 <tags/>
 <name
-   name="control_panel"/>
+   name="puerta_Ascensor_izquierda_arriba___opened_pos004"/>
 <transform
-   pos="21.6793 -23.9999 5.65632"
-   quat="0 0 0 1.0"
+   pos="-64.7441 16.8798 19.724"
+   quat="0.708405 0 0 0.705806"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/control_panel.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
 <room
-   name="1"/>
+   name="2"/>
 
 </entity>
 <entity>
 <tags/>
 <name
-   name="control_panel_var1"/>
+   name="puerta_cerrada_mapeada"/>
 <transform
-   pos="21.8305 -23.9999 -6.69264"
+   pos="-68.361 8.53101 -2.83843"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/control_panel_var1.static_mesh"/>
+   name="static_meshes/ms3/puerta_cerrada_mapeada.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
 <room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="maquinas_abajo"/>
-<transform
-   pos="22.3139 -23.9999 -5.77681"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/maquinas_abajo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="tuberia"/>
-<transform
-   pos="0.130459 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/tuberia.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="tuberia_turbina"/>
-<transform
-   pos="0.130459 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/tuberia_turbina.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="andamio_usable"/>
-<transform
-   pos="0.130459 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/andamio_usable.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="marco_balcon_pequeno_arriba"/>
-<transform
-   pos="-17.6757 -0.643752 25.1382"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/marco_balcon_pequeno_arriba.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cubo"/>
-<transform
-   pos="12.2411 -23.5866 -0.177153"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cubo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="botegrande"/>
-<transform
-   pos="12.2411 -23.5866 -0.177153"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/botegrande.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cubo_de_pintura_grande"/>
-<transform
-   pos="12.2411 -23.5866 -0.177153"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cubo_de_pintura_grande.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="bote_pequeno"/>
-<transform
-   pos="13.8287 -24.0236 -6.61795"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/bote_pequeno.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="bote_mediano"/>
-<transform
-   pos="14.2439 -24.0313 -6.36514"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/bote_mediano.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
+   name="2"/>
 
 </entity>
 <entity>
@@ -1022,7 +2984,7 @@
 <name
    name="puerta_gigante"/>
 <transform
-   pos="-40.3362 -22.2308 -3.07953"
+   pos="-40.0767 -19.9395 1.02137"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -1037,13 +2999,30 @@
 <entity>
 <tags/>
 <name
-   name="pared_rota"/>
+   name="puerta_taquilla"/>
 <transform
-   pos="-5.08366 0 -30.2709"
+   pos="-120.853 -1.30951 -12.7256"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/pared_rota.static_mesh"/>
+   name="static_meshes/ms3/puerta_taquilla.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="puertas"/>
+<transform
+   pos="-3.16453 -9.98238 -1.98327"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/puertas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -1054,13 +3033,13 @@
 <entity>
 <tags/>
 <name
-   name="suelo_nivel_1"/>
+   name="puertas"/>
 <transform
-   pos="-2.49196 -24.02 -0.118451"
+   pos="-5.07216 -22.8179 -0.727479"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/suelo_nivel_1.static_mesh"/>
+   name="static_meshes/ms3/puertas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -1071,1282 +3050,13 @@
 <entity>
 <tags/>
 <name
-   name="cajas_de_herramientas"/>
+   name="puertas_ascensor_abajoi_derecha"/>
 <transform
-   pos="-87.6997 4.71603 42.2839"
+   pos="-67.2186 0.322646 19.4268"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/cajas_de_herramientas.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="destornilladores"/>
-<transform
-   pos="-73.6602 18.9851 4.8912"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/destornilladores.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columnas_caida"/>
-<transform
-   pos="-15.3523 -23.9115 -16.9733"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/columnas_caida.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pibotes_abajo_no_esquineros"/>
-<transform
-   pos="10.3159 -11.1743 22.1758"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pibotes_abajo_no_esquineros.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pibotes_esquineros_2"/>
-<transform
-   pos="10.2559 -11.1743 -22.47"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pibotes_esquineros_2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="banners"/>
-<transform
-   pos="-41.456 5.04152 15.4184"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/banners.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="plataforma_balcon_cuadrado_izquierdo001"/>
-<transform
-   pos="-15.2158 -2.59128 -24.8024"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/plataforma_balcon_cuadrado_izquierdo001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pibotes_balcon_cuadrado-izquierdo001"/>
-<transform
-   pos="-0.451664 -2.24886 -21.5112"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pibotes_balcon_cuadrado-izquierdo001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pibotes_balcon_adorno"/>
-<transform
-   pos="5.07313 -2.28255 -22.0947"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pibotes_balcon_adorno.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="barrotes_balcon_arriba_adorno"/>
-<transform
-   pos="4.2751 -2.23531 -22.1088"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/barrotes_balcon_arriba_adorno.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="paredes_nivel_bajo001"/>
-<transform
-   pos="-14.7969 -8.5372 1.02887"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/paredes_nivel_bajo001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="marco_balcon_superior_redondo001"/>
-<transform
-   pos="-23.4395 -0.557649 -24.9885"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/marco_balcon_superior_redondo001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="marco_balcon_superior_redondo002"/>
-<transform
-   pos="-1.37998 -0.557649 -24.9885"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/marco_balcon_superior_redondo002.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="paredes_nivel_bajo002"/>
-<transform
-   pos="-10.4599 -21.4888 -25.0323"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/paredes_nivel_bajo002.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="coluimnas_balcon_superior"/>
-<transform
-   pos="-8.73322 2.82897 -24.475"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/coluimnas_balcon_superior.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columna_rota002"/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/columna_rota002.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columna_rota_003"/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/columna_rota_003.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columna_rota001"/>
-<transform
-   pos="-37.0865 -20.7983 -18.2052"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/columna_rota001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="balcon_redondo"/>
-<transform
-   pos="-34.6137 -2.2547 -0.896849"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/balcon_redondo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="balcon_redondo_pequeno001"/>
-<transform
-   pos="10.0144 0.533692 22.5109"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/balcon_redondo_pequeno001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pared_balcon_redondo_arriba002"/>
-<transform
-   pos="10.094 2.65663 25.3438"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pared_balcon_redondo_arriba002.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="marco_balcon_pequeno_arriba001"/>
-<transform
-   pos="10.1155 2.71593 25.1382"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/marco_balcon_pequeno_arriba001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="puerta_balcon_redondo_pequeno001"/>
-<transform
-   pos="10.0987 2.55315 25.0843"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/puerta_balcon_redondo_pequeno001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="laboratorio_arriba"/>
-<transform
-   pos="-65.604 15.8037 15.5134"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/laboratorio_arriba.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="extintor"/>
-<transform
-   pos="-67.6755 18.7784 19.3041"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/extintor.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="rejilla_de_ventilacion"/>
-<transform
-   pos="-75.129 16.8279 19.4169"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/rejilla_de_ventilacion.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="rejilla_grande"/>
-<transform
-   pos="-68.4537 18.8142 16.6043"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/rejilla_grande.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pipetas"/>
-<transform
-   pos="-69.4621 16.9465 16.0049"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pipetas.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="caja_de_herramientas"/>
-<transform
-   pos="-68.1863 17.2534 18.1981"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/caja_de_herramientas.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="libro"/>
-<transform
-   pos="-67.9783 17.2219 17.6614"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/libro.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags
-   tags="workbench interactive"/>
-<workbench/>
-<name
-   name="mesa_cientifico"/>
-<transform
-   pos="-93.7459 -0.884286 19.7479"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/mesa_cientifico.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="teclado"/>
-<transform
-   pos="-68.8721 16.9309 16.5678"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/teclado.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cosa_de_cientifico"/>
-<transform
-   pos="-68.2417 16.9884 17.1086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cosa_de_cientifico.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="vitrina"/>
-<transform
-   pos="-68.2718 17.3215 17.2144"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/vitrina.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pantallas"/>
-<transform
-   pos="-68.7266 17.5022 16.4948"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pantallas.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="ventilador"/>
-<transform
-   pos="-76.8743 14.206 4.90643"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/ventilador.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="alarma"/>
-<transform
-   pos="-67.2547 17.6254 18.7389"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/alarma.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="biombo"/>
-<transform
-   pos="-69.3908 17.2218 12.5266"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/biombo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camilla"/>
-<transform
-   pos="-71.1101 16.8697 12.795"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camilla.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="techo"/>
-<transform
-   pos="-65.6567 15.8368 15.4622"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/techo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="puerta"/>
-<transform
-   pos="-73.894 17.4633 16.8862"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/puerta.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="papelera"/>
-<transform
-   pos="-65.7097 16.3417 27.1988"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/papelera.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="panel"/>
-<transform
-   pos="-72.6722 8.69011 1.9557"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/panel.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="fuenteagua"/>
-<transform
-   pos="-67.531 17.3056 20.2309"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/fuenteagua.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="bandejas"/>
-<transform
-   pos="-69.8995 16.8535 13.3485"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/bandejas.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="elemento_central_labos"/>
-<transform
-   pos="-65.4403 17.848 15.7443"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/elemento_central_labos.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="plafones"/>
-<transform
-   pos="-73.0147 18.9882 18.6652"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/plafones.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cables_cacharro_labo_arriba"/>
-<transform
-   pos="-65.5933 18.5873 14.2603"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cables_cacharro_labo_arriba.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="fotocopiadora"/>
-<transform
-   pos="-74.5125 -0.765186 6.41702"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/fotocopiadora.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="paredes_milestone_3"/>
-<transform
-   pos="-97.2604 -0.600098 -16.655"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/paredes_milestone_3.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cartel_puerta003"/>
-<transform
-   pos="-77.3177 1.4952 6.83198"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cartel_puerta003.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cubo_fregona"/>
-<transform
-   pos="-82.3433 -1.30278 -17.8813"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cubo_fregona.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="fregona"/>
-<transform
-   pos="-82.1948 -1.30278 -17.3238"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/fregona.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="expendedoras_1"/>
-<transform
-   pos="-71.7316 -0.379266 16.2031"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/expendedoras_1.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="taquilla"/>
-<transform
-   pos="-74.1225 0.102785 2.42957"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/taquilla.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="estanteria"/>
-<transform
-   pos="-77.8908 -1.15216 8.35908"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/estanteria.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="bookcase_door2_LP002"/>
-<transform
-   pos="-79.5026 -0.391431 8.37726"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/bookcase_door2_LP002.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pirulos_cargador_bateria"/>
-<transform
-   pos="-91.7531 -0.888125 13.893"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pirulos_cargador_bateria.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cables_cargador"/>
-<transform
-   pos="-90.3979 2.73833 12.2134"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cables_cargador.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="lampara_techo_peq001"/>
-<transform
-   pos="-88.4409 1.74718 21.5488"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/lampara_techo_peq001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="caja_de_herramientas001"/>
-<transform
-   pos="-93.8549 -0.395488 18.4124"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/caja_de_herramientas001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pantallas001"/>
-<transform
-   pos="-94.6773 -0.146682 19.9988"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pantallas001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="maquina_1"/>
-<transform
-   pos="-72.1229 -1.34961 13.5715"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/maquina_1.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="maquina_2"/>
-<transform
-   pos="-72.0698 -1.34961 15.02"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/maquina_2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="maquina_3"/>
-<transform
-   pos="-91.7274 -1.34729 -0.839014"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/maquina_3.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="bookshelf_2_deformed"/>
-<transform
-   pos="-124.402 -1.31285 -7.60454"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/bookshelf_2_deformed.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="wc_boxlp"/>
-<transform
-   pos="-123.83 -1.29273 -9.54817"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/wc_boxlp.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="mesita"/>
-<transform
-   pos="-70.4773 -0.899074 18.4302"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/mesita.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="bookcaseLP002"/>
-<transform
-   pos="-124.344 -1.27753 -10.9222"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/bookcaseLP002.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cable"/>
-<transform
-   pos="-81.289 5.82279 -7.78528"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cable.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="paneles_seguridad"/>
-<transform
-   pos="-72.6722 8.69011 1.9557"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/paneles_seguridad.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="sofa2"/>
-<transform
-   pos="-76.1398 -0.731511 -2.8491"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/sofa2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="rodapies"/>
-<transform
-   pos="-97.2604 -0.600098 -16.655"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/rodapies.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="suelo_003"/>
-<transform
-   pos="-97.2611 -0.600098 -16.654"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/suelo_003.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="techo_caseto"/>
-<transform
-   pos="-97.2604 -0.600098 -16.655"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/techo_caseto.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="trozo_pared_suelto"/>
-<transform
-   pos="-97.2604 -0.600098 -16.655"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozo_pared_suelto.static_mesh"/>
+   name="static_meshes/ms3/puertas_ascensor_abajoi_derecha.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -2359,7 +3069,7 @@
 <name
    name="rejilla_aire_006"/>
 <transform
-   pos="-99.9776 0.208877 -17.8882"
+   pos="-100.597 0.191244 -17.8882"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2374,13 +3084,64 @@
 <entity>
 <tags/>
 <name
-   name="Techo_milestone_3"/>
+   name="rejilla_grande_mapeada"/>
 <transform
-   pos="-97.2604 -0.600098 -16.655"
+   pos="-95.7531 8.62443 -1.45102"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/Techo_milestone_3.static_mesh"/>
+   name="static_meshes/ms3/rejilla_grande_mapeada.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="rejilla_pequenha_mapeada"/>
+<transform
+   pos="-69.6521 16.4535 16.5816"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/rejilla_pequenha_mapeada.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="rejillapequenhamapeadabaajo"/>
+<transform
+   pos="-62.4566 -0.0343912 5.38522"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/rejillapequenhamapeadabaajo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="rodapies"/>
+<transform
+   pos="-83.1154 -1.06956 -9.2294"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/rodapies.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -2389,18 +3150,218 @@
 <entity>
 <tags/>
 <name
-   name="puerta_ascensor"/>
+   name="sillas"/>
 <transform
-   pos="-73.894 17.4633 16.8862"
+   pos="-76.0522 7.2858 7.77354"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/puerta_ascensor.static_mesh"/>
+   name="static_meshes/ms3/sillas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
 <room
    name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="sofa2"/>
+<transform
+   pos="-34.604 -11.9969 -10.6264"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/sofa2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="soporte_balcon_mapeado"/>
+<transform
+   pos="-17.8704 -10.7523 22.8559"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/soporte_balcon_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="soporte_balcon_mapeado001"/>
+<transform
+   pos="10.3326 -2.88598 24.3744"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/soporte_balcon_mapeado001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="soporte_balcon_mapeado002"/>
+<transform
+   pos="5.06322 -6.20532 -24.0616"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/soporte_balcon_mapeado002.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="soporte_balcon_mapeado003"/>
+<transform
+   pos="-1.87994 -6.22961 -24.0616"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/soporte_balcon_mapeado003.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="soporte_balcon_mapeado004"/>
+<transform
+   pos="-8.79865 -6.22961 -24.0616"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/soporte_balcon_mapeado004.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="soporte_balcon_mapeado005"/>
+<transform
+   pos="-15.7981 -6.22961 -24.0616"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/soporte_balcon_mapeado005.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="soporte_balcon_mapeado006"/>
+<transform
+   pos="-22.6945 -6.22961 -24.0616"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/soporte_balcon_mapeado006.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="soporte_balcon_mapeado007"/>
+<transform
+   pos="-29.7045 -6.22961 -24.0616"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/soporte_balcon_mapeado007.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="soporte_balcon_mapeado008"/>
+<transform
+   pos="-36.5497 -6.22961 -24.0616"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/soporte_balcon_mapeado008.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="soporte_balcon_mapeado009"/>
+<transform
+   pos="-36.2329 -7.79219 -0.743673"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/soporte_balcon_mapeado009.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="suelo_003"/>
+<transform
+   pos="-83.0827 -1.31786 -9.24089"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/suelo_003.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 <entity>
@@ -2425,7 +3386,7 @@
 <name
    name="suelo_labo_arriba_2"/>
 <transform
-   pos="-65.604 15.8037 15.5134"
+   pos="-65.717 15.8037 8.46963"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2438,17 +3399,390 @@
 
 </entity>
 <entity>
-<tags
-   tags="workbench interactive"/>
-<workbench/>
+<tags/>
 <name
-   name="mesa_cientifico_up"/>
+   name="suelo_nivel_1"/>
 <transform
-   pos="-64.0111 16.0884 13.1749"
+   pos="-2.49196 -17.9212 -0.117593"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/mesa_cientifico_up.static_mesh"/>
+   name="static_meshes/ms3/suelo_nivel_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="tabla_arriba"/>
+<transform
+   pos="-3.9234 -16.4837 -1.36173"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/tabla_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="taquilla_mapeado"/>
+<transform
+   pos="-96.4017 8.31507 2.22628"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/taquilla_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="techo"/>
+<transform
+   pos="-10.3054 10.3031 -0.177968"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/techo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="techo_labo"/>
+<transform
+   pos="-65.6567 20.6568 15.4622"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/techo_labo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="Techo_milestone_3"/>
+<transform
+   pos="-83.1155 4.56567 -9.22597"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/Techo_milestone_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="teclado"/>
+<transform
+   pos="-63.7302 16.6365 12.3133"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/teclado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="trozo_destruible_abajo"/>
+<transform
+   pos="-86.9613 0.0937034 -7.83921"
+   quat="0 0 0.111467 0.993768"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_destruible_abajo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="trozo_destruible_arriba"/>
+<transform
+   pos="-86.9443 1.50531 -7.83921"
+   quat="0 0 -0.150304 0.98864"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_destruible_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="trozo_destruible_derec"/>
+<transform
+   pos="-86.978 0.893398 -8.43306"
+   quat="0 -0.0368033 0 0.999323"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_destruible_derec.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="trozo_destruible_iz"/>
+<transform
+   pos="-86.9196 0.692698 -7.24536"
+   quat="0 -0.0231607 0 0.999732"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_destruible_iz.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="trozo_pared_suelto"/>
+<transform
+   pos="-97.2604 -0.600098 -16.655"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_pared_suelto.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="trozo_plataforma_1"/>
+<transform
+   pos="-25.5169 -18.9324 -14.4836"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_plataforma_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="trozo_plataforma_2"/>
+<transform
+   pos="3.01385 -20.9314 -15.6435"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_plataforma_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="trozos_columnas_rotas"/>
+<transform
+   pos="-20.2575 -23.6701 2.46468"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozos_columnas_rotas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="tuberia"/>
+<transform
+   pos="1.70612 -16.3491 2.51665"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/tuberia.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="tuberia_turbina"/>
+<transform
+   pos="-6.82406 -23.498 -3.74186"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/tuberia_turbina.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="turbina_"/>
+<transform
+   pos="-9.54874 -20.506 18.0157"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/turbina_.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="valla_arriba_1"/>
+<transform
+   pos="-63.9431 16.2484 18.6188"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/valla_arriba_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="ventilador_mapeado"/>
+<transform
+   pos="-81.6512 6.96453 -8.07339"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/ventilador_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="ventilador_mapeado_arriba"/>
+<transform
+   pos="-65.5568 20.8969 15.5303"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/ventilador_mapeado_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="wc_boxlp"/>
+<transform
+   pos="-123.757 -0.340642 -9.43229"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/wc_boxlp.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -2473,87 +3807,6 @@
    pos="-45.0788 5.35219 -0.918759"
    quat="0 0 0 1.0"
    scale="1.0"/>
-
-</entity>
-<entity
-   id="300">
-<tags
-   tags="doorExit door"/>
-<magnet_door
-   locked="yes"
-   speedOpening="1"
-   target="-82.841 4.37253 -29.8566"
-   pol="neutral"/>
-<name
-   name="__Door"/>
-<transform
-   pos="-82.841 0.575218 -29.8566"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/logic/Door.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<polarized
-   pol="neutral"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="__Door___opened_pos"/>
-<transform
-   pos="-82.841 4.37253 -29.8566"
-   quat="0.708405 0 0 0.705806"
-   scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   id="301">
-<tags
-   tags="elevator1 elevator interactive"/>
-<elevator
-   speedUp="7"
-   speedDown="7"
-   target="-65.5449 -1.25345 20.4724"/>
-<name
-   name="__elevator"/>
-<transform
-   pos="-65.5449 15.7081 20.4724"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/logic/elevator.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="box"
-   size="4.6299 0.15 3.25725"
-   mass="5"
-   kinematic="yes"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="__elevator___pos_elevator_down"/>
-<transform
-   pos="-65.5449 -1.25345 20.4724"
-   quat="0 0 0 1.0"
-   scale="0.547495"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>
@@ -2621,489 +3874,6 @@
    pos="-65.6524 -0.632667 20.4715"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="__camara"/>
-<transform
-   pos="-68.4072 18.7886 10.0999"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/logic/camara.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camara_centro"/>
-<transform
-   pos="-104.56 5.17204 -10.0285"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_centro.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camara_izquierdaq"/>
-<transform
-   pos="-99.6426 6.09816 -3.77469"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_izquierdaq.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="camara_derecha"/>
-<transform
-   pos="-100.319 6.05234 -17.3462"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/camara_derecha.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="soporte_balcon_separado_1"/>
-<transform
-   pos="-17.8704 -10.7523 22.8559"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/soporte_balcon_separado_1.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="soporte_balcon_separado_2"/>
-<transform
-   pos="-17.8704 -10.7523 22.8559"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/soporte_balcon_separado_2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="soporte_balcon_separado_3"/>
-<transform
-   pos="-17.8704 -10.7523 22.8559"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/soporte_balcon_separado_3.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="soporte_balcon_separado_4"/>
-<transform
-   pos="-17.8704 -10.7523 22.8559"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/soporte_balcon_separado_4.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="soporte_balcon_separado_5"/>
-<transform
-   pos="-17.8704 -10.7523 22.8559"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/soporte_balcon_separado_5.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="soporte_balcon_separado_7"/>
-<transform
-   pos="-17.8704 -10.7523 22.8559"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/soporte_balcon_separado_7.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="soporte_balcon_separado_6"/>
-<transform
-   pos="-17.8704 -10.7523 22.8559"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/soporte_balcon_separado_6.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="soporte_balcon_separado_8"/>
-<transform
-   pos="-17.8704 -10.7523 22.8559"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/soporte_balcon_separado_8.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="soporte_balcon_separado_009"/>
-<transform
-   pos="-17.8704 -10.7523 22.8559"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/soporte_balcon_separado_009.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="arboles_balcon_cuadrado_izquierdo_abajo"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/arboles_balcon_cuadrado_izquierdo_abajo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="arboles_balcon_decorativo"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/arboles_balcon_decorativo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="balcon_decorativo_arboles"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/balcon_decorativo_arboles.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="arboles_balcon_cuadrado_derecho"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/arboles_balcon_cuadrado_derecho.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="arboles_balcon_redondo_izquierdo"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/arboles_balcon_redondo_izquierdo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="arboles_balcon_redondo_grande"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/arboles_balcon_redondo_grande.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="arbol_arriba_1"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/arbol_arriba_1.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="arbol_arriba_2"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/arbol_arriba_2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="arbol_arriba_3"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/arbol_arriba_3.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="arbol_arriba_5"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/arbol_arriba_5.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="arbol_arriba_6"/>
-<transform
-   pos="-20.1851 -2.39575 24.6086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/arbol_arriba_6.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="biombos_abajo"/>
-<transform
-   pos="-88.4023 0.097167 21.5525"
-   quat="0 0 0 1.0"
-   scale="0.70141"/>
-<render_static_mesh
-   name="static_meshes/ms3/biombos_abajo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pirulo_cargador_bateria_derecho"/>
-<transform
-   pos="-91.7531 -0.888125 13.893"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pirulo_cargador_bateria_derecho.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="antenitas_cargador"/>
-<transform
-   pos="-90.8368 -0.419937 14.4301"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/antenitas_cargador.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags
-   tags="platform pila interactive"/>
-<pila/>
-<bone_tracker/>
-<name
-   name="__pila"/>
-<transform
-   pos="-121.537 -0.242203 -5.41684"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pila.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"
-   kinematic="yes"/>
-<local_aabb/>
 <room
    name="2"/>
 
@@ -3707,25 +4477,6 @@
    name="1"/>
 
 </entity>
-<entity
-   id="302">
-<tags
-   tags="interactive"/>
-<name
-   name="pared_rompible"/>
-<transform
-   pos="-97.2604 -0.600098 -16.655"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pared_rompible.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
 <entity>
 <tags/>
 <rigidbody
@@ -3753,449 +4504,9 @@
 <name
    name="tWall_pAction"/>
 <transform
-   pos="-85.5962 -0.023749 -7.78823"
-   quat="0 -0.707107 0 0.707107"
+   pos="-86.5675 -0.533921 -7.40714"
+   quat="0 -0.714153 0 0.69999"
    scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible00"/>
-<transform
-   pos="-87.122 -0.265351 -7.12929"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible01"/>
-<transform
-   pos="-87.122 1.92398 -7.12929"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole025.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible02"/>
-<transform
-   pos="-87.122 1.92398 -7.85801"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole024.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible03"/>
-<transform
-   pos="-87.122 1.92398 -8.60534"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole023.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible04"/>
-<transform
-   pos="-87.1826 2.26157 -7.45778"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole022.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible05"/>
-<transform
-   pos="-87.1826 2.26157 -8.26832"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole021.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible06"/>
-<transform
-   pos="-87.122 1.22507 -7.12929"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole020.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible07"/>
-<transform
-   pos="-87.122 1.22507 -7.85801"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole019.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible08"/>
-<transform
-   pos="-87.122 1.22507 -8.60534"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole018.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible09"/>
-<transform
-   pos="-87.1826 1.56207 -7.45778"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole017.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible10"/>
-<transform
-   pos="-87.1826 1.56207 -8.26832"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole016.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible11"/>
-<transform
-   pos="-87.122 0.508117 -7.12929"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole015.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible12"/>
-<transform
-   pos="-87.122 0.508117 -7.85801"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole014.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible13"/>
-<transform
-   pos="-87.122 0.508117 -8.60534"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole013.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible14"/>
-<transform
-   pos="-87.1826 0.854095 -7.45778"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole012.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible15"/>
-<transform
-   pos="-87.1826 0.854095 -8.26832"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole011.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible16"/>
-<transform
-   pos="-87.1826 0.0809323 -7.45778"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole007.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible17"/>
-<transform
-   pos="-87.1826 0.0809323 -8.22412"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole006.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible18"/>
-<transform
-   pos="-87.122 -0.265351 -8.62366"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole003.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="pared_rompible19"/>
-<transform
-   pos="-87.122 -0.265351 -7.86716"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/whitebox/pared_mole002.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
 <room
    name="2"/>
 
@@ -4229,26 +4540,6 @@
    pos="-91.6796 -0.419937 14.2709"
    quat="0 0.959077 0 0.283145"
    scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   id="304">
-<tags
-   tags="pila_container interactive"/>
-<pila_container/>
-<name
-   name="enchufe"/>
-<transform
-   pos="-121.537 -0.242203 -5.41684"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/enchufe.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
 <room
    name="2"/>
 
@@ -4768,170 +5059,6 @@
    name="2"/>
 
 </entity>
-<entity
-   id="305">
-<tags
-   tags="door"/>
-<magnet_door
-   locked="yes"
-   speedOpening="1"
-   target="-63.6948 0.32264 19.4268"
-   pol="neutral"/>
-<name
-   name="__DoorElev_Left"/>
-<transform
-   pos="-64.9312 0.32264 19.4268"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/__DoorElev_Left.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<polarized
-   pol="neutral"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="__DoorElev_Left___opened_pos001"/>
-<transform
-   pos="-63.6948 0.32264 19.4268"
-   quat="0.708405 0 0 0.705806"
-   scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   id="306">
-<tags
-   tags="door"/>
-<magnet_door
-   locked="yes"
-   speedOpening="1"
-   target="-67.4927 0.32264 19.4268"
-   pol="neutral"/>
-<name
-   name="__DoorElev_Right"/>
-<transform
-   pos="-66.2562 0.32264 19.4268"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/__DoorElev_Right.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<polarized
-   pol="neutral"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="__DoorElev_Right___opened_pos002"/>
-<transform
-   pos="-67.4927 0.32264 19.4268"
-   quat="0.708405 0 0 0.705806"
-   scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   id="307">
-<tags
-   tags="door"/>
-<magnet_door
-   locked="no"
-   speedOpening="1"
-   target="-64.8125 16.9651 19.4268"
-   pol="neutral"/>
-<name
-   name="__DoorElev_LeftUp"/>
-<transform
-   pos="-63.888 16.9651 19.4268"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/__DoorElev_LeftUp.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<polarized
-   pol="neutral"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="__DoorElev_LeftUp___opened_pos003"/>
-<transform
-   pos="-64.8125 16.9651 19.4268"
-   quat="0.708405 0 0 0.705806"
-   scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   id="308">
-<tags
-   tags="door"/>
-<magnet_door
-   locked="no"
-   speedOpening="1"
-   target="-66.1481 16.9651 19.4268"
-   pol="neutral"/>
-<name
-   name="__DoorElev_RightUp"/>
-<transform
-   pos="-67.1209 16.9651 19.4268"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/__DoorElev_RightUp.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<polarized
-   pol="neutral"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="__DoorElev_RightUp___opened_pos004"/>
-<transform
-   pos="-66.1481 16.9651 19.4268"
-   quat="0.708405 0 0 0.705806"
-   scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
 <entity>
 <tags/>
 <rigidbody
@@ -4966,6 +5093,70 @@
    pos="-62.2198 0.753134 -5.47724"
    quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-86.6543 -0.628906 15.0363"
+   yawAction="-3.14159"/>
+<name
+   name="Workstation004"/>
+<transform
+   pos="-86.6543 -0.628906 15.0363"
+   quat="0 0.710217 0 0.703983"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-93.4641 -0.628905 19.8214"
+   yawAction="-3.14159"/>
+<name
+   name="Workstation005"/>
+<transform
+   pos="-93.4641 -0.628905 19.8214"
+   quat="0 -0.728751 0 0.684779"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-94.2381 -0.628906 15.836"
+   yawAction="-3.14159"/>
+<name
+   name="Workstation006"/>
+<transform
+   pos="-94.2381 -0.628906 15.836"
+   quat="0 -0.728751 0 0.684779"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags
+   tags="workstation"/>
+<workstation
+   posAction="-90.0359 -0.628906 15.5712"
+   yawAction="-3.14159"/>
+<name
+   name="Workstation007"/>
+<transform
+   pos="-90.0359 -0.628906 15.5712"
+   quat="0 0.92894 0 -0.370229"
+   scale="1.0"/>
+<room
+   name="2"/>
 
 </entity>
 

@@ -354,7 +354,7 @@ struct TResources (
 */
 	
 	fn exportObject obj = (
-		if ( (not obj.isHidden) and (getUserProp obj "typeHelper") == undefined) and ((getUserProp obj "typeObject") != "Trigger") then (
+		if ( (not (classof obj == Delegate)) and  (not obj.isHidden) and (getUserProp obj "typeHelper") == undefined) and ((getUserProp obj "typeObject") != "Trigger") then (
 			--exportCompName obj
 			local canExport = true
 			if classof obj != Editable_mesh and classof obj != Editable_Poly then (
