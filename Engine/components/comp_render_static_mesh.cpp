@@ -6,8 +6,11 @@
 #include "components/comp_charactercontroller.h"
 #include "components/entity.h"
 
+CHandle TCompRenderStaticMesh::last_loaded_static_mesh = CHandle();
+
 void TCompRenderStaticMesh::onCreate(const TMsgEntityCreated&) {
 	registerToRender();
+	last_loaded_static_mesh = CHandle(this).getOwner();
 }
 
 bool TCompRenderStaticMesh::load(MKeyValue& atts) {

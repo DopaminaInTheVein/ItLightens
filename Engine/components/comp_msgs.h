@@ -219,7 +219,7 @@ struct TMsgWirePass {
 };
 
 struct TMsgCanRec {
-	bool range;
+	CHandle generator; // empty --> out of range
 	DECLARE_MSG_ID();
 };
 

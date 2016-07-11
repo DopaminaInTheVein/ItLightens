@@ -88,7 +88,7 @@ class player_controller : public CPlayerBase {
 	bool					affectPolarized = false;
 	bool					forward_jump = false;
 
-	bool					canRecEnergy = false;
+	CHandle					generatorNear = CHandle();
 	bool					canPassWire = false;
 	bool					canRechargeDrone = false;
 	bool					canNotRechargeDrone = false;
@@ -132,6 +132,7 @@ class player_controller : public CPlayerBase {
 	void createDevolveLight();
 
 	void rechargeEnergy();
+	void gainLife(float amoung);
 
 	void UpdateMoves() override;
 	void UpdateInputActions() override;

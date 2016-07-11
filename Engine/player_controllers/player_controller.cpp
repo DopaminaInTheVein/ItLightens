@@ -124,7 +124,19 @@ void player_controller::setLife(float new_life)
 void player_controller::rechargeEnergy()
 {
 	PROFILE_FUNCTION("recharge_energy");
-	Evolve(eEvol::second);
+	GET_COMP(gen, generatorNear, TCompGenerator);
+	float life_recover = gen->use();
+	gainLife(life_recover);
+	//Evolve(eEvol::second);
+}
+
+void player_controller::gainLife(float amoung)
+{
+	float next_life = getLife();
+	next_life += amoung;
+	if (next_life > max_life) next_life = max_life;
+	setLife(next_life);
+	curr_evol = (next_life > evolution_limit) ? eEvol::second : eEvol::first;
 }
 
 void player_controller::createEvolveLight() {
@@ -891,12 +903,17 @@ void player_controller::onWirePass(const TMsgWirePass & msg)
 
 void player_controller::onCanRec(const TMsgCanRec & msg)
 {
-	canRecEnergy = msg.range;
+	generatorNear = msg.generator;
 }
 
 bool player_controller::canRecharge()
 {
-	return canRecEnergy && !isDamaged();
+	if (isDamaged()) return false;
+	if (generatorNear.isValid()) {
+		GET_COMP(gen, generatorNear, TCompGenerator);
+		if (gen) return gen->isUsable();
+	}
+	return false;
 }
 
 void player_controller::onCanRechargeDrone(const TMsgCanRechargeDrone & msg)

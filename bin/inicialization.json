@@ -119,5 +119,9 @@
 		"blink_distance" : 8.0,
 		"blink_energy" : 10.0,
 		"drop_water_timer_reset" : 3.0
+	},
+	"generator" : {
+		"_timeReuse" : 15.0,
+		"life_recover" : 30
 	}
 }
