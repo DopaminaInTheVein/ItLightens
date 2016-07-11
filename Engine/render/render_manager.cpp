@@ -180,7 +180,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	// Pasearse por todas las keys
 	while (it != end_it) {
 		// Do the culling
-		if (it->isPlayer || pj_room == -1 || it->room == -1 || pj_room == it->room) {
+		if (it->owner.getOwner().hasTag("player") || pj_room == -1 || it->room == -1 || pj_room == it->room) {
 			if (culling_bits) {
 				TCompAbsAABB* aabb = it->aabb;
 				if (aabb) {
@@ -387,7 +387,7 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 	}
 
 	while (it != all_shadow_skinning_keys.end()) {
-		if (it->isPlayer || pj_room == -1 || it->room == -1 || pj_room == it->room) {
+		if (it->owner.getOwner().hasTag("player") || pj_room == -1 || it->room == -1 || pj_room == it->room) {
 			const TCompTransform* c_tmx = it->transform;
 
 			if (c_tmx) {
