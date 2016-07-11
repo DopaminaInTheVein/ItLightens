@@ -444,7 +444,7 @@ function wireGoUp( )
   cam:run_cinematic("CineWireGoUp", factorWireGoUp * 5)
 
   p:exec_command( "player:set_position(0,-1000,0);", 2 )
-  p:exec_command( "wireParticlesUp();", 2.5 / factorWireGoUp )
+  p:exec_command( "wireParticlesUp();", 1.5 / factorWireGoUp )
   p:exec_command( "cam:fade_out(0.5);", 7.5)
   p:exec_command( "cam:fade_in(0.5);", 9.5)
   p:exec_command( "triggerWire_1:setActionable(1);", 3)
