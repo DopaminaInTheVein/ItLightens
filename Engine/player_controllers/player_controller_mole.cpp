@@ -229,6 +229,7 @@ void player_controller_mole::UpdateUnpossess() {
 		pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		pilaGrabbed = CHandle();
 	}
+	SET_ANIM_MOLE(AST_STUNNED);
 }
 
 void player_controller_mole::DestroyWall() {
@@ -674,6 +675,9 @@ void player_controller_mole::ChangeCommonState(std::string st)
 	}
 	else if (st == "jumping") {
 		SET_ANIM_MOLE(AST_JUMP);
+	}
+	else if (st == "falling") {
+		SET_ANIM_MOLE(AST_FALL);
 	}
 	else if (st == "idle") {
 		SET_ANIM_MOLE(AST_IDLE);

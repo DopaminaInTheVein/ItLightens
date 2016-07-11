@@ -126,6 +126,7 @@ void SkelControllerMole::myUpdate()
 			msgAttach.bone_name = SK_RHAND;
 			msgAttach.handle = owner;
 			msgAttach.save_local_tmx = true;
+			msgAttach.offset = VEC3(0, 0, 0);
 			grabbed.sendMsg(msgAttach);
 		}
 		else if (currentState == AST_GRAB_PILA2) {
@@ -141,6 +142,11 @@ void SkelControllerMole::myUpdate()
 		}
 		else if (currentState == AST_PUT_PILA) {
 			setAction("put_pila", "idle");
+			//setAction("grab_pila_2", "idle");
+			currentState = AST_IDLE;
+		}
+		else if (currentState == AST_FALL) {
+			setAction("jumpland", "idle");
 			//setAction("grab_pila_2", "idle");
 			currentState = AST_IDLE;
 		}
