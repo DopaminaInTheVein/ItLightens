@@ -2,6 +2,7 @@
 #define	INC_UI_H_
 
 #include "imgui\imgui.h"
+#include "app_modules\gui\gui.h"
 #include "components/entity_tags.h"
 #include "components/entity.h"
 #include "components/components.h"
@@ -111,7 +112,7 @@ public:
 			ImGui::Text("Press 'ENTER' to restart\n");
 			ImGui::End();
 		}
-		else if (GameController->GetGameState() == CGameController::VICTORY) {
+	    else if (GameController->GetGameState() == CGameController::VICTORY) {
 			bool open = true;
 			ImGui::Begin("Victory Player State", &open, ImVec2(300, 100), -1.0f);
 			ImGui::Text("You WIN!\n");

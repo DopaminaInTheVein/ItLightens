@@ -96,6 +96,7 @@ void CGuiModule::initScreens()
   ADD_GAME_STATE(CGameController::STOPPED_INTRO, OnStopIntro);
   ADD_GAME_STATE(CGameController::MENU, OnMenu);
   ADD_GAME_STATE(CGameController::LOSE, OnDead);
+  ADD_GAME_STATE(CGameController::VICTORY, OnVictory);
 }
 
 void inline CGuiModule::setRender(int state, screenRender render)
@@ -154,6 +155,11 @@ void CGuiModule::updateOnMenu(float dt) {
 // ----- Update On Dead ----- //
 void CGuiModule::updateOnDead(float dt) {
   //Nothing at the moment
+}
+
+// ----- Update On Victory ----- //
+void CGuiModule::updateOnVictory(float dt) {
+	//Nothing at the moment
 }
 
 // ----------------------------------- RENDER MODULE ----------------------------------- //
@@ -216,6 +222,19 @@ void CGuiModule::renderOnDead() {
   // Text Dead
   GUI::drawText(0.3f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "Has muerto");
   GUI::drawText(0.3f, 0.5f, GImGui->Font, 0.05f, GUI::IM_WHITE, "Intro: Reintentar");
+}
+
+// ----- Render On Victory ----- //
+void CGuiModule::renderOnVictory() {
+	//hudPlayer->render();
+	ImGuiState& g = *GImGui;
+	g.FontSize = resolution_y;
+	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+
+	// Text Victory
+	GUI::drawText(0.3f, 0.3f, GImGui->Font, 0.1f, GUI::IM_WHITE, "Victory!!");
+	GUI::drawText(0.3f, 0.5f, GImGui->Font, 0.05f, GUI::IM_WHITE, "ESC: Exit game");
+	GUI::drawText(0.3f, 0.6f, GImGui->Font, 0.05f, GUI::IM_WHITE, "Enter: Play again");
 }
 
 // ----- Render On Menu ----- //

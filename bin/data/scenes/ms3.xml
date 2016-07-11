@@ -3822,7 +3822,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="-35.5948 -23.4092 -0.614541"
+   pos="-65.2184 16.129 11.5512"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -3836,7 +3836,7 @@
    radius="0.3"
    height="0.7"/>
 <room
-   name="1"/>
+   name="2"/>
 
 </entity>
 <entity>
