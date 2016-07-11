@@ -213,6 +213,7 @@ void player_controller::createDevolveLight() {
 
 void player_controller::myUpdate() {
 	PROFILE_FUNCTION("player controller: MY_update");
+	setLife(getLife() - getDeltaTime() * 1.f);
 	UpdateDamage();
 	____TIMER__UPDATE_(timerDamaged);
 	if (isDamaged()) {

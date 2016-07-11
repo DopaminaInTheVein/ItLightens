@@ -69,13 +69,14 @@ void TCompFadingMessage::update(float dt) {
 	}
 }
 void TCompFadingMessage::render() const {
-#ifndef NDEBUG
+	//#ifndef NDEBUG
 	PROFILE_FUNCTION("TCompFadingMessage render");
 	// ttl message is viewed
 	std::string textToShow = text.substr(0, numchars);
 
 	bool b = false;
-
+	int gState = GameController->GetGameState();
+	if (gState != CGameController::RUNNING) return;
 	ImGui::Begin("Game GUI", &b, ImVec2(resolution_x, resolution_y), 0.0f, flags);
 	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
 
@@ -89,5 +90,5 @@ void TCompFadingMessage::render() const {
 		GUI::drawText(startxrect + marginForImage / 2, startyrect + marginForImage / 2, GImGui->Font, sizeFont, textColor, iconLittleText.c_str());
 	}
 	ImGui::End();
-#endif
+	//#endif
 }
