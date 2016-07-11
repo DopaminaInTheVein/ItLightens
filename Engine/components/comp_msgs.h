@@ -25,6 +25,7 @@ struct TMsgAttach {
 	CHandle handle;
 	std::string bone_name;
 	bool save_local_tmx;
+	VEC3 offset;
 	DECLARE_MSG_ID();
 };
 

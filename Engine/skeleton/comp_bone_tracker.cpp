@@ -41,42 +41,48 @@ void TCompBoneTracker::onAttach(const TMsgAttach& msg) {
 		return;
 	bone_id = skel->getKeyBoneId(bone_name);
 	local_tmx_saved = msg.save_local_tmx;
+	auto bone = skel->model->getSkeleton()->getBone(bone_id);
+	VEC3 pos_bone_abs = Cal2Engine(bone->getTranslationAbsolute());
+	CQuaternion rot_bone_abs = Cal2Engine(bone->getRotationAbsolute());
+	dbg("Descompose bone abs. (%f, %f, %f), (%f, %f, %f, %f)\n"
+		, VEC3_VALUES(pos_bone_abs)
+		, VEC4_VALUES(rot_bone_abs));
+
+	// BoneWorld inv
+	MAT44 bone_world = MAT44::CreateFromQuaternion(rot_bone_abs);
+	bone_world.Translation(pos_bone_abs);
+	VEC3 scale, pos; CQuaternion rot;
+	bone_world.Decompose(scale, rot, pos);
+	dbg("Descompose bone_world. (%f, %f, %f), (%f, %f, %f, %f)\n"
+		, VEC3_VALUES(pos)
+		, VEC4_VALUES(rot));
+	MAT44 bone_world_inv = bone_world.Invert();
+	bone_world_inv.Decompose(scale, rot, pos);
+	dbg("Descompose bone_world invert. (%f, %f, %f), (%f, %f, %f, %f)\n"
+		, VEC3_VALUES(pos)
+		, VEC4_VALUES(rot));
+
+	// My World now
+	MAT44 my_world;
 	if (msg.save_local_tmx) {
-		auto bone = skel->model->getSkeleton()->getBone(bone_id);
-		VEC3 pos_bone_abs = Cal2Engine(bone->getTranslationAbsolute());
-		CQuaternion rot_bone_abs = Cal2Engine(bone->getRotationAbsolute());
-		dbg("Descompose bone abs. (%f, %f, %f), (%f, %f, %f, %f)\n"
-			, VEC3_VALUES(pos_bone_abs)
-			, VEC4_VALUES(rot_bone_abs));
-
-		// BoneWorld inv
-		MAT44 bone_world = MAT44::CreateFromQuaternion(rot_bone_abs);
-		bone_world.Translation(pos_bone_abs);
-		VEC3 scale, pos; CQuaternion rot;
-		bone_world.Decompose(scale, rot, pos);
-		dbg("Descompose bone_world. (%f, %f, %f), (%f, %f, %f, %f)\n"
-			, VEC3_VALUES(pos)
-			, VEC4_VALUES(rot));
-		MAT44 bone_world_inv = bone_world.Invert();
-		bone_world_inv.Decompose(scale, rot, pos);
-		dbg("Descompose bone_world invert. (%f, %f, %f), (%f, %f, %f, %f)\n"
-			, VEC3_VALUES(pos)
-			, VEC4_VALUES(rot));
-
-		// My World now
-		GET_MY(tmx, TCompTransform);
+		GET_MY(tmx, TCompTransform); tmx->addPosition(msg.offset);
 		MAT44 my_world = tmx->asMatrix();
-		my_world.Decompose(scale, rot, pos);
-		dbg("Descompose my_world. (%f, %f, %f), (%f, %f, %f, %f)\n"
-			, VEC3_VALUES(pos)
-			, VEC4_VALUES(rot));
-		// Local bone transform
-		local_tmx = my_world * bone_world_inv;
-		local_tmx.Decompose(scale, rot, pos);
-		dbg("Descompose local_tmx. (%f, %f, %f), (%f, %f, %f, %f)\n"
-			, VEC3_VALUES(pos)
-			, VEC4_VALUES(rot));
 	}
+	else {
+		my_world = MAT44::CreateFromQuaternion(rot_bone_abs);
+		my_world.Translation(pos_bone_abs + msg.offset);
+	}
+
+	my_world.Decompose(scale, rot, pos);
+	dbg("Descompose my_world. (%f, %f, %f), (%f, %f, %f, %f)\n"
+		, VEC3_VALUES(pos)
+		, VEC4_VALUES(rot));
+	// Local bone transform
+	local_tmx = my_world * bone_world_inv;
+	local_tmx.Decompose(scale, rot, pos);
+	dbg("Descompose local_tmx. (%f, %f, %f), (%f, %f, %f, %f)\n"
+		, VEC3_VALUES(pos)
+		, VEC4_VALUES(rot));
 }
 
 void TCompBoneTracker::renderInMenu() {
@@ -89,7 +95,8 @@ void TCompBoneTracker::renderInMenu() {
 
 void TCompBoneTracker::update(float dt) {
 	CEntity* e = h_entity;
-	if (!e)
+	CEntity* my_e = CHandle(this).getOwner();
+	if (!e || !my_e)
 		return;
 	TCompSkeleton* skel = e->get<TCompSkeleton>();
 	if (!skel || bone_id == -1)
@@ -98,17 +105,16 @@ void TCompBoneTracker::update(float dt) {
 	auto rot = Cal2Engine(bone->getRotationAbsolute());
 	auto trans = Cal2Engine(bone->getTranslationAbsolute());
 
-	CEntity* my_e = CHandle(this).getOwner();
 	TCompTransform* tmx = my_e->get<TCompTransform>();
 	assert(tmx);
 
-	if (local_tmx_saved) {
-		MAT44 bone_world = MAT44::CreateFromQuaternion(rot);
-		bone_world.Translation(trans);
-		MAT44 new_tmx = local_tmx * bone_world;
-		VEC3 scale;
-		new_tmx.Decompose(scale, rot, trans);
-	}
+	//if (local_tmx_saved) {
+	MAT44 bone_world = MAT44::CreateFromQuaternion(rot);
+	bone_world.Translation(trans);
+	MAT44 new_tmx = local_tmx * bone_world;
+	VEC3 scale;
+	new_tmx.Decompose(scale, rot, trans);
+	//}
 
 	tmx->setPosition(trans);
 	tmx->setRotation(rot);

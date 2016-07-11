@@ -1,7 +1,7 @@
 <entity>
     <tags tags="throw_bomb"/>
     <name name="throw_bomb"/>
-	<transform pos="0 1000 0" quat="0.0 0.0 0.0 1.0" scale="0.2" />
+	<transform pos="0 1000 0" quat="0.0 0.0 0.0 1.0" scale="0.05" />
     <render_static_mesh name="static_meshes/obj/bomb.static_mesh"/>
 
 	<rigidbody

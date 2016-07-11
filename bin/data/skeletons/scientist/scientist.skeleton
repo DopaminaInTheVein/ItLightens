@@ -3,5 +3,6 @@
   <animations src ="skeletons/scientist/"/>
   <mesh     src="skeletons/scientist/scientist.cmf"/>
   <key_bones 
+    right_hand="scientist69"
   />
 </model>

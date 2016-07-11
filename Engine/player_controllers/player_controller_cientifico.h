@@ -56,6 +56,8 @@ class player_controller_cientifico : public PossController {
 	float t_create_beacon_energy;
 	float t_create_StaticBomb_energy;
 	float t_create_MagneticBomb_energy;
+	VEC3 bomb_offset_1;
+	VEC3 bomb_offset_2;
 
 	void UpdateInputActions() override;
 	void WorkBenchActions();
@@ -85,7 +87,7 @@ public:
 	void RecalcScientist();
 
 	//Create game objects
-	void spawnBomb();
+	void spawnBomb(VEC3 offset);
 
 	// Player states
 	void CreateBomb();

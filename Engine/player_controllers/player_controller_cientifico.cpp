@@ -53,6 +53,8 @@ void player_controller_cientifico::readIniFileAttr() {
 			assignValueToVar(t_create_MagneticBomb_energy, fields_scientist);
 		}
 	}
+	bomb_offset_1 = VEC3(0, -0.1f, -0.05f);
+	bomb_offset_2 = VEC3(0, -0.1f, 0.05f);
 }
 
 bool player_controller_cientifico::getUpdateInfo()
@@ -101,7 +103,7 @@ void player_controller_cientifico::Init() {
 	ChangeState("idle");
 	SET_ANIM_SCIENTIST(AST_IDLE);
 
-	____TIMER_REDEFINE_(t_throwing, 1.f);
+	____TIMER_REDEFINE_(t_throwing, 0.5f);
 	____TIMER_REDEFINE_(t_nextBomb, 1.f);
 }
 
@@ -241,7 +243,7 @@ void player_controller_cientifico::CreateBomb()
 		t_waiting = 0;
 		objs_amoung[obj] = 5;
 		if (bomb_handle.isValid()) bomb_handle.destroy();
-		spawnBomb();
+		spawnBomb(bomb_offset_1);
 		//bomb_handle.sendMsg(TMsgActivate());
 		ChangeState("idle");
 	}
@@ -263,7 +265,7 @@ void player_controller_cientifico::UseBomb()
 	}
 	else {
 		dbg("No bombs remain!");
-		//TODO?
+		ChangeState("idle");
 	}
 }
 
@@ -289,7 +291,7 @@ void player_controller_cientifico::NextBomb()
 
 	//Test mover bomba
 	____TIMER_CHECK_DO_(t_nextBomb);
-	spawnBomb();
+	spawnBomb(bomb_offset_2);
 	ChangeState("idle");
 	____TIMER_CHECK_DONE_(t_nextBomb);
 }
@@ -370,7 +372,7 @@ void player_controller_cientifico::RepairDrone()
 
 #pragma region Game objects creators
 
-void player_controller_cientifico::spawnBomb()
+void player_controller_cientifico::spawnBomb(VEC3 offset)
 {
 	PROFILE_FUNCTION("player cientifico: create mag bomb");
 
@@ -380,6 +382,7 @@ void player_controller_cientifico::spawnBomb()
 	msg.handle = CHandle(this).getOwner();
 	msg.bone_name = SK_RHAND;
 	msg.save_local_tmx = false;
+	msg.offset = offset;
 	bomb_handle.sendMsg(msg);
 
 	//float yaw, pitch;
@@ -470,6 +473,9 @@ void player_controller_cientifico::renderInMenu()
 	ImGui::Text("direction: %.4f, %.4f, %.4f", direction.x, direction.y, direction.z);
 	ImGui::Text("jump: %.5f", jspeed);
 	ImGui::Text("object: %d\n", obj);
+
+	ImGui::DragFloat3("BombOffset_1: ", &bomb_offset_1.x, 0.1f);
+	ImGui::DragFloat3("BombOffset_2: ", &bomb_offset_2.x, 0.1f);
 }
 
 void player_controller_cientifico::UpdateUnpossess() {
