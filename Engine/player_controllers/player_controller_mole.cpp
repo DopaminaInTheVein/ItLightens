@@ -150,7 +150,6 @@ void player_controller_mole::myUpdate()
 		if (player_curr_speed >= player_max_speed - 0.1f)
 		{
 			SET_ANIM_MOLE(AST_RUN);
-			logic_manager->throwEvent(logic_manager->OnVictory, "");
 		}
 		else
 		{
