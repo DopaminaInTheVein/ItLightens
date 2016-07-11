@@ -126,6 +126,7 @@ class bt_guard : public bt, public TCompBase
 	int direction = 0;
 	VEC3 unstuck_target;
 	VEC3 last_position;
+	VEC3 dest_shoot;
 	// reaction time management
 	bool player_detected_start = false;
 	float reaction_time = -1.0f;
@@ -174,7 +175,7 @@ class bt_guard : public bt, public TCompBase
 	bool rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit);
 	bool rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform);
 	bool shootToPlayer();
-	void drawShot(float distRay);
+	void drawShot(VEC3 dest);
 	void removeBox(CHandle box_handle);
 
 	bool stunned;

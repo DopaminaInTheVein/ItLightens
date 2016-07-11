@@ -1369,6 +1369,7 @@ bool bt_guard::shootToPlayer() {
 		//RayCast to player
 		PxRaycastBuffer hit;
 		bool ret = rayCastToPlayer(1, distRay, hit);
+		dest_shoot = PhysxConversion::PxVec3ToVec3(hit.getAnyHit(0).position);
 		if (ret) {
 			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
 			if (h.hasTag("player")) {
@@ -1426,12 +1427,12 @@ bool bt_guard::shootToPlayer() {
 	//}
 
 	//Render Shot
-	drawShot(distRay);
+	drawShot(dest_shoot);
 
 	return false;
 }
 
-void bt_guard::drawShot(float distRay) {
+void bt_guard::drawShot(VEC3 dest) {
 	PROFILE_FUNCTION("guard bt: draw shot");
 	CEntity * ePlayer = getPlayer();
 	if (!ePlayer) return;
@@ -1448,8 +1449,7 @@ void bt_guard::drawShot(float distRay) {
 	originShot += VEC3(0.0f, -0.32f, 0.0f);
 	originShot += 0.15f*getTransform()->getLeft();
 	originShot += 0.15f*getTransform()->getFront();
-	VEC3 destShot = posPlayer; //algun offset?
-	VEC3 rayShot = destShot - originShot;
+	VEC3 destShot = dest; //algun offset?
 
 	// Add Render Instruction
 	ShootManager::shootLaser(originShot, destShot);
