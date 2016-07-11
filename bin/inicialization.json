@@ -5,7 +5,7 @@
 		"restitution" : 0.25
 	}, 	
 	"bt_scientist" : {
-		"move_speed" : 2.0,
+		"move_speed" : 1.5,
 		"rot_speed" : 2.0,
 		"reach_dist_pnt" : 0.2,
 		"max_wb_distance" : 1000.0,
@@ -100,6 +100,7 @@
 		"destroy_wall_energy" : 10.0
 	},	
 	"controller_scientist" : {
+		"player_max_speed" : 2.5,
 		"t_waiting" : 0.0,
 		"t_to_explode" : 5.0,
 		"t_create_beacon" : 1.0,

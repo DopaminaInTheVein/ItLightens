@@ -143,7 +143,7 @@ fn loadAll = (
 	if $Trigger_Cambio_Sala != undefined then (
 		delete $Trigger_Cambio_Sala
 	)
-	addAlexLogicCamaras()
+	--addAlexLogicCamaras()
 	assign_room_to_all_from_x()
 	createRoomSwitcherTrigger "1" "2"
 	createRoomLimiterForPossession()

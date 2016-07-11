@@ -130,7 +130,13 @@ public:
 	void SetCollisions(bool new_collisions);
 	void SetFilterData(PxFilterData& filter);
 	void SetActive(bool isActive) { m_active = isActive; }
-	void SetGravity(bool isActive) { m_affectGravity = isActive; }
+	void SetGravity(bool isActive) { 
+		m_affectGravity = isActive;
+		if (!isActive) {
+			m_flagsCollisions.clear(PxControllerCollisionFlag::eCOLLISION_DOWN);
+			m_OnGround = false;
+		}
+	}
 
 	//-----------------------------------------------------------------------------------------------------
 	//									Movement modifiers

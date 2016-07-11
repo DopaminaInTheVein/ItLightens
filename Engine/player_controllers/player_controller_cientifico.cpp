@@ -42,6 +42,7 @@ void player_controller_cientifico::readIniFileAttr() {
 
 			map<std::string, float> fields_scientist = readIniAtrData(file_ini, "controller_scientist");
 
+			assignValueToVar(player_max_speed, fields_scientist);
 			assignValueToVar(t_waiting, fields_scientist);
 			assignValueToVar(t_create_beacon, fields_scientist);
 			assignValueToVar(t_create_StaticBomb, fields_scientist);

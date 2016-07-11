@@ -58,7 +58,7 @@ function activateCargadorPlayer()
 
   if hCargador:has_pila() then
     if hCargador:has_pila_charged() then
-		p:player_talks("The cell is full of energy now", "scientific.dds", "SCI")
+		p:player_talks("The cell is full of energy now.", "scientific.dds", "SCI")
 	else
 		p:player_talks("The cell fits perfectly.\nI don't know how this machine works though...", "scientific.dds", "SCI")
 		
@@ -76,7 +76,7 @@ function activateCargadorSci()
   hCargador:get_handle_by_id(idCargador)
   if hCargador:has_pila() then
     if hCargador:has_pila_charged() then
-		p:player_talks("The cell is full thanks to my hard work", "scientific.dds", "SCI")
+		p:player_talks("The cell has power and is working now!", "scientific.dds", "SCI")
 	else
 		hCargadorTarget:get_handle_by_name_tag("cargador_bateria_pAction", "target")
 		p:player_talks("Here we go!", "scientific.dds", "SCI")
@@ -85,7 +85,7 @@ function activateCargadorSci()
 		sci:go_and_look_as(hCargadorTarget, "rechargeCell();")
 	end
   else
-	p:player_talks("There is nothing to charge", "scientific.dds", "SCI")
+	p:player_talks("There is nothing to charge.", "scientific.dds", "SCI")
   end
 
   triggerCargador:getHandleCaller()
@@ -352,7 +352,7 @@ actionWallTarget = Handle()
 function lookWall( )
   p:print("Look Wall\n")
   triggerWall_1:getHandleCaller()
-  p:player_talks("I feel some energy behind this wall...","scientific.dds","SCI")
+  p:player_talks("This wall seems weak, I wonder if there is something behind...","scientific.dds","SCI")
   p:exec_command( "triggerWall_1:setActionable(1);", 2 )
 end
 

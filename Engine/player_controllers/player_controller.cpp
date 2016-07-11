@@ -1042,7 +1042,14 @@ void player_controller::renderInMenu() {
 	ImGui::Separator();
 
 	ImGui::Text(GetPolarity().c_str());
+	for (auto force : all_forces) {
+		ImGui::Text("force: %f - %f - %f\n", force.x, force.y, force.z);
+	}
 
+	for (auto pond : force_ponderations) {
+		ImGui::Text("Ponderation: %f\n", pond);
+	}
+	
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
 

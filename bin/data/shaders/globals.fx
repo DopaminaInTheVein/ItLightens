@@ -35,12 +35,12 @@ float3 getWorldCoords(float2 screen_coords, float zlinear_normalized) {
   // Si screen_coords == 0 => ux = 1
   // Si screen_coords == 512 => ux = 0
   // Si screen_coords == 1024 => ux = -1
-  float ux = 1.0 - screen_coords.x / 1024. * 2;
+  float ux = 1.0 - screen_coords.x / xres * 2;
   
   // Si screen_coords =   0 => uy = 1;
   // Si screen_coords = 400 => uy = 0;
   // Si screen_coords = 800 => uy = -1;
-  float uy = 1.0 - screen_coords.y / 800. * 2;
+  float uy = 1.0 - screen_coords.y / yres * 2;
   
   float3 view_dir = float3( ux * CameraTanHalfFov * CameraAspectRatio
                           , uy * CameraTanHalfFov
