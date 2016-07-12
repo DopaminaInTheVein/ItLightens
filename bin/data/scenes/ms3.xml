@@ -1487,7 +1487,7 @@
    tags="pila_container interactive"/>
 <pila_container/>
 <name
-   name="enchufe_mapeado"/>
+   name="enchufe"/>
 <transform
    pos="-121.537 0.0748136 -5.41684"
    quat="0 0 0 1.0"
@@ -5247,6 +5247,23 @@
    name="CineWireGoUp"/>
 <transform
    pos="-91.9901 27.8865 -44.4083"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="4.23 5.21 1.61"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="TriggerBox_1"/>
+<transform
+   pos="-82.7871 1.32399 -34.8168"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

@@ -61,6 +61,7 @@ function OnGameStart( param )
 	--triggerGuardFormation();
 	--p:exec_command( "triggerGuardFormation();", 15 )
 	cam:run_cinematic("CinematicIntro", 10)
+	stateElevator = 1
 	CallFunction("test_dbg")
 end
 
@@ -328,7 +329,7 @@ end
 
 --Game Ending
 ---------------------------------------------------
-function OnVictory( param )
+function OnVictory( )
 	p:print( "OnVictory\n")
 	launchVictoryState();
 end
