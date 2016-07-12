@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/tablon_difuso.dds"/>
+<texture slot="normalmap" name="textures/tablon_difuso_NRM.dds"/>
+</material>

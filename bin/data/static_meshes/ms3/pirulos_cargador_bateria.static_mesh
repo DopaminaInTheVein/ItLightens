@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/ms3/pirulos_cargador_bateria.mesh" material="materials/test_red.material" mesh_idx="0"/>
-</static_mesh>
