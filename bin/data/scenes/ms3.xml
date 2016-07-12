@@ -2085,132 +2085,6 @@
 </entity>
 <entity>
 <tags/>
-<light_point
-   color="0.694118 0.560784 0.415686 0.2"
-   in_radius="7.0"
-   out_radius="55.0"/>
-<name
-   name="Omni023"/>
-<transform
-   pos="-9.26134 -3.17584 -1.27001"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="0.694118 0.560784 0.415686 0.2"
-   in_radius="7.0"
-   out_radius="55.0"/>
-<name
-   name="Omni024"/>
-<transform
-   pos="-4.71288 -6.58136 0.921652"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="0.694118 0.560784 0.415686 0.2"
-   in_radius="7.0"
-   out_radius="55.0"/>
-<name
-   name="Omni025"/>
-<transform
-   pos="-6.61168 -6.48627 -5.32213"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="0.694118 0.560784 0.415686 0.2"
-   in_radius="7.0"
-   out_radius="55.0"/>
-<name
-   name="Omni026"/>
-<transform
-   pos="-12.9618 -6.48627 -4.85997"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="0.694118 0.560784 0.415686 0.2"
-   in_radius="7.0"
-   out_radius="55.0"/>
-<name
-   name="Omni027"/>
-<transform
-   pos="-14.7108 -6.48627 -0.0966661"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="0.694118 0.560784 0.415686 0.2"
-   in_radius="7.0"
-   out_radius="55.0"/>
-<name
-   name="Omni028"/>
-<transform
-   pos="-10.0603 -6.31574 4.37965"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="0.694118 0.560784 0.415686 0.2"
-   in_radius="7.0"
-   out_radius="55.0"/>
-<name
-   name="Omni029"/>
-<transform
-   pos="0.452164 -18.5472 24.2437"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="0.694118 0.560784 0.415686 0.2"
-   in_radius="7.0"
-   out_radius="55.0"/>
-<name
-   name="Omni030"/>
-<transform
-   pos="0.189438 -18.5472 -24.2676"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<light_point
-   color="0.694118 0.560784 0.415686 0.2"
-   in_radius="7.0"
-   out_radius="55.0"/>
-<name
-   name="Omni031"/>
-<transform
-   pos="27.032 -18.5472 -1.55589"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
 <name
    name="panel_mapeado"/>
 <transform
@@ -4743,45 +4617,6 @@
 </entity>
 <entity>
 <tags
-   tags="guided_camera"/>
-<guided_camera
-   velocity="2.0"
-   default_dirs="0"
-   points_size="12"
-   wpt1="-72.9468 0.48355 -16.4786"
-   wpt2="-74.148 1.84512 -21.2435"
-   wpt3="-70.163 3.83865 -15.079"
-   wpt4="-64.0399 4.88089 -12.119"
-   wpt5="-62.3907 8.17905 -10.3229"
-   wpt6="-61.978 13.2981 -7.17426"
-   wpt7="-61.978 14.8739 -3.8869"
-   wpt8="-61.8485 18.7657 -2.72998"
-   wpt9="-61.8485 20.5716 2.9375"
-   wpt10="-61.8485 19.7312 7.34058"
-   wpt11="-57.5686 18.7657 9.61511"
-   wpt12="-54.1142 18.7657 9.61511"
-   lpt1="-79.8352 2.09982 -15.529"
-   lpt2="-79.959 2.3179 -9.47595"
-   lpt3="-79.959 2.3179 1.24573"
-   lpt4="-79.959 2.88284 11.9039"
-   lpt5="-67.3206 10.5338 11.2877"
-   lpt6="-56.3279 11.2121 10.778"
-   lpt7="-54.763 18.5873 3.07819"
-   lpt8="-54.763 18.8966 3.76953"
-   lpt9="-54.763 18.8966 3.53967"
-   lpt10="-54.763 18.8966 3.30835"
-   lpt11="-54.763 18.8966 3.30835"
-   lpt12="-54.7841 18.672 3.30835"/>
-<name
-   name="CineWireGoUp"/>
-<transform
-   pos="-91.9901 27.8865 -44.4083"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags
    tags="teleport"/>
 <name
    name="WirePosUp"/>
@@ -5385,6 +5220,33 @@
    name="Trigger_Escupe_Posessiones"/>
 <transform
    pos="-62.2198 0.753134 -5.47724"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="6"
+   wpt1="-68.9491 0.483551 -8.31356"
+   wpt2="-74.148 5.78952 -14.7448"
+   wpt3="-91.2291 3.85275 -15.079"
+   wpt4="-92.2785 4.7532 -4.84552"
+   wpt5="-80.1012 3.95865 -2.18445"
+   wpt6="-69.2861 4.4492 -2.95988"
+   lpt1="-85.7904 2.09982 -8.10908"
+   lpt2="-79.959 7.61081 -9.47595"
+   lpt3="-79.959 7.129 -4.54605"
+   lpt4="-74.0356 9.8638 -0.0596776"
+   lpt5="-67.3206 10.5338 11.2877"
+   lpt6="-66.8054 11.2121 15.816"/>
+<name
+   name="CineWireGoUp"/>
+<transform
+   pos="-91.9901 27.8865 -44.4083"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
