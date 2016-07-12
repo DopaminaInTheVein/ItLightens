@@ -105,7 +105,7 @@ hEnchufe = Handle()
 hEnchufeTarget = Handle()
 function activateEnchufePlayer()
   triggerEnchufe:getHandleCaller()
-  hEnchufe:get_handle_by_id(idCargador)
+  hEnchufe:get_handle_by_id(idEnchufe)
 
   if hEnchufe:has_pila() then
     if hEnchufe:has_pila_charged() then
