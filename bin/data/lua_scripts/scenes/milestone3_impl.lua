@@ -93,7 +93,7 @@ function activateCargadorSci()
 end
 
 function rechargeCell()
-  p:player_talks("*CLAC*", "scientific.dds", "SCI")
+  p:player_talks("The battery is now full of power!", "scientific.dds", "SCI")
   hCargador:set_charged(1)
 end
 
