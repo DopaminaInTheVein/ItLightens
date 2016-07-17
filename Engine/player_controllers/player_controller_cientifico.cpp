@@ -53,8 +53,8 @@ void player_controller_cientifico::readIniFileAttr() {
 			assignValueToVar(t_create_MagneticBomb_energy, fields_scientist);
 		}
 	}
-	bomb_offset_1 = VEC3(0, -0.1f, -0.05f);
-	bomb_offset_2 = VEC3(0, -0.1f, 0.05f);
+	bomb_offset_1 = VEC3(0.1f, 0.05f, 0.f);
+	bomb_offset_2 = VEC3(0.1f, 0.05f, 0.f);
 }
 
 bool player_controller_cientifico::getUpdateInfo()
