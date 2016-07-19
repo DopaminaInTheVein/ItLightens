@@ -27,7 +27,7 @@ public:
 			: bone_id(abone_id)
 			, local_dir(alocal_dir)
 		{}
-		void apply(CalModel* model, CalVector target, float amount);
+		void apply(CalModel* model, CalVector target, float amount, bool keep_vertical = false);
 	};
 
 	typedef std::vector <TBoneCorrector> VBoneCorrections;

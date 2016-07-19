@@ -260,6 +260,7 @@ bool CEntitiesModule::start() {
 
 	//Skeleton IK
 	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
+	SUBSCRIBE(TCompSkeletonLookAt, TMsgEntityCreated, onCreate);
 
 	//Grab Objects Hit
 	SUBSCRIBE(player_controller_mole, TMsgGrabHit, onGrabHit);
