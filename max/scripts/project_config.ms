@@ -52,6 +52,8 @@ fn startUp = (
 	-- Rigid Anim
 	fileIn (mcvScriptsDir + "RigidAnimExp.ms")
 
+	-- Material Manager
+	fileIn (mcvScriptsDir + "materialManager.ms")
 	
 	--Tools MaxScript
 	getTools = getFiles (mcvTools + "*.ms")
