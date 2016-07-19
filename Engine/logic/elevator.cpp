@@ -7,7 +7,7 @@ bool elevator::load(MKeyValue& atts)
 	speedUp = atts.getFloat("speedUp", 7.f);
 	speedDown = atts.getFloat("speedDown", speedUp);
 	targetDown = targetUp = atts.getPoint("target"); // Both as targets, because onCreate we will set targetUp/down as initial position
-	epsilonTarget = 0.1f;
+	epsilonTarget = 0.01f;
 	return true;
 }
 
@@ -38,6 +38,7 @@ void elevator::update(float elapsed)
 	if (!isInRoom(CHandle(this).getOwner()))return;
 	updateMove();
 	notifyNewState();
+	Debug->DrawLine(transform->getPosition(), targetDown);
 }
 
 //Move door and set OPENED or CLOSED if movement ends
@@ -62,7 +63,7 @@ void elevator::updateMove()
 	}
 	lastSpeed = speed*drag_i + lastSpeed * drag;
 	VEC3 delta = target - transform->getPosition();
-	float moveAmount = lastSpeed * getDeltaTime();
+	float moveAmount = min(lastSpeed * getDeltaTime(), delta.Length());
 	PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();
 
 	if (rd) {

@@ -1288,8 +1288,14 @@
    name="2"/>
 
 </entity>
-<entity>
-<tags/>
+<entity
+   id="301">
+<tags
+   tags="elevator interactive"/>
+<elevator
+   speedUp="27"
+   speedDown="27"
+   target="-65.3498 -1.3062 20.8289"/>
 <name
    name="elevator"/>
 <transform
@@ -1313,9 +1319,9 @@
 <entity>
 <tags/>
 <name
-   name="__pos_elevator_down"/>
+   name="elevator___pos_elevator_down"/>
 <transform
-   pos="-65.3498 -1.27052 20.8289"
+   pos="-65.3498 -1.3062 20.8289"
    quat="0 0 0 1.0"
    scale="0.547495"/>
 <room
@@ -2992,23 +2998,6 @@
    type_collision="static"/>
 <room
    name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="puertas_ascensor_abajoi_derecha"/>
-<transform
-   pos="-67.2186 0.322646 19.4268"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/puertas_ascensor_abajoi_derecha.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>
