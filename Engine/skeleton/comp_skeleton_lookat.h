@@ -3,12 +3,13 @@
 
 #include "components/comp_base.h"
 
-struct TCompSkeletonLookAt : public TCompBase { 
-  VEC3 target;
-  float    amount;
-  TCompSkeletonLookAt() { }
-  bool load(MKeyValue &atts);
-  void update(float elapsed);
+struct TCompSkeletonLookAt : public TCompBase {
+	VEC3 target;
+	float    amount;
+	TCompSkeletonLookAt() { }
+	bool load(MKeyValue &atts);
+	void update(float elapsed);
+	void onCreate(const TMsgEntityCreated&);
 };
 
 #endif

@@ -1,6 +1,3 @@
--- Last id 305, 306
--- Next 307, 308
-
 --------------------------- COMENTAR CODIGO TEST!!!! ---------------------------------------
 function test_dbg()
   --h:get_handle_by_id(idDoor)

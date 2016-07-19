@@ -3749,6 +3749,7 @@
 <render_static_mesh
    name="skeletons/player/player.static_mesh"/>
 <skeleton_ik/>
+<skeleton_lookat/>
 <abs_aabb/>
 <local_aabb/>
 <character_controller

@@ -144,6 +144,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSkeletonIK>()->init(MAX_ENTITIES);
+	getHandleManager<TCompSkeletonLookAt>()->init(MAX_ENTITIES);
 	getHandleManager<SkelControllerPlayer>()->init(MAX_ENTITIES);
 	getHandleManager<SkelControllerGuard>()->init(MAX_ENTITIES);
 	getHandleManager<SkelControllerScientist>()->init(MAX_ENTITIES);
@@ -637,11 +638,12 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<TCompSkeleton>()->updateAllInParallel(dt);
 			getHandleManager<TCompBoneTracker>()->updateAllInParallel(dt);
 			getHandleManager<TCompSkeletonIK>()->updateAllInParallel(dt);
+			getHandleManager<TCompSkeletonLookAt>()->updateAllInParallel(dt);
 		}
 		else {
 			getHandleManager<TCompSkeleton>()->updateAll(dt);
 			getHandleManager<TCompBoneTracker>()->updateAll(dt);
-			getHandleManager<TCompSkeletonIK>()->updateAll(dt);
+			getHandleManager<TCompSkeletonLookAt>()->updateAll(dt);
 		}
 
 		if (SBB::readBool("navmesh") && ia_wait > 1.0f) {
