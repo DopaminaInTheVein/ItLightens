@@ -66,11 +66,11 @@ Si no teneis cambios pendientes de subir, podreis actualizar sin problemas.
 
 > git add --all .
 
-* Si no se deben subir todos pongo una ruta de ejemplo para fichero concreto:
+	* Si no se deben subir todos pongo una ruta de ejemplo para fichero concreto:
 
 > git add bin/data/scenes/ms3.xml
 
-	Pongo una ruta de ejemplo para todos los ficheros nuevos y cambiados de una carpeta:
+	* Pongo una ruta de ejemplo para todos los ficheros nuevos y cambiados de una carpeta:
 
 > git add bin/data/scenes
 
