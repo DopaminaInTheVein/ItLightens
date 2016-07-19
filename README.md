@@ -19,9 +19,9 @@ Primero toca descargar el contenido del repositorio. Pasos:
 3. Abrir con el explorador, tal cual, botón derecho en pleno centro y darle a "Git Gui"
 4. Clicar en "Clone Existing Repository"
 5. En "Source Location" copiar:
-	> https://github.com/DopaminaInTheVein/ItLightens.git
+> https://github.com/DopaminaInTheVein/ItLightens.git
 	o en su defecto,
-	> https://github.com/DopaminaInTheVein/ItLightensArt.git
+> https://github.com/DopaminaInTheVein/ItLightensArt.git
 6. En "Target Directory" buscar la carpeta nueva y añadir un "/itlightens" (o cualquier otro nombre que os guste más)
 7. Clic en "Clone" y esperar un rato a que se descargue.
 8. Cuando termine salir de la nueva ventana que aparece
@@ -29,9 +29,9 @@ Primero toca descargar el contenido del repositorio. Pasos:
 ### Configurar ficheros pesados
 1. Repetir paso 4 anterior con "Git Bash" dentro de la subcarpeta que se crea.
 2. En el terminal que se abre, escribir y ejecutar:
-	> git lfs install
+> git lfs install
 3. Para cada tipo de fichero que vaya a pesar bastante (por ejemplo el escenario.max):
-	> git lfs track "*.max"
+> git lfs track "*.max"
 	
 ### En caso de clonar el repositorio de programación
 
@@ -63,17 +63,17 @@ Si no teneis cambios pendientes de subir, podreis actualizar sin problemas.
 
 ### Subir cambios
 1. Si estais seguros de que todo lo que aparece en el "status" se debe subir (el punto final es importante):
-	> git add --all .
+> git add --all .
 	Si no se deben subir todos:
 	* pongo una ruta de ejemplo para fichero concreto:
-		> git add bin/data/scenes/ms3.xml
+> git add bin/data/scenes/ms3.xml
 	* pongo una ruta de ejemplo para todos los ficheros nuevos y cambiados de una carpeta:
-		> git add bin/data/scenes
+> git add bin/data/scenes
 2. Una vez añadidos, con un mensaje de ejemplo entre comillas simples (recomendado algo claro y descriptivo por si hay que buscarlo):
-	> git commit -m 'Descripción del contenido de la subida'
+> git commit -m 'Descripción del contenido de la subida'
 3. Si os dejais de añadir algo y os dais cuenta o quereis separar las subidas por organización, repetir el paso 1-2 por cada parte.
 4. Mandar los cambios al repositorio (os pedirá usuario y contraseña de github "https://github.com/orgs/DopaminaInTheVein/people"):
-	> git push origin dev
+> git push origin dev
 5. "Liberar" el/los fichero/s reservado/s. (Quizás un excell de google groups os puede ayudar ahí)
 
 Error D3D11_CREATE_DEVICE_DEBUG:
