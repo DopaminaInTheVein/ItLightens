@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/pared_rota.dds"/>
+<texture slot="normalmap" name="textures/pared_rota_normals.dds"/>
+</material>
