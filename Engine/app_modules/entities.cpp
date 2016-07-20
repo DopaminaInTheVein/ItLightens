@@ -392,6 +392,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_cientifico, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(player_controller_speedy, TMsgSetControllable, onSetControllable);
+	SUBSCRIBE(TCompController3rdPerson, TMsgSetControllable, onSetControllable);
 
 	//Go And Look
 	SUBSCRIBE(player_controller, TMsgGoAndLook, onGoAndLook);

@@ -36,6 +36,7 @@ class TCompController3rdPerson : public TCompBase {
 	float		rotation_sensibility;
 	bool		y_axis_inverted;
 	bool		x_axis_inverted;
+	bool		input_enabled = true;
 	VEC3		position_diff;
 	VEC3		offset;
 
@@ -171,7 +172,7 @@ public:
 		if (!e_target)
 			return;
 
-		updateInput();
+		if (input_enabled) updateInput();
 
 		TCompTransform* target_tmx = e_target->get<TCompTransform>();
 		assert(target_tmx);
@@ -238,10 +239,16 @@ public:
 		my_tmx->lookAt(origin, origin + front);
 	}
 
+	void onSetControllable(const TMsgSetControllable& msg)
+	{
+		input_enabled = msg.control;
+	}
+
 	void renderInMenu() {
 		ImGui::DragFloat("rot_speed", &speed_camera, -0.1f, 0.1f);
 		ImGui::DragFloat("distanceToTarget", &distance_to_target, 0.1f, 0.1f);
 		ImGui::DragFloat3("positionDiff", &position_diff.x, -0.1f, 0.1f);
+		ImGui::Checkbox("Input enabled", &input_enabled);
 	}
 };
 

@@ -130,6 +130,7 @@ void CPlayerBase::UpdateCinematic(float elapsed) {
 			//In position and Oriented
 			onCinematic = false;
 			logic_manager->throwUserEvent(cinematicEndCode);
+			ChangeCommonState("idle");
 		}
 		else {
 			//Orientation to target
@@ -141,6 +142,7 @@ void CPlayerBase::UpdateCinematic(float elapsed) {
 		float deltaYaw = transform->getDeltaYawToAimTo(cinematicTargetPos);
 		if (deltaYaw > epsilonYaw) transform->setAngles(yaw + 0.1f * deltaYaw, pitch);
 		VEC3 dir = cinematicTargetPos - cc->GetPosition();
+		dir.y = 0;
 		dir.Normalize();
 		cc->AddMovement(dir, player_max_speed * getDeltaTime());
 		moving = true;

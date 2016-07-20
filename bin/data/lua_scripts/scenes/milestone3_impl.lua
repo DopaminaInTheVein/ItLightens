@@ -254,10 +254,20 @@ hDoorElevLeft = Handle()
 hDoorElevRight = Handle()
 hDoorElevLeftUp = Handle()
 hDoorElevRightUp = Handle()
+actionElevatorTarget = Handle()
 
 triggerElevator = Handle()
 stateElevator = 1 -- 1= up , 0 = down
 function activateElevator( )  
+
+  --Llevamos el player al punto de accion
+  actionElevatorTarget:get_handle_by_name_tag("elevator_pAction", "target")
+  player = Handle()
+  player:get_player()
+  player:go_and_look_as(actionElevatorTarget, "moveElevator();")
+end
+
+function moveElevator( )
   triggerElevator:getHandleCaller()
   p:setControlEnabled(0)
   
@@ -272,6 +282,7 @@ function activateElevator( )
   if stateElevator == 1 then
 	hDoorElevLeftUp:setLocked(1)
 	hDoorElevRightUp:setLocked(1)
+	
 	p:exec_command("hDoorElevLeft:setLocked(0);", 7)
 	p:exec_command("hDoorElevRight:setLocked(0);", 7)
   else

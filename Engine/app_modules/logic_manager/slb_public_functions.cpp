@@ -493,11 +493,12 @@ void SLBPublicFunctions::print(const char* to_print) {
 
 void SLBPublicFunctions::setControlEnabled(int enabled) {
 	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
-	if (player.isValid()) {
-		CEntity * ePlayer = player;
+	CHandle main_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
+	if (player.isValid() && main_camera.isValid()) {
 		TMsgSetControllable msg;
 		msg.control = (enabled != 0);
-		ePlayer->sendMsg(msg);
+		player.sendMsg(msg);
+		main_camera.sendMsg(msg);
 	}
 }
 
