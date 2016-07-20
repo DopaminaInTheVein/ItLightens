@@ -414,6 +414,18 @@ int bt_guard::actionStepBack() {
 	else return OK;
 }
 
+void bt_guard::lookAtPlayer()
+{
+	CEntity * ePlayer = getPlayer();
+	if (ePlayer) {
+		GET_MY(look_at, TCompSkeletonLookAt);
+		TCompCharacterController * ccPlayer = ePlayer->get<TCompCharacterController>();
+		if (look_at && ccPlayer) {
+			look_at->setTarget(ccPlayer->GetPosition());
+		}
+	}
+}
+
 int bt_guard::actionReact() {
 	PROFILE_FUNCTION("guard: actionreact");
 	if (!myParent.isValid()) return false;

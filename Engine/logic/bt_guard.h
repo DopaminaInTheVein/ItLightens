@@ -153,6 +153,7 @@ class bt_guard : public bt, public TCompBase
 	void goForward(float stepForward);
 	bool turnTo(VEC3 dest, bool wide = false);
 	bool turnToPlayer();
+	void lookAtPlayer();
 	//VEC3 generateRandomPoint(); THIS IS NOT USED!
 
 	//Aux checks
@@ -280,6 +281,9 @@ public:
 	}
 
 	void update(float dt) {
+		//Test
+		lookAtPlayer();
+
 		if (!isInRoom(myParent))return;
 		TCompTransform * t = compBaseEntity->get<TCompTransform>();
 		Debug->DrawLine(t->getPosition(), player_last_seen_point, VEC3(0, 1, 0));

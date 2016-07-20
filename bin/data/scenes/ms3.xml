@@ -1385,7 +1385,7 @@
    tags="pila_container interactive"/>
 <pila_container/>
 <name
-   name="enchufe_mapeado"/>
+   name="enchufe"/>
 <transform
    pos="-121.537 0.0748136 -5.41684"
    quat="0 0 0 1.0"
@@ -3738,6 +3738,7 @@
 <life
    points="10"/>
 <skc_player/>
+<skeleton_lookat/>
 <name
    name="__player_1"/>
 <transform
@@ -3749,7 +3750,6 @@
 <render_static_mesh
    name="skeletons/player/player.static_mesh"/>
 <skeleton_ik/>
-<skeleton_lookat/>
 <abs_aabb/>
 <local_aabb/>
 <character_controller
@@ -3853,6 +3853,7 @@
    formation_point="25.5739 -24.0251 -6.9732"
    formation_dir="26.2157 -23.9678 -6.80094"/>
 <skc_guard/>
+<skeleton_lookat/>
 <name
    name="guard_002"/>
 <transform
@@ -3894,6 +3895,7 @@
    formation_point="-4.26029 -24.0251 1.96243"
    formation_dir="-3.61846 -23.9678 2.13469"/>
 <skc_guard/>
+<skeleton_lookat/>
 <name
    name="guard_003"/>
 <transform
@@ -3932,6 +3934,7 @@
    formation_point="-87.0319 -1.32482 -30.3074"
    formation_dir="-86.3901 -1.26751 -30.1352"/>
 <skc_guard/>
+<skeleton_lookat/>
 <name
    name="guard_004"/>
 <transform
@@ -3970,6 +3973,7 @@
    formation_point="-84.3387 -1.32482 -30.3074"
    formation_dir="-83.6969 -1.26751 -30.1352"/>
 <skc_guard/>
+<skeleton_lookat/>
 <name
    name="guard_005"/>
 <transform
@@ -4020,6 +4024,7 @@
    formation_point="-99.4642 -1.32482 -12.4904"
    formation_dir="-98.8223 -1.26751 -12.3182"/>
 <skc_guard/>
+<skeleton_lookat/>
 <name
    name="guard_006"/>
 <transform
@@ -4070,6 +4075,7 @@
    formation_point="-69.5936 -1.32482 5.92785"
    formation_dir="-68.9518 -1.26751 6.10012"/>
 <skc_guard/>
+<skeleton_lookat/>
 <name
    name="guard_007"/>
 <transform
@@ -4602,45 +4608,6 @@
    size="71"/>
 <room
    name="2"/>
-
-</entity>
-<entity>
-<tags
-   tags="guided_camera"/>
-<guided_camera
-   velocity="2.0"
-   default_dirs="0"
-   points_size="12"
-   wpt1="-72.9468 0.48355 -16.4786"
-   wpt2="-74.148 1.84512 -21.2435"
-   wpt3="-70.163 3.83865 -15.079"
-   wpt4="-64.0399 4.88089 -12.119"
-   wpt5="-62.3907 8.17905 -10.3229"
-   wpt6="-61.978 13.2981 -7.17426"
-   wpt7="-61.978 14.8739 -3.8869"
-   wpt8="-61.8485 18.7657 -2.72998"
-   wpt9="-61.8485 20.5716 2.9375"
-   wpt10="-61.8485 19.7312 7.34058"
-   wpt11="-57.5686 18.7657 9.61511"
-   wpt12="-54.1142 18.7657 9.61511"
-   lpt1="-79.8352 2.09982 -15.529"
-   lpt2="-79.959 2.3179 -9.47595"
-   lpt3="-79.959 2.3179 1.24573"
-   lpt4="-79.959 2.88284 11.9039"
-   lpt5="-67.3206 10.5338 11.2877"
-   lpt6="-56.3279 11.2121 10.778"
-   lpt7="-54.763 18.5873 3.07819"
-   lpt8="-54.763 18.8966 3.76953"
-   lpt9="-54.763 18.8966 3.53967"
-   lpt10="-54.763 18.8966 3.30835"
-   lpt11="-54.763 18.8966 3.30835"
-   lpt12="-54.7841 18.672 3.30835"/>
-<name
-   name="CineWireGoUp"/>
-<transform
-   pos="-91.9901 27.8865 -44.4083"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
 
 </entity>
 <entity>
@@ -5365,6 +5332,33 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="6"
+   wpt1="-68.9491 0.483551 -8.31356"
+   wpt2="-74.148 5.78952 -14.7448"
+   wpt3="-91.2291 3.85275 -15.079"
+   wpt4="-92.2785 4.7532 -4.84552"
+   wpt5="-80.1012 3.95865 -2.18445"
+   wpt6="-69.2861 4.4492 -2.95988"
+   lpt1="-85.7904 2.09982 -8.10908"
+   lpt2="-79.959 7.61081 -9.47595"
+   lpt3="-79.959 7.129 -4.54605"
+   lpt4="-74.0356 9.8638 -0.0596776"
+   lpt5="-67.3206 10.5338 11.2877"
+   lpt6="-66.8054 11.2121 15.816"/>
+<name
+   name="CineWireGoUp"/>
+<transform
+   pos="-91.9901 27.8865 -44.4083"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
 </entity>
 

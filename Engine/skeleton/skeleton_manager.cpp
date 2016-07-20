@@ -16,13 +16,13 @@ CQuaternion Cal2Engine(CalQuaternion q) {
 }
 //--------------------------------------------------
 
-CalQuaternion getRotationFromAToB(CalVector a, CalVector b, float unit_amount) {
+CalQuaternion getRotationFromAToB(CalVector a, CalVector b, float unit_amount, float max_angle) {
 	VEC3 da = Cal2Engine(a);
 	VEC3 db = Cal2Engine(b);
 	VEC3 normal = da.Cross(db);
 	if (!isNormal(normal)) return Engine2Cal(CQuaternion::Identity);
 
-	float angle = angleBetween(da, db);
+	float angle = clampAbs(angleBetween(da, db), max_angle);
 	CQuaternion q = CQuaternion::CreateFromAxisAngle(normal, angle * unit_amount);
 	return Engine2Cal(q);
 }
@@ -30,7 +30,7 @@ CalQuaternion getRotationFromAToB(CalVector a, CalVector b, float unit_amount) {
 
 CCoreModel::CCoreModel() : CalCoreModel("unnamed") {}
 
-void CCoreModel::TBoneCorrector::apply(CalModel* model, CalVector world_pos, float amount, bool keep_vertical) {
+void CCoreModel::TBoneCorrector::apply(CalModel* model, CalVector world_pos, float amount, float max_angle, bool keep_vertical) {
 	CalBone* bone = model->getSkeleton()->getBone(bone_id);
 	assert(bone);
 
@@ -49,7 +49,7 @@ void CCoreModel::TBoneCorrector::apply(CalModel* model, CalVector world_pos, flo
 	CalVector dir_local_to_target = dir_abs;
 	dir_local_to_target *= abs_to_local_rot;
 
-	CalQuaternion correction_rot = getRotationFromAToB(local_dir, dir_local_to_target, amount);//1.0f);
+	CalQuaternion correction_rot = getRotationFromAToB(local_dir, dir_local_to_target, amount, max_angle);
 
 	// The current bone rotation wrt my parent bone
 	CalQuaternion bone_local_rotation = bone->getRotation();

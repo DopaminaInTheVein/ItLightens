@@ -3,5 +3,10 @@
   <animations src ="skeletons/guard/"/>
   <mesh     src="skeletons/guard/guard.cmf"/>
   <key_bones 
+    pelvis="Guard Pelvis"
+    spine_down="Guard Spine"
+    spine_up="Guard Spine1"
+    neck="Guard Neck"
+    head="Guard Head"
   />
 </model>

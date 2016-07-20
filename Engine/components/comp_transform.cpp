@@ -21,31 +21,31 @@ void TCompTransform::render() const
 }
 
 bool TCompTransform::load(MKeyValue& atts) {
-  auto p = atts.getPoint("pos");
-  auto q = atts.getQuat("quat");
-  auto s = atts.getFloat("scale", 1.0f);
-  setPosition(p);
-  setRotation(q);
-  setScale(VEC3(s));
-  //if (atts.getString("lookat", "") != "") {
-  if (atts.has("yaw") || atts.has("pitch")) {
-	  float yaw, pitch;
-	  getAngles(&yaw, &pitch);
-	  yaw = deg2rad(atts.getFloat("yaw", rad2deg(yaw)));
-	  pitch = deg2rad(atts.getFloat("pitch", rad2deg(pitch)));
-	  setAngles(yaw, pitch);
-  }
-  if (atts.has("lookat")) {
-    auto target = atts.getPoint("lookat");
-    lookAt(p, target, getUp());
-  }
-  return true;
+	auto p = atts.getPoint("pos");
+	auto q = atts.getQuat("quat");
+	auto s = atts.getFloat("scale", 1.0f);
+	setPosition(p);
+	setRotation(q);
+	setScale(VEC3(s));
+	//if (atts.getString("lookat", "") != "") {
+	if (atts.has("yaw") || atts.has("pitch")) {
+		float yaw, pitch;
+		getAngles(&yaw, &pitch);
+		yaw = deg2rad(atts.getFloat("yaw", rad2deg(yaw)));
+		pitch = deg2rad(atts.getFloat("pitch", rad2deg(pitch)));
+		setAngles(yaw, pitch);
+	}
+	if (atts.has("lookat")) {
+		auto target = atts.getPoint("lookat");
+		lookAt(p, target, getUp());
+	}
+	return true;
 }
 
 void TCompTransform::renderInMenu() {
 	VEC3 pos = getPosition();
 	//if (ImGui::DragFloat3("Pos", &pos.x, -0.1f, 0.1f)) {
-	if (ImGui::DragFloat3("Pos", &pos.x, 0.1f)){
+	if (ImGui::DragFloat3("Pos", &pos.x, 0.1f)) {
 		setPosition(pos);
 	}
 

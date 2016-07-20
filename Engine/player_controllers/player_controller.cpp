@@ -499,14 +499,18 @@ void player_controller::UpdateMoves()
 	assert(isValid(direction));
 
 	float yaw_to_stop = deg2rad(80.f);
+	float yaw_to_break = deg2rad(40.f);
 	float new_yaw = player_transform->getDeltaYawToAimDirection(direction);
 
 	player_transform->getAngles(&yaw, &pitch);
-	player_transform->setAngles(new_yaw*0.1f + yaw, pitch);		//control rotate transfom, not needed for the character controller
+	player_transform->setAngles(new_yaw * player_rotation_speed * getDeltaTime() + yaw, pitch);		//control rotate transfom, not needed for the character controller
 
 	if (abs(new_yaw) >= yaw_to_stop) {
 		player_curr_speed = 0.0f;
 		directionForward = directionLateral = directionVertical = VEC3(0, 0, 0);
+	}
+	else if (abs(new_yaw) >= yaw_to_break) {
+		player_curr_speed *= 0.9f;
 	}
 
 	//Set current velocity with friction
@@ -1050,7 +1054,7 @@ void player_controller::renderInMenu() {
 	for (auto pond : force_ponderations) {
 		ImGui::Text("Ponderation: %f\n", pond);
 	}
-	
+
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
 
