@@ -49,7 +49,7 @@
    name="__pila"/>
 <transform
    pos="-121.537 -0.242203 -5.41684"
-   quat="0 0.998249 0 -0.0591458"
+   quat="0 -0.01971 0 0.999806"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/__pila.static_mesh"/>
@@ -1400,11 +1400,11 @@
 <name
    name="enchufe"/>
 <transform
-   pos="-121.537 0.0748136 -5.41684"
+   pos="-121.537 -0.242203 -5.41684"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/enchufe_mapeado.static_mesh"/>
+   name="static_meshes/ms3/enchufe.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -5244,6 +5244,43 @@
    name="CineWireGoUp"/>
 <transform
    pos="-91.9901 27.8865 -44.4083"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="11"
+   wpt1="-121.213 -0.0322575 -9.55555"
+   wpt2="-120.474 -0.0322575 -10.299"
+   wpt3="-118.405 -0.0322575 -10.6867"
+   wpt4="-111.098 0.535184 -10.1802"
+   wpt5="-95.1181 0.495025 -8.78833"
+   wpt6="-88.7627 3.22459 -19.3234"
+   wpt7="-90.6459 0.795638 -19.3234"
+   wpt8="-92.6409 0.795638 -14.234"
+   wpt9="-97.1622 -0.164078 -10.1621"
+   wpt10="-105.879 -0.164078 -10.1621"
+   wpt11="-120.794 -0.164078 -11.0042"
+   lpt1="-121.755 0.050018 -6.03046"
+   lpt2="-122.196 0.050018 -7.03473"
+   lpt3="-122.602 0.0500179 -8.24042"
+   lpt4="-122.264 0.224029 -9.81918"
+   lpt5="-104.172 0 -11.1817"
+   lpt6="-82.9293 0.117583 -29.395"
+   lpt7="-82.9293 0.117583 -29.395"
+   lpt8="-82.9293 0.117583 -29.395"
+   lpt9="-82.9293 0.117583 -29.395"
+   lpt10="-87.6883 0.117583 -18.1023"
+   lpt11="-87.6883 0.117584 -12.5695"/>
+<name
+   name="CineEnchufeDoor"/>
+<transform
+   pos="-139.761 24.4228 -44.4083"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

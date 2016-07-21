@@ -100,22 +100,23 @@ idEnchufe = 304
 triggerEnchufe = Handle()
 hEnchufe = Handle()
 hEnchufeTarget = Handle()
-function activateEnchufePlayer()
-  triggerEnchufe:getHandleCaller()
-  hEnchufe:get_handle_by_id(idEnchufe)
 
-  if hEnchufe:has_pila() then
-    if hEnchufe:has_pila_charged() then
-		p:player_talks("I did it! The door is open now!", "scientific.dds", "SCI")
+function activateEnchufePlayer()
+	triggerEnchufe:getHandleCaller()
+	hEnchufe:get_handle_by_id(idEnchufe)
+
+	if hEnchufe:has_pila() then
+		if hEnchufe:has_pila_charged() then
+			p:player_talks("I did it! The door is open now!", "scientific.dds", "SCI")
+		else
+			p:player_talks("The object on it has no energy...", "scientific.dds", "SCI")
+		end
 	else
-		p:player_talks("The object on it has no energy...", "scientific.dds", "SCI")
+		p:player_talks("This needs energy to work.", "scientific.dds", "SCI")
 	end
-  else
-	p:player_talks("This needs energy to work.", "scientific.dds", "SCI")
-  end
-  
-  triggerEnchufe:getHandleCaller()
-  p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
+	  
+	triggerEnchufe:getHandleCaller()
+	p:exec_command("triggerEnchufe:setActionable(1);", 4.5)
 end
 
 function activateEnchufeSci()
@@ -141,28 +142,50 @@ isDoorOpen = false
 function OnPutPila_enchufe()
   pila:getHandleCaller()
   if pila:is_charged() then
-	-- Evento abrir puerta
-	-- Faltaria cinematica, etc.
-	
 	--Abril
-	h:get_handle_by_id(idDoor)
 	isDoorOpen = true
 	if not alert then
-		h:setLocked(0)
+		openDoorPila()
 	end
   end
+end
+
+function cineDoor( )
+  cam:run_cinematic("CineEnchufeDoor", 10)
+  p:exec_command( "cam:fade_out(1);", 0.1)
+  p:exec_command( "cam:fade_in(1);", 3)
+  p:exec_command( "cam:fade_out(1);", 7)
+  p:exec_command( "cam:fade_in(1);", 11)
+end
+
+function openDoorPila( )
+  cineDoor()
+  p:exec_command( "openDoorPilaEffect();", 4)
+end
+
+function closeDoorPila( )
+  cineDoor()
+  p:exec_command( "closeDoorPilaEffect();", 4)
+end
+
+function openDoorPilaEffect( )
+  h:get_handle_by_id(idDoor)
+  h:setLocked(0)
+end
+
+function closeDoorPilaEffect( )
+  h:get_handle_by_id(idDoor)
+  h:setLocked(1)
 end
 
 function OnRemovePila_enchufe()
   pila:getHandleCaller()
   if pila:is_charged() then
-	-- Evento cerrar puerta
-	-- Faltaria cinematica, etc.
-	
 	--Cerral (:P)
-	h:get_handle_by_id(idDoor)
-	h:setLocked(1)
 	isDoorOpen = false
+	if not alert then
+		closeDoorPila()
+	end
   end
 end
 

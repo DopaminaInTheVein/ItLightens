@@ -119,6 +119,7 @@ void TCompPila::checkActions()
 eAction TCompPila::getActionAvailable()
 {
 	if (!isZero(place)) return NONE;
+	if (container.isValid()) return NONE;
 	//Resultado
 	eAction action = NONE;
 
