@@ -87,6 +87,8 @@ public:
 	void LeavingPila();
 	void PuttingPila();
 	void DestroyWall();
+	void PushBoxPreparation();
+	void PushBox();
 
 	void InitControlState();
 	bool nearToBox();
@@ -99,10 +101,13 @@ public:
 
 	CHandle boxGrabbed; // = false;
 	CHandle boxNear; // = false;
+	CHandle boxPushed;
 	CHandle pilaGrabbed; // = false;
 	CHandle pilaNear; // = false;
 	CHandle pilaContainer;
 	VEC3 pilaContainerPos;
+
+	bool pushing_box = false;
 
 	string selectedBox = "";
 	//int selectedBoxi = 0;

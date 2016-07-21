@@ -2,17 +2,18 @@
 #include "player_controller_mole.h"
 
 #include <windows.h>
-#include "handle\object_manager.h"
-#include "components\comp_transform.h"
-#include "components\entity.h"
-#include "components\entity_tags.h"
-#include "app_modules\io\io.h"
-#include "app_modules\logic_manager\logic_manager.h"
-#include "components\comp_msgs.h"
+#include "handle/object_manager.h"
+#include "components/comp_transform.h"
+#include "components/entity.h"
+#include "components/entity_tags.h"
+#include "app_modules/io/io.h"
+#include "app_modules/logic_manager/logic_manager.h"
+#include "components/comp_msgs.h"
+#include "logic/comp_box.h"
 
-#include "ui\ui_interface.h"
+#include "ui/ui_interface.h"
 #include "components/comp_charactercontroller.h"
-#include "components\comp_physics.h"
+#include "components/comp_physics.h"
 
 map<string, statehandler> player_controller_mole::statemap = {};
 
@@ -22,6 +23,7 @@ map<string, statehandler> player_controller_mole::statemap = {};
 
 //State names
 #define ST_MOLE_GRAB "grabbedBox"
+#define ST_MOLE_PUSH "pushingBox"
 #define ST_MOLE_PILA "grabbedPila"
 #define ST_MOLE_GRAB_GO "goToGrab"
 #define ST_MOLE_PILA_GO "goToPila"
@@ -43,6 +45,7 @@ map<string, statehandler> player_controller_mole::statemap = {};
 #define ST_MOLE_UNPILING "leavingPila"
 #define ST_MOLE_PUTTING "puttingPila"
 #define ST_MOLE_DESTROY "destroyWall"
+#define ST_MOLE_PUSH_PREP "pushBoxPreparation"
 
 #define MOLE_TIME_OUT_GO_GRAB	4.f
 
@@ -104,6 +107,8 @@ void player_controller_mole::Init() {
 		AddStMole(ST_MOLE_UNPILING, LeavingPila);
 		AddStMole(ST_MOLE_PUTTING, PuttingPila);
 		AddStMole(ST_MOLE_DESTROY, DestroyWall);
+		AddStMole(ST_MOLE_PUSH_PREP, PushBoxPreparation);
+		AddStMole(ST_MOLE_PUSH, PushBox);
 
 		AddStMole(ST_MOLE_PUT_GO, GoToPilaContainer);
 		AddStMole(ST_MOLE_PUT_FACE, FaceToPilaContainer);
@@ -203,6 +208,48 @@ void player_controller_mole::UpdateInputActions() {
 			}
 		}
 	}
+	
+	if (pushing_box) {
+		if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
+			GET_COMP(box_t, boxPushed, TCompTransform);
+			VEC3 box_position = box_t->getPosition();
+
+			VEC3 direction = VEC3(0, 0, 1);
+
+			CEntity * camera_e = camera;
+			TCompTransform* camera_comp = camera_e->get<TCompTransform>();
+
+			direction.Normalize();
+
+			float yaw, pitch;
+			camera_comp->getAngles(&yaw, &pitch);
+			float new_x, new_z;
+
+			new_x = direction.x * cosf(yaw) + direction.z*sinf(yaw);
+			new_z = -direction.x * sinf(yaw) + direction.z*cosf(yaw);
+
+			direction.x = new_x;
+			direction.z = new_z;
+
+			direction.Normalize();
+
+			float new_yaw = box_t->getDeltaYawToAimDirection(direction);
+			clampAbs_me(new_yaw, player_rotation_speed * getDeltaTime());
+			box_t->getAngles(&yaw, &pitch);
+
+			box_t->setAngles(new_yaw + yaw, pitch);
+
+			box_position.x += direction.x;
+			box_position.z += direction.z;
+
+			box_t->setPosition(box_position);
+		}
+		if (io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility
+			|| io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility 
+			|| io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
+			LeaveBox();
+		}
+	}
 }
 
 void player_controller_mole::UpdateMovingWithOther() {
@@ -255,7 +302,16 @@ void player_controller_mole::DestroyWall() {
 }
 
 void player_controller_mole::LeaveBox() {
-	animController->ungrabObject();
+
+	// if we were pushing a box, we just stop and return
+	if (pushing_box) {
+		GET_COMP(box_p, boxPushed, TCompPhysics);
+		box_p->setKinematic(false);
+		pushing_box = false;
+	}
+	else {
+		animController->ungrabObject();
+	}
 
 	SBB::postBool(selectedBox, false);
 	mole_max_speed *= 2;
@@ -488,10 +544,52 @@ void player_controller_mole::FaceToGrab()
 {
 	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
 	if (faced) {
-		animController->grabObject(boxNear);
-		animController->setState(AST_GRAB_DOWN);
-		ChangeState(ST_MOLE_GRABBING_1);
+		GET_COMP(box, boxNear, TCompBox);
+		// if the box is MEDIUM (1) we go to "push mode"
+		if (box->type_box == 1) {
+			boxPushed = boxNear;
+			animController->setState(AST_PUSH_PREP);
+			ChangeState(ST_MOLE_PUSH_PREP);
+		}
+		// if the box is SMALL, we go to grab mode
+		else {
+			animController->grabObject(boxNear);
+			animController->setState(AST_GRAB_DOWN);
+			ChangeState(ST_MOLE_GRABBING_1);
+		}
 	}
+}
+
+void player_controller_mole::PushBoxPreparation() {
+	static float t_grab2 = SK_MOLE_TIME_TO_GRAB;
+	t_grab2 -= getDeltaTime();
+	if (t_grab2 < 0) {
+		t_grab2 = SK_MOLE_TIME_TO_GRAB;
+		ChangeState(ST_MOLE_PUSH);
+		animController->setState(AST_PUSH_PREP);
+		GET_COMP(box_p, boxPushed, TCompPhysics);
+		box_p->setKinematic(true);
+		pushing_box = true;
+		inputEnabled = true;
+	}
+}
+
+void player_controller_mole::PushBox() {
+	if (!SBB::readBool(selectedBox)) {
+		SBB::postBool(selectedBox, true);
+	}
+
+	animController->setState(AST_PUSH_WALK);
+
+	energyDecreasal(5.0f);
+	TMsgDamage dmg;
+	dmg.modif = 0.5f;
+	myEntity->sendMsg(dmg);
+	boxGrabbed = boxNear;
+	mole_max_speed /= 2;
+
+	ChangeState("idle");
+	//logic_manager->throwEvent(logic_manager->OnPickupBox, "");
 }
 
 void player_controller_mole::FaceToPila()
@@ -657,6 +755,7 @@ void player_controller_mole::GrabbingImpact1()
 		____TIMER__UPDATE_(t_grab_hit);
 	}
 }
+
 void player_controller_mole::GrabbingImpact2()
 {
 	//UpdateMovingWithOther();
