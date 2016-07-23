@@ -4,14 +4,13 @@
 #include <windows.h>
 #include "utils\timer.h"
 
-
 class IAppModule;
 
 // ------------------------------------------------------
 class CApp {
 public:
 	typedef std::vector<IAppModule*> VModules;
-
+	std::string sceneToLoad = "room_one";
 	// Remove copy ctor
 	CApp(const CApp&) = delete;
 
@@ -44,7 +43,6 @@ public:
 	CTimer timer_app;
 
 private:
-	std::string sceneToLoad = "";
 
 	// Windows stuff
 	HINSTANCE hInstance;
@@ -66,7 +64,6 @@ private:
 	void render();
 
 public:
-
 };
 
 #endif

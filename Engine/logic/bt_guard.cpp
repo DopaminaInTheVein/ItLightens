@@ -1083,9 +1083,22 @@ void bt_guard::goTo(const VEC3& dest) {
 	}
 	VEC3 target = dest;
 	VEC3 npcPos = getTransform()->getPosition();
-	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) < 0.5f) {
-		++currPathWpt;
+	float walk_amount = SPEED_WALK * getDeltaTime();
+	bool target_found = totalPathWpt <= 0 || currPathWpt >= totalPathWpt;
+	while (!target_found) {
+		if (fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) >= walk_amount) {
+			target_found = true;
+		}
+		else {
+			if (currPathWpt < totalPathWpt - 1) {
+				currPathWpt++;
+			}
+			else target_found = true;
+		}
 	}
+	//while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) < 0.5f) {
+	//	++currPathWpt;
+	//}
 	if (currPathWpt < totalPathWpt) {
 		target = pathWpts[currPathWpt];
 	}

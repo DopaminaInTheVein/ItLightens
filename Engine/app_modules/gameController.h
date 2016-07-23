@@ -64,8 +64,8 @@ public:
 			//restart game
 			if (io->keys[VK_RETURN].becomesPressed() || io->joystick.button_START.becomesPressed()) {
 				CApp& app = CApp::get();
-				app.restart();
-				//app.changeScene();
+				//app.restart();
+				app.changeScene();
 			}
 
 			//toggle console log

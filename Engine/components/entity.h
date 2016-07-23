@@ -8,7 +8,8 @@
 // --------------------------------------------
 class CEntity : public TCompBase {
 	CHandle comps[CHandle::max_types];
-
+	bool permanent;
+	bool need_reload;
 public:
 
 	void add(CHandle h) {
@@ -86,6 +87,10 @@ public:
 	void setName(const char* new_name);
 	bool hasName(const char* new_name) const;
 	bool hasTag(std::string tag);
+	bool isPermanent() { return permanent; }
+	bool needReload() { return need_reload; }
+	void setPermanent(bool new_permanent) { permanent = new_permanent; }
+	void setReload(bool new_reload) { need_reload = new_reload; }
 
 	// --------------------------------------------
 	CEntity() {
