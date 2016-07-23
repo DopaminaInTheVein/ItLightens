@@ -1030,7 +1030,7 @@
 <rigidbody
    type_collision="static"/>
 <room
-   name="1"/>
+   name="1/1"/>
 
 </entity>
 <entity>
@@ -3457,7 +3457,7 @@
 <rigidbody
    type_collision="static"/>
 <room
-   name="1"/>
+   name="1/2/1"/>
 
 </entity>
 <entity>

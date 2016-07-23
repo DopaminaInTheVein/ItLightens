@@ -220,7 +220,11 @@ fn assign_default_room_to_all = (
 )
 
 fn assign_room_name_to selected rname = (
+	if selected.room_name == "-1" then (	
 		selected.room_name = rname
+	) else (
+		selected.room_name += "/" + rname
+	)
 )
 
 fn assign_room_name_to_selected rname = (

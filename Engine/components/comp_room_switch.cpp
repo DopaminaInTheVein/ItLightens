@@ -10,8 +10,8 @@
 
 bool TCompRoomSwitch::load(MKeyValue & atts)
 {
-	room_back = atts.getInt("back_room", -1);
-	room_front = atts.getInt("front_room", -1);
+	room_back.push_back(atts.getInt("back_room", -1));
+	room_front.push_back(atts.getInt("front_room", -1));
 	return true;
 }
 
@@ -33,12 +33,12 @@ void TCompRoomSwitch::onTriggerExit(const TMsgTriggerOut & msg)
 	TCompTransform * t = me_e->get<TCompTransform>();
 	if (t->isInFront(pt->getPosition())) {
 		if (room->setName(room_front)) {
-			SBB::postSala(room_front);
+			SBB::postSala(room_front[0]);
 		}
 	}
 	else {
 		if (room->setName(room_back)) {
-			SBB::postSala(room_back);
+			SBB::postSala(room_back[0]);
 		}
 	}
 }

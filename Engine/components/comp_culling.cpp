@@ -34,8 +34,10 @@ void TCompCulling::update() {
 	if (!e_owner) return;
 	TCompRoom* room = e_owner->get<TCompRoom>();
 	if (room) {
-		if (SBB::readSala() != room->name)
+		std::vector<int> rooms = room->name;
+		if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) != rooms.end()) {
 			return;			//light on diferent room
+		}
 		else {
 			//fast fix for room3
 			if (SBB::readSala() == 2) {

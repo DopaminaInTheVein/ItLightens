@@ -519,10 +519,13 @@ void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 }
 
 void SLBPublicFunctions::playerRoom(int newRoom) {
+	std::vector<int> new_room_vec;
+	new_room_vec.push_back(newRoom);
+
 	CHandle p = tags_manager.getFirstHavingTag("player");
 	CEntity * pe = p;
 	TCompRoom * room = pe->get<TCompRoom>();
-	if (room->setName(newRoom)) {
+	if (room->setName(new_room_vec)) {
 		SBB::postSala(newRoom);
 	}
 }

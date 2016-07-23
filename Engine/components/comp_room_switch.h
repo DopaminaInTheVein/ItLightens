@@ -5,8 +5,8 @@
 #include "comp_msgs.h"
 
 struct TCompRoomSwitch : public TTrigger {
-	int room_back;
-	int room_front;
+	std::vector<int> room_back;
+	std::vector<int> room_front;
 
 	bool load(MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated& msg);
