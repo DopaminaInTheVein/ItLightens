@@ -159,7 +159,7 @@ void CApp::stop() {
 void CApp::changeScene() {
 	dbg("Destroying scene...\n");
 
-	entities->clear();
+	entities->clear("room_one");
 	sceneToLoad = "room_one";
 }
 

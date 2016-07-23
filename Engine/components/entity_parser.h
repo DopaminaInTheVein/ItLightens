@@ -32,17 +32,20 @@ namespace IdEntities {
 class CEntityParser : public CXMLParser {
 	CHandle curr_entity;
 	int curr_entity_id;
-	int curr_entity_permanent;
+	bool curr_entity_permanent;
+	bool curr_entity_reload;
 	bool curr_entity_slept;
 	bool first_load;
+	bool level_changed = true;
 	CHandle root_entity;
 	VHandles handles;
 	CPrefabCompiler* curr_prefab_compiler;
 	CPrefabCompiler* curr_slept_compiler;
 	VHandles collisionables;
-	std::set<std::string> loaded_files;
+	static std::set<std::string> loaded_files;
 public:
 	CEntityParser() : curr_prefab_compiler(nullptr) { IdEntities::init(); }
+	CEntityParser(bool new_level) : curr_prefab_compiler(nullptr) { IdEntities::init(); level_changed = new_level; }
 	CEntityParser(CHandle parent) { curr_entity = root_entity = parent; }
 	CHandle getRootEntity() { return root_entity; }
 	void onStartElement(const std::string &elem, MKeyValue &atts) override;
@@ -60,6 +63,7 @@ public:
 		loaded_files.insert(filename);
 		return result;
 	}
+	bool hasToCreate();
 };
 
 CHandle spawnPrefab(const std::string& prefab); // create Prefab and call onCreate

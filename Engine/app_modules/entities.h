@@ -4,10 +4,14 @@
 #include "app_modules/app_module.h"
 #include "handle/handle.h"
 #include <vector>
+#include <thread>
 
 class CEntitiesModule : public IAppModule {
 	void renderInMenu();
 	bool use_parallel = true;
+	std::thread navmeshThread;
+	std::string current_level = "";
+	std::string next_level = "";
 public:
 	std::vector< CHandle > collisionables;
 	std::string sala;
@@ -18,7 +22,7 @@ public:
 	void update(float dt) override;
 
 	void initLevel(std::string);
-	void clear();
+	void clear(std::string next_level = "");
 	bool isCleared();
 	void destroyRandomEntity(float percent);
 

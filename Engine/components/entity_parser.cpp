@@ -5,7 +5,10 @@
 #include "components/comp_msgs.h"
 #include "components/entity_tags.h"
 
-std::map< std::string, CPrefabCompiler* > compiled_prefabs;
+using namespace std;
+
+map< string, CPrefabCompiler* > compiled_prefabs;
+set<string> CEntityParser::loaded_files = set<string>();
 
 // Identified Entities
 static VHandles identified_entities;
@@ -97,16 +100,22 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 
 	// Check if we find a new entity with the prefab attr
 	if (elem == "entity") {
-		curr_entity_id = atts.getInt("id", -1);
 		curr_entity_permanent = atts.getBool("permanent", false);
-		if (curr_entity_permanent && !first_load) return;
+		curr_entity_reload = atts.getBool("reload", false);
 
-		curr_entity_slept = atts.getBool("slept", false);
-		if (curr_entity_slept) curr_slept_compiler = new CPrefabCompiler;
-		auto prefab = atts["prefab"];
-		if (!prefab.empty())
-			new_h = createPrefab(prefab);
+		if (!hasToCreate()) {
+			curr_entity = CHandle();
+			return;
+		}
+		else {
+			curr_entity_id = atts.getInt("id", -1);
+			curr_entity_slept = atts.getBool("slept", false);
+			if (curr_entity_slept) curr_slept_compiler = new CPrefabCompiler;
+			auto prefab = atts["prefab"];
+			if (!prefab.empty()) new_h = createPrefab(prefab);
+		}
 	}
+	if (!hasToCreate()) return;
 
 	// Inside an entity...?
 	if (curr_entity.isValid()) {
@@ -116,6 +125,7 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 		CEntity* e = curr_entity;
 		IdEntities::saveIdEntity(CHandle(e), curr_entity_id);
 		e->setPermanent(curr_entity_permanent);
+		e->setReload(curr_entity_reload);
 		new_h = e->getByCompIndex(hm->getType());
 		reusing_component = new_h.isValid();
 	}
@@ -163,6 +173,7 @@ void CEntityParser::onEndElement(const std::string &elem) {
 
 	//dbg("Bye from %s\n", elem.c_str());
 	if (elem == "entity") {
+		if (!curr_entity.isValid()) return;
 		handles.push_back(curr_entity);
 
 		if (curr_slept_compiler) {
@@ -194,4 +205,11 @@ void CEntityParser::onEndElement(const std::string &elem) {
 		for (auto h : handles)
 			((CEntity*)h)->sendMsg(msg);
 	}
+}
+
+bool CEntityParser::hasToCreate()
+{
+	if (curr_entity_permanent && !first_load) return false;
+	if (!level_changed && !curr_entity_reload) return false;
+	return true;
 }

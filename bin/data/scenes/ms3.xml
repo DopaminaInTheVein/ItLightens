@@ -1,6 +1,7 @@
 <entities>
 <entity
-   id="300">
+   id="300"
+   reload="yes">
 <tags
    tags="doorExit door"/>
 <magnet_door
@@ -40,7 +41,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="platform pila interactive"/>
 <pila/>
@@ -1289,7 +1291,8 @@
 
 </entity>
 <entity
-   id="301">
+   id="301"
+   reload="yes">
 <tags
    tags="elevator interactive"/>
 <elevator
@@ -1393,7 +1396,8 @@
 
 </entity>
 <entity
-   id="304">
+   id="304"
+   reload="yes">
 <tags
    tags="pila_container interactive"/>
 <pila_container/>
@@ -1852,7 +1856,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workbench interactive"/>
 <workbench/>
@@ -1871,7 +1876,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workbench interactive"/>
 <workbench/>
@@ -2639,7 +2645,8 @@
 
 </entity>
 <entity
-   id="306">
+   id="306"
+   reload="yes">
 <tags
    tags="door"/>
 <magnet_door
@@ -2680,7 +2687,8 @@
 
 </entity>
 <entity
-   id="308">
+   id="308"
+   reload="yes">
 <tags
    tags="door"/>
 <magnet_door
@@ -2721,7 +2729,8 @@
 
 </entity>
 <entity
-   id="305">
+   id="305"
+   reload="yes">
 <tags
    tags="door"/>
 <magnet_door
@@ -2762,7 +2771,8 @@
 
 </entity>
 <entity
-   id="307">
+   id="307"
+   reload="yes">
 <tags
    tags="door"/>
 <magnet_door
@@ -3600,7 +3610,8 @@
 
 </entity>
 <entity
-  permanent = "yes">
+   permanent="yes"
+   reload="yes">
 <tags
    tags="camera_main"/>
 <camera_main
@@ -3619,7 +3630,8 @@
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="player raijin"/>
 <player/>
@@ -3647,7 +3659,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -3668,7 +3681,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -3689,7 +3703,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_mole AI_poss"/>
 <bt_mole/>
@@ -3717,7 +3732,54 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="4"
+   kpt0_type="seek"
+   kpt0_pos="13.3487 -23.8712 16.4845"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="2.40446 -23.8712 2.58889"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="26.1755 -23.8712 -4.6136"
+   kpt2_wait="2"
+   kpt3_type="seek"
+   kpt3_pos="10.8511 -23.8712 -13.6583"
+   kpt3_wait="2"
+   jurisdiction="26.0682 -23.9 -5.11404"
+   jurRadius="5.0"
+   formation_point="25.5739 -24.0251 -6.9732"
+   formation_dir="26.2157 -23.9678 -6.80094"/>
+<skc_guard/>
+<skeleton_lookat/>
+<name
+   name="guard_002"/>
+<transform
+   pos="26.0682 -23.9 -5.11404"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+<room
+   name="1"/>
+
+</entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_guard"/>
 <life
@@ -3759,7 +3821,192 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="look"
+   kpt0_pos="-84.3259 -1.27954 -28.0575"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-84.3393 -1.28589 -28.4518"
+   kpt1_wait="2"
+   jurisdiction="-82.8302 -1.19972 -25.2863"
+   jurRadius="7.15"
+   formation_point="-87.0319 -1.32482 -30.3074"
+   formation_dir="-86.3901 -1.26751 -30.1352"/>
+<skc_guard/>
+<skeleton_lookat/>
+<name
+   name="guard_004"/>
+<transform
+   pos="-84.3522 -1.19972 -28.422"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="look"
+   kpt0_pos="-81.6327 -1.27954 -28.0575"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-81.6461 -1.28589 -28.4518"
+   kpt1_wait="2"
+   jurisdiction="-82.8302 -1.19972 -25.2863"
+   jurRadius="7.2"
+   formation_point="-84.3387 -1.32482 -30.3074"
+   formation_dir="-83.6969 -1.26751 -30.1352"/>
+<skc_guard/>
+<skeleton_lookat/>
+<name
+   name="guard_005"/>
+<transform
+   pos="-81.659 -1.19972 -28.422"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="6"
+   kpt0_type="look"
+   kpt0_pos="-100.586 -1.27954 -5.80638"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-100.726 -1.28589 -14.3003"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="-92.8546 -1.28589 -14.3658"
+   kpt2_wait="2"
+   kpt3_type="look"
+   kpt3_pos="-90.7359 -1.27954 -17.2999"
+   kpt3_wait="2"
+   kpt4_type="seek"
+   kpt4_pos="-70.0602 -1.28589 -14.3658"
+   kpt4_wait="2"
+   kpt5_type="look"
+   kpt5_pos="-72.2655 -1.27954 -17.2999"
+   kpt5_wait="2"
+   jurisdiction="-96.7845 -1.19972 -10.605"
+   jurRadius="5.0"
+   formation_point="-99.4642 -1.32482 -12.4904"
+   formation_dir="-98.8223 -1.26751 -12.3182"/>
+<skc_guard/>
+<skeleton_lookat/>
+<name
+   name="guard_006"/>
+<transform
+   pos="-96.7845 -1.19972 -10.605"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="AI AI_guard"/>
+<life
+   points="100"/>
+<bt_guard
+   kpt_size="6"
+   kpt0_type="look"
+   kpt0_pos="-67.1094 -1.27954 10.7064"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="-67.1231 -1.28589 11.4189"
+   kpt1_wait="2"
+   kpt2_type="seek"
+   kpt2_pos="-62.9841 -1.28589 -8.10853"
+   kpt2_wait="2"
+   kpt3_type="look"
+   kpt3_pos="-57.9167 -1.27954 -7.76042"
+   kpt3_wait="2"
+   kpt4_type="seek"
+   kpt4_pos="-88.3649 -1.28589 1.81971"
+   kpt4_wait="2"
+   kpt5_type="look"
+   kpt5_pos="-88.5043 -1.27954 -8.20765"
+   kpt5_wait="2"
+   jurisdiction="-66.9139 -1.19972 7.81328"
+   jurRadius="5.0"
+   formation_point="-69.5936 -1.32482 5.92785"
+   formation_dir="-68.9518 -1.26751 6.10012"/>
+<skc_guard/>
+<skeleton_lookat/>
+<name
+   name="guard_007"/>
+<transform
+   pos="-66.9139 -1.19972 7.81328"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -3790,7 +4037,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -3821,7 +4069,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -3852,7 +4101,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -3883,7 +4133,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="box platform removable interactive"/>
 <box
@@ -3910,7 +4161,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -3941,7 +4193,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -3972,7 +4225,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -4003,7 +4257,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="box platform removable interactive"/>
 <box
@@ -4030,7 +4285,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_mole AI_poss"/>
 <bt_mole
@@ -4069,7 +4325,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4104,7 +4361,8 @@
 
 </entity>
 <entity
-   id="303">
+   id="303"
+   reload="yes">
 <tags
    tags="pila_container interactive"/>
 <pila_container/>
@@ -4136,7 +4394,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4157,7 +4416,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4178,7 +4438,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4286,7 +4547,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_cientifico AI_poss"/>
 <bt_scientist/>
@@ -4314,7 +4576,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4330,7 +4593,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4346,7 +4610,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4379,7 +4644,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4415,7 +4681,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4451,7 +4718,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4487,7 +4755,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4523,7 +4792,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4559,7 +4829,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4578,7 +4849,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4612,7 +4884,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4631,7 +4904,8 @@
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4648,7 +4922,8 @@
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4664,7 +4939,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4680,7 +4956,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4696,7 +4973,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4997,7 +5275,8 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="guided_camera"/>
 <guided_camera
@@ -5024,7 +5303,8 @@
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="guided_camera"/>
 <guided_camera
