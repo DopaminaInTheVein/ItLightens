@@ -228,5 +228,7 @@ fn assign_room_name_to selected rname = (
 )
 
 fn assign_room_name_to_selected rname = (
-		assign_room_name_to $ rname
+		for obj in $ do (
+			assign_room_name_to obj rname
+		)
 )
