@@ -210,42 +210,21 @@ void player_controller_mole::UpdateInputActions() {
 	}
 	
 	if (pushing_box) {
-		if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
-			GET_COMP(box_t, boxPushed, TCompTransform);
-			VEC3 box_position = box_t->getPosition();
+		if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility ||
+			io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
+			//GET_COMP(box_p, boxPushed, TCompPhysics);
 
-			VEC3 direction = VEC3(0, 0, 1);
+			CEntity* box = boxPushed;
+			TCompPhysics* box_p = box->get<TCompPhysics>();
 
-			CEntity * camera_e = camera;
-			TCompTransform* camera_comp = camera_e->get<TCompTransform>();
+			VEC3 direction = VEC3(0, 0, -200);
+			if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) 
+				direction = VEC3(0, 0, 200);
 
-			direction.Normalize();
-
-			float yaw, pitch;
-			camera_comp->getAngles(&yaw, &pitch);
-			float new_x, new_z;
-
-			new_x = direction.x * cosf(yaw) + direction.z*sinf(yaw);
-			new_z = -direction.x * sinf(yaw) + direction.z*cosf(yaw);
-
-			direction.x = new_x;
-			direction.z = new_z;
-
-			direction.Normalize();
-
-			float new_yaw = box_t->getDeltaYawToAimDirection(direction);
-			clampAbs_me(new_yaw, player_rotation_speed * getDeltaTime());
-			box_t->getAngles(&yaw, &pitch);
-
-			box_t->setAngles(new_yaw + yaw, pitch);
-
-			box_position.x += direction.x;
-			box_position.z += direction.z;
-
-			box_t->setPosition(box_position);
+			box_p->AddForce(direction);
+			
 		}
-		if (io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility
-			|| io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility 
+		if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility 
 			|| io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
 			LeaveBox();
 		}
@@ -306,7 +285,7 @@ void player_controller_mole::LeaveBox() {
 	// if we were pushing a box, we just stop and return
 	if (pushing_box) {
 		GET_COMP(box_p, boxPushed, TCompPhysics);
-		box_p->setKinematic(false);
+		//box_p->setKinematic(false);
 		pushing_box = false;
 	}
 	else {
@@ -568,7 +547,7 @@ void player_controller_mole::PushBoxPreparation() {
 		ChangeState(ST_MOLE_PUSH);
 		animController->setState(AST_PUSH_PREP);
 		GET_COMP(box_p, boxPushed, TCompPhysics);
-		box_p->setKinematic(true);
+		//box_p->setKinematic(true);
 		pushing_box = true;
 		inputEnabled = true;
 	}
