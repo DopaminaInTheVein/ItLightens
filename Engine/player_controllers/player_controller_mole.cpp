@@ -217,11 +217,26 @@ void player_controller_mole::UpdateInputActions() {
 			CEntity* box = boxPushed;
 			TCompPhysics* box_p = box->get<TCompPhysics>();
 
-			VEC3 direction = VEC3(0, 0, -200);
-			if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) 
-				direction = VEC3(0, 0, 200);
+			VEC3 direction = directionForward + directionLateral;
 
-			box_p->AddForce(direction);
+			CEntity * camera_e = camera;
+			TCompTransform* camera_comp = camera_e->get<TCompTransform>();
+
+			direction.Normalize();
+
+			float yaw, pitch;
+			camera_comp->getAngles(&yaw, &pitch);
+			float new_x, new_z;
+
+			new_x = direction.x * cosf(yaw) + direction.z*sinf(yaw);
+			new_z = -direction.x * sinf(yaw) + direction.z*cosf(yaw);
+
+			direction.x = new_x;
+			direction.z = new_z;
+
+			direction.Normalize();
+
+			box_p->AddForce(direction*100);
 			
 		}
 		if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility 
