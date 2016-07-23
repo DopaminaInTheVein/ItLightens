@@ -402,7 +402,7 @@ bool CEntitiesModule::start() {
 	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
 	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
 
-	initLevel("room_one");
+	initLevel(CApp::get().sceneToLoad);
 
 	return true;
 }
@@ -531,17 +531,6 @@ void CEntitiesModule::initLevel(string level) {
 	VHandles generatorsHandles = tags_manager.getHandlesByTag(generators);
 	SBB::postHandlesVector("generatorsHandles", generatorsHandles);
 
-	// Set the player in the Speedy AIs
-	//TTagID tagIDSpeedy = getID("AI_speedy");
-	//VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
-
-	//for (CHandle speedyHandle : speedyHandles) {
-	//	CEntity * speedy_e = speedyHandle;
-	//	TMsgSetPlayer msg_player;
-	//	msg_player.player = t;
-	//	speedy_e->sendMsg(msg_player);
-	//}
-
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
 	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
 	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
@@ -571,12 +560,22 @@ void CEntitiesModule::initLevel(string level) {
 
 	//TODO: Message LevelStart
 	GameController->SetGameState(CGameController::RUNNING);
+	CApp::get().sceneToLoad = "";
 }
 
-void CEntitiesModule::destroyAllEntities() {
+void CEntitiesModule::clear() {
 	getHandleManager<CEntity>()->each([](CEntity * e) {
-		CHandle(e).destroy();
+		if (!e->isPermanent())
+			CHandle(e).destroy();
 	});
+}
+
+bool CEntitiesModule::isCleared() {
+	getHandleManager<CEntity>()->each([](CEntity * e) {
+		if (!e->isPermanent())
+			return false;
+	});
+	return true;
 }
 
 void CEntitiesModule::destroyRandomEntity(float percent) {

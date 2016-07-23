@@ -44,7 +44,7 @@ public:
 	virtual void onEndElement(const std::string &elem);
 	virtual ~CXMLParser() { }
 
-	bool xmlParseFile(const std::string &filename);
+	virtual bool xmlParseFile(const std::string &filename);
 	bool xmlParseStream(std::istream &is, const char *stream_name = NULL);
 	const std::string &getXMLError() const { return xml_error; }
 };

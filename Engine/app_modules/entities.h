@@ -18,13 +18,14 @@ public:
 	void update(float dt) override;
 
 	void initLevel(std::string);
-	void destroyAllEntities();
+	void clear();
+	bool isCleared();
 	void destroyRandomEntity(float percent);
 
 	void render() override;
 	void recalcNavmesh();
 	void readNavmesh();
-	bool forcedUpdate() { 
+	bool forcedUpdate() {
 		return true;
 	}
 
