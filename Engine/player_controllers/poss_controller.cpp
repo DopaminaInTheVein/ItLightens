@@ -45,19 +45,19 @@ void PossController::onForceUnPosses(const TMsgUnpossesDamage& msg) {
 	PROFILE_FUNCTION("poss controller: onUnposses");
 	getUpdateInfo(); //You can receive a message without the update info loaded!
 	UpdateUnpossess();
-	TMsgDamageSave msg_unpss;
+	/*TMsgDamageSave msg_unpss;
 	myEntity->sendMsg(msg_unpss);
-	msg_unpss.modif = -0.1f;
+	msg_unpss.modif = -0.1f;*/
 	onSetEnable(false);
 }
 
 void PossController::onSetEnable(const TMsgControllerSetEnable& msg) {
 	onSetEnable(msg.enabled);
-	if (msg.enabled) {
+	/*if (msg.enabled) {
 		TMsgDamageSave msg_pss;
 		msg_pss.modif = 0.1f;
 		getMyEntity()->sendMsg(msg_pss);
-	}
+	}*/
 }
 
 void PossController::UpdateUnpossess() {

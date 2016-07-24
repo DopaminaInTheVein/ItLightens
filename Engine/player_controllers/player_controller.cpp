@@ -103,24 +103,6 @@ bool player_controller::isDamaged() {
 	return !____TIMER__END_(timerDamaged);
 }
 
-float player_controller::getLife()
-{
-	CEntity * eMe = CHandle(this).getOwner();
-	assert(eMe);
-	TCompLife * life = eMe->get<TCompLife>();
-	assert(life || fatal("Player doesnt have life component!"));
-	return life->getCurrent();
-}
-
-void player_controller::setLife(float new_life)
-{
-	CEntity * eMe = CHandle(this).getOwner();
-	assert(eMe);
-	TCompLife * life = eMe->get<TCompLife>();
-	assert(life || fatal("Player doesnt have life component!"));
-	life->setCurrent(new_life);
-}
-
 void player_controller::rechargeEnergy()
 {
 	PROFILE_FUNCTION("recharge_energy");
@@ -213,7 +195,6 @@ void player_controller::createDevolveLight() {
 
 void player_controller::myUpdate() {
 	PROFILE_FUNCTION("player controller: MY_update");
-	setLife(getLife() - getDeltaTime() * 0.3f);
 	UpdateDamage();
 	____TIMER__UPDATE_(timerDamaged);
 	if (isDamaged()) {
@@ -245,7 +226,8 @@ void player_controller::myExtraIdle() {
 
 void player_controller::UpdateDamage()
 {
-	TCompLife * life = myEntity->get<TCompLife>();
+	CEntity * raijin = tags_manager.getFirstHavingTag("raijin");
+	TCompLife * life = raijin->get<TCompLife>();
 	if (life->energyDamageScale > 0.2f) {
 		____TIMER_RESET_(timerDamaged);
 	}
@@ -295,7 +277,7 @@ void player_controller::Jump()
 			-curSpeed.x * 0.1f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
 			-curSpeed.z * 0.1f
-		);
+			);
 		//--------------------------------------
 	}
 	else {
@@ -941,9 +923,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-			),
+				),
 			polarityForces.end()
-		);
+			);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}
@@ -955,7 +937,7 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 }
 
 void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
-	CEntity* eMe = CHandle(this).getOwner();
+	CEntity* eMe = tags_manager.getFirstHavingTag("raijin");
 
 	assert(eMe);
 	Damage::DMG_TYPE type = msg.type;

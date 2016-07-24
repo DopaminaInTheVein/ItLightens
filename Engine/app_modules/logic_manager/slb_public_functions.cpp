@@ -50,6 +50,10 @@ void SLBPlayer::getPlayer() {
 	CHandle thePlayer = tags_manager.getFirstHavingTag("player");
 	player_handle = thePlayer;
 }
+void SLBPlayer::getRaijin() {
+	CHandle thePlayer = tags_manager.getFirstHavingTag("raijin");
+	player_handle = thePlayer;
+}
 
 void SLBPlayer::setPlayerPosition(float x, float y, float z) {
 	getPlayer();
@@ -100,7 +104,7 @@ float SLBPlayer::getPlayerZ() {
 }
 
 void SLBPlayer::addEnergy(int energy_to_add) {
-	getPlayer();
+	getRaijin();
 	CEntity* entity = player_handle;
 
 	TCompLife* player_life = entity->get<TCompLife>();
@@ -109,7 +113,7 @@ void SLBPlayer::addEnergy(int energy_to_add) {
 }
 
 void SLBPlayer::refillEnergy() {
-	getPlayer();
+	getRaijin();
 	CEntity* entity = player_handle;
 
 	TCompLife* player_life = entity->get<TCompLife>();
@@ -125,6 +129,10 @@ CHandle SLBHandle::getHandle() {
 // We need ti aply generic actions to player as well
 void SLBHandle::getPlayer() {
 	CHandle thePlayer = tags_manager.getFirstHavingTag("player");
+	real_handle = thePlayer;
+}
+void SLBHandle::getRaijin() {
+	CHandle thePlayer = tags_manager.getFirstHavingTag("raijin");
 	real_handle = thePlayer;
 }
 
@@ -519,10 +527,13 @@ void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 }
 
 void SLBPublicFunctions::playerRoom(int newRoom) {
+	std::vector<int> new_room_vec;
+	new_room_vec.push_back(newRoom);
+
 	CHandle p = tags_manager.getFirstHavingTag("player");
 	CEntity * pe = p;
 	TCompRoom * room = pe->get<TCompRoom>();
-	if (room->setName(newRoom)) {
+	if (room->setName(new_room_vec)) {
 		SBB::postSala(newRoom);
 	}
 }

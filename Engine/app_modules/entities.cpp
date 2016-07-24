@@ -525,7 +525,7 @@ void CEntitiesModule::initLevel(string level) {
 	if (target_e) {
 		TCompRoom * player_room = target_e->get<TCompRoom>();
 		if (player_room) {
-			room_name = player_room->name;
+			room_name = player_room->name[0];
 		}
 	}
 	SBB::postSala(room_name);

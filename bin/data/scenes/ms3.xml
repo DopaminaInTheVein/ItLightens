@@ -1032,7 +1032,7 @@
 <rigidbody
    type_collision="static"/>
 <room
-   name="1"/>
+   name="1/1"/>
 
 </entity>
 <entity>
@@ -3467,7 +3467,7 @@
 <rigidbody
    type_collision="static"/>
 <room
-   name="1"/>
+   name="1/2/1"/>
 
 </entity>
 <entity>
@@ -3636,7 +3636,7 @@
    tags="player raijin"/>
 <player/>
 <life
-   points="10"/>
+   points="100"/>
 <skc_player/>
 <skeleton_lookat/>
 <name
@@ -3709,8 +3709,6 @@
    tags="AI AI_mole AI_poss"/>
 <bt_mole/>
 <player_mole/>
-<life
-   points="100"/>
 <skc_mole/>
 <name
    name="__mole_1"/>
@@ -3730,14 +3728,11 @@
    height="2.1"/>
 <room
    name="2"/>
-
 </entity>
 <entity
    reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="4"
    kpt0_type="seek"
@@ -3782,8 +3777,6 @@
    reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="3"
    kpt0_type="seek"
@@ -3825,8 +3818,6 @@
    reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="2"
    kpt0_type="look"
@@ -3865,8 +3856,6 @@
    reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="2"
    kpt0_type="look"
@@ -3905,8 +3894,6 @@
    reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="6"
    kpt0_type="look"
@@ -3957,8 +3944,6 @@
    reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="6"
    kpt0_type="look"
@@ -4302,11 +4287,11 @@
    wpt4_pos="33.2816 -23.859 0.208357"
    wpt4_wait="2"/>
 <player_mole/>
-<life
-   points="100"/>
 <skc_mole/>
 <name
    name="mole_1"/>
+   <life points="100" />
+
 <transform
    pos="34.2279 -23.859 -12.2899"
    quat="0 0 0 1.0"
@@ -4553,8 +4538,6 @@
    tags="AI AI_cientifico AI_poss"/>
 <bt_scientist/>
 <player_cientifico/>
-<life
-   points="100"/>
 <skc_scientist/>
 <name
    name="scientist_1"/>

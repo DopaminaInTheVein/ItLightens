@@ -78,7 +78,7 @@ bool isInRoom(CHandle h) {
 	if (!e) return true;
 	TCompRoom * room = e->get<TCompRoom>();
 	if (!room) return true;
-	return room->name == pjSala;
+	return std::find(room->name.begin(), room->name.end(), pjSala) != room->name.end();
 }
 
 float squared(float i) {

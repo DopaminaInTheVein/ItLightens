@@ -119,8 +119,8 @@ class player_controller : public CPlayerBase {
 	PolarityForce getPolarityForce(CHandle forceHandle);
 
 	bool isDamaged();
-	float getLife();
-	void setLife(float);
+	//float getLife();
+	//void setLife(float);
 	bool nearStunable();
 
 	void recalcPossassable();

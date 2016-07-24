@@ -19,7 +19,7 @@ public:
 		CHandle                 owner;
 		CHandle                 transform;
 		CHandle                 aabb;
-		int				        room;
+		std::vector<int>        room;
 		bool                    isPlayer;
 	};
 private:
@@ -29,7 +29,7 @@ private:
 		CHandle                 owner;
 		CHandle                 transform;
 		CHandle                 aabb;
-		int     				room;
+		std::vector<int>		room;
 		bool                    isPlayer;
 	};
 	static bool sortByTechMatMesh(const TKey& k1, const TKey& k2);
