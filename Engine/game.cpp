@@ -58,18 +58,18 @@ bool CApp::start() {
 	logic_manager = new CLogicManagerModule;
 	sound_manager = new CSoundManagerModule;
 
-  // Will contain all modules created
-  all_modules.push_back(imgui);
-  all_modules.push_back(Gui);
-  all_modules.push_back(g_PhysxManager);
-  all_modules.push_back(g_particlesManager);
-  all_modules.push_back(entities);
-  all_modules.push_back(io);
-  all_modules.push_back(GameController);
-  all_modules.push_back(Debug);
-  all_modules.push_back(render_deferred);
-  all_modules.push_back(logic_manager);
-  all_modules.push_back(sound_manager);
+	// Will contain all modules created
+	all_modules.push_back(imgui);
+	all_modules.push_back(Gui);
+	all_modules.push_back(g_PhysxManager);
+	all_modules.push_back(g_particlesManager);
+	all_modules.push_back(entities);
+	all_modules.push_back(io);
+	all_modules.push_back(GameController);
+	all_modules.push_back(Debug);
+	all_modules.push_back(render_deferred);
+	all_modules.push_back(logic_manager);
+	all_modules.push_back(sound_manager);
 
 	mod_update.push_back(logic_manager);
 	mod_update.push_back(sound_manager);
@@ -149,12 +149,17 @@ void CApp::stop() {
 	for (auto m : all_modules)
 		delete m;
 	all_modules.clear();
+	mod_update.clear();
+	mod_renders.clear();
+	mod_init_order.clear();
+	mod_wnd_proc.clear();
 }
 
 //----------------------------------
 void CApp::changeScene() {
 	dbg("Destroying scene...\n");
-	entities->destroyAllEntities();
+
+	entities->clear("room_one");
 	sceneToLoad = "room_one";
 }
 
@@ -188,12 +193,9 @@ void CApp::update(float elapsed) {
 	static float ctime = 0.f;
 	ctime += elapsed* 0.01f;
 	CHandleManager::destroyAllPendingObjects();
-	if (sceneToLoad != "" && entities->size() == 0) {
+	if (sceneToLoad != "" && entities->isCleared()) {
 		entities->initLevel(sceneToLoad);
-		sceneToLoad = "";
 	}
-
-
 }
 
 // ----------------------------------

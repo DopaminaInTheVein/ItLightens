@@ -53,6 +53,24 @@ fn parseSlept = (
 	)
 )
 
+fn parsePermanent = (
+	local permanent = getUserProp _parsingObject "permanent"
+	if permanent != undefined then (
+		XML_PARSING.addAttr "permanent" (permanent as string)
+	)	
+)
+
+fn parseReload = (
+	local reload = getUserProp _parsingObject "reload"
+	if reload != undefined then (
+		XML_PARSING.addAttr "reload" (slept as string)
+	) else (
+		if (getUserProp _parsingObject "typeObject") != undefined then (
+			XML_PARSING.addAttr "reload" "yes"
+		)
+	)
+)
+
 ---------------------------------------------------------------------
 -- OBJECT --
 ---------------------------------------------------------------------
@@ -67,6 +85,8 @@ fn _parseObject parent = (
 		XML_PARSING = parent.addChild "entity"
 		parseId()
 		parseSlept()
+		parsePermanent()
+		parseReload()
 		
 		--Parseamos Tags
 		tags = _descriptorObject.getTags()
