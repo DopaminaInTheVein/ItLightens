@@ -3623,7 +3623,7 @@
    tags="player raijin"/>
 <player/>
 <life
-   points="10"/>
+   points="100"/>
 <skc_player/>
 <skeleton_lookat/>
 <name
@@ -3693,8 +3693,6 @@
    tags="AI AI_mole AI_poss"/>
 <bt_mole/>
 <player_mole/>
-<life
-   points="100"/>
 <skc_mole/>
 <name
    name="__mole_1"/>
@@ -3719,8 +3717,6 @@
 <entity>
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="4"
    kpt0_type="seek"
@@ -3764,8 +3760,6 @@
 <entity>
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="3"
    kpt0_type="seek"
@@ -3806,8 +3800,6 @@
 <entity>
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="2"
    kpt0_type="look"
@@ -3845,8 +3837,6 @@
 <entity>
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="2"
    kpt0_type="look"
@@ -3884,8 +3874,6 @@
 <entity>
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="6"
    kpt0_type="look"
@@ -3935,8 +3923,6 @@
 <entity>
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="6"
    kpt0_type="look"
@@ -4270,8 +4256,6 @@
    wpt4_pos="33.2816 -23.859 0.208357"
    wpt4_wait="2"/>
 <player_mole/>
-<life
-   points="100"/>
 <skc_mole/>
 <name
    name="mole_1"/>
@@ -4515,8 +4499,6 @@
    tags="AI AI_cientifico AI_poss"/>
 <bt_scientist/>
 <player_cientifico/>
-<life
-   points="100"/>
 <skc_scientist/>
 <name
    name="scientist_1"/>
