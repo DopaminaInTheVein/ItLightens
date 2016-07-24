@@ -31,5 +31,4 @@ public:
 		return 50.0f;
 	}
 };
-
 #endif

@@ -45,5 +45,6 @@ function SetTarget( target )
 	p:print( "Set Target: "..target.."\n" )
 end
 
-
-
+function LoadLevel( logic_level, real_level )
+	p:load_level(logic_level)
+end

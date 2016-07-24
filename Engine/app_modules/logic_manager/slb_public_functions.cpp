@@ -643,6 +643,10 @@ void SLBPublicFunctions::launchVictoryState() {
 	GameController->SetGameState(CGameController::VICTORY);
 }
 
+void SLBPublicFunctions::loadLevel(const char* level_name) {
+	CApp::get().changeScene(level_name);
+}
+
 //test
 void SLBPublicFunctions::test(const char* to_print) {
 	//CHandle h = CHandle();

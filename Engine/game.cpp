@@ -103,9 +103,9 @@ bool CApp::start() {
 	mod_init_order.push_back(io);
 	mod_init_order.push_back(g_PhysxManager);
 	mod_init_order.push_back(g_particlesManager);   //need to be initialized before the entities
-	mod_init_order.push_back(entities);
 	mod_init_order.push_back(logic_manager);
 	mod_init_order.push_back(sound_manager);
+	mod_init_order.push_back(entities);
 
 	mod_wnd_proc.push_back(io);
 	mod_wnd_proc.push_back(imgui);
@@ -175,8 +175,30 @@ void CApp::changeScene(string level) {
 //	SendMessage(hTempWnd, WM_CLOSE, 0, 0);
 //}
 
-void CApp::restart_level() {
+void CApp::restartLevel() {
 	changeScene(entities->getCurrentLevel());
+}
+
+std::string CApp::getCurrentRealLevel() {
+	map<std::string, std::string> fields = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
+	return fields[entities->getCurrentLevel()];
+}
+
+std::string CApp::getCurrentLogicLevel() {
+	return entities->getCurrentLevel();
+}
+
+void CApp::restartLevelNotify() {
+	char params[128];
+	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnRestartLevel, std::string(params));
+}
+
+void CApp::loadedLevelNotify() {
+	sceneToLoad = "";
+	char params[128];
+	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnLoadedLevel, std::string(params));
 }
 
 void CApp::exitGame() {

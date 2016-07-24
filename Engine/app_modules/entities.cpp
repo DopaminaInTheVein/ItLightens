@@ -413,10 +413,7 @@ void CEntitiesModule::initLevel(string level) {
 	// Restart Timers LUA
 	logic_manager->resetTimers();
 
-	CApp &app = CApp::get();
-	std::string file_options = app.file_options_json;
-	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
-
+	map<std::string, std::string> fields = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
 	sala = fields[level];
 
 	SBB::postBool("navmesh", false);
@@ -569,6 +566,7 @@ void CEntitiesModule::initLevel(string level) {
 	GameController->SetGameState(CGameController::RUNNING);
 	current_level = level;
 	CApp::get().sceneToLoad = "";
+	CApp::get().loadedLevelNotify();
 }
 
 void CEntitiesModule::clear(string new_next_level) {

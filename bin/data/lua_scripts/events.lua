@@ -327,6 +327,24 @@ function OnCinematicEnd( param )
 	CallFunction("OnCinematicEnd_"..param)
 end
 
+--Game Restart
+---------------------------------------------------
+function OnRestartLevel( logic_level, real_level )
+	p:print( "OnRestartLevel\n")
+	cam:fade_out(1)
+	p:setControlEnabled(0)
+	p:exec_command("LoadLevel(\""..logic_level.."\", \""..real_level.."\");", 1) -- Defined in functions.lua
+end
+
+--Loaded Level
+---------------------------------------------------
+function OnLoadedLevel( logic_level, real_level)
+	p:print("OnLoadedLevel")
+	p:exec_command("cam:fade_in(1)", 1)
+	p:exec_command("p:setControlEnabled(0);", 1)
+	CallFunction("OnLoaded_"..real_level)
+end
+
 --Game Ending
 ---------------------------------------------------
 function OnVictory( )

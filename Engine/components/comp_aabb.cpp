@@ -27,6 +27,7 @@ void TCompAABB::render() const {
 }
 
 void TCompAABB::updateFromSiblingsLocalAABBs(CHandle h_entity) {
+	if (!h_entity.isValid()) return;
 	// Time to update our AbsAABB based on the sibling components
 	CEntity* e = h_entity;
 	// Start by computing the local aabb
@@ -51,32 +52,41 @@ AABB getRotatedBy(AABB src, const MAT44 &model) {
 
 // ------------------------------------------------------
 void TCompAbsAABB::onCreate(const TMsgEntityCreated&) {
-	updateFromSiblingsLocalAABBs(CHandle(this).getOwner());
-	CEntity* e_owner = CHandle(this).getOwner();
+	CHandle myHandle = CHandle(this).getOwner();
+	if (!myHandle.isValid()) return;
+	updateFromSiblingsLocalAABBs(myHandle);
+	CEntity* e_owner = myHandle;
 	TCompTransform* c_trans = e_owner->get<TCompTransform>();
+	if (!c_trans) return;
 	AABB::Transform(*this, c_trans->asMatrix());
 }
 
 // Updates AbsAABB from LocalAABB and CompTransform
 void TCompLocalAABB::updateAbs() {
 	PROFILE_FUNCTION("aabb: updatelocals");
-	CEntity *e = CHandle(this).getOwner();
-	assert(e);
-	const TCompTransform *in_tmx = e->get< TCompTransform >();
-	TCompAbsAABB *abs_aabb = e->get<TCompAbsAABB>();
-	if (abs_aabb)
-		*(AABB*)abs_aabb = getRotatedBy(*this, in_tmx->asMatrix());
+	CHandle myHandle = CHandle(this).getOwner();
+	if (!myHandle.isValid()) return;
+	CEntity *e = myHandle;
+	if (e) {
+		const TCompTransform *in_tmx = e->get< TCompTransform >();
+		if (!in_tmx) return;
+		TCompAbsAABB *abs_aabb = e->get<TCompAbsAABB>();
+		if (abs_aabb) *(AABB*)abs_aabb = getRotatedBy(*this, in_tmx->asMatrix());
+	}
 }
 
 void TCompLocalAABB::onCreate(const TMsgEntityCreated&) {
-	updateFromSiblingsLocalAABBs(CHandle(this).getOwner());
+	CHandle myHandle = CHandle(this).getOwner();
+	if (myHandle.isValid())	updateFromSiblingsLocalAABBs(myHandle);
 }
 
 void TCompLocalAABB::render() const {
 #ifndef NDEBUG
 	if (GameController->GetCullingRender()) {
 		CEntity *e = CHandle(this).getOwner();
+		if (!e) return;
 		const TCompTransform *in_tmx = e->get< TCompTransform >();
+		if (!in_tmx) return;
 		drawWiredAABB(*this, in_tmx->asMatrix(), VEC4(1, 1, 0, 1));
 	}
 #endif

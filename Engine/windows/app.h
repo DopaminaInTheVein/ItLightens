@@ -11,7 +11,7 @@ class CApp {
 public:
 	typedef std::vector<IAppModule*> VModules;
 	std::string sceneToLoad = "";
-	
+
 	// Remove copy ctor
 	CApp(const CApp&) = delete;
 
@@ -32,8 +32,12 @@ public:
 	bool start();
 	void stop();
 	void changeScene(std::string level);
+	void loadedLevelNotify();
 	//void restart();
-	void restart_level();
+	void restartLevel();
+	void restartLevelNotify();
+	std::string getCurrentRealLevel();
+	std::string getCurrentLogicLevel();
 	void exitGame();
 
 	VModules& getModulesToWndProc() {

@@ -134,6 +134,7 @@ public:
 	void characterGlobeWithColor(const char* text, float distance, float char_x, float char_y, float char_z, const char* background, const char* textColor);
 	void toggleIntroState();
 	void launchVictoryState();
+	void loadLevel(const char* level_name);
 
 	void test(const char* to_print);
 };
