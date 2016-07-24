@@ -31,7 +31,7 @@ public:
 		ImGui::End();
 		ui_assist();
 #endif
-  }
+	}
 
 	void ui_assist() {
 		ImGui::Begin("Help", &open_assist, ImVec2(400, 150), -1.0f);
@@ -70,33 +70,34 @@ public:
 		TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
 		CEntity * target_e = camara3rd->target;
 
-    if (target_e) {
-      TCompLife * life = target_e->get<TCompLife>();
-      ImGui::Text("LifeBar\n");
-      std::string lifeString = "|";
-      //int increment = life->maxlife / 60;
-      if (life) {
-        for (int i = 0; i < life->maxlife; i++) {//= increment) {
-          if (life->currentlife > i) {
-            lifeString += "=";
-          }
-          else {
-            lifeString += ".";
-          }
-        }
-      }
-      lifeString += "|\n";
-      ImGui::Text(lifeString.c_str());
-      ImGui::Text("%f / %f", life->currentlife, life->maxlife);
-      ImGui::Separator();
+		if (target_e) {
+			CEntity * raijin_e = tags_manager.getFirstHavingTag("raijin");
+			TCompLife * life = raijin_e->get<TCompLife>();
+			ImGui::Text("LifeBar\n");
+			std::string lifeString = "|";
+			//int increment = life->maxlife / 60;
+			if (life) {
+				for (int i = 0; i < life->maxlife; i++) {//= increment) {
+					if (life->currentlife > i) {
+						lifeString += "=";
+					}
+					else {
+						lifeString += ".";
+					}
+				}
+			}
+			lifeString += "|\n";
+			ImGui::Text(lifeString.c_str());
+			ImGui::Text("%f / %f", life->currentlife, life->maxlife);
+			ImGui::Separator();
 
-      //Polarity
-      player_controller * playerController = target_e->get<player_controller>();
-      if (playerController) {
-        ImGui::Text(playerController->GetPolarity().c_str());
-        ImGui::Separator();
-      }
-    }
+			//Polarity
+			player_controller * playerController = target_e->get<player_controller>();
+			if (playerController) {
+				ImGui::Text(playerController->GetPolarity().c_str());
+				ImGui::Separator();
+			}
+		}
 		//put cheats here:
 		ImGui::Text("Press 'ESC' to exit\n");
 		ImGui::Text("Press 'ENTER' to restart\n");
@@ -112,7 +113,7 @@ public:
 			ImGui::Text("Press 'ENTER' to restart\n");
 			ImGui::End();
 		}
-	    else if (GameController->GetGameState() == CGameController::VICTORY) {
+		else if (GameController->GetGameState() == CGameController::VICTORY) {
 			bool open = true;
 			ImGui::Begin("Victory Player State", &open, ImVec2(300, 100), -1.0f);
 			ImGui::Text("You WIN!\n");

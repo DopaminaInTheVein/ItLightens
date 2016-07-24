@@ -185,7 +185,7 @@ public:
 		TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
 		CHandle targetowner = obtarged->target;
 		CEntity* targeted = targetowner;
-		TCompLife * targetlife = targeted->get<TCompLife>();
+		//TCompLife * targetlife = targeted->get<TCompLife>();
 		TCompTransform * targettrans = targeted->get<TCompTransform>();
 		TCompCharacterController *cc = targeted->get<TCompCharacterController>();
 
