@@ -1159,6 +1159,9 @@ void bt_guard::goTo(const VEC3& dest) {
 
 // -- Go Forward -- //
 void bt_guard::goForward(float stepForward) {
+	//static int test_forward = 0;
+	//dbg("Estoy avanzando! (%d)\n", (++test_forward) % 100);
+
 	PROFILE_FUNCTION("guard: go forward");
 	VEC3 myPos = getTransform()->getPosition();
 	float dt = getDeltaTime();
@@ -1167,6 +1170,9 @@ void bt_guard::goForward(float stepForward) {
 
 // -- Turn To -- //
 bool bt_guard::turnTo(VEC3 dest, bool wide) {
+	//static int test_giro = 0;
+	//dbg("Estoy girando! (%d)\n", (++test_giro) % 100);
+
 	PROFILE_FUNCTION("guard: turn to");
 	if (!myParent.isValid()) return false;
 	int angle = 5;
@@ -1176,8 +1182,11 @@ bool bt_guard::turnTo(VEC3 dest, bool wide) {
 	float yaw, pitch;
 	getTransform()->getAngles(&yaw, &pitch);
 
+	float dbg_yawBefore = yaw;
+
 	float deltaAngle = SPEED_ROT * getDeltaTime();
 	float deltaYaw = getTransform()->getDeltaYawToAimTo(dest);
+
 	float angle_epsilon = deg2rad(angle);
 
 	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(360 - angle))
@@ -1205,6 +1214,12 @@ bool bt_guard::turnTo(VEC3 dest, bool wide) {
 
 	//Ha acabado el giro?
 	bool done = abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(360 - angle);
+	dbg("Result giro. Yaw: %f --> %f, done = %d\n", dbg_yawBefore, yaw, done);
+
+	//DEBUG!
+	//if (done) {
+	//	dbg("Turn to devuelve true!\n");
+	//}
 	return done;
 }
 

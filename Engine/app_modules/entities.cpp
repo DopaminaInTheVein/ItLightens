@@ -140,7 +140,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompLightDirShadows>()->init(MAX_ENTITIES);
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
-	getHandleManager<player_controller_mole>()->init(8);
+	getHandleManager<player_controller_mole>()->init(16);
 	getHandleManager<player_controller_cientifico>()->init(8);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);

@@ -35,10 +35,12 @@ public:
 
 	static void fixedUpdate(float elapsed);
 
-	static void fixedUpdate();
 	const char* getName() const {
 		return "entities";
 	}
+
+	std::string getCurrentLevel() { return current_level; }
+
 	int size();
 };
 

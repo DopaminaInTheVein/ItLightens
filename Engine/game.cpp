@@ -27,6 +27,8 @@
 #include <shellapi.h>
 #include <process.h>
 
+using namespace std;
+
 const CRenderTechnique* tech_solid_colored = nullptr;
 const CRenderTechnique* tech_textured_colored = nullptr;
 CDirectoyWatcher resources_dir_watcher;
@@ -45,6 +47,9 @@ CGuiModule * Gui = nullptr;
 // --------------------------------------------
 
 bool CApp::start() {
+	map<std::string, std::string> fields = readIniAtrDataStr(file_options_json, "scenes");
+	sceneToLoad = fields["first_scene"];
+
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
 	Gui = new CGuiModule;
@@ -156,19 +161,22 @@ void CApp::stop() {
 }
 
 //----------------------------------
-void CApp::changeScene() {
+void CApp::changeScene(string level) {
 	dbg("Destroying scene...\n");
-
-	entities->clear("room_one");
-	sceneToLoad = "room_one";
+	entities->clear(level);
+	sceneToLoad = level;
 }
 
-void CApp::restart() {
-	HWND hTempWnd = getHWnd();
-	char szFileName[MAX_PATH] = "";
-	GetModuleFileName(NULL, szFileName, MAX_PATH);
-	ShellExecute(GetDesktopWindow(), "open", szFileName, NULL, NULL, SW_SHOWDEFAULT);
-	SendMessage(hTempWnd, WM_CLOSE, 0, 0);
+//void CApp::restart() {
+//	HWND hTempWnd = getHWnd();
+//	char szFileName[MAX_PATH] = "";
+//	GetModuleFileName(NULL, szFileName, MAX_PATH);
+//	ShellExecute(GetDesktopWindow(), "open", szFileName, NULL, NULL, SW_SHOWDEFAULT);
+//	SendMessage(hTempWnd, WM_CLOSE, 0, 0);
+//}
+
+void CApp::restart_level() {
+	changeScene(entities->getCurrentLevel());
 }
 
 void CApp::exitGame() {

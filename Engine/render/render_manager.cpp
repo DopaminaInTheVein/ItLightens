@@ -331,7 +331,8 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 				it->mesh->activateAndRender();
 			}
 			else {
-				fatal("render__manager: tranfrom from shadowcaster null");
+				//Puede no tener transform, ignoralo y ya esta
+				//fatal("render__manager: tranfrom from shadowcaster null");
 			}
 		}
 

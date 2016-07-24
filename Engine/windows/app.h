@@ -10,7 +10,8 @@ class IAppModule;
 class CApp {
 public:
 	typedef std::vector<IAppModule*> VModules;
-	std::string sceneToLoad = "room_one";
+	std::string sceneToLoad = "";
+	
 	// Remove copy ctor
 	CApp(const CApp&) = delete;
 
@@ -30,8 +31,9 @@ public:
 	HWND getHWnd() { return hWnd; }
 	bool start();
 	void stop();
-	void changeScene();
-	void restart();
+	void changeScene(std::string level);
+	//void restart();
+	void restart_level();
 	void exitGame();
 
 	VModules& getModulesToWndProc() {

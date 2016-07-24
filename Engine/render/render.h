@@ -10,49 +10,49 @@ class CMesh;
 class CRender {
 	IDXGISwapChain*         swap_chain;
 	D3D_FEATURE_LEVEL       featureLevel;
-  int                     width, height;
-  
+	int                     width, height;
+
 public:
 	CRender();
 
-  // Remove copy ctor
-  CRender(const CRender&) = delete;
+	// Remove copy ctor
+	CRender(const CRender&) = delete;
 
 	ID3D11Device*           device;
 	ID3D11DeviceContext*    ctx;
-  ID3D11RenderTargetView* render_target_view;
-  
-  ID3D11Texture2D*        depth_resource;
-  ID3D11DepthStencilView* depth_stencil_view;
+	ID3D11RenderTargetView* render_target_view;
 
-  void destroyDevice();
+	ID3D11Texture2D*        depth_resource;
+	ID3D11DepthStencilView* depth_stencil_view;
+
+	void destroyDevice();
 	bool createDevice();
 	void swapChain();
 
-  void activateBackBuffer();
-  void clearMainZBuffer();
+	void activateBackBuffer();
+	void clearMainZBuffer();
 
-  int getXRes() const{
-	  return width;
-  }
+	int getXRes() const {
+		return width;
+	}
 
-  int getYRes() const {
-	  return height;
-  }
+	int getYRes() const {
+		return height;
+	}
 };
 
 extern CRender Render;
 //#define Render		CRender::get()
 
 //#ifdef NDEBUG
-//#define setDXName(dx_obj,new_name) 
+//#define setDXName(dx_obj,new_name)
 //#else
 #define setDXName(dx_obj,new_name) \
-        dbg( "DXObj %p will have name %s\n", dx_obj, new_name ); \
+        //dbg( "DXObj %p will have name %s\n", dx_obj, new_name ); \
         dx_obj->SetPrivateData(WKPDID_D3DDebugObjectName, (UINT)strlen(new_name), new_name);
 
 #define setObjName(obj, new_name) \
-		dbg( "DXObj %p will have name %s\n", obj, new_name );
+		//dbg( "DXObj %p will have name %s\n", obj, new_name );
 //#endif
 
 #include "gpu_trace.h"
@@ -66,4 +66,3 @@ extern CRender Render;
 #include "render_config.h"
 
 #endif
-
