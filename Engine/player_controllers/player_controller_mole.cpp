@@ -216,41 +216,22 @@ void player_controller_mole::UpdateInputActions() {
 		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
 
 		//if somehow the box splits from the player, we leave it
-		if (distance_to_box > 2.75f) {
+		if (distance_to_box > 3.f) {
 			LeaveBox();
 		}
 		else if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility ||
 				 io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
 
+			GET_COMP(box_p, boxPushed, TCompPhysics);
+
 			if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
 				animController->setState(AST_PUSH_WALK);
+				box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
 			}
 			else {
 				animController->setState(AST_PULL_WALK);
+				box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
 			}
-
-			GET_COMP(box_p, boxPushed, TCompPhysics);
-
-			VEC3 direction = directionForward + directionLateral;
-
-			CEntity * camera_e = camera;
-			TCompTransform* camera_comp = camera_e->get<TCompTransform>();
-
-			direction.Normalize();
-
-			float yaw, pitch;
-			camera_comp->getAngles(&yaw, &pitch);
-			float new_x, new_z;
-
-			new_x = direction.x * cosf(yaw) + direction.z*sinf(yaw);
-			new_z = -direction.x * sinf(yaw) + direction.z*cosf(yaw);
-
-			direction.x = new_x;
-			direction.z = new_z;
-
-			direction.Normalize();
-
-			box_p->AddMovement(direction*player_curr_speed*getDeltaTime());
 			
 		}
 		else if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility ||
@@ -551,6 +532,7 @@ void player_controller_mole::FaceToGrab()
 {
 	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
 	if (faced) {
+		
 		GET_COMP(box, boxNear, TCompBox);
 		// if the box is MEDIUM (1) we go to "push mode"
 		if (box->type_box == 1) {
@@ -577,6 +559,7 @@ void player_controller_mole::PushBoxPreparation() {
 		GET_COMP(box_p, boxPushed, TCompPhysics);
 		pushing_box = true;
 		inputEnabled = true;
+		push_pull_direction = getEntityTransform()->getFront();
 	}
 }
 
@@ -801,7 +784,9 @@ void player_controller_mole::ChangeCommonState(std::string st)
 }
 
 bool player_controller_mole::canJump() {
+
 	bool ascending = cc->GetLastSpeed().y > 0.1f;
 	bool descending = cc->GetLastSpeed().y < -0.1f;
 	return !boxGrabbed.isValid() && !pilaGrabbed.isValid() && !ascending && !descending;
+
 }

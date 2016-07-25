@@ -33,9 +33,9 @@ protected:
 	static map<string, statehandler> statemap;
 
 	// Main attributes
-	//energies
 	float grab_box_energy;
 	float destroy_wall_energy;
+	VEC3 push_pull_direction;
 	float push_box_force;
 	float pull_box_force;
 	struct GrabInfo {
