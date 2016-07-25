@@ -341,7 +341,7 @@ end
 function OnLoadedLevel( logic_level, real_level)
 	p:print("OnLoadedLevel")
 	p:exec_command("cam:fade_in(1)", 1)
-	p:exec_command("p:setControlEnabled(0);", 1)
+	p:exec_command("p:setControlEnabled(1);", 1)
 	CallFunction("OnLoaded_"..real_level)
 end
 
