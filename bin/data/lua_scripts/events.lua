@@ -140,6 +140,10 @@ function OnPickupBox( param )
 	p:print( "OnPickupBox: "..param.."\n" )
 end
 
+function OnPushBox( param )
+	p:print( "OnPushBox: "..param.."\n" )
+end
+
 function OnLeaveBox( param )
 	p:print( "OnLeaveBox: "..param.."\n" )
 end

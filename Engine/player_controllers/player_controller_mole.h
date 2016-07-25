@@ -33,9 +33,11 @@ protected:
 	static map<string, statehandler> statemap;
 
 	// Main attributes
-	//energies
 	float grab_box_energy;
 	float destroy_wall_energy;
+	VEC3 push_pull_direction;
+	float push_box_force;
+	float pull_box_force;
 	struct GrabInfo {
 		float y;
 		float dist;
@@ -87,6 +89,8 @@ public:
 	void LeavingPila();
 	void PuttingPila();
 	void DestroyWall();
+	void PushBoxPreparation();
+	void PushBox();
 
 	void InitControlState();
 	bool nearToBox();
@@ -99,10 +103,13 @@ public:
 
 	CHandle boxGrabbed; // = false;
 	CHandle boxNear; // = false;
+	CHandle boxPushed;
 	CHandle pilaGrabbed; // = false;
 	CHandle pilaNear; // = false;
 	CHandle pilaContainer;
 	VEC3 pilaContainerPos;
+
+	bool pushing_box = false;
 
 	string selectedBox = "";
 	//int selectedBoxi = 0;
