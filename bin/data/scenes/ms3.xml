@@ -4141,7 +4141,7 @@
 <rigidbody
    type_collision="static"
    type_shape="convex"
-   mass="299"/>
+   mass="1000000"/>
 <local_aabb/>
 <polarized
    pol="plus"

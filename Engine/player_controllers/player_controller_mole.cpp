@@ -216,7 +216,7 @@ void player_controller_mole::UpdateInputActions() {
 		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
 
 		//if somehow the box splits from the player, we leave it
-		if (distance_to_box > 3.f) {
+		if (distance_to_box > 3.5f) {
 			LeaveBox();
 		}
 		else if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility ||
@@ -267,6 +267,7 @@ void player_controller_mole::UpdateUnpossess() {
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
 		boxGrabbed = CHandle();
+		boxPushed = CHandle();
 	}
 	if (pilaGrabbed.isValid()) {
 		LeavePila();
@@ -558,6 +559,8 @@ void player_controller_mole::PushBoxPreparation() {
 		ChangeState(ST_MOLE_PUSH);
 		animController->setState(AST_PUSH_PREP);
 		GET_COMP(box_p, boxPushed, TCompPhysics);
+		box_p->getActor()->isRigidBody()->setMass(250.f);
+		box_p->getRigidActor()->isRigidBody()->setMass(250.f);
 		pushing_box = true;
 		inputEnabled = true;
 		push_pull_direction = getEntityTransform()->getFront();
