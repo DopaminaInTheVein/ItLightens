@@ -302,7 +302,7 @@ void player_controller_mole::LeaveBox() {
 	}
 
 	SBB::postBool(selectedBox, false);
-	mole_max_speed *= 2;
+	player_max_speed *= 2;
 	//ChangePose(pose_idle_route);
 	ChangeState(ST_MOLE_UNGRABBING);
 	stopMovement();
@@ -311,7 +311,7 @@ void player_controller_mole::LeaveBox() {
 
 void player_controller_mole::LeavePila() {
 	animController->ungrabPila();
-	mole_max_speed *= 2;
+	player_max_speed *= 2;
 	ChangeState(ST_MOLE_UNPILING);
 	stopMovement();
 	inputEnabled = false;
@@ -328,6 +328,7 @@ void player_controller_mole::LeavingBox()
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
 		boxGrabbed = CHandle();
+		boxPushed = CHandle();
 	}
 }
 
@@ -375,7 +376,7 @@ void player_controller_mole::PuttingPila()
 		//pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		pila->PutIn(pilaContainer);
 		pilaGrabbed = CHandle();
-		mole_max_speed *= 2;
+		player_max_speed *= 2;
 		animController->setState(AST_IDLE);
 	}
 }
@@ -478,7 +479,7 @@ void player_controller_mole::GoToGrab()
 		if (deltaYaw > epsilonYaw) transform->setAngles(yaw + 0.1f * deltaYaw, pitch);
 		VEC3 dir = grabInfo.pos_to_grab - cc->GetPosition();
 		dir.Normalize();
-		cc->AddMovement(dir, mole_max_speed * getDeltaTime());
+		cc->AddMovement(dir, player_max_speed * getDeltaTime());
 		moving = true;
 		ChangeCommonState("moving");
 	}
@@ -518,7 +519,7 @@ bool player_controller_mole::goAndTurnTo(VEC3 target)
 		if (deltaYaw > epsilonYaw) transform->setAngles(yaw + 0.1f * deltaYaw, pitch);
 		VEC3 dir = target - cc->GetPosition();
 		dir.Normalize();
-		cc->AddMovement(dir, mole_max_speed * getDeltaTime());
+		cc->AddMovement(dir, player_max_speed * getDeltaTime());
 		moving = true;
 		ChangeCommonState("moving");
 		return false;
@@ -573,7 +574,7 @@ void player_controller_mole::PushBox() {
 	dmg.modif = 0.5f;
 	myEntity->sendMsg(dmg);
 	boxGrabbed = boxNear;
-	mole_max_speed /= 2;
+	player_max_speed /= 2;
 
 	ChangeState("idle");
 	logic_manager->throwEvent(logic_manager->OnPushBox, "");
@@ -663,7 +664,7 @@ void player_controller_mole::GrabbedBox() {
 	dmg.modif = 0.5f;
 	myEntity->sendMsg(dmg);
 	boxGrabbed = boxNear;
-	mole_max_speed /= 2;
+	player_max_speed /= 2;
 
 	ChangeState("idle");
 	logic_manager->throwEvent(logic_manager->OnPickupBox, "");
@@ -676,7 +677,7 @@ void player_controller_mole::GrabbedPila()
 	dmg.modif = 0.5f;
 	myEntity->sendMsg(dmg);
 	pilaGrabbed = pilaNear;
-	mole_max_speed /= 2;
+	player_max_speed /= 2;
 
 	ChangeState("idle");
 	animController->setState(AST_PILA_IDLE);
