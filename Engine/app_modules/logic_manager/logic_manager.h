@@ -99,6 +99,8 @@ public:
 		OnRemovePila,
 
 		OnVictory,
+		OnRestartLevel,
+		OnLoadedLevel,
 	};
 
 	CLogicManagerModule();

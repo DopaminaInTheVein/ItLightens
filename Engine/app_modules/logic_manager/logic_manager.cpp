@@ -344,8 +344,16 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnExplode(\"%s\");", params.c_str());
 		break;
 	}
-	case (OnVictory) : {
+	case (OnVictory): {
 		sprintf(lua_code, "OnVictory();");
+		break;
+	}
+	case (OnRestartLevel): {
+		sprintf(lua_code, "OnRestartLevel(%s);", params.c_str());
+		break;
+	}
+	case (OnLoadedLevel): {
+		sprintf(lua_code, "OnLoadedLevel(%s);", params.c_str());
 		break;
 	}
 	default: {
@@ -679,5 +687,9 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// launch victory state
 		.set("launch_victory_state", &SLBPublicFunctions::launchVictoryState)
 		.comment("Launches the victory game state")
+		// LoadLevel (and clear current)
+		.set("load_level", &SLBPublicFunctions::loadLevel)
+		.comment("Launches the victory game state")
+		.param("string: name of the level")
 		;
 }

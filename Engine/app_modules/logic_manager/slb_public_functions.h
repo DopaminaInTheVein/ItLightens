@@ -31,6 +31,7 @@ public:
 
 	// player functions
 	void getPlayer();
+	void getRaijin();
 	void setPlayerPosition(float x, float y, float z);
 	void teleport(const char * point_name);
 	float getPlayerX();
@@ -54,6 +55,7 @@ public:
 
 	// generic handle functions
 	void getPlayer();
+	void getRaijin();
 	void getHandleById(int id);
 	void getHandleByNameTag(const char* name, const char* tag);
 	void getHandleCaller();
@@ -134,6 +136,7 @@ public:
 	void characterGlobeWithColor(const char* text, float distance, float char_x, float char_y, float char_z, const char* background, const char* textColor);
 	void toggleIntroState();
 	void launchVictoryState();
+	void loadLevel(const char* level_name);
 
 	void test(const char* to_print);
 };

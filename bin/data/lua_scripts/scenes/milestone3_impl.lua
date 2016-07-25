@@ -5,7 +5,6 @@ function test_dbg()
   --isDoorOpen = true
 end
 --------------------------- COMENTAR CODIGO TEST!!!! ---------------------------------------
-
 print('This is lua')
 
 SLB.using( SLB )
@@ -15,6 +14,16 @@ h = Handle( )
 hg = HandleGroup()
 cam = Camera()
 player = Player()
+
+---------------------------- LEVEL LOADED ---------------------------------------------------
+function OnLoaded_ms3()
+  p:print("OnLoaded Scene MS3")
+  isDoorOpen = false
+  alert = false
+  stateElevator = 1 -- 1= up , 0 = down
+end
+---------------------------------------------------------------------------------------------
+
 
 function OnEnter_tElevator( )
   --Nothing to do

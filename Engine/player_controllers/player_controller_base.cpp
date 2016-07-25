@@ -90,10 +90,28 @@ void CPlayerBase::stopMovement() {
 	moving = false;
 	directionForward = directionLateral = VEC3(0.f, 0.f, 0.f);
 }
+float CPlayerBase::getLife()
+{
+	CEntity * eMe = tags_manager.getFirstHavingTag("raijin");
+	assert(eMe);
+	TCompLife * life = eMe->get<TCompLife>();
+	assert(life || fatal("Player doesnt have life component!"));
+	return life->getCurrent();
+}
+
+void CPlayerBase::setLife(float new_life)
+{
+	CEntity * eMe = tags_manager.getFirstHavingTag("raijin");
+	assert(eMe);
+	TCompLife * life = eMe->get<TCompLife>();
+	assert(life || fatal("Player doesnt have life component!"));
+	life->setCurrent(new_life);
+}
 
 void CPlayerBase::update(float elapsed) {
 	PROFILE_FUNCTION("update base");
 	if (camera.isValid()) {
+		setLife(getLife() - getDeltaTime() * 0.3f);
 		if (onCinematic) {
 			UpdateCinematic(elapsed);
 		}
@@ -307,10 +325,11 @@ void CPlayerBase::UpdateMovingWithOther() {
 #pragma region Player States
 void CPlayerBase::energyDecreasal(float howmuch) {
 	PROFILE_FUNCTION("player base: energy dec function");
+	CEntity * raijin = tags_manager.getFirstHavingTag(getID("raijin"));
 
 	TMsgSetDamage msg;
 	msg.dmg = howmuch;
-	this->myEntity->sendMsg(msg);
+	raijin->sendMsg(msg);
 }
 
 void CPlayerBase::Idle()

@@ -4,13 +4,13 @@
 #include <windows.h>
 #include "utils\timer.h"
 
-
 class IAppModule;
 
 // ------------------------------------------------------
 class CApp {
 public:
 	typedef std::vector<IAppModule*> VModules;
+	std::string sceneToLoad = "";
 
 	// Remove copy ctor
 	CApp(const CApp&) = delete;
@@ -31,8 +31,13 @@ public:
 	HWND getHWnd() { return hWnd; }
 	bool start();
 	void stop();
-	void changeScene();
-	void restart();
+	void changeScene(std::string level);
+	void loadedLevelNotify();
+	//void restart();
+	void restartLevel();
+	void restartLevelNotify();
+	std::string getCurrentRealLevel();
+	std::string getCurrentLogicLevel();
 	void exitGame();
 
 	VModules& getModulesToWndProc() {
@@ -44,7 +49,6 @@ public:
 	CTimer timer_app;
 
 private:
-	std::string sceneToLoad = "";
 
 	// Windows stuff
 	HINSTANCE hInstance;
@@ -66,7 +70,6 @@ private:
 	void render();
 
 public:
-
 };
 
 #endif

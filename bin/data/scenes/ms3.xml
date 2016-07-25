@@ -1,6 +1,7 @@
 <entities>
 <entity
-   id="300">
+   id="300"
+   reload="yes">
 <tags
    tags="doorExit door"/>
 <magnet_door
@@ -40,7 +41,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="platform pila interactive"/>
 <pila/>
@@ -1030,7 +1032,7 @@
 <rigidbody
    type_collision="static"/>
 <room
-   name="1"/>
+   name="1/1"/>
 
 </entity>
 <entity>
@@ -1289,7 +1291,8 @@
 
 </entity>
 <entity
-   id="301">
+   id="301"
+   reload="yes">
 <tags
    tags="elevator interactive"/>
 <elevator
@@ -1393,7 +1396,8 @@
 
 </entity>
 <entity
-   id="304">
+   id="304"
+   reload="yes">
 <tags
    tags="pila_container interactive"/>
 <pila_container/>
@@ -1852,7 +1856,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workbench interactive"/>
 <workbench/>
@@ -1871,7 +1876,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workbench interactive"/>
 <workbench/>
@@ -2639,7 +2645,8 @@
 
 </entity>
 <entity
-   id="306">
+   id="306"
+   reload="yes">
 <tags
    tags="door"/>
 <magnet_door
@@ -2680,7 +2687,8 @@
 
 </entity>
 <entity
-   id="308">
+   id="308"
+   reload="yes">
 <tags
    tags="door"/>
 <magnet_door
@@ -2721,7 +2729,8 @@
 
 </entity>
 <entity
-   id="305">
+   id="305"
+   reload="yes">
 <tags
    tags="door"/>
 <magnet_door
@@ -2762,7 +2771,8 @@
 
 </entity>
 <entity
-   id="307">
+   id="307"
+   reload="yes">
 <tags
    tags="door"/>
 <magnet_door
@@ -3457,7 +3467,7 @@
 <rigidbody
    type_collision="static"/>
 <room
-   name="1"/>
+   name="1/2/1"/>
 
 </entity>
 <entity>
@@ -3599,7 +3609,9 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   permanent="yes"
+   reload="yes">
 <tags
    tags="camera_main"/>
 <camera_main
@@ -3618,12 +3630,13 @@
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="player raijin"/>
 <player/>
 <life
-   points="10"/>
+   points="100"/>
 <skc_player/>
 <skeleton_lookat/>
 <name
@@ -3646,7 +3659,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -3667,7 +3681,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -3688,13 +3703,12 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_mole AI_poss"/>
 <bt_mole/>
 <player_mole/>
-<life
-   points="100"/>
 <skc_mole/>
 <name
    name="__mole_1"/>
@@ -3714,13 +3728,11 @@
    height="2.1"/>
 <room
    name="2"/>
-
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="4"
    kpt0_type="seek"
@@ -3761,11 +3773,10 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="3"
    kpt0_type="seek"
@@ -3803,11 +3814,10 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="2"
    kpt0_type="look"
@@ -3842,11 +3852,10 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="2"
    kpt0_type="look"
@@ -3881,11 +3890,10 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="6"
    kpt0_type="look"
@@ -3932,11 +3940,10 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_guard"/>
-<life
-   points="100"/>
 <bt_guard
    kpt_size="6"
    kpt0_type="look"
@@ -3983,7 +3990,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -4014,7 +4022,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -4045,7 +4054,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -4076,7 +4086,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -4107,7 +4118,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="box platform removable interactive"/>
 <box
@@ -4134,7 +4146,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -4165,7 +4178,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -4196,7 +4210,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="drone platform"/>
 <drone
@@ -4227,7 +4242,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="box platform removable interactive"/>
 <box
@@ -4254,7 +4270,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_mole AI_poss"/>
 <bt_mole
@@ -4270,11 +4287,11 @@
    wpt4_pos="33.2816 -23.859 0.208357"
    wpt4_wait="2"/>
 <player_mole/>
-<life
-   points="100"/>
 <skc_mole/>
 <name
    name="mole_1"/>
+   <life points="100" />
+
 <transform
    pos="34.2279 -23.859 -12.2899"
    quat="0 0 0 1.0"
@@ -4293,7 +4310,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4328,7 +4346,8 @@
 
 </entity>
 <entity
-   id="303">
+   id="303"
+   reload="yes">
 <tags
    tags="pila_container interactive"/>
 <pila_container/>
@@ -4360,7 +4379,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4381,7 +4401,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4402,7 +4423,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4510,13 +4532,12 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="AI AI_cientifico AI_poss"/>
 <bt_scientist/>
 <player_cientifico/>
-<life
-   points="100"/>
 <skc_scientist/>
 <name
    name="scientist_1"/>
@@ -4538,7 +4559,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4554,7 +4576,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4570,7 +4593,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4603,7 +4627,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4639,7 +4664,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4675,7 +4701,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4711,7 +4738,8 @@
    name="1"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4747,7 +4775,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4783,7 +4812,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4802,7 +4832,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4836,7 +4867,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4855,7 +4887,8 @@
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags/>
 <rigidbody
    type_collision="trigger"
@@ -4872,7 +4905,8 @@
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4888,7 +4922,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4904,7 +4939,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -4920,7 +4956,8 @@
    name="2"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="workstation"/>
 <workstation
@@ -5221,7 +5258,8 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="guided_camera"/>
 <guided_camera
@@ -5248,7 +5286,8 @@
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity
+   reload="yes">
 <tags
    tags="guided_camera"/>
 <guided_camera

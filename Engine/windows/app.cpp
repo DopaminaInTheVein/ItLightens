@@ -26,7 +26,7 @@ CApp::CApp()
 	file_initAttr_json = "./inicialization.json";
 
 	std::map<std::string, float> options = readIniAtrData(file_options_json, "screen");
-	
+
 	//"0 != " to convert uint to bool more efficient
 	max_screen = 0 != (int)options["full_screen"];
 	xres = (int)options["xres"];
@@ -62,16 +62,14 @@ bool CApp::maxScreen() {
 	SetWindowLong(getHWnd(), GWL_STYLE, WS_POPUPWINDOW);
 	SetWindowPos(getHWnd(), HWND_TOP, 0, 0, xres_max, yres_max,
 		SWP_FRAMECHANGED | SWP_SHOWWINDOW);
-	
+
 	return true;
 }
 
 // -------------------------------------------------
 bool CApp::windowedScreen() {
-	
-	
 	SetWindowLong(getHWnd(), GWL_STYLE, WS_OVERLAPPEDWINDOW);
-	SetWindowPos(getHWnd(), HWND_TOP, 0, 0,xres, yres,
+	SetWindowPos(getHWnd(), HWND_TOP, 0, 0, xres, yres,
 		SWP_FRAMECHANGED | SWP_NOMOVE | SWP_SHOWWINDOW);
 	return true;
 }
@@ -149,20 +147,20 @@ bool CApp::createWindow(HINSTANCE new_hInstance, int nCmdShow)
 	if (!hWnd)
 		return false;
 
-	if(max_screen) maxScreen();
+	if (max_screen) maxScreen();
 	ShowWindow(hWnd, nCmdShow);
 	return true;
 }
 
 // -------------------------------------------------
 void CApp::generateFrame() {
-  PROFILE_FRAME_BEGINS();
-  PROFILE_FUNCTION("generateFrame");
-  float delta_time = timer_app.deltaAndReset();
-  delta_time = getDeltaTime();
-  const float max_delta_time = 5.f / 60.f;      // 5 frames
-  if (delta_time > max_delta_time)
-    delta_time = max_delta_time;
+	PROFILE_FRAME_BEGINS();
+	PROFILE_FUNCTION("generateFrame");
+	float delta_time = timer_app.deltaAndReset();
+	delta_time = getDeltaTime();
+	const float max_delta_time = 5.f / 60.f;      // 5 frames
+	if (delta_time > max_delta_time)
+		delta_time = max_delta_time;
 	update(delta_time);
 	render();
 	Render.swapChain();

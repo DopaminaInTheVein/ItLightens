@@ -1,13 +1,14 @@
 {
   "scenes": {
-    "room_one": "ms3",
-    "room_two": "milestone2",
-    "room_three": "milestone2",
-    "room_four": "milestone2"
+	"first_scene": "level_0",
+    "level_0": "ms3",
+    "level_1": "milestone2",
+    "level_2": "milestone2",
+    "level_3": "milestone2"
   },
   "screen": {
-    "xres": 512,
-    "yres": 400,
+    "xres": 1024,
+    "yres": 800,
     "full_screen": 1
   },
   "controls": {

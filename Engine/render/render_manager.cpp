@@ -56,7 +56,8 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 	CHandle h_transform = e->get<TCompTransform>();
 	CHandle h_aabb = e->get<TCompAbsAABB>();
 	TCompRoom * comproom = e->get<TCompRoom>();
-	int oroom = -1;
+	std::vector<int> oroom;
+	oroom.push_back(-1);
 	if (comproom) {
 		oroom = comproom->name;
 	}
@@ -180,7 +181,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	// Pasearse por todas las keys
 	while (it != end_it) {
 		// Do the culling
-		if (it->owner.getOwner().hasTag("player") || pj_room == -1 || it->room == -1 || pj_room == it->room) {
+		if (it->owner.getOwner().hasTag("player") || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
 			if (culling_bits) {
 				TCompAbsAABB* aabb = it->aabb;
 				if (aabb) {
@@ -294,11 +295,12 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 	}
 
 	//check room
-	int room_str = -1;
+	/*std::vector<int> room_str;
+	room_str.push_back(-1);
 	if (room) {
 		room_str = room->name;
 	}
-
+	*/
 	//culling
 	if (culling)
 		culling_bits = &culling->bits;
@@ -307,7 +309,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 	const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
 	int nkeys_rendered = 0;
 	while (it != all_shadow_keys.end()) {
-		if (pj_room == -1 || it->room == -1 || pj_room == it->room) {
+		if (pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
 			if (culling_bits) {
 				TCompAbsAABB* aabb = it->aabb;
 				if (aabb) {
@@ -331,7 +333,8 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 				it->mesh->activateAndRender();
 			}
 			else {
-				fatal("render__manager: tranfrom from shadowcaster null");
+				//Puede no tener transform, ignoralo y ya esta
+				//fatal("render__manager: tranfrom from shadowcaster null");
 			}
 		}
 
@@ -359,12 +362,13 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 		return;
 
 	//check room
-	int room_str = -1;
+	std::vector<int> room_str;
+	room_str.push_back(-1);
 	if (room) {
 		room_str = room->name;
 	}
 
-	if (SBB::readSala() != room_str)
+	if (std::find(room_str.begin(), room_str.end(), SBB::readSala()) != room_str.end())
 		return;			//shadows on diferent room
 	else {
 		//fast fix for room3
@@ -387,7 +391,7 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 	}
 
 	while (it != all_shadow_skinning_keys.end()) {
-		if (it->owner.getOwner().hasTag("player") || pj_room == -1 || it->room == -1 || pj_room == it->room) {
+		if (it->owner.getOwner().hasTag("player") || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
 			const TCompTransform* c_tmx = it->transform;
 
 			if (c_tmx) {

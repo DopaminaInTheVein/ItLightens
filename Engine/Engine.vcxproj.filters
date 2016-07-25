@@ -509,6 +509,9 @@
     <ClCompile Include="logic\pila.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\gameController.cpp">
+      <Filter>app_modules\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">

@@ -13,8 +13,8 @@ typedef int (bt::*btaction)();
 typedef bool (bt::*btcondition)();
 
 struct btevent {
-  CLogicManagerModule::EVENT evt;
-  string params;
+	CLogicManagerModule::EVENT evt;
+	string params;
 };
 
 // Implementation of the behavior tree
@@ -28,64 +28,66 @@ struct btevent {
 class bt
 {
 protected:
-  vector<VEC3> pathWpts;
-  int currPathWpt;
-  int totalPathWpt;
+	vector<VEC3> pathWpts;
+	int currPathWpt;
+	int totalPathWpt;
 
-  // the nodes
-  virtual map<string, btnode *>* getTree();
-  // the C++ functions that implement node actions, hence, the behaviours
-  virtual map<string, btaction>* getActions();
-  // the C++ functions that implement conditions
-  virtual map<string, btcondition>* getConditions();
-  // the events that will be executed by the decoratos
-  virtual map<string, btevent>* getEvents();
+	// the nodes
+	virtual map<string, btnode *>* getTree();
+	// the C++ functions that implement node actions, hence, the behaviours
+	virtual map<string, btaction>* getActions();
+	// the C++ functions that implement conditions
+	virtual map<string, btcondition>* getConditions();
+	// the events that will be executed by the decoratos
+	virtual map<string, btevent>* getEvents();
 
-  virtual btnode** getRoot();
-  btnode *current;
+	virtual btnode** getRoot();
+	btnode *current;
 
-  // moved to private as really the derived classes do not need to see this
-  btnode *createNode(string);
-  btnode *findNode(string);
+	// moved to private as really the derived classes do not need to see this
+	btnode *createNode(string);
+	btnode *findNode(string);
 
-  bool getPath(const VEC3& startPoint, const VEC3& endPoint);
-  CEntity* frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle);
-  CEntity* frontCollisionBOX(const TCompTransform * transform, CEntity *  molePursuingBoxi);
-  bool avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform);
-  bool needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, CEntity * molePursuingBoxi = nullptr);
+	bool getPath(const VEC3& startPoint, const VEC3& endPoint);
+	CEntity* frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle);
+	CEntity* frontCollisionBOX(const TCompTransform * transform, CEntity *  molePursuingBoxi);
+	bool avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform);
+	bool needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, CEntity * molePursuingBoxi = nullptr);
 public:
-  //Prueba
-  int getPathDebug(const VEC3& startPoint, const VEC3& endPoint) {
-    if (getPath(startPoint, endPoint)) return totalPathWpt;
-    else return -1;
-  }
+	//Prueba
+	int getPathDebug(const VEC3& startPoint, const VEC3& endPoint) {
+		if (getPath(startPoint, endPoint)) return totalPathWpt;
+		else return -1;
+	}
 
-  string name;
-  // use a derived create to declare BT nodes for your specific BTs
-  virtual void create(string);
-  // use this two calls to declare the root and the children.
-  // use NULL when you don't want a btcondition or btaction (inner nodes)
+	string name;
+	// use a derived create to declare BT nodes for your specific BTs
+	virtual void create(string);
+	// use this two calls to declare the root and the children.
+	// use NULL when you don't want a btcondition or btaction (inner nodes)
 
-  btnode *createRoot(string, int, btcondition, btaction); //nombre nodo, tipo nodo, condicion, accion
-  btnode *addChild(string, string, int, btcondition, btaction); // nombre padre, nombre hijo, tipo, cond, accion
-  btnode *addChild(string, string, int, btcondition, CLogicManagerModule::EVENT, string); // nombre padre, nombre hijo, tipo, cond, evento, parametros
+	btnode *createRoot(string, int, btcondition, btaction); //nombre nodo, tipo nodo, condicion, accion
+	btnode *addChild(string, string, int, btcondition, btaction); // nombre padre, nombre hijo, tipo, cond, accion
+	btnode *addChild(string, string, int, btcondition, CLogicManagerModule::EVENT, string); // nombre padre, nombre hijo, tipo, cond, evento, parametros
 
-  // internals used by btnode and other bt calls
-  void addAction(string, btaction);
-  int execAction(string);
-  void addCondition(string, btcondition);
-  bool testCondition(string);
-  void addEvent(string, btevent);
-  int execEvent(string);
-  void setCurrent(btnode *);
+	// internals used by btnode and other bt calls
+	void addAction(string, btaction);
+	int execAction(string);
+	void addCondition(string, btcondition);
+	bool testCondition(string);
+	void addEvent(string, btevent);
+	int execEvent(string);
+	void setCurrent(btnode *);
 
-  void initParent() {
-    currPathWpt = totalPathWpt = 0;
-  }
+	void initParent() {
+		currPathWpt = totalPathWpt = 0;
+		pathWpts.clear();
+		setCurrent(NULL);
+	}
 
-  // call this once per frame to compute the AI. No need to derive this one,
-  // as the behaviours are derived via btactions and the tree is declared on create
-  void Recalc();
+	// call this once per frame to compute the AI. No need to derive this one,
+	// as the behaviours are derived via btactions and the tree is declared on create
+	void Recalc();
 };
 
 #endif

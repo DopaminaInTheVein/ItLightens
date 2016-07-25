@@ -21,7 +21,6 @@
 #include "recast/navmesh.h"
 #include "recast/navmesh_query.h"
 #include <vector>
-#include <thread>
 #include <future>
 #include <fstream>
 
@@ -114,6 +113,8 @@ DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
 DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
 DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
 
+using namespace std;
+
 CCamera * camera;
 
 // The global dict of all msgs
@@ -139,7 +140,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompLightDirShadows>()->init(MAX_ENTITIES);
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_speedy>()->init(8);
-	getHandleManager<player_controller_mole>()->init(8);
+	getHandleManager<player_controller_mole>()->init(16);
 	getHandleManager<player_controller_cientifico>()->init(8);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSkeleton>()->init(MAX_ENTITIES);
@@ -402,31 +403,29 @@ bool CEntitiesModule::start() {
 	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
 	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
 
-	initLevel("room_one");
+	initLevel(CApp::get().sceneToLoad);
 
 	return true;
 }
 
 void CEntitiesModule::initLevel(string level) {
+	bool level_changed = level != current_level;
 	// Restart Timers LUA
 	logic_manager->resetTimers();
 
-	CApp &app = CApp::get();
-	std::string file_options = app.file_options_json;
-	map<std::string, std::string> fields = readIniAtrDataStr(file_options, "scenes");
-
+	map<std::string, std::string> fields = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
 	sala = fields[level];
 
 	SBB::postBool("navmesh", false);
 	salaloc = "data/navmeshes/" + sala + ".data";
 
-	CEntityParser ep;
+	CEntityParser ep(level_changed);
 
 	dbg("Loading scene... (%d entities)\n", size());
 	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 	assert(is_ok);
 	{
-		CEntityParser ep;
+		CEntityParser ep(level_changed);
 		is_ok = ep.xmlParseFile("data/scenes/test_lights.xml");
 		assert(is_ok);
 	}
@@ -476,16 +475,21 @@ void CEntitiesModule::initLevel(string level) {
 	bool recalc = !is.is_open();
 	is.close();
 	SBB::postBool(sala, false);
+	//------------------------------
 	if (!recalc) {
 		// restore the navmesh from the archive
-		std::thread thre(&CEntitiesModule::readNavmesh, this);
-		thre.detach();
+		//std::thread thre(&CEntitiesModule::readNavmesh, this);
+		//thre.detach();
+		readNavmesh();
 	}
 	else {
 		// make mesh on a separate thread
-		std::thread thre(&CEntitiesModule::recalcNavmesh, this);
-		thre.detach();
+		//std::thread thre(&CEntitiesModule::recalcNavmesh, this);
+		//thre.detach();
+		recalcNavmesh();
 	}
+	//------------------------------
+
 	TTagID tagIDcamera = getID("camera_main");
 	TTagID tagIDwall = getID("breakable_wall");
 	TTagID tagIDminus = getID("minus_wall");
@@ -521,7 +525,7 @@ void CEntitiesModule::initLevel(string level) {
 	if (target_e) {
 		TCompRoom * player_room = target_e->get<TCompRoom>();
 		if (player_room) {
-			room_name = player_room->name;
+			room_name = player_room->name[0];
 		}
 	}
 	SBB::postSala(room_name);
@@ -530,17 +534,6 @@ void CEntitiesModule::initLevel(string level) {
 	TTagID generators = getID("generator");
 	VHandles generatorsHandles = tags_manager.getHandlesByTag(generators);
 	SBB::postHandlesVector("generatorsHandles", generatorsHandles);
-
-	// Set the player in the Speedy AIs
-	//TTagID tagIDSpeedy = getID("AI_speedy");
-	//VHandles speedyHandles = tags_manager.getHandlesByTag(tagIDSpeedy);
-
-	//for (CHandle speedyHandle : speedyHandles) {
-	//	CEntity * speedy_e = speedyHandle;
-	//	TMsgSetPlayer msg_player;
-	//	msg_player.player = t;
-	//	speedy_e->sendMsg(msg_player);
-	//}
 
 	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
 	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
@@ -571,12 +564,36 @@ void CEntitiesModule::initLevel(string level) {
 
 	//TODO: Message LevelStart
 	GameController->SetGameState(CGameController::RUNNING);
+	current_level = level;
+	CApp::get().sceneToLoad = "";
+	CApp::get().loadedLevelNotify();
 }
 
-void CEntitiesModule::destroyAllEntities() {
-	getHandleManager<CEntity>()->each([](CEntity * e) {
-		CHandle(e).destroy();
+void CEntitiesModule::clear(string new_next_level) {
+	next_level = new_next_level;
+	bool level_changed = (next_level != "" && next_level != current_level);
+	static int entities_destroyed = 0;
+	getHandleManager<CEntity>()->each([level_changed](CEntity * e) {
+		if (!e->isPermanent()) {
+			if (level_changed || e->needReload()) {
+				CHandle(e).destroy();
+				entities_destroyed++;
+			}
+		}
 	});
+	dbg("Entities destroyed = %d\n", entities_destroyed);
+}
+
+bool CEntitiesModule::isCleared() {
+	bool level_changed = (next_level != "" && next_level != current_level);
+	getHandleManager<CEntity>()->each([level_changed](CEntity * e) {
+		if (!e->isPermanent()) {
+			if (level_changed || e->needReload()) {
+				return false;
+			}
+		}
+	});
+	return true;
 }
 
 void CEntitiesModule::destroyRandomEntity(float percent) {

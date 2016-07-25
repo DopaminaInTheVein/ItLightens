@@ -155,9 +155,11 @@ struct OM (
 			-- Tags
 			,#("AI","AI_guard")
 			-- Attributes
-			,#("life", "skeleton")
+			--,#("life", "skeleton")
+			,#("skeleton")
 			--Components
-			,#("life","bt_guard", "skc_guard", "skeleton_lookat")
+			--,#("life","bt_guard", "skc_guard", "skeleton_lookat")
+			,#("bt_guard", "skc_guard", "skeleton_lookat")
 			--Helpers
 			,hNpcs + #("Formation_Go", "Formation_Look")
 		)
@@ -168,7 +170,8 @@ struct OM (
 			-- Attributes
 			,#("life")
 			--Components
-			,#("bt_mole", "player_mole", "life", "skc_mole")
+			--,#("bt_mole", "player_mole", "life", "skc_mole")
+			,#("bt_mole", "player_mole", "skc_mole")
 			--Helpers
 			,hNpcs
 		)
@@ -179,7 +182,8 @@ struct OM (
 			-- Attributes
 			,#("life")
 			--Components
-			,#("bt_scientist", "player_cientifico", "life", "skc_scientist")
+			--,#("bt_scientist", "player_cientifico", "life", "skc_scientist")
+			,#("bt_scientist", "player_cientifico", "skc_scientist")
 			--Helpers
 			,hNpcs
 		)
@@ -190,7 +194,8 @@ struct OM (
 			-- Attributes
 			,#("life")
 			--Components
-			,#("bt_speedy", "player_speedy", "life")
+			--,#("bt_speedy", "player_speedy", "life")
+			,#("bt_speedy", "player_speedy")
 			--Helpers
 			,hNpcs
 		)

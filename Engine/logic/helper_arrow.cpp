@@ -19,12 +19,19 @@ void LogicHelperArrow::update(float elapsed) {
 	PROFILE_FUNCTION("helper arrow: update");
 	std::vector<CHandle> generators = SBB::readHandlesVector("generatorsHandles");
 	CEntity * targete = target;
+	if (!targete) return;
 	TCompTransform * targett = targete->get<TCompTransform>();
+	if (!targett) return;
 	TCompLife * targetl = targete->get<TCompLife>();
+	if (!targetl) return;
 	VEC3 targetpos = targett->getPosition();
 
 	CEntity* e_owner = CHandle(this).getOwner();
+	if (!e_owner) return;
+
 	TCompTransform *ownT = e_owner->get<TCompTransform>();
+	if (!ownT) return;
+
 	VEC3 ownpos = targetpos;
 	ownpos.y += 1.8f;
 	float distance = 99999999.999f;
@@ -33,7 +40,9 @@ void LogicHelperArrow::update(float elapsed) {
 		GET_COMP(g, gen, TCompGenerator);
 		if (g  && g->isUsable()) {
 			CEntity * gene = gen;
+			if (!gene) return;
 			TCompTransform * gent = gene->get<TCompTransform>();
+			if (!gent) return;
 			VEC3 genpos = gent->getPosition();
 			float d = squaredDist(targetpos, genpos);
 			if (d < distance - 8.0f) {

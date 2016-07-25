@@ -1,9 +1,7 @@
 #ifndef INC_GAME_CONTROLLER_H_
 #define INC_GAME_CONTROLLER_H_
 
-#include "debug\debug_itlightens.h"
 #include "app_module.h"
-#include "io\io.h"
 
 class CGameController : public IAppModule {
 	int		game_state = 0;
@@ -26,123 +24,27 @@ public:
 		GAME_STATES_SIZE
 	};
 
-	int GetGameState() const { return game_state; }
-	void SetGameState(int state) { game_state = state; }
+	int GetGameState() const;
+	void SetGameState(int state);
 
-	void TogglePauseState() {
-		if (game_state == RUNNING)
-			game_state = STOPPED;
+	void TogglePauseState();
+	void TogglePauseIntroState();
 
-		else if (game_state == STOPPED)
-			game_state = RUNNING;
-	}
+	void UpdateGeneralInputs();
 
-	void TogglePauseIntroState() {
-		if (game_state == RUNNING)
-			game_state = STOPPED_INTRO;
+	void update(float dt);
 
-		else if (game_state == STOPPED_INTRO)
-			game_state = RUNNING;
-	}
-
-	void UpdateGeneralInputs() {
-		if (!ImGui::GetIO().WantTextInput) { //not input wanted from imgui
-			//exit game
-			if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
-				if (game_state == RUNNING) {
-					SetGameState(MENU);
-					io->mouse.release();
-				}
-				else if (game_state == MENU) {
-					SetGameState(RUNNING);
-					io->mouse.capture();
-				}
-				//CApp& app = CApp::get();
-				//app.exitGame();
-			}
-
-			//restart game
-			if (io->keys[VK_RETURN].becomesPressed() || io->joystick.button_START.becomesPressed()) {
-				CApp& app = CApp::get();
-				app.restart();
-				//app.changeScene();
-			}
-
-			//toggle console log
-			if (io->keys['L'].becomesPressed()) {
-				Debug->setOpen(!*Debug->getStatus());
-			}
-
-			//toggle command log
-			if (io->keys['O'].becomesPressed()) {
-				Debug->ToggleConsole();
-			}
-
-			//lock/unlock free camera
-			if (io->keys['K'].becomesPressed()) {
-				free_camera = !free_camera;
-			}
-
-			//pause/unpause game
-			if (io->keys['P'].becomesPressed()) {
-				TogglePauseState();
-			}
-
-			//pause/unpause game (intro mode)
-			if (io->keys['I'].becomesPressed()) {
-				TogglePauseIntroState();
-			}
-		}
-	}
-
-	void update(float dt) {
-		UpdateGeneralInputs();
-	}
-
-	bool forcedUpdate() { return true; }
-
-	bool * GetFxGlowPointer() {
-		return &fx_glow;
-	}
-
-	bool * GetFxPolarizePointer() {
-		return &fx_polarize;
-	}
-
-	bool GetFxGlow() {
-		return fx_glow;
-	}
-
-	bool GetFxPolarize() {
-		return fx_polarize;
-	}
-
-	bool * GetFreeCameraPointer() {
-		return &free_camera;
-	}
-
-	bool GetFreeCamera() const {
-		return free_camera;
-	}
-
-	bool IsCinematic() const {
-		return cinematic;
-	}
-	void SetCinematic(bool new_cinematic) {
-		cinematic = new_cinematic;
-	}
-
-	bool * GetCullingRenderPointer() {
-		return &render_culling_box;
-	}
-
-	bool GetCullingRender() const {
-		return render_culling_box;
-	}
-
-	const char* getName() const {
-		return "game_controller";
-	}
+	bool * GetFxGlowPointer();
+	bool * GetFxPolarizePointer();
+	bool GetFxGlow();
+	bool GetFxPolarize();
+	bool * GetFreeCameraPointer();
+	bool GetFreeCamera() const;
+	bool IsCinematic() const;
+	void SetCinematic(bool new_cinematic);
+	bool * GetCullingRenderPointer();
+	bool GetCullingRender() const;
+	const char* getName() const;
 };
 
 extern CGameController* GameController;

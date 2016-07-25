@@ -92,6 +92,8 @@ protected:
 	void orbitCameraDeath();
 	bool getUpdateInfo() override;
 	void checkFalling();
+	float getLife();
+	void setLife(float new_life);
 
 	bool turnTo(TCompTransform*);
 	bool turnTo(VEC3 target);

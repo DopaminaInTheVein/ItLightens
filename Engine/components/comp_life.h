@@ -70,9 +70,9 @@ struct TCompLife : public TCompBase {
 
 	void update(float elapsed) {
 		CHandle me = CHandle(this).getOwner();
-		if (me.hasTag("AI_poss") && !me.hasTag("player")) {
+		/*if (me.hasTag("AI_poss") && !me.hasTag("player")) {
 			energyDamageScale = -0.1f;
-		}
+		}*/
 		if (player_life && !dead) {
 			if (modifier != 0 && energyDamageScale != 0)
 				currentlife -= energyDamageScale*modifier*elapsed;

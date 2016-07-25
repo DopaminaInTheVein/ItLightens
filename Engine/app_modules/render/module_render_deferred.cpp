@@ -288,8 +288,10 @@ void CRenderDeferredModule::addPointLights() {
 		PROFILE_FUNCTION("upload point light");
 		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
-			if (SBB::readSala() != room->name)
+			std::vector<int> rooms = room->name;
+			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) != rooms.end()) {
 				return;			//light on diferent room
+			}
 			else {
 				//fast fix for room3
 				if (SBB::readSala() == 2) {
@@ -337,8 +339,10 @@ void CRenderDeferredModule::addDirectionalLights() {
 		PROFILE_FUNCTION("upload light dir");
 		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
-			if (SBB::readSala() != room->name)
+			std::vector<int> rooms = room->name;
+			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) != rooms.end()) {
 				return;			//light on diferent room
+			}
 			else {
 				//fast fix for room3
 				if (SBB::readSala() == 2) {
@@ -562,8 +566,10 @@ void CRenderDeferredModule::generateShadowMaps() {
 
 		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
-			if (SBB::readSala() != room->name)
+			std::vector<int> rooms = room->name;
+			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) != rooms.end()) {
 				return;			//light on diferent room
+			}
 			else {
 				//fast fix for room3
 				if (SBB::readSala() == 2) {
