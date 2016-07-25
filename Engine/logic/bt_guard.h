@@ -154,6 +154,7 @@ class bt_guard : public bt, public TCompBase
 	bool turnTo(VEC3 dest, bool wide = false);
 	bool turnToPlayer();
 	void lookAtPlayer();
+	void lookAtFront();
 	//VEC3 generateRandomPoint(); THIS IS NOT USED!
 
 	//Aux checks
