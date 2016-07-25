@@ -168,7 +168,7 @@ struct OM (
 			-- Tags
 			,#("AI","AI_mole","AI_poss")
 			-- Attributes
-			--,#("life")
+			,#("life")
 			--Components
 			--,#("bt_mole", "player_mole", "life", "skc_mole")
 			,#("bt_mole", "player_mole", "skc_mole")
@@ -180,7 +180,7 @@ struct OM (
 			-- Tags
 			,#("AI","AI_cientifico","AI_poss")
 			-- Attributes
-			--,#("life")
+			,#("life")
 			--Components
 			--,#("bt_scientist", "player_cientifico", "life", "skc_scientist")
 			,#("bt_scientist", "player_cientifico", "skc_scientist")
@@ -192,7 +192,7 @@ struct OM (
 			-- Tags
 			,#("AI", "AI_speedy", "AI_poss")
 			-- Attributes
-			--,#("life")
+			,#("life")
 			--Components
 			--,#("bt_speedy", "player_speedy", "life")
 			,#("bt_speedy", "player_speedy")
