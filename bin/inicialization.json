@@ -97,7 +97,9 @@
 	},	
 	"controller_mole" : {
 		"grab_box_energy" : 5.0,
-		"destroy_wall_energy" : 10.0
+		"destroy_wall_energy" : 10.0,
+		"push_box_force" : 100.0,
+		"pull_box_force" : 20.0
 	},	
 	"controller_scientist" : {
 		"player_max_speed" : 4.5,

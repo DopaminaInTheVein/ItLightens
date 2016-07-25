@@ -36,6 +36,8 @@ protected:
 	//energies
 	float grab_box_energy;
 	float destroy_wall_energy;
+	float push_box_force;
+	float pull_box_force;
 	struct GrabInfo {
 		float y;
 		float dist;

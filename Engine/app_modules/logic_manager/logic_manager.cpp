@@ -184,6 +184,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnPickupBox(%f);", 0.5f);
 		break;
 	}
+	case (OnPushBox) : {
+		sprintf(lua_code, "OnPushBox(%f);", 0.5f);
+		break;
+	}
 	case (OnLeaveBox): {
 		sprintf(lua_code, "OnLeaveBox(%f);", 0.5f);
 		break;

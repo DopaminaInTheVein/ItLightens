@@ -68,6 +68,8 @@ void player_controller_mole::readIniFileAttr() {
 
 			assignValueToVar(grab_box_energy, fields_mole);
 			assignValueToVar(destroy_wall_energy, fields_mole);
+			assignValueToVar(push_box_force, fields_mole);
+			assignValueToVar(pull_box_force, fields_mole);
 		}
 	}
 }
@@ -151,7 +153,7 @@ void player_controller_mole::myUpdate()
 	}
 	//Debug->DrawLine(transform->getPosition(), transform->getFront(), 1.f);
 
-	if (cc->OnGround() && state == "moving") {
+	if (cc->OnGround() && state == "moving" && !pushing_box) {
 		if (player_curr_speed >= player_max_speed - 0.1f)
 		{
 			SET_ANIM_MOLE(AST_RUN);
@@ -210,12 +212,24 @@ void player_controller_mole::UpdateInputActions() {
 	}
 	
 	if (pushing_box) {
-		if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility ||
-			io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
-			//GET_COMP(box_p, boxPushed, TCompPhysics);
+		GET_COMP(box_t, boxPushed, TCompTransform);
+		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
 
-			CEntity* box = boxPushed;
-			TCompPhysics* box_p = box->get<TCompPhysics>();
+		//if somehow the box splits from the player, we leave it
+		if (distance_to_box > 2.75f) {
+			LeaveBox();
+		}
+		else if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility ||
+				 io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
+
+			if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
+				animController->setState(AST_PUSH_WALK);
+			}
+			else {
+				animController->setState(AST_PULL_WALK);
+			}
+
+			GET_COMP(box_p, boxPushed, TCompPhysics);
 
 			VEC3 direction = directionForward + directionLateral;
 
@@ -236,11 +250,11 @@ void player_controller_mole::UpdateInputActions() {
 
 			direction.Normalize();
 
-			box_p->AddForce(direction*100);
+			box_p->AddMovement(direction*player_curr_speed*getDeltaTime());
 			
 		}
-		if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility 
-			|| io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
+		else if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility ||
+				 io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
 			LeaveBox();
 		}
 	}
@@ -299,8 +313,7 @@ void player_controller_mole::LeaveBox() {
 
 	// if we were pushing a box, we just stop and return
 	if (pushing_box) {
-		GET_COMP(box_p, boxPushed, TCompPhysics);
-		//box_p->setKinematic(false);
+		boxGrabbed = boxPushed;
 		pushing_box = false;
 	}
 	else {
@@ -562,7 +575,6 @@ void player_controller_mole::PushBoxPreparation() {
 		ChangeState(ST_MOLE_PUSH);
 		animController->setState(AST_PUSH_PREP);
 		GET_COMP(box_p, boxPushed, TCompPhysics);
-		//box_p->setKinematic(true);
 		pushing_box = true;
 		inputEnabled = true;
 	}
@@ -573,8 +585,6 @@ void player_controller_mole::PushBox() {
 		SBB::postBool(selectedBox, true);
 	}
 
-	animController->setState(AST_PUSH_WALK);
-
 	energyDecreasal(5.0f);
 	TMsgDamage dmg;
 	dmg.modif = 0.5f;
@@ -583,7 +593,7 @@ void player_controller_mole::PushBox() {
 	mole_max_speed /= 2;
 
 	ChangeState("idle");
-	//logic_manager->throwEvent(logic_manager->OnPickupBox, "");
+	logic_manager->throwEvent(logic_manager->OnPushBox, "");
 }
 
 void player_controller_mole::FaceToPila()
@@ -771,20 +781,22 @@ void player_controller_mole::update_msgs()
 
 void player_controller_mole::ChangeCommonState(std::string st)
 {
-	if (st == "moving") {
-		SET_ANIM_MOLE(AST_MOVE);
-	}
-	else if (st == "running") {
-		SET_ANIM_MOLE(AST_RUN);
-	}
-	else if (st == "jumping") {
-		SET_ANIM_MOLE(AST_JUMP);
-	}
-	else if (st == "falling") {
-		SET_ANIM_MOLE(AST_FALL);
-	}
-	else if (st == "idle") {
-		SET_ANIM_MOLE(AST_IDLE);
+	if (!pushing_box) {
+		if (st == "moving") {
+			SET_ANIM_MOLE(AST_MOVE);
+		}
+		else if (st == "running") {
+			SET_ANIM_MOLE(AST_RUN);
+		}
+		else if (st == "jumping") {
+			SET_ANIM_MOLE(AST_JUMP);
+		}
+		else if (st == "falling") {
+			SET_ANIM_MOLE(AST_FALL);
+		}
+		else if (st == "idle") {
+			SET_ANIM_MOLE(AST_IDLE);
+		}
 	}
 }
 
