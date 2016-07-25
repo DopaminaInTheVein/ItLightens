@@ -1159,8 +1159,8 @@ void bt_guard::goTo(const VEC3& dest) {
 
 // -- Go Forward -- //
 void bt_guard::goForward(float stepForward) {
-	//static int test_forward = 0;
-	//dbg("Estoy avanzando! (%d)\n", (++test_forward) % 100);
+	static int test_forward = 0;
+	dbg("Estoy avanzando! (%d)\n", (++test_forward) % 100);
 
 	PROFILE_FUNCTION("guard: go forward");
 	VEC3 myPos = getTransform()->getPosition();
@@ -1170,56 +1170,45 @@ void bt_guard::goForward(float stepForward) {
 
 // -- Turn To -- //
 bool bt_guard::turnTo(VEC3 dest, bool wide) {
-	//static int test_giro = 0;
-	//dbg("Estoy girando! (%d)\n", (++test_giro) % 100);
+	static int test_giro = 0;
+	dbg("Estoy girando! (%d)\n", (++test_giro) % 100);
 
 	PROFILE_FUNCTION("guard: turn to");
 	if (!myParent.isValid()) return false;
 	int angle = 5;
 	if (wide)
 		angle = 30;
+	float angle_epsilon = deg2rad(angle);
+
 	VEC3 myPos = getTransform()->getPosition();
 	float yaw, pitch;
 	getTransform()->getAngles(&yaw, &pitch);
 
 	float dbg_yawBefore = yaw;
 
-	float deltaAngle = SPEED_ROT * getDeltaTime();
+	// Cuanto necesito girar?
 	float deltaYaw = getTransform()->getDeltaYawToAimTo(dest);
 
-	float angle_epsilon = deg2rad(angle);
-
-	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(360 - angle))
+	// Necesito girar menos que epsilon? --> Termino giro!
+	if (abs(deltaYaw) < angle_epsilon) {
+		dbg("No es necesario girar. Devuelvo true. (deltayaw = %f", deltaYaw);
 		return true;
-
-	if (deltaYaw > 0) {
-		if (deltaAngle < deltaYaw) yaw += deltaAngle;
-		else yaw += deltaYaw;
-	}
-	else {
-		if (deltaAngle < abs(deltaYaw)) yaw -= deltaAngle;
-		else yaw += deltaYaw;
 	}
 
-	if (!getTransform()->isHalfConeVision(dest, deg2rad(5.0f))) {
-		bool inLeft = getTransform()->isInLeft(dest);
-		if (inLeft) {
-			yaw += deltaAngle;
-		}
-		else {
-			yaw -= deltaAngle;
-		}
-		getTransform()->setAngles(yaw, pitch);
-	}
+	// Ajusto deltayaw al maximo que puede girar el mequetrefe
+	float maxDeltaYaw = SPEED_ROT * getDeltaTime();
+	clampAbs_me(deltaYaw, maxDeltaYaw);
+	yaw += deltaYaw;
+	getTransform()->setAngles(yaw, pitch);
 
 	//Ha acabado el giro?
-	bool done = abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(360 - angle);
+	bool done = abs(deltaYaw) < angle_epsilon;
 	dbg("Result giro. Yaw: %f --> %f, done = %d\n", dbg_yawBefore, yaw, done);
 
 	//DEBUG!
-	//if (done) {
-	//	dbg("Turn to devuelve true!\n");
-	//}
+	if (done) {
+		dbg("Turn to devuelve true!\n");
+	}
 	return done;
 }
 
