@@ -334,7 +334,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 			}
 			else {
 				//Puede no tener transform, ignoralo y ya esta
-				//fatal("render__manager: tranfrom from shadowcaster null");
+				fatal("render__manager: tranfrom from shadowcaster null");
 			}
 		}
 
@@ -368,7 +368,7 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 		room_str = room->name;
 	}
 
-	if (std::find(room_str.begin(), room_str.end(), SBB::readSala()) != room_str.end())
+	if (std::find(room_str.begin(), room_str.end(), SBB::readSala()) == room_str.end())
 		return;			//shadows on diferent room
 	else {
 		//fast fix for room3
@@ -409,7 +409,7 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 				it->mesh->activateAndRender();
 			}
 			else {
-				fatal("render__manager: tranfrom from shadowcaster null");
+				fatal("render__manager: tranfrom from shadowcaster skinning null");
 			}
 		}
 		++it;

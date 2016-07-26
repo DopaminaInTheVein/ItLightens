@@ -350,7 +350,7 @@ PxController * CPhysxManager::CreateCharacterController(PxReal radius, PxReal he
 	descCapsule.radius = radius;
 	descCapsule.height = height;
 	//descCapsule.slopeLimit = 0.3f;	//slope can walk
-	descCapsule.stepOffset = 0.01f;	//height can pass walking
+	descCapsule.stepOffset = 0.05f;	//height can pass walking
 	descCapsule.material = m_pPhysics->createMaterial(0.5f, 0.5f, 0.25f);
 	descCapsule.contactOffset = 0.01f;
 	descCapsule.behaviorCallback = this;

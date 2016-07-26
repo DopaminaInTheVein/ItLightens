@@ -152,8 +152,9 @@ void PSLightPoint(
   
  float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL, 0.0f))*2.0f;
   
- //NL *= lightWarp.xyz;
-
+ NL = lightWarp.xyz;
+if(NL > 1)
+	NL = 1;
   // Factor de atenuacion por distancia al centro de la
   // luz. 1 para distancias menores de LightInRadius y 0
   // para distancias mayores que LightOutRadius. Entre medio
@@ -184,7 +185,7 @@ void PSLightPoint(
   float3 lightCol = LightColor.xyz;
   
   if(color_ramp != 0.0f){
-	lightCol *= lightWarp.xyz;
+	//lightCol *= lightWarp.xyz;
   }
   
   spec_amount *= specular_force;
