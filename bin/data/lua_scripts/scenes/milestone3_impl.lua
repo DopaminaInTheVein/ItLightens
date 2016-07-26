@@ -44,7 +44,7 @@ function OnAction___pila( )
   if pila:is_charged() then
 	p:player_talks("Where can I use this cell?", "scientific.dds", "SCI")
   else
-    p:player_talks("This object contained energy in some past...", "scientific.dds", "SCI")
+    p:player_talks("This object contained energy in the past...", "scientific.dds", "SCI")
   end
   p:exec_command("pila:setActionable(1);", 4.5)
 end
@@ -130,7 +130,7 @@ end
 
 function activateEnchufeSci()
   triggerEnchufe:getHandleCaller()
-  hEnchufe:get_handle_by_id(idCargador)
+  hEnchufe:get_handle_by_id(idEnchufe)
 
   if hEnchufe:has_pila() then
     if hEnchufe:has_pila_charged() then

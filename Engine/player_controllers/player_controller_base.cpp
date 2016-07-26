@@ -32,6 +32,7 @@ void CPlayerBase::addBasicStates() {
 	AddState("jumping", (statehandler)&CPlayerBase::Jumping);
 	AddState("die", (statehandler)&CPlayerBase::Die);
 	AddState("win", (statehandler)&CPlayerBase::Win);
+	initBaseAttributes();
 }
 
 bool CPlayerBase::getUpdateInfo() {
@@ -111,13 +112,13 @@ void CPlayerBase::setLife(float new_life)
 void CPlayerBase::update(float elapsed) {
 	PROFILE_FUNCTION("update base");
 	if (camera.isValid()) {
-		setLife(getLife() - getDeltaTime() * 0.3f);
 		if (onCinematic) {
 			UpdateCinematic(elapsed);
 		}
 		else if (controlEnabled) {
 			bool alive = !checkDead();
 			if (alive && inputEnabled) {
+				setLife(getLife() - getDeltaTime() * 0.3f);
 				UpdateMoves();
 				UpdateInputActions();
 			}
@@ -344,6 +345,14 @@ void CPlayerBase::Idle()
 			ChangeState("moving");
 		}
 	}
+}
+
+void CPlayerBase::initBaseAttributes()
+{
+	CApp &app = CApp::get();
+	std::string file_ini = app.file_initAttr_json;
+	map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
+	assignValueToVar(energy_damage, fields_base);
 }
 
 void CPlayerBase::Jump()

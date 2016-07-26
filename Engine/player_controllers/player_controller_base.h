@@ -39,6 +39,7 @@ protected:
 	// Main attributes
 	float player_max_speed;
 	float player_rotation_speed;
+	float energy_damage;
 	float jimpulse;
 	float left_stick_sensibility;
 	float camera_max_height;
@@ -101,10 +102,10 @@ protected:
 public:
 
 	CPlayerBase();
-	void init() { Init(); }
+	void init() { initBaseAttributes(); Init(); }
 	void update(float elapsed); //deberia ser const pero Recalc no lo es  e historias
 	void addBasicStates();
-
+	virtual void initBaseAttributes();
 	void onSetCamera(const TMsgSetCamera& msg);
 	void onSetControllable(const TMsgSetControllable& msg);
 	void onGoAndLook(const TMsgGoAndLook& msg);
