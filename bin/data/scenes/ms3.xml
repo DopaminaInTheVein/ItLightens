@@ -4873,5 +4873,25 @@
    scale="1.0"/>
 
 </entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="2.71809 1.205 1.63032"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="tVictory"/>
+<transform
+   pos="-82.0434 -0.0145058 -32.981"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
 
 </entities>

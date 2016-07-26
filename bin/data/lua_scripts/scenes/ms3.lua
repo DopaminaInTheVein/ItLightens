@@ -46,3 +46,7 @@ function OnAction_tWireUp( )
 wireGoDown()
 end
 
+function OnEnter_tVictory( )
+OnVictory()
+end
+
