@@ -437,8 +437,10 @@ void CEntitiesModule::initLevel(string level) {
 	SBB::postHandlesVector("collisionables", collisionables);
 	CNavmesh nav;
 	nav.m_input.clearInput();
+	dbg(" GENERANDO NAVMESH INPUT...\n");
 	for (CHandle han : collisionables) {
 		CEntity * e = han;
+		dbg("Navmesh, collisionable: %s\n", e->getName());
 		if (e) {
 			TCompTransform * trans = e->get<TCompTransform>();
 			TCompPhysics * p = e->get<TCompPhysics>();
@@ -459,6 +461,7 @@ void CEntitiesModule::initLevel(string level) {
 				rb->getShapes(ptr, 1);
 				for (int i = 0; i < nBShapes; i++) {
 					PxTriangleMeshGeometry meshGeom;
+					assert(ptr[i]);
 					if (ptr[i]->getTriangleMeshGeometry(meshGeom)) {
 						nav.m_input.addInput(meshGeom.triangleMesh, PhysxConversion::PxVec3ToVec3(rb->getGlobalPose().p), min, max, trans->getRotation());
 					}

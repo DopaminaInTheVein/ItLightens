@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/ms3/enchufe_mapeado.mesh" material="materials/enchufe.material" mesh_idx="0"/>
-</static_mesh>

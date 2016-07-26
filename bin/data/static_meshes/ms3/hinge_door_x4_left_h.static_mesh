@@ -1,3 +1,5 @@
 <static_mesh>
-  <slot mesh="meshes/ms3/hinge_door_x4_left_h.mesh" material="materials/puertas_estanteria_baja_con_puertas.material" mesh_idx="0"/>
+  <slot mesh="meshes/hinge_door_x4_left_h__puertas_estanteria_baja_con_puertas.mesh" material="materials/puertas_estanteria_baja_con_puertas.material" mesh_idx="0"/>
+  <slot mesh="meshes/hinge_door_x4_left_h__hinge_estanteria_baja_con_puertas.mesh" material="materials/hinge_estanteria_baja_con_puertas.material" mesh_idx="1"/>
+  <slot mesh="meshes/hinge_door_x4_left_h__tirador_estanteria_baja_con_puertas.mesh" material="materials/tirador_estanteria_baja_con_puertas.material" mesh_idx="2"/>
 </static_mesh>

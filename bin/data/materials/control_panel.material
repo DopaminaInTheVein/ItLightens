@@ -1,0 +1,5 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/machine_2_control_panel_albedo.dds"/>
+<texture slot="selfilum" name="textures/machine_2_control_panel_emissive.dds"/>
+<texture slot="normalmap" name="textures/machine_2_control_panel_normal.dds"/>
+</material>

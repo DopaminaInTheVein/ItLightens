@@ -1,0 +1,5 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/front_elevator_door_difuso.dds"/>
+<texture slot="specular" name="textures/front_elevator_door_specular.dds"/>
+<texture slot="normalmap" name="textures/front_elevator_door_normal.dds"/>
+</material>
