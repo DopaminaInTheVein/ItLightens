@@ -21,7 +21,7 @@ bin/results.cpuprofile
 bin/Engined.exp
 bin/Engine.lib
 max/script/archives/*
-max/maxScenes/*
+max/maxScenes/*.max
 *.VC.db
 *.orig
 *.opendb
