@@ -162,18 +162,18 @@ struct TResources (
 						
 						if faces.count > 0 then (
 							-------- Fix multimat+tiling (26/7)
-							--local the_name = meshPrefix + "__" + (mat[m].name)
-							local the_mesh = meshPrefix + "__" + (mat[m].name)
-							local tokens = filterString meshPrefix "/"
-							local the_name = tokens[tokens.count] + "__" + (mat[m].name)
+							local the_name = meshPrefix + "__" + (mat[m].name)
+							--local the_mesh = meshPrefix + "__" + (mat[m].name)
+							--local tokens = filterString meshPrefix "/"
+							--local the_name = tokens[tokens.count] + "__" + (mat[m].name)
 							------- /Fix multimat+tiling (26/7)
 							--messagebox("The name: " + (the_name as string) )
 							polyOp.detachFaces polyObj faces asnode:true keepOriginal:on name:the_name
 							subMesh = (getnodebyname the_name)
 							if (subMesh != undefined) then (
 								-------- Fix multimat+tiling (26/7)
-								--setUserProp subMesh "mesh" the_name
-								setUserProp subMesh "mesh" the_mesh
+								setUserProp subMesh "mesh" the_name
+								--setUserProp subMesh "mesh" the_mesh
 								------- /Fix multimat+tiling (26/7)
 							)
 						)

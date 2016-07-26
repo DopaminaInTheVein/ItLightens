@@ -218,7 +218,7 @@ fn export_mesh given_obj meshName mat_infos = (
 	-- Pasearse por todos los grupos de caras
 	
 	-------- Fix multimat+tiling (26/7)
-	index_sub_mat = 0
+	--index_sub_mat = 0
 	--------/Fix multimat+tiling (26/7)
 	for mat_info in mat_infos do (
 		index_sub_mat += 1
@@ -256,14 +256,14 @@ fn export_mesh given_obj meshName mat_infos = (
 				--ADDED:
 				
 				-------- Fix multimat+tiling (26/7)
-				--local uTiling = obj.mat.diffusemap.coords.U_tiling
-				--local vTiling = obj.mat.diffusemap.coords.V_tiling
-				local matForTiling = obj.mat
-				if (classof matForTiling) == MultiMaterial then (
-					matForTiling = matForTiling[index_sub_mat]
-				)
-				local uTiling = matForTiling.diffusemap.coords.U_tiling
-				local vTiling = matForTiling.diffusemap.coords.V_tiling
+				local uTiling = obj.mat.diffusemap.coords.U_tiling
+				local vTiling = obj.mat.diffusemap.coords.V_tiling
+				--local matForTiling = obj.mat
+				--if (classof matForTiling) == MultiMaterial then (
+				--	matForTiling = matForTiling[index_sub_mat]
+				--)
+				--local uTiling = matForTiling.diffusemap.coords.U_tiling
+				--local vTiling = matForTiling.diffusemap.coords.V_tiling
 				--------/Fix multimat+tiling (26/7)
 				
 				local uvx = uvA.x * uTiling

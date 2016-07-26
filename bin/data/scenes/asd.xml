@@ -188,6 +188,146 @@
 <entity>
 <tags/>
 <name
+   name="barandilla_mapeaaado"/>
+<transform
+   pos="-89.2474 -0.82739 -9.23426"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla_mapeaaado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla4"/>
+<transform
+   pos="-66.8816 16.2484 18.6188"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla4.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla005"/>
+<transform
+   pos="-67.671 16.2484 16.9526"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla005.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla006"/>
+<transform
+   pos="-64.6155 16.2722 14.3309"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla006.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla007"/>
+<transform
+   pos="-66.2139 16.2722 13.8865"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla007.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla008"/>
+<transform
+   pos="-63.8707 16.2722 15.6266"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla008.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandillas2"/>
+<transform
+   pos="-86.6447 -0.842288 4.75572"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandillas2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="barrotes_balcon_arriba"/>
 <transform
    pos="-34.9403 -0.685649 -1.29331"
@@ -3120,6 +3260,26 @@
 <entity>
 <tags/>
 <name
+   name="valla_arriba_1"/>
+<transform
+   pos="-63.9431 16.2484 18.6188"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/valla_arriba_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="ventilador_mapeado"/>
 <transform
    pos="-81.6512 6.96453 -8.07339"
@@ -4639,6 +4799,42 @@
 <entity>
 <tags/>
 <name
+   name="barandilla_2"/>
+<transform
+   pos="-89.2474 -0.82739 -9.23426"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla_5"/>
+<transform
+   pos="-89.2474 -0.82739 -9.23426"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla_5.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="bookshelf_3"/>
 <transform
    pos="0 0 0"
@@ -4871,6 +5067,42 @@
    pos="-19.5958 20.1293 -44.4083"
    quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="ms3/cubo_de_pintura_grande_mapeado"/>
+<transform
+   pos="-5.58868 -23.3171 1.24878"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="ms3/cubo_de_pintura_grande_mapeado"/>
+<transform
+   pos="-5.58868 -23.3171 1.24878"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="ms3/cubo_fix"/>
+<transform
+   pos="-5.58868 -23.3171 1.24878"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 
