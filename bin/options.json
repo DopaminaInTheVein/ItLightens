@@ -1,7 +1,7 @@
 {
   "scenes": {
 	"first_scene": "level_0",
-    "level_0": "ms3",
+    "level_0": "ms3intro",
     "level_1": "milestone2",
     "level_2": "milestone2",
     "level_3": "milestone2"
