@@ -181,8 +181,8 @@ if(NL > 1)
 	//if(NL < 1.0f)
 		//NL = 1.0f;
 
-  // Aportacion final de la luz es NL x color_luz x atenuacion
-  float3 lightCol = LightColor.xyz;
+  //noramlize light with intensity
+  float3 lightCol = LightColor.xyz*LightColor.a;
   
   if(color_ramp != 0.0f){
 	//lightCol *= lightWarp.xyz;
@@ -199,6 +199,7 @@ if(NL > 1)
  // inv_shadows /= 2;
   o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
   
+  // Aportacion final de la luz es NL x color_luz x atenuacion
   o_color.xyz = lightCol * NL * distance_att * albedo + spec_amount;
   //o_color.xyz += env * 0.3;
   //o_color.xyz = E_refl.xyz;

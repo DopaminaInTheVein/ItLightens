@@ -8,7 +8,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.3 0.3"
+       color="0.7 0.7 0.5 1.0"
        in_radius="25.0"
        out_radius="70.0"/>
     <name
@@ -21,7 +21,7 @@
        name="1/2"/>
   </entity>
 
-  <entity>
+  <!--<entity>
     <tags
        tags=""/>
     <light_point
@@ -105,7 +105,7 @@
     <room
         name="1/2"/>
   </entity>
-
+-->
   <!-- shadows -->
 
   <entity>
@@ -125,7 +125,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -143,7 +143,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -160,7 +160,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -177,7 +177,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -194,7 +194,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.7"
        in_radius="6.0"
        out_radius="12.0"/>
     <name
@@ -211,7 +211,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 1.0"
        in_radius="5.0"
        out_radius="10.0"/>
     <name
@@ -245,7 +245,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.7 0.7 1.0 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -262,7 +262,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -279,7 +279,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -296,7 +296,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -313,7 +313,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -330,7 +330,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -347,7 +347,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -364,7 +364,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -381,7 +381,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -398,7 +398,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -415,7 +415,7 @@
     <tags
        tags=""/>
     <light_point
-       color="0.5 0.5 0.7 0.7"
+       color="0.7 0.7 1.0 0.4"
        in_radius="7.0"
        out_radius="15.0"/>
     <name
@@ -433,7 +433,7 @@
     <tags
        tags=""/>
     <light_point
-       color="1.0 1.0 0.5 0.7"
+       color="1.0 1.0 0.5 0.4"
        in_radius="4.0"
        out_radius="8.0"/>
     <name
@@ -450,7 +450,7 @@
     <tags
        tags=""/>
     <light_point
-       color="1.0 1.0 0.5 0.7"
+       color="1.0 1.0 0.5 0.4"
        in_radius="4.0"
        out_radius="8.0"/>
     <name
@@ -467,7 +467,7 @@
     <tags
        tags=""/>
     <light_point
-       color="1.0 1.0 0.5 0.7"
+       color="1.0 1.0 0.5 0.4"
        in_radius="4.0"
        out_radius="8.0"/>
     <name
