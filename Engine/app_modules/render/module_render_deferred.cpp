@@ -289,7 +289,7 @@ void CRenderDeferredModule::addPointLights() {
 		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
 			std::vector<int> rooms = room->name;
-			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) != rooms.end()) {
+			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
 				return;			//light on diferent room
 			}
 			else {
@@ -340,7 +340,7 @@ void CRenderDeferredModule::addDirectionalLights() {
 		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
 			std::vector<int> rooms = room->name;
-			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) != rooms.end()) {
+			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
 				return;			//light on diferent room
 			}
 			else {
@@ -567,7 +567,7 @@ void CRenderDeferredModule::generateShadowMaps() {
 		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
 			std::vector<int> rooms = room->name;
-			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) != rooms.end()) {
+			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
 				return;			//light on diferent room
 			}
 			else {
