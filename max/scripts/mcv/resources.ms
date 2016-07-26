@@ -104,7 +104,9 @@ struct TResources (
 	),
 	
 	fn saveMaterial mat = (
+		--messagebox ( "Guardo material: " + (mat.name) )
 		if classof mat == Multimaterial then (
+			--messagebox ("guardo multimaterial " + mat.name)
 			saveMultiMaterial mat
 		) else if classof mat == Standardmaterial then (
 			saveStdMaterial mat
@@ -159,12 +161,20 @@ struct TResources (
 						faces = getFaceSelection polyObj
 						
 						if faces.count > 0 then (
-							local the_name = meshPrefix + "__" + (mat[m].name)
+							-------- Fix multimat+tiling (26/7)
+							--local the_name = meshPrefix + "__" + (mat[m].name)
+							local the_mesh = meshPrefix + "__" + (mat[m].name)
+							local tokens = filterString meshPrefix "/"
+							local the_name = tokens[tokens.count] + "__" + (mat[m].name)
+							------- /Fix multimat+tiling (26/7)
 							--messagebox("The name: " + (the_name as string) )
 							polyOp.detachFaces polyObj faces asnode:true keepOriginal:on name:the_name
 							subMesh = (getnodebyname the_name)
 							if (subMesh != undefined) then (
-								setUserProp subMesh "mesh" the_name
+								-------- Fix multimat+tiling (26/7)
+								--setUserProp subMesh "mesh" the_name
+								setUserProp subMesh "mesh" the_mesh
+								------- /Fix multimat+tiling (26/7)
 							)
 						)
 					)
@@ -229,25 +239,36 @@ struct TResources (
 		--Material de la mesh principal
 		local m = obj.mat
 		
+		
+		------------------- debug ---------------
+		smFound = ""
+		for subme in subMeshes do (
+			smFound += (subme.name + "\n")
+		)
+		--messagebox smFound
+		------------------------------------------
 		try (
 			-- Tratamos de crear la static mesh con sus meshes
 			local mesh_idx = 0
 			local mat_idx = 0
 			local used_mats = #()
 			
+			--messagebox ("Recorro submeshes")
 			for obj in subMeshes do (
 				mat_idx = mat_idx + 1
 				if obj != undefined then (
 					--Current material
 					local mat_used = m
+					--messagebox ("Material principal: " + (m.name) + " Class: " + ((classof m) as string))
 					if classOf m == MultiMaterial then (
 						mat_used = m[mat_idx]
+						--messagebox ("Submaterial: " + (mat_used.name) + " Class: " + ((classof mat_used) as string))
 					)
 					
 					-- Name of mesh and material
 					local mat_name = mat_used.name
 					local meshName = obj.name
-					--messagebox("Mat Name: " + (mat_name as string))
+					--messagebox("Mesh name: " + (meshName as string) + "\nMat Name: " + (mat_name as string))
 					
 					-- Check material is correct
 					checkMaterialName mat_name
@@ -260,7 +281,10 @@ struct TResources (
 					-- #(   #(faces_with_mat1) undef undef #(faces_with_mat4) )
 					local mat_infos = getMeshMaterialInfo obj
 					local filenameXML = "meshes/" + meshName + mesh_ext
+					
+					--messagebox("Exporto mesh")
 					export_mesh obj meshName mat_infos
+					--messagebox("Mesh exported")
 					
 					-- Añadimos mesh slot 
 					local mat_res_name = "materials/" + mat_name + ".material"
@@ -268,7 +292,10 @@ struct TResources (
 					mesh_idx = mesh_idx + 1
 				)
 			)
+			--messagebox ("SubMeshes Recorridas")
+			
 			-- Save material(s) resource
+			--messagebox ("Material a guardar: " + (m.name) + " Class: " + ((classof m) as string))
 			saveMaterial m
 		) catch (
 			-- Si falla debemos de borrar los objetos temporales de todas formas!
@@ -279,7 +306,7 @@ struct TResources (
 			throw()
 		)
 		for sm in subMeshes do (
-			if sm != undefined then (delete sm)
+			--if sm != undefined then (delete sm)
 		)
 		format "</static_mesh>\n" to:fsm
 		close fsm
