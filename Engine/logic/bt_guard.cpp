@@ -417,22 +417,22 @@ int bt_guard::actionStepBack() {
 
 void bt_guard::lookAtPlayer()
 {
-	CEntity * ePlayer = getPlayer();
+	/*CEntity * ePlayer = getPlayer();
 	if (ePlayer) {
 		GET_MY(look_at, TCompSkeletonLookAt);
 		TCompCharacterController * ccPlayer = ePlayer->get<TCompCharacterController>();
 		if (look_at && ccPlayer) {
 			look_at->setTarget(ccPlayer->GetPosition());
 		}
-	}
+	}*/
 }
 
 void bt_guard::lookAtFront()
 {
-	GET_MY(look_at, TCompSkeletonLookAt);
+	/*GET_MY(look_at, TCompSkeletonLookAt);
 	if (look_at) {
 		look_at->setTarget(VEC3());
-	}
+	}*/
 }
 
 int bt_guard::actionReact() {
