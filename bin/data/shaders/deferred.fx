@@ -166,7 +166,7 @@ if(NL > 1)
   // Calculo el vector E normalizado
   float3 E = normalize(CameraWorldPos.xyz - wPos);
 
-  float3 H = normalize(E + L);
+  float3 H = normalize(E + L)*NL;
   float  cos_beta = saturate(dot(N, H));
   float  glossiness = 20.;
   float  spec_amount = pow(cos_beta, glossiness);
@@ -189,6 +189,7 @@ if(NL > 1)
   }
   
   spec_amount *= specular_force;
+  //spec_amount *= 0;
   
   float inv_shadows = NL*distance_att;
   if(inv_shadows > 1)
