@@ -4726,6 +4726,21 @@
    type_collision="static"/>
 
 </entity>
+<entity>
+<tags/>
+<name
+   name="cubo_de_pintura_grande_mapeado"/>
+<transform
+   pos="-5.58868 -23.3171 1.24878"
+   quat="0 0 0 1.0"
+   scale="0.040496"/>
+<render_static_mesh
+   name="static_meshes/ms3/cubo_de_pintura_grande_mapeado.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
 <entity
    reload="yes">
 <tags
@@ -4879,14 +4894,14 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="2.71809 1.205 1.63032"/>
+   size="3.61506 1.205 1.63032"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="tVictory"/>
 <transform
-   pos="-82.0434 -0.0145058 -32.981"
+   pos="-82.9341 -0.0145058 -32.981"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room
