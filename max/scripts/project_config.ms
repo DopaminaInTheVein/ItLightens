@@ -1,11 +1,11 @@
 -- PATHS RELATIVOS a los anteriores (por lo general no tocar)
---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
 --ScriptsDir
-if dev_scripts_dir == undefined then
+if dev_scripts_dir == undefined then (
 	scripts_dir = max_dir + "scripts\\"
-else
+) else (
 	scripts_dir = dev_scripts_dir
-end
+)
 --Data
 meshes_dir = data_dir + "meshes\\"
 staticMeshes_dir = data_dir + "static_meshes\\"
