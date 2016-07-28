@@ -1,6 +1,6 @@
 -- PATHS GENERALES (Configurar para cada usuario)
 --------------------------------------------------------------------------------------------------------------------
-data_dir = "C:\\Users\\mcv14_alumne\\Desktop\\itlightens\\repo\\bin\\data\\"
-max_dir = "C:\\Users\\mcv14_alumne\\Desktop\\itlightens\\repo\\max\\"
+data_dir = "D:\\ItLightens\\ItLightens\\bin\\data\\"
+max_dir = "C:\\Users\Ryo\\Dropbox\\ItLightens_dropbox\\max\\"
 --------------------------------------------------------------------------------------------------------------------
 filein ( max_dir + "scripts\\project_config.ms")
