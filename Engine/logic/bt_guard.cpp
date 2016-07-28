@@ -390,7 +390,7 @@ int bt_guard::actionUnstuckMove() {
 int bt_guard::actionStunned() {
 	PROFILE_FUNCTION("guard: actionstunned");
 	if (!myParent.isValid()) return false;
-	lookAtFront();
+	//lookAtFront();
 	stuck = false;
 	stuck_time = 0.f;
 	if (timerStunt < 0) {
@@ -417,28 +417,28 @@ int bt_guard::actionStepBack() {
 
 void bt_guard::lookAtPlayer()
 {
-	/*CEntity * ePlayer = getPlayer();
+	CEntity * ePlayer = getPlayer();
 	if (ePlayer) {
 		GET_MY(look_at, TCompSkeletonLookAt);
 		TCompCharacterController * ccPlayer = ePlayer->get<TCompCharacterController>();
 		if (look_at && ccPlayer) {
 			look_at->setTarget(ccPlayer->GetPosition());
 		}
-	}*/
+	}
 }
 
 void bt_guard::lookAtFront()
 {
-	/*GET_MY(look_at, TCompSkeletonLookAt);
+	GET_MY(look_at, TCompSkeletonLookAt);
 	if (look_at) {
 		look_at->setTarget(VEC3());
-	}*/
+	}
 }
 
 int bt_guard::actionReact() {
 	PROFILE_FUNCTION("guard: actionreact");
 	if (!myParent.isValid()) return false;
-	lookAtPlayer();
+	//lookAtPlayer();
 
 	if (!player_detected_start) {
 		// starting the reaction time decorator
@@ -641,7 +641,7 @@ int bt_guard::actionRemoveBox() {
 int bt_guard::actionSearch() {
 	PROFILE_FUNCTION("guard: search");
 	if (!myParent.isValid()) return STAY;
-	lookAtFront();
+	//lookAtFront();
 	CEntity * ePlayer = getPlayer();
 	if (!ePlayer) return STAY;
 	looking_around_time -= getDeltaTime();
@@ -855,7 +855,7 @@ int bt_guard::actionSeekWpt() {
 int bt_guard::actionNextWpt() {
 	PROFILE_FUNCTION("guard: actionnextwpt");
 	if (!myParent.isValid()) return false;
-	lookAtFront();
+	//lookAtFront();
 	if (keyPoints.size() == 0) return false;
 	SET_ANIM_GUARD(AST_TURN);
 	VEC3 myPos = getTransform()->getPosition();

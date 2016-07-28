@@ -283,7 +283,13 @@ public:
 
 	void update(float dt) {
 		//Test
-		lookAtPlayer();
+		//static bool guardsLook = false;
+		//if (io->keys['H'].isPressed()) {
+		//	lookAtPlayer();
+		//}
+		//else {
+		//	lookAtFront();
+		//}
 
 		if (!isInRoom(myParent))return;
 		TCompTransform * t = compBaseEntity->get<TCompTransform>();
