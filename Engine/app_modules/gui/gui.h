@@ -61,7 +61,7 @@ private:
 	void initWindow();
 	void initScreens();
 	void toogleEnabled();
-	
+
 	//ImGui Window
 	bool enabled;
 	bool menu;
@@ -72,8 +72,8 @@ public:
 	bool start() override;
 	void stop() override;
 	void update(float dt) override;
+	bool forcedUpdate() override;
 	void render() override;
-	bool forcedUpdate() { return true; }
 	const char* getName() const {
 		return "gui";
 	}

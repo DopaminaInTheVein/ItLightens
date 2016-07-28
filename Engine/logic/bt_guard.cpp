@@ -390,7 +390,7 @@ int bt_guard::actionUnstuckMove() {
 int bt_guard::actionStunned() {
 	PROFILE_FUNCTION("guard: actionstunned");
 	if (!myParent.isValid()) return false;
-	//lookAtFront();
+	lookAtFront();
 	stuck = false;
 	stuck_time = 0.f;
 	if (timerStunt < 0) {
@@ -415,6 +415,13 @@ int bt_guard::actionStepBack() {
 	else return OK;
 }
 
+void bt_guard::updateLookAt()
+{
+	if (looking_player) {
+		lookAtPlayer();
+	}
+}
+
 void bt_guard::lookAtPlayer()
 {
 	CEntity * ePlayer = getPlayer();
@@ -422,6 +429,7 @@ void bt_guard::lookAtPlayer()
 		GET_MY(look_at, TCompSkeletonLookAt);
 		TCompCharacterController * ccPlayer = ePlayer->get<TCompCharacterController>();
 		if (look_at && ccPlayer) {
+			looking_player = true;
 			look_at->setTarget(ccPlayer->GetPosition());
 		}
 	}
@@ -431,7 +439,10 @@ void bt_guard::lookAtFront()
 {
 	GET_MY(look_at, TCompSkeletonLookAt);
 	if (look_at) {
-		look_at->setTarget(VEC3());
+		if (looking_player) {
+			looking_player = false;
+			look_at->setTarget(VEC3());
+		}
 	}
 }
 
@@ -439,6 +450,7 @@ int bt_guard::actionReact() {
 	PROFILE_FUNCTION("guard: actionreact");
 	if (!myParent.isValid()) return false;
 	//lookAtPlayer();
+	looking_player = true;
 
 	if (!player_detected_start) {
 		// starting the reaction time decorator
@@ -641,7 +653,7 @@ int bt_guard::actionRemoveBox() {
 int bt_guard::actionSearch() {
 	PROFILE_FUNCTION("guard: search");
 	if (!myParent.isValid()) return STAY;
-	//lookAtFront();
+	lookAtFront();
 	CEntity * ePlayer = getPlayer();
 	if (!ePlayer) return STAY;
 	looking_around_time -= getDeltaTime();
@@ -855,7 +867,7 @@ int bt_guard::actionSeekWpt() {
 int bt_guard::actionNextWpt() {
 	PROFILE_FUNCTION("guard: actionnextwpt");
 	if (!myParent.isValid()) return false;
-	//lookAtFront();
+	lookAtFront();
 	if (keyPoints.size() == 0) return false;
 	SET_ANIM_GUARD(AST_TURN);
 	VEC3 myPos = getTransform()->getPosition();
@@ -1171,8 +1183,8 @@ void bt_guard::goTo(const VEC3& dest) {
 
 // -- Go Forward -- //
 void bt_guard::goForward(float stepForward) {
-	static int test_forward = 0;
-	dbg("Estoy avanzando! (%d)\n", (++test_forward) % 100);
+	//static int test_forward = 0;
+	//dbg("Estoy avanzando! (%d)\n", (++test_forward) % 100);
 
 	PROFILE_FUNCTION("guard: go forward");
 	VEC3 myPos = getTransform()->getPosition();
@@ -1182,8 +1194,8 @@ void bt_guard::goForward(float stepForward) {
 
 // -- Turn To -- //
 bool bt_guard::turnTo(VEC3 dest, bool wide) {
-	static int test_giro = 0;
-	dbg("Estoy girando! (%d)\n", (++test_giro) % 100);
+	//static int test_giro = 0;
+	//dbg("Estoy girando! (%d)\n", (++test_giro) % 100);
 
 	PROFILE_FUNCTION("guard: turn to");
 	if (!myParent.isValid()) return false;
@@ -1203,7 +1215,7 @@ bool bt_guard::turnTo(VEC3 dest, bool wide) {
 
 	// Necesito girar menos que epsilon? --> Termino giro!
 	if (abs(deltaYaw) < angle_epsilon) {
-		dbg("No es necesario girar. Devuelvo true. (deltayaw = %f", deltaYaw);
+		//dbg("No es necesario girar. Devuelvo true. (deltayaw = %f", deltaYaw);
 		return true;
 	}
 
@@ -1215,12 +1227,12 @@ bool bt_guard::turnTo(VEC3 dest, bool wide) {
 
 	//Ha acabado el giro?
 	bool done = abs(deltaYaw) < angle_epsilon;
-	dbg("Result giro. Yaw: %f --> %f, done = %d\n", dbg_yawBefore, yaw, done);
+	//dbg("Result giro. Yaw: %f --> %f, done = %d\n", dbg_yawBefore, yaw, done);
 
 	//DEBUG!
-	if (done) {
-		dbg("Turn to devuelve true!\n");
-	}
+	//if (done) {
+	//	dbg("Turn to devuelve true!\n");
+	//}
 	return done;
 }
 

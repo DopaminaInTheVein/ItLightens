@@ -632,6 +632,7 @@ void CEntitiesModule::update(float dt) {
 		}
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompCameraMain>()->updateAll(dt);
+		getHandleManager<TCompFadeScreen>()->updateAll(dt);
 	}
 
 	if (GameController->GetGameState() == CGameController::RUNNING) {
@@ -645,6 +646,7 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<TCompFadingMessage>()->updateAll(dt);
 			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
+			getHandleManager<TCompFadeScreen>()->updateAll(dt);
 		}
 
 		getHandleManager<TCompCamera>()->updateAll(dt);

@@ -61,9 +61,9 @@ void CGameController::UpdateGeneralInputs() {
 		}
 
 		//pause/unpause game
-		if (io->keys['P'].becomesPressed()) {
-			TogglePauseState();
-		}
+		//if (io->keys['P'].becomesPressed()) {
+		//	TogglePauseState();
+		//}
 
 		//pause/unpause game (intro mode)
 		if (io->keys['I'].becomesPressed()) {
