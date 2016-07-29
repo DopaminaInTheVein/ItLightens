@@ -293,10 +293,11 @@ void player_controller_mole::DestroyWall() {
 
 void player_controller_mole::LeaveBox() {
 
-	// if we were pushing a box, we just stop and return
+	// if we were pushing a box, we just stop
 	if (pushing_box) {
 		boxGrabbed = boxPushed;
 		pushing_box = false;
+		animController->unpushObject();
 	}
 	else {
 		animController->ungrabObject();
@@ -539,6 +540,7 @@ void player_controller_mole::FaceToGrab()
 		// if the box is MEDIUM (1) we go to "push mode"
 		if (box->type_box == 1) {
 			boxPushed = boxNear;
+			animController->pushObject(boxNear);
 			animController->setState(AST_PUSH_PREP);
 			ChangeState(ST_MOLE_PUSH_PREP);
 		}

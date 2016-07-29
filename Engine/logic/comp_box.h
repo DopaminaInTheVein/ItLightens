@@ -44,6 +44,15 @@ struct TCompBox : public TCompBase {
 		, VEC3& normal_right
 		, float offset_separation = 0.3f
 		, bool recalc = true);
+	bool getPushPoints(TCompTransform * t_actor
+		, VEC3& left
+		, VEC3& right
+		, VEC3& front_dir
+		, VEC3& pos_grab
+		, VEC3& normal_left
+		, VEC3& normal_right
+		, float offset_separation = 0.3f
+		, bool recalc = true);
 };
 
 #endif

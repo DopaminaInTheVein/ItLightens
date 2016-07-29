@@ -35,6 +35,7 @@
 #define AST_THROW				"throw"
 #define AST_PUSH_PREP			"push_prep"
 #define AST_PUSH_WALK			"push_walk"
+#define AST_PULL_PREP			"pull_prep"
 #define AST_PULL_WALK			"pull_walk"
 // ------------------- //
 
