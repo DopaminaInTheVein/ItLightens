@@ -119,6 +119,7 @@ class bt_guard : public bt, public TCompBase
 	bool patrolling = false;
 	bool noiseHeard = false;
 	bool playerLost = false;
+	bool looking_player = false;
 	// stuck management
 	float stuck_time = 0.f;
 	bool stuck = false;
@@ -282,9 +283,6 @@ public:
 	}
 
 	void update(float dt) {
-		//Test
-		lookAtPlayer();
-
 		if (!isInRoom(myParent))return;
 		TCompTransform * t = compBaseEntity->get<TCompTransform>();
 		Debug->DrawLine(t->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
@@ -313,8 +311,12 @@ public:
 		last_position = t->getPosition();
 
 		if (!forced_move) Recalc();
+
+		updateLookAt();
 		//animController.update();
 	}
+
+	void updateLookAt();
 
 	void render();
 	void renderInMenu();

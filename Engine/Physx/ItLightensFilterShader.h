@@ -104,7 +104,7 @@ public:
 		//BULLETS
 		//--------------------------------------------------------------------------------
 		else if ((me = filterData0.word0) & eTHROW || (me = filterData1.word0) & eTHROW) {
-			other = (me == filterData0.word0) ? filterData1.word0 : filterData1.word0;
+			other = (me == filterData0.word0) ? filterData1.word0 : filterData0.word0;
 			if (other & eTHROW || other & ePLAYER_CONTROLLED) {
 				pairFlags &= ~PxPairFlag::eCONTACT_DEFAULT;
 				pairFlags &= ~PxPairFlag::eNOTIFY_TOUCH_FOUND;

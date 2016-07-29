@@ -32,103 +32,108 @@ ADD_RENDER(state, render##name); ADD_UPDATER(state, update##name)
 
 // ------ External functions --------//
 void CGuiModule::setActionAvailable(eAction action) {
-  assert(txtAction);
-  txtAction->setState(action);
+	assert(txtAction);
+	txtAction->setState(action);
 }
 
 // ----------------------------------- START MODULE ----------------------------------- //
 bool CGuiModule::start()
 {
-  resolution_x = CApp::get().getXRes();
-  resolution_y = CApp::get().getYRes();
+	resolution_x = CApp::get().getXRes();
+	resolution_y = CApp::get().getYRes();
 
-  //Pause and Menu
-  bigRect = GUI::createRect(0.00f, 0.00f, 1.00f, 1.00f);
-  menuPause = new CGuiMenuPause();
+	//Pause and Menu
+	bigRect = GUI::createRect(0.00f, 0.00f, 1.00f, 1.00f);
+	menuPause = new CGuiMenuPause();
 
-  //Font
-  imFont = imIO.Fonts->AddFontDefault();
+	//Font
+	imFont = imIO.Fonts->AddFontDefault();
 
-  //Window
-  initWindow();
+	//Window
+	initWindow();
 
-  //Screens
-  initScreens();
+	//Screens
+	initScreens();
 
-  //Hud Player
-  hudPlayerRect = GUI::createRect(0.05f, 0.05f, .30f, 0.05f);
-  hudPlayer = new CGuiHudPlayer(hudPlayerRect);
+	//Hud Player
+	hudPlayerRect = GUI::createRect(0.05f, 0.05f, .30f, 0.05f);
+	hudPlayer = new CGuiHudPlayer(hudPlayerRect);
 
-  //Action Text
-  txtAction = new CGuiActionText(GUI::createRect(0.7f, 0.9f, .3f, .1f));
+	//Action Text
+	txtAction = new CGuiActionText(GUI::createRect(0.7f, 0.9f, .3f, .1f));
 
-  ImGui::GetStyle().WindowPadding.x = 0.0f;
-  ImGui::GetStyle().WindowPadding.y = 0.0f;
-  ImGui::GetStyle().FramePadding.x = 0.0f;
-  ImGui::GetStyle().FramePadding.y = 0.0f;
-  ImGui::GetStyle().WindowRounding = 0.0f;
-  ImGui::GetStyle().FrameRounding = 0.0f;
+	ImGui::GetStyle().WindowPadding.x = 0.0f;
+	ImGui::GetStyle().WindowPadding.y = 0.0f;
+	ImGui::GetStyle().FramePadding.x = 0.0f;
+	ImGui::GetStyle().FramePadding.y = 0.0f;
+	ImGui::GetStyle().WindowRounding = 0.0f;
+	ImGui::GetStyle().FrameRounding = 0.0f;
 
-  dbg("GUI module started\n");
+	dbg("GUI module started\n");
 
-  return true;
+	return true;
 }
 
 void CGuiModule::initWindow()
 {
-  menu = false;
-  enabled = true;
-  window_flags |= ImGuiWindowFlags_NoMove
-    | ImGuiWindowFlags_NoResize
-    | ImGuiWindowFlags_NoTitleBar
-    | ImGuiWindowFlags_NoSavedSettings
-    | ImGuiWindowFlags_ShowBorders;
+	menu = false;
+	enabled = true;
+	window_flags |= ImGuiWindowFlags_NoMove
+		| ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_NoTitleBar
+		| ImGuiWindowFlags_NoSavedSettings
+		| ImGuiWindowFlags_ShowBorders;
 }
 
 void CGuiModule::initScreens()
 {
-  screenRenders = vector<screenRender>(CGameController::GAME_STATES_SIZE, (screenRender)&CGuiModule::renderDefault);
-  screenUpdaters = vector<screenUpdater>(CGameController::GAME_STATES_SIZE, (screenUpdater)&CGuiModule::updateDefault);
+	screenRenders = vector<screenRender>(CGameController::GAME_STATES_SIZE, (screenRender)&CGuiModule::renderDefault);
+	screenUpdaters = vector<screenUpdater>(CGameController::GAME_STATES_SIZE, (screenUpdater)&CGuiModule::updateDefault);
 
-  //Add here Game States
-  ADD_GAME_STATE(CGameController::RUNNING, OnPlay);
-  ADD_GAME_STATE(CGameController::STOPPED, OnStop);
-  ADD_GAME_STATE(CGameController::STOPPED_INTRO, OnStopIntro);
-  ADD_GAME_STATE(CGameController::MENU, OnMenu);
-  ADD_GAME_STATE(CGameController::LOSE, OnDead);
-  ADD_GAME_STATE(CGameController::VICTORY, OnVictory);
+	//Add here Game States
+	ADD_GAME_STATE(CGameController::RUNNING, OnPlay);
+	ADD_GAME_STATE(CGameController::STOPPED, OnStop);
+	ADD_GAME_STATE(CGameController::STOPPED_INTRO, OnStopIntro);
+	ADD_GAME_STATE(CGameController::MENU, OnMenu);
+	ADD_GAME_STATE(CGameController::LOSE, OnDead);
+	ADD_GAME_STATE(CGameController::VICTORY, OnVictory);
 }
 
 void inline CGuiModule::setRender(int state, screenRender render)
 {
-  assert(state >= 0);
-  assert(state < CGameController::GAME_STATES_SIZE);
-  screenRenders[state] = render;
+	assert(state >= 0);
+	assert(state < CGameController::GAME_STATES_SIZE);
+	screenRenders[state] = render;
 }
 
 void inline CGuiModule::setUpdater(int state, screenUpdater updater)
 {
-  assert(state >= 0);
-  assert(state < CGameController::GAME_STATES_SIZE);
-  screenUpdaters[state] = updater;
+	assert(state >= 0);
+	assert(state < CGameController::GAME_STATES_SIZE);
+	screenUpdaters[state] = updater;
 }
 
 // ----------------------------------- UPDATE MODULE ----------------------------------- //
 void CGuiModule::update(float dt)
 {
-  toogleEnabled();
-  callUpdater(GameController->GetGameState(), dt);
+	toogleEnabled();
+	callUpdater(GameController->GetGameState(), dt);
+}
+
+bool CGuiModule::forcedUpdate()
+{
+	return true;
 }
 
 void CGuiModule::toogleEnabled() {
-  if (io->keys[VK_F1].becomesPressed()) {
-    enabled = !enabled;
-  }
+	if (io->keys[VK_F1].becomesPressed()) {
+		enabled = !enabled;
+	}
 }
 
 void inline CGuiModule::callUpdater(int state, float dt)
 {
-  (this->*screenUpdaters[state])(dt);
+	(this->*screenUpdaters[state])(dt);
 }
 
 // ----- Update Default ----- //
@@ -137,91 +142,110 @@ void CGuiModule::updateDefault(float dt) {}
 // ----- Update On Play ----- //
 void CGuiModule::updateOnPlay(float dt)
 {
-  hudPlayer->update(dt);
-  txtAction->update(dt);
+	if (io->keys['P'].becomesPressed()) {
+		GameController->SetGameState(CGameController::STOPPED);
+	}
+	hudPlayer->update(dt);
+	txtAction->update(dt);
 }
 
 // ----- Update On Stop ----- //
-void CGuiModule::updateOnStop(float dt) {}
+void CGuiModule::updateOnStop(float dt) {
+	if (io->keys['P'].becomesPressed()) {
+		GameController->SetGameState(CGameController::RUNNING);
+	}
+}
 
 // ----- Update On Stop Intro----- //
 void CGuiModule::updateOnStopIntro(float dt) {}
 
 // ----- Update On Menu ----- //
 void CGuiModule::updateOnMenu(float dt) {
-  if (!enabled) CApp::get().exitGame();
+	if (!enabled) CApp::get().exitGame();
 }
 
 // ----- Update On Dead ----- //
 void CGuiModule::updateOnDead(float dt) {
-  //Nothing at the moment
+	if (io->keys[VK_RETURN].becomesPressed()) {
+		GameController->SetGameState(CGameController::RUNNING);
+		CApp::get().restartLevelNotify();
+	}
+	else if (io->keys[VK_ESCAPE].becomesPressed()) {
+		CApp::get().exitGame();
+	}
 }
 
 // ----- Update On Victory ----- //
 void CGuiModule::updateOnVictory(float dt) {
-	//Nothing at the moment
+	if (io->keys[VK_RETURN].becomesPressed()) {
+		CApp::get().restartLevelNotify();
+	}
+	else if (io->keys[VK_ESCAPE].becomesPressed()) {
+		GameController->SetGameState(CGameController::RUNNING);
+		CApp::get().exitGame();
+	}
 }
 
 // ----------------------------------- RENDER MODULE ----------------------------------- //
 void inline CGuiModule::callRender(int state)
 {
-  (this->*screenRenders[state])();
+	(this->*screenRenders[state])();
 }
 
 void CGuiModule::render() {
-  if (!enabled) return;
-  activateZ(ZCFG_ALL_DISABLED);
-  ImGui::Begin("Game GUI", &menu, ImVec2(resolution_x, resolution_y), 0.0f, window_flags);
-  ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
-  callRender(GameController->GetGameState());
-  ImGui::End();
+	if (!enabled) return;
+	activateZ(ZCFG_ALL_DISABLED);
+	ImGui::Begin("Game GUI", &menu, ImVec2(resolution_x, resolution_y), 0.0f, window_flags);
+	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
+	callRender(GameController->GetGameState());
+	ImGui::End();
 
-  txtAction->setState(eAction::NONE);
-  //ImGui::Render(); <-- Ya lo hace el módulo de ImGui!!
+	txtAction->setState(eAction::NONE);
+	//ImGui::Render(); <-- Ya lo hace el módulo de ImGui!!
 }
 
 // ----- Render Default ----- //
 void CGuiModule::renderDefault() {
-  ImGui::TextColored(GUI::IM_RED, "GAME STATE \"%d\", doesn't have any render!", GameController->GetGameState());
+	ImGui::TextColored(GUI::IM_RED, "GAME STATE \"%d\", doesn't have any render!", GameController->GetGameState());
 }
 
 // ----- Render On Play ----- //
 void CGuiModule::renderOnPlay() {
-  hudPlayer->render();
-  txtAction->render();
+	hudPlayer->render();
+	txtAction->render();
 }
 
 // ----- Render On Stop ----- //
 void CGuiModule::renderOnStop() {
-  hudPlayer->render();
-  ImGuiState& g = *GImGui;
-  g.FontSize = resolution_y;
-  GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+	hudPlayer->render();
+	ImGuiState& g = *GImGui;
+	g.FontSize = resolution_y;
+	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
 
-  // Text Pause
-  GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSA");
-  //ImGui::GetWindowDrawList()->AddText(g.Font, g.FontSize, ImVec2(0,0), GUI::IM_WHITE, "PAUSE");
+	// Text Pause
+	GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSA");
+	//ImGui::GetWindowDrawList()->AddText(g.Font, g.FontSize, ImVec2(0,0), GUI::IM_WHITE, "PAUSE");
 }
 
 // ----- Render On Stop Intro ----- //
 void CGuiModule::renderOnStopIntro() {
-  // Text Pause Intro
-  Rect upperRect = GUI::createRect(.00f, .00f, 1.f, .12f);
-  Rect lowerRect = GUI::createRect(.00f, .88f, 1.f, 1.f);
-  GUI::drawRect(upperRect, GUI::IM_BLACK);
-  GUI::drawRect(lowerRect, GUI::IM_BLACK);
+	// Text Pause Intro
+	Rect upperRect = GUI::createRect(.00f, .00f, 1.f, .12f);
+	Rect lowerRect = GUI::createRect(.00f, .88f, 1.f, 1.f);
+	GUI::drawRect(upperRect, GUI::IM_BLACK);
+	GUI::drawRect(lowerRect, GUI::IM_BLACK);
 }
 
 // ----- Render On Dead ----- //
 void CGuiModule::renderOnDead() {
-  //hudPlayer->render();
-  ImGuiState& g = *GImGui;
-  g.FontSize = resolution_y;
-  GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+	//hudPlayer->render();
+	ImGuiState& g = *GImGui;
+	g.FontSize = resolution_y;
+	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
 
-  // Text Dead
-  GUI::drawText(0.3f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "Has muerto");
-  GUI::drawText(0.3f, 0.5f, GImGui->Font, 0.05f, GUI::IM_WHITE, "Intro: Reintentar");
+	// Text Dead
+	GUI::drawText(0.3f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "Has muerto");
+	GUI::drawText(0.3f, 0.5f, GImGui->Font, 0.05f, GUI::IM_WHITE, "Intro: Reintentar");
 }
 
 // ----- Render On Victory ----- //
@@ -239,13 +263,13 @@ void CGuiModule::renderOnVictory() {
 
 // ----- Render On Menu ----- //
 void CGuiModule::renderOnMenu() {
-  renderOnPlay();
-  GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
-  menuPause->render();
+	renderOnPlay();
+	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+	menuPause->render();
 }
 
 // ----------------------------------- STOP MODULE ----------------------------------- //
 void CGuiModule::stop() {
-  dbg("GUI module stopped");
-  //ImGui_ImplDX11_Shutdown(); <-- Ya lo hace el modulo de ImGui!
+	dbg("GUI module stopped");
+	//ImGui_ImplDX11_Shutdown(); <-- Ya lo hace el modulo de ImGui!
 }

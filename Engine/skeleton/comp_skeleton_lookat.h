@@ -8,7 +8,9 @@ class TCompSkeleton;
 
 struct TCompSkeletonLookAt : public TCompBase {
 	VEC3 target;
-	float    amount;
+	VEC3 target_prev;
+	float amount;
+	bool looking;
 	TCompSkeletonLookAt() { }
 	std::vector<std::string> look_at_bones{ "spine_down", "spine_up", "neck", "head" };
 	std::vector<float> look_at_amount{ 0.2f, 0.35f, 0.2f, 1.0f };
@@ -24,6 +26,7 @@ struct TCompSkeletonLookAt : public TCompBase {
 	bool getUpdateInfo();
 	void update(float elapsed);
 	void RecalcAmount();
+	VEC3 RecalcTarget();
 	void onCreate(const TMsgEntityCreated&);
 
 	void setTarget(const VEC3&);

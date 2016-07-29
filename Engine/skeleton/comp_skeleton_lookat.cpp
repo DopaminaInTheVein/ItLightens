@@ -8,8 +8,9 @@
 using namespace std;
 
 bool TCompSkeletonLookAt::load(MKeyValue &atts) {
-	target = atts.getPoint("target");
+	target_prev = target = atts.getPoint("target");
 	amount = atts.getFloat("amount", 1.0f);
+	looking = false;
 	return true;
 }
 
@@ -29,20 +30,22 @@ void TCompSkeletonLookAt::update(float elapsed) {
 
 	// Recalc amount
 	RecalcAmount();
+	VEC3 new_target = RecalcTarget();
+
 	if (amount <= 0.f) return;
 
 	// Apply all the corrections of the core skeleton definition
 	CalModel* model = my_skeleton->model;
 	CCoreModel *core = (CCoreModel*)model->getCoreModel();
 	for (auto bc : core->bone_corrections) {
-		bc.apply(model, Engine2Cal(target), amount * bc.local_amount, max_angle_per_bone);
+		bc.apply(model, Engine2Cal(new_target), amount * bc.local_amount, max_angle_per_bone);
 	}
 }
 
 void TCompSkeletonLookAt::RecalcAmount()
 {
 	bool increment = true;
-	if (isZero(target)) increment = false;
+	if (!looking) increment = false;
 	else {
 		float angle = angleBetween(my_transform->getFront(), target - my_transform->getPosition());
 		if (angle > max_angle) {
@@ -53,6 +56,15 @@ void TCompSkeletonLookAt::RecalcAmount()
 	if (increment) amount += getDeltaTime() * speed_transition;
 	else amount -= getDeltaTime() * speed_transition;
 	clamp_me(amount, 0.f, 1.f);
+}
+
+VEC3 TCompSkeletonLookAt::RecalcTarget()
+{
+	VEC3 res = target;
+	if (isZero(target)) res = target_prev;
+	//TODO? : amount_new_target to smooth change of targets
+
+	return res;
 }
 
 void TCompSkeletonLookAt::onCreate(const TMsgEntityCreated& msg)
@@ -77,7 +89,10 @@ void TCompSkeletonLookAt::onCreate(const TMsgEntityCreated& msg)
 
 void TCompSkeletonLookAt::setTarget(const VEC3& new_target)
 {
+	if (target == new_target) return;
+	target_prev = target;
 	target = new_target;
+	looking = !isZero(new_target);
 }
 
 void TCompSkeletonLookAt::renderInMenu()
