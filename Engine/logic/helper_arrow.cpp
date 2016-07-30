@@ -18,11 +18,12 @@ void LogicHelperArrow::onSetTarget(const TMsgSetTarget & tasr)
 void LogicHelperArrow::update(float elapsed) {
 	PROFILE_FUNCTION("helper arrow: update");
 	std::vector<CHandle> generators = SBB::readHandlesVector("generatorsHandles");
+	CEntity * targeteRaigin = tags_manager.getFirstHavingTag(getID("raijin"));
 	CEntity * targete = target;
 	if (!targete) return;
 	TCompTransform * targett = targete->get<TCompTransform>();
 	if (!targett) return;
-	TCompLife * targetl = targete->get<TCompLife>();
+	TCompLife * targetl = targeteRaigin->get<TCompLife>();
 	if (!targetl) return;
 	VEC3 targetpos = targett->getPosition();
 

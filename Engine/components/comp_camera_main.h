@@ -11,7 +11,11 @@ struct TCompCameraMain : public TCompCamera {
 	float smoothDefault;
 	float smoothCurrent;
 
+	float hitRadius = 0.1f;
+	float hitDistance = 0.1f;
+
 	VEC3 origin_camera;
+	VEC3 last_pos_camera;
 
 	//Guided camera
 	CHandle guidedCamera;
@@ -23,7 +27,7 @@ struct TCompCameraMain : public TCompCamera {
 	bool load(MKeyValue& atts);
 	bool getUpdateInfo() override;
 	void update(float dt);
-	bool checkColision(const VEC3& pos);
+	bool checkColision(const VEC3& pos, const float smoothCurrent);
 	void onGuidedCamera(const TMsgGuidedCamera&);
 };
 

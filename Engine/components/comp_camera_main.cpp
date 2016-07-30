@@ -30,7 +30,6 @@ bool TCompCameraMain::load(MKeyValue& atts) {
 	return true;
 }
 
-
 void TCompCameraMain::onGuidedCamera(const TMsgGuidedCamera& msg) {
 	if (msg.guide.isValid()) guidedCamera = msg.guide;
 	GameController->SetCinematic(true);
@@ -83,14 +82,18 @@ void TCompCameraMain::update(float dt) {
 			VEC3 pos = transform->getPosition();
 			pos.y += 2;
 			transform->setPosition(pos);
-			if (detect_colsions) {
-				if (!checkColision(pos))
-					this->smoothLookAt(transform->getPosition(), transform->getPosition() + transform->getFront(), getUpAux());
-			}
-			if (!detect_colsions || !checkColision(pos)) {
-				if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
+			if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
+
+			bool colision = checkColision(pos, smoothCurrent);
+			if (detect_colsions && !colision) {
 				this->smoothLookAt(transform->getPosition(), transform->getPosition() + transform->getFront(), getUpAux(), smoothCurrent);
+				last_pos_camera = transform->getPosition();
 			}
+			else if (!colision) {
+				this->smoothLookAt(transform->getPosition(), transform->getPosition() + transform->getFront(), getUpAux(), smoothCurrent);
+				last_pos_camera = transform->getPosition();
+			}
+
 			//}
 		}
 		else if (GameController->GetFreeCamera()) {
@@ -115,7 +118,7 @@ void TCompCameraMain::update(float dt) {
 	}
 }
 
-bool TCompCameraMain::checkColision(const VEC3 & pos)
+bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 {
 	//TODO:for now only for camera_main
 
@@ -142,20 +145,38 @@ bool TCompCameraMain::checkColision(const VEC3 & pos)
 
 	//efficient raycast to search if there is some type of vision on the player
 	//if it is possible to see the player will not be considered camera obstruction
-	PxRaycastBuffer hit;
-	bool collision = g_PhysxManager->raycast(pos_target, direction, dist, hit, fd);
+	//PxRaycastBuffer hit;
+	PxSweepBuffer hit_sphere;
+	bool collision = false;//g_PhysxManager->raySphere(0.3f, pos_target, direction, dist, hit_sphere, fd);// g_PhysxManager->raycast(pos_target, direction, dist, hit, fd);
+	if (!collision) {
+		direction = VEC3(1, 0, 0);
+		collision = g_PhysxManager->raySphere(hitRadius, real_pos, direction, hitDistance, hit_sphere); //(real_pos, direction, 0.1f, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(-1, 0, 0);
+		collision = g_PhysxManager->raySphere(hitRadius, real_pos, direction, hitDistance, hit_sphere);
+	}
+	if (!collision) {
+		direction = VEC3(0, 0, 1);
+		collision = g_PhysxManager->raySphere(hitRadius, real_pos, direction, hitDistance, hit_sphere);
+	}
+	if (!collision) {
+		direction = VEC3(0, 0, -1);
+		collision = g_PhysxManager->raySphere(hitRadius, real_pos, direction, hitDistance, hit_sphere);
+	}
+
 	if (collision) {
-		//if there is obstruction, look for good position
-		PxSweepBuffer hit_sphere;
-		collision = g_PhysxManager->raySphere(0.3f, pos_target, direction, dist, hit_sphere, fd);
-		if (collision) {
-			int i = 0;
-			if (hit.getAnyHit(i).distance == 0.0f) {
-				i++;
-				if (hit.getNbTouches() == 1) return true;	//will not move the camera this frame if there are not any good position
-			}
-			VEC3 hit_pos = PhysxConversion::PxVec3ToVec3(hit_sphere.getAnyHit(i).position);
-			smoothLookAt(hit_pos, pos_target, getUpAux());
+		int i = 0;
+		if (hit_sphere.getAnyHit(i).distance == 0.0f) {
+			i++;
+			if (hit_sphere.getNbTouches() == 1) return true;	//will not move the camera this frame if there are not any good position
+		}
+		VEC3 hit_pos = PhysxConversion::PxVec3ToVec3(hit_sphere.getAnyHit(i).position);
+		if (hit_pos != VEC3(0, 0, 0)) {
+			smoothLookAt(hit_pos, pos_target, getUpAux(), smoothCurrent);
+		}
+		else {
+			smoothLookAt(last_pos_camera, pos_target, getUpAux(), smoothCurrent);
 		}
 	}
 

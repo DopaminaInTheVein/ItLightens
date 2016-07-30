@@ -3176,7 +3176,8 @@
 <camera_main
    znear="0.1"
    zfar="250.0"
-   fov="60.0"/>
+   fov="60.0"
+   collision="true"/>
 <culling/>
 <render_glow/>
 <controller_3rd_person/>
