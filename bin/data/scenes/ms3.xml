@@ -802,23 +802,6 @@
 <entity>
 <tags/>
 <name
-   name="control_panel_var1"/>
-<transform
-   pos="13.199 -23.2558 -23.7632"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/control_panel_var1.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="cubo"/>
 <transform
    pos="-5.57598 -20.2973 2.07459"
@@ -3289,7 +3272,6 @@
    name="2"/>
 
 </entity>
-<!--
 <entity
    reload="yes">
 <tags
@@ -3334,7 +3316,6 @@
    name="1"/>
 
 </entity>
--->
 <entity
    reload="yes">
 <tags
@@ -3376,7 +3357,6 @@
    name="1"/>
 
 </entity>
-<!--
 <entity
    reload="yes">
 <tags
@@ -3553,7 +3533,6 @@
    name="2"/>
 
 </entity>
--->
 <entity
    reload="yes">
 <tags
@@ -4718,26 +4697,11 @@
 <entity>
 <tags/>
 <name
-   name="bookshelf_w_doors001"/>
-<transform
-   pos="-76.2627 -1.34997 -11.3785"
-   quat="0 0.898 0 0.439996"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/bookshelf_w_doors001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="cubo_de_pintura_grande_mapeado"/>
 <transform
    pos="-5.58868 -23.3171 1.24878"
    quat="0 0 0 1.0"
-   scale="0.040496"/>
+   scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/cubo_de_pintura_grande_mapeado.static_mesh"/>
 <abs_aabb/>
@@ -4910,6 +4874,1110 @@
    scale="1.0"/>
 <room
    name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_1"/>
+<transform
+   pos="-74.4543 0.655554 -5.66782"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_2"/>
+<transform
+   pos="-68.8567 0.674109 18.8797"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_3"/>
+<transform
+   pos="-89.6447 0.702673 5.77587"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_5"/>
+<transform
+   pos="-80.2451 0.61649 -28.6096"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_5.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_6"/>
+<transform
+   pos="-85.6904 0.61649 -28.7055"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_6.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_derecho"/>
+<transform
+   pos="10.2064 -9.89572 -24.5997"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_izquierdo_abajo"/>
+<transform
+   pos="11.0636 -9.72945 24.6214"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_izquierdo_abajo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_decorativo"/>
+<transform
+   pos="9.87597 3.14677 24.6222"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_decorativo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_grande"/>
+<transform
+   pos="-40.6128 0.725866 -0.804768"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_izquierdo"/>
+<transform
+   pos="-17.6526 -0.368005 24.5795"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_decorativo_arboles"/>
+<transform
+   pos="-13.2767 -0.845668 -24.5244"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/balcon_decorativo_arboles.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bookshelf_2_deformed"/>
+<transform
+   pos="-97.1786 8.28088 1.70162"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/bookshelf_2_deformed.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel_var1"/>
+<transform
+   pos="13.199 -24.0204 -23.7632"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/control_panel_var1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bookshelf_w_door_2"/>
+<transform
+   pos="-81.5895 -1.34997 -3.87495"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/bookshelf_w_door_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="handle_r_l_h_1"/>
+<transform
+   pos="-80.9202 -0.302511 -4.13469"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/handle_r_l_h_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bookshelf_w_doors001"/>
+<transform
+   pos="-76.2627 -1.34997 -11.3785"
+   quat="0 0.898 0 0.439996"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/bookshelf_w_doors001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="estanteria"/>
+<transform
+   pos="-76.7828 -1.29291 -4.54694"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/estanteria.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_izquierdo_abajo_ramas"/>
+<transform
+   pos="11.0636 -9.72945 24.6214"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_izquierdo_abajo_ramas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_izquierdo_abajo_maceta"/>
+<transform
+   pos="11.0636 -9.72945 24.6214"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_izquierdo_abajo_maceta.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_izquierdo_abajo_maceta_2"/>
+<transform
+   pos="11.0636 -9.72945 24.6214"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_izquierdo_abajo_maceta_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_decorativo_ramas_1"/>
+<transform
+   pos="9.87597 3.14677 24.6222"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_decorativo_ramas_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_decorativo_ramas_2"/>
+<transform
+   pos="9.87597 3.14677 24.6222"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_decorativo_ramas_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_decorativo_maceta_1"/>
+<transform
+   pos="9.87597 3.14677 24.6222"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_decorativo_maceta_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_decorativo_maceta_2"/>
+<transform
+   pos="9.87597 3.14677 24.6222"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_decorativo_maceta_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_decorativo_2"/>
+<transform
+   pos="9.87597 3.14677 24.6222"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_decorativo_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_decorativo_arboles_maceta_1"/>
+<transform
+   pos="-13.2767 -0.845668 -24.5244"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/balcon_decorativo_arboles_maceta_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_decorativo_arboles_maceta_2"/>
+<transform
+   pos="-13.2767 -0.845668 -24.5244"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/balcon_decorativo_arboles_maceta_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_decorativo_arboles_ramas_1"/>
+<transform
+   pos="-13.2767 -0.845668 -24.5244"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/balcon_decorativo_arboles_ramas_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_decorativo_arboles_ramas_2"/>
+<transform
+   pos="-13.2767 -0.845668 -24.5244"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/balcon_decorativo_arboles_ramas_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_decorativo_arboles_2"/>
+<transform
+   pos="-13.2767 -0.845668 -24.5244"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/balcon_decorativo_arboles_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_derecho_ramas"/>
+<transform
+   pos="10.2064 -9.89572 -24.5997"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho_ramas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_derecho_ramas_2"/>
+<transform
+   pos="10.2064 -9.89572 -24.5997"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho_ramas_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_derecho_maceta_1"/>
+<transform
+   pos="10.2064 -9.89572 -24.5997"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho_maceta_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_derecho_maceta_2"/>
+<transform
+   pos="10.2064 -9.89572 -24.5997"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho_maceta_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_cuadrado_derecho_2"/>
+<transform
+   pos="10.2064 -9.89572 -24.5997"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_izquierdo_ramas"/>
+<transform
+   pos="-17.6526 -0.368005 24.5795"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo_ramas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_izquierdo_ramas_1"/>
+<transform
+   pos="-17.6526 -0.368005 24.5795"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo_ramas_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_izquierdo_maceta_2"/>
+<transform
+   pos="-17.6526 -0.368005 24.5795"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo_maceta_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_izquierdo_maceta_1"/>
+<transform
+   pos="-17.6526 -0.368005 24.5795"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo_maceta_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_izquierdo_2"/>
+<transform
+   pos="-17.6526 -0.368005 24.5795"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_decorativo_arboles_ramas_3"/>
+<transform
+   pos="-13.2767 -0.845668 -24.5244"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/balcon_decorativo_arboles_ramas_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_decorativo_arboles_3"/>
+<transform
+   pos="-13.2767 -0.845668 -24.5244"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/balcon_decorativo_arboles_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon_decorativo_arboles_maceta"/>
+<transform
+   pos="-13.2767 -0.845668 -24.5244"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/balcon_decorativo_arboles_maceta.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_grande_ramas_1"/>
+<transform
+   pos="-40.6128 0.725866 -0.804768"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande_ramas_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_grande_ramas_2"/>
+<transform
+   pos="-40.6128 0.725866 -0.804768"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande_ramas_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_grande_maceta_1"/>
+<transform
+   pos="-40.6128 0.725866 -0.804768"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande_maceta_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_grande_maceta_2"/>
+<transform
+   pos="-40.6128 0.725866 -0.804768"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande_maceta_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arboles_balcon_redondo_grande_2"/>
+<transform
+   pos="-40.6128 0.725866 -0.804768"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_2_ramas"/>
+<transform
+   pos="-68.8567 0.674109 18.8797"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_2_ramas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_2_maceta"/>
+<transform
+   pos="-68.8567 0.674109 18.8797"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_2_maceta.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_1_maceta"/>
+<transform
+   pos="-74.4543 0.655554 -5.66782"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_1_maceta.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_1_ramas"/>
+<transform
+   pos="-74.4543 0.655554 -5.66782"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_1_ramas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_3_maceta"/>
+<transform
+   pos="-89.6447 0.702673 5.77587"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_3_maceta.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_3_ramas"/>
+<transform
+   pos="-89.6447 0.702673 5.77587"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_3_ramas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_5_ramas"/>
+<transform
+   pos="-80.2451 0.61649 -28.6096"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_5_ramas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_5_maceta"/>
+<transform
+   pos="-80.2451 0.61649 -28.6096"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_5_maceta.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_6_ramas"/>
+<transform
+   pos="-85.6904 0.61649 -28.7055"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_6_ramas.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="arbol_arriba_6_maceta"/>
+<transform
+   pos="-85.6904 0.61649 -28.7055"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/arbol_arriba_6_maceta.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bookshelf_2_deformed_1"/>
+<transform
+   pos="-97.1786 8.28088 1.70162"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/bookshelf_2_deformed_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bookshelf_2_deformed_2"/>
+<transform
+   pos="-97.1786 8.28088 1.70162"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/bookshelf_2_deformed_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel_1"/>
+<transform
+   pos="-34.9226 -22.0432 18.6004"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/control_panel_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel_2"/>
+<transform
+   pos="-34.8644 -24.026 18.4424"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/control_panel_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel_3"/>
+<transform
+   pos="-22.564 -24.0264 18.8561"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/control_panel_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel_4"/>
+<transform
+   pos="-25.4033 -24.026 5.34171"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/control_panel_4.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel_5"/>
+<transform
+   pos="-23.1595 -24.026 1.11233"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/control_panel_5.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel_6"/>
+<transform
+   pos="-9.53061 -24.026 10.9267"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/control_panel_6.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="control_panel_007"/>
+<transform
+   pos="-7.03202 -22.6676 9.66177"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/control_panel_007.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="hinge_bookshelf_w_doors_4"/>
+<transform
+   pos="-80.9202 -0.302511 -4.13469"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/hinge_bookshelf_w_doors_4.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="doorx4_r_l_h_1_1"/>
+<transform
+   pos="-80.9202 -0.302511 -4.13469"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/doorx4_r_l_h_1_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="estanteria_1"/>
+<transform
+   pos="-76.7828 -1.29291 -4.54694"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/estanteria_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="estanteria_2"/>
+<transform
+   pos="-76.7828 -1.29291 -4.54694"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/estanteria_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="estanteria_4"/>
+<transform
+   pos="-76.7828 -1.29291 -4.54694"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3_multi/estanteria_4.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 

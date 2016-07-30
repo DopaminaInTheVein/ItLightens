@@ -213,6 +213,16 @@ void CPhysxManager::setupFiltering(PxRigidActor* actor, PxFilterData& filterData
 	//free(ptr);
 }
 
+PxFilterData CPhysxManager::getFiltering(PxRigidActor * actor)
+{
+	PxShape **ptr;
+	ptr = new PxShape*[1];
+	actor->getShapes(ptr, 1);
+	auto res = ptr[0]->getSimulationFilterData();
+	free(ptr);
+	return res;
+}
+
 void CPhysxManager::setBehaviour(PxRigidActor* actor, ItLightensFilter::descObjectBehaviour tag, bool enabled)
 {
 	const PxU32 numShapes = actor->getNbShapes();

@@ -109,7 +109,7 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 	if (!m_pActor) return;
 	PxRigidActor *actor = m_pActor->isRigidActor();
 	if (actor) {
-		filter.word1 = ItLightensFilter::eALL;
+		//filter.word1 = ItLightensFilter::eALL;
 		g_PhysxManager->setupFiltering(actor, filter);
 		/*if (h.hasTag("fragment") || h.hasTag("throw_bomb")) {
 		  PxRigidDynamic * rd = actor->isRigidDynamic();
@@ -646,6 +646,19 @@ void TCompPhysics::renderInMenu()
 			writeIniFileAttr();
 		}
 	}
+
+	ImGui::Separator();
+	PxFilterData filterData = getFilterData();
+	int fdata[4] = { filterData.word0, filterData.word1, filterData.word2, filterData.word3 };
+
+	if (ImGui::DragInt4("Filter data", fdata)) {
+		filterData.word0 = fdata[0];
+		filterData.word1 = fdata[1];
+		filterData.word2 = fdata[2];
+		filterData.word3 = fdata[3];
+		auto actor = m_pActor->isRigidActor();
+		if (actor) g_PhysxManager->setupFiltering(actor, filterData);
+	}
 }
 
 void TCompPhysics::readIniFileAttr() {
@@ -691,6 +704,19 @@ void TCompPhysics::updateAttrMaterial() {
 			buff_m[j]->setRestitution(m_restitution);
 		}
 	}
+}
+
+PxFilterData TCompPhysics::getFilterData() {
+	PxRigidActor *actor = m_pActor->isRigidActor();
+	PxFilterData res;
+	if (actor) {
+		res = g_PhysxManager->getFiltering(actor);
+		//*fData = res.word0;
+		//*(fData + 1) = res.word1;
+		//*(fData + 2) = res.word2;
+		//*(fData + 3) = res.word3;
+	}
+	return res;
 }
 
 void TCompPhysics::writeIniFileAttr() {
