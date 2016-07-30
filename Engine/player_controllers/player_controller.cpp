@@ -277,7 +277,7 @@ void player_controller::Jump()
 			-curSpeed.x * 0.1f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
 			-curSpeed.z * 0.1f
-			);
+		);
 		//--------------------------------------
 	}
 	else {
@@ -923,9 +923,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-				),
+			),
 			polarityForces.end()
-			);
+		);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}
@@ -1036,6 +1036,9 @@ void player_controller::renderInMenu() {
 	for (auto pond : force_ponderations) {
 		ImGui::Text("Ponderation: %f\n", pond);
 	}
+
+	ImGui::Separator();
+	ImGui::Text("Absorb fonts: %d", damageFonts[Damage::ABSORB]);
 
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
