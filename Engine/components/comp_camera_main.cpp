@@ -93,6 +93,18 @@ void TCompCameraMain::update(float dt) {
 				this->smoothLookAt(transform->getPosition(), transform->getPosition() + transform->getFront(), getUpAux(), smoothCurrent);
 				last_pos_camera = transform->getPosition();
 			}
+			else if (detect_colsions) {
+				CEntity *e_me = compBaseEntity;
+				TCompController3rdPerson *c = e_me->get<TCompController3rdPerson>();
+
+				CEntity *target = c->target;
+				TCompCharacterController *cc = target->get<TCompCharacterController>();
+				TCompTransform *targett = target->get<TCompTransform>();
+				VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
+
+				this->smoothLookAt(pos_target, pos_target + transform->getFront(), getUpAux(), smoothCurrent);
+				last_pos_camera = transform->getPosition();
+			}
 
 			//}
 		}
@@ -120,59 +132,35 @@ void TCompCameraMain::update(float dt) {
 
 bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 {
-	//TODO:for now only for camera_main
-
 	CEntity *e_me = compBaseEntity;
 	TCompController3rdPerson *c = e_me->get<TCompController3rdPerson>();
-	TCompTransform *t = e_me->get<TCompTransform>();
-	VEC3 real_pos = t->getPosition();
 
-	CEntity *target = c->target;
-	TCompCharacterController *cc = target->get<TCompCharacterController>();
-	TCompTransform *targett = target->get<TCompTransform>();
-	VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
-
-	VEC3 direction = pos_target - real_pos;
-	hitDistance = (fabs(direction.x) + fabsf(direction.y) + fabsf(direction.z)) / 2;
-
-	direction.Normalize();
 	float dist = c->GetPositionDistance();
+
 	PxQueryFilterData fd = PxQueryFilterData();
 
-	//fd.data.word0 = PXM_NO_PLAYER_CRYSTAL;	//will ignore crystals
-
-	fd.data.word0 = PXM_CAMERA_COLLISIONS;
-
-	pos_target += c->GetOffset() + VEC3(0, 1.0f, 0);
+	fd.data.word0 = PXM_NO_PLAYER_NPC;
 
 	//efficient raycast to search if there is some type of vision on the player
 	//if it is possible to see the player will not be considered camera obstruction
 	PxRaycastBuffer hit;
-	//PxSweepBuffer hit_sphere;
-	bool collision = false;//g_PhysxManager->raySphere(0.3f, pos_target, direction, dist, hit_sphere, fd);// g_PhysxManager->raycast(pos_target, direction, dist, hit, fd);
-	VEC3 direction2;
-	//hitDistance = 2.5f;
+	bool collision = false;
+	VEC3 direction;
 	if (!collision) {
-		direction2 = VEC3(1, 0, 0);
-		collision = g_PhysxManager->raycast(real_pos, direction2, hitDistance, hit, fd);
+		direction = VEC3(1, 0, 0);
+		collision = g_PhysxManager->raycast(pos, direction, dist, hit, fd);
 	}
 	if (!collision) {
-		direction2 = VEC3(-1, 0, 0);
-		collision = g_PhysxManager->raycast(real_pos, direction2, hitDistance, hit, fd);
+		direction = VEC3(-1, 0, 0);
+		collision = g_PhysxManager->raycast(pos, direction, dist, hit, fd);
 	}
 	if (!collision) {
-		direction2 = VEC3(0, 0, 1);
-		collision = g_PhysxManager->raycast(real_pos, direction2, hitDistance, hit, fd);
+		direction = VEC3(0, 0, 1);
+		collision = g_PhysxManager->raycast(pos, direction, dist, hit, fd);
 	}
 	if (!collision) {
-		direction2 = VEC3(0, 0, -1);
-		collision = g_PhysxManager->raycast(real_pos, direction2, hitDistance, hit, fd);
-	}
-
-	if (collision) {
-		last_pos_camera == real_pos + direction;
-		t->setPosition(last_pos_camera);
-		lookAt(last_pos_camera, last_pos_camera + direction, getUpAux());
+		direction = VEC3(0, 0, -1);
+		collision = g_PhysxManager->raycast(pos, direction, dist, hit, fd);
 	}
 
 	return collision;
