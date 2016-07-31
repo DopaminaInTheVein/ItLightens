@@ -380,6 +380,7 @@ PxActor * CPhysxManager::CreateAndAddRigidDynamic(const PxTransform *transform, 
 //create actor with static rigidbody
 PxActor * CPhysxManager::CreateAndAddRigidStatic(const PxTransform *transform, PxShape* shape)
 {
+	assert(shape);
 	PxRigidStatic *actor = PxCreateStatic(*m_pPhysics, *transform, *shape);
 	AddToActiveScene(*actor);
 	return actor;
@@ -421,6 +422,7 @@ PxTriangleMesh * CPhysxManager::CreateCookedTriangleMesh(const CMesh * mesh)
 	meshDesc.flags = PxMeshFlag::eFLIPNORMALS | PxMeshFlag::e16_BIT_INDICES;
 
 	PxDefaultMemoryOutputStream writeBuffer;
+	dbg("Buffer out physx size: %d\n", writeBuffer.getSize());
 	bool status = m_pCooking->cookTriangleMesh(meshDesc, writeBuffer);
 	if (!status)
 		return NULL;

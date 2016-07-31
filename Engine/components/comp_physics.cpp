@@ -203,29 +203,31 @@ int TCompPhysics::getCollisionShapeValueFromString(std::string str) {
 void TCompPhysics::onCreate(const TMsgEntityCreated &)
 {
 	readIniFileAttr();	//load current default values
+	bool ok = false;
 	switch (m_collisionShape) {
 	case TRI_MESH:
-		createTriMeshShape();
+		ok = createTriMeshShape();
 		break;
 	case SPHERE:
-		createSphereShape();
+		ok = createSphereShape();
 		break;
 	case BOX:
-		createBoxShape();
+		ok = createBoxShape();
 		break;
 	case CAPSULE:
-		createCapsuleShape();
+		ok = createCapsuleShape();
 		break;
 	case CONVEX:
-		createConvexShape();
+		ok = createConvexShape();
 		break;
 	case DRONE:
-		createDroneShape();
+		ok = createDroneShape();
 		break;
 	default:
 		fatal("object type inexistent!!\n");
 		break;
 	}
+	if (!ok) CHandle(this).destroy();
 }
 
 //fixedUpdate for physix, only needed for dynamic rigidbodys
@@ -272,6 +274,7 @@ bool TCompPhysics::createTriMeshShape()
 		dbg("[Physx]: Cooking static mesh on %s", name);
 		PxTriangleMesh *cookedMesh = g_PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0
 		m_pShape = g_PhysxManager->CreateTriangleMesh(cookedMesh, m_staticFriction, m_dynamicFriction, m_restitution);
+		if (!m_pShape) return false;
 		addRigidbodyScene();
 
 		int size_slots = comp_static_mesh->static_mesh->slots.size();
