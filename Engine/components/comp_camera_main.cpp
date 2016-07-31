@@ -132,7 +132,9 @@ bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 	TCompTransform *targett = target->get<TCompTransform>();
 	VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
 
-	VEC3 direction = real_pos - pos_target;
+	VEC3 direction = pos_target - real_pos;
+	hitDistance = (fabs(direction.x) + fabsf(direction.y) + fabsf(direction.z)) / 2;
+
 	direction.Normalize();
 	float dist = c->GetPositionDistance();
 	PxQueryFilterData fd = PxQueryFilterData();
@@ -145,39 +147,32 @@ bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 
 	//efficient raycast to search if there is some type of vision on the player
 	//if it is possible to see the player will not be considered camera obstruction
-	//PxRaycastBuffer hit;
-	PxSweepBuffer hit_sphere;
+	PxRaycastBuffer hit;
+	//PxSweepBuffer hit_sphere;
 	bool collision = false;//g_PhysxManager->raySphere(0.3f, pos_target, direction, dist, hit_sphere, fd);// g_PhysxManager->raycast(pos_target, direction, dist, hit, fd);
+	VEC3 direction2;
+	//hitDistance = 2.5f;
 	if (!collision) {
-		direction = VEC3(1, 0, 0);
-		collision = g_PhysxManager->raySphere(hitRadius, real_pos, direction, hitDistance, hit_sphere); //(real_pos, direction, 0.1f, hit, fd);
+		direction2 = VEC3(1, 0, 0);
+		collision = g_PhysxManager->raycast(real_pos, direction2, hitDistance, hit, fd);
 	}
 	if (!collision) {
-		direction = VEC3(-1, 0, 0);
-		collision = g_PhysxManager->raySphere(hitRadius, real_pos, direction, hitDistance, hit_sphere);
+		direction2 = VEC3(-1, 0, 0);
+		collision = g_PhysxManager->raycast(real_pos, direction2, hitDistance, hit, fd);
 	}
 	if (!collision) {
-		direction = VEC3(0, 0, 1);
-		collision = g_PhysxManager->raySphere(hitRadius, real_pos, direction, hitDistance, hit_sphere);
+		direction2 = VEC3(0, 0, 1);
+		collision = g_PhysxManager->raycast(real_pos, direction2, hitDistance, hit, fd);
 	}
 	if (!collision) {
-		direction = VEC3(0, 0, -1);
-		collision = g_PhysxManager->raySphere(hitRadius, real_pos, direction, hitDistance, hit_sphere);
+		direction2 = VEC3(0, 0, -1);
+		collision = g_PhysxManager->raycast(real_pos, direction2, hitDistance, hit, fd);
 	}
 
 	if (collision) {
-		int i = 0;
-		if (hit_sphere.getAnyHit(i).distance == 0.0f) {
-			i++;
-			if (hit_sphere.getNbTouches() == 1) return true;	//will not move the camera this frame if there are not any good position
-		}
-		VEC3 hit_pos = PhysxConversion::PxVec3ToVec3(hit_sphere.getAnyHit(i).position);
-		if (hit_pos != VEC3(0, 0, 0)) {
-			smoothLookAt(hit_pos, pos_target, getUpAux(), smoothCurrent);
-		}
-		else {
-			smoothLookAt(last_pos_camera, pos_target, getUpAux(), smoothCurrent);
-		}
+		last_pos_camera == real_pos + direction;
+		t->setPosition(last_pos_camera);
+		lookAt(last_pos_camera, last_pos_camera + direction, getUpAux());
 	}
 
 	return collision;
