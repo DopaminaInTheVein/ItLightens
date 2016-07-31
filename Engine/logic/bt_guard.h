@@ -159,7 +159,7 @@ class bt_guard : public bt, public TCompBase
 	//VEC3 generateRandomPoint(); THIS IS NOT USED!
 
 	//Aux checks
-	bool playerVisible();
+	bool playerVisible(bool check_raycast = true);
 	bool playerTooNear();
 	bool boxMovingDetected();
 	bool inJurisdiction(VEC3);

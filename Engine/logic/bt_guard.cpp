@@ -557,7 +557,7 @@ int bt_guard::actionAbsorb() {
 
 	turnTo(posPlayer);
 	if (squaredDistY(myPos, posPlayer) * 2.0f > dist) { //Angulo de 30 grados
-				  //Si pitch muy alto me alejo
+		//Si pitch muy alto me alejo
 		goForward(-SPEED_WALK);
 	}
 	// if we don't see the player anymore
@@ -575,7 +575,7 @@ int bt_guard::actionAbsorb() {
 		dmg.actived = false;
 		ePlayer->sendMsg(dmg);
 		// if the player went out of reach, we don't shoot the wall
-		if (squaredDistXZ(myPos, posPlayer) > DIST_SQ_PLAYER_DETECTION || !inJurisdiction(posPlayer)) {
+		if (!playerVisible(false)) {//squaredDistXZ(myPos, posPlayer) > DIST_SQ_PLAYER_DETECTION || !inJurisdiction(posPlayer)) {
 			logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 			return KO;
 		}
@@ -1287,7 +1287,7 @@ bool bt_guard::playerTooNear() {
 }
 
 // -- Player Visible? -- //
-bool bt_guard::playerVisible() {
+bool bt_guard::playerVisible(bool check_raycast) {
 	if (!myParent.isValid()) return false;
 	CEntity * ePlayer = getPlayer();
 	if (!ePlayer) return false;
@@ -1323,7 +1323,8 @@ bool bt_guard::playerVisible() {
 						return true;
 					}
 					else {
-						//TODO RAYCAST PLAYER
+						//Raycast
+						if (!check_raycast) return true;
 						PxRaycastBuffer hit;
 						bool ret = rayCastToPlayer(1, distRay, hit);
 						if (ret) { //No bloquea vision

@@ -109,7 +109,7 @@ void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 	if (!m_pActor) return;
 	PxRigidActor *actor = m_pActor->isRigidActor();
 	if (actor) {
-		filter.word1 = ItLightensFilter::eALL;
+		//filter.word1 = ItLightensFilter::eALL;
 		g_PhysxManager->setupFiltering(actor, filter);
 		/*if (h.hasTag("fragment") || h.hasTag("throw_bomb")) {
 		  PxRigidDynamic * rd = actor->isRigidDynamic();
@@ -203,29 +203,31 @@ int TCompPhysics::getCollisionShapeValueFromString(std::string str) {
 void TCompPhysics::onCreate(const TMsgEntityCreated &)
 {
 	readIniFileAttr();	//load current default values
+	bool ok = false;
 	switch (m_collisionShape) {
 	case TRI_MESH:
-		createTriMeshShape();
+		ok = createTriMeshShape();
 		break;
 	case SPHERE:
-		createSphereShape();
+		ok = createSphereShape();
 		break;
 	case BOX:
-		createBoxShape();
+		ok = createBoxShape();
 		break;
 	case CAPSULE:
-		createCapsuleShape();
+		ok = createCapsuleShape();
 		break;
 	case CONVEX:
-		createConvexShape();
+		ok = createConvexShape();
 		break;
 	case DRONE:
-		createDroneShape();
+		ok = createDroneShape();
 		break;
 	default:
 		fatal("object type inexistent!!\n");
 		break;
 	}
+	if (!ok) CHandle(this).destroy();
 }
 
 //fixedUpdate for physix, only needed for dynamic rigidbodys
@@ -272,6 +274,7 @@ bool TCompPhysics::createTriMeshShape()
 		dbg("[Physx]: Cooking static mesh on %s", name);
 		PxTriangleMesh *cookedMesh = g_PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0
 		m_pShape = g_PhysxManager->CreateTriangleMesh(cookedMesh, m_staticFriction, m_dynamicFriction, m_restitution);
+		if (!m_pShape) return false;
 		addRigidbodyScene();
 
 		int size_slots = comp_static_mesh->static_mesh->slots.size();
@@ -646,6 +649,19 @@ void TCompPhysics::renderInMenu()
 			writeIniFileAttr();
 		}
 	}
+
+	ImGui::Separator();
+	PxFilterData filterData = getFilterData();
+	int fdata[4] = { filterData.word0, filterData.word1, filterData.word2, filterData.word3 };
+
+	if (ImGui::DragInt4("Filter data", fdata)) {
+		filterData.word0 = fdata[0];
+		filterData.word1 = fdata[1];
+		filterData.word2 = fdata[2];
+		filterData.word3 = fdata[3];
+		auto actor = m_pActor->isRigidActor();
+		if (actor) g_PhysxManager->setupFiltering(actor, filterData);
+	}
 }
 
 void TCompPhysics::readIniFileAttr() {
@@ -691,6 +707,19 @@ void TCompPhysics::updateAttrMaterial() {
 			buff_m[j]->setRestitution(m_restitution);
 		}
 	}
+}
+
+PxFilterData TCompPhysics::getFilterData() {
+	PxRigidActor *actor = m_pActor->isRigidActor();
+	PxFilterData res;
+	if (actor) {
+		res = g_PhysxManager->getFiltering(actor);
+		//*fData = res.word0;
+		//*(fData + 1) = res.word1;
+		//*(fData + 2) = res.word2;
+		//*(fData + 3) = res.word3;
+	}
+	return res;
 }
 
 void TCompPhysics::writeIniFileAttr() {
