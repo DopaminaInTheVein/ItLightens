@@ -31,16 +31,25 @@ bool CEntity::hasTag(std::string tag)
 }
 
 //------------------------------
-void CEntity::save(std::ofstream& os, MKeyValue& atts) {
-	atts.writeStartElement(os, "entity");
+bool CEntity::save(std::ofstream& os, MKeyValue& atts) {
 	if (id >= 0) atts.put("id", id);
 	atts.put("reload", need_reload);
 	atts.put("permanent", permanent);
+	atts.writeStartElement(os, "entity");
+
 	for (uint32_t i = 0; i < CHandle::max_types; ++i) {
-		if (comps[i].isValid())
-			comps[i].save(os, atts);
+		auto hm = CHandleManager::getByType(i);
+		if (comps[i].isValid()) {
+			bool ok = comps[i].save(os, atts);
+			if (!ok) {
+				atts.clear();
+				atts.writeSingle(os, hm->getName());
+			}
+		}
 	}
 	atts.writeEndElement(os, "entity");
+
+	return true;
 }
 
 // -----------------------------

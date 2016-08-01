@@ -23,6 +23,7 @@ void TCompTransform::render() const
 }
 
 bool TCompTransform::load(MKeyValue& atts) {
+	//MKeyValue atts;
 	auto p = atts.getPoint("pos");
 	auto q = atts.getQuat("quat");
 	auto s = atts.getFloat("scale", 1.0f);
@@ -44,13 +45,14 @@ bool TCompTransform::load(MKeyValue& atts) {
 	return true;
 }
 
-void TCompTransform::save(ofstream& os, MKeyValue& atts) {
+bool TCompTransform::save(ofstream& os, MKeyValue& atts) {
 	dbg("Guardo transform!\n");
-	atts.writeStartElement(os, "transform");
 	atts.put("pos", getPosition());
 	atts.put("quat", getRotation());
 	atts.put("scale", getScale());
-	atts.writeEndElement(os, "transform");
+	atts.writeSingle(os, "transform");
+
+	return true;
 }
 
 void TCompTransform::renderInMenu() {

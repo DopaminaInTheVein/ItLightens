@@ -23,9 +23,10 @@ bool CHandle::load(MKeyValue& atts) {
 	return false;
 }
 
-void CHandle::save(std::ofstream& os, MKeyValue& atts) {
+bool CHandle::save(std::ofstream& os, MKeyValue& atts) {
 	auto hm = CHandleManager::getByType(type);
-	if (hm)	hm->save(*this, os, atts);
+	if (hm)	return hm->save(*this, os, atts);
+	return false;
 }
 
 void CHandle::renderInMenu() {

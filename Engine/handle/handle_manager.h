@@ -133,7 +133,7 @@ public:
 	virtual void fixedUpdateAll(float dt) {}
 	virtual void initAll() {}
 	virtual bool load(CHandle h, MKeyValue& atts) { return true; }
-	virtual void save(CHandle h, std::ofstream& os, MKeyValue& atts) {}
+	virtual bool save(CHandle h, std::ofstream& os, MKeyValue& atts) { return false; }
 	virtual void renderInMenu(CHandle h) { }
 
 	// ---------------------------------------

@@ -81,7 +81,7 @@ public:
 	CHandle getOwner() const;
 	bool hasTag(std::string tag);
 	bool load(MKeyValue& atts);
-	void save(std::ofstream& os, MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	void renderInMenu();
 
 	// --------------------------------------

@@ -24,7 +24,7 @@ struct TCompBase {
 		return true;
 	}
 
-	void save(std::ofstream& os, MKeyValue& atts) {}
+	bool save(std::ofstream& os, MKeyValue& atts) { return false; }
 
 	void renderInMenu() {}
 };
