@@ -141,21 +141,30 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 		-- Fill default values
 		assign_default_room_to_all()
 		
-		local xml = _parseLevel()
+		local xml = _parseLevel ""
+		local xml_init = _parseLevel "init"
 		local fileName = (scenes_dir + txtExport.text + ".xml")
+		local fileNameInit = (scenes_dir + txtExport.text + "_init.xml")
+		
 		local fsm = createFile fileName
+		local fsm_init = createFile fileNameInit
+		
 		try (
 			format (xml.parse()) to:fsm
+			format (xml_init.parse()) to:fsm_init
 		) catch (
 			close fsm
+			close fsm_init
 			DestroyDialog RL_LevelEditor
 			throw()				
 		)
 		close fsm
+		close fsm_init
 		if _lua_code != "" then (
 			local fLua = createFile (lua_dir + "scenes\\" + txtExport.text + ".lua")
 			format _lua_code to:fLua
 			close fLua
+			_lua_code = ""
 		)
 		messagebox ("Nivel exportado correctamente: \n(" + fileName + ")")
 	)

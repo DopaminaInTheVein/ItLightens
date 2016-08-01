@@ -21,7 +21,7 @@ _descriptorObject = undefined
 _entities_ids = #()
 XML_PARSING = undefined
 _lua_code = ""
-
+_xml_sufix = "" -- init, ...
 
 --*******************************************************
 -------------FUNCTIONS-------------------------------------
@@ -63,7 +63,7 @@ fn parsePermanent = (
 fn parseReload = (
 	local reload = getUserProp _parsingObject "reload"
 	if reload != undefined then (
-		XML_PARSING.addAttr "reload" (slept as string)
+		XML_PARSING.addAttr "reload" (reload as string)
 	) else (
 		if (getUserProp _parsingObject "typeObject") != undefined then (
 			XML_PARSING.addAttr "reload" "yes"
@@ -106,10 +106,12 @@ fn _parseObject parent = (
 ----------------------------------------------------------------------
 -- LEVEL--
 ---------------------------------------------------------------------
-fn _parseLevel = (
+fn _parseLevel sufix = (
 	local xml = XMLNode()
-	_lua_code = ""
+	--_lua_code = ""
+	_xml_sufix = sufix
 	_entities_ids = #()
+	
 	xml.nombre = "entities"
 	for obj in $* do (
 		obj.name = strReplace obj.name "ñ" "n"
