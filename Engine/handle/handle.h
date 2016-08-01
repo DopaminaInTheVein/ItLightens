@@ -80,6 +80,7 @@ public:
 	CHandle getOwner() const;
 	bool hasTag(std::string tag);
 	bool load(MKeyValue& atts);
+	void save();
 	void renderInMenu();
 
 	// --------------------------------------

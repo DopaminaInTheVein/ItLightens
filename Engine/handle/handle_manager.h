@@ -120,11 +120,11 @@ public:
 	void    setOwner(CHandle who, CHandle new_owner);
 	CHandle getOwner(CHandle who);
 
-  // ---------------------------------------------
-  virtual void createObj(uint32_t internal_idx) = 0;
-  virtual void destroyObj(uint32_t internal_idx) = 0;
-  virtual void moveObj(uint32_t src_internal_idx, uint32_t dst_internal_idx) = 0;
-  void destroyPendingObjects();
+	// ---------------------------------------------
+	virtual void createObj(uint32_t internal_idx) = 0;
+	virtual void destroyObj(uint32_t internal_idx) = 0;
+	virtual void moveObj(uint32_t src_internal_idx, uint32_t dst_internal_idx) = 0;
+	void destroyPendingObjects();
 
 	// ---------------------------------------
 	virtual void renderAll() const { }
@@ -132,6 +132,7 @@ public:
 	virtual void fixedUpdateAll(float dt) {}
 	virtual void initAll() {}
 	virtual bool load(CHandle h, MKeyValue& atts) { return true; }
+	virtual void save(CHandle h) {}
 	virtual void renderInMenu(CHandle h) { }
 
 	// ---------------------------------------
@@ -140,10 +141,10 @@ public:
 
 	void    dumpInternals() const;
 
-  static CHandleManager* getByType(uint32_t type);
-  static CHandleManager* getByName(const char* obj_name);
-  static uint32_t getNumDefinedTypes();
-  static void destroyAllPendingObjects();
+	static CHandleManager* getByType(uint32_t type);
+	static CHandleManager* getByName(const char* obj_name);
+	static uint32_t getNumDefinedTypes();
+	static void destroyAllPendingObjects();
 };
 
 #include "object_manager.h"

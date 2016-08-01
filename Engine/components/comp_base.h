@@ -24,6 +24,8 @@ struct TCompBase {
 		return true;
 	}
 
+	void save() {}
+
 	void renderInMenu() {}
 };
 

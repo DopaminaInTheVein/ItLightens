@@ -36,6 +36,12 @@ class CObjectManager : public CHandleManager
 		return o->load(atts);
 	}
 
+	void save(CHandle h) {
+		TObj* o = getAddrFromHandle(h);
+		assert(o);
+		o->save();
+	}
+
 public:
 
 	CObjectManager(const char* new_name) : objs(nullptr) {

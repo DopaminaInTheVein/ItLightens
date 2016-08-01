@@ -22,6 +22,11 @@ bool CHandle::load(MKeyValue& atts) {
 	return false;
 }
 
+void CHandle::save() {
+	auto hm = CHandleManager::getByType(type);
+	if (hm)	hm->save(*this);
+}
+
 void CHandle::renderInMenu() {
 	auto hm = CHandleManager::getByType(type);
 	if (hm)

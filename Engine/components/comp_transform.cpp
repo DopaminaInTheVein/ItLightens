@@ -42,6 +42,10 @@ bool TCompTransform::load(MKeyValue& atts) {
 	return true;
 }
 
+void TCompTransform::save() {
+	dbg("Guardo transform!\n");
+}
+
 void TCompTransform::renderInMenu() {
 	VEC3 pos = getPosition();
 	//if (ImGui::DragFloat3("Pos", &pos.x, -0.1f, 0.1f)) {

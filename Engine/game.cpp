@@ -194,6 +194,10 @@ void CApp::restartLevelNotify() {
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnRestartLevel, std::string(params));
 }
 
+void CApp::saveLevel() {
+	entities->saveLevel();
+}
+
 void CApp::loadedLevelNotify() {
 	sceneToLoad = "";
 	char params[128];

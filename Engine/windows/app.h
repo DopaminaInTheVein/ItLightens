@@ -36,6 +36,7 @@ public:
 	//void restart();
 	void restartLevel();
 	void restartLevelNotify();
+	void saveLevel();
 	std::string getCurrentRealLevel();
 	std::string getCurrentLogicLevel();
 	void exitGame();

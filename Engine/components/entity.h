@@ -91,7 +91,7 @@ public:
 	bool needReload() { return need_reload; }
 	void setPermanent(bool new_permanent) { permanent = new_permanent; }
 	void setReload(bool new_reload) { need_reload = new_reload; }
-
+	void save();
 	// --------------------------------------------
 	CEntity() {
 	}

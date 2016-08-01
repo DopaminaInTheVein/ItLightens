@@ -22,6 +22,7 @@ public:
 	void update(float dt) override;
 
 	void initLevel(std::string);
+	void saveLevel();
 	void clear(std::string next_level = "");
 	bool isCleared();
 	void destroyRandomEntity(float percent);
