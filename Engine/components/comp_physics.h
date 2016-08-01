@@ -107,6 +107,7 @@ public:
 	void renderInMenu();
 	void readIniFileAttr();
 	void updateAttrMaterial();
+	PxFilterData getFilterData();
 	void writeIniFileAttr();
 };
 

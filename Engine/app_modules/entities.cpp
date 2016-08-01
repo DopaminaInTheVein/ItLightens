@@ -444,7 +444,10 @@ void CEntitiesModule::initLevel(string level) {
 		if (e) {
 			TCompTransform * trans = e->get<TCompTransform>();
 			TCompPhysics * p = e->get<TCompPhysics>();
-			PxBounds3 bounds = p->getActor()->getWorldBounds();
+			if (!p) continue;
+			auto actor = p->getActor();
+			if (!actor) continue;
+			PxBounds3 bounds = actor->getWorldBounds();
 			VEC3 min, max;
 			min.x = bounds.minimum.x;
 			min.y = bounds.minimum.y;

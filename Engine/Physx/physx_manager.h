@@ -121,6 +121,7 @@ public:
 
 	//set flags
 	void					setupFiltering(PxRigidActor * actor, PxFilterData& filterData);
+	PxFilterData			getFiltering(PxRigidActor * actor);
 	void					setBehaviour(PxRigidActor* actor, ItLightensFilter::descObjectBehaviour tag, bool enabled);
 
 	//gets
@@ -274,10 +275,10 @@ public:
 	//-----------------------------------------------------------------------------------------------------
 	virtual  PxFilterFlags pairFound(PxU32 pairID, PxFilterObjectAttributes attributes0, PxFilterData filterData0, const PxActor *a0, const PxShape *s0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, const PxActor *a1, const PxShape *s1, PxPairFlags &pairFlags);
 	virtual void pairLost(PxU32 pairID, PxFilterObjectAttributes attributes0, PxFilterData filterData0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, bool objectRemoved) {}
-	virtual bool statusChange(PxU32 &pairID, PxPairFlags &pairFlags, PxFilterFlags &filterFlags) 
-	{ 
+	virtual bool statusChange(PxU32 &pairID, PxPairFlags &pairFlags, PxFilterFlags &filterFlags)
+	{
 		filterFlags |= PxFilterFlag::eNOTIFY;
-		return false; 
+		return false;
 	}
 	//Auxiliars
 

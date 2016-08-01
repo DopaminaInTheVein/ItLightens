@@ -261,6 +261,8 @@ void TCompCharacterController::UpdateTags()
 		if (h.hasTag("player")) { //player
 			m_filter.word0 |= ItLightensFilter::ePLAYER_BASE;
 			m_filter.word0 |= ItLightensFilter::ePLAYER_CONTROLLED;
+			m_filter.word1 &= ~ItLightensFilter::eTHROW;
+
 			m_mass = 50.0f;
 		}
 		if (h.hasTag("AI_guard")) {

@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ms3_multi/bookshelf_2_deformed_1.mesh" material="materials/estanteriadeforme.material" mesh_idx="0"/>
+</static_mesh>

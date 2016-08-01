@@ -213,6 +213,16 @@ void CPhysxManager::setupFiltering(PxRigidActor* actor, PxFilterData& filterData
 	//free(ptr);
 }
 
+PxFilterData CPhysxManager::getFiltering(PxRigidActor * actor)
+{
+	PxShape **ptr;
+	ptr = new PxShape*[1];
+	actor->getShapes(ptr, 1);
+	auto res = ptr[0]->getSimulationFilterData();
+	free(ptr);
+	return res;
+}
+
 void CPhysxManager::setBehaviour(PxRigidActor* actor, ItLightensFilter::descObjectBehaviour tag, bool enabled)
 {
 	const PxU32 numShapes = actor->getNbShapes();
@@ -370,6 +380,7 @@ PxActor * CPhysxManager::CreateAndAddRigidDynamic(const PxTransform *transform, 
 //create actor with static rigidbody
 PxActor * CPhysxManager::CreateAndAddRigidStatic(const PxTransform *transform, PxShape* shape)
 {
+	assert(shape);
 	PxRigidStatic *actor = PxCreateStatic(*m_pPhysics, *transform, *shape);
 	AddToActiveScene(*actor);
 	return actor;
@@ -411,6 +422,7 @@ PxTriangleMesh * CPhysxManager::CreateCookedTriangleMesh(const CMesh * mesh)
 	meshDesc.flags = PxMeshFlag::eFLIPNORMALS | PxMeshFlag::e16_BIT_INDICES;
 
 	PxDefaultMemoryOutputStream writeBuffer;
+	dbg("Buffer out physx size: %d\n", writeBuffer.getSize());
 	bool status = m_pCooking->cookTriangleMesh(meshDesc, writeBuffer);
 	if (!status)
 		return NULL;
