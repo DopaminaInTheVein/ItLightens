@@ -259,7 +259,7 @@ namespace physx
 			suppressTriangleMeshRemapTable(false),
 			buildTriangleAdjacencies(false),
 			scale(sc),
-			meshPreprocessParams(PxMeshPreprocessingFlag::eWELD_VERTICES),
+			meshPreprocessParams(0),//PxMeshPreprocessingFlag::eWELD_VERTICES),
 			meshCookingHint(PxMeshCookingHint::eSIM_PERFORMANCE),
 			meshWeldTolerance(0.2f),
 			meshSizePerformanceTradeOff(0.55f)
