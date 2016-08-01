@@ -10,6 +10,8 @@
 #include "handle\handle.h"
 #include "components\entity.h"
 
+using namespace std;
+
 extern CShaderCte< TCteObject > shader_ctes_object;
 
 void TCompTransform::render() const
@@ -42,8 +44,13 @@ bool TCompTransform::load(MKeyValue& atts) {
 	return true;
 }
 
-void TCompTransform::save() {
+void TCompTransform::save(ofstream& os, MKeyValue& atts) {
 	dbg("Guardo transform!\n");
+	atts.writeStartElement(os, "transform");
+	atts.put("pos", getPosition());
+	atts.put("quat", getRotation());
+	atts.put("scale", getScale());
+	atts.writeEndElement(os, "transform");
 }
 
 void TCompTransform::renderInMenu() {

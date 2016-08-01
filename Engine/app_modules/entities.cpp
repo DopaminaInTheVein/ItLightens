@@ -586,16 +586,19 @@ void CEntitiesModule::initLevel(string level) {
 }
 
 void CEntitiesModule::saveLevel() {
-	string file_name = "data/scenes/" + current_level + "_00.xml";
+	string file_name = "data/scenes/" + current_level + "_save00.xml";
 	std::ofstream os(file_name.c_str());
 	if (!os.is_open()) {
 		assert(false);
 	}
-	getHandleManager<CEntity>()->each([](CEntity * e) {
+	MKeyValue atts;
+	atts.writeStartElement(os, "entities");
+	getHandleManager<CEntity>()->each([&atts, &os](CEntity * e) {
 		if (e->needReload()) {
-			e->save();
+			e->save(os, atts);
 		}
 	});
+	atts.writeEndElement(os, "entities");
 	os.close();
 }
 

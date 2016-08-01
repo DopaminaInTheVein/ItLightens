@@ -2,6 +2,7 @@
 #define INC_HANDLE_H_
 
 #include <cinttypes>
+#include <fstream>
 
 // CHandleManager is a class
 class CHandleManager;
@@ -80,7 +81,7 @@ public:
 	CHandle getOwner() const;
 	bool hasTag(std::string tag);
 	bool load(MKeyValue& atts);
-	void save();
+	void save(std::ofstream& os, MKeyValue& atts);
 	void renderInMenu();
 
 	// --------------------------------------

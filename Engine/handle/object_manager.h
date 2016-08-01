@@ -36,10 +36,10 @@ class CObjectManager : public CHandleManager
 		return o->load(atts);
 	}
 
-	void save(CHandle h) {
+	void save(CHandle h, std::ofstream& os, MKeyValue& atts) {
 		TObj* o = getAddrFromHandle(h);
 		assert(o);
-		o->save();
+		o->save(os, atts);
 	}
 
 public:
