@@ -108,8 +108,11 @@ public:
 	CHandle pilaNear; // = false;
 	CHandle pilaContainer;
 	VEC3 pilaContainerPos;
+	float camera_push_yaw;
+	float camera_push_pitch;
 
 	bool pushing_box = false;
+	bool pulling_box = false;
 
 	string selectedBox = "";
 	//int selectedBoxi = 0;
@@ -129,6 +132,9 @@ public:
 	void UpdateInputActions();
 	void UpdateMovingWithOther();
 	void UpdateUnpossess();
+	// redefinition for push_box mode
+	void UpdateMoves();
+	bool UpdateMovDirection();
 
 	// JUMP
 	bool canJump() override;
