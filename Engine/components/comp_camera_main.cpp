@@ -101,8 +101,8 @@ void TCompCameraMain::update(float dt) {
 				TCompCharacterController *cc = target->get<TCompCharacterController>();
 				TCompTransform *targett = target->get<TCompTransform>();
 				VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
-
-				this->smoothLookAt(pos_target, pos_target + transform->getFront(), getUpAux(), smoothCurrent);
+				VEC3 pos_cam = pos + (pos_target - pos)*0.8;
+				this->smoothLookAt(pos_cam, pos_cam + transform->getFront(), getUpAux(), smoothCurrent);
 				last_pos_camera = transform->getPosition();
 			}
 

@@ -165,6 +165,65 @@ void player_controller_mole::myUpdate()
 	}
 }
 
+void player_controller_mole::UpdateMoves() {
+
+	if (pushing_box) {
+		TCompTransform* player_transform = myEntity->get<TCompTransform>();
+		VEC3 player_position = player_transform->getPosition();
+
+		VEC3 direction = directionForward + directionLateral;
+
+		direction.Normalize();
+
+		float new_x, new_z;
+
+		new_x = direction.x * cosf(camera_push_yaw) + direction.z*sinf(camera_push_yaw);
+		new_z = -direction.x * sinf(camera_push_yaw) + direction.z*cosf(camera_push_yaw);
+
+		direction.x = new_x;
+		direction.z = new_z;
+
+		direction.Normalize();
+
+		//Set current velocity with friction
+		float drag = 2.5f*getDeltaTime();
+		float drag_i = (1 - drag);
+
+		if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
+		else player_curr_speed = drag_i*player_curr_speed - drag*player_max_speed;
+
+		if (player_curr_speed < 0) {
+			player_curr_speed = 0.0f;
+			directionForward = directionLateral = VEC3(0, 0, 0);
+		}
+
+		cc->AddMovement(direction, player_curr_speed*getDeltaTime());
+		if (moving) UpdateMovingWithOther();
+	}
+	else {
+		CPlayerBase::UpdateMoves();
+	}
+	
+}
+
+bool player_controller_mole::UpdateMovDirection() {
+
+	if (pushing_box) {
+		GET_COMP(box_t, boxPushed, TCompTransform);
+		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
+
+		if (distance_to_box < 2.7f && !pulling_box) {
+			directionForward = VEC3(0, 0, 0);
+			directionLateral = VEC3(0, 0, 0);
+			directionVertical = VEC3(0, 0, 0);
+			return false;
+		}
+	}
+
+	return CPlayerBase::UpdateMovDirection();
+
+}
+
 void player_controller_mole::UpdateInputActions() {
 	if (io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()) {
 		if (boxGrabbed.isValid()) {
@@ -213,26 +272,27 @@ void player_controller_mole::UpdateInputActions() {
 	
 	if (pushing_box) {
 		GET_COMP(box_t, boxPushed, TCompTransform);
+		GET_COMP(box_p, boxPushed, TCompPhysics);
+		animController->setState(AST_PUSH_IDLE);
+		// comprobacion de distancia
 		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
 
 		//if somehow the box splits from the player, we leave it
-		if (distance_to_box > 3.5f) {
+		if (distance_to_box > 3.5f || 
+			!getEntityTransform()->isHalfConeVision(box_t->getPosition(), deg2rad(10))) {
 			LeaveBox();
 		}
-		else if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility ||
-				 io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
-
-			GET_COMP(box_p, boxPushed, TCompPhysics);
-
-			if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
-				animController->setState(AST_PUSH_WALK);
-				box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
-			}
-			else {
-				animController->setState(AST_PULL_WALK);
-				box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
-			}
-			
+		// pushing box
+		else if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
+			pulling_box = false;
+			animController->setState(AST_PUSH_WALK);
+			box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
+		}
+		// pulling box
+		else if ((io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility)) {
+			pulling_box = true;
+			animController->setState(AST_PULL_WALK);
+			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
 		}
 		else if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility ||
 				 io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
@@ -293,17 +353,20 @@ void player_controller_mole::DestroyWall() {
 
 void player_controller_mole::LeaveBox() {
 
-	// if we were pushing a box, we just stop and return
+	// if we were pushing a box, we just stop
 	if (pushing_box) {
 		boxGrabbed = boxPushed;
 		pushing_box = false;
+		pulling_box = false;
+		animController->unpushObject();
 	}
 	else {
 		animController->ungrabObject();
 	}
 
 	SBB::postBool(selectedBox, false);
-	player_max_speed *= 2;
+	if (player_max_speed < mole_max_speed)
+		player_max_speed *= 2;
 	//ChangePose(pose_idle_route);
 	ChangeState(ST_MOLE_UNGRABBING);
 	stopMovement();
@@ -312,7 +375,8 @@ void player_controller_mole::LeaveBox() {
 
 void player_controller_mole::LeavePila() {
 	animController->ungrabPila();
-	player_max_speed *= 2;
+	if (player_max_speed < mole_max_speed)
+		player_max_speed *= 2;
 	ChangeState(ST_MOLE_UNPILING);
 	stopMovement();
 	inputEnabled = false;
@@ -539,6 +603,7 @@ void player_controller_mole::FaceToGrab()
 		// if the box is MEDIUM (1) we go to "push mode"
 		if (box->type_box == 1) {
 			boxPushed = boxNear;
+			animController->pushObject(boxNear);
 			animController->setState(AST_PUSH_PREP);
 			ChangeState(ST_MOLE_PUSH_PREP);
 		}
@@ -562,6 +627,9 @@ void player_controller_mole::PushBoxPreparation() {
 		box_p->getActor()->isRigidBody()->setMass(250.f);
 		box_p->getRigidActor()->isRigidBody()->setMass(250.f);
 		pushing_box = true;
+		CEntity * camera_e = camera;
+		TCompTransform* camera_push = camera_e->get<TCompTransform>();
+		camera_push->getAngles(&camera_push_yaw, &camera_push_pitch);
 		inputEnabled = true;
 		push_pull_direction = getEntityTransform()->getFront();
 	}
