@@ -257,9 +257,9 @@ bool SkelControllerMole::isMovingBox()
 	return currentState == AST_GRAB_UP
 		|| currentState == AST_GRAB_IDLE
 		|| currentState == AST_GRAB_WALK
+		|| currentState == AST_PUSH_IDLE
 		|| currentState == AST_PUSH_PREP
 		|| currentState == AST_PUSH_WALK
-		|| currentState == AST_PULL_PREP
 		|| currentState == AST_PULL_WALK
 		;
 }
