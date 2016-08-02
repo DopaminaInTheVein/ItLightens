@@ -39,6 +39,7 @@ struct TCompPolarized : public TCompBase {
 	void update(float elapsed);
 
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 
 	void onCreate(const TMsgEntityCreated&);
 

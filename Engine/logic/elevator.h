@@ -36,6 +36,7 @@ public:
 	void update(float elapsed);
 	void onElevatorAction(const TMsgActivate&);
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated&);
 };
 #endif

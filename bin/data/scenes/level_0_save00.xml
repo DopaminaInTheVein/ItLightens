@@ -13,6 +13,7 @@
 	name="__Door"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-82.841003 0.575238 -29.856600"
@@ -20,15 +21,26 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/__Door.static_mesh"
 	/>
 <polarized
+	offset="0.000000 0.500000 0.000000"
+	pol="neutral"
 	/>
 <tags
 	tags="door doorExit"
 	/>
 <magnet_door
+	locked="1"
+	pol="neutral"
+	speedClosing="1"
+	speedOpening="1"
+	target="-82.841003 4.372530 -29.856600"
 	/>
 <rigidbody
+	mass="5"
+	type_collision="dynamic"
+	type_shape="convex"
 	/>
 </entity>
 <entity
@@ -43,6 +55,7 @@
 	name="__pila"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-121.537003 -0.242203 -5.416840"
@@ -50,6 +63,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/__pila.static_mesh"
 	/>
 <bone_tracker
 	/>
@@ -59,6 +73,9 @@
 <pila
 	/>
 <rigidbody
+	mass="5"
+	type_collision="dynamic"
+	type_shape="convex"
 	/>
 </entity>
 <entity
@@ -74,6 +91,7 @@
 	name="elevator"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-65.349800 15.808000 20.828899"
@@ -81,13 +99,22 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/elevator.static_mesh"
 	/>
 <tags
 	tags="elevator interactive"
 	/>
 <elevator
+	speedDown="27"
+	speedUp="27"
+	target_down="-65.349800 -1.306200 20.828899"
+	target_up="-65.349800 15.808000 20.828899"
 	/>
 <rigidbody
+	mass="5"
+	size="2.314950 0.075000 1.628625"
+	type_collision="dynamic"
+	type_shape="box"
 	/>
 </entity>
 <entity
@@ -101,6 +128,7 @@
 	name="enchufe"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-121.537003 -0.242203 -5.416840"
@@ -108,6 +136,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/enchufe.static_mesh"
 	/>
 <tags
 	tags="interactive pila_container"
@@ -115,6 +144,9 @@
 <pila_container
 	/>
 <rigidbody
+	mass="2"
+	type_collision="static"
+	type_shape="mesh"
 	/>
 </entity>
 <entity
@@ -127,6 +159,7 @@
 	name="mesa_cientifico_up_mapeado"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-63.683300 18.594700 13.462700"
@@ -134,6 +167,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/mesa_cientifico_up_mapeado.static_mesh"
 	/>
 <tags
 	tags="interactive workbench"
@@ -141,6 +175,9 @@
 <workbench
 	/>
 <rigidbody
+	mass="2"
+	type_collision="static"
+	type_shape="mesh"
 	/>
 </entity>
 <entity
@@ -153,6 +190,7 @@
 	name="mesa_cientifico_up_mapeado001"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-93.821098 1.513170 19.472300"
@@ -160,6 +198,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/mesa_cientifico_up_mapeado001.static_mesh"
 	/>
 <tags
 	tags="interactive workbench"
@@ -167,6 +206,9 @@
 <workbench
 	/>
 <rigidbody
+	mass="2"
+	type_collision="static"
+	type_shape="mesh"
 	/>
 </entity>
 <entity
@@ -182,6 +224,7 @@
 	name="puerta_Ascensor_derecha"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-66.010002 -0.203600 19.675100"
@@ -189,15 +232,26 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/puerta_Ascensor_derecha.static_mesh"
 	/>
 <polarized
+	offset="0.000000 0.500000 0.000000"
+	pol="neutral"
 	/>
 <tags
 	tags="door"
 	/>
 <magnet_door
+	locked="1"
+	pol="neutral"
+	speedClosing="1"
+	speedOpening="1"
+	target="-66.748001 -0.203600 19.675100"
 	/>
 <rigidbody
+	mass="5"
+	type_collision="dynamic"
+	type_shape="convex"
 	/>
 </entity>
 <entity
@@ -213,6 +267,7 @@
 	name="puerta_Ascensor_derecha_arriba"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-66.896797 16.879801 19.739000"
@@ -220,15 +275,26 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/puerta_Ascensor_derecha_arriba.static_mesh"
 	/>
 <polarized
+	offset="0.000000 0.500000 0.000000"
+	pol="neutral"
 	/>
 <tags
 	tags="door"
 	/>
 <magnet_door
+	locked="0"
+	pol="neutral"
+	speedClosing="1"
+	speedOpening="1"
+	target="-66.078102 16.879801 19.739000"
 	/>
 <rigidbody
+	mass="5"
+	type_collision="dynamic"
+	type_shape="convex"
 	/>
 </entity>
 <entity
@@ -244,6 +310,7 @@
 	name="puerta_Ascensor_izquierda"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-64.710701 -0.203600 19.675100"
@@ -251,15 +318,26 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/puerta_Ascensor_izquierda.static_mesh"
 	/>
 <polarized
+	offset="0.000000 0.500000 0.000000"
+	pol="neutral"
 	/>
 <tags
 	tags="door"
 	/>
 <magnet_door
+	locked="1"
+	pol="neutral"
+	speedClosing="1"
+	speedOpening="1"
+	target="-64.059502 -0.203600 19.675100"
 	/>
 <rigidbody
+	mass="5"
+	type_collision="dynamic"
+	type_shape="convex"
 	/>
 </entity>
 <entity
@@ -275,6 +353,7 @@
 	name="puerta_Ascensor_izquierda_arriba"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-63.948799 16.879801 19.724001"
@@ -282,15 +361,26 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/puerta_Ascensor_izquierda_arriba.static_mesh"
 	/>
 <polarized
+	offset="0.000000 0.500000 0.000000"
+	pol="neutral"
 	/>
 <tags
 	tags="door"
 	/>
 <magnet_door
+	locked="0"
+	pol="neutral"
+	speedClosing="1"
+	speedOpening="1"
+	target="-64.744102 16.879801 19.724001"
 	/>
 <rigidbody
+	mass="5"
+	type_collision="dynamic"
+	type_shape="convex"
 	/>
 </entity>
 <entity
@@ -303,8 +393,8 @@
 	name="__camController_1"
 	/>
 <transform
-	pos="35.279091 -20.953495 -7.917967"
-	quat="-0.068117 0.768054 -0.082868 -0.631337"
+	pos="-35.594799 -23.020016 -2.614541"
+	quat="-0.000000 0.000000 -0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <camera_main
@@ -341,18 +431,20 @@
 	name="__player_1"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="0.000000 200.000000 0.000000"
-	quat="0.000000 0.431351 0.000000 0.902184"
+	pos="-35.594799 -24.020016 -0.614541"
+	quat="-0.000000 -0.100654 0.000000 0.994921"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="skeletons/player/player.static_mesh"
 	/>
 <life
 	/>
 <tags
-	tags="raijin"
+	tags="player raijin"
 	/>
 <character_controller
 	/>
@@ -367,6 +459,7 @@
 	name="__tElevator"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-65.843300 16.063000 20.769699"
@@ -377,6 +470,10 @@
 	tags="trigger"
 	/>
 <rigidbody
+	mass="2"
+	size="1.523040 0.437500 0.958650"
+	type_collision="trigger"
+	type_shape="box"
 	/>
 </entity>
 <entity
@@ -389,6 +486,7 @@
 	name="__tElevator"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-65.652397 -0.632667 20.471500"
@@ -399,6 +497,10 @@
 	tags="trigger"
 	/>
 <rigidbody
+	mass="2"
+	size="0.903715 0.437500 0.640740"
+	type_collision="trigger"
+	type_shape="box"
 	/>
 </entity>
 <entity
@@ -421,13 +523,15 @@
 	name="__mole_1"
 	/>
 <room
+	name="2"
 	/>
 <transform
-	pos="-122.074875 -1.309578 -10.584604"
+	pos="-122.074867 -1.309578 -10.584608"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="skeletons/mole/mole.static_mesh"
 	/>
 <tags
 	tags="AI AI_mole AI_poss"
@@ -457,13 +561,15 @@
 	name="guard_002"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="2.482880 -24.020016 2.636958"
-	quat="0.000000 0.965853 0.000000 0.259089"
+	pos="16.770775 -23.776480 1.845745"
+	quat="0.000000 0.872232 0.000000 0.489091"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
 	tags="AI AI_guard"
@@ -493,13 +599,15 @@
 	name="guard_003"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="6.899599 -23.961750 -20.936121"
-	quat="-0.000000 -0.965407 0.000000 0.260746"
+	pos="-1.553664 -23.964937 -9.158060"
+	quat="0.000000 0.101760 0.000000 0.994809"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
 	tags="AI AI_guard"
@@ -529,6 +637,7 @@
 	name="guard_004"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-84.146545 -1.303518 -28.490538"
@@ -536,6 +645,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
 	tags="AI AI_guard"
@@ -565,6 +675,7 @@
 	name="guard_005"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-81.658997 -1.303518 -28.422001"
@@ -572,6 +683,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
 	tags="AI AI_guard"
@@ -601,6 +713,7 @@
 	name="guard_006"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-96.784500 -1.303517 -10.605000"
@@ -608,6 +721,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
 	tags="AI AI_guard"
@@ -637,6 +751,7 @@
 	name="guard_007"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-66.913902 -1.303516 7.813280"
@@ -644,6 +759,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
 	tags="AI AI_guard"
@@ -665,15 +781,19 @@
 	name="DroneMinus_1"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="14.976423 -11.659878 -11.572529"
+	pos="14.008189 -11.796388 -11.531068"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
 	/>
 <polarized
+	offset="-0.010628 0.965812 0.101485"
+	pol="minus"
 	/>
 <tags
 	tags="drone platform"
@@ -681,6 +801,9 @@
 <drone
 	/>
 <rigidbody
+	mass="2"
+	type_collision="dynamic"
+	type_shape="drone"
 	/>
 </entity>
 <entity
@@ -695,15 +818,19 @@
 	name="DronePlus_1"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="4.690164 -11.703499 -2.766310"
+	pos="5.691035 -11.796791 -2.786311"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
 	/>
 <polarized
+	offset="0.000000 0.966293 -0.032145"
+	pol="plus"
 	/>
 <tags
 	tags="drone platform"
@@ -711,6 +838,9 @@
 <drone
 	/>
 <rigidbody
+	mass="2"
+	type_collision="dynamic"
+	type_shape="drone"
 	/>
 </entity>
 <entity
@@ -725,15 +855,19 @@
 	name="DroneMinus_002"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="16.614969 -11.794667 5.147821"
+	pos="13.324631 -11.796150 5.148393"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
 	/>
 <polarized
+	offset="-0.010628 0.965812 -0.044817"
+	pol="minus"
 	/>
 <tags
 	tags="drone platform"
@@ -741,6 +875,9 @@
 <drone
 	/>
 <rigidbody
+	mass="2"
+	type_collision="dynamic"
+	type_shape="drone"
 	/>
 </entity>
 <entity
@@ -755,15 +892,19 @@
 	name="DronePlus_002"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="4.629019 -11.708060 14.050540"
+	pos="5.729494 -11.795609 14.065405"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
 	/>
 <polarized
+	offset="-0.016867 0.966293 -0.293303"
+	pol="plus"
 	/>
 <tags
 	tags="drone platform"
@@ -771,6 +912,9 @@
 <drone
 	/>
 <rigidbody
+	mass="2"
+	type_collision="dynamic"
+	type_shape="drone"
 	/>
 </entity>
 <entity
@@ -785,6 +929,7 @@
 	name="Box_1"
 	/>
 <room
+	name="1"
 	/>
 <transform
 	pos="15.264800 -10.923300 22.079599"
@@ -792,8 +937,11 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/obj/box2.static_mesh"
 	/>
 <polarized
+	offset="-0.067045 0.874261 -0.143208"
+	pol="plus"
 	/>
 <bone_tracker
 	/>
@@ -803,6 +951,9 @@
 <box
 	/>
 <rigidbody
+	mass="5"
+	type_collision="static"
+	type_shape="convex"
 	/>
 </entity>
 <entity
@@ -817,15 +968,19 @@
 	name="DroneMinus_003"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="-0.390060 -3.270441 21.273844"
+	pos="-1.272519 -3.378878 21.386982"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
 	/>
 <polarized
+	offset="-0.073867 0.934383 0.100378"
+	pol="plus"
 	/>
 <tags
 	tags="drone platform"
@@ -833,6 +988,9 @@
 <drone
 	/>
 <rigidbody
+	mass="2"
+	type_collision="dynamic"
+	type_shape="drone"
 	/>
 </entity>
 <entity
@@ -847,15 +1005,19 @@
 	name="DroneMinus_004"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="-25.983112 3.090380 22.002754"
+	pos="-25.833504 3.053026 21.997908"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
 	/>
 <polarized
+	offset="-0.044737 0.965812 0.010961"
+	pol="minus"
 	/>
 <tags
 	tags="drone platform"
@@ -863,6 +1025,9 @@
 <drone
 	/>
 <rigidbody
+	mass="2"
+	type_collision="dynamic"
+	type_shape="drone"
 	/>
 </entity>
 <entity
@@ -877,15 +1042,19 @@
 	name="DroneMinus_005"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="-34.734497 3.827362 15.339119"
+	pos="-34.418217 4.143736 21.291649"
 	quat="0.000000 -0.701693 0.000000 0.712479"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
 	/>
 <polarized
+	offset="0.100697 0.934383 0.073431"
+	pol="plus"
 	/>
 <tags
 	tags="drone platform"
@@ -893,6 +1062,9 @@
 <drone
 	/>
 <rigidbody
+	mass="2"
+	type_collision="dynamic"
+	type_shape="drone"
 	/>
 </entity>
 <entity
@@ -907,6 +1079,7 @@
 	name="Box_2"
 	/>
 <room
+	name="1"
 	/>
 <transform
 	pos="27.404200 -23.268003 -14.433700"
@@ -914,8 +1087,11 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/obj/box2.static_mesh"
 	/>
 <polarized
+	offset="0.000000 1.005130 0.000000"
+	pol="minus"
 	/>
 <bone_tracker
 	/>
@@ -925,6 +1101,9 @@
 <box
 	/>
 <rigidbody
+	mass="5"
+	type_collision="dynamic"
+	type_shape="convex"
 	/>
 </entity>
 <entity
@@ -947,16 +1126,18 @@
 	name="mole_1"
 	/>
 <room
+	name="1"
 	/>
 <transform
-	pos="30.486530 -24.020016 -8.863436"
-	quat="-0.000000 -0.827080 0.000000 0.562084"
+	pos="33.656528 -24.020016 -8.418317"
+	quat="0.000000 0.997318 0.000000 0.073193"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="skeletons/mole/mole.static_mesh"
 	/>
 <tags
-	tags="AI AI_mole AI_poss player"
+	tags="AI AI_mole AI_poss"
 	/>
 <bt_mole
 	/>
@@ -973,6 +1154,7 @@
 	name="tWall"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-85.837097 -0.524505 -7.804090"
@@ -983,6 +1165,10 @@
 	tags="trigger"
 	/>
 <rigidbody
+	mass="2"
+	size="1.202695 0.092500 1.922545"
+	type_collision="trigger"
+	type_shape="box"
 	/>
 </entity>
 <entity
@@ -996,6 +1182,7 @@
 	name="cargador_bateria"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-90.836800 -0.419937 14.430100"
@@ -1003,6 +1190,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
+	name="static_meshes/ms3/cargador_bateria.static_mesh"
 	/>
 <tags
 	tags="interactive pila_container"
@@ -1010,6 +1198,9 @@
 <pila_container
 	/>
 <rigidbody
+	mass="2"
+	type_collision="static"
+	type_shape="mesh"
 	/>
 </entity>
 <entity
@@ -1022,6 +1213,7 @@
 	name="__tCargador"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-90.807602 -0.719524 14.492000"
@@ -1032,6 +1224,10 @@
 	tags="trigger"
 	/>
 <rigidbody
+	mass="2"
+	size="1.089255 0.585750 1.204775"
+	type_collision="trigger"
+	type_shape="box"
 	/>
 </entity>
 <entity
@@ -1044,6 +1240,7 @@
 	name="__tEnchufe"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-121.536003 -0.719525 -6.020050"
@@ -1054,6 +1251,10 @@
 	tags="trigger"
 	/>
 <rigidbody
+	mass="2"
+	size="0.729800 0.585750 0.745515"
+	type_collision="trigger"
+	type_shape="box"
 	/>
 </entity>
 <entity
@@ -1066,6 +1267,7 @@
 	name="tWireDown"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-86.472801 -0.331161 -7.483200"
@@ -1076,6 +1278,10 @@
 	tags="trigger"
 	/>
 <rigidbody
+	mass="2"
+	size="0.541210 0.092500 1.922545"
+	type_collision="trigger"
+	type_shape="box"
 	/>
 <tracker
 	/>
@@ -1100,6 +1306,7 @@
 	name="scientist_1"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-66.218399 15.803701 12.551200"
@@ -1107,6 +1314,7 @@
 	scale="0.009299 0.009299 0.009299"
 	/>
 <render_static_mesh
+	name="skeletons/scientist/scientist.static_mesh"
 	/>
 <tags
 	tags="AI AI_cientifico AI_poss interactive"
@@ -1124,6 +1332,7 @@
 	name="Workstation02"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-64.458397 16.297899 13.227700"
@@ -1144,6 +1353,7 @@
 	name="Workstation01"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-66.745003 16.297899 16.787001"
@@ -1164,6 +1374,7 @@
 	name="Workstation03"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-63.220100 16.297899 17.436300"
@@ -1184,6 +1395,7 @@
 	name="trigger_1"
 	/>
 <room
+	name="1"
 	/>
 <transform
 	pos="-17.810101 -1.546140 24.667601"
@@ -1196,6 +1408,10 @@
 	tags="generator trigger"
 	/>
 <rigidbody
+	mass="2"
+	radius="1.64"
+	type_collision="trigger"
+	type_shape="sphere"
 	/>
 </entity>
 <entity
@@ -1206,6 +1422,7 @@
 	name="trigger_2"
 	/>
 <room
+	name="1"
 	/>
 <transform
 	pos="29.617599 -23.288900 16.429600"
@@ -1218,6 +1435,10 @@
 	tags="generator trigger"
 	/>
 <rigidbody
+	mass="2"
+	radius="1.64"
+	type_collision="trigger"
+	type_shape="sphere"
 	/>
 </entity>
 <entity
@@ -1228,6 +1449,7 @@
 	name="trigger_3"
 	/>
 <room
+	name="1"
 	/>
 <transform
 	pos="-6.749730 -12.236300 -19.607100"
@@ -1240,6 +1462,10 @@
 	tags="generator trigger"
 	/>
 <rigidbody
+	mass="2"
+	radius="1.64"
+	type_collision="trigger"
+	type_shape="sphere"
 	/>
 </entity>
 <entity
@@ -1250,6 +1476,7 @@
 	name="trigger_4"
 	/>
 <room
+	name="1"
 	/>
 <transform
 	pos="-40.825001 -0.555908 -7.163710"
@@ -1262,6 +1489,10 @@
 	tags="generator trigger"
 	/>
 <rigidbody
+	mass="2"
+	radius="1.64"
+	type_collision="trigger"
+	type_shape="sphere"
 	/>
 </entity>
 <entity
@@ -1272,6 +1503,7 @@
 	name="trigger_5"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-73.506798 -0.588134 8.454650"
@@ -1284,6 +1516,10 @@
 	tags="generator trigger"
 	/>
 <rigidbody
+	mass="2"
+	radius="1.64"
+	type_collision="trigger"
+	type_shape="sphere"
 	/>
 </entity>
 <entity
@@ -1294,6 +1530,7 @@
 	name="trigger_6"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-119.644997 -0.582276 -12.525600"
@@ -1306,6 +1543,10 @@
 	tags="generator trigger"
 	/>
 <rigidbody
+	mass="2"
+	radius="1.64"
+	type_collision="trigger"
+	type_shape="sphere"
 	/>
 </entity>
 <entity
@@ -1318,6 +1559,7 @@
 	name="tWireUp"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-69.285400 16.398001 16.660999"
@@ -1328,6 +1570,10 @@
 	tags="trigger"
 	/>
 <rigidbody
+	mass="2"
+	size="0.357145 0.362500 0.461411"
+	type_collision="trigger"
+	type_shape="box"
 	/>
 </entity>
 <entity
@@ -1348,6 +1594,10 @@
 	tags="room_switcher trigger"
 	/>
 <rigidbody
+	mass="2"
+	size="1.500000 2.000000 0.050000"
+	type_collision="trigger"
+	type_shape="box"
 	/>
 </entity>
 <entity
@@ -1368,6 +1618,10 @@
 	tags="limit trigger"
 	/>
 <rigidbody
+	mass="2"
+	size="0.050000 2.000000 6.000000"
+	type_collision="trigger"
+	type_shape="box"
 	/>
 </entity>
 <entity
@@ -1378,6 +1632,7 @@
 	name="Workstation004"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-86.654297 -0.628906 15.036300"
@@ -1398,6 +1653,7 @@
 	name="Workstation005"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-93.464104 -0.628905 19.821400"
@@ -1418,6 +1674,7 @@
 	name="Workstation006"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-94.238098 -0.628906 15.836000"
@@ -1438,6 +1695,7 @@
 	name="Workstation007"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-90.035896 -0.628906 15.571200"
@@ -1514,6 +1772,7 @@
 	name="tVictory"
 	/>
 <room
+	name="2"
 	/>
 <transform
 	pos="-82.934097 -0.014506 -32.980999"
@@ -1524,6 +1783,10 @@
 	tags="trigger"
 	/>
 <rigidbody
+	mass="2"
+	size="1.807530 0.602500 0.815160"
+	type_collision="trigger"
+	type_shape="box"
 	/>
 </entity>
 </entities>
