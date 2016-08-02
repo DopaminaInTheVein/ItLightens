@@ -265,27 +265,6 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
-<tags
-   tags="camera_main"/>
-<camera_main
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<culling/>
-<render_glow/>
-<controller_3rd_person/>
-<FX_fade_screen/>
-<name
-   name="__camController_1"/>
-<transform
-   pos="-45.0788 5.35219 -0.918759"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
    reload="yes">
 <tags
    tags="player raijin"/>

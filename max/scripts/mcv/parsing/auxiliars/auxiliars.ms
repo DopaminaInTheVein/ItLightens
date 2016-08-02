@@ -43,6 +43,8 @@ fn parseable = (
 	local isReload = false
 	if (reload as string) == "yes" then (
 		isReload = true
+	) else if (reload as string) == "no" then (
+		isReload = false
 	) else if (getUserProp _parsingObject "typeObject") != undefined then (
 		isReload = true	
 	)

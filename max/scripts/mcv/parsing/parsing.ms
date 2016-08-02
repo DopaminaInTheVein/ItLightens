@@ -65,8 +65,13 @@ fn parseReload = (
 	if reload != undefined then (
 		XML_PARSING.addAttr "reload" (reload as string)
 	) else (
-		if (getUserProp _parsingObject "typeObject") != undefined then (
+		local type = getUserProp _parsingObject "typeObject"
+		if type != undefined then (
+			--if type == "Trigger" then (
+				--XML_PARSING.addAttr "reload" "no"
+			--) else (
 			XML_PARSING.addAttr "reload" "yes"
+			--)
 		)
 	)
 )

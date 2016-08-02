@@ -1,5 +1,3 @@
-<!-- quitar reload en camera_main-->
-
 <trigger_lua
    action="examinate"
    actionSci="activate"/>
