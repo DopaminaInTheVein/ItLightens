@@ -165,6 +165,10 @@ void MKeyValue::put(const char *what, int value) {
 	putKey(*this, what, value);
 }
 
+void MKeyValue::put(const char *what, std::string value) {
+	putKey(*this, what, value);
+}
+
 void MKeyValue::put(const char *what, VEC3 value) {
 	putPoint(*this, what, value);
 }

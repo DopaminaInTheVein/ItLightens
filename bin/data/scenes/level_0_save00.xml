@@ -10,6 +10,7 @@
 <local_aabb
 	/>
 <name
+	name="__Door"
 	/>
 <room
 	/>
@@ -38,6 +39,7 @@
 <local_aabb
 	/>
 <name
+	name="__pila"
 	/>
 <room
 	/>
@@ -67,6 +69,7 @@
 <local_aabb
 	/>
 <name
+	name="elevator"
 	/>
 <room
 	/>
@@ -92,6 +95,7 @@
 <abs_aabb
 	/>
 <name
+	name="enchufe"
 	/>
 <room
 	/>
@@ -116,6 +120,7 @@
 <abs_aabb
 	/>
 <name
+	name="mesa_cientifico_up_mapeado"
 	/>
 <room
 	/>
@@ -140,6 +145,7 @@
 <abs_aabb
 	/>
 <name
+	name="mesa_cientifico_up_mapeado001"
 	/>
 <room
 	/>
@@ -167,6 +173,7 @@
 <local_aabb
 	/>
 <name
+	name="puerta_Ascensor_derecha"
 	/>
 <room
 	/>
@@ -196,6 +203,7 @@
 <local_aabb
 	/>
 <name
+	name="puerta_Ascensor_derecha_arriba"
 	/>
 <room
 	/>
@@ -225,6 +233,7 @@
 <local_aabb
 	/>
 <name
+	name="puerta_Ascensor_izquierda"
 	/>
 <room
 	/>
@@ -254,6 +263,7 @@
 <local_aabb
 	/>
 <name
+	name="puerta_Ascensor_izquierda_arriba"
 	/>
 <room
 	/>
@@ -280,10 +290,11 @@
 <culling
 	/>
 <name
+	name="__camController_1"
 	/>
 <transform
-	pos="-37.451385 -23.133053 0.120532"
-	quat="-0.015890 0.826750 0.023382 0.561859"
+	pos="-35.562283 -23.220741 0.455027"
+	quat="-0.022670 0.891302 0.044840 0.450619"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <camera_main
@@ -316,12 +327,13 @@
 <skc_player
 	/>
 <name
+	name="__player_1"
 	/>
 <room
 	/>
 <transform
-	pos="-35.594799 -24.020016 -0.614541"
-	quat="-0.000000 -0.008170 0.000000 0.999967"
+	pos="-33.959801 -24.020016 -0.724705"
+	quat="0.000000 0.706526 0.000000 0.707687"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -340,6 +352,7 @@
 <trigger_lua
 	/>
 <name
+	name="__tElevator"
 	/>
 <room
 	/>
@@ -360,6 +373,7 @@
 <trigger_lua
 	/>
 <name
+	name="__tElevator"
 	/>
 <room
 	/>
@@ -390,11 +404,12 @@
 <skc_mole
 	/>
 <name
+	name="__mole_1"
 	/>
 <room
 	/>
 <transform
-	pos="-122.028137 -1.309774 -10.558657"
+	pos="-122.074623 -1.309580 -10.584774"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -424,12 +439,13 @@
 <skc_guard
 	/>
 <name
+	name="guard_002"
 	/>
 <room
 	/>
 <transform
-	pos="13.351470 -23.990587 16.353806"
-	quat="-0.000000 -0.051758 0.000000 0.998660"
+	pos="12.309038 -24.020016 2.453968"
+	quat="0.000000 0.039277 0.000000 0.999228"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -458,12 +474,13 @@
 <skc_guard
 	/>
 <name
+	name="guard_003"
 	/>
 <room
 	/>
 <transform
-	pos="5.758385 -24.020014 22.370991"
-	quat="0.000000 0.512509 0.000000 0.858682"
+	pos="5.934959 -24.020016 22.348232"
+	quat="-0.000000 -0.295921 0.000000 0.955212"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -492,11 +509,12 @@
 <skc_guard
 	/>
 <name
+	name="guard_004"
 	/>
 <room
 	/>
 <transform
-	pos="-84.149788 -1.303518 -28.456415"
+	pos="-84.146545 -1.303518 -28.490538"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -526,6 +544,7 @@
 <skc_guard
 	/>
 <name
+	name="guard_005"
 	/>
 <room
 	/>
@@ -560,6 +579,7 @@
 <skc_guard
 	/>
 <name
+	name="guard_006"
 	/>
 <room
 	/>
@@ -594,6 +614,7 @@
 <skc_guard
 	/>
 <name
+	name="guard_007"
 	/>
 <room
 	/>
@@ -620,11 +641,12 @@
 <local_aabb
 	/>
 <name
+	name="DroneMinus_1"
 	/>
 <room
 	/>
 <transform
-	pos="14.433237 -11.796374 -11.531071"
+	pos="12.569222 -11.468043 -11.630823"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -648,11 +670,12 @@
 <local_aabb
 	/>
 <name
+	name="DronePlus_1"
 	/>
 <room
 	/>
 <transform
-	pos="4.864994 -11.796251 -2.786193"
+	pos="6.688033 -11.549253 -2.733246"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -676,11 +699,12 @@
 <local_aabb
 	/>
 <name
+	name="DroneMinus_002"
 	/>
 <room
 	/>
 <transform
-	pos="14.299162 -11.795602 5.148177"
+	pos="15.119318 -11.673826 5.101500"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -704,11 +728,12 @@
 <local_aabb
 	/>
 <name
+	name="DronePlus_002"
 	/>
 <room
 	/>
 <transform
-	pos="4.864625 -11.796276 14.065531"
+	pos="6.682494 -11.549266 14.023580"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -732,6 +757,7 @@
 <local_aabb
 	/>
 <name
+	name="Box_1"
 	/>
 <room
 	/>
@@ -762,11 +788,12 @@
 <local_aabb
 	/>
 <name
+	name="DroneMinus_003"
 	/>
 <room
 	/>
 <transform
-	pos="-1.684125 -3.314589 21.387697"
+	pos="2.129925 -3.433614 21.165026"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -790,11 +817,12 @@
 <local_aabb
 	/>
 <name
+	name="DroneMinus_004"
 	/>
 <room
 	/>
 <transform
-	pos="-28.285448 3.675452 22.077959"
+	pos="-26.264757 3.161890 22.011948"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -818,11 +846,12 @@
 <local_aabb
 	/>
 <name
+	name="DroneMinus_005"
 	/>
 <room
 	/>
 <transform
-	pos="-34.421059 4.056430 20.717726"
+	pos="-34.619610 3.047127 11.987350"
 	quat="0.000000 -0.701693 0.000000 0.712479"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -846,6 +875,7 @@
 <local_aabb
 	/>
 <name
+	name="Box_2"
 	/>
 <room
 	/>
@@ -884,12 +914,13 @@
 <skc_mole
 	/>
 <name
+	name="mole_1"
 	/>
 <room
 	/>
 <transform
-	pos="29.701097 -24.020016 3.406194"
-	quat="-0.000000 -0.149780 0.000000 0.988719"
+	pos="33.614796 -24.020016 -10.079268"
+	quat="0.000000 -0.990865 -0.000000 -0.134859"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -908,6 +939,7 @@
 <trigger_lua
 	/>
 <name
+	name="tWall"
 	/>
 <room
 	/>
@@ -929,6 +961,7 @@
 <abs_aabb
 	/>
 <name
+	name="cargador_bateria"
 	/>
 <room
 	/>
@@ -953,6 +986,7 @@
 <trigger_lua
 	/>
 <name
+	name="__tCargador"
 	/>
 <room
 	/>
@@ -973,6 +1007,7 @@
 <trigger_lua
 	/>
 <name
+	name="__tEnchufe"
 	/>
 <room
 	/>
@@ -993,6 +1028,7 @@
 <trigger_lua
 	/>
 <name
+	name="tWireDown"
 	/>
 <room
 	/>
@@ -1025,6 +1061,7 @@
 <skc_scientist
 	/>
 <name
+	name="scientist_1"
 	/>
 <room
 	/>
@@ -1047,6 +1084,7 @@
 	reload="1"
 >
 <name
+	name="Workstation02"
 	/>
 <room
 	/>
@@ -1065,6 +1103,7 @@
 	reload="1"
 >
 <name
+	name="Workstation01"
 	/>
 <room
 	/>
@@ -1083,6 +1122,7 @@
 	reload="1"
 >
 <name
+	name="Workstation03"
 	/>
 <room
 	/>
@@ -1101,6 +1141,7 @@
 	reload="1"
 >
 <name
+	name="trigger_1"
 	/>
 <room
 	/>
@@ -1121,6 +1162,7 @@
 	reload="1"
 >
 <name
+	name="trigger_2"
 	/>
 <room
 	/>
@@ -1141,6 +1183,7 @@
 	reload="1"
 >
 <name
+	name="trigger_3"
 	/>
 <room
 	/>
@@ -1161,6 +1204,7 @@
 	reload="1"
 >
 <name
+	name="trigger_4"
 	/>
 <room
 	/>
@@ -1181,6 +1225,7 @@
 	reload="1"
 >
 <name
+	name="trigger_5"
 	/>
 <room
 	/>
@@ -1201,6 +1246,7 @@
 	reload="1"
 >
 <name
+	name="trigger_6"
 	/>
 <room
 	/>
@@ -1223,6 +1269,7 @@
 <trigger_lua
 	/>
 <name
+	name="tWireUp"
 	/>
 <room
 	/>
@@ -1241,6 +1288,7 @@
 	reload="1"
 >
 <name
+	name="Trigger_Cambio_Sala"
 	/>
 <room_switcher
 	/>
@@ -1259,6 +1307,7 @@
 	reload="1"
 >
 <name
+	name="Trigger_Escupe_Posessiones"
 	/>
 <limit
 	/>
@@ -1277,6 +1326,7 @@
 	reload="1"
 >
 <name
+	name="Workstation004"
 	/>
 <room
 	/>
@@ -1295,6 +1345,7 @@
 	reload="1"
 >
 <name
+	name="Workstation005"
 	/>
 <room
 	/>
@@ -1313,6 +1364,7 @@
 	reload="1"
 >
 <name
+	name="Workstation006"
 	/>
 <room
 	/>
@@ -1331,6 +1383,7 @@
 	reload="1"
 >
 <name
+	name="Workstation007"
 	/>
 <room
 	/>
@@ -1349,6 +1402,7 @@
 	reload="1"
 >
 <name
+	name="CineWireGoUp"
 	/>
 <transform
 	pos="-91.990097 27.886499 -44.408298"
@@ -1365,6 +1419,7 @@
 	reload="1"
 >
 <name
+	name="CineEnchufeDoor"
 	/>
 <transform
 	pos="-139.761002 24.422800 -44.408298"
@@ -1381,6 +1436,7 @@
 	reload="1"
 >
 <name
+	name="CinematicIntro"
 	/>
 <transform
 	pos="-19.595800 20.129299 -44.408298"
@@ -1399,6 +1455,7 @@
 <trigger_lua
 	/>
 <name
+	name="tVictory"
 	/>
 <room
 	/>

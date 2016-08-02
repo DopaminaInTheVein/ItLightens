@@ -40,11 +40,8 @@ bool CEntity::save(std::ofstream& os, MKeyValue& atts) {
 	for (uint32_t i = 0; i < CHandle::max_types; ++i) {
 		auto hm = CHandleManager::getByType(i);
 		if (comps[i].isValid()) {
-			bool ok = comps[i].save(os, atts);
-			if (!ok) {
-				atts.clear();
-				atts.writeSingle(os, hm->getName());
-			}
+			comps[i].save(os, atts);
+			atts.writeSingle(os, hm->getName());
 		}
 	}
 	atts.writeEndElement(os, "entity");

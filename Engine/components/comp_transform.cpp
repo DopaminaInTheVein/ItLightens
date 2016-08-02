@@ -46,12 +46,9 @@ bool TCompTransform::load(MKeyValue& atts) {
 }
 
 bool TCompTransform::save(ofstream& os, MKeyValue& atts) {
-	dbg("Guardo transform!\n");
 	atts.put("pos", getPosition());
 	atts.put("quat", getRotation());
 	atts.put("scale", getScale());
-	atts.writeSingle(os, "transform");
-
 	return true;
 }
 
