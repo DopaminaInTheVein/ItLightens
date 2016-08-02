@@ -1,12 +1,5 @@
 <!-- quitar reload en camera_main-->
-  
-<life
-   points="10"/>
-<skeleton
-   model="skeletons/player/player.skeleton"/>
-<character_controller
-   radius="0.3"
-   height="0.7"/>
+
 <trigger_lua
    action="examinate"
    actionSci="activate"/>
