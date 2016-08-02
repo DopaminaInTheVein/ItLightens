@@ -31,7 +31,7 @@ void bt_poss::onSetPossessed(const TMsgAISetPossessed& msg) {
 	}
 	TMsgSetTag msgTag;
 	msgTag.add = msg.possessed;
-	msgTag.tag_id = getID("player");
+	msgTag.tag = "player";
 	getMyEntity()->sendMsg(msgTag);
 }
 

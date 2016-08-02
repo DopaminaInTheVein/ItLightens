@@ -85,7 +85,7 @@ void TCompGenerator::setUsable(bool usable)
 {
 	TMsgSetTag msg;
 	msg.add = usable;
-	msg.tag_id = getID("interactive");
+	msg.tag = "interactive";
 	mesh.sendMsg(msg);
 	if (!usable) {
 		____TIMER_RESET_(timeReuse);

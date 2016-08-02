@@ -676,7 +676,7 @@ void player_controller::UpdatePossession() {
 			SBB::postBool("possMode", true);
 			TMsgSetTag msgTag;
 			msgTag.add = false;
-			msgTag.tag_id = getID("player");
+			msgTag.tag = "player";
 			compBaseEntity->sendMsg(msgTag);
 			msgTag.add = true;
 

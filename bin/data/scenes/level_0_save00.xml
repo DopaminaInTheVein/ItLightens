@@ -24,6 +24,7 @@
 <polarized
 	/>
 <tags
+	tags="door doorExit"
 	/>
 <magnet_door
 	/>
@@ -53,6 +54,7 @@
 <bone_tracker
 	/>
 <tags
+	tags="interactive pila platform"
 	/>
 <pila
 	/>
@@ -81,6 +83,7 @@
 <render_static_mesh
 	/>
 <tags
+	tags="elevator interactive"
 	/>
 <elevator
 	/>
@@ -107,6 +110,7 @@
 <render_static_mesh
 	/>
 <tags
+	tags="interactive pila_container"
 	/>
 <pila_container
 	/>
@@ -132,6 +136,7 @@
 <render_static_mesh
 	/>
 <tags
+	tags="interactive workbench"
 	/>
 <workbench
 	/>
@@ -157,6 +162,7 @@
 <render_static_mesh
 	/>
 <tags
+	tags="interactive workbench"
 	/>
 <workbench
 	/>
@@ -187,6 +193,7 @@
 <polarized
 	/>
 <tags
+	tags="door"
 	/>
 <magnet_door
 	/>
@@ -217,6 +224,7 @@
 <polarized
 	/>
 <tags
+	tags="door"
 	/>
 <magnet_door
 	/>
@@ -247,6 +255,7 @@
 <polarized
 	/>
 <tags
+	tags="door"
 	/>
 <magnet_door
 	/>
@@ -277,6 +286,7 @@
 <polarized
 	/>
 <tags
+	tags="door"
 	/>
 <magnet_door
 	/>
@@ -293,8 +303,8 @@
 	name="__camController_1"
 	/>
 <transform
-	pos="-35.562283 -23.220741 0.455027"
-	quat="-0.022670 0.891302 0.044840 0.450619"
+	pos="35.279091 -20.953495 -7.917967"
+	quat="-0.068117 0.768054 -0.082868 -0.631337"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <camera_main
@@ -302,6 +312,7 @@
 <controller_3rd_person
 	/>
 <tags
+	tags="camera_main"
 	/>
 <render_glow
 	/>
@@ -332,8 +343,8 @@
 <room
 	/>
 <transform
-	pos="-33.959801 -24.020016 -0.724705"
-	quat="0.000000 0.706526 0.000000 0.707687"
+	pos="0.000000 200.000000 0.000000"
+	quat="0.000000 0.431351 0.000000 0.902184"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -341,6 +352,7 @@
 <life
 	/>
 <tags
+	tags="raijin"
 	/>
 <character_controller
 	/>
@@ -362,6 +374,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	/>
@@ -383,6 +396,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	/>
@@ -409,13 +423,14 @@
 <room
 	/>
 <transform
-	pos="-122.074623 -1.309580 -10.584774"
+	pos="-122.074875 -1.309578 -10.584604"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	/>
 <tags
+	tags="AI AI_mole AI_poss"
 	/>
 <bt_mole
 	/>
@@ -444,13 +459,14 @@
 <room
 	/>
 <transform
-	pos="12.309038 -24.020016 2.453968"
-	quat="0.000000 0.039277 0.000000 0.999228"
+	pos="2.482880 -24.020016 2.636958"
+	quat="0.000000 0.965853 0.000000 0.259089"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	/>
@@ -479,13 +495,14 @@
 <room
 	/>
 <transform
-	pos="5.934959 -24.020016 22.348232"
-	quat="-0.000000 -0.295921 0.000000 0.955212"
+	pos="6.899599 -23.961750 -20.936121"
+	quat="-0.000000 -0.965407 0.000000 0.260746"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	/>
@@ -521,6 +538,7 @@
 <render_static_mesh
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	/>
@@ -556,6 +574,7 @@
 <render_static_mesh
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	/>
@@ -591,6 +610,7 @@
 <render_static_mesh
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	/>
@@ -626,6 +646,7 @@
 <render_static_mesh
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	/>
@@ -646,7 +667,7 @@
 <room
 	/>
 <transform
-	pos="12.569222 -11.468043 -11.630823"
+	pos="14.976423 -11.659878 -11.572529"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -655,6 +676,7 @@
 <polarized
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	/>
@@ -675,7 +697,7 @@
 <room
 	/>
 <transform
-	pos="6.688033 -11.549253 -2.733246"
+	pos="4.690164 -11.703499 -2.766310"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -684,6 +706,7 @@
 <polarized
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	/>
@@ -704,7 +727,7 @@
 <room
 	/>
 <transform
-	pos="15.119318 -11.673826 5.101500"
+	pos="16.614969 -11.794667 5.147821"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -713,6 +736,7 @@
 <polarized
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	/>
@@ -733,7 +757,7 @@
 <room
 	/>
 <transform
-	pos="6.682494 -11.549266 14.023580"
+	pos="4.629019 -11.708060 14.050540"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -742,6 +766,7 @@
 <polarized
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	/>
@@ -773,6 +798,7 @@
 <bone_tracker
 	/>
 <tags
+	tags="box interactive platform removable"
 	/>
 <box
 	/>
@@ -793,7 +819,7 @@
 <room
 	/>
 <transform
-	pos="2.129925 -3.433614 21.165026"
+	pos="-0.390060 -3.270441 21.273844"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -802,6 +828,7 @@
 <polarized
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	/>
@@ -822,7 +849,7 @@
 <room
 	/>
 <transform
-	pos="-26.264757 3.161890 22.011948"
+	pos="-25.983112 3.090380 22.002754"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -831,6 +858,7 @@
 <polarized
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	/>
@@ -851,7 +879,7 @@
 <room
 	/>
 <transform
-	pos="-34.619610 3.047127 11.987350"
+	pos="-34.734497 3.827362 15.339119"
 	quat="0.000000 -0.701693 0.000000 0.712479"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -860,6 +888,7 @@
 <polarized
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	/>
@@ -891,6 +920,7 @@
 <bone_tracker
 	/>
 <tags
+	tags="box interactive platform removable"
 	/>
 <box
 	/>
@@ -919,13 +949,14 @@
 <room
 	/>
 <transform
-	pos="33.614796 -24.020016 -10.079268"
-	quat="0.000000 -0.990865 -0.000000 -0.134859"
+	pos="30.486530 -24.020016 -8.863436"
+	quat="-0.000000 -0.827080 0.000000 0.562084"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	/>
 <tags
+	tags="AI AI_mole AI_poss player"
 	/>
 <bt_mole
 	/>
@@ -949,6 +980,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	/>
@@ -973,6 +1005,7 @@
 <render_static_mesh
 	/>
 <tags
+	tags="interactive pila_container"
 	/>
 <pila_container
 	/>
@@ -996,6 +1029,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	/>
@@ -1017,6 +1051,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	/>
@@ -1038,6 +1073,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	/>
@@ -1066,13 +1102,14 @@
 <room
 	/>
 <transform
-	pos="-66.218399 15.803700 12.551200"
+	pos="-66.218399 15.803701 12.551200"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="0.009299 0.009299 0.009299"
 	/>
 <render_static_mesh
 	/>
 <tags
+	tags="AI AI_cientifico AI_poss interactive"
 	/>
 <bt_scientist
 	/>
@@ -1094,6 +1131,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	/>
@@ -1113,6 +1151,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	/>
@@ -1132,6 +1171,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	/>
@@ -1153,6 +1193,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	/>
@@ -1174,6 +1215,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	/>
@@ -1195,6 +1237,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	/>
@@ -1216,6 +1259,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	/>
@@ -1237,6 +1281,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	/>
@@ -1258,6 +1303,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	/>
@@ -1279,6 +1325,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	/>
@@ -1298,6 +1345,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="room_switcher trigger"
 	/>
 <rigidbody
 	/>
@@ -1317,6 +1365,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="limit trigger"
 	/>
 <rigidbody
 	/>
@@ -1336,6 +1385,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	/>
@@ -1355,6 +1405,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	/>
@@ -1374,6 +1425,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	/>
@@ -1393,6 +1445,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	/>
@@ -1410,6 +1463,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="guided_camera"
 	/>
 <guided_camera
 	/>
@@ -1427,6 +1481,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="guided_camera"
 	/>
 <guided_camera
 	/>
@@ -1444,6 +1499,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="guided_camera"
 	/>
 <guided_camera
 	/>
@@ -1465,6 +1521,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	/>

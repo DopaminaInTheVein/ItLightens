@@ -1,6 +1,5 @@
 <entities>
-<tags
-   tags="doorExit door"/>
+
 <magnet_door
    locked="yes"
    speedOpening="1"
