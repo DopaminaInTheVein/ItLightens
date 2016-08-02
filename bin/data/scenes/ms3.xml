@@ -1563,23 +1563,6 @@
 <entity>
 <tags/>
 <name
-   name="nivel001"/>
-<transform
-   pos="-2.6115 -6.89124 0.152153"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/nivel001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="panel_mapeado"/>
 <transform
    pos="-85.7992 8.65631 -0.144349"
@@ -3159,8 +3142,7 @@
 <camera_main
    znear="0.1"
    zfar="250.0"
-   fov="60.0"
-   collision="true"/>
+   fov="60.0"/>
 <culling/>
 <render_glow/>
 <controller_3rd_person/>
@@ -3246,7 +3228,6 @@
    name="2"/>
 
 </entity>
-<!--
 <entity
    reload="yes">
 <tags
@@ -3318,7 +3299,6 @@
    name="1"/>
 
 </entity>
--->
 <entity
    reload="yes">
 <tags
@@ -3360,7 +3340,6 @@
    name="1"/>
 
 </entity>
-<!--
 <entity
    reload="yes">
 <tags
@@ -3537,7 +3516,6 @@
    name="2"/>
 
 </entity>
--->
 <entity
    reload="yes">
 <tags
