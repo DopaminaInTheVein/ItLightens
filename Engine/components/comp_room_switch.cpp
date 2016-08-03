@@ -15,6 +15,13 @@ bool TCompRoomSwitch::load(MKeyValue & atts)
 	return true;
 }
 
+bool TCompRoomSwitch::save(std::ofstream& ofs, MKeyValue& atts)
+{
+	atts.put("back_room", room_back[0]);
+	atts.put("front_room", room_front[0]);
+	return true;
+}
+
 void TCompRoomSwitch::mUpdate(float dt)
 {
 	//nothing to do

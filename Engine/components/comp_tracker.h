@@ -50,6 +50,7 @@ struct TCompTracker : public TCompBase {
 	void updateTrackMovement(HandleTrack& ht);
 	std::vector<HandleTrack>::iterator unfollow(HandleTrack);
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	void renderInMenu();
 
 	VEC3 evaluatePos(HandleTrack ht);

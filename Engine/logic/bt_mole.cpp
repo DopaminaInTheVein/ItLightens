@@ -107,6 +107,17 @@ bool bt_mole::load(MKeyValue& atts) {
 	return true;
 }
 
+bool bt_mole::save(std::ofstream& os, MKeyValue& atts)
+{
+	int n = fixedWpts.size();
+	atts.put("wpts_size", n);
+	for (int i = 0; i < n; i++) {
+		WPT_ATR_NAME(atrPos, "pos", i);
+		atts.put(atrPos, fixedWpts[i]);
+	}
+	return true;
+}
+
 // actions
 int bt_mole::actionLookForWpt() {
 	if (!SBB::readBool("navmesh")) {

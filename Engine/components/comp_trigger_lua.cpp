@@ -104,6 +104,36 @@ else {														\
 	actionEnum = NONE;										\
 }															\
 mActionable = mActionable || (mAction != NONE)
+
+//Save actions
+//-----------------------------------------------------------------------------
+void TTriggerLua::saveAction(MKeyValue& atts, std::string action_name, eAction action_enum)
+{
+	std::string action = getActionStr(action_enum);
+	if (action != "") atts.put(action_name.c_str(), action);
+}
+
+std::string TTriggerLua::getActionStr(eAction action_enum)
+{
+	std::string result;
+	switch (action_enum) {
+	case ACTIVATE:
+		result = "activate";
+		break;
+	case PUT:
+		result = "put";
+		break;
+	case EXAMINATE:
+		result = "examinate";
+		break;
+	case DESTROY:
+		result = "destroy";
+		break;
+	default:
+		result = "";
+	}
+	return result;
+}
 //-----------------------------------------------------------------------------
 bool TTriggerLua::load(MKeyValue& atts) {
 	mActionable = false;
@@ -117,6 +147,15 @@ bool TTriggerLua::load(MKeyValue& atts) {
 		mActionable = atts.getBool("actived", true);
 	}
 
+	return true;
+}
+bool TTriggerLua::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("actived", mActionable);
+	saveAction(atts, "action", mAction);
+	saveAction(atts, "actionSci", mActionSci);
+	saveAction(atts, "actionMole", mActionMole);
+	saveAction(atts, "actionPila", mActionPila);
 	return true;
 }
 

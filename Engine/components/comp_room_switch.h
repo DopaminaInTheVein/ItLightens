@@ -9,6 +9,7 @@ struct TCompRoomSwitch : public TTrigger {
 	std::vector<int> room_front;
 
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& ofs, MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated& msg);
 	void init();
 
