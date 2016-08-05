@@ -3157,7 +3157,7 @@
 <tags
    tags="camera_main"/>
 <camera_main
-   znear="0.1"
+   znear="0.001"
    zfar="250.0"
    fov="60.0"
    collision="true"/>
@@ -4099,7 +4099,7 @@
 <abs_aabb/>
 <local_aabb/>
 <character_controller
-   radius="0.147"
+   radius="0.3"
    height="1.71312"/>
 <room
    name="2"/>

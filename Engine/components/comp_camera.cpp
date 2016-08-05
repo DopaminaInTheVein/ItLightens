@@ -23,7 +23,7 @@ extern CShaderCte< TCteCamera > shader_ctes_camera;
 #include "comp_charactercontroller.h"
 
 bool TCompCamera::load(MKeyValue& atts) {
-	float znear = atts.getFloat("znear", 0.1f);
+	float znear = atts.getFloat("znear", 0.01f);
 	float zfar = atts.getFloat("zfar", 1000.f);
 	float fov_in_degs = atts.getFloat("fov", 70.f);
 

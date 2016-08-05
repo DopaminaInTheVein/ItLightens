@@ -17,7 +17,7 @@
 #define THIRD_PERSON_CONTROLLER_PLAYER_DIST				2.0f
 #define THIRD_PERSON_CONTROLLER_SPEEDY_DIST				5.f
 #define THIRD_PERSON_CONTROLLER_MOLE_DIST				5.f
-#define THIRD_PERSON_CONTROLLER_SCIENTIST_DIST			5.f
+#define THIRD_PERSON_CONTROLLER_SCIENTIST_DIST			4.f
 #define THIRD_PERSON_CONTROLLER_PLAYER_POS_OFFSET_Y			-1.0f
 #define THIRD_PERSON_CONTROLLER_SPEEDY_POS_OFFSET_Y			0.f
 #define THIRD_PERSON_CONTROLLER_MOLE_POS_OFFSET_Y			0.f
@@ -246,7 +246,7 @@ public:
 
 	void renderInMenu() {
 		ImGui::DragFloat("rot_speed", &speed_camera, -0.1f, 0.1f);
-		ImGui::DragFloat("distanceToTarget", &distance_to_target, 0.1f, 0.1f);
+		ImGui::DragFloat("distanceToTarget", &distance_to_target, 0.0001f, 0.1f);
 		ImGui::DragFloat3("positionDiff", &position_diff.x, -0.1f, 0.1f);
 		ImGui::Checkbox("Input enabled", &input_enabled);
 	}

@@ -103,6 +103,7 @@ public:
 
 	CPlayerBase();
 	void init() { initBaseAttributes(); Init(); }
+	bool getEnabled() { return controlEnabled; }
 	void update(float elapsed); //deberia ser const pero Recalc no lo es  e historias
 	void addBasicStates();
 	virtual void initBaseAttributes();

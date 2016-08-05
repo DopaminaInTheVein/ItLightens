@@ -6,6 +6,9 @@
 #include "comp_life.h"
 #include "entity.h"
 #include "entity_tags.h"
+#include "player_controllers\player_controller.h"
+#include "player_controllers\player_controller_mole.h"
+#include "player_controllers\player_controller_cientifico.h"
 #include "resources/resources_manager.h"
 #include "render/mesh.h"
 #include "render/shader_cte.h"
@@ -84,24 +87,41 @@ void TCompCameraMain::update(float dt) {
 			transform->setPosition(pos);
 			if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
 
-			bool colision = checkColision(pos, smoothCurrent);
-			if (detect_colsions && !colision) {
-				this->smoothLookAt(transform->getPosition(), transform->getPosition() + transform->getFront(), getUpAux(), smoothCurrent);
-				last_pos_camera = transform->getPosition();
-			}
-			else if (!colision) {
-				this->smoothLookAt(transform->getPosition(), transform->getPosition() + transform->getFront(), getUpAux(), smoothCurrent);
-				last_pos_camera = transform->getPosition();
-			}
-			else if (detect_colsions) {
-				CEntity *e_me = compBaseEntity;
-				TCompController3rdPerson *c = e_me->get<TCompController3rdPerson>();
+			CEntity *e_me = compBaseEntity;
+			TCompController3rdPerson *c = e_me->get<TCompController3rdPerson>();
 
-				CEntity *target = c->target;
-				TCompCharacterController *cc = target->get<TCompCharacterController>();
-				TCompTransform *targett = target->get<TCompTransform>();
-				VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
-				VEC3 pos_cam = pos + (pos_target - pos)*0.8;
+			CEntity *target = c->target;
+			TCompCharacterController *cc = target->get<TCompCharacterController>();
+			TCompTransform *targett = target->get<TCompTransform>();
+			VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
+			float factor = 0.8f;
+
+			bool colision = false;
+			if (detect_colsions) {
+				player_controller * raijincontroller = target->get<player_controller>();
+				player_controller_mole * molecontroller = target->get<player_controller_mole>();
+				player_controller_cientifico * cientificocontroller = target->get<player_controller_cientifico>();
+
+				if (raijincontroller) {
+					colision = raijincontroller->getEnabled();
+				}
+				if (molecontroller) {
+					colision = molecontroller->getEnabled();
+					factor = 0.89f;
+				}
+				if (cientificocontroller) {
+					colision = cientificocontroller->getEnabled();
+					factor = 0.89f;
+				}
+			}
+			colision = (colision ? checkColision(pos, smoothCurrent) : false);
+			if (!colision) {
+				this->smoothLookAt(transform->getPosition(), transform->getPosition() + transform->getFront(), getUpAux(), smoothCurrent);
+				last_pos_camera = transform->getPosition();
+			}
+			else {
+				VEC3 pos_cam = pos + (pos_target - pos)*factor;
+				//pos_cam.y += cc->GetHeight();
 				this->smoothLookAt(pos_cam, pos_cam + transform->getFront(), getUpAux(), smoothCurrent);
 				last_pos_camera = transform->getPosition();
 			}
@@ -134,7 +154,7 @@ bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 {
 	CEntity *e_me = compBaseEntity;
 	TCompController3rdPerson *c = e_me->get<TCompController3rdPerson>();
-
+	CEntity * target = c->target;
 	//float dist = c->GetPositionDistance();
 
 	PxQueryFilterData fd = PxQueryFilterData();
@@ -163,7 +183,6 @@ bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
 	}
 	if (!collision) {
-		CEntity * target = c->target;
 		TCompCharacterController *cc = target->get<TCompCharacterController>();
 		TCompTransform *targett = target->get<TCompTransform>();
 		VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
