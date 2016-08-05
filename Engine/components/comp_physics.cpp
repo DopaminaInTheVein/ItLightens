@@ -159,6 +159,16 @@ bool TCompPhysics::load(MKeyValue & atts)
 
 bool TCompPhysics::save(std::ofstream& os, MKeyValue& atts)
 {
+	/*
+	std::string readString = atts.getString("type_collision", "static");
+	m_collisionType = getCollisionTypeValueFromString(readString);
+	readString = atts.getString("type_shape", "mesh");
+	m_collisionShape = getCollisionShapeValueFromString(readString);
+	m_mass = atts.getFloat("mass", 2.0f);		//default enough to pass polarize threshold
+	m_kinematic = atts.getBool("kinematic", false);		//default enough to pass polarize threshold
+	m_smooth = atts.getFloat("smooth", 0.0f);
+	*/
+
 	std::string t_collisions[] = { "static", "dynamic", "trigger" };
 	atts.put("type_collision", t_collisions[m_collisionType]);
 
@@ -176,6 +186,8 @@ bool TCompPhysics::save(std::ofstream& os, MKeyValue& atts)
 	}
 
 	atts.put("mass", m_mass);
+	atts.put("kinematic", m_kinematic);
+	atts.put("smooth", m_smooth);
 
 	return true;
 }

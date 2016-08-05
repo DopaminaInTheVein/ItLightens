@@ -38,7 +38,9 @@
 	target="-82.841003 4.372530 -29.856600"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="5"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="convex"
 	/>
@@ -76,7 +78,9 @@
 	actived="1"
 	/>
 <rigidbody
+	kinematic="1"
 	mass="5"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="convex"
 	/>
@@ -114,8 +118,10 @@
 	target_up="-65.349800 15.808000 20.828899"
 	/>
 <rigidbody
+	kinematic="1"
 	mass="5"
 	size="2.314950 0.075000 1.628625"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="box"
 	/>
@@ -147,7 +153,9 @@
 <pila_container
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="static"
 	type_shape="mesh"
 	/>
@@ -178,7 +186,9 @@
 <workbench
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="static"
 	type_shape="mesh"
 	/>
@@ -209,7 +219,9 @@
 <workbench
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="static"
 	type_shape="mesh"
 	/>
@@ -252,7 +264,9 @@
 	target="-66.748001 -0.203600 19.675100"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="5"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="convex"
 	/>
@@ -295,7 +309,9 @@
 	target="-66.078102 16.879801 19.739000"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="5"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="convex"
 	/>
@@ -338,7 +354,9 @@
 	target="-64.059502 -0.203600 19.675100"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="5"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="convex"
 	/>
@@ -381,7 +399,9 @@
 	target="-64.744102 16.879801 19.724001"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="5"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="convex"
 	/>
@@ -412,15 +432,15 @@
 	name="1"
 	/>
 <transform
-	pos="-26.618240 -20.796635 0.324650"
-	quat="0.000000 0.327190 0.000000 0.944959"
+	pos="-27.300489 -21.434601 -0.332001"
+	quat="0.000000 0.511692 0.000000 0.859169"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	name="skeletons/player/player.static_mesh"
 	/>
 <life
-	points="143.358"
+	points="146.807"
 	/>
 <tags
 	tags="player raijin             "
@@ -454,8 +474,10 @@
 	tags="trigger              "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	size="1.523040 0.437500 0.958650"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
 	/>
@@ -484,8 +506,10 @@
 	tags="trigger              "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	size="0.903715 0.437500 0.640740"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
 	/>
@@ -514,7 +538,7 @@
 	name="2"
 	/>
 <transform
-	pos="-122.074951 -1.309577 -10.584553"
+	pos="-122.074944 -1.309577 -10.584558"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -556,8 +580,8 @@
 	name="1"
 	/>
 <transform
-	pos="2.473362 -23.949581 2.629663"
-	quat="0.000000 0.983097 0.000000 0.183086"
+	pos="13.355855 -23.987415 16.312206"
+	quat="-0.000000 -0.064602 0.000000 0.997911"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -614,8 +638,8 @@
 	name="1"
 	/>
 <transform
-	pos="6.976371 -24.020016 -1.112412"
-	quat="0.000000 0.992861 0.000000 0.119279"
+	pos="5.776061 -24.020016 22.388521"
+	quat="0.000000 0.841620 0.000000 0.540070"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -892,7 +916,7 @@
 	name="1"
 	/>
 <transform
-	pos="3.473261 -11.801460 -11.529514"
+	pos="13.907300 -11.796267 -11.531095"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -916,7 +940,9 @@
 	wpts_size="2"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="drone"
 	/>
@@ -936,7 +962,7 @@
 	name="1"
 	/>
 <transform
-	pos="16.525978 -11.801466 -2.787312"
+	pos="5.391634 -11.796212 -2.786187"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -960,7 +986,9 @@
 	wpts_size="2"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="drone"
 	/>
@@ -980,7 +1008,7 @@
 	name="1"
 	/>
 <transform
-	pos="3.739851 -11.797110 5.148757"
+	pos="13.814422 -11.796597 5.148553"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1004,7 +1032,9 @@
 	wpts_size="2"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="drone"
 	/>
@@ -1024,7 +1054,7 @@
 	name="1"
 	/>
 <transform
-	pos="16.531042 -11.801455 14.066390"
+	pos="5.391265 -11.796237 14.065517"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1048,7 +1078,9 @@
 	wpts_size="2"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="drone"
 	/>
@@ -1088,7 +1120,9 @@
 	size="3.000000 1.500000 3.000000"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="5"
+	smooth="0"
 	type_collision="static"
 	type_shape="convex"
 	/>
@@ -1108,7 +1142,7 @@
 	name="1"
 	/>
 <transform
-	pos="9.952541 -5.140655 21.371315"
+	pos="-1.161625 -3.396061 21.386723"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1132,7 +1166,9 @@
 	wpts_size="2"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="drone"
 	/>
@@ -1152,7 +1188,7 @@
 	name="1"
 	/>
 <transform
-	pos="-20.011580 1.702664 21.816063"
+	pos="-27.779379 3.546581 22.061411"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1176,7 +1212,9 @@
 	wpts_size="2"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="drone"
 	/>
@@ -1196,7 +1234,7 @@
 	name="1"
 	/>
 <transform
-	pos="-34.488220 2.219950 8.555026"
+	pos="-34.424198 3.977957 20.194777"
 	quat="0.000000 -0.701693 0.000000 0.712479"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1220,7 +1258,9 @@
 	wpts_size="2"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="drone"
 	/>
@@ -1260,7 +1300,9 @@
 	size="3.000000 1.500000 3.000000"
 	/>
 <rigidbody
+	kinematic="0"
 	mass="5"
+	smooth="0"
 	type_collision="dynamic"
 	type_shape="convex"
 	/>
@@ -1289,8 +1331,8 @@
 	name="1"
 	/>
 <transform
-	pos="30.652971 -24.020016 0.250571"
-	quat="0.000000 -0.991253 -0.000000 -0.131974"
+	pos="31.618717 -24.020014 4.884863"
+	quat="-0.000000 -0.055329 0.000000 0.998468"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -1336,8 +1378,10 @@
 	tags="trigger              "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	size="1.202695 0.092500 1.922545"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
 	/>
@@ -1369,7 +1413,9 @@
 <pila_container
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
+	smooth="0"
 	type_collision="static"
 	type_shape="mesh"
 	/>
@@ -1398,8 +1444,10 @@
 	tags="trigger              "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	size="1.089255 0.585750 1.204775"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
 	/>
@@ -1428,8 +1476,10 @@
 	tags="trigger              "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	size="0.729800 0.585750 0.745515"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
 	/>
@@ -1457,8 +1507,10 @@
 	tags="trigger              "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	size="0.541210 0.092500 1.922545"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
 	/>
@@ -1562,7 +1614,7 @@
 	name="2"
 	/>
 <transform
-	pos="-66.218399 15.803700 12.551200"
+	pos="-66.218399 15.803699 12.551200"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="0.009299 0.009299 0.009299"
 	/>
@@ -1672,8 +1724,10 @@
 	tags="trigger generator             "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	radius="1.64"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="sphere"
 	/>
@@ -1699,8 +1753,10 @@
 	tags="trigger generator             "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	radius="1.64"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="sphere"
 	/>
@@ -1726,8 +1782,10 @@
 	tags="trigger generator             "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	radius="1.64"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="sphere"
 	/>
@@ -1753,8 +1811,10 @@
 	tags="trigger generator             "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	radius="1.64"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="sphere"
 	/>
@@ -1780,8 +1840,10 @@
 	tags="trigger generator             "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	radius="1.64"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="sphere"
 	/>
@@ -1807,8 +1869,10 @@
 	tags="trigger generator             "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	radius="1.64"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="sphere"
 	/>
@@ -1836,8 +1900,10 @@
 	tags="trigger              "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	size="0.357145 0.362500 0.461411"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
 	/>
@@ -1862,8 +1928,10 @@
 	tags="trigger room_switcher             "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	size="1.500000 2.000000 0.050000"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
 	/>
@@ -1886,8 +1954,10 @@
 	tags="trigger limit             "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	size="0.050000 2.000000 6.000000"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
 	/>
@@ -2125,8 +2195,10 @@
 	tags="trigger              "
 	/>
 <rigidbody
+	kinematic="0"
 	mass="2"
 	size="1.807530 0.602500 0.815160"
+	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
 	/>
