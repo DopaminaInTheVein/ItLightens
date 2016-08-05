@@ -164,8 +164,11 @@ bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 	}
 	if (!collision) {
 		CEntity * target = c->target;
+		if (!target) return false;
 		TCompCharacterController *cc = target->get<TCompCharacterController>();
+		if (!cc) return false;
 		TCompTransform *targett = target->get<TCompTransform>();
+		if (!targett) return false;
 		VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
 		// direction to player
 		direction = pos_target - pos;

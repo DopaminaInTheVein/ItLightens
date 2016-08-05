@@ -69,6 +69,9 @@ void CImGuiModule::update(float dt) {
 	}
 
 	if (ImGui::Button("SAVE GAME")) CApp::get().saveLevel();
+	if (ImGui::Button("LOAD GAME")) {
+		CApp::get().restartLevelNotify();
+	}
 
 	if (GameController->GetGameState() == CGameController::STOPPED) {
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));

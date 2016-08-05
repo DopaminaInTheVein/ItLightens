@@ -28,6 +28,7 @@
 	pol="neutral"
 	/>
 <tags
+	tags="door doorExit"
 	/>
 <magnet_door
 	locked="1"
@@ -67,6 +68,7 @@
 <bone_tracker
 	/>
 <tags
+	tags="interactive pila platform"
 	/>
 <pila
 	action="examinate"
@@ -103,6 +105,7 @@
 	name="static_meshes/ms3/elevator.static_mesh"
 	/>
 <tags
+	tags="elevator interactive"
 	/>
 <elevator
 	speedDown="27"
@@ -139,6 +142,7 @@
 	name="static_meshes/ms3/enchufe.static_mesh"
 	/>
 <tags
+	tags="interactive pila_container"
 	/>
 <pila_container
 	/>
@@ -169,6 +173,7 @@
 	name="static_meshes/ms3/mesa_cientifico_up_mapeado.static_mesh"
 	/>
 <tags
+	tags="interactive workbench"
 	/>
 <workbench
 	/>
@@ -199,6 +204,7 @@
 	name="static_meshes/ms3/mesa_cientifico_up_mapeado001.static_mesh"
 	/>
 <tags
+	tags="interactive workbench"
 	/>
 <workbench
 	/>
@@ -236,6 +242,7 @@
 	pol="neutral"
 	/>
 <tags
+	tags="door"
 	/>
 <magnet_door
 	locked="1"
@@ -278,6 +285,7 @@
 	pol="neutral"
 	/>
 <tags
+	tags="door"
 	/>
 <magnet_door
 	locked="0"
@@ -320,6 +328,7 @@
 	pol="neutral"
 	/>
 <tags
+	tags="door"
 	/>
 <magnet_door
 	locked="1"
@@ -362,6 +371,7 @@
 	pol="neutral"
 	/>
 <tags
+	tags="door"
 	/>
 <magnet_door
 	locked="0"
@@ -402,17 +412,18 @@
 	name="1"
 	/>
 <transform
-	pos="-1.630433 -24.020016 -14.641859"
-	quat="0.000000 0.772573 0.000000 0.634926"
+	pos="-35.594799 -24.020016 -0.614541"
+	quat="-0.000000 -0.008295 0.000000 0.999966"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	name="skeletons/player/player.static_mesh"
 	/>
 <life
-	points="140.035"
+	points="147.732"
 	/>
 <tags
+	tags="player raijin"
 	/>
 <character_controller
 	height="0.7"
@@ -440,6 +451,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -469,6 +481,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -501,7 +514,7 @@
 	name="2"
 	/>
 <transform
-	pos="-122.074699 -1.309579 -10.584723"
+	pos="-122.075134 -1.309575 -10.584431"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -509,6 +522,7 @@
 	name="skeletons/mole/mole.static_mesh"
 	/>
 <tags
+	tags="AI AI_mole AI_poss"
 	/>
 <bt_mole
 	wpts_size="0"
@@ -542,14 +556,15 @@
 	name="1"
 	/>
 <transform
-	pos="15.333591 -24.020016 -5.928013"
-	quat="0.000000 0.979281 0.000000 0.202504"
+	pos="13.419702 -23.990709 15.925931"
+	quat="-0.000000 -0.105039 0.000000 0.994468"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	formation_dir="26.215700 -23.967800 -6.800940"
@@ -599,14 +614,15 @@
 	name="1"
 	/>
 <transform
-	pos="6.883915 -23.973576 -20.962667"
-	quat="-0.000000 -0.964641 0.000000 0.263568"
+	pos="5.756578 -24.020014 22.371691"
+	quat="0.000000 0.354193 0.000000 0.935172"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	formation_dir="-3.618460 -23.967800 2.134690"
@@ -661,6 +677,7 @@
 	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	formation_dir="-86.390099 -1.267510 -30.135201"
@@ -712,6 +729,7 @@
 	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	formation_dir="-83.696899 -1.267510 -30.135201"
@@ -763,6 +781,7 @@
 	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	formation_dir="-98.822304 -1.267510 -12.318200"
@@ -826,6 +845,7 @@
 	name="skeletons/guard/guard.static_mesh"
 	/>
 <tags
+	tags="AI AI_guard"
 	/>
 <bt_guard
 	formation_dir="-68.951797 -1.267510 6.100120"
@@ -872,7 +892,7 @@
 	name="1"
 	/>
 <transform
-	pos="11.408992 -11.373843 -11.659444"
+	pos="14.814046 -11.795457 -11.531347"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -884,6 +904,7 @@
 	pol="minus"
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	textureBack=""
@@ -915,7 +936,7 @@
 	name="1"
 	/>
 <transform
-	pos="9.222776 -11.353980 -2.691386"
+	pos="4.501830 -11.795269 -2.785982"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -927,6 +948,7 @@
 	pol="plus"
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	textureBack=""
@@ -958,7 +980,7 @@
 	name="1"
 	/>
 <transform
-	pos="11.948566 -11.418904 5.003783"
+	pos="14.730804 -11.796300 5.148451"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -970,6 +992,7 @@
 	pol="minus"
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	textureBack=""
@@ -1001,7 +1024,7 @@
 	name="1"
 	/>
 <transform
-	pos="9.221921 -11.353941 13.990426"
+	pos="4.501461 -11.795297 14.065350"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1013,6 +1036,7 @@
 	pol="plus"
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	textureBack=""
@@ -1058,6 +1082,7 @@
 <bone_tracker
 	/>
 <tags
+	tags="box interactive platform removable"
 	/>
 <box
 	size="3.000000 1.500000 3.000000"
@@ -1083,7 +1108,7 @@
 	name="1"
 	/>
 <transform
-	pos="3.069683 -3.496555 21.125404"
+	pos="-2.046331 -3.257104 21.387913"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1095,6 +1120,7 @@
 	pol="plus"
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	textureBack=""
@@ -1126,7 +1152,7 @@
 	name="1"
 	/>
 <transform
-	pos="-27.934944 3.952147 22.090120"
+	pos="-28.680489 3.774933 22.090805"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1138,6 +1164,7 @@
 	pol="minus"
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	textureBack=""
@@ -1169,7 +1196,7 @@
 	name="1"
 	/>
 <transform
-	pos="-34.735165 3.773564 14.999220"
+	pos="-34.419353 4.111777 21.080288"
 	quat="0.000000 -0.701693 0.000000 0.712479"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1181,6 +1208,7 @@
 	pol="plus"
 	/>
 <tags
+	tags="drone platform"
 	/>
 <drone
 	textureBack=""
@@ -1226,6 +1254,7 @@
 <bone_tracker
 	/>
 <tags
+	tags="box interactive platform removable"
 	/>
 <box
 	size="3.000000 1.500000 3.000000"
@@ -1260,14 +1289,15 @@
 	name="1"
 	/>
 <transform
-	pos="31.166584 -24.020016 -1.330732"
-	quat="-0.000000 -0.138967 0.000000 0.990297"
+	pos="29.926622 -24.020016 2.605413"
+	quat="-0.000000 -0.108694 0.000000 0.994075"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	name="skeletons/mole/mole.static_mesh"
 	/>
 <tags
+	tags="AI AI_mole AI_poss"
 	/>
 <bt_mole
 	wpt0_pos="32.941601 -23.858999 -8.192150"
@@ -1303,6 +1333,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1333,6 +1364,7 @@
 	name="static_meshes/ms3/cargador_bateria.static_mesh"
 	/>
 <tags
+	tags="interactive pila_container"
 	/>
 <pila_container
 	/>
@@ -1363,6 +1395,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1392,6 +1425,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1420,6 +1454,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1527,7 +1562,7 @@
 	name="2"
 	/>
 <transform
-	pos="-66.218399 15.803701 12.551200"
+	pos="-66.218399 15.803699 12.551200"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="0.009299 0.009299 0.009299"
 	/>
@@ -1535,6 +1570,7 @@
 	name="skeletons/scientist/scientist.static_mesh"
 	/>
 <tags
+	tags="AI AI_cientifico AI_poss interactive"
 	/>
 <bt_scientist
 	/>
@@ -1559,6 +1595,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	animation="idle"
@@ -1582,6 +1619,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	animation="idle"
@@ -1605,6 +1643,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	animation="idle"
@@ -1630,6 +1669,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1656,6 +1696,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1682,6 +1723,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1708,6 +1750,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1734,6 +1777,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1760,6 +1804,7 @@
 <generator
 	/>
 <tags
+	tags="generator trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1788,6 +1833,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1813,6 +1859,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="room_switcher trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1836,6 +1883,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="limit trigger"
 	/>
 <rigidbody
 	mass="2"
@@ -1860,6 +1908,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	animation="idle"
@@ -1883,6 +1932,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	animation="idle"
@@ -1906,6 +1956,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	animation="idle"
@@ -1929,6 +1980,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="workstation"
 	/>
 <workstation
 	animation="idle"
@@ -1949,6 +2001,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="guided_camera"
 	/>
 <guided_camera
 	default_dirs="0"
@@ -1981,6 +2034,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="guided_camera"
 	/>
 <guided_camera
 	default_dirs="0"
@@ -2023,6 +2077,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="guided_camera"
 	/>
 <guided_camera
 	default_dirs="0"
@@ -2067,6 +2122,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
+	tags="trigger"
 	/>
 <rigidbody
 	mass="2"

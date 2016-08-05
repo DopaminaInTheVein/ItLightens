@@ -403,12 +403,12 @@ bool CEntitiesModule::start() {
 	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
 	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
 
-	initLevel(CApp::get().sceneToLoad);
+	initLevel(CApp::get().sceneToLoad, false);
 
 	return true;
 }
 
-void CEntitiesModule::initLevel(string level) {
+void CEntitiesModule::initLevel(string level, bool check_point) {
 	bool level_changed = level != current_level;
 	// Restart Timers LUA
 	logic_manager->resetTimers();
@@ -431,7 +431,8 @@ void CEntitiesModule::initLevel(string level) {
 	}
 
 	// Parte cambiante
-	is_ok = ep.xmlParseFile("data/scenes/" + sala + "_init.xml"); //TODO: check save files
+	if (!level_changed && check_point) is_ok = ep.xmlParseFile("data/scenes/" + sala + "_save.xml");
+	else is_ok = ep.xmlParseFile("data/scenes/" + sala + "_init.xml");
 	assert(is_ok);
 
 	{
@@ -586,7 +587,7 @@ void CEntitiesModule::initLevel(string level) {
 }
 
 void CEntitiesModule::saveLevel() {
-	string file_name = "data/scenes/" + current_level + "_save00.xml";
+	string file_name = "data/scenes/" + sala + "_save.xml";
 	std::ofstream os(file_name.c_str());
 	if (!os.is_open()) {
 		assert(false);

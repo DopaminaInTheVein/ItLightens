@@ -42,6 +42,7 @@ void CGameController::UpdateGeneralInputs() {
 
 		//restart game
 		if (io->keys[VK_RETURN].becomesPressed() || io->joystick.button_START.becomesPressed()) {
+			CApp::get().has_check_point = false;
 			CApp::get().restartLevelNotify();
 		}
 

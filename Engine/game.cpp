@@ -195,6 +195,7 @@ void CApp::restartLevelNotify() {
 }
 
 void CApp::saveLevel() {
+	has_check_point = true;
 	entities->saveLevel();
 }
 
@@ -228,7 +229,7 @@ void CApp::update(float elapsed) {
 	ctime += elapsed* 0.01f;
 	CHandleManager::destroyAllPendingObjects();
 	if (sceneToLoad != "" && entities->isCleared()) {
-		entities->initLevel(sceneToLoad);
+		entities->initLevel(sceneToLoad, has_check_point);
 	}
 }
 

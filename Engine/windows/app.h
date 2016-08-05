@@ -11,7 +11,7 @@ class CApp {
 public:
 	typedef std::vector<IAppModule*> VModules;
 	std::string sceneToLoad = "";
-
+	bool has_check_point = false;
 	// Remove copy ctor
 	CApp(const CApp&) = delete;
 

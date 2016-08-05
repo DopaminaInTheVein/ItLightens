@@ -20,7 +20,8 @@ void split(const std::string& str, CB cb) {
 struct TCompTags : public TCompBase {
 	static const uint32_t max_tags = 16;
 	TTagID   tags[max_tags];
-	std::set<std::string> tags_str;
+	char tags_str[max_tags][32];
+	//std::set<std::string> tags_str;
 	int nextTag = 0;
 
 	TCompTags() {
@@ -34,7 +35,7 @@ struct TCompTags : public TCompBase {
 			auto tag_id = getID(word.c_str());
 			tags_manager.registerTag(word);
 			tags[nextTag++] = tag_id;
-			tags_str.insert(word);
+			sprintf(tags_str[nextTag], "%s", word.c_str());
 		});
 		return true;
 	}
@@ -91,7 +92,7 @@ struct TCompTags : public TCompBase {
 				if (!tags[i]) {
 					assert(nextTag < max_tags);
 					tags[i] = tag_id;
-					tags_str.insert(msg.tag);
+					sprintf(tags_str[i], "%s", msg.tag.c_str());
 					tags_manager.addTag(h_entity, tag_id);
 					nextTag++;
 					break;
@@ -106,7 +107,7 @@ struct TCompTags : public TCompBase {
 					nextTag--;
 					tags[i] = tags[nextTag];
 					tags[nextTag] = 0x00; // if i == nextTag first assignation dont do anything
-					tags_str.erase(msg.tag);
+					sprintf(tags_str[nextTag], "%s", msg.tag);
 					break;
 				}
 			}
