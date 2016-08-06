@@ -157,6 +157,41 @@ bool TCompPhysics::load(MKeyValue & atts)
 	return true;
 }
 
+bool TCompPhysics::save(std::ofstream& os, MKeyValue& atts)
+{
+	/*
+	std::string readString = atts.getString("type_collision", "static");
+	m_collisionType = getCollisionTypeValueFromString(readString);
+	readString = atts.getString("type_shape", "mesh");
+	m_collisionShape = getCollisionShapeValueFromString(readString);
+	m_mass = atts.getFloat("mass", 2.0f);		//default enough to pass polarize threshold
+	m_kinematic = atts.getBool("kinematic", false);		//default enough to pass polarize threshold
+	m_smooth = atts.getFloat("smooth", 0.0f);
+	*/
+
+	std::string t_collisions[] = { "static", "dynamic", "trigger" };
+	atts.put("type_collision", t_collisions[m_collisionType]);
+
+	std::string t_shapes[] = { "mesh", "sphere", "capsule", "box", "convex", "drone" };
+	atts.put("type_shape", t_shapes[m_collisionShape]);
+
+	if (m_collisionShape == BOX) {
+		atts.put("size", m_size);
+	}
+	else {
+		if (m_collisionShape == CAPSULE || m_collisionShape == SPHERE) {
+			atts.put("radius", m_radius);
+			if (m_collisionShape == CAPSULE) atts.put("height", m_height);
+		}
+	}
+
+	atts.put("mass", m_mass);
+	atts.put("kinematic", m_kinematic);
+	atts.put("smooth", m_smooth);
+
+	return true;
+}
+
 int TCompPhysics::getCollisionTypeValueFromString(std::string str) {
 	if (str == "static") {
 		return STATIC_OBJECT;

@@ -31,6 +31,11 @@ struct TCompLife : public TCompBase {
 		return true;
 	}
 
+	bool save(std::ofstream& os, MKeyValue& atts) {
+		atts.put("points", currentlife);
+		return true;
+	}
+
 	float getCurrent() {
 		return currentlife;
 	}

@@ -403,12 +403,12 @@ bool CEntitiesModule::start() {
 	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
 	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
 
-	initLevel(CApp::get().sceneToLoad);
+	initLevel(CApp::get().sceneToLoad, false);
 
 	return true;
 }
 
-void CEntitiesModule::initLevel(string level) {
+void CEntitiesModule::initLevel(string level, bool check_point) {
 	bool level_changed = level != current_level;
 	// Restart Timers LUA
 	logic_manager->resetTimers();
@@ -422,8 +422,19 @@ void CEntitiesModule::initLevel(string level) {
 	CEntityParser ep(level_changed);
 
 	dbg("Loading scene... (%d entities)\n", size());
-	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
+
+	bool is_ok;
+	// Parte inmutable de la escena
+	if (level_changed) {
+		is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
+		assert(is_ok);
+	}
+
+	// Parte cambiante
+	if (!level_changed && check_point) is_ok = ep.xmlParseFile("data/scenes/" + sala + "_save.xml");
+	else is_ok = ep.xmlParseFile("data/scenes/" + sala + "_init.xml");
 	assert(is_ok);
+
 	{
 		CEntityParser ep(level_changed);
 		is_ok = ep.xmlParseFile("data/scenes/test_lights.xml");
@@ -573,6 +584,23 @@ void CEntitiesModule::initLevel(string level) {
 	current_level = level;
 	CApp::get().sceneToLoad = "";
 	CApp::get().loadedLevelNotify();
+}
+
+void CEntitiesModule::saveLevel() {
+	string file_name = "data/scenes/" + sala + "_save.xml";
+	std::ofstream os(file_name.c_str());
+	if (!os.is_open()) {
+		assert(false);
+	}
+	MKeyValue atts;
+	atts.writeStartElement(os, "entities");
+	getHandleManager<CEntity>()->each([&atts, &os](CEntity * e) {
+		if (e->needReload()) {
+			e->save(os, atts);
+		}
+	});
+	atts.writeEndElement(os, "entities");
+	os.close();
 }
 
 void CEntitiesModule::clear(string new_next_level) {

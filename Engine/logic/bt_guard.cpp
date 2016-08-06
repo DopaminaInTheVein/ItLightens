@@ -1572,6 +1572,32 @@ bool bt_guard::load(MKeyValue& atts) {
 	return true;
 }
 
+std::string bt_guard::getKpTypeStr(bt_guard::KptType type)
+{
+	if (type == KptType::Seek) return "seek";
+	else return "look";
+}
+
+bool bt_guard::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("kpt_size", (int)keyPoints.size());
+	int i = 0;
+	for (auto kp : keyPoints) {
+		KPT_ATR_NAME(atrType, "type", i);
+		KPT_ATR_NAME(atrPos, "pos", i);
+		KPT_ATR_NAME(atrWait, "wait", i);
+		atts.put(atrType, getKpTypeStr(kp.type));
+		atts.put(atrPos, kp.pos);
+		atts.put(atrWait, kp.time);
+		i++;
+	}
+	atts.put("jurisdiction", jurCenter);
+	atts.put("jurRadius", sqrtf(jurRadiusSq));
+	atts.put("formation_point", formation_point);
+	atts.put("formation_dir", formation_dir);
+	return true;
+}
+
 void bt_guard::render() {
 }
 

@@ -70,6 +70,7 @@ public:
 
 	//onread xml
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	PxController* GetController() {
 		return m_pActor;
 	}
@@ -130,7 +131,7 @@ public:
 	void SetCollisions(bool new_collisions);
 	void SetFilterData(PxFilterData& filter);
 	void SetActive(bool isActive) { m_active = isActive; }
-	void SetGravity(bool isActive) { 
+	void SetGravity(bool isActive) {
 		m_affectGravity = isActive;
 		if (!isActive) {
 			m_flagsCollisions.clear(PxControllerCollisionFlag::eCOLLISION_DOWN);

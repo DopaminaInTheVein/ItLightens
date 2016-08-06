@@ -14,7 +14,7 @@ void TCompRenderStaticMesh::onCreate(const TMsgEntityCreated&) {
 }
 
 bool TCompRenderStaticMesh::load(MKeyValue& atts) {
-	auto res_name = atts["name"];
+	res_name = atts["name"];
 #ifndef NDEBUG
 	if (res_name == "static_meshes/ms3/cable.static_mesh") {
 		dbg("Cargando malla buscada...\n");
@@ -22,6 +22,11 @@ bool TCompRenderStaticMesh::load(MKeyValue& atts) {
 #endif
 	static_mesh = Resources.get(res_name.c_str())->as<CStaticMesh>();
 	assert(static_mesh);
+	return true;
+}
+bool TCompRenderStaticMesh::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("name", res_name);
 	return true;
 }
 

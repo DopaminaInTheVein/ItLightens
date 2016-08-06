@@ -38,6 +38,25 @@ fn parseable = (
 		return false
 	)
 	
+	-- Reload <--> sufijo _init
+	local reload = getUserProp _parsingObject "reload"
+	local isReload = false
+	if (reload as string) == "yes" then (
+		isReload = true
+	) else if (reload as string) == "no" then (
+		isReload = false
+	) else if (getUserProp _parsingObject "typeObject") != undefined then (
+		isReload = true	
+	)
+	
+	if isReload and _xml_sufix != "init" then (
+		return false
+	)
+	
+	if (not isReload) and _xml_sufix == "init" then (
+		return false
+	)
+	
 	return true
 )
 

@@ -134,7 +134,7 @@ void PossController::onSetEnable(bool enabled) {
 		//Recover Tag Player
 		TMsgSetTag msgTag;
 		msgTag.add = true;
-		msgTag.tag_id = getID("player");
+		msgTag.tag = "player";
 		hTarget.sendMsg(msgTag);
 	}
 }

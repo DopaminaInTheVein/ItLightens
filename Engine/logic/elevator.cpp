@@ -6,8 +6,34 @@ bool elevator::load(MKeyValue& atts)
 {
 	speedUp = atts.getFloat("speedUp", 7.f);
 	speedDown = atts.getFloat("speedDown", speedUp);
-	targetDown = targetUp = atts.getPoint("target"); // Both as targets, because onCreate we will set targetUp/down as initial position
+
+	//May be indicated target only (and current position) or target_up and down
+	VEC3 target = atts.getPoint("target");
+	//Up and Down
+	if (isZero(target)) {
+		targetUp = atts.getPoint("target_up");
+		targetDown = atts.getPoint("target_down");
+	}
+	//Target and position
+	else {
+		targetDown = targetUp = atts.getPoint("target"); // Both as targets, because onCreate we will set targetUp/down as initial position
+	}
 	epsilonTarget = 0.01f;
+	return true;
+}
+/*	VEC3 targetUp, targetDown;
+	float speedUp;
+	float speedDown;
+	float epsilonTarget;
+	float lastSpeed = 0.0f;
+	*/
+bool elevator::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("speedUp", speedUp);
+	atts.put("speedDown", speedDown);
+	atts.put("target_up", targetUp);
+	atts.put("target_down", targetDown);
+
 	return true;
 }
 
@@ -19,16 +45,17 @@ void elevator::onCreate(const TMsgEntityCreated&)
 	TCompTransform * transform = eMe->get<TCompTransform>();
 	assert(transform);
 
-	VEC3 initialPos = transform->getPosition();
-	if (initialPos.y > targetUp.y) {
-		targetUp = initialPos;
-		prevState = state = UP;
+	if (targetUp == targetDown) {
+		VEC3 initialPos = transform->getPosition();
+		if (initialPos.y > targetUp.y) {
+			targetUp = initialPos;
+			prevState = state = UP;
+		}
+		else {
+			targetDown = initialPos;
+			prevState = state = DOWN;
+		}
 	}
-	else {
-		targetDown = initialPos;
-		prevState = state = DOWN;
-	}
-
 	physics = eMe->get<TCompPhysics>();
 	physics->setKinematic(true);
 }

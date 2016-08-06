@@ -258,7 +258,8 @@ struct TMsgPlayerPolarize {
 };
 
 struct TMsgSetTag {
-	uint32_t tag_id;
+	//uint32_t tag_id;
+	std::string tag;
 	bool add;
 	DECLARE_MSG_ID();
 };

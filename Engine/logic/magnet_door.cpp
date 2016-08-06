@@ -52,6 +52,21 @@ bool magnet_door::load(MKeyValue& atts)
 	return true;
 }
 
+bool magnet_door::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("locked", locked);
+	atts.put("speedOpening", speedOpening);
+	atts.put("speedClosing", speedClosing);
+	atts.put("target", locked ? targetOpened : targetClosed);
+
+	std::string pol = "neutral";
+	if (polarity == PLUS) pol = "plus";
+	else if (polarity == MINUS) pol = "minus";
+	atts.put("pol", pol);
+
+	return true;
+}
+
 void magnet_door::onCreate(const TMsgEntityCreated&)
 {
 	CHandle parent = CHandle(this).getOwner();

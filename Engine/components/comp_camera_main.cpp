@@ -156,7 +156,7 @@ bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 	TCompController3rdPerson *c = e_me->get<TCompController3rdPerson>();
 	CEntity * target = c->target;
 	//float dist = c->GetPositionDistance();
-
+	if (!target) return false;
 	PxQueryFilterData fd = PxQueryFilterData();
 
 	fd.data.word0 = PXM_NO_PLAYER_NPC;
@@ -184,7 +184,9 @@ bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 	}
 	if (!collision) {
 		TCompCharacterController *cc = target->get<TCompCharacterController>();
+		if (!cc) return false;
 		TCompTransform *targett = target->get<TCompTransform>();
+		if (!targett) return false;
 		VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
 		// direction to player
 		direction = pos_target - pos;

@@ -24,6 +24,13 @@ bool TCompCharacterController::load(MKeyValue & atts)
 	return true;
 }
 
+bool TCompCharacterController::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("radius", m_radius);
+	atts.put("height", m_height);
+	return true;
+}
+
 void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 {
 	m_pActor = g_PhysxManager->CreateCharacterController(m_radius, m_height);

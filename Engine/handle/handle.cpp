@@ -3,6 +3,7 @@
 #include "components\entity_tags.h"
 #include "components\entity.h"
 
+#include <fstream>
 // ------------------------------------
 bool CHandle::isValid() const {
 	auto hm = CHandleManager::getByType(type);
@@ -19,6 +20,12 @@ bool CHandle::load(MKeyValue& atts) {
 	auto hm = CHandleManager::getByType(type);
 	if (hm)
 		return hm->load(*this, atts);
+	return false;
+}
+
+bool CHandle::save(std::ofstream& os, MKeyValue& atts) {
+	auto hm = CHandleManager::getByType(type);
+	if (hm)	return hm->save(*this, os, atts);
 	return false;
 }
 

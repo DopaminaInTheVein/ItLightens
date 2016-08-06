@@ -15,6 +15,8 @@ protected:
 	eAction mActionPila;
 	PLAYER_TYPE playerType = PLAYER;
 
+	std::string getActionStr(eAction actionEnum);
+	void saveAction(MKeyValue&, std::string, eAction);
 public:
 	void mUpdate(float dt) override {} //not needed
 	virtual eAction getActionAvailable();
@@ -31,6 +33,7 @@ public:
 		(void)(elapsed);
 	}
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	void renderInMenu();
 
 	//Messages

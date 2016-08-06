@@ -41,12 +41,36 @@ void SkelControllerMole::grabPila(CHandle h)
 	GET_COMP(pila, grabbedPila, TCompPila);
 	if (pila) pila->Grab();
 }
+void SkelControllerMole::pushObject(CHandle h) {
+	pushed = h;
+	GET_COMP(box, h, TCompBox);
+	GET_COMP(tMe, owner, TCompTransform);
+	VEC3 pos_grab_dummy;
+	box->getPushPoints(
+		tMe
+		, left_h_target
+		, right_h_target
+		, front_h_dir
+		, pos_grab_dummy
+		, left_h_normal
+		, right_h_normal
+	);
+	enableIK(SK_LHAND, grabLeftIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
+	enableIK(SK_RHAND, grabRightIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
+}
 void SkelControllerMole::ungrabObject()
 {
 	GET_COMP(box, grabbed, TCompBox);
 	box->UnGrab();
 	disableIK(SK_LHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
 	//(SK_RHAND, SK_MOLE_TIME_TO_UNGRAB, );
+}
+void SkelControllerMole::unpushObject()
+{
+	GET_COMP(box, pushed, TCompBox);
+	box->UnGrab();
+	disableIK(SK_LHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
+	disableIK(SK_RHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
 }
 
 void SkelControllerMole::ungrabPila()
@@ -159,13 +183,21 @@ void SkelControllerMole::updateGrab()
 		else if (currentState == AST_RUN) currentState = AST_GRAB_WALK;
 		else if (currentState == AST_MOVE) currentState = AST_GRAB_WALK;
 	}
+	else if (pushed.isValid()) {
+		if (currentState == AST_IDLE) currentState = AST_GRAB_IDLE;
+		else if (currentState == AST_RUN) currentState = AST_PUSH_WALK;
+		else if (currentState == AST_MOVE) currentState = AST_PUSH_WALK;
+	}
 	else {
 		if (currentState == AST_GRAB_IDLE) currentState = AST_IDLE;
 		else if (currentState == AST_GRAB_WALK) currentState = AST_MOVE;
 	}
 
 	if (isMovingBox()) {
-		updateGrabPoints();
+		if (grabbed.isValid())
+			updateGrabPoints();
+		else if (pushed.isValid())
+			updatePushPoints();
 	}
 }
 
@@ -201,11 +233,34 @@ void SkelControllerMole::updateGrabPoints()
 	}
 }
 
+void SkelControllerMole::updatePushPoints()
+{
+	if (!pushed.isValid()) return;
+	if (isMovingBox()) {
+		GET_COMP(box, pushed, TCompBox);
+		GET_MY(tMe, TCompTransform);
+		VEC3 pos_grab_dummy;
+		box->getPushPoints(tMe
+			, left_h_target
+			, right_h_target
+			, front_h_dir
+			, pos_grab_dummy
+			, left_h_normal
+			, right_h_normal
+			, 0.5f
+			, false);
+	}
+}
+
 bool SkelControllerMole::isMovingBox()
 {
 	return currentState == AST_GRAB_UP
 		|| currentState == AST_GRAB_IDLE
 		|| currentState == AST_GRAB_WALK
+		|| currentState == AST_PUSH_IDLE
+		|| currentState == AST_PUSH_PREP
+		|| currentState == AST_PUSH_WALK
+		|| currentState == AST_PULL_WALK
 		;
 }
 
@@ -233,7 +288,10 @@ VEC3 SkelControllerMole::getGrabFrontDir()
 
 CHandle SkelControllerMole::getGrabbed()
 {
-	return grabbed;
+	if (grabbed.isValid())
+		return grabbed;
+	else
+		return pushed;
 }
 
 CHandle SkelControllerMole::getGrabbedPila()

@@ -190,6 +190,21 @@ bool TCompDrone::load(MKeyValue & atts)
 	speed = atts.getFloat("speed", 1.0f);
 	return true;
 }
+bool TCompDrone::save(std::ofstream& os, MKeyValue& atts)
+{
+	int n = (int)wpts.size() - 1;
+	atts.put("wpts_size", n);
+	for (int i = 0; i < n; i++) {
+		WPT_ATR_NAME(atrPos, "pos", i);
+		WPT_ATR_NAME(atrWait, "wait", i);
+		atts.put(atrPos, wpts[i]);
+		atts.put(atrWait, waitTimes[i]);
+	}
+	atts.put("textureFront", self_ilum_front);
+	atts.put("textureBack", self_ilum_back);
+
+	return true;
+}
 
 void TCompDrone::fixedUpdate(float elapsed) {
 	PxRigidDynamic *rd = physics->getActor()->isRigidDynamic();

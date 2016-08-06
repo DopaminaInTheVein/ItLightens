@@ -10,6 +10,8 @@
 #include "handle\handle.h"
 #include "components\entity.h"
 
+using namespace std;
+
 extern CShaderCte< TCteObject > shader_ctes_object;
 
 void TCompTransform::render() const
@@ -21,6 +23,7 @@ void TCompTransform::render() const
 }
 
 bool TCompTransform::load(MKeyValue& atts) {
+	//MKeyValue atts;
 	auto p = atts.getPoint("pos");
 	auto q = atts.getQuat("quat");
 	auto s = atts.getFloat("scale", 1.0f);
@@ -39,6 +42,13 @@ bool TCompTransform::load(MKeyValue& atts) {
 		auto target = atts.getPoint("lookat");
 		lookAt(p, target, getUp());
 	}
+	return true;
+}
+
+bool TCompTransform::save(ofstream& os, MKeyValue& atts) {
+	atts.put("pos", getPosition());
+	atts.put("quat", getRotation());
+	atts.put("scale", getScale());
 	return true;
 }
 

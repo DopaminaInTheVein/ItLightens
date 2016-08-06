@@ -21,6 +21,8 @@ void IdEntities::init() {
 void IdEntities::saveIdEntity(CHandle entity, int entity_id) {
 	if (entity_id >= 0) {
 		identified_entities[entity_id] = entity;
+		CEntity* e = entity;
+		e->setId(entity_id);
 	}
 }
 

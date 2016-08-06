@@ -21,6 +21,16 @@ struct TCompRoom : public TCompBase {
 		return true;
 	}
 
+	bool save(std::ofstream& os, MKeyValue& atts) {
+		std::stringstream ss;
+		for (int n : name) {
+			if (ss.str() != "") ss << "/";
+			ss << n;
+		}
+		atts.put("name", ss.str());
+		return true;
+	}
+
 	bool setName(std::vector<int> newName) {
 		name = newName;
 		return true;

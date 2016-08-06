@@ -50,6 +50,7 @@ public:
 	void onSetPolarity(const TMsgSetPolarity&);
 	void onSetLocked(const TMsgSetLocked&);
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated&);
 };
 #endif

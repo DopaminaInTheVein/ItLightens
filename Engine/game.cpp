@@ -194,6 +194,11 @@ void CApp::restartLevelNotify() {
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnRestartLevel, std::string(params));
 }
 
+void CApp::saveLevel() {
+	has_check_point = true;
+	entities->saveLevel();
+}
+
 void CApp::loadedLevelNotify() {
 	sceneToLoad = "";
 	char params[128];
@@ -224,7 +229,7 @@ void CApp::update(float elapsed) {
 	ctime += elapsed* 0.01f;
 	CHandleManager::destroyAllPendingObjects();
 	if (sceneToLoad != "" && entities->isCleared()) {
-		entities->initLevel(sceneToLoad);
+		entities->initLevel(sceneToLoad, has_check_point);
 	}
 }
 

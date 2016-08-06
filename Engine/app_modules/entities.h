@@ -21,7 +21,8 @@ public:
 	void stop() override;
 	void update(float dt) override;
 
-	void initLevel(std::string);
+	void initLevel(std::string, bool check_point);
+	void saveLevel();
 	void clear(std::string next_level = "");
 	bool isCleared();
 	void destroyRandomEntity(float percent);

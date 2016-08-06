@@ -151,6 +151,14 @@ bool TCompPolarized::load(MKeyValue & atts)
 	return true;
 }
 
+bool TCompPolarized::save(std::ofstream& os, MKeyValue& atts)
+{
+	std::string polarities[] = { "neutral", "minus", "plus" };
+	atts.put("pol", polarities[force.polarity]);
+	if (!isZero(force.offset)) atts.put("offset", force.offset);
+	return true;
+}
+
 void TCompPolarized::onCreate(const TMsgEntityCreated &)
 {
 	CHandle me_h = CHandle(this).getOwner();

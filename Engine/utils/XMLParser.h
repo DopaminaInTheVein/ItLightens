@@ -11,6 +11,7 @@ class MKeyValue : public std::map<std::string, std::string> {
 	void writeAttributes(std::ostream &os) const;
 public:
 	void   put(const char *what, int value);
+	void   put(const char *what, std::string value);
 	void   put(const char *what, float value);
 	void   put(const char * what, VEC4 value);
 	void   put(const char *what, bool value);

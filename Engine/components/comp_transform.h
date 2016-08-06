@@ -15,6 +15,7 @@ struct TCompTransform : public CTransform, public TCompBase {
 		dbg("TCompTransform on TMsgEntityCreated\n");
 	}
 	void renderInMenu();
+	bool save(std::ofstream& os, MKeyValue& atts);
 };
 
 #endif

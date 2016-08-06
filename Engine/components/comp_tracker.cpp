@@ -33,6 +33,24 @@ bool TCompTracker::load(MKeyValue& atts) {
 
 	return true;
 }
+bool TCompTracker::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("long", longitude);
+	atts.put("size", size);
+
+	//Positions & Orientations
+	char nameAttr[20];
+	for (int i = 0; i < size; i++) {
+		//Position
+		sprintf(nameAttr, "point%d", i);
+		atts.put(nameAttr, positions[i]);
+
+		//Orientation
+		//sprintf(nameAttr, "tangent%d", i); // Quaternions!?
+		//orientations[i] = atts.getPoint(nameAttr);
+	}
+	return true;
+}
 
 void TCompTracker::setFollower(const TMsgFollow &msg) {
 	//dbg("---------- Tracker -----------------------------------\n");

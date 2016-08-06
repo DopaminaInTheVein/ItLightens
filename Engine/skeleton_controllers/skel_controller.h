@@ -33,6 +33,7 @@
 #define AST_PILA_WALK			"grab_pila_walk"
 #define AST_WORK				"work"
 #define AST_THROW				"throw"
+#define AST_PUSH_IDLE			"push_idle"
 #define AST_PUSH_PREP			"push_prep"
 #define AST_PUSH_WALK			"push_walk"
 #define AST_PULL_WALK			"pull_walk"
