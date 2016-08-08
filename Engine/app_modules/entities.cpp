@@ -407,12 +407,15 @@ bool CEntitiesModule::start() {
 
 	return true;
 }
-void CEntitiesModule::loadXML(std::string file, bool calc_navmesh)
+
+void CEntitiesModule::loadXML(CEntitiesModule::ParsingInfo& info)
 {
+	//TODO init IdEntities!
+	CEntityParser ep(info.reload);
 }
 
 void CEntitiesModule::initLevel(string level, bool check_point) {
-	bool level_changed = level != current_level;
+	bool reload = level == current_level;
 	// Restart Timers LUA
 	logic_manager->resetTimers();
 
@@ -422,24 +425,24 @@ void CEntitiesModule::initLevel(string level, bool check_point) {
 	SBB::postBool("navmesh", false);
 	salaloc = "data/navmeshes/" + sala + ".data";
 
-	CEntityParser ep(level_changed);
+	CEntityParser ep(reload);
 
 	dbg("Loading scene... (%d entities)\n", size());
 
 	bool is_ok;
 	// Parte inmutable de la escena
-	if (level_changed) {
+	if (!reload) {
 		is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
 		assert(is_ok);
 	}
 
 	// Parte cambiante
-	if (!level_changed && check_point) is_ok = ep.xmlParseFile("data/scenes/" + sala + "_save.xml");
+	if (reload && check_point) is_ok = ep.xmlParseFile("data/scenes/" + sala + "_save.xml");
 	else is_ok = ep.xmlParseFile("data/scenes/" + sala + "_init.xml");
 	assert(is_ok);
 
 	{
-		CEntityParser ep(level_changed);
+		CEntityParser ep(reload);
 		is_ok = ep.xmlParseFile("data/scenes/test_lights.xml");
 		assert(is_ok);
 	}
