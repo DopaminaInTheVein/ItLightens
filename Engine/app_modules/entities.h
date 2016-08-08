@@ -17,11 +17,18 @@ public:
 	std::string sala;
 	std::string salaloc;
 
+	struct ParsingInfo {
+		std::string filename;
+		bool calc_navmesh;
+		bool reload;
+	};
+
 	bool start() override;
 	void stop() override;
 	void update(float dt) override;
 
 	void initLevel(std::string, bool check_point);
+	void loadXML(ParsingInfo& info);
 	void saveLevel();
 	void clear(std::string next_level = "");
 	bool isCleared();

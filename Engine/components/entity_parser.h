@@ -36,7 +36,7 @@ class CEntityParser : public CXMLParser {
 	bool curr_entity_reload;
 	bool curr_entity_slept;
 	bool first_load;
-	bool level_changed = true;
+	bool reload = false;
 	CHandle root_entity;
 	VHandles handles;
 	CPrefabCompiler* curr_prefab_compiler;
@@ -45,7 +45,7 @@ class CEntityParser : public CXMLParser {
 	static std::set<std::string> loaded_files;
 public:
 	CEntityParser() : curr_prefab_compiler(nullptr) { IdEntities::init(); }
-	CEntityParser(bool new_level) : curr_prefab_compiler(nullptr) { IdEntities::init(); level_changed = new_level; }
+	CEntityParser(bool new_reload) : curr_prefab_compiler(nullptr), reload(new_reload) { IdEntities::init(); }
 	CEntityParser(CHandle parent) { curr_entity = root_entity = parent; }
 	CHandle getRootEntity() { return root_entity; }
 	void onStartElement(const std::string &elem, MKeyValue &atts) override;

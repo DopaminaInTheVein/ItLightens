@@ -212,6 +212,6 @@ void CEntityParser::onEndElement(const std::string &elem) {
 bool CEntityParser::hasToCreate()
 {
 	if (curr_entity_permanent && !first_load) return false;
-	if (!level_changed && !curr_entity_reload) return false;
+	if (reload && !curr_entity_reload) return false;
 	return true;
 }

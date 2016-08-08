@@ -407,6 +407,9 @@ bool CEntitiesModule::start() {
 
 	return true;
 }
+void CEntitiesModule::loadXML(std::string file, bool calc_navmesh)
+{
+}
 
 void CEntitiesModule::initLevel(string level, bool check_point) {
 	bool level_changed = level != current_level;
