@@ -130,6 +130,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
+    <ClCompile Include="app_modules\navmesh\navmesh_manager.cpp" />
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
     <ClCompile Include="camera\camera.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="components\comp_render_fade_screen.cpp" />
     <ClCompile Include="components\comp_render_glow.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
+    <ClCompile Include="components\comp_room.cpp" />
     <ClCompile Include="components\comp_room_limit.cpp" />
     <ClCompile Include="components\comp_room_switch.cpp" />
     <ClCompile Include="components\comp_snoozer.cpp">
@@ -343,6 +345,7 @@
     <ClInclude Include="app_modules\io\mouse.h" />
     <ClInclude Include="app_modules\logic_manager\logic_manager.h" />
     <ClInclude Include="app_modules\logic_manager\slb_public_functions.h" />
+    <ClInclude Include="app_modules\navmesh\navmesh_manager.h" />
     <ClInclude Include="app_modules\render\module_render_deferred.h" />
     <ClInclude Include="app_modules\sound_manager\sound_manager.h" />
     <ClInclude Include="camera\camera.h" />

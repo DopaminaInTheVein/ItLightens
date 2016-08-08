@@ -26,6 +26,20 @@ extern CShaderCte< TCteCamera > shader_ctes_camera;
 
 #include "comp_charactercontroller.h"
 
+void TCompCameraMain::init()
+{
+	CHandle player = tags_manager.getFirstHavingTag("player");
+	TMsgSetTarget msg;
+	msg.target = player;
+	msg.who = PLAYER;
+	CHandle hMe = CHandle(this).getOwner();
+	hMe.sendMsg(msg);
+
+	TMsgSetCamera msgCam;
+	msgCam.camera = hMe;
+	player.sendMsg(msgCam);
+}
+
 bool TCompCameraMain::load(MKeyValue& atts) {
 	if (!TCompCamera::load(atts)) return false;
 	detect_colsions = atts.getBool("collision", false);
@@ -116,7 +130,8 @@ void TCompCameraMain::update(float dt) {
 				else if (cientificocontroller) {
 					colision = cientificocontroller->getEnabled();
 					factor = 0.89f;
-				} else {
+				}
+				else {
 					return;
 				}
 			}

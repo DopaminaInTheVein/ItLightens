@@ -57,11 +57,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-    p:play_music("event:/OnGameStart")
-	--triggerGuardFormation();
-	--p:exec_command( "triggerGuardFormation();", 15 )
-	cam:run_cinematic("CinematicIntro", 10)
-	stateElevator = 1
+	p:load_level("level_0")
 	CallFunction("test_dbg")
 end
 
@@ -337,7 +333,7 @@ function OnRestartLevel( logic_level, real_level )
 	p:print( "OnRestartLevel\n")
 	cam:fade_out(1)
 	p:setControlEnabled(0)
-	p:exec_command("LoadLevel(\""..logic_level.."\", \""..real_level.."\");", 1) -- Defined in functions.lua
+	p:exec_command("LoadLevel(\""..logic_level.."\");", 1) -- Defined in functions.lua
 end
 
 --Loaded Level

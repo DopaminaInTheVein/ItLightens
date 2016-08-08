@@ -512,6 +512,12 @@
     <ClCompile Include="app_modules\gameController.cpp">
       <Filter>app_modules\game</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_room.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\navmesh\navmesh_manager.cpp">
+      <Filter>app_modules\navmesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1386,6 +1392,9 @@
     <ClInclude Include="logic\pila.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="app_modules\navmesh\navmesh_manager.h">
+      <Filter>app_modules\navmesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1561,6 +1570,9 @@
     </Filter>
     <Filter Include="app_modules\particles">
       <UniqueIdentifier>{39998eac-d4cc-4be4-bbba-a3a4d8b79e2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\navmesh">
+      <UniqueIdentifier>{e00dde25-03bc-4be5-9b3e-a185b50d039a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

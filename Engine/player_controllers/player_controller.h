@@ -110,12 +110,6 @@ class player_controller : public CPlayerBase {
 		return transform;
 	}
 
-	CHandle getMinusPointHandle(int i) {
-		return SBB::readHandlesVector("wptsMinusPoint")[i];
-	}
-	CHandle getPlusPointHandle(int i) {
-		return SBB::readHandlesVector("wptsPlusPoint")[i];
-	}
 	PolarityForce getPolarityForce(CHandle forceHandle);
 
 	bool isDamaged();

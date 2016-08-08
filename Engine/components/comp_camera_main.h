@@ -24,6 +24,7 @@ struct TCompCameraMain : public TCompCamera {
 	//int lastguidedCamPoint;
 	//VEC3 guided_positions[MAX_GUIDE_POINTS];
 	//CQuaternion guided_rotations[MAX_GUIDE_POINTS];
+	void init();
 	bool load(MKeyValue& atts);
 	bool getUpdateInfo() override;
 	void update(float dt);

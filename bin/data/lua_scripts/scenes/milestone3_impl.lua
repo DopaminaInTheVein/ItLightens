@@ -21,6 +21,10 @@ function OnLoaded_ms3()
   isDoorOpen = false
   alert = false
   stateElevator = 1 -- 1= up , 0 = down
+  p:play_music("event:/OnGameStart")
+  --triggerGuardFormation();
+  --p:exec_command( "triggerGuardFormation();", 15 )
+  cam:run_cinematic("CinematicIntro", 10)
 end
 ---------------------------------------------------------------------------------------------
 

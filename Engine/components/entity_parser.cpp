@@ -9,7 +9,7 @@ using namespace std;
 
 map< string, CPrefabCompiler* > compiled_prefabs;
 set<string> CEntityParser::loaded_files = set<string>();
-
+VHandles CEntityParser::collisionables = VHandles();
 // Identified Entities
 static VHandles identified_entities;
 CHandle IdEntities::findById(const int entity_id) {
