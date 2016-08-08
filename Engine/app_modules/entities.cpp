@@ -666,27 +666,6 @@ void CEntitiesModule::renderInMenu() {
 	ImGui::End();
 }
 
-//void CEntitiesModule::recalcNavmesh() {
-//	// GENERATE NAVMESH
-//	CNavmesh nav = SBB::readNavmesh();
-//	nav.build(salaloc);
-//	SBB::postNavmesh(nav);
-//	SBB::postBool(sala, true);
-//}
-//
-//void CEntitiesModule::readNavmesh() {
-//	// GENERATE NAVMESH
-//	CNavmesh nav = SBB::readNavmesh();
-//	bool recalc = !nav.reload(salaloc);
-//	if (recalc) {
-//		recalcNavmesh();
-//	}
-//	else {
-//		SBB::postNavmesh(nav);
-//		SBB::postBool("navmesh", true);
-//	}
-//}
-
 void CEntitiesModule::fixedUpdate(float elapsed)
 {
 	getHandleManager<TCompDrone>()->fixedUpdateAll(elapsed);
