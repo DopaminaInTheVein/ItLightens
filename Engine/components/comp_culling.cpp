@@ -4,6 +4,7 @@
 #include "comp_camera.h"
 #include "comp_msgs.h"
 #include "entity.h"
+#include "handle/handle.h"
 #include "comp_room.h"
 #include "logic\sbb.h"
 
@@ -24,6 +25,19 @@ bool TCompCulling::VPlanes::isVisible(const AABB* aabb) const {
 		++it;
 	}
 	return true;
+}
+
+// Returns true if the aabb is fully in the negative side of the plane
+bool TCompCulling::CPlane::isCulled(const AABB* aabb) const {
+	//
+	const float r = aabb->Extents.x * fabsf(n.x)
+		+ aabb->Extents.y * fabsf(n.y)
+		+ aabb->Extents.z * fabsf(n.z)
+		;
+
+	// Distance from box center to the plane
+	const float c = n.Dot(aabb->Center) + d;
+	return c < -r;
 }
 
 void TCompCulling::update() {
@@ -74,7 +88,7 @@ void TCompCulling::update() {
 	TCompAbsAABB* aabb = hm->getFirstObject();
 	for (size_t i = 0; i < hm->size(); ++i, ++aabb) {
 		PROFILE_FUNCTION("TCompCulling: isVisible bucle");
-		if (planes.isVisible(aabb))
+		if (planes.isVisible(aabb) || CHandle(aabb).getOwner().hasTag("player"))
 			bits.set(i);
 	}
 }

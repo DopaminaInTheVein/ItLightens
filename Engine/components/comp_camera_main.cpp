@@ -89,10 +89,14 @@ void TCompCameraMain::update(float dt) {
 
 			CEntity *e_me = compBaseEntity;
 			TCompController3rdPerson *c = e_me->get<TCompController3rdPerson>();
+			if (!c) return;
 
 			CEntity *target = c->target;
+			if (!target) return;
 			TCompCharacterController *cc = target->get<TCompCharacterController>();
+			if (!cc) return;
 			TCompTransform *targett = target->get<TCompTransform>();
+			if (!targett) return;
 			VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
 			float factor = 0.8f;
 
@@ -105,13 +109,15 @@ void TCompCameraMain::update(float dt) {
 				if (raijincontroller) {
 					colision = raijincontroller->getEnabled();
 				}
-				if (molecontroller) {
+				else if (molecontroller) {
 					colision = molecontroller->getEnabled();
 					factor = 0.89f;
 				}
-				if (cientificocontroller) {
+				else if (cientificocontroller) {
 					colision = cientificocontroller->getEnabled();
 					factor = 0.89f;
+				} else {
+					return;
 				}
 			}
 			colision = (colision ? checkColision(pos, smoothCurrent) : false);
