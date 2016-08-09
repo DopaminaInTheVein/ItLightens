@@ -703,7 +703,11 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.comment("Launches the victory game state")
 		// LoadLevel (and clear current)
 		.set("load_level", &SLBPublicFunctions::loadLevel)
-		.comment("Launches the victory game state")
+		.comment("Clear current scene and load next (param)")
+		.param("string: name of the level")
+		// SaveLevel
+		.set("save_level", &SLBPublicFunctions::saveLevel)
+		.comment("Save state current level")
 		.param("string: name of the level")
 		;
 }
