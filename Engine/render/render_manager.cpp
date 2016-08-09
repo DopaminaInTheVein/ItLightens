@@ -165,7 +165,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 		all_keys.begin()
 		, all_keys.end()
 		, category
-		);
+	);
 	auto d0 = std::distance(all_keys.begin(), r.first);
 	auto d1 = std::distance(all_keys.begin(), r.second);
 	TKey* it = &all_keys[0] + d0;
@@ -334,7 +334,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 			}
 			else {
 				//Puede no tener transform, ignoralo y ya esta
-				fatal("render__manager: tranfrom from shadowcaster null");
+				//fatal("render__manager: tranfrom from shadowcaster null");
 			}
 		}
 
@@ -409,7 +409,7 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 				it->mesh->activateAndRender();
 			}
 			else {
-				fatal("render__manager: tranfrom from shadowcaster skinning null");
+				//fatal("render__manager: tranfrom from shadowcaster skinning null");
 			}
 		}
 		++it;

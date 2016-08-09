@@ -446,8 +446,8 @@ void CEntitiesModule::initEntities() {
 	getHandleManager<TCompRoom>()->onAll(&TCompRoom::init);
 }
 
-void CEntitiesModule::saveLevel() {
-	string file_name = "data/scenes/" + sala + "_save.xml";
+void CEntitiesModule::saveLevel(std::string level_name) {
+	string file_name = "data/scenes/" + level_name + "_save.xml";
 	std::ofstream os(file_name.c_str());
 	if (!os.is_open()) {
 		assert(false);

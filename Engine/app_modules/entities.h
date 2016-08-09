@@ -13,8 +13,6 @@ class CEntitiesModule : public IAppModule {
 	std::thread navmeshThread;
 public:
 	std::vector< CHandle > collisionables;
-	std::string sala;
-	std::string salaloc;
 
 	struct ParsingInfo {
 		std::string filename;
@@ -28,7 +26,7 @@ public:
 	//void initLevel(std::string, bool check_point, bool reload);
 	void initEntities();
 	bool loadXML(ParsingInfo& info);
-	void saveLevel();
+	void saveLevel(std::string level_name);
 	void clear(bool reload);//std::string next_level = "");
 	bool isCleared();
 	void destroyRandomEntity(float percent);

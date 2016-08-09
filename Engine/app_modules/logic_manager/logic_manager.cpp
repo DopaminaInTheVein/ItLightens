@@ -20,6 +20,7 @@ bool CLogicManagerModule::start() {
 	bindHandle(*slb_manager);
 	bindHandleGroup(*slb_manager);
 	bindCamera(*slb_manager);
+	bindData(*slb_manager);
 	bindPublicFunctions(*slb_manager);
 
 	// load the scripts
@@ -108,12 +109,6 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "teleportPlayer(%f, %f, %f);", 0.0f, 0.0f, -22.0f);
 		break;
 	}
-	case (OnLevelStart): {
-		//char command_code[64];
-		//sprintf(command_code, "dbg('%s');", "TIMER - OLS");
-		sprintf(lua_code, "OnLevelStart(\"%s\");", params.c_str());
-		break;
-	}
 	case (OnZoneStart001): {
 		sprintf(lua_code, "teleportSpeedy('%s', %f, %f, %f);", "speedy1", 0.0f, 0.0f, -22.0f);
 		break;
@@ -184,7 +179,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnPickupBox(%f);", 0.5f);
 		break;
 	}
-	case (OnPushBox) : {
+	case (OnPushBox): {
 		sprintf(lua_code, "OnPushBox(%f);", 0.5f);
 		break;
 	}
@@ -350,6 +345,14 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 	}
 	case (OnRestartLevel): {
 		sprintf(lua_code, "OnRestartLevel(%s);", params.c_str());
+		break;
+	}
+	case (OnSavedLevel): {
+		sprintf(lua_code, "OnSavedLevel(%s);", params.c_str());
+		break;
+	}
+	case (OnLevelStart): {
+		sprintf(lua_code, "OnLevelStart(%s);", params.c_str());
 		break;
 	}
 	case (OnLoadedLevel): {
@@ -608,6 +611,17 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.set("fade_out", &SLBCamera::fadeOut)
 		.comment("Start fade out")
 		.param("float: time fade, if time <= 0 set default")
+		;
+}
+
+// Permanent Data Functions
+void CLogicManagerModule::bindData(SLB::Manager& m) {
+	SLB::Class<SLBData>("Data", &m)
+		.comment("Data class")
+		.constructor()
+		// sets the handle pointer to the player
+		.set("write", &SLBData::write)
+		.comment("Write the current info into a file")
 		;
 }
 

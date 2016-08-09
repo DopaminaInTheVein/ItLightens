@@ -86,11 +86,6 @@ function OnGuardRemoveBox( reaction_time )
 	p:print( "OnGuardRemoveBox: "..reaction_time.."\n" )
 end
 
-function OnLevelStart( param )
-	p:print("OnLevelStart\n")
-	CallFunction("OnLevelStart_"..param)
-end
-
 function OnZoneStart001( param )
 	p:print( "OnZoneStart001: "..param.."\n" )
 end
@@ -336,13 +331,25 @@ function OnRestartLevel( logic_level, real_level )
 	p:exec_command("LoadLevel(\""..logic_level.."\");", 1) -- Defined in functions.lua
 end
 
---Loaded Level
+--Levels
 ---------------------------------------------------
-function OnLoadedLevel( logic_level, real_level)
+function OnLevelStart( logic_level, real_level )
+	p:print("OnLevelStart\n")
+	p:exec_command("cam:fade_in(1)", 1)
+	p:exec_command("p:setControlEnabled(1);", 1)
+	CallFunction("OnStart_"..real_level)
+end
+
+function OnSavedLevel( logic_level, real_level )
+	p:print("OnSavedLevel")
+	CallFunction("OnSave_"..real_level)	
+end
+
+function OnLoadedLevel( logic_level, real_level )
 	p:print("OnLoadedLevel")
 	p:exec_command("cam:fade_in(1)", 1)
 	p:exec_command("p:setControlEnabled(1);", 1)
-	CallFunction("OnLoaded_"..real_level)
+	CallFunction("OnLoad_"..real_level)
 end
 
 --Game Ending

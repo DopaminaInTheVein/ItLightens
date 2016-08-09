@@ -50,3 +50,7 @@ function OnEnter_tVictory( )
 OnVictory()
 end
 
+function OnEnter_tSave01( )
+SaveLevel()
+end
+

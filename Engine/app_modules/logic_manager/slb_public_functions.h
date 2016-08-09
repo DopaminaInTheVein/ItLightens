@@ -117,6 +117,14 @@ public:
 };
 
 // public functions
+class SLBData
+{
+public:
+	// public functions
+	void write();
+};
+
+// public functions
 class SLBPublicFunctions
 {
 public:
@@ -137,6 +145,7 @@ public:
 	void toggleIntroState();
 	void launchVictoryState();
 	void loadLevel(const char* level_name);
+	void saveLevel();
 
 	void test(const char* to_print);
 };

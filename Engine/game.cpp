@@ -203,15 +203,22 @@ void CApp::restartLevelNotify() {
 
 void CApp::saveLevel() {
 	has_check_point = true;
-	entities->saveLevel();
+	entities->saveLevel(current_level);
+	char params[128];
+	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnSavedLevel, std::string(params));
 }
 
 void CApp::loadedLevelNotify() {
-	char params[128];
-	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnLoadedLevel, std::string(params));
 	current_level = next_level;
 	next_level = "";
+	char params[128];
+	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
+	auto game_event = has_check_point
+		? CLogicManagerModule::EVENT::OnLoadedLevel
+		: CLogicManagerModule::EVENT::OnLevelStart;
+
+	logic_manager->throwEvent(game_event, std::string(params));
 }
 
 void CApp::exitGame() {
