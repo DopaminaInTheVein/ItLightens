@@ -1,7 +1,6 @@
 {
     "ms3": {
-        "ola": 0.0,
-        "q": 1.0,
-        "ase": 0
+        "elevator_state": 1.0,
+        "door_open": 1.0
     }
 }

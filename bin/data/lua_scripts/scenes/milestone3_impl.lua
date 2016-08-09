@@ -29,6 +29,8 @@ end
 
 function OnSave_ms3()
 	d = Data()
+	d:put("elevator_state", 1)
+	d:put("door_open", 1)
 	d:write()
 end
 

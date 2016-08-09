@@ -119,7 +119,11 @@ public:
 // public functions
 class SLBData
 {
+	std::string file_name;
+	std::map<std::string, float> data;
 public:
+
+	void put(const char* key, float value);
 	// public functions
 	void write();
 };

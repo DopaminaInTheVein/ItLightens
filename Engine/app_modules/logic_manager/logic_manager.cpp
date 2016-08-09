@@ -619,7 +619,12 @@ void CLogicManagerModule::bindData(SLB::Manager& m) {
 	SLB::Class<SLBData>("Data", &m)
 		.comment("Data class")
 		.constructor()
-		// sets the handle pointer to the player
+		// add value to data
+		.set("put", &SLBData::put)
+		.comment("Add a key value pair to data")
+		.param("string: key")
+		.param("float: value")
+		// write data to file
 		.set("write", &SLBData::write)
 		.comment("Write the current info into a file")
 		;

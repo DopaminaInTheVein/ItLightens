@@ -485,13 +485,14 @@ void SLBCamera::fadeOut(float speed) {
 }
 
 // Data
+void SLBData::put(const char* key, float value)
+{
+	data[std::string(key)] = value;
+}
+
 void SLBData::write()
 {
-	std::map<std::string, float> atributes_map;
-
-	atributes_map["ola"] = 0.f;
-	atributes_map["q"] = 1.f;
-	writeIniAtrData("data/data.json", CApp::get().getCurrentRealLevel(), atributes_map);
+	writeIniAtrData("data/data.json", CApp::get().getCurrentRealLevel(), data);
 }
 
 // public generic functions
