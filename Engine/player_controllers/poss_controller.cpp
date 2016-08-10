@@ -134,3 +134,20 @@ void PossController::onSetEnable(bool enabled) {
 		hTarget.sendMsg(msgTag);
 	}
 }
+
+bool PossController::load_poss(MKeyValue& atts)
+{
+	npcIsPossessed = atts.getBool("possessed", false);
+	return true;
+}
+bool PossController::save_poss(std::ofstream& os, MKeyValue& atts)
+{
+	if (npcIsPossessed) atts.put("possessed", npcIsPossessed);
+	return true;
+}
+void PossController::init_poss()
+{
+	if (npcIsPossessed) {
+		onSetEnable(true);
+	}
+}

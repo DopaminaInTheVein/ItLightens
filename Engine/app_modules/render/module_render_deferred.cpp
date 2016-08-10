@@ -286,7 +286,8 @@ void CRenderDeferredModule::addPointLights() {
 	// Activar la mesh unit_sphere
 	getHandleManager<TCompLightPoint>()->each([mesh](TCompLightPoint* c) {
 		PROFILE_FUNCTION("upload point light");
-		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
+		GET_ECOMP(room, c->compBaseEntity, TCompRoom);
+		//TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
 			std::vector<int> rooms = room->name;
 			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
@@ -298,15 +299,17 @@ void CRenderDeferredModule::addPointLights() {
 					CEntity* ep = tags_manager.getFirstHavingTag("player");
 					if (ep) {
 						TCompTransform* t = ep->get<TCompTransform>();
-						TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
-
-						if (t->getPosition().y > 10) {
-							if (tl->getPosition().y < 12)
-								return;
-						}
-						else {
-							if (tl->getPosition().y > 12)
-								return;
+						GET_ECOMP(tl, c->compBaseEntity, TCompTransform);
+						//TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
+						if (t && tl) {
+							if (t->getPosition().y > 10) {
+								if (tl->getPosition().y < 12)
+									return;
+							}
+							else {
+								if (tl->getPosition().y > 12)
+									return;
+							}
 						}
 					}
 				}
@@ -337,7 +340,8 @@ void CRenderDeferredModule::addDirectionalLights() {
 		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
 		// la world para la mesh y las constantes en el pixel shader
 		PROFILE_FUNCTION("upload light dir");
-		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
+		GET_ECOMP(room, c->compBaseEntity, TCompRoom);
+		//TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
 		if (room) {
 			std::vector<int> rooms = room->name;
 			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
@@ -349,15 +353,17 @@ void CRenderDeferredModule::addDirectionalLights() {
 					CEntity* ep = tags_manager.getFirstHavingTag("player");
 					if (ep) {
 						TCompTransform* t = ep->get<TCompTransform>();
-						TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
-
-						if (t->getPosition().y > 10) {
-							if (tl->getPosition().y < 12)
-								return;
-						}
-						else {
-							if (tl->getPosition().y > 12)
-								return;
+						GET_ECOMP(tl, c->compBaseEntity, TCompTransform);
+						//TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
+						if (t && tl) {
+							if (t->getPosition().y > 10) {
+								if (tl->getPosition().y < 12)
+									return;
+							}
+							else {
+								if (tl->getPosition().y > 12)
+									return;
+							}
 						}
 					}
 				}
@@ -563,8 +569,7 @@ void CRenderDeferredModule::generateShadowMaps() {
 		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
 		// la world para la mesh y las constantes en el pixel shader
 		PROFILE_FUNCTION("check gen shadow");
-
-		TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
+		GET_ECOMP(room, c->compBaseEntity, TCompRoom);
 		if (room) {
 			std::vector<int> rooms = room->name;
 			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {

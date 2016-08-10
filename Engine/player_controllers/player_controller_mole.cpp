@@ -121,6 +121,8 @@ void player_controller_mole::Init() {
 
 	ChangeState("idle");
 	SET_ANIM_MOLE(AST_IDLE);
+
+	init_poss();
 }
 
 bool player_controller_mole::getUpdateInfo()
@@ -852,4 +854,16 @@ bool player_controller_mole::canJump() {
 	bool ascending = cc->GetLastSpeed().y > 0.1f;
 	bool descending = cc->GetLastSpeed().y < -0.1f;
 	return !boxGrabbed.isValid() && !pilaGrabbed.isValid() && !ascending && !descending;
+}
+
+//Load and save
+bool player_controller_mole::load(MKeyValue& atts)
+{
+	load_poss(atts);
+	return true;
+}
+bool player_controller_mole::save(std::ofstream& os, MKeyValue& atts)
+{
+	save_poss(os, atts);
+	return true;
 }

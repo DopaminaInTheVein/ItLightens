@@ -10,6 +10,7 @@ struct TCompGenerator : public TTrigger {
 	VEC3 org;
 	CHandle player;
 	CHandle mesh;
+	static VHandles all_generators;
 
 	____TIMER_DECLARE_(timeReuse);
 
@@ -25,6 +26,7 @@ struct TCompGenerator : public TTrigger {
 	void onTriggerInside(const TMsgTriggerIn& msg) {} //will do nothing, particles effect, ui message or something
 	void onTriggerEnter(const TMsgTriggerIn& msg);
 	void onTriggerExit(const TMsgTriggerOut& msg);
+	~TCompGenerator();
 };
 
 #endif

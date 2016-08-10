@@ -68,6 +68,10 @@ public:
 	//TComponent
 	virtual CEntity* getMyEntity() = 0; //Pasar al TCompBase?
 	virtual PLAYER_TYPE whoAmI() = 0;
-	};
+
+	//Load and save
+	virtual bool load_bt(MKeyValue& atts);
+	virtual bool save_bt(std::ofstream& os, MKeyValue& atts);
+};
 
 #endif

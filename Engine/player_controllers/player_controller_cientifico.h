@@ -120,6 +120,10 @@ public:
 	// JUMP
 	bool canJump() override;
 
+	//Load and save
+	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
+
 	//Overload function for handler_manager
 	player_controller_cientifico& player_controller_cientifico::operator=(player_controller_cientifico arg) { return arg; }
 };

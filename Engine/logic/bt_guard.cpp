@@ -1597,6 +1597,8 @@ bool bt_guard::save(std::ofstream& os, MKeyValue& atts)
 	atts.put("jurRadius", sqrtf(jurRadiusSq));
 	atts.put("formation_point", formation_point);
 	atts.put("formation_dir", formation_dir);
+
+	save_bt(os, atts);
 	return true;
 }
 

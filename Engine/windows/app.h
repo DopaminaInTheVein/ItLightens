@@ -10,7 +10,6 @@ class IAppModule;
 class CApp {
 public:
 	typedef std::vector<IAppModule*> VModules;
-	std::string sceneToLoad = "";
 	bool has_check_point = false;
 	// Remove copy ctor
 	CApp(const CApp&) = delete;
@@ -34,10 +33,10 @@ public:
 	void changeScene(std::string level);
 	void loadedLevelNotify();
 	//void restart();
-	void restartLevel();
 	void restartLevelNotify();
 	void saveLevel();
 	std::string getCurrentRealLevel();
+	std::string getRealLevel(std::string logic_level);
 	std::string getCurrentLogicLevel();
 	void exitGame();
 
@@ -58,6 +57,9 @@ private:
 	int		  xres_max, yres_max;
 	int		  game_state = 0;
 
+	std::string current_level = "";
+	std::string next_level = "";
+
 	VModules  all_modules;
 	VModules  mod_update;
 	VModules  mod_renders;
@@ -70,7 +72,9 @@ private:
 	void update(float elapsed);
 	void render();
 
-public:
+	//Levels
+	void initNextLevel();
+	void restartLevel();
 };
 
 #endif

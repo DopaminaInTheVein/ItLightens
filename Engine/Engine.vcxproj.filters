@@ -113,6 +113,9 @@
     <ClCompile Include="logic\sbb.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="logic\bt_speedy.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
     <ClCompile Include="logic\aicontroller.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -133,6 +136,9 @@
       <Filter>prefabs</Filter>
     </ClCompile>
     <ClCompile Include="player_controllers\player_controller_mole.cpp">
+      <Filter>player controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="player_controllers\player_controller_speedy.cpp">
       <Filter>player controllers</Filter>
     </ClCompile>
     <ClCompile Include="player_controllers\poss_controller.cpp">
@@ -509,6 +515,12 @@
     <ClCompile Include="input\input_wrapper.cpp">
       <Filter>input</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_room.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\navmesh\navmesh_manager.cpp">
+      <Filter>app_modules\navmesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -644,6 +656,9 @@
     <ClInclude Include="logic\sbb.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="logic\bt_speedy.h">
+      <Filter>logic</Filter>
+    </ClInclude>
     <ClInclude Include="logic\aicontroller.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -675,6 +690,9 @@
       <Filter>player controllers</Filter>
     </ClInclude>
     <ClInclude Include="player_controllers\player_controller_mole.h">
+      <Filter>player controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="player_controllers\player_controller_speedy.h">
       <Filter>player controllers</Filter>
     </ClInclude>
     <ClInclude Include="player_controllers\poss_controller.h">
@@ -1380,6 +1398,9 @@
     <ClInclude Include="input\input_wrapper.h">
       <Filter>input</Filter>
     </ClInclude>
+    <ClInclude Include="app_modules\navmesh\navmesh_manager.h">
+      <Filter>app_modules\navmesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1555,6 +1576,9 @@
     </Filter>
     <Filter Include="app_modules\particles">
       <UniqueIdentifier>{39998eac-d4cc-4be4-bbba-a3a4d8b79e2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\navmesh">
+      <UniqueIdentifier>{e00dde25-03bc-4be5-9b3e-a185b50d039a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

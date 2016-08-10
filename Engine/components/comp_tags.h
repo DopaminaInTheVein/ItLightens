@@ -25,8 +25,11 @@ struct TCompTags : public TCompBase {
 	int nextTag = 0;
 
 	TCompTags() {
-		for (uint32_t i = 0; i < max_tags; ++i)
+		for (uint32_t i = 0; i < max_tags; ++i) {
 			tags[i] = 0x00;
+			auto word_i = tags_str[i];
+			word_i = "";
+		}
 	}
 
 	bool load(MKeyValue& atts) {
@@ -34,8 +37,8 @@ struct TCompTags : public TCompBase {
 		split(all_tags, [this](const std::string& word) {
 			auto tag_id = getID(word.c_str());
 			tags_manager.registerTag(word);
-			tags[nextTag++] = tag_id;
 			sprintf(tags_str[nextTag], "%s", word.c_str());
+			tags[nextTag++] = tag_id;
 		});
 		return true;
 	}
@@ -106,8 +109,9 @@ struct TCompTags : public TCompBase {
 					tags_manager.removeTag(h_entity, tag_id);
 					nextTag--;
 					tags[i] = tags[nextTag];
+					sprintf(tags_str[i], "%s", tags_str[nextTag]);
 					tags[nextTag] = 0x00; // if i == nextTag first assignation dont do anything
-					sprintf(tags_str[nextTag], "%s", msg.tag);
+					sprintf(tags_str[nextTag], "");
 					break;
 				}
 			}

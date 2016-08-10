@@ -484,6 +484,34 @@ void SLBCamera::fadeOut(float speed) {
 	fx->FadeOut();
 }
 
+// Data
+SLBData::SLBData()
+{
+	file_name = "data/data.json";
+	data = readIniAtrData(file_name, CApp::get().getCurrentRealLevel());
+}
+float SLBData::getFloat(const char* key)
+{
+	return data[std::string(key)];
+}
+
+bool SLBData::getBool(const char* key)
+{
+	return data[std::string(key)] != 0.f;
+}
+void SLBData::putFloat(const char* key, float value)
+{
+	data[std::string(key)] = value;
+}
+void SLBData::putBool(const char* key, bool value)
+{
+	data[std::string(key)] = value ? 1.f : 0.f;
+}
+void SLBData::write()
+{
+	writeIniAtrData(file_name, CApp::get().getCurrentRealLevel(), data);
+}
+
 // public generic functions
 void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	// create the new command
@@ -656,6 +684,10 @@ void SLBPublicFunctions::launchVictoryState() {
 
 void SLBPublicFunctions::loadLevel(const char* level_name) {
 	CApp::get().changeScene(level_name);
+}
+
+void SLBPublicFunctions::saveLevel() {
+	CApp::get().saveLevel();
 }
 
 //test

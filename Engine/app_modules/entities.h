@@ -9,27 +9,29 @@
 class CEntitiesModule : public IAppModule {
 	void renderInMenu();
 	bool use_parallel = true;
+	bool reloading; // Only clean the reloadable entities
 	std::thread navmeshThread;
-	std::string current_level = "";
-	std::string next_level = "";
 public:
 	std::vector< CHandle > collisionables;
-	std::string sala;
-	std::string salaloc;
+
+	struct ParsingInfo {
+		std::string filename;
+		bool reload;
+	};
 
 	bool start() override;
 	void stop() override;
 	void update(float dt) override;
 
-	void initLevel(std::string, bool check_point);
-	void saveLevel();
-	void clear(std::string next_level = "");
+	//void initLevel(std::string, bool check_point, bool reload);
+	void initEntities();
+	bool loadXML(ParsingInfo& info);
+	void saveLevel(std::string level_name);
+	void clear(bool reload);//std::string next_level = "");
 	bool isCleared();
 	void destroyRandomEntity(float percent);
 
 	void render() override;
-	void recalcNavmesh();
-	void readNavmesh();
 	bool forcedUpdate() {
 		return true;
 	}
@@ -40,7 +42,7 @@ public:
 		return "entities";
 	}
 
-	std::string getCurrentLevel() { return current_level; }
+	//std::string getCurrentLevel() { return current_level; }
 
 	int size();
 };

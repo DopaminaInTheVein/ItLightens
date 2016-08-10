@@ -15,12 +15,36 @@ hg = HandleGroup()
 cam = Camera()
 player = Player()
 
----------------------------- LEVEL LOADED ---------------------------------------------------
-function OnLoaded_ms3()
+---------------------------- LEVEL Init, Load, Save ---------------------------------------------------
+function OnStart_ms3()
   p:print("OnLoaded Scene MS3")
   isDoorOpen = false
   alert = false
   stateElevator = 1 -- 1= up , 0 = down
+  p:play_music("event:/OnGameStart")
+  --triggerGuardFormation();
+  --p:exec_command( "triggerGuardFormation();", 15 )
+  cam:run_cinematic("CinematicIntro", 10)
+end
+
+function OnSave_ms3()
+	d = Data()
+	d:put_float("elevator_state", stateElevator)
+	d:put_bool("door_open", isDoorOpen)
+	d:put_bool("alert", alert)
+	d:write()
+end
+
+function OnLoad_ms3()
+  p:print("OnLoaded Scene MS3")
+  d = Data()
+  isDoorOpen = d:get_bool("door_open")
+  alert = d:get_bool("alert")
+  stateElevator = d:get_float("elevator_state")
+  p:play_music("event:/OnGameStart")
+  --triggerGuardFormation();
+  --p:exec_command( "triggerGuardFormation();", 15 )
+  --cam:run_cinematic("CinematicIntro", 10)
 end
 ---------------------------------------------------------------------------------------------
 

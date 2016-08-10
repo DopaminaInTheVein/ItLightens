@@ -238,11 +238,11 @@ Document readJSONAtrFile(const std::string route) {
 std::map<std::string, float> readIniAtrData(const std::string route, std::string element) {
 	Document document = readJSONAtrFile(route);
 	std::map<std::string, float> atributes;
-
-	for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
-		atributes[it->name.GetString()] = it->value.GetFloat();
+	if (document.HasMember(element.c_str())) {
+		for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
+			atributes[it->name.GetString()] = it->value.GetFloat();
+		}
 	}
-
 	return atributes;
 }
 
@@ -261,7 +261,6 @@ std::map<std::string, std::string> readIniAtrDataStr(const std::string route, st
 // Modifies the specified json element of the specified file
 void writeIniAtrData(const std::string route, std::string element, std::map<std::string, float> element_values) {
 	Document document = readJSONAtrFile(route);
-
 	for (auto atribute : element_values) {
 		document[element.c_str()][atribute.first.c_str()].SetFloat(atribute.second);
 	}

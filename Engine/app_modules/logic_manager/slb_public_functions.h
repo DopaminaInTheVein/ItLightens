@@ -117,6 +117,21 @@ public:
 };
 
 // public functions
+class SLBData
+{
+	std::string file_name;
+	std::map<std::string, float> data;
+public:
+	SLBData();
+	float getFloat(const char* key);
+	bool getBool(const char* key);
+	void putFloat(const char* key, float value);
+	void putBool(const char* key, bool value);
+	// public functions
+	void write();
+};
+
+// public functions
 class SLBPublicFunctions
 {
 public:
@@ -137,6 +152,7 @@ public:
 	void toggleIntroState();
 	void launchVictoryState();
 	void loadLevel(const char* level_name);
+	void saveLevel();
 
 	void test(const char* to_print);
 };

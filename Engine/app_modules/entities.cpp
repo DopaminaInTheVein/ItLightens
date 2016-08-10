@@ -124,6 +124,7 @@ TMsgID generateUniqueMsgID() {
 bool CEntitiesModule::start() {
 	SBB::init();
 	Damage::init();
+	IdEntities::init();
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 
@@ -386,160 +387,21 @@ bool CEntitiesModule::start() {
 	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
 	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
 
-	initLevel(CApp::get().sceneToLoad, false);
+	//initLevel(CApp::get().sceneToLoad, false);
 
 	return true;
 }
 
-void CEntitiesModule::initLevel(string level, bool check_point) {
-	bool level_changed = level != current_level;
-	// Restart Timers LUA
-	logic_manager->resetTimers();
+bool CEntitiesModule::loadXML(CEntitiesModule::ParsingInfo& info)
+{
+	CEntityParser ep(info.reload);
+	dbg("Loading XML [%s]... (entities before: %d)\n", info.filename.c_str(), size());
+	bool is_ok = ep.xmlParseFile("data/scenes/" + info.filename + ".xml");
 
-	map<std::string, std::string> fields = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
-	sala = fields[level];
+	return is_ok;
+}
 
-	SBB::postBool("navmesh", false);
-	salaloc = "data/navmeshes/" + sala + ".data";
-
-	CEntityParser ep(level_changed);
-
-	dbg("Loading scene... (%d entities)\n", size());
-
-	bool is_ok;
-	// Parte inmutable de la escena
-	if (level_changed) {
-		is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
-		assert(is_ok);
-	}
-
-	// Parte cambiante
-	if (!level_changed && check_point) is_ok = ep.xmlParseFile("data/scenes/" + sala + "_save.xml");
-	else is_ok = ep.xmlParseFile("data/scenes/" + sala + "_init.xml");
-	assert(is_ok);
-
-	{
-		CEntityParser ep(level_changed);
-		is_ok = ep.xmlParseFile("data/scenes/test_lights.xml");
-		assert(is_ok);
-	}
-
-	dbg("Scene Loaded! (%d entities)\n", size());
-
-	// GENERATE NAVMESH
-	collisionables = ep.getCollisionables();
-	SBB::postHandlesVector("collisionables", collisionables);
-	CNavmesh nav;
-	nav.m_input.clearInput();
-	dbg(" GENERANDO NAVMESH INPUT...\n");
-	for (CHandle han : collisionables) {
-		CEntity * e = han;
-		dbg("Navmesh, collisionable: %s\n", e->getName());
-		if (e) {
-			TCompTransform * trans = e->get<TCompTransform>();
-			TCompPhysics * p = e->get<TCompPhysics>();
-			if (!p) continue;
-			auto actor = p->getActor();
-			if (!actor) continue;
-			PxBounds3 bounds = actor->getWorldBounds();
-			VEC3 min, max;
-			min.x = bounds.minimum.x;
-			min.y = bounds.minimum.y;
-			min.z = bounds.minimum.z;
-			max.x = bounds.maximum.x;
-			max.y = bounds.maximum.y;
-			max.z = bounds.maximum.z;
-
-			auto rb = p->getActor()->isRigidStatic();
-			if (rb) {
-				int nBShapes = rb->getNbShapes();
-				PxShape **ptr;
-				ptr = new PxShape*[nBShapes];
-				rb->getShapes(ptr, 1);
-				for (int i = 0; i < nBShapes; i++) {
-					PxTriangleMeshGeometry meshGeom;
-					assert(ptr[i]);
-					if (ptr[i]->getTriangleMeshGeometry(meshGeom)) {
-						nav.m_input.addInput(meshGeom.triangleMesh, PhysxConversion::PxVec3ToVec3(rb->getGlobalPose().p), min, max, trans->getRotation());
-					}
-				}
-			}
-			else {
-				nav.m_input.addInput(min, max);
-			}
-		}
-	}
-	nav.m_input.computeBoundaries();
-	SBB::postNavmesh(nav);
-	std::ifstream is(salaloc.c_str());
-	bool recalc = !is.is_open();
-	is.close();
-	SBB::postBool(sala, false);
-	//------------------------------
-	if (!recalc) {
-		// restore the navmesh from the archive
-		//std::thread thre(&CEntitiesModule::readNavmesh, this);
-		//thre.detach();
-		readNavmesh();
-	}
-	else {
-		// make mesh on a separate thread
-		//std::thread thre(&CEntitiesModule::recalcNavmesh, this);
-		//thre.detach();
-		recalcNavmesh();
-	}
-	//------------------------------
-
-	TTagID tagIDcamera = getID("camera_main");
-	TTagID tagIDwall = getID("breakable_wall");
-	TTagID tagIDminus = getID("minus_wall");
-	TTagID tagIDplus = getID("plus_wall");
-	TTagID tagIDrec = getID("recover_point");
-
-	// Camara del player
-	CHandle camera = tags_manager.getFirstHavingTag("camera_main");
-	CEntity * camera_e = camera;
-	CHandle t = tags_manager.getFirstHavingTag("player");
-	CEntity * target_e = t;
-	if (camera_e) {
-		TCompCameraMain * pcam = camera_e->get<TCompCameraMain>();
-
-		CHandle helper_arrow = tags_manager.getFirstHavingTag("helper_arrow");
-		CEntity * helper_arrow_e = helper_arrow;
-
-		// Set the player in the 3rdPersonController
-		if (camera_e && t.isValid()) {
-			TMsgSetTarget msg;
-			msg.target = t;
-			msg.who = PLAYER;
-			camera_e->sendMsg(msg);	//set camera
-			if (helper_arrow.isValid()) helper_arrow_e->sendMsg(msg);
-
-			TMsgSetCamera msg_camera;
-			msg_camera.camera = camera;
-			target_e->sendMsg(msg_camera); //set target camera
-		}
-	}
-	// SET PLAYER INITIAL ROOM
-	int room_name = -1;
-	if (target_e) {
-		TCompRoom * player_room = target_e->get<TCompRoom>();
-		if (player_room) {
-			room_name = player_room->name[0];
-		}
-	}
-	SBB::postSala(room_name);
-
-	//}
-	TTagID generators = getID("generator");
-	VHandles generatorsHandles = tags_manager.getHandlesByTag(generators);
-	SBB::postHandlesVector("generatorsHandles", generatorsHandles);
-
-	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
-	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
-	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
-	SBB::postHandlesVector("wptsRecoverPoint", tags_manager.getHandlesByTag(tagIDrec));
-
+void CEntitiesModule::initEntities() {
 	getHandleManager<player_controller>()->onAll(&player_controller::Init);
 	getHandleManager<player_controller_cientifico>()->onAll(&player_controller_cientifico::Init);
 	getHandleManager<player_controller_mole>()->onAll(&player_controller_mole::Init);
@@ -547,7 +409,6 @@ void CEntitiesModule::initLevel(string level, bool check_point) {
 	getHandleManager<bt_guard>()->onAll(&bt_guard::Init);
 	getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
 	getHandleManager<bt_scientist>()->onAll(&bt_scientist::Init);
-	//getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
 	getHandleManager<ai_cam>()->onAll(&ai_cam::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
 	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
@@ -560,15 +421,14 @@ void CEntitiesModule::initLevel(string level, bool check_point) {
 	//fx
 	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
 
-	//TODO: Message LevelStart
-	GameController->SetGameState(CGameController::RUNNING);
-	current_level = level;
-	CApp::get().sceneToLoad = "";
-	CApp::get().loadedLevelNotify();
+	//Added to clean this file
+	getHandleManager<LogicHelperArrow>()->onAll(&LogicHelperArrow::init);
+	getHandleManager<TCompCameraMain>()->onAll(&TCompCameraMain::init);
+	getHandleManager<TCompRoom>()->onAll(&TCompRoom::init);
 }
 
-void CEntitiesModule::saveLevel() {
-	string file_name = "data/scenes/" + sala + "_save.xml";
+void CEntitiesModule::saveLevel(std::string level_name) {
+	string file_name = "data/scenes/" + level_name + "_save.xml";
 	std::ofstream os(file_name.c_str());
 	if (!os.is_open()) {
 		assert(false);
@@ -584,26 +444,25 @@ void CEntitiesModule::saveLevel() {
 	os.close();
 }
 
-void CEntitiesModule::clear(string new_next_level) {
-	next_level = new_next_level;
-	bool level_changed = (next_level != "" && next_level != current_level);
-	static int entities_destroyed = 0;
-	getHandleManager<CEntity>()->each([level_changed](CEntity * e) {
+void CEntitiesModule::clear(bool reload) {
+	static int entities_destroyed = 0; //dbg
+	reloading = reload;
+	getHandleManager<CEntity>()->each([reload](CEntity * e) {
 		if (!e->isPermanent()) {
-			if (level_changed || e->needReload()) {
+			if (!reload || e->needReload()) {
 				CHandle(e).destroy();
-				entities_destroyed++;
+				entities_destroyed++; //dbg
 			}
 		}
 	});
-	dbg("Entities destroyed = %d\n", entities_destroyed);
+	dbg("Entities destroyed = %d\n", entities_destroyed); //dbg
 }
 
 bool CEntitiesModule::isCleared() {
-	bool level_changed = (next_level != "" && next_level != current_level);
-	getHandleManager<CEntity>()->each([level_changed](CEntity * e) {
+	bool reload = reloading;
+	getHandleManager<CEntity>()->each([reload](CEntity * e) {
 		if (!e->isPermanent()) {
-			if (level_changed || e->needReload()) {
+			if (!reload || e->needReload()) {
 				return false;
 			}
 		}
@@ -784,27 +643,6 @@ void CEntitiesModule::renderInMenu() {
 		ImGui::TreePop();
 	}
 	ImGui::End();
-}
-
-void CEntitiesModule::recalcNavmesh() {
-	// GENERATE NAVMESH
-	CNavmesh nav = SBB::readNavmesh();
-	nav.build(salaloc);
-	SBB::postNavmesh(nav);
-	SBB::postBool(sala, true);
-}
-
-void CEntitiesModule::readNavmesh() {
-	// GENERATE NAVMESH
-	CNavmesh nav = SBB::readNavmesh();
-	bool recalc = !nav.reload(salaloc);
-	if (recalc) {
-		recalcNavmesh();
-	}
-	else {
-		SBB::postNavmesh(nav);
-		SBB::postBool("navmesh", true);
-	}
 }
 
 void CEntitiesModule::fixedUpdate(float elapsed)

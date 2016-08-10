@@ -109,6 +109,7 @@ public:
 	void update(float elapsed);
 	void readIniFileAttr();
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	//conditions
 	bool playerStunned();
 	bool workbenchAvailable();

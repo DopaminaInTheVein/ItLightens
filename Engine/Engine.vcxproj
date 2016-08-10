@@ -130,6 +130,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
+    <ClCompile Include="app_modules\navmesh\navmesh_manager.cpp" />
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
     <ClCompile Include="camera\camera.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="components\comp_render_fade_screen.cpp" />
     <ClCompile Include="components\comp_render_glow.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
+    <ClCompile Include="components\comp_room.cpp" />
     <ClCompile Include="components\comp_room_limit.cpp" />
     <ClCompile Include="components\comp_room_switch.cpp" />
     <ClCompile Include="components\comp_snoozer.cpp">
@@ -213,6 +215,7 @@
     <ClCompile Include="logic\bt_mole.cpp" />
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_scientist.cpp" />
+    <ClCompile Include="logic\bt_speedy.cpp" />
     <ClCompile Include="logic\comp_box.cpp" />
     <ClCompile Include="logic\damage.cpp" />
     <ClCompile Include="logic\elevator.cpp" />
@@ -232,6 +235,7 @@
     <ClCompile Include="player_controllers\player_controller_base.cpp" />
     <ClCompile Include="player_controllers\player_controller_cientifico.cpp" />
     <ClCompile Include="player_controllers\player_controller_mole.cpp" />
+    <ClCompile Include="player_controllers\player_controller_speedy.cpp" />
     <ClCompile Include="player_controllers\poss_controller.cpp" />
     <ClCompile Include="prefabs\magnetic_bomb.cpp" />
     <ClCompile Include="prefabs\static_bomb.cpp">
@@ -342,6 +346,7 @@
     <ClInclude Include="app_modules\io\mouse.h" />
     <ClInclude Include="app_modules\logic_manager\logic_manager.h" />
     <ClInclude Include="app_modules\logic_manager\slb_public_functions.h" />
+    <ClInclude Include="app_modules\navmesh\navmesh_manager.h" />
     <ClInclude Include="app_modules\render\module_render_deferred.h" />
     <ClInclude Include="app_modules\sound_manager\sound_manager.h" />
     <ClInclude Include="camera\camera.h" />
@@ -436,6 +441,7 @@
     <ClInclude Include="logic\bt_mole.h" />
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_scientist.h" />
+    <ClInclude Include="logic\bt_speedy.h" />
     <ClInclude Include="logic\comp_box.h" />
     <ClInclude Include="logic\damage.h" />
     <ClInclude Include="logic\elevator.h" />
@@ -459,6 +465,7 @@
     <ClInclude Include="player_controllers\player_controller_base.h" />
     <ClInclude Include="player_controllers\player_controller_cientifico.h" />
     <ClInclude Include="player_controllers\player_controller_mole.h" />
+    <ClInclude Include="player_controllers\player_controller_speedy.h" />
     <ClInclude Include="player_controllers\poss_controller.h" />
     <ClInclude Include="prefabs\magnetic_bomb.h" />
     <ClInclude Include="prefabs\static_bomb.h">

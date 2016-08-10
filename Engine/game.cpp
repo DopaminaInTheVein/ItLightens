@@ -24,6 +24,8 @@
 #include "handle/handle_manager.h"
 #include "utils/directory_watcher.h"
 
+#include "app_modules/navmesh/navmesh_manager.h"
+
 #include <shellapi.h>
 #include <process.h>
 
@@ -48,7 +50,7 @@ CGuiModule * Gui = nullptr;
 
 bool CApp::start() {
 	map<std::string, std::string> fields = readIniAtrDataStr(file_options_json, "scenes");
-	sceneToLoad = fields["first_scene"];
+	//next_level = fields["first_scene"];
 
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
@@ -163,8 +165,9 @@ void CApp::stop() {
 //----------------------------------
 void CApp::changeScene(string level) {
 	dbg("Destroying scene...\n");
-	entities->clear(level);
-	sceneToLoad = level;
+	bool reload = level == getCurrentLogicLevel();
+	entities->clear(reload);
+	next_level = level;
 }
 
 //void CApp::restart() {
@@ -176,16 +179,20 @@ void CApp::changeScene(string level) {
 //}
 
 void CApp::restartLevel() {
-	changeScene(entities->getCurrentLevel());
+	changeScene(current_level);
 }
 
 std::string CApp::getCurrentRealLevel() {
-	map<std::string, std::string> fields = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
-	return fields[entities->getCurrentLevel()];
+	return getRealLevel(current_level);
 }
 
 std::string CApp::getCurrentLogicLevel() {
-	return entities->getCurrentLevel();
+	return current_level;
+}
+
+std::string CApp::getRealLevel(std::string logic_level) {
+	map<std::string, std::string> fields = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
+	return fields[logic_level];
 }
 
 void CApp::restartLevelNotify() {
@@ -196,14 +203,22 @@ void CApp::restartLevelNotify() {
 
 void CApp::saveLevel() {
 	has_check_point = true;
-	entities->saveLevel();
+	entities->saveLevel(getCurrentRealLevel());
+	char params[128];
+	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnSavedLevel, std::string(params));
 }
 
 void CApp::loadedLevelNotify() {
-	sceneToLoad = "";
+	current_level = next_level;
+	next_level = "";
 	char params[128];
 	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnLoadedLevel, std::string(params));
+	auto game_event = has_check_point
+		? CLogicManagerModule::EVENT::OnLoadedLevel
+		: CLogicManagerModule::EVENT::OnLevelStart;
+
+	logic_manager->throwEvent(game_event, std::string(params));
 }
 
 void CApp::exitGame() {
@@ -228,9 +243,49 @@ void CApp::update(float elapsed) {
 	static float ctime = 0.f;
 	ctime += elapsed* 0.01f;
 	CHandleManager::destroyAllPendingObjects();
-	if (sceneToLoad != "" && entities->isCleared()) {
-		entities->initLevel(sceneToLoad, has_check_point);
+	if (next_level != "" && entities->isCleared()) {
+		initNextLevel();
+		//bool reload = (next_level == current_level);
+		//entities->initLevel(getRealLevel(next_level), has_check_point, reload);
 	}
+}
+
+void CApp::initNextLevel()
+{
+	// Restart Timers LUA
+	logic_manager->resetTimers();
+
+	//
+	std::string level_name = getRealLevel(next_level);
+	bool reload = next_level == current_level;
+	if (!reload) CEntityParser::clearCollisionables();
+	bool is_ok;
+
+	// Entidades invariantes
+	CEntitiesModule::ParsingInfo info;
+	info.filename = level_name;
+	info.reload = reload;
+	is_ok = entities->loadXML(info);
+	assert(is_ok);
+
+	// Entidades variantes
+	info.filename = level_name + (has_check_point ? "_save" : "_init");
+	entities->loadXML(info);
+	assert(is_ok);
+
+	// Lights
+	info.filename = level_name + "_lights";
+	entities->loadXML(info);
+
+	// Init entities
+	entities->initEntities();
+
+	// Navmesh
+	if (!reload) CNavmeshManager::initNavmesh(level_name);
+
+	// Game state and notify
+	GameController->SetGameState(CGameController::RUNNING);
+	loadedLevelNotify();
 }
 
 // ----------------------------------

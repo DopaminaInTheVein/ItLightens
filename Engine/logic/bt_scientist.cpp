@@ -46,7 +46,6 @@ void bt_scientist::readIniFileAttr() {
 
 void bt_scientist::Init() {
 	getUpdateInfoBase(CHandle(this).getOwner());
-	initParent();
 	//read main attributes from file
 	readIniFileAttr();
 
@@ -91,6 +90,7 @@ void bt_scientist::Init() {
 	}
 	SET_ANIM_SCI_BT(AST_IDLE);
 	curkpt = 0;
+	initParent();
 }
 
 bool bt_scientist::getUpdateInfo()
@@ -127,17 +127,37 @@ bool bt_scientist::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-			);
+		);
 	}
 
-	zmin = atts.getFloat("zmin", 0.0f);
-	zmax = atts.getFloat("zmax", 0.0f);
+	zmin = atts.getFloat("zmin", 100.0f);
+	zmax = atts.getFloat("zmax", 0.1f);
+
+	load_bt(atts);
+	return true;
+}
+
+bool bt_scientist::save(std::ofstream& os, MKeyValue& atts)
+{
+	int n = keyPoints.size();
+	atts.put("kpt_size", n);
+	for (int i = 0; i < n; i++) {
+		KPT_ATR_NAME(atrType, "type", i);
+		KPT_ATR_NAME(atrPos, "pos", i);
+		KPT_ATR_NAME(atrWait, "wait", i);
+		atts.put(atrType, keyPoints[i].type);
+		atts.put(atrPos, keyPoints[i].pos);
+		atts.put(atrWait, keyPoints[i].time);
+	}
+
+	atts.put("zmin", zmin);
+	atts.put("zmax", zmax);
+	save_bt(os, atts);
 
 	return true;
 }
 
 // conditions
-
 bool bt_scientist::playerStunned() {
 	PROFILE_FUNCTION("scientist: player stunned");
 	if (stunned == true) {

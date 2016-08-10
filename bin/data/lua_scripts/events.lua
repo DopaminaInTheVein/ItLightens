@@ -57,11 +57,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-    p:play_music("event:/OnGameStart")
-	--triggerGuardFormation();
-	--p:exec_command( "triggerGuardFormation();", 15 )
-	cam:run_cinematic("CinematicIntro", 10)
-	stateElevator = 1
+	p:load_level("level_0")
 	CallFunction("test_dbg")
 end
 
@@ -88,11 +84,6 @@ end
 
 function OnGuardRemoveBox( reaction_time )
 	p:print( "OnGuardRemoveBox: "..reaction_time.."\n" )
-end
-
-function OnLevelStart( param )
-	p:print("OnLevelStart\n")
-	CallFunction("OnLevelStart_"..param)
 end
 
 function OnZoneStart001( param )
@@ -337,16 +328,28 @@ function OnRestartLevel( logic_level, real_level )
 	p:print( "OnRestartLevel\n")
 	cam:fade_out(1)
 	p:setControlEnabled(0)
-	p:exec_command("LoadLevel(\""..logic_level.."\", \""..real_level.."\");", 1) -- Defined in functions.lua
+	p:exec_command("LoadLevel(\""..logic_level.."\");", 1) -- Defined in functions.lua
 end
 
---Loaded Level
+--Levels
 ---------------------------------------------------
-function OnLoadedLevel( logic_level, real_level)
+function OnLevelStart( logic_level, real_level )
+	p:print("OnLevelStart\n")
+	p:exec_command("cam:fade_in(1)", 1)
+	p:exec_command("p:setControlEnabled(1);", 1)
+	CallFunction("OnStart_"..real_level)
+end
+
+function OnSavedLevel( logic_level, real_level )
+	p:print("OnSavedLevel")
+	CallFunction("OnSave_"..real_level)	
+end
+
+function OnLoadedLevel( logic_level, real_level )
 	p:print("OnLoadedLevel")
 	p:exec_command("cam:fade_in(1)", 1)
 	p:exec_command("p:setControlEnabled(1);", 1)
-	CallFunction("OnLoaded_"..real_level)
+	CallFunction("OnLoad_"..real_level)
 end
 
 --Game Ending

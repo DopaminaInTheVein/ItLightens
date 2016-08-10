@@ -6,72 +6,61 @@
 #include <bitset>
 
 struct TCompCulling : public TCompBase {
-  static const size_t nbits = 4096;
-  typedef std::bitset<nbits> TCullingBits;
-  TCullingBits bits;
+	static const size_t nbits = 4096;
+	typedef std::bitset<nbits> TCullingBits;
+	TCullingBits bits;
 
-  // A single plane
-  struct CPlane {
-    VEC3  n;
-    float d;
-    void from(VEC4 k) {
-      n = VEC3(k.x, k.y, k.z);
-      d = k.w;
-    }
+	// A single plane
+	struct CPlane {
+		VEC3  n;
+		float d;
+		void from(VEC4 k) {
+			n = VEC3(k.x, k.y, k.z);
+			d = k.w;
+		}
 
-    // Returns true if the aabb is fully in the negative side of the plane
-    bool isCulled(const AABB* aabb) const {
-      //
-      const float r = aabb->Extents.x * fabsf(n.x)
-        + aabb->Extents.y * fabsf(n.y)
-        + aabb->Extents.z * fabsf(n.z)
-        ;
+		// Returns true if the aabb is fully in the negative side of the plane
+		bool isCulled(const AABB* aabb) const;
+	};
 
-      // Distance from box center to the plane
-      const float c = n.Dot(aabb->Center) + d;
-      return c < -r;
-    }
-  };
+	// the 6 sides of the frustum
+	enum EFrustumPlanes {
+		FP_LEFT = 0
+		, FP_RIGHT
+		, FP_BOTTOM
+		, FP_TOP
+		, FP_NEAR
+		, FP_FAR
+		, FP_NPLANES
+	};
 
-  // the 6 sides of the frustum
-  enum EFrustumPlanes {
-    FP_LEFT = 0
-  , FP_RIGHT
-  , FP_BOTTOM
-  , FP_TOP
-  , FP_NEAR
-  , FP_FAR
-  , FP_NPLANES
-  };
+	// An array of N planes
+	class VPlanes : std::vector< CPlane > {
+	public:
+		void fromViewProjection(MAT44 view_proj) {
+			PROFILE_FUNCTION("TCompCulling: fromView");
+			resize(FP_NPLANES);
+			MAT44 m = view_proj.Transpose();
+			VEC4 mx = VEC4(m.m[0]);
+			VEC4 my = VEC4(m.m[1]);
+			VEC4 mz = VEC4(m.m[2]);
+			VEC4 mw = VEC4(m.m[3]);
+			VPlanes &vp = *this;
+			vp[FP_LEFT].from(mw + mx);
+			vp[FP_RIGHT].from(mw - mx);
+			vp[FP_BOTTOM].from(mw + my);
+			vp[FP_TOP].from(mw - my);
+			vp[FP_NEAR].from(mw + mz);      // + mz if frustum is 0..1
+			vp[FP_FAR].from(mw - mz);
+		}
+		bool isVisible(const AABB* aabb) const;
+	};
 
-  // An array of N planes
-  class VPlanes : std::vector< CPlane > {
-  public:
-    void fromViewProjection(MAT44 view_proj) {
-	   PROFILE_FUNCTION("TCompCulling: fromView");
-      resize(FP_NPLANES);
-      MAT44 m = view_proj.Transpose();
-      VEC4 mx = VEC4(m.m[0]);
-      VEC4 my = VEC4(m.m[1]);
-      VEC4 mz = VEC4(m.m[2]);
-      VEC4 mw = VEC4(m.m[3]);
-      VPlanes &vp = *this;
-      vp[FP_LEFT].from(mw + mx);
-      vp[FP_RIGHT].from(mw - mx);
-      vp[FP_BOTTOM].from(mw + my);
-      vp[FP_TOP].from(mw - my);
-      vp[FP_NEAR].from(mw + mz);      // + mz if frustum is 0..1
-      vp[FP_FAR].from(mw - mz);
-    }
-    bool isVisible(const AABB* aabb) const;
-  };
+	VPlanes planes;
 
-  VPlanes planes;
-
-  void renderInMenu();
-  void update(float dt) {}
-  void update();
+	void renderInMenu();
+	void update(float dt) {}
+	void update();
 };
-
 
 #endif
