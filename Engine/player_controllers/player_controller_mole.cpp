@@ -121,6 +121,8 @@ void player_controller_mole::Init() {
 
 	ChangeState("idle");
 	SET_ANIM_MOLE(AST_IDLE);
+
+	init_poss();
 }
 
 bool player_controller_mole::getUpdateInfo()
@@ -166,7 +168,6 @@ void player_controller_mole::myUpdate()
 }
 
 void player_controller_mole::UpdateMoves() {
-
 	if (pushing_box) {
 		TCompTransform* player_transform = myEntity->get<TCompTransform>();
 		VEC3 player_position = player_transform->getPosition();
@@ -203,11 +204,9 @@ void player_controller_mole::UpdateMoves() {
 	else {
 		CPlayerBase::UpdateMoves();
 	}
-	
 }
 
 bool player_controller_mole::UpdateMovDirection() {
-
 	if (pushing_box) {
 		GET_COMP(box_t, boxPushed, TCompTransform);
 		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
@@ -221,7 +220,6 @@ bool player_controller_mole::UpdateMovDirection() {
 	}
 
 	return CPlayerBase::UpdateMovDirection();
-
 }
 
 void player_controller_mole::UpdateInputActions() {
@@ -269,7 +267,7 @@ void player_controller_mole::UpdateInputActions() {
 			}
 		}
 	}
-	
+
 	if (pushing_box) {
 		GET_COMP(box_t, boxPushed, TCompTransform);
 		GET_COMP(box_p, boxPushed, TCompPhysics);
@@ -278,7 +276,7 @@ void player_controller_mole::UpdateInputActions() {
 		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
 
 		//if somehow the box splits from the player, we leave it
-		if (distance_to_box > 3.5f || 
+		if (distance_to_box > 3.5f ||
 			!getEntityTransform()->isHalfConeVision(box_t->getPosition(), deg2rad(10))) {
 			LeaveBox();
 		}
@@ -295,7 +293,7 @@ void player_controller_mole::UpdateInputActions() {
 			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
 		}
 		else if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility ||
-				 io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
+			io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
 			LeaveBox();
 		}
 	}
@@ -352,7 +350,6 @@ void player_controller_mole::DestroyWall() {
 }
 
 void player_controller_mole::LeaveBox() {
-
 	// if we were pushing a box, we just stop
 	if (pushing_box) {
 		boxGrabbed = boxPushed;
@@ -598,7 +595,6 @@ void player_controller_mole::FaceToGrab()
 {
 	bool faced = turnTo(GETH_COMP(boxNear, TCompTransform));
 	if (faced) {
-		
 		GET_COMP(box, boxNear, TCompBox);
 		// if the box is MEDIUM (1) we go to "push mode"
 		if (box->type_box == 1) {
@@ -856,9 +852,19 @@ void player_controller_mole::ChangeCommonState(std::string st)
 }
 
 bool player_controller_mole::canJump() {
-
 	bool ascending = cc->GetLastSpeed().y > 0.1f;
 	bool descending = cc->GetLastSpeed().y < -0.1f;
 	return !boxGrabbed.isValid() && !pilaGrabbed.isValid() && !ascending && !descending;
+}
 
+//Load and save
+bool player_controller_mole::load(MKeyValue& atts)
+{
+	load_poss(atts);
+	return true;
+}
+bool player_controller_mole::save(std::ofstream& os, MKeyValue& atts)
+{
+	save_poss(os, atts);
+	return true;
 }

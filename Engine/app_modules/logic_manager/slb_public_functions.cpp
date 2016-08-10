@@ -485,14 +485,31 @@ void SLBCamera::fadeOut(float speed) {
 }
 
 // Data
-void SLBData::put(const char* key, float value)
+SLBData::SLBData()
+{
+	file_name = "data/data.json";
+	data = readIniAtrData(file_name, CApp::get().getCurrentRealLevel());
+}
+float SLBData::getFloat(const char* key)
+{
+	return data[std::string(key)];
+}
+
+bool SLBData::getBool(const char* key)
+{
+	return data[std::string(key)] != 0.f;
+}
+void SLBData::putFloat(const char* key, float value)
 {
 	data[std::string(key)] = value;
 }
-
+void SLBData::putBool(const char* key, bool value)
+{
+	data[std::string(key)] = value ? 1.f : 0.f;
+}
 void SLBData::write()
 {
-	writeIniAtrData("data/data.json", CApp::get().getCurrentRealLevel(), data);
+	writeIniAtrData(file_name, CApp::get().getCurrentRealLevel(), data);
 }
 
 // public generic functions

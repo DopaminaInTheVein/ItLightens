@@ -157,3 +157,23 @@ map<string, btevent>* bt_poss::getEvents() {
 btnode** bt_poss::getRoot() {
 	return nullptr;
 }
+
+//Load and save
+bool bt_poss::load_bt(MKeyValue& atts)
+{
+	stunned = atts.getBool("stunned", false);
+	possessed = atts.getBool("possessed", false);
+	stunning = atts.getBool("stunning", false);
+	possessing = atts.getBool("possessing", false);
+	bt::load_bt(atts);
+	return true;
+}
+bool bt_poss::save_bt(std::ofstream& os, MKeyValue& atts)
+{
+	if (stunned) atts.put("stunned", stunned);
+	if (possessed) atts.put("possessed", possessed);
+	if (stunning) atts.put("stunning", stunning);
+	if (possessing) atts.put("possessing", possessing);
+	bt::save_bt(os, atts);
+	return true;
+}

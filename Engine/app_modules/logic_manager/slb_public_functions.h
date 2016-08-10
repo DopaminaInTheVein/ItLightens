@@ -122,8 +122,11 @@ class SLBData
 	std::string file_name;
 	std::map<std::string, float> data;
 public:
-
-	void put(const char* key, float value);
+	SLBData();
+	float getFloat(const char* key);
+	bool getBool(const char* key);
+	void putFloat(const char* key, float value);
+	void putBool(const char* key, bool value);
 	// public functions
 	void write();
 };

@@ -169,6 +169,10 @@ public:
 
 	bool hasPila() { return pilaGrabbed.isValid(); }
 
+	//Load and save
+	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
+
 	//Overload function for handler_manager
 	player_controller_mole& player_controller_mole::operator=(player_controller_mole arg) { return arg; }
 };

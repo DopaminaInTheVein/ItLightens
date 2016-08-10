@@ -18,6 +18,7 @@ bool elevator::load(MKeyValue& atts)
 	else {
 		targetDown = targetUp = atts.getPoint("target"); // Both as targets, because onCreate we will set targetUp/down as initial position
 	}
+	state_init = atts.getInt("state", -1);
 	epsilonTarget = 0.01f;
 	return true;
 }
@@ -33,7 +34,7 @@ bool elevator::save(std::ofstream& os, MKeyValue& atts)
 	atts.put("speedDown", speedDown);
 	atts.put("target_up", targetUp);
 	atts.put("target_down", targetDown);
-
+	atts.put("state", state);
 	return true;
 }
 
@@ -45,16 +46,21 @@ void elevator::onCreate(const TMsgEntityCreated&)
 	TCompTransform * transform = eMe->get<TCompTransform>();
 	assert(transform);
 
-	if (targetUp == targetDown) {
-		VEC3 initialPos = transform->getPosition();
-		if (initialPos.y > targetUp.y) {
-			targetUp = initialPos;
-			prevState = state = UP;
+	if (state_init < 0) {
+		if (targetUp == targetDown) {
+			VEC3 initialPos = transform->getPosition();
+			if (initialPos.y > targetUp.y) {
+				targetUp = initialPos;
+				prevState = state = UP;
+			}
+			else {
+				targetDown = initialPos;
+				prevState = state = DOWN;
+			}
 		}
-		else {
-			targetDown = initialPos;
-			prevState = state = DOWN;
-		}
+	}
+	else {
+		prevState = state = (eElevatorState)state_init;
 	}
 	physics = eMe->get<TCompPhysics>();
 	physics->setKinematic(true);

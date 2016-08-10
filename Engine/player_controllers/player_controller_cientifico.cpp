@@ -92,9 +92,9 @@ void player_controller_cientifico::Init() {
 		objs_names.resize(eObjSci::OBJ_SCI_SIZE);
 		objs_names[eObjSci::EMPTY] = "empty";
 		objs_names[eObjSci::DISABLE_BEACON] = "disable_beacon";
-		objs_names[eObjSci::MAGNETIC_BOMB] = "magnetic_bomb"; //Only this is used at the moment!
+		objs_names[eObjSci::MAGNETIC_BOMB] = "magnetic_bomb";
 		objs_names[eObjSci::STATIC_BOMB] = "static_bomb";
-		objs_names[eObjSci::THROW_BOMB] = "throw_bomb";
+		objs_names[eObjSci::THROW_BOMB] = "throw_bomb"; //Only this is used at the moment!
 	}
 
 	myHandle = om->getHandleFromObjAddr(this);
@@ -105,6 +105,12 @@ void player_controller_cientifico::Init() {
 
 	____TIMER_REDEFINE_(t_throwing, 0.5f);
 	____TIMER_REDEFINE_(t_nextBomb, 1.f);
+	if (objs_amoung[THROW_BOMB] > 0) {
+		obj = eObjSci::THROW_BOMB;
+		spawnBomb(bomb_offset_1);
+	}
+
+	init_poss();
 }
 
 //##########################################################################
@@ -601,4 +607,20 @@ void player_controller_cientifico::ChangeCommonState(std::string state) {
 	else if (state == "idle") {
 		SET_ANIM_SCIENTIST(AST_IDLE);
 	}
+}
+
+//Load and save
+bool player_controller_cientifico::load(MKeyValue& atts)
+{
+	objs_amoung[THROW_BOMB] = atts.getFloat("bombs", 0);
+	load_poss(atts);
+	return true;
+}
+bool player_controller_cientifico::save(std::ofstream& os, MKeyValue& atts)
+{
+	if (objs_amoung[THROW_BOMB] > 0) {
+		atts.put("bombs", objs_amoung[THROW_BOMB]);
+	}
+	save_poss(os, atts);
+	return true;
 }

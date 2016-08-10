@@ -35,7 +35,6 @@ void bt_mole::readIniFileAttr() {
 void bt_mole::Init()
 {
 	getUpdateInfoBase(CHandle(this).getOwner());
-	initParent();
 	// read main attributes from file
 	readIniFileAttr();
 
@@ -65,6 +64,7 @@ void bt_mole::Init()
 	TCompTransform * myParentT = myParentE->get<TCompTransform>();
 	rechargePoint = myParentT->getPosition();
 	SET_ANIM_MOLE_BT(AST_IDLE);
+	initParent();
 }
 
 bool bt_mole::getUpdateInfo()
@@ -104,6 +104,7 @@ bool bt_mole::load(MKeyValue& atts) {
 		fixedWpts[i] = atts.getPoint(atrPos);
 	}
 	pointsToRechargePoint = atts.getInt("max_patrol", 5);
+	load_bt(atts);
 	return true;
 }
 
@@ -115,6 +116,8 @@ bool bt_mole::save(std::ofstream& os, MKeyValue& atts)
 		WPT_ATR_NAME(atrPos, "pos", i);
 		atts.put(atrPos, fixedWpts[i]);
 	}
+
+	save_bt(os, atts);
 	return true;
 }
 

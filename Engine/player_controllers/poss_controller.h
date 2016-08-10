@@ -33,6 +33,11 @@ public:
 	//virtual void DisabledState();
 	//virtual void InitControlState();
 	//virtual CEntity* getMyEntity();
+
+	//Load, save and init
+	bool load_poss(MKeyValue& atts);
+	bool save_poss(std::ofstream& os, MKeyValue& atts);
+	void init_poss();
 };
 
 #endif

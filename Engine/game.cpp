@@ -203,7 +203,7 @@ void CApp::restartLevelNotify() {
 
 void CApp::saveLevel() {
 	has_check_point = true;
-	entities->saveLevel(current_level);
+	entities->saveLevel(getCurrentRealLevel());
 	char params[128];
 	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnSavedLevel, std::string(params));

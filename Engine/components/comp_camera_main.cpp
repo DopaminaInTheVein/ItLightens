@@ -31,7 +31,9 @@ void TCompCameraMain::init()
 	CHandle player = tags_manager.getFirstHavingTag("player");
 	TMsgSetTarget msg;
 	msg.target = player;
-	msg.who = PLAYER;
+	TMsgGetWhoAmI msgWho;
+	player.sendMsgWithReply(msgWho);
+	msg.who = msgWho.who;
 	CHandle hMe = CHandle(this).getOwner();
 	hMe.sendMsg(msg);
 
