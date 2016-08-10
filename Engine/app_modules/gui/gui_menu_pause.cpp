@@ -23,20 +23,18 @@ CGuiMenuPause::CGuiMenuPause()
 	float distanceYButtons = spaceYButtons + sizeYButtons;
 	// ----------------------------
 
-
 	btnResume = new CGuiButtonStd(
 		GUI::createRect(startXButtons, startYButtons, sizeXButtons, sizeYButtons),
 		fontSize,
 		"Resume"
-	);
+		);
 
 	btnExit = new CGuiButtonStd(
-		GUI::createRect(startXButtons, startYButtons + distanceYButtons*1, sizeXButtons, sizeYButtons),
+		GUI::createRect(startXButtons, startYButtons + distanceYButtons * 1, sizeXButtons, sizeYButtons),
 		fontSize,
 		"Exit"
-	);
+		);
 }
-
 
 void CGuiMenuPause::render()
 {
@@ -48,12 +46,11 @@ void CGuiMenuPause::render()
 
 	// Buttons
 	if (btnResume->render()) {
-		io->mouse.capture();
+		controller->ChangeMouseState(true);
 		GameController->SetGameState(CGameController::RUNNING);
 	}
-	
+
 	if (btnExit->render()) {
 		CApp::get().exitGame();
 	}
 }
-

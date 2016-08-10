@@ -202,6 +202,7 @@
     <ClCompile Include="handle\handle_manager.cpp" />
     <ClCompile Include="input\input.cpp" />
     <ClCompile Include="input\input_manager.cpp" />
+    <ClCompile Include="input\input_wrapper.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
     <ClCompile Include="logic\ai_cam.cpp" />
     <ClCompile Include="logic\ai_water.cpp" />
@@ -212,7 +213,6 @@
     <ClCompile Include="logic\bt_mole.cpp" />
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_scientist.cpp" />
-    <ClCompile Include="logic\bt_speedy.cpp" />
     <ClCompile Include="logic\comp_box.cpp" />
     <ClCompile Include="logic\damage.cpp" />
     <ClCompile Include="logic\elevator.cpp" />
@@ -232,7 +232,6 @@
     <ClCompile Include="player_controllers\player_controller_base.cpp" />
     <ClCompile Include="player_controllers\player_controller_cientifico.cpp" />
     <ClCompile Include="player_controllers\player_controller_mole.cpp" />
-    <ClCompile Include="player_controllers\player_controller_speedy.cpp" />
     <ClCompile Include="player_controllers\poss_controller.cpp" />
     <ClCompile Include="prefabs\magnetic_bomb.cpp" />
     <ClCompile Include="prefabs\static_bomb.cpp">
@@ -426,6 +425,7 @@
     <ClInclude Include="imgui\stb_textedit.h" />
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\input_manager.h" />
+    <ClInclude Include="input\input_wrapper.h" />
     <ClInclude Include="logic\aicontroller.h" />
     <ClInclude Include="logic\ai_cam.h" />
     <ClInclude Include="logic\ai_water.h" />
@@ -436,7 +436,6 @@
     <ClInclude Include="logic\bt_mole.h" />
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_scientist.h" />
-    <ClInclude Include="logic\bt_speedy.h" />
     <ClInclude Include="logic\comp_box.h" />
     <ClInclude Include="logic\damage.h" />
     <ClInclude Include="logic\elevator.h" />
@@ -460,7 +459,6 @@
     <ClInclude Include="player_controllers\player_controller_base.h" />
     <ClInclude Include="player_controllers\player_controller_cientifico.h" />
     <ClInclude Include="player_controllers\player_controller_mole.h" />
-    <ClInclude Include="player_controllers\player_controller_speedy.h" />
     <ClInclude Include="player_controllers\poss_controller.h" />
     <ClInclude Include="prefabs\magnetic_bomb.h" />
     <ClInclude Include="prefabs\static_bomb.h">

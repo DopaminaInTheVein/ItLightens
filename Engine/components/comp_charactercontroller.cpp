@@ -7,7 +7,7 @@
 #include "comp_name.h"
 
 #include "handle\handle.h"
-#include "app_modules\io\io.h"
+//#include "input\input_wrapper.h"
 
 #define FACTOR_HEIGHT_AABB	1.4f
 #define FACTOR_WIDTH_AABB	1.5f

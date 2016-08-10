@@ -74,7 +74,7 @@ void bt_scientist::Init() {
 		addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_scientist::actionSeekWpt);
 		addChild("patrol", "waitwpt", ACTION, NULL, (btaction)&bt_scientist::actionWaitWpt);
 	}
-	// transforms for the speedy and the player
+	// transforms for the player
 	SetMyEntity();
 
 	out[IDLE] = "IDLE";
@@ -127,7 +127,7 @@ bool bt_scientist::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-		);
+			);
 	}
 
 	zmin = atts.getFloat("zmin", 0.0f);

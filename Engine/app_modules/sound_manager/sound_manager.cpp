@@ -1,6 +1,5 @@
 #include "mcv_platform.h"
 #include "sound_manager.h"
-#include "app_modules/io/io.h"
 #include "utils/utils.h"
 
 extern CSoundManagerModule* sound_manager = nullptr;
@@ -8,7 +7,6 @@ extern CSoundManagerModule* sound_manager = nullptr;
 CSoundManagerModule::CSoundManagerModule() {}
 
 bool CSoundManagerModule::start() {
-
 	/*
 	Create a System object and initialize
 	*/
@@ -138,5 +136,3 @@ bool CSoundManagerModule::playAmbient(std::string route) {
 
 	return false;
 }
-
-

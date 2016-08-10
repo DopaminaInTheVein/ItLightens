@@ -93,7 +93,7 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMai
 	if (curPoint > positions.size() - 2) {
 		finish = true;
 	}
-	if (io->keys['Q'].becomesPressed()) {
+	if (controller->IsBackPressed()) {
 		CHandle me = CHandle(this).getOwner();
 		CEntity* eMe = me;
 		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicSkipped, std::string(eMe->getName())), CHandle(this).getOwner();

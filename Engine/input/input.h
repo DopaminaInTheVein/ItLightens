@@ -179,7 +179,6 @@
 */
 #define KEY_CIRCUMFLEX      KEY_PREVTRACK       /* Japanese keyboard */
 
-
 #pragma endregion
 
 class CInput
@@ -189,6 +188,16 @@ public:
 	CInput(const CInput&);
 	~CInput();
 
+	bool Initialize(HINSTANCE, HWND, int, int);
+	void Shutdown();
+	bool Frame();
+	int getScreenWidth() {
+		return m_screenWidth;
+	}
+	int getScreenHeight() {
+		return m_screenHeight;
+	}
+private:
 	const int mouse_LEFT = 0;
 	const int mouse_RIGHT = 1;
 	const int mouse_WHEEL = 2;
@@ -206,16 +215,6 @@ public:
 	const int joystick_RB = 5;
 	const int joystick_BACK = 6;
 	const int joystick_START = 7;
-
-	bool Initialize(HINSTANCE, HWND, int, int);
-	void Shutdown();
-	bool Frame();
-	int getScreenWidth() {
-		return m_screenWidth;
-	}
-	int getScreenHeight() {
-		return m_screenHeight;
-	}
 
 	void GetMouseLocation(int&, int&);
 

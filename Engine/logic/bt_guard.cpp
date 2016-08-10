@@ -4,8 +4,8 @@
 #include "components/entity_tags.h"
 #include "utils/XMLParser.h"
 #include "utils/utils.h"
+#include "input/input_wrapper.h"
 #include "logic/sbb.h"
-#include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "ui/ui_interface.h"
 
@@ -550,10 +550,12 @@ int bt_guard::actionAbsorb() {
 	VEC3 myPos = getTransform()->getPosition();
 	float dist = squaredDistXZ(posPlayer, getTransform()->getPosition());
 
+#ifndef NDEBUG
 	ui.addTextInstructions("\nPress 'M' to interrupt gaurd shoot when he dont see you!!! (artificial)\n");
-	if (io->keys['M'].becomesPressed()) {
+	if (controller->interruptGuardShotButtonPressed()) {
 		artificialInterrupt();
 	}
+#endif // !NDEBUG
 
 	turnTo(posPlayer);
 	if (squaredDistY(myPos, posPlayer) * 2.0f > dist) { //Angulo de 30 grados
@@ -1556,7 +1558,7 @@ bool bt_guard::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-		);
+			);
 	}
 	noShoot = atts.getBool("noShoot", false);
 

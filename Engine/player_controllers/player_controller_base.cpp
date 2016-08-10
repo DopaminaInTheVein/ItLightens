@@ -14,7 +14,7 @@
 #include "components/comp_msgs.h"
 #include "components/comp_camera_main.h"
 
-#include "app_modules/io/io.h"
+#include "input/input_wrapper.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "utils/utils.h"
 
@@ -236,44 +236,45 @@ bool CPlayerBase::UpdateMovDirection() {
 	bool horizontal = false;
 	bool vertical = false;
 	if (!GameController->GetFreeCamera()) {
-		if (io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility) {
+		if (controller->IsMoveForward(left_stick_sensibility)) {
 			directionForward = VEC3(0, 0, 1);
 			//TODO: xbobx
 			moving = true;
 			vertical = true;
 		}
-		if (io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility) {
+		if (controller->IsMoveBackWard(left_stick_sensibility)) {
 			directionForward = VEC3(0, 0, -1);
 			//TODO: xbobx
 			moving = true;
 			vertical = true;
 		}
 
-		if (io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility) {
+		if (controller->IsMoveLeft(left_stick_sensibility)) {
 			directionLateral = VEC3(1, 0, 0);
 			//TODO: xbobx
 			moving = true;
 			horizontal = true;
 		}
-		if (io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility) {
+		if (controller->IsMoveRight(left_stick_sensibility)) {
 			directionLateral = VEC3(-1, 0, 0);
 			//TODO: xbobx
 			moving = true;
 			horizontal = true;
 		}
-		if ((io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed()) && !gravity_active) {
+		if ((controller->IsJumpButtonPressed()) && !gravity_active) {
 			directionVertical = VEC3(0, 0.25, 0);
 			//TODO: xbobx
 			moving = true;
 			vertical = true;
 		}
+		/*
 		if ((io->keys[VK_MENU].isPressed() || io->joystick.button_A.isPressed()) && !gravity_active) {
 			directionVertical = VEC3(0, -0.25, 0);
 			//TODO: xbobx
 			moving = true;
 			vertical = true;
 		}
-
+		*/
 		if (!vertical && moving)
 			directionForward = VEC3(0, 0, 0);
 
@@ -289,7 +290,7 @@ bool CPlayerBase::UpdateMovDirection() {
 void CPlayerBase::UpdateJumpState() {
 	PROFILE_FUNCTION("update jump state base");
 	if (!canJump()) return;
-	if (io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.isPressed()) {
+	if (controller->IsJumpButtonPressed()) {
 		logic_manager->throwEvent(logic_manager->OnJump, "");
 		Jump();
 	}
@@ -317,8 +318,6 @@ void CPlayerBase::UpdateMovingWithOther() {
 	//TODO: actions
 }
 #pragma endregion
-
-//##########################################################################
 
 //##########################################################################
 // Player States

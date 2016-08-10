@@ -1,11 +1,11 @@
 #ifndef	INC_CONSOLE_H_
 #define INC_CONSOLE_H_
 
-#include "imgui\imgui.h"
-#include "app_modules\io\io.h"
+#include "imgui/imgui.h"
 #include "utils/utils.h"
-#include <stdlib.h>   
-#include <stdio.h> 
+#include "input/input_wrapper.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include <ctype.h>
 
 // Some compilers support applying printf-style warnings to user functions.
@@ -28,7 +28,6 @@ class CConsole
 	ImVector<const char*> Commands;
 	bool				  opened = false;
 
-
 	//TODO: should be able to call lua functions
 	//functions commands done:
 	void Command_Help(const char* command) {
@@ -41,8 +40,8 @@ class CConsole
 		AddLog("test function");
 
 		int i = 1;
-		for (char* a: args) {
-			AddLog("#arg %d - %s\n",i,a);
+		for (char* a : args) {
+			AddLog("#arg %d - %s\n", i, a);
 			i++;
 		}
 	}
@@ -135,7 +134,6 @@ public:
 			return;
 		}
 
-		
 		ImGui::TextWrapped("Enter 'HELP' for help, press TAB to use text completion.\nPress up/down to move between used commands");
 
 		if (ImGui::SmallButton("Clear")) ClearLog();
@@ -170,9 +168,8 @@ public:
 		ImGui::EndChild();
 		ImGui::Separator();
 
-		if (!io->keys[220].isPressed()) {
+		if (!controller->isReleaseButtonPressed()) {
 			//ImGui::SetWindowFocus();
-
 
 			// Command-line
 			if (ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf), ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory, &TextEditCallbackStub, (void*)this))
@@ -235,7 +232,6 @@ public:
 		char* space_end = strchr(line_to_treat, ' ');
 		space_end = '\0';
 		command_line = line_to_treat;
-		
 
 		// Process command
 		if (Stricmp(command_line, "CLEAR") == 0)
@@ -371,9 +367,9 @@ public:
 		return 0;
 	}
 
-	void update(){
+	void update() {
 		if (opened) {
-			if (io->keys[VK_ESCAPE].becomesPressed()) {
+			if (controller->IsBackPressed()) {
 				opened = false;
 				return;
 			}

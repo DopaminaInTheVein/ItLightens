@@ -1,8 +1,9 @@
 #include "mcv_platform.h"
 #include "gameController.h"
 
+#include "input/input_wrapper.h"
+
 #include "debug\debug_itlightens.h"
-#include "io\io.h"
 #include "app_modules/logic_manager/logic_manager.h"
 
 int CGameController::GetGameState() const { return game_state; }
@@ -27,37 +28,37 @@ void CGameController::TogglePauseIntroState() {
 void CGameController::UpdateGeneralInputs() {
 	if (!ImGui::GetIO().WantTextInput) { //not input wanted from imgui
 										 //exit game
-		if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
+		if (controller->IsBackPressed()) {
 			if (game_state == RUNNING) {
 				SetGameState(MENU);
-				io->mouse.release();
+				controller->ChangeMouseState(false);
 			}
 			else if (game_state == MENU) {
 				SetGameState(RUNNING);
-				io->mouse.capture();
+				controller->ChangeMouseState(true);
 			}
 			//CApp& app = CApp::get();
 			//app.exitGame();
 		}
 
 		//restart game
-		if (io->keys[VK_RETURN].becomesPressed() || io->joystick.button_START.becomesPressed()) {
+		if (controller->IsPausePressed()) {
 			CApp::get().has_check_point = false;
 			CApp::get().restartLevelNotify();
 		}
-
+#ifndef NDEGUG
 		//toggle console log
-		if (io->keys['L'].becomesPressed()) {
+		if (controller->isToogleConsoleLoguttonPressed()) {
 			Debug->setOpen(!*Debug->getStatus());
 		}
 
 		//toggle command log
-		if (io->keys['O'].becomesPressed()) {
+		if (controller->isToogleCommandLogButtonPressed()) {
 			Debug->ToggleConsole();
 		}
 
 		//lock/unlock free camera
-		if (io->keys['K'].becomesPressed()) {
+		if (controller->isCameraReleaseButtonPressed()) {
 			free_camera = !free_camera;
 		}
 
@@ -67,9 +68,10 @@ void CGameController::UpdateGeneralInputs() {
 		//}
 
 		//pause/unpause game (intro mode)
-		if (io->keys['I'].becomesPressed()) {
+		if (controller->isPauseGameButtonPressed()) {
 			TogglePauseIntroState();
 		}
+#endif
 	}
 }
 

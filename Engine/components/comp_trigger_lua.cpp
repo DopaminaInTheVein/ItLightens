@@ -31,7 +31,7 @@ void TTriggerLua::onTriggerInside(const TMsgTriggerIn& msg) {
 	eAction actionAvalable = getActionAvailable();
 	if (actionAvalable != NONE && mActionable) {
 		Gui->setActionAvailable(actionAvalable);
-		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
+		if (controller->IsActionButtonPessed()) {
 			mActionable = false;
 			onTriggerAction(playerType);
 		}

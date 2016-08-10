@@ -61,20 +61,19 @@
 #include "comp_trigger_standar.h"
 
 //controllers
-#include "player_controllers\player_controller.h"
-#include "player_controllers/player_controller_speedy.h"
+#include "player_controllers/player_controller.h"
 #include "player_controllers/player_controller_mole.h"
 #include "player_controllers/player_controller_cientifico.h"
 
 //Physics
 #include "comp_physics.h"
 #include "comp_charactercontroller.h"
-#include "particles\ParticlesSystem.h"
+#include "particles/ParticlesSystem.h"
 
 //prefabs
-#include "prefabs\magnetic_bomb.h"
-#include "prefabs\static_bomb.h"
-#include "prefabs\throw_bomb.h"
+#include "prefabs/magnetic_bomb.h"
+#include "prefabs/static_bomb.h"
+#include "prefabs/throw_bomb.h"
 #include "comp_wire.h"
 #include "comp_generator.h"
 #include "comp_polarized.h"

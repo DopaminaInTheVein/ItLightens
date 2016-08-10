@@ -126,7 +126,7 @@ bool CGuiModule::forcedUpdate()
 }
 
 void CGuiModule::toogleEnabled() {
-	if (io->keys[VK_F1].becomesPressed()) {
+	if (controller->changegui()) {
 		enabled = !enabled;
 	}
 }
@@ -142,7 +142,7 @@ void CGuiModule::updateDefault(float dt) {}
 // ----- Update On Play ----- //
 void CGuiModule::updateOnPlay(float dt)
 {
-	if (io->keys['P'].becomesPressed()) {
+	if (controller->isStopGameButtonPressed()) {
 		GameController->SetGameState(CGameController::STOPPED);
 	}
 	hudPlayer->update(dt);
@@ -151,7 +151,7 @@ void CGuiModule::updateOnPlay(float dt)
 
 // ----- Update On Stop ----- //
 void CGuiModule::updateOnStop(float dt) {
-	if (io->keys['P'].becomesPressed()) {
+	if (controller->isStopGameButtonPressed()) {
 		GameController->SetGameState(CGameController::RUNNING);
 	}
 }
@@ -166,21 +166,21 @@ void CGuiModule::updateOnMenu(float dt) {
 
 // ----- Update On Dead ----- //
 void CGuiModule::updateOnDead(float dt) {
-	if (io->keys[VK_RETURN].becomesPressed()) {
+	if (controller->IsPausePressed()) {
 		GameController->SetGameState(CGameController::RUNNING);
 		CApp::get().restartLevelNotify();
 	}
-	else if (io->keys[VK_ESCAPE].becomesPressed()) {
+	else if (controller->IsBackPressed()) {
 		CApp::get().exitGame();
 	}
 }
 
 // ----- Update On Victory ----- //
 void CGuiModule::updateOnVictory(float dt) {
-	if (io->keys[VK_RETURN].becomesPressed()) {
+	if (controller->IsPausePressed()) {
 		CApp::get().restartLevelNotify();
 	}
-	else if (io->keys[VK_ESCAPE].becomesPressed()) {
+	else if (controller->IsBackPressed()) {
 		GameController->SetGameState(CGameController::RUNNING);
 		CApp::get().exitGame();
 	}

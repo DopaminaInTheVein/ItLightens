@@ -113,9 +113,6 @@
     <ClCompile Include="logic\sbb.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\bt_speedy.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="logic\aicontroller.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -136,9 +133,6 @@
       <Filter>prefabs</Filter>
     </ClCompile>
     <ClCompile Include="player_controllers\player_controller_mole.cpp">
-      <Filter>player controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="player_controllers\player_controller_speedy.cpp">
       <Filter>player controllers</Filter>
     </ClCompile>
     <ClCompile Include="player_controllers\poss_controller.cpp">
@@ -512,6 +506,9 @@
     <ClCompile Include="app_modules\gameController.cpp">
       <Filter>app_modules\game</Filter>
     </ClCompile>
+    <ClCompile Include="input\input_wrapper.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -647,9 +644,6 @@
     <ClInclude Include="logic\sbb.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\bt_speedy.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="logic\aicontroller.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -681,9 +675,6 @@
       <Filter>player controllers</Filter>
     </ClInclude>
     <ClInclude Include="player_controllers\player_controller_mole.h">
-      <Filter>player controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="player_controllers\player_controller_speedy.h">
       <Filter>player controllers</Filter>
     </ClInclude>
     <ClInclude Include="player_controllers\poss_controller.h">
@@ -1385,6 +1376,9 @@
     </ClInclude>
     <ClInclude Include="logic\pila.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="input\input_wrapper.h">
+      <Filter>input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

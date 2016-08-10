@@ -157,7 +157,7 @@ void CRenderDeferredModule::stop() {
 // ------------------------------------------------------
 void CRenderDeferredModule::update(float dt) {
 	shader_ctes_globals.world_time += dt;
-	if (io->keys['H'].isPressed()) {
+	if (controller->isParticleEditorButtonPressed()) {
 		auto gs = tags_manager.getHandlesByTag("generator");
 
 		helpers.create(gs.size(), particles_mesh);
@@ -983,7 +983,7 @@ void CRenderDeferredModule::RenderHelpGenLoc() {
 	activateZ(ZCFG_ALL_DISABLED);
 
 	//TEST_HELP
-	if (io->keys['H'].isPressed()) {
+	if (controller->isParticleEditorButtonPressed()) {
 		//helpers_gen | ui
 		Resources.get("textures/general/triangle1.dds")->as<CTexture>()->activate(TEXTURE_SLOT_DIFFUSE);
 		Resources.get("textures/fire.dds")->as<CTexture>()->activate(TEXTURE_SLOT_DIFFUSE);

@@ -111,7 +111,6 @@ struct TMsgSetCamera {
 enum PLAYER_TYPE {
 	PLAYER
 	, MOLE
-	, SPEEDY
 	, SCIENTIST
 };
 struct TMsgSetTarget {

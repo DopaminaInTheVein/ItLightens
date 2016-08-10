@@ -53,7 +53,7 @@ float getDeltaTime(float always) {
 		if (GameController->GetGameState() == CGameController::STOPPED_INTRO)
 			return dt / 2.5f;
 #ifndef NDEBUG
-		else if (io->keys['M'].isPressed())
+		else if (controller->isSlowButtonPressed())
 			return dt / 10.f;
 #endif
 		else

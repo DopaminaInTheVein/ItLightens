@@ -14,7 +14,6 @@
 #include "logic/ai_water.h"
 #include "logic/bt_guard.h"
 #include "logic/bt_mole.h"
-#include "logic/bt_speedy.h"
 #include "logic/bt_scientist.h"
 #include "windows/app.h"
 #include "utils/utils.h"
@@ -42,10 +41,8 @@ DECL_OBJ_MANAGER("magnet_door", magnet_door);
 DECL_OBJ_MANAGER("elevator", elevator);
 DECL_OBJ_MANAGER("bt_guard", bt_guard);
 DECL_OBJ_MANAGER("bt_mole", bt_mole);
-DECL_OBJ_MANAGER("bt_speedy", bt_speedy);
 DECL_OBJ_MANAGER("water", water_controller);
 DECL_OBJ_MANAGER("player", player_controller);
-DECL_OBJ_MANAGER("player_speedy", player_controller_speedy);
 DECL_OBJ_MANAGER("player_mole", player_controller_mole);
 DECL_OBJ_MANAGER("player_cientifico", player_controller_cientifico);
 DECL_OBJ_MANAGER("workbench", workbench);
@@ -139,7 +136,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompLightDir>()->init(8);
 	getHandleManager<TCompLightDirShadows>()->init(MAX_ENTITIES);
 	getHandleManager<player_controller>()->init(8);
-	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(16);
 	getHandleManager<player_controller_cientifico>()->init(8);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
@@ -182,7 +178,6 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
-	getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
 	getHandleManager<bt_scientist>()->init(MAX_ENTITIES);
 	getHandleManager<ai_cam>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
@@ -238,9 +233,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(LogicHelperArrow, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(player_controller, TMsgDamageSpecific, onSetDamage);
-	SUBSCRIBE(player_controller_speedy, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
-	SUBSCRIBE(bt_speedy, TMsgSetPlayer, onSetPlayer);
 	SUBSCRIBE(bt_scientist, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
@@ -290,7 +283,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
-	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
 	SUBSCRIBE(bt_guard, TMsgNoise, noise);
 	SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
@@ -352,11 +344,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_cientifico, TMsgControllerSetEnable, onSetEnable);
 	SUBSCRIBE(player_controller_cientifico, TMsgGetWhoAmI, onGetWhoAmI);
 	SUBSCRIBE(player_controller_cientifico, TMsgCanRechargeDrone, onCanRepairDrone);
-	//..Speedy
-	SUBSCRIBE(bt_speedy, TMsgAISetPossessed, onSetPossessed);
-	SUBSCRIBE(bt_speedy, TMsgAISetStunned, onSetStunned);
-	SUBSCRIBE(player_controller_speedy, TMsgControllerSetEnable, onSetEnable);
-	//SUBSCRIBE(player_controller_speedy, TMsgGetWhoAmI, onGetWhoAmI);
 	//..Mole
 	SUBSCRIBE(bt_mole, TMsgAISetPossessed, onSetPossessed);
 	SUBSCRIBE(bt_mole, TMsgAISetStunned, onSetStunned);
@@ -371,7 +358,6 @@ bool CEntitiesModule::start() {
 	//anything for now
 	/*SUBSCRIBE(player_controller, TMsgDie, onDie);
 	SUBSCRIBE(player_controller_cientifico, TMsgDie, onDie);
-	SUBSCRIBE(player_controller_speedy, TMsgDie, onDie);
 	SUBSCRIBE(player_controller_mole, TMsgDie, onDie);*/
 
 	//Damage
@@ -381,7 +367,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompLife, TMsgSetDamage, onReciveDamage);
 	SUBSCRIBE(TCompLife, TMsgStopDamage, onStopDamage);
 	SUBSCRIBE(player_controller_cientifico, TMsgUnpossesDamage, onForceUnPosses);
-	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	SUBSCRIBE(TCompCameraMain, TMsgGetCullingViewProj, onGetViewProj);
@@ -392,14 +377,12 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(player_controller_cientifico, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
-	SUBSCRIBE(player_controller_speedy, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetControllable, onSetControllable);
 
 	//Go And Look
 	SUBSCRIBE(player_controller, TMsgGoAndLook, onGoAndLook);
 	SUBSCRIBE(player_controller_cientifico, TMsgGoAndLook, onGoAndLook);
 	SUBSCRIBE(player_controller_mole, TMsgGoAndLook, onGoAndLook);
-	//SUBSCRIBE(player_controller_speedy, TMsgGoAndLook, onGoAndLook);
 	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
 	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
 
@@ -558,13 +541,11 @@ void CEntitiesModule::initLevel(string level, bool check_point) {
 	SBB::postHandlesVector("wptsRecoverPoint", tags_manager.getHandlesByTag(tagIDrec));
 
 	getHandleManager<player_controller>()->onAll(&player_controller::Init);
-	getHandleManager<player_controller_speedy>()->onAll(&player_controller_speedy::Init);
 	getHandleManager<player_controller_cientifico>()->onAll(&player_controller_cientifico::Init);
 	getHandleManager<player_controller_mole>()->onAll(&player_controller_mole::Init);
 
 	getHandleManager<bt_guard>()->onAll(&bt_guard::Init);
 	getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
-	getHandleManager<bt_speedy>()->onAll(&bt_speedy::Init);
 	getHandleManager<bt_scientist>()->onAll(&bt_scientist::Init);
 	//getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
 	getHandleManager<ai_cam>()->onAll(&ai_cam::Init);
@@ -670,7 +651,6 @@ void CEntitiesModule::update(float dt) {
 		// May need here a switch to update wich player controller takes the action - possession rulez
 		if (!GameController->IsCinematic()) {
 			getHandleManager<player_controller>()->updateAll(dt);
-			getHandleManager<player_controller_speedy>()->updateAll(dt);
 			getHandleManager<player_controller_mole>()->updateAll(dt);
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
@@ -706,7 +686,6 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<bt_scientist>()->updateAll(dt);
 			getHandleManager<ai_cam>()->updateAll(dt);
 			getHandleManager<workbench_controller>()->updateAll(dt);
-			getHandleManager<bt_speedy>()->updateAll(dt);
 			getHandleManager<water_controller>()->updateAll(dt);
 			getHandleManager<bt_guard>()->updateAll(dt);
 		}
@@ -759,7 +738,7 @@ void CEntitiesModule::render() {
 	// for each manager
 	// if manager has debug render active
 	// manager->renderAll()
-	if (io->keys['N'].isPressed() && io->keys[VK_CONTROL].isPressed()) {
+	if (controller->isRenderDebugComboButtonPressed()) {
 		SBB::readNavmesh().render();
 	}
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
