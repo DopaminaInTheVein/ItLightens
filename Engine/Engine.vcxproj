@@ -215,7 +215,6 @@
     <ClCompile Include="logic\bt_mole.cpp" />
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_scientist.cpp" />
-    <ClCompile Include="logic\bt_speedy.cpp" />
     <ClCompile Include="logic\comp_box.cpp" />
     <ClCompile Include="logic\damage.cpp" />
     <ClCompile Include="logic\elevator.cpp" />
@@ -235,7 +234,6 @@
     <ClCompile Include="player_controllers\player_controller_base.cpp" />
     <ClCompile Include="player_controllers\player_controller_cientifico.cpp" />
     <ClCompile Include="player_controllers\player_controller_mole.cpp" />
-    <ClCompile Include="player_controllers\player_controller_speedy.cpp" />
     <ClCompile Include="player_controllers\poss_controller.cpp" />
     <ClCompile Include="prefabs\magnetic_bomb.cpp" />
     <ClCompile Include="prefabs\static_bomb.cpp">
@@ -441,7 +439,6 @@
     <ClInclude Include="logic\bt_mole.h" />
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_scientist.h" />
-    <ClInclude Include="logic\bt_speedy.h" />
     <ClInclude Include="logic\comp_box.h" />
     <ClInclude Include="logic\damage.h" />
     <ClInclude Include="logic\elevator.h" />
@@ -465,7 +462,6 @@
     <ClInclude Include="player_controllers\player_controller_base.h" />
     <ClInclude Include="player_controllers\player_controller_cientifico.h" />
     <ClInclude Include="player_controllers\player_controller_mole.h" />
-    <ClInclude Include="player_controllers\player_controller_speedy.h" />
     <ClInclude Include="player_controllers\poss_controller.h" />
     <ClInclude Include="prefabs\magnetic_bomb.h" />
     <ClInclude Include="prefabs\static_bomb.h">

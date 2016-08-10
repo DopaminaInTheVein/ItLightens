@@ -113,9 +113,6 @@
     <ClCompile Include="logic\sbb.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\bt_speedy.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="logic\aicontroller.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -136,9 +133,6 @@
       <Filter>prefabs</Filter>
     </ClCompile>
     <ClCompile Include="player_controllers\player_controller_mole.cpp">
-      <Filter>player controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="player_controllers\player_controller_speedy.cpp">
       <Filter>player controllers</Filter>
     </ClCompile>
     <ClCompile Include="player_controllers\poss_controller.cpp">
@@ -656,9 +650,6 @@
     <ClInclude Include="logic\sbb.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\bt_speedy.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="logic\aicontroller.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -690,9 +681,6 @@
       <Filter>player controllers</Filter>
     </ClInclude>
     <ClInclude Include="player_controllers\player_controller_mole.h">
-      <Filter>player controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="player_controllers\player_controller_speedy.h">
       <Filter>player controllers</Filter>
     </ClInclude>
     <ClInclude Include="player_controllers\poss_controller.h">
