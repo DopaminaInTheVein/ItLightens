@@ -17,6 +17,9 @@ struct TCompCameraMain : public TCompCamera {
 	VEC3 origin_camera;
 	VEC3 last_pos_camera;
 
+	//Camera_main unique
+	static CHandle prev_camera_main;
+
 	//Guided camera
 	CHandle guidedCamera;
 	TCompTransform * transform;
@@ -30,6 +33,7 @@ struct TCompCameraMain : public TCompCamera {
 	void update(float dt);
 	bool checkColision(const VEC3& pos, const float smoothCurrent);
 	void onGuidedCamera(const TMsgGuidedCamera&);
+	void onCreate(const TMsgEntityCreated&);
 };
 
 #endif

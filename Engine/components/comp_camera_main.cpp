@@ -26,6 +26,8 @@ extern CShaderCte< TCteCamera > shader_ctes_camera;
 
 #include "comp_charactercontroller.h"
 
+CHandle TCompCameraMain::prev_camera_main = CHandle();
+
 void TCompCameraMain::init()
 {
 	CHandle player = tags_manager.getFirstHavingTag("player");
@@ -44,9 +46,15 @@ void TCompCameraMain::init()
 
 bool TCompCameraMain::load(MKeyValue& atts) {
 	if (!TCompCamera::load(atts)) return false;
-	detect_colsions = atts.getBool("collision", false);
+	detect_colsions = atts.getBool("collision", true);
 	smoothCurrent = smoothDefault = 10.f;
 	return true;
+}
+
+void TCompCameraMain::onCreate(const TMsgEntityCreated&)
+{
+	if (prev_camera_main.isValid()) prev_camera_main.destroy();
+	prev_camera_main = CHandle(this).getOwner();
 }
 
 void TCompCameraMain::onGuidedCamera(const TMsgGuidedCamera& msg) {

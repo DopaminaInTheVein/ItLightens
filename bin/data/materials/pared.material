@@ -1,0 +1,3 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/Brick_14_UV_H_CM_1.dds"/>
+</material>

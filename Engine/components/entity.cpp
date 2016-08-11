@@ -3,7 +3,7 @@
 #include "comp_name.h"
 #include "imgui/imgui.h"
 #include "comp_tags.h"
-
+#include "app_modules/imgui/module_imgui.h"
 const char* CEntity::getName() const {
 	TCompName* c = get<TCompName>();
 	if (c)
@@ -57,6 +57,12 @@ void CEntity::renderInMenu() {
 	if (c_name)
 		my_name = c_name->name;
 
+	//Check filter
+	std::string str = std::string(my_name);
+	int found = str.find(CImGuiModule::getFilterText()); //TODO read filter
+	if (found == std::string::npos) return;
+
+	//Show entity
 	ImGui::PushID(this);
 	if (ImGui::TreeNode(my_name)) {
 		// For each component type defined in the game ( comp type 0 is invalid... )
