@@ -7,10 +7,10 @@ class CInputWrapper
 {
 public:
 	// Left Joystick
-	bool IsMoveForward(float left_stick_sensibility);
-	bool IsMoveRight(float left_stick_sensibility);
-	bool IsMoveBackWard(float left_stick_sensibility);
-	bool IsMoveLeft(float left_stick_sensibility);
+	bool IsMoveForward();
+	bool IsMoveRight();
+	bool IsMoveBackWard();
+	bool IsMoveLeft();
 
 	// Right Joystick
 	bool IsCamMovedUp(float right_stick_sensibility);

@@ -281,18 +281,18 @@ void player_controller_mole::UpdateInputActions() {
 			LeaveBox();
 		}
 		// pushing box
-		else if (controller->IsMoveForward(left_stick_sensibility)) {
+		else if (controller->IsMoveForward()) {
 			pulling_box = false;
 			animController->setState(AST_PUSH_WALK);
 			box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
 		}
 		// pulling box
-		else if (controller->IsMoveBackWard(left_stick_sensibility)) {
+		else if (controller->IsMoveBackWard()) {
 			pulling_box = true;
 			animController->setState(AST_PULL_WALK);
 			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
 		}
-		else if (controller->IsMoveLeft(left_stick_sensibility) || controller->IsMoveRight(left_stick_sensibility)) {
+		else if (controller->IsMoveLeft() || controller->IsMoveRight()) {
 			LeaveBox();
 		}
 	}

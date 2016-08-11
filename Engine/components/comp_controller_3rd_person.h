@@ -119,6 +119,7 @@ public:
 	void updateInput() {
 		float deltaYaw = 0.f;
 		float deltaPitch = 0.f;
+		/*
 		int movement_x = 0;
 
 		if (controller->JoystickDeltaRightX() != 0)
@@ -127,15 +128,18 @@ public:
 			movement_x = -2;
 		else if (controller->IsJoystickRXMax())
 			movement_x = 2;
-
+		*/
 		//rotation_sensibility = deg2rad(45.0f)/ 250.0f;
-		if (x_axis_inverted)	deltaYaw -= (controller->MouseDeltaX() + movement_x)* rotation_sensibility*speed_camera;
-		else deltaYaw += (controller->MouseDeltaX() + movement_x) * rotation_sensibility*speed_camera;
-		if (y_axis_inverted) deltaPitch -= (controller->MouseDeltaY() + controller->JoystickDeltaRightY()) * rotation_sensibility*speed_camera;
-		else deltaPitch += (controller->MouseDeltaY() + controller->JoystickDeltaRightY()) * rotation_sensibility*speed_camera;
+		if (x_axis_inverted)	deltaYaw -= (controller->MouseDeltaX() + /*movement_x +*/ controller->JoystickRightX() * 6 / controller->JoystickMax()) * rotation_sensibility * speed_camera;
+		else					deltaYaw += (controller->MouseDeltaX() + /*movement_x +*/ controller->JoystickRightX() * 6 / controller->JoystickMax()) * rotation_sensibility * speed_camera;
+
+		if (y_axis_inverted)	deltaPitch -= (controller->MouseDeltaY() + controller->JoystickRightY() * 6 / controller->JoystickMax()) * rotation_sensibility * speed_camera;
+		else					deltaPitch += (controller->MouseDeltaY() + controller->JoystickRightY() * 6 / controller->JoystickMax()) * rotation_sensibility * speed_camera;
 
 		yaw = MOD_YAW(yaw + deltaYaw);
+
 		pitch += deltaPitch;
+
 		if (pitch >= max_pitch) {
 			pitch = max_pitch;
 		}
@@ -198,13 +202,13 @@ public:
 		float dt = getDeltaTime(true);
 		if (!ImGui::GetIO().WantTextInput)
 		{
-			if (controller->IsMoveForward(0.0f))
+			if (controller->IsMoveForward())
 				origin += my_tmx->getFront() * dt * speed_camera_unlocked;
-			if (controller->IsMoveBackWard(0.0f))
+			if (controller->IsMoveBackWard())
 				origin -= my_tmx->getFront() * dt * speed_camera_unlocked;
-			if (controller->IsMoveLeft(0.0f))
+			if (controller->IsMoveLeft())
 				origin += my_tmx->getLeft() * dt * speed_camera_unlocked;
-			if (controller->IsMoveRight(0.0f))
+			if (controller->IsMoveRight())
 				origin -= my_tmx->getLeft() * dt * speed_camera_unlocked;
 			if (controller->IsPlusPolarityPressed())
 				origin.y += dt * speed_camera_unlocked;

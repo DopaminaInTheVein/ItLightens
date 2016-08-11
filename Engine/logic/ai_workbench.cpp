@@ -69,7 +69,6 @@ void workbench_controller::Init() {
 void workbench_controller::Idle()
 {
 	//Nothing to do
-	//if (GetAsyncKeyState('Q') != 0)
 	ChangeState("inactive");
 }
 

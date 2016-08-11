@@ -164,50 +164,7 @@ void player_controller_cientifico::WorkBenchActions() {
 
 void player_controller_cientifico::UpdateInputActions() {
 	PROFILE_FUNCTION("player cientifico: energy dec");
-	//if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
-	//	ChangeState("createDisableBeacon");
-	//}
-
-	//if (io->keys['2'].becomesPressed() || io->joystick.button_B.becomesPressed()) {
-	//	ChangeState("addDisableBeacon");
-	//}
-
-	//if (io->keys['3'].becomesPressed() || io->joystick.button_Y.becomesPressed()) {
-	//	energyDecreasal(5.0f);
-	//	ChangeState("createStaticBomb");
-	//}
-
-	//if (io->keys['5'].becomesPressed() || io->joystick.button_L.becomesPressed()) {
-	//	energyDecreasal(5.0f);
-	//	ChangeState("createMagneticBomb");
-	//}
-	//if (io->keys['6'].becomesPressed() || io->joystick.button_LT > io->joystick.max_trigger_value / 2) {
-	//	energyDecreasal(10.0f);
-	//	ChangeState("useMagneticBomb");
-	//}
-	//if (io->keys['4'].becomesPressed() || io->joystick.button_RT > io->joystick.max_trigger_value / 2) {
-	//	energyDecreasal(10.0f);
-	//	ChangeState("useStaticBomb");
-	//}
-	//if (io->keys['R'].becomesPressed() || io->joystick.button_R.becomesPressed())
-	//	ExplodeBomb();
 }
-
-//void player_controller_cientifico::ExplodeBomb()
-//{
-//	PROFILE_FUNCTION("player cientifico: explode bomb");
-//	if (obj == STATIC_BOMB_GAME && bomb_handle.isValid()) {
-//		CStaticBomb *bomb = bomb_handle;
-//		obj = EMPTY;
-//		bomb->toExplode();
-//	}
-//
-//	if (obj == MAGNETIC_BOMB_GAME && bomb_handle.isValid()) {
-//		CMagneticBomb *bomb = bomb_handle;
-//		obj = EMPTY;
-//		bomb->toExplode();
-//	}
-//}
 
 #pragma endregion
 

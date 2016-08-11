@@ -28,7 +28,7 @@ void CGameController::TogglePauseIntroState() {
 void CGameController::UpdateGeneralInputs() {
 	if (!ImGui::GetIO().WantTextInput) { //not input wanted from imgui
 										 //exit game
-		if (controller->IsBackPressed()) {
+		if (controller->IsPausePressed()) {
 			if (game_state == RUNNING) {
 				SetGameState(MENU);
 				controller->ChangeMouseState(false);
@@ -41,11 +41,12 @@ void CGameController::UpdateGeneralInputs() {
 			//app.exitGame();
 		}
 
-		//restart game
+		/*restart game
 		if (controller->IsPausePressed()) {
 			CApp::get().has_check_point = false;
 			CApp::get().restartLevelNotify();
 		}
+		*/
 #ifndef NDEGUG
 		//toggle console log
 		if (controller->isToogleConsoleLoguttonPressed()) {

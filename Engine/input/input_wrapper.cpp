@@ -20,17 +20,17 @@ bool CInputWrapper::IsCamMovedRight(float right_stick_sensibility) {
 }
 
 // Right Joystick
-bool CInputWrapper::IsMoveForward(float left_stick_sensibility) {
-	return io->keys['W'].isPressed() || io->joystick.ly > left_stick_sensibility;
+bool CInputWrapper::IsMoveForward() {
+	return io->keys['W'].isPressed() || io->joystick.ly > 0;
 }
-bool CInputWrapper::IsMoveRight(float left_stick_sensibility) {
-	return io->keys['D'].isPressed() || io->joystick.lx > left_stick_sensibility;
+bool CInputWrapper::IsMoveRight() {
+	return io->keys['D'].isPressed() || io->joystick.lx > 0;
 }
-bool CInputWrapper::IsMoveBackWard(float left_stick_sensibility) {
-	return io->keys['S'].isPressed() || io->joystick.ly < -left_stick_sensibility;
+bool CInputWrapper::IsMoveBackWard() {
+	return io->keys['S'].isPressed() || io->joystick.ly < 0;
 }
-bool CInputWrapper::IsMoveLeft(float left_stick_sensibility) {
-	return io->keys['A'].isPressed() || io->joystick.lx < -left_stick_sensibility;
+bool CInputWrapper::IsMoveLeft() {
+	return io->keys['A'].isPressed() || io->joystick.lx < 0;
 }
 float CInputWrapper::JoystickDeltaRightX() {
 	return io->joystick.drx;
