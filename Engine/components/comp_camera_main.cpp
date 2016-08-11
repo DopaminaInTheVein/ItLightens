@@ -46,7 +46,7 @@ void TCompCameraMain::init()
 
 bool TCompCameraMain::load(MKeyValue& atts) {
 	if (!TCompCamera::load(atts)) return false;
-	detect_colsions = atts.getBool("collision", false);
+	detect_colsions = atts.getBool("collision", true);
 	smoothCurrent = smoothDefault = 10.f;
 	return true;
 }
