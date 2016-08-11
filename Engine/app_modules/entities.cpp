@@ -260,6 +260,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
 	SUBSCRIBE(TCompBoneTracker, TMsgAttach, onAttach);
 
+	//For camera unique
+	SUBSCRIBE(TCompCameraMain, TMsgEntityCreated, onCreate);
+
 	//Skeleton IK
 	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
 	SUBSCRIBE(TCompSkeletonLookAt, TMsgEntityCreated, onCreate);

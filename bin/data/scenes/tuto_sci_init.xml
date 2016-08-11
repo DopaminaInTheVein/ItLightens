@@ -13,7 +13,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/Drone_1.static_mesh"/>
+   name="static_meshes/obj/drone.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -117,6 +117,7 @@
 
 </entity>
 <entity
+   permanent="yes"
    reload="yes">
 <tags
    tags="camera_main"/>
@@ -132,6 +133,25 @@
    name="camController_1"/>
 <transform
    pos="48.0799 1.9 -1.25342"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.0 0.31 1.0"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="activate"/>
+<name
+   name="tOpenDoor"/>
+<transform
+   pos="74.8028 7.42111 -1.67456"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

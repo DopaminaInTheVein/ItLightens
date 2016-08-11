@@ -17,6 +17,8 @@
 
 #include <Commdlg.h>
 
+ImGuiTextFilter CImGuiModule::filter = ImGuiTextFilter();
+
 bool CImGuiModule::start() {
 	CApp& app = CApp::get();
 	return ImGui_ImplDX11_Init(app.getHWnd(), Render.device, Render.ctx);
@@ -133,7 +135,7 @@ void CImGuiModule::update(float dt) {
 	}
 	//end header instructions
 
-	static ImGuiTextFilter filter;
+	//static ImGuiTextFilter filter;
 	filter.Draw(); //filter text draw
 	//---------------------------------------
 
@@ -279,4 +281,10 @@ std::string CImGuiModule::getFilePath(char * filter, HWND owner)
 		fileNameStr = fileName;
 
 	return fileNameStr;
+}
+
+// Text Filter
+std::string CImGuiModule::getFilterText()
+{
+	return std::string(filter.InputBuf);
 }
