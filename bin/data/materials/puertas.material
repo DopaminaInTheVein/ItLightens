@@ -1,4 +1,3 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/difuso.dds"/>
-<texture slot="normalmap" name="textures/normal.dds"/>
+<texture slot="diffuse" name="textures/pared_mole.dds"/>
 </material>
