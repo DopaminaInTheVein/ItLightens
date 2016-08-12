@@ -89,10 +89,10 @@ bool CInputWrapper::IsMinusPolarityPressed() {
 	return io->keys['E'].becomesPressed() || io->joystick.button_R.becomesPressed();
 }
 bool CInputWrapper::IsCameraUpPressing() {
-	return io->keys['Q'].isPressed() || io->joystick.button_L.becomesPressed();
+	return io->keys['Q'].isPressed() || io->joystick.button_L.isPressed();
 }
 bool CInputWrapper::IsCameraDownPressing() {
-	return io->keys['E'].isPressed() || io->joystick.button_L.isPressed();
+	return io->keys['E'].isPressed() || io->joystick.button_R.isPressed();
 }
 
 // Start & back

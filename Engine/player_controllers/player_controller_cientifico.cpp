@@ -190,7 +190,7 @@ void player_controller_cientifico::Moving()
 }
 
 void player_controller_cientifico::RecalcScientist() {
-	if (controller->IsActionButtonPessed()) {
+	if (controller->IsSenseButtonPressed()) {
 		ChangeState("useBomb");
 	}
 	WorkBenchActions();
