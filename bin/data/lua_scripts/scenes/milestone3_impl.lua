@@ -21,6 +21,8 @@ function OnStart_ms3()
   isDoorOpen = false
   alert = false
   stateElevator = 1 -- 1= up , 0 = down
+  cp_elevator = false
+  cp_door_opened = false
   p:play_music("event:/OnGameStart")
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
@@ -32,6 +34,8 @@ function OnSave_ms3()
 	d:put_float("elevator_state", stateElevator)
 	d:put_bool("door_open", isDoorOpen)
 	d:put_bool("alert", alert)
+	d:put_bool("cp_elevator", cp_elevator)
+	d:put_bool("cp_door_opened", cp_door_opened)
 	d:write()
 end
 
@@ -41,6 +45,8 @@ function OnLoad_ms3()
   isDoorOpen = d:get_bool("door_open")
   alert = d:get_bool("alert")
   stateElevator = d:get_float("elevator_state")
+  cp_elevator = d:get_bool("cp_elevator")
+  cp_door_opened = d:get_bool("cp_door_opened")
   p:play_music("event:/OnGameStart")
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
@@ -177,6 +183,10 @@ function OnPutPila_enchufe()
   if pila:is_charged() then
 	--Abril
 	isDoorOpen = true
+	if not cp_door_opened then
+		cp_door_opened = true
+		SaveLevel()
+	end
 	if not alert then
 		openDoorPila()
 	end
@@ -341,6 +351,7 @@ function moveElevator( )
 	
 	p:exec_command("hDoorElevLeft:setLocked(0);", 7)
 	p:exec_command("hDoorElevRight:setLocked(0);", 7)
+	p:exec_command("checkPointElevator()", 9)
   else
 	hDoorElevLeft:setLocked(1)
 	hDoorElevRight:setLocked(1)  
@@ -350,9 +361,9 @@ function moveElevator( )
   stateElevator = 1 - stateElevator
   
   p:exec_command("h:activate();", 2)
-  p:exec_command( "cam:fade_out(1);", 2.5)
-  p:exec_command( "triggerElevator:setActionable(1);", 4 )
-  p:exec_command( "cam:fade_in(1);", 7.0)
+  p:exec_command("cam:fade_out(1);", 2.5)
+  p:exec_command("triggerElevator:setActionable(1);", 4 )
+  p:exec_command("cam:fade_in(1);", 7.0)
   
   p:exec_command( "p:setControlEnabled(1);", 9 )
   --cambio  cientifico
@@ -361,6 +372,13 @@ function moveElevator( )
   --else if elevatorState == 2
   --  p:playerRoom("2")
   --end
+end
+
+function checkPointElevator( )
+	if not cp_elevator then
+		cp_elevator = true
+		SaveLevel()
+	end
 end
 
 function activateElevatorPlayer( )

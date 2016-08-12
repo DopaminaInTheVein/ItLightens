@@ -60,8 +60,8 @@
 	name="2"
 	/>
 <transform
-	pos="-121.537003 -0.242203 -5.416840"
-	quat="-0.000000 -0.019710 0.000000 0.999806"
+	pos="-121.670563 -0.467000 -5.184159"
+	quat="-0.000000 -0.669883 0.000000 0.742467"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -101,7 +101,7 @@
 	name="2"
 	/>
 <transform
-	pos="-65.349800 15.808000 20.828899"
+	pos="-65.349800 -1.306200 20.828899"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -114,14 +114,14 @@
 <elevator
 	speedDown="27"
 	speedUp="27"
-	state="0"
+	state="2"
 	target_down="-65.349800 -1.306200 20.828899"
 	target_up="-65.349800 15.808000 20.828899"
 	/>
 <rigidbody
 	kinematic="1"
 	mass="5"
-	size="1.157475 0.037500 0.814313"
+	size="2.314950 0.075000 1.628625"
 	smooth="0"
 	type_collision="dynamic"
 	type_shape="box"
@@ -243,7 +243,7 @@
 	name="2"
 	/>
 <transform
-	pos="-66.010002 -0.203600 19.675100"
+	pos="-66.748001 -0.203600 19.675100"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -258,11 +258,11 @@
 	tags="door               "
 	/>
 <magnet_door
-	locked="1"
+	locked="0"
 	pol="neutral"
 	speedClosing="1"
 	speedOpening="1"
-	target="-66.748001 -0.203600 19.675100"
+	target="-66.010002 -0.203600 19.675100"
 	/>
 <rigidbody
 	kinematic="0"
@@ -288,7 +288,7 @@
 	name="2"
 	/>
 <transform
-	pos="-66.896797 16.879801 19.739000"
+	pos="-66.078102 16.879801 19.739000"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -303,11 +303,11 @@
 	tags="door               "
 	/>
 <magnet_door
-	locked="0"
+	locked="1"
 	pol="neutral"
 	speedClosing="1"
 	speedOpening="1"
-	target="-66.078102 16.879801 19.739000"
+	target="-66.896797 16.879801 19.739000"
 	/>
 <rigidbody
 	kinematic="0"
@@ -333,7 +333,7 @@
 	name="2"
 	/>
 <transform
-	pos="-64.710701 -0.203600 19.675100"
+	pos="-64.059502 -0.203600 19.675100"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -348,11 +348,11 @@
 	tags="door               "
 	/>
 <magnet_door
-	locked="1"
+	locked="0"
 	pol="neutral"
 	speedClosing="1"
 	speedOpening="1"
-	target="-64.059502 -0.203600 19.675100"
+	target="-64.710701 -0.203600 19.675100"
 	/>
 <rigidbody
 	kinematic="0"
@@ -378,7 +378,7 @@
 	name="2"
 	/>
 <transform
-	pos="-63.948799 16.879801 19.724001"
+	pos="-64.744102 16.879801 19.724001"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -393,11 +393,11 @@
 	tags="door               "
 	/>
 <magnet_door
-	locked="0"
+	locked="1"
 	pol="neutral"
 	speedClosing="1"
 	speedOpening="1"
-	target="-64.744102 16.879801 19.724001"
+	target="-63.948799 16.879801 19.724001"
 	/>
 <rigidbody
 	kinematic="0"
@@ -430,21 +430,21 @@
 	name="__player_1"
 	/>
 <room
-	name="1"
+	name="2"
 	/>
 <transform
-	pos="-49.840359 -1.103015 -0.646080"
-	quat="-0.000000 -0.609887 0.000000 0.792488"
+	pos="0.000000 200.000000 0.000000"
+	quat="-0.000000 -0.959329 0.000000 0.282289"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	name="skeletons/player/player.static_mesh"
 	/>
 <life
-	points="149.926"
+	points="66.5858"
 	/>
 <tags
-	tags="player raijin              "
+	tags="raijin               "
 	/>
 <character_controller
 	height="0.7"
@@ -472,12 +472,12 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="trigger room_switcher              "
+	tags="trigger               "
 	/>
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.761520 0.218750 0.479325"
+	size="1.523040 0.437500 0.958650"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -509,7 +509,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.451858 0.218750 0.320370"
+	size="0.903715 0.437500 0.640740"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -524,6 +524,7 @@
 <local_aabb
 	/>
 <player_mole
+	possessed="1"
 	/>
 <skeleton
 	model="skeletons/mole/mole.skeleton"
@@ -539,17 +540,18 @@
 	name="2"
 	/>
 <transform
-	pos="-122.075226 -0.409073 -10.584371"
-	quat="0.000000 0.000000 0.000000 1.000000"
+	pos="-121.580330 -1.303517 -6.308896"
+	quat="0.000000 0.032037 0.000000 0.999487"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
 	name="skeletons/mole/mole.static_mesh"
 	/>
 <tags
-	tags="AI AI_mole AI_poss             "
+	tags="AI AI_mole AI_poss player            "
 	/>
 <bt_mole
+	possessed="1"
 	wpts_size="0"
 	/>
 <character_controller
@@ -581,8 +583,8 @@
 	name="1"
 	/>
 <transform
-	pos="5.077806 -23.200670 1.704442"
-	quat="0.000000 0.680274 0.000000 0.732958"
+	pos="11.114939 -24.020016 -10.309830"
+	quat="0.000000 0.021438 0.000000 0.999770"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -609,7 +611,7 @@
 	kpt3_type="seek"
 	kpt3_wait="2"
 	kpt_size="4"
-	state="nextWpt"
+	state="seekwpt"
 	/>
 <character_controller
 	height="1.8"
@@ -640,8 +642,8 @@
 	name="1"
 	/>
 <transform
-	pos="7.948907 -23.269516 -4.308225"
-	quat="0.000000 0.942281 0.000000 0.334822"
+	pos="5.932351 -24.020014 22.356855"
+	quat="-0.000000 -0.511227 0.000000 0.859446"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -665,7 +667,7 @@
 	kpt2_type="seek"
 	kpt2_wait="2"
 	kpt_size="3"
-	state="nextWpt"
+	state="seekwpt"
 	/>
 <character_controller
 	height="1.8"
@@ -696,8 +698,8 @@
 	name="2"
 	/>
 <transform
-	pos="-84.147125 -0.553018 -28.490765"
-	quat="0.000000 0.000000 0.000000 1.000000"
+	pos="-84.221001 -1.303518 -28.427591"
+	quat="-0.000000 -0.163167 0.000000 0.986598"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -718,6 +720,7 @@
 	kpt1_type="seek"
 	kpt1_wait="2"
 	kpt_size="2"
+	state="waitwpt"
 	/>
 <character_controller
 	height="1.8"
@@ -748,7 +751,7 @@
 	name="2"
 	/>
 <transform
-	pos="-81.658997 -0.553018 -28.422001"
+	pos="-81.658997 -1.303518 -28.422001"
 	quat="0.000000 0.000000 0.000000 1.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -770,6 +773,7 @@
 	kpt1_type="seek"
 	kpt1_wait="2"
 	kpt_size="2"
+	state="waitwpt"
 	/>
 <character_controller
 	height="1.8"
@@ -800,8 +804,8 @@
 	name="2"
 	/>
 <transform
-	pos="-96.784500 -0.553016 -10.605000"
-	quat="0.000000 0.000000 0.000000 1.000000"
+	pos="-101.044189 -1.303517 -10.326334"
+	quat="-0.000000 -0.527759 0.000000 0.849394"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -834,6 +838,7 @@
 	kpt5_type="look"
 	kpt5_wait="2"
 	kpt_size="6"
+	state="seekwpt"
 	/>
 <character_controller
 	height="1.8"
@@ -864,8 +869,8 @@
 	name="2"
 	/>
 <transform
-	pos="-66.913902 -0.553016 7.813280"
-	quat="0.000000 0.000000 0.000000 1.000000"
+	pos="-65.898109 -1.302402 1.465355"
+	quat="-0.000000 -0.562424 0.000000 0.826849"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -898,6 +903,7 @@
 	kpt5_type="look"
 	kpt5_wait="2"
 	kpt_size="6"
+	state="seekwpt"
 	/>
 <character_controller
 	height="1.8"
@@ -919,7 +925,7 @@
 	name="1"
 	/>
 <transform
-	pos="3.531277 -11.801457 -11.529513"
+	pos="7.279348 -11.531692 -11.611481"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -965,7 +971,7 @@
 	name="1"
 	/>
 <transform
-	pos="16.465986 -11.801449 -2.787309"
+	pos="13.071040 -11.484313 -2.719324"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1011,7 +1017,7 @@
 	name="1"
 	/>
 <transform
-	pos="3.746902 -11.799134 5.149534"
+	pos="8.370251 -11.459263 5.019255"
 	quat="0.000000 0.708986 0.000000 0.705223"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1057,7 +1063,7 @@
 	name="1"
 	/>
 <transform
-	pos="16.465616 -11.801449 14.066391"
+	pos="13.069664 -11.484233 14.012544"
 	quat="0.000000 -0.707107 0.000000 0.707107"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1145,7 +1151,7 @@
 	name="1"
 	/>
 <transform
-	pos="9.910580 -5.134104 21.371389"
+	pos="7.111662 -4.397264 21.240448"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1191,7 +1197,7 @@
 	name="1"
 	/>
 <transform
-	pos="-20.106379 1.732281 21.819513"
+	pos="-25.926117 3.700309 22.041199"
 	quat="0.000000 1.000000 0.000000 0.000000"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1237,7 +1243,7 @@
 	name="1"
 	/>
 <transform
-	pos="-34.487839 2.230143 8.622741"
+	pos="-34.541595 2.558371 9.963962"
 	quat="0.000000 -0.701693 0.000000 0.712479"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -1334,8 +1340,8 @@
 	name="1"
 	/>
 <transform
-	pos="28.010958 -23.164515 10.952713"
-	quat="0.000000 -0.991473 -0.000000 -0.130309"
+	pos="32.885254 -24.020016 -7.523476"
+	quat="0.000000 -0.999117 -0.000000 -0.042004"
 	scale="1.000000 1.000000 1.000000"
 	/>
 <render_static_mesh
@@ -1345,7 +1351,7 @@
 	tags="AI AI_mole AI_poss             "
 	/>
 <bt_mole
-	state="followPathToWpt"
+	state="reachedPoint"
 	wpt0_pos="32.941601 -23.858999 -8.192150"
 	wpt1_pos="32.941601 -23.858999 12.267200"
 	wpt2_pos="27.273600 -23.858999 12.267200"
@@ -1365,7 +1371,7 @@
 <trigger_lua
 	action="examinate"
 	actionMole="destroy"
-	actived="1"
+	actived="0"
 	/>
 <name
 	name="tWall"
@@ -1384,7 +1390,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.601348 0.046250 0.961272"
+	size="1.202695 0.092500 1.922545"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -1450,7 +1456,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.544627 0.292875 0.602387"
+	size="1.089255 0.585750 1.204775"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -1482,7 +1488,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.364900 0.292875 0.372757"
+	size="0.729800 0.585750 0.745515"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -1494,7 +1500,7 @@
 >
 <trigger_lua
 	action="activate"
-	actived="0"
+	actived="1"
 	/>
 <name
 	name="tWireDown"
@@ -1513,7 +1519,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.270605 0.046250 0.961272"
+	size="0.541210 0.092500 1.922545"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -1603,6 +1609,7 @@
 <local_aabb
 	/>
 <player_cientifico
+	bombs="3"
 	/>
 <skeleton
 	model="skeletons/scientist/scientist.skeleton"
@@ -1618,8 +1625,8 @@
 	name="2"
 	/>
 <transform
-	pos="-66.218399 16.510759 12.551200"
-	quat="0.000000 0.000000 0.000000 1.000000"
+	pos="-75.813461 -1.303517 -4.026479"
+	quat="0.000000 0.309081 0.000000 0.951036"
 	scale="0.009299 0.009299 0.009299"
 	/>
 <render_static_mesh
@@ -1630,6 +1637,7 @@
 	/>
 <bt_scientist
 	kpt_size="0"
+	state="gotoworkstation"
 	zmax="0.1"
 	zmin="100"
 	/>
@@ -1909,7 +1917,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.178573 0.181250 0.230705"
+	size="0.357145 0.362500 0.461411"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -1937,7 +1945,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.750000 1.000000 0.025000"
+	size="1.500000 2.000000 0.050000"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -1963,7 +1971,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.025000 1.000000 3.000000"
+	size="0.050000 2.000000 6.000000"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -2204,7 +2212,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.903765 0.301250 0.407580"
+	size="1.807530 0.602500 0.815160"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -2234,7 +2242,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="3.904250 0.491037 1.662640"
+	size="7.808500 0.982075 3.325280"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
@@ -2261,7 +2269,7 @@
 <rigidbody
 	kinematic="0"
 	mass="2"
-	size="0.052500 1.000000 1.125000"
+	size="0.105000 2.000000 2.250000"
 	smooth="0"
 	type_collision="trigger"
 	type_shape="box"
