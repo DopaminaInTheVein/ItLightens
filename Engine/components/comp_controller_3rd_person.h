@@ -187,9 +187,9 @@ public:
 				origin += my_tmx->getLeft() * dt * speed_camera_unlocked;
 			if (controller->IsMoveRight())
 				origin -= my_tmx->getLeft() * dt * speed_camera_unlocked;
-			if (controller->IsPlusPolarityPressed())
+			if (controller->IsCameraUpPressing())
 				origin.y += dt * speed_camera_unlocked;
-			if (controller->IsMinusPolarityPressed())
+			if (controller->IsCameraDownPressing())
 				origin.y -= dt * speed_camera_unlocked;
 			if (controller->isTeleportComboButtonPressed()) {
 				CHandle player = tags_manager.getFirstHavingTag("player");

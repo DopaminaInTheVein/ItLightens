@@ -88,6 +88,12 @@ bool CInputWrapper::IsPlusPolarityPressed() {
 bool CInputWrapper::IsMinusPolarityPressed() {
 	return io->keys['E'].becomesPressed() || io->joystick.button_R.becomesPressed();
 }
+bool CInputWrapper::IsCameraUpPressing() {
+	return io->keys['Q'].isPressed() || io->joystick.button_L.becomesPressed();
+}
+bool CInputWrapper::IsCameraDownPressing() {
+	return io->keys['E'].isPressed() || io->joystick.button_L.isPressed();
+}
 
 // Start & back
 bool CInputWrapper::IsPausePressed() {
@@ -149,5 +155,49 @@ bool CInputWrapper::interruptGuardShotButtonPressed() {
 }
 bool CInputWrapper::changegui() {
 	return io->keys[VK_F1].becomesPressed();
+}
+
+#else
+bool CInputWrapper::isCameraReleaseButtonPressed() {
+	return false;
+}
+bool CInputWrapper::isTeleportComboButtonPressed() {
+	return false;
+}
+bool CInputWrapper::isRenderDebugComboButtonPressed() {
+	return false;
+}
+bool CInputWrapper::isReleaseButtonPressed() {
+	return false;
+}
+bool CInputWrapper::isToogleCommandLogButtonPressed() {
+	return false;
+}
+bool CInputWrapper::isToogleConsoleLoguttonPressed() {
+	return false;
+}
+bool CInputWrapper::isPauseGameButtonPressed() {
+	return false;
+}
+bool CInputWrapper::isStopGameButtonPressed() {
+	return false;
+}
+bool CInputWrapper::isSlowButtonPressed() {
+	return false;
+}
+bool CInputWrapper::isDrawLineButtonPressed() {
+	return false;
+}
+bool CInputWrapper::isParticleEditorButtonPressed() {
+	return false;
+}
+bool CInputWrapper::isParticleEditorActivationPressed() {
+	return false;
+}
+bool CInputWrapper::interruptGuardShotButtonPressed() {
+	return false;
+}
+bool CInputWrapper::changegui() {
+	return false;
 }
 #endif

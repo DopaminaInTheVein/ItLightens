@@ -42,6 +42,8 @@ public:
 	// (LB - RB)
 	bool IsPlusPolarityPressed();
 	bool IsMinusPolarityPressed();
+	bool IsCameraUpPressing();
+	bool IsCameraDownPressing();
 
 	// Start & back
 	bool IsPausePressed();
@@ -51,7 +53,6 @@ public:
 	void ChangeMouseState(bool captured);
 
 	// DEBUG TOOLS
-#ifndef NDEGUG
 	bool isCameraReleaseButtonPressed();
 	bool isReleaseButtonPressed();
 	bool isTeleportComboButtonPressed();
@@ -69,7 +70,6 @@ public:
 	bool interruptGuardShotButtonPressed();
 
 	bool changegui();
-#endif
 };
 
 extern CInputWrapper * controller;

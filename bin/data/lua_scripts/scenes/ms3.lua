@@ -54,3 +54,7 @@ function OnEnter_tSave01( )
 SaveLevel()
 end
 
+function OnEnter_tSave02( )
+SaveLevel()
+end
+

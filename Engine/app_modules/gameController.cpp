@@ -47,7 +47,7 @@ void CGameController::UpdateGeneralInputs() {
 			CApp::get().restartLevelNotify();
 		}
 		*/
-#ifndef NDEGUG
+#ifndef NDEBUG
 		//toggle console log
 		if (controller->isToogleConsoleLoguttonPressed()) {
 			Debug->setOpen(!*Debug->getStatus());
