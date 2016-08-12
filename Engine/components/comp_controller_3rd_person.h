@@ -110,26 +110,10 @@ public:
 		}
 	}
 
-	/*void updateCollisionPosition(VEC3 hit) {
-		CEntity* e_owner = CHandle(this).getOwner();
-		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
-		my_tmx->setPosition(hit);
-	}*/
-
 	void updateInput() {
 		float deltaYaw = 0.f;
 		float deltaPitch = 0.f;
-		/*
-		int movement_x = 0;
 
-		if (controller->JoystickDeltaRightX() != 0)
-			movement_x = controller->JoystickDeltaRightX();
-		else if (controller->IsJoystickRXMin())
-			movement_x = -2;
-		else if (controller->IsJoystickRXMax())
-			movement_x = 2;
-		*/
-		//rotation_sensibility = deg2rad(45.0f)/ 250.0f;
 		if (x_axis_inverted)	deltaYaw -= (controller->MouseDeltaX() + /*movement_x +*/ controller->JoystickRightX() * 6 / controller->JoystickMax()) * rotation_sensibility * speed_camera;
 		else					deltaYaw += (controller->MouseDeltaX() + /*movement_x +*/ controller->JoystickRightX() * 6 / controller->JoystickMax()) * rotation_sensibility * speed_camera;
 
@@ -146,13 +130,6 @@ public:
 		else if (pitch <= min_pitch) {
 			pitch = min_pitch;
 		}
-
-		//TODO: mouse wheel, distance
-		/**** WHEEL EXAMPLE
-		if (io->mouse.wheel) {
-			pitch += io->mouse.wheel * 8;
-		}
-		*/
 	}
 
 	void update(float dt) {
