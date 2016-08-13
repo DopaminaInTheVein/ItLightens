@@ -176,6 +176,7 @@
     <ClCompile Include="components\entity_tags.cpp" />
     <ClCompile Include="debug\console.cpp" />
     <ClCompile Include="debug\debug_itlightens.cpp" />
+    <ClCompile Include="debug\log.cpp" />
     <ClCompile Include="expat\xmlparse.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -402,6 +403,7 @@
     <ClInclude Include="components\entity_tags.h" />
     <ClInclude Include="debug\console.h" />
     <ClInclude Include="debug\debug_itlightens.h" />
+    <ClInclude Include="debug\log.h" />
     <ClInclude Include="fmod\studio\inc\fmod.h" />
     <ClInclude Include="fmod\studio\inc\fmod.hpp" />
     <ClInclude Include="fmod\studio\inc\fmod_codec.h" />

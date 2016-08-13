@@ -5,6 +5,9 @@
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) {
 	CApp& app = CApp::get();
 
+	CLog::reset();
+	CLog::append("Start It Lightens Engine");
+
 	if (!app.createWindow(hInstance, nCmdShow))
 		return -1;
 

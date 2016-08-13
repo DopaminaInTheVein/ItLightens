@@ -33,6 +33,7 @@
 #include "utils/data_provider.h"
 #include "utils/utils.h"
 #include "utils/macros/macros.h"
+#include "debug/log.h"
 
 #include "geometry/geometry.h"
 #include "render/render.h"
@@ -46,8 +47,8 @@
 #pragma comment(lib, "PhysX3DEBUG_x64.lib")
 #pragma comment(lib, "PhysX3CommonDEBUG_x64.lib")
 #pragma comment(lib, "PhysX3ExtensionsDEBUG.lib")
-#pragma comment(lib, "PhysXVisualDebuggerSDKDEBUG.lib") 
-#pragma comment(lib, "PhysX3CharacterKinematicDEBUG_x64") 
+#pragma comment(lib, "PhysXVisualDebuggerSDKDEBUG.lib")
+#pragma comment(lib, "PhysX3CharacterKinematicDEBUG_x64")
 #pragma comment(lib, "PhysX3CookingDEBUG_x64.lib")
 #pragma comment(lib, "PxTaskDEBUG.lib")
 #pragma comment(lib, "PhysXProfileSDKDEBUG.lib")

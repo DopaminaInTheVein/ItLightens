@@ -515,6 +515,9 @@
     <ClCompile Include="app_modules\navmesh\navmesh_manager.cpp">
       <Filter>app_modules\navmesh</Filter>
     </ClCompile>
+    <ClCompile Include="debug\log.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1388,6 +1391,9 @@
     </ClInclude>
     <ClInclude Include="app_modules\navmesh\navmesh_manager.h">
       <Filter>app_modules\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\log.h">
+      <Filter>debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
