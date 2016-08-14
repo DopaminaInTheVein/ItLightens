@@ -1,6 +1,9 @@
 #ifndef INC_MCV_PLATFORM_H_
 #define INC_MCV_PLATFORM_H_
 
+//Final build
+//#define FINAL_BUILD
+
 // Global settings
 #define _CRT_SECURE_NO_WARNINGS
 #define _SCL_SECURE_NO_WARNINGS

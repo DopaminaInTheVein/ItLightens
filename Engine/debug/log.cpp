@@ -2,6 +2,7 @@
 #include "log.h"
 #include <ctime>
 
+#ifndef FINAL_BUILD
 char* CLog::file_log = "log.txt";
 
 void CLog::reset()
@@ -36,3 +37,13 @@ const std::string CLog::currentDateTime() {
 
 	return buf;
 }
+#else
+void CLog::reset() {}
+
+void CLog::append(const char* txt) {}
+
+void CLog::appendFormat(const char* format, ...) {}
+
+// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
+const std::string CLog::currentDateTime() { return ""; }
+#endif
