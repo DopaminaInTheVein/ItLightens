@@ -17,6 +17,15 @@ void CLog::append(const char* txt)
 	ofs.close();
 }
 
+void CLog::appendFormat(const char* format, ...) {
+	va_list argptr;
+	va_start(argptr, format);
+	char dest[1024 * 16];
+	_vsnprintf(dest, sizeof(dest), format, argptr);
+	va_end(argptr);
+	append(dest);
+}
+
 // Get current date/time, format is YYYY-MM-DD.HH:mm:ss
 const std::string CLog::currentDateTime() {
 	time_t     now = time(0);

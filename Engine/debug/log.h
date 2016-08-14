@@ -7,6 +7,7 @@ class CLog {
 public:
 	static void reset();
 	static void append(const char* txt);
+	static void appendFormat(const char* format, ...);
 };
 
 #endif
