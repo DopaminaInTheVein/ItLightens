@@ -28,7 +28,9 @@ bool TCompCamera::load(MKeyValue& atts) {
 	float fov_in_degs = atts.getFloat("fov", 70.f);
 
 	bool is_ortho = atts.getBool("is_ortho", false);
-	if (is_ortho) setOrtho(1024, 800, znear, zfar);
+	float x = CApp::get().getXRes();
+	float y = CApp::get().getYRes();
+	if (is_ortho) setOrtho(x, y, znear, zfar);
 	else setProjection(deg2rad(fov_in_degs), znear, zfar);
 
 	//setProjection(deg2rad(fov_in_degs), znear, zfar);
@@ -43,10 +45,10 @@ void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
 
 void TCompCamera::render() const {
 	PROFILE_FUNCTION("TCompCamera render");
-	//auto axis = Resources.get("frustum.mesh")->as<CMesh>();
+	auto axis = Resources.get("frustum.mesh")->as<CMesh>();
 	shader_ctes_object.World = getViewProjection().Invert();
 	shader_ctes_object.uploadToGPU();
-	//axis->activateAndRender();
+	axis->activateAndRender();
 }
 
 void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {

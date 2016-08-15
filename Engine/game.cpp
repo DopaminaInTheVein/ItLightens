@@ -172,6 +172,12 @@ void CApp::changeScene(string level) {
 	entities->clear(reload);
 	next_level = level;
 }
+void CApp::loadEntities(string file_name) {
+	CEntitiesModule::ParsingInfo info;
+	info.filename = file_name;
+	info.reload = false;
+	entities->loadXML(info);
+}
 
 //void CApp::restart() {
 //	HWND hTempWnd = getHWnd();

@@ -985,7 +985,8 @@ void CRenderDeferredModule::RenderHelpGenLoc() {
 	PROFILE_FUNCTION("referred: particle generator");
 	CTraceScoped scope("particle generator");
 
-	activateZ(ZCFG_ALL_DISABLED);
+	//activateZ(ZCFG_ALL_DISABLED);
+	activateZ(ZCFG_DEFAULT);
 
 	//TEST_HELP
 	if (controller->isParticleEditorButtonPressed()) {
@@ -1011,8 +1012,8 @@ void CRenderDeferredModule::renderUI() {
 	CEntity* e_ui_camera = h_ui_camera;
 
 	TCompCamera* ortho = e_ui_camera->get<TCompCamera>();
-	//ortho->setOrtho(xres, yres, ortho->getZNear(), ortho->getZFar());
-	ortho->setOrtho(10, 10, ortho->getZNear(), ortho->getZFar());
+	ortho->setOrtho(xres, yres, ortho->getZNear(), ortho->getZFar());
+	//ortho->setOrtho(10.f, 10.f * yres / xres, ortho->getZNear(), ortho->getZFar());
 	activateCamera(ortho);
 
 	/*
@@ -1048,5 +1049,6 @@ void CRenderDeferredModule::renderUI() {
 	auto mesh = Resources.get("unitQuadXY.mesh")->as<CMesh>();
 	mesh->activateAndRender();
 	*/
+	Render.activateBackBuffer();
 	RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS);
 }

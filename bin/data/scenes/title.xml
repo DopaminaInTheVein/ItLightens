@@ -1,0 +1,7 @@
+<!--
+<entity>
+  <name name="ui_logo"/>
+    <transform pos="0 0 0" quat="0 0 0 1" scale="1.0" />
+    <render_static_mesh name="static_meshes/ui/menu/background.static_mesh"/>
+</entity>
+-->

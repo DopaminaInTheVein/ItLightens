@@ -87,13 +87,26 @@ void CCamera::setOrtho(int xres, int yres, float new_znear, float new_zfar) {
 	znear = new_znear;
 	zfar = new_zfar;
 	setAspectRatio((float)xres / (float)yres);
-	projection = MAT44::CreateOrthographicOffCenter(0, xres, 0, yres, znear, zfar);
+	//projection = MAT44::CreateOrthographicOffCenter(0, xres, 0, yres, znear, zfar);
+	//projection = MAT44::CreateOrthographicOffCenter(0, 10.f, 0, 10.f / aspect_ratio, znear, zfar);
+	float left = 0.f, bottom = 0.f;
+	float right = 10.f;
+	float top = 10.f;
+	if (aspect_ratio > 1) {
+		float offset_y = top * 0.5f / aspect_ratio;
+		bottom += offset_y;
+		top -= offset_y;
+	}
+	projection = MAT44::CreateOrthographicOffCenter(left, right, bottom, top, znear, zfar);
 	is_ortho = true;
 	updateViewProjection();
 }
 
 void CCamera::setAspectRatio(float new_ratio) {
+	dbg("Hago set aspectio_ratio = %f", new_ratio);
 	aspect_ratio = new_ratio;
+	dbg("Ahora aspect_ratio vale = %f", aspect_ratio);
+
 	projection = MAT44::CreatePerspectiveFieldOfView(fov_vertical_rads, aspect_ratio, znear, zfar);
 	updateViewProjection();
 }

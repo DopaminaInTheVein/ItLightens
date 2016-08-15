@@ -31,6 +31,7 @@ public:
 	bool start();
 	void stop();
 	void changeScene(std::string level);
+	void loadEntities(std::string file_name);
 	void loadedLevelNotify();
 	//void restart();
 	void restartLevelNotify();
