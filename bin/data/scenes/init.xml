@@ -2,7 +2,7 @@
   <entity permanent="yes">
     <tags tags="ui_camera" />
     <name name="ui_camera" />
-    <transform pos="0 0 3" yaw="180"/>
+    <transform pos="0 7 3" yaw="180"/>
     <camera znear="0" zfar="5" is_ortho="1"/>
   </entity>
   
