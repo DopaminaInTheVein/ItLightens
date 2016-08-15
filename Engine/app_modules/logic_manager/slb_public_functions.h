@@ -144,6 +144,7 @@ public:
 	void playMusic(const char* music_route);
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);
+	void playVideo(const char* video_route);
 	void playerRoom(int newRoom);
 	void playerTalks(const char* text, const char* iconName, const char* iconText);
 	void playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor);

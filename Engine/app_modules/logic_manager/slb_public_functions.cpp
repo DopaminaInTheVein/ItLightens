@@ -7,6 +7,7 @@
 #include "components/entity_parser.h"
 #include "components/comp_charactercontroller.h"
 #include "components/comp_life.h"
+//#include "components/comp_video.h"
 #include "logic/bt_guard.h"
 #include "logic/bt_scientist.h"
 #include "logic/pila_container.h"
@@ -552,6 +553,28 @@ void SLBPublicFunctions::playVoice(const char* voice_route) {
 
 void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 	sound_manager->playAmbient(std::string(ambient_route));
+}
+
+void SLBPublicFunctions::playVideo(const char* video_route) {
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+
+	auto hm1 = CHandleManager::getByName("name");
+	CHandle new_hn = hm1->createHandle();
+	MKeyValue atts1;
+	atts1.put("name", "play_video");
+	new_hn.load(atts1);
+	entity->add(new_hn);
+
+	auto hm3 = CHandleManager::getByName("video_player");
+	CHandle new_hl = hm3->createHandle();
+	MKeyValue atts3;
+	atts3["file"] = video_route;
+	new_hl.load(atts3);
+	entity->add(new_hl);
+	//TCompVideo * new_comp = new_hl;
+	//new_comp->init();
 }
 
 void SLBPublicFunctions::playerRoom(int newRoom) {
