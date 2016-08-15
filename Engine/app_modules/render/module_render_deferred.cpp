@@ -626,7 +626,7 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 
 		getHandleManager<TCompPolarized>()->each([pol](TCompPolarized* c) {
 			if (c->force.polarity == pol) {	//render polarity designed only
-				CEntity *e = CHandle(c).getOwner();
+				CEntity *e = ClHandle(c).getOwner();
 				TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
 				TCompTransform *c_tmx = e->get<TCompTransform>();
 
@@ -1005,7 +1005,7 @@ void CRenderDeferredModule::renderUI() {
 	activateZ(ZCFG_ALL_DISABLED);
 	activateBlend(BLENDCFG_DEFAULT);
 
-	CHandle h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
+	ClHandle h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
 	if (!h_ui_camera.isValid())
 		return;
 	CEntity* e_ui_camera = h_ui_camera;

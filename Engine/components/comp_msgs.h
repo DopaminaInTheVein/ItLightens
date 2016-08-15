@@ -22,7 +22,7 @@ struct TMsgAwake {
 
 // Attach to skeleton bone
 struct TMsgAttach {
-	CHandle handle;
+	ClHandle handle;
 	std::string bone_name;
 	bool save_local_tmx;
 	VEC3 offset;
@@ -31,7 +31,7 @@ struct TMsgAttach {
 
 // Subscribe an IK bone solver
 struct TMsgSetIKSolver {
-	CHandle handle;
+	ClHandle handle;
 	IK::bone_solver function;
 	std::string bone_name;
 	bool enable;
@@ -104,7 +104,7 @@ struct TMsgUnpossesDamage {
 };
 
 struct TMsgSetCamera {
-	CHandle camera;
+	ClHandle camera;
 	DECLARE_MSG_ID();
 };
 
@@ -114,7 +114,7 @@ enum PLAYER_TYPE {
 	, SCIENTIST
 };
 struct TMsgSetTarget {
-	CHandle target;
+	ClHandle target;
 	PLAYER_TYPE who;
 	DECLARE_MSG_ID();
 };
@@ -125,7 +125,7 @@ struct TMsgGetWhoAmI {
 };
 
 struct TMsgSetPlayer {
-	CHandle player;
+	ClHandle player;
 	DECLARE_MSG_ID();
 };
 
@@ -219,34 +219,34 @@ struct TMsgWirePass {
 };
 
 struct TMsgCanRec {
-	CHandle generator; // empty --> out of range
+	ClHandle generator; // empty --> out of range
 	DECLARE_MSG_ID();
 };
 
 struct TMsgCanRechargeDrone {
 	bool range;
-	CHandle han;
+	ClHandle han;
 	DECLARE_MSG_ID();
 };
 
 struct TMsgCanNotRechargeDrone {
 	bool range;
-	CHandle han;
+	ClHandle han;
 	DECLARE_MSG_ID();
 };
 
 struct TMsgTriggerIn {
-	CHandle other;
+	ClHandle other;
 	DECLARE_MSG_ID();
 };
 
 struct TMsgTriggerOut {
-	CHandle other;
+	ClHandle other;
 	DECLARE_MSG_ID();
 };
 
 struct TMsgPolarize {
-	CHandle handle;
+	ClHandle handle;
 	bool range;
 	DECLARE_MSG_ID();
 };
@@ -271,7 +271,7 @@ struct TMsgSetAnim {
 };
 
 struct TMsgFollow {
-	CHandle follower;
+	ClHandle follower;
 	float speed;
 	DECLARE_MSG_ID();
 };
@@ -312,7 +312,7 @@ struct TMsgBoxHit {
 	DECLARE_MSG_ID();
 };
 struct TMsgGuidedCamera {
-	CHandle guide;
+	ClHandle guide;
 	float speed;
 	DECLARE_MSG_ID();
 };
@@ -330,7 +330,7 @@ struct TMsgGetPolarity {
 	DECLARE_MSG_ID();
 };
 struct TMsgGoAndLook {
-	CHandle target;
+	ClHandle target;
 	std::string code_arrived;
 	DECLARE_MSG_ID();
 };

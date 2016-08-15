@@ -18,10 +18,10 @@ struct TCompCameraMain : public TCompCamera {
 	VEC3 last_pos_camera;
 
 	//Camera_main unique
-	static CHandle prev_camera_main;
+	static ClHandle prev_camera_main;
 
 	//Guided camera
-	CHandle guidedCamera;
+	ClHandle guidedCamera;
 	TCompTransform * transform;
 	//bool guidedCamera;
 	//int lastguidedCamPoint;

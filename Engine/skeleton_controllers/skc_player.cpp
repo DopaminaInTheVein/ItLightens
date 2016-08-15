@@ -7,7 +7,7 @@
 
 bool SkelControllerPlayer::getUpdateInfo()
 {
-	owner = CHandle(this).getOwner();
+	owner = ClHandle(this).getOwner();
 	if (!owner.isValid()) return false;
 	return true;
 }

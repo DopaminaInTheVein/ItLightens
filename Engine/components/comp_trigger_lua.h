@@ -24,7 +24,7 @@ public:
 	void onTriggerEnter(const TMsgTriggerIn& msg) override;
 	void onTriggerExit(const TMsgTriggerOut& msg) override;
 	void onTriggerAction(PLAYER_TYPE playerType = PLAYER);
-	virtual void executeTrigger(CLogicManagerModule::EVENT logicEvent); //, CHandle handle);
+	virtual void executeTrigger(CLogicManagerModule::EVENT logicEvent); //, ClHandle handle);
 	void setActionable(bool);
 	void render() {}
 	void init() {}

@@ -7,7 +7,7 @@
 class CStaticMesh;
 
 struct TCompRenderStaticMesh : public TCompBase {
-	static CHandle last_loaded_static_mesh;
+	static ClHandle last_loaded_static_mesh;
 	bool onlyDebug = false;
 	const CStaticMesh* static_mesh;
 	std::string res_name;

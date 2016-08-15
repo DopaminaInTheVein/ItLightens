@@ -19,7 +19,7 @@ class CLogicManagerModule : public IAppModule
 	std::deque<command> command_queue;
 	std::deque<command> command_queue_to_add;
 
-	CHandle caller_handle;
+	ClHandle caller_handle;
 
 public:
 
@@ -125,8 +125,8 @@ public:
 	}
 
 	// module specific functions
-	void throwEvent(EVENT evt, std::string params, CHandle handle = CHandle());//, uint32_t handle_id = 0);
-	void throwUserEvent(std::string evt, std::string params = "", CHandle handle = CHandle());//, uint32_t handle_id = 0);
+	void throwEvent(EVENT evt, std::string params, ClHandle handle = ClHandle());//, uint32_t handle_id = 0);
+	void throwUserEvent(std::string evt, std::string params = "", ClHandle handle = ClHandle());//, uint32_t handle_id = 0);
 	void bindPosition(SLB::Manager& m);
 	void bindPlayer(SLB::Manager& m);
 	void bindHandle(SLB::Manager& m);
@@ -134,7 +134,7 @@ public:
 	void bindCamera(SLB::Manager& m);
 	void bindData(SLB::Manager& m);
 	void bindPublicFunctions(SLB::Manager& m);
-	CHandle getCaller() { return caller_handle; }
+	ClHandle getCaller() { return caller_handle; }
 };
 
 extern CLogicManagerModule* logic_manager;

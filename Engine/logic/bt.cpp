@@ -202,14 +202,14 @@ bool bt::getPath(const VEC3& startPoint, const VEC3& endPoint) {
 	return true;
 }
 
-CEntity* bt::frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle) {
+CEntity* bt::frontCollisionIA(const VEC3 & npcPos, ClHandle ownHandle) {
 	CEntity * ownHandleE = ownHandle;
 	TCompTransform * candidateOwn = ownHandleE->get<TCompTransform>();
 	VEC3 npcFront = candidateOwn->getFront();
 	npcFront.Normalize();
 	TTagID tagIDia = getID("AI");
-	vector<CHandle> colCandidates = tags_manager.getHandlesByTag(tagIDia);
-	for (CHandle candidateH : colCandidates) {
+	vector<ClHandle> colCandidates = tags_manager.getHandlesByTag(tagIDia);
+	for (ClHandle candidateH : colCandidates) {
 		if (candidateH != ownHandle) {
 			CEntity * candidateE = candidateH;
 			TCompTransform * candidateT = candidateE->get<TCompTransform>();
@@ -230,8 +230,8 @@ CEntity* bt::frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle) {
 CEntity* bt::frontCollisionBOX(const TCompTransform * transform, CEntity *  molePursuingBoxi) {
 	TTagID tagIDbox = getID("box");
 	VEC3 npcPos = transform->getPosition();
-	vector<CHandle> colCandidates = tags_manager.getHandlesByTag(tagIDbox);//SBB::readHandlesVector("collisionables");
-	for (CHandle candidateH : colCandidates) {
+	vector<ClHandle> colCandidates = tags_manager.getHandlesByTag(tagIDbox);//SBB::readHandlesVector("collisionables");
+	for (ClHandle candidateH : colCandidates) {
 		if (!candidateH.isValid()) continue;
 		CEntity * candidateE = candidateH;
 		TCompTransform * candidateT = candidateE->get<TCompTransform>();
@@ -253,7 +253,7 @@ bool bt::avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform) 
 	}
 	return false;
 }
-bool bt::needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, CEntity *  molePursuingBoxi) {
+bool bt::needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, ClHandle myHandle, CEntity *  molePursuingBoxi) {
 	float yaw, pitch, delta_yaw = 0.25f;
 	transform->getAngles(&yaw, &pitch);
 	CEntity * collisionBOX = frontCollisionBOX(transform, molePursuingBoxi);

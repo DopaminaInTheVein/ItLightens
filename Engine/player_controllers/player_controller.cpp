@@ -28,7 +28,7 @@
 map<string, statehandler> player_controller::statemap = {};
 
 void player_controller::readIniFileAttr() {
-	CHandle h = CHandle(this).getOwner();
+	ClHandle h = ClHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("player")) {
 			CApp &app = CApp::get();
@@ -125,17 +125,17 @@ void player_controller::createEvolveLight() {
 	TCompTransform * trans = myEntity->get<TCompTransform>();
 
 	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
+	ClHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
 
 	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
+	ClHandle new_hn = hm1->createHandle();
 	MKeyValue atts1;
 	atts1.put("name", "light_evolve");
 	new_hn.load(atts1);
 	entity->add(new_hn);
 	auto hm2 = CHandleManager::getByName("transform");
-	CHandle new_ht = hm2->createHandle();
+	ClHandle new_ht = hm2->createHandle();
 	MKeyValue atts2;
 	VEC3 positio = trans->getPosition(), scal = trans->getScale();
 	VEC4 rota = trans->getRotation();
@@ -145,7 +145,7 @@ void player_controller::createEvolveLight() {
 	new_ht.load(atts2);
 	entity->add(new_ht);
 	auto hm3 = CHandleManager::getByName("light_fadable");
-	CHandle new_hl = hm3->createHandle();
+	ClHandle new_hl = hm3->createHandle();
 	MKeyValue atts3;
 	atts3["color"] = "0 255 0 255";
 	atts3["in_radius"] = "1.0";
@@ -160,18 +160,18 @@ void player_controller::createDevolveLight() {
 	TCompTransform * trans = myEntity->get<TCompTransform>();
 
 	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
+	ClHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
-	IdEntities::saveIdEntity(CHandle(entity), -1900);
+	IdEntities::saveIdEntity(ClHandle(entity), -1900);
 
 	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
+	ClHandle new_hn = hm1->createHandle();
 	MKeyValue atts1;
 	atts1.put("name", "light_evolve");
 	new_hn.load(atts1);
 	entity->add(new_hn);
 	auto hm2 = CHandleManager::getByName("transform");
-	CHandle new_ht = hm2->createHandle();
+	ClHandle new_ht = hm2->createHandle();
 	MKeyValue atts2;
 	VEC3 positio = trans->getPosition(), scal = trans->getScale();
 	VEC4 rota = trans->getRotation();
@@ -181,7 +181,7 @@ void player_controller::createDevolveLight() {
 	new_ht.load(atts2);
 	entity->add(new_ht);
 	auto hm3 = CHandleManager::getByName("light_fadable");
-	CHandle new_hl = hm3->createHandle();
+	ClHandle new_hl = hm3->createHandle();
 	MKeyValue atts3;
 	atts3["color"] = "255 0 0 255";
 	atts3["in_radius"] = "1.0";
@@ -538,13 +538,13 @@ void player_controller::UpdateInputActions()
 	//Test borrar CLH!!!
 	//----------------------
 	//if (io->keys['8'].becomesPressed()) {
-	   // CHandle player = tags_manager.getFirstHavingTag("raijin");
+	   // ClHandle player = tags_manager.getFirstHavingTag("raijin");
 	   // GET_COMP(tPlayer, player, TCompTransform);
 	   // startPoint = tPlayer->getPosition();
 	   // dbg("Set StartPoint\n");
 	//}
 	//if (io->keys['9'].becomesPressed()) {
-	   // CHandle player = tags_manager.getFirstHavingTag("raijin");
+	   // ClHandle player = tags_manager.getFirstHavingTag("raijin");
 	   // GET_COMP(tPlayer, player, TCompTransform);
 	   // endPoint = tPlayer->getPosition();
 	   // dbg("Set EndPoint\n");
@@ -695,14 +695,14 @@ void player_controller::UpdatePossession() {
 // Recalcula el mejor candidato para poseer
 void player_controller::recalcPossassable() {
 	PROFILE_FUNCTION("recalc possessable");
-	currentPossessable = CHandle();
+	currentPossessable = ClHandle();
 	if (isDamaged()) return;
 	float minDeltaYaw = FLT_MAX;
 	float minDistance = FLT_MAX;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
 	VHandles possessables = tags_manager.getHandlesByTag(getID("AI_poss"));
-	for (CHandle hPoss : possessables) {
+	for (ClHandle hPoss : possessables) {
 		if (!hPoss.isValid()) continue;
 		CEntity* ePoss = hPoss;
 		if (!ePoss) continue;
@@ -751,9 +751,9 @@ bool player_controller::nearStunable() {
 	float minDistance = FLT_MAX;
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
-	currentStunable = CHandle();
+	currentStunable = ClHandle();
 	VHandles stuneables = tags_manager.getHandlesByTag(getID("AI_poss"));
-	for (CHandle hPoss : stuneables) {
+	for (ClHandle hPoss : stuneables) {
 		if (!hPoss.isValid()) continue;
 		CEntity* ePoss = hPoss;
 		if (!ePoss) continue;
@@ -795,9 +795,9 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	PROFILE_FUNCTION("on leave poss");
 	getUpdateInfo();
 	// Handles y entities necesarias
-	CHandle  hMe = CHandle(this).getOwner();
+	ClHandle  hMe = ClHandle(this).getOwner();
 	CEntity* eMe = hMe;
-	CHandle hCamera = tags_manager.getFirstHavingTag(getID("camera_main"));
+	ClHandle hCamera = tags_manager.getFirstHavingTag(getID("camera_main"));
 	CEntity* eCamera = hCamera;
 
 	//Colocamos el player
@@ -813,7 +813,7 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	eCamera->sendMsg(msg3rdController);
 
 	//Set Camera
-	camera = CHandle(eCamera);
+	camera = ClHandle(eCamera);
 
 	//Habilitamos control
 	controlEnabled = true;
@@ -991,7 +991,7 @@ void player_controller::SendMessagePolarizeState()
 	TMsgPlayerPolarize msg;
 	msg.type = pol_state;
 	VHandles hs = tags_manager.getHandlesByTag(getID("box"));
-	for (CHandle h : hs) {
+	for (ClHandle h : hs) {
 		if (h.isValid()) {
 			h.sendMsg(msg);
 		}
@@ -1043,7 +1043,7 @@ void player_controller::renderInMenu() {
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
 
-PolarityForce player_controller::getPolarityForce(CHandle forceHandle) {
+PolarityForce player_controller::getPolarityForce(ClHandle forceHandle) {
 	PolarityForce pf;
 	if (forceHandle.isValid()) {
 		CEntity* eForce = forceHandle;

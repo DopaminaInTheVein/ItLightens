@@ -26,7 +26,7 @@ map<int, string> player_controller_cientifico::out = {};
 std::vector<std::string> player_controller_cientifico::objs_names;
 
 void player_controller_cientifico::readIniFileAttr() {
-	CHandle h = CHandle(this).getOwner();
+	ClHandle h = ClHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_cientifico")) {
 			CApp &app = CApp::get();
@@ -60,7 +60,7 @@ void player_controller_cientifico::readIniFileAttr() {
 bool player_controller_cientifico::getUpdateInfo()
 {
 	if (!CPlayerBase::getUpdateInfo()) return false;
-	myParent = CHandle(this).getOwner();
+	myParent = ClHandle(this).getOwner();
 
 	animController = GETH_MY(SkelControllerScientist);
 	return true;
@@ -342,7 +342,7 @@ void player_controller_cientifico::spawnBomb(VEC3 offset)
 	bomb_handle = spawnPrefab(objs_names[obj]);
 
 	TMsgAttach msg;
-	msg.handle = CHandle(this).getOwner();
+	msg.handle = ClHandle(this).getOwner();
 	msg.bone_name = SK_RHAND;
 	msg.save_local_tmx = false;
 	msg.offset = offset;
@@ -384,19 +384,19 @@ void player_controller_cientifico::spawnBomb(VEC3 offset)
 //	VEC3 player_position = transform->getPosition();
 //
 //	auto hm_e = CHandleManager::getByName("entity");
-//	CHandle new_h_e = hm_e->createHandle();
+//	ClHandle new_h_e = hm_e->createHandle();
 //
 //	auto hm_n = CHandleManager::getByName("name");
-//	CHandle new_h_n = hm_n->createHandle();
+//	ClHandle new_h_n = hm_n->createHandle();
 //
 //	auto hm_t = CHandleManager::getByName("transform");
-//	CHandle new_h_t = hm_t->createHandle();
+//	ClHandle new_h_t = hm_t->createHandle();
 //
 //	auto hm_mb = CHandleManager::getByName("static_bomb");
-//	CHandle new_h_mb = hm_mb->createHandle();
+//	ClHandle new_h_mb = hm_mb->createHandle();
 //
 //	auto hm_sm = CHandleManager::getByName("render_static_mesh");
-//	CHandle new_h_sm = hm_sm->createHandle();
+//	ClHandle new_h_sm = hm_sm->createHandle();
 //
 //	CEntity *e = new_h_e;
 //	bomb_handle = new_h_mb;
@@ -443,7 +443,7 @@ void player_controller_cientifico::renderInMenu()
 
 void player_controller_cientifico::UpdateUnpossess() {
 	PROFILE_FUNCTION("player cientifico: update unposses");
-	CHandle h = CHandle(this);
+	ClHandle h = ClHandle(this);
 	tags_manager.removeTag(h.getOwner(), getID("player"));
 	SET_ANIM_SCIENTIST(AST_STUNNED);
 }
@@ -452,14 +452,14 @@ void player_controller_cientifico::DisabledState() {
 	PROFILE_FUNCTION("player cientifico: disabled satte");
 }
 void player_controller_cientifico::InitControlState() {
-	CHandle h = CHandle(this);
+	ClHandle h = ClHandle(this);
 	tags_manager.addTag(h.getOwner(), getID("player"));
 	ChangeState("idle");
 }
 
 CEntity* player_controller_cientifico::getMyEntity() {
 	PROFILE_FUNCTION("player cientifico: get my entity");
-	CHandle me = CHandle(this);
+	ClHandle me = ClHandle(this);
 	return me.getOwner();
 }
 

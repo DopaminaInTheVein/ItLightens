@@ -23,7 +23,7 @@ class elevator : public TCompBase {
 	eElevatorState prevState;
 
 	//Update info
-	CHandle myEntity;
+	ClHandle myEntity;
 	TCompTransform * transform;
 	TCompPhysics * physics;
 

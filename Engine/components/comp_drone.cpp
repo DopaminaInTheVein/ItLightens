@@ -10,7 +10,7 @@
 
 void TCompDrone::onCreate(const TMsgEntityCreated &)
 {
-	CHandle h = CHandle(this).getOwner();
+	ClHandle h = ClHandle(this).getOwner();
 	CEntity *e = h;
 	if (e) {
 		//Init Waypoints (and add the last point the initial position)
@@ -35,7 +35,7 @@ void TCompDrone::onCreate(const TMsgEntityCreated &)
 
 void TCompDrone::onRecharge(const TMsgActivate &)
 {
-	CHandle h = CHandle(this).getOwner();
+	ClHandle h = ClHandle(this).getOwner();
 	CEntity *e = h;
 	if (e) {
 		// Reset life
@@ -50,13 +50,13 @@ void TCompDrone::onRecharge(const TMsgActivate &)
 
 void TCompDrone::onRepair(const TMsgRepair &)
 {
-	CHandle h = CHandle(this).getOwner();
+	ClHandle h = ClHandle(this).getOwner();
 	CEntity *e = h;
 	if (e) {
 		espatllat = false;
 		sciInDistance = false;
 		CEntity * scie = nullptr;
-		for (CHandle sci : tags_manager.getHandlesByTag(getID("AI_cientifico"))) {
+		for (ClHandle sci : tags_manager.getHandlesByTag(getID("AI_cientifico"))) {
 			CEntity * sci_e = sci;
 			player_controller_cientifico * sci_e_controller = sci_e->get<player_controller_cientifico>();
 			if (sci_e_controller && sci_e_controller->npcIsPossessed) {
@@ -69,7 +69,7 @@ void TCompDrone::onRepair(const TMsgRepair &)
 
 bool TCompDrone::SetMyBasicComponents()
 {
-	CHandle h = CHandle(this).getOwner();
+	ClHandle h = ClHandle(this).getOwner();
 	CEntity *e = h;
 	if (!e) return false;
 	transform = e->get<TCompTransform>();
@@ -104,7 +104,7 @@ void TCompDrone::update(float elapsed)
 		VEC3 direction = VEC3(0.0f, -1.0f, 0.0f);
 		VEC3 npcPos = transform->getPosition();
 
-		CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
+		ClHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
 		CEntity *player_e = player;
 		TCompTransform * p_transform = player_e->get<TCompTransform>();
 		float distToDrone = realDist(npcPos, p_transform->getPosition());
@@ -116,9 +116,9 @@ void TCompDrone::update(float elapsed)
 			final_pos = final_pos + direction * fallingSpeed * elapsed;
 		}
 		else {
-			CHandle scih;
+			ClHandle scih;
 			CEntity * scie = nullptr;
-			for (CHandle sci : tags_manager.getHandlesByTag(getID("AI_cientifico"))) {
+			for (ClHandle sci : tags_manager.getHandlesByTag(getID("AI_cientifico"))) {
 				CEntity * sci_e = sci;
 				player_controller_cientifico * sci_e_controller = sci_e->get<player_controller_cientifico>();
 				if (sci_e_controller && sci_e_controller->npcIsPossessed) {
@@ -220,8 +220,8 @@ void TCompDrone::CanRechargeDrone(bool new_range)
 {
 	TMsgCanRechargeDrone msg;
 	msg.range = new_range;
-	msg.han = CHandle(this).getOwner();
-	CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
+	msg.han = ClHandle(this).getOwner();
+	ClHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
 	CEntity *player_e = player;
 	player_e->sendMsg(msg);
 }
@@ -229,15 +229,15 @@ void TCompDrone::CanNotRechargeDrone(bool new_range)
 {
 	TMsgCanNotRechargeDrone msg;
 	msg.range = new_range;
-	msg.han = CHandle(this).getOwner();
-	CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
+	msg.han = ClHandle(this).getOwner();
+	ClHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
 	CEntity *player_e = player;
 	player_e->sendMsg(msg);
 }
-void TCompDrone::CanRepairDrone(CHandle sci, bool new_range) {
+void TCompDrone::CanRepairDrone(ClHandle sci, bool new_range) {
 	TMsgCanRechargeDrone msg;
 	msg.range = new_range;
-	msg.han = CHandle(this).getOwner();
+	msg.han = ClHandle(this).getOwner();
 
 	CEntity * scie = sci;
 	scie->sendMsg(msg);
@@ -245,7 +245,7 @@ void TCompDrone::CanRepairDrone(CHandle sci, bool new_range) {
 
 void TCompDrone::onTriggerEnter(const TMsgTriggerIn & msg)
 {
-	CHandle h_in = msg.other;
+	ClHandle h_in = msg.other;
 	if (h_in.hasTag("raijin")) {
 		CanRechargeDrone(true);
 	}
@@ -253,7 +253,7 @@ void TCompDrone::onTriggerEnter(const TMsgTriggerIn & msg)
 
 void TCompDrone::onTriggerExit(const TMsgTriggerOut & msg)
 {
-	CHandle h_in = msg.other;
+	ClHandle h_in = msg.other;
 	if (h_in.hasTag("raijin")) {
 		CanRechargeDrone(false);
 	}

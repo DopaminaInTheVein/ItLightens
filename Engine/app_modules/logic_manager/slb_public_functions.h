@@ -25,7 +25,7 @@ public:
 
 class SLBPlayer
 {
-	CHandle player_handle;
+	ClHandle player_handle;
 
 public:
 
@@ -44,14 +44,14 @@ public:
 // generic handle control in LUA
 class SLBHandle
 {
-	CHandle real_handle;
-	CHandle caller_handle;
+	ClHandle real_handle;
+	ClHandle caller_handle;
 	std::string handle_name;
 	std::string handle_tag;
 
 public:
 	// Gets
-	CHandle getHandle();
+	ClHandle getHandle();
 
 	// generic handle functions
 	void getPlayer();
@@ -99,7 +99,7 @@ public:
 // camera control in LUA
 class SLBCamera
 {
-	CHandle camera_h;
+	ClHandle camera_h;
 
 public:
 

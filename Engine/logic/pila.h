@@ -16,9 +16,9 @@ struct TCompPila : public aicontroller, public TTriggerLua {
 	virtual map<string, statehandler>* getStatemap() { return &statemap; }
 
 	static VHandles all_pilas;
-	CHandle player;
+	ClHandle player;
 	VEC3 place;
-	CHandle container;
+	ClHandle container;
 	bool charged;
 
 	~TCompPila();
@@ -39,7 +39,7 @@ struct TCompPila : public aicontroller, public TTriggerLua {
 	void Grabbed();
 	void StartFalling();
 	void Falling();
-	void PutIn(CHandle, bool notify = true);
+	void PutIn(ClHandle, bool notify = true);
 	void Grab();
 	void onRecharge(const TMsgActivate&);
 	void isCharged(TMsgIsCharged&);

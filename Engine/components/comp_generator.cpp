@@ -33,7 +33,7 @@ void TCompGenerator::mUpdate(float dt)
 
 void TCompGenerator::onTriggerEnter(const TMsgTriggerIn & msg)
 {
-	CHandle h_in = msg.other;
+	ClHandle h_in = msg.other;
 	if (h_in.hasTag("raijin")) {
 		CanRec(true);
 	}
@@ -41,7 +41,7 @@ void TCompGenerator::onTriggerEnter(const TMsgTriggerIn & msg)
 
 void TCompGenerator::onTriggerExit(const TMsgTriggerOut & msg)
 {
-	CHandle h_in = msg.other;
+	ClHandle h_in = msg.other;
 	if (h_in.hasTag("raijin")) {
 		CanRec(false);
 	}
@@ -49,7 +49,7 @@ void TCompGenerator::onTriggerExit(const TMsgTriggerOut & msg)
 
 void TCompGenerator::onCreate(const TMsgEntityCreated & msg)
 {
-	CHandle me_h = CHandle(this).getOwner();
+	ClHandle me_h = ClHandle(this).getOwner();
 
 	CEntity *me_e = me_h;
 	TCompTransform *t = me_e->get<TCompTransform>();
@@ -81,7 +81,7 @@ void TCompGenerator::CanRec(bool new_range)
 	TCompTransform *t_p = p_e->get<TCompTransform>();
 	VEC3 player_position = t_p->getPosition();
 
-	msg.generator = new_range ? CHandle(this).getOwner() : CHandle();
+	msg.generator = new_range ? ClHandle(this).getOwner() : ClHandle();
 	CEntity *player_e = player;
 	player_e->sendMsg(msg);
 }
@@ -111,5 +111,5 @@ float TCompGenerator::use()
 
 TCompGenerator::~TCompGenerator()
 {
-	removeFromVector(all_generators, CHandle(this).getOwner());
+	removeFromVector(all_generators, ClHandle(this).getOwner());
 }

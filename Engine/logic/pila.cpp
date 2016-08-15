@@ -28,7 +28,7 @@ void TCompPila::setFalling()
 
 void TCompPila::onCreate(const TMsgEntityCreated& msg)
 {
-	all_pilas.push_back(CHandle(this).getOwner());
+	all_pilas.push_back(ClHandle(this).getOwner());
 
 	mActionable = true;
 	mAction = EXAMINATE;
@@ -42,7 +42,7 @@ void TCompPila::onCreate(const TMsgEntityCreated& msg)
 	}
 
 	place = VEC3();
-	container = CHandle();
+	container = ClHandle();
 	ChangeState(ST_PILA_GROUND);
 }
 
@@ -141,9 +141,9 @@ eAction TCompPila::getActionAvailable()
 	return action;
 }
 
-void TCompPila::executeTrigger(CLogicManagerModule::EVENT logicEvent) { //, CHandle handle) {
-	CEntity* eMe = CHandle(this).getOwner();
-	logic_manager->throwEvent(logicEvent, string(eMe->getName()), CHandle(this).getOwner());
+void TCompPila::executeTrigger(CLogicManagerModule::EVENT logicEvent) { //, ClHandle handle) {
+	CEntity* eMe = ClHandle(this).getOwner();
+	logic_manager->throwEvent(logicEvent, string(eMe->getName()), ClHandle(this).getOwner());
 }
 
 bool TCompPila::getPlayer()
@@ -161,7 +161,7 @@ bool TCompPila::isPlayerNear()
 	return inSquaredRangeXZ_Y(tmx->getPosition(), tmx_player->getPosition(), 4.f, 5.f);
 }
 
-void TCompPila::PutIn(CHandle pilaContainer, bool notify)
+void TCompPila::PutIn(ClHandle pilaContainer, bool notify)
 {
 	GET_COMP(tmx_container, pilaContainer, TCompTransform);
 	GET_COMP(container_comp, pilaContainer, TCompPilaContainer);
@@ -169,7 +169,7 @@ void TCompPila::PutIn(CHandle pilaContainer, bool notify)
 	container = pilaContainer;
 	place = tmx_container->getPosition();
 
-	container_comp->PutPila(CHandle(this).getOwner(), notify);
+	container_comp->PutPila(ClHandle(this).getOwner(), notify);
 	ChangeState("on_ground");
 }
 
@@ -184,7 +184,7 @@ void TCompPila::Grab()
 	if (container.isValid()) {
 		GET_COMP(container_comp, container, TCompPilaContainer);
 		container_comp->RemovePila();
-		container = CHandle();
+		container = ClHandle();
 	}
 	ChangeState(ST_PILA_GRABBED);
 }
@@ -200,5 +200,5 @@ void TCompPila::isCharged(TMsgIsCharged& msg)
 }
 
 TCompPila::~TCompPila() {
-	removeFromVector(all_pilas, CHandle(this).getOwner());
+	removeFromVector(all_pilas, ClHandle(this).getOwner());
 }

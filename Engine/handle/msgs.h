@@ -8,8 +8,8 @@
 
 struct IFunctorBase {
 	virtual ~IFunctorBase() {}
-	virtual void execute(CHandle handle, const void* msg_data) = 0;
-	virtual void execute(CHandle handle, void* msg_data) = 0;
+	virtual void execute(ClHandle handle, const void* msg_data) = 0;
+	virtual void execute(ClHandle handle, void* msg_data) = 0;
 };
 
 template< class TObj, class TMsgData >
@@ -26,7 +26,7 @@ struct TFunctor : public IFunctorBase {
 	TFunctor(TMemberFn new_member_fn) : member_fn(new_member_fn) { }
 
 	// Implement the virtual interface
-	void execute(CHandle handle, const void* msg) {
+	void execute(ClHandle handle, const void* msg) {
 		assert(msg);
 		TObj* obj = handle;
 		// Confirm the handle is still valid
@@ -41,7 +41,7 @@ struct TFunctor : public IFunctorBase {
 		(obj->*member_fn_const)(*(const TMsgData*)msg);
 	}
 
-	void execute(CHandle handle, void* msg) {
+	void execute(ClHandle handle, void* msg) {
 		assert(msg);
 		TObj* obj = handle;
 		// Confirm the handle is still valid

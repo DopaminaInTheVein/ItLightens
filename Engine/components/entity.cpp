@@ -37,7 +37,7 @@ bool CEntity::save(std::ofstream& os, MKeyValue& atts) {
 	atts.put("permanent", permanent);
 	atts.writeStartElement(os, "entity");
 
-	for (uint32_t i = 0; i < CHandle::max_types; ++i) {
+	for (uint32_t i = 0; i < ClHandle::max_types; ++i) {
 		auto hm = CHandleManager::getByType(i);
 		if (comps[i].isValid()) {
 			comps[i].save(os, atts);
@@ -67,7 +67,7 @@ void CEntity::renderInMenu() {
 	if (ImGui::TreeNode(my_name)) {
 		// For each component type defined in the game ( comp type 0 is invalid... )
 		for (uint32_t i = 1; i < CHandleManager::getNumDefinedTypes(); ++i) {
-			CHandle h = comps[i];
+			ClHandle h = comps[i];
 			if (h.isValid()) {
 				// Open a tree node with the name of the component
 				if (ImGui::TreeNode(CHandleManager::getByType(i)->getName())) {
@@ -76,7 +76,7 @@ void CEntity::renderInMenu() {
 				}
 			}
 		}
-		CHandle h(this);
+		ClHandle h(this);
 		if (ImGui::Button("Destroy"))
 			h.destroy();
 

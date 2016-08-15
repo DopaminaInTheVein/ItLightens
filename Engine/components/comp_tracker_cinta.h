@@ -10,7 +10,7 @@
 #include "comp_transform.h"
 
 struct HandleTrack {
-  CHandle handle;
+  ClHandle handle;
   float normalTime;
 };
 typedef std::vector<HandleTrack> VHandleTracks;

@@ -15,9 +15,9 @@ class SkelControllerMole : public TCompSkelController, public TCompBase {
 protected:
 	TCompCharacterController * cc;
 	player_controller_mole * pc;
-	CHandle grabbed;
-	CHandle grabbedPila;
-	CHandle pushed;
+	ClHandle grabbed;
+	ClHandle grabbedPila;
+	ClHandle pushed;
 	VEC3 left_h_target, right_h_target, front_h_dir;
 	VEC3 left_h_normal, right_h_normal;
 
@@ -31,21 +31,21 @@ protected:
 	bool isMovingBox();
 
 public:
-	void grabObject(CHandle);
-	void grabPila(CHandle);
-	void pushObject(CHandle);
+	void grabObject(ClHandle);
+	void grabPila(ClHandle);
+	void pushObject(ClHandle);
 	void ungrabObject(); // Funcion para soltarlo
 	void ungrabPila(); // Funcion para soltarlo
 	void unpushObject(); // Funcion para soltarlo
-	void removeGrab() { grabbed = CHandle(); pushed = CHandle();  } //"Private" func
-	void removePila() { grabbedPila = CHandle(); } //"Private" func
+	void removeGrab() { grabbed = ClHandle(); pushed = ClHandle(); } //"Private" func
+	void removePila() { grabbedPila = ClHandle(); } //"Private" func
 	VEC3 getGrabLeft();
 	VEC3 getGrabRight();
 	VEC3 getGrabNormalLeft();
 	VEC3 getGrabNormalRight();
 	VEC3 getGrabFrontDir();
-	CHandle getGrabbed();
-	CHandle getGrabbedPila();
+	ClHandle getGrabbed();
+	ClHandle getGrabbedPila();
 
 	bool load(MKeyValue& atts) { return true; }
 	//void onCreate(const TMsgEntityCreated&);

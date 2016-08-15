@@ -2,7 +2,7 @@
 #include "comp_base.h"
 #include "components/entity.h"
 
-bool TCompBase::getUpdateInfoBase(CHandle parent) {
+bool TCompBase::getUpdateInfoBase(ClHandle parent) {
 	compBaseEntity = parent;
 	return parent.isValid() && getUpdateInfo();
 }

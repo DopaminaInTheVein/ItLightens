@@ -44,7 +44,7 @@ void TCompCulling::update() {
 	//PROFILE_FUNCTION("TCompCulling: Update");
 	// Get access to the comp_camera in a sibling component
 
-	CEntity* e_owner = CHandle(this).getOwner();
+	CEntity* e_owner = ClHandle(this).getOwner();
 	if (!e_owner) return;
 	TCompRoom* room = e_owner->get<TCompRoom>();
 	if (room) {
@@ -88,7 +88,7 @@ void TCompCulling::update() {
 	TCompAbsAABB* aabb = hm->getFirstObject();
 	for (size_t i = 0; i < hm->size(); ++i, ++aabb) {
 		PROFILE_FUNCTION("TCompCulling: isVisible bucle");
-		if (planes.isVisible(aabb) || CHandle(aabb).getOwner().hasTag("player"))
+		if (planes.isVisible(aabb) || ClHandle(aabb).getOwner().hasTag("player"))
 			bits.set(i);
 	}
 }

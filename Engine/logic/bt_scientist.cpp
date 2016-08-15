@@ -21,7 +21,7 @@ map<string, btevent> bt_scientist::events = {};
 btnode* bt_scientist::root = nullptr;
 
 void bt_scientist::readIniFileAttr() {
-	CHandle h = CHandle(this).getOwner();
+	ClHandle h = ClHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_cientifico")) {
 			CApp &app = CApp::get();
@@ -45,7 +45,7 @@ void bt_scientist::readIniFileAttr() {
 }
 
 void bt_scientist::Init() {
-	getUpdateInfoBase(CHandle(this).getOwner());
+	getUpdateInfoBase(ClHandle(this).getOwner());
 	//read main attributes from file
 	readIniFileAttr();
 
@@ -127,7 +127,7 @@ bool bt_scientist::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-		);
+			);
 	}
 
 	zmin = atts.getFloat("zmin", 100.0f);

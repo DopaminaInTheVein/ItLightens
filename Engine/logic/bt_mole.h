@@ -47,9 +47,9 @@ class bt_mole : public bt_poss, public TCompBase {
 	VEC3 rechargePoint;
 
 	CObjectManager<bt_mole> * om = nullptr;
-	CHandle myHandle;
-	CHandle myParent;
-	CHandle myBox = CHandle();
+	ClHandle myHandle;
+	ClHandle myParent;
+	ClHandle myBox = ClHandle();
 	CEntity *myEntity = nullptr;
 
 	TCompTransform* transform;
@@ -57,13 +57,13 @@ class bt_mole : public bt_poss, public TCompBase {
 	void SetMyEntity();
 
 	CEntity * getEntityPointer(int i) {
-		CHandle han = SBB::readHandlesVector("wptsBoxes")[i];
+		ClHandle han = SBB::readHandlesVector("wptsBoxes")[i];
 		CEntity * ent = han;
 		return ent;
 	}
 
 	CEntity* getMyEntity() {
-		CHandle me = CHandle(this);
+		ClHandle me = ClHandle(this);
 		return me.getOwner();
 	}
 	//bool isBoxAtLeavePoint(VEC3 posBox);

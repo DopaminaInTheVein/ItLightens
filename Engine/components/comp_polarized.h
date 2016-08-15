@@ -5,7 +5,7 @@
 #include "logic/polarity.h"
 
 struct TMsgPolarize;
-class CHandle;
+class ClHandle;
 
 struct TCompPolarized : public TCompBase {
 	enum type {
@@ -20,7 +20,7 @@ struct TCompPolarized : public TCompBase {
 
 	TMsgPolarize		msg_in;
 	TMsgPolarize		msg_out;
-	CHandle				player_h;
+	ClHandle				player_h;
 
 	float			dist_effect_free = 5.0f;
 	float			dist_effect_fixed = 5.0f;

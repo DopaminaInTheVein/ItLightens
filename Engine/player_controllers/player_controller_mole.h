@@ -101,12 +101,12 @@ public:
 	void GoToPilaContainer();
 	void FaceToPilaContainer();
 
-	CHandle boxGrabbed; // = false;
-	CHandle boxNear; // = false;
-	CHandle boxPushed;
-	CHandle pilaGrabbed; // = false;
-	CHandle pilaNear; // = false;
-	CHandle pilaContainer;
+	ClHandle boxGrabbed; // = false;
+	ClHandle boxNear; // = false;
+	ClHandle boxPushed;
+	ClHandle pilaGrabbed; // = false;
+	ClHandle pilaNear; // = false;
+	ClHandle pilaContainer;
 	VEC3 pilaContainerPos;
 	float camera_push_yaw;
 	float camera_push_pitch;
@@ -143,15 +143,15 @@ public:
 		return transform;
 	}
 	CEntity* player_controller_mole::getMyEntity() {
-		CHandle me = CHandle(this);
+		ClHandle me = ClHandle(this);
 		return me.getOwner();
 	}
 	CEntity * getEntityBoxPointer(int i) {
-		CHandle han = SBB::readHandlesVector("wptsBoxes")[i];
+		ClHandle han = SBB::readHandlesVector("wptsBoxes")[i];
 		CEntity * ent = han;
 		return ent;
 	}
-	CHandle getEntityWallHandle(int i) {
+	ClHandle getEntityWallHandle(int i) {
 		return SBB::readHandlesVector("wptsBreakableWall")[i];
 	}
 

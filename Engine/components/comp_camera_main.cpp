@@ -26,17 +26,17 @@ extern CShaderCte< TCteCamera > shader_ctes_camera;
 
 #include "comp_charactercontroller.h"
 
-CHandle TCompCameraMain::prev_camera_main = CHandle();
+ClHandle TCompCameraMain::prev_camera_main = ClHandle();
 
 void TCompCameraMain::init()
 {
-	CHandle player = tags_manager.getFirstHavingTag("player");
+	ClHandle player = tags_manager.getFirstHavingTag("player");
 	TMsgSetTarget msg;
 	msg.target = player;
 	TMsgGetWhoAmI msgWho;
 	player.sendMsgWithReply(msgWho);
 	msg.who = msgWho.who;
-	CHandle hMe = CHandle(this).getOwner();
+	ClHandle hMe = ClHandle(this).getOwner();
 	hMe.sendMsg(msg);
 
 	TMsgSetCamera msgCam;
@@ -54,7 +54,7 @@ bool TCompCameraMain::load(MKeyValue& atts) {
 void TCompCameraMain::onCreate(const TMsgEntityCreated&)
 {
 	if (prev_camera_main.isValid()) prev_camera_main.destroy();
-	prev_camera_main = CHandle(this).getOwner();
+	prev_camera_main = ClHandle(this).getOwner();
 }
 
 void TCompCameraMain::onGuidedCamera(const TMsgGuidedCamera& msg) {
@@ -79,14 +79,14 @@ void TCompCameraMain::update(float dt) {
 		if (!cameraIsGuided) {
 			//Fin recorrido  ...
 			//... Guardamos guidedCamera para mensaje a Logic Manager
-			CHandle cameraFinished = guidedCamera;
+			ClHandle cameraFinished = guidedCamera;
 
 			//... Terminamos el modo cinematica
-			guidedCamera = CHandle();
+			guidedCamera = ClHandle();
 			GameController->SetCinematic(false);
 
 			// Set the player in the 3rdPersonController
-			CHandle t = tags_manager.getFirstHavingTag("player");
+			ClHandle t = tags_manager.getFirstHavingTag("player");
 			//CEntity * target_e = t;
 			if (t.isValid()) {
 				TMsgSetTarget msg;
@@ -95,7 +95,7 @@ void TCompCameraMain::update(float dt) {
 				compBaseEntity->sendMsg(msg);		//set camera
 
 				TMsgSetCamera msg_camera;
-				msg_camera.camera = CHandle(this).getOwner();
+				msg_camera.camera = ClHandle(this).getOwner();
 				t.sendMsg(msg_camera);	//set target camera
 			}
 
@@ -160,7 +160,7 @@ void TCompCameraMain::update(float dt) {
 			//}
 		}
 		else if (GameController->GetFreeCamera()) {
-			CHandle owner = CHandle(this).getOwner();
+			ClHandle owner = ClHandle(this).getOwner();
 			CEntity* e_owner = owner;
 			assert(e_owner);
 			TCompTransform* tmx = e_owner->get<TCompTransform>();
@@ -170,7 +170,7 @@ void TCompCameraMain::update(float dt) {
 		else {
 			if (compBaseEntity) {
 				TCompController3rdPerson * obtarged = compBaseEntity->get<TCompController3rdPerson>();
-				CHandle targetowner = obtarged->target;
+				ClHandle targetowner = obtarged->target;
 				if (targetowner.isValid()) {
 					CEntity* targeted = targetowner;
 					TCompTransform * targettrans = targeted->get<TCompTransform>();

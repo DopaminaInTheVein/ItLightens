@@ -23,7 +23,7 @@ using namespace physx;
 
 class CMesh;
 class CEntity;
-class CHandle;
+class ClHandle;
 
 /*class PxAllocatorCallback
 {
@@ -424,7 +424,7 @@ namespace PhysxConversion {
 
 	PxTransform		ToPxTransform(const VEC3& pos, const CQuaternion& rot);
 
-	CHandle			GetEntityHandle(const PxActor& a);
+	ClHandle			GetEntityHandle(const PxActor& a);
 }
 
 #endif

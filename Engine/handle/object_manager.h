@@ -30,13 +30,13 @@ class CObjectManager : public CHandleManager
 		*dst = std::move(*src);
 	}
 
-	bool load(CHandle h, MKeyValue& atts) {
+	bool load(ClHandle h, MKeyValue& atts) {
 		TObj* o = getAddrFromHandle(h);
 		assert(o);
 		return o->load(atts);
 	}
 
-	bool save(CHandle h, std::ofstream& os, MKeyValue& atts) {
+	bool save(ClHandle h, std::ofstream& os, MKeyValue& atts) {
 		TObj* o = getAddrFromHandle(h);
 		assert(o);
 		return o->save(os, atts);
@@ -60,17 +60,17 @@ public:
 	}
 
 	// --------------------------------------------
-	CHandle getHandleFromObjAddr(const TObj* obj_addr) {
+	ClHandle getHandleFromObjAddr(const TObj* obj_addr) {
 		auto internal_index = obj_addr - objs;
 		if (internal_index >= num_objs_used || internal_index < 0)
-			return CHandle();
+			return ClHandle();
 		auto external_index = internal_to_external[internal_index];
 		auto ed = external_to_internal + external_index;
-		return CHandle(type, external_index, ed->current_age);
+		return ClHandle(type, external_index, ed->current_age);
 	}
 
 	// --------------------------------------------
-	TObj* getAddrFromHandle(CHandle h) {
+	TObj* getAddrFromHandle(ClHandle h) {
 		if (!h.getType())
 			return nullptr;
 
@@ -80,7 +80,7 @@ public:
 				"a class of type %s"
 				, CHandleManager::getByType(h.getType())->getName()
 				, getName()
-			);
+				);
 			return nullptr;
 		}
 
@@ -101,7 +101,7 @@ public:
 		auto o = objs;
 		for (size_t i = 0; i < num_objs_used; ++i, ++o) {
 			PROFILE_FUNCTION("object");
-			if (o->getUpdateInfoBase(CHandle(o).getOwner())) o->update(dt);
+			if (o->getUpdateInfoBase(ClHandle(o).getOwner())) o->update(dt);
 		}
 	}
 
@@ -110,7 +110,7 @@ public:
 		auto o = objs;
 		for (size_t i = 0; i < num_objs_used; ++i, ++o) {
 			PROFILE_FUNCTION("object");
-			if (o->getUpdateInfoBase(CHandle(o).getOwner())) o->fixedUpdate(dt);
+			if (o->getUpdateInfoBase(ClHandle(o).getOwner())) o->fixedUpdate(dt);
 		}
 	}
 
@@ -133,7 +133,7 @@ public:
 	}
 
 	// -------------------------
-	void renderInMenu(CHandle h) override {
+	void renderInMenu(ClHandle h) override {
 		auto obj = getAddrFromHandle(h);
 		if (!obj)
 			return;

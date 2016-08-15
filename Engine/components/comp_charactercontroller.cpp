@@ -37,7 +37,7 @@ void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 	m_affectGravity = true;
 	m_gravitySpeed = -10.0f;
 	m_maxSpeed = 7.0f;
-	CEntity *e = CHandle(this).getOwner();
+	CEntity *e = ClHandle(this).getOwner();
 	if (e) {	//update position from CC to match the render transform
 		TCompName  *nameComp = e->get<TCompName>();
 		if (nameComp)
@@ -48,7 +48,7 @@ void TCompCharacterController::onCreate(const TMsgEntityCreated &)
 		m_pActor->setPosition(p);
 
 		//save parent handle
-		m_pActor->getActor()->userData = (void*)CHandle(this).getOwner().asUnsigned();
+		m_pActor->getActor()->userData = (void*)ClHandle(this).getOwner().asUnsigned();
 
 		//default flags for character controllers
 		m_filter = DEFAULT_DATA_CC;
@@ -78,7 +78,7 @@ void TCompCharacterController::renderInMenu()
 
 VEC3 TCompCharacterController::GetCameraPointFocus() const
 {
-	CEntity *e = CHandle(this).getOwner();
+	CEntity *e = ClHandle(this).getOwner();
 	TCompTransform *t = e->get<TCompTransform>();
 	return VEC3(0, m_height, 0) + (-t->getLeft()*m_radius);
 }
@@ -246,7 +246,7 @@ void TCompCharacterController::UpdateMeshTransform()
 	PROFILE_FUNCTION("update: transform");
 	PxExtendedVec3 curr_pos = m_pActor->getFootPosition();
 	//PxVec3 up_v = pActor->getUpDirection();	//get rotation
-	CEntity *e = CHandle(this).getOwner();
+	CEntity *e = ClHandle(this).getOwner();
 	if (!e) return;
 	TCompTransform *tmx = e->get<TCompTransform>();
 	tmx->setPosition(PxExVec3ToVec3(curr_pos));
@@ -263,7 +263,7 @@ void TCompCharacterController::UpdateMeshTransform()
 void TCompCharacterController::UpdateTags()
 {
 	//PROFILE_FUNCTION("update tags");
-	CHandle h = CHandle(this).getOwner();
+	ClHandle h = ClHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("player")) { //player
 			m_filter.word0 |= ItLightensFilter::ePLAYER_BASE;

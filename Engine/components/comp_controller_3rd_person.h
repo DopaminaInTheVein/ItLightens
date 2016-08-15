@@ -38,7 +38,7 @@ class TCompController3rdPerson : public TCompBase {
 	VEC3		offset;
 
 public:
-	CHandle		target;
+	ClHandle		target;
 
 	TCompController3rdPerson()
 		: yaw(deg2rad(0.f))
@@ -78,7 +78,7 @@ public:
 
 	void onCreate(const TMsgEntityCreated& msg) {
 		CApp& app = CApp::get();
-		CEntity* e_owner = CHandle(this).getOwner();
+		CEntity* e_owner = ClHandle(this).getOwner();
 
 		//init aspect/ratio from screen
 		TCompCameraMain *camera = e_owner->get<TCompCameraMain>();
@@ -153,11 +153,11 @@ public:
 		auto target_loc = target_tmx->getPosition();
 		VEC3 delta = getVectorFromYawPitch(yaw, pitch);
 		auto origin = target_loc - delta * distance_to_target;
-		CEntity* e_owner = CHandle(this).getOwner();
+		CEntity* e_owner = ClHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
 
 		TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
-		CHandle targetowner = obtarged->target;
+		ClHandle targetowner = obtarged->target;
 		CEntity* targeted = targetowner;
 		//TCompLife * targetlife = targeted->get<TCompLife>();
 		TCompTransform * targettrans = targeted->get<TCompTransform>();
@@ -173,7 +173,7 @@ public:
 
 	void unlockedCameraController() {
 #ifndef NDEBUG
-		CEntity* e_owner = CHandle(this).getOwner();
+		CEntity* e_owner = ClHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
 		VEC3 origin = my_tmx->getPosition();
 		float dt = getDeltaTime(true);
@@ -192,7 +192,7 @@ public:
 			if (controller->IsCameraDownPressing())
 				origin.y -= dt * speed_camera_unlocked;
 			if (controller->isTeleportComboButtonPressed()) {
-				CHandle player = tags_manager.getFirstHavingTag("player");
+				ClHandle player = tags_manager.getFirstHavingTag("player");
 				if (player.isValid()) {
 					GET_COMP(cc, player, TCompCharacterController);
 					if (cc) cc->teleport(my_tmx->getPosition() + my_tmx->getFront() * 2);

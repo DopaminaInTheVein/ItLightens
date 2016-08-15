@@ -5,58 +5,58 @@
 
 #include <fstream>
 // ------------------------------------
-bool CHandle::isValid() const {
+bool ClHandle::isValid() const {
 	auto hm = CHandleManager::getByType(type);
 	return hm && hm->isValid(*this);
 }
 
-void CHandle::destroy() {
+void ClHandle::destroy() {
 	auto hm = CHandleManager::getByType(type);
 	if (hm)
 		hm->destroyHandle(*this);
 }
 
-bool CHandle::load(MKeyValue& atts) {
+bool ClHandle::load(MKeyValue& atts) {
 	auto hm = CHandleManager::getByType(type);
 	if (hm)
 		return hm->load(*this, atts);
 	return false;
 }
 
-bool CHandle::save(std::ofstream& os, MKeyValue& atts) {
+bool ClHandle::save(std::ofstream& os, MKeyValue& atts) {
 	auto hm = CHandleManager::getByType(type);
 	if (hm)	return hm->save(*this, os, atts);
 	return false;
 }
 
-void CHandle::renderInMenu() {
+void ClHandle::renderInMenu() {
 	auto hm = CHandleManager::getByType(type);
 	if (hm)
 		hm->renderInMenu(*this);
 }
 
 // ------------------------------------
-void CHandle::setOwner(CHandle new_owner) {
+void ClHandle::setOwner(ClHandle new_owner) {
 	auto hm = CHandleManager::getByType(type);
 	if (hm)
 		hm->setOwner(*this, new_owner);
 }
 
-CHandle CHandle::getOwner() const {
+ClHandle ClHandle::getOwner() const {
 	auto hm = CHandleManager::getByType(type);
 	if (hm)
 		return hm->getOwner(*this);
-	return CHandle();
+	return ClHandle();
 }
 
-bool CHandle::hasTag(std::string tag)
+bool ClHandle::hasTag(std::string tag)
 {
 	CEntity* e = *this;
 	if (e) {
 		return e->hasTag(tag);
 	}
 	else {
-		CHandle h = this->getOwner();
+		ClHandle h = this->getOwner();
 		if (h.isValid()) {
 			e = h;
 			if (e) {

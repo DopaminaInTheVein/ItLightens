@@ -71,7 +71,7 @@ float random(float vmin, float vmax) {
 	return vmin + urandom() * (vmax - vmin);
 }
 
-bool isInRoom(CHandle h) {
+bool isInRoom(ClHandle h) {
 	int pjSala = SBB::readSala();
 	if (pjSala == -1) return true;
 	CEntity * e = h;

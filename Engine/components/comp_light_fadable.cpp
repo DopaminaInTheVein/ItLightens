@@ -18,12 +18,12 @@ void TCompLightFadable::update(float dt) {
 	if (ttl >= 0) {
 		// ttl only defined by player evolve/devolve
 		//follow player
-		CHandle t = tags_manager.getFirstHavingTag("player");
+		ClHandle t = tags_manager.getFirstHavingTag("player");
 		CEntity * target_e = t;
 		TCompTransform * pt = target_e->get<TCompTransform>();
 		VEC3 ppos = pt->getPosition();
 		ppos.y += 1.0f;
-		CEntity * le = CHandle(this).getOwner();
+		CEntity * le = ClHandle(this).getOwner();
 		TCompTransform * lt = le->get<TCompTransform>();
 		lt->setPosition(ppos);
 		ttl -= getDeltaTime();
@@ -35,7 +35,7 @@ void TCompLightFadable::update(float dt) {
 		}
 	}
 	else {
-		CHandle h = CHandle(this).getOwner();
+		ClHandle h = ClHandle(this).getOwner();
 		h.destroy();
 	}
 }
@@ -47,7 +47,7 @@ void TCompLightFadable::renderInMenu() {
 
 void TCompLightFadable::uploadShaderCtes() {
 	PROFILE_FUNCTION("fadable: uploadShader");
-	CEntity* e = CHandle(this).getOwner();
+	CEntity* e = ClHandle(this).getOwner();
 	TCompTransform* trans = e->get<TCompTransform>();
 	shader_ctes_lights.LightWorldPos = VEC4(trans->getPosition());
 	// LightViewProj not updated
@@ -59,7 +59,7 @@ void TCompLightFadable::uploadShaderCtes() {
 
 void TCompLightFadable::activate() {
 	PROFILE_FUNCTION("fadable: activate");
-	CEntity* e = CHandle(this).getOwner();
+	CEntity* e = ClHandle(this).getOwner();
 	assert(e);
 	TCompTransform* trans = e->get<TCompTransform>();
 	assert(trans);

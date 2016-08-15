@@ -51,10 +51,10 @@ protected:
 	btnode *findNode(string);
 
 	bool getPath(const VEC3& startPoint, const VEC3& endPoint);
-	CEntity* frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle);
+	CEntity* frontCollisionIA(const VEC3 & npcPos, ClHandle ownHandle);
 	CEntity* frontCollisionBOX(const TCompTransform * transform, CEntity *  molePursuingBoxi);
 	bool avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform);
-	bool needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, CEntity * molePursuingBoxi = nullptr);
+	bool needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, ClHandle myHandle, CEntity * molePursuingBoxi = nullptr);
 	virtual bool load_bt(MKeyValue& atts);
 	virtual bool save_bt(std::ofstream& os, MKeyValue& atts);
 

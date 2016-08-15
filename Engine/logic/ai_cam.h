@@ -33,8 +33,8 @@ class ai_cam : public aicontroller, public TCompBase {
 	std::string camera_light = "";
 	CObjectManager<ai_cam> * om = nullptr;
 
-	CHandle myHandle;
-	CHandle	myParent;
+	ClHandle myHandle;
+	ClHandle myParent;
 	CEntity	*myEntity = nullptr;
 	float max_idle_waiting = 5.0f;
 	float idle_wait;

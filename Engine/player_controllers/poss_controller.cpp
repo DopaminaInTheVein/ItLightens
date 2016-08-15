@@ -7,7 +7,7 @@
 #include "app_modules\logic_manager\logic_manager.h"
 #include "components\comp_charactercontroller.h"
 
-extern CHandle player;
+extern ClHandle player;
 
 PossController::PossController() {
 	speedRecover = 5.0f;
@@ -74,8 +74,8 @@ void PossController::onSetEnable(bool enabled) {
 	player_curr_speed = 0;
 
 	// Componentes y entidades para asignar Controlador y cámara
-	CHandle camera3 = tags_manager.getFirstHavingTag(getID("camera_main"));
-	CHandle hMe = CHandle(getMyEntity());
+	ClHandle camera3 = tags_manager.getFirstHavingTag(getID("camera_main"));
+	ClHandle hMe = ClHandle(getMyEntity());
 	CEntity *eMe = hMe;
 	CEntity* e_camera = camera3;
 
@@ -104,8 +104,8 @@ void PossController::onSetEnable(bool enabled) {
 		camera = camera3;
 	}
 	else {
-		CHandle hTarget = tags_manager.getFirstHavingTag(getID("raijin"));
-		//CHandle hTarget = player;
+		ClHandle hTarget = tags_manager.getFirstHavingTag(getID("raijin"));
+		//ClHandle hTarget = player;
 
 		CEntity * camera3 = tags_manager.getFirstHavingTag(getID("camera_main"));
 		TMsgSetTarget msgTarg;

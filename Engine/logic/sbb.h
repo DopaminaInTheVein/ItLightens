@@ -6,7 +6,7 @@
 using namespace std;
 
 class CNavmesh;
-class CHandle;
+class ClHandle;
 class bt_mole;
 class guard_alert;
 
@@ -18,9 +18,9 @@ private:
 	static map<string, bool > sbbBool;
 	static map<string, int > sbbInt;
 	static map<string, VEC3> sbbVEC3;
-	static map<string, CHandle> sbbHandle;
+	static map<string, ClHandle> sbbHandle;
 	static map<string, bt_mole*> sbbMole;
-	static map<string, vector<CHandle> > sbbHandlesVector;
+	static map<string, vector<ClHandle> > sbbHandlesVector;
 	static map<string, vector<VEC3> > sbbVEC3Vector;
 
 public:
@@ -49,14 +49,14 @@ public:
 	static void postVEC3(string, VEC3);
 	static VEC3 readVEC3(string);
 	// sbbHandle
-	static void postHandle(string, CHandle);
-	static CHandle readHandle(string);
+	static void postHandle(string, ClHandle);
+	static ClHandle readHandle(string);
 	// sbbAiMole
 	static void postMole(string, bt_mole*);
 	static bt_mole* readMole(string);
 	// sbbHandleVector
-	static void postHandlesVector(string, vector<CHandle>);
-	static vector<CHandle> readHandlesVector(string);
+	static void postHandlesVector(string, vector<ClHandle>);
+	static vector<ClHandle> readHandlesVector(string);
 	// sbbVEC3Vector
 	static void postVEC3Vector(string, vector<VEC3>);
 	static vector<VEC3> readVEC3Vector(string);

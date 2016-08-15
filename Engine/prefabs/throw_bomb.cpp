@@ -111,10 +111,10 @@ void CThrowBomb::Impacted() {
 
 void CThrowBomb::Explode()
 {
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnExplode, "throw_bomb", CHandle(this).getOwner());
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnExplode, "throw_bomb", ClHandle(this).getOwner());
 	SendMsg();
 	ChangeState("dead");
-	CHandle(this).getOwner().destroy();
+	ClHandle(this).getOwner().destroy();
 }
 
 void CThrowBomb::Dead()
@@ -129,7 +129,7 @@ void CThrowBomb::initThrow() {
 	rd->setGlobalPose(PxTransform(
 		PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
 		PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
-	));
+		));
 }
 
 void CThrowBomb::throwMovement() {

@@ -16,7 +16,7 @@ IK_DECL_SOLVER(grabPilaIK);
 IK_DECL_SOLVER(ungrabbed);
 IK_DECL_SOLVER(ungrabbedPila);
 
-void SkelControllerMole::grabObject(CHandle h)
+void SkelControllerMole::grabObject(ClHandle h)
 {
 	grabbed = h;
 	GET_COMP(box, h, TCompBox);
@@ -30,18 +30,18 @@ void SkelControllerMole::grabObject(CHandle h)
 		, pos_grab_dummy
 		, left_h_normal
 		, right_h_normal
-	);
+		);
 	enableIK(SK_LHAND, grabLeftIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 	enableIK(SK_RHAND, grabRightIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 }
-void SkelControllerMole::grabPila(CHandle h)
+void SkelControllerMole::grabPila(ClHandle h)
 {
 	grabbedPila = h;
 	enableIK(SK_RHAND, grabPilaIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 	GET_COMP(pila, grabbedPila, TCompPila);
 	if (pila) pila->Grab();
 }
-void SkelControllerMole::pushObject(CHandle h) {
+void SkelControllerMole::pushObject(ClHandle h) {
 	pushed = h;
 	GET_COMP(box, h, TCompBox);
 	GET_COMP(tMe, owner, TCompTransform);
@@ -54,7 +54,7 @@ void SkelControllerMole::pushObject(CHandle h) {
 		, pos_grab_dummy
 		, left_h_normal
 		, right_h_normal
-	);
+		);
 	enableIK(SK_LHAND, grabLeftIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 	enableIK(SK_RHAND, grabRightIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 }
@@ -77,17 +77,17 @@ void SkelControllerMole::ungrabPila()
 {
 	GET_COMP(pila, grabbedPila, TCompPila);
 	TMsgAttach msg;
-	msg.handle = CHandle();
+	msg.handle = ClHandle();
 	grabbedPila.sendMsg(msg);
 	pila->setFalling();
-	grabbedPila = CHandle();
+	grabbedPila = ClHandle();
 	//disableIK(SK_LHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
 	//(SK_RHAND, SK_MOLE_TIME_TO_UNGRAB, );
 }
 
 bool SkelControllerMole::getUpdateInfo()
 {
-	owner = CHandle(this).getOwner();
+	owner = ClHandle(this).getOwner();
 	if (!owner.isValid()) return false;
 	return true;
 }
@@ -286,7 +286,7 @@ VEC3 SkelControllerMole::getGrabFrontDir()
 	return front_h_dir;
 }
 
-CHandle SkelControllerMole::getGrabbed()
+ClHandle SkelControllerMole::getGrabbed()
 {
 	if (grabbed.isValid())
 		return grabbed;
@@ -294,7 +294,7 @@ CHandle SkelControllerMole::getGrabbed()
 		return pushed;
 }
 
-CHandle SkelControllerMole::getGrabbedPila()
+ClHandle SkelControllerMole::getGrabbedPila()
 {
 	return grabbedPila;
 }
@@ -321,7 +321,7 @@ IK_IMPL_SOLVER(grabRightIK, info, result) {
 IK_IMPL_SOLVER(ungrabbed, info, result) {
 	GET_COMP(skc, info.handle, SkelControllerMole);
 	TMsgAttach msg;
-	msg.handle = CHandle();
+	msg.handle = ClHandle();
 	skc->getGrabbed().sendMsg(msg);
 	skc->removeGrab();
 }
@@ -340,7 +340,7 @@ IK_IMPL_SOLVER(grabPilaIK, info, result) {
 IK_IMPL_SOLVER(ungrabbedPila, info, result) {
 	GET_COMP(skc, info.handle, SkelControllerMole);
 	TMsgAttach msg;
-	msg.handle = CHandle();
+	msg.handle = ClHandle();
 	skc->getGrabbedPila().sendMsg(msg);
 	skc->removePila();
 }

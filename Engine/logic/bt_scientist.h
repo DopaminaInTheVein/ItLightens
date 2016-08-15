@@ -3,7 +3,6 @@
 
 #include "bt_poss.h"
 #include "sbb.h"
-#include "ai_water.h"
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
 #include "components/entity.h"
@@ -74,8 +73,8 @@ class bt_scientist : public bt_poss, public TCompBase {
 	//general pointers
 	//--------------------------------------
 	CObjectManager<bt_scientist> * om = nullptr;
-	CHandle myHandle;
-	CHandle myParent;
+	ClHandle myHandle;
+	ClHandle myParent;
 	CEntity *myEntity = nullptr;
 
 	SkelControllerScientist * animController;
@@ -88,7 +87,7 @@ class bt_scientist : public bt_poss, public TCompBase {
 	float zmax = 0.0f;
 
 	CEntity* getMyEntity() {
-		CHandle me = CHandle(this);
+		ClHandle me = ClHandle(this);
 		return me.getOwner();
 	}
 

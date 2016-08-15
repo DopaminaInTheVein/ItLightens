@@ -72,7 +72,7 @@ void TCompFadingGlobe::update(float dt) {
 	}
 	else {
 		//textureIcon->destroy();
-		CHandle h = CHandle(this).getOwner();
+		ClHandle h = ClHandle(this).getOwner();
 		h.destroy();
 	}
 }

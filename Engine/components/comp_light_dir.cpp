@@ -42,11 +42,11 @@ void TCompLightDir::uploadShaderCtes(CEntity* e) {
 }
 
 void TCompLightDir::update(float dt) {
-	CHandle owner = CHandle(this).getOwner();
+	ClHandle owner = ClHandle(this).getOwner();
 	updateFromEntityTransform(owner);
 }
 
 void TCompLightDir::activate() {
 	activateWorldMatrix(getViewProjection().Invert());
-	uploadShaderCtes(CHandle(this).getOwner());
+	uploadShaderCtes(ClHandle(this).getOwner());
 }

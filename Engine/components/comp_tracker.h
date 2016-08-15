@@ -9,7 +9,7 @@
 #include "comp_transform.h"
 
 struct HandleTrack {
-	CHandle handle;
+	ClHandle handle;
 	float normalTime;
 	float speed;
 	float normalSpeed;

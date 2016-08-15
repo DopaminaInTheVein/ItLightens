@@ -9,15 +9,15 @@
 class CHandleManager {
 protected:
 
-	static const uint32_t max_total_objects_allowed = 1 << CHandle::num_bits_index;
+	static const uint32_t max_total_objects_allowed = 1 << ClHandle::num_bits_index;
 	static const uint32_t invalid_index = ~0;   // all ones
 
 	// Se accede por external_id via []
 	struct TExternalData {
 		uint32_t internal_index;
-		uint32_t current_age : CHandle::num_bits_age;
+		uint32_t current_age : ClHandle::num_bits_age;
 		uint32_t next_external_index;
-		CHandle  current_owner;
+		ClHandle  current_owner;
 		TExternalData()
 			: internal_index(0)
 			, current_age(0)
@@ -38,10 +38,10 @@ protected:
 
 	uint32_t        next_free_handle_ext_index;
 	uint32_t        last_free_handle_ext_index;
-	std::vector< CHandle > objs_to_destroy;
+	std::vector< ClHandle > objs_to_destroy;
 	// Shared by all managers
 	static uint32_t next_type_of_handle_manager;
-	static CHandleManager* all_managers[CHandle::max_types];
+	static CHandleManager* all_managers[ClHandle::max_types];
 	static std::map<std::string, CHandleManager*> all_manager_by_name;
 
 	const char*     name;
@@ -105,7 +105,7 @@ public:
 	}
 
 	// ---------------------------------------
-	bool isValid(CHandle h) const {
+	bool isValid(ClHandle h) const {
 		assert(h.getType() == type);
 		assert(h.getExternalIndex() < num_objs_capacity);
 		auto ed = external_to_internal + h.getExternalIndex();
@@ -118,8 +118,8 @@ public:
 	uint32_t capacity() const { return num_objs_capacity; }
 
 	// ---------------------------------------------
-	void    setOwner(CHandle who, CHandle new_owner);
-	CHandle getOwner(CHandle who);
+	void    setOwner(ClHandle who, ClHandle new_owner);
+	ClHandle getOwner(ClHandle who);
 
 	// ---------------------------------------------
 	virtual void createObj(uint32_t internal_idx) = 0;
@@ -132,13 +132,13 @@ public:
 	virtual void updateAll(float dt) { }
 	virtual void fixedUpdateAll(float dt) {}
 	virtual void initAll() {}
-	virtual bool load(CHandle h, MKeyValue& atts) { return true; }
-	virtual bool save(CHandle h, std::ofstream& os, MKeyValue& atts) { return false; }
-	virtual void renderInMenu(CHandle h) { }
+	virtual bool load(ClHandle h, MKeyValue& atts) { return true; }
+	virtual bool save(ClHandle h, std::ofstream& os, MKeyValue& atts) { return false; }
+	virtual void renderInMenu(ClHandle h) { }
 
 	// ---------------------------------------
-	CHandle createHandle();
-	void    destroyHandle(CHandle h);
+	ClHandle createHandle();
+	void    destroyHandle(ClHandle h);
 
 	void    dumpInternals() const;
 

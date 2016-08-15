@@ -12,7 +12,7 @@ class CEntitiesModule : public IAppModule {
 	bool reloading; // Only clean the reloadable entities
 	std::thread navmeshThread;
 public:
-	std::vector< CHandle > collisionables;
+	std::vector< ClHandle > collisionables;
 
 	struct ParsingInfo {
 		std::string filename;

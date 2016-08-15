@@ -26,7 +26,7 @@ void TCompAABB::render() const {
 #endif
 }
 
-void TCompAABB::updateFromSiblingsLocalAABBs(CHandle h_entity) {
+void TCompAABB::updateFromSiblingsLocalAABBs(ClHandle h_entity) {
 	if (!h_entity.isValid()) return;
 	// Time to update our AbsAABB based on the sibling components
 	CEntity* e = h_entity;
@@ -52,7 +52,7 @@ AABB getRotatedBy(AABB src, const MAT44 &model) {
 
 // ------------------------------------------------------
 void TCompAbsAABB::onCreate(const TMsgEntityCreated&) {
-	CHandle myHandle = CHandle(this).getOwner();
+	ClHandle myHandle = ClHandle(this).getOwner();
 	if (!myHandle.isValid()) return;
 	updateFromSiblingsLocalAABBs(myHandle);
 	CEntity* e_owner = myHandle;
@@ -64,7 +64,7 @@ void TCompAbsAABB::onCreate(const TMsgEntityCreated&) {
 // Updates AbsAABB from LocalAABB and CompTransform
 void TCompLocalAABB::updateAbs() {
 	PROFILE_FUNCTION("aabb: updatelocals");
-	CHandle myHandle = CHandle(this).getOwner();
+	ClHandle myHandle = ClHandle(this).getOwner();
 	if (!myHandle.isValid()) return;
 	CEntity *e = myHandle;
 	if (e) {
@@ -76,14 +76,14 @@ void TCompLocalAABB::updateAbs() {
 }
 
 void TCompLocalAABB::onCreate(const TMsgEntityCreated&) {
-	CHandle myHandle = CHandle(this).getOwner();
+	ClHandle myHandle = ClHandle(this).getOwner();
 	if (myHandle.isValid())	updateFromSiblingsLocalAABBs(myHandle);
 }
 
 void TCompLocalAABB::render() const {
 #ifndef NDEBUG
 	if (GameController->GetCullingRender()) {
-		CEntity *e = CHandle(this).getOwner();
+		CEntity *e = ClHandle(this).getOwner();
 		if (!e) return;
 		const TCompTransform *in_tmx = e->get< TCompTransform >();
 		if (!in_tmx) return;

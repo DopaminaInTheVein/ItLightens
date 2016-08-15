@@ -44,7 +44,7 @@ void CNavmeshManager::initNavmesh(std::string level_name)
 	CNavmesh nav;
 	nav.m_input.clearInput();
 	dbg(" GENERANDO NAVMESH INPUT...\n");
-	for (CHandle han : CEntityParser::getCollisionables()) {
+	for (ClHandle han : CEntityParser::getCollisionables()) {
 		CEntity * e = han;
 		dbg("Navmesh, collisionable: %s\n", e->getName());
 		if (e) {

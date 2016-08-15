@@ -4,7 +4,7 @@
 #include "utils/XMLParser.h"
 
 uint32_t CHandleManager::next_type_of_handle_manager = 1;
-CHandleManager* CHandleManager::all_managers[CHandle::max_types];
+CHandleManager* CHandleManager::all_managers[ClHandle::max_types];
 std::map<std::string, CHandleManager*> CHandleManager::all_manager_by_name;
 
 void CHandleManager::destroyAllPendingObjects() {
@@ -28,21 +28,21 @@ CHandleManager* CHandleManager::getByName(const char* name) {
 }
 
 // ---------------------------------------------
-void    CHandleManager::setOwner(CHandle who, CHandle new_owner) {
+void    CHandleManager::setOwner(ClHandle who, ClHandle new_owner) {
 	assert(who.isValid());
 	auto ed = external_to_internal + who.getExternalIndex();
 	ed->current_owner = new_owner;
 }
 
-CHandle CHandleManager::getOwner(CHandle who) {
+ClHandle CHandleManager::getOwner(ClHandle who) {
 	if (!who.isValid())
-		return CHandle();
+		return ClHandle();
 	auto ed = external_to_internal + who.getExternalIndex();
 	return ed->current_owner;
 }
 
 // ---------------------------------------
-CHandle CHandleManager::createHandle() {
+ClHandle CHandleManager::createHandle() {
 	assert(type != 0);
 	// Tengo que tener libres
 	assert(next_free_handle_ext_index != invalid_index);
@@ -74,13 +74,13 @@ CHandle CHandleManager::createHandle() {
 	ed->next_external_index = invalid_index;
 
 	// Borrar el antiguo handle que pudiese haber
-	ed->current_owner = CHandle();
+	ed->current_owner = ClHandle();
 
-	return CHandle(type, external_idx, ed->current_age);
+	return ClHandle(type, external_idx, ed->current_age);
 }
 
 // ---------------------------------------------
-void CHandleManager::destroyHandle(CHandle h) {
+void CHandleManager::destroyHandle(ClHandle h) {
 	// Confirmar que el handle es valido
 	if (!isValid(h))
 		return;
@@ -106,7 +106,7 @@ void CHandleManager::destroyPendingObjects() {
 		assert(num_objs_used > 0);
 
 		// Restore the previous current age
-		// to be able to recover the CHandle from
+		// to be able to recover the ClHandle from
 		// and object addr during the scope of the
 		// dtor. For example, the RenderStaticMesh
 		// uses it's own handle as id in the render

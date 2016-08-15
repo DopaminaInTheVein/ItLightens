@@ -5,10 +5,9 @@
 #include "player_controllers/player_controller_cientifico.h"
 #include "components/entity.h"
 
-
 bool SkelControllerScientist::getUpdateInfo()
 {
-	owner = CHandle(this).getOwner();
+	owner = ClHandle(this).getOwner();
 	if (!owner.isValid()) return false;
 	return true;
 }
@@ -41,7 +40,7 @@ void SkelControllerScientist::myUpdate()
 		//dbg("Player Speed, Last: %f, %f\n", speed.LengthSquared(), lastSpeed.LengthSquared());
 
 		//if ( !isNormal(speed) || speed.LengthSquared() <= 0.0001f) {
-		//	
+		//
 		//}
 	}
 

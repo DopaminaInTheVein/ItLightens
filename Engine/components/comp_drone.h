@@ -34,7 +34,7 @@ struct TCompDrone : public TTrigger {
 	void onRepair(const TMsgRepair &);
 	void CanRechargeDrone(bool new_range);
 	void CanNotRechargeDrone(bool new_range);
-	void CanRepairDrone(CHandle sci, bool new_range);
+	void CanRepairDrone(ClHandle sci, bool new_range);
 
 	void onTriggerInside(const TMsgTriggerIn& msg) {} //will do nothing, particles effect, ui message or something
 	void onTriggerEnter(const TMsgTriggerIn& msg);

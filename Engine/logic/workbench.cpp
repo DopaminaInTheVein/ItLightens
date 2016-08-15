@@ -4,7 +4,7 @@
 #include "logic/sbb.h"
 
 void workbench::onCreate(const TMsgEntityCreated&) {
-	GET_COMP(transform, CHandle(this).getOwner(), TCompTransform);
+	GET_COMP(transform, ClHandle(this).getOwner(), TCompTransform);
 	SBB::addVEC3ToVector("wb_pos", transform->getPosition());
 	dbg("Hello workbench\n");
 }

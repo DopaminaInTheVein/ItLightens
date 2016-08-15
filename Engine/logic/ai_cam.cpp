@@ -100,7 +100,7 @@ bool ai_cam::playerInRange() {
 	PROFILE_FUNCTION("ai_cam: player in range");
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	// player detection
-	CHandle hPlayer = tags_manager.getFirstHavingTag("raijin");
+	ClHandle hPlayer = tags_manager.getFirstHavingTag("raijin");
 	CEntity * eplayer = hPlayer;
 	TCompTransform * tplayer = eplayer->get<TCompTransform>();
 	VEC3 myposinitial = me_transform->getPosition();
@@ -136,7 +136,7 @@ bool ai_cam::playerInRange() {
 	if (b) {
 		//raycast to look for down distance
 		PxRaycastBuffer hit;
-		CHandle hanHitted;
+		ClHandle hanHitted;
 		VEC3 playerPos = minplayerPos;
 		VEC3 playerPosUp = maxplayerPos;
 		playerPosUp.y -= 0.1;
@@ -278,7 +278,7 @@ void ai_cam::AimPlayer()
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	if (!myEntity) return;
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	CHandle hPlayer = tags_manager.getFirstHavingTag("raijin");
+	ClHandle hPlayer = tags_manager.getFirstHavingTag("raijin");
 	CEntity * eplayer = hPlayer;
 	TCompTransform * tplayer = eplayer->get<TCompTransform>();
 
@@ -300,7 +300,7 @@ void ai_cam::AimPlayer()
 	if (playerInRange()) {
 		TMsgNoise msg;
 		msg.source = tplayer->getPosition();
-		for (CHandle guardHandle : tags_manager.getHandlesByTag(getID("AI_guard"))) {
+		for (ClHandle guardHandle : tags_manager.getHandlesByTag(getID("AI_guard"))) {
 			CEntity * ePoss = guardHandle;
 			ePoss->sendMsg(msg);
 		}

@@ -29,13 +29,13 @@ void TCompRoomSwitch::mUpdate(float dt)
 
 void TCompRoomSwitch::onTriggerExit(const TMsgTriggerOut & msg)
 {
-	CHandle h_out = msg.other;
+	ClHandle h_out = msg.other;
 	if (!h_out.hasTag("player")) { return; }
 	CEntity * pe = h_out;
 	TCompRoom * room = pe->get<TCompRoom>();
 	TCompTransform * pt = pe->get<TCompTransform>();
 
-	CHandle me_h = CHandle(this).getOwner();
+	ClHandle me_h = ClHandle(this).getOwner();
 	CEntity * me_e = me_h;
 	TCompTransform * t = me_e->get<TCompTransform>();
 	if (t->isInFront(pt->getPosition())) {

@@ -8,9 +8,9 @@ struct TCompWire : public TCompBase {
 	float half_lenght;
 	VEC3 direction;
 	VEC3 org;
-	CHandle player;
+	ClHandle player;
 	bool send = false;
-	
+
 	bool load(MKeyValue& atts);
 	void update(float dt);
 	void onCreate(const TMsgEntityCreated& msg);

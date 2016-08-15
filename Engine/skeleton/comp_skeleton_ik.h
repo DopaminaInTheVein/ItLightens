@@ -16,7 +16,7 @@ struct TCompSkeletonIK : public TCompBase {
 		float time_max;
 		bool enabled;
 
-		CHandle h_solver;
+		ClHandle h_solver;
 		IK::bone_solver f_solver;
 		IK::bone_solver f_ender;
 	};

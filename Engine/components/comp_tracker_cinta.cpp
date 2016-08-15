@@ -47,7 +47,7 @@ void TCompTrackerCinta::setFollower(const TMsgFollow &msg) {
   //}
   //dbg("---------- /Tracker -----------------------------------\n");
 
-  CHandle follower = msg.follower;
+  ClHandle follower = msg.follower;
   if (follower.isValid()) {
 	HandleTrack ht;
 	ht.handle = follower;

@@ -40,7 +40,7 @@ bool elevator::save(std::ofstream& os, MKeyValue& atts)
 
 void elevator::onCreate(const TMsgEntityCreated&)
 {
-	CHandle parent = CHandle(this).getOwner();
+	ClHandle parent = ClHandle(this).getOwner();
 	CEntity* eMe = parent;
 	assert(eMe);
 	TCompTransform * transform = eMe->get<TCompTransform>();
@@ -68,7 +68,7 @@ void elevator::onCreate(const TMsgEntityCreated&)
 
 void elevator::update(float elapsed)
 {
-	if (!isInRoom(CHandle(this).getOwner()))return;
+	if (!isInRoom(ClHandle(this).getOwner()))return;
 	updateMove();
 	notifyNewState();
 	Debug->DrawLine(transform->getPosition(), targetDown);
@@ -113,7 +113,7 @@ void elevator::updateMove()
 	if (simpleDist(target, transform->getPosition()) < epsilonTarget) {
 		state = targetState;
 		lastSpeed = 0.0f;
-		CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+		ClHandle player = tags_manager.getFirstHavingTag(getID("player"));
 		if (player.isValid()) {
 			CEntity * ePlayer = player;
 			TMsgSetControllable msg;

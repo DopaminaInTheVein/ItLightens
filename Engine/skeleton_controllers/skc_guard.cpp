@@ -3,14 +3,14 @@
 
 bool SkelControllerGuard::getUpdateInfo()
 {
-	owner = CHandle(this).getOwner();
+	owner = ClHandle(this).getOwner();
 	if (!owner.isValid()) return false;
 	return true;
 }
 
 void SkelControllerGuard::myUpdate()
 {
-	if (currentState == prevState) return;	
+	if (currentState == prevState) return;
 
 	// the guard only walks
 	if (currentState == "run") currentState = "walk";

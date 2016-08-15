@@ -39,7 +39,7 @@ void CMagneticBomb::UpdatePosition() {
 
 void CMagneticBomb::Explode()
 {
-	myHandle = CHandle(this);
+	myHandle = ClHandle(this);
 	myParent = myHandle.getOwner();
 	dbg("MAGNETIC BOMB -> I am going to explode\n");
 	if (myHandle.isValid() && myParent.isValid()) {

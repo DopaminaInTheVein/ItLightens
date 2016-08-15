@@ -9,7 +9,7 @@ bool TCompVideo::load(MKeyValue & atts)
 
 void TCompVideo::update(float dt) {
 	if (file == "") { return; }
-	BSTR * status;
+	BSTR * status = new BSTR;
 	m_spWMPPlayer->get_status(status);
 }
 
@@ -20,9 +20,9 @@ void TCompVideo::init() {
 	HRESULT  hr;
 
 	HWND hwnd = CApp::get().getHWnd();
-	LPRECT rcClient;
-	GetClientRect(hwnd, rcClient);
-	m_wndView.Create(hwnd, rcClient, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+	LPRECT * rcClient = new LPRECT;
+	GetClientRect(hwnd, *rcClient);
+	m_wndView.Create(hwnd, *rcClient, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
 
 	hr = m_wndView.QueryHost(&spHost);
 

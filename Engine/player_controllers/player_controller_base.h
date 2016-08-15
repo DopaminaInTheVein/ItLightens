@@ -32,7 +32,7 @@ protected:
 	static std::map<int, std::string> out;
 
 	// Controller input class
-	CHandle camera;
+	ClHandle camera;
 
 	float dt;
 
@@ -51,8 +51,8 @@ protected:
 	float jspeed = 0.0f;
 
 	//CObjectManager<CPlayerBase> * om = nullptr;
-	CHandle myHandle;
-	CHandle myParent;
+	ClHandle myHandle;
+	ClHandle myParent;
 	CEntity *myEntity = nullptr;
 	TCompTransform *transform;
 

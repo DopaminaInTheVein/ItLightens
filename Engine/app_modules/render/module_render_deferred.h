@@ -30,8 +30,8 @@ class CRenderDeferredModule : public IAppModule {
 
 	int xres, yres;
 
-	CHandle                 h_camera;	
-	
+	ClHandle                 h_camera;
+
 	const CRenderTechnique* acc_light_points;
 	const CRenderTechnique* acc_light_directionals;
 	const CRenderTechnique* blur_tech;
@@ -53,7 +53,7 @@ class CRenderDeferredModule : public IAppModule {
 	void addDirectionalLights();
 	void addDirectionalLightsShadows();
 	void addAmbientPass();
-  	void generateShadowMaps();
+	void generateShadowMaps();
 
 	void FinalRender();
 

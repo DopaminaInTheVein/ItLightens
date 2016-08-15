@@ -17,7 +17,7 @@ bool TCompRoom::load(MKeyValue& atts) {
 
 void TCompRoom::init()
 {
-	if (CHandle(this).getOwner().hasTag("player")) {
+	if (ClHandle(this).getOwner().hasTag("player")) {
 		SBB::postSala(name[0]);
 	}
 }

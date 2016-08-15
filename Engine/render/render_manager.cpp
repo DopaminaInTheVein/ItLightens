@@ -49,12 +49,12 @@ bool CRenderManager::sortByTechMatMesh(
 	return k1.material < k2.material;
 }
 
-void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
-	CHandle ow = owner.getOwner();
+void CRenderManager::registerToRender(const CStaticMesh* mesh, ClHandle owner) {
+	ClHandle ow = owner.getOwner();
 	CEntity* e = ow;
 	assert(e);
-	CHandle h_transform = e->get<TCompTransform>();
-	CHandle h_aabb = e->get<TCompAbsAABB>();
+	ClHandle h_transform = e->get<TCompTransform>();
+	ClHandle h_aabb = e->get<TCompAbsAABB>();
 	TCompRoom * comproom = e->get<TCompRoom>();
 	std::vector<int> oroom;
 	oroom.push_back(-1);
@@ -97,7 +97,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 	in_order = false;
 }
 
-void CRenderManager::unregisterFromRender(CHandle owner) {
+void CRenderManager::unregisterFromRender(ClHandle owner) {
 	// Pasarse por todas las keys y borrar aquellas q tengan el owner
 	auto it = all_keys.begin();
 	while (it != all_keys.end()) {
@@ -109,7 +109,7 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
 	}
 }
 
-void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory category) {
+void CRenderManager::renderAll(ClHandle h_camera, CRenderTechnique::eCategory category) {
 	std::string name;
 	PROFILE_FUNCTION("OBJS");
 	if (category == CRenderTechnique::DBG_OBJS) {
@@ -165,7 +165,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 		all_keys.begin()
 		, all_keys.end()
 		, category
-	);
+		);
 	auto d0 = std::distance(all_keys.begin(), r.first);
 	auto d1 = std::distance(all_keys.begin(), r.second);
 	TKey* it = &all_keys[0] + d0;
@@ -273,7 +273,7 @@ void CRenderManager::renderUICulling() {
 }
 
 // ------------------------------------------
-void CRenderManager::renderShadowCasters(CHandle h_light) {
+void CRenderManager::renderShadowCasters(ClHandle h_light) {
 	CTraceScoped scope("Shadow Casters");
 	PROFILE_FUNCTION("SHADOW CASTERS OBJ");
 	auto it = all_shadow_keys.begin();
@@ -347,7 +347,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 // ------------------------------------------
 
 //render shadowcaster with skinning tech
-void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
+void CRenderManager::renderShadowCastersSkin(ClHandle h_light) {
 	PROFILE_FUNCTION("SHADOW CASTER SKIN");
 	auto it = all_shadow_skinning_keys.begin();
 	int pj_room = SBB::readSala();

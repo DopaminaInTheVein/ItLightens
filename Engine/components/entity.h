@@ -9,13 +9,13 @@
 
 // --------------------------------------------
 class CEntity : public TCompBase {
-	CHandle comps[CHandle::max_types];
+	ClHandle comps[ClHandle::max_types];
 	int id = -1;
 	bool permanent;
 	bool need_reload;
 public:
 
-	void add(CHandle h) {
+	void add(ClHandle h) {
 		// Lo que viene tiene que ser valido
 		assert(h.isValid());
 		// Lo que yo tenia no tenia que ser valido¿?¿?¿
@@ -23,25 +23,25 @@ public:
 		// Me lo quedo
 		comps[h.getType()] = h;
 		// Que el componente sepa que soy su owner
-		h.setOwner(CHandle(this));
+		h.setOwner(ClHandle(this));
 	}
 
 	template< typename TObj >
-	CHandle get() const {
+	ClHandle get() const {
 		auto hm = getHandleManager<TObj>();
 		return comps[hm->getType()];
 	}
 
 	void renderInMenu();
 
-	CHandle getByCompIndex(uint32_t idx) const {
+	ClHandle getByCompIndex(uint32_t idx) const {
 		return comps[idx];
 	}
 
 	template< typename TObj >
 	void del() {
 		get<TObj>().destroy();
-		// No hay necesidad de comps[ h.getType() ] = CHandle()
+		// No hay necesidad de comps[ h.getType() ] = ClHandle()
 		// pq el age se encarga de invalidar mi handle
 	}
 
@@ -54,7 +54,7 @@ public:
 			const TComponentMsgHandler& msg_handler = range.first->second;
 
 			// If this entity HAS that component, and it's valid
-			CHandle my_comp = comps[msg_handler.comp_type];
+			ClHandle my_comp = comps[msg_handler.comp_type];
 			if (my_comp.isValid()) {
 				// use the method object to call to the method
 				// which was registered to that msg in the subscribe macro
@@ -74,7 +74,7 @@ public:
 			const TComponentMsgHandler& msg_handler = range.first->second;
 
 			// If this entity HAS that component, and it's valid
-			CHandle my_comp = comps[msg_handler.comp_type];
+			ClHandle my_comp = comps[msg_handler.comp_type];
 			if (my_comp.isValid()) {
 				// use the method object to call to the method
 				// which was registered to that msg in the subscribe macro
@@ -101,11 +101,11 @@ public:
 	}
 
 	~CEntity() {
-		for (uint32_t i = 0; i < CHandle::max_types; ++i) {
+		for (uint32_t i = 0; i < ClHandle::max_types; ++i) {
 			if (comps[i].isValid())
 				comps[i].destroy();
 		}
-		tags_manager.removeAllTags(CHandle(this));
+		tags_manager.removeAllTags(ClHandle(this));
 	}
 };
 
