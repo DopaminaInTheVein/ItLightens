@@ -38,6 +38,12 @@ void CImGuiModule::update(float dt) {
 	ImGui::Begin("Debug UI", &menu, ImVec2(800, 512), -1.0f, window_flags);
 	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 
+	//TEST BORRAR
+	//ImGui::DragFloat("Ui Left", &(CCamera::cui_left), 1.f, -10.f, CCamera::cui_right - 0.05f);
+	//ImGui::DragFloat("Ui Right", &CCamera::cui_right, 1.f, CCamera::cui_left + 0.05f);
+	//ImGui::DragFloat("Ui Bottom", &CCamera::cui_bottom, 1.f, -10.f, CCamera::cui_top - 0.05f);
+	//ImGui::DragFloat("Ui Top", &CCamera::cui_top, 1.f, CCamera::cui_bottom + 0.05f);
+
 	//Engine Apps
 	//---------------------------------------
 	if (ImGui::BeginMenuBar())

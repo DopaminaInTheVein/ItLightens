@@ -1,6 +1,11 @@
 #include "mcv_platform.h"
 #include "camera.h"
 
+//float CCamera::cui_bottom = 0.f;
+//float CCamera::cui_top = 10.f;
+//float CCamera::cui_left = 0.f;
+//float CCamera::cui_right = 10.f;
+
 CCamera::CCamera()
 	: aspect_ratio(1.0f)
 	, is_ortho(false)
@@ -87,17 +92,17 @@ void CCamera::setOrtho(int xres, int yres, float new_znear, float new_zfar) {
 	znear = new_znear;
 	zfar = new_zfar;
 	setAspectRatio((float)xres / (float)yres);
-	//projection = MAT44::CreateOrthographicOffCenter(0, xres, 0, yres, znear, zfar);
-	//projection = MAT44::CreateOrthographicOffCenter(0, 10.f, 0, 10.f / aspect_ratio, znear, zfar);
 	float left = 0.f, bottom = 0.f;
 	float right = 10.f;
 	float top = 10.f;
+
 	if (aspect_ratio > 1) {
-		float offset_y = top * 0.5f / aspect_ratio;
-		bottom += offset_y;
+		float offset_y = 5 - (5 / aspect_ratio);
 		top -= offset_y;
+		bottom += offset_y;
 	}
 	projection = MAT44::CreateOrthographicOffCenter(left, right, bottom, top, znear, zfar);
+	//projection = MAT44::CreateOrthographicOffCenter(cui_left, cui_right, cui_bottom, cui_top, znear, zfar);
 	is_ortho = true;
 	updateViewProjection();
 }
