@@ -124,10 +124,13 @@ bool CApp::start() {
 
 	// Init modules
 	for (auto it : mod_init_order) {
+		CLog::appendFormat("Starting module %s...", it->getName());
 		if (!it->start()) {
-			dbg("Failed to init module %s\n", it->getName());
+			dbg("Failed to init module [%s]\n", it->getName());
+			CLog::appendFormat("ERROR!! Failed to init module %s\n", it->getName());
 			return false;
 		}
+		CLog::appendFormat("Module [%s] started successfully.", it->getName());
 	}
 
 	io->mouse.toggle();

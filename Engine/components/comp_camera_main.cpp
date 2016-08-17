@@ -125,6 +125,8 @@ void TCompCameraMain::update(float dt) {
 			float factor = 0.8f;
 
 			bool colision = false;
+			float collisionDistanceToCam = 0.0f;
+			float distanceToTarget = c->GetPositionDistance();
 			if (detect_colsions) {
 				player_controller * raijincontroller = target->get<player_controller>();
 				player_controller_mole * molecontroller = target->get<player_controller_mole>();
@@ -145,13 +147,17 @@ void TCompCameraMain::update(float dt) {
 					return;
 				}
 			}
-			colision = (colision ? checkColision(pos, smoothCurrent) : false);
+			if (colision) {
+				collisionDistanceToCam = checkColision(pos, smoothCurrent, distanceToTarget);
+				colision = collisionDistanceToCam > 0.0f;
+			}
 			if (!colision) {
 				this->smoothLookAt(transform->getPosition(), transform->getPosition() + transform->getFront(), getUpAux(), smoothCurrent);
 				last_pos_camera = transform->getPosition();
 			}
 			else {
-				VEC3 pos_cam = pos + (pos_target - pos)*factor;
+				//VEC3 pos_cam = pos + (pos_target - pos)*factor;
+				VEC3 pos_cam = pos + (pos_target - pos) * ((collisionDistanceToCam + cc->GetRadius() / 2) / distanceToTarget);
 				//pos_cam.y += cc->GetHeight();
 				this->smoothLookAt(pos_cam, pos_cam + transform->getFront(), getUpAux(), smoothCurrent);
 				last_pos_camera = transform->getPosition();
@@ -181,7 +187,7 @@ void TCompCameraMain::update(float dt) {
 	}
 }
 
-bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
+float TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent, const float distanceToTarget)
 {
 	CEntity *e_me = compBaseEntity;
 	TCompController3rdPerson *c = e_me->get<TCompController3rdPerson>();
@@ -214,6 +220,29 @@ bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
 	}
 	if (!collision) {
+		direction = VEC3(1, 0, -1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(-1, 0, 1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(1, 0, 1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(-1, 0, -1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (collision) {
+		return hitDistance;
+	}
+	else {
 		TCompCharacterController *cc = target->get<TCompCharacterController>();
 		if (!cc) return false;
 		TCompTransform *targett = target->get<TCompTransform>();
@@ -227,30 +256,14 @@ bool TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent)
 			direction = pos - pos_target;
 			direction.Normalize();
 			collision = g_PhysxManager->raycast(pos_target, direction, c->GetPositionDistance(), hit, fd);
+			if (collision) {
+				return distanceToTarget - hit.getAnyHit(0).distance;
+			}
+		}
+		else {
+			return hit.getAnyHit(0).distance;
 		}
 	}
 
-	/*
-	if (!collision) {
-		direction = VEC3(1, 0, 1);
-		direction.Normalize();
-		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
-	}
-	if (!collision) {
-		direction = VEC3(-1, 0, -1);
-		direction.Normalize();
-		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
-	}
-	if (!collision) {
-		direction = VEC3(-1, 0, 1);
-		direction.Normalize();
-		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
-	}
-	if (!collision) {
-		direction = VEC3(1, 0, -1);
-		direction.Normalize();
-		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
-	}*/
-
-	return collision;
+	return 0.0f;
 }

@@ -114,7 +114,7 @@ void CInputWrapper::ChangeMouseState(bool captured) {
 }
 
 // DEBUG TOOLS
-#ifndef NDEGUG
+#ifndef FINAL_BUILD
 bool CInputWrapper::isCameraReleaseButtonPressed() {
 	return io->keys['K'].becomesPressed();
 }

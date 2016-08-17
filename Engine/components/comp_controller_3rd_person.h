@@ -172,7 +172,7 @@ public:
 	VEC3 GetOffset() const { return offset; }
 
 	void unlockedCameraController() {
-#ifndef NDEBUG
+#ifndef FINAL_BUILD
 		CEntity* e_owner = CHandle(this).getOwner();
 		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
 		VEC3 origin = my_tmx->getPosition();

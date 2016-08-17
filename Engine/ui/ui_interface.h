@@ -20,7 +20,7 @@ class CUI {
 public:
 	void update() {
 		//Here goes all game UI info
-#ifndef NDEBUG
+#ifndef FINAL_BUILD
 		ImGui::Begin("UI", &open_main_ui, ImVec2(500, 350), -1.0f);
 
 		life_update();

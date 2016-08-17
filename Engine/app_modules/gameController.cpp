@@ -47,7 +47,7 @@ void CGameController::UpdateGeneralInputs() {
 			CApp::get().restartLevelNotify();
 		}
 		*/
-#ifndef NDEBUG
+#ifndef FINAL_BUILD
 		//toggle console log
 		if (controller->isToogleConsoleLoguttonPressed()) {
 			Debug->setOpen(!*Debug->getStatus());
@@ -67,12 +67,11 @@ void CGameController::UpdateGeneralInputs() {
 		//if (io->keys['P'].becomesPressed()) {
 		//	TogglePauseState();
 		//}
-
+#endif
 		//pause/unpause game (intro mode)
 		if (controller->isPauseGameButtonPressed()) {
 			TogglePauseIntroState();
 		}
-#endif
 	}
 }
 
