@@ -11,7 +11,7 @@ enum ZConfig {
   , ZCFG_LIGHTS_DIR_CONFIG
 	, ZCFG_OUTLINE
 	, ZCFG_MASK_NUMBER
-	//, ZCFG_SHADOWS
+	, ZCFG_MASK_NUMBER_NO_Z
 	, ZCFG_COUNT
 };
 void activateZ(enum ZConfig, UINT num = 0);

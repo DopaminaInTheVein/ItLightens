@@ -8,7 +8,7 @@
 bool TCompLightDirShadows::load(MKeyValue& atts) {
   TCompLightDir::load(atts);
 
-  int res = atts.getInt("resolution", 256);
+  res = atts.getInt("resolution", 256);
   rt_shadows = new CRenderToTexture();
   // I don't need a color buffer, just the ZBuffer
   bool is_ok = rt_shadows->createRT("ShadowMap", Render.getXRes(), Render.getYRes(), DXGI_FORMAT_UNKNOWN, DXGI_FORMAT_R32_TYPELESS);

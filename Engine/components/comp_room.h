@@ -6,7 +6,9 @@
 #include <sstream>
 
 struct TCompRoom : public TCompBase {
+public:
 	std::vector<int> name;
+	char rooms_raw[32];
 
 	void init();
 

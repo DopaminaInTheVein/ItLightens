@@ -1,0 +1,4 @@
+<tech>
+  <vs fx="blur" main="VS" decl="positions_uv" />
+  <ps fx="blur" main="PSBlurWithDepth" />
+</tech>	

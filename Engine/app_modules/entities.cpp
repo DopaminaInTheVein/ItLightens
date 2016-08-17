@@ -427,6 +427,8 @@ void CEntitiesModule::initEntities() {
 	getHandleManager<TCompPila>()->onAll(&TCompPila::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
+	getHandleManager<CParticleSystem>()->onAll(&CParticleSystem::init);
+
 	//fx
 	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
 

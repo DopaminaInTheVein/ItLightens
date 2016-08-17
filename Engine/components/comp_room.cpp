@@ -6,6 +6,7 @@ bool TCompRoom::load(MKeyValue& atts) {
 	std::string to_parse = atts.getString("name", "-1");
 	std::stringstream ss(to_parse);
 	std::string number;
+	strcpy(rooms_raw, to_parse.c_str());
 	while (std::getline(ss, number, '/')) {
 		int value = std::stoi(number);
 		if (std::find(name.begin(), name.end(), value) == name.end()) {

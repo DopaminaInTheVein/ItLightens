@@ -7,6 +7,8 @@
 #include "constants/ctes_data.h"
 #include "constants/ctes_blur.h"
 
+#define PI 3.1415926
+
 Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
 Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
 Texture2D txSpecular  : USE_SHADER_REG(TEXTURE_SLOT_SPECULAR);

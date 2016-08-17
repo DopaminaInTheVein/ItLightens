@@ -6,6 +6,8 @@
 #include "render\render_instanced.h"
 #include "ParticlesEmitter.h"
 
+#define DEFAULT_PARTICLES_FILE "test1"
+
 using namespace physx;
 
 class CalCoreSkeleton;
@@ -34,7 +36,7 @@ class CParticleSystem : public TCompBase {
 
   const CMesh *						m_pParticle_mesh;
 
-  bool StepLifeTimeParticle(unsigned idx, float max_time, float dt);
+  bool StepLifeTimeParticle(unsigned idx, float dt);
   //void SetParticleInitialValues(unsigned idx);
 
   
@@ -48,7 +50,8 @@ class CParticleSystem : public TCompBase {
   bool random_value_color	 = false;
   //------------------------------------------------------------------
 
-  std::vector<int> list_bones;
+  std::vector<int>	list_bones;
+  std::vector<VEC3>	offset_bones;
 
   void UpdateRandomsAttr();
   
@@ -60,6 +63,8 @@ public:
 
   void stop() {
     m_particles.clear();
+	m_RenderParticles.clear();
+	if(m_pParticleSystem) m_pParticleSystem->releaseParticles();
     PX_SAFE_RELEASE(m_pParticleSystem);
 	PX_SAFE_RELEASE(m_pIndexPool);
   }
@@ -68,7 +73,12 @@ public:
   void renderParticles();
   void init();
   bool CreateParticles(TParticleData& particles);
+
   void update(float elapsed);
+
+  void updateParticlesWithoutPhysx(float elapsed);
+
+  void updateParticlesPhysx(float elapsed);
   
   void SetBufferData();
   bool load(MKeyValue& atts);
@@ -85,6 +95,7 @@ public:
   //										Particles system editor
   //-----------------------------------------------------------------------------------------------------
   void renderInMenu();
+  void RenderMenuSystemParticles();
   void RenderMenuSkeletonParticles();
   void printListChilds(int bone, CalCoreSkeleton * skeleton, std::vector<int>& bones_activated, int & idx);
   void ShowListBones(CEntity* owner, std::vector<int>& bones_activated);

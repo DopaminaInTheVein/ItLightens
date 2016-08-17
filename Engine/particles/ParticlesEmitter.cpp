@@ -7,8 +7,50 @@
 #include "skeleton\comp_skeleton.h"
 #include "components\comp_transform.h"
 
+
+VEC3 CParticlesEmitter::GetPosBone(int num) {
+	CEntity *player = tags_manager.getFirstHavingTag("player");
+	assert(player);
+	TCompSkeleton *skel_player = player->get<TCompSkeleton>();
+	assert(skel_player);
+
+	//auto bone_test = skel_player->model->getSkeleton()->getBone(num);
+
+	//auto bone_test = skel_player->model->getSkeleton()->get
+
+	//auto bone_test = skel_player->model->getCoreModel()->getCoreSkeleton()->getCoreBone(num);
+	auto bone_test = skel_player->model->getSkeleton()->getBone(num);
+	// auto bone_test = skel_player->model->getSkeleton()->getBone(num);
+	if (!bone_test) {
+		return VEC3(0, 0, 0);
+	}
+	//auto traslacion_cal = bone_test->getTranslation();
+	auto traslacion_cal = bone_test->getTranslationAbsolute();
+	//auto traslacion_cal = bone_test->getTranslationBoneSpace();
+	auto rotation_cal = bone_test->getRotationAbsolute();
+	//auto rotation_cal = bone_test->getRotationBoneSpace();
+	//auto rotation_cal = bone_test->getRotation();
+	TCompTransform* transform = player->get<TCompTransform>();
+	VEC3 traslacion = VEC3(traslacion_cal.x, traslacion_cal.y, traslacion_cal.z);
+	//CQuaternion rotation = CQuaternion(rotation_cal.x, rotation_cal.y, rotation_cal.z, -rotation_cal.w);
+
+	//VEC3 tras = traslacion;
+	//rotate_vector_by_quaternion(tras, rotation, traslacion);
+	
+	//seems ok
+	//auto cardan = transform->getRotation();
+	//tras = traslacion;
+	//rotate_vector_by_quaternion(tras, cardan, traslacion);
+	//VEC3 position = traslacion + transform->getPosition();
+
+	//return pos;
+	//return traslacionEngine;
+	return traslacion;
+}
+
+
 VEC3 CParticlesEmitter::testBones(int num, std::string* name, VEC3* traslacion) {
-  CEntity *player = tags_manager.getFirstHavingTag("player");
+ /* CEntity *player = tags_manager.getFirstHavingTag("player");
   assert(player);
   TCompSkeleton *skel_player = player->get<TCompSkeleton>();
   assert(skel_player);
@@ -33,13 +75,16 @@ VEC3 CParticlesEmitter::testBones(int num, std::string* name, VEC3* traslacion) 
   //bone_test-
   TCompTransform* transform = player->get<TCompTransform>();
   *traslacion = VEC3(traslacion_cal.x, traslacion_cal.y, traslacion_cal.z);
-  VEC3 rotation = VEC3(rotation_cal.x, rotation_cal.y, rotation_cal.z);
-  
+  CQuaternion rotation = CQuaternion(rotation_cal.x, rotation_cal.y, rotation_cal.z, -rotation_cal.w);
+  VEC3 tras = *traslacion;
+  rotate_vector_by_quaternion(tras,rotation,*traslacion);
+
   VEC3 position = *traslacion + transform->getPosition();
   VEC3 cardan = transform->getRotation();
   
   //return traslacionEngine;
-  return position;
+  return position;*/
+	return VEC3(0,0,0);
 }
 
 PxVec3 CParticlesEmitter::GetInitialPosByShape(const VEC3& front, const VEC3& up)

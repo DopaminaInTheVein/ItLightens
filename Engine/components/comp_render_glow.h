@@ -15,8 +15,8 @@ struct TCompRenderGlow : public TCompBase {
   int   nactive_steps;
   bool enabled;
   bool load(MKeyValue& atts);
+  CTexture * apply(CTexture * input, const CRenderTechnique * technique = nullptr);
   void renderInMenu();
-  CTexture* apply(CTexture* input);
 
 };
 
