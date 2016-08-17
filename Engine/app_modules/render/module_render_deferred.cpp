@@ -919,6 +919,7 @@ void CRenderDeferredModule::render() {
 
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 
+	renderUI();
 	CEntity* ec = h_camera;
 	TCompFadeScreen* e = ec->get<TCompFadeScreen>();
 	if (e) {
@@ -928,7 +929,6 @@ void CRenderDeferredModule::render() {
 		activateBlend(BLENDCFG_DEFAULT);
 	}
 
-	renderUI();
 
 	// Leave the 3D Camera active
 	activateRenderCamera3D();

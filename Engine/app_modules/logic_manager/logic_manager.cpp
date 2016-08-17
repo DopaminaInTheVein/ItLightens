@@ -359,6 +359,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadedLevel(%s);", params.c_str());
 		break;
 	}
+						  //GUI
+	case (OnClicked): {
+		sprintf(lua_code, "OnClicked(\"%s\");", params.c_str());
+		break;
+	}
 	default: {
 		sprintf(lua_code, "dbg('The event %s does not exist!');", evt);
 	}

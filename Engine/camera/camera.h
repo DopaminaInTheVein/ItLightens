@@ -25,6 +25,9 @@ class CCamera {
 	MAT44 view_projection;
 	void updateViewProjection();
 
+protected:
+	VEC3 min_ortho;
+	VEC3 max_ortho;
 public:
 
 	//For Test

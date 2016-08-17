@@ -130,4 +130,8 @@ void CHandle::sendMsgWithReply(TMsg& msg) {
 #define GETH_MY(type) ((CEntity*)(CHandle(this).getOwner()))->get<type>()
 #define GET_MY(var, type) type * var = ((CEntity*)(CHandle(this).getOwner()))->get<type>()
 #define GET_ECOMP(var, entity_ptr, type) type * var = entity_ptr ? entity_ptr->get<type>() : CHandle()
+#define GET_NAME(name) ((CEntity*)handle)->getName()
+#define MY_NAME ((CEntity*)(CHandle(this).getOwner()))->getName()
+#define MY_OWNER CHandle(this).getOwner()
+
 #endif

@@ -102,6 +102,9 @@ public:
 		OnRestartLevel,
 		OnLoadedLevel,
 		OnSavedLevel,
+
+		//GUI
+		OnClicked,
 	};
 
 	CLogicManagerModule();

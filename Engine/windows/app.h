@@ -20,8 +20,9 @@ public:
 	std::string file_options_json;
 	std::string file_initAttr_json;
 	bool max_screen;
-	int getXRes();
-	int getYRes();
+	// ask_window, pixels of the application, render otherwise
+	int getXRes(bool ask_window = false);
+	int getYRes(bool ask_window = false);
 	bool maxScreen();
 	bool windowedScreen();
 	bool createWindow(HINSTANCE new_hInstance, int nCmdShow);

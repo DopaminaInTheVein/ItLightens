@@ -6,6 +6,7 @@
 
 #include "app_modules/gameController.h"
 #include "app_modules/io/io.h"
+#include "app_modules/logic_manager/logic_manager.h"
 
 // load Xml
 bool TCompGuiButton::load(MKeyValue& atts)
@@ -26,8 +27,10 @@ bool TCompGuiButton::getUpdateInfo()
 	myTransform = GETH_MY(TCompTransform);
 	if (!myTransform) return false;
 
-	CHandle cursor = tags_manager.getFirstHavingTag("gui_cursor");
-	if (cursor.isValid()) cursorTransform = GETH_COMP(cursor, TCompTransform);
+	cursor = tags_manager.getFirstHavingTag("gui_cursor");
+	if (!cursor.isValid()) return false;
+
+	cursorTransform = GETH_COMP(cursor, TCompTransform);
 	if (!cursorTransform) return false;
 
 	return true;
@@ -42,8 +45,17 @@ void TCompGuiButton::update(float dt)
 	dbg("\n\nButton pos: %f, %f. Cursor pos: %f, %f. width: %f, height: %f\n%d\n\n\n\n", myPos.x, myPos.y, cursorPos.x, cursorPos.y, width, height, is_over_now);
 	if (is_over_now ^ cursor_over) {
 		//Send message
+		TMsgOverButton msg;
+		msg.button = CHandle(this).getOwner();
+		msg.is_over = is_over_now;
+		cursor.sendMsg(msg);
 	}
 	cursor_over = is_over_now;
+}
+
+void TCompGuiButton::onClick(const TMsgClicked&)
+{
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnClicked, MY_NAME, MY_OWNER);
 }
 
 void TCompGuiButton::renderInMenu()

@@ -12,6 +12,7 @@ class TCompGuiButton : public TCompBase {
 	bool cursor_over = false;
 
 	TCompTransform * myTransform;
+	CHandle cursor;
 	TCompTransform * cursorTransform;
 public:
 	// load Xml
@@ -21,6 +22,9 @@ public:
 	bool getUpdateInfo();
 	void update(float dt);
 	void renderInMenu();
+
+	//Messages
+	void onClick(const TMsgClicked&);
 };
 
 #endif

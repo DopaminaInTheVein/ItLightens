@@ -398,6 +398,13 @@ bool CEntitiesModule::start() {
 	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
 	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
 
+	//Fx
+	SUBSCRIBE(TCompFadeScreen, TMsgEntityCreated, onCreate);
+
+	//Gui
+	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
+	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
+
 	return true;
 }
 
@@ -426,9 +433,6 @@ void CEntitiesModule::initEntities() {
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
 	getHandleManager<TCompPila>()->onAll(&TCompPila::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
-
-	//fx
-	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
 
 	//Added to clean this file
 	getHandleManager<LogicHelperArrow>()->onAll(&LogicHelperArrow::init);
