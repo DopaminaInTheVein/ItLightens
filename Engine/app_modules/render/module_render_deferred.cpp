@@ -1013,8 +1013,8 @@ void CRenderDeferredModule::renderUI() {
 	CEntity* e_ui_camera = h_ui_camera;
 
 	TCompCamera* ortho = e_ui_camera->get<TCompCamera>();
-	ortho->setOrtho(xres, yres, ortho->getZNear(), ortho->getZFar());
-	//ortho->setOrtho(10.f, 10.f * yres / xres, ortho->getZNear(), ortho->getZFar());
+	//ortho->setOrtho(xres, yres, ortho->getZNear(), ortho->getZFar());
+	//ortho->setOrtho(10.f, 10.f, ortho->getZNear(), ortho->getZFar(), getAspectRatio());
 	activateCamera(ortho);
 
 	/*
@@ -1052,4 +1052,9 @@ void CRenderDeferredModule::renderUI() {
 	*/
 	//Render.activateBackBuffer();
 	RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS);
+}
+
+float CRenderDeferredModule::getAspectRatio()
+{
+	return (float)xres / (float)yres;
 }

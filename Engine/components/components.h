@@ -81,4 +81,8 @@
 //FX
 #include "comp_render_fade_screen.h"
 
+//GUI
+#include "app_modules/gui/comps/gui_cursor.h"
+#include "app_modules/gui/comps/gui_button.h"
+
 #endif

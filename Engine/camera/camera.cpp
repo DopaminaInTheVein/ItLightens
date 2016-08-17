@@ -88,16 +88,17 @@ void CCamera::setProjection(float new_fov_vertical_rads, float new_znear, float 
 }
 
 // Orthographic projection
-void CCamera::setOrtho(int xres, int yres, float new_znear, float new_zfar) {
+void CCamera::setOrtho(float size_x, float size_y, float new_znear, float new_zfar, float ar) {
+	//ar = aspect_ratio screen
 	znear = new_znear;
 	zfar = new_zfar;
-	setAspectRatio((float)xres / (float)yres);
+	aspect_ratio = (float)size_x / (float)size_y; //aspect_ratio of camera (used?)
 	float left = 0.f, bottom = 0.f;
-	float right = 10.f;
-	float top = 10.f;
+	float right = size_x;
+	float top = size_y;
 
-	if (aspect_ratio > 1) {
-		float offset_y = 5 - (5 / aspect_ratio);
+	if (ar > 1) {
+		float offset_y = (size_y - (size_y / ar)) * 0.5f;
 		top -= offset_y;
 		bottom += offset_y;
 	}
@@ -108,10 +109,7 @@ void CCamera::setOrtho(int xres, int yres, float new_znear, float new_zfar) {
 }
 
 void CCamera::setAspectRatio(float new_ratio) {
-	dbg("Hago set aspectio_ratio = %f", new_ratio);
 	aspect_ratio = new_ratio;
-	dbg("Ahora aspect_ratio vale = %f", aspect_ratio);
-
 	projection = MAT44::CreatePerspectiveFieldOfView(fov_vertical_rads, aspect_ratio, znear, zfar);
 	updateViewProjection();
 }

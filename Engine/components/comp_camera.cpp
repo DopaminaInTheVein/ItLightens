@@ -26,11 +26,14 @@ bool TCompCamera::load(MKeyValue& atts) {
 	float znear = atts.getFloat("znear", 0.01f);
 	float zfar = atts.getFloat("zfar", 1000.f);
 	float fov_in_degs = atts.getFloat("fov", 70.f);
+	float size_x = atts.getFloat("size_x", 10.f);
+	float size_y = atts.getFloat("size_y", 10.f);
+	bool use_ar = atts.getBool("use_ar", true);
 
 	bool is_ortho = atts.getBool("is_ortho", false);
 	float x = CApp::get().getXRes();
 	float y = CApp::get().getYRes();
-	if (is_ortho) setOrtho(x, y, znear, zfar);
+	if (is_ortho) setOrtho(size_x, size_y, znear, zfar, use_ar ? x / y : 1.f);
 	else setProjection(deg2rad(fov_in_degs), znear, zfar);
 
 	//setProjection(deg2rad(fov_in_degs), znear, zfar);

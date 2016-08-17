@@ -333,7 +333,6 @@ bool CXMLParser::xmlParseFile(const std::string &filename) {
 	std::ifstream is(filename.c_str());
 	if (!is.is_open()) {
 		xml_error = "XML File " + filename + " not found";
-		assert(false);
 		return false;
 	}
 	return xmlParseStream(is, filename.c_str());

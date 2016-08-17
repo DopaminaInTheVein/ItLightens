@@ -45,7 +45,7 @@ CUI ui;
 CGameController* GameController = nullptr;
 CPhysxManager *g_PhysxManager = nullptr;
 CGuiModule * Gui = nullptr;
-
+CRenderDeferredModule * render_deferred;
 // --------------------------------------------
 
 bool CApp::start() {
@@ -56,7 +56,7 @@ bool CApp::start() {
 	auto imgui = new CImGuiModule;
 	Gui = new CGuiModule;
 	entities = new CEntitiesModule;
-	auto render_deferred = new CRenderDeferredModule;
+	render_deferred = new CRenderDeferredModule;
 	io = new CIOModule;     // It's the global io
 	g_PhysxManager = new CPhysxManager;
 	g_particlesManager = new CParticlesManager;
@@ -99,9 +99,9 @@ bool CApp::start() {
 
 	mod_renders.push_back(io);
 
+	mod_init_order.push_back(render_deferred);
 	mod_init_order.push_back(Gui);
 	mod_init_order.push_back(imgui);
-	mod_init_order.push_back(render_deferred);
 	mod_init_order.push_back(io);
 	mod_init_order.push_back(g_PhysxManager);
 	mod_init_order.push_back(g_particlesManager);   //need to be initialized before the entities
@@ -280,7 +280,6 @@ void CApp::initNextLevel()
 	// Entidades variantes
 	info.filename = level_name + (has_check_point ? "_save" : "_init");
 	entities->loadXML(info);
-	assert(is_ok);
 
 	// Lights
 	info.filename = level_name + "_lights";
@@ -307,4 +306,23 @@ void CApp::render() {
 		CTraceScoped scope(it->getName());
 		it->render();
 	}
+}
+
+int CApp::getXRes() {
+	if (render_deferred) {
+		return render_deferred->getXRes();
+	}
+	if (!max_screen)
+		return xres;
+	else
+		return xres_max;
+}
+int CApp::getYRes() {
+	if (render_deferred) {
+		return render_deferred->getYRes();
+	}
+	if (!max_screen)
+		return yres;
+	else
+		return yres_max;
 }

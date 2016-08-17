@@ -22,11 +22,11 @@ _entities_ids = #()
 XML_PARSING = undefined
 _lua_code = ""
 _xml_sufix = "" -- init, ...
+_
 
 --*******************************************************
 -------------FUNCTIONS-------------------------------------
 --*******************************************************
-
 ---------------------------------------------------------------------
 --Entity Id --
 ---------------------------------------------------------------------
@@ -84,7 +84,6 @@ fn _parseObject parent = (
 	print ("Object: " + (_parsingObject.name as string))
 	-- Obtenemos descriptor del objeto
 	_descriptorObject = OManager.getDescriptor _parsingObject
-	
 	if parseable() then (
 		-- Añadimos Entity
 		XML_PARSING = parent.addChild "entity"
@@ -180,4 +179,9 @@ fn xmlTest obj = (
 	_parseObject xml
 	_parsingObject = undefined
 	xml.parse()
+)
+
+fn xmlTestUi obj = (
+	_xml_sufix ="ui_scene"
+	xmlTest obj
 )

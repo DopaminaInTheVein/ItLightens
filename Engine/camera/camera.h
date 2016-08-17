@@ -49,7 +49,7 @@ public:
 	// Projection
 	void setProjection(float fov_v_vertical_rads, float znear, float zfar);
 	void setAspectRatio(float new_ratio);
-	void setOrtho(int xres, int yres, float znear, float zfar);
+	void setOrtho(float size_x, float size_y, float znear, float zfar, float ar = 1);
 	bool isOrtho() const { return is_ortho; }
 
 	MAT44 getProjection() const { return projection; }

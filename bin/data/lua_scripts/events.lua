@@ -59,6 +59,7 @@ function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	p:load_entities("init")
 	p:load_level("level_0")
+	--p:load_entities("title")
 	CallFunction("test_dbg")
 end
 

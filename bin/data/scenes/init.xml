@@ -1,33 +1,29 @@
 <entities>
-  <entity permanent="yes">
-    <tags tags="ui_camera" />
-    <name name="ui_camera" />
-    <transform pos="0 0 3" yaw="180"/>
-    <camera znear="0" zfar="5" is_ortho="1"/>
-  </entity>
+	<entity
+	   permanent="yes"
+	   reload="no">
+		<tags
+		   tags="camera_main"/>
+		<camera_main
+		   znear="0.1"
+		   zfar="250.0"
+		   fov="60.0"/>
+		<culling/>
+		<render_glow/>
+		<controller_3rd_person/>
+		<FX_fade_screen/>
+		<name
+		   name="__camController_1"/>
+		<transform
+		   pos="-35.4164 -21.6023 -1.9649"
+		   quat="0 0 0 1.0"
+		   scale="1.0"/>
+	</entity>
 
-  <entity permanent="yes">
-    <name name="ui_background"/>
-    <transform pos="5 5 -1" quat="0 0 0 1" scale="1.0" />
-    <render_static_mesh name="static_meshes/ui/menu/background.static_mesh"/>
-  </entity>
-
-  <entity permanent="yes">
-    <name name="ui_front"/>
-    <transform pos="5 5 2" quat="0 0 0 1" scale="1.0" />
-    <render_static_mesh name="static_meshes/ui/menu/front.static_mesh"/>
-  </entity>
-  
-  <entity permanent="yes">
-  <name name="ui_limits"/>
-    <transform pos="5 5 0" quat="0 0 0 1" scale="1.0" />
-    <render_static_mesh name="static_meshes/ui/menu/limits.static_mesh"/>
-  </entity>
-
-  <entity permanent="yes">
-    <name name="ui_limits_edge"/>
-    <transform pos="5 5 1" quat="0 0 0 1" scale="1.0" />
-    <render_static_mesh name="static_meshes/ui/menu/limits_edge.static_mesh"/>
-  </entity>
-  
+	<entity permanent="yes">
+		<tags tags="ui_camera" />
+		<name name="ui_camera" />
+		<transform pos="0 0 10" yaw="180"/>
+	<camera znear="0" zfar="5" is_ortho="1"/>
+	</entity>  
 </entities>
