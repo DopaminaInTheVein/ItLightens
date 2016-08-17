@@ -1,23 +1,28 @@
 #ifndef INC_COMP_VIDEO_H_
 #define	INC_COMP_VIDEO_H_
 
-#include <atlbase.h>
-#include <atlcom.h>
-#include <atlhost.h>
-#include <atlctl.h>
-
-#include "wmp.h"
 #include "comp_base.h"
+#include <dshow.h>
 
 class TCompVideo : public TCompBase {
-	CAxWindow  m_wndView;  // ActiveX host window class.
-	CComPtr<IWMPPlayer>  m_spWMPPlayer;  // Smart pointer to IWMPPlayer interface.
+	IGraphBuilder *pGraph;
+	IMediaControl *pControl;
+	IMediaEvent   *pEvent;
+	//IVideoWindow  *pVidWin;
+	IMediaSeeking *pSeek;
+	IBaseFilter* pVmr;
+	IVMRWindowlessControl* pWc;
+	IVMRFilterConfig* pConfig;
+	HDC         hdc;
+
 	std::string file;
+	bool loaded = false;
 
 public:
 	bool load(MKeyValue& atts);
 	void update(float dt);
 	void init();
+	void ReleaseAll();
 };
 
 #endif

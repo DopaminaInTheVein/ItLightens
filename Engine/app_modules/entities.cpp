@@ -510,7 +510,10 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
 	}
 
-	if (GameController->GetGameState() == CGameController::RUNNING) {
+	if (GameController->GetGameState() == CGameController::PLAY_VIDEO) {
+		getHandleManager<TCompVideo>()->updateAll(dt);
+	}
+	else if (GameController->GetGameState() == CGameController::RUNNING) {
 		// May need here a switch to update wich player controller takes the action - possession rulez
 		if (!GameController->IsCinematic()) {
 			getHandleManager<player_controller>()->updateAll(dt);

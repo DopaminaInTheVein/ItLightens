@@ -677,6 +677,11 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play ambient function
 		.set("play_ambient", &SLBPublicFunctions::playAmbient)
 		.comment("Executes the specified ambient sound")
+		// play video function
+		.set("play_video", &SLBPublicFunctions::playVideo)
+		.comment("Executes the specified video")
+		.param("Route of the video")
+
 		// Change Player Room
 		.set("player_room", &SLBPublicFunctions::playerRoom)
 		.comment("Change Player Room")
