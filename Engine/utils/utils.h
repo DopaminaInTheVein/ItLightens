@@ -61,6 +61,7 @@ float angleBetween(const VEC3&, const VEC3&);
 
 VEC3 movementUnion(const VEC3& u, const VEC3& v);
 bool isZero(VEC3);
+void clampVector(VEC3& u, const VEC3& min, const VEC3& max);
 ///  Performs a linear interpolation between two vectors. (@p v1 toward @p v2)
 ///  return					The result vector. [(x, y, z)]
 ///  @param[in]		start	The starting vector.

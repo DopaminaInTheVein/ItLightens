@@ -344,4 +344,14 @@ struct TMsgIsCharged {
 	bool charged;
 	DECLARE_MSG_ID();
 };
+
+//GUI messages
+struct TMsgOverButton {
+	CHandle button;
+	bool is_over;
+	DECLARE_MSG_ID();
+};
+struct TMsgClicked {
+	DECLARE_MSG_ID();
+};
 #endif

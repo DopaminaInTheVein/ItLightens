@@ -5,10 +5,14 @@
 
 //Forward Declaration
 class TCompTransform;
+class TCompCamera;
 
 class TCompGuiCursor : public TCompBase {
 	float speed;
 	TCompTransform * myTransform;
+	TCompCamera * ui_camera;
+	CHandle button;
+	CHandle ui_camera_h;
 public:
 	// load Xml
 	bool load(MKeyValue& atts);
@@ -16,7 +20,13 @@ public:
 	//void onCreate(const TMsgEntityCreated&);
 	bool getUpdateInfo();
 	void update(float dt);
+	void updateMovement(float dt);
 	void renderInMenu();
+
+	//Messages
+	void onButton(const TMsgOverButton&);
+
+	//Destructor
 	~TCompGuiCursor();
 };
 

@@ -3,6 +3,7 @@ print('This is lua')
 SLB.using( SLB )
 
 p = Public( )
+cam = Camera()
 
 function Teleport( param )
     p:print( "Teleport: "..param.."\n" )
@@ -51,5 +52,7 @@ end
 
 function LoadLevel( logic_level )
 	p:print("Load Level")
-	p:load_level(logic_level)
+	cam:fade_out(1)
+	p:setControlEnabled(0)
+	p:exec_command("p:load_level(\""..logic_level.."\")", 1)
 end

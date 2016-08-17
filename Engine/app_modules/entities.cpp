@@ -398,6 +398,13 @@ bool CEntitiesModule::start() {
 	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
 	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
 
+	//Fx
+	SUBSCRIBE(TCompFadeScreen, TMsgEntityCreated, onCreate);
+
+	//Gui
+	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
+	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
+
 	return true;
 }
 

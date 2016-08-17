@@ -105,6 +105,9 @@ void CCamera::setOrtho(float size_x, float size_y, float new_znear, float new_zf
 	projection = MAT44::CreateOrthographicOffCenter(left, right, bottom, top, znear, zfar);
 	//projection = MAT44::CreateOrthographicOffCenter(cui_left, cui_right, cui_bottom, cui_top, znear, zfar);
 	is_ortho = true;
+	//Ojo! Solo funciona para zetas negativas y up (0,1,0)!
+	min_ortho = VEC3(left, bottom, -zfar);
+	max_ortho = VEC3(right, top, znear);
 	updateViewProjection();
 }
 

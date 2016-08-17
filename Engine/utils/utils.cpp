@@ -209,6 +209,13 @@ bool isZero(VEC3 u)
 	return u.x == 0.f && u.y == 0.f && u.z == 0.f;
 }
 
+void clampVector(VEC3& u, const VEC3& min, const VEC3& max)
+{
+	clamp_me(u.x, min.x, max.x);
+	clamp_me(u.y, min.y, max.y);
+	clamp_me(u.z, min.z, max.z);
+}
+
 //template<class TObj>
 #include "components\entity_tags.h"
 //template<class  TObj>

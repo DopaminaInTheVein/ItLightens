@@ -46,6 +46,18 @@ void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
 	*msg.view_proj = this->getViewProjection();
 }
 
+// Ojo! Esto solo va para camara mirando para z negativa, y up = (0,1,0) !!!
+VEC3  TCompCamera::getMinOrtho() const
+{
+	GET_MY(tmx, TCompTransform);
+	return (tmx ? tmx->getPosition() : VEC3()) + min_ortho;
+}
+VEC3  TCompCamera::getMaxOrtho() const
+{
+	GET_MY(tmx, TCompTransform);
+	return (tmx ? tmx->getPosition() : VEC3()) + max_ortho;
+}
+
 void TCompCamera::render() const {
 	PROFILE_FUNCTION("TCompCamera render");
 	auto axis = Resources.get("frustum.mesh")->as<CMesh>();
@@ -62,7 +74,11 @@ void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
 }
 
 void TCompCamera::update(float dt) {
-	updateFromEntityTransform(compBaseEntity);
+	if (!isOrtho()) updateFromEntityTransform(compBaseEntity);
+	else {
+		GET_MY(tmx, TCompTransform);
+		if (tmx) this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+	}
 }
 
 void TCompCamera::renderInMenu() {
