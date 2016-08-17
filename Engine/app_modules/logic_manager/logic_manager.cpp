@@ -60,7 +60,7 @@ void CLogicManagerModule::resetTimers() {
 	command_queue.clear();
 }
 
-void CLogicManagerModule::throwEvent(EVENT evt, std::string params, ClHandle handle) {//, uint32_t handle_id) {
+void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
 	char lua_code[64];
 	caller_handle = handle;
 
@@ -373,7 +373,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, ClHandle han
 	}
 }
 
-void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, ClHandle handle) {//, uint32_t handle_id) {
+void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
   // construct the lua code using the event and the specified parameters
 	std::string lua_code = evt;
 

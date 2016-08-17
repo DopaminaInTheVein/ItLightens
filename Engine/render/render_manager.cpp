@@ -49,12 +49,12 @@ bool CRenderManager::sortByTechMatMesh(
 	return k1.material < k2.material;
 }
 
-void CRenderManager::registerToRender(const CStaticMesh* mesh, ClHandle owner) {
-	ClHandle ow = owner.getOwner();
+void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
+	CHandle ow = owner.getOwner();
 	CEntity* e = ow;
 	assert(e);
-	ClHandle h_transform = e->get<TCompTransform>();
-	ClHandle h_aabb = e->get<TCompAbsAABB>();
+	CHandle h_transform = e->get<TCompTransform>();
+	CHandle h_aabb = e->get<TCompAbsAABB>();
 	TCompRoom * comproom = e->get<TCompRoom>();
 	std::vector<int> oroom;
 	oroom.push_back(-1);
@@ -97,7 +97,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, ClHandle owner) {
 	in_order = false;
 }
 
-void CRenderManager::unregisterFromRender(ClHandle owner) {
+void CRenderManager::unregisterFromRender(CHandle owner) {
 	// Pasarse por todas las keys y borrar aquellas q tengan el owner
 	auto it = all_keys.begin();
 	while (it != all_keys.end()) {
@@ -109,7 +109,7 @@ void CRenderManager::unregisterFromRender(ClHandle owner) {
 	}
 }
 
-void CRenderManager::renderAll(ClHandle h_camera, CRenderTechnique::eCategory category) {
+void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory category) {
 	std::string name;
 	PROFILE_FUNCTION("OBJS");
 	if (category == CRenderTechnique::DBG_OBJS) {
@@ -273,7 +273,7 @@ void CRenderManager::renderUICulling() {
 }
 
 // ------------------------------------------
-void CRenderManager::renderShadowCasters(ClHandle h_light) {
+void CRenderManager::renderShadowCasters(CHandle h_light) {
 	CTraceScoped scope("Shadow Casters");
 	PROFILE_FUNCTION("SHADOW CASTERS OBJ");
 	auto it = all_shadow_keys.begin();
@@ -347,7 +347,7 @@ void CRenderManager::renderShadowCasters(ClHandle h_light) {
 // ------------------------------------------
 
 //render shadowcaster with skinning tech
-void CRenderManager::renderShadowCastersSkin(ClHandle h_light) {
+void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 	PROFILE_FUNCTION("SHADOW CASTER SKIN");
 	auto it = all_shadow_skinning_keys.begin();
 	int pj_room = SBB::readSala();

@@ -9,7 +9,7 @@
 VHandles TCompBox::all_boxes;
 
 void TCompBox::init() {
-	mParent = ClHandle(this).getOwner();
+	mParent = CHandle(this).getOwner();
 	if (!mParent.isValid()) return;
 	if (carePosition) {
 		CEntity *e = mParent;
@@ -33,7 +33,7 @@ void TCompBox::update(float elapsed) {
 }
 
 void TCompBox::stuntNpcs() {
-	CEntity * eMe = ClHandle(this).getOwner();
+	CEntity * eMe = CHandle(this).getOwner();
 	assert(eMe);
 	TCompPhysics * pc = eMe->get<TCompPhysics>();
 	assert(pc);
@@ -44,7 +44,7 @@ void TCompBox::stuntNpcs() {
 		TCompTransform * tMe = eMe->get<TCompTransform>();
 		assert(tMe);
 		VHandles npcs = tags_manager.getHandlesByTag(getID("AI"));
-		for (ClHandle npc : npcs) {
+		for (CHandle npc : npcs) {
 			if (npc.isValid()) {
 				CEntity * eNpc = npc;
 				TCompTransform * tNpc = eNpc->get<TCompTransform>();
@@ -118,7 +118,7 @@ void TCompBox::onUnLeaveBox(const TMsgLeaveBox& msg) {
 }
 
 TCompBox::~TCompBox() {
-	removeFromVector(all_boxes, ClHandle(this).getOwner());
+	removeFromVector(all_boxes, CHandle(this).getOwner());
 }
 
 bool TCompBox::getGrabPoints(

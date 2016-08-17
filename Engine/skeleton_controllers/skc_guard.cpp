@@ -3,7 +3,7 @@
 
 bool SkelControllerGuard::getUpdateInfo()
 {
-	owner = ClHandle(this).getOwner();
+	owner = CHandle(this).getOwner();
 	if (!owner.isValid()) return false;
 	return true;
 }

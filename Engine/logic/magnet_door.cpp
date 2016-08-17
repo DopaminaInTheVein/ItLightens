@@ -69,7 +69,7 @@ bool magnet_door::save(std::ofstream& os, MKeyValue& atts)
 
 void magnet_door::onCreate(const TMsgEntityCreated&)
 {
-	ClHandle parent = ClHandle(this).getOwner();
+	CHandle parent = CHandle(this).getOwner();
 	CEntity* eMe = parent;
 	assert(eMe);
 	TCompTransform * transform = eMe->get<TCompTransform>();
@@ -83,7 +83,7 @@ void magnet_door::onCreate(const TMsgEntityCreated&)
 
 void magnet_door::update(float elapsed)
 {
-	if (!isInRoom(ClHandle(this).getOwner()))return;
+	if (!isInRoom(CHandle(this).getOwner()))return;
 
 	updateMagneticBehaviour();
 	updateCinematicState();
@@ -205,7 +205,7 @@ bool magnet_door::getUpdateInfo() {
 	if (!physics) return false;
 
 	//Player Info
-	ClHandle player = tags_manager.getFirstHavingTag("raijin");
+	CHandle player = tags_manager.getFirstHavingTag("raijin");
 	if (!player.isValid()) return false;
 	CEntity* ePlayer = player;
 	playerTransform = ePlayer->get<TCompTransform>();

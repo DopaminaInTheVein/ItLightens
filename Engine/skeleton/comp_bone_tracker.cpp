@@ -15,7 +15,7 @@ bool TCompBoneTracker::load(MKeyValue& atts) {
 	strcpy(bone_name, atts.getString("bone", "").c_str());
 	strcpy(entity_name, atts.getString("entity", "").c_str());
 	bone_id = -1;
-	h_entity = ClHandle();
+	h_entity = CHandle();
 	return true;
 }
 
@@ -173,7 +173,7 @@ void TCompBoneTracker::update(float dt) {
 	auto rot = Cal2Engine(bone->getRotationAbsolute());
 	auto trans = Cal2Engine(bone->getTranslationAbsolute());
 
-	CEntity* my_e = ClHandle(this).getOwner();
+	CEntity* my_e = CHandle(this).getOwner();
 	if (!my_e) return;
 	TCompTransform* tmx = my_e->get<TCompTransform>();
 	assert(tmx);
@@ -189,7 +189,7 @@ void TCompBoneTracker::update(float dt) {
 	tmx->setPosition(trans);
 	tmx->setRotation(rot);
 
-	GET_COMP(physics, ClHandle(this).getOwner(), TCompPhysics);
+	GET_COMP(physics, CHandle(this).getOwner(), TCompPhysics);
 	if (physics) {
 		physics->setPosition(trans, rot);
 	}

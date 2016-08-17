@@ -64,7 +64,7 @@ void TCompFadingMessage::update(float dt) {
 	else {
 		iconLoaded = false;
 		//textureIcon->destroy();
-		ClHandle h = ClHandle(this).getOwner();
+		CHandle h = CHandle(this).getOwner();
 		h.destroy();
 	}
 }

@@ -111,10 +111,10 @@ void CThrowBomb::Impacted() {
 
 void CThrowBomb::Explode()
 {
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnExplode, "throw_bomb", ClHandle(this).getOwner());
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnExplode, "throw_bomb", CHandle(this).getOwner());
 	SendMsg();
 	ChangeState("dead");
-	ClHandle(this).getOwner().destroy();
+	CHandle(this).getOwner().destroy();
 }
 
 void CThrowBomb::Dead()

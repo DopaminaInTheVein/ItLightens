@@ -454,7 +454,7 @@ void CEntitiesModule::clear(bool reload) {
 	getHandleManager<CEntity>()->each([reload](CEntity * e) {
 		if (!e->isPermanent()) {
 			if (!reload || e->needReload()) {
-				ClHandle(e).destroy();
+				CHandle(e).destroy();
 				entities_destroyed++; //dbg
 			}
 		}
@@ -480,7 +480,7 @@ void CEntitiesModule::destroyRandomEntity(float percent) {
 		int r = rand() % (int)currentSize;
 		if ((float)r / currentSize < percent) {
 			dbg("Elimino entidad %s\n", e->getName());
-			ClHandle(e).destroy();
+			CHandle(e).destroy();
 		}
 	});
 }
@@ -591,7 +591,7 @@ void CEntitiesModule::update(float dt) {
 	}
 	// In this mode, only the animation of the player is updated
 	else if (GameController->GetGameState() == CGameController::STOPPED_INTRO) {
-		ClHandle player_handle = tags_manager.getFirstHavingTag("player");
+		CHandle player_handle = tags_manager.getFirstHavingTag("player");
 		CEntity * player_entity = player_handle;
 
 		TCompSkeleton* player_skeleton = player_entity->get<TCompSkeleton>();
@@ -628,8 +628,8 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompBox>()->onAll(&TCompBox::render);
 #endif
 
-	RenderManager.renderAll(ClHandle(), CRenderTechnique::DBG_OBJS);
-	RenderManager.renderAll(ClHandle(), CRenderTechnique::UI_OBJS);
+	RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
+	RenderManager.renderAll(CHandle(), CRenderTechnique::UI_OBJS);
 }
 
 void CEntitiesModule::renderInMenu() {

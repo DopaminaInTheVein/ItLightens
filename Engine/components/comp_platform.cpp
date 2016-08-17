@@ -7,7 +7,7 @@
 
 void TCompPlatform::onCreate(const TMsgEntityCreated &)
 {
-	ClHandle h = ClHandle(this).getOwner();
+	CHandle h = CHandle(this).getOwner();
 	CEntity *e = h;
 	if (e) {
 		TCompTransform *t = e->get<TCompTransform>();
@@ -24,7 +24,7 @@ void TCompPlatform::onCreate(const TMsgEntityCreated &)
 
 void TCompPlatform::update(float elapsed)
 {
-	ClHandle h = ClHandle(this).getOwner();
+	CHandle h = CHandle(this).getOwner();
 	CEntity *e = h;
 	if (!e) return;
 	TCompTransform *t = e->get<TCompTransform>();

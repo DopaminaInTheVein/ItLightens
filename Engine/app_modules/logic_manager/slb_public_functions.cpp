@@ -48,11 +48,11 @@ float SLBPosition::Z()
 
 // player functions
 void SLBPlayer::getPlayer() {
-	ClHandle thePlayer = tags_manager.getFirstHavingTag("player");
+	CHandle thePlayer = tags_manager.getFirstHavingTag("player");
 	player_handle = thePlayer;
 }
 void SLBPlayer::getRaijin() {
-	ClHandle thePlayer = tags_manager.getFirstHavingTag("raijin");
+	CHandle thePlayer = tags_manager.getFirstHavingTag("raijin");
 	player_handle = thePlayer;
 }
 
@@ -69,7 +69,7 @@ void SLBPlayer::setPlayerPosition(float x, float y, float z) {
 void SLBPlayer::teleport(const char * point_name) {
 	getPlayer();
 	if (player_handle.isValid()) {
-		ClHandle target = tags_manager.getHandleByTagAndName("teleport", point_name);
+		CHandle target = tags_manager.getHandleByTagAndName("teleport", point_name);
 		GET_COMP(tTarget, target, TCompTransform);
 		GET_COMP(tPlayer, player_handle, TCompTransform);
 		GET_COMP(ccPlayer, player_handle, TCompCharacterController);
@@ -123,22 +123,22 @@ void SLBPlayer::refillEnergy() {
 }
 
 // generic handle function
-ClHandle SLBHandle::getHandle() {
+CHandle SLBHandle::getHandle() {
 	return real_handle;
 }
 
 // We need ti aply generic actions to player as well
 void SLBHandle::getPlayer() {
-	ClHandle thePlayer = tags_manager.getFirstHavingTag("player");
+	CHandle thePlayer = tags_manager.getFirstHavingTag("player");
 	real_handle = thePlayer;
 }
 void SLBHandle::getRaijin() {
-	ClHandle thePlayer = tags_manager.getFirstHavingTag("raijin");
+	CHandle thePlayer = tags_manager.getFirstHavingTag("raijin");
 	real_handle = thePlayer;
 }
 
 void SLBHandle::getHandleById(int id) {
-	ClHandle handle = IdEntities::findById(id);
+	CHandle handle = IdEntities::findById(id);
 	real_handle = handle;
 	if (real_handle.isValid()) {
 		dbg("[LUA] getHandleById: %s\n", ((CEntity*)(real_handle))->getName());
@@ -232,7 +232,7 @@ void SLBHandle::goToPoint(float x, float y, float z) {
 	}
 }
 void SLBHandle::goAndLookAs(SLBHandle target, std::string code_arrived) {
-	ClHandle hTarget = target.getHandle();
+	CHandle hTarget = target.getHandle();
 	if (hTarget.isValid() && real_handle.isValid()) {
 		TMsgGoAndLook msg;
 		msg.target = hTarget;
@@ -242,7 +242,7 @@ void SLBHandle::goAndLookAs(SLBHandle target, std::string code_arrived) {
 }
 
 void SLBHandle::followTracker(SLBHandle target, float speed) {
-	ClHandle hTarget = target.getHandle();
+	CHandle hTarget = target.getHandle();
 	if (hTarget.isValid() && real_handle.isValid()) {
 		TMsgFollow msg;
 		msg.follower = real_handle;
@@ -390,7 +390,7 @@ void SLBHandleGroup::awake() {
 void SLBHandleGroup::removePhysics() {
 	for (auto h : handle_group) {
 		if (h.isValid()) {
-			ClHandle hPhysics = ((CEntity*)h)->get<TCompPhysics>();
+			CHandle hPhysics = ((CEntity*)h)->get<TCompPhysics>();
 			if (hPhysics.isValid()) hPhysics.destroy();
 		}
 	}
@@ -461,7 +461,7 @@ void SLBCamera::setPositionOffset(float x_offset, float y_offset, float z_offset
 }
 
 void SLBCamera::runCinematic(const char* name, float speed) {
-	ClHandle guidedCam = tags_manager.getHandleByTagAndName("guided_camera", name);
+	CHandle guidedCam = tags_manager.getHandleByTagAndName("guided_camera", name);
 	CEntity * guidedCamE = guidedCam;
 	if (guidedCamE) {
 		TMsgGuidedCamera msg_guided_cam;
@@ -529,8 +529,8 @@ void SLBPublicFunctions::print(const char* to_print) {
 }
 
 void SLBPublicFunctions::setControlEnabled(int enabled) {
-	ClHandle player = tags_manager.getFirstHavingTag(getID("player"));
-	ClHandle main_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
+	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+	CHandle main_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
 	if (player.isValid() && main_camera.isValid()) {
 		TMsgSetControllable msg;
 		msg.control = (enabled != 0);
@@ -557,18 +557,18 @@ void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 
 void SLBPublicFunctions::playVideo(const char* video_route) {
 	auto hm = CHandleManager::getByName("entity");
-	ClHandle new_hp = hm->createHandle();
+	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
 
 	auto hm1 = CHandleManager::getByName("name");
-	ClHandle new_hn = hm1->createHandle();
+	CHandle new_hn = hm1->createHandle();
 	MKeyValue atts1;
 	atts1.put("name", "play_video");
 	new_hn.load(atts1);
 	entity->add(new_hn);
 
 	auto hm3 = CHandleManager::getByName("video_player");
-	ClHandle new_hl = hm3->createHandle();
+	CHandle new_hl = hm3->createHandle();
 	MKeyValue atts3;
 	atts3["file"] = video_route;
 	new_hl.load(atts3);
@@ -581,7 +581,7 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 	std::vector<int> new_room_vec;
 	new_room_vec.push_back(newRoom);
 
-	ClHandle p = tags_manager.getFirstHavingTag("player");
+	CHandle p = tags_manager.getFirstHavingTag("player");
 	CEntity * pe = p;
 	TCompRoom * room = pe->get<TCompRoom>();
 	if (room->setName(new_room_vec)) {
@@ -594,18 +594,18 @@ void SLBPublicFunctions::playerTalks(const char* text, const char* iconName, con
 	dbg(text);
 
 	auto hm = CHandleManager::getByName("entity");
-	ClHandle new_hp = hm->createHandle();
+	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
 
 	auto hm1 = CHandleManager::getByName("name");
-	ClHandle new_hn = hm1->createHandle();
+	CHandle new_hn = hm1->createHandle();
 	MKeyValue atts1;
 	atts1.put("name", "playerTalk");
 	new_hn.load(atts1);
 	entity->add(new_hn);
 
 	auto hm3 = CHandleManager::getByName("helper_message");
-	ClHandle new_hl = hm3->createHandle();
+	CHandle new_hl = hm3->createHandle();
 	MKeyValue atts3;
 	atts3["text"] = text;
 	atts3["icon"] = iconName;
@@ -619,18 +619,18 @@ void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* icon
 	dbg(text);
 
 	auto hm = CHandleManager::getByName("entity");
-	ClHandle new_hp = hm->createHandle();
+	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
 
 	auto hm1 = CHandleManager::getByName("name");
-	ClHandle new_hn = hm1->createHandle();
+	CHandle new_hn = hm1->createHandle();
 	MKeyValue atts1;
 	atts1.put("name", "playerTalk");
 	new_hn.load(atts1);
 	entity->add(new_hn);
 
 	auto hm3 = CHandleManager::getByName("helper_message");
-	ClHandle new_hl = hm3->createHandle();
+	CHandle new_hl = hm3->createHandle();
 	MKeyValue atts3;
 	atts3["text"] = text;
 	atts3["icon"] = iconName;
@@ -646,18 +646,18 @@ void SLBPublicFunctions::characterGlobe(const char* text, float distance, float 
 	dbg(text);
 
 	auto hm = CHandleManager::getByName("entity");
-	ClHandle new_hp = hm->createHandle();
+	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
 
 	auto hm1 = CHandleManager::getByName("name");
-	ClHandle new_hn = hm1->createHandle();
+	CHandle new_hn = hm1->createHandle();
 	MKeyValue atts1;
 	atts1.put("name", "characterGlobe");
 	new_hn.load(atts1);
 	entity->add(new_hn);
 
 	auto hm3 = CHandleManager::getByName("character_globe");
-	ClHandle new_hl = hm3->createHandle();
+	CHandle new_hl = hm3->createHandle();
 	MKeyValue atts3;
 	atts3["text"] = text;
 	atts3["dist"] = std::to_string(distance);
@@ -673,18 +673,18 @@ void SLBPublicFunctions::characterGlobeWithColor(const char* text, float distanc
 	dbg(text);
 
 	auto hm = CHandleManager::getByName("entity");
-	ClHandle new_hp = hm->createHandle();
+	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
 
 	auto hm1 = CHandleManager::getByName("name");
-	ClHandle new_hn = hm1->createHandle();
+	CHandle new_hn = hm1->createHandle();
 	MKeyValue atts1;
 	atts1.put("name", "characterGlobe");
 	new_hn.load(atts1);
 	entity->add(new_hn);
 
 	auto hm3 = CHandleManager::getByName("character_globe");
-	ClHandle new_hl = hm3->createHandle();
+	CHandle new_hl = hm3->createHandle();
 	MKeyValue atts3;
 	atts3["text"] = text;
 	atts3["backgroundColor"] = background;
@@ -715,7 +715,7 @@ void SLBPublicFunctions::saveLevel() {
 
 //test
 void SLBPublicFunctions::test(const char* to_print) {
-	//ClHandle h = ClHandle();
+	//CHandle h = CHandle();
 	//h.fromUnsigned(h_num);
 
 	//if (h.isValid()) {

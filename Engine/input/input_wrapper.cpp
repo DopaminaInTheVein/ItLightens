@@ -135,7 +135,8 @@ bool CInputWrapper::isToogleConsoleLoguttonPressed() {
 }
 bool CInputWrapper::isPauseGameButtonPressed() {
 	return io->keys['I'].becomesPressed();
-}bool CInputWrapper::isStopGameButtonPressed() {
+}
+bool CInputWrapper::isStopGameButtonPressed() {
 	return io->keys['P'].becomesPressed();
 }
 bool CInputWrapper::isSlowButtonPressed() {

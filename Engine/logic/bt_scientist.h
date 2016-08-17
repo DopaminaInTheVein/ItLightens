@@ -73,8 +73,8 @@ class bt_scientist : public bt_poss, public TCompBase {
 	//general pointers
 	//--------------------------------------
 	CObjectManager<bt_scientist> * om = nullptr;
-	ClHandle myHandle;
-	ClHandle myParent;
+	CHandle myHandle;
+	CHandle myParent;
 	CEntity *myEntity = nullptr;
 
 	SkelControllerScientist * animController;
@@ -87,7 +87,7 @@ class bt_scientist : public bt_poss, public TCompBase {
 	float zmax = 0.0f;
 
 	CEntity* getMyEntity() {
-		ClHandle me = ClHandle(this);
+		CHandle me = CHandle(this);
 		return me.getOwner();
 	}
 

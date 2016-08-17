@@ -22,23 +22,23 @@ void TTagsManager::renderInMenu() {
 }
 
 // ---------------------------------------
-ClHandle findByName(const VHandles& handles, const char* entity_name) {
+CHandle findByName(const VHandles& handles, const char* entity_name) {
 	for (auto h : handles) {
 		CEntity* e = h;
 		if (e->hasName(entity_name))
 			return h;
 	}
-	return ClHandle();
+	return CHandle();
 }
 
-void TTagsManager::removeAllTags(ClHandle h)
+void TTagsManager::removeAllTags(CHandle h)
 {
 	for (auto& it_m : tags_manager) {
 		it_m.second.erase(std::remove(it_m.second.begin(), it_m.second.end(), h), it_m.second.end());
 	}
 }
 
-void TTagsManager::removeTag(ClHandle h, TTagID tag_id)
+void TTagsManager::removeTag(CHandle h, TTagID tag_id)
 {
 	for (auto& it_m : tags_manager) {
 		if (it_m.first == tag_id) {
@@ -47,10 +47,10 @@ void TTagsManager::removeTag(ClHandle h, TTagID tag_id)
 	}
 }
 
-void TTagsManager::getTagFromHandle(ClHandle h_match, std::vector<TTagID>& out)
+void TTagsManager::getTagFromHandle(CHandle h_match, std::vector<TTagID>& out)
 {
 	for (auto& it_m : tags_manager) {
-		for (ClHandle h : it_m.second) {
+		for (CHandle h : it_m.second) {
 			if (h == h_match)
 				out.push_back(it_m.first);
 		}
@@ -71,18 +71,18 @@ void TTagsManager::registerTag(const std::string& tag_name) {
 }
 
 // ---------------------------------------
-ClHandle TTagsManager::getFirstHavingTag(TTagID tag_id) const {
-	ClHandle result;
+CHandle TTagsManager::getFirstHavingTag(TTagID tag_id) const {
+	CHandle result;
 	auto h = getHandlesByTag(tag_id);
-	return h.size() > 0 ? h[0] : ClHandle();
+	return h.size() > 0 ? h[0] : CHandle();
 }
 
-ClHandle TTagsManager::getFirstHavingTag(std::string tag_id) const {
+CHandle TTagsManager::getFirstHavingTag(std::string tag_id) const {
 	return getFirstHavingTag(getID(tag_id.c_str()));
 }
 
 // ---------------------------------------
-void TTagsManager::addTag(ClHandle h, TTagID tag_id) {
+void TTagsManager::addTag(CHandle h, TTagID tag_id) {
 	auto it = find(tag_id);
 	if (it == end()) {
 		insert(std::pair<TTagID, VHandles>(tag_id, VHandles(1, h)));
@@ -103,7 +103,7 @@ const VHandles& TTagsManager::getHandlesByTag(TTagID tag_id) const {
 	return it->second;
 }
 // ---------------------------------------
-ClHandle TTagsManager::getHandleByTagAndName(const char* tag, const char* name) const {
+CHandle TTagsManager::getHandleByTagAndName(const char* tag, const char* name) const {
 	VHandles targets = tags_manager.getHandlesByTag(getID(tag));
 	return findByName(targets, name);
 }

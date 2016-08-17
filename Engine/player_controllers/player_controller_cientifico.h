@@ -42,10 +42,10 @@ class player_controller_cientifico : public PossController {
 	VEC3 directionJump = VEC3(0, 0, 0);
 	float rotate = 0;
 	bool canRepairDrone = false;
-	ClHandle       drone;
+	CHandle       drone;
 
 	eObjSci obj = EMPTY;
-	ClHandle bomb_handle;
+	CHandle bomb_handle;
 
 	//Main attributes
 	float t_waiting;

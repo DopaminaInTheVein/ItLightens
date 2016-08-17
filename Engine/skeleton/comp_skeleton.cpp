@@ -170,7 +170,7 @@ bool TCompSkeleton::getUpdateInfo()
 	if (!tmx) return false;
 
 	if (!culling.isValid()) {
-		ClHandle camera_main = tags_manager.getFirstHavingTag("camera_main");
+		CHandle camera_main = tags_manager.getFirstHavingTag("camera_main");
 		if (!camera_main.isValid()) return false;
 		culling = GETH_COMP(camera_main, TCompCulling);
 		if (!culling.isValid()) return false;
@@ -183,7 +183,7 @@ bool TCompSkeleton::getUpdateInfo()
 }
 
 void TCompSkeleton::update(float dt) {
-	ClHandle ownerHandle = ClHandle(this).getOwner();
+	CHandle ownerHandle = CHandle(this).getOwner();
 	if (!getUpdateInfoBase(ownerHandle))
 		return; //El updateAllInParallel no llama infobase
 	CEntity* e = ownerHandle;
@@ -214,7 +214,7 @@ void TCompSkeleton::update(float dt) {
 }
 
 void TCompSkeleton::updateEndAction() {
-	if (isInRoom(ClHandle(this).getOwner())) {
+	if (isInRoom(CHandle(this).getOwner())) {
 		float endTimeAction = 0.2f; // Tiempo antes de acabar animacion que empieza el blend
 		auto mixer = model->getMixer();
 		if (mixer->getAnimationActionList().size() == 1) {
@@ -238,7 +238,7 @@ void TCompSkeleton::updateEndAction() {
 
 void TCompSkeleton::render() const {
 #ifndef NDEBUG
-	if (!isInRoom(ClHandle(this).getOwner())) return;
+	if (!isInRoom(CHandle(this).getOwner())) return;
 	if (!Debug->isDrawLines()) return;
 	PROFILE_FUNCTION("TCompSkeleton render");
 	auto skel = model->getSkeleton();

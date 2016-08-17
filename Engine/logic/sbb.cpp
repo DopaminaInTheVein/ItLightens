@@ -13,8 +13,8 @@ map<string, int> SBB::sbbInt;
 map<string, bool> SBB::sbbBool;
 map<string, VEC3> SBB::sbbVEC3;
 map<string, bt_mole*> SBB::sbbMole;
-map<string, ClHandle> SBB::sbbHandle;
-map<string, vector<ClHandle>> SBB::sbbHandlesVector;
+map<string, CHandle> SBB::sbbHandle;
+map<string, vector<CHandle>> SBB::sbbHandlesVector;
 map<string, vector<VEC3> > SBB::sbbVEC3Vector;
 map<string, guard_alert> SBB::sbbGuardAlerts;
 
@@ -113,11 +113,11 @@ bt_mole* SBB::readMole(string name) {
 
 // sbbHandles
 
-void SBB::postHandle(string name, ClHandle value) {
+void SBB::postHandle(string name, CHandle value) {
 	sbbHandle[name] = value;
 }
 
-ClHandle SBB::readHandle(string name) {
+CHandle SBB::readHandle(string name) {
 	if (sbbHandle.find(name) == sbbHandle.end())
 	{
 		fatal("sbbHandle: Se intenta leer String que no existe!");
@@ -127,11 +127,11 @@ ClHandle SBB::readHandle(string name) {
 
 // sbbHandlesVector
 
-void SBB::postHandlesVector(string name, vector<ClHandle> value) {
+void SBB::postHandlesVector(string name, vector<CHandle> value) {
 	sbbHandlesVector[name] = value;
 }
 
-vector<ClHandle> SBB::readHandlesVector(string name) {
+vector<CHandle> SBB::readHandlesVector(string name) {
 	if (sbbHandlesVector.find(name) == sbbHandlesVector.end())
 	{
 		fatal("sbbHandlesVector: Se intenta leer String que no existe!");

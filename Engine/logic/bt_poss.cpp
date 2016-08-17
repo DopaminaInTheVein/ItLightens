@@ -90,7 +90,7 @@ int bt_poss::actionPossessing() {
 	msgTarg.who = whoAmI();
 	camera_e->sendMsg(msgTarg);
 
-	ClHandle hRaijin = tags_manager.getFirstHavingTag("raijin");
+	CHandle hRaijin = tags_manager.getFirstHavingTag("raijin");
 	GET_COMP(cc, hRaijin, TCompCharacterController);
 	GET_COMP(tRaijin, hRaijin, TCompTransform);
 	cc->GetController()->setPosition(PxExtendedVec3(0, 200, 0));

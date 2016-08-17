@@ -63,11 +63,11 @@ void TCompGuidedCamera::start(float speed) {
 
 void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
 	//Get main_camera and notify
-	ClHandle mainCamera = tags_manager.getFirstHavingTag("camera_main");
+	CHandle mainCamera = tags_manager.getFirstHavingTag("camera_main");
 	if (mainCamera.isValid()) {
 		//Messagge to sent
 		TMsgGuidedCamera msgToMainCamera;
-		msgToMainCamera.guide = ClHandle(this).getOwner();
+		msgToMainCamera.guide = CHandle(this).getOwner();
 
 		//Send message
 		CEntity* eMainCamera = mainCamera;
@@ -94,9 +94,9 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMai
 		finish = true;
 	}
 	if (controller->IsBackPressed()) {
-		ClHandle me = ClHandle(this).getOwner();
+		CHandle me = CHandle(this).getOwner();
 		CEntity* eMe = me;
-		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicSkipped, std::string(eMe->getName())), ClHandle(this).getOwner();
+		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicSkipped, std::string(eMe->getName())), CHandle(this).getOwner();
 		finish = true;
 	}
 

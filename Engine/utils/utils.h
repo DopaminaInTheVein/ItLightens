@@ -37,7 +37,7 @@ uint32_t	getID(const char* text);
 float		getDeltaTime(float always = false);
 float random(float vmin, float vmax);
 
-bool isInRoom(ClHandle handle);
+bool isInRoom(CHandle handle);
 
 float squared(float i);
 

@@ -30,7 +30,7 @@ class CRenderDeferredModule : public IAppModule {
 
 	int xres, yres;
 
-	ClHandle                 h_camera;
+	CHandle                 h_camera;
 
 	const CRenderTechnique* acc_light_points;
 	const CRenderTechnique* acc_light_directionals;

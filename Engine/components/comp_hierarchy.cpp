@@ -5,15 +5,15 @@
 bool TCompHierarchy::load(MKeyValue& atts) {
 	TCompTransform::load(atts);
 	strcpy(parent_name, atts.getString("parent", "").c_str());
-	h_parent_transform = ClHandle();
-	h_my_transform = ClHandle();
+	h_parent_transform = CHandle();
+	h_my_transform = CHandle();
 	return true;
 }
 
-void TCompHierarchy::linkTo(ClHandle h_entity) {
+void TCompHierarchy::linkTo(CHandle h_entity) {
 	CEntity* e = h_entity;
 	if (!e) {
-		h_parent_transform = ClHandle();
+		h_parent_transform = CHandle();
 		return;
 	}
 	h_parent_transform = e->get<TCompTransform>();
@@ -21,11 +21,11 @@ void TCompHierarchy::linkTo(ClHandle h_entity) {
 
 // Resolve parent
 void TCompHierarchy::onGroupCreated(const TMsgEntityGroupCreated& msg) {
-	ClHandle h_entity = findByName(*msg.handles, parent_name);
+	CHandle h_entity = findByName(*msg.handles, parent_name);
 	linkTo(h_entity);
 
 	// Get access to my comp transform
-	ClHandle h_my_entity = ClHandle(this).getOwner();
+	CHandle h_my_entity = CHandle(this).getOwner();
 	CEntity* e_my_entity = h_my_entity;
 	h_my_transform = e_my_entity->get<TCompTransform>();
 }

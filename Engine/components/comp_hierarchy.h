@@ -4,10 +4,10 @@
 #include "comp_transform.h"
 
 struct TCompHierarchy : public TCompTransform {
-	ClHandle h_parent_transform;
-	ClHandle h_my_transform;
+	CHandle h_parent_transform;
+	CHandle h_my_transform;
 	char    parent_name[64];
-	void linkTo(ClHandle e);
+	void linkTo(CHandle e);
 	bool load(MKeyValue& atts);
 	void onGroupCreated(const TMsgEntityGroupCreated& msg);
 	void updateWorldFromLocal();

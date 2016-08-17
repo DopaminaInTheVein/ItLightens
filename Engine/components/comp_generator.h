@@ -8,8 +8,8 @@ struct TCompGenerator : public TTrigger {
 	float life_recover;
 	float rad;
 	VEC3 org;
-	ClHandle player;
-	ClHandle mesh;
+	CHandle player;
+	CHandle mesh;
 	static VHandles all_generators;
 
 	____TIMER_DECLARE_(timeReuse);

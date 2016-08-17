@@ -61,7 +61,7 @@ struct TCompTags : public TCompBase {
 	void onCreate(const TMsgEntityCreated&) {
 		if (created) return;
 		created = true;
-		ClHandle h_entity = ClHandle(this).getOwner();
+		CHandle h_entity = CHandle(this).getOwner();
 		for (uint32_t i = 0; i < max_tags; ++i)
 			if (tags[i])
 				tags_manager.addTag(h_entity, tags[i]);
@@ -84,7 +84,7 @@ struct TCompTags : public TCompBase {
 	}
 
 	void onSetTag(const TMsgSetTag& msg) {
-		ClHandle h_entity = ClHandle(this).getOwner();
+		CHandle h_entity = CHandle(this).getOwner();
 		auto tag_id = getID(msg.tag.c_str());
 		if (msg.add) {
 			for (int i = 0; i < max_tags; ++i) {

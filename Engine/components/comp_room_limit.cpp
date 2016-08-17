@@ -21,7 +21,7 @@ void TCompRoomLimit::mUpdate(float dt)
 
 void TCompRoomLimit::onTriggerEnter(const TMsgTriggerIn & msg)
 {
-	ClHandle h_out = msg.other;
+	CHandle h_out = msg.other;
 	if (!h_out.hasTag("player")) { return; }
 	if (h_out.hasTag("raijin")) { return; }
 	CEntity * pe = h_out;

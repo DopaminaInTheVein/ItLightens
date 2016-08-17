@@ -13,8 +13,8 @@ class CStaticBomb : public TCompBase {
 	float t_waiting = 0.0f;
 	float x_local = 0.0f;
 
-	ClHandle myHandle;
-	ClHandle myParent;
+	CHandle myHandle;
+	CHandle myParent;
 
 	CEntity *myEntity;
 

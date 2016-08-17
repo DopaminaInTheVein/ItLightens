@@ -8,7 +8,7 @@ struct TCompWire : public TCompBase {
 	float half_lenght;
 	VEC3 direction;
 	VEC3 org;
-	ClHandle player;
+	CHandle player;
 	bool send = false;
 
 	bool load(MKeyValue& atts);

@@ -12,11 +12,11 @@ bool LogicHelperArrow::load(MKeyValue& atts)
 
 void LogicHelperArrow::init()
 {
-	ClHandle player = tags_manager.getFirstHavingTag("player");
+	CHandle player = tags_manager.getFirstHavingTag("player");
 	TMsgSetTarget msg;
 	msg.target = player;
 	msg.who = PLAYER;
-	ClHandle(this).getOwner().sendMsg(msg);
+	CHandle(this).getOwner().sendMsg(msg);
 }
 
 void LogicHelperArrow::onSetTarget(const TMsgSetTarget & tasr)
@@ -35,7 +35,7 @@ void LogicHelperArrow::update(float elapsed) {
 	if (!targetl) return;
 	VEC3 targetpos = targett->getPosition();
 
-	CEntity* e_owner = ClHandle(this).getOwner();
+	CEntity* e_owner = CHandle(this).getOwner();
 	if (!e_owner) return;
 
 	TCompTransform *ownT = e_owner->get<TCompTransform>();
@@ -45,7 +45,7 @@ void LogicHelperArrow::update(float elapsed) {
 	ownpos.y += 1.8f;
 	float distance = 99999999.999f;
 	VEC3 nearGen;
-	for (ClHandle gen : TCompGenerator::all_generators) {
+	for (CHandle gen : TCompGenerator::all_generators) {
 		GET_COMP(g, gen, TCompGenerator);
 		if (g  && g->isUsable()) {
 			CEntity * gene = gen;

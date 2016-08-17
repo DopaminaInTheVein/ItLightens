@@ -150,7 +150,7 @@ void CParticlesManager::renderInMenu()
 	if (ImGui::TreeNode("Particles systems list")) {
 		for (auto& p : m_Particles) {
 			std::string name;
-			ClHandle h = ClHandle(p).getOwner();
+			CHandle h = CHandle(p).getOwner();
 
 			if (h.isValid()) {  //handle valid, search for name
 				CEntity * e = h;

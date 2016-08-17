@@ -16,9 +16,9 @@ public:
 		int						polarity;
 		int                     submesh_idx;
 		//const CRenderTechnique* tech;
-		ClHandle                 owner;
-		ClHandle                 transform;
-		ClHandle                 aabb;
+		CHandle                 owner;
+		CHandle                 transform;
+		CHandle                 aabb;
 		std::vector<int>        room;
 		bool                    isPlayer;
 	};
@@ -26,9 +26,9 @@ private:
 
 	struct TShadowKey {
 		const CMesh*            mesh;
-		ClHandle                 owner;
-		ClHandle                 transform;
-		ClHandle                 aabb;
+		CHandle                 owner;
+		CHandle                 transform;
+		CHandle                 aabb;
 		std::vector<int>		room;
 		bool                    isPlayer;
 	};
@@ -46,12 +46,12 @@ private:
 	int  ntimes_sorted = 0;
 public:
 
-	void registerToRender(const CStaticMesh* mesh, ClHandle handle);
-	void unregisterFromRender(ClHandle handle);
+	void registerToRender(const CStaticMesh* mesh, CHandle handle);
+	void unregisterFromRender(CHandle handle);
 	void renderUICulling();
-	void renderAll(ClHandle h_camera, CRenderTechnique::eCategory category);
-	void renderShadowCasters(ClHandle h_light);
-	void renderShadowCastersSkin(ClHandle h_light);
+	void renderAll(CHandle h_camera, CRenderTechnique::eCategory category);
+	void renderShadowCasters(CHandle h_light);
+	void renderShadowCastersSkin(CHandle h_light);
 };
 
 extern CRenderManager RenderManager;

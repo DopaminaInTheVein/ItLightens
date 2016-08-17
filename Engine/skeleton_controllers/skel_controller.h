@@ -44,7 +44,7 @@ class CObjectManager;
 
 class TCompSkelController {
 protected:
-	ClHandle owner;
+	CHandle owner;
 	std::string currentState = "";
 	std::string prevState = "";
 	bool priority = false;

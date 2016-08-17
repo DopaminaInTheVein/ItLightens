@@ -6,7 +6,7 @@
 
 namespace IK {
 	struct InfoSolver {
-		ClHandle handle;
+		CHandle handle;
 		VEC3 bone_pos;
 	};
 	struct ResultSolver {

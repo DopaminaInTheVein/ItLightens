@@ -6,11 +6,11 @@
 #include "components/comp_charactercontroller.h"
 #include "components/entity.h"
 
-ClHandle TCompRenderStaticMesh::last_loaded_static_mesh = ClHandle();
+CHandle TCompRenderStaticMesh::last_loaded_static_mesh = CHandle();
 
 void TCompRenderStaticMesh::onCreate(const TMsgEntityCreated&) {
 	registerToRender();
-	last_loaded_static_mesh = ClHandle(this).getOwner();
+	last_loaded_static_mesh = CHandle(this).getOwner();
 }
 
 bool TCompRenderStaticMesh::load(MKeyValue& atts) {
@@ -35,11 +35,11 @@ TCompRenderStaticMesh::~TCompRenderStaticMesh() {
 }
 
 void TCompRenderStaticMesh::registerToRender() {
-	RenderManager.registerToRender(static_mesh, ClHandle(this));
+	RenderManager.registerToRender(static_mesh, CHandle(this));
 }
 
 void TCompRenderStaticMesh::unregisterFromRender() {
-	RenderManager.unregisterFromRender(ClHandle(this));
+	RenderManager.unregisterFromRender(CHandle(this));
 }
 
 void TCompRenderStaticMesh::onGetLocalAABB(const TMsgGetLocalAABB& msg) {

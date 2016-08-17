@@ -10,10 +10,10 @@ VHandles TCompPilaContainer::all_pila_containers;
 
 void TCompPilaContainer::onCreate(const TMsgEntityCreated& msg)
 {
-	all_pila_containers.push_back(ClHandle(this).getOwner());
+	all_pila_containers.push_back(CHandle(this).getOwner());
 }
 
-void TCompPilaContainer::PutPila(ClHandle new_pila, bool notify) {
+void TCompPilaContainer::PutPila(CHandle new_pila, bool notify) {
 	pila = new_pila;
 
 	//Logic Event
@@ -23,17 +23,17 @@ void TCompPilaContainer::PutPila(ClHandle new_pila, bool notify) {
 	//string state = msg.charged ? "charged" : "uncharged";
 	//sprintf(params, "%s,%s", e->getName(), state);
 	if (notify) {
-		CEntity* e = ClHandle(this).getOwner();
+		CEntity* e = CHandle(this).getOwner();
 		logic_manager->throwEvent(CLogicManagerModule::OnPutPila, e->getName(), pila);
 	}
 }
 
 void TCompPilaContainer::RemovePila() {
-	ClHandle copyPilaforLM = pila;
-	pila = ClHandle();
+	CHandle copyPilaforLM = pila;
+	pila = CHandle();
 
 	//Logic Event
-	CEntity* e = ClHandle(this).getOwner();
+	CEntity* e = CHandle(this).getOwner();
 	logic_manager->throwEvent(CLogicManagerModule::OnRemovePila, e->getName(), copyPilaforLM);
 }
 
@@ -58,5 +58,5 @@ void TCompPilaContainer::onRecharge(const TMsgSetCharged& msg) {
 }
 
 TCompPilaContainer::~TCompPilaContainer() {
-	removeFromVector(all_pila_containers, ClHandle(this).getOwner());
+	removeFromVector(all_pila_containers, CHandle(this).getOwner());
 }

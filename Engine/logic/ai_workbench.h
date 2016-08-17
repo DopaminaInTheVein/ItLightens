@@ -34,8 +34,8 @@ class workbench_controller : public aicontroller, public TCompBase {
 	std::string full_name = "";
 
 	CObjectManager<workbench_controller>		*om = nullptr;
-	ClHandle								 myHandle;
-	ClHandle								 myParent;
+	CHandle								 myHandle;
+	CHandle								 myParent;
 	CEntity								*myEntity = nullptr;
 	//--------------------------------------
 

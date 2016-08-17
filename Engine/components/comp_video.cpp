@@ -32,7 +32,7 @@ void TCompVideo::ReleaseAll() {
 	if (pGraph)		pGraph->Release();
 	CoUninitialize();
 	GameController->SetGameState(CGameController::RUNNING);
-	ClHandle h = ClHandle(this).getOwner();
+	CHandle h = CHandle(this).getOwner();
 	h.destroy();
 }
 

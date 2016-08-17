@@ -26,7 +26,7 @@ bool CParticleSystem::load(MKeyValue & atts)
 	m_pTexture = Resources.get(tex_particles.c_str())->as<CTexture>();
 
 	std::string file_particles = atts.getString("file", "particles/particles_default.particles");
-	CParticleLoader parser = CParticleLoader(ClHandle(this));
+	CParticleLoader parser = CParticleLoader(CHandle(this));
 	m_Emitter = CParticlesEmitter();
 	bool is_ok = parser.xmlParseFile(file_particles);
 	return is_ok;
@@ -164,7 +164,7 @@ void CParticleSystem::init() {
 
 	m_pParticle_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 
-	CEntity * e = ClHandle(this).getOwner();
+	CEntity * e = CHandle(this).getOwner();
 	TCompTransform *t = e->get<TCompTransform>();
 	VEC3 curr_pos = t->getPosition();
 
@@ -412,7 +412,7 @@ void CParticleSystem::update(float elapsed) {
 }
 
 void CParticleSystem::UpdateRandomsAttr() {
-	CEntity* e = ClHandle(this).getOwner();
+	CEntity* e = CHandle(this).getOwner();
 	VEC3 front, up;
 	if (!e) {
 		front = VEC3(0, 0, 1);
@@ -576,7 +576,7 @@ void CParticleSystem::saveToFile(std::string fileName)
 
 bool CParticleSystem::loadFromFile(std::string fileName)
 {
-	CParticleLoader ep = CParticleLoader(ClHandle(this));
+	CParticleLoader ep = CParticleLoader(CHandle(this));
 	bool is_ok = ep.xmlParseFile(fileName);
 	if (!is_ok) {
 		fatal("error reading particle system %s file, the file wont be loaded\n", fileName.c_str());

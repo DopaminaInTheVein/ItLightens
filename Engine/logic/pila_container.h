@@ -5,12 +5,12 @@
 
 struct TCompPilaContainer : public TCompBase {
 	static VHandles all_pila_containers;
-	ClHandle player;
-	ClHandle pila;
+	CHandle player;
+	CHandle pila;
 
 	~TCompPilaContainer();
 	void onCreate(const TMsgEntityCreated& msg);
-	void PutPila(ClHandle, bool notify = true);
+	void PutPila(CHandle, bool notify = true);
 	void RemovePila();
 	bool HasPila();
 	bool HasPilaCharged();

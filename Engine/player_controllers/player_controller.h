@@ -17,7 +17,7 @@
 
 template< class TObj >
 class CObjectManager;
-class ClHandle;
+class CHandle;
 struct PolarityForce;
 struct TCompRenderStaticMesh;
 
@@ -64,8 +64,8 @@ class player_controller : public CPlayerBase {
 	float					dmg_absorbed;
 
 	//possesion handles
-	ClHandle					currentPossessable;
-	ClHandle					currentStunable;
+	CHandle					currentPossessable;
+	CHandle					currentStunable;
 
 	//Polarity Constants
 	float	POL_MIN_DISTANCE = 0.1f;
@@ -88,12 +88,12 @@ class player_controller : public CPlayerBase {
 	bool					affectPolarized = false;
 	bool					forward_jump = false;
 
-	ClHandle				generatorNear = ClHandle();
+	CHandle				generatorNear = CHandle();
 	bool					canPassWire = false;
 	bool					canRechargeDrone = false;
 	bool					canNotRechargeDrone = false;
 
-	ClHandle			drone;
+	CHandle			drone;
 
 	VEC3					endPointWire = VEC3(0, 0, 0);
 	vector<VEC3>			all_forces;
@@ -110,7 +110,7 @@ class player_controller : public CPlayerBase {
 		return transform;
 	}
 
-	PolarityForce getPolarityForce(ClHandle forceHandle);
+	PolarityForce getPolarityForce(CHandle forceHandle);
 
 	bool isDamaged();
 	//float getLife();
@@ -120,7 +120,7 @@ class player_controller : public CPlayerBase {
 	void recalcPossassable();
 	void UpdatePossession();
 
-	//void ChangePose(ClHandle new_pos_h);
+	//void ChangePose(CHandle new_pos_h);
 
 	void createEvolveLight();
 	void createDevolveLight();

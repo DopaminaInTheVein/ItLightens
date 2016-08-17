@@ -7,10 +7,10 @@
 
 struct LogicHelperArrow : public TCompBase {
 	//Update info
-	ClHandle myEntity;
+	CHandle myEntity;
 	TCompTransform * transform;
 public:
-	ClHandle		target;
+	CHandle		target;
 	void update(float elapsed);
 	bool load(MKeyValue& atts);
 	void onSetTarget(const TMsgSetTarget& tasr);

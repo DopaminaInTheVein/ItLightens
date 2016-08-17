@@ -32,7 +32,7 @@ class magnet_door : public TCompBase {
 	float epsilonTarget;
 
 	//Update info
-	ClHandle myEntity;
+	CHandle myEntity;
 	TCompTransform * transform;
 	TCompPhysics * physics;
 	TCompTransform * playerTransform;

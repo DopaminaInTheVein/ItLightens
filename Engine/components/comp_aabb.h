@@ -10,7 +10,7 @@ struct TCompAABB : public AABB, public TCompBase {
 	bool load(MKeyValue &atts);
 	void renderInMenu();
 	void render() const;
-	void updateFromSiblingsLocalAABBs(ClHandle h_entity);
+	void updateFromSiblingsLocalAABBs(CHandle h_entity);
 };
 
 struct TCompAbsAABB : public TCompAABB {

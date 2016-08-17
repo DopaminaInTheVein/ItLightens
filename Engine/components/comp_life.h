@@ -54,7 +54,7 @@ struct TCompLife : public TCompBase {
 	}
 
 	void onCreate(const TMsgEntityCreated &) {
-		ClHandle me = ClHandle(this).getOwner();
+		CHandle me = CHandle(this).getOwner();
 		if (!me.isValid()) {
 			fatal("Error creating life component\n");
 			assert(false);
@@ -74,7 +74,7 @@ struct TCompLife : public TCompBase {
 	}
 
 	void update(float elapsed) {
-		ClHandle me = ClHandle(this).getOwner();
+		CHandle me = CHandle(this).getOwner();
 		/*if (me.hasTag("AI_poss") && !me.hasTag("player")) {
 			energyDamageScale = -0.1f;
 		}*/

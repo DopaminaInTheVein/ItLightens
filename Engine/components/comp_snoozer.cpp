@@ -10,12 +10,12 @@ void TCompSnoozer::onPreload(const TMsgPreload& msg) {
 }
 
 void TCompSnoozer::onAwake(const TMsgAwake& msg) {
-	ClHandle parent = ClHandle(this).getOwner();
+	CHandle parent = CHandle(this).getOwner();
 	CEntityParser ep = CEntityParser(parent);
 	components->execute(&ep);
 	TMsgEntityCreated msgCreated;
 	((CEntity*)parent)->sendMsg(msgCreated);
-	ClHandle(this).destroy();
+	CHandle(this).destroy();
 }
 
 void TCompSnoozer::renderInMenu() {

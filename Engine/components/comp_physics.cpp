@@ -70,7 +70,7 @@ void TCompPhysics::updateTagsSetupActor()
 
 void TCompPhysics::updateTagsSetupActor(PxFilterData& filter)
 {
-	ClHandle h = ClHandle(this).getOwner();
+	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("trigger"))
 			return;
@@ -262,13 +262,13 @@ void TCompPhysics::onCreate(const TMsgEntityCreated &)
 		fatal("object type inexistent!!\n");
 		break;
 	}
-	if (!ok) ClHandle(this).destroy();
+	if (!ok) CHandle(this).destroy();
 }
 
 //fixedUpdate for physix, only needed for dynamic rigidbodys
 void TCompPhysics::update(float dt)
 {
-	if (!isInRoom(ClHandle(this).getOwner())) return;
+	if (!isInRoom(CHandle(this).getOwner())) return;
 	if (m_collisionType == DYNAMIC_RB && m_pActor) {
 		// ask physics about the current pos + rotation
 		// update my sibling TCompTransform with the physics info
@@ -300,7 +300,7 @@ void TCompPhysics::update(float dt)
 //----------------------------------------------------------
 bool TCompPhysics::createTriMeshShape()
 {
-	ClHandle entity_h = ClHandle(this).getOwner();
+	CHandle entity_h = CHandle(this).getOwner();
 	CEntity *e = nullptr;
 	if (entity_h.isValid()) e = entity_h;
 	if (e) {
@@ -353,7 +353,7 @@ bool TCompPhysics::createSphereShape()
 }
 
 bool TCompPhysics::createConvexShape() {
-	ClHandle entity_h = ClHandle(this).getOwner();
+	CHandle entity_h = CHandle(this).getOwner();
 	CEntity *e = nullptr;
 	if (entity_h.isValid()) e = entity_h;
 	if (e) {
@@ -393,7 +393,7 @@ bool TCompPhysics::createDroneShape()
 
 bool TCompPhysics::addRigidbodyScene()
 {
-	CEntity *e = ClHandle(this).getOwner();
+	CEntity *e = CHandle(this).getOwner();
 	TCompTransform *tmx = e->get<TCompTransform>();
 
 	if (m_collisionType == STATIC_OBJECT) {
@@ -406,7 +406,7 @@ bool TCompPhysics::addRigidbodyScene()
 		updateTagsSetupActor(mFilterData);
 
 		//save parent handle to physx
-		m_pActor->userData = (void*)ClHandle(this).getOwner().asUnsigned();
+		m_pActor->userData = (void*)CHandle(this).getOwner().asUnsigned();
 		return true;
 	}
 	else if (m_collisionType == DYNAMIC_RB) {
@@ -420,7 +420,7 @@ bool TCompPhysics::addRigidbodyScene()
 		updateTagsSetupActor(mFilterData);
 
 		//save parent handle to physx
-		m_pActor->userData = (void*)ClHandle(this).getOwner().asUnsigned();
+		m_pActor->userData = (void*)CHandle(this).getOwner().asUnsigned();
 		m_pActor->isRigidBody()->setMass(m_mass);
 		if (m_kinematic) setKinematic(true);
 		return true;
@@ -433,7 +433,7 @@ bool TCompPhysics::addRigidbodyScene()
 		m_pShape->release();
 
 		//save parent handle to physx
-		m_pActor->userData = (void*)ClHandle(this).getOwner().asUnsigned();
+		m_pActor->userData = (void*)CHandle(this).getOwner().asUnsigned();
 
 		return true;
 	}
@@ -700,7 +700,7 @@ void TCompPhysics::renderInMenu()
 }
 
 void TCompPhysics::readIniFileAttr() {
-	ClHandle h = ClHandle(this).getOwner();
+	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("box")) {
 			CApp &app = CApp::get();
@@ -761,7 +761,7 @@ void TCompPhysics::writeIniFileAttr() {
 	CApp &app = CApp::get();
 	std::string file_ini = app.file_initAttr_json;
 
-	ClHandle h = ClHandle(this).getOwner();
+	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("box")) {
 			char read[64];

@@ -195,7 +195,7 @@ void TCompSkeletonIK::solveBone(TBoneMod* bm) {
 //
 //	// Access to the sibling comp skeleton component
 //	// where we can access the cal_model instance
-//	CEntity* e = ClHandle(this).getOwner();
+//	CEntity* e = CHandle(this).getOwner();
 //	TCompSkeleton *comp_skel = e->get<TCompSkeleton>();
 //	if (comp_skel == nullptr)
 //		return;

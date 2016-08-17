@@ -12,7 +12,7 @@ void TCompPolarized::init()
 {
 	player_h = tags_manager.getFirstHavingTag(getID("player"));
 
-	ClHandle e_h = ClHandle(this).getOwner();
+	CHandle e_h = CHandle(this).getOwner();
 	CEntity * e = e_h;
 	TCompTransform *t = e->get<TCompTransform>();
 	last_position = t->getPosition();
@@ -25,7 +25,7 @@ void TCompPolarized::init()
 }
 
 bool TCompPolarized::getUpdateInfo() {
-	GET_COMP(t, ClHandle(this).getOwner(), TCompTransform);
+	GET_COMP(t, CHandle(this).getOwner(), TCompTransform);
 	if (!t) return false;
 	origin = t->getPosition() + force.offset;
 	Debug->DrawLine(t->getPosition(), t->getPosition() + force.offset);
@@ -34,7 +34,7 @@ bool TCompPolarized::getUpdateInfo() {
 void TCompPolarized::update(float elapsed)
 {
 	/*
-	ClHandle me_h = ClHandle(this).getOwner();
+	CHandle me_h = CHandle(this).getOwner();
 
 	origin = VEC3(0.0f, 0.0f, 0.0f);
 	CEntity *me_e = me_h;
@@ -70,7 +70,7 @@ void TCompPolarized::update(float elapsed)
 		}
 		else if (mType == FREE) {
 			if (mPlayer_state != NEUTRAL) {
-				ClHandle e_h = ClHandle(this).getOwner();
+				CHandle e_h = CHandle(this).getOwner();
 				CEntity *e = e_h;
 
 				if (e_h.isValid()) {		//update real position, object can be moved
@@ -161,7 +161,7 @@ bool TCompPolarized::save(std::ofstream& os, MKeyValue& atts)
 
 void TCompPolarized::onCreate(const TMsgEntityCreated &)
 {
-	ClHandle me_h = ClHandle(this).getOwner();
+	CHandle me_h = CHandle(this).getOwner();
 	CEntity* e = me_h;
 	dbg("on create polarized [%s]\n", e->getName());
 

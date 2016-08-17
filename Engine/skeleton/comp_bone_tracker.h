@@ -6,7 +6,7 @@
 #include "components/comp_msgs.h"
 
 struct TCompBoneTracker : public TCompBase {
-	ClHandle  h_entity;
+	CHandle  h_entity;
 	uint32_t bone_id;
 	char     bone_name[64];
 	char     entity_name[64];

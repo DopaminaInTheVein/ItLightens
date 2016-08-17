@@ -14,7 +14,7 @@ map<string, statehandler> workbench_controller::statemap = {};
 map<int, string> workbench_controller::out = {};
 
 void workbench_controller::readIniFileAttr() {
-	ClHandle h = ClHandle(this).getOwner();
+	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("workbench")) {
 			CApp &app = CApp::get();

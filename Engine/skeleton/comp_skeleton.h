@@ -13,7 +13,7 @@ class TCompTransform;
 struct TCompSkeleton : public TCompBase {
 	const CSkeleton* resource_skeleton;
 	CalModel*  model;
-	ClHandle culling;
+	CHandle culling;
 	TCompAbsAABB * aabb;
 	TCompTransform * tmx;
 

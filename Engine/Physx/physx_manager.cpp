@@ -474,10 +474,10 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 		PxFilterData fd = pair.otherShape->getQueryFilterData();
 		if (fd.word2 & (ItLightensFilter::eCAN_TRIGGER)) {
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_LOST)) {
-				ClHandle h_active = ClHandle();
+				CHandle h_active = CHandle();
 				h_active.fromUnsigned(HandleToUlong(pair.otherActor->userData));
 
-				ClHandle h_trigger = ClHandle();
+				CHandle h_trigger = CHandle();
 				h_trigger.fromUnsigned(HandleToUlong(pair.triggerActor->userData));
 
 				if (!h_trigger.isValid() || !h_active.isValid()) return;
@@ -486,15 +486,15 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 				CEntity *e_active = h_active;
 
 				TMsgTriggerOut msg;
-				msg.other = ClHandle(e_active);
+				msg.other = CHandle(e_active);
 				e_trigger->sendMsg(msg);
 			}
 
 			if (pair.status & (PxPairFlag::eNOTIFY_TOUCH_FOUND)) {
-				ClHandle h_active = ClHandle();
+				CHandle h_active = CHandle();
 				h_active.fromUnsigned(HandleToUlong(pair.otherActor->userData));
 
-				ClHandle h_trigger = ClHandle();
+				CHandle h_trigger = CHandle();
 				h_trigger.fromUnsigned(HandleToUlong(pair.triggerActor->userData));
 
 				if (!h_trigger.isValid() || !h_active.isValid()) return;
@@ -503,7 +503,7 @@ void CPhysxManager::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
 				CEntity *e_active = h_active;
 
 				TMsgTriggerIn msg;
-				msg.other = ClHandle(e_active);
+				msg.other = CHandle(e_active);
 				e_trigger->sendMsg(msg);
 			}
 		}
@@ -839,15 +839,15 @@ PxTransform PhysxConversion::ToPxTransform(const VEC3 & pos, const CQuaternion &
 {
 	return PxTransform(Vec3ToPxVec3(pos), CQuaternionToPxQuat(rot));
 }
-ClHandle PhysxConversion::GetEntityHandle(const PxActor & a)
+CHandle PhysxConversion::GetEntityHandle(const PxActor & a)
 {
 	if (&a) {
-		ClHandle h;
+		CHandle h;
 		h.fromUnsigned(HandleToUlong(a.userData));
 		return h;
 	}
 	else {
-		return ClHandle(); //handle not valid
+		return CHandle(); //handle not valid
 	}
 }
 //----------------------------------------------------------

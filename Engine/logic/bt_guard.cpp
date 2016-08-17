@@ -54,7 +54,7 @@ CEntity* bt_guard::getPlayer() {
 }
 
 void bt_guard::readIniFileAttr() {
-	ClHandle h = ClHandle(this).getOwner();
+	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_guard")) {
 			CApp &app = CApp::get();
@@ -104,7 +104,7 @@ void bt_guard::Init()
 	readIniFileAttr();
 
 	//Handles
-	myHandle = ClHandle(this);
+	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 	//animController.init(myParent);
 	thePlayer = tags_manager.getFirstHavingTag(getID("player"));
@@ -209,7 +209,7 @@ bool bt_guard::playerDetected() {
 
 		SBB::postGuardAlert(name, alert);
 
-		logic_manager->throwEvent(logic_manager->OnDetected, std::to_string(distance) + " " + std::to_string(myPos.x) + " " + std::to_string(myPos.y) + " " + std::to_string(myPos.z), ClHandle(this).getOwner());
+		logic_manager->throwEvent(logic_manager->OnDetected, std::to_string(distance) + " " + std::to_string(myPos.x) + " " + std::to_string(myPos.y) + " " + std::to_string(myPos.z), CHandle(this).getOwner());
 		return true;
 	}
 	else {
@@ -1242,7 +1242,7 @@ bool bt_guard::turnToPlayer()
 {
 	CEntity* ePlayer = getPlayer();
 	if (ePlayer) {
-		GET_COMP(tPlayer, ClHandle(ePlayer), TCompTransform);
+		GET_COMP(tPlayer, CHandle(ePlayer), TCompTransform);
 		return turnTo(tPlayer->getPosition());
 	}
 	return true;
@@ -1305,7 +1305,7 @@ bool bt_guard::playerVisible(bool check_raycast) {
 		PxRaycastBuffer hit;
 		bool ret = rayCastToPlayer(1, distRay, hit);
 		if (ret) { //No bloquea vision
-			ClHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
 			if (h.hasTag("player")) { //player?
 				return true;
 			}
@@ -1330,7 +1330,7 @@ bool bt_guard::playerVisible(bool check_raycast) {
 						PxRaycastBuffer hit;
 						bool ret = rayCastToPlayer(1, distRay, hit);
 						if (ret) { //No bloquea vision
-							ClHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+							CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
 							if (h.hasTag("player")) { //player?
 								return true;
 							}
@@ -1349,7 +1349,7 @@ bool bt_guard::boxMovingDetected() {
 	PxRaycastBuffer hit;
 	bool ret = rayCastToFront(1, distRay, hit);
 	if (ret) { //No bloquea vision
-		ClHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+		CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
 		if (h.hasTag("box")) { //box?
 			CEntity* box = h;
 			TCompPolarized* pol_component = box->get<TCompPolarized>();
@@ -1429,7 +1429,7 @@ bool bt_guard::shootToPlayer() {
 		bool ret = rayCastToPlayer(1, distRay, hit);
 		dest_shoot = PhysxConversion::PxVec3ToVec3(hit.getAnyHit(0).position);
 		if (ret) {
-			ClHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
 			if (h.hasTag("player")) {
 				damage = true;
 				raijin = h.hasTag("raijin");
@@ -1513,7 +1513,7 @@ void bt_guard::drawShot(VEC3 dest) {
 	ShootManager::shootLaser(originShot, destShot);
 }
 
-void bt_guard::removeBox(ClHandle box_handle) {
+void bt_guard::removeBox(CHandle box_handle) {
 	CEntity* box = box_handle;
 	TCompPhysics* box_physx = box->get<TCompPhysics>();
 	int lateral_force = rand() % 2500;

@@ -6,14 +6,14 @@
 #include "comp_transform.h"
 
 struct TCompWorkstation : public TCompBase {
-	ClHandle mParent;
+	CHandle mParent;
 	VEC3 position;
 	std::string anim_name;
 	VEC3 pos_action;
 	float yaw_action;
 
 	void init() {
-		mParent = ClHandle(this).getOwner();
+		mParent = CHandle(this).getOwner();
 		CEntity *e = mParent;
 		TCompTransform *t = e->get<TCompTransform>();
 		position = t->getPosition();

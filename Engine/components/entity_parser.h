@@ -25,19 +25,19 @@ public:
 
 namespace IdEntities {
 	void init();
-	ClHandle findById(const int entity_id);
-	void saveIdEntity(const ClHandle entity, const int entity_id);
+	CHandle findById(const int entity_id);
+	void saveIdEntity(const CHandle entity, const int entity_id);
 }
 
 class CEntityParser : public CXMLParser {
-	ClHandle curr_entity;
+	CHandle curr_entity;
 	int curr_entity_id;
 	bool curr_entity_permanent;
 	bool curr_entity_reload;
 	bool curr_entity_slept;
 	bool first_load;
 	bool reload = false;
-	ClHandle root_entity;
+	CHandle root_entity;
 	VHandles handles;
 	static VHandles collisionables;
 	CPrefabCompiler* curr_prefab_compiler;
@@ -46,12 +46,12 @@ class CEntityParser : public CXMLParser {
 public:
 	CEntityParser() : curr_prefab_compiler(nullptr) {}// { IdEntities::init(); }
 	CEntityParser(bool new_reload) : curr_prefab_compiler(nullptr), reload(new_reload) {}// { IdEntities::init(); }
-	CEntityParser(ClHandle parent) { curr_entity = root_entity = parent; }
-	ClHandle getRootEntity() { return root_entity; }
+	CEntityParser(CHandle parent) { curr_entity = root_entity = parent; }
+	CHandle getRootEntity() { return root_entity; }
 	void onStartElement(const std::string &elem, MKeyValue &atts) override;
 	void onEndElement(const std::string &elem) override;
 
-	static const std::vector<ClHandle> CEntityParser::getCollisionables() {
+	static const std::vector<CHandle> CEntityParser::getCollisionables() {
 		return collisionables;
 	}
 	static void clearCollisionables() {
@@ -70,7 +70,7 @@ public:
 	bool hasToCreate();
 };
 
-ClHandle spawnPrefab(const std::string& prefab); // create Prefab and call onCreate
-ClHandle createPrefab(const std::string& prefab);
+CHandle spawnPrefab(const std::string& prefab); // create Prefab and call onCreate
+CHandle createPrefab(const std::string& prefab);
 
 #endif

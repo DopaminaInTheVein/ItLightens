@@ -28,7 +28,7 @@ void TCompWire::update(float dt)
 
 void TCompWire::onCreate(const TMsgEntityCreated & msg)
 {
-	ClHandle me_h = ClHandle(this).getOwner();
+	CHandle me_h = CHandle(this).getOwner();
 	org = VEC3(0.0f, 0.0f, 0.0f);
 	if (me_h.isValid()) {
 		CEntity *me_e = me_h;

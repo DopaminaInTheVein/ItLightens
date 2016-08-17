@@ -7,7 +7,7 @@
 class GameData {
 public:
 	static float getLifeNormalized() {
-		ClHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
+		CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
 		if (player.isValid()) {
 			CEntity* ePlayer = player;
 			TCompLife * life = ePlayer->get<TCompLife>();
@@ -17,7 +17,7 @@ public:
 	}
 
 	static float getLifeMax() {
-		ClHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
+		CHandle player = tags_manager.getFirstHavingTag(getID("raijin"));
 		if (player.isValid()) {
 			CEntity* ePlayer = player;
 			player_controller * pc = ePlayer->get<player_controller>();

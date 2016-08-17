@@ -76,9 +76,9 @@ class bt_guard : public bt, public TCompBase
 	float UNSTUCK_DISTANCE;
 
 	//Handles & More
-	ClHandle myHandle;
-	ClHandle myParent;
-	ClHandle thePlayer;
+	CHandle myHandle;
+	CHandle myParent;
+	CHandle thePlayer;
 	TCompTransform * getTransform();
 	TCompCharacterController* getCC();
 	CEntity* getPlayer();
@@ -132,7 +132,7 @@ class bt_guard : public bt, public TCompBase
 	bool player_detected_start = false;
 	float reaction_time = -1.0f;
 	// box removal management
-	ClHandle box_to_remove;
+	CHandle box_to_remove;
 	bool remove_box_ready = true;
 	float remove_box_time = -1.0f;
 	float removing_box_animation_time = 0.f;
@@ -179,7 +179,7 @@ class bt_guard : public bt, public TCompBase
 	bool rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform);
 	bool shootToPlayer();
 	void drawShot(VEC3 dest);
-	void removeBox(ClHandle box_handle);
+	void removeBox(CHandle box_handle);
 
 	bool stunned;
 	bool shooting = false;

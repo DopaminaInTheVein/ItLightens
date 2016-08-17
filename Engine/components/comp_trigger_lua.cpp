@@ -43,7 +43,7 @@ eAction TTriggerLua::getActionAvailable() {
 
 	// Obtenemos player...
 	// ... Intentamos por el handle del ultimo que entro en el trigger
-	ClHandle player = last_msg_in.other;
+	CHandle player = last_msg_in.other;
 	// ... Si no lo volvemos a buscar por tag
 	if (!player.isValid() || !last_msg_in.other.hasTag("player")) {
 		player = tags_manager.getFirstHavingTag("player");
@@ -79,9 +79,9 @@ void TTriggerLua::setActionable(bool actionable) {
 	mActionable = actionable;
 }
 
-void TTriggerLua::executeTrigger(CLogicManagerModule::EVENT logicEvent) { //, ClHandle handle) {
-	CEntity* eMe = ClHandle(this).getOwner();
-	logic_manager->throwEvent(logicEvent, string(eMe->getName()), ClHandle(this).getOwner());
+void TTriggerLua::executeTrigger(CLogicManagerModule::EVENT logicEvent) { //, CHandle handle) {
+	CEntity* eMe = CHandle(this).getOwner();
+	logic_manager->throwEvent(logicEvent, string(eMe->getName()), CHandle(this).getOwner());
 }
 
 //Load actions

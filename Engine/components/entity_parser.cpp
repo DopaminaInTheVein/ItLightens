@@ -12,13 +12,13 @@ set<string> CEntityParser::loaded_files = set<string>();
 VHandles CEntityParser::collisionables = VHandles();
 // Identified Entities
 static VHandles identified_entities;
-ClHandle IdEntities::findById(const int entity_id) {
+CHandle IdEntities::findById(const int entity_id) {
 	return identified_entities[entity_id];
 }
 void IdEntities::init() {
 	identified_entities.resize(MAX_ENTITIES);
 }
-void IdEntities::saveIdEntity(ClHandle entity, int entity_id) {
+void IdEntities::saveIdEntity(CHandle entity, int entity_id) {
 	if (entity_id >= 0) {
 		identified_entities[entity_id] = entity;
 		CEntity* e = entity;
@@ -26,8 +26,8 @@ void IdEntities::saveIdEntity(ClHandle entity, int entity_id) {
 	}
 }
 
-ClHandle spawnPrefab(const std::string& prefab) {
-	ClHandle h = createPrefab(prefab);
+CHandle spawnPrefab(const std::string& prefab) {
+	CHandle h = createPrefab(prefab);
 
 	//Le avisamos que se ha creado
 	CEntity* e = h;
@@ -38,7 +38,7 @@ ClHandle spawnPrefab(const std::string& prefab) {
 	return h;
 }
 
-ClHandle createPrefab(const std::string& prefab) {
+CHandle createPrefab(const std::string& prefab) {
 	// Check if the prefabs is already 'compiled'
 	CPrefabCompiler* prefab_compiler = nullptr;
 	auto it = compiled_prefabs.find(prefab);
@@ -97,7 +97,7 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 		return;
 	}
 
-	ClHandle new_h;
+	CHandle new_h;
 	bool    reusing_component = false;
 
 	// Check if we find a new entity with the prefab attr
@@ -106,7 +106,7 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 		curr_entity_reload = atts.getBool("reload", false);
 
 		if (!hasToCreate()) {
-			curr_entity = ClHandle();
+			curr_entity = CHandle();
 			return;
 		}
 		else {
@@ -125,7 +125,7 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 		// Check if the current entity already has this type
 		// of component...
 		CEntity* e = curr_entity;
-		IdEntities::saveIdEntity(ClHandle(e), curr_entity_id);
+		IdEntities::saveIdEntity(CHandle(e), curr_entity_id);
 		e->setPermanent(curr_entity_permanent);
 		e->setReload(curr_entity_reload);
 		new_h = e->getByCompIndex(hm->getType());
@@ -180,7 +180,7 @@ void CEntityParser::onEndElement(const std::string &elem) {
 
 		if (curr_slept_compiler) {
 			auto hmSnoozer = CHandleManager::getByName("snoozer");
-			ClHandle snoozer = hmSnoozer->createHandle();
+			CHandle snoozer = hmSnoozer->createHandle();
 			CEntity * e = curr_entity;
 			e->add(snoozer);
 			TMsgPreload msgPreload;
@@ -190,7 +190,7 @@ void CEntityParser::onEndElement(const std::string &elem) {
 		// Keep track of the first entity found in the file
 		if (!root_entity.isValid())
 			root_entity = curr_entity;
-		curr_entity = ClHandle();
+		curr_entity = CHandle();
 		curr_slept_compiler = nullptr;
 	}
 

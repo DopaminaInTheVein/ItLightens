@@ -16,7 +16,7 @@ map<string, btevent> bt_mole::events = {};
 btnode* bt_mole::root = nullptr;
 
 void bt_mole::readIniFileAttr() {
-	ClHandle h = ClHandle(this).getOwner();
+	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_mole")) {
 			CApp &app = CApp::get();
@@ -34,11 +34,11 @@ void bt_mole::readIniFileAttr() {
 
 void bt_mole::Init()
 {
-	getUpdateInfoBase(ClHandle(this).getOwner());
+	getUpdateInfoBase(CHandle(this).getOwner());
 	// read main attributes from file
 	readIniFileAttr();
 
-	myHandle = ClHandle(this);
+	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 
 	if (tree.empty()) {
@@ -375,7 +375,7 @@ int bt_mole::actionUngrabBox() {
 */
 void bt_mole::_actionBeforePossession() {
 	/*if (towptbox > -1 && carryingBox) {
-		vector<ClHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
+		vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
 		CEntity * en = newPointerVec[towptbox];
 		TCompName * nameBox = en->get<TCompName>();
 		string key = nameBox->name;
@@ -411,7 +411,7 @@ void bt_mole::_actionBeforePossession() {
 
 void bt_mole::_actionWhenStunt() {
 	/*if (towptbox > -1 && carryingBox) {
-		vector<ClHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
+		vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
 		CEntity * en = newPointerVec[towptbox];
 		TCompName * nameBox = en->get<TCompName>();
 		string key = nameBox->name;

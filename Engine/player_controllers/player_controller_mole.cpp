@@ -50,7 +50,7 @@ map<string, statehandler> player_controller_mole::statemap = {};
 #define MOLE_TIME_OUT_GO_GRAB	4.f
 
 void player_controller_mole::readIniFileAttr() {
-	ClHandle h = ClHandle(this).getOwner();
+	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
 		if (h.hasTag("AI_mole")) {
 			CApp &app = CApp::get();
@@ -76,7 +76,7 @@ void player_controller_mole::readIniFileAttr() {
 
 #define AddStMole(name, func) AddState(name, (statehandler)&player_controller_mole::func)
 void player_controller_mole::Init() {
-	getUpdateInfoBase(ClHandle(this).getOwner());
+	getUpdateInfoBase(CHandle(this).getOwner());
 
 	// read main attributes from file
 	readIniFileAttr();
@@ -128,7 +128,7 @@ void player_controller_mole::Init() {
 bool player_controller_mole::getUpdateInfo()
 {
 	if (!CPlayerBase::getUpdateInfo()) return false;
-	myParent = ClHandle(this).getOwner();
+	myParent = CHandle(this).getOwner();
 	animController = GETH_MY(SkelControllerMole);
 	return true;
 }
@@ -313,7 +313,7 @@ void player_controller_mole::UpdateMovingWithOther() {
 }
 
 void player_controller_mole::UpdateUnpossess() {
-	ClHandle h = ClHandle(this);
+	CHandle h = CHandle(this);
 	tags_manager.removeTag(h.getOwner(), getID("player"));
 
 	if (boxGrabbed.isValid()) {
@@ -323,8 +323,8 @@ void player_controller_mole::UpdateUnpossess() {
 		GET_COMP(box_p, boxGrabbed, TCompPhysics);
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
-		boxGrabbed = ClHandle();
-		boxPushed = ClHandle();
+		boxGrabbed = CHandle();
+		boxPushed = CHandle();
 	}
 	if (pilaGrabbed.isValid()) {
 		LeavePila();
@@ -332,7 +332,7 @@ void player_controller_mole::UpdateUnpossess() {
 		inputEnabled = true;
 		GET_COMP(pila_p, pilaGrabbed, TCompPhysics);
 		pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
-		pilaGrabbed = ClHandle();
+		pilaGrabbed = CHandle();
 	}
 	SET_ANIM_MOLE(AST_STUNNED);
 }
@@ -340,7 +340,7 @@ void player_controller_mole::UpdateUnpossess() {
 void player_controller_mole::DestroyWall() {
 	energyDecreasal(10.0f);
 	SET_ANIM_MOLE(AST_SHOOT);
-	vector<ClHandle> handles = SBB::readHandlesVector("wptsBreakableWall");
+	vector<CHandle> handles = SBB::readHandlesVector("wptsBreakableWall");
 	handles.erase(handles.begin() + selectedWallToBreaki);
 	getHandleManager<CEntity>()->destroyHandle(getEntityWallHandle(selectedWallToBreaki));
 	SBB::postHandlesVector("wptsBreakableWall", handles);
@@ -388,8 +388,8 @@ void player_controller_mole::LeavingBox()
 		GET_COMP(box_p, boxGrabbed, TCompPhysics);
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
-		boxGrabbed = ClHandle();
-		boxPushed = ClHandle();
+		boxGrabbed = CHandle();
+		boxPushed = CHandle();
 	}
 }
 
@@ -406,7 +406,7 @@ void player_controller_mole::LeavingPila()
 		GET_COMP(pila_t, pilaGrabbed, TCompTransform);
 
 		pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
-		pilaGrabbed = ClHandle();
+		pilaGrabbed = CHandle();
 		animController->setState(AST_IDLE);
 	}
 }
@@ -436,7 +436,7 @@ void player_controller_mole::PuttingPila()
 
 		//pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		pila->PutIn(pilaContainer);
-		pilaGrabbed = ClHandle();
+		pilaGrabbed = CHandle();
 		player_max_speed *= 2;
 		animController->setState(AST_IDLE);
 	}
@@ -509,7 +509,7 @@ bool player_controller_mole::nearToPila() {
 
 bool player_controller_mole::nearToPilaContainer() {
 	float distMax = 4.f;
-	pilaContainer = ClHandle();
+	pilaContainer = CHandle();
 	for (auto h : TCompPilaContainer::all_pila_containers) {
 		if (!h.isValid()) continue;
 		GET_COMP(tContainer, h, TCompTransform);
@@ -818,7 +818,7 @@ void player_controller_mole::GrabbingImpact2()
 }
 
 void player_controller_mole::InitControlState() {
-	ClHandle h = ClHandle(this);
+	CHandle h = CHandle(this);
 	tags_manager.addTag(h.getOwner(), getID("player"));
 	ChangeState("idle");
 }

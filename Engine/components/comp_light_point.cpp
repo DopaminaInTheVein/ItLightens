@@ -20,7 +20,7 @@ void TCompLightPoint::renderInMenu() {
 }
 
 void TCompLightPoint::uploadShaderCtes() {
-	CEntity* e = ClHandle(this).getOwner();
+	CEntity* e = CHandle(this).getOwner();
 	TCompTransform* trans = e->get<TCompTransform>();
 	shader_ctes_lights.LightWorldPos = VEC4(trans->getPosition());
 	// LightViewProj not updated
@@ -31,7 +31,7 @@ void TCompLightPoint::uploadShaderCtes() {
 }
 
 void TCompLightPoint::activate() {
-	CEntity* e = ClHandle(this).getOwner();
+	CEntity* e = CHandle(this).getOwner();
 	assert(e);
 	TCompTransform* trans = e->get<TCompTransform>();
 	assert(trans);

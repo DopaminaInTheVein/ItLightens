@@ -39,7 +39,7 @@ void CStaticBomb::UpdatePosition() {
 
 void CStaticBomb::Explode()
 {
-	myHandle = ClHandle(this);
+	myHandle = CHandle(this);
 	myParent = myHandle.getOwner();
 	dbg("STATIC BOMB -> I am going to explode\n");
 	if (myHandle.isValid() && myParent.isValid()) {
