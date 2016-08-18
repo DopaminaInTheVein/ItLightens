@@ -70,7 +70,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)\fmod\studio\lib;$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod_vc.lib;fmodstudioL_vc.lib;fmodstudio_vc.lib;fmodL_vc.lib;fmod64_vc.lib;fmodL64_vc.lib;fmodstudio64_vc.lib;fmodstudioL64_vc.lib;XINPUT9_1_0.LIB;SLB_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Strmiids.lib;fmod_vc.lib;fmodstudioL_vc.lib;fmodstudio_vc.lib;fmodL_vc.lib;fmod64_vc.lib;fmodL64_vc.lib;fmodstudio64_vc.lib;fmodstudioL64_vc.lib;XINPUT9_1_0.LIB;SLB_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
@@ -172,6 +172,7 @@
     </ClCompile>
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\comp_trigger_lua.cpp" />
+    <ClCompile Include="components\comp_video.cpp" />
     <ClCompile Include="components\comp_wire.cpp" />
     <ClCompile Include="components\entity.cpp" />
     <ClCompile Include="components\entity_parser.cpp" />
@@ -211,7 +212,6 @@
     <ClCompile Include="input\input_wrapper.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
     <ClCompile Include="logic\ai_cam.cpp" />
-    <ClCompile Include="logic\ai_water.cpp" />
     <ClCompile Include="logic\ai_workbench.cpp" />
     <ClCompile Include="logic\bt.cpp" />
     <ClCompile Include="logic\btnode.cpp" />
@@ -401,6 +401,7 @@
     <ClInclude Include="components\comp_trigger_standar.h" />
     <ClInclude Include="components\comp_trigger_lua.h" />
     <ClInclude Include="components\comp_victory_point.h" />
+    <ClInclude Include="components\comp_video.h" />
     <ClInclude Include="components\comp_wire.h" />
     <ClInclude Include="components\comp_workstation.h" />
     <ClInclude Include="components\entity.h" />
@@ -439,7 +440,6 @@
     <ClInclude Include="input\input_wrapper.h" />
     <ClInclude Include="logic\aicontroller.h" />
     <ClInclude Include="logic\ai_cam.h" />
-    <ClInclude Include="logic\ai_water.h" />
     <ClInclude Include="logic\ai_workbench.h" />
     <ClInclude Include="logic\bt.h" />
     <ClInclude Include="logic\btnode.h" />

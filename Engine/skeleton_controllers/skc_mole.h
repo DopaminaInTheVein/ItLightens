@@ -37,7 +37,7 @@ public:
 	void ungrabObject(); // Funcion para soltarlo
 	void ungrabPila(); // Funcion para soltarlo
 	void unpushObject(); // Funcion para soltarlo
-	void removeGrab() { grabbed = CHandle(); pushed = CHandle();  } //"Private" func
+	void removeGrab() { grabbed = CHandle(); pushed = CHandle(); } //"Private" func
 	void removePila() { grabbedPila = CHandle(); } //"Private" func
 	VEC3 getGrabLeft();
 	VEC3 getGrabRight();

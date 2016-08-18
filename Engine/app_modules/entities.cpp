@@ -5,13 +5,13 @@
 #include "components/comp_msgs.h"
 #include "components/entity_tags.h"
 #include "components/comp_workstation.h"
+#include "components/comp_video.h"
 #include "handle/handle_manager.h"
 #include "handle/msgs.h"
 #include "render/technique.h"
 #include "resources/resources_manager.h"
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
-#include "logic/ai_water.h"
 #include "logic/bt_guard.h"
 #include "logic/bt_mole.h"
 #include "logic/bt_scientist.h"
@@ -41,7 +41,6 @@ DECL_OBJ_MANAGER("magnet_door", magnet_door);
 DECL_OBJ_MANAGER("elevator", elevator);
 DECL_OBJ_MANAGER("bt_guard", bt_guard);
 DECL_OBJ_MANAGER("bt_mole", bt_mole);
-DECL_OBJ_MANAGER("water", water_controller);
 DECL_OBJ_MANAGER("player", player_controller);
 DECL_OBJ_MANAGER("player_mole", player_controller_mole);
 DECL_OBJ_MANAGER("player_cientifico", player_controller_cientifico);
@@ -100,6 +99,9 @@ DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
 
 //particles
 DECL_OBJ_MANAGER("particles_system", CParticleSystem);
+
+//particles
+DECL_OBJ_MANAGER("video_player", TCompVideo);
 
 /* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
@@ -187,7 +189,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<ai_cam>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench>()->init(MAX_ENTITIES);
-	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 	getHandleManager<magnet_door>()->init(MAX_ENTITIES);
 	getHandleManager<elevator>()->init(4);
 	getHandleManager<TCompRenderGlow>()->init(4);
@@ -213,6 +214,9 @@ bool CEntitiesModule::start() {
 
 	//particles
 	getHandleManager<CParticleSystem>()->init(MAX_ENTITIES);
+
+	//video
+	getHandleManager<TCompVideo>()->init(4);
 
 	//fx
 	getHandleManager<TCompFadeScreen>()->init(4);
@@ -284,9 +288,6 @@ bool CEntitiesModule::start() {
 
 	//box
 	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
-
-	//water
-	SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
 
 	//bombs
 	SUBSCRIBE(CThrowBomb, TMsgActivate, onNextState);
@@ -524,7 +525,10 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
 	}
 
-	if (GameController->GetGameState() == CGameController::RUNNING) {
+	if (GameController->GetGameState() == CGameController::PLAY_VIDEO) {
+		getHandleManager<TCompVideo>()->updateAll(dt);
+	}
+	else if (GameController->GetGameState() == CGameController::RUNNING) {
 		// May need here a switch to update wich player controller takes the action - possession rulez
 		if (!GameController->IsCinematic()) {
 			getHandleManager<player_controller>()->updateAll(dt);
@@ -563,7 +567,6 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<bt_scientist>()->updateAll(dt);
 			getHandleManager<ai_cam>()->updateAll(dt);
 			getHandleManager<workbench_controller>()->updateAll(dt);
-			getHandleManager<water_controller>()->updateAll(dt);
 			getHandleManager<bt_guard>()->updateAll(dt);
 		}
 		getHandleManager<CStaticBomb>()->updateAll(dt);

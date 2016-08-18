@@ -30,7 +30,7 @@ void SkelControllerMole::grabObject(CHandle h)
 		, pos_grab_dummy
 		, left_h_normal
 		, right_h_normal
-	);
+		);
 	enableIK(SK_LHAND, grabLeftIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 	enableIK(SK_RHAND, grabRightIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 }
@@ -54,7 +54,7 @@ void SkelControllerMole::pushObject(CHandle h) {
 		, pos_grab_dummy
 		, left_h_normal
 		, right_h_normal
-	);
+		);
 	enableIK(SK_LHAND, grabLeftIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 	enableIK(SK_RHAND, grabRightIK, SK_MOLE_TIME_TO_GRAB * 0.9f);
 }

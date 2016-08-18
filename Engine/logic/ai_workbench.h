@@ -17,77 +17,77 @@ class CObjectManager;
 //--------------------------------------
 
 class workbench_controller : public aicontroller, public TCompBase {
-  static std::map<int, std::string> out;
+	static std::map<int, std::string> out;
 
-  //main attributes
-  //--------------------------------------
-  float range; 				//range sonar
-  float rot_speed_sonar;
-  float rot_speed_disable;
-  //--------------------------------------
+	//main attributes
+	//--------------------------------------
+	float range; 				//range sonar
+	float rot_speed_sonar;
+	float rot_speed_disable;
+	//--------------------------------------
 
-  //general info
-  //--------------------------------------
+	//general info
+	//--------------------------------------
 
-  int id_wb = 0;
+	int id_wb = 0;
 
-  std::string full_name = "";
+	std::string full_name = "";
 
-  CObjectManager<workbench_controller>		*om = nullptr;
-  CHandle								 myHandle;
-  CHandle								 myParent;
-  CEntity								*myEntity = nullptr;
-  //--------------------------------------
+	CObjectManager<workbench_controller>		*om = nullptr;
+	CHandle								 myHandle;
+	CHandle								 myParent;
+	CEntity								*myEntity = nullptr;
+	//--------------------------------------
 
-  //messages types
-  TMsgWBEmpty				msg_empty;
-  TMsgWBTakenByPlayer		msg_taken;
+	//messages types
+	TMsgWBEmpty				msg_empty;
+	TMsgWBTakenByPlayer		msg_taken;
 
 protected:
-  // the states, as maps to functions
-  static map<string, statehandler>statemap;
+	// the states, as maps to functions
+	static map<string, statehandler>statemap;
 
 public:
 
-  static int id_curr_max_wb;	//count ids, id++ each beacon
+	static int id_curr_max_wb;	//count ids, id++ each beacon
 
-                  //states wb
-  enum {
-    INACTIVE = 0,
-    INACTIVE_TAKEN,
-    BUSY
-  };
+					//states wb
+	enum {
+		INACTIVE = 0,
+		INACTIVE_TAKEN,
+		BUSY
+	};
 
-  map<string, statehandler>* getStatemap() override {
-    return &statemap;
-  }
+	map<string, statehandler>* getStatemap() override {
+		return &statemap;
+	}
 
-  workbench_controller() {}		//needed to create obj at load
-  void Init() override;
-  void init() { Init(); }
-  void readIniFileAttr();
+	workbench_controller() {}		//needed to create obj at load
+	void Init() override;
+	void init() { Init(); }
+	void readIniFileAttr();
 
-  //Overload functions from TCompBase, needed to loop AI Component
-  //--------------------------------------
-  void update(float elapsed) { if (!isInRoom(myParent))return; Recalc(); }  //Called from object_manager
-  //--------------------------------------
+	//Overload functions from TCompBase, needed to loop AI Component
+	//--------------------------------------
+	void update(float elapsed) { if (!isInRoom(myParent))return; Recalc(); }  //Called from object_manager
+	//--------------------------------------
 
-  //Init handlers
-  //--------------------------------------
-  void SetHandleMeInit();
-  void SetMyEntity();
-  void SendMessageEmpty();
-  void SendMessageTaken();
-  //--------------------------------------
+	//Init handlers
+	//--------------------------------------
+	void SetHandleMeInit();
+	void SetMyEntity();
+	void SendMessageEmpty();
+	void SendMessageTaken();
+	//--------------------------------------
 
-  //Functions AI Nodes:
-  //--------------------------------------
-  void Idle();
-  void Inactive();		//beacon empty
-  void Busy();
-  //--------------------------------------
+	//Functions AI Nodes:
+	//--------------------------------------
+	void Idle();
+	void Inactive();		//beacon empty
+	void Busy();
+	//--------------------------------------
 
-  void renderInMenu();
+	void renderInMenu();
 };
 
 #endif

@@ -16,6 +16,7 @@ class CGameController : public IAppModule {
 public:
 	enum {
 		STARTING = 0,
+		PLAY_VIDEO,
 		RUNNING,
 		STOPPED,
 		STOPPED_INTRO,

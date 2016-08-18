@@ -24,13 +24,11 @@ void workbench_controller::readIniFileAttr() {
 			assignValueToVar(range, fields);
 			assignValueToVar(rot_speed_sonar, fields);
 			assignValueToVar(rot_speed_disable, fields);
-
 		}
 	}
 }
 
 void workbench_controller::Init() {
-
 	//read attributes from file
 	readIniFileAttr();
 
@@ -74,7 +72,6 @@ void workbench_controller::Idle()
 
 void workbench_controller::Inactive()
 {
-
 	if (SBB::readInt(full_name) == INACTIVE) SendMessageEmpty();
 	//nothing to do, check sbb. Should go system of events
 	if (SBB::readInt(full_name) == BUSY) {
@@ -91,7 +88,6 @@ void workbench_controller::Busy()
 		ChangeState("inactive");
 	}
 }
-
 
 void workbench_controller::renderInMenu()
 {
@@ -124,7 +120,6 @@ void workbench_controller::SendMessageEmpty() {
 }
 
 void workbench_controller::SendMessageTaken() {
-
 	VHandles hs = tags_manager.getHandlesByTag(getID("AI_cientifico"));
 	for (CEntity *e : hs)
 		e->sendMsg(msg_taken);

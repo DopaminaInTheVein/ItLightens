@@ -80,7 +80,7 @@ public:
 				"a class of type %s"
 				, CHandleManager::getByType(h.getType())->getName()
 				, getName()
-			);
+				);
 			return nullptr;
 		}
 

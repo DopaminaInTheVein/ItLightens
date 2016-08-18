@@ -149,7 +149,7 @@ void TCompSkeleton::renderInMenu() {
 			, a->getWeight()
 			, a->getTime()
 			, a->getCoreAnimation()->getDuration()
-		);
+			);
 	}
 
 	for (auto a : mixer->getAnimationCycle()) {
@@ -158,7 +158,7 @@ void TCompSkeleton::renderInMenu() {
 			, a->getState()
 			, a->getWeight()
 			, a->getCoreAnimation()->getDuration()
-		);
+			);
 	}
 }
 

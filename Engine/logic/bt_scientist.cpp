@@ -127,7 +127,7 @@ bool bt_scientist::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-		);
+			);
 	}
 
 	zmin = atts.getFloat("zmin", 100.0f);

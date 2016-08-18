@@ -133,9 +133,9 @@ std::vector<HandleTrack>::iterator TCompTracker::unfollow(HandleTrack ht)
 			followers.begin(),
 			followers.end(),
 			ht
-		),
+			),
 		followers.end()
-	);
+		);
 }
 
 VEC3 TCompTracker::evaluatePos(HandleTrack ht) {

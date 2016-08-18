@@ -6,7 +6,7 @@ class CParticleSystem;
 class CParticleLoader : public CXMLParser {
 	CHandle				m_handle;
 	CParticleSystem*	m_pParticles_system;
-	
+
 public:
 	CParticleLoader() : m_pParticles_system(nullptr) { m_handle = CHandle(); }
 	CParticleLoader(CHandle particles_handle) : m_pParticles_system(nullptr) { m_handle = particles_handle; }
@@ -14,6 +14,5 @@ public:
 	void onStartElement(const std::string &elem, MKeyValue &atts) override;
 	void onEndElement(const std::string &elem) override;
 };
-
 
 #endif

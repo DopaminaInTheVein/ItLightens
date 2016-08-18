@@ -88,12 +88,12 @@ class player_controller : public CPlayerBase {
 	bool					affectPolarized = false;
 	bool					forward_jump = false;
 
-	CHandle					generatorNear = CHandle();
+	CHandle				generatorNear = CHandle();
 	bool					canPassWire = false;
 	bool					canRechargeDrone = false;
 	bool					canNotRechargeDrone = false;
 
-	CHandle				drone;
+	CHandle			drone;
 
 	VEC3					endPointWire = VEC3(0, 0, 0);
 	vector<VEC3>			all_forces;

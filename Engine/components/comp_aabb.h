@@ -7,21 +7,21 @@
 struct TMsgEntityCreated;
 
 struct TCompAABB : public AABB, public TCompBase {
-  bool load(MKeyValue &atts);
-  void renderInMenu();
-  void render() const;
-  void updateFromSiblingsLocalAABBs(CHandle h_entity);
+	bool load(MKeyValue &atts);
+	void renderInMenu();
+	void render() const;
+	void updateFromSiblingsLocalAABBs(CHandle h_entity);
 };
 
 struct TCompAbsAABB : public TCompAABB {
-  void onCreate(const TMsgEntityCreated&);
+	void onCreate(const TMsgEntityCreated&);
 };
 
 // Updates AbsAABB from LocalAABB and CompTransform
 struct TCompLocalAABB : public TCompAABB {
-  void updateAbs();
-  void render() const;
-  void onCreate(const TMsgEntityCreated&);
+	void updateAbs();
+	void render() const;
+	void onCreate(const TMsgEntityCreated&);
 };
 
 #endif

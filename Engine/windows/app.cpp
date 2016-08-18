@@ -149,8 +149,10 @@ void CApp::generateFrame() {
 	if (delta_time > max_delta_time)
 		delta_time = max_delta_time;
 	update(delta_time);
-	render();
-	Render.swapChain();
+	if (GameController->GetGameState() != CGameController::PLAY_VIDEO) {
+		render();
+		Render.swapChain();
+	}
 }
 
 // -------------------------------------------------

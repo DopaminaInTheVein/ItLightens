@@ -159,9 +159,6 @@
     <ClCompile Include="app_modules\io\mouse.cpp">
       <Filter>app_modules\io</Filter>
     </ClCompile>
-    <ClCompile Include="logic\ai_water.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="app_modules\io\joystick.cpp">
       <Filter>app_modules\io</Filter>
     </ClCompile>
@@ -515,6 +512,9 @@
     <ClCompile Include="app_modules\navmesh\navmesh_manager.cpp">
       <Filter>app_modules\navmesh</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_video.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
     <ClCompile Include="debug\log.cpp">
       <Filter>debug</Filter>
     </ClCompile>
@@ -718,9 +718,6 @@
     </ClInclude>
     <ClInclude Include="app_modules\io\mouse.h">
       <Filter>app_modules\io</Filter>
-    </ClInclude>
-    <ClInclude Include="logic\ai_water.h">
-      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="app_modules\io\joystick.h">
       <Filter>app_modules\io</Filter>
@@ -1400,6 +1397,9 @@
     </ClInclude>
     <ClInclude Include="app_modules\navmesh\navmesh_manager.h">
       <Filter>app_modules\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_video.h">
+      <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="debug\log.h">
       <Filter>debug</Filter>

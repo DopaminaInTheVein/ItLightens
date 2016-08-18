@@ -165,7 +165,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 		all_keys.begin()
 		, all_keys.end()
 		, category
-	);
+		);
 	auto d0 = std::distance(all_keys.begin(), r.first);
 	auto d1 = std::distance(all_keys.begin(), r.second);
 	TKey* it = &all_keys[0] + d0;

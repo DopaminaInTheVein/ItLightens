@@ -129,7 +129,7 @@ void CThrowBomb::initThrow() {
 	rd->setGlobalPose(PxTransform(
 		PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
 		PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
-	));
+		));
 }
 
 void CThrowBomb::throwMovement() {

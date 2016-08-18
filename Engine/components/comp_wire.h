@@ -10,7 +10,7 @@ struct TCompWire : public TCompBase {
 	VEC3 org;
 	CHandle player;
 	bool send = false;
-	
+
 	bool load(MKeyValue& atts);
 	void update(float dt);
 	void onCreate(const TMsgEntityCreated& msg);

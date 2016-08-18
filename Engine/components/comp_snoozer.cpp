@@ -1,12 +1,10 @@
-
 #include "mcv_platform.h"
 #include "comp_snoozer.h"
 
 #include "components/entity.h"
 #include "components/entity_parser.h"
 
-
-void TCompSnoozer::onPreload(const TMsgPreload& msg) { 
+void TCompSnoozer::onPreload(const TMsgPreload& msg) {
 	components = new CPrefabCompiler;
 	*components = *(msg.comps);
 }

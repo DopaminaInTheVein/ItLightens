@@ -10,7 +10,7 @@ bool SkelControllerGuard::getUpdateInfo()
 
 void SkelControllerGuard::myUpdate()
 {
-	if (currentState == prevState) return;	
+	if (currentState == prevState) return;
 
 	// the guard only walks
 	if (currentState == "run") currentState = "walk";

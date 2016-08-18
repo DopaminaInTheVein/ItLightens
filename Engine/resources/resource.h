@@ -7,20 +7,20 @@ class IResource {
 
 public:
 
-  // ---------------------------------
-  enum eType {
-    UNDEFINED
-    , MESH
-    , PIXEL_SHADER
-    , VERTEX_SHADER
-    , TECHNIQUE
-    , TEXTURE
-    , MATERIAL
-    , STATIC_MESH
-    , SKELETON
-    , NUM_RESOURCES_TYPE
-  };
-  static const char* getTypeName(eType atype);
+	// ---------------------------------
+	enum eType {
+		UNDEFINED
+		, MESH
+		, PIXEL_SHADER
+		, VERTEX_SHADER
+		, TECHNIQUE
+		, TEXTURE
+		, MATERIAL
+		, STATIC_MESH
+		, SKELETON
+		, NUM_RESOURCES_TYPE
+	};
+	static const char* getTypeName(eType atype);
 
 	virtual ~IResource() { }
 
@@ -29,16 +29,16 @@ public:
 	virtual bool reload() { return false; }
 	virtual eType getType() const = 0;
 	virtual void renderUIDebug() { }
-  	virtual void onFileChanged(const std::string& filename) { }
+	virtual void onFileChanged(const std::string& filename) { }
 
 	uint32_t getTag() const { return tag; }
 	void setTag(uint32_t new_tag) { tag = new_tag; }
 
-  void setName(const std::string& new_name) { name = new_name; }
-  void setName(const char* new_name) { name = new_name; }
-  const std::string& getName() const {
-    return name;
-  }
+	void setName(const std::string& new_name) { name = new_name; }
+	void setName(const char* new_name) { name = new_name; }
+	const std::string& getName() const {
+		return name;
+	}
 
 	template< typename TObj>
 	const TObj* as() const {

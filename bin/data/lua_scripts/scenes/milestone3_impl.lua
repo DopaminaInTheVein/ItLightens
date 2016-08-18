@@ -16,6 +16,10 @@ cam = Camera()
 player = Player()
 
 ---------------------------- LEVEL Init, Load, Save ---------------------------------------------------
+function auxiliarMusic()
+	p:play_music("event:/OnGameStart")
+end
+
 function OnStart_ms3()
   p:print("OnLoaded Scene MS3")
   isDoorOpen = false
@@ -23,7 +27,8 @@ function OnStart_ms3()
   stateElevator = 1 -- 1= up , 0 = down
   cp_elevator = false
   cp_door_opened = false
-  p:play_music("event:/OnGameStart")
+  p:play_video("data\\videos\\intro.avi")
+  p:exec_command("auxiliarMusic();",14)
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
   cam:run_cinematic("CinematicIntro", 10)
