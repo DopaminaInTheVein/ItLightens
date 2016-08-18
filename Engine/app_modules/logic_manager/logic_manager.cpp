@@ -743,8 +743,11 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("load_entities", &SLBPublicFunctions::loadEntities)
 		.comment("Save state current level")
 		.param("string: name of the level")
-		// Load Entities
+		// Resume
 		.set("resume", &SLBPublicFunctions::resume)
 		.comment("Resume game")
+		// Exit Game
+		.set("exit_game", &SLBPublicFunctions::exit)
+		.comment("Exit game")
 		;
 }

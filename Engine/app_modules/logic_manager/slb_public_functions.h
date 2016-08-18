@@ -156,6 +156,7 @@ public:
 	void saveLevel();
 	void loadEntities(const char* file_name);
 	void resume();
+	void exit();
 
 	void test(const char* to_print);
 };

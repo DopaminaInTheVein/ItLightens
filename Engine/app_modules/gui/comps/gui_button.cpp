@@ -42,7 +42,7 @@ void TCompGuiButton::update(float dt)
 	VEC3 cursorPos = cursorTransform->getPosition();
 	VEC3 delta = myPos - cursorPos;
 	bool is_over_now = abs(delta.x) < width*0.5f && abs(delta.y) < height*0.5f;
-	dbg("\n\nButton pos: %f, %f. Cursor pos: %f, %f. width: %f, height: %f\n%d\n\n\n\n", myPos.x, myPos.y, cursorPos.x, cursorPos.y, width, height, is_over_now);
+	//dbg("\n\nButton pos: %f, %f. Cursor pos: %f, %f. width: %f, height: %f\n%d\n\n\n\n", myPos.x, myPos.y, cursorPos.x, cursorPos.y, width, height, is_over_now);
 	if (is_over_now ^ cursor_over) {
 		//Send message
 		TMsgOverButton msg;

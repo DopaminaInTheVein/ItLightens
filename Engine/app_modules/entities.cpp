@@ -599,10 +599,6 @@ void CEntitiesModule::update(float dt) {
 		//Fx
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
 
-		//Gui
-		getHandleManager<TCompGuiCursor>()->updateAll(dt);
-		getHandleManager<TCompGuiButton>()->updateAll(dt);
-
 		SBB::update(dt);
 	}
 	// In this mode, only the animation of the player is updated
@@ -613,6 +609,10 @@ void CEntitiesModule::update(float dt) {
 		TCompSkeleton* player_skeleton = player_entity->get<TCompSkeleton>();
 		player_skeleton->update(dt);
 	}
+
+	//Gui
+	getHandleManager<TCompGuiCursor>()->updateAll(dt);
+	getHandleManager<TCompGuiButton>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

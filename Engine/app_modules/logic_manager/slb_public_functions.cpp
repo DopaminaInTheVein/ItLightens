@@ -708,6 +708,10 @@ void SLBPublicFunctions::resume() {
 	GameController->SetGameState(CGameController::RUNNING);
 }
 
+void SLBPublicFunctions::exit() {
+	CApp::get().exitGame();
+}
+
 //test
 void SLBPublicFunctions::test(const char* to_print) {
 	//CHandle h = CHandle();

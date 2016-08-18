@@ -1,5 +1,6 @@
 <entities>
 <entity
+   permanent="yes"
    reload="yes">
 <tags
    tags="menu gui_button clickable"/>
@@ -18,9 +19,10 @@
 
 </entity>
 <entity
+   permanent="yes"
    reload="yes">
 <tags
-   tags="gui_cursor"/>
+   tags="menu gui_cursor"/>
 <gui_cursor/>
 <name
    name="cursor"/>
@@ -33,7 +35,8 @@
 <abs_aabb/>
 
 </entity>
-<entity>
+<entity
+   permanent="yes">
 <tags
    tags="menu"/>
 <name
@@ -47,7 +50,8 @@
 <abs_aabb/>
 
 </entity>
-<entity>
+<entity
+   permanent="yes">
 <tags
    tags="menu"/>
 <name
@@ -62,6 +66,7 @@
 
 </entity>
 <entity
+   permanent="yes"
    reload="yes">
 <tags
    tags="menu gui_button clickable"/>
@@ -80,6 +85,7 @@
 
 </entity>
 <entity
+   permanent="yes"
    reload="yes">
 <tags
    tags="menu gui_button clickable"/>
@@ -87,7 +93,7 @@
    width="1.13903"
    height="0.640701"/>
 <name
-   name="btn_exit"/>
+   name="btn_back_title"/>
 <transform
    pos="5.00018 -96.3884 8.99995"
    quat="0 0 0 1.0"
@@ -98,6 +104,7 @@
 
 </entity>
 <entity
+   permanent="yes"
    reload="yes">
 <tags
    tags="menu gui_button clickable"/>
