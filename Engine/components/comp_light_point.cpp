@@ -14,6 +14,13 @@ bool TCompLightPoint::load(MKeyValue& atts) {
 	return true;
 }
 
+bool TCompLightPoint::save(std::ofstream& os, MKeyValue& atts) {
+	atts.put("color", color);
+	atts.put("in_radius", in_radius);
+	atts.put("out_radius", out_radius);
+	return true;
+}
+
 void TCompLightPoint::render() const
 {
 	if (debug_render) {

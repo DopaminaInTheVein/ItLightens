@@ -474,6 +474,7 @@ void CEntitiesModule::clear(bool reload) {
 			}
 		}
 	});
+	TCompRoom::all_rooms.clear();
 	dbg("Entities destroyed = %d\n", entities_destroyed); //dbg
 }
 

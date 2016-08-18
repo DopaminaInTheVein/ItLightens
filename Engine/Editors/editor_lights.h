@@ -49,7 +49,7 @@ public:
 	bool LoadLights();
 	bool SaveLights(std::string filename = DEFAULT_LIGHTS);
 	bool AddLightToSave(CHandle h, TypeLight type);
-	bool AddLightToEngine(TypeLight type);
+	bool AddLightToEngine(TypeLight type, bool* rooms);
 	bool RemoveLight(CHandle h, std::vector<CHandle>& v_lights, std::vector<TypeLight>& v_types);
 	bool HideLight(CHandle h);
 

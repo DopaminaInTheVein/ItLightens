@@ -14,7 +14,13 @@ bool TCompLightDir::load(MKeyValue& atts) {
 
 	return true;
 }
-
+bool TCompLightDir::save(std::ofstream& os, MKeyValue& atts) {
+	atts.put("color", color);
+	atts.put("znear", getZNear());
+	atts.put("zfar", getZFar());
+	atts.put("fov", getFov());
+	return true;
+}
 void TCompLightDir::render() const {
 	if (debug_render) {
 		PROFILE_FUNCTION("TCompLight render");

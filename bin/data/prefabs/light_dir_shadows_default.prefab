@@ -4,7 +4,5 @@
     <transform pos="0 0 0" yaw = "0" pitch = "-89.9"	/>
     <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="30" fov="45" resolution="512"/>
     <culling/>
-    <room
-     name="1/2"/>
   </entity>
 </entities>

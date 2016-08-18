@@ -66,102 +66,22 @@ bool CEditorLights::SaveLights(std::string fileName)
 	MKeyValue atts;
 
 	//file buffer
-	std::filebuf fb;
-	fb.open(full_path.c_str(), std::ios::out);
-	std::ostream file(&fb);
+	std::ofstream os(full_path.c_str());
 
-	atts.writeStartElement(file, "entities");
+	atts.writeStartElement(os, "entities");
 
 	for (int idx = 0; idx < m_Lights.size(); idx++) {
-		CEntity* e_owner = m_Lights[idx].getOwner();
-
-		if (!e_owner) continue;	//if light invalid, next light
-
-		atts.writeStartElement(file, "entity");
-
-		//atts.put("tags", "");
-		//atts.writeSingle(file, "tags");
-
-		//light point component
-
-		if (m_Types[idx] == TypeLight::POINT) {
-			TCompLightPoint* pl = m_Lights[idx];
-
-			if (!pl) {	//light invalid
-				atts.clear();
-				continue;
-			}
-			else {
-				atts.put("color", pl->color);
-				atts.put("in_radius", pl->in_radius);
-				atts.put("out_radius", pl->out_radius);
-				atts.writeSingle(file, "light_point");
-			}
+		CHandle h_owner = m_Lights[idx].getOwner();
+		GET_COMP(lp, h_owner, TCompLightPoint);
+		GET_COMP(ld, h_owner, TCompLightDir);
+		GET_COMP(lds, h_owner, TCompLightDirShadows);
+		if (lp || ld || lds) {
+			((CEntity *)(h_owner))->save(os, atts);
 		}
-
-		else if (m_Types[idx] == TypeLight::DIR) {
-			TCompLightDir* ld = e_owner->get<TCompLightDir>();
-
-			if (ld) {
-				atts.put("color", ld->color);
-				atts.put("znear", ld->getZNear());
-				atts.put("zfar", ld->getZFar());
-				atts.put("fov", ld->getFov());
-				atts.writeSingle(file, "light_dir");
-			}
-		}
-		else if (m_Types[idx] == TypeLight::DIR_SHADOWS) {
-			TCompLightDirShadows* ld = e_owner->get<TCompLightDirShadows>();
-
-			if (ld) {
-				atts.put("color", ld->color);
-				atts.put("znear", ld->getZNear());
-				atts.put("zfar", ld->getZFar());
-				atts.put("fov", ld->getFov());
-				atts.put("resolution", ld->res);
-				atts.writeSingle(file, "light_dir_shadows");
-			}
-		}
-
-		//general must components for lights
-
-		//name component
-		TCompName* name = e_owner->get<TCompName>();
-		if (name) {
-			atts.put("name", std::string(name->name));
-			atts.writeSingle(file, "name");
-		}
-
-		//transform component
-		TCompTransform* trans = e_owner->get<TCompTransform>();
-		if (trans) {
-			atts.put("pos", trans->getPosition());
-			atts.put("quat", trans->getRotation());
-			atts.put("scale", trans->getScale());
-			atts.writeSingle(file, "transform");
-		}
-
-		//culling component
-		TCompCulling* hasCulling = e_owner->get<TCompCulling>();
-
-		//if entity dont have any culling component hasCulling will be null
-		if (hasCulling) {
-			atts.writeSingle(file, "culling");
-		}
-
-		//room component
-		TCompRoom* room = e_owner->get<TCompRoom>();
-
-		if (room) {
-			atts.put("name", std::string(room->rooms_raw));
-			atts.writeSingle(file, "room");
-		}
-
-		atts.writeEndElement(file, "entity");
 	}
 
-	atts.writeEndElement(file, "entities");
-
+	atts.writeEndElement(os, "entities");
+	os.close();
 	return true;
 }
 
@@ -174,7 +94,7 @@ bool CEditorLights::AddLightToSave(CHandle h, TypeLight type)
 	return true;
 }
 
-bool CEditorLights::AddLightToEngine(TypeLight type)
+bool CEditorLights::AddLightToEngine(TypeLight type, bool* rooms)
 {
 	CHandle h;
 
@@ -213,9 +133,7 @@ bool CEditorLights::AddLightToEngine(TypeLight type)
 		return false;
 	}
 
-	m_LigthsTemp.push_back(h);
-	m_TypesTemp.push_back(type);
-
+	//Position
 	GET_COMP(tmx_light, h.getOwner(), TCompTransform);
 	if (tmx_light) {
 		CHandle hcam = tags_manager.getFirstHavingTag("camera_main");
@@ -225,6 +143,25 @@ bool CEditorLights::AddLightToEngine(TypeLight type)
 		}
 	}
 
+	//Rooms
+	std::set<int> rooms_selected = std::set<int>();
+	for (int i = 0; i < 10; i++) {
+		if (rooms[i]) rooms_selected.insert(i);
+	}
+	if (rooms_selected.size() > 0) {
+		auto hm = CHandleManager::getByName("room");
+		CHandle new_h = hm->createHandle();
+		TCompRoom* room_comp = new_h;
+		for (int r : rooms_selected) {
+			room_comp->name.push_back(r);
+		}
+		((CEntity*)(h.getOwner()))->add(new_h);
+	}
+
+	m_LigthsTemp.push_back(h);
+	m_TypesTemp.push_back(type);
+
+	id_name++;
 	return true;
 }
 
@@ -344,6 +281,7 @@ void CEditorLights::renderLightDirShadows(TCompLightDirShadows* pl) {
 
 void CEditorLights::RenderInMenu()
 {
+	static bool rooms_selected[10] = { 0 };
 	ImGui::SetNextWindowSize(ImVec2(512, 512), ImGuiSetCond_FirstUseEver);
 	if (m_activated_editor) {
 		ImGui::Begin("LightsEditor", &m_activated_editor);
@@ -365,17 +303,22 @@ void CEditorLights::RenderInMenu()
 		if (ImGui::SmallButton("Load lights file")) {
 			//TODO
 		}
-
+		ImGui::Separator();
+		for (int room : TCompRoom::all_rooms) {
+			char text_check[64];
+			sprintf(text_check, "Room %d", room);
+			ImGui::Checkbox(text_check, &rooms_selected[room]);
+		}
 		if (ImGui::Button("Add new point light")) {
-			AddLightToEngine(TypeLight::POINT);
+			AddLightToEngine(TypeLight::POINT, rooms_selected);
 		}
 
 		if (ImGui::Button("Add new dir light")) {
-			AddLightToEngine(TypeLight::DIR);
+			AddLightToEngine(TypeLight::DIR, rooms_selected);
 		}
 
 		if (ImGui::Button("Add new dir shadows light")) {
-			AddLightToEngine(TypeLight::DIR_SHADOWS);
+			AddLightToEngine(TypeLight::DIR_SHADOWS, rooms_selected);
 		}
 
 		ImGui::Separator();

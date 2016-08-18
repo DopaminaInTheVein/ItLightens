@@ -2,6 +2,8 @@
 #include "comp_room.h"
 #include "logic/sbb.h"
 
+std::set<int> TCompRoom::all_rooms = std::set<int>();
+
 bool TCompRoom::load(MKeyValue& atts) {
 	std::string to_parse = atts.getString("name", "-1");
 	std::stringstream ss(to_parse);
@@ -11,6 +13,7 @@ bool TCompRoom::load(MKeyValue& atts) {
 		int value = std::stoi(number);
 		if (std::find(name.begin(), name.end(), value) == name.end()) {
 			name.push_back(value);
+			all_rooms.insert(value);
 		}
 	}
 	return true;

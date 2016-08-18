@@ -4,8 +4,10 @@
 #include "utils/XMLParser.h"
 #include "comp_base.h"
 #include <sstream>
+#include <set>
 
 struct TCompRoom : public TCompBase {
+	static std::set<int> all_rooms;
 public:
 	std::vector<int> name;
 	char rooms_raw[32];

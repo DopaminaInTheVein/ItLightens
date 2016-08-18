@@ -12,7 +12,5 @@
        pos="-9.300 -8.482 -1.00"
        quat="0 0 0 1.0"
        scale="1.0"/>
-    <room
-       name="1/2"/>
   </entity>
 </entities>

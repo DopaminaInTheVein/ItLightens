@@ -8,16 +8,17 @@ class CRenderToTexture;
 
 // ------------------------------------
 struct TCompLightDirShadows : public TCompLightDir {
-  CRenderToTexture* rt_shadows = nullptr;
-  bool              enabled = true;
-  int res;
-  bool load(MKeyValue& atts);
-  void activate();
-  void update(float dt);
-  void generateShadowMap();
-  void destroy();
+	CRenderToTexture* rt_shadows = nullptr;
+	bool              enabled = true;
+	int res;
+	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
+	void activate();
+	void update(float dt);
+	void generateShadowMap();
+	void destroy();
 
-  void setNewFov(float fov);
+	void setNewFov(float fov);
 };
 
 #endif
