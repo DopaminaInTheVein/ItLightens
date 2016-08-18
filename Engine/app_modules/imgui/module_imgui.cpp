@@ -23,7 +23,7 @@
 //light editor
 void CImGuiModule::StartLightEditor() {
 	m_pLights_editor = new CEditorLights;
-	//	m_pLights_editor->LoadLights();
+	m_pLights_editor->LoadLights();
 }
 
 ImGuiTextFilter CImGuiModule::filter = ImGuiTextFilter();
