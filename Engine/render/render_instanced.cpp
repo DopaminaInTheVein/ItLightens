@@ -66,11 +66,11 @@ void CRenderParticlesInstanced::render() const {
   //texture->activate(TEXTURE_SLOT_DIFFUSE);
   activateBlend(BLENDCFG_COMBINATIVE);
   //activateZ(ZCFG_TEST_BUT_NO_WRITE);
-  activateZ(ZCFG_ALL_DISABLED);
+  //activateZ(ZCFG_ALL_DISABLED);
   //activateZ(ZCFG_DEFAULT);
   instanced_mesh->renderInstanced(instances_data_mesh, instances.size());
-  activateZ(ZCFG_DEFAULT);
-  activateBlend(BLENDCFG_DEFAULT);
+  //activateZ(ZCFG_DEFAULT);
+  //activateBlend(BLENDCFG_DEFAULT);
 }
 
 void CRenderParticlesInstanced::update(float elapsed, const TParticleData& particle_data) {
@@ -96,7 +96,8 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
     if (particle_data.lifeTimeBuffer[idx - 1] <= 0.f)
       p.color.w = 0.f;
 
-    p.rotation += VEC3(1, 0, 0)*elapsed;
+    //p.rotation += VEC3(1, 0, 0)*elapsed;
+	p.rotation = VEC3(1, 0, 0);
     p.size = particle_data.sizeBuffer[idx-1];
 
     ++idx;

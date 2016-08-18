@@ -16,6 +16,10 @@ public:
 
   virtual bool start();
   virtual void stop() {
+	  for (auto& p : m_Particles) {
+		  p->stop();
+	  }
+	  //if (m_pNewParticleSystem) m_pNewParticleSystem->stop();
     m_Particles.clear();
   }
   virtual void update(float dt);

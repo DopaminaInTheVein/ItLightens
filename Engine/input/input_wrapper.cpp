@@ -145,8 +145,14 @@ bool CInputWrapper::isSlowButtonPressed() {
 bool CInputWrapper::isDrawLineButtonPressed() {
 	return io->keys['N'].becomesPressed();
 }
-bool CInputWrapper::isParticleEditorButtonPressed() {
+bool CInputWrapper::isTestSSAOButoonPressed() {
+	return io->keys[VK_F3].becomesPressed();
+}
+bool CInputWrapper::isEspecialVisionButtonPressed() {
 	return io->keys['H'].becomesPressed();
+}
+bool CInputWrapper::isEditorLightsButtonPressed() {
+	return io->keys[VK_F9].becomesPressed();
 }
 bool CInputWrapper::isParticleEditorActivationPressed() {
 	return io->keys[VK_F8].becomesPressed();

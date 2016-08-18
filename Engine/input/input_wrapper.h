@@ -65,6 +65,9 @@ public:
 
 	bool isSlowButtonPressed();
 	bool isDrawLineButtonPressed();
+	bool isTestSSAOButoonPressed();
+	bool isEspecialVisionButtonPressed();
+	bool isEditorLightsButtonPressed();
 	bool isParticleEditorButtonPressed();
 	bool isParticleEditorActivationPressed();
 	bool interruptGuardShotButtonPressed();

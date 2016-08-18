@@ -78,6 +78,15 @@ struct TParticleData {
 		started.clear();
 		currDelayStart.clear();
 		colorBuffer.clear();
+
+
+		positionInitBuffer.clear();
+		negativeVelocityBuffer.clear();
+		velocityInitBuffer.clear();
+
+		colorOriginBuffer.clear();
+
+		maxLifeTimeBuffer.clear();
 	}
 };
 

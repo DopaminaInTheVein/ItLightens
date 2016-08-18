@@ -1,0 +1,63 @@
+<particles_emitter
+	num_particles="8"
+>
+<collisions
+	value="1"
+	/>
+<gravity
+	value="0"
+	/>
+<use_physx
+	value="1"
+	/>
+<shape
+	angle="45"
+	max="0.000000 0.000000 0.000000"
+	min="0.000000 0.000000 0.000000"
+	radius="1"
+	type="0"
+	/>
+<position
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	value="0.000000 0.000000 0.000000"
+	/>
+<velocity
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	value="0.000000 5.000000 0.000000"
+	/>
+<size
+	modifier="-1"
+	value="0.2"
+	/>
+<lifetime
+	max_rand="0"
+	min_rand="0"
+	value="1"
+	/>
+<acceleration
+	modifier="0.000000 0.000000 0.000000"
+	value="0.000000 0.000000 0.000000"
+	/>
+<delay
+	delay_particle_rand="5"
+	delay_start="0"
+	/>
+<color
+	modifier="1"
+	value="1.000000 1.000000 1.000000 1.000000"
+	/>
+<bonesList
+	value ="true"
+	size = "8"
+	bone0="50"
+	bone1="51"
+	bone2="52"
+	bone3="53"
+	bone4="54"
+	bone5="55"
+	bone6="56"
+	bone7="57"
+	/>
+</particles_emitter>

@@ -114,6 +114,8 @@
   <ItemGroup>
     <ClCompile Include="app_modules\entities.cpp" />
     <ClCompile Include="app_modules\gameController.cpp" />
+    <ClCompile Include="app_modules\gui\comps\gui_button.cpp" />
+    <ClCompile Include="app_modules\gui\comps\gui_cursor.cpp" />
     <ClCompile Include="app_modules\gui\gui.cpp" />
     <ClCompile Include="app_modules\gui\gui_action_text.cpp" />
     <ClCompile Include="app_modules\gui\gui_bar_color.cpp" />
@@ -178,6 +180,7 @@
     <ClCompile Include="debug\console.cpp" />
     <ClCompile Include="debug\debug_itlightens.cpp" />
     <ClCompile Include="debug\log.cpp" />
+    <ClCompile Include="Editors\editor_lights.cpp" />
     <ClCompile Include="expat\xmlparse.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -328,6 +331,8 @@
     <ClInclude Include="app_modules\entities.h" />
     <ClInclude Include="app_modules\gameController.h" />
     <ClInclude Include="app_modules\gameData.h" />
+    <ClInclude Include="app_modules\gui\comps\gui_button.h" />
+    <ClInclude Include="app_modules\gui\comps\gui_cursor.h" />
     <ClInclude Include="app_modules\gui\gui.h" />
     <ClInclude Include="app_modules\gui\gui_action_text.h" />
     <ClInclude Include="app_modules\gui\gui_bar.h" />
@@ -405,6 +410,7 @@
     <ClInclude Include="debug\console.h" />
     <ClInclude Include="debug\debug_itlightens.h" />
     <ClInclude Include="debug\log.h" />
+    <ClInclude Include="Editors\editor_lights.h" />
     <ClInclude Include="fmod\studio\inc\fmod.h" />
     <ClInclude Include="fmod\studio\inc\fmod.hpp" />
     <ClInclude Include="fmod\studio\inc\fmod_codec.h" />

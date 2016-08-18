@@ -1,14 +1,14 @@
 {
   "scenes": {
-    "level_0": "ms3",
+    "level_0": "title",
     "level_1": "ms3",
     "level_2": "milestone2",
     "level_3": "milestone2"
   },
   "screen": {
-    "xres": 1024,
-    "yres": 800,
-    "full_screen": 1
+    "xres": 960,
+    "yres": 540,
+    "full_screen": 0
   },
   "controls": {
     "y-axis_inverted": 1,

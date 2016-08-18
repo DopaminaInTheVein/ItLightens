@@ -518,6 +518,15 @@
     <ClCompile Include="debug\log.cpp">
       <Filter>debug</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\gui\comps\gui_cursor.cpp">
+      <Filter>app_modules\gui\comps</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\gui\comps\gui_button.cpp">
+      <Filter>app_modules\gui\comps</Filter>
+    </ClCompile>
+    <ClCompile Include="Editors\editor_lights.cpp">
+      <Filter>Editors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1395,6 +1404,15 @@
     <ClInclude Include="debug\log.h">
       <Filter>debug</Filter>
     </ClInclude>
+    <ClInclude Include="app_modules\gui\comps\gui_cursor.h">
+      <Filter>app_modules\gui\comps</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\comps\gui_button.h">
+      <Filter>app_modules\gui\comps</Filter>
+    </ClInclude>
+    <ClInclude Include="Editors\editor_lights.h">
+      <Filter>Editors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1573,6 +1591,12 @@
     </Filter>
     <Filter Include="app_modules\navmesh">
       <UniqueIdentifier>{e00dde25-03bc-4be5-9b3e-a185b50d039a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\gui\comps">
+      <UniqueIdentifier>{c40994dd-6ed8-4e00-bece-6abf4462f146}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editors">
+      <UniqueIdentifier>{07107c58-8bcf-4032-9f50-52cef83806f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

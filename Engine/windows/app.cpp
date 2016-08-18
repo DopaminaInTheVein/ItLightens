@@ -10,7 +10,6 @@
 
 // -------------------------------------------------
 static CApp* app = nullptr;
-
 CApp& CApp::get() {
 	if (!app)
 		app = new CApp();
@@ -43,19 +42,6 @@ CApp::CApp()
 	// (horizontal, vertical)
 	xres_max = desktop.right;
 	yres_max = desktop.bottom;
-}
-
-int CApp::getXRes() {
-	if (!max_screen)
-		return xres;
-	else
-		return xres_max;
-}
-int CApp::getYRes() {
-	if (!max_screen)
-		return yres;
-	else
-		return yres_max;
 }
 
 // -------------------------------------------------

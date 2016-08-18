@@ -104,7 +104,18 @@ bool * CGameController::GetFreeCameraPointer() {
 bool CGameController::GetFreeCamera() const {
 	return free_camera;
 }
-
+bool CGameController::IsUiControl() const
+{
+	return ui_control;
+}
+bool * CGameController::IsUiControlPointer()
+{
+	return &ui_control;
+}
+void CGameController::SetUiControl(bool new_ui_control)
+{
+	ui_control = new_ui_control;
+}
 bool CGameController::IsCinematic() const {
 	return cinematic;
 }

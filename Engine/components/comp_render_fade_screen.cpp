@@ -58,7 +58,7 @@ void TCompFadeScreen::render()
 }
 
 bool TCompFadeScreen::load(MKeyValue& atts) {
-	fade_in = atts.getBool("enabled", true);		//by default false on start
+	fade_in = atts.getBool("enabled", false);		//by default false on start
 	fade_out = !fade_in;
 	t_max_fade = t_max_fade_default = atts.getFloat("max time", 2.0f);
 	t_curr_fade = 0.0f;
@@ -66,7 +66,7 @@ bool TCompFadeScreen::load(MKeyValue& atts) {
 	return true;
 }
 
-void TCompFadeScreen::init()
+void TCompFadeScreen::onCreate(const TMsgEntityCreated&)
 {
 	tech = Resources.get("fade_screen.tech")->as<CRenderTechnique>();
 }

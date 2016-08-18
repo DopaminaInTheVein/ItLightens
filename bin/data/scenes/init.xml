@@ -1,0 +1,29 @@
+<entities>
+	<entity
+	   permanent="yes"
+	   reload="no">
+		<tags
+		   tags="camera_main"/>
+		<camera_main
+		   znear="0.1"
+		   zfar="250.0"
+		   fov="60.0"/>
+		<culling/>
+		<render_glow/>
+		<controller_3rd_person/>
+		<FX_fade_screen/>
+		<name
+		   name="__camController_1"/>
+		<transform
+		   pos="-35.4164 -21.6023 -1.9649"
+		   quat="0 0 0 1.0"
+		   scale="1.0"/>
+	</entity>
+
+	<entity permanent="yes">
+		<tags tags="ui_camera" />
+		<name name="ui_camera" />
+		<transform pos="0 -100 10" yaw="180"/>
+	<camera znear="0" zfar="10" is_ortho="1"/>
+	</entity>  
+</entities>

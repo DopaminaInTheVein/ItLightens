@@ -713,6 +713,10 @@ void SLBPublicFunctions::saveLevel() {
 	CApp::get().saveLevel();
 }
 
+void SLBPublicFunctions::loadEntities(const char* file_name) {
+	CApp::get().loadEntities(file_name);
+}
+
 //test
 void SLBPublicFunctions::test(const char* to_print) {
 	//CHandle h = CHandle();

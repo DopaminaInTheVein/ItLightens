@@ -57,7 +57,9 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-	p:load_level("level_0")
+	p:load_entities("init")
+	p:exec_command("p:load_level(\"level_0\")", 2)
+	--p:load_entities("title")
 	CallFunction("test_dbg")
 end
 
@@ -326,9 +328,7 @@ end
 ---------------------------------------------------
 function OnRestartLevel( logic_level, real_level )
 	p:print( "OnRestartLevel\n")
-	cam:fade_out(1)
-	p:setControlEnabled(0)
-	p:exec_command("LoadLevel(\""..logic_level.."\");", 1) -- Defined in functions.lua
+	LoadLevel(logic_level) -- Defined in functions.lua
 end
 
 --Levels
@@ -357,4 +357,11 @@ end
 function OnVictory( )
 	p:print( "OnVictory\n")
 	launchVictoryState();
+end
+
+-- GUI
+---------------------------------------------------
+function OnClicked( param )
+	p:print("OnClicked")
+	CallFunction("OnClicked_"..param)
 end

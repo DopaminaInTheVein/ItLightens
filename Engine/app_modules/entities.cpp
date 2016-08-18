@@ -112,6 +112,10 @@ DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
 DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
 DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
 
+//gui
+DECL_OBJ_MANAGER("gui_cursor", TCompGuiCursor);
+DECL_OBJ_MANAGER("gui_button", TCompGuiButton);
+
 using namespace std;
 
 CCamera * camera;
@@ -216,6 +220,10 @@ bool CEntitiesModule::start() {
 
 	//fx
 	getHandleManager<TCompFadeScreen>()->init(4);
+
+	//Gui
+	getHandleManager<TCompGuiCursor>()->init(4);
+	getHandleManager<TCompGuiButton>()->init(64);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -391,7 +399,12 @@ bool CEntitiesModule::start() {
 	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
 	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
 
-	//initLevel(CApp::get().sceneToLoad, false);
+	//Fx
+	SUBSCRIBE(TCompFadeScreen, TMsgEntityCreated, onCreate);
+
+	//Gui
+	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
+	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
 
 	return true;
 }
@@ -421,6 +434,8 @@ void CEntitiesModule::initEntities() {
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
 	getHandleManager<TCompPila>()->onAll(&TCompPila::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
+
+	getHandleManager<CParticleSystem>()->onAll(&CParticleSystem::init);
 
 	//fx
 	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
@@ -586,6 +601,10 @@ void CEntitiesModule::update(float dt) {
 
 		//Fx
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
+
+		//Gui
+		getHandleManager<TCompGuiCursor>()->updateAll(dt);
+		getHandleManager<TCompGuiButton>()->updateAll(dt);
 
 		SBB::update(dt);
 	}

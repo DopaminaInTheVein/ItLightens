@@ -11,6 +11,7 @@ class CGameController : public IAppModule {
 	bool	render_culling_box = false;
 	bool	free_camera = false;
 	bool	cinematic = false;
+	bool    ui_control = false;
 
 public:
 	enum {
@@ -41,6 +42,10 @@ public:
 	bool GetFxPolarize();
 	bool * GetFreeCameraPointer();
 	bool GetFreeCamera() const;
+	bool IsUiControl() const;
+	bool * IsUiControlPointer();
+	void SetUiControl(bool new_ui_control);
+
 	bool IsCinematic() const;
 	void SetCinematic(bool new_cinematic);
 	bool * GetCullingRenderPointer();

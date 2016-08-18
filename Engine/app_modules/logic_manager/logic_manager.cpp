@@ -359,6 +359,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadedLevel(%s);", params.c_str());
 		break;
 	}
+						  //GUI
+	case (OnClicked): {
+		sprintf(lua_code, "OnClicked(\"%s\");", params.c_str());
+		break;
+	}
 	default: {
 		sprintf(lua_code, "dbg('The event %s does not exist!');", evt);
 	}
@@ -730,6 +735,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("string: name of the level")
 		// SaveLevel
 		.set("save_level", &SLBPublicFunctions::saveLevel)
+		.comment("Save state current level")
+		.param("string: name of the level")
+		// Load Entities
+		.set("load_entities", &SLBPublicFunctions::loadEntities)
 		.comment("Save state current level")
 		.param("string: name of the level")
 		;

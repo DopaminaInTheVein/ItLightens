@@ -49,12 +49,14 @@ fn parseable = (
 		isReload = true	
 	)
 	
-	if isReload and _xml_sufix != "init" then (
-		return false
-	)
-	
-	if (not isReload) and _xml_sufix == "init" then (
-		return false
+	if _xml_sufix != "ui_scene" then (		
+		if isReload and _xml_sufix != "init" then (
+			return false
+		)
+		
+		if (not isReload) and _xml_sufix == "init" then (
+			return false
+		)
 	)
 	
 	return true
