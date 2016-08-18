@@ -27,30 +27,30 @@ CGuiMenuPause::CGuiMenuPause()
 		GUI::createRect(startXButtons, startYButtons, sizeXButtons, sizeYButtons),
 		fontSize,
 		"Resume"
-		);
+	);
 
 	btnExit = new CGuiButtonStd(
 		GUI::createRect(startXButtons, startYButtons + distanceYButtons * 1, sizeXButtons, sizeYButtons),
 		fontSize,
 		"Exit"
-		);
+	);
 }
 
 void CGuiMenuPause::render()
 {
-	// Menu Frame
-	GUI::drawRect(rect, GUI::IM_BLACK_TRANSP);
+	//// Menu Frame
+	//GUI::drawRect(rect, GUI::IM_BLACK_TRANSP);
 
-	// Menu Text
-	GUI::drawText(0.45f, 0.1f, GImGui->Font, 0.1f, GUI::IM_WHITE, "MENU");
+	//// Menu Text
+	//GUI::drawText(0.45f, 0.1f, GImGui->Font, 0.1f, GUI::IM_WHITE, "MENU");
 
-	// Buttons
-	if (btnResume->render()) {
-		controller->ChangeMouseState(true);
-		GameController->SetGameState(CGameController::RUNNING);
-	}
+	//// Buttons
+	//if (btnResume->render()) {
+	//	controller->ChangeMouseState(true);
+	//	GameController->SetGameState(CGameController::RUNNING);
+	//}
 
-	if (btnExit->render()) {
-		CApp::get().exitGame();
-	}
+	//if (btnExit->render()) {
+	//	CApp::get().exitGame();
+	//}
 }

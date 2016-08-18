@@ -12,6 +12,8 @@
 bool TCompGuiCursor::load(MKeyValue& atts)
 {
 	GameController->SetUiControl(true);
+	GameController->SetGameState(CGameController::STOPPED);
+
 	speed = atts.getFloat("speed", 5.f);
 	return true;
 }
@@ -89,4 +91,5 @@ void TCompGuiCursor::onButton(const TMsgOverButton& msg)
 TCompGuiCursor::~TCompGuiCursor()
 {
 	GameController->SetUiControl(false);
+	//GameController->SetGameState(CGameController::RUNNING);
 }

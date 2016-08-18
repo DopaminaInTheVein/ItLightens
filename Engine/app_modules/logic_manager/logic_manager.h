@@ -105,6 +105,7 @@ public:
 
 		//GUI
 		OnClicked,
+		OnPause,
 	};
 
 	CLogicManagerModule();

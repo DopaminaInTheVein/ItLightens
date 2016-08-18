@@ -94,6 +94,7 @@ public:
 	void getHandlesByTag(const char * tag);
 	void awake();
 	void removePhysics();
+	void destroy();
 };
 
 // camera control in LUA
@@ -155,6 +156,8 @@ public:
 	void loadLevel(const char* level_name);
 	void saveLevel();
 	void loadEntities(const char* file_name);
+	void resume();
+	void exit();
 
 	void test(const char* to_print);
 };

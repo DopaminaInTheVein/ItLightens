@@ -364,6 +364,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnClicked(\"%s\");", params.c_str());
 		break;
 	}
+	case (OnPause): {
+		sprintf(lua_code, "OnPause();");
+		break;
+	}
 	default: {
 		sprintf(lua_code, "dbg('The event %s does not exist!');", evt);
 	}
@@ -570,6 +574,9 @@ void CLogicManagerModule::bindHandleGroup(SLB::Manager& m) {
 		// Remove Physics
 		.set("remove_physics", &SLBHandleGroup::removePhysics)
 		.comment("Remove their physic components")
+		// Destroy
+		.set("destroy", &SLBHandleGroup::destroy)
+		.comment("Destroy all handlen in that group")
 		;
 }
 
@@ -741,5 +748,11 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("load_entities", &SLBPublicFunctions::loadEntities)
 		.comment("Save state current level")
 		.param("string: name of the level")
+		// Resume
+		.set("resume", &SLBPublicFunctions::resume)
+		.comment("Resume game")
+		// Exit Game
+		.set("exit_game", &SLBPublicFunctions::exit)
+		.comment("Exit game")
 		;
 }

@@ -294,7 +294,7 @@ void CApp::initNextLevel()
 	if (!reload) CNavmeshManager::initNavmesh(level_name);
 
 	// Game state and notify
-	GameController->SetGameState(CGameController::RUNNING);
+	if (!GameController->IsUiControl()) GameController->SetGameState(CGameController::RUNNING);
 	loadedLevelNotify();
 }
 

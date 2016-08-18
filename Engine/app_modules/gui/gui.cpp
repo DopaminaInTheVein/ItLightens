@@ -117,7 +117,7 @@ void inline CGuiModule::setUpdater(int state, screenUpdater updater)
 void CGuiModule::update(float dt)
 {
 	toogleEnabled();
-	callUpdater(GameController->GetGameState(), dt);
+	//callUpdater(GameController->GetGameState(), dt);
 }
 
 bool CGuiModule::forcedUpdate()
@@ -189,7 +189,7 @@ void CGuiModule::updateOnVictory(float dt) {
 // ----------------------------------- RENDER MODULE ----------------------------------- //
 void inline CGuiModule::callRender(int state)
 {
-	(this->*screenRenders[state])();
+	//(this->*screenRenders[state])();
 }
 
 void CGuiModule::render() {
