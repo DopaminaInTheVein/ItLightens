@@ -32,6 +32,7 @@ void CGameController::UpdateGeneralInputs() {
 			if (game_state == RUNNING) {
 				SetGameState(MENU);
 				controller->ChangeMouseState(false);
+				logic_manager->throwEvent(CLogicManagerModule::EVENT::OnPause, "");
 			}
 			else if (game_state == MENU) {
 				SetGameState(RUNNING);

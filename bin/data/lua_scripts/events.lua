@@ -365,3 +365,8 @@ function OnClicked( param )
 	p:print("OnClicked")
 	CallFunction("OnClicked_"..param)
 end
+
+function OnPause( )
+	p:print("OnPause")
+	p:load_entities("menu")
+end

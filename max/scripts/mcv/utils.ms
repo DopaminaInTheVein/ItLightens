@@ -244,3 +244,20 @@ fn _is_ui_scene = (
 	)
 	return false
 )
+
+ --  Add TAGS --
+fn addTagTo obj tag = (
+	local current_tag = getUserProp obj "tags"
+	if current_tag == undefined then (current_tag = "")
+	setUserProp obj "tags" (current_tag + tag)
+)
+
+fn addTag tag = (
+	if (classof $) == ObjectSet then (
+		for obj in $ do (
+			addTagTo obj tag
+		)
+	) else (
+		addTagTo $ tag
+	)
+)

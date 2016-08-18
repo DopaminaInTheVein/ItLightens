@@ -395,6 +395,15 @@ void SLBHandleGroup::removePhysics() {
 	}
 }
 
+// Remove physics to the group
+void SLBHandleGroup::destroy() {
+	for (auto h : handle_group) {
+		if (h.isValid()) {
+			h.destroy();
+		}
+	}
+}
+
 // camera control in LUA
 void SLBCamera::getCamera() {
 	camera_h = tags_manager.getFirstHavingTag("camera_main");
@@ -692,6 +701,11 @@ void SLBPublicFunctions::saveLevel() {
 
 void SLBPublicFunctions::loadEntities(const char* file_name) {
 	CApp::get().loadEntities(file_name);
+}
+
+void SLBPublicFunctions::resume() {
+	controller->ChangeMouseState(true);
+	GameController->SetGameState(CGameController::RUNNING);
 }
 
 //test
