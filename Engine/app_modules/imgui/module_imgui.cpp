@@ -23,7 +23,7 @@
 //light editor
 void CImGuiModule::StartLightEditor() {
 	m_pLights_editor = new CEditorLights;
-//	m_pLights_editor->LoadLights();
+	//	m_pLights_editor->LoadLights();
 }
 
 ImGuiTextFilter CImGuiModule::filter = ImGuiTextFilter();
@@ -47,8 +47,8 @@ void CImGuiModule::update(float dt) {
 #ifndef FINAL_BUILD
 	ImGui::Begin("Debug UI", &menu, ImVec2(800, 512), -1.0f, window_flags);
 	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
-	
-	m_pLights_editor->update(dt);	
+
+	m_pLights_editor->update(dt);
 
 	//TEST BORRAR
 	//ImGui::DragFloat("Ui Left", &(CCamera::cui_left), 1.f, -10.f, CCamera::cui_right - 0.05f);
@@ -110,6 +110,12 @@ void CImGuiModule::update(float dt) {
 	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
 	ImGui::Checkbox("Ui control", GameController->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
+	if (ImGui::TreeNode("Gui create elements")) {
+		static VEC3 pos_new_ui;
+		ImGui::DragFloat3("Pos", &pos_new_ui.x, 0.1f, -1.f, 2.f);
+		if (ImGui::Button("Create")) Gui->addGuiElement("ui/test", pos_new_ui);
+		ImGui::TreePop();
+	}
 
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
 	ImGui::Text("WARNING: The player will still move, pause the game to stop moving the player");
