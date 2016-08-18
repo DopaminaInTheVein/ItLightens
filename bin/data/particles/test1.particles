@@ -1,0 +1,114 @@
+<particles_emitter
+	num_particles="58"
+>
+<collisions
+	value="1"
+	/>
+<gravity
+	value="0"
+	/>
+<use_physx
+	value="1"
+	/>
+<shape
+	angle="45"
+	max="0.000000 0.000000 0.000000"
+	min="0.000000 0.000000 0.000000"
+	radius="1"
+	type="0"
+	/>
+<position
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	value="0.000000 0.000000 0.000000"
+	/>
+<velocity
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	value="0.000000 5.000000 0.000000"
+	/>
+<size
+	modifier="-1"
+	value="0.2"
+	/>
+<lifetime
+	max_rand="0"
+	min_rand="0"
+	value="1"
+	/>
+<acceleration
+	modifier="0.000000 0.000000 0.000000"
+	value="0.000000 0.000000 0.000000"
+	/>
+<delay
+	delay_particle_rand="5"
+	delay_start="0"
+	/>
+<color
+	modifier="1"
+	value="0.000000 0.000000 0.000000 1.000000"
+	/>
+>
+<bonesList
+	value ="true"
+	size = "58"
+	bone0="0"
+	bone1="1"
+	bone10="10"
+	bone11="11"
+	bone12="12"
+	bone13="13"
+	bone14="14"
+	bone15="15"
+	bone16="16"
+	bone17="17"
+	bone18="18"
+	bone19="19"
+	bone2="2"
+	bone20="20"
+	bone21="21"
+	bone22="22"
+	bone23="23"
+	bone24="24"
+	bone25="25"
+	bone26="26"
+	bone27="27"
+	bone28="28"
+	bone29="29"
+	bone3="3"
+	bone30="30"
+	bone31="31"
+	bone32="32"
+	bone33="33"
+	bone34="34"
+	bone35="35"
+	bone36="36"
+	bone37="37"
+	bone38="38"
+	bone39="39"
+	bone4="4"
+	bone40="40"
+	bone41="41"
+	bone42="42"
+	bone43="43"
+	bone44="44"
+	bone45="45"
+	bone46="46"
+	bone47="47"
+	bone48="48"
+	bone49="49"
+	bone5="5"
+	bone50="50"
+	bone51="51"
+	bone52="52"
+	bone53="53"
+	bone54="54"
+	bone55="55"
+	bone56="56"
+	bone57="57"
+	bone6="6"
+	bone7="7"
+	bone8="8"
+	bone9="9"
+	/>
+</particles_emitter>

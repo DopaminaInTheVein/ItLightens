@@ -8,13 +8,17 @@
 
 // ------------------------------------
 struct TCompLightDir : public TCompCamera {
-  const CTexture* light_mask;
-  VEC4 color;
-  bool load(MKeyValue& atts);
-  void renderInMenu();
-  void uploadShaderCtes(CEntity* e);
-  void activate();
-  void update(float dt);
+  const CTexture*	light_mask;
+  VEC4				color;
+  bool				enabled = true;
+  bool				debug_render = false;
+
+  bool				load(MKeyValue& atts);
+  void				render() const;
+  void				renderInMenu();
+  void				uploadShaderCtes(CEntity* e);
+  void				activate();
+  void				update(float dt);
 };
 
 #endif

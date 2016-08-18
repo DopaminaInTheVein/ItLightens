@@ -15,9 +15,23 @@ bool TCompLightDir::load(MKeyValue& atts) {
 	return true;
 }
 
+void TCompLightDir::render() const {
+	if (debug_render) {
+		PROFILE_FUNCTION("TCompLight render");
+		auto axis = Resources.get("frustum.mesh")->as<CMesh>();
+		shader_ctes_object.World = getViewProjection().Invert();
+		shader_ctes_object.uploadToGPU();
+		axis->activateAndRender();
+	}
+}
+
 void TCompLightDir::renderInMenu() {
 	TCompCamera::renderInMenu();
 	ImGui::ColorEdit4("Color", &color.x, true);
+
+	bool test;
+	ImGui::Checkbox("SAVE LIGHT", &test);
+	ImGui::Checkbox("HIDE LIGHT", &test);
 }
 
 void TCompLightDir::uploadShaderCtes(CEntity* e) {

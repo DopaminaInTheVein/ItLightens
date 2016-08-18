@@ -434,6 +434,11 @@ void CEntitiesModule::initEntities() {
 	getHandleManager<TCompPila>()->onAll(&TCompPila::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
+	getHandleManager<CParticleSystem>()->onAll(&CParticleSystem::init);
+
+	//fx
+	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
+
 	//Added to clean this file
 	getHandleManager<LogicHelperArrow>()->onAll(&LogicHelperArrow::init);
 	getHandleManager<TCompCameraMain>()->onAll(&TCompCameraMain::init);

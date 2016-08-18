@@ -15,7 +15,16 @@
 
 #include "particles\particles_manager.h"
 
+//editors
+#include "Editors\editor_lights.h"
+
 #include <Commdlg.h>
+
+//light editor
+void CImGuiModule::StartLightEditor() {
+	m_pLights_editor = new CEditorLights;
+//	m_pLights_editor->LoadLights();
+}
 
 ImGuiTextFilter CImGuiModule::filter = ImGuiTextFilter();
 
@@ -25,6 +34,7 @@ bool CImGuiModule::start() {
 }
 
 void CImGuiModule::stop() {
+	delete m_pLights_editor;
 	ImGui_ImplDX11_Shutdown();
 }
 
@@ -37,6 +47,8 @@ void CImGuiModule::update(float dt) {
 #ifndef FINAL_BUILD
 	ImGui::Begin("Debug UI", &menu, ImVec2(800, 512), -1.0f, window_flags);
 	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
+	
+	m_pLights_editor->update(dt);	
 
 	//TEST BORRAR
 	//ImGui::DragFloat("Ui Left", &(CCamera::cui_left), 1.f, -10.f, CCamera::cui_right - 0.05f);
@@ -54,6 +66,8 @@ void CImGuiModule::update(float dt) {
 			ImGui::MenuItem("Commands (O)", NULL, Debug->GetCommandsConsoleState());
 
 			ImGui::MenuItem("Particle editor (F8)", NULL, g_particlesManager->GetParticleEditorState());
+			ImGui::MenuItem("Lights editor (F9)", NULL, m_pLights_editor->GetLightsEditorState());
+
 			//Debug->OpenConsole();
 			ImGui::EndMenu();
 		}
@@ -257,6 +271,7 @@ void CImGuiModule::update(float dt) {
 
 	ui.update();			//update ui
 	//Debug->update();		//update log
+	m_pLights_editor->RenderInMenu();
 }
 
 void CImGuiModule::render() {

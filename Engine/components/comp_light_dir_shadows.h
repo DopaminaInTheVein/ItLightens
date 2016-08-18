@@ -9,7 +9,8 @@ class CRenderToTexture;
 // ------------------------------------
 struct TCompLightDirShadows : public TCompLightDir {
   CRenderToTexture* rt_shadows = nullptr;
-  bool              enabled = true;;
+  bool              enabled = true;
+  int res;
   bool load(MKeyValue& atts);
   void activate();
   void update(float dt);
