@@ -7,7 +7,7 @@
 #include "comp_name.h"
 
 #include "handle\handle.h"
-#include "app_modules\io\io.h"
+//#include "input\input_wrapper.h"
 
 #define FACTOR_HEIGHT_AABB	1.4f
 #define FACTOR_WIDTH_AABB	1.5f
@@ -21,6 +21,13 @@ bool TCompCharacterController::load(MKeyValue & atts)
 {
 	m_radius = atts.getFloat("radius", 0.5f);
 	m_height = atts.getFloat("height", 0.5f);
+	return true;
+}
+
+bool TCompCharacterController::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("radius", m_radius);
+	atts.put("height", m_height);
 	return true;
 }
 

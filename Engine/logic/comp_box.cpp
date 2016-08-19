@@ -86,6 +86,12 @@ bool TCompBox::load(MKeyValue& atts) {
 	return true;
 }
 
+bool TCompBox::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("size", size);
+	return true;
+}
+
 VEC3 TCompBox::GetLeavePoint() const { return originPoint; }
 bool TCompBox::isRemovable() { return removable; }
 void TCompBox::UnGrab()

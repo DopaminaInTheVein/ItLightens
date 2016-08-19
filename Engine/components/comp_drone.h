@@ -9,46 +9,47 @@ class TCompPhysics;
 struct TCompLife;
 
 struct TCompDrone : public TTrigger {
-  TCompTransform* transform;
-  TCompPhysics* physics;
-  TCompLife* life;
+	TCompTransform* transform;
+	TCompPhysics* physics;
+	TCompLife* life;
 
-  std::vector<VEC3> wpts;
-  std::vector<float> waitTimes;
-  int curWpt;
-  float speed = 1.0f;
-  float fallingSpeed = 3.0f;
-  float timeToWait = 0.f;
-  float mEpsilon = .1f;
-  bool playerInDistance = false;
-  bool sciInDistance = false;
-  bool espatllat = false;
+	std::vector<VEC3> wpts;
+	std::vector<float> waitTimes;
+	int curWpt;
+	float speed = 1.0f;
+	float fallingSpeed = 3.0f;
+	float timeToWait = 0.f;
+	float mEpsilon = .1f;
+	bool playerInDistance = false;
+	bool sciInDistance = false;
+	bool espatllat = false;
 
-  std::string self_ilum_front;
-  std::string self_ilum_back;
+	std::string self_ilum_front;
+	std::string self_ilum_back;
 
-  VEC3 final_pos;
+	VEC3 final_pos;
 
-  void onCreate(const TMsgEntityCreated&);
-  void onRecharge(const TMsgActivate &);
-  void onRepair(const TMsgRepair &);
-  void CanRechargeDrone(bool new_range);
-  void CanNotRechargeDrone(bool new_range);
-  void CanRepairDrone(CHandle sci, bool new_range);
+	void onCreate(const TMsgEntityCreated&);
+	void onRecharge(const TMsgActivate &);
+	void onRepair(const TMsgRepair &);
+	void CanRechargeDrone(bool new_range);
+	void CanNotRechargeDrone(bool new_range);
+	void CanRepairDrone(CHandle sci, bool new_range);
 
-  void onTriggerInside(const TMsgTriggerIn& msg) {} //will do nothing, particles effect, ui message or something
-  void onTriggerEnter(const TMsgTriggerIn& msg);
-  void onTriggerExit(const TMsgTriggerOut& msg);
-  void mUpdate(float dt) {}
+	void onTriggerInside(const TMsgTriggerIn& msg) {} //will do nothing, particles effect, ui message or something
+	void onTriggerEnter(const TMsgTriggerIn& msg);
+	void onTriggerExit(const TMsgTriggerOut& msg);
+	void mUpdate(float dt) {}
 
-  bool SetMyBasicComponents();
-  void update(float elapsed);
-  void moveToNext(float elapsed);
-  bool load(MKeyValue& atts);
-  void fixedUpdate(float elapsed);
-  void renderInMenu() {
-    ImGui::Text("I am a drone!!");
-  }
+	bool SetMyBasicComponents();
+	void update(float elapsed);
+	void moveToNext(float elapsed);
+	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
+	void fixedUpdate(float elapsed);
+	void renderInMenu() {
+		ImGui::Text("I am a drone!!");
+	}
 };
 
 #endif

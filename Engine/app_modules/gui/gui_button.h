@@ -1,5 +1,5 @@
-#ifndef INC_MODULE_GUI_BUTTON_H_
-#define INC_MODULE_GUI_BUTTON_H_
+#ifndef INC_MODULE_GUI_BUTTON_OLD_H_
+#define INC_MODULE_GUI_BUTTON_OLD_H_
 
 #include "gui_utils.h"
 

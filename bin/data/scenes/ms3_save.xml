@@ -1,0 +1,2278 @@
+<entities
+>
+<entity
+	id="300"
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="__Door"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-82.841003 0.575238 -29.856600"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/__Door.static_mesh"
+	/>
+<polarized
+	offset="0.000000 0.500000 0.000000"
+	pol="neutral"
+	/>
+<tags
+	tags="doorExit door              "
+	/>
+<magnet_door
+	locked="1"
+	pol="neutral"
+	speedClosing="1"
+	speedOpening="1"
+	target="-82.841003 4.372530 -29.856600"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="5"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="convex"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="__pila"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-121.670563 -0.467000 -5.184159"
+	quat="-0.000000 -0.669883 0.000000 0.742467"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/__pila.static_mesh"
+	/>
+<bone_tracker
+	/>
+<tags
+	tags="platform pila interactive             "
+	/>
+<pila
+	action="examinate"
+	actionSci="examinate"
+	actived="1"
+	/>
+<rigidbody
+	kinematic="1"
+	mass="5"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="convex"
+	/>
+</entity>
+<entity
+	id="301"
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="elevator"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-65.349800 -1.306200 20.828899"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/elevator.static_mesh"
+	/>
+<tags
+	tags="elevator interactive              "
+	/>
+<elevator
+	speedDown="27"
+	speedUp="27"
+	state="2"
+	target_down="-65.349800 -1.306200 20.828899"
+	target_up="-65.349800 15.808000 20.828899"
+	/>
+<rigidbody
+	kinematic="1"
+	mass="5"
+	size="2.314950 0.075000 1.628625"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	id="304"
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<name
+	name="enchufe"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-121.537003 -0.242203 -5.416840"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/enchufe.static_mesh"
+	/>
+<tags
+	tags="pila_container interactive              "
+	/>
+<pila_container
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="static"
+	type_shape="mesh"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<name
+	name="mesa_cientifico_up_mapeado"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-63.683300 18.594700 13.462700"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/mesa_cientifico_up_mapeado.static_mesh"
+	/>
+<tags
+	tags="workbench interactive              "
+	/>
+<workbench
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="static"
+	type_shape="mesh"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<name
+	name="mesa_cientifico_up_mapeado001"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-93.821098 1.513170 19.472300"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/mesa_cientifico_up_mapeado001.static_mesh"
+	/>
+<tags
+	tags="workbench interactive              "
+	/>
+<workbench
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="static"
+	type_shape="mesh"
+	/>
+</entity>
+<entity
+	id="306"
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="puerta_Ascensor_derecha"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-66.748001 -0.203600 19.675100"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/puerta_Ascensor_derecha.static_mesh"
+	/>
+<polarized
+	offset="0.000000 0.500000 0.000000"
+	pol="neutral"
+	/>
+<tags
+	tags="door               "
+	/>
+<magnet_door
+	locked="0"
+	pol="neutral"
+	speedClosing="1"
+	speedOpening="1"
+	target="-66.010002 -0.203600 19.675100"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="5"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="convex"
+	/>
+</entity>
+<entity
+	id="308"
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="puerta_Ascensor_derecha_arriba"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-66.078102 16.879801 19.739000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/puerta_Ascensor_derecha_arriba.static_mesh"
+	/>
+<polarized
+	offset="0.000000 0.500000 0.000000"
+	pol="neutral"
+	/>
+<tags
+	tags="door               "
+	/>
+<magnet_door
+	locked="1"
+	pol="neutral"
+	speedClosing="1"
+	speedOpening="1"
+	target="-66.896797 16.879801 19.739000"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="5"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="convex"
+	/>
+</entity>
+<entity
+	id="305"
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="puerta_Ascensor_izquierda"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-64.059502 -0.203600 19.675100"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/puerta_Ascensor_izquierda.static_mesh"
+	/>
+<polarized
+	offset="0.000000 0.500000 0.000000"
+	pol="neutral"
+	/>
+<tags
+	tags="door               "
+	/>
+<magnet_door
+	locked="0"
+	pol="neutral"
+	speedClosing="1"
+	speedOpening="1"
+	target="-64.710701 -0.203600 19.675100"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="5"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="convex"
+	/>
+</entity>
+<entity
+	id="307"
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="puerta_Ascensor_izquierda_arriba"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-64.744102 16.879801 19.724001"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/puerta_Ascensor_izquierda_arriba.static_mesh"
+	/>
+<polarized
+	offset="0.000000 0.500000 0.000000"
+	pol="neutral"
+	/>
+<tags
+	tags="door               "
+	/>
+<magnet_door
+	locked="1"
+	pol="neutral"
+	speedClosing="1"
+	speedOpening="1"
+	target="-63.948799 16.879801 19.724001"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="5"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="convex"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<player
+	/>
+<skeleton
+	model="skeletons/player/player.skeleton"
+	/>
+<skeleton_ik
+	/>
+<skeleton_lookat
+	/>
+<skc_player
+	/>
+<name
+	name="__player_1"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="0.000000 200.000000 0.000000"
+	quat="-0.000000 -0.959329 0.000000 0.282289"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="skeletons/player/player.static_mesh"
+	/>
+<life
+	points="66.5858"
+	/>
+<tags
+	tags="raijin               "
+	/>
+<character_controller
+	height="0.7"
+	radius="0.3"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<trigger_lua
+	action="examinate"
+	actionSci="activate"
+	actived="1"
+	/>
+<name
+	name="__tElevator"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-65.843300 16.063000 20.769699"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="1.523040 0.437500 0.958650"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<trigger_lua
+	action="examinate"
+	actionSci="activate"
+	actived="1"
+	/>
+<name
+	name="__tElevator"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-65.652397 -0.632667 20.471500"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="0.903715 0.437500 0.640740"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<player_mole
+	possessed="1"
+	/>
+<skeleton
+	model="skeletons/mole/mole.skeleton"
+	/>
+<skeleton_ik
+	/>
+<skc_mole
+	/>
+<name
+	name="__mole_1"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-121.580330 -1.303517 -6.308896"
+	quat="0.000000 0.032037 0.000000 0.999487"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="skeletons/mole/mole.static_mesh"
+	/>
+<tags
+	tags="AI AI_mole AI_poss player            "
+	/>
+<bt_mole
+	possessed="1"
+	wpts_size="0"
+	/>
+<character_controller
+	height="2.1"
+	radius="0.3"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<skeleton
+	model="skeletons/guard/guard.skeleton"
+	/>
+<skeleton_ik
+	/>
+<skeleton_lookat
+	/>
+<skc_guard
+	/>
+<name
+	name="guard_002"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="11.114939 -24.020016 -10.309830"
+	quat="0.000000 0.021438 0.000000 0.999770"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
+	/>
+<tags
+	tags="AI AI_guard              "
+	/>
+<bt_guard
+	formation_dir="26.215700 -23.967800 -6.800940"
+	formation_point="25.573900 -24.025101 -6.973200"
+	jurRadius="5"
+	jurisdiction="26.068199 -23.900000 -5.114040"
+	kpt0_pos="13.348700 -23.871201 16.484501"
+	kpt0_type="seek"
+	kpt0_wait="2"
+	kpt1_pos="2.404460 -23.871201 2.588890"
+	kpt1_type="seek"
+	kpt1_wait="2"
+	kpt2_pos="26.175501 -23.871201 -4.613600"
+	kpt2_type="seek"
+	kpt2_wait="2"
+	kpt3_pos="10.851100 -23.871201 -13.658300"
+	kpt3_type="seek"
+	kpt3_wait="2"
+	kpt_size="4"
+	state="seekwpt"
+	/>
+<character_controller
+	height="1.8"
+	radius="0.3"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<skeleton
+	model="skeletons/guard/guard.skeleton"
+	/>
+<skeleton_ik
+	/>
+<skeleton_lookat
+	/>
+<skc_guard
+	/>
+<name
+	name="guard_003"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="5.932351 -24.020014 22.356855"
+	quat="-0.000000 -0.511227 0.000000 0.859446"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
+	/>
+<tags
+	tags="AI AI_guard              "
+	/>
+<bt_guard
+	formation_dir="-3.618460 -23.967800 2.134690"
+	formation_point="-4.260290 -24.025101 1.962430"
+	jurRadius="5"
+	jurisdiction="-1.580590 -23.900000 3.847850"
+	kpt0_pos="5.847900 -23.871201 22.454500"
+	kpt0_type="seek"
+	kpt0_wait="2"
+	kpt1_pos="6.838980 -23.871201 -21.022699"
+	kpt1_type="seek"
+	kpt1_wait="2"
+	kpt2_pos="2.705620 -23.871201 1.629040"
+	kpt2_type="seek"
+	kpt2_wait="2"
+	kpt_size="3"
+	state="seekwpt"
+	/>
+<character_controller
+	height="1.8"
+	radius="0.3"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<skeleton
+	model="skeletons/guard/guard.skeleton"
+	/>
+<skeleton_ik
+	/>
+<skeleton_lookat
+	/>
+<skc_guard
+	/>
+<name
+	name="guard_004"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-84.221001 -1.303518 -28.427591"
+	quat="-0.000000 -0.163167 0.000000 0.986598"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
+	/>
+<tags
+	tags="AI AI_guard              "
+	/>
+<bt_guard
+	formation_dir="-86.390099 -1.267510 -30.135201"
+	formation_point="-87.031898 -1.324820 -30.307400"
+	jurRadius="7.15"
+	jurisdiction="-82.830200 -1.199720 -25.286301"
+	kpt0_pos="-84.325897 -1.279540 -28.057501"
+	kpt0_type="look"
+	kpt0_wait="2"
+	kpt1_pos="-84.339302 -1.285890 -28.451799"
+	kpt1_type="seek"
+	kpt1_wait="2"
+	kpt_size="2"
+	state="waitwpt"
+	/>
+<character_controller
+	height="1.8"
+	radius="0.3"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<skeleton
+	model="skeletons/guard/guard.skeleton"
+	/>
+<skeleton_ik
+	/>
+<skeleton_lookat
+	/>
+<skc_guard
+	/>
+<name
+	name="guard_005"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-81.658997 -1.303518 -28.422001"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
+	/>
+<tags
+	tags="AI AI_guard              "
+	/>
+<bt_guard
+	formation_dir="-83.696899 -1.267510 -30.135201"
+	formation_point="-84.338699 -1.324820 -30.307400"
+	jurRadius="7.2"
+	jurisdiction="-82.830200 -1.199720 -25.286301"
+	kpt0_pos="-81.632698 -1.279540 -28.057501"
+	kpt0_type="look"
+	kpt0_wait="2"
+	kpt1_pos="-81.646103 -1.285890 -28.451799"
+	kpt1_type="seek"
+	kpt1_wait="2"
+	kpt_size="2"
+	state="waitwpt"
+	/>
+<character_controller
+	height="1.8"
+	radius="0.3"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<skeleton
+	model="skeletons/guard/guard.skeleton"
+	/>
+<skeleton_ik
+	/>
+<skeleton_lookat
+	/>
+<skc_guard
+	/>
+<name
+	name="guard_006"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-101.044189 -1.303517 -10.326334"
+	quat="-0.000000 -0.527759 0.000000 0.849394"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
+	/>
+<tags
+	tags="AI AI_guard              "
+	/>
+<bt_guard
+	formation_dir="-98.822304 -1.267510 -12.318200"
+	formation_point="-99.464203 -1.324820 -12.490400"
+	jurRadius="5"
+	jurisdiction="-96.784500 -1.199720 -10.605000"
+	kpt0_pos="-100.585999 -1.279540 -5.806380"
+	kpt0_type="look"
+	kpt0_wait="2"
+	kpt1_pos="-100.725998 -1.285890 -14.300300"
+	kpt1_type="seek"
+	kpt1_wait="2"
+	kpt2_pos="-92.854599 -1.285890 -14.365800"
+	kpt2_type="seek"
+	kpt2_wait="2"
+	kpt3_pos="-90.735901 -1.279540 -17.299900"
+	kpt3_type="look"
+	kpt3_wait="2"
+	kpt4_pos="-70.060204 -1.285890 -14.365800"
+	kpt4_type="seek"
+	kpt4_wait="2"
+	kpt5_pos="-72.265503 -1.279540 -17.299900"
+	kpt5_type="look"
+	kpt5_wait="2"
+	kpt_size="6"
+	state="seekwpt"
+	/>
+<character_controller
+	height="1.8"
+	radius="0.3"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<skeleton
+	model="skeletons/guard/guard.skeleton"
+	/>
+<skeleton_ik
+	/>
+<skeleton_lookat
+	/>
+<skc_guard
+	/>
+<name
+	name="guard_007"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-65.898109 -1.302402 1.465355"
+	quat="-0.000000 -0.562424 0.000000 0.826849"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="skeletons/guard/guard.static_mesh"
+	/>
+<tags
+	tags="AI AI_guard              "
+	/>
+<bt_guard
+	formation_dir="-68.951797 -1.267510 6.100120"
+	formation_point="-69.593597 -1.324820 5.927850"
+	jurRadius="5"
+	jurisdiction="-66.913902 -1.199720 7.813280"
+	kpt0_pos="-67.109398 -1.279540 10.706400"
+	kpt0_type="look"
+	kpt0_wait="2"
+	kpt1_pos="-67.123100 -1.285890 11.418900"
+	kpt1_type="seek"
+	kpt1_wait="2"
+	kpt2_pos="-62.984100 -1.285890 -8.108530"
+	kpt2_type="seek"
+	kpt2_wait="2"
+	kpt3_pos="-57.916698 -1.279540 -7.760420"
+	kpt3_type="look"
+	kpt3_wait="2"
+	kpt4_pos="-88.364899 -1.285890 1.819710"
+	kpt4_type="seek"
+	kpt4_wait="2"
+	kpt5_pos="-88.504303 -1.279540 -8.207650"
+	kpt5_type="look"
+	kpt5_wait="2"
+	kpt_size="6"
+	state="seekwpt"
+	/>
+<character_controller
+	height="1.8"
+	radius="0.3"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="DroneMinus_1"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="7.279348 -11.531692 -11.611481"
+	quat="0.000000 0.708986 0.000000 0.705223"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
+	/>
+<polarized
+	offset="-0.010628 0.965812 0.101485"
+	pol="minus"
+	/>
+<tags
+	tags="drone platform              "
+	/>
+<drone
+	textureBack=""
+	textureFront=""
+	wpt0_pos="16.754700 -11.801500 -11.529500"
+	wpt0_wait="2"
+	wpt1_pos="3.386520 -11.801500 -11.529500"
+	wpt1_wait="2"
+	wpts_size="2"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="drone"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="DronePlus_1"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="13.071040 -11.484313 -2.719324"
+	quat="0.000000 -0.707107 0.000000 0.707107"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
+	/>
+<polarized
+	offset="0.000000 0.966293 -0.032145"
+	pol="plus"
+	/>
+<tags
+	tags="drone platform              "
+	/>
+<drone
+	textureBack=""
+	textureFront=""
+	wpt0_pos="3.420320 -11.801500 -2.787320"
+	wpt0_wait="2"
+	wpt1_pos="16.611601 -11.801500 -2.787320"
+	wpt1_wait="2"
+	wpts_size="2"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="drone"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="DroneMinus_002"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="8.370251 -11.459263 5.019255"
+	quat="0.000000 0.708986 0.000000 0.705223"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
+	/>
+<polarized
+	offset="-0.010628 0.965812 -0.044817"
+	pol="minus"
+	/>
+<tags
+	tags="drone platform              "
+	/>
+<drone
+	textureBack=""
+	textureFront=""
+	wpt0_pos="16.699800 -11.801500 5.150440"
+	wpt0_wait="2"
+	wpt1_pos="3.590940 -11.801500 5.150440"
+	wpt1_wait="2"
+	wpts_size="2"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="drone"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="DronePlus_002"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="13.069664 -11.484233 14.012544"
+	quat="0.000000 -0.707107 0.000000 0.707107"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
+	/>
+<polarized
+	offset="-0.016867 0.966293 -0.293303"
+	pol="plus"
+	/>
+<tags
+	tags="drone platform              "
+	/>
+<drone
+	textureBack=""
+	textureFront=""
+	wpt0_pos="3.420320 -11.801500 14.066400"
+	wpt0_wait="2"
+	wpt1_pos="16.611601 -11.801500 14.066400"
+	wpt1_wait="2"
+	wpts_size="2"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="drone"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="Box_1"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="15.264800 -10.923300 22.079599"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/obj/box2.static_mesh"
+	/>
+<polarized
+	offset="-0.067045 0.874261 -0.143208"
+	pol="plus"
+	/>
+<bone_tracker
+	/>
+<tags
+	tags="box platform removable interactive            "
+	/>
+<box
+	size="3.000000 1.500000 3.000000"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="5"
+	smooth="0"
+	type_collision="static"
+	type_shape="convex"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="DroneMinus_003"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="7.111662 -4.397264 21.240448"
+	quat="0.000000 1.000000 0.000000 0.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
+	/>
+<polarized
+	offset="-0.073867 0.934383 0.100378"
+	pol="plus"
+	/>
+<tags
+	tags="drone platform              "
+	/>
+<drone
+	textureBack=""
+	textureFront=""
+	wpt0_pos="-3.177640 -3.087290 21.393000"
+	wpt0_wait="2"
+	wpt1_pos="10.032500 -5.153200 21.371201"
+	wpt1_wait="2"
+	wpts_size="2"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="drone"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="DroneMinus_004"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="-25.926117 3.700309 22.041199"
+	quat="0.000000 1.000000 0.000000 0.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
+	/>
+<polarized
+	offset="-0.044737 0.965812 0.010961"
+	pol="minus"
+	/>
+<tags
+	tags="drone platform              "
+	/>
+<drone
+	textureBack=""
+	textureFront=""
+	wpt0_pos="-30.829399 4.311670 22.160400"
+	wpt0_wait="2"
+	wpt1_pos="-18.937901 1.301440 21.772699"
+	wpt1_wait="2"
+	wpts_size="2"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="drone"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="DroneMinus_005"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="-34.541595 2.558371 9.963962"
+	quat="0.000000 -0.701693 0.000000 0.712479"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/obj/drone.static_mesh"
+	/>
+<polarized
+	offset="0.100697 0.934383 0.073431"
+	pol="plus"
+	/>
+<tags
+	tags="drone platform              "
+	/>
+<drone
+	textureBack=""
+	textureFront=""
+	wpt0_pos="-34.409599 4.275510 22.212500"
+	wpt0_wait="2"
+	wpt1_pos="-34.488602 2.209590 8.486400"
+	wpt1_wait="2"
+	wpts_size="2"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="drone"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<name
+	name="Box_2"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="27.404202 -23.268002 -14.433700"
+	quat="-0.000000 0.000000 -0.000001 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/obj/box2.static_mesh"
+	/>
+<polarized
+	offset="0.000000 1.005130 0.000000"
+	pol="minus"
+	/>
+<bone_tracker
+	/>
+<tags
+	tags="box platform removable interactive            "
+	/>
+<box
+	size="3.000000 1.500000 3.000000"
+	/>
+<rigidbody
+	kinematic="0"
+	mass="5"
+	smooth="0"
+	type_collision="dynamic"
+	type_shape="convex"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<player_mole
+	/>
+<skeleton
+	model="skeletons/mole/mole.skeleton"
+	/>
+<skeleton_ik
+	/>
+<skc_mole
+	/>
+<name
+	name="mole_1"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="32.885254 -24.020016 -7.523476"
+	quat="0.000000 -0.999117 -0.000000 -0.042004"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="skeletons/mole/mole.static_mesh"
+	/>
+<tags
+	tags="AI AI_mole AI_poss             "
+	/>
+<bt_mole
+	state="reachedPoint"
+	wpt0_pos="32.941601 -23.858999 -8.192150"
+	wpt1_pos="32.941601 -23.858999 12.267200"
+	wpt2_pos="27.273600 -23.858999 12.267200"
+	wpt3_pos="31.308500 -23.858999 7.675870"
+	wpt4_pos="33.281601 -23.858999 0.208357"
+	wpts_size="5"
+	/>
+<character_controller
+	height="2.01"
+	radius="0.3"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<trigger_lua
+	action="examinate"
+	actionMole="destroy"
+	actived="0"
+	/>
+<name
+	name="tWall"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-85.837097 -0.524505 -7.804090"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="1.202695 0.092500 1.922545"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	id="303"
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<name
+	name="cargador_bateria"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-90.836800 -0.419937 14.430100"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<render_static_mesh
+	name="static_meshes/ms3/cargador_bateria.static_mesh"
+	/>
+<tags
+	tags="pila_container interactive              "
+	/>
+<pila_container
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	smooth="0"
+	type_collision="static"
+	type_shape="mesh"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<trigger_lua
+	action="examinate"
+	actionSci="activate"
+	actived="1"
+	/>
+<name
+	name="__tCargador"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-90.807602 -0.719524 14.492000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="1.089255 0.585750 1.204775"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<trigger_lua
+	action="examinate"
+	actionSci="activate"
+	actived="1"
+	/>
+<name
+	name="__tEnchufe"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-121.536003 -0.719525 -6.020050"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="0.729800 0.585750 0.745515"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<trigger_lua
+	action="activate"
+	actived="1"
+	/>
+<name
+	name="tWireDown"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-86.472801 -0.331161 -7.483200"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="0.541210 0.092500 1.922545"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+<tracker
+	long="35.0293"
+	point0="-87.067703 0.707772 -5.458670"
+	point1="-87.067703 0.707772 -4.965300"
+	point10="-87.067703 0.707773 -0.524974"
+	point11="-87.067703 0.707772 -0.031604"
+	point12="-87.067703 0.707772 0.461766"
+	point13="-87.067703 0.707772 0.955136"
+	point14="-87.067703 0.707772 1.448510"
+	point15="-87.067703 0.707772 1.941880"
+	point16="-87.067703 0.707772 2.435240"
+	point17="-87.067703 0.707772 2.928620"
+	point18="-87.067703 0.707772 3.421980"
+	point19="-87.067703 0.707772 3.915360"
+	point2="-87.067703 0.707772 -4.471930"
+	point20="-87.067703 0.707772 4.408730"
+	point21="-87.067703 0.707772 4.902100"
+	point22="-87.067703 0.707772 5.395470"
+	point23="-87.067703 0.707772 5.888840"
+	point24="-87.067703 0.707772 6.382210"
+	point25="-87.067703 0.707772 6.875580"
+	point26="-87.067703 0.707772 7.368950"
+	point27="-87.067703 0.707773 7.862320"
+	point28="-87.067703 0.707773 8.355690"
+	point29="-87.067703 0.707773 8.849060"
+	point3="-87.067703 0.707773 -3.978560"
+	point30="-87.067703 0.707773 9.342430"
+	point31="-87.067703 0.707773 9.835800"
+	point32="-87.067703 0.707773 10.329200"
+	point33="-87.067703 0.707773 10.822500"
+	point34="-87.067703 0.707773 11.315900"
+	point35="-87.067703 0.707773 11.809300"
+	point36="-87.067703 0.707773 12.302600"
+	point37="-87.067703 0.707773 12.796000"
+	point38="-87.067703 0.707773 13.289400"
+	point39="-87.067703 0.707773 13.782800"
+	point4="-87.067703 0.707772 -3.485190"
+	point40="-87.067703 0.707773 14.276100"
+	point41="-87.067703 0.707773 14.769500"
+	point42="-87.067703 0.707773 15.262900"
+	point43="-87.067703 0.707773 15.756200"
+	point44="-87.067703 0.707773 16.249599"
+	point45="-87.067703 0.707773 16.743000"
+	point46="-87.067703 0.707773 17.236300"
+	point47="-87.067703 0.707773 17.729700"
+	point48="-87.067703 0.707773 18.223101"
+	point49="-87.067703 0.707773 18.716499"
+	point5="-87.067703 0.707772 -2.991820"
+	point50="-87.067703 0.855405 19.062201"
+	point51="-87.067703 1.348780 19.062201"
+	point52="-87.067703 1.842150 19.062201"
+	point53="-87.067703 2.335520 19.062201"
+	point54="-87.067703 2.828890 19.062201"
+	point55="-87.067703 3.322260 19.062201"
+	point56="-87.067703 3.815630 19.062201"
+	point57="-87.067703 4.309000 19.062201"
+	point58="-87.067703 4.802370 19.062201"
+	point59="-87.067703 5.295740 19.062201"
+	point6="-87.067703 0.707773 -2.498450"
+	point60="-87.067703 5.789110 19.062201"
+	point61="-87.067703 6.282480 19.062201"
+	point62="-87.067703 6.775850 19.062201"
+	point63="-87.067703 7.269220 19.062201"
+	point64="-87.067703 7.762590 19.062201"
+	point65="-87.067703 8.255960 19.062201"
+	point66="-87.067703 8.749330 19.062201"
+	point67="-87.067703 9.242700 19.062201"
+	point68="-87.067703 9.736070 19.062201"
+	point69="-87.067703 10.229400 19.062201"
+	point7="-87.067703 0.707772 -2.005080"
+	point70="-87.067703 10.722800 19.062201"
+	point8="-87.067703 0.707772 -1.511710"
+	point9="-87.067703 0.707772 -1.018340"
+	size="71"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<abs_aabb
+	/>
+<local_aabb
+	/>
+<player_cientifico
+	bombs="3"
+	/>
+<skeleton
+	model="skeletons/scientist/scientist.skeleton"
+	/>
+<skeleton_ik
+	/>
+<skc_scientist
+	/>
+<name
+	name="scientist_1"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-75.813461 -1.303517 -4.026479"
+	quat="0.000000 0.309081 0.000000 0.951036"
+	scale="0.009299 0.009299 0.009299"
+	/>
+<render_static_mesh
+	name="skeletons/scientist/scientist.static_mesh"
+	/>
+<tags
+	tags="AI AI_cientifico AI_poss interactive            "
+	/>
+<bt_scientist
+	kpt_size="0"
+	state="gotoworkstation"
+	zmax="0.1"
+	zmin="100"
+	/>
+<character_controller
+	height="1.71312"
+	radius="0.147"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="Workstation02"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-64.458397 16.297899 13.227700"
+	quat="0.000000 0.922127 0.000000 0.386888"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="workstation               "
+	/>
+<workstation
+	animation="idle"
+	posAction="-64.458397 16.297899 13.227700"
+	yawAction="-3.14159"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="Workstation01"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-66.745003 16.297899 16.787001"
+	quat="0.000000 -0.357009 0.000000 0.934101"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="workstation               "
+	/>
+<workstation
+	animation="idle"
+	posAction="-66.745003 16.297899 16.787001"
+	yawAction="0"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="Workstation03"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-63.220100 16.297899 17.436300"
+	quat="0.000000 0.410464 0.000000 0.911877"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="workstation               "
+	/>
+<workstation
+	animation="idle"
+	posAction="-63.220100 16.297899 17.436300"
+	yawAction="0"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="trigger_1"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="-17.810101 -1.546140 24.667601"
+	quat="0.000000 1.000000 0.000000 0.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<generator
+	/>
+<tags
+	tags="trigger generator              "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	radius="1.64"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="sphere"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="trigger_2"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="29.617599 -23.288900 16.429600"
+	quat="0.000000 1.000000 0.000000 0.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<generator
+	/>
+<tags
+	tags="trigger generator              "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	radius="1.64"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="sphere"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="trigger_3"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="-6.749730 -12.236300 -19.607100"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<generator
+	/>
+<tags
+	tags="trigger generator              "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	radius="1.64"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="sphere"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="trigger_4"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="-40.825001 -0.555908 -7.163710"
+	quat="0.000000 0.705949 0.000000 0.708263"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<generator
+	/>
+<tags
+	tags="trigger generator              "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	radius="1.64"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="sphere"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="trigger_5"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-73.506798 -0.588134 8.454650"
+	quat="0.000000 0.846634 0.000000 0.532176"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<generator
+	/>
+<tags
+	tags="trigger generator              "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	radius="1.64"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="sphere"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="trigger_6"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-119.644997 -0.582276 -12.525600"
+	quat="0.000000 -0.695415 0.000000 0.718609"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<generator
+	/>
+<tags
+	tags="trigger generator              "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	radius="1.64"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="sphere"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<trigger_lua
+	action="activate"
+	actived="1"
+	/>
+<name
+	name="tWireUp"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-69.285400 16.398001 16.660999"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="0.357145 0.362500 0.461411"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="Trigger_Cambio_Sala"
+	/>
+<room_switcher
+	back_room="2"
+	front_room="1"
+	/>
+<transform
+	pos="-54.476501 0.753134 -5.477240"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger room_switcher              "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="1.500000 2.000000 0.050000"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="Trigger_Escupe_Posessiones"
+	/>
+<limit
+	/>
+<transform
+	pos="-62.219799 0.753134 -5.477240"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger limit              "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="0.050000 2.000000 6.000000"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="Workstation004"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-86.654297 -0.628906 15.036300"
+	quat="0.000000 0.710217 0.000000 0.703983"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="workstation               "
+	/>
+<workstation
+	animation="idle"
+	posAction="-86.654297 -0.628906 15.036300"
+	yawAction="-3.14159"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="Workstation005"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-93.464104 -0.628905 19.821400"
+	quat="0.000000 -0.728751 0.000000 0.684779"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="workstation               "
+	/>
+<workstation
+	animation="idle"
+	posAction="-93.464104 -0.628905 19.821400"
+	yawAction="-3.14159"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="Workstation006"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-94.238098 -0.628906 15.836000"
+	quat="0.000000 -0.728751 0.000000 0.684779"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="workstation               "
+	/>
+<workstation
+	animation="idle"
+	posAction="-94.238098 -0.628906 15.836000"
+	yawAction="-3.14159"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="Workstation007"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-90.035896 -0.628906 15.571200"
+	quat="0.000000 0.928940 0.000000 -0.370229"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="workstation               "
+	/>
+<workstation
+	animation="idle"
+	posAction="-90.035896 -0.628906 15.571200"
+	yawAction="-3.14159"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="CineWireGoUp"
+	/>
+<transform
+	pos="-91.990097 27.886499 -44.408298"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="guided_camera               "
+	/>
+<guided_camera
+	default_dirs="0"
+	lpt1="-85.790398 2.099820 -8.109080"
+	lpt2="-79.959000 7.610810 -9.475950"
+	lpt3="-79.959000 7.129000 -4.546050"
+	lpt4="-74.035599 9.863800 -0.059678"
+	lpt5="-67.320602 10.533800 11.287700"
+	lpt6="-66.805397 11.212100 15.816000"
+	points_size="6"
+	velocity="2"
+	wpt1="-68.949097 0.483551 -8.313560"
+	wpt2="-74.148003 5.789520 -14.744800"
+	wpt3="-91.229103 3.852750 -15.079000"
+	wpt4="-92.278503 4.753200 -4.845520"
+	wpt5="-80.101196 3.958650 -2.184450"
+	wpt6="-69.286102 4.449200 -2.959880"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="CineEnchufeDoor"
+	/>
+<transform
+	pos="-139.761002 24.422800 -44.408298"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="guided_camera               "
+	/>
+<guided_camera
+	default_dirs="0"
+	lpt1="-121.754997 0.050018 -6.030460"
+	lpt10="-87.688301 0.117583 -18.102301"
+	lpt11="-87.688301 0.117584 -12.569500"
+	lpt2="-122.195999 0.050018 -7.034730"
+	lpt3="-122.601997 0.050018 -8.240420"
+	lpt4="-122.264000 0.224029 -9.819180"
+	lpt5="-104.171997 0.000000 -11.181700"
+	lpt6="-82.929298 0.117583 -29.395000"
+	lpt7="-82.929298 0.117583 -29.395000"
+	lpt8="-82.929298 0.117583 -29.395000"
+	lpt9="-82.929298 0.117583 -29.395000"
+	points_size="11"
+	velocity="2"
+	wpt1="-121.212997 -0.032258 -9.555550"
+	wpt10="-105.878998 -0.164078 -10.162100"
+	wpt11="-120.793999 -0.164078 -11.004200"
+	wpt2="-120.473999 -0.032258 -10.299000"
+	wpt3="-118.404999 -0.032258 -10.686700"
+	wpt4="-111.098000 0.535184 -10.180200"
+	wpt5="-95.118103 0.495025 -8.788330"
+	wpt6="-88.762703 3.224590 -19.323400"
+	wpt7="-90.645897 0.795638 -19.323400"
+	wpt8="-92.640900 0.795638 -14.234000"
+	wpt9="-97.162201 -0.164078 -10.162100"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<name
+	name="CinematicIntro"
+	/>
+<transform
+	pos="-19.595800 20.129299 -44.408298"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="guided_camera               "
+	/>
+<guided_camera
+	default_dirs="0"
+	lpt1="-32.946602 -18.697800 3.690360"
+	lpt2="13.263200 -18.697800 -13.474300"
+	lpt3="22.717699 -21.888901 -14.958400"
+	lpt4="-3.466310 -15.321800 -13.816300"
+	lpt5="10.318000 -9.006930 -20.708900"
+	lpt6="5.183840 -3.558560 11.287700"
+	lpt7="-10.209200 -3.652430 15.816000"
+	lpt8="-27.008301 0.831574 16.783001"
+	lpt9="-38.915199 1.443390 0.421875"
+	points_size="9"
+	velocity="2"
+	wpt1="-33.017300 -19.541300 -8.313560"
+	wpt2="-7.923530 -19.541300 -12.672000"
+	wpt3="21.736601 -15.747500 -0.261352"
+	wpt4="-4.155180 -18.147699 -2.250610"
+	wpt5="-3.773840 -7.011660 -15.778600"
+	wpt6="8.385620 -6.613740 -19.499901"
+	wpt7="6.243390 -11.248700 14.207500"
+	wpt8="-16.013901 -0.088882 7.555740"
+	wpt9="-28.146500 1.846660 4.332900"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<trigger_lua
+	actived="0"
+	/>
+<name
+	name="tVictory"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-82.934097 -0.014506 -32.980999"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="1.807530 0.602500 0.815160"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<trigger_lua
+	actived="0"
+	/>
+<name
+	name="tSave01"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="10.310800 -10.844600 -22.102900"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="7.808500 0.982075 3.325280"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="1"
+>
+<trigger_lua
+	actived="0"
+	/>
+<name
+	name="tSave02"
+	/>
+<transform
+	pos="-49.903198 0.753134 -0.840155"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<rigidbody
+	kinematic="0"
+	mass="2"
+	size="0.105000 2.000000 2.250000"
+	smooth="0"
+	type_collision="trigger"
+	type_shape="box"
+	/>
+</entity>
+</entities>

@@ -28,6 +28,7 @@ struct TCompBox : public TCompBase {
 	void init();
 	void update(float elapsed);
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 
 	void stuntNpcs();
 	void ImTooFar();

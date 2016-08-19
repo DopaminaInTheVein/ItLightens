@@ -111,7 +111,6 @@ struct TMsgSetCamera {
 enum PLAYER_TYPE {
 	PLAYER
 	, MOLE
-	, SPEEDY
 	, SCIENTIST
 };
 struct TMsgSetTarget {
@@ -258,7 +257,8 @@ struct TMsgPlayerPolarize {
 };
 
 struct TMsgSetTag {
-	uint32_t tag_id;
+	//uint32_t tag_id;
+	std::string tag;
 	bool add;
 	DECLARE_MSG_ID();
 };
@@ -342,6 +342,16 @@ struct TMsgSetCharged {
 
 struct TMsgIsCharged {
 	bool charged;
+	DECLARE_MSG_ID();
+};
+
+//GUI messages
+struct TMsgOverButton {
+	CHandle button;
+	bool is_over;
+	DECLARE_MSG_ID();
+};
+struct TMsgClicked {
 	DECLARE_MSG_ID();
 };
 #endif

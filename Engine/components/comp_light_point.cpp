@@ -3,6 +3,7 @@
 #include "comp_transform.h"
 #include "entity.h"
 #include "render/draw_utils.h"
+#include "resources\resources_manager.h"
 
 bool TCompLightPoint::load(MKeyValue& atts) {
 	color = atts.getQuat("color");
@@ -11,6 +12,27 @@ bool TCompLightPoint::load(MKeyValue& atts) {
 	ttl = atts.getFloat("ttl", -999.0f);
 	assert(out_radius >= in_radius);
 	return true;
+}
+
+bool TCompLightPoint::save(std::ofstream& os, MKeyValue& atts) {
+	atts.put("color", color);
+	atts.put("in_radius", in_radius);
+	atts.put("out_radius", out_radius);
+	return true;
+}
+
+void TCompLightPoint::render() const
+{
+	if (debug_render) {
+		CEntity *owner = CHandle(this).getOwner();
+		if (!owner) return; //handle invalid
+
+		TCompTransform* me_t = owner->get<TCompTransform>();
+		auto axis = Resources.get("axis.mesh")->as<CMesh>();
+		shader_ctes_object.World = me_t->asMatrix();
+		shader_ctes_object.uploadToGPU();
+		axis->activateAndRender();
+	}
 }
 
 void TCompLightPoint::renderInMenu() {

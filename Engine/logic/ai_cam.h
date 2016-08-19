@@ -34,7 +34,7 @@ class ai_cam : public aicontroller, public TCompBase {
 	CObjectManager<ai_cam> * om = nullptr;
 
 	CHandle myHandle;
-	CHandle	myParent;
+	CHandle myParent;
 	CEntity	*myEntity = nullptr;
 	float max_idle_waiting = 5.0f;
 	float idle_wait;

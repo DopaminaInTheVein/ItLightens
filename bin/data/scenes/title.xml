@@ -1,0 +1,68 @@
+<entities>
+<entity
+   reload="yes">
+<tags
+   tags="gui_button clickable"/>
+<gui_button
+   width="0.652746"
+   height="0.367172"/>
+<name
+   name="btn_start"/>
+<transform
+   pos="5.00018 -96.616 8.99995"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu/button_start.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="gui_cursor"/>
+<gui_cursor/>
+<name
+   name="cursor"/>
+<transform
+   pos="5.0 -95.0 9.5"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu/front.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="background"/>
+<transform
+   pos="5.0 -95.0 9.14624"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu/background.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="gui_button clickable"/>
+<gui_button
+   width="0.652746"
+   height="0.367172"/>
+<name
+   name="btn_exit"/>
+<transform
+   pos="5.00018 -97.1836 8.99995"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu/button_start.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+
+</entities>

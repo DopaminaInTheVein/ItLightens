@@ -24,6 +24,8 @@
 #include "handle/handle_manager.h"
 #include "utils/directory_watcher.h"
 
+#include "app_modules/navmesh/navmesh_manager.h"
+
 #include <shellapi.h>
 #include <process.h>
 
@@ -43,18 +45,18 @@ CUI ui;
 CGameController* GameController = nullptr;
 CPhysxManager *g_PhysxManager = nullptr;
 CGuiModule * Gui = nullptr;
-
+CRenderDeferredModule * render_deferred;
 // --------------------------------------------
 
 bool CApp::start() {
 	map<std::string, std::string> fields = readIniAtrDataStr(file_options_json, "scenes");
-	sceneToLoad = fields["first_scene"];
+	//next_level = fields["first_scene"];
 
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
 	Gui = new CGuiModule;
 	entities = new CEntitiesModule;
-	auto render_deferred = new CRenderDeferredModule;
+	render_deferred = new CRenderDeferredModule;
 	io = new CIOModule;     // It's the global io
 	g_PhysxManager = new CPhysxManager;
 	g_particlesManager = new CParticlesManager;
@@ -97,9 +99,9 @@ bool CApp::start() {
 
 	mod_renders.push_back(io);
 
+	mod_init_order.push_back(render_deferred);
 	mod_init_order.push_back(Gui);
 	mod_init_order.push_back(imgui);
-	mod_init_order.push_back(render_deferred);
 	mod_init_order.push_back(io);
 	mod_init_order.push_back(g_PhysxManager);
 	mod_init_order.push_back(g_particlesManager);   //need to be initialized before the entities
@@ -122,13 +124,18 @@ bool CApp::start() {
 
 	// Init modules
 	for (auto it : mod_init_order) {
+		CLog::appendFormat("Starting module %s...", it->getName());
 		if (!it->start()) {
-			dbg("Failed to init module %s\n", it->getName());
+			dbg("Failed to init module [%s]\n", it->getName());
+			CLog::appendFormat("ERROR!! Failed to init module %s\n", it->getName());
 			return false;
 		}
+		CLog::appendFormat("Module [%s] started successfully.", it->getName());
 	}
 
 	io->mouse.toggle();
+
+	imgui->StartLightEditor(); //need to be created after entities
 
 	GameController->SetGameState(CGameController::RUNNING);
 
@@ -163,8 +170,15 @@ void CApp::stop() {
 //----------------------------------
 void CApp::changeScene(string level) {
 	dbg("Destroying scene...\n");
-	entities->clear(level);
-	sceneToLoad = level;
+	bool reload = level == getCurrentLogicLevel();
+	entities->clear(reload);
+	next_level = level;
+}
+void CApp::loadEntities(string file_name) {
+	CEntitiesModule::ParsingInfo info;
+	info.filename = file_name;
+	info.reload = false;
+	entities->loadXML(info);
 }
 
 //void CApp::restart() {
@@ -176,16 +190,20 @@ void CApp::changeScene(string level) {
 //}
 
 void CApp::restartLevel() {
-	changeScene(entities->getCurrentLevel());
+	changeScene(current_level);
 }
 
 std::string CApp::getCurrentRealLevel() {
-	map<std::string, std::string> fields = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
-	return fields[entities->getCurrentLevel()];
+	return getRealLevel(current_level);
 }
 
 std::string CApp::getCurrentLogicLevel() {
-	return entities->getCurrentLevel();
+	return current_level;
+}
+
+std::string CApp::getRealLevel(std::string logic_level) {
+	map<std::string, std::string> fields = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
+	return fields[logic_level];
 }
 
 void CApp::restartLevelNotify() {
@@ -194,11 +212,24 @@ void CApp::restartLevelNotify() {
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnRestartLevel, std::string(params));
 }
 
-void CApp::loadedLevelNotify() {
-	sceneToLoad = "";
+void CApp::saveLevel() {
+	has_check_point = true;
+	entities->saveLevel(getCurrentRealLevel());
 	char params[128];
 	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnLoadedLevel, std::string(params));
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnSavedLevel, std::string(params));
+}
+
+void CApp::loadedLevelNotify() {
+	current_level = next_level;
+	next_level = "";
+	char params[128];
+	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
+	auto game_event = has_check_point
+		? CLogicManagerModule::EVENT::OnLoadedLevel
+		: CLogicManagerModule::EVENT::OnLevelStart;
+
+	logic_manager->throwEvent(game_event, std::string(params));
 }
 
 void CApp::exitGame() {
@@ -223,9 +254,48 @@ void CApp::update(float elapsed) {
 	static float ctime = 0.f;
 	ctime += elapsed* 0.01f;
 	CHandleManager::destroyAllPendingObjects();
-	if (sceneToLoad != "" && entities->isCleared()) {
-		entities->initLevel(sceneToLoad);
+	if (next_level != "" && entities->isCleared()) {
+		initNextLevel();
+		//bool reload = (next_level == current_level);
+		//entities->initLevel(getRealLevel(next_level), has_check_point, reload);
 	}
+}
+
+void CApp::initNextLevel()
+{
+	// Restart Timers LUA
+	logic_manager->resetTimers();
+
+	//
+	std::string level_name = getRealLevel(next_level);
+	bool reload = next_level == current_level;
+	if (!reload) CEntityParser::clearCollisionables();
+	bool is_ok;
+
+	// Entidades invariantes
+	CEntitiesModule::ParsingInfo info;
+	info.filename = level_name;
+	info.reload = reload;
+	is_ok = entities->loadXML(info);
+	assert(is_ok);
+
+	// Entidades variantes
+	info.filename = level_name + (has_check_point ? "_save" : "_init");
+	entities->loadXML(info);
+
+	// Lights
+	info.filename = level_name + "_lights";
+	entities->loadXML(info);
+
+	// Init entities
+	entities->initEntities();
+
+	// Navmesh
+	if (!reload) CNavmeshManager::initNavmesh(level_name);
+
+	// Game state and notify
+	if (!GameController->IsUiControl()) GameController->SetGameState(CGameController::RUNNING);
+	loadedLevelNotify();
 }
 
 // ----------------------------------
@@ -238,4 +308,23 @@ void CApp::render() {
 		CTraceScoped scope(it->getName());
 		it->render();
 	}
+}
+
+int CApp::getXRes(bool ask_window) {
+	if (!ask_window && render_deferred) {
+		return render_deferred->getXRes();
+	}
+	if (!max_screen)
+		return xres;
+	else
+		return xres_max;
+}
+int CApp::getYRes(bool ask_window) {
+	if (!ask_window && render_deferred) {
+		return render_deferred->getYRes();
+	}
+	if (!max_screen)
+		return yres;
+	else
+		return yres_max;
 }

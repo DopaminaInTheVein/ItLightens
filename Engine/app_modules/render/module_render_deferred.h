@@ -7,6 +7,15 @@
 #include "render\render_instanced.h"
 
 class CRenderDeferredModule : public IAppModule {
+
+	enum typeObject {
+		POL_MINUS_OBJECTS = 1,
+		POL_PLUS_OBJECTS,
+		SHOTS_OBJECTS,
+		INTERACTIVE_OBJECTS,
+		VISION_OBJECTS
+	};
+
 	CRenderToTexture* rt_albedos;
 	CRenderToTexture* rt_normals;
 	CRenderToTexture* rt_depths;
@@ -29,9 +38,10 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_temp;
 
 	int xres, yres;
+	bool ssao_test = false;
 
-	CHandle                 h_camera;	
-	
+	CHandle                 h_camera;
+
 	const CRenderTechnique* acc_light_points;
 	const CRenderTechnique* acc_light_directionals;
 	const CRenderTechnique* blur_tech;
@@ -43,17 +53,20 @@ class CRenderDeferredModule : public IAppModule {
 	//fast fix
 	CRenderParticlesInstanced helpers;
 
+	bool m_isSpecialVisionActive = false;
+
 	void renderGBuffer();
 	void activateRenderCamera3D();
 	void renderAccLight();
 	void RenderPolarizedPP(int pol, const VEC4& color);
-	void MarkInteractives(const VEC4 & color);
+	void ApplySSAO();
+	void MarkInteractives(const VEC4 & color, std::string, int slot);
 	void ShootGuardRender();
 	void addPointLights();
 	void addDirectionalLights();
 	void addDirectionalLightsShadows();
 	void addAmbientPass();
-  	void generateShadowMaps();
+	void generateShadowMaps();
 
 	void FinalRender();
 
@@ -64,6 +77,7 @@ public:
 	void stop() override;
 	void update(float dt);
 	void render() override;
+	void renderEspVisionMode();
 	void renderDetails();
 	void applyPostFX();
 	void RenderHelpGenLoc();
@@ -72,6 +86,9 @@ public:
 	const char* getName() const {
 		return "render_deferred";
 	}
+	float getXRes() { return xres; }
+	float getYRes() { return yres; }
+	float getAspectRatio();
 };
 
 #endif

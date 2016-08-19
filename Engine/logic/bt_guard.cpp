@@ -4,8 +4,8 @@
 #include "components/entity_tags.h"
 #include "utils/XMLParser.h"
 #include "utils/utils.h"
+#include "input/input_wrapper.h"
 #include "logic/sbb.h"
-#include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "ui/ui_interface.h"
 
@@ -550,10 +550,12 @@ int bt_guard::actionAbsorb() {
 	VEC3 myPos = getTransform()->getPosition();
 	float dist = squaredDistXZ(posPlayer, getTransform()->getPosition());
 
+#ifndef NDEBUG
 	ui.addTextInstructions("\nPress 'M' to interrupt gaurd shoot when he dont see you!!! (artificial)\n");
-	if (io->keys['M'].becomesPressed()) {
+	if (controller->interruptGuardShotButtonPressed()) {
 		artificialInterrupt();
 	}
+#endif // !NDEBUG
 
 	turnTo(posPlayer);
 	if (squaredDistY(myPos, posPlayer) * 2.0f > dist) { //Angulo de 30 grados
@@ -1556,7 +1558,7 @@ bool bt_guard::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-		);
+			);
 	}
 	noShoot = atts.getBool("noShoot", false);
 
@@ -1569,6 +1571,34 @@ bool bt_guard::load(MKeyValue& atts) {
 	formation_point = atts.getPoint("formation_point");
 	formation_dir = atts.getPoint("formation_dir");
 
+	return true;
+}
+
+std::string bt_guard::getKpTypeStr(bt_guard::KptType type)
+{
+	if (type == KptType::Seek) return "seek";
+	else return "look";
+}
+
+bool bt_guard::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("kpt_size", (int)keyPoints.size());
+	int i = 0;
+	for (auto kp : keyPoints) {
+		KPT_ATR_NAME(atrType, "type", i);
+		KPT_ATR_NAME(atrPos, "pos", i);
+		KPT_ATR_NAME(atrWait, "wait", i);
+		atts.put(atrType, getKpTypeStr(kp.type));
+		atts.put(atrPos, kp.pos);
+		atts.put(atrWait, kp.time);
+		i++;
+	}
+	atts.put("jurisdiction", jurCenter);
+	atts.put("jurRadius", sqrtf(jurRadiusSq));
+	atts.put("formation_point", formation_point);
+	atts.put("formation_dir", formation_dir);
+
+	save_bt(os, atts);
 	return true;
 }
 

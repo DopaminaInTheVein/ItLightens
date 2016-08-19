@@ -169,6 +169,32 @@ void createZStates() {
   assert(!FAILED(hr));
   setDXName(depth_stencil_states[ZCFG_MASK_NUMBER], "ZCFG_MASK_NUMBER");
 
+  //mark mask without z
+  //-------------------------------------------------------------------------
+  desc.DepthEnable = false;
+  desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+  desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+
+  desc.StencilEnable = true;
+  desc.StencilReadMask = 0xFF;
+  desc.StencilWriteMask = 0xFF;
+
+  desc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_REPLACE;
+  desc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+
+  desc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+  //we don't care about back facing pixels
+  desc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+  desc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+  desc.BackFace.StencilFunc = D3D11_COMPARISON_NEVER;
+
+  hr = Render.device->CreateDepthStencilState(&desc, &depth_stencil_states[ZCFG_MASK_NUMBER_NO_Z]);
+  assert(!FAILED(hr));
+  setDXName(depth_stencil_states[ZCFG_MASK_NUMBER_NO_Z], "ZCFG_MASK_NUMBER_NO_Z");
+  
 
   //discard
   //-------------------------------------------------------------------------

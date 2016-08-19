@@ -6,15 +6,14 @@
 #include "comp_transform.h"
 
 struct TCompWorkstation : public TCompBase {
-
-	CHandle mParent;	
+	CHandle mParent;
 	VEC3 position;
 	std::string anim_name;
 	VEC3 pos_action;
 	float yaw_action;
 
 	void init() {
-		mParent = CHandle(this).getOwner();		
+		mParent = CHandle(this).getOwner();
 		CEntity *e = mParent;
 		TCompTransform *t = e->get<TCompTransform>();
 		position = t->getPosition();
@@ -28,6 +27,13 @@ struct TCompWorkstation : public TCompBase {
 		anim_name = atts.getString("animation", "idle");
 		pos_action = atts.getPoint("posAction");
 		yaw_action = atts.getFloat("yawAction", 0);
+		return true;
+	}
+
+	bool save(std::ofstream& os, MKeyValue& atts) {
+		atts.put("animation", anim_name);
+		atts.put("posAction", pos_action);
+		atts.put("yawAction", yaw_action);
 		return true;
 	}
 

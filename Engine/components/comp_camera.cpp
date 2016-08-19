@@ -23,12 +23,17 @@ extern CShaderCte< TCteCamera > shader_ctes_camera;
 #include "comp_charactercontroller.h"
 
 bool TCompCamera::load(MKeyValue& atts) {
-	float znear = atts.getFloat("znear", 0.1f);
+	float znear = atts.getFloat("znear", 0.01f);
 	float zfar = atts.getFloat("zfar", 1000.f);
 	float fov_in_degs = atts.getFloat("fov", 70.f);
+	float size_x = atts.getFloat("size_x", 10.f);
+	float size_y = atts.getFloat("size_y", 10.f);
+	bool use_ar = atts.getBool("use_ar", true);
 
 	bool is_ortho = atts.getBool("is_ortho", false);
-	if (is_ortho) setOrtho(1024, 800, znear, zfar);
+	float x = CApp::get().getXRes();
+	float y = CApp::get().getYRes();
+	if (is_ortho) setOrtho(size_x, size_y, znear, zfar, use_ar ? x / y : 1.f);
 	else setProjection(deg2rad(fov_in_degs), znear, zfar);
 
 	//setProjection(deg2rad(fov_in_degs), znear, zfar);
@@ -41,12 +46,24 @@ void TCompCamera::onGetViewProj(const TMsgGetCullingViewProj& msg) {
 	*msg.view_proj = this->getViewProjection();
 }
 
+// Ojo! Esto solo va para camara mirando para z negativa, y up = (0,1,0) !!!
+VEC3  TCompCamera::getMinOrtho() const
+{
+	GET_MY(tmx, TCompTransform);
+	return (tmx ? tmx->getPosition() : VEC3()) + min_ortho;
+}
+VEC3  TCompCamera::getMaxOrtho() const
+{
+	GET_MY(tmx, TCompTransform);
+	return (tmx ? tmx->getPosition() : VEC3()) + max_ortho;
+}
+
 void TCompCamera::render() const {
 	PROFILE_FUNCTION("TCompCamera render");
-	//auto axis = Resources.get("frustum.mesh")->as<CMesh>();
+	auto axis = Resources.get("frustum.mesh")->as<CMesh>();
 	shader_ctes_object.World = getViewProjection().Invert();
 	shader_ctes_object.uploadToGPU();
-	//axis->activateAndRender();
+	axis->activateAndRender();
 }
 
 void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
@@ -57,7 +74,11 @@ void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
 }
 
 void TCompCamera::update(float dt) {
-	updateFromEntityTransform(compBaseEntity);
+	if (!isOrtho()) updateFromEntityTransform(compBaseEntity);
+	else {
+		GET_MY(tmx, TCompTransform);
+		if (tmx) this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());
+	}
 }
 
 void TCompCamera::renderInMenu() {

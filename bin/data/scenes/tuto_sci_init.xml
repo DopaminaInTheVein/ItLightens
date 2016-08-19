@@ -1,0 +1,160 @@
+<entities>
+<entity
+   reload="yes">
+<tags
+   tags="drone platform"/>
+<drone
+   textureFront="droneFront"
+   textureBack="droneBack"/>
+<name
+   name="Drone_1"/>
+<transform
+   pos="70.8593 0.689306 -2.75757"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<local_aabb/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="AI AI_guard"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="look"
+   kpt0_pos="62.7471 0 -2.93604"
+   kpt0_wait="2"
+   kpt1_type="seek"
+   kpt1_pos="70.9404 0.0222019 -6.24413"
+   kpt1_wait="2"
+   jurisdiction="71.4503 0.13 -5.19"
+   jurRadius="5.0"/>
+<skc_guard/>
+<skeleton_lookat/>
+<name
+   name="guard_1"/>
+<transform
+   pos="71.4503 0.13 -5.19"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="AI AI_guard"/>
+<bt_guard
+   kpt_size="2"
+   kpt0_type="seek"
+   kpt0_pos="70.7198 0.0222022 0.808846"
+   kpt0_wait="2"
+   kpt1_type="look"
+   kpt1_pos="61.8219 0 -2.93604"
+   kpt1_wait="2"
+   jurisdiction="71.4774 0.08 -0.606354"
+   jurRadius="5.0"/>
+<skc_guard/>
+<skeleton_lookat/>
+<name
+   name="guard_2"/>
+<transform
+   pos="71.4774 0.08 -0.606354"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/guard/guard.skeleton"/>
+<render_static_mesh
+   name="skeletons/guard/guard.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="1.8"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="player raijin"/>
+<player/>
+<life
+   points="10"/>
+<skc_player/>
+<skeleton_lookat/>
+<name
+   name="player_1"/>
+<transform
+   pos="47.6013 0.29 -3.27368"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/player/player.skeleton"/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="0.7"/>
+
+</entity>
+<entity
+   permanent="yes"
+   reload="yes">
+<tags
+   tags="camera_main"/>
+<camera_main
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"/>
+<culling/>
+<render_glow/>
+<controller_3rd_person/>
+<FX_fade_screen/>
+<name
+   name="camController_1"/>
+<transform
+   pos="48.0799 1.9 -1.25342"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.0 0.31 1.0"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="activate"/>
+<name
+   name="tOpenDoor"/>
+<transform
+   pos="74.8028 7.42111 -1.67456"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+
+</entities>

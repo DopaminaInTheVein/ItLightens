@@ -88,12 +88,12 @@ class player_controller : public CPlayerBase {
 	bool					affectPolarized = false;
 	bool					forward_jump = false;
 
-	CHandle					generatorNear = CHandle();
+	CHandle				generatorNear = CHandle();
 	bool					canPassWire = false;
 	bool					canRechargeDrone = false;
 	bool					canNotRechargeDrone = false;
 
-	CHandle				drone;
+	CHandle			drone;
 
 	VEC3					endPointWire = VEC3(0, 0, 0);
 	vector<VEC3>			all_forces;
@@ -110,12 +110,6 @@ class player_controller : public CPlayerBase {
 		return transform;
 	}
 
-	CHandle getMinusPointHandle(int i) {
-		return SBB::readHandlesVector("wptsMinusPoint")[i];
-	}
-	CHandle getPlusPointHandle(int i) {
-		return SBB::readHandlesVector("wptsPlusPoint")[i];
-	}
 	PolarityForce getPolarityForce(CHandle forceHandle);
 
 	bool isDamaged();

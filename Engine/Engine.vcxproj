@@ -70,7 +70,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)\fmod\studio\lib;$(ProjectDir)\physx\libs\$(Configuration);$(ProjectDir)\libs\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod_vc.lib;fmodstudioL_vc.lib;fmodstudio_vc.lib;fmodL_vc.lib;fmod64_vc.lib;fmodL64_vc.lib;fmodstudio64_vc.lib;fmodstudioL64_vc.lib;XINPUT9_1_0.LIB;SLB_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Strmiids.lib;fmod_vc.lib;fmodstudioL_vc.lib;fmodstudio_vc.lib;fmodL_vc.lib;fmod64_vc.lib;fmodL64_vc.lib;fmodstudio64_vc.lib;fmodstudioL64_vc.lib;XINPUT9_1_0.LIB;SLB_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
@@ -114,6 +114,8 @@
   <ItemGroup>
     <ClCompile Include="app_modules\entities.cpp" />
     <ClCompile Include="app_modules\gameController.cpp" />
+    <ClCompile Include="app_modules\gui\comps\gui_button.cpp" />
+    <ClCompile Include="app_modules\gui\comps\gui_cursor.cpp" />
     <ClCompile Include="app_modules\gui\gui.cpp" />
     <ClCompile Include="app_modules\gui\gui_action_text.cpp" />
     <ClCompile Include="app_modules\gui\gui_bar_color.cpp" />
@@ -130,6 +132,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
+    <ClCompile Include="app_modules\navmesh\navmesh_manager.cpp" />
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
     <ClCompile Include="camera\camera.cpp" />
@@ -155,6 +158,7 @@
     <ClCompile Include="components\comp_render_fade_screen.cpp" />
     <ClCompile Include="components\comp_render_glow.cpp" />
     <ClCompile Include="components\comp_render_static_mesh.cpp" />
+    <ClCompile Include="components\comp_room.cpp" />
     <ClCompile Include="components\comp_room_limit.cpp" />
     <ClCompile Include="components\comp_room_switch.cpp" />
     <ClCompile Include="components\comp_snoozer.cpp">
@@ -168,12 +172,15 @@
     </ClCompile>
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\comp_trigger_lua.cpp" />
+    <ClCompile Include="components\comp_video.cpp" />
     <ClCompile Include="components\comp_wire.cpp" />
     <ClCompile Include="components\entity.cpp" />
     <ClCompile Include="components\entity_parser.cpp" />
     <ClCompile Include="components\entity_tags.cpp" />
     <ClCompile Include="debug\console.cpp" />
     <ClCompile Include="debug\debug_itlightens.cpp" />
+    <ClCompile Include="debug\log.cpp" />
+    <ClCompile Include="Editors\editor_lights.cpp" />
     <ClCompile Include="expat\xmlparse.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -202,9 +209,9 @@
     <ClCompile Include="handle\handle_manager.cpp" />
     <ClCompile Include="input\input.cpp" />
     <ClCompile Include="input\input_manager.cpp" />
+    <ClCompile Include="input\input_wrapper.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
     <ClCompile Include="logic\ai_cam.cpp" />
-    <ClCompile Include="logic\ai_water.cpp" />
     <ClCompile Include="logic\ai_workbench.cpp" />
     <ClCompile Include="logic\bt.cpp" />
     <ClCompile Include="logic\btnode.cpp" />
@@ -212,7 +219,6 @@
     <ClCompile Include="logic\bt_mole.cpp" />
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_scientist.cpp" />
-    <ClCompile Include="logic\bt_speedy.cpp" />
     <ClCompile Include="logic\comp_box.cpp" />
     <ClCompile Include="logic\damage.cpp" />
     <ClCompile Include="logic\elevator.cpp" />
@@ -232,7 +238,6 @@
     <ClCompile Include="player_controllers\player_controller_base.cpp" />
     <ClCompile Include="player_controllers\player_controller_cientifico.cpp" />
     <ClCompile Include="player_controllers\player_controller_mole.cpp" />
-    <ClCompile Include="player_controllers\player_controller_speedy.cpp" />
     <ClCompile Include="player_controllers\poss_controller.cpp" />
     <ClCompile Include="prefabs\magnetic_bomb.cpp" />
     <ClCompile Include="prefabs\static_bomb.cpp">
@@ -326,6 +331,8 @@
     <ClInclude Include="app_modules\entities.h" />
     <ClInclude Include="app_modules\gameController.h" />
     <ClInclude Include="app_modules\gameData.h" />
+    <ClInclude Include="app_modules\gui\comps\gui_button.h" />
+    <ClInclude Include="app_modules\gui\comps\gui_cursor.h" />
     <ClInclude Include="app_modules\gui\gui.h" />
     <ClInclude Include="app_modules\gui\gui_action_text.h" />
     <ClInclude Include="app_modules\gui\gui_bar.h" />
@@ -343,6 +350,7 @@
     <ClInclude Include="app_modules\io\mouse.h" />
     <ClInclude Include="app_modules\logic_manager\logic_manager.h" />
     <ClInclude Include="app_modules\logic_manager\slb_public_functions.h" />
+    <ClInclude Include="app_modules\navmesh\navmesh_manager.h" />
     <ClInclude Include="app_modules\render\module_render_deferred.h" />
     <ClInclude Include="app_modules\sound_manager\sound_manager.h" />
     <ClInclude Include="camera\camera.h" />
@@ -393,6 +401,7 @@
     <ClInclude Include="components\comp_trigger_standar.h" />
     <ClInclude Include="components\comp_trigger_lua.h" />
     <ClInclude Include="components\comp_victory_point.h" />
+    <ClInclude Include="components\comp_video.h" />
     <ClInclude Include="components\comp_wire.h" />
     <ClInclude Include="components\comp_workstation.h" />
     <ClInclude Include="components\entity.h" />
@@ -400,6 +409,8 @@
     <ClInclude Include="components\entity_tags.h" />
     <ClInclude Include="debug\console.h" />
     <ClInclude Include="debug\debug_itlightens.h" />
+    <ClInclude Include="debug\log.h" />
+    <ClInclude Include="Editors\editor_lights.h" />
     <ClInclude Include="fmod\studio\inc\fmod.h" />
     <ClInclude Include="fmod\studio\inc\fmod.hpp" />
     <ClInclude Include="fmod\studio\inc\fmod_codec.h" />
@@ -426,9 +437,9 @@
     <ClInclude Include="imgui\stb_textedit.h" />
     <ClInclude Include="input\input.h" />
     <ClInclude Include="input\input_manager.h" />
+    <ClInclude Include="input\input_wrapper.h" />
     <ClInclude Include="logic\aicontroller.h" />
     <ClInclude Include="logic\ai_cam.h" />
-    <ClInclude Include="logic\ai_water.h" />
     <ClInclude Include="logic\ai_workbench.h" />
     <ClInclude Include="logic\bt.h" />
     <ClInclude Include="logic\btnode.h" />
@@ -436,7 +447,6 @@
     <ClInclude Include="logic\bt_mole.h" />
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_scientist.h" />
-    <ClInclude Include="logic\bt_speedy.h" />
     <ClInclude Include="logic\comp_box.h" />
     <ClInclude Include="logic\damage.h" />
     <ClInclude Include="logic\elevator.h" />
@@ -460,7 +470,6 @@
     <ClInclude Include="player_controllers\player_controller_base.h" />
     <ClInclude Include="player_controllers\player_controller_cientifico.h" />
     <ClInclude Include="player_controllers\player_controller_mole.h" />
-    <ClInclude Include="player_controllers\player_controller_speedy.h" />
     <ClInclude Include="player_controllers\poss_controller.h" />
     <ClInclude Include="prefabs\magnetic_bomb.h" />
     <ClInclude Include="prefabs\static_bomb.h">

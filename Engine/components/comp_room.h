@@ -4,35 +4,23 @@
 #include "utils/XMLParser.h"
 #include "comp_base.h"
 #include <sstream>
+#include <set>
 
 struct TCompRoom : public TCompBase {
+	static std::set<int> all_rooms;
+public:
 	std::vector<int> name;
+	char rooms_raw[32];
 
-	bool load(MKeyValue& atts) {
-		std::string to_parse = atts.getString("name", "-1");
-		std::stringstream ss(to_parse);
-		std::string number;
-		while (std::getline(ss, number, '/')) {
-			int value = std::stoi(number);
-			if (std::find(name.begin(), name.end(), value) == name.end()) {
-				name.push_back(value);
-			}
-		}
-		return true;
-	}
+	void init();
 
-	bool setName(std::vector<int> newName) {
-		name = newName;
-		return true;
-	}
+	bool load(MKeyValue& atts);
 
-	void renderInMenu() {
-		std::string all_rooms = std::to_string(name[0]);
-		for (int i = 1; i < name.size(); i++) {
-			all_rooms += " " + std::to_string(name[i]);
-		}
-		ImGui::Text(all_rooms.c_str());
-	}
+	bool save(std::ofstream& os, MKeyValue& atts);
+
+	bool setName(std::vector<int> newName);
+
+	void renderInMenu();
 };
 
 #endif

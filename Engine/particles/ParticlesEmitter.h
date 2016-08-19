@@ -1,6 +1,8 @@
 #ifndef	INC_PARTICLES_EMITTER_H_
 #define INC_PARTICLES_EMITTER_H_
 
+#include <map>
+
 class CParticlesEmitter {
 public:
   enum EShapeEmitter {
@@ -96,6 +98,11 @@ private:
   PxReal			m_modifier_color;	//based on lifetime always
 
   PxVec3			m_front_transform;
+
+  //bones
+  std::vector<int>		m_listBones;
+  std::map<int, bool>	m_busyBones;		//list of bones with particles activated
+  std::vector<VEC3>		m_offsetValues;	//offset for each bone added
 
   bool				m_collisions;
   bool				m_gravity;
@@ -322,6 +329,53 @@ public:
   void SetRandomDelay(float new_modifier) {
     m_delay_start_particles = new_modifier;
   }
+
+  //LIST BONES
+  //-----------------------------------------------------------------
+  std::vector<int> GetListBones() const { return m_listBones; }
+  
+  int GetBoneId(int num) {
+	  if (m_listBones.size() <= num)
+		  return -1;		//invalid bone
+
+	  return m_listBones[num];
+  }
+
+  int GetNumBonesUsed() { return m_listBones.size(); }
+  
+  void AddBone(int num, VEC3 offset) {
+	  m_listBones.push_back(num);
+	  m_busyBones.insert(std::pair<int, bool>(num, false));
+	  m_offsetValues.push_back(offset);
+  }
+
+  void AddParticleToBone(int id) {
+	  m_busyBones[id] = true;
+  }
+
+  void RemoveParticleFromBone(int id) {
+	  m_busyBones[id] = false;
+  }
+
+  bool IsBoneBusy(int id) {
+	  auto ret = m_busyBones.find(id);
+
+	  //bone in map
+	  if (ret != m_busyBones.end())
+		  return m_busyBones[id];
+
+	  //bone dont exist
+	  else
+		  return false;
+  }
+
+  void ClearBones() { 
+	  m_listBones.clear(); 
+	  m_busyBones.clear();
+	  m_offsetValues.clear();
+  }
+
+  VEC3 GetPosBone(int num);
 
   //TESTING BONES
   //-----------------------------------------------------------------

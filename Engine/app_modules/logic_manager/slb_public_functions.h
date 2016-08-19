@@ -94,6 +94,7 @@ public:
 	void getHandlesByTag(const char * tag);
 	void awake();
 	void removePhysics();
+	void destroy();
 };
 
 // camera control in LUA
@@ -117,6 +118,21 @@ public:
 };
 
 // public functions
+class SLBData
+{
+	std::string file_name;
+	std::map<std::string, float> data;
+public:
+	SLBData();
+	float getFloat(const char* key);
+	bool getBool(const char* key);
+	void putFloat(const char* key, float value);
+	void putBool(const char* key, bool value);
+	// public functions
+	void write();
+};
+
+// public functions
 class SLBPublicFunctions
 {
 public:
@@ -131,6 +147,7 @@ public:
 	void playLoopingMusic(const char* music_route);
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);
+	void playVideo(const char* video_route);
 	void playerRoom(int newRoom);
 	void playerTalks(const char* text, const char* iconName, const char* iconText);
 	void playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor);
@@ -139,6 +156,10 @@ public:
 	void toggleIntroState();
 	void launchVictoryState();
 	void loadLevel(const char* level_name);
+	void saveLevel();
+	void loadEntities(const char* file_name);
+	void resume();
+	void exit();
 
 	void test(const char* to_print);
 };

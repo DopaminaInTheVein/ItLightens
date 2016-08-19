@@ -58,11 +58,10 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-    p:play_looping_music("event:/OnGameStart")
-	--triggerGuardFormation();
-	--p:exec_command( "triggerGuardFormation();", 15 )
-	cam:run_cinematic("CinematicIntro", 10)
-	stateElevator = 1
+	p:play_looping_music("event:/OnGameStart")
+	p:load_entities("init")
+	p:exec_command("p:load_level(\"level_0\")", 2)
+	--p:load_entities("title")
 	CallFunction("test_dbg")
 end
 
@@ -89,11 +88,6 @@ end
 
 function OnGuardRemoveBox( reaction_time )
 	p:print( "OnGuardRemoveBox: "..reaction_time.."\n" )
-end
-
-function OnLevelStart( param )
-	p:print("OnLevelStart\n")
-	CallFunction("OnLevelStart_"..param)
 end
 
 function OnZoneStart001( param )
@@ -336,18 +330,28 @@ end
 ---------------------------------------------------
 function OnRestartLevel( logic_level, real_level )
 	p:print( "OnRestartLevel\n")
-	cam:fade_out(1)
-	p:setControlEnabled(0)
-	p:exec_command("LoadLevel(\""..logic_level.."\", \""..real_level.."\");", 1) -- Defined in functions.lua
+	LoadLevel(logic_level) -- Defined in functions.lua
 end
 
---Loaded Level
+--Levels
 ---------------------------------------------------
-function OnLoadedLevel( logic_level, real_level)
+function OnLevelStart( logic_level, real_level )
+	p:print("OnLevelStart\n")
+	p:exec_command("cam:fade_in(1)", 1)
+	p:exec_command("p:setControlEnabled(1);", 1)
+	CallFunction("OnStart_"..real_level)
+end
+
+function OnSavedLevel( logic_level, real_level )
+	p:print("OnSavedLevel")
+	CallFunction("OnSave_"..real_level)	
+end
+
+function OnLoadedLevel( logic_level, real_level )
 	p:print("OnLoadedLevel")
 	p:exec_command("cam:fade_in(1)", 1)
 	p:exec_command("p:setControlEnabled(1);", 1)
-	CallFunction("OnLoaded_"..real_level)
+	CallFunction("OnLoad_"..real_level)
 end
 
 --Game Ending
@@ -355,4 +359,16 @@ end
 function OnVictory( )
 	p:print( "OnVictory\n")
 	launchVictoryState();
+end
+
+-- GUI
+---------------------------------------------------
+function OnClicked( param )
+	p:print("OnClicked")
+	CallFunction("OnClicked_"..param)
+end
+
+function OnPause( )
+	p:print("OnPause")
+	p:load_entities("menu")
 end

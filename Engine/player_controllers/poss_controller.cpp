@@ -3,7 +3,7 @@
 #include "components/entity_tags.h"
 #include "components/comp_transform.h"
 #include "components/comp_name.h"
-#include "app_modules\io\io.h"
+#include "input\input_wrapper.h"
 #include "app_modules\logic_manager\logic_manager.h"
 #include "components\comp_charactercontroller.h"
 
@@ -21,7 +21,7 @@ void PossController::addPossStates() {
 
 void PossController::UpdatePossession() {
 	if (npcIsPossessed) {
-		if (controlEnabled && (io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed()) && possessionCooldown <= 0.0f) {
+		if (controlEnabled && (controller->IsPossessionButtonPressed()) && possessionCooldown <= 0.0f) {
 			CEntity* myParent = getMyEntity();
 			TCompName * myParentName = myParent->get<TCompName>();
 			string name = myParentName->name;
@@ -90,10 +90,6 @@ void PossController::onSetEnable(bool enabled) {
 		if (hMe.hasTag("AI_mole")) {
 			msg3rdController.who = MOLE;
 		}
-
-		else if (hMe.hasTag("AI_speedy")) {
-			msg3rdController.who = SPEEDY;
-		}
 		else if (hMe.hasTag("AI_cientifico")) {
 			msg3rdController.who = SCIENTIST;
 		}
@@ -134,7 +130,24 @@ void PossController::onSetEnable(bool enabled) {
 		//Recover Tag Player
 		TMsgSetTag msgTag;
 		msgTag.add = true;
-		msgTag.tag_id = getID("player");
+		msgTag.tag = "player";
 		hTarget.sendMsg(msgTag);
+	}
+}
+
+bool PossController::load_poss(MKeyValue& atts)
+{
+	npcIsPossessed = atts.getBool("possessed", false);
+	return true;
+}
+bool PossController::save_poss(std::ofstream& os, MKeyValue& atts)
+{
+	if (npcIsPossessed) atts.put("possessed", npcIsPossessed);
+	return true;
+}
+void PossController::init_poss()
+{
+	if (npcIsPossessed) {
+		onSetEnable(true);
 	}
 }

@@ -53,7 +53,7 @@ float getDeltaTime(float always) {
 		if (GameController->GetGameState() == CGameController::STOPPED_INTRO)
 			return dt / 2.5f;
 #ifndef NDEBUG
-		else if (io->keys['M'].isPressed())
+		else if (controller->isSlowButtonPressed())
 			return dt / 10.f;
 #endif
 		else
@@ -209,6 +209,13 @@ bool isZero(VEC3 u)
 	return u.x == 0.f && u.y == 0.f && u.z == 0.f;
 }
 
+void clampVector(VEC3& u, const VEC3& min, const VEC3& max)
+{
+	clamp_me(u.x, min.x, max.x);
+	clamp_me(u.y, min.y, max.y);
+	clamp_me(u.z, min.z, max.z);
+}
+
 //template<class TObj>
 #include "components\entity_tags.h"
 //template<class  TObj>
@@ -238,11 +245,11 @@ Document readJSONAtrFile(const std::string route) {
 std::map<std::string, float> readIniAtrData(const std::string route, std::string element) {
 	Document document = readJSONAtrFile(route);
 	std::map<std::string, float> atributes;
-
-	for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
-		atributes[it->name.GetString()] = it->value.GetFloat();
+	if (document.HasMember(element.c_str())) {
+		for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
+			atributes[it->name.GetString()] = it->value.GetFloat();
+		}
 	}
-
 	return atributes;
 }
 
@@ -261,7 +268,6 @@ std::map<std::string, std::string> readIniAtrDataStr(const std::string route, st
 // Modifies the specified json element of the specified file
 void writeIniAtrData(const std::string route, std::string element, std::map<std::string, float> element_values) {
 	Document document = readJSONAtrFile(route);
-
 	for (auto atribute : element_values) {
 		document[element.c_str()][atribute.first.c_str()].SetFloat(atribute.second);
 	}

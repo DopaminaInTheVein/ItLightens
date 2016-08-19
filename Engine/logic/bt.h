@@ -44,6 +44,8 @@ protected:
 	virtual btnode** getRoot();
 	btnode *current;
 
+	std::string state_ini;
+
 	// moved to private as really the derived classes do not need to see this
 	btnode *createNode(string);
 	btnode *findNode(string);
@@ -53,6 +55,9 @@ protected:
 	CEntity* frontCollisionBOX(const TCompTransform * transform, CEntity *  molePursuingBoxi);
 	bool avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform);
 	bool needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, CEntity * molePursuingBoxi = nullptr);
+	virtual bool load_bt(MKeyValue& atts);
+	virtual bool save_bt(std::ofstream& os, MKeyValue& atts);
+
 public:
 	//Prueba
 	int getPathDebug(const VEC3& startPoint, const VEC3& endPoint) {
@@ -82,7 +87,8 @@ public:
 	void initParent() {
 		currPathWpt = totalPathWpt = 0;
 		pathWpts.clear();
-		setCurrent(NULL);
+		if (state_ini != "") setCurrent(findNode(state_ini));
+		else setCurrent(NULL);
 	}
 
 	// call this once per frame to compute the AI. No need to derive this one,

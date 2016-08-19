@@ -19,7 +19,7 @@ void TCompWire::update(float dt)
 	TCompTransform *t_p = p_e->get<TCompTransform>();
 	VEC3 player_position = t_p->getPosition();
 
-	float d_squared = simpleDistXZ(org,player_position);
+	float d_squared = simpleDistXZ(org, player_position);
 
 	if (d_squared < (half_lenght * 2)) {
 		CanPass();
@@ -54,7 +54,7 @@ void TCompWire::CanPass()
 	VEC3 player_position = t_p->getPosition();
 
 	//TODO: calculate well direction, for now only z-axis
-	if(player_position.z < org.z)
+	if (player_position.z < org.z)
 		msg.dst = org + direction*half_lenght;
 	else
 		msg.dst = org - direction*half_lenght;

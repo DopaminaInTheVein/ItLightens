@@ -15,57 +15,57 @@ MAKE_GUID(WKPDID_D3DDebugObjectName, 0x429b8c22, 0x9188, 0x4b0c, 0x87, 0x42, 0xa
 CRender Render;
 
 CRender::CRender()
-: swap_chain(nullptr)
-, width( 0 )
-, height( 0 )
-, device(nullptr)
-, ctx(nullptr)
-, render_target_view( nullptr )
-, depth_stencil_view( nullptr )
+	: swap_chain(nullptr)
+	, width(0)
+	, height(0)
+	, device(nullptr)
+	, ctx(nullptr)
+	, render_target_view(nullptr)
+	, depth_stencil_view(nullptr)
 { }
 
 void CRender::swapChain() {
-  PROFILE_FUNCTION("CRender::swapChain");
-  swap_chain->Present(0, 0);
+	PROFILE_FUNCTION("CRender::swapChain");
+	swap_chain->Present(0, 0);
 }
 
 // ----------------------------------------
 void CRender::activateBackBuffer() {
-  ctx->OMSetRenderTargets(1, &render_target_view, depth_stencil_view);
-  // Setup the viewport
-  D3D11_VIEWPORT vp;
-  vp.Width = (FLOAT)width;
-  vp.Height = (FLOAT)height;
-  vp.MinDepth = 0.0f;
-  vp.MaxDepth = 1.0f;
-  vp.TopLeftX = 0;
-  vp.TopLeftY = 0;
-  ctx->RSSetViewports(1, &vp);
+	ctx->OMSetRenderTargets(1, &render_target_view, depth_stencil_view);
+	// Setup the viewport
+	D3D11_VIEWPORT vp;
+	vp.Width = (FLOAT)width;
+	vp.Height = (FLOAT)height;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 0;
+	ctx->RSSetViewports(1, &vp);
 }
 
 void CRender::clearMainZBuffer() {
-  ctx->ClearDepthStencilView(depth_stencil_view, D3D11_CLEAR_DEPTH, 1.0f, 0);
-  ctx->ClearDepthStencilView(depth_stencil_view, D3D11_CLEAR_STENCIL, 1.0f, 0);
+	ctx->ClearDepthStencilView(depth_stencil_view, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	ctx->ClearDepthStencilView(depth_stencil_view, D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
 void CRender::destroyDevice() {
-  destroyRenderStateConfigs();
-  SAFE_RELEASE(render_target_view);
-  SAFE_RELEASE(depth_stencil_view);
-  SAFE_RELEASE(depth_resource);
-  if (ctx) ctx->ClearState();
-  if (swap_chain) swap_chain->Release(), swap_chain = nullptr;
-  if (ctx) ctx->Release(), ctx = nullptr;
-  if (device) device->Release(), device = nullptr;
+	destroyRenderStateConfigs();
+	SAFE_RELEASE(render_target_view);
+	SAFE_RELEASE(depth_stencil_view);
+	SAFE_RELEASE(depth_resource);
+	if (ctx) ctx->ClearState();
+	if (swap_chain) swap_chain->Release(), swap_chain = nullptr;
+	if (ctx) ctx->Release(), ctx = nullptr;
+	if (device) device->Release(), device = nullptr;
 }
 
 bool CRender::createDevice() {
-
 	CApp& app = CApp::get();
 
 	HRESULT hr = S_OK;
 
 	RECT rc;
+	CLog::append("GetClientRect(app.getHWnd(), &rc);");
 	GetClientRect(app.getHWnd(), &rc);
 	width = rc.right - rc.left;
 	height = rc.bottom - rc.top;
@@ -101,41 +101,53 @@ bool CRender::createDevice() {
 	sd.SampleDesc.Quality = 0;
 	sd.Windowed = TRUE;
 
-	hr = D3D11CreateDeviceAndSwapChain(NULL, 
-		D3D_DRIVER_TYPE_HARDWARE, NULL, 
-		createDeviceFlags, 
-		featureLevels, 
+	CLog::append("D3D11CreateDeviceAndSwapChain...");
+	hr = D3D11CreateDeviceAndSwapChain(NULL,
+		D3D_DRIVER_TYPE_HARDWARE, NULL,
+		createDeviceFlags,
+		featureLevels,
 		numFeatureLevels,
-		D3D11_SDK_VERSION, 
+		D3D11_SDK_VERSION,
 		&sd, &swap_chain, &device, &featureLevel, &ctx);
+	CLog::appendFormat("Succeded: %d", SUCCEEDED(hr));
 	if (!SUCCEEDED(hr))
 		return false;
 	setDXName(device, "DX11Dev");
 
 	// Create a render target view
 	ID3D11Texture2D* pBackBuffer = NULL;
+	CLog::append("swap_chain->GetBuffer");
 	hr = swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+	CLog::appendFormat("Succeded: %d", !FAILED(hr));
 	if (FAILED(hr))
 		return false;
 
+	CLog::append("device->CreateRenderTargetView");
 	hr = device->CreateRenderTargetView(pBackBuffer, NULL, &render_target_view);
+	CLog::append("pBackBuffer->Release()");
 	pBackBuffer->Release();
+	CLog::appendFormat("Succeded: %d", !FAILED(hr));
+
 	if (FAILED(hr))
 		return false;
+	CLog::append("setDXName(pBackBuffer)");
 	setDXName(pBackBuffer, "BackBufferRes");
+	CLog::append("setDXName(render_target_view)");
 	setDXName(render_target_view, "BackBufferRTV");
 
+	CLog::append("createDepthBuffer(...)");
 	if (!createDepthBuffer(width, height, DXGI_FORMAT_D24_UNORM_S8_UINT, &depth_resource, &depth_stencil_view, "ZBackBuffer"))
 		return false;
 	setDXName(depth_resource, "MainZBufferRes");
 	setDXName(depth_stencil_view, "MainZBufferDSV");
 
-  activateBackBuffer();
+	CLog::append("activateBackBuffer()");
+	activateBackBuffer();
 
-  createRenderStateConfigs();
+	CLog::append("createRenderStateConfigs()");
+	createRenderStateConfigs();
 
-  dbg("Render.device created\n");
+	dbg("Render.device created\n");
 
 	return true;
 }
-

@@ -11,6 +11,8 @@
 
 using namespace std;
 
+VHandles TCompGenerator::all_generators;
+
 bool TCompGenerator::load(MKeyValue & atts)
 {
 	rad = atts.getFloat("rad", 1);
@@ -48,6 +50,7 @@ void TCompGenerator::onTriggerExit(const TMsgTriggerOut & msg)
 void TCompGenerator::onCreate(const TMsgEntityCreated & msg)
 {
 	CHandle me_h = CHandle(this).getOwner();
+
 	CEntity *me_e = me_h;
 	TCompTransform *t = me_e->get<TCompTransform>();
 
@@ -62,6 +65,8 @@ void TCompGenerator::onCreate(const TMsgEntityCreated & msg)
 	____TIMER__SET_ZERO_(timeReuse);
 	mesh = TCompRenderStaticMesh::last_loaded_static_mesh;
 	setUsable(true);
+
+	all_generators.push_back(me_h);
 }
 
 void TCompGenerator::init()
@@ -85,7 +90,7 @@ void TCompGenerator::setUsable(bool usable)
 {
 	TMsgSetTag msg;
 	msg.add = usable;
-	msg.tag_id = getID("interactive");
+	msg.tag = "interactive";
 	mesh.sendMsg(msg);
 	if (!usable) {
 		____TIMER_RESET_(timeReuse);
@@ -102,4 +107,9 @@ float TCompGenerator::use()
 	if (!isUsable()) return 0;
 	setUsable(false);
 	return life_recover;
+}
+
+TCompGenerator::~TCompGenerator()
+{
+	removeFromVector(all_generators, CHandle(this).getOwner());
 }

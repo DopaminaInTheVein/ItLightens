@@ -11,7 +11,7 @@
 #include "components\comp_name.h"
 #include "ui\ui_interface.h"
 #include "components\comp_msgs.h"
-#include "app_modules\io\io.h"
+#include "input\input_wrapper.h"
 #include "render\static_mesh.h"
 #include "components\comp_render_static_mesh.h"
 #include "components/comp_charactercontroller.h"
@@ -92,9 +92,9 @@ void player_controller_cientifico::Init() {
 		objs_names.resize(eObjSci::OBJ_SCI_SIZE);
 		objs_names[eObjSci::EMPTY] = "empty";
 		objs_names[eObjSci::DISABLE_BEACON] = "disable_beacon";
-		objs_names[eObjSci::MAGNETIC_BOMB] = "magnetic_bomb"; //Only this is used at the moment!
+		objs_names[eObjSci::MAGNETIC_BOMB] = "magnetic_bomb";
 		objs_names[eObjSci::STATIC_BOMB] = "static_bomb";
-		objs_names[eObjSci::THROW_BOMB] = "throw_bomb";
+		objs_names[eObjSci::THROW_BOMB] = "throw_bomb"; //Only this is used at the moment!
 	}
 
 	myHandle = om->getHandleFromObjAddr(this);
@@ -105,6 +105,12 @@ void player_controller_cientifico::Init() {
 
 	____TIMER_REDEFINE_(t_throwing, 0.5f);
 	____TIMER_REDEFINE_(t_nextBomb, 1.f);
+	if (objs_amoung[THROW_BOMB] > 0) {
+		obj = eObjSci::THROW_BOMB;
+		spawnBomb(bomb_offset_1);
+	}
+
+	init_poss();
 }
 
 //##########################################################################
@@ -135,7 +141,7 @@ void player_controller_cientifico::WorkBenchActions() {
 	//----------------------------------------------------
 
 	if (dist_wb < 1.5f) {
-		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) { //io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
+		if (controller->IsActionButtonPessed()) {
 			obj = THROW_BOMB;
 			//TODO: Destruir bomba actual
 			ChangeState("createBomb");
@@ -146,7 +152,7 @@ void player_controller_cientifico::WorkBenchActions() {
 		}
 	}
 	else if (canRepairDrone) {
-		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
+		if (controller->IsActionButtonPessed()) {
 			logic_manager->throwEvent(logic_manager->OnRepairDrone, "");
 			ChangeState("repairDrone");
 		}
@@ -158,50 +164,7 @@ void player_controller_cientifico::WorkBenchActions() {
 
 void player_controller_cientifico::UpdateInputActions() {
 	PROFILE_FUNCTION("player cientifico: energy dec");
-	//if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
-	//	ChangeState("createDisableBeacon");
-	//}
-
-	//if (io->keys['2'].becomesPressed() || io->joystick.button_B.becomesPressed()) {
-	//	ChangeState("addDisableBeacon");
-	//}
-
-	//if (io->keys['3'].becomesPressed() || io->joystick.button_Y.becomesPressed()) {
-	//	energyDecreasal(5.0f);
-	//	ChangeState("createStaticBomb");
-	//}
-
-	//if (io->keys['5'].becomesPressed() || io->joystick.button_L.becomesPressed()) {
-	//	energyDecreasal(5.0f);
-	//	ChangeState("createMagneticBomb");
-	//}
-	//if (io->keys['6'].becomesPressed() || io->joystick.button_LT > io->joystick.max_trigger_value / 2) {
-	//	energyDecreasal(10.0f);
-	//	ChangeState("useMagneticBomb");
-	//}
-	//if (io->keys['4'].becomesPressed() || io->joystick.button_RT > io->joystick.max_trigger_value / 2) {
-	//	energyDecreasal(10.0f);
-	//	ChangeState("useStaticBomb");
-	//}
-	//if (io->keys['R'].becomesPressed() || io->joystick.button_R.becomesPressed())
-	//	ExplodeBomb();
 }
-
-//void player_controller_cientifico::ExplodeBomb()
-//{
-//	PROFILE_FUNCTION("player cientifico: explode bomb");
-//	if (obj == STATIC_BOMB_GAME && bomb_handle.isValid()) {
-//		CStaticBomb *bomb = bomb_handle;
-//		obj = EMPTY;
-//		bomb->toExplode();
-//	}
-//
-//	if (obj == MAGNETIC_BOMB_GAME && bomb_handle.isValid()) {
-//		CMagneticBomb *bomb = bomb_handle;
-//		obj = EMPTY;
-//		bomb->toExplode();
-//	}
-//}
 
 #pragma endregion
 
@@ -227,7 +190,7 @@ void player_controller_cientifico::Moving()
 }
 
 void player_controller_cientifico::RecalcScientist() {
-	if (io->keys['1'].becomesPressed() || io->joystick.button_X.becomesPressed()) {
+	if (controller->IsSenseButtonPressed()) {
 		ChangeState("useBomb");
 	}
 	WorkBenchActions();
@@ -601,4 +564,20 @@ void player_controller_cientifico::ChangeCommonState(std::string state) {
 	else if (state == "idle") {
 		SET_ANIM_SCIENTIST(AST_IDLE);
 	}
+}
+
+//Load and save
+bool player_controller_cientifico::load(MKeyValue& atts)
+{
+	objs_amoung[THROW_BOMB] = atts.getFloat("bombs", 0);
+	load_poss(atts);
+	return true;
+}
+bool player_controller_cientifico::save(std::ofstream& os, MKeyValue& atts)
+{
+	if (objs_amoung[THROW_BOMB] > 0) {
+		atts.put("bombs", objs_amoung[THROW_BOMB]);
+	}
+	save_poss(os, atts);
+	return true;
 }

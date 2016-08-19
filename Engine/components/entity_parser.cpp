@@ -9,7 +9,7 @@ using namespace std;
 
 map< string, CPrefabCompiler* > compiled_prefabs;
 set<string> CEntityParser::loaded_files = set<string>();
-
+VHandles CEntityParser::collisionables = VHandles();
 // Identified Entities
 static VHandles identified_entities;
 CHandle IdEntities::findById(const int entity_id) {
@@ -21,6 +21,8 @@ void IdEntities::init() {
 void IdEntities::saveIdEntity(CHandle entity, int entity_id) {
 	if (entity_id >= 0) {
 		identified_entities[entity_id] = entity;
+		CEntity* e = entity;
+		e->setId(entity_id);
 	}
 }
 
@@ -209,7 +211,7 @@ void CEntityParser::onEndElement(const std::string &elem) {
 
 bool CEntityParser::hasToCreate()
 {
-	if (curr_entity_permanent && !first_load) return false;
-	if (!level_changed && !curr_entity_reload) return false;
+	//if (curr_entity_permanent && !first_load) return false;
+	if (reload && !curr_entity_reload) return false;
 	return true;
 }

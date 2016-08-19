@@ -1,0 +1,24 @@
+<entities
+>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="point_light0"
+	/>
+<transform
+	pos="46.735603 0.827126 -3.749603"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="trigger               "
+	/>
+<light_point
+	color="0.700000 0.700000 0.500000 1.000000"
+	in_radius="25"
+	out_radius="70"
+	/>
+</entity>
+</entities>

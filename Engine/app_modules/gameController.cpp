@@ -1,8 +1,9 @@
 #include "mcv_platform.h"
 #include "gameController.h"
 
+#include "input/input_wrapper.h"
+
 #include "debug\debug_itlightens.h"
-#include "io\io.h"
 #include "app_modules/logic_manager/logic_manager.h"
 
 int CGameController::GetGameState() const { return game_state; }
@@ -27,36 +28,39 @@ void CGameController::TogglePauseIntroState() {
 void CGameController::UpdateGeneralInputs() {
 	if (!ImGui::GetIO().WantTextInput) { //not input wanted from imgui
 										 //exit game
-		if (io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed()) {
+		if (controller->IsPausePressed()) {
 			if (game_state == RUNNING) {
 				SetGameState(MENU);
-				io->mouse.release();
+				//controller->ChangeMouseState(false);
+				logic_manager->throwEvent(CLogicManagerModule::EVENT::OnPause, "");
 			}
 			else if (game_state == MENU) {
 				SetGameState(RUNNING);
-				io->mouse.capture();
+				controller->ChangeMouseState(true);
 			}
 			//CApp& app = CApp::get();
 			//app.exitGame();
 		}
 
-		//restart game
-		if (io->keys[VK_RETURN].becomesPressed() || io->joystick.button_START.becomesPressed()) {
+		/*restart game
+		if (controller->IsPausePressed()) {
+			CApp::get().has_check_point = false;
 			CApp::get().restartLevelNotify();
 		}
-
+		*/
+#ifndef FINAL_BUILD
 		//toggle console log
-		if (io->keys['L'].becomesPressed()) {
+		if (controller->isToogleConsoleLoguttonPressed()) {
 			Debug->setOpen(!*Debug->getStatus());
 		}
 
 		//toggle command log
-		if (io->keys['O'].becomesPressed()) {
+		if (controller->isToogleCommandLogButtonPressed()) {
 			Debug->ToggleConsole();
 		}
 
 		//lock/unlock free camera
-		if (io->keys['K'].becomesPressed()) {
+		if (controller->isCameraReleaseButtonPressed()) {
 			free_camera = !free_camera;
 		}
 
@@ -64,9 +68,9 @@ void CGameController::UpdateGeneralInputs() {
 		//if (io->keys['P'].becomesPressed()) {
 		//	TogglePauseState();
 		//}
-
+#endif
 		//pause/unpause game (intro mode)
-		if (io->keys['I'].becomesPressed()) {
+		if (controller->isPauseGameButtonPressed()) {
 			TogglePauseIntroState();
 		}
 	}
@@ -101,7 +105,18 @@ bool * CGameController::GetFreeCameraPointer() {
 bool CGameController::GetFreeCamera() const {
 	return free_camera;
 }
-
+bool CGameController::IsUiControl() const
+{
+	return ui_control;
+}
+bool * CGameController::IsUiControlPointer()
+{
+	return &ui_control;
+}
+void CGameController::SetUiControl(bool new_ui_control)
+{
+	ui_control = new_ui_control;
+}
 bool CGameController::IsCinematic() const {
 	return cinematic;
 }

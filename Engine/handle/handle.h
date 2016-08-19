@@ -2,6 +2,7 @@
 #define INC_HANDLE_H_
 
 #include <cinttypes>
+#include <fstream>
 
 // CHandleManager is a class
 class CHandleManager;
@@ -80,6 +81,7 @@ public:
 	CHandle getOwner() const;
 	bool hasTag(std::string tag);
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	void renderInMenu();
 
 	// --------------------------------------
@@ -127,5 +129,9 @@ void CHandle::sendMsgWithReply(TMsg& msg) {
 #define GET_COMP(var, handle, type) type * var = ((CEntity*)handle)->get<type>()
 #define GETH_MY(type) ((CEntity*)(CHandle(this).getOwner()))->get<type>()
 #define GET_MY(var, type) type * var = ((CEntity*)(CHandle(this).getOwner()))->get<type>()
+#define GET_ECOMP(var, entity_ptr, type) type * var = entity_ptr ? entity_ptr->get<type>() : CHandle()
+#define GET_NAME(name) ((CEntity*)handle)->getName()
+#define MY_NAME ((CEntity*)(CHandle(this).getOwner()))->getName()
+#define MY_OWNER CHandle(this).getOwner()
 
 #endif

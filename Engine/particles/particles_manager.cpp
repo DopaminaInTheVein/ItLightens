@@ -35,8 +35,8 @@ void CParticlesManager::update(float dt)
 	for (auto& particles : m_Particles) {
 		particles->update(dt);
 	}
-#ifdef _DEBUG
-	if (io->keys[VK_F8].becomesPressed()) {
+#ifndef FINAL_BUILD
+	if (controller->isParticleEditorActivationPressed()) {
 		m_particleEditor = !m_particleEditor;
 	}
 #endif
@@ -54,7 +54,7 @@ void CParticlesManager::renderParticles()
     particles->renderParticles();
   }
 
-  activateZ(ZCFG_DEFAULT);
+  activateZ(ZCFG_ALL_DISABLED);
   activateBlend(BLENDCFG_DEFAULT);
 }
 

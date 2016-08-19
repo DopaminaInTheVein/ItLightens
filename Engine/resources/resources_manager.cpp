@@ -82,10 +82,10 @@ const IResource* CResourcesManager::get(const char* name) {
 	}
 	else if (ext == ".dds" || ext == ".DDS") {
 #ifndef NDEBUG
-		std::string str = std::string(name);
-		int found = str.find("caja_2_difuso");
-		if (found != std::string::npos)
-			dbg("Aqui estas\n");
+		//std::string str = std::string(name);
+		//int found = str.find("caja_2_difuso");
+		//if (found != std::string::npos)
+		//	dbg("Aqui estas\n");
 #endif
 		new_obj = createObjFromName<CTexture>(name);
 	}

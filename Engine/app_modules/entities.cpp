@@ -5,16 +5,15 @@
 #include "components/comp_msgs.h"
 #include "components/entity_tags.h"
 #include "components/comp_workstation.h"
+#include "components/comp_video.h"
 #include "handle/handle_manager.h"
 #include "handle/msgs.h"
 #include "render/technique.h"
 #include "resources/resources_manager.h"
 #include "imgui/imgui.h"
 #include "logic/sbb.h"
-#include "logic/ai_water.h"
 #include "logic/bt_guard.h"
 #include "logic/bt_mole.h"
-#include "logic/bt_speedy.h"
 #include "logic/bt_scientist.h"
 #include "windows/app.h"
 #include "utils/utils.h"
@@ -42,10 +41,7 @@ DECL_OBJ_MANAGER("magnet_door", magnet_door);
 DECL_OBJ_MANAGER("elevator", elevator);
 DECL_OBJ_MANAGER("bt_guard", bt_guard);
 DECL_OBJ_MANAGER("bt_mole", bt_mole);
-DECL_OBJ_MANAGER("bt_speedy", bt_speedy);
-DECL_OBJ_MANAGER("water", water_controller);
 DECL_OBJ_MANAGER("player", player_controller);
-DECL_OBJ_MANAGER("player_speedy", player_controller_speedy);
 DECL_OBJ_MANAGER("player_mole", player_controller_mole);
 DECL_OBJ_MANAGER("player_cientifico", player_controller_cientifico);
 DECL_OBJ_MANAGER("workbench", workbench);
@@ -104,6 +100,9 @@ DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
 //particles
 DECL_OBJ_MANAGER("particles_system", CParticleSystem);
 
+//particles
+DECL_OBJ_MANAGER("video_player", TCompVideo);
+
 /* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
@@ -112,6 +111,10 @@ DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
 //fx
 DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
 DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
+
+//gui
+DECL_OBJ_MANAGER("gui_cursor", TCompGuiCursor);
+DECL_OBJ_MANAGER("gui_button", TCompGuiButton);
 
 using namespace std;
 
@@ -127,6 +130,7 @@ TMsgID generateUniqueMsgID() {
 bool CEntitiesModule::start() {
 	SBB::init();
 	Damage::init();
+	IdEntities::init();
 
 	getHandleManager<CEntity>()->init(MAX_ENTITIES);
 
@@ -139,7 +143,6 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompLightDir>()->init(8);
 	getHandleManager<TCompLightDirShadows>()->init(MAX_ENTITIES);
 	getHandleManager<player_controller>()->init(8);
-	getHandleManager<player_controller_speedy>()->init(8);
 	getHandleManager<player_controller_mole>()->init(16);
 	getHandleManager<player_controller_cientifico>()->init(8);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
@@ -182,12 +185,10 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<bt_guard>()->init(MAX_ENTITIES);
 	getHandleManager<bt_mole>()->init(MAX_ENTITIES);
-	getHandleManager<bt_speedy>()->init(MAX_ENTITIES);
 	getHandleManager<bt_scientist>()->init(MAX_ENTITIES);
 	getHandleManager<ai_cam>()->init(MAX_ENTITIES);
 	getHandleManager<workbench_controller>()->init(MAX_ENTITIES);
 	getHandleManager<workbench>()->init(MAX_ENTITIES);
-	getHandleManager<water_controller>()->init(MAX_ENTITIES);
 	getHandleManager<magnet_door>()->init(MAX_ENTITIES);
 	getHandleManager<elevator>()->init(4);
 	getHandleManager<TCompRenderGlow>()->init(4);
@@ -214,8 +215,15 @@ bool CEntitiesModule::start() {
 	//particles
 	getHandleManager<CParticleSystem>()->init(MAX_ENTITIES);
 
+	//video
+	getHandleManager<TCompVideo>()->init(4);
+
 	//fx
 	getHandleManager<TCompFadeScreen>()->init(4);
+
+	//Gui
+	getHandleManager<TCompGuiCursor>()->init(4);
+	getHandleManager<TCompGuiButton>()->init(64);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -238,9 +246,7 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(LogicHelperArrow, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(player_controller, TMsgDamageSpecific, onSetDamage);
-	SUBSCRIBE(player_controller_speedy, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
-	SUBSCRIBE(bt_speedy, TMsgSetPlayer, onSetPlayer);
 	SUBSCRIBE(bt_scientist, TMsgWBEmpty, onEmptyWB);						//Workbench empty
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
@@ -258,6 +264,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompCameraMain, TMsgGuidedCamera, onGuidedCamera);
 	SUBSCRIBE(TCompGuidedCamera, TMsgGuidedCamera, onGuidedCamera);
 	SUBSCRIBE(TCompBoneTracker, TMsgAttach, onAttach);
+
+	//For camera unique
+	SUBSCRIBE(TCompCameraMain, TMsgEntityCreated, onCreate);
 
 	//Skeleton IK
 	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
@@ -280,9 +289,6 @@ bool CEntitiesModule::start() {
 	//box
 	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
 
-	//water
-	SUBSCRIBE(water_controller, TMsgEntityCreated, onCreate);
-
 	//bombs
 	SUBSCRIBE(CThrowBomb, TMsgActivate, onNextState);
 	SUBSCRIBE(CThrowBomb, TMsgThrow, onThrow);
@@ -290,7 +296,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
-	SUBSCRIBE(bt_speedy, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
 	SUBSCRIBE(bt_guard, TMsgNoise, noise);
 	SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
@@ -352,11 +357,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_cientifico, TMsgControllerSetEnable, onSetEnable);
 	SUBSCRIBE(player_controller_cientifico, TMsgGetWhoAmI, onGetWhoAmI);
 	SUBSCRIBE(player_controller_cientifico, TMsgCanRechargeDrone, onCanRepairDrone);
-	//..Speedy
-	SUBSCRIBE(bt_speedy, TMsgAISetPossessed, onSetPossessed);
-	SUBSCRIBE(bt_speedy, TMsgAISetStunned, onSetStunned);
-	SUBSCRIBE(player_controller_speedy, TMsgControllerSetEnable, onSetEnable);
-	//SUBSCRIBE(player_controller_speedy, TMsgGetWhoAmI, onGetWhoAmI);
 	//..Mole
 	SUBSCRIBE(bt_mole, TMsgAISetPossessed, onSetPossessed);
 	SUBSCRIBE(bt_mole, TMsgAISetStunned, onSetStunned);
@@ -371,7 +371,6 @@ bool CEntitiesModule::start() {
 	//anything for now
 	/*SUBSCRIBE(player_controller, TMsgDie, onDie);
 	SUBSCRIBE(player_controller_cientifico, TMsgDie, onDie);
-	SUBSCRIBE(player_controller_speedy, TMsgDie, onDie);
 	SUBSCRIBE(player_controller_mole, TMsgDie, onDie);*/
 
 	//Damage
@@ -381,7 +380,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompLife, TMsgSetDamage, onReciveDamage);
 	SUBSCRIBE(TCompLife, TMsgStopDamage, onStopDamage);
 	SUBSCRIBE(player_controller_cientifico, TMsgUnpossesDamage, onForceUnPosses);
-	SUBSCRIBE(player_controller_speedy, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	SUBSCRIBE(TCompCameraMain, TMsgGetCullingViewProj, onGetViewProj);
@@ -392,170 +390,42 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(player_controller_cientifico, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
-	SUBSCRIBE(player_controller_speedy, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetControllable, onSetControllable);
 
 	//Go And Look
 	SUBSCRIBE(player_controller, TMsgGoAndLook, onGoAndLook);
 	SUBSCRIBE(player_controller_cientifico, TMsgGoAndLook, onGoAndLook);
 	SUBSCRIBE(player_controller_mole, TMsgGoAndLook, onGoAndLook);
-	//SUBSCRIBE(player_controller_speedy, TMsgGoAndLook, onGoAndLook);
 	//SUBSCRIBE(bt_guard, TMsgGoAndLookAs, onGoAndLook);
 	//SUBSCRIBE(bt_mole, TMsgGoAndLookAs, onGoAndLook);
 
-	initLevel(CApp::get().sceneToLoad);
+	//Fx
+	SUBSCRIBE(TCompFadeScreen, TMsgEntityCreated, onCreate);
+
+	//Gui
+	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
+	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
 
 	return true;
 }
 
-void CEntitiesModule::initLevel(string level) {
-	bool level_changed = level != current_level;
-	// Restart Timers LUA
-	logic_manager->resetTimers();
+bool CEntitiesModule::loadXML(CEntitiesModule::ParsingInfo& info)
+{
+	CEntityParser ep(info.reload);
+	dbg("Loading XML [%s]... (entities before: %d)\n", info.filename.c_str(), size());
+	bool is_ok = ep.xmlParseFile("data/scenes/" + info.filename + ".xml");
 
-	map<std::string, std::string> fields = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
-	sala = fields[level];
+	return is_ok;
+}
 
-	SBB::postBool("navmesh", false);
-	salaloc = "data/navmeshes/" + sala + ".data";
-
-	CEntityParser ep(level_changed);
-
-	dbg("Loading scene... (%d entities)\n", size());
-	bool is_ok = ep.xmlParseFile("data/scenes/" + sala + ".xml");
-	assert(is_ok);
-	{
-		CEntityParser ep(level_changed);
-		is_ok = ep.xmlParseFile("data/scenes/test_lights.xml");
-		assert(is_ok);
-	}
-
-	dbg("Scene Loaded! (%d entities)\n", size());
-
-	// GENERATE NAVMESH
-	collisionables = ep.getCollisionables();
-	SBB::postHandlesVector("collisionables", collisionables);
-	CNavmesh nav;
-	nav.m_input.clearInput();
-	dbg(" GENERANDO NAVMESH INPUT...\n");
-	for (CHandle han : collisionables) {
-		CEntity * e = han;
-		dbg("Navmesh, collisionable: %s\n", e->getName());
-		if (e) {
-			TCompTransform * trans = e->get<TCompTransform>();
-			TCompPhysics * p = e->get<TCompPhysics>();
-			if (!p) continue;
-			auto actor = p->getActor();
-			if (!actor) continue;
-			PxBounds3 bounds = actor->getWorldBounds();
-			VEC3 min, max;
-			min.x = bounds.minimum.x;
-			min.y = bounds.minimum.y;
-			min.z = bounds.minimum.z;
-			max.x = bounds.maximum.x;
-			max.y = bounds.maximum.y;
-			max.z = bounds.maximum.z;
-
-			auto rb = p->getActor()->isRigidStatic();
-			if (rb) {
-				int nBShapes = rb->getNbShapes();
-				PxShape **ptr;
-				ptr = new PxShape*[nBShapes];
-				rb->getShapes(ptr, 1);
-				for (int i = 0; i < nBShapes; i++) {
-					PxTriangleMeshGeometry meshGeom;
-					assert(ptr[i]);
-					if (ptr[i]->getTriangleMeshGeometry(meshGeom)) {
-						nav.m_input.addInput(meshGeom.triangleMesh, PhysxConversion::PxVec3ToVec3(rb->getGlobalPose().p), min, max, trans->getRotation());
-					}
-				}
-			}
-			else {
-				nav.m_input.addInput(min, max);
-			}
-		}
-	}
-	nav.m_input.computeBoundaries();
-	SBB::postNavmesh(nav);
-	std::ifstream is(salaloc.c_str());
-	bool recalc = !is.is_open();
-	is.close();
-	SBB::postBool(sala, false);
-	//------------------------------
-	if (!recalc) {
-		// restore the navmesh from the archive
-		//std::thread thre(&CEntitiesModule::readNavmesh, this);
-		//thre.detach();
-		readNavmesh();
-	}
-	else {
-		// make mesh on a separate thread
-		//std::thread thre(&CEntitiesModule::recalcNavmesh, this);
-		//thre.detach();
-		recalcNavmesh();
-	}
-	//------------------------------
-
-	TTagID tagIDcamera = getID("camera_main");
-	TTagID tagIDwall = getID("breakable_wall");
-	TTagID tagIDminus = getID("minus_wall");
-	TTagID tagIDplus = getID("plus_wall");
-	TTagID tagIDrec = getID("recover_point");
-
-	// Camara del player
-	CHandle camera = tags_manager.getFirstHavingTag("camera_main");
-	CEntity * camera_e = camera;
-	CHandle t = tags_manager.getFirstHavingTag("player");
-	CEntity * target_e = t;
-	if (camera_e) {
-		TCompCameraMain * pcam = camera_e->get<TCompCameraMain>();
-
-		CHandle helper_arrow = tags_manager.getFirstHavingTag("helper_arrow");
-		CEntity * helper_arrow_e = helper_arrow;
-
-		// Set the player in the 3rdPersonController
-		if (camera_e && t.isValid()) {
-			TMsgSetTarget msg;
-			msg.target = t;
-			msg.who = PLAYER;
-			camera_e->sendMsg(msg);	//set camera
-			if (helper_arrow.isValid()) helper_arrow_e->sendMsg(msg);
-
-			TMsgSetCamera msg_camera;
-			msg_camera.camera = camera;
-			target_e->sendMsg(msg_camera); //set target camera
-		}
-	}
-	// SET PLAYER INITIAL ROOM
-	int room_name = -1;
-	if (target_e) {
-		TCompRoom * player_room = target_e->get<TCompRoom>();
-		if (player_room) {
-			room_name = player_room->name[0];
-		}
-	}
-	SBB::postSala(room_name);
-
-	//}
-	TTagID generators = getID("generator");
-	VHandles generatorsHandles = tags_manager.getHandlesByTag(generators);
-	SBB::postHandlesVector("generatorsHandles", generatorsHandles);
-
-	SBB::postHandlesVector("wptsBreakableWall", tags_manager.getHandlesByTag(tagIDwall));
-	SBB::postHandlesVector("wptsMinusPoint", tags_manager.getHandlesByTag(tagIDminus));
-	SBB::postHandlesVector("wptsPlusPoint", tags_manager.getHandlesByTag(tagIDplus));
-	SBB::postHandlesVector("wptsRecoverPoint", tags_manager.getHandlesByTag(tagIDrec));
-
+void CEntitiesModule::initEntities() {
 	getHandleManager<player_controller>()->onAll(&player_controller::Init);
-	getHandleManager<player_controller_speedy>()->onAll(&player_controller_speedy::Init);
 	getHandleManager<player_controller_cientifico>()->onAll(&player_controller_cientifico::Init);
 	getHandleManager<player_controller_mole>()->onAll(&player_controller_mole::Init);
 
 	getHandleManager<bt_guard>()->onAll(&bt_guard::Init);
 	getHandleManager<bt_mole>()->onAll(&bt_mole::Init);
-	getHandleManager<bt_speedy>()->onAll(&bt_speedy::Init);
 	getHandleManager<bt_scientist>()->onAll(&bt_scientist::Init);
-	//getHandleManager<water_controller>()->onAll(&water_controller::Init); --> Se hace en el onCreated!
 	getHandleManager<ai_cam>()->onAll(&ai_cam::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
 	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
@@ -565,36 +435,54 @@ void CEntitiesModule::initLevel(string level) {
 	getHandleManager<TCompPila>()->onAll(&TCompPila::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
+	getHandleManager<CParticleSystem>()->onAll(&CParticleSystem::init);
+
 	//fx
 	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
 
-	//TODO: Message LevelStart
-	GameController->SetGameState(CGameController::RUNNING);
-	current_level = level;
-	CApp::get().sceneToLoad = "";
-	CApp::get().loadedLevelNotify();
+	//Added to clean this file
+	getHandleManager<LogicHelperArrow>()->onAll(&LogicHelperArrow::init);
+	getHandleManager<TCompCameraMain>()->onAll(&TCompCameraMain::init);
+	getHandleManager<TCompRoom>()->onAll(&TCompRoom::init);
 }
 
-void CEntitiesModule::clear(string new_next_level) {
-	next_level = new_next_level;
-	bool level_changed = (next_level != "" && next_level != current_level);
-	static int entities_destroyed = 0;
-	getHandleManager<CEntity>()->each([level_changed](CEntity * e) {
+void CEntitiesModule::saveLevel(std::string level_name) {
+	string file_name = "data/scenes/" + level_name + "_save.xml";
+	std::ofstream os(file_name.c_str());
+	if (!os.is_open()) {
+		assert(false);
+	}
+	MKeyValue atts;
+	atts.writeStartElement(os, "entities");
+	getHandleManager<CEntity>()->each([&atts, &os](CEntity * e) {
+		if (e->needReload()) {
+			e->save(os, atts);
+		}
+	});
+	atts.writeEndElement(os, "entities");
+	os.close();
+}
+
+void CEntitiesModule::clear(bool reload) {
+	static int entities_destroyed = 0; //dbg
+	reloading = reload;
+	getHandleManager<CEntity>()->each([reload](CEntity * e) {
 		if (!e->isPermanent()) {
-			if (level_changed || e->needReload()) {
+			if (!reload || e->needReload()) {
 				CHandle(e).destroy();
-				entities_destroyed++;
+				entities_destroyed++; //dbg
 			}
 		}
 	});
-	dbg("Entities destroyed = %d\n", entities_destroyed);
+	TCompRoom::all_rooms.clear();
+	dbg("Entities destroyed = %d\n", entities_destroyed); //dbg
 }
 
 bool CEntitiesModule::isCleared() {
-	bool level_changed = (next_level != "" && next_level != current_level);
-	getHandleManager<CEntity>()->each([level_changed](CEntity * e) {
+	bool reload = reloading;
+	getHandleManager<CEntity>()->each([reload](CEntity * e) {
 		if (!e->isPermanent()) {
-			if (level_changed || e->needReload()) {
+			if (!reload || e->needReload()) {
 				return false;
 			}
 		}
@@ -638,11 +526,13 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
 	}
 
-	if (GameController->GetGameState() == CGameController::RUNNING) {
+	if (GameController->GetGameState() == CGameController::PLAY_VIDEO) {
+		getHandleManager<TCompVideo>()->updateAll(dt);
+	}
+	else if (GameController->GetGameState() == CGameController::RUNNING) {
 		// May need here a switch to update wich player controller takes the action - possession rulez
 		if (!GameController->IsCinematic()) {
 			getHandleManager<player_controller>()->updateAll(dt);
-			getHandleManager<player_controller_speedy>()->updateAll(dt);
 			getHandleManager<player_controller_mole>()->updateAll(dt);
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
@@ -678,8 +568,6 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<bt_scientist>()->updateAll(dt);
 			getHandleManager<ai_cam>()->updateAll(dt);
 			getHandleManager<workbench_controller>()->updateAll(dt);
-			getHandleManager<bt_speedy>()->updateAll(dt);
-			getHandleManager<water_controller>()->updateAll(dt);
 			getHandleManager<bt_guard>()->updateAll(dt);
 		}
 		getHandleManager<CStaticBomb>()->updateAll(dt);
@@ -725,13 +613,17 @@ void CEntitiesModule::update(float dt) {
 		TCompSkeleton* player_skeleton = player_entity->get<TCompSkeleton>();
 		player_skeleton->update(dt);
 	}
+
+	//Gui
+	getHandleManager<TCompGuiCursor>()->updateAll(dt);
+	getHandleManager<TCompGuiButton>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {
 	// for each manager
 	// if manager has debug render active
 	// manager->renderAll()
-	if (io->keys['N'].isPressed() && io->keys[VK_CONTROL].isPressed()) {
+	if (controller->isRenderDebugComboButtonPressed()) {
 		SBB::readNavmesh().render();
 	}
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
@@ -777,27 +669,6 @@ void CEntitiesModule::renderInMenu() {
 		ImGui::TreePop();
 	}
 	ImGui::End();
-}
-
-void CEntitiesModule::recalcNavmesh() {
-	// GENERATE NAVMESH
-	CNavmesh nav = SBB::readNavmesh();
-	nav.build(salaloc);
-	SBB::postNavmesh(nav);
-	SBB::postBool(sala, true);
-}
-
-void CEntitiesModule::readNavmesh() {
-	// GENERATE NAVMESH
-	CNavmesh nav = SBB::readNavmesh();
-	bool recalc = !nav.reload(salaloc);
-	if (recalc) {
-		recalcNavmesh();
-	}
-	else {
-		SBB::postNavmesh(nav);
-		SBB::postBool("navmesh", true);
-	}
 }
 
 void CEntitiesModule::fixedUpdate(float elapsed)

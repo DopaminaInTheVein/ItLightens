@@ -123,6 +123,8 @@ fn parseCharController parent charController = (
 -- PHYSX --
 -------------
 fn _parse_physx = (
+	if _xml_sufix == "ui_scene" then (return false)
+	
 	-- Character Controller?
 	local charController = findHelper "CharController"
 	if charController != undefined then (

@@ -107,8 +107,12 @@ fn getEditableProps obj = (
 -- Buscar Helpers
 ---------------------------------------------------------
 fn findHelper tHelper = (
+	return findHelperIn _parsingObject tHelper
+)
+
+fn findHelperIn obj tHelper = (
 	local res = undefined
-	for child in _parsingObject.children do (
+	for child in obj.children do (
 		if ( (getUserProp child "typeHelper") == tHelper ) then (
 			res = child
 			exit
@@ -231,4 +235,29 @@ fn assign_room_name_to_selected rname = (
 		for obj in $ do (
 			assign_room_name_to obj rname
 		)
+)
+
+fn _is_ui_scene = (
+	for obj in $* do (
+		local h = getUserProp obj "typeHelper"
+		if (h as string) == "znear" then (return true)
+	)
+	return false
+)
+
+ --  Add TAGS --
+fn addTagTo obj tag = (
+	local current_tag = getUserProp obj "tags"
+	if current_tag == undefined then (current_tag = "")
+	setUserProp obj "tags" (current_tag + tag)
+)
+
+fn addTag tag = (
+	if (classof $) == ObjectSet then (
+		for obj in $ do (
+			addTagTo obj tag
+		)
+	) else (
+		addTagTo $ tag
+	)
 )

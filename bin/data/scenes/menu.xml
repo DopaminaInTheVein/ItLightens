@@ -1,0 +1,126 @@
+<entities>
+<entity
+   permanent="yes"
+   reload="yes">
+<tags
+   tags="menu gui_button clickable"/>
+<gui_button
+   width="1.13903"
+   height="0.640701"/>
+<name
+   name="btn_resume"/>
+<transform
+   pos="5.00018 -94.2417 8.99995"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu_game/btn_resume.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   permanent="yes"
+   reload="yes">
+<tags
+   tags="menu gui_cursor"/>
+<gui_cursor/>
+<name
+   name="cursor"/>
+<transform
+   pos="5.0 -95.0 9.5"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu_game/cursor.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   permanent="yes">
+<tags
+   tags="menu"/>
+<name
+   name="limits_edge"/>
+<transform
+   pos="5.0 -95.0 8.63545"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu_game/limits_edge.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   permanent="yes">
+<tags
+   tags="menu"/>
+<name
+   name="menu_background"/>
+<transform
+   pos="5.0 -95.0 8.54408"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu_game/menu_background.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   permanent="yes"
+   reload="yes">
+<tags
+   tags="menu gui_button clickable"/>
+<gui_button
+   width="1.13903"
+   height="0.640701"/>
+<name
+   name="btn_restart"/>
+<transform
+   pos="5.00018 -95.3151 8.99995"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu_game/btn_restart.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   permanent="yes"
+   reload="yes">
+<tags
+   tags="menu gui_button clickable"/>
+<gui_button
+   width="1.13903"
+   height="0.640701"/>
+<name
+   name="btn_back_title"/>
+<transform
+   pos="5.00018 -96.3884 8.99995"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu_game/btn_exit.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   permanent="yes"
+   reload="yes">
+<tags
+   tags="menu gui_button clickable"/>
+<gui_button
+   width="5.87608"
+   height="0.640701"/>
+<name
+   name="menu_title"/>
+<transform
+   pos="5.00018 -93.3036 8.99995"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu_game/menu_title.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+
+</entities>

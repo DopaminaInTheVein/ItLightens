@@ -82,6 +82,7 @@ public:
 
 	// load Xml
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated&);
 
 	void setBehaviour(ItLightensFilter::descObjectBehaviour tag, bool enabled);

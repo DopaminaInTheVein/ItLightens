@@ -78,6 +78,8 @@ public:
 		return "gui";
 	}
 
+	void addGuiElement(std::string prefab, VEC3 pos = VEC3(0.5f, 0.5f, 0.5f));
+
 	//Text Actions
 	void setActionAvailable(eAction action);
 

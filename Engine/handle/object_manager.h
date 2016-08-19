@@ -36,6 +36,12 @@ class CObjectManager : public CHandleManager
 		return o->load(atts);
 	}
 
+	bool save(CHandle h, std::ofstream& os, MKeyValue& atts) {
+		TObj* o = getAddrFromHandle(h);
+		assert(o);
+		return o->save(os, atts);
+	}
+
 public:
 
 	CObjectManager(const char* new_name) : objs(nullptr) {
@@ -74,7 +80,7 @@ public:
 				"a class of type %s"
 				, CHandleManager::getByType(h.getType())->getName()
 				, getName()
-			);
+				);
 			return nullptr;
 		}
 

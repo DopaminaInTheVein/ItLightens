@@ -34,6 +34,21 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
 	return true;
 };
 
+bool TCompGuidedCamera::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("points_size", num_points);
+	atts.put("velocity", velocity_default);
+	atts.put("default_dirs", default_dirs);
+	for (int i = 1; i <= num_points; i++) {
+		WPT_ATR_NAME(atrPos, i);
+		atts.put(atrPos, positions[i]);
+		LPT_ATR_NAME(atrLook, i);
+		atts.put(atrLook, targets[i]);
+	}
+
+	return true;
+}
+
 void TCompGuidedCamera::start(float speed) {
 	curPoint = 1;
 	factor = 0.0f;
@@ -78,7 +93,7 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMai
 	if (curPoint > positions.size() - 2) {
 		finish = true;
 	}
-	if (io->keys['Q'].becomesPressed()) {
+	if (controller->IsBackPressed()) {
 		CHandle me = CHandle(this).getOwner();
 		CEntity* eMe = me;
 		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicSkipped, std::string(eMe->getName())), CHandle(this).getOwner();

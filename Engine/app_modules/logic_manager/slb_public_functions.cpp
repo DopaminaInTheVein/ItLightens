@@ -7,6 +7,7 @@
 #include "components/entity_parser.h"
 #include "components/comp_charactercontroller.h"
 #include "components/comp_life.h"
+#include "components/comp_video.h"
 #include "logic/bt_guard.h"
 #include "logic/bt_scientist.h"
 #include "logic/pila_container.h"
@@ -395,6 +396,15 @@ void SLBHandleGroup::removePhysics() {
 	}
 }
 
+// Remove physics to the group
+void SLBHandleGroup::destroy() {
+	for (auto h : handle_group) {
+		if (h.isValid()) {
+			h.destroy();
+		}
+	}
+}
+
 // camera control in LUA
 void SLBCamera::getCamera() {
 	camera_h = tags_manager.getFirstHavingTag("camera_main");
@@ -484,6 +494,34 @@ void SLBCamera::fadeOut(float speed) {
 	fx->FadeOut();
 }
 
+// Data
+SLBData::SLBData()
+{
+	file_name = "data/data.json";
+	data = readIniAtrData(file_name, CApp::get().getCurrentRealLevel());
+}
+float SLBData::getFloat(const char* key)
+{
+	return data[std::string(key)];
+}
+
+bool SLBData::getBool(const char* key)
+{
+	return data[std::string(key)] != 0.f;
+}
+void SLBData::putFloat(const char* key, float value)
+{
+	data[std::string(key)] = value;
+}
+void SLBData::putBool(const char* key, bool value)
+{
+	data[std::string(key)] = value ? 1.f : 0.f;
+}
+void SLBData::write()
+{
+	writeIniAtrData(file_name, CApp::get().getCurrentRealLevel(), data);
+}
+
 // public generic functions
 void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	// create the new command
@@ -539,6 +577,28 @@ void SLBPublicFunctions::playVoice(const char* voice_route) {
 
 void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 	sound_manager->playAmbient(std::string(ambient_route));
+}
+
+void SLBPublicFunctions::playVideo(const char* video_route) {
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+
+	auto hm1 = CHandleManager::getByName("name");
+	CHandle new_hn = hm1->createHandle();
+	MKeyValue atts1;
+	atts1.put("name", "play_video");
+	new_hn.load(atts1);
+	entity->add(new_hn);
+
+	auto hm3 = CHandleManager::getByName("video_player");
+	CHandle new_hl = hm3->createHandle();
+	MKeyValue atts3;
+	atts3["file"] = video_route;
+	new_hl.load(atts3);
+	entity->add(new_hl);
+	TCompVideo * new_comp = new_hl;
+	new_comp->init();
 }
 
 void SLBPublicFunctions::playerRoom(int newRoom) {
@@ -671,6 +731,23 @@ void SLBPublicFunctions::launchVictoryState() {
 
 void SLBPublicFunctions::loadLevel(const char* level_name) {
 	CApp::get().changeScene(level_name);
+}
+
+void SLBPublicFunctions::saveLevel() {
+	CApp::get().saveLevel();
+}
+
+void SLBPublicFunctions::loadEntities(const char* file_name) {
+	CApp::get().loadEntities(file_name);
+}
+
+void SLBPublicFunctions::resume() {
+	controller->ChangeMouseState(true);
+	GameController->SetGameState(CGameController::RUNNING);
+}
+
+void SLBPublicFunctions::exit() {
+	CApp::get().exitGame();
 }
 
 //test

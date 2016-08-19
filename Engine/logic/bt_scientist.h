@@ -3,7 +3,6 @@
 
 #include "bt_poss.h"
 #include "sbb.h"
-#include "ai_water.h"
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
 #include "components/entity.h"
@@ -109,6 +108,7 @@ public:
 	void update(float elapsed);
 	void readIniFileAttr();
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	//conditions
 	bool playerStunned();
 	bool workbenchAvailable();

@@ -117,7 +117,7 @@ void inline CGuiModule::setUpdater(int state, screenUpdater updater)
 void CGuiModule::update(float dt)
 {
 	toogleEnabled();
-	callUpdater(GameController->GetGameState(), dt);
+	//callUpdater(GameController->GetGameState(), dt);
 }
 
 bool CGuiModule::forcedUpdate()
@@ -126,7 +126,7 @@ bool CGuiModule::forcedUpdate()
 }
 
 void CGuiModule::toogleEnabled() {
-	if (io->keys[VK_F1].becomesPressed()) {
+	if (controller->changegui()) {
 		enabled = !enabled;
 	}
 }
@@ -142,7 +142,7 @@ void CGuiModule::updateDefault(float dt) {}
 // ----- Update On Play ----- //
 void CGuiModule::updateOnPlay(float dt)
 {
-	if (io->keys['P'].becomesPressed()) {
+	if (controller->isStopGameButtonPressed()) {
 		GameController->SetGameState(CGameController::STOPPED);
 	}
 	hudPlayer->update(dt);
@@ -151,7 +151,7 @@ void CGuiModule::updateOnPlay(float dt)
 
 // ----- Update On Stop ----- //
 void CGuiModule::updateOnStop(float dt) {
-	if (io->keys['P'].becomesPressed()) {
+	if (controller->isStopGameButtonPressed()) {
 		GameController->SetGameState(CGameController::RUNNING);
 	}
 }
@@ -166,21 +166,21 @@ void CGuiModule::updateOnMenu(float dt) {
 
 // ----- Update On Dead ----- //
 void CGuiModule::updateOnDead(float dt) {
-	if (io->keys[VK_RETURN].becomesPressed()) {
+	if (controller->IsPausePressed()) {
 		GameController->SetGameState(CGameController::RUNNING);
 		CApp::get().restartLevelNotify();
 	}
-	else if (io->keys[VK_ESCAPE].becomesPressed()) {
+	else if (controller->IsBackPressed()) {
 		CApp::get().exitGame();
 	}
 }
 
 // ----- Update On Victory ----- //
 void CGuiModule::updateOnVictory(float dt) {
-	if (io->keys[VK_RETURN].becomesPressed()) {
+	if (controller->IsPausePressed()) {
 		CApp::get().restartLevelNotify();
 	}
-	else if (io->keys[VK_ESCAPE].becomesPressed()) {
+	else if (controller->IsBackPressed()) {
 		GameController->SetGameState(CGameController::RUNNING);
 		CApp::get().exitGame();
 	}
@@ -189,7 +189,7 @@ void CGuiModule::updateOnVictory(float dt) {
 // ----------------------------------- RENDER MODULE ----------------------------------- //
 void inline CGuiModule::callRender(int state)
 {
-	(this->*screenRenders[state])();
+	//(this->*screenRenders[state])();
 }
 
 void CGuiModule::render() {
@@ -272,4 +272,18 @@ void CGuiModule::renderOnMenu() {
 void CGuiModule::stop() {
 	dbg("GUI module stopped");
 	//ImGui_ImplDX11_Shutdown(); <-- Ya lo hace el modulo de ImGui!
+}
+
+//------------------------------------------------------------------------------------//
+void CGuiModule::addGuiElement(std::string prefab, VEC3 pos)
+{
+	CHandle h = createPrefab(prefab);
+	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
+	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
+	VEC3 min_ortho = ui_cam->getMinOrtho();
+	VEC3 max_ortho = ui_cam->getMaxOrtho();
+	VEC3 new_pos = min_ortho + (max_ortho - min_ortho) * pos;
+	GET_COMP(tmx, h, TCompTransform);
+	tmx->setPosition(new_pos);
+	dbg("gui_element created\n");
 }

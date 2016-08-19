@@ -321,6 +321,8 @@ public:
 	void render();
 	void renderInMenu();
 	bool load(MKeyValue& atts);
+	std::string getKpTypeStr(bt_guard::KptType type);
+	bool save(std::ofstream& os, MKeyValue& atts);
 
 	//Cambio Malla
 	//void ChangePose(string new_pose_route);

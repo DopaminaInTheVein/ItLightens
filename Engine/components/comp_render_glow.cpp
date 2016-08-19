@@ -34,19 +34,23 @@ struct TBlurStep {
   }
 
   // ---------------------
-  void applyBlur( float dx, float dy ) {
+  void applyBlur( float dx, float dy, const CRenderTechnique* technique) {
 
     shader_ctes_blur.blur_step.x = (float) dx / (float) xres;
     shader_ctes_blur.blur_step.y = (float) dy / (float) yres;
     // Box filter 
     shader_ctes_blur.uploadToGPU();
 
-    tech->activate();
+	if (technique)
+		technique->activate();
+	else
+		tech->activate();
+
     mesh->activateAndRender();
   }
 
   // ---------------------
-  CTexture* apply(CTexture* input, float global_distance, VEC4 distances, VEC4 weights ) {
+  CTexture* apply(CTexture* input, float global_distance, VEC4 distances, VEC4 weights, const CRenderTechnique* technique) {
 
     float normalization_factor = 
         1 * weights.x 
@@ -68,11 +72,11 @@ struct TBlurStep {
 
     rt_half_y->activateRT();
     input->activate(TEXTURE_SLOT_DIFFUSE);
-    applyBlur( 0, global_distance);
+    applyBlur( 0, global_distance, technique);
 
     rt_output->activateRT();
     rt_half_y->activate(TEXTURE_SLOT_DIFFUSE);
-    applyBlur(global_distance, 0 );
+    applyBlur(global_distance, 0, technique);
 
     return rt_output;
   }
@@ -174,7 +178,7 @@ bool TCompRenderGlow::load(MKeyValue& atts) {
   return is_ok;
 }
 
-CTexture* TCompRenderGlow::apply( CTexture* input ) {
+CTexture* TCompRenderGlow::apply( CTexture* input, const CRenderTechnique* technique ) {
   if (!enabled)
     return input;
   CTraceScoped scope("CompGlow");
@@ -184,7 +188,7 @@ CTexture* TCompRenderGlow::apply( CTexture* input ) {
   for (auto s : steps) {
     if (--nsteps_to_apply < 0)
       break;
-    output = s->apply(input, global_distance, distance_factors, weights);
+    output = s->apply(input, global_distance, distance_factors, weights, technique);
     input = output;
   }
 

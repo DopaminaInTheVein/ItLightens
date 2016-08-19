@@ -1,6 +1,5 @@
 #include "mcv_platform.h"
 #include "sound_manager.h"
-#include "app_modules/io/io.h"
 #include "utils/utils.h"
 
 extern CSoundManagerModule* sound_manager = nullptr;
@@ -11,7 +10,6 @@ FMOD_RESULT F_CALLBACK markerCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD
 bool music_playing = true;
 
 bool CSoundManagerModule::start() {
-
 	/*
 	Create a System object and initialize
 	*/
@@ -214,6 +212,4 @@ FMOD_RESULT F_CALLBACK markerCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD
 
 	return FMOD_OK;
 }
-
-
 

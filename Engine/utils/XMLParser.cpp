@@ -165,6 +165,10 @@ void MKeyValue::put(const char *what, int value) {
 	putKey(*this, what, value);
 }
 
+void MKeyValue::put(const char *what, std::string value) {
+	putKey(*this, what, value);
+}
+
 void MKeyValue::put(const char *what, VEC3 value) {
 	putPoint(*this, what, value);
 }
@@ -178,8 +182,6 @@ void MKeyValue::put(const char *what, float value) {
 void MKeyValue::put(const char *what, VEC4 value) {
 	putQuat(*this, what, value);
 }
-
-
 
 float MKeyValue::getFloat(const char *what, float default_value) const {
 	const_iterator it = find(what);
@@ -268,6 +270,8 @@ void MKeyValue::writeAttributes(std::ostream &os) const {
 		os << "\t" << i->first << "=\"" << i->second << "\"\n";
 		++i;
 	}
+	auto a = const_cast<MKeyValue*>(this);
+	a->clear();
 }
 
 void MKeyValue::writeStartElement(std::ostream &os, const char *what) const {
@@ -329,7 +333,6 @@ bool CXMLParser::xmlParseFile(const std::string &filename) {
 	std::ifstream is(filename.c_str());
 	if (!is.is_open()) {
 		xml_error = "XML File " + filename + " not found";
-		assert(false);
 		return false;
 	}
 	return xmlParseStream(is, filename.c_str());
@@ -363,7 +366,7 @@ bool CXMLParser::xmlParseStream(std::istream &is, const char *stream_name) {
 				XML_ErrorString(XML_GetErrorCode(parser)),
 				XML_GetCurrentLineNumber(parser),
 				stream_name ? stream_name : "<UNNAMED>"
-				);
+			);
 			xml_error = std::string(msg);
 			done = false;
 			assert(done);

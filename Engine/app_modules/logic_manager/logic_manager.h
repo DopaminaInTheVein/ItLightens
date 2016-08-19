@@ -101,6 +101,11 @@ public:
 		OnVictory,
 		OnRestartLevel,
 		OnLoadedLevel,
+		OnSavedLevel,
+
+		//GUI
+		OnClicked,
+		OnPause,
 	};
 
 	CLogicManagerModule();
@@ -131,6 +136,7 @@ public:
 	void bindHandle(SLB::Manager& m);
 	void bindHandleGroup(SLB::Manager& m);
 	void bindCamera(SLB::Manager& m);
+	void bindData(SLB::Manager& m);
 	void bindPublicFunctions(SLB::Manager& m);
 	CHandle getCaller() { return caller_handle; }
 };

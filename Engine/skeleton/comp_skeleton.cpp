@@ -17,7 +17,7 @@ int TCompSkeleton::updated_skeletons = 0;
 
 // --------------------------------------------------
 bool TCompSkeleton::load(MKeyValue& atts) {
-	std::string res_name = atts.getString("model", "");   // warrior.skeleton
+	res_name = atts.getString("model", "");   // warrior.skeleton
 	resource_skeleton = Resources.get(res_name.c_str())->as<CSkeleton>();
 	auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
 	model = new CalModel(non_const_skel->getCoreModel());
@@ -25,6 +25,11 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 	// To get the bones updated right now, otherwis, trying to render will find all bones collapsed in the zero
 	model->update(0.f);
 
+	return true;
+}
+bool TCompSkeleton::save(std::ofstream& os, MKeyValue& atts)
+{
+	atts.put("model", res_name);
 	return true;
 }
 
@@ -144,7 +149,7 @@ void TCompSkeleton::renderInMenu() {
 			, a->getWeight()
 			, a->getTime()
 			, a->getCoreAnimation()->getDuration()
-		);
+			);
 	}
 
 	for (auto a : mixer->getAnimationCycle()) {
@@ -153,7 +158,7 @@ void TCompSkeleton::renderInMenu() {
 			, a->getState()
 			, a->getWeight()
 			, a->getCoreAnimation()->getDuration()
-		);
+			);
 	}
 }
 

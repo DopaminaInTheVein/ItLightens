@@ -17,6 +17,8 @@ struct TCompCamera : public CCamera, public TCompBase {
 	void renderInMenu();
 	void updateFromEntityTransform(CEntity* e_owner);
 	void onGetViewProj(const TMsgGetCullingViewProj& msg);
+	VEC3  getMinOrtho() const;
+	VEC3  getMaxOrtho() const;
 };
 
 #endif

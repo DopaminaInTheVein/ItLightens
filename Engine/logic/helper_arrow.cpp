@@ -10,6 +10,15 @@ bool LogicHelperArrow::load(MKeyValue& atts)
 	return true;
 }
 
+void LogicHelperArrow::init()
+{
+	CHandle player = tags_manager.getFirstHavingTag("player");
+	TMsgSetTarget msg;
+	msg.target = player;
+	msg.who = PLAYER;
+	CHandle(this).getOwner().sendMsg(msg);
+}
+
 void LogicHelperArrow::onSetTarget(const TMsgSetTarget & tasr)
 {
 	target = tasr.target;
@@ -17,7 +26,6 @@ void LogicHelperArrow::onSetTarget(const TMsgSetTarget & tasr)
 
 void LogicHelperArrow::update(float elapsed) {
 	PROFILE_FUNCTION("helper arrow: update");
-	std::vector<CHandle> generators = SBB::readHandlesVector("generatorsHandles");
 	CEntity * targeteRaigin = tags_manager.getFirstHavingTag(getID("raijin"));
 	CEntity * targete = target;
 	if (!targete) return;
@@ -37,7 +45,7 @@ void LogicHelperArrow::update(float elapsed) {
 	ownpos.y += 1.8f;
 	float distance = 99999999.999f;
 	VEC3 nearGen;
-	for (CHandle gen : generators) {
+	for (CHandle gen : TCompGenerator::all_generators) {
 		GET_COMP(g, gen, TCompGenerator);
 		if (g  && g->isUsable()) {
 			CEntity * gene = gen;

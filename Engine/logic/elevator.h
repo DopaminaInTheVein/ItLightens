@@ -18,6 +18,7 @@ class elevator : public TCompBase {
 	float speedDown;
 	float epsilonTarget;
 	float lastSpeed = 0.0f;
+	int state_init = -1;
 
 	eElevatorState prevState;
 
@@ -36,6 +37,7 @@ public:
 	void update(float elapsed);
 	void onElevatorAction(const TMsgActivate&);
 	bool load(MKeyValue& atts);
+	bool save(std::ofstream& os, MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated&);
 };
 #endif

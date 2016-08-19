@@ -9,7 +9,7 @@
 #include "components/comp_render_static_mesh.h"
 #include "components/comp_msgs.h"
 #include "render/static_mesh.h"
-#include "app_modules/io/io.h"
+#include "input/input_wrapper.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "app_modules/gui/gui.h"
 
@@ -277,7 +277,7 @@ void player_controller::Jump()
 			-curSpeed.x * 0.1f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
 			-curSpeed.z * 0.1f
-		);
+			);
 		//--------------------------------------
 	}
 	else {
@@ -310,7 +310,7 @@ void player_controller::Jumping()
 		SET_ANIM_PLAYER(AST_IDLE);
 	}
 
-	if ((io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) && gravity_active) {
+	if ((controller->IsJumpButtonPressed()) && gravity_active) {
 		if (gravity_active) {
 			cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 			energyDecreasal(jump_energy);
@@ -329,7 +329,7 @@ void player_controller::Falling()
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	SET_ANIM_PLAYER(AST_FALL);
-	if ((io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed()) && gravity_active) {
+	if ((controller->IsJumpButtonPressed()) && gravity_active) {
 		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 		energyDecreasal(jump_energy);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
@@ -561,7 +561,7 @@ void player_controller::UpdateInputActions()
 	//	pol_state = NEUTRAL;
 	//}
 	//else {
-	if ((io->keys['1'].becomesPressed() || io->joystick.button_L.isPressed())) {
+	if ((controller->IsMinusPolarityPressed())) {
 		if (pol_state == PLUS) {
 			pol_state = NEUTRAL;
 			cc->SetGravity(true);
@@ -572,7 +572,7 @@ void player_controller::UpdateInputActions()
 			dbg("POLARIDAD POSITIVA!\n");
 		}
 	}
-	else if ((io->keys['2'].becomesPressed() || io->joystick.button_R.isPressed())) {
+	else if ((controller->IsPlusPolarityPressed())) {
 		if (pol_state == MINUS) {
 			pol_state = NEUTRAL;
 			cc->SetGravity(true);
@@ -599,7 +599,7 @@ void player_controller::UpdateInputActions()
 		pol_state_prev = pol_state;
 	}
 
-	if ((io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()) && nearStunable()) {
+	if ((controller->IsActionButtonPessed()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado
 		CEntity* ePoss = currentStunable;
@@ -621,7 +621,7 @@ void player_controller::UpdateActionsTrigger() {
 	PROFILE_FUNCTION("player_controller: update Actions trigger");
 
 	if (canRecharge()) {
-		if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
+		if (controller->IsActionButtonPessed()) {
 			rechargeEnergy();
 			SET_ANIM_PLAYER_P(AST_RECHARGE);
 			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
@@ -631,13 +631,13 @@ void player_controller::UpdateActionsTrigger() {
 		}
 	}
 	else if (canPassWire) {
-		if (io->keys['E'].becomesPressed()) {
+		if (controller->IsActionButtonPessed()) {
 			cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(endPointWire));
 			logic_manager->throwEvent(logic_manager->OnUseCable, "");
 		}
 	}
 	else if (canRechargeDrone) {
-		if (io->keys['E'].becomesPressed()) {
+		if (controller->IsActionButtonPessed()) {
 			TMsgActivate msg;
 			CEntity *drone_e = drone;
 			drone_e->sendMsg(msg);
@@ -648,7 +648,7 @@ void player_controller::UpdateActionsTrigger() {
 		}
 	}
 	else if (canNotRechargeDrone) {
-		if (io->keys['E'].becomesPressed()) {
+		if (controller->IsActionButtonPessed()) {
 			logic_manager->throwEvent(logic_manager->OnNotRechargeDrone, "");
 		}
 		else {
@@ -663,7 +663,7 @@ void player_controller::UpdatePossession() {
 	PROFILE_FUNCTION("update poss");
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
-		if (controlEnabled && (io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed())) {
+		if (controlEnabled && (controller->IsPossessionButtonPressed())) {
 			// Se avisa el ai_poss que ha sido pose\EDdo
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;
@@ -676,7 +676,7 @@ void player_controller::UpdatePossession() {
 			SBB::postBool("possMode", true);
 			TMsgSetTag msgTag;
 			msgTag.add = false;
-			msgTag.tag_id = getID("player");
+			msgTag.tag = "player";
 			compBaseEntity->sendMsg(msgTag);
 			msgTag.add = true;
 
@@ -827,7 +827,7 @@ void player_controller::UpdateOverCharge() {
 		float currentLife = getLife();
 
 		if (currentLife > evolution_limit) {
-			if (io->keys['E'].becomesPressed() || io->mouse.left.becomesPressed()) {
+			if (controller->IsActionButtonPessed()) {
 				startOverCharge();
 			}
 			else {
@@ -923,9 +923,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-			),
+				),
 			polarityForces.end()
-		);
+			);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}

@@ -14,7 +14,7 @@ struct TCompFadeScreen : public TCompBase {
 	float t_max_fade, t_max_fade_default;
 	float t_curr_fade;
 
-	void init();
+	void onCreate(const TMsgEntityCreated&);
 
 	void renderInMenu();
 	void update(float elapsed);
