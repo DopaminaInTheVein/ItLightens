@@ -58,7 +58,6 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-	p:play_looping_music("event:/OnGameStart")
 	p:load_entities("init")
 	p:exec_command("p:load_level(\"level_0\")", 2)
 	--p:load_entities("title")
@@ -71,7 +70,8 @@ end
 
 function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
-	p:play_voice("event:/OnGuardAttack")
+	h:getHandleCaller()	
+	p:play_3d_sound("event:/OnGuardAttack", pl:get_x(), pl:get_y(), pl:get_z(), h:get_x(), h:get_y(), h:get_z())
 end
 
 function OnGuardAttackEnd( reaction_time )

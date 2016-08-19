@@ -522,7 +522,7 @@ int bt_guard::actionPrepareToAbsorb() {
 	if (shoot_preparation_time > SHOOT_PREP_TIME) {
 		shoot_preparation_time = 0.f;
 		// calling OnGuardAttackEvent
-		logic_manager->throwEvent(logic_manager->OnGuardAttack, "");
+		logic_manager->throwEvent(logic_manager->OnGuardAttack, "", CHandle(this).getOwner());
 		return OK;
 	}
 	else {
