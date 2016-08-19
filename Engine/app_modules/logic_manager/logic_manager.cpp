@@ -423,7 +423,6 @@ void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
 		.set("teleport", &SLBPlayer::teleport)
 		.comment("Teleport player")
 		.param("Point name to teleport")
-
 		// basic coordinates functions
 		.set("get_x", &SLBPlayer::getPlayerX)
 		.comment("returns the X coordinate")
@@ -476,7 +475,6 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// get handle position function (object)
 		.set("get_pos", &SLBHandle::getPos)
 		.comment("Get the position of the NPC")
-
 		// basic coordinates functions
 		.set("get_x", &SLBHandle::getX)
 		.comment("returns the X coordinate")
@@ -634,9 +632,20 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("play_sound", &SLBPublicFunctions::playSound)
 		.comment("Executes the specified sound effect")
 		.param("Route of the sound")
+		// play 3d sound function
+		.set("play_3d_sound", &SLBPublicFunctions::play3dSound)
+		.comment("Executes the specified sound effect in a 3d position")
+		.param("string: Route of the sound")
+		.param("float: x coord of the sound")
+		.param("float: y coord of the sound")
+		.param("float: z coord of the sound")
 		// play music function
 		.set("play_music", &SLBPublicFunctions::playMusic)
 		.comment("Executes the specified music")
+		.param("Route of the music")
+		// play looping music function
+		.set("play_looping_music", &SLBPublicFunctions::playLoopingMusic)
+		.comment("Executes the specified music in an endless loop")
 		.param("Route of the music")
 		// play voice function
 		.set("play_voice", &SLBPublicFunctions::playVoice)

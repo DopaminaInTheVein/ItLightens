@@ -7,6 +7,9 @@ extern CSoundManagerModule* sound_manager = nullptr;
 
 CSoundManagerModule::CSoundManagerModule() {}
 
+FMOD_RESULT F_CALLBACK markerCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters);
+bool music_playing = true;
+
 bool CSoundManagerModule::start() {
 
 	/*
@@ -70,6 +73,9 @@ bool CSoundManagerModule::start() {
 
 void CSoundManagerModule::update(float dt) {
 	studio_system->update();
+
+	if (!music_playing)
+		music_instance->start();
 }
 
 void CSoundManagerModule::stop() {
@@ -101,9 +107,47 @@ bool CSoundManagerModule::playSound(std::string route) {
 	return false;
 }
 
+bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 sound_pos) {
+	Studio::EventInstance* sound_instance = NULL;
+	result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
+
+	if (result == FMOD_OK) {
+
+		// Position the listener at the player position
+		FMOD_3D_ATTRIBUTES attributes = { { 0 } };
+		attributes.position.x = player_pos.x;
+		attributes.position.y = player_pos.y;
+		attributes.position.z = player_pos.z;
+		attributes.forward.z = 1.0f;
+		attributes.up.y = -1.0f;
+		studio_system->setListenerAttributes(0, &attributes);
+
+		// Position the event correctly
+		attributes.position.x = sound_pos.x;
+		attributes.position.y = sound_pos.y;
+		attributes.position.z = sound_pos.z;
+		sound_instance->set3DAttributes(&attributes);
+
+		sound_instance->start();
+		sound_instance->release();
+
+		// Reset listener attributes
+		attributes.position.x = 0;
+		attributes.position.y = 0;
+		attributes.position.z = 0;
+		studio_system->setListenerAttributes(0, &attributes);
+		return true;
+	}
+
+	return false;
+}
+
 bool CSoundManagerModule::playMusic(std::string route) {
+
 	Studio::EventInstance* music_instance = NULL;
 	result = sounds_descriptions[std::string(route)]->createInstance(&music_instance);
+
+	music_instance->start();
 
 	if (result == FMOD_OK) {
 		music_instance->start();
@@ -111,6 +155,20 @@ bool CSoundManagerModule::playMusic(std::string route) {
 	}
 
 	return false;
+}
+
+bool CSoundManagerModule::playLoopingMusic(std::string route) {
+
+	result = sounds_descriptions[std::string(route)]->createInstance(&music_instance);
+
+	if (result == FMOD_OK) {
+		music_instance->setCallback(markerCallback, FMOD_STUDIO_EVENT_CALLBACK_STARTED | FMOD_STUDIO_EVENT_CALLBACK_STOPPED);
+		music_instance->start();
+		return true;
+	}
+
+	return false;
+
 }
 
 bool CSoundManagerModule::playVoice(std::string route) {
@@ -138,5 +196,24 @@ bool CSoundManagerModule::playAmbient(std::string route) {
 
 	return false;
 }
+
+// Callback from Studio - Remember these callbacks will occur in the Studio update thread, NOT the game thread.
+FMOD_RESULT F_CALLBACK markerCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters)
+{
+	if (type == FMOD_STUDIO_EVENT_CALLBACK_STARTED)
+	{
+		music_playing = true;
+	}
+	else if (type == FMOD_STUDIO_EVENT_CALLBACK_STOPPED)
+	{
+		music_playing = false;
+	}
+	else {
+		//Nothing
+	}
+
+	return FMOD_OK;
+}
+
 
 

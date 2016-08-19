@@ -9,6 +9,7 @@
 #define NOMINMAX
 #define _WIN32_WINNT      _WIN32_WINNT_WIN7
 #define MAX_ENTITIES 1000
+#define Common_vsnprintf vsnprintf
 
 #define SAFE_RELEASE(p)  if (p) p->Release(), p = nullptr
 

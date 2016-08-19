@@ -126,7 +126,9 @@ public:
 	void print(const char* to_print);
 	void setControlEnabled(int);
 	void playSound(const char* sound_route);
+	void play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z);
 	void playMusic(const char* music_route);
+	void playLoopingMusic(const char* music_route);
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);
 	void playerRoom(int newRoom);

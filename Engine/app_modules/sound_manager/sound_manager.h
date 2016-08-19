@@ -29,6 +29,8 @@ class CSoundManagerModule : public IAppModule
 	// Sound descriptors
 	Studio::EventDescription								**events_array[4];
 	std::map<std::string, Studio::EventDescription*>		sounds_descriptions;
+	// Global sound instances
+	Studio::EventInstance*									music_instance = NULL;
 
 public:
 
@@ -51,9 +53,13 @@ public:
 	}
 
 	bool playSound(std::string);
+	bool play3dSound(std::string, VEC3 player_pos, VEC3 sound_pos);
 	bool playMusic(std::string);
+	bool playLoopingMusic(std::string);
 	bool playVoice(std::string);
 	bool playAmbient(std::string);
+
+	//FMOD_RESULT F_CALLBACK markerCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters);
 
 };
 

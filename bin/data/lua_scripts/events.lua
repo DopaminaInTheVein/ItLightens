@@ -4,6 +4,7 @@ SLB.using( SLB )
 
 p = Public( )
 h = Handle()
+pl = Player()
 cam = Camera()
 
 function CallFunction(func)
@@ -57,7 +58,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
-    p:play_music("event:/OnGameStart")
+    p:play_looping_music("event:/OnGameStart")
 	--triggerGuardFormation();
 	--p:exec_command( "triggerGuardFormation();", 15 )
 	cam:run_cinematic("CinematicIntro", 10)
@@ -232,8 +233,8 @@ end
 
 function OnDetected( distance, posx, posy, posz )
 	p:print( "OnDetected: "..distance.." "..posx.." "..posy.." "..posz.."\n" )
-	p:play_sound("event:/OnDetected")
-	h:getHandleCaller()
+	h:getHandleCaller()	
+	p:play_3d_sound("event:/OnDetected", pl:get_x(), pl:get_y(), pl:get_z(), h:get_x(), h:get_y(), h:get_z())
 	name_guard = h:get_name()
 	CallFunction("OnDetected_"..name_guard)
 	--p:character_globe("Intruder detected!", distance, posx, posy, posz)
