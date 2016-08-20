@@ -97,7 +97,7 @@ class bt_guard : public bt, public TCompBase
 	//____TIMER_DECLARE_(timerDebug, 2.0f);
 
 	//KeyPoints
-	enum KptType { Seek, Look };
+	enum KptType { Seek = 0, Look };
 	struct KeyPoint {
 		KptType type;
 		VEC3 pos;

@@ -1558,7 +1558,7 @@ bool bt_guard::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-			);
+		);
 	}
 	noShoot = atts.getBool("noShoot", false);
 
@@ -1621,6 +1621,12 @@ void bt_guard::renderInMenu() {
 	ImGui::SliderFloat3("Offset Starting Shot", &SHOT_OFFSET.x, 0.f, 2.f);
 	if (bt::current) ImGui::Text("NODE: %s", bt::current->getName().c_str());
 	else ImGui::Text("NODE: %s", "???\n");
+	ImGui::Text("Next patrol: %d, Type: %s, Pos: (%f,%f,%f), Wait: %f"
+		, curkpt
+		, keyPoints[curkpt].type == KptType::Seek ? "Seek" : "Look"
+		, VEC3_VALUES(keyPoints[curkpt].pos)
+		, keyPoints[curkpt].time);
+	//ImGui::Text("Esto tira? %d", curkpt);
 }
 
 /**************/

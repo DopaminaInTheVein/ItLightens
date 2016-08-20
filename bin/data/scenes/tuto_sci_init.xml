@@ -40,41 +40,7 @@
 <name
    name="guard_1"/>
 <transform
-   pos="71.4503 0.13 -5.19"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/guard/guard.skeleton"/>
-<render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
-<skeleton_ik/>
-<abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.3"
-   height="1.8"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="AI AI_guard"/>
-<bt_guard
-   kpt_size="2"
-   kpt0_type="seek"
-   kpt0_pos="70.7198 0.0222022 0.808846"
-   kpt0_wait="2"
-   kpt1_type="look"
-   kpt1_pos="61.8219 0 -2.93604"
-   kpt1_wait="2"
-   jurisdiction="71.4774 0.08 -0.606354"
-   jurRadius="5.0"/>
-<skc_guard/>
-<skeleton_lookat/>
-<name
-   name="guard_2"/>
-<transform
-   pos="71.4774 0.08 -0.606354"
+   pos="73.6471 0.13 -5.91046"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -117,7 +83,6 @@
 
 </entity>
 <entity
-   permanent="yes"
    reload="yes">
 <tags
    tags="camera_main"/>
@@ -133,25 +98,6 @@
    name="camController_1"/>
 <transform
    pos="48.0799 1.9 -1.25342"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="1.0 0.31 1.0"/>
-<tags
-   tags="trigger"/>
-<trigger_lua
-   action="activate"/>
-<name
-   name="tOpenDoor"/>
-<transform
-   pos="74.8028 7.42111 -1.67456"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

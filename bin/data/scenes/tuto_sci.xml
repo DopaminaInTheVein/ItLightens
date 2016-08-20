@@ -77,13 +77,13 @@
 <entity>
 <tags/>
 <name
-   name="nivel"/>
+   name="paredes"/>
 <transform
    pos="73.935 -0.0177512 -1.20231"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/nivel.static_mesh"/>
+   name="static_meshes/tuto_sci/paredes.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
