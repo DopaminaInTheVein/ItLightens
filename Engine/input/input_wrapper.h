@@ -62,7 +62,7 @@ public:
 	DECL_INPUT_DEBUG(isCameraReleaseButtonPressed);
 	DECL_INPUT_DEBUG(isReleaseButtonPressed);
 	DECL_INPUT_DEBUG(isTeleportComboButtonPressed);
-	DECL_INPUT_DEBUG(isRenderDebugComboButtonPressed);
+	DECL_INPUT_DEBUG(isRenderDebugComboButtonPressing);
 
 	DECL_INPUT_DEBUG(isToogleCommandLogButtonPressed);
 	DECL_INPUT_DEBUG(isToogleConsoleLoguttonPressed);
@@ -70,7 +70,7 @@ public:
 	DECL_INPUT_DEBUG(isStopGameButtonPressed);
 
 	DECL_INPUT_DEBUG(isSlowButtonPressed);
-	DECL_INPUT_DEBUG(isDrawLineButtonPressed);
+	DECL_INPUT_DEBUG(isDrawLineButtonPressing);
 	DECL_INPUT_DEBUG(isTestSSAOButoonPressed);
 	DECL_INPUT_DEBUG(isEspecialVisionButtonPressed);
 	DECL_INPUT_DEBUG(isEditorLightsButtonPressed);

@@ -122,8 +122,8 @@ bool CInputWrapper::isCameraReleaseButtonPressed() {
 bool CInputWrapper::isTeleportComboButtonPressed() {
 	return io->keys['T'].becomesPressed() && io->keys[VK_CONTROL].isPressed();
 }
-bool CInputWrapper::isRenderDebugComboButtonPressed() {
-	return io->keys['N'].becomesPressed() && io->keys[VK_CONTROL].isPressed();
+bool CInputWrapper::isRenderDebugComboButtonPressing() {
+	return io->keys['N'].isPressed() && io->keys[VK_CONTROL].isPressed();
 }
 bool CInputWrapper::isReleaseButtonPressed() {
 	return io->keys[220].becomesPressed();
@@ -143,8 +143,8 @@ bool CInputWrapper::isStopGameButtonPressed() {
 bool CInputWrapper::isSlowButtonPressed() {
 	return io->keys['M'].becomesPressed();
 }
-bool CInputWrapper::isDrawLineButtonPressed() {
-	return io->keys['N'].becomesPressed();
+bool CInputWrapper::isDrawLineButtonPressing() {
+	return io->keys['N'].isPressed();
 }
 bool CInputWrapper::isTestSSAOButoonPressed() {
 	return io->keys[VK_F3].becomesPressed();

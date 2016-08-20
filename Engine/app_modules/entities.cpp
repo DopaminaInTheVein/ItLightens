@@ -623,7 +623,7 @@ void CEntitiesModule::render() {
 	// for each manager
 	// if manager has debug render active
 	// manager->renderAll()
-	if (controller->isRenderDebugComboButtonPressed()) {
+	if (controller->isRenderDebugComboButtonPressing()) {
 		SBB::readNavmesh().render();
 	}
 	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();

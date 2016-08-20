@@ -288,6 +288,7 @@ public:
 		Debug->DrawLine(t->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
 		Debug->DrawLine(t->getPosition(), t->getPosition() + t->getFront(), VEC3(1, 1, 0));
 		Debug->DrawLine(t->getPosition(), t->getPosition() + t->getLeft(), VEC3(1, 1, 0));
+		if (curkpt >= 0) Debug->DrawLine(getTransform()->getPosition(), keyPoints[curkpt].pos + VEC3_UP, VEC3(1.f, 1.f, 1.f));
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
 			if (t_reduceStats <= 0.0f) {

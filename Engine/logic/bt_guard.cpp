@@ -1213,22 +1213,22 @@ bool bt_guard::turnTo(VEC3 dest, bool wide) {
 	float dbg_yawBefore = yaw;
 
 	// Cuanto necesito girar?
-	float deltaYaw = getTransform()->getDeltaYawToAimTo(dest);
+	float delta_yaw = getTransform()->getDeltaYawToAimTo(dest);
 
 	// Necesito girar menos que epsilon? --> Termino giro!
-	if (abs(deltaYaw) < angle_epsilon) {
+	if (abs(delta_yaw) < angle_epsilon) {
 		//dbg("No es necesario girar. Devuelvo true. (deltayaw = %f", deltaYaw);
 		return true;
 	}
 
 	// Ajusto deltayaw al maximo que puede girar el mequetrefe
 	float maxDeltaYaw = SPEED_ROT * getDeltaTime();
-	clampAbs_me(deltaYaw, maxDeltaYaw);
-	yaw += deltaYaw;
+	float delta_yaw_clamp = clampAbs(delta_yaw, maxDeltaYaw);
+	yaw += delta_yaw_clamp;
 	getTransform()->setAngles(yaw, pitch);
 
 	//Ha acabado el giro?
-	bool done = abs(deltaYaw) < angle_epsilon;
+	bool done = abs(delta_yaw) < angle_epsilon;
 	//dbg("Result giro. Yaw: %f --> %f, done = %d\n", dbg_yawBefore, yaw, done);
 
 	//DEBUG!
