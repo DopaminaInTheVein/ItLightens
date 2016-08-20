@@ -92,10 +92,12 @@ void PSGBuffer(
   , out float1 o_depth : SV_Target2
   , out float4 o_selfIlum : SV_Target3
   , out float4 o_speculars : SV_Target4
+  , out float4 o_glossiness : SV_Target5
   )
 {
   o_albedo = txDiffuse.Sample(samLinear, iTex0);
   o_speculars = txSpecular.Sample(samLinear, iTex0);
+  o_glossiness = float4(o_speculars.a, o_speculars.a, o_speculars.a, o_speculars.a);
   // Generar la matrix TBN usando la informacion interpolada
   // desde los 3 vertices del triangulo
   float3 T = normalize(iTangent.xyz);
@@ -162,21 +164,28 @@ if(NL > 1)
   float distance_att = 1. - saturate((d2L - LightInRadius) / (LightOutRadius - LightInRadius));
 
   float4 albedo = txDiffuse.Load(ss_load_coords);
-
+  float4 specular_color = txSpeculars.Load(ss_load_coords); 
+  float  glossiness = txGlossiness.Load(ss_load_coords).r;
+  
   // Calculo el vector E normalizado
   float3 E = normalize(CameraWorldPos.xyz - wPos);
 
-  float3 H = normalize(E + L)*NL;
+  float3 H = normalize(E + L);
   float  cos_beta = saturate(dot(N, H));
-  float  glossiness = 20.;
-  float  spec_amount = pow(cos_beta, glossiness);
+  //glossiness *= 10;
+  glossiness *= 255.0f/20.0f;
+
+  float spec_reflec = pow(cos_beta, 20);
+  float spec_amount = pow(cos_beta, glossiness);
+ 
+  //spec_amount += spec_reflec*glossiness;
   spec_amount *= distance_att;
   
   //spec_amount /= 2.0f;
 
   // Environment. incident_vector = -E
   float3 E_refl = reflect(-E, N);
-  //float3 env = txEnvironment.Sample(samLinear, E_refl).xyz;
+  float3 env = txDiffuse.Sample(samLinear, E_refl).xyz;
   
 	//if(NL < 1.0f)
 		//NL = 1.0f;
@@ -184,12 +193,18 @@ if(NL > 1)
   //noramlize light with intensity
   float3 lightCol = LightColor.xyz*LightColor.a;
   
+  
   if(color_ramp != 0.0f){
 	//lightCol *= lightWarp.xyz;
   }
   
-  spec_amount *= specular_force;
+  //spec_amount *= specular_force;
+  o_specular = spec_amount;
+  //o_specular += spec_reflec*specular_color/5.0f;
   //spec_amount *= 0;
+  
+  //if(length(specularForce) > 0.1f)
+	//o_specular = float4(1,1,1,1);
   
   float inv_shadows = NL*distance_att;
   if(inv_shadows > 1)
@@ -201,13 +216,13 @@ if(NL > 1)
   o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
   
   // Aportacion final de la luz es NL x color_luz x atenuacion
-  o_color.xyz = lightCol * NL * distance_att * albedo + spec_amount;
-  //o_color.xyz += env * 0.3;
+  o_color.xyz = lightCol * NL * distance_att * albedo + o_specular.xyz*specular_color;
+ 
+  //o_color.xyz += env * glossiness * 0.3;
   //o_color.xyz = E_refl.xyz;
   o_color.a = 1.;
   
   //o_color = float4(spec_amount, spec_amount, spec_amount, 1.0f);
-  o_specular = float4(spec_amount, spec_amount, spec_amount,1.0f);
   
   //o_color = float4(wPos, 1);
   
