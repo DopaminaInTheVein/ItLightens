@@ -122,7 +122,7 @@ void TCompCameraMain::update(float dt) {
 			TCompTransform *targett = target->get<TCompTransform>();
 			if (!targett) return;
 			VEC3 pos_target = targett->getPosition() + VEC3(0, cc->GetHeight(), 0);
-			float factor = 0.8f;
+			float max_factor = 0.8f;
 
 			bool colision = false;
 			float collisionDistanceToCam = 0.0f;
@@ -137,11 +137,11 @@ void TCompCameraMain::update(float dt) {
 				}
 				else if (molecontroller) {
 					colision = molecontroller->getEnabled();
-					factor = 0.89f;
+					max_factor = 0.89f;
 				}
 				else if (cientificocontroller) {
 					colision = cientificocontroller->getEnabled();
-					factor = 0.89f;
+					max_factor = 0.89f;
 				}
 				else {
 					return;
@@ -156,8 +156,8 @@ void TCompCameraMain::update(float dt) {
 				last_pos_camera = transform->getPosition();
 			}
 			else {
-				//VEC3 pos_cam = pos + (pos_target - pos)*factor;
-				VEC3 pos_cam = pos + (pos_target - pos) * ((collisionDistanceToCam + cc->GetRadius() / 2) / distanceToTarget);
+				float factor = fminf(max_factor, ((collisionDistanceToCam + cc->GetRadius() / 2) / distanceToTarget));
+				VEC3 pos_cam = pos + (pos_target - pos)*factor;
 				//pos_cam.y += cc->GetHeight();
 				this->smoothLookAt(pos_cam, pos_cam + transform->getFront(), getUpAux(), smoothCurrent);
 				last_pos_camera = transform->getPosition();
