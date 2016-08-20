@@ -12,15 +12,15 @@
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/prettywriter.h"
 
+#define VEC3_VALUES(name) name.x, name.y, name.z
+#define VEC4_VALUES(name) name.x, name.y, name.z, name.w
+
 #ifdef NDEBUG
 
 #define dbg(...)
 
 #else
 void		dbg(const char* fmt, ...);
-#define VEC3_VALUES(name) name.x, name.y, name.z
-#define VEC4_VALUES(name) name.x, name.y, name.z, name.w
-
 #endif
 
 #define PI 3.14159265359
