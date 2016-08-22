@@ -2,21 +2,6 @@
 <entity>
 <tags/>
 <name
-   name="banco_de_trabajo"/>
-<transform
-   pos="45.4998 -0.0873738 -2.61038"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/banco_de_trabajo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="puerta_salida_abajo"/>
 <transform
    pos="49.9582 -0.0549806 2.13332"

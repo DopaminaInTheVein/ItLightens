@@ -46,6 +46,14 @@ void bt_poss::onSetStunned(const TMsgAISetStunned& msg) {
 	}
 }
 
+void bt_poss::onForceUnPosses(const TMsgUnpossesDamage& msg)
+{
+	TMsgAISetPossessed msgUnpossessed;
+	msgUnpossessed.possessed = false;
+	onSetPossessed(msgUnpossessed);
+}
+
+
 //ACCIONES implementables
 void bt_poss::_actionBeforePossession() {
 	//Default: Nothing to do

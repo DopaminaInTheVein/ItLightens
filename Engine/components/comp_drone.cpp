@@ -202,6 +202,7 @@ bool TCompDrone::save(std::ofstream& os, MKeyValue& atts)
 	}
 	atts.put("textureFront", self_ilum_front);
 	atts.put("textureBack", self_ilum_back);
+	if (espatllat) atts.put("espatllat", espatllat);
 
 	return true;
 }

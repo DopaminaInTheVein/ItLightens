@@ -127,7 +127,7 @@ bool bt_scientist::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-			);
+		);
 	}
 
 	zmin = atts.getFloat("zmin", 100.0f);
@@ -577,6 +577,10 @@ void bt_scientist::onStaticBomb(const TMsgStaticBomb & msg)
 void bt_scientist::renderInMenu()
 {
 	ImGui::Text("Node: %s", out[actual_action].c_str());
+	if (bt::current) ImGui::Text("NODE BT: %s", bt::current->getName().c_str());
+	else ImGui::Text("NODE BT: %s", "???\n");
+	ImGui::Checkbox("Possessed", &possessed);
+	ImGui::Checkbox("Stunned", &stunned);
 	ImGui::Text("Timer: %.4f", waiting_time);
 }
 

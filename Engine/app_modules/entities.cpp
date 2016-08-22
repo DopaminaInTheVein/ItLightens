@@ -381,6 +381,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompLife, TMsgStopDamage, onStopDamage);
 	SUBSCRIBE(player_controller_cientifico, TMsgUnpossesDamage, onForceUnPosses);
 	SUBSCRIBE(player_controller_mole, TMsgUnpossesDamage, onForceUnPosses);
+	SUBSCRIBE(bt_scientist, TMsgUnpossesDamage, onForceUnPosses);
+	SUBSCRIBE(bt_mole, TMsgUnpossesDamage, onForceUnPosses);
 
 	SUBSCRIBE(TCompCameraMain, TMsgGetCullingViewProj, onGetViewProj);
 	SUBSCRIBE(TCompLightDirShadows, TMsgGetCullingViewProj, onGetViewProj);

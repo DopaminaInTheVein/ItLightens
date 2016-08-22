@@ -63,6 +63,9 @@ public:
 	void onSetPossessed(const TMsgAISetPossessed&);
 	//Avisar a la entidad que ha sido stunneada
 	void onSetStunned(const TMsgAISetStunned&);
+	//Avisar force unpossess
+	void onForceUnPosses(const TMsgUnpossesDamage& msg);
+
 
 	virtual void onStaticBomb(const TMsgStaticBomb & msg);
 	//TComponent
