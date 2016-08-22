@@ -23,13 +23,33 @@ void bt_mole::readIniFileAttr() {
 			std::string file_ini = app.file_initAttr_json;
 			map<std::string, float> fields = readIniAtrData(file_ini, "bt_mole");
 
-			assignValueToVar(speed, fields);
-			assignValueToVar(rotation_speed, fields);
-			rotation_speed = deg2rad(rotation_speed);
+			readNpcIni(fields);
+
+			//assignValueToVar(speed, fields);
+			//assignValueToVar(rotation_speed, fields);
+			//rotation_speed = deg2rad(rotation_speed);
 			assignValueToVar(distMaxToBox, fields);
 			assignValueToVar(rechTime, fields);
 		}
 	}
+}
+
+//NPC virtuals
+TCompTransform * bt_mole::getTransform()
+{
+	return GETH_MY(TCompTransform);
+}
+void bt_mole::changeCommonState(std::string state)
+{
+	SET_ANIM_MOLE_BT(state);
+}
+CHandle bt_mole::getParent()
+{
+	return MY_OWNER;
+}
+TCompCharacterController * bt_mole::getCC()
+{
+	return GETH_MY(TCompCharacterController);
 }
 
 void bt_mole::Init()
@@ -84,6 +104,7 @@ void bt_mole::update(float elapsed) {
 		setCurrent(NULL);
 	if (stunned)
 		SET_ANIM_MOLE_BT(AST_STUNNED);
+	updateStuck();
 	Recalc();
 }
 
@@ -157,9 +178,9 @@ int bt_mole::actionFollowPathToWpt() {
 	}
 	VEC3 npcPos = transform->getPosition();
 	VEC3 npcFront = transform->getFront();
-	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent)) {
+	if (needsSteering(npcPos + npcFront, transform, SPEED_ROT, myParent)) {
 		SET_ANIM_MOLE_BT(AST_MOVE);
-		moveFront(speed);
+		moveFront(SPEED_WALK);
 		return STAY;
 	}
 	else if (!transform->isHalfConeVision(target, deg2rad(5.0f))) {
@@ -171,7 +192,7 @@ int bt_mole::actionFollowPathToWpt() {
 		float distToWPT = squaredDistXZ(target, transform->getPosition());
 		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
 			SET_ANIM_MOLE_BT(AST_MOVE);
-			moveFront(speed);
+			moveFront(SPEED_WALK);
 			return STAY;
 		}
 		else {
@@ -470,7 +491,7 @@ bool bt_mole::aimToTarget(VEC3 target) {
 		float yaw, pitch;
 		transform->getAngles(&yaw, &pitch);
 		if (delta_yaw > 0.15) {
-			transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
+			transform->setAngles(yaw + delta_yaw*SPEED_ROT*getDeltaTime(), pitch);
 		}
 		else {
 			transform->setAngles(yaw + delta_yaw, pitch);

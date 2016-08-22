@@ -29,8 +29,8 @@ class SkelControllerMole;
 
 class bt_mole : public bt_poss, public TCompBase {
 	// Main attributes
-	float speed;
-	float rotation_speed;
+	//float speed;
+	//float rotation_speed;
 	float distMaxToBox;
 	float rechTime;
 
@@ -82,6 +82,11 @@ class bt_mole : public bt_poss, public TCompBase {
 	// tree root
 	static btnode* root;
 
+	//NPC virtuals
+	TCompTransform * getTransform() override;
+	void changeCommonState(std::string) override;
+	CHandle getParent() override;
+	TCompCharacterController * getCC() override;
 public:
 	void Init();
 	bool getUpdateInfo() override;

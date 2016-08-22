@@ -38,19 +38,18 @@ protected:
 	bool avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform);
 	bool needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, CEntity * molePursuingBoxi = nullptr);
 
-	//Conditions
-	bool guardStuck();
-
-	//Actions
-	int actionUnstuckTurn();
-	int actionUnstuckMove();
+	//Add npc states
+	void addNpcStates(std::string);
 
 	//Update stuck
 	void updateStuck();
 
 	//Aux actions
+	void readNpcIni(std::map<std::string, float>&);
 	void goTo(const VEC3& dest);
 	void goForward(float stepForward);
+	bool turnYaw(float delta_yaw, float angle_epsilon = 5.f);
+	bool turnToYaw(float target_yaw);
 	bool turnTo(VEC3 dest, bool wide = false);
 
 	virtual TCompTransform * getTransform() = 0;
@@ -59,6 +58,13 @@ protected:
 	virtual TCompCharacterController * getCC() = 0;
 
 public:
+	//Conditions
+	bool npcStuck();
+
+	//Actions
+	int actionUnstuckTurn();
+	int actionUnstuckMove();
+
 	//Prueba
 	int getPathDebug(const VEC3& startPoint, const VEC3& endPoint) {
 		if (getPath(startPoint, endPoint)) return totalPathWpt;

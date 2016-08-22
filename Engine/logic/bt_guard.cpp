@@ -61,20 +61,18 @@ void bt_guard::readIniFileAttr() {
 			std::string file_ini = app.file_initAttr_json;
 			map<std::string, float> fields = readIniAtrData(file_ini, "bt_guard");
 
-			assignValueToVar(DIST_REACH_PNT, fields);
+			readNpcIni(fields);
+
 			assignValueToVar(PLAYER_DETECTION_RADIUS, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_ENTER, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_LEAVE, fields);
 			assignValueToVar(DIST_RAYSHOT, fields);
 			assignValueToVar(DIST_SQ_PLAYER_DETECTION, fields);
 			assignValueToVar(DIST_SQ_PLAYER_LOST, fields);
-			assignValueToVar(SPEED_WALK, fields);
 			assignValueToVar(SHOOT_PREP_TIME, fields);
 			assignValueToVar(MIN_SQ_DIST_TO_PLAYER, fields);
 			assignValueToVar(CONE_VISION, fields);
 			CONE_VISION = deg2rad(CONE_VISION);
-			assignValueToVar(SPEED_ROT, fields);
-			SPEED_ROT = deg2rad(SPEED_ROT);
 			assignValueToVar(DAMAGE_LASER, fields);
 			assignValueToVar(MAX_REACTION_TIME, fields);
 			assignValueToVar(MAX_BOX_REMOVAL_TIME, fields);
@@ -87,8 +85,6 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
-			assignValueToVar(MAX_STUCK_TIME, fields);
-			assignValueToVar(UNSTUCK_DISTANCE, fields);
 			SHOT_OFFSET = VEC4(0, 1.5f, 0.5f, 1);
 		}
 	}
@@ -113,9 +109,10 @@ void bt_guard::Init()
 		// insert all states in the map
 		createRoot("guard", PRIORITY, NULL, NULL);
 		// stuck management
-		addChild("guard", "stucksequence", SEQUENCE, (btcondition)&bt_guard::guardStuck, NULL);
-		addChild("stucksequence", "unstuckturn", ACTION, NULL, (btaction)&bt_guard::actionUnstuckTurn);
-		addChild("stucksequence", "unstuckmove", ACTION, NULL, (btaction)&bt_guard::actionUnstuckMove);
+		addNpcStates("guard");
+		//addChild("guard", "stucksequence", SEQUENCE, (btcondition)&npc::npcStuck, NULL);
+		//addChild("stucksequence", "unstuckturn", ACTION, NULL, (btaction)&npc::actionUnstuckTurn);
+		//addChild("stucksequence", "unstuckmove", ACTION, NULL, (btaction)&npc::actionUnstuckMove);
 		// formation toggle
 		addChild("guard", "formationsequence", SEQUENCE, (btcondition)&bt_guard::checkFormation, NULL);
 		addChild("formationsequence", "gotoformation", ACTION, NULL, (btaction)&bt_guard::actionGoToFormation);

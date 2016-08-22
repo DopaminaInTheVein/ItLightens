@@ -5,9 +5,9 @@
 		"restitution" : 0.25
 	}, 	
 	"bt_scientist" : {
-		"move_speed" : 1.5,
-		"rot_speed" : 2.0,
-		"reach_dist_pnt" : 0.2,
+		"SPEED_WALK" : 1.5,
+		"SPEED_ROT" : 100,
+		"DIST_REACH_PNT" : 0.2,
 		"max_wb_distance" : 1000.0,
 		"max_beacon_distance" : 1000.0,
 		"square_range_action" : 1.0,
@@ -19,7 +19,9 @@
 		"t_removeBeacon" : 1.5,
 		"t_waitInPos" : 0.0,
 		"ws_wait_time" : 10.0,
-		"ws_wait_time_offset" : 2.0
+		"ws_wait_time_offset" : 2.0,
+		"MAX_STUCK_TIME" : 2.0,
+		"UNSTUCK_DISTANCE" : 5.0
 	},
 	"bt_guard" : {
 		"SPEED_WALK" : 3.0,
@@ -51,10 +53,12 @@
 		"UNSTUCK_DISTANCE" : 5.0
 	},	
 	"bt_mole" : {
-		"speed" : 2.0,
-		"rotation_speed" : 200,
+		"SPEED_WALK" : 2.0,
+		"SPEED_ROT" : 200,
 		"distMaxToBox" : 10.0,
-		"rechTime" : 1.0
+		"rechTime" : 1.0,
+		"MAX_STUCK_TIME" : 2.0,
+		"UNSTUCK_DISTANCE" : 5.0
 	},	
 	"bt_speedy" : { 
 		"speed" : 4.0,

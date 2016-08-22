@@ -5,6 +5,23 @@
 #include "recast/navmesh_query.h"
 #include "recast/DebugUtils/Include/DebugDraw.h"
 
+void npc::readNpcIni(std::map<std::string, float>& fields)
+{
+	assignValueToVar(DIST_REACH_PNT, fields);
+	assignValueToVar(SPEED_WALK, fields);
+	assignValueToVar(SPEED_ROT, fields);
+	SPEED_ROT = deg2rad(SPEED_ROT);
+	assignValueToVar(MAX_STUCK_TIME, fields);
+	assignValueToVar(UNSTUCK_DISTANCE, fields);
+}
+
+void npc::addNpcStates(std::string parent)
+{
+	addChild(parent, "stucksequence", SEQUENCE, (btcondition)&npc::npcStuck, NULL);
+	addChild("stucksequence", "unstuckturn", ACTION, NULL, (btaction)&npc::actionUnstuckTurn);
+	addChild("stucksequence", "unstuckmove", ACTION, NULL, (btaction)&npc::actionUnstuckMove);
+}
+
 bool npc::getPath(const VEC3& startPoint, const VEC3& endPoint) {
 	PROFILE_FUNCTION("bt Get Path");
 	CNavmesh nav = SBB::readNavmesh();
@@ -130,7 +147,7 @@ void npc::updateStuck()
 	last_position = getTransform()->getPosition();
 }
 
-bool npc::guardStuck() {
+bool npc::npcStuck() {
 	PROFILE_FUNCTION("npc: guard stuck");
 	return stuck;
 }
@@ -190,13 +207,20 @@ bool npc::turnTo(VEC3 dest, bool wide) {
 	float angle_epsilon = deg2rad(angle);
 
 	VEC3 myPos = getTransform()->getPosition();
-	float yaw, pitch;
-	getTransform()->getAngles(&yaw, &pitch);
 
-	float dbg_yawBefore = yaw;
+	//float dbg_yawBefore = yaw;
 
 	// Cuanto necesito girar?
 	float delta_yaw = getTransform()->getDeltaYawToAimTo(dest);
+	bool done = turnYaw(delta_yaw, angle_epsilon);
+
+	return done;
+}
+
+bool npc::turnYaw(float delta_yaw, float angle_epsilon)
+{
+	float yaw, pitch;
+	getTransform()->getAngles(&yaw, &pitch);
 
 	// Necesito girar menos que epsilon? --> Termino giro!
 	if (abs(delta_yaw) < angle_epsilon) {
@@ -212,13 +236,21 @@ bool npc::turnTo(VEC3 dest, bool wide) {
 
 	//Ha acabado el giro?
 	bool done = abs(delta_yaw) < angle_epsilon;
-	//dbg("Result giro. Yaw: %f --> %f, done = %d\n", dbg_yawBefore, yaw, done);
+}
 
-	//DEBUG!
-	//if (done) {
-	//	dbg("Turn to devuelve true!\n");
-	//}
-	return done;
+bool npc::turnToYaw(float target_yaw)
+{
+	TCompTransform * t = getTransform();
+	float yaw = t->getYaw();
+
+	//Normalize angles
+	if (yaw < 0.f) yaw += 2 * M_PI;
+	if (target_yaw < 0.f) target_yaw += 2 * M_PI;
+
+	float delta_yaw = target_yaw - yaw;
+	if (delta_yaw > M_PI) delta_yaw -= 2 * M_PI;
+	else if (delta_yaw < -M_PI) delta_yaw += 2 * M_PI;
+	return turnYaw(delta_yaw);
 }
 
 int npc::actionUnstuckMove() {

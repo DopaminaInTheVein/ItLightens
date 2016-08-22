@@ -35,15 +35,13 @@ class bt_scientist : public bt_poss, public TCompBase {
 
 	//main attributes
 	//--------------------------------------
-	float move_speed;
-	float rot_speed;
+	//float move_speed;
+	//float rot_speed;
 	//--------------------------------------
 
 	//distance limitations
 	//--------------------------------------
-	float reach_dist_pnt;
 	float square_range_action;
-	float d_epsilon;
 	float d_beacon_simple;
 	float max_wb_distance;
 	float max_beacon_distance;
@@ -102,6 +100,11 @@ class bt_scientist : public bt_poss, public TCompBase {
 	// tree root
 	static btnode* root;
 
+	// NPC Virtuals
+	TCompTransform * getTransform() override;
+	void changeCommonState(std::string) override;
+	CHandle getParent() override;
+	TCompCharacterController * getCC() override;
 public:
 	void Init();
 	bool getUpdateInfo() override;
@@ -183,12 +186,6 @@ public:
 	void SetMyEntity();
 	bool aimToTarget(VEC3 target);
 	void moveFront(float speed);
-
-	//Aux actions
-	void goTo(const VEC3& dest);
-	void goForward(float stepForward);
-	bool turnTo(VEC3 dest);
-	bool turnToYaw(float yaw_dest);
 
 	//UI Debug for scientific AI
 	void renderInMenu();
