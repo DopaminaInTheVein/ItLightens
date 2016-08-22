@@ -1,7 +1,7 @@
 #ifndef INC_BT_GUARD_H_
 #define INC_BT_GUARD_H_
 
-#include "bt.h"
+#include "npc.h"
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
 #include "components/entity.h"
@@ -43,7 +43,7 @@ public:
 	float timer;
 };
 
-class bt_guard : public bt, public TCompBase
+class bt_guard : public npc, public TCompBase
 {
 	//Main attritbutes
 	float DIST_REACH_PNT;

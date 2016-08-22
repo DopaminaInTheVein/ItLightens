@@ -2,7 +2,7 @@
 #define _BT_POSS_INC
 
 #include "mcv_platform.h"
-#include "bt.h"
+#include "npc.h"
 #include "components/comp_msgs.h"
 #include "components/entity.h"
 #include <string>
@@ -14,7 +14,7 @@
 #define ST_STUNT			"stunt"
 #define ST_STUNT_END		"stuntEnd"
 
-class bt_poss : public bt {
+class bt_poss : public npc {
 protected:
 	bool stunned = false;
 	bool possessed = false;
@@ -65,7 +65,6 @@ public:
 	void onSetStunned(const TMsgAISetStunned&);
 	//Avisar force unpossess
 	void onForceUnPosses(const TMsgUnpossesDamage& msg);
-
 
 	virtual void onStaticBomb(const TMsgStaticBomb & msg);
 	//TComponent

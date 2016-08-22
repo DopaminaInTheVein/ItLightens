@@ -527,6 +527,9 @@
     <ClCompile Include="Editors\editor_lights.cpp">
       <Filter>Editors</Filter>
     </ClCompile>
+    <ClCompile Include="logic\npc.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1412,6 +1415,9 @@
     </ClInclude>
     <ClInclude Include="Editors\editor_lights.h">
       <Filter>Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\npc.h">
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

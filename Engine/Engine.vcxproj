@@ -224,6 +224,7 @@
     <ClCompile Include="logic\elevator.cpp" />
     <ClCompile Include="logic\helper_arrow.cpp" />
     <ClCompile Include="logic\magnet_door.cpp" />
+    <ClCompile Include="logic\npc.cpp" />
     <ClCompile Include="logic\pila.cpp" />
     <ClCompile Include="logic\pila_container.cpp" />
     <ClCompile Include="logic\sbb.cpp" />
@@ -452,6 +453,7 @@
     <ClInclude Include="logic\elevator.h" />
     <ClInclude Include="logic\helper_arrow.h" />
     <ClInclude Include="logic\magnet_door.h" />
+    <ClInclude Include="logic\npc.h" />
     <ClInclude Include="logic\pila.h" />
     <ClInclude Include="logic\pila_container.h" />
     <ClInclude Include="logic\polarity.h" />
