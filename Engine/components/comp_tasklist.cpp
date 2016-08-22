@@ -32,8 +32,11 @@ void Tasklist::completeTask(int i) {
 	}
 	if (i == SBB::readInt("current_tasklist")) {
 		int aux = i + 1;
-		while (pointsVisiteds[aux]) {
+		while (aux < maxPoints-1 && pointsVisiteds[aux]) {
 			aux++;
+		}
+		if (aux >= maxPoints) {
+			aux = maxPoints - 1;
 		}
 		SBB::postInt("current_tasklist", aux);
 		CHandle h = CHandle(this).getOwner();
@@ -75,5 +78,12 @@ bool Tasklist::save(std::ofstream& ofs, MKeyValue& atts) {
 		atts.put(atrRoom, pointsRooms[i]);
 		WPT_ATR_NAME(atrVisited, "visited", i);
 		atts.put(atrVisited, pointsVisiteds[i]);
+	}
+	return true;
+}
+
+void Tasklist::renderInMenu() {
+	for (int i = 0; i < maxPoints; i++) {
+		ImGui::Text("Point task %d is %s", i, pointsVisiteds[i] ? "done" : "todo");
 	}
 }

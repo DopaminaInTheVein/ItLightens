@@ -1,5 +1,4 @@
 <material tech="deferred.tech">
 <texture slot="diffuse" name="textures/sofa_difuso.dds"/>
 <texture slot="specular" name="textures/sofa_specular.dds"/>
-<texture slot="normalmap" name="textures/sofa_normal.dds"/>
 </material>

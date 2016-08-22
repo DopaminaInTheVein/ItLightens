@@ -14,7 +14,9 @@ fn _parse_tasklist = (
 
 		xml.addAttr "points_size" ((_parsingObject.children.count+1) as string)
 		
-		local all_tasks = _parsingObject.children
+		local names_array = for nameaux in _parsingObject.children collect nameaux.name
+		
+		sort names_array
 		
 		local mcv_tmx
 		local wPoint
@@ -35,13 +37,15 @@ fn _parse_tasklist = (
 		xml.addAttr  atrName2	_parsingObject.room_name
 
 		
-		for i = 1 to all_tasks.count do (			
+		for i = 1 to _parsingObject.children.count do (		
+			local task = getNodeByName names_array[i]
+
 			-- Atr Name
 			atrName = ("pos" + (i) as string)
 			atrName2 = ("room" + (i) as string)
 			
 			--Get Point
-			wPoint = all_tasks[i].pos
+			wPoint = task.pos
 			
 			--Transform point in atrValue
 			tMatrix = matrix3 1
@@ -51,7 +55,7 @@ fn _parse_tasklist = (
 			
 			--Parse Attribute wpt
 			xml.addAttr  atrName	atrValue
-			xml.addAttr  atrName2	all_tasks[i].room_name
+			xml.addAttr  atrName2	task.room_name
 		)
 		
 		) else throw ("Error: not an editable mesh or poly for making tasklist")

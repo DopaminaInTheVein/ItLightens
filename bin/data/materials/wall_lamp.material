@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/wall_lamp_difuso.tga"/>
+<texture slot="normalmap" name="textures/wall_lamp_normal.tga"/>
+</material>

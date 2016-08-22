@@ -16,6 +16,7 @@ public:
 	bool load(MKeyValue& atts);
 	void completeTask(int i);
 	void update(float dt);
+	void renderInMenu();
 };
 
 #endif
