@@ -112,3 +112,178 @@ bool npc::needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_
 	}
 	return false;
 }
+
+void npc::updateStuck()
+{
+	float distance = simpleDistXZ(last_position, getTransform()->getPosition());
+	if (distance <= 0.75f*getDeltaTime()*SPEED_WALK) {
+		stuck_time += getDeltaTime();
+		if (stuck_time > MAX_STUCK_TIME && !stuck) {
+			stuck = true;
+			setCurrent(NULL);
+		}
+	}
+	else {
+		stuck_time = 0.f;
+	}
+
+	last_position = getTransform()->getPosition();
+}
+
+bool npc::guardStuck() {
+	PROFILE_FUNCTION("npc: guard stuck");
+	return stuck;
+}
+
+//actions
+int npc::actionUnstuckTurn() {
+	PROFILE_FUNCTION("npc: actionunstuckturn");
+	// turn to get unstuck
+	//SET_ANIM_GUARD(AST_IDLE);
+	changeCommonState(AST_IDLE);
+	if (!reoriented) {
+		VEC3 left = getTransform()->getLeft();
+		VEC3 front = getTransform()->getFront();
+		switch (direction) {
+		case 0: {
+			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 2;
+			break;
+		}
+		case 1: {
+			unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 1;
+			break;
+		}
+		case 2: {
+			unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 0;
+			break;
+		}
+		default: {
+			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			direction = 0;
+			break;
+		}
+		}
+		reoriented = true;
+	}
+	if (!turnTo(unstuck_target))
+		return STAY;
+	else {
+		reoriented = false;
+		stuck_time = 0.f;
+		stuck = false;
+		return OK;
+	}
+}
+
+// -- Turn To -- //
+bool npc::turnTo(VEC3 dest, bool wide) {
+	//static int test_giro = 0;
+	//dbg("Estoy girando! (%d)\n", (++test_giro) % 100);
+
+	PROFILE_FUNCTION("npc: turn to");
+	int angle = 5;
+	if (wide)
+		angle = 30;
+	float angle_epsilon = deg2rad(angle);
+
+	VEC3 myPos = getTransform()->getPosition();
+	float yaw, pitch;
+	getTransform()->getAngles(&yaw, &pitch);
+
+	float dbg_yawBefore = yaw;
+
+	// Cuanto necesito girar?
+	float delta_yaw = getTransform()->getDeltaYawToAimTo(dest);
+
+	// Necesito girar menos que epsilon? --> Termino giro!
+	if (abs(delta_yaw) < angle_epsilon) {
+		//dbg("No es necesario girar. Devuelvo true. (deltayaw = %f", deltaYaw);
+		return true;
+	}
+
+	// Ajusto deltayaw al maximo que puede girar el mequetrefe
+	float maxDeltaYaw = SPEED_ROT * getDeltaTime();
+	float delta_yaw_clamp = clampAbs(delta_yaw, maxDeltaYaw);
+	yaw += delta_yaw_clamp;
+	getTransform()->setAngles(yaw, pitch);
+
+	//Ha acabado el giro?
+	bool done = abs(delta_yaw) < angle_epsilon;
+	//dbg("Result giro. Yaw: %f --> %f, done = %d\n", dbg_yawBefore, yaw, done);
+
+	//DEBUG!
+	//if (done) {
+	//	dbg("Turn to devuelve true!\n");
+	//}
+	return done;
+}
+
+int npc::actionUnstuckMove() {
+	PROFILE_FUNCTION("npc: actionunstuckmove");
+	// move to get unstuck
+	VEC3 myPos = getTransform()->getPosition();
+	if (simpleDistXZ(myPos, unstuck_target) > DIST_REACH_PNT) {
+		getPath(myPos, unstuck_target);
+		changeCommonState(AST_MOVE);
+		//SET_ANIM_GUARD(AST_MOVE);
+		goTo(unstuck_target);
+		return STAY;
+	}
+	else {
+		return OK;
+	}
+}
+
+// -- Go To -- //
+void npc::goTo(const VEC3& dest) {
+	PROFILE_FUNCTION("guard: go to");
+	if (!SBB::readBool("navmesh")) {
+		return;
+	}
+	VEC3 target = dest;
+	VEC3 npcPos = getTransform()->getPosition();
+	float walk_amount = SPEED_WALK * getDeltaTime();
+	bool target_found = totalPathWpt <= 0 || currPathWpt >= totalPathWpt;
+	while (!target_found) {
+		if (fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) >= walk_amount) {
+			target_found = true;
+		}
+		else {
+			if (currPathWpt < totalPathWpt - 1) {
+				currPathWpt++;
+			}
+			else target_found = true;
+		}
+	}
+
+	if (currPathWpt < totalPathWpt) {
+		target = pathWpts[currPathWpt];
+	}
+
+	if (needsSteering(npcPos, getTransform(), SPEED_WALK, getParent())) {
+		goForward(SPEED_WALK);
+	}
+	else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
+		turnTo(target);
+	}
+	else {
+		float distToWPT = simpleDistXZ(target, getTransform()->getPosition());
+		if (fabsf(distToWPT) > 0.1f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 0.2f) {
+			goForward(SPEED_WALK);
+		}
+	}
+}
+
+// -- Go Forward -- //
+void npc::goForward(float stepForward) {
+	//static int test_forward = 0;
+	//dbg("Estoy avanzando! (%d)\n", (++test_forward) % 100);
+
+	PROFILE_FUNCTION("guard: go forward");
+	VEC3 myPos = getTransform()->getPosition();
+	float dt = getDeltaTime();
+	getCC()->AddMovement(getTransform()->getFront() * stepForward*dt);
+}

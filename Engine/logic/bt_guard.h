@@ -53,11 +53,9 @@ class bt_guard : public npc, public TCompBase
 	float DIST_RAYSHOT;
 	float DIST_SQ_PLAYER_DETECTION;
 	float DIST_SQ_PLAYER_LOST;
-	float SPEED_WALK;
 	float SHOOT_PREP_TIME;
 	float MIN_SQ_DIST_TO_PLAYER;
 	float CONE_VISION;
-	float SPEED_ROT;
 	float DAMAGE_LASER;
 	float MAX_REACTION_TIME;
 	float MAX_BOX_REMOVAL_TIME;
@@ -72,14 +70,12 @@ class bt_guard : public npc, public TCompBase
 	float reduce_factor;
 	float t_reduceStats_max;
 	float t_reduceStats;
-	float MAX_STUCK_TIME;
-	float UNSTUCK_DISTANCE;
 
 	//Handles & More
 	CHandle myHandle;
 	CHandle myParent;
 	CHandle thePlayer;
-	TCompTransform * getTransform();
+	TCompTransform * getTransform() override;
 	TCompCharacterController* getCC();
 	CEntity* getPlayer();
 
@@ -120,13 +116,6 @@ class bt_guard : public npc, public TCompBase
 	bool noiseHeard = false;
 	bool playerLost = false;
 	bool looking_player = false;
-	// stuck management
-	float stuck_time = 0.f;
-	bool stuck = false;
-	bool reoriented = false;
-	int direction = 0;
-	VEC3 unstuck_target;
-	VEC3 last_position;
 	VEC3 dest_shoot;
 	// reaction time management
 	bool player_detected_start = false;
@@ -149,10 +138,7 @@ class bt_guard : public npc, public TCompBase
 	VEC3 jurCenter;
 	float jurRadiusSq;
 
-	//Aux actions
-	void goTo(const VEC3& dest);
-	void goForward(float stepForward);
-	bool turnTo(VEC3 dest, bool wide = false);
+	//bool turnTo(VEC3 dest, bool wide = false);
 	bool turnToPlayer();
 	void lookAtPlayer();
 	void lookAtFront();
@@ -196,12 +182,13 @@ class bt_guard : public npc, public TCompBase
 	// tree root
 	static btnode* root;
 
+	CHandle getParent() override { return CHandle(this).getOwner(); }
+
 public:
 	//public for LUA
 	bool isInFirstSeekPoint();
 
 	//conditions
-	bool guardStuck();
 	bool playerStunned();
 	bool playerNear();
 	bool playerDetected();
@@ -210,8 +197,6 @@ public:
 	//toggle conditions
 	bool checkFormation();
 	//actions
-	int actionUnstuckTurn();
-	int actionUnstuckMove();
 	int actionStunned();
 	int actionStepBack();
 	int actionReact();
@@ -297,19 +282,7 @@ public:
 			}
 		}
 		// stuck management
-		float distance = simpleDistXZ(last_position, t->getPosition());
-		if (distance <= 0.75f*getDeltaTime()*SPEED_WALK) {
-			stuck_time += getDeltaTime();
-			if (stuck_time > MAX_STUCK_TIME && !stuck) {
-				stuck = true;
-				setCurrent(NULL);
-			}
-		}
-		else {
-			stuck_time = 0.f;
-		}
-
-		last_position = t->getPosition();
+		updateStuck();
 
 		if (!forced_move) Recalc();
 
@@ -324,6 +297,8 @@ public:
 	bool load(MKeyValue& atts);
 	std::string getKpTypeStr(bt_guard::KptType type);
 	bool save(std::ofstream& os, MKeyValue& atts);
+
+	void changeCommonState(std::string);
 
 	//Cambio Malla
 	//void ChangePose(string new_pose_route);

@@ -18,11 +18,45 @@ protected:
 	int currPathWpt;
 	int totalPathWpt;
 
+	float SPEED_WALK;
+	float SPEED_ROT;
+	float DIST_REACH_PNT;
+
+	// stuck management
+	float MAX_STUCK_TIME;
+	float UNSTUCK_DISTANCE;
+	float stuck_time = 0.f;
+	bool stuck = false;
+	bool reoriented = false;
+	int direction = 0;
+	VEC3 unstuck_target;
+	VEC3 last_position;
+
 	bool getPath(const VEC3& startPoint, const VEC3& endPoint);
 	CEntity* frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle);
 	CEntity* frontCollisionBOX(const TCompTransform * transform, CEntity *  molePursuingBoxi);
 	bool avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform);
 	bool needsSteering(VEC3 npcPos, TCompTransform * transform, float rotation_speed, CHandle myHandle, CEntity * molePursuingBoxi = nullptr);
+
+	//Conditions
+	bool guardStuck();
+
+	//Actions
+	int actionUnstuckTurn();
+	int actionUnstuckMove();
+
+	//Update stuck
+	void updateStuck();
+
+	//Aux actions
+	void goTo(const VEC3& dest);
+	void goForward(float stepForward);
+	bool turnTo(VEC3 dest, bool wide = false);
+
+	virtual TCompTransform * getTransform() = 0;
+	virtual void changeCommonState(std::string) = 0;
+	virtual CHandle getParent() = 0;
+	virtual TCompCharacterController * getCC() = 0;
 
 public:
 	//Prueba
