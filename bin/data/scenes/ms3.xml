@@ -4390,5 +4390,53 @@
    type_collision="static"/>
 
 </entity>
+<entity
+   reload="no">
+<tags
+   tags="tasklist"/>
+<room
+   name="-1"/>
+<tasklist
+   points_size="5"
+   pos0="27.7549 -23.8407 -14.7725"
+   room0="1"
+   pos1="8.55087 -12.7222 -24.6113"
+   room1="1"
+   pos2="-38.1801 -1.30454 -0.525588"
+   room2="1"
+   pos3="-18.9761 -2.19914 21.819"
+   room3="1"
+   pos4="15.2705 -11.3233 22.57"
+   room4="1"/>
+<name
+   name="tasklist"/>
+<transform
+   pos="27.7549 -23.8407 -14.7725"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test/baliza.static_mesh"/>
+
+</entity>
+
+<entity
+   reload="no">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.0 2.0 3.0"/>
+<tags
+   tags="trigger task_switcher"/>
+<task_switcher
+   task="0"/>
+<name
+   name="Trigger_Tasklist1"/>
+<transform
+   pos="27.3914 -22.9726 -14.5149"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
 
 </entities>

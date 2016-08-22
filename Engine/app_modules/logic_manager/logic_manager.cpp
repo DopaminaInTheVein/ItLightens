@@ -359,12 +359,12 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadedLevel(%s);", params.c_str());
 		break;
 	}
-						  //GUI
-	case (OnClicked): {
+						   //GUI
+	case (OnClicked) : {
 		sprintf(lua_code, "OnClicked(\"%s\");", params.c_str());
 		break;
 	}
-	case (OnPause): {
+	case (OnPause) : {
 		sprintf(lua_code, "OnPause();");
 		break;
 	}
@@ -756,6 +756,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("load_entities", &SLBPublicFunctions::loadEntities)
 		.comment("Save state current level")
 		.param("string: name of the level")
+		// Complete Tasklist
+		.set("complete_tasklist", &SLBPublicFunctions::completeTasklist)
+		.comment("Complete tasklist point")
+		.param("int: index task to be completed")
 		// Resume
 		.set("resume", &SLBPublicFunctions::resume)
 		.comment("Resume game")

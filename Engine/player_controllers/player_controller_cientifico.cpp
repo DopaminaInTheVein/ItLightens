@@ -15,6 +15,7 @@
 #include "render\static_mesh.h"
 #include "components\comp_render_static_mesh.h"
 #include "components/comp_charactercontroller.h"
+#include "components/comp_tasklist.h"
 #include "app_modules/gui/gui.h"
 
 //if (animController) animController->setState(AST_IDLE, [prio])
@@ -141,7 +142,7 @@ void player_controller_cientifico::WorkBenchActions() {
 	//----------------------------------------------------
 
 	if (dist_wb < 1.5f) {
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			obj = THROW_BOMB;
 			//TODO: Destruir bomba actual
 			ChangeState("createBomb");
@@ -152,7 +153,7 @@ void player_controller_cientifico::WorkBenchActions() {
 		}
 	}
 	else if (canRepairDrone) {
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			logic_manager->throwEvent(logic_manager->OnRepairDrone, "");
 			ChangeState("repairDrone");
 		}
@@ -190,7 +191,7 @@ void player_controller_cientifico::Moving()
 }
 
 void player_controller_cientifico::RecalcScientist() {
-	if (controller->IsSenseButtonPressed()) {
+	if (controller->SenseButtonBecomesPressed()) {
 		ChangeState("useBomb");
 	}
 	WorkBenchActions();
@@ -207,6 +208,12 @@ void player_controller_cientifico::CreateBomb()
 		objs_amoung[obj] = 5;
 		if (bomb_handle.isValid()) bomb_handle.destroy();
 		spawnBomb(bomb_offset_1);
+
+		CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
+		CEntity * tasklist_e = tasklist;
+		Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
+		tasklist_comp->completeTask(TASKLIST_CREATE_BOMB);
+
 		//bomb_handle.sendMsg(TMsgActivate());
 		ChangeState("idle");
 	}

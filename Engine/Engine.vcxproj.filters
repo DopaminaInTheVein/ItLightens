@@ -527,6 +527,12 @@
     <ClCompile Include="Editors\editor_lights.cpp">
       <Filter>Editors</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_tasklist.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_tasklist_switcher.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1412,6 +1418,12 @@
     </ClInclude>
     <ClInclude Include="Editors\editor_lights.h">
       <Filter>Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tasklist.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tasklist_switcher.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

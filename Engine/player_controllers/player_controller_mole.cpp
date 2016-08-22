@@ -14,6 +14,7 @@
 #include "ui/ui_interface.h"
 #include "components/comp_charactercontroller.h"
 #include "components/comp_physics.h"
+#include "components/comp_tasklist.h"
 
 map<string, statehandler> player_controller_mole::statemap = {};
 
@@ -223,7 +224,7 @@ bool player_controller_mole::UpdateMovDirection() {
 }
 
 void player_controller_mole::UpdateInputActions() {
-	if (controller->IsActionButtonPessed()) {
+	if (controller->ActionButtonBecomesPessed()) {
 		if (boxGrabbed.isValid()) {
 			logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
 			ChangeState(ST_MOLE_UNGRAB);
@@ -436,6 +437,13 @@ void player_controller_mole::PuttingPila()
 
 		//pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		pila->PutIn(pilaContainer);
+		CEntity * pilaEntity = pilaContainer;
+		if (pilaEntity->getId() == 303) {
+			CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
+			CEntity * tasklist_e = tasklist;
+			Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
+			tasklist_comp->completeTask(TASKLIST_LEAVE_PILA_ON_CHARGER);
+		}
 		pilaGrabbed = CHandle();
 		player_max_speed *= 2;
 		animController->setState(AST_IDLE);

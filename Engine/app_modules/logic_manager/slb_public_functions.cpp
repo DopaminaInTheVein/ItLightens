@@ -8,6 +8,7 @@
 #include "components/comp_charactercontroller.h"
 #include "components/comp_life.h"
 #include "components/comp_video.h"
+#include "components/comp_tasklist.h"
 #include "logic/bt_guard.h"
 #include "logic/bt_scientist.h"
 #include "logic/pila_container.h"
@@ -537,6 +538,13 @@ void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA", "%s\n", to_print);
 }
 
+void SLBPublicFunctions::completeTasklist(int i) {
+	CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
+	CEntity * tasklist_e = tasklist;
+	Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
+	tasklist_comp->completeTask(i);
+}
+
 void SLBPublicFunctions::setControlEnabled(int enabled) {
 	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
 	CHandle main_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
@@ -553,7 +561,6 @@ void SLBPublicFunctions::playSound(const char* sound_route) {
 }
 
 void SLBPublicFunctions::play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z) {
-
 	VEC3 player_pos = VEC3(pl_x, pl_y, pl_z);
 	player_pos.Normalize();
 
