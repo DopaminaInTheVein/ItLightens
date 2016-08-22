@@ -364,20 +364,6 @@
 <entity>
 <tags/>
 <name
-   name="base_porsi"/>
-<transform
-   pos="-72.3766 16.4852 39.9267"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="biombo_mapeado_arriba"/>
 <transform
    pos="-63.9873 16.6386 8.90742"
@@ -941,40 +927,6 @@
 <entity>
 <tags/>
 <name
-   name="control_panel"/>
-<transform
-   pos="-7.03202 -22.6676 9.66177"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/control_panel.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cosa_de_cientifico"/>
-<transform
-   pos="-68.2417 16.9884 17.1086"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cosa_de_cientifico.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="cubo"/>
 <transform
    pos="-5.57598 -20.2973 2.07459"
@@ -987,23 +939,6 @@
    type_collision="static"/>
 <room
    name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cubo_fregona"/>
-<transform
-   pos="-82.3434 -1.30278 -17.8813"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cubo_fregona.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>
@@ -4027,51 +3962,7 @@
    type_collision="static"/>
 
 </entity>
-<entity>
-<tags/>
-<name
-   name="bookshelf_w_doors"/>
-<transform
-   pos="-81.5895 -1.34997 -3.87495"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/bookshelf_w_doors.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
 
-</entity>
-<entity>
-<tags/>
-<name
-   name="hinge_door_x4_left_h"/>
-<transform
-   pos="-82.2579 -0.302511 -4.13469"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/hinge_door_x4_left_h.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="hinge_doorx4_right_h"/>
-<transform
-   pos="-80.9202 -0.302511 -4.13469"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/hinge_doorx4_right_h.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
 <entity>
 <tags/>
 <name
