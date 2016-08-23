@@ -6,6 +6,8 @@
 #include "components/entity_tags.h"
 #include "components/comp_workstation.h"
 #include "components/comp_video.h"
+#include "components/comp_tasklist.h"
+#include "components/comp_tasklist_switcher.h"
 #include "handle/handle_manager.h"
 #include "handle/msgs.h"
 #include "render/technique.h"
@@ -106,6 +108,8 @@ DECL_OBJ_MANAGER("video_player", TCompVideo);
 /* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
+DECL_OBJ_MANAGER("tasklist", Tasklist);
+DECL_OBJ_MANAGER("task_switcher", TasklistSwitch);
 DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
 
 //fx
@@ -178,6 +182,8 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompFadingMessage>()->init(32);
 	getHandleManager<TCompFadingGlobe>()->init(32);
 	getHandleManager<LogicHelperArrow>()->init(4);
+	getHandleManager<Tasklist>()->init(4);
+	getHandleManager<TasklistSwitch>()->init(32);
 	//lights
 	getHandleManager<TCompLightDir>()->init(MAX_ENTITIES);
 	getHandleManager<TCompLightFadable>()->init(4);
@@ -317,6 +323,10 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompGenerator, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TCompGenerator, TMsgTriggerOut, onTriggerExitCall);
 
+	// task switcher
+	SUBSCRIBE(TasklistSwitch, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TasklistSwitch, TMsgTriggerIn, onTriggerEnterCall);
+	SUBSCRIBE(TasklistSwitch, TMsgTriggerOut, onTriggerExitCall);
 	// room switcher
 	SUBSCRIBE(TCompRoomSwitch, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompRoomSwitch, TMsgTriggerIn, onTriggerEnterCall);
@@ -446,6 +456,7 @@ void CEntitiesModule::initEntities() {
 	getHandleManager<LogicHelperArrow>()->onAll(&LogicHelperArrow::init);
 	getHandleManager<TCompCameraMain>()->onAll(&TCompCameraMain::init);
 	getHandleManager<TCompRoom>()->onAll(&TCompRoom::init);
+	getHandleManager<Tasklist>()->onAll(&Tasklist::init);
 }
 
 void CEntitiesModule::saveLevel(std::string level_name) {
@@ -542,6 +553,7 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
 			getHandleManager<TCompFadeScreen>()->updateAll(dt);
+			getHandleManager<Tasklist>()->updateAll(dt);
 		}
 
 		getHandleManager<TCompCamera>()->updateAll(dt);

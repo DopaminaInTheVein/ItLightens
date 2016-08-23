@@ -181,6 +181,12 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	// Pasearse por todas las keys
 	while (it != end_it) {
 		// Do the culling
+		if (it->owner.getOwner().hasTag("tasklist")) {
+			CEntity * tent = it->owner.getOwner();
+			TCompRoom * tentroom = tent->get<TCompRoom>();
+			it->room = tentroom->name;
+		}
+
 		if (it->owner.getOwner().hasTag("player") || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
 			if (culling_bits) {
 				TCompAbsAABB* aabb = it->aabb;

@@ -31,7 +31,7 @@ void TTriggerLua::onTriggerInside(const TMsgTriggerIn& msg) {
 	eAction actionAvalable = getActionAvailable();
 	if (actionAvalable != NONE && mActionable) {
 		Gui->setActionAvailable(actionAvalable);
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			mActionable = false;
 			onTriggerAction(playerType);
 		}

@@ -45,6 +45,11 @@ public:
 	bool IsPossessionButtonPressed();
 	bool IsSenseButtonPressed();
 
+	bool ActionButtonBecomesPessed();
+	bool JumpButtonBecomesPressed();
+	bool PossessionButtonBecomesPressed();
+	bool SenseButtonBecomesPressed();
+
 	// (LB - RB)
 	bool IsPlusPolarityPressed();
 	bool IsMinusPolarityPressed();

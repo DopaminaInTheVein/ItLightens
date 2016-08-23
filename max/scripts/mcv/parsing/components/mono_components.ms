@@ -31,6 +31,13 @@ fn parseMonoComponent = (
 		parsed = true
 	)
 	
+	if ( (getUserProp _parsingObject "typeObject") as string) == "tasklist"  then
+	(
+		_parse_tasklist()
+		parsed = true
+	)
+	
+	
 	if ( (getUserProp _parsingObject "typeObject") as string) == "detection_cam"  then
 	(
 		_parse_detection_cam()

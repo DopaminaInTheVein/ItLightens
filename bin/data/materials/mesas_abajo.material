@@ -1,4 +1,5 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/machine_table_1_albedo_var_1.dds"/>
-<texture slot="normalmap" name="textures/Map__7_Normal_Bump.dds"/>
+<texture slot="diffuse" name="textures/machine_table_difuso.dds"/>
+<texture slot="specular" name="textures/machine_table_specular.dds"/>
+<texture slot="normalmap" name="textures/machine_table_normal.dds"/>
 </material>

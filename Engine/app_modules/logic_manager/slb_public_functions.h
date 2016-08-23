@@ -139,6 +139,7 @@ public:
 
 	// public functions
 	void execCommand(const char* exec_code, float exec_time);
+	void completeTasklist(int i);
 	void print(const char* to_print);
 	void setControlEnabled(int);
 	void playSound(const char* sound_route);

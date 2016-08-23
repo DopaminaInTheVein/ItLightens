@@ -1558,14 +1558,14 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.61506 1.205 1.63032"/>
+   size="3.61506 3.65115 1.63032"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="tVictory"/>
 <transform
-   pos="-82.9341 -0.0145058 -32.981"
+   pos="-82.1906 1.20857 -32.981"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room
@@ -1606,6 +1606,50 @@
    name="tSave02"/>
 <transform
    pos="-49.9032 0.753134 -0.840155"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="tasklist"/>
+<render_static_mesh
+   name="static_meshes/test/baliza.static_mesh"/>
+<room
+   name="-1"/>
+<tasklist
+   points_size="13"
+   pos0="27.7549 -23.8407 -14.7725"
+   room0="-1"
+   pos1="10.3977 -11.6142 -20.2438"
+   room1="-1"
+   pos2="15.2705 -10.1038 22.1639"
+   room2="-1"
+   pos3="-18.9761 -2.19914 21.819"
+   room3="-1"
+   pos4="-38.1801 -1.30454 -0.525588"
+   room4="-1"
+   pos5="-121.471 -1.30454 -5.78993"
+   room5="-1"
+   pos6="-90.8256 -1.13969 14.8048"
+   room6="-1"
+   pos7="-86.6896 -1.47877 -8.23455"
+   room7="-1"
+   pos8="-65.3382 15.8583 19.9205"
+   room8="-1"
+   pos9="-90.8256 -1.13969 14.7521"
+   room9="-1"
+   pos10="-121.471 -1.30454 -5.79445"
+   room10="-1"
+   pos11="-94.0284 -1.13969 18.6385"
+   room11="-1"
+   pos12="-82.8144 -1.47877 -35.137"
+   room12="-1"/>
+<name
+   name="tasklist"/>
+<transform
+   pos="27.7549 -23.8407 -14.7725"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

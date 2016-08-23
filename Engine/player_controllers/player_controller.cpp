@@ -310,7 +310,7 @@ void player_controller::Jumping()
 		SET_ANIM_PLAYER(AST_IDLE);
 	}
 
-	if ((controller->IsJumpButtonPressed()) && gravity_active) {
+	if ((controller->JumpButtonBecomesPressed()) && gravity_active) {
 		if (gravity_active) {
 			cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 			energyDecreasal(jump_energy);
@@ -329,7 +329,7 @@ void player_controller::Falling()
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	SET_ANIM_PLAYER(AST_FALL);
-	if ((controller->IsJumpButtonPressed()) && gravity_active) {
+	if ((controller->JumpButtonBecomesPressed()) && gravity_active) {
 		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 		energyDecreasal(jump_energy);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
@@ -600,7 +600,7 @@ void player_controller::UpdateInputActions()
 		pol_state_prev = pol_state;
 	}
 
-	if ((controller->IsActionButtonPessed()) && nearStunable()) {
+	if ((controller->ActionButtonBecomesPessed()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado
 		CEntity* ePoss = currentStunable;
@@ -622,7 +622,7 @@ void player_controller::UpdateActionsTrigger() {
 	PROFILE_FUNCTION("player_controller: update Actions trigger");
 
 	if (canRecharge()) {
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			rechargeEnergy();
 			SET_ANIM_PLAYER_P(AST_RECHARGE);
 			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
@@ -632,13 +632,13 @@ void player_controller::UpdateActionsTrigger() {
 		}
 	}
 	else if (canPassWire) {
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(endPointWire));
 			logic_manager->throwEvent(logic_manager->OnUseCable, "");
 		}
 	}
 	else if (canRechargeDrone) {
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			TMsgActivate msg;
 			CEntity *drone_e = drone;
 			drone_e->sendMsg(msg);
@@ -649,7 +649,7 @@ void player_controller::UpdateActionsTrigger() {
 		}
 	}
 	else if (canNotRechargeDrone) {
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			logic_manager->throwEvent(logic_manager->OnNotRechargeDrone, "");
 		}
 		else {
@@ -664,7 +664,7 @@ void player_controller::UpdatePossession() {
 	PROFILE_FUNCTION("update poss");
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
-		if (controlEnabled && (controller->IsPossessionButtonPressed())) {
+		if (controlEnabled && (controller->PossessionButtonBecomesPressed())) {
 			// Se avisa el ai_poss que ha sido pose\EDdo
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;
@@ -828,7 +828,7 @@ void player_controller::UpdateOverCharge() {
 		float currentLife = getLife();
 
 		if (currentLife > evolution_limit) {
-			if (controller->IsActionButtonPessed()) {
+			if (controller->ActionButtonBecomesPessed()) {
 				startOverCharge();
 			}
 			else {

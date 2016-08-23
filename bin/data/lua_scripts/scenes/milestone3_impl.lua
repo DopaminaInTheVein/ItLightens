@@ -124,6 +124,7 @@ function activateCargadorSci()
 	    sci = Handle()
 		sci:get_player()
 		sci:go_and_look_as(hCargadorTarget, "rechargeCell();")
+		p:complete_tasklist(9)
 	end
   else
 	p:player_talks("There is nothing to charge.", "scientific.dds", "SCI")
@@ -191,6 +192,7 @@ function OnPutPila_enchufe()
 	if not cp_door_opened then
 		cp_door_opened = true
 		SaveLevel()
+		p:complete_tasklist(10)
 	end
 	if not alert then
 		openDoorPila()
@@ -228,6 +230,7 @@ end
 
 function OnRemovePila_enchufe()
   pila:getHandleCaller()
+  p:complete_tasklist(5);
   if pila:is_charged() then
 	--Cerral (:P)
 	isDoorOpen = false
@@ -369,7 +372,7 @@ function moveElevator( )
   p:exec_command("cam:fade_out(1);", 2.5)
   p:exec_command("triggerElevator:setActionable(1);", 4 )
   p:exec_command("cam:fade_in(1);", 7.0)
-  
+  p:complete_tasklist(8)
   p:exec_command( "p:setControlEnabled(1);", 9 )
   --cambio  cientifico
   --if elevatorState == 0 then
@@ -456,6 +459,7 @@ function destroyWall( )
   player = Handle()
   player:get_player()
   player:go_and_look_as(actionWallTarget, "destroyWallAnim();")
+  
 end
 
 function destroyWallAnim( )
@@ -529,7 +533,7 @@ function wireGoUp( )
   player:get_player()
   cmd_teleport = "player:teleport(\""..wire_pos_up.."\")"
   cam:run_cinematic("CineWireGoUp", factorWireGoUp * 5)
-
+  p:complete_tasklist(7)
   p:exec_command( "player:set_position(0,-1000,0);", 2 )
   p:exec_command( "wireParticlesUp();", 1.5 / factorWireGoUp )
   p:exec_command( "cam:fade_out(0.5);", 7.5)

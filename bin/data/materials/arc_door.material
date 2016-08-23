@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/arc_door_difuso.tga"/>
+<texture slot="normalmap" name="textures/arc_door_normal.tga"/>
+</material>

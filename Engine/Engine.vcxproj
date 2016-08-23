@@ -164,6 +164,8 @@
     <ClCompile Include="components\comp_snoozer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="components\comp_tasklist.cpp" />
+    <ClCompile Include="components\comp_tasklist_switcher.cpp" />
     <ClCompile Include="components\comp_tracker.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -391,6 +393,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="components\comp_tags.h" />
+    <ClInclude Include="components\comp_tasklist.h" />
+    <ClInclude Include="components\comp_tasklist_switcher.h" />
     <ClInclude Include="components\comp_tracker.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

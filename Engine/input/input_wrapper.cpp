@@ -69,15 +69,28 @@ float CInputWrapper::MouseDeltaY() {
 }
 // A-B-X-Y
 bool CInputWrapper::IsActionButtonPessed() {
-	return io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed();
+	return io->mouse.left.isPressed() || io->joystick.button_X.isPressed();
 }
 bool CInputWrapper::IsJumpButtonPressed() {
-	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed();
+	return io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed();
 }
 bool CInputWrapper::IsPossessionButtonPressed() {
-	return io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed();
+	return io->keys[VK_SHIFT].isPressed() || io->joystick.button_Y.isPressed();
 }
 bool CInputWrapper::IsSenseButtonPressed() {
+	return io->mouse.right.isPressed() || io->joystick.button_B.isPressed();
+}
+
+bool CInputWrapper::ActionButtonBecomesPessed() {
+	return io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed();
+}
+bool CInputWrapper::JumpButtonBecomesPressed() {
+	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed();
+}
+bool CInputWrapper::PossessionButtonBecomesPressed() {
+	return io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed();
+}
+bool CInputWrapper::SenseButtonBecomesPressed() {
 	return io->mouse.right.becomesPressed() || io->joystick.button_B.becomesPressed();
 }
 

@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/window_wall_difuso.tga"/>
+<texture slot="normalmap" name="textures/window_wall_normal.tga"/>
+</material>

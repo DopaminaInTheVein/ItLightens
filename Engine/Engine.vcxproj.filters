@@ -530,6 +530,12 @@
     <ClCompile Include="logic\npc.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_tasklist.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_tasklist_switcher.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1418,6 +1424,12 @@
     </ClInclude>
     <ClInclude Include="logic\npc.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tasklist.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_tasklist_switcher.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
