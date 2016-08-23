@@ -102,6 +102,7 @@ void bt_mole::update(float elapsed) {
 	// If we become possessed, reset the tree and stop all actions
 	if (possessing)
 		setCurrent(NULL);
+	if (possessed) return;
 	if (stunned)
 		SET_ANIM_MOLE_BT(AST_STUNNED);
 	updateStuck();

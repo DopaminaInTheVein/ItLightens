@@ -125,6 +125,7 @@ void bt_scientist::update(float elapsed) {
 
 	if (possessing)
 		setCurrent(NULL);
+	if (possessed) return;
 	if (stunned)
 		SET_ANIM_SCI_BT(AST_STUNNED);
 	updateStuck();
