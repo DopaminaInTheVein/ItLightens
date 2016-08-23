@@ -88,6 +88,16 @@ fn parseJurisdiction parent = (
 )
 
 ----------------------------------------------------------------------
+-- STUNT RECOVER --
+----------------------------------------------------------------------
+fn parseStuntRecover parent = (
+	local stunt_recover = getUserProp _parsingObject "stunt_recover"
+	if stunt_recover != undefined then (
+		parent.addAttr "stunt_recover" stunt_recover
+	)
+)
+
+----------------------------------------------------------------------
 -- FORMATION --
 ----------------------------------------------------------------------
 fn parseFormation parent = (
@@ -148,6 +158,7 @@ fn _parse_bt_guard = (
 	parseKeyPoints btXml -- KptPoints
 	parseJurisdiction btXml --Jurisdiction
 	parseFormation btXml --Formation
+	parseStuntRecover btXml --Formation
 )
 
 ----------------------------------------------------------------------

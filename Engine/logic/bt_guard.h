@@ -46,7 +46,6 @@ public:
 class bt_guard : public npc, public TCompBase
 {
 	//Main attritbutes
-	float DIST_REACH_PNT;
 	float PLAYER_DETECTION_RADIUS;
 	float DIST_SQ_SHOT_AREA_ENTER;
 	float DIST_SQ_SHOT_AREA_LEAVE;
@@ -167,7 +166,8 @@ class bt_guard : public npc, public TCompBase
 	void drawShot(VEC3 dest);
 	void removeBox(CHandle box_handle);
 
-	bool stunned;
+	bool stunned = false;;
+	bool stunt_recover = true;
 	bool shooting = false;
 	bool forced_move = false;
 

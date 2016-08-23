@@ -326,6 +326,7 @@ int bt_guard::actionStunned() {
 	lookAtFront();
 	stuck = false;
 	stuck_time = 0.f;
+	if (!stunt_recover) return STAY;
 	if (timerStunt < 0) {
 		stunned = false;
 		logic_manager->throwEvent(logic_manager->OnStunnedEnd, "");
@@ -1367,6 +1368,8 @@ bool bt_guard::load(MKeyValue& atts) {
 	formation_point = atts.getPoint("formation_point");
 	formation_dir = atts.getPoint("formation_dir");
 
+	//Stunt_recover
+	stunt_recover = atts.getBool("stunt_recover", true);
 	return true;
 }
 

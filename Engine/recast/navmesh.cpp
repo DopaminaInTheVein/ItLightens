@@ -22,7 +22,7 @@ rcConfig CNavmesh::getRcConfig() {
 	config.tileSize = 32;
 	config.cs = 0.05;
 	config.ch = 0.05;
-	config.walkableHeight = 3;
+	config.walkableHeight = 2.f;
 	config.walkableRadius = 0;
 	config.walkableClimb = 0;
 	config.walkableSlopeAngle = 20.0f;
@@ -125,7 +125,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 	// Find triangles which are walkable based on their slope and rasterize them.
 	// If your input data is multiple meshes, you can transform them here, calculate
 	// the are type for each of the meshes and rasterize them.
-	memset(m_triareas, 0, m_input.ntris_total*sizeof(unsigned char));
+	memset(m_triareas, 0, m_input.ntris_total * sizeof(unsigned char));
 
 	for (size_t i = 0; i < m_input.inputs.size(); ++i) {
 		m_input.prepareInput(m_input.inputs[i]);

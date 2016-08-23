@@ -35,7 +35,8 @@
    kpt1_pos="69.4692 0.0222019 -4.65487"
    kpt1_wait="2"
    jurisdiction="71.4503 0.13 -5.19"
-   jurRadius="5.0"/>
+   jurRadius="5.0"
+   stunt_recover="no"/>
 <skc_guard/>
 <skeleton_lookat/>
 <name
@@ -69,7 +70,8 @@
    kpt1_pos="61.8219 0 -2.93604"
    kpt1_wait="2"
    jurisdiction="71.4774 0.08 -0.606354"
-   jurRadius="5.0"/>
+   jurRadius="5.0"
+   stunt_recover="no"/>
 <skc_guard/>
 <skeleton_lookat/>
 <name

@@ -277,7 +277,7 @@ void player_controller::Jump()
 			-curSpeed.x * 0.1f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
 			-curSpeed.z * 0.1f
-			);
+		);
 		//--------------------------------------
 	}
 	else {
@@ -525,35 +525,36 @@ void player_controller::UpdateMoves()
 	cc->AddMovement(newMovement * getDeltaTime());
 }
 
-//Test CLH borrar!!
+//Test CLH naveshes
 //---------
-VEC3 startPoint;
-VEC3 endPoint;
-#include "logic/bt.h"
+//VEC3 startPoint;
+//VEC3 endPoint;
+//#include "logic/bt_guard.h"
+//#include "app_modules/io/io.h"
 //---------
 void player_controller::UpdateInputActions()
 {
 	PROFILE_FUNCTION("update input actions");
 
-	//Test borrar CLH!!!
+	//Test CLH navmeshes
 	//----------------------
 	//if (io->keys['8'].becomesPressed()) {
-	   // CHandle player = tags_manager.getFirstHavingTag("raijin");
-	   // GET_COMP(tPlayer, player, TCompTransform);
-	   // startPoint = tPlayer->getPosition();
-	   // dbg("Set StartPoint\n");
+	//	CHandle player = tags_manager.getFirstHavingTag("raijin");
+	//	GET_COMP(tPlayer, player, TCompTransform);
+	//	startPoint = tPlayer->getPosition();
+	//	dbg("Set StartPoint\n");
 	//}
 	//if (io->keys['9'].becomesPressed()) {
-	   // CHandle player = tags_manager.getFirstHavingTag("raijin");
-	   // GET_COMP(tPlayer, player, TCompTransform);
-	   // endPoint = tPlayer->getPosition();
-	   // dbg("Set EndPoint\n");
+	//	CHandle player = tags_manager.getFirstHavingTag("raijin");
+	//	GET_COMP(tPlayer, player, TCompTransform);
+	//	endPoint = tPlayer->getPosition();
+	//	dbg("Set EndPoint\n");
 	//}
 	//if (io->keys['0'].becomesPressed()) {
-	   // bt btTest = bt();
-	   // int res = btTest.getPathDebug(startPoint, endPoint, SBB::readSala());
-	   // dbg("get path result: %d", res);
-	   // dbg("\n", res);
+	//	bt_guard bttest;
+	//	int res = bttest.getPathDebug(startPoint, endPoint);
+	//	dbg("get path result: %d", res);
+	//	dbg("\n", res);
 	//}
 	//---------------------
 
@@ -923,9 +924,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-				),
+			),
 			polarityForces.end()
-			);
+		);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}
