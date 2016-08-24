@@ -138,6 +138,7 @@ class player_controller : public CPlayerBase {
 	void UpdateActionsTrigger();
 
 	void RecalcAttractions();
+	bool affectedByPolarity();
 	VEC3 calcForceEffect(const PolarityForce& force);//VEC3 point_pos, bool atraction);
 	VEC3 calcFinalForces(vector<VEC3>& forces, vector<float>& ponderations);
 	//--------------------------------------------------------------------

@@ -53,6 +53,7 @@
 		"UNSTUCK_DISTANCE" : 5.0
 	},	
 	"bt_mole" : {
+		"DIST_REACH_PNT" : 0.2,
 		"SPEED_WALK" : 2.0,
 		"SPEED_ROT" : 200,
 		"distMaxToBox" : 10.0,

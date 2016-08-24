@@ -185,6 +185,7 @@ end
 
 function OnUseGenerator( param )
 	p:print( "OnUseGenerator: "..param.."\n" )
+	CallFunction("OnUseGenerator_"..param)
 	p:play_sound("event:/OnUseGenerator")
 end
 

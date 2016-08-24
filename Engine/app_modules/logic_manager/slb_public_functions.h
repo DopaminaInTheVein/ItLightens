@@ -149,6 +149,7 @@ public:
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);
 	void playVideo(const char* video_route);
+	void playVideoAndDo(const char* video_route, const char* lua_code);
 	void playerRoom(int newRoom);
 	void playerTalks(const char* text, const char* iconName, const char* iconText);
 	void playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor);

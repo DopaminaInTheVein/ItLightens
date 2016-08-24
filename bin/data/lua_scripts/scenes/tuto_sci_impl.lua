@@ -2,7 +2,9 @@ p = Public()
 
 function openDoorTutoSci( )
 	p:print( "openDoorTutoSci\n")
-	cam:fade_out(1)
-	p:setControlEnabled(0)
-	p:exec_command("LoadLevel(\"level_1\");", 1) -- Defined in functions.lua
+	LoadLevel("level_1") -- Defined in functions.lua
+end
+
+function OnUseGenerator_gen_tuto_sci( )
+	p:player_talks("gen tuto sci", "scientific.dds", "SCI")
 end

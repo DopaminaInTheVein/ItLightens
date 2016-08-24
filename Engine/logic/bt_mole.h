@@ -92,6 +92,7 @@ public:
 	bool getUpdateInfo() override;
 	void update(float elapsed);
 	void readIniFileAttr();
+	void renderInMenu();
 	//conditions
 	//bool checkBoxes();
 	//actions

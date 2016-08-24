@@ -21,13 +21,12 @@ function auxiliarMusic()
 end
 
 function OnStart_ms3()
-  p:print("OnLoaded Scene MS3")
+  p:print("OnStarted Scene MS3")
   isDoorOpen = false
   alert = false
   stateElevator = 1 -- 1= up , 0 = down
   cp_elevator = false
   cp_door_opened = false
-  p:play_video("data\\videos\\intro.avi")
   p:exec_command("auxiliarMusic();",14)
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )

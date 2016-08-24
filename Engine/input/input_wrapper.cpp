@@ -87,6 +87,9 @@ bool CInputWrapper::ActionButtonBecomesPessed() {
 bool CInputWrapper::JumpButtonBecomesPressed() {
 	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed();
 }
+bool CInputWrapper::IsImpulseUpButtonPressed() {
+	return io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed();
+}
 bool CInputWrapper::PossessionButtonBecomesPressed() {
 	return io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed();
 }

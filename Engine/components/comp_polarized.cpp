@@ -206,5 +206,11 @@ void TCompPolarized::sendMessagePlayer(const TMsgPolarize & msg)
 }
 
 PolarityForce TCompPolarized::getForce() {
-	return force;
+	if (enabled) return force;
+	return PolarityForce();
+}
+
+void TCompPolarized::setEnabled(bool new_enabled)
+{
+	enabled = new_enabled;
 }

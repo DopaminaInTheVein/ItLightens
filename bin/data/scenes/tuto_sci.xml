@@ -17,21 +17,6 @@
 <entity>
 <tags/>
 <name
-   name="cosa_para_abrir_puerta"/>
-<transform
-   pos="74.7345 7.09427 -1.12683"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/cosa_para_abrir_puerta.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="puerta_arriba"/>
 <transform
    pos="76.0347 7.11366 -2.95113"
@@ -69,6 +54,21 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/tuto_sci/paredes.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator"/>
+<transform
+   pos="75.3317 7.89981 -0.590158"
+   quat="0 0.939693 0 -0.34202"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>

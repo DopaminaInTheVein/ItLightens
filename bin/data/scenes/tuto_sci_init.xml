@@ -2,29 +2,6 @@
 <entity
    reload="yes">
 <tags
-   tags="drone platform"/>
-<drone
-   espatllat="yes"
-   textureFront="droneFront"
-   textureBack="droneBack"/>
-<name
-   name="Drone_1"/>
-<transform
-   pos="70.8593 1.98545 -2.75757"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
    tags="AI AI_guard"/>
 <bt_guard
    kpt_size="2"
@@ -168,7 +145,7 @@
    quat="0 0.382683 0 0.92388"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/mesa_cientifico_up_mapeado.static_mesh"/>
+   name="static_meshes/tuto_sci/mesa_cientifico_up_mapeado.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -214,6 +191,50 @@
    scale="1.0"/>
 <room
    name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="drone platform"/>
+<drone
+   espatllat="no"
+   textureFront="droneFront"
+   textureBack="droneBack"/>
+<name
+   name="DronePlus_1"/>
+<transform
+   pos="70.6917 3.82912 -2.78086"
+   quat="0 1.0 0 0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="drone"/>
+<local_aabb/>
+<polarized
+   pol="plus"
+   offset="0.0321426 0.966293 0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="gen_tuto_sci"/>
+<transform
+   pos="75.3317 7.89981 -0.590158"
+   quat="0 0.939693 0 -0.34202"
+   scale="1.0"/>
 
 </entity>
 

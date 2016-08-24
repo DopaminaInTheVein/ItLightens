@@ -109,7 +109,8 @@ void player_controller::rechargeEnergy()
 	GET_COMP(gen, generatorNear, TCompGenerator);
 	float life_recover = gen->use();
 	gainLife(life_recover);
-	//Evolve(eEvol::second);
+	SET_ANIM_PLAYER_P(AST_RECHARGE);
+	logic_manager->throwEvent(logic_manager->OnUseGenerator, GET_NAME(generatorNear));
 }
 
 void player_controller::gainLife(float amoung)
@@ -343,12 +344,23 @@ void player_controller::Falling()
 	}
 }
 
+bool player_controller::affectedByPolarity()
+{
+	for (auto forceHandle : polarityForces) {
+		PolarityForce force = getPolarityForce(forceHandle);
+		if (force.polarity != NEUTRAL) return true;
+	}
+	return false;
+}
+
 void player_controller::RecalcAttractions()
 {
 	PROFILE_FUNCTION("player controller: recalc attraction");
 
+	//gravity_active = true;
+
 	// Calc all_forces & Find Orbit force if exists
-	if (pol_state != NEUTRAL && polarityForces.size() > 0) {
+	if (pol_state != NEUTRAL && affectedByPolarity()/*polarityForces.size() > 0*/) {
 		// Remove gravity, we will control the player
 		inertia_time = 0.f;
 		cc->SetGravity(false);
@@ -360,6 +372,7 @@ void player_controller::RecalcAttractions()
 			PolarityForce force = getPolarityForce(forceHandle);
 
 			if (force.polarity == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
+			gravity_active = false;
 
 			VEC3 localForce = calcForceEffect(force);
 			assert(isValid(localForce));
@@ -386,7 +399,7 @@ void player_controller::RecalcAttractions()
 			inertia_time += getDeltaTime();
 		}
 	}
-
+	//cc->SetGravity(gravity_active);
 	all_forces.clear();
 	force_ponderations.clear();
 }
@@ -624,8 +637,6 @@ void player_controller::UpdateActionsTrigger() {
 	if (canRecharge()) {
 		if (controller->ActionButtonBecomesPessed()) {
 			rechargeEnergy();
-			SET_ANIM_PLAYER_P(AST_RECHARGE);
-			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
 		}
 		else {
 			Gui->setActionAvailable(eAction::RECHARGE);

@@ -50,10 +50,12 @@ void TCompRoomSwitch::onTriggerExit(const TMsgTriggerOut & msg)
 		}
 	}
 	for (int i = 0; i < TASKLIST_PICKUP_PILA; ++i) {
+#ifdef TASK_LIST_ENABLED
 		CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
 		CEntity * tasklist_e = tasklist;
 		Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
 		tasklist_comp->completeTask(i);
+#endif
 	}
 }
 

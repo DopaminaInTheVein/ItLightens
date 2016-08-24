@@ -261,7 +261,7 @@ bool CPlayerBase::UpdateMovDirection() {
 			moving = true;
 			horizontal = true;
 		}
-		if ((controller->JumpButtonBecomesPressed()) && !gravity_active) {
+		if ((controller->IsImpulseUpButtonPressed()) && !gravity_active) {
 			directionVertical = VEC3(0, 0.25, 0);
 			//TODO: xbobx
 			moving = true;

@@ -208,11 +208,12 @@ void player_controller_cientifico::CreateBomb()
 		objs_amoung[obj] = 5;
 		if (bomb_handle.isValid()) bomb_handle.destroy();
 		spawnBomb(bomb_offset_1);
-
+#ifdef TASK_LIST_ENABLED
 		CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
 		CEntity * tasklist_e = tasklist;
 		Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
 		tasklist_comp->completeTask(TASKLIST_CREATE_BOMB);
+#endif // TASK_LIST_ENABLED
 
 		//bomb_handle.sendMsg(TMsgActivate());
 		ChangeState("idle");

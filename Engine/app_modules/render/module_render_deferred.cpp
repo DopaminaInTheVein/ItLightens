@@ -609,7 +609,7 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 		tech->activate();
 
 		getHandleManager<TCompPolarized>()->each([pol](TCompPolarized* c) {
-			if (c->force.polarity == pol) {	//render polarity designed only
+			if (c->getForce().polarity == pol) {	//render polarity designed only
 				CEntity *e = CHandle(c).getOwner();
 				TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
 				TCompTransform *c_tmx = e->get<TCompTransform>();
@@ -655,7 +655,6 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 }
 
 void CRenderDeferredModule::ApplySSAO() {
-
 	Render.activateBackBuffer();
 
 	activateBlend(BLENDCFG_SUBSTRACT);
@@ -827,7 +826,7 @@ void CRenderDeferredModule::render() {
 	rt_black->clear(VEC4(0, 0, 0, 1));
 	rt_data->clear(VEC4(0, 0, 0, 0));
 	rt_specular->clear(VEC4(0, 0, 0, 0));
-	rt_glossiness->clear(VEC4(0,0,0,0));
+	rt_glossiness->clear(VEC4(0, 0, 0, 0));
 
 	generateShadowMaps();
 
@@ -857,7 +856,6 @@ void CRenderDeferredModule::render() {
 	//blurEffectLights();
 
 	 //render_particles_instanced.render();
-	
 
 	//MarkInteractives(VEC4(1, 1, 0, 1));
 
@@ -872,7 +870,6 @@ void CRenderDeferredModule::render() {
 	drawFullScreen(rt_final, tech);*/
 
 	drawFullScreen(rt_final);
-
 
 	g_particlesManager->renderParticles();   //render all particles systems
 
@@ -936,7 +933,6 @@ void CRenderDeferredModule::render() {
 		activateBlend(BLENDCFG_DEFAULT);
 	}
 
-
 	// Leave the 3D Camera active
 	activateRenderCamera3D();
 }
@@ -971,7 +967,6 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		activateBlend(BLENDCFG_DEFAULT);
 		activateZ(ZCFG_ALL_DISABLED);
 		drawFullScreen(tex_screen);
-
 	}
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
@@ -1042,7 +1037,7 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 		Render.activateBackBuffer();
 		activateZ(ZCFG_ALL_DISABLED);
-		
+
 		drawFullScreen(rt_black);
 	}*/
 }

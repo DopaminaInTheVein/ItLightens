@@ -47,6 +47,7 @@ public:
 
 	bool ActionButtonBecomesPessed();
 	bool JumpButtonBecomesPressed();
+	bool IsImpulseUpButtonPressed();
 	bool PossessionButtonBecomesPressed();
 	bool SenseButtonBecomesPressed();
 
