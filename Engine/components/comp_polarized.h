@@ -16,6 +16,7 @@ struct TCompPolarized : public TCompBase {
 	VEC3				origin;
 	bool				send = false;
 	bool				moving = false;
+	bool				enabled = true;
 	VEC3				last_position;
 
 	TMsgPolarize		msg_in;
@@ -49,6 +50,9 @@ struct TCompPolarized : public TCompBase {
 
 	//Get Force to Player
 	PolarityForce getForce();
+
+	//Enable and disable polarity
+	void setEnabled(bool);
 };
 
 #endif

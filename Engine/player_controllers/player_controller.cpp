@@ -109,7 +109,8 @@ void player_controller::rechargeEnergy()
 	GET_COMP(gen, generatorNear, TCompGenerator);
 	float life_recover = gen->use();
 	gainLife(life_recover);
-	//Evolve(eEvol::second);
+	SET_ANIM_PLAYER_P(AST_RECHARGE);
+	logic_manager->throwEvent(logic_manager->OnUseGenerator, GET_NAME(generatorNear));
 }
 
 void player_controller::gainLife(float amoung)
@@ -277,7 +278,7 @@ void player_controller::Jump()
 			-curSpeed.x * 0.1f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
 			-curSpeed.z * 0.1f
-			);
+		);
 		//--------------------------------------
 	}
 	else {
@@ -310,7 +311,7 @@ void player_controller::Jumping()
 		SET_ANIM_PLAYER(AST_IDLE);
 	}
 
-	if ((controller->IsJumpButtonPressed()) && gravity_active) {
+	if ((controller->JumpButtonBecomesPressed()) && gravity_active) {
 		if (gravity_active) {
 			cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 			energyDecreasal(jump_energy);
@@ -329,7 +330,7 @@ void player_controller::Falling()
 	//Debug->LogRaw("%s\n", io->keys[VK_SPACE].becomesPressed() ? "true" : "false");
 
 	SET_ANIM_PLAYER(AST_FALL);
-	if ((controller->IsJumpButtonPressed()) && gravity_active) {
+	if ((controller->JumpButtonBecomesPressed()) && gravity_active) {
 		cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f), true);
 		energyDecreasal(jump_energy);
 		logic_manager->throwEvent(logic_manager->OnDoubleJump, "");
@@ -343,12 +344,23 @@ void player_controller::Falling()
 	}
 }
 
+bool player_controller::affectedByPolarity()
+{
+	for (auto forceHandle : polarityForces) {
+		PolarityForce force = getPolarityForce(forceHandle);
+		if (force.polarity != NEUTRAL) return true;
+	}
+	return false;
+}
+
 void player_controller::RecalcAttractions()
 {
 	PROFILE_FUNCTION("player controller: recalc attraction");
 
+	//gravity_active = true;
+
 	// Calc all_forces & Find Orbit force if exists
-	if (pol_state != NEUTRAL && polarityForces.size() > 0) {
+	if (pol_state != NEUTRAL && affectedByPolarity()/*polarityForces.size() > 0*/) {
 		// Remove gravity, we will control the player
 		inertia_time = 0.f;
 		cc->SetGravity(false);
@@ -360,6 +372,7 @@ void player_controller::RecalcAttractions()
 			PolarityForce force = getPolarityForce(forceHandle);
 
 			if (force.polarity == NEUTRAL) continue;		//if pol is neutral shouldnt have any effect
+			gravity_active = false;
 
 			VEC3 localForce = calcForceEffect(force);
 			assert(isValid(localForce));
@@ -386,7 +399,7 @@ void player_controller::RecalcAttractions()
 			inertia_time += getDeltaTime();
 		}
 	}
-
+	//cc->SetGravity(gravity_active);
 	all_forces.clear();
 	force_ponderations.clear();
 }
@@ -525,35 +538,36 @@ void player_controller::UpdateMoves()
 	cc->AddMovement(newMovement * getDeltaTime());
 }
 
-//Test CLH borrar!!
+//Test CLH naveshes
 //---------
-VEC3 startPoint;
-VEC3 endPoint;
-#include "logic/bt.h"
+//VEC3 startPoint;
+//VEC3 endPoint;
+//#include "logic/bt_guard.h"
+//#include "app_modules/io/io.h"
 //---------
 void player_controller::UpdateInputActions()
 {
 	PROFILE_FUNCTION("update input actions");
 
-	//Test borrar CLH!!!
+	//Test CLH navmeshes
 	//----------------------
 	//if (io->keys['8'].becomesPressed()) {
-	   // CHandle player = tags_manager.getFirstHavingTag("raijin");
-	   // GET_COMP(tPlayer, player, TCompTransform);
-	   // startPoint = tPlayer->getPosition();
-	   // dbg("Set StartPoint\n");
+	//	CHandle player = tags_manager.getFirstHavingTag("raijin");
+	//	GET_COMP(tPlayer, player, TCompTransform);
+	//	startPoint = tPlayer->getPosition();
+	//	dbg("Set StartPoint\n");
 	//}
 	//if (io->keys['9'].becomesPressed()) {
-	   // CHandle player = tags_manager.getFirstHavingTag("raijin");
-	   // GET_COMP(tPlayer, player, TCompTransform);
-	   // endPoint = tPlayer->getPosition();
-	   // dbg("Set EndPoint\n");
+	//	CHandle player = tags_manager.getFirstHavingTag("raijin");
+	//	GET_COMP(tPlayer, player, TCompTransform);
+	//	endPoint = tPlayer->getPosition();
+	//	dbg("Set EndPoint\n");
 	//}
 	//if (io->keys['0'].becomesPressed()) {
-	   // bt btTest = bt();
-	   // int res = btTest.getPathDebug(startPoint, endPoint, SBB::readSala());
-	   // dbg("get path result: %d", res);
-	   // dbg("\n", res);
+	//	bt_guard bttest;
+	//	int res = bttest.getPathDebug(startPoint, endPoint);
+	//	dbg("get path result: %d", res);
+	//	dbg("\n", res);
 	//}
 	//---------------------
 
@@ -599,7 +613,7 @@ void player_controller::UpdateInputActions()
 		pol_state_prev = pol_state;
 	}
 
-	if ((controller->IsActionButtonPessed()) && nearStunable()) {
+	if ((controller->ActionButtonBecomesPessed()) && nearStunable()) {
 		energyDecreasal(5.0f);
 		// Se avisa el ai_poss que ha sido stuneado
 		CEntity* ePoss = currentStunable;
@@ -621,23 +635,21 @@ void player_controller::UpdateActionsTrigger() {
 	PROFILE_FUNCTION("player_controller: update Actions trigger");
 
 	if (canRecharge()) {
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			rechargeEnergy();
-			SET_ANIM_PLAYER_P(AST_RECHARGE);
-			logic_manager->throwEvent(logic_manager->OnUseGenerator, "");
 		}
 		else {
 			Gui->setActionAvailable(eAction::RECHARGE);
 		}
 	}
 	else if (canPassWire) {
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(endPointWire));
 			logic_manager->throwEvent(logic_manager->OnUseCable, "");
 		}
 	}
 	else if (canRechargeDrone) {
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			TMsgActivate msg;
 			CEntity *drone_e = drone;
 			drone_e->sendMsg(msg);
@@ -648,7 +660,7 @@ void player_controller::UpdateActionsTrigger() {
 		}
 	}
 	else if (canNotRechargeDrone) {
-		if (controller->IsActionButtonPessed()) {
+		if (controller->ActionButtonBecomesPessed()) {
 			logic_manager->throwEvent(logic_manager->OnNotRechargeDrone, "");
 		}
 		else {
@@ -663,7 +675,7 @@ void player_controller::UpdatePossession() {
 	PROFILE_FUNCTION("update poss");
 	recalcPossassable();
 	if (currentPossessable.isValid()) {
-		if (controlEnabled && (controller->IsPossessionButtonPressed())) {
+		if (controlEnabled && (controller->PossessionButtonBecomesPressed())) {
 			// Se avisa el ai_poss que ha sido pose\EDdo
 			CEntity* ePoss = currentPossessable;
 			TMsgAISetPossessed msg;
@@ -687,7 +699,7 @@ void player_controller::UpdatePossession() {
 			//t->setPosition(VEC3(0, 200, 0));
 			player_curr_speed = 0;
 
-			logic_manager->throwEvent(logic_manager->OnPossess, "");
+			logic_manager->throwEvent(logic_manager->OnPossess, ePoss->getName());
 		}
 	}
 }
@@ -827,7 +839,7 @@ void player_controller::UpdateOverCharge() {
 		float currentLife = getLife();
 
 		if (currentLife > evolution_limit) {
-			if (controller->IsActionButtonPessed()) {
+			if (controller->ActionButtonBecomesPessed()) {
 				startOverCharge();
 			}
 			else {
@@ -923,9 +935,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-				),
+			),
 			polarityForces.end()
-			);
+		);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}

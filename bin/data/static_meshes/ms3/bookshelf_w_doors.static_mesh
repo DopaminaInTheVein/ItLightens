@@ -1,4 +1,1 @@
 <static_mesh>
-  <slot mesh="meshes/bookshelf_w_doors__estanteria_baja_con_puertas.mesh" material="materials/estanteria_baja_con_puertas.material" mesh_idx="0"/>
-  <slot mesh="meshes/bookshelf_w_doors__hinge_estanteria_baja_con_puertas.mesh" material="materials/hinge_estanteria_baja_con_puertas.material" mesh_idx="1"/>
-</static_mesh>

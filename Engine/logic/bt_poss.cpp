@@ -17,6 +17,7 @@ void bt_poss::addBtPossStates() {
 	addChild("unpossession", "unpossessing", ACTION, NULL, (btaction)&bt_poss::actionUnpossessing);
 	addChild("unpossession", "stunt", ACTION, NULL, (btaction)&bt_poss::actionStunt);
 	addChild("unpossession", "stunt_end", ACTION, NULL, (btaction)&bt_poss::actionStuntEnd);
+	addNpcStates("possessable");
 }
 
 // MENSAJES
@@ -46,6 +47,13 @@ void bt_poss::onSetStunned(const TMsgAISetStunned& msg) {
 	}
 }
 
+void bt_poss::onForceUnPosses(const TMsgUnpossesDamage& msg)
+{
+	TMsgAISetPossessed msgUnpossessed;
+	msgUnpossessed.possessed = false;
+	onSetPossessed(msgUnpossessed);
+}
+
 //ACCIONES implementables
 void bt_poss::_actionBeforePossession() {
 	//Default: Nothing to do
@@ -58,7 +66,8 @@ void bt_poss::_actionBeingUnpossessed() {
 }
 
 void bt_poss::_actionWhenStunt() {
-	dbg("Being Stunt");
+	//dbg("Being Stunt");
+	stuck_time = 0.f;
 	//Ejecutar animacion etc.
 }
 

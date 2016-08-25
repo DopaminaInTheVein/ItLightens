@@ -23,13 +23,33 @@ void bt_mole::readIniFileAttr() {
 			std::string file_ini = app.file_initAttr_json;
 			map<std::string, float> fields = readIniAtrData(file_ini, "bt_mole");
 
-			assignValueToVar(speed, fields);
-			assignValueToVar(rotation_speed, fields);
-			rotation_speed = deg2rad(rotation_speed);
+			readNpcIni(fields);
+
+			//assignValueToVar(speed, fields);
+			//assignValueToVar(rotation_speed, fields);
+			//rotation_speed = deg2rad(rotation_speed);
 			assignValueToVar(distMaxToBox, fields);
 			assignValueToVar(rechTime, fields);
 		}
 	}
+}
+
+//NPC virtuals
+TCompTransform * bt_mole::getTransform()
+{
+	return GETH_MY(TCompTransform);
+}
+void bt_mole::changeCommonState(std::string state)
+{
+	SET_ANIM_MOLE_BT(state);
+}
+CHandle bt_mole::getParent()
+{
+	return MY_OWNER;
+}
+TCompCharacterController * bt_mole::getCC()
+{
+	return GETH_MY(TCompCharacterController);
 }
 
 void bt_mole::Init()
@@ -82,8 +102,10 @@ void bt_mole::update(float elapsed) {
 	// If we become possessed, reset the tree and stop all actions
 	if (possessing)
 		setCurrent(NULL);
+	if (possessed) return;
 	if (stunned)
 		SET_ANIM_MOLE_BT(AST_STUNNED);
+	updateStuck();
 	Recalc();
 }
 
@@ -146,41 +168,60 @@ int bt_mole::actionFollowPathToWpt() {
 	if (fixedWpts.size() <= 0) return OK;
 
 	VEC3 target = fixedWpts[curwpt];
-	if (pointsToRechargePoint == currToRechargePoint) {
-		target = rechargePoint;
-	}
-	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
-		++currPathWpt;
-	}
-	if (currPathWpt < totalPathWpt) {
-		target = pathWpts[currPathWpt];
-	}
-	VEC3 npcPos = transform->getPosition();
-	VEC3 npcFront = transform->getFront();
-	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent)) {
-		SET_ANIM_MOLE_BT(AST_MOVE);
-		moveFront(speed);
-		return STAY;
-	}
-	else if (!transform->isHalfConeVision(target, deg2rad(5.0f))) {
-		SET_ANIM_MOLE_BT(AST_IDLE);
-		aimToTarget(target);
-		return STAY;
-	}
-	else {
-		float distToWPT = squaredDistXZ(target, transform->getPosition());
-		if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
+	VEC3 my_pos = getTransform()->getPosition();
+	float distance_to_point = simpleDistXZ(my_pos, target);
+
+	if (turnTo(target)) {
+		// if we didn't reach the point
+		if (distance_to_point > DIST_REACH_PNT) {
+			getPath(my_pos, target);
 			SET_ANIM_MOLE_BT(AST_MOVE);
-			moveFront(speed);
+			goTo(target);
 			return STAY;
 		}
-		else {
-			return OK;
-		}
+		return OK;
 	}
+	else {
+		SET_ANIM_MOLE_BT(AST_TURN);
+		return STAY;
+	}
+	//if (pointsToRechargePoint == currToRechargePoint) {
+	//	target = rechargePoint;
+	//}
+	//while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
+	//	++currPathWpt;
+	//}
+	//if (currPathWpt < totalPathWpt) {
+	//	target = pathWpts[currPathWpt];
+	//}
+	//VEC3 npcPos = transform->getPosition();
+	//VEC3 npcFront = transform->getFront();
+	//if (needsSteering(npcPos + npcFront, transform, SPEED_ROT, myParent)) {
+	//	SET_ANIM_MOLE_BT(AST_MOVE);
+	//	moveFront(SPEED_WALK);
+	//	return STAY;
+	//}
+	//else if (!transform->isHalfConeVision(target, deg2rad(5.0f))) {
+	//	SET_ANIM_MOLE_BT(AST_IDLE);
+	//	aimToTarget(target);
+	//	return STAY;
+	//}
+	//else {
+	//	float distToWPT = squaredDistXZ(target, transform->getPosition());
+	//	if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
+	//		SET_ANIM_MOLE_BT(AST_MOVE);
+	//		moveFront(SPEED_WALK);
+	//		return STAY;
+	//	}
+	//	else {
+	//		return OK;
+	//	}
+	//}
 }
 
 int bt_mole::actionEndPathToWpt() {
+	stuck = false;
+	stuck_time = 0.f;
 	static float recharging = 0.0f;
 	recharging += getDeltaTime();
 	SET_ANIM_MOLE_BT(AST_IDLE);
@@ -470,7 +511,7 @@ bool bt_mole::aimToTarget(VEC3 target) {
 		float yaw, pitch;
 		transform->getAngles(&yaw, &pitch);
 		if (delta_yaw > 0.15) {
-			transform->setAngles(yaw + delta_yaw*rotation_speed*getDeltaTime(), pitch);
+			transform->setAngles(yaw + delta_yaw*SPEED_ROT*getDeltaTime(), pitch);
 		}
 		else {
 			transform->setAngles(yaw + delta_yaw, pitch);
@@ -488,4 +529,16 @@ void bt_mole::moveFront(float movement_speed) {
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 	float dt = getDeltaTime();
 	cc->AddMovement(VEC3(front.x*movement_speed*dt, 0.0f, front.z*movement_speed*dt));
+}
+
+void bt_mole::renderInMenu()
+{
+	if (bt::current) ImGui::Text("NODE: %s", bt::current->getName().c_str());
+	else ImGui::Text("NODE: %s", "???\n");
+	//if (fixedWpts.size() >= 0) {
+	//	ImGui::Text("Next patrol: %d, Pos: (%f,%f,%f)"
+	//		, curwpt
+	//		, VEC3_VALUES(fixedWpts[curwpt])
+	//	);
+	//}
 }

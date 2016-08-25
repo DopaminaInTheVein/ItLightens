@@ -261,7 +261,7 @@ bool CPlayerBase::UpdateMovDirection() {
 			moving = true;
 			horizontal = true;
 		}
-		if ((controller->IsJumpButtonPressed()) && !gravity_active) {
+		if ((controller->IsImpulseUpButtonPressed()) && !gravity_active) {
 			directionVertical = VEC3(0, 0.25, 0);
 			//TODO: xbobx
 			moving = true;
@@ -290,7 +290,7 @@ bool CPlayerBase::UpdateMovDirection() {
 void CPlayerBase::UpdateJumpState() {
 	PROFILE_FUNCTION("update jump state base");
 	if (!canJump()) return;
-	if (controller->IsJumpButtonPressed()) {
+	if (controller->JumpButtonBecomesPressed()) {
 		logic_manager->throwEvent(logic_manager->OnJump, "");
 		Jump();
 	}

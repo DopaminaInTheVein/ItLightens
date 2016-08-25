@@ -4,6 +4,7 @@
 #include "comp_transform.h"
 #include "comp_physics.h"
 #include "comp_life.h"
+#include "comp_polarized.h"
 #include "handle\handle.h"
 #include "player_controllers/player_controller_cientifico.h"
 #include "entity.h"
@@ -31,6 +32,10 @@ void TCompDrone::onCreate(const TMsgEntityCreated &)
 		}
 	}
 	else h.destroy();
+	if (espatllat) {
+		GET_MY(polarity, TCompPolarized);
+		polarity->setEnabled(false);
+	}
 }
 
 void TCompDrone::onRecharge(const TMsgActivate &)
@@ -56,6 +61,8 @@ void TCompDrone::onRepair(const TMsgRepair &)
 		espatllat = false;
 		sciInDistance = false;
 		CEntity * scie = nullptr;
+		GET_MY(polarity, TCompPolarized);
+		polarity->setEnabled(true);
 		for (CHandle sci : tags_manager.getHandlesByTag(getID("AI_cientifico"))) {
 			CEntity * sci_e = sci;
 			player_controller_cientifico * sci_e_controller = sci_e->get<player_controller_cientifico>();
@@ -202,6 +209,7 @@ bool TCompDrone::save(std::ofstream& os, MKeyValue& atts)
 	}
 	atts.put("textureFront", self_ilum_front);
 	atts.put("textureBack", self_ilum_back);
+	if (espatllat) atts.put("espatllat", espatllat);
 
 	return true;
 }

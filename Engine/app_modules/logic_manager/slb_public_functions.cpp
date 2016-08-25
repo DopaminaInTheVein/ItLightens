@@ -8,6 +8,7 @@
 #include "components/comp_charactercontroller.h"
 #include "components/comp_life.h"
 #include "components/comp_video.h"
+#include "components/comp_tasklist.h"
 #include "logic/bt_guard.h"
 #include "logic/bt_scientist.h"
 #include "logic/pila_container.h"
@@ -537,6 +538,13 @@ void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA", "%s\n", to_print);
 }
 
+void SLBPublicFunctions::completeTasklist(int i) {
+	CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
+	CEntity * tasklist_e = tasklist;
+	Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
+	tasklist_comp->completeTask(i);
+}
+
 void SLBPublicFunctions::setControlEnabled(int enabled) {
 	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
 	CHandle main_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
@@ -553,7 +561,6 @@ void SLBPublicFunctions::playSound(const char* sound_route) {
 }
 
 void SLBPublicFunctions::play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z) {
-
 	VEC3 player_pos = VEC3(pl_x, pl_y, pl_z);
 	player_pos.Normalize();
 
@@ -580,25 +587,36 @@ void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 }
 
 void SLBPublicFunctions::playVideo(const char* video_route) {
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
+	CHandle h = createPrefab("video_player");
+	GET_COMP(video_player, h, TCompVideo);
+	video_player->setup(video_route);
+	video_player->init();
+	//auto hm = CHandleManager::getByName("entity");
+	//CHandle new_hp = hm->createHandle();
+	//CEntity* entity = new_hp;
 
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "play_video");
-	new_hn.load(atts1);
-	entity->add(new_hn);
+	//auto hm1 = CHandleManager::getByName("name");
+	//CHandle new_hn = hm1->createHandle();
+	//MKeyValue atts1;
+	//atts1.put("name", "play_video");
+	//new_hn.load(atts1);
+	//entity->add(new_hn);
 
-	auto hm3 = CHandleManager::getByName("video_player");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["file"] = video_route;
-	new_hl.load(atts3);
-	entity->add(new_hl);
-	TCompVideo * new_comp = new_hl;
-	new_comp->init();
+	//auto hm3 = CHandleManager::getByName("video_player");
+	//CHandle new_hl = hm3->createHandle();
+	//MKeyValue atts3;
+	//atts3["file"] = video_route;
+	//new_hl.load(atts3);
+	//entity->add(new_hl);
+	//TCompVideo * new_comp = new_hl;
+	//new_comp->init();
+}
+
+void SLBPublicFunctions::playVideoAndDo(const char* video_route, const char* lua_code) {
+	CHandle h = createPrefab("video_player");
+	GET_COMP(video_player, h, TCompVideo);
+	video_player->setup(video_route, lua_code);
+	video_player->init();
 }
 
 void SLBPublicFunctions::playerRoom(int newRoom) {
@@ -616,7 +634,7 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 void SLBPublicFunctions::playerTalks(const char* text, const char* iconName, const char* iconText) {
 	// DO Something with text...
 	dbg(text);
-
+	for (auto handles : tags_manager.getHandlesByTag("talk_text")) handles.destroy();
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
@@ -636,6 +654,12 @@ void SLBPublicFunctions::playerTalks(const char* text, const char* iconName, con
 	atts3["iconText"] = iconText;
 	new_hl.load(atts3);
 	entity->add(new_hl);
+
+	//Add tag talk text
+	TMsgSetTag msg;
+	msg.add = true;
+	msg.tag = "talk_text";
+	new_hp.sendMsg(msg);
 }
 
 void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor) {

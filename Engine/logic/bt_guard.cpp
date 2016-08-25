@@ -61,20 +61,18 @@ void bt_guard::readIniFileAttr() {
 			std::string file_ini = app.file_initAttr_json;
 			map<std::string, float> fields = readIniAtrData(file_ini, "bt_guard");
 
-			assignValueToVar(DIST_REACH_PNT, fields);
+			readNpcIni(fields);
+
 			assignValueToVar(PLAYER_DETECTION_RADIUS, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_ENTER, fields);
 			assignValueToVar(DIST_SQ_SHOT_AREA_LEAVE, fields);
 			assignValueToVar(DIST_RAYSHOT, fields);
 			assignValueToVar(DIST_SQ_PLAYER_DETECTION, fields);
 			assignValueToVar(DIST_SQ_PLAYER_LOST, fields);
-			assignValueToVar(SPEED_WALK, fields);
 			assignValueToVar(SHOOT_PREP_TIME, fields);
 			assignValueToVar(MIN_SQ_DIST_TO_PLAYER, fields);
 			assignValueToVar(CONE_VISION, fields);
 			CONE_VISION = deg2rad(CONE_VISION);
-			assignValueToVar(SPEED_ROT, fields);
-			SPEED_ROT = deg2rad(SPEED_ROT);
 			assignValueToVar(DAMAGE_LASER, fields);
 			assignValueToVar(MAX_REACTION_TIME, fields);
 			assignValueToVar(MAX_BOX_REMOVAL_TIME, fields);
@@ -87,8 +85,6 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
-			assignValueToVar(MAX_STUCK_TIME, fields);
-			assignValueToVar(UNSTUCK_DISTANCE, fields);
 			SHOT_OFFSET = VEC4(0, 1.5f, 0.5f, 1);
 		}
 	}
@@ -113,9 +109,10 @@ void bt_guard::Init()
 		// insert all states in the map
 		createRoot("guard", PRIORITY, NULL, NULL);
 		// stuck management
-		addChild("guard", "stucksequence", SEQUENCE, (btcondition)&bt_guard::guardStuck, NULL);
-		addChild("stucksequence", "unstuckturn", ACTION, NULL, (btaction)&bt_guard::actionUnstuckTurn);
-		addChild("stucksequence", "unstuckmove", ACTION, NULL, (btaction)&bt_guard::actionUnstuckMove);
+		addNpcStates("guard");
+		//addChild("guard", "stucksequence", SEQUENCE, (btcondition)&npc::npcStuck, NULL);
+		//addChild("stucksequence", "unstuckturn", ACTION, NULL, (btaction)&npc::actionUnstuckTurn);
+		//addChild("stucksequence", "unstuckmove", ACTION, NULL, (btaction)&npc::actionUnstuckMove);
 		// formation toggle
 		addChild("guard", "formationsequence", SEQUENCE, (btcondition)&bt_guard::checkFormation, NULL);
 		addChild("formationsequence", "gotoformation", ACTION, NULL, (btaction)&bt_guard::actionGoToFormation);
@@ -157,15 +154,10 @@ void bt_guard::Init()
 }
 
 //conditions
-bool bt_guard::guardStuck() {
-	PROFILE_FUNCTION("guard: guard stuck");
-	return stuck;
-}
-
 bool bt_guard::playerStunned() {
 	PROFILE_FUNCTION("guard: player stunned");
 	if (stunned == true) {
-		logic_manager->throwEvent(logic_manager->OnStunned, "");
+		logic_manager->throwEvent(logic_manager->OnStunned, MY_NAME);
 		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 		return true;
 	}
@@ -328,71 +320,13 @@ bool bt_guard::checkFormation() {
 	return formation_toggle;
 }
 
-//actions
-int bt_guard::actionUnstuckTurn() {
-	PROFILE_FUNCTION("guard: actionunstuckturn");
-	if (!myParent.isValid()) return false;
-	// turn to get unstuck
-	SET_ANIM_GUARD(AST_IDLE);
-	if (!reoriented) {
-		VEC3 left = getTransform()->getLeft();
-		VEC3 front = getTransform()->getFront();
-		switch (direction) {
-		case 0: {
-			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			direction = 2;
-			break;
-		}
-		case 1: {
-			unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			direction = 1;
-			break;
-		}
-		case 2: {
-			unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			direction = 0;
-			break;
-		}
-		default: {
-			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			direction = 0;
-			break;
-		}
-		}
-		reoriented = true;
-	}
-	if (!turnTo(unstuck_target))
-		return STAY;
-	else {
-		reoriented = false;
-		stuck_time = 0.f;
-		stuck = false;
-		return OK;
-	}
-}
-
-int bt_guard::actionUnstuckMove() {
-	PROFILE_FUNCTION("guard: actionunstuckmove");
-	if (!myParent.isValid()) return false;
-	// move to get unstuck
-	VEC3 myPos = getTransform()->getPosition();
-	if (simpleDistXZ(myPos, unstuck_target) > DIST_REACH_PNT) {
-		getPath(myPos, unstuck_target);
-		SET_ANIM_GUARD(AST_MOVE);
-		goTo(unstuck_target);
-		return STAY;
-	}
-	else {
-		return OK;
-	}
-}
-
 int bt_guard::actionStunned() {
 	PROFILE_FUNCTION("guard: actionstunned");
 	if (!myParent.isValid()) return false;
 	lookAtFront();
 	stuck = false;
 	stuck_time = 0.f;
+	if (!stunt_recover) return STAY;
 	if (timerStunt < 0) {
 		stunned = false;
 		logic_manager->throwEvent(logic_manager->OnStunnedEnd, "");
@@ -990,21 +924,22 @@ void bt_guard::noise(const TMsgNoise& msg) {
 	}
 }
 
+// NOT USED!
 void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 {
-	PROFILE_FUNCTION("guard: onmagneticbomb");
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	VEC3 myPos = getTransform()->getPosition();
-	if (inSquaredRangeXZ_Y(msg.pos, myPos, msg.r, 5.f)) {
-		resetTimers();
-		stunned = true;
-		SET_ANIM_GUARD(AST_STUNNED);
-		checkStopDamage();
-		/*isPathObtainedAccessible = false;
-		isPathObtained = false;*/
+	//PROFILE_FUNCTION("guard: onmagneticbomb");
+	//TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	//VEC3 myPos = getTransform()->getPosition();
+	//if (inSquaredRangeXZ_Y(msg.pos, myPos, msg.r, 5.f)) {
+	//	resetTimers();
+	//	stunned = true;
+	//	SET_ANIM_GUARD(AST_STUNNED);
+	//	checkStopDamage();
+	//	/*isPathObtainedAccessible = false;
+	//	isPathObtained = false;*/
 
-		setCurrent(NULL);
-	}
+	//	setCurrent(NULL);
+	//}
 	//VEC3 myPos = getTransform()->getPosition();
 	//float d = squaredDist(msg.pos, myPos);
 
@@ -1020,6 +955,7 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
+		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStunned, MY_NAME);
 		SET_ANIM_GUARD(AST_STUNNED);
 		checkStopDamage();
 		/*isPathObtainedAccessible = false;
@@ -1099,143 +1035,6 @@ void bt_guard::onBoxHit(const TMsgBoxHit& msg) {
  // -- Go To -- //
 bool bt_guard::canHear(VEC3 position, float intensity) {
 	return (realDist(getTransform()->getPosition(), position) < DIST_SQ_SOUND_DETECTION);
-}
-
-// -- Go To -- //
-void bt_guard::goTo(const VEC3& dest) {
-	PROFILE_FUNCTION("guard: go to");
-	if (!SBB::readBool("navmesh")) {
-		return;
-	}
-	VEC3 target = dest;
-	VEC3 npcPos = getTransform()->getPosition();
-	float walk_amount = SPEED_WALK * getDeltaTime();
-	bool target_found = totalPathWpt <= 0 || currPathWpt >= totalPathWpt;
-	while (!target_found) {
-		if (fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) >= walk_amount) {
-			target_found = true;
-		}
-		else {
-			if (currPathWpt < totalPathWpt - 1) {
-				currPathWpt++;
-			}
-			else target_found = true;
-		}
-	}
-	//while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) < 0.5f) {
-	//	++currPathWpt;
-	//}
-	if (currPathWpt < totalPathWpt) {
-		target = pathWpts[currPathWpt];
-	}
-	/*else if (totalPathWpt == 0) {
-	  TCompTransform * player_transform = getPlayer()->get<TCompTransform>();
-	  VEC3 posPlayer = player_transform->getPosition();
-	  VEC3 myPos = getTransform()->getPosition();
-
-	  VEC3 dir = getTransform()->getPosition() - myPos;
-	  dir.Normalize();
-
-	  std::vector<VEC3> candidates;
-	  bool trobat = false;
-
-	  target = posPlayer + 2.0f * dir;
-	  candidates.push_back(target);
-	  target = posPlayer - 2.0f * dir;
-	  candidates.push_back(target);
-
-	  dir = player_transform->getLeft();
-	  target = posPlayer + 2.0f * dir;
-	  candidates.push_back(target);
-	  target = posPlayer - 2.0f * dir;
-	  candidates.push_back(target);
-
-	  for (auto cand : candidates) {
-		bool accesible = getPath(myPos, cand);
-		if (!accesible)
-		  continue;
-		else {
-		  target = cand;
-		  trobat = true;
-		  break;
-		}
-	  }
-
-	  if (!trobat) {
-	  isPathObtainedAccessible = false;
-	  isPathObtained = false;
-	  setCurrent(NULL);
-		return;
-	  }
-	}*/
-
-	if (needsSteering(npcPos, getTransform(), SPEED_WALK, myParent)) {
-		goForward(SPEED_WALK);
-	}
-	else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
-		turnTo(target);
-	}
-	else {
-		float distToWPT = simpleDistXZ(target, getTransform()->getPosition());
-		if (fabsf(distToWPT) > 0.1f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 0.2f) {
-			goForward(SPEED_WALK);
-		}
-	}
-}
-
-// -- Go Forward -- //
-void bt_guard::goForward(float stepForward) {
-	//static int test_forward = 0;
-	//dbg("Estoy avanzando! (%d)\n", (++test_forward) % 100);
-
-	PROFILE_FUNCTION("guard: go forward");
-	VEC3 myPos = getTransform()->getPosition();
-	float dt = getDeltaTime();
-	getCC()->AddMovement(getTransform()->getFront() * stepForward*dt);
-}
-
-// -- Turn To -- //
-bool bt_guard::turnTo(VEC3 dest, bool wide) {
-	//static int test_giro = 0;
-	//dbg("Estoy girando! (%d)\n", (++test_giro) % 100);
-
-	PROFILE_FUNCTION("guard: turn to");
-	if (!myParent.isValid()) return false;
-	int angle = 5;
-	if (wide)
-		angle = 30;
-	float angle_epsilon = deg2rad(angle);
-
-	VEC3 myPos = getTransform()->getPosition();
-	float yaw, pitch;
-	getTransform()->getAngles(&yaw, &pitch);
-
-	float dbg_yawBefore = yaw;
-
-	// Cuanto necesito girar?
-	float deltaYaw = getTransform()->getDeltaYawToAimTo(dest);
-
-	// Necesito girar menos que epsilon? --> Termino giro!
-	if (abs(deltaYaw) < angle_epsilon) {
-		//dbg("No es necesario girar. Devuelvo true. (deltayaw = %f", deltaYaw);
-		return true;
-	}
-
-	// Ajusto deltayaw al maximo que puede girar el mequetrefe
-	float maxDeltaYaw = SPEED_ROT * getDeltaTime();
-	clampAbs_me(deltaYaw, maxDeltaYaw);
-	yaw += deltaYaw;
-	getTransform()->setAngles(yaw, pitch);
-
-	//Ha acabado el giro?
-	bool done = abs(deltaYaw) < angle_epsilon;
-	//dbg("Result giro. Yaw: %f --> %f, done = %d\n", dbg_yawBefore, yaw, done);
-
-	//DEBUG!
-	//if (done) {
-	//	dbg("Turn to devuelve true!\n");
-	//}
-	return done;
 }
 
 bool bt_guard::turnToPlayer()
@@ -1558,7 +1357,7 @@ bool bt_guard::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-			);
+		);
 	}
 	noShoot = atts.getBool("noShoot", false);
 
@@ -1571,6 +1370,8 @@ bool bt_guard::load(MKeyValue& atts) {
 	formation_point = atts.getPoint("formation_point");
 	formation_dir = atts.getPoint("formation_dir");
 
+	//Stunt_recover
+	stunt_recover = atts.getBool("stunt_recover", true);
 	return true;
 }
 
@@ -1621,6 +1422,12 @@ void bt_guard::renderInMenu() {
 	ImGui::SliderFloat3("Offset Starting Shot", &SHOT_OFFSET.x, 0.f, 2.f);
 	if (bt::current) ImGui::Text("NODE: %s", bt::current->getName().c_str());
 	else ImGui::Text("NODE: %s", "???\n");
+	ImGui::Text("Next patrol: %d, Type: %s, Pos: (%f,%f,%f), Wait: %f"
+		, curkpt
+		, keyPoints[curkpt].type == KptType::Seek ? "Seek" : "Look"
+		, VEC3_VALUES(keyPoints[curkpt].pos)
+		, keyPoints[curkpt].time);
+	//ImGui::Text("Esto tira? %d", curkpt);
 }
 
 /**************/
@@ -1716,4 +1523,10 @@ bool bt_guard::isInFirstSeekPoint()
 		}
 	}
 	return res;
+}
+
+void bt_guard::changeCommonState(std::string state)
+{
+	//if (state == AST_IDLE)
+	SET_ANIM_GUARD(state);
 }

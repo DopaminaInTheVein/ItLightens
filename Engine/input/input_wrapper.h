@@ -3,6 +3,12 @@
 
 #include "input.h"
 
+#ifndef FINAL_BUILD
+#define DECL_INPUT_DEBUG(name) bool name();
+#else
+#define DECL_INPUT_DEBUG(name) bool name(){return false;}
+#endif
+
 class CInputWrapper
 {
 public:
@@ -39,6 +45,12 @@ public:
 	bool IsPossessionButtonPressed();
 	bool IsSenseButtonPressed();
 
+	bool ActionButtonBecomesPessed();
+	bool JumpButtonBecomesPressed();
+	bool IsImpulseUpButtonPressed();
+	bool PossessionButtonBecomesPressed();
+	bool SenseButtonBecomesPressed();
+
 	// (LB - RB)
 	bool IsPlusPolarityPressed();
 	bool IsMinusPolarityPressed();
@@ -53,26 +65,26 @@ public:
 	void ChangeMouseState(bool captured);
 
 	// DEBUG TOOLS
-	bool isCameraReleaseButtonPressed();
-	bool isReleaseButtonPressed();
-	bool isTeleportComboButtonPressed();
-	bool isRenderDebugComboButtonPressed();
+	DECL_INPUT_DEBUG(isCameraReleaseButtonPressed);
+	DECL_INPUT_DEBUG(isReleaseButtonPressed);
+	DECL_INPUT_DEBUG(isTeleportComboButtonPressed);
+	DECL_INPUT_DEBUG(isRenderDebugComboButtonPressing);
 
-	bool isToogleCommandLogButtonPressed();
-	bool isToogleConsoleLoguttonPressed();
-	bool isPauseGameButtonPressed();
-	bool isStopGameButtonPressed();
+	DECL_INPUT_DEBUG(isToogleCommandLogButtonPressed);
+	DECL_INPUT_DEBUG(isToogleConsoleLoguttonPressed);
+	DECL_INPUT_DEBUG(isPauseGameButtonPressed);
+	DECL_INPUT_DEBUG(isStopGameButtonPressed);
 
-	bool isSlowButtonPressed();
-	bool isDrawLineButtonPressed();
-	bool isTestSSAOButoonPressed();
-	bool isEspecialVisionButtonPressed();
-	bool isEditorLightsButtonPressed();
-	bool isParticleEditorButtonPressed();
-	bool isParticleEditorActivationPressed();
-	bool interruptGuardShotButtonPressed();
+	DECL_INPUT_DEBUG(isSlowButtonPressed);
+	DECL_INPUT_DEBUG(isDrawLineButtonPressing);
+	DECL_INPUT_DEBUG(isTestSSAOButoonPressed);
+	DECL_INPUT_DEBUG(isEspecialVisionButtonPressed);
+	DECL_INPUT_DEBUG(isEditorLightsButtonPressed);
+	DECL_INPUT_DEBUG(isParticleEditorButtonPressed);
+	DECL_INPUT_DEBUG(isParticleEditorActivationPressed);
+	DECL_INPUT_DEBUG(interruptGuardShotButtonPressed);
 
-	bool changegui();
+	DECL_INPUT_DEBUG(changegui);
 };
 
 extern CInputWrapper * controller;

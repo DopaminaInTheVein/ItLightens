@@ -11,6 +11,7 @@ bin/Engine.exe
 bin/Engine.iobj
 bin/Engine.ipdb
 bin/Engine.pdb
+bin/Engine.exp
 bin/Engined.exp
 bin/Engined.lib
 Engine/#Verone/

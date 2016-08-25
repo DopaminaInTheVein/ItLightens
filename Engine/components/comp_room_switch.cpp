@@ -6,6 +6,7 @@
 #include "handle\handle.h"
 #include "entity.h"
 #include "comp_transform.h"
+#include "comp_tasklist.h"
 #include "entity_tags.h"
 
 bool TCompRoomSwitch::load(MKeyValue & atts)
@@ -47,6 +48,14 @@ void TCompRoomSwitch::onTriggerExit(const TMsgTriggerOut & msg)
 		if (room->setName(room_back)) {
 			SBB::postSala(room_back[0]);
 		}
+	}
+	for (int i = 0; i < TASKLIST_PICKUP_PILA; ++i) {
+#ifdef TASK_LIST_ENABLED
+		CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
+		CEntity * tasklist_e = tasklist;
+		Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
+		tasklist_comp->completeTask(i);
+#endif
 	}
 }
 

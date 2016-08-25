@@ -5,6 +5,10 @@ SLB.using( SLB )
 p = Public( )
 cam = Camera()
 
+function nothing( )
+	--Default function doesnt do anything
+end
+
 function Teleport( param )
     p:print( "Teleport: "..param.."\n" )
 end

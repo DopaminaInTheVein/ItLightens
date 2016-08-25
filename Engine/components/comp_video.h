@@ -16,11 +16,13 @@ class TCompVideo : public TCompBase {
 	HDC         hdc;
 
 	std::string file;
+	std::string lua_code;
 	bool loaded = false;
 
 public:
 	bool load(MKeyValue& atts);
 	void update(float dt);
+	void setup(std::string file_name, std::string lua_code_end = "");
 	void init();
 	void ReleaseAll();
 };

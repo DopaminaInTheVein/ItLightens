@@ -184,7 +184,7 @@ void CDebug::update(float dt) {
 #ifndef NDEBUG
 	console.update();
 	DrawLog();
-	draw_lines = controller->isDrawLineButtonPressed();
+	draw_lines = controller->isDrawLineButtonPressing();
 #endif
 }
 

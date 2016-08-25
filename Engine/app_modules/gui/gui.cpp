@@ -117,7 +117,7 @@ void inline CGuiModule::setUpdater(int state, screenUpdater updater)
 void CGuiModule::update(float dt)
 {
 	toogleEnabled();
-	//callUpdater(GameController->GetGameState(), dt);
+	callUpdater(GameController->GetGameState(), dt);
 }
 
 bool CGuiModule::forcedUpdate()
@@ -189,7 +189,7 @@ void CGuiModule::updateOnVictory(float dt) {
 // ----------------------------------- RENDER MODULE ----------------------------------- //
 void inline CGuiModule::callRender(int state)
 {
-	//(this->*screenRenders[state])();
+	(this->*screenRenders[state])();
 }
 
 void CGuiModule::render() {
@@ -217,14 +217,14 @@ void CGuiModule::renderOnPlay() {
 
 // ----- Render On Stop ----- //
 void CGuiModule::renderOnStop() {
-	hudPlayer->render();
-	ImGuiState& g = *GImGui;
-	g.FontSize = resolution_y;
-	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+	//hudPlayer->render();
+	//ImGuiState& g = *GImGui;
+	//g.FontSize = resolution_y;
+	//GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
 
-	// Text Pause
-	GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSA");
-	//ImGui::GetWindowDrawList()->AddText(g.Font, g.FontSize, ImVec2(0,0), GUI::IM_WHITE, "PAUSE");
+	//// Text Pause
+	//GUI::drawText(0.4f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "PAUSA");
+	////ImGui::GetWindowDrawList()->AddText(g.Font, g.FontSize, ImVec2(0,0), GUI::IM_WHITE, "PAUSE");
 }
 
 // ----- Render On Stop Intro ----- //
@@ -264,8 +264,8 @@ void CGuiModule::renderOnVictory() {
 // ----- Render On Menu ----- //
 void CGuiModule::renderOnMenu() {
 	renderOnPlay();
-	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
-	menuPause->render();
+	//GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+	//menuPause->render();
 }
 
 // ----------------------------------- STOP MODULE ----------------------------------- //

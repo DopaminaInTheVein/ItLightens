@@ -12,20 +12,28 @@
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/prettywriter.h"
 
+#define VEC3_VALUES(name) name.x, name.y, name.z
+#define VEC4_VALUES(name) name.x, name.y, name.z, name.w
+
 #ifdef NDEBUG
 
 #define dbg(...)
 
 #else
 void		dbg(const char* fmt, ...);
-#define VEC3_VALUES(name) name.x, name.y, name.z
-#define VEC4_VALUES(name) name.x, name.y, name.z, name.w
-
 #endif
 
 #define PI 3.14159265359
 #define MOD_YAW(a) ((a > deg2rad(180.0f)) ? (a - deg2rad(360.0f)) : ((a < deg2rad(-180.0f)) ? (a + deg2rad(360.0f)) : a))
 #define assignValueToVar(name, data_map) assingValueFromMap(&name, #name, data_map)
+
+#define TASKLIST_PICKUP_PILA 5
+#define TASKLIST_LEAVE_PILA_ON_CHARGER 6
+#define TASKLIST_BREAK_WALL 7
+#define TASKLIST_ELEVATOR_DOWN 8
+#define TASKLIST_CHARGE_PILA 9
+#define TASKLIST_LEAVE_PILA 10
+#define TASKLIST_CREATE_BOMB 11
 
 using namespace rapidjson;
 

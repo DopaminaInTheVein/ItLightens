@@ -183,6 +183,10 @@ fn _parse_trigger = (
 			compi.addAttr "front_room" fr
 			compi.addAttr "back_room" br
 		)
+		local taskid = getUserProp _parsingObject "task"
+		if (component == "task_switcher" and taskid != undefined) then (
+			compi.addAttr "task" taskid
+		)
 	) else (
 		--Add trigger lua component
 		local xml = XML_PARSING.addChild "trigger_lua"

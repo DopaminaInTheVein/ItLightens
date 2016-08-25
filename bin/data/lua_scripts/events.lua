@@ -143,12 +143,16 @@ function OnLeaveBox( param )
 	p:print( "OnLeaveBox: "..param.."\n" )
 end
 
-function OnPossess( param )
-	p:print( "OnPossess: "..param.."\n" )
+function OnPossess( level, pj )
+	p:print( "OnPossess: "..level..", "..pj.."\n" )
+	CallFunction("OnPossess_"..level)
+	CallFunction("OnPossess_"..pj)
 end
 
-function OnUnpossess( param )
-	p:print( "OnUnpossess: "..param.."\n" )
+function OnUnpossess( level, pj )
+	p:print( "OnUnpossess: "..level..", "..pj.."\n" )
+	CallFunction("OnUnpossess_"..level)
+	CallFunction("OnUnpossess_"..pj)
 end
 
 function OnDash( param )
@@ -168,10 +172,17 @@ function OnRechargeDrone( param )
 	p:play_sound("event:/OnUseGenerator")
 end
 
-function OnRepairDrone( param )
-	p:print( "OnRepairDrone: "..param.."\n" )
+function OnRepairDrone( level, drone )
+	p:print( "OnRepairDrone: "..level..", "..drone.."\n" )
 	p:play_sound("event:/OnUseGenerator")
-	p:player_talks("I just repaired that useful thing to make a full working one...\nbut battery may fail as well, that is unreparable....","scientific.dds","SCI")
+	CallFunction("OnRepairDrone_"..level)
+	CallFunction("OnRepairDrone_"..drone)
+	--p:player_talks("I just repaired that useful thing to make a full working one...\nbut battery may fail as well, that is unreparable....","scientific.dds","SCI")
+end
+
+function OnCreateBomb( level )
+	p:print( "OnCreateBomb: "..level)
+	CallFunction( "OnCreateBomb_"..level)
 end
 
 function OnNotRechargeDrone( param )
@@ -185,6 +196,7 @@ end
 
 function OnUseGenerator( param )
 	p:print( "OnUseGenerator: "..param.."\n" )
+	CallFunction("OnUseGenerator_"..param)
 	p:play_sound("event:/OnUseGenerator")
 end
 
@@ -192,9 +204,10 @@ function OnStun( param )
 	p:print( "OnStun: "..param.."\n" )
 end
 
-function OnStunned( param )
-	p:print( "OnStunned: "..param.."\n" )
+function OnStunned( pj )
+	p:print( "OnStunned: "..pj.."\n" )
 	p:play_ambient("event:/OnStunned")
+	CallFunction( "OnStunned_"..pj)
 end
 
 function OnStunnedEnd( param )

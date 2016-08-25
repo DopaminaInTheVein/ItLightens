@@ -40,7 +40,7 @@ void TCompRoomLimit::onTriggerEnter(const TMsgTriggerIn & msg)
 		cientifico->UpdateUnpossess();
 		cientifico->onSetEnable(false);
 	}
-	logic_manager->throwEvent(logic_manager->OnUnpossess, "");
+	logic_manager->throwEvent(logic_manager->OnUnpossess, pe->getName());
 }
 
 void TCompRoomLimit::onCreate(const TMsgEntityCreated & msg)

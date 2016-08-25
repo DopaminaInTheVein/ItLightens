@@ -69,15 +69,31 @@ float CInputWrapper::MouseDeltaY() {
 }
 // A-B-X-Y
 bool CInputWrapper::IsActionButtonPessed() {
-	return io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed();
+	return io->mouse.left.isPressed() || io->joystick.button_X.isPressed();
 }
 bool CInputWrapper::IsJumpButtonPressed() {
-	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed();
+	return io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed();
 }
 bool CInputWrapper::IsPossessionButtonPressed() {
-	return io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed();
+	return io->keys[VK_SHIFT].isPressed() || io->joystick.button_Y.isPressed();
 }
 bool CInputWrapper::IsSenseButtonPressed() {
+	return io->mouse.right.isPressed() || io->joystick.button_B.isPressed();
+}
+
+bool CInputWrapper::ActionButtonBecomesPessed() {
+	return io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed();
+}
+bool CInputWrapper::JumpButtonBecomesPressed() {
+	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed();
+}
+bool CInputWrapper::IsImpulseUpButtonPressed() {
+	return io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed();
+}
+bool CInputWrapper::PossessionButtonBecomesPressed() {
+	return io->keys[VK_SHIFT].becomesPressed() || io->joystick.button_Y.becomesPressed();
+}
+bool CInputWrapper::SenseButtonBecomesPressed() {
 	return io->mouse.right.becomesPressed() || io->joystick.button_B.becomesPressed();
 }
 
@@ -115,14 +131,15 @@ void CInputWrapper::ChangeMouseState(bool captured) {
 
 // DEBUG TOOLS
 #ifndef FINAL_BUILD
+
 bool CInputWrapper::isCameraReleaseButtonPressed() {
 	return io->keys['K'].becomesPressed();
 }
 bool CInputWrapper::isTeleportComboButtonPressed() {
 	return io->keys['T'].becomesPressed() && io->keys[VK_CONTROL].isPressed();
 }
-bool CInputWrapper::isRenderDebugComboButtonPressed() {
-	return io->keys['N'].becomesPressed() && io->keys[VK_CONTROL].isPressed();
+bool CInputWrapper::isRenderDebugComboButtonPressing() {
+	return io->keys['N'].isPressed() && io->keys[VK_CONTROL].isPressed();
 }
 bool CInputWrapper::isReleaseButtonPressed() {
 	return io->keys[220].becomesPressed();
@@ -142,8 +159,8 @@ bool CInputWrapper::isStopGameButtonPressed() {
 bool CInputWrapper::isSlowButtonPressed() {
 	return io->keys['M'].becomesPressed();
 }
-bool CInputWrapper::isDrawLineButtonPressed() {
-	return io->keys['N'].becomesPressed();
+bool CInputWrapper::isDrawLineButtonPressing() {
+	return io->keys['N'].isPressed();
 }
 bool CInputWrapper::isTestSSAOButoonPressed() {
 	return io->keys[VK_F3].becomesPressed();
@@ -162,49 +179,5 @@ bool CInputWrapper::interruptGuardShotButtonPressed() {
 }
 bool CInputWrapper::changegui() {
 	return io->keys[VK_F1].becomesPressed();
-}
-
-#else
-bool CInputWrapper::isCameraReleaseButtonPressed() {
-	return false;
-}
-bool CInputWrapper::isTeleportComboButtonPressed() {
-	return false;
-}
-bool CInputWrapper::isRenderDebugComboButtonPressed() {
-	return false;
-}
-bool CInputWrapper::isReleaseButtonPressed() {
-	return false;
-}
-bool CInputWrapper::isToogleCommandLogButtonPressed() {
-	return false;
-}
-bool CInputWrapper::isToogleConsoleLoguttonPressed() {
-	return false;
-}
-bool CInputWrapper::isPauseGameButtonPressed() {
-	return false;
-}
-bool CInputWrapper::isStopGameButtonPressed() {
-	return false;
-}
-bool CInputWrapper::isSlowButtonPressed() {
-	return false;
-}
-bool CInputWrapper::isDrawLineButtonPressed() {
-	return false;
-}
-bool CInputWrapper::isParticleEditorButtonPressed() {
-	return false;
-}
-bool CInputWrapper::isParticleEditorActivationPressed() {
-	return false;
-}
-bool CInputWrapper::interruptGuardShotButtonPressed() {
-	return false;
-}
-bool CInputWrapper::changegui() {
-	return false;
 }
 #endif

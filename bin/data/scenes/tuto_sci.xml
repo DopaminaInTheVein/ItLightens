@@ -2,21 +2,6 @@
 <entity>
 <tags/>
 <name
-   name="banco_de_trabajo"/>
-<transform
-   pos="45.4998 -0.0873738 -2.61038"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/banco_de_trabajo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="puerta_salida_abajo"/>
 <transform
    pos="49.9582 -0.0549806 2.13332"
@@ -24,36 +9,6 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/tuto_sci/puerta_salida_abajo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cosa_para_abrir_puerta"/>
-<transform
-   pos="74.7345 7.09427 -1.12683"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/cosa_para_abrir_puerta.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="puerta_arriba"/>
-<transform
-   pos="76.0347 7.11366 -2.95113"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/puerta_arriba.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -77,16 +32,43 @@
 <entity>
 <tags/>
 <name
-   name="nivel"/>
+   name="paredes"/>
 <transform
    pos="73.935 -0.0177512 -1.20231"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/nivel.static_mesh"/>
+   name="static_meshes/tuto_sci/paredes.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="generator"/>
+<transform
+   pos="75.3317 7.89981 -0.590158"
+   quat="0 0.939693 0 -0.34202"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="door_tuto_end___opened_pos001"/>
+<transform
+   pos="75.9021 8.61366 -4.41574"
+   quat="0.500918 -0.49908 0.500918 0.49908"
+   scale="1.0"/>
+<room
+   name="2"/>
 
 </entity>
 

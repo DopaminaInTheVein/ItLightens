@@ -47,6 +47,8 @@ bool CRenderDeferredModule::start() {
 	rt_final = new CRenderToTexture;
 
 	rt_specular = new CRenderToTexture;
+	rt_specular_lights = new CRenderToTexture;
+	rt_glossiness = new CRenderToTexture;
 	rt_shadows = new CRenderToTexture;
 
 	//aux
@@ -60,6 +62,10 @@ bool CRenderDeferredModule::start() {
 	rt_selfIlum_blurred_int = new CRenderToTexture;
 
 	if (!rt_specular->createRT("rt_specular", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+		return false;
+	if (!rt_glossiness->createRT("rt_glossiness", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+		return false;
+	if (!rt_specular_lights->createRT("rt_specular_lights", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 		return false;
 	if (!rt_albedos->createRT("rt_albedo", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 		return false;
@@ -194,14 +200,16 @@ void CRenderDeferredModule::renderGBuffer() {
 
 	// -------------------------
 	// Activar mis multiples render targets
-	ID3D11RenderTargetView* rts[4] = {
+	ID3D11RenderTargetView* rts[6] = {
 	  rt_albedos->getRenderTargetView()
 	  ,	rt_normals->getRenderTargetView()
 	  ,	rt_depths->getRenderTargetView()
 	  ,   rt_selfIlum->getRenderTargetView()
+	  , rt_specular->getRenderTargetView()
+	  , rt_glossiness->getRenderTargetView()
 	};
 	// Y el ZBuffer del backbuffer principal
-	Render.ctx->OMSetRenderTargets(4, rts, Render.depth_stencil_view);
+	Render.ctx->OMSetRenderTargets(6, rts, Render.depth_stencil_view);
 	rt_albedos->activateViewport();
 	// Clear de los render targets y el ZBuffer
 	rt_albedos->clear(VEC4(1, 0, 0, 1));
@@ -209,6 +217,8 @@ void CRenderDeferredModule::renderGBuffer() {
 	rt_selfIlum->clear(VEC4(0, 0, 0, 1));
 	rt_depths->clear(VEC4(1, 1, 1, 1));
 	rt_final->clear(VEC4(0, 0, 0, 0));
+	rt_specular_lights->clear(VEC4(0, 0, 0, 0));
+
 	Render.clearMainZBuffer();
 
 	rt_acc_light->clear(VEC4(0, 0, 0, 1));
@@ -490,7 +500,7 @@ void CRenderDeferredModule::renderAccLight() {
 	// Activar el rt para pintar las luces...
 	ID3D11RenderTargetView* rts[3] = {
 	  rt_acc_light->getRenderTargetView()
-	  ,  rt_specular->getRenderTargetView()
+	  ,  rt_specular_lights->getRenderTargetView()
 	  ,  rt_shadows->getRenderTargetView()
 	};
 	// Y el ZBuffer del backbuffer principal
@@ -501,6 +511,8 @@ void CRenderDeferredModule::renderAccLight() {
 	//rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);	//activated on addAmbientPass
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+	rt_specular->activate(TEXTURE_SLOT_SPECULAR_GL);
+	rt_glossiness->activate(TEXTURE_SLOT_GLOSSINESS);
 
 	//rt_acc_light->clear(VEC4(0, 0, 0, 1));
 
@@ -523,6 +535,7 @@ void CRenderDeferredModule::renderAccLight() {
 	activateZ(ZCFG_DEFAULT);
 	activateBlend(BLENDCFG_DEFAULT);
 
+	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
@@ -596,7 +609,7 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 		tech->activate();
 
 		getHandleManager<TCompPolarized>()->each([pol](TCompPolarized* c) {
-			if (c->force.polarity == pol) {	//render polarity designed only
+			if (c->getForce().polarity == pol) {	//render polarity designed only
 				CEntity *e = CHandle(c).getOwner();
 				TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
 				TCompTransform *c_tmx = e->get<TCompTransform>();
@@ -642,7 +655,6 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 }
 
 void CRenderDeferredModule::ApplySSAO() {
-
 	Render.activateBackBuffer();
 
 	activateBlend(BLENDCFG_SUBSTRACT);
@@ -814,6 +826,7 @@ void CRenderDeferredModule::render() {
 	rt_black->clear(VEC4(0, 0, 0, 1));
 	rt_data->clear(VEC4(0, 0, 0, 0));
 	rt_specular->clear(VEC4(0, 0, 0, 0));
+	rt_glossiness->clear(VEC4(0, 0, 0, 0));
 
 	generateShadowMaps();
 
@@ -843,7 +856,6 @@ void CRenderDeferredModule::render() {
 	//blurEffectLights();
 
 	 //render_particles_instanced.render();
-	
 
 	//MarkInteractives(VEC4(1, 1, 0, 1));
 
@@ -859,11 +871,10 @@ void CRenderDeferredModule::render() {
 
 	drawFullScreen(rt_final);
 
-
 	g_particlesManager->renderParticles();   //render all particles systems
 
 	activateBlend(BLENDCFG_COMBINATIVE);
-	rt_specular->activate(TEXTURE_SLOT_SPECULAR_GL);
+	rt_specular_lights->activate(TEXTURE_SLOT_SPECULAR_LIGHTS);
 
 	blurred_shadows->activate(TEXTURE_SLOT_SHADOWS);
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
@@ -893,7 +904,7 @@ void CRenderDeferredModule::render() {
 	MarkInteractives(VEC4(1, 1, 1, 1), "interactive", INTERACTIVE_OBJECTS);
 
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
-	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
+	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_LIGHTS);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 
 	Render.activateBackBuffer();
@@ -921,7 +932,6 @@ void CRenderDeferredModule::render() {
 		e->render();
 		activateBlend(BLENDCFG_DEFAULT);
 	}
-
 
 	// Leave the 3D Camera active
 	activateRenderCamera3D();
@@ -957,7 +967,6 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		activateBlend(BLENDCFG_DEFAULT);
 		activateZ(ZCFG_ALL_DISABLED);
 		drawFullScreen(tex_screen);
-
 	}
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
@@ -1028,7 +1037,7 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 		Render.activateBackBuffer();
 		activateZ(ZCFG_ALL_DISABLED);
-		
+
 		drawFullScreen(rt_black);
 	}*/
 }

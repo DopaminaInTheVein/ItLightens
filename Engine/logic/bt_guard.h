@@ -1,7 +1,7 @@
 #ifndef INC_BT_GUARD_H_
 #define INC_BT_GUARD_H_
 
-#include "bt.h"
+#include "npc.h"
 #include "components/comp_base.h"
 #include "components/comp_transform.h"
 #include "components/entity.h"
@@ -43,21 +43,18 @@ public:
 	float timer;
 };
 
-class bt_guard : public bt, public TCompBase
+class bt_guard : public npc, public TCompBase
 {
 	//Main attritbutes
-	float DIST_REACH_PNT;
 	float PLAYER_DETECTION_RADIUS;
 	float DIST_SQ_SHOT_AREA_ENTER;
 	float DIST_SQ_SHOT_AREA_LEAVE;
 	float DIST_RAYSHOT;
 	float DIST_SQ_PLAYER_DETECTION;
 	float DIST_SQ_PLAYER_LOST;
-	float SPEED_WALK;
 	float SHOOT_PREP_TIME;
 	float MIN_SQ_DIST_TO_PLAYER;
 	float CONE_VISION;
-	float SPEED_ROT;
 	float DAMAGE_LASER;
 	float MAX_REACTION_TIME;
 	float MAX_BOX_REMOVAL_TIME;
@@ -72,14 +69,12 @@ class bt_guard : public bt, public TCompBase
 	float reduce_factor;
 	float t_reduceStats_max;
 	float t_reduceStats;
-	float MAX_STUCK_TIME;
-	float UNSTUCK_DISTANCE;
 
 	//Handles & More
 	CHandle myHandle;
 	CHandle myParent;
 	CHandle thePlayer;
-	TCompTransform * getTransform();
+	TCompTransform * getTransform() override;
 	TCompCharacterController* getCC();
 	CEntity* getPlayer();
 
@@ -97,7 +92,7 @@ class bt_guard : public bt, public TCompBase
 	//____TIMER_DECLARE_(timerDebug, 2.0f);
 
 	//KeyPoints
-	enum KptType { Seek, Look };
+	enum KptType { Seek = 0, Look };
 	struct KeyPoint {
 		KptType type;
 		VEC3 pos;
@@ -120,13 +115,6 @@ class bt_guard : public bt, public TCompBase
 	bool noiseHeard = false;
 	bool playerLost = false;
 	bool looking_player = false;
-	// stuck management
-	float stuck_time = 0.f;
-	bool stuck = false;
-	bool reoriented = false;
-	int direction = 0;
-	VEC3 unstuck_target;
-	VEC3 last_position;
 	VEC3 dest_shoot;
 	// reaction time management
 	bool player_detected_start = false;
@@ -149,10 +137,7 @@ class bt_guard : public bt, public TCompBase
 	VEC3 jurCenter;
 	float jurRadiusSq;
 
-	//Aux actions
-	void goTo(const VEC3& dest);
-	void goForward(float stepForward);
-	bool turnTo(VEC3 dest, bool wide = false);
+	//bool turnTo(VEC3 dest, bool wide = false);
 	bool turnToPlayer();
 	void lookAtPlayer();
 	void lookAtFront();
@@ -181,7 +166,8 @@ class bt_guard : public bt, public TCompBase
 	void drawShot(VEC3 dest);
 	void removeBox(CHandle box_handle);
 
-	bool stunned;
+	bool stunned = false;;
+	bool stunt_recover = true;
 	bool shooting = false;
 	bool forced_move = false;
 
@@ -196,12 +182,13 @@ class bt_guard : public bt, public TCompBase
 	// tree root
 	static btnode* root;
 
+	CHandle getParent() override { return CHandle(this).getOwner(); }
+
 public:
 	//public for LUA
 	bool isInFirstSeekPoint();
 
 	//conditions
-	bool guardStuck();
 	bool playerStunned();
 	bool playerNear();
 	bool playerDetected();
@@ -210,8 +197,6 @@ public:
 	//toggle conditions
 	bool checkFormation();
 	//actions
-	int actionUnstuckTurn();
-	int actionUnstuckMove();
 	int actionStunned();
 	int actionStepBack();
 	int actionReact();
@@ -288,6 +273,7 @@ public:
 		Debug->DrawLine(t->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
 		Debug->DrawLine(t->getPosition(), t->getPosition() + t->getFront(), VEC3(1, 1, 0));
 		Debug->DrawLine(t->getPosition(), t->getPosition() + t->getLeft(), VEC3(1, 1, 0));
+		if (curkpt >= 0) Debug->DrawLine(getTransform()->getPosition(), keyPoints[curkpt].pos + VEC3_UP, VEC3(1.f, 1.f, 1.f));
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
 			if (t_reduceStats <= 0.0f) {
@@ -296,19 +282,7 @@ public:
 			}
 		}
 		// stuck management
-		float distance = simpleDistXZ(last_position, t->getPosition());
-		if (distance <= 0.75f*getDeltaTime()*SPEED_WALK) {
-			stuck_time += getDeltaTime();
-			if (stuck_time > MAX_STUCK_TIME && !stuck) {
-				stuck = true;
-				setCurrent(NULL);
-			}
-		}
-		else {
-			stuck_time = 0.f;
-		}
-
-		last_position = t->getPosition();
+		updateStuck();
 
 		if (!forced_move) Recalc();
 
@@ -323,6 +297,8 @@ public:
 	bool load(MKeyValue& atts);
 	std::string getKpTypeStr(bt_guard::KptType type);
 	bool save(std::ofstream& os, MKeyValue& atts);
+
+	void changeCommonState(std::string);
 
 	//Cambio Malla
 	//void ChangePose(string new_pose_route);

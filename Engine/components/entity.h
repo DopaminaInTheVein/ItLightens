@@ -89,6 +89,7 @@ public:
 	const char* getName() const;
 	void setName(const char* new_name);
 	void setId(int new_id) { id = new_id; }
+	int getId() { return id; }
 	bool hasName(const char* new_name) const;
 	bool hasTag(std::string tag);
 	bool isPermanent() { return permanent; }

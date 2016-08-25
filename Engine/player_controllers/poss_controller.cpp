@@ -21,7 +21,7 @@ void PossController::addPossStates() {
 
 void PossController::UpdatePossession() {
 	if (npcIsPossessed) {
-		if (controlEnabled && (controller->IsPossessionButtonPressed()) && possessionCooldown <= 0.0f) {
+		if (controlEnabled && (controller->PossessionButtonBecomesPressed()) && possessionCooldown <= 0.0f) {
 			CEntity* myParent = getMyEntity();
 			TCompName * myParentName = myParent->get<TCompName>();
 			string name = myParentName->name;
@@ -30,7 +30,7 @@ void PossController::UpdatePossession() {
 			myParent->sendMsg(msg);
 			UpdateUnpossess();
 			onSetEnable(false);
-			logic_manager->throwEvent(logic_manager->OnUnpossess, "");
+			logic_manager->throwEvent(logic_manager->OnUnpossess, name);
 		}
 		else {
 			possessionCooldown -= getDeltaTime();

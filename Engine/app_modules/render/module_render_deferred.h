@@ -23,6 +23,8 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_acc_light;
 	CRenderToTexture* rt_selfIlum_blurred;
 	CRenderToTexture* rt_final;
+	CRenderToTexture* rt_specular_lights;
+	CRenderToTexture* rt_glossiness;
 
 	CRenderToTexture* rt_specular;
 

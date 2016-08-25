@@ -99,7 +99,8 @@ switch (type)
 		{
 		for (int i=0;i<children.size();i++)
 			{
-			if (tree->testCondition(children[i]->getName())) 
+			auto condition_name = children[i]->getName();
+			if (tree->testCondition(condition_name)) 
 				{
 				children[i]->recalc(tree);
 				break;

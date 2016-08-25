@@ -7,7 +7,7 @@ fn parseable = (
 		local slept = getUserProp _parsingObject "slept"
 		if (slept as string) != "yes" then ( return false)
 	)	
-	
+
 	-- Es container?
 	if (classof _parsingObject) == Container then (
 		return false
@@ -32,12 +32,12 @@ fn parseable = (
 	if (classof _parsingObject) == TargetObject then (
 		return false
 	)
-	
+		
 	-- Comprobamos que no sea un Helper
 	if (getUserProp _parsingObject "typeHelper") != undefined then (
 		return false
 	)
-	
+
 	-- Reload <--> sufijo _init
 	local reload = getUserProp _parsingObject "reload"
 	local isReload = false
@@ -48,7 +48,6 @@ fn parseable = (
 	) else if (getUserProp _parsingObject "typeObject") != undefined then (
 		isReload = true	
 	)
-	
 	if _xml_sufix != "ui_scene" then (		
 		if isReload and _xml_sufix != "init" then (
 			return false
@@ -58,7 +57,6 @@ fn parseable = (
 			return false
 		)
 	)
-	
 	return true
 )
 

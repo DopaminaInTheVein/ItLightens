@@ -64,6 +64,7 @@ public:
 		OnRechargeDrone,
 		OnNotRechargeDrone,
 		OnRepairDrone,
+		OnCreateBomb,
 		OnUseCable,
 		OnUseGenerator,
 		OnStun,

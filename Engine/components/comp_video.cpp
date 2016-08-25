@@ -1,6 +1,8 @@
 #include "mcv_platform.h"
 #include "comp_video.h"
 
+#include "app_modules/logic_manager/logic_manager.h"
+
 bool TCompVideo::load(MKeyValue & atts)
 {
 	TCHAR szPath[MAX_PATH];
@@ -58,7 +60,13 @@ void TCompVideo::update(float dt) {
 	LONGLONG remaining = *duration - *pos;
 	if (remaining < 10LL || controller->IsBackPressed()) {
 		ReleaseAll();
+		logic_manager->throwUserEvent(lua_code);
 	}
+}
+
+void TCompVideo::setup(std::string file_name, std::string lua_code_end) {
+	file = file_name;
+	if (lua_code_end != "") lua_code = lua_code_end;
 }
 
 void TCompVideo::init() {

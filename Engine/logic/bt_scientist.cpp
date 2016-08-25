@@ -28,13 +28,13 @@ void bt_scientist::readIniFileAttr() {
 			std::string file_ini = app.file_initAttr_json;
 			map<std::string, float> fields = readIniAtrData(file_ini, "bt_scientist");
 
-			assignValueToVar(move_speed, fields);
-			assignValueToVar(rot_speed, fields);
+			readNpcIni(fields);
+
+			//assignValueToVar(move_speed, fields);
+			//assignValueToVar(rot_speed, fields);
 			assignValueToVar(square_range_action, fields);
 			assignValueToVar(max_wb_distance, fields);
 			assignValueToVar(max_beacon_distance, fields);
-			assignValueToVar(reach_dist_pnt, fields);
-			assignValueToVar(d_epsilon, fields);
 			assignValueToVar(d_beacon_simple, fields);
 			assignValueToVar(waiting_time, fields);
 			assignValueToVar(t_waitInPos, fields);
@@ -42,6 +42,24 @@ void bt_scientist::readIniFileAttr() {
 			assignValueToVar(ws_wait_time_offset, fields);
 		}
 	}
+}
+
+//NPC virtuals
+TCompTransform * bt_scientist::getTransform()
+{
+	return GETH_MY(TCompTransform);
+}
+void bt_scientist::changeCommonState(std::string state)
+{
+	SET_ANIM_SCI_BT(state);
+}
+CHandle bt_scientist::getParent()
+{
+	return MY_OWNER;
+}
+TCompCharacterController * bt_scientist::getCC()
+{
+	return GETH_MY(TCompCharacterController);
 }
 
 void bt_scientist::Init() {
@@ -107,8 +125,11 @@ void bt_scientist::update(float elapsed) {
 
 	if (possessing)
 		setCurrent(NULL);
+	if (possessed) return;
 	if (stunned)
 		SET_ANIM_SCI_BT(AST_STUNNED);
+	updateStuck();
+
 	Recalc();
 }
 
@@ -127,7 +148,7 @@ bool bt_scientist::load(MKeyValue& atts) {
 			kptTypes[atts.getString(atrType, "seek")]
 			, atts.getPoint(atrPos)
 			, atts.getFloat(atrWait, 0.0f)
-			);
+		);
 	}
 
 	zmin = atts.getFloat("zmin", 100.0f);
@@ -203,6 +224,8 @@ bool bt_scientist::checkBusy() {
 int bt_scientist::actionStunned() {
 	PROFILE_FUNCTION("scientist: actionstunned");
 	if (!myParent.isValid()) return false;
+	stuck = false;
+	stuck_time = 0.f;
 	if (timerStunt < 0) {
 		stunned = false;
 		logic_manager->throwEvent(logic_manager->OnStunnedEnd, "");
@@ -219,6 +242,8 @@ int bt_scientist::actionStunned() {
 
 int bt_scientist::actionAimToPos() {
 	//Look to next target position
+	stuck = false;
+	stuck_time = 0.f;
 	if (turnTo(obj_position)) {
 		SetMyEntity(); //needed in case address Entity moved by handle_manager
 		if (!myEntity) return KO;
@@ -242,7 +267,7 @@ int bt_scientist::actionMoveToPos() {
 	float dist = simpleDistXZ(myPos, obj_position);
 
 	//reach waypoint?
-	if (dist < reach_dist_pnt) {
+	if (dist < DIST_REACH_PNT) {
 		curkpt = (curkpt + 1) % keyPoints.size();
 		return OK;
 	}
@@ -264,7 +289,7 @@ int bt_scientist::actionSeekWpt() {
 	//Go to waypoint
 	if (keyPoints[curkpt].type == Seek) {
 		//reach waypoint?
-		if (simpleDistXZ(myPos, dest) < reach_dist_pnt) {
+		if (simpleDistXZ(myPos, dest) < DIST_REACH_PNT) {
 			curkpt = (curkpt + 1) % keyPoints.size();
 			return OK;
 		}
@@ -315,7 +340,8 @@ int bt_scientist::actionNextWpt() {
 int bt_scientist::actionWaitWpt() {
 	PROFILE_FUNCTION("scientist: actionwaitwpt");
 	if (!myParent.isValid()) return false;
-	//animController.setState(AST_IDLE);
+	stuck = false;
+	stuck_time = 0.f;
 
 	if (t_waitInPos > keyPoints[curkpt].time) {
 		t_waitInPos = 0;
@@ -383,7 +409,7 @@ int bt_scientist::actionGoToWorkstation() {
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
 	VEC3 myPos = me_transform->getPosition();
 	//reach waypoint?
-	if (simpleDistXZ(myPos, ws_to_go) < reach_dist_pnt) {
+	if (simpleDistXZ(myPos, ws_to_go) < DIST_REACH_PNT) {
 		return OK;
 	}
 	else {
@@ -400,6 +426,8 @@ int bt_scientist::actionGoToWorkstation() {
 int bt_scientist::actionWaitInWorkstation() {
 	PROFILE_FUNCTION("scientist: waitinworkbench");
 	if (!myParent.isValid()) return false;
+	stuck = false;
+	stuck_time = 0.f;
 
 	// Turn to the workstation
 	if (!turnToYaw(ws_yaw)) {
@@ -433,123 +461,123 @@ int bt_scientist::actionWaitInWorkstation() {
 	return OK;
 }
 
-// -- Go To -- //
-void bt_scientist::goTo(const VEC3& dest) {
-	PROFILE_FUNCTION("scientist: go to");
-	if (!SBB::readBool("navmesh")) {
-		return;
-	}
-	VEC3 target = dest;
-	SetMyEntity(); //needed in case address Entity moved by handle_manager
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	VEC3 npcPos = me_transform->getPosition();
-	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) < 0.5f) {
-		++currPathWpt;
-	}
-	if (currPathWpt < totalPathWpt) {
-		target = pathWpts[currPathWpt];
-	}
-
-	if (needsSteering(npcPos, me_transform, move_speed, myParent)) {
-		goForward(move_speed);
-	}
-	else if (!me_transform->isHalfConeVision(target, deg2rad(5.0f))) {
-		turnTo(target);
-	}
-	else {
-		float distToWPT = simpleDistXZ(target, me_transform->getPosition());
-		if (fabsf(distToWPT) > 0.1f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 0.2f) {
-			goForward(move_speed);
-		}
-		else if (totalPathWpt == 0) {
-			goForward(-move_speed);
-		}
-	}
-}
-
-// -- Go Forward -- //
-void bt_scientist::goForward(float stepForward) {
-	PROFILE_FUNCTION("scientist: go forward");
-	SetMyEntity(); //needed in case address Entity moved by handle_manager
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	VEC3 myPos = me_transform->getPosition();
-	float dt = getDeltaTime();
-	TCompCharacterController * cc = myEntity->get<TCompCharacterController>();
-	cc->AddMovement(me_transform->getFront()*stepForward*dt);
-}
+//// -- Go To -- //
+//void bt_scientist::goTo(const VEC3& dest) {
+//	PROFILE_FUNCTION("scientist: go to");
+//	if (!SBB::readBool("navmesh")) {
+//		return;
+//	}
+//	VEC3 target = dest;
+//	SetMyEntity(); //needed in case address Entity moved by handle_manager
+//	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+//	VEC3 npcPos = me_transform->getPosition();
+//	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], npcPos)) < 0.5f) {
+//		++currPathWpt;
+//	}
+//	if (currPathWpt < totalPathWpt) {
+//		target = pathWpts[currPathWpt];
+//	}
+//
+//	if (needsSteering(npcPos, me_transform, SPEED_WALK, myParent)) {
+//		goForward(SPEED_WALK);
+//	}
+//	else if (!me_transform->isHalfConeVision(target, deg2rad(5.0f))) {
+//		turnTo(target);
+//	}
+//	else {
+//		float distToWPT = simpleDistXZ(target, me_transform->getPosition());
+//		if (fabsf(distToWPT) > 0.1f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 0.2f) {
+//			goForward(SPEED_WALK);
+//		}
+//		else if (totalPathWpt == 0) {
+//			goForward(-SPEED_WALK);
+//		}
+//	}
+//}
+//
+//// -- Go Forward -- //
+//void bt_scientist::goForward(float stepForward) {
+//	PROFILE_FUNCTION("scientist: go forward");
+//	SetMyEntity(); //needed in case address Entity moved by handle_manager
+//	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+//	VEC3 myPos = me_transform->getPosition();
+//	float dt = getDeltaTime();
+//	TCompCharacterController * cc = myEntity->get<TCompCharacterController>();
+//	cc->AddMovement(me_transform->getFront()*stepForward*dt);
+//}
+//
+//// -- Turn To -- //
+//bool bt_scientist::turnTo(VEC3 dest) {
+//	PROFILE_FUNCTION("scientist: turn to");
+//	if (!myParent.isValid()) return false;
+//	SetMyEntity(); //needed in case address Entity moved by handle_manager
+//	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+//	VEC3 myPos = me_transform->getPosition();
+//	float yaw, pitch;
+//	me_transform->getAngles(&yaw, &pitch);
+//
+//	float deltaAngle = SPEED_ROT * getDeltaTime();
+//	float deltaYaw = me_transform->getDeltaYawToAimTo(dest);
+//	float angle_epsilon = deg2rad(5);
+//
+//	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355))
+//		return true;
+//
+//	if (deltaYaw > 0) {
+//		if (deltaAngle < deltaYaw) yaw += deltaAngle;
+//		else yaw += deltaYaw;
+//	}
+//	else {
+//		if (deltaAngle < abs(deltaYaw)) yaw -= deltaAngle;
+//		else yaw += deltaYaw;
+//	}
+//
+//	if (!me_transform->isHalfConeVision(dest, deg2rad(5.0f))) {
+//		bool inLeft = me_transform->isInLeft(dest);
+//		if (inLeft) {
+//			yaw += deltaAngle;
+//		}
+//		else {
+//			yaw -= deltaAngle;
+//		}
+//		me_transform->setAngles(yaw, pitch);
+//	}
+//
+//	//Ha acabado el giro?
+//	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
+//}
 
 // -- Turn To -- //
-bool bt_scientist::turnTo(VEC3 dest) {
-	PROFILE_FUNCTION("scientist: turn to");
-	if (!myParent.isValid()) return false;
-	SetMyEntity(); //needed in case address Entity moved by handle_manager
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	VEC3 myPos = me_transform->getPosition();
-	float yaw, pitch;
-	me_transform->getAngles(&yaw, &pitch);
-
-	float deltaAngle = rot_speed * getDeltaTime();
-	float deltaYaw = me_transform->getDeltaYawToAimTo(dest);
-	float angle_epsilon = deg2rad(5);
-
-	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355))
-		return true;
-
-	if (deltaYaw > 0) {
-		if (deltaAngle < deltaYaw) yaw += deltaAngle;
-		else yaw += deltaYaw;
-	}
-	else {
-		if (deltaAngle < abs(deltaYaw)) yaw -= deltaAngle;
-		else yaw += deltaYaw;
-	}
-
-	if (!me_transform->isHalfConeVision(dest, deg2rad(5.0f))) {
-		bool inLeft = me_transform->isInLeft(dest);
-		if (inLeft) {
-			yaw += deltaAngle;
-		}
-		else {
-			yaw -= deltaAngle;
-		}
-		me_transform->setAngles(yaw, pitch);
-	}
-
-	//Ha acabado el giro?
-	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
-}
-
-// -- Turn To -- //
-bool bt_scientist::turnToYaw(float yaw_dest) {
-	PROFILE_FUNCTION("scientist: turn to");
-	if (!myParent.isValid()) return false;
-	SetMyEntity(); //needed in case address Entity moved by handle_manager
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	VEC3 myPos = me_transform->getPosition();
-	float yaw, pitch;
-	me_transform->getAngles(&yaw, &pitch);
-
-	float deltaAngle = rot_speed * getDeltaTime();
-	float deltaYaw = yaw_dest - yaw;
-	float angle_epsilon = deg2rad(5);
-
-	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355))
-		return true;
-
-	if (deltaYaw > 0) {
-		if (deltaAngle < deltaYaw) yaw += deltaAngle;
-		else yaw += deltaYaw;
-	}
-	else {
-		if (deltaAngle < abs(deltaYaw)) yaw -= deltaAngle;
-		else yaw -= deltaYaw;
-	}
-
-	me_transform->setAngles(yaw, pitch);
-
-	//Ha acabado el giro?
-	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
-}
+//bool bt_scientist::turnToYaw(float yaw_dest) {
+//	PROFILE_FUNCTION("scientist: turn to");
+//	if (!myParent.isValid()) return false;
+//	SetMyEntity(); //needed in case address Entity moved by handle_manager
+//	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+//	VEC3 myPos = me_transform->getPosition();
+//	float yaw, pitch;
+//	me_transform->getAngles(&yaw, &pitch);
+//
+//	float deltaAngle = SPEED_ROT * getDeltaTime();
+//	float deltaYaw = yaw_dest - yaw;
+//	float angle_epsilon = deg2rad(5);
+//
+//	if (abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355))
+//		return true;
+//
+//	if (deltaYaw > 0) {
+//		if (deltaAngle < deltaYaw) yaw += deltaAngle;
+//		else yaw += deltaYaw;
+//	}
+//	else {
+//		if (deltaAngle < abs(deltaYaw)) yaw -= deltaAngle;
+//		else yaw -= deltaYaw;
+//	}
+//
+//	me_transform->setAngles(yaw, pitch);
+//
+//	//Ha acabado el giro?
+//	return abs(deltaYaw) < angle_epsilon || abs(deltaYaw) > deg2rad(355);
+//}
 
 void bt_scientist::onEmptyWB(const TMsgWBEmpty & msg)
 {
@@ -577,6 +605,10 @@ void bt_scientist::onStaticBomb(const TMsgStaticBomb & msg)
 void bt_scientist::renderInMenu()
 {
 	ImGui::Text("Node: %s", out[actual_action].c_str());
+	if (bt::current) ImGui::Text("NODE BT: %s", bt::current->getName().c_str());
+	else ImGui::Text("NODE BT: %s", "???\n");
+	ImGui::Checkbox("Possessed", &possessed);
+	ImGui::Checkbox("Stunned", &stunned);
 	ImGui::Text("Timer: %.4f", waiting_time);
 }
 
@@ -601,7 +633,7 @@ bool bt_scientist::aimToTarget(VEC3 target) {
 	if (abs(delta_yaw) > 0.001f) {
 		float yaw, pitch;
 		transform->getAngles(&yaw, &pitch);
-		transform->setAngles(yaw + delta_yaw*rot_speed*getDeltaTime(), pitch);
+		transform->setAngles(yaw + delta_yaw*SPEED_ROT*getDeltaTime(), pitch);
 		return false;
 	}
 	else {
