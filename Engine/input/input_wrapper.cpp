@@ -38,6 +38,30 @@ float CInputWrapper::JoystickDeltaRightX() {
 float CInputWrapper::JoystickDeltaRightY() {
 	return io->joystick.dry;
 }
+float CInputWrapper::MoveYNormalized() {
+	if (io->keys['W'].isPressed()) {
+		return 1.0f;
+	}
+	else if (io->keys['S'].isPressed()) {
+		return -1.0f;
+	}
+	else if (io->joystick.ly > 0 && io->joystick.ly > joystick_umbral || io->joystick.ly < 0 && io->joystick.ly < -joystick_umbral) {
+		return io->joystick.ly / io->joystick.max_stick_value;
+	}
+	return 0.0f;
+}
+float CInputWrapper::MoveXNormalized() {
+	if (io->keys['D'].isPressed()) {
+		return -1.0f;
+	}
+	else if (io->keys['A'].isPressed()) {
+		return 1.0f;
+	}
+	else if (io->joystick.lx > 0 && io->joystick.lx > joystick_umbral || io->joystick.lx < 0 && io->joystick.lx < -joystick_umbral) {
+		return -io->joystick.lx / io->joystick.max_stick_value;
+	}
+	return 0.0f;
+}
 float CInputWrapper::JoystickRightX() {
 	if (io->joystick.rx > 0 && io->joystick.rx > joystick_umbral) {
 		return io->joystick.rx;

@@ -19,6 +19,8 @@ public:
 	bool IsMoveRight();
 	bool IsMoveBackWard();
 	bool IsMoveLeft();
+	float MoveYNormalized();
+	float MoveXNormalized();
 
 	// Right Joystick
 	bool IsCamMovedUp(float right_stick_sensibility);
