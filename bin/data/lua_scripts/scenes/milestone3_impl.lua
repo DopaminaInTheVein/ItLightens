@@ -208,7 +208,7 @@ function OnPutPila_enchufe()
   end
 end
 
-function OnPutPila_cargador()
+function OnPutPila_cargador_bateria()
   p:complete_tasklist(6)
 end
 
