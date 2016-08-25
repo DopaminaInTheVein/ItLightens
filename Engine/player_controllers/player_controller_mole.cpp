@@ -255,7 +255,7 @@ void player_controller_mole::UpdateInputActions() {
 					, grabInfo.pos_to_grab
 					, h_target_dummy
 					, h_target_dummy
-				);
+					);
 				float pitch_dummy;
 				getYawPitchFromVector(grabInfo.dir_to_grab, &grabInfo.yaw, &pitch_dummy);
 				inputEnabled = false;
@@ -438,6 +438,7 @@ void player_controller_mole::PuttingPila()
 		//pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		pila->PutIn(pilaContainer);
 		CEntity * pilaEntity = pilaContainer;
+		/*
 #ifdef TASK_LIST_ENABLED
 		if (pilaEntity->getId() == 303) {
 			CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
@@ -446,6 +447,7 @@ void player_controller_mole::PuttingPila()
 			tasklist_comp->completeTask(TASKLIST_LEAVE_PILA_ON_CHARGER);
 		}
 #endif
+		*/
 		pilaGrabbed = CHandle();
 		player_max_speed *= 2;
 		animController->setState(AST_IDLE);
