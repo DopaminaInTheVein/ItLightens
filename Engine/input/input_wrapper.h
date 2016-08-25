@@ -2,6 +2,7 @@
 #define _INC_INPUT_WRAPPER_H_
 
 #include "input.h"
+#include "app_modules\io\io.h"
 
 #ifndef FINAL_BUILD
 #define DECL_INPUT_DEBUG(name) bool name();
@@ -12,6 +13,7 @@
 class CInputWrapper
 {
 public:
+	int joystick_umbral = 150; // 32767 * 0.05 Aprox
 	// Left Joystick
 	bool IsMoveForward();
 	bool IsMoveRight();

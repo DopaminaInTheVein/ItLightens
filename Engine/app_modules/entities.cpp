@@ -249,7 +249,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompCharacterController, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(TCompController3rdPerson, TMsgEntityCreated, onCreate);
-	SUBSCRIBE(LogicHelperArrow, TMsgSetTarget, onSetTarget);
 	SUBSCRIBE(player_controller, TMsgSetCamera, onSetCamera);
 	SUBSCRIBE(player_controller, TMsgDamageSpecific, onSetDamage);
 	SUBSCRIBE(player_controller_mole, TMsgSetCamera, onSetCamera);
