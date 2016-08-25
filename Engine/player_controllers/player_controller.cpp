@@ -699,7 +699,7 @@ void player_controller::UpdatePossession() {
 			//t->setPosition(VEC3(0, 200, 0));
 			player_curr_speed = 0;
 
-			logic_manager->throwEvent(logic_manager->OnPossess, "");
+			logic_manager->throwEvent(logic_manager->OnPossess, ePoss->getName());
 		}
 	}
 }

@@ -634,7 +634,7 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 void SLBPublicFunctions::playerTalks(const char* text, const char* iconName, const char* iconText) {
 	// DO Something with text...
 	dbg(text);
-
+	for (auto handles : tags_manager.getHandlesByTag("talk_text")) handles.destroy();
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
@@ -654,6 +654,12 @@ void SLBPublicFunctions::playerTalks(const char* text, const char* iconName, con
 	atts3["iconText"] = iconText;
 	new_hl.load(atts3);
 	entity->add(new_hl);
+
+	//Add tag talk text
+	TMsgSetTag msg;
+	msg.add = true;
+	msg.tag = "talk_text";
+	new_hp.sendMsg(msg);
 }
 
 void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor) {
