@@ -30,7 +30,7 @@ void PossController::UpdatePossession() {
 			myParent->sendMsg(msg);
 			UpdateUnpossess();
 			onSetEnable(false);
-			logic_manager->throwEvent(logic_manager->OnUnpossess, "");
+			logic_manager->throwEvent(logic_manager->OnUnpossess, name);
 		}
 		else {
 			possessionCooldown -= getDeltaTime();

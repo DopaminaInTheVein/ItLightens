@@ -22,6 +22,8 @@
 #define SET_ANIM_SCIENTIST(state) SET_ANIM_STATE(animController, state)
 #define SET_ANIM_SCIENTIST_P(state) SET_ANIM_STATE_P(animController, state)
 
+#define MAX_BOMBS 5
+
 map<string, statehandler> player_controller_cientifico::statemap = {};
 map<int, string> player_controller_cientifico::out = {};
 std::vector<std::string> player_controller_cientifico::objs_names;
@@ -125,42 +127,45 @@ void player_controller_cientifico::WorkBenchActions() {
 	PROFILE_FUNCTION("player cientifico: WorbBenchActions");
 	VEC3 myPos = transform->getPosition();
 
-	// Find nearest workbench
 	//====================================================
-	VEC3 nearest_wb;
-	float dist_wb = FLT_MAX;
-	//====================================================
-	for (VEC3 wb_pos : SBB::readVEC3Vector("wb_pos")) {
-		if (distY(myPos, wb_pos) < 5.f) {
-			float dist = simpleDistXZ(myPos, wb_pos);
-			if (dist < dist_wb) {
-				dist_wb = dist;
-				nearest_wb = wb_pos;
-			}
-		}
-	}
-	//----------------------------------------------------
-
-	if (dist_wb < 1.5f) {
+	// Repair drone
+	if (canRepairDrone) {
 		if (controller->ActionButtonBecomesPessed()) {
-			obj = THROW_BOMB;
-			//TODO: Destruir bomba actual
-			ChangeState("createBomb");
-			stopMovement();
-		}
-		else {
-			Gui->setActionAvailable(eAction::CREATE_MAGNETIC_BOMB);
-		}
-	}
-	else if (canRepairDrone) {
-		if (controller->ActionButtonBecomesPessed()) {
-			logic_manager->throwEvent(logic_manager->OnRepairDrone, "");
 			ChangeState("repairDrone");
 		}
 		else {
 			Gui->setActionAvailable(eAction::REPAIR_DRONE);
 		}
 	}
+	//====================================================
+	// Create bomb
+	else if (obj == eObjSci::EMPTY || objs_amoung[obj] < MAX_BOMBS) {
+		// Find nearest workbench
+		VEC3 nearest_wb;
+		float dist_wb = FLT_MAX;
+		for (VEC3 wb_pos : SBB::readVEC3Vector("wb_pos")) {
+			if (distY(myPos, wb_pos) < 5.f) {
+				float dist = simpleDistXZ(myPos, wb_pos);
+				if (dist < dist_wb) {
+					dist_wb = dist;
+					nearest_wb = wb_pos;
+				}
+			}
+		}
+		//----------------------------------------------------
+		if (dist_wb < 1.5f) {
+			if (controller->ActionButtonBecomesPessed()) {
+				obj = THROW_BOMB;
+				//TODO: Destruir bomba actual
+				ChangeState("createBomb");
+				stopMovement();
+			}
+			else {
+				Gui->setActionAvailable(eAction::CREATE_MAGNETIC_BOMB);
+			}
+		}
+	}
+	//====================================================
 }
 
 void player_controller_cientifico::UpdateInputActions() {
@@ -205,7 +210,7 @@ void player_controller_cientifico::CreateBomb()
 	if (t_waiting >= t_create_MagneticBomb) {
 		dbg("bomb created!\n");
 		t_waiting = 0;
-		objs_amoung[obj] = 5;
+		objs_amoung[obj] = MAX_BOMBS;
 		if (bomb_handle.isValid()) bomb_handle.destroy();
 		spawnBomb(bomb_offset_1);
 #ifdef TASK_LIST_ENABLED
@@ -215,7 +220,7 @@ void player_controller_cientifico::CreateBomb()
 		tasklist_comp->completeTask(TASKLIST_CREATE_BOMB);
 #endif // TASK_LIST_ENABLED
 
-		//bomb_handle.sendMsg(TMsgActivate());
+		logic_manager->throwEvent(logic_manager->OnCreateBomb, "");
 		ChangeState("idle");
 	}
 	else {
@@ -272,6 +277,7 @@ void player_controller_cientifico::RepairDrone()
 	TMsgRepair msg;
 	CEntity *drone_e = drone;
 	drone_e->sendMsg(msg);
+	logic_manager->throwEvent(logic_manager->OnRepairDrone, drone_e->getName());
 	ChangeState("idle");
 }
 

@@ -157,7 +157,7 @@ void bt_guard::Init()
 bool bt_guard::playerStunned() {
 	PROFILE_FUNCTION("guard: player stunned");
 	if (stunned == true) {
-		logic_manager->throwEvent(logic_manager->OnStunned, "");
+		logic_manager->throwEvent(logic_manager->OnStunned, MY_NAME);
 		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 		return true;
 	}
@@ -924,21 +924,22 @@ void bt_guard::noise(const TMsgNoise& msg) {
 	}
 }
 
+// NOT USED!
 void bt_guard::onMagneticBomb(const TMsgMagneticBomb & msg)
 {
-	PROFILE_FUNCTION("guard: onmagneticbomb");
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	VEC3 myPos = getTransform()->getPosition();
-	if (inSquaredRangeXZ_Y(msg.pos, myPos, msg.r, 5.f)) {
-		resetTimers();
-		stunned = true;
-		SET_ANIM_GUARD(AST_STUNNED);
-		checkStopDamage();
-		/*isPathObtainedAccessible = false;
-		isPathObtained = false;*/
+	//PROFILE_FUNCTION("guard: onmagneticbomb");
+	//TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
+	//VEC3 myPos = getTransform()->getPosition();
+	//if (inSquaredRangeXZ_Y(msg.pos, myPos, msg.r, 5.f)) {
+	//	resetTimers();
+	//	stunned = true;
+	//	SET_ANIM_GUARD(AST_STUNNED);
+	//	checkStopDamage();
+	//	/*isPathObtainedAccessible = false;
+	//	isPathObtained = false;*/
 
-		setCurrent(NULL);
-	}
+	//	setCurrent(NULL);
+	//}
 	//VEC3 myPos = getTransform()->getPosition();
 	//float d = squaredDist(msg.pos, myPos);
 
@@ -954,6 +955,7 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
+		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStunned, MY_NAME);
 		SET_ANIM_GUARD(AST_STUNNED);
 		checkStopDamage();
 		/*isPathObtainedAccessible = false;

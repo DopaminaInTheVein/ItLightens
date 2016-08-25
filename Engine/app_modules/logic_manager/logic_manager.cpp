@@ -188,11 +188,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnPossess): {
-		sprintf(lua_code, "OnPossess(%f);", 0.5f);
+		sprintf(lua_code, "OnPossess(\"%s\",\"%s\");", CApp::get().getCurrentRealLevel().c_str(), params.c_str());
 		break;
 	}
 	case (OnUnpossess): {
-		sprintf(lua_code, "OnUnpossess(%f);", 0.5f);
+		sprintf(lua_code, "OnUnpossess(\"%s\",\"%s\");", CApp::get().getCurrentRealLevel().c_str(), params.c_str());
 		break;
 	}
 	case (OnDash): {
@@ -216,7 +216,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnRepairDrone): {
-		sprintf(lua_code, "OnRepairDrone(%f);", 0.5);
+		sprintf(lua_code, "OnRepairDrone(\"%s\",\"%s\");", CApp::get().getCurrentRealLevel().c_str(), params.c_str());
+		break;
+	}
+	case (OnCreateBomb): {
+		sprintf(lua_code, "OnCreateBomb(\"%s\");", CApp::get().getCurrentRealLevel().c_str());
 		break;
 	}
 	case (OnUseCable): {
@@ -232,7 +236,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnStunned): {
-		sprintf(lua_code, "OnStunned(%f);", 0.5f);
+		sprintf(lua_code, "OnStunned(\"%s\");", params.c_str());
 		break;
 	}
 	case (OnStunnedEnd): {
