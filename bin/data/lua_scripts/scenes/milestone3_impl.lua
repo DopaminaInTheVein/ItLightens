@@ -69,6 +69,15 @@ function OnLeave_tElevator( )
   --p:player_talks_color("I'm out of an elevator! \nI'm not so cool!!! \nI wanna die my hair black!","scientific.dds","SCI", "#FF2222FF","#22FF22FF")
 end
 
+-- Creating Bomb
+---------------------------------------------------------------------------------------------
+
+function OnCreateBomb_ms3( )
+	p:complete_tasklist(11)
+end
+
+
+
 -- Pila --
 --------------------------------------------------------------------------------------------
 pila = Handle()
@@ -197,6 +206,10 @@ function OnPutPila_enchufe()
 		openDoorPila()
 	end
   end
+end
+
+function OnPutPila_cargador()
+  p:complete_tasklist(6)
 end
 
 function cineDoor( )
