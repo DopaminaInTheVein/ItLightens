@@ -683,11 +683,13 @@ void SLBPublicFunctions::characterGlobe(const char* text, float distance, float 
 	auto hm3 = CHandleManager::getByName("character_globe");
 	CHandle new_hl = hm3->createHandle();
 	MKeyValue atts3;
+
 	atts3["text"] = text;
 	atts3["dist"] = std::to_string(distance);
 	atts3["posx"] = std::to_string(char_x);
 	atts3["posy"] = std::to_string(char_y);
 	atts3["posz"] = std::to_string(char_z);
+
 	new_hl.load(atts3);
 	entity->add(new_hl);
 }

@@ -11,6 +11,7 @@
 #include "constants/ctes_object.h"
 #include "constants/ctes_camera.h"
 #include "constants/ctes_globals.h"
+#include "comp_camera_main.h"
 
 #include <math.h>
 
@@ -20,8 +21,7 @@ extern CShaderCte< TCteCamera > shader_ctes_camera;
 bool TCompFadingGlobe::load(MKeyValue& atts)
 {
 	text = atts.getString("text", "defaultText");
-	//ttl = atts.getFloat("ttl", 0.1f);
-	ttl = timeForLetter * text.length() + 2.0f;
+	ttl = 1.0f;
 	std::string textColorStr = atts.getString("textColor", "#FFFFFFFF");
 	std::string backgroudColorStr = atts.getString("backgroundColor", "#000000FF");
 	distance = atts.getFloat("dist", 1.0f);
@@ -29,9 +29,29 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	char_y = atts.getFloat("posy", 1.0f);
 	char_z = atts.getFloat("posz", 1.0f);
 
-	float4 char_position = float4(char_x, char_y, char_z, 0.0);
-	//float4 world_pos = XMVector4Transform(char_position, shader_ctes_object.World);
-	float4 view_pos = XMVector4Transform(char_position, shader_ctes_camera.ViewProjection);
+	resolution_x = CApp::get().getXRes();
+	resolution_y = CApp::get().getYRes();
+
+	dbg("world pos: %f, %f, %f\n", char_x, char_y, char_z);
+
+	float aspect_ratio = shader_ctes_camera.CameraAspectRatio;
+	float zfar = shader_ctes_camera.CameraZFar;
+	float znear = shader_ctes_camera.CameraZNear;
+
+	float ys = 1.0f / shader_ctes_camera.CameraTanHalfFov;
+	float xs = ys / aspect_ratio;
+
+	float proj_x = char_x * xs;
+	float proj_y = char_y * ys;
+	float proj_z = char_z * (zfar / (zfar - znear)) - (zfar*znear / (zfar - znear));
+
+	float4 proj_coords = float4(proj_x, proj_y, proj_z, char_z);
+	proj_coords.Normalize();
+
+	screen_x = (proj_coords.x + 1.0f) / 2.0f;
+	screen_y = (1.f - proj_coords.y) / 2.0f;
+
+	dbg("screen pos: %f, %f\n", screen_x, screen_y);
 
 	textColor = obtainColorFromString(textColorStr);
 	backgroudColor = obtainColorFromString(backgroudColorStr);
@@ -48,12 +68,15 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	if (lines < minlines) {
 		lines = minlines;
 	}
-	resolution_x = CApp::get().getXRes();
-	resolution_y = CApp::get().getYRes();
+
 	flags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus;
 	marginForImage = lines * percentLineHeight;
-	globe_width = 1.0f;
-	globe_height = 1.0f;
+
+	if (distance < 4.0f)
+		distance = 4.0f;
+
+	globe_width = 1.0f / distance;
+	globe_height = 1.0f / distance;
 
 	return true;
 }
@@ -88,9 +111,15 @@ void TCompFadingGlobe::render() const {
 	ImGui::Begin("Game GUI", &b, ImVec2(resolution_x, resolution_y), 0.0f, flags);
 	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
 
-	Rect rect = GUI::createRect(char_x, char_y, char_x + globe_width, char_y + globe_height);
+	Rect rect = GUI::createRect(screen_x, screen_y, 0.1f, 0.1f);
 	GUI::drawRect(rect, backgroudColor);
-	GUI::drawText(char_x + percentLineHeight + percentLineHeight + marginForImage, char_y + percentLineHeight, GImGui->Font, sizeFont, textColor, textToShow.c_str());
+
+	rect = GUI::createRect(0.f, 0.f, 0.1f, 0.1f);
+	GUI::drawRect(rect, obtainColorFromString("#FF0000FF"));
+
+	rect = GUI::createRect(0.9f, 0.9f, 0.1f, 0.1f);
+	GUI::drawRect(rect, obtainColorFromString("#00FF00FF"));
+	//GUI::drawText(screen_x + percentLineHeight + percentLineHeight + marginForImage, screen_y + percentLineHeight, GImGui->Font, sizeFont, textColor, textToShow.c_str());
 	ImGui::End();
 #endif
 }

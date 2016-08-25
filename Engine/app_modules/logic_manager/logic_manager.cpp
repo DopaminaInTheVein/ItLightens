@@ -274,7 +274,9 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 
 		delete[] pars;
 
-		sprintf(lua_code, "OnDetected(%f,%f,%f,%f);", float_params[0], float_params[1], float_params[2], float_params[3]);
+		float distance = float_params[0];
+
+		sprintf(lua_code, "OnDetected(%f);", distance);
 
 		break;
 	}
@@ -359,7 +361,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadedLevel(%s);", params.c_str());
 		break;
 	}
-						  //GUI
+	//GUI
 	case (OnClicked): {
 		sprintf(lua_code, "OnClicked(\"%s\");", params.c_str());
 		break;

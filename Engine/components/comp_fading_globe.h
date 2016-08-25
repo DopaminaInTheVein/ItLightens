@@ -20,6 +20,9 @@ class TCompFadingGlobe : public TCompBase {
 	float char_x;
 	float char_y;
 	float char_z;
+	// position of the globe
+	float screen_x;
+	float screen_y;
 
 	std::string text;
 	ImColor textColor;

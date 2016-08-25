@@ -209,7 +209,7 @@ bool bt_guard::playerDetected() {
 
 		SBB::postGuardAlert(name, alert);
 
-		logic_manager->throwEvent(logic_manager->OnDetected, std::to_string(distance) + " " + std::to_string(myPos.x) + " " + std::to_string(myPos.y) + " " + std::to_string(myPos.z), CHandle(this).getOwner());
+		logic_manager->throwEvent(logic_manager->OnDetected, std::to_string(distance), CHandle(this).getOwner());
 		return true;
 	}
 	else {
