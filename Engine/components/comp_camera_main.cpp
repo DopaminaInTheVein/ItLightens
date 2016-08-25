@@ -87,11 +87,13 @@ void TCompCameraMain::update(float dt) {
 
 			// Set the player in the 3rdPersonController
 			CHandle t = tags_manager.getFirstHavingTag("player");
+			TMsgGetWhoAmI msg_who;
+			t.sendMsgWithReply(msg_who);
 			//CEntity * target_e = t;
 			if (t.isValid()) {
 				TMsgSetTarget msg;
 				msg.target = t;
-				msg.who = PLAYER; //TODO: Siempre player?
+				msg.who = msg_who.who; //TODO: Siempre player?
 				compBaseEntity->sendMsg(msg);		//set camera
 
 				TMsgSetCamera msg_camera;
