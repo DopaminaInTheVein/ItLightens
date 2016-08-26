@@ -345,7 +345,7 @@ bool SLBHandle::isCharged() {
 void SLBHandle::setAnim(const char* name) {
 	if (real_handle.isValid()) {
 		TMsgSetAnim msg;
-		msg.loop = false;
+		msg.loop = true;
 		msg.name = vector<string>(1, string(name));
 		real_handle.sendMsg(msg);
 	}

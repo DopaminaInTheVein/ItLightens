@@ -21,7 +21,13 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 	resource_skeleton = Resources.get(res_name.c_str())->as<CSkeleton>();
 	auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
 	model = new CalModel(non_const_skel->getCoreModel());
-
+	anim_default = atts.getString("anim", "");
+	if (anim_default != "") {
+		TMsgSetAnim msg;
+		msg.loop = true;
+		msg.name = std::vector<std::string>(1, anim_default);
+		onSetAnim(msg);
+	}
 	// To get the bones updated right now, otherwis, trying to render will find all bones collapsed in the zero
 	model->update(0.f);
 
@@ -30,6 +36,7 @@ bool TCompSkeleton::load(MKeyValue& atts) {
 bool TCompSkeleton::save(std::ofstream& os, MKeyValue& atts)
 {
 	atts.put("model", res_name);
+	if (anim_default != "") atts.put("anim", anim_default);
 	return true;
 }
 
@@ -149,7 +156,7 @@ void TCompSkeleton::renderInMenu() {
 			, a->getWeight()
 			, a->getTime()
 			, a->getCoreAnimation()->getDuration()
-			);
+		);
 	}
 
 	for (auto a : mixer->getAnimationCycle()) {
@@ -158,7 +165,7 @@ void TCompSkeleton::renderInMenu() {
 			, a->getState()
 			, a->getWeight()
 			, a->getCoreAnimation()->getDuration()
-			);
+		);
 	}
 }
 

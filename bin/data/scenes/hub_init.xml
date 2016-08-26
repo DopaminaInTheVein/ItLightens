@@ -112,5 +112,49 @@
    name="2"/>
 
 </entity>
+<entity
+   id="5"
+   reload="yes">
+<tags/>
+<name
+   name="_mole_slept"/>
+<transform
+   pos="-1.94649 51.3869 -20.0874"
+   quat="0 0.960939 0 0.276759"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/mole/mole.skeleton"
+   anim="sleep"/>
+<render_static_mesh
+   name="skeletons/mole/mole.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity
+   id="6"
+   reload="yes">
+<tags/>
+<name
+   name="_scientist_1"/>
+<transform
+   pos="-1.70325 51.4159 -30.7175"
+   quat="0 0.401707 0 0.915768"
+   scale="0.00929856"/>
+<skeleton
+   model="skeletons/scientist/scientist.skeleton"
+   anim="sleep"/>
+<render_static_mesh
+   name="skeletons/scientist/scientist.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
 
 </entities>
