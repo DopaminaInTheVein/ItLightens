@@ -58,7 +58,13 @@ void CGuiActionText::render() {
 		text = "Creating...";
 		break;
 	case eAction::TRAVEL_WIRE:
-		text = "ACTION: Pass by the wire";
+		text = "ACTION: Pass through the wire";
+		break;
+	case eAction::DREAM:
+		text = "ACTION: Enter to dream";
+		break;
+	case eAction::LEAVE:
+		text = "ACTION: Leave";
 		break;
 	}
 

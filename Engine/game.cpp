@@ -213,7 +213,7 @@ void CApp::restartLevelNotify() {
 }
 
 void CApp::saveLevel() {
-	has_check_point = true;
+	has_check_point.insert(getCurrentLogicLevel());
 	entities->saveLevel(getCurrentRealLevel());
 	char params[128];
 	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
@@ -225,7 +225,7 @@ void CApp::loadedLevelNotify() {
 	next_level = "";
 	char params[128];
 	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
-	auto game_event = has_check_point
+	auto game_event = setContains(has_check_point, getCurrentLogicLevel())
 		? CLogicManagerModule::EVENT::OnLoadedLevel
 		: CLogicManagerModule::EVENT::OnLevelStart;
 
@@ -256,8 +256,6 @@ void CApp::update(float elapsed) {
 	CHandleManager::destroyAllPendingObjects();
 	if (next_level != "" && entities->isCleared()) {
 		initNextLevel();
-		//bool reload = (next_level == current_level);
-		//entities->initLevel(getRealLevel(next_level), has_check_point, reload);
 	}
 }
 
@@ -280,7 +278,7 @@ void CApp::initNextLevel()
 	assert(is_ok);
 
 	// Entidades variantes
-	info.filename = level_name + (has_check_point ? "_save" : "_init");
+	info.filename = level_name + (setContains(has_check_point, next_level) ? "_save" : "_init");
 	entities->loadXML(info);
 
 	// Lights

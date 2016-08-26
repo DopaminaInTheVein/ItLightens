@@ -101,7 +101,8 @@ function tutosci_reach( )
 end
 
 function tutosci_end( )
-	LoadLevel("level_2")
+	sci_done = true
+	LoadLevel("level_1")
 end
 --=============================================
 

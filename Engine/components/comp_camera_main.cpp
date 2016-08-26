@@ -93,7 +93,7 @@ void TCompCameraMain::update(float dt) {
 			if (t.isValid()) {
 				TMsgSetTarget msg;
 				msg.target = t;
-				msg.who = msg_who.who; //TODO: Siempre player?
+				msg.who = msg_who.who;
 				compBaseEntity->sendMsg(msg);		//set camera
 
 				TMsgSetCamera msg_camera;
