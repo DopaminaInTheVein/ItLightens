@@ -906,9 +906,14 @@ void CRenderDeferredModule::render() {
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_LIGHTS);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+	CTexture::deactivate(TEXTURE_SLOT_GLOSSINESS);
 
 	Render.activateBackBuffer();
 	activateZ(ZCFG_DEFAULT);
+
+	if (m_isSpecialVisionActive) {
+		renderEspVisionMode();
+	}
 
 	applyPostFX();
 
@@ -932,6 +937,7 @@ void CRenderDeferredModule::render() {
 		e->render();
 		activateBlend(BLENDCFG_DEFAULT);
 	}
+
 
 	// Leave the 3D Camera active
 	activateRenderCamera3D();
@@ -967,13 +973,14 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		activateBlend(BLENDCFG_DEFAULT);
 		activateZ(ZCFG_ALL_DISABLED);
 		drawFullScreen(tex_screen);
+
 	}
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
-	/*
+	
 	//create mask
 	{
-		PROFILE_FUNCTION("referred: mask");
+		PROFILE_FUNCTION("referred: mask vision");
 		CTraceScoped scope("mask");
 
 		//activateZ(ZCFG_DEFAULT);
@@ -986,17 +993,35 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		};
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-		//auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
-		//tech->activate();
+		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+		tech->activate();
 
-		auto hs = tags_manager.getHandlesByTag("AI_guard");
-		Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
+		auto hs = tags_manager.getHandlesByTag("generator");
+
+		float outlineWith = 0.1f;
+		float offset = 1 + outlineWith;
+
+		//Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
 		for (CEntity* e : hs) {
 			if (!e) continue;
 			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
 			TCompTransform *c_tmx = e->get<TCompTransform>();
 			if (!c_tmx || !rsm) continue;
+
+			//camera distance
+			CEntity* e_cam = h_camera;
+			TCompCameraMain *cam = e_cam->get<TCompCameraMain>();
+			float z = fabs(VEC3::Distance(cam->getPosition(), c_tmx->getPosition()));
+
+			//set scale bigger for outline
+			VEC3 scale = c_tmx->getScale();
+			c_tmx->setScale(VEC3(offset, offset, offset)*scale + VEC3(outlineWith, outlineWith, outlineWith)*z*0.1f);
+
+			//push scaled matrix
 			activateWorldMatrix(c_tmx->asMatrix());
+
+			//set original scale
+			c_tmx->setScale(scale);
 
 			//rsm->static_mesh->slots[0].material->activateTextures();
 			rsm->static_mesh->slots[0].mesh->activateAndRender();
@@ -1010,8 +1035,8 @@ void CRenderDeferredModule::renderEspVisionMode() {
 	//edge detection
 	{
 		rt_black->clear(VEC4(0,0,0,0));
-		PROFILE_FUNCTION("referred: edge detection");
-		CTraceScoped scope("edge detection final");
+		PROFILE_FUNCTION("referred: mark detection");
+		CTraceScoped scope("mark detection");
 
 		// Activar el rt para pintar las luces...
 
@@ -1024,22 +1049,76 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-		rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-		rt_normals->activate(TEXTURE_SLOT_NORMALS);
-
 		//activateZ(ZCFG_ALL_DISABLED);
 
-		auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
+		auto tech = Resources.get("white_color.tech")->as<CRenderTechnique>();
 
 		drawFullScreen(rt_final, tech);
 		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
 		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 
-		Render.activateBackBuffer();
+		//Render.activateBackBuffer();
+		
+		//drawFullScreen(rt_black);
+	}
+
+	{
+		PROFILE_FUNCTION("referred: edge detection");
+		CTraceScoped scope("edge detection");
+
+		// Activar el rt para pintar las luces...
+
+		ID3D11RenderTargetView* rts[3] = {
+			rt_black->getRenderTargetView()
+			,	nullptr   // remove the other rt's from the pipeline
+			,	nullptr
+		};
+		// Y el ZBuffer del backbuffer principal
+
+		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+		activateBlend(BLENDCFG_SUBSTRACT);
 		activateZ(ZCFG_ALL_DISABLED);
 
-		drawFullScreen(rt_black);
-	}*/
+		auto tech = Resources.get("white_color.tech")->as<CRenderTechnique>();
+		tech->activate();
+
+		auto hs = tags_manager.getHandlesByTag("generator");
+		//Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
+		for (CEntity* e : hs) {
+			if (!e) continue;
+			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
+			TCompTransform *c_tmx = e->get<TCompTransform>();
+			if (!c_tmx || !rsm) continue;
+
+			//push scaled matrix
+			activateWorldMatrix(c_tmx->asMatrix());
+
+			//rsm->static_mesh->slots[0].material->activateTextures();
+			rsm->static_mesh->slots[0].mesh->activateAndRender();
+
+			//rsm->static_mesh->slots[0].material->deactivateTextures();
+		}
+
+		//drawFullScreen(rt_final, tech);
+		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
+		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+	}
+
+	{
+		ID3D11RenderTargetView* rts[3] = {
+			rt_selfIlum->getRenderTargetView()
+			,	nullptr   // remove the other rt's from the pipeline
+			,	nullptr
+		};
+		// Y el ZBuffer del backbuffer principal
+
+		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+		activateBlend(BLENDCFG_ADDITIVE);
+		//activateZ(ZCFG_ALL_DISABLED);
+		drawFullScreen(rt_black);	//rt_black contain outlined meshes
+	}
+	//Render.activateBackBuffer();
+	
 }
 
 void CRenderDeferredModule::renderDetails() {
@@ -1084,22 +1163,7 @@ void CRenderDeferredModule::applyPostFX() {
 
 	drawFullScreen(next_step);
 
-	RenderHelpGenLoc();
-
 	activateZ(ZCFG_DEFAULT);
-}
-
-void CRenderDeferredModule::RenderHelpGenLoc() {
-	PROFILE_FUNCTION("referred: particle generator");
-	CTraceScoped scope("particle generator");
-
-	activateZ(ZCFG_ALL_DISABLED);
-	//activateZ(ZCFG_DEFAULT);
-
-	//TEST_HELP
-	if (m_isSpecialVisionActive) {
-		renderEspVisionMode();
-	}
 }
 
 void CRenderDeferredModule::renderUI() {

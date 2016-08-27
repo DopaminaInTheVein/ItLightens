@@ -314,3 +314,18 @@ return global_color;
  return float4(w, w, w, w); 
 
 }
+
+float4 PSWhiteColor(float4 Pos : SV_POSITION
+	, float2 uv : TEXCOORD0) : SV_TARGET
+
+{
+	return float4(1,1,1,1);
+}
+
+
+float4 PSOutlineStencil(float4 Pos : SV_POSITION
+	, float2 uv : TEXCOORD0) : SV_TARGET
+
+{
+	return float4(1,1,1,1);
+}
