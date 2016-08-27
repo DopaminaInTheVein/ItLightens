@@ -13,7 +13,7 @@
 class CInputWrapper
 {
 public:
-	int joystick_umbral = 5000; // 32767 * 0.1 Aprox
+	int joystick_umbral = 5000; // 32768 - 15.26% Aprox
 	// Left Joystick
 	bool IsMoveForward();
 	bool IsMoveRight();
@@ -85,7 +85,6 @@ public:
 	DECL_INPUT_DEBUG(isSlowButtonPressed);
 	DECL_INPUT_DEBUG(isDrawLineButtonPressing);
 	DECL_INPUT_DEBUG(isTestSSAOButoonPressed);
-	DECL_INPUT_DEBUG(isEspecialVisionButtonPressed);
 	DECL_INPUT_DEBUG(isEditorLightsButtonPressed);
 	DECL_INPUT_DEBUG(isParticleEditorButtonPressed);
 	DECL_INPUT_DEBUG(isParticleEditorActivationPressed);

@@ -223,9 +223,6 @@ bool CInputWrapper::isDrawLineButtonPressing() {
 bool CInputWrapper::isTestSSAOButoonPressed() {
 	return io->keys[VK_F3].becomesPressed();
 }
-bool CInputWrapper::isEspecialVisionButtonPressed() {
-	return io->keys['H'].becomesPressed();
-}
 bool CInputWrapper::isEditorLightsButtonPressed() {
 	return io->keys[VK_F9].becomesPressed();
 }

@@ -168,9 +168,7 @@ void CRenderDeferredModule::update(float dt) {
 		ssao_test = !ssao_test;
 	}
 
-	if (controller->isEspecialVisionButtonPressed()) {
-		m_isSpecialVisionActive = !m_isSpecialVisionActive;
-	}
+	m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
 }
 
 // ------------------------------------------------------
@@ -938,7 +936,6 @@ void CRenderDeferredModule::render() {
 		activateBlend(BLENDCFG_DEFAULT);
 	}
 
-
 	// Leave the 3D Camera active
 	activateRenderCamera3D();
 }
@@ -973,11 +970,10 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		activateBlend(BLENDCFG_DEFAULT);
 		activateZ(ZCFG_ALL_DISABLED);
 		drawFullScreen(tex_screen);
-
 	}
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
-	
+
 	//create mask
 	{
 		PROFILE_FUNCTION("referred: mask vision");
@@ -1034,7 +1030,7 @@ void CRenderDeferredModule::renderEspVisionMode() {
 	activateBlend(BLENDCFG_ADDITIVE);
 	//edge detection
 	{
-		rt_black->clear(VEC4(0,0,0,0));
+		rt_black->clear(VEC4(0, 0, 0, 0));
 		PROFILE_FUNCTION("referred: mark detection");
 		CTraceScoped scope("mark detection");
 
@@ -1058,7 +1054,7 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 
 		//Render.activateBackBuffer();
-		
+
 		//drawFullScreen(rt_black);
 	}
 
@@ -1118,7 +1114,6 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		drawFullScreen(rt_black);	//rt_black contain outlined meshes
 	}
 	//Render.activateBackBuffer();
-	
 }
 
 void CRenderDeferredModule::renderDetails() {
