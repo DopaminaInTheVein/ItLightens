@@ -13,7 +13,7 @@
 class CInputWrapper
 {
 public:
-	int joystick_umbral = 150; // 32767 * 0.05 Aprox
+	int joystick_umbral = 328; // 32767 * 0.1 Aprox
 	// Left Joystick
 	bool IsMoveForward();
 	bool IsMoveRight();
@@ -23,19 +23,22 @@ public:
 	float MoveXNormalized();
 
 	// Right Joystick
-	bool IsCamMovedUp(float right_stick_sensibility);
-	bool IsCamMovedDown(float right_stick_sensibility);
-	bool IsCamMovedLeft(float right_stick_sensibility);
-	bool IsCamMovedRight(float right_stick_sensibility);
+	bool IsCamMovedUp();
+	bool IsCamMovedDown();
+	bool IsCamMovedLeft();
+	bool IsCamMovedRight();
 
 	float JoystickDeltaRightX();
 	float JoystickDeltaRightY();
 	float JoystickRightX();
 	float JoystickRightY();
-	bool IsJoystickRXMax();
-	bool IsJoystickRXMin();
+
+	float RYNormalized();
+	float RXNormalized();
 
 	//Joystick min & max
+	bool IsJoystickRXMax();
+	bool IsJoystickRXMin();
 	float JoystickMax();
 	float JoystickMin();
 

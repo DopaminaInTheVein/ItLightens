@@ -114,11 +114,11 @@ public:
 		float deltaYaw = 0.f;
 		float deltaPitch = 0.f;
 
-		if (x_axis_inverted)	deltaYaw -= (controller->MouseDeltaX() + /*movement_x +*/ controller->JoystickRightX() * 6 / controller->JoystickMax()) * rotation_sensibility * speed_camera;
-		else					deltaYaw += (controller->MouseDeltaX() + /*movement_x +*/ controller->JoystickRightX() * 6 / controller->JoystickMax()) * rotation_sensibility * speed_camera;
+		if (x_axis_inverted)	deltaYaw -= controller->RXNormalized() * rotation_sensibility * speed_camera;
+		else					deltaYaw += controller->RXNormalized() * rotation_sensibility * speed_camera;
 
-		if (y_axis_inverted)	deltaPitch -= (controller->MouseDeltaY() + controller->JoystickRightY() * 6 / controller->JoystickMax()) * rotation_sensibility * speed_camera;
-		else					deltaPitch += (controller->MouseDeltaY() + controller->JoystickRightY() * 6 / controller->JoystickMax()) * rotation_sensibility * speed_camera;
+		if (y_axis_inverted)	deltaPitch -= controller->RYNormalized() * rotation_sensibility * speed_camera;
+		else					deltaPitch += controller->RYNormalized() * rotation_sensibility * speed_camera;
 
 		yaw = MOD_YAW(yaw + deltaYaw);
 
