@@ -13,7 +13,7 @@
 class CInputWrapper
 {
 public:
-	int joystick_umbral = 328; // 32767 * 0.1 Aprox
+	int joystick_umbral = 5000; // 32767 * 0.1 Aprox
 	// Left Joystick
 	bool IsMoveForward();
 	bool IsMoveRight();

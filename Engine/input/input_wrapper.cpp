@@ -41,7 +41,7 @@ float CInputWrapper::MoveYNormalized() {
 		return -1.0f;
 	}
 	else if (io->joystick.ly > 0 && io->joystick.ly > joystick_umbral || io->joystick.ly < 0 && io->joystick.ly < -joystick_umbral) {
-		return io->joystick.ly / io->joystick.max_stick_value;
+		return io->joystick.ly / (float)io->joystick.max_stick_value;
 	}
 	return 0.0f;
 }
@@ -53,7 +53,7 @@ float CInputWrapper::MoveXNormalized() {
 		return 1.0f;
 	}
 	else if (io->joystick.lx > 0 && io->joystick.lx > joystick_umbral || io->joystick.lx < 0 && io->joystick.lx < -joystick_umbral) {
-		return -io->joystick.lx / io->joystick.max_stick_value;
+		return (-io->joystick.lx / (float)io->joystick.max_stick_value);
 	}
 	return 0.0f;
 }
@@ -95,7 +95,7 @@ float CInputWrapper::RYNormalized() {
 		return io->mouse.dy;
 	}
 	else if (io->joystick.ry > 0 && io->joystick.ry > joystick_umbral || io->joystick.ry < 0 && io->joystick.ry < -joystick_umbral) {
-		return io->joystick.ry * 8 / io->joystick.max_stick_value;
+		return io->joystick.ry * 8 / (float)io->joystick.max_stick_value;
 	}
 	return 0.0f;
 }
@@ -104,7 +104,7 @@ float CInputWrapper::RXNormalized() {
 		return io->mouse.dx;
 	}
 	else if (io->joystick.rx > 0 && io->joystick.rx > joystick_umbral || io->joystick.rx < 0 && io->joystick.rx < -joystick_umbral) {
-		return io->joystick.rx * 8 / io->joystick.max_stick_value;
+		return io->joystick.rx * 8 / (float)io->joystick.max_stick_value;
 	}
 	return 0.0f;
 }
