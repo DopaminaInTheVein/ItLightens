@@ -8,6 +8,7 @@
 #include "components/comp_light_dir_shadows.h"
 #include "components/comp_light_point.h"
 #include "components/comp_light_fadable.h"
+#include "skeleton/comp_skeleton.h"
 #include "render/render.h"
 #include "windows/app.h"
 #include "resources/resources_manager.h"
@@ -977,12 +978,10 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 	renderEspVisionModeFor("generator", VEC4(1, 1, 1, 1), VISION_OBJECTS_WHITE);
 	renderEspVisionModeFor("tasklist", VEC4(0, 1, 0, 1), VISION_OBJECTS_GREEN);
-	renderEspVisionModeFor("AI_guard", VEC4(1, 0, 0, 1), VISION_OBJECTS_RED);
+	renderEspVisionModeFor("AI_guard", VEC4(1, 0, 0, 1), VISION_OBJECTS_RED, true);
 }
 
 void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 color_mask, int sencil_mask, bool use_skeleton) {
-
-
 	//color
 	shader_ctes_globals.global_color = color_mask;
 	shader_ctes_globals.uploadToGPU();
@@ -1004,7 +1003,7 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 
 		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
 
-		if(use_skeleton)
+		if (use_skeleton)
 			tech = Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>();
 
 		tech->activate();
@@ -1016,11 +1015,13 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 		float offset = 1 + outlineWith;
 
 		//Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
-		
+
 		bool mesh_uploaded = false;
 
-		for (CEntity* e : hs) {
+		for (CHandle h : hs) {
+			CEntity* e = h;
 			if (!e) continue;
+			if (!isInRoom(h)) continue;
 			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
 			TCompTransform *c_tmx = e->get<TCompTransform>();
 			if (!c_tmx || !rsm) continue;
@@ -1047,6 +1048,13 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 				rsm->static_mesh->slots[0].mesh->activate();
 				mesh_uploaded = true;
 			}
+
+			if (use_skeleton) {
+				const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+				assert(comp_skel);
+				comp_skel->uploadBonesToCteShader();
+			}
+
 			//rsm->static_mesh->slots[0].mesh->render();
 			rsm->static_mesh->slots[0].mesh->renderGroup(rsm->static_mesh->slots[0].submesh_idx);
 
@@ -1110,8 +1118,10 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 
 		bool mesh_uploaded = false;
 
-		for (CEntity* e : hs) {
+		for (CHandle h : hs) {
+			CEntity* e = h;
 			if (!e) continue;
+			if (!isInRoom(h)) continue;
 			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
 			TCompTransform *c_tmx = e->get<TCompTransform>();
 			if (!c_tmx || !rsm) continue;
@@ -1123,6 +1133,13 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 				rsm->static_mesh->slots[0].mesh->activate();
 				mesh_uploaded = true;
 			}
+
+			if (use_skeleton) {
+				const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+				assert(comp_skel);
+				comp_skel->uploadBonesToCteShader();
+			}
+
 			//rsm->static_mesh->slots[0].mesh->render();
 			rsm->static_mesh->slots[0].mesh->renderGroup(rsm->static_mesh->slots[0].submesh_idx);
 			//rsm->static_mesh->slots[0].material->deactivateTextures();
