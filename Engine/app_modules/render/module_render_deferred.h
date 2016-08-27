@@ -7,7 +7,6 @@
 #include "render\render_instanced.h"
 
 class CRenderDeferredModule : public IAppModule {
-
 	enum typeObject {
 		POL_MINUS_OBJECTS = 1,
 		POL_PLUS_OBJECTS,
@@ -80,6 +79,7 @@ public:
 	void update(float dt);
 	void render() override;
 	void renderEspVisionMode();
+	void renderEspVisionModeFor(std::string tag, std::string tech);
 	void renderDetails();
 	void applyPostFX();
 	void RenderHelpGenLoc();

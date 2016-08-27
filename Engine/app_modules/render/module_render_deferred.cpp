@@ -974,10 +974,16 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
 
+	//renderEspVisionModeFor("generator", "white_color.tech");
+	renderEspVisionModeFor("tasklist", "green_color.tech");
+	//renderEspVisionModeFor("AI_guard", "red_color.tech");
+}
+
+void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::string techstr) {
 	//create mask
 	{
-		PROFILE_FUNCTION("referred: mask vision");
-		CTraceScoped scope("mask");
+		PROFILE_FUNCTION(("referred: mask vision " + tagstr).c_str());
+		CTraceScoped scope(("mask" + tagstr).c_str());
 
 		//activateZ(ZCFG_DEFAULT);
 		activateZ(ZCFG_MASK_NUMBER_NO_Z, VISION_OBJECTS);
@@ -992,7 +998,8 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
 		tech->activate();
 
-		auto hs = tags_manager.getHandlesByTag("generator");
+		// GENERATORS
+		auto hs = tags_manager.getHandlesByTag(tagstr);
 
 		float outlineWith = 0.1f;
 		float offset = 1 + outlineWith;
@@ -1031,8 +1038,8 @@ void CRenderDeferredModule::renderEspVisionMode() {
 	//edge detection
 	{
 		rt_black->clear(VEC4(0, 0, 0, 0));
-		PROFILE_FUNCTION("referred: mark detection");
-		CTraceScoped scope("mark detection");
+		PROFILE_FUNCTION(("referred: mark detection " + tagstr).c_str());
+		CTraceScoped scope(("mark detection " + tagstr).c_str());
 
 		// Activar el rt para pintar las luces...
 
@@ -1047,7 +1054,7 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 		//activateZ(ZCFG_ALL_DISABLED);
 
-		auto tech = Resources.get("white_color.tech")->as<CRenderTechnique>();
+		auto tech = Resources.get(techstr.c_str())->as<CRenderTechnique>();
 
 		drawFullScreen(rt_final, tech);
 		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
@@ -1057,10 +1064,9 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 		//drawFullScreen(rt_black);
 	}
-
 	{
-		PROFILE_FUNCTION("referred: edge detection");
-		CTraceScoped scope("edge detection");
+		PROFILE_FUNCTION(("referred: edge detection " + tagstr).c_str());
+		CTraceScoped scope(("edge detection " + tagstr).c_str());
 
 		// Activar el rt para pintar las luces...
 
@@ -1075,10 +1081,10 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		activateBlend(BLENDCFG_SUBSTRACT);
 		activateZ(ZCFG_ALL_DISABLED);
 
-		auto tech = Resources.get("white_color.tech")->as<CRenderTechnique>();
+		auto tech = Resources.get(techstr.c_str())->as<CRenderTechnique>();
 		tech->activate();
 
-		auto hs = tags_manager.getHandlesByTag("generator");
+		auto hs = tags_manager.getHandlesByTag(tagstr);
 		//Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
 		for (CEntity* e : hs) {
 			if (!e) continue;
@@ -1099,7 +1105,6 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
 		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	}
-
 	{
 		ID3D11RenderTargetView* rts[3] = {
 			rt_selfIlum->getRenderTargetView()

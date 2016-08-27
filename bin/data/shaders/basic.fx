@@ -322,6 +322,20 @@ float4 PSWhiteColor(float4 Pos : SV_POSITION
 	return float4(1,1,1,1);
 }
 
+float4 PSRedColor(float4 Pos : SV_POSITION
+	, float2 uv : TEXCOORD0) : SV_TARGET
+
+{
+	return float4(1,0,0,1);
+}
+
+float4 PSGreenColor(float4 Pos : SV_POSITION
+	, float2 uv : TEXCOORD0) : SV_TARGET
+
+{
+	return float4(0,1,0,1);
+}
+
 
 float4 PSOutlineStencil(float4 Pos : SV_POSITION
 	, float2 uv : TEXCOORD0) : SV_TARGET
