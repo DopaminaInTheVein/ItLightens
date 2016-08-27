@@ -12,7 +12,9 @@ class CRenderDeferredModule : public IAppModule {
 		POL_PLUS_OBJECTS,
 		SHOTS_OBJECTS,
 		INTERACTIVE_OBJECTS,
-		VISION_OBJECTS
+		VISION_OBJECTS_RED,
+		VISION_OBJECTS_GREEN,
+		VISION_OBJECTS_WHITE
 	};
 
 	CRenderToTexture* rt_albedos;
@@ -79,7 +81,7 @@ public:
 	void update(float dt);
 	void render() override;
 	void renderEspVisionMode();
-	void renderEspVisionModeFor(std::string tag, std::string tech);
+	void renderEspVisionModeFor(std::string tag, std::string tech, int stencil_mask);
 	void renderDetails();
 	void applyPostFX();
 	void RenderHelpGenLoc();

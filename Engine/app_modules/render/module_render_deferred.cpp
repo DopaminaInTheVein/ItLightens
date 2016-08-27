@@ -974,19 +974,19 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
 
-	renderEspVisionModeFor("generator", "white_color.tech");
-	renderEspVisionModeFor("tasklist", "green_color.tech");
-	renderEspVisionModeFor("AI_guard", "red_color.tech");
+	renderEspVisionModeFor("generator", "white_color.tech", VISION_OBJECTS_WHITE);
+	renderEspVisionModeFor("tasklist", "green_color.tech", VISION_OBJECTS_GREEN);
+	renderEspVisionModeFor("AI_guard", "red_color.tech", VISION_OBJECTS_RED);
 }
 
-void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::string techstr) {
+void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::string techstr, int sencil_mask) {
 	//create mask
 	{
 		PROFILE_FUNCTION(("referred: mask vision " + tagstr).c_str());
 		CTraceScoped scope(("mask" + tagstr).c_str());
 
 		//activateZ(ZCFG_DEFAULT);
-		activateZ(ZCFG_MASK_NUMBER_NO_Z, VISION_OBJECTS);
+		activateZ(ZCFG_MASK_NUMBER_NO_Z, sencil_mask);
 
 		ID3D11RenderTargetView* rts[3] = {
 			rt_data->getRenderTargetView()
@@ -1005,6 +1005,9 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::stri
 		float offset = 1 + outlineWith;
 
 		//Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
+		
+		bool mesh_uploaded = false;
+
 		for (CEntity* e : hs) {
 			if (!e) continue;
 			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
@@ -1027,13 +1030,18 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::stri
 			c_tmx->setScale(scale);
 
 			//rsm->static_mesh->slots[0].material->activateTextures();
-			rsm->static_mesh->slots[0].mesh->activateAndRender();
+
+			//every object will have the same mesh
+			if (!mesh_uploaded) {
+				rsm->static_mesh->slots[0].mesh->activate();
+			}
+			rsm->static_mesh->slots[0].mesh->render();
 
 			//rsm->static_mesh->slots[0].material->deactivateTextures();
 		}
 	}
 
-	activateZ(ZCFG_OUTLINE, VISION_OBJECTS);
+	activateZ(ZCFG_OUTLINE, sencil_mask);
 	activateBlend(BLENDCFG_ADDITIVE);
 	//edge detection
 	{
@@ -1086,6 +1094,9 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::stri
 
 		auto hs = tags_manager.getHandlesByTag(tagstr);
 		//Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
+
+		bool mesh_uploaded = false;
+
 		for (CEntity* e : hs) {
 			if (!e) continue;
 			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
@@ -1095,8 +1106,10 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::stri
 			//push scaled matrix
 			activateWorldMatrix(c_tmx->asMatrix());
 
-			//rsm->static_mesh->slots[0].material->activateTextures();
-			rsm->static_mesh->slots[0].mesh->activateAndRender();
+			if (!mesh_uploaded) {
+				rsm->static_mesh->slots[0].mesh->activate();
+			}
+			rsm->static_mesh->slots[0].mesh->render();
 
 			//rsm->static_mesh->slots[0].material->deactivateTextures();
 		}
