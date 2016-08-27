@@ -13,6 +13,7 @@
 #include "resources/resources_manager.h"
 #include "render/draw_utils.h"
 #include "components/comp_render_glow.h"
+#include "render\static_mesh.h"
 
 #include "components\comp_render_fade_screen.h"
 
@@ -1044,8 +1045,10 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 			//every object will have the same mesh
 			if (!mesh_uploaded) {
 				rsm->static_mesh->slots[0].mesh->activate();
+				mesh_uploaded = true;
 			}
-			rsm->static_mesh->slots[0].mesh->render();
+			//rsm->static_mesh->slots[0].mesh->render();
+			rsm->static_mesh->slots[0].mesh->renderGroup(rsm->static_mesh->slots[0].submesh_idx);
 
 			//rsm->static_mesh->slots[0].material->deactivateTextures();
 		}
@@ -1118,9 +1121,10 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 
 			if (!mesh_uploaded) {
 				rsm->static_mesh->slots[0].mesh->activate();
+				mesh_uploaded = true;
 			}
-			rsm->static_mesh->slots[0].mesh->render();
-
+			//rsm->static_mesh->slots[0].mesh->render();
+			rsm->static_mesh->slots[0].mesh->renderGroup(rsm->static_mesh->slots[0].submesh_idx);
 			//rsm->static_mesh->slots[0].material->deactivateTextures();
 		}
 
