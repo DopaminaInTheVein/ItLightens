@@ -974,9 +974,9 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
 
-	//renderEspVisionModeFor("generator", "white_color.tech");
+	renderEspVisionModeFor("generator", "white_color.tech");
 	renderEspVisionModeFor("tasklist", "green_color.tech");
-	//renderEspVisionModeFor("AI_guard", "red_color.tech");
+	renderEspVisionModeFor("AI_guard", "red_color.tech");
 }
 
 void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::string techstr) {
