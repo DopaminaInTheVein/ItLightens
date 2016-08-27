@@ -81,10 +81,9 @@ public:
 	void update(float dt);
 	void render() override;
 	void renderEspVisionMode();
-	void renderEspVisionModeFor(std::string tag, std::string tech, int stencil_mask);
+	void renderEspVisionModeFor(std::string tag, VEC4 color_mask, int stencil_mask, bool use_skeleton = false);
 	void renderDetails();
 	void applyPostFX();
-	void RenderHelpGenLoc();
 	void renderUI();
 	bool forcedUpdate() { return true; }
 	const char* getName() const {

@@ -974,12 +974,18 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
 
-	renderEspVisionModeFor("generator", "white_color.tech", VISION_OBJECTS_WHITE);
-	renderEspVisionModeFor("tasklist", "green_color.tech", VISION_OBJECTS_GREEN);
-	renderEspVisionModeFor("AI_guard", "red_color.tech", VISION_OBJECTS_RED);
+	renderEspVisionModeFor("generator", VEC4(1, 1, 1, 1), VISION_OBJECTS_WHITE);
+	renderEspVisionModeFor("tasklist", VEC4(0, 1, 0, 1), VISION_OBJECTS_GREEN);
+	renderEspVisionModeFor("AI_guard", VEC4(1, 0, 0, 1), VISION_OBJECTS_RED);
 }
 
-void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::string techstr, int sencil_mask) {
+void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 color_mask, int sencil_mask, bool use_skeleton) {
+
+
+	//color
+	shader_ctes_globals.global_color = color_mask;
+	shader_ctes_globals.uploadToGPU();
+
 	//create mask
 	{
 		PROFILE_FUNCTION(("referred: mask vision " + tagstr).c_str());
@@ -996,6 +1002,10 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::stri
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
 		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+
+		if(use_skeleton)
+			tech = Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>();
+
 		tech->activate();
 
 		// GENERATORS
@@ -1062,7 +1072,7 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::stri
 
 		//activateZ(ZCFG_ALL_DISABLED);
 
-		auto tech = Resources.get(techstr.c_str())->as<CRenderTechnique>();
+		auto tech = Resources.get("global_color.tech")->as<CRenderTechnique>();
 
 		drawFullScreen(rt_final, tech);
 		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
@@ -1089,7 +1099,7 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::stri
 		activateBlend(BLENDCFG_SUBSTRACT);
 		activateZ(ZCFG_ALL_DISABLED);
 
-		auto tech = Resources.get(techstr.c_str())->as<CRenderTechnique>();
+		auto tech = Resources.get("global_color.tech")->as<CRenderTechnique>();
 		tech->activate();
 
 		auto hs = tags_manager.getHandlesByTag(tagstr);
@@ -1130,6 +1140,8 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, std::stri
 		activateBlend(BLENDCFG_ADDITIVE);
 		//activateZ(ZCFG_ALL_DISABLED);
 		drawFullScreen(rt_black);	//rt_black contain outlined meshes
+
+		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	}
 	//Render.activateBackBuffer();
 }
