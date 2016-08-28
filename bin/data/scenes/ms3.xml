@@ -1979,6 +1979,23 @@
 <entity>
 <tags/>
 <name
+   name="plataforma_balcon_cuadrado_izquierdo"/>
+<transform
+   pos="10.1696 -11.9814 21.9434"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/plataforma_balcon_cuadrado_izquierdo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="plataforma_balcon_cuadrado_izquierdo001"/>
 <transform
    pos="-15.0113 -3.08759 -23.495"
@@ -2840,7 +2857,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="generator"/>
 <name
    name="generator_1"/>
 <transform
@@ -2857,7 +2874,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="generator"/>
 <name
    name="generator_2"/>
 <transform
@@ -2874,7 +2891,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="generator"/>
 <name
    name="generator_3"/>
 <transform
@@ -2891,7 +2908,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="generator"/>
 <name
    name="generator_4"/>
 <transform
@@ -2908,7 +2925,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="generator"/>
 <name
    name="generator_5"/>
 <transform
@@ -2925,7 +2942,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="generator"/>
 <name
    name="generator_6"/>
 <transform

@@ -13,7 +13,6 @@ public:
 	CHandle		target;
 	void update(float elapsed);
 	bool load(MKeyValue& atts);
-	void onSetTarget(const TMsgSetTarget& tasr);
 	void init();
 };
 #endif

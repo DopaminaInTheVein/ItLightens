@@ -19,14 +19,10 @@ void LogicHelperArrow::init()
 	CHandle(this).getOwner().sendMsg(msg);
 }
 
-void LogicHelperArrow::onSetTarget(const TMsgSetTarget & tasr)
-{
-	target = tasr.target;
-}
-
 void LogicHelperArrow::update(float elapsed) {
 	PROFILE_FUNCTION("helper arrow: update");
 	CEntity * targeteRaigin = tags_manager.getFirstHavingTag(getID("raijin"));
+	CHandle target = tags_manager.getFirstHavingTag(getID("player"));
 	CEntity * targete = target;
 	if (!targete) return;
 	TCompTransform * targett = targete->get<TCompTransform>();
@@ -43,6 +39,9 @@ void LogicHelperArrow::update(float elapsed) {
 
 	VEC3 ownpos = targetpos;
 	ownpos.y += 1.8f;
+	if (!target.hasTag("raijin")) {
+		ownpos.y += 1.8f;
+	}
 	float distance = 99999999.999f;
 	VEC3 nearGen;
 	for (CHandle gen : TCompGenerator::all_generators) {

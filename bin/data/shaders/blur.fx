@@ -87,7 +87,7 @@ float4 PSBlurWithDepthVision(
     + (cp3 + cn3) * blur_w.w
     ;
 
-	cfinal *= float4(0.7,0.7f,1.0f,1);
+	cfinal *= float4(0.1,0.1f,0.5f,1);
 	//return float4(depth, depth, depth, 1.0f);
   return cfinal;
 }

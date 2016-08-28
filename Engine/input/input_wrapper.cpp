@@ -21,16 +21,16 @@ bool CInputWrapper::IsCamMovedRight(float right_stick_sensibility) {
 
 // Right Joystick
 bool CInputWrapper::IsMoveForward() {
-	return io->keys['W'].isPressed() || io->joystick.ly > 0;
+	return io->keys['W'].isPressed() || io->joystick.ly > joystick_umbral;
 }
 bool CInputWrapper::IsMoveRight() {
-	return io->keys['D'].isPressed() || io->joystick.lx > 0;
+	return io->keys['D'].isPressed() || io->joystick.lx > joystick_umbral;
 }
 bool CInputWrapper::IsMoveBackWard() {
-	return io->keys['S'].isPressed() || io->joystick.ly < 0;
+	return io->keys['S'].isPressed() || io->joystick.ly < -joystick_umbral;
 }
 bool CInputWrapper::IsMoveLeft() {
-	return io->keys['A'].isPressed() || io->joystick.lx < 0;
+	return io->keys['A'].isPressed() || io->joystick.lx < -joystick_umbral;
 }
 float CInputWrapper::JoystickDeltaRightX() {
 	return io->joystick.drx;
@@ -38,11 +38,47 @@ float CInputWrapper::JoystickDeltaRightX() {
 float CInputWrapper::JoystickDeltaRightY() {
 	return io->joystick.dry;
 }
+float CInputWrapper::MoveYNormalized() {
+	if (io->keys['W'].isPressed()) {
+		return 1.0f;
+	}
+	else if (io->keys['S'].isPressed()) {
+		return -1.0f;
+	}
+	else if (io->joystick.ly > 0 && io->joystick.ly > joystick_umbral || io->joystick.ly < 0 && io->joystick.ly < -joystick_umbral) {
+		return io->joystick.ly / io->joystick.max_stick_value;
+	}
+	return 0.0f;
+}
+float CInputWrapper::MoveXNormalized() {
+	if (io->keys['D'].isPressed()) {
+		return -1.0f;
+	}
+	else if (io->keys['A'].isPressed()) {
+		return 1.0f;
+	}
+	else if (io->joystick.lx > 0 && io->joystick.lx > joystick_umbral || io->joystick.lx < 0 && io->joystick.lx < -joystick_umbral) {
+		return -io->joystick.lx / io->joystick.max_stick_value;
+	}
+	return 0.0f;
+}
 float CInputWrapper::JoystickRightX() {
-	return io->joystick.rx;
+	if (io->joystick.rx > 0 && io->joystick.rx > joystick_umbral) {
+		return io->joystick.rx;
+	}
+	else if (io->joystick.rx < 0 && io->joystick.rx < -joystick_umbral) {
+		return io->joystick.rx;
+	}
+	return 0.0f;
 }
 float CInputWrapper::JoystickRightY() {
-	return io->joystick.ry;
+	if (io->joystick.ry > 0 && io->joystick.ry > joystick_umbral) {
+		return io->joystick.ry;
+	}
+	else if (io->joystick.ry < 0 && io->joystick.ry < -joystick_umbral) {
+		return io->joystick.ry;
+	}
+	return 0.0f;
 }
 bool CInputWrapper::IsJoystickRXMax() {
 	return io->joystick.rx == io->joystick.max_stick_value;

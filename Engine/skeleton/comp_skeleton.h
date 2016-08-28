@@ -23,6 +23,7 @@ struct TCompSkeleton : public TCompBase {
 	static int updated_skeletons;
 
 	std::string res_name;
+	std::string anim_default;
 	std::vector<int> prevCycleIds;
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);

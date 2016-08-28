@@ -100,8 +100,14 @@ else if (s##actionEnum == "examinate"){						\
 else if (s##actionEnum == "destroy"){						\
 	actionEnum = DESTROY;									\
 }															\
+else if (s##actionEnum == "dream"){							\
+	actionEnum = DREAM;										\
+}															\
+else if (s##actionEnum == "leave"){							\
+	actionEnum = LEAVE;										\
+}															\
 else {														\
-	actionEnum = NONE;										\
+		actionEnum = NONE;									\
 }															\
 mActionable = mActionable || (mAction != NONE)
 
@@ -128,6 +134,12 @@ std::string TTriggerLua::getActionStr(eAction action_enum)
 		break;
 	case DESTROY:
 		result = "destroy";
+		break;
+	case DREAM:
+		result = "dream";
+		break;
+	case LEAVE:
+		result = "leave";
 		break;
 	default:
 		result = "";

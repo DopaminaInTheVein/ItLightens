@@ -105,5 +105,5 @@ bool isNormal(VEC3 vec);
 //STD operations
 
 #define removeFromVector(v, elem) v.erase(std::remove(v.begin(), v.end(), elem), v.end())
-
+#define setContains(container, elem) container.find(elem) != container.end()
 #endif

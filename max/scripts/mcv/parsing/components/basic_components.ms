@@ -173,6 +173,10 @@ fn _parse_render = (
 	if skel != undefined then (
 		local xmlSkel = XML_PARSING.addChild "skeleton"
 		xmlSkel.addAttr "model" ("skeletons/" + skel + "/" + skel + skel_ext)
+		local anim = getUserProp _parsingObject "anim"
+		if anim !=undefined then (
+			xmlSkel.addAttr "anim" anim
+		)
 		
 		local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
 		xmlStMesh.addAttr "name" ("skeletons/" + skel + "/" + skel + staticMesh_ext)
