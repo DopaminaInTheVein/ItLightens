@@ -34,7 +34,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 
 	dbg("world pos: %f, %f, %f\n", char_x, char_y, char_z);
 
-	float aspect_ratio = shader_ctes_camera.CameraAspectRatio;
+	/*float aspect_ratio = shader_ctes_camera.CameraAspectRatio;
 	float zfar = shader_ctes_camera.CameraZFar;
 	float znear = shader_ctes_camera.CameraZNear;
 
@@ -46,10 +46,13 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	float proj_z = char_z * (zfar / (zfar - znear)) - (zfar*znear / (zfar - znear));
 
 	float4 proj_coords = float4(proj_x, proj_y, proj_z, char_z);
-	proj_coords.Normalize();
+	proj_coords = proj_coords / resolution_x;*/
 
-	screen_x = (proj_coords.x + 1.0f) / 2.0f;
-	screen_y = (1.f - proj_coords.y) / 2.0f;
+	float4 proj_coords = mul(VEC4(char_x, char_y, char_z, 1.0f), shader_ctes_camera.ViewProjection);
+	proj_coords /= proj_coords.w;
+
+	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
+	screen_y = ((1.f - proj_coords.y) / 2.0f);
 
 	dbg("screen pos: %f, %f\n", screen_x, screen_y);
 

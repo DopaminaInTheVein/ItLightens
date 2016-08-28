@@ -365,6 +365,17 @@ float min(int nargs, ...) {
 	return min_value;
 }
 
+VEC4 mul(VEC4 input, MAT44 transform) {
+	VEC4 result;
+
+	result.x = input.x * transform._11 + input.y + transform._21 + input.z * transform._31 + input.w * transform._41;
+	result.y = input.x * transform._12 + input.y + transform._22 + input.z * transform._32 + input.w * transform._42;
+	result.z = input.x * transform._13 + input.y + transform._23 + input.z * transform._33 + input.w * transform._43;
+	result.w = input.x * transform._14 + input.y + transform._24 + input.z * transform._34 + input.w * transform._44;
+
+	return result;
+}
+
 //Check Nan, Infinity's zero values,...
 
 //Is nan?
