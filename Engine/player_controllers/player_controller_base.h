@@ -39,6 +39,8 @@ protected:
 	// Main attributes
 	float player_max_speed;
 	float player_rotation_speed;
+	float energy_default_decrease = 0.0f;
+	float energy_sense_decrease = 0.0f;
 	float energy_damage;
 	float jimpulse;
 	float left_stick_sensibility;
