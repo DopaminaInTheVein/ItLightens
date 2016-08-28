@@ -34,7 +34,9 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 
 	dbg("world pos: %f, %f, %f\n", char_x, char_y, char_z);
 
-	/*float aspect_ratio = shader_ctes_camera.CameraAspectRatio;
+	// First option: computing manually the projective space coords
+
+	float aspect_ratio = shader_ctes_camera.CameraAspectRatio;
 	float zfar = shader_ctes_camera.CameraZFar;
 	float znear = shader_ctes_camera.CameraZNear;
 
@@ -46,15 +48,18 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	float proj_z = char_z * (zfar / (zfar - znear)) - (zfar*znear / (zfar - znear));
 
 	float4 proj_coords = float4(proj_x, proj_y, proj_z, char_z);
-	proj_coords = proj_coords / resolution_x;*/
-
-	float4 proj_coords = mul(VEC4(char_x, char_y, char_z, 1.0f), shader_ctes_camera.ViewProjection);
-	proj_coords /= proj_coords.w;
+	proj_coords = proj_coords / char_z;
 
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
 
-	dbg("screen pos: %f, %f\n", screen_x, screen_y);
+	// Second option: using camera viewprojection matrix
+
+	float4 proj_coords_2 = mul(VEC4(char_x, char_y, char_z, 1.0f), shader_ctes_camera.ViewProjection);
+	proj_coords_2 /= proj_coords_2.w;
+
+	screen_x_2 = ((proj_coords_2.x + 1.0f) / 2.0f);
+	screen_y_2 = ((1.f - proj_coords_2.y) / 2.0f);
 
 	textColor = obtainColorFromString(textColorStr);
 	backgroudColor = obtainColorFromString(backgroudColorStr);
@@ -115,13 +120,16 @@ void TCompFadingGlobe::render() const {
 	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
 
 	Rect rect = GUI::createRect(screen_x, screen_y, 0.1f, 0.1f);
-	GUI::drawRect(rect, backgroudColor);
+	GUI::drawRect(rect, obtainColorFromString("#00FF00FF"));
+
+	rect = GUI::createRect(screen_x_2, screen_y_2, 0.1f, 0.1f);
+	GUI::drawRect(rect, obtainColorFromString("#0000FFFF"));
 
 	rect = GUI::createRect(0.f, 0.f, 0.1f, 0.1f);
 	GUI::drawRect(rect, obtainColorFromString("#FF0000FF"));
 
 	rect = GUI::createRect(0.9f, 0.9f, 0.1f, 0.1f);
-	GUI::drawRect(rect, obtainColorFromString("#00FF00FF"));
+	GUI::drawRect(rect, obtainColorFromString("#FF0000FF"));
 	//GUI::drawText(screen_x + percentLineHeight + percentLineHeight + marginForImage, screen_y + percentLineHeight, GImGui->Font, sizeFont, textColor, textToShow.c_str());
 	ImGui::End();
 #endif
