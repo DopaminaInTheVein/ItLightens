@@ -222,6 +222,7 @@
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_scientist.cpp" />
     <ClCompile Include="logic\comp_box.cpp" />
+    <ClCompile Include="logic\comp_box_placer.cpp" />
     <ClCompile Include="logic\damage.cpp" />
     <ClCompile Include="logic\elevator.cpp" />
     <ClCompile Include="logic\helper_arrow.cpp" />
@@ -453,6 +454,7 @@
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_scientist.h" />
     <ClInclude Include="logic\comp_box.h" />
+    <ClInclude Include="logic\comp_box_placer.h" />
     <ClInclude Include="logic\damage.h" />
     <ClInclude Include="logic\elevator.h" />
     <ClInclude Include="logic\helper_arrow.h" />

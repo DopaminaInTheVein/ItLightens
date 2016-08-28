@@ -111,7 +111,8 @@ float simpleDist(const VEC3& init, const VEC3& dest) {
 }
 bool inSquaredRangeXZ_Y(const VEC3& init, const VEC3& dest, const float& squared_xz, const float& y) {
 	if (abs(init.y - dest.y) > y) return false;
-	return squaredDistXZ(init, dest) < squared_xz;
+	float dist = squaredDistXZ(init, dest);
+	return  dist < squared_xz;
 }
 
 float simpleDistXZ(const VEC3 &init, const VEC3 &dest) {
