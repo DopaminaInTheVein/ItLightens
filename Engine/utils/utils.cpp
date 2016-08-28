@@ -369,10 +369,29 @@ float min(int nargs, ...) {
 VEC4 mul(VEC4 input, MAT44 transform) {
 	VEC4 result;
 
-	result.x = input.x * transform._11 + input.y + transform._21 + input.z * transform._31 + input.w * transform._41;
-	result.y = input.x * transform._12 + input.y + transform._22 + input.z * transform._32 + input.w * transform._42;
-	result.z = input.x * transform._13 + input.y + transform._23 + input.z * transform._33 + input.w * transform._43;
-	result.w = input.x * transform._14 + input.y + transform._24 + input.z * transform._34 + input.w * transform._44;
+	float a = (input.x * transform._11);
+	float b = (input.y * transform._21);
+	float c = (input.z * transform._31);
+	float d = (input.w * transform._41);
+	result.x = a + b + c + d;
+
+	a = (input.x * transform._12);
+	b = (input.y * transform._22);
+	c = (input.z * transform._32);
+	d = (input.w * transform._42);
+	result.y = a + b + c + d;
+
+	a = (input.x * transform._13);
+	b = (input.y * transform._23);
+	c = (input.z * transform._33);
+	d = (input.w * transform._43);
+	result.z = a + b + c + d; 
+	
+	a = (input.x * transform._14);
+	b = (input.y * transform._24);
+	c = (input.z * transform._34);
+	d = (input.w * transform._44);
+	result.w = a + b + c + d;
 
 	return result;
 }
