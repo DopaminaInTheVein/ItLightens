@@ -7,13 +7,14 @@
 #include "render\render_instanced.h"
 
 class CRenderDeferredModule : public IAppModule {
-
 	enum typeObject {
 		POL_MINUS_OBJECTS = 1,
 		POL_PLUS_OBJECTS,
 		SHOTS_OBJECTS,
 		INTERACTIVE_OBJECTS,
-		VISION_OBJECTS
+		VISION_OBJECTS_RED,
+		VISION_OBJECTS_GREEN,
+		VISION_OBJECTS_WHITE
 	};
 
 	CRenderToTexture* rt_albedos;
@@ -80,9 +81,9 @@ public:
 	void update(float dt);
 	void render() override;
 	void renderEspVisionMode();
+	void renderEspVisionModeFor(std::string tag, VEC4 color_mask, int stencil_mask, bool use_skeleton = false);
 	void renderDetails();
 	void applyPostFX();
-	void RenderHelpGenLoc();
 	void renderUI();
 	bool forcedUpdate() { return true; }
 	const char* getName() const {

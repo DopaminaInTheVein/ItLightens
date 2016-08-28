@@ -8,11 +8,13 @@
 #include "components/comp_light_dir_shadows.h"
 #include "components/comp_light_point.h"
 #include "components/comp_light_fadable.h"
+#include "skeleton/comp_skeleton.h"
 #include "render/render.h"
 #include "windows/app.h"
 #include "resources/resources_manager.h"
 #include "render/draw_utils.h"
 #include "components/comp_render_glow.h"
+#include "render\static_mesh.h"
 
 #include "components\comp_render_fade_screen.h"
 
@@ -168,9 +170,7 @@ void CRenderDeferredModule::update(float dt) {
 		ssao_test = !ssao_test;
 	}
 
-	if (controller->isEspecialVisionButtonPressed()) {
-		m_isSpecialVisionActive = !m_isSpecialVisionActive;
-	}
+	m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
 }
 
 // ------------------------------------------------------
@@ -938,7 +938,6 @@ void CRenderDeferredModule::render() {
 		activateBlend(BLENDCFG_DEFAULT);
 	}
 
-
 	// Leave the 3D Camera active
 	activateRenderCamera3D();
 }
@@ -973,18 +972,27 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		activateBlend(BLENDCFG_DEFAULT);
 		activateZ(ZCFG_ALL_DISABLED);
 		drawFullScreen(tex_screen);
-
 	}
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
-	
+
+	renderEspVisionModeFor("generator", VEC4(1, 1, 1, 1), VISION_OBJECTS_WHITE);
+	renderEspVisionModeFor("tasklist", VEC4(0, 1, 0, 1), VISION_OBJECTS_GREEN);
+	renderEspVisionModeFor("AI_guard", VEC4(1, 0, 0, 1), VISION_OBJECTS_RED, true);
+}
+
+void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 color_mask, int sencil_mask, bool use_skeleton) {
+	//color
+	shader_ctes_globals.global_color = color_mask;
+	shader_ctes_globals.uploadToGPU();
+
 	//create mask
 	{
-		PROFILE_FUNCTION("referred: mask vision");
-		CTraceScoped scope("mask");
+		PROFILE_FUNCTION(("referred: mask vision " + tagstr).c_str());
+		CTraceScoped scope(("mask" + tagstr).c_str());
 
 		//activateZ(ZCFG_DEFAULT);
-		activateZ(ZCFG_MASK_NUMBER_NO_Z, VISION_OBJECTS);
+		activateZ(ZCFG_MASK_NUMBER_NO_Z, sencil_mask);
 
 		ID3D11RenderTargetView* rts[3] = {
 			rt_data->getRenderTargetView()
@@ -994,16 +1002,26 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
 		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+
+		if (use_skeleton)
+			tech = Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>();
+
 		tech->activate();
 
-		auto hs = tags_manager.getHandlesByTag("generator");
+		// GENERATORS
+		auto hs = tags_manager.getHandlesByTag(tagstr);
 
 		float outlineWith = 0.1f;
 		float offset = 1 + outlineWith;
 
 		//Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
-		for (CEntity* e : hs) {
+
+		bool mesh_uploaded = false;
+
+		for (CHandle h : hs) {
+			CEntity* e = h;
 			if (!e) continue;
+			if (!isInRoom(h)) continue;
 			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
 			TCompTransform *c_tmx = e->get<TCompTransform>();
 			if (!c_tmx || !rsm) continue;
@@ -1024,19 +1042,33 @@ void CRenderDeferredModule::renderEspVisionMode() {
 			c_tmx->setScale(scale);
 
 			//rsm->static_mesh->slots[0].material->activateTextures();
-			rsm->static_mesh->slots[0].mesh->activateAndRender();
+
+			//every object will have the same mesh
+			if (!mesh_uploaded) {
+				rsm->static_mesh->slots[0].mesh->activate();
+				mesh_uploaded = true;
+			}
+
+			if (use_skeleton) {
+				const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+				assert(comp_skel);
+				comp_skel->uploadBonesToCteShader();
+			}
+
+			//rsm->static_mesh->slots[0].mesh->render();
+			rsm->static_mesh->slots[0].mesh->renderGroup(rsm->static_mesh->slots[0].submesh_idx);
 
 			//rsm->static_mesh->slots[0].material->deactivateTextures();
 		}
 	}
 
-	activateZ(ZCFG_OUTLINE, VISION_OBJECTS);
+	activateZ(ZCFG_OUTLINE, sencil_mask);
 	activateBlend(BLENDCFG_ADDITIVE);
 	//edge detection
 	{
-		rt_black->clear(VEC4(0,0,0,0));
-		PROFILE_FUNCTION("referred: mark detection");
-		CTraceScoped scope("mark detection");
+		rt_black->clear(VEC4(0, 0, 0, 0));
+		PROFILE_FUNCTION(("referred: mark detection " + tagstr).c_str());
+		CTraceScoped scope(("mark detection " + tagstr).c_str());
 
 		// Activar el rt para pintar las luces...
 
@@ -1051,20 +1083,19 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 		//activateZ(ZCFG_ALL_DISABLED);
 
-		auto tech = Resources.get("white_color.tech")->as<CRenderTechnique>();
+		auto tech = Resources.get("global_color.tech")->as<CRenderTechnique>();
 
 		drawFullScreen(rt_final, tech);
 		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
 		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 
 		//Render.activateBackBuffer();
-		
+
 		//drawFullScreen(rt_black);
 	}
-
 	{
-		PROFILE_FUNCTION("referred: edge detection");
-		CTraceScoped scope("edge detection");
+		PROFILE_FUNCTION(("referred: edge detection " + tagstr).c_str());
+		CTraceScoped scope(("edge detection " + tagstr).c_str());
 
 		// Activar el rt para pintar las luces...
 
@@ -1079,13 +1110,18 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		activateBlend(BLENDCFG_SUBSTRACT);
 		activateZ(ZCFG_ALL_DISABLED);
 
-		auto tech = Resources.get("white_color.tech")->as<CRenderTechnique>();
+		auto tech = Resources.get("global_color.tech")->as<CRenderTechnique>();
 		tech->activate();
 
-		auto hs = tags_manager.getHandlesByTag("generator");
+		auto hs = tags_manager.getHandlesByTag(tagstr);
 		//Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
-		for (CEntity* e : hs) {
+
+		bool mesh_uploaded = false;
+
+		for (CHandle h : hs) {
+			CEntity* e = h;
 			if (!e) continue;
+			if (!isInRoom(h)) continue;
 			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
 			TCompTransform *c_tmx = e->get<TCompTransform>();
 			if (!c_tmx || !rsm) continue;
@@ -1093,9 +1129,19 @@ void CRenderDeferredModule::renderEspVisionMode() {
 			//push scaled matrix
 			activateWorldMatrix(c_tmx->asMatrix());
 
-			//rsm->static_mesh->slots[0].material->activateTextures();
-			rsm->static_mesh->slots[0].mesh->activateAndRender();
+			if (!mesh_uploaded) {
+				rsm->static_mesh->slots[0].mesh->activate();
+				mesh_uploaded = true;
+			}
 
+			if (use_skeleton) {
+				const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+				assert(comp_skel);
+				comp_skel->uploadBonesToCteShader();
+			}
+
+			//rsm->static_mesh->slots[0].mesh->render();
+			rsm->static_mesh->slots[0].mesh->renderGroup(rsm->static_mesh->slots[0].submesh_idx);
 			//rsm->static_mesh->slots[0].material->deactivateTextures();
 		}
 
@@ -1103,7 +1149,6 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
 		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	}
-
 	{
 		ID3D11RenderTargetView* rts[3] = {
 			rt_selfIlum->getRenderTargetView()
@@ -1116,9 +1161,10 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		activateBlend(BLENDCFG_ADDITIVE);
 		//activateZ(ZCFG_ALL_DISABLED);
 		drawFullScreen(rt_black);	//rt_black contain outlined meshes
+
+		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	}
 	//Render.activateBackBuffer();
-	
 }
 
 void CRenderDeferredModule::renderDetails() {

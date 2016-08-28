@@ -78,6 +78,7 @@ bool isInRoom(CHandle h) {
 	if (!e) return true;
 	TCompRoom * room = e->get<TCompRoom>();
 	if (!room) return true;
+	if (std::find(room->name.begin(), room->name.end(), -1) != room->name.end())  return true;
 	return std::find(room->name.begin(), room->name.end(), pjSala) != room->name.end();
 }
 

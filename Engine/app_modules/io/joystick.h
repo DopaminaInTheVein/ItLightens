@@ -36,7 +36,7 @@ public:
 
   // Constants (gamepad taken values)
   const int min_stick_value = -32768;
-  const int max_stick_value = 32767;
+  const int max_stick_value = 32768;
   const int min_trigger_value = 0;
   const int max_trigger_value = 255;
 

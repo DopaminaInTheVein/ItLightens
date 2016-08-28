@@ -6,20 +6,20 @@
 
 extern CInputWrapper* controller = new CInputWrapper;
 
-bool CInputWrapper::IsCamMovedUp(float right_stick_sensibility) {
-	return false;
+bool CInputWrapper::IsCamMovedUp() {
+	return io->joystick.ry > joystick_umbral || io->mouse.dy > 0;
 }
-bool CInputWrapper::IsCamMovedDown(float right_stick_sensibility) {
-	return false;
+bool CInputWrapper::IsCamMovedDown() {
+	return io->joystick.ry < -joystick_umbral || io->mouse.dy < 0;
 }
-bool CInputWrapper::IsCamMovedLeft(float right_stick_sensibility) {
-	return false;
+bool CInputWrapper::IsCamMovedLeft() {
+	return io->joystick.rx < -joystick_umbral || io->mouse.dx < 0;
 }
-bool CInputWrapper::IsCamMovedRight(float right_stick_sensibility) {
-	return false;
+bool CInputWrapper::IsCamMovedRight() {
+	return io->joystick.rx > joystick_umbral || io->mouse.dx > 0;
 }
 
-// Right Joystick
+// Left Joystick
 bool CInputWrapper::IsMoveForward() {
 	return io->keys['W'].isPressed() || io->joystick.ly > joystick_umbral;
 }
@@ -32,12 +32,7 @@ bool CInputWrapper::IsMoveBackWard() {
 bool CInputWrapper::IsMoveLeft() {
 	return io->keys['A'].isPressed() || io->joystick.lx < -joystick_umbral;
 }
-float CInputWrapper::JoystickDeltaRightX() {
-	return io->joystick.drx;
-}
-float CInputWrapper::JoystickDeltaRightY() {
-	return io->joystick.dry;
-}
+
 float CInputWrapper::MoveYNormalized() {
 	if (io->keys['W'].isPressed()) {
 		return 1.0f;
@@ -46,7 +41,7 @@ float CInputWrapper::MoveYNormalized() {
 		return -1.0f;
 	}
 	else if (io->joystick.ly > 0 && io->joystick.ly > joystick_umbral || io->joystick.ly < 0 && io->joystick.ly < -joystick_umbral) {
-		return io->joystick.ly / io->joystick.max_stick_value;
+		return io->joystick.ly / (float)io->joystick.max_stick_value;
 	}
 	return 0.0f;
 }
@@ -58,10 +53,19 @@ float CInputWrapper::MoveXNormalized() {
 		return 1.0f;
 	}
 	else if (io->joystick.lx > 0 && io->joystick.lx > joystick_umbral || io->joystick.lx < 0 && io->joystick.lx < -joystick_umbral) {
-		return -io->joystick.lx / io->joystick.max_stick_value;
+		return (-io->joystick.lx / (float)io->joystick.max_stick_value);
 	}
 	return 0.0f;
 }
+
+// Right Joystick
+float CInputWrapper::JoystickDeltaRightX() {
+	return io->joystick.drx;
+}
+float CInputWrapper::JoystickDeltaRightY() {
+	return io->joystick.dry;
+}
+
 float CInputWrapper::JoystickRightX() {
 	if (io->joystick.rx > 0 && io->joystick.rx > joystick_umbral) {
 		return io->joystick.rx;
@@ -85,6 +89,24 @@ bool CInputWrapper::IsJoystickRXMax() {
 }
 bool CInputWrapper::IsJoystickRXMin() {
 	return io->joystick.rx == io->joystick.min_stick_value;
+}
+float CInputWrapper::RYNormalized() {
+	if (io->mouse.dy != 0) {
+		return io->mouse.dy;
+	}
+	else if (io->joystick.ry > 0 && io->joystick.ry > joystick_umbral || io->joystick.ry < 0 && io->joystick.ry < -joystick_umbral) {
+		return io->joystick.ry * 8 / (float)io->joystick.max_stick_value;
+	}
+	return 0.0f;
+}
+float CInputWrapper::RXNormalized() {
+	if (io->mouse.dx != 0) {
+		return io->mouse.dx;
+	}
+	else if (io->joystick.rx > 0 && io->joystick.rx > joystick_umbral || io->joystick.rx < 0 && io->joystick.rx < -joystick_umbral) {
+		return io->joystick.rx * 8 / (float)io->joystick.max_stick_value;
+	}
+	return 0.0f;
 }
 
 //Joystick min & max
@@ -200,9 +222,6 @@ bool CInputWrapper::isDrawLineButtonPressing() {
 }
 bool CInputWrapper::isTestSSAOButoonPressed() {
 	return io->keys[VK_F3].becomesPressed();
-}
-bool CInputWrapper::isEspecialVisionButtonPressed() {
-	return io->keys['H'].becomesPressed();
 }
 bool CInputWrapper::isEditorLightsButtonPressed() {
 	return io->keys[VK_F9].becomesPressed();

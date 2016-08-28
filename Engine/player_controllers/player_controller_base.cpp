@@ -237,26 +237,30 @@ bool CPlayerBase::UpdateMovDirection() {
 	bool vertical = false;
 	if (!GameController->GetFreeCamera()) {
 		if (controller->IsMoveForward()) {
-			directionForward = VEC3(0, 0, controller->MoveYNormalized());
+			float zzz = controller->MoveYNormalized();
+			directionForward = VEC3(0, 0, zzz);
 			//TODO: xbobx
 			moving = true;
 			vertical = true;
 		}
 		if (controller->IsMoveBackWard()) {
-			directionForward = VEC3(0, 0, controller->MoveYNormalized());
+			float zzz = controller->MoveYNormalized();
+			directionForward = VEC3(0, 0, zzz);
 			//TODO: xbobx
 			moving = true;
 			vertical = true;
 		}
 
 		if (controller->IsMoveLeft()) {
-			directionLateral = VEC3(controller->MoveXNormalized(), 0, 0);
+			float zzz = controller->MoveXNormalized();
+			directionLateral = VEC3(zzz, 0, 0);
 			//TODO: xbobx
 			moving = true;
 			horizontal = true;
 		}
 		if (controller->IsMoveRight()) {
-			directionLateral = VEC3(controller->MoveXNormalized(), 0, 0);
+			float zzz = controller->MoveXNormalized();
+			directionLateral = VEC3(zzz, 0, 0);
 			//TODO: xbobx
 			moving = true;
 			horizontal = true;
