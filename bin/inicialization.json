@@ -99,7 +99,9 @@
 		"max_life" : 150.0,
 		"init_life" : 150.0,
 		"jump_energy" : 0.25,
-		"stun_energy" : 5.0
+		"stun_energy" : 5.0,
+		"energy_default_decrease" : 0.3,
+		"energy_sense_decrease" : 2.0
 	},	
 	"controller_mole" : {
 		"grab_box_energy" : 5.0,
