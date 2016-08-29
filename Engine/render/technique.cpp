@@ -3,6 +3,9 @@
 #include "resources/resources_manager.h"
 #include "shaders.h"
 #include "render/vertex_declarations.h"
+#include "handle\handle.h"
+#include "components\entity.h"
+#include "components\comp_transform.h"
 
 template<> IResource::eType getTypeOfResource<CRenderTechnique>() { return IResource::TECHNIQUE; }
 
@@ -50,6 +53,9 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
     }
     ps = Resources.get(res_name.c_str())->as<CPixelShader>();
   }
+  else if (elem == "priority") {
+	  priority = atts.getFloat("value", 100);
+  }
   else if (elem == "tech") {
     uses_bones = atts.getBool("uses_bones", false);
 
@@ -65,6 +71,20 @@ void CRenderTechnique::onStartElement(const std::string &elem, MKeyValue &atts) 
 
     ps_disabled = atts.getBool( "ps_disabled", false );
   }
+}
+
+float CRenderTechnique::getPriority(CHandle owner) const
+{
+	if (category == UI_OBJS) {
+		CEntity* e_owner = owner;
+		if (!e_owner) return priority;
+
+		TCompTransform* trans = e_owner->get<TCompTransform>();
+		if (!trans) return priority;
+
+		return trans->getPosition().z;
+	}
+	return priority;
 }
 
 void CRenderTechnique::destroy() {

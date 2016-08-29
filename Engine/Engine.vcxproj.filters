@@ -542,6 +542,9 @@
     <ClCompile Include="components\comp_transform_animator.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_life .cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">

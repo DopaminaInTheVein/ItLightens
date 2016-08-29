@@ -73,25 +73,7 @@ struct TCompLife : public TCompBase {
 		}
 	}
 
-	void update(float elapsed) {
-		CHandle me = CHandle(this).getOwner();
-		/*if (me.hasTag("AI_poss") && !me.hasTag("player")) {
-			energyDamageScale = -0.1f;
-		}*/
-		if (player_life && !dead) {
-			if (modifier != 0 && energyDamageScale != 0)
-				currentlife -= energyDamageScale*modifier*elapsed;
-
-			if (currentlife < 0 && !dead) {
-				dead = true;
-				GameController->SetGameState(CGameController::LOSE);
-				currentlife = 0;
-			}
-
-			else if (currentlife > maxlife)
-				currentlife = maxlife;
-		}
-	}
+	void update(float elapsed);
 
 	void onDamage(const TMsgDamage& msg) {
 		energyDamageScale = msg.modif;

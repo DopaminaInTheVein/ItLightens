@@ -32,7 +32,8 @@ private:
 		std::vector<int>		room;
 		bool                    isPlayer;
 	};
-	static bool sortByTechMatMesh(const TKey& k1, const TKey& k2);
+
+	static bool sortByTechMatMesh(const TKey & k1, const TKey & k2);
 
 	bool in_order;
 	std::vector< TKey > all_keys;
