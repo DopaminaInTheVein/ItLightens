@@ -70,10 +70,13 @@ void TCompCharacterController::renderInMenu()
 	ImGui::Checkbox("OnGround", &m_OnGround);
 	ImGui::Checkbox("PhysxOnGround", &m_physxOnground);
 	ImGui::Checkbox("last_onground", &m_lastOnGround);
+	bool test_ground = m_flagsCollisions & PxControllerFlag::eCOLLISION_DOWN;
+	ImGui::Checkbox("collision flag physx", &test_ground);
 	ImGui::DragFloat("Friction Ground", &m_friction, 0.f, 10.f);
 	ImGui::DragFloat("Friction Air", &m_friction_air, 0.f, 10.f);
 	ImGui::Text("Position collider: %f - %f - %f\n", GetFootPosition().x, GetFootPosition().y, GetFootPosition().z);
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
+	
 }
 
 VEC3 TCompCharacterController::GetCameraPointFocus() const
@@ -230,14 +233,32 @@ void TCompCharacterController::RecalcOnGround()
 		m_physxOnground = true;
 	}
 	else {
+		m_OnGround = false;
+		m_physxOnground = false;
+	}
+	/*else {
 		//raycast to look for down distance
 		PxQueryFilterData filterData;
 		filterData.data.word0 = ItLightensFilter::eSCENE | ItLightensFilter::eOBJECT;
 		PxRaycastBuffer hit;
 		bool hit_ground = g_PhysxManager->raycast(GetFootPosition(), PhysxConversion::PxVec3ToVec3(-m_pActor->getUpDirection()), 0.1f, hit, filterData);
+		if (hit_ground) {
+			auto h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+			if (!h.isValid()) {
+				return;
+			}
+			if (h.hasTag("platform")) {
+				hit_ground = false;
+			}
+			else {
+				if (h.hasTag("drone")) {
+					hit_ground = false;
+				}
+			}
+		}
 		m_OnGround = hit_ground;
 		m_physxOnground = false;
-	}
+	}*/
 }
 
 //update position from render mesh
