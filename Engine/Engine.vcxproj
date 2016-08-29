@@ -148,6 +148,7 @@
     <ClCompile Include="components\comp_generator.cpp" />
     <ClCompile Include="components\comp_guided_camera.cpp" />
     <ClCompile Include="components\comp_hierarchy.cpp" />
+    <ClCompile Include="components\comp_life .cpp" />
     <ClCompile Include="components\comp_light_dir.cpp" />
     <ClCompile Include="components\comp_light_dir_shadows.cpp" />
     <ClCompile Include="components\comp_light_fadable.cpp" />

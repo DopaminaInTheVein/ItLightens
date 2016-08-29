@@ -55,8 +55,14 @@ function SaveLevel( )
 end
 
 g_current_level = "level_0"
+g_is_menu = false
 function LoadLevel( logic_level )
-g_current_level = logic_level
+	g_current_level = logic_level
+	if g_current_level == "level_0" then 
+		g_is_menu = true
+	else
+		g_is_menu = false
+	end
 	p:print("Load Level")
 	cam:fade_out(1)
 	p:setControlEnabled(0)

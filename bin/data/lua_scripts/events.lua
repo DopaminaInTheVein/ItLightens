@@ -352,6 +352,9 @@ function OnLevelStart( logic_level, real_level )
 	p:print("OnLevelStart\n")
 	p:exec_command("cam:fade_in(1)", 1)
 	p:exec_command("p:setControlEnabled(1);", 1)
+	if not g_is_menu then
+		p:load_entities("player_hud")
+	end
 	CallFunction("OnStart_"..real_level)
 end
 

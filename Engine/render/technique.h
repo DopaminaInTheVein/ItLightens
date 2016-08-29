@@ -7,6 +7,7 @@
 
 struct CVertexDeclaration;
 class  CVertexShader;
+class  CHandle;
 class  CPixelShader;
 
 class CRenderTechnique : public IResource, public CXMLParser {
@@ -30,7 +31,6 @@ public:
   , UI_OBJS
   };
   eCategory getCategory() const { return category; }
-  int getPriority() const { return priority; }
 
   const std::string& getName() const {
     return name;
@@ -56,6 +56,12 @@ private:
 
   void onStartElement(const std::string &elem, MKeyValue &atts) override;
 
+public:
+	float getPriority() const {
+		return priority;
+	}
+
+	float getPriority(CHandle) const;
 };
 
 #endif

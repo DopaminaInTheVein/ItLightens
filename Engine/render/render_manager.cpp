@@ -37,14 +37,15 @@ bool CRenderManager::sortByTechMatMesh(
 	, const TKey &k2) {
 	auto* tech1 = k1.material->tech;
 	auto* tech2 = k2.material->tech;
+
 	if (tech1 != tech2) {
 		//if (tech1->getCategory() != tech2->getCategory())
 		//  return tech1->getCategory() < tech2->getCategory();
 		if (tech1->getCategory() != tech2->getCategory())
 			return tech1->getCategory() < tech2->getCategory();
-		if (tech1->getPriority() == tech2->getPriority())
+		if (tech1->getPriority(k1.owner.getOwner()) == tech2->getPriority(k2.owner.getOwner()))
 			return tech1->getName() < tech2->getName();
-		return (tech1->getPriority() < tech2->getPriority());
+		return (tech1->getPriority(k1.owner.getOwner()) < tech2->getPriority(k2.owner.getOwner()));
 	}
 	return k1.material < k2.material;
 }
@@ -97,6 +98,10 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 	in_order = false;
 }
 
+void sortUI() {
+
+}
+
 void CRenderManager::unregisterFromRender(CHandle owner) {
 	// Pasarse por todas las keys y borrar aquellas q tengan el owner
 	auto it = all_keys.begin();
@@ -140,6 +145,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 	if (!in_order) {
 		// sort the keys based on....
+
 		std::sort(all_keys.begin(), all_keys.end(), &sortByTechMatMesh);
 		in_order = true;
 		++ntimes_sorted;

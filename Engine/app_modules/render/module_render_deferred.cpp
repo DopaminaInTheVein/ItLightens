@@ -1220,7 +1220,8 @@ void CRenderDeferredModule::renderUI() {
 	CTraceScoped scope("renderUI");
 	//activateZ(ZCFG_ALL_DISABLED);
 	activateZ(ZCFG_DEFAULT);
-	activateBlend(BLENDCFG_DEFAULT);
+	//activateBlend(BLENDCFG_DEFAULT);
+	activateBlend(BLENDCFG_COMBINATIVE);
 
 	Render.clearMainZBuffer();
 
