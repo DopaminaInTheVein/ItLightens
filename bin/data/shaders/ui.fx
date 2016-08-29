@@ -19,5 +19,9 @@ float4 PS(
   , in float2 iTex0 : TEXCOORD0
 ) : SV_Target
 {
-  return txDiffuse.Sample(samLinear, iTex0);
+  float4 result = txDiffuse.Sample(samLinear, iTex0);
+  //result.a = 0;
+  return result;
+  
+  //return txDiffuse.Sample(samLinear, iTex0);
 }

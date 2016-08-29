@@ -1,0 +1,29 @@
+<entities>
+<entity>
+<tags/>
+<name
+   name="health_bar_inner"/>
+<transform
+   pos="8.65987 -96.4954 8.4747"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/hud/health_bar_inner.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="health_bar_out"/>
+<transform
+   pos="8.65987 -96.4954 8.34409"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/hud/health_bar_out.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+
+</entities>
