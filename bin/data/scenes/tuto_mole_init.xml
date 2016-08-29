@@ -133,5 +133,167 @@
    scale="1.0"/>
 
 </entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.43707 0.185 3.76478"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.57 70.2065 -12.9299"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.718536 0.185 2.56005"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.57 70.7873 -12.9409"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 1.51043"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 71.0914 -12.9409"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.718536 0.185 2.56005"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.57 69.6159 -12.9409"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 1.51043"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 69.3238 -12.9409"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 69.676 -12.1503"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 69.676 -13.7335"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 70.7453 -13.7335"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 70.7453 -12.1504"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
 
 </entities>

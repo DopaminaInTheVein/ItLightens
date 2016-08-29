@@ -7,6 +7,7 @@
 #include "comp_room_switch.h"
 #include "comp_room_limit.h"
 #include "comp_transform.h"
+#include "comp_transform_animator.h"
 #include "comp_snoozer.h"
 #include "comp_camera.h"
 #include "comp_camera_main.h"

@@ -10,3 +10,39 @@ function OnEnter__tCrossWall( )
 tutomole_wall_crossed()
 end
 
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+

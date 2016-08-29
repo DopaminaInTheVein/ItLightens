@@ -6,6 +6,7 @@ p = Public()
 poss_done = false
 box_done = false
 unposs_done = false
+portal_done = false
 --==================
 
 --===========================================
@@ -14,6 +15,7 @@ unposs_done = false
 function OnStart_tuto_mole( )
 	poss_done = false
 	box_done = false
+	portal_done = false
 	p:exec_command("tutomole_help_possess();", 2)
 end
 
@@ -90,8 +92,11 @@ end
 --------------
 
 function tutomole_end( )
-	mole_done = true
-	LoadLevel("level_1")
+	if not portal_done then
+		portal_done = true
+		mole_done = true
+		LoadLevel("level_1")
+	end
 end
 --=============================================
 

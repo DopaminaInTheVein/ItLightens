@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/tuto_mole/end_portal.mesh" material="materials/mole_spiral.material" mesh_idx="0"/>
+</static_mesh>

@@ -57,11 +57,31 @@ fn centerIfNeeded = (
 	)
 )
 
+fn parseTmxAnimator = (
+	local yaw_speed = getUserProp _parsingObject "yaw_speed"
+	local roll_speed = getUserProp _parsingObject "roll_speed"
+	local pitch_speed = getUserProp _parsingObject "pitch_speed"
+	local animated = false
+	if yaw_speed !=undefined then (animated = true)
+	if roll_speed !=undefined then (animated = true)
+	if pitch_speed !=undefined then (animated = true)
+	if animated then (
+		local xml = XML_PARSING.addChild "tmx_animator"
+		if yaw_speed !=undefined then (animated = true)
+		if roll_speed !=undefined then (animated = true)
+		if pitch_speed !=undefined then (animated = true)
+		parsePropAttribute xml "yaw_speed" "yaw_speed"
+		parsePropAttribute xml "roll_speed" "roll_speed"
+		parsePropAttribute xml "pitch_speed" "pitch_speed"
+	)
+)
+
 fn _parse_transform = (
 	local posBefore = _parsingObject.pos
 	centerIfNeeded()
 	parseTransform XML_PARSING
 	_parsingObject.pos = posBefore
+	parseTmXAnimator()
 )
 
 ----------------------------------------------------------------------

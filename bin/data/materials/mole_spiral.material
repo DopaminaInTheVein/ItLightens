@@ -1,0 +1,3 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/espiral_no_alpha_256.dds"/>
+</material>

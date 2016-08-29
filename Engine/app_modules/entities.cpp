@@ -30,6 +30,7 @@ DECL_OBJ_MANAGER("entity", CEntity);		//need to be first
 DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("room", TCompRoom);
 DECL_OBJ_MANAGER("transform", TCompTransform);
+DECL_OBJ_MANAGER("tmx_animator", TCompTransformAnimator);
 DECL_OBJ_MANAGER("snoozer", TCompSnoozer);
 DECL_OBJ_MANAGER("camera", TCompCamera);
 DECL_OBJ_MANAGER("camera_main", TCompCameraMain);
@@ -163,6 +164,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompRoomSwitch>()->init(4);
 	getHandleManager<TCompRoomLimit>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTransformAnimator>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCamera>()->init(32);
@@ -618,6 +620,9 @@ void CEntitiesModule::update(float dt) {
 
 		//Fx
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
+
+		//Tmx animator
+		getHandleManager<TCompTransformAnimator>()->updateAll(dt);
 
 		SBB::update(dt);
 	}

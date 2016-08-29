@@ -173,6 +173,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="components\comp_transform.cpp" />
+    <ClCompile Include="components\comp_transform_animator.cpp" />
     <ClCompile Include="components\comp_trigger_lua.cpp" />
     <ClCompile Include="components\comp_video.cpp" />
     <ClCompile Include="components\comp_wire.cpp" />
@@ -403,6 +404,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="components\comp_transform.h" />
+    <ClInclude Include="components\comp_transform_animator.h" />
     <ClInclude Include="components\comp_trigger.h" />
     <ClInclude Include="components\comp_trigger_standar.h" />
     <ClInclude Include="components\comp_trigger_lua.h" />

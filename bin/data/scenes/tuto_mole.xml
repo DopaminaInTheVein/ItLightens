@@ -613,5 +613,20 @@
 <local_aabb/>
 
 </entity>
+<entity>
+<tags/>
+<name
+   name="end_portal"/>
+<transform
+   pos="1019.52 70.1684 -12.9469"
+   quat="0 -0.707107 0 0.707107"
+   scale="1.0"/>
+<tmx_animator
+   roll_speed="180"/>
+<render_static_mesh
+   name="static_meshes/tuto_mole/end_portal.static_mesh"/>
+<abs_aabb/>
+
+</entity>
 
 </entities>
