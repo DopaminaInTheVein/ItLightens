@@ -132,12 +132,14 @@ public:
 	void SetFilterData(PxFilterData& filter);
 	void SetActive(bool isActive) { m_active = isActive; }
 	void SetGravity(bool isActive) {
-		m_affectGravity = isActive;
-		//if (!isActive) {
+		
+		if (!m_affectGravity) {
 			m_flagsCollisions.clear(PxControllerCollisionFlag::eCOLLISION_DOWN);
 			m_OnGround = false;
 			m_physxOnground = false;
-		//}
+		}
+
+		m_affectGravity = isActive;
 	}
 
 	//-----------------------------------------------------------------------------------------------------
