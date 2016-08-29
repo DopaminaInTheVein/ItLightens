@@ -734,21 +734,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// launch text span related to npc talks with colors
 		.set("character_globe", &SLBPublicFunctions::characterGlobe)
 		.comment("Shows the specified globe for a limited time")
-		.param("string: text to show")
 		.param("float: distance to the player")
 		.param("float: x coord of the character")
 		.param("float: y coord of the character")
 		.param("float: z coord of the character")
-		// launch text span related to npc talks with colors
-		.set("character_globe_color", &SLBPublicFunctions::characterGlobeWithColor)
-		.comment("Shows the specified globe for a limited time")
-		.param("string: text to show")
-		.param("float: distance to the player")
-		.param("float: x coord of the character")
-		.param("float: y coord of the character")
-		.param("float: z coord of the character")
-		.param("string: HEX BACKGROUND COLOR -> #RRGGBBAA")
-		.param("string: HEX TEXT COLOR -> #RRGGBBAA")
 		// launch intro state
 		.set("toggle_intro_state", &SLBPublicFunctions::toggleIntroState)
 		.comment("Toggles the intro game state")

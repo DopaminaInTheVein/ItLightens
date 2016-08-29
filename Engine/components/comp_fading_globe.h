@@ -4,18 +4,14 @@
 #include "comp_base.h"
 
 class TCompFadingGlobe : public TCompBase {
-	float percentLineHeight = 0.02f;
-	float timeForLetter = 0.05f;
-	float marginForImage;
-	int numchars;
-	int lines;
-	int minlines = 3;
 	float resolution_x;
 	float resolution_y;
 	ImGuiWindowFlags flags;
 	float globe_width;
 	float globe_height;
+	bool added = false;
 	// aux params for computing the correct position and size
+	std::string globe_name;
 	float distance;
 	float char_x;
 	float char_y;
@@ -23,16 +19,8 @@ class TCompFadingGlobe : public TCompBase {
 	// position of the globe
 	float screen_x;
 	float screen_y;
-	float screen_x_2;
-	float screen_y_2;
 
-	std::string text;
-	ImColor textColor;
-	ImColor backgroudColor;
 	float  ttl;
-	float sizeFont = 0.025f;
-	const CTexture * textureIcon;
-	ImTextureID tex_id;
 
 public:
 	//Update info

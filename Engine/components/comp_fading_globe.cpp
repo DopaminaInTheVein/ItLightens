@@ -1,4 +1,5 @@
 #include "mcv_platform.h"
+#include "app_modules/imgui/module_imgui.h"
 #include "comp_fading_globe.h"
 #include "entity.h"
 #include "app_modules/gui/gui_utils.h"
@@ -20,10 +21,8 @@ extern CShaderCte< TCteCamera > shader_ctes_camera;
 
 bool TCompFadingGlobe::load(MKeyValue& atts)
 {
-	text = atts.getString("text", "defaultText");
-	ttl = 1.0f;
-	std::string textColorStr = atts.getString("textColor", "#FFFFFFFF");
-	std::string backgroudColorStr = atts.getString("backgroundColor", "#000000FF");
+	ttl = 2.0f;
+	globe_name = atts.getString("name", "char_globe");
 	distance = atts.getFloat("dist", 1.0f);
 	char_x = atts.getFloat("posx", 1.0f);
 	char_y = atts.getFloat("posy", 1.0f);
@@ -32,7 +31,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	resolution_x = CApp::get().getXRes();
 	resolution_y = CApp::get().getYRes();
 
-	char_y += 1.5f;
+	char_y += 1.5f - (1.f / distance);
 
 	// First option: computing manually the projective space coords
 
@@ -61,24 +60,10 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
 
-	textColor = obtainColorFromString(textColorStr);
-	backgroudColor = obtainColorFromString(backgroudColorStr);
-	numchars = 0;
-
-	lines = 1;
-	std::string endline = "\n";
-	size_t pos = text.find(endline, 0);
-	while (pos != text.npos)
-	{
-		lines++;
-		pos = text.find(endline, pos + 1);
+	if (!added) {
+		Gui->addGuiElement("ui/bafarada", VEC3(screen_x, 1.f - screen_y, 0.f), globe_name);
+		added = true;
 	}
-	if (lines < minlines) {
-		lines = minlines;
-	}
-
-	flags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus;
-	marginForImage = lines * percentLineHeight;
 
 	if (distance < 4.0f)
 		distance = 4.0f;
@@ -100,10 +85,8 @@ void TCompFadingGlobe::update(float dt) {
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
 
-	accumTime += getDeltaTime();
-	while (accumTime > timeForLetter) {
-		++numchars;
-		accumTime -= timeForLetter;
+	if (added) {
+		Gui->updateGuiElementPositionByTag(globe_name, VEC3(screen_x, 1.f - screen_y, 0.f));
 	}
 
 	if (ttl >= 0.0f) {
@@ -113,32 +96,24 @@ void TCompFadingGlobe::update(float dt) {
 		//textureIcon->destroy();
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
+
+		// clean instance of the globe
+		Gui->removeGuiElementByTag(globe_name);
 	}
 }
 
 void TCompFadingGlobe::render() const {
 #ifndef NDEBUG
-	PROFILE_FUNCTION("TCompFadingMessage render");
-	// ttl message is viewed
-	std::string textToShow = text.substr(0, numchars);
+	PROFILE_FUNCTION("TCompFadingGlobe render");
 
 	bool b = false;
 
 	ImGui::Begin("Game GUI", &b, ImVec2(resolution_x, resolution_y), 0.0f, flags);
 	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
 
-	Rect rect = GUI::createRect(screen_x, screen_y, 0.1f, 0.1f);
-	GUI::drawRect(rect, obtainColorFromString("#00FF00FF"));
+	/*Rect rect = GUI::createRect(screen_x, screen_y, 0.1f, 0.1f);
+	GUI::drawRect(rect, obtainColorFromString("#00FF00FF"));*/
 
-	/*rect = GUI::createRect(screen_x, screen_y, 0.1f, 0.1f);
-	GUI::drawRect(rect, obtainColorFromString("#0000FFFF"));
-
-	rect = GUI::createRect(0.f, 0.f, 0.1f, 0.1f);
-	GUI::drawRect(rect, obtainColorFromString("#FF0000FF"));
-
-	rect = GUI::createRect(0.9f, 0.9f, 0.1f, 0.1f);
-	GUI::drawRect(rect, obtainColorFromString("#FF0000FF"));
-	GUI::drawText(screen_x + percentLineHeight + percentLineHeight + marginForImage, screen_y + percentLineHeight, GImGui->Font, sizeFont, textColor, textToShow.c_str());*/
 	ImGui::End();
 #endif
 }

@@ -244,7 +244,7 @@ function OnDetected( distance )
 	p:play_3d_sound("event:/OnDetected", pl:get_x(), pl:get_y(), pl:get_z(), h:get_x(), h:get_y(), h:get_z())
 	name_guard = h:get_name()
 	CallFunction("OnDetected_"..name_guard)
-	p:character_globe("Intruder detected!", distance, h:get_x(), h:get_y(), h:get_z())
+	p:character_globe(distance, h:get_x(), h:get_y(), h:get_z())
 end
 
 function OnNextPatrol( guard_name )

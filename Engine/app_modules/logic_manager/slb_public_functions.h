@@ -153,8 +153,7 @@ public:
 	void playerRoom(int newRoom);
 	void playerTalks(const char* text, const char* iconName, const char* iconText);
 	void playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor);
-	void characterGlobe(const char* text, float distance, float char_x, float char_y, float char_z);
-	void characterGlobeWithColor(const char* text, float distance, float char_x, float char_y, float char_z, const char* background, const char* textColor);
+	void characterGlobe(float distance, float char_x, float char_y, float char_z);
 	void toggleIntroState();
 	void launchVictoryState();
 	void loadLevel(const char* level_name);
