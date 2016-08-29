@@ -33,7 +33,7 @@ float4 PSHealthBar(
 {
   float4 result = txDiffuse.Sample(samLinear, iTex0);
   //result.a = 0;
-  result.rgb = float3(1,0,0);
+  result.rgb *= float3(1,0.7,0.7);
   if(result.a > 0.01f){
 		float life_normalized = current_life_player/max_life_player;
 		result.a = 1 - result.a;
