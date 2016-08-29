@@ -118,7 +118,11 @@ void CPlayerBase::update(float elapsed) {
 		else if (controlEnabled) {
 			bool alive = !checkDead();
 			if (alive && inputEnabled) {
-				setLife(getLife() - getDeltaTime() * 0.3f);
+				float factor = energy_default_decrease;
+				if (tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed()) {
+					factor = energy_sense_decrease;
+				}
+				setLife(getLife() - getDeltaTime() * factor);
 				UpdateMoves();
 				UpdateInputActions();
 			}

@@ -61,14 +61,12 @@ void TCompTransform::renderInMenu() {
 
 	float yaw, pitch, roll;
 	getAngles(&yaw, &pitch, &roll);
-	yaw = rad2deg(yaw);
-	pitch = rad2deg(pitch);
-	roll = rad2deg(roll);
+
 	bool yaw_changed = ImGui::DragFloat("Yaw", &yaw, -0.1f, 0.1f);
 	bool pitch_changed = ImGui::DragFloat("Pitch", &pitch, -0.1f, 0.1f);
 	bool roll_changed = ImGui::SliderFloat("Roll", &roll, -180.f, 180.f);
-	if (yaw_changed || pitch_changed || roll_changed, deg2rad(roll))
-		setAngles(deg2rad(yaw), deg2rad(pitch));
+	if (yaw_changed || pitch_changed || roll_changed)
+		setAngles(yaw, pitch, roll);
 
 	float scale = getScale().x;
 	if (ImGui::DragFloat("Scale", &scale, -0.1f, 0.1f)) {

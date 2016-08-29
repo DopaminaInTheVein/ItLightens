@@ -536,6 +536,12 @@
     <ClCompile Include="components\comp_tasklist_switcher.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="logic\comp_box_placer.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_transform_animator.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1429,6 +1435,12 @@
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_tasklist_switcher.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\comp_box_placer.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_transform_animator.h">
       <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>

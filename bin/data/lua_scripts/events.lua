@@ -238,13 +238,13 @@ function OnDoubleJump( param )
 	p:play_sound("event:/OnDoubleJump")
 end
 
-function OnDetected( distance, posx, posy, posz )
-	p:print( "OnDetected: "..distance.." "..posx.." "..posy.." "..posz.."\n" )
+function OnDetected( distance )
+	p:print( "OnDetected: "..distance.."\n" )
 	h:getHandleCaller()	
 	p:play_3d_sound("event:/OnDetected", pl:get_x(), pl:get_y(), pl:get_z(), h:get_x(), h:get_y(), h:get_z())
 	name_guard = h:get_name()
 	CallFunction("OnDetected_"..name_guard)
-	--p:character_globe("Intruder detected!", distance, posx, posy, posz)
+	p:character_globe(distance, h:get_x(), h:get_y(), h:get_z())
 end
 
 function OnNextPatrol( guard_name )

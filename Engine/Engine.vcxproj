@@ -173,6 +173,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="components\comp_transform.cpp" />
+    <ClCompile Include="components\comp_transform_animator.cpp" />
     <ClCompile Include="components\comp_trigger_lua.cpp" />
     <ClCompile Include="components\comp_video.cpp" />
     <ClCompile Include="components\comp_wire.cpp" />
@@ -222,6 +223,7 @@
     <ClCompile Include="logic\bt_poss.cpp" />
     <ClCompile Include="logic\bt_scientist.cpp" />
     <ClCompile Include="logic\comp_box.cpp" />
+    <ClCompile Include="logic\comp_box_placer.cpp" />
     <ClCompile Include="logic\damage.cpp" />
     <ClCompile Include="logic\elevator.cpp" />
     <ClCompile Include="logic\helper_arrow.cpp" />
@@ -402,6 +404,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="components\comp_transform.h" />
+    <ClInclude Include="components\comp_transform_animator.h" />
     <ClInclude Include="components\comp_trigger.h" />
     <ClInclude Include="components\comp_trigger_standar.h" />
     <ClInclude Include="components\comp_trigger_lua.h" />
@@ -453,6 +456,7 @@
     <ClInclude Include="logic\bt_poss.h" />
     <ClInclude Include="logic\bt_scientist.h" />
     <ClInclude Include="logic\comp_box.h" />
+    <ClInclude Include="logic\comp_box_placer.h" />
     <ClInclude Include="logic\damage.h" />
     <ClInclude Include="logic\elevator.h" />
     <ClInclude Include="logic\helper_arrow.h" />

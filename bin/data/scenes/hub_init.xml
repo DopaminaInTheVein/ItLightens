@@ -90,29 +90,6 @@
 
 </entity>
 <entity
-   slept="yes"
-   reload="yes">
-<tags
-   tags="end_hub"/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="4.91954 3.91691 2.69166"/>
-<tags
-   tags="end_hub trigger"/>
-<trigger_lua
-   action="leave"/>
-<name
-   name="thub_end"/>
-<transform
-   pos="-1.94649 52.7547 -25.6735"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity
    id="5"
    reload="yes">
 <tags/>
@@ -130,8 +107,6 @@
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 <entity
@@ -152,8 +127,6 @@
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 

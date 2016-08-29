@@ -662,10 +662,13 @@ void CRenderDeferredModule::ApplySSAO() {
 	//activateBlend(BLENDCFG_DEFAULT);		//only used for testing
 	activateZ(ZCFG_ALL_DISABLED);
 
+	rt_normals->activate(TEXTURE_SLOT_NORMALS);
 	auto tech = Resources.get("ssao.tech")->as<CRenderTechnique>();
 	tech->activate();
 
 	drawFullScreen(rt_albedos, tech);
+
+	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 }
 
 void CRenderDeferredModule::MarkInteractives(const VEC4& color, std::string tag, int slot) {

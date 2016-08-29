@@ -96,6 +96,7 @@ void writeIniAtrData(const std::string route, std::string element_name, std::map
 //Math basic
 float max(int nargs, ...);
 float min(int nargs, ...);
+VEC4 mul(VEC4 input, MAT44 transform);
 
 //Check nan VEC3
 bool isNan(VEC3 vec);

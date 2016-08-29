@@ -1,0 +1,299 @@
+<entities>
+<entity
+   reload="yes">
+<tags
+   tags="player raijin"/>
+<player/>
+<life
+   points="10"/>
+<skc_player/>
+<skeleton_lookat/>
+<name
+   name="_player_1"/>
+<transform
+   pos="1038.17 64.1823 -25.628"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/player/player.skeleton"/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="0.7"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="AI AI_mole AI_poss"/>
+<bt_mole
+   wpts_size="3"
+   wpt0_pos="1035.83 64.1938 -27.3372"
+   wpt0_wait="2"
+   wpt1_pos="1035.83 64.1938 -24.6995"
+   wpt1_wait="2"
+   wpt2_pos="1037.4 64.1938 -27.5013"
+   wpt2_wait="2"/>
+<player_mole/>
+<skc_mole/>
+<name
+   name="_mole_1"/>
+<transform
+   pos="1035.47 64.1938 -26.8255"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/mole/mole.skeleton"/>
+<render_static_mesh
+   name="skeletons/mole/mole.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="2.01"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.889994 0.185 3.84509"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionMole="destroy"/>
+<name
+   name="_tWall"/>
+<transform
+   pos="1034.14 64.402 -26.0653"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="box platform removable interactive"/>
+<box
+   size="3.0 1.5 3.0"/>
+<bone_tracker/>
+<name
+   name="_Box_1"/>
+<transform
+   pos="1027.77 65.1174 -12.6499"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="box_placer"/>
+<box_placer
+   event="tutomole_box_placed"/>
+<name
+   name="_box_target"/>
+<transform
+   pos="1019.55 64.2138 -12.6371"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.889994 2.955 3.84509"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_tCrossWall"/>
+<transform
+   pos="1033.0 65.787 -26.0653"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.43707 0.185 3.76478"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.57 70.2065 -12.9299"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.718536 0.185 2.56005"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.57 70.7873 -12.9409"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 1.51043"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 71.0914 -12.9409"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.718536 0.185 2.56005"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.57 69.6159 -12.9409"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 1.51043"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 69.3238 -12.9409"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 69.676 -12.1503"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 69.676 -13.7335"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 70.7453 -13.7335"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1019.53 70.7453 -12.1504"
+   quat="0 0 -0.707107 0.707107"
+   scale="0.521071"/>
+
+</entity>
+
+</entities>

@@ -275,7 +275,7 @@ void CGuiModule::stop() {
 }
 
 //------------------------------------------------------------------------------------//
-void CGuiModule::addGuiElement(std::string prefab, VEC3 pos)
+void CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag)
 {
 	CHandle h = createPrefab(prefab);
 	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
@@ -285,5 +285,31 @@ void CGuiModule::addGuiElement(std::string prefab, VEC3 pos)
 	VEC3 new_pos = min_ortho + (max_ortho - min_ortho) * pos;
 	GET_COMP(tmx, h, TCompTransform);
 	tmx->setPosition(new_pos);
+
+	if (!tag.empty()) {
+		TMsgSetTag msgTag;
+		msgTag.add = true;
+		msgTag.tag = tag;
+		CEntity* e = h;
+		e->sendMsg(msgTag);
+	}
+
 	dbg("gui_element created\n");
+}
+
+void CGuiModule::removeGuiElementByTag(std::string tag)
+{
+	CHandle handle = tags_manager.getFirstHavingTag(tag.c_str());
+	handle.destroy();
+}
+
+void CGuiModule::updateGuiElementPositionByTag(std::string tag, VEC3 new_position) {
+	CHandle handle = tags_manager.getFirstHavingTag(tag.c_str());
+	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
+	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
+	VEC3 min_ortho = ui_cam->getMinOrtho();
+	VEC3 max_ortho = ui_cam->getMaxOrtho();
+	VEC3 new_pos = min_ortho + (max_ortho - min_ortho) * new_position;
+	GET_COMP(tmx, handle, TCompTransform);
+	tmx->setPosition(new_pos);
 }

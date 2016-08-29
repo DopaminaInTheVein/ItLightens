@@ -30,6 +30,7 @@ DECL_OBJ_MANAGER("entity", CEntity);		//need to be first
 DECL_OBJ_MANAGER("name", TCompName);
 DECL_OBJ_MANAGER("room", TCompRoom);
 DECL_OBJ_MANAGER("transform", TCompTransform);
+DECL_OBJ_MANAGER("tmx_animator", TCompTransformAnimator);
 DECL_OBJ_MANAGER("snoozer", TCompSnoozer);
 DECL_OBJ_MANAGER("camera", TCompCamera);
 DECL_OBJ_MANAGER("camera_main", TCompCameraMain);
@@ -74,6 +75,7 @@ DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("drone", TCompDrone);
 DECL_OBJ_MANAGER("box", TCompBox);
+DECL_OBJ_MANAGER("box_placer", TCompBoxPlacer);
 DECL_OBJ_MANAGER("pila", TCompPila);
 DECL_OBJ_MANAGER("pila_container", TCompPilaContainer);
 DECL_OBJ_MANAGER("workstation", TCompWorkstation);
@@ -162,6 +164,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompRoomSwitch>()->init(4);
 	getHandleManager<TCompRoomLimit>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
+	getHandleManager<TCompTransformAnimator>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRenderStaticMesh>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCamera>()->init(32);
@@ -208,6 +211,7 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<TCompBoxSpawner>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBoxDestructor>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoxPlacer>()->init(MAX_ENTITIES);
 
 	//getHandleManager<TCompTriggerStandar>()->init(MAX_ENTITIES);
 
@@ -595,6 +599,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompPlatform>()->updateAll(dt);
 		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
+		getHandleManager<TCompBoxPlacer>()->updateAll(dt);
 		getHandleManager<TCompPila>()->updateAll(dt);
 		getHandleManager<TCompWorkstation>()->updateAll(dt);
 		getHandleManager<magnet_door>()->updateAll(dt);
@@ -615,6 +620,9 @@ void CEntitiesModule::update(float dt) {
 
 		//Fx
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
+
+		//Tmx animator
+		getHandleManager<TCompTransformAnimator>()->updateAll(dt);
 
 		SBB::update(dt);
 	}

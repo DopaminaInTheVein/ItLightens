@@ -689,9 +689,7 @@ void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* icon
 	entity->add(new_hl);
 }
 
-void SLBPublicFunctions::characterGlobe(const char* text, float distance, float char_x, float char_y, float char_z) {
-	// DO Something with text...
-	dbg(text);
+void SLBPublicFunctions::characterGlobe(float distance, float char_x, float char_y, float char_z) {
 
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
@@ -706,41 +704,18 @@ void SLBPublicFunctions::characterGlobe(const char* text, float distance, float 
 
 	auto hm3 = CHandleManager::getByName("character_globe");
 	CHandle new_hl = hm3->createHandle();
+
+	// generation of a unique name
+	std::string name = "globe_" + to_string(char_x) + "_" + to_string(char_z);
+
+	// Creation of the attributes
 	MKeyValue atts3;
-	atts3["text"] = text;
+	atts3["name"] = name;
 	atts3["dist"] = std::to_string(distance);
 	atts3["posx"] = std::to_string(char_x);
 	atts3["posy"] = std::to_string(char_y);
 	atts3["posz"] = std::to_string(char_z);
-	new_hl.load(atts3);
-	entity->add(new_hl);
-}
 
-void SLBPublicFunctions::characterGlobeWithColor(const char* text, float distance, float char_x, float char_y, float char_z, const char* background, const char* textColor) {
-	// DO Something with text...
-	dbg(text);
-
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "characterGlobe");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-
-	auto hm3 = CHandleManager::getByName("character_globe");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["text"] = text;
-	atts3["backgroundColor"] = background;
-	atts3["textColor"] = textColor;
-	atts3["dist"] = std::to_string(distance);
-	atts3["posx"] = std::to_string(char_x);
-	atts3["posy"] = std::to_string(char_y);
-	atts3["posz"] = std::to_string(char_z);
 	new_hl.load(atts3);
 	entity->add(new_hl);
 }

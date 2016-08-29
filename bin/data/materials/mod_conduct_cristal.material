@@ -1,0 +1,5 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/cristal_difuso_dtx5.dds"/>
+<texture slot="specular" name="textures/cristal_specular.dds"/>
+<texture slot="normalmap" name="textures/cristal_normal.dds"/>
+</material>
