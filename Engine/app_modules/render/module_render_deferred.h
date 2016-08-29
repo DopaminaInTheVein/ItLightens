@@ -41,7 +41,7 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderToTexture* rt_temp;
 
 	int xres, yres;
-	bool ssao_test = false;
+	bool ssao_test = true;
 
 	CHandle                 h_camera;
 
