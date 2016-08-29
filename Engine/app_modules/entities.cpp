@@ -74,6 +74,7 @@ DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
 DECL_OBJ_MANAGER("platform", TCompPlatform);
 DECL_OBJ_MANAGER("drone", TCompDrone);
 DECL_OBJ_MANAGER("box", TCompBox);
+DECL_OBJ_MANAGER("box_placer", TCompBoxPlacer);
 DECL_OBJ_MANAGER("pila", TCompPila);
 DECL_OBJ_MANAGER("pila_container", TCompPilaContainer);
 DECL_OBJ_MANAGER("workstation", TCompWorkstation);
@@ -208,6 +209,7 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<TCompBoxSpawner>()->init(MAX_ENTITIES);
 	getHandleManager<TCompBoxDestructor>()->init(MAX_ENTITIES);
+	getHandleManager<TCompBoxPlacer>()->init(MAX_ENTITIES);
 
 	//getHandleManager<TCompTriggerStandar>()->init(MAX_ENTITIES);
 
@@ -595,6 +597,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompPlatform>()->updateAll(dt);
 		getHandleManager<TCompDrone>()->updateAll(dt);
 		getHandleManager<TCompBox>()->updateAll(dt);
+		getHandleManager<TCompBoxPlacer>()->updateAll(dt);
 		getHandleManager<TCompPila>()->updateAll(dt);
 		getHandleManager<TCompWorkstation>()->updateAll(dt);
 		getHandleManager<magnet_door>()->updateAll(dt);

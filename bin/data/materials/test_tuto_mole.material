@@ -1,0 +1,3 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/cubo_de_fregar_difuso.dds"/>
+</material>

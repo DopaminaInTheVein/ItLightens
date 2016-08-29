@@ -53,6 +53,8 @@ void player_controller::readIniFileAttr() {
 			assignValueToVar(init_life, fields_player);
 			assignValueToVar(jump_energy, fields_player);
 			assignValueToVar(stun_energy, fields_player);
+			assignValueToVar(energy_default_decrease, fields_player);
+			assignValueToVar(energy_sense_decrease, fields_player);
 		}
 	}
 }
@@ -278,7 +280,7 @@ void player_controller::Jump()
 			-curSpeed.x * 0.1f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
 			-curSpeed.z * 0.1f
-		);
+			);
 		//--------------------------------------
 	}
 	else {
@@ -935,9 +937,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-			),
+				),
 			polarityForces.end()
-		);
+			);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}

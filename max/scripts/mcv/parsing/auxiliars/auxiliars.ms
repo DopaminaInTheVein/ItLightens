@@ -16,7 +16,9 @@ fn parseable = (
 	-- Es dummy?
 	if (classof _parsingObject) == Dummy then (
 		local type = getUserProp _parsingObject "typeObject"
-		if (type as string) != "railCamera" then (return false)
+		if (type as string) != "railCamera" then (
+			if (type as string) != "BoxPlacer" then ( return false )
+		)
 	)
 	
 	-- FreeCameras & TargetCameras
