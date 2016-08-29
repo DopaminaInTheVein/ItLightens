@@ -168,7 +168,7 @@ void CMesh::renderInstanced(const CMesh* instances_data, size_t ninstances) cons
 
   // Set the buffer strides.
   unsigned int strides[2];
-  strides[0] = vtx_decl->bytes_per_vertex;      // My stride (la mesh que se pinta N veces)
+  strides[0] = vtx_decl->bytes_per_vertex;					// My stride (la mesh que se pinta N veces)
   strides[1] = instances_data->vtx_decl->bytes_per_vertex;  // stride of the instance
                                                             // Set the buffer offsets.
   unsigned int offsets[2] = { 0, 0 };
