@@ -635,10 +635,22 @@ void player_controller_mole::PushBoxPreparation() {
 		box_p->getRigidActor()->isRigidBody()->setMass(250.f);
 		pushing_box = true;
 		CEntity * camera_e = camera;
-		TCompTransform* camera_push = camera_e->get<TCompTransform>();
-		camera_push->getAngles(&camera_push_yaw, &camera_push_pitch);
-		inputEnabled = true;
+		GET_COMP(cam_t, camera_e, TCompTransform);
+		GET_COMP(cam_m, camera_e, TCompCameraMain);
+		// update the position of the camera
+		GET_COMP(box_t, boxPushed, TCompTransform);
+		VEC3 box_position = box_t->getPosition();
+		VEC3 mole_position = transform->getPosition();
+		VEC3 camera_direction = mole_position - box_position;
+		VEC3 camera_position = cam_t->getPosition();
+		GameController->SetManualCameraState(true);
+		cam_m->setManualControl(true);
+		cam_m->smoothLookAt(mole_position + camera_direction * 0.5f, mole_position, cam_m->getUpAux(), 0.9f / getDeltaTime());
+		cam_t->lookAt(mole_position + camera_direction * 0.5f, mole_position, cam_m->getUpAux());
+		// get pushing direction
+		cam_t->getAngles(&camera_push_yaw, &camera_push_pitch);
 		push_pull_direction = getEntityTransform()->getFront();
+		inputEnabled = true;
 	}
 }
 
@@ -656,6 +668,11 @@ void player_controller_mole::PushBox() {
 
 	ChangeState("idle");
 	logic_manager->throwEvent(logic_manager->OnPushBox, "");
+
+	CEntity * camera_e = camera;
+	GET_COMP(cam_m, camera_e, TCompCameraMain);
+	cam_m->setManualControl(false);
+	GameController->SetManualCameraState(false);
 }
 
 void player_controller_mole::FaceToPila()

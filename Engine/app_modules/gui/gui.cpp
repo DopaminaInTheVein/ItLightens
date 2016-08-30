@@ -305,11 +305,13 @@ void CGuiModule::removeGuiElementByTag(std::string tag)
 
 void CGuiModule::updateGuiElementPositionByTag(std::string tag, VEC3 new_position) {
 	CHandle handle = tags_manager.getFirstHavingTag(tag.c_str());
-	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
-	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
-	VEC3 min_ortho = ui_cam->getMinOrtho();
-	VEC3 max_ortho = ui_cam->getMaxOrtho();
-	VEC3 new_pos = min_ortho + (max_ortho - min_ortho) * new_position;
-	GET_COMP(tmx, handle, TCompTransform);
-	tmx->setPosition(new_pos);
+	if (handle.isValid()) {
+		CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
+		GET_COMP(ui_cam, h_ui_cam, TCompCamera);
+		VEC3 min_ortho = ui_cam->getMinOrtho();
+		VEC3 max_ortho = ui_cam->getMaxOrtho();
+		VEC3 new_pos = min_ortho + (max_ortho - min_ortho) * new_position;
+		GET_COMP(tmx, handle, TCompTransform);
+		tmx->setPosition(new_pos);
+	}
 }

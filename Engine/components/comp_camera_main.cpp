@@ -71,6 +71,12 @@ bool TCompCameraMain::getUpdateInfo() {
 
 void TCompCameraMain::update(float dt) {
 	bool cameraIsGuided = false;
+
+	if (manual_control) {
+		// do nothing
+
+		return;
+	}
 	if (guidedCamera.isValid()) {
 		//Camara guida
 		CEntity * egc = guidedCamera;

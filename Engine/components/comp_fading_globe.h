@@ -19,6 +19,7 @@ class TCompFadingGlobe : public TCompBase {
 	// position of the globe
 	float screen_x;
 	float screen_y;
+	float screen_z;
 
 	float  ttl;
 

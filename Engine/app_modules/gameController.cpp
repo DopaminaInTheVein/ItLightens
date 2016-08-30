@@ -120,6 +120,9 @@ void CGameController::SetUiControl(bool new_ui_control)
 bool CGameController::IsCinematic() const {
 	return cinematic;
 }
+bool CGameController::IsCamManual() const {
+	return manual_control;
+}
 void CGameController::SetCinematic(bool new_cinematic) {
 	cinematic = new_cinematic;
 }
