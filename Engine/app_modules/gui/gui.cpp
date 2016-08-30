@@ -43,8 +43,8 @@ bool CGuiModule::start()
 	resolution_y = CApp::get().getYRes();
 
 	//Pause and Menu
-	bigRect = GUI::createRect(0.00f, 0.00f, 1.00f, 1.00f);
-	menuPause = new CGuiMenuPause();
+	//bigRect = GUI::createRect(0.00f, 0.00f, 1.00f, 1.00f);
+	//menuPause = new CGuiMenuPause();
 
 	//Font
 	imFont = imIO.Fonts->AddFontDefault();
@@ -56,8 +56,8 @@ bool CGuiModule::start()
 	initScreens();
 
 	//Hud Player
-	hudPlayerRect = GUI::createRect(0.05f, 0.05f, .30f, 0.05f);
-	hudPlayer = new CGuiHudPlayer(hudPlayerRect);
+	//hudPlayerRect = GUI::createRect(0.05f, 0.05f, .30f, 0.05f);
+	//hudPlayer = new CGuiHudPlayer(hudPlayerRect);
 
 	//Action Text
 	txtAction = new CGuiActionText(GUI::createRect(0.7f, 0.9f, .3f, .1f));
@@ -81,8 +81,8 @@ void CGuiModule::initWindow()
 	window_flags |= ImGuiWindowFlags_NoMove
 		| ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_NoTitleBar
-		| ImGuiWindowFlags_NoSavedSettings
-		| ImGuiWindowFlags_ShowBorders;
+		| ImGuiWindowFlags_NoSavedSettings;
+	//| ImGuiWindowFlags_ShowBorders;
 }
 
 void CGuiModule::initScreens()
@@ -145,7 +145,7 @@ void CGuiModule::updateOnPlay(float dt)
 	if (controller->isStopGameButtonPressed()) {
 		GameController->SetGameState(CGameController::STOPPED);
 	}
-	hudPlayer->update(dt);
+	//hudPlayer->update(dt);
 	txtAction->update(dt);
 }
 
@@ -194,11 +194,18 @@ void inline CGuiModule::callRender(int state)
 
 void CGuiModule::render() {
 	if (!enabled) return;
-	activateZ(ZCFG_ALL_DISABLED);
-	ImGui::Begin("Game GUI", &menu, ImVec2(resolution_x, resolution_y), 0.0f, window_flags);
-	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
-	callRender(GameController->GetGameState());
-	ImGui::End();
+	window_actived = there_is_text;
+	there_is_text = false;
+	if (window_actived) {
+		activateZ(ZCFG_ALL_DISABLED);
+		ImGui::Begin("Game GUI", &menu, ImVec2(resolution_x, resolution_y), 0.0f, window_flags);
+		ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
+		callRender(GameController->GetGameState());
+		ImGui::End();
+	}
+	else {
+		callRender(GameController->GetGameState());
+	}
 
 	txtAction->setState(eAction::NONE);
 	//ImGui::Render(); <-- Ya lo hace el módulo de ImGui!!
@@ -211,7 +218,7 @@ void CGuiModule::renderDefault() {
 
 // ----- Render On Play ----- //
 void CGuiModule::renderOnPlay() {
-	hudPlayer->render();
+	//hudPlayer->render();
 	txtAction->render();
 }
 
@@ -230,10 +237,10 @@ void CGuiModule::renderOnStop() {
 // ----- Render On Stop Intro ----- //
 void CGuiModule::renderOnStopIntro() {
 	// Text Pause Intro
-	Rect upperRect = GUI::createRect(.00f, .00f, 1.f, .12f);
-	Rect lowerRect = GUI::createRect(.00f, .88f, 1.f, 1.f);
-	GUI::drawRect(upperRect, GUI::IM_BLACK);
-	GUI::drawRect(lowerRect, GUI::IM_BLACK);
+	//Rect upperRect = GUI::createRect(.00f, .00f, 1.f, .12f);
+	//Rect lowerRect = GUI::createRect(.00f, .88f, 1.f, 1.f);
+	//GUI::drawRect(upperRect, GUI::IM_BLACK);
+	//GUI::drawRect(lowerRect, GUI::IM_BLACK);
 }
 
 // ----- Render On Dead ----- //
@@ -241,7 +248,7 @@ void CGuiModule::renderOnDead() {
 	//hudPlayer->render();
 	ImGuiState& g = *GImGui;
 	g.FontSize = resolution_y;
-	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+	//GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
 
 	// Text Dead
 	GUI::drawText(0.3f, 0.4f, GImGui->Font, 0.1f, GUI::IM_WHITE, "Has muerto");
@@ -253,7 +260,7 @@ void CGuiModule::renderOnVictory() {
 	//hudPlayer->render();
 	ImGuiState& g = *GImGui;
 	g.FontSize = resolution_y;
-	GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
+	//GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
 
 	// Text Victory
 	GUI::drawText(0.3f, 0.3f, GImGui->Font, 0.1f, GUI::IM_WHITE, "Victory!!");

@@ -15,6 +15,10 @@ function OnClicked_btn_back_title( )
 	LoadLevel("level_0")
 end
 
+function OnClicked_btn_exit_pause( )
+	p:exit_game()
+end
+
 function destroyMenu( )
 	menu_handles = HandleGroup()
 	menu_handles:get_handles_by_tag("menu")

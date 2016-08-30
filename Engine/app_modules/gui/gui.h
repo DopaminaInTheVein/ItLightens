@@ -27,14 +27,14 @@ private:
 	//ImGuiState*             GImGui = &GImDefaultState;
 
 	//Hud Player
-	Rect hudPlayerRect;
-	CGuiHudPlayer * hudPlayer;
+	//Rect hudPlayerRect;
+	//CGuiHudPlayer * hudPlayer;
 
 	//Pause
-	Rect bigRect;
+	//Rect bigRect;
 
 	//Menu
-	CGuiMenuPause * menuPause;
+	//CGuiMenuPause * menuPause;
 
 	//Action Text
 	CGuiActionText * txtAction;
@@ -68,6 +68,11 @@ private:
 	ImGuiWindowFlags window_flags;
 
 public:
+
+	//Text check
+	bool there_is_text = false;
+	bool window_actived = false;
+
 	CGuiModule() {}
 	bool start() override;
 	void stop() override;
