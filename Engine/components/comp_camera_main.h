@@ -8,6 +8,7 @@
 // ------------------------------------
 struct TCompCameraMain : public TCompCamera {
 	bool detect_colsions;
+	bool manual_control = false;
 	float smoothDefault;
 	float smoothCurrent;
 
@@ -32,6 +33,8 @@ struct TCompCameraMain : public TCompCamera {
 	bool getUpdateInfo() override;
 	void update(float dt);
 	float checkColision(const VEC3& pos, const float smoothCurrent, const float distanceToTarget);
+	bool getManualControl() { return manual_control; }
+	void setManualControl(bool control) { manual_control = control; }
 	void onGuidedCamera(const TMsgGuidedCamera&);
 	void onCreate(const TMsgEntityCreated&);
 };

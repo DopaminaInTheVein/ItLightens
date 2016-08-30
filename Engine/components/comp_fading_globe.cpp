@@ -59,9 +59,10 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
+	screen_z = 0.75f;
 
 	if (!added) {
-		Gui->addGuiElement("ui/bafarada", VEC3(screen_x, 1.f - screen_y, 0.f), globe_name);
+		Gui->addGuiElement("ui/bafarada", VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
 		added = true;
 	}
 
@@ -86,8 +87,10 @@ void TCompFadingGlobe::update(float dt) {
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
 
 	if (added) {
-		Gui->updateGuiElementPositionByTag(globe_name, VEC3(screen_x, 1.f - screen_y, 0.f));
+		Gui->updateGuiElementPositionByTag(globe_name, VEC3(screen_x, 1.f - screen_y, screen_z));
 	}
+
+	// time to life control for the globe
 
 	if (ttl >= 0.0f) {
 		ttl -= getDeltaTime();

@@ -11,6 +11,7 @@ class CGameController : public IAppModule {
 	bool	render_culling_box = false;
 	bool	free_camera = false;
 	bool	cinematic = false;
+	bool	manual_control = false;
 	bool    ui_control = false;
 
 public:
@@ -31,6 +32,7 @@ public:
 
 	void TogglePauseState();
 	void TogglePauseIntroState();
+	void SetManualCameraState(bool state) { manual_control = state; }
 
 	void UpdateGeneralInputs();
 
@@ -47,6 +49,7 @@ public:
 	void SetUiControl(bool new_ui_control);
 
 	bool IsCinematic() const;
+	bool IsCamManual() const;
 	void SetCinematic(bool new_cinematic);
 	bool * GetCullingRenderPointer();
 	bool GetCullingRender() const;

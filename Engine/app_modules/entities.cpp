@@ -547,11 +547,21 @@ void CEntitiesModule::update(float dt) {
 	}
 	else if (GameController->GetGameState() == CGameController::RUNNING) {
 		// May need here a switch to update wich player controller takes the action - possession rulez
-		if (!GameController->IsCinematic()) {
+		if (!GameController->IsCinematic() && !GameController->IsCamManual()) {
 			getHandleManager<player_controller>()->updateAll(dt);
 			getHandleManager<player_controller_mole>()->updateAll(dt);
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+			getHandleManager<TCompFadingMessage>()->updateAll(dt);
+			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
+			getHandleManager<LogicHelperArrow>()->updateAll(dt);
+			getHandleManager<TCompFadeScreen>()->updateAll(dt);
+			getHandleManager<Tasklist>()->updateAll(dt);
+		}
+		else if (GameController->IsCamManual()) {
+			getHandleManager<player_controller>()->updateAll(dt);
+			getHandleManager<player_controller_mole>()->updateAll(dt);
+			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompFadingMessage>()->updateAll(dt);
 			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
