@@ -36,36 +36,6 @@
 
 </entity>
 <entity
-   permanent="yes">
-<tags
-   tags="menu"/>
-<name
-   name="limits_edge"/>
-<transform
-   pos="5.0 -95.0 8.63545"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/menu_game/limits_edge.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity
-   permanent="yes">
-<tags
-   tags="menu"/>
-<name
-   name="menu_background"/>
-<transform
-   pos="5.0 -95.0 8.54408"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/menu_game/menu_background.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity
    permanent="yes"
    reload="yes">
 <tags
@@ -76,7 +46,7 @@
 <name
    name="btn_restart"/>
 <transform
-   pos="5.00018 -95.3151 8.99995"
+   pos="5.00018 -95.0363 8.99995"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -95,7 +65,7 @@
 <name
    name="btn_back_title"/>
 <transform
-   pos="5.00018 -96.3884 8.99995"
+   pos="5.00018 -95.8152 8.99995"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -119,6 +89,24 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ui/menu_game/menu_title.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="menu gui_button clickable"/>
+<gui_button
+   width="0.652746"
+   height="0.367172"/>
+<name
+   name="btn_exit_pause"/>
+<transform
+   pos="5.03041 -96.5323 8.99995"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu/button_start.static_mesh"/>
 <abs_aabb/>
 
 </entity>

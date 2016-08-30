@@ -116,6 +116,11 @@ void CImGuiModule::update(float dt) {
 		if (ImGui::Button("Create")) Gui->addGuiElement("ui/test", pos_new_ui);
 		ImGui::TreePop();
 	}
+	if (ImGui::TreeNode("Gui Others")) {
+		ImGui::Text("Text?: %s", Gui->there_is_text ? "yes" : "no");
+		ImGui::Text("Window?: %s", Gui->window_actived ? "yes" : "no");
+		ImGui::TreePop();
+	}
 
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
 	ImGui::Text("WARNING: The player will still move, pause the game to stop moving the player");
