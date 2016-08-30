@@ -9,6 +9,7 @@ class TCompCamera;
 
 class TCompGuiCursor : public TCompBase {
 	float speed;
+	float factor = 0.f;
 	TCompTransform * myTransform;
 	TCompCamera * ui_camera;
 	CHandle button;

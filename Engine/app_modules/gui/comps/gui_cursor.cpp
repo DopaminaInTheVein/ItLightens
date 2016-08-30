@@ -14,7 +14,7 @@ bool TCompGuiCursor::load(MKeyValue& atts)
 	GameController->SetUiControl(true);
 	GameController->SetGameState(CGameController::STOPPED);
 
-	speed = atts.getFloat("speed", 5.f);
+	speed = atts.getFloat("speed", .5f);
 	return true;
 }
 
@@ -57,7 +57,8 @@ void TCompGuiCursor::updateMovement(float dt)
 	dy += io->mouse.dy;
 
 	//Apply speed
-	float factor = speed * dt;
+	float smooth = 0.99f;
+	factor = (speed * dt * (1 - smooth)) + factor * smooth;
 	dx *= factor;
 	dy *= factor;
 
