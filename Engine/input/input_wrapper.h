@@ -48,6 +48,7 @@ public:
 
 	// A-B-X-Y
 	bool IsActionButtonPessed();
+	bool IsActionButtonReleased();
 	bool IsJumpButtonPressed();
 	bool IsPossessionButtonPressed();
 	bool IsSenseButtonPressed();

@@ -7,7 +7,15 @@
 #include "app_modules/logic_manager/logic_manager.h"
 
 int CGameController::GetGameState() const { return game_state; }
-void CGameController::SetGameState(int state) { game_state = state; }
+void CGameController::SetGameState(int state) {
+	if (game_state == state) return;
+	game_state = state;
+	switch (game_state) {
+	case CGameController::LOSE:
+		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDead, "");
+		break;
+	}
+}
 
 void CGameController::TogglePauseState() {
 	if (game_state == RUNNING)

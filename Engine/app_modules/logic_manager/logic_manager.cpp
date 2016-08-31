@@ -349,6 +349,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnVictory();");
 		break;
 	}
+	case (OnDead): {
+		sprintf(lua_code, "OnDead();");
+		break;
+	}
 	case (OnRestartLevel): {
 		sprintf(lua_code, "OnRestartLevel(%s);", params.c_str());
 		break;
@@ -365,7 +369,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadedLevel(%s);", params.c_str());
 		break;
 	}
-	//GUI
+						  //GUI
 	case (OnClicked): {
 		sprintf(lua_code, "OnClicked(\"%s\");", params.c_str());
 		break;

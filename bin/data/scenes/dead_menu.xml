@@ -3,25 +3,6 @@
    permanent="yes"
    reload="yes">
 <tags
-   tags="menu gui_button clickable"/>
-<gui_button
-   width="1.13903"
-   height="0.640701"/>
-<name
-   name="btn_resume"/>
-<transform
-   pos="5.00018 -94.2417 8.99995"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/menu_game/btn_resume.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity
-   permanent="yes"
-   reload="yes">
-<tags
    tags="menu gui_cursor"/>
 <gui_cursor/>
 <name
@@ -44,13 +25,13 @@
    width="1.13903"
    height="0.640701"/>
 <name
-   name="btn_restart"/>
+   name="btn_retry"/>
 <transform
    pos="5.00018 -95.0363 8.99995"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/menu_game/btn_restart.static_mesh"/>
+   name="static_meshes/ui/dead_menu/btn_retry.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -60,16 +41,16 @@
 <tags
    tags="menu gui_button clickable"/>
 <gui_button
-   width="1.13903"
-   height="0.640701"/>
+   width="0.673163"
+   height="0.378647"/>
 <name
-   name="btn_back_title"/>
+   name="btn_back_title_dead"/>
 <transform
    pos="5.00018 -95.8152 8.99995"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/menu_game/btn_exit.static_mesh"/>
+   name="static_meshes/ui/dead_menu/btn_back_title.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -82,13 +63,13 @@
    width="5.87608"
    height="0.640701"/>
 <name
-   name="menu_title"/>
+   name="title_dead"/>
 <transform
-   pos="5.00018 -93.3036 8.99995"
+   pos="5.00018 -94.224 8.99995"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/menu_game/menu_title.static_mesh"/>
+   name="static_meshes/ui/dead_menu/title_dead.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -101,13 +82,13 @@
    width="0.652746"
    height="0.367172"/>
 <name
-   name="btn_exit_pause"/>
+   name="btn_exit_dead"/>
 <transform
-   pos="5.03041 -96.5323 8.99995"
+   pos="4.99275 -96.2507 8.99995"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/menu/button_exit_pause.static_mesh"/>
+   name="static_meshes/ui/dead_menu/btn_exit_pause.static_mesh"/>
 <abs_aabb/>
 
 </entity>

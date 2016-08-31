@@ -100,6 +100,7 @@ public:
 		OnRemovePila,
 
 		OnVictory,
+		OnDead,
 		OnRestartLevel,
 		OnLoadedLevel,
 		OnSavedLevel,

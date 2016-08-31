@@ -129,6 +129,9 @@ float CInputWrapper::MouseDeltaY() {
 bool CInputWrapper::IsActionButtonPessed() {
 	return io->mouse.left.isPressed() || io->joystick.button_X.isPressed();
 }
+bool CInputWrapper::IsActionButtonReleased() {
+	return io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased();
+}
 bool CInputWrapper::IsJumpButtonPressed() {
 	return io->keys[VK_SPACE].isPressed() || io->joystick.button_A.isPressed();
 }

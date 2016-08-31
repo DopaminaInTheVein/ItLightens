@@ -14,7 +14,7 @@ bool TCompGuiCursor::load(MKeyValue& atts)
 	GameController->SetUiControl(true);
 	GameController->SetGameState(CGameController::STOPPED);
 
-	speed = atts.getFloat("speed", .5f);
+	speed = atts.getFloat("speed", 5.f);
 	return true;
 }
 
@@ -41,10 +41,12 @@ bool TCompGuiCursor::getUpdateInfo()
 
 void TCompGuiCursor::update(float dt)
 {
+	if (!enabled) return;
 	updateMovement(dt);
 	if (button.isValid()) {
-		if (io->mouse.left.becomesReleased()) {
+		if (controller->IsActionButtonReleased()) {
 			button.sendMsg(TMsgClicked());
+			enabled = false;
 		}
 	}
 }
@@ -53,19 +55,19 @@ void TCompGuiCursor::updateMovement(float dt)
 {
 	//Leer mouse
 	float dx = 0, dy = 0;
-	dx += io->mouse.dx;
-	dy += io->mouse.dy;
+	dx += controller->MouseDeltaX();
+	dy += controller->MouseDeltaY();
 
 	//Apply speed
-	float smooth = 0.99f;
-	factor = (speed * dt * (1 - smooth)) + factor * smooth;
-	dx *= factor;
-	dy *= factor;
+	///float smooth = 0.99f;
+	///factor = (speed * dt * (1 - smooth)) + factor * smooth;
+	dx *= speed * dt;
+	dy *= speed * dt;
 
 	//Calc Movement
 	VEC3 movement = VEC3(dx, -dy, 0);
 	VEC3 new_pos = myTransform->getPosition() + movement;
-	//VEC3 new_pos_old = new_pos;
+	///VEC3 new_pos_old = new_pos;
 
 	//Limits camera
 	VEC3 min_ortho = ui_camera->getMinOrtho();

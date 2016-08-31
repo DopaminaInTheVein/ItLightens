@@ -377,6 +377,11 @@ function OnVictory( )
 	launchVictoryState();
 end
 
+function OnDead( )
+	p:print( "OnDead\n")
+	p:load_entities("dead_menu")
+end
+
 -- GUI
 ---------------------------------------------------
 function OnClicked( param )

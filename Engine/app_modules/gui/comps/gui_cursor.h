@@ -9,11 +9,12 @@ class TCompCamera;
 
 class TCompGuiCursor : public TCompBase {
 	float speed;
-	float factor = 0.f;
+	//float factor = 0.f;
 	TCompTransform * myTransform;
 	TCompCamera * ui_camera;
 	CHandle button;
 	CHandle ui_camera_h;
+	bool enabled = true;
 public:
 	// load Xml
 	bool load(MKeyValue& atts);

@@ -166,13 +166,13 @@ void CGuiModule::updateOnMenu(float dt) {
 
 // ----- Update On Dead ----- //
 void CGuiModule::updateOnDead(float dt) {
-	if (controller->IsPausePressed()) {
-		GameController->SetGameState(CGameController::RUNNING);
-		CApp::get().restartLevelNotify();
-	}
-	else if (controller->IsBackPressed()) {
-		CApp::get().exitGame();
-	}
+	//if (controller->IsPausePressed()) {
+	//	GameController->SetGameState(CGameController::RUNNING);
+	//	CApp::get().restartLevelNotify();
+	//}
+	//else if (controller->IsBackPressed()) {
+	//	CApp::get().exitGame();
+	//}
 }
 
 // ----- Update On Victory ----- //
