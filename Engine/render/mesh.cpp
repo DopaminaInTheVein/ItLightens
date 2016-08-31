@@ -228,9 +228,9 @@ void CMesh::activateAndRender() const {
 	render();
 }
 
-FileDataMesh CMesh::loadData(std::string path, CDataProvider& dp)
+FileDataMesh* CMesh::loadData(std::string path, CDataProvider& dp)
 {
-	FileDataMesh dm;
+	FileDataMesh* dm = new FileDataMesh();
 
 	struct TRiff {
 		uint32_t magic;
@@ -275,12 +275,12 @@ FileDataMesh CMesh::loadData(std::string path, CDataProvider& dp)
 		}
 	}
 
-	dm.idxs = idxs;
-	dm.numIdxPerBytes = header.bytes_per_idx;
-	dm.vtxs = vtxs;
-	dm.numVtxPerBytes = header.bytes_per_vtx;
-	dm.numIdx = header.num_idxs;
-	dm.numVtx = header.num_vtxs;
+	dm->idxs = idxs;
+	dm->numIdxPerBytes = header.bytes_per_idx;
+	dm->vtxs = vtxs;
+	dm->numVtxPerBytes = header.bytes_per_vtx;
+	dm->numIdx = header.num_idxs;
+	dm->numVtx = header.num_vtxs;
 
 	return dm;
 }

@@ -3,6 +3,7 @@
 
 #include "app_modules\app_module.h"
 #include "ItLightensFilterShader.h"
+#include "physx_mesh_manager.h"
 
 #define DEFAULT_DATA_DYNAMIC	g_PhysxManager->GetDefaultQueryTagsDynamic()
 #define DEFAULT_DATA_STATIC		g_PhysxManager->GetDefaultQueryTagsStatic()
@@ -49,7 +50,8 @@ class CPhysxManager : public IAppModule,
 	public PxSimulationFilterCallback,
 	public PxControllerBehaviorCallback,
 	public PxUserControllerHitReport,
-	public PxQueryFilterCallback {
+	public PxQueryFilterCallback,
+	public CMeshPhysxManager{
 	PxFoundation			*m_pFoundation = nullptr;
 	PxProfileZoneManager	*m_pProfileZoneManager = nullptr;
 	PxPhysics				*m_pPhysics = nullptr;

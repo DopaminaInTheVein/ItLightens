@@ -8,6 +8,8 @@ using namespace MeshFormat;
 bool meshLoader(CMesh* mesh, CDataProvider& dp) {
 	assert(dp.isValid());
 
+	FileDataMesh* file_data = new FileDataMesh();
+
 	struct TRiff {
 		uint32_t magic;
 		uint32_t num_bytes;
@@ -58,6 +60,16 @@ bool meshLoader(CMesh* mesh, CDataProvider& dp) {
 			break;
 		}
 	}
+
+	file_data->idxs = idxs;
+	file_data->numIdxPerBytes = header.bytes_per_idx;
+	file_data->vtxs = vtxs;
+	file_data->numVtxPerBytes = header.bytes_per_vtx;
+	file_data->numIdx = header.num_idxs;
+	file_data->numVtx = header.num_vtxs;
+
+
+	g_PhysxManager->addNewMeshPhysx(file_data,mesh->getName());
 
 	//
 
@@ -180,6 +192,7 @@ IResource* createObjFromName<CMesh>(const std::string& name) {
 			, CMesh::LINE_LIST
 			, nullptr))
 			return nullptr;
+
 		return mesh;
 	}
 	// ----------------------------------
@@ -313,5 +326,6 @@ else if (name == "textured_quad_xy_centered.mesh") {
 	assert(fdp.isValid() || fatal("Can't open mesh file %s\n", full_path.c_str()));
 	bool is_ok = meshLoader(mesh, fdp);
 	assert(is_ok);
+
 	return mesh;
 }

@@ -133,6 +133,8 @@ bool CPhysxManager::start()
 	m_pScene->setVisualizationParameter(PxVisualizationParameter::eJOINT_LIMITS, 1.0f);
 #endif
 
+	initMeshManager();
+
 	setFtDynamic();
 	setFtStatic();
 	setFtCC();
@@ -405,19 +407,38 @@ PxActor* CPhysxManager::CreateAndAddTrigger(const PxTransform *transform, PxShap
 //function CreateCookedTriangleMesh: Cook Triangle Mesh to be read for physx
 PxTriangleMesh * CPhysxManager::CreateCookedTriangleMesh(const CMesh * mesh)
 {
-	std::string full_path = mesh->getDataPath() + mesh->getName();
-	CFileDataProvider dp(full_path.c_str());
-	FileDataMesh dataM = CMesh::loadData(mesh->getDataPath(), dp);		//TODO: way of reading from CMesh buffers
+	
+
+	FileDataMesh* dataM = nullptr;
+
+	bool read = false;
+	if (!getPhysxMesh(mesh->getName())) {
+		std::string full_path = mesh->getDataPath() + mesh->getName();
+		CFileDataProvider dp(full_path.c_str());
+		dataM = CMesh::loadData(mesh->getDataPath(), dp);
+
+		read = true;
+
+		this->addNewMeshPhysx(dataM, mesh->getName());
+		if (!dataM->numVtx) {
+			int i = 0;
+		}
+	}
+	else {
+		dataM = loadPhysxMesh(mesh->getName());
+	}
+
+	// = mesh->readData();		//TODO: way of reading from CMesh buffers
 
 	PxTriangleMeshDesc meshDesc;
-	meshDesc.points.count = dataM.numVtx;
-	meshDesc.points.stride = dataM.numVtxPerBytes;
-	meshDesc.points.data = dataM.vtxs.data();
+	meshDesc.points.count = dataM->numVtx;
+	meshDesc.points.stride = dataM->numVtxPerBytes;
+	meshDesc.points.data = dataM->vtxs.data();
 
-	meshDesc.triangles.count = dataM.numIdx / 3;
-	meshDesc.triangles.stride = 3 * dataM.numIdxPerBytes;
+	meshDesc.triangles.count = dataM->numIdx / 3;
+	meshDesc.triangles.stride = 3 * dataM->numIdxPerBytes;
 
-	meshDesc.triangles.data = dataM.idxs.data();
+	meshDesc.triangles.data = dataM->idxs.data();
 
 	meshDesc.flags = PxMeshFlag::eFLIPNORMALS | PxMeshFlag::e16_BIT_INDICES;
 
@@ -434,14 +455,30 @@ PxTriangleMesh * CPhysxManager::CreateCookedTriangleMesh(const CMesh * mesh)
 }
 
 PxConvexMesh * CPhysxManager::CreateCookedConvexMesh(const CMesh * mesh) {
-	std::string full_path = mesh->getDataPath() + mesh->getName();
-	CFileDataProvider dp(full_path.c_str());
-	FileDataMesh dataM = CMesh::loadData(mesh->getDataPath(), dp);		//TODO: way of reading from CMesh buffers
+	FileDataMesh* dataM = nullptr;
+
+	bool read = false;
+	if (!getPhysxMesh(mesh->getName())) {
+		std::string full_path = mesh->getDataPath() + mesh->getName();
+		CFileDataProvider dp(full_path.c_str());
+		dataM = CMesh::loadData(mesh->getDataPath(), dp);
+
+		read = true;
+
+		this->addNewMeshPhysx(dataM, mesh->getName());
+		if (!dataM->numVtx) {
+			int i = 0;
+		}
+	}
+	else {
+		dataM = loadPhysxMesh(mesh->getName());
+	}
+
 
 	PxConvexMeshDesc convexDesc;
-	convexDesc.points.count = dataM.numVtx;
-	convexDesc.points.stride = dataM.numVtxPerBytes;
-	convexDesc.points.data = dataM.vtxs.data();
+	convexDesc.points.count = dataM->numVtx;
+	convexDesc.points.stride = dataM->numVtxPerBytes;
+	convexDesc.points.data = dataM->vtxs.data();
 	convexDesc.flags = PxConvexFlag::eCOMPUTE_CONVEX;
 
 	PxDefaultMemoryOutputStream buf;

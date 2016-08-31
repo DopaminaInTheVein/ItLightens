@@ -72,7 +72,9 @@ public:
   void updateFromCPU(const void *new_cpu_data, size_t num_bytes_to_update = 0);
   void renderInstanced(const CMesh* instances_data, size_t ninstances) const;
 
-	static FileDataMesh loadData(std::string path, CDataProvider & dp);
+	static FileDataMesh* loadData(std::string path, CDataProvider & dp);
+	
+
 	AABB getAABB() const { return aabb; }
 	uint32_t getNumVtxs() const {
 		return num_vertexs;
@@ -125,6 +127,12 @@ private:
 	AABB                      aabb;
 
 	static const CMesh* curr_mesh;
+
+public:
+	FileDataMesh			  mesh_data;
+	FileDataMesh readData() const {
+		return mesh_data;
+	}
 };
 
 #endif

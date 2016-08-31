@@ -16,14 +16,17 @@ std::string CNavmeshManager::getPathNavmesh(std::string level_name)
 
 void CNavmeshManager::recalcNavmesh(std::string level_name) {
 	// GENERATE NAVMESH
+	dbg("RECALC NAVMESH INIT");
 	CNavmesh nav = SBB::readNavmesh();
 	nav.build(getPathNavmesh(level_name));
 	SBB::postNavmesh(nav);
 	SBB::postBool(level_name, true);
+	dbg("RECALC NAVMESH END");
 }
 
 void CNavmeshManager::readNavmesh(std::string level_name) {
 	// GENERATE NAVMESH
+	dbg("READ NAVMESH READ...\n");
 	CNavmesh nav = SBB::readNavmesh();
 	bool recalc = !nav.reload(getPathNavmesh(level_name));
 	if (recalc) {
@@ -33,6 +36,7 @@ void CNavmeshManager::readNavmesh(std::string level_name) {
 		SBB::postNavmesh(nav);
 		SBB::postBool("navmesh", true);
 	}
+	dbg("END NAVMESH READ...\n");
 }
 
 void CNavmeshManager::initNavmesh(std::string level_name)
@@ -81,6 +85,7 @@ void CNavmeshManager::initNavmesh(std::string level_name)
 			}
 		}
 	}
+	dbg("END NAVMESH INPUT...\n");
 	nav.m_input.computeBoundaries();
 	SBB::postNavmesh(nav);
 	std::ifstream is(salaloc.c_str());

@@ -545,6 +545,9 @@
     <ClCompile Include="components\comp_life .cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="Physx\physx_mesh_manager.cpp">
+      <Filter>physx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1445,6 +1448,9 @@
     </ClInclude>
     <ClInclude Include="components\comp_transform_animator.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physx\physx_mesh_manager.h">
+      <Filter>physx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
