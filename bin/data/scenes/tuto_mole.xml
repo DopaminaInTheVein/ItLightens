@@ -3,12 +3,12 @@
 <tags/>
 <light_point
    color="0.686275 0.407843 0.243137 2.0"
-   in_radius="226.2"
-   out_radius="1172.96"/>
+   in_radius="120.0"
+   out_radius="200.0"/>
 <name
-   name="Omni011"/>
+   name="Omni014"/>
 <transform
-   pos="1023.75 72.4757 -26.0896"
+   pos="1023.61 71.1785 -24.6194"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -18,26 +18,11 @@
 <name
    name="techo"/>
 <transform
-   pos="0 0 0"
+   pos="1023.43 77.0813 -24.9464"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/techo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="trozo_plataforma_1"/>
-<transform
-   pos="1024.73 65.1077 -13.6529"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/trozo_plataforma_1.static_mesh"/>
+   name="static_meshes/test_tuto_mole/techo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -48,11 +33,11 @@
 <name
    name="puerta_principal"/>
 <transform
-   pos="0 0 0"
+   pos="1023.57 68.5286 -24.9187"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/puerta_principal.static_mesh"/>
+   name="static_meshes/test_tuto_mole/puerta_principal.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -63,56 +48,11 @@
 <name
    name="puerta_izquierda"/>
 <transform
-   pos="0 0 0"
+   pos="1023.57 68.5323 -24.9227"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/puerta_izquierda.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="plataforma_baja_1"/>
-<transform
-   pos="1027.29 64.2487 -27.2703"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/plataforma_baja_1.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="plataforma_alta_2"/>
-<transform
-   pos="1020.39 64.2368 -28.8703"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/plataforma_alta_2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="Plane001"/>
-<transform
-   pos="1023.38 64.1806 -25.3538"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/Plane001.static_mesh"/>
+   name="static_meshes/test_tuto_mole/puerta_izquierda.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -123,11 +63,26 @@
 <name
    name="pibotes_Esquineros"/>
 <transform
-   pos="0 0 0"
+   pos="1023.49 71.1615 -25.0842"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/pibotes_Esquineros.static_mesh"/>
+   name="static_meshes/test_tuto_mole/pibotes_Esquineros.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="paredes_nivel_bajo002"/>
+<transform
+   pos="1023.47 68.243 -24.9738"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test_tuto_mole/paredes_nivel_bajo002.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -138,11 +93,11 @@
 <name
    name="paredes_balcon_cuadrado_derecha"/>
 <transform
-   pos="1026.27 69.494 -21.3906"
+   pos="1023.6 68.444 -24.9338"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/paredes_balcon_cuadrado_derecha.static_mesh"/>
+   name="static_meshes/test_tuto_mole/paredes_balcon_cuadrado_derecha.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -151,13 +106,13 @@
 <entity>
 <tags/>
 <name
-   name="Obzject001"/>
+   name="paredes"/>
 <transform
-   pos="0 0 0"
+   pos="1024.58 70.6914 -24.9243"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/Obzject001.static_mesh"/>
+   name="static_meshes/test_tuto_mole/paredes.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -168,11 +123,11 @@
 <name
    name="Object007"/>
 <transform
-   pos="1021.1 72.271 -6.36937"
+   pos="1021.1 72.271 -15.4702"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/Object007.static_mesh"/>
+   name="static_meshes/test_tuto_mole/Object007.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -183,11 +138,11 @@
 <name
    name="Object006"/>
 <transform
-   pos="1025.91 72.271 -6.35947"
+   pos="1025.91 72.271 -15.4618"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/Object006.static_mesh"/>
+   name="static_meshes/test_tuto_mole/Object006.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -198,11 +153,11 @@
 <name
    name="Object005"/>
 <transform
-   pos="1023.53 65.7376 -6.38255"
+   pos="1023.51 65.7376 -15.436"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/Object005.static_mesh"/>
+   name="static_meshes/test_tuto_mole/Object005.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -213,11 +168,11 @@
 <name
    name="Object004"/>
 <transform
-   pos="1021.24 72.271 -44.344"
+   pos="1023.56 69.0043 -34.1884"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/Object004.static_mesh"/>
+   name="static_meshes/test_tuto_mole/Object004.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -228,11 +183,11 @@
 <name
    name="Object002"/>
 <transform
-   pos="0 0 0"
+   pos="1020.68 66.9876 -21.4528"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/Object002.static_mesh"/>
+   name="static_meshes/test_tuto_mole/Object002.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -243,11 +198,11 @@
 <name
    name="marco_puerta_abajo"/>
 <transform
-   pos="0 0 0"
+   pos="1023.55 68.6809 -24.9223"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/marco_puerta_abajo.static_mesh"/>
+   name="static_meshes/test_tuto_mole/marco_puerta_abajo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -258,11 +213,11 @@
 <name
    name="lamparas_derecha001"/>
 <transform
-   pos="1032.85 69.135 -25.2977"
+   pos="1032.85 69.135 -25.2825"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/lamparas_derecha001.static_mesh"/>
+   name="static_meshes/test_tuto_mole/lamparas_derecha001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -273,11 +228,26 @@
 <name
    name="lamparas_derecha"/>
 <transform
-   pos="1013.99 69.135 -25.2788"
+   pos="1013.99 69.135 -25.2964"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/lamparas_derecha.static_mesh"/>
+   name="static_meshes/test_tuto_mole/lamparas_derecha.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="lampara001"/>
+<transform
+   pos="1023.21 72.1014 12712.4"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test_tuto_mole/lampara001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -288,41 +258,11 @@
 <name
    name="hierro001"/>
 <transform
-   pos="-0.149301 0.115589 0"
+   pos="1023.23 74.2289 -24.6291"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/hierro001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cubo_de_pintura_grande"/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/cubo_de_pintura_grande.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cubo"/>
-<transform
-   pos="1021.42 64.2789 -34.2389"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/cubo.static_mesh"/>
+   name="static_meshes/test_tuto_mole/hierro001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -333,26 +273,11 @@
 <name
    name="columnas_abajo"/>
 <transform
-   pos="0 0 0"
+   pos="1023.42 68.8791 -24.8112"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/columnas_abajo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columna001"/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/columna001.static_mesh"/>
+   name="static_meshes/test_tuto_mole/columnas_abajo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -363,11 +288,11 @@
 <name
    name="columna_rota"/>
 <transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
+   pos="1019.81 65.8185 -25.1388"
+   quat="1.0 0 0 0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/columna_rota.static_mesh"/>
+   name="static_meshes/test_tuto_mole/columna_rota.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -378,56 +303,11 @@
 <name
    name="columna"/>
 <transform
-   pos="1021.0 67.3392 -40.6272"
+   pos="1023.92 66.9411 -33.1612"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/columna.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cascote"/>
-<transform
-   pos="1020.26 65.0247 -24.2567"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/cascote.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cajas_de_herramientas"/>
-<transform
-   pos="1025.71 64.3646 -35.2693"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/cajas_de_herramientas.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="bote_pequenho"/>
-<transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/bote_pequenho.static_mesh"/>
+   name="static_meshes/test_tuto_mole/columna.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -438,11 +318,11 @@
 <name
    name="barrotes_balcon_cuadrado_derecho"/>
 <transform
-   pos="0 0 0"
+   pos="1023.48 71.1554 -28.8775"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/barrotes_balcon_cuadrado_derecho.static_mesh"/>
+   name="static_meshes/test_tuto_mole/barrotes_balcon_cuadrado_derecho.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -453,11 +333,11 @@
 <name
    name="barrotes"/>
 <transform
-   pos="0 0 0"
+   pos="1023.47 71.207 -25.0857"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/barrotes.static_mesh"/>
+   name="static_meshes/test_tuto_mole/barrotes.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -468,11 +348,11 @@
 <name
    name="balconada"/>
 <transform
-   pos="0 0 0"
+   pos="1023.43 70.1225 -24.9109"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/balconada.static_mesh"/>
+   name="static_meshes/test_tuto_mole/balconada.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -481,43 +361,37 @@
 <entity>
 <tags/>
 <name
-   name="anzamio_usable"/>
+   name="suelo"/>
 <transform
-   pos="1015.67 73.9769 -33.46"
+   pos="1023.43 64.1878 -24.9243"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/andamio_usable.static_mesh"/>
+   name="static_meshes/test_tuto_mole/suelo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="Sky002"/>
-<transform
-   pos="1026.19 64.2425 -31.3306"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
 
 </entity>
 <entity
-   id="302">
+   permanent="yes"
+   reload="no">
 <tags
-   tags="interactive"/>
+   tags="camera_main"/>
+<camera_main
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"/>
+<culling/>
+<render_glow/>
+<controller_3rd_person/>
+<FX_fade_screen/>
 <name
-   name="_pared_rompible"/>
+   name="_player_1_camController_1"/>
 <transform
-   pos="1033.5 65.6331 -26.0653"
-   quat="0 0 0 1.0"
+   pos="1039.49 66.5439 -24.4054"
+   quat="0.424021 0.498953 -0.21665 0.724096"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/pared_rompible.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 <entity>
@@ -533,93 +407,13 @@
    name="2"/>
 
 </entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="_wall_down"/>
-<transform
-   pos="1033.84 65.2756 -26.0653"
-   quat="0 0 0.130526 0.991445"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_abajo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="_wall_up"/>
-<transform
-   pos="1033.84 66.5033 -26.0653"
-   quat="0 0 -0.0871557 0.996195"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_arriba.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="_wall_right"/>
-<transform
-   pos="1033.83 66.077 -26.7662"
-   quat="0 -0.173648 0 0.984808"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_derec.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-
-</entity>
-<entity
-   slept="yes">
-<tags
-   tags="fragment wall1_fragment"/>
-<name
-   name="_wall_left"/>
-<transform
-   pos="1033.89 65.7878 -25.4293"
-   quat="0 0.21644 0 0.976296"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_iz.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-
-</entity>
 <entity>
 <tags/>
 <name
-   name="end_portal"/>
+   name="_end_portal"/>
 <transform
-   pos="1019.52 70.1684 -12.9469"
-   quat="0 -0.707107 0 0.707107"
+   pos="1028.2 72.7323 -24.9939"
+   quat="0 0.707107 0 0.707107"
    scale="1.0"/>
 <tmx_animator
    roll_speed="180"/>

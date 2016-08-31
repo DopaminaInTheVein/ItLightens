@@ -1,3 +1,8 @@
+
+function OnStart_title( )
+	p:clear_save()
+end
+
 function OnClicked_btn_start( )
 	cam:fade_out(1)
 	p:exec_command("playVideoIntro();", 1)

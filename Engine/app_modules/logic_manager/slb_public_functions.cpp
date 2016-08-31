@@ -690,7 +690,6 @@ void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* icon
 }
 
 void SLBPublicFunctions::characterGlobe(float distance, float char_x, float char_y, float char_z) {
-
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
@@ -734,6 +733,10 @@ void SLBPublicFunctions::loadLevel(const char* level_name) {
 
 void SLBPublicFunctions::saveLevel() {
 	CApp::get().saveLevel();
+}
+
+void SLBPublicFunctions::clearSaveData() {
+	CApp::get().clearSaveData();
 }
 
 void SLBPublicFunctions::loadEntities(const char* file_name) {

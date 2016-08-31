@@ -756,6 +756,9 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("save_level", &SLBPublicFunctions::saveLevel)
 		.comment("Save state current level")
 		.param("string: name of the level")
+		// Clear save data
+		.set("clear_save", &SLBPublicFunctions::clearSaveData)
+		.comment("clear save data")
 		// Load Entities
 		.set("load_entities", &SLBPublicFunctions::loadEntities)
 		.comment("Save state current level")

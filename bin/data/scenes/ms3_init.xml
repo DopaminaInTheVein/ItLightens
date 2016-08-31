@@ -145,6 +145,26 @@
 
 </entity>
 <entity
+   id="302"
+   reload="yes">
+<tags
+   tags="interactive"/>
+<name
+   name="pared_rompible"/>
+<transform
+   pos="-87.1847 0.893398 -7.83921"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/pared_rompible.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
    id="306"
    reload="yes">
 <tags
@@ -260,6 +280,98 @@
 <local_aabb/>
 <polarized
    pol="neutral"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   slept="yes"
+   reload="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="trozo_destruible_abajo"/>
+<transform
+   pos="-86.9613 0.0937034 -7.83921"
+   quat="0 0 0.111467 0.993768"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_destruible_abajo.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   slept="yes"
+   reload="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="trozo_destruible_arriba"/>
+<transform
+   pos="-86.9443 1.50531 -7.83921"
+   quat="0 0 -0.150304 0.98864"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_destruible_arriba.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   slept="yes"
+   reload="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="trozo_destruible_derec"/>
+<transform
+   pos="-86.978 0.893398 -8.43306"
+   quat="0 -0.0368033 0 0.999323"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_destruible_derec.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   slept="yes"
+   reload="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="trozo_destruible_iz"/>
+<transform
+   pos="-86.9196 0.692698 -7.24536"
+   quat="0 -0.0231607 0 0.999732"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/trozo_destruible_iz.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
 <room
    name="2"/>
 

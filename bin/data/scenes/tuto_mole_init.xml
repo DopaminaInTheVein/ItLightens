@@ -32,18 +32,18 @@
    tags="AI AI_mole AI_poss"/>
 <bt_mole
    wpts_size="3"
-   wpt0_pos="1035.83 64.1938 -27.3372"
+   wpt0_pos="1035.83 64.1938 -26.9732"
    wpt0_wait="2"
-   wpt1_pos="1035.83 64.1938 -24.6995"
+   wpt1_pos="1035.83 64.1938 -24.3355"
    wpt1_wait="2"
-   wpt2_pos="1037.4 64.1938 -27.5013"
+   wpt2_pos="1037.4 64.1938 -27.1372"
    wpt2_wait="2"/>
 <player_mole/>
 <skc_mole/>
 <name
    name="_mole_1"/>
 <transform
-   pos="1035.47 64.1938 -26.8255"
+   pos="1035.47 64.1938 -26.4615"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -56,6 +56,24 @@
 <character_controller
    radius="0.3"
    height="2.01"/>
+
+</entity>
+<entity
+   id="302"
+   reload="yes">
+<tags
+   tags="interactive"/>
+<name
+   name="_pared_rompible"/>
+<transform
+   pos="1033.5 65.6331 -26.0653"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test_tuto_mole/_pared_rompible.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 <entity
@@ -79,6 +97,90 @@
 
 </entity>
 <entity
+   slept="yes"
+   reload="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="_wall_down"/>
+<transform
+   pos="1033.84 65.0197 -26.0653"
+   quat="0 0 0.130526 0.991445"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test_tuto_mole/_wall_down.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity
+   slept="yes"
+   reload="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="_wall_up"/>
+<transform
+   pos="1033.84 66.2475 -26.0653"
+   quat="0 0 -0.0871557 0.996195"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test_tuto_mole/_wall_up.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity
+   slept="yes"
+   reload="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="_wall_right"/>
+<transform
+   pos="1033.83 65.8211 -26.7662"
+   quat="0 -0.173648 0 0.984808"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test_tuto_mole/_wall_right.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity
+   slept="yes"
+   reload="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="_wall_left"/>
+<transform
+   pos="1033.89 65.5319 -25.4293"
+   quat="0 0.21644 0 0.976296"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/test_tuto_mole/_wall_left.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity
    reload="yes">
 <tags
    tags="box platform removable interactive"/>
@@ -88,7 +190,7 @@
 <name
    name="_Box_1"/>
 <transform
-   pos="1027.77 65.1174 -12.6499"
+   pos="1016.53 65.0432 -32.2398"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -110,7 +212,7 @@
 <name
    name="_box_target"/>
 <transform
-   pos="1019.55 64.2138 -12.6371"
+   pos="1019.86 64.2138 -25.1436"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -139,160 +241,16 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="1.43707 0.185 3.76478"/>
+   size="4.25373 0.185 4.21655"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="_ttutomole_end"/>
 <transform
-   pos="1019.57 70.2065 -12.9299"
+   pos="1028.67 72.9879 -24.9823"
    quat="0 0 -0.707107 0.707107"
-   scale="0.521071"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.718536 0.185 2.56005"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1019.57 70.7873 -12.9409"
-   quat="0 0 -0.707107 0.707107"
-   scale="0.521071"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 1.51043"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1019.53 71.0914 -12.9409"
-   quat="0 0 -0.707107 0.707107"
-   scale="0.521071"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.718536 0.185 2.56005"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1019.57 69.6159 -12.9409"
-   quat="0 0 -0.707107 0.707107"
-   scale="0.521071"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 1.51043"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1019.53 69.3238 -12.9409"
-   quat="0 0 -0.707107 0.707107"
-   scale="0.521071"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 0.31719"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1019.53 69.676 -12.1503"
-   quat="0 0 -0.707107 0.707107"
-   scale="0.521071"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 0.31719"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1019.53 69.676 -13.7335"
-   quat="0 0 -0.707107 0.707107"
-   scale="0.521071"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 0.31719"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1019.53 70.7453 -13.7335"
-   quat="0 0 -0.707107 0.707107"
-   scale="0.521071"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 0.31719"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1019.53 70.7453 -12.1504"
-   quat="0 0 -0.707107 0.707107"
-   scale="0.521071"/>
+   scale="1.17711"/>
 
 </entity>
 

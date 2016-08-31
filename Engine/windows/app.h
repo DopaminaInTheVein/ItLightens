@@ -39,6 +39,7 @@ public:
 	//void restart();
 	void restartLevelNotify();
 	void saveLevel();
+	void clearSaveData();
 	std::string getCurrentRealLevel();
 	std::string getRealLevel(std::string logic_level);
 	std::string getCurrentLogicLevel();

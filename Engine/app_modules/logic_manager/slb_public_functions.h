@@ -158,6 +158,7 @@ public:
 	void launchVictoryState();
 	void loadLevel(const char* level_name);
 	void saveLevel();
+	void clearSaveData();
 	void loadEntities(const char* file_name);
 	void resume();
 	void exit();

@@ -220,6 +220,10 @@ void CApp::saveLevel() {
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnSavedLevel, std::string(params));
 }
 
+void CApp::clearSaveData() {
+	has_check_point.clear();
+}
+
 void CApp::loadedLevelNotify() {
 	current_level = next_level;
 	next_level = "";

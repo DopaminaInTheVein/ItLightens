@@ -38,11 +38,15 @@ end
 -- Events
 --===========================================
 function dream_mole()
+	h:getHandleCaller()
+	h:setActionable(1)
 	SaveLevel()
 	LoadLevel("level_2")
 end
 
 function dream_sci()
+	h:getHandleCaller()
+	h:setActionable(1)
 	SaveLevel()
 	LoadLevel("level_3")
 end
