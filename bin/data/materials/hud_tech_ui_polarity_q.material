@@ -1,0 +1,3 @@
+<material tech="ui_polarity_q.tech">
+<texture slot="diffuse" name="textures/Q_polaridad.dds"/>
+</material>
