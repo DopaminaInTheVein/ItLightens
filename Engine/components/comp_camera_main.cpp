@@ -73,8 +73,10 @@ void TCompCameraMain::update(float dt) {
 	bool cameraIsGuided = false;
 
 	if (manual_control) {
-		// do nothing
-
+		VEC3 pos = transform->getPosition();
+		pos.y += 2;
+		transform->setPosition(pos);
+		last_pos_camera = pos;
 		return;
 	}
 	if (guidedCamera.isValid()) {
