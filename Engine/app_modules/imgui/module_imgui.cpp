@@ -188,7 +188,7 @@ void CImGuiModule::update(float dt) {
 		tags_manager.renderInMenu();
 	}if (ImGui::CollapsingHeader("Graficos")) {
 		if (ImGui::TreeNode("polarize")) {
-			ImGui::SliderFloat("Polarize strength", &shader_ctes_globals.strenght_polarize, 0.0f, 2.0f);
+			//ImGui::SliderFloat("Polarize strength", &shader_ctes_globals.strenght_polarize, 0.0f, 2.0f);
 
 			ImGui::TreePop();
 		}

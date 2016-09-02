@@ -9,7 +9,7 @@ ShaderBuffer(TCteGlobals, CTE_SHADER_GLOBALS_SLOT)
 
   float current_life_player;
   float max_life_player;
-  float strenght_polarize;
+  float polarity;
   float dummy_global3;
 
   float4 global_color;

@@ -26,6 +26,57 @@ float4 PS(
   //return txDiffuse.Sample(samLinear, iTex0);
 }
 
+float4 PSQPolarity(
+  in float4 iPosition : SV_Position
+  , in float2 iTex0 : TEXCOORD0
+) : SV_Target
+{
+  float4 result = txDiffuse.Sample(samLinear, iTex0);
+  //result.a = 0;
+  
+  if(polarity == 1.0f){
+	result *= txDiffuse.Sample(samLinear, iTex0*0.9 + 0.04);
+	result *= float4(1,1,0.5,1);
+  }
+  else if(polarity == 2.0f){
+	result *= txDiffuse.Sample(samLinear, iTex0);
+	result *= float4(1,1,1,0.5);
+  }
+  else{
+	result *= txDiffuse.Sample(samLinear, iTex0);
+  }
+  
+  return result;
+  
+  //return txDiffuse.Sample(samLinear, iTex0);
+}
+
+
+float4 PSEPolarity(
+  in float4 iPosition : SV_Position
+  , in float2 iTex0 : TEXCOORD0
+) : SV_Target
+{
+  float4 result = float4(1,1,1,1); 
+  //result.a = 0;
+  
+  if(polarity == 2.0f){
+	result *= txDiffuse.Sample(samLinear, iTex0*0.9 + 0.04);
+	result *= float4(1,1,0.5,1);
+  }
+  else if(polarity == 1.0f){
+	result *= txDiffuse.Sample(samLinear, iTex0);
+	result *= float4(1,1,1,0.5);
+  }
+  else{
+	result *= txDiffuse.Sample(samLinear, iTex0);
+  }
+  return result;
+  
+  //return txDiffuse.Sample(samLinear, iTex0);
+}
+
+
 float4 PSHealthBar(
   in float4 iPosition : SV_Position
   , in float2 iTex0 : TEXCOORD0

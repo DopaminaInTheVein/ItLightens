@@ -150,7 +150,6 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_globals.world_time = 0.f;
 	shader_ctes_globals.xres = xres;
 	shader_ctes_globals.yres = yres;
-	shader_ctes_globals.strenght_polarize = 1.0f / 5.0f;
 
 	shader_ctes_hatching.uploadToGPU();
 
@@ -840,7 +839,8 @@ void CRenderDeferredModule::render() {
 	rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred_int->clear(VEC4(0, 0, 0, 0));
 
-	shader_ctes_globals.uploadToGPU();
+	uploadConstantsGPU();
+	
 	renderGBuffer();
 	renderDetails();
 	renderAccLight();
@@ -1187,6 +1187,18 @@ void CRenderDeferredModule::renderDetails() {
 	activateBlend(BLENDCFG_COMBINATIVE);
 
 	RenderManager.renderAll(h_camera, CRenderTechnique::DETAIL_OBJS);
+}
+
+void CRenderDeferredModule::uploadConstantsGPU() {
+
+	CEntity* e_player = tags_manager.getFirstHavingTag("raijin");
+	if (e_player) {
+		player_controller* pc = e_player->get<player_controller>();
+		if (pc) {
+			shader_ctes_globals.polarity = pc->GetPolarityInt();
+		}
+	}
+	shader_ctes_globals.uploadToGPU();
 }
 
 void CRenderDeferredModule::applyPostFX() {
