@@ -840,7 +840,7 @@ void CRenderDeferredModule::render() {
 	rt_selfIlum_blurred_int->clear(VEC4(0, 0, 0, 0));
 
 	uploadConstantsGPU();
-	
+
 	renderGBuffer();
 	renderDetails();
 	renderAccLight();
@@ -981,6 +981,7 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 	renderEspVisionModeFor("generator", VEC4(1, 1, 1, 1), VISION_OBJECTS_WHITE);
 	renderEspVisionModeFor("tasklist", VEC4(0, 1, 0, 1), VISION_OBJECTS_GREEN);
+	renderEspVisionModeFor("tasklistend", VEC4(1, 1, 0, 1), VISION_OBJECTS_YELLOW);
 	renderEspVisionModeFor("AI_guard", VEC4(1, 0, 0, 1), VISION_OBJECTS_RED, true);
 }
 
@@ -1190,7 +1191,6 @@ void CRenderDeferredModule::renderDetails() {
 }
 
 void CRenderDeferredModule::uploadConstantsGPU() {
-
 	CEntity* e_player = tags_manager.getFirstHavingTag("raijin");
 	if (e_player) {
 		player_controller* pc = e_player->get<player_controller>();

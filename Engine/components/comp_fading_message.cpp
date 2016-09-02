@@ -3,9 +3,18 @@
 #include "entity.h"
 #include "app_modules/gui/gui_utils.h"
 #include "imgui/imgui_internal.h"
+#include "app_modules/imgui/module_imgui.h"
 #include "resources/resources_manager.h"
 #include "render/render.h"
 #include "render/DDSTextureLoader.h"
+
+#include "render/shader_cte.h"
+#include "constants/ctes_object.h"
+#include "constants/ctes_camera.h"
+#include "constants/ctes_globals.h"
+#include <math.h>
+
+extern CShaderCte< TCteCamera > shader_ctes_camera;
 
 bool TCompFadingMessage::load(MKeyValue& atts)
 {
@@ -44,6 +53,9 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	else {
 		iconLoaded = true;
 		tex_id = (ImTextureID*)textureIcon->getResView();
+		Gui->addGuiElement("ui/bafarada", VEC3(0.0f, 0.0f, 0.48f), "Fading_Message_Background");
+		Gui->addGuiElement("ui/bafarada", VEC3(0.075f, 0.09f, 0.49f), "Fading_Message");
+		iconLoaded = true;
 	}
 
 	return true;
@@ -63,9 +75,12 @@ void TCompFadingMessage::update(float dt) {
 	}
 	else {
 		iconLoaded = false;
-		//textureIcon->destroy();
+
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
+
+		Gui->removeGuiElementByTag("Fading_Message");
+		Gui->removeGuiElementByTag("Fading_Message_Background");
 	}
 }
 void TCompFadingMessage::render() const {
@@ -77,14 +92,14 @@ void TCompFadingMessage::render() const {
 	bool b = false;
 	int gState = GameController->GetGameState();
 	if (gState != CGameController::RUNNING) return;
+
 	ImGui::Begin("Game GUI", &b, ImVec2(resolution_x, resolution_y), 0.0f, flags);
 	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
-
-	Rect rect = GUI::createRect(startxrect, startyrect, 1.0f, 1.0f);
-	GUI::drawRect(rect, backgroudColor);
+	//Rect rect = GUI::createRect(startxrect, startyrect, 1.0f, 1.0f);
+	//GUI::drawRect(rect, backgroudColor);
 	GUI::drawText(startxrect + percentLineHeight + percentLineHeight + marginForImage, startyrect + percentLineHeight, GImGui->Font, sizeFont, textColor, textToShow.c_str());
 	if (iconLoaded) {
-		GUI::drawImage(startxrect + percentLineHeight, startyrect + percentLineHeight, startxrect + percentLineHeight + marginForImage, startyrect + percentLineHeight + marginForImage, tex_id);
+		//GUI::drawImage(startxrect + percentLineHeight, startyrect + percentLineHeight, startxrect + percentLineHeight + marginForImage, startyrect + percentLineHeight + marginForImage, tex_id);
 	}
 	else {
 		GUI::drawText(startxrect + marginForImage / 2, startyrect + marginForImage / 2, GImGui->Font, sizeFont, textColor, iconLittleText.c_str());

@@ -99,7 +99,6 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 }
 
 void sortUI() {
-
 }
 
 void CRenderManager::unregisterFromRender(CHandle owner) {
@@ -187,7 +186,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	// Pasearse por todas las keys
 	while (it != end_it) {
 		// Do the culling
-		if (it->owner.getOwner().hasTag("tasklist")) {
+		if (it->owner.getOwner().hasTag("tasklist") || it->owner.getOwner().hasTag("tasklistend")) {
 			CEntity * tent = it->owner.getOwner();
 			TCompRoom * tentroom = tent->get<TCompRoom>();
 			it->room = tentroom->name;

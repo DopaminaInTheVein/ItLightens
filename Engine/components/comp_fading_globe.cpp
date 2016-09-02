@@ -54,7 +54,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 
 	// Second option: using camera viewprojection matrix
 
-	float4 proj_coords = mul(VEC4(char_x, char_y, char_z, 1.0f), shader_ctes_camera.ViewProjection);
+ 	float4 proj_coords = mul(VEC4(char_x, char_y, char_z, 1.0f), shader_ctes_camera.ViewProjection);
 	proj_coords /= proj_coords.z;
 
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
