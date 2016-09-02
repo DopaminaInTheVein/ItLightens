@@ -6,6 +6,7 @@
 
 //Forward Declaration
 class TCompTransform;
+class TCompGui;
 
 class TCompGuiButton : public aicontroller, public TCompBase {
 	float width;
@@ -20,6 +21,7 @@ class TCompGuiButton : public aicontroller, public TCompBase {
 
 	TCompTransform * myTransform;
 	TCompTransform * cursorTransform;
+	TCompGui * myGui;
 
 	// Aux
 	bool checkOver();

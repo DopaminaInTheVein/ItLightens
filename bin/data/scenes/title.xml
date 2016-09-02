@@ -1,8 +1,8 @@
 <entities>
-<entity
-   reload="yes">
+<entity>
 <tags
-   tags="gui_button clickable"/>
+   tags="gui gui_button clickable"/>
+<gui/>
 <gui_button
    width="0.652746"
    height="0.367172"/>
@@ -17,10 +17,10 @@
 <abs_aabb/>
 
 </entity>
-<entity
-   reload="yes">
+<entity>
 <tags
-   tags="gui_cursor"/>
+   tags="gui gui_cursor"/>
+<gui/>
 <gui_cursor/>
 <name
    name="cursor"/>
@@ -33,10 +33,10 @@
 <abs_aabb/>
 
 </entity>
-<entity
-   reload="yes">
+<entity>
 <tags
-   tags="gui_button clickable"/>
+   tags="gui gui_button clickable"/>
+<gui/>
 <gui_button
    width="0.652746"
    height="0.367172"/>

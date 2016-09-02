@@ -114,6 +114,7 @@
   <ItemGroup>
     <ClCompile Include="app_modules\entities.cpp" />
     <ClCompile Include="app_modules\gameController.cpp" />
+    <ClCompile Include="app_modules\gui\comps\gui_basic.cpp" />
     <ClCompile Include="app_modules\gui\comps\gui_button.cpp" />
     <ClCompile Include="app_modules\gui\comps\gui_cursor.cpp" />
     <ClCompile Include="app_modules\gui\gui.cpp" />
@@ -338,6 +339,7 @@
     <ClInclude Include="app_modules\entities.h" />
     <ClInclude Include="app_modules\gameController.h" />
     <ClInclude Include="app_modules\gameData.h" />
+    <ClInclude Include="app_modules\gui\comps\gui_basic.h" />
     <ClInclude Include="app_modules\gui\comps\gui_button.h" />
     <ClInclude Include="app_modules\gui\comps\gui_cursor.h" />
     <ClInclude Include="app_modules\gui\gui.h" />

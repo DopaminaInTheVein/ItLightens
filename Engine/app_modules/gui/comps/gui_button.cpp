@@ -3,6 +3,7 @@
 
 #include "components/entity.h"
 #include "components/comp_transform.h"
+#include "app_modules/gui/comps/gui_basic.h"
 
 #include "app_modules/gameController.h"
 #include "app_modules/io/io.h"
@@ -160,6 +161,9 @@ bool TCompGuiButton::getUpdateInfo()
 	cursorTransform = GETH_COMP(cursor, TCompTransform);
 	if (!cursorTransform) return false;
 
+	myGui = GETH_MY(TCompGui);
+	if (!myGui) return false;
+
 	return true;
 }
 
@@ -178,21 +182,14 @@ void TCompGuiButton::updateRenderState()
 {
 	// Calc speed
 	float speed = 0.f;
+	render_state = myGui->getRenderState();
 	if (render_state_target > render_state) {
 		speed = speeds_increase[(int)(floor(render_state)) + 1];
 	}
 	else if (render_state_target < render_state) {
 		speed = speeds_decrease[(int)(ceil(render_state)) + 1];
 	}
-
-	//Apply speed
-	float delta = getDeltaTime(true) * speed;
-	if (render_state_target > render_state) {
-		render_state = clamp(render_state + delta, render_state, render_state_target);
-	}
-	else if (render_state_target < render_state) {
-		render_state = clamp(render_state - delta, render_state_target, render_state);
-	}
+	myGui->setRenderTarget(render_state_target, speed);
 }
 
 #define DragFloatTimes(name, sufix, rstate) if (ImGui::DragFloat(STRING(name), &name, 0.01f, 0.001f, 1.f)) speeds_##sufix[RStates::rstate] = inverseFloat(name);
@@ -200,18 +197,6 @@ void TCompGuiButton::renderInMenu()
 {
 	IMGUI_SHOW_STRING(getState());
 	IMGUI_SHOW_FLOAT(render_state);
-	/*	speeds_increase[RStates::DISABLED] = inverseFloat(t_enabled);
-	speeds_increase[RStates::ENABLED] = inverseFloat(t_over);
-	speeds_increase[RStates::OVER] = inverseFloat(t_clicked);
-	speeds_increase[RStates::CLICKED] = inverseFloat(t_released);
-	speeds_increase[RStates::RELEASED] = 0.f;
-
-	speeds_decrease[RStates::DISABLED] = 0.f;
-	speeds_decrease[RStates::ENABLED] = inverseFloat(t_disabled);
-	speeds_decrease[RStates::OVER] = inverseFloat(t_unover);
-	speeds_decrease[RStates::CLICKED] = inverseFloat(t_unclicked);
-	speeds_decrease[RStates::RELEASED] = inverseFloat(t_unreleased);
-	*/
 	DragFloatTimes(t_enabled, increase, DISABLED);
 	DragFloatTimes(t_over, increase, ENABLED);
 	DragFloatTimes(t_clicked, increase, OVER);
@@ -221,8 +206,6 @@ void TCompGuiButton::renderInMenu()
 	DragFloatTimes(t_unover, decrease, OVER);
 	DragFloatTimes(t_unclicked, decrease, CLICKED);
 	DragFloatTimes(t_unreleased, decrease, RELEASED);
-
-	//if (ImGui::DragFloat("t_enabled", &t_enabled, 0.01f, 0.001f, 1.f)) speeds_increase[RStates::DISABLED] = inverseFloat(t_enabled);
 }
 
 bool TCompGuiButton::checkOver()

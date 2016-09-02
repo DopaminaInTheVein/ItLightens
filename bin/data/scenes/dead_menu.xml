@@ -1,9 +1,9 @@
 <entities>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_cursor"/>
+   tags="menu gui gui_cursor"/>
+<gui/>
 <gui_cursor/>
 <name
    name="cursor"/>
@@ -17,10 +17,10 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_button clickable"/>
+   tags="menu gui gui_button clickable"/>
+<gui/>
 <gui_button
    width="1.13903"
    height="0.640701"/>
@@ -36,10 +36,10 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_button clickable"/>
+   tags="menu gui gui_button clickable"/>
+<gui/>
 <gui_button
    width="0.673163"
    height="0.378647"/>
@@ -55,13 +55,10 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_button clickable"/>
-<gui_button
-   width="5.87608"
-   height="0.640701"/>
+   tags="menu gui"/>
+<gui/>
 <name
    name="title_dead"/>
 <transform
@@ -74,10 +71,10 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_button clickable"/>
+   tags="menu gui gui_button clickable"/>
+<gui/>
 <gui_button
    width="0.652746"
    height="0.367172"/>

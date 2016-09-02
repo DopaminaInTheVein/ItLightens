@@ -65,13 +65,15 @@ fn parseReload = (
 	if reload != undefined then (
 		XML_PARSING.addAttr "reload" (reload as string)
 	) else (
-		local type = getUserProp _parsingObject "typeObject"
-		if type != undefined then (
-			--if type == "Trigger" then (
-				--XML_PARSING.addAttr "reload" "no"
-			--) else (
-			XML_PARSING.addAttr "reload" "yes"
-			--)
+		if _xml_sufix != "ui_scene" then (	
+			local type = getUserProp _parsingObject "typeObject"
+			if type != undefined then (
+				--if type == "Trigger" then (
+					--XML_PARSING.addAttr "reload" "no"
+				--) else (
+				XML_PARSING.addAttr "reload" "yes"
+				--)
+			)
 		)
 	)
 )

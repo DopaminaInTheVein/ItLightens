@@ -1,6 +1,8 @@
 <entities>
 <entity>
-<tags/>
+<tags
+   tags="gui"/>
+<gui/>
 <name
    name="health_bar_inner"/>
 <transform
@@ -13,7 +15,9 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="gui"/>
+<gui/>
 <name
    name="health_bar_out"/>
 <transform
@@ -26,7 +30,9 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="gui"/>
+<gui/>
 <name
    name="pol_q"/>
 <transform
@@ -39,7 +45,9 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="gui"/>
+<gui/>
 <name
    name="pol_e"/>
 <transform
