@@ -30,6 +30,9 @@ void TCompGui::renderInMenu()
 
 void TCompGui::update(float elapsed)
 {
+	//Check if needs to update
+	if (render_speed == 0.f || render_state == render_target) return;
+
 	//Apply speed
 	float delta = getDeltaTime(true) * render_speed;
 	if (render_target > render_state) {
