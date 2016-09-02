@@ -370,8 +370,20 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 						  //GUI
-	case (OnClicked): {
+	case (OnButtonPressed): { // Boton pulsado, sin soltar aun
+		sprintf(lua_code, "OnPressed(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnClicked): { // En realidad lo usamos como release del boton
 		sprintf(lua_code, "OnClicked(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnMouseOver): {
+		sprintf(lua_code, "OnMouseOver(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnMouseUnover): {
+		sprintf(lua_code, "OnMouseUnover(\"%s\");", params.c_str());
 		break;
 	}
 	case (OnPause): {

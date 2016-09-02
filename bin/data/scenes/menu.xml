@@ -74,13 +74,9 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_button clickable"/>
-<gui_button
-   width="5.87608"
-   height="0.640701"/>
+   tags="menu"/>
 <name
    name="menu_title"/>
 <transform

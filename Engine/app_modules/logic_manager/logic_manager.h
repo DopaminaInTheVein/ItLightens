@@ -106,7 +106,10 @@ public:
 		OnSavedLevel,
 
 		//GUI
+		OnButtonPressed,
 		OnClicked,
+		OnMouseOver,
+		OnMouseUnover,
 		OnPause,
 	};
 

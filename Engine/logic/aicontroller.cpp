@@ -32,7 +32,7 @@ void aicontroller::AddState(std::string name, statehandler sh)
 	{
 		// the state we wish to jump to does exist. we abort
 		//exit(-1);
-		assert(false || fatal("state doesnt exist!\n"));
+		assert(false || fatal("state already exist!\n"));
 	}
 	(*getStatemap())[name] = sh;
 }

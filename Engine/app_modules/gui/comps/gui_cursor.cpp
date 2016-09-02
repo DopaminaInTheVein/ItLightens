@@ -43,12 +43,16 @@ void TCompGuiCursor::update(float dt)
 {
 	if (!enabled) return;
 	updateMovement(dt);
-	if (button.isValid()) {
-		if (controller->IsActionButtonReleased()) {
-			button.sendMsg(TMsgClicked());
-			enabled = false;
-		}
-	}
+
+	// Pasa a logica del boton
+	// ------------------------------------------------
+	//if (button.isValid()) {
+	//	if (controller->IsActionButtonReleased()) {
+	//		button.sendMsg(TMsgClicked());
+	//		enabled = false;
+	//	}
+	//}
+	//-------------------------------------------------
 }
 
 void TCompGuiCursor::updateMovement(float dt)

@@ -18,7 +18,6 @@ class TCompGuiCursor : public TCompBase {
 public:
 	// load Xml
 	bool load(MKeyValue& atts);
-
 	//void onCreate(const TMsgEntityCreated&);
 	bool getUpdateInfo();
 	void update(float dt);

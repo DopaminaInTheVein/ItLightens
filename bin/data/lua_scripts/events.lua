@@ -59,7 +59,7 @@ end
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	p:load_entities("init")
-	p:exec_command("p:load_level(\"level_0\")", 2)
+	p:exec_command("LoadLevel(\"level_0\")", 2)
 	--p:load_entities("title")
 	CallFunction("test_dbg")
 end
@@ -384,6 +384,21 @@ end
 
 -- GUI
 ---------------------------------------------------
+function OnMouseOver( param )
+	p:print("OnMouseOver")
+	CallFunction("OnMouseOver_"..param)
+end
+
+function OnMouseUnover( param )
+	p:print("OnMouseUnover")
+	CallFunction("OnMouseUnover_"..param)
+end
+
+function OnPressed( param )
+	p:print("OnPressed")
+	CallFunction("OnPressed_"..param)
+end
+
 function OnClicked( param )
 	p:print("OnClicked")
 	CallFunction("OnClicked_"..param)

@@ -33,19 +33,6 @@
 <abs_aabb/>
 
 </entity>
-<entity>
-<tags/>
-<name
-   name="background"/>
-<transform
-   pos="5.0 -95.0 9.14624"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/menu/background.static_mesh"/>
-<abs_aabb/>
-
-</entity>
 <entity
    reload="yes">
 <tags
