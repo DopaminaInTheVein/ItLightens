@@ -53,9 +53,8 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	else {
 		iconLoaded = true;
 		tex_id = (ImTextureID*)textureIcon->getResView();
-		Gui->addGuiElement("ui/bafarada", VEC3(0.0f, 0.0f, 0.48f), "Fading_Message_Background");
-		Gui->addGuiElement("ui/bafarada", VEC3(0.075f, 0.09f, 0.49f), "Fading_Message");
-		iconLoaded = true;
+		Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, 0.07f, 0.48f), "Fading_Message_Background");
+		Gui->addGuiElement("ui/Fading_Icon", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message");
 	}
 
 	return true;
