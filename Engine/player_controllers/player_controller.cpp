@@ -590,7 +590,8 @@ void player_controller::UpdateInputActions()
 			gravity_active = true;
 		}
 		else {
-			pol_state = PLUS;
+			setPolState(PLUS);
+			//pol_state = PLUS;
 			dbg("POLARIDAD POSITIVA!\n");
 		}
 	}
@@ -1043,10 +1044,10 @@ void player_controller::setPolState(pols new_pol)
 	pol_state = new_pol;
 	GET_COMP(ui_pol_q, handle_pol_q, TCompGui);
 	GET_COMP(ui_pol_e, handle_pol_e, TCompGui);
-	float pol_q_val = new_pol == NEUTRAL ? 0.f : new_pol == PLUS ? 1.f : 0.f;
+	float pol_q_val = new_pol == NEUTRAL ? 0.f : new_pol == MINUS ? 1.f : 0.f;
 	float pol_e_val = new_pol == NEUTRAL ? 0.f : 1.f - pol_q_val;
-	//ui_pol_q->setRenderTarget(pol_q_val, 5.f);
-	//ui_pol_e->setRenderTarget(pol_e_val, 5.f);
+	ui_pol_q->setRenderTarget(pol_q_val, 5.f);
+	ui_pol_e->setRenderTarget(pol_e_val, 5.f);
 }
 
 //Render In Menu
