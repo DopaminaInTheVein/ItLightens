@@ -63,6 +63,11 @@ bool player_controller::getUpdateInfo()
 {
 	if (!CPlayerBase::getUpdateInfo()) return false;
 	animController = GETH_MY(SkelControllerPlayer);
+
+	if (!handle_pol_q.isValid()) handle_pol_q = tags_manager.getFirstHavingTag("ui_pol_q");
+	if (!handle_pol_e.isValid()) handle_pol_e = tags_manager.getFirstHavingTag("ui_pol_e");
+	//if (!handle_pol_q.isValid() || !handle_pol_e.isValid()) return false;
+
 	return true;
 }
 
@@ -280,7 +285,7 @@ void player_controller::Jump()
 			-curSpeed.x * 0.1f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
 			-curSpeed.z * 0.1f
-			);
+		);
 		//--------------------------------------
 	}
 	else {
@@ -579,23 +584,27 @@ void player_controller::UpdateInputActions()
 	//else {
 	if ((controller->IsMinusPolarityPressed())) {
 		if (pol_state == PLUS) {
-			pol_state = NEUTRAL;
+			setPolState(NEUTRAL);
+			//pol_state = NEUTRAL;
 			cc->SetGravity(true);
 			gravity_active = true;
 		}
 		else {
-			pol_state = PLUS;
+			setPolState(PLUS);
+			//pol_state = PLUS;
 			dbg("POLARIDAD POSITIVA!\n");
 		}
 	}
 	else if ((controller->IsPlusPolarityPressed())) {
 		if (pol_state == MINUS) {
-			pol_state = NEUTRAL;
+			setPolState(NEUTRAL);
+			//pol_state = NEUTRAL;
 			cc->SetGravity(true);
 			gravity_active = true;
 		}
 		else {
-			pol_state = MINUS;
+			setPolState(MINUS);
+			//pol_state = MINUS;
 			dbg("POLARIDAD NEGATIVA!\n");
 		}
 	}
@@ -937,9 +946,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-				),
+			),
 			polarityForces.end()
-			);
+		);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}
@@ -1027,6 +1036,18 @@ string player_controller::GetPolarity() {
 
 void player_controller::onGetWhoAmI(TMsgGetWhoAmI& msg) {
 	msg.who = PLAYER_TYPE::PLAYER;
+}
+
+// Set pol state
+void player_controller::setPolState(pols new_pol)
+{
+	pol_state = new_pol;
+	GET_COMP(ui_pol_q, handle_pol_q, TCompGui);
+	GET_COMP(ui_pol_e, handle_pol_e, TCompGui);
+	float pol_q_val = new_pol == NEUTRAL ? 0.f : new_pol == MINUS ? 1.f : 0.f;
+	float pol_e_val = new_pol == NEUTRAL ? 0.f : 1.f - pol_q_val;
+	ui_pol_q->setRenderTarget(pol_q_val, 5.f);
+	ui_pol_e->setRenderTarget(pol_e_val, 5.f);
 }
 
 //Render In Menu

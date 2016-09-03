@@ -31,7 +31,7 @@
 </entity>
 <entity>
 <tags
-   tags="gui"/>
+   tags="ui_pol_q gui"/>
 <gui/>
 <name
    name="pol_q"/>
@@ -46,7 +46,7 @@
 </entity>
 <entity>
 <tags
-   tags="gui"/>
+   tags="ui_pol_e gui"/>
 <gui/>
 <name
    name="pol_e"/>
