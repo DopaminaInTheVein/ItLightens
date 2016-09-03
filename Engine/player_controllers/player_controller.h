@@ -103,6 +103,10 @@ class player_controller : public CPlayerBase {
 
 	std::string			damage_source = "none";
 
+	// Ui player
+	CHandle handle_pol_q;
+	CHandle handle_pol_e;
+
 	//private functions
 	//--------------------------------------------------------------------
 
@@ -194,6 +198,9 @@ public:
 	int GetPolarityInt() const { return pol_state; }
 	void onGetPolarity(TMsgGetPolarity& msg) { msg.polarity = (pols)pol_state; }
 	void onGetWhoAmI(TMsgGetWhoAmI& msg);
+
+	//Aux
+	void setPolState(pols);
 
 	//Render In Menu
 	void renderInMenu();
