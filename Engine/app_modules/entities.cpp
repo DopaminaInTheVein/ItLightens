@@ -119,6 +119,7 @@ DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
 DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
 
 //gui
+DECL_OBJ_MANAGER("gui", TCompGui);
 DECL_OBJ_MANAGER("gui_cursor", TCompGuiCursor);
 DECL_OBJ_MANAGER("gui_button", TCompGuiButton);
 
@@ -234,6 +235,7 @@ bool CEntitiesModule::start() {
 	//Gui
 	getHandleManager<TCompGuiCursor>()->init(4);
 	getHandleManager<TCompGuiButton>()->init(64);
+	getHandleManager<TCompGui>()->init(128);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -419,6 +421,7 @@ bool CEntitiesModule::start() {
 
 	//Gui
 	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
+	SUBSCRIBE(TCompGuiButton, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
 
 	return true;
@@ -648,6 +651,7 @@ void CEntitiesModule::update(float dt) {
 	//Gui
 	getHandleManager<TCompGuiCursor>()->updateAll(dt);
 	getHandleManager<TCompGuiButton>()->updateAll(dt);
+	getHandleManager<TCompGui>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

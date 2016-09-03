@@ -1,8 +1,8 @@
 <entities>
-<entity
-   reload="yes">
+<entity>
 <tags
-   tags="gui_button clickable"/>
+   tags="gui gui_button clickable"/>
+<gui/>
 <gui_button
    width="0.652746"
    height="0.367172"/>
@@ -17,10 +17,10 @@
 <abs_aabb/>
 
 </entity>
-<entity
-   reload="yes">
+<entity>
 <tags
-   tags="gui_cursor"/>
+   tags="gui gui_cursor"/>
+<gui/>
 <gui_cursor/>
 <name
    name="cursor"/>
@@ -34,22 +34,9 @@
 
 </entity>
 <entity>
-<tags/>
-<name
-   name="background"/>
-<transform
-   pos="5.0 -95.0 9.14624"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/menu/background.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity
-   reload="yes">
 <tags
-   tags="gui_button clickable"/>
+   tags="gui gui_button clickable"/>
+<gui/>
 <gui_button
    width="0.652746"
    height="0.367172"/>

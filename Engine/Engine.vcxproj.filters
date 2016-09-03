@@ -548,6 +548,9 @@
     <ClCompile Include="Physx\physx_mesh_manager.cpp">
       <Filter>physx</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\gui\comps\gui_basic.cpp">
+      <Filter>app_modules\gui\comps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1451,6 +1454,9 @@
     </ClInclude>
     <ClInclude Include="Physx\physx_mesh_manager.h">
       <Filter>physx</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\comps\gui_basic.h">
+      <Filter>app_modules\gui\comps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
