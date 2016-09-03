@@ -138,6 +138,9 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 	)
 	on btnExport pressed do
 	(
+		if txtExport.text == "" then (
+			txtExport.text = (filterstring maxFileName ".")[1]
+		)
 		-- Fill default values
 		assign_default_room_to_all()
 		
