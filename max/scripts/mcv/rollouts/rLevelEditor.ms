@@ -143,6 +143,7 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 		)
 		-- Fill default values
 		assign_default_room_to_all()
+		fixUserProps()
 		
 		local xml, xml_init
 		local fileName, fileNameInit
