@@ -3,6 +3,12 @@ p = Public()
 --==================
 -- Level DATA
 --==================
+TASK_TUTOS_POSS = 0
+TASK_TUTOS_BOMB = 1
+TASK_TUTOS_STUN = 2
+TASK_TUTOS_DRONE = 3
+TASK_TUTOS_GENERATOR = 4
+-------------------------
 poss_done = false
 bomb_done = false
 stunned_1 = false
@@ -38,6 +44,7 @@ function OnUseGenerator_gen_tuto_sci( )
 		gen_done = true
 		openDoorTutoSci()
 		tutosci_help_exit()
+		p:complete_tasklist(TASK_TUTOS_GENERATOR)
 	end
 end
 
@@ -45,6 +52,7 @@ function OnPossess_tuto_sci( )
 	if not poss_done then
 		poss_done = true
 		tutosci_help_wb()
+		p:complete_tasklist(TASK_TUTOS_POSS)
 	end
 end
 
@@ -53,6 +61,7 @@ function OnUnpossess_tuto_sci( )
 		if not unposs_done then
 			unposs_done = true
 			tutosci_help_polarity()
+			p:complete_tasklist(TASK_TUTOS_DRONE)
 		end
 	end
 end
@@ -61,6 +70,7 @@ function OnCreateBomb_tuto_sci( )
 	if not bomb_done then
 		bomb_done = true
 		tutosci_help_bomb()
+		p:complete_tasklist(TASK_TUTOS_BOMB)
 	end
 end
 
@@ -129,6 +139,7 @@ function tutosci_stunned_guard_remain()
 end
 function tutosci_stunned_guards( )
 	tutosci_help_repair()
+	p:complete_tasklist(TASK_TUTOS_STUN)
 end
 function tutosci_help_repair( )
 	p:player_talks("Bien hecho. Al ser un sueño se quedaran aturdidos para siempre.\nAhora acercate al dron de enfrente y pulsa CLIC IZQUIERDO para repararlo.", "scientific.dds", "SCI")
