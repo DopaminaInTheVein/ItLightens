@@ -2750,7 +2750,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="sense_ganerator" />
 <name
    name="generator_1"/>
 <transform
@@ -2767,7 +2767,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="sense_ganerator" />
 <name
    name="generator_2"/>
 <transform
@@ -2784,7 +2784,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="sense_ganerator" />
 <name
    name="generator_3"/>
 <transform
@@ -2801,7 +2801,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="sense_ganerator" />
 <name
    name="generator_4"/>
 <transform
@@ -2818,7 +2818,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="sense_ganerator" />
 <name
    name="generator_5"/>
 <transform
@@ -2835,7 +2835,7 @@
 
 </entity>
 <entity>
-<tags/>
+<tags tags="sense_ganerator" />
 <name
    name="generator_6"/>
 <transform

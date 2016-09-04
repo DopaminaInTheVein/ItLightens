@@ -978,8 +978,7 @@ void CRenderDeferredModule::renderEspVisionMode() {
 	}
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
-
-	renderEspVisionModeFor("generator", VEC4(1, 1, 1, 1), VISION_OBJECTS_WHITE);
+	renderEspVisionModeFor("sense_generator", VEC4(1, 1, 1, 1), VISION_OBJECTS_WHITE);
 	renderEspVisionModeFor("tasklist", VEC4(0, 1, 0, 1), VISION_OBJECTS_GREEN);
 	renderEspVisionModeFor("tasklistend", VEC4(1, 1, 0, 1), VISION_OBJECTS_YELLOW);
 	renderEspVisionModeFor("AI_guard", VEC4(1, 0, 0, 1), VISION_OBJECTS_RED, true);
