@@ -29,6 +29,27 @@
    type_collision="static"/>
 
 </entity>
+<entity
+   permanent="yes"
+   reload="no">
+<tags
+   tags="camera_main"/>
+<camera_main
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"/>
+<culling/>
+<render_glow/>
+<controller_3rd_person/>
+<FX_fade_screen/>
+<name
+   name="player_1_camController_1"/>
+<transform
+   pos="45.1097 1.54851 -7.1481"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
 <entity>
 <tags/>
 <name
@@ -45,7 +66,8 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="sense_generator"/>
 <name
    name="generator"/>
 <transform
@@ -64,7 +86,7 @@
 <name
    name="door_tuto_end___opened_pos001"/>
 <transform
-   pos="75.9021 8.61366 -4.41574"
+   pos="75.9021 8.61366 -4.55197"
    quat="0.500918 -0.49908 0.500918 0.49908"
    scale="1.0"/>
 <room
