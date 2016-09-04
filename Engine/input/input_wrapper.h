@@ -68,6 +68,7 @@ public:
 	// Start & back
 	bool IsPausePressed();
 	bool IsBackPressed();
+	bool IsBackBeingPressed();
 
 	// Capture & Release Mouse
 	void ChangeMouseState(bool captured);

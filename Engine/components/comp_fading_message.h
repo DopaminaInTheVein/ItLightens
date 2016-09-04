@@ -32,6 +32,7 @@ public:
 
 	void update(float elapsed);
 	void render() const;
+	void forceTTLZero();
 	bool load(MKeyValue& atts);
 };
 

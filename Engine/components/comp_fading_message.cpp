@@ -17,8 +17,19 @@
 
 extern CShaderCte< TCteCamera > shader_ctes_camera;
 
+void TCompFadingMessage::forceTTLZero() {
+	ttl = -0.1f;
+}
+
 bool TCompFadingMessage::load(MKeyValue& atts)
 {
+	CHandle thisHan = CHandle(this).getOwner();
+
+	getHandleManager<TCompFadingMessage>()->each([](TCompFadingMessage * mess) {
+		mess->forceTTLZero();
+	}
+	);
+
 	text = atts.getString("text", "defaultText");
 	//ttl = atts.getFloat("ttl", 0.1f);
 	ttl = timeForLetter * text.length() + 2.0f;
@@ -75,14 +86,14 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 void TCompFadingMessage::update(float dt) {
 	static float accumTime = 0.0f;
 
-	accumTime += getDeltaTime();
+	accumTime += dt;
 	while (accumTime > timeForLetter) {
 		++numchars;
 		accumTime -= timeForLetter;
 	}
 
 	if (ttl >= 0.0f) {
-		ttl -= getDeltaTime();
+		ttl -= dt;
 	}
 	else {
 		//iconLoaded = false;

@@ -48,7 +48,7 @@ void TCompVideo::update(float dt) {
 	pWc->RepaintVideo(hwndApp, hdc);
 	//if (FAILED(hr)) { ReleaseAll(); return; }
 
-	long timeout = dt * 1000;
+	LONGLONG timeout = dt * 1000;
 
 	long evCode;
 	pEvent->WaitForCompletion(timeout, &evCode);
@@ -58,9 +58,11 @@ void TCompVideo::update(float dt) {
 	pSeek->GetDuration(duration);
 
 	LONGLONG remaining = *duration - *pos;
-	if (remaining < 10LL || controller->IsBackPressed()) {
+	if (remaining <= timeout || controller->IsBackBeingPressed()) {
 		ReleaseAll();
-		logic_manager->throwUserEvent(lua_code);
+		if (lua_code != "") {
+			logic_manager->throwUserEvent(lua_code);
+		}
 	}
 }
 

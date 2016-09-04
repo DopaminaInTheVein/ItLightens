@@ -307,7 +307,7 @@ void CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag)
 void CGuiModule::removeGuiElementByTag(std::string tag)
 {
 	CHandle handle = tags_manager.getFirstHavingTag(tag.c_str());
-	handle.destroy();
+	if (handle.isValid()) { handle.destroy(); }
 }
 
 void CGuiModule::updateGuiElementPositionByTag(std::string tag, VEC3 new_position) {

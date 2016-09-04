@@ -179,6 +179,9 @@ bool CInputWrapper::IsPausePressed() {
 bool CInputWrapper::IsBackPressed() {
 	return io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed();
 }
+bool CInputWrapper::IsBackBeingPressed() {
+	return io->keys[VK_ESCAPE].isPressed() || io->joystick.button_BACK.isPressed();
+}
 
 // Capture & Release Mouse
 void CInputWrapper::ChangeMouseState(bool captured) {
