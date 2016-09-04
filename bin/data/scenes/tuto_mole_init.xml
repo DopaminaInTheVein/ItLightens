@@ -194,7 +194,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"/>
+   name="static_meshes/test_mole/_Box_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -208,7 +208,8 @@
 <tags
    tags="box_placer"/>
 <box_placer
-   event="tutomole_box_placed"/>
+   event_in="tutomole_box_placed"
+   radius="4"/>
 <name
    name="_box_target"/>
 <transform
@@ -251,6 +252,49 @@
    pos="1028.67 72.9879 -24.9823"
    quat="0 0 -0.707107 0.707107"
    scale="1.17711"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="tasklist"/>
+<render_static_mesh
+   name="static_meshes/test/baliza.static_mesh"/>
+<room
+   name="-1"/>
+<tasklist
+   points_size="5"
+   pos0="1035.93 64.0616 -25.7225"
+   room0="-1"
+   pos1="1033.91 64.0616 -26.0518"
+   room1="-1"
+   pos2="1016.4 64.0616 -32.241"
+   room2="-1"
+   pos3="1020.37 64.0616 -25.8535"
+   room3="-1"
+   pos4="1028.2 71.5124 -24.9939"
+   room4="-1"/>
+<name
+   name="tasklist"/>
+<transform
+   pos="1035.93 64.0616 -25.7225"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="box_placer"/>
+<box_placer
+   event_out="tutomole_box_moved"
+   radius="0.5"/>
+<name
+   name="_box_origin"/>
+<transform
+   pos="1016.53 65.0432 -32.2398"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
 </entity>
 

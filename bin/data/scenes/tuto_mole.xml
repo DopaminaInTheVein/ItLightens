@@ -22,7 +22,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/techo.static_mesh"/>
+   name="static_meshes/test_mole/techo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -37,7 +37,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/puerta_principal.static_mesh"/>
+   name="static_meshes/test_mole/puerta_principal.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -52,7 +52,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/puerta_izquierda.static_mesh"/>
+   name="static_meshes/test_mole/puerta_izquierda.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -67,7 +67,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/pibotes_Esquineros.static_mesh"/>
+   name="static_meshes/test_mole/pibotes_Esquineros.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -82,7 +82,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/paredes_nivel_bajo002.static_mesh"/>
+   name="static_meshes/test_mole/paredes_nivel_bajo002.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -97,7 +97,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/paredes_balcon_cuadrado_derecha.static_mesh"/>
+   name="static_meshes/test_mole/paredes_balcon_cuadrado_derecha.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -112,7 +112,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/paredes.static_mesh"/>
+   name="static_meshes/test_mole/paredes.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -127,7 +127,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/Object007.static_mesh"/>
+   name="static_meshes/test_mole/Object007.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -142,7 +142,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/Object006.static_mesh"/>
+   name="static_meshes/test_mole/Object006.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -157,7 +157,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/Object005.static_mesh"/>
+   name="static_meshes/test_mole/Object005.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -172,7 +172,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/Object004.static_mesh"/>
+   name="static_meshes/test_mole/Object004.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -187,7 +187,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/Object002.static_mesh"/>
+   name="static_meshes/test_mole/Object002.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -202,7 +202,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/marco_puerta_abajo.static_mesh"/>
+   name="static_meshes/test_mole/marco_puerta_abajo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -217,7 +217,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/lamparas_derecha001.static_mesh"/>
+   name="static_meshes/test_mole/lamparas_derecha001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -232,22 +232,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/lamparas_derecha.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="lampara001"/>
-<transform
-   pos="1023.21 72.1014 12712.4"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/test_tuto_mole/lampara001.static_mesh"/>
+   name="static_meshes/test_mole/lamparas_derecha.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -262,7 +247,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/hierro001.static_mesh"/>
+   name="static_meshes/test_mole/hierro001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -277,7 +262,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/columnas_abajo.static_mesh"/>
+   name="static_meshes/test_mole/columnas_abajo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -292,7 +277,7 @@
    quat="1.0 0 0 0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/columna_rota.static_mesh"/>
+   name="static_meshes/test_mole/columna_rota.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -307,7 +292,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/columna.static_mesh"/>
+   name="static_meshes/test_mole/columna.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -322,7 +307,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/barrotes_balcon_cuadrado_derecho.static_mesh"/>
+   name="static_meshes/test_mole/barrotes_balcon_cuadrado_derecho.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -337,7 +322,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/barrotes.static_mesh"/>
+   name="static_meshes/test_mole/barrotes.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -352,7 +337,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/balconada.static_mesh"/>
+   name="static_meshes/test_mole/balconada.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -367,7 +352,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/suelo.static_mesh"/>
+   name="static_meshes/test_mole/suelo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>

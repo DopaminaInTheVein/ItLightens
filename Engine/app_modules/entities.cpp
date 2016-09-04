@@ -299,6 +299,7 @@ bool CEntitiesModule::start() {
 
 	//box
 	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
+	//SUBSCRIBE(TCompBoxPlacer, TMsgEntityCreated, onCreate);
 
 	//bombs
 	SUBSCRIBE(CThrowBomb, TMsgActivate, onNextState);
@@ -450,6 +451,7 @@ void CEntitiesModule::initEntities() {
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
+	getHandleManager<TCompBoxPlacer>()->onAll(&TCompBoxPlacer::init);
 	getHandleManager<TCompPila>()->onAll(&TCompPila::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 

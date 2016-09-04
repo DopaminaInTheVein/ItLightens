@@ -5,14 +5,20 @@
 #include "handle/handle.h"
 
 struct TCompBoxPlacer : public TCompBase {
-	std::string lua_event;
+	std::string lua_event_in;
+	std::string lua_event_out;
 	bool box_placed;
 	CHandle box;
 	float radius;
 
-	void update(float elapsed);
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);
+	void init();
+	//void onCreate(const TMsgEntityCreated&);
+	void update(float elapsed);
+
+	//Aux
+	bool checkBox();
 };
 
 #endif

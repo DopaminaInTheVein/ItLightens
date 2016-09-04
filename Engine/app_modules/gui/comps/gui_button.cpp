@@ -134,7 +134,7 @@ void TCompGuiButton::Clicked()
 		ChangeState(STRING(Released));
 		render_state = RSTATE_CLICKED;
 		render_state_target = RSTATE_RELEASED;
-		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnClicked, MY_NAME, MY_OWNER);
+		//logic_manager->throwEvent(CLogicManagerModule::EVENT::OnClicked, MY_NAME, MY_OWNER);
 	}
 }
 void TCompGuiButton::Released()
