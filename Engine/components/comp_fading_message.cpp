@@ -70,13 +70,13 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	//CEntity * entp = player;
 	//TCompTags * tags = entp->get<TCompTags>();
 	if (player.hasTag("raijin")) {
-		Gui->addGuiElement("ui/Fading_Icon_RAI", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message_Icon");
+		Gui->addGuiElement("ui/Fading_Icon_RAI", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message_Icon_RAI");
 	}
 	else if (player.hasTag("AI_mole")) {
-		Gui->addGuiElement("ui/Fading_Icon_MOL", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message_Icon");
+		Gui->addGuiElement("ui/Fading_Icon_MOL", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message_Icon_MOL");
 	}
 	else if (player.hasTag("AI_cientifico")) {
-		Gui->addGuiElement("ui/Fading_Icon_SCI", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message_Icon");
+		Gui->addGuiElement("ui/Fading_Icon_SCI", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message_Icon_SCI");
 	}
 	//}
 
@@ -101,7 +101,17 @@ void TCompFadingMessage::update(float dt) {
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
 
-		Gui->removeGuiElementByTag("Fading_Message_Icon");
+		CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+		if (player.hasTag("raijin")) {
+			Gui->removeGuiElementByTag("Fading_Message_Icon_RAI");
+		}
+		else if (player.hasTag("AI_mole")) {
+			Gui->removeGuiElementByTag("Fading_Message_Icon_MOL");
+		}
+		else if (player.hasTag("AI_cientifico")) {
+			Gui->removeGuiElementByTag("Fading_Message_Icon_SCI");
+		}
+
 		Gui->removeGuiElementByTag("Fading_Message_Background");
 	}
 }
