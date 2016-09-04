@@ -1,3 +1,3 @@
 <material tech="ui.tech">
-<texture slot="diffuse" name="textures/scientific.dds"/>
+<texture slot="diffuse" name="textures/icon_scientific.dds"/>
 </material>

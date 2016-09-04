@@ -50,6 +50,12 @@ void Tasklist::completeTask(int i) {
 void Tasklist::init() {
 	CHandle h = CHandle(this).getOwner();
 	CEntity * e = h;
+	TCompRoom * room = e->get<TCompRoom>();
+
+	std::vector<int> rooms(1);
+	rooms[0] = 99999999;
+	room->setName(rooms);
+
 	TCompTransform * t = e->get<TCompTransform>();
 	t->setPosition(pointsPlaces[0]);
 	SBB::postInt("current_tasklist", 0);

@@ -18,14 +18,14 @@ class TCompFadingMessage : public TCompBase {
 
 	std::string text;
 	ImColor textColor;
-	ImColor backgroudColor;
+	//ImColor backgroudColor;
 	float  ttl;
 	float sizeFont = 0.025f;
-	std::string iconUri;
-	const CTexture * textureIcon;
+	//std::string iconUri;
+	//const CTexture * textureIcon;
 	std::string iconLittleText;
-	bool iconLoaded;
-	ImTextureID tex_id;
+	//bool iconLoaded;
+	//ImTextureID tex_id;
 
 public:
 	//Update info

@@ -1,5 +1,6 @@
 #include "mcv_platform.h"
 #include "comp_fading_message.h"
+//#include "comp_tags.h"
 #include "entity.h"
 #include "app_modules/gui/gui_utils.h"
 #include "imgui/imgui_internal.h"
@@ -24,8 +25,8 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	std::string textColorStr = atts.getString("textColor", "#FFFFFFFF");
 	std::string backgroudColorStr = atts.getString("backgroundColor", "#000000FF");
 	textColor = obtainColorFromString(textColorStr);
-	backgroudColor = obtainColorFromString(backgroudColorStr);
-	iconUri = "icons/" + atts.getString("icon", "none.dds");
+	//backgroudColor = obtainColorFromString(backgroudColorStr);
+	//iconUri = "icons/" + atts.getString("icon", "none.dds");
 	iconLittleText = atts.getString("iconText", "DEFAULT");
 	numchars = 0;
 
@@ -46,16 +47,27 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	marginForImage = lines * percentLineHeight;
 	startxrect = 0.0f;
 	startyrect = 0.95f - marginForImage;
-	textureIcon = /*const_cast<CTexture *>*/(Resources.get(iconUri.c_str())->as<CTexture>());
-	if (!textureIcon->isValid()) {
-		iconLoaded = false;
+	//textureIcon = /*const_cast<CTexture *>*/(Resources.get(iconUri.c_str())->as<CTexture>());
+	//if (!textureIcon->isValid()) {
+	//	iconLoaded = false;
+	//}
+	//else {
+	//iconLoaded = true;
+	//tex_id = (ImTextureID*)textureIcon->getResView();
+	Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, 0.07f, 0.48f), "Fading_Message_Background");
+	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+	//CEntity * entp = player;
+	//TCompTags * tags = entp->get<TCompTags>();
+	if (player.hasTag("raijin")) {
+		Gui->addGuiElement("ui/Fading_Icon_RAI", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message_Icon");
 	}
-	else {
-		iconLoaded = true;
-		tex_id = (ImTextureID*)textureIcon->getResView();
-		Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, 0.07f, 0.48f), "Fading_Message_Background");
-		Gui->addGuiElement("ui/Fading_Icon", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message");
+	else if (player.hasTag("AI_mole")) {
+		Gui->addGuiElement("ui/Fading_Icon_MOL", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message_Icon");
 	}
+	else if (player.hasTag("AI_cientifico")) {
+		Gui->addGuiElement("ui/Fading_Icon_SCI", VEC3(0.11f, 0.06f, 0.49f), "Fading_Message_Icon");
+	}
+	//}
 
 	return true;
 }
@@ -73,12 +85,12 @@ void TCompFadingMessage::update(float dt) {
 		ttl -= getDeltaTime();
 	}
 	else {
-		iconLoaded = false;
+		//iconLoaded = false;
 
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
 
-		Gui->removeGuiElementByTag("Fading_Message");
+		Gui->removeGuiElementByTag("Fading_Message_Icon");
 		Gui->removeGuiElementByTag("Fading_Message_Background");
 	}
 }
@@ -97,12 +109,9 @@ void TCompFadingMessage::render() const {
 	//Rect rect = GUI::createRect(startxrect, startyrect, 1.0f, 1.0f);
 	//GUI::drawRect(rect, backgroudColor);
 	GUI::drawText(startxrect + percentLineHeight + percentLineHeight + marginForImage, startyrect + percentLineHeight, GImGui->Font, sizeFont, textColor, textToShow.c_str());
-	if (iconLoaded) {
-		//GUI::drawImage(startxrect + percentLineHeight, startyrect + percentLineHeight, startxrect + percentLineHeight + marginForImage, startyrect + percentLineHeight + marginForImage, tex_id);
-	}
-	else {
-		GUI::drawText(startxrect + marginForImage / 2, startyrect + marginForImage / 2, GImGui->Font, sizeFont, textColor, iconLittleText.c_str());
-	}
+	//if (!iconLoaded) {
+	//	GUI::drawText(startxrect + marginForImage / 2, startyrect + marginForImage / 2, GImGui->Font, sizeFont, textColor, iconLittleText.c_str());
+	//}
 	ImGui::End();
 	//#endif
 }
