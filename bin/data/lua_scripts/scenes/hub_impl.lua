@@ -1,13 +1,17 @@
 --==================
 -- Level DATA
 --==================
+
+--TASKS
+TASK_HUB_MOLE = 0
+TASK_HUB_SCI = 1
 -------------------------------
 mole_done = false
 sci_done = false
 -------------------------------
 function OnStart_hub( )
 	hub_first_time = true
-	mole_done = true -- provisional
+	mole_done = false
 	sci_done = false
 	p:player_talks("Bienvenido al hub", "scientific.dds", "SCI")
 end
@@ -27,10 +31,12 @@ function OnLoad_hub()
 	if mole_done then
 		h:get_handle_by_id(idMoleSlept)
 		h:set_anim("run")
+		p:complete_tasklist(TASK_HUB_MOLE)
 	end
 	if sci_done then
 		h:get_handle_by_id(idSciSlept)
 		h:set_anim("run")
+		p:complete_tasklist(TASK_HUB_SCI)
 	end
 end
 -------------------------------
