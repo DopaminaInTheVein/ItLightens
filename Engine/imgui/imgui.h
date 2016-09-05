@@ -8,6 +8,8 @@
 
 //Macros added
 #define IMGUI_SHOW_FLOAT(name) ImGui::Text(STRING(name) ": %f\n", name)
+#define IMGUI_SHOW_INT(name) ImGui::Text(STRING(name) ": %d\n", name)
+#define IMGUI_SHOW_BOOL(name) ImGui::Text(STRING(name) ": %s\n", name != 0 ? "true" : "false")
 #define IMGUI_SHOW_STRING(name) ImGui::Text(STRING(name) ": %s\n", name.c_str())
 
 #pragma once

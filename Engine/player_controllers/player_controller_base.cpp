@@ -13,6 +13,7 @@
 
 #include "components/comp_msgs.h"
 #include "components/comp_camera_main.h"
+#include "components/comp_sense_vision.h"
 
 #include "input/input_wrapper.h"
 #include "app_modules/logic_manager/logic_manager.h"
@@ -44,6 +45,11 @@ bool CPlayerBase::getUpdateInfo() {
 	transform = compBaseEntity->get<TCompTransform>();
 	if (!transform) return false;
 
+	if (!h_sense_vision.isValid()) h_sense_vision = tags_manager.getFirstHavingTag("game_controller");
+	if (!h_sense_vision.isValid()) return false;
+	sense_vision = GETH_COMP(h_sense_vision, TCompSenseVision);
+	if (!sense_vision) return false;
+
 	return true;
 }
 
@@ -69,7 +75,13 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 }
 
 void CPlayerBase::onSetControllable(const TMsgSetControllable& msg) {
-	controlEnabled = msg.control;
+	setControllable(msg.control);
+}
+
+void CPlayerBase::setControllable(bool control)
+{
+	controlEnabled = control;
+	if (!control) sense_vision->unregisterHandle(myHandle);
 }
 
 void CPlayerBase::onGoAndLook(const TMsgGoAndLook& msg) {
@@ -119,8 +131,12 @@ void CPlayerBase::update(float elapsed) {
 			bool alive = !checkDead();
 			if (alive && inputEnabled) {
 				float factor = energy_default_decrease;
-				if (tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed()) {
+				if (/*tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") &&*/ controller->IsSenseButtonPressed()) {
 					factor = energy_sense_decrease;
+					sense_vision->registerHandle(myHandle);
+				}
+				else {
+					sense_vision->unregisterHandle(myHandle);
 				}
 				setLife(getLife() - getDeltaTime() * factor);
 				UpdateMoves();
@@ -360,6 +376,8 @@ void CPlayerBase::initBaseAttributes()
 	std::string file_ini = app.file_initAttr_json;
 	map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 	assignValueToVar(energy_damage, fields_base);
+	assignValueToVar(energy_default_decrease, fields_base);
+	assignValueToVar(energy_sense_decrease, fields_base);
 }
 
 void CPlayerBase::Jump()

@@ -169,7 +169,8 @@ void CRenderDeferredModule::update(float dt) {
 		ssao_test = !ssao_test;
 	}
 
-	m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
+	//m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
+	m_isSpecialVisionActive = GameController->isSenseVisionEnabled();
 }
 
 // ------------------------------------------------------

@@ -30,7 +30,9 @@ map<string, statehandler> player_controller::statemap = {};
 void player_controller::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
-		if (h.hasTag("player")) {
+		if (h.hasTag("player")) { // <-- Esto no va cumplirse siempre?
+			CPlayerBase::initBaseAttributes();
+
 			CApp &app = CApp::get();
 			std::string file_ini = app.file_initAttr_json;
 			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
@@ -53,8 +55,6 @@ void player_controller::readIniFileAttr() {
 			assignValueToVar(init_life, fields_player);
 			assignValueToVar(jump_energy, fields_player);
 			assignValueToVar(stun_energy, fields_player);
-			assignValueToVar(energy_default_decrease, fields_player);
-			assignValueToVar(energy_sense_decrease, fields_player);
 		}
 	}
 }
@@ -100,8 +100,9 @@ void player_controller::Init() {
 	setLife(init_life);
 
 	ChangeState("idle");
+	animController = GETH_MY(SkelControllerPlayer);
 	SET_ANIM_PLAYER(AST_IDLE);
-	controlEnabled = true;
+	setControllable(true);
 	____TIMER__SET_ZERO_(timerDamaged);
 }
 
@@ -217,9 +218,12 @@ void player_controller::myUpdate() {
 		{
 			SET_ANIM_PLAYER(AST_RUN);
 		}
-		else
+		else if (player_curr_speed > 0.f)
 		{
 			SET_ANIM_PLAYER(AST_MOVE);
+		}
+		else {
+			SET_ANIM_PLAYER(AST_IDLE);
 		}
 	}
 }
@@ -472,6 +476,12 @@ VEC3 player_controller::calcFinalForces(vector<VEC3>& forces, vector<float>& pon
 void player_controller::UpdateMoves()
 {
 	PROFILE_FUNCTION("player controller: update moves");
+	//Check Player Enabled
+	if (!controlEnabled) {
+		player_curr_speed = 0.0f;
+		directionForward = directionLateral = directionVertical = VEC3(0, 0, 0);
+		return;
+	}
 
 	TCompTransform* player_transform = myEntity->get<TCompTransform>();
 	VEC3 player_position = player_transform->getPosition();
@@ -695,7 +705,7 @@ void player_controller::UpdatePossession() {
 			possessionCooldown = 1.0f;
 
 			//Se desactiva el player
-			controlEnabled = false;
+			setControllable(false);
 			SBB::postBool("possMode", true);
 			TMsgSetTag msgTag;
 			msgTag.add = false;
@@ -839,7 +849,7 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	camera = CHandle(eCamera);
 
 	//Habilitamos control
-	controlEnabled = true;
+	setControllable(true);
 
 	//Notificamos presencia de Player
 	SBB::postBool("possMode", false);

@@ -689,11 +689,18 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
 		.param("Text to print")
-		// Enable and disable controls
+		// Enable and disable controls (player and camera)
 		.set("setControlEnabled", &SLBPublicFunctions::setControlEnabled)
 		.comment("Enable or disable controls\n")
 		.param("int: 0 disabled, otherwise enabled")
-		.param("float: time until execution")
+		// Enable and disable player controls
+		.set("setPlayerEnabled", &SLBPublicFunctions::setPlayerEnabled)
+		.comment("Enable or disable player control\n")
+		.param("int: 0 disabled, otherwise enabled")
+		// Enable and disable camera control
+		.set("setCameraEnabled", &SLBPublicFunctions::setCameraEnabled)
+		.comment("Enable or disable camera control\n")
+		.param("int: 0 disabled, otherwise enabled")
 		// play sound function
 		.set("play_sound", &SLBPublicFunctions::playSound)
 		.comment("Executes the specified sound effect")

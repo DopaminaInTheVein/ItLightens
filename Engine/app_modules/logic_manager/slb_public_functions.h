@@ -142,6 +142,8 @@ public:
 	void completeTasklist(int i);
 	void print(const char* to_print);
 	void setControlEnabled(int);
+	void setPlayerEnabled(int);
+	void setCameraEnabled(int);
 	void playSound(const char* sound_route);
 	void play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z);
 	void playMusic(const char* music_route);

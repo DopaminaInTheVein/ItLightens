@@ -82,6 +82,7 @@
 
 //FX
 #include "comp_render_fade_screen.h"
+#include "comp_sense_vision.h"
 
 //GUI
 #include "app_modules/gui/comps/gui_basic.h"

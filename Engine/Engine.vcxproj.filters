@@ -551,6 +551,9 @@
     <ClCompile Include="app_modules\gui\comps\gui_basic.cpp">
       <Filter>app_modules\gui\comps</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_sense_vision.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1457,6 +1460,9 @@
     </ClInclude>
     <ClInclude Include="app_modules\gui\comps\gui_basic.h">
       <Filter>app_modules\gui\comps</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_sense_vision.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

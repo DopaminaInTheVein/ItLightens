@@ -556,6 +556,24 @@ void SLBPublicFunctions::setControlEnabled(int enabled) {
 	}
 }
 
+void SLBPublicFunctions::setPlayerEnabled(int enabled) {
+	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+	if (player.isValid()) {
+		TMsgSetControllable msg;
+		msg.control = (enabled != 0);
+		player.sendMsg(msg);
+	}
+}
+
+void SLBPublicFunctions::setCameraEnabled(int enabled) {
+	CHandle main_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
+	if (main_camera.isValid()) {
+		TMsgSetControllable msg;
+		msg.control = (enabled != 0);
+		main_camera.sendMsg(msg);
+	}
+}
+
 void SLBPublicFunctions::playSound(const char* sound_route) {
 	sound_manager->playSound(std::string(sound_route));
 }

@@ -13,6 +13,9 @@ function OnStart_hub( )
 	hub_first_time = true
 	mole_done = false
 	sci_done = false
+	--p:setPlayerEnabled(0)
+	p:setPlayerEnabled(1) --test
+	--p:exec_command("p:setPlayerEnabled(1)", 5) --test
 	p:player_talks("Bienvenido al hub", "scientific.dds", "SCI")
 end
 -------------------------------

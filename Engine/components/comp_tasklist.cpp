@@ -120,7 +120,7 @@ void Tasklist::update(float dt) {
 
 	std::vector<int> rooms(1);
 	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
-	if (controller->IsSenseButtonPressed() && player.hasTag("raijin")) {
+	if (GameController->isSenseVisionEnabled()) {
 		rooms[0] = pointsRooms[SBB::readInt("current_tasklist")];
 	}
 	else {

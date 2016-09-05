@@ -117,6 +117,7 @@ DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
 //fx
 DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
 DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
+DECL_OBJ_MANAGER("sense_vision", TCompSenseVision);
 
 //gui
 DECL_OBJ_MANAGER("gui", TCompGui);
@@ -202,6 +203,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<magnet_door>()->init(MAX_ENTITIES);
 	getHandleManager<elevator>()->init(4);
 	getHandleManager<TCompRenderGlow>()->init(4);
+	getHandleManager<TCompSenseVision>()->init(4);
 
 	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompDrone>()->init(MAX_ENTITIES);

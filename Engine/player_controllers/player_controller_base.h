@@ -15,6 +15,7 @@ class CEntity;
 template< class TObj >
 class CObjectManager;
 class TCompCharacterController;
+class TCompSenseVision;
 
 class CPlayerBase : public aicontroller, public TCompBase {
 protected:
@@ -57,6 +58,8 @@ protected:
 	CHandle myParent;
 	CEntity *myEntity = nullptr;
 	TCompTransform *transform;
+	CHandle h_sense_vision;
+	TCompSenseVision* sense_vision;
 
 	VEC3 directionLateral = VEC3(0, 0, 0);
 	VEC3 directionVertical = VEC3(0, 0, 0);
@@ -100,6 +103,8 @@ protected:
 
 	bool turnTo(TCompTransform*);
 	bool turnTo(VEC3 target);
+
+	void setControllable(bool);
 
 public:
 

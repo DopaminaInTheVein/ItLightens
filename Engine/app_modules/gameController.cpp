@@ -6,6 +6,10 @@
 #include "debug\debug_itlightens.h"
 #include "app_modules/logic_manager/logic_manager.h"
 
+#include "components/entity.h"
+#include "components/entity_tags.h"
+#include "components/comp_sense_vision.h"
+
 int CGameController::GetGameState() const { return game_state; }
 void CGameController::SetGameState(int state) {
 	if (game_state == state) return;
@@ -85,6 +89,7 @@ void CGameController::UpdateGeneralInputs() {
 }
 
 void CGameController::update(float dt) {
+	if (!h_game_controller.isValid()) h_game_controller = tags_manager.getFirstHavingTag("game_controller");
 	UpdateGeneralInputs();
 }
 
@@ -141,6 +146,16 @@ bool * CGameController::GetCullingRenderPointer() {
 
 bool CGameController::GetCullingRender() const {
 	return render_culling_box;
+}
+
+void CGameController::setHandleController(CHandle h) {
+	h_game_controller = h;
+}
+
+bool CGameController::isSenseVisionEnabled()
+{
+	GET_COMP(sv, h_game_controller, TCompSenseVision);
+	return sv ? sv->isSenseVisionEnabled() : false;
 }
 
 const char* CGameController::getName() const {
