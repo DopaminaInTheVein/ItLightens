@@ -25,11 +25,6 @@ float TCompGuiButton::t_unclicked;
 float TCompGuiButton::t_released;
 float TCompGuiButton::t_unreleased;
 
-#define RSTATE_DISABLED	-1.f
-#define RSTATE_ENABLED	0.f
-#define RSTATE_OVER		1.f
-#define RSTATE_CLICKED	2.f
-#define RSTATE_RELEASED	3.f
 
 //#define SetSpeedButtonState(sufix) sp_##sufix = 1.f / t_##sufix;
 void TCompGuiButton::loadOptions()
@@ -171,6 +166,19 @@ void TCompGuiButton::update(float dt)
 {
 	Recalc();
 	updateRenderState();
+	CEntity* e_owner = CHandle(this).getOwner();
+	TCompTransform* trans = e_owner->get<TCompTransform>();
+
+	//update size buttons
+/*	float offset = getRenderState();
+
+	//reset offset
+	if (offset > RSTATE_OVER) {
+		offset = (RSTATE_RELEASED - offset)/ RSTATE_RELEASED;
+	}
+	// +1 because default render state is 0
+	float value = 1 + offset*0.25f;
+	trans->setScale(VEC3(value, value, value));*/
 }
 
 void TCompGuiButton::onClick(const TMsgClicked&)
@@ -207,6 +215,7 @@ void TCompGuiButton::renderInMenu()
 	DragFloatTimes(t_unclicked, decrease, CLICKED);
 	DragFloatTimes(t_unreleased, decrease, RELEASED);
 }
+
 
 bool TCompGuiButton::checkOver()
 {

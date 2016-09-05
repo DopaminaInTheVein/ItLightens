@@ -7,6 +7,12 @@
 class TCompTransform;
 class TCompCamera;
 
+#define RSTATE_DISABLED	-1.f
+#define RSTATE_ENABLED	0.f
+#define RSTATE_OVER		1.f
+#define RSTATE_CLICKED	2.f
+#define RSTATE_RELEASED	3.f
+
 class TCompGui : public TCompBase {
 	float render_state;
 	float render_target;

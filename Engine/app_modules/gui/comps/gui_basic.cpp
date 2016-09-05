@@ -28,6 +28,8 @@ void TCompGui::renderInMenu()
 	IMGUI_SHOW_FLOAT(render_target);
 }
 
+#include "components\comp_transform.h"
+#include "components\entity.h"
 void TCompGui::update(float elapsed)
 {
 	//Check if needs to update
@@ -41,4 +43,18 @@ void TCompGui::update(float elapsed)
 	else if (render_target < render_state) {
 		render_state = clamp(render_state - delta, render_target, render_state);
 	}
+
+	//update size buttons
+	CEntity* e_owner = CHandle(this).getOwner();
+	TCompTransform* trans = e_owner->get<TCompTransform>();
+	float offset = getRenderState();
+
+	//reset offset
+	if (offset > RSTATE_OVER) {
+		offset = (RSTATE_RELEASED - offset) / RSTATE_RELEASED;
+	}
+	// +1 because default render state is 0
+	float value = 1 + offset*0.25f;
+	if(value != 0)
+		trans->setScale(VEC3(value, value, value));
 }

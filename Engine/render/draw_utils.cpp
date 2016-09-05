@@ -11,7 +11,7 @@ CShaderCte< TCteLight >  shader_ctes_lights;
 CShaderCte< TCteGlobals > shader_ctes_globals;
 CShaderCte< TCteBlur >     shader_ctes_blur;
 CShaderCte< TCteHatching > shader_ctes_hatching;
-CShaderCte< TCteData > shader_ctes_data;
+CShaderCte< TCteGui > shader_ctes_gui;
 
 const CTexture* all_black;
 
@@ -151,7 +151,7 @@ bool drawUtilsCreate() {
 		return false;
   if (!shader_ctes_camera.create("ctes_camera"))
     return false;
-  if (!shader_ctes_data.create("ctes_data"))
+  if (!shader_ctes_gui.create("ctes_gui"))
 	  return false;
   if (!shader_ctes_object.create("ctes_object"))
     return false;
@@ -178,7 +178,7 @@ void activateDefaultStates() {
   shader_ctes_globals.activate(CTE_SHADER_GLOBALS_SLOT);
   shader_ctes_blur.activate(CTE_SHADER_BLUR_SLOT); 
   shader_ctes_hatching.activate(CTE_SHADER_HATCHING_SLOT);
-  shader_ctes_data.activate(CTE_SHADER_DATA_SLOT);
+  shader_ctes_gui.activate(CTE_SHADER_GUI_SLOT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
   activateSamplerStates();
@@ -192,7 +192,7 @@ void drawUtilsDestroy() {
   shader_ctes_object.destroy();
   shader_ctes_hatching.destroy();
   shader_ctes_blur.destroy();
-  shader_ctes_data.destroy();
+  shader_ctes_gui.destroy();
 }
 
 // Activo la camara en la pipeline de render

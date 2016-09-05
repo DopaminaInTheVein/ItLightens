@@ -76,6 +76,50 @@ float4 PSEPolarity(
   //return txDiffuse.Sample(samLinear, iTex0);
 }
 
+//defined on gui_button.cpp
+#define RSTATE_DISABLED	-1.f
+#define RSTATE_ENABLED	0.f
+#define RSTATE_OVER		1.f
+#define RSTATE_CLICKED	2.f
+#define RSTATE_RELEASED	3.f
+
+static float base_color = 0.5f;
+
+float4 PSButton(
+  in float4 iPosition : SV_Position
+  , in float2 iTex0 : TEXCOORD0
+) : SV_Target
+{
+  float4 result = txDiffuse.Sample(samLinear, iTex0);
+  result.rgb = result.rgb*base_color;
+  
+  if(state_ui == RSTATE_DISABLED){
+	result *= float4(0.5,0.5,0.5,1);
+  }else if(state_ui == RSTATE_ENABLED){
+	float influence = state_ui - RSTATE_ENABLED + 1;
+	float inv_influence = 1 - influence;
+	result += base_color*(result);
+  }else if(state_ui <= RSTATE_OVER){
+	float influence = state_ui - RSTATE_OVER + 1;
+	float inv_influence = 1 - influence;
+	result += base_color*(result*inv_influence + float4(1,1,0,1)*state_ui);
+  }else if(state_ui <= RSTATE_CLICKED){
+	float influence = state_ui - RSTATE_CLICKED + 1;
+	float inv_influence = 1 - influence;
+	result += base_color*(result*inv_influence + float4(1,0.5,0,1)*state_ui);
+  }else{
+	float influence = state_ui - RSTATE_RELEASED + 1;
+	float inv_influence = 1 - influence;
+	result += base_color*(result*inv_influence + float4(1,0,0,1)*state_ui);
+  }
+  
+  return result;
+  
+  //return txDiffuse.Sample(samLinear, iTex0);
+}
+
+
+
 
 float4 PSHealthBar(
   in float4 iPosition : SV_Position

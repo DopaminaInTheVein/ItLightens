@@ -202,6 +202,11 @@ void CImGuiModule::update(float dt) {
 				shader_ctes_hatching.uploadToGPU();
 			}
 
+			static bool use_ramp = shader_ctes_globals.use_ramp;
+			if (ImGui::Checkbox("use ramp", &use_ramp)) {
+				shader_ctes_globals.use_ramp = use_ramp;
+			}
+
 			ImGui::TreePop();
 		}
 

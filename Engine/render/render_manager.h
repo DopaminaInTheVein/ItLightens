@@ -51,6 +51,8 @@ public:
 	void unregisterFromRender(CHandle handle);
 	void renderUICulling();
 	void renderAll(CHandle h_camera, CRenderTechnique::eCategory category);
+	void renderSkeleton(TKey * it);
+	void renderUI(TKey * it);
 	void renderShadowCasters(CHandle h_light);
 	void renderShadowCastersSkin(CHandle h_light);
 };

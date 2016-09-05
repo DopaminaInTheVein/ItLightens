@@ -50,8 +50,8 @@ void TCompFadeScreen::FadeOut()
 void TCompFadeScreen::render()
 {
 	if (t_curr_fade > 0) {
-		shader_ctes_data.fade_black_screen = t_curr_fade / t_max_fade;
-		shader_ctes_data.uploadToGPU();
+		shader_ctes_globals.fade_black_screen = t_curr_fade / t_max_fade;
+		shader_ctes_globals.uploadToGPU();
 		tech->activate();
 		drawFullScreen(all_black, tech);	//wont use texture all_black
 	}

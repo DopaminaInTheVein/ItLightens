@@ -147,6 +147,7 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_hatching.specular_force = 0.2f;
 	shader_ctes_hatching.rim_specular = 1.5f;
 
+	shader_ctes_globals.use_ramp = 1;
 	shader_ctes_globals.world_time = 0.f;
 	shader_ctes_globals.xres = xres;
 	shader_ctes_globals.yres = yres;

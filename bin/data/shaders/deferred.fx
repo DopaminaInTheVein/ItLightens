@@ -153,9 +153,10 @@ void PSLightPoint(
   float NL = saturate(dot(N, L));
   
  float4 lightWarp = txWarpLight.Sample(samClampLinear, float2(NL, 0.0f))*2.0f;
-  
- NL = lightWarp.xyz;
-if(NL > 1)
+  if(use_ramp)
+	NL = lightWarp.xyz;
+
+  if(NL > 1)
 	NL = 1;
   // Factor de atenuacion por distancia al centro de la
   // luz. 1 para distancias menores de LightInRadius y 0
