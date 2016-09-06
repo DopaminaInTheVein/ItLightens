@@ -429,6 +429,7 @@ bool CEntitiesModule::start() {
 
 	//Gui
 	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
+	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
 

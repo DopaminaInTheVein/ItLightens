@@ -3,8 +3,10 @@
    permanent="yes">
 <tags
    tags="menu gui gui_cursor"/>
-<gui/>
-<gui_cursor/>
+<gui
+   menu_name="dead_menu"/>
+<gui_cursor
+   menu_name="dead_menu"/>
 <name
    name="cursor"/>
 <transform
@@ -20,7 +22,10 @@
    permanent="yes">
 <tags
    tags="menu gui gui_button clickable"/>
-<gui/>
+<gui
+   menu_name="dead_menu"
+   row="0"
+   col="0"/>
 <gui_button
    width="1.13903"
    height="0.640701"/>
@@ -39,7 +44,10 @@
    permanent="yes">
 <tags
    tags="menu gui gui_button clickable"/>
-<gui/>
+<gui
+   menu_name="dead_menu"
+   row="0"
+   col="1"/>
 <gui_button
    width="0.673163"
    height="0.378647"/>
@@ -58,7 +66,8 @@
    permanent="yes">
 <tags
    tags="menu gui"/>
-<gui/>
+<gui
+   menu_name="dead_menu"/>
 <name
    name="title_dead"/>
 <transform
@@ -74,7 +83,10 @@
    permanent="yes">
 <tags
    tags="menu gui gui_button clickable"/>
-<gui/>
+<gui
+   menu_name="dead_menu"
+   row="0"
+   col="2"/>
 <gui_button
    width="0.652746"
    height="0.367172"/>

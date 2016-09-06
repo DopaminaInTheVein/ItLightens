@@ -7,6 +7,7 @@
 
 #include "app_modules/gameController.h"
 #include "app_modules/io/io.h"
+#include "gui_basic.h"
 
 // load Xml
 bool TCompGuiCursor::load(MKeyValue& atts)
@@ -15,6 +16,7 @@ bool TCompGuiCursor::load(MKeyValue& atts)
 	GameController->SetGameState(CGameController::STOPPED);
 
 	speed = atts.getFloat("speed", 5.f);
+	menu_name = atts.getString("menu_name", "");
 	return true;
 }
 
@@ -85,6 +87,15 @@ void TCompGuiCursor::updateMovement(float dt)
 void TCompGuiCursor::renderInMenu()
 {
 	ImGui::Text("Is overbutton %d", button.isValid());
+	if (menu_name != "") {
+		auto screen = TCompGui::gui_screens[menu_name];
+		for (int i = 0; i < GUI_MAX_ROW; i++) {
+			for (int j = 0; j < GUI_MAX_ROW; j++) {
+				if (screen.elem[i][j].isValid())
+					ImGui::Text("screen(%d,%d): %s", i, j, GET_NAME(screen.elem[i][j]));
+			}
+		}
+	}
 }
 
 void TCompGuiCursor::onButton(const TMsgOverButton& msg)
@@ -98,5 +109,6 @@ void TCompGuiCursor::onButton(const TMsgOverButton& msg)
 TCompGuiCursor::~TCompGuiCursor()
 {
 	GameController->SetUiControl(false);
+	if (menu_name != "") TCompGui::clearScreen(menu_name);
 	//GameController->SetGameState(CGameController::RUNNING);
 }

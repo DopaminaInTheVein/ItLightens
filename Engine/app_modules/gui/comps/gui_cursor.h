@@ -8,6 +8,7 @@ class TCompTransform;
 class TCompCamera;
 
 class TCompGuiCursor : public TCompBase {
+	std::string menu_name;
 	float speed;
 	//float factor = 0.f;
 	TCompTransform * myTransform;
