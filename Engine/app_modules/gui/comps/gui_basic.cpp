@@ -12,12 +12,19 @@ void TCompGui::setRenderState(float rs_state)
 	render_state = rs_state;
 }
 
+RectNormalized TCompGui::getTxCoords()
+{
+	return text_coords;
+}
+
 // load Xml
 bool TCompGui::load(MKeyValue& atts)
 {
+	// Render state
 	render_state = atts.getFloat("render_state", 0.f);
 	render_target = render_state;
 	render_speed = 0.f;
+
 	return true;
 }
 
@@ -26,6 +33,8 @@ void TCompGui::renderInMenu()
 	IMGUI_SHOW_FLOAT(render_state);
 	IMGUI_SHOW_FLOAT(render_speed);
 	IMGUI_SHOW_FLOAT(render_target);
+	ImGui::Text("Text coords (x, sizeX, y, sizeY):");
+	ImGui::DragFloat4("", (float*)(&text_coords), 0.01f, 0.f, 1.f);
 }
 
 #include "components\comp_transform.h"
@@ -43,18 +52,4 @@ void TCompGui::update(float elapsed)
 	else if (render_target < render_state) {
 		render_state = clamp(render_state - delta, render_target, render_state);
 	}
-
-	//update size buttons
-	CEntity* e_owner = CHandle(this).getOwner();
-	TCompTransform* trans = e_owner->get<TCompTransform>();
-	float offset = getRenderState();
-
-	//reset offset
-	if (offset > RSTATE_OVER) {
-		offset = (RSTATE_RELEASED - offset) / RSTATE_RELEASED;
-	}
-	// +1 because default render state is 0
-	float value = 1 + offset*0.25f;
-	if(value != 0)
-		trans->setScale(VEC3(value, value, value));
 }

@@ -74,6 +74,7 @@ public:
 
 	//Render State
 	void updateRenderState();
+	void updateSize();
 	float getRenderState() { return render_state; }
 };
 

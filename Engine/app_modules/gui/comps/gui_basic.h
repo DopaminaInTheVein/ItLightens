@@ -3,6 +3,8 @@
 
 #include "components/comp_base.h"
 
+#include "../gui_utils.h"
+
 //Forward Declaration
 class TCompTransform;
 class TCompCamera;
@@ -14,16 +16,21 @@ class TCompCamera;
 #define RSTATE_RELEASED	3.f
 
 class TCompGui : public TCompBase {
+	// Render state float for render manager
 	float render_state;
 	float render_target;
 	float render_speed;
 
+	// Text coords limits
+	RectNormalized text_coords;
+
 public:
+	bool load(MKeyValue& atts);
 	void update(float elapsed);
 	float getRenderState() { return render_state; }
 	void setRenderTarget(float rs_target, float speed);
 	void setRenderState(float rs_state);
-	bool load(MKeyValue& atts);
+	RectNormalized getTxCoords();
 	void renderInMenu();
 };
 

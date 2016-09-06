@@ -25,7 +25,6 @@ float TCompGuiButton::t_unclicked;
 float TCompGuiButton::t_released;
 float TCompGuiButton::t_unreleased;
 
-
 //#define SetSpeedButtonState(sufix) sp_##sufix = 1.f / t_##sufix;
 void TCompGuiButton::loadOptions()
 {
@@ -166,6 +165,7 @@ void TCompGuiButton::update(float dt)
 {
 	Recalc();
 	updateRenderState();
+	updateSize();
 	CEntity* e_owner = CHandle(this).getOwner();
 	TCompTransform* trans = e_owner->get<TCompTransform>();
 
@@ -197,7 +197,24 @@ void TCompGuiButton::updateRenderState()
 	else if (render_state_target < render_state) {
 		speed = speeds_decrease[(int)(ceil(render_state)) + 1];
 	}
+
+	//Apply spped
 	myGui->setRenderTarget(render_state_target, speed);
+}
+
+void TCompGuiButton::updateSize()
+{
+	//update size buttons
+	float offset = render_state;
+
+	//reset offset
+	if (offset > RSTATE_OVER) {
+		offset = (RSTATE_RELEASED - offset) / RSTATE_RELEASED;
+	}
+	// +1 because default render state is 0
+	float value = 1 + offset*0.25f;
+	if (value != 0)
+		myTransform->setScale(VEC3(value, value, value));
 }
 
 #define DragFloatTimes(name, sufix, rstate) if (ImGui::DragFloat(STRING(name), &name, 0.01f, 0.001f, 1.f)) speeds_##sufix[RStates::rstate] = inverseFloat(name);
@@ -215,7 +232,6 @@ void TCompGuiButton::renderInMenu()
 	DragFloatTimes(t_unclicked, decrease, CLICKED);
 	DragFloatTimes(t_unreleased, decrease, RELEASED);
 }
-
 
 bool TCompGuiButton::checkOver()
 {
