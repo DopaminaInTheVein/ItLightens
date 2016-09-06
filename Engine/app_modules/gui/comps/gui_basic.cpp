@@ -1,6 +1,8 @@
 #include "mcv_platform.h"
 #include "gui_basic.h"
 
+#include "render\draw_utils.h"
+
 void TCompGui::setRenderTarget(float rs_target, float speed = FLT_MAX)
 {
 	render_target = rs_target;
@@ -52,4 +54,14 @@ void TCompGui::update(float elapsed)
 	else if (render_target < render_state) {
 		render_state = clamp(render_state - delta, render_target, render_state);
 	}
+}
+
+void TCompGui::uploadCtes() {
+	//position
+	shader_ctes_gui.pos_x = getTxCoords().x;
+	shader_ctes_gui.pos_y = getTxCoords().y;
+
+	//size
+	shader_ctes_gui.size_x = getTxCoords().sx;
+	shader_ctes_gui.size_y = getTxCoords().sy;
 }

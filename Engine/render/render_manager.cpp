@@ -295,6 +295,7 @@ void CRenderManager::renderUI(TKey* it) {
 	TCompGui* comp_ui = e->get<TCompGui>();
 	if (comp_ui) {
 		shader_ctes_gui.state_ui = comp_ui->getRenderState();
+		comp_ui->uploadCtes();
 	}
 	else {
 		shader_ctes_gui.state_ui = 0;

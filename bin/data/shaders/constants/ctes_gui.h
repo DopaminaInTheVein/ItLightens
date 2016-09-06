@@ -9,6 +9,11 @@ ShaderBuffer(TCteGui, CTE_SHADER_GUI_SLOT)
   float  polarity_ui;
   float  dummy_ui1;  
   float  dummy_ui2;
+
+  float	 pos_x;
+  float	 pos_y;
+  float  size_x;
+  float  size_y;
 };
 
 #endif

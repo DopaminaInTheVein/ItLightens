@@ -1470,6 +1470,9 @@
     <ClInclude Include="components\comp_look_target.h">
       <Filter>components</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_gui.h">
+      <Filter>render\constants</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">

@@ -23,10 +23,12 @@ class TCompGui : public TCompBase {
 
 	// Text coords limits
 	RectNormalized text_coords;
+	int num_words_per_line;
 
 public:
 	bool load(MKeyValue& atts);
 	void update(float elapsed);
+	void uploadCtes();
 	float getRenderState() { return render_state; }
 	void setRenderTarget(float rs_target, float speed);
 	void setRenderState(float rs_state);

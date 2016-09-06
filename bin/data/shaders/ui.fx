@@ -118,6 +118,34 @@ float4 PSButton(
   //return txDiffuse.Sample(samLinear, iTex0);
 }
 
+bool isInside(float2 maxf, float2 minf, float2 pointf){
+	if(maxf.x < pointf.x || maxf.y < pointf.y)
+		return false;
+		
+	if(minf.x > pointf.x || minf.y > pointf.y)
+		return false;
+		
+	return true;
+
+}
+
+float4 PSFont(
+  in float4 iPosition : SV_Position
+  , in float2 iTex0 : TEXCOORD0
+) : SV_Target
+{
+  float4 result = txDiffuse.Sample(samLinear, iTex0);
+  float2 min_coord = float2(pos_x*size_x, pos_y*size_y);
+  float2 max_coord = float2(min_coord.x+size_x, min_coord.y+size_y);
+  
+  if(!isInside(max_coord, min_coord, iTex0))
+	result.a = 0;
+  
+  return result;
+  
+  //return txDiffuse.Sample(samLinear, iTex0);
+}
+
 
 
 
