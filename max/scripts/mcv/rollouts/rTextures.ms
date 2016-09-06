@@ -1,4 +1,4 @@
-try(DestroyDialog RL_Materials)catch()
+try(DestroyDialog RL_Textures)catch()
 rollout RL_Textures "IT Lightens!" width:541 height:440
 (
 	label lblTitle "SEARCH TEXTURES" pos:[84,17] width:102 height:18
