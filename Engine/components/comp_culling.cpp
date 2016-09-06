@@ -92,3 +92,17 @@ void TCompCulling::update() {
 			bits.set(i);
 	}
 }
+
+bool TCompCulling::checkAABB(TCompCulling* culling, TCompAbsAABB* aabb)
+{
+	TCompCulling * cculling = culling;
+	TCompCulling::TCullingBits* culling_bits = nullptr;
+	culling_bits = &cculling->bits;
+
+	// To get the index of each aabb
+	auto hm_aabbs = getHandleManager<TCompAbsAABB>();
+	const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
+
+	intptr_t idx = aabb - base_aabbs;
+	return culling_bits->test(idx);
+}

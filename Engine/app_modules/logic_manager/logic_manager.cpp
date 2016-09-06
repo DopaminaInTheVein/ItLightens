@@ -407,6 +407,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
   // construct the lua code using the event and the specified parameters
 	std::string lua_code = evt;
+	caller_handle = handle;
 
 	// Ojo! Params no se usa!
 
@@ -700,6 +701,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// Enable and disable camera control
 		.set("setCameraEnabled", &SLBPublicFunctions::setCameraEnabled)
 		.comment("Enable or disable camera control\n")
+		.param("int: 0 disabled, otherwise enabled")
+		// Enable only sense_vision
+		.set("setOnlySense", &SLBPublicFunctions::setOnlySense)
+		.comment("Enable or disable only_sense mode\n")
 		.param("int: 0 disabled, otherwise enabled")
 		// play sound function
 		.set("play_sound", &SLBPublicFunctions::playSound)

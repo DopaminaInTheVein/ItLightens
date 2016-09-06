@@ -25,6 +25,7 @@ protected:
 	//Enabled
 	bool controlEnabled = false;
 	bool inputEnabled = true;
+	bool only_sense = false;
 
 	// CountDown To Unpossess
 	static float possessionCooldown;
@@ -42,6 +43,7 @@ protected:
 	float player_rotation_speed;
 	float energy_default_decrease = 0.0f;
 	float energy_sense_decrease = 0.0f;
+	float energy_decrease = 0.0f;
 	float energy_damage;
 	float jimpulse;
 	float left_stick_sensibility;
@@ -90,6 +92,7 @@ protected:
 	virtual void UpdateDirection();
 	//virtual void UpdateAnimation() {}
 	virtual void UpdateCinematic(float elapsed);
+	virtual void UpdateSenseVision();
 	virtual void ChangeCommonState(std::string) {}
 	virtual bool canJump();
 
@@ -116,6 +119,7 @@ public:
 	virtual void initBaseAttributes();
 	void onSetCamera(const TMsgSetCamera& msg);
 	void onSetControllable(const TMsgSetControllable& msg);
+	void onSetOnlySense(const TMsgSetOnlySense& msg);
 	void onGoAndLook(const TMsgGoAndLook& msg);
 	void stopMovement();
 	virtual void myUpdate(); // deberia ser abstracta pero peta

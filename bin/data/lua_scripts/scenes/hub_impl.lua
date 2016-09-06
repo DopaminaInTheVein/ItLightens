@@ -6,17 +6,19 @@
 TASK_HUB_MOLE = 0
 TASK_HUB_SCI = 1
 -------------------------------
+target_seen = false
 mole_done = false
 sci_done = false
 -------------------------------
 function OnStart_hub( )
+	target_seen = false
 	hub_first_time = true
 	mole_done = false
 	sci_done = false
-	--p:setPlayerEnabled(0)
-	p:setPlayerEnabled(1) --test
+	p:setControlEnabled(1)
+	p:setOnlySense(1)
 	--p:exec_command("p:setPlayerEnabled(1)", 5) --test
-	p:player_talks("Bienvenido al hub", "scientific.dds", "SCI")
+	p:player_talks("Mueve la camara y usa SENTIR para encontrar tu objetivo", "scientific.dds", "SCI")
 end
 -------------------------------
 function OnSave_hub()
@@ -46,6 +48,13 @@ end
 --===========================================
 -- Events
 --===========================================
+function hub_target_seen()
+	p:player_talks("Voila", "scientific.dds", "SCI")
+	h:getHandleCaller()
+	h:destroy()
+	p:exec_command("p:setOnlySense(0);", 0.5)
+end
+
 function dream_mole()
 	h:getHandleCaller()
 	h:setActionable(1)

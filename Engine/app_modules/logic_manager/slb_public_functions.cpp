@@ -573,7 +573,14 @@ void SLBPublicFunctions::setCameraEnabled(int enabled) {
 		main_camera.sendMsg(msg);
 	}
 }
-
+void SLBPublicFunctions::setOnlySense(int enabled) {
+	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+	if (player.isValid()) {
+		TMsgSetOnlySense msg;
+		msg.sense = (enabled != 0);
+		player.sendMsg(msg);
+	}
+}
 void SLBPublicFunctions::playSound(const char* sound_route) {
 	sound_manager->playSound(std::string(sound_route));
 }

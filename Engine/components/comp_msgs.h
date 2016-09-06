@@ -308,6 +308,10 @@ struct TMsgSetControllable {
 	bool control;
 	DECLARE_MSG_ID();
 };
+struct TMsgSetOnlySense {
+	bool sense;
+	DECLARE_MSG_ID();
+};
 struct TMsgBoxHit {
 	DECLARE_MSG_ID();
 };

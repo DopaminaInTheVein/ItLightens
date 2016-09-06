@@ -77,6 +77,9 @@ void CPlayerBase::onSetCamera(const TMsgSetCamera& msg) {
 void CPlayerBase::onSetControllable(const TMsgSetControllable& msg) {
 	setControllable(msg.control);
 }
+void CPlayerBase::onSetOnlySense(const TMsgSetOnlySense& msg) {
+	only_sense = msg.sense;
+}
 
 void CPlayerBase::setControllable(bool control)
 {
@@ -127,20 +130,16 @@ void CPlayerBase::update(float elapsed) {
 		if (onCinematic) {
 			UpdateCinematic(elapsed);
 		}
-		else if (controlEnabled) {
+		else if (controlEnabled || only_sense) {
 			bool alive = !checkDead();
 			if (alive && inputEnabled) {
-				float factor = energy_default_decrease;
-				if (/*tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") &&*/ controller->IsSenseButtonPressed()) {
-					factor = energy_sense_decrease;
-					sense_vision->registerHandle(myHandle);
+				energy_decrease = energy_default_decrease; // Default if nobody change that this frame
+				UpdateSenseVision();
+				if (!only_sense) {
+					UpdateMoves();
+					UpdateInputActions();
 				}
-				else {
-					sense_vision->unregisterHandle(myHandle);
-				}
-				setLife(getLife() - getDeltaTime() * factor);
-				UpdateMoves();
-				UpdateInputActions();
+				setLife(getLife() - getDeltaTime() * energy_decrease);
 			}
 			Recalc();
 			if (alive) {
@@ -150,6 +149,16 @@ void CPlayerBase::update(float elapsed) {
 			}
 		}
 		//UpdateAnimation();
+	}
+}
+
+void CPlayerBase::UpdateSenseVision() {
+	if (/*tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") &&*/ controller->IsSenseButtonPressed()) {
+		energy_decrease = energy_sense_decrease;
+		sense_vision->registerHandle(myHandle);
+	}
+	else {
+		sense_vision->unregisterHandle(myHandle);
 	}
 }
 

@@ -59,6 +59,7 @@
 #include "logic/helper_arrow.h"
 #include "components/comp_fading_message.h"
 #include "components/comp_fading_globe.h"
+#include "components/comp_look_target.h"
 
 #include "comp_trigger_standar.h"
 

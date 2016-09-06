@@ -132,5 +132,21 @@
    scale="1.0"/>
 
 </entity>
+<entity
+   reload="yes">
+<tags
+   tags="look_target"/>
+<look_target
+   event_lua_in="hub_target_seen"
+   sense_vision="yes"/>
+<abs_aabb/>
+<name
+   name="look_target"/>
+<transform
+   pos="-1.98726 52.4763 -20.0778"
+   quat="0 0 0 1.0"
+   scale="0.746888"/>
+
+</entity>
 
 </entities>

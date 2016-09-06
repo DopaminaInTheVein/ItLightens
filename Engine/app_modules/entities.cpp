@@ -113,6 +113,7 @@ DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
 DECL_OBJ_MANAGER("tasklist", Tasklist);
 DECL_OBJ_MANAGER("task_switcher", TasklistSwitch);
 DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
+DECL_OBJ_MANAGER("look_target", TCompLookTarget);
 
 //fx
 DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
@@ -189,6 +190,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<LogicHelperArrow>()->init(4);
 	getHandleManager<Tasklist>()->init(4);
 	getHandleManager<TasklistSwitch>()->init(32);
+	getHandleManager<TCompLookTarget>()->init(8);
 	//lights
 	getHandleManager<TCompLightDir>()->init(MAX_ENTITIES);
 	getHandleManager<TCompLightFadable>()->init(4);
@@ -411,6 +413,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_cientifico, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetControllable, onSetControllable);
+	SUBSCRIBE(player_controller, TMsgSetOnlySense, onSetOnlySense);
+	SUBSCRIBE(player_controller_cientifico, TMsgSetOnlySense, onSetOnlySense);
+	SUBSCRIBE(player_controller_mole, TMsgSetOnlySense, onSetOnlySense);
 
 	//Go And Look
 	SUBSCRIBE(player_controller, TMsgGoAndLook, onGoAndLook);
@@ -622,6 +627,9 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<magnet_door>()->updateAll(dt);
 		getHandleManager<elevator>()->updateAll(dt);
 		getHandleManager<TCompTracker>()->updateAll(dt);
+
+		//Look Target
+		getHandleManager<TCompLookTarget>()->updateAll(dt);
 
 		//particles
 		getHandleManager<CParticleSystem>()->updateAll(dt);
