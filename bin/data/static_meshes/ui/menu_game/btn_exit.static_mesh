@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/ui/menu_game/btn_exit.mesh" material="materials/Menu_tech_ui.material" mesh_idx="0"/>
+  <slot mesh="meshes/ui/menu_game/btn_exit.mesh" material="materials/pause_title_tech_ui_button.material" mesh_idx="0"/>
 </static_mesh>
