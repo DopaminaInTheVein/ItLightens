@@ -35,6 +35,8 @@ public:
 	bool load(MKeyValue& atts);
 	void onCreate(const TMsgEntityCreated&);
 	void renderInMenu();
+	int GetRow();
+	int GetCol();
 };
 
 #endif

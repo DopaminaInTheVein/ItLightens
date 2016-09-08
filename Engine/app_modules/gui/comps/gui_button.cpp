@@ -25,7 +25,6 @@ float TCompGuiButton::t_unclicked;
 float TCompGuiButton::t_released;
 float TCompGuiButton::t_unreleased;
 
-
 //#define SetSpeedButtonState(sufix) sp_##sufix = 1.f / t_##sufix;
 void TCompGuiButton::loadOptions()
 {
@@ -203,7 +202,6 @@ void TCompGuiButton::renderInMenu()
 	DragFloatTimes(t_unreleased, decrease, RELEASED);
 }
 
-
 bool TCompGuiButton::checkOver()
 {
 	VEC3 myPos = myTransform->getPosition();
@@ -214,12 +212,12 @@ bool TCompGuiButton::checkOver()
 
 bool TCompGuiButton::checkClicked()
 {
-	return controller->ActionButtonBecomesPessed();
+	return controller->ActionGuiButtonBecomesPressed();
 }
 
 bool TCompGuiButton::checkReleased()
 {
-	return controller->IsActionButtonReleased();
+	return controller->ActionGuiButtonBecomesReleased();
 }
 
 void TCompGuiButton::notifyOver(bool over)

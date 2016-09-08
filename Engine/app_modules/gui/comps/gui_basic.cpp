@@ -23,7 +23,7 @@ bool TCompGui::load(MKeyValue& atts)
 void TCompGui::onCreate(const TMsgEntityCreated&)
 {
 	if (menu_name != "" && row >= 0 && col >= 0) {
-		addGuiElement(menu_name, row, col, MY_OWNER);
+		addGuiElement(menu_name, col, row, MY_OWNER);
 	}
 }
 
@@ -89,4 +89,13 @@ void TCompGui::update(float elapsed)
 	float value = 1 + offset*0.25f;
 	if (value != 0)
 		trans->setScale(VEC3(value, value, value));
+}
+
+int TCompGui::GetRow()
+{
+	return row;
+}
+int TCompGui::GetCol()
+{
+	return col;
 }
