@@ -25,10 +25,8 @@ void TCompTransformAnimator::update(float dt)
 {
 	float yaw, pitch, roll;
 	tmx->getAngles(&yaw, &pitch, &roll);
-	dbg("pitch: %f", pitch);
 	tmx_anim_inc(yaw);
 	tmx_anim_inc(pitch);
 	tmx_anim_inc(roll);
 	tmx->setAngles(yaw, pitch, roll);
-	dbg("-->%f\n", pitch);
 }
