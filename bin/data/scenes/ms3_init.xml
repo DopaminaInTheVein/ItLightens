@@ -898,17 +898,18 @@
 <tags
    tags="drone platform"/>
 <drone
+   speed="2"
    wpts_size="2"
-   wpt0_pos="-3.17764 -3.08729 21.393"
+   wpt0_pos="-4.99386 -2.06581 21.393"
    wpt0_wait="2"
-   wpt1_pos="10.0325 -5.1532 21.3712"
+   wpt1_pos="8.21624 -6.43763 21.3712"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
    name="DroneMinus_003"/>
 <transform
-   pos="3.79343 -3.53051 21.0883"
+   pos="1.9772 -4.14541 21.0883"
    quat="0 0.999985 0 0"
    scale="1.0"/>
 <render_static_mesh
@@ -930,17 +931,18 @@
 <tags
    tags="drone platform"/>
 <drone
+   speed="2"
    wpts_size="2"
-   wpt0_pos="-30.8294 4.31167 22.1604"
+   wpt0_pos="-32.8201 -1.4378 22.1604"
    wpt0_wait="2"
-   wpt1_pos="-18.9379 1.30144 21.7727"
+   wpt1_pos="-23.7822 1.5695 21.7727"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
    name="DroneMinus_004"/>
 <transform
-   pos="-24.9983 3.5994 22.0196"
+   pos="-26.9891 0.912211 22.0196"
    quat="0 0.99998 0 0"
    scale="1.0"/>
 <render_static_mesh
@@ -962,17 +964,18 @@
 <tags
    tags="drone platform"/>
 <drone
+   speed="2"
    wpts_size="2"
-   wpt0_pos="-34.4096 4.27551 22.2125"
+   wpt0_pos="-34.4096 -3.08164 18.7668"
    wpt0_wait="2"
-   wpt1_pos="-34.4886 2.20959 8.4864"
+   wpt1_pos="-34.4886 0.938228 13.5009"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
    name="DroneMinus_005"/>
 <transform
-   pos="-34.7445 3.83228 15.2428"
+   pos="-34.7445 -0.294695 15.2428"
    quat="0 -0.701693 0 0.712479"
    scale="1.0"/>
 <render_static_mesh
