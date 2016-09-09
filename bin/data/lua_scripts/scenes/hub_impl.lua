@@ -35,12 +35,12 @@ function OnLoad_hub()
 	end
 	if mole_done then
 		h:get_handle_by_id(idMoleSlept)
-		h:set_anim("run")
+		h:set_anim_loop("run")
 		p:complete_tasklist(TASK_HUB_MOLE)
 	end
 	if sci_done then
 		h:get_handle_by_id(idSciSlept)
-		h:set_anim("run")
+		h:set_anim_loop("run")
 		p:complete_tasklist(TASK_HUB_SCI)
 	end
 end

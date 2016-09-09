@@ -577,6 +577,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("set_anim", &SLBHandle::setAnim)
 		.param("string: animation name")
 		.comment("set an animation to the skeleton of that handle")
+		// Set Anim Loop
+		.set("set_anim_loop", &SLBHandle::setAnimLoop)
+		.param("string: animation name")
+		.comment("set an animation to the skeleton of that handle as loop")
 		;
 }
 

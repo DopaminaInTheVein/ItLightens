@@ -49,6 +49,8 @@ class SLBHandle
 	std::string handle_name;
 	std::string handle_tag;
 
+	//Aux
+	void _setAnim(const char* name, bool loop);
 public:
 	// Gets
 	CHandle getHandle();
@@ -82,6 +84,7 @@ public:
 	void setCharged(bool);
 	bool isCharged();
 	void setAnim(const char* name);
+	void setAnimLoop(const char* name);
 	bool isPatrolling();
 	bool isComeBack();
 };
