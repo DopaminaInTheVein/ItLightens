@@ -47,12 +47,16 @@ public:
 	CHandle getGrabbed();
 	CHandle getGrabbedPila();
 
-	bool load(MKeyValue& atts) { return true; }
+	bool load(MKeyValue& atts) {
+		FOOT_GROUND_EPSILON = 0.6f;
+		FOOT_AIR_EPSILON = 0.65f;
+		return true;
+	}
 	//void onCreate(const TMsgEntityCreated&);
 	bool getUpdateInfo() override;
 	void update(float elapsed) { TCompSkelController::update(); }
 
-	void renderInMenu() { TCompSkelController::renderInMenu(); }
+	void renderInMenu() { renderInMenuParent(); }
 
 	//Overload function for handler_manager
 	//SkelControllerMole& SkelControllerMole::operator=(SkelControllerMole arg) { return arg; }

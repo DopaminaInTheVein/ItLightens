@@ -102,8 +102,8 @@ TCompSkeletonIK::TBoneMod TCompSkeletonIK::getBoneModInvariant(string name)
 		- bone_b->getCoreBone()->getTranslationAbsolute();
 	mod.dist_bc = cal_bc.length();
 
-	mod.enabled = true,
-		mod.time = 0;
+	mod.enabled = true;
+	mod.time = 0;
 
 	return mod;
 }
@@ -180,12 +180,19 @@ void TCompSkeletonIK::solveBone(TBoneMod* bm) {
 	// -------------------------------------------------------------------------
 
 	// Bone orientation
-
+	if (res.height_fix > 0.f) {
+		CalVector new_abs_front = abs_front;
+		new_abs_front.y = res.height_fix;//distance_of_c0_to_ground - distance_of_cf_to_ground;
+		CalVector front_target = bone_c->getTranslationAbsolute() + new_abs_front;
+		CCoreModel::TBoneCorrector front_fix(bm->bone_id_c, local_front);
+		front_fix.apply(model, front_target, amount);
+	}
 	//CCoreModel::TBoneCorrector front_fix(bm->bone_id_c, local_front);
 	//CalVector front_target = bone_c->getTranslationAbsolute() + Engine2Cal(res.bone_front);
 	//front_fix.apply(model, front_target, amount);
 
 	// Apply post correction? (another bone_solver)?
+
 	// Example: restart orientation foot
 }
 

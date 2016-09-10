@@ -389,6 +389,26 @@ function OnDead( )
 	p:load_entities("dead_menu")
 end
 
+-- Others
+-------------------------------------------
+function OnStepGuard( )
+	p:print("StepGuard")
+end
+function OnStepMole( )
+	p:print("StepMole")
+end
+function OnStepScientist( )
+	p:print("StepScientist")
+end
+function OnStepOutGuard( )
+	p:print("StepOutGuard")
+end
+function OnStepOutMole( )
+	p:print("StepOutMole")
+end
+function OnStepOutScientist( )
+	p:print("StepOutScientist")
+end
 -- GUI
 ---------------------------------------------------
 function OnMouseOver( param )

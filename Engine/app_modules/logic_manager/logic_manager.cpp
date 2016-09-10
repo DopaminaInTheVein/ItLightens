@@ -369,7 +369,15 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadedLevel(%s);", params.c_str());
 		break;
 	}
-						  //GUI
+						  //Others
+	case (OnStep): {
+		sprintf(lua_code, "OnStep%s();", params.c_str());
+		break;
+	}
+	case (OnStepOut): {
+		sprintf(lua_code, "OnStepOut%s();", params.c_str());
+		break;
+	}						  //GUI
 	case (OnButtonPressed): { // Boton pulsado, sin soltar aun
 		sprintf(lua_code, "OnPressed(\"%s\");", params.c_str());
 		break;

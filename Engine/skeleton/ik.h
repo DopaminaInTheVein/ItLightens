@@ -12,6 +12,7 @@ namespace IK {
 	struct ResultSolver {
 		VEC3 new_pos;
 		VEC3 bone_normal;
+		float height_fix;
 	};
 
 	//template<typename TObj>

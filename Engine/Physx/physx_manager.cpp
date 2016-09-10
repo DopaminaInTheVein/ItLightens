@@ -407,8 +407,6 @@ PxActor* CPhysxManager::CreateAndAddTrigger(const PxTransform *transform, PxShap
 //function CreateCookedTriangleMesh: Cook Triangle Mesh to be read for physx
 PxTriangleMesh * CPhysxManager::CreateCookedTriangleMesh(const CMesh * mesh)
 {
-	
-
 	FileDataMesh* dataM = nullptr;
 
 	bool read = false;
@@ -473,7 +471,6 @@ PxConvexMesh * CPhysxManager::CreateCookedConvexMesh(const CMesh * mesh) {
 	else {
 		dataM = loadPhysxMesh(mesh->getName());
 	}
-
 
 	PxConvexMeshDesc convexDesc;
 	convexDesc.points.count = dataM->numVtx;
@@ -720,7 +717,7 @@ bool CPhysxManager::raycast(PxVec3 origin, PxVec3 end, PxRaycastBuffer& hit, PxQ
 		m_last_direction = end - origin;
 		m_last_distance = sqrt(squared(m_last_direction.x) + squared(m_last_direction.y) + squared(m_last_direction.z));
 	}
-
+	m_last_direction.normalize();
 	bool status = raycast(origin, m_last_direction, m_last_distance, hit, filterData, outputFlags);
 	return status;
 }

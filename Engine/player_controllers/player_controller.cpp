@@ -1046,6 +1046,7 @@ string player_controller::GetPolarity() {
 
 void player_controller::onGetWhoAmI(TMsgGetWhoAmI& msg) {
 	msg.who = PLAYER_TYPE::PLAYER;
+	msg.who_string = "Player";
 }
 
 // Set pol state

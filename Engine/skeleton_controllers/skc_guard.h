@@ -8,13 +8,17 @@ protected:
 	void myUpdate();
 
 public:
-	bool load(MKeyValue& atts) { return true; }
+	bool load(MKeyValue& atts) {
+		FOOT_GROUND_EPSILON = 0.01f;
+		FOOT_AIR_EPSILON = 0.015f;
+		return true;
+	}
 	//void onCreate(const TMsgEntityCreated&);
 
 	bool getUpdateInfo() override;
 	void update(float elapsed) { TCompSkelController::update(); };
 
-	void renderInMenu() {}
+	void renderInMenu() { renderInMenuParent(); }
 
 	SkelControllerGuard& SkelControllerGuard::operator=(SkelControllerGuard arg) { return arg; }
 };

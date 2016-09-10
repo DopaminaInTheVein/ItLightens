@@ -283,6 +283,12 @@ bool CEntitiesModule::start() {
 	//For camera unique
 	SUBSCRIBE(TCompCameraMain, TMsgEntityCreated, onCreate);
 
+	//Skeleton Controllers
+	SUBSCRIBE(SkelControllerPlayer, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(SkelControllerGuard, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(SkelControllerMole, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(SkelControllerScientist, TMsgEntityCreated, onCreate);
+
 	//Skeleton IK
 	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
 	SUBSCRIBE(TCompSkeletonLookAt, TMsgEntityCreated, onCreate);
@@ -386,6 +392,9 @@ bool CEntitiesModule::start() {
 	//..PJ Principal
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
 	SUBSCRIBE(player_controller, TMsgGetWhoAmI, onGetWhoAmI);
+
+	//Guard
+	SUBSCRIBE(bt_guard, TMsgGetWhoAmI, onGetWhoAmI);
 
 	//Dead
 	//anything for now

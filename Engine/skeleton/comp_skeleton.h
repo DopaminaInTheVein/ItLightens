@@ -25,6 +25,7 @@ struct TCompSkeleton : public TCompBase {
 	std::string res_name;
 	std::string anim_default;
 	std::vector<int> prevCycleIds;
+
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);
 	bool getUpdateInfo();
@@ -37,7 +38,14 @@ struct TCompSkeleton : public TCompBase {
 	void clearPrevAnims(bool instant);
 	std::string getKeyBoneName(std::string);
 	int getKeyBoneId(std::string);
-
+	float getLFootOffset() {
+		auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
+		return non_const_skel->getLFootOffset();
+	}
+	float getRFootOffset() {
+		auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
+		return non_const_skel->getRFootOffset();
+	}
 	//Messages
 	void onSetAnim(const TMsgSetAnim&);
 };

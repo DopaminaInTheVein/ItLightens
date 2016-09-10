@@ -7,9 +7,7 @@
 class TCompCharacterController;
 class player_controller;
 
-
-
-class SkelControllerPlayer : public TCompSkelController, public TCompBase{
+class SkelControllerPlayer : public TCompSkelController, public TCompBase {
 protected:
 	TCompCharacterController * cc;
 	player_controller * pc;
@@ -21,12 +19,11 @@ protected:
 
 public:
 	bool load(MKeyValue& atts) { return true; }
-	//void onCreate(const TMsgEntityCreated&);
+	void onCreate(const TMsgEntityCreated&) {};
 
 	bool getUpdateInfo() override;
 	void update(float elapsed) { TCompSkelController::update(); }
-
-	void renderInMenu() {}
+	void renderInMenu() { renderInMenuParent(); }
 
 	//Overload function for handler_manager
 	//SkelControllerPlayer& SkelControllerPlayer::operator=(SkelControllerPlayer arg) { return arg; }
