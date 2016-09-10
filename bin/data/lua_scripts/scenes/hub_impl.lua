@@ -18,7 +18,7 @@ function OnStart_hub( )
 	p:setControlEnabled(1)
 	p:setOnlySense(1)
 	--p:exec_command("p:setPlayerEnabled(1)", 5) --test
-	p:player_talks("Mueve la camara y usa SENTIR para encontrar tu objetivo", "scientific.dds", "SCI")
+	p:player_talks("Mueve la camara\ny usa SENTIR\npara encontrar tu objetivo", "scientific.dds", "SCI")
 end
 -------------------------------
 function OnSave_hub()

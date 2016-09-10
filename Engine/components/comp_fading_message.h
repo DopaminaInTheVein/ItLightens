@@ -4,6 +4,7 @@
 #include "comp_base.h"
 
 class TCompFadingMessage : public TCompBase {
+	int id;
 	float percentLineHeight = 0.02f;
 	float timeForLetter = 0.05f;
 	float marginForImage;
