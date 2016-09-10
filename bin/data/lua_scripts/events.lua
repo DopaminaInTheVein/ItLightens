@@ -392,22 +392,22 @@ end
 -- Others
 -------------------------------------------
 function OnStepGuard( )
-	p:print("StepGuard")
+	--p:print("StepGuard")
 end
 function OnStepMole( )
-	p:print("StepMole")
+	--p:print("StepMole")
 end
 function OnStepScientist( )
-	p:print("StepScientist")
+	--p:print("StepScientist")
 end
 function OnStepOutGuard( )
-	p:print("StepOutGuard")
+	-- p:print("StepOutGuard")
 end
 function OnStepOutMole( )
-	p:print("StepOutMole")
+	-- p:print("StepOutMole")
 end
 function OnStepOutScientist( )
-	p:print("StepOutScientist")
+	-- p:print("StepOutScientist")
 end
 -- GUI
 ---------------------------------------------------
