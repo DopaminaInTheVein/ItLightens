@@ -2,7 +2,10 @@
 <entity>
 <tags
    tags="gui gui_button clickable"/>
-<gui/>
+<gui
+   menu_name="title"
+   row="0"
+   col="0"/>
 <gui_button
    width="0.652746"
    height="0.367172"/>
@@ -20,8 +23,10 @@
 <entity>
 <tags
    tags="gui gui_cursor"/>
-<gui/>
-<gui_cursor/>
+<gui
+   menu_name="title"/>
+<gui_cursor
+   menu_name="title"/>
 <name
    name="cursor"/>
 <transform
@@ -36,7 +41,10 @@
 <entity>
 <tags
    tags="gui gui_button clickable"/>
-<gui/>
+<gui
+   menu_name="title"
+   row="1"
+   col="0"/>
 <gui_button
    width="0.652746"
    height="0.367172"/>

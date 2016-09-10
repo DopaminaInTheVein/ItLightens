@@ -341,14 +341,19 @@ bool SLBHandle::isCharged() {
 	}
 	return false;
 }
-
-void SLBHandle::setAnim(const char* name) {
+void SLBHandle::_setAnim(const char* name, bool loop) {
 	if (real_handle.isValid()) {
 		TMsgSetAnim msg;
-		msg.loop = true;
+		msg.loop = loop;
 		msg.name = vector<string>(1, string(name));
 		real_handle.sendMsg(msg);
 	}
+}
+void SLBHandle::setAnim(const char* name) {
+	_setAnim(name, false);
+}
+void SLBHandle::setAnimLoop(const char* name) {
+	_setAnim(name, true);
 }
 bool SLBHandle::isPatrolling() {
 	bool patrol = false;

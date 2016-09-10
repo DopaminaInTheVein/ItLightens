@@ -153,7 +153,7 @@ void CPlayerBase::update(float elapsed) {
 }
 
 void CPlayerBase::UpdateSenseVision() {
-	if (/*tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") &&*/ controller->IsSenseButtonPressed()) {
+	if (controller->IsSenseButtonPressed()) {
 		energy_decrease = energy_sense_decrease;
 		sense_vision->registerHandle(myHandle);
 	}

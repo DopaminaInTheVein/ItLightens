@@ -8,7 +8,9 @@ class TCompTransform;
 class TCompCamera;
 
 class TCompGuiCursor : public TCompBase {
+	std::string menu_name;
 	float speed;
+	int x, y; // position gui matrix
 	//float factor = 0.f;
 	TCompTransform * myTransform;
 	TCompCamera * ui_camera;
@@ -22,6 +24,7 @@ public:
 	bool getUpdateInfo();
 	void update(float dt);
 	void updateMovement(float dt);
+	void updateNavigation();
 	void renderInMenu();
 
 	//Messages
