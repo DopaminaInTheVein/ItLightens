@@ -49,6 +49,7 @@ public:
 	void setRenderTarget(float rs_target, float speed);
 	void setRenderState(float rs_state);
 	RectNormalized getTxCoords();
+	void setTxCoords(RectNormalized);
 	void renderInMenu();
 };
 

@@ -3,6 +3,7 @@
 //#include "comp_tags.h"
 #include "entity.h"
 #include "app_modules/gui/gui_utils.h"
+#include "app_modules/gui/comps/gui_basic.h"
 #include "imgui/imgui_internal.h"
 #include "app_modules/imgui/module_imgui.h"
 #include "resources/resources_manager.h"
@@ -47,7 +48,7 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	}
 	lineText.push_back(text.substr(ini + 1, pos));
 
-	Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, 0.02f, 0.40f), "Fading_Message_Background_"+std::to_string(id));
+	Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, 0.02f, 0.40f), "Fading_Message_Background_" + std::to_string(id));
 	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
 	if (player.hasTag("raijin")) {
 		Gui->addGuiElement("ui/Fading_Icon_RAI", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_RAI_" + std::to_string(id));
@@ -73,7 +74,7 @@ void TCompFadingMessage::update(float dt) {
 		accumTime -= timeForLetter;
 	}
 
-	if (ttl >= 0.0f) {
+	if (true){//ttl >= 0.0f) {
 		ttl -= dt;
 	}
 	else {
@@ -91,7 +92,7 @@ void TCompFadingMessage::update(float dt) {
 			Gui->removeGuiElementByTag("Fading_Message_Icon_SCI_" + std::to_string(id));
 		}
 		for (int i = 0; i < text.length(); i++) {
-			Gui->removeGuiElementByTag(("Fading_Message_Letter_" + std::to_string(id)+ "_" + std::to_string(i)));
+			Gui->removeGuiElementByTag(("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)));
 		}
 		Gui->removeGuiElementByTag("Fading_Message_Background_" + std::to_string(id));
 	}
@@ -126,8 +127,13 @@ void TCompFadingMessage::render() const {
 		float sx = letterBoxSize;
 		float sy = letterBoxSize;
 
-		float letter_posx = 0.50f + (i - linechars_prev - fminf(line,1.0f)) * sizeFontX;
-		float letter_posy = 0.03f - line*sizeFontY;
-		Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.49f), ("Fading_Message_Letter_" + std::to_string(id)+"_" + std::to_string(i)));
+		float letter_posx = 0.50f + (i - linechars_prev - fminf(line, 1.0f)) * sizeFontX;
+		float letter_posy = 0.02f - line*sizeFontY;
+		CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.49f), ("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)));
+		CEntity * letter_e = letter_h;
+		TCompGui * letter_gui = letter_e->get<TCompGui>();
+		assert(letter_gui);
+		RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
+		letter_gui->setTxCoords(textCords);
 	}
 }

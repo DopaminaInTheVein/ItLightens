@@ -12,6 +12,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-
+<gui />
 </entity>
 </entities>

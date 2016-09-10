@@ -31,6 +31,10 @@ RectNormalized TCompGui::getTxCoords()
 {
 	return text_coords;
 }
+void TCompGui::setTxCoords(RectNormalized coords)
+{
+	text_coords = coords;
+}
 
 // load Xml
 bool TCompGui::load(MKeyValue& atts)
