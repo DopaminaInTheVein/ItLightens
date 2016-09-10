@@ -1,6 +1,6 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/caja_2_difuso.dds"/>
-<texture slot="normalmap" name="textures/caja_2_difuso_NRM.dds"/>
-<texture slot="selfilum_plus" name="textures/box2/self_ilumination_azul.dds"/>
-<texture slot="selfilum_minus" name="textures/box2/self_ilumination_rojo.dds"/>
+<texture slot="diffuse" name="textures/obj/box2/caja_2_difuso.dds"/>
+<texture slot="selfilum_plus" name="textures/obj/box2/self_ilumination_azul.dds"/>
+<texture slot="selfilum_minus" name="textures/obj/box2/self_ilumination_rojo.dds"/>
+<texture slot="normalmap" name="textures/obj/box2/caja_2_difuso_NRM.dds"/>
 </material>

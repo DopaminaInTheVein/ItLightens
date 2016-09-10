@@ -4,5 +4,11 @@
   <mesh     src="skeletons/scientist/scientist.cmf"/>
   <key_bones 
     right_hand="scientist69"
+    LFoot="scientist06"
+    RFoot="scientist11"
+  />
+  <measures 
+    LFootHigh="0.125983"
+    RFootHigh="0.125983"
   />
 </model>

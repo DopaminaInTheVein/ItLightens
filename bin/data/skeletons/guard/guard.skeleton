@@ -8,5 +8,11 @@
     spine_up="Guard Spine1"
     neck="Guard Neck"
     head="Guard Head"
+    LFoot="Guard L Foot"
+    RFoot="Guard R Foot"
+  />
+  <measures 
+    LFootHigh="0.109115"
+    RFootHigh="0.109116"
   />
 </model>

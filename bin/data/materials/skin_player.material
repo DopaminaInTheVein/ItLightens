@@ -1,7 +1,7 @@
 <material tech="skin_textured.tech">
-<texture slot="diffuse" name="textures/player_albedo_map.dds"/>
-<texture slot="selfilum" name="textures/player_self_ilumination.dds"/>
-<texture slot="normalmap" name="textures/player_normals_map.dds"/>
-<texture slot="selfilum_plus" name="textures/player/self_ilumination_azul.dds"/>
-<texture slot="selfilum_minus" name="textures/player/self_ilumination_rojo.dds"/>
+<texture slot="diffuse" name="textures/player/player_albedo_map.dds"/>
+<texture slot="selfilum" name="textures/player/player_self_ilumination.dds"/>
+<texture slot="selfilum_plus" name="textures/player/player_self_ilumination_azul.dds"/>
+<texture slot="selfilum_minus" name="textures/player/player_self_ilumination_rojo.dds"/>
+<texture slot="normalmap" name="textures/player/player_normals_map.dds"/>
 </material>
