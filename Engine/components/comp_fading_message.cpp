@@ -74,7 +74,7 @@ void TCompFadingMessage::update(float dt) {
 		accumTime -= timeForLetter;
 	}
 
-	if (true){//ttl >= 0.0f) {
+	if (ttl >= 0.0f) {
 		ttl -= dt;
 	}
 	else {
