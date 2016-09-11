@@ -128,7 +128,7 @@ void TCompFadingMessage::render() const {
 		float sy = letterBoxSize;
 
 		float letter_posx = 0.50f + (i - linechars_prev - fminf(line, 1.0f)) * sizeFontX;
-		float letter_posy = 0.02f - line*sizeFontY;
+		float letter_posy = 0.01f - line*sizeFontY;
 		CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.49f), ("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)));
 		CEntity * letter_e = letter_h;
 		TCompGui * letter_gui = letter_e->get<TCompGui>();

@@ -239,7 +239,7 @@ bool CEntitiesModule::start() {
 	//Gui
 	getHandleManager<TCompGuiCursor>()->init(4);
 	getHandleManager<TCompGuiButton>()->init(64);
-	getHandleManager<TCompGui>()->init(128);
+	getHandleManager<TCompGui>()->init(MAX_ENTITIES);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);

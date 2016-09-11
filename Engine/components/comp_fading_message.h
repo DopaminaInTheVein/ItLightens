@@ -11,13 +11,13 @@ class TCompFadingMessage : public TCompBase {
 	int numchars;
 	int shown_chars;
 	int lines;
-	float letterBoxSize = 1.0f / 16.0f;
+	float letterBoxSize = 1.0f;
 
 	std::string text;
 	std::vector<std::string> lineText;
 	float  ttl;
-	float sizeFontX = 0.025f;
-	float sizeFontY = 0.060f;
+	float sizeFontX = 0.0125f;
+	float sizeFontY = 0.030f;
 
 public:
 	//Update info
