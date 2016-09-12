@@ -75,6 +75,7 @@ void TCompFadingMessage::update(float dt) {
 	}
 
 	if (ttl >= 0.0f) {
+		printLetters();
 		ttl -= dt;
 	}
 	else {
@@ -97,8 +98,8 @@ void TCompFadingMessage::update(float dt) {
 		Gui->removeGuiElementByTag("Fading_Message_Background_" + std::to_string(id));
 	}
 }
-void TCompFadingMessage::render() const {
-	PROFILE_FUNCTION("TCompFadingMessage render");
+void TCompFadingMessage::printLetters() const {
+	//PROFILE_FUNCTION("TCompFadingMessage printLetters");
 
 	bool b = false;
 	int gState = GameController->GetGameState();
@@ -124,8 +125,8 @@ void TCompFadingMessage::render() const {
 
 		float texture_pos_x = ((float)ascii_tex_posx) / 16.0f;
 		float texture_pos_y = ((float)ascii_tex_posy) / 16.0f;
-		float sx = letterBoxSize;
-		float sy = letterBoxSize;
+		float sx = letterBoxSize / 16.0f;
+		float sy = letterBoxSize / 16.0f;
 
 		float letter_posx = 0.50f + (i - linechars_prev - fminf(line, 1.0f)) * sizeFontX;
 		float letter_posy = 0.01f - line*sizeFontY;

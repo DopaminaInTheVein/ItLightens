@@ -22,7 +22,7 @@ class TCompFadingMessage : public TCompBase {
 public:
 	//Update info
 	void update(float elapsed);
-	void render() const;
+	void printLetters() const;
 	void forceTTLZero();
 	bool load(MKeyValue& atts);
 };
