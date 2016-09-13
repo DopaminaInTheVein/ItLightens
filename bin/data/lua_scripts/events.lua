@@ -370,6 +370,11 @@ function OnLoadedLevel( logic_level, real_level )
 	CallFunction("OnLoad_"..real_level)
 end
 
+function OnLoadingLevel()
+	p:print("OnLoadingLevel")
+	p:show_loading_screen()
+end
+
 --Game Ending
 ---------------------------------------------------
 function OnVictory( )

@@ -369,7 +369,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadedLevel(%s);", params.c_str());
 		break;
 	}
-						  //GUI
+	case (OnLoadingLevel): {
+		sprintf(lua_code, "OnLoadingLevel(%s);", params.c_str());
+		break;
+	}
+	//GUI
 	case (OnClicked): {
 		sprintf(lua_code, "OnClicked(\"%s\");", params.c_str());
 		break;
@@ -748,6 +752,9 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// launch victory state
 		.set("launch_victory_state", &SLBPublicFunctions::launchVictoryState)
 		.comment("Launches the victory game state")
+		// show loading screen
+		.set("show_loading_screen", &SLBPublicFunctions::showLoadingScreen)
+		.comment("Shows the loading screen")
 		// LoadLevel (and clear current)
 		.set("load_level", &SLBPublicFunctions::loadLevel)
 		.comment("Clear current scene and load next (param)")

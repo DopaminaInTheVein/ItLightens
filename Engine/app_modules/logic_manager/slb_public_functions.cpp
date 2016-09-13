@@ -727,6 +727,22 @@ void SLBPublicFunctions::launchVictoryState() {
 	GameController->SetGameState(CGameController::VICTORY);
 }
 
+void SLBPublicFunctions::showLoadingScreen() {
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+
+	auto hm3 = CHandleManager::getByName("loading_screen");
+	CHandle new_hl = hm3->createHandle();
+
+	// Creation of the attributes
+	MKeyValue atts3;
+	atts3["name"] = "loading_screen";
+
+	new_hl.load(atts3);
+	entity->add(new_hl);
+}
+
 void SLBPublicFunctions::loadLevel(const char* level_name) {
 	CApp::get().changeScene(level_name);
 }

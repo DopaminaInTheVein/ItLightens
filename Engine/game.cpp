@@ -137,7 +137,7 @@ bool CApp::start() {
 
 	imgui->StartLightEditor(); //need to be created after entities
 
-	GameController->SetGameState(CGameController::RUNNING);
+	GameController->SetGameState(CGameController::LOADING);
 
 	logic_manager->throwEvent(logic_manager->OnGameStart, "");
 
@@ -170,6 +170,10 @@ void CApp::stop() {
 //----------------------------------
 void CApp::changeScene(string level) {
 	dbg("Destroying scene...\n");
+	// Loading state and screen
+	GameController->SetGameState(CGameController::LOADING);
+	logic_manager->throwEvent(logic_manager->OnLoadingLevel, "");
+	// Level load
 	bool reload = level == getCurrentLogicLevel();
 	entities->clear(reload);
 	next_level = level;
@@ -258,7 +262,8 @@ void CApp::update(float elapsed) {
 	static float ctime = 0.f;
 	ctime += elapsed* 0.01f;
 	CHandleManager::destroyAllPendingObjects();
-	if (next_level != "" && entities->isCleared()) {
+	if (next_level != "" && entities->isCleared()) {	
+		// Init the next level
 		initNextLevel();
 	}
 }

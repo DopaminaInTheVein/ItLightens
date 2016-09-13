@@ -548,6 +548,9 @@
     <ClCompile Include="Physx\physx_mesh_manager.cpp">
       <Filter>physx</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_loading_screen.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1451,6 +1454,9 @@
     </ClInclude>
     <ClInclude Include="Physx\physx_mesh_manager.h">
       <Filter>physx</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_loading_screen.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

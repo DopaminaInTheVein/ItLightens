@@ -153,6 +153,7 @@
     <ClCompile Include="components\comp_light_dir_shadows.cpp" />
     <ClCompile Include="components\comp_light_fadable.cpp" />
     <ClCompile Include="components\comp_light_point.cpp" />
+    <ClCompile Include="components\comp_loading_screen.cpp" />
     <ClCompile Include="components\comp_physics.cpp" />
     <ClCompile Include="components\comp_platform.cpp" />
     <ClCompile Include="components\comp_polarized.cpp" />
@@ -382,6 +383,7 @@
     <ClInclude Include="components\comp_light_dir_shadows.h" />
     <ClInclude Include="components\comp_light_fadable.h" />
     <ClInclude Include="components\comp_light_point.h" />
+    <ClInclude Include="components\comp_loading_screen.h" />
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
     <ClInclude Include="components\comp_physics.h" />

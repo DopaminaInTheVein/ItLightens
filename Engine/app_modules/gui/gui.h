@@ -45,6 +45,7 @@ private:
 	DECL_GUI_STATE(OnStop);
 	DECL_GUI_STATE(OnStopIntro);
 	DECL_GUI_STATE(OnMenu);
+	DECL_GUI_STATE(OnLoading);
 	DECL_GUI_STATE(OnDead);
 	DECL_GUI_STATE(OnVictory);
 

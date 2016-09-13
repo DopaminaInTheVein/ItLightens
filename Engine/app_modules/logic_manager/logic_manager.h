@@ -102,6 +102,7 @@ public:
 		OnVictory,
 		OnDead,
 		OnRestartLevel,
+		OnLoadingLevel,
 		OnLoadedLevel,
 		OnSavedLevel,
 

@@ -17,6 +17,9 @@ void CGameController::SetGameState(int state) {
 	}
 }
 
+int CGameController::GetLoadingState() const { return loading_state; }
+void CGameController::SetLoadingState(int state) { loading_state = state; }
+
 void CGameController::TogglePauseState() {
 	if (game_state == RUNNING)
 		game_state = STOPPED;

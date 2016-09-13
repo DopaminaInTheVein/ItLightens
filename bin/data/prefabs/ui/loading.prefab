@@ -1,0 +1,15 @@
+<entities>
+<entity>
+<tags
+   tags="loading"/>
+<name
+   name="loading"/>
+<transform
+   pos="5.0 -95.0 9.0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/loading/background.static_mesh"/>
+<abs_aabb/>
+</entity>
+</entities>

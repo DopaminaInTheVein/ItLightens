@@ -5,6 +5,7 @@
 
 class CGameController : public IAppModule {
 	int		game_state = 0;
+	int		loading_state = 0;
 
 	bool    fx_polarize = true;
 	bool	fx_glow = true;
@@ -24,11 +25,15 @@ public:
 		VICTORY,
 		LOSE,
 		MENU,
+		LOADING,
 		GAME_STATES_SIZE
 	};
 
 	int GetGameState() const;
 	void SetGameState(int state);
+
+	int GetLoadingState() const;
+	void SetLoadingState(int state);
 
 	void TogglePauseState();
 	void TogglePauseIntroState();
