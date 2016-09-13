@@ -142,9 +142,20 @@ void CImGuiModule::update(float dt) {
 	if (ImGui::TreeNode("PROFILING"))
 	{
 		static int nframes = 5;
+		static float time_threshold = 5;
 		ImGui::InputInt("NFrames", &nframes, 1, 5);
+		ImGui::Separator();
 		if (ImGui::Button("Start Capture Profiling"))
 			profiler.setNFramesToCapture(nframes);
+		ImGui::Separator();
+		ImGui::InputFloat("Time Threshold", &time_threshold, 1, 5);
+		if (profiler.isAutoCapture()) {
+			ImGui::Text("Waiting auto capture...");
+		}
+		else {
+			if (ImGui::Button("Auto Capture Profiling"))
+				profiler.setAutoCapture(nframes, time_threshold);
+		}
 		ImGui::TreePop();
 	}
 #endif
