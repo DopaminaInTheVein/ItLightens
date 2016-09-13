@@ -7,15 +7,29 @@ class TCompLoadingScreen : public TCompBase {
 	float resolution_x;
 	float resolution_y;
 	int loading_value = 0;
+	int decenas = 0;
+	int unidades = 0;
 	ImGuiWindowFlags flags;
-	bool added = false;
+
+	float letterBoxSize = 1.0f;
+	int shown_chars;
+	int numchars = 2;
+	int lines = 1;
+
+	int id = std::rand();
+	std::string text;
+	std::vector<std::string> lineText;
+	float  ttl = 0.5f;
+	float sizeFontX = 0.0125f;
+	float sizeFontY = 0.030f;
+	float timeForLetter = 0.05f;
 	
 	public:
-		//Update info
-				
-		void update(float elapsed);
-		void render() const;
-		bool load(MKeyValue& atts);
+	//Update info				
+	void update(float elapsed);
+	void render() const;
+	bool load(MKeyValue& atts);
+	void printLetters() const;
 };
 
 #endif

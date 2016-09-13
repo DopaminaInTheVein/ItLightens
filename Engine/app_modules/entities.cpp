@@ -570,9 +570,10 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompVideo>()->updateAll(dt);
 	}
 	else if (GameController->GetGameState() == CGameController::LOADING) {
-		getHandleManager<TCompLoadingScreen>()->updateAll(dt);
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompCameraMain>()->updateAll(dt);
+		getHandleManager<TCompFadeScreen>()->updateAll(dt);
+		getHandleManager<TCompLoadingScreen>()->updateAll(dt);
 	}
 	else if (GameController->GetGameState() == CGameController::RUNNING) {
 		// May need here a switch to update wich player controller takes the action - possession rulez
@@ -697,20 +698,26 @@ void CEntitiesModule::render() {
 	//getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 #endif
 
-	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 	getHandleManager<TCompCameraMain>()->onAll(&TCompCamera::render);
-	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
-
-	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
-	getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
-	getHandleManager<TCompFadingGlobe>()->onAll(&TCompFadingGlobe::render);
+	
+	if (GameController->GetGameState() == CGameController::LOADING) {
+		getHandleManager<TCompLoadingScreen>()->onAll(&TCompLoadingScreen::render);
+	}
+	else {
+		getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
+		getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
+
+		getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
+		getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
+		getHandleManager<TCompFadingGlobe>()->onAll(&TCompFadingGlobe::render);
 
 #ifndef NDEBUG
-	getHandleManager<TCompBox>()->onAll(&TCompBox::render);
+		getHandleManager<TCompBox>()->onAll(&TCompBox::render);
 #endif
+	}
 
 	RenderManager.renderAll(CHandle(), CRenderTechnique::DBG_OBJS);
 	RenderManager.renderAll(CHandle(), CRenderTechnique::UI_OBJS);

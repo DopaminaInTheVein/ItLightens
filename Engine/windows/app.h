@@ -61,6 +61,7 @@ private:
 	int       xres, yres;
 	int		  xres_max, yres_max;
 	int		  game_state = 0;
+	bool	  loading = false;
 
 	std::string current_level = "";
 	std::string next_level = "";
@@ -80,6 +81,7 @@ private:
 	//Levels
 	void initNextLevel();
 	void restartLevel();
+	void showLoadingScreen();
 };
 
 #endif

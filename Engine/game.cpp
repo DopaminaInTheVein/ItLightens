@@ -171,9 +171,6 @@ void CApp::stop() {
 //----------------------------------
 void CApp::changeScene(string level) {
 	dbg("Destroying scene...\n");
-	// Loading state and screen
-	GameController->SetGameState(CGameController::LOADING);
-	logic_manager->throwEvent(logic_manager->OnLoadingLevel, "");
 	// Level load
 	bool reload = level == getCurrentLogicLevel();
 	entities->clear(reload);
@@ -230,6 +227,7 @@ void CApp::clearSaveData() {
 }
 
 void CApp::loadedLevelNotify() {
+
 	current_level = next_level;
 	next_level = "";
 	char params[128];
@@ -239,6 +237,7 @@ void CApp::loadedLevelNotify() {
 		: CLogicManagerModule::EVENT::OnLevelStart;
 
 	logic_manager->throwEvent(game_event, std::string(params));
+	//loading = false;
 }
 
 void CApp::exitGame() {
@@ -264,7 +263,15 @@ void CApp::update(float elapsed) {
 	ctime += elapsed* 0.01f;
 	CHandleManager::destroyAllPendingObjects();
 	if (next_level != "" && entities->isCleared()) {
-		initNextLevel();
+		/*// Loading state and screen
+		GameController->SetGameState(CGameController::LOADING);
+		logic_manager->throwEvent(logic_manager->OnLoadingLevel, "");
+		if (!loading)
+			showLoadingScreen();*/
+		// init the next level
+		//std::thread* th = new std::thread([this] {
+		initNextLevel();			
+		//});		
 	}
 }
 
@@ -289,20 +296,47 @@ void CApp::initNextLevel()
 	// Entidades variantes
 	info.filename = level_name + (setContains(has_check_point, next_level) ? "_save" : "_init");
 	entities->loadXML(info);
+	GameController->SetLoadingState(30);
 
 	// Lights
 	info.filename = level_name + "_lights";
 	entities->loadXML(info);
+	GameController->SetLoadingState(60);
+
+	// Init entities
+	entities->initEntities();
+	GameController->SetLoadingState(80);
+
+	// Navmesh
+	if (!reload) CNavmeshManager::initNavmesh(level_name);
+	GameController->SetLoadingState(100);
+
+	// Game state and notify
+	loadedLevelNotify();
+}
+
+void CApp::showLoadingScreen()
+{
+	loading = true;
+	// Restart Timers LUA
+	logic_manager->resetTimers();
+
+	//
+	std::string level_name = "loading";
+	bool reload = next_level == current_level;
+	if (!reload) CEntityParser::clearCollisionables();
+	bool is_ok;
+
+	// Entidades invariantes
+	CEntitiesModule::ParsingInfo info;
+	info.filename = level_name;
+	info.reload = reload;
+	is_ok = entities->loadXML(info);
+	assert(is_ok);
 
 	// Init entities
 	entities->initEntities();
 
-	// Navmesh
-	if (!reload) CNavmeshManager::initNavmesh(level_name);
-
-	// Game state and notify
-	if (!GameController->IsUiControl()) GameController->SetGameState(CGameController::RUNNING);
-	loadedLevelNotify();
 }
 
 // ----------------------------------
