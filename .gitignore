@@ -25,6 +25,7 @@ max/max*
 *.VC.db
 *.orig
 *.opendb
+*.cpuprofile
 bin/Phys*
 bin/glut32.dll
 bin/nvToolsExt64_1.dll

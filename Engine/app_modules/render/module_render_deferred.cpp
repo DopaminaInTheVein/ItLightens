@@ -993,8 +993,10 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 
 	//create mask
 	{
-		PROFILE_FUNCTION(("referred: mask vision " + tagstr).c_str());
-		CTraceScoped scope(("mask" + tagstr).c_str());
+		//PROFILE_FUNCTION(("referred: mask vision " + tagstr).c_str());
+		//CTraceScoped scope(("mask" + tagstr).c_str());
+		PROFILE_FUNCTION("referred: mask vision ");
+		CTraceScoped scope("mask");
 
 		//activateZ(ZCFG_DEFAULT);
 		activateZ(ZCFG_MASK_NUMBER_NO_Z, sencil_mask);
@@ -1072,8 +1074,10 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 	//edge detection
 	{
 		rt_black->clear(VEC4(0, 0, 0, 0));
-		PROFILE_FUNCTION(("referred: mark detection " + tagstr).c_str());
-		CTraceScoped scope(("mark detection " + tagstr).c_str());
+		//PROFILE_FUNCTION(("referred: mark detection " + tagstr).c_str());
+		//CTraceScoped scope(("mark detection " + tagstr).c_str());
+		PROFILE_FUNCTION("referred: mark detection ");
+		CTraceScoped scope("mark detection ");
 
 		// Activar el rt para pintar las luces...
 
@@ -1099,9 +1103,10 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 		//drawFullScreen(rt_black);
 	}
 	{
-		PROFILE_FUNCTION(("referred: edge detection " + tagstr).c_str());
-		CTraceScoped scope(("edge detection " + tagstr).c_str());
-
+		//PROFILE_FUNCTION(("referred: edge detection " + tagstr).c_str());
+		//CTraceScoped scope(("edge detection " + tagstr).c_str());
+		PROFILE_FUNCTION("referred: edge detection ");
+		CTraceScoped scope("edge detection ");
 		// Activar el rt para pintar las luces...
 
 		ID3D11RenderTargetView* rts[3] = {

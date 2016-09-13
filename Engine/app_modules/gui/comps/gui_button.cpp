@@ -166,19 +166,6 @@ void TCompGuiButton::update(float dt)
 	Recalc();
 	updateRenderState();
 	updateSize();
-	CEntity* e_owner = CHandle(this).getOwner();
-	TCompTransform* trans = e_owner->get<TCompTransform>();
-
-	//update size buttons
-/*	float offset = getRenderState();
-
-	//reset offset
-	if (offset > RSTATE_OVER) {
-		offset = (RSTATE_RELEASED - offset)/ RSTATE_RELEASED;
-	}
-	// +1 because default render state is 0
-	float value = 1 + offset*0.25f;
-	trans->setScale(VEC3(value, value, value));*/
 }
 
 void TCompGuiButton::onClick(const TMsgClicked&)
