@@ -12,6 +12,8 @@
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/prettywriter.h"
 
+#define STRING(s) #s
+
 #define VEC3_VALUES(name) name.x, name.y, name.z
 #define VEC4_VALUES(name) name.x, name.y, name.z, name.w
 
@@ -97,7 +99,7 @@ void writeIniAtrData(const std::string route, std::string element_name, std::map
 float max(int nargs, ...);
 float min(int nargs, ...);
 VEC4 mul(VEC4 input, MAT44 transform);
-
+float inverseFloat(float value);
 //Check nan VEC3
 bool isNan(VEC3 vec);
 bool isValid(VEC3 vec);

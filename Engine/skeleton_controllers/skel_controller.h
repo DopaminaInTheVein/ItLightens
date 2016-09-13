@@ -48,6 +48,14 @@ protected:
 	std::string currentState = "";
 	std::string prevState = "";
 	bool priority = false;
+	float lfoot_correction = 0.f;
+	float rfoot_correction = 0.f;
+	float lfoot_height_offset;
+	float rfoot_height_offset;
+	bool foot_ground_left = true;
+	bool foot_ground_right = true;
+	float FOOT_GROUND_EPSILON;
+	float FOOT_AIR_EPSILON;
 
 	void setAnim(std::string anim, bool loop, std::string nextLoop = "");
 	void setAction(std::string anim, std::string nextLoop = "");
@@ -57,16 +65,35 @@ protected:
 	void setAction(std::vector<std::string> anim, std::vector<std::string> nextLoop);
 	void setLoop(std::vector<std::string> anim);
 
-	void update();
 	//Virtuals
 	virtual void myUpdate();
 	virtual void myUpdateIK();
-
+	virtual bool getUpdateInfo() = 0;
 public:
+	void update();
+	void onCreate(const TMsgEntityCreated&);
 	void enableIK(std::string bone_name, IK::bone_solver solver, float delay);
 	void disableIK(std::string bone_name, float delay = 0.f, IK::bone_solver function = nullptr);
 	void setState(std::string state, bool prio = false);
-	void renderInMenu();
+	void renderInMenuParent();
+
+	//IK querys
+	void solveFoot(const IK::InfoSolver&, IK::ResultSolver&, float& height_correction, bool& on_ground, float height_offset);
+	void solveFootLeft(const IK::InfoSolver&, IK::ResultSolver&);
+	void solveFootRight(const IK::InfoSolver&, IK::ResultSolver&);
+	float getLFootCorrection() {
+		return lfoot_correction;
+	}
+	float getRFootCorrection() {
+		return rfoot_correction;
+	}
+	void setLFootCorrection(float val) {
+		lfoot_correction = val;
+	}
+	void setRFootCorrection(float val) {
+		rfoot_correction = val;
+	}
+	void updateSteps(float dist_ground, bool& on_ground);
 };
 
 #define SET_ANIM_STATE(skc, state) {if (skc) skc->setState(state);}

@@ -7,30 +7,45 @@
 extern CInputWrapper* controller = new CInputWrapper;
 
 bool CInputWrapper::IsCamMovedUp() {
-	return io->joystick.ry > joystick_umbral || io->mouse.dy > 0;
+	return io->joystick.getRY() > 0 || io->mouse.dy > 0;
 }
 bool CInputWrapper::IsCamMovedDown() {
-	return io->joystick.ry < -joystick_umbral || io->mouse.dy < 0;
+	return io->joystick.getRY() < 0 || io->mouse.dy < 0;
 }
 bool CInputWrapper::IsCamMovedLeft() {
-	return io->joystick.rx < -joystick_umbral || io->mouse.dx < 0;
+	return io->joystick.getRX() < 0 || io->mouse.dx < 0;
 }
 bool CInputWrapper::IsCamMovedRight() {
-	return io->joystick.rx > joystick_umbral || io->mouse.dx > 0;
+	return io->joystick.getRX() > 0 || io->mouse.dx > 0;
 }
 
 // Left Joystick
 bool CInputWrapper::IsMoveForward() {
-	return io->keys['W'].isPressed() || io->joystick.ly > joystick_umbral;
+	return io->keys['W'].isPressed() || io->joystick.getLY() > 0;
 }
 bool CInputWrapper::IsMoveRight() {
-	return io->keys['D'].isPressed() || io->joystick.lx > joystick_umbral;
+	return io->keys['D'].isPressed() || io->joystick.getLX() > 0;
 }
 bool CInputWrapper::IsMoveBackWard() {
-	return io->keys['S'].isPressed() || io->joystick.ly < -joystick_umbral;
+	return io->keys['S'].isPressed() || io->joystick.getLY() < 0;
 }
 bool CInputWrapper::IsMoveLeft() {
-	return io->keys['A'].isPressed() || io->joystick.lx < -joystick_umbral;
+	return io->keys['A'].isPressed() || io->joystick.getLX() < 0;
+}
+
+// TODO: Preguntar por becomes pressed del joystick --> simular pulsaciones
+// Dejar pulsado --> simular comportamiento teclado (una pulsacion, espera, pulsaciones repetidas cada X milisegundos)
+bool CInputWrapper::IsUpPressed() {
+	return io->keys['W'].becomesPressedWithRepeat() || io->keys[VK_UP].becomesPressedWithRepeat() || io->joystick.lstick.UpBecomesPressed();
+}
+bool CInputWrapper::IsDownPressed() {
+	return io->keys['S'].becomesPressedWithRepeat() || io->keys[VK_DOWN].becomesPressedWithRepeat() || io->joystick.lstick.DownBecomesPressed();
+}
+bool CInputWrapper::IsLeftPressed() {
+	return io->keys['A'].becomesPressedWithRepeat() || io->keys[VK_LEFT].becomesPressedWithRepeat() || io->joystick.lstick.LeftBecomesPressed();
+}
+bool CInputWrapper::IsRightPressed() {
+	return io->keys['D'].becomesPressedWithRepeat() || io->keys[VK_RIGHT].becomesPressedWithRepeat() || io->joystick.lstick.RightBecomesPressed();
 }
 
 float CInputWrapper::MoveYNormalized() {
@@ -40,7 +55,7 @@ float CInputWrapper::MoveYNormalized() {
 	else if (io->keys['S'].isPressed()) {
 		return -1.0f;
 	}
-	else if (io->joystick.ly > 0 && io->joystick.ly > joystick_umbral || io->joystick.ly < 0 && io->joystick.ly < -joystick_umbral) {
+	else if (io->joystick.getLY() != 0.f) {
 		return io->joystick.ly / (float)io->joystick.max_stick_value;
 	}
 	return 0.0f;
@@ -52,7 +67,7 @@ float CInputWrapper::MoveXNormalized() {
 	else if (io->keys['A'].isPressed()) {
 		return 1.0f;
 	}
-	else if (io->joystick.lx > 0 && io->joystick.lx > joystick_umbral || io->joystick.lx < 0 && io->joystick.lx < -joystick_umbral) {
+	else if (io->joystick.getLX() != 0.f) {
 		return (-io->joystick.lx / (float)io->joystick.max_stick_value);
 	}
 	return 0.0f;
@@ -67,35 +82,29 @@ float CInputWrapper::JoystickDeltaRightY() {
 }
 
 float CInputWrapper::JoystickRightX() {
-	if (io->joystick.rx > 0 && io->joystick.rx > joystick_umbral) {
+	if (io->joystick.getRX() > 0) {
 		return io->joystick.rx;
 	}
-	else if (io->joystick.rx < 0 && io->joystick.rx < -joystick_umbral) {
+	else if (io->joystick.getRX() < 0) {
 		return io->joystick.rx;
 	}
 	return 0.0f;
 }
 float CInputWrapper::JoystickRightY() {
-	if (io->joystick.ry > 0 && io->joystick.ry > joystick_umbral) {
-		return io->joystick.ry;
-	}
-	else if (io->joystick.ry < 0 && io->joystick.ry < -joystick_umbral) {
-		return io->joystick.ry;
-	}
-	return 0.0f;
+	return io->joystick.getRY();
 }
 bool CInputWrapper::IsJoystickRXMax() {
-	return io->joystick.rx == io->joystick.max_stick_value;
+	return io->joystick.getRX() == io->joystick.max_stick_value;
 }
 bool CInputWrapper::IsJoystickRXMin() {
-	return io->joystick.rx == io->joystick.min_stick_value;
+	return io->joystick.getRX() == io->joystick.min_stick_value;
 }
 float CInputWrapper::RYNormalized() {
 	if (io->mouse.dy != 0) {
 		return io->mouse.dy;
 	}
-	else if (io->joystick.ry > 0 && io->joystick.ry > joystick_umbral || io->joystick.ry < 0 && io->joystick.ry < -joystick_umbral) {
-		return io->joystick.ry * 8 / (float)io->joystick.max_stick_value;
+	else if (io->joystick.getRY() != 0.f) {
+		return io->joystick.getRY() * 8 / (float)io->joystick.max_stick_value;
 	}
 	return 0.0f;
 }
@@ -103,7 +112,7 @@ float CInputWrapper::RXNormalized() {
 	if (io->mouse.dx != 0) {
 		return io->mouse.dx;
 	}
-	else if (io->joystick.rx > 0 && io->joystick.rx > joystick_umbral || io->joystick.rx < 0 && io->joystick.rx < -joystick_umbral) {
+	else if (io->joystick.getRX() != 0.f) {
 		return io->joystick.rx * 8 / (float)io->joystick.max_stick_value;
 	}
 	return 0.0f;
@@ -145,6 +154,14 @@ bool CInputWrapper::IsSenseButtonPressed() {
 bool CInputWrapper::ActionButtonBecomesPessed() {
 	return io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed();
 }
+bool CInputWrapper::ActionGuiButtonBecomesPressed() {
+	return io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()
+		|| io->keys[VK_RETURN].becomesPressed() || io->keys[VK_SPACE].becomesPressed();
+}
+bool CInputWrapper::ActionGuiButtonBecomesReleased() {
+	return io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()
+		|| io->keys[VK_RETURN].becomesReleased() || io->keys[VK_SPACE].becomesReleased();
+}
 bool CInputWrapper::JumpButtonBecomesPressed() {
 	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed();
 }
@@ -178,6 +195,9 @@ bool CInputWrapper::IsPausePressed() {
 }
 bool CInputWrapper::IsBackPressed() {
 	return io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed();
+}
+bool CInputWrapper::IsBackBeingPressed() {
+	return io->keys[VK_ESCAPE].isPressed() || io->joystick.button_BACK.isPressed();
 }
 
 // Capture & Release Mouse

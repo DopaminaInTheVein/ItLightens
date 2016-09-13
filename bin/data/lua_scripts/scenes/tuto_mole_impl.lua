@@ -3,8 +3,16 @@ p = Public()
 --==================
 -- Level DATA
 --==================
+TASK_TUTOM_POSS = 0
+TASK_TUTOM_WALL = 1
+TASK_TUTOM_BOX_MOVE = 2
+TASK_TUTOM_BOX_PLACED = 3
+--TASK_TUTOM_PORTAL = 4
+
+---------------------------------------------
 poss_done = false
-box_done = false
+box_moved_done = false
+box_placed_done = false
 unposs_done = false
 portal_done = false
 --==================
@@ -14,7 +22,8 @@ portal_done = false
 --===========================================
 function OnStart_tuto_mole( )
 	poss_done = false
-	box_done = false
+	box_moved_done = false
+	box_placed_done = false
 	portal_done = false
 	p:exec_command("tutomole_help_possess();", 2)
 end
@@ -23,11 +32,13 @@ function OnPossess_tuto_mole( )
 	if not poss_done then
 		poss_done = true
 		tutomole_help_wall()
+		--Tasklist
+		p:complete_tasklist(TASK_TUTOM_POSS)
 	end
 end
 
 function OnUnpossess_tuto_mole( )
-	if box_done then
+	if box__placed_done then
 		if not unposs_done then
 			unposs_done = true
 			tutomole_help_djump()
@@ -40,9 +51,22 @@ function tutomole_wall_crossed( )
 end
 
 function tutomole_box_placed( )
-	if not box_done then
-		box_done = true
+	if not box_placed_done then
+		box_placed_done = true
 		tutomole_help_unpossess()
+		
+		--Tasklist
+		p:complete_tasklist(TASK_TUTOM_BOX_PLACED)
+	end
+end
+
+function tutomole_box_moved( )
+	if not box_moved_done then
+		box_moved_done = true
+		tutomole_help_place_box()
+		
+		--Tasklist
+		p:complete_tasklist(TASK_TUTOM_BOX_MOVE)
 	end
 end
 
@@ -81,12 +105,12 @@ function tutomole_destroyWallEffect()
   h:destroy()
   
   --Activamos fragmentos pared
-  
   all_fragments1:get_handles_by_tag(tagWallFragment1)
   all_fragments1:awake()
   p:exec_command( "all_fragments1:remove_physics();", 5 )
-  activeWire1();
-  --p:exec_command( "activeWire1();", 0.5 )
+  
+  --Tasklist
+  p:complete_tasklist(TASK_TUTOM_WALL)
 end
 --------------------------------------
 --------------
@@ -108,6 +132,9 @@ function tutomole_help_possess( )
 end
 function tutomole_help_unpossess( )
 	p:player_talks("Pulsa SHIFT IZQUIERDO para abandonar el cuerpo de la mole.", "scientific.dds", "SCI")
+end
+function tutomole_help_place_box( )
+	p:player_talks("Lleva la caja hasta la columna rota (puedes utilizar SENTIR)", "scientific.dds", "SCI")
 end
 function tutomole_help_wall( )
 	p:player_talks("Acercate al muro de enfrente con la mole y pulsa CLIC IZQUIERDO para destruirlo", "scientific.dds", "SCI")

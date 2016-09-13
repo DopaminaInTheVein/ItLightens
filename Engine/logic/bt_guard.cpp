@@ -1530,3 +1530,9 @@ void bt_guard::changeCommonState(std::string state)
 	//if (state == AST_IDLE)
 	SET_ANIM_GUARD(state);
 }
+
+void bt_guard::onGetWhoAmI(TMsgGetWhoAmI& msg)
+{
+	msg.who = PLAYER_TYPE::GUARD;
+	msg.who_string = "Guard";
+}

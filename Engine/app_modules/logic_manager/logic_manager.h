@@ -106,8 +106,15 @@ public:
 		OnLoadedLevel,
 		OnSavedLevel,
 
+		//Others
+		OnStep,
+		OnStepOut,
+
 		//GUI
+		OnButtonPressed,
 		OnClicked,
+		OnMouseOver,
+		OnMouseUnover,
 		OnPause,
 	};
 

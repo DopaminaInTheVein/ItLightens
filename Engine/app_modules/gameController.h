@@ -15,6 +15,8 @@ class CGameController : public IAppModule {
 	bool	manual_control = false;
 	bool    ui_control = false;
 
+	CHandle h_game_controller;
+
 public:
 	enum {
 		STARTING = 0,
@@ -59,6 +61,9 @@ public:
 	bool * GetCullingRenderPointer();
 	bool GetCullingRender() const;
 	const char* getName() const;
+	void setHandleController(CHandle);
+
+	bool isSenseVisionEnabled();
 };
 
 extern CGameController* GameController;

@@ -88,7 +88,9 @@
 		"jimpulse" : 5.0,
 		"left_stick_sensibility" : 5000,
 		"camera_max_height" : 4,
-		"camera_min_height" : 0
+		"camera_min_height" : 0,
+		"energy_default_decrease" : 0.3,
+		"energy_sense_decrease" : 2.0
 	},	
 	"controller_player" : {
 		"full_height" : 0.5,
@@ -99,9 +101,7 @@
 		"max_life" : 150.0,
 		"init_life" : 150.0,
 		"jump_energy" : 0.25,
-		"stun_energy" : 5.0,
-		"energy_default_decrease" : 0.3,
-		"energy_sense_decrease" : 2.0
+		"stun_energy" : 5.0
 	},	
 	"controller_mole" : {
 		"grab_box_energy" : 5.0,
@@ -134,5 +134,16 @@
 	"generator" : {
 		"_timeReuse" : 15.0,
 		"life_recover" : 150
+	},
+	
+	"gui_button" : {
+		"t_enabled" : 0.2,
+		"t_disabled" : 0.2,
+		"t_over" : 0.2,
+		"t_unover" : 0.2,
+		"t_clicked" : 0.1,
+		"t_unclciked" : 0.1,
+		"t_released" : 0.1,
+		"t_unreleased" : 0.1		
 	}
 }

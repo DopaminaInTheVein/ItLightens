@@ -114,12 +114,15 @@ DECL_OBJ_MANAGER("tasklist", Tasklist);
 DECL_OBJ_MANAGER("task_switcher", TasklistSwitch);
 DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
 DECL_OBJ_MANAGER("loading_screen", TCompLoadingScreen);
+DECL_OBJ_MANAGER("look_target", TCompLookTarget);
 
 //fx
 DECL_OBJ_MANAGER("FX_fade_screen", TCompFadeScreen);
 DECL_OBJ_MANAGER("render_glow", TCompRenderGlow);
+DECL_OBJ_MANAGER("sense_vision", TCompSenseVision);
 
 //gui
+DECL_OBJ_MANAGER("gui", TCompGui);
 DECL_OBJ_MANAGER("gui_cursor", TCompGuiCursor);
 DECL_OBJ_MANAGER("gui_button", TCompGuiButton);
 
@@ -189,6 +192,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<LogicHelperArrow>()->init(4);
 	getHandleManager<Tasklist>()->init(4);
 	getHandleManager<TasklistSwitch>()->init(32);
+	getHandleManager<TCompLookTarget>()->init(8);
 	//lights
 	getHandleManager<TCompLightDir>()->init(MAX_ENTITIES);
 	getHandleManager<TCompLightFadable>()->init(4);
@@ -203,6 +207,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<magnet_door>()->init(MAX_ENTITIES);
 	getHandleManager<elevator>()->init(4);
 	getHandleManager<TCompRenderGlow>()->init(4);
+	getHandleManager<TCompSenseVision>()->init(4);
 
 	getHandleManager<TCompPlatform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompDrone>()->init(MAX_ENTITIES);
@@ -236,6 +241,7 @@ bool CEntitiesModule::start() {
 	//Gui
 	getHandleManager<TCompGuiCursor>()->init(4);
 	getHandleManager<TCompGuiButton>()->init(64);
+	getHandleManager<TCompGui>()->init(MAX_ENTITIES);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -279,6 +285,12 @@ bool CEntitiesModule::start() {
 	//For camera unique
 	SUBSCRIBE(TCompCameraMain, TMsgEntityCreated, onCreate);
 
+	//Skeleton Controllers
+	SUBSCRIBE(SkelControllerPlayer, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(SkelControllerGuard, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(SkelControllerMole, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(SkelControllerScientist, TMsgEntityCreated, onCreate);
+
 	//Skeleton IK
 	SUBSCRIBE(TCompSkeletonIK, TMsgSetIKSolver, onSetIKSolver);
 	SUBSCRIBE(TCompSkeletonLookAt, TMsgEntityCreated, onCreate);
@@ -299,6 +311,7 @@ bool CEntitiesModule::start() {
 
 	//box
 	SUBSCRIBE(TCompBox, TMsgLeaveBox, onUnLeaveBox);
+	//SUBSCRIBE(TCompBoxPlacer, TMsgEntityCreated, onCreate);
 
 	//bombs
 	SUBSCRIBE(CThrowBomb, TMsgActivate, onNextState);
@@ -382,6 +395,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller, TMsgPossessionLeave, onLeaveFromPossession);
 	SUBSCRIBE(player_controller, TMsgGetWhoAmI, onGetWhoAmI);
 
+	//Guard
+	SUBSCRIBE(bt_guard, TMsgGetWhoAmI, onGetWhoAmI);
+
 	//Dead
 	//anything for now
 	/*SUBSCRIBE(player_controller, TMsgDie, onDie);
@@ -408,6 +424,9 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller_cientifico, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(player_controller_mole, TMsgSetControllable, onSetControllable);
 	SUBSCRIBE(TCompController3rdPerson, TMsgSetControllable, onSetControllable);
+	SUBSCRIBE(player_controller, TMsgSetOnlySense, onSetOnlySense);
+	SUBSCRIBE(player_controller_cientifico, TMsgSetOnlySense, onSetOnlySense);
+	SUBSCRIBE(player_controller_mole, TMsgSetOnlySense, onSetOnlySense);
 
 	//Go And Look
 	SUBSCRIBE(player_controller, TMsgGoAndLook, onGoAndLook);
@@ -421,6 +440,8 @@ bool CEntitiesModule::start() {
 
 	//Gui
 	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
+	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompGuiButton, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
 
 	return true;
@@ -449,6 +470,7 @@ void CEntitiesModule::initEntities() {
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
 	getHandleManager<TCompBox>()->onAll(&TCompBox::init);
+	getHandleManager<TCompBoxPlacer>()->onAll(&TCompBoxPlacer::init);
 	getHandleManager<TCompPila>()->onAll(&TCompPila::init);
 	getHandleManager<TCompWorkstation>()->onAll(&TCompWorkstation::init);
 
@@ -623,6 +645,9 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<elevator>()->updateAll(dt);
 		getHandleManager<TCompTracker>()->updateAll(dt);
 
+		//Look Target
+		getHandleManager<TCompLookTarget>()->updateAll(dt);
+
 		//particles
 		getHandleManager<CParticleSystem>()->updateAll(dt);
 
@@ -655,6 +680,7 @@ void CEntitiesModule::update(float dt) {
 	//Gui
 	getHandleManager<TCompGuiCursor>()->updateAll(dt);
 	getHandleManager<TCompGuiButton>()->updateAll(dt);
+	getHandleManager<TCompGui>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

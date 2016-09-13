@@ -114,6 +114,7 @@
   <ItemGroup>
     <ClCompile Include="app_modules\entities.cpp" />
     <ClCompile Include="app_modules\gameController.cpp" />
+    <ClCompile Include="app_modules\gui\comps\gui_basic.cpp" />
     <ClCompile Include="app_modules\gui\comps\gui_button.cpp" />
     <ClCompile Include="app_modules\gui\comps\gui_cursor.cpp" />
     <ClCompile Include="app_modules\gui\gui.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="components\comp_light_fadable.cpp" />
     <ClCompile Include="components\comp_light_point.cpp" />
     <ClCompile Include="components\comp_loading_screen.cpp" />
+    <ClCompile Include="components\comp_look_target.cpp" />
     <ClCompile Include="components\comp_physics.cpp" />
     <ClCompile Include="components\comp_platform.cpp" />
     <ClCompile Include="components\comp_polarized.cpp" />
@@ -163,6 +165,7 @@
     <ClCompile Include="components\comp_room.cpp" />
     <ClCompile Include="components\comp_room_limit.cpp" />
     <ClCompile Include="components\comp_room_switch.cpp" />
+    <ClCompile Include="components\comp_sense_vision.cpp" />
     <ClCompile Include="components\comp_snoozer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -332,6 +335,7 @@
     <ClInclude Include="..\bin\data\shaders\constants\ctes_bones.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_camera.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_globals.h" />
+    <ClInclude Include="..\bin\data\shaders\constants\ctes_gui.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_light.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_object.h" />
     <ClInclude Include="..\bin\data\shaders\constants\ctes_platform.h" />
@@ -339,6 +343,7 @@
     <ClInclude Include="app_modules\entities.h" />
     <ClInclude Include="app_modules\gameController.h" />
     <ClInclude Include="app_modules\gameData.h" />
+    <ClInclude Include="app_modules\gui\comps\gui_basic.h" />
     <ClInclude Include="app_modules\gui\comps\gui_button.h" />
     <ClInclude Include="app_modules\gui\comps\gui_cursor.h" />
     <ClInclude Include="app_modules\gui\gui.h" />
@@ -384,6 +389,7 @@
     <ClInclude Include="components\comp_light_fadable.h" />
     <ClInclude Include="components\comp_light_point.h" />
     <ClInclude Include="components\comp_loading_screen.h" />
+    <ClInclude Include="components\comp_look_target.h" />
     <ClInclude Include="components\comp_msgs.h" />
     <ClInclude Include="components\comp_name.h" />
     <ClInclude Include="components\comp_physics.h" />
@@ -395,6 +401,7 @@
     <ClInclude Include="components\comp_room.h" />
     <ClInclude Include="components\comp_room_limit.h" />
     <ClInclude Include="components\comp_room_switch.h" />
+    <ClInclude Include="components\comp_sense_vision.h" />
     <ClInclude Include="components\comp_snoozer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

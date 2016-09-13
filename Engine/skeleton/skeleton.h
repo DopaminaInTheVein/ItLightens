@@ -17,12 +17,15 @@ class CSkeleton : public IResource, public CXMLParser {
 	void onStartElement(const std::string &elem, MKeyValue &atts);
 
 	std::map<std::string, std::string> key_bones;
+	float left_foot_offset;
+	float right_foot_offset;
 public:
 	CSkeleton();
 	eType getType() const { return SKELETON; }
 
 	std::string getKeyBoneName(std::string);
-
+	float getLFootOffset() { return left_foot_offset; }
+	float getRFootOffset() { return right_foot_offset; }
 	bool isValid() const {
 		return core_model != nullptr;
 	}

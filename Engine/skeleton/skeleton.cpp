@@ -271,6 +271,10 @@ void CSkeleton::onStartElement(const std::string &elem, MKeyValue &atts) {
 			key_bones[val.first] = val.second;
 		}
 	}
+	else if (elem == "measures") {
+		left_foot_offset = atts.getFloat("LFootHigh", 0.f);
+		right_foot_offset = atts.getFloat("RFootHigh", 0.f);
+	}
 }
 
 std::string CSkeleton::getKeyBoneName(std::string name)

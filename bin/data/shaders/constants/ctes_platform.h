@@ -8,7 +8,8 @@
 #define CTE_SHADER_GLOBALS_SLOT			4
 #define CTE_SHADER_BLUR_SLOT				5
 #define CTE_SHADER_HATCHING_SLOT			6
-#define CTE_SHADER_DATA_SLOT				7
+#define CTE_SHADER_GUI_SLOT				7
+//#define CTE_SHADER_DATA_SLOT				8
 
 //textures object, 0-19
 #define TEXTURE_SLOT_DIFFUSE				0

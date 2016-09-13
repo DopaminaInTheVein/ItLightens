@@ -5,5 +5,11 @@
   <key_bones 
     left_hand="mole L Hand"
     right_hand="mole R Hand"
+    LFoot="mole L Foot"
+    RFoot="mole R Foot"
+  />
+  <measures 
+    LFootHigh="0.182677"
+    RFootHigh="0.182677"
   />
 </model>

@@ -261,3 +261,20 @@ fn addTag tag = (
 		addTagTo $ tag
 	)
 )
+
+-- FIXES SCENE
+fn fixUserProps = (
+	names_modified = #()
+	for obj in $* do (
+		prop = getUserPropBuffer obj
+		if prop.count > 0 then(
+			if prop[prop.count] != "\n" then (
+				setUserPropBuffer obj (prop + "\n")
+				append names_modified obj.name
+			)
+		)
+	)
+	for nombre in names_modified do (
+		print nombre
+	)
+)

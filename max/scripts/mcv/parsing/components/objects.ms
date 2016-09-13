@@ -13,6 +13,7 @@ fn _parse_box = (
 
 fn _parse_box_placer = (
 	local xml = XML_PARSING.addChild "box_placer"
-	local lua_event = getUserProp _parsingObject "event"
-	xml.addAttr "event" lua_event
+	parsePropAttribute xml "event_in" "event_in"
+	parsePropAttribute xml "event_out" "event_out"
+	parsePropAttribute xml "radius" "radius"
 )

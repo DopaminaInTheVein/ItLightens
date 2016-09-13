@@ -157,6 +157,7 @@ public:
 
 	void onGetWhoAmI(TMsgGetWhoAmI& msg) {
 		msg.who = PLAYER_TYPE::MOLE;
+		msg.who_string = "Mole";
 	}
 
 	//Cambio Malla

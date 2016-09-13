@@ -341,14 +341,19 @@ bool SLBHandle::isCharged() {
 	}
 	return false;
 }
-
-void SLBHandle::setAnim(const char* name) {
+void SLBHandle::_setAnim(const char* name, bool loop) {
 	if (real_handle.isValid()) {
 		TMsgSetAnim msg;
-		msg.loop = true;
+		msg.loop = loop;
 		msg.name = vector<string>(1, string(name));
 		real_handle.sendMsg(msg);
 	}
+}
+void SLBHandle::setAnim(const char* name) {
+	_setAnim(name, false);
+}
+void SLBHandle::setAnimLoop(const char* name) {
+	_setAnim(name, true);
 }
 bool SLBHandle::isPatrolling() {
 	bool patrol = false;
@@ -556,6 +561,31 @@ void SLBPublicFunctions::setControlEnabled(int enabled) {
 	}
 }
 
+void SLBPublicFunctions::setPlayerEnabled(int enabled) {
+	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+	if (player.isValid()) {
+		TMsgSetControllable msg;
+		msg.control = (enabled != 0);
+		player.sendMsg(msg);
+	}
+}
+
+void SLBPublicFunctions::setCameraEnabled(int enabled) {
+	CHandle main_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
+	if (main_camera.isValid()) {
+		TMsgSetControllable msg;
+		msg.control = (enabled != 0);
+		main_camera.sendMsg(msg);
+	}
+}
+void SLBPublicFunctions::setOnlySense(int enabled) {
+	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+	if (player.isValid()) {
+		TMsgSetOnlySense msg;
+		msg.sense = (enabled != 0);
+		player.sendMsg(msg);
+	}
+}
 void SLBPublicFunctions::playSound(const char* sound_route) {
 	sound_manager->playSound(std::string(sound_route));
 }

@@ -7,6 +7,7 @@
 
 #include "app_modules/gameController.h"
 #include "app_modules/io/io.h"
+#include "gui_basic.h"
 
 // load Xml
 bool TCompGuiCursor::load(MKeyValue& atts)
@@ -15,6 +16,8 @@ bool TCompGuiCursor::load(MKeyValue& atts)
 	GameController->SetGameState(CGameController::STOPPED);
 
 	speed = atts.getFloat("speed", 5.f);
+	menu_name = atts.getString("menu_name", "");
+	x = y = -1;
 	return true;
 }
 
@@ -43,10 +46,76 @@ void TCompGuiCursor::update(float dt)
 {
 	if (!enabled) return;
 	updateMovement(dt);
-	if (button.isValid()) {
-		if (controller->IsActionButtonReleased()) {
-			button.sendMsg(TMsgClicked());
-			enabled = false;
+	updateNavigation();
+
+	// Pasa a logica del boton
+	// ------------------------------------------------
+	//if (button.isValid()) {
+	//	if (controller->IsActionButtonReleased()) {
+	//		button.sendMsg(TMsgClicked());
+	//		enabled = false;
+	//	}
+	//}
+	//-------------------------------------------------
+}
+
+void TCompGuiCursor::updateNavigation()
+{
+	if (x == -1) {
+		if (controller->IsUpPressed()
+			|| controller->IsDownPressed()
+			|| controller->IsLeftPressed()
+			|| controller->IsRightPressed()
+			)
+		{
+			x = y = 0;
+			CHandle next_gui = TCompGui::gui_screens[menu_name].elem[0][0];
+			if (next_gui.isValid()) {
+				GET_COMP(tmx, next_gui, TCompTransform);
+				if (tmx) myTransform->setPosition(tmx->getPosition());
+			}
+		}
+	}
+	else {
+		int * current = nullptr;
+		int dir = 0;
+		int max = 0;
+		if (controller->IsUpPressed()) {
+			current = &y;
+			dir = -1;
+			max = GUI_MAX_ROW;
+		}
+		else if (controller->IsDownPressed()) {
+			current = &y;
+			dir = 1;
+			max = GUI_MAX_ROW;
+		}
+		else if (controller->IsLeftPressed()) {
+			current = &x;
+			dir = -1;
+			max = GUI_MAX_COL;
+		}
+		else if (controller->IsRightPressed()) {
+			current = &x;
+			dir = 1;
+			max = GUI_MAX_COL;
+		}
+		if (current) {
+			int prev = *current;
+			bool found = false;
+			auto gui_matrix = TCompGui::gui_screens[menu_name];
+			do {
+				*current += dir;
+				*current = (max + *current) % max;
+				CHandle next_gui = gui_matrix.elem[x][y];
+				if (next_gui.isValid()) {
+					GET_COMP(tmx, next_gui, TCompTransform);
+					if (tmx) {
+						found = true;
+						myTransform->setPosition(tmx->getPosition());
+					}
+				}
+			} while (!found && *current != prev);
 		}
 	}
 }
@@ -81,18 +150,38 @@ void TCompGuiCursor::updateMovement(float dt)
 void TCompGuiCursor::renderInMenu()
 {
 	ImGui::Text("Is overbutton %d", button.isValid());
+	if (menu_name != "") {
+		auto screen = TCompGui::gui_screens[menu_name];
+		for (int i = 0; i < GUI_MAX_ROW; i++) {
+			for (int j = 0; j < GUI_MAX_ROW; j++) {
+				if (screen.elem[i][j].isValid())
+					ImGui::Text("screen(%d,%d): %s", i, j, GET_NAME(screen.elem[i][j]));
+			}
+		}
+	}
 }
 
 void TCompGuiCursor::onButton(const TMsgOverButton& msg)
 {
-	if (msg.is_over) button = msg.button;
+	if (msg.is_over) {
+		button = msg.button;
+		GET_COMP(gui_basic, button, TCompGui);
+		if (gui_basic) {
+			x = gui_basic->GetCol();
+			y = gui_basic->GetRow();
+		}
+	}
 	else {
-		if (button == msg.button) button = CHandle();
+		if (button == msg.button) {
+			button = CHandle();
+			x = y = -1;
+		}
 	}
 }
 
 TCompGuiCursor::~TCompGuiCursor()
 {
 	GameController->SetUiControl(false);
+	if (menu_name != "") TCompGui::clearScreen(menu_name);
 	//GameController->SetGameState(CGameController::RUNNING);
 }

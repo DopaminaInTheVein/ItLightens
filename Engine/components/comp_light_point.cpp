@@ -36,7 +36,8 @@ void TCompLightPoint::render() const
 }
 
 void TCompLightPoint::renderInMenu() {
-	ImGui::ColorEdit4("Color", &color.x, true);
+	ImGui::ColorEdit3("Color", &color.x);
+	ImGui::DragFloat("Intensity", &color.w);
 	ImGui::InputFloat("in_radius", &in_radius);
 	ImGui::InputFloat("out_radius", &out_radius);
 }

@@ -4,7 +4,7 @@
 #include "geometry/geometry.h"
 #include "components/comp_base.h"
 #include <bitset>
-
+class TCompAbsAABB;
 struct TCompCulling : public TCompBase {
 	static const size_t nbits = 4096;
 	typedef std::bitset<nbits> TCullingBits;
@@ -61,6 +61,9 @@ struct TCompCulling : public TCompBase {
 	void renderInMenu();
 	void update(float dt) {}
 	void update();
+
+	//Static method for check AABBs
+	static bool checkAABB(TCompCulling*, TCompAbsAABB*);
 };
 
 #endif

@@ -112,6 +112,7 @@ enum PLAYER_TYPE {
 	PLAYER
 	, MOLE
 	, SCIENTIST
+	, GUARD
 };
 struct TMsgSetTarget {
 	CHandle target;
@@ -121,6 +122,7 @@ struct TMsgSetTarget {
 
 struct TMsgGetWhoAmI {
 	PLAYER_TYPE who;
+	std::string who_string;
 	DECLARE_MSG_ID();
 };
 
@@ -306,6 +308,10 @@ struct TMsgRepair {
 
 struct TMsgSetControllable {
 	bool control;
+	DECLARE_MSG_ID();
+};
+struct TMsgSetOnlySense {
+	bool sense;
 	DECLARE_MSG_ID();
 };
 struct TMsgBoxHit {

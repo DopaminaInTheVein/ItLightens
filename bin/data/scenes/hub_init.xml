@@ -27,27 +27,6 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
-<tags
-   tags="camera_main"/>
-<camera_main
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<culling/>
-<render_glow/>
-<controller_3rd_person/>
-<FX_fade_screen/>
-<name
-   name="camController_1"/>
-<transform
-   pos="24.61 53.5507 -25.007"
-   quat="0 0.707104 0 0.707104"
-   scale="1.0"/>
-
-</entity>
-<entity
    reload="yes">
 <tags/>
 <rigidbody
@@ -127,6 +106,46 @@
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="tasklist"/>
+<render_static_mesh
+   name="static_meshes/test/baliza.static_mesh"/>
+<room
+   name="-1"/>
+<tasklist
+   points_size="3"
+   pos0="-1.94649 51.3869 -20.0874"
+   room0="-1"
+   pos1="-1.94649 51.3869 -30.7676"
+   room1="-1"
+   pos2="-1.94649 51.3869 -25.6129"
+   room2="-1"/>
+<name
+   name="tasklist"/>
+<transform
+   pos="-1.94649 51.3869 -20.0874"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="look_target"/>
+<look_target
+   event_lua_in="hub_target_seen"
+   sense_vision="yes"/>
+<abs_aabb/>
+<name
+   name="look_target"/>
+<transform
+   pos="-1.98726 52.4763 -20.0778"
+   quat="0 0 0 1.0"
+   scale="0.746888"/>
 
 </entity>
 

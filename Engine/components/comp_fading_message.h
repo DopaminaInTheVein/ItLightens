@@ -4,34 +4,26 @@
 #include "comp_base.h"
 
 class TCompFadingMessage : public TCompBase {
+	int id;
 	float percentLineHeight = 0.02f;
 	float timeForLetter = 0.05f;
 	float marginForImage;
 	int numchars;
+	int shown_chars;
 	int lines;
-	int minlines = 3;
-	float resolution_x;
-	float resolution_y;
-	ImGuiWindowFlags flags;
-	float startxrect;
-	float startyrect;
+	float letterBoxSize = 1.0f;
 
 	std::string text;
-	ImColor textColor;
-	ImColor backgroudColor;
+	std::vector<std::string> lineText;
 	float  ttl;
-	float sizeFont = 0.025f;
-	std::string iconUri;
-	const CTexture * textureIcon;
-	std::string iconLittleText;
-	bool iconLoaded;
-	ImTextureID tex_id;
+	float sizeFontX = 0.0125f;
+	float sizeFontY = 0.030f;
 
 public:
 	//Update info
-
 	void update(float elapsed);
-	void render() const;
+	void printLetters() const;
+	void forceTTLZero();
 	bool load(MKeyValue& atts);
 };
 

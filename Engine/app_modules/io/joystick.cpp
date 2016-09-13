@@ -2,6 +2,9 @@
 #include "joystick.h"
 #include "io.h"
 
+float TJoystick::t_before_repeat = 0.5f;
+float TJoystick::t_repeat = 0.25f;
+
 TJoystick::TJoystick()
 {
 	// Set the Controller Number
@@ -60,9 +63,7 @@ void TJoystick::Vibrate(int leftVal, int rightVal)
 }
 
 void TJoystick::update(float dt) {
-  
 	if (IsConnected()) {
-
 		old_rx = rx;
 		old_ry = ry;
 
@@ -95,8 +96,71 @@ void TJoystick::update(float dt) {
 		button_LT = GetState().Gamepad.bLeftTrigger;
 		button_RT = GetState().Gamepad.bRightTrigger;
 
+		//Stick pulsation
+		lstick.update(getLX(), getLY(), dt);
+		rstick.update(getRX(), getRY(), dt);
 	}
 }
 
-void TJoystick::start() {
+int TJoystick::getLX()
+{
+	return abs(lx) > joystick_umbral ? lx : 0;
 }
+int TJoystick::getLY()
+{
+	return abs(ly) > joystick_umbral ? ly : 0;
+}
+int TJoystick::getRX()
+{
+	return abs(rx) > joystick_umbral ? rx : 0;
+}
+int TJoystick::getRY()
+{
+	return abs(ry) > joystick_umbral ? ry : 0;
+}
+
+void TJoystick::stick::update(int dx, int dy, float dt)
+{
+	int new_dir = 5; // direction as numpad
+	new_dir += dx > 0.f ? 1 : dx < 0.f ? -1 : 0;
+	new_dir += dy > 0.f ? 3 : dy < 0.f ? -3 : 0;
+
+	if (dir != new_dir) {
+		first_pressed = false;
+		becomes_pressed = true;
+	}
+	else {
+		time += dt;
+		if (first_pressed) {
+			becomes_pressed = time > t_repeat;
+		}
+		else {
+			becomes_pressed = first_pressed = time > t_before_repeat;
+		}
+	}
+	if (becomes_pressed) time = 0.f;
+	dir = new_dir;
+}
+bool TJoystick::stick::LeftPressed()
+{
+	return dir % 3 == 1;
+}
+bool TJoystick::stick::RightPressed()
+{
+	return dir % 3 == 0;
+}
+bool TJoystick::stick::UpPressed()
+{
+	return dir > 6;
+}
+bool TJoystick::stick::DownPressed()
+{
+	return dir < 4;
+}
+#define StickBecomesPressed(dir) bool TJoystick::stick::##dir##BecomesPressed() { return becomes_pressed && ##dir##Pressed(); }
+StickBecomesPressed(Left);
+StickBecomesPressed(Right);
+StickBecomesPressed(Up);
+StickBecomesPressed(Down);
+
+void TJoystick::start() {}

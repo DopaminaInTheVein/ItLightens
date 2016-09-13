@@ -2,13 +2,13 @@
 <entity>
 <tags/>
 <light_point
-   color="0.560784 0.862745 0.960784 5.0"
-   in_radius="18.0"
-   out_radius="28.5"/>
+   color="0.560784 0.862745 0.960784 0.5"
+   in_radius="0.0"
+   out_radius="11.4586"/>
 <name
    name="Omni005"/>
 <transform
-   pos="9.27955 56.6631 -17.3862"
+   pos="10.4129 51.9513 -26.1914"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -311,6 +311,27 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+
+</entity>
+<entity
+   permanent="yes"
+   reload="no">
+<tags
+   tags="camera_main"/>
+<camera_main
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"/>
+<culling/>
+<render_glow/>
+<controller_3rd_person/>
+<FX_fade_screen/>
+<name
+   name="camController_1"/>
+<transform
+   pos="24.61 53.5507 -25.007"
+   quat="0 0.707104 0 0.707104"
+   scale="1.0"/>
 
 </entity>
 <entity>

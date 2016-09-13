@@ -1,0 +1,3 @@
+<material tech="ui_font.tech">
+<texture slot="diffuse" name="textures/ui/font.dds"/>
+</material>

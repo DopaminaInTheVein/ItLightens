@@ -76,7 +76,12 @@ public:
 	bool operator!=(CHandle h) const {
 		return !(*this == h);
 	}
-
+	bool operator<(const CHandle &h) const
+	{
+		if (type != h.getType()) return type < h.getType();
+		if (external_index != h.getExternalIndex()) return external_index < h.getExternalIndex();
+		return age < h.getAge();
+	}
 	void setOwner(CHandle new_owner);
 	CHandle getOwner() const;
 	bool hasTag(std::string tag);

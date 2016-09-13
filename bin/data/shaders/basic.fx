@@ -140,6 +140,10 @@ void VSBlur(
 //--------------------------------------------------------------------------------------
 // Pixel Shader
 //--------------------------------------------------------------------------------------
+
+
+static float width_line = 1./5.;
+
 float4 PSBlur(float4 Pos : SV_POSITION
 			, float2 iTex0 : TEXCOORD0
 			, float3 iWorldPos : TEXCOORD1) : SV_Target
@@ -195,7 +199,8 @@ float pixelWidth = 1.0f;
 	//return float4(iWorldPos,1);
 	//return float4(E,1);
 	
-	pixelWidth = strenght_polarize/(xres)/dc;
+	
+	pixelWidth = width_line/(xres)/dc;
 	
 	float sinw = abs(sin(world_time/3));
 	float offset_c = sinw*sinw/2;

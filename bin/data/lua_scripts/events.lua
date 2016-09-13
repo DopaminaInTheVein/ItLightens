@@ -1,4 +1,5 @@
 print('This is lua')
+print('This is lua')
 
 SLB.using( SLB )
 
@@ -59,7 +60,7 @@ end
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	p:load_entities("init")
-	p:exec_command("p:load_level(\"level_0\")", 2)
+	p:exec_command("LoadLevel(\"level_0\")", 2)
 	--p:load_entities("title")
 	CallFunction("test_dbg")
 end
@@ -350,12 +351,8 @@ end
 ---------------------------------------------------
 function OnLevelStart( logic_level, real_level )
 	p:print("OnLevelStart\n")
-	p:exec_command("cam:fade_in(1)", 1)
-	p:exec_command("p:setControlEnabled(1);", 1)
-	if not g_is_menu then
-		p:load_entities("player_hud")
-	end
-	CallFunction("OnStart_"..real_level)
+	InitScene()
+	p:exec_command("CallFunction(\"OnStart_"..real_level.."\");", 1.1)
 end
 
 function OnSavedLevel( logic_level, real_level )
@@ -365,9 +362,19 @@ end
 
 function OnLoadedLevel( logic_level, real_level )
 	p:print("OnLoadedLevel")
+	InitScene()
+	p:exec_command("CallFunction(\"OnLoad_"..real_level.."\");", 1.1)
+end
+
+function InitScene()
+	--p:reset_camera() <--Implementar!
 	p:exec_command("cam:fade_in(1)", 1)
-	p:exec_command("p:setControlEnabled(1);", 1)
-	CallFunction("OnLoad_"..real_level)
+	if not real_level == "hub" then
+		p:exec_command("p:setControlEnabled(1);", 1)
+	end
+	if not g_is_menu then
+		p:load_entities("player_hud")
+	end
 end
 
 function OnLoadingLevel()
@@ -387,8 +394,43 @@ function OnDead( )
 	p:load_entities("dead_menu")
 end
 
+-- Others
+-------------------------------------------
+function OnStepGuard( )
+	--p:print("StepGuard")
+end
+function OnStepMole( )
+	--p:print("StepMole")
+end
+function OnStepScientist( )
+	--p:print("StepScientist")
+end
+function OnStepOutGuard( )
+	-- p:print("StepOutGuard")
+end
+function OnStepOutMole( )
+	-- p:print("StepOutMole")
+end
+function OnStepOutScientist( )
+	-- p:print("StepOutScientist")
+end
 -- GUI
 ---------------------------------------------------
+function OnMouseOver( param )
+	p:print("OnMouseOver")
+	CallFunction("OnMouseOver_"..param)
+end
+
+function OnMouseUnover( param )
+	p:print("OnMouseUnover")
+	CallFunction("OnMouseUnover_"..param)
+end
+
+function OnPressed( param )
+	p:print("OnPressed")
+	CallFunction("OnPressed_"..param)
+end
+
 function OnClicked( param )
 	p:print("OnClicked")
 	CallFunction("OnClicked_"..param)

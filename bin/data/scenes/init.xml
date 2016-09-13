@@ -20,10 +20,20 @@
 		   scale="1.0"/>
 	</entity>
 
-	<entity permanent="yes">
+	<entity 
+		permanent="yes"
+		reload="no">
 		<tags tags="ui_camera" />
 		<name name="ui_camera" />
 		<transform pos="0 -100 10" yaw="180"/>
 	<camera znear="0" zfar="10" is_ortho="1"/>
-	</entity>  
+	</entity>
+	
+	<entity 
+		permanent="yes"
+		reload="no">
+		<tags tags="game_controller" />
+		<name name="game_controller" />
+		<sense_vision/>
+	</entity>  	
 </entities>

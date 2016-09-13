@@ -1,94 +1,140 @@
 #include "mcv_platform.h"
 #include "comp_fading_message.h"
+//#include "comp_tags.h"
 #include "entity.h"
 #include "app_modules/gui/gui_utils.h"
+#include "app_modules/gui/comps/gui_basic.h"
 #include "imgui/imgui_internal.h"
+#include "app_modules/imgui/module_imgui.h"
 #include "resources/resources_manager.h"
 #include "render/render.h"
 #include "render/DDSTextureLoader.h"
 
+#include "render/shader_cte.h"
+#include "constants/ctes_object.h"
+#include "constants/ctes_camera.h"
+#include "constants/ctes_globals.h"
+#include <math.h>
+
+extern CShaderCte< TCteCamera > shader_ctes_camera;
+
+void TCompFadingMessage::forceTTLZero() {
+	ttl = -0.1f;
+}
+
 bool TCompFadingMessage::load(MKeyValue& atts)
 {
+	CHandle thisHan = CHandle(this).getOwner();
+
+	getHandleManager<TCompFadingMessage>()->each([](TCompFadingMessage * mess) {
+		mess->forceTTLZero();
+	}
+	);
+
 	text = atts.getString("text", "defaultText");
 	//ttl = atts.getFloat("ttl", 0.1f);
 	ttl = timeForLetter * text.length() + 2.0f;
-	std::string textColorStr = atts.getString("textColor", "#FFFFFFFF");
-	std::string backgroudColorStr = atts.getString("backgroundColor", "#000000FF");
-	textColor = obtainColorFromString(textColorStr);
-	backgroudColor = obtainColorFromString(backgroudColorStr);
-	iconUri = "icons/" + atts.getString("icon", "none.dds");
-	iconLittleText = atts.getString("iconText", "DEFAULT");
 	numchars = 0;
-
-	lines = 1;
+	shown_chars = 0;
+	id = std::rand();
 	std::string endline = "\n";
+	int ini = -1;
 	size_t pos = text.find(endline, 0);
 	while (pos != text.npos)
 	{
-		lines++;
+		lineText.push_back(text.substr(ini + 1, pos));
+		ini = pos;
 		pos = text.find(endline, pos + 1);
 	}
-	if (lines < minlines) {
-		lines = minlines;
-	}
-	resolution_x = CApp::get().getXRes();
-	resolution_y = CApp::get().getYRes();
-	flags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus;
-	marginForImage = lines * percentLineHeight;
-	startxrect = 0.0f;
-	startyrect = 0.95f - marginForImage;
-	textureIcon = /*const_cast<CTexture *>*/(Resources.get(iconUri.c_str())->as<CTexture>());
-	if (!textureIcon->isValid()) {
-		iconLoaded = false;
-	}
-	else {
-		iconLoaded = true;
-		tex_id = (ImTextureID*)textureIcon->getResView();
-	}
+	lineText.push_back(text.substr(ini + 1, pos));
 
+	Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, 0.02f, 0.40f), "Fading_Message_Background_" + std::to_string(id));
+	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+	if (player.hasTag("raijin")) {
+		Gui->addGuiElement("ui/Fading_Icon_RAI", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_RAI_" + std::to_string(id));
+	}
+	else if (player.hasTag("AI_mole")) {
+		Gui->addGuiElement("ui/Fading_Icon_MOL", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_MOL_" + std::to_string(id));
+	}
+	else if (player.hasTag("AI_cientifico")) {
+		Gui->addGuiElement("ui/Fading_Icon_SCI", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_SCI_" + std::to_string(id));
+	}
 	return true;
 }
 
 void TCompFadingMessage::update(float dt) {
 	static float accumTime = 0.0f;
+	shown_chars = numchars;
 
-	accumTime += getDeltaTime();
+	accumTime += dt;
 	while (accumTime > timeForLetter) {
-		++numchars;
+		if (numchars < text.length()) {
+			++numchars;
+		}
 		accumTime -= timeForLetter;
 	}
 
 	if (ttl >= 0.0f) {
-		ttl -= getDeltaTime();
+		printLetters();
+		ttl -= dt;
 	}
 	else {
-		iconLoaded = false;
-		//textureIcon->destroy();
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
+
+		CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+		if (player.hasTag("raijin")) {
+			Gui->removeGuiElementByTag("Fading_Message_Icon_RAI_" + std::to_string(id));
+		}
+		else if (player.hasTag("AI_mole")) {
+			Gui->removeGuiElementByTag("Fading_Message_Icon_MOL_" + std::to_string(id));
+		}
+		else if (player.hasTag("AI_cientifico")) {
+			Gui->removeGuiElementByTag("Fading_Message_Icon_SCI_" + std::to_string(id));
+		}
+		for (int i = 0; i < text.length(); i++) {
+			Gui->removeGuiElementByTag(("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)));
+		}
+		Gui->removeGuiElementByTag("Fading_Message_Background_" + std::to_string(id));
 	}
 }
-void TCompFadingMessage::render() const {
-	//#ifndef NDEBUG
-	PROFILE_FUNCTION("TCompFadingMessage render");
-	// ttl message is viewed
-	std::string textToShow = text.substr(0, numchars);
+void TCompFadingMessage::printLetters() const {
+	//PROFILE_FUNCTION("TCompFadingMessage printLetters");
 
 	bool b = false;
 	int gState = GameController->GetGameState();
 	if (gState != CGameController::RUNNING) return;
-	ImGui::Begin("Game GUI", &b, ImVec2(resolution_x, resolution_y), 0.0f, flags);
-	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
 
-	Rect rect = GUI::createRect(startxrect, startyrect, 1.0f, 1.0f);
-	GUI::drawRect(rect, backgroudColor);
-	GUI::drawText(startxrect + percentLineHeight + percentLineHeight + marginForImage, startyrect + percentLineHeight, GImGui->Font, sizeFont, textColor, textToShow.c_str());
-	if (iconLoaded) {
-		GUI::drawImage(startxrect + percentLineHeight, startyrect + percentLineHeight, startxrect + percentLineHeight + marginForImage, startyrect + percentLineHeight + marginForImage, tex_id);
+	for (int i = shown_chars; i < numchars; ++i) {
+		if ((i < text.length() - 1 && text[i] == '\\' && text[i + 1] == 'n') || (i > 1 && text[i - 1] == '\\' && text[i] == 'n')) {
+			continue;
+		}
+		int line = 0;
+		int linechars = lineText[line].length();
+		int linechars_prev = 0;
+		while (linechars < shown_chars) {
+			++line;
+			linechars_prev = linechars;
+			linechars += lineText[line].length();
+		}
+
+		char letter = text[i];
+		int ascii_tex_pos = letter;
+		int ascii_tex_posx = ascii_tex_pos % 16;
+		int ascii_tex_posy = ascii_tex_pos / 16;
+
+		float texture_pos_x = ((float)ascii_tex_posx) / 16.0f;
+		float texture_pos_y = ((float)ascii_tex_posy) / 16.0f;
+		float sx = letterBoxSize / 16.0f;
+		float sy = letterBoxSize / 16.0f;
+
+		float letter_posx = 0.50f + (i - linechars_prev - fminf(line, 1.0f)) * sizeFontX;
+		float letter_posy = 0.01f - line*sizeFontY;
+		CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.49f), ("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)));
+		CEntity * letter_e = letter_h;
+		TCompGui * letter_gui = letter_e->get<TCompGui>();
+		assert(letter_gui);
+		RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
+		letter_gui->setTxCoords(textCords);
 	}
-	else {
-		GUI::drawText(startxrect + marginForImage / 2, startyrect + marginForImage / 2, GImGui->Font, sizeFont, textColor, iconLittleText.c_str());
-	}
-	ImGui::End();
-	//#endif
 }

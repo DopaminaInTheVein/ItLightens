@@ -187,7 +187,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	// Pasearse por todas las keys
 	while (it != end_it) {
 		// Do the culling
-		if (it->owner.getOwner().hasTag("tasklist")) {
+		if (it->owner.getOwner().hasTag("tasklist") || it->owner.getOwner().hasTag("tasklistend")) {
 			CEntity * tent = it->owner.getOwner();
 			TCompRoom * tentroom = tent->get<TCompRoom>();
 			it->room = tentroom->name;
@@ -257,13 +257,17 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 				// if each static object had it's own shader_ctes_object
 				activateWorldMatrix(c_tmx->asMatrix());
 			}
+
+			//render skeleton object
 			if (curr_tech_used_bones) {
-				const CEntity* e = it->owner.getOwner();
-				assert(e);
-				const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
-				assert(comp_skel);
-				comp_skel->uploadBonesToCteShader();
+				renderSkeleton(it);
 			}
+
+			//render UI object
+			else if (it->material->tech->getCategory() == CRenderTechnique::UI_OBJS) {
+				renderUI(it);
+			}
+
 			it->mesh->renderGroup(it->submesh_idx);    // it->mesh->renderSubMesh( it->submesh );
 			prev_it = it;
 			++nkeys_rendered;
@@ -274,6 +278,38 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	CMaterial::deactivateTextures();
 
 	renderedCulling.push_back(nkeys_rendered);
+}
+
+void CRenderManager::renderSkeleton(TKey* it) {
+	const CEntity* e = it->owner.getOwner();
+	assert(e);
+	const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+	assert(comp_skel);
+	comp_skel->uploadBonesToCteShader();
+}
+
+#include "app_modules\gui\comps\gui_basic.h"
+void CRenderManager::renderUI(TKey* it) {
+	const CEntity* e = it->owner.getOwner();
+	assert(e);
+	TCompGui* comp_ui = e->get<TCompGui>();
+	if (comp_ui) {
+		shader_ctes_gui.state_ui = comp_ui->getRenderState();
+		comp_ui->uploadCtes();
+	}
+	else {
+		shader_ctes_gui.state_ui = 0;
+	}
+
+	CEntity* e_owner = it->owner.getOwner();
+	TCompTransform* trans = e_owner->get<TCompTransform>();
+
+	//float value = random(0.5, 2.0);
+	//trans->setScale(VEC3(value, value, value));
+
+	//shader_ctes_object.World = trans->asMatrix();
+	//shader_ctes_object.uploadToGPU();
+	shader_ctes_gui.uploadToGPU();
 }
 
 void CRenderManager::renderUICulling() {

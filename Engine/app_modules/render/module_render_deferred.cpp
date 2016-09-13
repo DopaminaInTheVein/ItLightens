@@ -147,10 +147,10 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_hatching.specular_force = 0.2f;
 	shader_ctes_hatching.rim_specular = 1.5f;
 
+	shader_ctes_globals.use_ramp = 1;
 	shader_ctes_globals.world_time = 0.f;
 	shader_ctes_globals.xres = xres;
 	shader_ctes_globals.yres = yres;
-	shader_ctes_globals.strenght_polarize = 1.0f / 5.0f;
 
 	shader_ctes_hatching.uploadToGPU();
 
@@ -170,7 +170,8 @@ void CRenderDeferredModule::update(float dt) {
 		ssao_test = !ssao_test;
 	}
 
-	m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
+	//m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
+	m_isSpecialVisionActive = GameController->isSenseVisionEnabled();
 }
 
 // ------------------------------------------------------
@@ -840,7 +841,8 @@ void CRenderDeferredModule::render() {
 	rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred_int->clear(VEC4(0, 0, 0, 0));
 
-	shader_ctes_globals.uploadToGPU();
+	uploadConstantsGPU();
+
 	renderGBuffer();
 	renderDetails();
 	renderAccLight();
@@ -978,9 +980,9 @@ void CRenderDeferredModule::renderEspVisionMode() {
 	}
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
-
-	renderEspVisionModeFor("generator", VEC4(1, 1, 1, 1), VISION_OBJECTS_WHITE);
+	renderEspVisionModeFor("sense_generator", VEC4(1, 1, 1, 1), VISION_OBJECTS_WHITE);
 	renderEspVisionModeFor("tasklist", VEC4(0, 1, 0, 1), VISION_OBJECTS_GREEN);
+	renderEspVisionModeFor("tasklistend", VEC4(1, 1, 0, 1), VISION_OBJECTS_YELLOW);
 	renderEspVisionModeFor("AI_guard", VEC4(1, 0, 0, 1), VISION_OBJECTS_RED, true);
 }
 
@@ -1187,6 +1189,17 @@ void CRenderDeferredModule::renderDetails() {
 	activateBlend(BLENDCFG_COMBINATIVE);
 
 	RenderManager.renderAll(h_camera, CRenderTechnique::DETAIL_OBJS);
+}
+
+void CRenderDeferredModule::uploadConstantsGPU() {
+	CEntity* e_player = tags_manager.getFirstHavingTag("raijin");
+	if (e_player) {
+		player_controller* pc = e_player->get<player_controller>();
+		if (pc) {
+			shader_ctes_globals.polarity = pc->GetPolarityInt();
+		}
+	}
+	shader_ctes_globals.uploadToGPU();
 }
 
 void CRenderDeferredModule::applyPostFX() {

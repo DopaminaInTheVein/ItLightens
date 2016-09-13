@@ -299,6 +299,7 @@ public:
 	bool save(std::ofstream& os, MKeyValue& atts);
 
 	void changeCommonState(std::string);
+	void onGetWhoAmI(TMsgGetWhoAmI& msg);
 
 	//Cambio Malla
 	//void ChangePose(string new_pose_route);

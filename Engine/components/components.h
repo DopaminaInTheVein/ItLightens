@@ -60,6 +60,7 @@
 #include "components/comp_fading_message.h"
 #include "components/comp_fading_globe.h"
 #include "components/comp_loading_screen.h"
+#include "components/comp_look_target.h"
 
 #include "comp_trigger_standar.h"
 
@@ -83,8 +84,10 @@
 
 //FX
 #include "comp_render_fade_screen.h"
+#include "comp_sense_vision.h"
 
 //GUI
+#include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/gui/comps/gui_cursor.h"
 #include "app_modules/gui/comps/gui_button.h"
 

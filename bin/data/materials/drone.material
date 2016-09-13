@@ -1,4 +1,6 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/COLOR.dds"/>
-<texture slot="normalmap" name="textures/dron_normals.dds"/>
+<texture slot="diffuse" name="textures/obj/drone/dron_albedo.dds"/>
+<texture slot="selfilum_plus" name="textures/obj/drone/drone_self_ilumination_azul.dds"/>
+<texture slot="selfilum_minus" name="textures/obj/drone/drone_self_ilumination_rojo.dds"/>
+<texture slot="normalmap" name="textures/obj/drone/dron_normals.dds"/>
 </material>

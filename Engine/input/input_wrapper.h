@@ -13,7 +13,6 @@
 class CInputWrapper
 {
 public:
-	int joystick_umbral = 5000; // 32768 - 15.26% Aprox
 	// Left Joystick
 	bool IsMoveForward();
 	bool IsMoveRight();
@@ -21,6 +20,11 @@ public:
 	bool IsMoveLeft();
 	float MoveYNormalized();
 	float MoveXNormalized();
+	//Left joystick becomes pressed
+	bool CInputWrapper::IsUpPressed();
+	bool CInputWrapper::IsDownPressed();
+	bool CInputWrapper::IsLeftPressed();
+	bool CInputWrapper::IsRightPressed();
 
 	// Right Joystick
 	bool IsCamMovedUp();
@@ -54,6 +58,8 @@ public:
 	bool IsSenseButtonPressed();
 
 	bool ActionButtonBecomesPessed();
+	bool ActionGuiButtonBecomesPressed();
+	bool ActionGuiButtonBecomesReleased();
 	bool JumpButtonBecomesPressed();
 	bool IsImpulseUpButtonPressed();
 	bool PossessionButtonBecomesPressed();
@@ -68,6 +74,7 @@ public:
 	// Start & back
 	bool IsPausePressed();
 	bool IsBackPressed();
+	bool IsBackBeingPressed();
 
 	// Capture & Release Mouse
 	void ChangeMouseState(bool captured);

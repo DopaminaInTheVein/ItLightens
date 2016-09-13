@@ -1,6 +1,8 @@
 <entities>
 <entity>
-<tags/>
+<tags
+   tags="gui"/>
+<gui/>
 <name
    name="health_bar_inner"/>
 <transform
@@ -13,7 +15,9 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="gui"/>
+<gui/>
 <name
    name="health_bar_out"/>
 <transform
@@ -22,6 +26,36 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ui/hud/health_bar_out.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="ui_pol_q gui"/>
+<gui/>
+<name
+   name="pol_q"/>
+<transform
+   pos="8.11806 -97.0584 8.55542"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/hud/pol_q.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="ui_pol_e gui"/>
+<gui/>
+<name
+   name="pol_e"/>
+<transform
+   pos="9.20664 -97.0584 8.55542"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/hud/pol_e.static_mesh"/>
 <abs_aabb/>
 
 </entity>

@@ -1,0 +1,17 @@
+<entities>
+<entity>
+<tags/>
+<name
+   name="Fading_Background"/>
+<transform
+   pos="5.0024 -97.1774 9.72066"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/messages/Fading_Background.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+</entities>

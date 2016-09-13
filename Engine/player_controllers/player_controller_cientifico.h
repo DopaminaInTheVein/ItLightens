@@ -103,7 +103,7 @@ public:
 	void InitControlState();
 	CEntity* getMyEntity();
 
-	void onGetWhoAmI(TMsgGetWhoAmI& msg) { msg.who = PLAYER_TYPE::SCIENTIST; }
+	void onGetWhoAmI(TMsgGetWhoAmI& msg) { msg.who = PLAYER_TYPE::SCIENTIST; msg.who_string = "Scientist"; }
 	void myUpdate() override;
 	//void UpdateAnimation() override { animController.update(); }
 

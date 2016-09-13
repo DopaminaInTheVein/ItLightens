@@ -295,7 +295,7 @@ void CGuiModule::stop() {
 }
 
 //------------------------------------------------------------------------------------//
-void CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag)
+CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag)
 {
 	CHandle h = createPrefab(prefab);
 	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
@@ -315,12 +315,13 @@ void CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag)
 	}
 
 	dbg("gui_element created\n");
+	return h;
 }
 
 void CGuiModule::removeGuiElementByTag(std::string tag)
 {
 	CHandle handle = tags_manager.getFirstHavingTag(tag.c_str());
-	handle.destroy();
+	if (handle.isValid()) { handle.destroy(); }
 }
 
 void CGuiModule::updateGuiElementPositionByTag(std::string tag, VEC3 new_position) {

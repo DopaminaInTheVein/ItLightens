@@ -386,8 +386,8 @@ VEC4 mul(VEC4 input, MAT44 transform) {
 	b = (input.y * transform._23);
 	c = (input.z * transform._33);
 	d = (input.w * transform._43);
-	result.z = a + b + c + d; 
-	
+	result.z = a + b + c + d;
+
 	a = (input.x * transform._14);
 	b = (input.y * transform._24);
 	c = (input.z * transform._34);
@@ -395,6 +395,10 @@ VEC4 mul(VEC4 input, MAT44 transform) {
 	result.w = a + b + c + d;
 
 	return result;
+}
+
+float inverseFloat(float value) {
+	return value != 0 ? 1.f / value : FLT_MAX;
 }
 
 //Check Nan, Infinity's zero values,...

@@ -373,9 +373,30 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadingLevel(%s);", params.c_str());
 		break;
 	}
+	 //Others
+	case (OnStep): {
+		sprintf(lua_code, "OnStep%s();", params.c_str());
+		break;
+	}
+	case (OnStepOut): {
+		sprintf(lua_code, "OnStepOut%s();", params.c_str());
+		break;
+	}						  
+	case (OnButtonPressed): { // Boton pulsado, sin soltar aun
+		sprintf(lua_code, "OnPressed(\"%s\");", params.c_str());
+		break;
+	}
 	//GUI
-	case (OnClicked): {
+	case (OnClicked): { // En realidad lo usamos como release del boton
 		sprintf(lua_code, "OnClicked(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnMouseOver): {
+		sprintf(lua_code, "OnMouseOver(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnMouseUnover): {
+		sprintf(lua_code, "OnMouseUnover(\"%s\");", params.c_str());
 		break;
 	}
 	case (OnPause): {
@@ -399,6 +420,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
   // construct the lua code using the event and the specified parameters
 	std::string lua_code = evt;
+	caller_handle = handle;
 
 	// Ojo! Params no se usa!
 
@@ -568,6 +590,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("set_anim", &SLBHandle::setAnim)
 		.param("string: animation name")
 		.comment("set an animation to the skeleton of that handle")
+		// Set Anim Loop
+		.set("set_anim_loop", &SLBHandle::setAnimLoop)
+		.param("string: animation name")
+		.comment("set an animation to the skeleton of that handle as loop")
 		;
 }
 
@@ -681,11 +707,22 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
 		.param("Text to print")
-		// Enable and disable controls
+		// Enable and disable controls (player and camera)
 		.set("setControlEnabled", &SLBPublicFunctions::setControlEnabled)
 		.comment("Enable or disable controls\n")
 		.param("int: 0 disabled, otherwise enabled")
-		.param("float: time until execution")
+		// Enable and disable player controls
+		.set("setPlayerEnabled", &SLBPublicFunctions::setPlayerEnabled)
+		.comment("Enable or disable player control\n")
+		.param("int: 0 disabled, otherwise enabled")
+		// Enable and disable camera control
+		.set("setCameraEnabled", &SLBPublicFunctions::setCameraEnabled)
+		.comment("Enable or disable camera control\n")
+		.param("int: 0 disabled, otherwise enabled")
+		// Enable only sense_vision
+		.set("setOnlySense", &SLBPublicFunctions::setOnlySense)
+		.comment("Enable or disable only_sense mode\n")
+		.param("int: 0 disabled, otherwise enabled")
 		// play sound function
 		.set("play_sound", &SLBPublicFunctions::playSound)
 		.comment("Executes the specified sound effect")

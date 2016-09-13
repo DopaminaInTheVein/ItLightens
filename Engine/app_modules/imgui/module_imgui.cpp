@@ -188,7 +188,7 @@ void CImGuiModule::update(float dt) {
 		tags_manager.renderInMenu();
 	}if (ImGui::CollapsingHeader("Graficos")) {
 		if (ImGui::TreeNode("polarize")) {
-			ImGui::SliderFloat("Polarize strength", &shader_ctes_globals.strenght_polarize, 0.0f, 2.0f);
+			//ImGui::SliderFloat("Polarize strength", &shader_ctes_globals.strenght_polarize, 0.0f, 2.0f);
 
 			ImGui::TreePop();
 		}
@@ -200,6 +200,11 @@ void CImGuiModule::update(float dt) {
 
 			if (ImGui::DragFloat("Specular force", &shader_ctes_hatching.specular_force)) {
 				shader_ctes_hatching.uploadToGPU();
+			}
+
+			static bool use_ramp = shader_ctes_globals.use_ramp;
+			if (ImGui::Checkbox("use ramp", &use_ramp)) {
+				shader_ctes_globals.use_ramp = use_ramp;
 			}
 
 			ImGui::TreePop();

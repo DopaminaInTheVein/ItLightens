@@ -1,5 +1,10 @@
 clearListener()
 
+struct NameValue (
+	name = "",
+	value = 0
+)
+
 struct  TSkeletonsExporter (
 	project_path = data_dir,
 	skel_name = "unknown",
@@ -28,13 +33,32 @@ struct  TSkeletonsExporter (
 			
 			local all_bones = findAllBones()
 			format "  <key_bones \n" to:fsm
+			local measures = #()
 			for b in all_bones do (
 				local kb = getUserProp b "key_bone"
 				if kb != undefined then (
 					format ("    " + kb + "=\"" + b.name + "\"\n") to:fsm
+					if kb == "LFoot" then (
+						local m = NameValue()
+						m.name = "LFootHigh"
+						m.value = b.transform.pos.z / 100.0
+						append measures m
+					) else if kb == "RFoot" then (
+						local m = NameValue()
+						m.name = "RFootHigh"
+						m.value = b.transform.pos.z / 100.0
+						append measures m
+					)
 				)
 			)
 			format "  />\n" to:fsm
+			
+			format "  <measures \n" to:fsm
+			for m in measures do (
+				format ("    " + m.name + "=\"" + (m.value as string) + "\"\n") to:fsm
+			)
+			format "  />\n" to:fsm
+			
 			format "</model>\n" to:fsm
 		) catch (
 			throw()

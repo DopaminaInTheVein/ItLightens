@@ -99,26 +99,6 @@
 <entity
    reload="yes">
 <tags
-   tags="camera_main"/>
-<camera_main
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<culling/>
-<render_glow/>
-<controller_3rd_person/>
-<FX_fade_screen/>
-<name
-   name="player_1_camController_1"/>
-<transform
-   pos="45.1097 1.54851 -7.1481"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
    tags="workstation"/>
 <workstation
    posAction="51.1517 0.439975 -5.89415"
@@ -265,12 +245,12 @@
 <magnet_door
    locked="yes"
    speedOpening="1"
-   target="75.9021 8.61366 -4.41574"
+   target="75.9021 8.61366 -4.55197"
    pol="neutral"/>
 <name
    name="door_tuto_end"/>
 <transform
-   pos="75.9021 8.61366 -2.69285"
+   pos="75.9021 8.61366 -2.82908"
    quat="0 -0.707107 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
@@ -303,6 +283,36 @@
    scale="1.0"/>
 <room
    name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="tasklist"/>
+<render_static_mesh
+   name="static_meshes/test/baliza.static_mesh"/>
+<room
+   name="-1"/>
+<tasklist
+   points_size="6"
+   pos0="48.9306 0.164173 -2.65924"
+   room0="-1"
+   pos1="50.9606 0.164173 -6.07402"
+   room1="-1"
+   pos2="68.1779 0.164173 -2.80021"
+   room2="-1"
+   pos3="70.6376 0.164173 -2.80021"
+   room3="-1"
+   pos4="75.3083 7.29137 -0.600843"
+   room4="-1"
+   pos5="81.7705 7.29137 -2.71025"
+   room5="-1"/>
+<name
+   name="tasklist"/>
+<transform
+   pos="48.9306 0.164173 -2.65924"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
 </entity>
 

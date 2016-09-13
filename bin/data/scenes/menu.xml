@@ -1,9 +1,12 @@
 <entities>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_button clickable"/>
+   tags="menu gui gui_button clickable"/>
+<gui
+   menu_name="menu"
+   row="0"
+   col="0"/>
 <gui_button
    width="1.13903"
    height="0.640701"/>
@@ -19,11 +22,13 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_cursor"/>
-<gui_cursor/>
+   tags="menu gui gui_cursor"/>
+<gui
+   menu_name="menu"/>
+<gui_cursor
+   menu_name="menu"/>
 <name
    name="cursor"/>
 <transform
@@ -36,10 +41,13 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_button clickable"/>
+   tags="menu gui gui_button clickable"/>
+<gui
+   menu_name="menu"
+   row="1"
+   col="0"/>
 <gui_button
    width="1.13903"
    height="0.640701"/>
@@ -55,10 +63,13 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_button clickable"/>
+   tags="menu gui gui_button clickable"/>
+<gui
+   menu_name="menu"
+   row="2"
+   col="0"/>
 <gui_button
    width="1.13903"
    height="0.640701"/>
@@ -74,13 +85,11 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_button clickable"/>
-<gui_button
-   width="5.87608"
-   height="0.640701"/>
+   tags="menu gui"/>
+<gui
+   menu_name="menu"/>
 <name
    name="menu_title"/>
 <transform
@@ -93,10 +102,13 @@
 
 </entity>
 <entity
-   permanent="yes"
-   reload="yes">
+   permanent="yes">
 <tags
-   tags="menu gui_button clickable"/>
+   tags="menu gui gui_button clickable"/>
+<gui
+   menu_name="menu"
+   row="3"
+   col="0"/>
 <gui_button
    width="0.652746"
    height="0.367172"/>

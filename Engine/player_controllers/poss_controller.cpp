@@ -70,7 +70,7 @@ void PossController::onSetEnable(bool enabled) {
 
 	dbg("PossController::setEnable(%d)", enabled);
 	npcIsPossessed = enabled;
-	this->controlEnabled = enabled;
+	setControllable(enabled);
 	player_curr_speed = 0;
 
 	// Componentes y entidades para asignar Controlador y cámara

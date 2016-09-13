@@ -14,6 +14,7 @@ class CRenderDeferredModule : public IAppModule {
 		INTERACTIVE_OBJECTS,
 		VISION_OBJECTS_RED,
 		VISION_OBJECTS_GREEN,
+		VISION_OBJECTS_YELLOW,
 		VISION_OBJECTS_WHITE
 	};
 
@@ -83,6 +84,7 @@ public:
 	void renderEspVisionMode();
 	void renderEspVisionModeFor(std::string tag, VEC4 color_mask, int stencil_mask, bool use_skeleton = false);
 	void renderDetails();
+	void uploadConstantsGPU();
 	void applyPostFX();
 	void renderUI();
 	bool forcedUpdate() { return true; }

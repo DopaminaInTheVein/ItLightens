@@ -9,7 +9,7 @@ class Tasklist : public TCompBase {
 	std::vector<VEC3> pointsPlaces;
 	std::vector<int> pointsRooms;
 	std::vector<bool> pointsVisiteds;
-
+	CHandle end;
 public:
 	void init();
 	bool save(std::ofstream& ofs, MKeyValue& atts);
