@@ -420,14 +420,24 @@ int bt_guard::actionChase() {
 		SET_ANIM_GUARD(AST_IDLE);
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
-		return OK;
+		return KO;
 	}
 	//player near?
 	else if (distance < DIST_SQ_SHOT_AREA_ENTER) {
 		SET_ANIM_GUARD(AST_PREP_SHOOT);
 		/*isPathObtainedAccessible = false;
 		isPathObtained = false;*/
-		return OK;
+		if (!playerVisible()) {
+			//if the distance is short but we dont see the player anymore, search for him
+			playerLost = true;
+			player_last_seen_point = posPlayer;
+			SET_ANIM_GUARD(AST_IDLE);
+			return KO;
+		}
+		else {
+			//if we see the player, shot him!
+			return OK;
+		}
 	}
 	else {
 		/*if (!isPathObtained) {
@@ -441,9 +451,9 @@ int bt_guard::actionChase() {
 			return OK;
 		}
 		else {*/
-	SET_ANIM_GUARD(AST_MOVE);
-	goTo(posPlayer);
-	return STAY;
+		SET_ANIM_GUARD(AST_MOVE);
+		goTo(posPlayer);
+		return STAY;
 	//}
 	}
 }
@@ -511,8 +521,11 @@ int bt_guard::actionAbsorb() {
 		dmg.actived = false;
 		ePlayer->sendMsg(dmg);
 		// if the player went out of reach, we don't shoot the wall
-		if (!playerVisible(false)) {//squaredDistXZ(myPos, posPlayer) > DIST_SQ_PLAYER_DETECTION || !inJurisdiction(posPlayer)) {
+		if (squaredDistXZ(myPos, posPlayer) > DIST_SQ_PLAYER_DETECTION || !inJurisdiction(posPlayer)) {
 			logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
+			playerLost = true;
+			player_last_seen_point = posPlayer;
+			SET_ANIM_GUARD(AST_IDLE);
 			return KO;
 		}
 		else {
