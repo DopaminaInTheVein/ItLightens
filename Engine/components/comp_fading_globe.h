@@ -23,6 +23,8 @@ class TCompFadingGlobe : public TCompBase {
 
 	float  ttl;
 
+	bool isBehindCamera();
+
 public:
 	//Update info
 

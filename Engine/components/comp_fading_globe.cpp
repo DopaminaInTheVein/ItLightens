@@ -61,7 +61,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
 	screen_z = 0.75f;
 
-	if (!added) {
+	if (!added && !isBehindCamera()) {
 		Gui->addGuiElement("ui/bafarada", VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
 		added = true;
 	}
@@ -86,7 +86,7 @@ void TCompFadingGlobe::update(float dt) {
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
 
-	if (added) {
+	if (added && !isBehindCamera()) {
 		Gui->updateGuiElementPositionByTag(globe_name, VEC3(screen_x, 1.f - screen_y, screen_z));
 	}
 
@@ -119,4 +119,20 @@ void TCompFadingGlobe::render() const {
 
 	ImGui::End();
 #endif
+}
+
+bool TCompFadingGlobe::isBehindCamera() {
+
+	float cam_x = shader_ctes_camera.CameraWorldPos.x;
+	float cam_y = shader_ctes_camera.CameraWorldPos.y;
+	float cam_z = shader_ctes_camera.CameraWorldPos.z;
+
+	float cam_lookat_x = shader_ctes_camera.CameraFront.x;
+	float cam_lookat_y = shader_ctes_camera.CameraFront.y;
+	float cam_lookat_z = shader_ctes_camera.CameraFront.z;
+
+	return ((char_x - cam_x) * cam_lookat_x
+		+ (char_y - cam_y) * cam_lookat_y
+		+ (char_z - cam_z) * cam_lookat_z
+		< 0);
 }

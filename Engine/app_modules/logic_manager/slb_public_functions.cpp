@@ -509,7 +509,6 @@ void SLBCamera::resetCamera() {
 	cam_m->setManualControl(false);
 	GameController->SetManualCameraState(false);
 	// restore normal controls
-	GET_COMP(cam_3p, camera_e, TCompController3rdPerson);
 	TMsgSetControllable msg;
 	msg.control = true;
 	camera_e->sendMsg(msg);	
