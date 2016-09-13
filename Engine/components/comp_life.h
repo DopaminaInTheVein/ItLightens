@@ -10,6 +10,7 @@
 struct TCompLife : public TCompBase {
 	float currentlife;
 	float maxlife;
+	float maxlife_inv;
 	float modifier = 1.0f;
 
 	float energyDamageScale = 0.1f;
@@ -27,6 +28,7 @@ struct TCompLife : public TCompBase {
 
 	bool load(MKeyValue& atts) {
 		maxlife = atts.getFloat("points", 100.0f);
+		maxlife_inv = 1 / maxlife;
 		currentlife = maxlife;
 		return true;
 	}
@@ -41,7 +43,7 @@ struct TCompLife : public TCompBase {
 	}
 
 	float getCurrentNormalized() {
-		return (currentlife / maxlife);
+		return (currentlife * maxlife_inv);
 	}
 
 	float getMax() {
@@ -49,7 +51,10 @@ struct TCompLife : public TCompBase {
 	}
 
 	void setCurrent(float new_life) {
-		if (new_life > maxlife) maxlife = new_life;
+		if (new_life > maxlife) {
+			maxlife = new_life;
+			maxlife_inv = 1 / maxlife;
+		}
 		currentlife = new_life;
 	}
 
@@ -95,6 +100,7 @@ struct TCompLife : public TCompBase {
 	void setMaxLife(float max) {
 		maxlife = max;
 		currentlife = max;
+		maxlife_inv = 1 / max;
 	}
 
 	void renderInMenu() {

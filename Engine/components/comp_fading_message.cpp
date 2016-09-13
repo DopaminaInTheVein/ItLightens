@@ -32,7 +32,6 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	);
 
 	text = atts.getString("text", "defaultText");
-	//ttl = atts.getFloat("ttl", 0.1f);
 	ttl = timeForLetter * text.length() + 2.0f;
 	numchars = 0;
 	shown_chars = 0;
@@ -99,8 +98,6 @@ void TCompFadingMessage::update(float dt) {
 	}
 }
 void TCompFadingMessage::printLetters() const {
-	//PROFILE_FUNCTION("TCompFadingMessage printLetters");
-
 	bool b = false;
 	int gState = GameController->GetGameState();
 	if (gState != CGameController::RUNNING) return;
@@ -123,10 +120,10 @@ void TCompFadingMessage::printLetters() const {
 		int ascii_tex_posx = ascii_tex_pos % 16;
 		int ascii_tex_posy = ascii_tex_pos / 16;
 
-		float texture_pos_x = ((float)ascii_tex_posx) / 16.0f;
-		float texture_pos_y = ((float)ascii_tex_posy) / 16.0f;
-		float sx = letterBoxSize / 16.0f;
-		float sy = letterBoxSize / 16.0f;
+		float texture_pos_x = ((float)ascii_tex_posx) * letterBoxSize;
+		float texture_pos_y = ((float)ascii_tex_posy) * letterBoxSize;
+		float sx = letterBoxSize;
+		float sy = letterBoxSize;
 
 		float letter_posx = 0.50f + (i - linechars_prev - fminf(line, 1.0f)) * sizeFontX;
 		float letter_posy = 0.01f - line*sizeFontY;
