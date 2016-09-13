@@ -184,7 +184,7 @@ struct TMsgNoise {
 };
 
 struct TMsgOverCharge {
-	std::string guard_name;
+	std::vector<std::string> guard_names;
 	DECLARE_MSG_ID();
 };
 

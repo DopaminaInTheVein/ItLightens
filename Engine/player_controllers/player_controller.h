@@ -80,28 +80,28 @@ class player_controller : public CPlayerBase {
 
 	//TCompRenderStaticMesh*	actual_render = nullptr;
 
-	int					curr_evol = 0;
-	int					pol_state = 0;
-	int					pol_state_prev = 0;
-	int					last_pol_state = 0;
+	int							curr_evol = 0;
+	int							pol_state = 0;
+	int							pol_state_prev = 0;
+	int							last_pol_state = 0;
 
-	bool					affectPolarized = false;
-	bool					forward_jump = false;
+	bool						affectPolarized = false;
+	bool						forward_jump = false;
 
-	CHandle				generatorNear = CHandle();
-	bool					canPassWire = false;
-	bool					canRechargeDrone = false;
-	bool					canNotRechargeDrone = false;
+	CHandle						generatorNear = CHandle();
+	bool						canPassWire = false;
+	bool						canRechargeDrone = false;
+	bool						canNotRechargeDrone = false;
 
-	CHandle			drone;
+	CHandle						drone;
 
-	VEC3					endPointWire = VEC3(0, 0, 0);
-	vector<VEC3>			all_forces;
-	VEC3					inertia_force;
-	float					inertia_time = 0.f;
-	vector<float>			force_ponderations;
+	VEC3						endPointWire = VEC3(0, 0, 0);
+	vector<VEC3>				all_forces;
+	VEC3						inertia_force;
+	float						inertia_time = 0.f;
+	vector<float>				force_ponderations;
 
-	std::string			damage_source = "none";
+	std::vector<std::string>	damage_source;
 
 	// Ui player
 	CHandle handle_pol_q;

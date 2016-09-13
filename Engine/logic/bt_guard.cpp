@@ -970,7 +970,7 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 	CEntity * entity = myHandle.getOwner();
 	string guard_name = entity->getName();
 
-	if (msg.guard_name == guard_name) {
+	if (std::find(msg.guard_names.begin(), msg.guard_names.end(), guard_name) != msg.guard_names.end()) {
 		logic_manager->throwEvent(logic_manager->OnGuardOvercharged, "");
 		stunned = true;
 		____TIMER_RESET_(timerStunt);

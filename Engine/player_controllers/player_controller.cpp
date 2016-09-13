@@ -887,10 +887,11 @@ void player_controller::doOverCharge()
 	for (auto guard : guards) {
 		if (guard.isValid()) {
 			CEntity* eGuard = guard;
-			msg.guard_name = damage_source;
+			msg.guard_names = damage_source;
 			eGuard->sendMsg(msg);
 		}
 	}
+	damage_source.clear();
 	Evolve(eEvol::first);
 }
 
@@ -997,10 +998,7 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 		eMe->sendMsg(msgDamagePerSecond);
 		if (type == Damage::ABSORB) {
 			if (msg.actived) {
-				damage_source = msg.source;
-			}
-			else {
-				damage_source = "none";
+				damage_source.push_back(msg.source);
 			}
 			//LogicManager
 			if (damageFonts[type] > 0) {
