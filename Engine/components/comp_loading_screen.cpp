@@ -23,11 +23,11 @@ bool TCompLoadingScreen::load(MKeyValue& atts)
 {
 	resolution_x = CApp::get().getXRes();
 	resolution_y = CApp::get().getYRes();
-
+	
 	string name = atts["name"];
-
+	
 	Gui->addGuiElement("ui/loading", VEC3(0.f, 0.f, 0.75f));
-
+	
 	return true;
 }
 
@@ -41,22 +41,24 @@ void TCompLoadingScreen::update(float dt) {
 		GameController->SetGameState(CGameController::RUNNING);
 		Gui->removeGuiElementByTag("loading");
 	}
+	
 }
 
 void TCompLoadingScreen::render() const {
-#ifndef NDEBUG
-	PROFILE_FUNCTION("TCompLoadingScreen render");
-
+	#ifndef NDEBUG
+	 PROFILE_FUNCTION("TCompLoadingScreen render");
+	
 	bool b = false;
-
+	
 	ImGui::Begin("Game GUI", &b, ImVec2(resolution_x, resolution_y), 0.0f, flags);
 	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
-
+	
 	GUI::drawText(0.45, 0.65, GImGui->Font, 20, obtainColorFromString("#FFFFFFFF"), to_string(loading_value).c_str());
-
+	
 	/*Rect rect = GUI::createRect(screen_x, screen_y, 0.1f, 0.1f);
 	GUI::drawRect(rect, obtainColorFromString("#00FF00FF"));*/
-
+	
 	ImGui::End();
 #endif
+		
 }

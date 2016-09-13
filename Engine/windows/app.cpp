@@ -150,7 +150,7 @@ void CApp::generateFrame() {
 		delta_time = max_delta_time;
 	update(delta_time);
 	/*if (GameController->GetGameState() != CGameController::LOADING) {
-
+	
 	}
 	else*/ if (GameController->GetGameState() != CGameController::PLAY_VIDEO) {
 		render();

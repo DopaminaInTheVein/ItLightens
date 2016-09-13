@@ -137,7 +137,8 @@ bool CApp::start() {
 
 	imgui->StartLightEditor(); //need to be created after entities
 
-	GameController->SetGameState(CGameController::LOADING);
+	//GameController->SetGameState(CGameController::LOADING);
+	GameController->SetGameState(CGameController::RUNNING);
 
 	logic_manager->throwEvent(logic_manager->OnGameStart, "");
 
@@ -262,8 +263,7 @@ void CApp::update(float elapsed) {
 	static float ctime = 0.f;
 	ctime += elapsed* 0.01f;
 	CHandleManager::destroyAllPendingObjects();
-	if (next_level != "" && entities->isCleared()) {	
-		// Init the next level
+	if (next_level != "" && entities->isCleared()) {
 		initNextLevel();
 	}
 }

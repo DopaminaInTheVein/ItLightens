@@ -9,13 +9,13 @@ class TCompLoadingScreen : public TCompBase {
 	int loading_value = 0;
 	ImGuiWindowFlags flags;
 	bool added = false;
-
-public:
-	//Update info
-
-	void update(float elapsed);
-	void render() const;
-	bool load(MKeyValue& atts);
+	
+	public:
+		//Update info
+				
+		void update(float elapsed);
+		void render() const;
+		bool load(MKeyValue& atts);
 };
 
 #endif

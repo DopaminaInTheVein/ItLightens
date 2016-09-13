@@ -112,8 +112,8 @@ DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
 DECL_OBJ_MANAGER("tasklist", Tasklist);
 DECL_OBJ_MANAGER("task_switcher", TasklistSwitch);
-DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
 DECL_OBJ_MANAGER("loading_screen", TCompLoadingScreen);
+DECL_OBJ_MANAGER("character_globe", TCompFadingGlobe);
 DECL_OBJ_MANAGER("look_target", TCompLookTarget);
 
 //fx
@@ -697,21 +697,16 @@ void CEntitiesModule::render() {
 	//getHandleManager<TCompTransform>()->onAll(&TCompTransform::render);
 #endif
 
+	getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
 	getHandleManager<TCompCamera>()->onAll(&TCompCamera::render);
 	getHandleManager<TCompCameraMain>()->onAll(&TCompCamera::render);
+	getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
+
+	getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
-	if (GameController->GetGameState() == CGameController::LOADING) {
-		getHandleManager<TCompLoadingScreen>()->onAll(&TCompLoadingScreen::render);
-	}
-	else {
-		getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
-		getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
-
-		getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
-		getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
-		getHandleManager<TCompFadingGlobe>()->onAll(&TCompFadingGlobe::render);
-	}
+	getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
+	getHandleManager<TCompFadingGlobe>()->onAll(&TCompFadingGlobe::render);
 
 #ifndef NDEBUG
 	getHandleManager<TCompBox>()->onAll(&TCompBox::render);
