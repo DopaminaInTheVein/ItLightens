@@ -237,7 +237,17 @@ void CApp::loadedLevelNotify() {
 		: CLogicManagerModule::EVENT::OnLevelStart;
 
 	logic_manager->throwEvent(game_event, std::string(params));
-	//loading = false;
+	
+	loading = false;
+	//cleanLoadingEntities();
+}
+
+void CApp::cleanLoadingEntities() {
+	TTagsManager tags_manager;
+	VHandles loading_handles = tags_manager.getHandlesByTag("loading");
+	for (CHandle handle : loading_handles) {
+		handle.destroy();
+	}
 }
 
 void CApp::exitGame() {
@@ -249,7 +259,8 @@ void CApp::exitGame() {
 void CApp::update(float elapsed) {
 	PROFILE_FUNCTION("update");
 	for (auto it : mod_update) {
-		if (GameController->GetGameState() == CGameController::RUNNING) {
+		if (GameController->GetGameState() == CGameController::RUNNING ||
+			GameController->GetGameState() == CGameController::LOADING) {
 			PROFILE_FUNCTION(it->getName());
 			auto name = it->getName();
 			it->update(elapsed);
@@ -263,15 +274,18 @@ void CApp::update(float elapsed) {
 	ctime += elapsed* 0.01f;
 	CHandleManager::destroyAllPendingObjects();
 	if (next_level != "" && entities->isCleared()) {
-		/*// Loading state and screen
-		GameController->SetGameState(CGameController::LOADING);
-		logic_manager->throwEvent(logic_manager->OnLoadingLevel, "");
-		if (!loading)
-			showLoadingScreen();*/
-		// init the next level
-		//std::thread* th = new std::thread([this] {
-		initNextLevel();			
-		//});		
+		if (!loading) {
+			// Loading state and screen
+			GameController->SetGameState(CGameController::LOADING);
+			logic_manager->throwEvent(logic_manager->OnLoadingLevel, "");
+			loading = true;
+			GameController->SetLoadingState(0);
+			//showLoadingScreen();
+			// init the next level
+			//std::thread* th = new std::thread([this] {
+				initNextLevel();
+			//});
+		}
 	}
 }
 
@@ -285,6 +299,7 @@ void CApp::initNextLevel()
 	bool reload = next_level == current_level;
 	if (!reload) CEntityParser::clearCollisionables();
 	bool is_ok;
+	GameController->SetLoadingState(5);
 
 	// Entidades invariantes
 	CEntitiesModule::ParsingInfo info;
@@ -292,11 +307,12 @@ void CApp::initNextLevel()
 	info.reload = reload;
 	is_ok = entities->loadXML(info);
 	assert(is_ok);
+	GameController->SetLoadingState(20);
 
 	// Entidades variantes
 	info.filename = level_name + (setContains(has_check_point, next_level) ? "_save" : "_init");
 	entities->loadXML(info);
-	GameController->SetLoadingState(30);
+	GameController->SetLoadingState(45);
 
 	// Lights
 	info.filename = level_name + "_lights";
@@ -317,7 +333,6 @@ void CApp::initNextLevel()
 
 void CApp::showLoadingScreen()
 {
-	loading = true;
 	// Restart Timers LUA
 	logic_manager->resetTimers();
 

@@ -82,6 +82,7 @@ private:
 	void initNextLevel();
 	void restartLevel();
 	void showLoadingScreen();
+	void cleanLoadingEntities();
 };
 
 #endif

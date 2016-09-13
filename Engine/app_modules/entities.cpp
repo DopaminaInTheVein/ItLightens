@@ -548,6 +548,18 @@ void CEntitiesModule::update(float dt) {
 	static float ia_wait = 0.0f;
 	ia_wait += getDeltaTime();
 
+	if (GameController->GetGameState() == CGameController::LOADING) {
+		getHandleManager<TCompCamera>()->updateAll(dt);
+		getHandleManager<TCompCameraMain>()->updateAll(dt);
+		getHandleManager<TCompFadeScreen>()->updateAll(dt);
+		getHandleManager<TCompLoadingScreen>()->updateAll(dt);
+		//Gui
+		getHandleManager<TCompGuiCursor>()->updateAll(dt);
+		getHandleManager<TCompGuiButton>()->updateAll(dt);
+		getHandleManager<TCompGui>()->updateAll(dt);
+		return;
+	}
+
 	//physx objects
 	getHandleManager<TCompCharacterController>()->updateAll(dt);
 	getHandleManager<TCompPhysics>()->updateAll(dt);
@@ -568,12 +580,6 @@ void CEntitiesModule::update(float dt) {
 
 	if (GameController->GetGameState() == CGameController::PLAY_VIDEO) {
 		getHandleManager<TCompVideo>()->updateAll(dt);
-	}
-	else if (GameController->GetGameState() == CGameController::LOADING) {
-		getHandleManager<TCompCamera>()->updateAll(dt);
-		getHandleManager<TCompCameraMain>()->updateAll(dt);
-		getHandleManager<TCompFadeScreen>()->updateAll(dt);
-		getHandleManager<TCompLoadingScreen>()->updateAll(dt);
 	}
 	else if (GameController->GetGameState() == CGameController::RUNNING) {
 		// May need here a switch to update wich player controller takes the action - possession rulez
@@ -663,6 +669,7 @@ void CEntitiesModule::update(float dt) {
 
 		//Fx
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
+		//getHandleManager<TCompLoadingScreen>()->updateAll(dt);
 
 		//Tmx animator
 		getHandleManager<TCompTransformAnimator>()->updateAll(dt);

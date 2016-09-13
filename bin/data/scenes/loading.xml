@@ -1,6 +1,7 @@
 <entities>
 <entity>
-<tags/>
+<tags
+   tags="loading"/>
 <name
    name="background"/>
 <transform
