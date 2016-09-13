@@ -367,7 +367,7 @@ function OnLoadedLevel( logic_level, real_level )
 end
 
 function InitScene()
-	--p:reset_camera() <--Implementar!
+	cam:reset_camera()
 	p:exec_command("cam:fade_in(1)", 1)
 	if not real_level == "hub" then
 		p:exec_command("p:setControlEnabled(1);", 1)

@@ -118,6 +118,7 @@ public:
 	void runCinematic(const char* name, float speed = 0.f);
 	void fadeIn(float speed = 0.f);
 	void fadeOut(float speed = 0.f);
+	void resetCamera();
 };
 
 // public functions

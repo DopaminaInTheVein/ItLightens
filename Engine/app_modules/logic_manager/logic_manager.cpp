@@ -661,6 +661,9 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.set("fade_out", &SLBCamera::fadeOut)
 		.comment("Start fade out")
 		.param("float: time fade, if time <= 0 set default")
+		// Reset the camera
+		.set("reset_camera", &SLBCamera::resetCamera)
+		.comment("Resets the camera to its default state")
 		;
 }
 

@@ -111,8 +111,8 @@ public:
 	float camera_push_yaw;
 	float camera_push_pitch;
 
-	bool pushing_box = false;
-	bool pulling_box = false;
+	bool pushing_box;
+	bool pulling_box;
 
 	string selectedBox = "";
 	//int selectedBoxi = 0;

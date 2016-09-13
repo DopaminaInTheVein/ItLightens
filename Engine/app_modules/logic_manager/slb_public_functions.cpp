@@ -500,6 +500,22 @@ void SLBCamera::fadeOut(float speed) {
 	fx->FadeOut();
 }
 
+void SLBCamera::resetCamera() {
+	// restore the normal 3rd person camera
+	if (!checkCamera()) return;
+	// turn manual control off
+	CEntity * camera_e = camera_h;
+	GET_COMP(cam_m, camera_e, TCompCameraMain);
+	cam_m->setManualControl(false);
+	GameController->SetManualCameraState(false);
+	// restore normal controls
+	GET_COMP(cam_3p, camera_e, TCompController3rdPerson);
+	TMsgSetControllable msg;
+	msg.control = true;
+	camera_e->sendMsg(msg);	
+
+}
+
 // Data
 SLBData::SLBData()
 {

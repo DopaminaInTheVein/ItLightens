@@ -26,7 +26,7 @@ bool TCompLoadingScreen::load(MKeyValue& atts)
 	
 	string name = atts["name"];
 	
-	Gui->addGuiElement("ui/loading", VEC3(0.f, 0.f, 0.75f));
+	//Gui->addGuiElement("ui/loading", VEC3(0.f, 0.f, 0.75f));
 	
 	return true;
 }

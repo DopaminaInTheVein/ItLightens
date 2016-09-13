@@ -123,6 +123,9 @@ void player_controller_mole::Init() {
 	ChangeState("idle");
 	SET_ANIM_MOLE(AST_IDLE);
 
+	pushing_box = false;
+	pulling_box = false;
+
 	init_poss();
 }
 
