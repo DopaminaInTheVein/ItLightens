@@ -49,6 +49,8 @@ class CRenderDeferredModule : public IAppModule {
 	const CRenderTechnique* acc_light_points;
 	const CRenderTechnique* acc_light_directionals;
 	const CRenderTechnique* blur_tech;
+	const CRenderTechnique* null_tech;
+	const CRenderTechnique* skining_tech;
 	const CRenderTechnique* acc_light_directionals_shadows;
 	const CMesh*            unit_sphere;
 	const CMesh*            unit_cube;

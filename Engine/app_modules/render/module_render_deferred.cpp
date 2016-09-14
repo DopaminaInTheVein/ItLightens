@@ -110,6 +110,12 @@ bool CRenderDeferredModule::start() {
 	//blur_tech = Resources.get("blur_glow.tech")->as<CRenderTechnique>();
 
 	acc_light_directionals_shadows = Resources.get("deferred_lights_dir_shadows.tech")->as<CRenderTechnique>();
+
+	//null technique
+	null_tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+	//skinning technique
+	skining_tech = Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>();
+
 	assert(acc_light_directionals_shadows && acc_light_directionals_shadows->isValid());
 
 	//  unit_sphere = Resources.get("meshes/engine/unit_sphere.mesh")->as<CMesh>();
@@ -121,6 +127,8 @@ bool CRenderDeferredModule::start() {
 	particles_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 
 	Resources.get("textures/general/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE);
+
+	
 
 	//hatching texture
 	Resources.get("textures/hatching/hatch_0.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
@@ -606,8 +614,8 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 		};
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
-		tech->activate();
+		//auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+		null_tech->activate();
 
 		getHandleManager<TCompPolarized>()->each([pol](TCompPolarized* c) {
 			if (c->getForce().polarity == pol) {	//render polarity designed only
@@ -691,8 +699,8 @@ void CRenderDeferredModule::MarkInteractives(const VEC4& color, std::string tag,
 		};
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
-		tech->activate();
+		//auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+		null_tech->activate();
 
 		auto hs = tags_manager.getHandlesByTag(tag);
 
@@ -1007,17 +1015,19 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 			,	nullptr
 		};
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+		
 
-		auto tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+		
 
-		if (use_skeleton)
-			tech = Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>();
-
-		tech->activate();
-
+		if (use_skeleton) {
+			skining_tech->activate();
+		}
+		else {
+			//tech = Resources.get("solid_PSnull.tech")->as<CRenderTechnique>();
+			null_tech->activate();
+		}
 		// GENERATORS
-		auto hs = tags_manager.getHandlesByTag(tagstr);
-
+		VHandles hs = tags_manager.getHandlesByTag(tagstr);
 		float outlineWith = 0.1f;
 		float offset = 1 + outlineWith;
 
@@ -1027,44 +1037,56 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 
 		for (CHandle h : hs) {
 			CEntity* e = h;
-			if (!e) continue;
-			if (!isInRoom(h)) continue;
-			TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
-			TCompTransform *c_tmx = e->get<TCompTransform>();
-			if (!c_tmx || !rsm) continue;
+			CEntity* e_cam;
+			TCompCameraMain *cam;
+			TCompRenderStaticMesh *rsm;
+			TCompTransform *c_tmx;
+			
+				
+				if (!e) continue;
+				if (!isInRoom(h)) continue;
+				rsm = e->get<TCompRenderStaticMesh>();
+				c_tmx = e->get<TCompTransform>();
+				if (!c_tmx || !rsm) continue;
 
-			//camera distance
-			CEntity* e_cam = h_camera;
-			TCompCameraMain *cam = e_cam->get<TCompCameraMain>();
+				//camera distance
+				e_cam = h_camera;
+				cam = e_cam->get<TCompCameraMain>();
+			
 			float z = fabs(VEC3::Distance(cam->getPosition(), c_tmx->getPosition()));
+			{
+				PROFILE_FUNCTION("referred: mask vision. Mesh Scale ");
+				//set scale bigger for outline
+				VEC3 scale = c_tmx->getScale();
+				c_tmx->setScale(VEC3(offset, offset, offset)*scale + VEC3(outlineWith, outlineWith, outlineWith)*z*0.1f);
 
-			//set scale bigger for outline
-			VEC3 scale = c_tmx->getScale();
-			c_tmx->setScale(VEC3(offset, offset, offset)*scale + VEC3(outlineWith, outlineWith, outlineWith)*z*0.1f);
+				//push scaled matrix
+				activateWorldMatrix(c_tmx->asMatrix());
 
-			//push scaled matrix
-			activateWorldMatrix(c_tmx->asMatrix());
-
-			//set original scale
-			c_tmx->setScale(scale);
-
+				//set original scale
+				c_tmx->setScale(scale);
+			}
 			//rsm->static_mesh->slots[0].material->activateTextures();
-
+			
 			//every object will have the same mesh
 			if (!mesh_uploaded) {
+				PROFILE_FUNCTION("referred: mask vision. Mesh upload ");
 				rsm->static_mesh->slots[0].mesh->activate();
 				mesh_uploaded = true;
 			}
 
 			if (use_skeleton) {
+				PROFILE_FUNCTION("referred: mask vision. Skeleton upload ");
 				const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
 				assert(comp_skel);
 				comp_skel->uploadBonesToCteShader();
 			}
 
-			//rsm->static_mesh->slots[0].mesh->render();
-			rsm->static_mesh->slots[0].mesh->renderGroup(rsm->static_mesh->slots[0].submesh_idx);
-
+			{
+				PROFILE_FUNCTION("referred: mask vision. Render ");
+				//rsm->static_mesh->slots[0].mesh->render();
+				rsm->static_mesh->slots[0].mesh->renderGroup(rsm->static_mesh->slots[0].submesh_idx);
+			}
 			//rsm->static_mesh->slots[0].material->deactivateTextures();
 		}
 	}
