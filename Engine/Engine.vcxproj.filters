@@ -560,6 +560,9 @@
     <ClCompile Include="components\comp_loading_screen.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="components\comp_text.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1477,6 +1480,9 @@
       <Filter>render\constants</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_loading_screen.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_text.h">
       <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>

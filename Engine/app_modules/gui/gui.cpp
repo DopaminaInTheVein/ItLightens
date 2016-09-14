@@ -60,7 +60,7 @@ bool CGuiModule::start()
 	//hudPlayer = new CGuiHudPlayer(hudPlayerRect);
 
 	//Action Text
-	txtAction = new CGuiActionText(GUI::createRect(0.7f, 0.9f, .3f, .1f));
+	txtAction = new CGuiActionText(0.7f, 0.05f);
 
 	ImGui::GetStyle().WindowPadding.x = 0.0f;
 	ImGui::GetStyle().WindowPadding.y = 0.0f;

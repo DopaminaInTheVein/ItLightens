@@ -511,8 +511,7 @@ void SLBCamera::resetCamera() {
 	// restore normal controls
 	TMsgSetControllable msg;
 	msg.control = true;
-	camera_e->sendMsg(msg);	
-
+	camera_e->sendMsg(msg);
 }
 
 // Data
@@ -636,25 +635,6 @@ void SLBPublicFunctions::playVideo(const char* video_route) {
 	GET_COMP(video_player, h, TCompVideo);
 	video_player->setup(video_route);
 	video_player->init();
-	//auto hm = CHandleManager::getByName("entity");
-	//CHandle new_hp = hm->createHandle();
-	//CEntity* entity = new_hp;
-
-	//auto hm1 = CHandleManager::getByName("name");
-	//CHandle new_hn = hm1->createHandle();
-	//MKeyValue atts1;
-	//atts1.put("name", "play_video");
-	//new_hn.load(atts1);
-	//entity->add(new_hn);
-
-	//auto hm3 = CHandleManager::getByName("video_player");
-	//CHandle new_hl = hm3->createHandle();
-	//MKeyValue atts3;
-	//atts3["file"] = video_route;
-	//new_hl.load(atts3);
-	//entity->add(new_hl);
-	//TCompVideo * new_comp = new_hl;
-	//new_comp->init();
 }
 
 void SLBPublicFunctions::playVideoAndDo(const char* video_route, const char* lua_code) {
@@ -776,16 +756,16 @@ void SLBPublicFunctions::showLoadingScreen() {
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
-	
+
 	auto hm3 = CHandleManager::getByName("loading_screen");
 	CHandle new_hl = hm3->createHandle();
-	
+
 	// Creation of the attributes
 	MKeyValue atts3;
 	atts3["name"] = "loading_screen";
-	
+
 	new_hl.load(atts3);
-	entity->add(new_hl);	
+	entity->add(new_hl);
 }
 
 void SLBPublicFunctions::loadLevel(const char* level_name) {

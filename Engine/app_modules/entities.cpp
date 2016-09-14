@@ -110,6 +110,7 @@ DECL_OBJ_MANAGER("video_player", TCompVideo);
 /* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
 DECL_OBJ_MANAGER("helper_message", TCompFadingMessage);
+DECL_OBJ_MANAGER("helper_text", TCompText);
 DECL_OBJ_MANAGER("tasklist", Tasklist);
 DECL_OBJ_MANAGER("task_switcher", TasklistSwitch);
 DECL_OBJ_MANAGER("loading_screen", TCompLoadingScreen);
@@ -187,6 +188,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompGuidedCamera>()->init(16);
 	//helpers
 	getHandleManager<TCompFadingMessage>()->init(32);
+	getHandleManager<TCompText>()->init(32);
 	getHandleManager<TCompFadingGlobe>()->init(32);
 	getHandleManager<TCompLoadingScreen>()->init(32);
 	getHandleManager<LogicHelperArrow>()->init(4);
@@ -589,6 +591,7 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 			getHandleManager<TCompFadingMessage>()->updateAll(dt);
+			getHandleManager<TCompText>()->updateAll(dt);
 			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
 			getHandleManager<TCompFadeScreen>()->updateAll(dt);
@@ -709,7 +712,7 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompCameraMain>()->onAll(&TCompCamera::render);
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
-	
+
 	if (GameController->GetGameState() == CGameController::LOADING) {
 		getHandleManager<TCompLoadingScreen>()->onAll(&TCompLoadingScreen::render);
 	}

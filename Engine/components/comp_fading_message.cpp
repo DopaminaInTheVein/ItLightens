@@ -4,19 +4,7 @@
 #include "entity.h"
 #include "app_modules/gui/gui_utils.h"
 #include "app_modules/gui/comps/gui_basic.h"
-#include "imgui/imgui_internal.h"
 #include "app_modules/imgui/module_imgui.h"
-#include "resources/resources_manager.h"
-#include "render/render.h"
-#include "render/DDSTextureLoader.h"
-
-#include "render/shader_cte.h"
-#include "constants/ctes_object.h"
-#include "constants/ctes_camera.h"
-#include "constants/ctes_globals.h"
-#include <math.h>
-
-extern CShaderCte< TCteCamera > shader_ctes_camera;
 
 void TCompFadingMessage::forceTTLZero() {
 	ttl = -0.1f;

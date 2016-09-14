@@ -26,11 +26,13 @@ enum eAction {
 class Rect;
 
 class CGuiActionText {
-	Rect rect;
+	float posx;
+	float posy;
 	float sizeFont;
 	eAction action;
+	std::string last_text = "";
 public:
-	CGuiActionText(Rect r);
+	CGuiActionText(float x, float y);
 
 	void setState(eAction action);
 	void update(float dt);

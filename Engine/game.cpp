@@ -367,7 +367,7 @@ void CApp::render() {
 }
 
 int CApp::getXRes(bool ask_window) {
-	if (!ask_window && render_deferred) {
+ 	if (!ask_window && render_deferred) {
 		return render_deferred->getXRes();
 	}
 	if (!max_screen)
