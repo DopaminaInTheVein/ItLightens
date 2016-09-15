@@ -66,6 +66,8 @@ public:
 	// Size
 	float GetWidth();
 	float GetHeight();
+	void SetWidth(float);
+	void SetHeight(float);
 
 	bool load(MKeyValue& atts);
 	void update(float elapsed);

@@ -62,6 +62,15 @@ float TCompGui::GetHeight()
 	return height;
 }
 
+void TCompGui::SetWidth(float w)
+{
+	width = w;
+}
+void TCompGui::SetHeight(float h)
+{
+	height = h;
+}
+
 void TCompGui::renderInMenu()
 {
 	IMGUI_SHOW_FLOAT(render_state);

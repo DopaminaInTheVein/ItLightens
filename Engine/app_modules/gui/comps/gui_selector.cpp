@@ -47,10 +47,13 @@ void TCompGuiSelector::AddArrow(CHandle& h, string prefab, string name_event, fl
 {
 	h = createPrefab(prefab);
 	GET_COMP(tmx, h, TCompTransform);
-	if (tmx) {
+	GET_COMP(gui, h, TCompGui);
+	if (tmx && gui) {
 		tmx->setPosition(myTransform->getPosition() + offset_pos * VEC3_RIGHT);
 		float height = myGui->GetHeight();
 		tmx->setScaleBase(VEC3(height, height, height));
+		gui->SetHeight(height);
+		gui->SetWidth(height); // No es un error, la flecha es cuadrada con la altura del selector
 	}
 	TMsgGuiSetListener msg;
 	msg.event_name = name_event;
