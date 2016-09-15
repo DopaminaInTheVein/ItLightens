@@ -91,5 +91,6 @@
 #include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/gui/comps/gui_cursor.h"
 #include "app_modules/gui/comps/gui_button.h"
+#include "app_modules/gui/comps/gui_selector.h"
 
 #endif

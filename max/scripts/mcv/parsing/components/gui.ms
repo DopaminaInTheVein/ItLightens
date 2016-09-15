@@ -16,10 +16,16 @@ fn _parse_gui = (
 	parseMenuName xml
 	parsePropAttribute xml "row" "row"
 	parsePropAttribute xml "col" "col"
+	
+	local size = _parsingObject.max - _parsingObject.min
+	xml.addAttr "width" size.x
+	xml.addAttr "height" size.z
 )
 
 fn _parse_gui_button = (
 	local xml = XML_PARSING.addChild "gui_button"
+	
+	--Si se lee del TCompGui se puede quitar de aqui!
 	local size = _parsingObject.max - _parsingObject.min
 	xml.addAttr "width" size.x
 	xml.addAttr "height" size.z

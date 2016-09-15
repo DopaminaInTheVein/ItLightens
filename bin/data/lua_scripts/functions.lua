@@ -76,3 +76,9 @@ g_current_level = logic_level
 	p:exec_command("SaveLevel()", 1)
 	p:exec_command("p:load_level(\""..logic_level.."\")", 1.2)
 end
+
+function DestroyAllByTag(tag)
+	handles = HandleGroup()
+	handles:get_handles_by_tag(tag)
+	handles:destroy()
+end

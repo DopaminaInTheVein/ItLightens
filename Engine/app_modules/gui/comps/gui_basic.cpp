@@ -8,6 +8,7 @@
 using namespace std;
 
 map<string, GuiMatrix> TCompGui::gui_screens = map<string, GuiMatrix>();
+stack<CHandle> TCompGui::cursors = stack<CHandle>();
 
 void TCompGui::onCreate(const TMsgEntityCreated&)
 {
@@ -46,8 +47,19 @@ bool TCompGui::load(MKeyValue& atts)
 	menu_name = atts.getString("menu_name", "");
 	row = atts.getInt("row", -1);
 	col = atts.getInt("col", -1);
+	width = atts.getFloat("width", 0.f);
+	height = atts.getFloat("height", 0.f);
 
 	return true;
+}
+
+float TCompGui::GetWidth()
+{
+	return width;
+}
+float TCompGui::GetHeight()
+{
+	return height;
 }
 
 void TCompGui::renderInMenu()
@@ -57,6 +69,16 @@ void TCompGui::renderInMenu()
 	IMGUI_SHOW_FLOAT(render_target);
 	ImGui::Text("Text coords (x, sizeX, y, sizeY):");
 	ImGui::DragFloat4("", (float*)(&text_coords), 0.01f, 0.f, 1.f);
+}
+
+CHandle TCompGui::getMatrixHandle(std::string menu_name, int row, int col)
+{
+	return gui_screens[menu_name].elem[row][col];
+}
+
+GuiMatrix TCompGui::getGuiMatrix(std::string menu_name)
+{
+	return gui_screens[menu_name];
 }
 
 void TCompGui::addGuiElement(string menu_name, int row, int col, CHandle h_gui)
@@ -74,6 +96,21 @@ void TCompGui::addGuiElement(string menu_name, int row, int col, CHandle h_gui)
 void TCompGui::clearScreen(string menu_name)
 {
 	gui_screens.erase(menu_name);
+}
+
+CHandle TCompGui::getCursor()
+{
+	CHandle result;
+	while (!result.isValid() && !cursors.empty()) {
+		result = cursors.top();
+		if (!result.isValid()) cursors.pop();
+	}
+	return result;
+}
+
+void TCompGui::pushCursor(CHandle h)
+{
+	cursors.push(h);
 }
 
 #include "components\comp_transform.h"

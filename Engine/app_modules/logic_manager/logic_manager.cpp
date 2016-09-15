@@ -373,7 +373,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadingLevel(%s);", params.c_str());
 		break;
 	}
-	//Others
+						   //Others
 	case (OnStep): {
 		sprintf(lua_code, "OnStep%s();", params.c_str());
 		break;
@@ -381,8 +381,12 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 	case (OnStepOut): {
 		sprintf(lua_code, "OnStepOut%s();", params.c_str());
 		break;
-	}						  
-	//GUI
+	}
+					  //GUI
+	case (OnCreateGui): {
+		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
+		break;
+	}
 	case (OnButtonPressed): { // Boton pulsado, sin soltar aun
 		sprintf(lua_code, "OnPressed(\"%s\");", params.c_str());
 		break;
@@ -594,6 +598,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("set_anim_loop", &SLBHandle::setAnimLoop)
 		.param("string: animation name")
 		.comment("set an animation to the skeleton of that handle as loop")
+		//----------Gui
+		.set("add_option", &SLBHandle::addOption)
+		.param("string: option text")
+		.comment("add an option and get the option number")
 		;
 }
 

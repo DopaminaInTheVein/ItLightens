@@ -1,0 +1,81 @@
+<entities>
+<entity>
+<tags
+   tags="options gui gui_button clickable"/>
+<gui
+   menu_name="options"
+   row="10"
+   col="0"
+   width="0.652746"
+   height="0.367172"/>
+<gui_button
+   width="0.652746"
+   height="0.367172"/>
+<name
+   name="btn_opt_back"/>
+<transform
+   pos="0.612932 -97.1539 9.23048"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu/button_start.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_cursor"/>
+<gui
+   menu_name="options"
+   width="0.114758"
+   height="0.131401"/>
+<gui_cursor
+   menu_name="options"/>
+<name
+   name="cursor_opt"/>
+<transform
+   pos="5.0 -95.0 9.73053"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu/front.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options"/>
+<name
+   name="background_opt"/>
+<transform
+   pos="5.0 -95.0 9.58039"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu/background.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_selector"/>
+<gui
+   menu_name="options"
+   row="0"
+   col="0"
+   width="5.76126"
+   height="0.277176"/>
+<gui_selector/>
+<name
+   name="opt_axisY"/>
+<transform
+   pos="5.0 -92.8187 9.1709"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/options/opt_axisY.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+
+</entities>

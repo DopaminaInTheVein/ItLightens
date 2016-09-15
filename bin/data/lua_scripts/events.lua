@@ -416,6 +416,10 @@ function OnStepOutScientist( )
 end
 -- GUI
 ---------------------------------------------------
+function OnCreateGui( param )
+	p:print("OnCreateGui: "..param)
+	CallFunction("OnCreateGui_"..param)
+end
 function OnMouseOver( param )
 	p:print("OnMouseOver")
 	CallFunction("OnMouseOver_"..param)

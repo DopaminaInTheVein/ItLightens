@@ -4,7 +4,9 @@
 <tags
    tags="menu gui gui_cursor"/>
 <gui
-   menu_name="dead_menu"/>
+   menu_name="dead_menu"
+   width="0.114758"
+   height="0.131401"/>
 <gui_cursor
    menu_name="dead_menu"/>
 <name
@@ -14,7 +16,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/menu_game/cursor.static_mesh"/>
+   name="static_meshes/ui/cursor.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -25,7 +27,9 @@
 <gui
    menu_name="dead_menu"
    row="0"
-   col="0"/>
+   col="0"
+   width="1.13903"
+   height="0.640701"/>
 <gui_button
    width="1.13903"
    height="0.640701"/>
@@ -47,7 +51,9 @@
 <gui
    menu_name="dead_menu"
    row="0"
-   col="1"/>
+   col="1"
+   width="0.673163"
+   height="0.378647"/>
 <gui_button
    width="0.673163"
    height="0.378647"/>
@@ -58,7 +64,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/dead_menu/btn_back_title.static_mesh"/>
+   name="static_meshes/ui/dead_menu/btn_back_title_dead.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -67,7 +73,9 @@
 <tags
    tags="menu gui"/>
 <gui
-   menu_name="dead_menu"/>
+   menu_name="dead_menu"
+   width="5.87608"
+   height="0.640701"/>
 <name
    name="title_dead"/>
 <transform
@@ -86,7 +94,9 @@
 <gui
    menu_name="dead_menu"
    row="0"
-   col="2"/>
+   col="2"
+   width="0.652746"
+   height="0.367172"/>
 <gui_button
    width="0.652746"
    height="0.367172"/>
@@ -97,7 +107,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/dead_menu/btn_exit_pause.static_mesh"/>
+   name="static_meshes/ui/dead_menu/btn_exit_dead.static_mesh"/>
 <abs_aabb/>
 
 </entity>

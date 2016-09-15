@@ -355,6 +355,14 @@ void SLBHandle::setAnim(const char* name) {
 void SLBHandle::setAnimLoop(const char* name) {
 	_setAnim(name, true);
 }
+int SLBHandle::addOption(const char* name) {
+	int res = -1;
+	if (real_handle.isValid()) {
+		GET_COMP(gui_selector, real_handle, TCompGuiSelector);
+		if (gui_selector) res = gui_selector->AddOption(string(name));
+	}
+	return res;
+}
 bool SLBHandle::isPatrolling() {
 	bool patrol = false;
 	if (real_handle.isValid()) {

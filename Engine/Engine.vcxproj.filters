@@ -563,6 +563,9 @@
     <ClCompile Include="components\comp_text.cpp">
       <Filter>components</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\gui\comps\gui_selector.cpp">
+      <Filter>app_modules\gui\comps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1484,6 +1487,9 @@
     </ClInclude>
     <ClInclude Include="components\comp_text.h">
       <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\comps\gui_selector.h">
+      <Filter>app_modules\gui\comps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

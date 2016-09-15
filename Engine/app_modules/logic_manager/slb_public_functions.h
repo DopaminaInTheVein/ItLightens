@@ -85,6 +85,7 @@ public:
 	bool isCharged();
 	void setAnim(const char* name);
 	void setAnimLoop(const char* name);
+	int addOption(const char* name);
 	bool isPatrolling();
 	bool isComeBack();
 };

@@ -6,7 +6,9 @@
 <gui
    menu_name="menu"
    row="0"
-   col="0"/>
+   col="0"
+   width="1.13903"
+   height="0.640701"/>
 <gui_button
    width="1.13903"
    height="0.640701"/>
@@ -26,7 +28,9 @@
 <tags
    tags="menu gui gui_cursor"/>
 <gui
-   menu_name="menu"/>
+   menu_name="menu"
+   width="0.114758"
+   height="0.131401"/>
 <gui_cursor
    menu_name="menu"/>
 <name
@@ -47,7 +51,9 @@
 <gui
    menu_name="menu"
    row="1"
-   col="0"/>
+   col="0"
+   width="1.13903"
+   height="0.640701"/>
 <gui_button
    width="1.13903"
    height="0.640701"/>
@@ -69,7 +75,9 @@
 <gui
    menu_name="menu"
    row="2"
-   col="0"/>
+   col="0"
+   width="1.13903"
+   height="0.640701"/>
 <gui_button
    width="1.13903"
    height="0.640701"/>
@@ -89,7 +97,9 @@
 <tags
    tags="menu gui"/>
 <gui
-   menu_name="menu"/>
+   menu_name="menu"
+   width="5.87608"
+   height="0.640701"/>
 <name
    name="menu_title"/>
 <transform
@@ -108,7 +118,9 @@
 <gui
    menu_name="menu"
    row="3"
-   col="0"/>
+   col="0"
+   width="0.652746"
+   height="0.367172"/>
 <gui_button
    width="0.652746"
    height="0.367172"/>

@@ -21,10 +21,11 @@ bool TCompGuiCursor::load(MKeyValue& atts)
 	return true;
 }
 
-//void TCompGuiCursor::onCreate(const TMsgEntityCreated&)
-//{
-//	GameController->SetUiControl(true);
-//}
+void TCompGuiCursor::onCreate(const TMsgEntityCreated&)
+{
+	TCompGui::pushCursor(MY_OWNER);
+	//GameController->SetUiControl(true);
+}
 
 bool TCompGuiCursor::getUpdateInfo()
 {
@@ -45,18 +46,9 @@ bool TCompGuiCursor::getUpdateInfo()
 void TCompGuiCursor::update(float dt)
 {
 	if (!enabled) return;
+	if (TCompGui::getCursor() != MY_OWNER) return;
 	updateMovement(dt);
 	updateNavigation();
-
-	// Pasa a logica del boton
-	// ------------------------------------------------
-	//if (button.isValid()) {
-	//	if (controller->IsActionButtonReleased()) {
-	//		button.sendMsg(TMsgClicked());
-	//		enabled = false;
-	//	}
-	//}
-	//-------------------------------------------------
 }
 
 void TCompGuiCursor::updateNavigation()
@@ -69,7 +61,7 @@ void TCompGuiCursor::updateNavigation()
 			)
 		{
 			x = y = 0;
-			CHandle next_gui = TCompGui::gui_screens[menu_name].elem[0][0];
+			CHandle next_gui = TCompGui::getMatrixHandle(menu_name, 0, 0);//gui_screens[menu_name].elem[0][0];
 			if (next_gui.isValid()) {
 				GET_COMP(tmx, next_gui, TCompTransform);
 				if (tmx) myTransform->setPosition(tmx->getPosition());
@@ -103,7 +95,7 @@ void TCompGuiCursor::updateNavigation()
 		if (current) {
 			int prev = *current;
 			bool found = false;
-			auto gui_matrix = TCompGui::gui_screens[menu_name];
+			auto gui_matrix = TCompGui::getGuiMatrix(menu_name);//gui_screens[menu_name];
 			do {
 				*current += dir;
 				*current = (max + *current) % max;
@@ -151,7 +143,7 @@ void TCompGuiCursor::renderInMenu()
 {
 	ImGui::Text("Is overbutton %d", button.isValid());
 	if (menu_name != "") {
-		auto screen = TCompGui::gui_screens[menu_name];
+		auto screen = TCompGui::getGuiMatrix(menu_name);//gui_screens[menu_name];
 		for (int i = 0; i < GUI_MAX_ROW; i++) {
 			for (int j = 0; j < GUI_MAX_ROW; j++) {
 				if (screen.elem[i][j].isValid())

@@ -126,6 +126,7 @@ DECL_OBJ_MANAGER("sense_vision", TCompSenseVision);
 DECL_OBJ_MANAGER("gui", TCompGui);
 DECL_OBJ_MANAGER("gui_cursor", TCompGuiCursor);
 DECL_OBJ_MANAGER("gui_button", TCompGuiButton);
+DECL_OBJ_MANAGER("gui_selector", TCompGuiSelector);
 
 using namespace std;
 
@@ -241,9 +242,10 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompFadeScreen>()->init(4);
 
 	//Gui
-	getHandleManager<TCompGuiCursor>()->init(4);
+	getHandleManager<TCompGuiCursor>()->init(64);
 	getHandleManager<TCompGuiButton>()->init(64);
 	getHandleManager<TCompGui>()->init(MAX_ENTITIES);
+	getHandleManager<TCompGuiSelector>()->init(64);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -442,6 +444,8 @@ bool CEntitiesModule::start() {
 
 	//Gui
 	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
+	SUBSCRIBE(TCompGuiCursor, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
@@ -689,9 +693,10 @@ void CEntitiesModule::update(float dt) {
 	}
 
 	//Gui
+	getHandleManager<TCompGui>()->updateAll(dt);
 	getHandleManager<TCompGuiCursor>()->updateAll(dt);
 	getHandleManager<TCompGuiButton>()->updateAll(dt);
-	getHandleManager<TCompGui>()->updateAll(dt);
+	getHandleManager<TCompGuiSelector>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

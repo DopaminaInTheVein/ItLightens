@@ -9,8 +9,6 @@ class TCompTransform;
 class TCompGui;
 
 class TCompGuiButton : public aicontroller, public TCompBase {
-	float width;
-	float height;
 	bool init_enabled;
 
 	//State info

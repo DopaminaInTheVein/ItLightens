@@ -25,7 +25,6 @@ float TCompGuiButton::t_unclicked;
 float TCompGuiButton::t_released;
 float TCompGuiButton::t_unreleased;
 
-//#define SetSpeedButtonState(sufix) sp_##sufix = 1.f / t_##sufix;
 void TCompGuiButton::loadOptions()
 {
 	// Check if options are already loaded
@@ -64,8 +63,6 @@ void TCompGuiButton::loadOptions()
 bool TCompGuiButton::load(MKeyValue& atts)
 {
 	loadOptions();
-	width = atts.getFloat("width", 0.f);
-	height = atts.getFloat("height", 0.f);
 	init_enabled = atts.getBool("enabled", true);
 	return true;
 }
@@ -149,7 +146,7 @@ bool TCompGuiButton::getUpdateInfo()
 	myTransform = GETH_MY(TCompTransform);
 	if (!myTransform) return false;
 
-	cursor = tags_manager.getFirstHavingTag("gui_cursor");
+	cursor = TCompGui::getCursor();
 	if (!cursor.isValid()) return false;
 
 	cursorTransform = GETH_COMP(cursor, TCompTransform);
@@ -225,7 +222,7 @@ bool TCompGuiButton::checkOver()
 	VEC3 myPos = myTransform->getPosition();
 	VEC3 cursorPos = cursorTransform->getPosition();
 	VEC3 delta = myPos - cursorPos;
-	return abs(delta.x) < width*0.5f && abs(delta.y) < height*0.5f;
+	return abs(delta.x) < myGui->GetWidth()*0.5f && abs(delta.y) < myGui->GetHeight()*0.5f;
 }
 
 bool TCompGuiButton::checkClicked()
