@@ -1,4 +1,5 @@
 {
+<<<<<<< dadbbcabe22de43309c1222ddce2a8ccd5b615f9
   "scenes": {
     "level_0": "title",
     "level_1": "hub",
@@ -19,3 +20,22 @@
 	"lang": "ES"
   }
 }
+=======
+    "scenes": {
+        "level_0": "title",
+        "level_1": "hub",
+        "level_2": "tuto_mole",
+        "level_3": "tuto_sci",
+        "level_4": "ms3"
+    },
+    "screen": {
+        "xres": 960,
+        "yres": 540,
+        "full_screen": 1
+    },
+    "controls": {
+        "y-axis_inverted": 0.0,
+        "x-axis_inverted": 1.0
+    }
+}
+>>>>>>> ui selector doing
