@@ -1,0 +1,21 @@
+<entities>
+<entity>
+<tags
+   tags="gui gui_button clickable"/>
+<gui
+   width="1.0"
+   height="1.0"/>
+<gui_button
+   width="1.0"
+   height="1.0"/>
+<name
+   name="left_arrow"/>
+<transform
+   pos="0 0 0"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/components/right_arrow.static_mesh"/>
+</entity>
+
+</entities>

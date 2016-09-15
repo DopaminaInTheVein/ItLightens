@@ -122,12 +122,17 @@ void TCompGuiButton::Clicked()
 		notifyOver(false);
 	}
 	else if (checkReleased()) {
-		ChangeState(STRING(Released));
-		render_state = RSTATE_CLICKED;
-		render_state_target = RSTATE_RELEASED;
+		setReleased();
 		//logic_manager->throwEvent(CLogicManagerModule::EVENT::OnClicked, MY_NAME, MY_OWNER);
 	}
 }
+void TCompGuiButton::setReleased()
+{
+	ChangeState(STRING(Released));
+	render_state = RSTATE_CLICKED;
+	render_state_target = RSTATE_RELEASED;
+}
+
 void TCompGuiButton::Released()
 {
 	if (render_state >= RSTATE_RELEASED) {
@@ -136,9 +141,20 @@ void TCompGuiButton::Released()
 }
 void TCompGuiButton::Actioned()
 {
-	onClick(TMsgClicked());
+	execute();
 	ChangeState(STRING(Over));
 	render_state_target = RSTATE_OVER;
+}
+
+void TCompGuiButton::execute()
+{
+	if (listener.handle.isValid()) {
+		TMsgGuiNotify msg;
+		msg.event_name = listener.event_name;
+		msg.notifier = MY_OWNER;
+		listener.handle.sendMsg(msg);
+	}
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnClicked, MY_NAME, MY_OWNER);
 }
 
 bool TCompGuiButton::getUpdateInfo()
@@ -163,11 +179,6 @@ void TCompGuiButton::update(float dt)
 	Recalc();
 	updateRenderState();
 	updateSize();
-}
-
-void TCompGuiButton::onClick(const TMsgClicked&)
-{
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnClicked, MY_NAME, MY_OWNER);
 }
 
 void TCompGuiButton::updateRenderState()
@@ -227,12 +238,12 @@ bool TCompGuiButton::checkOver()
 
 bool TCompGuiButton::checkClicked()
 {
-	return controller->ActionButtonBecomesPessed();
+	return controller->ActionGuiButtonBecomesPressed();
 }
 
 bool TCompGuiButton::checkReleased()
 {
-	return controller->IsActionButtonReleased();
+	return controller->ActionGuiButtonBecomesReleased();
 }
 
 void TCompGuiButton::notifyOver(bool over)
@@ -249,6 +260,18 @@ void TCompGuiButton::notifyOver(bool over)
 	else {
 		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnMouseUnover, MY_NAME, MY_OWNER);
 	}
+}
+
+//Messages
+void TCompGuiButton::onClick(const TMsgClicked&)
+{
+	setReleased();
+}
+
+void TCompGuiButton::onSetListener(const TMsgGuiSetListener& msg)
+{
+	listener.handle = msg.listener;
+	listener.event_name = msg.event_name;
 }
 
 map<string, statehandler>* TCompGuiButton::getStatemap() {

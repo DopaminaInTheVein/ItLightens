@@ -171,6 +171,7 @@ public:
 	void clearSaveData();
 	void loadEntities(const char* file_name);
 	void resume();
+	void jsonEdit(std::string filename, std::string group, std::string name, float new_value);
 	void exit();
 	const char* getText(const char* scene, const char* event);
 	void reloadLanguageFile(const char* language);

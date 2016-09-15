@@ -403,6 +403,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnMouseUnover(\"%s\");", params.c_str());
 		break;
 	}
+	case (OnChoose): {
+		sprintf(lua_code, "OnChoose(%s);", params.c_str());
+		break;
+	}
 	case (OnPause): {
 		sprintf(lua_code, "OnPause();");
 		break;
@@ -825,6 +829,13 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// Resume
 		.set("resume", &SLBPublicFunctions::resume)
 		.comment("Resume game")
+		// Edit json file
+		.set("json_edit", &SLBPublicFunctions::jsonEdit)
+		.comment("Resume game")
+		.param("string: filename")
+		.param("string: group")
+		.param("string: name")
+		.param("float: value")
 		// Exit Game
 		.set("exit_game", &SLBPublicFunctions::exit)
 		.comment("Exit game")

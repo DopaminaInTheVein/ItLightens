@@ -360,4 +360,14 @@ struct TMsgOverButton {
 struct TMsgClicked {
 	DECLARE_MSG_ID();
 };
+struct TMsgGuiSetListener {
+	CHandle listener;
+	std::string event_name;
+	DECLARE_MSG_ID();
+};
+struct TMsgGuiNotify {
+	CHandle notifier;
+	std::string event_name;
+	DECLARE_MSG_ID();
+};
 #endif

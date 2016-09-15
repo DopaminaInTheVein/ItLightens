@@ -15,6 +15,13 @@ function CallFunction(func)
 	end
 end
 
+function CallFunctionParam(func, param)
+	if _G[func] then _G[func](param)
+	else
+		p:print("function "..func.." does not exist!\n")
+	end
+end
+
 function OnAction( param )
 	p:print( "OnAction: "..param.."\n" )
 	CallFunction("OnAction_"..param)
@@ -414,6 +421,7 @@ end
 function OnStepOutScientist( )
 	-- p:print("StepOutScientist")
 end
+
 -- GUI
 ---------------------------------------------------
 function OnCreateGui( param )
@@ -438,6 +446,11 @@ end
 function OnClicked( param )
 	p:print("OnClicked")
 	CallFunction("OnClicked_"..param)
+end
+
+function OnChoose( name, option )
+	p:print("OnChoose: "..name.." "..option)
+	CallFunctionParam("OnChoose_"..name, option)
 end
 
 function OnPause( )

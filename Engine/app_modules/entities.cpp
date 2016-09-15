@@ -242,9 +242,9 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompFadeScreen>()->init(4);
 
 	//Gui
+	getHandleManager<TCompGui>()->init(MAX_ENTITIES);
 	getHandleManager<TCompGuiCursor>()->init(64);
 	getHandleManager<TCompGuiButton>()->init(64);
-	getHandleManager<TCompGui>()->init(MAX_ENTITIES);
 	getHandleManager<TCompGuiSelector>()->init(64);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
@@ -443,13 +443,15 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompFadeScreen, TMsgEntityCreated, onCreate);
 
 	//Gui
+	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
 	SUBSCRIBE(TCompGuiCursor, TMsgEntityCreated, onCreate);
-	SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
-	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
+	SUBSCRIBE(TCompGuiButton, TMsgGuiSetListener, onSetListener);
 
+	SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompGuiSelector, TMsgGuiNotify, onGuiNotify);
 	return true;
 }
 
@@ -693,8 +695,8 @@ void CEntitiesModule::update(float dt) {
 	}
 
 	//Gui
-	getHandleManager<TCompGui>()->updateAll(dt);
 	getHandleManager<TCompGuiCursor>()->updateAll(dt);
+	getHandleManager<TCompGui>()->updateAll(dt);
 	getHandleManager<TCompGuiButton>()->updateAll(dt);
 	getHandleManager<TCompGuiSelector>()->updateAll(dt);
 }

@@ -15,6 +15,11 @@ typedef DirectX::BoundingBox AABB;
 #define rad2deg( _rad )     ( _rad  * 180.f / (float)M_PI )
 
 #define VEC3_UP VEC3(0.f, 1.f, 0.f)
+#define VEC3_DOWN VEC3(0.f, -1.f, 0.f)
+#define VEC3_LEFT VEC3(-1.f, 0.f, 0.f)
+#define VEC3_RIGHT VEC3(1.f, 0.f, 0.f)
+#define VEC3_FRONT VEC3(0.f, 0.f, 1.f)
+#define VEC3_BACK VEC3(0.f, 0.f, -1.f)
 
 #include "angular.h"
 #include "transform.h"

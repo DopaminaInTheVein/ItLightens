@@ -10,9 +10,10 @@ class CTransform {
 	CQuaternion rotation;
 	VEC3        position;
 	VEC3        scale;
+	VEC3		scale_base;
 public:
 	// ---------------------------
-	CTransform() : scale(1.f, 1.f, 1.f) {}
+	CTransform() : scale(1.f, 1.f, 1.f), scale_base(1.f, 1.f, 1.f) {}
 	MAT44       asMatrix() const {
 		MAT44 matScale;
 		if (scale.x == 1.f && scale.y == 1.f || scale.z == 1.f) {
@@ -110,6 +111,10 @@ public:
 		position += new_pos;
 	}
 	void setScale(VEC3 new_scale) {
+		scale = new_scale * scale_base;
+	}
+	void setScaleBase(VEC3 new_scale) {
+		scale_base = new_scale;
 		scale = new_scale;
 	}
 	void setRotation(CQuaternion new_rotation) {

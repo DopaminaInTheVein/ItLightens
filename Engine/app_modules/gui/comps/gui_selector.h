@@ -15,6 +15,8 @@ class TCompGuiSelector : public aicontroller, public TCompBase {
 
 	//State info
 	CHandle cursor;
+	CHandle arrow_left;
+	CHandle arrow_right;
 	int cur_option;
 	std::vector<SelectorOption> options;
 
@@ -24,6 +26,9 @@ class TCompGuiSelector : public aicontroller, public TCompBase {
 
 	// Aux
 	bool checkOver();
+	void notifyOver(bool over);
+	void AddArrows();
+	void AddArrow(CHandle&, string prefab, string name_event, float offset_pos);
 
 protected:
 	// the states, as maps to functions
@@ -34,7 +39,6 @@ public:
 	// load Xml
 	bool load(MKeyValue& atts);
 
-	void onCreate(const TMsgEntityCreated&);
 	bool getUpdateInfo();
 	void update(float dt);
 	void renderInMenu();
@@ -45,8 +49,15 @@ public:
 	void Enabled();
 	void Over();
 
+	//Messages
+	void onCreate(const TMsgEntityCreated&);
+	void onGuiNotify(const TMsgGuiNotify&);
+
 	//Public actions
 	int AddOption(std::string);
+
+	//Destructor
+	~TCompGuiSelector();
 };
 
 #endif

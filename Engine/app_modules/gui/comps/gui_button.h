@@ -4,6 +4,8 @@
 #include "components/comp_base.h"
 #include "logic/aicontroller.h"
 
+#include "gui_basic.h"
+
 //Forward Declaration
 class TCompTransform;
 class TCompGui;
@@ -13,6 +15,7 @@ class TCompGuiButton : public aicontroller, public TCompBase {
 
 	//State info
 	CHandle cursor;
+	GuiListener listener;
 	float render_state;
 	float render_state_target;
 	//float render_state_speed;
@@ -69,11 +72,16 @@ public:
 
 	//Messages
 	void onClick(const TMsgClicked&);
+	void onSetListener(const TMsgGuiSetListener&);
 
 	//Render State
 	void updateRenderState();
 	void updateSize();
 	float getRenderState() { return render_state; }
+
+	//Aux
+	void setReleased();
+	void execute();
 };
 
 #endif

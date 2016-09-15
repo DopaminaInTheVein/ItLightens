@@ -797,6 +797,12 @@ void SLBPublicFunctions::resume() {
 	GameController->SetGameState(CGameController::RUNNING);
 }
 
+void SLBPublicFunctions::jsonEdit(std::string filename, std::string group, std::string name, float new_value) {
+	std::map<std::string, float> all_values = readIniAtrData(filename, group);
+	all_values[name] = new_value;
+	writeIniAtrData(filename, group, all_values);
+}
+
 void SLBPublicFunctions::exit() {
 	CApp::get().exitGame();
 }

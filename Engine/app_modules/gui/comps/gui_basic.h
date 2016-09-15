@@ -21,6 +21,10 @@ class TCompCamera;
 #define GUI_MAX_COL	20
 
 typedef struct GuiMatrix { CHandle elem[GUI_MAX_ROW][GUI_MAX_COL]; } GuiMatrix;
+typedef struct GuiListener {
+	CHandle handle;
+	std::string event_name;
+} GuiListener;
 
 class TCompGui : public TCompBase {
 	static std::map<std::string, GuiMatrix> gui_screens;

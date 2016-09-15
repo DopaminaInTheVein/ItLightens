@@ -117,6 +117,7 @@ public:
 		OnMouseUnover,
 		OnPause,
 		OnCreateGui,
+		OnChoose,
 	};
 
 	CLogicManagerModule();

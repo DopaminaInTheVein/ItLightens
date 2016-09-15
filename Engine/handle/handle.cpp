@@ -11,6 +11,7 @@ bool CHandle::isValid() const {
 }
 
 void CHandle::destroy() {
+	if (!isValid()) return;
 	auto hm = CHandleManager::getByType(type);
 	if (hm)
 		hm->destroyHandle(*this);
