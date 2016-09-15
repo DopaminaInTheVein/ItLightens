@@ -260,17 +260,34 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 			//render skeleton object
 			if (curr_tech_used_bones) {
-				renderSkeleton(it);
+				if(renderSkeleton(it)) {
+
+					//valid skeleton
+					it->mesh->renderGroup(it->submesh_idx);
+					prev_it = it;
+					++nkeys_rendered;
+				}
 			}
 
 			//render UI object
 			else if (it->material->tech->getCategory() == CRenderTechnique::UI_OBJS) {
-				renderUI(it);
-			}
+				if (renderUI(it)) {
 
-			it->mesh->renderGroup(it->submesh_idx);    // it->mesh->renderSubMesh( it->submesh );
-			prev_it = it;
-			++nkeys_rendered;
+					//Valid UI
+					it->mesh->renderGroup(it->submesh_idx);
+					prev_it = it;
+					++nkeys_rendered;
+				}
+			}
+			else {
+
+				//default skeleton
+				it->mesh->renderGroup(it->submesh_idx);
+				prev_it = it;
+				++nkeys_rendered;
+			}
+			
+			
 		}
 		++it;
 	}
@@ -280,18 +297,19 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	renderedCulling.push_back(nkeys_rendered);
 }
 
-void CRenderManager::renderSkeleton(TKey* it) {
+bool CRenderManager::renderSkeleton(TKey* it) {
 	const CEntity* e = it->owner.getOwner();
-	assert(e);
+	if (!e) return false;
 	const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
-	assert(comp_skel);
+	if (!comp_skel) return false;
 	comp_skel->uploadBonesToCteShader();
+	return true;
 }
 
 #include "app_modules\gui\comps\gui_basic.h"
-void CRenderManager::renderUI(TKey* it) {
+bool CRenderManager::renderUI(TKey* it) {
 	const CEntity* e = it->owner.getOwner();
-	assert(e);
+	if (!e) return false;
 	TCompGui* comp_ui = e->get<TCompGui>();
 	if (comp_ui) {
 		shader_ctes_gui.state_ui = comp_ui->getRenderState();
@@ -301,15 +319,9 @@ void CRenderManager::renderUI(TKey* it) {
 		shader_ctes_gui.state_ui = 0;
 	}
 
-	CEntity* e_owner = it->owner.getOwner();
-	TCompTransform* trans = e_owner->get<TCompTransform>();
-
-	//float value = random(0.5, 2.0);
-	//trans->setScale(VEC3(value, value, value));
-
-	//shader_ctes_object.World = trans->asMatrix();
-	//shader_ctes_object.uploadToGPU();
 	shader_ctes_gui.uploadToGPU();
+
+	return true;
 }
 
 void CRenderManager::renderUICulling() {
