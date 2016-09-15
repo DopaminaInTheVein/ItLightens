@@ -801,6 +801,20 @@ void SLBPublicFunctions::exit() {
 	CApp::get().exitGame();
 }
 
+const char* SLBPublicFunctions::getText(const char* scene, const char* event) {
+	std::string res_str = lang_manager->getText(scene, event);
+
+	char * res = new char[res_str.size() + 1];
+	std::copy(res_str.begin(), res_str.end(), res);
+	res[res_str.size()] = '\0';
+
+	return res;
+}
+
+void SLBPublicFunctions::reloadLanguageFile(const char* language) {
+	lang_manager->reloadLanguageFile(language);
+}
+
 //test
 void SLBPublicFunctions::test(const char* to_print) {
 	//CHandle h = CHandle();

@@ -130,6 +130,7 @@
     <ClCompile Include="app_modules\io\joystick.cpp" />
     <ClCompile Include="app_modules\io\keyboard.cpp" />
     <ClCompile Include="app_modules\io\mouse.cpp" />
+    <ClCompile Include="app_modules\lang_manager\lang_manager.cpp" />
     <ClCompile Include="app_modules\logic_manager\logic_manager.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -364,6 +365,7 @@
     <ClInclude Include="app_modules\io\joystick.h" />
     <ClInclude Include="app_modules\io\keyboard.h" />
     <ClInclude Include="app_modules\io\mouse.h" />
+    <ClInclude Include="app_modules\lang_manager\lang_manager.h" />
     <ClInclude Include="app_modules\logic_manager\logic_manager.h" />
     <ClInclude Include="app_modules\logic_manager\slb_public_functions.h" />
     <ClInclude Include="app_modules\navmesh\navmesh_manager.h" />

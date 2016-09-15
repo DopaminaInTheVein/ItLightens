@@ -1,0 +1,49 @@
+{
+  "title": {
+	"button_1": "Comenzar partida"
+  },
+  "hub": {
+    "start_hub": "Mueve la camara\ny usa SENTIR\npara encontrar tu objetivo",
+    "target_seen": "Voila"
+  },
+  "tuto_mole": {
+    "look_wall": "This wall seems weak, I wonder if there is something behind...",
+    "help_possess": "Acercate a la mole y pulsa SHIFT IZQUIERDO para poseer su cuerpo.",
+    "help_unpossess": "Pulsa SHIFT IZQUIERDO para abandonar el cuerpo de la mole.",
+	"help_place_box": "Lleva la caja hasta la columna rota (puedes utilizar SENTIR)",
+	"help_wall": "Acercate al muro de enfrente con la mole y pulsa CLIC IZQUIERDO para destruirlo",
+	"help_box": "Acercate a na caja y pulsa CLIC IZQUIERDO para empujar o tirar",
+	"help_djump": "Pulsa ESPACIO para saltar. Puedes pulsar de nuevo para efectuar doble salto"
+  },
+  "tuto_sci": {
+    "help_possess": "Acercate al cientifico y pulsa SHIFT IZQUIERDO para poseer su cuerpo.",
+    "help_unpossess": "Pulsa SHIFT IZQUIERDO para abandonar el cuerpo del científico.",
+	"help_wb": "Acercate al banco de trabajo con el cientifico y pulsa CLIC IZQUIERDO para crear bombas.",
+	"help_bomb": "Lanza bombas con CLIC DERECHO para aturdir a los guardias.\n(No te acerques demasiado o te detectaran.)",
+	"help_exit": "Has recuperado toda tu energia. Cruza la puerta abierta para abandonar este tutorial.",
+	"stunned_guard_remain": "Podria ser peor... Aturde al guardia restante.",
+	"help_repair": "Bien hecho. Al ser un sueño se quedaran aturdidos para siempre.\nAhora acercate al dron de enfrente y pulsa CLIC IZQUIERDO para repararlo.",
+	"help_polarity": "Pulsa Q y E para alternar mi polaridad.\n Usa esta habilidad para atraerte hacia el dron y repelerte despues hacia arriba.",
+	"help_generator": "Pulsa CLIC IZQUIERDO cerca de un generador para recuperar energia"
+  },
+  "ms3": {
+    "pila_1": "Where can I use this cell?",
+    "pila_2": "This object contained energy in the past...",
+	"sci_pila": "This cell is exhausted. And too heavy for me...",
+    "cargador_player_1": "The cell is full of energy now.",
+    "cargador_player_2": "The cell fits perfectly.\nI don't know how this machine works though...",
+	"cargador_player_3": "I can feel a lot of energy inside this.",
+    "cargador_sci_1": "The cell has power and is working now!",
+    "cargador_sci_2": "Here we go!",
+	"cargador_sci_3": "There is nothing to charge.",
+    "recharge_cell": "The battery is now full of power!",
+    "enchufe_player_1": "I did it! The door is open now!",
+	"enchufe_player_2": "The object on it has no energy...",
+	"enchufe_player_3": "This needs energy to work.",
+	"enchufe_sci_1": "I don't like to brag, but THIS is a good work",
+	"enchufe_sci_2": "The cell is empty, and too heavy for me...",
+	"enchufe_sci_3": "This needs a cell to work.",
+	"elevator_player": "I don't know how this mechanism works\n\n",
+	"look_wall": "This wall seems weak, I wonder if there is something behind..."
+  }
+}

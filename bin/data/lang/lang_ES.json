@@ -1,0 +1,49 @@
+{
+  "title": {
+	"button_1": "Comenzar partida"
+  },
+  "hub": {
+    "start_hub": "Mueve la camara\ny usa SENTIR\npara encontrar tu objetivo.",
+    "target_seen": "Eso es!"
+  },
+  "tuto_mole": {
+    "look_wall": "Esta pared parece debil. Me pregunto si habra algo detras...",
+    "help_possess": "Acercate a la Mole y pulsa SHIFT IZQUIERDO para controlar su cuerpo.",
+    "help_unpossess": "Pulsa SHIFT IZQUIERDO para abandonar el cuerpo de la Mole.",
+	"help_place_box": "Lleva la caja hasta la columna rota (puedes utilizar SENTIR).",
+	"help_wall": "Acercate al muro de enfrente con la mole y pulsa CLIC IZQUIERDO para destruirlo.",
+	"help_box": "Acercate a la caja y pulsa CLIC IZQUIERDO para empujar o tirar de ella.",
+	"help_djump": "Pulsa ESPACIO para saltar. Pulsalo dos veces para efectuar un doble salto."
+  },
+  "tuto_sci": {
+    "help_possess": "Acercate al Cientifico y pulsa SHIFT IZQUIERDO para controlar su cuerpo.",
+    "help_unpossess": "Pulsa SHIFT IZQUIERDO para abandonar el cuerpo del Cientifico.",
+	"help_wb": "Acercate al banco de trabajo con el cientifico y pulsa CLIC IZQUIERDO para crear bombas.",
+	"help_bomb": "Lanza bombas pulsando E para aturdir a los guardias.\nNo te acerques demasiado o te detectaran.",
+	"help_exit": "Has recuperado toda tu energia! Cruza la puerta abierta para abandonar este tutorial.",
+	"stunned_guard_remain": "Has fallado!\nPodria ser peor... Aturde al guardia restante.",
+	"help_repair": "Bien hecho! Al ser un sueño se quedaran aturdidos para siempre.\nAhora acercate al dron de delante y pulsa CLIC IZQUIERDO para repararlo.",
+	"help_polarity": "Pulsa Q y E para alternar mi polaridad.\n Usa esta habilidad para atraerte hacia el dron y repelerte despues hacia arriba.",
+	"help_generator": "Pulsa CLIC IZQUIERDO cerca de un generador para recuperar energia."
+  },
+  "ms3": {
+    "pila_1": "Donde puedo usar esta bateria?",
+    "pila_2": "Este objeto contenia mucha energia en el pasado...",
+	"sci_pila": "Esta bateria esta agotada, y es demasiado pesada para mi...",
+    "cargador_player_1": "La bateria esta cargada.",
+    "cargador_player_2": "La bateria encaja perfectamente.\nLastima que no sepa como activar la maquina...",
+	"cargador_player_3": "Detecto mucha energia aqui dentro...",
+    "cargador_sci_1": "La bateria esta cargada y operativa!",
+    "cargador_sci_2": "Vamos alla!",
+	"cargador_sci_3": "No hay nada colocado para cargar.",
+    "recharge_cell": "La bateria esta cargada!",
+    "enchufe_player_1": "Lo consegui! La puerta se ha abierto!",
+	"enchufe_player_2": "Este objeto no tiene energia...",
+	"enchufe_player_3": "Esto necesita energia para funcionar.",
+	"enchufe_sci_1": "No me gusta fanfarronear, pero esto ha sido un buen trabajo.",
+	"enchufe_sci_2": "La bateria esta agotada, y es demasiado pesada para mi...",
+	"enchufe_sci_3": "Esto necesita una bateria para funcionar.",
+	"elevator_player": "No se como funciona este mecanismo.",
+	"look_wall": "Esta pared parece debil. Me pregunto si habra algo detras..."
+  }
+}

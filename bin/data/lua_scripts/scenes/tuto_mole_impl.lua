@@ -73,7 +73,7 @@ end
 function tutomole_lookWall( )
   p:print("Look Wall\n")
   triggerWall_1:getHandleCaller()
-  p:player_talks("This wall seems weak, I wonder if there is something behind...","scientific.dds","SCI")
+  p:player_talks(p:get_text("tuto_mole", "look_wall"),"scientific.dds","SCI")
   p:exec_command( "triggerWall_1:setActionable(1);", 2 )
 end
 
@@ -128,21 +128,21 @@ end
 -- Auxiliars
 --==============================================================
 function tutomole_help_possess( )
-	p:player_talks("Acercate a la mole y pulsa SHIFT IZQUIERDO para poseer su cuerpo.", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_possess"), "scientific.dds", "SCI")
 end
 function tutomole_help_unpossess( )
-	p:player_talks("Pulsa SHIFT IZQUIERDO para abandonar el cuerpo de la mole.", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_unpossess"), "scientific.dds", "SCI")
 end
 function tutomole_help_place_box( )
-	p:player_talks("Lleva la caja hasta la columna rota (puedes utilizar SENTIR)", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_place_box"), "scientific.dds", "SCI")
 end
 function tutomole_help_wall( )
-	p:player_talks("Acercate al muro de enfrente con la mole y pulsa CLIC IZQUIERDO para destruirlo", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_wall"), "scientific.dds", "SCI")
 end
 function tutomole_help_box( )
-	p:player_talks("Acercate a na caja y pulsa CLIC IZQUIERDO para empujar o tirar", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_box"), "scientific.dds", "SCI")
 end
 function tutomole_help_djump( )
-	p:player_talks("Pulsa ESPACIO para saltar. Puedes pulsar de nuevo para efectuar doble salto", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_djump"), "scientific.dds", "SCI")
 end
 --==============================================================

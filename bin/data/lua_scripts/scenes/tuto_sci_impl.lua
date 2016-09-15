@@ -120,35 +120,35 @@ end
 -- Auxiliars
 --==============================================================
 function tutosci_help_possess( )
-	p:player_talks("Acercate al cientifico y pulsa SHIFT IZQUIERDO para poseer su cuerpo.", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_possess"), "scientific.dds", "SCI")
 end
 function tutosci_help_unpossess( )
-	p:player_talks("Pulsa SHIFT IZQUIERDO para abandonar el cuerpo del científico.", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_unpossess"), "scientific.dds", "SCI")
 end
 function tutosci_help_wb( )
-	p:player_talks("Acercate al banco de trabajo con el cientifico y pulsa CLIC IZQUIERDO para crear bombas.", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_wb"), "scientific.dds", "SCI")
 end
 function tutosci_help_bomb( )
-	p:player_talks("Lanza bombas con CLIC DERECHO para aturdir a los guardias.\n(No te acerques demasiado o te detectaran.)", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_bomb"), "scientific.dds", "SCI")
 end
 function tutosci_help_exit( )
-	p:player_talks("Has recuperado toda tu energia. Cruza la puerta abierta para abandonar este tutorial.", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_exit"), "scientific.dds", "SCI")
 end
 function tutosci_stunned_guard_remain()
-	p:player_talks("Podria ser peor... Aturde al guardia restante.", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","stunned_guard_remain"), "scientific.dds", "SCI")
 end
 function tutosci_stunned_guards( )
 	tutosci_help_repair()
 	p:complete_tasklist(TASK_TUTOS_STUN)
 end
 function tutosci_help_repair( )
-	p:player_talks("Bien hecho. Al ser un sueño se quedaran aturdidos para siempre.\nAhora acercate al dron de enfrente y pulsa CLIC IZQUIERDO para repararlo.", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_repair"), "scientific.dds", "SCI")
 end
 function tutosci_help_polarity( )
-	p:player_talks("Pulsa Q y E para alternar mi polaridad.\n Usa esta habilidad para atraerte hacia el dron y repelerte despues hacia arriba", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_polarity"), "scientific.dds", "SCI")
 end
 function tutosci_help_generator( )
-	p:player_talks("Pulsa CLIC IZQUIERDO cerca de un generador para recuperar energia", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_generator"), "scientific.dds", "SCI")
 end
 
 -- Door

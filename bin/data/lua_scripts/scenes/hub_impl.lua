@@ -18,7 +18,8 @@ function OnStart_hub( )
 	p:setControlEnabled(1)
 	p:setOnlySense(1)
 	--p:exec_command("p:setPlayerEnabled(1)", 5) --test
-	p:player_talks("Mueve la camara\ny usa SENTIR\npara encontrar tu objetivo", "scientific.dds", "SCI")
+	text = p:get_text("hub","start_hub")
+	p:player_talks(text, "scientific.dds", "SCI")
 end
 -------------------------------
 function OnSave_hub()
@@ -49,7 +50,7 @@ end
 -- Events
 --===========================================
 function hub_target_seen()
-	p:player_talks("Voila", "scientific.dds", "SCI")
+	p:player_talks(p:get_text("hub","target_seen"), "scientific.dds", "SCI")
 	h:getHandleCaller()
 	h:destroy()
 	p:exec_command("p:setOnlySense(0);", 0.5)

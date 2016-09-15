@@ -1,0 +1,49 @@
+{
+  "title": {
+	"button_1": "Comença el joc"
+  },
+  "hub": {
+    "start_hub": "Mou la camera\ni usa SENTIR\nper trobar el teu objectiu.",
+    "target_seen": "Ja ho tens!"
+  },
+  "tuto_mole": {
+    "look_wall": "Aquesta pared sembla debil. Em pregunto si hi haura alguna cosa darrera...",
+    "help_possess": "Apropa't a la Mola i prem SHIFT ESQUERRE per controlar el seu cos.",
+    "help_unpossess": "Prem SHIFT ESQUERRE per abandonar el cose de la Mola.",
+	"help_place_box": "Porta la caixa fins a la columna trencada (pots utilitzar SENTIR).",
+	"help_wall": "Apropa't al mur de davant amb la Mola i prem CLIC ESQUERRE per destruir-lo.",
+	"help_box": "Apropa't a la caixa i prem CLIC ESQUERRE per empenyer-la o estirar-la.",
+	"help_djump": "Prem ESPAI per saltar. Prem-ho dues vegades per efectuar un doble salt."
+  },
+  "tuto_sci": {
+    "help_possess": "Apropa't al Cientific i prem SHIFT ESQUERRE per controlar el seu cos.",
+    "help_unpossess": "Prem SHIFT ESQUERRE per abandonar el cose del Cientific.",
+	"help_wb": "Apropa't al banc de treball amb el Cientific i prem CLIC ESQUERRE per crear bombes.",
+	"help_bomb": "Llença bombes prement E per atordir als guardies.\nNo t'apropis massa o et detectaran!",
+	"help_exit": "Has recuperat tota la teve energia. Creua la porta oberta per abandonar aquest tutorial.",
+	"stunned_guard_remain": "Has fallat!\nPodria ser pitjor... Atordeix al guardia restant.",
+	"help_repair": "Ben fet! Al ser un somni es quedaran atordits per sempre.\nAra apropa't al dron de davant i prem CLIC ESQUERRE per reparar-lo.",
+	"help_polarity": "Prem Q i E per alternar la meva polaritat.\n Usa aquesta habilitat per atraure't cap al dron i repelir-te despres cap amunt.",
+	"help_generator": "Prem CLIC ESQUERRE a prop d'un generador per recuperar energia."
+  },
+  "ms3": {
+    "pila_1": "On puc usar aquesta bateria?",
+    "pila_2": "Aquest objecte contenia molta energia al passat...",
+	"sci_pila": "Aqueta bateria esta agotada, i es massa pesada per a mi...",
+    "cargador_player_1": "La bateria esta carregada.",
+    "cargador_player_2": "La bateria encaixa perfectament.\nLlastima que no sapiga com activar la maquina...",
+	"cargador_player_3": "Detecto molta energia aqui dins...",
+    "cargador_sci_1": "La bateria esta carregada i operativa!",
+    "cargador_sci_2": "Som-hi!",
+	"cargador_sci_3": "No hi ha res col·locat per carregar.",
+    "recharge_cell": "La bateria esta carregada!",
+    "enchufe_player_1": "Ho he aconseguit! La porta s'ha obert!",
+	"enchufe_player_2": "Aquest objecte no te energia...",
+	"enchufe_player_3": "Aixo necessita energia per funcionar.",
+	"enchufe_sci_1": "No m'agrada fanfarronejar, pero aixo ha sigut un bon treball.",
+	"enchufe_sci_2": "La bateria esta agotada, i es massa pesada per a mi...",
+	"enchufe_sci_3": "Aixo necessita una bateria per funcionar.",
+	"elevator_player": "No se com funciona aquest mecanisme.",
+	"look_wall": "Aquesta pared sembla debil. Em pregunto si hi haura alguna cosa darrera..."
+  }
+}

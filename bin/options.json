@@ -14,5 +14,8 @@
   "controls": {
     "y-axis_inverted": 1,
     "x-axis_inverted": 1
+  },
+  "language" : {
+	"lang": "ES"
   }
 }

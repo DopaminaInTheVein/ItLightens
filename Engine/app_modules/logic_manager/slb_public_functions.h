@@ -5,8 +5,9 @@
 #include <conio.h>
 #include <stdio.h>
 #include "logic_manager.h"
-#include "app_modules\sound_manager\sound_manager.h"
-#include "handle\handle.h"
+#include "app_modules/sound_manager/sound_manager.h"
+#include "app_modules/lang_manager/lang_manager.h"
+#include "handle/handle.h"
 #include "components/entity.h"
 
 // player handle control in LUA
@@ -171,6 +172,8 @@ public:
 	void loadEntities(const char* file_name);
 	void resume();
 	void exit();
+	const char* getText(const char* scene, const char* event);
+	void reloadLanguageFile(const char* language);
 
 	void test(const char* to_print);
 };

@@ -828,5 +828,14 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// Exit Game
 		.set("exit_game", &SLBPublicFunctions::exit)
 		.comment("Exit game")
+		// Get text (localization)
+		.set("get_text", &SLBPublicFunctions::getText)
+		.comment("Get the text for the specified scene and event")
+		.param("string: scene of the text")
+		.param("string: event of the text")
+		// Reload localization file
+		.set("reload_language_file", &SLBPublicFunctions::reloadLanguageFile)
+		.comment("Reloads the language file")
+		.param("string: code of the language file that will be loaded")
 		;
 }

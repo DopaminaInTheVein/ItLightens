@@ -2,7 +2,7 @@
 #define INC_WINDOWS_APP_H_
 
 #include <windows.h>
-#include "utils\timer.h"
+#include "utils/timer.h"
 #include <set>
 
 class IAppModule;
@@ -21,6 +21,7 @@ public:
 
 	std::string file_options_json;
 	std::string file_initAttr_json;
+
 	bool max_screen;
 	// ask_window, pixels of the application, render otherwise
 	int getXRes(bool ask_window = false);

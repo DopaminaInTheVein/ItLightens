@@ -566,6 +566,9 @@
     <ClCompile Include="app_modules\gui\comps\gui_selector.cpp">
       <Filter>app_modules\gui\comps</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\lang_manager\lang_manager.cpp">
+      <Filter>app_modules\lang_manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1491,6 +1494,9 @@
     <ClInclude Include="app_modules\gui\comps\gui_selector.h">
       <Filter>app_modules\gui\comps</Filter>
     </ClInclude>
+    <ClInclude Include="app_modules\lang_manager\lang_manager.h">
+      <Filter>app_modules\lang_manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1675,6 +1681,9 @@
     </Filter>
     <Filter Include="Editors">
       <UniqueIdentifier>{07107c58-8bcf-4032-9f50-52cef83806f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app_modules\lang_manager">
+      <UniqueIdentifier>{0948db12-24b9-4337-a8be-138dc4bdee78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

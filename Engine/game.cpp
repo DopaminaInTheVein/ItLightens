@@ -17,6 +17,7 @@
 #include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "app_modules/sound_manager/sound_manager.h"
+#include "app_modules/lang_manager/lang_manager.h"
 #include "particles\particles_manager.h"
 
 #include "app_modules/render/module_render_deferred.h"
@@ -51,6 +52,7 @@ CRenderDeferredModule * render_deferred;
 bool CApp::start() {
 	map<std::string, std::string> fields = readIniAtrDataStr(file_options_json, "scenes");
 	//next_level = fields["first_scene"];
+	map<std::string, std::string> lang_map = readIniAtrDataStr(CApp::get().file_options_json, "language");
 
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
@@ -64,6 +66,7 @@ bool CApp::start() {
 	Debug = new CDebug();
 	logic_manager = new CLogicManagerModule;
 	sound_manager = new CSoundManagerModule;
+	lang_manager = new CLangManagerModule(lang_map["lang"]);
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
@@ -77,7 +80,9 @@ bool CApp::start() {
 	all_modules.push_back(render_deferred);
 	all_modules.push_back(logic_manager);
 	all_modules.push_back(sound_manager);
+	all_modules.push_back(lang_manager);
 
+	mod_update.push_back(lang_manager);
 	mod_update.push_back(logic_manager);
 	mod_update.push_back(sound_manager);
 	mod_update.push_back(entities);
@@ -107,6 +112,7 @@ bool CApp::start() {
 	mod_init_order.push_back(g_particlesManager);   //need to be initialized before the entities
 	mod_init_order.push_back(logic_manager);
 	mod_init_order.push_back(sound_manager);
+	mod_init_order.push_back(lang_manager);
 	mod_init_order.push_back(entities);
 
 	mod_wnd_proc.push_back(io);
