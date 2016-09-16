@@ -282,7 +282,7 @@ void CGuiModule::stop() {
 }
 
 //------------------------------------------------------------------------------------//
-CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag)
+CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag, float scale)
 {
 	CHandle h = createPrefab(prefab);
 	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
@@ -292,7 +292,9 @@ CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag)
 	VEC3 new_pos = min_ortho + (max_ortho - min_ortho) * pos;
 	GET_COMP(tmx, h, TCompTransform);
 	tmx->setPosition(new_pos);
-
+	if (scale != 1.0f) {
+		tmx->setScale(VEC3(scale, scale, scale));
+	}
 	if (!tag.empty()) {
 		TMsgSetTag msgTag;
 		msgTag.add = true;

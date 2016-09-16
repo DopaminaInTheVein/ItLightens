@@ -46,6 +46,8 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	else if (player.hasTag("AI_cientifico")) {
 		Gui->addGuiElement("ui/Fading_Icon_SCI", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_SCI_" + std::to_string(id));
 	}
+	accumSpacing.resize(lineText.size(), 0.0f);
+
 	return true;
 }
 
@@ -85,7 +87,7 @@ void TCompFadingMessage::update(float dt) {
 		Gui->removeGuiElementByTag("Fading_Message_Background_" + std::to_string(id));
 	}
 }
-void TCompFadingMessage::printLetters() const {
+void TCompFadingMessage::printLetters() {
 	bool b = false;
 	int gState = GameController->GetGameState();
 	if (gState != CGameController::RUNNING) return;
@@ -103,7 +105,7 @@ void TCompFadingMessage::printLetters() const {
 			linechars += lineText[line].length();
 		}
 
-		char letter = text[i];
+		unsigned char letter = text[i];
 		int ascii_tex_pos = letter;
 		int ascii_tex_posx = ascii_tex_pos % 16;
 		int ascii_tex_posy = ascii_tex_pos / 16;
@@ -113,13 +115,14 @@ void TCompFadingMessage::printLetters() const {
 		float sx = letterBoxSize;
 		float sy = letterBoxSize;
 
-		float letter_posx = 0.50f + (i - linechars_prev - fminf(line, 1.0f)) * sizeFontX;
+		float letter_posx = 0.50f + (i - linechars_prev - fminf(line, 1.0f)) * sizeFontX - accumSpacing[line];
 		float letter_posy = 0.01f - line*sizeFontY;
-		CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.49f), ("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)));
+		CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.49f + i*0.001f), ("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)));
 		CEntity * letter_e = letter_h;
 		TCompGui * letter_gui = letter_e->get<TCompGui>();
 		assert(letter_gui);
 		RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
 		letter_gui->setTxCoords(textCords);
+		accumSpacing[line] += SBB::readLetterSpacingVector()[ascii_tex_pos];
 	}
 }

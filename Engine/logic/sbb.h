@@ -22,6 +22,7 @@ private:
 	static map<string, bt_mole*> sbbMole;
 	static map<string, vector<CHandle> > sbbHandlesVector;
 	static map<string, vector<VEC3> > sbbVEC3Vector;
+	static vector<float> letterSpacing;
 
 public:
 	static map<string, guard_alert> sbbGuardAlerts;
@@ -66,6 +67,8 @@ public:
 	static void postGuardAlert(string, guard_alert);
 	static guard_alert readGuardAlert(string);
 	static void updateGuardAlerts(float);
+
+	static vector<float> readLetterSpacingVector();
 };
 
 #endif
