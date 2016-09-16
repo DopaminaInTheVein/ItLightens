@@ -78,6 +78,7 @@ CHandle createPrefab(const std::string& prefab) {
 #define MUST_COMPILE_SNOOZER (curr_slept_compiler && elem != "entity" && elem != "tags" && elem != "name")
 
 void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
+
 	if (curr_prefab_compiler) {
 		CPrefabCompiler::TCall c;
 		c.is_start = true;

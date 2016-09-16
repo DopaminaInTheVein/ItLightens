@@ -143,7 +143,6 @@ bool CApp::start() {
 
 	imgui->StartLightEditor(); //need to be created after entities
 
-	//GameController->SetGameState(CGameController::LOADING);
 	GameController->SetGameState(CGameController::RUNNING);
 
 	logic_manager->throwEvent(logic_manager->OnGameStart, "");
@@ -265,8 +264,7 @@ void CApp::exitGame() {
 void CApp::update(float elapsed) {
 	PROFILE_FUNCTION("update");
 	for (auto it : mod_update) {
-		if (GameController->GetGameState() == CGameController::RUNNING ||
-			GameController->GetGameState() == CGameController::LOADING) {
+		if (GameController->GetGameState() == CGameController::RUNNING) {
 			PROFILE_FUNCTION(it->getName());
 			auto name = it->getName();
 			it->update(elapsed);
@@ -282,15 +280,11 @@ void CApp::update(float elapsed) {
 	if (next_level != "" && entities->isCleared()) {
 		if (!loading) {
 			// Loading state and screen
-			GameController->SetGameState(CGameController::LOADING);
 			logic_manager->throwEvent(logic_manager->OnLoadingLevel, "");
 			loading = true;
 			GameController->SetLoadingState(0);
-			//showLoadingScreen();
-			// init the next level
-			//std::thread* th = new std::thread([this] {
-				initNextLevel();
-			//});
+			showLoadingScreen();
+			initNextLevel();
 		}
 	}
 }
@@ -306,6 +300,7 @@ void CApp::initNextLevel()
 	if (!reload) CEntityParser::clearCollisionables();
 	bool is_ok;
 	GameController->SetLoadingState(5);
+	generateFrame();
 
 	// Entidades invariantes
 	CEntitiesModule::ParsingInfo info;
@@ -314,24 +309,29 @@ void CApp::initNextLevel()
 	is_ok = entities->loadXML(info);
 	assert(is_ok);
 	GameController->SetLoadingState(20);
+	generateFrame();
 
 	// Entidades variantes
 	info.filename = level_name + (setContains(has_check_point, next_level) ? "_save" : "_init");
 	entities->loadXML(info);
 	GameController->SetLoadingState(45);
+	generateFrame();
 
 	// Lights
 	info.filename = level_name + "_lights";
 	entities->loadXML(info);
 	GameController->SetLoadingState(60);
+	generateFrame();
 
 	// Init entities
 	entities->initEntities();
 	GameController->SetLoadingState(80);
+	generateFrame();
 
 	// Navmesh
 	if (!reload) CNavmeshManager::initNavmesh(level_name);
 	GameController->SetLoadingState(100);
+	generateFrame();
 
 	// Game state and notify
 	loadedLevelNotify();

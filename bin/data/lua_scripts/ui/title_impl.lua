@@ -13,8 +13,8 @@ function OnClicked_btn_options( )
 end
 
 function playVideoIntro( )
-	--LoadLevel("level_1")
-	p:play_video_and_do("data\\videos\\intro.avi", "LoadLevel(\"level_1\");")
+	LoadLevel("level_1")
+	--p:play_video_and_do("data\\videos\\intro.avi", "LoadLevel(\"level_1\");")
 end
 
 function OnClicked_btn_exit( )

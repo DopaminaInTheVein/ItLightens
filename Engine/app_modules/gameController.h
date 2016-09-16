@@ -27,7 +27,6 @@ public:
 		VICTORY,
 		LOSE,
 		MENU,
-		LOADING,
 		GAME_STATES_SIZE
 	};
 
@@ -36,6 +35,7 @@ public:
 
 	int GetLoadingState() const;
 	void SetLoadingState(int state);
+	bool loadFinished() { return loading_state > 100; }
 
 	void TogglePauseState();
 	void TogglePauseIntroState();

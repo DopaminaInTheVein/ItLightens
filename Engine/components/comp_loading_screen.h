@@ -29,7 +29,8 @@ class TCompLoadingScreen : public TCompBase {
 	void update(float elapsed);
 	void render() const;
 	bool load(MKeyValue& atts);
-	void printLetters() const;
+	void printLetters(VEC3 posi) const;
+	void renderInMenu();
 };
 
 #endif

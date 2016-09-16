@@ -556,7 +556,7 @@ void CEntitiesModule::update(float dt) {
 	static float ia_wait = 0.0f;
 	ia_wait += getDeltaTime();
 
-	if (GameController->GetGameState() == CGameController::LOADING) {
+	if (!GameController->loadFinished()) {
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompCameraMain>()->updateAll(dt);
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
@@ -720,7 +720,7 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 
-	if (GameController->GetGameState() == CGameController::LOADING) {
+	if (!GameController->loadFinished()) {
 		getHandleManager<TCompLoadingScreen>()->onAll(&TCompLoadingScreen::render);
 	}
 	else {
