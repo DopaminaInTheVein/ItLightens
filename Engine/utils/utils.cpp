@@ -342,6 +342,15 @@ ImColor obtainColorFromString(std::string color) {
 	return ImColor(red, green, blue, alpha);
 }
 
+VEC4 obtainColorNormFromString(std::string color) {
+	float red = ((float)stoi(color.substr(1, 2), 0, 16)) / 255.0f;
+	float green = ((float)stoi(color.substr(3, 2), 0, 16)) / 255.0f;
+	float blue = ((float)stoi(color.substr(5, 2), 0, 16)) / 255.0f;
+	float alpha = ((float)stoi(color.substr(7, 2), 0, 16)) / 255.0f;
+
+	return VEC4(red, green, blue, alpha);
+}
+
 // Basic math
 float max(int nargs, ...) {
 	float max_value = FLT_MIN;

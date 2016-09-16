@@ -27,6 +27,8 @@ public:
 	void printLetters();
 	void forceTTLZero();
 	bool load(MKeyValue& atts);
+	// Getter
+	const std::string getId() const { return id; }
 };
 
 #endif

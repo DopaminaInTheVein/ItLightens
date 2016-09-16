@@ -81,6 +81,7 @@ CQuaternion interpolate(const CQuaternion &start, const CQuaternion &end, const 
 
 // STRING TO COLOR
 ImColor obtainColorFromString(std::string color);
+VEC4 obtainColorNormFromString(std::string color);
 
 //template<class TObj>
 typedef uint32_t TTagID;

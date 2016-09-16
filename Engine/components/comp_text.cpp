@@ -27,8 +27,7 @@ bool TCompText::load(MKeyValue& atts)
 	letter_posx_ini = atts.getFloat("pos_x", 0.0f);
 	letter_posy_ini = atts.getFloat("pos_y", 0.0f);
 	scale = atts.getFloat("scale", 1.0f);
-	CQuaternion colorQ = atts.getQuat("color");
-	color = VEC4(colorQ.x, colorQ.y, colorQ.z, colorQ.w);
+	color = obtainColorNormFromString(atts.getString("color", "#000000FF"));
 	printed = false;
 	ttl = 1.0f;
 	std::string endline = "\n";
