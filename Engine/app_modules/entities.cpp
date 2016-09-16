@@ -452,12 +452,14 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiSelector, TMsgGuiNotify, onGuiNotify);
+	SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
 	return true;
 }
 
 bool CEntitiesModule::loadXML(CEntitiesModule::ParsingInfo& info)
 {
 	CEntityParser ep(info.reload);
+	ep.setLoadingControl(info.loading_control);
 	dbg("Loading XML [%s]... (entities before: %d)\n", info.filename.c_str(), size());
 	bool is_ok = ep.xmlParseFile("data/scenes/" + info.filename + ".xml");
 
@@ -474,6 +476,7 @@ void CEntitiesModule::initEntities() {
 	getHandleManager<bt_scientist>()->onAll(&bt_scientist::Init);
 	getHandleManager<ai_cam>()->onAll(&ai_cam::Init);
 	getHandleManager<workbench_controller>()->onAll(&workbench_controller::Init);
+
 	getHandleManager<TCompGenerator>()->onAll(&TCompGenerator::init);
 	getHandleManager<TCompWire>()->onAll(&TCompWire::init);
 	getHandleManager<TCompPolarized>()->onAll(&TCompPolarized::init);
@@ -556,7 +559,7 @@ void CEntitiesModule::update(float dt) {
 	static float ia_wait = 0.0f;
 	ia_wait += getDeltaTime();
 
-	if (!GameController->loadFinished()) {
+	if (GameController->IsLoadingState()) {
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompCameraMain>()->updateAll(dt);
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
@@ -678,7 +681,6 @@ void CEntitiesModule::update(float dt) {
 
 		//Fx
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
-		//getHandleManager<TCompLoadingScreen>()->updateAll(dt);
 
 		//Tmx animator
 		getHandleManager<TCompTransformAnimator>()->updateAll(dt);
@@ -720,7 +722,7 @@ void CEntitiesModule::render() {
 	getHandleManager<TCompAbsAABB>()->onAll(&TCompAbsAABB::render);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::render);
 
-	if (!GameController->loadFinished()) {
+	if (GameController->IsLoadingState()) {
 		getHandleManager<TCompLoadingScreen>()->onAll(&TCompLoadingScreen::render);
 	}
 	else {

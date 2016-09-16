@@ -522,6 +522,33 @@ void SLBCamera::resetCamera() {
 	camera_e->sendMsg(msg);
 }
 
+//Ui Camera control in LUA
+void SLBUiCamera::getCamera() {
+	ui_camera_h = tags_manager.getFirstHavingTag("ui_camera");
+}
+
+bool SLBUiCamera::checkCamera() {
+	if (!ui_camera_h.isValid()) {
+		getCamera();
+		return ui_camera_h.isValid();
+	}
+	return true;
+}
+
+void SLBUiCamera::fadeIn(float speed) {
+	if (!checkCamera()) return;
+	GET_COMP(fx, ui_camera_h, TCompFadeScreen);
+	fx->SetMaxTime(speed);
+	fx->FadeIn();
+}
+
+void SLBUiCamera::fadeOut(float speed) {
+	if (!checkCamera()) return;
+	GET_COMP(fx, ui_camera_h, TCompFadeScreen);
+	fx->SetMaxTime(speed);
+	fx->FadeOut();
+}
+
 // Data
 SLBData::SLBData()
 {

@@ -87,6 +87,7 @@ public:
 	CHandle addGuiElement(std::string prefab, VEC3 pos = VEC3(0.5f, 0.5f, 0.5f), std::string tag = "");
 	void updateGuiElementPositionByTag(std::string tag, VEC3 new_position);
 	void removeGuiElementByTag(std::string tag);
+	void removeAllGuiElementsByTag(std::string tag);
 
 	//Text Actions
 	void setActionAvailable(eAction action);

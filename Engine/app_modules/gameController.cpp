@@ -24,8 +24,12 @@ void CGameController::SetGameState(int state) {
 }
 
 int CGameController::GetLoadingState() const { return loading_state; }
-void CGameController::SetLoadingState(int state) { 
-	loading_state = state; 
+void CGameController::SetLoadingState(float state) { 
+	loading_state = state;
+}
+void CGameController::AddLoadingState(float delta) {
+	loading_state += delta;
+	CApp::get().SetLoadingState(loading_state);
 }
 
 void CGameController::TogglePauseState() {

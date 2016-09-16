@@ -5,7 +5,8 @@
 
 class CGameController : public IAppModule {
 	int		game_state = 0;
-	int		loading_state = 0;
+	float	loading_state = 0.f;
+	bool	loading = false;
 
 	bool    fx_polarize = true;
 	bool	fx_glow = true;
@@ -34,8 +35,16 @@ public:
 	void SetGameState(int state);
 
 	int GetLoadingState() const;
-	void SetLoadingState(int state);
-	bool loadFinished() { return loading_state > 100; }
+	void SetLoadingState(float state);
+	void AddLoadingState(float delta);
+	bool IsLoadingState() { return loading; }
+	void LoadComplete(bool complete) { 
+		loading = !complete; 
+		if (complete)
+			loading_state = 100.f;
+		else
+			loading_state = 0.f;
+	}
 
 	void TogglePauseState();
 	void TogglePauseIntroState();

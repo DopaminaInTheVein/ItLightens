@@ -17,6 +17,7 @@ public:
 	struct ParsingInfo {
 		std::string filename;
 		bool reload;
+		bool loading_control = false;
 	};
 
 	bool start() override;

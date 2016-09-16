@@ -45,6 +45,7 @@ public:
 	std::string getRealLevel(std::string logic_level);
 	std::string getCurrentLogicLevel();
 	void exitGame();
+	void SetLoadingState(float loading);
 
 	VModules& getModulesToWndProc() {
 		return mod_wnd_proc;
@@ -83,7 +84,6 @@ private:
 	void initNextLevel();
 	void restartLevel();
 	void showLoadingScreen();
-	void cleanLoadingEntities();
 };
 
 #endif

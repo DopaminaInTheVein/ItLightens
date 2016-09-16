@@ -187,6 +187,7 @@ void CRenderDeferredModule::renderGBuffer() {
 	PROFILE_FUNCTION("GBuffer");
 	CTraceScoped scope("GBuffer");
 	h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
+	h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
 
 	//static CCamera camera;
 
@@ -942,7 +943,7 @@ void CRenderDeferredModule::render() {
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 
 	renderUI();
-	CEntity* ec = h_camera;
+	CEntity* ec = h_ui_camera;
 	TCompFadeScreen* e = ec->get<TCompFadeScreen>();
 	if (e) {
 		activateZ(ZCFG_ALL_DISABLED);

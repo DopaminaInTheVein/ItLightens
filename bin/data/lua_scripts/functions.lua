@@ -64,14 +64,14 @@ function LoadLevel( logic_level )
 		g_is_menu = false
 	end
 	p:print("Load Level")
-	cam:fade_out(1)
+	--ui_cam:fade_out(1)
 	p:setControlEnabled(0)
 	p:exec_command("p:load_level(\""..logic_level.."\")", 1)
 end
 function LoadLevelSaving( logic_level )
 g_current_level = logic_level
 	p:print("Load Level")
-	cam:fade_out(1)
+	ui_cam:fade_out(1)
 	p:setControlEnabled(0)
 	p:exec_command("SaveLevel()", 1)
 	p:exec_command("p:load_level(\""..logic_level.."\")", 1.2)

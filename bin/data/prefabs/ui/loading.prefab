@@ -10,6 +10,5 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ui/loading/background.static_mesh"/>
-<abs_aabb/>
 </entity>
 </entities>

@@ -45,6 +45,7 @@ class CRenderDeferredModule : public IAppModule {
 	bool ssao_test = true;
 
 	CHandle                 h_camera;
+	CHandle                 h_ui_camera;
 
 	const CRenderTechnique* acc_light_points;
 	const CRenderTechnique* acc_light_directionals;

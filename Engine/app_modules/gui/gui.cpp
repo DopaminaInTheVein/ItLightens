@@ -311,6 +311,12 @@ void CGuiModule::removeGuiElementByTag(std::string tag)
 	if (handle.isValid()) { handle.destroy(); }
 }
 
+void CGuiModule::removeAllGuiElementsByTag(std::string tag)
+{
+	VHandles handles = tags_manager.getHandlesByTag(tag.c_str());
+	for (auto handle : handles) { handle.destroy(); }
+}
+
 void CGuiModule::updateGuiElementPositionByTag(std::string tag, VEC3 new_position) {
 	CHandle handle = tags_manager.getFirstHavingTag(tag.c_str());
 	if (handle.isValid()) {

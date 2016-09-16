@@ -123,6 +123,20 @@ public:
 	void resetCamera();
 };
 
+// camera control in LUA
+class SLBUiCamera
+{
+	CHandle ui_camera_h;
+
+public:
+
+	// camera functions
+	void getCamera();
+	bool checkCamera();
+	void fadeIn(float speed = 0.f);
+	void fadeOut(float speed = 0.f);
+};
+
 // public functions
 class SLBData
 {

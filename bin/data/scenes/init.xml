@@ -27,6 +27,7 @@
 		<name name="ui_camera" />
 		<transform pos="0 -100 10" yaw="180"/>
 	<camera znear="0" zfar="10" is_ortho="1"/>
+	<FX_fade_screen/>
 	</entity>
 	
 	<entity 
@@ -35,5 +36,6 @@
 		<tags tags="game_controller" />
 		<name name="game_controller" />
 		<sense_vision/>
+		<loading_screen/>
 	</entity>  	
 </entities>

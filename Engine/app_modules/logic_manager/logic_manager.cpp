@@ -20,6 +20,7 @@ bool CLogicManagerModule::start() {
 	bindHandle(*slb_manager);
 	bindHandleGroup(*slb_manager);
 	bindCamera(*slb_manager);
+	bindUiCamera(*slb_manager);
 	bindData(*slb_manager);
 	bindPublicFunctions(*slb_manager);
 
@@ -676,6 +677,25 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		// Reset the camera
 		.set("reset_camera", &SLBCamera::resetCamera)
 		.comment("Resets the camera to its default state")
+		;
+}
+
+// Ui Camera LUA functions
+void CLogicManagerModule::bindUiCamera(SLB::Manager& m) {
+	SLB::Class<SLBUiCamera>("UiCamera", &m)
+		.comment("Ui Camera class")
+		.constructor()
+		// sets the handle pointer to the player
+		.set("get_camera", &SLBUiCamera::getCamera)
+		.comment("Gets the camera handler")
+		// Fade In
+		.set("fade_in", &SLBUiCamera::fadeIn)
+		.comment("Start fade in")
+		.param("float: time fade, if time <= 0 set default")
+		// Fade Out
+		.set("fade_out", &SLBUiCamera::fadeOut)
+		.comment("Start fade out")
+		.param("float: time fade, if time <= 0 set default")
 		;
 }
 
