@@ -46,7 +46,7 @@ private:
 	DECL_GUI_STATE(OnStopIntro);
 	DECL_GUI_STATE(OnMenu);
 	DECL_GUI_STATE(OnLoading)
-	DECL_GUI_STATE(OnDead);
+		DECL_GUI_STATE(OnDead);
 	DECL_GUI_STATE(OnVictory);
 
 	//Renders & Updaters Management
@@ -84,7 +84,7 @@ public:
 		return "gui";
 	}
 
-	CHandle addGuiElement(std::string prefab, VEC3 pos = VEC3(0.5f, 0.5f, 0.5f), std::string tag = "");
+	CHandle addGuiElement(std::string prefab, VEC3 pos = VEC3(0.5f, 0.5f, 0.5f), std::string tag = "", float scale = 1.0f);
 	void updateGuiElementPositionByTag(std::string tag, VEC3 new_position);
 	void removeGuiElementByTag(std::string tag);
 

@@ -22,12 +22,15 @@ bool TCompText::load(MKeyValue& atts)
 	}
 	);
 
+	id = atts.getString("id", std::to_string(std::rand()));
 	text = atts.getString("text", "defaultText");
 	letter_posx_ini = atts.getFloat("pos_x", 0.0f);
 	letter_posy_ini = atts.getFloat("pos_y", 0.0f);
+	scale = atts.getFloat("scale", 1.0f);
+	CQuaternion colorQ = atts.getQuat("color");
+	color = VEC4(colorQ.x, colorQ.y, colorQ.z, colorQ.w);
 	printed = false;
 	ttl = 1.0f;
-	id = std::rand();
 	std::string endline = "\n";
 	int ini = -1;
 	size_t pos = text.find(endline, 0);
@@ -38,6 +41,9 @@ bool TCompText::load(MKeyValue& atts)
 		pos = text.find(endline, pos + 1);
 	}
 	lineText.push_back(text.substr(ini + 1, pos));
+
+	accumSpacing.resize(lineText.size(), 0.0f);
+
 	return true;
 }
 
@@ -49,7 +55,7 @@ void TCompText::update(float dt) {
 		int letteri = 0;
 		for (int j = 0; j < lineText.size(); ++j) {
 			for (int i = 0; i < lineText[j].size(); ++i) {
-				Gui->removeGuiElementByTag(("Text_Message_Letter_" + std::to_string(id) + "_" + std::to_string(letteri)));
+				Gui->removeGuiElementByTag(("Text_Message_Letter_" + id + "_" + std::to_string(letteri)));
 				++letteri;
 			}
 		}
@@ -61,9 +67,10 @@ void TCompText::printLetters() {
 	int gState = GameController->GetGameState();
 	if (gState != CGameController::RUNNING) return;
 	int letteri = 0;
+
 	for (int j = 0; j < lineText.size(); ++j) {
 		for (int i = 0; i < lineText[j].size(); ++i) {
-			char letter = lineText[j][i];
+			unsigned char letter = lineText[j][i];
 			int ascii_tex_pos = letter;
 			int ascii_tex_posx = ascii_tex_pos % 16;
 			int ascii_tex_posy = ascii_tex_pos / 16;
@@ -73,16 +80,17 @@ void TCompText::printLetters() {
 			float sx = letterBoxSize;
 			float sy = letterBoxSize;
 
-			float letter_posx = letter_posx_ini + 0.375f + i * sizeFontX;
-			float letter_posy = letter_posy_ini - 0.15f - j * sizeFontY;
+			float letter_posx = letter_posx_ini + 0.375f + i * sizeFontX*scale - accumSpacing[j] * scale;
+			float letter_posy = letter_posy_ini - 0.15f - j * sizeFontY*scale;
 
-			CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.50f), ("Text_Message_Letter_" + std::to_string(id) + "_" + std::to_string(letteri)));
+			CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.50f + letteri*0.001), ("Text_Message_Letter_" + id + "_" + std::to_string(letteri)), scale);
 			CEntity * letter_e = letter_h;
 			TCompGui * letter_gui = letter_e->get<TCompGui>();
 			assert(letter_gui);
 			RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
 			letter_gui->setTxCoords(textCords);
 			letteri++;
+			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
 		}
 	}
 	printed = true;
