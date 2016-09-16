@@ -6,6 +6,7 @@
 #include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/imgui/module_imgui.h"
 #include "render/render.h"
+#include "render\draw_utils.h"
 
 #include <math.h>
 
@@ -27,7 +28,7 @@ bool TCompText::load(MKeyValue& atts)
 	letter_posx_ini = atts.getFloat("pos_x", 0.0f);
 	letter_posy_ini = atts.getFloat("pos_y", 0.0f);
 	scale = atts.getFloat("scale", 1.0f);
-	color = obtainColorNormFromString(atts.getString("color", "#000000FF"));
+	color = obtainColorNormFromString(atts.getString("color", "#FFFFFFFF"));
 	printed = false;
 	ttl = 1.0f;
 	std::string endline = "\n";
@@ -90,6 +91,7 @@ void TCompText::printLetters() {
 			letter_gui->setTxCoords(textCords);
 			letteri++;
 			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
+			letter_gui->SetColor(color);
 		}
 	}
 	printed = true;

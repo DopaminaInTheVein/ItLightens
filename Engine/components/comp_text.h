@@ -25,6 +25,7 @@ public:
 	//Update info
 	void update(float elapsed);
 	void printLetters();
+	void uploadCtes();
 	void forceTTLZero();
 	bool load(MKeyValue& atts);
 	// Getter

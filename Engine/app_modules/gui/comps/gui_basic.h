@@ -42,6 +42,9 @@ class TCompGui : public TCompBase {
 	float render_target;
 	float render_speed;
 
+
+	VEC4 color;
+
 	// Text coords limits
 	RectNormalized text_coords;
 	int num_words_per_line;
@@ -68,6 +71,10 @@ public:
 	float GetHeight();
 	void SetWidth(float);
 	void SetHeight(float);
+
+	void SetColor(VEC4 new_color) {
+		color = new_color;
+	}
 
 	bool load(MKeyValue& atts);
 	void update(float elapsed);
