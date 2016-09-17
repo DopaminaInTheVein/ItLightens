@@ -1,49 +1,66 @@
 {
+  "actions": {
+	"none": "",
+	"overcharge" : "ACTION: Overcharge",
+	"possess" : "ACTION: Possess",
+	"recharge" : "ACTION: Recharge",
+	"recharge_drone" : "ACTION: Recharge drone",
+	"repair_drone" : "ACTION: Repair drone",
+	"activate" : "ACTION: Activate",
+	"put" : "ACTION: Put",
+	"examinate" : "ACTION: Examinate",
+	"destroy" : "ACTION: Destroy",
+	"create_magnetic_bomb" : "ACTION: Create bomb",
+	"creating" : "ACTION: Creating...",
+	"travel_wire" : "ACTION: Pass through the wire",
+	"dream" : "ACTION: Enter to dream",
+	"leave" : "ACTION: Leave"
+  },
   "title": {
-	"button_1": "Comenzar partida"
+	"button_1": "Game start"
   },
   "hub": {
-    "start_hub": "Mueve la camara\ny usa SENTIR\npara encontrar tu objetivo.",
-    "target_seen": "Eso es!"
+    "start_hub": "Move the camera\nand use your SENSE skill\nto find your objective.",
+    "target_seen": "That is it!"
   },
   "tuto_mole": {
-    "look_wall": "Esta pared parece debil. Me pregunto si habra algo detras...",
-    "help_possess": "Acercate a la Mole y pulsa SHIFT IZQUIERDO para controlar su cuerpo.",
-    "help_unpossess": "Pulsa SHIFT IZQUIERDO para abandonar el cuerpo de la Mole.",
-	"help_place_box": "Lleva la caja hasta la columna rota (puedes utilizar SENTIR).",
-	"help_wall": "Acercate al muro de enfrente con la mole y pulsa CLIC IZQUIERDO para destruirlo.",
-	"help_box": "Acercate a la caja y pulsa CLIC IZQUIERDO para empujar o tirar de ella.",
-	"help_djump": "Pulsa ESPACIO para saltar. Pulsalo dos veces para efectuar un doble salto."
+    "look_wall": "This wall seems weak. I wonder if there is something behind...",
+    "help_possess": "Get closer to the Mass and press LEFT SHIFT to control his body.",
+    "help_unpossess": "Press LEFT SHIFT to abandon the Mass.",
+	"help_place_box": "Carry the box to the broken column (you can use SENSE).",
+	"help_wall": "Get closer to the wall in front of you with the Mass\nand press LEFT CLICK to destroy it.",
+	"help_box": "Get closer to the box and press LEFT CLICK to push or pull it.",
+	"help_djump": "Press SPACE to jump. Press it twice to perform a double jump."
   },
   "tuto_sci": {
-    "help_possess": "Acercate al Cientifico y pulsa SHIFT IZQUIERDO para controlar su cuerpo.",
-    "help_unpossess": "Pulsa SHIFT IZQUIERDO para abandonar el cuerpo del Cientifico.",
-	"help_wb": "Acercate al banco de trabajo con el cientifico y pulsa CLIC IZQUIERDO para crear bombas.",
-	"help_bomb": "Lanza bombas pulsando E para aturdir a los guardias.\nNo te acerques demasiado o te detectaran.",
-	"help_exit": "Has recuperado toda tu energia! Cruza la puerta abierta para abandonar este tutorial.",
-	"stunned_guard_remain": "Has fallado!\nPodria ser peor... Aturde al guardia restante.",
-	"help_repair": "Bien hecho! Al ser un sueño se quedaran aturdidos para siempre.\nAhora acercate al dron de delante y pulsa CLIC IZQUIERDO para repararlo.",
-	"help_polarity": "Pulsa Q y E para alternar mi polaridad.\n Usa esta habilidad para atraerte hacia el dron y repelerte despues hacia arriba.",
-	"help_generator": "Pulsa CLIC IZQUIERDO cerca de un generador para recuperar energia."
+    "help_possess": "Get closer to the Scientist and press LEFT SHIFT to control his body.",
+    "help_unpossess": "Press LEFT SHIFT to abandon the Scientist.",
+	"help_wb": "Get closer to the work bench with the Scientist\nand press LEFT CLICK to create bombs.",
+	"help_bomb": "Throw bombs by pressing E to stun the guards.\nDo not get too close or they will detect you!",
+	"help_exit": "You have regained all your energy! Cross the open that just opened to end this tutorial.",
+	"stunned_guard_remain": "You failed!\nIt could have been worse... Stun the remaining guard.",
+	"help_repair": "Well done! As this is a dream, the guards will remain stunt forever.\nNow get closer to the drone in front of you and press LEFT CLICK to repair it.",
+	"help_polarity": "Press Q and E to toggle my polarity.\n Use this skill to get attracted by the drone and then repulsed up.",
+	"help_generator": "Press LEFT CLICK near a generator to recover your energy."
   },
   "ms3": {
-    "pila_1": "Donde puedo usar esta bateria?",
-    "pila_2": "Este objeto contenia mucha energia en el pasado...",
-	"sci_pila": "Esta bateria esta agotada, y es demasiado pesada para mi...",
-    "cargador_player_1": "La bateria esta cargada.",
-    "cargador_player_2": "La bateria encaja perfectamente.\nLastima que no sepa como activar la maquina...",
+    "pila_1": "Where can I use this cell?",
+    "pila_2": "This object contained energy in the past...",
+	"sci_pila": "This cell is exhausted. And too heavy for me...",
+    "cargador_player_1": "The cell is full of energy now.",
+    "cargador_player_2": "The cell fits perfectly.\nI don't know how this machine works though...",
 	"cargador_player_3": "Detecto mucha energia aqui dentro...",
-    "cargador_sci_1": "La bateria esta cargada y operativa!",
-    "cargador_sci_2": "Vamos alla!",
-	"cargador_sci_3": "No hay nada colocado para cargar.",
-    "recharge_cell": "La bateria esta cargada!",
-    "enchufe_player_1": "Lo consegui! La puerta se ha abierto!",
-	"enchufe_player_2": "Este objeto no tiene energia...",
-	"enchufe_player_3": "Esto necesita energia para funcionar.",
-	"enchufe_sci_1": "No me gusta fanfarronear, pero esto ha sido un buen trabajo.",
-	"enchufe_sci_2": "La bateria esta agotada, y es demasiado pesada para mi...",
-	"enchufe_sci_3": "Esto necesita una bateria para funcionar.",
-	"elevator_player": "No se como funciona este mecanismo.",
-	"look_wall": "Esta pared parece debil. Me pregunto si habra algo detras..."
+    "cargador_sci_1": "The cell has power and is working now!",
+    "cargador_sci_2": "Here we go!",
+	"cargador_sci_3": "There is nothing to charge.",
+    "recharge_cell": "The battery is now full of power!",
+    "enchufe_player_1": "I did it! The door is open now!",
+	"enchufe_player_2": "The object on it has no energy...",
+	"enchufe_player_3": "This needs energy to work.",
+	"enchufe_sci_1": "I don't like to brag, but THIS is a good work.",
+	"enchufe_sci_2": "The cell is empty, and too heavy for me...",
+	"enchufe_sci_3": "This needs a cell to work.",
+	"elevator_player": "I don't know how this mechanism works.",
+	"look_wall": "This wall seems weak. I wonder if there is something behind..."
   }
 }

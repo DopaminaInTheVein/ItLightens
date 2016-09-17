@@ -1,4 +1,21 @@
 {
+  "actions": {
+	"none": "",
+	"overcharge" : "ACCIO: Sobrecarrega",
+	"possess" : "ACCIO: Posseir",
+	"recharge" : "ACCIO: Recarregar",
+	"recharge_drone" : "ACCIO: Recarregar dron",
+	"repair_drone" : "ACCIO: Reparar dron",
+	"activate" : "ACCIO: Activar",
+	"put" : "ACCIO: Posar",
+	"examinate" : "ACCIO: Examinar",
+	"destroy" : "ACCIO: Destruir",
+	"create_magnetic_bomb" : "ACCIO: Crear bomba",
+	"creating" : "ACCIO: Creant...",
+	"travel_wire" : "ACCIO: Passar pel cable",
+	"dream" : "ACCIO: Entrar al somni",
+	"leave" : "ACCIO: Sortir"
+  },
   "title": {
 	"button_1": "Comença el joc"
   },

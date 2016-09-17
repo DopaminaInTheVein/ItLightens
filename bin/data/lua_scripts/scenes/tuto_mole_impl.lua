@@ -73,7 +73,7 @@ end
 function tutomole_lookWall( )
   p:print("Look Wall\n")
   triggerWall_1:getHandleCaller()
-  p:player_talks(p:get_text("tuto_mole", "look_wall"),"scientific.dds","SCI")
+  p:player_talks(p:get_text("tuto_mole", "look_wall"))
   p:exec_command( "triggerWall_1:setActionable(1);", 2 )
 end
 
@@ -128,21 +128,21 @@ end
 -- Auxiliars
 --==============================================================
 function tutomole_help_possess( )
-	p:player_talks(p:get_text("tuto_mole", "help_possess"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_possess"))
 end
 function tutomole_help_unpossess( )
-	p:player_talks(p:get_text("tuto_mole", "help_unpossess"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_unpossess"))
 end
 function tutomole_help_place_box( )
-	p:player_talks(p:get_text("tuto_mole", "help_place_box"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_place_box"))
 end
 function tutomole_help_wall( )
-	p:player_talks(p:get_text("tuto_mole", "help_wall"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_wall"))
 end
 function tutomole_help_box( )
-	p:player_talks(p:get_text("tuto_mole", "help_box"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_box"))
 end
 function tutomole_help_djump( )
-	p:player_talks(p:get_text("tuto_mole", "help_djump"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_mole", "help_djump"))
 end
 --==============================================================

@@ -3,6 +3,7 @@
 #include "gui_action_text.h"
 #include "components/entity.h"
 #include "components/comp_text.h"
+#include "app_modules/lang_manager/lang_manager.h"
 
 using namespace std;
 
@@ -28,49 +29,49 @@ void CGuiActionText::render() {
 	string text;
 	switch (action) {
 	case eAction::NONE:
-		text = "";
+		text = lang_manager->getText("actions", "none");
 		break;
 	case eAction::OVERCHARGE:
-		text = "ACTION: Overcharge";
+		text = lang_manager->getText("actions", "overcharge");
 		break;
 	case eAction::POSSESS:
-		text = "ACTION: Possess";
+		text = lang_manager->getText("actions", "possess");
 		break;
 	case eAction::RECHARGE:
-		text = "ACTION: Recharge";
+		text = lang_manager->getText("actions", "recharge");
 		break;
 	case eAction::RECHARGE_DRONE:
-		text = "ACTION: Recharge Drone";
+		text = lang_manager->getText("actions", "recharge_drone");
 		break;
 	case eAction::REPAIR_DRONE:
-		text = "ACTION: Repair Drone";
+		text = lang_manager->getText("actions", "repair_drone");
 		break;
 	case eAction::ACTIVATE:
-		text = "ACTION: Activate";
+		text = lang_manager->getText("actions", "activate");
 		break;
 	case eAction::PUT:
-		text = "ACTION: Put";
+		text = lang_manager->getText("actions", "put");
 		break;
 	case eAction::EXAMINATE:
-		text = "ACTION: Examinate";
+		text = lang_manager->getText("actions", "examinate");
 		break;
 	case eAction::DESTROY:
-		text = "ACTION: Destroy";
+		text = lang_manager->getText("actions", "destroy");
 		break;
 	case eAction::CREATE_MAGNETIC_BOMB:
-		text = "ACTION: Create Bomb";
+		text = lang_manager->getText("actions", "create_magnetic_bomb");
 		break;
 	case eAction::CREATING:
-		text = "Creating...";
+		text = lang_manager->getText("actions", "creating");
 		break;
 	case eAction::TRAVEL_WIRE:
-		text = "ACTION: Pass through the wire";
+		text = lang_manager->getText("actions", "travel_wire");
 		break;
 	case eAction::DREAM:
-		text = "ACTION: Enter to dream";
+		text = lang_manager->getText("actions", "dream");
 		break;
 	case eAction::LEAVE:
-		text = "ACTION: Leave";
+		text = lang_manager->getText("actions", "leave");
 		break;
 	}
 	if (text != "" && text != last_text) {

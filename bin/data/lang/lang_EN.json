@@ -1,4 +1,21 @@
 {
+  "actions": {
+	"none": "",
+	"overcharge" : "ACTION: Overcharge",
+	"possess" : "ACTION: Possess",
+	"recharge" : "ACTION: Recharge",
+	"recharge_drone" : "ACTION: Recharge drone",
+	"repair_drone" : "ACTION: Repair drone",
+	"activate" : "ACTION: Activate",
+	"put" : "ACTION: Put",
+	"examinate" : "ACTION: Examinate",
+	"destroy" : "ACTION: Destroy",
+	"create_magnetic_bomb" : "ACTION: Create bomb",
+	"creating" : "ACTION: Creating...",
+	"travel_wire" : "ACTION: Pass through the wire",
+	"dream" : "ACTION: Enter to dream",
+	"leave" : "ACTION: Leave"
+  },
   "title": {
 	"button_1": "Game start"
   },
@@ -20,7 +37,7 @@
     "help_unpossess": "Press LEFT SHIFT to abandon the Scientist.",
 	"help_wb": "Get closer to the work bench with the Scientist\nand press LEFT CLICK to create bombs.",
 	"help_bomb": "Throw bombs by pressing E to stun the guards.\nDo not get too close or they will detect you!",
-	"help_exit": "You have regained all your energy! Cross the open that just opened to end this tutorial.",
+	"help_exit": "You have regained all your energy! Cross the door that just opened to end this tutorial.",
 	"stunned_guard_remain": "You failed!\nIt could have been worse... Stun the remaining guard.",
 	"help_repair": "Well done! As this is a dream, the guards will remain stunt forever.\nNow get closer to the drone in front of you and press LEFT CLICK to repair it.",
 	"help_polarity": "Press Q and E to toggle my polarity.\n Use this skill to get attracted by the drone and then repulsed up.",

@@ -120,35 +120,35 @@ end
 -- Auxiliars
 --==============================================================
 function tutosci_help_possess( )
-	p:player_talks(p:get_text("tuto_sci","help_possess"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_possess"))
 end
 function tutosci_help_unpossess( )
-	p:player_talks(p:get_text("tuto_sci","help_unpossess"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_unpossess"))
 end
 function tutosci_help_wb( )
-	p:player_talks(p:get_text("tuto_sci","help_wb"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_wb"))
 end
 function tutosci_help_bomb( )
-	p:player_talks(p:get_text("tuto_sci","help_bomb"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_bomb"))
 end
 function tutosci_help_exit( )
-	p:player_talks(p:get_text("tuto_sci","help_exit"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_exit"))
 end
 function tutosci_stunned_guard_remain()
-	p:player_talks(p:get_text("tuto_sci","stunned_guard_remain"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","stunned_guard_remain"))
 end
 function tutosci_stunned_guards( )
 	tutosci_help_repair()
 	p:complete_tasklist(TASK_TUTOS_STUN)
 end
 function tutosci_help_repair( )
-	p:player_talks(p:get_text("tuto_sci","help_repair"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_repair"))
 end
 function tutosci_help_polarity( )
-	p:player_talks(p:get_text("tuto_sci","help_polarity"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_polarity"))
 end
 function tutosci_help_generator( )
-	p:player_talks(p:get_text("tuto_sci","help_generator"), "scientific.dds", "SCI")
+	p:player_talks(p:get_text("tuto_sci","help_generator"))
 end
 
 -- Door
