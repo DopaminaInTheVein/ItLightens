@@ -801,8 +801,6 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("player_talks", &SLBPublicFunctions::playerTalks)
 		.comment("Shows the specified text for aq limited time")
 		.param("string: text to show")
-		.param("string: icon to show")
-		.param("string: text to show if icon not loaded")
 		// launch text span related to npc talks with colors
 		.set("player_talks_color", &SLBPublicFunctions::playerTalksWithColor)
 		.comment("Shows the specified text for aq limited time")

@@ -691,7 +691,7 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 	}
 }
 
-void SLBPublicFunctions::playerTalks(const char* text, const char* iconName, const char* iconText) {
+void SLBPublicFunctions::playerTalks(const char* text) {
 	// DO Something with text...
 	dbg(text);
 	for (auto handles : tags_manager.getHandlesByTag("talk_text")) handles.destroy();
@@ -710,8 +710,6 @@ void SLBPublicFunctions::playerTalks(const char* text, const char* iconName, con
 	CHandle new_hl = hm3->createHandle();
 	MKeyValue atts3;
 	atts3["text"] = text;
-	atts3["icon"] = iconName;
-	atts3["iconText"] = iconText;
 	new_hl.load(atts3);
 	entity->add(new_hl);
 

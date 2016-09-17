@@ -186,7 +186,7 @@ function OnRepairDrone( level, drone )
 	p:play_sound("event:/OnUseGenerator")
 	CallFunction("OnRepairDrone_"..level)
 	CallFunction("OnRepairDrone_"..drone)
-	--p:player_talks("I just repaired that useful thing to make a full working one...\nbut battery may fail as well, that is unreparable....","scientific.dds","SCI")
+	--p:player_talks("I just repaired that useful thing to make a full working one...\nbut battery may fail as well, that is unreparable....")
 end
 
 function OnCreateBomb( level )
@@ -196,7 +196,7 @@ end
 
 function OnNotRechargeDrone( param )
 	p:print( "OnRechargeDrone: "..param.."\n" )
-	p:player_talks("I hope a scientific may get this repaired...","scientific.dds","SCI")
+	p:player_talks("I hope a scientific may get this repaired...")
 end
 
 function OnUseCable( param )
