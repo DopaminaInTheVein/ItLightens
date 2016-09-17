@@ -218,9 +218,9 @@ void player_controller_mole::UpdateMoves() {
 		camera_direction.Normalize();
 		// new camera position
 		VEC3 camera_position = cam_t->getPosition();
-		VEC3 new_cam_position = mole_position + camera_direction * cam_3p->GetPositionDistance();
+		VEC3 new_cam_position = mole_position + camera_direction * (cam_3p->GetPositionDistance() - 1.f);
 		new_cam_position.y = mole_position.y + 3.f;
-		VEC3 new_look_position = mole_position + VEC3(0.f, 1.f, 0.f);
+		VEC3 new_look_position = mole_position + VEC3(0.f, 1.5f, 0.f);
 		cam_m->smoothLookAt(new_cam_position, new_look_position, cam_m->getUpAux(), 0.9f / getDeltaTime());
 		cam_t->lookAt(new_cam_position, new_look_position, cam_m->getUpAux());
 		cam_t->setPosition(new_cam_position);
@@ -676,7 +676,7 @@ void player_controller_mole::PushBoxPreparation() {
 		GameController->SetManualCameraState(true);
 		cam_m->setManualControl(true);
 		// new camera position
-		VEC3 new_cam_position = mole_position + camera_direction * cam_3p->GetPositionDistance();
+		VEC3 new_cam_position = mole_position + camera_direction * ( cam_3p->GetPositionDistance() - 1.f);
 		new_cam_position.y = camera_position.y;
 		cam_m->smoothLookAt(new_cam_position, mole_position, cam_m->getUpAux(), 0.9f / getDeltaTime());
 		cam_t->lookAt(new_cam_position, mole_position, cam_m->getUpAux());
