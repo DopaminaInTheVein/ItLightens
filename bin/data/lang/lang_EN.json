@@ -1,4 +1,21 @@
 {
+  "actions": {
+	"none": "",
+	"overcharge" : "ACTION: Overcharge",
+	"possess" : "ACTION: Possess",
+	"recharge" : "ACTION: Recharge",
+	"recharge_drone" : "ACTION: Recharge drone",
+	"repair_drone" : "ACTION: Repair drone",
+	"activate" : "ACTION: Activate",
+	"put" : "ACTION: Put",
+	"examinate" : "ACTION: Examinate",
+	"destroy" : "ACTION: Destroy",
+	"create_magnetic_bomb" : "ACTION: Create bomb",
+	"creating" : "ACTION: Creating...",
+	"travel_wire" : "ACTION: Pass through the wire",
+	"dream" : "ACTION: Enter to dream",
+	"leave" : "ACTION: Leave"
+  },
   "title": {
 	"button_1": "Game start"
   },

@@ -36,9 +36,13 @@ void CLangManagerModule::readLanguageMap() {
 
 	typedef std::map<std::string, std::string>::iterator it_type;
 
+	// Read map texts
 	for (it_type iterator = scenes.begin(); iterator != scenes.end(); iterator++) {
 		language_map[iterator->second] = readIniAtrDataStr(lang_file, iterator->second);
-	}	
+	}
+
+	// Read action texts
+	language_map["actions"] = readIniAtrDataStr(lang_file, "actions");
 }
 
 std::string CLangManagerModule::getText(std::string scene, std::string event) {

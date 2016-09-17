@@ -1,4 +1,21 @@
 {
+  "actions": {
+	"none": "",
+	"overcharge" : "ACCION: Sobrecarga",
+	"possess" : "ACCION: Poseer",
+	"recharge" : "ACCION: Recargar",
+	"recharge_drone" : "ACCION: Recargar dron",
+	"repair_drone" : "ACCION: Reparar dron",
+	"activate" : "ACCION: Activar",
+	"put" : "ACCION: Poner",
+	"examinate" : "ACCION: Examinar",
+	"destroy" : "ACCION: Destruir",
+	"create_magnetic_bomb" : "ACCION: Crear bomba",
+	"creating" : "ACCION: Creando...",
+	"travel_wire" : "ACCION: Pasar por cable",
+	"dream" : "ACCION: Entrar en el sueño",
+	"leave" : "ACCION: Salir"
+  },
   "title": {
 	"button_1": "Comenzar partida"
   },
