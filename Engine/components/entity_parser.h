@@ -29,14 +29,30 @@ namespace IdEntities {
 	void saveIdEntity(const CHandle entity, const int entity_id);
 }
 
+class CEntityCounter : public CXMLParser {
+	int num_entities = 0;
+public:
+	void onStartElement(const std::string &elem, MKeyValue &atts) override { if (elem == "entity") { num_entities++; } }
+	int getNumEntities() { 
+		return num_entities; 
+	}
+
+	bool xmlParseFile(const std::string &filename) override {
+		bool result = CXMLParser::xmlParseFile(filename);
+		return result;
+	}
+};
+
 class CEntityParser : public CXMLParser {
 	CHandle curr_entity;
 	int curr_entity_id;
+	static float entity_load_value;
 	bool curr_entity_permanent;
 	bool curr_entity_reload;
 	bool curr_entity_slept;
 	bool first_load;
 	bool reload = false;
+	bool loading_control = false;
 	CHandle root_entity;
 	VHandles handles;
 	static VHandles collisionables;
@@ -50,6 +66,9 @@ public:
 	CHandle getRootEntity() { return root_entity; }
 	void onStartElement(const std::string &elem, MKeyValue &atts) override;
 	void onEndElement(const std::string &elem) override;
+	static void setNumEntities(int num_entities) {
+		entity_load_value = 100.f / num_entities;
+	}
 
 	static const std::vector<CHandle> CEntityParser::getCollisionables() {
 		return collisionables;
@@ -68,6 +87,7 @@ public:
 		return result;
 	}
 	bool hasToCreate();
+	void setLoadingControl(bool value) { loading_control = value; }
 };
 
 CHandle spawnPrefab(const std::string& prefab); // create Prefab and call onCreate

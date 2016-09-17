@@ -7,6 +7,7 @@ p = Public( )
 h = Handle()
 pl = Player()
 cam = Camera()
+ui_cam = UiCamera()
 
 function CallFunction(func)
 	if _G[func] then _G[func]()
@@ -375,7 +376,7 @@ end
 
 function InitScene()
 	cam:reset_camera()
-	p:exec_command("cam:fade_in(1)", 1)
+	p:exec_command("ui_cam:fade_in(1)", 1)
 	if not real_level == "hub" then
 		p:exec_command("p:setControlEnabled(1);", 1)
 	end

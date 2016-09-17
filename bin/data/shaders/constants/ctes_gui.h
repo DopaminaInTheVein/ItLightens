@@ -14,6 +14,8 @@ ShaderBuffer(TCteGui, CTE_SHADER_GUI_SLOT)
   float	 pos_y;
   float  size_x;
   float  size_y;
+
+  float4 color_ui;
 };
 
 #endif

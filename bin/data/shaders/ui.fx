@@ -142,7 +142,7 @@ float4 PSFont(
   //if(!isInside(max_coord, min_coord, iTex0))
   //result.a = 0;
   
-  return result;
+  return result*color_ui;
   
   //return txDiffuse.Sample(samLinear, iTex0);
 }

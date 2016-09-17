@@ -10,6 +10,7 @@ using namespace std;
 map< string, CPrefabCompiler* > compiled_prefabs;
 set<string> CEntityParser::loaded_files = set<string>();
 VHandles CEntityParser::collisionables = VHandles();
+float CEntityParser::entity_load_value = 0.f;
 // Identified Entities
 static VHandles identified_entities;
 CHandle IdEntities::findById(const int entity_id) {
@@ -78,6 +79,7 @@ CHandle createPrefab(const std::string& prefab) {
 #define MUST_COMPILE_SNOOZER (curr_slept_compiler && elem != "entity" && elem != "tags" && elem != "name")
 
 void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
+
 	if (curr_prefab_compiler) {
 		CPrefabCompiler::TCall c;
 		c.is_start = true;
@@ -192,6 +194,9 @@ void CEntityParser::onEndElement(const std::string &elem) {
 			root_entity = curr_entity;
 		curr_entity = CHandle();
 		curr_slept_compiler = nullptr;
+
+		if (loading_control)
+			GameController->AddLoadingState(entity_load_value);
 	}
 
 	if (elem == "entities" || elem == "prefab") {

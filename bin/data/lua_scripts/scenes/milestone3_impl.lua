@@ -211,10 +211,10 @@ end
 
 function cineDoor( )
   cam:run_cinematic("CineEnchufeDoor", 10)
-  p:exec_command( "cam:fade_out(1);", 0.1)
-  p:exec_command( "cam:fade_in(1);", 3)
-  p:exec_command( "cam:fade_out(1);", 7)
-  p:exec_command( "cam:fade_in(1);", 11)
+  p:exec_command( "ui_cam:fade_out(1);", 0.1)
+  p:exec_command( "ui_cam:fade_in(1);", 3)
+  p:exec_command( "ui_cam:fade_out(1);", 7)
+  p:exec_command( "ui_cam:fade_in(1);", 11)
 end
 
 function openDoorPila( )
@@ -378,9 +378,9 @@ function moveElevator( )
   stateElevator = 1 - stateElevator
   
   p:exec_command("h:activate();", 2)
-  p:exec_command("cam:fade_out(1);", 2.5)
+  p:exec_command("ui_cam:fade_out(1);", 2.5)
   p:exec_command("triggerElevator:setActionable(1);", 4 )
-  p:exec_command("cam:fade_in(1);", 7.0)
+  p:exec_command("ui_cam:fade_in(1);", 7.0)
   p:complete_tasklist(8)
   p:exec_command( "p:setControlEnabled(1);", 9 )
   --cambio  cientifico
@@ -545,8 +545,8 @@ function wireGoUp( )
   p:complete_tasklist(7)
   p:exec_command( "player:set_position(0,-1000,0);", 2 )
   p:exec_command( "wireParticlesUp();", 1.5 / factorWireGoUp )
-  p:exec_command( "cam:fade_out(0.5);", 7.5)
-  p:exec_command( "cam:fade_in(0.5);", 9.5)
+  p:exec_command( "ui_cam:fade_out(0.5);", 7.5)
+  p:exec_command( "ui_cam:fade_in(0.5);", 9.5)
   p:exec_command( "triggerWire_1:setActionable(1);", 3)
   p:exec_command( cmd_teleport, 7.5 )
 end
@@ -563,8 +563,8 @@ function wireGoDown( )
   p:exec_command( cmd_teleport, 1.9 )
   p:exec_command( "player:set_position(0,-1000,0);", 5.0 )
   --p:exec_command( "wireParticlesUp();", 2.5 / factorWireGoDown )
-  cam:fade_out(0.2)
-  p:exec_command( "cam:fade_in(1);", 3.0)
+  ui_cam:fade_out(0.2)
+  p:exec_command( "ui_cam:fade_in(1);", 3.0)
   p:exec_command( "triggerWire_2:setActionable(1);", 3)
   p:exec_command( cmd_teleport, 9.5 )
 end

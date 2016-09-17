@@ -49,6 +49,7 @@ bool TCompGui::load(MKeyValue& atts)
 	col = atts.getInt("col", -1);
 	width = atts.getFloat("width", 0.f);
 	height = atts.getFloat("height", 0.f);
+	color = VEC4(1,1,1,1);
 
 	return true;
 }
@@ -161,6 +162,8 @@ void TCompGui::uploadCtes() {
 	//size
 	shader_ctes_gui.size_x = getTxCoords().sx;
 	shader_ctes_gui.size_y = getTxCoords().sy;
+
+	shader_ctes_gui.color_ui = color;
 }
 int TCompGui::GetRow()
 {

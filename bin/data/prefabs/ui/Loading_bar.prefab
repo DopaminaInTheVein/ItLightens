@@ -1,8 +1,8 @@
 <entities>
-<entity>
+<entity permanent = "yes">
 <tags/>
 <name
-   name="Fading_Letter"/>
+   name="loading_bar"/>
 <transform
    pos="5.0024 -97.1774 9.72066"
    quat="0.707107 0 0 0.707107"

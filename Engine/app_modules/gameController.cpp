@@ -10,7 +10,9 @@
 #include "components/entity_tags.h"
 #include "components/comp_sense_vision.h"
 
-int CGameController::GetGameState() const { return game_state; }
+int CGameController::GetGameState() const { 
+	return game_state; 
+}
 void CGameController::SetGameState(int state) {
 	if (game_state == state) return;
 	game_state = state;
@@ -22,7 +24,13 @@ void CGameController::SetGameState(int state) {
 }
 
 int CGameController::GetLoadingState() const { return loading_state; }
-void CGameController::SetLoadingState(int state) { loading_state = state; }
+void CGameController::SetLoadingState(float state) { 
+	loading_state = state;
+}
+void CGameController::AddLoadingState(float delta) {
+	loading_state += delta;
+	CApp::get().SetLoadingState(loading_state);
+}
 
 void CGameController::TogglePauseState() {
 	if (game_state == RUNNING)

@@ -95,7 +95,6 @@ void CGuiModule::initScreens()
 	ADD_GAME_STATE(CGameController::STOPPED, OnStop);
 	ADD_GAME_STATE(CGameController::STOPPED_INTRO, OnStopIntro);
 	ADD_GAME_STATE(CGameController::MENU, OnMenu);
-	ADD_GAME_STATE(CGameController::LOADING, OnLoading);
 	ADD_GAME_STATE(CGameController::LOSE, OnDead);
 	ADD_GAME_STATE(CGameController::VICTORY, OnVictory);
 }
@@ -163,11 +162,6 @@ void CGuiModule::updateOnStopIntro(float dt) {}
 // ----- Update On Menu ----- //
 void CGuiModule::updateOnMenu(float dt) {
 	if (!enabled) CApp::get().exitGame();
-}
-
-// ----- Update On Loading ----- //
-void CGuiModule::updateOnLoading(float dt) {
-	// TODO
 }
 
 // ----- Update On Dead ----- //
@@ -281,13 +275,6 @@ void CGuiModule::renderOnMenu() {
 	//menuPause->render();
 }
 
-// ----- Render On Loading ----- //
-void CGuiModule::renderOnLoading() {
-	renderOnPlay();
-	//GUI::drawRect(bigRect, GUI::IM_BLACK_TRANSP);
-	//menuPause->render();
-}
-
 // ----------------------------------- STOP MODULE ----------------------------------- //
 void CGuiModule::stop() {
 	dbg("GUI module stopped");
@@ -295,7 +282,7 @@ void CGuiModule::stop() {
 }
 
 //------------------------------------------------------------------------------------//
-CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag)
+CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag, float scale)
 {
 	CHandle h = createPrefab(prefab);
 	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
@@ -305,7 +292,9 @@ CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag)
 	VEC3 new_pos = min_ortho + (max_ortho - min_ortho) * pos;
 	GET_COMP(tmx, h, TCompTransform);
 	tmx->setPosition(new_pos);
-
+	if (scale != 1.0f) {
+		tmx->setScale(VEC3(scale, scale, scale));
+	}
 	if (!tag.empty()) {
 		TMsgSetTag msgTag;
 		msgTag.add = true;
@@ -322,6 +311,12 @@ void CGuiModule::removeGuiElementByTag(std::string tag)
 {
 	CHandle handle = tags_manager.getFirstHavingTag(tag.c_str());
 	if (handle.isValid()) { handle.destroy(); }
+}
+
+void CGuiModule::removeAllGuiElementsByTag(std::string tag)
+{
+	VHandles handles = tags_manager.getHandlesByTag(tag.c_str());
+	for (auto handle : handles) { handle.destroy(); }
 }
 
 void CGuiModule::updateGuiElementPositionByTag(std::string tag, VEC3 new_position) {

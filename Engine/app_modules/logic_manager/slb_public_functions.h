@@ -123,6 +123,20 @@ public:
 	void resetCamera();
 };
 
+// camera control in LUA
+class SLBUiCamera
+{
+	CHandle ui_camera_h;
+
+public:
+
+	// camera functions
+	void getCamera();
+	bool checkCamera();
+	void fadeIn(float speed = 0.f);
+	void fadeOut(float speed = 0.f);
+};
+
 // public functions
 class SLBData
 {
@@ -162,6 +176,8 @@ public:
 	void playerRoom(int newRoom);
 	void playerTalks(const char* text, const char* iconName, const char* iconText);
 	void playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor);
+	void putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale);
+	void removeText(const char* id);
 	void characterGlobe(float distance, float char_x, float char_y, float char_z);
 	void toggleIntroState();
 	void launchVictoryState();

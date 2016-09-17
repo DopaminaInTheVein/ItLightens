@@ -143,7 +143,6 @@ bool CApp::start() {
 
 	imgui->StartLightEditor(); //need to be created after entities
 
-	//GameController->SetGameState(CGameController::LOADING);
 	GameController->SetGameState(CGameController::RUNNING);
 
 	logic_manager->throwEvent(logic_manager->OnGameStart, "");
@@ -242,18 +241,8 @@ void CApp::loadedLevelNotify() {
 		? CLogicManagerModule::EVENT::OnLoadedLevel
 		: CLogicManagerModule::EVENT::OnLevelStart;
 
-	logic_manager->throwEvent(game_event, std::string(params));
-	
+	logic_manager->throwEvent(game_event, std::string(params));	
 	loading = false;
-	//cleanLoadingEntities();
-}
-
-void CApp::cleanLoadingEntities() {
-	TTagsManager tags_manager;
-	VHandles loading_handles = tags_manager.getHandlesByTag("loading");
-	for (CHandle handle : loading_handles) {
-		handle.destroy();
-	}
 }
 
 void CApp::exitGame() {
@@ -265,8 +254,7 @@ void CApp::exitGame() {
 void CApp::update(float elapsed) {
 	PROFILE_FUNCTION("update");
 	for (auto it : mod_update) {
-		if (GameController->GetGameState() == CGameController::RUNNING ||
-			GameController->GetGameState() == CGameController::LOADING) {
+		if (GameController->GetGameState() == CGameController::RUNNING) {
 			PROFILE_FUNCTION(it->getName());
 			auto name = it->getName();
 			it->update(elapsed);
@@ -282,21 +270,19 @@ void CApp::update(float elapsed) {
 	if (next_level != "" && entities->isCleared()) {
 		if (!loading) {
 			// Loading state and screen
-			GameController->SetGameState(CGameController::LOADING);
-			logic_manager->throwEvent(logic_manager->OnLoadingLevel, "");
 			loading = true;
-			GameController->SetLoadingState(0);
-			//showLoadingScreen();
-			// init the next level
-			//std::thread* th = new std::thread([this] {
-				initNextLevel();
-			//});
+			GameController->LoadComplete(false);
+			showLoadingScreen();
+			initNextLevel();
 		}
 	}
 }
 
 void CApp::initNextLevel()
 {
+	std::vector<CEntitiesModule::ParsingInfo> files_to_parse;
+	CEntityCounter entity_counter;
+
 	// Restart Timers LUA
 	logic_manager->resetTimers();
 
@@ -305,33 +291,40 @@ void CApp::initNextLevel()
 	bool reload = next_level == current_level;
 	if (!reload) CEntityParser::clearCollisionables();
 	bool is_ok;
-	GameController->SetLoadingState(5);
+	//SetLoadingState(5);
 
 	// Entidades invariantes
 	CEntitiesModule::ParsingInfo info;
 	info.filename = level_name;
 	info.reload = reload;
-	is_ok = entities->loadXML(info);
-	assert(is_ok);
-	GameController->SetLoadingState(20);
+	files_to_parse.push_back(info);
+	entity_counter.xmlParseFile("data/scenes/" + info.filename + ".xml");
 
 	// Entidades variantes
 	info.filename = level_name + (setContains(has_check_point, next_level) ? "_save" : "_init");
-	entities->loadXML(info);
-	GameController->SetLoadingState(45);
+	files_to_parse.push_back(info);
+	entity_counter.xmlParseFile("data/scenes/" + info.filename + ".xml");
 
 	// Lights
 	info.filename = level_name + "_lights";
-	entities->loadXML(info);
-	GameController->SetLoadingState(60);
+	files_to_parse.push_back(info);
+	entity_counter.xmlParseFile("data/scenes/" + info.filename + ".xml");
+
+	CEntityParser::setNumEntities(entity_counter.getNumEntities());
+
+	// Load entities
+	for (auto file : files_to_parse) {
+		file.loading_control = true;
+		entities->loadXML(file);
+	}
 
 	// Init entities
 	entities->initEntities();
-	GameController->SetLoadingState(80);
+	//SetLoadingState(80);
 
 	// Navmesh
 	if (!reload) CNavmeshManager::initNavmesh(level_name);
-	GameController->SetLoadingState(100);
+	GameController->SetLoadingState(100.f);
 
 	// Game state and notify
 	loadedLevelNotify();

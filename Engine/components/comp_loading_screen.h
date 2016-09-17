@@ -10,10 +10,11 @@ class TCompLoadingScreen : public TCompBase {
 	int decenas = 0;
 	int unidades = 0;
 	ImGuiWindowFlags flags;
+	CHandle letras[100];
 
 	float letterBoxSize = 1.0f;
 	int shown_chars;
-	int numchars = 2;
+	int numchars;
 	int lines = 1;
 
 	int id = std::rand();
@@ -30,6 +31,9 @@ class TCompLoadingScreen : public TCompBase {
 	void render() const;
 	bool load(MKeyValue& atts);
 	void printLetters() const;
+	void updateLetters(bool loaded) const;
+	void renderInMenu();
+	void onCreate(const TMsgEntityCreated&);
 };
 
 #endif

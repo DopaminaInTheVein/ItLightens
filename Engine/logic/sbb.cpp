@@ -17,6 +17,7 @@ map<string, CHandle> SBB::sbbHandle;
 map<string, vector<CHandle>> SBB::sbbHandlesVector;
 map<string, vector<VEC3> > SBB::sbbVEC3Vector;
 map<string, guard_alert> SBB::sbbGuardAlerts;
+vector<float> SBB::letterSpacing;
 
 void SBB::init() {
 	postBool("possMode", false);
@@ -189,4 +190,63 @@ void SBB::updateGuardAlerts(float dt) {
 			alert_it++;
 		}
 	}
+}
+
+vector<float> SBB::readLetterSpacingVector() {
+	if (letterSpacing.size() == 0) {
+		letterSpacing.resize(256, 0.0f);
+		letterSpacing[65] = 0.0046875f;
+		letterSpacing[66] = 0.0051136f;
+		letterSpacing[67] = 0.00375f;
+		letterSpacing[68] = 0.0046875f;
+		letterSpacing[69] = 0.003515625f;
+		letterSpacing[70] = 0.003515625f;
+		letterSpacing[71] = 0.0046875f;
+		letterSpacing[72] = 0.0040178f;
+		letterSpacing[73] = 0.0033088f;
+		letterSpacing[74] = 0.00375f;
+		letterSpacing[75] = 0.0040178f;
+		letterSpacing[76] = 0.003515625f;
+		letterSpacing[77] = 0.0046875f;
+		letterSpacing[78] = 0.0040178f;
+		letterSpacing[79] = 0.005625f;
+		letterSpacing[80] = 0.0040178f;
+		letterSpacing[81] = 0.005625f;
+		letterSpacing[82] = 0.0051136f;
+		letterSpacing[83] = 0.0040178f;
+		letterSpacing[84] = 0.00375f;
+		letterSpacing[85] = 0.0040178f;
+		letterSpacing[86] = 0.00375f;
+		letterSpacing[87] = 0.00432692f;
+		letterSpacing[88] = 0.00375f;
+		letterSpacing[89] = 0.0040178f;
+		letterSpacing[90] = 0.00375f;
+		letterSpacing[97] = 0.0046875f;
+		letterSpacing[98] = 0.0051136f;
+		letterSpacing[99] = 0.00375f;
+		letterSpacing[100] = 0.0046875f;
+		letterSpacing[101] = 0.003515625f;
+		letterSpacing[102] = 0.003515625f;
+		letterSpacing[103] = 0.0046875f;
+		letterSpacing[104] = 0.0040178f;
+		letterSpacing[105] = 0.0033088f;
+		letterSpacing[106] = 0.00375f;
+		letterSpacing[107] = 0.0040178f;
+		letterSpacing[108] = 0.003515625f;
+		letterSpacing[109] = 0.0046875f;
+		letterSpacing[110] = 0.0040178f;
+		letterSpacing[111] = 0.005625f;
+		letterSpacing[112] = 0.0040178f;
+		letterSpacing[113] = 0.005625f;
+		letterSpacing[114] = 0.0051136f;
+		letterSpacing[115] = 0.0040178f;
+		letterSpacing[116] = 0.00375f;
+		letterSpacing[117] = 0.0040178f;
+		letterSpacing[118] = 0.00375f;
+		letterSpacing[119] = 0.00432692f;
+		letterSpacing[120] = 0.00375f;
+		letterSpacing[121] = 0.0040178f;
+		letterSpacing[122] = 0.00375f;
+	}
+	return letterSpacing;
 }

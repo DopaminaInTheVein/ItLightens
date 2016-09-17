@@ -4,13 +4,12 @@
 #include "comp_base.h"
 
 class TCompText : public TCompBase {
-	int id;
-	float percentLineHeight = 0.02f;
-	float timeForLetter = 0.05f;
+	std::string id;
+	float scale = 0.0f;
 	float marginForImage;
 	float letter_posx_ini;
 	float letter_posy_ini;
-
+	VEC4 color;
 	int lines;
 	float letterBoxSize = 1.0f / 16.0f;
 
@@ -20,13 +19,17 @@ class TCompText : public TCompBase {
 	float sizeFontX = 0.0125f;
 	float sizeFontY = 0.030f;
 	bool printed = false;
+	std::vector<float> accumSpacing;
 
 public:
 	//Update info
 	void update(float elapsed);
 	void printLetters();
+	void uploadCtes();
 	void forceTTLZero();
 	bool load(MKeyValue& atts);
+	// Getter
+	const std::string getId() const { return id; }
 };
 
 #endif

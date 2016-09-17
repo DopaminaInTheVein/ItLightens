@@ -18,11 +18,12 @@ class TCompFadingMessage : public TCompBase {
 	float  ttl;
 	float sizeFontX = 0.0125f;
 	float sizeFontY = 0.030f;
+	std::vector<float> accumSpacing;
 
 public:
 	//Update info
 	void update(float elapsed);
-	void printLetters() const;
+	void printLetters();
 	void forceTTLZero();
 	bool load(MKeyValue& atts);
 };

@@ -522,6 +522,33 @@ void SLBCamera::resetCamera() {
 	camera_e->sendMsg(msg);
 }
 
+//Ui Camera control in LUA
+void SLBUiCamera::getCamera() {
+	ui_camera_h = tags_manager.getFirstHavingTag("ui_camera");
+}
+
+bool SLBUiCamera::checkCamera() {
+	if (!ui_camera_h.isValid()) {
+		getCamera();
+		return ui_camera_h.isValid();
+	}
+	return true;
+}
+
+void SLBUiCamera::fadeIn(float speed) {
+	if (!checkCamera()) return;
+	GET_COMP(fx, ui_camera_h, TCompFadeScreen);
+	fx->SetMaxTime(speed);
+	fx->FadeIn();
+}
+
+void SLBUiCamera::fadeOut(float speed) {
+	if (!checkCamera()) return;
+	GET_COMP(fx, ui_camera_h, TCompFadeScreen);
+	fx->SetMaxTime(speed);
+	fx->FadeOut();
+}
+
 // Data
 SLBData::SLBData()
 {
@@ -720,6 +747,44 @@ void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* icon
 	atts3["textColor"] = textColor;
 	new_hl.load(atts3);
 	entity->add(new_hl);
+}
+
+void SLBPublicFunctions::putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale) {
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+
+	auto hm1 = CHandleManager::getByName("name");
+	CHandle new_hn = hm1->createHandle();
+	MKeyValue atts1;
+	atts1.put("name", "helpText");
+	new_hn.load(atts1);
+	entity->add(new_hn);
+
+	auto hm3 = CHandleManager::getByName("helper_text");
+	CHandle new_hl = hm3->createHandle();
+	MKeyValue atts3;
+	atts3["text"] = text;
+	atts3["id"] = id;
+	atts3["color"] = textColor;
+	atts3["scale"] = std::to_string(scale);
+	atts3["pos_x"] = std::to_string(posx);
+	atts3["pos_y"] = std::to_string(posy);
+	new_hl.load(atts3);
+	entity->add(new_hl);
+
+	//Add tag talk text
+	TMsgSetTag msg;
+	msg.add = true;
+	msg.tag = "talk_text_" + string(id);
+	new_hp.sendMsg(msg);
+}
+void SLBPublicFunctions::removeText(const char* id) {
+	std::string id_string(id);
+	getHandleManager<TCompText>()->each([id_string](TCompText * mess) {
+		if (mess->getId() == id_string) { mess->forceTTLZero(); }
+	}
+	);
 }
 
 void SLBPublicFunctions::characterGlobe(float distance, float char_x, float char_y, float char_z) {

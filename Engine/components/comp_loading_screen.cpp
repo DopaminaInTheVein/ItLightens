@@ -23,49 +23,47 @@ bool TCompLoadingScreen::load(MKeyValue& atts)
 	
 	string name = atts["name"];
 	
-	//Gui->addGuiElement("ui/loading", VEC3(0.f, 0.f, 0.75f));
-	
 	return true;
+}
+
+void TCompLoadingScreen::onCreate(const TMsgEntityCreated&) {
+	text = "";
+	for (int i = 0; i < 100; i++) {
+		text += "g";
+	}
+	printLetters();
 }
 
 void TCompLoadingScreen::update(float dt) {
 	// update loading_value;
 	loading_value = GameController->GetLoadingState();
-	text = to_string(loading_value);
+	numchars = loading_value;
 
-	if (loading_value >= 100) {
-		for (int i = 0; i < text.length(); i++) {
-			Gui->removeGuiElementByTag(("Loading_" + std::to_string(id) + "_" + std::to_string(i)));
-		}
+	if (loading_value == 100.f) {
 		GameController->SetGameState(CGameController::RUNNING);
+		GameController->LoadComplete(true);
+		// Delete de la barra y la imagen de fondo
+		Gui->removeAllGuiElementsByTag("loading");
+		updateLetters(false);
 	}
 	else {
-		printLetters();
+		updateLetters(true);
 	}
 }
 
 void TCompLoadingScreen::render() const {
-	PROFILE_FUNCTION("TCompLoadingScreen render");
-	
-	bool b = false;
-	
-	ImGui::Begin("Game GUI", &b, ImVec2(resolution_x, resolution_y), 0.0f, flags);
-	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
-	
-	GUI::drawText(0.45, 0.65, GImGui->Font, 20, obtainColorFromString("#FFFFFFFF"), "HOOOOOOOOOOLAAAAAA");
-	
-	ImGui::End();
-		
+	//do nothing		
 }
 
 void TCompLoadingScreen::printLetters() const {
 	//PROFILE_FUNCTION("TCompFadingMessage printLetters");
 
 	bool b = false;
-	int gState = GameController->GetGameState();
-	if (gState != CGameController::LOADING) return;
+	VEC3 position;
+	position.y = -0.25f;
+	position.z = 0.75f;
 
-	for (int i = 0; i < numchars; ++i) {
+	for (int i = 0; i < 100; ++i) {
 		if ((i < text.length() - 1 && text[i] == '\\' && text[i + 1] == 'n') || (i > 1 && text[i - 1] == '\\' && text[i] == 'n')) {
 			continue;
 		}
@@ -82,13 +80,32 @@ void TCompLoadingScreen::printLetters() const {
 		float sx = letterBoxSize / 16.0f;
 		float sy = letterBoxSize / 16.0f;
 
-		float letter_posx = 0.50f + (i - linechars_prev - fminf(line, 1.0f)) * sizeFontX;
-		float letter_posy = 0.50f - line*sizeFontY;
-		CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.49f), ("Loading_" + std::to_string(id) + "_" + std::to_string(i)));
+		position.x = 0.4f + i*0.0085f;
+
+		CHandle letter_h = Gui->addGuiElement("ui/Loading_bar", position, "loading" + to_string(i));
 		CEntity * letter_e = letter_h;
 		TCompGui * letter_gui = letter_e->get<TCompGui>();
 		assert(letter_gui);
 		RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
 		letter_gui->setTxCoords(textCords);
 	}
+}
+
+void TCompLoadingScreen::updateLetters(bool loaded) const {
+	//PROFILE_FUNCTION("TCompFadingMessage printLetters");
+	VEC3 position;
+	if (loaded)
+		position.y = 0.10f;
+	else
+		position.y = -0.25f;
+	position.z = 0.75f;
+
+	for (int i = 0; i < numchars; ++i) {
+		position.x = 0.4f + i*0.0085f;
+		Gui->updateGuiElementPositionByTag("loading" + to_string(i), position);
+	}
+}
+
+void TCompLoadingScreen::renderInMenu() {
+	IMGUI_SHOW_INT(loading_value);
 }
