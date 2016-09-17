@@ -363,6 +363,12 @@ int SLBHandle::addOption(const char* name) {
 	}
 	return res;
 }
+void SLBHandle::selectOption(int id) {
+	if (real_handle.isValid()) {
+		GET_COMP(gui_selector, real_handle, TCompGuiSelector);
+		if (gui_selector) gui_selector->SelectOption(id);
+	}
+}
 bool SLBHandle::isPatrolling() {
 	bool patrol = false;
 	if (real_handle.isValid()) {
@@ -864,6 +870,11 @@ void SLBPublicFunctions::jsonEdit(std::string filename, std::string group, std::
 	std::map<std::string, float> all_values = readIniAtrData(filename, group);
 	all_values[name] = new_value;
 	writeIniAtrData(filename, group, all_values);
+}
+
+float SLBPublicFunctions::jsonRead(std::string filename, std::string group, std::string name) {
+	std::map<std::string, float> all_values = readIniAtrData(filename, group);
+	return all_values[name];
 }
 
 void SLBPublicFunctions::exit() {

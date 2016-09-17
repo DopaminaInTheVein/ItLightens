@@ -87,6 +87,7 @@ public:
 	void setAnim(const char* name);
 	void setAnimLoop(const char* name);
 	int addOption(const char* name);
+	void selectOption(int);
 	bool isPatrolling();
 	bool isComeBack();
 };
@@ -188,6 +189,7 @@ public:
 	void loadEntities(const char* file_name);
 	void resume();
 	void jsonEdit(std::string filename, std::string group, std::string name, float new_value);
+	float jsonRead(std::string filename, std::string group, std::string name);
 	void exit();
 	const char* getText(const char* scene, const char* event);
 	void reloadLanguageFile(const char* language);

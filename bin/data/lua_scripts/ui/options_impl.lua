@@ -6,6 +6,12 @@ function OnCreateGui_opt_axisY( )
 	h:getHandleCaller()
 	GUI_OPTION_AXIS_Y_NORMAL = h:add_option(TXT_OPTION_AXIS_Y_NORMAL)
 	GUI_OPTION_AXIS_Y_INVERTED = h:add_option(TXT_OPTION_AXIS_Y_INVERTED)
+	axis_inverted = p:json_read("options.json", "controls", "y-axis_inverted")
+	if axis_inverted == 1.0 then
+		h:select_option(GUI_OPTION_AXIS_Y_INVERTED)
+	else
+		h:select_option(GUI_OPTION_AXIS_Y_NORMAL)
+	end	
 end
 
 function OnChoose_opt_axisY(option)
