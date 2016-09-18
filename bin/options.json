@@ -1,21 +1,24 @@
 {
-  "scenes": {
-    "level_0": "title",
-    "level_1": "hub",
-    "level_2": "tuto_mole",
-    "level_3": "tuto_sci",
-	"level_4": "ms3"
-  },
-  "screen": {
-    "xres": 960,
-    "yres": 540,
-    "full_screen": 1
-  },
-  "controls": {
-    "y-axis_inverted": 1,
-    "x-axis_inverted": 1
-  },
-  "language" : {
-	"lang": "EN"
-  }
+    "scenes": {
+        "level_0": "title",
+        "level_1": "hub",
+        "level_2": "tuto_mole",
+        "level_3": "tuto_sci",
+        "level_4": "ms3"
+    },
+    "screen": {
+        "xres": 960,
+        "yres": 540,
+        "full_screen": 1
+    },
+    "controls": {
+        "y-axis_inverted": 1.0,
+        "x-axis_inverted": 1.0
+    },
+    "language": {
+        "lang": "EN"
+    },
+    "game": {
+        "difficulty": 1.0
+    }
 }

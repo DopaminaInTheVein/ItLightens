@@ -95,6 +95,7 @@ Document readJSONAtrFile(const std::string route);
 std::map<std::string, float> readIniAtrData(const std::string route, std::string atr_to_read);
 std::map<std::string, std::string> readIniAtrDataStr(const std::string route, std::string atr_to_read);
 void writeIniAtrData(const std::string route, std::string element_name, std::map<std::string, float> element_values);
+void writeIniAtrDataStr(const std::string route, std::string element_name, std::map<std::string, std::string> element_values);
 
 //Math basic
 float max(int nargs, ...);
@@ -105,7 +106,7 @@ float inverseFloat(float value);
 bool isNan(VEC3 vec);
 bool isValid(VEC3 vec);
 bool isNormal(VEC3 vec);
-
+void mod(int& value, int module);
 //STD operations
 
 #define removeFromVector(v, elem) v.erase(std::remove(v.begin(), v.end(), elem), v.end())

@@ -282,6 +282,21 @@ void writeIniAtrData(const std::string route, std::string element, std::map<std:
 	fclose(pFile);
 }
 
+// Modifies the specified json element of the specified file
+void writeIniAtrDataStr(const std::string route, std::string element, std::map<std::string, std::string> element_values) {
+	Document document = readJSONAtrFile(route);
+	for (auto atribute : element_values) {
+		document[element.c_str()][atribute.first.c_str()].SetString(atribute.second.c_str(), document.GetAllocator());
+	}
+
+	FILE* pFile = fopen(route.c_str(), "wb");
+	char buffer[65536];
+	FileWriteStream os(pFile, buffer, sizeof(buffer));
+	PrettyWriter<FileWriteStream> prettywritter(os);
+	document.Accept(prettywritter);
+	fclose(pFile);
+}
+
 // Lists all files contained in the specified folder recursively
 std::vector<std::string> list_files_recursively(std::string folder_path) {
 	std::vector<std::string> files;
@@ -430,4 +445,9 @@ bool isValid(VEC3 vec) {
 // Is valid and different zero?
 bool isNormal(VEC3 vec) {
 	return isValid(vec) && vec.LengthSquared() > 0;
+}
+
+void mod(int& value, int module)
+{
+	value = (value + module) % module;
 }

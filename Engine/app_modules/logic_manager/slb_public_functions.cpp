@@ -363,6 +363,12 @@ int SLBHandle::addOption(const char* name) {
 	}
 	return res;
 }
+void SLBHandle::selectOption(int id) {
+	if (real_handle.isValid()) {
+		GET_COMP(gui_selector, real_handle, TCompGuiSelector);
+		if (gui_selector) gui_selector->SelectOption(id);
+	}
+}
 bool SLBHandle::isPatrolling() {
 	bool patrol = false;
 	if (real_handle.isValid()) {
@@ -590,6 +596,14 @@ void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 
 void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA", "%s\n", to_print);
+}
+
+void SLBPublicFunctions::setupGame() {
+	GameController->Setup();
+}
+
+void SLBPublicFunctions::setLanguage(const char* lang) {
+	GameController->SetLanguage(std::string(lang));
 }
 
 void SLBPublicFunctions::completeTasklist(int i) {
@@ -864,6 +878,22 @@ void SLBPublicFunctions::jsonEdit(std::string filename, std::string group, std::
 	std::map<std::string, float> all_values = readIniAtrData(filename, group);
 	all_values[name] = new_value;
 	writeIniAtrData(filename, group, all_values);
+}
+
+float SLBPublicFunctions::jsonRead(std::string filename, std::string group, std::string name) {
+	std::map<std::string, float> all_values = readIniAtrData(filename, group);
+	return all_values[name];
+}
+
+void SLBPublicFunctions::jsonEditStr(std::string filename, std::string group, std::string name, string new_value) {
+	std::map<std::string, string> all_values = readIniAtrDataStr(filename, group);
+	all_values[name] = new_value;
+	writeIniAtrDataStr(filename, group, all_values);
+}
+
+string SLBPublicFunctions::jsonReadStr(std::string filename, std::string group, std::string name) {
+	std::map<std::string, string> all_values = readIniAtrDataStr(filename, group);
+	return all_values[name];
 }
 
 void SLBPublicFunctions::exit() {

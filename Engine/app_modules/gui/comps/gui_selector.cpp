@@ -162,24 +162,37 @@ int TCompGuiSelector::AddOption(string option)
 	sel_option.text = option;
 	options.push_back(sel_option);
 	//TODO: create text options[res]
-	//TODO: if res == 0 options[res].alfa = 0
-	//TODO: else options[res].color = COLOR_SELECTED
+	//TODO: if res == options[res].color = COLOR_SELECTED
+	//TODO: else options[res].alfa = 0
 	return res;
 }
 
 void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 {
-	//options[cur_option] --> alfa = 0;
+	if (options.size() == 0) {
+		assert(false);
+		return;
+	}
+	int new_id = 0;
 	if (msg.event_name == LEFT_EVENT) {
-		cur_option -= 1;
+		new_id = cur_option - 1;
 	}
 	else if (msg.event_name == RIGHT_EVENT) {
-		cur_option += 1;
+		new_id = cur_option + 1;
 	}
-	cur_option %= options.size();
+	mod(new_id, options.size());
+	SelectOption(new_id);
 	char param[64];
 	sprintf(param, "\"%s\", %d", MY_NAME, cur_option);
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnChoose, string(param), MY_OWNER);
+}
+
+void TCompGuiSelector::SelectOption(int id)
+{
+	//options[cur_option] --> alfa = 0;
+	cur_option = clamp(id, 0, options.size());
+	assert(id == cur_option);
+	//options[cur_option=id].color = COLOR_SELECTED;
 }
 
 TCompGuiSelector::~TCompGuiSelector()

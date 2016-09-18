@@ -84,6 +84,7 @@ void TCompText::printLetters() {
 			float letter_posy = letter_posy_ini - 0.15f - j * sizeFontY*scale;
 
 			CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.50f + letteri*0.001), ("Text_Message_Letter_" + id + "_" + std::to_string(letteri)), scale);
+			ui_letters.push_back(letter_h);
 			CEntity * letter_e = letter_h;
 			TCompGui * letter_gui = letter_e->get<TCompGui>();
 			assert(letter_gui);

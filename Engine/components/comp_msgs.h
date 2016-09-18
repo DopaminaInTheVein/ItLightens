@@ -370,4 +370,7 @@ struct TMsgGuiNotify {
 	std::string event_name;
 	DECLARE_MSG_ID();
 };
+struct TMsgLanguageChanged {
+	DECLARE_MSG_ID();
+};
 #endif
