@@ -80,7 +80,7 @@ protected:
 	float cinematicTargetYaw;
 	bool onCinematic = false;
 	std::string cinematicEndCode;
-	float epsilonPos = 0.05f;
+	float epsilonPos = 0.2f;
 	float epsilonYaw = deg2rad(1);
 
 	//virtual needed for poses right now
