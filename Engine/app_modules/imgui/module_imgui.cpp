@@ -75,6 +75,9 @@ void CImGuiModule::update(float dt) {
 	}
 	//---------------------------------------
 
+	//Difficulty
+	IMGUI_SHOW_INT(GameController->GetDifficulty());
+
 	//Buttons game
 	//---------------------------------------
 	if (GameController->GetGameState() == CGameController::RUNNING) {
@@ -88,7 +91,6 @@ void CImGuiModule::update(float dt) {
 
 		ImGui::PopStyleColor();
 	}
-
 	if (ImGui::Button("SAVE GAME")) CApp::get().saveLevel();
 	if (ImGui::Button("LOAD GAME")) {
 		CApp::get().restartLevelNotify();

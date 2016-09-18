@@ -3,7 +3,15 @@
 
 #include "app_module.h"
 
+enum DIFFICULTIES {
+	EASY = 0,
+	NORMAL,
+	HARD,
+	DIFF_SIZE,
+};
+
 class CGameController : public IAppModule {
+	DIFFICULTIES game_difficulty = DIFFICULTIES::NORMAL;
 	int		game_state = 0;
 	float	loading_state = 0.f;
 	bool	loading = false;
@@ -31,6 +39,10 @@ public:
 		GAME_STATES_SIZE
 	};
 
+	DIFFICULTIES GetDifficulty() const;
+	void SetDifficulty(int);
+	void Setup();
+
 	int GetGameState() const;
 	void SetGameState(int state);
 
@@ -38,8 +50,8 @@ public:
 	void SetLoadingState(float state);
 	void AddLoadingState(float delta);
 	bool IsLoadingState() { return loading; }
-	void LoadComplete(bool complete) { 
-		loading = !complete; 
+	void LoadComplete(bool complete) {
+		loading = !complete;
 		if (complete)
 			loading_state = 100.f;
 		else

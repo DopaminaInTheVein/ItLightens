@@ -598,6 +598,10 @@ void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA", "%s\n", to_print);
 }
 
+void SLBPublicFunctions::setupGame() {
+	GameController->Setup();
+}
+
 void SLBPublicFunctions::completeTasklist(int i) {
 	CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
 	CEntity * tasklist_e = tasklist;

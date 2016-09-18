@@ -105,7 +105,7 @@ float inverseFloat(float value);
 bool isNan(VEC3 vec);
 bool isValid(VEC3 vec);
 bool isNormal(VEC3 vec);
-
+void mod(int& value, int module);
 //STD operations
 
 #define removeFromVector(v, elem) v.erase(std::remove(v.begin(), v.end(), elem), v.end())

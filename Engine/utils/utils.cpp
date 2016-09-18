@@ -431,3 +431,8 @@ bool isValid(VEC3 vec) {
 bool isNormal(VEC3 vec) {
 	return isValid(vec) && vec.LengthSquared() > 0;
 }
+
+void mod(int& value, int module)
+{
+	value = (value + module) % module;
+}

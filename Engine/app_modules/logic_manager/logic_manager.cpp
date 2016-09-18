@@ -747,6 +747,9 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
 		.param("Text to print")
+		// Setup game
+		.set("setup_game", &SLBPublicFunctions::setupGame)
+		.comment("Setup for a new game")
 		// Enable and disable controls (player and camera)
 		.set("setControlEnabled", &SLBPublicFunctions::setControlEnabled)
 		.comment("Enable or disable controls\n")

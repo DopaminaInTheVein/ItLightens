@@ -162,6 +162,7 @@ public:
 	void execCommand(const char* exec_code, float exec_time);
 	void completeTasklist(int i);
 	void print(const char* to_print);
+	void setupGame();
 	void setControlEnabled(int);
 	void setPlayerEnabled(int);
 	void setCameraEnabled(int);
