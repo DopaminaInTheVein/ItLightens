@@ -1,0 +1,16 @@
+<entities>
+<entity>
+	<name name="helper_text"/>
+	<helper_text 
+		id="helper_text"
+		text="defaultText"
+		pos_x="0.0"
+		pos_y="0.0"
+		scale="1.0"
+		color="#FFFFFFFF"
+		colorTarget="#FFFFFFFF"
+		colorSpeed="0.0"
+		colorSpeedLag = "0.0"
+	/>
+</entity>
+</entities>

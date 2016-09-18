@@ -16,8 +16,6 @@ void TCompText::forceTTLZero() {
 
 bool TCompText::load(MKeyValue& atts)
 {
-	CHandle thisHan = CHandle(this).getOwner();
-
 	id = atts.getString("id", "");
 	assert(id != "");
 	text = atts.getString("text", "defaultText");
@@ -25,6 +23,10 @@ bool TCompText::load(MKeyValue& atts)
 	letter_posy_ini = atts.getFloat("pos_y", 0.0f);
 	scale = atts.getFloat("scale", 1.0f);
 	color = obtainColorNormFromString(atts.getString("color", "#FFFFFFFF"));
+	colorTarget = obtainColorNormFromString(atts.getString("colorTarget", "#FFFFFFFF"));
+	colorChangeSpeed = atts.getFloat("colorSpeed", 0.0f);
+	colorChangeSpeedLag = atts.getFloat("colorSpeedLag", 0.0f);
+	lineText.resize(0);
 	printed = false;
 	ttl = 1.0f;
 	std::string endline = "\n";
@@ -44,7 +46,11 @@ bool TCompText::load(MKeyValue& atts)
 }
 
 void TCompText::update(float dt) {
-	if (ttl >= 0.0f && !printed) {
+	if (ttl >= 0.0f && (!printed || reprint)) {
+		for (CHandle h_letter : gui_letters) {
+			h_letter.destroy();
+		}
+		gui_letters.empty();
 		printLetters();
 	}
 	else if (ttl < 0.0f) {
@@ -55,11 +61,47 @@ void TCompText::update(float dt) {
 		h.destroy();
 	}
 }
+
+void TCompText::setup(std::string set_id, std::string set_text, float set_posx, float set_posy, std::string set_textColor, float set_scale, std::string set_textColorTarget, float set_textColorSpeed, float set_textColorSpeedLag) {
+	id = set_id;
+	assert(id != "");
+	text = set_text;
+	letter_posx_ini = set_posx;
+	letter_posy_ini = set_posy;
+	scale = set_scale;
+	color = obtainColorNormFromString(set_textColor);
+	colorTarget = obtainColorNormFromString(set_textColorTarget);
+	colorChangeSpeed = set_textColorSpeed;
+	colorChangeSpeedLag = set_textColorSpeedLag;
+	printed = false;
+	ttl = 1.0f;
+	lineText.resize(0);
+	std::string endline = "\n";
+	int ini = -1;
+	size_t pos = text.find(endline, 0);
+	while (pos != text.npos)
+	{
+		lineText.push_back(text.substr(ini + 1, pos));
+		ini = pos;
+		pos = text.find(endline, pos + 1);
+	}
+	lineText.push_back(text.substr(ini + 1, pos));
+
+	accumSpacing.resize(lineText.size(), 0.0f);
+}
+
+void TCompText::setAttr(float new_x, float new_y, float new_scale) {
+	letter_posx_ini = new_x;
+	letter_posy_ini = new_y;
+	scale = new_scale;
+	reprint = true;
+}
+
 void TCompText::printLetters() {
 	int gState = GameController->GetGameState();
 	if (gState != CGameController::RUNNING) return;
 	int letteri = 0;
-
+	float accumLag = 0.0f;
 	for (int j = 0; j < lineText.size(); ++j) {
 		for (int i = 0; i < lineText[j].size(); ++i) {
 			unsigned char letter = lineText[j][i];
@@ -84,7 +126,11 @@ void TCompText::printLetters() {
 			letteri++;
 			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
 			letter_gui->SetColor(color);
+			if (colorChangeSpeed > 0.0f) {
+				letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag);
+			}
 			gui_letters.push_back(letter_h);
+			accumLag += colorChangeSpeedLag;
 		}
 	}
 	printed = true;

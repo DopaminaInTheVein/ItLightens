@@ -49,8 +49,7 @@ bool TCompGui::load(MKeyValue& atts)
 	col = atts.getInt("col", -1);
 	width = atts.getFloat("width", 0.f);
 	height = atts.getFloat("height", 0.f);
-	color = VEC4(1,1,1,1);
-
+	color = VEC4(1, 1, 1, 1);
 	return true;
 }
 
@@ -127,6 +126,20 @@ void TCompGui::pushCursor(CHandle h)
 #include "components\entity.h"
 void TCompGui::update(float elapsed)
 {
+	static float timeAcum = 0.0f;
+	timeAcum += elapsed / 200;
+	if (color_speed > 0.0f) {
+		float mesura = timeAcum*color_speed - color_speed_lag;
+		if (mesura > 0.0f) {
+			float mesuramoduled = fmod(mesura, 2.0f);
+			float proportion = mesuramoduled;
+			if (mesuramoduled > 1.0f) {
+				proportion = 2.0 - mesuramoduled;
+			}
+			color = origin_color + (target_color - origin_color)*proportion;
+		}
+	}
+
 	//Check if needs to update
 	if (render_speed == 0.f || render_state == render_target) return;
 
