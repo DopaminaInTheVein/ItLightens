@@ -18,12 +18,8 @@ bool TCompText::load(MKeyValue& atts)
 {
 	CHandle thisHan = CHandle(this).getOwner();
 
-	getHandleManager<TCompText>()->each([](TCompText * mess) {
-		mess->forceTTLZero();
-	}
-	);
-
-	id = atts.getString("id", std::to_string(std::rand()));
+	id = atts.getString("id", "");
+	assert(id != "");
 	text = atts.getString("text", "defaultText");
 	letter_posx_ini = atts.getFloat("pos_x", 0.0f);
 	letter_posy_ini = atts.getFloat("pos_y", 0.0f);
@@ -52,12 +48,8 @@ void TCompText::update(float dt) {
 		printLetters();
 	}
 	else if (ttl < 0.0f) {
-		int letteri = 0;
-		for (int j = 0; j < lineText.size(); ++j) {
-			for (int i = 0; i < lineText[j].size(); ++i) {
-				Gui->removeGuiElementByTag(("Text_Message_Letter_" + id + "_" + std::to_string(letteri)));
-				++letteri;
-			}
+		for (CHandle h_letter : gui_letters) {
+			h_letter.destroy();
 		}
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
@@ -83,7 +75,7 @@ void TCompText::printLetters() {
 			float letter_posx = letter_posx_ini + 0.375f + i * sizeFontX*scale - accumSpacing[j] * scale;
 			float letter_posy = letter_posy_ini - 0.15f - j * sizeFontY*scale;
 
-			CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.50f + letteri*0.001), ("Text_Message_Letter_" + id + "_" + std::to_string(letteri)), scale);
+			CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.50f + letteri*0.001), ("Text_Message_Letter_" + id), scale);
 			CEntity * letter_e = letter_h;
 			TCompGui * letter_gui = letter_e->get<TCompGui>();
 			assert(letter_gui);
@@ -92,6 +84,7 @@ void TCompText::printLetters() {
 			letteri++;
 			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
 			letter_gui->SetColor(color);
+			gui_letters.push_back(letter_h);
 		}
 	}
 	printed = true;
