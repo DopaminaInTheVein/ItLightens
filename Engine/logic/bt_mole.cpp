@@ -83,7 +83,13 @@ void bt_mole::Init()
 	CEntity * myParentE = myParent;
 	TCompTransform * myParentT = myParentE->get<TCompTransform>();
 	rechargePoint = myParentT->getPosition();
+
+	____TIMER_REDEFINE_(timerStunt, 15);
+	if (animController) {
+		animController->setState(AST_IDLE);
+	}
 	SET_ANIM_MOLE_BT(AST_IDLE);
+
 	initParent();
 }
 
@@ -142,6 +148,8 @@ bool bt_mole::save(std::ofstream& os, MKeyValue& atts)
 	save_bt(os, atts);
 	return true;
 }
+
+// conditions
 
 // actions
 int bt_mole::actionLookForWpt() {
@@ -414,79 +422,6 @@ int bt_mole::actionUngrabBox() {
   return OK;
 }
 */
-void bt_mole::_actionBeforePossession() {
-	/*if (towptbox > -1 && carryingBox) {
-		vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
-		CEntity * en = newPointerVec[towptbox];
-		TCompName * nameBox = en->get<TCompName>();
-		string key = nameBox->name;
-
-		bt_mole * mole = SBB::readMole(key);
-		CEntity * mole_e = mole->getMyEntity();
-		TCompName * mole_e_n = mole_e->get<TCompName>();
-
-		CEntity * currmole_e = getMyEntity();
-		TCompName * currmole_e_n = currmole_e->get<TCompName>();
-
-		if (mole_e_n->name == currmole_e_n->name) {
-			TCompTransform* p_t = mole_e->get<TCompTransform>();
-			TCompTransform* b_t = en->get<TCompTransform>();
-			VEC3 posboxIni = b_t->getPosition();
-			VEC3 posbox;
-			posbox.x = posboxIni.x + p_t->getFront().x * 3;
-			posbox.y = posboxIni.y - 2;
-			posbox.z = posboxIni.z + p_t->getFront().z * 3;
-			float angle = 0.0f;
-			//TODO PHYSX OBJECT
-
-			while (!b_t->executeMovement(posbox)) {
-			  angle += 0.1f;
-			  posbox.x = posboxIni.x + p_t->getFront().x * cos(angle) * 3;
-			  posbox.z = posboxIni.z + p_t->getFront().z * sin(angle) * 3;
-			}
-			SBB::postBool(key, false);
-			carryingBox = false;
-		}
-	}*/
-}
-
-void bt_mole::_actionWhenStunt() {
-	/*if (towptbox > -1 && carryingBox) {
-		vector<CHandle> newPointerVec = SBB::readHandlesVector("wptsBoxes");
-		CEntity * en = newPointerVec[towptbox];
-		TCompName * nameBox = en->get<TCompName>();
-		string key = nameBox->name;
-		if (SBB::readBool(key)) {
-			bt_mole * mole = SBB::readMole(key);
-			CEntity * mole_e = mole->getMyEntity();
-			TCompName * mole_e_n = mole_e->get<TCompName>();
-
-			CEntity * currmole_e = getMyEntity();
-			TCompName * currmole_e_n = currmole_e->get<TCompName>();
-
-			if (mole_e_n->name == currmole_e_n->name) {
-				TCompTransform* p_t = mole_e->get<TCompTransform>();
-				TCompTransform* b_t = en->get<TCompTransform>();
-				VEC3 posboxIni = b_t->getPosition();
-				VEC3 posbox;
-				posbox.x = posboxIni.x + p_t->getFront().x * 3;
-				posbox.y = posboxIni.y - 2;
-				posbox.z = posboxIni.z + p_t->getFront().z * 3;
-				float angle = 0.0f;
-				//TODO PHYSX OBJECT
-
-				while (!b_t->executeMovement(posbox)) {
-				  angle += 0.1f;
-				  posbox.x = posboxIni.x + p_t->getFront().x * cos(angle) * 3;
-				  posbox.z = posboxIni.z + p_t->getFront().z * sin(angle) * 3;
-				}
-
-				SBB::postBool(key, false);
-				carryingBox = false;
-			}
-		}
-	}*/
-}
 /*
 bool bt_mole::isBoxAtLeavePoint(VEC3 posBox) {
 	if (SBB::readHandlesVector("wptsBoxLeavePoint").size() > 0) {

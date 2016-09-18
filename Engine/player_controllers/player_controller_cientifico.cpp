@@ -344,6 +344,7 @@ void player_controller_cientifico::UpdateUnpossess() {
 	CHandle h = CHandle(this);
 	tags_manager.removeTag(h.getOwner(), getID("player"));
 	SET_ANIM_SCIENTIST(AST_STUNNED);
+	ChangeState("idle");
 }
 
 void player_controller_cientifico::DisabledState() {

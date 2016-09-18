@@ -36,6 +36,7 @@ class bt_mole : public bt_poss, public TCompBase {
 
 	int towptbox;
 	int towptleave;
+	float timerStunt, _timerStunt;
 
 	bool carryingBox = false;
 
@@ -93,7 +94,6 @@ public:
 	void update(float elapsed);
 	void readIniFileAttr();
 	void renderInMenu();
-	//conditions
 	//bool checkBoxes();
 	//actions
 	/*
@@ -129,9 +129,6 @@ public:
 
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);
-
-	void _actionBeforePossession();
-	void _actionWhenStunt();
 
 	bool aimToTarget(VEC3 target);
 	void moveFront(float movement_speed);

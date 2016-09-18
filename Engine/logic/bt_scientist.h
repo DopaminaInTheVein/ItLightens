@@ -113,12 +113,10 @@ public:
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);
 	//conditions
-	bool playerStunned();
 	bool workbenchAvailable();
 	//toggle conditions
 	bool checkBusy();
 	//actions
-	int actionStunned();
 	// movement
 	int actionAimToPos();
 	int actionMoveToPos();
