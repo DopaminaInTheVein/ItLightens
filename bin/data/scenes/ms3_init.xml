@@ -931,17 +931,17 @@
    tags="drone platform"/>
 <drone
    wpts_size="2"
-   wpt0_pos="-30.8294 4.31167 22.1604"
+   wpt0_pos="-26.998 1.42543 5.70417"
    wpt0_wait="2"
-   wpt1_pos="-18.9379 1.30144 21.7727"
+   wpt1_pos="-19.0573 -1.58479 14.5644"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
    name="DroneMinus_004"/>
 <transform
-   pos="-24.9983 3.5994 22.0196"
-   quat="0 0.99998 0 0"
+   pos="-23.142 0.713167 10.0805"
+   quat="0 0.908985 0 0.416829"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
@@ -952,7 +952,7 @@
 <local_aabb/>
 <polarized
    pol="minus"
-   offset="-0.0447369 0.965812 0.0109615"/>
+   offset="-0.0371513 0.965812 -0.0272245"/>
 <room
    name="1"/>
 
