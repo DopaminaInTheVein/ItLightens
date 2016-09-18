@@ -19,6 +19,20 @@ void CGameController::SetDifficulty(int diff)
 	assert(diff >= 0 && diff < DIFFICULTIES::DIFF_SIZE);
 	game_difficulty = (DIFFICULTIES)diff;
 }
+
+std::string CGameController::GetLanguage() const
+{
+	return game_language;
+}
+void CGameController::SetLanguage(std::string lang)
+{
+	if (lang == game_language) return;
+	game_language = lang;
+	getHandleManager<CEntity>()->each([](CEntity * e) {
+		e->sendMsg(TMsgLanguageChanged());
+	});
+}
+
 void CGameController::Setup()
 {
 	auto file = CApp::get().file_options_json;

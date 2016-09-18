@@ -75,6 +75,9 @@ void CImGuiModule::update(float dt) {
 	}
 	//---------------------------------------
 
+	//Language
+	IMGUI_SHOW_STRING(GameController->GetLanguage());
+
 	//Difficulty
 	IMGUI_SHOW_INT(GameController->GetDifficulty());
 

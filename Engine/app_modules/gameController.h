@@ -12,6 +12,7 @@ enum DIFFICULTIES {
 
 class CGameController : public IAppModule {
 	DIFFICULTIES game_difficulty = DIFFICULTIES::NORMAL;
+	std::string game_language = "EN";
 	int		game_state = 0;
 	float	loading_state = 0.f;
 	bool	loading = false;
@@ -39,9 +40,13 @@ public:
 		GAME_STATES_SIZE
 	};
 
+	void Setup();
+
 	DIFFICULTIES GetDifficulty() const;
 	void SetDifficulty(int);
-	void Setup();
+
+	std::string GetLanguage() const;
+	void SetLanguage(std::string);
 
 	int GetGameState() const;
 	void SetGameState(int state);

@@ -95,6 +95,7 @@ Document readJSONAtrFile(const std::string route);
 std::map<std::string, float> readIniAtrData(const std::string route, std::string atr_to_read);
 std::map<std::string, std::string> readIniAtrDataStr(const std::string route, std::string atr_to_read);
 void writeIniAtrData(const std::string route, std::string element_name, std::map<std::string, float> element_values);
+void writeIniAtrDataStr(const std::string route, std::string element_name, std::map<std::string, std::string> element_values);
 
 //Math basic
 float max(int nargs, ...);
