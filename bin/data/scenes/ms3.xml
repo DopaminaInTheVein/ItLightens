@@ -1588,7 +1588,7 @@
 <name
    name="pared_rota"/>
 <transform
-   pos="15.9914 -21.7099 -5.63918"
+   pos="15.9914 -21.7099 -2.9009"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
