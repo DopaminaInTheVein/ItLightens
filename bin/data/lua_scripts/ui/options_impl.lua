@@ -89,6 +89,7 @@ end
 
 function SaveLanguage(option)
 	p:json_edit_str("options.json", "language", "lang", LANGS_ID[option])
+	p:set_language(LANGS_ID[option])
 end
 
 -- Difficulty

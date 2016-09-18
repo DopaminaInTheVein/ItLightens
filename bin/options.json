@@ -16,9 +16,9 @@
         "x-axis_inverted": 1.0
     },
     "language": {
-        "lang": "EN"
+        "lang": "ES"
     },
     "game": {
-        "difficulty": 0.0
+        "difficulty": 1.0
     }
 }
