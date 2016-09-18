@@ -218,9 +218,9 @@ void player_controller_mole::UpdateMoves() {
 		camera_direction.Normalize();
 		// new camera position
 		VEC3 camera_position = cam_t->getPosition();
-		VEC3 new_cam_position = mole_position + camera_direction * cam_3p->GetPositionDistance();
+		VEC3 new_cam_position = mole_position + camera_direction * (cam_3p->GetPositionDistance() - 1.f);
 		new_cam_position.y = mole_position.y + 3.f;
-		VEC3 new_look_position = mole_position + VEC3(0.f, 1.f, 0.f);
+		VEC3 new_look_position = mole_position + VEC3(0.f, 1.5f, 0.f);
 		cam_m->smoothLookAt(new_cam_position, new_look_position, cam_m->getUpAux(), 0.9f / getDeltaTime());
 		cam_t->lookAt(new_cam_position, new_look_position, cam_m->getUpAux());
 		cam_t->setPosition(new_cam_position);
@@ -343,7 +343,6 @@ void player_controller_mole::UpdateUnpossess() {
 	if (boxGrabbed.isValid()) {
 		LeaveBox();
 		//Codigo de Leaving Box sin espera
-		inputEnabled = true;
 		GET_COMP(box_p, boxGrabbed, TCompPhysics);
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
@@ -353,12 +352,14 @@ void player_controller_mole::UpdateUnpossess() {
 	if (pilaGrabbed.isValid()) {
 		LeavePila();
 		//Codigo de Leaving Pil sin espera
-		inputEnabled = true;
 		GET_COMP(pila_p, pilaGrabbed, TCompPhysics);
 		pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		pilaGrabbed = CHandle();
 	}
+	inputEnabled = true;
+	pushing_box = false;
 	SET_ANIM_MOLE(AST_STUNNED);
+	ChangeState("idle");
 }
 
 void player_controller_mole::DestroyWall() {
@@ -661,7 +662,6 @@ void player_controller_mole::PushBoxPreparation() {
 		GET_COMP(box_p, boxPushed, TCompPhysics);
 		box_p->getActor()->isRigidBody()->setMass(250.f);
 		box_p->getRigidActor()->isRigidBody()->setMass(250.f);
-		pushing_box = true;
 		CEntity * camera_e = camera;
 		GET_COMP(cam_t, camera_e, TCompTransform);
 		GET_COMP(cam_m, camera_e, TCompCameraMain);
@@ -676,7 +676,7 @@ void player_controller_mole::PushBoxPreparation() {
 		GameController->SetManualCameraState(true);
 		cam_m->setManualControl(true);
 		// new camera position
-		VEC3 new_cam_position = mole_position + camera_direction * cam_3p->GetPositionDistance();
+		VEC3 new_cam_position = mole_position + camera_direction * ( cam_3p->GetPositionDistance() - 1.f);
 		new_cam_position.y = camera_position.y;
 		cam_m->smoothLookAt(new_cam_position, mole_position, cam_m->getUpAux(), 0.9f / getDeltaTime());
 		cam_t->lookAt(new_cam_position, mole_position, cam_m->getUpAux());
@@ -693,6 +693,7 @@ void player_controller_mole::PushBox() {
 		SBB::postBool(selectedBox, true);
 	}
 
+	pushing_box = true;
 	energyDecreasal(5.0f);
 	TMsgDamage dmg;
 	dmg.modif = 0.5f;

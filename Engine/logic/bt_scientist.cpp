@@ -79,8 +79,6 @@ void bt_scientist::Init() {
 		addChild("busystate", "selectworkstation", ACTION, NULL, (btaction)&bt_scientist::actionSelectWorkstation);
 		addChild("busystate", "gotoworkstation", ACTION, NULL, (btaction)&bt_scientist::actionGoToWorkstation);
 		addChild("busystate", "waitinworkstation", ACTION, NULL, (btaction)&bt_scientist::actionWaitInWorkstation);
-		// stunned state
-		addChild("scientist", "stunned", ACTION, (btcondition)&bt_scientist::playerStunned, (btaction)&bt_scientist::actionStunned);
 		// create beacon sequence
 		addChild("scientist", "createbeacon", SEQUENCE, (btcondition)&bt_scientist::workbenchAvailable, NULL);
 		addChild("createbeacon", "aimcreate", ACTION, NULL, (btaction)&bt_scientist::actionAimToPos);
@@ -129,7 +127,6 @@ void bt_scientist::update(float elapsed) {
 	if (stunned)
 		SET_ANIM_SCI_BT(AST_STUNNED);
 	updateStuck();
-
 	Recalc();
 }
 
@@ -179,16 +176,6 @@ bool bt_scientist::save(std::ofstream& os, MKeyValue& atts)
 }
 
 // conditions
-bool bt_scientist::playerStunned() {
-	PROFILE_FUNCTION("scientist: player stunned");
-	if (stunned == true) {
-		logic_manager->throwEvent(logic_manager->OnStunned, "");
-		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
-		return true;
-	}
-	return false;
-}
-
 bool bt_scientist::workbenchAvailable() {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	TCompTransform *me_transform = myEntity->get<TCompTransform>();
@@ -221,25 +208,6 @@ bool bt_scientist::checkBusy() {
 }
 
 // actions
-int bt_scientist::actionStunned() {
-	PROFILE_FUNCTION("scientist: actionstunned");
-	if (!myParent.isValid()) return false;
-	stuck = false;
-	stuck_time = 0.f;
-	if (timerStunt < 0) {
-		stunned = false;
-		logic_manager->throwEvent(logic_manager->OnStunnedEnd, "");
-		return OK;
-	}
-	else {
-		SET_ANIM_SCI_BT(AST_STUNNED);
-		if (timerStunt > -1)
-			timerStunt -= getDeltaTime();
-		return STAY;
-	}
-	return OK;
-}
-
 int bt_scientist::actionAimToPos() {
 	//Look to next target position
 	stuck = false;
