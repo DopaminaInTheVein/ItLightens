@@ -10,8 +10,37 @@
 #include "components/entity_tags.h"
 #include "components/comp_sense_vision.h"
 
-int CGameController::GetGameState() const { 
-	return game_state; 
+DIFFICULTIES CGameController::GetDifficulty() const
+{
+	return game_difficulty;
+}
+void CGameController::SetDifficulty(int diff)
+{
+	assert(diff >= 0 && diff < DIFFICULTIES::DIFF_SIZE);
+	game_difficulty = (DIFFICULTIES)diff;
+}
+
+std::string CGameController::GetLanguage() const
+{
+	return game_language;
+}
+void CGameController::SetLanguage(std::string lang)
+{
+	if (lang == game_language) return;
+	game_language = lang;
+	getHandleManager<CEntity>()->each([](CEntity * e) {
+		e->sendMsg(TMsgLanguageChanged());
+	});
+}
+
+void CGameController::Setup()
+{
+	auto file = CApp::get().file_options_json;
+	auto values = readIniAtrData(file, "game");
+	SetDifficulty((int)values["difficulty"]);
+}
+int CGameController::GetGameState() const {
+	return game_state;
 }
 void CGameController::SetGameState(int state) {
 	if (game_state == state) return;
@@ -24,7 +53,7 @@ void CGameController::SetGameState(int state) {
 }
 
 int CGameController::GetLoadingState() const { return loading_state; }
-void CGameController::SetLoadingState(float state) { 
+void CGameController::SetLoadingState(float state) {
 	loading_state = state;
 }
 void CGameController::AddLoadingState(float delta) {

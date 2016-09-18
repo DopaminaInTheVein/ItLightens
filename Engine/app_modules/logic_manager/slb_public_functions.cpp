@@ -598,6 +598,14 @@ void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA", "%s\n", to_print);
 }
 
+void SLBPublicFunctions::setupGame() {
+	GameController->Setup();
+}
+
+void SLBPublicFunctions::setLanguage(const char* lang) {
+	GameController->SetLanguage(std::string(lang));
+}
+
 void SLBPublicFunctions::completeTasklist(int i) {
 	CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
 	CEntity * tasklist_e = tasklist;
@@ -874,6 +882,17 @@ void SLBPublicFunctions::jsonEdit(std::string filename, std::string group, std::
 
 float SLBPublicFunctions::jsonRead(std::string filename, std::string group, std::string name) {
 	std::map<std::string, float> all_values = readIniAtrData(filename, group);
+	return all_values[name];
+}
+
+void SLBPublicFunctions::jsonEditStr(std::string filename, std::string group, std::string name, string new_value) {
+	std::map<std::string, string> all_values = readIniAtrDataStr(filename, group);
+	all_values[name] = new_value;
+	writeIniAtrDataStr(filename, group, all_values);
+}
+
+string SLBPublicFunctions::jsonReadStr(std::string filename, std::string group, std::string name) {
+	std::map<std::string, string> all_values = readIniAtrDataStr(filename, group);
 	return all_values[name];
 }
 

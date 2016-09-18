@@ -6,6 +6,7 @@
 class TCompText : public TCompBase {
 	VHandles gui_letters;
 	std::string id;
+	VHandles ui_letters;
 	float scale = 0.0f;
 	float marginForImage;
 	float letter_posx_ini;

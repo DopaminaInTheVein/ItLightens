@@ -162,6 +162,8 @@ public:
 	void execCommand(const char* exec_code, float exec_time);
 	void completeTasklist(int i);
 	void print(const char* to_print);
+	void setupGame();
+	void setLanguage(const char*);
 	void setControlEnabled(int);
 	void setPlayerEnabled(int);
 	void setCameraEnabled(int);
@@ -190,6 +192,8 @@ public:
 	void resume();
 	void jsonEdit(std::string filename, std::string group, std::string name, float new_value);
 	float jsonRead(std::string filename, std::string group, std::string name);
+	void jsonEditStr(std::string filename, std::string group, std::string name, std::string new_value);
+	std::string jsonReadStr(std::string filename, std::string group, std::string name);
 	void exit();
 	const char* getText(const char* scene, const char* event);
 	void reloadLanguageFile(const char* language);

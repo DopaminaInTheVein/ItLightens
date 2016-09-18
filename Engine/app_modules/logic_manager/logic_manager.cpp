@@ -747,6 +747,17 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
 		.param("Text to print")
+		// Setup game
+		.set("setup_game", &SLBPublicFunctions::setupGame)
+		.comment("Setup for a new game")
+		// Enable and disable controls (player and camera)
+		.set("setControlEnabled", &SLBPublicFunctions::setControlEnabled)
+		.comment("Enable or disable controls\n")
+		.param("int: 0 disabled, otherwise enabled")
+		// Set language
+		.set("set_language", &SLBPublicFunctions::setLanguage)
+		.param("string: language id")
+		.comment("Set language")
 		// Enable and disable controls (player and camera)
 		.set("setControlEnabled", &SLBPublicFunctions::setControlEnabled)
 		.comment("Enable or disable controls\n")
@@ -878,6 +889,19 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("string: group")
 		.param("string: name")
 		.param("float: value")
+		// Read json file
+		.set("json_read_str", &SLBPublicFunctions::jsonReadStr)
+		.comment("Read JSON property")
+		.param("string: filename")
+		.param("string: group")
+		.param("string: name")
+		// Edit json file
+		.set("json_edit_str", &SLBPublicFunctions::jsonEditStr)
+		.comment("Edit JSON property")
+		.param("string: filename")
+		.param("string: group")
+		.param("string: name")
+		.param("string: value")
 		// Exit Game
 		.set("exit_game", &SLBPublicFunctions::exit)
 		.comment("Exit game")

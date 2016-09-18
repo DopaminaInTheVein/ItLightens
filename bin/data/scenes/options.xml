@@ -63,13 +63,76 @@
    menu_name="options"
    row="0"
    col="0"
-   width="5.76126"
+   width="3.11336"
    height="0.277176"/>
 <gui_selector/>
 <name
    name="opt_axisY"/>
 <transform
-   pos="5.0 -92.8187 9.1709"
+   pos="4.9329 -96.211 9.17095"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/options/opt_axisY.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_selector"/>
+<gui
+   menu_name="options"
+   row="0"
+   col="0"
+   width="3.11336"
+   height="0.277176"/>
+<gui_selector/>
+<name
+   name="opt_axisX"/>
+<transform
+   pos="4.9329 -95.5672 9.17095"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/options/opt_axisY.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_selector"/>
+<gui
+   menu_name="options"
+   row="0"
+   col="0"
+   width="3.11336"
+   height="0.277176"/>
+<gui_selector/>
+<name
+   name="opt_lang"/>
+<transform
+   pos="4.9329 -94.1647 9.17095"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/options/opt_axisY.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_selector"/>
+<gui
+   menu_name="options"
+   row="0"
+   col="0"
+   width="3.11336"
+   height="0.277176"/>
+<gui_selector/>
+<name
+   name="opt_diff"/>
+<transform
+   pos="4.9329 -94.7474 9.17095"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh

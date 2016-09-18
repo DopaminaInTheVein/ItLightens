@@ -169,6 +169,10 @@ int TCompGuiSelector::AddOption(string option)
 
 void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 {
+	if (options.size() == 0) {
+		assert(false);
+		return;
+	}
 	int new_id = 0;
 	if (msg.event_name == LEFT_EVENT) {
 		new_id = cur_option - 1;
@@ -176,7 +180,7 @@ void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 	else if (msg.event_name == RIGHT_EVENT) {
 		new_id = cur_option + 1;
 	}
-	new_id %= options.size();
+	mod(new_id, options.size());
 	SelectOption(new_id);
 	char param[64];
 	sprintf(param, "\"%s\", %d", MY_NAME, cur_option);
@@ -186,7 +190,8 @@ void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 void TCompGuiSelector::SelectOption(int id)
 {
 	//options[cur_option] --> alfa = 0;
-	cur_option = id;
+	cur_option = clamp(id, 0, options.size());
+	assert(id == cur_option);
 	//options[cur_option=id].color = COLOR_SELECTED;
 }
 
