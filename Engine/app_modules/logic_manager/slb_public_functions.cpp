@@ -761,40 +761,23 @@ void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* icon
 	entity->add(new_hl);
 }
 
-void SLBPublicFunctions::putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale) {
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "helpText");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-
-	auto hm3 = CHandleManager::getByName("helper_text");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["text"] = text;
-	atts3["id"] = id;
-	atts3["color"] = textColor;
-	atts3["scale"] = std::to_string(scale);
-	atts3["pos_x"] = std::to_string(posx);
-	atts3["pos_y"] = std::to_string(posy);
-	new_hl.load(atts3);
-	entity->add(new_hl);
-
-	//Add tag talk text
-	TMsgSetTag msg;
-	msg.add = true;
-	msg.tag = "talk_text_" + string(id);
-	new_hp.sendMsg(msg);
+void SLBPublicFunctions::putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag) {
+	CHandle h = createPrefab("ui/text");
+	GET_COMP(t, h, TCompText);
+	t->setup(std::string(id), std::string(text), posx, posy, std::string(textColor), scale, std::string(textColorTarget), textColorSpeed, textColorSpeedLag);
 }
+
 void SLBPublicFunctions::removeText(const char* id) {
 	std::string id_string(id);
 	getHandleManager<TCompText>()->each([id_string](TCompText * mess) {
 		if (mess->getId() == id_string) { mess->forceTTLZero(); }
+	}
+	);
+}
+void SLBPublicFunctions::alterText(const char* id, float new_posx, float new_posy, float new_scale) {
+	std::string id_string(id);
+	getHandleManager<TCompText>()->each([id_string, new_posx, new_posy, new_scale](TCompText * mess) {
+		if (mess->getId() == id_string) { mess->setAttr(new_posx, new_posy, new_scale); }
 	}
 	);
 }

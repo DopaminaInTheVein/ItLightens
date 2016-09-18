@@ -620,6 +620,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompCameraMain>()->updateAll(dt);
 		getHandleManager<TCompLightDir>()->updateAll(dt);
+		getHandleManager<TCompGui>()->updateAll(dt);
 
 		getHandleManager<SkelControllerGuard>()->updateAll(dt);
 		getHandleManager<SkelControllerPlayer>()->updateAll(dt);

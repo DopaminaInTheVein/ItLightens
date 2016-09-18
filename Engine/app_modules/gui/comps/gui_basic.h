@@ -42,8 +42,11 @@ class TCompGui : public TCompBase {
 	float render_target;
 	float render_speed;
 
-
 	VEC4 color;
+	VEC4 origin_color;
+	VEC4 target_color;
+	float color_speed = 0.0f;
+	float color_speed_lag = 0.0f;
 
 	// Text coords limits
 	RectNormalized text_coords;
@@ -74,6 +77,7 @@ public:
 
 	void SetColor(VEC4 new_color) {
 		color = new_color;
+		origin_color = color;
 	}
 
 	bool load(MKeyValue& atts);
@@ -82,6 +86,11 @@ public:
 	float getRenderState() { return render_state; }
 	void setRenderTarget(float rs_target, float speed);
 	void setRenderState(float rs_state);
+	void setTargetColorAndSpeed(VEC4 new_t_color, float new_color_speed, float new_color_lag = 0.0f) { 
+		assert(new_color_speed > 0.0f); 
+		target_color = new_t_color; 
+		color_speed = new_color_speed;
+		color_speed_lag = new_color_lag; }
 	RectNormalized getTxCoords();
 	void setTxCoords(RectNormalized);
 	void renderInMenu();
