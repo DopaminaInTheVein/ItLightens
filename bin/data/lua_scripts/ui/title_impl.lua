@@ -1,6 +1,6 @@
 
 function OnStart_title( )
-	p:putText("title_text","It Lightens",1.25,0.3,"#DE7915FF",3.5,"#CADE1BFF",0.5,0.1)
+	p:putText("title_text","It Lightens",1.25,0.3,"#FF0000FF",3.5,"#0000FFFF",0.5,0.1)
 	p:clear_save()
 end
 
