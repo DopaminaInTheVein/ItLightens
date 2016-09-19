@@ -94,6 +94,8 @@
 #include "mcv_platform.h"
 #include "profiling.h"
 
+#ifdef PROFILING_ENABLED
+
 CProfiler profiler;
 
 bool CProfiler::TEntry::isBegin() const {
@@ -209,3 +211,5 @@ void CProfiler::saveResults() {
 
 	fclose(f);
 }
+
+#endif
