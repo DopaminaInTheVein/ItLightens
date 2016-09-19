@@ -85,6 +85,7 @@ end
 
 function OnGuardAttackEnd( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
+	p:stop_sound("event:/OnGuardAttack")
 end
 
 function OnGuardOvercharged( param )
@@ -97,6 +98,16 @@ end
 
 function OnGuardRemoveBox( reaction_time )
 	p:print( "OnGuardRemoveBox: "..reaction_time.."\n" )
+end
+
+function OnGuardMoving( reaction_time )
+	p:print( "OnGuardMoving: "..reaction_time.."\n" )
+	p:play_sound("event:/OnGuardMoving")
+end
+
+function OnGuardMovingStop( reaction_time )
+	p:print( "OnGuardMovingStop: "..reaction_time.."\n" )
+	p:stop_sound("event:/OnGuardMoving")
 end
 
 function OnZoneStart001( param )
@@ -146,10 +157,17 @@ end
 
 function OnPushBox( param )
 	p:print( "OnPushBox: "..param.."\n" )
+  	p:play_sound("event:/OnPushPullBox")
+end
+
+function OnPushBoxIdle( param )
+	p:print( "OnPushBoxIdle: "..param.."\n" )
+  	p:stop_sound("event:/OnPushPullBox")
 end
 
 function OnLeaveBox( param )
 	p:print( "OnLeaveBox: "..param.."\n" )
+	p:stop_sound("event:/OnPushPullBox")
 end
 
 function OnPossess( level, pj )
@@ -174,6 +192,7 @@ end
 
 function OnBreakWall( param )
 	p:print( "OnBreakWall: "..param.."\n" )
+	p:play_sound("event:/OnBreakWall")
 end
 
 function OnRechargeDrone( param )
@@ -329,6 +348,7 @@ end
 function OnPutPila( param )
 	p:print( "OnPutPila\n")
 	CallFunction("OnPutPila_"..param)
+	p:play_sound("event:/OnPutPila")
 end
 
 function OnRemovePila( param )
