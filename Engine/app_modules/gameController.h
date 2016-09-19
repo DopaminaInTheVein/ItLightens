@@ -25,6 +25,8 @@ class CGameController : public IAppModule {
 	bool	manual_control = false;
 	bool    ui_control = false;
 
+	bool	cheat_godmode = false;
+
 	CHandle h_game_controller;
 
 public:
@@ -80,6 +82,13 @@ public:
 	bool IsUiControl() const;
 	bool * IsUiControlPointer();
 	void SetUiControl(bool new_ui_control);
+
+	bool * GetCheatGodmodePointer() {
+		return &cheat_godmode;
+	}
+	bool IsCheatGodModeActivated() const {
+		return cheat_godmode;
+	}
 
 	bool IsCinematic() const;
 	bool IsCamManual() const;

@@ -202,6 +202,10 @@ void CImGuiModule::update(float dt) {
 	}if (ImGui::CollapsingHeader("Entity by Tag")) {
 		ImGui::Text("Application ENTITY TAG - TODO");
 		tags_manager.renderInMenu();
+	}
+	if (ImGui::CollapsingHeader("Game Options")) {
+		ImGui::Checkbox("god mode", GameController->GetCheatGodmodePointer());
+	
 	}if (ImGui::CollapsingHeader("Graficos")) {
 		if (ImGui::TreeNode("polarize")) {
 			//ImGui::SliderFloat("Polarize strength", &shader_ctes_globals.strenght_polarize, 0.0f, 2.0f);
@@ -213,6 +217,14 @@ void CImGuiModule::update(float dt) {
 			ImGui::Checkbox("polarize effects(disabled)", GameController->GetFxPolarizePointer());
 
 			ImGui::Checkbox("glow effect(disabled)", GameController->GetFxGlowPointer());
+
+			if (ImGui::DragFloat("ssao intensity", &shader_ctes_blur.ssao_intensity)) {
+				shader_ctes_blur.uploadToGPU();
+			}
+
+			if (ImGui::DragFloat("ssao iterations", &shader_ctes_blur.ssao_iterations)) {
+				shader_ctes_blur.uploadToGPU();
+			}
 
 			if (ImGui::DragFloat("Specular force", &shader_ctes_hatching.specular_force)) {
 				shader_ctes_hatching.uploadToGPU();
