@@ -157,5 +157,6 @@ hDoorTutoSci = Handle()
 function openDoorTutoSci( )
 	hDoorTutoSci:get_handle_by_id(idDoorTutoSci)
 	hDoorTutoSci:setLocked(0)
+	p:play_sound("event:/OnDoorClosing")
 end
 --==============================================================

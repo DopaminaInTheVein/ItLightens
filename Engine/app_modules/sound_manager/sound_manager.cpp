@@ -94,12 +94,38 @@ void CSoundManagerModule::stop() {
 
 bool CSoundManagerModule::playSound(std::string route) {
 	Studio::EventInstance* sound_instance = NULL;
-	result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
 
-	if (result == FMOD_OK) {
-		sound_instance->start();
-		sound_instance->release();
-		return true;
+	int count;
+	sounds_descriptions[std::string(route)]->getInstanceCount(&count);
+
+	if (count < 1) {
+		result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
+
+		if (result == FMOD_OK) {
+			sound_instance->start();
+			sound_instance->release();
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool CSoundManagerModule::stopSound(std::string route) {
+	int count;
+	sounds_descriptions[std::string(route)]->getInstanceCount(&count);
+
+	Studio::EventInstance** sound_instances = (Studio::EventInstance**)malloc(count * sizeof(void*));
+	sounds_descriptions[std::string(route)]->getInstanceList(sound_instances, count, &count);
+
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			Studio::EventInstance* sound_instance = NULL;
+			sound_instance = sound_instances[i];
+			sound_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+			sound_instance->release();
+		}
+		return true;		
 	}
 
 	return false;
@@ -107,34 +133,39 @@ bool CSoundManagerModule::playSound(std::string route) {
 
 bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 sound_pos) {
 	Studio::EventInstance* sound_instance = NULL;
-	result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
 
-	if (result == FMOD_OK) {
+	int count;
+	sounds_descriptions[std::string(route)]->getInstanceCount(&count);
 
-		// Position the listener at the player position
-		FMOD_3D_ATTRIBUTES attributes = { { 0 } };
-		attributes.position.x = player_pos.x;
-		attributes.position.y = player_pos.y;
-		attributes.position.z = player_pos.z;
-		attributes.forward.z = 1.0f;
-		attributes.up.y = -1.0f;
-		studio_system->setListenerAttributes(0, &attributes);
+	if (count < 1) {
+		result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
+		if (result == FMOD_OK) {
 
-		// Position the event correctly
-		attributes.position.x = sound_pos.x;
-		attributes.position.y = sound_pos.y;
-		attributes.position.z = sound_pos.z;
-		sound_instance->set3DAttributes(&attributes);
+			// Position the listener at the player position
+			FMOD_3D_ATTRIBUTES attributes = { { 0 } };
+			attributes.position.x = player_pos.x;
+			attributes.position.y = player_pos.y;
+			attributes.position.z = player_pos.z;
+			attributes.forward.z = 1.0f;
+			attributes.up.y = -1.0f;
+			studio_system->setListenerAttributes(0, &attributes);
 
-		sound_instance->start();
-		sound_instance->release();
+			// Position the event correctly
+			attributes.position.x = sound_pos.x;
+			attributes.position.y = sound_pos.y;
+			attributes.position.z = sound_pos.z;
+			sound_instance->set3DAttributes(&attributes);
 
-		// Reset listener attributes
-		attributes.position.x = 0;
-		attributes.position.y = 0;
-		attributes.position.z = 0;
-		studio_system->setListenerAttributes(0, &attributes);
-		return true;
+			sound_instance->start();
+			sound_instance->release();
+
+			// Reset listener attributes
+			attributes.position.x = 0;
+			attributes.position.y = 0;
+			attributes.position.z = 0;
+			studio_system->setListenerAttributes(0, &attributes);
+			return true;
+		}
 	}
 
 	return false;
@@ -193,6 +224,21 @@ bool CSoundManagerModule::playAmbient(std::string route) {
 	}
 
 	return false;
+}
+
+bool CSoundManagerModule::setMusicVolume(float volume) {
+
+	if (volume < 0.f)
+		volume = 0.f;
+	if (volume > 1.f)
+		volume = 1.f;
+
+	result = music_instance->setVolume(volume);
+	if (result == FMOD_OK)
+		return true;
+
+	return false;
+
 }
 
 // Callback from Studio - Remember these callbacks will occur in the Studio update thread, NOT the game thread.

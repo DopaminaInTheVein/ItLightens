@@ -309,15 +309,21 @@ void player_controller_mole::UpdateInputActions() {
 			pulling_box = false;
 			animController->setState(AST_PUSH_WALK);
 			box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
+			logic_manager->throwEvent(logic_manager->OnPushBox, "");
 		}
 		// pulling box
 		else if (controller->IsMoveBackWard()) {
 			pulling_box = true;
 			animController->setState(AST_PULL_WALK);
 			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
+			logic_manager->throwEvent(logic_manager->OnPushBox, "");
 		}
 		else if (controller->IsMoveLeft() || controller->IsMoveRight()) {
 			LeaveBox();
+		}
+		else {
+			// If we are pushing box in idle state, we just stop the sound
+			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
 		}
 	}
 }
@@ -385,6 +391,7 @@ void player_controller_mole::LeaveBox() {
 		GET_COMP(cam_m, camera_e, TCompCameraMain);
 		cam_m->setManualControl(false);
 		GameController->SetManualCameraState(false);
+		logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
 	}
 	else {
 		animController->ungrabObject();
@@ -702,7 +709,6 @@ void player_controller_mole::PushBox() {
 	player_max_speed /= 2;
 
 	ChangeState("idle");
-	logic_manager->throwEvent(logic_manager->OnPushBox, "");
 
 }
 

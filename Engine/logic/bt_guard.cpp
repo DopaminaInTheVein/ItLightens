@@ -453,6 +453,7 @@ int bt_guard::actionChase() {
 		else {*/
 		SET_ANIM_GUARD(AST_MOVE);
 		goTo(posPlayer);
+		logic_manager->throwEvent(logic_manager->OnGuardMoving, "");
 		return STAY;
 	//}
 	}
@@ -461,12 +462,11 @@ int bt_guard::actionChase() {
 int bt_guard::actionPrepareToAbsorb() {
 	PROFILE_FUNCTION("guard: prepare to absorb");
 	if (!myParent.isValid()) return false;
+	logic_manager->throwEvent(logic_manager->OnGuardMovingStop, "");
 	shoot_preparation_time += getDeltaTime();
 	dbg("PREPARING TO SHOOT!\n");
 	if (shoot_preparation_time > SHOOT_PREP_TIME) {
 		shoot_preparation_time = 0.f;
-		// calling OnGuardAttackEvent
-		logic_manager->throwEvent(logic_manager->OnGuardAttack, "", CHandle(this).getOwner());
 		return OK;
 	}
 	else {
@@ -1298,6 +1298,9 @@ bool bt_guard::shootToPlayer() {
 
 	//Render Shot
 	drawShot(dest_shoot);
+
+	// calling OnGuardAttackEvent
+	logic_manager->throwEvent(logic_manager->OnGuardAttack, "", CHandle(this).getOwner());
 
 	return false;
 }

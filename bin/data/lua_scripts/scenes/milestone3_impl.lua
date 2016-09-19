@@ -18,6 +18,7 @@ player = Player()
 ---------------------------- LEVEL Init, Load, Save ---------------------------------------------------
 function auxiliarMusic()
 	p:play_looping_music("event:/OnGameStart")
+	p:set_music_volume(0.3)
 end
 
 function OnStart_ms3()
@@ -220,11 +221,13 @@ end
 function openDoorPila( )
   cineDoor()
   p:exec_command( "openDoorPilaEffect();", 4)
+  p:play_sound("event:/OnDoorClosing")
 end
 
 function closeDoorPila( )
   cineDoor()
   p:exec_command( "closeDoorPilaEffect();", 4)
+  p:play_sound("event:/OnDoorClosing")
 end
 
 function openDoorPilaEffect( )
@@ -486,6 +489,9 @@ function destroyWallEffect()
   --Destruimos pared
   h:get_handle_by_id(idWall)
   h:destroy()
+  
+    --Reproducimos sonido
+  	p:play_sound("event:/OnBreakWall")
   
   --Activamos fragmentos pared
   

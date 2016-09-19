@@ -155,6 +155,14 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnGuardBoxHit(%f);", 0.5f);
 		break;
 	}
+	case (OnGuardMoving): {
+		sprintf(lua_code, "OnGuardMoving(%f);", 0.5f);
+		break;
+	}
+	case (OnGuardMovingStop): {
+		sprintf(lua_code, "OnGuardMovingStop(%f);", 0.5f);
+		break;
+	}
 	case (OnInterruptHit) : {
 		sprintf(lua_code, "OnInterruptHit(%f);", 0.5f);
 		break;
@@ -182,6 +190,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 	}
 	case (OnPushBox) : {
 		sprintf(lua_code, "OnPushBox(%f);", 0.5f);
+		break;
+	}
+	case (OnPushBoxIdle): {
+		sprintf(lua_code, "OnPushBoxIdle(%f);", 0.5f);
 		break;
 	}
 	case (OnLeaveBox) : {
@@ -785,6 +797,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: x coord of the sound")
 		.param("float: y coord of the sound")
 		.param("float: z coord of the sound")
+		// stop sound function
+		.set("stop_sound", &SLBPublicFunctions::stopSound)
+		.comment("Stops the specified sound effect")
+		.param("Route of the sound")
 		// play music function
 		.set("play_music", &SLBPublicFunctions::playMusic)
 		.comment("Executes the specified music")
@@ -800,6 +816,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play ambient function
 		.set("play_ambient", &SLBPublicFunctions::playAmbient)
 		.comment("Executes the specified ambient sound")
+		// sets the music volume
+		.set("set_music_volume", &SLBPublicFunctions::setMusicVolume)
+		.comment("Changes the volume of the music to the specified value")
+		.param("float: volume value")
 		// play video function
 		.set("play_video", &SLBPublicFunctions::playVideo)
 		.comment("Executes the specified video")
