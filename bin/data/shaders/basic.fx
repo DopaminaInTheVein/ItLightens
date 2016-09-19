@@ -92,6 +92,17 @@ float4 PSTextured(float4 Pos : SV_POSITION
 	return txDiffuse.Sample(samLinear, iTex0);
 }
 
+void PSMultiple(float4 Pos : SV_POSITION
+	, float2 iTex0 : TEXCOORD0
+	, out float4 output1 : SV_Target0
+	, out float4 output2 : SV_Target1
+	)
+{
+	output1 = txDiffuse.Sample(samLinear, iTex0);
+	
+	output2 = output1;
+}
+
 //--------------------------------------------------------------------------------------
 void PSAddAmbient(float4 Pos : SV_POSITION
 	, float2 iTex0 : TEXCOORD0

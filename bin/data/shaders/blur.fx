@@ -45,6 +45,7 @@ float4 PS(
   float4 cn2 = txDiffuse.Sample(samClampLinear, iTex2.xy);
   float4 cn3 = txDiffuse.Sample(samClampLinear, iTex3.xy);
 
+	
   float4 cfinal =
     c0 * blur_w.x
     + (cp1 + cn1) * blur_w.y
