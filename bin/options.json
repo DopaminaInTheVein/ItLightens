@@ -1,7 +1,7 @@
 {
     "scenes": {
         "level_0": "title",
-        "level_1": "hub",
+        "level_1": "ms3",
         "level_2": "tuto_mole",
         "level_3": "tuto_sci",
         "level_4": "ms3"
