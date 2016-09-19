@@ -1,4 +1,4 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/difuso_pirulo.dds"/>
+<texture slot="diffuse" name="textures/difuso_pibote.dds"/>
 <texture slot="normalmap" name="textures/normal_pirulo.dds"/>
 </material>

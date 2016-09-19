@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/suelo_ms3_difuso.dds"/>
+<texture slot="normalmap" name="textures/suelo_ms3_normals.dds"/>
+</material>
