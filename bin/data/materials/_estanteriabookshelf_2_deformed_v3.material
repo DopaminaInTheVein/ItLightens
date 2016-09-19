@@ -1,5 +1,4 @@
 <material tech="deferred.tech">
 <texture slot="diffuse" name="textures/bookshelf_2_defo_v3_difuso.dds"/>
 <texture slot="specular" name="textures/bookshelf_2_defo_v3_specular.dds"/>
-<texture slot="normalmap" name="textures/Map__712_Normal_Bump.tga"/>
 </material>

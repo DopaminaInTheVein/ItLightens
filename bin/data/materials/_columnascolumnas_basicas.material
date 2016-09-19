@@ -1,4 +1,3 @@
 <material tech="deferred.tech">
 <texture slot="diffuse" name="textures/columna_1_albedo (1).dds"/>
-<texture slot="normalmap" name="textures/Map__382_Normal_Bump.tga"/>
 </material>
