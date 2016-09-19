@@ -4,6 +4,7 @@
 #include "components/comp_charactercontroller.h"
 #include "player_controllers/player_controller.h"
 #include "components/entity.h"
+#include "components/comp_controller_3rd_person.h"
 
 bool SkelControllerPlayer::getUpdateInfo()
 {
@@ -60,6 +61,9 @@ void SkelControllerPlayer::myUpdate()
 		else if (currentState == "recharge") {
 			setAction("recharge", "idle");
 			currentState = "idle";
+		}
+		else if (currentState == AST_DEATH) {
+			setAction(AST_DEATH, AST_NULL);
 		}
 		else {
 			setLoop(currentState);

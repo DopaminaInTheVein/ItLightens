@@ -34,6 +34,7 @@ class TCompController3rdPerson : public TCompBase {
 	bool		y_axis_inverted;
 	bool		x_axis_inverted;
 	bool		input_enabled = true;
+	bool		orbit_mode = false;
 	VEC3		position_diff;
 	VEC3		offset;
 
@@ -131,6 +132,10 @@ public:
 			pitch = min_pitch;
 		}
 	}
+	void updateOrbit() {
+		float deltaYaw = rotation_sensibility * speed_camera;
+		yaw = MOD_YAW(yaw + deltaYaw);
+	}
 
 	void update(float dt) {
 		if (!GameController->GetFreeCamera())
@@ -146,7 +151,8 @@ public:
 		if (!e_target)
 			return;
 
-		if (input_enabled) updateInput();
+		if (orbit_mode) updateOrbit();
+		else if (input_enabled) updateInput();
 
 		TCompTransform* target_tmx = e_target->get<TCompTransform>();
 		assert(target_tmx);
@@ -220,6 +226,9 @@ public:
 	{
 		input_enabled = msg.control;
 	}
+
+	void StartOrbit() { orbit_mode = true; }
+	void StopOrbit() { orbit_mode = false; }
 
 	void renderInMenu() {
 		ImGui::DragFloat("rot_speed", &speed_camera, -0.1f, 0.1f);

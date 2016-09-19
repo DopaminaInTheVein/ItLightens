@@ -56,15 +56,19 @@ bool CPlayerBase::getUpdateInfo() {
 bool CPlayerBase::checkDead() {
 	PROFILE_FUNCTION("checkdead");
 
-	if (GameController->GetGameState() == CGameController::LOSE) {
+	if (TCompLife::isDead()) {
+		if (!dead) logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDead, "");
+		dead = true;
 		ChangeState("die");
 		ChangeCommonState("die");
+		controlEnabled = false;
 		return true;
 	}
 
 	if (GameController->GetGameState() == CGameController::VICTORY) {
 		ChangeState("win");
 		ChangeCommonState("win");
+		controlEnabled = false;
 		return true;
 	}
 	return false;
@@ -407,9 +411,9 @@ void CPlayerBase::Die()
 	if (!cc->OnGround()) {
 		Falling();
 	}
-	orbitCameraDeath();
+	//orbitCameraDeath();
 	ChangeState("idle");
-	ChangeCommonState("idle");
+	ChangeCommonState("dead");
 }
 
 void CPlayerBase::Win()
@@ -492,9 +496,10 @@ void CPlayerBase::renderInMenu()
 
 void CPlayerBase::orbitCameraDeath() {
 	PROFILE_FUNCTION("orbit camera dead base");
-	float angle = getDeltaTime();
-	float s = sin(angle);
-	float c = cos(angle);
+	static float angle_orbit_player = 0.f;
+	angle_orbit_player += getDeltaTime();
+	float s = sin(angle_orbit_player);
+	float c = cos(angle_orbit_player);
 
 	// translate point back to origin:
 	TCompTransform* target_transform = myEntity->get<TCompTransform>();

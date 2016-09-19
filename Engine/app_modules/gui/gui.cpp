@@ -95,7 +95,7 @@ void CGuiModule::initScreens()
 	ADD_GAME_STATE(CGameController::STOPPED, OnStop);
 	ADD_GAME_STATE(CGameController::STOPPED_INTRO, OnStopIntro);
 	ADD_GAME_STATE(CGameController::MENU, OnMenu);
-	ADD_GAME_STATE(CGameController::LOSE, OnDead);
+	//ADD_GAME_STATE(CGameController::LOSE, OnDead);
 	ADD_GAME_STATE(CGameController::VICTORY, OnVictory);
 }
 

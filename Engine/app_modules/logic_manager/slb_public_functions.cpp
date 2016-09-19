@@ -514,6 +514,15 @@ void SLBCamera::fadeOut(float speed) {
 	fx->FadeOut();
 }
 
+void SLBCamera::orbit(bool new_orbit) {
+	if (!checkCamera()) return;
+	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
+	if (cam_control) {
+		if (new_orbit) cam_control->StartOrbit();
+		else cam_control->StopOrbit();
+	}
+}
+
 void SLBCamera::resetCamera() {
 	// restore the normal 3rd person camera
 	if (!checkCamera()) return;
@@ -526,6 +535,8 @@ void SLBCamera::resetCamera() {
 	TMsgSetControllable msg;
 	msg.control = true;
 	camera_e->sendMsg(msg);
+	GET_COMP(cam_control, camera_e, TCompController3rdPerson);
+	if (cam_control) cam_control->StopOrbit();
 }
 
 //Ui Camera control in LUA

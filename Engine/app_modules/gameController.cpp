@@ -45,11 +45,11 @@ int CGameController::GetGameState() const {
 void CGameController::SetGameState(int state) {
 	if (game_state == state) return;
 	game_state = state;
-	switch (game_state) {
-	case CGameController::LOSE:
-		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDead, "");
-		break;
-	}
+	//switch (game_state) {
+	//case CGameController::LOSE:
+	//	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDead, "");
+	//	break;
+	//}
 }
 
 int CGameController::GetLoadingState() const { return loading_state; }

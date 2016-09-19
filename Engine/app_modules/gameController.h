@@ -37,7 +37,6 @@ public:
 		STOPPED,
 		STOPPED_INTRO,
 		VICTORY,
-		LOSE,
 		MENU,
 		GAME_STATES_SIZE
 	};

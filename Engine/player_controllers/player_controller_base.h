@@ -26,6 +26,7 @@ protected:
 	bool controlEnabled = false;
 	bool inputEnabled = true;
 	bool only_sense = false;
+	bool dead = false;
 
 	// CountDown To Unpossess
 	static float possessionCooldown;

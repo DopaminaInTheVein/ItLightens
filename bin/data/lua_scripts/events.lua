@@ -399,7 +399,9 @@ end
 
 function OnDead( )
 	p:print( "OnDead\n")
-	p:load_entities("dead_menu")
+	cam:orbit(true)
+	p:exec_command("p:load_entities(\"dead_menu\");", 2.0)
+	p:exec_command("cam:orbit(fase)", 3.0)
 end
 
 -- Others
@@ -440,6 +442,7 @@ function OnMouseUnover( param )
 end
 
 function OnPressed( param )
+	p:print("OnPressed")
 	p:print("OnPressed")
 	CallFunction("OnPressed_"..param)
 end

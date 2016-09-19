@@ -8,6 +8,7 @@
 
 // ------------------------------------
 struct TCompLife : public TCompBase {
+	static bool dead;
 	float currentlife;
 	float maxlife;
 	float maxlife_inv;
@@ -16,7 +17,6 @@ struct TCompLife : public TCompBase {
 	float energyDamageScale = 0.1f;
 	float last_modif = energyDamageScale;
 
-	bool dead = false;
 	bool player_life = true;
 
 	TCompLife() : maxlife(100.f) {
@@ -59,6 +59,7 @@ struct TCompLife : public TCompBase {
 	}
 
 	void onCreate(const TMsgEntityCreated &) {
+		dead = false;
 		CHandle me = CHandle(this).getOwner();
 		if (!me.isValid()) {
 			fatal("Error creating life component\n");
@@ -107,6 +108,8 @@ struct TCompLife : public TCompBase {
 		ImGui::SliderFloat("life", &currentlife, 0, 1);
 		ImGui::SliderFloat("Action Damage Scale", &energyDamageScale, 0, 1);
 	}
+
+	static bool isDead() { return dead; }
 };
 
 #endif

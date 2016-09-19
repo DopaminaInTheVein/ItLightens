@@ -12,6 +12,7 @@
 #define AST_JUMP2				"jump"
 #define AST_MOVE				"walk"
 #define AST_RUN					"run"
+#define AST_DEATH				"death"
 #define AST_PREP_SHOOT			"attackprepare"
 #define AST_SHOOT				"attack"
 #define AST_SHOOT_BACK			"attackgoback"
@@ -37,6 +38,7 @@
 #define AST_PUSH_PREP			"push_prep"
 #define AST_PUSH_WALK			"push_walk"
 #define AST_PULL_WALK			"pull_walk"
+#define AST_NULL				"NULL"
 // ------------------- //
 
 template< class TObj >

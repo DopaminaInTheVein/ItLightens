@@ -105,15 +105,16 @@ public:
 		//if (Input.IsKeyPressedDown(KEY_L))
 			//life->refillLife();
 
-		if (GameController->GetGameState() == CGameController::LOSE) {
-			bool open = true;
-			ImGui::Begin("Fatal Player State", &open, ImVec2(300, 100), -1.0f);
-			ImGui::Text("You are Dead!\n");
-			ImGui::Text("Press 'ESC' to exit\n");
-			ImGui::Text("Press 'ENTER' to restart\n");
-			ImGui::End();
-		}
-		else if (GameController->GetGameState() == CGameController::VICTORY) {
+		//if (GameController->GetGameState() == CGameController::LOSE) {
+		//	bool open = true;
+		//	ImGui::Begin("Fatal Player State", &open, ImVec2(300, 100), -1.0f);
+		//	ImGui::Text("You are Dead!\n");
+		//	ImGui::Text("Press 'ESC' to exit\n");
+		//	ImGui::Text("Press 'ENTER' to restart\n");
+		//	ImGui::End();
+		//}
+		//else
+		if (GameController->GetGameState() == CGameController::VICTORY) {
 			bool open = true;
 			ImGui::Begin("Victory Player State", &open, ImVec2(300, 100), -1.0f);
 			ImGui::Text("You WIN!\n");
