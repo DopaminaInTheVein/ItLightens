@@ -59,12 +59,14 @@ struct MatManager (
 				if (hasProperty aMtl "bumpmap") then (
 					local prop = aMtl.bumpMap
 					if (classof prop) == Normal_Bump then (
-						local txtName = FilterString prop.normal.filename "\\ /"
-						txtName = txtName[txtName.count]
-						--print ("Diffuse: " + aMtl.name + "-" + (aMtl.diffuseMap as string) + " " + txtName)
-						local index = findString txtName texture
-						if (index != undefined) then (
-							append res ("Normal: " + aMtl.name + "/" + (prop as string) + "/" + txtName)
+						if prop.normal != undefined then (
+							local txtName = FilterString prop.normal.filename "\\ /"
+							txtName = txtName[txtName.count]
+							--print ("Diffuse: " + aMtl.name + "-" + (aMtl.diffuseMap as string) + " " + txtName)
+							local index = findString txtName texture
+							if (index != undefined) then (
+								append res ("Normal: " + aMtl.name + "/" + (prop as string) + "/" + txtName)
+							)
 						)
 						--print ("Ojo" + ( (classof prop) as string))
 					) else (
