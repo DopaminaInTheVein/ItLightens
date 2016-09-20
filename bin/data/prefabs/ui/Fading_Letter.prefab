@@ -3,7 +3,6 @@
 <tags
    tags="gui"/>
 <gui
-   menu_name="components_ui"
    width="1.0"
    height="1.0"/>
 <name
