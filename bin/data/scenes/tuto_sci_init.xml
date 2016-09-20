@@ -81,8 +81,8 @@
 <name
    name="player_1"/>
 <transform
-   pos="45.769 0.29 -6.15994"
-   quat="0 0.258819 0 0.965926"
+   pos="46.7614 0.29 -6.15994"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
    model="skeletons/player/player.skeleton"/>
@@ -102,12 +102,12 @@
    tags="workstation"/>
 <workstation
    posAction="51.1517 0.439975 -5.89415"
-   yawAction="-3.14159"/>
+   yawAction="0.0"/>
 <name
    name="Workstation01"/>
 <transform
    pos="51.1517 0.439975 -5.89415"
-   quat="0 0.899431 0 0.437062"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -122,7 +122,7 @@
    name="mesa_cientifico_up_mapeado"/>
 <transform
    pos="51.6847 2.81285 -6.69464"
-   quat="0 0.382683 0 0.92388"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/tuto_sci/mesa_cientifico_up_mapeado.static_mesh"/>
@@ -141,9 +141,9 @@
 <name
    name="scientist_1"/>
 <transform
-   pos="46.4529 0 -0.0553257"
+   pos="47.2694 0 -0.980863"
    quat="0 0 0 1.0"
-   scale="0.00929856"/>
+   scale="1.0"/>
 <skeleton
    model="skeletons/scientist/scientist.skeleton"/>
 <render_static_mesh
@@ -167,7 +167,7 @@
    name="Workstation002"/>
 <transform
    pos="45.28 0.439975 0.885366"
-   quat="0 -0.437062 0 0.899431"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -185,7 +185,7 @@
    name="DronePlus_1"/>
 <transform
    pos="70.6917 3.82912 -2.78086"
-   quat="0 1.0 0 0"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
@@ -212,8 +212,8 @@
 <name
    name="gen_tuto_sci"/>
 <transform
-   pos="75.3317 7.89981 -0.590158"
-   quat="0 0.939693 0 -0.34202"
+   pos="75.3317 7.89981 -0.590163"
+   quat="0 0.642788 0 0.766044"
    scale="1.0"/>
 
 </entity>
@@ -245,13 +245,13 @@
 <magnet_door
    locked="yes"
    speedOpening="1"
-   target="75.9021 8.61366 -4.55197"
+   target="75.9743 11.4115 -2.82908"
    pol="neutral"/>
 <name
    name="door_tuto_end"/>
 <transform
-   pos="75.9021 8.61366 -2.82908"
-   quat="0 -0.707107 0 0.707107"
+   pos="75.9743 8.61366 -2.82908"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/tuto_sci/door_tuto_end.static_mesh"/>
@@ -271,14 +271,14 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="0.287405 1.96415 1.12342"/>
+   size="0.187405 4.20328 5.52722"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="ttuto_sci_end"/>
 <transform
-   pos="76.0533 8.14559 -2.67259"
+   pos="81.5543 9.26515 -2.67259"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room

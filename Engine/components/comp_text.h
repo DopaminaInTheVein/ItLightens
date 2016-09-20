@@ -23,7 +23,6 @@ class TCompText : public TCompBase {
 	float sizeFontX = 0.0125f;
 	float sizeFontY = 0.030f;
 	bool printed = false;
-	bool reprint = false;
 	std::vector<float> accumSpacing;
 
 public:

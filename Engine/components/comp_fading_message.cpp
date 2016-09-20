@@ -114,10 +114,10 @@ void TCompFadingMessage::printLetters() {
 		float texture_pos_y = ((float)ascii_tex_posy) * letterBoxSize;
 		float sx = letterBoxSize;
 		float sy = letterBoxSize;
-
-		float letter_posx = 0.50f + (i - linechars_prev - fminf(line, 1.0f)) * sizeFontX - accumSpacing[line];
-		float letter_posy = 0.01f - line*sizeFontY;
-		CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.49f + i*0.001f), ("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)));
+		float scale = 0.2f;
+		float letter_posx = 0.16f + (i - linechars_prev - fminf(line, 1.0f))*letterBoxSize*scale - accumSpacing[line]*scale;
+		float letter_posy = 0.20f - line*letterBoxSize*scale*2.5f;
+		CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.49f + i*0.001f), ("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)), scale);
 		CEntity * letter_e = letter_h;
 		TCompGui * letter_gui = letter_e->get<TCompGui>();
 		assert(letter_gui);

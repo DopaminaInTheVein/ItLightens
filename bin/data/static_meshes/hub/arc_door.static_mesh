@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/hub/arc_door.mesh" material="materials/bloking.material" mesh_idx="0"/>
+  <slot mesh="meshes/hub/arc_door.mesh" material="materials/arc_door.material" mesh_idx="0"/>
 </static_mesh>

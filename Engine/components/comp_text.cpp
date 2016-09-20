@@ -40,17 +40,15 @@ bool TCompText::load(MKeyValue& atts)
 	}
 	lineText.push_back(text.substr(ini + 1, pos));
 
-	accumSpacing.resize(lineText.size(), 0.0f);
-
+	accumSpacing.resize(lineText.size());
+	for (int i = 0; i < accumSpacing.size(); ++i) {
+		accumSpacing[i] = 0.0f;
+	}
 	return true;
 }
 
 void TCompText::update(float dt) {
-	if (ttl >= 0.0f && (!printed || reprint)) {
-		for (CHandle h_letter : gui_letters) {
-			h_letter.destroy();
-		}
-		gui_letters.empty();
+	if (ttl >= 0.0f && !printed) {
 		printLetters();
 	}
 	else if (ttl < 0.0f) {
@@ -87,14 +85,34 @@ void TCompText::setup(std::string set_id, std::string set_text, float set_posx, 
 	}
 	lineText.push_back(text.substr(ini + 1, pos));
 
-	accumSpacing.resize(lineText.size(), 0.0f);
+	accumSpacing.resize(lineText.size());
+	for (int i = 0; i < accumSpacing.size(); ++i) {
+		accumSpacing[i] = 0.0f;
+	}
 }
 
 void TCompText::setAttr(float new_x, float new_y, float new_scale) {
-	letter_posx_ini = new_x;
-	letter_posy_ini = new_y;
-	scale = new_scale;
-	reprint = true;
+	int letteri = 0;
+	accumSpacing.resize(lineText.size());
+	for (int i = 0; i < accumSpacing.size(); ++i) {
+		accumSpacing[i] = 0.0f;
+	}
+	for (int j = 0; j < lineText.size(); ++j) {
+		for (int i = 0; i < lineText[j].size(); ++i) {
+			unsigned char letter = lineText[j][i];
+			int ascii_tex_pos = letter;
+			CEntity * e_letter = gui_letters[letteri];
+			TCompGui * letter_gui = e_letter->get<TCompGui>();
+			TCompTransform * letter_trans = e_letter->get<TCompTransform>();
+			VEC3 pos_letter = letter_trans->getPosition();
+			pos_letter.x = new_x + i * letterBoxSize*new_scale - accumSpacing[j] * new_scale;
+			pos_letter.y = new_y - j * letterBoxSize*new_scale*2.5f;
+			letter_trans->setPosition(pos_letter);
+			letter_trans->setScaleBase(VEC3(new_scale, new_scale, new_scale));
+			letteri++;
+			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
+		}
+	}
 }
 
 void TCompText::printLetters() {
@@ -114,10 +132,10 @@ void TCompText::printLetters() {
 			float sx = letterBoxSize;
 			float sy = letterBoxSize;
 
-			float letter_posx = letter_posx_ini + 0.375f + i * sizeFontX*scale - accumSpacing[j] * scale;
-			float letter_posy = letter_posy_ini - 0.15f - j * sizeFontY*scale;
+			float letter_posx = letter_posx_ini + i * letterBoxSize*scale - accumSpacing[j] * scale;
+			float letter_posy = letter_posy_ini - j * letterBoxSize*scale*2.5f;
 
-			CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.50f + letteri*0.001), ("Text_Message_Letter_" + id), scale);
+			CHandle letter_h = Gui->addGuiElement("ui/letter", VEC3(letter_posx, letter_posy, 0.50f + letteri*0.001), ("Text_Message_Letter_" + id), scale);
 			CEntity * letter_e = letter_h;
 			TCompGui * letter_gui = letter_e->get<TCompGui>();
 			assert(letter_gui);
