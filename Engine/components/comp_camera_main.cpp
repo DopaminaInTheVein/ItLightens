@@ -226,6 +226,17 @@ float TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent
 		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
 	}
 	if (!collision) {
+		direction = VEC3(0, -1, 1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(0, 1, 1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+
+	if (!collision) {
 		direction = VEC3(1, 0, -1);
 		direction.Normalize();
 		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
@@ -245,6 +256,83 @@ float TCompCameraMain::checkColision(const VEC3 & pos, const float smoothCurrent
 		direction.Normalize();
 		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
 	}
+
+	if (!collision) {
+		direction = VEC3(1, -1, 0);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(-1, 1, 0);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(1, 1, 0);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(-1, -1, 0);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+
+	if (!collision) {
+		direction = VEC3(0, 1, -1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(0, -1, 1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(0, 1, 1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+	if (!collision) {
+		direction = VEC3(0, -1, -1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+
+	if (!collision) {
+		direction = VEC3(1, 1, 1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}	if (!collision) {
+		direction = VEC3(1, 1, -1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}	if (!collision) {
+		direction = VEC3(1, -1, 1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}	if (!collision) {
+		direction = VEC3(1, -1, -1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}	if (!collision) {
+		direction = VEC3(-1, 1, 1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}	if (!collision) {
+		direction = VEC3(-1, 1, -1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}	if (!collision) {
+		direction = VEC3(-1, -1, 1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}	if (!collision) {
+		direction = VEC3(-1, -1, -1);
+		direction.Normalize();
+		collision = g_PhysxManager->raycast(pos, direction, hitDistance, hit, fd);
+	}
+
 	if (collision) {
 		return hitDistance;
 	}
