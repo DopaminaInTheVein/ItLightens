@@ -106,7 +106,7 @@ void TCompText::setAttr(float new_x, float new_y, float new_scale) {
 			TCompTransform * letter_trans = e_letter->get<TCompTransform>();
 			VEC3 pos_letter = letter_trans->getPosition();
 			pos_letter.x = new_x + i * letterBoxSize*new_scale - accumSpacing[j] * new_scale;
-			pos_letter.y = new_y - j * letterBoxSize*new_scale;
+			pos_letter.y = new_y - j * letterBoxSize*new_scale*2.5f;
 			letter_trans->setPosition(pos_letter);
 			letter_trans->setScaleBase(VEC3(new_scale, new_scale, new_scale));
 			letteri++;
@@ -133,7 +133,7 @@ void TCompText::printLetters() {
 			float sy = letterBoxSize;
 
 			float letter_posx = letter_posx_ini + i * letterBoxSize*scale - accumSpacing[j] * scale;
-			float letter_posy = letter_posy_ini - j * letterBoxSize*scale;
+			float letter_posy = letter_posy_ini - j * letterBoxSize*scale*2.5f;
 
 			CHandle letter_h = Gui->addGuiElement("ui/letter", VEC3(letter_posx, letter_posy, 0.50f + letteri*0.001), ("Text_Message_Letter_" + id), scale);
 			CEntity * letter_e = letter_h;
