@@ -117,10 +117,10 @@ void CImGuiModule::update(float dt) {
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui;
-		static char gui_prebab_name[64] = "ui/test";
+		static char gui_prebab_name[64] = "Fading_Letter";
 		ImGui::DragFloat3("Pos", &pos_new_ui.x, 0.1f, -1.f, 2.f);
 		ImGui::InputText("Prefab name", gui_prebab_name, 64);
-		if (ImGui::Button("Create")) Gui->addGuiElement(gui_prebab_name, pos_new_ui);
+		if (ImGui::Button("Create")) Gui->addGuiElement(std::string("ui/") + std::string(gui_prebab_name), pos_new_ui);
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Gui Others")) {
