@@ -117,8 +117,10 @@ void CImGuiModule::update(float dt) {
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui;
+		static char gui_prebab_name[64] = "ui/test";
 		ImGui::DragFloat3("Pos", &pos_new_ui.x, 0.1f, -1.f, 2.f);
-		if (ImGui::Button("Create")) Gui->addGuiElement("ui/test", pos_new_ui);
+		ImGui::InputText("Prefab name", gui_prebab_name, 64);
+		if (ImGui::Button("Create")) Gui->addGuiElement(gui_prebab_name, pos_new_ui);
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Gui Others")) {
@@ -205,7 +207,6 @@ void CImGuiModule::update(float dt) {
 	}
 	if (ImGui::CollapsingHeader("Game Options")) {
 		ImGui::Checkbox("god mode", GameController->GetCheatGodmodePointer());
-	
 	}if (ImGui::CollapsingHeader("Graficos")) {
 		if (ImGui::TreeNode("polarize")) {
 			//ImGui::SliderFloat("Polarize strength", &shader_ctes_globals.strenght_polarize, 0.0f, 2.0f);
