@@ -837,10 +837,9 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("string: HEX TEXT COLOR TARGET -> #RRGGBBAA")
 		.param("float: scale")
 		.param("float: scale")
-		// launch text span
-		.param("float: scale")
+		// alter text span
 		.set("alterText", &SLBPublicFunctions::alterText)
-		.comment("Shows the specified text")
+		.comment("Alter the specified text")
 		.param("string: text id")
 		.param("float: new x pos")
 		.param("float: new y pos")

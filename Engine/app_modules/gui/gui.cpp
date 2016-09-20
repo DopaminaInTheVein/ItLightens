@@ -293,7 +293,7 @@ CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag,
 	GET_COMP(tmx, h, TCompTransform);
 	tmx->setPosition(new_pos);
 	if (scale != 1.0f) {
-		tmx->setScale(VEC3(scale, scale, scale));
+		tmx->setScaleBase(VEC3(scale, scale, scale));
 	}
 	if (!tag.empty()) {
 		TMsgSetTag msgTag;
