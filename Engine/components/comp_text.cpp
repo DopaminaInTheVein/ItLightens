@@ -108,7 +108,7 @@ void TCompText::setAttr(float new_x, float new_y, float new_scale) {
 			pos_letter.x = new_x + i * letterBoxSize*new_scale - accumSpacing[j] * new_scale;
 			pos_letter.y = new_y - j * letterBoxSize*new_scale;
 			letter_trans->setPosition(pos_letter);
-			letter_trans->setScale(VEC3(new_scale, new_scale, new_scale));
+			letter_trans->setScaleBase(VEC3(new_scale, new_scale, new_scale));
 			letteri++;
 			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
 		}
