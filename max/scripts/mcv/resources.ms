@@ -76,6 +76,11 @@ struct TResources (
 			local tech_by_name = getSuffixAfter m.name "_tech_"
 			if tech_by_name != undefined then tech = tech_by_name
 			
+			--Transparent techinque
+			if tech == "deferred" and m.opacitymap != undefined then (
+				tech = "transparent"
+			)
+			
 			--Write material file
 			format ("<material tech=\"" + tech + ".tech\">\n") to:mat_file
 			saveTextureSlot mat_file "diffuse" m.diffusemap
