@@ -121,6 +121,7 @@ public:
 	void runCinematic(const char* name, float speed = 0.f);
 	void fadeIn(float speed = 0.f);
 	void fadeOut(float speed = 0.f);
+	void orbit(bool);
 	void resetCamera();
 };
 
@@ -170,10 +171,12 @@ public:
 	void setOnlySense(int);
 	void playSound(const char* sound_route);
 	void play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z);
+	void stopSound(const char* sound_route);
 	void playMusic(const char* music_route);
 	void playLoopingMusic(const char* music_route);
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);
+	void setMusicVolume(float volume);
 	void playVideo(const char* video_route);
 	void playVideoAndDo(const char* video_route, const char* lua_code);
 	void playerRoom(int newRoom);

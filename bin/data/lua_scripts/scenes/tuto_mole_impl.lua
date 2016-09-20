@@ -104,6 +104,9 @@ function tutomole_destroyWallEffect()
   h:get_handle_by_id(idWall)
   h:destroy()
   
+  --Reproducimos sonido
+  	p:play_sound("event:/OnBreakWall")
+  
   --Activamos fragmentos pared
   all_fragments1:get_handles_by_tag(tagWallFragment1)
   all_fragments1:awake()

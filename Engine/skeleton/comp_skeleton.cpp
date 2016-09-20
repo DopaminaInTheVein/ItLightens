@@ -8,6 +8,7 @@
 #include "imgui/imgui.h"
 #include "components/entity.h"
 #include "components/comp_aabb.h"
+#include "skeleton_controllers\skel_controller.h"
 
 #pragma comment(lib, "cal3d.lib" )
 
@@ -69,7 +70,7 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 	//dbg("\n------------------------------------\n");
 
 	//Siguiente Loop
-	if (next_loop.size() > 0 && next_loop[0] != "") {
+	if (next_loop.size() > 0 && next_loop[0] != "" && next_loop[0] != AST_NULL) {
 		for (auto next : next_loop) {
 			int nextCycleId = resource_skeleton->getAnimIdByName(next);
 			if (nextCycleId >= 0) {
@@ -79,9 +80,10 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 		}
 	}
 
-	//Si no hay siguiente loop, usamos el anterior
+	//Si no hay siguiente loop, usamos el anterior (a menos q nos pongan NULL)
+	bool block = !next_loop.empty() && next_loop[0] == AST_NULL;
 	if (nextCycleIds.size() == 0) {
-		nextCycleIds = prevCycleIds;
+		if (!block) nextCycleIds = prevCycleIds;
 	}
 
 	// activacion nuevas animacinoes
@@ -102,7 +104,7 @@ void TCompSkeleton::onSetAnim(const TMsgSetAnim &msg) {
 			}
 			else {
 				//Action animation (no loop)
-				model->getMixer()->executeAction(anim_id, 0.f, 0.2f, true);
+				model->getMixer()->executeAction(anim_id, 0.f, 0.2f, true, block);
 			}
 		}
 		else {

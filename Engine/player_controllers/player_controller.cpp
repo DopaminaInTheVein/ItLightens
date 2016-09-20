@@ -1112,6 +1112,9 @@ void player_controller::ChangeCommonState(std::string state) {
 	else if (state == "idle") {
 		SET_ANIM_PLAYER(AST_IDLE);
 	}
+	else if (state == "dead") {
+		SET_ANIM_PLAYER_P(AST_DEATH);
+	}
 }
 
 map<string, statehandler>* player_controller::getStatemap() {

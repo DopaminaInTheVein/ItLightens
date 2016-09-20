@@ -3,6 +3,7 @@
 
 #include "render\draw_utils.h"
 
+bool TCompLife::dead = false;
 
 void TCompLife::update(float elapsed) {
 	CHandle me = CHandle(this).getOwner();
@@ -15,7 +16,7 @@ void TCompLife::update(float elapsed) {
 
 		if (currentlife < 0 && !dead) {
 			dead = true;
-			GameController->SetGameState(CGameController::LOSE);
+			//GameController->SetGameState(CGameController::LOSE);
 			currentlife = 0;
 		}
 

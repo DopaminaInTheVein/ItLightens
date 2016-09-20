@@ -514,6 +514,15 @@ void SLBCamera::fadeOut(float speed) {
 	fx->FadeOut();
 }
 
+void SLBCamera::orbit(bool new_orbit) {
+	if (!checkCamera()) return;
+	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
+	if (cam_control) {
+		if (new_orbit) cam_control->StartOrbit();
+		else cam_control->StopOrbit();
+	}
+}
+
 void SLBCamera::resetCamera() {
 	// restore the normal 3rd person camera
 	if (!checkCamera()) return;
@@ -526,6 +535,8 @@ void SLBCamera::resetCamera() {
 	TMsgSetControllable msg;
 	msg.control = true;
 	camera_e->sendMsg(msg);
+	GET_COMP(cam_control, camera_e, TCompController3rdPerson);
+	if (cam_control) cam_control->StopOrbit();
 }
 
 //Ui Camera control in LUA
@@ -649,6 +660,7 @@ void SLBPublicFunctions::setOnlySense(int enabled) {
 		player.sendMsg(msg);
 	}
 }
+
 void SLBPublicFunctions::playSound(const char* sound_route) {
 	sound_manager->playSound(std::string(sound_route));
 }
@@ -661,6 +673,10 @@ void SLBPublicFunctions::play3dSound(const char* sound_route, float pl_x, float 
 	sound_pos.Normalize();
 
 	sound_manager->play3dSound(std::string(sound_route), player_pos, sound_pos);
+}
+
+void SLBPublicFunctions::stopSound(const char* sound_route) {
+	sound_manager->stopSound(std::string(sound_route));
 }
 
 void SLBPublicFunctions::playMusic(const char* music_route) {
@@ -677,6 +693,10 @@ void SLBPublicFunctions::playVoice(const char* voice_route) {
 
 void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 	sound_manager->playAmbient(std::string(ambient_route));
+}
+
+void SLBPublicFunctions::setMusicVolume(float volume) {
+	sound_manager->setMusicVolume(volume);
 }
 
 void SLBPublicFunctions::playVideo(const char* video_route) {

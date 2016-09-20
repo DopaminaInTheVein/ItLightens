@@ -57,7 +57,7 @@ bool CRenderDeferredModule::start() {
 	rt_data = new CRenderToTexture;
 	rt_data2 = new CRenderToTexture;
 	rt_black = new CRenderToTexture;
-	rt_temp = new CRenderToTexture;
+	rt_ssao = new CRenderToTexture;
 
 	//temp
 	rt_selfIlum_int = new CRenderToTexture;
@@ -95,7 +95,7 @@ bool CRenderDeferredModule::start() {
 		return false;
 	if (!rt_selfIlum_blurred_int->createRT("rt_selfIlum_blurred_int", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 		return false;
-	if (!rt_temp->createRT("rt_temp", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+	if (!rt_ssao->createRT("rt_ssao", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 		return false;
 	if (!rt_shadows->createRT("rt_shadows", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 		return false;
@@ -160,7 +160,11 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_globals.xres = xres;
 	shader_ctes_globals.yres = yres;
 
+	shader_ctes_blur.ssao_intensity = 1.0f;
+	shader_ctes_blur.ssao_iterations = 30.f;
+
 	shader_ctes_hatching.uploadToGPU();
+	shader_ctes_blur.uploadToGPU();
 
 	return true;
 }
@@ -665,19 +669,59 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 }
 
 void CRenderDeferredModule::ApplySSAO() {
-	Render.activateBackBuffer();
+	//Render.activateBackBuffer();
+	PROFILE_FUNCTION("referred: ssao");
+	CTraceScoped scope("referred: ssao");
 
-	activateBlend(BLENDCFG_SUBSTRACT);
-	//activateBlend(BLENDCFG_COMBINATIVE);
-	//activateBlend(BLENDCFG_DEFAULT);		//only used for testing
+	rt_ssao->clear(VEC4(0,0,0,0));
+
+	ID3D11RenderTargetView* rts[3] = {
+		//Render.render_target_view
+		rt_ssao->getRenderTargetView()
+		,   nullptr
+		,	nullptr
+	};
+
+	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+	activateBlend(BLENDCFG_DEFAULT);		
+	
 	activateZ(ZCFG_ALL_DISABLED);
 
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	auto tech = Resources.get("ssao.tech")->as<CRenderTechnique>();
-	tech->activate();
 
 	drawFullScreen(rt_albedos, tech);
 
+	Render.activateBackBuffer();
+	//blur shadows
+	CTexture *blurred_ssao = rt_ssao;
+	CEntity* e_camera = h_camera;
+	TCompRenderGlow* glow = e_camera->get< TCompRenderGlow >();
+	//glow->
+	if (glow)
+		blurred_ssao = glow->apply(blurred_ssao);
+
+	Render.activateBackBuffer();	//reset size viewport
+	activateZ(ZCFG_ALL_DISABLED);
+
+	{
+		ID3D11RenderTargetView* rts[3] = {
+			rt_acc_light->getRenderTargetView()
+			, rt_shadows->getRenderTargetView()
+			,   nullptr
+		};
+		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+
+		auto tech = Resources.get("solid_textured_multiple_outputs.tech")->as<CRenderTechnique>();
+
+		activateBlend(BLENDCFG_SUBSTRACT);
+		drawFullScreen(blurred_ssao, tech);
+	}
+	activateBlend(BLENDCFG_DEFAULT);
+	Render.activateBackBuffer();
+
+	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 }
 
@@ -762,12 +806,12 @@ void CRenderDeferredModule::ShootGuardRender() {
 	{
 		PROFILE_FUNCTION("referred: mask laser");
 		CTraceScoped scope("mask laser");
-		rt_temp->clear(VEC4(0, 0, 0, 0));
+		rt_black->clear(VEC4(0, 0, 0, 0));
 		//activateZ(ZCFG_DEFAULT);
 		activateZ(ZCFG_MASK_NUMBER, SHOTS_OBJECTS);
 		activateBlend(BLENDCFG_ADDITIVE);
 		ID3D11RenderTargetView* rts[3] = {
-		  rt_temp->getRenderTargetView()
+			rt_black->getRenderTargetView()
 		  ,	nullptr   // remove the other rt's from the pipeline
 		  ,	nullptr
 		};
@@ -787,7 +831,7 @@ void CRenderDeferredModule::ShootGuardRender() {
 		CTraceScoped scope("laser");
 
 		ID3D11RenderTargetView* rts[3] = {
-		rt_temp->getRenderTargetView()
+			rt_black->getRenderTargetView()
 		,	nullptr   // remove the other rt's from the pipeline
 		,	nullptr
 		};
@@ -799,7 +843,7 @@ void CRenderDeferredModule::ShootGuardRender() {
 		auto tech = Resources.get("test_shoot_w.tech")->as<CRenderTechnique>();
 		tech->activate();
 
-		rt_temp->clear(VEC4(0, 0, 0, 1));
+		rt_black->clear(VEC4(0, 0, 0, 1));
 		rt_data2->clear(VEC4(0, 0, 0, 1));
 		drawFullScreen(rt_data2, tech);
 		//activateZ(ZCFG_DEFAULT);
@@ -825,7 +869,7 @@ void CRenderDeferredModule::ShootGuardRender() {
 		auto tech = Resources.get("test_shoot.tech")->as<CRenderTechnique>();
 		tech->activate();
 
-		drawFullScreen(rt_temp, tech);
+		drawFullScreen(rt_black, tech);
 
 		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	}
@@ -849,12 +893,17 @@ void CRenderDeferredModule::render() {
 	rt_selfIlum_int->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred_int->clear(VEC4(0, 0, 0, 0));
+	rt_shadows->clear(VEC4(0,0,0,0));
 
 	uploadConstantsGPU();
 
 	renderGBuffer();
 	renderDetails();
 	renderAccLight();
+
+	if (ssao_test) {
+		ApplySSAO();
+	}
 
 	CTexture* blurred_shadows = rt_shadows;
 
@@ -888,12 +937,23 @@ void CRenderDeferredModule::render() {
 	g_particlesManager->renderParticles();   //render all particles systems
 
 	activateBlend(BLENDCFG_COMBINATIVE);
-	rt_specular_lights->activate(TEXTURE_SLOT_SPECULAR_LIGHTS);
+	rt_specular_lights->activate(TEXTURE_SLOT_SPECULAR_GL);
 
-	blurred_shadows->activate(TEXTURE_SLOT_SHADOWS);
+	if (controller->IsImpulseUpButtonPressed()) {
+ 		rt_shadows->activate(TEXTURE_SLOT_SHADOWS);
+	}
+	else {
+		blurred_shadows->activate(TEXTURE_SLOT_SHADOWS);
+	}
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
 	//rt_shadows->activate(TEXTURE_SLOT_SHADOWS);
+
+	//activateBlend(BLENDCFG_DEFAULT);	//testing
+	activateBlend(BLENDCFG_COMBINATIVE);
+
 	auto tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
+
+
 	drawFullScreen(rt_final, tech);
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 
@@ -918,7 +978,7 @@ void CRenderDeferredModule::render() {
 	MarkInteractives(VEC4(1, 1, 1, 1), "interactive", INTERACTIVE_OBJECTS);
 
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
-	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_LIGHTS);
+	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	CTexture::deactivate(TEXTURE_SLOT_GLOSSINESS);
 
@@ -930,10 +990,6 @@ void CRenderDeferredModule::render() {
 	}
 
 	applyPostFX();
-
-	if (ssao_test) {
-		ApplySSAO();
-	}
 
 	// Mandar a pintar los 'transparentes'
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);

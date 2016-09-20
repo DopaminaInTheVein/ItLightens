@@ -97,7 +97,7 @@ void PSGBuffer(
 {
   o_albedo = txDiffuse.Sample(samLinear, iTex0);
   o_speculars = txSpecular.Sample(samLinear, iTex0);
-  o_glossiness = float4(o_speculars.a, o_speculars.a, o_speculars.a, o_speculars.a);
+  o_glossiness = float4(o_speculars.a, o_speculars.a, o_speculars.a, 1);
   // Generar la matrix TBN usando la informacion interpolada
   // desde los 3 vertices del triangulo
   float3 T = normalize(iTangent.xyz);
@@ -201,6 +201,7 @@ void PSLightPoint(
   
   //spec_amount *= specular_force;
   o_specular = spec_amount;
+  o_specular.a = 1;
   //o_specular += spec_reflec*specular_color/5.0f;
   //spec_amount *= 0;
   
@@ -214,7 +215,7 @@ void PSLightPoint(
   //inv_shadows = 1 - inv_shadows;
   //inv_shadows = 1 - saturate(inv_shadows);
  // inv_shadows /= 2;
-  o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
+  o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, 1);
   
   // Aportacion final de la luz es NL x color_luz x atenuacion
   o_color.xyz = lightCol * NL * distance_att * albedo + o_specular.xyz*specular_color;
