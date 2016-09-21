@@ -15,6 +15,7 @@ struct TCompTransform : public CTransform, public TCompBase {
 		dbg("TCompTransform on TMsgEntityCreated\n");
 	}
 	void renderInMenu();
+	void setPosition(VEC3 new_pos);
 	bool save(std::ofstream& os, MKeyValue& atts);
 };
 
