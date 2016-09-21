@@ -600,7 +600,6 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 			getHandleManager<TCompFadingMessage>()->updateAll(dt);
-			getHandleManager<TCompText>()->updateAll(dt);
 			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
 			getHandleManager<TCompFadeScreen>()->updateAll(dt);
@@ -702,6 +701,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompGui>()->updateAll(dt);
 	getHandleManager<TCompGuiButton>()->updateAll(dt);
 	getHandleManager<TCompGuiSelector>()->updateAll(dt);
+	getHandleManager<TCompText>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

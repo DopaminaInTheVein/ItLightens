@@ -9,16 +9,17 @@ class TCompTransform;
 class TCompGui;
 
 class TCompGuiSelector : public aicontroller, public TCompBase {
-	struct SelectorOption {
-		std::string text;
-	};
+	//struct SelectorOption {
+	//	std::string text;
+	//};
 
 	//State info
 	CHandle cursor;
 	CHandle arrow_left;
 	CHandle arrow_right;
+	VHandles options;
 	int cur_option;
-	std::vector<SelectorOption> options;
+	//std::vector<SelectorOption> options;
 
 	TCompTransform * myTransform;
 	TCompTransform * cursorTransform;

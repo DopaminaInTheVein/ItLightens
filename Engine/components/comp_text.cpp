@@ -48,31 +48,44 @@ bool TCompText::load(MKeyValue& atts)
 }
 
 void TCompText::update(float dt) {
-	if (ttl >= 0.0f && !printed) {
-		printLetters();
-	}
-	else if (ttl < 0.0f) {
-		for (CHandle h_letter : gui_letters) {
-			h_letter.destroy();
-		}
+	if (ttl < 0.0f) {
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
 	}
+	else if (!printed) {
+		for (CHandle h_letter : gui_letters) {
+			h_letter.destroy();
+		}
+		printLetters();
+	}
+	else {
+		if (colorChangeSpeed > 0.0f) {
+			float accumLag = 0.0f;
+			for (CHandle h_letter : gui_letters) {
+				GET_COMP(letter_gui, h_letter, TCompGui);
+				letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
+				accumLag += colorChangeSpeedLag;
+			}
+		}
+	}
 }
 
-void TCompText::setup(std::string set_id, std::string set_text, float set_posx, float set_posy, std::string set_textColor, float set_scale, std::string set_textColorTarget, float set_textColorSpeed, float set_textColorSpeedLag) {
+void TCompText::setup(std::string set_id, std::string set_text, float set_posx, float set_posy, std::string set_textColor, float set_scale, std::string set_textColorTarget, float set_textColorSpeed, float set_textColorSpeedLag, float set_posz, bool loop) {
 	id = set_id;
 	assert(id != "");
-	text = set_text;
-	letter_posx_ini = set_posx;
-	letter_posy_ini = set_posy;
-	scale = set_scale;
-	color = obtainColorNormFromString(set_textColor);
-	colorTarget = obtainColorNormFromString(set_textColorTarget);
-	colorChangeSpeed = set_textColorSpeed;
-	colorChangeSpeedLag = set_textColorSpeedLag;
-	printed = false;
+	SetPosScreen(VEC3(set_posx, set_posy, set_posz));
+	SetSize(set_scale);
+	SetColor(set_textColor);
+	SetColorTarget(set_textColorTarget, set_textColorSpeed);
+	SetLetterLag(set_textColorSpeedLag);
 	ttl = 1.0f;
+	SetText(set_text);
+	this->loop = loop;
+}
+
+void TCompText::SetText(std::string new_text)
+{
+	text = new_text;
 	lineText.resize(0);
 	std::string endline = "\n";
 	int ini = -1;
@@ -89,6 +102,36 @@ void TCompText::setup(std::string set_id, std::string set_text, float set_posx, 
 	for (int i = 0; i < accumSpacing.size(); ++i) {
 		accumSpacing[i] = 0.0f;
 	}
+	printed = false;
+}
+void TCompText::SetPosWorld(VEC3 pos)
+{
+	SetPosScreen(Gui->getScreenPos(pos));
+}
+void TCompText::SetPosScreen(VEC3 pos)
+{
+	letter_posx_ini = pos.x;
+	letter_posy_ini = pos.y;
+	letter_posz_ini = pos.z;
+	printed = false;
+}
+void TCompText::SetSize(float size)
+{
+	scale = size;
+	printed = false;
+}
+void TCompText::SetColor(std::string rrggbbaa)
+{
+	color = colorTarget = obtainColorNormFromString(rrggbbaa);
+}
+void TCompText::SetColorTarget(std::string rrggbbaa, float speed)
+{
+	colorTarget = obtainColorNormFromString(rrggbbaa);
+	colorChangeSpeed = speed;
+}
+void TCompText::SetLetterLag(float letter_lag)
+{
+	colorChangeSpeedLag = letter_lag;
 }
 
 void TCompText::setAttr(float new_x, float new_y, float new_scale) {
@@ -117,7 +160,6 @@ void TCompText::setAttr(float new_x, float new_y, float new_scale) {
 
 void TCompText::printLetters() {
 	int gState = GameController->GetGameState();
-	if (gState != CGameController::RUNNING) return;
 	int letteri = 0;
 	float accumLag = 0.0f;
 	for (int j = 0; j < lineText.size(); ++j) {
@@ -135,7 +177,7 @@ void TCompText::printLetters() {
 			float letter_posx = letter_posx_ini + i * letterBoxSize*scale - accumSpacing[j] * scale;
 			float letter_posy = letter_posy_ini - j * letterBoxSize*scale*2.5f;
 
-			CHandle letter_h = Gui->addGuiElement("ui/letter", VEC3(letter_posx, letter_posy, 0.50f + letteri*0.001), ("Text_Message_Letter_" + id), scale);
+			CHandle letter_h = Gui->addGuiElement("ui/letter", VEC3(letter_posx, letter_posy, letter_posz_ini + letteri*0.001), ("Text_Message_Letter_" + id), scale);
 			CEntity * letter_e = letter_h;
 			TCompGui * letter_gui = letter_e->get<TCompGui>();
 			assert(letter_gui);
@@ -145,11 +187,17 @@ void TCompText::printLetters() {
 			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
 			letter_gui->SetColor(color);
 			if (colorChangeSpeed > 0.0f) {
-				letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag);
+				letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
 			}
 			gui_letters.push_back(letter_h);
 			accumLag += colorChangeSpeedLag;
 		}
 	}
 	printed = true;
+}
+
+TCompText::~TCompText()
+{
+	for (auto h : gui_letters)
+		h.destroy();
 }

@@ -308,6 +308,16 @@ CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag,
 	return h;
 }
 
+// Get Screen Pos
+VEC3 CGuiModule::getScreenPos(VEC3 pos)
+{
+	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
+	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
+	VEC3 min_ortho = ui_cam->getMinOrtho();
+	VEC3 max_ortho = ui_cam->getMaxOrtho();
+	return (pos - min_ortho) / (max_ortho - min_ortho);
+}
+
 void CGuiModule::removeGuiElementByTag(std::string tag)
 {
 	CHandle handle = tags_manager.getFirstHavingTag(tag.c_str());

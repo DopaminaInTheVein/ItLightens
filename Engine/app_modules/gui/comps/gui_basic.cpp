@@ -126,20 +126,8 @@ void TCompGui::pushCursor(CHandle h)
 #include "components\entity.h"
 void TCompGui::update(float elapsed)
 {
-	static float timeAcum = 0.0f;
-	timeAcum += elapsed / 200;
-	if (color_speed > 0.0f) {
-		float mesura = timeAcum*color_speed - color_speed_lag;
-		if (mesura > 0.0f) {
-			float mesuramoduled = fmod(mesura, 2.0f);
-			float proportion = mesuramoduled;
-			if (mesuramoduled > 1.0f) {
-				proportion = 2.0 - mesuramoduled;
-			}
-			color = origin_color + (target_color - origin_color)*proportion;
-		}
-	}
-
+	if (loop_color) updateColorLag(elapsed);
+	else updateColor(elapsed);
 	//Check if needs to update
 	if (render_speed == 0.f || render_state == render_target) return;
 
@@ -185,4 +173,34 @@ int TCompGui::GetRow()
 int TCompGui::GetCol()
 {
 	return col;
+}
+#define checkColorReach(x) if (abs(prev_color.x - target_color.x) < abs(color.x - target_color.x)) color.x = target_color.x; else reach = false
+void TCompGui::updateColor(float elapsed)
+{
+	if (color_speed > 0.f) {
+		VEC4 prev_color = color;
+		color += delta_color * color_speed;
+		bool reach = true;
+		checkColorReach(x);
+		checkColorReach(y);
+		checkColorReach(z);
+		checkColorReach(w);
+		if (reach) color_speed = 0.f;
+	}
+}
+void TCompGui::updateColorLag(float elapsed)
+{
+	static float timeAcum = 0.0f;
+	timeAcum += elapsed / 200;
+	if (color_speed > 0.0f) {
+		float mesura = timeAcum*color_speed - color_speed_lag;
+		if (mesura > 0.0f) {
+			float mesuramoduled = fmod(mesura, 2.0f);
+			float proportion = mesuramoduled;
+			if (mesuramoduled > 1.0f) {
+				proportion = 2.0 - mesuramoduled;
+			}
+			color = origin_color + (target_color - origin_color)*proportion;
+		}
+	}
 }

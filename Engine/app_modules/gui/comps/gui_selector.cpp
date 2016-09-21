@@ -5,6 +5,8 @@
 #include "components/entity_parser.h"
 
 #include "components/comp_transform.h"
+#include "components/comp_text.h"
+#include "app_modules/gui/gui.h"
 #include "app_modules/gui/comps/gui_basic.h"
 
 #include "app_modules/io/io.h"
@@ -14,6 +16,10 @@
 
 #define LEFT_EVENT "left_event"
 #define RIGHT_EVENT "right_event"
+#define COLOR_SELECTED "#FFFF00FF"
+#define COLOR_NORMAL "#FFFFFFFF"
+#define COLOR_HIDDEN "#00000000"
+#define COLOR_SPEED 0.1f
 
 // Static info
 map<string, statehandler> TCompGuiSelector::statemap = {};
@@ -27,7 +33,7 @@ bool TCompGuiSelector::load(MKeyValue& atts)
 // onCreate
 void TCompGuiSelector::onCreate(const TMsgEntityCreated&) {
 	getUpdateInfo();
-	options = vector<SelectorOption>();
+	options = VHandles();
 	cur_option = 0;
 	AddSelectorStates();
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
@@ -89,7 +95,6 @@ void TCompGuiSelector::Over()
 	if (!checkOver()) {
 		ChangeState(STRING(Enabled));
 		notifyOver(false);
-		//options[cur_option].color = COLOR_NOT_SELECTED;
 	}
 	else {
 		if (controller->IsLeftPressed()) {
@@ -132,6 +137,9 @@ bool TCompGuiSelector::checkOver()
 }
 void TCompGuiSelector::notifyOver(bool over)
 {
+	GET_COMP(txt, options[cur_option], TCompText);
+	txt->SetColorTarget(over ? COLOR_SELECTED : COLOR_NORMAL, COLOR_SPEED);
+
 	// Cursor Message (for something?)
 	TMsgOverButton msg;
 	msg.button = CHandle(this).getOwner();
@@ -151,19 +159,27 @@ void TCompGuiSelector::renderInMenu()
 	IMGUI_SHOW_INT(cur_option);
 	int i = 0;
 	for (auto sel_opt : options) {
-		ImGui::Text("Option %d: %s", i++, sel_opt.text.c_str());
+		GET_COMP(txt, sel_opt, TCompText);
+		//ImGui::Text("Option %d: %s", i++, txt ? txt->getText() : "???");
 	}
 }
 
 int TCompGuiSelector::AddOption(string option)
 {
 	int res = options.size();
-	SelectorOption sel_option;
-	sel_option.text = option;
-	options.push_back(sel_option);
-	//TODO: create text options[res]
-	//TODO: if res == options[res].color = COLOR_SELECTED
-	//TODO: else options[res].alfa = 0
+
+	CHandle h_option = createPrefab("ui/text");
+	GET_COMP(txt, h_option, TCompText);
+	VEC3 postxt = myTransform->getPosition();
+	float w = myGui->GetWidth();
+	float h = myGui->GetHeight();
+	postxt += VEC3(-w / 2.f, -h / 2.f, .01f);
+	txt->SetText(option);
+	txt->SetSize(myGui->GetHeight());
+	txt->SetPosWorld(postxt);
+	options.push_back(h_option);
+	if (res == 0) txt->SetColor(COLOR_NORMAL);
+	else txt->SetColor(COLOR_HIDDEN);
 	return res;
 }
 
@@ -189,10 +205,12 @@ void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 
 void TCompGuiSelector::SelectOption(int id)
 {
-	//options[cur_option] --> alfa = 0;
+	GET_COMP(txt, options[cur_option], TCompText);
+	if (txt) txt->SetColorTarget(COLOR_HIDDEN, COLOR_SPEED);
 	cur_option = clamp(id, 0, options.size());
 	assert(id == cur_option);
-	//options[cur_option=id].color = COLOR_SELECTED;
+	txt = GETH_COMP(options[cur_option = id], TCompText);
+	txt->SetColorTarget(COLOR_SELECTED, COLOR_SPEED);
 }
 
 TCompGuiSelector::~TCompGuiSelector()
