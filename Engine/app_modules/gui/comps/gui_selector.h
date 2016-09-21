@@ -7,6 +7,7 @@
 //Forward Declaration
 class TCompTransform;
 class TCompGui;
+class TCompText;
 
 class TCompGuiSelector : public aicontroller, public TCompBase {
 	//struct SelectorOption {
@@ -19,6 +20,8 @@ class TCompGuiSelector : public aicontroller, public TCompBase {
 	CHandle arrow_right;
 	VHandles options;
 	int cur_option;
+	bool is_over = false;
+	VEC3 my_pos;
 	//std::vector<SelectorOption> options;
 
 	TCompTransform * myTransform;
@@ -30,6 +33,7 @@ class TCompGuiSelector : public aicontroller, public TCompBase {
 	void notifyOver(bool over);
 	void AddArrows();
 	void AddArrow(CHandle&, string prefab, string name_event, float offset_pos);
+	TCompText* setTextVisible(int option, bool visible);
 
 protected:
 	// the states, as maps to functions

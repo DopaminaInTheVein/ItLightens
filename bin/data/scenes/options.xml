@@ -1,5 +1,5 @@
 <entities>
-<entity>
+<!-- <entity>
 <tags
    tags="options gui gui_button clickable"/>
 <gui
@@ -21,7 +21,7 @@
    name="static_meshes/ui/menu/button_start.static_mesh"/>
 <abs_aabb/>
 
-</entity>
+</entity> -->
 <entity>
 <tags
    tags="options gui gui_cursor"/>
@@ -77,7 +77,7 @@
 <abs_aabb/>
 
 </entity>
-<entity>
+<!-- <entity>
 <tags
    tags="options gui gui_selector"/>
 <gui
@@ -140,5 +140,5 @@
 <abs_aabb/>
 
 </entity>
-
+ -->
 </entities>

@@ -21,8 +21,8 @@ end
 --TEXTS--
 ---------------------------------------
 --Axis
-TXT_OPTION_AXIS_NORMAL = "Normal"
-TXT_OPTION_AXIS_INVERTED = "Inverted"
+TXT_OPTION_AXIS_NORMAL = "N"--ormal"
+TXT_OPTION_AXIS_INVERTED = "I"--nverted"
 
 --Difficulty
 DECLARE_DIFFICULTY("Easy")

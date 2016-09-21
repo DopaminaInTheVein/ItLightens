@@ -36,10 +36,10 @@ void TCompGuiSelector::onCreate(const TMsgEntityCreated&) {
 	options = VHandles();
 	cur_option = 0;
 	AddSelectorStates();
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
-
-	// Add side arrows
+	my_pos = myTransform->getPosition();
 	AddArrows();
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
+	// Add side arrows
 }
 
 void TCompGuiSelector::AddArrows()
@@ -137,6 +137,7 @@ bool TCompGuiSelector::checkOver()
 }
 void TCompGuiSelector::notifyOver(bool over)
 {
+	is_over = over;
 	GET_COMP(txt, options[cur_option], TCompText);
 	txt->SetColorTarget(over ? COLOR_SELECTED : COLOR_NORMAL, COLOR_SPEED);
 
@@ -178,8 +179,8 @@ int TCompGuiSelector::AddOption(string option)
 	txt->SetSize(myGui->GetHeight());
 	txt->SetPosWorld(postxt);
 	options.push_back(h_option);
-	if (res == 0) txt->SetColor(COLOR_NORMAL);
-	else txt->SetColor(COLOR_HIDDEN);
+	txt->update(getDeltaTime(true));
+	setTextVisible(res, res == 0);
 	return res;
 }
 
@@ -205,12 +206,23 @@ void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 
 void TCompGuiSelector::SelectOption(int id)
 {
-	GET_COMP(txt, options[cur_option], TCompText);
-	if (txt) txt->SetColorTarget(COLOR_HIDDEN, COLOR_SPEED);
+	setTextVisible(cur_option, false);
 	cur_option = clamp(id, 0, options.size());
 	assert(id == cur_option);
-	txt = GETH_COMP(options[cur_option = id], TCompText);
-	txt->SetColorTarget(COLOR_SELECTED, COLOR_SPEED);
+	setTextVisible(cur_option = id, true);
+}
+
+TCompText* TCompGuiSelector::setTextVisible(int option, bool visible)
+{
+	CHandle opt = options[option];
+	GET_COMP(txt, opt, TCompText);
+	if (txt) {
+		txt->SetColorTarget(visible ? (is_over ? COLOR_SELECTED : COLOR_NORMAL) : COLOR_HIDDEN, COLOR_SPEED);
+		txt->SetZ(my_pos.z + ((visible ? 1 : -1) * 0.05f));
+	}
+	//test
+	txt->update(getDeltaTime(true));
+	return txt;
 }
 
 TCompGuiSelector::~TCompGuiSelector()

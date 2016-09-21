@@ -196,6 +196,20 @@ void TCompText::printLetters() {
 	printed = true;
 }
 
+void TCompText::Move(VEC3 movement)
+{
+	for (auto h : gui_letters) {
+		GET_COMP(tmx, h, TCompTransform);
+		tmx->setPosition(movement);
+	}
+}
+void TCompText::SetZ(float z)
+{
+	for (auto h : gui_letters) {
+		GET_COMP(tmx, h, TCompTransform);
+		tmx->setZ(z);
+	}
+}
 TCompText::~TCompText()
 {
 	for (auto h : gui_letters)

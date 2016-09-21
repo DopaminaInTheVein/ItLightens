@@ -12,11 +12,11 @@
         "full_screen": 1
     },
     "controls": {
-        "y-axis_inverted": 1.0,
+        "y-axis_inverted": 0.0,
         "x-axis_inverted": 1.0
     },
     "language": {
-        "lang": "EN"
+        "lang": "CAT"
     },
     "game": {
         "difficulty": 1.0
