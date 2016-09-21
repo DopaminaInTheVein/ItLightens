@@ -78,7 +78,7 @@ void CGuiActionText::render() {
 	if (text != "" && text != last_text) {
 		CHandle h = createPrefab("ui/text");
 		GET_COMP(t, h, TCompText);
-		t->setup(std::string("action_text"), std::string(text), posx, posy, std::string("#FFFFFFFF"), .2f, std::string("#FFFFFFFF"), 0.0f, 0.0f);
+		t->setup(std::string("action_text"), std::string(text), posx, posy, std::string("#FFFFFFFF"), 0.2f, std::string("#FFFFFFFF"), 0.0f, 0.0f);
 	}
 	else if (text == "" && text != last_text) {
 		getHandleManager<TCompText>()->each([](TCompText * mess) {

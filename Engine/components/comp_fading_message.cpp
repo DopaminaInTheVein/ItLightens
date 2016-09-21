@@ -38,13 +38,13 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, 0.02f, 0.40f), "Fading_Message_Background_" + std::to_string(id));
 	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
 	if (player.hasTag("raijin")) {
-		Gui->addGuiElement("ui/Fading_Icon_RAI", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_RAI_" + std::to_string(id));
+		Gui->addGuiElement("ui/Fading_Icon_RAI", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_" + std::to_string(id));
 	}
 	else if (player.hasTag("AI_mole")) {
-		Gui->addGuiElement("ui/Fading_Icon_MOL", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_MOL_" + std::to_string(id));
+		Gui->addGuiElement("ui/Fading_Icon_MOL", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_" + std::to_string(id));
 	}
 	else if (player.hasTag("AI_cientifico")) {
-		Gui->addGuiElement("ui/Fading_Icon_SCI", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_SCI_" + std::to_string(id));
+		Gui->addGuiElement("ui/Fading_Icon_SCI", VEC3(0.12f, 0.09f, 0.49f), "Fading_Message_Icon_" + std::to_string(id));
 	}
 	accumSpacing.resize(lineText.size(), 0.0f);
 
@@ -72,15 +72,7 @@ void TCompFadingMessage::update(float dt) {
 		h.destroy();
 
 		CHandle player = tags_manager.getFirstHavingTag(getID("player"));
-		if (player.hasTag("raijin")) {
-			Gui->removeGuiElementByTag("Fading_Message_Icon_RAI_" + std::to_string(id));
-		}
-		else if (player.hasTag("AI_mole")) {
-			Gui->removeGuiElementByTag("Fading_Message_Icon_MOL_" + std::to_string(id));
-		}
-		else if (player.hasTag("AI_cientifico")) {
-			Gui->removeGuiElementByTag("Fading_Message_Icon_SCI_" + std::to_string(id));
-		}
+		Gui->removeGuiElementByTag("Fading_Message_Icon_" + std::to_string(id));
 		for (int i = 0; i < text.length(); i++) {
 			Gui->removeGuiElementByTag(("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)));
 		}
