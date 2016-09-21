@@ -52,11 +52,19 @@ bool TCompTransform::save(ofstream& os, MKeyValue& atts) {
 	return true;
 }
 
+#include "app_modules\gui\comps\gui_basic.h"
+
 void TCompTransform::renderInMenu() {
 	VEC3 pos = getPosition();
 	//if (ImGui::DragFloat3("Pos", &pos.x, -0.1f, 0.1f)) {
 	if (ImGui::DragFloat3("Pos", &pos.x, 0.1f)) {
 		setPosition(pos);
+		CEntity* owner = CHandle(this).getOwner();
+		if (!owner) return;
+		TCompGui* gui = owner->get<TCompGui>();
+		if (gui) {
+			RenderManager.ModifyUI();
+		}
 	}
 
 	float yaw, pitch, roll;
@@ -78,4 +86,9 @@ void TCompTransform::renderInMenu() {
 	VEC3 l = getLeft();
 	ImGui::Text("Front: (%.2f, %.2f, %.2f), Left: (%.2f, %.2f, %.2f)",
 		f.x, f.y, f.z, l.x, l.y, l.z);
+}
+
+void TCompTransform::setPosition(VEC3 new_pos) {
+	
+	CTransform::setPosition(new_pos);
 }

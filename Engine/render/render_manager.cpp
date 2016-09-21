@@ -39,14 +39,29 @@ bool CRenderManager::sortByTechMatMesh(
 	auto* tech2 = k2.material->tech;
 
 	if (tech1 != tech2) {
-		//if (tech1->getCategory() != tech2->getCategory())
-		//  return tech1->getCategory() < tech2->getCategory();
+		if (tech1->getCategory() != tech2->getCategory())
+		  return tech1->getCategory() < tech2->getCategory();
 		if (tech1->getCategory() != tech2->getCategory())
 			return tech1->getCategory() < tech2->getCategory();
 		if (tech1->getPriority(k1.owner.getOwner()) == tech2->getPriority(k2.owner.getOwner()))
 			return tech1->getName() < tech2->getName();
-		return (tech1->getPriority(k1.owner.getOwner()) < tech2->getPriority(k2.owner.getOwner()));
+
+		float prio1 = tech1->getPriority(k1.owner.getOwner());
+		float prio2 = tech2->getPriority(k2.owner.getOwner());
+		return (prio1 < prio2);
 	}
+
+	//ui are compared by z position
+	else if (tech1->getCategory() == CRenderTechnique::UI_OBJS && tech2->getCategory() == CRenderTechnique::UI_OBJS) {
+		
+		if (tech1->getPriority(k1.owner.getOwner()) == tech2->getPriority(k2.owner.getOwner()))
+			return tech1->getName() < tech2->getName();
+
+		float prio1 = tech1->getPriority(k1.owner.getOwner());
+		float prio2 = tech2->getPriority(k2.owner.getOwner());
+		return (prio1 < prio2);
+	}
+
 	return k1.material < k2.material;
 }
 
@@ -114,8 +129,55 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
 	}
 }
 
+static bool ui_render = false;
+static int id = 0;
+
+void checkTestZ(std::vector<std::string>& last_v, std::vector<std::string>& new_v) {
+	bool same = true;
+	if (last_v.empty()) {
+		same = false;
+		for (auto it : new_v) {
+			last_v.push_back(it);
+		}
+	}
+	else {
+		for (int idx = 0; idx < last_v.size(); idx++) {
+			
+			//cheack is some it are different
+			std::string str1 = last_v[idx];
+			std::string str2 = new_v[idx];
+
+			if (strcmp(str1.c_str(), str2.c_str())) {
+				same = false;
+
+				//rebuild last_v
+				last_v.clear();
+				for (auto it : new_v) {
+					last_v.push_back(it);
+				}
+				break;
+			}
+		}
+	}
+
+	//print if different
+	if (!same) {
+		id++;
+		dbg("#### INIT %d #####\n", id);
+		for (auto it : last_v) {
+			dbg("\nz_test_ui : %s", it.c_str());
+		}
+		dbg("#### END %d #####\n", id);
+	}
+}
+
+#include "components\comp_name.h"
+
 void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory category) {
 	std::string name;
+	ui_render = false;
+	test_z_render.clear();
+	
 	PROFILE_FUNCTION("OBJS");
 	if (category == CRenderTechnique::DBG_OBJS) {
 		name = "DEBUG_OBJS";
@@ -132,6 +194,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	else if (category == CRenderTechnique::UI_OBJS) {
 		name = "UI_OBJS";
 		PROFILE_FUNCTION("UI_OBJS");
+		ui_render = true;
 	}
 	else if (category == CRenderTechnique::DETAIL_OBJS) {
 		name = "DETAIL_OBJS";
@@ -277,6 +340,10 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 					it->mesh->renderGroup(it->submesh_idx);
 					prev_it = it;
 					++nkeys_rendered;
+
+					CEntity* e_owner = it->owner.getOwner();
+					TCompName* e_name = e_owner->get<TCompName>();
+					test_z_render.push_back(e_name->name);
 				}
 			}
 			else {
@@ -289,8 +356,13 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 			
 			
 		}
+
 		++it;
 	}
+
+#ifndef NDEBUG 
+	if(ui_render)checkTestZ(last_test_z_render, test_z_render);
+#endif
 
 	CMaterial::deactivateTextures();
 
