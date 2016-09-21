@@ -47,7 +47,6 @@ public:
 	void setAttr(float new_x, float new_y, float new_scale);
 	void Move(VEC3 pos);
 	void SetZ(float z);
-	TCompText::~TCompText();
 };
 
 #endif

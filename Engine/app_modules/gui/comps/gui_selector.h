@@ -61,9 +61,6 @@ public:
 	//Public actions
 	int AddOption(std::string);
 	void SelectOption(int);
-
-	//Destructor
-	~TCompGuiSelector();
 };
 
 #endif

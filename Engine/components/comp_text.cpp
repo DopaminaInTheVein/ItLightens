@@ -181,6 +181,7 @@ void TCompText::printLetters() {
 			CEntity * letter_e = letter_h;
 			TCompGui * letter_gui = letter_e->get<TCompGui>();
 			assert(letter_gui);
+			letter_gui->SetParent(MY_OWNER);
 			RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
 			letter_gui->setTxCoords(textCords);
 			letteri++;
@@ -205,13 +206,10 @@ void TCompText::Move(VEC3 movement)
 }
 void TCompText::SetZ(float z)
 {
+	float offset = 0.f;
 	for (auto h : gui_letters) {
 		GET_COMP(tmx, h, TCompTransform);
-		tmx->setZ(z);
+		tmx->setZ(z + offset);
+		offset += 0.001f;
 	}
-}
-TCompText::~TCompText()
-{
-	for (auto h : gui_letters)
-		h.destroy();
 }

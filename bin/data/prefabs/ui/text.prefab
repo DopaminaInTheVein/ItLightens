@@ -1,5 +1,6 @@
 <entities>
 <entity>
+	<gui/>
 	<name name="helper_text"/>
 	<helper_text 
 		id="helper_text"

@@ -42,6 +42,10 @@ class TCompGui : public TCompBase {
 	float render_target;
 	float render_speed;
 
+	//Parent
+	CHandle parent;
+
+	//Color
 	VEC4 color;
 	VEC4 origin_color;
 	VEC4 target_color;
@@ -65,7 +69,7 @@ public:
 	static void clearScreen(std::string menu_name);
 
 	// Cursors
-	static CHandle getCursor();
+	CHandle getCursor();
 	static void pushCursor(CHandle);
 
 	void onCreate(const TMsgEntityCreated&);
@@ -73,6 +77,9 @@ public:
 	// Menu gets
 	int GetRow();
 	int GetCol();
+	std::string GetMenuName() {
+		return menu_name;
+	}
 
 	// Size
 	float GetWidth();
@@ -80,18 +87,15 @@ public:
 	void SetWidth(float);
 	void SetHeight(float);
 
+	// Parent
+	void SetParent(CHandle);
+
+	// Color
 	void SetColor(VEC4 new_color) {
 		color = new_color;
 		origin_color = color;
 		loop_color = false;
 	}
-
-	bool load(MKeyValue& atts);
-	void update(float elapsed);
-	void uploadCtes();
-	float getRenderState() { return render_state; }
-	void setRenderTarget(float rs_target, float speed);
-	void setRenderState(float rs_state);
 	void setTargetColorAndSpeed(VEC4 new_t_color, float new_color_speed, float new_color_lag = 0.0f, bool loop = false) {
 		assert(new_color_speed > 0.0f);
 		target_color = new_t_color;
@@ -100,6 +104,13 @@ public:
 		loop_color = loop;
 		if (!loop) delta_color = color_speed * (target_color - color);
 	}
+
+	bool load(MKeyValue& atts);
+	void update(float elapsed);
+	void uploadCtes();
+	float getRenderState() { return render_state; }
+	void setRenderTarget(float rs_target, float speed);
+	void setRenderState(float rs_state);
 	RectNormalized getTxCoords();
 	void setTxCoords(RectNormalized);
 	void renderInMenu();

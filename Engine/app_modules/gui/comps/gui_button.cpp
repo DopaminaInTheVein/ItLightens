@@ -159,17 +159,17 @@ void TCompGuiButton::execute()
 
 bool TCompGuiButton::getUpdateInfo()
 {
+	myGui = GETH_MY(TCompGui);
+	if (!myGui) return false;
+
 	myTransform = GETH_MY(TCompTransform);
 	if (!myTransform) return false;
 
-	cursor = TCompGui::getCursor();
+	cursor = myGui->getCursor();
 	if (!cursor.isValid()) return false;
 
 	cursorTransform = GETH_COMP(cursor, TCompTransform);
 	if (!cursorTransform) return false;
-
-	myGui = GETH_MY(TCompGui);
-	if (!myGui) return false;
 
 	return true;
 }

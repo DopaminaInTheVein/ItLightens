@@ -1,5 +1,5 @@
 <entities>
-<!-- <entity>
+<entity>
 <tags
    tags="options gui gui_button clickable"/>
 <gui
@@ -21,7 +21,7 @@
    name="static_meshes/ui/menu/button_start.static_mesh"/>
 <abs_aabb/>
 
-</entity> -->
+</entity>
 <entity>
 <tags
    tags="options gui gui_cursor"/>
@@ -61,7 +61,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="0"
+   row="3"
    col="0"
    width="3.11336"
    height="0.277176"/>
@@ -77,12 +77,12 @@
 <abs_aabb/>
 
 </entity>
-<!-- <entity>
+<entity>
 <tags
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="0"
+   row="2"
    col="0"
    width="3.11336"
    height="0.277176"/>
@@ -124,7 +124,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="0"
+   row="1"
    col="0"
    width="3.11336"
    height="0.277176"/>
@@ -140,5 +140,5 @@
 <abs_aabb/>
 
 </entity>
- -->
+
 </entities>

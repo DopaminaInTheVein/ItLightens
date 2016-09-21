@@ -19,7 +19,7 @@
 #define COLOR_SELECTED "#FFFF00FF"
 #define COLOR_NORMAL "#FFFFFFFF"
 #define COLOR_HIDDEN "#00000000"
-#define COLOR_SPEED 0.1f
+#define COLOR_SPEED 0.2f
 
 // Static info
 map<string, statehandler> TCompGuiSelector::statemap = {};
@@ -60,6 +60,7 @@ void TCompGuiSelector::AddArrow(CHandle& h, string prefab, string name_event, fl
 		tmx->setScaleBase(VEC3(height, height, height));
 		gui->SetHeight(height);
 		gui->SetWidth(height); // No es un error, la flecha es cuadrada con la altura del selector
+		gui->SetParent(MY_OWNER);
 	}
 	TMsgGuiSetListener msg;
 	msg.event_name = name_event;
@@ -108,17 +109,17 @@ void TCompGuiSelector::Over()
 
 bool TCompGuiSelector::getUpdateInfo()
 {
+	myGui = GETH_MY(TCompGui);
+	if (!myGui) return false;
+
 	myTransform = GETH_MY(TCompTransform);
 	if (!myTransform) return false;
 
-	cursor = TCompGui::getCursor();
+	cursor = myGui->getCursor();
 	if (!cursor.isValid()) return false;
 
 	cursorTransform = GETH_COMP(cursor, TCompTransform);
 	if (!cursorTransform) return false;
-
-	myGui = GETH_MY(TCompGui);
-	if (!myGui) return false;
 
 	return true;
 }
@@ -181,6 +182,8 @@ int TCompGuiSelector::AddOption(string option)
 	options.push_back(h_option);
 	txt->update(getDeltaTime(true));
 	setTextVisible(res, res == 0);
+	GET_COMP(gui, h_option, TCompGui);
+	gui->SetParent(MY_OWNER);
 	return res;
 }
 
@@ -223,12 +226,6 @@ TCompText* TCompGuiSelector::setTextVisible(int option, bool visible)
 	//test
 	txt->update(getDeltaTime(true));
 	return txt;
-}
-
-TCompGuiSelector::~TCompGuiSelector()
-{
-	arrow_left.destroy();
-	arrow_right.destroy();
 }
 
 map<string, statehandler>* TCompGuiSelector::getStatemap() {

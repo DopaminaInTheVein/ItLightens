@@ -21,12 +21,12 @@ end
 --TEXTS--
 ---------------------------------------
 --Axis
-TXT_OPTION_AXIS_NORMAL = "N"--ormal"
-TXT_OPTION_AXIS_INVERTED = "I"--nverted"
+TXT_OPTION_AXIS_NORMAL = "Normal"
+TXT_OPTION_AXIS_INVERTED = "Inverted"
 
 --Difficulty
 DECLARE_DIFFICULTY("Easy")
-DECLARE_DIFFICULTY("Normal")
+DECLARE_DIFFICULTY("Medium")
 DECLARE_DIFFICULTY("Hard")
 
 --Languages

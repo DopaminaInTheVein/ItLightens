@@ -71,6 +71,16 @@ void TCompGui::SetHeight(float h)
 	height = h;
 }
 
+// Parent
+void TCompGui::SetParent(CHandle h)
+{
+	if (h.isValid()) {
+		parent = h;
+		GET_COMP(gui, parent, TCompGui);
+		menu_name = gui->GetMenuName();
+	}
+}
+
 void TCompGui::renderInMenu()
 {
 	IMGUI_SHOW_FLOAT(render_state);
@@ -114,6 +124,10 @@ CHandle TCompGui::getCursor()
 		result = cursors.top();
 		if (!result.isValid()) cursors.pop();
 	}
+	if (result.isValid()) {
+		GET_COMP(gui, result, TCompGui);
+		if (menu_name != gui->GetMenuName()) result = CHandle();
+	}
 	return result;
 }
 
@@ -126,6 +140,11 @@ void TCompGui::pushCursor(CHandle h)
 #include "components\entity.h"
 void TCompGui::update(float elapsed)
 {
+	if (parent != CHandle() && !parent.isValid()) {
+		MY_OWNER.destroy();
+		return;
+	}
+
 	if (loop_color) updateColorLag(elapsed);
 	else updateColor(elapsed);
 	//Check if needs to update
