@@ -55,7 +55,7 @@ void TCompGuiSelector::AddArrow(CHandle& h, string prefab, string name_event, fl
 	GET_COMP(tmx, h, TCompTransform);
 	GET_COMP(gui, h, TCompGui);
 	if (tmx && gui) {
-		tmx->setPosition(myTransform->getPosition() + offset_pos * VEC3_RIGHT);
+		tmx->setPosition(myTransform->getPosition() + offset_pos * VEC3_RIGHT + VEC3_FRONT * 0.01f);
 		float height = myGui->GetHeight();
 		tmx->setScaleBase(VEC3(height, height, height));
 		gui->SetHeight(height);
