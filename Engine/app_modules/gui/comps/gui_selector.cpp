@@ -19,7 +19,7 @@
 #define COLOR_SELECTED "#FFFF00FF"
 #define COLOR_NORMAL "#FFFFFFFF"
 #define COLOR_HIDDEN "#00000000"
-#define COLOR_SPEED 0.2f
+#define COLOR_SPEED 0.3f
 
 // Static info
 map<string, statehandler> TCompGuiSelector::statemap = {};
@@ -175,13 +175,13 @@ int TCompGuiSelector::AddOption(string option)
 	VEC3 postxt = myTransform->getPosition();
 	float w = myGui->GetWidth();
 	float h = myGui->GetHeight();
-	postxt += VEC3(-w / 2.f, -h / 2.f, .01f);
+	postxt += VEC3(-w / 2.f, -h / 2.f, .1f);
 	txt->SetText(option);
 	txt->SetSize(myGui->GetHeight());
 	txt->SetPosWorld(postxt);
 	options.push_back(h_option);
 	txt->update(getDeltaTime(true));
-	setTextVisible(res, res == 0);
+	setTextVisible(res, res == 0, true);
 	GET_COMP(gui, h_option, TCompGui);
 	gui->SetParent(MY_OWNER);
 	return res;
@@ -215,13 +215,13 @@ void TCompGuiSelector::SelectOption(int id)
 	setTextVisible(cur_option = id, true);
 }
 
-TCompText* TCompGuiSelector::setTextVisible(int option, bool visible)
+TCompText* TCompGuiSelector::setTextVisible(int option, bool visible, bool instant)
 {
 	CHandle opt = options[option];
 	GET_COMP(txt, opt, TCompText);
 	if (txt) {
-		txt->SetColorTarget(visible ? (is_over ? COLOR_SELECTED : COLOR_NORMAL) : COLOR_HIDDEN, COLOR_SPEED);
-		txt->SetZ(my_pos.z + ((visible ? 1 : -1) * 0.05f));
+		txt->SetColorTarget(visible ? (is_over ? COLOR_SELECTED : COLOR_NORMAL) : COLOR_HIDDEN, instant ? FLT_MAX : COLOR_SPEED);
+		//txt->SetZ(my_pos.z + ((visible ? 1 : -1) * 0.05f));
 	}
 	//test
 	txt->update(getDeltaTime(true));
