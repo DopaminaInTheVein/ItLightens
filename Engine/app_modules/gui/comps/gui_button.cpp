@@ -64,6 +64,7 @@ bool TCompGuiButton::load(MKeyValue& atts)
 {
 	loadOptions();
 	init_enabled = atts.getBool("enabled", true);
+	language = atts.getBool("lang", true);
 	return true;
 }
 
@@ -73,6 +74,8 @@ void TCompGuiButton::onCreate(const TMsgEntityCreated&) {
 	AddButtonStates();
 	render_state = render_state_target = 0.f;
 	init_enabled ? ChangeState(STRING(Enabled)) : ChangeState(STRING(Disabled));
+	getUpdateInfo();
+	myGui->SetLangEnabled(language);
 }
 
 void TCompGuiButton::AddButtonStates()

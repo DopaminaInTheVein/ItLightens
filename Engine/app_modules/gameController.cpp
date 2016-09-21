@@ -10,6 +10,14 @@
 #include "components/entity_tags.h"
 #include "components/comp_sense_vision.h"
 
+bool CGameController::start()
+{
+	auto file = CApp::get().get().file_options_json;
+	auto language = readIniAtrDataStr(file, "language");
+	game_language = language["lang"];
+	return true;
+}
+
 DIFFICULTIES CGameController::GetDifficulty() const
 {
 	return game_difficulty;

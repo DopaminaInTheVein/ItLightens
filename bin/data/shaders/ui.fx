@@ -90,7 +90,11 @@ float4 PSButton(
   , in float2 iTex0 : TEXCOORD0
 ) : SV_Target
 {
-  float4 result = txDiffuse.Sample(samLinear, iTex0);
+  //float4 result = txDiffuse.Sample(samLinear, iTex0);
+  float2 min_coord = float2(pos_x, pos_y);
+  float2 max_coord = float2(min_coord.x+size_x, min_coord.y+size_y);
+  float2 tex = min_coord + iTex0 * (max_coord - min_coord);
+  float4 result = txDiffuse.Sample(samLinear, tex);
   result.rgb = result.rgb*base_color;
   
   if(state_ui == RSTATE_DISABLED){

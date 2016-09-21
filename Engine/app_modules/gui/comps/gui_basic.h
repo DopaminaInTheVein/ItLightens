@@ -30,6 +30,9 @@ class TCompGui : public TCompBase {
 	static std::map<std::string, GuiMatrix> gui_screens;
 	static std::stack<CHandle> cursors;
 
+	//Language
+	bool language;
+
 	//Menu info
 	std::string menu_name;
 	int row, col;
@@ -80,6 +83,9 @@ public:
 	std::string GetMenuName() {
 		return menu_name;
 	}
+
+	//Language
+	void SetLangEnabled(bool enabled) { language = enabled; }
 
 	// Size
 	float GetWidth();

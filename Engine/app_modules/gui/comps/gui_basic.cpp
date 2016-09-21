@@ -30,7 +30,12 @@ void TCompGui::setRenderState(float rs_state)
 
 RectNormalized TCompGui::getTxCoords()
 {
-	return text_coords;
+	if (!language) return text_coords;
+	std::string lang_code = GameController->GetLanguage();
+	RectNormalized sub_rect(0.f, 0.f, 0.5f, 0.5f);
+	if (lang_code == "EN" || lang_code == "PO") sub_rect.y = .5f;
+	if (lang_code == "CAT" || lang_code == "PO") sub_rect.x = .5f;
+	return text_coords.subRect(sub_rect);
 }
 void TCompGui::setTxCoords(RectNormalized coords)
 {
@@ -50,6 +55,7 @@ bool TCompGui::load(MKeyValue& atts)
 	width = atts.getFloat("width", 0.f);
 	height = atts.getFloat("height", 0.f);
 	color = VEC4(1, 1, 1, 1);
+	language = atts.getBool("lang", false);
 	return true;
 }
 
@@ -86,6 +92,14 @@ void TCompGui::renderInMenu()
 	IMGUI_SHOW_FLOAT(render_state);
 	IMGUI_SHOW_FLOAT(render_speed);
 	IMGUI_SHOW_FLOAT(render_target);
+	ImGui::Separator();
+	IMGUI_SHOW_BOOL(language);
+	RectNormalized public_coords = getTxCoords();
+	IMGUI_SHOW_FLOAT(public_coords.x);
+	IMGUI_SHOW_FLOAT(public_coords.y);
+	IMGUI_SHOW_FLOAT(public_coords.sx);
+	IMGUI_SHOW_FLOAT(public_coords.sy);
+	ImGui::Separator();
 	ImGui::Text("Text coords (x, sizeX, y, sizeY):");
 	ImGui::DragFloat4("", (float*)(&text_coords), 0.01f, 0.f, 1.f);
 }

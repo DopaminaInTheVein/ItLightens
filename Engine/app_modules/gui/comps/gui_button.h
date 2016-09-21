@@ -12,6 +12,7 @@ class TCompGui;
 
 class TCompGuiButton : public aicontroller, public TCompBase {
 	bool init_enabled;
+	bool language;
 
 	//State info
 	CHandle cursor;
