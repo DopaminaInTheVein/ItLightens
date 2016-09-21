@@ -89,4 +89,50 @@
 
 </entity>
 
+<!--Test -->
+<entity>
+<tags
+   tags="gui"/>
+<gui/>
+<name
+   name="tes_back"/>
+<transform
+   pos="5 -96 8.5"
+   quat="0.707107 0 0 0.707107"
+   scale="1.5"/>
+<render_static_mesh
+   name="static_meshes/ui/hud/health_bar_out.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui"/>
+<gui/>
+<name
+   name="tes_middle"/>
+<transform
+   pos="5 -95 8.6"
+   quat="0.707107 0 0 0.707107"
+   scale="1.5"/>
+<render_static_mesh
+   name="static_meshes/ui/hud/health_bar_out.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui"/>
+<gui/>
+<name
+   name="tes_front"/>
+<transform
+   pos="5 -94 8.7"
+   quat="0.707107 0 0 0.707107"
+   scale="1.5"/>
+<render_static_mesh
+   name="static_meshes/ui/hud/health_bar_out.static_mesh"/>
+<abs_aabb/>
+
+</entity>
 </entities>
