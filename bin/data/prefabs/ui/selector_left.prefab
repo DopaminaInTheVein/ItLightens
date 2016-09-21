@@ -7,7 +7,8 @@
    height="1.0"/>
 <gui_button
    width="1.0"
-   height="1.0"/>
+   height="1.0"
+   lang="no"/>
 <name
    name="left_arrow"/>
 <transform

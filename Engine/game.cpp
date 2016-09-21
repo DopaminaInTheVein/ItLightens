@@ -243,6 +243,8 @@ void CApp::loadedLevelNotify() {
 
 	logic_manager->throwEvent(game_event, std::string(params));
 	loading = false;
+	if (!GameController->IsUiControl())
+		GameController->SetGameState(CGameController::RUNNING);
 }
 
 void CApp::exitGame() {
