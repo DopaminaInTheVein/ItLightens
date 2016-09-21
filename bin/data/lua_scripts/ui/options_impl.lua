@@ -33,6 +33,7 @@ DECLARE_DIFFICULTY("Hard")
 DECLARE_LANG("Català", "CAT")
 DECLARE_LANG("Castellano", "ES")
 DECLARE_LANG("English", "EN")
+DECLARE_LANG("Galego", "GA")
 ---------------------------------------
 
 -- EVENTS --

@@ -33,8 +33,8 @@ RectNormalized TCompGui::getTxCoords()
 	if (!language) return text_coords;
 	std::string lang_code = GameController->GetLanguage();
 	RectNormalized sub_rect(0.f, 0.f, 0.5f, 0.5f);
-	if (lang_code == "EN" || lang_code == "PO") sub_rect.y = .5f;
-	if (lang_code == "CAT" || lang_code == "PO") sub_rect.x = .5f;
+	if (lang_code == "EN" || lang_code == "GA") sub_rect.y = .5f;
+	if (lang_code == "CAT" || lang_code == "GA") sub_rect.x = .5f;
 	return text_coords.subRect(sub_rect);
 }
 void TCompGui::setTxCoords(RectNormalized coords)
