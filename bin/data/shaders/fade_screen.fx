@@ -134,9 +134,6 @@ float4 PSTest(float4 Pos : SV_POSITION
 	c = txDiffuse.Sample(samClampLinear, offset);
 
 	
-	
-	
-	
 	//o_color.rgb = float4(0.5,0.5,0.5,0.5)+c; 
 	
 	//c multiplied by 1 - alpha to extract the alpha influence and not add color
