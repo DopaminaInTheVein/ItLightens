@@ -44,6 +44,9 @@ private:
 
 	std::vector<int> renderedCulling;
 
+	std::vector<std::string> test_z_render;
+	std::vector<std::string> last_test_z_render;
+
 	int  ntimes_sorted = 0;
 public:
 
@@ -55,6 +58,10 @@ public:
 	bool renderUI(TKey * it);
 	void renderShadowCasters(CHandle h_light);
 	void renderShadowCastersSkin(CHandle h_light);
+
+	void ModifyUI() {
+		in_order = false;
+	}
 };
 
 extern CRenderManager RenderManager;

@@ -215,7 +215,9 @@ bool TCompDrone::save(std::ofstream& os, MKeyValue& atts)
 }
 
 void TCompDrone::fixedUpdate(float elapsed) {
-	PxRigidDynamic *rd = physics ? physics->getActor()->isRigidDynamic() : nullptr;
+	if (!SetMyBasicComponents()) return;
+	auto actor = physics ? physics->getActor(): nullptr;
+	PxRigidDynamic *rd = actor ? actor->isRigidDynamic() : nullptr;
 	if (rd) {
 		PxTransform tmx = rd->getGlobalPose();
 		VEC3 target = final_pos;

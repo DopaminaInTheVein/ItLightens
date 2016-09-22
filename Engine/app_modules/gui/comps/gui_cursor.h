@@ -6,12 +6,14 @@
 //Forward Declaration
 class TCompTransform;
 class TCompCamera;
+class TCompGui;
 
 class TCompGuiCursor : public TCompBase {
 	std::string menu_name;
 	float speed;
 	int x, y; // position gui matrix
 	//float factor = 0.f;
+	TCompGui * myGui;
 	TCompTransform * myTransform;
 	TCompCamera * ui_camera;
 	CHandle button;

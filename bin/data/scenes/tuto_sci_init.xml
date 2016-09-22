@@ -212,8 +212,8 @@
 <name
    name="gen_tuto_sci"/>
 <transform
-   pos="75.3317 7.89981 -0.590153"
-   quat="0 0.939693 0 -0.34202"
+   pos="75.3317 7.89981 -0.590163"
+   quat="0 0.642788 0 0.766044"
    scale="1.0"/>
 
 </entity>
@@ -245,12 +245,12 @@
 <magnet_door
    locked="yes"
    speedOpening="1"
-   target="61.4278 -1.21169 21.4519"
+   target="75.9743 11.4115 -2.82908"
    pol="neutral"/>
 <name
    name="door_tuto_end"/>
 <transform
-   pos="75.9021 8.61366 -2.82908"
+   pos="75.9743 8.61366 -2.82908"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -271,14 +271,14 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="0.287405 1.96415 1.12342"/>
+   size="0.187405 4.20328 5.52722"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="ttuto_sci_end"/>
 <transform
-   pos="76.0533 8.14559 -2.67259"
+   pos="81.5543 9.26515 -2.67259"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room

@@ -20,9 +20,9 @@ bool TCompLoadingScreen::load(MKeyValue& atts)
 {
 	resolution_x = CApp::get().getXRes();
 	resolution_y = CApp::get().getYRes();
-	
+
 	string name = atts["name"];
-	
+
 	return true;
 }
 
@@ -40,7 +40,6 @@ void TCompLoadingScreen::update(float dt) {
 	numchars = loading_value;
 
 	if (loading_value == 100.f) {
-		GameController->SetGameState(CGameController::RUNNING);
 		GameController->LoadComplete(true);
 		// Delete de la barra y la imagen de fondo
 		Gui->removeAllGuiElementsByTag("loading");
@@ -52,7 +51,7 @@ void TCompLoadingScreen::update(float dt) {
 }
 
 void TCompLoadingScreen::render() const {
-	//do nothing		
+	//do nothing
 }
 
 void TCompLoadingScreen::printLetters() const {

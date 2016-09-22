@@ -2,7 +2,7 @@
 #define INC_MCV_PLATFORM_H_
 
 // Global settings
-#define FINAL_BUILD
+//#define FINAL_BUILD
 //#define TASK_LIST_ENABLED
 #define _CRT_SECURE_NO_WARNINGS
 #define _SCL_SECURE_NO_WARNINGS

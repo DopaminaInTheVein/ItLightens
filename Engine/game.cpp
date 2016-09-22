@@ -105,6 +105,7 @@ bool CApp::start() {
 	mod_renders.push_back(io);
 
 	mod_init_order.push_back(render_deferred);
+	mod_init_order.push_back(GameController);
 	mod_init_order.push_back(Gui);
 	mod_init_order.push_back(imgui);
 	mod_init_order.push_back(io);
@@ -232,7 +233,6 @@ void CApp::clearSaveData() {
 }
 
 void CApp::loadedLevelNotify() {
-
 	current_level = next_level;
 	next_level = "";
 	char params[128];
@@ -241,8 +241,10 @@ void CApp::loadedLevelNotify() {
 		? CLogicManagerModule::EVENT::OnLoadedLevel
 		: CLogicManagerModule::EVENT::OnLevelStart;
 
-	logic_manager->throwEvent(game_event, std::string(params));	
+	logic_manager->throwEvent(game_event, std::string(params));
 	loading = false;
+	if (!GameController->IsUiControl())
+		GameController->SetGameState(CGameController::RUNNING);
 }
 
 void CApp::exitGame() {
@@ -350,7 +352,6 @@ void CApp::showLoadingScreen()
 
 	// Init entities
 	entities->initEntities();
-
 }
 
 // ----------------------------------
@@ -366,7 +367,7 @@ void CApp::render() {
 }
 
 int CApp::getXRes(bool ask_window) {
- 	if (!ask_window && render_deferred) {
+	if (!ask_window && render_deferred) {
 		return render_deferred->getXRes();
 	}
 	if (!max_screen)

@@ -29,6 +29,9 @@ void TCompGuiCursor::onCreate(const TMsgEntityCreated&)
 
 bool TCompGuiCursor::getUpdateInfo()
 {
+	myGui = GETH_MY(TCompGui);
+	if (!myGui) return false;
+
 	myTransform = GETH_MY(TCompTransform);
 	if (!myTransform) return false;
 
@@ -46,7 +49,7 @@ bool TCompGuiCursor::getUpdateInfo()
 void TCompGuiCursor::update(float dt)
 {
 	if (!enabled) return;
-	if (TCompGui::getCursor() != MY_OWNER) return;
+	if (myGui->getCursor() != MY_OWNER) return;
 	updateMovement(dt);
 	updateNavigation();
 }

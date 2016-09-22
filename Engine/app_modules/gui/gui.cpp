@@ -290,10 +290,11 @@ CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag,
 	VEC3 min_ortho = ui_cam->getMinOrtho();
 	VEC3 max_ortho = ui_cam->getMaxOrtho();
 	VEC3 new_pos = min_ortho + (max_ortho - min_ortho) * pos;
+	if (new_pos.z == 0.f) new_pos.z = 0.01f;
 	GET_COMP(tmx, h, TCompTransform);
 	tmx->setPosition(new_pos);
 	if (scale != 1.0f) {
-		tmx->setScale(VEC3(scale, scale, scale));
+		tmx->setScaleBase(VEC3(scale, scale, scale));
 	}
 	if (!tag.empty()) {
 		TMsgSetTag msgTag;
@@ -305,6 +306,16 @@ CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag,
 
 	dbg("gui_element created\n");
 	return h;
+}
+
+// Get Screen Pos
+VEC3 CGuiModule::getScreenPos(VEC3 pos)
+{
+	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
+	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
+	VEC3 min_ortho = ui_cam->getMinOrtho();
+	VEC3 max_ortho = ui_cam->getMaxOrtho();
+	return (pos - min_ortho) / (max_ortho - min_ortho);
 }
 
 void CGuiModule::removeGuiElementByTag(std::string tag)

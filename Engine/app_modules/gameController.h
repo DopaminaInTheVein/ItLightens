@@ -41,6 +41,8 @@ public:
 		GAME_STATES_SIZE
 	};
 
+	bool start();
+
 	void Setup();
 
 	DIFFICULTIES GetDifficulty() const;

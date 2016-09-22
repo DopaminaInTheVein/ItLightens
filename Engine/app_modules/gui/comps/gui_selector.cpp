@@ -5,6 +5,8 @@
 #include "components/entity_parser.h"
 
 #include "components/comp_transform.h"
+#include "components/comp_text.h"
+#include "app_modules/gui/gui.h"
 #include "app_modules/gui/comps/gui_basic.h"
 
 #include "app_modules/io/io.h"
@@ -14,6 +16,10 @@
 
 #define LEFT_EVENT "left_event"
 #define RIGHT_EVENT "right_event"
+#define COLOR_SELECTED "#FFFF00FF"
+#define COLOR_NORMAL "#FFFFFFFF"
+#define COLOR_HIDDEN "#00000000"
+#define COLOR_SPEED 0.3f
 
 // Static info
 map<string, statehandler> TCompGuiSelector::statemap = {};
@@ -27,13 +33,13 @@ bool TCompGuiSelector::load(MKeyValue& atts)
 // onCreate
 void TCompGuiSelector::onCreate(const TMsgEntityCreated&) {
 	getUpdateInfo();
-	options = vector<SelectorOption>();
+	options = VHandles();
 	cur_option = 0;
 	AddSelectorStates();
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
-
-	// Add side arrows
+	my_pos = myTransform->getPosition();
 	AddArrows();
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
+	// Add side arrows
 }
 
 void TCompGuiSelector::AddArrows()
@@ -49,11 +55,12 @@ void TCompGuiSelector::AddArrow(CHandle& h, string prefab, string name_event, fl
 	GET_COMP(tmx, h, TCompTransform);
 	GET_COMP(gui, h, TCompGui);
 	if (tmx && gui) {
-		tmx->setPosition(myTransform->getPosition() + offset_pos * VEC3_RIGHT);
+		tmx->setPosition(myTransform->getPosition() + offset_pos * VEC3_RIGHT + VEC3_FRONT * 0.01f);
 		float height = myGui->GetHeight();
 		tmx->setScaleBase(VEC3(height, height, height));
 		gui->SetHeight(height);
 		gui->SetWidth(height); // No es un error, la flecha es cuadrada con la altura del selector
+		gui->SetParent(MY_OWNER);
 	}
 	TMsgGuiSetListener msg;
 	msg.event_name = name_event;
@@ -89,7 +96,6 @@ void TCompGuiSelector::Over()
 	if (!checkOver()) {
 		ChangeState(STRING(Enabled));
 		notifyOver(false);
-		//options[cur_option].color = COLOR_NOT_SELECTED;
 	}
 	else {
 		if (controller->IsLeftPressed()) {
@@ -103,17 +109,17 @@ void TCompGuiSelector::Over()
 
 bool TCompGuiSelector::getUpdateInfo()
 {
+	myGui = GETH_MY(TCompGui);
+	if (!myGui) return false;
+
 	myTransform = GETH_MY(TCompTransform);
 	if (!myTransform) return false;
 
-	cursor = TCompGui::getCursor();
+	cursor = myGui->getCursor();
 	if (!cursor.isValid()) return false;
 
 	cursorTransform = GETH_COMP(cursor, TCompTransform);
 	if (!cursorTransform) return false;
-
-	myGui = GETH_MY(TCompGui);
-	if (!myGui) return false;
 
 	return true;
 }
@@ -132,6 +138,10 @@ bool TCompGuiSelector::checkOver()
 }
 void TCompGuiSelector::notifyOver(bool over)
 {
+	is_over = over;
+	GET_COMP(txt, options[cur_option], TCompText);
+	txt->SetColorTarget(over ? COLOR_SELECTED : COLOR_NORMAL, COLOR_SPEED);
+
 	// Cursor Message (for something?)
 	TMsgOverButton msg;
 	msg.button = CHandle(this).getOwner();
@@ -151,19 +161,29 @@ void TCompGuiSelector::renderInMenu()
 	IMGUI_SHOW_INT(cur_option);
 	int i = 0;
 	for (auto sel_opt : options) {
-		ImGui::Text("Option %d: %s", i++, sel_opt.text.c_str());
+		GET_COMP(txt, sel_opt, TCompText);
+		//ImGui::Text("Option %d: %s", i++, txt ? txt->getText() : "???");
 	}
 }
 
 int TCompGuiSelector::AddOption(string option)
 {
 	int res = options.size();
-	SelectorOption sel_option;
-	sel_option.text = option;
-	options.push_back(sel_option);
-	//TODO: create text options[res]
-	//TODO: if res == options[res].color = COLOR_SELECTED
-	//TODO: else options[res].alfa = 0
+
+	CHandle h_option = createPrefab("ui/text");
+	GET_COMP(txt, h_option, TCompText);
+	VEC3 postxt = myTransform->getPosition();
+	float w = myGui->GetWidth();
+	float h = myGui->GetHeight();
+	postxt += VEC3(-w / 2.f, -h / 2.f, .1f);
+	txt->SetText(option);
+	txt->SetSize(myGui->GetHeight());
+	txt->SetPosWorld(postxt);
+	options.push_back(h_option);
+	txt->update(getDeltaTime(true));
+	setTextVisible(res, res == 0, true);
+	GET_COMP(gui, h_option, TCompGui);
+	gui->SetParent(MY_OWNER);
 	return res;
 }
 
@@ -189,16 +209,23 @@ void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 
 void TCompGuiSelector::SelectOption(int id)
 {
-	//options[cur_option] --> alfa = 0;
+	setTextVisible(cur_option, false);
 	cur_option = clamp(id, 0, options.size());
 	assert(id == cur_option);
-	//options[cur_option=id].color = COLOR_SELECTED;
+	setTextVisible(cur_option = id, true);
 }
 
-TCompGuiSelector::~TCompGuiSelector()
+TCompText* TCompGuiSelector::setTextVisible(int option, bool visible, bool instant)
 {
-	arrow_left.destroy();
-	arrow_right.destroy();
+	CHandle opt = options[option];
+	GET_COMP(txt, opt, TCompText);
+	if (txt) {
+		txt->SetColorTarget(visible ? (is_over ? COLOR_SELECTED : COLOR_NORMAL) : COLOR_HIDDEN, instant ? FLT_MAX : COLOR_SPEED);
+		//txt->SetZ(my_pos.z + ((visible ? 1 : -1) * 0.05f));
+	}
+	//test
+	txt->update(getDeltaTime(true));
+	return txt;
 }
 
 map<string, statehandler>* TCompGuiSelector::getStatemap() {

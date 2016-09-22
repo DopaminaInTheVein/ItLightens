@@ -13,7 +13,7 @@ struct TCompCameraMain : public TCompCamera {
 	float smoothCurrent;
 
 	float hitRadius = 0.1f;
-	float hitDistance = 0.4f;
+	float hitDistance = 0.7f;
 
 	VEC3 origin_camera;
 	VEC3 last_pos_camera;

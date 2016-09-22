@@ -26,13 +26,14 @@ TXT_OPTION_AXIS_INVERTED = "Inverted"
 
 --Difficulty
 DECLARE_DIFFICULTY("Easy")
-DECLARE_DIFFICULTY("Normal")
+DECLARE_DIFFICULTY("Medium")
 DECLARE_DIFFICULTY("Hard")
 
 --Languages
 DECLARE_LANG("Català", "CAT")
 DECLARE_LANG("Castellano", "ES")
 DECLARE_LANG("English", "EN")
+DECLARE_LANG("Galego", "GA")
 ---------------------------------------
 
 -- EVENTS --

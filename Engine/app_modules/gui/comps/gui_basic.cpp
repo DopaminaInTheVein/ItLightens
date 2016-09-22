@@ -30,7 +30,12 @@ void TCompGui::setRenderState(float rs_state)
 
 RectNormalized TCompGui::getTxCoords()
 {
-	return text_coords;
+	if (!language) return text_coords;
+	std::string lang_code = GameController->GetLanguage();
+	RectNormalized sub_rect(0.f, 0.f, 0.5f, 0.5f);
+	if (lang_code == "EN" || lang_code == "GA") sub_rect.y = .5f;
+	if (lang_code == "CAT" || lang_code == "GA") sub_rect.x = .5f;
+	return text_coords.subRect(sub_rect);
 }
 void TCompGui::setTxCoords(RectNormalized coords)
 {
@@ -50,6 +55,7 @@ bool TCompGui::load(MKeyValue& atts)
 	width = atts.getFloat("width", 0.f);
 	height = atts.getFloat("height", 0.f);
 	color = VEC4(1, 1, 1, 1);
+	language = atts.getBool("lang", false);
 	return true;
 }
 
@@ -71,11 +77,29 @@ void TCompGui::SetHeight(float h)
 	height = h;
 }
 
+// Parent
+void TCompGui::SetParent(CHandle h)
+{
+	if (h.isValid()) {
+		parent = h;
+		GET_COMP(gui, parent, TCompGui);
+		menu_name = gui->GetMenuName();
+	}
+}
+
 void TCompGui::renderInMenu()
 {
 	IMGUI_SHOW_FLOAT(render_state);
 	IMGUI_SHOW_FLOAT(render_speed);
 	IMGUI_SHOW_FLOAT(render_target);
+	ImGui::Separator();
+	IMGUI_SHOW_BOOL(language);
+	RectNormalized public_coords = getTxCoords();
+	IMGUI_SHOW_FLOAT(public_coords.x);
+	IMGUI_SHOW_FLOAT(public_coords.y);
+	IMGUI_SHOW_FLOAT(public_coords.sx);
+	IMGUI_SHOW_FLOAT(public_coords.sy);
+	ImGui::Separator();
 	ImGui::Text("Text coords (x, sizeX, y, sizeY):");
 	ImGui::DragFloat4("", (float*)(&text_coords), 0.01f, 0.f, 1.f);
 }
@@ -114,6 +138,10 @@ CHandle TCompGui::getCursor()
 		result = cursors.top();
 		if (!result.isValid()) cursors.pop();
 	}
+	if (result.isValid()) {
+		GET_COMP(gui, result, TCompGui);
+		if (menu_name != gui->GetMenuName()) result = CHandle();
+	}
 	return result;
 }
 
@@ -126,20 +154,13 @@ void TCompGui::pushCursor(CHandle h)
 #include "components\entity.h"
 void TCompGui::update(float elapsed)
 {
-	static float timeAcum = 0.0f;
-	timeAcum += elapsed / 200;
-	if (color_speed > 0.0f) {
-		float mesura = timeAcum*color_speed - color_speed_lag;
-		if (mesura > 0.0f) {
-			float mesuramoduled = fmod(mesura, 2.0f);
-			float proportion = mesuramoduled;
-			if (mesuramoduled > 1.0f) {
-				proportion = 2.0 - mesuramoduled;
-			}
-			color = origin_color + (target_color - origin_color)*proportion;
-		}
+	if (parent != CHandle() && !parent.isValid()) {
+		MY_OWNER.destroy();
+		return;
 	}
 
+	if (loop_color) updateColorLag(elapsed);
+	else updateColor(elapsed);
 	//Check if needs to update
 	if (render_speed == 0.f || render_state == render_target) return;
 
@@ -185,4 +206,34 @@ int TCompGui::GetRow()
 int TCompGui::GetCol()
 {
 	return col;
+}
+#define checkColorReach(x) if (abs(prev_color.x - target_color.x) < abs(color.x - target_color.x)) color.x = target_color.x; else reach = false
+void TCompGui::updateColor(float elapsed)
+{
+	if (color_speed > 0.f) {
+		VEC4 prev_color = color;
+		color += delta_color * color_speed;
+		bool reach = true;
+		checkColorReach(x);
+		checkColorReach(y);
+		checkColorReach(z);
+		checkColorReach(w);
+		if (reach) color_speed = 0.f;
+	}
+}
+void TCompGui::updateColorLag(float elapsed)
+{
+	static float timeAcum = 0.0f;
+	timeAcum += elapsed / 200;
+	if (color_speed > 0.0f) {
+		float mesura = timeAcum*color_speed - color_speed_lag;
+		if (mesura > 0.0f) {
+			float mesuramoduled = fmod(mesura, 2.0f);
+			float proportion = mesuramoduled;
+			if (mesuramoduled > 1.0f) {
+				proportion = 2.0 - mesuramoduled;
+			}
+			color = origin_color + (target_color - origin_color)*proportion;
+		}
+	}
 }
