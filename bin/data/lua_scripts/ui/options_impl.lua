@@ -1,4 +1,4 @@
--- TEXTS AUXILIAR DECLARATION
+﻿-- TEXTS AUXILIAR DECLARATION
 ---------------------------------------
 --Difficulty
 DIFF_SIZE = 0
