@@ -324,7 +324,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
-	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
 	SUBSCRIBE(bt_guard, TMsgNoise, noise);
 	SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
 	SUBSCRIBE(bt_guard, TMsgBoxHit, onBoxHit);

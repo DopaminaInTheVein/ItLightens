@@ -57,8 +57,6 @@ class bt_guard : public npc, public TCompBase
 	float CONE_VISION;
 	float DAMAGE_LASER;
 	float MAX_REACTION_TIME;
-	float MAX_BOX_REMOVAL_TIME;
-	float BOX_REMOVAL_ANIM_TIME;
 	float MAX_SEARCH_DISTANCE;
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
@@ -162,7 +160,7 @@ class bt_guard : public npc, public TCompBase
 	bool rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit);
 	bool rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit);
 	bool rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform);
-	bool shootToPlayer();
+	void shootToPlayer();
 	void drawShot(VEC3 dest);
 	void removeBox(CHandle box_handle);
 
@@ -204,7 +202,6 @@ public:
 	int actionPrepareToAbsorb();
 	int actionAbsorb();
 	int actionShootWall();
-	int actionRemoveBox();
 	int actionSearch();
 	int actionMoveAround();
 	int actionLookAround();
@@ -253,7 +250,6 @@ public:
 	//From bombs
 	void reduceStats();
 	void resetStats();
-	void onMagneticBomb(const TMsgMagneticBomb& msg);
 	void onStaticBomb(const TMsgStaticBomb& msg);
 	void onOverCharged(const TMsgOverCharge& msg);
 	void onBoxHit(const TMsgBoxHit& msg);
