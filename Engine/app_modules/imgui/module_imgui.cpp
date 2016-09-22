@@ -235,7 +235,7 @@ void CImGuiModule::update(float dt) {
 			}
 
 			if (ImGui::SmallButton("Load defaults")) {
-				shader_ctes_dream.color_influence = VEC4(0.2,0.2,0.3,1);
+				shader_ctes_dream.color_influence = VEC4(0.5, 0.5, 0.8, 1);
 				shader_ctes_dream.dream_speed = 1;
 				shader_ctes_dream.dream_waves_size = 0.5;
 				shader_ctes_dream.dream_wave_amplitude = 8;

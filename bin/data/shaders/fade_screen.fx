@@ -128,13 +128,11 @@ float4 PSTest(float4 Pos : SV_POSITION
 	float4 c = float4(0,0,0,0);
 	
 	//distorsion effect
-	if( o_color.a < dream_distorsion_expansion){	//0.85
-		float radius = length(offset);
-		offset.x += radius * cos(wave)/dream_distorsion_strenght;	//55
-		offset.y += radius * sin(wave)/dream_distorsion_strenght;
-		c = txDiffuse.Sample(samClampLinear, offset);
-		//c 
-	}
+	float radius = length(offset);
+	offset.x += radius * cos(wave)/dream_distorsion_strenght;	//55
+	offset.y += radius * sin(wave)/dream_distorsion_strenght;
+	c = txDiffuse.Sample(samClampLinear, offset);
+
 	
 	
 	
