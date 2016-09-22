@@ -6,6 +6,7 @@
 #include "constants/ctes_bones.h"
 #include "constants/ctes_gui.h"
 #include "constants/ctes_blur.h"
+#include "constants/ctes_dream.h"
 
 #define PI 3.1415926
 

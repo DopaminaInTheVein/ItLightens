@@ -12,6 +12,7 @@ CShaderCte< TCteGlobals > shader_ctes_globals;
 CShaderCte< TCteBlur >     shader_ctes_blur;
 CShaderCte< TCteHatching > shader_ctes_hatching;
 CShaderCte< TCteGui > shader_ctes_gui;
+CShaderCte< TCteDream > shader_ctes_dream;
 
 const CTexture* all_black;
 
@@ -159,10 +160,12 @@ bool drawUtilsCreate() {
     return false;
   if (!shader_ctes_lights.create("ctes_light"))
     return false;
-if (!shader_ctes_blur.create("ctes_blur"))
-    return false;
-if (!shader_ctes_hatching.create("ctes_hatching"))
-	  return false;
+	if (!shader_ctes_blur.create("ctes_blur"))
+		return false;
+	if (!shader_ctes_hatching.create("ctes_hatching"))
+		return false;
+	if (!shader_ctes_dream.create("ctes_dream"))
+		return false;
 
   all_black = Resources.get("textures/missing_black.dds")->as<CTexture>();
   
@@ -179,6 +182,7 @@ void activateDefaultStates() {
   shader_ctes_blur.activate(CTE_SHADER_BLUR_SLOT); 
   shader_ctes_hatching.activate(CTE_SHADER_HATCHING_SLOT);
   shader_ctes_gui.activate(CTE_SHADER_GUI_SLOT);
+  shader_ctes_dream.activate(CTE_SHADER_DREAM_SLOT);
   activateZ(ZCFG_DEFAULT);
   activateBlend(BLENDCFG_DEFAULT);
   activateSamplerStates();
@@ -193,6 +197,7 @@ void drawUtilsDestroy() {
   shader_ctes_hatching.destroy();
   shader_ctes_blur.destroy();
   shader_ctes_gui.destroy();
+  shader_ctes_dream.destroy();
 }
 
 // Activo la camara en la pipeline de render
