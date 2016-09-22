@@ -17,7 +17,11 @@
 	"leave" : "ACTION: Leave"
   },
   "title": {
-	"button_1": "Game start"
+	"easy": "Easy",
+	"medium": "Medium",
+	"hard": "Hard",
+	"normal": "Normal",
+	"inverted": "Inverted"
   },
   "hub": {
     "start_hub": "Move the camera\nand use your SENSE skill\nto find your objective.",

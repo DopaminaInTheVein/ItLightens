@@ -245,11 +245,40 @@ Document readJSONAtrFile(const std::string route) {
 
 // Obtains all the atributes of the specified element of a JSON object
 std::map<std::string, float> readIniAtrData(const std::string route, std::string element) {
-	Document document = readJSONAtrFile(route);
+	// Get standard file
+	Document document;
+	try {
+		document = readJSONAtrFile(route);
+	}
+	catch (int e) { assert(fatal("Error reading JSON: %d", route.c_str())); }
 	std::map<std::string, float> atributes;
 	if (document.HasMember(element.c_str())) {
 		for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
 			atributes[it->name.GetString()] = it->value.GetFloat();
+		}
+	}
+
+	//Apply changes by difficulty
+	if (GameController) {
+		//-- Make Difficulty name
+		char route_diff[256];
+		auto p = route.find_last_of(".");
+		if (p == std::string::npos) {
+			sprintf(route_diff, "%s_%d", route.c_str(), GameController->GetDifficulty());
+		}
+		else {
+			sprintf(route_diff, "%s_%d%s", route.substr(0, p).c_str(), GameController->GetDifficulty(), route.substr(p).c_str());
+		}
+		try {
+			document = readJSONAtrFile(std::string(route_diff));
+			if (document.HasMember(element.c_str())) {
+				for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
+					atributes[it->name.GetString()] = it->value.GetFloat();
+				}
+			}
+		}
+		catch (int e) {
+			dbg("File '%s' not found\n", route_diff);
 		}
 	}
 	return atributes;

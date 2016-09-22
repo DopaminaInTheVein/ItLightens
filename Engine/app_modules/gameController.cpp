@@ -46,6 +46,7 @@ void CGameController::Setup()
 	auto file = CApp::get().file_options_json;
 	auto values = readIniAtrData(file, "game");
 	SetDifficulty((int)values["difficulty"]);
+	Damage::init();
 }
 int CGameController::GetGameState() const {
 	return game_state;
