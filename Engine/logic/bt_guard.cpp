@@ -233,30 +233,30 @@ bool bt_guard::guardAlerted() {
 	VEC3 myPos = getTransform()->getPosition();
 	// if the player is out of jurisdiction, we dont search him
 	CEntity* ePlayer = getPlayer();
-	if (ePlayer) {
-		TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
-		VEC3 posPlayer = tPlayer->getPosition();
-		if (outJurisdiction(posPlayer)) {
-			return false;
-		}
+	if (!ePlayer) return false;
+
+	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
+	VEC3 posPlayer = tPlayer->getPosition();
+
+	// If he player is out of jurisdiction, we forget about him
+	if (outJurisdiction(posPlayer)) {
+		return false;
 	}
 
-	// we send a new alert with our position and the player position
+	// We send a new alert with our position and the player position
 	guard_alert alert;
 	alert.guard_position = myPos;
 	alert.timer = GUARD_ALERT_TIME;
 	CEntity* entity = myHandle.getOwner();
 
 	if (playerLost) {
-		if (ePlayer) {
-			TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
-			VEC3 posPlayer = tPlayer->getPosition();
-			player_last_seen_point = posPlayer;
-			// send an alert for the nearest guards with the player last position
-			alert.alert_position = player_last_seen_point;
-			string name = entity->getName() + string("_player_lost");
-			SBB::postGuardAlert(name, alert);
-		}
+		TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
+		VEC3 posPlayer = tPlayer->getPosition();
+		player_last_seen_point = posPlayer;
+		// send an alert for the nearest guards with the player last position
+		alert.alert_position = player_last_seen_point;
+		string name = entity->getName() + string("_player_lost");
+		SBB::postGuardAlert(name, alert);
 		looking_around_time = LOOK_AROUND_TIME;
 		return true;
 	}
@@ -560,16 +560,15 @@ int bt_guard::actionShootWall() {
 int bt_guard::actionSearch() {
 	PROFILE_FUNCTION("guard: search");
 	if (!myParent.isValid()) return STAY;
-	lookAtFront();
 	CEntity * ePlayer = getPlayer();
 	if (!ePlayer) return STAY;
+
+	lookAtFront();
 	looking_around_time -= getDeltaTime();
 	VEC3 myPos = getTransform()->getPosition();
 
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected() || looking_around_time < 0.f) {
-		/*isPathObtainedAccessible = false;
-		isPathObtained = false;*/
 		return KO;
 	}
 	else if (playerLost) {
@@ -577,7 +576,7 @@ int bt_guard::actionSearch() {
 		getPath(myPos, player_last_seen_point);
 		SET_ANIM_GUARD(AST_MOVE);
 		goTo(player_last_seen_point);
-		//Noise Point Reached ?
+		// last seen point reached ?
 		if (distance < DIST_REACH_PNT) {
 			playerLost = false;
 
@@ -588,27 +587,6 @@ int bt_guard::actionSearch() {
 			dir.Normalize();
 
 			search_player_point = playerPos + 1.0f * dir;
-			return OK;
-		}
-		else {
-			return STAY;
-		}
-	}
-	// If we heared a noise, we go to the point and look around
-	else if (noiseHeard) {
-		float distance = simpleDistXZ(myPos, noisePoint);
-		getPath(myPos, noisePoint);
-		SET_ANIM_GUARD(AST_MOVE);
-		goTo(noisePoint);
-		//Noise Point Reached ?
-		if (distance < DIST_REACH_PNT) {
-			noiseHeard = false;
-
-			VEC3 dir = noisePoint - myPos;
-			dir.Normalize();
-
-			search_player_point = noisePoint + 1.0f * dir;
-			Debug->DrawLine(myPos, search_player_point);
 			return OK;
 		}
 		else {
@@ -940,46 +918,49 @@ bool bt_guard::playerVisible(bool check_raycast) {
 	if (!myParent.isValid()) return false;
 	CEntity * ePlayer = getPlayer();
 	if (!ePlayer) return false;
+
 	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
-	if (SBB::readBool("possMode") && squaredDistXZ(myPos, posPlayer) > 25.f) {
+	float dist_sq = squaredDistXZ(myPos, posPlayer);
+
+	if (SBB::readBool("possMode") && dist_sq > 25.f) {
 		return false;
 	}
 
+	bool res = false;
+
+	// deteccion por radio minimo
 	if (simpleDist(posPlayer, myPos) < PLAYER_DETECTION_RADIUS) {
-		float distRay;
-		PxRaycastBuffer hit;
-		bool ret = rayCastToPlayer(1, distRay, hit);
-		if (ret) { //No bloquea vision
-			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
-			if (h.hasTag("player")) { //player?
-				return true;
-			}
-		}
+		res = true;
 	}
+	// deteccion por vision
+	else {
+		float distancia_vertical = squaredDistY(posPlayer, myPos);
 
-	float distancia_vertical = squaredDistY(posPlayer, myPos);
-
-	if (distancia_vertical < squaredDistXZ(posPlayer, myPos) * 0.5f) { //Pitch < 30
-		if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
-			if (squaredDistXZ(myPos, posPlayer) < DIST_SQ_PLAYER_DETECTION) { //Distancia
-				if (inJurisdiction(posPlayer)) { //Jurisdiccion
-					float distanceJur = squaredDistXZ(posPlayer, jurCenter);
-					float distRay;
-					if (SBB::readBool("possMode")) {
-						// Estas poseyendo, estas cerca y dentro del cono de vision, no hace falta raycast
-						return true;
-					}
-					else {
-						//Raycast
-						if (!check_raycast) return true;
-						PxRaycastBuffer hit;
-						bool ret = rayCastToPlayer(1, distRay, hit);
-						if (ret) { //No bloquea vision
-							CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
-							if (h.hasTag("player")) { //player?
-								return true;
+		if (distancia_vertical < dist_sq * 0.5f) { //Pitch < 30
+			if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
+				if (dist_sq < DIST_SQ_PLAYER_DETECTION) { //Distancia
+					if (inJurisdiction(posPlayer)) { //Jurisdiccion
+						float distRay;
+						if (SBB::readBool("possMode")) {
+							// Estas poseyendo, estas cerca y dentro del cono de vision, no hace falta raycast
+							res = true;
+						}
+						else {
+							//Raycast
+							if (!check_raycast) {
+								res = true;
+							}
+							else {
+								PxRaycastBuffer hit;
+								bool ret = rayCastToPlayer(1, distRay, hit);
+								if (ret) { //No bloquea vision
+									CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
+									if (h.hasTag("player")) {
+										res = true;
+									}
+								}
 							}
 						}
 					}
@@ -987,7 +968,11 @@ bool bt_guard::playerVisible(bool check_raycast) {
 			}
 		}
 	}
-	return false;
+
+	// if we see the player, it's not lost
+	if (res)
+		playerLost = false;
+	return res;
 }
 
 bool bt_guard::boxMovingDetected() {
