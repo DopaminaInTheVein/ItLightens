@@ -61,7 +61,6 @@ class bt_guard : public npc, public TCompBase
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
 	float GUARD_ALERT_RADIUS;
-	float RANDOM_POINT_MAX_DISTANCE;
 	VEC4 SHOT_OFFSET;
 	//from bombs
 	float reduce_factor;
@@ -139,11 +138,9 @@ class bt_guard : public npc, public TCompBase
 	bool turnToPlayer();
 	void lookAtPlayer();
 	void lookAtFront();
-	//VEC3 generateRandomPoint(); THIS IS NOT USED!
 
 	//Aux checks
 	bool playerVisible(bool check_raycast = true);
-	bool playerTooNear();
 	bool boxMovingDetected();
 	bool inJurisdiction(VEC3);
 	bool outJurisdiction(VEC3);
@@ -167,6 +164,7 @@ class bt_guard : public npc, public TCompBase
 	bool stunned = false;;
 	bool stunt_recover = true;
 	bool shooting = false;
+	bool shooting_backwards = false;
 	bool forced_move = false;
 
 	// the nodes

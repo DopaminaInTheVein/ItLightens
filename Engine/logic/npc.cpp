@@ -137,6 +137,7 @@ void npc::updateStuck()
 		stuck_time += getDeltaTime();
 		if (stuck_time > MAX_STUCK_TIME && !stuck) {
 			stuck = true;
+			action_when_stuck = current;
 			setCurrent(NULL);
 		}
 	}
@@ -265,6 +266,7 @@ int npc::actionUnstuckMove() {
 		return STAY;
 	}
 	else {
+		setCurrent(action_when_stuck);
 		return OK;
 	}
 }

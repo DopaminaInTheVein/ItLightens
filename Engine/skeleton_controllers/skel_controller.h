@@ -98,7 +98,7 @@ public:
 	void updateSteps(float dist_ground, bool& on_ground);
 };
 
-#define SET_ANIM_STATE(skc, state) {if (skc) skc->setState(state);}
-#define SET_ANIM_STATE_P(skc, state) {if (skc) skc->setState(state, true);}
+#define SET_ANIM_STATE(skc, state) skc ? skc->setState(state) : (void)0
+#define SET_ANIM_STATE_P(skc, state) skc ? skc->setState(state, true) : (void)0
 
 #endif

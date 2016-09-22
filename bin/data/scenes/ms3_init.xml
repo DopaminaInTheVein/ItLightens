@@ -495,7 +495,7 @@
    kpt3_pos="10.8511 -23.8712 -13.6583"
    kpt3_wait="2"
    jurisdiction="26.0682 -23.9 -5.11404"
-   jurRadius="5.0"
+   jurRadius="50.0"
    formation_point="25.5739 -24.0251 -6.9732"
    formation_dir="26.2157 -23.9678 -6.80094"/>
 <skc_guard/>
@@ -536,7 +536,7 @@
    kpt2_pos="2.70562 -23.8712 1.62904"
    kpt2_wait="2"
    jurisdiction="-1.58059 -23.9 3.84785"
-   jurRadius="5.0"
+   jurRadius="50.0"
    formation_point="-4.26029 -24.0251 1.96243"
    formation_dir="-3.61846 -23.9678 2.13469"/>
 <skc_guard/>

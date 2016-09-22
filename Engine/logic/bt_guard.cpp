@@ -79,7 +79,6 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(LOOK_AROUND_TIME, fields);
 			assignValueToVar(GUARD_ALERT_TIME, fields);
 			assignValueToVar(GUARD_ALERT_RADIUS, fields);
-			assignValueToVar(RANDOM_POINT_MAX_DISTANCE, fields);
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
@@ -124,10 +123,10 @@ void bt_guard::Init()
 		addChild("absorbsequence", "absorb", ACTION, NULL, (btaction)&bt_guard::actionAbsorb);
 		addChild("absorbsequence", "shootwall", ACTION, NULL, (btaction)&bt_guard::actionShootWall);
 		// alert states
-		/*addChild("guard", "alertdetected", SEQUENCE, (btcondition)&bt_guard::guardAlerted, NULL);
+		addChild("guard", "alertdetected", SEQUENCE, (btcondition)&bt_guard::guardAlerted, NULL);
 		addChild("alertdetected", "search", ACTION, NULL, (btaction)&bt_guard::actionSearch);
 		addChild("alertdetected", "movearound", ACTION, NULL, (btaction)&bt_guard::actionMoveAround);
-		addChild("alertdetected", "lookaround", ACTION, NULL, (btaction)&bt_guard::actionLookAround);*/
+		addChild("alertdetected", "lookaround", ACTION, NULL, (btaction)&bt_guard::actionLookAround);
 		// patrol states
 		addChild("guard", "patrol", SEQUENCE, NULL, NULL);
 		addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_guard::actionNextWpt);
@@ -220,8 +219,8 @@ bool bt_guard::playerOutOfReach() {
 	res = (distance > DIST_SQ_SHOT_AREA_ENTER);
 
 	//Update animation
-	if (res) SET_ANIM_GUARD(AST_MOVE)
-	else SET_ANIM_GUARD(AST_SHOOT)
+	if (res) SET_ANIM_GUARD(AST_MOVE);
+	else SET_ANIM_GUARD(AST_SHOOT);
 
 	//Return calc
 	return res;
@@ -231,7 +230,6 @@ bool bt_guard::guardAlerted() {
 	PROFILE_FUNCTION("guard: guardalert");
 
 	VEC3 myPos = getTransform()->getPosition();
-	// if the player is out of jurisdiction, we dont search him
 	CEntity* ePlayer = getPlayer();
 	if (!ePlayer) return false;
 
@@ -243,29 +241,20 @@ bool bt_guard::guardAlerted() {
 		return false;
 	}
 
-	// We send a new alert with our position and the player position
-	guard_alert alert;
-	alert.guard_position = myPos;
-	alert.timer = GUARD_ALERT_TIME;
-	CEntity* entity = myHandle.getOwner();
-
+	// if playerLost is active (our own alert), we need to search for him
 	if (playerLost) {
+		// Get the position of the player where we will search
 		TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
 		VEC3 posPlayer = tPlayer->getPosition();
 		player_last_seen_point = posPlayer;
-		// send an alert for the nearest guards with the player last position
+		// We send a new alert with our position and the player position to the rest of the guards
+		guard_alert alert;
+		alert.guard_position = myPos;
+		alert.timer = GUARD_ALERT_TIME;
+		CEntity* entity = myHandle.getOwner();
 		alert.alert_position = player_last_seen_point;
 		string name = entity->getName() + string("_player_lost");
 		SBB::postGuardAlert(name, alert);
-		looking_around_time = LOOK_AROUND_TIME;
-		return true;
-	}
-	else if (noiseHeard) {
-		// send an alert for the nearest guards with the noise point
-		alert.alert_position = noisePoint;
-		string name = entity->getName() + string("_noise_heard");
-		SBB::postGuardAlert(name, alert);
-		looking_around_time = LOOK_AROUND_TIME;
 		return true;
 	}
 	// check alerts from other guards
@@ -279,24 +268,10 @@ bool bt_guard::guardAlerted() {
 				// the guard will be alerted if he is near enough
 				if (simpleDist(myPos, guard_alert_position) < GUARD_ALERT_RADIUS) {
 					VEC3 alert_point = alert_it->second.alert_position;
-
-					// depending on the alert type, we make a different decission
-					if (alert_it->first.find(string("_player_lost")) != string::npos) {
+					if ((alert_it->first.find(string("_player_lost")) != string::npos) || 
+						(alert_it->first.find(string("_player_detected")) != string::npos)) {
 						playerLost = true;
 						player_last_seen_point = alert_point;
-						looking_around_time = LOOK_AROUND_TIME;
-						return true;
-					}
-					else if (alert_it->first.find(string("_noise_heard")) != string::npos) {
-						noiseHeard = true;
-						noisePoint = alert_point;
-						looking_around_time = LOOK_AROUND_TIME;
-						return true;
-					}
-					else if (alert_it->first.find(string("_player_detected")) != string::npos) {
-						playerLost = true;
-						player_last_seen_point = alert_point;
-						looking_around_time = LOOK_AROUND_TIME;
 						return true;
 					}
 				}
@@ -392,6 +367,7 @@ int bt_guard::actionReact() {
 	else {
 		if (reaction_time > -1)
 			reaction_time -= getDeltaTime();
+		stuck_time = 0.f;
 		return STAY;
 	}
 }
@@ -448,6 +424,7 @@ int bt_guard::actionPrepareToAbsorb() {
 		return OK;
 	}
 	else {
+		stuck_time = 0.f;
 		return STAY;
 	}
 }
@@ -457,17 +434,20 @@ int bt_guard::actionAbsorb() {
 	if (!myParent.isValid()) return false;
 	CEntity * ePlayer = getPlayer();
 	if (!ePlayer) return STAY;
+	stuck_time = 0.f;
 
 	// if player too near, move backwards
-	if (playerNear() && playerVisible()) {
+	if (playerNear()) {
 		dbg("SHOOTING BACKWARDS!\n");
 		SET_ANIM_GUARD(AST_SHOOT_BACK);
 		goForward(-0.75f*SPEED_WALK);
 		turnToPlayer();
 		shootToPlayer();
+		shooting_backwards = true;
 		return STAY;
 	}
 
+	shooting_backwards = false;
 	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
 	VEC3 posPlayer = tPlayer->getPosition();
 	VEC3 myPos = getTransform()->getPosition();
@@ -488,8 +468,8 @@ int bt_guard::actionAbsorb() {
 	// if we see the payer, shoot at him
 	if (playerVisible()) {
 		SET_ANIM_GUARD(AST_SHOOT);
+		turnToPlayer();
 		shootToPlayer();
-		stuck_time = 0.f;
 		return STAY;
 	}
 	// if we don't see the player anymore and we were shooting
@@ -541,11 +521,13 @@ int bt_guard::actionShootWall() {
 	}
 	else {
 		//We shoot in the player direction, and stop if the timer is finished
+		turnToPlayer();
 		shootToPlayer();
 		if (timerShootingWall < 0) {
 			playerLost = true;
 			player_last_seen_point = posPlayer;
 			logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
+			____TIMER_REDEFINE_(timerShootingWall, 1);
 			return OK;
 		}
 		else {
@@ -567,16 +549,17 @@ int bt_guard::actionSearch() {
 	looking_around_time -= getDeltaTime();
 	VEC3 myPos = getTransform()->getPosition();
 
-	//Player Visible?
+	// player/box visible or search time ended
 	if (playerVisible() || boxMovingDetected() || looking_around_time < 0.f) {
+		looking_around_time = LOOK_AROUND_TIME;
 		return KO;
 	}
 	else if (playerLost) {
 		float distance = simpleDistXZ(myPos, player_last_seen_point);
+		// go to player last seen point
 		getPath(myPos, player_last_seen_point);
 		SET_ANIM_GUARD(AST_MOVE);
 		goTo(player_last_seen_point);
-		// last seen point reached ?
 		if (distance < DIST_REACH_PNT) {
 			playerLost = false;
 
@@ -603,13 +586,13 @@ int bt_guard::actionMoveAround() {
 	PROFILE_FUNCTION("guard: movearound");
 	if (!myParent.isValid()) return false;
 	looking_around_time -= getDeltaTime();
-	//Player Visible?
+	// player/box visible or search time ended
 	if (playerVisible() || boxMovingDetected() || looking_around_time <= 0.f) {
+		looking_around_time = LOOK_AROUND_TIME;
 		return KO;
 	}
 
 	VEC3 myPos = getTransform()->getPosition();
-
 	float distance_to_point = simpleDistXZ(myPos, search_player_point);
 
 	// if the player is too far, we just look around
@@ -623,22 +606,21 @@ int bt_guard::actionMoveAround() {
 		goTo(search_player_point);
 		return STAY;
 	}
+
 	return OK;
 }
 
 int bt_guard::actionLookAround() {
 	PROFILE_FUNCTION("guard: lookaround");
-	dbg("---Action Looking Arround---\n");
 	if (!myParent.isValid()) return false;
 	looking_around_time -= getDeltaTime();
 	//Player Visible?
-	if (playerVisible() || boxMovingDetected()) {
-		dbg("::Player visible!\n");
+	if (playerVisible() || boxMovingDetected() || looking_around_time <= 0.f) {
+		looking_around_time = LOOK_AROUND_TIME;
 		return KO;
 	}
 	// Turn arround
-	else if (deltaYawLookingArround < 2 * M_PI && looking_around_time > 0.f) {
-		dbg("::Looking Arround\n");
+	else if (deltaYawLookingArround < 2 * M_PI) {
 		SET_ANIM_GUARD(AST_TURN);
 		float yaw, pitch;
 		getTransform()->getAngles(&yaw, &pitch);
@@ -647,15 +629,13 @@ int bt_guard::actionLookAround() {
 		deltaYawLookingArround += deltaYaw;
 		yaw += deltaYaw;
 		getTransform()->setAngles(yaw, pitch);
-
 		looking_around_time -= getDeltaTime();
-		dbg("---\n");
-
+		stuck_time = 0.f;
 		return STAY;
 	}
 	else {
 		deltaYawLookingArround = 0;
-		dbg("---\n");
+		looking_around_time = LOOK_AROUND_TIME;
 		return OK;
 	}
 }
@@ -902,17 +882,6 @@ bool bt_guard::turnToPlayer()
 	return true;
 }
 
-bool bt_guard::playerTooNear() {
-	if (!myParent.isValid()) return false;
-	CEntity * ePlayer = getPlayer();
-	if (!ePlayer) return false;
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
-	VEC3 myPos = getTransform()->getPosition();
-
-	return simpleDist(posPlayer, myPos) < PLAYER_DETECTION_RADIUS;
-}
-
 // -- Player Visible? -- //
 bool bt_guard::playerVisible(bool check_raycast) {
 	if (!myParent.isValid()) return false;
@@ -957,7 +926,8 @@ bool bt_guard::playerVisible(bool check_raycast) {
 								bool ret = rayCastToPlayer(1, distRay, hit);
 								if (ret) { //No bloquea vision
 									CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
-									if (h.hasTag("player")) {
+									dest_shoot = PhysxConversion::PxVec3ToVec3(hit.getAnyHit(0).position);
+									if (h.hasTag("player") || dist_sq < squaredDistXZ(myPos, dest_shoot)) {
 										res = true;
 									}
 								}
@@ -976,6 +946,7 @@ bool bt_guard::playerVisible(bool check_raycast) {
 }
 
 bool bt_guard::boxMovingDetected() {
+	if (!myParent.isValid()) return false;
 	// moving boxes detection
 	float distRay;
 	PxRaycastBuffer hit;
@@ -1009,8 +980,8 @@ bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hi
 	//rcQuery.types = types;
 	CEntity *e = myParent;
 	TCompCharacterController *cc = e->get<TCompCharacterController>();
-	Debug->DrawLine(origin + direction*(cc->GetRadius() + 0.05f), getTransform()->getFront(), 10.0f);
-	bool ret = g_PhysxManager->raycast(origin + direction*(cc->GetRadius() + 0.05f), direction, dist, hit);
+	Debug->DrawLine(origin + direction*(cc->GetRadius() + 0.075f), getTransform()->getFront(), 10.0f);
+	bool ret = g_PhysxManager->raycast(origin + direction*(cc->GetRadius() + 0.075f), direction, dist, hit);
 
 	if (ret)
 		distRay = hit.getAnyHit(0).distance;
@@ -1096,6 +1067,11 @@ void bt_guard::shootToPlayer() {
 	//	float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 	//	Debug->DrawLine(myPos + VEC3(r1 - 0.5f, 1 + r2 - 0.5f, 0), posPlayer - myPos, distRay, RED);
 	//}
+
+	if (shooting_backwards || distance < squaredDistXZ(myPos, dest_shoot)) {
+		dest_shoot = posPlayer;
+		dest_shoot.y += 0.5f;
+	}
 
 	//Render Shot
 	drawShot(dest_shoot);
