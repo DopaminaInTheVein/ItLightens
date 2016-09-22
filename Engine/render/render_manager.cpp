@@ -40,7 +40,7 @@ bool CRenderManager::sortByTechMatMesh(
 
 	if (tech1 != tech2) {
 		if (tech1->getCategory() != tech2->getCategory())
-		  return tech1->getCategory() < tech2->getCategory();
+			return tech1->getCategory() < tech2->getCategory();
 		if (tech1->getCategory() != tech2->getCategory())
 			return tech1->getCategory() < tech2->getCategory();
 		if (tech1->getPriority(k1.owner.getOwner()) == tech2->getPriority(k2.owner.getOwner()))
@@ -53,7 +53,6 @@ bool CRenderManager::sortByTechMatMesh(
 
 	//ui are compared by z position
 	else if (tech1->getCategory() == CRenderTechnique::UI_OBJS && tech2->getCategory() == CRenderTechnique::UI_OBJS) {
-		
 		if (tech1->getPriority(k1.owner.getOwner()) == tech2->getPriority(k2.owner.getOwner()))
 			return tech1->getName() < tech2->getName();
 
@@ -114,7 +113,6 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 }
 
 void sortUI() {
-
 }
 
 void CRenderManager::unregisterFromRender(CHandle owner) {
@@ -142,10 +140,9 @@ void checkTestZ(std::vector<std::string>& last_v, std::vector<std::string>& new_
 	}
 	else {
 		for (int idx = 0; idx < last_v.size(); idx++) {
-			
 			//cheack is some it are different
 			std::string str1 = last_v[idx];
-			std::string str2 = new_v[idx];
+			std::string str2 = idx >= new_v.size() ? "" : new_v[idx];
 
 			if (strcmp(str1.c_str(), str2.c_str())) {
 				same = false;
@@ -177,7 +174,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	std::string name;
 	ui_render = false;
 	test_z_render.clear();
-	
+
 	PROFILE_FUNCTION("OBJS");
 	if (category == CRenderTechnique::DBG_OBJS) {
 		name = "DEBUG_OBJS";
@@ -323,8 +320,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 			//render skeleton object
 			if (curr_tech_used_bones) {
-				if(renderSkeleton(it)) {
-
+				if (renderSkeleton(it)) {
 					//valid skeleton
 					it->mesh->renderGroup(it->submesh_idx);
 					prev_it = it;
@@ -335,7 +331,6 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 			//render UI object
 			else if (it->material->tech->getCategory() == CRenderTechnique::UI_OBJS) {
 				if (renderUI(it)) {
-
 					//Valid UI
 					it->mesh->renderGroup(it->submesh_idx);
 					prev_it = it;
@@ -347,21 +342,18 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 				}
 			}
 			else {
-
 				//default skeleton
 				it->mesh->renderGroup(it->submesh_idx);
 				prev_it = it;
 				++nkeys_rendered;
 			}
-			
-			
 		}
 
 		++it;
 	}
 
-#ifndef NDEBUG 
-	if(ui_render)checkTestZ(last_test_z_render, test_z_render);
+#ifndef NDEBUG
+	if (ui_render)checkTestZ(last_test_z_render, test_z_render);
 #endif
 
 	CMaterial::deactivateTextures();
