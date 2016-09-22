@@ -21,13 +21,13 @@ end
 --TEXTS--
 ---------------------------------------
 --Axis
-TXT_OPTION_AXIS_NORMAL = "Normal"
-TXT_OPTION_AXIS_INVERTED = "Inverted"
+TXT_OPTION_AXIS_NORMAL = "normal"
+TXT_OPTION_AXIS_INVERTED = "inverted"
 
 --Difficulty
-DECLARE_DIFFICULTY("Easy")
-DECLARE_DIFFICULTY("Medium")
-DECLARE_DIFFICULTY("Hard")
+DECLARE_DIFFICULTY("easy")
+DECLARE_DIFFICULTY("medium")
+DECLARE_DIFFICULTY("hard")
 
 --Languages
 DECLARE_LANG("Català", "CAT")
@@ -75,6 +75,10 @@ end
 -- Auxiliar functions --
 -------------------------------------------------------------------------------
 -- Language
+function translate_opt(text)
+	return p:get_text("title", text)
+end
+
 function InitLanguage()
 	h:getHandleCaller()
 	lang = p:json_read_str("options.json", "language", "lang")
@@ -97,7 +101,7 @@ end
 function InitDifficulty()
 	h:getHandleCaller()
 	for i=0, DIFF_SIZE-1 do
-		h:add_option(TXT_DIFFICULTIES[i])
+		h:add_option(translate_opt(TXT_DIFFICULTIES[i]))
 	end
 	diff = p:json_read("options.json", "game", "difficulty")
 	h:select_option(diff)
@@ -110,8 +114,8 @@ end
 --Axis
 function InitOptAxis(axis)
 	h:getHandleCaller()
-	GUI_OPTION_AXIS_NORMAL = h:add_option(TXT_OPTION_AXIS_NORMAL)
-	GUI_OPTION_AXIS_INVERTED = h:add_option(TXT_OPTION_AXIS_INVERTED)
+	GUI_OPTION_AXIS_NORMAL = h:add_option(translate_opt(TXT_OPTION_AXIS_NORMAL))
+	GUI_OPTION_AXIS_INVERTED = h:add_option(translate_opt(TXT_OPTION_AXIS_INVERTED))
 	axis_inverted = p:json_read("options.json", "controls", axis.."-axis_inverted")
 	if axis_inverted == 1.0 then
 		h:select_option(GUI_OPTION_AXIS_INVERTED)

@@ -17,7 +17,11 @@
 	"leave" : "ACCIO: Sortir"
   },
   "title": {
-	"button_1": "Comença el joc"
+	"easy": "Fàcil",
+	"medium": "Normal",
+	"hard": "Difícil",
+	"normal": "Normal",
+	"inverted": "Invertit"
   },
   "hub": {
     "start_hub": "Mou la camera\ni usa SENTIR\nper trobar el teu objectiu.",
