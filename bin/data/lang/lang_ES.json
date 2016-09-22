@@ -17,11 +17,12 @@
 	"leave" : "ACTION: Leave"
   },
   "title": {
+	"test": "àèìòù_áéíóú_ÀÈÌÒÙ_ÁÉÍÓÚ_üÜ_ç\n¡¿!?_:_'_\"_%$_l·l=(<>,.:;-)",
 	"easy": "Fácil",
 	"medium": "Normal",
 	"hard": "Difícil",
 	"normal": "Normal",
-	"inverted": "Inverted"
+	"inverted": "Invertido"
   },
   "hub": {
     "start_hub": "Move the camera\nand use your SENSE skill\nto find your objective.",

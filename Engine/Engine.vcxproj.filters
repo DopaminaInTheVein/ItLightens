@@ -569,6 +569,9 @@
     <ClCompile Include="app_modules\lang_manager\lang_manager.cpp">
       <Filter>app_modules\lang_manager</Filter>
     </ClCompile>
+    <ClCompile Include="utils\text_encode.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1496,6 +1499,9 @@
     </ClInclude>
     <ClInclude Include="app_modules\lang_manager\lang_manager.h">
       <Filter>app_modules\lang_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\text_encode.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

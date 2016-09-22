@@ -5,6 +5,7 @@
 
 #include "debug\debug_itlightens.h"
 #include "app_modules/logic_manager/logic_manager.h"
+#include "lang_manager/lang_manager.h"
 
 #include "components/entity.h"
 #include "components/entity_tags.h"
@@ -36,6 +37,7 @@ void CGameController::SetLanguage(std::string lang)
 {
 	if (lang == game_language) return;
 	game_language = lang;
+	lang_manager->reloadLanguageFile(game_language);
 	getHandleManager<CEntity>()->each([](CEntity * e) {
 		e->sendMsg(TMsgLanguageChanged());
 	});

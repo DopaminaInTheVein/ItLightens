@@ -359,7 +359,8 @@ int SLBHandle::addOption(const char* name) {
 	int res = -1;
 	if (real_handle.isValid()) {
 		GET_COMP(gui_selector, real_handle, TCompGuiSelector);
-		if (gui_selector) res = gui_selector->AddOption(string(name));
+		auto name_fixed = TextEncode::Utf8ToLatin1String(name);
+		if (gui_selector) res = gui_selector->AddOption(string(name_fixed));
 	}
 	return res;
 }
@@ -782,9 +783,10 @@ void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* icon
 }
 
 void SLBPublicFunctions::putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag) {
+	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
 	CHandle h = createPrefab("ui/text");
 	GET_COMP(t, h, TCompText);
-	t->setup(std::string(id), std::string(text), posx, posy, std::string(textColor), scale, std::string(textColorTarget), textColorSpeed, textColorSpeedLag);
+	t->setup(std::string(id), text_fixed, posx, posy, std::string(textColor), scale, std::string(textColorTarget), textColorSpeed, textColorSpeedLag);
 }
 
 void SLBPublicFunctions::removeText(const char* id) {

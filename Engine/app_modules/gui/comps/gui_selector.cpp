@@ -207,6 +207,14 @@ void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnChoose, string(param), MY_OWNER);
 }
 
+void TCompGuiSelector::onLanguageChanged(const TMsgLanguageChanged& msg)
+{
+	for (auto opt : options) opt.destroy();
+	options.clear();
+	cur_option = 0;
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
+}
+
 void TCompGuiSelector::SelectOption(int id)
 {
 	setTextVisible(cur_option, false);

@@ -1,6 +1,7 @@
-
+﻿
 function OnStart_title( )
 	p:putText("title_text","It Lightens",0.2,0.6,"#FF0000FF",1.0,"#0000FFFF",10.0,0.1)
+	--p:putText("title_text",p:get_text("title", "test"),0.2,0.6,"#FF0000FF",0.2,"#0000FFFF",0.5,0.1)	
 	p:clear_save()
 	--p:exec_command("waitAndDoTitleSmaller()",2.0)
 end

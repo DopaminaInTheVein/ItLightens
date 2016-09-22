@@ -451,6 +451,7 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiSelector, TMsgGuiNotify, onGuiNotify);
+	SUBSCRIBE(TCompGuiSelector, TMsgLanguageChanged, onLanguageChanged);
 	SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
 	return true;
 }
