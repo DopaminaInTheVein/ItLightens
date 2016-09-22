@@ -67,6 +67,7 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderParticlesInstanced helpers;
 
 	bool m_isSpecialVisionActive = false;
+	bool test_dream_shader = false;
 
 	void renderGBuffer();
 	void activateRenderCamera3D();

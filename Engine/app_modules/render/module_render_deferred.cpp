@@ -32,6 +32,9 @@
 #include "components\comp_life.h"
 #include "player_controllers\player_controller.h"
 
+//for test
+#include "app_modules\io\io.h"
+
 // ------------------------------------------------------
 bool CRenderDeferredModule::start() {
 	//xres = CApp::get().getXRes();
@@ -163,8 +166,17 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_blur.ssao_intensity = 1.0f;
 	shader_ctes_blur.ssao_iterations = 30.f;
 
+	shader_ctes_dream.color_influence = VEC4(0.2, 0.2, 0.3, 1);
+	shader_ctes_dream.dream_speed = 1;
+	shader_ctes_dream.dream_waves_size = 0.5;
+	shader_ctes_dream.dream_wave_amplitude = 8;
+
+	shader_ctes_dream.dream_distorsion_expansion = 0.85;
+	shader_ctes_dream.dream_distorsion_strenght = 55;
+
 	shader_ctes_hatching.uploadToGPU();
 	shader_ctes_blur.uploadToGPU();
+	shader_ctes_dream.uploadToGPU();
 
 	return true;
 }
@@ -180,6 +192,9 @@ void CRenderDeferredModule::update(float dt) {
 
 	if (controller->isTestSSAOButoonPressed()) {
 		ssao_test = !ssao_test;
+	}	
+	if (io->keys[VK_F1].becomesPressed()) {
+		test_dream_shader = !test_dream_shader;
 	}
 
 	//m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
@@ -979,9 +994,9 @@ void CRenderDeferredModule::render() {
 
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+	
 	CTexture::deactivate(TEXTURE_SLOT_GLOSSINESS);
-
+	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	Render.activateBackBuffer();
 	activateZ(ZCFG_DEFAULT);
 
@@ -992,10 +1007,10 @@ void CRenderDeferredModule::render() {
 	applyPostFX();
 
 	// Mandar a pintar los 'transparentes'
-	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+	
 	RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
 	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
-
+	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 
 	renderUI();
@@ -1299,6 +1314,16 @@ void CRenderDeferredModule::applyPostFX() {
 		next_step = glow->apply(next_step);
 	else
 		return;
+	
+	if (test_dream_shader) {
+		activateBlend(BLENDCFG_COMBINATIVE);
+		auto tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
+		tech->activate();
+
+		drawFullScreen(rt_final, tech);
+	}
+
+
 
 	// ------------------------
 	Render.activateBackBuffer();
@@ -1315,13 +1340,12 @@ void CRenderDeferredModule::applyPostFX() {
 void CRenderDeferredModule::renderUI() {
 	PROFILE_FUNCTION("renderUI");
 	CTraceScoped scope("renderUI");
-	activateZ(ZCFG_ALL_DISABLED);
-	//activateZ(ZCFG_DEFAULT);
+	//activateZ(ZCFG_ALL_DISABLED);
+	activateZ(ZCFG_DEFAULT);
 	//activateBlend(BLENDCFG_DEFAULT);
 	activateBlend(BLENDCFG_COMBINATIVE);
 
-
-	//Render.clearMainZBuffer();
+	Render.clearMainZBuffer();
 
 	CHandle h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
 	if (!h_ui_camera.isValid())
