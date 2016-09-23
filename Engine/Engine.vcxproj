@@ -218,8 +218,6 @@
     <ClCompile Include="geometry\transform.cpp" />
     <ClCompile Include="handle\handle.cpp" />
     <ClCompile Include="handle\handle_manager.cpp" />
-    <ClCompile Include="input\input.cpp" />
-    <ClCompile Include="input\input_manager.cpp" />
     <ClCompile Include="input\input_wrapper.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
     <ClCompile Include="logic\ai_cam.cpp" />
@@ -461,8 +459,6 @@
     <ClInclude Include="imgui\imgui_impl_dx11.h" />
     <ClInclude Include="imgui\imgui_internal.h" />
     <ClInclude Include="imgui\stb_textedit.h" />
-    <ClInclude Include="input\input.h" />
-    <ClInclude Include="input\input_manager.h" />
     <ClInclude Include="input\input_wrapper.h" />
     <ClInclude Include="logic\aicontroller.h" />
     <ClInclude Include="logic\ai_cam.h" />
