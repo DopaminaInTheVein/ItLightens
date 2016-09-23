@@ -180,8 +180,7 @@ int TCompGuiSelector::AddOption(string option)
 	txt->SetSize(myGui->GetHeight());
 	txt->SetPosWorld(postxt);
 	options.push_back(h_option);
-	txt->update(getDeltaTime(true));
-	setTextVisible(res, res == 0, true);
+	setTextVisible(res, res == 0);
 	GET_COMP(gui, h_option, TCompGui);
 	gui->SetParent(MY_OWNER);
 	return res;
@@ -223,16 +222,19 @@ void TCompGuiSelector::SelectOption(int id)
 	setTextVisible(cur_option = id, true);
 }
 
-TCompText* TCompGuiSelector::setTextVisible(int option, bool visible, bool instant)
+TCompText* TCompGuiSelector::setTextVisible(int option, bool visible)
 {
 	CHandle opt = options[option];
 	GET_COMP(txt, opt, TCompText);
 	if (txt) {
-		txt->SetColorTarget(visible ? (is_over ? COLOR_SELECTED : COLOR_NORMAL) : COLOR_HIDDEN, instant ? FLT_MAX : COLOR_SPEED);
+		if (visible) {
+			txt->SetColorTarget(is_over ? COLOR_SELECTED : COLOR_NORMAL, COLOR_SPEED);
+		}
+		else {
+			txt->SetColor(COLOR_HIDDEN);
+		}
 		//txt->SetZ(my_pos.z + ((visible ? 1 : -1) * 0.05f));
 	}
-	//test
-	txt->update(getDeltaTime(true));
 	return txt;
 }
 

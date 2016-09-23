@@ -33,7 +33,7 @@ class TCompGuiSelector : public aicontroller, public TCompBase {
 	void notifyOver(bool over);
 	void AddArrows();
 	void AddArrow(CHandle&, string prefab, string name_event, float offset_pos);
-	TCompText* setTextVisible(int option, bool visible, bool instant = false);
+	TCompText* setTextVisible(int option, bool visible);
 
 protected:
 	// the states, as maps to functions
