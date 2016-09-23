@@ -913,7 +913,8 @@ void CRenderDeferredModule::render() {
 	uploadConstantsGPU();
 
 	renderGBuffer();
-	renderDetails();
+	renderDetails(CRenderTechnique::DETAIL_OBJS);
+	renderDetails(CRenderTechnique::TRANSPARENT_OBJS);
 	renderAccLight();
 
 	if (ssao_test) {
@@ -994,7 +995,6 @@ void CRenderDeferredModule::render() {
 
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
-	
 	CTexture::deactivate(TEXTURE_SLOT_GLOSSINESS);
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	Render.activateBackBuffer();
@@ -1005,10 +1005,7 @@ void CRenderDeferredModule::render() {
 	}
 
 	applyPostFX();
-
-	// Mandar a pintar los 'transparentes'
 	
-	RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
 	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
@@ -1271,23 +1268,26 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 	//Render.activateBackBuffer();
 }
 
-void CRenderDeferredModule::renderDetails() {
+void CRenderDeferredModule::renderDetails(CRenderTechnique::eCategory type) {
 	// -------------------------
 	// Activar mis multiples render targets
-	ID3D11RenderTargetView* rts[3] = {
+	ID3D11RenderTargetView* rts[5] = {
 		rt_albedos->getRenderTargetView()
 		,	rt_normals->getRenderTargetView()
-		,	nullptr
+		,	rt_depths->getRenderTargetView()
+		,   rt_glossiness->getRenderTargetView()
+		,   rt_specular->getRenderTargetView()
 	};
 
 	Render.activateBackBuffer();
 
-	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+	Render.ctx->OMSetRenderTargets(5, rts, Render.depth_stencil_view);
 
 	activateZ(ZCFG_Z_TEST_LESS_EQUAL);
 	activateBlend(BLENDCFG_COMBINATIVE);
 
-	RenderManager.renderAll(h_camera, CRenderTechnique::DETAIL_OBJS);
+	RenderManager.renderAll(h_camera, type);
+	//RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
 }
 
 void CRenderDeferredModule::uploadConstantsGPU() {
