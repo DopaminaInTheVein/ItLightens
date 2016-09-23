@@ -1,7 +1,6 @@
 #include "mcv_platform.h"
-#include <windows.h>
 #include "input_wrapper.h"
-#include "app_modules\io\io.h"
+#include <windows.h>
 
 extern CInputWrapper* controller = new CInputWrapper;
 

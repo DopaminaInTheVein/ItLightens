@@ -1,9 +1,8 @@
 #include "mcv_platform.h"
 #include "gameController.h"
 
-#include "input/input_wrapper.h"
-
-#include "debug\debug_itlightens.h"
+#include "app_modules/io/input_wrapper.h"
+#include "debug/debug_itlightens.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "lang_manager/lang_manager.h"
 

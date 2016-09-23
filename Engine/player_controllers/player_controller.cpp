@@ -9,7 +9,6 @@
 #include "components/comp_render_static_mesh.h"
 #include "components/comp_msgs.h"
 #include "render/static_mesh.h"
-#include "input/input_wrapper.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "app_modules/gui/gui.h"
 

@@ -9,7 +9,7 @@
 #include "comp_msgs.h"
 #include "geometry/angular.h"
 #include "windows\app.h"
-#include "input/input_wrapper.h"
+#include "app_modules/io/input_wrapper.h"
 #include "comp_charactercontroller.h"
 #include "comp_camera_main.h"
 

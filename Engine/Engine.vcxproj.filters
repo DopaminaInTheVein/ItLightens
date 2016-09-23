@@ -497,9 +497,6 @@
     <ClCompile Include="app_modules\gameController.cpp">
       <Filter>app_modules\game</Filter>
     </ClCompile>
-    <ClCompile Include="input\input_wrapper.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
     <ClCompile Include="components\comp_room.cpp">
       <Filter>components</Filter>
     </ClCompile>
@@ -565,6 +562,9 @@
     </ClCompile>
     <ClCompile Include="utils\text_encode.cpp">
       <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\io\input_wrapper.cpp">
+      <Filter>app_modules\io</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1425,9 +1425,6 @@
     <ClInclude Include="logic\pila.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="input\input_wrapper.h">
-      <Filter>input</Filter>
-    </ClInclude>
     <ClInclude Include="app_modules\navmesh\navmesh_manager.h">
       <Filter>app_modules\navmesh</Filter>
     </ClInclude>
@@ -1490,6 +1487,9 @@
     </ClInclude>
     <ClInclude Include="utils\text_encode.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\io\input_wrapper.h">
+      <Filter>app_modules\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1555,9 +1555,6 @@
     </Filter>
     <Filter Include="physx">
       <UniqueIdentifier>{16d1a48c-1e04-411f-8706-8555b3d2c0b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="input">
-      <UniqueIdentifier>{3cada1c5-734d-4cb7-a898-3db5437867da}</UniqueIdentifier>
     </Filter>
     <Filter Include="recast">
       <UniqueIdentifier>{d6093316-e00e-4813-91b6-fa40da65dc5c}</UniqueIdentifier>
