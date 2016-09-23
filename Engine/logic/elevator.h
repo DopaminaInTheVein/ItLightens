@@ -19,17 +19,23 @@ class elevator : public TCompBase {
 	float epsilonTarget;
 	float lastSpeed = 0.0f;
 	int state_init = -1;
+	bool player_near = false; //only for pitch disable
 
 	eElevatorState prevState;
 
 	//Update info
 	CHandle myEntity;
+	CHandle player;
+	CHandle camera;
 	TCompTransform * transform;
 	TCompPhysics * physics;
+	TCompTransform* player_tmx;
+	TCompController3rdPerson* player_3rd;
 
 	//Private Funcs
 	void updateMove();
 	void notifyNewState();
+	void updatePlayerNear(); //only for pitch disable
 
 public:
 	eElevatorState state;

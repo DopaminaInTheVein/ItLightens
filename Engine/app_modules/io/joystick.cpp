@@ -141,6 +141,11 @@ void TJoystick::stick::update(int dx, int dy, float dt)
 	if (becomes_pressed) time = 0.f;
 	dir = new_dir;
 }
+void TJoystick::release()
+{
+	//Nothing to do
+}
+
 bool TJoystick::stick::LeftPressed()
 {
 	return dir % 3 == 1;
