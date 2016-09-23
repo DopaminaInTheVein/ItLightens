@@ -1005,10 +1005,7 @@ void CRenderDeferredModule::render() {
 	}
 
 	applyPostFX();
-
-	// Mandar a pintar los 'transparentes'
 	
-	RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
 	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
