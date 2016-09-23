@@ -10,6 +10,22 @@
 
 #include <math.h>
 
+float TCompText::letterSpacing[256] = { 0.f };
+bool TCompText::init_configuration = false;
+
+void TCompText::initSpaceLetters()
+{
+	auto general = readIniAtrData("./data/font.json", "general");
+	auto space_values = readIniAtrData("./data/font.json", "space_right");
+	float size = general["size"];
+	float default_space = space_values["default"] / size;
+	for (int i = 0; i < 256; i++) letterSpacing[i] = default_space;
+	for (auto entry : space_values) {
+		unsigned char letter_char = entry.first.at(0);
+		letterSpacing[letter_char] = entry.second / size;
+	}
+}
+
 void TCompText::forceTTLZero() {
 	ttl = -0.1f;
 }
@@ -43,6 +59,10 @@ bool TCompText::load(MKeyValue& atts)
 	accumSpacing.resize(lineText.size());
 	for (int i = 0; i < accumSpacing.size(); ++i) {
 		accumSpacing[i] = 0.0f;
+	}
+	if (!init_configuration) {
+		init_configuration = true;
+		initSpaceLetters();
 	}
 	return true;
 }
@@ -134,34 +154,37 @@ void TCompText::SetLetterLag(float letter_lag)
 	colorChangeSpeedLag = letter_lag;
 }
 
-void TCompText::setAttr(float new_x, float new_y, float new_scale) {
-	int letteri = 0;
-	accumSpacing.resize(lineText.size());
-	for (int i = 0; i < accumSpacing.size(); ++i) {
-		accumSpacing[i] = 0.0f;
-	}
-	for (int j = 0; j < lineText.size(); ++j) {
-		for (int i = 0; i < lineText[j].size(); ++i) {
-			unsigned char letter = lineText[j][i];
-			int ascii_tex_pos = letter;
-			CEntity * e_letter = gui_letters[letteri];
-			TCompGui * letter_gui = e_letter->get<TCompGui>();
-			TCompTransform * letter_trans = e_letter->get<TCompTransform>();
-			VEC3 pos_letter = letter_trans->getPosition();
-			pos_letter.x = new_x + i * letterBoxSize*new_scale - accumSpacing[j] * new_scale;
-			pos_letter.y = new_y - j * letterBoxSize*new_scale*2.5f;
-			letter_trans->setPosition(pos_letter);
-			letter_trans->setScaleBase(VEC3(new_scale, new_scale, new_scale));
-			letteri++;
-			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
-		}
-	}
-}
+//void TCompText::setAttr(float new_x, float new_y, float new_scale) {
+//	int letteri = 0;
+//	accumSpacing.resize(lineText.size());
+//	for (int i = 0; i < accumSpacing.size(); ++i) {
+//		accumSpacing[i] = 0.0f;
+//	}
+//	for (int j = 0; j < lineText.size(); ++j) {
+//		for (int i = 0; i < lineText[j].size(); ++i) {
+//			unsigned char letter = lineText[j][i];
+//			int ascii_tex_pos = letter;
+//			CEntity * e_letter = gui_letters[letteri];
+//			TCompGui * letter_gui = e_letter->get<TCompGui>();
+//			TCompTransform * letter_trans = e_letter->get<TCompTransform>();
+//			VEC3 pos_letter = letter_trans->getPosition();
+//			pos_letter.x = new_x + i * letterBoxSize*new_scale - accumSpacing[j] * new_scale;
+//			pos_letter.y = new_y - j * letterBoxSize*new_scale*2.5f;
+//			letter_trans->setPosition(pos_letter);
+//			letter_trans->setScaleBase(VEC3(new_scale, new_scale, new_scale));
+//			letteri++;
+//			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
+//		}
+//	}
+//}
 
 void TCompText::printLetters() {
 	int gState = GameController->GetGameState();
 	int letteri = 0;
 	float accumLag = 0.0f;
+	VEC3 ui_scale = VEC3(1.f, 1.f, 1.f) / Gui->getUiSize();
+	float scale_x = scale *ui_scale.x;
+	float scale_y = scale * line_separation * ui_scale.y;
 	for (int j = 0; j < lineText.size(); ++j) {
 		for (int i = 0; i < lineText[j].size(); ++i) {
 			unsigned char letter = lineText[j][i];
@@ -174,8 +197,8 @@ void TCompText::printLetters() {
 			float sx = letterBoxSize;
 			float sy = letterBoxSize;
 
-			float letter_posx = letter_posx_ini + i * letterBoxSize*scale - accumSpacing[j] * scale;
-			float letter_posy = letter_posy_ini - j * letterBoxSize*scale*2.5f;
+			float letter_posx = letter_posx_ini + (i - accumSpacing[j]) * scale_x;
+			float letter_posy = letter_posy_ini - j * scale_y;
 
 			CHandle letter_h = Gui->addGuiElement("ui/letter", VEC3(letter_posx, letter_posy, letter_posz_ini + letteri*0.001), ("Text_Message_Letter_" + id), scale);
 			CEntity * letter_e = letter_h;
@@ -185,7 +208,7 @@ void TCompText::printLetters() {
 			RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
 			letter_gui->setTxCoords(textCords);
 			letteri++;
-			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
+			accumSpacing[j] += letterSpacing[ascii_tex_pos];
 			letter_gui->SetColor(color);
 			if (colorChangeSpeed > 0.0f) {
 				letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);

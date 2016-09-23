@@ -15,7 +15,7 @@ bool TCompGuiCursor::load(MKeyValue& atts)
 	GameController->SetUiControl(true);
 	GameController->SetGameState(CGameController::STOPPED);
 
-	speed = atts.getFloat("speed", 5.f);
+	speed = atts.getFloat("speed", 0.01f);
 	menu_name = atts.getString("menu_name", "");
 	x = y = -1;
 	return true;
@@ -125,8 +125,8 @@ void TCompGuiCursor::updateMovement(float dt)
 	//Apply speed
 	///float smooth = 0.99f;
 	///factor = (speed * dt * (1 - smooth)) + factor * smooth;
-	dx *= speed * dt;
-	dy *= speed * dt;
+	dx *= speed; //* dt;
+	dy *= speed; //* dt;
 
 	//Calc Movement
 	VEC3 movement = VEC3(dx, -dy, 0);

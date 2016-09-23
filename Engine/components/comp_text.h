@@ -4,6 +4,9 @@
 #include "comp_base.h"
 
 class TCompText : public TCompBase {
+	static float letterSpacing[256];
+	static bool init_configuration;
+
 	VHandles gui_letters;
 	std::string id = "";
 	float scale = 0.0f;
@@ -17,17 +20,17 @@ class TCompText : public TCompBase {
 	float colorChangeSpeedLag;
 	int lines;
 	float letterBoxSize = 1.0f / 16.0f;
+	float line_separation = 1.1f;
 	bool loop = false;
 
 	std::string text;
 	std::vector<std::string> lineText;
 	float  ttl;
-	float sizeFontX = 0.0125f;
-	float sizeFontY = 0.030f;
 	bool printed = false;
 	std::vector<float> accumSpacing;
 
 public:
+	static void initSpaceLetters();
 	//Update info
 	void update(float elapsed);
 	void printLetters();
@@ -44,7 +47,7 @@ public:
 	void SetColor(std::string rrggbbaa);
 	void SetColorTarget(std::string rrggbbaa, float speed = 1.f);
 	void SetLetterLag(float);
-	void setAttr(float new_x, float new_y, float new_scale);
+	//void setAttr(float new_x, float new_y, float new_scale);
 	void Move(VEC3 pos);
 	void SetZ(float z);
 };

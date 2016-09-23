@@ -796,13 +796,13 @@ void SLBPublicFunctions::removeText(const char* id) {
 	}
 	);
 }
-void SLBPublicFunctions::alterText(const char* id, float new_posx, float new_posy, float new_scale) {
-	std::string id_string(id);
-	getHandleManager<TCompText>()->each([id_string, new_posx, new_posy, new_scale](TCompText * mess) {
-		if (mess->getId() == id_string) { mess->setAttr(new_posx, new_posy, new_scale); }
-	}
-	);
-}
+//void SLBPublicFunctions::alterText(const char* id, float new_posx, float new_posy, float new_scale) {
+//	std::string id_string(id);
+//	getHandleManager<TCompText>()->each([id_string, new_posx, new_posy, new_scale](TCompText * mess) {
+//		if (mess->getId() == id_string) { mess->setAttr(new_posx, new_posy, new_scale); }
+//	}
+//	);
+//}
 
 void SLBPublicFunctions::characterGlobe(float distance, float char_x, float char_y, float char_z) {
 	auto hm = CHandleManager::getByName("entity");

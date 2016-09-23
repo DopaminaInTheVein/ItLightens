@@ -98,10 +98,10 @@ void TCompGuiSelector::Over()
 		notifyOver(false);
 	}
 	else {
-		if (controller->IsLeftPressed()) {
+		if (controller->IsLeftPressedSelector()) {
 			arrow_left.sendMsg(TMsgClicked());
 		}
-		else if (controller->IsRightPressed()) {
+		else if (controller->IsRightPressedSelector()) {
 			arrow_right.sendMsg(TMsgClicked());
 		}
 	}

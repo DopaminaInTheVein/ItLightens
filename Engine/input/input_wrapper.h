@@ -25,6 +25,8 @@ public:
 	bool CInputWrapper::IsDownPressed();
 	bool CInputWrapper::IsLeftPressed();
 	bool CInputWrapper::IsRightPressed();
+	bool CInputWrapper::IsLeftPressedSelector();
+	bool CInputWrapper::IsRightPressedSelector();
 
 	// Right Joystick
 	bool IsCamMovedUp();

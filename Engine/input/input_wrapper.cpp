@@ -44,10 +44,15 @@ bool CInputWrapper::IsDownPressed() {
 bool CInputWrapper::IsLeftPressed() {
 	return io->keys['A'].becomesPressedWithRepeat() || io->keys[VK_LEFT].becomesPressedWithRepeat() || io->joystick.lstick.LeftBecomesPressed();
 }
+bool CInputWrapper::IsLeftPressedSelector() {
+	return IsLeftPressed() || io->mouse.left.becomesPressed();
+}
 bool CInputWrapper::IsRightPressed() {
 	return io->keys['D'].becomesPressedWithRepeat() || io->keys[VK_RIGHT].becomesPressedWithRepeat() || io->joystick.lstick.RightBecomesPressed();
 }
-
+bool CInputWrapper::IsRightPressedSelector() {
+	return IsRightPressed() || io->mouse.right.becomesPressed();
+}
 float CInputWrapper::MoveYNormalized() {
 	if (io->keys['W'].isPressed()) {
 		return 1.0f;

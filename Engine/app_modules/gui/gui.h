@@ -86,6 +86,7 @@ public:
 
 	CHandle addGuiElement(std::string prefab, VEC3 pos = VEC3(0.5f, 0.5f, 0.5f), std::string tag = "", float scale = 1.0f);
 	VEC3 getScreenPos(VEC3 pos);
+	VEC3 getUiSize();
 	void updateGuiElementPositionByTag(std::string tag, VEC3 new_position);
 	void removeGuiElementByTag(std::string tag);
 	void removeAllGuiElementsByTag(std::string tag);
