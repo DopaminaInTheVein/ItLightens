@@ -125,6 +125,62 @@ void PSGBuffer(
 }
 
 //--------------------------------------------------------------------------------------
+void PSTransparency(
+  float4 Pos : SV_POSITION
+  , float3 iNormal : NORMAL0
+  , float4 iTangent : NORMAL1
+  , float2 iTex0 : TEXCOORD0
+  , float3 iWorldPos : TEXCOORD1
+  , out float4 o_color : SV_Target0
+  , out float4 o_normal : SV_Target1
+  , out float4 o_depth : SV_Target2
+   , out float4 o_glossiness  : SV_Target3
+  , out float4 o_speculars : SV_Target4
+  )
+{
+  float4 o_albedo = txDiffuse.Sample(samLinear, iTex0);
+  //float4 o_speculars = txSpecular.Sample(samLinear, iTex0);
+  //float4 o_glossiness = float4(o_speculars.a, o_speculars.a, o_speculars.a, 1);
+  // Generar la matrix TBN usando la informacion interpolada
+  // desde los 3 vertices del triangulo
+  float3 T = normalize(iTangent.xyz);
+  float3 N = normalize(iNormal);
+  float3 B = cross(N, T) * iTangent.w;
+  float3x3 TBN = float3x3(T, -B, N);
+
+  // Leer la normal en tangent space tal como esta en la textura
+  // y convertir el rango de 0..1 a -1..1
+  float3 N_tangent_space = txNormal.Sample(samLinear, iTex0).xyz * 2. - 1.;
+  // Cambiar la intensidad del normal map
+  //N_tangent_space.xy *= 0.5;
+  //N_tangent_space = normalize(N_tangent_space);
+  float3 N_world_space = mul(N_tangent_space, TBN);
+  //float4 o_normal;
+  o_normal.xyz = (normalize(N_world_space) + 1.) * 0.5;
+  
+  float3 camera2wpos = iWorldPos - CameraWorldPos.xyz;
+  o_depth = dot( CameraFront.xyz, camera2wpos) / CameraZFar;
+  
+  //o_normal.a = o_albedo.a;
+  o_color = o_albedo;
+  o_color.a = o_albedo.a*4;
+  //o_color = float4(1,1,1,1);
+  
+  o_normal.a = o_color.a;
+  
+  //depth for transparencies need a limit, can't merge different depths
+  if(o_color.a > 0.1)
+	o_depth.a = 1;
+ else 
+	o_depth.a = 0;
+  //o_color.a = 1;
+  
+  o_glossiness = float4(0,0,0,0);
+  o_speculars = o_glossiness;
+  
+}
+
+//--------------------------------------------------------------------------------------
 void PSLightPoint(
   in float4 iPosition : SV_Position
   , out float4 o_color : SV_Target0
