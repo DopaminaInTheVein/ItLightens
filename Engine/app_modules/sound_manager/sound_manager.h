@@ -52,11 +52,12 @@ public:
 		return "sound_manager";
 	}
 
-	bool playSound(std::string);
-	bool play3dSound(std::string, VEC3 player_pos, VEC3 sound_pos);
+	bool playSound(std::string, float volume);
+	bool play3dSound(std::string, VEC3 player_pos, VEC3 sound_pos, float volume);
 	bool stopSound(std::string);
 	bool playMusic(std::string);
 	bool playLoopingMusic(std::string);
+	bool stopMusic();
 	bool playVoice(std::string);
 	bool playAmbient(std::string);
 	bool setMusicVolume(float);

@@ -92,7 +92,11 @@ void CSoundManagerModule::stop() {
 	system->release();
 }
 
-bool CSoundManagerModule::playSound(std::string route) {
+bool CSoundManagerModule::playSound(std::string route, float volume = 1.f) {
+
+	if (volume < 0.f) { volume = 0.f; }
+	else if (volume > 1.f) { volume = 1.f; }
+
 	Studio::EventInstance* sound_instance = NULL;
 
 	int count;
@@ -102,6 +106,7 @@ bool CSoundManagerModule::playSound(std::string route) {
 		result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
 
 		if (result == FMOD_OK) {
+			sound_instance->setVolume(volume);
 			sound_instance->start();
 			sound_instance->release();
 			return true;
@@ -131,7 +136,11 @@ bool CSoundManagerModule::stopSound(std::string route) {
 	return false;
 }
 
-bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 sound_pos) {
+bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 sound_pos, float volume = 1.f) {
+
+	if (volume < 0.f) { volume = 0.f; }
+	else if (volume > 1.f) { volume = 1.f; }
+
 	Studio::EventInstance* sound_instance = NULL;
 
 	int count;
@@ -156,6 +165,8 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 s
 			attributes.position.z = sound_pos.z;
 			sound_instance->set3DAttributes(&attributes);
 
+			// Play the sound
+			sound_instance->setVolume(volume);
 			sound_instance->start();
 			sound_instance->release();
 
@@ -173,7 +184,13 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 s
 
 bool CSoundManagerModule::playMusic(std::string route) {
 
-	Studio::EventInstance* music_instance = NULL;
+	//if there was a music playing, we stop it
+	if (music_instance) {
+		music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+		music_instance->release();
+		music_instance = NULL;
+	}
+
 	result = sounds_descriptions[std::string(route)]->createInstance(&music_instance);
 
 	music_instance->start();
@@ -188,6 +205,13 @@ bool CSoundManagerModule::playMusic(std::string route) {
 
 bool CSoundManagerModule::playLoopingMusic(std::string route) {
 
+	//if there was a music playing, we stop it
+	if (music_instance) {
+		music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+		music_instance->release();
+		music_instance = NULL;
+	}
+
 	result = sounds_descriptions[std::string(route)]->createInstance(&music_instance);
 
 	if (result == FMOD_OK) {
@@ -198,6 +222,19 @@ bool CSoundManagerModule::playLoopingMusic(std::string route) {
 
 	return false;
 
+}
+
+bool CSoundManagerModule::stopMusic() {
+
+	//if there was a music playing, we stop it
+	if (music_instance) {
+		music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+		music_instance->release();
+		music_instance = NULL;
+		return true;
+	}
+
+	return false;
 }
 
 bool CSoundManagerModule::playVoice(std::string route) {
@@ -228,10 +265,8 @@ bool CSoundManagerModule::playAmbient(std::string route) {
 
 bool CSoundManagerModule::setMusicVolume(float volume) {
 
-	if (volume < 0.f)
-		volume = 0.f;
-	if (volume > 1.f)
-		volume = 1.f;
+	if (volume < 0.f) { volume = 0.f; }
+	if (volume > 1.f) { volume = 1.f; }
 
 	result = music_instance->setVolume(volume);
 	if (result == FMOD_OK)

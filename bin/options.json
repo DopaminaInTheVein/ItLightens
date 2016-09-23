@@ -1,7 +1,7 @@
 {
     "scenes": {
         "level_0": "title",
-        "level_1": "tuto_sci",
+        "level_1": "hub",
         "level_2": "tuto_mole",
         "level_3": "tuto_sci",
         "level_4": "ms3"
@@ -16,7 +16,7 @@
         "x-axis_inverted": 0.0
     },
     "language": {
-        "lang": "CAT"
+        "lang": "EN"
     },
     "game": {
         "difficulty": 1.0

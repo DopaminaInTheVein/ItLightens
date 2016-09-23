@@ -80,7 +80,7 @@ end
 function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
 	h:getHandleCaller()	
-	p:play_3d_sound("event:/OnGuardAttack", pl:get_x(), pl:get_y(), pl:get_z(), h:get_x(), h:get_y(), h:get_z())
+	p:play_3d_sound("event:/OnGuardAttack", pl:get_x(), pl:get_y(), pl:get_z(), h:get_x(), h:get_y(), h:get_z(), 1.0)
 end
 
 function OnGuardAttackEnd( reaction_time )
@@ -102,7 +102,7 @@ end
 
 function OnGuardMoving( reaction_time )
 	p:print( "OnGuardMoving: "..reaction_time.."\n" )
-	p:play_sound("event:/OnGuardMoving")
+	p:play_sound("event:/OnGuardMoving", 1.0)
 end
 
 function OnGuardMovingStop( reaction_time )
@@ -148,7 +148,7 @@ end
 
 function OnChangePolarity( param )
 	p:print( "OnChangePolarity: "..param.."\n" )
-	p:play_sound("event:/OnChangePolarity")
+	p:play_sound("event:/OnChangePolarity", 1.0)
 end
 
 function OnPickupBox( param )
@@ -157,7 +157,7 @@ end
 
 function OnPushBox( param )
 	p:print( "OnPushBox: "..param.."\n" )
-  	p:play_sound("event:/OnPushPullBox")
+  	p:play_sound("event:/OnPushPullBox", 1.0)
 end
 
 function OnPushBoxIdle( param )
@@ -192,17 +192,17 @@ end
 
 function OnBreakWall( param )
 	p:print( "OnBreakWall: "..param.."\n" )
-	p:play_sound("event:/OnBreakWall")
+	p:play_sound("event:/OnBreakWall", 1.0)
 end
 
 function OnRechargeDrone( param )
 	p:print( "OnRechargeDrone: "..param.."\n" )
-	p:play_sound("event:/OnUseGenerator")
+	p:play_sound("event:/OnUseGenerator", 1.0)
 end
 
 function OnRepairDrone( level, drone )
 	p:print( "OnRepairDrone: "..level..", "..drone.."\n" )
-	p:play_sound("event:/OnUseGenerator")
+	p:play_sound("event:/OnUseGenerator", 1.0)
 	CallFunction("OnRepairDrone_"..level)
 	CallFunction("OnRepairDrone_"..drone)
 	--p:player_talks("I just repaired that useful thing to make a full working one...\nbut battery may fail as well, that is unreparable....")
@@ -225,7 +225,7 @@ end
 function OnUseGenerator( param )
 	p:print( "OnUseGenerator: "..param.."\n" )
 	CallFunction("OnUseGenerator_"..param)
-	p:play_sound("event:/OnUseGenerator")
+	p:play_sound("event:/OnUseGenerator", 1.0)
 end
 
 function OnStun( param )
@@ -234,7 +234,7 @@ end
 
 function OnStunned( pj )
 	p:print( "OnStunned: "..pj.."\n" )
-	p:play_ambient("event:/OnStunned")
+	p:play_sound("event:/OnStunned", 1.0)
 	CallFunction( "OnStunned_"..pj)
 end
 
@@ -252,24 +252,24 @@ end
 
 function OnOvercharge( param )
 	p:print( "OnOvercharge: "..param.."\n" )
-	p:play_sound("event:/OnOvercharge")
+	p:play_sound("event:/OnOvercharge", 1.0)
 	specialActionSettings(0.7);
 end
 
 function OnJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
-	p:play_sound("event:/OnJump")
+	p:play_sound("event:/OnJump", 1.0)
 end
 
 function OnDoubleJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
-	p:play_sound("event:/OnDoubleJump")
+	p:play_sound("event:/OnDoubleJump", 1.0)
 end
 
 function OnDetected( distance )
 	p:print( "OnDetected: "..distance.."\n" )
 	h:getHandleCaller()	
-	p:play_3d_sound("event:/OnDetected", pl:get_x(), pl:get_y(), pl:get_z(), h:get_x(), h:get_y(), h:get_z())
+	p:play_3d_sound("event:/OnDetected", pl:get_x(), pl:get_y(), pl:get_z(), h:get_x(), h:get_y(), h:get_z(), 1.0)
 	name_guard = h:get_name()
 	CallFunction("OnDetected_"..name_guard)
 	p:character_globe(distance, h:get_x(), h:get_y(), h:get_z())
@@ -317,7 +317,7 @@ end
 
 function OnExplode_throw_bomb()
 	p:print( "OnExplode_throw_bomb\n")
-	p:play_sound("event:/OnChangePolarity")
+	p:play_sound("event:/OnChangePolarity", 1.0)
 end
 
 
@@ -348,7 +348,7 @@ end
 function OnPutPila( param )
 	p:print( "OnPutPila\n")
 	CallFunction("OnPutPila_"..param)
-	p:play_sound("event:/OnPutPila")
+	p:play_sound("event:/OnPutPila", 1.0)
 end
 
 function OnRemovePila( param )

@@ -169,11 +169,12 @@ public:
 	void setPlayerEnabled(int);
 	void setCameraEnabled(int);
 	void setOnlySense(int);
-	void playSound(const char* sound_route);
-	void play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z);
+	void playSound(const char* sound_route, float volume);
+	void play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z, float volume);
 	void stopSound(const char* sound_route);
 	void playMusic(const char* music_route);
 	void playLoopingMusic(const char* music_route);
+	void stopMusic();
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);
 	void setMusicVolume(float volume);
