@@ -69,8 +69,8 @@ class player_controller : public CPlayerBase {
 
 	//Polarity Constants
 	float	POL_MIN_DISTANCE = 0.1f;
-	float	POL_MAX_DISTANCE = 20.0f;
-	float	POL_INTENSITY = 3.5f;
+	float	POL_MAX_DISTANCE = 25.0f;
+	float	POL_INTENSITY = 5.f;
 	float	POL_REPULSION = 1.25f;
 	float	POL_INERTIA_TIME = 1.0f;
 

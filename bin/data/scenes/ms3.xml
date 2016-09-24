@@ -226,6 +226,8 @@
 <render_static_mesh
    name="static_meshes/ms3/biombo_mapeado_arriba.static_mesh"/>
 <abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 <room
    name="2"/>
 
@@ -1492,8 +1494,6 @@
 <render_static_mesh
    name="static_meshes/ms3/papelera_mapeada.static_mesh"/>
 <abs_aabb/>
-<rigidbody
-   type_collision="static"/>
 <room
    name="2"/>
 

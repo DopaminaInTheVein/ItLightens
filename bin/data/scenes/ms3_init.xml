@@ -39,7 +39,7 @@
    name="__pila"/>
 <transform
    pos="-121.537 -0.242203 -5.41684"
-   quat="0 -0.01971 0 0.999806"
+   quat="0 0.999806 0 0.0197099"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/__pila.static_mesh"/>
@@ -495,7 +495,7 @@
    kpt3_pos="10.8511 -23.8712 -13.6583"
    kpt3_wait="2"
    jurisdiction="26.0682 -23.9 -5.11404"
-   jurRadius="50.0"
+   jurRadius="5.0"
    formation_point="25.5739 -24.0251 -6.9732"
    formation_dir="26.2157 -23.9678 -6.80094"/>
 <skc_guard/>
@@ -536,7 +536,7 @@
    kpt2_pos="2.70562 -23.8712 1.62904"
    kpt2_wait="2"
    jurisdiction="-1.58059 -23.9 3.84785"
-   jurRadius="50.0"
+   jurRadius="5.0"
    formation_point="-4.26029 -24.0251 1.96243"
    formation_dir="-3.61846 -23.9678 2.13469"/>
 <skc_guard/>
@@ -742,17 +742,18 @@
 <tags
    tags="drone platform"/>
 <drone
+   speed="3"
    wpts_size="2"
-   wpt0_pos="16.7547 -11.8015 -11.5295"
+   wpt0_pos="11.227 -12.0 -18.0"
    wpt0_wait="2"
-   wpt1_pos="3.38652 -11.8015 -11.5295"
+   wpt1_pos="11.5331 -11.8015 0.159917"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
    name="DroneMinus_1"/>
 <transform
-   pos="10.59 -11.2973 -11.6827"
+   pos="11.28 -11.2973 -11.6827"
    quat="0 0.708986 0 0.705223"
    scale="1.0"/>
 <render_static_mesh
@@ -774,17 +775,18 @@
 <tags
    tags="drone platform"/>
 <drone
+   speed="3"
    wpts_size="2"
-   wpt0_pos="3.42032 -11.8015 -2.78732"
+   wpt0_pos="8.83 -12.0 16.541"
    wpt0_wait="2"
-   wpt1_pos="16.6116 -11.8015 -2.78732"
+   wpt1_pos="8.83 -12.0 -1.177"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
    name="DronePlus_1"/>
 <transform
-   pos="10.4543 -11.2448 -2.66798"
+   pos="8.625 -11.2448 7.201"
    quat="0 -0.707107 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
@@ -796,71 +798,7 @@
 <local_aabb/>
 <polarized
    pol="plus"
-   offset="0 0.966293 -0.0321448"/>
-<room
-   name="1"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="drone platform"/>
-<drone
-   wpts_size="2"
-   wpt0_pos="16.6998 -11.8015 5.15044"
-   wpt0_wait="2"
-   wpt1_pos="3.59094 -11.8015 5.15044"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"/>
-<name
-   name="DroneMinus_002"/>
-<transform
-   pos="10.59 -11.2973 4.95717"
-   quat="0 0.708986 0 0.705223"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-<polarized
-   pol="minus"
-   offset="-0.0106277 0.965812 -0.0448165"/>
-<room
-   name="1"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="drone platform"/>
-<drone
-   wpts_size="2"
-   wpt0_pos="3.42032 -11.8015 14.0664"
-   wpt0_wait="2"
-   wpt1_pos="16.6116 -11.8015 14.0664"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"/>
-<name
-   name="DronePlus_002"/>
-<transform
-   pos="10.4543 -11.2448 13.9719"
-   quat="0 -0.707107 0 0.707107"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-<polarized
-   pol="plus"
-   offset="-0.0168667 0.966293 -0.293303"/>
+   offset="0 0.966293 -0.032145"/>
 <room
    name="1"/>
 
@@ -898,17 +836,18 @@
 <tags
    tags="drone platform"/>
 <drone
+   speed="2.5"
    wpts_size="2"
-   wpt0_pos="-3.17764 -3.08729 21.393"
+   wpt0_pos="-8.35107 -0.0956042 21.393"
    wpt0_wait="2"
-   wpt1_pos="10.0325 -5.1532 21.3712"
+   wpt1_pos="4.826 -8.349 21.3712"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
    name="DroneMinus_003"/>
 <transform
-   pos="3.79343 -3.53051 21.0883"
+   pos="-1.38 -2.938 21.0883"
    quat="0 0.999985 0 0"
    scale="1.0"/>
 <render_static_mesh
@@ -930,10 +869,11 @@
 <tags
    tags="drone platform"/>
 <drone
+   speed="3"
    wpts_size="2"
-   wpt0_pos="-26.998 1.42543 5.70417"
+   wpt0_pos="-30.674 1.42543 5.70417"
    wpt0_wait="2"
-   wpt1_pos="-19.0573 -1.58479 14.5644"
+   wpt1_pos="-19.0573 0 17.855"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
@@ -953,38 +893,6 @@
 <polarized
    pol="minus"
    offset="-0.0371513 0.965812 -0.0272245"/>
-<room
-   name="1"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="drone platform"/>
-<drone
-   wpts_size="2"
-   wpt0_pos="-34.4096 4.27551 22.2125"
-   wpt0_wait="2"
-   wpt1_pos="-34.4886 2.20959 8.4864"
-   wpt1_wait="2"
-   textureFront="droneFront"
-   textureBack="droneBack"/>
-<name
-   name="DroneMinus_005"/>
-<transform
-   pos="-34.7445 3.83228 15.2428"
-   quat="0 -0.701693 0 0.712479"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="drone"/>
-<local_aabb/>
-<polarized
-   pol="plus"
-   offset="0.100697 0.934383 0.073431"/>
 <room
    name="1"/>
 
