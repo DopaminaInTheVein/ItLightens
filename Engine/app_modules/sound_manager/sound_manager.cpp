@@ -192,7 +192,7 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, bool lo
 			}
 
 			// Reset listener attributes
-			attributes = { { 0 } };
+			attributes.position = { { 0 } };
 			studio_system->setListenerAttributes(0, &attributes);
 			return true;
 		}
