@@ -109,7 +109,10 @@ fn parseCharController parent charController = (
 	local radius = "0.3" --> Prefab!?
 	local height = "0.5" --> Prefab!?
 	if charController != undefined then (
-		radius = charController.radius as string
+		local type = (getUserProp _parsingObject "typeObject") as string
+		if type != "Scientist" then (
+			radius = charController.radius as string
+		)
 		height = charController.height as string
 	)
 	local xml = parent.addChild "character_controller"
