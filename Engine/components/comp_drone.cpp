@@ -15,12 +15,12 @@ void TCompDrone::onCreate(const TMsgEntityCreated &)
 	CEntity *e = h;
 	if (e) {
 		//Init Waypoints (and add the last point the initial position)
-		TCompTransform *t = e->get<TCompTransform>();
-		wpts[wpts.size() - 1] = t->getPosition();
-		waitTimes[waitTimes.size() - 1] = 0;
+		//wpts[wpts.size() - 1] = t->getPosition();
+		//waitTimes[waitTimes.size() - 1] = 0;
 		curWpt = 0;
 
 		// Set Kinematic
+		TCompTransform *t = e->get<TCompTransform>();
 		TCompPhysics *p = e->get<TCompPhysics>();
 		p->setKinematic(true);
 		final_pos = t->getPosition();
@@ -186,8 +186,8 @@ bool TCompDrone::load(MKeyValue & atts)
 {
 	espatllat = atts.getBool("espatllat", false);
 	int n = atts.getInt("wpts_size", 0);
-	wpts.resize(n + 1);
-	waitTimes.resize(n + 1);
+	wpts.resize(n);// +1);
+	waitTimes.resize(n);// + 1);
 	for (int i = 0; i < n; i++) {
 		WPT_ATR_NAME(atrPos, "pos", i);
 		WPT_ATR_NAME(atrWait, "wait", i);
@@ -199,7 +199,7 @@ bool TCompDrone::load(MKeyValue & atts)
 }
 bool TCompDrone::save(std::ofstream& os, MKeyValue& atts)
 {
-	int n = (int)wpts.size() - 1;
+	int n = (int)wpts.size();//- 1;
 	atts.put("wpts_size", n);
 	for (int i = 0; i < n; i++) {
 		WPT_ATR_NAME(atrPos, "pos", i);
@@ -216,7 +216,7 @@ bool TCompDrone::save(std::ofstream& os, MKeyValue& atts)
 
 void TCompDrone::fixedUpdate(float elapsed) {
 	if (!SetMyBasicComponents()) return;
-	auto actor = physics ? physics->getActor(): nullptr;
+	auto actor = physics ? physics->getActor() : nullptr;
 	PxRigidDynamic *rd = actor ? actor->isRigidDynamic() : nullptr;
 	if (rd) {
 		PxTransform tmx = rd->getGlobalPose();

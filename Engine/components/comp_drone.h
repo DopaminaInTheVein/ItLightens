@@ -19,7 +19,7 @@ struct TCompDrone : public TTrigger {
 	float speed = 1.0f;
 	float fallingSpeed = 3.0f;
 	float timeToWait = 0.f;
-	float mEpsilon = .1f;
+	float mEpsilon = 1.1f;
 	bool playerInDistance = false;
 	bool sciInDistance = false;
 	bool espatllat = false;
