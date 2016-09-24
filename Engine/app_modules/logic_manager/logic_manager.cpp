@@ -386,7 +386,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadingLevel(%s);", params.c_str());
 		break;
 	}
-						   //Others
+	//Others
 	case (OnStep): {
 		sprintf(lua_code, "OnStep%s();", params.c_str());
 		break;
@@ -395,7 +395,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnStepOut%s();", params.c_str());
 		break;
 	}
-					  //GUI
+	//GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;
@@ -802,7 +802,6 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: x coord of the sound")
 		.param("float: y coord of the sound")
 		.param("float: z coord of the sound")
-		.param("float: Volume of the sound")
 		.param("bool: Sound looping or not")
 		// stop sound function
 		.set("stop_sound", &SLBPublicFunctions::stopSound)

@@ -2,6 +2,10 @@
 #include "sound_manager.h"
 #include "utils/utils.h"
 
+#include "render/shader_cte.h"
+#include "constants/ctes_camera.h"
+
+extern CShaderCte< TCteCamera > shader_ctes_camera;
 extern CSoundManagerModule* sound_manager = nullptr;
 
 CSoundManagerModule::CSoundManagerModule() {}
@@ -123,10 +127,7 @@ bool CSoundManagerModule::playSound(std::string route, float volume = 1.f, bool 
 	return false;
 }
 
-bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 sound_pos, float volume = 1.f, bool looping = false) {
-
-	if (volume < 0.f) { volume = 0.f; }
-	else if (volume > 1.f) { volume = 1.f; }
+bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, bool looping = false) {
 
 	Studio::EventInstance* sound_instance = NULL;
 
@@ -134,22 +135,49 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 s
 	sounds_descriptions[std::string(route)]->getInstanceCount(&count);
 
 	if (count < 1) {
+
 		result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
+
 		if (result == FMOD_OK) {
+
+			// read max distance to hear a sound
+			float MAX_DISTANCE = 0.f;
+			CApp &app = CApp::get();
+			std::string file_ini = app.file_initAttr_json;
+			std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
+			assignValueToVar(MAX_DISTANCE, fields);
+
+			// the volume will depend on the actual distance
+			VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
+			float dist = simpleDist(camera_pos, sound_pos);
+			float volume = 1.f;
+
+			if (dist < MAX_DISTANCE) {
+				volume = (MAX_DISTANCE - dist) / MAX_DISTANCE;
+			}
+			else {
+				volume = 0.f;
+			}
+
+			camera_pos.Normalize();
+			sound_pos.Normalize();
+			VEC3 camera_front = shader_ctes_camera.CameraFront;
+			VEC3 camera_up = shader_ctes_camera.CameraUp;
+
+			FMOD_VECTOR listener_position = VectorToFmod(camera_pos);
+			FMOD_VECTOR listener_front = VectorToFmod(camera_front);
+			FMOD_VECTOR listener_up = VectorToFmod(camera_up);
+			FMOD_VECTOR sound_position = VectorToFmod(sound_pos);
 
 			// Position the listener at the player position
 			FMOD_3D_ATTRIBUTES attributes = { { 0 } };
-			attributes.position.x = player_pos.x;
-			attributes.position.y = player_pos.y;
-			attributes.position.z = player_pos.z;
-			attributes.forward.z = 1.0f;
-			attributes.up.y = -1.0f;
+			attributes.position = listener_position;
+			attributes.forward = listener_front;
+			attributes.up = listener_up;
 			studio_system->setListenerAttributes(0, &attributes);
 
 			// Position the event correctly
-			attributes.position.x = sound_pos.x;
-			attributes.position.y = sound_pos.y;
-			attributes.position.z = sound_pos.z;
+			attributes.position = sound_position;
 			sound_instance->set3DAttributes(&attributes);
 
 			// Play the sound
@@ -164,14 +192,12 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 s
 			}
 
 			// Reset listener attributes
-			attributes.position.x = 0;
-			attributes.position.y = 0;
-			attributes.position.z = 0;
+			attributes = { { 0 } };
 			studio_system->setListenerAttributes(0, &attributes);
 			return true;
 		}
 	}
-
+	
 	return false;
 }
 
@@ -289,6 +315,14 @@ bool CSoundManagerModule::setMusicVolume(float volume) {
 
 }
 
+FMOD_VECTOR CSoundManagerModule::VectorToFmod(const VEC3 vect) {
+	FMOD_VECTOR fVec;
+	fVec.x = vect.x;
+	fVec.y = vect.y;
+	fVec.z = vect.z;
+	return fVec;
+}
+
 // Callback from Studio - Remember these callbacks will occur in the Studio update thread, NOT the game thread.
 FMOD_RESULT F_CALLBACK loopingMusicCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters)
 {
@@ -321,4 +355,6 @@ FMOD_RESULT F_CALLBACK loopingSoundCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type
 
 	return FMOD_OK;
 }
+
+
 

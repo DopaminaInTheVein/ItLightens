@@ -80,7 +80,7 @@ end
 function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
 	h:getHandleCaller()	
-	p:play_3d_sound("event:/OnGuardAttack", pl:get_x(), pl:get_y(), pl:get_z(), h:get_x(), h:get_y(), h:get_z(), 1.0, false)
+	p:play_3d_sound("event:/OnGuardAttack", h:get_x(), h:get_y(), h:get_z(), false)
 end
 
 function OnGuardAttackEnd( reaction_time )
@@ -269,7 +269,7 @@ end
 function OnDetected( distance )
 	p:print( "OnDetected: "..distance.."\n" )
 	h:getHandleCaller()	
-	p:play_3d_sound("event:/OnDetected", pl:get_x(), pl:get_y(), pl:get_z(), h:get_x(), h:get_y(), h:get_z(), 1.0, false)
+	p:play_3d_sound("event:/OnDetected", h:get_x(), h:get_y(), h:get_z(), false)
 	name_guard = h:get_name()
 	CallFunction("OnDetected_"..name_guard)
 	p:character_globe(distance, h:get_x(), h:get_y(), h:get_z())
@@ -427,10 +427,12 @@ end
 -- Others
 -------------------------------------------
 function OnStepGuard( )
-	--p:print("StepGuard")
+	--h:getHandleCaller()	
+	--p:play_3d_sound("event:/OnGuardStepLeft1", h:get_x(), h:get_y(), h:get_z(), false)
 end
 function OnStepMole( )
-	--p:print("StepMole")
+	h:getHandleCaller()	
+	p:play_3d_sound("event:/OnMoleStepLeft1", h:get_x(), h:get_y(), h:get_z(), false)
 end
 function OnStepScientist( )
 	--p:print("StepScientist")

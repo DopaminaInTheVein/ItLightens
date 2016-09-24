@@ -53,7 +53,7 @@ public:
 	}
 
 	bool playSound(std::string, float volume, bool looping);
-	bool play3dSound(std::string, VEC3 player_pos, VEC3 sound_pos, float volume, bool looping);
+	bool play3dSound(std::string, VEC3 sound_pos, bool looping);
 	bool stopSound(std::string);
 	bool playMusic(std::string);
 	bool playLoopingMusic(std::string);
@@ -61,6 +61,7 @@ public:
 	bool playVoice(std::string);
 	bool playAmbient(std::string);
 	bool setMusicVolume(float);
+	FMOD_VECTOR VectorToFmod(const VEC3 vect);
 
 };
 
