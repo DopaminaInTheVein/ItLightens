@@ -179,6 +179,11 @@
    tags="drone platform"/>
 <drone
    espatllat="yes"
+   wpts_size="2"
+   wpt0_pos="70.2983 1.99352 -2.8411"
+   wpt0_wait="2"
+   wpt1_pos="70.8942 4.67723 -2.80197"
+   wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
