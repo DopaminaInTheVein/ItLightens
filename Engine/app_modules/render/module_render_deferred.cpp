@@ -1336,16 +1336,6 @@ void CRenderDeferredModule::applyPostFX() {
 	auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
 	drawFullScreen(rt_final, tech);
 
-	
-
-	if (test_dream_shader) {
-		activateBlend(BLENDCFG_COMBINATIVE);
-		tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
-		tech->activate();
-
-		drawFullScreen(rt_final, tech);
-	}
-
 	activateBlend(BLENDCFG_COMBINATIVE);
 	//activateBlend(BLENDCFG_DEFAULT);
 
@@ -1354,6 +1344,14 @@ void CRenderDeferredModule::applyPostFX() {
 	tech->activate();
 
 	drawFullScreen(rt_final, tech);
+
+	if (test_dream_shader) {
+		activateBlend(BLENDCFG_COMBINATIVE);
+		tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
+		tech->activate();
+
+		drawFullScreen(rt_final, tech);
+	}
 
 	activateZ(ZCFG_DEFAULT);
 }
