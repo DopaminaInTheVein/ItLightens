@@ -11,6 +11,7 @@
 
 class CIOModule : public IAppModule {
   void renderInMenu();
+  void release_all();
 public:
   bool start() override;
   void stop() override;

@@ -7,29 +7,33 @@
 extern CIOModule* io = nullptr;
 static int i = 0;
 bool isKeyPressed(int key_code) {
-  return ( ::GetAsyncKeyState(key_code) & 0x8000 ) != 0;
+	return (::GetAsyncKeyState(key_code) & 0x8000) != 0;
 }
 
-
 bool CIOModule::start() {
-  mouse.start(CApp::get().getHWnd());
-  //mouse.capture();
-  
-  return true;
+	mouse.start(CApp::get().getHWnd());
+	//mouse.capture();
+
+	return true;
 }
 
 void CIOModule::stop() {
-
 }
 
 void CIOModule::update(float dt) {
-  mouse.update(dt);
-  keys.update(dt);
-  joystick.update(dt);
+	mouse.update(dt);
+	keys.update(dt);
+	joystick.update(dt);
+}
+
+void CIOModule::release_all() {
+	mouse.release();
+	keys.release();
+	joystick.release();
 }
 
 void CIOModule::render() {
-  mouse.wheel = 0;
+	mouse.wheel = 0;
 }
 
 bool CIOModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -41,10 +45,10 @@ bool CIOModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		return true;
 		break;
 	case WM_KILLFOCUS:
-		mouse.release();
+		release_all();
 		return true;
 		break;
-		
+
 	case WM_MOUSEMOVE:
 		mouse.setSysMouseLoc(x, y);
 		return true;
@@ -65,5 +69,5 @@ bool CIOModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		return true;
 		break;
 	}
-  return false;
+	return false;
 }

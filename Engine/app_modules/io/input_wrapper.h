@@ -1,8 +1,7 @@
 #ifndef _INC_INPUT_WRAPPER_H_
 #define _INC_INPUT_WRAPPER_H_
 
-#include "input.h"
-#include "app_modules\io\io.h"
+#include "io.h"
 
 #ifndef FINAL_BUILD
 #define DECL_INPUT_DEBUG(name) bool name();

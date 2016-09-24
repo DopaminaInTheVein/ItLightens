@@ -4,7 +4,6 @@
 #include "components/entity_tags.h"
 #include "utils/XMLParser.h"
 #include "utils/utils.h"
-#include "input/input_wrapper.h"
 #include "logic/sbb.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "ui/ui_interface.h"
@@ -268,7 +267,7 @@ bool bt_guard::guardAlerted() {
 				// the guard will be alerted if he is near enough
 				if (simpleDist(myPos, guard_alert_position) < GUARD_ALERT_RADIUS) {
 					VEC3 alert_point = alert_it->second.alert_position;
-					if ((alert_it->first.find(string("_player_lost")) != string::npos) || 
+					if ((alert_it->first.find(string("_player_lost")) != string::npos) ||
 						(alert_it->first.find(string("_player_detected")) != string::npos)) {
 						playerLost = true;
 						player_last_seen_point = alert_point;
@@ -1078,7 +1077,6 @@ void bt_guard::shootToPlayer() {
 
 	// calling OnGuardAttackEvent
 	logic_manager->throwEvent(logic_manager->OnGuardAttack, "", CHandle(this).getOwner());
-
 }
 
 void bt_guard::drawShot(VEC3 dest) {

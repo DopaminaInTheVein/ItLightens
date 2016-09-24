@@ -15,7 +15,7 @@
 #include "components/comp_camera_main.h"
 #include "components/comp_sense_vision.h"
 
-#include "input/input_wrapper.h"
+#include "app_modules/io/input_wrapper.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "utils/utils.h"
 

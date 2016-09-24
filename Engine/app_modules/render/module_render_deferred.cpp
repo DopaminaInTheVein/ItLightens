@@ -913,7 +913,8 @@ void CRenderDeferredModule::render() {
 	uploadConstantsGPU();
 
 	renderGBuffer();
-	renderDetails();
+	renderDetails(CRenderTechnique::DETAIL_OBJS);
+	renderDetails(CRenderTechnique::TRANSPARENT_OBJS);
 	renderAccLight();
 
 	if (ssao_test) {
@@ -974,11 +975,7 @@ void CRenderDeferredModule::render() {
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 
-	shader_ctes_globals.global_color = VEC4(1, 1, 1, 1);
-	shader_ctes_globals.uploadToGPU();
-	activateBlend(BLENDCFG_SUBSTRACT);
-	tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_final, tech);
+	
 
 	activateBlend(BLENDCFG_DEFAULT);
 
@@ -994,7 +991,6 @@ void CRenderDeferredModule::render() {
 
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
-	
 	CTexture::deactivate(TEXTURE_SLOT_GLOSSINESS);
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	Render.activateBackBuffer();
@@ -1005,10 +1001,7 @@ void CRenderDeferredModule::render() {
 	}
 
 	applyPostFX();
-
-	// Mandar a pintar los 'transparentes'
 	
-	RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
 	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
@@ -1271,23 +1264,26 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 	//Render.activateBackBuffer();
 }
 
-void CRenderDeferredModule::renderDetails() {
+void CRenderDeferredModule::renderDetails(CRenderTechnique::eCategory type) {
 	// -------------------------
 	// Activar mis multiples render targets
-	ID3D11RenderTargetView* rts[3] = {
+	ID3D11RenderTargetView* rts[5] = {
 		rt_albedos->getRenderTargetView()
 		,	rt_normals->getRenderTargetView()
-		,	nullptr
+		,	rt_depths->getRenderTargetView()
+		,   rt_glossiness->getRenderTargetView()
+		,   rt_specular->getRenderTargetView()
 	};
 
 	Render.activateBackBuffer();
 
-	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+	Render.ctx->OMSetRenderTargets(5, rts, Render.depth_stencil_view);
 
 	activateZ(ZCFG_Z_TEST_LESS_EQUAL);
 	activateBlend(BLENDCFG_COMBINATIVE);
 
-	RenderManager.renderAll(h_camera, CRenderTechnique::DETAIL_OBJS);
+	RenderManager.renderAll(h_camera, type);
+	//RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
 }
 
 void CRenderDeferredModule::uploadConstantsGPU() {
@@ -1314,25 +1310,48 @@ void CRenderDeferredModule::applyPostFX() {
 		next_step = glow->apply(next_step);
 	else
 		return;
-	
-	if (test_dream_shader) {
-		activateBlend(BLENDCFG_COMBINATIVE);
-		auto tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
-		tech->activate();
-
-		drawFullScreen(rt_final, tech);
-	}
-
 
 
 	// ------------------------
 	Render.activateBackBuffer();
 
-	//activateZ(ZCFG_ALL_DISABLED);
+	activateZ(ZCFG_ALL_DISABLED);
 
 	activateBlend(BLENDCFG_ADDITIVE);
 
 	drawFullScreen(next_step);
+
+
+	//AA
+//	activateBlend(BLENDCFG_COMBINATIVE);
+//	auto tech = Resources.get("anti_aliasing.tech")->as<CRenderTechnique>();
+//	tech->activate();
+
+//	drawFullScreen(rt_final, tech);
+	
+	//outline
+	shader_ctes_globals.global_color = VEC4(1, 1, 1, 1);
+	shader_ctes_globals.uploadToGPU();
+	activateBlend(BLENDCFG_SUBSTRACT);
+	auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_final, tech);
+
+	activateBlend(BLENDCFG_COMBINATIVE);
+	//activateBlend(BLENDCFG_DEFAULT);
+
+	//DoF
+	tech = Resources.get("depth_field.tech")->as<CRenderTechnique>();
+	tech->activate();
+
+	drawFullScreen(rt_final, tech);
+
+	if (test_dream_shader) {
+		activateBlend(BLENDCFG_COMBINATIVE);
+		tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
+		tech->activate();
+
+		drawFullScreen(rt_final, tech);
+	}
 
 	activateZ(ZCFG_DEFAULT);
 }

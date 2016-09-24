@@ -44,11 +44,13 @@ float getDeltaTime(float always) {
 	if (GameController->GetGameState() == CGameController::RUNNING || always) {
 		CApp& app = CApp::get();
 		float dt = app.timer_app.GetDeltaTime();
-		if (dt > 0.5f) {
+		bool long_frame = CApp::get().long_frame = (dt > 0.5f);
+		if (long_frame) {
 			dt = _deltaTimePrev;
 		}
 		else {
 			_deltaTimePrev = dt;
+			CApp::get().long_frame = true;
 		}
 		if (GameController->GetGameState() == CGameController::STOPPED_INTRO)
 			return dt / 2.5f;

@@ -11,7 +11,6 @@
 #include "components\comp_name.h"
 #include "ui\ui_interface.h"
 #include "components\comp_msgs.h"
-#include "input\input_wrapper.h"
 #include "render\static_mesh.h"
 #include "components\comp_render_static_mesh.h"
 #include "components/comp_charactercontroller.h"
