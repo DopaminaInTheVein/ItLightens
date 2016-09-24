@@ -49,7 +49,7 @@ float SLBPosition::Z()
 
 // player functions
 void SLBPlayer::getPlayer() {
-	CHandle thePlayer = tags_manager.getFirstHavingTag("player");
+	CHandle thePlayer = CPlayerBase::handle_player;
 	player_handle = thePlayer;
 }
 void SLBPlayer::getRaijin() {
@@ -130,7 +130,7 @@ CHandle SLBHandle::getHandle() {
 
 // We need ti aply generic actions to player as well
 void SLBHandle::getPlayer() {
-	CHandle thePlayer = tags_manager.getFirstHavingTag("player");
+	CHandle thePlayer = CPlayerBase::handle_player;
 	real_handle = thePlayer;
 }
 void SLBHandle::getRaijin() {
@@ -718,7 +718,7 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 	std::vector<int> new_room_vec;
 	new_room_vec.push_back(newRoom);
 
-	CHandle p = tags_manager.getFirstHavingTag("player");
+	CHandle p = CPlayerBase::handle_player;
 	CEntity * pe = p;
 	TCompRoom * room = pe->get<TCompRoom>();
 	if (room->setName(new_room_vec)) {

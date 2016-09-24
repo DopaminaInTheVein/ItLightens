@@ -61,7 +61,6 @@ struct TCompCulling : public TCompBase {
 	void renderInMenu();
 	void update(float dt) {}
 	void update();
-
 	//Static method for check AABBs
 	static bool checkAABB(TCompCulling*, TCompAbsAABB*);
 };

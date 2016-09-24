@@ -22,6 +22,7 @@
 #include "components/comp_charactercontroller.h"
 
 map<int, string> CPlayerBase::out = {};
+CHandle CPlayerBase::handle_player = CHandle();
 
 CPlayerBase::CPlayerBase() {
 }
@@ -49,6 +50,10 @@ bool CPlayerBase::getUpdateInfo() {
 	if (!h_sense_vision.isValid()) return false;
 	sense_vision = GETH_COMP(h_sense_vision, TCompSenseVision);
 	if (!sense_vision) return false;
+
+	//Cache handle player
+	CHandle myHandle = CHandle(compBaseEntity);
+	if (myHandle.hasTag("player")) handle_player = myHandle;
 
 	return true;
 }

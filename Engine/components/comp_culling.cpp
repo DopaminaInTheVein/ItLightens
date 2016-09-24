@@ -7,6 +7,7 @@
 #include "handle/handle.h"
 #include "comp_room.h"
 #include "logic\sbb.h"
+#include "player_controllers/player_controller_base.h"
 
 void TCompCulling::renderInMenu() {
 	// Show how many AABB's we are seeing...
@@ -41,12 +42,10 @@ bool TCompCulling::CPlane::isCulled(const AABB* aabb) const {
 }
 
 void TCompCulling::update() {
+	compBaseEntity = MY_OWNER;
 	//PROFILE_FUNCTION("TCompCulling: Update");
 	// Get access to the comp_camera in a sibling component
-
-	CEntity* e_owner = CHandle(this).getOwner();
-	if (!e_owner) return;
-	TCompRoom* room = e_owner->get<TCompRoom>();
+	TCompRoom* room = compBaseEntity->get<TCompRoom>();
 	if (room) {
 		std::vector<int> rooms = room->name;
 		if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
@@ -55,10 +54,10 @@ void TCompCulling::update() {
 		else {
 			//fast fix for room3
 			if (SBB::readSala() == 2) {
-				CEntity* ep = tags_manager.getFirstHavingTag("player");
+				CEntity* ep = CPlayerBase::handle_player;
 				if (ep) {
 					TCompTransform* t = ep->get<TCompTransform>();
-					TCompTransform* tl = e_owner->get<TCompTransform>();
+					TCompTransform* tl = compBaseEntity->get<TCompTransform>();
 
 					if (t->getPosition().y > 10) {
 						if (tl->getPosition().y < 12)
@@ -74,7 +73,7 @@ void TCompCulling::update() {
 	}
 
 	MAT44 view_proj;
-	e_owner->sendMsg(TMsgGetCullingViewProj{ &view_proj });
+	compBaseEntity->sendMsg(TMsgGetCullingViewProj{ &view_proj });
 
 	// Construir el set de planos usando la view_proj
 	planes.fromViewProjection(view_proj);
@@ -86,10 +85,19 @@ void TCompCulling::update() {
 	// and test them
 	auto hm = getHandleManager<TCompAbsAABB>();
 	TCompAbsAABB* aabb = hm->getFirstObject();
+	PROFILE_FUNCTION("TCompCulling: do culling");
 	for (size_t i = 0; i < hm->size(); ++i, ++aabb) {
-		PROFILE_FUNCTION("TCompCulling: isVisible bucle");
-		if (planes.isVisible(aabb) || CHandle(aabb).getOwner().hasTag("player"))
-			bits.set(i);
+		PROFILE_FUNCTION("TCompCulling: do culling each");
+		bool isPlayer = false;
+		{
+			PROFILE_FUNCTION("TCompCulling: isPlayer");
+			isPlayer = MY_OWNER == CPlayerBase::handle_player;
+		}
+		{
+			PROFILE_FUNCTION("TCompCulling: isVisible");
+			if (planes.isVisible(aabb) || MY_OWNER == CPlayerBase::handle_player)
+				bits.set(i);
+		}
 	}
 }
 
