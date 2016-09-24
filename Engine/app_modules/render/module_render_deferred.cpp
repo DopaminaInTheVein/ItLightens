@@ -975,11 +975,7 @@ void CRenderDeferredModule::render() {
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 
-	shader_ctes_globals.global_color = VEC4(1, 1, 1, 1);
-	shader_ctes_globals.uploadToGPU();
-	activateBlend(BLENDCFG_SUBSTRACT);
-	tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_final, tech);
+	
 
 	activateBlend(BLENDCFG_DEFAULT);
 
@@ -1314,25 +1310,50 @@ void CRenderDeferredModule::applyPostFX() {
 		next_step = glow->apply(next_step);
 	else
 		return;
-	
-	if (test_dream_shader) {
-		activateBlend(BLENDCFG_COMBINATIVE);
-		auto tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
-		tech->activate();
-
-		drawFullScreen(rt_final, tech);
-	}
-
 
 
 	// ------------------------
 	Render.activateBackBuffer();
 
-	//activateZ(ZCFG_ALL_DISABLED);
+	activateZ(ZCFG_ALL_DISABLED);
 
 	activateBlend(BLENDCFG_ADDITIVE);
 
 	drawFullScreen(next_step);
+
+
+	//AA
+//	activateBlend(BLENDCFG_COMBINATIVE);
+//	auto tech = Resources.get("anti_aliasing.tech")->as<CRenderTechnique>();
+//	tech->activate();
+
+//	drawFullScreen(rt_final, tech);
+	
+	//outline
+	shader_ctes_globals.global_color = VEC4(1, 1, 1, 1);
+	shader_ctes_globals.uploadToGPU();
+	activateBlend(BLENDCFG_SUBSTRACT);
+	auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_final, tech);
+
+	
+
+	if (test_dream_shader) {
+		activateBlend(BLENDCFG_COMBINATIVE);
+		tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
+		tech->activate();
+
+		drawFullScreen(rt_final, tech);
+	}
+
+	activateBlend(BLENDCFG_COMBINATIVE);
+	//activateBlend(BLENDCFG_DEFAULT);
+
+	//DoF
+	tech = Resources.get("depth_field.tech")->as<CRenderTechnique>();
+	tech->activate();
+
+	drawFullScreen(rt_final, tech);
 
 	activateZ(ZCFG_DEFAULT);
 }
