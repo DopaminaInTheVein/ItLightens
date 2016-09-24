@@ -213,7 +213,18 @@ void TCompSkeleton::update(float dt) {
 		total_skeletons = 0;
 		updated_skeletons = 0;
 	}
-	if (culling_bits->test(idx)) {
+
+	// read max distance to always update
+	float MAX_DISTANCE = 0.f;
+	CApp &app = CApp::get();
+	std::string file_ini = app.file_initAttr_json;
+	std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
+	assignValueToVar(MAX_DISTANCE, fields);
+	// compute distance to camera
+	VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
+	float distance = simpleDist(camera_pos, tmx->getPosition());
+
+	if (culling_bits->test(idx) || distance < MAX_DISTANCE) {
 		updated_skeletons++;
 		model->getMixer()->extra_trans = Engine2Cal(tmx->getPosition());
 		model->getMixer()->extra_rotation = Engine2Cal(tmx->getRotation());

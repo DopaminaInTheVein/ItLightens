@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.01.08.00">
     <object class="Event" id="{afbef0fe-3e2a-437f-96ac-682e69b1cb47}">
         <property name="name">
-            <value>OnMoleStep1</value>
+            <value>OnMoleStepLeft1</value>
         </property>
         <property name="outputFormat">
             <value>2</value>
@@ -59,11 +59,18 @@
     <object class="EventAutomatableProperties" id="{77a17c0e-3a3f-4f76-8fd3-c1e16b6f7846}"/>
     <object class="MarkerTrack" id="{083e049d-40cf-4eaa-b100-00712f9ca2a4}"/>
     <object class="GroupTrack" id="{3e34dcce-09d5-4596-be4f-4d2bd68fa001}">
+        <relationship name="modules">
+            <destination>{72a28433-6fb9-4c7f-b3e0-94c5ddb1e682}</destination>
+        </relationship>
         <relationship name="mixerGroup">
             <destination>{6016d449-1564-4321-8c5a-59452f079dda}</destination>
         </relationship>
     </object>
-    <object class="Timeline" id="{5788e960-961d-42a0-aa29-38e98f4b313a}"/>
+    <object class="Timeline" id="{5788e960-961d-42a0-aa29-38e98f4b313a}">
+        <relationship name="modules">
+            <destination>{72a28433-6fb9-4c7f-b3e0-94c5ddb1e682}</destination>
+        </relationship>
+    </object>
     <object class="EventMixerMaster" id="{e34fc332-c3c6-4fe6-8e78-28bde08b0254}">
         <relationship name="effectChain">
             <destination>{dd696561-3349-40b2-b756-c7063c833769}</destination>
@@ -81,6 +88,17 @@
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{408fdfb9-f74f-458f-a5da-8f5e021a93a4}"/>
+    <object class="SingleSound" id="{72a28433-6fb9-4c7f-b3e0-94c5ddb1e682}">
+        <property name="start">
+            <value>0</value>
+        </property>
+        <property name="length">
+            <value>0.23802721088435375</value>
+        </property>
+        <relationship name="audioFile">
+            <destination>{ba7f8f47-d710-4a9b-b8d3-aea2b4656f45}</destination>
+        </relationship>
+    </object>
     <object class="EventMixerGroup" id="{6016d449-1564-4321-8c5a-59452f079dda}">
         <property name="name">
             <value>Audio 1</value>
@@ -110,6 +128,10 @@
     </object>
     <object class="MixerBusPanner" id="{297e2502-6181-4761-9e96-f1b52b22e876}"/>
     <object class="MixerBusFader" id="{02d5d137-3793-4a9d-9607-3dbdecf2944c}"/>
-    <object class="SpatialiserEffect" id="{81878d10-476e-4340-ae62-80cf7072ef89}"/>
+    <object class="SpatialiserEffect" id="{81878d10-476e-4340-ae62-80cf7072ef89}">
+        <property name="userPanDirection">
+            <value>82.8627396</value>
+        </property>
+    </object>
     <object class="MixerBusFader" id="{427b2daa-ca9f-4a90-92b0-ac5cb8bfb537}"/>
 </objects>
