@@ -221,13 +221,13 @@ end
 function openDoorPila( )
   cineDoor()
   p:exec_command( "openDoorPilaEffect();", 4)
-  p:play_sound("event:/OnDoorClosing")
+  p:play_sound("event:/OnDoorClosing", 1.0, false)
 end
 
 function closeDoorPila( )
   cineDoor()
   p:exec_command( "closeDoorPilaEffect();", 4)
-  p:play_sound("event:/OnDoorClosing")
+  p:play_sound("event:/OnDoorClosing", 1.0, false)
 end
 
 function openDoorPilaEffect( )
@@ -491,7 +491,7 @@ function destroyWallEffect()
   h:destroy()
   
     --Reproducimos sonido
-  	p:play_sound("event:/OnBreakWall")
+  	p:play_sound("event:/OnBreakWall", 1.0, false)
   
   --Activamos fragmentos pared
   
