@@ -52,8 +52,8 @@ public:
 		return "sound_manager";
 	}
 
-	bool playSound(std::string, float volume);
-	bool play3dSound(std::string, VEC3 player_pos, VEC3 sound_pos, float volume);
+	bool playSound(std::string, float volume, bool looping);
+	bool play3dSound(std::string, VEC3 player_pos, VEC3 sound_pos, float volume, bool looping);
 	bool stopSound(std::string);
 	bool playMusic(std::string);
 	bool playLoopingMusic(std::string);
@@ -61,8 +61,6 @@ public:
 	bool playVoice(std::string);
 	bool playAmbient(std::string);
 	bool setMusicVolume(float);
-
-	//FMOD_RESULT F_CALLBACK markerCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters);
 
 };
 

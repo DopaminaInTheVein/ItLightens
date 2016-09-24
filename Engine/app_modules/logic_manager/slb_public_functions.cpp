@@ -662,18 +662,18 @@ void SLBPublicFunctions::setOnlySense(int enabled) {
 	}
 }
 
-void SLBPublicFunctions::playSound(const char* sound_route, float volume = 1.f) {
-	sound_manager->playSound(std::string(sound_route), volume);
+void SLBPublicFunctions::playSound(const char* sound_route, float volume = 1.f, bool looping = false) {
+	sound_manager->playSound(std::string(sound_route), volume, looping);
 }
 
-void SLBPublicFunctions::play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z, float volume = 1.f) {
+void SLBPublicFunctions::play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z, float volume = 1.f, bool looping = false) {
 	VEC3 player_pos = VEC3(pl_x, pl_y, pl_z);
 	player_pos.Normalize();
 
 	VEC3 sound_pos = VEC3(s_x, s_y, s_z);
 	sound_pos.Normalize();
 
-	sound_manager->play3dSound(std::string(sound_route), player_pos, sound_pos, volume);
+	sound_manager->play3dSound(std::string(sound_route), player_pos, sound_pos, volume, looping);
 }
 
 void SLBPublicFunctions::stopSound(const char* sound_route) {

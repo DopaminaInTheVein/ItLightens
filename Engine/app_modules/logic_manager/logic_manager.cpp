@@ -794,6 +794,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.comment("Executes the specified sound effect")
 		.param("string: Route of the sound")
 		.param("float: Volume of the sound")
+		.param("bool: Sound looping or not")
 		// play 3d sound function
 		.set("play_3d_sound", &SLBPublicFunctions::play3dSound)
 		.comment("Executes the specified sound effect in a 3d position")
@@ -802,6 +803,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: y coord of the sound")
 		.param("float: z coord of the sound")
 		.param("float: Volume of the sound")
+		.param("bool: Sound looping or not")
 		// stop sound function
 		.set("stop_sound", &SLBPublicFunctions::stopSound)
 		.comment("Stops the specified sound effect")

@@ -6,7 +6,8 @@ extern CSoundManagerModule* sound_manager = nullptr;
 
 CSoundManagerModule::CSoundManagerModule() {}
 
-FMOD_RESULT F_CALLBACK markerCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters);
+FMOD_RESULT F_CALLBACK loopingMusicCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters);
+FMOD_RESULT F_CALLBACK loopingSoundCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters);
 bool music_playing = true;
 
 bool CSoundManagerModule::start() {
@@ -92,7 +93,7 @@ void CSoundManagerModule::stop() {
 	system->release();
 }
 
-bool CSoundManagerModule::playSound(std::string route, float volume = 1.f) {
+bool CSoundManagerModule::playSound(std::string route, float volume = 1.f, bool looping = false) {
 
 	if (volume < 0.f) { volume = 0.f; }
 	else if (volume > 1.f) { volume = 1.f; }
@@ -107,8 +108,14 @@ bool CSoundManagerModule::playSound(std::string route, float volume = 1.f) {
 
 		if (result == FMOD_OK) {
 			sound_instance->setVolume(volume);
-			sound_instance->start();
-			sound_instance->release();
+			if (looping) {
+				sound_instance->setCallback(loopingSoundCallback, FMOD_STUDIO_EVENT_CALLBACK_STARTED | FMOD_STUDIO_EVENT_CALLBACK_STOPPED);
+				sound_instance->start();
+			}
+			else {
+				sound_instance->start();
+				sound_instance->release();
+			}
 			return true;
 		}
 	}
@@ -116,27 +123,7 @@ bool CSoundManagerModule::playSound(std::string route, float volume = 1.f) {
 	return false;
 }
 
-bool CSoundManagerModule::stopSound(std::string route) {
-	int count;
-	sounds_descriptions[std::string(route)]->getInstanceCount(&count);
-
-	Studio::EventInstance** sound_instances = (Studio::EventInstance**)malloc(count * sizeof(void*));
-	sounds_descriptions[std::string(route)]->getInstanceList(sound_instances, count, &count);
-
-	if (count > 0) {
-		for (int i = 0; i < count; i++) {
-			Studio::EventInstance* sound_instance = NULL;
-			sound_instance = sound_instances[i];
-			sound_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
-			sound_instance->release();
-		}
-		return true;		
-	}
-
-	return false;
-}
-
-bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 sound_pos, float volume = 1.f) {
+bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 sound_pos, float volume = 1.f, bool looping = false) {
 
 	if (volume < 0.f) { volume = 0.f; }
 	else if (volume > 1.f) { volume = 1.f; }
@@ -167,8 +154,14 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 s
 
 			// Play the sound
 			sound_instance->setVolume(volume);
-			sound_instance->start();
-			sound_instance->release();
+			if (looping) {
+				sound_instance->setCallback(loopingSoundCallback, FMOD_STUDIO_EVENT_CALLBACK_STARTED | FMOD_STUDIO_EVENT_CALLBACK_STOPPED);
+				sound_instance->start();
+			}
+			else {
+				sound_instance->start();
+				sound_instance->release();
+			}
 
 			// Reset listener attributes
 			attributes.position.x = 0;
@@ -177,6 +170,26 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 player_pos, VEC3 s
 			studio_system->setListenerAttributes(0, &attributes);
 			return true;
 		}
+	}
+
+	return false;
+}
+
+bool CSoundManagerModule::stopSound(std::string route) {
+	int count;
+	sounds_descriptions[std::string(route)]->getInstanceCount(&count);
+
+	Studio::EventInstance** sound_instances = (Studio::EventInstance**)malloc(count * sizeof(void*));
+	sounds_descriptions[std::string(route)]->getInstanceList(sound_instances, count, &count);
+
+	if (count > 0) {
+		for (int i = 0; i < count; i++) {
+			Studio::EventInstance* sound_instance = NULL;
+			sound_instance = sound_instances[i];
+			sound_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+			sound_instance->release();
+		}
+		return true;
 	}
 
 	return false;
@@ -215,7 +228,7 @@ bool CSoundManagerModule::playLoopingMusic(std::string route) {
 	result = sounds_descriptions[std::string(route)]->createInstance(&music_instance);
 
 	if (result == FMOD_OK) {
-		music_instance->setCallback(markerCallback, FMOD_STUDIO_EVENT_CALLBACK_STARTED | FMOD_STUDIO_EVENT_CALLBACK_STOPPED);
+		music_instance->setCallback(loopingMusicCallback, FMOD_STUDIO_EVENT_CALLBACK_STARTED | FMOD_STUDIO_EVENT_CALLBACK_STOPPED);
 		music_instance->start();
 		return true;
 	}
@@ -277,7 +290,7 @@ bool CSoundManagerModule::setMusicVolume(float volume) {
 }
 
 // Callback from Studio - Remember these callbacks will occur in the Studio update thread, NOT the game thread.
-FMOD_RESULT F_CALLBACK markerCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters)
+FMOD_RESULT F_CALLBACK loopingMusicCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters)
 {
 	if (type == FMOD_STUDIO_EVENT_CALLBACK_STARTED)
 	{
@@ -289,6 +302,21 @@ FMOD_RESULT F_CALLBACK markerCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD
 	}
 	else {
 		//Nothing
+	}
+
+	return FMOD_OK;
+}
+
+// Callback from Studio - Remember these callbacks will occur in the Studio update thread, NOT the game thread.
+FMOD_RESULT F_CALLBACK loopingSoundCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters)
+{
+
+	FMOD::Studio::EventInstance* instance = (FMOD::Studio::EventInstance*)event;
+
+	if (type == FMOD_STUDIO_EVENT_CALLBACK_STOPPED)
+	{
+		instance->setCallback(loopingSoundCallback, FMOD_STUDIO_EVENT_CALLBACK_STARTED | FMOD_STUDIO_EVENT_CALLBACK_STOPPED);
+		instance->start();
 	}
 
 	return FMOD_OK;
