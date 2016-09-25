@@ -134,6 +134,7 @@ public:
 	void UpdateInputActions();
 	void UpdateMovingWithOther();
 	void UpdateUnpossess();
+	void UpdateJumpState();
 	// redefinition for push_box mode
 	void UpdateMoves();
 	bool UpdateMovDirection();

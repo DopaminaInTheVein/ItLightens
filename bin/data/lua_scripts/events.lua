@@ -257,13 +257,23 @@ function OnOvercharge( param )
 end
 
 function OnJump( param )
-	p:print( "OnDoubleJump: "..param.."\n" )
+	p:print( "OnJump: "..param.."\n" )
 	p:play_sound("event:/OnJump", 1.0, false)
 end
 
 function OnDoubleJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
 	p:play_sound("event:/OnDoubleJump", 1.0, false)
+end
+
+function OnMoleJump( param )
+	p:print( "OnMoleJump: "..param.."\n" )
+	p:play_sound("event:/OnMoleJump", 1.0, false)
+end
+
+function OnScientistJump( param )
+	p:print( "OnScientistJump: "..param.."\n" )
+	p:play_sound("event:/OnScientistJump", 1.0, false)
 end
 
 function OnDetected( distance )
@@ -325,21 +335,27 @@ end
 --------------------------------
 function OnElevatorUp( param )
 	p:print( "OnElevatorUp\n")
+	p:stop_sound("event:/OnElevatorMoving")
+	p:play_sound("event:/OnElevatorArrived", 1.0, false)
 	CallFunction("OnElevatorUp_"..param)
 end
 
 function OnElevatorDown( param )
 	p:print( "OnElevatorDown\n")
+	p:stop_sound("event:/OnElevatorMoving")
+	p:play_sound("event:/OnElevatorArrived", 1.0, false)
 	CallFunction("OnElevatorDown_"..param)
 end
 
 function OnElevatorGoingUp( param )
 	p:print( "OnElevatorGoingUp\n")
+	p:play_sound("event:/OnElevatorMoving", 1.0, false)
 	CallFunction("OnElevatorGoingUp_"..param)
 end
 
 function OnElevatorGoingDown( param )
 	p:print( "OnElevatorGoingDown\n")
+	p:play_sound("event:/OnElevatorMoving", 1.0, false)
 	CallFunction("OnElevatorGoingDown_"..param)
 end
 

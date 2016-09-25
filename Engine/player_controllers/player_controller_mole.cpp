@@ -327,6 +327,15 @@ void player_controller_mole::UpdateInputActions() {
 	}
 }
 
+void player_controller_mole::UpdateJumpState() {
+	PROFILE_FUNCTION("update jump state base");
+	if (!canJump()) return;
+	if (controller->JumpButtonBecomesPressed()) {
+		logic_manager->throwEvent(logic_manager->OnJump, "Mole");
+		Jump();
+	}
+}
+
 void player_controller_mole::UpdateMovingWithOther() {
 	if (boxGrabbed.isValid()) {
 		GET_COMP(box_t, boxGrabbed, TCompTransform);

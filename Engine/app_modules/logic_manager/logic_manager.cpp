@@ -272,7 +272,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnJump): {
-		sprintf(lua_code, "OnJump(%f);", 0.5f);
+		sprintf(lua_code, "On%sJump(%f);", params.c_str(), 0.5f);
 		break;
 	}
 	case (OnDoubleJump): {
