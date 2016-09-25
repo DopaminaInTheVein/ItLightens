@@ -111,7 +111,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 		k.room = oroom;
 		k.isPlayer = playercandidate;
 		for (auto room : oroom) {
-			if (room >= 0 && !playercandidate)
+			if (room >= 0  && !playercandidate)
 				all_keys[room].push_back(k);
 			else {
 				for (int idx = 0; idx < ROOMS_SIZE; idx++) {
