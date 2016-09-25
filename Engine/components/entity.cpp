@@ -65,6 +65,8 @@ void CEntity::renderInMenu() {
 	//Show entity
 	ImGui::PushID(this);
 	if (ImGui::TreeNode(my_name)) {
+		IMGUI_SHOW_BOOL(permanent);
+		IMGUI_SHOW_BOOL(need_reload);
 		// For each component type defined in the game ( comp type 0 is invalid... )
 		for (uint32_t i = 1; i < CHandleManager::getNumDefinedTypes(); ++i) {
 			CHandle h = comps[i];
