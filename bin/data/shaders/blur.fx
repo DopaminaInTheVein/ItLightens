@@ -55,7 +55,7 @@ float4 PS(
   float4 cp3 = txDiffuse.Sample(samClampLinear, iTex3.zw);
   float4 cp2 = txDiffuse.Sample(samClampLinear, iTex2.zw);
   float4 cp1 = txDiffuse.Sample(samClampLinear, iTex1.zw);
-  float4 c0  = txDiffuse.Sample(samClampLinear, iTex0.xy)*factor;
+  float4 c0  = txDiffuse.Sample(samClampLinear, iTex0.xy);
   float4 cn1 = txDiffuse.Sample(samClampLinear, iTex1.xy);
   float4 cn2 = txDiffuse.Sample(samClampLinear, iTex2.xy);
   float4 cn3 = txDiffuse.Sample(samClampLinear, iTex3.xy);
@@ -68,7 +68,8 @@ float4 PS(
     + (cp3 + cn3) * blur_w.w
     ;
 	
-  return cfinal;
+	return cfinal - 1;
+  return float4(1,1,1,1) - cfinal;
 }
 
 //--------------------------------------------------------------------------------------
@@ -139,31 +140,62 @@ float4 PSBlurWithDepth(
 ) : SV_Target
 {
 
-  float depth = txDepths.Sample(samLinear, iTex0.xy);
+float factor_depth = 4;
+  float base_depth = txDepths.Sample(samLinear, iTex0.xy).r;
   
+  
+  float depth = base_depth * factor_depth;
   //float factor = (1 - depth);
   
   //make exponencial curve;
- //depth *= depth*depth;
+ depth = pow(depth,2);
   
   //depth -= depth;
   if(depth < 0)
 	depth = 0;
   
-  float factor = depth;//*10;
   
+  
+  float depth_focus = txDepths.Sample(samLinear, float2(0.5,0.6)).r;
+  //return float4(depth_focus.rrr,1);
+  
+  /*//test_center
+  if(iTex0.y <= 0.405f && iTex0.y >= 0.395f){
+	if(iTex0.x <= 0.505f && iTex0.x >= 0.495f)
+		return float4(0,0,1,1);
+  }
+  
+  //auto focus
+  float barrier_focus = 0.05;
+  //float4 cfinal;
+  float differences_depths = abs(base_depth - depth_focus);
+  //return float4(differences_depths.xxx,1);
+  
+  if( differences_depths > barrier_focus){
+  
+	//depth focus should be more soft than depth of field,
+	//so we divide factor_depth by 2
+	depth += 1;
+	//return float4(depth.xxx,1)*float4(0,1,0,1);
+  }else{
+	//return float4(depth.xxx, 1)*float4(1,0,0,1);
+  }*/
+  
+  float factor = depth;
   float2 offset = float2(factor/xres, factor/yres);
   //factor = 1;
+  
+  //return float4(offset.yyy, 1);
 	//factor = 0;
 
   // 7 tap blur controlled by the vs
-  float4 cp3 = txDiffuse.Sample(samClampLinear, iTex3.zw - offset);
-  float4 cp2 = txDiffuse.Sample(samClampLinear, iTex2.zw - offset);
-  float4 cp1 = txDiffuse.Sample(samClampLinear, iTex1.zw - offset);
+  float4 cp3 = txDiffuse.Sample(samClampLinear, iTex0.xy - offset);
+  float4 cp2 = txDiffuse.Sample(samClampLinear, iTex0.xy - offset);
+  float4 cp1 = txDiffuse.Sample(samClampLinear, iTex0.xy - offset);
   float4 c0  = txDiffuse.Sample(samClampLinear, iTex0.xy);
-  float4 cn1 = txDiffuse.Sample(samClampLinear, iTex1.xy + offset);
-  float4 cn2 = txDiffuse.Sample(samClampLinear, iTex2.xy + offset);
-  float4 cn3 = txDiffuse.Sample(samClampLinear, iTex3.xy + offset);
+  float4 cn1 = txDiffuse.Sample(samClampLinear, iTex0.xy + offset);
+  float4 cn2 = txDiffuse.Sample(samClampLinear, iTex0.xy + offset);
+  float4 cn3 = txDiffuse.Sample(samClampLinear, iTex0.xy + offset);
 
   float4 cfinal =
     c0 * blur_w.x
@@ -174,9 +206,9 @@ float4 PSBlurWithDepth(
 	
 	//return float4(depth, depth, depth, 1);
 
-	//return float4(1, 1, 1, 1.0f);
+	return float4(1, 1, 1, 0.0f);
 	
-	return float4(cfinal.rgb,3*depth);
+	return float4(cfinal.rgb,depth*factor_depth);
 
 }
 
@@ -193,7 +225,7 @@ static float2 offs[7] = {
 float GetEdgeValue(float2 uv){
 
 	  //float2 e_barrier = float2(0.5f,edge_lines_detection);  // x=norm, y=depth
-	float2 e_barrier = float2(0.5f,0.0001f);
+	float2 e_barrier = float2(0.5f,0.00005f);
 	float2 pixel_size = float2(1.0f/xres,1.0f/yres);	//to adjust line witdh
 	//float pixel_size = 1.0f;
 	float2 e_weights= float2(1,1);  // x=norm, y=depth
@@ -221,21 +253,21 @@ float GetEdgeValue(float2 uv){
 
 	 //float2 test = float2(10,10);
 	 //return float4(uv.yyyyy);
-	 dd.x = txDepths.Sample(samLinear, uv + offs[1]*pixel_size).r +
+	 dd.x = txDepths.Sample(samClampLinear, uv + offs[1]*pixel_size).r +
 
-			 txDepths.Sample(samLinear, uv + offs[2]*pixel_size).r;
+			 txDepths.Sample(samClampLinear, uv + offs[2]*pixel_size).r;
 
-	 dd.y = txDepths.Sample(samLinear, uv + offs[3]*pixel_size).r+
+	 dd.y = txDepths.Sample(samClampLinear, uv + offs[3]*pixel_size).r+
 
-			txDepths.Sample(samLinear, uv + offs[4]*pixel_size).r;
+			txDepths.Sample(samClampLinear, uv + offs[4]*pixel_size).r;
 
-	 dd.z = txDepths.Sample(samLinear, uv + offs[5]*pixel_size).r +
+	 dd.z = txDepths.Sample(samClampLinear, uv + offs[5]*pixel_size).r +
 
-			txDepths.Sample(samLinear, uv + tc5r*pixel_size).r;
+			txDepths.Sample(samClampLinear, uv + tc5r*pixel_size).r;
 
-	 dd.w = txDepths.Sample(samLinear,uv +  offs[6]*pixel_size).r+
+	 dd.w = txDepths.Sample(samClampLinear,uv +  offs[6]*pixel_size).r+
 
-			txDepths.Sample(samLinear,uv +  tc6r*pixel_size).r;
+			txDepths.Sample(samClampLinear,uv +  tc6r*pixel_size).r;
 
 	//return dd;
 	float4 a = (2*dc - dd);
@@ -248,11 +280,20 @@ float GetEdgeValue(float2 uv){
 	 float de = saturate(dot(dd, e_weights));
 	//return float4(de,de,de,1);
 	 // Weight
-
+	 
+	 float3 N_pixel = txNormal.Sample(samClampLinear,uv).xyz * 2 - 1;
+	
+	float3 normals[6];
+	float dots = 0;
+	for(int i =1; i<7;i++ ){
+		int pos = i-1;
+		 normals[pos] = txNormal.Sample(samClampLinear,uv + offs[i]*pixel_size).xyz * 2 - 1;
+		 dots += dot(N_pixel, normals[pos]);
+	}
 	 float w = (1 - de) * e_kernel.x; 
 	//return float4(1,0,1,1);
-	w = step(0.75f, w);
-
+	//w = step(0.75f, w);
+	//return dots/30+w;
 	return w;
 }
 
@@ -267,31 +308,32 @@ float4 PSAntiAliasing(
 {
 
   float depth = txDepths.Sample(samLinear, iTex0.xy);
-  float3 N = txNormal.Load(int3(iTex0, 0)).xyz * 2 - 1;
   
+  
+  //return float4(depth.rrr,1);
   
   float edge = GetEdgeValue(iTex0);
   if(edge == 0){
 	return float4(0,0,0,0);
   }
   
-  float factor = depth;//*10;
+  float factor = edge;//*10;
  
   
   float2 offset = float2(factor/xres, factor/yres);
   //factor = 1;
 	//factor = 0;
 	
-	
+		return float4(edge,edge,edge,1);
 
   // 7 tap blur controlled by the vs
-  float4 cp3 = txDiffuse.Sample(samClampLinear, iTex3.zw - offset);
-  float4 cp2 = txDiffuse.Sample(samClampLinear, iTex2.zw - offset);
-  float4 cp1 = txDiffuse.Sample(samClampLinear, iTex1.zw - offset);
+  float4 cp3 = txDiffuse.Sample(samClampLinear, iTex0.xy - offset);
+  float4 cp2 = txDiffuse.Sample(samClampLinear, iTex0.xy - offset);
+  float4 cp1 = txDiffuse.Sample(samClampLinear, iTex0.xy - offset);
   float4 c0  = txDiffuse.Sample(samClampLinear, iTex0.xy);
-  float4 cn1 = txDiffuse.Sample(samClampLinear, iTex1.xy + offset);
-  float4 cn2 = txDiffuse.Sample(samClampLinear, iTex2.xy + offset);
-  float4 cn3 = txDiffuse.Sample(samClampLinear, iTex3.xy + offset);
+  float4 cn1 = txDiffuse.Sample(samClampLinear, iTex0.xy + offset);
+  float4 cn2 = txDiffuse.Sample(samClampLinear, iTex0.xy + offset);
+  float4 cn3 = txDiffuse.Sample(samClampLinear, iTex0.xy + offset);
 
   float4 cfinal =
     c0 * blur_w.x

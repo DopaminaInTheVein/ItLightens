@@ -3,6 +3,8 @@
 
 #include "handle/handle.h"
 
+#define ROOMS_SIZE 5
+
 class CMesh;
 class CRenderTechnique;
 class CMaterial;
@@ -22,7 +24,6 @@ public:
 		std::vector<int>        room;
 		bool                    isPlayer;
 	};
-private:
 
 	struct TShadowKey {
 		const CMesh*            mesh;
@@ -33,14 +34,22 @@ private:
 		bool                    isPlayer;
 	};
 
+private:
+
+	int num_renders = 0;
+
 	static bool sortByTechMatMesh(const TKey & k1, const TKey & k2);
+	static bool sortByMesh(const TShadowKey & k1, const TShadowKey & k2);
+
 
 	bool in_order;
-	std::vector< TKey > all_keys;
-	std::vector< TShadowKey > all_shadow_keys;
+	bool in_order_shadows;
+	bool in_order_shadows_skin;
+	std::vector< TKey > all_keys[ROOMS_SIZE];
+	std::vector< TShadowKey > all_shadow_keys[ROOMS_SIZE];
 
 	//will use another tech for skinning from defaul shadowcasters
-	std::vector< TShadowKey > all_shadow_skinning_keys;
+	std::vector< TShadowKey > all_shadow_skinning_keys[ROOMS_SIZE];
 
 	std::vector<int> renderedCulling;
 
@@ -52,12 +61,12 @@ public:
 
 	void registerToRender(const CStaticMesh* mesh, CHandle handle);
 	void unregisterFromRender(CHandle handle);
-	void renderUICulling();
-	void renderAll(CHandle h_camera, CRenderTechnique::eCategory category);
+	void renderUICulling(int room);
+	void renderAll(CHandle h_camera, CRenderTechnique::eCategory category, int room = 0);
 	bool renderSkeleton(TKey * it);
 	bool renderUI(TKey * it);
-	void renderShadowCasters(CHandle h_light);
-	void renderShadowCastersSkin(CHandle h_light);
+	void renderShadowCasters(CHandle h_light, int room);
+	void renderShadowCastersSkin(CHandle h_light, int room);
 
 	void ModifyUI() {
 		in_order = false;

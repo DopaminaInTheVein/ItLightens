@@ -7,7 +7,7 @@
 #ifdef PROFILING_ENABLED
 
 #ifdef PROFILING_JOHN
-CProfiler profiler;
+CProfiler* profiler = new CProfiler;
 
 bool CProfiler::TEntry::isBegin() const {
 	return (time_stamp & 1ULL) == 0;
@@ -94,7 +94,7 @@ void CProfiler::saveResults() {
 
 //--- Cristian autocapture some bug
 
-CProfiler profiler;
+CProfiler* profiler;
 
 bool CProfiler::TEntry::isBegin() const {
 	return (time_stamp & 1ULL) == 0;

@@ -259,7 +259,7 @@ void CRenderDeferredModule::renderGBuffer() {
 
 	// Mandar a pintar los 'solidos'
 	if (h_camera.isValid())
-		RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS);
+		RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS, SBB::readSala());
 
 	activateZ(ZCFG_DEFAULT);
 }
@@ -1275,7 +1275,7 @@ void CRenderDeferredModule::renderDetails(CRenderTechnique::eCategory type) {
 	activateZ(ZCFG_Z_TEST_LESS_EQUAL);
 	activateBlend(BLENDCFG_COMBINATIVE);
 
-	RenderManager.renderAll(h_camera, type);
+	RenderManager.renderAll(h_camera, type, SBB::readSala());
 	//RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
 }
 
@@ -1303,6 +1303,7 @@ void CRenderDeferredModule::applyPostFX() {
 		next_step = glow->apply(next_step);
 	else
 		return;
+
 
 	// ------------------------
 	Render.activateBackBuffer();
@@ -1401,7 +1402,7 @@ void CRenderDeferredModule::renderUI() {
 	mesh->activateAndRender();
 	*/
 	//Render.activateBackBuffer();
-	RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS);
+	RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS, SBB::readSala());
 }
 
 float CRenderDeferredModule::getAspectRatio()
