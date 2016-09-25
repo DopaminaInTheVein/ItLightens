@@ -15,7 +15,7 @@ class CProfiler {
 		const char*  name;
 		bool isBegin() const;
 	};
-
+public:
 	TEntry*  entries;
 	uint32_t nentries;
 	uint32_t max_entries;
@@ -51,6 +51,7 @@ public:
 		return nentries - 1;
 	}
 	__forceinline void exit(uint32_t entrance_idx) {
+		if (!entries) return;
 		auto* e = entries + nentries;
 		e->time_stamp = __rdtsc() | (1ULL);
 		e->name = entries[entrance_idx].name;
@@ -61,16 +62,18 @@ public:
 	void beginFrame();
 };
 
-extern CProfiler profiler;
+extern CProfiler* profiler;
 
 // ------------------------------------
 struct TCPUScoped {
 	uint32_t n;
 	TCPUScoped(const char* txt) {
-		n = profiler.enter(txt);
+		if (!profiler) return;
+		if (!profiler->entries) return;
+		n = profiler->enter(txt);
 	}
 	~TCPUScoped() {
-		profiler.exit(n);
+		profiler->exit(n);
 	}
 };
 #else
@@ -81,6 +84,7 @@ class CProfiler {
 		const char*  name;
 		bool isBegin() const;
 	};
+public:
 
 	TEntry*  entries;
 	uint32_t nentries;
@@ -133,23 +137,23 @@ public:
 	bool isAutoCapture();
 };
 
-extern CProfiler profiler;
+extern CProfiler* profiler;
 
 // ------------------------------------
 struct TCPUScoped {
 	uint32_t n;
 	TCPUScoped(const char* txt) {
-		n = profiler.enter(txt);
+		n = profiler->enter(txt);
 	}
 	~TCPUScoped() {
-		profiler.exit(n);
+		profiler->exit(n);
 	}
 };
 #endif //PROFILING_JOHN
 
 
 #define PROFILE_FUNCTION(txt)  TCPUScoped profiled_scoped(txt)
-#define PROFILE_FRAME_BEGINS()   profiler.beginFrame()
+#define PROFILE_FRAME_BEGINS()   profiler->beginFrame()
 
 #else
  //Profile disabled

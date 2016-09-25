@@ -153,16 +153,16 @@ void CImGuiModule::update(float dt) {
 		ImGui::InputInt("NFrames", &nframes, 1, 5);
 		ImGui::Separator();
 		if (ImGui::Button("Start Capture Profiling"))
-			profiler.setNFramesToCapture(nframes);
+			profiler->setNFramesToCapture(nframes);
 #ifndef PROFILING_JOHN
 		ImGui::Separator();
 		ImGui::InputFloat("Time Threshold", &time_threshold, 1, 5);
-		if (profiler.isAutoCapture()) {
+		if (profiler->isAutoCapture()) {
 			ImGui::Text("Waiting auto capture...");
 		}
 		else {
 			if (ImGui::Button("Auto Capture Profiling"))
-				profiler.setAutoCapture(nframes, time_threshold);
+				profiler->setAutoCapture(nframes, time_threshold);
 		}
 #endif
 		ImGui::TreePop();
@@ -332,7 +332,7 @@ void CImGuiModule::update(float dt) {
 			ImGui::TreePop();
 		}
 	}if (ImGui::CollapsingHeader("Culling")) {
-		RenderManager.renderUICulling();
+		RenderManager.renderUICulling(SBB::readSala());
 		TCompSkeleton::renderUICulling();
 		ImGui::Checkbox("show culling collider", GameController->GetCullingRenderPointer());
 	}

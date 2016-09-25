@@ -135,4 +135,11 @@ public:
 	}
 };
 
+inline bool operator< (const CMesh& lhs, const CMesh& rhs)	{ return rhs.getName() > lhs.getName(); }
+inline bool operator> (const CMesh& lhs, const CMesh& rhs)	{ return rhs.getName() < lhs.getName(); }
+inline bool operator<=(const CMesh& lhs, const CMesh& rhs)	{ return !(lhs.getName() > rhs.getName()); }
+inline bool operator>=(const CMesh& lhs, const CMesh& rhs)	{ return !(lhs < rhs); }
+bool operator==(const CMesh& lhs, const CMesh& rhs)			{ return lhs.getName() == rhs.getName() && lhs.getName() == rhs.getName();}
+bool operator!=(const CMesh& lhs, const CMesh& rhs)			{ return !(lhs == rhs); }
+
 #endif

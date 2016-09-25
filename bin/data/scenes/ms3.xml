@@ -1494,6 +1494,8 @@
 <render_static_mesh
    name="static_meshes/ms3/papelera_mapeada.static_mesh"/>
 <abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 <room
    name="2"/>
 
@@ -4465,14 +4467,17 @@
 <name
    name="container_1"/>
 <transform
-   pos="18.964 -8.58662 -23.0446"
+   pos="-4.41499 -24.6818 -13.7647"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/container_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity>
@@ -4480,14 +4485,17 @@
 <name
    name="container_2"/>
 <transform
-   pos="18.964 -8.58662 -23.0446"
+   pos="25.6039 -24.6817 -2.94211"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/container_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity>

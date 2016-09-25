@@ -10,7 +10,7 @@ fn parseTypeShape xml collider isTrigger = (
 	
 	if collider != undefined then (
 		local theClass = classof collider
-		if ( theClass == Pyramid )  then (
+		if ( theClass == Pyramid)  then (
 			 typeShape = "convex"
 		 ) else if (classof collider == Box) then (
 			local box_forced = ((getUserProp collider "box_forced") as string) == "yes"
@@ -28,6 +28,9 @@ fn parseTypeShape xml collider isTrigger = (
 		 ) else (
 			throw ("Falta implementar el collider de tipo" + ((classof collider) as string) + "! + (" + collider.name + ")\n")
 		)
+	) else (
+		local typeCollider = (getUserProp _parsingObject "collider_type") as string
+		if typeCollider == "convex" then (typeShape = "convex")
 	)
 	
 	if typeShape != undefined then (

@@ -259,7 +259,7 @@ void CRenderDeferredModule::renderGBuffer() {
 
 	// Mandar a pintar los 'solidos'
 	if (h_camera.isValid())
-		RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS);
+		RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS, SBB::readSala());
 
 	activateZ(ZCFG_DEFAULT);
 }
@@ -970,6 +970,14 @@ void CRenderDeferredModule::render() {
 	auto tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
 
 	drawFullScreen(rt_final, tech);
+
+	//outline
+	shader_ctes_globals.global_color = VEC4(1, 1, 1, 1);
+	shader_ctes_globals.uploadToGPU();
+	activateBlend(BLENDCFG_SUBSTRACT);
+	tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
+	drawFullScreen(rt_final, tech);
+
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
@@ -1275,7 +1283,7 @@ void CRenderDeferredModule::renderDetails(CRenderTechnique::eCategory type) {
 	activateZ(ZCFG_Z_TEST_LESS_EQUAL);
 	activateBlend(BLENDCFG_COMBINATIVE);
 
-	RenderManager.renderAll(h_camera, type);
+	RenderManager.renderAll(h_camera, type, SBB::readSala());
 	//RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
 }
 
@@ -1304,6 +1312,7 @@ void CRenderDeferredModule::applyPostFX() {
 	else
 		return;
 
+
 	// ------------------------
 	Render.activateBackBuffer();
 
@@ -1320,16 +1329,9 @@ void CRenderDeferredModule::applyPostFX() {
 
 //	drawFullScreen(rt_final, tech);
 
-	//outline
-	shader_ctes_globals.global_color = VEC4(1, 1, 1, 1);
-	shader_ctes_globals.uploadToGPU();
-	activateBlend(BLENDCFG_SUBSTRACT);
-	auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_final, tech);
-
 	if (test_dream_shader) {
 		activateBlend(BLENDCFG_COMBINATIVE);
-		tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
+		auto tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
 		tech->activate();
 
 		drawFullScreen(rt_final, tech);
@@ -1339,10 +1341,10 @@ void CRenderDeferredModule::applyPostFX() {
 	//activateBlend(BLENDCFG_DEFAULT);
 
 	//DoF
-	tech = Resources.get("depth_field.tech")->as<CRenderTechnique>();
-	tech->activate();
+	auto tech1 = Resources.get("depth_field.tech")->as<CRenderTechnique>();
+	tech1->activate();
 
-	drawFullScreen(rt_final, tech);
+	drawFullScreen(rt_final, tech1);
 
 	activateZ(ZCFG_DEFAULT);
 }
@@ -1401,7 +1403,7 @@ void CRenderDeferredModule::renderUI() {
 	mesh->activateAndRender();
 	*/
 	//Render.activateBackBuffer();
-	RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS);
+	RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS, SBB::readSala());
 }
 
 float CRenderDeferredModule::getAspectRatio()
