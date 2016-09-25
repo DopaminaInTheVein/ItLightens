@@ -162,13 +162,11 @@ void TCompSkelController::solveFoot(
 	bool hit_ground = g_PhysxManager->raycast(orig, end, hit, filterData);
 	float dist = 1.f;
 	Debug->DrawLine(orig, end);
+	height_correction = 0;
 	if (hit_ground) {
 		dist = hit.getAnyHit(0).distance - 0.1f - height_offset;
 		if (dist > 0) {
 			height_correction = dist;
-		}
-		else {
-			height_correction = 0;
 		}
 	}
 	result.new_pos = info.bone_pos + VEC3(0.f, height_correction, 0.f);

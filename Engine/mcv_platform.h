@@ -4,6 +4,8 @@
 // Global settings
 //#define FINAL_BUILD
 //#define TASK_LIST_ENABLED
+#define TEST_VALUES // Read initialization_test.json
+
 #define _CRT_SECURE_NO_WARNINGS
 #define _SCL_SECURE_NO_WARNINGS
 #define WIN32_LEAN_AND_MEAN

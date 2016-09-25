@@ -108,6 +108,8 @@ void SkelControllerMole::SetPlayerController() {
 	}
 }
 
+//Test
+#include "skeleton/comp_skeleton.h"
 void SkelControllerMole::myUpdate()
 {
 	updateGrab();

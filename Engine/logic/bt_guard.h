@@ -46,6 +46,7 @@ public:
 class bt_guard : public npc, public TCompBase
 {
 	//Main attritbutes
+	static float SHOT_OFFSET;
 	float PLAYER_DETECTION_RADIUS;
 	float DIST_SQ_SHOT_AREA_ENTER;
 	float DIST_SQ_SHOT_AREA_LEAVE;
@@ -61,7 +62,6 @@ class bt_guard : public npc, public TCompBase
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
 	float GUARD_ALERT_RADIUS;
-	VEC4 SHOT_OFFSET;
 	//from bombs
 	float reduce_factor;
 	float t_reduceStats_max;

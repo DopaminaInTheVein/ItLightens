@@ -41,6 +41,16 @@
 #define AST_NULL				"NULL"
 // ------------------- //
 
+//Key bones
+#define KEYBONE_LFOOT	"LFoot"
+#define KEYBONE_RFOOT	"RFoot"
+#define KEYBONE_LHAND	"left_hand"
+#define KEYBONE_RHAND	"right_hand"
+#define KEYBONE_RARM	"right_arm"
+#define KEYBONE_NECK	"neck"
+#define KEYBONE_HEAD	"head"
+// ------------------- //
+
 template< class TObj >
 class CObjectManager;
 

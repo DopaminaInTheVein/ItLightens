@@ -8,6 +8,8 @@
     spine_up="Guard Spine1"
     neck="Guard Neck"
     head="Guard Head"
+    right_arm="Guard weapon_rotation"
+    right_hand="Guard weapon_2"
     LFoot="Guard L Foot"
     RFoot="Guard R Foot"
   />
