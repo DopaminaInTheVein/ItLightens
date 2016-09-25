@@ -46,7 +46,7 @@ public:
 class bt_guard : public npc, public TCompBase
 {
 	//Main attritbutes
-	static float SHOT_OFFSET;
+	//static float SHOT_OFFSET;
 	float PLAYER_DETECTION_RADIUS;
 	float DIST_SQ_SHOT_AREA_ENTER;
 	float DIST_SQ_SHOT_AREA_LEAVE;
