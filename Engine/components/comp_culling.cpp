@@ -10,6 +10,8 @@
 #include "player_controllers/player_controller_base.h"
 
 int TCompCulling::next_to_update = 0;
+CHandle TCompCulling::camera_main = CHandle();
+bool TCompCulling::cull_camera = true;
 
 void TCompCulling::renderInMenu() {
 	// Show how many AABB's we are seeing...
@@ -120,7 +122,17 @@ bool TCompCulling::checkAABB(TCompCulling* culling, TCompAbsAABB* aabb)
 
 void TCompCulling::updateNext()
 {
-	TCompCulling* cullings = getHandleManager<TCompCulling>()->getFirstObject();
-	(cullings + next_to_update++)->update();
-	if (next_to_update > getHandleManager<TCompCulling>()->size()) TCompCulling::next_to_update = 0;
+	if (cull_camera) {
+		if (!camera_main.isValid()) camera_main = tags_manager.getFirstHavingTag("camera_main");
+		if (camera_main.isValid()) {
+			GET_COMP(cul_cam, camera_main, TCompCulling);
+			cul_cam->update();
+		}
+	}
+	else {
+		TCompCulling* cullings = getHandleManager<TCompCulling>()->getFirstObject();
+		(cullings + next_to_update++)->update();
+		if (next_to_update > getHandleManager<TCompCulling>()->size()) TCompCulling::next_to_update = 0;
+	}
+	cull_camera = !cull_camera;
 }

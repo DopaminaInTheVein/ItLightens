@@ -7,6 +7,8 @@
 class TCompAbsAABB;
 struct TCompCulling : public TCompBase {
 	static int next_to_update;
+	static CHandle camera_main;
+	static bool cull_camera;
 	static const size_t nbits = 4096;
 	typedef std::bitset<nbits> TCullingBits;
 	TCullingBits bits;

@@ -439,6 +439,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 	const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
 	int nkeys_rendered = 0;
 	while (it != all_shadow_keys.end()) {
+		PROFILE_FUNCTION("SHADOW CASTERS OBJ: each");
 		if (pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
 			if (culling_bits) {
 				TCompAbsAABB* aabb = it->aabb;
@@ -451,7 +452,6 @@ void CRenderManager::renderShadowCasters(CHandle h_light) {
 					nkeys_rendered++;
 				}
 			}
-
 			const TCompTransform* c_tmx = it->transform;
 			//TODO: Review Pedro!
 			//assert(c_tmx);
