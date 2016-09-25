@@ -9,6 +9,8 @@
 #include "logic\sbb.h"
 #include "player_controllers/player_controller_base.h"
 
+int TCompCulling::next_to_update = 0;
+
 void TCompCulling::renderInMenu() {
 	// Show how many AABB's we are seeing...
 	auto hm = getHandleManager<TCompAbsAABB>();
@@ -43,6 +45,7 @@ bool TCompCulling::CPlane::isCulled(const AABB* aabb) const {
 
 void TCompCulling::update() {
 	compBaseEntity = MY_OWNER;
+	if (!compBaseEntity) return;
 	//PROFILE_FUNCTION("TCompCulling: Update");
 	// Get access to the comp_camera in a sibling component
 	TCompRoom* room = compBaseEntity->get<TCompRoom>();
@@ -113,4 +116,11 @@ bool TCompCulling::checkAABB(TCompCulling* culling, TCompAbsAABB* aabb)
 
 	intptr_t idx = aabb - base_aabbs;
 	return culling_bits->test(idx);
+}
+
+void TCompCulling::updateNext()
+{
+	TCompCulling* cullings = getHandleManager<TCompCulling>()->getFirstObject();
+	(cullings + next_to_update++)->update();
+	if (next_to_update > getHandleManager<TCompCulling>()->size()) TCompCulling::next_to_update = 0;
 }

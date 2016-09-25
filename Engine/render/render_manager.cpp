@@ -250,12 +250,14 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 		PROFILE_FUNCTION("Render Manager each");
 		// Do the culling
 		{
-			PROFILE_FUNCTION("Render Manager: Check Tasklist tag");
-			if (it->owner.getOwner().hasTag("tasklist") || it->owner.getOwner().hasTag("tasklistend")) {
-				CEntity * tent = it->owner.getOwner();
-				TCompRoom * tentroom = tent->get<TCompRoom>();
-				it->room = tentroom->name;
-			}
+			GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
+			if (tentroom) it->room = tentroom->name;
+			//PROFILE_FUNCTION("Render Manager: Check Tasklist tag");
+			//if (it->owner.getOwner().hasTag("tasklist") || it->owner.getOwner().hasTag("tasklistend")) {
+			//	CEntity * tent = it->owner.getOwner();
+			//	TCompRoom * tentroom = tent->get<TCompRoom>();
+			//	it->room = tentroom->name;
+			//}
 		}
 		if (it->owner.getOwner() == CPlayerBase::handle_player || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
 			if (culling_bits) {

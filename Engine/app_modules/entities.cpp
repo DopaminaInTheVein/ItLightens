@@ -578,7 +578,10 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompLightDir>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
-	getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
+	//getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
+
+	//Culling optimized
+	TCompCulling::updateNext();
 
 	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::STOPPED_INTRO) {
 		if (!GameController->IsCinematic()) {
