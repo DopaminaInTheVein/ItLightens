@@ -127,7 +127,7 @@ bool CSoundManagerModule::playSound(std::string route, float volume = 1.f, bool 
 	return false;
 }
 
-bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, bool looping = false) {
+bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, float max_volume = 1.f, bool looping = false) {
 
 	Studio::EventInstance* sound_instance = NULL;
 
@@ -139,6 +139,10 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, bool lo
 		result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
 
 		if (result == FMOD_OK) {
+
+			// normalize the maximum volume
+			if (max_volume > 1.f) max_volume = 1.f;
+			else if (max_volume < 0.f) max_volume = 0.f;
 
 			// read max distance to hear a sound
 			float MAX_DISTANCE = 0.f;
@@ -154,6 +158,7 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, bool lo
 
 			if (dist < MAX_DISTANCE) {
 				volume = (MAX_DISTANCE - dist) / MAX_DISTANCE;
+				volume *= max_volume;
 			}
 			else {
 				volume = 0.f;

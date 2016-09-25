@@ -198,9 +198,15 @@ void TCompSkelController::updateSteps(float dist_ground, bool& on_ground)
 	//dbg("-->new_on_ground: %d\n", on_ground);
 	if (send_msg) {
 		TMsgGetWhoAmI msg;
-		owner.sendMsgWithReply(msg);
-		if (on_ground) logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStep, msg.who_string, owner);
-		else logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStepOut, msg.who_string, owner);
+		if (on_ground) {
+			msg.action_flag = true;
+			owner.sendMsgWithReply(msg);
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStep, msg.who_string, owner);
+		}
+		else {
+			owner.sendMsgWithReply(msg);
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStepOut, msg.who_string, owner);
+		}
 	}
 }
 

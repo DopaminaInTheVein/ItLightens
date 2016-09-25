@@ -180,6 +180,8 @@ class bt_guard : public npc, public TCompBase
 
 	CHandle getParent() override { return CHandle(this).getOwner(); }
 
+	int step_counter = 0;
+
 public:
 	//public for LUA
 	bool isInFirstSeekPoint();
@@ -294,6 +296,7 @@ public:
 
 	void changeCommonState(std::string);
 	void onGetWhoAmI(TMsgGetWhoAmI& msg);
+	int getStepCounter() { return step_counter; }
 
 	//Cambio Malla
 	//void ChangePose(string new_pose_route);

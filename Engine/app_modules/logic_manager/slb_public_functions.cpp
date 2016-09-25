@@ -666,17 +666,11 @@ void SLBPublicFunctions::playSound(const char* sound_route, float volume = 1.f, 
 	sound_manager->playSound(std::string(sound_route), volume, looping);
 }
 
-void SLBPublicFunctions::play3dSound(const char* sound_route, float s_x, float s_y, float s_z, bool looping = false) {
+void SLBPublicFunctions::play3dSound(const char* sound_route, float s_x, float s_y, float s_z, float max_volume, bool looping = false) {
 
 	VEC3 sound_pos = VEC3(s_x, s_y, s_z);
-
-	// normalize position between 0.f and 1.f
-	/*sound_pos.Normalize();
-	sound_pos.x = (sound_pos.x + 1.f) / 2.f;
-	sound_pos.y = (sound_pos.y + 1.f) / 2.f;
-	sound_pos.z = (sound_pos.z + 1.f) / 2.f;*/
 	// reproduce the sound
-	sound_manager->play3dSound(std::string(sound_route), sound_pos, looping);
+	sound_manager->play3dSound(std::string(sound_route), sound_pos, max_volume, looping);
 }
 
 void SLBPublicFunctions::stopSound(const char* sound_route) {

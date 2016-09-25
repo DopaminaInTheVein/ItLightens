@@ -1307,4 +1307,6 @@ void bt_guard::onGetWhoAmI(TMsgGetWhoAmI& msg)
 {
 	msg.who = PLAYER_TYPE::GUARD;
 	msg.who_string = "Guard";
+	if (msg.action_flag)
+		step_counter = (step_counter + 1) % 4;
 }
