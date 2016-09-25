@@ -3,7 +3,7 @@
 
 #include "handle/handle.h"
 
-#define ROOMS_SIZE 5
+#define ROOMS_SIZE 3
 
 class CMesh;
 class CRenderTechnique;
