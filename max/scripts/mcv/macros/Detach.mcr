@@ -1,6 +1,6 @@
 -- macros for "Detach_Elements.ms" which need to be placed in "scripts" folder
 macroScript macro_Detach_Elements
-	category:"Tools" 
+	category:"_ItLightens" 
 	internalCategory:"Tools" 
 	tooltip:"Detach Elements" 
 	buttontext:"Detach Elements" 
