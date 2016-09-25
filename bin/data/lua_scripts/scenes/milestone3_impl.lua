@@ -345,7 +345,7 @@ actionElevatorTarget = Handle()
 triggerElevator = Handle()
 stateElevator = 1 -- 1= up , 0 = down
 function activateElevator( )  
-
+  triggerElevator:getHandleCaller()
   --Llevamos el player al punto de accion
   actionElevatorTarget:get_handle_by_name_tag("elevator_pAction", "target")
   player = Handle()
@@ -354,7 +354,6 @@ function activateElevator( )
 end
 
 function moveElevator( )
-  triggerElevator:getHandleCaller()
   p:setControlEnabled(0)
   
   -- Get handles
