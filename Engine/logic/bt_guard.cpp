@@ -44,7 +44,7 @@ TCompCharacterController* bt_guard::getCC() {
 
 CEntity* bt_guard::getPlayer() {
 	PROFILE_FUNCTION("guard: get player");
-	thePlayer = tags_manager.getFirstHavingTag("player");
+	thePlayer = CPlayerBase::handle_player;
 	CEntity* player = thePlayer;
 	if (!player) {
 		dbg("GUARD CAUTION: PLAYER NOT FOUND!\n");
@@ -926,7 +926,7 @@ bool bt_guard::playerVisible(bool check_raycast) {
 								if (ret) { //No bloquea vision
 									CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
 									dest_shoot = PhysxConversion::PxVec3ToVec3(hit.getAnyHit(0).position);
-									if (h.hasTag("player") || dist_sq < squaredDistXZ(myPos, dest_shoot)) {
+									if (h == CPlayerBase::handle_player || dist_sq < squaredDistXZ(myPos, dest_shoot)) {
 										res = true;
 									}
 								}
@@ -1032,7 +1032,7 @@ void bt_guard::shootToPlayer() {
 		dest_shoot = PhysxConversion::PxVec3ToVec3(hit.getAnyHit(0).position);
 		if (ret) {
 			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
-			if (h.hasTag("player")) {
+			if (h == CPlayerBase::handle_player) {
 				damage = true;
 				raijin = h.hasTag("raijin");
 			}

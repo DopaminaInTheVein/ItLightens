@@ -111,7 +111,7 @@ protected:
 	void setControllable(bool);
 
 public:
-
+	static CHandle handle_player;
 	CPlayerBase();
 	void init() { initBaseAttributes(); Init(); }
 	bool getEnabled() { return controlEnabled; }

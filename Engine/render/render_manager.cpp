@@ -10,6 +10,7 @@
 #include "skeleton/comp_skeleton.h"
 #include "components/entity.h"
 #include "components/comp_room.h"
+#include "player_controllers/player_controller_base.h"
 #include "logic/sbb.h"
 #include "render/draw_utils.h"
 
@@ -231,7 +232,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 		all_keys.begin()
 		, all_keys.end()
 		, category
-		);
+	);
 	auto d0 = std::distance(all_keys.begin(), r.first);
 	auto d1 = std::distance(all_keys.begin(), r.second);
 	TKey* it = &all_keys[0] + d0;
@@ -246,14 +247,19 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	int pj_room = SBB::readSala();
 	// Pasearse por todas las keys
 	while (it != end_it) {
+		PROFILE_FUNCTION("Render Manager each");
 		// Do the culling
-		if (it->owner.getOwner().hasTag("tasklist") || it->owner.getOwner().hasTag("tasklistend")) {
-			CEntity * tent = it->owner.getOwner();
-			TCompRoom * tentroom = tent->get<TCompRoom>();
-			it->room = tentroom->name;
+		{
+			GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
+			if (tentroom) it->room = tentroom->name;
+			//PROFILE_FUNCTION("Render Manager: Check Tasklist tag");
+			//if (it->owner.getOwner().hasTag("tasklist") || it->owner.getOwner().hasTag("tasklistend")) {
+			//	CEntity * tent = it->owner.getOwner();
+			//	TCompRoom * tentroom = tent->get<TCompRoom>();
+			//	it->room = tentroom->name;
+			//}
 		}
-
-		if (it->owner.getOwner().hasTag("player") || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
+		if (it->owner.getOwner() == CPlayerBase::handle_player || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
 			if (culling_bits) {
 				TCompAbsAABB* aabb = it->aabb;
 				if (aabb) {
@@ -515,7 +521,7 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light) {
 	}
 
 	while (it != all_shadow_skinning_keys.end()) {
-		if (it->owner.getOwner().hasTag("player") || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
+		if (it->owner.getOwner() == CPlayerBase::handle_player || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
 			const TCompTransform* c_tmx = it->transform;
 
 			if (c_tmx) {

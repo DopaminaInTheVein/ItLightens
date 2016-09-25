@@ -12,6 +12,7 @@ CHandle findByName(const VHandles& handles, const char* entity_name);
 
 class TTagsManager : private std::map< TTagID, VHandles > {
 	std::map< TTagID, std::string > name_of_tag;
+	static CHandle handle_player;
 public:
 	void addTag(CHandle h, TTagID tag_id);
 	void removeTag(CHandle h, TTagID tag_id);

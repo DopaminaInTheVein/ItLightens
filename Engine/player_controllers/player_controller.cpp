@@ -29,32 +29,30 @@ map<string, statehandler> player_controller::statemap = {};
 void player_controller::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
-		if (h.hasTag("player")) { // <-- Esto no va cumplirse siempre?
-			CPlayerBase::initBaseAttributes();
+		CPlayerBase::initBaseAttributes();
 
-			CApp &app = CApp::get();
-			std::string file_ini = app.file_initAttr_json;
-			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
+		CApp &app = CApp::get();
+		std::string file_ini = app.file_initAttr_json;
+		map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
-			assignValueToVar(player_max_speed, fields_base);
-			assignValueToVar(player_rotation_speed, fields_base);
-			assignValueToVar(jimpulse, fields_base);
-			assignValueToVar(left_stick_sensibility, fields_base);
-			assignValueToVar(camera_max_height, fields_base);
-			assignValueToVar(camera_min_height, fields_base);
+		assignValueToVar(player_max_speed, fields_base);
+		assignValueToVar(player_rotation_speed, fields_base);
+		assignValueToVar(jimpulse, fields_base);
+		assignValueToVar(left_stick_sensibility, fields_base);
+		assignValueToVar(camera_max_height, fields_base);
+		assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_player = readIniAtrData(file_ini, "controller_player");
+		map<std::string, float> fields_player = readIniAtrData(file_ini, "controller_player");
 
-			assignValueToVar(full_height, fields_player);
-			assignValueToVar(min_height, fields_player);
-			assignValueToVar(DIST_LEAVING_POSSESSION, fields_player);
-			assignValueToVar(possessionReach, fields_player);
-			assignValueToVar(evolution_limit, fields_player);
-			assignValueToVar(max_life, fields_player);
-			assignValueToVar(init_life, fields_player);
-			assignValueToVar(jump_energy, fields_player);
-			assignValueToVar(stun_energy, fields_player);
-		}
+		assignValueToVar(full_height, fields_player);
+		assignValueToVar(min_height, fields_player);
+		assignValueToVar(DIST_LEAVING_POSSESSION, fields_player);
+		assignValueToVar(possessionReach, fields_player);
+		assignValueToVar(evolution_limit, fields_player);
+		assignValueToVar(max_life, fields_player);
+		assignValueToVar(init_life, fields_player);
+		assignValueToVar(jump_energy, fields_player);
+		assignValueToVar(stun_energy, fields_player);
 	}
 }
 

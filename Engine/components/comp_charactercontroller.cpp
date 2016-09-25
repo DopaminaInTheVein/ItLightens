@@ -5,7 +5,6 @@
 #include "comp_transform.h"
 #include "entity_tags.h"
 #include "comp_name.h"
-
 #include "handle\handle.h"
 //#include "input\input_wrapper.h"
 
@@ -76,7 +75,6 @@ void TCompCharacterController::renderInMenu()
 	ImGui::DragFloat("Friction Air", &m_friction_air, 0.f, 10.f);
 	ImGui::Text("Position collider: %f - %f - %f\n", GetFootPosition().x, GetFootPosition().y, GetFootPosition().z);
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
-	
 }
 
 VEC3 TCompCharacterController::GetCameraPointFocus() const

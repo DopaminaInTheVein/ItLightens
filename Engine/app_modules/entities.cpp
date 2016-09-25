@@ -578,7 +578,10 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompLightDir>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
-	getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
+	//getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
+
+	//Culling optimized
+	TCompCulling::updateNext();
 
 	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::STOPPED_INTRO) {
 		if (!GameController->IsCinematic()) {
@@ -689,7 +692,7 @@ void CEntitiesModule::update(float dt) {
 	}
 	// In this mode, only the animation of the player is updated
 	else if (GameController->GetGameState() == CGameController::STOPPED_INTRO) {
-		CHandle player_handle = tags_manager.getFirstHavingTag("player");
+		CHandle player_handle = CPlayerBase::handle_player;
 		CEntity * player_entity = player_handle;
 
 		TCompSkeleton* player_skeleton = player_entity->get<TCompSkeleton>();
