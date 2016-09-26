@@ -104,8 +104,11 @@ DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
 //particles
 DECL_OBJ_MANAGER("particles_system", CParticleSystem);
 
-//particles
+//video
 DECL_OBJ_MANAGER("video_player", TCompVideo);
+
+//sound
+DECL_OBJ_MANAGER("sound", TCompSound);
 
 /* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
@@ -237,6 +240,9 @@ bool CEntitiesModule::start() {
 
 	//video
 	getHandleManager<TCompVideo>()->init(4);
+
+	//sound
+	getHandleManager<TCompSound>()->init(MAX_ENTITIES);
 
 	//fx
 	getHandleManager<TCompFadeScreen>()->init(4);
@@ -490,6 +496,9 @@ void CEntitiesModule::initEntities() {
 	//fx
 	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
 
+	//sound
+	getHandleManager<TCompSound>()->onAll(&TCompSound::init);
+
 	//Added to clean this file
 	getHandleManager<LogicHelperArrow>()->onAll(&LogicHelperArrow::init);
 	getHandleManager<TCompCameraMain>()->onAll(&TCompCameraMain::init);
@@ -684,6 +693,9 @@ void CEntitiesModule::update(float dt) {
 
 		//Fx
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
+
+		//sound
+		getHandleManager<TCompSound>()->updateAll(dt);
 
 		//Tmx animator
 		getHandleManager<TCompTransformAnimator>()->updateAll(dt);

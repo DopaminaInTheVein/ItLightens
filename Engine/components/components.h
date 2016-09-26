@@ -87,6 +87,9 @@
 #include "comp_render_fade_screen.h"
 #include "comp_sense_vision.h"
 
+//Sound
+#include "app_modules/sound_manager/comp_sound.h"
+
 //GUI
 #include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/gui/comps/gui_cursor.h"

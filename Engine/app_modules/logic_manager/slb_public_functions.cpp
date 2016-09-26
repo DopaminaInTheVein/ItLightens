@@ -205,23 +205,44 @@ void SLBHandle::setPosition(float x, float y, float z) {
 
 float SLBHandle::getX() {
 	CEntity* entity = real_handle;
+	// if it has entity_controller, we get the coord from there
 	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
-
-	return entity_controller->GetPosition().x;
+	if (entity_controller) {
+		return entity_controller->GetPosition().x;
+	}
+	// otherwise, we get it from the transform
+	else {
+		TCompTransform* entity_transform = entity->get<TCompTransform>();
+		return entity_transform->getPosition().x;
+	}
 }
 
 float SLBHandle::getY() {
 	CEntity* entity = real_handle;
+	// if it has entity_controller, we get the coord from there
 	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
-
-	return entity_controller->GetPosition().y;
+	if (entity_controller) {
+		return entity_controller->GetPosition().y;
+	}
+	// otherwise, we get it from the transform
+	else {
+		TCompTransform* entity_transform = entity->get<TCompTransform>();
+		return entity_transform->getPosition().y;
+	}
 }
 
 float SLBHandle::getZ() {
 	CEntity* entity = real_handle;
+	// if it has entity_controller, we get the coord from there
 	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
-
-	return entity_controller->GetPosition().z;
+	if (entity_controller) {
+		return entity_controller->GetPosition().z;
+	}
+	// otherwise, we get it from the transform
+	else {
+		TCompTransform* entity_transform = entity->get<TCompTransform>();
+		return entity_transform->getPosition().z;
+	}
 }
 
 void SLBHandle::goToPoint(float x, float y, float z) {
@@ -666,11 +687,11 @@ void SLBPublicFunctions::playSound(const char* sound_route, float volume = 1.f, 
 	sound_manager->playSound(std::string(sound_route), volume, looping);
 }
 
-void SLBPublicFunctions::play3dSound(const char* sound_route, float s_x, float s_y, float s_z, float max_volume, bool looping = false) {
+void SLBPublicFunctions::play3dSound(const char* sound_route, float s_x, float s_y, float s_z, float max_volume, bool looping = false, int max_instances = 1) {
 
 	VEC3 sound_pos = VEC3(s_x, s_y, s_z);
 	// reproduce the sound
-	sound_manager->play3dSound(std::string(sound_route), sound_pos, max_volume, looping);
+	sound_manager->play3dSound(std::string(sound_route), sound_pos, max_volume, looping, max_instances);
 }
 
 void SLBPublicFunctions::stopSound(const char* sound_route) {

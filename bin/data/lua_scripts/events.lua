@@ -80,7 +80,7 @@ end
 function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
 	h:getHandleCaller()	
-	p:play_3d_sound("event:/OnGuardAttack", h:get_x(), h:get_y(), h:get_z(), 1.0, false)
+	p:play_3d_sound("event:/OnGuardAttack", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 1)
 end
 
 function OnGuardAttackEnd( reaction_time )
@@ -279,7 +279,7 @@ end
 function OnDetected( distance )
 	p:print( "OnDetected: "..distance.."\n" )
 	h:getHandleCaller()	
-	p:play_3d_sound("event:/OnDetected", h:get_x(), h:get_y(), h:get_z(), 1.0, false)
+	p:play_3d_sound("event:/OnDetected", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 	name_guard = h:get_name()
 	CallFunction("OnDetected_"..name_guard)
 	p:character_globe(distance, h:get_x(), h:get_y(), h:get_z())
@@ -316,6 +316,12 @@ end
 
 function OnDoorOpening()
 	p:print( "OnDoorOpening\n")
+end
+
+--Lights
+function OnSetLight( volume )
+	h:getHandleCaller()
+	p:play_3d_sound("event:/OnFluoriscent", h:get_x(), h:get_y(), h:get_z(), volume, false, 32)
 end
 
 --Bombs
@@ -458,7 +464,7 @@ function OnStepGuard( step )
 		sound_route = "event:/OnGuardStepLeft1"
 	end
 	
-	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false)
+	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 end
 function OnStepMole( step )
 	h:getHandleCaller()
@@ -476,7 +482,7 @@ function OnStepMole( step )
 		sound_route = "event:/OnMoleStepLeft1"
 	end
 	
-	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false)
+	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 end
 
 function OnStepScientist( step )

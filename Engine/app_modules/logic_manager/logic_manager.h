@@ -40,6 +40,7 @@ public:
 		OnZoneEnd001,
 		OnTimeout,
 		OntTimerStart,
+		OnSetLight,
 
 		OnPlayerDead,
 		OnGuardAttack,

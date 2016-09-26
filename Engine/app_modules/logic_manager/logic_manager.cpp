@@ -129,7 +129,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OntTimerStart(%f);", 0.5f);
 		break;
 	}
-
+	case (OnSetLight): {
+		float volume = atof(params.c_str());
+		sprintf(lua_code, "OnSetLight(%f);", volume);
+		break;
+	}
 	case (OnPlayerDead): {
 		sprintf(lua_code, "OnPlayerDead(%f);", 0.5f);
 		break;
@@ -840,6 +844,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: y coord of the sound")
 		.param("float: z coord of the sound")
 		.param("bool: Sound looping or not")
+		.param("int: maximum number of instances allowed")
 		// stop sound function
 		.set("stop_sound", &SLBPublicFunctions::stopSound)
 		.comment("Stops the specified sound effect")
