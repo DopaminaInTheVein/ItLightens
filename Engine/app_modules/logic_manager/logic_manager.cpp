@@ -393,7 +393,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadingLevel(%s);", params.c_str());
 		break;
 	}
-	//Others
+						   //Others
 	case (OnStep): {
 
 		int step_number = 0;
@@ -436,7 +436,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnStepOut%s(%i);", params.c_str(), step_number);
 		break;
 	}
-	//GUI
+					  //GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;
@@ -724,14 +724,6 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.comment("Run cinematic defined in the specified guided camera")
 		.param("string: guided camera name")
 		.param("speed: speed of camera movement (0 means default speed)")
-		// Fade In
-		.set("fade_in", &SLBCamera::fadeIn)
-		.comment("Start fade in")
-		.param("float: time fade, if time <= 0 set default")
-		// Fade Out
-		.set("fade_out", &SLBCamera::fadeOut)
-		.comment("Start fade out")
-		.param("float: time fade, if time <= 0 set default")
 		// Set Orbit Camera
 		.set("orbit", &SLBCamera::orbit)
 		.comment("Enable or disable auto orbit camera")

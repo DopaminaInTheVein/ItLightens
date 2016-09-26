@@ -9,6 +9,8 @@ class CPrefabCompiler;
 
 struct TCompSnoozer : public TCompBase {
 	CPrefabCompiler * components;
+	bool need_reload;
+	bool permanent;
 public:
 	//Messages
 	void onPreload(const TMsgPreload& msg);

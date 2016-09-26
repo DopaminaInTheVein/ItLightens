@@ -72,7 +72,7 @@ bool TCompCameraMain::getUpdateInfo() {
 void TCompCameraMain::update(float dt) {
 	bool cameraIsGuided = false;
 
-	if (manual_control) {
+	if (manual_control || GameController->IsUiControl()) {
 		return;
 	}
 	if (guidedCamera.isValid()) {
