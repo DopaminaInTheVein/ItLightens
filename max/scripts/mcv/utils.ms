@@ -262,6 +262,22 @@ fn addTag tag = (
 	)
 )
 
+ --  SetProp --
+fn setPropTo obj prop val = (
+	setUserProp obj prop val
+)
+
+fn setProp prop val = (
+	if (classof $) == ObjectSet then (
+		for obj in $ do (
+			setPropTo obj prop val
+		)
+	) else (
+		setPropTo obj prop val
+	)
+)
+ 
+ 
 -- FIXES SCENE
 fn fixUserProps = (
 	names_modified = #()

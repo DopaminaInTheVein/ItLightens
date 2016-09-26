@@ -378,7 +378,7 @@ struct OM (
 			-- Tags
 			,#()
 			-- Attributes
-			,#()
+			,#("event", "volume")
 			--Components
 			,#("sound")
 			--Helpers
