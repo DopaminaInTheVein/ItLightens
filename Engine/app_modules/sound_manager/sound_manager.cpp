@@ -303,14 +303,9 @@ bool CSoundManagerModule::playFixed3dSound(std::string route, std::string sound_
 			studio_system->setListenerAttributes(0, &attributes);
 			return true;
 		}
-		return false;
 	}
-	// the sound is already created but was paused
-	else {
-		result = fixed_instances[sound_name]->setPaused(false);
-		if (result != FMOD_OK) return false;
-		return true;
-	}
+	return false;
+
 }
 
 bool CSoundManagerModule::stopSound(std::string route) {
@@ -344,6 +339,18 @@ bool CSoundManagerModule::stopFixedSound(std::string name) {
 }
 
 bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_pos, float max_volume) {
+	
+	// if the sound was paused, we resume it
+	bool paused;
+	result = fixed_instances[sound_name]->getPaused(&paused);
+	if (result != FMOD_OK) return false;
+
+	if (paused) {
+		result = fixed_instances[sound_name]->setPaused(false);
+		if (result != FMOD_OK) return false;
+		result = fixed_instances[sound_name]->start();
+		if (result != FMOD_OK) return false;
+	}
 
 	// normalize the maximum volume
 	if (max_volume > 1.f) max_volume = 1.f;

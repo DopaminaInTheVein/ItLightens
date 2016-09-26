@@ -65,6 +65,8 @@ public:
 		OnDash,
 		OnBlink,
 		OnBreakWall,
+		OnDroneMoving,
+		OnDroneStatic,
 		OnRechargeDrone,
 		OnNotRechargeDrone,
 		OnRepairDrone,

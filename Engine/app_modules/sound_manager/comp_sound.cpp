@@ -25,6 +25,9 @@ void TCompSound::init() {
 	std::string file_ini = app.file_initAttr_json;
 	std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
 	assignValueToVar(MAX_DISTANCE, fields);
+
+	// create the sound
+	sound_manager->playFixed3dSound(event, entity_name, entity_position, volume, true);
 }
 
 void TCompSound::update(float elapsed) {
@@ -32,23 +35,21 @@ void TCompSound::update(float elapsed) {
 	VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
 	float dist = simpleDist(camera_pos, entity_position);
 
-	// if the sound was not playing and we go into the distance, play it
-	if (!sound_playing && dist < MAX_DISTANCE) {
-		sound_manager->playFixed3dSound("event:/OnFluoriscent", entity_name, entity_position, 0.25f, false);
-		sound_playing = true;
-	}
-	// if the sound is playing and we go out the distance, stop it
-	else if (sound_playing && dist >= MAX_DISTANCE) {
+	// if we go out of distance, stop playing
+	if (dist >= MAX_DISTANCE) {
 		sound_manager->stopFixedSound(entity_name);
-		sound_playing = false;
 	}
-	// if the sound is playing and we are in the distance, update it
-	else if (sound_playing && dist < MAX_DISTANCE) {
-		sound_manager->updateFixed3dSound(entity_name, entity_position, 0.25f);
+	// otherwise, we update the sound
+	else {
+		sound_manager->updateFixed3dSound(entity_name, entity_position, volume);
 	}
 }
 
 bool TCompSound::load(MKeyValue& atts) {
+
+	event = event;
+	volume = volume;
+
 	return true;
 }
 
