@@ -395,6 +395,7 @@ function OnLoadedLevel( logic_level, real_level )
 end
 
 function InitScene()
+	g_dead = false
 	cam:reset_camera()
 	p:exec_command("ui_cam:fade_in(1)", 1)
 	if not real_level == "hub" then
@@ -419,6 +420,7 @@ end
 
 function OnDead( )
 	p:print( "OnDead\n")
+	g_dead = true
 	cam:orbit(true)
 	p:exec_command("p:load_entities(\"dead_menu\");", 2.0)
 	p:exec_command("cam:orbit(fase)", 3.0)
@@ -481,5 +483,7 @@ end
 
 function OnPause( )
 	p:print("OnPause")
-	p:load_entities("menu")
+	if not g_dead then
+		p:load_entities("menu")
+	end
 end

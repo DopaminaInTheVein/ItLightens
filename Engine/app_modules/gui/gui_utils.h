@@ -1,9 +1,6 @@
 #ifndef INC_MODULE_GUI_UTILS_H_
 #define INC_MODULE_GUI_UTILS_H_
 
-#define DECL_IMGUI_COLOR(NAME, r,g,b,a) \
-static const ImColor NAME = ImColor(r, g, b, a)
-
 struct RectNormalized {
 	float x; float y;
 	float sx; float sy;
@@ -49,23 +46,5 @@ struct Pixel {
 	Pixel() : x(0), y(0) {}
 	Pixel(int _x, int _y) : x(_x), y(_y) {}
 };
-
-namespace GUI {
-	DECL_IMGUI_COLOR(IM_WHITE, 1.0f, 1.0f, 1.0f, 1.0f);
-	DECL_IMGUI_COLOR(IM_BLACK, 0.0f, 0.0f, 0.0f, 1.0f);
-	DECL_IMGUI_COLOR(IM_BLACK_TRANSP, 0.0f, 0.0f, 0.0f, 0.8f);
-	DECL_IMGUI_COLOR(IM_RED, 1.0f, 0.0f, 0.0f, 1.0f);
-	DECL_IMGUI_COLOR(IM_RED_DARK_TRANS, 0.3f, 0.0f, 0.0f, 0.8f);
-	DECL_IMGUI_COLOR(IM_GREEN, 0.0f, 1.0f, 0.0f, 1.0f);
-	DECL_IMGUI_COLOR(IM_BLUE_LIGHT, 0.2f, 0.2f, 1.0f, 0.8f);
-	DECL_IMGUI_COLOR(IM_BLUE_DARK, 0.0f, 0.0f, 0.8f, 0.8f);
-
-	Rect createRect(float x, float y, float sx, float sy);
-	void drawRect(const Rect&, const ImColor&);
-	void drawText(float x, float y, ImFont * font, float size, ImColor color, const char * text);
-	void drawText(Pixel p, ImFont * font, float size, ImColor color, const char * text);
-	void drawImage(float x1, float y1, float x2, float y2, ImTextureID id_tex);
-	void drawImage(Pixel p, Pixel q, ImTextureID id_tex);
-}
 
 #endif

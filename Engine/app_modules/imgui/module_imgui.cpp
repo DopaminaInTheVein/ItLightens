@@ -123,15 +123,6 @@ void CImGuiModule::update(float dt) {
 		if (ImGui::Button("Create")) Gui->addGuiElement(std::string("ui/") + std::string(gui_prebab_name), pos_new_ui);
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Gui Others")) {
-		ImGui::Text("Text?: %s", Gui->there_is_text ? "yes" : "no");
-		ImGui::Text("Window?: %s", Gui->window_actived ? "yes" : "no");
-		ImGui::TreePop();
-	}
-
-	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
-	ImGui::Text("WARNING: The player will still move, pause the game to stop moving the player");
-	ImGui::PopStyleColor();
 
 	if (ImGui::TreeNode("Free camera instructions")) {
 		ImGui::Text("w/a/s/d - normal move\nq/e - up/down\nmouse wheel - speed up/down\n");
@@ -352,7 +343,7 @@ void CImGuiModule::update(float dt) {
 	ui.update();			//update ui
 	//Debug->update();		//update log
 	m_pLights_editor->RenderInMenu();
-}
+		}
 
 void CImGuiModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);

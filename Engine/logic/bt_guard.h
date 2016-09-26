@@ -295,10 +295,10 @@ public:
 	void changeCommonState(std::string);
 	void onGetWhoAmI(TMsgGetWhoAmI& msg);
 
-	//Cambio Malla
-	//void ChangePose(string new_pose_route);
-
 	float timerStunt, _timerStunt;
+
+	void onDifficultyChanged(const TMsgDifficultyChanged&);
+
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)
 };
 

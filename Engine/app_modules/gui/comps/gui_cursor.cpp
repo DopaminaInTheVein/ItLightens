@@ -18,6 +18,8 @@ bool TCompGuiCursor::load(MKeyValue& atts)
 	speed = atts.getFloat("speed", 0.01f);
 	menu_name = atts.getString("menu_name", "");
 	x = y = -1;
+	init_x = atts.getInt("init_x", 0);
+	init_y = atts.getInt("init_y", 0);
 	return true;
 }
 
@@ -56,20 +58,12 @@ void TCompGuiCursor::update(float dt)
 
 void TCompGuiCursor::updateNavigation()
 {
-	if (x == -1) {
-		if (controller->IsUpPressed()
-			|| controller->IsDownPressed()
-			|| controller->IsLeftPressed()
-			|| controller->IsRightPressed()
-			)
-		{
-			x = y = 0;
-			CHandle next_gui = TCompGui::getMatrixHandle(menu_name, 0, 0);//gui_screens[menu_name].elem[0][0];
-			if (next_gui.isValid()) {
-				GET_COMP(tmx, next_gui, TCompTransform);
-				if (tmx) myTransform->setPosition(tmx->getPosition());
-			}
-		}
+	if (init_pos) {
+		init_pos = false;
+		x = init_x;
+		y = init_y;
+		CHandle next_gui = TCompGui::getMatrixHandle(menu_name, x, y);
+		if (next_gui.isValid()) putCursorOn(next_gui);
 	}
 	else {
 		int * current = nullptr;
@@ -98,21 +92,28 @@ void TCompGuiCursor::updateNavigation()
 		if (current) {
 			int prev = *current;
 			bool found = false;
-			auto gui_matrix = TCompGui::getGuiMatrix(menu_name);//gui_screens[menu_name];
+			auto gui_matrix = TCompGui::getGuiMatrix(menu_name);
 			do {
 				*current += dir;
 				*current = (max + *current) % max;
 				CHandle next_gui = gui_matrix.elem[x][y];
 				if (next_gui.isValid()) {
-					GET_COMP(tmx, next_gui, TCompTransform);
-					if (tmx) {
-						found = true;
-						myTransform->setPosition(tmx->getPosition());
-					}
+					putCursorOn(next_gui);
+					found = true;
 				}
 			} while (!found && *current != prev);
 		}
 	}
+}
+
+void TCompGuiCursor::putCursorOn(CHandle next_gui)
+{
+	assert(next_gui.isValid());
+	GET_COMP(tmx, next_gui, TCompTransform);
+	if (tmx) myTransform->setPosition(tmx->getPosition());
+	GET_COMP(gui, next_gui, TCompGui);
+	VEC3 offset = VEC3(gui->GetWidth(), -gui->GetHeight(), 0.f);
+	myTransform->addPosition(offset*0.4f);
 }
 
 void TCompGuiCursor::updateMovement(float dt)
@@ -169,7 +170,6 @@ void TCompGuiCursor::onButton(const TMsgOverButton& msg)
 	else {
 		if (button == msg.button) {
 			button = CHandle();
-			x = y = -1;
 		}
 	}
 }

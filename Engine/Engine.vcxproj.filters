@@ -336,26 +336,11 @@
     <ClCompile Include="app_modules\gui\gui.cpp">
       <Filter>app_modules\gui</Filter>
     </ClCompile>
-    <ClCompile Include="app_modules\gui\gui_bar_color.cpp">
-      <Filter>app_modules\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="app_modules\gui\gui_utils.cpp">
-      <Filter>app_modules\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="app_modules\gui\gui_hud_player.cpp">
-      <Filter>app_modules\gui</Filter>
-    </ClCompile>
     <ClCompile Include="components\comp_light_dir.cpp">
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="components\comp_light_point.cpp">
       <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="app_modules\gui\gui_menu_pause.cpp">
-      <Filter>app_modules\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="app_modules\gui\gui_button_std.cpp">
-      <Filter>app_modules\gui</Filter>
     </ClCompile>
     <ClCompile Include="components\comp_light_fadable.cpp">
       <Filter>components</Filter>
@@ -1061,17 +1046,11 @@
     <ClInclude Include="app_modules\gui\gui.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_bar_color.h">
-      <Filter>app_modules\gui</Filter>
-    </ClInclude>
     <ClInclude Include="app_modules\gui\gui_utils.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
     <ClInclude Include="app_modules\gameData.h">
       <Filter>app_modules\game</Filter>
-    </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_hud_player.h">
-      <Filter>app_modules\gui</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_light_dir.h">
       <Filter>components</Filter>
@@ -1084,18 +1063,6 @@
     </ClInclude>
     <ClInclude Include="imgui\imgui_internal.h">
       <Filter>app_modules\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_menu_pause.h">
-      <Filter>app_modules\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_button.h">
-      <Filter>app_modules\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_button_std.h">
-      <Filter>app_modules\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_bar.h">
-      <Filter>app_modules\gui</Filter>
     </ClInclude>
     <ClInclude Include="render\fx\GuardShots.h">
       <Filter>render\fx</Filter>

@@ -912,6 +912,10 @@ void SLBPublicFunctions::exit() {
 	CApp::get().exitGame();
 }
 
+void SLBPublicFunctions::pauseGame() {
+	GameController->SetGameState(CGameController::STOPPED);
+}
+
 const char* SLBPublicFunctions::getText(const char* scene, const char* event) {
 	std::string res_str = lang_manager->getText(scene, event);
 

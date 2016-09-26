@@ -373,4 +373,7 @@ struct TMsgGuiNotify {
 struct TMsgLanguageChanged {
 	DECLARE_MSG_ID();
 };
+struct TMsgDifficultyChanged {
+	DECLARE_MSG_ID();
+};
 #endif

@@ -35,9 +35,8 @@ public:
 		PLAY_VIDEO,
 		RUNNING,
 		STOPPED,
-		STOPPED_INTRO,
+		SPECIAL_ACTION,
 		VICTORY,
-		MENU,
 		GAME_STATES_SIZE
 	};
 
@@ -47,6 +46,7 @@ public:
 
 	DIFFICULTIES GetDifficulty() const;
 	void SetDifficulty(int);
+	void UpdateDifficulty();
 
 	std::string GetLanguage() const;
 	void SetLanguage(std::string);
@@ -72,6 +72,7 @@ public:
 
 	void UpdateGeneralInputs();
 
+	bool forcedUpdate() { return true; }
 	void update(float dt);
 
 	bool * GetFxGlowPointer();

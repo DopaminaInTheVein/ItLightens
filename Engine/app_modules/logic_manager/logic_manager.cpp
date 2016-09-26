@@ -933,6 +933,9 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("string: group")
 		.param("string: name")
 		.param("string: value")
+		// Pause Game
+		.set("pause_game", &SLBPublicFunctions::pauseGame)
+		.comment("Exit game")
 		// Exit Game
 		.set("exit_game", &SLBPublicFunctions::exit)
 		.comment("Exit game")

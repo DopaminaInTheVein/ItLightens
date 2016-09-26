@@ -87,6 +87,11 @@ void bt_guard::readIniFileAttr() {
 	}
 }
 
+void bt_guard::onDifficultyChanged(const TMsgDifficultyChanged&)
+{
+	readIniFileAttr();
+}
+
 /**************
 * Init
 **************/

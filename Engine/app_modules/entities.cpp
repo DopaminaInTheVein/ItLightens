@@ -441,6 +441,10 @@ bool CEntitiesModule::start() {
 	//Fx
 	SUBSCRIBE(TCompFadeScreen, TMsgEntityCreated, onCreate);
 
+	//System
+	SUBSCRIBE(bt_guard, TMsgDifficultyChanged, onDifficultyChanged);
+	SUBSCRIBE(player_controller, TMsgDifficultyChanged, onDifficultyChanged);
+
 	//Gui
 	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
@@ -583,7 +587,7 @@ void CEntitiesModule::update(float dt) {
 	//Culling optimized
 	TCompCulling::updateNext();
 
-	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::STOPPED_INTRO) {
+	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::SPECIAL_ACTION) {
 		if (!GameController->IsCinematic()) {
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 		}
@@ -691,7 +695,7 @@ void CEntitiesModule::update(float dt) {
 		SBB::update(dt);
 	}
 	// In this mode, only the animation of the player is updated
-	else if (GameController->GetGameState() == CGameController::STOPPED_INTRO) {
+	else if (GameController->GetGameState() == CGameController::SPECIAL_ACTION) {
 		CHandle player_handle = CPlayerBase::handle_player;
 		CEntity * player_entity = player_handle;
 

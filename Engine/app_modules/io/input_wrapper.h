@@ -89,7 +89,7 @@ public:
 	DECL_INPUT_DEBUG(isToogleCommandLogButtonPressed);
 	DECL_INPUT_DEBUG(isToogleConsoleLoguttonPressed);
 	DECL_INPUT_DEBUG(isPauseGameButtonPressed);
-	DECL_INPUT_DEBUG(isStopGameButtonPressed);
+	DECL_INPUT_DEBUG(isPauseDebugPressed);
 
 	DECL_INPUT_DEBUG(isSlowButtonPressed);
 	DECL_INPUT_DEBUG(isDrawLineButtonPressing);

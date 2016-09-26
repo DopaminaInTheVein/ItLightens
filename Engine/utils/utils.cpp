@@ -52,7 +52,7 @@ float getDeltaTime(float always) {
 			_deltaTimePrev = dt;
 			CApp::get().long_frame = true;
 		}
-		if (GameController->GetGameState() == CGameController::STOPPED_INTRO)
+		if (GameController->GetGameState() == CGameController::SPECIAL_ACTION)
 			return dt / 2.5f;
 #ifndef NDEBUG
 		else if (controller->isSlowButtonPressed())

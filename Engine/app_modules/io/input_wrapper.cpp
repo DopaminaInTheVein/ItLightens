@@ -194,7 +194,11 @@ bool CInputWrapper::IsCameraDownPressing() {
 
 // Start & back
 bool CInputWrapper::IsPausePressed() {
-	return io->keys[VK_RETURN].becomesPressed() || io->joystick.button_START.becomesPressed();
+	bool res = io->keys[VK_RETURN].becomesPressed() || io->joystick.button_START.becomesPressed() || io->keys[VK_ESCAPE].becomesPressed();
+#ifdef FINAL_BUILD
+	res = res || io->keys['P'].becomesPressed();
+#endif
+	return res;
 }
 bool CInputWrapper::IsBackPressed() {
 	return io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed();
@@ -237,7 +241,7 @@ bool CInputWrapper::isToogleConsoleLoguttonPressed() {
 bool CInputWrapper::isPauseGameButtonPressed() {
 	return io->keys['I'].becomesPressed();
 }
-bool CInputWrapper::isStopGameButtonPressed() {
+bool CInputWrapper::isPauseDebugPressed() {
 	return io->keys['P'].becomesPressed();
 }
 bool CInputWrapper::isSlowButtonPressed() {

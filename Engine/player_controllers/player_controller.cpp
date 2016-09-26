@@ -286,7 +286,7 @@ void player_controller::Jump()
 			-curSpeed.x * 0.1f,
 			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
 			-curSpeed.z * 0.1f
-			);
+		);
 		//--------------------------------------
 	}
 	else {
@@ -954,9 +954,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-				),
+			),
 			polarityForces.end()
-			);
+		);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}
@@ -989,7 +989,9 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 
 	//Cumulative add always, otherwise when change to 0 or 1
 	if (DMG_IS_CUMULATIVE(type) || damageFonts[type] < 2) {
-		damageCurrent += DMG_PER_SECOND(type) * signDamage;
+		float dmg = DMG_PER_SECOND(type) * signDamage;
+		damageCurrent += dmg;
+		damageAdded += dmg;
 		TMsgDamage msgDamagePerSecond;
 		msgDamagePerSecond.modif = damageCurrent;
 		eMe->sendMsg(msgDamagePerSecond);
@@ -1012,6 +1014,19 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 
 	//Player is damaged (cant possess, etc.)
 	____TIMER_RESET_(timerDamaged);
+}
+
+void player_controller::onDifficultyChanged(const TMsgDifficultyChanged& msg)
+{
+	damageCurrent -= damageAdded;
+	damageAdded = 0;
+	for (int i = 0; i < Damage::SIZE; i++) {
+		damageCurrent += DMG_PER_SECOND(i) * damageFonts[i];
+		damageAdded += DMG_PER_SECOND(i) * damageFonts[i];
+	}
+	TMsgDamage msgDamagePerSecond;
+	msgDamagePerSecond.modif = damageCurrent;
+	MY_OWNER.sendMsg(msgDamagePerSecond);
 }
 
 void player_controller::SendMessagePolarizeState()

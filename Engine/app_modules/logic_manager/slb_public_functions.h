@@ -199,6 +199,7 @@ public:
 	float jsonRead(std::string filename, std::string group, std::string name);
 	void jsonEditStr(std::string filename, std::string group, std::string name, std::string new_value);
 	std::string jsonReadStr(std::string filename, std::string group, std::string name);
+	void pauseGame();
 	void exit();
 	const char* getText(const char* scene, const char* event);
 	void reloadLanguageFile(const char* language);
