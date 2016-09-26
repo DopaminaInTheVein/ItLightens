@@ -622,6 +622,7 @@ void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	command new_command;
 	new_command.code = exec_code;
 	new_command.execution_time = exec_time;
+	new_command.only_runtime = GameController->GetGameState() == CGameController::RUNNING;
 	// add the new command to the queue
 	//logic_manager->getCommandQueue()->push_back(new_command);
 	logic_manager->addCommand(new_command);
@@ -688,14 +689,12 @@ void SLBPublicFunctions::playSound(const char* sound_route, float volume = 1.f, 
 }
 
 void SLBPublicFunctions::play3dSound(const char* sound_route, float s_x, float s_y, float s_z, float max_volume, bool looping = false, int max_instances = 1) {
-
 	VEC3 sound_pos = VEC3(s_x, s_y, s_z);
 	// reproduce the sound
 	sound_manager->play3dSound(std::string(sound_route), sound_pos, max_volume, looping, max_instances);
 }
 
 void SLBPublicFunctions::playFixed3dSound(const char* sound_route, const char* sound_name, float s_x, float s_y, float s_z, float max_volume, bool looping = false) {
-
 	VEC3 sound_pos = VEC3(s_x, s_y, s_z);
 	// reproduce the sound
 	sound_manager->playFixed3dSound(std::string(sound_route), std::string(sound_name), sound_pos, max_volume, looping);

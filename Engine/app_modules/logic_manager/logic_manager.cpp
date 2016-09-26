@@ -44,10 +44,11 @@ void CLogicManagerModule::update(float dt) {
 	// update the timer of each command
 	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ) {
 		command_it->execution_time -= dt;
-
-		if (command_it->execution_time < 0.f) {
-			slb_script.doString(command_it->code);
-			command_it = command_queue.erase(command_it);
+		if (!command_it->only_runtime || GameController->GetGameState() == CGameController::RUNNING) {
+			if (command_it->execution_time < 0.f) {
+				slb_script.doString(command_it->code);
+				command_it = command_queue.erase(command_it);
+			}
 		}
 		else {
 			command_it++;

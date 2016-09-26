@@ -10,6 +10,7 @@
 struct command {
 	const char* code;
 	float execution_time;
+	bool only_runtime;
 };
 
 class CLogicManagerModule : public IAppModule
