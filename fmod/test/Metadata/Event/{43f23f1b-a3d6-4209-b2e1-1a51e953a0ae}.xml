@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.01.08.00">
     <object class="Event" id="{43f23f1b-a3d6-4209-b2e1-1a51e953a0ae}">
         <property name="name">
-            <value>OnGameStart</value>
+            <value>OnRoom1</value>
         </property>
         <property name="outputFormat">
             <value>2</value>
@@ -60,7 +60,7 @@
     <object class="MarkerTrack" id="{adf45c19-5181-4ce4-b751-e3976573d44c}"/>
     <object class="GroupTrack" id="{610d73a2-0f69-4bb9-86a9-4533e2cc8b73}">
         <relationship name="modules">
-            <destination>{3edcea27-c1f0-4f53-9c0d-9aba6f8cccac}</destination>
+            <destination>{6d97d9d4-7b11-4422-8f28-c99cd3967db7}</destination>
         </relationship>
         <relationship name="mixerGroup">
             <destination>{b295c117-30af-4d7e-86f8-72a460a41acf}</destination>
@@ -68,7 +68,7 @@
     </object>
     <object class="Timeline" id="{4767f0c5-c6da-4a78-80b7-b39e7fd933f9}">
         <relationship name="modules">
-            <destination>{3edcea27-c1f0-4f53-9c0d-9aba6f8cccac}</destination>
+            <destination>{6d97d9d4-7b11-4422-8f28-c99cd3967db7}</destination>
         </relationship>
     </object>
     <object class="EventMixerMaster" id="{99554b8f-f8b5-4623-a771-71f97603af6b}">
@@ -88,7 +88,7 @@
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{547f188c-3dee-4101-9349-0a40f2e80817}"/>
-    <object class="SingleSound" id="{3edcea27-c1f0-4f53-9c0d-9aba6f8cccac}">
+    <object class="SingleSound" id="{6d97d9d4-7b11-4422-8f28-c99cd3967db7}">
         <property name="start">
             <value>0</value>
         </property>
@@ -96,7 +96,7 @@
             <value>66.53387755102041</value>
         </property>
         <relationship name="audioFile">
-            <destination>{62d3c6f5-9fe3-4ced-8be8-d5c34d46c785}</destination>
+            <destination>{39d4af71-32c5-441b-b9c6-70cdd0a63717}</destination>
         </relationship>
     </object>
     <object class="EventMixerGroup" id="{b295c117-30af-4d7e-86f8-72a460a41acf}">
