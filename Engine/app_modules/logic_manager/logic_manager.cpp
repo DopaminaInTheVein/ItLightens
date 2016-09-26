@@ -227,6 +227,14 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnBreakWall(%f);", 0.5f);
 		break;
 	}
+	case (OnDroneMoving): {
+		sprintf(lua_code, "OnDroneMoving(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnDroneStatic): {
+		sprintf(lua_code, "OnDroneStatic(\"%s\");", params.c_str());
+		break;
+	}
 	case (OnRechargeDrone): {
 		sprintf(lua_code, "OnRechargeDrone(%f);", 0.5);
 		break;
@@ -830,17 +838,30 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("bool: Sound looping or not")
 		// play 3d sound function
 		.set("play_3d_sound", &SLBPublicFunctions::play3dSound)
-		.comment("Executes the specified sound effect in a 3d position")
-		.param("string: Route of the sound")
+		.comment("Executes a sound effect of the specified event type in a 3d position")
+		.param("string: Route of the sound event type")
 		.param("float: x coord of the sound")
 		.param("float: y coord of the sound")
 		.param("float: z coord of the sound")
 		.param("bool: Sound looping or not")
 		.param("int: maximum number of instances allowed")
+		// play persistent 3d sound function
+		.set("play_fixed_3d_sound", &SLBPublicFunctions::playFixed3dSound)
+		.comment("Executes the specified sound effect in a 3d position")
+		.param("string: Route of the sound event type")
+		.param("string: Name of the sound")
+		.param("float: x coord of the sound")
+		.param("float: y coord of the sound")
+		.param("float: z coord of the sound")
+		.param("bool: Sound looping or not")
 		// stop sound function
 		.set("stop_sound", &SLBPublicFunctions::stopSound)
-		.comment("Stops the specified sound effect")
+		.comment("Stops all the sfx from the specified event type")
 		.param("Route of the sound")
+		// stop fixed sound function
+		.set("stop_fixed_sound", &SLBPublicFunctions::stopFixedSound)
+		.comment("Stops the specified sound effect")
+		.param("Name of the sound")
 		// play music function
 		.set("play_music", &SLBPublicFunctions::playMusic)
 		.comment("Executes the specified music")

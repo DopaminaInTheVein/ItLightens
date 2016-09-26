@@ -27,6 +27,13 @@ struct TCompDrone : public TTrigger {
 	std::string self_ilum_front;
 	std::string self_ilum_back;
 
+	// sound parameters
+	std::string name;
+	std::string moving_sound_event = "event:/OnDroneMoving";
+	std::string static_sound_event = "event:/OnDroneStatic";
+	float volume = 0.5f;
+	bool moving = false;
+
 	VEC3 final_pos;
 
 	void onCreate(const TMsgEntityCreated&);

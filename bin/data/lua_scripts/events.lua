@@ -195,6 +195,18 @@ function OnBreakWall( param )
 	p:play_sound("event:/OnBreakWall", 1.0, false)
 end
 
+function OnDroneMoving( sound_name )
+	p:print( "OnRechargeDrone: "..sound_name.."\n" )
+	h:getHandleCaller()	
+	p:play_fixed_3d_sound("event:/OnDroneMoving", sound_name, h:get_x(), h:get_y(), h:get_z(), 1.0, true)
+end
+
+function OnDroneStatic( sound_name )
+	p:print( "OnRechargeDrone: "..sound_name.."\n" )
+	h:getHandleCaller()	
+	p:play_fixed_3d_sound("event:/OnDroneStatic", sound_name, h:get_x(), h:get_y(), h:get_z(), 1.0, true)
+end
+
 function OnRechargeDrone( param )
 	p:print( "OnRechargeDrone: "..param.."\n" )
 	p:play_sound("event:/OnUseGenerator", 1.0, false)
@@ -333,7 +345,7 @@ end
 
 function OnExplode_throw_bomb()
 	p:print( "OnExplode_throw_bomb\n")
-	p:play_sound("event:/OnChangePolarity", 1.0, false)
+	p:play_sound("event:/OnBombExplodes", 1.0, false)
 end
 
 

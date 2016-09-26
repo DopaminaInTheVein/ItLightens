@@ -694,8 +694,19 @@ void SLBPublicFunctions::play3dSound(const char* sound_route, float s_x, float s
 	sound_manager->play3dSound(std::string(sound_route), sound_pos, max_volume, looping, max_instances);
 }
 
+void SLBPublicFunctions::playFixed3dSound(const char* sound_route, const char* sound_name, float s_x, float s_y, float s_z, float max_volume, bool looping = false) {
+
+	VEC3 sound_pos = VEC3(s_x, s_y, s_z);
+	// reproduce the sound
+	sound_manager->playFixed3dSound(std::string(sound_route), std::string(sound_name), sound_pos, max_volume, looping);
+}
+
 void SLBPublicFunctions::stopSound(const char* sound_route) {
 	sound_manager->stopSound(std::string(sound_route));
+}
+
+void SLBPublicFunctions::stopFixedSound(const char* sound_name) {
+	sound_manager->stopFixedSound(std::string(sound_name));
 }
 
 void SLBPublicFunctions::playMusic(const char* music_route) {

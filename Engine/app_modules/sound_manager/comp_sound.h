@@ -12,6 +12,11 @@ struct TCompSound : public TCompBase {
 	VEC3 entity_position;
 	std::string entity_name;
 
+	// loaded atributes
+	std::string event = "event:/OnFluoriscent";
+	float volume = 0.25f;
+
+	// aux
 	bool sound_playing = false;
 	float MAX_DISTANCE = 20.f;
 
