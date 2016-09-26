@@ -42,7 +42,6 @@ public:
 		OntTimerStart,
 		OnSetLight,
 
-		OnPlayerDead,
 		OnGuardAttack,
 		OnGuardAttackEnd,
 		OnGuardRemoveBox,

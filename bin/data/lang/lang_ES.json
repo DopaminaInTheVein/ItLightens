@@ -26,7 +26,8 @@
   },
   "hub": {
     "start_hub": "Mueve la cámara\ny usa SENTIR\npara encontrar tu objetivo.",
-    "target_seen": "¡Eso es!"
+    "target_seen": "¡Eso es!",
+	"dead_on_dream": "¡Uy! Suerte que era un sueño...\nTendré que esforzarme más."
   },
   "tuto_mole": {
     "look_wall": "Esta pared parece débil. Me pregunto si habrá algo detrás...",

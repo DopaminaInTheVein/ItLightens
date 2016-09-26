@@ -1,5 +1,5 @@
 <entities>
-  <entity>
+  <entity temp="yes">
     <tags tags="particles" />
     <name name="particles_default" />
     <transform pos="0.0 0.0 0.0" quat="0.0 0.0 0.0 1.0" scale="1.0" />

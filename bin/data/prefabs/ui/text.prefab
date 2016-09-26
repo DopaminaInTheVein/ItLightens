@@ -1,5 +1,5 @@
 <entities>
-<entity>
+<entity temp="yes">
 	<gui/>
 	<name name="helper_text"/>
 	<helper_text 

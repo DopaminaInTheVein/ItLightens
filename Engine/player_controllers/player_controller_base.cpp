@@ -62,7 +62,7 @@ bool CPlayerBase::checkDead() {
 	PROFILE_FUNCTION("checkdead");
 
 	if (TCompLife::isDead()) {
-		if (!dead) logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDead, "");
+		if (!dead) logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDead, CApp::get().getCurrentRealLevel());
 		dead = true;
 		ChangeState("die");
 		ChangeCommonState("die");

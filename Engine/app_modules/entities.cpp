@@ -531,11 +531,9 @@ void CEntitiesModule::clear(bool reload) {
 	static int entities_destroyed = 0; //dbg
 	reloading = reload;
 	getHandleManager<CEntity>()->each([reload](CEntity * e) {
-		if (!e->isPermanent()) {
-			if (!reload || e->needReload()) {
-				CHandle(e).destroy();
-				entities_destroyed++; //dbg
-			}
+		if (e->hasToClear(reload)) {
+			CHandle(e).destroy();
+			entities_destroyed++; //dbg
 		}
 	});
 	TCompRoom::all_rooms.clear();
@@ -545,11 +543,7 @@ void CEntitiesModule::clear(bool reload) {
 bool CEntitiesModule::isCleared() {
 	bool reload = reloading;
 	getHandleManager<CEntity>()->each([reload](CEntity * e) {
-		if (!e->isPermanent()) {
-			if (!reload || e->needReload()) {
-				return false;
-			}
-		}
+		if (e->hasToClear(reload)) return false;
 	});
 	return true;
 }

@@ -134,11 +134,6 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnSetLight(%f);", volume);
 		break;
 	}
-	case (OnPlayerDead): {
-		sprintf(lua_code, "OnPlayerDead(%f);", 0.5f);
-		break;
-	}
-
 	case (OnGuardAttack): {
 		sprintf(lua_code, "OnGuardAttack(%f);", 0.5f);
 		break;
@@ -378,7 +373,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnDead): {
-		sprintf(lua_code, "OnDead();");
+		sprintf(lua_code, "OnDead(\"%s\");", params.c_str());
 		break;
 	}
 	case (OnRestartLevel): {
@@ -403,7 +398,6 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 	}
 						   //Others
 	case (OnStep): {
-
 		int step_number = 0;
 		CEntity* entity = handle;
 
@@ -424,10 +418,9 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnStepOut): {
-
 		int step_number = 0;
 		CEntity* entity = handle;
-		
+
 		if (params.find("Guard") != std::string::npos) {
 			bt_guard* guard = entity->get<bt_guard>();
 			step_number = guard->getStepCounter();

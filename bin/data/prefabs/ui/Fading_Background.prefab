@@ -1,5 +1,5 @@
 <entities>
-<entity>
+<entity temp="yes">
 <tags/>
 <name
    name="Fading_Background"/>
@@ -9,9 +9,6 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ui/messages/Fading_Background.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 </entities>

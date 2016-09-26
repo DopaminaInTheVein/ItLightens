@@ -33,8 +33,8 @@ class CEntityCounter : public CXMLParser {
 	int num_entities = 0;
 public:
 	void onStartElement(const std::string &elem, MKeyValue &atts) override { if (elem == "entity") { num_entities++; } }
-	int getNumEntities() { 
-		return num_entities; 
+	int getNumEntities() {
+		return num_entities;
 	}
 
 	bool xmlParseFile(const std::string &filename) override {
@@ -50,6 +50,7 @@ class CEntityParser : public CXMLParser {
 	bool curr_entity_permanent;
 	bool curr_entity_reload;
 	bool curr_entity_slept;
+	bool curr_entity_temp;
 	bool first_load;
 	bool reload = false;
 	bool loading_control = false;

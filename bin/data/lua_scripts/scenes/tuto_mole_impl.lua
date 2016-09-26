@@ -20,6 +20,11 @@ portal_done = false
 --===========================================
 -- Events
 --===========================================
+function OnDead_tuto_mole( )
+	dead_on_dream = true
+	LoadLevel("level_1")
+end
+
 function OnStart_tuto_mole( )
 	poss_done = false
 	box_moved_done = false

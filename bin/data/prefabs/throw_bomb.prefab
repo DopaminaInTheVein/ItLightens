@@ -1,4 +1,4 @@
-<entity>
+<entity temp="yes">
     <tags tags="throw_bomb"/>
     <name name="throw_bomb"/>
 	<transform pos="0 1000 0" quat="0.0 0.0 0.0 1.0" scale="0.05" />

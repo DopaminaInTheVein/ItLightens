@@ -109,8 +109,8 @@ fn parseRigidBodyTrigger parent = (
 )
 
 fn parseCharController parent charController = (
-	local radius = "0.3" --> Prefab!?
-	local height = "0.5" --> Prefab!?
+	local radius = "0.3"
+	local height = "0.5"
 	if charController != undefined then (
 		local type = (getUserProp _parsingObject "typeObject") as string
 		if type != "Scientist" then (

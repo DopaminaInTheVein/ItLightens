@@ -1,5 +1,5 @@
 <entities>
-<entity>
+<entity="yes">
 <tags/>
 <name
    name="Fading_Icon"/>

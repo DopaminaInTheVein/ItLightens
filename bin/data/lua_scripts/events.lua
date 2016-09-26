@@ -10,17 +10,23 @@ cam = Camera()
 ui_cam = UiCamera()
 
 function CallFunction(func)
+	called = true
 	if _G[func] then _G[func]()
 	else
 		p:print("function "..func.." does not exist!\n")
+		called = false
 	end
+	return called
 end
 
 function CallFunctionParam(func, param)
+	called = true
 	if _G[func] then _G[func](param)
 	else
 		p:print("function "..func.." does not exist!\n")
+		called = false
 	end
+	return called
 end
 
 function OnAction( param )
@@ -124,10 +130,6 @@ end
 
 function OntTimerStart( param )
 	p:print( "OntTimerStart: "..param.."\n" )
-end
-
-function OnPlayerDead( param )
-	p:print( "OnPlayerDead: "..param.."\n" )
 end
 
 function OnInterruptHit( param )
@@ -452,12 +454,15 @@ function OnVictory( )
 	launchVictoryState();
 end
 
-function OnDead( )
+function OnDead(level)
 	p:print( "OnDead\n")
 	g_dead = true
-	cam:orbit(true)
-	p:exec_command("p:load_entities(\"dead_menu\");", 2.0)
-	p:exec_command("cam:orbit(fase)", 3.0)
+	special_death = CallFunction("OnDead_"..level)
+	if not special_death then
+		cam:orbit(true)
+		p:exec_command("p:load_entities(\"dead_menu\");", 2.0)
+		p:exec_command("cam:orbit(fase)", 3.0)
+	end
 end
 
 -- Others

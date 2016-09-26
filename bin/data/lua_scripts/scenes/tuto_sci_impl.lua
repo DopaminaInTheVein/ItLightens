@@ -22,6 +22,11 @@ gen_done = false
 --===========================================
 -- Events
 --===========================================
+function OnDead_tuto_sci( )
+	dead_on_dream = true
+	LoadLevel("level_1")
+end
+
 function OnStart_tuto_sci( )
 	poss_done = false
 	bomb_done = false

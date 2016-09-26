@@ -26,7 +26,8 @@
   },
   "hub": {
     "start_hub": "Mou la càmera\ni usa SENTIR\nper trobar el teu objectiu.",
-    "target_seen": "Ja ho tens!"
+    "target_seen": "Ja ho tens!",
+	"dead_on_dream": "Ui! Sort que era un somni...\nHauré d'esforçar-me més."
   },
   "tuto_mole": {
     "look_wall": "Aquesta pared sembla dèbil. Em pregunto si hi haura alguna cosa darrera...",
