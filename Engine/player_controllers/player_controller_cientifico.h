@@ -59,6 +59,8 @@ class player_controller_cientifico : public PossController {
 	VEC3 bomb_offset_1;
 	VEC3 bomb_offset_2;
 
+	int step_counter = 0;
+
 	void UpdateInputActions() override;
 	void WorkBenchActions();
 
@@ -103,7 +105,13 @@ public:
 	void InitControlState();
 	CEntity* getMyEntity();
 
-	void onGetWhoAmI(TMsgGetWhoAmI& msg) { msg.who = PLAYER_TYPE::SCIENTIST; msg.who_string = "Scientist"; }
+	void onGetWhoAmI(TMsgGetWhoAmI& msg) { 
+		msg.who = PLAYER_TYPE::SCIENTIST; 
+		msg.who_string = "Scientist"; 
+		if (msg.action_flag)
+			step_counter = (step_counter + 1) % 4;
+	}
+	int getStepCounter() { return step_counter; }
 	void myUpdate() override;
 	//void UpdateAnimation() override { animController.update(); }
 

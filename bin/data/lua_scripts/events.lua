@@ -80,7 +80,7 @@ end
 function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
 	h:getHandleCaller()	
-	p:play_3d_sound("event:/OnGuardAttack", h:get_x(), h:get_y(), h:get_z(), false)
+	p:play_3d_sound("event:/OnGuardAttack", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 1)
 end
 
 function OnGuardAttackEnd( reaction_time )
@@ -257,7 +257,7 @@ function OnOvercharge( param )
 end
 
 function OnJump( param )
-	p:print( "OnDoubleJump: "..param.."\n" )
+	p:print( "OnJump: "..param.."\n" )
 	p:play_sound("event:/OnJump", 1.0, false)
 end
 
@@ -266,10 +266,20 @@ function OnDoubleJump( param )
 	p:play_sound("event:/OnDoubleJump", 1.0, false)
 end
 
+function OnMoleJump( param )
+	p:print( "OnMoleJump: "..param.."\n" )
+	p:play_sound("event:/OnMoleJump", 1.0, false)
+end
+
+function OnScientistJump( param )
+	p:print( "OnScientistJump: "..param.."\n" )
+	p:play_sound("event:/OnScientistJump", 1.0, false)
+end
+
 function OnDetected( distance )
 	p:print( "OnDetected: "..distance.."\n" )
 	h:getHandleCaller()	
-	p:play_3d_sound("event:/OnDetected", h:get_x(), h:get_y(), h:get_z(), false)
+	p:play_3d_sound("event:/OnDetected", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 	name_guard = h:get_name()
 	CallFunction("OnDetected_"..name_guard)
 	p:character_globe(distance, h:get_x(), h:get_y(), h:get_z())
@@ -308,6 +318,12 @@ function OnDoorOpening()
 	p:print( "OnDoorOpening\n")
 end
 
+--Lights
+function OnSetLight( volume )
+	h:getHandleCaller()
+	p:play_3d_sound("event:/OnFluoriscent", h:get_x(), h:get_y(), h:get_z(), volume, false, 32)
+end
+
 --Bombs
 --------------------------------
 function OnExplode( param )
@@ -325,21 +341,27 @@ end
 --------------------------------
 function OnElevatorUp( param )
 	p:print( "OnElevatorUp\n")
+	p:stop_sound("event:/OnElevatorMoving")
+	p:play_sound("event:/OnElevatorArrived", 1.0, false)
 	CallFunction("OnElevatorUp_"..param)
 end
 
 function OnElevatorDown( param )
 	p:print( "OnElevatorDown\n")
+	p:stop_sound("event:/OnElevatorMoving")
+	p:play_sound("event:/OnElevatorArrived", 1.0, false)
 	CallFunction("OnElevatorDown_"..param)
 end
 
 function OnElevatorGoingUp( param )
 	p:print( "OnElevatorGoingUp\n")
+	p:play_sound("event:/OnElevatorMoving", 1.0, false)
 	CallFunction("OnElevatorGoingUp_"..param)
 end
 
 function OnElevatorGoingDown( param )
 	p:print( "OnElevatorGoingDown\n")
+	p:play_sound("event:/OnElevatorMoving", 1.0, false)
 	CallFunction("OnElevatorGoingDown_"..param)
 end
 
@@ -428,24 +450,71 @@ end
 
 -- Others
 -------------------------------------------
-function OnStepGuard( )
-	--h:getHandleCaller()	
-	--p:play_3d_sound("event:/OnGuardStepLeft1", h:get_x(), h:get_y(), h:get_z(), false)
+function OnStepGuard( step )
+	h:getHandleCaller()
+	sound_route = ""
+	
+	if step == 0 then
+		sound_route = "event:/OnGuardStepLeft1"
+	elseif step == 1 then
+		sound_route = "event:/OnGuardStepRight1"
+	elseif step == 2 then
+		sound_route = "event:/OnGuardStepLeft2"
+	elseif step == 4 then
+		sound_route = "event:/OnGuardStepRight2"
+	else
+		sound_route = "event:/OnGuardStepLeft1"
+	end
+	
+	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 end
-function OnStepMole( )
-	h:getHandleCaller()	
-	p:play_3d_sound("event:/OnMoleStepLeft1", h:get_x(), h:get_y(), h:get_z(), false)
+function OnStepMole( step )
+	h:getHandleCaller()
+	sound_route = ""
+	
+	if step == 0 then
+		sound_route = "event:/OnMoleStepLeft1"
+	elseif step == 1 then
+		sound_route = "event:/OnMoleStepRight1"
+	elseif step == 2 then
+		sound_route = "event:/OnMoleStepLeft2"
+	elseif step == 4 then
+		sound_route = "event:/OnMoleStepRight2"
+	else
+		sound_route = "event:/OnMoleStepLeft1"
+	end
+	
+	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 end
-function OnStepScientist( )
+
+function OnStepScientist( step )
 	--p:print("StepScientist")
 end
-function OnStepOutGuard( )
-	-- p:print("StepOutGuard")
+
+function OnStepOutGuard( step )
+	h:getHandleCaller()
+	sound_route = ""
+	
+	if step == 0 then
+		sound_route = "event:/OnGuardStepLeft1"
+	elseif step == 1 then
+		sound_route = "event:/OnGuardStepRight1"
+	elseif step == 2 then
+		sound_route = "event:/OnGuardStepLeft2"
+	elseif step == 4 then
+		sound_route = "event:/OnGuardStepRight2"
+	else
+		sound_route = "event:/OnGuardStepLeft1"
+	end
+	
+	p:stop_sound(sound_route)
 end
-function OnStepOutMole( )
+
+function OnStepOutMole( step )
 	-- p:print("StepOutMole")
 end
-function OnStepOutScientist( )
+
+function OnStepOutScientist( step )
 	-- p:print("StepOutScientist")
 end
 

@@ -3,7 +3,10 @@
 #include "app_modules\io\io.h"
 #include "slb_public_functions.h"
 
-#include "utils\utils.h"
+#include "utils/utils.h"
+#include "logic/bt_guard.h"
+#include "player_controllers/player_controller_cientifico.h"
+#include "player_controllers/player_controller_mole.h"
 
 extern CLogicManagerModule* logic_manager = nullptr;
 
@@ -126,7 +129,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OntTimerStart(%f);", 0.5f);
 		break;
 	}
-
+	case (OnSetLight): {
+		float volume = atof(params.c_str());
+		sprintf(lua_code, "OnSetLight(%f);", volume);
+		break;
+	}
 	case (OnPlayerDead): {
 		sprintf(lua_code, "OnPlayerDead(%f);", 0.5f);
 		break;
@@ -269,7 +276,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnJump): {
-		sprintf(lua_code, "OnJump(%f);", 0.5f);
+		sprintf(lua_code, "On%sJump(%f);", params.c_str(), 0.5f);
 		break;
 	}
 	case (OnDoubleJump): {
@@ -388,11 +395,45 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 	}
 						   //Others
 	case (OnStep): {
-		sprintf(lua_code, "OnStep%s();", params.c_str());
+
+		int step_number = 0;
+		CEntity* entity = handle;
+
+		if (params.find("Guard") != std::string::npos) {
+			bt_guard* guard = entity->get<bt_guard>();
+			step_number = guard->getStepCounter();
+		}
+		else if (params.find("Scientist") != std::string::npos) {
+			player_controller_cientifico* scientist = entity->get<player_controller_cientifico>();
+			step_number = scientist->getStepCounter();
+		}
+		else if (params.find("Mole") != std::string::npos) {
+			player_controller_mole* mole = entity->get<player_controller_mole>();
+			step_number = mole->getStepCounter();
+		}
+
+		sprintf(lua_code, "OnStep%s(%i);", params.c_str(), step_number);
 		break;
 	}
 	case (OnStepOut): {
-		sprintf(lua_code, "OnStepOut%s();", params.c_str());
+
+		int step_number = 0;
+		CEntity* entity = handle;
+		
+		if (params.find("Guard") != std::string::npos) {
+			bt_guard* guard = entity->get<bt_guard>();
+			step_number = guard->getStepCounter();
+		}
+		else if (params.find("Scientist") != std::string::npos) {
+			player_controller_cientifico* scientist = entity->get<player_controller_cientifico>();
+			step_number = scientist->getStepCounter();
+		}
+		else if (params.find("Mole") != std::string::npos) {
+			player_controller_mole* mole = entity->get<player_controller_mole>();
+			step_number = mole->getStepCounter();
+		}
+
+		sprintf(lua_code, "OnStepOut%s(%i);", params.c_str(), step_number);
 		break;
 	}
 					  //GUI
@@ -795,6 +836,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: y coord of the sound")
 		.param("float: z coord of the sound")
 		.param("bool: Sound looping or not")
+		.param("int: maximum number of instances allowed")
 		// stop sound function
 		.set("stop_sound", &SLBPublicFunctions::stopSound)
 		.comment("Stops the specified sound effect")

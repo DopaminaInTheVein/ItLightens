@@ -170,7 +170,7 @@ public:
 	void setCameraEnabled(int);
 	void setOnlySense(int);
 	void playSound(const char* sound_route, float volume, bool looping);
-	void play3dSound(const char* sound_route, float s_x, float s_y, float s_z, bool looping);
+	void play3dSound(const char* sound_route, float s_x, float s_y, float s_z, float max_volume, bool looping, int max_instances);
 	void stopSound(const char* sound_route);
 	void playMusic(const char* music_route);
 	void playLoopingMusic(const char* music_route);

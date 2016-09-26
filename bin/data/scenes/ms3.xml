@@ -976,7 +976,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound001"/>
 <transform
@@ -988,7 +988,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound005"/>
 <transform
@@ -1000,7 +1000,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound009"/>
 <transform
@@ -1012,7 +1012,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound013"/>
 <transform
@@ -1024,7 +1024,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound017"/>
 <transform
@@ -1036,7 +1036,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound022"/>
 <transform
@@ -1048,7 +1048,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound026"/>
 <transform
@@ -1060,7 +1060,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound029"/>
 <transform
@@ -1072,7 +1072,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound036"/>
 <transform
@@ -1084,7 +1084,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound040"/>
 <transform
@@ -1096,7 +1096,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound044"/>
 <transform
@@ -1108,7 +1108,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound048"/>
 <transform
@@ -1120,7 +1120,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound051"/>
 <transform
@@ -1132,7 +1132,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound056"/>
 <transform
@@ -1144,7 +1144,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound059"/>
 <transform
@@ -1156,7 +1156,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="farolillos_sound062"/>
 <transform
@@ -2084,7 +2084,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafoncitos_sound001"/>
 <transform
@@ -2096,7 +2096,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafoncitos_sound002"/>
 <transform
@@ -2108,7 +2108,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafoncitos_sound003"/>
 <transform
@@ -2120,7 +2120,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafoncitos_sound004"/>
 <transform
@@ -2132,7 +2132,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafoncitos_sound005"/>
 <transform
@@ -2161,7 +2161,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound003"/>
 <transform
@@ -2173,7 +2173,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound006"/>
 <transform
@@ -2185,7 +2185,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound009"/>
 <transform
@@ -2197,7 +2197,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound012"/>
 <transform
@@ -2209,7 +2209,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound015"/>
 <transform
@@ -2221,7 +2221,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound018"/>
 <transform
@@ -2233,7 +2233,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound021"/>
 <transform
@@ -2245,7 +2245,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound024"/>
 <transform
@@ -2257,7 +2257,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound027"/>
 <transform
@@ -2269,7 +2269,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound030"/>
 <transform
@@ -2281,7 +2281,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound033"/>
 <transform
@@ -2293,7 +2293,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound036"/>
 <transform
@@ -2305,7 +2305,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound039"/>
 <transform
@@ -2317,7 +2317,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound042"/>
 <transform
@@ -2329,7 +2329,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound045"/>
 <transform
@@ -2341,7 +2341,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound048"/>
 <transform
@@ -2353,7 +2353,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound051"/>
 <transform
@@ -2365,7 +2365,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound054"/>
 <transform
@@ -2377,7 +2377,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound057"/>
 <transform
@@ -2389,7 +2389,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound060"/>
 <transform
@@ -2401,7 +2401,7 @@
 <entity
    reload="no">
 <tags/>
-<!--<sound/>-->
+<sound/>
 <name
    name="plafones_sound063"/>
 <transform

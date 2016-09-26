@@ -551,6 +551,9 @@
     <ClCompile Include="app_modules\io\input_wrapper.cpp">
       <Filter>app_modules\io</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\sound_manager\comp_sound.cpp">
+      <Filter>app_modules\sound_manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1457,6 +1460,9 @@
     </ClInclude>
     <ClInclude Include="app_modules\io\input_wrapper.h">
       <Filter>app_modules\io</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\sound_manager\comp_sound.h">
+      <Filter>app_modules\sound_manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
