@@ -179,7 +179,7 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, float m
 
 			FMOD_VECTOR listener_position = VectorToFmod(camera_pos);
 			FMOD_VECTOR listener_front = VectorToFmod(camera_front);
-			FMOD_VECTOR listener_up = VectorToFmod(camera_up);
+			FMOD_VECTOR listener_up = VectorToFmod(-camera_up);
 			FMOD_VECTOR sound_position = VectorToFmod(sound_pos);
 
 			// Position the listener at the player position
@@ -264,7 +264,7 @@ bool CSoundManagerModule::playFixed3dSound(std::string route, std::string sound_
 
 			FMOD_VECTOR listener_position = VectorToFmod(camera_pos);
 			FMOD_VECTOR listener_front = VectorToFmod(camera_front);
-			FMOD_VECTOR listener_up = VectorToFmod(camera_up);
+			FMOD_VECTOR listener_up = VectorToFmod(-camera_up);
 			FMOD_VECTOR sound_position = VectorToFmod(sound_pos);
 
 			// Position the listener at the player position
@@ -380,7 +380,7 @@ bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_
 
 	FMOD_VECTOR listener_position = VectorToFmod(camera_pos);
 	FMOD_VECTOR listener_front = VectorToFmod(camera_front);
-	FMOD_VECTOR listener_up = VectorToFmod(camera_up);
+	FMOD_VECTOR listener_up = VectorToFmod(-camera_up);
 	FMOD_VECTOR sound_position = VectorToFmod(sound_pos);
 
 	FMOD_3D_ATTRIBUTES attributes = { { 0 } };
