@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes//escritorio.mesh" material="materials/_mesadesk_1.material" mesh_idx="0"/>
-</static_mesh>

@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes//soporte_balcon_mapeado001.mesh" material="materials/soporte_balcon.material" mesh_idx="0"/>
-</static_mesh>

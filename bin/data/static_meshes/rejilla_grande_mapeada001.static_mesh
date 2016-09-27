@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes//rejilla_grande_mapeada001.mesh" material="materials/_rejillatest_red.material" mesh_idx="0"/>
-</static_mesh>

@@ -430,7 +430,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes//cajas_de_herramientas_ms1.static_mesh"/>
+   name="static_meshes/ms3/cajas_de_herramientas_ms1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -702,7 +702,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes//columnas_caida.static_mesh"/>
+   name="static_meshes/ms3/columnas_caida.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -871,20 +871,6 @@
    name="2"/>
 
 </entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnElevatorMusic"
-   volume="0.1"/>
-<name
-   name="elevator_ascensor_sound"/>
-<transform
-   pos="-65.1377 16.621 21.0196"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
 <entity>
 <tags/>
 <name
@@ -987,230 +973,6 @@
    name="1"/>
 
 </entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound001"/>
-<transform
-   pos="-39.8526 -19.1095 -24.0712"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound005"/>
-<transform
-   pos="-40.0566 -19.1095 23.9026"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound009"/>
-<transform
-   pos="-40.4502 -19.1095 -7.20969"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound013"/>
-<transform
-   pos="2.39889 0.885974 -24.0295"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound017"/>
-<transform
-   pos="-5.50724 0.885974 -24.0295"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound022"/>
-<transform
-   pos="-19.2091 1.5682 -24.0794"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound026"/>
-<transform
-   pos="-20.5272 -18.4273 -24.0794"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound029"/>
-<transform
-   pos="0.251226 -19.1095 -24.0871"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound036"/>
-<transform
-   pos="19.7799 -18.5348 -23.652"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound040"/>
-<transform
-   pos="34.852 -18.5348 -15.8452"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound044"/>
-<transform
-   pos="35.3034 -18.5348 -5.37202"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound048"/>
-<transform
-   pos="35.3034 -18.5348 4.86455"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound051"/>
-<transform
-   pos="34.8526 -18.6391 15.3135"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound056"/>
-<transform
-   pos="19.7848 -18.5348 24.0314"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound059"/>
-<transform
-   pos="0.505161 -18.6391 23.947"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos_sound062"/>
-<transform
-   pos="-20.3215 -18.4273 23.9522"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
 <entity>
 <tags/>
 <name
@@ -1282,23 +1044,6 @@
 <entity>
 <tags/>
 <name
-   name="hierro001"/>
-<transform
-   pos="-9.60305 2.84581 -0.725681"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/hierro001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="laboratorio_arriba"/>
 <transform
    pos="-65.7799 19.2312 12.4431"
@@ -1339,7 +1084,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/libro_mapeado.static_mesh"/>
+   name="static_meshes/ms3/libro_modelo_3.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -2127,76 +1872,6 @@
    name="2"/>
 
 </entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafoncitos_sound001"/>
-<transform
-   pos="-108.431 2.98599 -9.9703"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafoncitos_sound002"/>
-<transform
-   pos="-116.046 2.98599 -9.97029"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafoncitos_sound003"/>
-<transform
-   pos="-122.221 3.05368 -9.97029"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafoncitos_sound004"/>
-<transform
-   pos="-65.7548 18.859 8.91881"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafoncitos_sound005"/>
-<transform
-   pos="-88.3917 2.10723 21.5721"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
 <entity>
 <tags/>
 <name
@@ -2212,300 +1887,6 @@
    type_collision="static"/>
 <room
    name="2"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound003"/>
-<transform
-   pos="-65.6001 18.4175 13.1908"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound006"/>
-<transform
-   pos="-65.6001 18.4175 18.0175"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound009"/>
-<transform
-   pos="-63.6653 18.4175 15.5698"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound012"/>
-<transform
-   pos="-67.4694 18.4175 15.5698"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound015"/>
-<transform
-   pos="-90.2643 2.19643 16.6817"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound018"/>
-<transform
-   pos="-99.8696 4.84301 -9.50144"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound021"/>
-<transform
-   pos="-91.5151 4.96791 -9.94764"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound024"/>
-<transform
-   pos="-81.0661 2.40679 -8.313"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound027"/>
-<transform
-   pos="-70.3324 4.7368 -7.17749"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound030"/>
-<transform
-   pos="-77.1959 5.15362 -14.9891"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound033"/>
-<transform
-   pos="-79.9749 5.15362 -26.2625"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound036"/>
-<transform
-   pos="-86.4284 5.15362 -26.4688"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound039"/>
-<transform
-   pos="-92.5319 4.84301 -18.3327"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound042"/>
-<transform
-   pos="-91.0145 4.84301 2.37872"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound045"/>
-<transform
-   pos="-83.7416 4.84301 2.37872"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound048"/>
-<transform
-   pos="-64.8288 5.2616 -6.97766"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound051"/>
-<transform
-   pos="-64.8288 5.2616 16.2942"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound054"/>
-<transform
-   pos="-69.5433 5.2616 16.2942"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound057"/>
-<transform
-   pos="-69.5433 5.2616 7.71195"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound060"/>
-<transform
-   pos="-64.8417 5.2616 7.71195"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="plafones_sound063"/>
-<transform
-   pos="-77.0056 4.84301 2.37872"
-   quat="0 0.709598 -0.704607 0"
-   scale="1.0"/>
 
 </entity>
 <entity>
@@ -2984,7 +2365,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes//tabla_arriba.static_mesh"/>
+   name="static_meshes/ms3/tabla_arriba.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3101,7 +2482,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes//trozos_columnas_rotas.static_mesh"/>
+   name="static_meshes/ms3/trozos_columnas_rotas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3574,7 +2955,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_1.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3591,7 +2972,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_2.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3608,7 +2989,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_3.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_3.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3625,7 +3006,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_5.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_5.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3642,7 +3023,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_6.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_6.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3659,7 +3040,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_cuadrado_derecho.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3676,7 +3057,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_izquierdo_abajo.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_cuadrado_izquierdo_abajo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3693,7 +3074,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_decorativo.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_decorativo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3710,7 +3091,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_grande.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3725,7 +3106,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_izquierdo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3742,7 +3123,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/balcon_decorativo_arboles.static_mesh"/>
+   name="static_meshes/ms3/balcon_decorativo_arboles.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3759,7 +3140,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/bookshelf_2_deformed.static_mesh"/>
+   name="static_meshes/ms3/bookshelf_2_deformed.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3793,7 +3174,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/bookshelf_w_door_2.static_mesh"/>
+   name="static_meshes/ms3/bookshelf_w_door_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3808,7 +3189,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/handle_r_l_h_1.static_mesh"/>
+   name="static_meshes/ms3/handle_r_l_h_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3823,7 +3204,7 @@
    quat="0 0.898 0 0.439996"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/bookshelf_w_doors001.static_mesh"/>
+   name="static_meshes/ms3/bookshelf_w_doors001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3838,7 +3219,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/estanteria.static_mesh"/>
+   name="static_meshes/ms3/estanteria.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3853,7 +3234,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_izquierdo_abajo_ramas.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_cuadrado_izquierdo_abajo_ramas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3868,7 +3249,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_izquierdo_abajo_maceta.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_cuadrado_izquierdo_abajo_maceta.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3883,7 +3264,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_izquierdo_abajo_maceta_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_cuadrado_izquierdo_abajo_maceta_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3898,7 +3279,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_decorativo_ramas_1.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_decorativo_ramas_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3913,7 +3294,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_decorativo_ramas_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_decorativo_ramas_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3928,7 +3309,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_decorativo_maceta_1.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_decorativo_maceta_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3943,7 +3324,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_decorativo_maceta_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_decorativo_maceta_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3958,7 +3339,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_decorativo_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_decorativo_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3973,7 +3354,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/balcon_decorativo_arboles_maceta_1.static_mesh"/>
+   name="static_meshes/ms3/balcon_decorativo_arboles_maceta_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -3988,7 +3369,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/balcon_decorativo_arboles_maceta_2.static_mesh"/>
+   name="static_meshes/ms3/balcon_decorativo_arboles_maceta_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4003,7 +3384,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/balcon_decorativo_arboles_ramas_1.static_mesh"/>
+   name="static_meshes/ms3/balcon_decorativo_arboles_ramas_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4018,7 +3399,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/balcon_decorativo_arboles_ramas_2.static_mesh"/>
+   name="static_meshes/ms3/balcon_decorativo_arboles_ramas_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4033,7 +3414,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/balcon_decorativo_arboles_2.static_mesh"/>
+   name="static_meshes/ms3/balcon_decorativo_arboles_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4048,7 +3429,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho_ramas.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_cuadrado_derecho_ramas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4063,7 +3444,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho_ramas_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_cuadrado_derecho_ramas_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4078,7 +3459,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho_maceta_1.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_cuadrado_derecho_maceta_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4093,7 +3474,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho_maceta_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_cuadrado_derecho_maceta_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4108,7 +3489,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_cuadrado_derecho_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_cuadrado_derecho_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4123,7 +3504,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo_ramas.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_izquierdo_ramas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4138,7 +3519,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo_ramas_1.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_izquierdo_ramas_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4153,7 +3534,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo_maceta_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_izquierdo_maceta_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4168,7 +3549,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo_maceta_1.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_izquierdo_maceta_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4183,7 +3564,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_izquierdo_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_izquierdo_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4198,7 +3579,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/balcon_decorativo_arboles_ramas_3.static_mesh"/>
+   name="static_meshes/ms3/balcon_decorativo_arboles_ramas_3.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4213,7 +3594,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/balcon_decorativo_arboles_3.static_mesh"/>
+   name="static_meshes/ms3/balcon_decorativo_arboles_3.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4228,7 +3609,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/balcon_decorativo_arboles_maceta.static_mesh"/>
+   name="static_meshes/ms3/balcon_decorativo_arboles_maceta.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4243,7 +3624,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande_ramas_1.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_grande_ramas_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4258,7 +3639,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande_ramas_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_grande_ramas_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4273,7 +3654,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande_maceta_1.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_grande_maceta_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4288,7 +3669,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande_maceta_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_grande_maceta_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4303,7 +3684,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arboles_balcon_redondo_grande_2.static_mesh"/>
+   name="static_meshes/ms3/arboles_balcon_redondo_grande_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4318,7 +3699,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_2_ramas.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_2_ramas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4333,7 +3714,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_2_maceta.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_2_maceta.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4348,7 +3729,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_1_maceta.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_1_maceta.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4363,7 +3744,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_1_ramas.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_1_ramas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4378,7 +3759,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_3_maceta.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_3_maceta.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4393,7 +3774,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_3_ramas.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_3_ramas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4408,7 +3789,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_5_ramas.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_5_ramas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4423,7 +3804,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_5_maceta.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_5_maceta.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4438,7 +3819,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_6_ramas.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_6_ramas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4453,7 +3834,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/arbol_arriba_6_maceta.static_mesh"/>
+   name="static_meshes/ms3/arbol_arriba_6_maceta.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4468,7 +3849,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/bookshelf_2_deformed_1.static_mesh"/>
+   name="static_meshes/ms3/bookshelf_2_deformed_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4483,7 +3864,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/bookshelf_2_deformed_2.static_mesh"/>
+   name="static_meshes/ms3/bookshelf_2_deformed_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4603,7 +3984,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/hinge_bookshelf_w_doors_4.static_mesh"/>
+   name="static_meshes/ms3/hinge_bookshelf_w_doors_4.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4618,7 +3999,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/doorx4_r_l_h_1_1.static_mesh"/>
+   name="static_meshes/ms3/doorx4_r_l_h_1_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4633,7 +4014,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/estanteria_1.static_mesh"/>
+   name="static_meshes/ms3/estanteria_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4648,7 +4029,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/estanteria_2.static_mesh"/>
+   name="static_meshes/ms3/estanteria_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4663,7 +4044,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3_multi/estanteria_4.static_mesh"/>
+   name="static_meshes/ms3/estanteria_4.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4938,7 +4319,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/libro_mapeado.static_mesh"/>
+   name="static_meshes/ms3/libros_modelo_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4953,7 +4334,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/libro_mapeado.static_mesh"/>
+   name="static_meshes/ms3/libros_modelo_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4968,7 +4349,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes//plataforma_rota001.static_mesh"/>
+   name="static_meshes/ms3/plataforma_rota001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -4983,7 +4364,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes//trozo_plataforma_003.static_mesh"/>
+   name="static_meshes/ms3/trozo_plataforma_003.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -5013,7 +4394,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes//prensa.static_mesh"/>
+   name="static_meshes/ms3/prensa.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -5062,42 +4443,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="container_1"/>
-<transform
-   pos="-4.41499 -24.6818 -13.7647"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/container_1.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="container_2"/>
-<transform
-   pos="25.6039 -24.6817 -2.94211"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/container_2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
 
 </entity>
 <entity>
@@ -5278,6 +4623,42 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="container_1"/>
+<transform
+   pos="-4.41499 -24.6818 -13.7647"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/container_1.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="container_2"/>
+<transform
+   pos="25.6039 -24.6817 -2.94211"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/container_2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
 
 </entity>
 

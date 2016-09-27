@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/ms3_multi/arboles_balcon_redondo_grande_ramas_1.mesh" material="materials/ramas_arbol.material" mesh_idx="0"/>
-</static_mesh>

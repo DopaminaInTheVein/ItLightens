@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes//plataforma_rota001.mesh" material="materials/trozo_suelo_roto.material" mesh_idx="0"/>
-</static_mesh>

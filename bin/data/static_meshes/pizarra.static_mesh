@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes//pizarra.mesh" material="materials/_pizarrapizarra.material" mesh_idx="0"/>
-</static_mesh>

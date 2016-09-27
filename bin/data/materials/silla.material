@@ -1,3 +1,4 @@
 <material tech="deferred.tech">
 <texture slot="diffuse" name="textures/silla.dds"/>
+<texture slot="normalmap" name="textures/normals_silla.dds"/>
 </material>

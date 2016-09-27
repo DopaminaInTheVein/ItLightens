@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes//fuente_agua_mapeada.mesh" material="materials/fuente.material" mesh_idx="0"/>
-</static_mesh>

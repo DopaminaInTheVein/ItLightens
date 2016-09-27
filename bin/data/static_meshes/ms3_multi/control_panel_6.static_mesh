@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/ms3_multi/control_panel_6.mesh" material="materials/control_panel_v_1.material" mesh_idx="0"/>
-</static_mesh>

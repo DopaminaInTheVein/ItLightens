@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes//barandilla_mapeaaado001.mesh" material="materials/_vallastest_red.material" mesh_idx="0"/>
-</static_mesh>

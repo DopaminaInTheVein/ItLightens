@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes//extintor_mapeado.mesh" material="materials/_extintortest_red.material" mesh_idx="0"/>
-</static_mesh>

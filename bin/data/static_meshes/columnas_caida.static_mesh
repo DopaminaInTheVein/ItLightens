@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes//columnas_caida.mesh" material="materials/test_red.material" mesh_idx="0"/>
-</static_mesh>

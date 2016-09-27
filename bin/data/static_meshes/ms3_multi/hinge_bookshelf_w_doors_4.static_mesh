@@ -1,3 +1,0 @@
-<static_mesh>
-  <slot mesh="meshes/ms3_multi/hinge_bookshelf_w_doors_4.mesh" material="materials/hinge_estanteria_baja_con_puertas.material" mesh_idx="0"/>
-</static_mesh>

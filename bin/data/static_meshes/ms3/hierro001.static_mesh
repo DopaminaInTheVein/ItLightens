@@ -1,3 +1,2 @@
 <static_mesh>
   <slot mesh="meshes/ms3/hierro001.mesh" material="materials/lampara.material" mesh_idx="0"/>
-</static_mesh>

@@ -49,8 +49,8 @@ struct TResources (
 			--format "<texture slot=\"%\" name=\"%%\"/>\n" slot textures_path aname to:fs 
 		) else (
 			local full_name = bitmap_texture.bitmap.filename
-			local ext = getSuffixAfter full_name "."
-			if (ext != "dds" and ext != "DDS") then (
+			local ext = getFilenameType full_name
+			if (ext != ".dds" and ext != ".DDS") then (
 				messagebox ( "This texture is not DDS! [" + full_name + "]")
 				throw ( "This texture is not DDS! [" + full_name + "]")
 			)
