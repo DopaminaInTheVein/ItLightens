@@ -856,6 +856,9 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("stop_fixed_sound", &SLBPublicFunctions::stopFixedSound)
 		.comment("Stops the specified sound effect")
 		.param("Name of the sound")
+		// stop all sounds function
+		.set("stop_all_sounds", &SLBPublicFunctions::stopAllSounds)
+		.comment("Stop all the sounds of the game")
 		// play music function
 		.set("play_music", &SLBPublicFunctions::playMusic)
 		.comment("Executes the specified music")

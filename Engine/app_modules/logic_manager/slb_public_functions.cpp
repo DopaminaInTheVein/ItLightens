@@ -708,6 +708,10 @@ void SLBPublicFunctions::stopFixedSound(const char* sound_name) {
 	sound_manager->stopFixedSound(std::string(sound_name));
 }
 
+void SLBPublicFunctions::stopAllSounds() {
+	sound_manager->stopAllSounds();
+}
+
 void SLBPublicFunctions::playMusic(const char* music_route) {
 	sound_manager->playMusic(std::string(music_route));
 }

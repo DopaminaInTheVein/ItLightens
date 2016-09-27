@@ -287,6 +287,9 @@ void CApp::initNextLevel()
 	// Restart Timers LUA
 	logic_manager->resetTimers();
 
+	// Stop sounds
+	sound_manager->stopAllSounds();
+
 	//
 	std::string level_name = getRealLevel(next_level);
 	bool reload = next_level == current_level;

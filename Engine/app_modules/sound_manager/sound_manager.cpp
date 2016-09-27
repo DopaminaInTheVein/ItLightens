@@ -338,6 +338,39 @@ bool CSoundManagerModule::stopFixedSound(std::string name) {
 	return result == FMOD_OK;
 }
 
+bool CSoundManagerModule::stopAllSounds() {
+
+	// we iterate over all the sound descriptors and stop and release each instance
+	for (std::map<std::string, Studio::EventDescription*>::iterator it = sounds_descriptions.begin(); it != sounds_descriptions.end(); ++it) {
+		
+		int count;
+		it->second->getInstanceCount(&count);
+
+		Studio::EventInstance** sound_instances = (Studio::EventInstance**)malloc(count * sizeof(void*));
+		it->second->getInstanceList(sound_instances, count, &count);
+
+		if (count > 0) {
+			for (int i = 0; i < count; i++) {
+				Studio::EventInstance* sound_instance = NULL;
+				sound_instance = sound_instances[i];
+
+				result = sound_instance->setPaused(true);
+				if (result != FMOD_OK) return false;
+
+				result = sound_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+				if (result != FMOD_OK) return false;
+
+				result = sound_instance->release();
+				if (result != FMOD_OK) return false;
+			}
+		}
+	}
+
+	fixed_instances.clear();
+
+	return true;
+}
+
 bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_pos, float max_volume) {
 	
 	// if the sound was paused, we resume it

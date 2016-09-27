@@ -64,6 +64,7 @@ public:
 	bool stopSound(std::string route);
 	bool stopFixedSound(std::string name);
 	bool stopMusic();
+	bool stopAllSounds();
 
 	bool setMusicVolume(float);
 	bool updateFixed3dSound(std::string name, VEC3 sound_pos, float max_volume);
