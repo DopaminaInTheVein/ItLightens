@@ -31,6 +31,8 @@ public:
 	void updateMovement(float dt);
 	void updateNavigation();
 	void renderInMenu();
+	bool isEnabled() { return enabled; }
+	void setEnabled(bool) { enabled = false; }
 
 	//Messages
 	void onButton(const TMsgOverButton&);

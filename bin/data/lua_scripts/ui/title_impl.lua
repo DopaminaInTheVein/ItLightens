@@ -8,6 +8,7 @@ end
 
 function OnClicked_btn_start( )
 	--ui_cam:fade_out(1)
+	p:set_cursor_enabled(false)
 	p:exec_command("playVideoIntro();", 1)
 end
 

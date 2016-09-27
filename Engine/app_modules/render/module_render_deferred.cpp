@@ -131,8 +131,6 @@ bool CRenderDeferredModule::start() {
 
 	Resources.get("textures/general/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE);
 
-	
-
 	//hatching texture
 	Resources.get("textures/hatching/hatch_0.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
 
@@ -192,7 +190,7 @@ void CRenderDeferredModule::update(float dt) {
 
 	if (controller->isTestSSAOButoonPressed()) {
 		ssao_test = !ssao_test;
-	}	
+	}
 	if (io->keys[VK_F1].becomesPressed()) {
 		test_dream_shader = !test_dream_shader;
 	}
@@ -205,8 +203,9 @@ void CRenderDeferredModule::update(float dt) {
 void CRenderDeferredModule::renderGBuffer() {
 	PROFILE_FUNCTION("GBuffer");
 	CTraceScoped scope("GBuffer");
-	h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
-	h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
+	//leidas al principio del render
+	///h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
+	///h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
 
 	//static CCamera camera;
 
@@ -894,6 +893,11 @@ void CRenderDeferredModule::ShootGuardRender() {
 
 // ----------------------------------------------
 void CRenderDeferredModule::render() {
+	if (!h_camera.isValid()) h_camera = tags_manager.getFirstHavingTag("camera_main");
+	if (!h_camera.isValid()) return;
+	if (!h_ui_camera.isValid()) h_ui_camera = tags_manager.getFirstHavingTag("ui_camera");
+	if (!h_ui_camera.isValid()) return;
+
 	//Render.clearMainZBuffer();
 	rt_black->clear(VEC4(0, 0, 0, 1));
 	rt_data->clear(VEC4(0, 0, 0, 0));
@@ -1311,7 +1315,6 @@ void CRenderDeferredModule::applyPostFX() {
 		next_step = glow->apply(next_step);
 	else
 		return;
-
 
 	// ------------------------
 	Render.activateBackBuffer();

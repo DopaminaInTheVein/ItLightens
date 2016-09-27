@@ -176,7 +176,6 @@ void TCompGuiCursor::onButton(const TMsgOverButton& msg)
 
 TCompGuiCursor::~TCompGuiCursor()
 {
-	GameController->SetUiControl(false);
 	if (menu_name != "") TCompGui::clearScreen(menu_name);
 	//GameController->SetGameState(CGameController::RUNNING);
 }

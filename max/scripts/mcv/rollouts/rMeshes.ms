@@ -247,6 +247,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 			tr.exportSelectedForceNew()
 			messageBox "Operación realizada OK"
 		)
+		messagebox (_list_objs as string)
 	)
 )
 CreateDialog RL_Meshes

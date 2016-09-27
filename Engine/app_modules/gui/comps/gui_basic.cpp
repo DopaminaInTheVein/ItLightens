@@ -4,6 +4,7 @@
 #include "render\draw_utils.h"
 #include "components\comp_transform.h"
 #include "components\entity.h"
+#include "gui_cursor.h"
 
 using namespace std;
 
@@ -131,6 +132,17 @@ void TCompGui::clearScreen(string menu_name)
 	gui_screens.erase(menu_name);
 }
 
+void TCompGui::setCursorEnabled(bool enabled)
+{
+	if (cursors.size() > 0) {
+		CHandle hcursor = cursors.top();
+		if (hcursor.isValid()) {
+			GET_COMP(cursor, hcursor, TCompGuiCursor);
+			if (cursor) cursor->setEnabled(enabled);
+		}
+	}
+}
+
 CHandle TCompGui::getCursor()
 {
 	CHandle result;
@@ -141,6 +153,9 @@ CHandle TCompGui::getCursor()
 	if (result.isValid()) {
 		GET_COMP(gui, result, TCompGui);
 		if (menu_name != gui->GetMenuName()) result = CHandle();
+	}
+	else {
+		GameController->SetUiControl(false);
 	}
 	return result;
 }
