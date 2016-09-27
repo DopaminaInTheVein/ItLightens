@@ -43,7 +43,9 @@ void CLogicManagerModule::reloadFile(std::string filename) {
 void CLogicManagerModule::update(float dt) {
 	// update the timer of each command
 	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ) {
-		if (!command_it->only_runtime || GameController->GetGameState() == CGameController::RUNNING) {
+		if (!command_it->only_runtime || 
+			GameController->GetGameState() == CGameController::RUNNING || 
+			GameController->GetGameState() == CGameController::SPECIAL_ACTION) {
 			command_it->execution_time -= dt;
 		}
 		if (command_it->execution_time < 0.f) {
