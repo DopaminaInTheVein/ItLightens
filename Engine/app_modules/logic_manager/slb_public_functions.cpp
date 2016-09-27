@@ -940,7 +940,9 @@ void SLBPublicFunctions::exit() {
 void SLBPublicFunctions::pauseGame() {
 	GameController->SetGameState(CGameController::STOPPED);
 }
-
+void SLBPublicFunctions::setCursorEnabled(bool enabled) {
+	TCompGui::setCursorEnabled(enabled);
+}
 const char* SLBPublicFunctions::getText(const char* scene, const char* event) {
 	std::string res_str = lang_manager->getText(scene, event);
 

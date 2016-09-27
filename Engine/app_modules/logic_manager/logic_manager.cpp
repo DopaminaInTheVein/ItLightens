@@ -993,6 +993,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// Pause Game
 		.set("pause_game", &SLBPublicFunctions::pauseGame)
 		.comment("Exit game")
+		// Disable Cursor
+		.set("set_cursor_enabled", &SLBPublicFunctions::setCursorEnabled)
+		.param("bool: enabled")
+		.comment("Enable/disable cursor")
 		// Exit Game
 		.set("exit_game", &SLBPublicFunctions::exit)
 		.comment("Exit game")
