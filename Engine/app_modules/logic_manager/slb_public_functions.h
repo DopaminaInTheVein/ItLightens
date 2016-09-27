@@ -206,6 +206,7 @@ public:
 	std::string jsonReadStr(std::string filename, std::string group, std::string name);
 	void pauseGame();
 	void resumeGame();
+	void setCursorEnabled(bool);
 	void exit();
 	const char* getText(const char* scene, const char* event);
 	void reloadLanguageFile(const char* language);

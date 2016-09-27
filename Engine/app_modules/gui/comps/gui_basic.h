@@ -70,6 +70,7 @@ public:
 	static GuiMatrix getGuiMatrix(std::string menu_name);
 	static void addGuiElement(std::string menu_name, int row, int column, CHandle h_gui);
 	static void clearScreen(std::string menu_name);
+	static void setCursorEnabled(bool);
 
 	// Cursors
 	CHandle getCursor();
