@@ -322,6 +322,13 @@ void CApp::initNextLevel()
 		entities->loadXML(file);
 	}
 
+	// Hierachy messages
+	for (auto handle : IdEntities::getHierarchyHandles()) {
+		TMsgHierarchySolver msg;
+		handle.sendMsg(msg);
+	}
+	IdEntities::clearHierarchyHandles();
+
 	// Init entities
 	entities->initEntities();
 	//SetLoadingState(80);

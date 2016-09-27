@@ -159,7 +159,8 @@ end
 
 function OnPushBox( param )
 	p:print( "OnPushBox: "..param.."\n" )
-  	p:play_sound("event:/OnPushPullBox", 1.0, false)
+	h:getHandleCaller()
+	p:play_3d_sound("event:/OnPushPullBox", h:get_x(), h:get_y(), h:get_z(), 1.0, true, 1)
 end
 
 function OnPushBoxIdle( param )
@@ -198,15 +199,20 @@ function OnBreakWall( param )
 end
 
 function OnDroneMoving( sound_name )
-	p:print( "OnRechargeDrone: "..sound_name.."\n" )
+	p:print( "OnDroneMoving: "..sound_name.."\n" )
 	h:getHandleCaller()	
 	p:play_fixed_3d_sound("event:/OnDroneMoving", sound_name, h:get_x(), h:get_y(), h:get_z(), 1.0, true)
 end
 
 function OnDroneStatic( sound_name )
-	p:print( "OnRechargeDrone: "..sound_name.."\n" )
+	p:print( "OnDroneStatic: "..sound_name.."\n" )
 	h:getHandleCaller()	
 	p:play_fixed_3d_sound("event:/OnDroneStatic", sound_name, h:get_x(), h:get_y(), h:get_z(), 1.0, true)
+end
+
+function OnUseWorkbench( param )
+	p:print( "OnUseWorkbench: "..param.."\n" )
+	p:play_sound("event:/OnLaboratory", 1.0, false)
 end
 
 function OnRechargeDrone( param )
@@ -228,7 +234,7 @@ function OnCreateBomb( level )
 end
 
 function OnNotRechargeDrone( param )
-	p:print( "OnRechargeDrone: "..param.."\n" )
+	p:print( "OnNotRechargeDrone: "..param.."\n" )
 	p:player_talks("I hope a scientific may get this repaired...")
 end
 
@@ -367,7 +373,8 @@ end
 
 function OnExplode_throw_bomb()
 	p:print( "OnExplode_throw_bomb\n")
-	p:play_sound("event:/OnBombExplodes", 1.0, false)
+	h:getHandleCaller()
+	p:play_3d_sound("event:/OnBombExplodes", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 end
 
 

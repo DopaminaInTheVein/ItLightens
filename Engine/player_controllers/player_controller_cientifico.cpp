@@ -153,6 +153,7 @@ void player_controller_cientifico::WorkBenchActions() {
 			if (controller->ActionButtonBecomesPessed()) {
 				obj = THROW_BOMB;
 				//TODO: Destruir bomba actual
+				logic_manager->throwEvent(logic_manager->OnUseWorkbench, "");
 				ChangeState("createBomb");
 				stopMovement();
 			}
@@ -219,10 +220,7 @@ void player_controller_cientifico::Falling()
 		else
 			params = params + "Baldosa";
 
-		char buffer[64];
-		sprintf(buffer, "p:exec_command(\"OnJumpLand%s(%f);\", 1.0)", params.c_str(), 1.f);
-
-		logic_manager->throwUserEvent(std::string(buffer));
+		logic_manager->throwEvent(logic_manager->OnJumpLand, params);
 	}
 }
 

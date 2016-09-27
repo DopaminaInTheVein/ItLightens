@@ -3,7 +3,6 @@
 
 #include "logic/sbb.h"
 #include "components/entity.h"
-#include "components/comp_transform.h"
 #include "components/comp_name.h"
 
 #include "render/shader_cte.h"
@@ -15,11 +14,19 @@ void TCompSound::init() {
 	mParent = CHandle(this).getOwner();
 	
 	CEntity* entity = mParent;
-	TCompTransform* transform = entity->get<TCompTransform>();
-	entity_position = transform->getPosition();
 
 	TCompName* name = entity->get<TCompName>();
 	entity_name = name->name;
+
+	hierarchy_comp = entity->get<TCompHierarchy>();
+	if (hierarchy_comp) {
+		TCompTransform* hierarchy_transform = hierarchy_comp->h_parent_transform;
+		entity_position = hierarchy_transform->getPosition();
+	}
+	else {
+		TCompTransform* transform = entity->get<TCompTransform>();
+		entity_position = transform->getPosition();
+	}
 
 	CApp &app = CApp::get();
 	std::string file_ini = app.file_initAttr_json;
@@ -27,12 +34,19 @@ void TCompSound::init() {
 	assignValueToVar(MAX_DISTANCE, fields);
 
 	// create the sound
-	sound_manager->playFixed3dSound(event, entity_name, entity_position, volume, true);
+	sound_manager->playFixed3dSound("event:/" + event, entity_name, entity_position, volume, true);
 }
 
 void TCompSound::update(float elapsed) {
 
 	VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
+
+	// if the positions comes from the hierarchy parent, we have to update it
+	if (hierarchy_comp) {
+		TCompTransform* hierarchy_transform = hierarchy_comp->h_parent_transform;
+		entity_position = hierarchy_transform->getPosition();
+	}
+
 	float dist = simpleDist(camera_pos, entity_position);
 
 	// if we go out of distance, stop playing
@@ -47,8 +61,8 @@ void TCompSound::update(float elapsed) {
 
 bool TCompSound::load(MKeyValue& atts) {
 
-	event = event;
-	volume = volume;
+	event =  atts.getString("event", "OnUseGenerator");
+	volume = atts.getFloat("volume", 0.25f);
 
 	return true;
 }

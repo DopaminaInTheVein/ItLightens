@@ -495,7 +495,7 @@
    kpt3_pos="10.8511 -23.8712 -13.6583"
    kpt3_wait="2"
    jurisdiction="-4.9095 -25.4091 0.406024"
-   jurRadius="20.75"
+   jurRadius="50.0"
    formation_point="25.5739 -24.0251 -6.9732"
    formation_dir="26.2157 -23.9678 -6.80094"/>
 <skc_guard/>
@@ -536,7 +536,7 @@
    kpt2_pos="2.70562 -23.8712 1.62904"
    kpt2_wait="2"
    jurisdiction="-4.9095 -25.4091 0.406024"
-   jurRadius="20.75"
+   jurRadius="50.0"
    formation_point="-4.26029 -24.0251 1.96243"
    formation_dir="-3.61846 -23.9678 2.13469"/>
 <skc_guard/>
@@ -574,7 +574,7 @@
    kpt1_pos="-84.3393 -1.28589 -28.4518"
    kpt1_wait="2"
    jurisdiction="-82.8302 -1.19972 -25.2863"
-   jurRadius="7.15"
+   jurRadius="10.0"
    formation_point="-87.0319 -1.32482 -30.3074"
    formation_dir="-86.3901 -1.26751 -30.1352"/>
 <skc_guard/>
@@ -612,7 +612,7 @@
    kpt1_pos="-81.6461 -1.28589 -28.4518"
    kpt1_wait="2"
    jurisdiction="-82.8302 -2.74989 -25.2863"
-   jurRadius="7.2"
+   jurRadius="10.0"
    formation_point="-84.3387 -1.32482 -30.3074"
    formation_dir="-83.6969 -1.26751 -30.1352"/>
 <skc_guard/>
@@ -662,7 +662,7 @@
    kpt5_pos="-72.2655 -1.27954 -17.2999"
    kpt5_wait="2"
    jurisdiction="-93.7738 -2.74989 -8.70853"
-   jurRadius="12.707"
+   jurRadius="20.0"
    formation_point="-99.4642 -1.32482 -12.4904"
    formation_dir="-98.8223 -1.26751 -12.3182"/>
 <skc_guard/>
@@ -712,7 +712,7 @@
    kpt5_pos="-88.5043 -1.27954 -8.20765"
    kpt5_wait="2"
    jurisdiction="-66.9139 -2.91151 -2.06844"
-   jurRadius="16.4"
+   jurRadius="20.0"
    formation_point="-69.5936 -1.32482 5.92785"
    formation_dir="-68.9518 -1.26751 6.10012"/>
 <skc_guard/>

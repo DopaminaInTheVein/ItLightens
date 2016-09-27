@@ -2,6 +2,9 @@
 #define	INC_SOUND_COMPONENT_H_
 
 #include "components/comp_base.h"
+#include "components/comp_transform.h"
+#include "components/comp_hierarchy.h"
+
 #include "handle/handle.h"
 #include "sound_manager.h"
 
@@ -11,9 +14,10 @@ struct TCompSound : public TCompBase {
 	CHandle mParent;
 	VEC3 entity_position;
 	std::string entity_name;
+	TCompHierarchy* hierarchy_comp;
 
 	// loaded atributes
-	std::string event = "event:/OnFluoriscent";
+	std::string event = "OnFluoriscent";
 	float volume = 0.25f;
 
 	// aux

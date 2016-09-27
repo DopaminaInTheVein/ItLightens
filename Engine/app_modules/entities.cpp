@@ -151,7 +151,7 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<TVictoryPoint>()->init(20);
 	getHandleManager<TTriggerLua>()->init(100);
-	//	getHandleManager<TCompHierarchy>()->init(nmax);
+	getHandleManager<TCompHierarchy>()->init(16);
 	getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
 	getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCulling>()->init(40);
@@ -278,7 +278,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
 	SUBSCRIBE(TCompCharacterController, TMsgGetLocalAABB, onGetLocalAABB);
-	//  SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
+	SUBSCRIBE(TCompHierarchy, TMsgHierarchySolver, onGetParentById);
+	SUBSCRIBE(TCompHierarchy, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompBoneTracker, TMsgEntityGroupCreated, onGroupCreated);
 	SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompLocalAABB, TMsgEntityCreated, onCreate);

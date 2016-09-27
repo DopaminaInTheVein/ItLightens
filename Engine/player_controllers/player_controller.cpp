@@ -214,14 +214,20 @@ void player_controller::myUpdate() {
 		if (player_curr_speed >= player_max_speed - 0.1f)
 		{
 			SET_ANIM_PLAYER(AST_RUN);
+			sound_manager->playSound("event:/OnRaijinMoving", 0.5f, false);
 		}
 		else if (player_curr_speed > 0.f)
 		{
+			sound_manager->stopSound("event:/OnRaijinMoving");
 			SET_ANIM_PLAYER(AST_MOVE);
 		}
 		else {
+			sound_manager->stopSound("event:/OnRaijinMoving");
 			SET_ANIM_PLAYER(AST_IDLE);
 		}
+	}
+	else {
+		sound_manager->stopSound("event:/OnRaijinMoving");
 	}
 }
 

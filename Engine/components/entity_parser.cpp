@@ -13,18 +13,33 @@ VHandles CEntityParser::collisionables = VHandles();
 float CEntityParser::entity_load_value = 0.f;
 // Identified Entities
 static VHandles identified_entities;
+static VHandles hierarchy_handles;
+
 CHandle IdEntities::findById(const int entity_id) {
 	return identified_entities[entity_id];
 }
+
 void IdEntities::init() {
 	identified_entities.resize(MAX_ENTITIES);
 }
+
 void IdEntities::saveIdEntity(CHandle entity, int entity_id) {
 	if (entity_id >= 0) {
 		identified_entities[entity_id] = entity;
 		CEntity* e = entity;
 		e->setId(entity_id);
 	}
+}
+
+void IdEntities::addHierarchyHandle(CHandle entity) {
+	hierarchy_handles.push_back(entity);
+}
+void IdEntities::clearHierarchyHandles() {
+	hierarchy_handles.clear();
+}
+
+VHandles IdEntities::getHierarchyHandles() {
+	return hierarchy_handles;
 }
 
 CHandle spawnPrefab(const std::string& prefab) {

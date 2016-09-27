@@ -308,14 +308,14 @@ void player_controller_mole::UpdateInputActions() {
 			pulling_box = false;
 			animController->setState(AST_PUSH_WALK);
 			box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
-			logic_manager->throwEvent(logic_manager->OnPushBox, "");
+			logic_manager->throwEvent(logic_manager->OnPushBox, "", boxGrabbed);
 		}
 		// pulling box
 		else if (controller->IsMoveBackWard()) {
 			pulling_box = true;
 			animController->setState(AST_PULL_WALK);
 			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
-			logic_manager->throwEvent(logic_manager->OnPushBox, "");
+			logic_manager->throwEvent(logic_manager->OnPushBox, "", boxGrabbed);
 		}
 		else if (controller->IsMoveLeft() || controller->IsMoveRight()) {
 			LeaveBox();
@@ -948,10 +948,7 @@ void player_controller_mole::Falling()
 		else
 			params = params + "Baldosa";
 
-		char buffer[64];
-		sprintf(buffer, "p:exec_command(\"OnJumpLand%s(%f);\", 1.0)", params.c_str(), 1.f);
-
-		logic_manager->throwUserEvent(std::string(buffer));
+		logic_manager->throwEvent(logic_manager->OnJumpLand, params);
 	}
 }
 

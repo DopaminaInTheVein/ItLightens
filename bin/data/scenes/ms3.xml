@@ -871,6 +871,21 @@
    name="2"/>
 
 </entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnElevatorMusic"
+   volume="0.1"/>
+<name
+   name="elevator_ascensor_sound"/>
+<transform
+   pos="-65.1377 16.621 21.0196"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<hierarchy
+   parent="301"/>
+</entity>
 <entity>
 <tags/>
 <name

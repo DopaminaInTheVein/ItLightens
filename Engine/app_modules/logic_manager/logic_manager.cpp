@@ -241,6 +241,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnNotRechargeDrone(%f);", 0.5);
 		break;
 	}
+	case (OnUseWorkbench): {
+		sprintf(lua_code, "OnUseWorkbench(%f);", 0.5);
+		break;
+	}
 	case (OnRepairDrone): {
 		sprintf(lua_code, "OnRepairDrone(\"%s\",\"%s\");", CApp::get().getCurrentRealLevel().c_str(), params.c_str());
 		break;

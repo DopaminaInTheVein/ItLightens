@@ -27,6 +27,9 @@ namespace IdEntities {
 	void init();
 	CHandle findById(const int entity_id);
 	void saveIdEntity(const CHandle entity, const int entity_id);
+	VHandles getHierarchyHandles();
+	void addHierarchyHandle(CHandle entity);
+	void clearHierarchyHandles();
 }
 
 class CEntityCounter : public CXMLParser {
