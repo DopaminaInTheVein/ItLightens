@@ -282,12 +282,32 @@ end
 
 function OnMoleJump( param )
 	p:print( "OnMoleJump: "..param.."\n" )
+	p:play_sound("event:/OnMoleJumpVoice", 1.0, false)
+end
+
+function OnJumpLandMoleBaldosa( param )
+	p:print( "OnJumpLandMoleBaldosa: "..param.."\n" )
 	p:play_sound("event:/OnMoleJump", 1.0, false)
+end
+
+function OnJumpLandMoleParquet( param )
+	p:print( "OnJumpLandScientistParquet: "..param.."\n" )
+	p:play_sound("event:/OnMoleJumpParquet", 1.0, false)
 end
 
 function OnScientistJump( param )
 	p:print( "OnScientistJump: "..param.."\n" )
-	p:play_sound("event:/OnScientistJump", 1.0, false)
+	p:play_sound("event:/OnScientistJumpVoice", 1.0, false)
+end
+
+function OnJumpLandScientistBaldosa( param )
+	p:print( "OnJumpLandScientistBaldosa: "..param.."\n" )
+	p:play_sound("event:/OnScientistJumpBaldosa", 1.0, false)
+end
+
+function OnJumpLandScientistParquet( param )
+	p:print( "OnJumpLandScientistParquet: "..param.."\n" )
+	p:play_sound("event:/OnScientistJumpParquet", 1.0, false)
 end
 
 function OnDetected( distance )

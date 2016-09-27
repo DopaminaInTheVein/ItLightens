@@ -62,6 +62,7 @@ class player_controller_cientifico : public PossController {
 	int step_counter = 0;
 
 	void UpdateInputActions() override;
+	void UpdateJumpState();
 	void WorkBenchActions();
 
 	//Timers
@@ -86,6 +87,7 @@ public:
 	void readIniFileAttr();
 	void Idle() override;
 	void Moving() override;
+	void Falling() override;
 	void RecalcScientist();
 
 	//Create game objects

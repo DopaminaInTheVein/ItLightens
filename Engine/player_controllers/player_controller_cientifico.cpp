@@ -168,6 +168,15 @@ void player_controller_cientifico::UpdateInputActions() {
 	PROFILE_FUNCTION("player cientifico: energy dec");
 }
 
+void player_controller_cientifico::UpdateJumpState() {
+	PROFILE_FUNCTION("update jump state cientifico");
+	if (!canJump()) return;
+	if (controller->JumpButtonBecomesPressed()) {
+		logic_manager->throwEvent(logic_manager->OnJump, "Scientist");
+		Jump();
+	}
+}
+
 #pragma endregion
 
 //##########################################################################
@@ -189,6 +198,34 @@ void player_controller_cientifico::Moving()
 	PROFILE_FUNCTION("player cientifico: idle state");
 	CPlayerBase::Idle();
 	RecalcScientist();
+}
+
+void player_controller_cientifico::Falling()
+{
+	PROFILE_FUNCTION("falling cientifico");
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (cc->OnGround()) {
+		jspeed = 0.0f;
+		ChangeState("idle");
+		ChangeCommonState("idle");
+
+		// landing sound
+		TCompRoom* room = myEntity->get<TCompRoom>();
+		int room_name = room->name[0];
+		std::string params = "Scientist";
+
+		if (room_name == 2)
+			params = params + "Parquet";
+		else
+			params = params + "Baldosa";
+
+		char buffer[64];
+		sprintf(buffer, "p:exec_command(\"OnJumpLand%s(%f);\", 1.0)", params.c_str(), 1.f);
+
+		logic_manager->throwUserEvent(std::string(buffer));
+	}
 }
 
 void player_controller_cientifico::RecalcScientist() {

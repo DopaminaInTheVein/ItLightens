@@ -132,7 +132,7 @@ public:
 	void Win();
 
 	void Jumping();
-	void Falling();
+	virtual void Falling();
 	virtual void Moving();
 
 	virtual void update_msgs() {}

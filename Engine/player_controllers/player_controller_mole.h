@@ -141,6 +141,7 @@ public:
 
 	// JUMP
 	bool canJump() override;
+	void Falling() override;
 
 	TCompTransform * getEntityTransform() {
 		return transform;

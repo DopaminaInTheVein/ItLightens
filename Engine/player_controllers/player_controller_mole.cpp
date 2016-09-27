@@ -929,6 +929,34 @@ bool player_controller_mole::canJump() {
 	return !boxGrabbed.isValid() && !pilaGrabbed.isValid() && !ascending && !descending;
 }
 
+void player_controller_mole::Falling()
+{
+	PROFILE_FUNCTION("falling cientifico");
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (cc->OnGround()) {
+		jspeed = 0.0f;
+		ChangeState("idle");
+		ChangeCommonState("idle");
+
+		// landing sound
+		TCompRoom* room = myEntity->get<TCompRoom>();
+		int room_name = room->name[0];
+		std::string params = "Mole";
+
+		if (room_name == 2)
+			params = params + "Parquet";
+		else
+			params = params + "Baldosa";
+
+		char buffer[64];
+		sprintf(buffer, "p:exec_command(\"OnJumpLand%s(%f);\", 1.0)", params.c_str(), 1.f);
+
+		logic_manager->throwUserEvent(std::string(buffer));
+	}
+}
+
 //Load and save
 bool player_controller_mole::load(MKeyValue& atts)
 {

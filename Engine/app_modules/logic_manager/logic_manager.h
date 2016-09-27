@@ -80,6 +80,7 @@ public:
 		OnBeingAttracted,
 		OnOvercharge,
 		OnJump,
+		OnJumpLand,
 		OnDoubleJump,
 		OnDetected,
 		OnNextPatrol,
