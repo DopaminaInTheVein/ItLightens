@@ -945,6 +945,10 @@ void SLBPublicFunctions::pauseGame() {
 	GameController->SetGameState(CGameController::STOPPED);
 }
 
+void SLBPublicFunctions::resumeGame() {
+	GameController->SetGameState(CGameController::RUNNING);
+}
+
 const char* SLBPublicFunctions::getText(const char* scene, const char* event) {
 	std::string res_str = lang_manager->getText(scene, event);
 

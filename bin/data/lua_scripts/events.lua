@@ -487,7 +487,7 @@ end
 
 -- Others
 -------------------------------------------
-function OnStepGuard( step )
+function OnStepGuardBaldosa( step )
 	h:getHandleCaller()
 	sound_route = ""
 	
@@ -505,7 +505,8 @@ function OnStepGuard( step )
 	
 	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 end
-function OnStepMole( step )
+
+function OnStepMoleBaldosa( step )
 	h:getHandleCaller()
 	sound_route = ""
 	
@@ -524,34 +525,118 @@ function OnStepMole( step )
 	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 end
 
-function OnStepScientist( step )
-	--p:print("StepScientist")
-end
-
-function OnStepOutGuard( step )
+function OnStepScientistBaldosa( step )
 	h:getHandleCaller()
 	sound_route = ""
 	
 	if step == 0 then
-		sound_route = "event:/OnGuardStepLeft1"
+		sound_route = "event:/OnScientistStepBaldosaL1"
 	elseif step == 1 then
-		sound_route = "event:/OnGuardStepRight1"
+		sound_route = "event:/OnScientistStepBaldosaR1"
 	elseif step == 2 then
-		sound_route = "event:/OnGuardStepLeft2"
+		sound_route = "event:/OnScientistStepBaldosaL2"
 	elseif step == 4 then
-		sound_route = "event:/OnGuardStepRight2"
+		sound_route = "event:/OnScientistStepBaldosaR1"
 	else
-		sound_route = "event:/OnGuardStepLeft1"
+		sound_route = "event:/OnScientistStepBaldosaL1"
 	end
 	
-	p:stop_sound(sound_route)
+	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 end
 
-function OnStepOutMole( step )
+function OnStepGuardParquet( step )
+	h:getHandleCaller()
+	sound_route = ""
+	
+	if step == 0 then
+		sound_route = "event:/OnGuardStepParquetL1"
+	elseif step == 1 then
+		sound_route = "event:/OnGuardStepParquetR1"
+	elseif step == 2 then
+		sound_route = "event:/OnGuardStepParquetL2"
+	elseif step == 4 then
+		sound_route = "event:/OnGuardStepParquetR2"
+	else
+		sound_route = "event:/OnGuardStepParquetL1"
+	end
+	
+	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+end
+
+function OnStepMoleParquet( step )
+	h:getHandleCaller()
+	sound_route = ""
+	
+	if step == 0 then
+		sound_route = "event:/OnMoleStepParquetL1"
+	elseif step == 1 then
+		sound_route = "event:/OnMoleStepParquetR1"
+	elseif step == 2 then
+		sound_route = "event:/OnMoleStepParquetL2"
+	elseif step == 4 then
+		sound_route = "event:/OnMoleStepParquetR2"
+	else
+		sound_route = "event:/OnMoleStepParquetL1"
+	end
+	
+	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+end
+
+function OnStepScientistParquet( step )
+	h:getHandleCaller()
+	sound_route = ""
+	
+	if step == 0 then
+		sound_route = "event:/OnScientistStepParquetL1"
+	elseif step == 1 then
+		sound_route = "event:/OnScientistStepParquetR1"
+	elseif step == 2 then
+		sound_route = "event:/OnScientistStepParquetL2"
+	elseif step == 4 then
+		sound_route = "event:/OnScientistStepParquetR1"
+	else
+		sound_route = "event:/OnScientistStepParquetL1"
+	end
+	
+	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+end
+
+function OnStepOutGuardBaldosa( step )
+	--h:getHandleCaller()
+	--sound_route = ""
+	
+	--if step == 0 then
+		--sound_route = "event:/OnGuardStepLeft1"
+	--elseif step == 1 then
+		--sound_route = "event:/OnGuardStepRight1"
+	--elseif step == 2 then
+		--sound_route = "event:/OnGuardStepLeft2"
+	--elseif step == 4 then
+		--sound_route = "event:/OnGuardStepRight2"
+	--else
+		--sound_route = "event:/OnGuardStepLeft1"
+	--end
+	
+	--p:stop_sound(sound_route)
+end
+
+function OnStepOutGuardParquet( step )
+	-- p:print("StepOutGuardParquet")
+end
+
+function OnStepOutMoleBaldosa( step )
 	-- p:print("StepOutMole")
 end
 
-function OnStepOutScientist( step )
+function OnStepOutMoleParquet( step )
+	-- p:print("StepOutMole")
+end
+
+function OnStepOutScientistBaldosa( step )
+	-- p:print("StepOutScientist")
+end
+
+function OnStepOutScientistParquet( step )
 	-- p:print("StepOutScientist")
 end
 

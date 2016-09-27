@@ -401,11 +401,12 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadingLevel(%s);", params.c_str());
 		break;
 	}
-						   //Others
+	// Step events
 	case (OnStep): {
 		int step_number = 0;
 		CEntity* entity = handle;
 
+		// get the step counter of the NPC
 		if (params.find("Guard") != std::string::npos) {
 			bt_guard* guard = entity->get<bt_guard>();
 			step_number = guard->getStepCounter();
@@ -419,13 +420,20 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			step_number = mole->getStepCounter();
 		}
 
-		sprintf(lua_code, "OnStep%s(%i);", params.c_str(), step_number);
+		// get the room of the NPC
+		TCompRoom* room = entity->get<TCompRoom>();
+		std::string event_name = params + "Baldosa";
+		if (room && room->name[0] == 2)
+				event_name = params + "Parquet";
+
+		sprintf(lua_code, "OnStep%s(%i);", event_name.c_str(), step_number);
 		break;
 	}
 	case (OnStepOut): {
 		int step_number = 0;
 		CEntity* entity = handle;
 
+		// get the step counter of the NPC
 		if (params.find("Guard") != std::string::npos) {
 			bt_guard* guard = entity->get<bt_guard>();
 			step_number = guard->getStepCounter();
@@ -439,10 +447,16 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 			step_number = mole->getStepCounter();
 		}
 
-		sprintf(lua_code, "OnStepOut%s(%i);", params.c_str(), step_number);
+		// get the room of the NPC
+		TCompRoom* room = entity->get<TCompRoom>();
+		std::string event_name = params + "Baldosa";
+		if (room && room->name[0] == 2)
+			event_name = params + "Parquet";
+
+		sprintf(lua_code, "OnStepOut%s(%i);", event_name.c_str(), step_number);
 		break;
 	}
-					  //GUI
+	//GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;
@@ -999,7 +1013,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("string: value")
 		// Pause Game
 		.set("pause_game", &SLBPublicFunctions::pauseGame)
-		.comment("Exit game")
+		.comment("Pauses the game")
+		// Pause Game
+		.set("resume_game", &SLBPublicFunctions::resumeGame)
+		.comment("Resumes the game")
 		// Exit Game
 		.set("exit_game", &SLBPublicFunctions::exit)
 		.comment("Exit game")

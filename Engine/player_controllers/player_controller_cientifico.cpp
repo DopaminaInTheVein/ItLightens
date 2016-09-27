@@ -213,10 +213,8 @@ void player_controller_cientifico::Falling()
 
 		// landing sound
 		TCompRoom* room = myEntity->get<TCompRoom>();
-		int room_name = room->name[0];
 		std::string params = "Scientist";
-
-		if (room_name == 2)
+		if (room && room->name[0] == 2)
 			params = params + "Parquet";
 		else
 			params = params + "Baldosa";
