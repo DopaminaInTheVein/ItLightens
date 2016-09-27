@@ -12,6 +12,7 @@
 #define AST_JUMP2				"jump"
 #define AST_MOVE				"walk"
 #define AST_RUN					"run"
+#define AST_DEATH				"death"
 #define AST_PREP_SHOOT			"attackprepare"
 #define AST_SHOOT				"attack"
 #define AST_SHOOT_BACK			"attackgoback"
@@ -37,6 +38,17 @@
 #define AST_PUSH_PREP			"push_prep"
 #define AST_PUSH_WALK			"push_walk"
 #define AST_PULL_WALK			"pull_walk"
+#define AST_NULL				"NULL"
+// ------------------- //
+
+//Key bones
+#define KEYBONE_LFOOT	"LFoot"
+#define KEYBONE_RFOOT	"RFoot"
+#define KEYBONE_LHAND	"left_hand"
+#define KEYBONE_RHAND	"right_hand"
+#define KEYBONE_RARM	"right_arm"
+#define KEYBONE_NECK	"neck"
+#define KEYBONE_HEAD	"head"
 // ------------------- //
 
 template< class TObj >
@@ -96,7 +108,7 @@ public:
 	void updateSteps(float dist_ground, bool& on_ground);
 };
 
-#define SET_ANIM_STATE(skc, state) {if (skc) skc->setState(state);}
-#define SET_ANIM_STATE_P(skc, state) {if (skc) skc->setState(state, true);}
+#define SET_ANIM_STATE(skc, state) skc ? skc->setState(state) : (void)0
+#define SET_ANIM_STATE_P(skc, state) skc ? skc->setState(state, true) : (void)0
 
 #endif

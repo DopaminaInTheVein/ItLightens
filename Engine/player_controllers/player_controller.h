@@ -69,13 +69,14 @@ class player_controller : public CPlayerBase {
 
 	//Polarity Constants
 	float	POL_MIN_DISTANCE = 0.1f;
-	float	POL_MAX_DISTANCE = 20.0f;
-	float	POL_INTENSITY = 3.5f;
+	float	POL_MAX_DISTANCE = 25.0f;
+	float	POL_INTENSITY = 5.f;
 	float	POL_REPULSION = 1.25f;
 	float	POL_INERTIA_TIME = 1.0f;
 
 	//Damage Fonts Actived
 	float damageCurrent = 0.1f;
+	float damageAdded = 0.f;
 	int damageFonts[Damage::SIZE] = { 0 };
 
 	//TCompRenderStaticMesh*	actual_render = nullptr;
@@ -189,6 +190,7 @@ public:
 	void onCanNotRechargeDrone(const TMsgCanNotRechargeDrone& msg);
 	void onPolarize(const TMsgPolarize& msg);
 	void onSetDamage(const TMsgDamageSpecific& msg);
+	void onDifficultyChanged(const TMsgDifficultyChanged& msg);
 
 	//output messages
 	void SendMessagePolarizeState();

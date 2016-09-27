@@ -1,0 +1,2 @@
+<static_mesh>
+  <slot mesh="meshes//pared_rompible_dentro.mesh" material="materials/test_gray.material" mesh_idx="0"/>

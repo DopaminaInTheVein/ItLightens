@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="AudioFile" id="{70ae3dba-78e8-46c0-9fc7-ab1c1eb217d1}">
+        <property name="assetPath">
+            <value>PILAconexion.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>6</value>
+        </property>
+        <property name="length">
+            <value>1.3604166666666666</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{27c9e485-159e-4d91-9702-b6efb99fec5b}</destination>
+        </relationship>
+    </object>
+</objects>

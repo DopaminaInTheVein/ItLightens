@@ -18,20 +18,25 @@ class CRenderDeferredModule : public IAppModule {
 		VISION_OBJECTS_WHITE
 	};
 
+	//basic textures
 	CRenderToTexture* rt_albedos;
 	CRenderToTexture* rt_normals;
 	CRenderToTexture* rt_depths;
 	CRenderToTexture* rt_selfIlum;
 	CRenderToTexture* rt_acc_light;
-	CRenderToTexture* rt_selfIlum_blurred;
 	CRenderToTexture* rt_final;
+	
+
+	//lights
+	CRenderToTexture* rt_specular;
 	CRenderToTexture* rt_specular_lights;
 	CRenderToTexture* rt_glossiness;
 
-	CRenderToTexture* rt_specular;
-
+	//shadows
+	CRenderToTexture* rt_ssao;
 	CRenderToTexture* rt_shadows;
 
+	//aux
 	CRenderToTexture* rt_data;
 	CRenderToTexture* rt_data2;
 	CRenderToTexture* rt_black;
@@ -39,7 +44,8 @@ class CRenderDeferredModule : public IAppModule {
 	//temp
 	CRenderToTexture* rt_selfIlum_int;
 	CRenderToTexture* rt_selfIlum_blurred_int;
-	CRenderToTexture* rt_temp;
+	CRenderToTexture* rt_selfIlum_blurred;
+	
 
 	int xres, yres;
 	bool ssao_test = true;
@@ -61,6 +67,7 @@ class CRenderDeferredModule : public IAppModule {
 	CRenderParticlesInstanced helpers;
 
 	bool m_isSpecialVisionActive = false;
+	bool test_dream_shader = false;
 
 	void renderGBuffer();
 	void activateRenderCamera3D();
@@ -86,7 +93,7 @@ public:
 	void render() override;
 	void renderEspVisionMode();
 	void renderEspVisionModeFor(std::string tag, VEC4 color_mask, int stencil_mask, bool use_skeleton = false);
-	void renderDetails();
+	void renderDetails(CRenderTechnique::eCategory type);
 	void uploadConstantsGPU();
 	void applyPostFX();
 	void renderUI();

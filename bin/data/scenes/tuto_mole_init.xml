@@ -11,7 +11,7 @@
 <name
    name="_player_1"/>
 <transform
-   pos="1038.17 64.1823 -25.628"
+   pos="1038.17 64.5601 -25.5997"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -27,23 +27,44 @@
 
 </entity>
 <entity
+   permanent="yes"
+   reload="yes">
+<tags
+   tags="camera_main"/>
+<camera_main
+   znear="0.1"
+   zfar="250.0"
+   fov="60.0"/>
+<culling/>
+<render_glow/>
+<controller_3rd_person/>
+<FX_fade_screen/>
+<name
+   name="_player_1_camController_1"/>
+<transform
+   pos="1039.49 66.5439 -24.4054"
+   quat="0.424022 0.498953 -0.216651 0.724096"
+   scale="1.0"/>
+
+</entity>
+<entity
    reload="yes">
 <tags
    tags="AI AI_mole AI_poss"/>
 <bt_mole
    wpts_size="3"
-   wpt0_pos="1035.83 64.1938 -26.9732"
+   wpt0_pos="1035.83 64.9498 -26.9732"
    wpt0_wait="2"
-   wpt1_pos="1035.83 64.1938 -24.3355"
+   wpt1_pos="1035.83 64.9498 -24.3355"
    wpt1_wait="2"
-   wpt2_pos="1037.4 64.1938 -27.1372"
+   wpt2_pos="1037.4 64.9498 -27.1372"
    wpt2_wait="2"/>
 <player_mole/>
 <skc_mole/>
 <name
    name="_mole_1"/>
 <transform
-   pos="1035.47 64.1938 -26.4615"
+   pos="1035.47 65.1939 -26.4838"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -56,24 +77,6 @@
 <character_controller
    radius="0.3"
    height="2.01"/>
-
-</entity>
-<entity
-   id="302"
-   reload="yes">
-<tags
-   tags="interactive"/>
-<name
-   name="_pared_rompible"/>
-<transform
-   pos="1033.5 65.6331 -26.0653"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/test_tuto_mole/_pared_rompible.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 <entity
@@ -105,10 +108,10 @@
    name="_wall_down"/>
 <transform
    pos="1033.84 65.0197 -26.0653"
-   quat="0 0 0.130526 0.991445"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/_wall_down.static_mesh"/>
+   name="static_meshes/tuto_mole/_wall_down.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -126,10 +129,10 @@
    name="_wall_up"/>
 <transform
    pos="1033.84 66.2475 -26.0653"
-   quat="0 0 -0.0871557 0.996195"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/_wall_up.static_mesh"/>
+   name="static_meshes/tuto_mole/_wall_up.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -147,10 +150,10 @@
    name="_wall_right"/>
 <transform
    pos="1033.83 65.8211 -26.7662"
-   quat="0 -0.173648 0 0.984808"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/_wall_right.static_mesh"/>
+   name="static_meshes/tuto_mole/_wall_right.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -168,10 +171,10 @@
    name="_wall_left"/>
 <transform
    pos="1033.89 65.5319 -25.4293"
-   quat="0 0.21644 0 0.976296"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_tuto_mole/_wall_left.static_mesh"/>
+   name="static_meshes/tuto_mole/_wall_left.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -194,7 +197,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/test_mole/_Box_1.static_mesh"/>
+   name="static_meshes/obj/box2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -207,13 +210,11 @@
    reload="yes">
 <tags
    tags="box_placer"/>
-<box_placer
-   event_in="tutomole_box_placed"
-   radius="4"/>
+<box_placer/>
 <name
    name="_box_target"/>
 <transform
-   pos="1019.86 64.2138 -25.1436"
+   pos="1022.03 64.2138 -25.3289"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -242,16 +243,160 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="4.25373 0.185 4.21655"/>
+   size="1.43707 0.185 3.76478"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="_ttutomole_end"/>
 <transform
-   pos="1028.67 72.9879 -24.9823"
-   quat="0 0 -0.707107 0.707107"
-   scale="1.17711"/>
+   pos="1028.22 73.3858 -24.9682"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.718536 0.185 2.56005"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1028.22 74.4586 -24.9886"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 1.51043"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1028.19 75.0203 -24.9886"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.718536 0.185 2.56005"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1028.22 72.295 -24.9886"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 1.51043"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1028.19 71.7556 -24.9886"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1028.19 72.406 -23.5284"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1028.19 72.406 -26.4524"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1028.19 74.381 -26.4524"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.338536 0.0250001 0.31719"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="1028.19 74.381 -23.5286"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
 </entity>
 <entity
@@ -278,21 +423,6 @@
    name="tasklist"/>
 <transform
    pos="1035.93 64.0616 -25.7225"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="box_placer"/>
-<box_placer
-   event_out="tutomole_box_moved"
-   radius="0.5"/>
-<name
-   name="_box_origin"/>
-<transform
-   pos="1016.53 65.0432 -32.2398"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

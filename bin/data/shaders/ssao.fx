@@ -1,20 +1,21 @@
 #include "globals.fx"
 
-static int n = 20;
-static float occ_offset = 0.001;
+static int n = ssao_iterations;
+static float occ_offset = 0.001 * ssao_intensity;
 
-float getOcc(float3 N, float3 w, float3 N_sample, float R, float depth, float depth_sample)
+float getOcc(float3 N, float3 w, float3 N_sample, float R, float depth, float depth_sample, float3 N_acum)
 {
    float Approx = 0.0f;
  
 	float3 wN = normalize(w); 
 	
 	float dotN = dot(N, N_sample);
+   float dotNacum =  dot(N_sample, N_acum);
    
    float3 diff = dot(wN, N);
    
    float e = 1 - dotN;
-
+	
    //depth differences
    float z_diff = depth-depth_sample;
    
@@ -41,9 +42,11 @@ void VSTextureScreen(
 }
 
 //--------------------------------------------------------------------------------------
-float4 PS(float4 Pos : SV_POSITION
+void PS(float4 Pos : SV_POSITION
 	, float2 iTex0 : TEXCOORD0
-	) : SV_Target
+	, out float4 o_color : SV_Target
+	//, out float4 o_shadows : SV_Target0
+	)
 {
    
    int3 ss_load_coords = uint3(Pos.xy, 0);
@@ -52,10 +55,10 @@ float4 PS(float4 Pos : SV_POSITION
   float  z = txDepths.Load(ss_load_coords).x;
   //float z_scaled = z*2.0f;
   float3 position = getWorldCoords(Pos.xy, z);
-  
+  //o_color = float4(z,z,z, 1);
    float3 normal = txNormal.Load(ss_load_coords).xyz * 2 - 1;
  //return float4(normal.x, normal.y, normal.z, 1);
-	
+	//o_color = float4(normal,1);
    //z /= 5;
    
    //Range of influence
@@ -90,7 +93,7 @@ float4 PS(float4 Pos : SV_POSITION
  //return  angleStep;
    //Initialize the Monte-Carlo sum value
    float occ = 0.0f;
- 
+  float3 n_acum =normal;
    //Iterate through all samples
    for(int i = 0; i < n; ++i)
    {
@@ -108,7 +111,6 @@ float4 PS(float4 Pos : SV_POSITION
   float z_sample = txDepths.Sample(samClampLinear, pixel_sample).x;
   float3 n_sample = txNormal.Sample(samClampLinear, pixel_sample).xyz * 2 - 1;
 
-    //Calculate the depth in view space (values needed to be scaled down)
    
  
   //return z_sample;
@@ -117,21 +119,34 @@ float4 PS(float4 Pos : SV_POSITION
  
       //Vector from the current position to the position of the sampled pixel
       float3 w = pixelPosition_sample - position;
-
+	
       //get occ value for pixel sample
-      occ += getOcc(normal, w, n_sample, R, z, z_sample);
+      occ += getOcc(normal, w, n_sample, R, z, z_sample, n_acum);
 	//return monteCarlo;
       //Offsets the angle for the next sampling
       angle += angleStep;
+	  n_acum = (n_sample+n_acum)/2.f;
+      n_acum = normalize(n_acum);
    }
    
-   return occ;
+   //return occ;
    //A factor that will multiply the final occ sum
-   float factor = ((2.0f * PI * c) / n);
+   float factor = ((2.0f * PI * c));
  
    //Calculating the final occlusion value
    float A = (factor * occ);
    
- 
-   return float4(A, A, A, 1);
- } 
+	//o_shadows = float4(0,0,0,1);
+   //o_color = float4(A, A, A, 1);
+	o_color = occ*c;
+	//o_color.a = 1 - o_color.r;
+	o_color/=1.0f;
+	o_color.a = 1;
+	
+	//o_color = float4(n_acum,1);
+	//we maintan only the dark spots with high alpha value
+/*	o_shadows = A;
+	o_shadows.a = 1 - o_shadows.r;
+	o_shadows.rgb *= 10;*/
+	//o_shadows = 0;
+} 

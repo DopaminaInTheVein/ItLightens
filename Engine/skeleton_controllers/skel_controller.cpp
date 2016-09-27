@@ -162,13 +162,11 @@ void TCompSkelController::solveFoot(
 	bool hit_ground = g_PhysxManager->raycast(orig, end, hit, filterData);
 	float dist = 1.f;
 	Debug->DrawLine(orig, end);
+	height_correction = 0;
 	if (hit_ground) {
 		dist = hit.getAnyHit(0).distance - 0.1f - height_offset;
 		if (dist > 0) {
 			height_correction = dist;
-		}
-		else {
-			height_correction = 0;
 		}
 	}
 	result.new_pos = info.bone_pos + VEC3(0.f, height_correction, 0.f);
@@ -196,11 +194,17 @@ void TCompSkelController::updateSteps(float dist_ground, bool& on_ground)
 		}
 	}
 	//dbg("-->new_on_ground: %d\n", on_ground);
-	if (send_msg) {
+	if (send_msg && (currentState == AST_MOVE || currentState == AST_RUN)) {
 		TMsgGetWhoAmI msg;
-		owner.sendMsgWithReply(msg);
-		if (on_ground) logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStep, msg.who_string, owner);
-		else logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStepOut, msg.who_string, owner);
+		if (on_ground) {
+			msg.action_flag = true;
+			owner.sendMsgWithReply(msg);
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStep, msg.who_string, owner);
+		}
+		else {
+			owner.sendMsgWithReply(msg);
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStepOut, msg.who_string, owner);
+		}
 	}
 }
 

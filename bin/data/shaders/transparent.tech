@@ -1,0 +1,5 @@
+<tech is_transparent="1">
+  <vs fx="deferred" main="VS" decl="positions_normal_uv_tangent" />
+  <ps fx="deferred" main="PSTransparency" />
+</tech>
+

@@ -121,6 +121,7 @@ struct TMsgSetTarget {
 };
 
 struct TMsgGetWhoAmI {
+	bool action_flag = false;
 	PLAYER_TYPE who;
 	std::string who_string;
 	DECLARE_MSG_ID();
@@ -371,6 +372,9 @@ struct TMsgGuiNotify {
 	DECLARE_MSG_ID();
 };
 struct TMsgLanguageChanged {
+	DECLARE_MSG_ID();
+};
+struct TMsgDifficultyChanged {
 	DECLARE_MSG_ID();
 };
 #endif

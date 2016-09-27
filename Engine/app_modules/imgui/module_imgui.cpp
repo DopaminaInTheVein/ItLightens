@@ -117,19 +117,12 @@ void CImGuiModule::update(float dt) {
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui;
+		static char gui_prebab_name[64] = "Fading_Letter";
 		ImGui::DragFloat3("Pos", &pos_new_ui.x, 0.1f, -1.f, 2.f);
-		if (ImGui::Button("Create")) Gui->addGuiElement("ui/test", pos_new_ui);
+		ImGui::InputText("Prefab name", gui_prebab_name, 64);
+		if (ImGui::Button("Create")) Gui->addGuiElement(std::string("ui/") + std::string(gui_prebab_name), pos_new_ui);
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Gui Others")) {
-		ImGui::Text("Text?: %s", Gui->there_is_text ? "yes" : "no");
-		ImGui::Text("Window?: %s", Gui->window_actived ? "yes" : "no");
-		ImGui::TreePop();
-	}
-
-	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
-	ImGui::Text("WARNING: The player will still move, pause the game to stop moving the player");
-	ImGui::PopStyleColor();
 
 	if (ImGui::TreeNode("Free camera instructions")) {
 		ImGui::Text("w/a/s/d - normal move\nq/e - up/down\nmouse wheel - speed up/down\n");
@@ -151,16 +144,18 @@ void CImGuiModule::update(float dt) {
 		ImGui::InputInt("NFrames", &nframes, 1, 5);
 		ImGui::Separator();
 		if (ImGui::Button("Start Capture Profiling"))
-			profiler.setNFramesToCapture(nframes);
+			profiler->setNFramesToCapture(nframes);
+#ifndef PROFILING_JOHN
 		ImGui::Separator();
 		ImGui::InputFloat("Time Threshold", &time_threshold, 1, 5);
-		if (profiler.isAutoCapture()) {
+		if (profiler->isAutoCapture()) {
 			ImGui::Text("Waiting auto capture...");
 		}
 		else {
 			if (ImGui::Button("Auto Capture Profiling"))
-				profiler.setAutoCapture(nframes, time_threshold);
+				profiler->setAutoCapture(nframes, time_threshold);
 		}
+#endif
 		ImGui::TreePop();
 	}
 #endif
@@ -202,9 +197,45 @@ void CImGuiModule::update(float dt) {
 	}if (ImGui::CollapsingHeader("Entity by Tag")) {
 		ImGui::Text("Application ENTITY TAG - TODO");
 		tags_manager.renderInMenu();
+	}
+	if (ImGui::CollapsingHeader("Game Options")) {
+		ImGui::Checkbox("god mode", GameController->GetCheatGodmodePointer());
 	}if (ImGui::CollapsingHeader("Graficos")) {
 		if (ImGui::TreeNode("polarize")) {
 			//ImGui::SliderFloat("Polarize strength", &shader_ctes_globals.strenght_polarize, 0.0f, 2.0f);
+
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Dream shader options")) {
+			if (ImGui::DragFloat4("color influence", &shader_ctes_dream.color_influence.x, 0.01f)) {
+				shader_ctes_dream.uploadToGPU();
+			}
+			if (ImGui::DragFloat("waves size", &shader_ctes_dream.dream_waves_size, 0.01f)) {
+				shader_ctes_dream.uploadToGPU();
+			}
+			if (ImGui::DragFloat("waves speed", &shader_ctes_dream.dream_speed, 0.01f)) {
+				shader_ctes_dream.uploadToGPU();
+			}
+			if (ImGui::DragFloat("waves intensity", &shader_ctes_dream.dream_wave_amplitude, 0.01f)) {
+				shader_ctes_dream.uploadToGPU();
+			}
+			if (ImGui::DragFloat("distorsion strenght", &shader_ctes_dream.dream_distorsion_strenght, 0.01f)) {
+				shader_ctes_dream.uploadToGPU();
+			}
+			if (ImGui::DragFloat("distorsion expansion", &shader_ctes_dream.dream_distorsion_expansion, 0.01f)) {
+				shader_ctes_dream.uploadToGPU();
+			}
+
+			if (ImGui::SmallButton("Load defaults")) {
+				shader_ctes_dream.color_influence = VEC4(0.5, 0.5, 0.8, 1);
+				shader_ctes_dream.dream_speed = 1;
+				shader_ctes_dream.dream_waves_size = 0.5;
+				shader_ctes_dream.dream_wave_amplitude = 8;
+
+				shader_ctes_dream.dream_distorsion_expansion = 0.85;
+				shader_ctes_dream.dream_distorsion_strenght = 55;
+			}
 
 			ImGui::TreePop();
 		}
@@ -213,6 +244,14 @@ void CImGuiModule::update(float dt) {
 			ImGui::Checkbox("polarize effects(disabled)", GameController->GetFxPolarizePointer());
 
 			ImGui::Checkbox("glow effect(disabled)", GameController->GetFxGlowPointer());
+
+			if (ImGui::DragFloat("ssao intensity", &shader_ctes_blur.ssao_intensity)) {
+				shader_ctes_blur.uploadToGPU();
+			}
+
+			if (ImGui::DragFloat("ssao iterations", &shader_ctes_blur.ssao_iterations)) {
+				shader_ctes_blur.uploadToGPU();
+			}
 
 			if (ImGui::DragFloat("Specular force", &shader_ctes_hatching.specular_force)) {
 				shader_ctes_hatching.uploadToGPU();
@@ -284,7 +323,7 @@ void CImGuiModule::update(float dt) {
 			ImGui::TreePop();
 		}
 	}if (ImGui::CollapsingHeader("Culling")) {
-		RenderManager.renderUICulling();
+		RenderManager.renderUICulling(SBB::readSala());
 		TCompSkeleton::renderUICulling();
 		ImGui::Checkbox("show culling collider", GameController->GetCullingRenderPointer());
 	}
@@ -304,7 +343,7 @@ void CImGuiModule::update(float dt) {
 	ui.update();			//update ui
 	//Debug->update();		//update log
 	m_pLights_editor->RenderInMenu();
-}
+		}
 
 void CImGuiModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);

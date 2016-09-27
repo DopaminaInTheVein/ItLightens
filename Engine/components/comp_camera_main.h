@@ -5,6 +5,12 @@
 
 #define MAX_GUIDE_POINTS 64
 
+struct collision_data {
+	VEC3 dir;
+	float dist;
+	bool intersection = false;
+};
+
 // ------------------------------------
 struct TCompCameraMain : public TCompCamera {
 	bool detect_colsions;
@@ -13,7 +19,8 @@ struct TCompCameraMain : public TCompCamera {
 	float smoothCurrent;
 
 	float hitRadius = 0.1f;
-	float hitDistance = 0.4f;
+	float hitDistance = 0.5f;
+	float hitDistanceMin = 0.2f;
 
 	VEC3 origin_camera;
 	VEC3 last_pos_camera;
@@ -32,7 +39,8 @@ struct TCompCameraMain : public TCompCamera {
 	bool load(MKeyValue& atts);
 	bool getUpdateInfo() override;
 	void update(float dt);
-	float checkColision(const VEC3& pos, const float smoothCurrent, const float distanceToTarget);
+	collision_data* checkColision(const VEC3& pos, const float distanceToTarget);
+	collision_data* getPosIfColisionClipping(const VEC3& pos);
 	bool getManualControl() { return manual_control; }
 	void setManualControl(bool control) { manual_control = control; }
 	void onGuidedCamera(const TMsgGuidedCamera&);

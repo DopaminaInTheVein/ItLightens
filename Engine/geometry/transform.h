@@ -105,7 +105,10 @@ public:
 
 	// ---------------------------
 	void setPosition(VEC3 new_pos) {
-		position = new_pos;
+		position = new_pos;	
+	}
+	void setZ(float z) {
+		position.z = z;
 	}
 	void addPosition(VEC3 new_pos) {
 		position += new_pos;

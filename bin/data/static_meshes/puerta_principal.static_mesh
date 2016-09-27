@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes//puerta_principal.mesh" material="materials/puerta.material" mesh_idx="0"/>
+</static_mesh>

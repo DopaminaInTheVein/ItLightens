@@ -6,7 +6,6 @@
 #include "components/comp_transform.h"
 #include "components/entity.h"
 #include "components/entity_tags.h"
-#include "input/input_wrapper.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "components/comp_msgs.h"
 #include "logic/comp_box.h"
@@ -278,7 +277,7 @@ void player_controller_mole::UpdateInputActions() {
 					, grabInfo.pos_to_grab
 					, h_target_dummy
 					, h_target_dummy
-					);
+				);
 				float pitch_dummy;
 				getYawPitchFromVector(grabInfo.dir_to_grab, &grabInfo.yaw, &pitch_dummy);
 				inputEnabled = false;
@@ -309,16 +308,31 @@ void player_controller_mole::UpdateInputActions() {
 			pulling_box = false;
 			animController->setState(AST_PUSH_WALK);
 			box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
+			logic_manager->throwEvent(logic_manager->OnPushBox, "");
 		}
 		// pulling box
 		else if (controller->IsMoveBackWard()) {
 			pulling_box = true;
 			animController->setState(AST_PULL_WALK);
 			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
+			logic_manager->throwEvent(logic_manager->OnPushBox, "");
 		}
 		else if (controller->IsMoveLeft() || controller->IsMoveRight()) {
 			LeaveBox();
 		}
+		else {
+			// If we are pushing box in idle state, we just stop the sound
+			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
+		}
+	}
+}
+
+void player_controller_mole::UpdateJumpState() {
+	PROFILE_FUNCTION("update jump state base");
+	if (!canJump()) return;
+	if (controller->JumpButtonBecomesPressed()) {
+		logic_manager->throwEvent(logic_manager->OnJump, "Mole");
+		Jump();
 	}
 }
 
@@ -385,6 +399,7 @@ void player_controller_mole::LeaveBox() {
 		GET_COMP(cam_m, camera_e, TCompCameraMain);
 		cam_m->setManualControl(false);
 		GameController->SetManualCameraState(false);
+		logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
 	}
 	else {
 		animController->ungrabObject();
@@ -676,7 +691,7 @@ void player_controller_mole::PushBoxPreparation() {
 		GameController->SetManualCameraState(true);
 		cam_m->setManualControl(true);
 		// new camera position
-		VEC3 new_cam_position = mole_position + camera_direction * ( cam_3p->GetPositionDistance() - 1.f);
+		VEC3 new_cam_position = mole_position + camera_direction * (cam_3p->GetPositionDistance() - 1.f);
 		new_cam_position.y = camera_position.y;
 		cam_m->smoothLookAt(new_cam_position, mole_position, cam_m->getUpAux(), 0.9f / getDeltaTime());
 		cam_t->lookAt(new_cam_position, mole_position, cam_m->getUpAux());
@@ -702,8 +717,6 @@ void player_controller_mole::PushBox() {
 	player_max_speed /= 2;
 
 	ChangeState("idle");
-	logic_manager->throwEvent(logic_manager->OnPushBox, "");
-
 }
 
 void player_controller_mole::FaceToPila()
@@ -914,6 +927,32 @@ bool player_controller_mole::canJump() {
 	bool ascending = cc->GetLastSpeed().y > 0.1f;
 	bool descending = cc->GetLastSpeed().y < -0.1f;
 	return !boxGrabbed.isValid() && !pilaGrabbed.isValid() && !ascending && !descending;
+}
+
+void player_controller_mole::Falling()
+{
+	PROFILE_FUNCTION("falling cientifico");
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (cc->OnGround()) {
+		jspeed = 0.0f;
+		ChangeState("idle");
+		ChangeCommonState("idle");
+
+		// landing sound
+		TCompRoom* room = myEntity->get<TCompRoom>();
+		std::string params = "Mole";
+		if (room && room->name[0] == 2)
+			params = params + "Parquet";
+		else
+			params = params + "Baldosa";
+
+		char buffer[64];
+		sprintf(buffer, "p:exec_command(\"OnJumpLand%s(%f);\", 1.0)", params.c_str(), 1.f);
+
+		logic_manager->throwUserEvent(std::string(buffer));
+	}
 }
 
 //Load and save

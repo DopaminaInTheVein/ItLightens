@@ -3,7 +3,10 @@
 #include "app_modules\io\io.h"
 #include "slb_public_functions.h"
 
-#include "utils\utils.h"
+#include "utils/utils.h"
+#include "logic/bt_guard.h"
+#include "player_controllers/player_controller_cientifico.h"
+#include "player_controllers/player_controller_mole.h"
 
 extern CLogicManagerModule* logic_manager = nullptr;
 
@@ -40,8 +43,11 @@ void CLogicManagerModule::reloadFile(std::string filename) {
 void CLogicManagerModule::update(float dt) {
 	// update the timer of each command
 	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ) {
-		command_it->execution_time -= dt;
-
+		if (!command_it->only_runtime || 
+			GameController->GetGameState() == CGameController::RUNNING || 
+			GameController->GetGameState() == CGameController::SPECIAL_ACTION) {
+			command_it->execution_time -= dt;
+		}
 		if (command_it->execution_time < 0.f) {
 			slb_script.doString(command_it->code);
 			command_it = command_queue.erase(command_it);
@@ -126,12 +132,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OntTimerStart(%f);", 0.5f);
 		break;
 	}
-
-	case (OnPlayerDead): {
-		sprintf(lua_code, "OnPlayerDead(%f);", 0.5f);
+	case (OnSetLight): {
+		float volume = atof(params.c_str());
+		sprintf(lua_code, "OnSetLight(%f);", volume);
 		break;
 	}
-
 	case (OnGuardAttack): {
 		sprintf(lua_code, "OnGuardAttack(%f);", 0.5f);
 		break;
@@ -153,6 +158,14 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 	}
 	case (OnGuardBoxHit): {
 		sprintf(lua_code, "OnGuardBoxHit(%f);", 0.5f);
+		break;
+	}
+	case (OnGuardMoving): {
+		sprintf(lua_code, "OnGuardMoving(%f);", 0.5f);
+		break;
+	}
+	case (OnGuardMovingStop): {
+		sprintf(lua_code, "OnGuardMovingStop(%f);", 0.5f);
 		break;
 	}
 	case (OnInterruptHit): {
@@ -184,6 +197,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnPushBox(%f);", 0.5f);
 		break;
 	}
+	case (OnPushBoxIdle): {
+		sprintf(lua_code, "OnPushBoxIdle(%f);", 0.5f);
+		break;
+	}
 	case (OnLeaveBox): {
 		sprintf(lua_code, "OnLeaveBox(%f);", 0.5f);
 		break;
@@ -206,6 +223,14 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 	}
 	case (OnBreakWall): {
 		sprintf(lua_code, "OnBreakWall(%f);", 0.5f);
+		break;
+	}
+	case (OnDroneMoving): {
+		sprintf(lua_code, "OnDroneMoving(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnDroneStatic): {
+		sprintf(lua_code, "OnDroneStatic(\"%s\");", params.c_str());
 		break;
 	}
 	case (OnRechargeDrone): {
@@ -257,7 +282,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnJump): {
-		sprintf(lua_code, "OnJump(%f);", 0.5f);
+		sprintf(lua_code, "On%sJump(%f);", params.c_str(), 0.5f);
+		break;
+	}
+	case (OnJumpLand): {
+		sprintf(lua_code, "OnJumpLand%s(%f);", params.c_str(), 0.5f);
 		break;
 	}
 	case (OnDoubleJump): {
@@ -351,7 +380,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnDead): {
-		sprintf(lua_code, "OnDead();");
+		sprintf(lua_code, "OnDead(\"%s\");", params.c_str());
 		break;
 	}
 	case (OnRestartLevel): {
@@ -374,16 +403,62 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadingLevel(%s);", params.c_str());
 		break;
 	}
-						   //Others
+	// Step events
 	case (OnStep): {
-		sprintf(lua_code, "OnStep%s();", params.c_str());
+		int step_number = 0;
+		CEntity* entity = handle;
+
+		// get the step counter of the NPC
+		if (params.find("Guard") != std::string::npos) {
+			bt_guard* guard = entity->get<bt_guard>();
+			step_number = guard->getStepCounter();
+		}
+		else if (params.find("Scientist") != std::string::npos) {
+			player_controller_cientifico* scientist = entity->get<player_controller_cientifico>();
+			step_number = scientist->getStepCounter();
+		}
+		else if (params.find("Mole") != std::string::npos) {
+			player_controller_mole* mole = entity->get<player_controller_mole>();
+			step_number = mole->getStepCounter();
+		}
+
+		// get the room of the NPC
+		TCompRoom* room = entity->get<TCompRoom>();
+		std::string event_name = params + "Baldosa";
+		if (room && room->name[0] == 2)
+				event_name = params + "Parquet";
+
+		sprintf(lua_code, "OnStep%s(%i);", event_name.c_str(), step_number);
 		break;
 	}
 	case (OnStepOut): {
-		sprintf(lua_code, "OnStepOut%s();", params.c_str());
+		int step_number = 0;
+		CEntity* entity = handle;
+
+		// get the step counter of the NPC
+		if (params.find("Guard") != std::string::npos) {
+			bt_guard* guard = entity->get<bt_guard>();
+			step_number = guard->getStepCounter();
+		}
+		else if (params.find("Scientist") != std::string::npos) {
+			player_controller_cientifico* scientist = entity->get<player_controller_cientifico>();
+			step_number = scientist->getStepCounter();
+		}
+		else if (params.find("Mole") != std::string::npos) {
+			player_controller_mole* mole = entity->get<player_controller_mole>();
+			step_number = mole->getStepCounter();
+		}
+
+		// get the room of the NPC
+		TCompRoom* room = entity->get<TCompRoom>();
+		std::string event_name = params + "Baldosa";
+		if (room && room->name[0] == 2)
+			event_name = params + "Parquet";
+
+		sprintf(lua_code, "OnStepOut%s(%i);", event_name.c_str(), step_number);
 		break;
 	}
-					  //GUI
+	//GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;
@@ -671,14 +746,9 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.comment("Run cinematic defined in the specified guided camera")
 		.param("string: guided camera name")
 		.param("speed: speed of camera movement (0 means default speed)")
-		// Fade In
-		.set("fade_in", &SLBCamera::fadeIn)
-		.comment("Start fade in")
-		.param("float: time fade, if time <= 0 set default")
-		// Fade Out
-		.set("fade_out", &SLBCamera::fadeOut)
-		.comment("Start fade out")
-		.param("float: time fade, if time <= 0 set default")
+		// Set Orbit Camera
+		.set("orbit", &SLBCamera::orbit)
+		.comment("Enable or disable auto orbit camera")
 		// Reset the camera
 		.set("reset_camera", &SLBCamera::resetCamera)
 		.comment("Resets the camera to its default state")
@@ -777,14 +847,38 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play sound function
 		.set("play_sound", &SLBPublicFunctions::playSound)
 		.comment("Executes the specified sound effect")
-		.param("Route of the sound")
+		.param("string: Route of the sound")
+		.param("float: Volume of the sound")
+		.param("bool: Sound looping or not")
 		// play 3d sound function
 		.set("play_3d_sound", &SLBPublicFunctions::play3dSound)
-		.comment("Executes the specified sound effect in a 3d position")
-		.param("string: Route of the sound")
+		.comment("Executes a sound effect of the specified event type in a 3d position")
+		.param("string: Route of the sound event type")
 		.param("float: x coord of the sound")
 		.param("float: y coord of the sound")
 		.param("float: z coord of the sound")
+		.param("bool: Sound looping or not")
+		.param("int: maximum number of instances allowed")
+		// play persistent 3d sound function
+		.set("play_fixed_3d_sound", &SLBPublicFunctions::playFixed3dSound)
+		.comment("Executes the specified sound effect in a 3d position")
+		.param("string: Route of the sound event type")
+		.param("string: Name of the sound")
+		.param("float: x coord of the sound")
+		.param("float: y coord of the sound")
+		.param("float: z coord of the sound")
+		.param("bool: Sound looping or not")
+		// stop sound function
+		.set("stop_sound", &SLBPublicFunctions::stopSound)
+		.comment("Stops all the sfx from the specified event type")
+		.param("Route of the sound")
+		// stop fixed sound function
+		.set("stop_fixed_sound", &SLBPublicFunctions::stopFixedSound)
+		.comment("Stops the specified sound effect")
+		.param("Name of the sound")
+		// stop all sounds function
+		.set("stop_all_sounds", &SLBPublicFunctions::stopAllSounds)
+		.comment("Stop all the sounds of the game")
 		// play music function
 		.set("play_music", &SLBPublicFunctions::playMusic)
 		.comment("Executes the specified music")
@@ -793,6 +887,9 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("play_looping_music", &SLBPublicFunctions::playLoopingMusic)
 		.comment("Executes the specified music in an endless loop")
 		.param("Route of the music")
+		// stop music function
+		.set("stop_music", &SLBPublicFunctions::stopMusic)
+		.comment("Stops the game music")
 		// play voice function
 		.set("play_voice", &SLBPublicFunctions::playVoice)
 		.comment("Executes the specified voice")
@@ -800,6 +897,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play ambient function
 		.set("play_ambient", &SLBPublicFunctions::playAmbient)
 		.comment("Executes the specified ambient sound")
+		// sets the music volume
+		.set("set_music_volume", &SLBPublicFunctions::setMusicVolume)
+		.comment("Changes the volume of the music to the specified value")
+		.param("float: volume value")
 		// play video function
 		.set("play_video", &SLBPublicFunctions::playVideo)
 		.comment("Executes the specified video")
@@ -834,6 +935,16 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float:  y pos")
 		.param("string: HEX TEXT COLOR -> #RRGGBBAA")
 		.param("float: scale")
+		.param("string: HEX TEXT COLOR TARGET -> #RRGGBBAA")
+		.param("float: scale")
+		.param("float: scale")
+		// alter text span
+		//.set("alterText", &SLBPublicFunctions::alterText)
+		//.comment("Alter the specified text")
+		//.param("string: text id")
+		//.param("float: new x pos")
+		//.param("float: new y pos")
+		//.param("float: new scale")
 		// remove text span
 		.set("removeText", &SLBPublicFunctions::removeText)
 		.comment("Removes the specified text")
@@ -902,6 +1013,16 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("string: group")
 		.param("string: name")
 		.param("string: value")
+		// Pause Game
+		.set("pause_game", &SLBPublicFunctions::pauseGame)
+		.comment("Pauses the game")
+		// Resume Game
+		.set("resume_game", &SLBPublicFunctions::resumeGame)
+		.comment("Resumes the game")
+		// Disable Cursor
+		.set("set_cursor_enabled", &SLBPublicFunctions::setCursorEnabled)
+		.param("bool: enabled")
+		.comment("Enable/disable cursor")
 		// Exit Game
 		.set("exit_game", &SLBPublicFunctions::exit)
 		.comment("Exit game")

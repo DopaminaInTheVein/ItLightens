@@ -46,6 +46,7 @@ public:
 class bt_guard : public npc, public TCompBase
 {
 	//Main attritbutes
+	//static float SHOT_OFFSET;
 	float PLAYER_DETECTION_RADIUS;
 	float DIST_SQ_SHOT_AREA_ENTER;
 	float DIST_SQ_SHOT_AREA_LEAVE;
@@ -57,14 +58,10 @@ class bt_guard : public npc, public TCompBase
 	float CONE_VISION;
 	float DAMAGE_LASER;
 	float MAX_REACTION_TIME;
-	float MAX_BOX_REMOVAL_TIME;
-	float BOX_REMOVAL_ANIM_TIME;
 	float MAX_SEARCH_DISTANCE;
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
 	float GUARD_ALERT_RADIUS;
-	float RANDOM_POINT_MAX_DISTANCE;
-	VEC4 SHOT_OFFSET;
 	//from bombs
 	float reduce_factor;
 	float t_reduceStats_max;
@@ -141,11 +138,9 @@ class bt_guard : public npc, public TCompBase
 	bool turnToPlayer();
 	void lookAtPlayer();
 	void lookAtFront();
-	//VEC3 generateRandomPoint(); THIS IS NOT USED!
 
 	//Aux checks
 	bool playerVisible(bool check_raycast = true);
-	bool playerTooNear();
 	bool boxMovingDetected();
 	bool inJurisdiction(VEC3);
 	bool outJurisdiction(VEC3);
@@ -162,13 +157,14 @@ class bt_guard : public npc, public TCompBase
 	bool rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit);
 	bool rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit);
 	bool rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform);
-	bool shootToPlayer();
+	void shootToPlayer();
 	void drawShot(VEC3 dest);
 	void removeBox(CHandle box_handle);
 
 	bool stunned = false;;
 	bool stunt_recover = true;
 	bool shooting = false;
+	bool shooting_backwards = false;
 	bool forced_move = false;
 
 	// the nodes
@@ -183,6 +179,8 @@ class bt_guard : public npc, public TCompBase
 	static btnode* root;
 
 	CHandle getParent() override { return CHandle(this).getOwner(); }
+
+	int step_counter = 0;
 
 public:
 	//public for LUA
@@ -204,7 +202,6 @@ public:
 	int actionPrepareToAbsorb();
 	int actionAbsorb();
 	int actionShootWall();
-	int actionRemoveBox();
 	int actionSearch();
 	int actionMoveAround();
 	int actionLookAround();
@@ -253,7 +250,6 @@ public:
 	//From bombs
 	void reduceStats();
 	void resetStats();
-	void onMagneticBomb(const TMsgMagneticBomb& msg);
 	void onStaticBomb(const TMsgStaticBomb& msg);
 	void onOverCharged(const TMsgOverCharge& msg);
 	void onBoxHit(const TMsgBoxHit& msg);
@@ -300,11 +296,12 @@ public:
 
 	void changeCommonState(std::string);
 	void onGetWhoAmI(TMsgGetWhoAmI& msg);
-
-	//Cambio Malla
-	//void ChangePose(string new_pose_route);
+	int getStepCounter() { return step_counter; }
 
 	float timerStunt, _timerStunt;
+
+	void onDifficultyChanged(const TMsgDifficultyChanged&);
+
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)
 };
 

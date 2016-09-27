@@ -1,3 +1,4 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/Brick_14_UV_H_CM_1.dds"/>
+<texture slot="diffuse" name="textures/columna_1_albedo (1).dds"/>
+<texture slot="normalmap" name="textures/columna_1_normals (1).dds"/>
 </material>

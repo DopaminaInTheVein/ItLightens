@@ -11,6 +11,7 @@
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/prettywriter.h"
+#include "text_encode.h"
 
 #define STRING(s) #s
 

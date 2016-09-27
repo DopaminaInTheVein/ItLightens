@@ -6,6 +6,9 @@
 #include <bitset>
 class TCompAbsAABB;
 struct TCompCulling : public TCompBase {
+	static int next_to_update;
+	static CHandle camera_main;
+	static bool cull_camera;
 	static const size_t nbits = 4096;
 	typedef std::bitset<nbits> TCullingBits;
 	TCullingBits bits;
@@ -61,9 +64,10 @@ struct TCompCulling : public TCompBase {
 	void renderInMenu();
 	void update(float dt) {}
 	void update();
-
+	//bool load(MKeyValue&);
 	//Static method for check AABBs
 	static bool checkAABB(TCompCulling*, TCompAbsAABB*);
+	static void updateNext();
 };
 
 #endif

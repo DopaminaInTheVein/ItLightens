@@ -3,6 +3,7 @@
 #include "gui_action_text.h"
 #include "components/entity.h"
 #include "components/comp_text.h"
+#include "components/entity_parser.h"
 #include "app_modules/lang_manager/lang_manager.h"
 
 using namespace std;
@@ -14,7 +15,7 @@ CGuiActionText::CGuiActionText(float x, float y) {
 	assert(y < 1.0f);
 	posx = x;
 	posy = y;
-	sizeFont = 0.025f;
+	sizeFont = 0.2f;
 }
 
 void CGuiActionText::setState(eAction new_action) {
@@ -75,31 +76,9 @@ void CGuiActionText::render() {
 		break;
 	}
 	if (text != "" && text != last_text) {
-		auto hm = CHandleManager::getByName("entity");
-		CHandle new_hp = hm->createHandle();
-		CEntity* entity = new_hp;
-
-		auto hm1 = CHandleManager::getByName("name");
-		CHandle new_hn = hm1->createHandle();
-		MKeyValue atts1;
-		atts1.put("name", "helpText");
-		new_hn.load(atts1);
-		entity->add(new_hn);
-
-		auto hm3 = CHandleManager::getByName("helper_text");
-		CHandle new_hl = hm3->createHandle();
-		MKeyValue atts3;
-		atts3["text"] = text;
-		atts3["pos_x"] = std::to_string(posx);
-		atts3["pos_y"] = std::to_string(posy);
-		new_hl.load(atts3);
-		entity->add(new_hl);
-
-		//Add tag talk text
-		TMsgSetTag msg;
-		msg.add = true;
-		msg.tag = "talk_text";
-		new_hp.sendMsg(msg);
+		CHandle h = createPrefab("ui/text");
+		GET_COMP(t, h, TCompText);
+		t->setup(std::string("action_text"), std::string(text), posx, posy, std::string("#FFFFFFFF"), sizeFont, std::string("#FFFFFFFF"), 0.0f, 0.0f);
 	}
 	else if (text == "" && text != last_text) {
 		getHandleManager<TCompText>()->each([](TCompText * mess) {

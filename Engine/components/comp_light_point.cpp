@@ -3,7 +3,7 @@
 #include "comp_transform.h"
 #include "entity.h"
 #include "render/draw_utils.h"
-#include "resources\resources_manager.h"
+#include "resources/resources_manager.h"
 
 bool TCompLightPoint::load(MKeyValue& atts) {
 	color = atts.getQuat("color");

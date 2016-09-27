@@ -20,9 +20,9 @@ bool TCompLoadingScreen::load(MKeyValue& atts)
 {
 	resolution_x = CApp::get().getXRes();
 	resolution_y = CApp::get().getYRes();
-	
+
 	string name = atts["name"];
-	
+
 	return true;
 }
 
@@ -39,12 +39,16 @@ void TCompLoadingScreen::update(float dt) {
 	loading_value = GameController->GetLoadingState();
 	numchars = loading_value;
 
-	if (loading_value == 100.f) {
-		GameController->SetGameState(CGameController::RUNNING);
+	if (loading_value >= 100.f) {
 		GameController->LoadComplete(true);
 		// Delete de la barra y la imagen de fondo
+		for (int i = 0; i < numchars; ++i) {
+			//position.x = 0.4f + i*0.0085f;
+			Gui->removeAllGuiElementsByTag("loading" + to_string(i));
+		}
 		Gui->removeAllGuiElementsByTag("loading");
 		updateLetters(false);
+		//CHandle(this).destroy();
 	}
 	else {
 		updateLetters(true);
@@ -52,11 +56,11 @@ void TCompLoadingScreen::update(float dt) {
 }
 
 void TCompLoadingScreen::render() const {
-	//do nothing		
+	//do nothing
 }
 
 void TCompLoadingScreen::printLetters() const {
-	//PROFILE_FUNCTION("TCompFadingMessage printLetters");
+	PROFILE_FUNCTION("TCompFadingMessage printLetters");
 
 	bool b = false;
 	VEC3 position;
@@ -92,7 +96,7 @@ void TCompLoadingScreen::printLetters() const {
 }
 
 void TCompLoadingScreen::updateLetters(bool loaded) const {
-	//PROFILE_FUNCTION("TCompFadingMessage printLetters");
+	PROFILE_FUNCTION("TCompFadingMessage printLetters");
 	VEC3 position;
 	if (loaded)
 		position.y = 0.10f;

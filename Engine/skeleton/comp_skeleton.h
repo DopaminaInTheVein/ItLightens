@@ -46,6 +46,13 @@ struct TCompSkeleton : public TCompBase {
 		auto non_const_skel = const_cast<CSkeleton*>(resource_skeleton);
 		return non_const_skel->getRFootOffset();
 	}
+
+	VEC3 getBonePos(std::string key_bone) {
+		int bone_id = getKeyBoneId(key_bone);
+		auto bone = model->getSkeleton()->getBone(bone_id);
+		return Cal2Engine(bone->getTranslationAbsolute());
+	}
+
 	//Messages
 	void onSetAnim(const TMsgSetAnim&);
 };

@@ -31,6 +31,7 @@ protected:
 	int direction = 0;
 	VEC3 unstuck_target;
 	VEC3 last_position;
+	btnode* action_when_stuck = NULL;
 
 	bool getPath(const VEC3& startPoint, const VEC3& endPoint);
 	CEntity* frontCollisionIA(const VEC3 & npcPos, CHandle ownHandle);

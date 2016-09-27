@@ -46,13 +46,13 @@
 <tags
    tags="options"/>
 <name
-   name="background_opt"/>
+   name="background"/>
 <transform
-   pos="5.0 -95.0 9.58039"
+   pos="5.0 -95.0 9.07057"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/menu/background.static_mesh"/>
+   name="static_meshes/ui/options/background.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -61,7 +61,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="0"
+   row="3"
    col="0"
    width="3.11336"
    height="0.277176"/>
@@ -82,7 +82,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="0"
+   row="2"
    col="0"
    width="3.11336"
    height="0.277176"/>
@@ -124,7 +124,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="0"
+   row="1"
    col="0"
    width="3.11336"
    height="0.277176"/>

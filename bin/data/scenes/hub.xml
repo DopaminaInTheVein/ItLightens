@@ -2,30 +2,15 @@
 <entity>
 <tags/>
 <light_point
-   color="0.560784 0.862745 0.960784 0.5"
-   in_radius="0.0"
-   out_radius="11.4586"/>
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
    name="Omni005"/>
 <transform
-   pos="10.4129 51.9513 -26.1914"
+   pos="9.27955 56.6631 -17.3862"
    quat="0 0 0 1.0"
    scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="blocking_light"/>
-<transform
-   pos="13.9828 50.6611 -23.3679"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/blocking_light.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
 
 </entity>
 <entity>
@@ -166,36 +151,6 @@
 <entity>
 <tags/>
 <name
-   name="floor"/>
-<transform
-   pos="9.54042 50.6611 -25.4918"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/floor.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="machine_table"/>
-<transform
-   pos="-2.27247 50.6611 -25.4918"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/machine_table.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="control_panel"/>
 <transform
    pos="25.0846 50.6621 -20.1743"
@@ -236,6 +191,300 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound21"/>
+<transform
+   pos="13.7262 55.293 -33.4789"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound01"/>
+<transform
+   pos="25.5278 57.1445 -31.4903"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound02"/>
+<transform
+   pos="-2.45396 57.1445 -31.5041"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound03"/>
+<transform
+   pos="9.6048 55.293 -33.4789"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound04"/>
+<transform
+   pos="7.25698 54.8355 -30.9778"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound05"/>
+<transform
+   pos="1.55277 54.8355 -27.4732"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound06"/>
+<transform
+   pos="1.55405 54.8355 -28.063"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound07"/>
+<transform
+   pos="1.55405 54.8355 -23.5124"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound08"/>
+<transform
+   pos="1.55277 54.8355 -22.9235"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound09"/>
+<transform
+   pos="-2.45262 57.1445 -19.48"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound10"/>
+<transform
+   pos="7.25698 54.8355 -20.0055"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound11"/>
+<transform
+   pos="9.34076 55.293 -17.5048"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound12"/>
+<transform
+   pos="13.6194 55.293 -17.5048"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound13"/>
+<transform
+   pos="15.8032 54.8355 -20.0055"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound14"/>
+<transform
+   pos="29.917 56.9883 -25.4886"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound15"/>
+<transform
+   pos="21.5081 54.8355 -28.0606"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound16"/>
+<transform
+   pos="21.5086 54.8355 -27.4722"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound17"/>
+<transform
+   pos="21.5081 54.8355 -23.512"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound18"/>
+<transform
+   pos="21.5086 54.8355 -22.9236"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound19"/>
+<transform
+   pos="25.4139 57.1445 -19.4098"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="wall_lamp_sound20"/>
+<transform
+   pos="15.8054 54.8355 -30.9778"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
 
 </entity>
 <entity>
@@ -303,7 +552,7 @@
 <name
    name="ceiling_tile"/>
 <transform
-   pos="11.53 62.0718 -25.4918"
+   pos="11.53 62.5135 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -339,8 +588,8 @@
 <name
    name="sofa2"/>
 <transform
-   pos="-1.78958 50.6621 -30.8095"
-   quat="0 -0.711298 0 0.702891"
+   pos="-1.84794 50.6621 -30.7404"
+   quat="0 -0.799557 0 0.60059"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/hub/sofa2.static_mesh"/>
@@ -387,6 +636,36 @@
    scale="1.0"/>
 <room
    name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="floor"/>
+<transform
+   pos="9.5408 50.6611 -25.4919"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/hub/floor.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="machine_table"/>
+<transform
+   pos="-2.27247 50.6611 -25.4918"
+   quat="0 0 0 1.0"
+   scale="6.72523"/>
+<render_static_mesh
+   name="static_meshes/hub/machine_table.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 

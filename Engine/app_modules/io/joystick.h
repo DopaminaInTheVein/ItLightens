@@ -91,6 +91,7 @@ public:
 	bool RightBecomesPressed();
 	bool UpBecomesPressed();
 	bool DownBecomesPressed();
+	void release();
 };
 
 #endif

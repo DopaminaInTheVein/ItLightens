@@ -9,9 +9,11 @@
 //Forward Declaration
 class TCompTransform;
 class TCompGui;
+class TCompGuiCursor;
 
 class TCompGuiButton : public aicontroller, public TCompBase {
 	bool init_enabled;
+	bool language;
 
 	//State info
 	CHandle cursor;
@@ -23,6 +25,7 @@ class TCompGuiButton : public aicontroller, public TCompBase {
 	TCompTransform * myTransform;
 	TCompTransform * cursorTransform;
 	TCompGui * myGui;
+	TCompGuiCursor * comp_cursor;
 
 	// Aux
 	bool checkOver();
@@ -50,7 +53,6 @@ protected:
 	// the states, as maps to functions
 	static map<string, statehandler> statemap;
 	map<string, statehandler>* getStatemap();
-
 public:
 
 	// load Xml

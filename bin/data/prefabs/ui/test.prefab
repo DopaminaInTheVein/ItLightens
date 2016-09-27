@@ -1,15 +1,17 @@
 <entities>
-<entity>
+<entity temp="yes">
 <tags
-   tags=""/>
+   tags="gui"/>
+<gui/>
 <name
-   name="test_ui"/>
+   name="health_bar_out"/>
 <transform
-   pos="5.0 -95.0 9.0"
-   quat="0 0 0 1.0"
+   pos="8.65987 -96.4954 8.34409"
+   quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/menu_game/btn_resume.static_mesh"/>
+   name="static_meshes/ui/hud/health_bar_out.static_mesh"/>
 <abs_aabb/>
+
 </entity>
 </entities>

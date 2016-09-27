@@ -49,7 +49,7 @@ float SLBPosition::Z()
 
 // player functions
 void SLBPlayer::getPlayer() {
-	CHandle thePlayer = tags_manager.getFirstHavingTag("player");
+	CHandle thePlayer = CPlayerBase::handle_player;
 	player_handle = thePlayer;
 }
 void SLBPlayer::getRaijin() {
@@ -130,7 +130,7 @@ CHandle SLBHandle::getHandle() {
 
 // We need ti aply generic actions to player as well
 void SLBHandle::getPlayer() {
-	CHandle thePlayer = tags_manager.getFirstHavingTag("player");
+	CHandle thePlayer = CPlayerBase::handle_player;
 	real_handle = thePlayer;
 }
 void SLBHandle::getRaijin() {
@@ -205,23 +205,44 @@ void SLBHandle::setPosition(float x, float y, float z) {
 
 float SLBHandle::getX() {
 	CEntity* entity = real_handle;
+	// if it has entity_controller, we get the coord from there
 	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
-
-	return entity_controller->GetPosition().x;
+	if (entity_controller) {
+		return entity_controller->GetPosition().x;
+	}
+	// otherwise, we get it from the transform
+	else {
+		TCompTransform* entity_transform = entity->get<TCompTransform>();
+		return entity_transform->getPosition().x;
+	}
 }
 
 float SLBHandle::getY() {
 	CEntity* entity = real_handle;
+	// if it has entity_controller, we get the coord from there
 	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
-
-	return entity_controller->GetPosition().y;
+	if (entity_controller) {
+		return entity_controller->GetPosition().y;
+	}
+	// otherwise, we get it from the transform
+	else {
+		TCompTransform* entity_transform = entity->get<TCompTransform>();
+		return entity_transform->getPosition().y;
+	}
 }
 
 float SLBHandle::getZ() {
 	CEntity* entity = real_handle;
+	// if it has entity_controller, we get the coord from there
 	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
-
-	return entity_controller->GetPosition().z;
+	if (entity_controller) {
+		return entity_controller->GetPosition().z;
+	}
+	// otherwise, we get it from the transform
+	else {
+		TCompTransform* entity_transform = entity->get<TCompTransform>();
+		return entity_transform->getPosition().z;
+	}
 }
 
 void SLBHandle::goToPoint(float x, float y, float z) {
@@ -359,7 +380,8 @@ int SLBHandle::addOption(const char* name) {
 	int res = -1;
 	if (real_handle.isValid()) {
 		GET_COMP(gui_selector, real_handle, TCompGuiSelector);
-		if (gui_selector) res = gui_selector->AddOption(string(name));
+		auto name_fixed = TextEncode::Utf8ToLatin1String(name);
+		if (gui_selector) res = gui_selector->AddOption(string(name_fixed));
 	}
 	return res;
 }
@@ -514,6 +536,15 @@ void SLBCamera::fadeOut(float speed) {
 	fx->FadeOut();
 }
 
+void SLBCamera::orbit(bool new_orbit) {
+	if (!checkCamera()) return;
+	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
+	if (cam_control) {
+		if (new_orbit) cam_control->StartOrbit();
+		else cam_control->StopOrbit();
+	}
+}
+
 void SLBCamera::resetCamera() {
 	// restore the normal 3rd person camera
 	if (!checkCamera()) return;
@@ -526,6 +557,8 @@ void SLBCamera::resetCamera() {
 	TMsgSetControllable msg;
 	msg.control = true;
 	camera_e->sendMsg(msg);
+	GET_COMP(cam_control, camera_e, TCompController3rdPerson);
+	if (cam_control) cam_control->StopOrbit();
 }
 
 //Ui Camera control in LUA
@@ -589,6 +622,7 @@ void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	command new_command;
 	new_command.code = exec_code;
 	new_command.execution_time = exec_time;
+	new_command.only_runtime = GameController->GetGameState() == CGameController::RUNNING;
 	// add the new command to the queue
 	//logic_manager->getCommandQueue()->push_back(new_command);
 	logic_manager->addCommand(new_command);
@@ -649,18 +683,33 @@ void SLBPublicFunctions::setOnlySense(int enabled) {
 		player.sendMsg(msg);
 	}
 }
-void SLBPublicFunctions::playSound(const char* sound_route) {
-	sound_manager->playSound(std::string(sound_route));
+
+void SLBPublicFunctions::playSound(const char* sound_route, float volume = 1.f, bool looping = false) {
+	sound_manager->playSound(std::string(sound_route), volume, looping);
 }
 
-void SLBPublicFunctions::play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z) {
-	VEC3 player_pos = VEC3(pl_x, pl_y, pl_z);
-	player_pos.Normalize();
-
+void SLBPublicFunctions::play3dSound(const char* sound_route, float s_x, float s_y, float s_z, float max_volume, bool looping = false, int max_instances = 1) {
 	VEC3 sound_pos = VEC3(s_x, s_y, s_z);
-	sound_pos.Normalize();
+	// reproduce the sound
+	sound_manager->play3dSound(std::string(sound_route), sound_pos, max_volume, looping, max_instances);
+}
 
-	sound_manager->play3dSound(std::string(sound_route), player_pos, sound_pos);
+void SLBPublicFunctions::playFixed3dSound(const char* sound_route, const char* sound_name, float s_x, float s_y, float s_z, float max_volume, bool looping = false) {
+	VEC3 sound_pos = VEC3(s_x, s_y, s_z);
+	// reproduce the sound
+	sound_manager->playFixed3dSound(std::string(sound_route), std::string(sound_name), sound_pos, max_volume, looping);
+}
+
+void SLBPublicFunctions::stopSound(const char* sound_route) {
+	sound_manager->stopSound(std::string(sound_route));
+}
+
+void SLBPublicFunctions::stopFixedSound(const char* sound_name) {
+	sound_manager->stopFixedSound(std::string(sound_name));
+}
+
+void SLBPublicFunctions::stopAllSounds() {
+	sound_manager->stopAllSounds();
 }
 
 void SLBPublicFunctions::playMusic(const char* music_route) {
@@ -671,12 +720,20 @@ void SLBPublicFunctions::playLoopingMusic(const char* music_route) {
 	sound_manager->playLoopingMusic(std::string(music_route));
 }
 
+void SLBPublicFunctions::stopMusic() {
+	sound_manager->stopMusic();
+}
+
 void SLBPublicFunctions::playVoice(const char* voice_route) {
 	sound_manager->playVoice(std::string(voice_route));
 }
 
 void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 	sound_manager->playAmbient(std::string(ambient_route));
+}
+
+void SLBPublicFunctions::setMusicVolume(float volume) {
+	sound_manager->setMusicVolume(volume);
 }
 
 void SLBPublicFunctions::playVideo(const char* video_route) {
@@ -697,7 +754,7 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 	std::vector<int> new_room_vec;
 	new_room_vec.push_back(newRoom);
 
-	CHandle p = tags_manager.getFirstHavingTag("player");
+	CHandle p = CPlayerBase::handle_player;
 	CEntity * pe = p;
 	TCompRoom * room = pe->get<TCompRoom>();
 	if (room->setName(new_room_vec)) {
@@ -761,36 +818,13 @@ void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* icon
 	entity->add(new_hl);
 }
 
-void SLBPublicFunctions::putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale) {
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "helpText");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-
-	auto hm3 = CHandleManager::getByName("helper_text");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["text"] = text;
-	atts3["id"] = id;
-	atts3["color"] = textColor;
-	atts3["scale"] = std::to_string(scale);
-	atts3["pos_x"] = std::to_string(posx);
-	atts3["pos_y"] = std::to_string(posy);
-	new_hl.load(atts3);
-	entity->add(new_hl);
-
-	//Add tag talk text
-	TMsgSetTag msg;
-	msg.add = true;
-	msg.tag = "talk_text_" + string(id);
-	new_hp.sendMsg(msg);
+void SLBPublicFunctions::putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag) {
+	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
+	CHandle h = createPrefab("ui/text");
+	GET_COMP(t, h, TCompText);
+	t->setup(std::string(id), text_fixed, posx, posy, std::string(textColor), scale, std::string(textColorTarget), textColorSpeed, textColorSpeedLag);
 }
+
 void SLBPublicFunctions::removeText(const char* id) {
 	std::string id_string(id);
 	getHandleManager<TCompText>()->each([id_string](TCompText * mess) {
@@ -798,6 +832,13 @@ void SLBPublicFunctions::removeText(const char* id) {
 	}
 	);
 }
+//void SLBPublicFunctions::alterText(const char* id, float new_posx, float new_posy, float new_scale) {
+//	std::string id_string(id);
+//	getHandleManager<TCompText>()->each([id_string, new_posx, new_posy, new_scale](TCompText * mess) {
+//		if (mess->getId() == id_string) { mess->setAttr(new_posx, new_posy, new_scale); }
+//	}
+//	);
+//}
 
 void SLBPublicFunctions::characterGlobe(float distance, float char_x, float char_y, float char_z) {
 	auto hm = CHandleManager::getByName("entity");
@@ -900,6 +941,16 @@ void SLBPublicFunctions::exit() {
 	CApp::get().exitGame();
 }
 
+void SLBPublicFunctions::pauseGame() {
+	GameController->SetGameState(CGameController::STOPPED);
+}
+
+void SLBPublicFunctions::setCursorEnabled(bool enabled) {
+	TCompGui::setCursorEnabled(enabled);
+}
+void SLBPublicFunctions::resumeGame() {
+	GameController->SetGameState(CGameController::RUNNING);
+}
 const char* SLBPublicFunctions::getText(const char* scene, const char* event) {
 	std::string res_str = lang_manager->getText(scene, event);
 

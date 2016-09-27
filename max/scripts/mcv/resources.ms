@@ -1,3 +1,4 @@
+_list_objs = #()
 struct TResources (
 	project_path = data_dir ,
 	mode = "all",
@@ -48,6 +49,11 @@ struct TResources (
 			--format "<texture slot=\"%\" name=\"%%\"/>\n" slot textures_path aname to:fs 
 		) else (
 			local full_name = bitmap_texture.bitmap.filename
+			local ext = getSuffixAfter full_name "."
+			if (ext != "dds" and ext != "DDS") then (
+				messagebox ( "This texture is not DDS! [" + full_name + "]")
+				throw ( "This texture is not DDS! [" + full_name + "]")
+			)
 			--messagebox (full_name as string)
 			local aname = getTexturePath full_name --filenameFromPath full_name
 			--messagebox (aname as string)
@@ -75,6 +81,11 @@ struct TResources (
 			local tech = technique
 			local tech_by_name = getSuffixAfter m.name "_tech_"
 			if tech_by_name != undefined then tech = tech_by_name
+			
+			--Transparent techinque
+			if tech == "deferred" and m.opacitymap != undefined then (
+				tech = "transparent"
+			)
 			
 			--Write material file
 			format ("<material tech=\"" + tech + ".tech\">\n") to:mat_file
@@ -383,6 +394,8 @@ struct TResources (
 				if (ConvertToMesh obj) == undefined then ( canExport = false)
 			)
 			if canExport then (
+				--select obj
+				append _list_objs obj.name
 				exportCompStaticMesh obj
 				--if obj.parent != undefined then exportCompHierarchy fs obj
 			)	
@@ -395,9 +408,10 @@ struct TResources (
 	),
 	
 	fn exportSelected = (
+		_list_objs = #()
 		if $ == undefined then return "(nothing to export)\n"
-		
-		for obj in $ do (
+		local all_objs = $
+		for obj in all_objs do (
 			exportObject obj
 		)
 		mode = "all"

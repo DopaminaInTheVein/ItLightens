@@ -119,6 +119,8 @@ public:
 	int selectedWallToBreaki = 0;
 	____TIMER_DECLARE_(t_grab_hit);
 
+	int step_counter = 0;
+
 	//Cambio Malla
 	//TCompRenderStaticMesh* mesh;
 	//string pose_idle_route;
@@ -132,12 +134,14 @@ public:
 	void UpdateInputActions();
 	void UpdateMovingWithOther();
 	void UpdateUnpossess();
+	void UpdateJumpState();
 	// redefinition for push_box mode
 	void UpdateMoves();
 	bool UpdateMovDirection();
 
 	// JUMP
 	bool canJump() override;
+	void Falling() override;
 
 	TCompTransform * getEntityTransform() {
 		return transform;
@@ -158,7 +162,10 @@ public:
 	void onGetWhoAmI(TMsgGetWhoAmI& msg) {
 		msg.who = PLAYER_TYPE::MOLE;
 		msg.who_string = "Mole";
+		if (msg.action_flag)
+			step_counter = (step_counter + 1) % 4;
 	}
+	int getStepCounter() { return step_counter; }
 
 	//Cambio Malla
 	//void ChangePose(string new_pose_route);

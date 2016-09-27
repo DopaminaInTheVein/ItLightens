@@ -15,13 +15,14 @@
 #include "components/comp_camera_main.h"
 #include "components/comp_sense_vision.h"
 
-#include "input/input_wrapper.h"
+#include "app_modules/io/input_wrapper.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "utils/utils.h"
 
 #include "components/comp_charactercontroller.h"
 
 map<int, string> CPlayerBase::out = {};
+CHandle CPlayerBase::handle_player = CHandle();
 
 CPlayerBase::CPlayerBase() {
 }
@@ -50,21 +51,29 @@ bool CPlayerBase::getUpdateInfo() {
 	sense_vision = GETH_COMP(h_sense_vision, TCompSenseVision);
 	if (!sense_vision) return false;
 
+	//Cache handle player
+	CHandle myHandle = CHandle(compBaseEntity);
+	if (myHandle.hasTag("player")) handle_player = myHandle;
+
 	return true;
 }
 
 bool CPlayerBase::checkDead() {
 	PROFILE_FUNCTION("checkdead");
 
-	if (GameController->GetGameState() == CGameController::LOSE) {
+	if (TCompLife::isDead()) {
+		if (!dead) logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDead, CApp::get().getCurrentRealLevel());
+		dead = true;
 		ChangeState("die");
 		ChangeCommonState("die");
+		controlEnabled = false;
 		return true;
 	}
 
 	if (GameController->GetGameState() == CGameController::VICTORY) {
 		ChangeState("win");
 		ChangeCommonState("win");
+		controlEnabled = false;
 		return true;
 	}
 	return false;
@@ -407,9 +416,9 @@ void CPlayerBase::Die()
 	if (!cc->OnGround()) {
 		Falling();
 	}
-	orbitCameraDeath();
+	//orbitCameraDeath();
 	ChangeState("idle");
-	ChangeCommonState("idle");
+	ChangeCommonState("dead");
 }
 
 void CPlayerBase::Win()
@@ -492,9 +501,10 @@ void CPlayerBase::renderInMenu()
 
 void CPlayerBase::orbitCameraDeath() {
 	PROFILE_FUNCTION("orbit camera dead base");
-	float angle = getDeltaTime();
-	float s = sin(angle);
-	float c = cos(angle);
+	static float angle_orbit_player = 0.f;
+	angle_orbit_player += getDeltaTime();
+	float s = sin(angle_orbit_player);
+	float c = cos(angle_orbit_player);
 
 	// translate point back to origin:
 	TCompTransform* target_transform = myEntity->get<TCompTransform>();

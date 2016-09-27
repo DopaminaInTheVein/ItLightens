@@ -6,17 +6,17 @@
    menu_name="title"
    row="0"
    col="0"
-   width="0.652746"
-   height="0.367172"/>
+   width="0.477473"
+   height="0.470192"/>
 <gui_button
-   width="0.652746"
-   height="0.367172"/>
+   width="0.477473"
+   height="0.470192"/>
 <name
    name="btn_start"/>
 <transform
    pos="5.00018 -96.268 8.99995"
    quat="0 0 0 1.0"
-   scale="1.0"/>
+   scale="1.04135"/>
 <render_static_mesh
    name="static_meshes/ui/title/btn_start.static_mesh"/>
 <abs_aabb/>

@@ -25,6 +25,8 @@ class CGameController : public IAppModule {
 	bool	manual_control = false;
 	bool    ui_control = false;
 
+	bool	cheat_godmode = false;
+
 	CHandle h_game_controller;
 
 public:
@@ -33,17 +35,18 @@ public:
 		PLAY_VIDEO,
 		RUNNING,
 		STOPPED,
-		STOPPED_INTRO,
+		SPECIAL_ACTION,
 		VICTORY,
-		LOSE,
-		MENU,
 		GAME_STATES_SIZE
 	};
+
+	bool start();
 
 	void Setup();
 
 	DIFFICULTIES GetDifficulty() const;
 	void SetDifficulty(int);
+	void UpdateDifficulty();
 
 	std::string GetLanguage() const;
 	void SetLanguage(std::string);
@@ -69,6 +72,7 @@ public:
 
 	void UpdateGeneralInputs();
 
+	bool forcedUpdate() { return true; }
 	void update(float dt);
 
 	bool * GetFxGlowPointer();
@@ -80,6 +84,13 @@ public:
 	bool IsUiControl() const;
 	bool * IsUiControlPointer();
 	void SetUiControl(bool new_ui_control);
+
+	bool * GetCheatGodmodePointer() {
+		return &cheat_godmode;
+	}
+	bool IsCheatGodModeActivated() const {
+		return cheat_godmode;
+	}
 
 	bool IsCinematic() const;
 	bool IsCamManual() const;

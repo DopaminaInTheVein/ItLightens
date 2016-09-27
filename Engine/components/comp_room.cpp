@@ -2,6 +2,7 @@
 #include "comp_room.h"
 #include "logic/sbb.h"
 
+#include "player_controllers/player_controller_base.h"
 std::set<int> TCompRoom::all_rooms = std::set<int>();
 
 bool TCompRoom::load(MKeyValue& atts) {

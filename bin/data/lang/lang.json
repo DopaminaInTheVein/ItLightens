@@ -4,7 +4,8 @@
   },
   "hub": {
     "start_hub": "Mueve la camara\ny usa SENTIR\npara encontrar tu objetivo",
-    "target_seen": "Voila"
+    "target_seen": "Voila",
+	"dead_on_dream": "¡Uy! Suerte que era un sueño...\nTendré que esforzarme más."
   },
   "tuto_mole": {
     "look_wall": "This wall seems weak, I wonder if there is something behind...",
@@ -45,5 +46,12 @@
 	"enchufe_sci_3": "This needs a cell to work.",
 	"elevator_player": "I don't know how this mechanism works\n\n",
 	"look_wall": "This wall seems weak, I wonder if there is something behind..."
+  },
+  "options": {
+	"easy": "Easy",
+	"medium": "Medium",
+	"hard": "Hard",
+	"normal": "Normal",
+	"inverted": "Inverted"
   }
 }

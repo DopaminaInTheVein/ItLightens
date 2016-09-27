@@ -3,16 +3,7 @@
   <animations src ="skeletons/player/"/>
   <mesh     src="skeletons/player/player.cmf"/>
   <key_bones 
-    pelvis="Raijin Pelvis"
-    spine_down="Raijin Spine"
-    spine_up="Raijin Spine1"
-    neck="Raijin Neck"
-    head="Raijin Head"
-    LFoot="Raijin L Foot"
-    RFoot="Raijin R Foot"
   />
   <measures 
-    LFootHigh="0.224694"
-    RFootHigh="0.224694"
   />
 </model>

@@ -104,8 +104,11 @@ DECL_OBJ_MANAGER("guided_camera", TCompGuidedCamera);
 //particles
 DECL_OBJ_MANAGER("particles_system", CParticleSystem);
 
-//particles
+//video
 DECL_OBJ_MANAGER("video_player", TCompVideo);
+
+//sound
+DECL_OBJ_MANAGER("sound", TCompSound);
 
 /* HELPERS */
 DECL_OBJ_MANAGER("helper_arrow", LogicHelperArrow);
@@ -238,6 +241,9 @@ bool CEntitiesModule::start() {
 	//video
 	getHandleManager<TCompVideo>()->init(4);
 
+	//sound
+	getHandleManager<TCompSound>()->init(MAX_ENTITIES);
+
 	//fx
 	getHandleManager<TCompFadeScreen>()->init(4);
 
@@ -324,7 +330,6 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(bt_scientist, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_guard, TMsgStaticBomb, onStaticBomb);
 	SUBSCRIBE(bt_mole, TMsgStaticBomb, onStaticBomb);
-	SUBSCRIBE(bt_guard, TMsgMagneticBomb, onMagneticBomb);
 	SUBSCRIBE(bt_guard, TMsgNoise, noise);
 	SUBSCRIBE(bt_guard, TMsgOverCharge, onOverCharged);
 	SUBSCRIBE(bt_guard, TMsgBoxHit, onBoxHit);
@@ -442,6 +447,10 @@ bool CEntitiesModule::start() {
 	//Fx
 	SUBSCRIBE(TCompFadeScreen, TMsgEntityCreated, onCreate);
 
+	//System
+	SUBSCRIBE(bt_guard, TMsgDifficultyChanged, onDifficultyChanged);
+	SUBSCRIBE(player_controller, TMsgDifficultyChanged, onDifficultyChanged);
+
 	//Gui
 	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
@@ -452,6 +461,7 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiSelector, TMsgGuiNotify, onGuiNotify);
+	SUBSCRIBE(TCompGuiSelector, TMsgLanguageChanged, onLanguageChanged);
 	SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
 	return true;
 }
@@ -490,6 +500,9 @@ void CEntitiesModule::initEntities() {
 	//fx
 	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
 
+	//sound
+	getHandleManager<TCompSound>()->onAll(&TCompSound::init);
+
 	//Added to clean this file
 	getHandleManager<LogicHelperArrow>()->onAll(&LogicHelperArrow::init);
 	getHandleManager<TCompCameraMain>()->onAll(&TCompCameraMain::init);
@@ -518,11 +531,9 @@ void CEntitiesModule::clear(bool reload) {
 	static int entities_destroyed = 0; //dbg
 	reloading = reload;
 	getHandleManager<CEntity>()->each([reload](CEntity * e) {
-		if (!e->isPermanent()) {
-			if (!reload || e->needReload()) {
-				CHandle(e).destroy();
-				entities_destroyed++; //dbg
-			}
+		if (e->hasToClear(reload)) {
+			CHandle(e).destroy();
+			entities_destroyed++; //dbg
 		}
 	});
 	TCompRoom::all_rooms.clear();
@@ -532,11 +543,7 @@ void CEntitiesModule::clear(bool reload) {
 bool CEntitiesModule::isCleared() {
 	bool reload = reloading;
 	getHandleManager<CEntity>()->each([reload](CEntity * e) {
-		if (!e->isPermanent()) {
-			if (!reload || e->needReload()) {
-				return false;
-			}
-		}
+		if (e->hasToClear(reload)) return false;
 	});
 	return true;
 }
@@ -578,9 +585,12 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompLightDir>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
-	getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
+	//getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
 
-	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::STOPPED_INTRO) {
+	//Culling optimized
+	TCompCulling::updateNext();
+
+	if (GameController->GetGameState() == CGameController::STOPPED || GameController->GetGameState() == CGameController::SPECIAL_ACTION) {
 		if (!GameController->IsCinematic()) {
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 		}
@@ -600,7 +610,6 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 			getHandleManager<TCompFadingMessage>()->updateAll(dt);
-			getHandleManager<TCompText>()->updateAll(dt);
 			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
 			getHandleManager<TCompFadeScreen>()->updateAll(dt);
@@ -620,6 +629,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompCameraMain>()->updateAll(dt);
 		getHandleManager<TCompLightDir>()->updateAll(dt);
+		getHandleManager<TCompGui>()->updateAll(dt);
 
 		getHandleManager<SkelControllerGuard>()->updateAll(dt);
 		getHandleManager<SkelControllerPlayer>()->updateAll(dt);
@@ -682,14 +692,17 @@ void CEntitiesModule::update(float dt) {
 		//Fx
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
 
+		//sound
+		getHandleManager<TCompSound>()->updateAll(dt);
+
 		//Tmx animator
 		getHandleManager<TCompTransformAnimator>()->updateAll(dt);
 
 		SBB::update(dt);
 	}
 	// In this mode, only the animation of the player is updated
-	else if (GameController->GetGameState() == CGameController::STOPPED_INTRO) {
-		CHandle player_handle = tags_manager.getFirstHavingTag("player");
+	else if (GameController->GetGameState() == CGameController::SPECIAL_ACTION) {
+		CHandle player_handle = CPlayerBase::handle_player;
 		CEntity * player_entity = player_handle;
 
 		TCompSkeleton* player_skeleton = player_entity->get<TCompSkeleton>();
@@ -701,6 +714,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompGui>()->updateAll(dt);
 	getHandleManager<TCompGuiButton>()->updateAll(dt);
 	getHandleManager<TCompGuiSelector>()->updateAll(dt);
+	getHandleManager<TCompText>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

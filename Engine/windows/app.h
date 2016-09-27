@@ -23,6 +23,7 @@ public:
 	std::string file_initAttr_json;
 
 	bool max_screen;
+	bool long_frame = false;
 	// ask_window, pixels of the application, render otherwise
 	int getXRes(bool ask_window = false);
 	int getYRes(bool ask_window = false);

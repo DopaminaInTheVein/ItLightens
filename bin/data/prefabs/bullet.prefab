@@ -1,8 +1,0 @@
-<entity>
-    <tags tags="bullet"/>
-    <name name="bullet"/>
-    <life points="10"/>
-</entity>
-
-
-

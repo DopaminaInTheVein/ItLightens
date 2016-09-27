@@ -1,14 +1,22 @@
 #include "mcv_platform.h"
 #include "gameController.h"
 
-#include "input/input_wrapper.h"
-
-#include "debug\debug_itlightens.h"
+#include "app_modules/io/input_wrapper.h"
+#include "debug/debug_itlightens.h"
 #include "app_modules/logic_manager/logic_manager.h"
+#include "lang_manager/lang_manager.h"
 
 #include "components/entity.h"
 #include "components/entity_tags.h"
 #include "components/comp_sense_vision.h"
+
+bool CGameController::start()
+{
+	auto file = CApp::get().get().file_options_json;
+	auto language = readIniAtrDataStr(file, "language");
+	game_language = language["lang"];
+	return true;
+}
 
 DIFFICULTIES CGameController::GetDifficulty() const
 {
@@ -18,6 +26,15 @@ void CGameController::SetDifficulty(int diff)
 {
 	assert(diff >= 0 && diff < DIFFICULTIES::DIFF_SIZE);
 	game_difficulty = (DIFFICULTIES)diff;
+	UpdateDifficulty();
+}
+
+void CGameController::UpdateDifficulty()
+{
+	Damage::init();
+	getHandleManager<CEntity>()->each([](CEntity * e) {
+		e->sendMsg(TMsgDifficultyChanged());
+	});
 }
 
 std::string CGameController::GetLanguage() const
@@ -28,6 +45,7 @@ void CGameController::SetLanguage(std::string lang)
 {
 	if (lang == game_language) return;
 	game_language = lang;
+	lang_manager->reloadLanguageFile(game_language);
 	getHandleManager<CEntity>()->each([](CEntity * e) {
 		e->sendMsg(TMsgLanguageChanged());
 	});
@@ -38,6 +56,7 @@ void CGameController::Setup()
 	auto file = CApp::get().file_options_json;
 	auto values = readIniAtrData(file, "game");
 	SetDifficulty((int)values["difficulty"]);
+	Damage::init();
 }
 int CGameController::GetGameState() const {
 	return game_state;
@@ -45,11 +64,6 @@ int CGameController::GetGameState() const {
 void CGameController::SetGameState(int state) {
 	if (game_state == state) return;
 	game_state = state;
-	switch (game_state) {
-	case CGameController::LOSE:
-		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDead, "");
-		break;
-	}
 }
 
 int CGameController::GetLoadingState() const { return loading_state; }
@@ -71,35 +85,18 @@ void CGameController::TogglePauseState() {
 
 void CGameController::TogglePauseIntroState() {
 	if (game_state == RUNNING)
-		game_state = STOPPED_INTRO;
+		game_state = SPECIAL_ACTION;
 
-	else if (game_state == STOPPED_INTRO)
+	else if (game_state == SPECIAL_ACTION)
 		game_state = RUNNING;
 }
 
 void CGameController::UpdateGeneralInputs() {
 	if (!ImGui::GetIO().WantTextInput) { //not input wanted from imgui
 										 //exit game
-		if (controller->IsPausePressed()) {
-			if (game_state == RUNNING) {
-				SetGameState(MENU);
-				//controller->ChangeMouseState(false);
-				logic_manager->throwEvent(CLogicManagerModule::EVENT::OnPause, "");
-			}
-			else if (game_state == MENU) {
-				SetGameState(RUNNING);
-				controller->ChangeMouseState(true);
-			}
-			//CApp& app = CApp::get();
-			//app.exitGame();
+		if (controller->IsPausePressed() && game_state == RUNNING) {
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnPause, "");
 		}
-
-		/*restart game
-		if (controller->IsPausePressed()) {
-			CApp::get().has_check_point = false;
-			CApp::get().restartLevelNotify();
-		}
-		*/
 #ifndef FINAL_BUILD
 		//toggle console log
 		if (controller->isToogleConsoleLoguttonPressed()) {
@@ -116,10 +113,9 @@ void CGameController::UpdateGeneralInputs() {
 			free_camera = !free_camera;
 		}
 
-		//pause/unpause game
-		//if (io->keys['P'].becomesPressed()) {
-		//	TogglePauseState();
-		//}
+		if (controller->isPauseDebugPressed()) {
+			TogglePauseState();
+		}
 #endif
 		//pause/unpause game (intro mode)
 		if (controller->isPauseGameButtonPressed()) {
@@ -194,8 +190,12 @@ void CGameController::setHandleController(CHandle h) {
 
 bool CGameController::isSenseVisionEnabled()
 {
-	GET_COMP(sv, h_game_controller, TCompSenseVision);
-	return sv ? sv->isSenseVisionEnabled() : false;
+	bool res = false;
+	if (h_game_controller.isValid()) {
+		GET_COMP(sv, h_game_controller, TCompSenseVision);
+		if (sv) res = sv->isSenseVisionEnabled();
+	}
+	return res;
 }
 
 const char* CGameController::getName() const {

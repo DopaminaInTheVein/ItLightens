@@ -4,10 +4,12 @@
    tags="gui gui_button clickable"/>
 <gui
    width="1.0"
-   height="1.0"/>
+   height="1.0"
+   />
 <gui_button
    width="1.0"
-   height="1.0"/>
+   height="1.0"
+   lang="no"/>
 <name
    name="right_arrow"/>
 <transform

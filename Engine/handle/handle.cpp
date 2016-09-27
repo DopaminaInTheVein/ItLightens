@@ -52,19 +52,20 @@ CHandle CHandle::getOwner() const {
 
 bool CHandle::hasTag(std::string tag)
 {
+	bool res = false;
 	CEntity* e = *this;
 	if (e) {
-		return e->hasTag(tag);
+		res = e->hasTag(tag);
 	}
 	else {
 		CHandle h = this->getOwner();
 		if (h.isValid()) {
 			e = h;
 			if (e) {
-				return e->hasTag(tag);
+				res = e->hasTag(tag);
 			}
 		}
 	}
 
-	return false;
+	return res;
 }

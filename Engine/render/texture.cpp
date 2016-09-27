@@ -14,6 +14,13 @@ template<> IResource::eType getTypeOfResource<CTexture>() { return IResource::TE
 template<>
 IResource* createObjFromName<CTexture>(const std::string& name) {
 	CTexture* texture = new CTexture;
+	//TODO: find locale texture
+	//auto p = name.find_last_of(".");
+	//if (p == std::string::npos) {
+	//	return nullptr;
+	//}
+	//std::string name_locale = name + GameController->GetLanguage();
+	//if (!texture->load(name_locale.c_str())) {
 	if (!texture->load(name.c_str())) {
 		dbg("Can't load texture %s. Will try placeholder...\n", name.c_str());
 		// try to load a placeholder...
@@ -22,6 +29,7 @@ IResource* createObjFromName<CTexture>(const std::string& name) {
 			fatal("Can't load texture %s\n", name.c_str());
 		}
 	}
+	//}
 	texture->setName(name.c_str());
 	return texture;
 }

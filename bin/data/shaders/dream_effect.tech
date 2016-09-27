@@ -1,0 +1,4 @@
+<tech>
+  <vs fx="fade_screen" main="VSTextureScreen" decl="positions_uv" />
+  <ps fx="fade_screen" main="PSTest" />
+</tech>

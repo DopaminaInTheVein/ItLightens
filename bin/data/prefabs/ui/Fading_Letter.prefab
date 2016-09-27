@@ -1,14 +1,20 @@
 <entities>
-<entity>
-<tags/>
+<entity temp="yes">
+<tags
+   tags="gui"/>
+<gui
+   width="1.0"
+   height="1.0"/>
 <name
-   name="Fading_Letter"/>
+   name="letter"/>
 <transform
-   pos="5.0024 -97.1774 9.72066"
+   pos="0 0 0"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/messages/Fading_Letter.static_mesh"/>
-<gui />
+   name="static_meshes/ui/letter.static_mesh"/>
+<abs_aabb/>
+
 </entity>
+
 </entities>

@@ -50,8 +50,8 @@
    tags="menu gui gui_button clickable"/>
 <gui
    menu_name="dead_menu"
-   row="0"
-   col="1"
+   row="1"
+   col="0"
    width="0.673163"
    height="0.378647"/>
 <gui_button
@@ -93,8 +93,8 @@
    tags="menu gui gui_button clickable"/>
 <gui
    menu_name="dead_menu"
-   row="0"
-   col="2"
+   row="2"
+   col="0"
    width="0.652746"
    height="0.367172"/>
 <gui_button

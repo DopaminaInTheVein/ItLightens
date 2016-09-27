@@ -3,7 +3,8 @@
 
 #include "components/entity.h"
 #include "components/comp_transform.h"
-#include "app_modules/gui/comps/gui_basic.h"
+#include "gui_basic.h"
+#include "gui_cursor.h"
 
 #include "app_modules/gameController.h"
 #include "app_modules/io/io.h"
@@ -64,6 +65,7 @@ bool TCompGuiButton::load(MKeyValue& atts)
 {
 	loadOptions();
 	init_enabled = atts.getBool("enabled", true);
+	language = atts.getBool("lang", true);
 	return true;
 }
 
@@ -73,6 +75,8 @@ void TCompGuiButton::onCreate(const TMsgEntityCreated&) {
 	AddButtonStates();
 	render_state = render_state_target = 0.f;
 	init_enabled ? ChangeState(STRING(Enabled)) : ChangeState(STRING(Disabled));
+	getUpdateInfo();
+	myGui->SetLangEnabled(language);
 }
 
 void TCompGuiButton::AddButtonStates()
@@ -159,17 +163,20 @@ void TCompGuiButton::execute()
 
 bool TCompGuiButton::getUpdateInfo()
 {
+	myGui = GETH_MY(TCompGui);
+	if (!myGui) return false;
+
 	myTransform = GETH_MY(TCompTransform);
 	if (!myTransform) return false;
 
-	cursor = TCompGui::getCursor();
+	cursor = myGui->getCursor();
 	if (!cursor.isValid()) return false;
 
 	cursorTransform = GETH_COMP(cursor, TCompTransform);
 	if (!cursorTransform) return false;
 
-	myGui = GETH_MY(TCompGui);
-	if (!myGui) return false;
+	comp_cursor = GETH_COMP(cursor, TCompGuiCursor);
+	if (!comp_cursor) return false;
 
 	return true;
 }
@@ -230,20 +237,30 @@ void TCompGuiButton::renderInMenu()
 
 bool TCompGuiButton::checkOver()
 {
-	VEC3 myPos = myTransform->getPosition();
-	VEC3 cursorPos = cursorTransform->getPosition();
-	VEC3 delta = myPos - cursorPos;
-	return abs(delta.x) < myGui->GetWidth()*0.5f && abs(delta.y) < myGui->GetHeight()*0.5f;
+	bool res = false;
+	if (comp_cursor->isEnabled()) {
+		VEC3 myPos = myTransform->getPosition();
+		VEC3 cursorPos = cursorTransform->getPosition();
+		VEC3 delta = myPos - cursorPos;
+		res = abs(delta.x) < myGui->GetWidth()*0.5f && abs(delta.y) < myGui->GetHeight()*0.5f;
+	}
+	return res;
 }
 
 bool TCompGuiButton::checkClicked()
 {
-	return controller->ActionGuiButtonBecomesPressed();
+	bool res = false;
+	if (comp_cursor->isEnabled())
+		res = controller->ActionGuiButtonBecomesPressed();
+	return res;
 }
 
 bool TCompGuiButton::checkReleased()
 {
-	return controller->ActionGuiButtonBecomesReleased();
+	bool res = false;
+	if (comp_cursor->isEnabled())
+		res = controller->ActionGuiButtonBecomesReleased();
+	return res;
 }
 
 void TCompGuiButton::notifyOver(bool over)

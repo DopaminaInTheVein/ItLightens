@@ -1,4 +1,4 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/columna_difuso.tga"/>
-<texture slot="normalmap" name="textures/columna_normal.tga"/>
+<texture slot="diffuse" name="textures/difuso_columna.dds"/>
+<texture slot="normalmap" name="textures/difuso_columna_normal.dds"/>
 </material>

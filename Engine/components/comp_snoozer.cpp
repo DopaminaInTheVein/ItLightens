@@ -7,6 +7,8 @@
 void TCompSnoozer::onPreload(const TMsgPreload& msg) {
 	components = new CPrefabCompiler;
 	*components = *(msg.comps);
+	CEntity* e = CHandle(this).getOwner();
+	e->setReload(false);
 }
 
 void TCompSnoozer::onAwake(const TMsgAwake& msg) {
@@ -15,6 +17,7 @@ void TCompSnoozer::onAwake(const TMsgAwake& msg) {
 	components->execute(&ep);
 	TMsgEntityCreated msgCreated;
 	((CEntity*)parent)->sendMsg(msgCreated);
+	((CEntity*)parent)->setReload(true);
 	CHandle(this).destroy();
 }
 

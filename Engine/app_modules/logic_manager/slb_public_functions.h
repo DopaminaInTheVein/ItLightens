@@ -121,6 +121,7 @@ public:
 	void runCinematic(const char* name, float speed = 0.f);
 	void fadeIn(float speed = 0.f);
 	void fadeOut(float speed = 0.f);
+	void orbit(bool);
 	void resetCamera();
 };
 
@@ -168,18 +169,27 @@ public:
 	void setPlayerEnabled(int);
 	void setCameraEnabled(int);
 	void setOnlySense(int);
-	void playSound(const char* sound_route);
-	void play3dSound(const char* sound_route, float pl_x, float pl_y, float pl_z, float s_x, float s_y, float s_z);
+
+	void playSound(const char* sound_route, float volume, bool looping);
+	void play3dSound(const char* sound_route, float s_x, float s_y, float s_z, float max_volume, bool looping, int max_instances);
+	void playFixed3dSound(const char* sound_route, const char* sound_name, float s_x, float s_y, float s_z, float max_volume, bool looping);
+	void stopSound(const char* sound_route);
+	void stopFixedSound(const char* sound_name);
+	void stopAllSounds();
 	void playMusic(const char* music_route);
 	void playLoopingMusic(const char* music_route);
+	void stopMusic();
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);
+	void setMusicVolume(float volume);
+
 	void playVideo(const char* video_route);
 	void playVideoAndDo(const char* video_route, const char* lua_code);
 	void playerRoom(int newRoom);
 	void playerTalks(const char* text);
 	void playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor);
-	void putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale);
+	void putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag);
+	//void alterText(const char* id, float new_posx, float new_posy, float new_scale);
 	void removeText(const char* id);
 	void characterGlobe(float distance, float char_x, float char_y, float char_z);
 	void toggleIntroState();
@@ -194,6 +204,9 @@ public:
 	float jsonRead(std::string filename, std::string group, std::string name);
 	void jsonEditStr(std::string filename, std::string group, std::string name, std::string new_value);
 	std::string jsonReadStr(std::string filename, std::string group, std::string name);
+	void pauseGame();
+	void resumeGame();
+	void setCursorEnabled(bool);
 	void exit();
 	const char* getText(const char* scene, const char* event);
 	void reloadLanguageFile(const char* language);

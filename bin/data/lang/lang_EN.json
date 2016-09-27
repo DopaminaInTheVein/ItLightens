@@ -17,11 +17,17 @@
 	"leave" : "ACTION: Leave"
   },
   "title": {
-	"button_1": "Game start"
+	"test": "àèìòù_áéíóú_ÀÈÌÒÙ_ÁÉÍÓÚ_üÜ_ç\n¡¿!?_:_'_\"_%$_l·l=(<>,.:;-)",
+	"easy": "Easy",
+	"medium": "Medium",
+	"hard": "Hard",
+	"normal": "Normal",
+	"inverted": "Inverted"
   },
   "hub": {
     "start_hub": "Move the camera\nand use your SENSE skill\nto find your objective.",
-    "target_seen": "That is it!"
+    "target_seen": "That is it!",
+	"dead_on_dream": "¡Oops! It was a dream fortunately...\nI'll do my best next time"
   },
   "tuto_mole": {
     "look_wall": "This wall seems weak. I wonder if there is something behind...",
@@ -49,7 +55,7 @@
 	"sci_pila": "This cell is exhausted. And too heavy for me...",
     "cargador_player_1": "The cell is full of energy now.",
     "cargador_player_2": "The cell fits perfectly.\nI don't know how this machine works though...",
-	"cargador_player_3": "Detecto mucha energia aqui dentro...",
+	"cargador_player_3": "I can feel a lot of energy here...",
     "cargador_sci_1": "The cell has power and is working now!",
     "cargador_sci_2": "Here we go!",
 	"cargador_sci_3": "There is nothing to charge.",

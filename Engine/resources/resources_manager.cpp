@@ -43,6 +43,9 @@ void CResourcesManager::onFileChanged(const std::string& filename) {
 	if (ext == ".lua") {
 		logic_manager->reloadFile(filename_correct);
 	}
+	else if (ext == ".json") {
+		if (GameController) GameController->UpdateDifficulty();
+	}
 	// Other files
 	else {
 		for (auto it : all)

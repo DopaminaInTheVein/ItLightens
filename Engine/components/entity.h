@@ -13,6 +13,7 @@ class CEntity : public TCompBase {
 	int id = -1;
 	bool permanent;
 	bool need_reload;
+	bool temp;
 public:
 
 	void add(CHandle h) {
@@ -96,6 +97,9 @@ public:
 	bool needReload() { return need_reload; }
 	void setPermanent(bool new_permanent) { permanent = new_permanent; }
 	void setReload(bool new_reload) { need_reload = new_reload; }
+	void setTemp(bool new_temp) { temp = new_temp; }
+	bool isTemp() { return temp; }
+	bool hasToClear(bool reloading) { return !isPermanent() && (isTemp() || !reloading || needReload()); }
 	bool save(std::ofstream& os, MKeyValue& atts);
 	// --------------------------------------------
 	CEntity() {

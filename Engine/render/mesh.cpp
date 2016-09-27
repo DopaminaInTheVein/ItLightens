@@ -43,107 +43,107 @@ bool CMesh::create(
 	assert(new_num_bytes_per_vertex > 0);
 	assert(initial_vertex_data != nullptr);
 
-  // Translate the topology from our system to dx
-  if( new_topology == TRIANGLE_LIST )
-    topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-  else if (new_topology == TRIANGLE_STRIP)
-    topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-  else if (new_topology == LINE_LIST)
-    topology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
-  else if (new_topology == POINT_LIST)
-	  topology = D3D_PRIMITIVE_TOPOLOGY_POINTLIST;
-  else {
-    fatal("Unknown topology %d\n", new_topology);
-  }
+	// Translate the topology from our system to dx
+	if (new_topology == TRIANGLE_LIST)
+		topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+	else if (new_topology == TRIANGLE_STRIP)
+		topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	else if (new_topology == LINE_LIST)
+		topology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
+	else if (new_topology == POINT_LIST)
+		topology = D3D_PRIMITIVE_TOPOLOGY_POINTLIST;
+	else {
+		fatal("Unknown topology %d\n", new_topology);
+	}
 
-  // Translate the vtx decr from our system to dx11
-  vtx_decl = vdecl_manager.getById(new_enum_vtx_decl);
-  assert(vtx_decl->bytes_per_vertex == new_num_bytes_per_vertex);
+	// Translate the vtx decr from our system to dx11
+	vtx_decl = vdecl_manager.getById(new_enum_vtx_decl);
+	assert(vtx_decl->bytes_per_vertex == new_num_bytes_per_vertex);
 
-  num_vertexs = new_num_vertexs;
-  num_bytes_per_vertex = new_num_bytes_per_vertex;
-  num_idxs = new_num_idxs;
-  num_bytes_per_idx = new_num_bytes_per_idx;
+	num_vertexs = new_num_vertexs;
+	num_bytes_per_vertex = new_num_bytes_per_vertex;
+	num_idxs = new_num_idxs;
+	num_bytes_per_idx = new_num_bytes_per_idx;
 
-  assert(initial_vertex_data);
-  AABB::CreateFromPoints(aabb, num_vertexs, (const VEC3*) initial_vertex_data, new_num_bytes_per_vertex);
+	assert(initial_vertex_data);
+	AABB::CreateFromPoints(aabb, num_vertexs, (const VEC3*)initial_vertex_data, new_num_bytes_per_vertex);
 
-  // Vertex buffer
-  D3D11_BUFFER_DESC bd;
-  memset(&bd, 0x00, sizeof(bd));
-  bd.Usage = D3D11_USAGE_DEFAULT;
-  bd.ByteWidth = new_num_bytes_per_vertex * num_vertexs;
-  bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-  bd.CPUAccessFlags = 0;
+	// Vertex buffer
+	D3D11_BUFFER_DESC bd;
+	memset(&bd, 0x00, sizeof(bd));
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = new_num_bytes_per_vertex * num_vertexs;
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = 0;
 
-  // If the user request a dynamic mesh
-  if (mesh_is_dynamic) {
-    bd.CPUAccessFlags |= D3D11_CPU_ACCESS_WRITE;
-    bd.Usage = D3D11_USAGE_DYNAMIC;
-  }
+	// If the user request a dynamic mesh
+	if (mesh_is_dynamic) {
+		bd.CPUAccessFlags |= D3D11_CPU_ACCESS_WRITE;
+		bd.Usage = D3D11_USAGE_DYNAMIC;
+	}
 
-  D3D11_SUBRESOURCE_DATA InitData;
-  memset(&InitData, 0x00, sizeof(InitData));
-  InitData.pSysMem = initial_vertex_data;
-  HRESULT hr = Render.device->CreateBuffer(&bd, &InitData, &vb);
-  if (FAILED(hr))
-    return false;
-  setDXName(vb, getName().c_str());
+	D3D11_SUBRESOURCE_DATA InitData;
+	memset(&InitData, 0x00, sizeof(InitData));
+	InitData.pSysMem = initial_vertex_data;
+	HRESULT hr = Render.device->CreateBuffer(&bd, &InitData, &vb);
+	if (FAILED(hr))
+		return false;
+	setDXName(vb, getName().c_str());
 
-  // Index buffer
-  if (num_idxs > 0) {
-    assert(initial_index_data);
-    assert(new_num_bytes_per_idx == 2 || new_num_bytes_per_idx == 4);
-    memset(&bd, 0x00, sizeof(bd));
-    bd.Usage = D3D11_USAGE_DEFAULT;
-    bd.ByteWidth = new_num_bytes_per_idx * new_num_idxs;
-    bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
-    bd.CPUAccessFlags = 0;
+	// Index buffer
+	if (num_idxs > 0) {
+		assert(initial_index_data);
+		assert(new_num_bytes_per_idx == 2 || new_num_bytes_per_idx == 4);
+		memset(&bd, 0x00, sizeof(bd));
+		bd.Usage = D3D11_USAGE_DEFAULT;
+		bd.ByteWidth = new_num_bytes_per_idx * new_num_idxs;
+		bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		bd.CPUAccessFlags = 0;
 
-    memset(&InitData, 0x00, sizeof(InitData));
-    InitData.pSysMem = initial_index_data;
-    hr = Render.device->CreateBuffer(&bd, &InitData, &ib);
-    if (FAILED(hr))
-      return false;
+		memset(&InitData, 0x00, sizeof(InitData));
+		InitData.pSysMem = initial_index_data;
+		hr = Render.device->CreateBuffer(&bd, &InitData, &ib);
+		if (FAILED(hr))
+			return false;
 
-    setDXName(ib, getName().c_str());
-  }
+		setDXName(ib, getName().c_str());
+	}
 
-  // Upgrade group info
-  if (new_groups) {
-    groups = *new_groups;
-  }
-  else {
-    // Generate a single fake group
-    groups.resize(1);
-    groups[0].first_index = 0;
-    if( num_idxs > 0 )    // If the mesh is indexed
-      groups[0].num_indices = num_idxs;   
-    else
-      groups[0].num_indices = num_vertexs;
-  }
+	// Upgrade group info
+	if (new_groups) {
+		groups = *new_groups;
+	}
+	else {
+		// Generate a single fake group
+		groups.resize(1);
+		groups[0].first_index = 0;
+		if (num_idxs > 0)    // If the mesh is indexed
+			groups[0].num_indices = num_idxs;
+		else
+			groups[0].num_indices = num_vertexs;
+	}
 
-  return true;
+	return true;
 }
 
 void CMesh::activate() const {
-  UINT stride = num_bytes_per_vertex;
-  UINT offset = 0;
-  Render.ctx->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	UINT stride = num_bytes_per_vertex;
+	UINT offset = 0;
+	Render.ctx->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
-  // Set primitive topology
-  Render.ctx->IASetPrimitiveTopology(topology);
+	// Set primitive topology
+	Render.ctx->IASetPrimitiveTopology(topology);
 
-  if (ib) {
-    Render.ctx->IASetIndexBuffer( ib
-      , (num_bytes_per_idx == 2)
-      ? DXGI_FORMAT_R16_UINT
-      : DXGI_FORMAT_R32_UINT
-      , 0
-      );
-  }
+	if (ib) {
+		Render.ctx->IASetIndexBuffer(ib
+			, (num_bytes_per_idx == 2)
+			? DXGI_FORMAT_R16_UINT
+			: DXGI_FORMAT_R32_UINT
+			, 0
+		);
+	}
 
-  curr_mesh = this;
+	curr_mesh = this;
 }
 
 void CMesh::render() const {
@@ -154,46 +154,46 @@ void CMesh::render() const {
 }
 
 void CMesh::renderGroup(uint32_t group_idx) const {
-  assert(group_idx < (uint32_t)groups.size());
-  const auto& g = groups[group_idx];
-  if (ib)
-    Render.ctx->DrawIndexed(g.num_indices, g.first_index, 0);
-  else
-    Render.ctx->Draw(g.num_indices, g.first_index);
+	assert(group_idx < (uint32_t)groups.size());
+	const auto& g = groups[group_idx];
+	if (ib)
+		Render.ctx->DrawIndexed(g.num_indices, g.first_index, 0);
+	else
+		Render.ctx->Draw(g.num_indices, g.first_index);
 }
 
 void CMesh::renderInstanced(const CMesh* instances_data, size_t ninstances) const {
-  assert(isValid());
-  if (!instances_data->isValid()) return;
+	assert(isValid());
+	if (!instances_data->isValid()) return;
 
-  // Set the buffer strides.
-  unsigned int strides[2];
-  strides[0] = vtx_decl->bytes_per_vertex;					// My stride (la mesh que se pinta N veces)
-  strides[1] = instances_data->vtx_decl->bytes_per_vertex;  // stride of the instance
-                                                            // Set the buffer offsets.
-  unsigned int offsets[2] = { 0, 0 };
+	// Set the buffer strides.
+	unsigned int strides[2];
+	strides[0] = vtx_decl->bytes_per_vertex;					// My stride (la mesh que se pinta N veces)
+	strides[1] = instances_data->vtx_decl->bytes_per_vertex;  // stride of the instance
+															  // Set the buffer offsets.
+	unsigned int offsets[2] = { 0, 0 };
 
-  // Set the array of pointers to the vertex and instance buffers.
-  ID3D11Buffer* bufferPointers[2];
-  bufferPointers[0] = vb;
-  bufferPointers[1] = instances_data->vb;
+	// Set the array of pointers to the vertex and instance buffers.
+	ID3D11Buffer* bufferPointers[2];
+	bufferPointers[0] = vb;
+	bufferPointers[1] = instances_data->vb;
 
-  // Set the vertex buffer to active in the input assembler so it can be rendered.
-  Render.ctx->IASetVertexBuffers(0, 2, bufferPointers, strides, offsets);
+	// Set the vertex buffer to active in the input assembler so it can be rendered.
+	Render.ctx->IASetVertexBuffers(0, 2, bufferPointers, strides, offsets);
 
-  Render.ctx->IASetPrimitiveTopology(topology);
+	Render.ctx->IASetPrimitiveTopology(topology);
 
-  if (ib) {
-    assert(ib);
-    // Set index buffer
-    DXGI_FORMAT fmt = (num_bytes_per_idx == 2) ? DXGI_FORMAT_R16_UINT : DXGI_FORMAT_R32_UINT;
-    Render.ctx->IASetIndexBuffer(ib, fmt, 0);
+	if (ib) {
+		assert(ib);
+		// Set index buffer
+		DXGI_FORMAT fmt = (num_bytes_per_idx == 2) ? DXGI_FORMAT_R16_UINT : DXGI_FORMAT_R32_UINT;
+		Render.ctx->IASetIndexBuffer(ib, fmt, 0);
 
-    Render.ctx->DrawIndexedInstanced(num_idxs, (UINT)ninstances, 0, 0, 0);
-  }
-  else {
-    Render.ctx->DrawInstanced(num_vertexs, (UINT)ninstances, 0, 0);
-  }
+		Render.ctx->DrawIndexedInstanced(num_idxs, (UINT)ninstances, 0, 0, 0);
+	}
+	else {
+		Render.ctx->DrawInstanced(num_vertexs, (UINT)ninstances, 0, 0);
+	}
 }
 
 // --------------------------------------
@@ -219,11 +219,10 @@ void CMesh::updateFromCPU(const void *new_cpu_data, size_t num_bytes_to_update) 
 
 	// Close the map
 	Render.ctx->Unmap(vb, 0);
-
 }
 
-
 void CMesh::activateAndRender() const {
+	PROFILE_FUNCTION("Mesh: activate and render");
 	activate();
 	render();
 }
