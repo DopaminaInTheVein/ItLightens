@@ -132,6 +132,7 @@ function activateCargadorSci()
 		sci:get_player()
 		sci:go_and_look_as(hCargadorTarget, "rechargeCell();")
 		p:complete_tasklist(9)
+		p:play_sound("event:/OnChargePila", 0.5, false)
 	end
   else
 	p:player_talks(p:get_text("ms3","cargador_sci_3"))
