@@ -110,6 +110,11 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	label lblFolderUp "Folder:" pos:[63,120] width:34 height:20
 	edittext txtFolderUp "" pos:[101,119] width:159 height:18
 	checkbox chkTextures "Export textures" pos:[153,402] width:108 height:15
+	on RL_Meshes open  do
+	(
+		local folder_init = (filterstring maxFileName ".")[1]
+		if folder_init != undefined then (txtFolder.text = folder_init)
+	)
 	on pckObj picked obj do
 	(
 		pckObj.text = obj.name
@@ -280,7 +285,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 		)
 	)
 	on chkTextures changed state do
-	(
+		(
 	)
 )
 CreateDialog RL_Meshes
@@ -288,4 +293,4 @@ CreateDialog RL_Meshes
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------
