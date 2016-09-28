@@ -591,7 +591,7 @@ void SLBUiCamera::fadeOut(float speed) {
 // Data
 SLBData::SLBData()
 {
-	file_name = "data/data.json";
+	file_name = DATA_JSON;
 	data = readIniAtrData(file_name, CApp::get().getCurrentRealLevel());
 }
 float SLBData::getFloat(const char* key)
