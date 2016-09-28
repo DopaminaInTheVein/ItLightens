@@ -293,6 +293,7 @@ fn fixUserProps = (
 	for nombre in names_modified do (
 		print nombre
 	)
+)
 	
 -- FILES
 fn getFolderFromPath folder = (
@@ -311,8 +312,8 @@ fn getFolderFromPath folder = (
 
 fn copyFileAndDirs orig dest = (
 	local res = false
-	destFolder = getFolderFromPath dest
-	dirs = getDirectories (destFolder)
+	local destFolder = (getFolderFromPath destFolder)
+	local dirs = getDirectories (destFolder)
 	if dirs.count == 0 then (
 		if (makeDir destFolder) then (
 			res =copyFile orig dest
@@ -321,5 +322,4 @@ fn copyFileAndDirs orig dest = (
 		res = copyFile orig dest
 	)
 	return res
-)
 )
