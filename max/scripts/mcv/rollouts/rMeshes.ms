@@ -109,8 +109,9 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	
 	label lblFolderUp "Folder:" pos:[63,120] width:34 height:20
 	edittext txtFolderUp "" pos:[101,119] width:159 height:18
-	checkbox chkTextures "Export textures" pos:[153,402] width:108 height:15
-	on RL_Meshes open  do
+	checkbox chkTextures "Export textures" pos:[151,401] width:108 height:15
+	checkbox chkMoveTextures "Move textures" pos:[31,400] width:108 height:15
+	on RL_Meshes open do
 	(
 		local folder_init = (filterstring maxFileName ".")[1]
 		if folder_init != undefined then (txtFolder.text = folder_init)
@@ -230,6 +231,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	(
 		tr = TResources()
 		tr.copy_textures = chkTextures.state
+		tr.move_textures = chkMoveTextures.state
 		
 		local folder =  trimRight (trimLeft txtFolder.text)
 		tr.folder = folder + "/"
@@ -243,6 +245,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	(
 		tr = TResources()
 		tr.copy_textures = chkTextures.state
+		tr.move_textures = chkMoveTextures.state
 		
 		local folder =  trimRight (trimLeft txtFolder.text)
 		tr.folder = folder + "/"
@@ -256,6 +259,8 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	(
 		tr = TResources()
 		tr.copy_textures = chkTextures.state
+		tr.move_textures = chkMoveTextures.state
+		
 	
 		local folder =  trimRight (trimLeft txtFolder.text)
 		tr.folder = folder + "/"
@@ -269,6 +274,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	(
 		tr = TResources()
 		tr.copy_textures = chkTextures.state
+		tr.move_textures = chkMoveTextures.state
 	
 		local folder =  trimRight (trimLeft txtFolder.text)
 		tr.folder =	folder + "/"
@@ -284,13 +290,10 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 			)
 		)
 	)
-	on chkTextures changed state do
-		(
-	)
 )
 CreateDialog RL_Meshes
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------

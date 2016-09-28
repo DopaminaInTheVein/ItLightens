@@ -5,6 +5,7 @@ struct TResources (
 	folder = "",
 	error = "",
 	copy_textures = false,
+	move_textures = false,
 	exported_obj = undefined,
 	is_ok = true,
 	
@@ -56,6 +57,14 @@ struct TResources (
 		local dest = strReplace (textures_dir + local_path) "/" "\\"
 		--messagebox full_name
 		--messagebox dest
+		if move_textures then (
+			local path_root = strReplace (textures_dir + (filenameFromPath full_name)) "/" "\\"
+			local path_dest = strReplace (textures_dir + folder + (filenameFromPath full_name)) "/" "\\"
+			if (copyFileAndDirs path_root path_dest) then (
+				deletefile path_root
+			)
+		)
+		
 		if copy_textures then (
 			if not (copyFileAndDirs full_name dest) then (
 				report_error ("Can't copy texture " + full_name)
@@ -106,8 +115,9 @@ struct TResources (
 		if (m != undefined) then (
 			if classof m != Standardmaterial then (throw "Invalid material recv")
 			local mat_file = undefined
+			local path_mat = strReplace (materials_dir + folder + m.name + ".material") "/" "\\"
 			try (
-				mat_file = createFile (materials_dir + folder + m.name + ".material")
+				mat_file =  createFile path_mat
 
 				--Special tech by material name
 				local tech = technique
@@ -141,7 +151,7 @@ struct TResources (
 				format "</material>\n" to:mat_file
 				close mat_file
 			) catch (
-				report_error( "Can't create file [" + (materials_dir + folder + m.name + ".material") + "]")	
+				report_error( "Can't create file [" + path_mat + "]")	
 				if mat_file != undefined then (close mat_file)
 			)
 		) else (
@@ -269,7 +279,7 @@ struct TResources (
 					local fsm = createFile out_filename
 					format "<static_mesh>\n" to:fsm
 					-- Añadimos mesh slot 
-					local mat_res_name = "materials/" + mat_name + folder + ".material"
+					local mat_res_name = "materials/" + folder + mat_name + ".material"
 					format "  <slot mesh=\"%\" material=\"%\"/>\n" filenameXML mat_res_name to:fsm
 					
 					format "</static_mesh>\n" to:fsm
