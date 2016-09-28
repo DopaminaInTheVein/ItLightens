@@ -9,7 +9,7 @@
     "screen": {
         "xres": 960,
         "yres": 540,
-        "full_screen": 0
+        "full_screen": 1
     },
     "controls": {
         "y-axis_inverted": 0.0,
