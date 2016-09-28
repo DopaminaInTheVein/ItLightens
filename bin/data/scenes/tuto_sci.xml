@@ -42,10 +42,10 @@
    name="generator"/>
 <transform
    pos="75.3317 7.89981 -0.590158"
-   quat="0 0.939693 0 -0.34202"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes//generator.static_mesh"/>
+   name="static_meshes/tuto_sci/generator.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -58,7 +58,7 @@
 <transform
    pos="75.9743 11.4115 -2.82908"
    quat="-0.49908 -0.500918 -0.49908 0.500919"
-   scale="1.0"/>
+   scale="0.999999"/>
 <room
    name="2"/>
 
@@ -188,7 +188,7 @@
 <name
    name="farolillos002"/>
 <transform
-   pos="57.968 1.08534 -3.88174"
+   pos="57.968 1.08534 -4.06373"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -207,7 +207,7 @@
 <name
    name="farolillos002_sound004"/>
 <transform
-   pos="54.8363 1.08533 -3.9224"
+   pos="54.8363 1.08533 -4.1044"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -221,7 +221,7 @@
 <name
    name="farolillos002_sound003"/>
 <transform
-   pos="61.091 1.08533 -3.9224"
+   pos="61.091 1.08533 -4.10439"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -235,7 +235,7 @@
 <name
    name="farolillos002_sound002"/>
 <transform
-   pos="56.7537 1.08533 -3.9224"
+   pos="56.7537 1.08533 -4.1044"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -249,7 +249,7 @@
 <name
    name="farolillos002_sound001"/>
 <transform
-   pos="59.0241 1.08533 -3.9224"
+   pos="59.0241 1.08533 -4.10439"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -259,7 +259,7 @@
 <name
    name="farolillos003"/>
 <transform
-   pos="56.7485 1.08534 -1.77969"
+   pos="56.7485 1.08534 -1.57266"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -278,7 +278,7 @@
 <name
    name="farolillos003_sound001"/>
 <transform
-   pos="60.9406 1.08533 -1.73903"
+   pos="60.9406 1.08533 -1.532"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -292,7 +292,7 @@
 <name
    name="farolillos003_sound002"/>
 <transform
-   pos="59.0232 1.08533 -1.73903"
+   pos="59.0232 1.08533 -1.532"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -306,7 +306,7 @@
 <name
    name="farolillos003_sound003"/>
 <transform
-   pos="54.6859 1.08533 -1.73903"
+   pos="54.6859 1.08533 -1.532"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -320,7 +320,7 @@
 <name
    name="farolillos003_sound004"/>
 <transform
-   pos="56.7528 1.08533 -1.73903"
+   pos="56.7528 1.08533 -1.532"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -349,7 +349,7 @@
 <name
    name="farolillos004_sound001"/>
 <transform
-   pos="62.5805 1.08533 -1.55082"
+   pos="62.5805 1.08533 -1.55083"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -363,7 +363,7 @@
 <name
    name="farolillos004_sound002"/>
 <transform
-   pos="62.5814 1.08533 -4.11409"
+   pos="62.5814 1.08533 -4.11411"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -377,7 +377,7 @@
 <name
    name="farolillos004_sound003"/>
 <transform
-   pos="75.9401 1.08534 -0.497131"
+   pos="75.9401 1.08534 -0.497145"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -391,7 +391,7 @@
 <name
    name="farolillos004_sound004"/>
 <transform
-   pos="75.9401 1.08533 -4.88323"
+   pos="75.9401 1.08533 -4.88324"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -405,7 +405,7 @@
 <name
    name="farolillos004_sound005"/>
 <transform
-   pos="75.9401 8.10499 -0.497126"
+   pos="75.9401 8.10499 -0.497139"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -419,7 +419,7 @@
 <name
    name="farolillos004_sound006"/>
 <transform
-   pos="75.9401 8.80086 -4.95512"
+   pos="75.9401 8.80086 -4.95514"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -433,7 +433,7 @@
 <name
    name="farolillos004_sound007"/>
 <transform
-   pos="75.9401 8.80086 -0.801045"
+   pos="75.9401 8.80086 -0.801058"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 

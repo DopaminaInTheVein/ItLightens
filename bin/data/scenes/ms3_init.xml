@@ -480,7 +480,8 @@
    reload="yes">
 <tags
    tags="box platform removable interactive"/>
-<box/>
+<box
+   size="3.0 1.5 3.0"/>
 <bone_tracker/>
 <name
    name="Box_1"/>
@@ -507,7 +508,8 @@
    reload="yes">
 <tags
    tags="box platform removable interactive"/>
-<box/>
+<box
+   size="3.0 1.5 3.0"/>
 <bone_tracker/>
 <name
    name="Box_2"/>

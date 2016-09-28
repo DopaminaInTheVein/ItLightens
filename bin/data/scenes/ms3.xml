@@ -3171,6 +3171,8 @@
    znear="0.1"
    zfar="250.0"
    fov="60.0"/>
+<culling/>
+<render_glow/>
 <controller_3rd_person/>
 <FX_fade_screen/>
 <name

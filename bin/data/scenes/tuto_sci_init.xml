@@ -31,7 +31,7 @@
 <local_aabb/>
 <character_controller
    radius="0.3"
-   height="1.8"/>
+   height="1.5"/>
 
 </entity>
 <entity
@@ -66,7 +66,7 @@
 <local_aabb/>
 <character_controller
    radius="0.3"
-   height="1.8"/>
+   height="1.5"/>
 
 </entity>
 <entity
@@ -153,7 +153,7 @@
 <local_aabb/>
 <character_controller
    radius="0.3"
-   height="1.71312"/>
+   height="1.5"/>
 
 </entity>
 <entity
@@ -217,7 +217,7 @@
 <name
    name="gen_tuto_sci"/>
 <transform
-   pos="75.3317 7.89981 -0.590163"
+   pos="75.3317 7.89981 -0.590159"
    quat="0 0.642788 0 0.766044"
    scale="1.0"/>
 
