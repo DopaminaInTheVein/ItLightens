@@ -4,6 +4,7 @@ struct TResources (
 	mode = "all",
 	folder = "",
 	error = "",
+	copy_textures = false,
 	exported_obj = undefined,
 	is_ok = true,
 	
@@ -53,10 +54,14 @@ struct TResources (
 		res = "textures/" + local_path
 		--bmap.filename = strReplace (textures_dir + local_path) "/" "\\"
 		local dest = strReplace (textures_dir + local_path) "/" "\\"
-		messagebox full_name
-		messagebox dest
-		local copied = copyFileAndDirs full_name dest
-		messagebox (copied as string)
+		--messagebox full_name
+		--messagebox dest
+		if copy_textures then (
+			if not (copyFileAndDirs full_name dest) then (
+				report_error ("Can't copy texture " + full_name)
+			)
+		)
+		--messagebox (copied as string)
 		return res
 	),
 	
@@ -100,39 +105,45 @@ struct TResources (
 	fn saveMaterialTech m technique = (
 		if (m != undefined) then (
 			if classof m != Standardmaterial then (throw "Invalid material recv")
-			local mat_file = createFile (materials_dir + folder + m.name + ".material")
-			
-			--Special tech by material name
-			local tech = technique
-			local tech_by_name = getSuffixAfter m.name "_tech_"
-			if tech_by_name != undefined then tech = tech_by_name
-			
-			--Transparent techinque
-			if tech == "deferred" and m.opacitymap != undefined then (
-				tech = "transparent"
-			)
-			
-			--Write material file
-			format ("<material tech=\"" + tech + ".tech\">\n") to:mat_file
-			saveTextureSlot mat_file "diffuse" m.diffusemap
-			saveTextureSlot mat_file "specular" m.specularmap
-			local self_ilum = m.selfillummap
-			if self_ilum != undefined then (
-				if (classof self_ilum) == Mix then (
-					saveTextureSlot mat_file "selfilum" self_ilum.mask
-					saveTextureSlot mat_file "selfilum_plus" self_ilum.map1
-					saveTextureSlot mat_file "selfilum_minus" self_ilum.map2
-				) else (
-					saveTextureSlot mat_file "selfilum" self_ilum
+			local mat_file = undefined
+			try (
+				mat_file = createFile (materials_dir + folder + m.name + ".material")
+
+				--Special tech by material name
+				local tech = technique
+				local tech_by_name = getSuffixAfter m.name "_tech_"
+				if tech_by_name != undefined then tech = tech_by_name
+				
+				--Transparent techinque
+				if tech == "deferred" and m.opacitymap != undefined then (
+					tech = "transparent"
 				)
+				
+				--Write material file
+				format ("<material tech=\"" + tech + ".tech\">\n") to:mat_file
+				saveTextureSlot mat_file "diffuse" m.diffusemap
+				saveTextureSlot mat_file "specular" m.specularmap
+				local self_ilum = m.selfillummap
+				if self_ilum != undefined then (
+					if (classof self_ilum) == Mix then (
+						saveTextureSlot mat_file "selfilum" self_ilum.mask
+						saveTextureSlot mat_file "selfilum_plus" self_ilum.map1
+						saveTextureSlot mat_file "selfilum_minus" self_ilum.map2
+					) else (
+						saveTextureSlot mat_file "selfilum" self_ilum
+					)
+				)
+				if (classof m.bumpmap) == Normal_Bump then (
+					saveTextureSlot mat_file "normalmap" m.bumpmap.normal
+				) else (
+					saveTextureSlot mat_file "normalmap" m.bumpmap
+				)
+				format "</material>\n" to:mat_file
+				close mat_file
+			) catch (
+				report_error( "Can't create file [" + (materials_dir + folder + m.name + ".material") + "]")	
+				if mat_file != undefined then (close mat_file)
 			)
-			if (classof m.bumpmap) == Normal_Bump then (
-				saveTextureSlot mat_file "normalmap" m.bumpmap.normal
-			) else (
-				saveTextureSlot mat_file "normalmap" m.bumpmap
-			)
-			format "</material>\n" to:mat_file
-			close mat_file
 		) else (
 			format "WARNING: - - Undefined material ignored!! - -\n"
 		)

@@ -312,7 +312,7 @@ fn getFolderFromPath folder = (
 
 fn copyFileAndDirs orig dest = (
 	local res = false
-	local destFolder = (getFolderFromPath destFolder)
+	local destFolder = (getFolderFromPath dest)
 	local dirs = getDirectories (destFolder)
 	if dirs.count == 0 then (
 		if (makeDir destFolder) then (
