@@ -40,6 +40,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 				if not yes then (return false)
 			) else (
 				local createMeshDir = false
+				local createMatDir = false
 				local createStMeshDir = false
 			
 				local meshPath = meshes_dir + folder + "\\"
@@ -52,6 +53,18 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 						return false
 					)
 				)
+
+				local matPath = materials_dir + folder + "\\"
+				local dirMats = getDirectories (materials_dir + folder)
+				if dirMats.count == 0 then (
+					local yes = queryBox ("Directorio nuevo. ¿Crear directorio [" + matPath+ "]?")
+					if yes then (
+						createMatDir = true
+					) else (
+						return false
+					)
+				)
+				
 				
 				local stMeshPath = staticMeshes_dir + folder + "\\"
 				local dirStMeshes = getDirectories (staticMeshes_dir + folder)
@@ -67,6 +80,13 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 				if createMeshDir then (
 					if not (makeDir meshPath) then (
 						messagebox ("Cannot create [" + meshes_dir + folder + "\\]")
+						return false
+					)
+				)
+
+				if createMatDir then (
+					if not (makeDir matPath) then (
+						messagebox ("Cannot create [" + materials_dir + folder + "\\]")
 						return false
 					)
 				)
@@ -205,7 +225,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 		tr = TResources()
 		
 		local folder =  trimRight (trimLeft txtFolder.text)
-		tr.folder = folder
+		tr.folder = folder + "/"
 		
 		if (checkFolder folder true) then (
 			tr.exportSelectedNew()
@@ -217,7 +237,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 		tr = TResources()
 		
 		local folder =  trimRight (trimLeft txtFolder.text)
-		tr.folder = folder
+		tr.folder = folder + "/"
 		
 		if (checkFolder folder false) then (
 			tr.rexport()
@@ -229,7 +249,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 		tr = TResources()
 	
 		local folder =  trimRight (trimLeft txtFolder.text)
-		tr.folder = folder
+		tr.folder = folder + "/"
 	
 		if (checkFolder folder true) then (		
 			tr.exportSelected()
@@ -241,13 +261,18 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 		tr = TResources()
 	
 		local folder =  trimRight (trimLeft txtFolder.text)
-		tr.folder =	folder
+		tr.folder =	folder + "/"
 		
 		if (checkFolder folder true) then (
 			tr.exportSelectedForceNew()
-			messageBox "Operación realizada OK"
+			if tr.error == "" then ( 
+				messageBox ("Operación realizada OK\n" + (_list_objs as string) )
+			) else (
+				local txt = (tr.error + "\n-------------\n" + (_list_objs as string))
+				print txt
+				messagebox txt
+			)
 		)
-		messagebox (_list_objs as string)
 	)
 )
 CreateDialog RL_Meshes
