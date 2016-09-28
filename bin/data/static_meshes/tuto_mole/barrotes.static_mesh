@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/tuto_mole/barrotes.mesh" material="materials/test_tuto_mole.material" mesh_idx="0"/>
+  <slot mesh="meshes/tuto_mole/barrotes.mesh" material="materials/barrotes.material" mesh_idx="0"/>
 </static_mesh>
