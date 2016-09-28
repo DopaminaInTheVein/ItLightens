@@ -281,3 +281,21 @@ fn _parse_box = (
 		xmlBox.addAttr "fixed" fixedValue
 	)
 )
+
+----------------------------------------------------------------------
+-- HIERARCHY --
+----------------------------------------------------------------------
+fn _parse_hierarchy = (
+	if ((getUserProp  _parsingObject "hierarchy") as string) == "yes" then (
+		local parent = _parsingObject.parent
+		if _parsingObject.parent == undefined then ( 
+			throw ("Object [" + _parsingObject.name +"] has not parent!")
+		)
+		local parent_id = getUserProp parent "id"
+		if parent_id == undefined then ( 
+			throw ("Object [" + _parsingObject.name +"] has not ID!")
+		)
+		local xml = XML_PARSING.addChild "hierarchy"
+		xml.addAttr "parent" parent_id
+	)
+)

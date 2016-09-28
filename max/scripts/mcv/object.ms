@@ -46,7 +46,7 @@ struct OM (
 			-- Attributes
 			,#("id", "slept", "mesh", "static_mesh", "skeleton", "logic")
 			--Components
-			,#("name", "transform",  "render", "physx", "polarized", "tracker", "polarizedArea", "room")
+			,#("name", "transform",  "render", "physx", "polarized", "tracker", "polarizedArea", "room", "hierarchy")
 			--Helpers
 			,hPolarized + hColliders
 		)
