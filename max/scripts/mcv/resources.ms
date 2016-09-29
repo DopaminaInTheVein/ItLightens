@@ -5,7 +5,7 @@ struct TResources (
 	folder = "",
 	error = "",
 	copy_textures = false,
-	move_textures = false,
+	move_resources = false,
 	exported_obj = undefined,
 	is_ok = true,
 	
@@ -50,20 +50,21 @@ struct TResources (
 			pos += textures_dir.count
 			local_path = strReplace (substring full_name pos full_name.count) "\\" "/"
 		) else (
-			local_path = folder + (filenameFromPath full_name)
+			--local_path = folder + (filenameFromPath full_name)
+			local_path = filenameFromPath full_name
 		)
 		res = "textures/" + local_path
 		--bmap.filename = strReplace (textures_dir + local_path) "/" "\\"
 		local dest = strReplace (textures_dir + local_path) "/" "\\"
 		--messagebox full_name
 		--messagebox dest
-		if move_textures then (
-			local path_root = strReplace (textures_dir + (filenameFromPath full_name)) "/" "\\"
-			local path_dest = strReplace (textures_dir + folder + (filenameFromPath full_name)) "/" "\\"
-			if (copyFileAndDirs path_root path_dest) then (
-				deletefile path_root
-			)
-		)
+-- 		if move_resources then (
+-- 			local path_root = strReplace (textures_dir + (filenameFromPath full_name)) "/" "\\"
+-- 			local path_dest = strReplace (textures_dir + folder + (filenameFromPath full_name)) "/" "\\"
+-- 			if (copyFileAndDirs path_root path_dest) then (
+-- 				deletefile path_root
+-- 			)
+-- 		)
 		
 		if copy_textures then (
 			if not (copyFileAndDirs full_name dest) then (
@@ -150,6 +151,12 @@ struct TResources (
 				)
 				format "</material>\n" to:mat_file
 				close mat_file
+				if move_resources then (
+					local path_mat_root = strReplace (materials_dir + m.name + ".material") "/" "\\"
+					if (path_mat_root != path_mat) then (
+						deletefile path_mat_root
+					)
+				)
 			) catch (
 				report_error( "Can't create file [" + path_mat + "]")	
 				if mat_file != undefined then (close mat_file)
@@ -332,8 +339,9 @@ struct TResources (
 		rStMesh = getResourceName obj "staticMesh"
 		if rStMesh != undefined do (
 			local static_mesh_name = "static_meshes\\" + rStMesh + ".static_mesh"
-			--format "  <render_static_mesh name=\"%\"/>\n" static_mesh_name to:fs
-			exportStaticMesh (project_path + static_mesh_name) #(obj)
+			local out = project_path + static_mesh_name
+			out = strReplace out "/" "\\"
+			exportStaticMesh out #(obj)
 			setUserProp obj "staticMesh" rStMesh
 			--messagebox ("Obtengo mesh de " + obj.name)
 			local rMesh = getResourceName obj "mesh"
@@ -356,10 +364,21 @@ struct TResources (
 * 		exportTransform max_tmx "transform" ""
 * 	),
 */
+	fn hasMeshProtected = (
+		local obj = exported_obj
+		if (getUserProp obj "mesh_protected") == "yes" then (return true)
+		if classof obj == Delegate then (return true)
+		if obj.isHidden then (return true)
+		if (getUserProp obj "typeHelper") != undefined then (return true)
+		if (getUserProp obj "typeObject") == "Trigger" then (return true)
+		
+		return false
+	),
 	
 	fn exportObject obj = (
 		exported_obj = obj
-		if ( (not (classof obj == Delegate)) and  (not obj.isHidden) and (getUserProp obj "typeHelper") == undefined) and ((getUserProp obj "typeObject") != "Trigger") then (
+		--if ( (not (classof obj == Delegate)) and  (not obj.isHidden) and (getUserProp obj "typeHelper") == undefined) and ((getUserProp obj "typeObject") != "Trigger") then (
+		if ( not hasMeshProtected() ) then (	
 			--exportCompName obj
 			local canExport = true
 			if classof obj != Editable_mesh and classof obj != Editable_Poly then (
@@ -370,17 +389,18 @@ struct TResources (
 				append _list_objs obj.name
 				exportCompStaticMesh obj
 				--if obj.parent != undefined then exportCompHierarchy fs obj
-			)	
-				
-			-- Export the children
-			for c in obj.children do (
-				exportObject c 
+			) else (					
+				-- Export the children (may be a group, layer, etc)
+				for c in obj.children do (
+					exportObject c 
+				)
 			)
 		)
 	),
 	
 	fn exportSelected = (
 		_list_objs = #()
+		folder += "/"
 		if $ == undefined then return "(nothing to export)\n"
 		local all_objs = $
 		for obj in all_objs do (

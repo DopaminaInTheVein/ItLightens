@@ -273,7 +273,7 @@ fn setProp prop val = (
 			setPropTo obj prop val
 		)
 	) else (
-		setPropTo obj prop val
+		setPropTo $ prop val
 	)
 )
  

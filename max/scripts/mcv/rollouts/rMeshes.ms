@@ -110,7 +110,7 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	label lblFolderUp "Folder:" pos:[63,120] width:34 height:20
 	edittext txtFolderUp "" pos:[101,119] width:159 height:18
 	checkbox chkTextures "Export textures" pos:[151,401] width:108 height:15
-	checkbox chkMoveTextures "Move textures" pos:[31,400] width:108 height:15
+	checkbox chkMoveResources "Delete materials on root" pos:[31,400] width:99 height:37
 	on RL_Meshes open do
 	(
 		local folder_init = (filterstring maxFileName ".")[1]
@@ -231,10 +231,10 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	(
 		tr = TResources()
 		tr.copy_textures = chkTextures.state
-		tr.move_textures = chkMoveTextures.state
+		tr.move_resources = chkMoveResources.state
 		
 		local folder =  trimRight (trimLeft txtFolder.text)
-		tr.folder = folder + "/"
+		tr.folder = folder
 		
 		if (checkFolder folder true) then (
 			tr.exportSelectedNew()
@@ -245,10 +245,10 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	(
 		tr = TResources()
 		tr.copy_textures = chkTextures.state
-		tr.move_textures = chkMoveTextures.state
+		tr.move_resources = chkMoveResources.state
 		
 		local folder =  trimRight (trimLeft txtFolder.text)
-		tr.folder = folder + "/"
+		tr.folder = folder
 		
 		if (checkFolder folder false) then (
 			tr.rexport()
@@ -259,11 +259,11 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	(
 		tr = TResources()
 		tr.copy_textures = chkTextures.state
-		tr.move_textures = chkMoveTextures.state
+		tr.move_resources = chkMoveResources.state
 		
 	
 		local folder =  trimRight (trimLeft txtFolder.text)
-		tr.folder = folder + "/"
+		tr.folder = folder
 	
 		if (checkFolder folder true) then (		
 			tr.exportSelected()
@@ -274,10 +274,10 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	(
 		tr = TResources()
 		tr.copy_textures = chkTextures.state
-		tr.move_textures = chkMoveTextures.state
+		tr.move_resources = chkMoveResources.state
 	
 		local folder =  trimRight (trimLeft txtFolder.text)
-		tr.folder =	folder + "/"
+		tr.folder =	folder
 		
 		if (checkFolder folder true) then (
 			tr.exportSelectedForceNew()
@@ -296,4 +296,4 @@ CreateDialog RL_Meshes
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
