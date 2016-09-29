@@ -591,7 +591,7 @@ void SLBUiCamera::fadeOut(float speed) {
 // Data
 SLBData::SLBData()
 {
-	file_name = "data/data.json";
+	file_name = DATA_JSON;
 	data = readIniAtrData(file_name, CApp::get().getCurrentRealLevel());
 }
 float SLBData::getFloat(const char* key)
@@ -712,12 +712,8 @@ void SLBPublicFunctions::stopAllSounds() {
 	sound_manager->stopAllSounds();
 }
 
-void SLBPublicFunctions::playMusic(const char* music_route) {
-	sound_manager->playMusic(std::string(music_route));
-}
-
-void SLBPublicFunctions::playLoopingMusic(const char* music_route) {
-	sound_manager->playLoopingMusic(std::string(music_route));
+void SLBPublicFunctions::playMusic(const char* music_route, float volume) {
+	sound_manager->playMusic(std::string(music_route), volume);
 }
 
 void SLBPublicFunctions::stopMusic() {
@@ -734,6 +730,10 @@ void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 
 void SLBPublicFunctions::setMusicVolume(float volume) {
 	sound_manager->setMusicVolume(volume);
+}
+
+void SLBPublicFunctions::setSFXVolume(float volume) {
+	sound_manager->setSFXVolume(volume);
 }
 
 void SLBPublicFunctions::playVideo(const char* video_route) {

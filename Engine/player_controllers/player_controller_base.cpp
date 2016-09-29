@@ -381,7 +381,7 @@ void CPlayerBase::Idle()
 	if (!checkDead()) {
 		UpdateDirection();
 		UpdateJumpState();
-		if (UpdateMovDirection()) {
+		if (UpdateMovDirection() && (state == "moving" || state == "idle" )) {
 			ChangeCommonState("moving");
 			ChangeState("moving");
 		}

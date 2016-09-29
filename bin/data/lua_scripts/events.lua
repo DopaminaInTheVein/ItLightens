@@ -83,6 +83,16 @@ function OnGameEnd( param )
 	p:print( "OnGameEnd: "..param.."\n" )
 end
 
+function OnGuardChase( volume )
+	p:print( "OnGuardChase: "..volume.."\n" )
+	p:play_music("event:/OnChaseMusic", volume)
+end
+
+function OnGuardChaseEnd( volume )
+	p:print( "OnGuardChaseEnd: "..volume.."\n" )
+	p:play_music("event:/OnRoom1", volume)
+end
+
 function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
 	h:getHandleCaller()	

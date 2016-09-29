@@ -5,6 +5,8 @@
 #include "utils/timer.h"
 #include <set>
 
+#define DATA_JSON "data/json/data.json"
+
 class IAppModule;
 
 // ------------------------------------------------------

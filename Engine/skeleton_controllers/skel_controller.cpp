@@ -195,7 +195,9 @@ void TCompSkelController::updateSteps(float dist_ground, bool& on_ground)
 	}
 	//dbg("-->new_on_ground: %d\n", on_ground);
 	if (send_msg && 
-		(currentState == AST_MOVE || currentState == AST_RUN)) {
+		(currentState == AST_MOVE || currentState == AST_RUN ||
+		 currentState == AST_PILA_WALK || currentState == AST_GRAB_WALK ||
+		 currentState == AST_GRAB_WALK_SMALL)) {
 		TMsgGetWhoAmI msg;
 		if (on_ground) {
 			msg.action_flag = true;

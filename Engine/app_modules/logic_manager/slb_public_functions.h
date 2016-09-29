@@ -173,15 +173,17 @@ public:
 	void playSound(const char* sound_route, float volume, bool looping);
 	void play3dSound(const char* sound_route, float s_x, float s_y, float s_z, float max_volume, bool looping, int max_instances);
 	void playFixed3dSound(const char* sound_route, const char* sound_name, float s_x, float s_y, float s_z, float max_volume, bool looping);
+	void playMusic(const char* music_route, float volume);
+	void playVoice(const char* voice_route);
+	void playAmbient(const char* ambient_route);
+
 	void stopSound(const char* sound_route);
 	void stopFixedSound(const char* sound_name);
 	void stopAllSounds();
-	void playMusic(const char* music_route);
-	void playLoopingMusic(const char* music_route);
 	void stopMusic();
-	void playVoice(const char* voice_route);
-	void playAmbient(const char* ambient_route);
+
 	void setMusicVolume(float volume);
+	void setSFXVolume(float volume);
 
 	void playVideo(const char* video_route);
 	void playVideoAndDo(const char* video_route, const char* lua_code);

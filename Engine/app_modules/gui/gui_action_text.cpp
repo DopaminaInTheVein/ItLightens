@@ -30,7 +30,7 @@ void CGuiActionText::render() {
 	string text;
 	switch (action) {
 	case eAction::NONE:
-		text = lang_manager->getText("actions", "none");
+		text = "";// lang_manager->getText("actions", "none");
 		break;
 	case eAction::OVERCHARGE:
 		text = lang_manager->getText("actions", "overcharge");
