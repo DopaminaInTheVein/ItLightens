@@ -732,6 +732,10 @@ void SLBPublicFunctions::setMusicVolume(float volume) {
 	sound_manager->setMusicVolume(volume);
 }
 
+void SLBPublicFunctions::setSFXVolume(float volume) {
+	sound_manager->setSFXVolume(volume);
+}
+
 void SLBPublicFunctions::playVideo(const char* video_route) {
 	CHandle h = createPrefab("video_player");
 	GET_COMP(video_player, h, TCompVideo);

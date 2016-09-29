@@ -17,7 +17,7 @@ player = Player()
 
 ---------------------------- LEVEL Init, Load, Save ---------------------------------------------------
 function auxiliarMusic()
-	p:play_music("event:/OnRoom1", 0.3)
+	p:play_music("event:/OnRoom1", 0.2)
 end
 
 function OnStart_ms3()
@@ -51,7 +51,7 @@ function OnLoad_ms3()
   stateElevator = d:get_float("elevator_state")
   cp_elevator = d:get_bool("cp_elevator")
   cp_door_opened = d:get_bool("cp_door_opened")
-  p:play_music("event:/OnRoom1", 0.3)
+  p:play_music("event:/OnRoom1", 0.2)
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
   --cam:run_cinematic("CinematicIntro", 10)

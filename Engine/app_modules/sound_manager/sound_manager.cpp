@@ -111,7 +111,7 @@ bool CSoundManagerModule::playSound(std::string route, float volume = 1.f, bool 
 		result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
 
 		if (result == FMOD_OK) {
-			result = sound_instance->setVolume(volume);
+			result = sound_instance->setVolume(volume*SFX_VOLUME);
 			if (result != FMOD_OK) return false;
 
 			if (looping) {
@@ -195,7 +195,7 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, float m
 			if (result != FMOD_OK) return false;
 
 			// Play the sound
-			result = sound_instance->setVolume(volume);
+			result = sound_instance->setVolume(volume*SFX_VOLUME);
 			if (result != FMOD_OK) return false;
 
 			if (looping) {
@@ -280,7 +280,7 @@ bool CSoundManagerModule::playFixed3dSound(std::string route, std::string sound_
 			if (result != FMOD_OK) return false;
 
 			// Play the sound
-			result = fixed_instances[sound_name]->setVolume(volume);
+			result = fixed_instances[sound_name]->setVolume(volume*SFX_VOLUME);
 			if (result != FMOD_OK) return false;
 
 			if (looping) {
@@ -409,7 +409,7 @@ bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_
 		volume = 0.f;
 	}
 
-	result = fixed_instances[sound_name]->setVolume(volume);
+	result = fixed_instances[sound_name]->setVolume(volume*SFX_VOLUME);
 	if (result != FMOD_OK) return false;
 
 	// update the position
@@ -519,6 +519,14 @@ bool CSoundManagerModule::setMusicVolume(float volume) {
 
 	return false;
 
+}
+
+void CSoundManagerModule::setSFXVolume(float volume) {
+
+	if (volume < 0.f) { volume = 0.f; }
+	if (volume > 1.f) { volume = 1.f; }
+
+	SFX_VOLUME = volume; 
 }
 
 FMOD_VECTOR CSoundManagerModule::VectorToFmod(const VEC3 vect) {

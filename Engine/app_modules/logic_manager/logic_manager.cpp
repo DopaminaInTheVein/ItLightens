@@ -914,6 +914,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("set_music_volume", &SLBPublicFunctions::setMusicVolume)
 		.comment("Changes the volume of the music to the specified value")
 		.param("float: volume value")
+		// sets the SFX volume
+		.set("set_sfx_volume", &SLBPublicFunctions::setSFXVolume)
+		.comment("Changes the volume of the sfx to the specified value")
+		.param("float: volume value")
 		// play video function
 		.set("play_video", &SLBPublicFunctions::playVideo)
 		.comment("Executes the specified video")

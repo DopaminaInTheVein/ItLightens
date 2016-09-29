@@ -1322,7 +1322,7 @@ void bt_guard::increaseChaseCounter() {
 		chasing = true;
 		guards_chasing++;
 		if (guards_chasing == 1)
-			logic_manager->throwEvent(logic_manager->OnGuardChase, "0.3");
+			logic_manager->throwEvent(logic_manager->OnGuardChase, "0.2");
 	}
 }
 void bt_guard::decreaseChaseCounter() {
@@ -1331,7 +1331,7 @@ void bt_guard::decreaseChaseCounter() {
 		chasing = false;
 		guards_chasing--;
 		if (guards_chasing == 0)
-			logic_manager->throwEvent(logic_manager->OnGuardChaseEnd, "0.3");
+			logic_manager->throwEvent(logic_manager->OnGuardChaseEnd, "0.2");
 	}
 }
 

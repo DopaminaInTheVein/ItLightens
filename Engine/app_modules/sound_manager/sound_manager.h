@@ -14,6 +14,7 @@ using namespace FMOD;
 class CSoundManagerModule : public IAppModule
 {
 	std::string sounds_folder = "data/sounds/banks/";
+	float SFX_VOLUME = 1.f;
 
 	FMOD_RESULT												result;
 	void													*extradriverdata = 0;
@@ -65,7 +66,8 @@ public:
 	bool stopMusic();
 	bool stopAllSounds();
 
-	bool setMusicVolume(float);
+	bool setMusicVolume(float volume);
+	void setSFXVolume(float volume);
 	bool updateFixed3dSound(std::string name, VEC3 sound_pos, float max_volume);
 
 	Studio::EventInstance* getFixedSound(std::string name) { return fixed_instances[name]; }
