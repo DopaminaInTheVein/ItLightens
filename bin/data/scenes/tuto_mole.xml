@@ -215,7 +215,7 @@
 <name
    name="_tWall_pAction"/>
 <transform
-   pos="1034.57 65.1706 -26.0653"
+   pos="1034.27 65.1706 -26.0653"
    quat="0 -0.714153 0 0.69999"
    scale="1.0"/>
 <room
@@ -233,7 +233,7 @@
 <tmx_animator
    roll_speed="180"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/end_portal.static_mesh"/>
+   name="static_meshes/tuto_mole/_end_portal.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -312,7 +312,8 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity
+   id="100">
 <tags/>
 <name
    name="pared_rompible"/>
@@ -357,7 +358,8 @@
    type_collision="static"/>
 
 </entity>
-<entity>
+<entity
+   id="101">
 <tags/>
 <name
    name="pared_rota_jaula"/>
@@ -375,29 +377,44 @@
 <entity>
 <tags/>
 <light_point
-   color="1.0 1.0 1.0 1.0"
+   color="1.0 1.0 1.0 0.4"
    in_radius="4.00001"
    out_radius="200.0"/>
 <name
    name="Omni001"/>
 <transform
    pos="1023.45 72.1185 -25.3549"
-   quat="-0.0323767 -0.706365 0.706365 -0.0323767"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 
 </entity>
 <entity>
 <tags/>
 <light_point
-   color="1.0 1.0 1.0 0.5"
+   color="1.0 1.0 1.0 0.01"
    in_radius="1.68"
    out_radius="200.0"/>
 <name
    name="Omni002"/>
 <transform
    pos="1036.96 67.1044 -25.3549"
-   quat="-0.0323767 -0.706365 0.706365 -0.0323767"
+   quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barrotes_balcon_cuadrado_derecho"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_mole/barrotes_balcon_cuadrado_derecho.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 

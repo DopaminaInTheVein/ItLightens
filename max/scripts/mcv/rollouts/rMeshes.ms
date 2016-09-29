@@ -36,8 +36,10 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	fn checkFolder folder needFolder = (
 		if needFolder then (
 			if folder == "" then (
-				local yes = queryBox "No se ha seleccionado carpeta. ¿Exportar en raíz?"
-				if not yes then (return false)
+				--local yes = queryBox "No se ha seleccionado carpeta. ¿Exportar en raíz?"
+				--if not yes then (return false)
+				messagebox "¡Debes indicar una carpeta!"
+				return false
 			) else (
 				local createMeshDir = false
 				local createMatDir = false

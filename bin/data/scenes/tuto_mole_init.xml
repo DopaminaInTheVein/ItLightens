@@ -85,7 +85,7 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="0.889994 0.185 3.84509"/>
+   size="1.26359 0.185 4.84482"/>
 <tags
    tags="trigger"/>
 <trigger_lua
@@ -94,7 +94,7 @@
 <name
    name="_tWall"/>
 <transform
-   pos="1034.14 64.402 -26.0653"
+   pos="1033.85 64.402 -26.0653"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -232,7 +232,7 @@
 <name
    name="_tCrossWall"/>
 <transform
-   pos="1033.0 65.787 -26.0653"
+   pos="1032.57 65.787 -26.0653"
    quat="0 0 0 1.0"
    scale="1.0"/>
 

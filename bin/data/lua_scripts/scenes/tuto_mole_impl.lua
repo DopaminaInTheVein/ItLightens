@@ -1,4 +1,9 @@
 p = Public()
+--==================
+-- Constants level
+--==================
+idWall_out = 0
+idWall_in = 0
 
 --==================
 -- Level DATA
@@ -30,6 +35,8 @@ function OnStart_tuto_mole( )
 	box_moved_done = false
 	box_placed_done = false
 	portal_done = false
+	idWall_out = 100
+	idWall_in = 101
 	p:exec_command("tutomole_help_possess();", 2)
 end
 
@@ -106,16 +113,18 @@ function tutomole_destroyWallEffect()
   p:print("Destroy Wall Effect\n")
   
   --Destruimos pared
-  h:get_handle_by_id(idWall)
+  h:get_handle_by_id(idWall_in)
+  h:destroy()
+  h:get_handle_by_id(idWall_out)
   h:destroy()
   
   --Reproducimos sonido
-  	p:play_sound("event:/OnBreakWall", 1.0, false)
+  p:play_sound("event:/OnBreakWall", 1.0, false)
   
   --Activamos fragmentos pared
   all_fragments1:get_handles_by_tag(tagWallFragment1)
   all_fragments1:awake()
-  p:exec_command( "all_fragments1:remove_physics();", 5 )
+  p:exec_command( "all_fragments1:remove_physics();", 4 )
   
   --Tasklist
   p:complete_tasklist(TASK_TUTOM_WALL)
