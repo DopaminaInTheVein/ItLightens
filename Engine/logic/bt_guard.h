@@ -181,6 +181,8 @@ class bt_guard : public npc, public TCompBase
 	CHandle getParent() override { return CHandle(this).getOwner(); }
 
 	int step_counter = 0;
+	bool chasing = false;
+	static int guards_chasing;
 
 public:
 	//public for LUA
@@ -297,6 +299,8 @@ public:
 	void changeCommonState(std::string);
 	void onGetWhoAmI(TMsgGetWhoAmI& msg);
 	int getStepCounter() { return step_counter; }
+	void increaseChaseCounter();
+	void decreaseChaseCounter();
 
 	float timerStunt, _timerStunt;
 

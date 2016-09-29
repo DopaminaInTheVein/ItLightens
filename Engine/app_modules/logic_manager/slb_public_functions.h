@@ -176,8 +176,7 @@ public:
 	void stopSound(const char* sound_route);
 	void stopFixedSound(const char* sound_name);
 	void stopAllSounds();
-	void playMusic(const char* music_route);
-	void playLoopingMusic(const char* music_route);
+	void playMusic(const char* music_route, float volume);
 	void stopMusic();
 	void playVoice(const char* voice_route);
 	void playAmbient(const char* ambient_route);

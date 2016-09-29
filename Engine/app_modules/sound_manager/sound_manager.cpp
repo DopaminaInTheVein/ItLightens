@@ -439,57 +439,47 @@ bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_
 	return true;
 }
 
-bool CSoundManagerModule::playMusic(std::string route) {
+bool CSoundManagerModule::playMusic(std::string route, float volume = 0.3f) {
 
-	//if there was a music playing, we stop it
+	//if there was a music playing, we pause it
 	if (music_instance) {
-		music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
-		music_instance->release();
-		music_instance = NULL;
+		result = music_instance->setPaused(true);
+		if (result != FMOD_OK) return false;
 	}
 
-	result = sounds_descriptions[std::string(route)]->createInstance(&music_instance);
-
-	if (result == FMOD_OK) {
-		music_instance->start();
-		return true;
+	//if the music instance didnt exist yet, we create it
+	if (!fixed_instances[route]) {
+		result = sounds_descriptions[std::string(route)]->createInstance(&fixed_instances[route]);
+		if (result != FMOD_OK) return false;
+		result = fixed_instances[route]->setCallback(loopingMusicCallback, FMOD_STUDIO_EVENT_CALLBACK_STARTED | FMOD_STUDIO_EVENT_CALLBACK_STOPPED);
+		if (result != FMOD_OK) return false;
+		//set the music to the requested track, and play it
+		music_instance = fixed_instances[route];
+		music_instance->setVolume(volume);
+		result = music_instance->start();
+		if (result != FMOD_OK) return false;
+	}
+	// if the music already existed, we set the music to the instance and unpause it
+	else {
+		//set the music to the requested track, and play it
+		music_instance = fixed_instances[route];
+		music_instance->setVolume(volume);
+		result = music_instance->setPaused(false);
+		if (result != FMOD_OK) return false;
 	}
 
-	return false;
-}
-
-bool CSoundManagerModule::playLoopingMusic(std::string route) {
-
-	//if there was a music playing, we stop it
-	if (music_instance) {
-		music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
-		music_instance->release();
-		music_instance = NULL;
-	}
-
-	result = sounds_descriptions[std::string(route)]->createInstance(&music_instance);
-
-	if (result == FMOD_OK) {
-		music_instance->setCallback(loopingMusicCallback, FMOD_STUDIO_EVENT_CALLBACK_STARTED | FMOD_STUDIO_EVENT_CALLBACK_STOPPED);
-		music_instance->start();
-		return true;
-	}
-
-	return false;
-
+	return true;
 }
 
 bool CSoundManagerModule::stopMusic() {
 
-	//if there was a music playing, we stop it
+	//if there was a music playing, we pause it
 	if (music_instance) {
-		music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
-		music_instance->release();
-		music_instance = NULL;
-		return true;
+		result = music_instance->setPaused(true);
+		if (result != FMOD_OK) return false;
 	}
 
-	return false;
+	return true;
 }
 
 bool CSoundManagerModule::playVoice(std::string route) {

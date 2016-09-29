@@ -712,12 +712,8 @@ void SLBPublicFunctions::stopAllSounds() {
 	sound_manager->stopAllSounds();
 }
 
-void SLBPublicFunctions::playMusic(const char* music_route) {
-	sound_manager->playMusic(std::string(music_route));
-}
-
-void SLBPublicFunctions::playLoopingMusic(const char* music_route) {
-	sound_manager->playLoopingMusic(std::string(music_route));
+void SLBPublicFunctions::playMusic(const char* music_route, float volume) {
+	sound_manager->playMusic(std::string(music_route), volume);
 }
 
 void SLBPublicFunctions::stopMusic() {

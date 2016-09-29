@@ -56,8 +56,7 @@ public:
 	bool playSound(std::string route , float volume, bool looping);
 	bool play3dSound(std::string route, VEC3 sound_pos, float max_volume, bool looping, int max_instances);
 	bool playFixed3dSound(std::string route, std::string sound_name, VEC3 sound_pos, float max_volume, bool looping);
-	bool playMusic(std::string);
-	bool playLoopingMusic(std::string);
+	bool playMusic(std::string route, float volume);
 	bool playVoice(std::string);
 	bool playAmbient(std::string);
 

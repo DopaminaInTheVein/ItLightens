@@ -137,11 +137,22 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnSetLight(%f);", volume);
 		break;
 	}
+
+	case (OnGuardChase): {
+		float volume = atof(params.c_str());
+		sprintf(lua_code, "OnGuardChase(%f);", volume);
+		break;
+	}
+	case (OnGuardChaseEnd): {
+		float volume = atof(params.c_str());
+		sprintf(lua_code, "OnGuardChaseEnd(%f);", volume);
+		break;
+	}
+
 	case (OnGuardAttack) : {
 		sprintf(lua_code, "OnGuardAttack(%f);", 0.5f);
 		break;
 	}
-
 	case (OnGuardAttackEnd) : {
 		sprintf(lua_code, "OnGuardAttackEnd(%f);", 0.5f);
 		break;
@@ -887,11 +898,8 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play music function
 		.set("play_music", &SLBPublicFunctions::playMusic)
 		.comment("Executes the specified music")
-		.param("Route of the music")
-		// play looping music function
-		.set("play_looping_music", &SLBPublicFunctions::playLoopingMusic)
-		.comment("Executes the specified music in an endless loop")
-		.param("Route of the music")
+		.param("string: Route of the music")
+		.param("float: Volume of the music")
 		// stop music function
 		.set("stop_music", &SLBPublicFunctions::stopMusic)
 		.comment("Stops the game music")

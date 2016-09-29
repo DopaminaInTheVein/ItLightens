@@ -43,6 +43,8 @@ public:
 		OntTimerStart,
 		OnSetLight,
 
+		OnGuardChase,
+		OnGuardChaseEnd,
 		OnGuardAttack,
 		OnGuardAttackEnd,
 		OnGuardRemoveBox,
