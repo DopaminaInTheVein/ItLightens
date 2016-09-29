@@ -60,6 +60,8 @@ end
 
 function tutomole_wall_crossed( )
 	tutomole_help_box()
+	h:getHandleCaller()
+	h:destroy()
 end
 
 function tutomole_box_placed( )
