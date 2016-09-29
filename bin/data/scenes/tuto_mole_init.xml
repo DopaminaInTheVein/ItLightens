@@ -210,7 +210,8 @@
    reload="yes">
 <tags
    tags="box_placer"/>
-<box_placer/>
+<box_placer
+   event_in="tutomole_box_placed"/>
 <name
    name="_box_target"/>
 <transform
@@ -423,6 +424,20 @@
    name="tasklist"/>
 <transform
    pos="1035.93 64.0616 -25.7225"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="box_placer"/>
+<box_placer
+   event_out="tutomole_box_moved"/>
+<name
+   name="_box_init"/>
+<transform
+   pos="1016.53 65.0432 -32.2398"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
