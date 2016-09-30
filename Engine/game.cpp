@@ -242,7 +242,7 @@ void CApp::loadedLevelNotify() {
 
 	logic_manager->throwEvent(game_event, std::string(params));
 	loading = false;
-	if (!GameController->IsUiControl())
+	if (!Gui->IsUiControl())
 		GameController->SetGameState(CGameController::RUNNING);
 }
 

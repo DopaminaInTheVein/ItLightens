@@ -4,7 +4,7 @@
 #include "components/entity.h"
 #include "components/entity_parser.h"
 #include "components/comp_camera.h"
-
+#include "comps/gui_cursor.h"
 // ImGui LIB headers
 #pragma comment(lib, "imgui.lib" )
 
@@ -12,10 +12,48 @@
 
 using namespace std;
 
+stack<CHandle> CGuiModule::cursors = stack<CHandle>();
+
+void CGuiModule::setCursorEnabled(bool enabled)
+{
+	if (cursors.size() > 0) {
+		CHandle hcursor = cursors.top();
+		if (hcursor.isValid()) {
+			GET_COMP(cursor, hcursor, TCompGuiCursor);
+			if (cursor) cursor->setEnabled(enabled);
+		}
+	}
+}
+
 // ------ External functions --------//
 void CGuiModule::setActionAvailable(eAction action) {
 	assert(txtAction);
 	txtAction->setState(action);
+}
+bool CGuiModule::IsUiControl() const
+{
+	return ui_control;
+}
+bool * CGuiModule::IsUiControlPointer()
+{
+	return &ui_control;
+}
+void CGuiModule::SetUiControl(bool new_ui_control)
+{
+	ui_control = new_ui_control;
+}
+
+CHandle CGuiModule::getCursor()
+{
+	CHandle res;
+	if (!cursors.empty()) res = cursors.top();
+	return res;
+}
+
+void CGuiModule::pushCursor(CHandle h)
+{
+	cursors.push(h);
+	ui_control = true;
 }
 
 // ----------------------------------- START MODULE ----------------------------------- //
@@ -26,10 +64,20 @@ bool CGuiModule::start()
 
 	return true;
 }
+//------------------------------------------------------------------------------------//
 
 void CGuiModule::update(float dt)
 {
 	txtAction->render();
+
+	if (ui_control) {
+		CHandle cursor;
+		while (!cursor.isValid() && !cursors.empty()) {
+			cursor = cursors.top();
+			if (!cursor.isValid()) cursors.pop();
+		}
+		if (!cursor.isValid()) ui_control = false;
+	}
 }
 
 // ----------------------------------- STOP MODULE ----------------------------------- //

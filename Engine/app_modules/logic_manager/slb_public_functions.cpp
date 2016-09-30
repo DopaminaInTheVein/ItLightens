@@ -946,7 +946,7 @@ void SLBPublicFunctions::pauseGame() {
 }
 
 void SLBPublicFunctions::setCursorEnabled(bool enabled) {
-	TCompGui::setCursorEnabled(enabled);
+	Gui->setCursorEnabled(enabled);
 }
 void SLBPublicFunctions::resumeGame() {
 	GameController->SetGameState(CGameController::RUNNING);

@@ -14,31 +14,11 @@
 <name
    name="btn_opt_back"/>
 <transform
-   pos="0.612932 -97.1539 9.23048"
+   pos="0.612932 -97.1539 6.1"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/menu/button_start.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags
-   tags="options gui gui_cursor"/>
-<gui
-   menu_name="options"
-   width="0.114758"
-   height="0.131401"/>
-<gui_cursor
-   menu_name="options"/>
-<name
-   name="cursor_opt"/>
-<transform
-   pos="5.0 -95.0 9.73053"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/menu/front.static_mesh"/>
+   name="static_meshes/ui/options/btn_opt_back.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -48,7 +28,7 @@
 <name
    name="background"/>
 <transform
-   pos="5.0 -95.0 9.07057"
+   pos="5.0 -95.0 6.0"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -69,7 +49,7 @@
 <name
    name="opt_axisY"/>
 <transform
-   pos="4.9329 -96.211 9.17095"
+   pos="4.9329 -96.211 6.1"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
@@ -90,11 +70,11 @@
 <name
    name="opt_axisX"/>
 <transform
-   pos="4.9329 -95.5672 9.17095"
+   pos="4.9329 -95.5672 6.1"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/options/opt_axisY.static_mesh"/>
+   name="static_meshes/ui/options/opt_axisX.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -111,11 +91,11 @@
 <name
    name="opt_lang"/>
 <transform
-   pos="4.9329 -94.1647 9.17095"
+   pos="4.9329 -94.1647 6.1"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/options/opt_axisY.static_mesh"/>
+   name="static_meshes/ui/options/opt_lang.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -132,11 +112,31 @@
 <name
    name="opt_diff"/>
 <transform
-   pos="4.9329 -94.7474 9.17095"
+   pos="4.9329 -94.7474 6.1"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/options/opt_axisY.static_mesh"/>
+   name="static_meshes/ui/options/opt_diff.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_cursor"/>
+<gui
+   menu_name="options"
+   width="0.2"
+   height="0.199997"/>
+<gui_cursor
+   menu_name="options"/>
+<name
+   name="cursor_opt"/>
+<transform
+   pos="5.00626 -94.9994 6.2"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/cursor.static_mesh"/>
 <abs_aabb/>
 
 </entity>

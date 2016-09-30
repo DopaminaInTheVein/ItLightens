@@ -74,7 +74,6 @@ void CImGuiModule::update(float dt) {
 		ImGui::EndMenuBar();
 	}
 	//---------------------------------------
-
 	//Language
 	IMGUI_SHOW_STRING(GameController->GetLanguage());
 
@@ -84,6 +83,7 @@ void CImGuiModule::update(float dt) {
 	//Buttons game
 	//---------------------------------------
 	if (GameController->GetGameState() == CGameController::RUNNING) {
+		IMGUI_SHOW_INT(CGameController::RUNNING);
 		if (ImGui::Button("PAUSE BUTTON"))
 			GameController->SetGameState(CGameController::STOPPED);
 
@@ -94,26 +94,26 @@ void CImGuiModule::update(float dt) {
 
 		ImGui::PopStyleColor();
 	}
+
+	else if (GameController->GetGameState() == CGameController::STOPPED) {
+		IMGUI_SHOW_INT(CGameController::STOPPED);
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
+		if (ImGui::Button("PAUSE BUTTON"))
+			GameController->SetGameState(CGameController::STOPPED);
+
+		ImGui::PopStyleColor();
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("RESUME BUTTON"))
+			GameController->SetGameState(CGameController::RUNNING);
+	}
+
 	if (ImGui::Button("SAVE GAME")) CApp::get().saveLevel();
-	if (ImGui::Button("LOAD GAME")) {
-		CApp::get().restartLevelNotify();
-	}
-
-	if (GameController->GetGameState() == CGameController::STOPPED) {
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
-		if (ImGui::Button("PAUSE BUTTON"))
-			GameController->SetGameState(CGameController::STOPPED);
-
-		ImGui::PopStyleColor();
-
-		ImGui::SameLine();
-
-		if (ImGui::Button("RESUME BUTTON"))
-			GameController->SetGameState(CGameController::RUNNING);
-	}
+	if (ImGui::Button("LOAD GAME")) CApp::get().restartLevelNotify();
 
 	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
-	ImGui::Checkbox("Ui control", GameController->IsUiControlPointer());
+	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui;
@@ -343,7 +343,7 @@ void CImGuiModule::update(float dt) {
 	ui.update();			//update ui
 	//Debug->update();		//update log
 	m_pLights_editor->RenderInMenu();
-		}
+}
 
 void CImGuiModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);

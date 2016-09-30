@@ -23,7 +23,6 @@ class CGameController : public IAppModule {
 	bool	free_camera = false;
 	bool	cinematic = false;
 	bool	manual_control = false;
-	bool    ui_control = false;
 
 	bool	cheat_godmode = false;
 
@@ -81,9 +80,6 @@ public:
 	bool GetFxPolarize();
 	bool * GetFreeCameraPointer();
 	bool GetFreeCamera() const;
-	bool IsUiControl() const;
-	bool * IsUiControlPointer();
-	void SetUiControl(bool new_ui_control);
 
 	bool * GetCheatGodmodePointer() {
 		return &cheat_godmode;

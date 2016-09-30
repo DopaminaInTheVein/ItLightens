@@ -5,11 +5,11 @@
 #include "components\comp_transform.h"
 #include "components\entity.h"
 #include "gui_cursor.h"
+#include "../gui.h"
 
 using namespace std;
 
 map<string, GuiMatrix> TCompGui::gui_screens = map<string, GuiMatrix>();
-stack<CHandle> TCompGui::cursors = stack<CHandle>();
 
 void TCompGui::onCreate(const TMsgEntityCreated&)
 {
@@ -132,37 +132,14 @@ void TCompGui::clearScreen(string menu_name)
 	gui_screens.erase(menu_name);
 }
 
-void TCompGui::setCursorEnabled(bool enabled)
-{
-	if (cursors.size() > 0) {
-		CHandle hcursor = cursors.top();
-		if (hcursor.isValid()) {
-			GET_COMP(cursor, hcursor, TCompGuiCursor);
-			if (cursor) cursor->setEnabled(enabled);
-		}
-	}
-}
-
 CHandle TCompGui::getCursor()
 {
-	CHandle result;
-	while (!result.isValid() && !cursors.empty()) {
-		result = cursors.top();
-		if (!result.isValid()) cursors.pop();
+	CHandle res = Gui->getCursor();
+	if (res.isValid()) {
+		GET_COMP(gui, res, TCompGui);
+		if (menu_name != gui->GetMenuName()) res = CHandle();
 	}
-	if (result.isValid()) {
-		GET_COMP(gui, result, TCompGui);
-		if (menu_name != gui->GetMenuName()) result = CHandle();
-	}
-	else {
-		GameController->SetUiControl(false);
-	}
-	return result;
-}
-
-void TCompGui::pushCursor(CHandle h)
-{
-	cursors.push(h);
+	return res;
 }
 
 #include "components\comp_transform.h"
