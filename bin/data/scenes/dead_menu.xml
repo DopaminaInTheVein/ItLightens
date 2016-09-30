@@ -2,27 +2,6 @@
 <entity
    permanent="yes">
 <tags
-   tags="menu gui gui_cursor"/>
-<gui
-   menu_name="dead_menu"
-   width="0.114758"
-   height="0.131401"/>
-<gui_cursor
-   menu_name="dead_menu"/>
-<name
-   name="cursor"/>
-<transform
-   pos="5.0 -95.0 9.5"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/cursor.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity
-   permanent="yes">
-<tags
    tags="menu gui gui_button clickable"/>
 <gui
    menu_name="dead_menu"
