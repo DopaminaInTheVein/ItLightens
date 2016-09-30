@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/balcon_tuto_sci.dds"/>
-<texture slot="normalmap" name="textures/balcon_tuto_sci_normal.dds"/>
-</material>

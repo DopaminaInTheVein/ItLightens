@@ -113,7 +113,7 @@
 <name
    name="sillas"/>
 <transform
-   pos="49.7863 0.586214 -6.18538"
+   pos="49.7937 0.586215 -2.81125"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -349,7 +349,7 @@
 <name
    name="farolillos004_sound001"/>
 <transform
-   pos="62.5805 1.08533 -1.55083"
+   pos="62.5805 1.08533 -1.55084"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -377,7 +377,7 @@
 <name
    name="farolillos004_sound003"/>
 <transform
-   pos="75.9401 1.08534 -0.497145"
+   pos="75.9401 1.08534 -0.49715"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -391,7 +391,7 @@
 <name
    name="farolillos004_sound004"/>
 <transform
-   pos="75.9401 1.08533 -4.88324"
+   pos="75.9401 1.08533 -4.88325"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -405,7 +405,7 @@
 <name
    name="farolillos004_sound005"/>
 <transform
-   pos="75.9401 8.10499 -0.497139"
+   pos="75.9401 8.10499 -0.497145"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -433,7 +433,7 @@
 <name
    name="farolillos004_sound007"/>
 <transform
-   pos="75.9401 8.80086 -0.801058"
+   pos="75.9401 8.80086 -0.801064"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
