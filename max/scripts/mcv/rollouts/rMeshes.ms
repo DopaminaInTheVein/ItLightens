@@ -117,6 +117,9 @@ rollout RL_Meshes "IT Lightens!" width:296 height:638
 	(
 		local folder_init = (filterstring maxFileName ".")[1]
 		if folder_init != undefined then (txtFolder.text = folder_init)
+		if _is_ui_scene() then (
+			txtFolder.text = "ui/" + txtFolder.text
+		)
 	)
 	on pckObj picked obj do
 	(

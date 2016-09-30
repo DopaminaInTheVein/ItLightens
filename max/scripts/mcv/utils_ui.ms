@@ -323,14 +323,3 @@ fn copyFileAndDirs orig dest = (
 	)
 	return res
 )
-
--- UI --
--- Transfer ui object
-fn transferUi orig dest = (
-	print orig.name
-	print dest.name
-	dest.mat = orig.mat
-	local props = getUserPropBuffer orig 
-	setUserPropBuffer dest props
-	dest.name = orig.name
-)
