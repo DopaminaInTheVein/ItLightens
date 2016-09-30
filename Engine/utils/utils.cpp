@@ -44,13 +44,15 @@ float getDeltaTime(float always) {
 	if (GameController->GetGameState() == CGameController::RUNNING || always) {
 		CApp& app = CApp::get();
 		float dt = app.timer_app.GetDeltaTime();
-		if (dt > 0.5f) {
+		bool long_frame = CApp::get().long_frame = (dt > 0.5f);
+		if (long_frame) {
 			dt = _deltaTimePrev;
 		}
 		else {
 			_deltaTimePrev = dt;
+			CApp::get().long_frame = true;
 		}
-		if (GameController->GetGameState() == CGameController::STOPPED_INTRO)
+		if (GameController->GetGameState() == CGameController::SPECIAL_ACTION)
 			return dt / 2.5f;
 #ifndef NDEBUG
 		else if (controller->isSlowButtonPressed())
@@ -263,12 +265,21 @@ std::map<std::string, float> readIniAtrData(const std::string route, std::string
 		//-- Make Difficulty name
 		char route_diff[256];
 		auto p = route.find_last_of(".");
+#ifdef TEST_VALUES
+		if (p == std::string::npos) {
+			sprintf(route_diff, "%s_%s", route.c_str(), "test");
+		}
+		else {
+			sprintf(route_diff, "%s_%s%s", route.substr(0, p).c_str(), "test", route.substr(p).c_str());
+		}
+#else
 		if (p == std::string::npos) {
 			sprintf(route_diff, "%s_%d", route.c_str(), GameController->GetDifficulty());
 		}
 		else {
 			sprintf(route_diff, "%s_%d%s", route.substr(0, p).c_str(), GameController->GetDifficulty(), route.substr(p).c_str());
 		}
+#endif
 		try {
 			document = readJSONAtrFile(std::string(route_diff));
 			if (document.HasMember(element.c_str())) {

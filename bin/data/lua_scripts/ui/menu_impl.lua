@@ -1,18 +1,27 @@
 p = Public()
 
 function OnClicked_btn_resume( )
+	p:set_cursor_enabled(false)
 	destroyMenu()
 	p:resume()
 end
 
 function OnClicked_btn_restart( )
+	-- (Fadeout)
+	p:set_cursor_enabled(false)
 	p:exec_command("destroyMenu();", 1)
-	LoadLevel(g_current_level)
+	p:exec_command("LoadLevel(g_current_level);", 1.1)
 end
 
 function OnClicked_btn_back_title( )
+	-- (Fadeout)
+	p:set_cursor_enabled(false)
 	p:exec_command("destroyMenu();", 1)
 	LoadLevel("level_0")
+end
+
+function OnClicked_btn_opt_menu( )
+	p:load_entities("options")
 end
 
 function OnClicked_btn_exit_pause( )

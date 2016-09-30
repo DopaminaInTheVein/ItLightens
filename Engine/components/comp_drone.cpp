@@ -1,13 +1,17 @@
 #include "mcv_platform.h"
 #include "comp_drone.h"
 
+#include "entity.h"
 #include "comp_transform.h"
 #include "comp_physics.h"
 #include "comp_life.h"
 #include "comp_polarized.h"
-#include "handle\handle.h"
+#include "comp_name.h"
+#include "handle/handle.h"
 #include "player_controllers/player_controller_cientifico.h"
-#include "entity.h"
+#include "app_modules/logic_manager/logic_manager.h"
+#include "app_modules/sound_manager/sound_manager.h"
+
 
 void TCompDrone::onCreate(const TMsgEntityCreated &)
 {
@@ -15,12 +19,12 @@ void TCompDrone::onCreate(const TMsgEntityCreated &)
 	CEntity *e = h;
 	if (e) {
 		//Init Waypoints (and add the last point the initial position)
-		TCompTransform *t = e->get<TCompTransform>();
-		wpts[wpts.size() - 1] = t->getPosition();
-		waitTimes[waitTimes.size() - 1] = 0;
+		//wpts[wpts.size() - 1] = t->getPosition();
+		//waitTimes[waitTimes.size() - 1] = 0;
 		curWpt = 0;
 
 		// Set Kinematic
+		TCompTransform *t = e->get<TCompTransform>();
 		TCompPhysics *p = e->get<TCompPhysics>();
 		p->setKinematic(true);
 		final_pos = t->getPosition();
@@ -30,6 +34,15 @@ void TCompDrone::onCreate(const TMsgEntityCreated &)
 		if (l) {
 			l->player_life = false;
 		}
+
+		// Get name
+		TCompName* entity_name = e->get<TCompName>();
+		name = entity_name->name;
+
+		// Create sound instances
+		logic_manager->throwEvent(logic_manager->OnDroneMoving, name + "moving", h);
+		logic_manager->throwEvent(logic_manager->OnDroneStatic, name + "static", h);
+
 	}
 	else h.destroy();
 	if (espatllat) {
@@ -93,16 +106,28 @@ void TCompDrone::update(float elapsed)
 		if (timeToWait > 0) {
 			//Waiting
 			timeToWait -= elapsed;
+			// static sound
+			sound_manager->updateFixed3dSound(name + "static", transform->getPosition(), volume);
 		}
 		else {
 			if (simpleDist(wpts[curWpt], transform->getPosition()) < mEpsilon) {
 				//Arrived
 				timeToWait = waitTimes[curWpt];
 				curWpt = (curWpt + 1) % wpts.size();
+				// stop moving sound
+				sound_manager->stopFixedSound(name + "moving");
+				moving = false;
 			}
 			else {
 				//Move to next
 				moveToNext(elapsed);
+				// moving sound
+				sound_manager->updateFixed3dSound(name + "moving", transform->getPosition(), volume);
+				// stop static sound (just once)
+				if (!moving) {
+					sound_manager->stopFixedSound(name + "static");
+					moving = true;
+				}
 			}
 		}
 	}
@@ -186,8 +211,8 @@ bool TCompDrone::load(MKeyValue & atts)
 {
 	espatllat = atts.getBool("espatllat", false);
 	int n = atts.getInt("wpts_size", 0);
-	wpts.resize(n + 1);
-	waitTimes.resize(n + 1);
+	wpts.resize(n);// +1);
+	waitTimes.resize(n);// + 1);
 	for (int i = 0; i < n; i++) {
 		WPT_ATR_NAME(atrPos, "pos", i);
 		WPT_ATR_NAME(atrWait, "wait", i);
@@ -199,7 +224,7 @@ bool TCompDrone::load(MKeyValue & atts)
 }
 bool TCompDrone::save(std::ofstream& os, MKeyValue& atts)
 {
-	int n = (int)wpts.size() - 1;
+	int n = (int)wpts.size();//- 1;
 	atts.put("wpts_size", n);
 	for (int i = 0; i < n; i++) {
 		WPT_ATR_NAME(atrPos, "pos", i);
@@ -216,7 +241,7 @@ bool TCompDrone::save(std::ofstream& os, MKeyValue& atts)
 
 void TCompDrone::fixedUpdate(float elapsed) {
 	if (!SetMyBasicComponents()) return;
-	auto actor = physics ? physics->getActor(): nullptr;
+	auto actor = physics ? physics->getActor() : nullptr;
 	PxRigidDynamic *rd = actor ? actor->isRigidDynamic() : nullptr;
 	if (rd) {
 		PxTransform tmx = rd->getGlobalPose();

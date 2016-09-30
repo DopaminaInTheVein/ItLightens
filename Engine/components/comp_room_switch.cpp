@@ -8,6 +8,7 @@
 #include "comp_transform.h"
 #include "comp_tasklist.h"
 #include "entity_tags.h"
+#include "player_controllers/player_controller_base.h"
 
 bool TCompRoomSwitch::load(MKeyValue & atts)
 {
@@ -31,7 +32,7 @@ void TCompRoomSwitch::mUpdate(float dt)
 void TCompRoomSwitch::onTriggerExit(const TMsgTriggerOut & msg)
 {
 	CHandle h_out = msg.other;
-	if (!h_out.hasTag("player")) { return; }
+	if (h_out != CPlayerBase::handle_player) { return; }
 	CEntity * pe = h_out;
 	TCompRoom * room = pe->get<TCompRoom>();
 	TCompTransform * pt = pe->get<TCompTransform>();

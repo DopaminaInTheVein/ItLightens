@@ -14,6 +14,7 @@ using namespace FMOD;
 class CSoundManagerModule : public IAppModule
 {
 	std::string sounds_folder = "data/sounds/banks/";
+	float SFX_VOLUME = 1.f;
 
 	FMOD_RESULT												result;
 	void													*extradriverdata = 0;
@@ -29,8 +30,9 @@ class CSoundManagerModule : public IAppModule
 	// Sound descriptors
 	Studio::EventDescription								**events_array[4];
 	std::map<std::string, Studio::EventDescription*>		sounds_descriptions;
-	// Global sound instances
+	// Global sound instances that need to be persistent
 	Studio::EventInstance*									music_instance = NULL;
+	std::map<std::string, Studio::EventInstance*>			fixed_instances;
 
 public:
 
@@ -52,16 +54,24 @@ public:
 		return "sound_manager";
 	}
 
-	bool playSound(std::string);
-	bool play3dSound(std::string, VEC3 player_pos, VEC3 sound_pos);
-	bool stopSound(std::string);
-	bool playMusic(std::string);
-	bool playLoopingMusic(std::string);
+	bool playSound(std::string route , float volume, bool looping);
+	bool play3dSound(std::string route, VEC3 sound_pos, float max_volume, bool looping, int max_instances);
+	bool playFixed3dSound(std::string route, std::string sound_name, VEC3 sound_pos, float max_volume, bool looping);
+	bool playMusic(std::string route, float volume);
 	bool playVoice(std::string);
 	bool playAmbient(std::string);
-	bool setMusicVolume(float);
 
-	//FMOD_RESULT F_CALLBACK markerCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters);
+	bool stopSound(std::string route);
+	bool stopFixedSound(std::string name);
+	bool stopMusic();
+	bool stopAllSounds();
+
+	bool setMusicVolume(float volume);
+	void setSFXVolume(float volume);
+	bool updateFixed3dSound(std::string name, VEC3 sound_pos, float max_volume);
+
+	Studio::EventInstance* getFixedSound(std::string name) { return fixed_instances[name]; }
+	FMOD_VECTOR VectorToFmod(const VEC3 vect);
 
 };
 

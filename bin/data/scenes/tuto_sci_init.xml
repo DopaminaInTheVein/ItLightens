@@ -31,7 +31,7 @@
 <local_aabb/>
 <character_controller
    radius="0.3"
-   height="1.8"/>
+   height="1.5"/>
 
 </entity>
 <entity
@@ -66,7 +66,7 @@
 <local_aabb/>
 <character_controller
    radius="0.3"
-   height="1.8"/>
+   height="1.5"/>
 
 </entity>
 <entity
@@ -152,8 +152,8 @@
 <abs_aabb/>
 <local_aabb/>
 <character_controller
-   radius="0.147"
-   height="1.71312"/>
+   radius="0.3"
+   height="1.5"/>
 
 </entity>
 <entity
@@ -179,6 +179,11 @@
    tags="drone platform"/>
 <drone
    espatllat="yes"
+   wpts_size="2"
+   wpt0_pos="70.2983 1.99352 -2.8411"
+   wpt0_wait="2"
+   wpt1_pos="70.8942 4.67723 -2.80197"
+   wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
 <name
@@ -212,7 +217,7 @@
 <name
    name="gen_tuto_sci"/>
 <transform
-   pos="75.3317 7.89981 -0.590163"
+   pos="75.3317 7.89981 -0.590159"
    quat="0 0.642788 0 0.766044"
    scale="1.0"/>
 

@@ -3,9 +3,8 @@
 #include "components/entity_tags.h"
 #include "components/comp_transform.h"
 #include "components/comp_name.h"
-#include "input\input_wrapper.h"
-#include "app_modules\logic_manager\logic_manager.h"
-#include "components\comp_charactercontroller.h"
+#include "app_modules/logic_manager/logic_manager.h"
+#include "components/comp_charactercontroller.h"
 
 extern CHandle player;
 

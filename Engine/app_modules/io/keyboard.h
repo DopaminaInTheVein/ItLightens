@@ -9,6 +9,7 @@ class TKeyBoard {
 public:
 	std::map< int, CDigitalButton > active_keys;
   void update(float dt);
+  void release();
   void sysSysStatus(int key_code, const bool &is_pressed);
   const CDigitalButton &operator[](int key_code);
 };

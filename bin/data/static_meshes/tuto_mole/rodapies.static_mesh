@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/tuto_mole/rodapies.mesh" material="materials/tuto_mole/paredes_tuto_mole.material"/>
+</static_mesh>

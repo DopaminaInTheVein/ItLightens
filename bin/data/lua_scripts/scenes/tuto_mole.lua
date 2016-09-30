@@ -14,3 +14,35 @@ function OnEnter__ttutomole_end( )
 tutomole_end()
 end
 
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+
+function OnEnter__ttutomole_end( )
+tutomole_end()
+end
+

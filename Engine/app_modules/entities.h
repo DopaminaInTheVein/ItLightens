@@ -11,6 +11,7 @@ class CEntitiesModule : public IAppModule {
 	bool use_parallel = true;
 	bool reloading; // Only clean the reloadable entities
 	std::thread navmeshThread;
+	bool hasToClear(CEntity*);
 public:
 	std::vector< CHandle > collisionables;
 

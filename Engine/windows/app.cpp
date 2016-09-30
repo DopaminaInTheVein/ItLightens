@@ -22,8 +22,8 @@ CApp::CApp()
 	: xres(800)
 	, yres(600)
 {
-	file_options_json = "./options.json";
-	file_initAttr_json = "./inicialization.json";
+	file_options_json = "./data/json/options.json";
+	file_initAttr_json = "./data/json/inicialization.json";
 
 	std::map<std::string, float> options = readIniAtrData(file_options_json, "screen");
 

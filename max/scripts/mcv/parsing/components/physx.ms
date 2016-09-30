@@ -10,7 +10,7 @@ fn parseTypeShape xml collider isTrigger = (
 	
 	if collider != undefined then (
 		local theClass = classof collider
-		if ( theClass == Pyramid )  then (
+		if ( theClass == Pyramid)  then (
 			 typeShape = "convex"
 		 ) else if (classof collider == Box) then (
 			local box_forced = ((getUserProp collider "box_forced") as string) == "yes"
@@ -28,6 +28,9 @@ fn parseTypeShape xml collider isTrigger = (
 		 ) else (
 			throw ("Falta implementar el collider de tipo" + ((classof collider) as string) + "! + (" + collider.name + ")\n")
 		)
+	) else (
+		local typeCollider = (getUserProp _parsingObject "collider_type") as string
+		if typeCollider == "convex" then (typeShape = "convex")
 	)
 	
 	if typeShape != undefined then (
@@ -106,10 +109,13 @@ fn parseRigidBodyTrigger parent = (
 )
 
 fn parseCharController parent charController = (
-	local radius = "0.3" --> Prefab!?
-	local height = "0.5" --> Prefab!?
+	local radius = "0.3"
+	local height = "0.5"
 	if charController != undefined then (
-		radius = charController.radius as string
+		local type = (getUserProp _parsingObject "typeObject") as string
+		if type != "Scientist" then (
+			radius = charController.radius as string
+		)
 		height = charController.height as string
 	)
 	local xml = parent.addChild "character_controller"

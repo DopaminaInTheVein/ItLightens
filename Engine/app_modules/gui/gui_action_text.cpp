@@ -15,7 +15,7 @@ CGuiActionText::CGuiActionText(float x, float y) {
 	assert(y < 1.0f);
 	posx = x;
 	posy = y;
-	sizeFont = 0.025f;
+	sizeFont = 0.2f;
 }
 
 void CGuiActionText::setState(eAction new_action) {
@@ -30,7 +30,7 @@ void CGuiActionText::render() {
 	string text;
 	switch (action) {
 	case eAction::NONE:
-		text = lang_manager->getText("actions", "none");
+		text = "";// lang_manager->getText("actions", "none");
 		break;
 	case eAction::OVERCHARGE:
 		text = lang_manager->getText("actions", "overcharge");
@@ -78,7 +78,7 @@ void CGuiActionText::render() {
 	if (text != "" && text != last_text) {
 		CHandle h = createPrefab("ui/text");
 		GET_COMP(t, h, TCompText);
-		t->setup(std::string("action_text"), std::string(text), posx, posy, std::string("#FFFFFFFF"), 0.2f, std::string("#FFFFFFFF"), 0.0f, 0.0f);
+		t->setup(std::string("action_text"), std::string(text), posx, posy, std::string("#FFFFFFFF"), sizeFont, std::string("#FFFFFFFF"), 0.0f, 0.0f);
 	}
 	else if (text == "" && text != last_text) {
 		getHandleManager<TCompText>()->each([](TCompText * mess) {

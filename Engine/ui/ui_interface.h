@@ -7,10 +7,6 @@
 #include "components/entity.h"
 #include "components/components.h"
 
-#include "input\input.h"
-
-extern CInput Input;
-
 class CUI {
 	bool open_main_ui = true;
 	bool open_ui_keys = true;

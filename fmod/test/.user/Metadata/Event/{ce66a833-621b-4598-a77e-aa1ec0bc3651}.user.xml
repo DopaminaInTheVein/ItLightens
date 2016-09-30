@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.01.08.00">
     <object class="Event" id="{ce66a833-621b-4598-a77e-aa1ec0bc3651}">
+        <relationship name="selectables">
+            <destination>{0dedcd3c-8d59-4a6f-8ff4-55511733785d}</destination>
+        </relationship>
         <relationship name="uiLastParameterSelection">
             <destination>{82f952df-041a-4da4-9247-8a4f2dec505c}</destination>
         </relationship>
@@ -25,7 +28,7 @@
     </object>
     <object class="MixerBusEffectChain" id="{7bd62116-e876-413e-9ba6-77495b0da019}"/>
     <object class="MixerBusPanner" id="{301dd29a-8a0b-4744-8d87-e47010075596}"/>
-    <object class="SingleSound" id="{071b29b0-cfec-41f7-b95d-89eb10216b9f}"/>
+    <object class="SingleSound" id="{0dedcd3c-8d59-4a6f-8ff4-55511733785d}"/>
     <object class="EventMixerGroup" id="{6b9349b6-2599-487d-a60a-8e11fa79e9a8}"/>
     <object class="MixerBusEffectChain" id="{c6f8c3bd-eb8c-457e-9c10-f599cf8a0159}"/>
     <object class="MixerBusPanner" id="{2ea8a4a3-4ec0-49f7-bb26-5a3478aa4ad4}"/>

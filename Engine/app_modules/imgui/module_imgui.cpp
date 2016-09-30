@@ -74,7 +74,6 @@ void CImGuiModule::update(float dt) {
 		ImGui::EndMenuBar();
 	}
 	//---------------------------------------
-
 	//Language
 	IMGUI_SHOW_STRING(GameController->GetLanguage());
 
@@ -84,6 +83,7 @@ void CImGuiModule::update(float dt) {
 	//Buttons game
 	//---------------------------------------
 	if (GameController->GetGameState() == CGameController::RUNNING) {
+		IMGUI_SHOW_INT(CGameController::RUNNING);
 		if (ImGui::Button("PAUSE BUTTON"))
 			GameController->SetGameState(CGameController::STOPPED);
 
@@ -94,26 +94,26 @@ void CImGuiModule::update(float dt) {
 
 		ImGui::PopStyleColor();
 	}
+
+	else if (GameController->GetGameState() == CGameController::STOPPED) {
+		IMGUI_SHOW_INT(CGameController::STOPPED);
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
+		if (ImGui::Button("PAUSE BUTTON"))
+			GameController->SetGameState(CGameController::STOPPED);
+
+		ImGui::PopStyleColor();
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("RESUME BUTTON"))
+			GameController->SetGameState(CGameController::RUNNING);
+	}
+
 	if (ImGui::Button("SAVE GAME")) CApp::get().saveLevel();
-	if (ImGui::Button("LOAD GAME")) {
-		CApp::get().restartLevelNotify();
-	}
-
-	if (GameController->GetGameState() == CGameController::STOPPED) {
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
-		if (ImGui::Button("PAUSE BUTTON"))
-			GameController->SetGameState(CGameController::STOPPED);
-
-		ImGui::PopStyleColor();
-
-		ImGui::SameLine();
-
-		if (ImGui::Button("RESUME BUTTON"))
-			GameController->SetGameState(CGameController::RUNNING);
-	}
+	if (ImGui::Button("LOAD GAME")) CApp::get().restartLevelNotify();
 
 	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
-	ImGui::Checkbox("Ui control", GameController->IsUiControlPointer());
+	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui;
@@ -123,15 +123,6 @@ void CImGuiModule::update(float dt) {
 		if (ImGui::Button("Create")) Gui->addGuiElement(std::string("ui/") + std::string(gui_prebab_name), pos_new_ui);
 		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Gui Others")) {
-		ImGui::Text("Text?: %s", Gui->there_is_text ? "yes" : "no");
-		ImGui::Text("Window?: %s", Gui->window_actived ? "yes" : "no");
-		ImGui::TreePop();
-	}
-
-	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
-	ImGui::Text("WARNING: The player will still move, pause the game to stop moving the player");
-	ImGui::PopStyleColor();
 
 	if (ImGui::TreeNode("Free camera instructions")) {
 		ImGui::Text("w/a/s/d - normal move\nq/e - up/down\nmouse wheel - speed up/down\n");
@@ -153,16 +144,18 @@ void CImGuiModule::update(float dt) {
 		ImGui::InputInt("NFrames", &nframes, 1, 5);
 		ImGui::Separator();
 		if (ImGui::Button("Start Capture Profiling"))
-			profiler.setNFramesToCapture(nframes);
+			profiler->setNFramesToCapture(nframes);
+#ifndef PROFILING_JOHN
 		ImGui::Separator();
 		ImGui::InputFloat("Time Threshold", &time_threshold, 1, 5);
-		if (profiler.isAutoCapture()) {
+		if (profiler->isAutoCapture()) {
 			ImGui::Text("Waiting auto capture...");
 		}
 		else {
 			if (ImGui::Button("Auto Capture Profiling"))
-				profiler.setAutoCapture(nframes, time_threshold);
+				profiler->setAutoCapture(nframes, time_threshold);
 		}
+#endif
 		ImGui::TreePop();
 	}
 #endif
@@ -330,7 +323,7 @@ void CImGuiModule::update(float dt) {
 			ImGui::TreePop();
 		}
 	}if (ImGui::CollapsingHeader("Culling")) {
-		RenderManager.renderUICulling();
+		RenderManager.renderUICulling(SBB::readSala());
 		TCompSkeleton::renderUICulling();
 		ImGui::Checkbox("show culling collider", GameController->GetCullingRenderPointer());
 	}

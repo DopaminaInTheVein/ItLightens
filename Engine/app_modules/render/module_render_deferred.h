@@ -93,7 +93,7 @@ public:
 	void render() override;
 	void renderEspVisionMode();
 	void renderEspVisionModeFor(std::string tag, VEC4 color_mask, int stencil_mask, bool use_skeleton = false);
-	void renderDetails();
+	void renderDetails(CRenderTechnique::eCategory type);
 	void uploadConstantsGPU();
 	void applyPostFX();
 	void renderUI();

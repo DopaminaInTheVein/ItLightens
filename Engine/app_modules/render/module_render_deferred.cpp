@@ -131,8 +131,6 @@ bool CRenderDeferredModule::start() {
 
 	Resources.get("textures/general/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE);
 
-	
-
 	//hatching texture
 	Resources.get("textures/hatching/hatch_0.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
 
@@ -192,7 +190,7 @@ void CRenderDeferredModule::update(float dt) {
 
 	if (controller->isTestSSAOButoonPressed()) {
 		ssao_test = !ssao_test;
-	}	
+	}
 	if (io->keys[VK_F1].becomesPressed()) {
 		test_dream_shader = !test_dream_shader;
 	}
@@ -205,8 +203,9 @@ void CRenderDeferredModule::update(float dt) {
 void CRenderDeferredModule::renderGBuffer() {
 	PROFILE_FUNCTION("GBuffer");
 	CTraceScoped scope("GBuffer");
-	h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
-	h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
+	//leidas al principio del render
+	///h_camera = tags_manager.getFirstHavingTag(getID("camera_main"));
+	///h_ui_camera = tags_manager.getFirstHavingTag(getID("ui_camera"));
 
 	//static CCamera camera;
 
@@ -259,7 +258,7 @@ void CRenderDeferredModule::renderGBuffer() {
 
 	// Mandar a pintar los 'solidos'
 	if (h_camera.isValid())
-		RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS);
+		RenderManager.renderAll(h_camera, CRenderTechnique::SOLID_OBJS, SBB::readSala());
 
 	activateZ(ZCFG_DEFAULT);
 }
@@ -306,7 +305,7 @@ void CRenderDeferredModule::addPointLights() {
 			else {
 				//fast fix for room3
 				if (SBB::readSala() == 2) {
-					CEntity* ep = tags_manager.getFirstHavingTag("player");
+					CEntity* ep = CPlayerBase::handle_player;
 					if (ep) {
 						TCompTransform* t = ep->get<TCompTransform>();
 						GET_ECOMP(tl, c->compBaseEntity, TCompTransform);
@@ -578,32 +577,32 @@ void CRenderDeferredModule::generateShadowMaps() {
 	// Llamar al metodo generateShadowMap para todas los components de tipo dir_shadows
 	//getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::generateShadowMap);
 
-	getHandleManager<TCompLightDirShadows>()->each([](TCompLightDirShadows* c) {
+	int sala = SBB::readSala();
+	CEntity* ep = CPlayerBase::handle_player;
+	bool player_sala3 = false;
+	if (ep) {
+		TCompTransform* t = ep->get<TCompTransform>();
+		if (t) player_sala3 = t->getPosition().y > 10;
+	}
+
+	getHandleManager<TCompLightDirShadows>()->each([sala, ep, player_sala3](TCompLightDirShadows* c) {
 		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
 		// la world para la mesh y las constantes en el pixel shader
 		PROFILE_FUNCTION("check gen shadow");
 		GET_ECOMP(room, c->compBaseEntity, TCompRoom);
+
 		if (room) {
 			std::vector<int> rooms = room->name;
-			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
+			if (std::find(rooms.begin(), rooms.end(), sala) == rooms.end()) {
 				return;			//light on diferent room
 			}
 			else {
 				//fast fix for room3
-				if (SBB::readSala() == 2) {
-					CEntity* ep = tags_manager.getFirstHavingTag("player");
+				if (sala == 2) {
 					if (ep) {
-						TCompTransform* t = ep->get<TCompTransform>();
 						TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
-
-						if (t->getPosition().y > 10) {
-							if (tl->getPosition().y < 12)
-								return;
-						}
-						else {
-							if (tl->getPosition().y > 12)
-								return;
-						}
+						if (tl->getPosition().y > 12 != player_sala3)
+							return;
 					}
 				}
 			}
@@ -688,7 +687,7 @@ void CRenderDeferredModule::ApplySSAO() {
 	PROFILE_FUNCTION("referred: ssao");
 	CTraceScoped scope("referred: ssao");
 
-	rt_ssao->clear(VEC4(0,0,0,0));
+	rt_ssao->clear(VEC4(0, 0, 0, 0));
 
 	ID3D11RenderTargetView* rts[3] = {
 		//Render.render_target_view
@@ -698,8 +697,8 @@ void CRenderDeferredModule::ApplySSAO() {
 	};
 
 	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
-	activateBlend(BLENDCFG_DEFAULT);		
-	
+	activateBlend(BLENDCFG_DEFAULT);
+
 	activateZ(ZCFG_ALL_DISABLED);
 
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
@@ -894,6 +893,11 @@ void CRenderDeferredModule::ShootGuardRender() {
 
 // ----------------------------------------------
 void CRenderDeferredModule::render() {
+	if (!h_camera.isValid()) h_camera = tags_manager.getFirstHavingTag("camera_main");
+	if (!h_camera.isValid()) return;
+	if (!h_ui_camera.isValid()) h_ui_camera = tags_manager.getFirstHavingTag("ui_camera");
+	if (!h_ui_camera.isValid()) return;
+
 	//Render.clearMainZBuffer();
 	rt_black->clear(VEC4(0, 0, 0, 1));
 	rt_data->clear(VEC4(0, 0, 0, 0));
@@ -908,12 +912,13 @@ void CRenderDeferredModule::render() {
 	rt_selfIlum_int->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred_int->clear(VEC4(0, 0, 0, 0));
-	rt_shadows->clear(VEC4(0,0,0,0));
+	rt_shadows->clear(VEC4(0, 0, 0, 0));
 
 	uploadConstantsGPU();
 
 	renderGBuffer();
-	renderDetails();
+	renderDetails(CRenderTechnique::DETAIL_OBJS);
+	renderDetails(CRenderTechnique::TRANSPARENT_OBJS);
 	renderAccLight();
 
 	if (ssao_test) {
@@ -955,7 +960,7 @@ void CRenderDeferredModule::render() {
 	rt_specular_lights->activate(TEXTURE_SLOT_SPECULAR_GL);
 
 	if (controller->IsImpulseUpButtonPressed()) {
- 		rt_shadows->activate(TEXTURE_SLOT_SHADOWS);
+		rt_shadows->activate(TEXTURE_SLOT_SHADOWS);
 	}
 	else {
 		blurred_shadows->activate(TEXTURE_SLOT_SHADOWS);
@@ -968,17 +973,18 @@ void CRenderDeferredModule::render() {
 
 	auto tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
 
-
 	drawFullScreen(rt_final, tech);
-	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 
-	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-
+	//outline
 	shader_ctes_globals.global_color = VEC4(1, 1, 1, 1);
 	shader_ctes_globals.uploadToGPU();
 	activateBlend(BLENDCFG_SUBSTRACT);
 	tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
 	drawFullScreen(rt_final, tech);
+
+	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
+
+	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 
 	activateBlend(BLENDCFG_DEFAULT);
 
@@ -994,7 +1000,6 @@ void CRenderDeferredModule::render() {
 
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
-	
 	CTexture::deactivate(TEXTURE_SLOT_GLOSSINESS);
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 	Render.activateBackBuffer();
@@ -1006,9 +1011,6 @@ void CRenderDeferredModule::render() {
 
 	applyPostFX();
 
-	// Mandar a pintar los 'transparentes'
-	
-	RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
 	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
@@ -1087,9 +1089,6 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 			,	nullptr
 		};
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
-		
-
-		
 
 		if (use_skeleton) {
 			skining_tech->activate();
@@ -1113,18 +1112,17 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 			TCompCameraMain *cam;
 			TCompRenderStaticMesh *rsm;
 			TCompTransform *c_tmx;
-			
-				
-				if (!e) continue;
-				if (!isInRoom(h)) continue;
-				rsm = e->get<TCompRenderStaticMesh>();
-				c_tmx = e->get<TCompTransform>();
-				if (!c_tmx || !rsm) continue;
 
-				//camera distance
-				e_cam = h_camera;
-				cam = e_cam->get<TCompCameraMain>();
-			
+			if (!e) continue;
+			if (!isInRoom(h)) continue;
+			rsm = e->get<TCompRenderStaticMesh>();
+			c_tmx = e->get<TCompTransform>();
+			if (!c_tmx || !rsm) continue;
+
+			//camera distance
+			e_cam = h_camera;
+			cam = e_cam->get<TCompCameraMain>();
+
 			float z = fabs(VEC3::Distance(cam->getPosition(), c_tmx->getPosition()));
 			{
 				PROFILE_FUNCTION("referred: mask vision. Mesh Scale ");
@@ -1139,7 +1137,7 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 				c_tmx->setScale(scale);
 			}
 			//rsm->static_mesh->slots[0].material->activateTextures();
-			
+
 			//every object will have the same mesh
 			if (!mesh_uploaded) {
 				PROFILE_FUNCTION("referred: mask vision. Mesh upload ");
@@ -1271,23 +1269,26 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 	//Render.activateBackBuffer();
 }
 
-void CRenderDeferredModule::renderDetails() {
+void CRenderDeferredModule::renderDetails(CRenderTechnique::eCategory type) {
 	// -------------------------
 	// Activar mis multiples render targets
-	ID3D11RenderTargetView* rts[3] = {
+	ID3D11RenderTargetView* rts[5] = {
 		rt_albedos->getRenderTargetView()
 		,	rt_normals->getRenderTargetView()
-		,	nullptr
+		,	rt_depths->getRenderTargetView()
+		,   rt_glossiness->getRenderTargetView()
+		,   rt_specular->getRenderTargetView()
 	};
 
 	Render.activateBackBuffer();
 
-	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+	Render.ctx->OMSetRenderTargets(5, rts, Render.depth_stencil_view);
 
 	activateZ(ZCFG_Z_TEST_LESS_EQUAL);
 	activateBlend(BLENDCFG_COMBINATIVE);
 
-	RenderManager.renderAll(h_camera, CRenderTechnique::DETAIL_OBJS);
+	RenderManager.renderAll(h_camera, type, SBB::readSala());
+	//RenderManager.renderAll(h_camera, CRenderTechnique::TRANSPARENT_OBJS);
 }
 
 void CRenderDeferredModule::uploadConstantsGPU() {
@@ -1314,7 +1315,23 @@ void CRenderDeferredModule::applyPostFX() {
 		next_step = glow->apply(next_step);
 	else
 		return;
-	
+
+	// ------------------------
+	Render.activateBackBuffer();
+
+	activateZ(ZCFG_ALL_DISABLED);
+
+	activateBlend(BLENDCFG_ADDITIVE);
+
+	drawFullScreen(next_step);
+
+	//AA
+//	activateBlend(BLENDCFG_COMBINATIVE);
+//	auto tech = Resources.get("anti_aliasing.tech")->as<CRenderTechnique>();
+//	tech->activate();
+
+//	drawFullScreen(rt_final, tech);
+
 	if (test_dream_shader) {
 		activateBlend(BLENDCFG_COMBINATIVE);
 		auto tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
@@ -1323,16 +1340,14 @@ void CRenderDeferredModule::applyPostFX() {
 		drawFullScreen(rt_final, tech);
 	}
 
+	activateBlend(BLENDCFG_COMBINATIVE);
+	//activateBlend(BLENDCFG_DEFAULT);
 
+	//DoF
+	auto tech1 = Resources.get("depth_field.tech")->as<CRenderTechnique>();
+	tech1->activate();
 
-	// ------------------------
-	Render.activateBackBuffer();
-
-	//activateZ(ZCFG_ALL_DISABLED);
-
-	activateBlend(BLENDCFG_ADDITIVE);
-
-	drawFullScreen(next_step);
+	drawFullScreen(rt_final, tech1);
 
 	activateZ(ZCFG_DEFAULT);
 }
@@ -1391,7 +1406,7 @@ void CRenderDeferredModule::renderUI() {
 	mesh->activateAndRender();
 	*/
 	//Render.activateBackBuffer();
-	RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS);
+	RenderManager.renderAll(h_ui_camera, CRenderTechnique::UI_OBJS, SBB::readSala());
 }
 
 float CRenderDeferredModule::getAspectRatio()

@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/tuto_mole/suelo_celda.mesh" material="materials/tuto_mole/suelo_jaula.material"/>
+</static_mesh>

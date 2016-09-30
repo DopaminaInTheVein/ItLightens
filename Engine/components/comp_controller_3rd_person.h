@@ -9,7 +9,7 @@
 #include "comp_msgs.h"
 #include "geometry/angular.h"
 #include "windows\app.h"
-#include "input/input_wrapper.h"
+#include "app_modules/io/input_wrapper.h"
 #include "comp_charactercontroller.h"
 #include "comp_camera_main.h"
 
@@ -34,6 +34,7 @@ class TCompController3rdPerson : public TCompBase {
 	bool		y_axis_inverted;
 	bool		x_axis_inverted;
 	bool		input_enabled = true;
+	bool		pitch_disabled = false;
 	bool		orbit_mode = false;
 	VEC3		position_diff;
 	VEC3		offset;
@@ -118,9 +119,13 @@ public:
 		if (x_axis_inverted)	deltaYaw -= controller->RXNormalized() * rotation_sensibility * speed_camera;
 		else					deltaYaw += controller->RXNormalized() * rotation_sensibility * speed_camera;
 
-		if (y_axis_inverted)	deltaPitch -= controller->RYNormalized() * rotation_sensibility * speed_camera;
-		else					deltaPitch += controller->RYNormalized() * rotation_sensibility * speed_camera;
-
+		if (pitch_disabled) {
+			deltaPitch += rotation_sensibility * speed_camera *2.f;
+		}
+		else {
+			if (y_axis_inverted)	deltaPitch -= controller->RYNormalized() * rotation_sensibility * speed_camera;
+			else					deltaPitch += controller->RYNormalized() * rotation_sensibility * speed_camera;
+		}
 		yaw = MOD_YAW(yaw + deltaYaw);
 
 		pitch += deltaPitch;
@@ -229,12 +234,14 @@ public:
 
 	void StartOrbit() { orbit_mode = true; }
 	void StopOrbit() { orbit_mode = false; }
+	void SetPitchEnabled(bool pitch_enabled) { pitch_disabled = !pitch_enabled; }
 
 	void renderInMenu() {
 		ImGui::DragFloat("rot_speed", &speed_camera, -0.1f, 0.1f);
 		ImGui::DragFloat("distanceToTarget", &distance_to_target, 0.0001f, 0.1f);
 		ImGui::DragFloat3("positionDiff", &position_diff.x, -0.1f, 0.1f);
 		ImGui::Checkbox("Input enabled", &input_enabled);
+		ImGui::Checkbox("Pitch Disabled", &pitch_disabled);
 	}
 };
 

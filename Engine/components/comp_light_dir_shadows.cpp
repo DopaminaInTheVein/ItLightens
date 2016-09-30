@@ -4,6 +4,8 @@
 #include "entity.h"
 #include "render/draw_utils.h"
 #include "resources/resources_manager.h"
+#include "comp_room.h"
+#include "player_controllers\player_controller_base.h"
 
 bool TCompLightDirShadows::load(MKeyValue& atts) {
 	TCompLightDir::load(atts);
@@ -56,13 +58,13 @@ void TCompLightDirShadows::generateShadowMap() {
 	Resources.get("shadow_gen.tech")->as<CRenderTechnique>()->activate();
 
 	// Pintar los shadow casters
-	RenderManager.renderShadowCasters(CHandle(this).getOwner());
+	RenderManager.renderShadowCasters(CHandle(this).getOwner(), SBB::readSala());
 
 	// activar la tech de shadow map generation
 	Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
 
 	// Pintar los shadow casters
-	RenderManager.renderShadowCastersSkin(CHandle(this).getOwner());
+	RenderManager.renderShadowCastersSkin(CHandle(this).getOwner(), SBB::readSala());
 
 	activateRS(RSCFG_DEFAULT);
 }

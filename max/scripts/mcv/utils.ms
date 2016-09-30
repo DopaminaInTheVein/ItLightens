@@ -262,6 +262,22 @@ fn addTag tag = (
 	)
 )
 
+ --  SetProp --
+fn setPropTo obj prop val = (
+	setUserProp obj prop val
+)
+
+fn setProp prop val = (
+	if (classof $) == ObjectSet then (
+		for obj in $ do (
+			setPropTo obj prop val
+		)
+	) else (
+		setPropTo $ prop val
+	)
+)
+ 
+ 
 -- FIXES SCENE
 fn fixUserProps = (
 	names_modified = #()
@@ -277,4 +293,44 @@ fn fixUserProps = (
 	for nombre in names_modified do (
 		print nombre
 	)
+)
+	
+-- FILES
+fn getFolderFromPath folder = (
+	local sub_folders = filterString folder "\\"
+	local res = ""
+	if sub_folders.count > 0 then (
+		res = sub_folders[1]
+		if sub_folders.count > 1 then (
+			for i = 2 to sub_folders.count - 1 do (
+				res += ("\\" + sub_folders[i])
+			)
+		)
+	)
+	return res
+)
+
+fn copyFileAndDirs orig dest = (
+	local res = false
+	local destFolder = (getFolderFromPath dest)
+	local dirs = getDirectories (destFolder)
+	if dirs.count == 0 then (
+		if (makeDir destFolder) then (
+			res =copyFile orig dest
+		)
+	) else (
+		res = copyFile orig dest
+	)
+	return res
+)
+
+-- UI --
+-- Transfer ui object
+fn transferUi orig dest = (
+	print orig.name
+	print dest.name
+	dest.mat = orig.mat
+	local props = getUserPropBuffer orig 
+	setUserPropBuffer dest props
+	dest.name = orig.name
 )

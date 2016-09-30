@@ -13,18 +13,33 @@ VHandles CEntityParser::collisionables = VHandles();
 float CEntityParser::entity_load_value = 0.f;
 // Identified Entities
 static VHandles identified_entities;
+static VHandles hierarchy_handles;
+
 CHandle IdEntities::findById(const int entity_id) {
 	return identified_entities[entity_id];
 }
+
 void IdEntities::init() {
 	identified_entities.resize(MAX_ENTITIES);
 }
+
 void IdEntities::saveIdEntity(CHandle entity, int entity_id) {
 	if (entity_id >= 0) {
 		identified_entities[entity_id] = entity;
 		CEntity* e = entity;
 		e->setId(entity_id);
 	}
+}
+
+void IdEntities::addHierarchyHandle(CHandle entity) {
+	hierarchy_handles.push_back(entity);
+}
+void IdEntities::clearHierarchyHandles() {
+	hierarchy_handles.clear();
+}
+
+VHandles IdEntities::getHierarchyHandles() {
+	return hierarchy_handles;
 }
 
 CHandle spawnPrefab(const std::string& prefab) {
@@ -79,7 +94,6 @@ CHandle createPrefab(const std::string& prefab) {
 #define MUST_COMPILE_SNOOZER (curr_slept_compiler && elem != "entity" && elem != "tags" && elem != "name")
 
 void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
-
 	if (curr_prefab_compiler) {
 		CPrefabCompiler::TCall c;
 		c.is_start = true;
@@ -106,6 +120,7 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 	if (elem == "entity") {
 		curr_entity_permanent = atts.getBool("permanent", false);
 		curr_entity_reload = atts.getBool("reload", false);
+		curr_entity_temp = atts.getBool("temp", false);
 
 		if (!hasToCreate()) {
 			curr_entity = CHandle();
@@ -130,6 +145,7 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 		IdEntities::saveIdEntity(CHandle(e), curr_entity_id);
 		e->setPermanent(curr_entity_permanent);
 		e->setReload(curr_entity_reload);
+		e->setTemp(curr_entity_temp);
 		new_h = e->getByCompIndex(hm->getType());
 		reusing_component = new_h.isValid();
 	}

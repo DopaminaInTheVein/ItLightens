@@ -15,13 +15,14 @@
 #include "components/comp_camera_main.h"
 #include "components/comp_sense_vision.h"
 
-#include "input/input_wrapper.h"
+#include "app_modules/io/input_wrapper.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "utils/utils.h"
 
 #include "components/comp_charactercontroller.h"
 
 map<int, string> CPlayerBase::out = {};
+CHandle CPlayerBase::handle_player = CHandle();
 
 CPlayerBase::CPlayerBase() {
 }
@@ -50,6 +51,10 @@ bool CPlayerBase::getUpdateInfo() {
 	sense_vision = GETH_COMP(h_sense_vision, TCompSenseVision);
 	if (!sense_vision) return false;
 
+	//Cache handle player
+	CHandle myHandle = CHandle(compBaseEntity);
+	if (myHandle.hasTag("player")) handle_player = myHandle;
+
 	return true;
 }
 
@@ -57,7 +62,7 @@ bool CPlayerBase::checkDead() {
 	PROFILE_FUNCTION("checkdead");
 
 	if (TCompLife::isDead()) {
-		if (!dead) logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDead, "");
+		if (!dead) logic_manager->throwEvent(CLogicManagerModule::EVENT::OnDead, CApp::get().getCurrentRealLevel());
 		dead = true;
 		ChangeState("die");
 		ChangeCommonState("die");
@@ -376,7 +381,7 @@ void CPlayerBase::Idle()
 	if (!checkDead()) {
 		UpdateDirection();
 		UpdateJumpState();
-		if (UpdateMovDirection()) {
+		if (UpdateMovDirection() && (state == "moving" || state == "idle" )) {
 			ChangeCommonState("moving");
 			ChangeState("moving");
 		}

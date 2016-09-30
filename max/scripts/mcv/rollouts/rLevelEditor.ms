@@ -104,7 +104,8 @@ rollout RL_LevelEditor "IT Lightens! Editor" width:250 height:644
 	)
 	on btnCreate pressed do
 	(
-		drawObj objMax_dir ddlType.selected
+		local obj = drawObj objMax_dir ddlType.selected
+		setUserProp obj "mesh_protected" "yes"
 	)
 	on pckObj picked obj do
 	(

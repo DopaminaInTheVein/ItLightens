@@ -46,6 +46,7 @@ public:
 class bt_guard : public npc, public TCompBase
 {
 	//Main attritbutes
+	//static float SHOT_OFFSET;
 	float PLAYER_DETECTION_RADIUS;
 	float DIST_SQ_SHOT_AREA_ENTER;
 	float DIST_SQ_SHOT_AREA_LEAVE;
@@ -61,7 +62,6 @@ class bt_guard : public npc, public TCompBase
 	float LOOK_AROUND_TIME;
 	float GUARD_ALERT_TIME;
 	float GUARD_ALERT_RADIUS;
-	VEC4 SHOT_OFFSET;
 	//from bombs
 	float reduce_factor;
 	float t_reduceStats_max;
@@ -180,6 +180,10 @@ class bt_guard : public npc, public TCompBase
 
 	CHandle getParent() override { return CHandle(this).getOwner(); }
 
+	int step_counter = 0;
+	bool chasing = false;
+	static int guards_chasing;
+
 public:
 	//public for LUA
 	bool isInFirstSeekPoint();
@@ -294,11 +298,14 @@ public:
 
 	void changeCommonState(std::string);
 	void onGetWhoAmI(TMsgGetWhoAmI& msg);
-
-	//Cambio Malla
-	//void ChangePose(string new_pose_route);
+	int getStepCounter() { return step_counter; }
+	void increaseChaseCounter();
+	void decreaseChaseCounter();
 
 	float timerStunt, _timerStunt;
+
+	void onDifficultyChanged(const TMsgDifficultyChanged&);
+
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)
 };
 

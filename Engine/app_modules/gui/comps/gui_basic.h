@@ -28,7 +28,6 @@ typedef struct GuiListener {
 
 class TCompGui : public TCompBase {
 	static std::map<std::string, GuiMatrix> gui_screens;
-	static std::stack<CHandle> cursors;
 
 	//Language
 	bool language;
@@ -73,9 +72,6 @@ public:
 
 	// Cursors
 	CHandle getCursor();
-	static void pushCursor(CHandle);
-
-	void onCreate(const TMsgEntityCreated&);
 
 	// Menu gets
 	int GetRow();
@@ -112,6 +108,7 @@ public:
 	}
 
 	bool load(MKeyValue& atts);
+	void onCreate(const TMsgEntityCreated&);
 	void update(float elapsed);
 	void uploadCtes();
 	float getRenderState() { return render_state; }

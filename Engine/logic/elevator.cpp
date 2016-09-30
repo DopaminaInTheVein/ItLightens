@@ -2,6 +2,8 @@
 #include "elevator.h"
 #include "components/comp_msgs.h"
 
+#define DIST_DISABLE_PITCH_SQ	9.f
+
 bool elevator::load(MKeyValue& atts)
 {
 	speedUp = atts.getFloat("speedUp", 7.f);
@@ -72,6 +74,7 @@ void elevator::update(float elapsed)
 	updateMove();
 	notifyNewState();
 	Debug->DrawLine(transform->getPosition(), targetDown);
+	updatePlayerNear();
 }
 
 //Move door and set OPENED or CLOSED if movement ends
@@ -152,8 +155,21 @@ bool elevator::getUpdateInfo() {
 	CEntity* eMe = myEntity;
 	transform = eMe->get<TCompTransform>();
 	if (!transform) return false;
+
 	physics = eMe->get<TCompPhysics>();
 	if (!physics) return false;
+
+	if (!player.isValid() || !player.hasTag("player")) player = tags_manager.getFirstHavingTag("player");
+	if (!player.isValid()) return false;
+
+	if (!camera.isValid()) camera = tags_manager.getFirstHavingTag("camera_main");
+	if (!camera.isValid()) return false;
+
+	player_tmx = GETH_COMP(player, TCompTransform);
+	if (!player_tmx) return false;
+
+	player_3rd = GETH_COMP(camera, TCompController3rdPerson);
+	if (!player_3rd) return false;
 
 	return true;
 }
@@ -162,4 +178,16 @@ void elevator::onElevatorAction(const TMsgActivate& msg)
 {
 	state = (state == UP || state == GOING_UP) ? GOING_DOWN : GOING_UP;
 	notifyNewState();
+}
+
+void elevator::updatePlayerNear()
+{
+	bool now_is_near = inSquaredRangeXZ_Y(transform->getPosition(), player_tmx->getPosition(), DIST_DISABLE_PITCH_SQ, 3.f);
+	if (now_is_near) {
+		player_3rd->SetPitchEnabled(false);
+	}
+	else {
+		if (player_near) player_3rd->SetPitchEnabled(true);
+	}
+	player_near = now_is_near;
 }

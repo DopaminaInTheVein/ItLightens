@@ -111,7 +111,7 @@ protected:
 	void setControllable(bool);
 
 public:
-
+	static CHandle handle_player;
 	CPlayerBase();
 	void init() { initBaseAttributes(); Init(); }
 	bool getEnabled() { return controlEnabled; }
@@ -132,7 +132,7 @@ public:
 	void Win();
 
 	void Jumping();
-	void Falling();
+	virtual void Falling();
 	virtual void Moving();
 
 	virtual void update_msgs() {}

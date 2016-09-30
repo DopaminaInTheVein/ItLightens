@@ -1,13 +1,15 @@
 ﻿
 function OnStart_title( )
-	p:putText("title_text","It Lightens\n0123456789",0.2,0.6,"#FF0000FF",1.0,"#0000FFFF",10.0,0.1)
-	--p:putText("title_text",p:get_text("title", "test"),0.2,0.6,"#FF0000FF",0.2,"#0000FFFF",0.5,0.1)	
+	p:pause_game()
+	p:putText("title_text","It Lightens",0.3,0.6,"#FF0000FF",0.6,"#0000FFFF",3.5,0.2)
+	--p:putText("title_text",p:get_text("title", "test"),0.1, 0.4,"#FF0000FF",0.2,"#0000FFFF",0.5,0.1)	
 	p:clear_save()
 	--p:exec_command("waitAndDoTitleSmaller()",2.0)
 end
 
 function OnClicked_btn_start( )
 	--ui_cam:fade_out(1)
+	p:set_cursor_enabled(false)
 	p:exec_command("playVideoIntro();", 1)
 end
 

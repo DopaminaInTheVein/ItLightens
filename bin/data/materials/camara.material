@@ -1,4 +1,4 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/difuso_camara.dds"/>
-<texture slot="normalmap" name="textures/normal_camara.dds"/>
+<texture slot="diffuse" name="textures/camara_difuso.dds"/>
+<texture slot="normalmap" name="textures/camara_normal.dds"/>
 </material>

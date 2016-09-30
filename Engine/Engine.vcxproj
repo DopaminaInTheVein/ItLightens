@@ -120,12 +120,8 @@
     <ClCompile Include="app_modules\gui\comps\gui_selector.cpp" />
     <ClCompile Include="app_modules\gui\gui.cpp" />
     <ClCompile Include="app_modules\gui\gui_action_text.cpp" />
-    <ClCompile Include="app_modules\gui\gui_bar_color.cpp" />
-    <ClCompile Include="app_modules\gui\gui_button_std.cpp" />
-    <ClCompile Include="app_modules\gui\gui_hud_player.cpp" />
-    <ClCompile Include="app_modules\gui\gui_menu_pause.cpp" />
-    <ClCompile Include="app_modules\gui\gui_utils.cpp" />
     <ClCompile Include="app_modules\imgui\module_imgui.cpp" />
+    <ClCompile Include="app_modules\io\input_wrapper.cpp" />
     <ClCompile Include="app_modules\io\io.cpp" />
     <ClCompile Include="app_modules\io\joystick.cpp" />
     <ClCompile Include="app_modules\io\keyboard.cpp" />
@@ -137,6 +133,7 @@
     <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
     <ClCompile Include="app_modules\navmesh\navmesh_manager.cpp" />
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
+    <ClCompile Include="app_modules\sound_manager\comp_sound.cpp" />
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
     <ClCompile Include="camera\camera.cpp" />
     <ClCompile Include="components\comp_aabb.cpp" />
@@ -218,9 +215,6 @@
     <ClCompile Include="geometry\transform.cpp" />
     <ClCompile Include="handle\handle.cpp" />
     <ClCompile Include="handle\handle_manager.cpp" />
-    <ClCompile Include="input\input.cpp" />
-    <ClCompile Include="input\input_manager.cpp" />
-    <ClCompile Include="input\input_wrapper.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
     <ClCompile Include="logic\ai_cam.cpp" />
     <ClCompile Include="logic\ai_workbench.cpp" />
@@ -353,15 +347,10 @@
     <ClInclude Include="app_modules\gui\comps\gui_selector.h" />
     <ClInclude Include="app_modules\gui\gui.h" />
     <ClInclude Include="app_modules\gui\gui_action_text.h" />
-    <ClInclude Include="app_modules\gui\gui_bar.h" />
-    <ClInclude Include="app_modules\gui\gui_bar_color.h" />
-    <ClInclude Include="app_modules\gui\gui_button.h" />
-    <ClInclude Include="app_modules\gui\gui_button_std.h" />
-    <ClInclude Include="app_modules\gui\gui_hud_player.h" />
-    <ClInclude Include="app_modules\gui\gui_menu_pause.h" />
     <ClInclude Include="app_modules\gui\gui_utils.h" />
     <ClInclude Include="app_modules\imgui\module_imgui.h" />
     <ClInclude Include="app_modules\io\digital_button.h" />
+    <ClInclude Include="app_modules\io\input_wrapper.h" />
     <ClInclude Include="app_modules\io\io.h" />
     <ClInclude Include="app_modules\io\joystick.h" />
     <ClInclude Include="app_modules\io\keyboard.h" />
@@ -371,6 +360,7 @@
     <ClInclude Include="app_modules\logic_manager\slb_public_functions.h" />
     <ClInclude Include="app_modules\navmesh\navmesh_manager.h" />
     <ClInclude Include="app_modules\render\module_render_deferred.h" />
+    <ClInclude Include="app_modules\sound_manager\comp_sound.h" />
     <ClInclude Include="app_modules\sound_manager\sound_manager.h" />
     <ClInclude Include="camera\camera.h" />
     <ClInclude Include="components\comp_aabb.h" />
@@ -461,9 +451,6 @@
     <ClInclude Include="imgui\imgui_impl_dx11.h" />
     <ClInclude Include="imgui\imgui_internal.h" />
     <ClInclude Include="imgui\stb_textedit.h" />
-    <ClInclude Include="input\input.h" />
-    <ClInclude Include="input\input_manager.h" />
-    <ClInclude Include="input\input_wrapper.h" />
     <ClInclude Include="logic\aicontroller.h" />
     <ClInclude Include="logic\ai_cam.h" />
     <ClInclude Include="logic\ai_workbench.h" />

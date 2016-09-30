@@ -4,7 +4,6 @@
 #include "components/entity_tags.h"
 #include "utils/XMLParser.h"
 #include "utils/utils.h"
-#include "input/input_wrapper.h"
 #include "logic/sbb.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "ui/ui_interface.h"
@@ -16,6 +15,8 @@
 #define SET_ANIM_GUARD(state) SET_ANIM_STATE(animController, state)
 #define SET_ANIM_GUARD_P(state) SET_ANIM_STATE_P(animController, state)
 
+//float bt_guard::SHOT_OFFSET = 1.f;
+
 map<string, bt_guard::KptType> bt_guard::kptTypes = {
   {"seek", KptType::Seek}
   , {"look", KptType::Look}
@@ -26,6 +27,7 @@ map<string, btaction> bt_guard::actions = {};
 map<string, btcondition> bt_guard::conditions = {};
 map<string, btevent> bt_guard::events = {};
 btnode* bt_guard::root = nullptr;
+int bt_guard::guards_chasing = 0;
 
 TCompTransform * bt_guard::getTransform() {
 	PROFILE_FUNCTION("guard: get transform");
@@ -45,7 +47,7 @@ TCompCharacterController* bt_guard::getCC() {
 
 CEntity* bt_guard::getPlayer() {
 	PROFILE_FUNCTION("guard: get player");
-	thePlayer = tags_manager.getFirstHavingTag("player");
+	thePlayer = CPlayerBase::handle_player;
 	CEntity* player = thePlayer;
 	if (!player) {
 		dbg("GUARD CAUTION: PLAYER NOT FOUND!\n");
@@ -82,9 +84,13 @@ void bt_guard::readIniFileAttr() {
 			assignValueToVar(reduce_factor, fields);
 			assignValueToVar(t_reduceStats_max, fields);
 			assignValueToVar(t_reduceStats, fields);
-			SHOT_OFFSET = VEC4(0, 1.5f, 0.5f, 1);
 		}
 	}
+}
+
+void bt_guard::onDifficultyChanged(const TMsgDifficultyChanged&)
+{
+	readIniFileAttr();
 }
 
 /**************
@@ -195,6 +201,7 @@ bool bt_guard::playerDetected() {
 		SBB::postGuardAlert(name, alert);
 
 		logic_manager->throwEvent(logic_manager->OnDetected, std::to_string(distance), CHandle(this).getOwner());
+
 		return true;
 	}
 	else {
@@ -207,8 +214,10 @@ bool bt_guard::playerOutOfReach() {
 	CEntity * ePlayer = getPlayer();
 	if (!ePlayer)
 		return false;
-	if (!playerVisible())
+	if (!playerVisible()) {
+		decreaseChaseCounter();
 		return true;
+	}
 
 	//Calc out of reach
 	bool res;
@@ -268,7 +277,7 @@ bool bt_guard::guardAlerted() {
 				// the guard will be alerted if he is near enough
 				if (simpleDist(myPos, guard_alert_position) < GUARD_ALERT_RADIUS) {
 					VEC3 alert_point = alert_it->second.alert_position;
-					if ((alert_it->first.find(string("_player_lost")) != string::npos) || 
+					if ((alert_it->first.find(string("_player_lost")) != string::npos) ||
 						(alert_it->first.find(string("_player_detected")) != string::npos)) {
 						playerLost = true;
 						player_last_seen_point = alert_point;
@@ -362,6 +371,7 @@ int bt_guard::actionReact() {
 	// stay in this state until the reaction time is over
 	if (reaction_time < 0.f) {
 		player_detected_start = false;
+		increaseChaseCounter();
 		return OK;
 	}
 	else {
@@ -387,6 +397,7 @@ int bt_guard::actionChase() {
 		playerLost = true;
 		player_last_seen_point = posPlayer;
 		SET_ANIM_GUARD(AST_IDLE);
+		decreaseChaseCounter();
 		return KO;
 	}
 	//player near?
@@ -397,6 +408,7 @@ int bt_guard::actionChase() {
 			playerLost = true;
 			player_last_seen_point = posPlayer;
 			SET_ANIM_GUARD(AST_IDLE);
+			decreaseChaseCounter();
 			return KO;
 		}
 		else {
@@ -492,6 +504,7 @@ int bt_guard::actionAbsorb() {
 			playerLost = true;
 			player_last_seen_point = posPlayer;
 			SET_ANIM_GUARD(AST_IDLE);
+			decreaseChaseCounter();
 			return KO;
 		}
 		else {
@@ -500,6 +513,7 @@ int bt_guard::actionAbsorb() {
 	}
 
 	logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
+	decreaseChaseCounter();
 	return KO;
 }
 
@@ -517,6 +531,7 @@ int bt_guard::actionShootWall() {
 	//If the player is visible, we stop shooting the wall
 	if (playerVisible() || boxMovingDetected()) {
 		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
+		decreaseChaseCounter();
 		return OK;
 	}
 	else {
@@ -528,6 +543,7 @@ int bt_guard::actionShootWall() {
 			player_last_seen_point = posPlayer;
 			logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 			____TIMER_REDEFINE_(timerShootingWall, 1);
+			decreaseChaseCounter();
 			return OK;
 		}
 		else {
@@ -927,7 +943,7 @@ bool bt_guard::playerVisible(bool check_raycast) {
 								if (ret) { //No bloquea vision
 									CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
 									dest_shoot = PhysxConversion::PxVec3ToVec3(hit.getAnyHit(0).position);
-									if (h.hasTag("player") || dist_sq < squaredDistXZ(myPos, dest_shoot)) {
+									if (h == CPlayerBase::handle_player || dist_sq < squaredDistXZ(myPos, dest_shoot)) {
 										res = true;
 									}
 								}
@@ -1033,7 +1049,7 @@ void bt_guard::shootToPlayer() {
 		dest_shoot = PhysxConversion::PxVec3ToVec3(hit.getAnyHit(0).position);
 		if (ret) {
 			CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
-			if (h.hasTag("player")) {
+			if (h == CPlayerBase::handle_player) {
 				damage = true;
 				raijin = h.hasTag("raijin");
 			}
@@ -1078,7 +1094,6 @@ void bt_guard::shootToPlayer() {
 
 	// calling OnGuardAttackEvent
 	logic_manager->throwEvent(logic_manager->OnGuardAttack, "", CHandle(this).getOwner());
-
 }
 
 void bt_guard::drawShot(VEC3 dest) {
@@ -1092,12 +1107,14 @@ void bt_guard::drawShot(VEC3 dest) {
 	VEC3 posPlayer = cc->GetPosition();
 
 	// Origin and rayshot
-	VEC4 originShot4;
-	VEC4::Transform(SHOT_OFFSET, getTransform()->asMatrix(), originShot4);
-	VEC3 originShot = VEC3(originShot4.x, originShot4.y, originShot4.z);
-	originShot += VEC3(0.0f, -0.32f, 0.0f);
-	originShot += 0.15f*getTransform()->getLeft();
-	originShot += 0.15f*getTransform()->getFront();
+	//VEC4 originShot4;
+	//VEC4::Transform(SHOT_OFFSET, getTransform()->asMatrix(), originShot4);
+	//VEC3 originShot = VEC3(originShot4.x, originShot4.y, originShot4.z);
+	GET_MY(skel, TCompSkeleton);
+	VEC3 hand = skel->getBonePos(KEYBONE_RHAND);
+	VEC3 arm = skel->getBonePos(KEYBONE_RARM);
+	//VEC3 originShot = hand + (hand - arm) * SHOT_OFFSET;
+	VEC3 originShot = hand + hand - arm;
 	VEC3 destShot = dest; //algun offset?
 
 	// Add Render Instruction
@@ -1211,7 +1228,7 @@ void bt_guard::renderInMenu() {
 	ImGui::SliderFloat("Laser Damage", &DAMAGE_LASER, 0, 10);
 	ImGui::SliderFloat("Time Shooting Wall before leave", &_timerShootingWall, 0, 15);
 	ImGui::Separator();
-	ImGui::SliderFloat3("Offset Starting Shot", &SHOT_OFFSET.x, 0.f, 2.f);
+	//ImGui::DragFloat("Offset Starting Shot", &SHOT_OFFSET);
 	if (bt::current) ImGui::Text("NODE: %s", bt::current->getName().c_str());
 	else ImGui::Text("NODE: %s", "???\n");
 	ImGui::Text("Next patrol: %d, Type: %s, Pos: (%f,%f,%f), Wait: %f"
@@ -1299,6 +1316,25 @@ bool bt_guard::isInFirstSeekPoint()
 	return res;
 }
 
+void bt_guard::increaseChaseCounter() {
+	//if im the first guard that is chasing, start the chase music
+	if (!chasing) {
+		chasing = true;
+		guards_chasing++;
+		if (guards_chasing == 1)
+			logic_manager->throwEvent(logic_manager->OnGuardChase, "0.2");
+	}
+}
+void bt_guard::decreaseChaseCounter() {
+	//if im the last guard that is chasing, stop the chase music
+	if (chasing) {
+		chasing = false;
+		guards_chasing--;
+		if (guards_chasing == 0)
+			logic_manager->throwEvent(logic_manager->OnGuardChaseEnd, "0.2");
+	}
+}
+
 void bt_guard::changeCommonState(std::string state)
 {
 	//if (state == AST_IDLE)
@@ -1309,4 +1345,6 @@ void bt_guard::onGetWhoAmI(TMsgGetWhoAmI& msg)
 {
 	msg.who = PLAYER_TYPE::GUARD;
 	msg.who_string = "Guard";
+	if (msg.action_flag)
+		step_counter = (step_counter + 1) % 4;
 }

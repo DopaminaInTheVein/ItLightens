@@ -10,6 +10,7 @@
 struct command {
 	const char* code;
 	float execution_time;
+	bool only_runtime;
 };
 
 class CLogicManagerModule : public IAppModule
@@ -40,8 +41,10 @@ public:
 		OnZoneEnd001,
 		OnTimeout,
 		OntTimerStart,
+		OnSetLight,
 
-		OnPlayerDead,
+		OnGuardChase,
+		OnGuardChaseEnd,
 		OnGuardAttack,
 		OnGuardAttackEnd,
 		OnGuardRemoveBox,
@@ -64,8 +67,11 @@ public:
 		OnDash,
 		OnBlink,
 		OnBreakWall,
+		OnDroneMoving,
+		OnDroneStatic,
 		OnRechargeDrone,
 		OnNotRechargeDrone,
+		OnUseWorkbench,
 		OnRepairDrone,
 		OnCreateBomb,
 		OnUseCable,
@@ -77,6 +83,7 @@ public:
 		OnBeingAttracted,
 		OnOvercharge,
 		OnJump,
+		OnJumpLand,
 		OnDoubleJump,
 		OnDetected,
 		OnNextPatrol,

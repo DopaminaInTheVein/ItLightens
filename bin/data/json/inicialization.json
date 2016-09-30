@@ -1,0 +1,147 @@
+{
+	"box" : {
+		"dynamic_friction" : 0.5,
+		"static_friction" : 0.5,
+		"restitution" : 0.25
+	}, 	
+	"bt_scientist" : {
+		"SPEED_WALK" : 1.5,
+		"SPEED_ROT" : 100,
+		"DIST_REACH_PNT" : 0.2,
+		"max_wb_distance" : 1000.0,
+		"max_beacon_distance" : 1000.0,
+		"square_range_action" : 1.0,
+		"d_epsilon" : 0.1,
+		"d_beacon_simple" : 100.0,
+		"waiting_time" : 0.0,
+		"t_addBeacon" : 2.5,
+		"t_createBeacon" : 5.0,
+		"t_removeBeacon" : 1.5,
+		"t_waitInPos" : 0.0,
+		"ws_wait_time" : 10.0,
+		"ws_wait_time_offset" : 2.0,
+		"MAX_STUCK_TIME" : 2.0,
+		"UNSTUCK_DISTANCE" : 5.0
+	},
+	"bt_guard" : {
+		"SPEED_WALK" : 3.0,
+		"DIST_RAYSHOT" : 80,
+		"DAMAGE_LASER" : 5,
+		"MIN_SQ_DIST_TO_PLAYER" : 9,
+		"DIST_REACH_PNT" : 0.2,
+		"PLAYER_DETECTION_RADIUS" : 2.0,
+		"DIST_SQ_SHOT_AREA_ENTER" : 30,
+		"DIST_SQ_SHOT_AREA_LEAVE" : 80,
+		"DIST_SQ_PLAYER_DETECTION" : 150,
+		"DIST_SQ_PLAYER_LOST" : 200,
+		"SHOOT_PREP_TIME" : 0.5,
+		"SPEED_ROT" : 100.0,
+		"CONE_VISION" : 75,
+		"MAX_REACTION_TIME" : 1,
+		"MAX_SEARCH_DISTANCE" : 500,
+		"LOOK_AROUND_TIME" : 15,
+		"GUARD_ALERT_TIME" : 15,
+		"GUARD_ALERT_RADIUS" : 5,
+		"reduce_factor" : 3.0,
+		"t_reduceStats_max" : 15,
+		"t_reduceStats" : 0.0,
+		"MAX_STUCK_TIME" : 2.0,
+		"UNSTUCK_DISTANCE" : 2.0
+	},	
+	"bt_mole" : {
+		"DIST_REACH_PNT" : 0.2,
+		"SPEED_WALK" : 2.0,
+		"SPEED_ROT" : 200,
+		"distMaxToBox" : 10.0,
+		"rechTime" : 1.0,
+		"MAX_STUCK_TIME" : 2.0,
+		"UNSTUCK_DISTANCE" : 5.0
+	},	
+	"bt_speedy" : { 
+		"speed" : 4.0,
+		"dash_speed" : 10.0,
+		"rotation_speed" : 200,
+		"max_dash_player_distance" : 70.0,
+		"dash_timer_reset" : 10.0,
+		"drop_water_timer_reset" : 3.0
+	},	
+	"ai_water" : {
+		"permanent_water_damage" : 1000,
+		"dropped_water_damage" : 15,
+		"permanent_max_ttl" : -1.0,
+		"dropped_max_ttl" : 10.0,
+		"damage_radius" : 25.0
+	},	
+	"ai_workbench" : {
+		"range" : 7.5,
+		"rot_speed_sonar" : 8.0,
+		"rot_speed_disable" : 2.0
+	},	
+	"controller_base" : {
+		"energy_damage" : 0.6,
+		"player_max_speed" : 5.0,
+		"player_rotation_speed" : 5.0,
+		"jimpulse" : 5.0,
+		"left_stick_sensibility" : 5000,
+		"camera_max_height" : 4,
+		"camera_min_height" : 0,
+		"energy_default_decrease" : 0.3,
+		"energy_sense_decrease" : 2.0
+	},	
+	"controller_player" : {
+		"full_height" : 0.5,
+		"min_height" : 0.2,
+		"DIST_LEAVING_POSSESSION" : 1.0,
+		"possessionReach" : 3.0,
+		"evolution_limit" : 50.0,
+		"max_life" : 150.0,
+		"init_life" : 150.0,
+		"jump_energy" : 0.25,
+		"stun_energy" : 5.0
+	},	
+	"controller_mole" : {
+		"grab_box_energy" : 5.0,
+		"destroy_wall_energy" : 10.0,
+		"push_box_force" : 1.0,
+		"pull_box_force" : 1.0
+	},	
+	"controller_scientist" : {
+		"player_max_speed" : 4.5,
+		"t_waiting" : 0.0,
+		"t_to_explode" : 5.0,
+		"t_create_beacon" : 1.0,
+		"t_create_StaticBomb" : 1.0,
+		"t_create_MagneticBomb" : 1.0,
+		"t_explode_static_bomb" : 5.0,
+		"t_create_beacon_energy" : 5.0,
+		"t_create_StaticBomb_energy" : 5.0,
+		"t_create_MagneticBomb_energy" : 5.0
+	},	
+	"controller_speedy" : {
+		"dash_speed" : 15.0,
+		"dash_max_duration" : 1.0,
+		"dash_cooldown" : 8.0,
+		"dash_energy" : 5.0,
+		"blink_cooldown" : 5.0,
+		"blink_distance" : 8.0,
+		"blink_energy" : 10.0,
+		"drop_water_timer_reset" : 3.0
+	},
+	"generator" : {
+		"_timeReuse" : 15.0,
+		"life_recover" : 150
+	},	
+	"gui_button" : {
+		"t_enabled" : 0.2,
+		"t_disabled" : 0.2,
+		"t_over" : 0.2,
+		"t_unover" : 0.2,
+		"t_clicked" : 0.1,
+		"t_unclciked" : 0.1,
+		"t_released" : 0.1,
+		"t_unreleased" : 0.1		
+	},
+	"sound" : {
+		"MAX_DISTANCE" : 20
+	}
+}

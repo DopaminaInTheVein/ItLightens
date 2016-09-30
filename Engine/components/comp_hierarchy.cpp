@@ -1,13 +1,22 @@
 #include "mcv_platform.h"
 #include "comp_hierarchy.h"
 #include "components/entity.h"
+#include "entity_parser.h"
 
 bool TCompHierarchy::load(MKeyValue& atts) {
+
 	TCompTransform::load(atts);
-	strcpy(parent_name, atts.getString("parent", "").c_str());
+	parent_id = atts.getInt("parent", 0);
 	h_parent_transform = CHandle();
 	h_my_transform = CHandle();
 	return true;
+}
+
+void TCompHierarchy::onCreate(const TMsgEntityCreated&)
+{
+	if (myHandle.isValid()) myHandle.destroy();
+	myHandle = CHandle(this).getOwner();
+	IdEntities::addHierarchyHandle(myHandle);
 }
 
 void TCompHierarchy::linkTo(CHandle h_entity) {
@@ -20,8 +29,8 @@ void TCompHierarchy::linkTo(CHandle h_entity) {
 }
 
 // Resolve parent
-void TCompHierarchy::onGroupCreated(const TMsgEntityGroupCreated& msg) {
-	CHandle h_entity = findByName(*msg.handles, parent_name);
+void TCompHierarchy::onGetParentById(const TMsgHierarchySolver&) {
+	CHandle h_entity = IdEntities::findById(parent_id);
 	linkTo(h_entity);
 
 	// Get access to my comp transform

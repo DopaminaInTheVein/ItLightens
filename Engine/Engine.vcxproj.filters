@@ -186,12 +186,6 @@
     <ClCompile Include="logic\btnode.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="input\input.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
-    <ClCompile Include="input\input_manager.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
     <ClCompile Include="recast\Recast\Source\Recast.cpp">
       <Filter>recast\Recast\Source</Filter>
     </ClCompile>
@@ -342,26 +336,11 @@
     <ClCompile Include="app_modules\gui\gui.cpp">
       <Filter>app_modules\gui</Filter>
     </ClCompile>
-    <ClCompile Include="app_modules\gui\gui_bar_color.cpp">
-      <Filter>app_modules\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="app_modules\gui\gui_utils.cpp">
-      <Filter>app_modules\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="app_modules\gui\gui_hud_player.cpp">
-      <Filter>app_modules\gui</Filter>
-    </ClCompile>
     <ClCompile Include="components\comp_light_dir.cpp">
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="components\comp_light_point.cpp">
       <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="app_modules\gui\gui_menu_pause.cpp">
-      <Filter>app_modules\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="app_modules\gui\gui_button_std.cpp">
-      <Filter>app_modules\gui</Filter>
     </ClCompile>
     <ClCompile Include="components\comp_light_fadable.cpp">
       <Filter>components</Filter>
@@ -503,9 +482,6 @@
     <ClCompile Include="app_modules\gameController.cpp">
       <Filter>app_modules\game</Filter>
     </ClCompile>
-    <ClCompile Include="input\input_wrapper.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
     <ClCompile Include="components\comp_room.cpp">
       <Filter>components</Filter>
     </ClCompile>
@@ -571,6 +547,12 @@
     </ClCompile>
     <ClCompile Include="utils\text_encode.cpp">
       <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\io\input_wrapper.cpp">
+      <Filter>app_modules\io</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\sound_manager\comp_sound.cpp">
+      <Filter>app_modules\sound_manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -790,12 +772,6 @@
     </ClInclude>
     <ClInclude Include="logic\btnode.h">
       <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="input\input.h">
-      <Filter>input</Filter>
-    </ClInclude>
-    <ClInclude Include="input\input_manager.h">
-      <Filter>input</Filter>
     </ClInclude>
     <ClInclude Include="recast\navmesh.h">
       <Filter>recast</Filter>
@@ -1073,17 +1049,11 @@
     <ClInclude Include="app_modules\gui\gui.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_bar_color.h">
-      <Filter>app_modules\gui</Filter>
-    </ClInclude>
     <ClInclude Include="app_modules\gui\gui_utils.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
     <ClInclude Include="app_modules\gameData.h">
       <Filter>app_modules\game</Filter>
-    </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_hud_player.h">
-      <Filter>app_modules\gui</Filter>
     </ClInclude>
     <ClInclude Include="components\comp_light_dir.h">
       <Filter>components</Filter>
@@ -1096,18 +1066,6 @@
     </ClInclude>
     <ClInclude Include="imgui\imgui_internal.h">
       <Filter>app_modules\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_menu_pause.h">
-      <Filter>app_modules\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_button.h">
-      <Filter>app_modules\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_button_std.h">
-      <Filter>app_modules\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="app_modules\gui\gui_bar.h">
-      <Filter>app_modules\gui</Filter>
     </ClInclude>
     <ClInclude Include="render\fx\GuardShots.h">
       <Filter>render\fx</Filter>
@@ -1437,9 +1395,6 @@
     <ClInclude Include="logic\pila.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="input\input_wrapper.h">
-      <Filter>input</Filter>
-    </ClInclude>
     <ClInclude Include="app_modules\navmesh\navmesh_manager.h">
       <Filter>app_modules\navmesh</Filter>
     </ClInclude>
@@ -1502,6 +1457,12 @@
     </ClInclude>
     <ClInclude Include="utils\text_encode.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\io\input_wrapper.h">
+      <Filter>app_modules\io</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\sound_manager\comp_sound.h">
+      <Filter>app_modules\sound_manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1567,9 +1528,6 @@
     </Filter>
     <Filter Include="physx">
       <UniqueIdentifier>{16d1a48c-1e04-411f-8706-8555b3d2c0b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="input">
-      <UniqueIdentifier>{3cada1c5-734d-4cb7-a898-3db5437867da}</UniqueIdentifier>
     </Filter>
     <Filter Include="recast">
       <UniqueIdentifier>{d6093316-e00e-4813-91b6-fa40da65dc5c}</UniqueIdentifier>

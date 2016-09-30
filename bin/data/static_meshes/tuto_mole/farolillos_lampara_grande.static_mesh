@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/tuto_mole/farolillos_lampara_grande.mesh" material="materials/tuto_mole/farolillos.material"/>
+</static_mesh>

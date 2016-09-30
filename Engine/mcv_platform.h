@@ -1,9 +1,13 @@
 #ifndef INC_MCV_PLATFORM_H_
 #define INC_MCV_PLATFORM_H_
 
-// Global settings
+// -- Global settings -- //
 //#define FINAL_BUILD
-//#define TASK_LIST_ENABLED
+#ifndef FINAL_BUILD
+#define TEST_VALUES // Read initialization_test.json
+#endif
+// -- Final Global settings -- //
+
 #define _CRT_SECURE_NO_WARNINGS
 #define _SCL_SECURE_NO_WARNINGS
 #define WIN32_LEAN_AND_MEAN

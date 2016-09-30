@@ -24,6 +24,11 @@ void TKeyBoard::update(float dt) {
 	  }
   }
 }
+void TKeyBoard::release() {
+	for (auto& it : active_keys) {
+		it.second.setCurrentStatus(false);
+	}
+}
 
 const CDigitalButton &TKeyBoard::operator[](int key_code) {
   static CDigitalButton non_pressed_key;

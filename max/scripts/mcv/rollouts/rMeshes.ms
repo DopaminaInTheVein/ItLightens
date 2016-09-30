@@ -1,5 +1,5 @@
 try(DestroyDialog RL_Meshes)catch()
-rollout RL_Meshes "IT Lightens!" width:296 height:615
+rollout RL_Meshes "IT Lightens!" width:296 height:638
 (
 	local selectedObj = undefined
 
@@ -21,14 +21,14 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 	GroupBox grpCopy "Copy" pos:[16,256] width:259 height:89
 	button btnCopy "Set this mesh to selected objects" pos:[30,275] width:230 height:16
 	label lblCopy "Para asignar la misma mesh a otros objetos (sólo actualiza la info para exportar nivel, no cambiará la apariencia en max)" pos:[27,296] width:237 height:46
-	GroupBox grpAll "Export All Selected" pos:[15,359] width:259 height:245
-	button btnExportSelectedNew "Only New Meshes" pos:[29,452] width:114 height:16
-	button btnRexport "Only Re-export" pos:[150,452] width:112 height:16
-	button btnExportSelected "Export New and Reexport Old" pos:[29,430] width:234 height:16
-	button btnForceNew "Force all as new (caution!)" pos:[75,576] width:145 height:16
-	label lbl11 "BASIC" pos:[133,407] width:29 height:17
-	label lbl12 "ADVANCED" pos:[119,554] width:58 height:17
-	label lbl20 "Las nuevas meshes (objetos sin mesh asignada), se guardarán con el mismo nombre que el objeto. Las reexportadas con el mismo nombre con el que ya se exportaron" pos:[26,476] width:237 height:61
+	GroupBox grpAll "Export All Selected" pos:[15,359] width:259 height:269
+	button btnExportSelectedNew "Only New Meshes" pos:[29,476] width:114 height:16
+	button btnRexport "Only Re-export" pos:[150,476] width:112 height:16
+	button btnExportSelected "Export New and Reexport Old" pos:[29,454] width:234 height:16
+	button btnForceNew "Force all as new (caution!)" pos:[75,600] width:145 height:16
+	label lbl11 "BASIC" pos:[133,431] width:29 height:17
+	label lbl12 "ADVANCED" pos:[119,578] width:58 height:17
+	label lbl20 "Las nuevas meshes (objetos sin mesh asignada), se guardarán con el mismo nombre que el objeto. Las reexportadas con el mismo nombre con el que ya se exportaron" pos:[26,500] width:237 height:61
 	label lblFolder "Folder" pos:[34,381] width:42 height:20
 	edittext txtFolder "" pos:[71,379] width:192 height:18
 	
@@ -36,10 +36,13 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 	fn checkFolder folder needFolder = (
 		if needFolder then (
 			if folder == "" then (
-				local yes = queryBox "No se ha seleccionado carpeta. ¿Exportar en raíz?"
-				if not yes then (return false)
+				--local yes = queryBox "No se ha seleccionado carpeta. ¿Exportar en raíz?"
+				--if not yes then (return false)
+				messagebox "¡Debes indicar una carpeta!"
+				return false
 			) else (
 				local createMeshDir = false
+				local createMatDir = false
 				local createStMeshDir = false
 			
 				local meshPath = meshes_dir + folder + "\\"
@@ -52,6 +55,18 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 						return false
 					)
 				)
+
+				local matPath = materials_dir + folder + "\\"
+				local dirMats = getDirectories (materials_dir + folder)
+				if dirMats.count == 0 then (
+					local yes = queryBox ("Directorio nuevo. ¿Crear directorio [" + matPath+ "]?")
+					if yes then (
+						createMatDir = true
+					) else (
+						return false
+					)
+				)
+				
 				
 				local stMeshPath = staticMeshes_dir + folder + "\\"
 				local dirStMeshes = getDirectories (staticMeshes_dir + folder)
@@ -67,6 +82,13 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 				if createMeshDir then (
 					if not (makeDir meshPath) then (
 						messagebox ("Cannot create [" + meshes_dir + folder + "\\]")
+						return false
+					)
+				)
+
+				if createMatDir then (
+					if not (makeDir matPath) then (
+						messagebox ("Cannot create [" + materials_dir + folder + "\\]")
 						return false
 					)
 				)
@@ -89,6 +111,16 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 	
 	label lblFolderUp "Folder:" pos:[63,120] width:34 height:20
 	edittext txtFolderUp "" pos:[101,119] width:159 height:18
+	checkbox chkTextures "Export textures" pos:[151,401] width:108 height:15
+	checkbox chkMoveResources "Delete materials on root" pos:[31,400] width:99 height:37
+	on RL_Meshes open do
+	(
+		local folder_init = (filterstring maxFileName ".")[1]
+		if folder_init != undefined then (txtFolder.text = folder_init)
+		if _is_ui_scene() then (
+			txtFolder.text = "ui/" + txtFolder.text
+		)
+	)
 	on pckObj picked obj do
 	(
 		pckObj.text = obj.name
@@ -203,6 +235,8 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 	on btnExportSelectedNew pressed do
 	(
 		tr = TResources()
+		tr.copy_textures = chkTextures.state
+		tr.move_resources = chkMoveResources.state
 		
 		local folder =  trimRight (trimLeft txtFolder.text)
 		tr.folder = folder
@@ -215,6 +249,8 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 	on btnRexport pressed do
 	(
 		tr = TResources()
+		tr.copy_textures = chkTextures.state
+		tr.move_resources = chkMoveResources.state
 		
 		local folder =  trimRight (trimLeft txtFolder.text)
 		tr.folder = folder
@@ -227,6 +263,9 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 	on btnExportSelected pressed do
 	(
 		tr = TResources()
+		tr.copy_textures = chkTextures.state
+		tr.move_resources = chkMoveResources.state
+		
 	
 		local folder =  trimRight (trimLeft txtFolder.text)
 		tr.folder = folder
@@ -239,13 +278,21 @@ rollout RL_Meshes "IT Lightens!" width:296 height:615
 	on btnForceNew pressed do
 	(
 		tr = TResources()
+		tr.copy_textures = chkTextures.state
+		tr.move_resources = chkMoveResources.state
 	
 		local folder =  trimRight (trimLeft txtFolder.text)
 		tr.folder =	folder
 		
 		if (checkFolder folder true) then (
 			tr.exportSelectedForceNew()
-			messageBox "Operación realizada OK"
+			if tr.error == "" then ( 
+				messageBox ("Operación realizada OK\n" + (_list_objs as string) )
+			) else (
+				local txt = (tr.error + "\n-------------\n" + (_list_objs as string))
+				print txt
+				messagebox txt
+			)
 		)
 	)
 )
@@ -254,4 +301,4 @@ CreateDialog RL_Meshes
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/tuto_mole/farolillo001.mesh" material="materials/tuto_mole/aplique.material"/>
+</static_mesh>

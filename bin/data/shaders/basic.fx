@@ -326,8 +326,7 @@ w = step(0.75f, w);
 //w=global_color*w;
 float4 final_color = w*global_color;
 return final_color;
-return global_color;	 
- return float4(w, w, w, w); 
+
 
 }
 

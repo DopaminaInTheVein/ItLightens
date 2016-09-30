@@ -26,7 +26,8 @@
   },
   "hub": {
     "start_hub": "Move the camera\nand use your SENSE skill\nto find your objective.",
-    "target_seen": "That is it!"
+    "target_seen": "That is it!",
+	"dead_on_dream": "¡Oops! It was a dream fortunately...\nI'll do my best next time"
   },
   "tuto_mole": {
     "look_wall": "This wall seems weak. I wonder if there is something behind...",

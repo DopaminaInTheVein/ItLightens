@@ -13,7 +13,6 @@
 #include "app_modules/app_module.h"
 #include "app_modules/imgui/module_imgui.h"
 #include "app_modules/gui/gui.h"
-#include "input/input.h"
 #include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "app_modules/sound_manager/sound_manager.h"
@@ -243,7 +242,7 @@ void CApp::loadedLevelNotify() {
 
 	logic_manager->throwEvent(game_event, std::string(params));
 	loading = false;
-	if (!GameController->IsUiControl())
+	if (!Gui->IsUiControl())
 		GameController->SetGameState(CGameController::RUNNING);
 }
 
@@ -288,6 +287,9 @@ void CApp::initNextLevel()
 	// Restart Timers LUA
 	logic_manager->resetTimers();
 
+	// Stop sounds
+	sound_manager->stopAllSounds();
+
 	//
 	std::string level_name = getRealLevel(next_level);
 	bool reload = next_level == current_level;
@@ -319,6 +321,13 @@ void CApp::initNextLevel()
 		file.loading_control = true;
 		entities->loadXML(file);
 	}
+
+	// Hierachy messages
+	for (auto handle : IdEntities::getHierarchyHandles()) {
+		TMsgHierarchySolver msg;
+		handle.sendMsg(msg);
+	}
+	IdEntities::clearHierarchyHandles();
 
 	// Init entities
 	entities->initEntities();

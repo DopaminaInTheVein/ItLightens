@@ -1,6 +1,9 @@
 --==================
 -- Level DATA
 --==================
+-- Texts
+TXT_DEAD_ON_DREAM = "dead_on_dream"
+
 
 --TASKS
 TASK_HUB_MOLE = 0
@@ -9,6 +12,7 @@ TASK_HUB_SCI = 1
 target_seen = false
 mole_done = false
 sci_done = false
+dead_on_dream = false
 -------------------------------
 function OnStart_hub( )
 	target_seen = false
@@ -28,21 +32,26 @@ end
 idMoleSlept = 5
 idSciSlept = 6
 function OnLoad_hub()
-	if mole_done and sci_done then
-		end_hub_handles = HandleGroup()
-		end_hub_handles:get_handles_by_tag("end_hub")
-		end_hub_handles:awake()
+	if dead_on_dream then
+		p:player_talks(p:get_text("hub",TXT_DEAD_ON_DREAM))
+	else
+		if mole_done and sci_done then
+			end_hub_handles = HandleGroup()
+			end_hub_handles:get_handles_by_tag("end_hub")
+			end_hub_handles:awake()
+		end
+		if mole_done then
+			h:get_handle_by_id(idMoleSlept)
+			h:set_anim_loop("run")
+			p:complete_tasklist(TASK_HUB_MOLE)
+		end
+		if sci_done then
+			h:get_handle_by_id(idSciSlept)
+			h:set_anim_loop("run")
+			p:complete_tasklist(TASK_HUB_SCI)
+		end
 	end
-	if mole_done then
-		h:get_handle_by_id(idMoleSlept)
-		h:set_anim_loop("run")
-		p:complete_tasklist(TASK_HUB_MOLE)
-	end
-	if sci_done then
-		h:get_handle_by_id(idSciSlept)
-		h:set_anim_loop("run")
-		p:complete_tasklist(TASK_HUB_SCI)
-	end
+	dead_on_dream = false
 end
 -------------------------------
 --===========================================

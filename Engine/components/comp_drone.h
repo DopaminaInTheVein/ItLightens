@@ -19,13 +19,20 @@ struct TCompDrone : public TTrigger {
 	float speed = 1.0f;
 	float fallingSpeed = 3.0f;
 	float timeToWait = 0.f;
-	float mEpsilon = .1f;
+	float mEpsilon = 1.1f;
 	bool playerInDistance = false;
 	bool sciInDistance = false;
 	bool espatllat = false;
 
 	std::string self_ilum_front;
 	std::string self_ilum_back;
+
+	// sound parameters
+	std::string name;
+	std::string moving_sound_event = "event:/OnDroneMoving";
+	std::string static_sound_event = "event:/OnDroneStatic";
+	float volume = 0.5f;
+	bool moving = false;
 
 	VEC3 final_pos;
 

@@ -6,8 +6,25 @@
 #include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/imgui/module_imgui.h"
 
+#define FONT_JSON "./data/json/font.json"
+
 void TCompFadingMessage::forceTTLZero() {
 	ttl = -0.1f;
+}
+
+float TCompFadingMessage::letterSpacing[256] = { 0.f };
+bool TCompFadingMessage::init_configuration = false;
+void TCompFadingMessage::initSpaceLetters()
+{
+	auto general = readIniAtrData(FONT_JSON, "general");
+	auto space_values = readIniAtrData(FONT_JSON, "space_right");
+	float size = general["size"];
+	float default_space = 1.f - space_values["default"] / size;
+	for (int i = 0; i < 256; i++) letterSpacing[i] = default_space;
+	for (auto entry : space_values) {
+		unsigned char letter_char = entry.first.at(0);
+		letterSpacing[letter_char] = 1.f - entry.second / size;
+	}
 }
 
 bool TCompFadingMessage::load(MKeyValue& atts)
@@ -48,6 +65,10 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	}
 	accumSpacing.resize(lineText.size(), 0.0f);
 
+	if (!init_configuration) {
+		init_configuration = true;
+		initSpaceLetters();
+	}
 	return true;
 }
 
@@ -106,15 +127,15 @@ void TCompFadingMessage::printLetters() {
 		float texture_pos_y = ((float)ascii_tex_posy) * letterBoxSize;
 		float sx = letterBoxSize;
 		float sy = letterBoxSize;
-		float scale = 0.2f;
-		float letter_posx = 0.16f + (i - linechars_prev - fminf(line, 1.0f))*letterBoxSize*scale - accumSpacing[line]*scale;
-		float letter_posy = 0.20f - line*letterBoxSize*scale*2.5f;
+		float letter_posx = 0.16f + (i - linechars_prev - fminf(line, 1.0f) - accumSpacing[line])*letterSpacer;
+		float letter_posy = 0.20f - line*letterSpacerHigh;
+
 		CHandle letter_h = Gui->addGuiElement("ui/Fading_Letter", VEC3(letter_posx, letter_posy, 0.49f + i*0.001f), ("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)), scale);
 		CEntity * letter_e = letter_h;
 		TCompGui * letter_gui = letter_e->get<TCompGui>();
 		assert(letter_gui);
 		RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
 		letter_gui->setTxCoords(textCords);
-		accumSpacing[line] += SBB::readLetterSpacingVector()[ascii_tex_pos];
+		accumSpacing[line] += letterSpacing[ascii_tex_pos]; //SBB::readLetterSpacingVector()[ascii_tex_pos];
 	}
 }

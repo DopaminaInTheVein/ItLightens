@@ -17,8 +17,7 @@ player = Player()
 
 ---------------------------- LEVEL Init, Load, Save ---------------------------------------------------
 function auxiliarMusic()
-	p:play_looping_music("event:/OnGameStart")
-	p:set_music_volume(0.3)
+	p:play_music("event:/OnRoom1", 0.2)
 end
 
 function OnStart_ms3()
@@ -52,7 +51,7 @@ function OnLoad_ms3()
   stateElevator = d:get_float("elevator_state")
   cp_elevator = d:get_bool("cp_elevator")
   cp_door_opened = d:get_bool("cp_door_opened")
-  p:play_looping_music("event:/OnGameStart")
+  p:play_music("event:/OnRoom1", 0.2)
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
   --cam:run_cinematic("CinematicIntro", 10)
@@ -131,6 +130,7 @@ function activateCargadorSci()
 		sci:get_player()
 		sci:go_and_look_as(hCargadorTarget, "rechargeCell();")
 		p:complete_tasklist(9)
+		p:play_sound("event:/OnChargePila", 0.5, false)
 	end
   else
 	p:player_talks(p:get_text("ms3","cargador_sci_3"))
@@ -221,13 +221,13 @@ end
 function openDoorPila( )
   cineDoor()
   p:exec_command( "openDoorPilaEffect();", 4)
-  p:play_sound("event:/OnDoorClosing")
+  p:play_sound("event:/OnDoorClosing", 1.0, false)
 end
 
 function closeDoorPila( )
   cineDoor()
   p:exec_command( "closeDoorPilaEffect();", 4)
-  p:play_sound("event:/OnDoorClosing")
+  p:play_sound("event:/OnDoorClosing", 1.0, false)
 end
 
 function openDoorPilaEffect( )
@@ -345,7 +345,7 @@ actionElevatorTarget = Handle()
 triggerElevator = Handle()
 stateElevator = 1 -- 1= up , 0 = down
 function activateElevator( )  
-
+  triggerElevator:getHandleCaller()
   --Llevamos el player al punto de accion
   actionElevatorTarget:get_handle_by_name_tag("elevator_pAction", "target")
   player = Handle()
@@ -354,7 +354,6 @@ function activateElevator( )
 end
 
 function moveElevator( )
-  triggerElevator:getHandleCaller()
   p:setControlEnabled(0)
   
   -- Get handles
@@ -491,7 +490,7 @@ function destroyWallEffect()
   h:destroy()
   
     --Reproducimos sonido
-  	p:play_sound("event:/OnBreakWall")
+  	p:play_sound("event:/OnBreakWall", 1.0, false)
   
   --Activamos fragmentos pared
   

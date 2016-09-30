@@ -9,7 +9,6 @@
 #include "components/comp_render_static_mesh.h"
 #include "components/comp_msgs.h"
 #include "render/static_mesh.h"
-#include "input/input_wrapper.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "app_modules/gui/gui.h"
 
@@ -30,32 +29,30 @@ map<string, statehandler> player_controller::statemap = {};
 void player_controller::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
 	if (h.isValid()) {
-		if (h.hasTag("player")) { // <-- Esto no va cumplirse siempre?
-			CPlayerBase::initBaseAttributes();
+		CPlayerBase::initBaseAttributes();
 
-			CApp &app = CApp::get();
-			std::string file_ini = app.file_initAttr_json;
-			map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
+		CApp &app = CApp::get();
+		std::string file_ini = app.file_initAttr_json;
+		map<std::string, float> fields_base = readIniAtrData(file_ini, "controller_base");
 
-			assignValueToVar(player_max_speed, fields_base);
-			assignValueToVar(player_rotation_speed, fields_base);
-			assignValueToVar(jimpulse, fields_base);
-			assignValueToVar(left_stick_sensibility, fields_base);
-			assignValueToVar(camera_max_height, fields_base);
-			assignValueToVar(camera_min_height, fields_base);
+		assignValueToVar(player_max_speed, fields_base);
+		assignValueToVar(player_rotation_speed, fields_base);
+		assignValueToVar(jimpulse, fields_base);
+		assignValueToVar(left_stick_sensibility, fields_base);
+		assignValueToVar(camera_max_height, fields_base);
+		assignValueToVar(camera_min_height, fields_base);
 
-			map<std::string, float> fields_player = readIniAtrData(file_ini, "controller_player");
+		map<std::string, float> fields_player = readIniAtrData(file_ini, "controller_player");
 
-			assignValueToVar(full_height, fields_player);
-			assignValueToVar(min_height, fields_player);
-			assignValueToVar(DIST_LEAVING_POSSESSION, fields_player);
-			assignValueToVar(possessionReach, fields_player);
-			assignValueToVar(evolution_limit, fields_player);
-			assignValueToVar(max_life, fields_player);
-			assignValueToVar(init_life, fields_player);
-			assignValueToVar(jump_energy, fields_player);
-			assignValueToVar(stun_energy, fields_player);
-		}
+		assignValueToVar(full_height, fields_player);
+		assignValueToVar(min_height, fields_player);
+		assignValueToVar(DIST_LEAVING_POSSESSION, fields_player);
+		assignValueToVar(possessionReach, fields_player);
+		assignValueToVar(evolution_limit, fields_player);
+		assignValueToVar(max_life, fields_player);
+		assignValueToVar(init_life, fields_player);
+		assignValueToVar(jump_energy, fields_player);
+		assignValueToVar(stun_energy, fields_player);
 	}
 }
 
@@ -217,14 +214,20 @@ void player_controller::myUpdate() {
 		if (player_curr_speed >= player_max_speed - 0.1f)
 		{
 			SET_ANIM_PLAYER(AST_RUN);
+			sound_manager->playSound("event:/OnRaijinMoving", 0.5f, false);
 		}
 		else if (player_curr_speed > 0.f)
 		{
+			sound_manager->stopSound("event:/OnRaijinMoving");
 			SET_ANIM_PLAYER(AST_MOVE);
 		}
 		else {
+			sound_manager->stopSound("event:/OnRaijinMoving");
 			SET_ANIM_PLAYER(AST_IDLE);
 		}
+	}
+	else {
+		sound_manager->stopSound("event:/OnRaijinMoving");
 	}
 }
 
@@ -992,7 +995,9 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 
 	//Cumulative add always, otherwise when change to 0 or 1
 	if (DMG_IS_CUMULATIVE(type) || damageFonts[type] < 2) {
-		damageCurrent += DMG_PER_SECOND(type) * signDamage;
+		float dmg = DMG_PER_SECOND(type) * signDamage;
+		damageCurrent += dmg;
+		damageAdded += dmg;
 		TMsgDamage msgDamagePerSecond;
 		msgDamagePerSecond.modif = damageCurrent;
 		eMe->sendMsg(msgDamagePerSecond);
@@ -1015,6 +1020,19 @@ void player_controller::onSetDamage(const TMsgDamageSpecific& msg) {
 
 	//Player is damaged (cant possess, etc.)
 	____TIMER_RESET_(timerDamaged);
+}
+
+void player_controller::onDifficultyChanged(const TMsgDifficultyChanged& msg)
+{
+	damageCurrent -= damageAdded;
+	damageAdded = 0;
+	for (int i = 0; i < Damage::SIZE; i++) {
+		damageCurrent += DMG_PER_SECOND(i) * damageFonts[i];
+		damageAdded += DMG_PER_SECOND(i) * damageFonts[i];
+	}
+	TMsgDamage msgDamagePerSecond;
+	msgDamagePerSecond.modif = damageCurrent;
+	MY_OWNER.sendMsg(msgDamagePerSecond);
 }
 
 void player_controller::SendMessagePolarizeState()
