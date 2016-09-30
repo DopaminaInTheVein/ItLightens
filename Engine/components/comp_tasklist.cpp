@@ -138,7 +138,7 @@ bool Tasklist::save(std::ofstream& ofs, MKeyValue& atts) {
 		WPT_ATR_NAME(atrRoom, "room", i);
 		atts.put(atrRoom, pointsRooms[i]);
 		WPT_ATR_NAME(atrVisited, "visited", i);
-		atts.put(atrVisited, pointsVisiteds[i]);
+		atts.put(atrVisited, pointsVisiteds[i] ? "true" : "false");
 	}
 	return true;
 }
