@@ -172,22 +172,11 @@ void player_controller_mole::myUpdate()
 
 void player_controller_mole::UpdateMoves() {
 	if (pushing_box) {
-		TCompTransform* player_transform = myEntity->get<TCompTransform>();
-		VEC3 player_position = player_transform->getPosition();
 
-		VEC3 direction = directionForward + directionLateral;
+		VEC3 direction = push_pull_direction;
 
-		direction.Normalize();
-
-		float new_x, new_z;
-
-		new_x = direction.x * cosf(camera_push_yaw) + direction.z*sinf(camera_push_yaw);
-		new_z = -direction.x * sinf(camera_push_yaw) + direction.z*cosf(camera_push_yaw);
-
-		direction.x = new_x;
-		direction.z = new_z;
-
-		direction.Normalize();
+		if (pulling_box)
+			direction = -direction;
 
 		//Set current velocity with friction
 		float drag = 2.5f*getDeltaTime();
@@ -204,25 +193,6 @@ void player_controller_mole::UpdateMoves() {
 		cc->AddMovement(direction, player_curr_speed*getDeltaTime());
 		if (moving) UpdateMovingWithOther();
 
-		// update the position of the camera
-		CEntity * camera_e = camera;
-		GET_COMP(cam_t, camera_e, TCompTransform);
-		GET_COMP(cam_m, camera_e, TCompCameraMain);
-		GET_COMP(cam_3p, camera_e, TCompController3rdPerson);
-		// update the position of the camera
-		GET_COMP(box_t, boxPushed, TCompTransform);
-		VEC3 box_position = box_t->getPosition();
-		VEC3 mole_position = transform->getPosition();
-		VEC3 camera_direction = mole_position - box_position;
-		camera_direction.Normalize();
-		// new camera position
-		VEC3 camera_position = cam_t->getPosition();
-		VEC3 new_cam_position = mole_position + camera_direction * (cam_3p->GetPositionDistance() - 1.f);
-		new_cam_position.y = mole_position.y + 3.f;
-		VEC3 new_look_position = mole_position + VEC3(0.f, 1.5f, 0.f);
-		cam_m->smoothLookAt(new_cam_position, new_look_position, cam_m->getUpAux(), 0.9f / getDeltaTime());
-		cam_t->lookAt(new_cam_position, new_look_position, cam_m->getUpAux());
-		cam_t->setPosition(new_cam_position);
 	}
 	else {
 		CPlayerBase::UpdateMoves();
@@ -394,11 +364,6 @@ void player_controller_mole::LeaveBox() {
 		pushing_box = false;
 		pulling_box = false;
 		animController->unpushObject();
-		// restore the normal 3rd person camera
-		CEntity * camera_e = camera;
-		GET_COMP(cam_m, camera_e, TCompCameraMain);
-		cam_m->setManualControl(false);
-		GameController->SetManualCameraState(false);
 		logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
 	}
 	else {
@@ -677,28 +642,12 @@ void player_controller_mole::PushBoxPreparation() {
 		GET_COMP(box_p, boxPushed, TCompPhysics);
 		box_p->getActor()->isRigidBody()->setMass(250.f);
 		box_p->getRigidActor()->isRigidBody()->setMass(250.f);
-		CEntity * camera_e = camera;
-		GET_COMP(cam_t, camera_e, TCompTransform);
-		GET_COMP(cam_m, camera_e, TCompCameraMain);
-		GET_COMP(cam_3p, camera_e, TCompController3rdPerson);
-		// update the position of the camera
+		
+		//push-pull direction
 		GET_COMP(box_t, boxPushed, TCompTransform);
-		VEC3 box_position = box_t->getPosition();
-		VEC3 mole_position = transform->getPosition();
-		VEC3 camera_direction = mole_position - box_position;
-		camera_direction.Normalize();
-		VEC3 camera_position = cam_t->getPosition();
-		GameController->SetManualCameraState(true);
-		cam_m->setManualControl(true);
-		// new camera position
-		VEC3 new_cam_position = mole_position + camera_direction * (cam_3p->GetPositionDistance() - 1.f);
-		new_cam_position.y = camera_position.y;
-		cam_m->smoothLookAt(new_cam_position, mole_position, cam_m->getUpAux(), 0.9f / getDeltaTime());
-		cam_t->lookAt(new_cam_position, mole_position, cam_m->getUpAux());
-		cam_t->setPosition(new_cam_position);
-		// get pushing direction
-		cam_t->getAngles(&camera_push_yaw, &camera_push_pitch);
-		push_pull_direction = getEntityTransform()->getFront();
+		push_pull_direction = box_t->getPosition() - getEntityTransform()->getPosition();
+		push_pull_direction.y = 0.f;
+		push_pull_direction.Normalize();
 		inputEnabled = true;
 	}
 }
