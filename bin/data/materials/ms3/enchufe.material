@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/enchufe_difuso.dds"/>
+<texture slot="normalmap" name="textures/enchufe_normal.dds"/>
+</material>

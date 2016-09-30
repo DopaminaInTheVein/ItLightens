@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/ms3/rejillapequenhamapeadabaajo.mesh" material="materials/rejilla_pequenha.material" mesh_idx="0"/>
+  <slot mesh="meshes/ms3/rejillapequenhamapeadabaajo.mesh" material="materials/ms3/rejilla_pequenha.material"/>
 </static_mesh>

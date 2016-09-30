@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/arena_difuso.dds"/>
+<texture slot="normalmap" name="textures/arena_normal.dds"/>
+</material>

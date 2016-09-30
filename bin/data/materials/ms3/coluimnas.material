@@ -1,0 +1,5 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/difuso_columna.dds"/>
+<texture slot="specular" name="textures/difuso_columna_especular.dds"/>
+<texture slot="normalmap" name="textures/columna_2_normals_normals.dds"/>
+</material>

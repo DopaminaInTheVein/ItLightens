@@ -594,18 +594,16 @@
 <entity>
 <tags/>
 <name
-   name="columna_rota_abajo2"/>
+   name="columnas_desechables"/>
 <transform
    pos="-8.75711 -20.5012 -4.0787"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/columna_rota_abajo2.static_mesh"/>
+   name="static_meshes/ms3/columnas_desechables.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="1"/>
 
 </entity>
 <entity>
@@ -686,40 +684,6 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/columnas_balcon_izquierdo_cuadrado.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columnas_caida"/>
-<transform
-   pos="-35.5131 -23.5615 13.2685"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/columnas_caida.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columnas_rota"/>
-<transform
-   pos="-20.4778 -9.95706 -3.94824"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/columnas_rota.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -1413,8 +1377,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="1"/>
 
 </entity>
 <entity>
@@ -1430,8 +1392,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="1"/>
 
 </entity>
 <entity>
@@ -1464,8 +1424,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="1"/>
 
 </entity>
 <entity>
@@ -1481,8 +1439,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="1"/>
 
 </entity>
 <entity>
@@ -1498,8 +1454,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="1"/>
 
 </entity>
 <entity>
@@ -1515,8 +1469,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="1"/>
 
 </entity>
 <entity>
@@ -1532,8 +1484,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="1"/>
 
 </entity>
 <entity>
@@ -1566,8 +1516,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="1"/>
 
 </entity>
 <entity>
@@ -1575,7 +1523,7 @@
 <name
    name="montanha_escombro_map"/>
 <transform
-   pos="-27.2267 -21.9344 16.8093"
+   pos="-31.6426 -25.0387 1.33133"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -1583,8 +1531,6 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
-<room
-   name="1"/>
 
 </entity>
 <entity>
@@ -2067,7 +2013,7 @@
    name="pirulos_cargador_bateria_mapeado"/>
 <transform
    pos="-92.4057 0.473134 13.6057"
-   quat="0 0.932165 0 0.362035"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/pirulos_cargador_bateria_mapeado.static_mesh"/>
@@ -3097,23 +3043,6 @@
 <entity>
 <tags/>
 <name
-   name="trozos_columnas_rotas"/>
-<transform
-   pos="-19.2161 -23.6701 8.72521"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/trozos_columnas_rotas.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="ventilador_mapeado"/>
 <transform
    pos="-81.6512 6.96453 -8.07339"
@@ -3228,7 +3157,7 @@
    name="WirePosUp"/>
 <transform
    pos="-68.5186 16.212 16.4784"
-   quat="0 0.753234 0 0.657752"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -3241,7 +3170,7 @@
    name="generator_1"/>
 <transform
    pos="-17.8101 -1.54614 24.6676"
-   quat="0 0.999986 0 0"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/generator.static_mesh"/>
@@ -3259,7 +3188,7 @@
    name="generator_2"/>
 <transform
    pos="29.6176 -23.2889 16.4296"
-   quat="0 0.99999 0 0"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/generator.static_mesh"/>
@@ -3295,7 +3224,7 @@
    name="generator_4"/>
 <transform
    pos="-40.825 -0.555909 -7.16371"
-   quat="0 0.705949 0 0.708263"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/generator.static_mesh"/>
@@ -3313,7 +3242,7 @@
    name="generator_5"/>
 <transform
    pos="-73.5068 -0.588134 8.45465"
-   quat="0 0.846634 0 0.532176"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/generator.static_mesh"/>
@@ -3331,7 +3260,7 @@
    name="generator_6"/>
 <transform
    pos="-119.645 -0.582276 -12.5256"
-   quat="0 -0.695415 0 0.718609"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/generator.static_mesh"/>
@@ -3349,7 +3278,7 @@
    name="WirePosDown"/>
 <transform
    pos="-85.4879 -0.533921 -7.74967"
-   quat="0 0.753234 0 0.657752"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -3543,7 +3472,7 @@
    name="escritorio"/>
 <transform
    pos="-79.5553 -1.31119 -5.78569"
-   quat="0 0.761719 0 0.647908"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/escritorio.static_mesh"/>
@@ -3558,7 +3487,7 @@
    name="rejilla_aire_006"/>
 <transform
    pos="-100.597 0.19222 -17.8732"
-   quat="0 0.707107 0 0.707107"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/rejilla_aire_006.static_mesh"/>
@@ -3822,7 +3751,7 @@
    name="bookshelf_w_doors001"/>
 <transform
    pos="-76.2627 -1.34997 -11.3785"
-   quat="0 0.898 0 0.439996"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/bookshelf_w_doors001.static_mesh"/>
@@ -4692,7 +4621,7 @@
    name="suelo_balcon_derecho_cuadrado"/>
 <transform
    pos="10.3507 -11.8588 -22.3457"
-   quat="0 1.0 0 0"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/suelo_balcon_derecho_cuadrado.static_mesh"/>
@@ -4708,7 +4637,7 @@
 <transform
    pos="-65.667 15.8037 8.38341"
    quat="0 0 0 1.0"
-   scale="0.73508"/>
+   scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/suelo_labo_arriba_2.static_mesh"/>
 <abs_aabb/>
@@ -4737,8 +4666,8 @@
    name="turbina_"/>
 <transform
    pos="-9.62175 -24.0369 18.016"
-   quat="0 -0.819152 0 0.573576"
-   scale="0.980927"/>
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/turbina_.static_mesh"/>
 <abs_aabb/>
@@ -4752,7 +4681,7 @@
    name="estanteria_3"/>
 <transform
    pos="-86.4599 -1.30691 -11.1285"
-   quat="0 -0.797762 0 0.602973"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/estanteria_3.static_mesh"/>
@@ -4767,7 +4696,7 @@
    name="maquinas_abajo"/>
 <transform
    pos="-24.492 -24.0188 11.4504"
-   quat="0 0.327495 0 0.944853"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/maquinas_abajo.static_mesh"/>
@@ -5280,6 +5209,81 @@
    type_shape="convex"
    mass="5"/>
 <local_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columnas_rotas_3"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/columnas_rotas_3.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="2"/>
+<transform
+   pos="-22.1566 -23.2786 -7.5703"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/2.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="gruaiz"/>
+<transform
+   pos="-28.2432 -23.2786 15.6682"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/gruaiz.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cubos_prensa"/>
+<transform
+   pos="-23.7545 -1.67688 -23.0446"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cubos_prensa.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cargador_bateria003"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cargador_bateria003.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 

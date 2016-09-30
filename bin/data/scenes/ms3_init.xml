@@ -39,7 +39,7 @@
    name="__pila"/>
 <transform
    pos="-121.537 -0.242203 -5.41684"
-   quat="0 0.999806 0 0.0197099"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/__pila.static_mesh"/>
@@ -293,7 +293,7 @@
    name="trozo_destruible_abajo"/>
 <transform
    pos="-86.9613 0.0937034 -7.83921"
-   quat="0 0 0.111467 0.993768"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/trozo_destruible_abajo.static_mesh"/>
@@ -316,7 +316,7 @@
    name="trozo_destruible_arriba"/>
 <transform
    pos="-86.9443 1.50531 -7.83921"
-   quat="0 0 -0.150304 0.98864"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/trozo_destruible_arriba.static_mesh"/>
@@ -339,7 +339,7 @@
    name="trozo_destruible_derec"/>
 <transform
    pos="-86.978 0.893398 -8.43306"
-   quat="0 -0.0368033 0 0.999323"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/trozo_destruible_derec.static_mesh"/>
@@ -362,7 +362,7 @@
    name="trozo_destruible_iz"/>
 <transform
    pos="-86.9196 0.692698 -7.24536"
-   quat="0 -0.0231607 0 0.999732"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/trozo_destruible_iz.static_mesh"/>
@@ -765,7 +765,7 @@
 <transform
    pos="-66.2184 16.129 12.5512"
    quat="0 0 0 1.0"
-   scale="0.00929856"/>
+   scale="1.0"/>
 <skeleton
    model="skeletons/scientist/scientist.skeleton"/>
 <render_static_mesh
@@ -786,12 +786,12 @@
    tags="workstation"/>
 <workstation
    posAction="-64.4584 16.2979 13.2277"
-   yawAction="-3.14159"/>
+   yawAction="0.0"/>
 <name
    name="Workstation02"/>
 <transform
    pos="-64.4584 16.2979 13.2277"
-   quat="0 0.922127 0 0.386888"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -808,7 +808,7 @@
    name="Workstation01"/>
 <transform
    pos="-66.745 16.2979 16.787"
-   quat="0 -0.357009 0 0.934101"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -825,7 +825,7 @@
    name="Workstation03"/>
 <transform
    pos="-63.2201 16.2979 17.4363"
-   quat="0 0.410464 0 0.911877"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -924,7 +924,7 @@
 <name
    name="trigger_5"/>
 <transform
-   pos="-73.5068 -0.588134 8.45465"
+   pos="-73.5068 -0.588134 8.45466"
    quat="0 0.846634 0 0.532176"
    scale="1.0"/>
 <room
@@ -1017,12 +1017,12 @@
    tags="workstation"/>
 <workstation
    posAction="-86.6543 -0.628906 15.0363"
-   yawAction="-3.14159"/>
+   yawAction="0.0"/>
 <name
    name="Workstation004"/>
 <transform
    pos="-86.6543 -0.628906 15.0363"
-   quat="0 0.710217 0 0.703983"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -1034,12 +1034,12 @@
    tags="workstation"/>
 <workstation
    posAction="-93.4641 -0.628905 19.8214"
-   yawAction="-3.14159"/>
+   yawAction="0.0"/>
 <name
    name="Workstation005"/>
 <transform
    pos="-93.4641 -0.628905 19.8214"
-   quat="0 -0.728751 0 0.684779"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -1051,12 +1051,12 @@
    tags="workstation"/>
 <workstation
    posAction="-94.2381 -0.628906 15.836"
-   yawAction="-3.14159"/>
+   yawAction="0.0"/>
 <name
    name="Workstation006"/>
 <transform
    pos="-94.2381 -0.628906 15.836"
-   quat="0 -0.728751 0 0.684779"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -1068,12 +1068,12 @@
    tags="workstation"/>
 <workstation
    posAction="-90.0359 -0.628906 15.5712"
-   yawAction="-3.14159"/>
+   yawAction="0.0"/>
 <name
    name="Workstation007"/>
 <transform
    pos="-90.0359 -0.628906 15.5712"
-   quat="0 0.92894 0 -0.370229"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <room
    name="2"/>
@@ -1290,7 +1290,7 @@
    wpts_size="2"
    wpt0_pos="11.2274 -12.0 -18.0"
    wpt0_wait="2"
-   wpt1_pos="11.2274 -12.0 -0.499999"
+   wpt1_pos="11.2274 -12.0 -0.5"
    wpt1_wait="2"
    textureFront="droneFront"
    textureBack="droneBack"/>
@@ -1298,7 +1298,7 @@
    name="DroneMinus_1"/>
 <transform
    pos="11.2799 -11.2973 -11.6827"
-   quat="0 0.708986 0 0.705223"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
@@ -1331,7 +1331,7 @@
    name="DronePlus_1"/>
 <transform
    pos="8.62348 -11.2448 7.20104"
-   quat="0 -0.707107 0 0.707107"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
@@ -1364,7 +1364,7 @@
    name="DroneMinus_003"/>
 <transform
    pos="-1.37955 -2.93774 21.0883"
-   quat="0 0.999985 0 0"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>
@@ -1375,7 +1375,7 @@
 <local_aabb/>
 <polarized
    pol="plus"
-   offset="-0.0738666 0.934383 0.100378"/>
+   offset="-0.0738667 0.934383 0.100378"/>
 <room
    name="1"/>
 
@@ -1397,7 +1397,7 @@
    name="DroneMinus_004"/>
 <transform
    pos="-23.142 0.713167 10.0805"
-   quat="0 0.908985 0 0.416829"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"/>

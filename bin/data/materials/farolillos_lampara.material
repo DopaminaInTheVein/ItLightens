@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/test_ender_Base_Color.dds"/>
-<texture slot="normalmap" name="textures/farolillos_norm_normals.dds"/>
-</material>
