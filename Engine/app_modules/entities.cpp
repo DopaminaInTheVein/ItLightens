@@ -611,7 +611,6 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 			getHandleManager<TCompFadingMessage>()->updateAll(dt);
-			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
 			getHandleManager<TCompFadeScreen>()->updateAll(dt);
 			getHandleManager<Tasklist>()->updateAll(dt);
@@ -621,12 +620,12 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<player_controller_mole>()->updateAll(dt);
 			getHandleManager<player_controller_cientifico>()->updateAll(dt);
 			getHandleManager<TCompFadingMessage>()->updateAll(dt);
-			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 			getHandleManager<LogicHelperArrow>()->updateAll(dt);
 			getHandleManager<TCompFadeScreen>()->updateAll(dt);
 			getHandleManager<Tasklist>()->updateAll(dt);
 		}
 
+		getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompCameraMain>()->updateAll(dt);
 		getHandleManager<TCompLightDir>()->updateAll(dt);

@@ -11,6 +11,7 @@ class TCompFadingGlobe : public TCompBase {
 	float globe_height;
 	bool added = false;
 	// aux params for computing the correct position and size
+	std::string prefab_route;
 	std::string globe_name;
 	float distance;
 	float char_x;
@@ -20,6 +21,8 @@ class TCompFadingGlobe : public TCompBase {
 	float screen_x;
 	float screen_y;
 	float screen_z;
+	// globes count
+	static int globes;
 
 	float  ttl;
 

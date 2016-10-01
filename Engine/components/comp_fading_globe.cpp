@@ -18,20 +18,23 @@
 
 extern CShaderCte< TCteObject > shader_ctes_object;
 extern CShaderCte< TCteCamera > shader_ctes_camera;
+int TCompFadingGlobe::globes = 0;
 
 bool TCompFadingGlobe::load(MKeyValue& atts)
 {
-	ttl = 2.0f;
-	globe_name = atts.getString("name", "char_globe");
+	prefab_route = atts.getString("route", "ui/effects/bafarada");
+	globe_name = atts.getString("name", "char_globe") + to_string(globes++);
 	distance = atts.getFloat("dist", 1.0f);
 	char_x = atts.getFloat("posx", 1.0f);
 	char_y = atts.getFloat("posy", 1.0f);
 	char_z = atts.getFloat("posz", 1.0f);
+	ttl = atts.getFloat("ttl", 2.0f);
 
 	resolution_x = CApp::get().getXRes();
 	resolution_y = CApp::get().getYRes();
 
-	char_y += 1.5f - (1.f / distance);
+	if (prefab_route.find("bafarada") != string::npos)
+		char_y += 2.0f - (1.f / distance);
 
 	// First option: computing manually the projective space coords
 
@@ -62,7 +65,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	screen_z = 0.75f;
 
 	if (!added && !isBehindCamera()) {
-		Gui->addGuiElement("ui/effects/bafarada", VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
+		Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
 		added = true;
 	}
 

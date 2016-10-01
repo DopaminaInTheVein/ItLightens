@@ -840,7 +840,7 @@ void SLBPublicFunctions::removeText(const char* id) {
 //	);
 //}
 
-void SLBPublicFunctions::characterGlobe(float distance, float char_x, float char_y, float char_z) {
+void SLBPublicFunctions::characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl) {
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
@@ -861,10 +861,12 @@ void SLBPublicFunctions::characterGlobe(float distance, float char_x, float char
 	// Creation of the attributes
 	MKeyValue atts3;
 	atts3["name"] = name;
+	atts3["route"] = std::string(route);
 	atts3["dist"] = std::to_string(distance);
 	atts3["posx"] = std::to_string(char_x);
 	atts3["posy"] = std::to_string(char_y);
 	atts3["posz"] = std::to_string(char_z);
+	atts3["ttl"] = std::to_string(ttl);
 
 	new_hl.load(atts3);
 	entity->add(new_hl);

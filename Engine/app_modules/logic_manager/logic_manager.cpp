@@ -421,7 +421,8 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 												  // Step events
 	case (OnStep): {
 		int step_number = 0;
-		CEntity* entity = handle;
+		CEntity* entity = caller_handle;
+		TCompTransform* transform = entity->get<TCompTransform>();
 
 		// get the step counter of the NPC
 		if (params.find("Guard") != std::string::npos) {
@@ -443,7 +444,13 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		if (room && room->name[0] == 2)
 			event_name = params + "Parquet";
 
-		sprintf(lua_code, "OnStep%s(%i);", event_name.c_str(), step_number);
+		VEC3 position = transform->getPosition();
+		if (step_number == 0 || step_number == 2)
+			position = position + transform->getLeft()*0.2f;
+		else 
+			position = position - transform->getLeft()*0.2f;
+
+		sprintf(lua_code, "OnStep%s(%i, %f, %f, %f);", event_name.c_str(), step_number, position.x, position.y, position.z);
 		break;
 	}
 	case (OnStepOut): {
@@ -969,10 +976,12 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// launch text span related to npc talks with colors
 		.set("character_globe", &SLBPublicFunctions::characterGlobe)
 		.comment("Shows the specified globe for a limited time")
+		.param("string: route of the prefab that will be displayed")
 		.param("float: distance to the player")
 		.param("float: x coord of the character")
 		.param("float: y coord of the character")
 		.param("float: z coord of the character")
+		.param("float: time to live in seconds")
 		// launch intro state
 		.set("toggle_intro_state", &SLBPublicFunctions::toggleIntroState)
 		.comment("Toggles the intro game state")
