@@ -21,12 +21,17 @@ extern CShaderCte< TCteCamera > shader_ctes_camera;
 
 bool TCompFadingGlobe::load(MKeyValue& atts)
 {
-	ttl = 2.0f;
 	globe_name = atts.getString("name", "char_globe");
 	distance = atts.getFloat("dist", 1.0f);
 	char_x = atts.getFloat("posx", 1.0f);
 	char_y = atts.getFloat("posy", 1.0f);
 	char_z = atts.getFloat("posz", 1.0f);
+	ttl = atts.getFloat("ttl", 2.0f);
+	prefabToUse = atts.getString("prefab", "ui/effects/bafarada");
+	if (ttl <= 0.0f) {
+		ttl = 0.0001f;
+		perenne = true;
+	}
 
 	resolution_x = CApp::get().getXRes();
 	resolution_y = CApp::get().getYRes();
@@ -54,7 +59,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 
 	// Second option: using camera viewprojection matrix
 
- 	float4 proj_coords = mul(VEC4(char_x, char_y, char_z, 1.0f), shader_ctes_camera.ViewProjection);
+	float4 proj_coords = mul(VEC4(char_x, char_y, char_z, 1.0f), shader_ctes_camera.ViewProjection);
 	proj_coords /= proj_coords.z;
 
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
@@ -62,7 +67,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	screen_z = 0.75f;
 
 	if (!added && !isBehindCamera()) {
-		Gui->addGuiElement("ui/effects/bafarada", VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
+		Gui->addGuiElement(prefabToUse, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
 		added = true;
 	}
 
@@ -85,17 +90,24 @@ void TCompFadingGlobe::update(float dt) {
 
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
-
-	if (added && !isBehindCamera()) {
+	if (!added && !isBehindCamera()) {
+		Gui->addGuiElement(prefabToUse, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
+		added = true;
+	}
+	else if (added && !isBehindCamera()) {
 		Gui->updateGuiElementPositionByTag(globe_name, VEC3(screen_x, 1.f - screen_y, screen_z));
+	}
+	else {
+		Gui->removeGuiElementByTag(globe_name);
+		added = false;
 	}
 
 	// time to life control for the globe
 
-	if (ttl >= 0.0f) {
+	if (ttl >= 0.0f && !perenne) {
 		ttl -= getDeltaTime();
 	}
-	else {
+	else if (ttl < 0.0f) {
 		//textureIcon->destroy();
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
@@ -122,7 +134,6 @@ void TCompFadingGlobe::render() const {
 }
 
 bool TCompFadingGlobe::isBehindCamera() {
-
 	float cam_x = shader_ctes_camera.CameraWorldPos.x;
 	float cam_y = shader_ctes_camera.CameraWorldPos.y;
 	float cam_z = shader_ctes_camera.CameraWorldPos.z;
