@@ -23,8 +23,8 @@ int TCompFadingGlobe::globes = 0;
 bool TCompFadingGlobe::load(MKeyValue& atts)
 {
 	prefab_route = atts.getString("route", "ui/effects/bafarada");
-	globe_name = atts.getString("name", "char_globe") + to_string(globes++);
-	globe_name = atts.getString("name", "char_globe");
+	globe_name = atts.getString("name", "char_globe" + to_string(globes++));
+	//globe_name = atts.getString("name", "char_globe");
 	distance = atts.getFloat("dist", 1.0f);
 	char_x = atts.getFloat("posx", 1.0f);
 	char_y = atts.getFloat("posy", 1.0f);
@@ -70,7 +70,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
 	screen_z = 0.75f;
 
-	if (!added && !isBehindCamera()) {
+	if (!isBehindCamera()) {
 		Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
 		added = true;
 	}

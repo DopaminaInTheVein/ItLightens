@@ -853,7 +853,7 @@ void SLBPublicFunctions::addAimCircle(const char* id, const char* prefab, float 
 	// Creation of the attributes
 	MKeyValue atts3;
 	atts3["name"] = name;
-	atts3["prefab"] = std::string(prefab);
+	atts3["route"] = std::string(prefab);
 	atts3["ttl"] = std::to_string(ttl);
 	atts3["posx"] = std::to_string(char_x);
 	atts3["posy"] = std::to_string(char_y);
