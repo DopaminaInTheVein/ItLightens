@@ -10,6 +10,7 @@ class TCompFadingGlobe : public TCompBase {
 	float globe_width;
 	float globe_height;
 	bool added = false;
+	bool perenne = false;
 	// aux params for computing the correct position and size
 	std::string prefab_route;
 	std::string globe_name;
@@ -30,7 +31,12 @@ class TCompFadingGlobe : public TCompBase {
 
 public:
 	//Update info
-
+	std::string getGlobeName() const {
+		return globe_name;
+	}
+	void forceTTLZero() {
+		ttl = -0.1f;
+	}
 	void update(float elapsed);
 	void render() const;
 	bool load(MKeyValue& atts);

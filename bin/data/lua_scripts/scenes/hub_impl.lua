@@ -21,7 +21,7 @@ function OnStart_hub( )
 	sci_done = false
 	p:setControlEnabled(1)
 	p:setOnlySense(1)
-	--p:exec_command("p:setPlayerEnabled(1)", 5) --test
+	p:aim_circle("circle_1","aim_circle",-1.94,51.64,-20.08,-1.0)
 	p:player_talks(p:get_text("hub","start_hub"))
 end
 -------------------------------

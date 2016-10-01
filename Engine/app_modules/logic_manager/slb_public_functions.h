@@ -194,6 +194,8 @@ public:
 	//void alterText(const char* id, float new_posx, float new_posy, float new_scale);
 	void removeText(const char* id);
 	void characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl);
+	void addAimCircle(const char* id, const char* prefab, float char_x, float char_y, float char_z, float ttl);
+	void removeAimCircle(const char* id);
 	void toggleIntroState();
 	void launchVictoryState();
 	//void showLoadingScreen();
