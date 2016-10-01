@@ -1,0 +1,21 @@
+<entities>
+<entity temp="yes">
+<tags
+   tags="gui"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<name
+   name="zap"/>
+<transform
+   pos="2.14401 -93.2253 0.5"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/effects/zap.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+
+</entities>

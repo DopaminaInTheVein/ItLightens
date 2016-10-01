@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/effects/zap.mesh" material="materials/ui/effects/zap_tech_ui.material"/>
+</static_mesh>
