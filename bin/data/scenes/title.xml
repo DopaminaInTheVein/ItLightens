@@ -14,7 +14,7 @@
 <name
    name="btn_start"/>
 <transform
-   pos="5.00018 -96.268 5.1"
+   pos="5.00018 -96.268 4.71109"
    quat="0 0 0 1.0"
    scale="1.04135"/>
 <render_static_mesh
@@ -27,7 +27,7 @@
 <name
    name="background"/>
 <transform
-   pos="5.0 -95.0 5.0"
+   pos="5.0 -95.0 4.61109"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -50,7 +50,7 @@
 <name
    name="btn_options"/>
 <transform
-   pos="5.00018 -96.7906 5.1"
+   pos="5.00018 -96.7906 4.71109"
    quat="0 0 0 1.0"
    scale="1.04135"/>
 <render_static_mesh
@@ -73,7 +73,7 @@
 <name
    name="btn_exit"/>
 <transform
-   pos="5.00018 -97.3131 5.1"
+   pos="5.00018 -97.3131 4.71109"
    quat="0 0 0 1.0"
    scale="1.04135"/>
 <render_static_mesh
@@ -93,7 +93,7 @@
 <name
    name="cursor_title"/>
 <transform
-   pos="5.00626 -94.9994 5.2"
+   pos="5.00626 -94.9994 4.81109"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh

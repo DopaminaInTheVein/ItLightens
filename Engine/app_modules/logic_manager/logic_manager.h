@@ -112,7 +112,7 @@ public:
 		OnVictory,
 		OnDead,
 		OnRestartLevel,
-		OnLoadingLevel,
+		//OnLoadingLevel, (no se esta usando)
 		OnLoadedLevel,
 		OnSavedLevel,
 

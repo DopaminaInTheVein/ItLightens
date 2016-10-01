@@ -196,7 +196,7 @@ public:
 	void characterGlobe(float distance, float char_x, float char_y, float char_z);
 	void toggleIntroState();
 	void launchVictoryState();
-	void showLoadingScreen();
+	//void showLoadingScreen();
 	void loadLevel(const char* level_name);
 	void saveLevel();
 	void clearSaveData();

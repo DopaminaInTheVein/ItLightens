@@ -467,6 +467,7 @@ function OnLoadedLevel( logic_level, real_level )
 	p:exec_command("CallFunction(\"OnLoad_"..real_level.."\");", 1.1)
 end
 
+loading_handles = HandleGroup()
 function InitScene()
 	g_dead = false
 	cam:reset_camera()
@@ -477,6 +478,8 @@ function InitScene()
 	if not g_is_menu then
 		p:load_entities("player_hud")
 	end
+	loading_handles:get_handles_by_tag("loading")
+	p:exec_command("loading_handles:destroy();", 1)
 end
 
 function OnLoadingLevel()
