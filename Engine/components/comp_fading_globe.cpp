@@ -62,7 +62,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	screen_z = 0.75f;
 
 	if (!added && !isBehindCamera()) {
-		Gui->addGuiElement("ui/bafarada", VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
+		Gui->addGuiElement("ui/effects/bafarada", VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
 		added = true;
 	}
 

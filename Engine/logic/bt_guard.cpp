@@ -158,6 +158,7 @@ bool bt_guard::playerStunned() {
 	if (stunned == true) {
 		logic_manager->throwEvent(logic_manager->OnStunned, MY_NAME);
 		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
+		decreaseChaseCounter();
 		return true;
 	}
 	return false;
