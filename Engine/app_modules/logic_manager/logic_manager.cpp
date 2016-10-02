@@ -447,7 +447,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		VEC3 position = transform->getPosition();
 		if (step_number == 0 || step_number == 2)
 			position = position + transform->getLeft()*0.2f;
-		else 
+		else
 			position = position - transform->getLeft()*0.2f;
 
 		sprintf(lua_code, "OnStep%s(%i, %f, %f, %f);", event_name.c_str(), step_number, position.x, position.y, position.z);
@@ -1075,5 +1075,8 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("reload_language_file", &SLBPublicFunctions::reloadLanguageFile)
 		.comment("Reloads the language file")
 		.param("string: code of the language file that will be loaded")
-		;
+		.set("force_sense_vision", &SLBPublicFunctions::forceSenseVision)
+		.comment("force sense vision")
+		.set("unforce_sense_vision", &SLBPublicFunctions::unforceSenseVision)
+		.comment("force normal vision");
 }

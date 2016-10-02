@@ -9,7 +9,6 @@
 
 #include "components/entity.h"
 #include "components/entity_tags.h"
-#include "components/comp_sense_vision.h"
 bool CGameController::start()
 {
 	auto file = CApp::get().get().file_options_json;
@@ -192,4 +191,17 @@ bool CGameController::isSenseVisionEnabled()
 
 const char* CGameController::getName() const {
 	return "game_controller";
+}
+
+CHandle CGameController::getHandleGameController() const {
+	return h_game_controller;
+}
+
+TCompSenseVision * CGameController::getSenseVisionComp()
+{
+	if (h_game_controller.isValid()) {
+		GET_COMP(sv, h_game_controller, TCompSenseVision);
+		if (sv) return sv;
+	}
+	return nullptr;
 }

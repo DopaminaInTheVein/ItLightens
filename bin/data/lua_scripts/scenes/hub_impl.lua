@@ -22,6 +22,7 @@ function OnStart_hub( )
 	p:setControlEnabled(1)
 	p:setOnlySense(1)
 	p:aim_circle("circle_1","aim_circle",-1.94,51.64,-20.08,-1.0)
+	p:force_sense_vision()
 	p:player_talks(p:get_text("hub","start_hub"))
 end
 -------------------------------
@@ -59,6 +60,9 @@ end
 --===========================================
 function hub_target_seen()
 	p:player_talks(p:get_text("hub","target_seen"))
+	p:no_aim_circle("circle_1")
+	p:unforce_sense_vision()
+
 	h:getHandleCaller()
 	h:destroy()
 	p:exec_command("p:setOnlySense(0);", 0.5)
