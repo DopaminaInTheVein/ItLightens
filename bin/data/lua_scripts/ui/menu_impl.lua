@@ -17,7 +17,7 @@ function OnClicked_btn_back_title( )
 	-- (Fadeout)
 	p:set_cursor_enabled(false)
 	p:exec_command("destroyMenu();", 1)
-	LoadLevel("level_0")
+	p:exec_command("LoadLevel(\"level_0\");", 1.1)
 end
 
 function OnClicked_btn_opt_menu( )
@@ -25,6 +25,7 @@ function OnClicked_btn_opt_menu( )
 end
 
 function OnClicked_btn_exit_pause( )
+	p:print("exit..")
 	p:exit_game()
 end
 

@@ -9,7 +9,7 @@
 
 // Loading the wpts
 #define WPT_ATR_NAME(nameVariable, nameSufix, index) \
-char nameVariable[10]; sprintf(nameVariable, "%s%d", nameSufix,index);
+char nameVariable[20]; sprintf(nameVariable, "%s%d", nameSufix,index);
 
 bool Tasklist::load(MKeyValue& atts) {
 	maxPoints = atts.getInt("points_size", 0);
