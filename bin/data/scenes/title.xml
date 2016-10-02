@@ -83,7 +83,7 @@
 </entity>
 <entity>
 <tags
-   tags="title gui gui_cursor"/>
+   tags="menu gui gui_cursor"/>
 <gui
    menu_name="title"
    width="0.2"
@@ -93,11 +93,11 @@
 <name
    name="cursor_title"/>
 <transform
-   pos="5.00626 -94.9994 4.81109"
+   pos="5.42145 -95.7802 4.77161"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/cursor.static_mesh"/>
+   name="static_meshes/ui//cursor.static_mesh"/>
 <abs_aabb/>
 
 </entity>

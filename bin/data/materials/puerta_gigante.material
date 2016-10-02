@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/puertas_gigantes_difuso.dds"/>
+<texture slot="normalmap" name="textures/puertas_gigantes_normal.dds"/>
+</material>

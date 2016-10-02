@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/paredes_provisionales_abajo.dds"/>
+<texture slot="normalmap" name="textures/modulos_bi.dds"/>
+</material>

@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/title/cursor_title.mesh" material="materials/ui/title/cursor_tech_ui.material"/>
+</static_mesh>
