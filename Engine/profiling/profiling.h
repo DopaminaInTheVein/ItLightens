@@ -1,7 +1,7 @@
 #ifndef INC_PROFILING_H_
 #define INC_PROFILING_H_
 
-#define PROFILING_JOHN
+//#define PROFILING_JOHN
 #define PROFILING_ENABLED
 
 #include <cinttypes>
@@ -151,14 +151,13 @@ struct TCPUScoped {
 };
 #endif //PROFILING_JOHN
 
-
 #define PROFILE_FUNCTION(txt)  TCPUScoped profiled_scoped(txt)
 #define PROFILE_FRAME_BEGINS()   profiler->beginFrame()
 
 #else
- //Profile disabled
-#define PROFILE_FUNCTION(txt)  
-#define PROFILE_FRAME_BEGINS()   
+//Profile disabled
+#define PROFILE_FUNCTION(txt)
+#define PROFILE_FRAME_BEGINS()
 
 #endif //PROFILING_ENABLED
 

@@ -50,7 +50,6 @@ bool CRenderManager::sortByTechMatMesh(
 	PROFILE_FUNCTION("Render manager: sort");
 
 	if (tech1 != tech2) {
-		
 		if (tech1->getCategory() != tech2->getCategory())
 			return tech1->getCategory() < tech2->getCategory();
 		if (tech1->getCategory() != tech2->getCategory())
@@ -79,8 +78,6 @@ bool CRenderManager::sortByTechMatMesh(
 bool CRenderManager::sortByMesh(
 	const TShadowKey &k1
 	, const TShadowKey &k2) {
-
-
 	PROFILE_FUNCTION("Render manager: sort");
 
 	//shadow caster are sorted by mesh
@@ -112,7 +109,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 		k.isPlayer = playercandidate;
 		for (auto room : oroom) {
 			if (room >= ROOMS_SIZE) continue;
-			if (room >= 0  && !playercandidate)
+			if (room >= 0 && !playercandidate)
 				all_keys[room].push_back(k);
 			else {
 				for (int idx = 0; idx < ROOMS_SIZE; idx++) {
@@ -128,7 +125,6 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 	// tengo la mesh completa...
 	// De momento, voy a asumir que si....
 	for (auto s : mesh->slots) {
-
 		//only solid objects cast shadows
 		if (s.material->tech->getCategory() != CRenderTechnique::SOLID_OBJS)
 			continue;
@@ -169,14 +165,9 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 			}
 		}
 	}
-
-	
-	
 }
 
-
 void CRenderManager::unregisterFromRender(CHandle owner) {
-
 	// Pasarse por todas las keys y borrar aquellas q tengan el owner
 
 	for (int idx = 0; idx < ROOMS_SIZE; idx++) {
@@ -190,12 +181,6 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
 				++it;
 		}
 	}
-
-	
-
-
-	
-	
 }
 
 static bool ui_render = false;
@@ -321,18 +306,11 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	while (it != end_it) {
 		PROFILE_FUNCTION("Render Manager each");
 		// Do the culling
-		{
-			GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
-			if (tentroom) it->room = tentroom->name;
-			//PROFILE_FUNCTION("Render Manager: Check Tasklist tag");
-			//if (it->owner.getOwner().hasTag("tasklist") || it->owner.getOwner().hasTag("tasklistend")) {
-			//	CEntity * tent = it->owner.getOwner();
-			//	TCompRoom * tentroom = tent->get<TCompRoom>();
-			//	it->room = tentroom->name;
-			//}
-		}
+		GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
+		if (tentroom) it->room = tentroom->name;
 		if (it->owner.getOwner() == CPlayerBase::handle_player || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
 			if (culling_bits) {
+				PROFILE_FUNCTION("Culling");
 				TCompAbsAABB* aabb = it->aabb;
 				if (aabb) {
 					intptr_t idx = aabb - base_aabbs;
@@ -344,6 +322,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 			}
 
 			if (it->isPlayer) {
+				PROFILE_FUNCTION("Polarity player");
 				CEntity* e_p = it->owner.getOwner();
 				if (e_p) {
 					player_controller* pc = e_p->get<player_controller>();
@@ -358,6 +337,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 				}
 			}
 			else {
+				PROFILE_FUNCTION("Polarity other");
 				CEntity* e_o = it->owner.getOwner();
 				if (e_o) {
 					TCompPolarized* op = e_o->get<TCompPolarized>();
@@ -373,6 +353,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 			}
 
 			if (it->material != prev_it->material) {
+				PROFILE_FUNCTION("Change material");
 				if (!prev_it->material || it->material->tech != prev_it->material->tech) {
 					it->material->tech->activate();
 					curr_tech_used_bones = it->material->tech->usesBones();
@@ -380,12 +361,15 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 				it->material->activateTextures(it->polarity);
 			}
 			else {
+				PROFILE_FUNCTION("Same material");
 				if (it->polarity != prev_it->polarity) {
 					it->material->activateTextures(it->polarity);
 				}
 			}
-			if (it->mesh != prev_it->mesh)
+			if (it->mesh != prev_it->mesh) {
+				PROFILE_FUNCTION("Mesh activate");
 				it->mesh->activate();
+			}
 			if (it->owner != prev_it->owner) {
 				// subir la world de it
 				const TCompTransform* c_tmx = it->transform;
@@ -398,6 +382,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 			//render skeleton object
 			if (curr_tech_used_bones) {
+				PROFILE_FUNCTION("Bones");
 				if (renderSkeleton(it)) {
 					//valid skeleton
 					it->mesh->renderGroup(it->submesh_idx);
@@ -408,6 +393,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 			//render UI object
 			else if (it->material->tech->getCategory() == CRenderTechnique::UI_OBJS) {
+				PROFILE_FUNCTION("Ui object");
 				if (renderUI(it)) {
 					//Valid UI
 					it->mesh->renderGroup(it->submesh_idx);
@@ -420,6 +406,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 				}
 			}
 			else {
+				PROFILE_FUNCTION("Desfault seleton");
 				//default skeleton
 				it->mesh->renderGroup(it->submesh_idx);
 				prev_it = it;
@@ -433,9 +420,10 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 #ifndef NDEBUG
 	//if (ui_render)checkTestZ(last_test_z_render, test_z_render);
 #endif
-
-	CMaterial::deactivateTextures();
-
+	{
+		PROFILE_FUNCTION("Deactivate textures");
+		CMaterial::deactivateTextures();
+	}
 	renderedCulling.push_back(nkeys_rendered);
 }
 
@@ -450,6 +438,7 @@ bool CRenderManager::renderSkeleton(TKey* it) {
 
 #include "app_modules\gui\comps\gui_basic.h"
 bool CRenderManager::renderUI(TKey* it) {
+	PROFILE_FUNCTION("Render UI");
 	const CEntity* e = it->owner.getOwner();
 	if (!e) return false;
 	TCompGui* comp_ui = e->get<TCompGui>();
@@ -474,7 +463,6 @@ void CRenderManager::renderUICulling(int room) {
 	renderedCulling.clear();
 }
 
-
 // ------------------------------------------
 void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	CTraceScoped scope("Shadow Casters");
@@ -489,10 +477,8 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 		++ntimes_sorted;
 	}
 
-		
 	TShadowKey* it = &all_shadow_keys[room][0];
-	TShadowKey* end_it = &all_shadow_keys[room][all_shadow_keys[room].size()-1];
-
+	TShadowKey* end_it = &all_shadow_keys[room][all_shadow_keys[room].size() - 1];
 
 	static TShadowKey null_key;
 	memset(&null_key, 0x00, sizeof(TShadowKey));
@@ -524,7 +510,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	bool valid = false;
 	while (true) {
 		PROFILE_FUNCTION("SHADOW CASTERS OBJ: while");
-		
+
 		valid = true;
 
 		const TCompTransform* c_tmx = it->transform;
@@ -532,7 +518,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 		//assert(c_tmx);
 		if (c_tmx) {
 			PROFILE_FUNCTION("SHADOW CASTERS OBJ: render and activate");
-				
+
 			if (culling_bits) {
 				TCompAbsAABB* aabb = it->aabb;
 				if (aabb) {
@@ -564,7 +550,6 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 			//fatal("render__manager: tranfrom from shadowcaster null");
 		}
 
-
 		if (it != end_it) {
 			++it;
 		}
@@ -573,8 +558,6 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 			return;
 		}
 	}
-
-	
 }
 
 // ------------------------------------------
@@ -594,9 +577,8 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 		++ntimes_sorted;
 	}
 
-
 	TShadowKey* it = &all_shadow_skinning_keys[room][0];
-	TShadowKey* end_it = &all_shadow_skinning_keys[room][all_shadow_skinning_keys[room].size()-1];
+	TShadowKey* end_it = &all_shadow_skinning_keys[room][all_shadow_skinning_keys[room].size() - 1];
 
 	static TShadowKey null_key;
 	memset(&null_key, 0x00, sizeof(TShadowKey));
@@ -612,7 +594,6 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 		return;
 	}
 
-
 	TCompCulling::TCullingBits* culling_bits = nullptr;
 	TCompCulling* culling = nullptr;
 
@@ -624,60 +605,55 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 	auto hm_aabbs = getHandleManager<TCompAbsAABB>();
 	const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
 
-
 	bool valid = true;
 	while (true) {
 		valid = true;
-			const TCompTransform* c_tmx = it->transform;
+		const TCompTransform* c_tmx = it->transform;
 
-			if (c_tmx) {
-
-
-				if (culling_bits) {
-					TCompAbsAABB* aabb = it->aabb;
-					if (aabb) {
-						PROFILE_FUNCTION("SHADOW CASTERS OBJ: culling");
-						intptr_t idx = aabb - base_aabbs;
-						if (!culling_bits->test(idx)) {
-							valid = false;
-						}
+		if (c_tmx) {
+			if (culling_bits) {
+				TCompAbsAABB* aabb = it->aabb;
+				if (aabb) {
+					PROFILE_FUNCTION("SHADOW CASTERS OBJ: culling");
+					intptr_t idx = aabb - base_aabbs;
+					if (!culling_bits->test(idx)) {
+						valid = false;
 					}
 				}
+			}
 
-				
+			const CEntity* e = it->owner.getOwner();
+			if (!e) {
+				valid = false;
+			}
+			const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+			if (!comp_skel) {
+				valid = false;
+			}
 
-				const CEntity* e = it->owner.getOwner();
-				if (!e) {
-					valid = false;
+			if (valid) {
+				activateWorldMatrix(c_tmx->asMatrix());
+				comp_skel->uploadBonesToCteShader();
+
+				// If the shadows_keys were sorted by mesh
+				// I could skip the activation and just call it
+				// when the mesh changed, and only call the render
+				if (it->mesh != prev_it->mesh) {
+					it->mesh->activate();
 				}
-				const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
-				if(!comp_skel) {
-					valid = false;
-				}
+				it->mesh->render();
+				prev_it = it;
+			}
+		}
+		else {
+			//fatal("render__manager: tranfrom from shadowcaster skinning null");
+		}
 
-				if (valid) {
-					activateWorldMatrix(c_tmx->asMatrix());
-					comp_skel->uploadBonesToCteShader();
-
-					// If the shadows_keys were sorted by mesh
-					// I could skip the activation and just call it
-					// when the mesh changed, and only call the render
-					if (it->mesh != prev_it->mesh) {
-						it->mesh->activate();
-					}
-					it->mesh->render();
-					prev_it = it;
-				}
-			}
-			else {
-				//fatal("render__manager: tranfrom from shadowcaster skinning null");
-			}
-
-			if (it != end_it) {
-				++it;
-			}
-			else {
-				return;
-			}
+		if (it != end_it) {
+			++it;
+		}
+		else {
+			return;
+		}
 	}
 }

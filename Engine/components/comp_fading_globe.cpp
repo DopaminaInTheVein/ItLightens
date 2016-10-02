@@ -29,6 +29,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	char_x = atts.getFloat("posx", 1.0f);
 	char_y = atts.getFloat("posy", 1.0f);
 	char_z = atts.getFloat("posz", 1.0f);
+	screen_z = atts.getFloat("screen_z", 0.1f);
 	ttl = atts.getFloat("ttl", 2.0f);
 	MAX_DISTANCE = atts.getFloat("max_distance", -1.f);
 
@@ -69,7 +70,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
-	screen_z = 0.75f;
+	//screen_z = 0.75f;
 
 	if (!isBehindCamera() && inDistance()) {
 		Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
@@ -155,7 +156,6 @@ bool TCompFadingGlobe::isBehindCamera() {
 }
 
 bool TCompFadingGlobe::inDistance() {
-
 	if (MAX_DISTANCE < 0.f)
 		return true;
 
@@ -163,5 +163,4 @@ bool TCompFadingGlobe::inDistance() {
 	float dist = simpleDist(camera_pos, VEC3(char_x, char_y, char_z));
 
 	return dist <= MAX_DISTANCE;
-
 }

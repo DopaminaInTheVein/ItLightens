@@ -19,8 +19,9 @@ void split(const std::string& str, CB cb) {
 // ----------------------------------------------------------------
 struct TCompTags : public TCompBase {
 	static const uint32_t max_tags = 16;
+	static const uint32_t max_tag_length = 256;
 	TTagID   tags[max_tags];
-	char tags_str[max_tags][32];
+	char tags_str[max_tags][max_tag_length];
 	//std::set<std::string> tags_str;
 	int nextTag = 0;
 
@@ -48,11 +49,11 @@ struct TCompTags : public TCompBase {
 		for (std::string t : tags_str) {
 			if (tags_save == "") tags_save = t;
 			else {
-				tags_save += " ";
-				tags_save += t;
+				tags_save += std::string(" ");
+				tags_save += std::string(t);
 			}
 		}
-
+		tags_save.erase(tags_save.find_last_not_of(" \n\r\t") + 1);
 		atts.put("tags", tags_save);
 		return true;
 	}
@@ -80,6 +81,10 @@ struct TCompTags : public TCompBase {
 		for (uint32_t i = 0; i < max_tags; ++i) {
 			if (tags[i])
 				ImGui::Text("Tag %d : %s %08x", i, tags_manager.getNameOfTag(tags[i]), tags[i]);
+		}
+		int i = 0;
+		for (auto str : tags_str) {
+			ImGui::Text("%s%d", str, i++);
 		}
 	}
 

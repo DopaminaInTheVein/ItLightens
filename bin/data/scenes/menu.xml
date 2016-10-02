@@ -15,7 +15,7 @@
 <name
    name="btn_resume"/>
 <transform
-   pos="5.00018 -93.1944 8.2177"
+   pos="5.00018 -93.1944 5.17659"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -39,7 +39,7 @@
 <name
    name="btn_restart"/>
 <transform
-   pos="5.00018 -93.9891 8.2177"
+   pos="5.00018 -93.9891 5.17659"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -63,7 +63,7 @@
 <name
    name="btn_opt_menu"/>
 <transform
-   pos="5.00018 -94.7679 8.2177"
+   pos="5.00018 -94.7679 5.17659"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -87,7 +87,7 @@
 <name
    name="btn_exit_pause"/>
 <transform
-   pos="5.03041 -96.8679 8.2177"
+   pos="5.03041 -96.8679 5.17659"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -101,7 +101,7 @@
 <name
    name="menu_background"/>
 <transform
-   pos="5.0 -95.0 7.86733"
+   pos="5.0 -95.0 5.0"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -125,7 +125,7 @@
 <name
    name="btn_back_title"/>
 <transform
-   pos="5.03041 -96.3304 8.2177"
+   pos="5.03041 -96.3304 5.17659"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -145,7 +145,7 @@
 <name
    name="cursor_menu"/>
 <transform
-   pos="6.04624 -94.8127 8.5603"
+   pos="6.04624 -94.8127 5.26718"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh

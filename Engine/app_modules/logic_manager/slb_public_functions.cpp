@@ -858,6 +858,7 @@ void SLBPublicFunctions::addAimCircle(const char* id, const char* prefab, float 
 	atts3["posx"] = std::to_string(char_x);
 	atts3["posy"] = std::to_string(char_y);
 	atts3["posz"] = std::to_string(char_z);
+	atts3["screen_z"] = "0.2";
 
 	new_hl.load(atts3);
 	entity->add(new_hl);

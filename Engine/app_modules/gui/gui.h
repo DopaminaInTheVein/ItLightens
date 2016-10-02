@@ -34,6 +34,7 @@ public:
 	void setCursorEnabled(bool);
 
 	CHandle addGuiElement(std::string prefab, VEC3 pos = VEC3(0.5f, 0.5f, 0.5f), std::string tag = "", float scale = 1.0f);
+	void moveGuiElement(CHandle h, VEC3 pos, float scale = 1.0f);
 	VEC3 getScreenPos(VEC3 pos);
 	VEC3 getUiSize();
 	void updateGuiElementPositionByTag(std::string tag, VEC3 new_position);

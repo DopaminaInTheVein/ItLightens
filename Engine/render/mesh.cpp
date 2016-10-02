@@ -154,6 +154,7 @@ void CMesh::render() const {
 }
 
 void CMesh::renderGroup(uint32_t group_idx) const {
+	PROFILE_FUNCTION("RenderGroup");
 	assert(group_idx < (uint32_t)groups.size());
 	const auto& g = groups[group_idx];
 	if (ib)

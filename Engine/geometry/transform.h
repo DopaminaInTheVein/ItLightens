@@ -105,7 +105,7 @@ public:
 
 	// ---------------------------
 	void setPosition(VEC3 new_pos) {
-		position = new_pos;	
+		position = new_pos;
 	}
 	void setZ(float z) {
 		position.z = z;
@@ -114,6 +114,9 @@ public:
 		position += new_pos;
 	}
 	void setScale(VEC3 new_scale) {
+		scale = new_scale * scale_base;
+	}
+	void setScale(float new_scale) {
 		scale = new_scale * scale_base;
 	}
 	void setScaleBase(VEC3 new_scale) {

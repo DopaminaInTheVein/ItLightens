@@ -9,7 +9,7 @@
 <name
    name="aim_circle"/>
 <transform
-   pos="3.35333 -93.2253 0.5"
+   pos="3.35333 -93.2253 2"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh

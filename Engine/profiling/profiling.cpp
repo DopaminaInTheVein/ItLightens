@@ -6,8 +6,8 @@
 
 #ifdef PROFILING_ENABLED
 
-#ifdef PROFILING_JOHN
 CProfiler* profiler = new CProfiler;
+#ifdef PROFILING_JOHN
 
 bool CProfiler::TEntry::isBegin() const {
 	return (time_stamp & 1ULL) == 0;
@@ -93,9 +93,6 @@ void CProfiler::saveResults() {
 #else
 
 //--- Cristian autocapture some bug
-
-CProfiler* profiler;
-
 bool CProfiler::TEntry::isBegin() const {
 	return (time_stamp & 1ULL) == 0;
 }
@@ -115,7 +112,7 @@ void CProfiler::setAutoCapture(uint32_t new_n, float t_threshold)
 
 void CProfiler::beginFrame() {
 	if (max_entries == 0)
-		create(1 << 16);
+		create(1 << 20);
 
 	if (!is_capturing) {
 		if (nframes_to_capture) {

@@ -112,6 +112,17 @@ CHandle CGuiModule::addGuiElement(std::string prefab, VEC3 pos, std::string tag,
 	return h;
 }
 
+void CGuiModule::moveGuiElement(CHandle h, VEC3 pos, float scale)
+{
+	if (h.isValid()) {
+		GET_COMP(tmx, h, TCompTransform);
+		if (tmx) {
+			tmx->setScale(scale);
+			tmx->setPosition(getScreenPos(pos));
+		}
+	}
+}
+
 VEC3 CGuiModule::getUiSize()
 {
 	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
