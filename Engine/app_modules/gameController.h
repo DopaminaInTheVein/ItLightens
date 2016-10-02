@@ -2,6 +2,7 @@
 #define INC_GAME_CONTROLLER_H_
 
 #include "app_module.h"
+#include "components/comp_sense_vision.h"
 
 enum DIFFICULTIES {
 	EASY = 0,
@@ -97,6 +98,10 @@ public:
 	void setHandleController(CHandle);
 
 	bool isSenseVisionEnabled();
+
+	CHandle getHandleGameController() const;
+
+	TCompSenseVision * getSenseVisionComp();
 };
 
 extern CGameController* GameController;

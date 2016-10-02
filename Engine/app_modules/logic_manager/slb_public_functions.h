@@ -199,6 +199,8 @@ public:
 	void toggleIntroState();
 	void launchVictoryState();
 	//void showLoadingScreen();
+	void forceSenseVision();
+	void unforceSenseVision();
 	void loadLevel(const char* level_name);
 	void saveLevel();
 	void clearSaveData();

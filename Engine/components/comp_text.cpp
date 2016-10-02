@@ -70,6 +70,9 @@ bool TCompText::load(MKeyValue& atts)
 
 void TCompText::update(float dt) {
 	if (ttl < 0.0f) {
+		for (CHandle h_letter : gui_letters) {
+			h_letter.destroy();
+		}
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
 	}

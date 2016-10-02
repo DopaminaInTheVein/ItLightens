@@ -84,21 +84,25 @@ void TCompFadingMessage::update(float dt) {
 		accumTime -= timeForLetter;
 	}
 
-	if (ttl >= 0.0f) {
+	if (ttl < 0.0f) {
+		for (CHandle h_letter : gui_letters) {
+			h_letter.destroy();
+		}
+		CHandle h = CHandle(this).getOwner();
+		h.destroy();
+	}
+	else {
 		printLetters();
 		ttl -= dt;
 	}
-	else {
-		CHandle h = CHandle(this).getOwner();
-		h.destroy();
 
-		CHandle player = tags_manager.getFirstHavingTag(getID("player"));
+	/*
 		Gui->removeGuiElementByTag("Fading_Message_Icon_" + std::to_string(id));
 		for (int i = 0; i < text.length(); i++) {
 			Gui->removeGuiElementByTag(("Fading_Message_Letter_" + std::to_string(id) + "_" + std::to_string(i)));
 		}
 		Gui->removeGuiElementByTag("Fading_Message_Background_" + std::to_string(id));
-	}
+	*/
 }
 void TCompFadingMessage::printLetters() {
 	bool b = false;
@@ -137,5 +141,6 @@ void TCompFadingMessage::printLetters() {
 		RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
 		letter_gui->setTxCoords(textCords);
 		accumSpacing[line] += letterSpacing[ascii_tex_pos]; //SBB::readLetterSpacingVector()[ascii_tex_pos];
+		gui_letters.push_back(letter_h);
 	}
 }

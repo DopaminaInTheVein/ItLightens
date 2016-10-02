@@ -1007,6 +1007,19 @@ void SLBPublicFunctions::reloadLanguageFile(const char* language) {
 	lang_manager->reloadLanguageFile(language);
 }
 
+void SLBPublicFunctions::forceSenseVision() {
+	TCompSenseVision * sense = GameController->getSenseVisionComp();
+	if (sense) {
+		sense->setSenseVisionMode(TCompSenseVision::eSenseVision::ENABLED);
+	}
+}
+void SLBPublicFunctions::unforceSenseVision() {
+	TCompSenseVision * sense = GameController->getSenseVisionComp();
+	if (sense) {
+		sense->setSenseVisionMode(TCompSenseVision::eSenseVision::DEFAULT);
+	}
+}
+
 //test
 void SLBPublicFunctions::test(const char* to_print) {
 	//CHandle h = CHandle();

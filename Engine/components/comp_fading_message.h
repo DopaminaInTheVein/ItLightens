@@ -4,6 +4,8 @@
 #include "comp_base.h"
 
 class TCompFadingMessage : public TCompBase {
+	VHandles gui_letters;
+
 	static float letterSpacing[256];
 	static bool init_configuration;
 
