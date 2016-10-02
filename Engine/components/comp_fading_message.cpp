@@ -37,20 +37,21 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	);
 
 	text = atts.getString("text", "defaultText");
-	ttl = timeForLetter * text.length() + 2.0f;
+	ttl = timeForLetter * text.length() + 4.0f;
 	numchars = 0;
 	shown_chars = 0;
 	id = std::rand();
 	std::string endline = "\n";
-	int ini = -1;
+	int ini = 0;
+	//int line
 	size_t pos = text.find(endline, 0);
 	while (pos != text.npos)
 	{
-		lineText.push_back(text.substr(ini + 1, pos));
-		ini = pos;
-		pos = text.find(endline, pos + 1);
+		lineText.push_back(text.substr(ini, pos - ini));
+		ini = pos + 1;
+		pos = text.find(endline, ini);
 	}
-	lineText.push_back(text.substr(ini + 1, pos));
+	lineText.push_back(text.substr(ini, pos - ini));
 
 	gui_letters.push_back(Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, 0.02f, 0.40f), "Fading_Message_Background_" + std::to_string(id)));
 	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
@@ -119,7 +120,7 @@ void TCompFadingMessage::printLetters() {
 		while (linechars < shown_chars) {
 			++line;
 			linechars_prev = linechars;
-			linechars += lineText[line].length();
+			linechars += lineText[line].length() + 1;
 		}
 
 		unsigned char letter = text[i];

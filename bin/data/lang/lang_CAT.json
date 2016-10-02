@@ -25,8 +25,9 @@
 	"inverted": "Invertit"
   },
   "hub": {
-    "start_hub": "Mou la càmera\ni usa SENTIR\nper trobar el teu objectiu.",
-    "target_seen": "Ja ho tens!",
+	"start_hub": "Aquesta és la teva habilitat sentir\nPots trobar coses amb ella\nApunta a la marca vermella",
+    "target_seen": "La senyal Verda és el teu sigüent pas,\nGroc és el pas final.",
+    "target_seen2": "Els altres colors signifiquen:\n El Blanc t'ajuda a trobar punts de recarrega,\nEl Vermell mostra on són els guardies.\n",
 	"dead_on_dream": "Ui! Sort que era un somni...\nHauré d'esforçar-me més."
   },
   "tuto_mole": {

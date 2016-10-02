@@ -19,7 +19,7 @@ class TCompFadingMessage : public TCompBase {
 	float scale = 0.2f;
 	float letterBoxSize = 1.0f / 16.0f;
 	float letterSpacer = 0.3f / 16.0f;
-	float letterSpacerHigh = 2.5f * 0.3f * 1.0f / 16.0f;
+	float letterSpacerHigh = 2.5f * 0.3f / 16.0f;
 
 	std::string text;
 	std::vector<std::string> lineText;
