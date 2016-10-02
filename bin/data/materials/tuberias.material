@@ -1,0 +1,5 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/pipe_set_difuso.dds"/>
+<texture slot="specular" name="textures/pipe_set_specular.dds"/>
+<texture slot="normalmap" name="textures/pipe_set_normal.dds"/>
+</material>

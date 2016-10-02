@@ -1,0 +1,5 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/cenefa_2_difuso.dds"/>
+<texture slot="specular" name="textures/cenefa_2_specular+gloss.dds"/>
+<texture slot="normalmap" name="textures/cenefa_2_normal.dds"/>
+</material>

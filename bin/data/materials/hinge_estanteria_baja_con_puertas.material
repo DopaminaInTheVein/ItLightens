@@ -1,0 +1,5 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/hinge_door_bookshelft_w_doors_difuso.dds"/>
+<texture slot="specular" name="textures/hinge_door_bookshelft_w_doors_specular.dds"/>
+<texture slot="normalmap" name="textures/hinge_door_bookshelft_w_doors_normal.dds"/>
+</material>
