@@ -32,6 +32,9 @@ class TCompGuiButton : public aicontroller, public TCompBase {
 	bool checkClicked();
 	bool checkReleased();
 	void notifyOver(bool);
+	void enable();
+	void disable();
+	bool checkEnabled();
 
 	enum RStates {
 		DISABLED = 0,
@@ -78,7 +81,7 @@ public:
 
 	//Render State
 	void updateRenderState();
-	void updateSize();
+	//void updateSize();
 	float getRenderState() { return render_state; }
 
 	//Aux

@@ -90,6 +90,7 @@ void TCompGui::SetParent(CHandle h)
 
 void TCompGui::renderInMenu()
 {
+	ImGui::Checkbox("Enabled", &enabled);
 	IMGUI_SHOW_FLOAT(render_state);
 	IMGUI_SHOW_FLOAT(render_speed);
 	IMGUI_SHOW_FLOAT(render_target);
@@ -176,8 +177,8 @@ void TCompGui::update(float elapsed)
 	}
 	// +1 because default render state is 0
 	float value = 1 + offset*0.25f;
-	if (value != 0)
-		trans->setScale(VEC3(value, value, value));
+	if (value < 1.f) value = 1.f;
+	trans->setScale(VEC3(value, value, value));
 }
 
 void TCompGui::uploadCtes() {

@@ -409,6 +409,13 @@ bool SLBHandle::isComeBack() {
 	dbg("SLBHANDLE::isPatroling: %d", comeback);
 	return comeback;
 }
+void SLBHandle::setGuiEnabled(bool enabled)
+{
+	if (real_handle.isValid()) {
+		GET_COMP(gui, real_handle, TCompGui);
+		if (gui) gui->SetEnabled(enabled);
+	}
+}
 
 // Handle group By Tag
 void SLBHandleGroup::getHandlesByTag(const char * tag) {

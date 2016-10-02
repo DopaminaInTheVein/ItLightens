@@ -109,6 +109,9 @@ function InitDifficulty()
 	end
 	diff = p:json_read(FILE_OPTIONS, "game", "difficulty")
 	h:select_option(diff)
+	if not g_is_menu then
+		h:set_gui_enabled(false)
+	end
 end
 
 function SaveDifficulty(option)

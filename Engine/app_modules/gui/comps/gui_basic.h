@@ -29,6 +29,9 @@ typedef struct GuiListener {
 class TCompGui : public TCompBase {
 	static std::map<std::string, GuiMatrix> gui_screens;
 
+	//Enabled
+	bool enabled = true;
+
 	//Language
 	bool language;
 
@@ -79,6 +82,10 @@ public:
 	std::string GetMenuName() {
 		return menu_name;
 	}
+
+	//Enabled
+	void SetEnabled(bool b) { enabled = b; }
+	bool IsEnabled() { return enabled; }
 
 	//Language
 	void SetLangEnabled(bool enabled) { language = enabled; }

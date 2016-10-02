@@ -93,41 +93,51 @@ void TCompGuiButton::AddButtonStates()
 
 void TCompGuiButton::Disabled()
 {
-	//Nothing to do
+	if (myGui->IsEnabled()) {
+		enable();
+	}
+	else render_state_target = RSTATE_DISABLED;
 }
 void TCompGuiButton::Enabled()
 {
 	//checkOver --> Over
-	if (checkOver()) {
-		ChangeState(STRING(Over));
-		render_state_target = RSTATE_OVER;
-		notifyOver(true);
+	if (checkEnabled()) {
+		if (checkOver()) {
+			ChangeState(STRING(Over));
+			render_state_target = RSTATE_OVER;
+			notifyOver(true);
+		}
+		else render_state_target = RSTATE_ENABLED;
 	}
 }
 void TCompGuiButton::Over()
 {
-	if (!checkOver()) {
-		ChangeState(STRING(Enabled));
-		render_state_target = RSTATE_ENABLED;
-		notifyOver(false);
-	}
-	else if (checkClicked()) {
-		ChangeState(STRING(Clicked));
-		render_state = RSTATE_OVER;
-		render_state_target = RSTATE_CLICKED;
-		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnButtonPressed, MY_NAME, MY_OWNER);
+	if (checkEnabled()) {
+		if (!checkOver()) {
+			ChangeState(STRING(Enabled));
+			render_state_target = RSTATE_ENABLED;
+			notifyOver(false);
+		}
+		else if (checkClicked()) {
+			ChangeState(STRING(Clicked));
+			render_state = RSTATE_OVER;
+			render_state_target = RSTATE_CLICKED;
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnButtonPressed, MY_NAME, MY_OWNER);
+		}
 	}
 }
 void TCompGuiButton::Clicked()
 {
-	if (!checkOver()) {
-		ChangeState(STRING(Enabled));
-		render_state_target = RSTATE_ENABLED;
-		notifyOver(false);
-	}
-	else if (checkReleased()) {
-		setReleased();
-		//logic_manager->throwEvent(CLogicManagerModule::EVENT::OnClicked, MY_NAME, MY_OWNER);
+	if (checkEnabled()) {
+		if (!checkOver()) {
+			ChangeState(STRING(Enabled));
+			render_state_target = RSTATE_ENABLED;
+			notifyOver(false);
+		}
+		else if (checkReleased()) {
+			setReleased();
+			//logic_manager->throwEvent(CLogicManagerModule::EVENT::OnClicked, MY_NAME, MY_OWNER);
+		}
 	}
 }
 void TCompGuiButton::setReleased()
@@ -139,8 +149,10 @@ void TCompGuiButton::setReleased()
 
 void TCompGuiButton::Released()
 {
-	if (render_state >= RSTATE_RELEASED) {
-		ChangeState(STRING(Actioned));
+	if (checkEnabled()) {
+		if (render_state >= RSTATE_RELEASED) {
+			ChangeState(STRING(Actioned));
+		}
 	}
 }
 void TCompGuiButton::Actioned()
@@ -185,7 +197,7 @@ void TCompGuiButton::update(float dt)
 {
 	Recalc();
 	updateRenderState();
-	updateSize();
+	//updateSize();
 }
 
 void TCompGuiButton::updateRenderState()
@@ -204,20 +216,20 @@ void TCompGuiButton::updateRenderState()
 	myGui->setRenderTarget(render_state_target, speed);
 }
 
-void TCompGuiButton::updateSize()
-{
-	//update size buttons
-	float offset = render_state;
-
-	//reset offset
-	if (offset > RSTATE_OVER) {
-		offset = (RSTATE_RELEASED - offset) / RSTATE_RELEASED;
-	}
-	// +1 because default render state is 0
-	float value = 1 + offset*0.25f;
-	if (value != 0)
-		myTransform->setScale(VEC3(value, value, value));
-}
+//void TCompGuiButton::updateSize()
+//{
+//	//update size buttons
+//	float offset = render_state;
+//
+//	//reset offset
+//	if (offset > RSTATE_OVER) {
+//		offset = (RSTATE_RELEASED - offset) / RSTATE_RELEASED;
+//	}
+//	// +1 because default render state is 0
+//	//float value = 1 + offset*0.25f;
+//	//if (value != 0)
+//	//	myTransform->setScale(VEC3(value, value, value));
+//}
 
 #define DragFloatTimes(name, sufix, rstate) if (ImGui::DragFloat(STRING(name), &name, 0.01f, 0.001f, 1.f)) speeds_##sufix[RStates::rstate] = inverseFloat(name);
 void TCompGuiButton::renderInMenu()
@@ -277,6 +289,21 @@ void TCompGuiButton::notifyOver(bool over)
 	else {
 		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnMouseUnover, MY_NAME, MY_OWNER);
 	}
+}
+
+void TCompGuiButton::enable()
+{
+	ChangeState(STRING(Enabled));
+}
+void TCompGuiButton::disable()
+{
+	ChangeState(STRING(Disabled));
+}
+bool TCompGuiButton::checkEnabled()
+{
+	bool is_enabled = myGui->IsEnabled();
+	if (!is_enabled) ChangeState(STRING(Disabled));
+	return is_enabled;
 }
 
 //Messages

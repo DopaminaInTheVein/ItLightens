@@ -90,6 +90,7 @@ public:
 	void selectOption(int);
 	bool isPatrolling();
 	bool isComeBack();
+	void setGuiEnabled(bool);
 };
 
 class SLBHandleGroup
