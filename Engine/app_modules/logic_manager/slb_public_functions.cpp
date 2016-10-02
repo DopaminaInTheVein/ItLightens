@@ -1015,7 +1015,7 @@ void SLBPublicFunctions::forceSenseVision() {
 void SLBPublicFunctions::unforceSenseVision() {
 	TCompSenseVision * sense = GameController->getSenseVisionComp();
 	if (sense) {
-		sense->setSenseVisionMode(TCompSenseVision::eSenseVision::DISABLED);
+		sense->setSenseVisionMode(TCompSenseVision::eSenseVision::DEFAULT);
 	}
 }
 
