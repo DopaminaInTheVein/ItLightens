@@ -30,6 +30,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	char_y = atts.getFloat("posy", 1.0f);
 	char_z = atts.getFloat("posz", 1.0f);
 	ttl = atts.getFloat("ttl", 2.0f);
+	MAX_DISTANCE = atts.getFloat("max_distance", -1.f);
 
 	if (ttl <= 0.0f) {
 		ttl = 0.0001f;
@@ -70,7 +71,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
 	screen_z = 0.75f;
 
-	if (!isBehindCamera()) {
+	if (!isBehindCamera() && inDistance()) {
 		Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
 		added = true;
 	}
@@ -94,11 +95,12 @@ void TCompFadingGlobe::update(float dt) {
 
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
-	if (!added && !isBehindCamera()) {
+
+	if (!added && !isBehindCamera() && inDistance()) {
 		Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
 		added = true;
 	}
-	else if (added && !isBehindCamera()) {
+	else if (added && !isBehindCamera() && inDistance()) {
 		Gui->updateGuiElementPositionByTag(globe_name, VEC3(screen_x, 1.f - screen_y, screen_z));
 	}
 	else {
@@ -150,4 +152,16 @@ bool TCompFadingGlobe::isBehindCamera() {
 		+ (char_y - cam_y) * cam_lookat_y
 		+ (char_z - cam_z) * cam_lookat_z
 		< 0);
+}
+
+bool TCompFadingGlobe::inDistance() {
+
+	if (MAX_DISTANCE < 0.f)
+		return true;
+
+	VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
+	float dist = simpleDist(camera_pos, VEC3(char_x, char_y, char_z));
+
+	return dist <= MAX_DISTANCE;
+
 }

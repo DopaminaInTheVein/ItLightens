@@ -878,7 +878,7 @@ void SLBPublicFunctions::removeAimCircle(const char* id) {
 //	);
 //}
 
-void SLBPublicFunctions::characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl) {
+void SLBPublicFunctions::characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance) {
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
@@ -905,6 +905,7 @@ void SLBPublicFunctions::characterGlobe(const char* route, float distance, float
 	atts3["posy"] = std::to_string(char_y);
 	atts3["posz"] = std::to_string(char_z);
 	atts3["ttl"] = std::to_string(ttl);
+	atts3["max_distance"] = std::to_string(max_distance);
 
 	new_hl.load(atts3);
 	entity->add(new_hl);

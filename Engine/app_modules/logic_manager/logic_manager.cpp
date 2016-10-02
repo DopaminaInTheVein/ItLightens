@@ -991,6 +991,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: y coord of the character")
 		.param("float: z coord of the character")
 		.param("float: timetolive")
+		.param("float: distance limitation (<0 means unlimited)")
 		// Remove aim red circle
 		.set("no_aim_circle", &SLBPublicFunctions::removeAimCircle)
 		.comment("Removes the specified text")

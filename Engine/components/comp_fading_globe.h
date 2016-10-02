@@ -11,6 +11,7 @@ class TCompFadingGlobe : public TCompBase {
 	float globe_height;
 	bool added = false;
 	bool perenne = false;
+
 	// aux params for computing the correct position and size
 	std::string prefab_route;
 	std::string globe_name;
@@ -26,8 +27,10 @@ class TCompFadingGlobe : public TCompBase {
 	static int globes;
 
 	float  ttl;
+	float MAX_DISTANCE = -1.f;
 
 	bool isBehindCamera();
+	bool inDistance();
 
 public:
 	//Update info

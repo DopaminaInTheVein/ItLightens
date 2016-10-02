@@ -332,7 +332,7 @@ function OnDetected( distance )
 	p:play_3d_sound("event:/OnDetected", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 	name_guard = h:get_name()
 	CallFunction("OnDetected_"..name_guard)
-	p:character_globe("ui/effects/bafarada", distance, h:get_x(), h:get_y(), h:get_z(), "2.0")
+	p:character_globe("ui/effects/bafarada", distance, h:get_x(), h:get_y(), h:get_z(), 2.0, -1.0)
 end
 
 function OnNextPatrol( guard_name )
@@ -524,7 +524,7 @@ function OnStepGuardBaldosa( step, x, y, z )
 	end
 	
 	p:play_3d_sound(sound_route, x, y, z, 1.0, false, 32)
-	p:character_globe("ui/effects/tap", "1.0", x, y, z, "0.5")
+	p:character_globe("ui/effects/tap", "1.0", x, y, z, 0.5, 20.0)
 end
 
 function OnStepMoleBaldosa( step, x, y, z )
@@ -582,7 +582,7 @@ function OnStepGuardParquet( step, x, y, z )
 	end
 	
 	p:play_3d_sound(sound_route, x, y, z, 1.0, false, 32)
-	p:character_globe("ui/effects/tap", "1.0", x, y, z, "0.5")
+	p:character_globe("ui/effects/tap", "1.0", x, y, z, 0.5, 20.0)
 end
 
 function OnStepMoleParquet( step, x, y, z )
