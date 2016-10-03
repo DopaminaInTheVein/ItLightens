@@ -165,17 +165,39 @@ function MusicChanged(value)
 	p:set_music_volume(value)
 end
 
+sfx_volume = 0.0
 function InitSfx()
 	p:print("Init sfx")
 	h:getHandleCaller()
-	val = p:json_read(FILE_OPTIONS, "sound", "sfx")
+	sfx_volume = p:json_read(FILE_OPTIONS, "sound", "sfx")
 	h:set_drag_value(val)
+	sfx_prev = sfx_volume
+	sfx_prev_prev = sfx_prev
+	testSound()
 end
 
 function SfxChanged(value)
 	p:print("Sfx Changed: "..value)
 	p:json_edit(FILE_OPTIONS, "sound", "sfx", value)
 	p:set_sfx_volume(value)
+	sfx_volume = value
+end
+
+sfx_prev = 0.0
+sfx_prev_prev = 0.0
+function testSound()
+	-- p:print("sfx_prev: "..sfx_prev)
+	-- p:print("sfx_prev_prev: "..sfx_prev_prev)
+	-- p:print("sfx: "..sfx_volume)
+	if sfx_prev == sfx_volume then
+		if sfx_prev_prev ~= sfx_prev then
+			p:play_sound("event:/OnMoleStepParquetL1", 1.0, false)
+			sfx_prev_prev = sfx_prev
+		end
+	end
+	sfx_prev_prev = sfx_prev
+	sfx_prev = sfx_volume
+	p:exec_command("testSound();", 0.05)
 end
 
 --Destroy Menu

@@ -125,9 +125,11 @@ void TCompGuiDrag::Over()
 			else render_state = RSTATE_OVER;
 			if (controller->IsLeftPressed()) {
 				SetValue(value - 0.1f);
+				notifyValue();
 			}
 			else if (controller->IsRightPressed()) {
 				SetValue(value + 0.1f);
+				notifyValue();
 			}
 		}
 		else {
