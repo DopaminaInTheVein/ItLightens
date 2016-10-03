@@ -26,7 +26,7 @@
   },
   "hub": {
     "start_hub": "Esta es tu habilidad sentir\nPuedes encontrar cosas con ella\nApunta a la marca roja",
-    "target_seen": "La señal verde es tu siguiente paso,\namarillo es el paso final.",
+    "target_seen": "Puedes utilizar esta habilidad siempre que la necesites.\nHazlo con el botón SENTIR (click derecho o B del mando)\nLa señal verde es tu siguiente paso,\namarillo es el paso final.",
     "target_seen2": "Los demás colores significan:\n El Blanco te ayuda a encontrar puntos de recarga,\nEl Rojo muestra donde están los guardias.\n",
 	"dead_on_dream": "¡Uy! Suerte que era un sueño...\nTendré que esforzarme más."
   },

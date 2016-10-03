@@ -475,8 +475,11 @@ bool CSoundManagerModule::stopMusic() {
 
 	//if there was a music playing, we pause it
 	if (music_instance) {
-		result = music_instance->setPaused(true);
+		result = music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
 		if (result != FMOD_OK) return false;
+		result = music_instance->release();
+		if (result != FMOD_OK) return false;
+		music_instance = nullptr;
 	}
 
 	return true;

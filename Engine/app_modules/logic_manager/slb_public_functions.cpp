@@ -654,10 +654,14 @@ void SLBPublicFunctions::setLanguage(const char* lang) {
 }
 
 void SLBPublicFunctions::completeTasklist(int i) {
-	CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
-	CEntity * tasklist_e = tasklist;
-	Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
-	tasklist_comp->completeTask(i);
+	VHandles tasklists = tags_manager.getHandlesByTag(getID("tasklist"));
+	for (CHandle tasklist : tasklists) {
+		CEntity * tasklist_e = tasklist;
+		if (!tasklist_e)continue;
+		Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
+		if (!tasklist_comp)continue;
+		tasklist_comp->completeTask(i);
+	}
 }
 
 void SLBPublicFunctions::setControlEnabled(int enabled) {

@@ -60,13 +60,13 @@ end
 --===========================================
 function hub_target_seen()
 	p:player_talks(p:get_text("hub","target_seen"))
-	p:exec_command("p:player_talks(p:get_text(\"hub\",\"target_seen2\"))",6.5)
-	p:exec_command("p:no_aim_circle(\"circle_1\")",13.0)
-	p:exec_command("p:unforce_sense_vision()",13.0)
+	h:getHandleCaller()
+	h:destroy()
+	p:exec_command("p:player_talks(p:get_text(\"hub\",\"target_seen2\"))",9.5)
+	p:exec_command("p:no_aim_circle(\"circle_1\")",16.0)
+	p:exec_command("p:unforce_sense_vision()",18.0)
 
-	p:exec_command("h:getHandleCaller()",13.0)
-	p:exec_command("h:destroy()",13.0)
-	p:exec_command("p:setOnlySense(0);", 13.5)
+	p:exec_command("p:setOnlySense(0);", 18.5)
 end
 
 function dream_mole()

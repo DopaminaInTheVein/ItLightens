@@ -27,7 +27,8 @@ function OnStart_ms3()
   stateElevator = 1 -- 1= up , 0 = down
   cp_elevator = false
   cp_door_opened = false
-  p:exec_command("auxiliarMusic();",14)
+  p:play_music("event:/OnRoom1", 0.2)
+  --p:exec_command("auxiliarMusic();",14)
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
   cam:run_cinematic("CinematicIntro", 10)
