@@ -26,7 +26,7 @@
   },
   "hub": {
     "start_hub": "This is your sensing ability\nYou can find important things with it\nNow aim for the red circle",
-    "target_seen": "Green signal is your next step,\nyellow is the final one.",
+    "target_seen": "You can use this ability every time you need.\nUse it with SENSE button (right click or gamepad B)\nGreen signal is your next step,\nyellow is the final one.",
     "target_seen2": "Other colors mean:\nWhite helps to locate recharge points,\nRed is where guards are.\n",
 	"dead_on_dream": "¡Oops! It was a dream fortunately...\nI'll do my best next time"
   },
