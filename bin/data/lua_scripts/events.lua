@@ -75,8 +75,11 @@ function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	p:load_entities("init")
 	p:exec_command("LoadLevel(\"level_0\")", 2)
-	--p:load_entities("title")
-	CallFunction("test_dbg")
+	--Sound
+	val = p:json_read(FILE_OPTIONS, "sound", "music")
+	p:set_music_volume(val)
+	val = p:json_read(FILE_OPTIONS, "sound", "sfx")
+	p:set_sfx_volume(val)
 end
 
 function OnGameEnd( param )
@@ -692,6 +695,11 @@ end
 function OnChoose( name, option )
 	p:print("OnChoose: "..name.." "..option)
 	CallFunctionParam("OnChoose_"..name, option)
+end
+
+function OnValueChanged( name, value )
+	p:print("OnChoose: "..name.." "..value)
+	CallFunctionParam("OnValueChanged_"..name, value)
 end
 
 function OnPause( )

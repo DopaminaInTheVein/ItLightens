@@ -505,6 +505,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnChoose(%s);", params.c_str());
 		break;
 	}
+	case (OnValueChanged): {
+		sprintf(lua_code, "OnValueChanged(%s);", params.c_str());
+		break;
+	}
 	case (OnPause): {
 		sprintf(lua_code, "OnPause();");
 		break;
@@ -714,6 +718,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("set_gui_enabled", &SLBHandle::setGuiEnabled)
 		.param("bool: enabled")
 		.comment("enable/disable gui component")
+		// Set Gui Enabled/disabled
+		.set("set_drag_value", &SLBHandle::setDragValue)
+		.param("float: value")
+		.comment("set new value to drag component")
 		;
 }
 

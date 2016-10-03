@@ -91,6 +91,7 @@ public:
 	bool isPatrolling();
 	bool isComeBack();
 	void setGuiEnabled(bool);
+	void setDragValue(float);
 };
 
 class SLBHandleGroup

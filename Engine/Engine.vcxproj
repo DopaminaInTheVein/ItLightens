@@ -117,6 +117,7 @@
     <ClCompile Include="app_modules\gui\comps\gui_basic.cpp" />
     <ClCompile Include="app_modules\gui\comps\gui_button.cpp" />
     <ClCompile Include="app_modules\gui\comps\gui_cursor.cpp" />
+    <ClCompile Include="app_modules\gui\comps\gui_drag.cpp" />
     <ClCompile Include="app_modules\gui\comps\gui_selector.cpp" />
     <ClCompile Include="app_modules\gui\gui.cpp" />
     <ClCompile Include="app_modules\gui\gui_action_text.cpp" />
@@ -344,6 +345,7 @@
     <ClInclude Include="app_modules\gui\comps\gui_basic.h" />
     <ClInclude Include="app_modules\gui\comps\gui_button.h" />
     <ClInclude Include="app_modules\gui\comps\gui_cursor.h" />
+    <ClInclude Include="app_modules\gui\comps\gui_drag.h" />
     <ClInclude Include="app_modules\gui\comps\gui_selector.h" />
     <ClInclude Include="app_modules\gui\gui.h" />
     <ClInclude Include="app_modules\gui\gui_action_text.h" />

@@ -416,7 +416,13 @@ void SLBHandle::setGuiEnabled(bool enabled)
 		if (gui) gui->SetEnabled(enabled);
 	}
 }
-
+void SLBHandle::setDragValue(float value)
+{
+	if (real_handle.isValid()) {
+		GET_COMP(gui_drag, real_handle, TCompGuiDrag);
+		if (gui_drag) gui_drag->SetValue(value);
+	}
+}
 // Handle group By Tag
 void SLBHandleGroup::getHandlesByTag(const char * tag) {
 	handle_group = tags_manager.getHandlesByTag(string(tag));

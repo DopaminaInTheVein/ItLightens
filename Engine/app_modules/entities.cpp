@@ -130,6 +130,7 @@ DECL_OBJ_MANAGER("gui", TCompGui);
 DECL_OBJ_MANAGER("gui_cursor", TCompGuiCursor);
 DECL_OBJ_MANAGER("gui_button", TCompGuiButton);
 DECL_OBJ_MANAGER("gui_selector", TCompGuiSelector);
+DECL_OBJ_MANAGER("gui_drag", TCompGuiDrag);
 
 using namespace std;
 
@@ -252,6 +253,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompGuiCursor>()->init(64);
 	getHandleManager<TCompGuiButton>()->init(64);
 	getHandleManager<TCompGuiSelector>()->init(64);
+	getHandleManager<TCompGuiDrag>()->init(64);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -464,6 +466,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompGuiSelector, TMsgGuiNotify, onGuiNotify);
 	SUBSCRIBE(TCompGuiSelector, TMsgLanguageChanged, onLanguageChanged);
 	SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
+
+	SUBSCRIBE(TCompGuiDrag, TMsgEntityCreated, onCreate);
 	return true;
 }
 
@@ -715,6 +719,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompGuiButton>()->updateAll(dt);
 	getHandleManager<TCompGuiSelector>()->updateAll(dt);
 	getHandleManager<TCompText>()->updateAll(dt);
+	getHandleManager<TCompGuiDrag>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

@@ -12,13 +12,17 @@
         "full_screen": 1
     },
     "controls": {
-        "y-axis_inverted": 1.0,
+        "y-axis_inverted": 0.0,
         "x-axis_inverted": 0.0
     },
     "language": {
-        "lang": "GA"
+        "lang": "EN"
     },
     "game": {
         "difficulty": 0.0
+    },
+    "sound": {
+        "sfx": 0.4,
+        "music": 0.6
     }
 }

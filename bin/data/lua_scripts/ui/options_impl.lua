@@ -56,6 +56,12 @@ end
 function OnCreateGui_opt_axisY( )
 	InitOptAxis("y")
 end
+function OnCreateGui_opt_music( )
+	InitMusic()
+end
+function OnCreateGui_opt_sfx( )
+	InitSfx()
+end
 
 --Choose Options
 function OnChoose_opt_axisX(option)
@@ -69,6 +75,12 @@ function OnChoose_opt_diff(option)
 end
 function OnChoose_opt_lang(option)
 	SaveLanguage(option)
+end
+function OnValueChanged_opt_music(value)
+	MusicChanged(value)
+end
+function OnValueChanged_opt_sfx(value)
+	SfxChanged(value)
 end
 
 --Click go back
@@ -137,6 +149,33 @@ function SaveAxis(option, axis)
 		default = function() val = -1 end, -- Esto no puede pasar
 	}
 	p:json_edit(FILE_OPTIONS, "controls", axis.."-axis_inverted", val)
+end
+
+--Sound
+function InitMusic()
+	p:print("Init music")
+	h:getHandleCaller()
+	val = p:json_read(FILE_OPTIONS, "sound", "music")
+	h:set_drag_value(val)
+end
+
+function MusicChanged(value)
+	p:print("Music Changed: "..value)
+	p:json_edit(FILE_OPTIONS, "sound", "music", value)
+	p:set_music_volume(value)
+end
+
+function InitSfx()
+	p:print("Init sfx")
+	h:getHandleCaller()
+	val = p:json_read(FILE_OPTIONS, "sound", "sfx")
+	h:set_drag_value(val)
+end
+
+function SfxChanged(value)
+	p:print("Sfx Changed: "..value)
+	p:json_edit(FILE_OPTIONS, "sound", "sfx", value)
+	p:set_sfx_volume(value)
 end
 
 --Destroy Menu

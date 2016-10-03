@@ -95,5 +95,6 @@
 #include "app_modules/gui/comps/gui_cursor.h"
 #include "app_modules/gui/comps/gui_button.h"
 #include "app_modules/gui/comps/gui_selector.h"
+#include "app_modules/gui/comps/gui_drag.h"
 
 #endif

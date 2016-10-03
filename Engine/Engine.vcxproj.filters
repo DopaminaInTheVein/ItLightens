@@ -554,6 +554,9 @@
     <ClCompile Include="app_modules\sound_manager\comp_sound.cpp">
       <Filter>app_modules\sound_manager</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\gui\comps\gui_drag.cpp">
+      <Filter>app_modules\gui\comps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1463,6 +1466,9 @@
     </ClInclude>
     <ClInclude Include="app_modules\sound_manager\comp_sound.h">
       <Filter>app_modules\sound_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\comps\gui_drag.h">
+      <Filter>app_modules\gui\comps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

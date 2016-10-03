@@ -152,7 +152,7 @@ bool CProfiler::hasToSave() {
 		if (t < min) min = t;
 		if (t > max) max = t;
 	}
-	dbg("Min: %f, Max: %f\n", min, max);
+	//dbg("Min: %f, Max: %f\n", min, max);
 	return max / min > time_threshold;
 }
 

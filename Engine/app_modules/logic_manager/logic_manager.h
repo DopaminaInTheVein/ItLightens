@@ -128,6 +128,7 @@ public:
 		OnPause,
 		OnCreateGui,
 		OnChoose,
+		OnValueChanged,
 	};
 
 	CLogicManagerModule();

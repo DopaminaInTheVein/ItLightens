@@ -61,6 +61,7 @@ public:
 	bool ActionButtonBecomesPessed();
 	bool ActionGuiButtonBecomesPressed();
 	bool ActionGuiButtonBecomesReleased();
+	bool IsGuiItemDragged();
 	bool JumpButtonBecomesPressed();
 	bool IsImpulseUpButtonPressed();
 	bool PossessionButtonBecomesPressed();
