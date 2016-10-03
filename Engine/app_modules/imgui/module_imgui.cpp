@@ -15,6 +15,8 @@
 
 #include "particles\particles_manager.h"
 
+#include "app_modules\render\module_render_postprocess.h"
+
 //editors
 #include "Editors\editor_lights.h"
 
@@ -190,6 +192,10 @@ void CImGuiModule::update(float dt) {
 
 	if (ImGui::CollapsingHeader("Entities")) {
 		getHandleManager<CEntity>()->onAll(&CEntity::renderInMenu);
+	}
+
+	if (ImGui::CollapsingHeader("PostProcess")) {
+		render_fx->renderInMenu();
 	}
 
 	if (ImGui::CollapsingHeader("SELECTED ENTITY")) {

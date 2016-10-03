@@ -34,7 +34,7 @@ class CRenderDeferredModule : public IAppModule {
 
 	//shadows
 	CRenderToTexture* rt_ssao;
-	CRenderToTexture* rt_shadows;
+	CRenderToTexture* rt_shadows_gl;
 
 	//aux
 	CRenderToTexture* rt_data;
@@ -101,6 +101,11 @@ public:
 	const char* getName() const {
 		return "render_deferred";
 	}
+
+	CTexture* GetFinalTexture() const {
+		return rt_final;
+	}
+
 	float getXRes() { return xres; }
 	float getYRes() { return yres; }
 	float getAspectRatio();

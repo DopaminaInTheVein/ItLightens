@@ -40,6 +40,7 @@
 //lights
 #include "comp_light_dir.h"
 #include "comp_light_dir_shadows.h"
+#include "comp_light_dir_shadows_dyn.h"
 #include "comp_light_point.h"
 #include "comp_light_fadable.h"
 

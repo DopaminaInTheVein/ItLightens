@@ -67,6 +67,7 @@ DECL_OBJ_MANAGER("abs_aabb", TCompAbsAABB);
 DECL_OBJ_MANAGER("local_aabb", TCompLocalAABB);
 DECL_OBJ_MANAGER("culling", TCompCulling);
 DECL_OBJ_MANAGER("light_dir", TCompLightDir);
+DECL_OBJ_MANAGER("light_dir_shadows_dynamic", TCompLightDirShadowsDynamic);
 DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
@@ -158,6 +159,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompCulling>()->init(40);
 	getHandleManager<TCompLightDir>()->init(8);
 	getHandleManager<TCompLightDirShadows>()->init(MAX_ENTITIES);
+	getHandleManager<TCompLightDirShadowsDynamic>()->init(20);
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_mole>()->init(16);
 	getHandleManager<player_controller_cientifico>()->init(8);
@@ -429,6 +431,7 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompCameraMain, TMsgGetCullingViewProj, onGetViewProj);
 	SUBSCRIBE(TCompLightDirShadows, TMsgGetCullingViewProj, onGetViewProj);
+	SUBSCRIBE(TCompLightDirShadowsDynamic, TMsgGetCullingViewProj, onGetViewProj);
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
 	//Control
@@ -507,6 +510,8 @@ void CEntitiesModule::initEntities() {
 
 	//sound
 	getHandleManager<TCompSound>()->onAll(&TCompSound::init);
+
+	getHandleManager<TCompLightDirShadowsDynamic>()->onAll(&TCompLightDirShadowsDynamic::init);
 
 	//Added to clean this file
 	getHandleManager<LogicHelperArrow>()->onAll(&LogicHelperArrow::init);
@@ -589,6 +594,7 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompLightDir>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
+	getHandleManager<TCompLightDirShadowsDynamic>()->updateAll(dt);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
 	//getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
 

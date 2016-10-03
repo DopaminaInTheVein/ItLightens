@@ -124,6 +124,39 @@ void TCompRenderGlow::renderInMenu() {
 	}
 }
 
+bool TCompRenderGlow::initValues() {
+	enabled = true;
+	global_distance =  1.0f;
+	distance_factors = VEC4(1, 2, 3, 4);
+
+	weights.x = 1.f;
+	weights.y = 1.f;
+	weights.z = 1.f;
+	weights.w = 1.f;
+
+	bool is_ok = true;
+	int nsteps = 2;
+	int xres = CApp::get().getXRes();
+	int yres = CApp::get().getYRes();
+	static int g_blur_counter = 0;
+	for (int i = 0; i < nsteps; ++i) {
+		TBlurStep* s = new TBlurStep;
+
+		char blur_name[64];
+		sprintf(blur_name, "Blur_%02d", g_blur_counter);
+		g_blur_counter++;
+
+		is_ok &= s->create(blur_name, xres, yres);
+		assert(is_ok);
+		steps.push_back(s);
+		xres /= 2;
+		yres /= 2;
+	}
+
+	nactive_steps = steps.size();
+	return is_ok;
+}
+
 bool TCompRenderGlow::load(MKeyValue& atts) {
 	enabled = atts.getBool("enabled", true);
 	global_distance = atts.getFloat("global_distance", 1.0f);

@@ -134,6 +134,7 @@
     <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
     <ClCompile Include="app_modules\navmesh\navmesh_manager.cpp" />
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
+    <ClCompile Include="app_modules\render\module_render_postprocess.cpp" />
     <ClCompile Include="app_modules\sound_manager\comp_sound.cpp" />
     <ClCompile Include="app_modules\sound_manager\sound_manager.cpp" />
     <ClCompile Include="camera\camera.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="components\comp_life .cpp" />
     <ClCompile Include="components\comp_light_dir.cpp" />
     <ClCompile Include="components\comp_light_dir_shadows.cpp" />
+    <ClCompile Include="components\comp_light_dir_shadows_dyn.cpp" />
     <ClCompile Include="components\comp_light_fadable.cpp" />
     <ClCompile Include="components\comp_light_point.cpp" />
     <ClCompile Include="components\comp_loading_screen.cpp" />
@@ -289,6 +291,14 @@
     <ClCompile Include="recast\Recast\Source\RecastRegion.cpp" />
     <ClCompile Include="render\DDSTextureLoader.cpp" />
     <ClCompile Include="render\draw_utils.cpp" />
+    <ClCompile Include="render\fx\fx_antialiasing.cpp" />
+    <ClCompile Include="render\fx\fx_depth_fog.cpp" />
+    <ClCompile Include="render\fx\fx_dream.cpp" />
+    <ClCompile Include="render\fx\fx_fade_screen.cpp" />
+    <ClCompile Include="render\fx\fx_glow.cpp" />
+    <ClCompile Include="render\fx\fx_hatching.cpp" />
+    <ClCompile Include="render\fx\fx_motion_blur.cpp" />
+    <ClCompile Include="render\fx\fx_outline.cpp" />
     <ClCompile Include="render\fx\GuardShots.cpp" />
     <ClCompile Include="render\material.cpp" />
     <ClCompile Include="render\mesh.cpp" />
@@ -361,7 +371,10 @@
     <ClInclude Include="app_modules\logic_manager\logic_manager.h" />
     <ClInclude Include="app_modules\logic_manager\slb_public_functions.h" />
     <ClInclude Include="app_modules\navmesh\navmesh_manager.h" />
+    <ClInclude Include="app_modules\render\comp_basic_fx.h" />
     <ClInclude Include="app_modules\render\module_render_deferred.h" />
+    <ClInclude Include="app_modules\render\module_render_postprocess.h" />
+    <ClInclude Include="app_modules\render\test_module_fx.h" />
     <ClInclude Include="app_modules\sound_manager\comp_sound.h" />
     <ClInclude Include="app_modules\sound_manager\sound_manager.h" />
     <ClInclude Include="camera\camera.h" />
@@ -384,6 +397,7 @@
     <ClInclude Include="components\comp_life.h" />
     <ClInclude Include="components\comp_light_dir.h" />
     <ClInclude Include="components\comp_light_dir_shadows.h" />
+    <ClInclude Include="components\comp_light_dir_shadows_dyn.h" />
     <ClInclude Include="components\comp_light_fadable.h" />
     <ClInclude Include="components\comp_light_point.h" />
     <ClInclude Include="components\comp_loading_screen.h" />
@@ -526,6 +540,14 @@
     <ClInclude Include="recast\Recast\Include\RecastAssert.h" />
     <ClInclude Include="render\DDSTextureLoader.h" />
     <ClInclude Include="render\draw_utils.h" />
+    <ClInclude Include="render\fx\fx_antialiasing.h" />
+    <ClInclude Include="render\fx\fx_depth_fog.h" />
+    <ClInclude Include="render\fx\fx_dream.h" />
+    <ClInclude Include="render\fx\fx_fade_screen.h" />
+    <ClInclude Include="render\fx\fx_glow.h" />
+    <ClInclude Include="render\fx\fx_hatching.h" />
+    <ClInclude Include="render\fx\fx_motion_blur.h" />
+    <ClInclude Include="render\fx\fx_outline.h" />
     <ClInclude Include="render\fx\GuardShots.h" />
     <ClInclude Include="render\gpu_trace.h" />
     <ClInclude Include="render\material.h" />

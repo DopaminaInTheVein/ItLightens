@@ -6,6 +6,7 @@
 #include "components/comp_camera_main.h"
 #include "components/comp_light_dir.h"
 #include "components/comp_light_dir_shadows.h"
+#include "components/comp_light_dir_shadows_dyn.h"
 #include "components/comp_light_point.h"
 #include "components/comp_light_fadable.h"
 #include "skeleton/comp_skeleton.h"
@@ -21,6 +22,8 @@
 #include "render/fx/GuardShots.h"
 #include "components\comp_room.h"
 
+#include "module_render_postprocess.h"
+
 //Particles
 #include "particles\particles_manager.h"
 
@@ -33,7 +36,10 @@
 #include "player_controllers\player_controller.h"
 
 //for test
+#include "test_module_fx.h"
 #include "app_modules\io\io.h"
+
+extern CRenderPostProcessModule* render_fx;
 
 // ------------------------------------------------------
 bool CRenderDeferredModule::start() {
@@ -54,7 +60,7 @@ bool CRenderDeferredModule::start() {
 	rt_specular = new CRenderToTexture;
 	rt_specular_lights = new CRenderToTexture;
 	rt_glossiness = new CRenderToTexture;
-	rt_shadows = new CRenderToTexture;
+	rt_shadows_gl = new CRenderToTexture;
 
 	//aux
 	rt_data = new CRenderToTexture;
@@ -100,7 +106,7 @@ bool CRenderDeferredModule::start() {
 		return false;
 	if (!rt_ssao->createRT("rt_ssao", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 		return false;
-	if (!rt_shadows->createRT("rt_shadows", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+	if (!rt_shadows_gl->createRT("rt_shadows_gl", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 		return false;
 
 	//
@@ -131,30 +137,12 @@ bool CRenderDeferredModule::start() {
 
 	Resources.get("textures/general/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE);
 
-	//hatching texture
-	Resources.get("textures/hatching/hatch_0.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
-
-	//tests hatching
-  //#ifdef _DEBUG
-	//Resources.get("textures/hatching/hatching_tileable.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST1);
-	//Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING_TEST2);
-  //#endif
-
-	Resources.get("textures/hatching/hatching_tileable_ALPHAS.dds")->as<CTexture>()->activate(63);
-	Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(64);
+	
+	
 
 	Resources.get("textures/ramps/rampa_prueba.dds")->as<CTexture>()->activate(TEXTURE_SLOT_RAMP);
 
-	shader_ctes_hatching.edge_lines_detection = 0.02f;
-	shader_ctes_hatching.frequency_offset = 8.0f;
-	shader_ctes_hatching.intensity_sketch = 0.2f;
-	shader_ctes_hatching.rim_strenght = 1.0f;
-	shader_ctes_hatching.specular_strenght = 50.0f;
-	shader_ctes_hatching.diffuse_strenght = 1.0f;
-	shader_ctes_hatching.frequency_texture = 10.0f;
-	shader_ctes_hatching.color_ramp = 0.0f;
-	shader_ctes_hatching.specular_force = 0.2f;
-	shader_ctes_hatching.rim_specular = 1.5f;
+	
 
 	shader_ctes_globals.use_ramp = 1;
 	shader_ctes_globals.world_time = 0.f;
@@ -164,17 +152,10 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_blur.ssao_intensity = 1.0f;
 	shader_ctes_blur.ssao_iterations = 30.f;
 
-	shader_ctes_dream.color_influence = VEC4(0.5, 0.5, 0.8, 1);
-	shader_ctes_dream.dream_speed = 1;
-	shader_ctes_dream.dream_waves_size = 0.5;
-	shader_ctes_dream.dream_wave_amplitude = 8;
+	
 
-	shader_ctes_dream.dream_distorsion_expansion = 0.85;
-	shader_ctes_dream.dream_distorsion_strenght = 55;
-
-	shader_ctes_hatching.uploadToGPU();
+	
 	shader_ctes_blur.uploadToGPU();
-	shader_ctes_dream.uploadToGPU();
 
 	return true;
 }
@@ -193,6 +174,17 @@ void CRenderDeferredModule::update(float dt) {
 	}
 	if (io->keys[VK_F1].becomesPressed()) {
 		test_dream_shader = !test_dream_shader;
+	}
+
+	static int num = 0;
+	if (io->keys['Y'].becomesPressed()) {
+		//test
+		//CHandle h = createPrefab("test_fx");
+		TTestFx* tt = new TTestFx;
+		tt->id = num;
+		render_fx->AddFX("test_fx"+std::to_string(num), tt);
+		render_fx->ActivateFXBeforeUI("test_fx" + std::to_string(num), random(0,15));
+		num++;
 	}
 
 	//m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
@@ -250,7 +242,7 @@ void CRenderDeferredModule::renderGBuffer() {
 	Render.clearMainZBuffer();
 
 	rt_acc_light->clear(VEC4(0, 0, 0, 1));
-	rt_shadows->clear(VEC4(0, 0, 0, 0));
+	rt_shadows_gl->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 1));
 
 	// Activa la ctes del object
@@ -403,31 +395,16 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
 		// la world para la mesh y las constantes en el pixel shader
 		PROFILE_FUNCTION("upload shadow dir");
 
-		/*TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
-		if (room) {
-			if (SBB::readSala() != room->name)
-				return;			//light on diferent room
-			else {
-				//fast fix for room3
-				if (SBB::readSala() == 2) {
-					CEntity* ep = tags_manager.getFirstHavingTag("player");
-					if (ep) {
-						TCompTransform* t = ep->get<TCompTransform>();
-						TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
+		c->activate();
+		// Pintar la mesh que hemos activado hace un momento
+		mesh->render();
+	});
 
-						if (t->getPosition().y > 10) {
-							if (tl->getPosition().y < 12)
-								return;
-						}
-						else {
-							if (tl->getPosition().y > 12)
-								return;
-						}
-					}
-				}
-			}
-		}
-		*/
+	getHandleManager<TCompLightDirShadowsDynamic>()->each([mesh](TCompLightDirShadowsDynamic* c) {
+		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
+		// la world para la mesh y las constantes en el pixel shader
+		PROFILE_FUNCTION("upload shadow dir");
+
 		c->activate();
 		// Pintar la mesh que hemos activado hace un momento
 		mesh->render();
@@ -462,11 +439,11 @@ void CRenderDeferredModule::FinalRender() {
 	// Y el ZBuffer del backbuffer principal
 	Render.ctx->OMSetRenderTargets(3, rts, nullptr);
 
-	rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
+/*	rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
 	rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
 	rt_selfIlum->activate(TEXTURE_SLOT_SELFILUM);
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+	rt_normals->activate(TEXTURE_SLOT_NORMALS);*/
 
 	activateZ(ZCFG_ALL_DISABLED);
 	activateBlend(BLENDCFG_DEFAULT);
@@ -474,12 +451,6 @@ void CRenderDeferredModule::FinalRender() {
 	drawFullScreen(rt_acc_light);
 
 	activateZ(ZCFG_DEFAULT);
-
-	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-	CTexture::deactivate(TEXTURE_SLOT_SELFILUM);
-	CTexture::deactivate(TEXTURE_SLOT_ENVIRONMENT);
-	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 }
 
 void CRenderDeferredModule::blurEffectLights(bool intermitent) {
@@ -520,6 +491,7 @@ void CRenderDeferredModule::blurEffectLights(bool intermitent) {
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 }
 
+#include "render\fx\fx_glow.h"
 // ----------------------------------------------
 void CRenderDeferredModule::renderAccLight() {
 	PROFILE_FUNCTION("renderAccLight");
@@ -529,7 +501,7 @@ void CRenderDeferredModule::renderAccLight() {
 	ID3D11RenderTargetView* rts[3] = {
 	  rt_acc_light->getRenderTargetView()
 	  ,  rt_specular_lights->getRenderTargetView()
-	  ,  rt_shadows->getRenderTargetView()
+	  ,  rt_shadows_gl->getRenderTargetView()
 	};
 	// Y el ZBuffer del backbuffer principal
 	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
@@ -556,17 +528,53 @@ void CRenderDeferredModule::renderAccLight() {
 	//activateRS(RSCFG_INVERT_CULLING);
 	addDirectionalLights();
 
+	activateBlend(BLENDCFG_ADDITIVE);
 	activateRS(RSCFG_DEFAULT);
 	addDirectionalLightsShadows();
 
+
+	CTexture* blurred_shadows = rt_shadows_gl;
+
+	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+
+	activateBlend(BLENDCFG_DEFAULT);
+	activateZ(ZCFG_DEFAULT);
+
+	//blur shadows
+	TCompRenderGlow* glow = render_fx->GetFX("blur");
+	if (glow)
+		blurred_shadows = glow->apply(blurred_shadows);
+
+	//reset size
+	Render.activateBackBuffer();
+
+	{
+		// Activar el rt para pintar las luces...
+		ID3D11RenderTargetView* rts[3] = {
+			rt_acc_light->getRenderTargetView()
+			,  nullptr
+			,  nullptr
+		};
+		// Y el ZBuffer del backbuffer principal
+		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+
+		activateZ(ZCFG_ALL_DISABLED);
+		//activateBlend(BLENDCFG_COMBINATIVE);
+		activateBlend(BLENDCFG_SUBSTRACT);
+		drawFullScreen(blurred_shadows);
+		//CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
+		
+	}
+
+	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	activateRS(RSCFG_DEFAULT);
 	activateZ(ZCFG_DEFAULT);
 	activateBlend(BLENDCFG_DEFAULT);
 
-	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
+	/*CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
+	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);*/
 }
 
 // ----------------------------------------------
@@ -577,36 +585,18 @@ void CRenderDeferredModule::generateShadowMaps() {
 	// Llamar al metodo generateShadowMap para todas los components de tipo dir_shadows
 	//getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::generateShadowMap);
 
-	int sala = SBB::readSala();
-	CEntity* ep = CPlayerBase::handle_player;
-	bool player_sala3 = false;
-	if (ep) {
-		TCompTransform* t = ep->get<TCompTransform>();
-		if (t) player_sala3 = t->getPosition().y > 10;
-	}
-
-	getHandleManager<TCompLightDirShadows>()->each([sala, ep, player_sala3](TCompLightDirShadows* c) {
+	getHandleManager<TCompLightDirShadows>()->each([](TCompLightDirShadows* c) {
 		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
 		// la world para la mesh y las constantes en el pixel shader
 		PROFILE_FUNCTION("check gen shadow");
-		GET_ECOMP(room, c->compBaseEntity, TCompRoom);
 
-		if (room) {
-			std::vector<int> rooms = room->name;
-			if (std::find(rooms.begin(), rooms.end(), sala) == rooms.end()) {
-				return;			//light on diferent room
-			}
-			else {
-				//fast fix for room3
-				if (sala == 2) {
-					if (ep) {
-						TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
-						if (tl->getPosition().y > 12 != player_sala3)
-							return;
-					}
-				}
-			}
-		}
+		c->generateShadowMap();
+	});
+
+	getHandleManager<TCompLightDirShadowsDynamic>()->each([](TCompLightDirShadowsDynamic* c) {
+		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
+		// la world para la mesh y las constantes en el pixel shader
+		PROFILE_FUNCTION("check gen shadow");
 
 		c->generateShadowMap();
 	});
@@ -722,7 +712,7 @@ void CRenderDeferredModule::ApplySSAO() {
 	{
 		ID3D11RenderTargetView* rts[3] = {
 			rt_acc_light->getRenderTargetView()
-			, rt_shadows->getRenderTargetView()
+			, rt_shadows_gl->getRenderTargetView()
 			,   nullptr
 		};
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
@@ -735,8 +725,8 @@ void CRenderDeferredModule::ApplySSAO() {
 	activateBlend(BLENDCFG_DEFAULT);
 	Render.activateBackBuffer();
 
-	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+	/*CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
+	CTexture::deactivate(TEXTURE_SLOT_NORMALS);*/
 }
 
 void CRenderDeferredModule::MarkInteractives(const VEC4& color, std::string tag, int slot) {
@@ -912,7 +902,7 @@ void CRenderDeferredModule::render() {
 	rt_selfIlum_int->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred_int->clear(VEC4(0, 0, 0, 0));
-	rt_shadows->clear(VEC4(0, 0, 0, 0));
+	rt_shadows_gl->clear(VEC4(0,0,0,0));
 
 	uploadConstantsGPU();
 
@@ -925,16 +915,15 @@ void CRenderDeferredModule::render() {
 		ApplySSAO();
 	}
 
-	CTexture* blurred_shadows = rt_shadows;
+	//make a texture copy
+	
+	//CTexture* copy_blurred_shadows = rt_shadows;
 
 	CEntity* e_camera = h_camera;
 	if (!e_camera)
 		return;
 
-	//blur shadows
-	TCompRenderGlow* glow = e_camera->get< TCompRenderGlow >();
-	if (glow)
-		blurred_shadows = glow->apply(blurred_shadows);
+	//*blurred_shadows = *copy_blurred_shadows;
 
 	//blurEffectLights();
 
@@ -948,10 +937,6 @@ void CRenderDeferredModule::render() {
 	Render.activateBackBuffer();
 	activateZ(ZCFG_ALL_DISABLED);
 
-	//AA cutre, only objects near camera
-	/*auto tech = Resources.get("aa_tech.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_final, tech);*/
-
 	drawFullScreen(rt_final);
 
 	g_particlesManager->renderParticles();   //render all particles systems
@@ -959,32 +944,16 @@ void CRenderDeferredModule::render() {
 	activateBlend(BLENDCFG_COMBINATIVE);
 	rt_specular_lights->activate(TEXTURE_SLOT_SPECULAR_GL);
 
-	if (controller->IsImpulseUpButtonPressed()) {
-		rt_shadows->activate(TEXTURE_SLOT_SHADOWS);
-	}
-	else {
-		blurred_shadows->activate(TEXTURE_SLOT_SHADOWS);
-	}
+
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
 	//rt_shadows->activate(TEXTURE_SLOT_SHADOWS);
 
 	//activateBlend(BLENDCFG_DEFAULT);	//testing
-	activateBlend(BLENDCFG_COMBINATIVE);
-
-	auto tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
-
-	drawFullScreen(rt_final, tech);
-
-	//outline
-	shader_ctes_globals.global_color = VEC4(1, 1, 1, 1);
-	shader_ctes_globals.uploadToGPU();
-	activateBlend(BLENDCFG_SUBSTRACT);
-	tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
-	drawFullScreen(rt_final, tech);
-
-	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
+	
+	//CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+
 
 	activateBlend(BLENDCFG_DEFAULT);
 
@@ -998,10 +967,7 @@ void CRenderDeferredModule::render() {
 	ShootGuardRender();
 	MarkInteractives(VEC4(1, 1, 1, 1), "interactive", INTERACTIVE_OBJECTS);
 
-	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
-	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
-	CTexture::deactivate(TEXTURE_SLOT_GLOSSINESS);
-	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+	
 	Render.activateBackBuffer();
 	activateZ(ZCFG_DEFAULT);
 
@@ -1011,22 +977,29 @@ void CRenderDeferredModule::render() {
 
 	applyPostFX();
 
-	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
-	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+	
+	
+	activateZ(ZCFG_ALL_DISABLED);
+
+	rt_shadows_gl->activate(TEXTURE_SLOT_SHADOWS);
+	render_fx->ExecuteUILayerFX();
 
 	renderUI();
-	CEntity* ec = h_ui_camera;
-	TCompFadeScreen* e = ec->get<TCompFadeScreen>();
-	if (e) {
-		activateZ(ZCFG_ALL_DISABLED);
-		activateBlend(BLENDCFG_COMBINATIVE);
-		e->render();
-		activateBlend(BLENDCFG_DEFAULT);
-	}
+
+	activateZ(ZCFG_ALL_DISABLED);
+	render_fx->ExecuteAllPendentFX();
 
 	// Leave the 3D Camera active
 	activateRenderCamera3D();
+
+
+	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
+	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
+	CTexture::deactivate(TEXTURE_SLOT_GLOSSINESS);
+	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
+	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
+	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+	//delete blurred_shadows;
 }
 
 void CRenderDeferredModule::renderEspVisionMode() {
@@ -1039,7 +1012,7 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		CTraceScoped scope("darken");
 
 		Render.activateBackBuffer();
-		rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+		//rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 		activateBlend(BLENDCFG_SUBSTRACT);
 		activateZ(ZCFG_ALL_DISABLED);
 		//auto tech = Resources.get("darken_screen.tech")->as<CRenderTechnique>();
@@ -1316,40 +1289,18 @@ void CRenderDeferredModule::applyPostFX() {
 	else
 		return;
 
+
 	// ------------------------
 	Render.activateBackBuffer();
 
-	activateZ(ZCFG_ALL_DISABLED);
+	//activateZ(ZCFG_ALL_DISABLED);
 
 	activateBlend(BLENDCFG_ADDITIVE);
 
 	drawFullScreen(next_step);
 
-	//AA
-//	activateBlend(BLENDCFG_COMBINATIVE);
-//	auto tech = Resources.get("anti_aliasing.tech")->as<CRenderTechnique>();
-//	tech->activate();
-
-//	drawFullScreen(rt_final, tech);
-
-	if (test_dream_shader) {
-		activateBlend(BLENDCFG_COMBINATIVE);
-		auto tech = Resources.get("dream_effect.tech")->as<CRenderTechnique>();
-		tech->activate();
-
-		drawFullScreen(rt_final, tech);
-	}
-
-	activateBlend(BLENDCFG_COMBINATIVE);
-	//activateBlend(BLENDCFG_DEFAULT);
-
-	//DoF
-	auto tech1 = Resources.get("depth_field.tech")->as<CRenderTechnique>();
-	tech1->activate();
-
-	drawFullScreen(rt_final, tech1);
-
 	activateZ(ZCFG_DEFAULT);
+
 }
 
 void CRenderDeferredModule::renderUI() {
