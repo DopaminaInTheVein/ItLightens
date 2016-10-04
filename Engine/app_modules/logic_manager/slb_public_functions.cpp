@@ -588,17 +588,21 @@ bool SLBUiCamera::checkCamera() {
 }
 
 void SLBUiCamera::fadeIn(float speed) {
-	if (!checkCamera()) return;
-	GET_COMP(fx, ui_camera_h, TCompFadeScreen);
-	fx->SetMaxTime(speed);
-	fx->FadeIn();
+	dbg("Function LUA deprecated!");
+	return;
+	//if (!checkCamera()) return;
+	//GET_COMP(fx, ui_camera_h, TCompFadeScreen);
+	//fx->SetMaxTime(speed);
+	//fx->FadeIn();
 }
 
 void SLBUiCamera::fadeOut(float speed) {
-	if (!checkCamera()) return;
-	GET_COMP(fx, ui_camera_h, TCompFadeScreen);
-	fx->SetMaxTime(speed);
-	fx->FadeOut();
+	dbg("Function LUA deprecated!");
+	return;
+	//if (!checkCamera()) return;
+	//GET_COMP(fx, ui_camera_h, TCompFadeScreen);
+	//fx->SetMaxTime(speed);
+	//fx->FadeOut();
 }
 
 // Data

@@ -9,7 +9,6 @@ class TRenderGlow;
 class CTexture;
 
 class CRenderPostProcessModule : public IAppModule {
-
 	struct TKeyFX {
 		TCompBasicFX* fx;
 		int priority;
@@ -30,7 +29,6 @@ public:
 	//template< typename TObj >
 	CHandle GetFX(std::string name);
 
-
 	void ActivateFXAtEnd(std::string name, int priority = 0);
 	void ActivateFXAtEnd(TCompBasicFX* handle, int priority = 0);
 
@@ -46,12 +44,12 @@ public:
 	static bool sortByPriority(const TKeyFX &k1, const TKeyFX &k2);
 
 	void stop();
+	bool forcedUpdate() override { return true; }
 	void update(float dt);
 	void init() {
 		//nothing to do
 	}
 	void renderInMenu();
-
 
 	const char* getName() const {
 		return "postprocess module";

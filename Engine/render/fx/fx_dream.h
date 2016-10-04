@@ -13,7 +13,7 @@ struct TRenderDream : public TCompBasicFX {
   void ApplyFX();
 
   const char* getName() const {
-	  return "dream effect";
+	  return "dream_border";
   }
 
 };
