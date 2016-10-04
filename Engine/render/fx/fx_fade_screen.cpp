@@ -3,12 +3,15 @@
 #include "resources/resources_manager.h"
 #include "fx_fade_screen.h"
 
+#include "app_modules/render/module_render_postprocess.h"
+
 // ---------------------
 void TFadeScreen::renderInMenu() {
 	if (ImGui::Checkbox("fade_in", &fade_in)) fade_out = !fade_in;
 	if (ImGui::Checkbox("fade_out", &fade_out)) fade_in = !fade_out;
 	ImGui::DragFloat("max timer fade", &t_max_fade);
 	ImGui::Text("curr time: %f\n", t_curr_fade);
+	TCompBasicFX::renderInMenu();
 }
 
 void TFadeScreen::update(float elapsed)
@@ -54,7 +57,7 @@ void TFadeScreen::ApplyFX()
 {
 	activateZ(ZCFG_ALL_DISABLED);
 	activateBlend(BLENDCFG_COMBINATIVE);
-	
+
 	if (t_curr_fade > 0) {
 		tech->activate();
 		drawFullScreen(all_black, tech);	//wont use texture all_black
