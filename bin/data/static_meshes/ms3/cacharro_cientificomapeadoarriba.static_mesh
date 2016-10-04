@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/ms3/cacharro_cientificomapeadoarriba.mesh" material="materials/ms3/test_red.material"/>
+  <slot mesh="meshes/ms3/cacharro_cientificomapeadoarriba.mesh" material="materials/ms3/pipetas.material"/>
 </static_mesh>

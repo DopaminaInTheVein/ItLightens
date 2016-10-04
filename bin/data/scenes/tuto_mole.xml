@@ -227,7 +227,7 @@
 <name
    name="_end_portal"/>
 <transform
-   pos="1028.23 73.3485 -24.9939"
+   pos="1028.23 70.7629 -24.9939"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <tmx_animator
@@ -412,6 +412,21 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/tuto_mole/barrotes_balcon_cuadrado_derecho.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columna_rota001"/>
+<transform
+   pos="1026.11 66.4762 -25.2976"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
+<render_static_mesh
+   name="static_meshes/tuto_mole/columna_rota001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>

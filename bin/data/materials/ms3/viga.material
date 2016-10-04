@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/viga_difuso.dds"/>
+<texture slot="normalmap" name="textures/viga_normal.dds"/>
+</material>

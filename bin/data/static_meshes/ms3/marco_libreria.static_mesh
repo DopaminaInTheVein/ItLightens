@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ms3/marco_libreria.mesh" material="materials/ms3/marco_libreria.material"/>
+</static_mesh>

@@ -1,4 +1,4 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/andamio_difuso.dds"/>
-<texture slot="normalmap" name="textures/normals.dds"/>
+<texture slot="diffuse" name="textures/cubo_metalico_difuso.dds"/>
+<texture slot="normalmap" name="textures/cubo_metalico_normal.dds"/>
 </material>

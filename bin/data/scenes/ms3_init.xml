@@ -388,7 +388,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="-31.1777 -05.8855 -0.614541"
+   pos="-31.1777 -25.8855 -0.614541"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
