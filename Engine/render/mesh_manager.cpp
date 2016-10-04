@@ -323,6 +323,11 @@ else if (name == "textured_quad_xy_centered.mesh") {
 	// Try to load from disk
 	std::string full_path = IResource::getDataPath() + name;
 	CFileDataProvider fdp(full_path.c_str());
+	if (!fdp.isValid()) {
+		char err[1024];
+		sprintf(err, "Can't open mesh file %s", full_path.c_str());
+		MessageBox(NULL, err, NULL, MB_OK);
+	}
 	assert(fdp.isValid() || fatal("Can't open mesh file %s\n", full_path.c_str()));
 	bool is_ok = meshLoader(mesh, fdp);
 	assert(is_ok);
