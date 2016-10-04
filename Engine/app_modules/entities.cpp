@@ -471,6 +471,23 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
 
 	SUBSCRIBE(TCompGuiDrag, TMsgEntityCreated, onCreate);
+
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+
+	auto hm1 = CHandleManager::getByName("name");
+	CHandle new_hn = hm1->createHandle();
+	MKeyValue atts1;
+	atts1.put("name", "playerTalk");
+	new_hn.load(atts1);
+	entity->add(new_hn);
+
+	auto hm3 = CHandleManager::getByName("helper_message");
+	CHandle new_hl = hm3->createHandle();
+	entity->add(new_hl);
+	entity->setPermanent(true);
+
 	return true;
 }
 

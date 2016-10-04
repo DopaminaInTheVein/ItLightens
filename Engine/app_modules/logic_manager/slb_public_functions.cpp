@@ -782,57 +782,12 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 void SLBPublicFunctions::playerTalks(const char* text) {
 	// DO Something with text...
 	dbg(text);
-	for (auto handles : tags_manager.getHandlesByTag("talk_text")) handles.destroy();
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "playerTalk");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-
-	auto hm3 = CHandleManager::getByName("helper_message");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["text"] = text;
-	new_hl.load(atts3);
-	entity->add(new_hl);
-
-	//Add tag talk text
-	TMsgSetTag msg;
-	msg.add = true;
-	msg.tag = "talk_text";
-	new_hp.sendMsg(msg);
-}
-
-void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor) {
-	// DO Something with text...
-	dbg(text);
-
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "playerTalk");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-
-	auto hm3 = CHandleManager::getByName("helper_message");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["text"] = text;
-	atts3["icon"] = iconName;
-	atts3["iconText"] = iconText;
-	atts3["backgroundColor"] = background;
-	atts3["textColor"] = textColor;
-	new_hl.load(atts3);
-	entity->add(new_hl);
+	getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
+		MKeyValue atts3;
+		atts3["text"] = text;
+		mess->load(atts3);
+	}
+	);
 }
 
 void SLBPublicFunctions::putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag) {

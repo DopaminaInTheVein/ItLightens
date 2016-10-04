@@ -191,7 +191,6 @@ public:
 	void playVideoAndDo(const char* video_route, const char* lua_code);
 	void playerRoom(int newRoom);
 	void playerTalks(const char* text);
-	void playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor);
 	void putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag);
 	//void alterText(const char* id, float new_posx, float new_posy, float new_scale);
 	void removeText(const char* id);
