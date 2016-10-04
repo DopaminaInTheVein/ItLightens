@@ -168,6 +168,32 @@ void CRenderPostProcessModule::ActivateFXAtEnd(TCompBasicFX* handle, int priorit
 	*/
 }
 
+
+void CRenderPostProcessModule::RemoveActiveFX(std::string name, int priority)
+{
+	TCompBasicFX* handle = m_list_fx[name];
+	RemoveActiveFX(handle, priority);
+}
+
+void CRenderPostProcessModule::RemoveActiveFX(TCompBasicFX* handle, int priority)
+{
+	int idx = 0;
+	for (auto fx_key : m_activated_ui_layer) {
+		if (fx_key.fx == handle) {
+			m_activated_ui_layer.erase(m_activated_ui_layer.begin()+idx);
+		}
+		idx++;
+	}
+
+	idx = 0;
+	for (auto fx_key : m_activated_end) {
+		if (fx_key.fx == handle) {
+			m_activated_ui_layer.erase(m_activated_end.begin() + idx);
+		}
+		idx++;
+	}
+}
+
 //Activate a FX before the UI layer is run by name.
 void CRenderPostProcessModule::ActivateFXBeforeUI(std::string name, int priority)
 {
