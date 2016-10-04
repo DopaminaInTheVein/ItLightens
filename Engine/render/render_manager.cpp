@@ -400,9 +400,13 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 					prev_it = it;
 					++nkeys_rendered;
 
-					CEntity* e_owner = it->owner.getOwner();
-					TCompName* e_name = e_owner->get<TCompName>();
-					test_z_render.push_back(e_name->name);
+					//CEntity* e_owner = it->owner.getOwner();
+					//TCompName* e_name = e_owner->get<TCompName>();
+					//{
+					//	PROFILE_FUNCTION("Test_z push_back");
+					//	test_z_render.push_back(e_name->name);
+					//	dbg("test z_render size: %d\n", test_z_render.size());
+					//}
 				}
 			}
 			else {
