@@ -25,9 +25,17 @@ public:
 	}
 
 	virtual const char* getName() const = 0;
+
+	virtual void Activate() {
+		render_fx->ActivateFXAtEnd(getName(), 200);
+	}
+
 	virtual void renderInMenu() {
 		ImGui::Separator();
 		ImGui::Text(getName());
+		if (ImGui::Button("Activate Default")) {
+			Activate(); //should go as the last one always
+		}
 		if (ImGui::Button("Apply before UI")) {
 			render_fx->ActivateFXBeforeUI(getName(), 200); //should go as the last one always
 		}

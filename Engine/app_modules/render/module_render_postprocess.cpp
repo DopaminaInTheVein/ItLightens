@@ -14,7 +14,6 @@
 #include "render\fx\fx_depth_fog.h"
 #include "render\fx\fx_dream.h"
 
-
 //Initialize fx and add it to the list of fx for the engine
 #define INIT_FX( fx_name, fx_object ) \
   fx_object->init(); \
@@ -29,11 +28,13 @@ bool CRenderPostProcessModule::start()
 	//fade_screen
 	TFadeScreen* fs = new TFadeScreen;
 	INIT_FX("fade_screen", fs);
+	TFadeScreenAll * fs_all = new TFadeScreenAll;
+	INIT_FX("fade_screen_all", fs_all);
 
 	//hatching
 	TRenderHatching * hatching = new TRenderHatching;
 	INIT_FX("hatching", hatching);
-	
+
 	//outline
 	TRenderOutline * outline = new TRenderOutline;
 	INIT_FX("outline", outline);
@@ -64,7 +65,7 @@ bool CRenderPostProcessModule::start()
 
 	//test fade
 	//WARNING: component fade is the same always, there will be only one!!
-	
+
 	//Init values for fade
 	//TFadeScreen* fs = GetFX("fade_screen");
 	//fs->FadeIn();
@@ -82,7 +83,6 @@ bool CRenderPostProcessModule::start()
 void CRenderPostProcessModule::ExecuteAllPendentFX()
 {
 	for (auto& key : m_activated_end) {
-
 		//get handle
 		TCompBasicFX* fx = key.fx;
 
@@ -91,12 +91,10 @@ void CRenderPostProcessModule::ExecuteAllPendentFX()
 	}
 }
 
-
 //execute all fx before the UI layer, managed at deferred module
 void CRenderPostProcessModule::ExecuteUILayerFX()
 {
 	for (auto& key : m_activated_ui_layer) {
-
 		//get handle
 		TCompBasicFX* fx = key.fx;
 
@@ -113,11 +111,10 @@ TObj * CRenderPostProcessModule::GetFX(std::string name)
 	return output;
 }*/
 
-
 //template< typename TObj >
 CHandle CRenderPostProcessModule::GetFX(std::string name)
 {
-	return m_list_fx[name]->handle;	
+	return m_list_fx[name]->handle;
 }
 
 //Activate a FX at the end of the render by name
@@ -168,7 +165,6 @@ void CRenderPostProcessModule::ActivateFXAtEnd(TCompBasicFX* handle, int priorit
 	*/
 }
 
-
 void CRenderPostProcessModule::RemoveActiveFX(std::string name, int priority)
 {
 	TCompBasicFX* handle = m_list_fx[name];
@@ -180,7 +176,7 @@ void CRenderPostProcessModule::RemoveActiveFX(TCompBasicFX* handle, int priority
 	int idx = 0;
 	for (auto fx_key : m_activated_ui_layer) {
 		if (fx_key.fx == handle) {
-			m_activated_ui_layer.erase(m_activated_ui_layer.begin()+idx);
+			m_activated_ui_layer.erase(m_activated_ui_layer.begin() + idx);
 		}
 		idx++;
 	}
@@ -223,7 +219,6 @@ void CRenderPostProcessModule::ActivateFXBeforeUI(TCompBasicFX* handle, int prio
 
 	m_activated_ui_layer.push_back(new_key);
 	std::sort(m_activated_ui_layer.begin(), m_activated_ui_layer.end(), &sortByPriority);
-
 
 	/*dbg("###### END #####\n");
 	if (!m_activated_ui_layer.empty()) {
@@ -304,7 +299,6 @@ void CRenderPostProcessModule::renderInMenu()
 				fx->renderInMenu();
 				ImGui::TreePop();
 			}
-			
 		}
 		ImGui::TreePop();
 	}
@@ -318,7 +312,6 @@ void CRenderPostProcessModule::renderInMenu()
 				fx->renderInMenu();
 				ImGui::TreePop();
 			}
-
 		}
 		ImGui::TreePop();
 	}
