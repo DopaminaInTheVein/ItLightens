@@ -32,9 +32,6 @@ void TFadeScreen::update(float elapsed)
 		return;
 	}
 	clamp_me(t_curr_fade, 0.f, t_max_fade);
-
-	shader_ctes_globals.fade_black_screen = t_curr_fade / t_max_fade;
-	shader_ctes_globals.uploadToGPU();
 }
 
 void TFadeScreen::SetMaxTime(float new_time) {
@@ -59,6 +56,8 @@ void TFadeScreen::ApplyFX()
 	activateBlend(BLENDCFG_COMBINATIVE);
 
 	if (t_curr_fade > 0) {
+		shader_ctes_globals.fade_black_screen = t_curr_fade / t_max_fade;
+		shader_ctes_globals.uploadToGPU();
 		tech->activate();
 		drawFullScreen(all_black, tech);	//wont use texture all_black
 	}
