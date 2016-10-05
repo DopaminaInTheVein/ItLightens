@@ -8,26 +8,26 @@
 
 // ---------------------
 void TRenderGlow::renderInMenu() {
-	TCompRenderGlow* glow = handle;
-	glow->renderInMenu();
+	/*TCompRenderGlow* glow = handle;
+	glow->renderInMenu();*/
 }
 
 void TRenderGlow::init() {
 	enabled = true;
-	handle = getHandleManager<TCompRenderGlow>()->createHandle();
+/*	handle = getHandleManager<TCompRenderGlow>()->createHandle();
 	TCompRenderGlow* glow = handle;
 	glow->initValues();
-	glow->init();
+	glow->init();*/
 }
 
 void TRenderGlow::update(float dt)
 {
-	TCompRenderGlow* glow = handle;
-	glow->update(dt);
+	/*TCompRenderGlow* glow = handle;
+	glow->update(dt);*/
 }
 
 void TRenderGlow::render()
 {
-	TCompRenderGlow* glow = handle;
-	glow->render();
+	/*TCompRenderGlow* glow = handle;
+	glow->render();*/
 }

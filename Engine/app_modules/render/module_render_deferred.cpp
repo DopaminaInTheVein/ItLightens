@@ -184,6 +184,11 @@ void CRenderDeferredModule::update(float dt) {
 		tt->id = num;
 		render_fx->AddFX("test_fx"+std::to_string(num), tt);
 		render_fx->ActivateFXBeforeUI("test_fx" + std::to_string(num), random(0,15));
+		
+
+		TTestFx* new_fx = render_fx->GetFX<TTestFx>("test_fx" + std::to_string(num));
+		dbg("my_fx is %d\n", new_fx->id);
+
 		num++;
 	}
 
