@@ -243,6 +243,26 @@ void CRenderPostProcessModule::AddFX(std::string name, TCompBasicFX* handle)
 	m_list_fx[name] = handle;
 }
 
+bool CRenderPostProcessModule::isActive(std::string name)
+{
+	int idx = 0;
+	for (auto fx_key : m_activated_ui_layer) {
+		if (fx_key.fx == m_list_fx[name]) {
+			return true;
+		}
+		idx++;
+	}
+
+	idx = 0;
+	for (auto fx_key : m_activated_end) {
+		if (fx_key.fx == m_list_fx[name]) {
+			return true;
+		}
+		idx++;
+	}
+	return false;
+}
+
 //clear all memory
 void CRenderPostProcessModule::stop()
 {
