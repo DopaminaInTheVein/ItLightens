@@ -7,8 +7,10 @@
 
 // ---------------------
 void TFadeScreen::renderInMenu() {
-	if (ImGui::Checkbox("fade_in", &fade_in)) fade_out = !fade_in;
-	if (ImGui::Checkbox("fade_out", &fade_out)) fade_in = !fade_out;
+	if (ImGui::Checkbox("fade_in", &fade_in) || ImGui::Checkbox("fade_out", &fade_out)) {
+		if (fade_in) FadeIn();
+		else FadeOut();
+	}
 	ImGui::DragFloat("max timer fade", &t_max_fade);
 	ImGui::Text("curr time: %f\n", t_curr_fade);
 	TCompBasicFX::renderInMenu();
@@ -45,12 +47,14 @@ void TFadeScreen::FadeIn()
 {
 	fade_in = true;
 	fade_out = false;
+	t_curr_fade = t_max_fade;
 }
 
 void TFadeScreen::FadeOut()
 {
 	fade_in = false;
 	fade_out = true;
+	t_curr_fade = 0;
 }
 
 void TFadeScreen::ApplyFX()
@@ -70,5 +74,5 @@ void TFadeScreen::init()
 	fade_in = false;		//by default false on start
 	fade_out = !fade_in;
 	t_max_fade = t_max_fade_default = 2.0f;
-	t_curr_fade = 0.0f;
+	t_curr_fade = 2.0f;
 }
