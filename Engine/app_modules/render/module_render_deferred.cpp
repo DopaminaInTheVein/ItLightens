@@ -541,9 +541,9 @@ void CRenderDeferredModule::renderAccLight() {
 	activateZ(ZCFG_DEFAULT);
 
 	//blur shadows
-	TCompRenderGlow* glow = render_fx->GetFX("blur");
-	if (glow)
-		blurred_shadows = glow->apply(blurred_shadows);
+	TRenderGlow* glow = render_fx->GetFX<TRenderGlow>("blur");
+	/*if (glow)
+		blurred_shadows = glow->apply(blurred_shadows);*/
 
 	//reset size
 	Render.activateBackBuffer();
