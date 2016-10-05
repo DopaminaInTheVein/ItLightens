@@ -26,8 +26,11 @@ public:
 	void ExecuteAllPendentFX();
 	void ExecuteUILayerFX();
 
-	//template< typename TObj >
-	CHandle GetFX(std::string name);
+	template< typename TObj >
+	TObj* GetFX(std::string name)
+	{
+		return dynamic_cast<TObj*>(m_list_fx[name]);
+	}
 
 	void ActivateFXAtEnd(std::string name, int priority = 0);
 	void ActivateFXAtEnd(TCompBasicFX* handle, int priority = 0);

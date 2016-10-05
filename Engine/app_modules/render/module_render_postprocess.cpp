@@ -112,10 +112,10 @@ TObj * CRenderPostProcessModule::GetFX(std::string name)
 }*/
 
 //template< typename TObj >
-CHandle CRenderPostProcessModule::GetFX(std::string name)
+/*CHandle CRenderPostProcessModule::GetFX(std::string name)
 {
 	return m_list_fx[name]->handle;
-}
+}*/
 
 //Activate a FX at the end of the render by name
 void CRenderPostProcessModule::ActivateFXAtEnd(std::string name, int priority)

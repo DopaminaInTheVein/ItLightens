@@ -5,6 +5,7 @@
 
 class TTestFx : public TCompBasicFX{
 public:
+	int id;
 	void setId(int num) {
 		id = num;
 	}
