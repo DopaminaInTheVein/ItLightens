@@ -20,10 +20,10 @@ function OnStart_hub( )
 	mole_done = false
 	sci_done = false
 	p:setControlEnabled(1)
-	p:setOnlySense(1)
-	p:aim_circle("circle_1","aim_circle",-1.94,51.64,-20.08,-1.0)
-	p:force_sense_vision()
-	p:player_talks(p:get_text("hub","start_hub"))
+	-- p:setOnlySense(1)
+	-- p:aim_circle("circle_1","aim_circle",-1.94,51.64,-20.08,-1.0)
+	-- p:force_sense_vision()
+	-- p:player_talks(p:get_text("hub","start_hub"))
 end
 -------------------------------
 function OnSave_hub()

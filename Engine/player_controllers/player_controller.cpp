@@ -25,6 +25,7 @@
 #define SET_ANIM_PLAYER_P(state) SET_ANIM_STATE_P(animController, state)
 
 map<string, statehandler> player_controller::statemap = {};
+float player_controller::SPEED_JUMP_PENALIZE = 0.2f;
 
 void player_controller::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
@@ -290,7 +291,8 @@ void player_controller::Jump()
 		VEC3 curSpeed = cc->GetLastSpeed();
 		jumpVector = VEC3(
 			-curSpeed.x * 0.1f,
-			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
+			clamp(jimpulse - sqrtf(curSpeed.Length())*SPEED_JUMP_PENALIZE, 0.f, jimpulse),//, //0.8f * jimpulse, jimpulse),
+			//jimpulse,
 			-curSpeed.z * 0.1f
 		);
 		//--------------------------------------
@@ -1101,6 +1103,9 @@ void player_controller::renderInMenu() {
 
 	ImGui::Separator();
 	ImGui::Text("Absorb fonts: %d", damageFonts[Damage::ABSORB]);
+	ImGui::Separator();
+	if (cc) IMGUI_SHOW_FLOAT(cc->GetLastSpeed().Length());
+	ImGui::DragFloat("Jump speed penalize", &SPEED_JUMP_PENALIZE, 0.01f, 0.f, 1.f);
 
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
