@@ -41,6 +41,8 @@ public:
 
 	void AddFX(std::string name, TCompBasicFX* handle);
 
+	bool isActive(std::string);
+
 	static bool sortByPriority(const TKeyFX &k1, const TKeyFX &k2);
 
 	void stop();
