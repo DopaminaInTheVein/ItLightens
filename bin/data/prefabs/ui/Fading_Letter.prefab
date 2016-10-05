@@ -1,5 +1,5 @@
 <entities>
-<entity temp="yes">
+<entity permanent="yes">
 <tags
    tags="gui"/>
 <gui

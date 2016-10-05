@@ -1,12 +1,19 @@
 #include "mcv_platform.h"
 #include "comp_fading_message.h"
-//#include "comp_tags.h"
 #include "entity.h"
 #include "app_modules/gui/gui_utils.h"
 #include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/imgui/module_imgui.h"
 
 #define FONT_JSON "./data/json/font.json"
+
+void moveElement(CHandle h, VEC3 pos)
+{
+	if (h.isValid()) {
+		GET_COMP(ht, h, TCompTransform);
+		if (ht) ht->setPosition(pos);
+	}
+}
 
 void TCompFadingMessage::Init() {
 	gui_back = Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, -1.0f, 0.3f), "Fading_Message_Background");
@@ -24,7 +31,9 @@ void TCompFadingMessage::Init() {
 
 void TCompFadingMessage::hideAll() {
 	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
+	if (!h_ui_cam.isValid()) return;
 	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
+	if (!ui_cam) return;
 	VEC3 min_ortho = ui_cam->getMinOrtho();
 	VEC3 max_ortho = ui_cam->getMaxOrtho();
 
@@ -32,22 +41,12 @@ void TCompFadingMessage::hideAll() {
 	VEC3 new_pos2 = min_ortho + (max_ortho - min_ortho) * VEC3(0.12f, -1.0f, 0.35f);
 	VEC3 new_pos3 = min_ortho + (max_ortho - min_ortho) * VEC3(0.0f, -1.0f, 0.0f);
 
-	CEntity * gui_backe = gui_back;
-	CEntity * gui_reie = gui_rai;
-	CEntity * gui_mole = gui_mol;
-	CEntity * gui_scie = gui_sci;
-	TCompTransform * gui_backt = gui_backe->get<TCompTransform>();
-	gui_backt->setPosition(new_pos1);
-
-	TCompTransform * gui_rait = gui_reie->get<TCompTransform>();
-	gui_rait->setPosition(new_pos2);
-	TCompTransform * gui_molt = gui_mole->get<TCompTransform>();
-	gui_molt->setPosition(new_pos2);
-	TCompTransform * gui_scit = gui_scie->get<TCompTransform>();
-	gui_scit->setPosition(new_pos2);
-	for (CEntity * lettere : gui_letters) {
-		TCompTransform * gui_lettert = lettere->get<TCompTransform>();
-		gui_lettert->setPosition(new_pos3);
+	moveElement(gui_back, new_pos1);
+	moveElement(gui_rai, new_pos2);
+	moveElement(gui_mol, new_pos2);
+	moveElement(gui_sci, new_pos2);
+	for (CHandle letter : gui_letters) {
+		moveElement(letter, new_pos3);
 	}
 	enabled = false;
 }
@@ -77,13 +76,13 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	}
 
 	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
+	if (!h_ui_cam.isValid()) return false;
 	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
+	if (!ui_cam) return false;
 	VEC3 min_ortho = ui_cam->getMinOrtho();
 	VEC3 max_ortho = ui_cam->getMaxOrtho();
 
 	VEC3 new_pos1 = min_ortho + (max_ortho - min_ortho) * VEC3(0.12f, 0.09f, 0.35f);
-
-	CHandle thisHan = CHandle(this).getOwner();
 
 	text = atts.getString("text", "defaultText");
 	ttl = timeForLetter * text.length() + 4.0f;
@@ -104,25 +103,19 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	}
 	lineText.push_back(text.substr(ini, pos - ini));
 
-	CEntity * gui_backe = gui_back;
-	TCompTransform * gui_backt = gui_backe->get<TCompTransform>();
-	gui_backt->setPosition(min_ortho + (max_ortho - min_ortho) * VEC3(0.5f, 0.02f, 0.3f));
+	moveElement(gui_back, min_ortho + (max_ortho - min_ortho) * VEC3(0.5f, 0.02f, 0.3f));
 
-	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
-	if (player.hasTag("raijin")) {
-		CEntity * gui_reie = gui_rai;
-		TCompTransform * gui_rait = gui_reie->get<TCompTransform>();
-		gui_rait->setPosition(new_pos1);
-	}
-	else if (player.hasTag("AI_mole")) {
-		CEntity * gui_mole = gui_mol;
-		TCompTransform * gui_molt = gui_mole->get<TCompTransform>();
-		gui_molt->setPosition(new_pos1);
-	}
-	else if (player.hasTag("AI_cientifico")) {
-		CEntity * gui_scie = gui_sci;
-		TCompTransform * gui_scit = gui_scie->get<TCompTransform>();
-		gui_scit->setPosition(new_pos1);
+	CHandle player = CPlayerBase::handle_player;
+	if (player.isValid()) {
+		if (player.hasTag("raijin")) {
+			moveElement(gui_rai, new_pos1);
+		}
+		else if (player.hasTag("AI_mole")) {
+			moveElement(gui_mol, new_pos1);
+		}
+		else if (player.hasTag("AI_cientifico")) {
+			moveElement(gui_sci, new_pos1);
+		}
 	}
 	accumSpacing.resize(lineText.size(), 0.0f);
 
@@ -164,7 +157,9 @@ void TCompFadingMessage::printLetters() {
 	if (gState != CGameController::RUNNING) return;
 
 	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
+	if (!h_ui_cam.isValid()) return;
 	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
+	if (!ui_cam) return;
 	VEC3 min_ortho = ui_cam->getMinOrtho();
 	VEC3 max_ortho = ui_cam->getMaxOrtho();
 
@@ -194,14 +189,14 @@ void TCompFadingMessage::printLetters() {
 		float letter_posy = 0.20f - line*letterSpacerHigh;
 
 		CHandle letter_h = gui_letters[50 * line + i - linechars_prev];
-		CEntity * letter_e = letter_h;
-		TCompGui * letter_gui = letter_e->get<TCompGui>();
-		TCompTransform * letter_trans = letter_e->get<TCompTransform>();
-		VEC3 new_pos = min_ortho + (max_ortho - min_ortho) * VEC3(letter_posx, letter_posy, 0.31f + i*0.001f);
-		letter_trans->setPosition(new_pos);
-		assert(letter_gui);
-		RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
-		letter_gui->setTxCoords(textCords);
-		accumSpacing[line] += letterSpacing[ascii_tex_pos]; //SBB::readLetterSpacingVector()[ascii_tex_pos];
+		moveElement(letter_h, min_ortho + (max_ortho - min_ortho) * VEC3(letter_posx, letter_posy, 0.31f + i*0.001f));
+		if (letter_h.isValid()) {
+			GET_COMP(letter_gui, letter_h, TCompGui);
+			if (letter_gui) {
+				RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
+				letter_gui->setTxCoords(textCords);
+				accumSpacing[line] += letterSpacing[ascii_tex_pos];
+			}
+		}
 	}
 }
