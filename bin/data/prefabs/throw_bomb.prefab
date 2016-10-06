@@ -10,9 +10,10 @@
 		radius="0.1"
 	/>
 	<throw_bomb
-		front="0.1"
-		height="1.0"
-		speed="3.0"
+		lmax="5.0"
+		hmax="0.2"
+		speed="6.0"
+		timer="2.5"
 		radius="2.0"
 	/>
 	<bone_tracker/>

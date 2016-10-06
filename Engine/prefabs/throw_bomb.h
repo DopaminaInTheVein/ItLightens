@@ -15,7 +15,6 @@ class CThrowBomb : public aicontroller, public TCompBase {
 	//float t_explode = 2.5f;
 	//float t_waiting = 0.0f;
 	float rad_squared = 4.f;
-
 protected:
 	// the states, as maps to functions
 	static map<string, statehandler> statemap;
@@ -27,6 +26,11 @@ protected:
 	float lcurrent, hcurrent;
 	bool nextState = false;
 public:
+	static VEC3 offset_init_throw;
+#ifdef CALIBRATE_GAME
+	static bool calibrate;
+	static float lmax_st, hmax_st, speed_st, timer_st, radius_st;
+#endif
 	map<string, statehandler>* getStatemap() override {
 		return &statemap;
 	}

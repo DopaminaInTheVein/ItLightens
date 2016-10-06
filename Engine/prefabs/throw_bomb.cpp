@@ -10,6 +10,15 @@
 #include "app_modules/logic_manager/logic_manager.h"
 
 map<string, statehandler> CThrowBomb::statemap = {};
+#ifdef CALIBRATE_GAME
+bool CThrowBomb::calibrate = false;
+float CThrowBomb::lmax_st = 5.0f;
+float CThrowBomb::hmax_st = 0.2f;
+float CThrowBomb::speed_st = 6.f;
+float CThrowBomb::timer_st = 2.5;
+float CThrowBomb::radius_st = 2.f;
+#endif
+VEC3 CThrowBomb::offset_init_throw = VEC3(0.2f, 0.1f, 0.2f);
 
 bool CThrowBomb::getUpdateInfo() {
 	transform = compBaseEntity->get<TCompTransform>();
@@ -63,6 +72,15 @@ void CThrowBomb::onCreate(const TMsgEntityCreated& msg) {
 	}
 	____TIMER_REDEFINE_(t_explode, 2.5f);
 	ChangeState("born");
+#ifdef CALIBRATE_GAME
+	if (calibrate) {
+		lmax = lmax_st;
+		hmax = hmax_st;
+		speed = speed_st;
+		t_explode = timer_st;
+		rad_squared = powf(radius_st, 2.f);
+	}
+#endif
 }
 
 void CThrowBomb::update(float elapsed)
@@ -126,23 +144,31 @@ void CThrowBomb::initThrow() {
 	lcurrent = hcurrent = 0;
 
 	initial_pos = transform->getPosition();
+	VEC3 offset = offset_init_throw.x * dir_throw.Cross(VEC3_UP)
+		+ offset_init_throw.y * VEC3_UP
+		+ offset_init_throw.z * dir_throw;
+	initial_pos += offset;
 	rd->setGlobalPose(PxTransform(
 		PhysxConversion::Vec3ToPxVec3(transform->getPosition()),
 		PhysxConversion::CQuaternionToPxQuat(transform->getRotation())
-		));
+	));
 }
 
 void CThrowBomb::throwMovement() {
 	PxTransform tmx;
-	lcurrent = lcurrent + speed * getDeltaTime();
+	float speed_real = speed - speed * (lcurrent / lmax)*(lcurrent / lmax)*0.5;
+	if (lcurrent > lmax) speed_real *= 0.5f;
+	lcurrent = lcurrent + speed_real * getDeltaTime();
 	//static int i = 0;
 	//physics->setKinematic(i++ % 5 != 0);
-
+	//TODO if ()speed_real <?)
 	if (lcurrent < lmax) {
-		hcurrent = sinf(lcurrent * M_PI / lmax);
+		hcurrent = sinf(lcurrent * M_PI / lmax) * hmax;
 	}
 	else {
-		hcurrent = (lmax - lcurrent) * 1.5f;
+		nextState = true;
+		rd->addForce(PhysxConversion::Vec3ToPxVec3(dir_throw * speed_real * 100.f));
+		return;
 	}
 	dbg("Lcur = %f, Hcur = %f\n", lcurrent, hcurrent);
 	tmx = PxTransform(

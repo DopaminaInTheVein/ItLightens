@@ -5,6 +5,7 @@
 //#define FINAL_BUILD
 #ifndef FINAL_BUILD
 #define TEST_VALUES // Read initialization_test.json
+//#define CALIBRATE_GAME
 #endif
 // -- Final Global settings -- //
 
