@@ -167,10 +167,15 @@ void TCompCameraMain::update(float dt) {
 				//VEC3 pos_target = pos_cam + transform->getFront();
 
 				if (collisionDistanceToCam->intersection) {
-					while (collisionDistanceToCam->dist != 0.0f) {
+					int n_iters = 0;
+					while (collisionDistanceToCam->dist != 0.0f && n_iters < 10) {
 						collisionDistanceToCam = getPosIfColisionClipping(pos_cam);
 						pos_cam -= collisionDistanceToCam->dir*collisionDistanceToCam->dist;
+						n_iters++;
 					}
+					char n_iters_c[10];
+					sprintf(n_iters_c, "%d\n", n_iters);
+					Debug->LogError(n_iters_c);
 					this->smoothLookAt(pos_cam, pos_target, getUpAux(), smoothCurrent);
 				}
 				else {
