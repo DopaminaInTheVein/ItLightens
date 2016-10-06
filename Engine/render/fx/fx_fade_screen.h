@@ -26,17 +26,13 @@ struct TFadeScreen : public TCompBasicFX {
 	const char* getName() const {
 		return "fade_screen";
 	}
-	void Activate() override {
-		render_fx->ActivateFXBeforeUI(getName(), 200);
-	}
+	void Activate() override;
 };
 
 struct TFadeScreenAll : public TFadeScreen {
 	const char* getName() const {
 		return "fade_screen_all";
 	}
-	void Activate() override {
-		render_fx->ActivateFXAtEnd(getName(), 200);
-	}
+	void Activate() override;
 };
 #endif

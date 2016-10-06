@@ -75,3 +75,10 @@ void TFadeScreen::init()
 	t_max_fade = t_max_fade_default = 2.0f;
 	t_curr_fade = 2.0f;
 }
+
+void TFadeScreen::Activate() {
+	render_fx->ActivateFXBeforeUI(getName(), 200);
+}
+void TFadeScreenAll::Activate() {
+	render_fx->ActivateFXAtEnd(getName(), 200);
+}

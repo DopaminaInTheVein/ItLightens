@@ -23,43 +23,43 @@ bool CRenderPostProcessModule::start()
 {
 	//glow
 	TRenderGlow* blur = new TRenderGlow;
-	INIT_FX("blur", blur);
+	INIT_FX(FX_BLUR, blur);
 
 	//fade_screen
 	TFadeScreen* fs = new TFadeScreen;
-	INIT_FX("fade_screen", fs);
+	INIT_FX(FX_FADESCREEN_ALL, fs);
 	TFadeScreenAll * fs_all = new TFadeScreenAll;
 	INIT_FX("fade_screen_all", fs_all);
 
 	//hatching
 	TRenderHatching * hatching = new TRenderHatching;
-	INIT_FX("hatching", hatching);
+	INIT_FX(FX_HATCHING, hatching);
 
 	//outline
 	TRenderOutline * outline = new TRenderOutline;
-	INIT_FX("outline", outline);
+	INIT_FX(FX_OUTLINE, outline);
 
 	//dream
 	TRenderDream * dream = new TRenderDream;
-	INIT_FX("dream_border", dream);
+	INIT_FX(FX_DREAM_BORDER, dream);
 
 	//motion blur
 	TRenderMotionBlur * mb = new TRenderMotionBlur;
-	INIT_FX("motion_blur", mb);
+	INIT_FX(FX_MOTION_BLUR, mb);
 
 	//fog depth
 	TRenderDepthFog * df = new TRenderDepthFog;
-	INIT_FX("fog_depth", df);
+	INIT_FX(FX_FOG_DEPTH, df);
 
 	//antialiasing
 	TRenderAntiAliasing * aa = new TRenderAntiAliasing;
-	INIT_FX("anti_aliasing", aa);
+	INIT_FX(FX_ANTI_ALIASING, aa);
 
 	//###### should go on lua scripts ############
 
 	//NEEDED RENDER SHADERS ON ALL SCENES
-	ActivateFXBeforeUI("outline", 90);
-	ActivateFXBeforeUI("hatching", 100);	//default priority is 0, but hatching should go the last one
+	ActivateFXBeforeUI(FX_OUTLINE, 90);
+	ActivateFXBeforeUI(FX_HATCHING, 100);	//default priority is 0, but hatching should go the last one
 
 	//ActivateFXBeforeUI("dream_border", 150); //--> only when needed, need to go after hatching so hatching wont be rendered on dream borders
 
@@ -118,16 +118,27 @@ TObj* CRenderPostProcessModule::GetFX(std::string name)
 	return dynamic_cast<TObj*>(m_list_fx[name]);
 }*/
 
+//higher priority will render the fx above the others with lower priority!!
+bool CRenderPostProcessModule::sortByPriority(const TKeyFX &k1, const TKeyFX &k2) {
+	return (k1.priority < k2.priority);
+}
+
+//Activate a FX default by name
+void CRenderPostProcessModule::ActivateFX(std::string name)
+{
+	TCompBasicFX* handle = m_list_fx[name];
+	ActivateFX(handle);
+}
+//Activate a FX default by handle
+void CRenderPostProcessModule::ActivateFX(TCompBasicFX* handle)
+{
+	handle->Activate();
+}
 //Activate a FX at the end of the render by name
 void CRenderPostProcessModule::ActivateFXAtEnd(std::string name, int priority)
 {
 	TCompBasicFX* handle = m_list_fx[name];
 	ActivateFXAtEnd(handle, priority);
-}
-
-//higher priority will render the fx above the others with lower priority!!
-bool CRenderPostProcessModule::sortByPriority(const TKeyFX &k1, const TKeyFX &k2) {
-	return (k1.priority < k2.priority);
 }
 
 //Activate a FX at the end of the render by his handle
