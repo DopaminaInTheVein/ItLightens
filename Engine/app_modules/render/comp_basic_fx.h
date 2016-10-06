@@ -7,7 +7,6 @@ class CRenderTechnique;
 
 class TCompBasicFX {
 public:
-
 	virtual void ApplyFX() = 0;
 
 	const CRenderTechnique *tech;
