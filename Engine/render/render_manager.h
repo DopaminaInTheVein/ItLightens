@@ -34,9 +34,14 @@ public:
 		bool                    isPlayer;
 	};
 
+	//sorter struct
+	struct sortByTechDistance;
+
 private:
 
 	int num_renders = 0;
+
+	bool dynamic_render;	//dynamic render neede for objects that can't write on zbuffer
 
 	static bool sortByTechMatMesh(const TKey & k1, const TKey & k2);
 	static bool sortByMesh(const TShadowKey & k1, const TShadowKey & k2);
@@ -46,6 +51,7 @@ private:
 	bool in_order_shadows_skin;
 	std::vector< TKey > all_keys[ROOMS_SIZE];
 	std::vector< TShadowKey > all_shadow_keys[ROOMS_SIZE];
+	std::vector< TKey >	dynamic_keys[ROOMS_SIZE];
 
 	//will use another tech for skinning from defaul shadowcasters
 	std::vector< TShadowKey > all_shadow_skinning_keys[ROOMS_SIZE];
@@ -61,6 +67,8 @@ public:
 	void registerToRender(const CStaticMesh* mesh, CHandle handle);
 	void unregisterFromRender(CHandle handle);
 	void renderUICulling(int room);
+	void renderDynamic(CHandle h_camera, CRenderTechnique::eCategory category, int room);
+	void renderList(CHandle h_camer, CRenderTechnique::eCategory category, int room, std::vector<TKey> & render_list);
 	void renderAll(CHandle h_camera, CRenderTechnique::eCategory category, int room = 0);
 	bool renderSkeleton(TKey * it);
 	bool renderUI(TKey * it);
