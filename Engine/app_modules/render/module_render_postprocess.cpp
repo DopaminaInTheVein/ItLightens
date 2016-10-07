@@ -14,7 +14,6 @@
 #include "render\fx\fx_depth_fog.h"
 #include "render\fx\fx_dream.h"
 
-
 //Initialize fx and add it to the list of fx for the engine
 #define INIT_FX( fx_name, fx_object ) \
   fx_object->init(); \
@@ -24,47 +23,49 @@ bool CRenderPostProcessModule::start()
 {
 	//glow
 	TRenderGlow* blur = new TRenderGlow;
-	INIT_FX("blur", blur);
+	INIT_FX(FX_BLUR, blur);
 
 	//fade_screen
 	TFadeScreen* fs = new TFadeScreen;
-	INIT_FX("fade_screen", fs);
+	INIT_FX(FX_FADESCREEN_ALL, fs);
+	TFadeScreenAll * fs_all = new TFadeScreenAll;
+	INIT_FX("fade_screen_all", fs_all);
 
 	//hatching
 	TRenderHatching * hatching = new TRenderHatching;
-	INIT_FX("hatching", hatching);
-	
+	INIT_FX(FX_HATCHING, hatching);
+
 	//outline
 	TRenderOutline * outline = new TRenderOutline;
-	INIT_FX("outline", outline);
+	INIT_FX(FX_OUTLINE, outline);
 
 	//dream
 	TRenderDream * dream = new TRenderDream;
-	INIT_FX("dream_border", dream);
+	INIT_FX(FX_DREAM_BORDER, dream);
 
 	//motion blur
 	TRenderMotionBlur * mb = new TRenderMotionBlur;
-	INIT_FX("motion_blur", mb);
+	INIT_FX(FX_MOTION_BLUR, mb);
 
 	//fog depth
 	TRenderDepthFog * df = new TRenderDepthFog;
-	INIT_FX("fog_depth", df);
+	INIT_FX(FX_FOG_DEPTH, df);
 
 	//antialiasing
 	TRenderAntiAliasing * aa = new TRenderAntiAliasing;
-	INIT_FX("anti_aliasing", aa);
+	INIT_FX(FX_ANTI_ALIASING, aa);
 
 	//###### should go on lua scripts ############
 
 	//NEEDED RENDER SHADERS ON ALL SCENES
-	ActivateFXBeforeUI("outline", 90);
-	ActivateFXBeforeUI("hatching", 100);	//default priority is 0, but hatching should go the last one
+	ActivateFXBeforeUI(FX_OUTLINE, 90);
+	ActivateFXBeforeUI(FX_HATCHING, 100);	//default priority is 0, but hatching should go the last one
 
 	//ActivateFXBeforeUI("dream_border", 150); //--> only when needed, need to go after hatching so hatching wont be rendered on dream borders
 
 	//test fade
 	//WARNING: component fade is the same always, there will be only one!!
-	
+
 	//Init values for fade
 	//TFadeScreen* fs = GetFX("fade_screen");
 	//fs->FadeIn();
@@ -82,7 +83,6 @@ bool CRenderPostProcessModule::start()
 void CRenderPostProcessModule::ExecuteAllPendentFX()
 {
 	for (auto& key : m_activated_end) {
-
 		//get handle
 		TCompBasicFX* fx = key.fx;
 
@@ -91,12 +91,10 @@ void CRenderPostProcessModule::ExecuteAllPendentFX()
 	}
 }
 
-
 //execute all fx before the UI layer, managed at deferred module
 void CRenderPostProcessModule::ExecuteUILayerFX()
 {
 	for (auto& key : m_activated_ui_layer) {
-
 		//get handle
 		TCompBasicFX* fx = key.fx;
 
@@ -113,23 +111,34 @@ TObj * CRenderPostProcessModule::GetFX(std::string name)
 	return output;
 }*/
 
-
-//template< typename TObj >
-CHandle CRenderPostProcessModule::GetFX(std::string name)
+/*
+template< typename TObj >
+TObj* CRenderPostProcessModule::GetFX(std::string name)
 {
-	return m_list_fx[name]->handle;	
+	return dynamic_cast<TObj*>(m_list_fx[name]);
+}*/
+
+//higher priority will render the fx above the others with lower priority!!
+bool CRenderPostProcessModule::sortByPriority(const TKeyFX &k1, const TKeyFX &k2) {
+	return (k1.priority < k2.priority);
 }
 
+//Activate a FX default by name
+void CRenderPostProcessModule::ActivateFX(std::string name)
+{
+	TCompBasicFX* handle = m_list_fx[name];
+	ActivateFX(handle);
+}
+//Activate a FX default by handle
+void CRenderPostProcessModule::ActivateFX(TCompBasicFX* handle)
+{
+	handle->Activate();
+}
 //Activate a FX at the end of the render by name
 void CRenderPostProcessModule::ActivateFXAtEnd(std::string name, int priority)
 {
 	TCompBasicFX* handle = m_list_fx[name];
 	ActivateFXAtEnd(handle, priority);
-}
-
-//higher priority will render the fx above the others with lower priority!!
-bool CRenderPostProcessModule::sortByPriority(const TKeyFX &k1, const TKeyFX &k2) {
-	return (k1.priority < k2.priority);
 }
 
 //Activate a FX at the end of the render by his handle
@@ -168,7 +177,6 @@ void CRenderPostProcessModule::ActivateFXAtEnd(TCompBasicFX* handle, int priorit
 	*/
 }
 
-
 void CRenderPostProcessModule::RemoveActiveFX(std::string name, int priority)
 {
 	TCompBasicFX* handle = m_list_fx[name];
@@ -180,7 +188,7 @@ void CRenderPostProcessModule::RemoveActiveFX(TCompBasicFX* handle, int priority
 	int idx = 0;
 	for (auto fx_key : m_activated_ui_layer) {
 		if (fx_key.fx == handle) {
-			m_activated_ui_layer.erase(m_activated_ui_layer.begin()+idx);
+			m_activated_ui_layer.erase(m_activated_ui_layer.begin() + idx);
 		}
 		idx++;
 	}
@@ -224,7 +232,6 @@ void CRenderPostProcessModule::ActivateFXBeforeUI(TCompBasicFX* handle, int prio
 	m_activated_ui_layer.push_back(new_key);
 	std::sort(m_activated_ui_layer.begin(), m_activated_ui_layer.end(), &sortByPriority);
 
-
 	/*dbg("###### END #####\n");
 	if (!m_activated_ui_layer.empty()) {
 		for (int id_fx = 0; id_fx < m_activated_ui_layer.size(); id_fx++) {
@@ -241,6 +248,26 @@ void CRenderPostProcessModule::AddFX(std::string name, TCompBasicFX* handle)
 {
 	handle->init();
 	m_list_fx[name] = handle;
+}
+
+bool CRenderPostProcessModule::isActive(std::string name)
+{
+	int idx = 0;
+	for (auto fx_key : m_activated_ui_layer) {
+		if (fx_key.fx == m_list_fx[name]) {
+			return true;
+		}
+		idx++;
+	}
+
+	idx = 0;
+	for (auto fx_key : m_activated_end) {
+		if (fx_key.fx == m_list_fx[name]) {
+			return true;
+		}
+		idx++;
+	}
+	return false;
 }
 
 //clear all memory
@@ -284,7 +311,6 @@ void CRenderPostProcessModule::renderInMenu()
 				fx->renderInMenu();
 				ImGui::TreePop();
 			}
-			
 		}
 		ImGui::TreePop();
 	}
@@ -298,7 +324,6 @@ void CRenderPostProcessModule::renderInMenu()
 				fx->renderInMenu();
 				ImGui::TreePop();
 			}
-
 		}
 		ImGui::TreePop();
 	}

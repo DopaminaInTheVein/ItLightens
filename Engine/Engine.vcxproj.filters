@@ -587,6 +587,12 @@
     <ClCompile Include="app_modules\render\module_render_postprocess.cpp">
       <Filter>app_modules\render</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\render\comp_basic_fx.cpp">
+      <Filter>app_modules\render</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\gui\gui_munition.cpp">
+      <Filter>app_modules\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1535,6 +1541,9 @@
     </ClInclude>
     <ClInclude Include="app_modules\render\comp_basic_fx.h">
       <Filter>app_modules\render</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\gui_munition.h">
+      <Filter>app_modules\gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

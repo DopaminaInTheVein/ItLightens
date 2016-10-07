@@ -121,6 +121,7 @@
     <ClCompile Include="app_modules\gui\comps\gui_selector.cpp" />
     <ClCompile Include="app_modules\gui\gui.cpp" />
     <ClCompile Include="app_modules\gui\gui_action_text.cpp" />
+    <ClCompile Include="app_modules\gui\gui_munition.cpp" />
     <ClCompile Include="app_modules\imgui\module_imgui.cpp" />
     <ClCompile Include="app_modules\io\input_wrapper.cpp" />
     <ClCompile Include="app_modules\io\io.cpp" />
@@ -133,6 +134,7 @@
     </ClCompile>
     <ClCompile Include="app_modules\logic_manager\slb_public_functions.cpp" />
     <ClCompile Include="app_modules\navmesh\navmesh_manager.cpp" />
+    <ClCompile Include="app_modules\render\comp_basic_fx.cpp" />
     <ClCompile Include="app_modules\render\module_render_deferred.cpp" />
     <ClCompile Include="app_modules\render\module_render_postprocess.cpp" />
     <ClCompile Include="app_modules\sound_manager\comp_sound.cpp" />
@@ -359,6 +361,7 @@
     <ClInclude Include="app_modules\gui\comps\gui_selector.h" />
     <ClInclude Include="app_modules\gui\gui.h" />
     <ClInclude Include="app_modules\gui\gui_action_text.h" />
+    <ClInclude Include="app_modules\gui\gui_munition.h" />
     <ClInclude Include="app_modules\gui\gui_utils.h" />
     <ClInclude Include="app_modules\imgui\module_imgui.h" />
     <ClInclude Include="app_modules\io\digital_button.h" />

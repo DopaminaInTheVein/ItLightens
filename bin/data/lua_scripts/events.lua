@@ -74,6 +74,7 @@ end
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	p:load_entities("init")
+	ui_cam:fade_out(0)
 	p:exec_command("LoadLevel(\"level_0\")", 2)
 	--Sound
 	val = p:json_read(FILE_OPTIONS, "sound", "music")

@@ -123,6 +123,7 @@ public:
 	void setRenderState(float rs_state);
 	RectNormalized getTxCoords();
 	void setTxCoords(RectNormalized);
+	void setTxLetter(unsigned char);
 	void renderInMenu();
 };
 

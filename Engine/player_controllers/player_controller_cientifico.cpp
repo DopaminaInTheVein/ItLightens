@@ -102,7 +102,7 @@ void player_controller_cientifico::Init() {
 	ChangeState("idle");
 	SET_ANIM_SCIENTIST(AST_IDLE);
 
-	____TIMER_REDEFINE_(t_throwing, 0.5f);
+	____TIMER_REDEFINE_(t_throwing, 0.35f);
 	____TIMER_REDEFINE_(t_nextBomb, 1.f);
 	if (objs_amoung[THROW_BOMB] > 0) {
 		obj = eObjSci::THROW_BOMB;
@@ -254,7 +254,9 @@ void player_controller_cientifico::UseBomb()
 {
 	PROFILE_FUNCTION("player cientifico: use bomb");
 	if (objs_amoung[obj] > 0) {
+#ifndef CALIBRATE_GAME
 		objs_amoung[obj]--;
+#endif
 		ChangeState("throwing");
 		bomb_handle.sendMsg(TMsgActivate()); //Notify throwing
 		stopMovement();

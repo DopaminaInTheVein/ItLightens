@@ -36,12 +36,13 @@ void TRenderDream::renderInMenu() {
 		shader_ctes_dream.dream_distorsion_expansion = 0.85;
 		shader_ctes_dream.dream_distorsion_strenght = 55;
 	}
+	TCompBasicFX::renderInMenu();
 }
 
 void TRenderDream::ApplyFX() {
 	if (enabled) {
 		activateBlend(BLENDCFG_COMBINATIVE);
-		
+
 		tech->activate();
 
 		drawFullScreen(render_deferred->GetFinalTexture(), tech);

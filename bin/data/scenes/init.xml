@@ -11,7 +11,6 @@
 		<culling/>
 		<render_glow/>
 		<controller_3rd_person/>
-		<FX_fade_screen/>
 		<name
 		   name="__camController_1"/>
 		<transform
@@ -27,7 +26,6 @@
 		<name name="ui_camera" />
 		<transform pos="0 -100 10" yaw="180"/>
 	<camera znear="0" zfar="10" is_ortho="1"/>
-	<FX_fade_screen/>
 	</entity>
 	
 	<entity 
@@ -37,5 +35,6 @@
 		<name name="game_controller" />
 		<sense_vision/>
 		<loading_screen/>
+		<!--<helper_message/>-->
 	</entity>  	
 </entities>

@@ -5,6 +5,10 @@
 
 class TCompFadingMessage : public TCompBase {
 	VHandles gui_letters;
+	CHandle gui_back;
+	CHandle gui_sci;
+	CHandle gui_mol;
+	CHandle gui_rai;
 
 	static float letterSpacing[256];
 	static bool init_configuration;
@@ -27,14 +31,18 @@ class TCompFadingMessage : public TCompBase {
 	float sizeFontX = 0.0125f;
 	float sizeFontY = 0.030f;
 	std::vector<float> accumSpacing;
+	bool enabled = false;
+	bool initialized = false;
+	float accumTime = 0.0f;
 
 public:
 	static void initSpaceLetters();
 	//Update info
 	void update(float elapsed);
 	void printLetters();
-	void forceTTLZero();
+	void Init();
 	bool load(MKeyValue& atts);
+	void hideAll();
 };
 
 #endif

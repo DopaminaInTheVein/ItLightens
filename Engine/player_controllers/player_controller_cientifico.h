@@ -107,13 +107,16 @@ public:
 	void InitControlState();
 	CEntity* getMyEntity();
 
-	void onGetWhoAmI(TMsgGetWhoAmI& msg) { 
-		msg.who = PLAYER_TYPE::SCIENTIST; 
-		msg.who_string = "Scientist"; 
+	void onGetWhoAmI(TMsgGetWhoAmI& msg) {
+		msg.who = PLAYER_TYPE::SCIENTIST;
+		msg.who_string = "Scientist";
 		if (msg.action_flag)
 			step_counter = (step_counter + 1) % 4;
 	}
 	int getStepCounter() { return step_counter; }
+	int getMunition() {
+		return objs_amoung[obj];
+	}
 	void myUpdate() override;
 	//void UpdateAnimation() override { animController.update(); }
 

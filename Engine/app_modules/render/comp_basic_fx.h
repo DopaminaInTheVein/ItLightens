@@ -2,13 +2,10 @@
 #define INC_COMP_BASIC_FX
 
 #include "components\comp_base.h"
-
 class CRenderTechnique;
 
 class TCompBasicFX {
 public:
-	int id;
-	CHandle handle;
 	virtual void ApplyFX() = 0;
 
 	const CRenderTechnique *tech;
@@ -23,11 +20,12 @@ public:
 	virtual void render() {
 		//here will go the uploads on the GPU that are needed
 	}
-	
+
 	virtual const char* getName() const = 0;
-	virtual void renderInMenu() {
-		ImGui::Text(getName());
-	}
+
+	virtual void Activate();
+
+	virtual void renderInMenu();
 };
 
 #endif

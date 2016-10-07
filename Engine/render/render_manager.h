@@ -41,7 +41,6 @@ private:
 	static bool sortByTechMatMesh(const TKey & k1, const TKey & k2);
 	static bool sortByMesh(const TShadowKey & k1, const TShadowKey & k2);
 
-
 	bool in_order;
 	bool in_order_shadows;
 	bool in_order_shadows_skin;
@@ -53,8 +52,8 @@ private:
 
 	std::vector<int> renderedCulling;
 
-	std::vector<std::string> test_z_render;
-	std::vector<std::string> last_test_z_render;
+	//std::vector<std::string> test_z_render;
+	//std::vector<std::string> last_test_z_render;
 
 	int  ntimes_sorted = 0;
 public:

@@ -13,6 +13,9 @@
 #include "logic/bt_scientist.h"
 #include "logic/pila_container.h"
 
+#include "app_modules/render/module_render_postprocess.h"
+#include "render/fx/fx_fade_screen.h"
+
 using namespace IdEntities;
 
 //Position functions
@@ -536,15 +539,20 @@ void SLBCamera::runCinematic(const char* name, float speed) {
 }
 
 void SLBCamera::fadeIn(float speed) {
-	if (!checkCamera()) return;
-	GET_COMP(fx, camera_h, TCompFadeScreen);
+	//TCompFadeScreen * fx = render_fx->GetFX<TCompFadeScreen>(FX_FADESCREEN_ALL);
+	GET_FX(fx, TFadeScreen, FX_FADESCREEN);
+	if (!render_fx->isActive(FX_FADESCREEN)) {
+		fx->Activate();
+	}
 	fx->SetMaxTime(speed);
 	fx->FadeIn();
 }
 
 void SLBCamera::fadeOut(float speed) {
-	if (!checkCamera()) return;
-	GET_COMP(fx, camera_h, TCompFadeScreen);
+	GET_FX(fx, TFadeScreen, FX_FADESCREEN);
+	if (!render_fx->isActive(FX_FADESCREEN)) {
+		fx->Activate();
+	}
 	fx->SetMaxTime(speed);
 	fx->FadeOut();
 }
@@ -588,15 +596,20 @@ bool SLBUiCamera::checkCamera() {
 }
 
 void SLBUiCamera::fadeIn(float speed) {
-	if (!checkCamera()) return;
-	GET_COMP(fx, ui_camera_h, TCompFadeScreen);
+	//TCompFadeScreen * fx = render_fx->GetFX<TCompFadeScreen>(FX_FADESCREEN_ALL);
+	GET_FX(fx, TFadeScreenAll, FX_FADESCREEN_ALL);
+	if (!render_fx->isActive(FX_FADESCREEN_ALL)) {
+		fx->Activate();
+	}
 	fx->SetMaxTime(speed);
 	fx->FadeIn();
 }
 
 void SLBUiCamera::fadeOut(float speed) {
-	if (!checkCamera()) return;
-	GET_COMP(fx, ui_camera_h, TCompFadeScreen);
+	GET_FX(fx, TFadeScreenAll, FX_FADESCREEN_ALL);
+	if (!render_fx->isActive(FX_FADESCREEN_ALL)) {
+		fx->Activate();
+	}
 	fx->SetMaxTime(speed);
 	fx->FadeOut();
 }
@@ -782,57 +795,12 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 void SLBPublicFunctions::playerTalks(const char* text) {
 	// DO Something with text...
 	dbg(text);
-	for (auto handles : tags_manager.getHandlesByTag("talk_text")) handles.destroy();
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "playerTalk");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-
-	auto hm3 = CHandleManager::getByName("helper_message");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["text"] = text;
-	new_hl.load(atts3);
-	entity->add(new_hl);
-
-	//Add tag talk text
-	TMsgSetTag msg;
-	msg.add = true;
-	msg.tag = "talk_text";
-	new_hp.sendMsg(msg);
-}
-
-void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor) {
-	// DO Something with text...
-	dbg(text);
-
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "playerTalk");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-
-	auto hm3 = CHandleManager::getByName("helper_message");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["text"] = text;
-	atts3["icon"] = iconName;
-	atts3["iconText"] = iconText;
-	atts3["backgroundColor"] = background;
-	atts3["textColor"] = textColor;
-	new_hl.load(atts3);
-	entity->add(new_hl);
+	getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
+		MKeyValue atts3;
+		atts3["text"] = text;
+		mess->load(atts3);
+	}
+	);
 }
 
 void SLBPublicFunctions::putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag) {

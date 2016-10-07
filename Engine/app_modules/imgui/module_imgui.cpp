@@ -22,6 +22,10 @@
 
 #include <Commdlg.h>
 
+#ifdef CALIBRATE_GAME
+#include "components/components.h"
+#endif
+
 //light editor
 void CImGuiModule::StartLightEditor() {
 	m_pLights_editor = new CEditorLights;
@@ -134,7 +138,20 @@ void CImGuiModule::update(float dt) {
 
 	ImGui::Separator();
 	//---------------------------------------
-
+#ifdef CALIBRATE_GAME
+	if (ImGui::TreeNode("CALIBRATE")) {
+		if (ImGui::TreeNode("Bomb sci")) {
+			ImGui::Checkbox("Calibrate", &CThrowBomb::calibrate);
+			IMGUI_DRAG_FLOAT(CThrowBomb::lmax_st, 0.01f, 0.1f, 10.f);
+			IMGUI_DRAG_FLOAT(CThrowBomb::hmax_st, 0.01f, 0.1f, 10.f);
+			IMGUI_DRAG_FLOAT(CThrowBomb::speed_st, 0.01f, 0.1f, 10.f);
+			IMGUI_DRAG_FLOAT(CThrowBomb::radius_st, 0.01f, 0.1f, 10.f);
+			ImGui::DragFloat3("offset start throw", &CThrowBomb::offset_init_throw.x, 0.01f, -1.f, 1.f);
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+#endif
 	//Profiling
 	//---------------------------------------
 #ifdef PROFILING_ENABLED

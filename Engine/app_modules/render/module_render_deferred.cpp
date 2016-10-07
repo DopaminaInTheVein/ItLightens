@@ -176,17 +176,6 @@ void CRenderDeferredModule::update(float dt) {
 		test_dream_shader = !test_dream_shader;
 	}
 
-	static int num = 0;
-	if (io->keys['Y'].becomesPressed()) {
-		//test
-		//CHandle h = createPrefab("test_fx");
-		TTestFx* tt = new TTestFx;
-		tt->id = num;
-		render_fx->AddFX("test_fx"+std::to_string(num), tt);
-		render_fx->ActivateFXBeforeUI("test_fx" + std::to_string(num), random(0,15));
-		num++;
-	}
-
 	//m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
 	m_isSpecialVisionActive = GameController->isSenseVisionEnabled();
 }
@@ -541,7 +530,7 @@ void CRenderDeferredModule::renderAccLight() {
 	activateZ(ZCFG_DEFAULT);
 
 	//blur shadows
-	TCompRenderGlow* glow = render_fx->GetFX("blur");
+	TRenderGlow* glow = render_fx->GetFX<TRenderGlow>("blur");
 	if (glow)
 		blurred_shadows = glow->apply(blurred_shadows);
 
