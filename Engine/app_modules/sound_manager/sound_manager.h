@@ -15,6 +15,7 @@ class CSoundManagerModule : public IAppModule
 {
 	std::string sounds_folder = "data/sounds/banks/";
 	float SFX_VOLUME = 1.f;
+	float MAX_DISTANCE = 20.f;
 
 	FMOD_RESULT												result;
 	void													*extradriverdata = 0;
@@ -72,6 +73,8 @@ public:
 
 	Studio::EventInstance* getFixedSound(std::string name) { return fixed_instances[name]; }
 	FMOD_VECTOR VectorToFmod(const VEC3 vect);
+	float getMaxDistance() { return MAX_DISTANCE; }
+	void setMaxDistance(float max_distance) { MAX_DISTANCE = max_distance; }
 
 };
 

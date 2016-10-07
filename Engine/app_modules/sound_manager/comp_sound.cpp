@@ -28,10 +28,7 @@ void TCompSound::init() {
 		entity_position = transform->getPosition();
 	}
 
-	CApp &app = CApp::get();
-	std::string file_ini = app.file_initAttr_json;
-	std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
-	assignValueToVar(MAX_DISTANCE, fields);
+	MAX_DISTANCE = sound_manager->getMaxDistance();
 
 	// create the sound
 	sound_manager->playFixed3dSound("event:/" + event, entity_name, entity_position, volume, true);
