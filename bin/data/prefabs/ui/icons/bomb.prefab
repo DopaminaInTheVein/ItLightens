@@ -1,0 +1,18 @@
+<entities>
+<entity temp="yes">
+<tags
+   tags="gui"/>
+<gui
+   width="1.0"
+   height="1.0"/>
+<name
+   name="icon_bomb"/>
+<transform
+   pos="0 0 9.9"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/icons/icon_bomb.static_mesh"/>
+</entity>
+
+</entities>

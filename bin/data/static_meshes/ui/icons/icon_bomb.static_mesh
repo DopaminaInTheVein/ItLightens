@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/icons/icon_bomb.mesh" material="materials/ui/icons/icon_bomb_tech_ui.material"/>
+</static_mesh>

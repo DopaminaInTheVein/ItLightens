@@ -5,6 +5,8 @@
 #include "components/entity_parser.h"
 #include "components/comp_camera.h"
 #include "comps/gui_cursor.h"
+#include "gui_munition.h"
+
 // ImGui LIB headers
 #pragma comment(lib, "imgui.lib" )
 
@@ -60,6 +62,7 @@ void CGuiModule::pushCursor(CHandle h)
 bool CGuiModule::start()
 {
 	txtAction = new CGuiActionText(0.7f, 0.05f);
+	munition = new CGuiMunition();
 	dbg("GUI module started\n");
 
 	return true;
@@ -69,7 +72,7 @@ bool CGuiModule::start()
 void CGuiModule::update(float dt)
 {
 	txtAction->render();
-
+	munition->update(dt);
 	if (ui_control) {
 		CHandle cursor;
 		while (!cursor.isValid() && !cursors.empty()) {
@@ -82,6 +85,7 @@ void CGuiModule::update(float dt)
 
 // ----------------------------------- STOP MODULE ----------------------------------- //
 void CGuiModule::stop() {
+	delete txtAction;
 	dbg("GUI module stopped");
 }
 

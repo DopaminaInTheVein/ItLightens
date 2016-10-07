@@ -15,6 +15,8 @@ class CThrowBomb : public aicontroller, public TCompBase {
 	//float t_explode = 2.5f;
 	//float t_waiting = 0.0f;
 	float rad_squared = 4.f;
+	bool throwed = false;
+
 protected:
 	// the states, as maps to functions
 	static map<string, statehandler> statemap;

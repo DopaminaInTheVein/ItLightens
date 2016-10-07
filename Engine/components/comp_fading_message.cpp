@@ -176,15 +176,6 @@ void TCompFadingMessage::printLetters() {
 			linechars += lineText[line].length() + 1;
 		}
 
-		unsigned char letter = text[i];
-		int ascii_tex_pos = letter;
-		int ascii_tex_posx = ascii_tex_pos % 16;
-		int ascii_tex_posy = ascii_tex_pos / 16;
-
-		float texture_pos_x = ((float)ascii_tex_posx) * letterBoxSize;
-		float texture_pos_y = ((float)ascii_tex_posy) * letterBoxSize;
-		float sx = letterBoxSize;
-		float sy = letterBoxSize;
 		float letter_posx = 0.16f + (i - linechars_prev - fminf(line, 1.0f) - accumSpacing[line])*letterSpacer;
 		float letter_posy = 0.20f - line*letterSpacerHigh;
 
@@ -193,9 +184,9 @@ void TCompFadingMessage::printLetters() {
 		if (letter_h.isValid()) {
 			GET_COMP(letter_gui, letter_h, TCompGui);
 			if (letter_gui) {
-				RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
-				letter_gui->setTxCoords(textCords);
-				accumSpacing[line] += letterSpacing[ascii_tex_pos];
+				unsigned char letter = text[i];
+				letter_gui->setTxLetter(text[i]);
+				accumSpacing[line] += letterSpacing[letter];
 			}
 		}
 	}
