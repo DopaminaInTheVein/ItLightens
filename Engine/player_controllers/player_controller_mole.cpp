@@ -183,7 +183,7 @@ void player_controller_mole::UpdateMoves() {
 		float drag_i = (1 - drag);
 
 		if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
-		else player_curr_speed = drag_i*player_curr_speed - drag*player_max_speed;
+		else player_curr_speed = 0.f;
 
 		if (player_curr_speed < 0) {
 			player_curr_speed = 0.0f;
@@ -292,6 +292,8 @@ void player_controller_mole::UpdateInputActions() {
 		}
 		else {
 			// If we are pushing box in idle state, we just stop the sound
+			TCompCharacterController* myController = myEntity->get<TCompCharacterController>();
+			myController->ResetMovement();
 			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
 		}
 	}
@@ -363,7 +365,7 @@ void player_controller_mole::LeaveBox() {
 		boxGrabbed = boxPushed;
 		pushing_box = false;
 		pulling_box = false;
-		animController->unpushObject();
+		//animController->unpushObject();
 		logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
 	}
 	else {
@@ -619,7 +621,7 @@ void player_controller_mole::FaceToGrab()
 		// if the box is MEDIUM (1) we go to "push mode"
 		if (box->type_box == 1) {
 			boxPushed = boxNear;
-			animController->pushObject(boxNear);
+			//animController->pushObject(boxNear);
 			animController->setState(AST_PUSH_PREP);
 			ChangeState(ST_MOLE_PUSH_PREP);
 		}
