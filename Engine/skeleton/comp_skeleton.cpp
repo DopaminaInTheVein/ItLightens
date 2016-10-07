@@ -225,7 +225,10 @@ void TCompSkeleton::update(float dt) {
 		updated_skeletons++;
 		model->getMixer()->extra_trans = Engine2Cal(tmx->getPosition());
 		model->getMixer()->extra_rotation = Engine2Cal(tmx->getRotation());
-		model->update(dt);
+		{
+			PROFILE_FUNCTION("Model update");
+			model->update(dt);
+		}
 	}
 	total_skeletons++;
 }
