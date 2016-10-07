@@ -98,7 +98,6 @@ void CSoundManagerModule::stop() {
 }
 
 bool CSoundManagerModule::playSound(std::string route, float volume = 1.f, bool looping = false) {
-
 	if (volume < 0.f) { volume = 0.f; }
 	else if (volume > 1.f) { volume = 1.f; }
 
@@ -136,18 +135,15 @@ bool CSoundManagerModule::playSound(std::string route, float volume = 1.f, bool 
 }
 
 bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, float max_volume = 1.f, bool looping = false, int max_instances = 1) {
-
 	Studio::EventInstance* sound_instance = NULL;
 
 	int count;
 	sounds_descriptions[std::string(route)]->getInstanceCount(&count);
 
 	if (count < max_instances) {
-
 		result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
 
 		if (result == FMOD_OK) {
-
 			// normalize the maximum volume
 			if (max_volume > 1.f) max_volume = 1.f;
 			else if (max_volume < 0.f) max_volume = 0.f;
@@ -218,21 +214,17 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, float m
 			studio_system->setListenerAttributes(0, &attributes);
 			return true;
 		}
-
 	}
-	
+
 	return false;
 }
 
 bool CSoundManagerModule::playFixed3dSound(std::string route, std::string sound_name, VEC3 sound_pos, float max_volume, bool looping) {
-
 	// the sound is not created yet
 	if (fixed_instances[sound_name] == NULL) {
-
 		result = sounds_descriptions[std::string(route)]->createInstance(&fixed_instances[sound_name]);
 
 		if (result == FMOD_OK) {
-
 			// normalize the maximum volume
 			if (max_volume > 1.f) max_volume = 1.f;
 			else if (max_volume < 0.f) max_volume = 0.f;
@@ -305,7 +297,6 @@ bool CSoundManagerModule::playFixed3dSound(std::string route, std::string sound_
 		}
 	}
 	return false;
-
 }
 
 bool CSoundManagerModule::stopSound(std::string route) {
@@ -333,16 +324,14 @@ bool CSoundManagerModule::stopSound(std::string route) {
 }
 
 bool CSoundManagerModule::stopFixedSound(std::string name) {
-
+	PROFILE_FUNCTION("stopFixedSound");
 	result = fixed_instances[name]->setPaused(true);
 	return result == FMOD_OK;
 }
 
 bool CSoundManagerModule::stopAllSounds() {
-
 	// we iterate over all the sound descriptors and stop and release each instance
 	for (std::map<std::string, Studio::EventDescription*>::iterator it = sounds_descriptions.begin(); it != sounds_descriptions.end(); ++it) {
-		
 		int count;
 		it->second->getInstanceCount(&count);
 
@@ -372,8 +361,8 @@ bool CSoundManagerModule::stopAllSounds() {
 }
 
 bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_pos, float max_volume) {
-	
 	// if the sound was paused, we resume it
+	PROFILE_FUNCTION("updateFixedSound");
 	bool paused;
 	result = fixed_instances[sound_name]->getPaused(&paused);
 	if (result != FMOD_OK) return false;
@@ -440,7 +429,6 @@ bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_
 }
 
 bool CSoundManagerModule::playMusic(std::string route, float volume = 0.3f) {
-
 	//if there was a music playing, we pause it
 	if (music_instance) {
 		result = music_instance->setPaused(true);
@@ -472,7 +460,6 @@ bool CSoundManagerModule::playMusic(std::string route, float volume = 0.3f) {
 }
 
 bool CSoundManagerModule::stopMusic() {
-
 	//if there was a music playing, we pause it
 	if (music_instance) {
 		result = music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
@@ -512,7 +499,6 @@ bool CSoundManagerModule::playAmbient(std::string route) {
 }
 
 bool CSoundManagerModule::setMusicVolume(float volume) {
-
 	if (volume < 0.f) { volume = 0.f; }
 	if (volume > 1.f) { volume = 1.f; }
 
@@ -521,15 +507,13 @@ bool CSoundManagerModule::setMusicVolume(float volume) {
 		return true;
 
 	return false;
-
 }
 
 void CSoundManagerModule::setSFXVolume(float volume) {
-
 	if (volume < 0.f) { volume = 0.f; }
 	if (volume > 1.f) { volume = 1.f; }
 
-	SFX_VOLUME = volume; 
+	SFX_VOLUME = volume;
 }
 
 FMOD_VECTOR CSoundManagerModule::VectorToFmod(const VEC3 vect) {
@@ -561,7 +545,6 @@ FMOD_RESULT F_CALLBACK loopingMusicCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type
 // Callback from Studio - Remember these callbacks will occur in the Studio update thread, NOT the game thread.
 FMOD_RESULT F_CALLBACK loopingSoundCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters)
 {
-
 	FMOD::Studio::EventInstance* instance = (FMOD::Studio::EventInstance*)event;
 
 	if (type == FMOD_STUDIO_EVENT_CALLBACK_STOPPED)
@@ -572,6 +555,3 @@ FMOD_RESULT F_CALLBACK loopingSoundCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type
 
 	return FMOD_OK;
 }
-
-
-

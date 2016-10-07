@@ -8,9 +8,9 @@
 #include "SLB\SLB.hpp"
 
 struct command {
-	const char* code;
-	float execution_time;
-	bool only_runtime;
+	const char* code = "";
+	float execution_time = 0.f;
+	bool only_runtime = false;
 };
 
 class CLogicManagerModule : public IAppModule

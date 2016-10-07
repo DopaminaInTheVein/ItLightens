@@ -111,6 +111,7 @@ void CProfiler::setAutoCapture(uint32_t new_n, float t_threshold)
 }
 
 void CProfiler::beginFrame() {
+	in_frame = true;
 	if (max_entries == 0)
 		create(1 << 20);
 

@@ -91,6 +91,7 @@ public:
 	uint32_t max_entries;
 	bool     is_capturing;
 	bool	 auto_capture;
+	bool	in_frame;
 	uint32_t nframes_to_capture;
 	float time_threshold;
 	std::vector<float> times = std::vector<float>();
@@ -143,10 +144,12 @@ extern CProfiler* profiler;
 struct TCPUScoped {
 	uint32_t n;
 	TCPUScoped(const char* txt) {
-		n = profiler->enter(txt);
+		if (profiler && profiler->in_frame)
+			n = profiler->enter(txt);
 	}
 	~TCPUScoped() {
-		profiler->exit(n);
+		if (profiler && profiler->in_frame)
+			profiler->exit(n);
 	}
 };
 #endif //PROFILING_JOHN
