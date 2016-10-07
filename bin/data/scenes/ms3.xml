@@ -2998,27 +2998,6 @@
    name="2"/>
 
 </entity>
-<entity
-   permanent="yes"
-   reload="no">
-<tags
-   tags="camera_main"/>
-<camera_main
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<culling/>
-<render_glow/>
-<controller_3rd_person/>
-<FX_fade_screen/>
-<name
-   name="__camController_1"/>
-<transform
-   pos="-35.4164 -21.6023 -1.9649"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
 <entity>
 <tags
    tags="target"/>
@@ -5316,43 +5295,13 @@
 <entity>
 <tags/>
 <name
-   name="rejasdespacho"/>
-<transform
-   pos="-82.0367 0.881225 -3.60809"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/rejasdespacho.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="rejasdespachoderecha"/>
 <transform
-   pos="-82.0367 0.767578 -12.0981"
+   pos="-82.0367 0.775156 -7.85312"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/rejasdespachoderecha.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="rejaslibreria"/>
-<transform
-   pos="-81.9029 0.990967 6.89136"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/rejaslibreria.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -5398,6 +5347,21 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/marcosdespacho.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="rejaslibreria001"/>
+<transform
+   pos="-81.9029 0.990967 6.89136"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/rejaslibreria001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>

@@ -475,6 +475,7 @@ loading_handles = HandleGroup()
 function InitScene()
 	g_dead = false
 	cam:reset_camera()
+	p:hide_message()
 	p:exec_command("ui_cam:fade_in(1)", 1)
 	if not real_level == "hub" then
 		p:exec_command("p:setControlEnabled(1);", 1)

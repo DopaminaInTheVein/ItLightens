@@ -13,6 +13,9 @@ struct collision_data {
 
 // ------------------------------------
 struct TCompCameraMain : public TCompCamera {
+private:
+	void endGuidedCamera();
+public:
 	bool detect_colsions;
 	bool manual_control = false;
 	float smoothDefault;

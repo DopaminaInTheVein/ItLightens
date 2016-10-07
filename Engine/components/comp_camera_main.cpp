@@ -82,46 +82,21 @@ void TCompCameraMain::update(float dt) {
 		return;
 	}
 	if (Gui->IsUiControl()) return;
+
 	if (guidedCamera.isValid()) {
 		//Camara guida
-		CEntity * egc = guidedCamera;
-		TCompGuidedCamera * gc = egc->get<TCompGuidedCamera>();
+		GET_COMP(gc, guidedCamera, TCompGuidedCamera);
 		cameraIsGuided = gc->followGuide(transform, this);
 		if (!cameraIsGuided) {
-			//Fin recorrido  ...
-			//... Guardamos guidedCamera para mensaje a Logic Manager
-			CHandle cameraFinished = guidedCamera;
-
-			//... Terminamos el modo cinematica
-			guidedCamera = CHandle();
-			GameController->SetCinematic(false);
-
-			// Set the player in the 3rdPersonController
-			CHandle t = tags_manager.getFirstHavingTag("player");
-			TMsgGetWhoAmI msg_who;
-			t.sendMsgWithReply(msg_who);
-			//CEntity * target_e = t;
-			if (t.isValid()) {
-				TMsgSetTarget msg;
-				msg.target = t;
-				msg.who = msg_who.who;
-				compBaseEntity->sendMsg(msg);		//set camera
-
-				TMsgSetCamera msg_camera;
-				msg_camera.camera = CHandle(this).getOwner();
-				t.sendMsg(msg_camera);	//set target camera
-			}
-
-			smoothCurrent = 1.f; //Return to player smoothly
-			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(egc->getName()), cameraFinished);
+			endGuidedCamera();
 		}
 	}
 	if (!cameraIsGuided) {
 		if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
 			//if (owner.hasTag("camera_main")) {
 			VEC3 pos = transform->getPosition();
-			pos.y += 2;
-			transform->setPosition(pos);
+			//pos.y += 2;
+			//transform->setPosition(pos);
 			if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
 
 			CEntity *e_me = compBaseEntity;
@@ -211,6 +186,35 @@ void TCompCameraMain::update(float dt) {
 			}
 		}
 	}
+}
+
+void TCompCameraMain::endGuidedCamera()
+{
+	//... Guardamos guidedCamera para mensaje a Logic Manager
+	CHandle cameraFinished = guidedCamera;
+
+	//... Terminamos el modo cinematica
+	guidedCamera = CHandle();
+	GameController->SetCinematic(false);
+
+	// Set the player in the 3rdPersonController
+	CHandle t = tags_manager.getFirstHavingTag("player");
+	TMsgGetWhoAmI msg_who;
+	t.sendMsgWithReply(msg_who);
+	//CEntity * target_e = t;
+	if (t.isValid()) {
+		TMsgSetTarget msg;
+		msg.target = t;
+		msg.who = msg_who.who;
+		compBaseEntity->sendMsg(msg);		//set camera
+
+		TMsgSetCamera msg_camera;
+		msg_camera.camera = CHandle(this).getOwner();
+		t.sendMsg(msg_camera);	//set target camera
+	}
+
+	smoothCurrent = 1.f; //Return to player smoothly
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(((CEntity*)(cameraFinished))->getName()), cameraFinished);
 }
 
 collision_data* TCompCameraMain::getPosIfColisionClipping(const VEC3 & pos) {

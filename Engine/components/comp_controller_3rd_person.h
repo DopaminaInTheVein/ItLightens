@@ -177,7 +177,7 @@ public:
 		offset = position_diff - VEC3(targettrans->getLeft()*cc->GetRadius());
 		my_tmx->lookAt(origin, target_loc);
 		//Aplicar offset
-		my_tmx->setPosition(my_tmx->getPosition() + position_diff);
+		my_tmx->setPosition(my_tmx->getPosition() + position_diff + VEC3_UP * 2.f);
 	}
 
 	VEC3 GetOffset() const { return offset; }

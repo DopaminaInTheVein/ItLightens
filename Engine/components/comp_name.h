@@ -18,6 +18,9 @@ struct TCompName : public TCompBase {
 
 	void renderInMenu() {
 		ImGui::Text(name);
+		static char name_name[64] = "new_name";
+		ImGui::InputText("New name", name_name, 64);
+		if (ImGui::Button("Change")) setName(std::string(name_name));
 	}
 
 	void setName(std::string name_s) {

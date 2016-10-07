@@ -532,27 +532,6 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   permanent="yes"
-   reload="no">
-<tags
-   tags="camera_main"/>
-<camera_main
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<culling/>
-<render_glow/>
-<controller_3rd_person/>
-<FX_fade_screen/>
-<name
-   name="camController_1"/>
-<transform
-   pos="24.61 53.5507 -25.007"
-   quat="0 0.707104 0 0.707104"
-   scale="1.0"/>
-
-</entity>
 <entity>
 <tags/>
 <name

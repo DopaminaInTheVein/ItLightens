@@ -576,16 +576,25 @@ void SLBCamera::resetCamera() {
 	// restore the normal 3rd person camera
 	if (!checkCamera()) return;
 	// turn manual control off
-	CEntity * camera_e = camera_h;
-	GET_COMP(cam_m, camera_e, TCompCameraMain);
+	GET_COMP(cam_m, camera_h, TCompCameraMain);
 	cam_m->setManualControl(false);
 	GameController->SetManualCameraState(false);
 	// restore normal controls
 	TMsgSetControllable msg;
 	msg.control = true;
-	camera_e->sendMsg(msg);
-	GET_COMP(cam_control, camera_e, TCompController3rdPerson);
+	camera_h.sendMsg(msg);
+	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
 	if (cam_control) cam_control->StopOrbit();
+
+	GET_COMP(cam_tmx, camera_h, TCompTransform);
+	if (cam_tmx) {
+		CHandle player = tags_manager.getFirstHavingTag("player");
+		if (player.isValid()) {
+			GET_COMP(tmx_player, player, TCompTransform);
+			cam_tmx->setPosition(tmx_player->getPosition() + VEC3_UP);
+			dbg("Position cam: %f,%f,%f\n", VEC3_VALUES(cam_tmx->getPosition()));
+		}
+	}
 }
 
 //Ui Camera control in LUA
