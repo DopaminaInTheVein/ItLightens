@@ -52,6 +52,7 @@ void TCompFadingMessage::hideAll() {
 	for (CHandle letter : gui_letters) {
 		moveElement(letter, new_pos3);
 	}
+	RenderManager.ModifyUI();
 	enabled = false;
 }
 
@@ -84,6 +85,8 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	//new_pos1.z = 0.35f;
 
 	text = atts.getString("text", "defaultText");
+	permanent = atts.getBool("permanent", false);
+	std::string who = atts.getString("icon", "default");
 	ttl = timeForLetter * text.length() + 4.0f;
 	numchars = 0;
 	shown_chars = 0;
@@ -107,18 +110,20 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	//new_pos2.z = 0.3f;
 	moveElement(gui_back, new_pos2);
 
-	CHandle player = CPlayerBase::handle_player;
-	if (player.isValid()) {
-		if (player.hasTag("raijin")) {
-			moveElement(gui_rai, new_pos1);
-		}
-		else if (player.hasTag("AI_mole")) {
-			moveElement(gui_mol, new_pos1);
-		}
-		else if (player.hasTag("AI_cientifico")) {
-			moveElement(gui_sci, new_pos1);
+	CHandle icon;
+	if (who == "raijin") icon = gui_rai;
+	else if (who == "mole") icon = gui_mol;
+	else if (who == "scientist") icon = gui_sci;
+	else if (who == "nobody") icon = CHandle();
+	else {
+		CHandle player = CPlayerBase::handle_player;
+		if (player.isValid()) {
+			if (player.hasTag("raijin")) icon = gui_rai;
+			if (player.hasTag("AI_mole")) icon = gui_mol;
+			else if (player.hasTag("AI_cientifico")) icon = gui_sci;
 		}
 	}
+	if (icon.isValid()) moveElement(icon, new_pos1);
 
 	enabled = true;
 	shown_chars = 0;
@@ -139,15 +144,18 @@ void TCompFadingMessage::update(float dt) {
 		}
 		accumTime -= timeForLetter;
 	}
+	bool modify_ui = shown_chars != numchars;
 
 	if (ttl < 0.0f) {
 		hideAll();
 	}
 	else {
 		printLetters();
-		ttl -= dt;
+		if (!permanent) ttl -= dt;
 	}
+	if (modify_ui) RenderManager.ModifyUI();
 }
+
 void TCompFadingMessage::printLetters() {
 	bool b = false;
 	int gState = GameController->GetGameState();
@@ -166,28 +174,18 @@ void TCompFadingMessage::printLetters() {
 			linechars += lineText[line].length() + 1;
 		}
 
-		unsigned char letter = text[i];
-		int ascii_tex_pos = letter;
-		int ascii_tex_posx = ascii_tex_pos % 16;
-		int ascii_tex_posy = ascii_tex_pos / 16;
-
-		float texture_pos_x = ((float)ascii_tex_posx) * letterBoxSize;
-		float texture_pos_y = ((float)ascii_tex_posy) * letterBoxSize;
-		float sx = letterBoxSize;
-		float sy = letterBoxSize;
 		float letter_posx = 0.16f + (i - linechars_prev - fminf(line, 1.0f) - accumSpacing[line])*letterSpacer;
 		float letter_posy = 0.20f - line*letterSpacerHigh;
 
-		CHandle letter_h = gui_letters[75 * line + i - linechars_prev];
+		CHandle letter_h = gui_letters[50 * line + i - linechars_prev];
 		VEC3 new_pos_let = min_ortho + orthorect * VEC3(letter_posx, letter_posy, 0.35f + i*0.001f);
-		//new_pos_let.z = 0.35f + i*0.001f;
 		moveElement(letter_h, new_pos_let);
 		if (letter_h.isValid()) {
 			GET_COMP(letter_gui, letter_h, TCompGui);
 			if (letter_gui) {
-				RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
-				letter_gui->setTxCoords(textCords);
-				accumSpacing[line] += letterSpacing[ascii_tex_pos];
+				unsigned char letter = text[i];
+				letter_gui->setTxLetter(text[i]);
+				accumSpacing[line] += letterSpacing[letter];
 			}
 		}
 	}

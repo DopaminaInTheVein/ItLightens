@@ -58,7 +58,7 @@ void TCompVideo::update(float dt) {
 	pSeek->GetDuration(duration);
 
 	LONGLONG remaining = *duration - *pos;
-	if (remaining <= timeout || controller->IsBackBeingPressed()) {
+	if (remaining <= timeout || controller->IsBackPressed()/*IsBackBeingPressed()*/) {
 		ReleaseAll();
 		if (lua_code != "") {
 			logic_manager->throwUserEvent(lua_code);

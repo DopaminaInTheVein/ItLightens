@@ -110,9 +110,12 @@ void CThrowBomb::Throwing()
 }
 
 void CThrowBomb::Throwed() {
-	GET_MY(phys, TCompPhysics);
-	auto fd = phys->getFilterData();
-	fd.word1 = PXM_NO_PLAYER;
+	if (!throwed) {
+		throwed = true;
+		GET_MY(phys, TCompPhysics);
+		auto fd = phys->getFilterData();
+		fd.word1 = PXM_NO_PLAYER;
+	}
 
 	if (checkNextState("impacted")) {
 		rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);

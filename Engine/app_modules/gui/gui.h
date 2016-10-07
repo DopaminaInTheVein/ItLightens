@@ -11,11 +11,12 @@ void render##name(); void update##name(float);
 //Forward Declarations
 class CGuiBarColor;
 class CGuiMenuPause;
-
+class CGuiMunition;
 class CGuiModule : public IAppModule {
 private:
 	//Action Text
 	CGuiActionText * txtAction;
+	CGuiMunition * munition;
 	static std::stack<CHandle> cursors;
 	bool ui_control = false;
 

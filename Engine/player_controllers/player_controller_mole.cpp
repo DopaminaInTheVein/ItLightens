@@ -183,7 +183,7 @@ void player_controller_mole::UpdateMoves() {
 		float drag_i = (1 - drag);
 
 		if (moving) player_curr_speed = drag_i*player_curr_speed + drag*player_max_speed;
-		else player_curr_speed = drag_i*player_curr_speed - drag*player_max_speed;
+		else player_curr_speed = 0.f;
 
 		if (player_curr_speed < 0) {
 			player_curr_speed = 0.0f;
@@ -204,7 +204,7 @@ bool player_controller_mole::UpdateMovDirection() {
 		GET_COMP(box_t, boxPushed, TCompTransform);
 		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
 
-		if (distance_to_box < 2.7f && !pulling_box) {
+		if (distance_to_box < 2.0f && !pulling_box) {
 			directionForward = VEC3(0, 0, 0);
 			directionLateral = VEC3(0, 0, 0);
 			directionVertical = VEC3(0, 0, 0);
@@ -275,6 +275,7 @@ void player_controller_mole::UpdateInputActions() {
 		}
 		// pushing box
 		else if (controller->IsMoveForward()) {
+			player_curr_speed = player_max_speed / 2.f;
 			pulling_box = false;
 			animController->setState(AST_PUSH_WALK);
 			box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
@@ -282,6 +283,7 @@ void player_controller_mole::UpdateInputActions() {
 		}
 		// pulling box
 		else if (controller->IsMoveBackWard()) {
+			player_curr_speed = player_max_speed / 2.f;
 			pulling_box = true;
 			animController->setState(AST_PULL_WALK);
 			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
@@ -292,6 +294,7 @@ void player_controller_mole::UpdateInputActions() {
 		}
 		else {
 			// If we are pushing box in idle state, we just stop the sound
+			player_curr_speed = 0.f;
 			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
 		}
 	}
@@ -363,7 +366,7 @@ void player_controller_mole::LeaveBox() {
 		boxGrabbed = boxPushed;
 		pushing_box = false;
 		pulling_box = false;
-		animController->unpushObject();
+		//animController->unpushObject();
 		logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
 	}
 	else {
@@ -619,7 +622,7 @@ void player_controller_mole::FaceToGrab()
 		// if the box is MEDIUM (1) we go to "push mode"
 		if (box->type_box == 1) {
 			boxPushed = boxNear;
-			animController->pushObject(boxNear);
+			//animController->pushObject(boxNear);
 			animController->setState(AST_PUSH_PREP);
 			ChangeState(ST_MOLE_PUSH_PREP);
 		}
@@ -663,7 +666,8 @@ void player_controller_mole::PushBox() {
 	dmg.modif = 0.5f;
 	myEntity->sendMsg(dmg);
 	boxGrabbed = boxNear;
-	player_max_speed /= 2;
+	player_max_speed /= 2.f;
+	player_curr_speed = 0.f;
 
 	ChangeState("idle");
 }

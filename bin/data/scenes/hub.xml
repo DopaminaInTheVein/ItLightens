@@ -16,21 +16,6 @@
 <entity>
 <tags/>
 <name
-   name="ceiling"/>
-<transform
-   pos="11.53 50.6611 -25.4918"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/ceiling.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="reja"/>
 <transform
    pos="11.53 50.6611 -25.4918"
@@ -547,21 +532,6 @@
    type_collision="static"/>
 
 </entity>
-<entity>
-<tags/>
-<name
-   name="ceiling_tile"/>
-<transform
-   pos="11.53 62.5135 -25.4918"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/ceiling_tile.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
 <entity
    permanent="yes"
    reload="no">
@@ -605,8 +575,8 @@
 <name
    name="end_hub"/>
 <transform
-   pos="-2.25084 53.5247 -25.6599"
-   quat="-0.480359 0.12571 0.109824 0.86104"
+   pos="-2.18931 53.361 -25.4419"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/hub/end_hub.static_mesh"/>

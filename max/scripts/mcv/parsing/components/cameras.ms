@@ -54,6 +54,10 @@ fn _parse_rail_camera = (
 	--Points size
 	xml.addAttr "points_size" all_cameras.count
 		
+	--Skippable
+	parsePropAttribute xml "skippable" "skippable"
+	parsePropAttribute xml "stop_final" "stop_final"
+	
 	-- Parse points
 	local mcv_tmx
 	local wPoint

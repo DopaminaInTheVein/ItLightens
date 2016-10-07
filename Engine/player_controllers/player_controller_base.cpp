@@ -115,6 +115,7 @@ void CPlayerBase::stopMovement() {
 	moving = false;
 	directionForward = directionLateral = VEC3(0.f, 0.f, 0.f);
 }
+
 float CPlayerBase::getLife()
 {
 	CEntity * eMe = tags_manager.getFirstHavingTag("raijin");

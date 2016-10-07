@@ -148,5 +148,29 @@
    scale="0.746888"/>
 
 </entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="3"
+   skippable="no"
+   stop_final="yes"
+   wpt1="19.508 54.8714 -24.8663"
+   wpt2="15.4449 54.8714 -24.8663"
+   wpt3="3.32984 52.1116 -25.4973"
+   lpt1="13.0438 53.361 -25.4419"
+   lpt2="7.12135 53.361 -25.4419"
+   lpt3="-1.37317 53.361 -25.4419"/>
+<name
+   name="CineEndTarget"/>
+<transform
+   pos="35.6838 66.6056 -25.4918"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
 
 </entities>

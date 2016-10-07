@@ -14,6 +14,7 @@ class TCompFadingMessage : public TCompBase {
 	static bool init_configuration;
 
 	//int id;
+	bool permanent;
 	float percentLineHeight = 0.02f;
 	float timeForLetter = 0.05f;
 	float marginForImage;
@@ -46,6 +47,7 @@ public:
 	void Init();
 	bool load(MKeyValue& atts);
 	void hideAll();
+	void kill() { ttl = -1.f; }
 };
 
 #endif
