@@ -659,7 +659,15 @@ void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	//logic_manager->getCommandQueue()->push_back(new_command);
 	logic_manager->addCommand(new_command);
 }
-
+void SLBPublicFunctions::waitButton(const char* exec_code) {
+	// create the new command
+	command new_command;
+	new_command.code = exec_code;
+	new_command.only_runtime = GameController->GetGameState() == CGameController::RUNNING;
+	// add the new command to the queue
+	//logic_manager->getCommandQueue()->push_back(new_command);
+	logic_manager->setWait(new_command);
+}
 void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA", "%s\n", to_print);
 }
