@@ -48,6 +48,7 @@ void TCompFadingMessage::hideAll() {
 	for (CHandle letter : gui_letters) {
 		moveElement(letter, new_pos3);
 	}
+	RenderManager.ModifyUI();
 	enabled = false;
 }
 
@@ -142,6 +143,7 @@ void TCompFadingMessage::update(float dt) {
 		}
 		accumTime -= timeForLetter;
 	}
+	bool modify_ui = shown_chars != numchars;
 
 	if (ttl < 0.0f) {
 		hideAll();
@@ -150,7 +152,9 @@ void TCompFadingMessage::update(float dt) {
 		printLetters();
 		ttl -= dt;
 	}
+	if (modify_ui) RenderManager.ModifyUI();
 }
+
 void TCompFadingMessage::printLetters() {
 	bool b = false;
 	int gState = GameController->GetGameState();
