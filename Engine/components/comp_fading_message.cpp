@@ -86,6 +86,8 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	VEC3 new_pos1 = min_ortho + (max_ortho - min_ortho) * VEC3(0.12f, 0.09f, 0.35f);
 
 	text = atts.getString("text", "defaultText");
+	permanent = atts.getBool("permanent", false);
+	std::string who = atts.getString("icon", "default");
 	ttl = timeForLetter * text.length() + 4.0f;
 	numchars = 0;
 	shown_chars = 0;
@@ -106,19 +108,21 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 
 	moveElement(gui_back, min_ortho + (max_ortho - min_ortho) * VEC3(0.5f, 0.02f, 0.3f));
 
-	CHandle player = CPlayerBase::handle_player;
-	if (player.isValid()) {
-		if (player.hasTag("raijin")) {
-			moveElement(gui_rai, new_pos1);
-		}
-		else if (player.hasTag("AI_mole")) {
-			moveElement(gui_mol, new_pos1);
-		}
-		else if (player.hasTag("AI_cientifico")) {
-			moveElement(gui_sci, new_pos1);
+	CHandle icon;
+	if (who == "raijin") icon = gui_rai;
+	else if (who == "mole") icon = gui_mol;
+	else if (who == "scientist") icon = gui_sci;
+	else if (who == "nobody") icon = CHandle();
+	else {
+		CHandle player = CPlayerBase::handle_player;
+		if (player.isValid()) {
+			if (player.hasTag("raijin")) icon = gui_rai;
+			if (player.hasTag("AI_mole")) icon = gui_mol;
+			else if (player.hasTag("AI_cientifico")) icon = gui_sci;
 		}
 	}
 	accumSpacing.resize(lineText.size(), 0.0f);
+	if (icon.isValid()) moveElement(icon, new_pos1);
 
 	if (!init_configuration) {
 		init_configuration = true;
@@ -150,7 +154,7 @@ void TCompFadingMessage::update(float dt) {
 	}
 	else {
 		printLetters();
-		ttl -= dt;
+		if (!permanent) ttl -= dt;
 	}
 	if (modify_ui) RenderManager.ModifyUI();
 }

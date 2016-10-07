@@ -538,6 +538,12 @@ void SLBCamera::runCinematic(const char* name, float speed) {
 	}
 }
 
+void SLBCamera::skipCinematic() {
+	if (!checkCamera()) return;
+	GET_COMP(cam, camera_h, TCompCameraMain);
+	if (cam) cam->skipCinematic();
+}
+
 void SLBCamera::fadeIn(float speed) {
 	//TCompFadeScreen * fx = render_fx->GetFX<TCompFadeScreen>(FX_FADESCREEN_ALL);
 	GET_FX(fx, TFadeScreen, FX_FADESCREEN);
@@ -799,6 +805,23 @@ void SLBPublicFunctions::playerTalks(const char* text) {
 		MKeyValue atts3;
 		atts3["text"] = text;
 		mess->load(atts3);
+	}
+	);
+}
+
+void SLBPublicFunctions::showMessage(const char* text, const char* icon) {
+	getHandleManager<TCompFadingMessage>()->each([text, icon](TCompFadingMessage * mess) {
+		MKeyValue atts3;
+		atts3["permanent"] = "true";
+		atts3["text"] = text;
+		atts3["icon"] = icon;
+		mess->load(atts3);
+	}
+	);
+}
+void SLBPublicFunctions::hideMessage() {
+	getHandleManager<TCompFadingMessage>()->each([](TCompFadingMessage * mess) {
+		mess->kill();
 	}
 	);
 }

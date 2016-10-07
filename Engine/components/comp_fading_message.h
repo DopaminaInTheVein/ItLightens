@@ -13,6 +13,7 @@ class TCompFadingMessage : public TCompBase {
 	static float letterSpacing[256];
 	static bool init_configuration;
 
+	bool permanent;
 	int id;
 	float percentLineHeight = 0.02f;
 	float timeForLetter = 0.05f;
@@ -43,6 +44,7 @@ public:
 	void Init();
 	bool load(MKeyValue& atts);
 	void hideAll();
+	void kill() { ttl = -1.f; }
 };
 
 #endif

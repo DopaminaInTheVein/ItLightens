@@ -31,6 +31,8 @@ bool TCompGuidedCamera::load(MKeyValue& atts) {
 	targets[num_points + 1] = targets[num_points];
 
 	default_dirs = atts.getBool("default_dirs", 0);
+	skippable = atts.getBool("skippable", true);
+	stop_final = atts.getBool("stop_final", false);
 	return true;
 };
 
@@ -54,6 +56,7 @@ void TCompGuidedCamera::start(float speed) {
 	factor = 0.0f;
 	velocity = speed == 0.f ? velocity_default : speed;
 	reversed = (velocity < 0.f);
+	skipped_extern = false;
 	if (reversed) {
 		std::reverse(positions.begin(), positions.end());
 		std::reverse(targets.begin(), targets.end());
@@ -90,10 +93,10 @@ void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
 
 bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMain* cam) {
 	bool finish = false;
-	if (curPoint > positions.size() - 2) {
+	if (skipped_extern || curPoint > positions.size() - 2) {
 		finish = true;
 	}
-	if (controller->IsBackPressed()) {
+	if (skippable && controller->IsBackPressed()) {
 		CHandle me = CHandle(this).getOwner();
 		CEntity* eMe = me;
 		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicSkipped, std::string(eMe->getName())), CHandle(this).getOwner();
@@ -101,11 +104,14 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMai
 	}
 
 	if (finish) {
-		if (reversed) {
-			std::reverse(positions.begin(), positions.end());
-			std::reverse(targets.begin(), targets.end());
+		if (!stop_final || skipped_extern) {
+			if (reversed) {
+				std::reverse(positions.begin(), positions.end());
+				std::reverse(targets.begin(), targets.end());
+			}
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	VEC3 goTo = positions[curPoint];

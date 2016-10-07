@@ -121,6 +121,7 @@ public:
 	void setRotationSensibility(float sensibility);
 	void setPositionOffset(float x_offset, float y_offset, float z_offset);
 	void runCinematic(const char* name, float speed = 0.f);
+	void skipCinematic();
 	void fadeIn(float speed = 0.f);
 	void fadeOut(float speed = 0.f);
 	void orbit(bool);
@@ -191,6 +192,8 @@ public:
 	void playVideoAndDo(const char* video_route, const char* lua_code);
 	void playerRoom(int newRoom);
 	void playerTalks(const char* text);
+	void showMessage(const char* text, const char* icon);
+	void hideMessage();
 	void putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag);
 	//void alterText(const char* id, float new_posx, float new_posy, float new_scale);
 	void removeText(const char* id);
