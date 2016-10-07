@@ -45,7 +45,8 @@ void CLogicManagerModule::update(float dt) {
 	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ) {
 		if (!command_it->only_runtime ||
 			GameController->GetGameState() == CGameController::RUNNING ||
-			GameController->GetGameState() == CGameController::SPECIAL_ACTION) {
+			GameController->GetGameState() == CGameController::SPECIAL_ACTION)
+		{
 			command_it->execution_time -= dt;
 		}
 		if (command_it->execution_time < 0.f) {
@@ -54,6 +55,19 @@ void CLogicManagerModule::update(float dt) {
 		}
 		else {
 			command_it++;
+		}
+	}
+
+	if (controller->IsBackPressed()) {
+		if (command_wait.code != "") {
+			if (!command_wait.only_runtime ||
+				GameController->GetGameState() == CGameController::RUNNING ||
+				GameController->GetGameState() == CGameController::SPECIAL_ACTION)
+			{
+				const char* copy_code = command_wait.code;
+				command_wait.code = "";
+				slb_script.doString(copy_code);
+			}
 		}
 	}
 
@@ -849,6 +863,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.comment("Executes the specified command after a given time")
 		.param("string: code to execute")
 		.param("float: time until execution")
+		// execute command function
+		.set("wait_button", &SLBPublicFunctions::waitButton)
+		.comment("Executes the specified command after press button")
+		.param("string: code to execute")
 		// basic print function
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")

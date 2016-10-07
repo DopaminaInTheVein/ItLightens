@@ -164,6 +164,7 @@ public:
 
 	// public functions
 	void execCommand(const char* exec_code, float exec_time);
+	void waitButton(const char* exec_code);
 	void completeTasklist(int i);
 	void print(const char* to_print);
 	void setupGame();

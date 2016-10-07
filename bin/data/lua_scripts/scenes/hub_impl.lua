@@ -101,12 +101,16 @@ end
 --==============================================================
 function yellow_help()
 	p:show_message("Este es el objetivo", "raijin")--p:get_text("hub","target_seen"))
-	p:exec_command("yellow_help2();", 3)
+	p:wait_button("yellow_help2();")
 end
 
 function yellow_help2()
 	p:show_message("Explicacion amarillo", "raijin")--p:get_text("hub","target_seen"))
-	p:exec_command("cam:skip_cinematic();", 3)
-	p:exec_command("p:hide_message();", 10)
+	p:wait_button("yellow_help3();")
+end
+
+function yellow_help3()
+	cam:skip_cinematic()
+	p:exec_command("p:hide_message();", 0.5)
 end
 --==============================================================
