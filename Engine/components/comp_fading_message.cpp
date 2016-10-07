@@ -7,7 +7,7 @@
 
 #define FONT_JSON "./data/json/font.json"
 
-void moveElement(CHandle h, VEC3 pos)
+void TCompFadingMessage::moveElement(CHandle h, const VEC3 pos)
 {
 	if (h.isValid()) {
 		GET_COMP(ht, h, TCompTransform);
@@ -16,30 +16,34 @@ void moveElement(CHandle h, VEC3 pos)
 }
 
 void TCompFadingMessage::Init() {
-	gui_back = Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, -1.0f, 0.3f), "Fading_Message_Background");
-	gui_rai = Gui->addGuiElement("ui/Fading_Icon_RAI", VEC3(0.12f, -1.0f, 0.35f), "Fading_Message_Icon_RAI");
-	gui_mol = Gui->addGuiElement("ui/Fading_Icon_MOL", VEC3(0.12f, -1.0f, 0.35f), "Fading_Message_Icon_MOL");
-	gui_sci = Gui->addGuiElement("ui/Fading_Icon_SCI", VEC3(0.12f, -1.0f, 0.35f), "Fading_Message_Icon_SCI");
+	gui_back = Gui->addGuiElement("ui/Fading_Background", VEC3(0.5f, -1.0f, 0.3f), "");
+	gui_rai = Gui->addGuiElement("ui/Fading_Icon_RAI", VEC3(0.12f, -1.0f, 0.35f), "");
+	gui_mol = Gui->addGuiElement("ui/Fading_Icon_MOL", VEC3(0.12f, -1.0f, 0.35f), "");
+	gui_sci = Gui->addGuiElement("ui/Fading_Icon_SCI", VEC3(0.12f, -1.0f, 0.35f), "");
 
-	// Size = 4 lines * 50 chars per line
-	gui_letters.resize(200);
-	for (int i = 0; i < 200; ++i) {
-		gui_letters[i] = Gui->addGuiElement("ui/Fading_Letter", VEC3(0.0f, -1.0, 0.31f), ("Fading_Message_Letter_" + std::to_string(i)), scale);
+	// Size = 4 lines * 75 chars per line
+	gui_letters.resize(300);
+	for (int i = 0; i < 300; ++i) {
+		gui_letters[i] = Gui->addGuiElement("ui/Fading_Letter", VEC3(0.0f, -1.0, 0.31f), "", scale);
 	}
 	initialized = true;
-}
 
-void TCompFadingMessage::hideAll() {
 	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
 	if (!h_ui_cam.isValid()) return;
 	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
 	if (!ui_cam) return;
-	VEC3 min_ortho = ui_cam->getMinOrtho();
-	VEC3 max_ortho = ui_cam->getMaxOrtho();
+	min_ortho = ui_cam->getMinOrtho();
+	max_ortho = ui_cam->getMaxOrtho();
+	orthorect = max_ortho - min_ortho;
+}
 
-	VEC3 new_pos1 = min_ortho + (max_ortho - min_ortho) * VEC3(0.5f, -1.0f, 0.3f);
-	VEC3 new_pos2 = min_ortho + (max_ortho - min_ortho) * VEC3(0.12f, -1.0f, 0.35f);
-	VEC3 new_pos3 = min_ortho + (max_ortho - min_ortho) * VEC3(0.0f, -1.0f, 0.0f);
+void TCompFadingMessage::hideAll() {
+	VEC3 new_pos1 = min_ortho + orthorect * VEC3(0.5f, -1.0f, 0.3f);
+	//new_pos1.z = 0.3f;
+	VEC3 new_pos2 = min_ortho + orthorect * VEC3(0.12f, -1.0f, 0.35f);
+	//new_pos2.z = 0.35f;
+	VEC3 new_pos3 = min_ortho + orthorect * VEC3(0.0f, -1.0f, 0.0f);
+	//new_pos3.z = 0.0f;
 
 	moveElement(gui_back, new_pos1);
 	moveElement(gui_rai, new_pos2);
@@ -70,27 +74,21 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 {
 	if (!initialized) {
 		Init();
+		initSpaceLetters();
 	}
-	if (enabled) {
+	else if (enabled) {
 		hideAll();
 	}
 
-	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
-	if (!h_ui_cam.isValid()) return false;
-	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
-	if (!ui_cam) return false;
-	VEC3 min_ortho = ui_cam->getMinOrtho();
-	VEC3 max_ortho = ui_cam->getMaxOrtho();
-
-	VEC3 new_pos1 = min_ortho + (max_ortho - min_ortho) * VEC3(0.12f, 0.09f, 0.35f);
+	VEC3 new_pos1 = min_ortho + orthorect * VEC3(0.12f, 0.09f, 0.35f);
+	//new_pos1.z = 0.35f;
 
 	text = atts.getString("text", "defaultText");
 	ttl = timeForLetter * text.length() + 4.0f;
 	numchars = 0;
 	shown_chars = 0;
 	lineText.resize(0);
-	accumSpacing.resize(0);
-	id = std::rand();
+	//id = std::rand();
 	std::string endline = "\n";
 	int ini = 0;
 	//int line
@@ -103,7 +101,11 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	}
 	lineText.push_back(text.substr(ini, pos - ini));
 
-	moveElement(gui_back, min_ortho + (max_ortho - min_ortho) * VEC3(0.5f, 0.02f, 0.3f));
+	accumSpacing = std::vector<float>(lineText.size(), 0.0f);
+
+	VEC3 new_pos2 = min_ortho + orthorect * VEC3(0.5f, 0.02f, 0.3f);
+	//new_pos2.z = 0.3f;
+	moveElement(gui_back, new_pos2);
 
 	CHandle player = CPlayerBase::handle_player;
 	if (player.isValid()) {
@@ -117,12 +119,7 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 			moveElement(gui_sci, new_pos1);
 		}
 	}
-	accumSpacing.resize(lineText.size(), 0.0f);
 
-	if (!init_configuration) {
-		init_configuration = true;
-		initSpaceLetters();
-	}
 	enabled = true;
 	shown_chars = 0;
 	numchars = 0;
@@ -156,13 +153,6 @@ void TCompFadingMessage::printLetters() {
 	int gState = GameController->GetGameState();
 	if (gState != CGameController::RUNNING) return;
 
-	CHandle h_ui_cam = tags_manager.getFirstHavingTag("ui_camera");
-	if (!h_ui_cam.isValid()) return;
-	GET_COMP(ui_cam, h_ui_cam, TCompCamera);
-	if (!ui_cam) return;
-	VEC3 min_ortho = ui_cam->getMinOrtho();
-	VEC3 max_ortho = ui_cam->getMaxOrtho();
-
 	for (int i = shown_chars; i < numchars; ++i) {
 		if ((i < text.length() - 1 && text[i] == '\\' && text[i + 1] == 'n') || (i > 1 && text[i - 1] == '\\' && text[i] == 'n')) {
 			continue;
@@ -170,7 +160,7 @@ void TCompFadingMessage::printLetters() {
 		int line = 0;
 		int linechars = lineText[line].length();
 		int linechars_prev = 0;
-		while (linechars < shown_chars) {
+		while (linechars < i) {
 			++line;
 			linechars_prev = linechars;
 			linechars += lineText[line].length() + 1;
@@ -188,8 +178,10 @@ void TCompFadingMessage::printLetters() {
 		float letter_posx = 0.16f + (i - linechars_prev - fminf(line, 1.0f) - accumSpacing[line])*letterSpacer;
 		float letter_posy = 0.20f - line*letterSpacerHigh;
 
-		CHandle letter_h = gui_letters[50 * line + i - linechars_prev];
-		moveElement(letter_h, min_ortho + (max_ortho - min_ortho) * VEC3(letter_posx, letter_posy, 0.31f + i*0.001f));
+		CHandle letter_h = gui_letters[75 * line + i - linechars_prev];
+		VEC3 new_pos_let = min_ortho + orthorect * VEC3(letter_posx, letter_posy, 0.35f + i*0.001f);
+		//new_pos_let.z = 0.35f + i*0.001f;
+		moveElement(letter_h, new_pos_let);
 		if (letter_h.isValid()) {
 			GET_COMP(letter_gui, letter_h, TCompGui);
 			if (letter_gui) {

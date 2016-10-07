@@ -13,7 +13,7 @@ class TCompFadingMessage : public TCompBase {
 	static float letterSpacing[256];
 	static bool init_configuration;
 
-	int id;
+	//int id;
 	float percentLineHeight = 0.02f;
 	float timeForLetter = 0.05f;
 	float marginForImage;
@@ -34,7 +34,10 @@ class TCompFadingMessage : public TCompBase {
 	bool enabled = false;
 	bool initialized = false;
 	float accumTime = 0.0f;
-
+	VEC3 min_ortho;
+	VEC3 max_ortho;
+	VEC3 orthorect;
+	void moveElement(CHandle h, const VEC3 pos);
 public:
 	static void initSpaceLetters();
 	//Update info
