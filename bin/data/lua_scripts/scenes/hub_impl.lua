@@ -20,12 +20,17 @@ function OnStart_hub( )
 	mole_done = false
 	sci_done = false
 	p:setControlEnabled(1)
+	------------ test ---------------------
 	cam:run_cinematic("CineEndTarget", 5)
 	p:exec_command("yellow_help();", 3)
+	---------------------------------------
+	
+	------------------- codigo comentado para testear, descomentar  y tocar como toque --------------------
 	-- p:setOnlySense(1)
 	-- p:aim_circle("circle_1","aim_circle",-1.94,51.64,-20.08,-1.0)
 	-- p:force_sense_vision()
 	-- p:player_talks(p:get_text("hub","start_hub"))
+	-------------------------------------------------------------------------------------------------------
 end
 -------------------------------
 function OnSave_hub()
@@ -95,12 +100,13 @@ end
 -- Auxiliars
 --==============================================================
 function yellow_help()
-	p:player_talks("Este es el objetivo")--p:get_text("hub","target_seen"))
+	p:show_message("Este es el objetivo", "raijin")--p:get_text("hub","target_seen"))
 	p:exec_command("yellow_help2();", 3)
 end
 
 function yellow_help2()
-	p:player_talks("Explicacion amarillo")--p:get_text("hub","target_seen"))
+	p:show_message("Explicacion amarillo", "raijin")--p:get_text("hub","target_seen"))
 	p:exec_command("cam:skip_cinematic();", 3)
+	p:exec_command("p:hide_message();", 10)
 end
 --==============================================================

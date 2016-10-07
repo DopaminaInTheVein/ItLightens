@@ -955,6 +955,14 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("player_talks", &SLBPublicFunctions::playerTalks)
 		.comment("Shows the specified text for aq limited time")
 		.param("string: text to show")
+		// clear fade message
+		.set("hide_message", &SLBPublicFunctions::hideMessage)
+		.comment("Hide the current message")
+		// launch text span related to npc talks
+		.set("show_message", &SLBPublicFunctions::showMessage)
+		.comment("Shows the specified customized text")
+		.param("string: text to show")
+		.param("string: icon to show")
 		// launch text span
 		.set("putText", &SLBPublicFunctions::putText)
 		.comment("Shows the specified text")

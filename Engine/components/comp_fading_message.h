@@ -44,6 +44,7 @@ public:
 	void Init();
 	bool load(MKeyValue& atts);
 	void hideAll();
+	void kill() { ttl = -1.f; }
 };
 
 #endif

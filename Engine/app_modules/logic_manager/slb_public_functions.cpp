@@ -809,6 +809,23 @@ void SLBPublicFunctions::playerTalks(const char* text) {
 	);
 }
 
+void SLBPublicFunctions::showMessage(const char* text, const char* icon) {
+	getHandleManager<TCompFadingMessage>()->each([text, icon](TCompFadingMessage * mess) {
+		MKeyValue atts3;
+		atts3["permanent"] = "true";
+		atts3["text"] = text;
+		atts3["icon"] = icon;
+		mess->load(atts3);
+	}
+	);
+}
+void SLBPublicFunctions::hideMessage() {
+	getHandleManager<TCompFadingMessage>()->each([](TCompFadingMessage * mess) {
+		mess->kill();
+	}
+	);
+}
+
 void SLBPublicFunctions::putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag) {
 	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
 	CHandle h = createPrefab("ui/text");
