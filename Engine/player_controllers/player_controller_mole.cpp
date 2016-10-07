@@ -204,7 +204,7 @@ bool player_controller_mole::UpdateMovDirection() {
 		GET_COMP(box_t, boxPushed, TCompTransform);
 		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
 
-		if (distance_to_box < 2.7f && !pulling_box) {
+		if (distance_to_box < 2.0f && !pulling_box) {
 			directionForward = VEC3(0, 0, 0);
 			directionLateral = VEC3(0, 0, 0);
 			directionVertical = VEC3(0, 0, 0);
@@ -275,6 +275,7 @@ void player_controller_mole::UpdateInputActions() {
 		}
 		// pushing box
 		else if (controller->IsMoveForward()) {
+			player_curr_speed = player_max_speed / 2.f;
 			pulling_box = false;
 			animController->setState(AST_PUSH_WALK);
 			box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
@@ -282,6 +283,7 @@ void player_controller_mole::UpdateInputActions() {
 		}
 		// pulling box
 		else if (controller->IsMoveBackWard()) {
+			player_curr_speed = player_max_speed / 2.f;
 			pulling_box = true;
 			animController->setState(AST_PULL_WALK);
 			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
@@ -292,8 +294,7 @@ void player_controller_mole::UpdateInputActions() {
 		}
 		else {
 			// If we are pushing box in idle state, we just stop the sound
-			TCompCharacterController* myController = myEntity->get<TCompCharacterController>();
-			myController->ResetMovement();
+			player_curr_speed = 0.f;
 			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
 		}
 	}
@@ -665,7 +666,8 @@ void player_controller_mole::PushBox() {
 	dmg.modif = 0.5f;
 	myEntity->sendMsg(dmg);
 	boxGrabbed = boxNear;
-	player_max_speed /= 2;
+	player_max_speed /= 2.f;
+	player_curr_speed = 0.f;
 
 	ChangeState("idle");
 }
