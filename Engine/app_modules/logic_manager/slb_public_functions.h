@@ -121,6 +121,7 @@ public:
 	void setRotationSensibility(float sensibility);
 	void setPositionOffset(float x_offset, float y_offset, float z_offset);
 	void runCinematic(const char* name, float speed = 0.f);
+	void skipCinematic();
 	void fadeIn(float speed = 0.f);
 	void fadeOut(float speed = 0.f);
 	void orbit(bool);

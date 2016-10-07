@@ -538,6 +538,12 @@ void SLBCamera::runCinematic(const char* name, float speed) {
 	}
 }
 
+void SLBCamera::skipCinematic() {
+	if (!checkCamera()) return;
+	GET_COMP(cam, camera_h, TCompCameraMain);
+	if (cam) cam->skipCinematic();
+}
+
 void SLBCamera::fadeIn(float speed) {
 	//TCompFadeScreen * fx = render_fx->GetFX<TCompFadeScreen>(FX_FADESCREEN_ALL);
 	GET_FX(fx, TFadeScreen, FX_FADESCREEN);

@@ -86,6 +86,7 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	VEC3 new_pos1 = min_ortho + (max_ortho - min_ortho) * VEC3(0.12f, 0.09f, 0.35f);
 
 	text = atts.getString("text", "defaultText");
+	permanent = atts.getBool("permanent", false);
 	ttl = timeForLetter * text.length() + 4.0f;
 	numchars = 0;
 	shown_chars = 0;
@@ -150,7 +151,7 @@ void TCompFadingMessage::update(float dt) {
 	}
 	else {
 		printLetters();
-		ttl -= dt;
+		if (!permanent) ttl -= dt;
 	}
 	if (modify_ui) RenderManager.ModifyUI();
 }
