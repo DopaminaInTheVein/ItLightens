@@ -15,6 +15,12 @@ FMOD_RESULT F_CALLBACK loopingSoundCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type
 bool music_playing = true;
 
 bool CSoundManagerModule::start() {
+
+	/*CApp &app = CApp::get();
+	std::string file_options_json = app.file_options_json;
+	std::map<std::string, float> fields = readIniAtrData(file_options_json, "sound");
+	assignValueToVar(MAX_DISTANCE, fields);*/
+
 	/*
 	Create a System object and initialize
 	*/
@@ -152,13 +158,6 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, float m
 			if (max_volume > 1.f) max_volume = 1.f;
 			else if (max_volume < 0.f) max_volume = 0.f;
 
-			// read max distance to hear a sound
-			float MAX_DISTANCE = 0.f;
-			CApp &app = CApp::get();
-			std::string file_ini = app.file_initAttr_json;
-			std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
-			assignValueToVar(MAX_DISTANCE, fields);
-
 			// the volume will depend on the actual distance
 			VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
 			float dist = simpleDist(camera_pos, sound_pos);
@@ -236,13 +235,6 @@ bool CSoundManagerModule::playFixed3dSound(std::string route, std::string sound_
 			// normalize the maximum volume
 			if (max_volume > 1.f) max_volume = 1.f;
 			else if (max_volume < 0.f) max_volume = 0.f;
-
-			// read max distance to hear a sound
-			float MAX_DISTANCE = 0.f;
-			CApp &app = CApp::get();
-			std::string file_ini = app.file_initAttr_json;
-			std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
-			assignValueToVar(MAX_DISTANCE, fields);
 
 			// the volume will depend on the actual distance
 			VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
@@ -388,13 +380,6 @@ bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_
 	// normalize the maximum volume
 	if (max_volume > 1.f) max_volume = 1.f;
 	else if (max_volume < 0.f) max_volume = 0.f;
-
-	// read max distance to hear a sound
-	float MAX_DISTANCE = 0.f;
-	CApp &app = CApp::get();
-	std::string file_ini = app.file_initAttr_json;
-	std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
-	assignValueToVar(MAX_DISTANCE, fields);
 
 	// update the volume
 	VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
