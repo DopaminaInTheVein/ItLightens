@@ -77,7 +77,7 @@
    tags="menu gui gui_button clickable"/>
 <gui
    menu_name="menu"
-   row="3"
+   row="4"
    col="0"
    width="0.652746"
    height="0.367172"/>
@@ -115,7 +115,7 @@
    tags="menu gui gui_button clickable"/>
 <gui
    menu_name="menu"
-   row="4"
+   row="3"
    col="0"
    width="0.652746"
    height="0.367172"/>
