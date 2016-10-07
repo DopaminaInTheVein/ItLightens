@@ -124,8 +124,15 @@ bool CVertexShader::create(
   
   // Compilar shader
   ID3DBlob* pBlob = NULL;
-  if( !compileShaderFromFile(fx_filename, entry_point.c_str(), "vs_4_0", &pBlob))
-    return false;
+  if (Render.device->GetFeatureLevel() < D3D_FEATURE_LEVEL_11_0)
+  {
+	  if (!compileShaderFromFile(fx_filename, entry_point.c_str(), "vs_4_0", &pBlob))
+		  return false;
+  }
+  else {
+	  if (!compileShaderFromFile(fx_filename, entry_point.c_str(), "vs_5_0", &pBlob))
+		  return false;
+  }
 
   // In case we are reloading....
   destroy();
@@ -178,8 +185,15 @@ bool CPixelShader::create(
 
   // Compilar shader
   ID3DBlob* pBlob = NULL;
-  if (!compileShaderFromFile(fx_filename, entry_point.c_str(), "ps_4_0", &pBlob))
-    return false;
+  if (Render.device->GetFeatureLevel() < D3D_FEATURE_LEVEL_11_0)
+  {
+	  if (!compileShaderFromFile(fx_filename, entry_point.c_str(), "ps_4_0", &pBlob))
+		  return false;
+  }
+  else {
+	  if (!compileShaderFromFile(fx_filename, entry_point.c_str(), "ps_5_0", &pBlob))
+		  return false;
+  }
 
   ID3D11PixelShader *new_ps = nullptr;
 

@@ -8,18 +8,28 @@ extern CRenderDeferredModule * render_deferred;
 
 // ---------------------
 void TRenderAntiAliasing::renderInMenu() {
-	//nothing
+	ImGui::Checkbox("enable antialiasing", &enabled);
 }
+
 
 void TRenderAntiAliasing::ApplyFX() {
 	if (enabled) {
-		//TODO
+		activateBlend(BLENDCFG_DEFAULT);
+		Render.activateBackBuffer();
+		tech->activate();
+
+		drawFullScreen(render_deferred->GetOutputTexture(), tech);
+	}
+	else {
+		activateBlend(BLENDCFG_DEFAULT);
+		Render.activateBackBuffer();
+		drawFullScreen(render_deferred->GetOutputTexture());
 	}
 }
 
 void TRenderAntiAliasing::init() {
 	enabled = true;
-	//tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
+	tech = Resources.get("anti_aliasing.tech")->as<CRenderTechnique>();
 
 	//TODO
 }

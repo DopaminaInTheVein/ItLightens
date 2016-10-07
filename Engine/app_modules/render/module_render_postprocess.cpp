@@ -60,6 +60,7 @@ bool CRenderPostProcessModule::start()
 	//NEEDED RENDER SHADERS ON ALL SCENES
 	ActivateFXBeforeUI(FX_OUTLINE, 90);
 	ActivateFXBeforeUI(FX_HATCHING, 100);	//default priority is 0, but hatching should go the last one
+	ActivateFXBeforeUI(FX_ANTI_ALIASING, 300);
 
 	//ActivateFXBeforeUI("dream_border", 150); //--> only when needed, need to go after hatching so hatching wont be rendered on dream borders
 

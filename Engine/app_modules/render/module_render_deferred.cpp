@@ -49,6 +49,8 @@ bool CRenderDeferredModule::start() {
 	xres = Render.getXRes();
 	yres = Render.getYRes();
 
+	rt_output = new CRenderToTexture;
+
 	rt_albedos = new CRenderToTexture;
 	rt_normals = new CRenderToTexture;
 	rt_depths = new CRenderToTexture;
@@ -71,6 +73,9 @@ bool CRenderDeferredModule::start() {
 	//temp
 	rt_selfIlum_int = new CRenderToTexture;
 	rt_selfIlum_blurred_int = new CRenderToTexture;
+
+	if (!rt_output->createRT("rt_output", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
+		return false;
 
 	if (!rt_specular->createRT("rt_specular", xres, yres, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_UNKNOWN))
 		return false;
@@ -423,7 +428,8 @@ void CRenderDeferredModule::FinalRender() {
 	  ,	nullptr
 	};
 
-	Render.activateBackBuffer();	//reset size to default
+	//Render.activateBackBuffer();	//reset size to default
+	SetOutputDeferred();
 
 	// Y el ZBuffer del backbuffer principal
 	Render.ctx->OMSetRenderTargets(3, rts, nullptr);
@@ -535,7 +541,8 @@ void CRenderDeferredModule::renderAccLight() {
 		blurred_shadows = glow->apply(blurred_shadows);
 
 	//reset size
-	Render.activateBackBuffer();
+	//Render.activateBackBuffer();
+	SetOutputDeferred();
 
 	{
 		// Activar el rt para pintar las luces...
@@ -589,6 +596,17 @@ void CRenderDeferredModule::generateShadowMaps() {
 
 		c->generateShadowMap();
 	});
+}
+
+void CRenderDeferredModule::SetOutputDeferred()
+{
+	ID3D11RenderTargetView* rts[3] = {
+		rt_output->getRenderTargetView()
+		,	nullptr   // remove the other rt's from the pipeline
+		,	nullptr
+	};
+	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+	rt_output->activateViewport();
 }
 
 void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
@@ -686,7 +704,8 @@ void CRenderDeferredModule::ApplySSAO() {
 
 	drawFullScreen(rt_albedos, tech);
 
-	Render.activateBackBuffer();
+	//Render.activateBackBuffer();
+	SetOutputDeferred();
 	//blur shadows
 	CTexture *blurred_ssao = rt_ssao;
 	CEntity* e_camera = h_camera;
@@ -695,7 +714,8 @@ void CRenderDeferredModule::ApplySSAO() {
 	if (glow)
 		blurred_ssao = glow->apply(blurred_ssao);
 
-	Render.activateBackBuffer();	//reset size viewport
+	//Render.activateBackBuffer();	//reset size viewport
+	SetOutputDeferred();
 	activateZ(ZCFG_ALL_DISABLED);
 
 	{
@@ -712,7 +732,8 @@ void CRenderDeferredModule::ApplySSAO() {
 		drawFullScreen(blurred_ssao, tech);
 	}
 	activateBlend(BLENDCFG_DEFAULT);
-	Render.activateBackBuffer();
+	//Render.activateBackBuffer();
+	SetOutputDeferred();
 
 	/*CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);*/
@@ -759,7 +780,8 @@ void CRenderDeferredModule::MarkInteractives(const VEC4& color, std::string tag,
 	activateZ(ZCFG_OUTLINE, slot);
 	{
 		activateBlend(BLENDCFG_ADDITIVE);
-		Render.activateBackBuffer();
+		//Render.activateBackBuffer();
+		SetOutputDeferred();
 		auto tech = Resources.get("LightenInteractive.tech")->as<CRenderTechnique>();
 		drawFullScreen(rt_final, tech);
 		activateBlend(BLENDCFG_COMBINATIVE);
@@ -847,7 +869,8 @@ void CRenderDeferredModule::ShootGuardRender() {
 	{
 		PROFILE_FUNCTION("referred: add laser");
 		CTraceScoped scope("add laser");
-		Render.activateBackBuffer();
+		//Render.activateBackBuffer();
+		SetOutputDeferred();
 		rt_data2->clear(VEC4(0, 0, 0, 0));
 		ID3D11RenderTargetView* rts[3] = {
 		  rt_selfIlum->getRenderTargetView()
@@ -923,7 +946,8 @@ void CRenderDeferredModule::render() {
 	FinalRender();
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-	Render.activateBackBuffer();
+	//Render.activateBackBuffer();
+	SetOutputDeferred();
 	activateZ(ZCFG_ALL_DISABLED);
 
 	drawFullScreen(rt_final);
@@ -957,7 +981,8 @@ void CRenderDeferredModule::render() {
 	MarkInteractives(VEC4(1, 1, 1, 1), "interactive", INTERACTIVE_OBJECTS);
 
 	
-	Render.activateBackBuffer();
+	//Render.activateBackBuffer();
+	SetOutputDeferred();
 	activateZ(ZCFG_DEFAULT);
 
 	if (m_isSpecialVisionActive) {
@@ -1000,7 +1025,8 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		PROFILE_FUNCTION("referred: darken");
 		CTraceScoped scope("darken");
 
-		Render.activateBackBuffer();
+		//Render.activateBackBuffer();
+		SetOutputDeferred();
 		//rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 		activateBlend(BLENDCFG_SUBSTRACT);
 		activateZ(ZCFG_ALL_DISABLED);
@@ -1017,7 +1043,8 @@ void CRenderDeferredModule::renderEspVisionMode() {
 		if (glow)
 			tex_screen = glow->apply(tex_screen, tech);
 
-		Render.activateBackBuffer();
+		//Render.activateBackBuffer();
+		SetOutputDeferred();
 		activateBlend(BLENDCFG_DEFAULT);
 		activateZ(ZCFG_ALL_DISABLED);
 		drawFullScreen(tex_screen);
@@ -1242,7 +1269,8 @@ void CRenderDeferredModule::renderDetails(CRenderTechnique::eCategory type) {
 		,   rt_specular->getRenderTargetView()
 	};
 
-	Render.activateBackBuffer();
+	//Render.activateBackBuffer();
+	SetOutputDeferred();
 
 	Render.ctx->OMSetRenderTargets(5, rts, Render.depth_stencil_view);
 
@@ -1280,7 +1308,8 @@ void CRenderDeferredModule::applyPostFX() {
 
 
 	// ------------------------
-	Render.activateBackBuffer();
+	//Render.activateBackBuffer();
+	SetOutputDeferred();
 
 	//activateZ(ZCFG_ALL_DISABLED);
 
