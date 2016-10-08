@@ -617,5 +617,21 @@
    type_collision="static"/>
 
 </entity>
+<entity>
+<tags
+   tags="sense_generator"/>
+<name
+   name="generator"/>
+<transform
+   pos="7.365 51.44 -30.6467"
+   quat="-0.064627 0.926492 -0.187081 0.320057"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/generator.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
 
 </entities>

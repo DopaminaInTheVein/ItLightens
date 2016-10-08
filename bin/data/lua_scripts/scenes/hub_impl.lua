@@ -12,6 +12,7 @@ TASK_HUB_SCI = 1
 target_seen = false
 mole_done = false
 sci_done = false
+sense_first_pressed = false
 dead_on_dream = false
 -------------------------------
 function OnStart_hub( )
@@ -19,10 +20,17 @@ function OnStart_hub( )
 	hub_first_time = true
 	mole_done = false
 	sci_done = false
+	
 	p:setControlEnabled(1)
+	
+	p:player_talks(p:get_text("hub","start_hub"))
+	p:exec_command("p:player_talks(p:get_text(\"hub\",\"sense\"))",4.0)
+	sense_first_pressed = true
+
+	
 	------------ test ---------------------
-	cam:run_cinematic("CineEndTarget", 5)
-	p:exec_command("yellow_help();", 3)
+	--cam:run_cinematic("CineEndTarget", 5)
+	--p:exec_command("yellow_help();", 3)
 	---------------------------------------
 	
 	------------------- codigo comentado para testear, descomentar  y tocar como toque --------------------
@@ -62,18 +70,30 @@ function OnLoad_hub()
 	dead_on_dream = false
 end
 -------------------------------
---===========================================
--- Events
---===========================================
-function hub_target_seen()
-	p:player_talks(p:get_text("hub","target_seen"))
-	h:getHandleCaller()
-	h:destroy()
-	p:exec_command("p:player_talks(p:get_text(\"hub\",\"target_seen2\"))",9.5)
-	p:exec_command("p:no_aim_circle(\"circle_1\")",16.0)
-	p:exec_command("p:unforce_sense_vision()",18.0)
 
-	p:exec_command("p:setOnlySense(0);", 18.5)
+function sense_pressed()
+	if sense_first_pressed then
+		sense_first_pressed = false
+		p:force_sense_vision()
+		cam:run_cinematic("CineEndTarget", 2.5)
+		
+		p:aim_circle("circle_1","aim_circle",-1.94,51.64,-20.08,-1.0)
+		p:exec_command("p:player_talks(p:get_text(\"hub\",\"target_seen_white\"))",3.0)
+		
+		p:exec_command("p:no_aim_circle(\"circle_1\")",7.5)
+		p:exec_command("p:aim_circle(\"circle_2\",\"aim_circle\",-1.94,51.64,-20.08,-1.0)",7.5)
+		p:exec_command("p:player_talks(p:get_text(\"hub\",\"target_seen_green\"))",7.5)
+		
+		p:exec_command("p:no_aim_circle(\"circle_2\")",12.0)
+		p:exec_command("p:aim_circle(\"circle_3\",\"aim_circle\",-1.94,51.64,-20.08,-1.0)",12.0)
+		p:exec_command("p:player_talks(p:get_text(\"hub\",\"target_seen_yellow\"))",12.0)
+		
+		p:exec_command("p:no_aim_circle(\"circle_3\")",16.5)
+		p:exec_command("cam:skip_cinematic()",16.5)
+		p:exec_command("p:player_talks(p:get_text(\"hub\",\"return_control\"))",16.5)
+		p:exec_command("p:unforce_sense_vision()",16.5)
+	end	
+	sense_first_pressed = false
 end
 
 function dream_mole()

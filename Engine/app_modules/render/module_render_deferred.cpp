@@ -16,6 +16,7 @@
 #include "render/draw_utils.h"
 #include "components/comp_render_glow.h"
 #include "render\static_mesh.h"
+#include "app_modules/logic_manager/logic_manager.h"
 
 #include "components\comp_render_fade_screen.h"
 
@@ -142,12 +143,7 @@ bool CRenderDeferredModule::start() {
 
 	Resources.get("textures/general/noise.dds")->as<CTexture>()->activate(TEXTURE_SLOT_NOISE);
 
-	
-	
-
 	Resources.get("textures/ramps/rampa_prueba.dds")->as<CTexture>()->activate(TEXTURE_SLOT_RAMP);
-
-	
 
 	shader_ctes_globals.use_ramp = 1;
 	shader_ctes_globals.world_time = 0.f;
@@ -157,9 +153,6 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_blur.ssao_intensity = 1.0f;
 	shader_ctes_blur.ssao_iterations = 30.f;
 
-	
-
-	
 	shader_ctes_blur.uploadToGPU();
 
 	return true;
@@ -183,6 +176,9 @@ void CRenderDeferredModule::update(float dt) {
 
 	//m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
 	m_isSpecialVisionActive = GameController->isSenseVisionEnabled();
+	if (controller->SenseButtonBecomesPressed()) {
+		logic_manager->throwUserEvent("sense_pressed()", "");
+	}
 }
 
 // ------------------------------------------------------
@@ -434,11 +430,11 @@ void CRenderDeferredModule::FinalRender() {
 	// Y el ZBuffer del backbuffer principal
 	Render.ctx->OMSetRenderTargets(3, rts, nullptr);
 
-/*	rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
-	rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
-	rt_selfIlum->activate(TEXTURE_SLOT_SELFILUM);
-	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-	rt_normals->activate(TEXTURE_SLOT_NORMALS);*/
+	/*	rt_albedos->activate(TEXTURE_SLOT_DIFFUSE);
+		rt_acc_light->activate(TEXTURE_SLOT_ENVIRONMENT);
+		rt_selfIlum->activate(TEXTURE_SLOT_SELFILUM);
+		rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+		rt_normals->activate(TEXTURE_SLOT_NORMALS);*/
 
 	activateZ(ZCFG_ALL_DISABLED);
 	activateBlend(BLENDCFG_DEFAULT);
@@ -527,7 +523,6 @@ void CRenderDeferredModule::renderAccLight() {
 	activateRS(RSCFG_DEFAULT);
 	addDirectionalLightsShadows();
 
-
 	CTexture* blurred_shadows = rt_shadows_gl;
 
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
@@ -559,7 +554,6 @@ void CRenderDeferredModule::renderAccLight() {
 		activateBlend(BLENDCFG_SUBSTRACT);
 		drawFullScreen(blurred_shadows);
 		//CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
-		
 	}
 
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
@@ -914,7 +908,7 @@ void CRenderDeferredModule::render() {
 	rt_selfIlum_int->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_blurred_int->clear(VEC4(0, 0, 0, 0));
-	rt_shadows_gl->clear(VEC4(0,0,0,0));
+	rt_shadows_gl->clear(VEC4(0, 0, 0, 0));
 
 	uploadConstantsGPU();
 
@@ -928,7 +922,7 @@ void CRenderDeferredModule::render() {
 	}
 
 	//make a texture copy
-	
+
 	//CTexture* copy_blurred_shadows = rt_shadows;
 
 	CEntity* e_camera = h_camera;
@@ -957,16 +951,14 @@ void CRenderDeferredModule::render() {
 	activateBlend(BLENDCFG_COMBINATIVE);
 	rt_specular_lights->activate(TEXTURE_SLOT_SPECULAR_GL);
 
-
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
 	//rt_shadows->activate(TEXTURE_SLOT_SHADOWS);
 
 	//activateBlend(BLENDCFG_DEFAULT);	//testing
-	
+
 	//CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-
 
 	activateBlend(BLENDCFG_DEFAULT);
 
@@ -980,7 +972,6 @@ void CRenderDeferredModule::render() {
 	ShootGuardRender();
 	MarkInteractives(VEC4(1, 1, 1, 1), "interactive", INTERACTIVE_OBJECTS);
 
-	
 	//Render.activateBackBuffer();
 	SetOutputDeferred();
 	activateZ(ZCFG_DEFAULT);
@@ -991,8 +982,6 @@ void CRenderDeferredModule::render() {
 
 	applyPostFX();
 
-	
-	
 	activateZ(ZCFG_ALL_DISABLED);
 
 	rt_shadows_gl->activate(TEXTURE_SLOT_SHADOWS);
@@ -1005,7 +994,6 @@ void CRenderDeferredModule::render() {
 
 	// Leave the 3D Camera active
 	activateRenderCamera3D();
-
 
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
 	CTexture::deactivate(TEXTURE_SLOT_SPECULAR_GL);
@@ -1306,7 +1294,6 @@ void CRenderDeferredModule::applyPostFX() {
 	else
 		return;
 
-
 	// ------------------------
 	//Render.activateBackBuffer();
 	SetOutputDeferred();
@@ -1318,7 +1305,6 @@ void CRenderDeferredModule::applyPostFX() {
 	drawFullScreen(next_step);
 
 	activateZ(ZCFG_DEFAULT);
-
 }
 
 void CRenderDeferredModule::renderUI() {

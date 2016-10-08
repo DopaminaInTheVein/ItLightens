@@ -3,9 +3,12 @@
 	"button_1": "Comenzar partida"
   },
   "hub": {
-    "start_hub": "This is your sensing ability\nYou can find important things with it\nNow aim for the red circle",
-    "target_seen": "You can use this ability every time you need.\Use it with SENSE button (right click or gamepad B)\nGreen signal is your next step,\nyellow is the final one.",
-    "target_seen2": "Other colors mean:\nWhite helps to locate recharge points,\nRed is where guards are.\n",
+    "start_hub": "Wellcome to the tutorials.\nLet's learn some things about the game.",
+	"sense":"Let's SENSE (right click or gamepad B)!!!\nFor demonstration it will keep for a short time.",
+    "target_seen_green": "This GREEEN signal is your next step.",
+    "target_seen_yellow": "The YELLOW one is the final point of the level.",
+	"target_seen_white": "WHITE are generators, where you can restore all your life.",
+	"return_control":"It's your turn now.\nMove with WASD + Mouse or with controller joysticks.\nTry going next to the big strong boy MOLE\nThen press ACTION button and enter his dream",
 	"dead_on_dream": "¡Uy! Suerte que era un sueño...\nTendré que esforzarme más."
   },
   "tuto_mole": {
