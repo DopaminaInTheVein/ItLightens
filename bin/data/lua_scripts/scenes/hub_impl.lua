@@ -100,7 +100,7 @@ function sense_pressed()
 		p:force_sense_vision()
 		cam:run_cinematic("CineEndTarget", 2.5)
 		
-		p:aim_circle("circle_1","aim_circle",-1.94,51.64,-20.08,-1.0)
+		p:aim_circle("circle_1","aim_circle",7.37,51.3,-30.65,-1.0)
 		p:exec_command("p:player_talks(p:get_text(\"hub\",\"target_seen_white\"))",3.0)
 		
 		p:exec_command("p:no_aim_circle(\"circle_1\")",7.5)
@@ -108,7 +108,7 @@ function sense_pressed()
 		p:exec_command("p:player_talks(p:get_text(\"hub\",\"target_seen_green\"))",7.5)
 		
 		p:exec_command("p:no_aim_circle(\"circle_2\")",12.0)
-		p:exec_command("p:aim_circle(\"circle_3\",\"aim_circle\",-1.94,51.64,-20.08,-1.0)",12.0)
+		p:exec_command("p:aim_circle(\"circle_3\",\"aim_circle\",-2.2,52.5,-25.44,-1.0)",12.0)
 		p:exec_command("p:player_talks(p:get_text(\"hub\",\"target_seen_yellow\"))",12.0)
 		
 		p:exec_command("p:no_aim_circle(\"circle_3\")",16.5)

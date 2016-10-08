@@ -2,7 +2,7 @@
 #define INC_MCV_PLATFORM_H_
 
 // -- Global settings -- //
-//#define FINAL_BUILD
+#define FINAL_BUILD
 #ifndef FINAL_BUILD
 #define TEST_VALUES // Read initialization_test.json
 //#define CALIBRATE_GAME
