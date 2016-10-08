@@ -94,7 +94,7 @@ function OnLoad_hub()
 end
 -------------------------------
 
-function sense_pressed()
+function hub_sense_pressed()
 	if sense_first_pressed then
 		sense_first_pressed = false
 		p:force_sense_vision()

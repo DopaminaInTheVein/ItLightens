@@ -58,3 +58,6 @@ function OnEnter_tSave02( )
 SaveLevel()
 end
 
+function ms3_sense_pressed()
+
+end
