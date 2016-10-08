@@ -14,6 +14,8 @@ mole_done = false
 sci_done = false
 sense_first_pressed = false
 dead_on_dream = false
+first_mole = false
+first_sci = false
 -------------------------------
 function OnStart_hub( )
 	target_seen = false
@@ -51,10 +53,30 @@ function OnLoad_hub()
 	if dead_on_dream then
 		p:player_talks(p:get_text("hub",TXT_DEAD_ON_DREAM))
 	else
+		if mole_done and not sci_done then
+			first_mole = true
+			p:player_talks(p:get_text("hub","mole_tuto_complete"))
+			p:exec_command("p:player_talks(p:get_text(\"hub\",\"do_other_tutorial_sci\"))",3.5)
+		end
+		if not mole_done and sci_done then
+			first_sci = true
+			p:player_talks(p:get_text("hub","sci_tuto_complete"))
+			p:exec_command("p:player_talks(p:get_text(\"hub\",\"do_other_tutorial_mole\"))",3.5)
+		end
+		
+		if first_mole and sci_done then
+			p:player_talks(p:get_text("hub","sci_tuto_complete"))
+		end
+		if first_sci and mole_done then
+			p:player_talks(p:get_text("hub","mole_tuto_complete"))
+		end
+		
+		
 		if mole_done and sci_done then
 			end_hub_handles = HandleGroup()
 			end_hub_handles:get_handles_by_tag("end_hub")
 			end_hub_handles:awake()
+			p:exec_command("p:player_talks(p:get_text(\"hub\",\"tutos_completed\"))",3.5)
 		end
 		if mole_done then
 			h:get_handle_by_id(idMoleSlept)
@@ -66,6 +88,7 @@ function OnLoad_hub()
 			h:set_anim_loop("run")
 			p:complete_tasklist(TASK_HUB_SCI)
 		end
+		
 	end
 	dead_on_dream = false
 end
@@ -114,23 +137,3 @@ function hub_end()
 	SaveLevel()
 	LoadLevel("level_4")
 end
---=============================================
-
---==============================================================
--- Auxiliars
---==============================================================
-function yellow_help()
-	p:show_message("Este es el objetivo", "raijin")--p:get_text("hub","target_seen"))
-	p:wait_button("yellow_help2();")
-end
-
-function yellow_help2()
-	p:show_message("Explicacion amarillo", "raijin")--p:get_text("hub","target_seen"))
-	p:wait_button("yellow_help3();")
-end
-
-function yellow_help3()
-	cam:skip_cinematic()
-	p:exec_command("p:hide_message();", 0.5)
-end
---==============================================================

@@ -31,6 +31,11 @@
     "target_seen_yellow": "The YELLOW one is the final point of the level.",
 	"target_seen_white": "WHITE are generators, where you can restore all your life.",
 	"return_control":"It's your turn now.\nMove with WASD + Mouse or with controller joysticks.\nTry going next to the big strong boy MOLE\nThen press ACTION button and enter his dream",
+	"mole_tuto_complete":"Congratulations for completing the MOLE tutorial",
+	"sci_tuto_complete":"Congratulations for completing the SCIENTIST tutorial",
+	"do_other_tutorial_sci":"Now let's do the SCIENTIST tutorial\nCheck with sense where it is!",
+	"do_other_tutorial_mole":"Now let's do the MOLE tutorial\nCheck with sense where it is!",
+	"tutos_completed":"You completed both tutorials, fantastic!\nYou are able to see the teleport sphere\nLet's go to the game itself!!!!",
 	"dead_on_dream": "Ui! Sort que era un somni...\nHauré d'esforçar-me més."
   },
   "tuto_mole": {
