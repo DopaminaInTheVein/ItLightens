@@ -795,6 +795,12 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.comment("Run cinematic defined in the specified guided camera")
 		.param("string: guided camera name")
 		.param("speed: speed of camera movement (0 means default speed)")
+		// run cinematic
+		.set("start_cinematic", &SLBCamera::startCinematic)
+		.comment("Run cinematic from first point")
+		.param("string: guided camera name")
+		.param("int: cinematic point")
+		//Skip cinematic
 		.set("skip_cinematic", &SLBCamera::skipCinematic)
 		// Set Orbit Camera
 		.set("orbit", &SLBCamera::orbit)

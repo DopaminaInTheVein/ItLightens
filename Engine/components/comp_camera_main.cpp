@@ -95,7 +95,7 @@ void TCompCameraMain::update(float dt) {
 		if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
 			//if (owner.hasTag("camera_main")) {
 			VEC3 pos = transform->getPosition();
-			//pos.y += 2;
+			pos.y += 2;
 			//transform->setPosition(pos);
 			if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
 

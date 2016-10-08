@@ -42,6 +42,7 @@ public:
 	bool followGuide(TCompTransform*, TCompCameraMain*);
 	void start(float speed = 0.f);
 	void skip() { skipped_extern = true; }
+	void moveCinePoint(int point_index);
 };
 
 #endif
