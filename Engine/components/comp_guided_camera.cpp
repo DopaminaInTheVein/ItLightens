@@ -79,15 +79,34 @@ void TCompGuidedCamera::onGuidedCamera(const TMsgGuidedCamera& msg) {
 		//Init Guide
 		TCompGuidedCamera::start(msg.speed);
 
-		//Initial Pos
 		TCompCameraMain * comp_main_camera = eMainCamera->get<TCompCameraMain>();
+		GET_COMP(cam_tmx, mainCamera, TCompTransform);
 		assert(comp_main_camera);
-		positions[0] = comp_main_camera->getPosition();
 
-		//Initial Target
 		TCompController3rdPerson * camera_controller = eMainCamera->get<TCompController3rdPerson>();
 		assert(camera_controller);
-		targets[0] = positions[0] + comp_main_camera->getFront() * camera_controller->GetPositionDistance();
+
+		if (msg.start) {
+			//Initial Target
+			positions[0] = positions[1] + VEC3_UP;
+			//Initial Pos
+			targets[0] = targets[1] + VEC3_UP;
+			comp_main_camera->lookAt(positions[0], targets[0]);
+		}
+		else {
+			//Initial Target
+			positions[0] = comp_main_camera->getPosition();
+			//Initial Pos
+			targets[0] = positions[0] + comp_main_camera->getFront() * camera_controller->GetPositionDistance();
+		}
+	}
+}
+
+void TCompGuidedCamera::moveCinePoint(int point_index) {
+	CHandle mainCamera = tags_manager.getFirstHavingTag("camera_main");
+	if (mainCamera.isValid()) {
+		GET_COMP(cam, mainCamera, TCompCameraMain);
+		cam->lookAt(positions[point_index], targets[point_index]);
 	}
 }
 

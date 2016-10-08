@@ -202,7 +202,7 @@ bool CInputWrapper::IsPausePressed() {
 	return res;
 }
 bool CInputWrapper::IsBackPressed() {
-	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed();
+	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed() || io->mouse.left.becomesPressed();
 }
 bool CInputWrapper::IsBackBeingPressed() {
 	return io->keys[VK_ESCAPE].isPressed() || io->joystick.button_BACK.isPressed();

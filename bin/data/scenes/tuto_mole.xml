@@ -227,7 +227,7 @@
 <name
    name="_end_portal"/>
 <transform
-   pos="1028.23 70.7629 -24.9939"
+   pos="1028.95 73.4292 -24.9939"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <tmx_animator
@@ -312,22 +312,6 @@
    type_collision="static"/>
 
 </entity>
-<entity
-   id="100">
-<tags/>
-<name
-   name="pared_rompible"/>
-<transform
-   pos="1033.21 66.0571 -26.0363"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/pared_rompible.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
 <entity>
 <tags/>
 <name
@@ -353,22 +337,6 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/tuto_mole/farolillo001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity
-   id="101">
-<tags/>
-<name
-   name="pared_rota_jaula"/>
-<transform
-   pos="1033.21 66.0571 -26.0363"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/pared_rota_jaula.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>

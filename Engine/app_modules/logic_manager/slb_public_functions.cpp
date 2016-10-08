@@ -534,6 +534,19 @@ void SLBCamera::runCinematic(const char* name, float speed) {
 		TMsgGuidedCamera msg_guided_cam;
 		msg_guided_cam.guide = guidedCam;
 		msg_guided_cam.speed = speed;
+		msg_guided_cam.start = false;
+		guidedCamE->sendMsg(msg_guided_cam);
+	}
+}
+
+void SLBCamera::startCinematic(const char* name, float speed) {
+	CHandle guidedCam = tags_manager.getHandleByTagAndName("guided_camera", name);
+	CEntity * guidedCamE = guidedCam;
+	if (guidedCamE) {
+		TMsgGuidedCamera msg_guided_cam;
+		msg_guided_cam.guide = guidedCam;
+		msg_guided_cam.speed = speed;
+		msg_guided_cam.start = true;
 		guidedCamE->sendMsg(msg_guided_cam);
 	}
 }
@@ -576,16 +589,24 @@ void SLBCamera::resetCamera() {
 	// restore the normal 3rd person camera
 	if (!checkCamera()) return;
 	// turn manual control off
-	CEntity * camera_e = camera_h;
-	GET_COMP(cam_m, camera_e, TCompCameraMain);
+	GET_COMP(cam_m, camera_h, TCompCameraMain);
 	cam_m->setManualControl(false);
 	GameController->SetManualCameraState(false);
 	// restore normal controls
 	TMsgSetControllable msg;
 	msg.control = true;
-	camera_e->sendMsg(msg);
-	GET_COMP(cam_control, camera_e, TCompController3rdPerson);
+	camera_h.sendMsg(msg);
+	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
 	if (cam_control) cam_control->StopOrbit();
+
+	CHandle player = CPlayerBase::handle_player;
+	if (player.isValid()) {
+		GET_COMP(player_tmx, player, TCompTransform);
+		if (player_tmx) {
+			GET_COMP(cam_tmx, camera_h, TCompTransform);
+			if (cam_tmx) cam_tmx->setPosition(player_tmx->getPosition());
+		}
+	}
 }
 
 //Ui Camera control in LUA

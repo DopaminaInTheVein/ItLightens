@@ -11,7 +11,7 @@
 <name
    name="_player_1"/>
 <transform
-   pos="1038.17 64.5601 -25.5997"
+   pos="1039.65 64.5601 -27.6757"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -24,27 +24,6 @@
 <character_controller
    radius="0.3"
    height="0.7"/>
-
-</entity>
-<entity
-   permanent="yes"
-   reload="yes">
-<tags
-   tags="camera_main"/>
-<camera_main
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<culling/>
-<render_glow/>
-<controller_3rd_person/>
-<FX_fade_screen/>
-<name
-   name="_player_1_camController_1"/>
-<transform
-   pos="1039.49 66.5439 -24.4054"
-   quat="0.424022 0.498953 -0.216651 0.724096"
-   scale="1.0"/>
 
 </entity>
 <entity
@@ -244,160 +223,50 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="1.43707 0.185 3.76478"/>
+   size="0.416751 10.914 3.76478"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="_ttutomole_end"/>
 <transform
-   pos="1028.22 70.8001 -24.9682"
+   pos="1028.49 73.1718 -24.9682"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
 </entity>
 <entity
+   id="100"
    reload="yes">
 <tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.718536 0.185 2.56005"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
 <name
-   name="_ttutomole_end"/>
+   name="pared_rompible"/>
 <transform
-   pos="1028.22 71.873 -24.9886"
+   pos="1033.21 66.0571 -26.0363"
    quat="0 0 0 1.0"
    scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_mole/pared_rompible.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 <entity
+   id="101"
    reload="yes">
 <tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 1.51043"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
 <name
-   name="_ttutomole_end"/>
+   name="pared_rota_jaula"/>
 <transform
-   pos="1028.19 72.4346 -24.9886"
+   pos="1033.21 66.0571 -26.0363"
    quat="0 0 0 1.0"
    scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
+<render_static_mesh
+   name="static_meshes/tuto_mole/pared_rota_jaula.static_mesh"/>
+<abs_aabb/>
 <rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.718536 0.185 2.56005"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1028.22 69.7093 -24.9886"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 1.51043"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1028.19 69.17 -24.9886"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 0.31719"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1028.19 69.8204 -23.5284"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 0.31719"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1028.19 69.8204 -26.4524"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 0.31719"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1028.19 71.7954 -26.4524"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.338536 0.0250001 0.31719"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1028.19 71.7954 -23.5286"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
+   type_collision="static"/>
 
 </entity>
 <entity
@@ -440,6 +309,102 @@
    pos="1016.53 65.0432 -32.2398"
    quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="4"
+   skippable="no"
+   stop_final="yes"
+   wpt1="1028.02 77.6201 -32.1976"
+   wpt2="1028.02 67.7094 -27.8563"
+   wpt3="1029.87 65.6882 -26.2146"
+   wpt4="1040.36 66.0803 -23.6371"
+   lpt1="1022.07 72.0148 -24.7469"
+   lpt2="1016.74 66.5073 -25.1092"
+   lpt3="1016.69 65.9383 -31.8152"
+   lpt4="1029.02 66.2446 -27.5532"/>
+<name
+   name="CineIntro"/>
+<transform
+   pos="1038.97 66.4762 -7.72171"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="3"
+   skippable="no"
+   stop_final="yes"
+   wpt1="1027.41 65.5478 -29.8346"
+   wpt2="1020.46 65.4545 -27.4272"
+   wpt3="1018.11 66.5244 -16.9743"
+   lpt1="1018.07 68.9209 -25.9594"
+   lpt2="1034.03 65.3697 -25.927"
+   lpt3="1028.95 71.6667 -26.0367"/>
+<name
+   name="CineSala"/>
+<transform
+   pos="1032.01 66.4762 -7.72171"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="2"
+   skippable="no"
+   stop_final="yes"
+   wpt1="1021.1 70.7414 -19.4925"
+   wpt2="1016.79 76.8245 -15.1391"
+   lpt1="1029.38 72.3398 -25.2395"
+   lpt2="1024.43 66.2909 -25.874"/>
+<name
+   name="CinePortalWay"/>
+<transform
+   pos="1025.34 66.4762 -7.72171"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="3"
+   skippable="no"
+   stop_final="yes"
+   wpt1="1021.25 71.9291 -19.6802"
+   wpt2="1021.25 67.4304 -25.2186"
+   wpt3="1024.13 67.1188 -31.1171"
+   lpt1="1025.87 67.3613 -25.0095"
+   lpt2="1013.46 62.8626 -32.4307"
+   lpt3="1015.38 65.4513 -31.8414"/>
+<name
+   name="CineBox"/>
+<transform
+   pos="1018.34 66.4762 -7.72171"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
 
 </entity>
 

@@ -325,6 +325,7 @@ struct TMsgBoxHit {
 struct TMsgGuidedCamera {
 	CHandle guide;
 	float speed;
+	bool start;
 	DECLARE_MSG_ID();
 };
 struct TMsgSetPolarity {

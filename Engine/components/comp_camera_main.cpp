@@ -121,7 +121,7 @@ void TCompCameraMain::update(float dt) {
 			//if (owner.hasTag("camera_main")) {
 			VEC3 pos = transform->getPosition();
 			pos.y += 2;
-			transform->setPosition(pos);
+			//transform->setPosition(pos);
 			if (abs(smoothCurrent - smoothDefault) > 0.1f) smoothCurrent = smoothDefault * 0.05f + smoothCurrent * 0.95f;
 
 			CEntity *e_me = compBaseEntity;
