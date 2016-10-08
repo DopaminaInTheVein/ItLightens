@@ -114,6 +114,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnPutPila(\"%s\");", params.c_str());
 		break;
 	}
+	case (OnBoxMode): {
+		sprintf(lua_code, "OnBoxMode(\"%s\");", params.c_str());
+		break;
+	}
 	case (OnRemovePila): {
 		sprintf(lua_code, "OnRemovePila(\"%s\");", params.c_str());
 		break;
