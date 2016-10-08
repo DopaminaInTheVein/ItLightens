@@ -107,6 +107,7 @@ public:
 		OnElevatorGoingUp,
 		OnElevatorGoingDown,
 
+		OnBoxMode,
 		OnPutPila,
 		OnRemovePila,
 

@@ -428,6 +428,11 @@ function OnPutPila( param )
 	p:play_sound("event:/OnPutPila", 1.0, false)
 end
 
+function OnBoxMode( level )
+	p:print( "OnBoxMode\n")
+	CallFunction("OnBoxMode_"..level)
+end
+
 function OnRemovePila( param )
 	p:print( "OnRemovePila\n")
 	CallFunction("OnRemovePila_"..param)

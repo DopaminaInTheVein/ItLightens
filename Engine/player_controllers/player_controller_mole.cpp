@@ -172,7 +172,6 @@ void player_controller_mole::myUpdate()
 
 void player_controller_mole::UpdateMoves() {
 	if (pushing_box) {
-
 		VEC3 direction = push_pull_direction;
 
 		if (pulling_box)
@@ -192,7 +191,6 @@ void player_controller_mole::UpdateMoves() {
 
 		cc->AddMovement(direction, player_curr_speed*getDeltaTime());
 		if (moving) UpdateMovingWithOther();
-
 	}
 	else {
 		CPlayerBase::UpdateMoves();
@@ -645,13 +643,15 @@ void player_controller_mole::PushBoxPreparation() {
 		GET_COMP(box_p, boxPushed, TCompPhysics);
 		box_p->getActor()->isRigidBody()->setMass(250.f);
 		box_p->getRigidActor()->isRigidBody()->setMass(250.f);
-		
+
 		//push-pull direction
 		GET_COMP(box_t, boxPushed, TCompTransform);
 		push_pull_direction = box_t->getPosition() - getEntityTransform()->getPosition();
 		push_pull_direction.y = 0.f;
 		push_pull_direction.Normalize();
 		inputEnabled = true;
+
+		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnBoxMode, CApp::get().getCurrentRealLevel(), MY_OWNER);
 	}
 }
 

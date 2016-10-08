@@ -16,6 +16,7 @@ TASK_TUTOM_BOX_PLACED = 3
 
 ---------------------------------------------
 poss_done = false
+box_contacted = false
 box_moved_done = false
 box_placed_done = false
 unposs_done = false
@@ -32,6 +33,7 @@ end
 
 function OnStart_tuto_mole( )
 	poss_done = false
+	box_contacted = false
 	box_moved_done = false
 	box_placed_done = false
 	portal_done = false
@@ -64,6 +66,10 @@ function tutomole_wall_crossed( )
 	-- tutomole_help_box()
 	-- h:getHandleCaller()
 	-- h:destroy()
+end
+
+function OnBoxMode_tuto_mole( )
+	TutoMoleUseBox()
 end
 
 function tutomole_box_placed( )
@@ -228,6 +234,13 @@ function TutoMoleSala10()
 	cam:skip_cinematic()
 	p:hide_message()
 	p:exec_command("tutomole_help_box();", 1)
+end
+---------------------------------------------------------------------------------------
+function TutoMoleUseBox()
+	if not box_contacted then
+		box_contacted = true
+		p:show_message("W pa empujar, S pa estirar", "raijin")
+	end
 end
 
 function tutomole_help_possess( )
