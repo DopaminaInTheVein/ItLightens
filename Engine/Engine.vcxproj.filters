@@ -554,6 +554,45 @@
     <ClCompile Include="app_modules\sound_manager\comp_sound.cpp">
       <Filter>app_modules\sound_manager</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\gui\comps\gui_drag.cpp">
+      <Filter>app_modules\gui\comps</Filter>
+    </ClCompile>
+    <ClCompile Include="render\fx\fx_hatching.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
+    <ClCompile Include="render\fx\fx_motion_blur.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
+    <ClCompile Include="render\fx\fx_outline.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
+    <ClCompile Include="render\fx\fx_antialiasing.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
+    <ClCompile Include="render\fx\fx_depth_fog.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
+    <ClCompile Include="render\fx\fx_dream.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
+    <ClCompile Include="render\fx\fx_fade_screen.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
+    <ClCompile Include="render\fx\fx_glow.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
+    <ClCompile Include="components\comp_light_dir_shadows_dyn.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\render\module_render_postprocess.cpp">
+      <Filter>app_modules\render</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\render\comp_basic_fx.cpp">
+      <Filter>app_modules\render</Filter>
+    </ClCompile>
+    <ClCompile Include="app_modules\gui\gui_munition.cpp">
+      <Filter>app_modules\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1463,6 +1502,48 @@
     </ClInclude>
     <ClInclude Include="app_modules\sound_manager\comp_sound.h">
       <Filter>app_modules\sound_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\comps\gui_drag.h">
+      <Filter>app_modules\gui\comps</Filter>
+    </ClInclude>
+    <ClInclude Include="render\fx\fx_glow.h">
+      <Filter>render\fx</Filter>
+    </ClInclude>
+    <ClInclude Include="render\fx\fx_hatching.h">
+      <Filter>render\fx</Filter>
+    </ClInclude>
+    <ClInclude Include="render\fx\fx_motion_blur.h">
+      <Filter>render\fx</Filter>
+    </ClInclude>
+    <ClInclude Include="render\fx\fx_outline.h">
+      <Filter>render\fx</Filter>
+    </ClInclude>
+    <ClInclude Include="render\fx\fx_antialiasing.h">
+      <Filter>render\fx</Filter>
+    </ClInclude>
+    <ClInclude Include="render\fx\fx_depth_fog.h">
+      <Filter>render\fx</Filter>
+    </ClInclude>
+    <ClInclude Include="render\fx\fx_dream.h">
+      <Filter>render\fx</Filter>
+    </ClInclude>
+    <ClInclude Include="render\fx\fx_fade_screen.h">
+      <Filter>render\fx</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\render\test_module_fx.h">
+      <Filter>app_modules\render</Filter>
+    </ClInclude>
+    <ClInclude Include="components\comp_light_dir_shadows_dyn.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\render\module_render_postprocess.h">
+      <Filter>app_modules\render</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\render\comp_basic_fx.h">
+      <Filter>app_modules\render</Filter>
+    </ClInclude>
+    <ClInclude Include="app_modules\gui\gui_munition.h">
+      <Filter>app_modules\gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

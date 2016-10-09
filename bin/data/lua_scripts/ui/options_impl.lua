@@ -56,6 +56,12 @@ end
 function OnCreateGui_opt_axisY( )
 	InitOptAxis("y")
 end
+function OnCreateGui_opt_music( )
+	InitMusic()
+end
+function OnCreateGui_opt_sfx( )
+	InitSfx()
+end
 
 --Choose Options
 function OnChoose_opt_axisX(option)
@@ -69,6 +75,12 @@ function OnChoose_opt_diff(option)
 end
 function OnChoose_opt_lang(option)
 	SaveLanguage(option)
+end
+function OnValueChanged_opt_music(value)
+	MusicChanged(value)
+end
+function OnValueChanged_opt_sfx(value)
+	SfxChanged(value)
 end
 
 --Click go back
@@ -109,6 +121,9 @@ function InitDifficulty()
 	end
 	diff = p:json_read(FILE_OPTIONS, "game", "difficulty")
 	h:select_option(diff)
+	if not g_is_menu then
+		h:set_gui_enabled(false)
+	end
 end
 
 function SaveDifficulty(option)
@@ -134,6 +149,55 @@ function SaveAxis(option, axis)
 		default = function() val = -1 end, -- Esto no puede pasar
 	}
 	p:json_edit(FILE_OPTIONS, "controls", axis.."-axis_inverted", val)
+end
+
+--Sound
+function InitMusic()
+	p:print("Init music")
+	h:getHandleCaller()
+	val = p:json_read(FILE_OPTIONS, "sound", "music")
+	h:set_drag_value(val)
+end
+
+function MusicChanged(value)
+	p:print("Music Changed: "..value)
+	p:json_edit(FILE_OPTIONS, "sound", "music", value)
+	p:set_music_volume(value)
+end
+
+sfx_volume = 0.0
+function InitSfx()
+	p:print("Init sfx")
+	h:getHandleCaller()
+	sfx_volume = p:json_read(FILE_OPTIONS, "sound", "sfx")
+	h:set_drag_value(val)
+	sfx_prev = sfx_volume
+	sfx_prev_prev = sfx_prev
+	testSound()
+end
+
+function SfxChanged(value)
+	p:print("Sfx Changed: "..value)
+	p:json_edit(FILE_OPTIONS, "sound", "sfx", value)
+	p:set_sfx_volume(value)
+	sfx_volume = value
+end
+
+sfx_prev = 0.0
+sfx_prev_prev = 0.0
+function testSound()
+	-- p:print("sfx_prev: "..sfx_prev)
+	-- p:print("sfx_prev_prev: "..sfx_prev_prev)
+	-- p:print("sfx: "..sfx_volume)
+	if sfx_prev == sfx_volume then
+		if sfx_prev_prev ~= sfx_prev then
+			p:play_sound("event:/OnMoleStepParquetL1", 1.0, false)
+			sfx_prev_prev = sfx_prev
+		end
+	end
+	sfx_prev_prev = sfx_prev
+	sfx_prev = sfx_volume
+	p:exec_command("testSound();", 0.05)
 end
 
 --Destroy Menu

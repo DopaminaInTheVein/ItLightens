@@ -48,15 +48,19 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	float specular = txSpeculars.Sample(samLinear, iTex0).r;
 	float4 diffuse = txDiffuse.Sample(samLinear, iTex0);
 	float4 N = txNormal.Sample(samLinear, iTex0);
-	float inv_shadows = 1- txShadows.Sample(samLinear, iTex0).r;
+	//float inv_shadows = txShadows.Sample(samLinear, iTex0).r;
 	float base = step(0.1f, specular);
+	float4 inv = txShadows.Sample(samLinear, iTex0);
+	//return float4(specular.xxx,1);
+	//return float4(diffuse.xyz,1);
+	//return float4(N.xyz,1);
+	//return float4(inv.rgb,1);
 	
-	
-	float4 val = diffuse*0.3 + specular.xxxx*0.3 + inv_shadows.xxxx*1.0;
+	float4 val = inv;
 	//val*= rim;
 	if(val.x > 1)
 		val = float4(1,1,1,1);
-	val = val*2 -1.6;
+	//val = val*2 -1.6;
 	
 	//return float4(val.xxx,1);
 
@@ -115,18 +119,19 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	float inv_specular = (1 - specular);
 	inv_specular = pow(inv_specular,5);
 	diff = 1 - diff;
-	float shading = inv_specular*0.2f+diff*0.8f;
+	/*float shading = inv_specular*0.2f+diff*0.8f;
 	//return float4(specular,specular,specular,1);
 	//return float4(inv_specular,inv_specular,inv_specular,1);
 	
 	//return float4(diff, diff, diff, 1);
-	shading = shading*5 - 3;
+	shading = shading*5 - 3;*/
 	//return float4(shading,shading,shading,1);
 	//return float4(alpha, alpha, alpha, 1);
 	
 	
-	c.a = alpha*(inv_shadows*inv_shadows)*shading;
-	c.a = alpha*val;
+	//c.a = alpha*(inv_shadows*inv_shadows)*shading;
+	c.a = alpha*val*intensity;
+	//c.a = 1;
 	//return float4(inv_shadows, inv_shadows, inv_shadows, 1);
 	//c.a = inv_shadows;
 	//float LC = 1 - length(c.rgb);
@@ -134,6 +139,8 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	
 	//c.a = c.a*2 - 1*c.a;
 	//c.a  = 1.0f;
+	//return float4(alpha.rrr, 1);
+	//return float4(val.rrr, 1);
 	//return float4(c.a, c.a, c.a, 1.0f);
 	//c.a = 0;
 	

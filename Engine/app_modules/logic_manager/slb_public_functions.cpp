@@ -13,6 +13,9 @@
 #include "logic/bt_scientist.h"
 #include "logic/pila_container.h"
 
+#include "app_modules/render/module_render_postprocess.h"
+#include "render/fx/fx_fade_screen.h"
+
 using namespace IdEntities;
 
 //Position functions
@@ -409,7 +412,20 @@ bool SLBHandle::isComeBack() {
 	dbg("SLBHANDLE::isPatroling: %d", comeback);
 	return comeback;
 }
-
+void SLBHandle::setGuiEnabled(bool enabled)
+{
+	if (real_handle.isValid()) {
+		GET_COMP(gui, real_handle, TCompGui);
+		if (gui) gui->SetEnabled(enabled);
+	}
+}
+void SLBHandle::setDragValue(float value)
+{
+	if (real_handle.isValid()) {
+		GET_COMP(gui_drag, real_handle, TCompGuiDrag);
+		if (gui_drag) gui_drag->SetValue(value);
+	}
+}
 // Handle group By Tag
 void SLBHandleGroup::getHandlesByTag(const char * tag) {
 	handle_group = tags_manager.getHandlesByTag(string(tag));
@@ -511,27 +527,46 @@ void SLBCamera::setPositionOffset(float x_offset, float y_offset, float z_offset
 	camara3rd->setPositionOffset(offset);
 }
 
-void SLBCamera::runCinematic(const char* name, float speed) {
+void SLBCamera::execCinematic(const char* name, float speed, bool is_start) {
 	CHandle guidedCam = tags_manager.getHandleByTagAndName("guided_camera", name);
-	CEntity * guidedCamE = guidedCam;
-	if (guidedCamE) {
+	if (guidedCam.isValid()) {
 		TMsgGuidedCamera msg_guided_cam;
 		msg_guided_cam.guide = guidedCam;
 		msg_guided_cam.speed = speed;
-		guidedCamE->sendMsg(msg_guided_cam);
+		msg_guided_cam.start = is_start;
+		guidedCam.sendMsg(msg_guided_cam);
 	}
 }
 
-void SLBCamera::fadeIn(float speed) {
+void SLBCamera::runCinematic(const char* name, float speed) {
+	execCinematic(name, speed, false);
+}
+
+void SLBCamera::startCinematic(const char* name, float speed) {
+	execCinematic(name, speed, true);
+}
+
+void SLBCamera::skipCinematic() {
 	if (!checkCamera()) return;
-	GET_COMP(fx, camera_h, TCompFadeScreen);
+	GET_COMP(cam, camera_h, TCompCameraMain);
+	if (cam) cam->skipCinematic();
+}
+
+void SLBCamera::fadeIn(float speed) {
+	//TCompFadeScreen * fx = render_fx->GetFX<TCompFadeScreen>(FX_FADESCREEN_ALL);
+	GET_FX(fx, TFadeScreen, FX_FADESCREEN);
+	if (!render_fx->isActive(FX_FADESCREEN)) {
+		fx->Activate();
+	}
 	fx->SetMaxTime(speed);
 	fx->FadeIn();
 }
 
 void SLBCamera::fadeOut(float speed) {
-	if (!checkCamera()) return;
-	GET_COMP(fx, camera_h, TCompFadeScreen);
+	GET_FX(fx, TFadeScreen, FX_FADESCREEN);
+	if (!render_fx->isActive(FX_FADESCREEN)) {
+		fx->Activate();
+	}
 	fx->SetMaxTime(speed);
 	fx->FadeOut();
 }
@@ -549,16 +584,24 @@ void SLBCamera::resetCamera() {
 	// restore the normal 3rd person camera
 	if (!checkCamera()) return;
 	// turn manual control off
-	CEntity * camera_e = camera_h;
-	GET_COMP(cam_m, camera_e, TCompCameraMain);
+	GET_COMP(cam_m, camera_h, TCompCameraMain);
 	cam_m->setManualControl(false);
 	GameController->SetManualCameraState(false);
 	// restore normal controls
 	TMsgSetControllable msg;
 	msg.control = true;
-	camera_e->sendMsg(msg);
-	GET_COMP(cam_control, camera_e, TCompController3rdPerson);
+	camera_h.sendMsg(msg);
+	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
 	if (cam_control) cam_control->StopOrbit();
+
+	CHandle player = CPlayerBase::handle_player;
+	if (player.isValid()) {
+		GET_COMP(player_tmx, player, TCompTransform);
+		if (player_tmx) {
+			GET_COMP(cam_tmx, camera_h, TCompTransform);
+			if (cam_tmx) cam_tmx->setPosition(player_tmx->getPosition());
+		}
+	}
 }
 
 //Ui Camera control in LUA
@@ -575,15 +618,20 @@ bool SLBUiCamera::checkCamera() {
 }
 
 void SLBUiCamera::fadeIn(float speed) {
-	if (!checkCamera()) return;
-	GET_COMP(fx, ui_camera_h, TCompFadeScreen);
+	//TCompFadeScreen * fx = render_fx->GetFX<TCompFadeScreen>(FX_FADESCREEN_ALL);
+	GET_FX(fx, TFadeScreenAll, FX_FADESCREEN_ALL);
+	if (!render_fx->isActive(FX_FADESCREEN_ALL)) {
+		fx->Activate();
+	}
 	fx->SetMaxTime(speed);
 	fx->FadeIn();
 }
 
 void SLBUiCamera::fadeOut(float speed) {
-	if (!checkCamera()) return;
-	GET_COMP(fx, ui_camera_h, TCompFadeScreen);
+	GET_FX(fx, TFadeScreenAll, FX_FADESCREEN_ALL);
+	if (!render_fx->isActive(FX_FADESCREEN_ALL)) {
+		fx->Activate();
+	}
 	fx->SetMaxTime(speed);
 	fx->FadeOut();
 }
@@ -591,7 +639,7 @@ void SLBUiCamera::fadeOut(float speed) {
 // Data
 SLBData::SLBData()
 {
-	file_name = "data/data.json";
+	file_name = DATA_JSON;
 	data = readIniAtrData(file_name, CApp::get().getCurrentRealLevel());
 }
 float SLBData::getFloat(const char* key)
@@ -627,7 +675,15 @@ void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 	//logic_manager->getCommandQueue()->push_back(new_command);
 	logic_manager->addCommand(new_command);
 }
-
+void SLBPublicFunctions::waitButton(const char* exec_code) {
+	// create the new command
+	command new_command;
+	new_command.code = exec_code;
+	new_command.only_runtime = GameController->GetGameState() == CGameController::RUNNING;
+	// add the new command to the queue
+	//logic_manager->getCommandQueue()->push_back(new_command);
+	logic_manager->setWait(new_command);
+}
 void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA", "%s\n", to_print);
 }
@@ -641,10 +697,14 @@ void SLBPublicFunctions::setLanguage(const char* lang) {
 }
 
 void SLBPublicFunctions::completeTasklist(int i) {
-	CHandle tasklist = tags_manager.getFirstHavingTag(getID("tasklist"));
-	CEntity * tasklist_e = tasklist;
-	Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
-	tasklist_comp->completeTask(i);
+	VHandles tasklists = tags_manager.getHandlesByTag(getID("tasklist"));
+	for (CHandle tasklist : tasklists) {
+		CEntity * tasklist_e = tasklist;
+		if (!tasklist_e)continue;
+		Tasklist * tasklist_comp = tasklist_e->get<Tasklist>();
+		if (!tasklist_comp)continue;
+		tasklist_comp->completeTask(i);
+	}
 }
 
 void SLBPublicFunctions::setControlEnabled(int enabled) {
@@ -712,12 +772,8 @@ void SLBPublicFunctions::stopAllSounds() {
 	sound_manager->stopAllSounds();
 }
 
-void SLBPublicFunctions::playMusic(const char* music_route) {
-	sound_manager->playMusic(std::string(music_route));
-}
-
-void SLBPublicFunctions::playLoopingMusic(const char* music_route) {
-	sound_manager->playLoopingMusic(std::string(music_route));
+void SLBPublicFunctions::playMusic(const char* music_route, float volume) {
+	sound_manager->playMusic(std::string(music_route), volume);
 }
 
 void SLBPublicFunctions::stopMusic() {
@@ -734,6 +790,10 @@ void SLBPublicFunctions::playAmbient(const char* ambient_route) {
 
 void SLBPublicFunctions::setMusicVolume(float volume) {
 	sound_manager->setMusicVolume(volume);
+}
+
+void SLBPublicFunctions::setSFXVolume(float volume) {
+	sound_manager->setSFXVolume(volume);
 }
 
 void SLBPublicFunctions::playVideo(const char* video_route) {
@@ -765,57 +825,29 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 void SLBPublicFunctions::playerTalks(const char* text) {
 	// DO Something with text...
 	dbg(text);
-	for (auto handles : tags_manager.getHandlesByTag("talk_text")) handles.destroy();
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "playerTalk");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-
-	auto hm3 = CHandleManager::getByName("helper_message");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["text"] = text;
-	new_hl.load(atts3);
-	entity->add(new_hl);
-
-	//Add tag talk text
-	TMsgSetTag msg;
-	msg.add = true;
-	msg.tag = "talk_text";
-	new_hp.sendMsg(msg);
+	getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
+		MKeyValue atts3;
+		atts3["text"] = text;
+		mess->load(atts3);
+	}
+	);
 }
 
-void SLBPublicFunctions::playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor) {
-	// DO Something with text...
-	dbg(text);
-
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-
-	auto hm1 = CHandleManager::getByName("name");
-	CHandle new_hn = hm1->createHandle();
-	MKeyValue atts1;
-	atts1.put("name", "playerTalk");
-	new_hn.load(atts1);
-	entity->add(new_hn);
-
-	auto hm3 = CHandleManager::getByName("helper_message");
-	CHandle new_hl = hm3->createHandle();
-	MKeyValue atts3;
-	atts3["text"] = text;
-	atts3["icon"] = iconName;
-	atts3["iconText"] = iconText;
-	atts3["backgroundColor"] = background;
-	atts3["textColor"] = textColor;
-	new_hl.load(atts3);
-	entity->add(new_hl);
+void SLBPublicFunctions::showMessage(const char* text, const char* icon) {
+	getHandleManager<TCompFadingMessage>()->each([text, icon](TCompFadingMessage * mess) {
+		MKeyValue atts3;
+		atts3["permanent"] = "true";
+		atts3["text"] = text;
+		atts3["icon"] = icon;
+		mess->load(atts3);
+	}
+	);
+}
+void SLBPublicFunctions::hideMessage() {
+	getHandleManager<TCompFadingMessage>()->each([](TCompFadingMessage * mess) {
+		mess->kill();
+	}
+	);
 }
 
 void SLBPublicFunctions::putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag) {
@@ -832,6 +864,45 @@ void SLBPublicFunctions::removeText(const char* id) {
 	}
 	);
 }
+
+void SLBPublicFunctions::addAimCircle(const char* id, const char* prefab, float char_x, float char_y, float char_z, float ttl) {
+	std::string name = std::string(id);
+
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+
+	auto hm1 = CHandleManager::getByName("name");
+	CHandle new_hn = hm1->createHandle();
+	MKeyValue atts1;
+	atts1.put("name", name);
+	new_hn.load(atts1);
+	entity->add(new_hn);
+
+	auto hm3 = CHandleManager::getByName("character_globe");
+	CHandle new_hl = hm3->createHandle();
+
+	// Creation of the attributes
+	MKeyValue atts3;
+	atts3["name"] = name;
+	atts3["route"] = std::string(prefab);
+	atts3["ttl"] = std::to_string(ttl);
+	atts3["posx"] = std::to_string(char_x);
+	atts3["posy"] = std::to_string(char_y);
+	atts3["posz"] = std::to_string(char_z);
+	atts3["screen_z"] = "0.2";
+
+	new_hl.load(atts3);
+	entity->add(new_hl);
+}
+void SLBPublicFunctions::removeAimCircle(const char* id) {
+	std::string id_string(id);
+	getHandleManager<TCompFadingGlobe>()->each([id_string](TCompFadingGlobe * mess) {
+		if (mess->getGlobeName() == id_string) { mess->forceTTLZero(); }
+	}
+	);
+}
+
 //void SLBPublicFunctions::alterText(const char* id, float new_posx, float new_posy, float new_scale) {
 //	std::string id_string(id);
 //	getHandleManager<TCompText>()->each([id_string, new_posx, new_posy, new_scale](TCompText * mess) {
@@ -840,7 +911,7 @@ void SLBPublicFunctions::removeText(const char* id) {
 //	);
 //}
 
-void SLBPublicFunctions::characterGlobe(float distance, float char_x, float char_y, float char_z) {
+void SLBPublicFunctions::characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance) {
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
@@ -861,10 +932,13 @@ void SLBPublicFunctions::characterGlobe(float distance, float char_x, float char
 	// Creation of the attributes
 	MKeyValue atts3;
 	atts3["name"] = name;
+	atts3["route"] = std::string(route);
 	atts3["dist"] = std::to_string(distance);
 	atts3["posx"] = std::to_string(char_x);
 	atts3["posy"] = std::to_string(char_y);
 	atts3["posz"] = std::to_string(char_z);
+	atts3["ttl"] = std::to_string(ttl);
+	atts3["max_distance"] = std::to_string(max_distance);
 
 	new_hl.load(atts3);
 	entity->add(new_hl);
@@ -878,21 +952,21 @@ void SLBPublicFunctions::launchVictoryState() {
 	GameController->SetGameState(CGameController::VICTORY);
 }
 
-void SLBPublicFunctions::showLoadingScreen() {
-	auto hm = CHandleManager::getByName("entity");
-	CHandle new_hp = hm->createHandle();
-	CEntity* entity = new_hp;
-
-	auto hm3 = CHandleManager::getByName("loading_screen");
-	CHandle new_hl = hm3->createHandle();
-
-	// Creation of the attributes
-	MKeyValue atts3;
-	atts3["name"] = "loading_screen";
-
-	new_hl.load(atts3);
-	entity->add(new_hl);
-}
+//void SLBPublicFunctions::showLoadingScreen() {
+//	auto hm = CHandleManager::getByName("entity");
+//	CHandle new_hp = hm->createHandle();
+//	CEntity* entity = new_hp;
+//
+//	auto hm3 = CHandleManager::getByName("loading_screen");
+//	CHandle new_hl = hm3->createHandle();
+//
+//	// Creation of the attributes
+//	MKeyValue atts3;
+//	atts3["name"] = "loading_screen";
+//
+//	new_hl.load(atts3);
+//	entity->add(new_hl);
+//}
 
 void SLBPublicFunctions::loadLevel(const char* level_name) {
 	CApp::get().changeScene(level_name);
@@ -946,7 +1020,7 @@ void SLBPublicFunctions::pauseGame() {
 }
 
 void SLBPublicFunctions::setCursorEnabled(bool enabled) {
-	TCompGui::setCursorEnabled(enabled);
+	Gui->setCursorEnabled(enabled);
 }
 void SLBPublicFunctions::resumeGame() {
 	GameController->SetGameState(CGameController::RUNNING);
@@ -963,6 +1037,19 @@ const char* SLBPublicFunctions::getText(const char* scene, const char* event) {
 
 void SLBPublicFunctions::reloadLanguageFile(const char* language) {
 	lang_manager->reloadLanguageFile(language);
+}
+
+void SLBPublicFunctions::forceSenseVision() {
+	TCompSenseVision * sense = GameController->getSenseVisionComp();
+	if (sense) {
+		sense->setSenseVisionMode(TCompSenseVision::eSenseVision::ENABLED);
+	}
+}
+void SLBPublicFunctions::unforceSenseVision() {
+	TCompSenseVision * sense = GameController->getSenseVisionComp();
+	if (sense) {
+		sense->setSenseVisionMode(TCompSenseVision::eSenseVision::DEFAULT);
+	}
 }
 
 //test

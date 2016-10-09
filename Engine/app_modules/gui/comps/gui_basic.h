@@ -28,7 +28,9 @@ typedef struct GuiListener {
 
 class TCompGui : public TCompBase {
 	static std::map<std::string, GuiMatrix> gui_screens;
-	static std::stack<CHandle> cursors;
+
+	//Enabled
+	bool enabled = true;
 
 	//Language
 	bool language;
@@ -70,13 +72,9 @@ public:
 	static GuiMatrix getGuiMatrix(std::string menu_name);
 	static void addGuiElement(std::string menu_name, int row, int column, CHandle h_gui);
 	static void clearScreen(std::string menu_name);
-	static void setCursorEnabled(bool);
 
 	// Cursors
 	CHandle getCursor();
-	static void pushCursor(CHandle);
-
-	void onCreate(const TMsgEntityCreated&);
 
 	// Menu gets
 	int GetRow();
@@ -84,6 +82,10 @@ public:
 	std::string GetMenuName() {
 		return menu_name;
 	}
+
+	//Enabled
+	void SetEnabled(bool b) { enabled = b; }
+	bool IsEnabled() { return enabled; }
 
 	//Language
 	void SetLangEnabled(bool enabled) { language = enabled; }
@@ -113,6 +115,7 @@ public:
 	}
 
 	bool load(MKeyValue& atts);
+	void onCreate(const TMsgEntityCreated&);
 	void update(float elapsed);
 	void uploadCtes();
 	float getRenderState() { return render_state; }
@@ -120,6 +123,7 @@ public:
 	void setRenderState(float rs_state);
 	RectNormalized getTxCoords();
 	void setTxCoords(RectNormalized);
+	void setTxLetter(unsigned char);
 	void renderInMenu();
 };
 

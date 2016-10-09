@@ -2,27 +2,6 @@
 <entity
    permanent="yes">
 <tags
-   tags="menu gui gui_cursor"/>
-<gui
-   menu_name="dead_menu"
-   width="0.114758"
-   height="0.131401"/>
-<gui_cursor
-   menu_name="dead_menu"/>
-<name
-   name="cursor"/>
-<transform
-   pos="5.0 -95.0 9.5"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/cursor.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity
-   permanent="yes">
-<tags
    tags="menu gui gui_button clickable"/>
 <gui
    menu_name="dead_menu"
@@ -71,25 +50,6 @@
 <entity
    permanent="yes">
 <tags
-   tags="menu gui"/>
-<gui
-   menu_name="dead_menu"
-   width="5.87608"
-   height="0.640701"/>
-<name
-   name="title_dead"/>
-<transform
-   pos="5.00018 -94.224 8.99995"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/dead_menu/title_dead.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity
-   permanent="yes">
-<tags
    tags="menu gui gui_button clickable"/>
 <gui
    menu_name="dead_menu"
@@ -108,6 +68,40 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ui/dead_menu/btn_exit_dead.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="menu"/>
+<name
+   name="dead_background"/>
+<transform
+   pos="5.0 -95.0 7.86733"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/dead_menu/dead_background.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="menu gui gui_cursor"/>
+<gui
+   menu_name="dead_menu"
+   width="0.2"
+   height="0.199997"/>
+<gui_cursor
+   menu_name="dead_menu"/>
+<name
+   name="cursor_dead"/>
+<transform
+   pos="6.04535 -94.8127 9.13068"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/cursor.static_mesh"/>
 <abs_aabb/>
 
 </entity>

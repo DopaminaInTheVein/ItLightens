@@ -41,6 +41,8 @@ bool operator<(const CRenderManager::TShadowKey& k, const CRenderTechnique::eCat
 }
 
 // -------------------------------------------------
+//sorters
+
 bool CRenderManager::sortByTechMatMesh(
 	const TKey &k1
 	, const TKey &k2) {
@@ -50,7 +52,6 @@ bool CRenderManager::sortByTechMatMesh(
 	PROFILE_FUNCTION("Render manager: sort");
 
 	if (tech1 != tech2) {
-		
 		if (tech1->getCategory() != tech2->getCategory())
 			return tech1->getCategory() < tech2->getCategory();
 		if (tech1->getCategory() != tech2->getCategory())
@@ -76,11 +77,62 @@ bool CRenderManager::sortByTechMatMesh(
 	return k1.material < k2.material;
 }
 
+#include "components\comp_camera_main.h"
+struct CRenderManager::sortByTechDistance
+{
+	CHandle camera;
+	sortByTechDistance(CHandle cam) { camera = cam; }
+	bool operator()(const TKey & k1, const TKey & k2) {
+		auto* tech1 = k1.material->tech;
+		auto* tech2 = k2.material->tech;
+
+		//sort by technique
+		if (tech1 != tech2) {
+			if (tech1->getCategory() != tech2->getCategory())
+				return tech1->getCategory() < tech2->getCategory();
+			if (tech1->getCategory() != tech2->getCategory())
+				return tech1->getCategory() < tech2->getCategory();
+			if (tech1->getPriority(k1.owner.getOwner()) == tech2->getPriority(k2.owner.getOwner()))
+				return tech1->getName() < tech2->getName();
+
+			float prio1 = tech1->getPriority(k1.owner.getOwner());
+			float prio2 = tech2->getPriority(k2.owner.getOwner());
+			return (prio1 < prio2);
+		}
+
+
+		//sort by distance
+		CEntity * e_k1 = k1.owner.getOwner();
+		CEntity * e_k2 = k2.owner.getOwner();
+		CEntity * e_cam = camera;
+		TCompCameraMain * cam = nullptr;
+		if (e_cam) {
+			cam = e_cam->get<TCompCameraMain>();
+		}
+
+		if (!cam || !e_k1 || !e_k2)
+			return 0;
+
+		VEC3 cam_pos = cam->getPosition();
+
+		TCompTransform * t_k1 = e_k1->get<TCompTransform>();
+		TCompTransform * t_k2 = e_k2->get<TCompTransform>();
+
+
+		if (!t_k1 || !t_k2)
+			return 0;
+
+		float dist_to_k1 = simpleDist(t_k1->getPosition(), cam_pos);
+		float dist_to_k2 = simpleDist(t_k2->getPosition(), cam_pos);
+
+		return dist_to_k1 > dist_to_k2;
+	}
+};
+
+// -------------------------------------------------
 bool CRenderManager::sortByMesh(
 	const TShadowKey &k1
 	, const TShadowKey &k2) {
-
-
 	PROFILE_FUNCTION("Render manager: sort");
 
 	//shadow caster are sorted by mesh
@@ -99,6 +151,9 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 	if (comproom) {
 		oroom = comproom->name;
 	}
+	std::vector<TKey> * render_list[ROOMS_SIZE];
+
+
 	bool playercandidate = ow.hasTag("player") || ow.hasTag("AI_poss");
 	for (auto s : mesh->slots) {
 		TKey k;
@@ -110,13 +165,24 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 		k.aabb = h_aabb;
 		k.room = oroom;
 		k.isPlayer = playercandidate;
+
+		if (k.material->tech->getCategory() != CRenderTechnique::DETAIL_OBJS && k.material->tech->getCategory() != CRenderTechnique::TRANSPARENT_OBJS) {
+			for (int idx = 0; idx < ROOMS_SIZE; idx++) {
+				render_list[idx] = &all_keys[idx];
+			}
+		}
+		else {
+			for (int idx = 0; idx < ROOMS_SIZE; idx++) {
+				render_list[idx] = &dynamic_keys[idx];
+			}
+		}
 		for (auto room : oroom) {
 			if (room >= ROOMS_SIZE) continue;
-			if (room >= 0  && !playercandidate)
-				all_keys[room].push_back(k);
+			if (room >= 0 && !playercandidate)
+				render_list[room]->push_back(k);
 			else {
 				for (int idx = 0; idx < ROOMS_SIZE; idx++) {
-					all_keys[idx].push_back(k);
+					render_list[idx]->push_back(k);
 				}
 			}
 		}
@@ -128,7 +194,6 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 	// tengo la mesh completa...
 	// De momento, voy a asumir que si....
 	for (auto s : mesh->slots) {
-
 		//only solid objects cast shadows
 		if (s.material->tech->getCategory() != CRenderTechnique::SOLID_OBJS)
 			continue;
@@ -169,14 +234,9 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 			}
 		}
 	}
-
-	
-	
 }
 
-
 void CRenderManager::unregisterFromRender(CHandle owner) {
-
 	// Pasarse por todas las keys y borrar aquellas q tengan el owner
 
 	for (int idx = 0; idx < ROOMS_SIZE; idx++) {
@@ -191,11 +251,17 @@ void CRenderManager::unregisterFromRender(CHandle owner) {
 		}
 	}
 
-	
-
-
-	
-	
+	for (int idx = 0; idx < ROOMS_SIZE; idx++) {
+		auto it = dynamic_keys[idx].begin();
+		while (it != dynamic_keys[idx].end()) {
+			if (it->owner == owner) {
+				num_renders--;
+				it = dynamic_keys[idx].erase(it);
+			}
+			else
+				++it;
+		}
+	}
 }
 
 static bool ui_render = false;
@@ -241,50 +307,18 @@ void checkTestZ(std::vector<std::string>& last_v, std::vector<std::string>& new_
 
 #include "components\comp_name.h"
 
-void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory category, int room) {
-	std::string name;
-	ui_render = false;
-	//test_z_render.clear();
+void CRenderManager::renderDynamic(CHandle h_camera, CRenderTechnique::eCategory category, int room) {
 
-	PROFILE_FUNCTION("OBJS");
-	if (category == CRenderTechnique::DBG_OBJS) {
-		name = "DEBUG_OBJS";
-		PROFILE_FUNCTION("DEBUG_OBJS");
-	}
-	else if (category == CRenderTechnique::SOLID_OBJS) {
-		name = "SOLID_OBJS";
-		PROFILE_FUNCTION("SOLID_OBJS");
-	}
-	else if (category == CRenderTechnique::TRANSPARENT_OBJS) {
-		name = "TRANSPARENT_OBJS";
-		PROFILE_FUNCTION("TRANSPARENT_OBJS");
-	}
-	else if (category == CRenderTechnique::UI_OBJS) {
-		name = "UI_OBJS";
-		PROFILE_FUNCTION("UI_OBJS");
-		ui_render = true;
-	}
-	else if (category == CRenderTechnique::DETAIL_OBJS) {
-		name = "DETAIL_OBJS";
-		PROFILE_FUNCTION("DETAIL_OBJS");
-	}
-	else {
-		name = "UNKNOWN_OBJS";
-		PROFILE_FUNCTION("UNKNOWN_OBJS");
-	}
-	CTraceScoped scope(name.c_str());
+	//sort objects by the actual distance
+	std::sort(dynamic_keys[room].begin(), dynamic_keys[room].end(), sortByTechDistance(h_camera));
 
-	if (!in_order) {
-		// sort the keys based on....
+	//start render objects from list
+	renderList(h_camera, category, room, dynamic_keys[room]);
+}
 
-		for (int idx = 0; idx < ROOMS_SIZE; idx++) {
-			std::sort(all_keys[idx].begin(), all_keys[idx].end(), &sortByTechMatMesh);
-		}
-		in_order = true;
-		++ntimes_sorted;
-	}
-
-	if (all_keys[room].empty())
+void CRenderManager::renderList(CHandle h_camera, CRenderTechnique::eCategory category, int room, std::vector<TKey> & render_list)
+{
+	if (render_list.empty())
 		return;
 
 	// Check if we have culling information from the camera source
@@ -301,14 +335,14 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 	//
 	auto r = std::equal_range(
-		all_keys[room].begin()
-		, all_keys[room].end()
+		render_list.begin()
+		, render_list.end()
 		, category
-	);
-	auto d0 = std::distance(all_keys[room].begin(), r.first);
-	auto d1 = std::distance(all_keys[room].begin(), r.second);
-	TKey* it = &all_keys[room][0] + d0;
-	TKey* end_it = &all_keys[room][0] + d1;
+		);
+	auto d0 = std::distance(render_list.begin(), r.first);
+	auto d1 = std::distance(render_list.begin(), r.second);
+	TKey* it = &render_list[0] + d0;
+	TKey* end_it = &render_list[0] + d1;
 
 	static TKey null_key;
 	memset(&null_key, 0x00, sizeof(TKey));
@@ -321,18 +355,11 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 	while (it != end_it) {
 		PROFILE_FUNCTION("Render Manager each");
 		// Do the culling
-		{
-			GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
-			if (tentroom) it->room = tentroom->name;
-			//PROFILE_FUNCTION("Render Manager: Check Tasklist tag");
-			//if (it->owner.getOwner().hasTag("tasklist") || it->owner.getOwner().hasTag("tasklistend")) {
-			//	CEntity * tent = it->owner.getOwner();
-			//	TCompRoom * tentroom = tent->get<TCompRoom>();
-			//	it->room = tentroom->name;
-			//}
-		}
+		GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
+		if (tentroom) it->room = tentroom->name;
 		if (it->owner.getOwner() == CPlayerBase::handle_player || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
 			if (culling_bits) {
+				PROFILE_FUNCTION("Culling");
 				TCompAbsAABB* aabb = it->aabb;
 				if (aabb) {
 					intptr_t idx = aabb - base_aabbs;
@@ -344,6 +371,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 			}
 
 			if (it->isPlayer) {
+				PROFILE_FUNCTION("Polarity player");
 				CEntity* e_p = it->owner.getOwner();
 				if (e_p) {
 					player_controller* pc = e_p->get<player_controller>();
@@ -358,6 +386,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 				}
 			}
 			else {
+				PROFILE_FUNCTION("Polarity other");
 				CEntity* e_o = it->owner.getOwner();
 				if (e_o) {
 					TCompPolarized* op = e_o->get<TCompPolarized>();
@@ -373,6 +402,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 			}
 
 			if (it->material != prev_it->material) {
+				PROFILE_FUNCTION("Change material");
 				if (!prev_it->material || it->material->tech != prev_it->material->tech) {
 					it->material->tech->activate();
 					curr_tech_used_bones = it->material->tech->usesBones();
@@ -380,12 +410,15 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 				it->material->activateTextures(it->polarity);
 			}
 			else {
+				PROFILE_FUNCTION("Same material");
 				if (it->polarity != prev_it->polarity) {
 					it->material->activateTextures(it->polarity);
 				}
 			}
-			if (it->mesh != prev_it->mesh)
+			if (it->mesh != prev_it->mesh) {
+				PROFILE_FUNCTION("Mesh activate");
 				it->mesh->activate();
+			}
 			if (it->owner != prev_it->owner) {
 				// subir la world de it
 				const TCompTransform* c_tmx = it->transform;
@@ -398,6 +431,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 			//render skeleton object
 			if (curr_tech_used_bones) {
+				PROFILE_FUNCTION("Bones");
 				if (renderSkeleton(it)) {
 					//valid skeleton
 					it->mesh->renderGroup(it->submesh_idx);
@@ -408,18 +442,24 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 
 			//render UI object
 			else if (it->material->tech->getCategory() == CRenderTechnique::UI_OBJS) {
+				PROFILE_FUNCTION("Ui object");
 				if (renderUI(it)) {
 					//Valid UI
 					it->mesh->renderGroup(it->submesh_idx);
 					prev_it = it;
 					++nkeys_rendered;
 
-					CEntity* e_owner = it->owner.getOwner();
-					TCompName* e_name = e_owner->get<TCompName>();
-					test_z_render.push_back(e_name->name);
+					//CEntity* e_owner = it->owner.getOwner();
+					//TCompName* e_name = e_owner->get<TCompName>();
+					//{
+					//	PROFILE_FUNCTION("Test_z push_back");
+					//	test_z_render.push_back(e_name->name);
+					//	dbg("test z_render size: %d\n", test_z_render.size());
+					//}
 				}
 			}
 			else {
+				PROFILE_FUNCTION("Desfault seleton");
 				//default skeleton
 				it->mesh->renderGroup(it->submesh_idx);
 				prev_it = it;
@@ -433,10 +473,66 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 #ifndef NDEBUG
 	//if (ui_render)checkTestZ(last_test_z_render, test_z_render);
 #endif
-
-	CMaterial::deactivateTextures();
-
+	{
+		PROFILE_FUNCTION("Deactivate textures");
+		CMaterial::deactivateTextures();
+	}
 	renderedCulling.push_back(nkeys_rendered);
+}
+
+void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory category, int room) {
+	std::string name;
+	ui_render = false;
+	dynamic_render = false;
+	//test_z_render.clear();
+
+	PROFILE_FUNCTION("OBJS");
+	if (category == CRenderTechnique::DBG_OBJS) {
+		name = "DEBUG_OBJS";
+		PROFILE_FUNCTION("DEBUG_OBJS");
+	}
+	else if (category == CRenderTechnique::SOLID_OBJS) {
+		name = "SOLID_OBJS";
+		PROFILE_FUNCTION("SOLID_OBJS");
+	}
+	else if (category == CRenderTechnique::TRANSPARENT_OBJS) {
+		dynamic_render = true;	
+		name = "TRANSPARENT_OBJS";
+		PROFILE_FUNCTION("TRANSPARENT_OBJS");
+	}
+	else if (category == CRenderTechnique::UI_OBJS) {
+		name = "UI_OBJS";
+		PROFILE_FUNCTION("UI_OBJS");
+		ui_render = true;
+	}
+	else if (category == CRenderTechnique::DETAIL_OBJS) {
+		dynamic_render = true;
+		name = "DETAIL_OBJS";
+		PROFILE_FUNCTION("DETAIL_OBJS");
+	}
+	else {
+		name = "UNKNOWN_OBJS";
+		PROFILE_FUNCTION("UNKNOWN_OBJS");
+	}
+	CTraceScoped scope(name.c_str());
+
+	if (dynamic_render) {
+		renderDynamic(h_camera, category, room);
+		return;
+	}
+
+	if (!in_order) {
+		// sort the keys based on....
+
+		for (int idx = 0; idx < ROOMS_SIZE; idx++) {
+			std::sort(all_keys[idx].begin(), all_keys[idx].end(), &sortByTechMatMesh);
+		}
+		in_order = true;
+		++ntimes_sorted;
+	}
+
+	//render objects
+	renderList(h_camera, category, room, all_keys[room]);
 }
 
 bool CRenderManager::renderSkeleton(TKey* it) {
@@ -450,6 +546,7 @@ bool CRenderManager::renderSkeleton(TKey* it) {
 
 #include "app_modules\gui\comps\gui_basic.h"
 bool CRenderManager::renderUI(TKey* it) {
+	PROFILE_FUNCTION("Render UI");
 	const CEntity* e = it->owner.getOwner();
 	if (!e) return false;
 	TCompGui* comp_ui = e->get<TCompGui>();
@@ -474,7 +571,6 @@ void CRenderManager::renderUICulling(int room) {
 	renderedCulling.clear();
 }
 
-
 // ------------------------------------------
 void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	CTraceScoped scope("Shadow Casters");
@@ -489,10 +585,8 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 		++ntimes_sorted;
 	}
 
-		
 	TShadowKey* it = &all_shadow_keys[room][0];
-	TShadowKey* end_it = &all_shadow_keys[room][all_shadow_keys[room].size()-1];
-
+	TShadowKey* end_it = &all_shadow_keys[room][all_shadow_keys[room].size() - 1];
 
 	static TShadowKey null_key;
 	memset(&null_key, 0x00, sizeof(TShadowKey));
@@ -524,7 +618,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	bool valid = false;
 	while (true) {
 		PROFILE_FUNCTION("SHADOW CASTERS OBJ: while");
-		
+
 		valid = true;
 
 		const TCompTransform* c_tmx = it->transform;
@@ -532,7 +626,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 		//assert(c_tmx);
 		if (c_tmx) {
 			PROFILE_FUNCTION("SHADOW CASTERS OBJ: render and activate");
-				
+
 			if (culling_bits) {
 				TCompAbsAABB* aabb = it->aabb;
 				if (aabb) {
@@ -564,7 +658,6 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 			//fatal("render__manager: tranfrom from shadowcaster null");
 		}
 
-
 		if (it != end_it) {
 			++it;
 		}
@@ -573,8 +666,6 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 			return;
 		}
 	}
-
-	
 }
 
 // ------------------------------------------
@@ -594,9 +685,8 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 		++ntimes_sorted;
 	}
 
-
 	TShadowKey* it = &all_shadow_skinning_keys[room][0];
-	TShadowKey* end_it = &all_shadow_skinning_keys[room][all_shadow_skinning_keys[room].size()-1];
+	TShadowKey* end_it = &all_shadow_skinning_keys[room][all_shadow_skinning_keys[room].size() - 1];
 
 	static TShadowKey null_key;
 	memset(&null_key, 0x00, sizeof(TShadowKey));
@@ -612,7 +702,6 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 		return;
 	}
 
-
 	TCompCulling::TCullingBits* culling_bits = nullptr;
 	TCompCulling* culling = nullptr;
 
@@ -624,60 +713,55 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 	auto hm_aabbs = getHandleManager<TCompAbsAABB>();
 	const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
 
-
 	bool valid = true;
 	while (true) {
 		valid = true;
-			const TCompTransform* c_tmx = it->transform;
+		const TCompTransform* c_tmx = it->transform;
 
-			if (c_tmx) {
-
-
-				if (culling_bits) {
-					TCompAbsAABB* aabb = it->aabb;
-					if (aabb) {
-						PROFILE_FUNCTION("SHADOW CASTERS OBJ: culling");
-						intptr_t idx = aabb - base_aabbs;
-						if (!culling_bits->test(idx)) {
-							valid = false;
-						}
+		if (c_tmx) {
+			if (culling_bits) {
+				TCompAbsAABB* aabb = it->aabb;
+				if (aabb) {
+					PROFILE_FUNCTION("SHADOW CASTERS OBJ: culling");
+					intptr_t idx = aabb - base_aabbs;
+					if (!culling_bits->test(idx)) {
+						valid = false;
 					}
 				}
+			}
 
-				
+			const CEntity* e = it->owner.getOwner();
+			if (!e) {
+				valid = false;
+			}
+			const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
+			if (!comp_skel) {
+				valid = false;
+			}
 
-				const CEntity* e = it->owner.getOwner();
-				if (!e) {
-					valid = false;
+			if (valid) {
+				activateWorldMatrix(c_tmx->asMatrix());
+				comp_skel->uploadBonesToCteShader();
+
+				// If the shadows_keys were sorted by mesh
+				// I could skip the activation and just call it
+				// when the mesh changed, and only call the render
+				if (it->mesh != prev_it->mesh) {
+					it->mesh->activate();
 				}
-				const TCompSkeleton* comp_skel = e->get<TCompSkeleton>();
-				if(!comp_skel) {
-					valid = false;
-				}
+				it->mesh->render();
+				prev_it = it;
+			}
+		}
+		else {
+			//fatal("render__manager: tranfrom from shadowcaster skinning null");
+		}
 
-				if (valid) {
-					activateWorldMatrix(c_tmx->asMatrix());
-					comp_skel->uploadBonesToCteShader();
-
-					// If the shadows_keys were sorted by mesh
-					// I could skip the activation and just call it
-					// when the mesh changed, and only call the render
-					if (it->mesh != prev_it->mesh) {
-						it->mesh->activate();
-					}
-					it->mesh->render();
-					prev_it = it;
-				}
-			}
-			else {
-				//fatal("render__manager: tranfrom from shadowcaster skinning null");
-			}
-
-			if (it != end_it) {
-				++it;
-			}
-			else {
-				return;
-			}
+		if (it != end_it) {
+			++it;
+		}
+		else {
+			return;
+		}
 	}
 }

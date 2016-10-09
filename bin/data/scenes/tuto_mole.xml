@@ -215,26 +215,11 @@
 <name
    name="_tWall_pAction"/>
 <transform
-   pos="1034.57 65.1706 -26.0653"
+   pos="1034.27 65.1706 -26.0653"
    quat="0 -0.714153 0 0.69999"
    scale="1.0"/>
 <room
    name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="_end_portal"/>
-<transform
-   pos="1028.23 73.3485 -24.9939"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<tmx_animator
-   roll_speed="180"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/end_portal.static_mesh"/>
-<abs_aabb/>
 
 </entity>
 <entity>
@@ -344,14 +329,42 @@
 </entity>
 <entity>
 <tags/>
+<light_point
+   color="1.0 1.0 1.0 0.4"
+   in_radius="4.00001"
+   out_radius="200.0"/>
 <name
-   name="pared_rota_jaula"/>
+   name="Omni001"/>
 <transform
-   pos="1033.21 66.0571 -26.0363"
+   pos="1023.45 72.1185 -25.3549"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 1.0 1.0 0.01"
+   in_radius="1.68"
+   out_radius="200.0"/>
+<name
+   name="Omni002"/>
+<transform
+   pos="1036.96 67.1044 -25.3549"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barrotes_balcon_cuadrado_derecho"/>
+<transform
+   pos="0 0 0"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/pared_rota_jaula.static_mesh"/>
+   name="static_meshes/tuto_mole/barrotes_balcon_cuadrado_derecho.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>
@@ -359,30 +372,36 @@
 </entity>
 <entity>
 <tags/>
-<light_point
-   color="1.0 1.0 1.0 1.0"
-   in_radius="4.00001"
-   out_radius="200.0"/>
 <name
-   name="Omni001"/>
+   name="columna_rota001"/>
 <transform
-   pos="1023.45 72.1185 -25.3549"
-   quat="-0.0323767 -0.706365 0.706365 -0.0323767"
+   pos="1026.11 64.1897 -25.2976"
+   quat="0 0.300706 0 0.953717"
    scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_mole/columna_rota001.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="box"
+   size="1.2024 7.716 1.54006"
+   mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity>
 <tags/>
-<light_point
-   color="1.0 1.0 1.0 0.5"
-   in_radius="1.68"
-   out_radius="200.0"/>
 <name
-   name="Omni002"/>
+   name="_end_portal"/>
 <transform
-   pos="1036.96 67.1044 -25.3549"
-   quat="-0.0323767 -0.706365 0.706365 -0.0323767"
+   pos="1028.95 73.4292 -24.9939"
+   quat="0 0.707107 0 0.707107"
    scale="1.0"/>
+<tmx_animator
+   roll_speed="180"/>
+<render_static_mesh
+   name="static_meshes/tuto_mole/_end_portal.static_mesh"/>
+<abs_aabb/>
 
 </entity>
 

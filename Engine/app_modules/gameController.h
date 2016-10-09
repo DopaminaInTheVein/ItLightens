@@ -2,6 +2,7 @@
 #define INC_GAME_CONTROLLER_H_
 
 #include "app_module.h"
+#include "components/comp_sense_vision.h"
 
 enum DIFFICULTIES {
 	EASY = 0,
@@ -23,7 +24,6 @@ class CGameController : public IAppModule {
 	bool	free_camera = false;
 	bool	cinematic = false;
 	bool	manual_control = false;
-	bool    ui_control = false;
 
 	bool	cheat_godmode = false;
 
@@ -81,9 +81,6 @@ public:
 	bool GetFxPolarize();
 	bool * GetFreeCameraPointer();
 	bool GetFreeCamera() const;
-	bool IsUiControl() const;
-	bool * IsUiControlPointer();
-	void SetUiControl(bool new_ui_control);
 
 	bool * GetCheatGodmodePointer() {
 		return &cheat_godmode;
@@ -101,6 +98,10 @@ public:
 	void setHandleController(CHandle);
 
 	bool isSenseVisionEnabled();
+
+	CHandle getHandleGameController() const;
+
+	TCompSenseVision * getSenseVisionComp();
 };
 
 extern CGameController* GameController;

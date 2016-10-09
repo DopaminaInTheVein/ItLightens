@@ -135,17 +135,45 @@
 <entity
    reload="yes">
 <tags
-   tags="look_target"/>
-<look_target
-   event_lua_in="hub_target_seen"
-   sense_vision="yes"/>
-<abs_aabb/>
+   tags="guided_camera"/>
+<guided_camera
+   velocity="0.5"
+   default_dirs="0"
+   points_size="4"
+   skippable="no"
+   stop_final="yes"
+   wpt1="21.1506 54.8714 -25.5393"
+   wpt2="15.4449 54.8714 -24.8663"
+   wpt3="3.96856 52.0162 -20.8374"
+   wpt4="2.93209 52.0285 -25.4208"
+   lpt1="7.27662 51.6521 -30.4931"
+   lpt2="7.28009 51.678 -30.4807"
+   lpt3="-1.76961 51.7298 -20.3509"
+   lpt4="-1.89637 52.6522 -25.383"/>
 <name
-   name="look_target"/>
+   name="CineEndTarget"/>
 <transform
-   pos="-1.98726 52.4763 -20.0778"
+   pos="35.6838 66.6056 -25.4918"
    quat="0 0 0 1.0"
-   scale="0.746888"/>
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="gen_hub"/>
+<transform
+   pos="7.365 51.44 -30.6467"
+   quat="0.0707461 0.915463 -0.184854 -0.35036"
+   scale="1.0"/>
 
 </entity>
 

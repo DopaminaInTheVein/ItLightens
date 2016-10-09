@@ -18,6 +18,8 @@ struct TCompRenderGlow : public TCompBase {
   CTexture * apply(CTexture * input, const CRenderTechnique * technique = nullptr);
   void renderInMenu();
 
+  bool initValues();
+
 };
 
 #endif

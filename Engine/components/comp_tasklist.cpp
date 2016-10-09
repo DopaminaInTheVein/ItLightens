@@ -9,7 +9,7 @@
 
 // Loading the wpts
 #define WPT_ATR_NAME(nameVariable, nameSufix, index) \
-char nameVariable[10]; sprintf(nameVariable, "%s%d", nameSufix,index);
+char nameVariable[20]; sprintf(nameVariable, "%s%d", nameSufix,index);
 
 bool Tasklist::load(MKeyValue& atts) {
 	maxPoints = atts.getInt("points_size", 0);
@@ -132,13 +132,15 @@ void Tasklist::update(float dt) {
 
 bool Tasklist::save(std::ofstream& ofs, MKeyValue& atts) {
 	atts.put("points_size", maxPoints);
+	std::string tr = "true";
+	std::string fa = "false";
 	for (int i = 0; i < maxPoints; i++) {
 		WPT_ATR_NAME(atrPos, "pos", i);
 		atts.put(atrPos, pointsPlaces[i]);
 		WPT_ATR_NAME(atrRoom, "room", i);
 		atts.put(atrRoom, pointsRooms[i]);
 		WPT_ATR_NAME(atrVisited, "visited", i);
-		atts.put(atrVisited, pointsVisiteds[i]);
+		atts.put(atrVisited, pointsVisiteds[i] ? tr : fa);
 	}
 	return true;
 }

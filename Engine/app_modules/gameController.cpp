@@ -2,14 +2,13 @@
 #include "gameController.h"
 
 #include "app_modules/io/input_wrapper.h"
+#include "app_modules/gui/gui.h"
 #include "debug/debug_itlightens.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "lang_manager/lang_manager.h"
 
 #include "components/entity.h"
 #include "components/entity_tags.h"
-#include "components/comp_sense_vision.h"
-
 bool CGameController::start()
 {
 	auto file = CApp::get().get().file_options_json;
@@ -59,7 +58,9 @@ void CGameController::Setup()
 	Damage::init();
 }
 int CGameController::GetGameState() const {
-	return game_state;
+	int res = game_state;
+	if (Gui && Gui->IsUiControl()) res = STOPPED;
+	return res;
 }
 void CGameController::SetGameState(int state) {
 	if (game_state == state) return;
@@ -95,7 +96,9 @@ void CGameController::UpdateGeneralInputs() {
 	if (!ImGui::GetIO().WantTextInput) { //not input wanted from imgui
 										 //exit game
 		if (controller->IsPausePressed() && game_state == RUNNING) {
-			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnPause, "");
+			if (Gui && !Gui->IsUiControl()) {
+				logic_manager->throwEvent(CLogicManagerModule::EVENT::OnPause, "");
+			}
 		}
 #ifndef FINAL_BUILD
 		//toggle console log
@@ -154,18 +157,6 @@ bool * CGameController::GetFreeCameraPointer() {
 bool CGameController::GetFreeCamera() const {
 	return free_camera;
 }
-bool CGameController::IsUiControl() const
-{
-	return ui_control;
-}
-bool * CGameController::IsUiControlPointer()
-{
-	return &ui_control;
-}
-void CGameController::SetUiControl(bool new_ui_control)
-{
-	ui_control = new_ui_control;
-}
 bool CGameController::IsCinematic() const {
 	return cinematic;
 }
@@ -200,4 +191,17 @@ bool CGameController::isSenseVisionEnabled()
 
 const char* CGameController::getName() const {
 	return "game_controller";
+}
+
+CHandle CGameController::getHandleGameController() const {
+	return h_game_controller;
+}
+
+TCompSenseVision * CGameController::getSenseVisionComp()
+{
+	if (h_game_controller.isValid()) {
+		GET_COMP(sv, h_game_controller, TCompSenseVision);
+		if (sv) return sv;
+	}
+	return nullptr;
 }

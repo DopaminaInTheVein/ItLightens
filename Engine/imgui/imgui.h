@@ -11,6 +11,7 @@
 #define IMGUI_SHOW_INT(name) ImGui::Text(STRING(name) ": %d\n", name)
 #define IMGUI_SHOW_BOOL(name) ImGui::Text(STRING(name) ": %s\n", name != 0 ? "true" : "false")
 #define IMGUI_SHOW_STRING(name) ImGui::Text(STRING(name) ": %s\n", name.c_str())
+#define IMGUI_DRAG_FLOAT(elem, speed, min, max) ImGui::DragFloat(STRING(elem), &(elem), speed, min, max);
 
 #pragma once
 

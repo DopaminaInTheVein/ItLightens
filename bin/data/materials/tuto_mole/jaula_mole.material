@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/jaula_difuso.dds"/>
+<texture slot="normalmap" name="textures/jaula_normal.dds"/>
+</material>

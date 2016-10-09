@@ -1,4 +1,4 @@
 <tech>
-  <vs fx="blur" main="VS" decl="positions_uv" />
-  <ps fx="blur" main="PSAntiAliasing" />
+  <vs fx="_AA" main="VS_AA" decl="positions_uv" />
+  <ps fx="_AA" main="PS_AA" />
 </tech>	

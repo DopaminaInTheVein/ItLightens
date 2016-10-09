@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/trozograndedifuso.dds"/>
+<texture slot="normalmap" name="textures/normal_pared_derruida_3.dds"/>
+</material>

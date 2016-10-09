@@ -19,6 +19,7 @@
 #define COLOR_SELECTED "#FFFF00FF"
 #define COLOR_NORMAL "#FFFFFFFF"
 #define COLOR_HIDDEN "#00000000"
+#define COLOR_DISABLED "#757575FF"
 #define COLOR_SPEED 0.3f
 
 // Static info
@@ -44,7 +45,7 @@ void TCompGuiSelector::onCreate(const TMsgEntityCreated&) {
 
 void TCompGuiSelector::AddArrows()
 {
-	float offset_pos = 0.5f * (myGui->GetWidth() + myGui->GetHeight());
+	float offset_pos = 0.5f * (myGui->GetWidth() - myGui->GetHeight());
 	AddArrow(arrow_left, "ui/selector_left", LEFT_EVENT, -offset_pos);
 	AddArrow(arrow_right, "ui/selector_right", RIGHT_EVENT, +offset_pos);
 }
@@ -81,28 +82,35 @@ void TCompGuiSelector::AddSelectorStates()
 
 void TCompGuiSelector::Disabled()
 {
-	//Nothing to do
+	//Check Enabled
+	if (myGui->IsEnabled()) {
+		enable();
+	}
 }
 void TCompGuiSelector::Enabled()
 {
-	//checkOver --> Over
-	if (checkOver()) {
-		ChangeState(STRING(Over));
-		notifyOver(true);
+	if (checkEnabled()) {
+		//checkOver --> Over
+		if (checkOver()) {
+			ChangeState(STRING(Over));
+			notifyOver(true);
+		}
 	}
 }
 void TCompGuiSelector::Over()
 {
-	if (!checkOver()) {
-		ChangeState(STRING(Enabled));
-		notifyOver(false);
-	}
-	else {
-		if (controller->IsLeftPressedSelector()) {
-			arrow_left.sendMsg(TMsgClicked());
+	if (checkEnabled()) {
+		if (!checkOver()) {
+			ChangeState(STRING(Enabled));
+			notifyOver(false);
 		}
-		else if (controller->IsRightPressedSelector()) {
-			arrow_right.sendMsg(TMsgClicked());
+		else {
+			if (controller->IsLeftPressedSelector()) {
+				arrow_left.sendMsg(TMsgClicked());
+			}
+			else if (controller->IsRightPressedSelector()) {
+				arrow_right.sendMsg(TMsgClicked());
+			}
 		}
 	}
 }
@@ -126,6 +134,7 @@ bool TCompGuiSelector::getUpdateInfo()
 
 void TCompGuiSelector::update(float dt)
 {
+	updateRenderState();
 	Recalc();
 }
 
@@ -175,7 +184,7 @@ int TCompGuiSelector::AddOption(string option)
 	VEC3 postxt = myTransform->getPosition();
 	float w = myGui->GetWidth();
 	float h = myGui->GetHeight();
-	postxt += VEC3(-w / 2.f, -h / 2.f, .1f);
+	postxt += VEC3(-w / 2.f + h*1.25f, -h / 2.f, .0001f);
 	txt->SetText(option);
 	txt->SetSize(myGui->GetHeight());
 	txt->SetPosWorld(postxt);
@@ -236,6 +245,47 @@ TCompText* TCompGuiSelector::setTextVisible(int option, bool visible)
 		//txt->SetZ(my_pos.z + ((visible ? 1 : -1) * 0.05f));
 	}
 	return txt;
+}
+
+bool TCompGuiSelector::checkEnabled()
+{
+	bool is_enabled = myGui->IsEnabled();
+	if (!is_enabled) {
+		disable();
+	}
+	return is_enabled;
+}
+void TCompGuiSelector::enable()
+{
+	ChangeState(STRING(Enabled));
+
+	//Text Color, buttons...
+	GET_COMP(txt, options[cur_option], TCompText);
+	txt->SetColorTarget(is_over ? COLOR_SELECTED : COLOR_NORMAL);
+
+	GET_COMP(larrow_gui, arrow_left, TCompGui);
+	GET_COMP(rarrow_gui, arrow_right, TCompGui);
+	larrow_gui->SetEnabled(true);
+	rarrow_gui->SetEnabled(true);
+}
+void TCompGuiSelector::disable()
+{
+	ChangeState(STRING(Disabled));
+
+	//Text Color, buttons...
+	GET_COMP(txt, options[cur_option], TCompText);
+	txt->SetColorTarget(COLOR_DISABLED);
+
+	GET_COMP(larrow_gui, arrow_left, TCompGui);
+	GET_COMP(rarrow_gui, arrow_right, TCompGui);
+	larrow_gui->SetEnabled(false);
+	rarrow_gui->SetEnabled(false);
+}
+
+void TCompGuiSelector::updateRenderState()
+{
+	if (myGui->IsEnabled()) myGui->setRenderTarget(0.f, 2.f);
+	else myGui->setRenderTarget(-1.f, 2.f);
 }
 
 map<string, statehandler>* TCompGuiSelector::getStatemap() {

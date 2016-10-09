@@ -10,6 +10,8 @@
 #include "components/comp_aabb.h"
 #include "skeleton_controllers\skel_controller.h"
 
+#include "app_modules/sound_manager/sound_manager.h"
+
 #pragma comment(lib, "cal3d.lib" )
 
 float TCompSkeleton::dt_frame = 0;
@@ -214,21 +216,19 @@ void TCompSkeleton::update(float dt) {
 		updated_skeletons = 0;
 	}
 
-	// read max distance to always update
-	float MAX_DISTANCE = 0.f;
-	CApp &app = CApp::get();
-	std::string file_ini = app.file_initAttr_json;
-	std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
-	assignValueToVar(MAX_DISTANCE, fields);
 	// compute distance to camera
 	VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
 	float distance = simpleDist(camera_pos, tmx->getPosition());
+	float MAX_DISTANCE = sound_manager->getMaxDistance();
 
 	if (culling_bits->test(idx) || distance < MAX_DISTANCE) {
 		updated_skeletons++;
 		model->getMixer()->extra_trans = Engine2Cal(tmx->getPosition());
 		model->getMixer()->extra_rotation = Engine2Cal(tmx->getRotation());
-		model->update(dt);
+		{
+			PROFILE_FUNCTION("Model update");
+			model->update(dt);
+		}
 	}
 	total_skeletons++;
 }

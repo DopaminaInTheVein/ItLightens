@@ -8,13 +8,11 @@
 #include "app_modules/gameController.h"
 #include "app_modules/io/io.h"
 #include "gui_basic.h"
+#include "../gui.h"
 
 // load Xml
 bool TCompGuiCursor::load(MKeyValue& atts)
 {
-	GameController->SetUiControl(true);
-	GameController->SetGameState(CGameController::STOPPED);
-
 	speed = atts.getFloat("speed", 0.01f);
 	menu_name = atts.getString("menu_name", "");
 	x = y = -1;
@@ -25,8 +23,7 @@ bool TCompGuiCursor::load(MKeyValue& atts)
 
 void TCompGuiCursor::onCreate(const TMsgEntityCreated&)
 {
-	TCompGui::pushCursor(MY_OWNER);
-	//GameController->SetUiControl(true);
+	Gui->pushCursor(MY_OWNER);
 }
 
 bool TCompGuiCursor::getUpdateInfo()
@@ -177,5 +174,4 @@ void TCompGuiCursor::onButton(const TMsgOverButton& msg)
 TCompGuiCursor::~TCompGuiCursor()
 {
 	if (menu_name != "") TCompGui::clearScreen(menu_name);
-	//GameController->SetGameState(CGameController::RUNNING);
 }

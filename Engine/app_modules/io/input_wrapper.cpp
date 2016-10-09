@@ -31,8 +31,6 @@ bool CInputWrapper::IsMoveLeft() {
 	return io->keys['A'].isPressed() || io->joystick.getLX() < 0;
 }
 
-// TODO: Preguntar por becomes pressed del joystick --> simular pulsaciones
-// Dejar pulsado --> simular comportamiento teclado (una pulsacion, espera, pulsaciones repetidas cada X milisegundos)
 bool CInputWrapper::IsUpPressed() {
 	return io->keys['W'].becomesPressedWithRepeat() || io->keys[VK_UP].becomesPressedWithRepeat() || io->joystick.lstick.UpBecomesPressed();
 }
@@ -43,13 +41,13 @@ bool CInputWrapper::IsLeftPressed() {
 	return io->keys['A'].becomesPressedWithRepeat() || io->keys[VK_LEFT].becomesPressedWithRepeat() || io->joystick.lstick.LeftBecomesPressed();
 }
 bool CInputWrapper::IsLeftPressedSelector() {
-	return IsLeftPressed() || io->mouse.left.becomesPressed();
+	return IsLeftPressed();// || io->mouse.left.becomesPressed();
 }
 bool CInputWrapper::IsRightPressed() {
 	return io->keys['D'].becomesPressedWithRepeat() || io->keys[VK_RIGHT].becomesPressedWithRepeat() || io->joystick.lstick.RightBecomesPressed();
 }
 bool CInputWrapper::IsRightPressedSelector() {
-	return IsRightPressed() || io->mouse.right.becomesPressed();
+	return IsRightPressed();// || io->mouse.right.becomesPressed();
 }
 float CInputWrapper::MoveYNormalized() {
 	if (io->keys['W'].isPressed()) {
@@ -165,6 +163,9 @@ bool CInputWrapper::ActionGuiButtonBecomesReleased() {
 	return io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()
 		|| io->keys[VK_RETURN].becomesReleased() || io->keys[VK_SPACE].becomesReleased();
 }
+bool CInputWrapper::IsGuiItemDragged() {
+	return io->mouse.left.isPressed();
+}
 bool CInputWrapper::JumpButtonBecomesPressed() {
 	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed();
 }
@@ -201,7 +202,7 @@ bool CInputWrapper::IsPausePressed() {
 	return res;
 }
 bool CInputWrapper::IsBackPressed() {
-	return io->keys[VK_ESCAPE].becomesPressed() || io->joystick.button_BACK.becomesPressed();
+	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed() || io->mouse.left.becomesPressed();
 }
 bool CInputWrapper::IsBackBeingPressed() {
 	return io->keys[VK_ESCAPE].isPressed() || io->joystick.button_BACK.isPressed();

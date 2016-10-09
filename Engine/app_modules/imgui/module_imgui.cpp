@@ -15,10 +15,16 @@
 
 #include "particles\particles_manager.h"
 
+#include "app_modules\render\module_render_postprocess.h"
+
 //editors
 #include "Editors\editor_lights.h"
 
 #include <Commdlg.h>
+
+#ifdef CALIBRATE_GAME
+#include "components/components.h"
+#endif
 
 //light editor
 void CImGuiModule::StartLightEditor() {
@@ -74,7 +80,6 @@ void CImGuiModule::update(float dt) {
 		ImGui::EndMenuBar();
 	}
 	//---------------------------------------
-
 	//Language
 	IMGUI_SHOW_STRING(GameController->GetLanguage());
 
@@ -84,6 +89,7 @@ void CImGuiModule::update(float dt) {
 	//Buttons game
 	//---------------------------------------
 	if (GameController->GetGameState() == CGameController::RUNNING) {
+		IMGUI_SHOW_INT(CGameController::RUNNING);
 		if (ImGui::Button("PAUSE BUTTON"))
 			GameController->SetGameState(CGameController::STOPPED);
 
@@ -94,26 +100,26 @@ void CImGuiModule::update(float dt) {
 
 		ImGui::PopStyleColor();
 	}
+
+	else if (GameController->GetGameState() == CGameController::STOPPED) {
+		IMGUI_SHOW_INT(CGameController::STOPPED);
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
+		if (ImGui::Button("PAUSE BUTTON"))
+			GameController->SetGameState(CGameController::STOPPED);
+
+		ImGui::PopStyleColor();
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("RESUME BUTTON"))
+			GameController->SetGameState(CGameController::RUNNING);
+	}
+
 	if (ImGui::Button("SAVE GAME")) CApp::get().saveLevel();
-	if (ImGui::Button("LOAD GAME")) {
-		CApp::get().restartLevelNotify();
-	}
-
-	if (GameController->GetGameState() == CGameController::STOPPED) {
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
-		if (ImGui::Button("PAUSE BUTTON"))
-			GameController->SetGameState(CGameController::STOPPED);
-
-		ImGui::PopStyleColor();
-
-		ImGui::SameLine();
-
-		if (ImGui::Button("RESUME BUTTON"))
-			GameController->SetGameState(CGameController::RUNNING);
-	}
+	if (ImGui::Button("LOAD GAME")) CApp::get().restartLevelNotify();
 
 	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
-	ImGui::Checkbox("Ui control", GameController->IsUiControlPointer());
+	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui;
@@ -132,7 +138,20 @@ void CImGuiModule::update(float dt) {
 
 	ImGui::Separator();
 	//---------------------------------------
-
+#ifdef CALIBRATE_GAME
+	if (ImGui::TreeNode("CALIBRATE")) {
+		if (ImGui::TreeNode("Bomb sci")) {
+			ImGui::Checkbox("Calibrate", &CThrowBomb::calibrate);
+			IMGUI_DRAG_FLOAT(CThrowBomb::lmax_st, 0.01f, 0.1f, 10.f);
+			IMGUI_DRAG_FLOAT(CThrowBomb::hmax_st, 0.01f, 0.1f, 10.f);
+			IMGUI_DRAG_FLOAT(CThrowBomb::speed_st, 0.01f, 0.1f, 10.f);
+			IMGUI_DRAG_FLOAT(CThrowBomb::radius_st, 0.01f, 0.1f, 10.f);
+			ImGui::DragFloat3("offset start throw", &CThrowBomb::offset_init_throw.x, 0.01f, -1.f, 1.f);
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+#endif
 	//Profiling
 	//---------------------------------------
 #ifdef PROFILING_ENABLED
@@ -190,6 +209,10 @@ void CImGuiModule::update(float dt) {
 
 	if (ImGui::CollapsingHeader("Entities")) {
 		getHandleManager<CEntity>()->onAll(&CEntity::renderInMenu);
+	}
+
+	if (ImGui::CollapsingHeader("PostProcess")) {
+		render_fx->renderInMenu();
 	}
 
 	if (ImGui::CollapsingHeader("SELECTED ENTITY")) {
@@ -343,7 +366,7 @@ void CImGuiModule::update(float dt) {
 	ui.update();			//update ui
 	//Debug->update();		//update log
 	m_pLights_editor->RenderInMenu();
-		}
+}
 
 void CImGuiModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);

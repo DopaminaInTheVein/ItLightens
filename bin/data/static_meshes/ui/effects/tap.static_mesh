@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/effects/tap.mesh" material="materials/ui/effects/tap_tech_ui.material"/>
+</static_mesh>

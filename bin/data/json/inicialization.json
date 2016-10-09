@@ -102,8 +102,8 @@
 	"controller_mole" : {
 		"grab_box_energy" : 5.0,
 		"destroy_wall_energy" : 10.0,
-		"push_box_force" : 1.0,
-		"pull_box_force" : 1.0
+		"push_box_force" : 1.03,
+		"pull_box_force" : 1.03
 	},	
 	"controller_scientist" : {
 		"player_max_speed" : 4.5,
@@ -140,8 +140,5 @@
 		"t_unclciked" : 0.1,
 		"t_released" : 0.1,
 		"t_unreleased" : 0.1		
-	},
-	"sound" : {
-		"MAX_DISTANCE" : 20
 	}
 }

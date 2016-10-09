@@ -6,7 +6,7 @@
 <name
    name="health_bar_inner"/>
 <transform
-   pos="8.65987 -96.4954 8.4747"
+   pos="8.65987 -96.4954 4.1"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
@@ -21,7 +21,7 @@
 <name
    name="health_bar_out"/>
 <transform
-   pos="8.65987 -96.4954 8.34409"
+   pos="8.65987 -96.4954 4.0"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
@@ -36,7 +36,7 @@
 <name
    name="pol_q"/>
 <transform
-   pos="8.11806 -97.0584 8.55542"
+   pos="8.11806 -97.0584 4.0"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
@@ -51,7 +51,7 @@
 <name
    name="pol_e"/>
 <transform
-   pos="9.20664 -97.0584 8.55542"
+   pos="9.20664 -97.0584 4.0"
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh

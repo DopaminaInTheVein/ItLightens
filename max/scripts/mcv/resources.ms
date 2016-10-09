@@ -3,6 +3,16 @@ struct TResources (
 	project_path = data_dir ,
 	mode = "all",
 	folder = "",
+	error = "",
+	copy_textures = false,
+	move_resources = false,
+	exported_obj = undefined,
+	is_ok = true,
+	
+	fn report_error msg = (
+		error += (exported_obj.name + ": " + msg + "\n")
+		is_ok = false
+	),
 	
 	fn getResourceName obj nameResource = (
 		local res = getUserProp obj nameResource
@@ -10,7 +20,7 @@ struct TResources (
 			"all":
 			(
 				if res == undefined then (
-					res = folder + "/" + obj.name
+					res = folder + obj.name
 				)
 			)
 			"old":
@@ -20,94 +30,137 @@ struct TResources (
 			"new":
 			(
 				if res != undefined then res = undefined
-				else res = folder + "/" + obj.name
+				else res = folder + obj.name
 			)
 			"forceNew":
 			(
-				res = folder + "/" + obj.name
+				res = folder + obj.name
 			)
 		)
 		return res
 	),
 	
-	fn getTexturePath full_name = (
+	fn getTexturePathAndSave bmap = (
+		local full_name = bmap.filename
 		--messagebox (full_name as string)
+		local res = ""
 		local pos = findString full_name textures_dir
+		local local_path = ""
 		if pos != undefined then (
 			pos += textures_dir.count
-			local local_path = substring full_name pos full_name.count
-			return "textures/" + strReplace local_path "\\" "/"
+			local_path = strReplace (substring full_name pos full_name.count) "\\" "/"
 		) else (
-			return "textures/" + filenameFromPath full_name
+			--local_path = folder + (filenameFromPath full_name)
+			local_path = filenameFromPath full_name
 		)
+		res = "textures/" + local_path
+		--bmap.filename = strReplace (textures_dir + local_path) "/" "\\"
+		local dest = strReplace (textures_dir + local_path) "/" "\\"
+		--messagebox full_name
+		--messagebox dest
+-- 		if move_resources then (
+-- 			local path_root = strReplace (textures_dir + (filenameFromPath full_name)) "/" "\\"
+-- 			local path_dest = strReplace (textures_dir + folder + (filenameFromPath full_name)) "/" "\\"
+-- 			if (copyFileAndDirs path_root path_dest) then (
+-- 				deletefile path_root
+-- 			)
+-- 		)
+		
+		if copy_textures then (
+			if not (copyFileAndDirs full_name dest) then (
+				report_error ("Can't copy texture " + full_name)
+			)
+		)
+		--messagebox (copied as string)
+		return res
 	),
 	
 	fn saveTextureSlot fs slot bitmap_texture = (
+		local res = true
 		-- if not found, use some default textures
 		if bitmap_texture == undefined then (
 			--local  = "missing_" + slot + ".dds"
 			--format "<texture slot=\"%\" name=\"%%\"/>\n" slot textures_path aname to:fs 
 		) else (
 			local full_name = bitmap_texture.bitmap.filename
-			local ext = getFilenameType full_name
-			if (ext != ".dds" and ext != ".DDS") then (
-				messagebox ( "This texture is not DDS! [" + full_name + "]")
-				throw ( "This texture is not DDS! [" + full_name + "]")
+			local ext = getSuffixAfter full_name "."
+			if (ext != "dds" and ext != "DDS") then (
+				report_error ("This texture is not DDS! [" + full_name + "]\n")
+				res = false
+				--throw ( "This texture is not DDS! [" + full_name + "]")
 			)
 			--messagebox (full_name as string)
-			local aname = getTexturePath full_name --filenameFromPath full_name
+			local aname = getTexturePathAndSave bitmap_texture.bitmap --filenameFromPath full_name
 			--messagebox (aname as string)
 			format "<texture slot=\"%\" name=\"%\"/>\n" slot aname to:fs
 		)
+		return res
 	),
 
 	fn checkMaterialName mat_name = (
+		local res = true
 		tieneEspacios = (findString mat_name " ")
 		tieneAlmohadilla = (findString mat_name "#")
 		if (tieneEspacios != undefined) do (
-			throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+			report_error ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+			res = false
 		)
 		if (tieneAlmohadilla != undefined) do (
-			throw ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+			report_error ("ERROR: -- Nombre de material incorrecto: " + mat_name)
+			res = false
 		)
+		return res
 	),
 	
-	fn saveMaterialTech m technique= (
+	fn saveMaterialTech m technique = (
 		if (m != undefined) then (
 			if classof m != Standardmaterial then (throw "Invalid material recv")
-			local mat_file = createFile (materials_dir + m.name + ".material")
-			
-			--Special tech by material name
-			local tech = technique
-			local tech_by_name = getSuffixAfter m.name "_tech_"
-			if tech_by_name != undefined then tech = tech_by_name
-			
-			--Transparent techinque
-			if tech == "deferred" and m.opacitymap != undefined then (
-				tech = "transparent"
-			)
-			
-			--Write material file
-			format ("<material tech=\"" + tech + ".tech\">\n") to:mat_file
-			saveTextureSlot mat_file "diffuse" m.diffusemap
-			saveTextureSlot mat_file "specular" m.specularmap
-			local self_ilum = m.selfillummap
-			if self_ilum != undefined then (
-				if (classof self_ilum) == Mix then (
-					saveTextureSlot mat_file "selfilum" self_ilum.mask
-					saveTextureSlot mat_file "selfilum_plus" self_ilum.map1
-					saveTextureSlot mat_file "selfilum_minus" self_ilum.map2
-				) else (
-					saveTextureSlot mat_file "selfilum" self_ilum
+			local mat_file = undefined
+			local path_mat = strReplace (materials_dir + folder + m.name + ".material") "/" "\\"
+			try (
+				mat_file =  createFile path_mat
+
+				--Special tech by material name
+				local tech = technique
+				local tech_by_name = getSuffixAfter m.name "_tech_"
+				if tech_by_name != undefined then tech = tech_by_name
+				
+				--Transparent techinque
+				if tech == "deferred" and m.opacitymap != undefined then (
+					tech = "transparent"
 				)
+				
+				--Write material file
+				format ("<material tech=\"" + tech + ".tech\">\n") to:mat_file
+				saveTextureSlot mat_file "diffuse" m.diffusemap
+				saveTextureSlot mat_file "specular" m.specularmap
+				local self_ilum = m.selfillummap
+				if self_ilum != undefined then (
+					if (classof self_ilum) == Mix then (
+						saveTextureSlot mat_file "selfilum" self_ilum.mask
+						saveTextureSlot mat_file "selfilum_plus" self_ilum.map1
+						saveTextureSlot mat_file "selfilum_minus" self_ilum.map2
+					) else (
+						saveTextureSlot mat_file "selfilum" self_ilum
+					)
+				)
+				if (classof m.bumpmap) == Normal_Bump then (
+					saveTextureSlot mat_file "normalmap" m.bumpmap.normal
+				) else (
+					saveTextureSlot mat_file "normalmap" m.bumpmap
+				)
+				format "</material>\n" to:mat_file
+				close mat_file
+				if move_resources then (
+					local path_mat_root = strReplace (materials_dir + m.name + ".material") "/" "\\"
+					if (path_mat_root != path_mat) then (
+						deletefile path_mat_root
+					)
+				)
+			) catch (
+				report_error( "Can't create file [" + path_mat + "]")	
+				if mat_file != undefined then (close mat_file)
 			)
-			if (classof m.bumpmap) == Normal_Bump then (
-				saveTextureSlot mat_file "normalmap" m.bumpmap.normal
-			) else (
-				saveTextureSlot mat_file "normalmap" m.bumpmap
-			)
-			format "</material>\n" to:mat_file
-			close mat_file
 		) else (
 			format "WARNING: - - Undefined material ignored!! - -\n"
 		)
@@ -142,7 +195,7 @@ struct TResources (
 		) else if classof mat == Standardmaterial then (
 			saveStdMaterial mat
 		) else 
-			throw ("Unsupported material " + ((classof mat) as string))
+			report_error ("Unsupported material " + ((classof mat) as string))
 	),
 	
 	fn saveMaterialSkel mat = (
@@ -150,67 +203,6 @@ struct TResources (
 			saveStdMaterialSkel mat
 		) else 
 			throw ("Unsupported material " + ((classof mat) as string))
-	),
-	
-	fn getSubMeshesByMaterial obj = (
-		-- Obtenemos el material
-		local mat = obj.mat
-		if mat == undefined then (
-			throw ("Object " + obj.name + " requires a material\n")
-		) 
-		
-		local meshPrefix = getResourceName obj "mesh"
-		-- Si llegamos hasta aqui y no sabemos que mesh poner, es que:
-		-- 1)  reexportamos una staticMesh y no conocemos su mesh
-		-- 2) exportamos una static mesh nueva pero ya tenía mesh
-		if meshPrefix == undefined then (
-			throw "-- ERROR -- [" + obj.name + "] Objeto corrupto! ¡Tiene mesh pero no staticMesh!\n"
-		)
-		
-		local res = #()
-		
-		if classof mat != MultiMaterial then (
-			newObj = copy obj
-			newObj.name = meshPrefix
-			setUserProp newObj "mesh" meshPrefix
-			res = #(newObj)
-			print res
-		) else (
-			--messagebox "Multi material"
-			local polyObj = copy obj --Objeto temporal solo en esta funcion
-			ConvertTo polyObj Editable_Poly
-			--messagebox ("obj = " + obj as string)
-			--messagebox ("polyObj = " + polyObj as string)
-			
-			try (
-				
-				for m=1 to mat.count do (
-					--messagebox ("Mat")
-					local subMesh = undefined
-					if mat[m] != undefined then(
-						polyObj.selectByMaterial m
-						faces = getFaceSelection polyObj
-						
-						if faces.count > 0 then (
-							local the_name = meshPrefix + "__" + (mat[m].name)
-							--messagebox("The name: " + (the_name as string) )
-							polyOp.detachFaces polyObj faces asnode:true keepOriginal:on name:the_name
-							subMesh = (getnodebyname the_name)
-							if (subMesh != undefined) then (
-								setUserProp subMesh "mesh" the_name
-							)
-						)
-					)
-					append res subMesh
-				)
-			) catch (
-				delete polyObj
-				throw()
-			)
-			delete polyObj
-		)
-		
-		return res
 	),
 	
 	fn getMeshMaterialInfo obj = (
@@ -240,82 +232,68 @@ struct TResources (
 -- STATIC MESH
 --------------------
 	fn exportStaticMesh out_filename objs = (
-		local fsm = createFile out_filename
-		format "<static_mesh>\n" to:fsm
-		
 		--Simplificamos a Array de solo un elemento
 		-- (Si añadimos multimaterial tampoco le veo utilidad a que pueda ser mayor)
 		-- Obtenemos el unico elementoq ue esperamos en [obj]
 		local obj
 		if (classof objs == Array) then (
 			if objs.count > 1 then (
-				throw "Function exportStaticMesh is not implemented for more than one object!"
+				report_error("Function exportStaticMesh is not implemented for more than one object!")
+				return false
 			) else (
 				obj = objs[1]
 			)
 		) else (
 			obj = objs
-		)
+		)		
 		
-		-- Creamos submeshes temporales
-		local subMeshes = getSubMeshesByMaterial obj
 		--Material de la mesh principal
 		local m = obj.mat
+
+		if m == undefined then (
+			report_error ("Requires a material")
+			return false
+		)
 		
-		try (
-			-- Tratamos de crear la static mesh con sus meshes
-			local mesh_idx = 0
-			local mat_idx = 0
-			local used_mats = #()
-			
-			for obj in subMeshes do (
-				mat_idx = mat_idx + 1
-				if obj != undefined then (
-					--Current material
-					local mat_used = m
-					if classOf m == MultiMaterial then (
-						mat_used = m[mat_idx]
-					)
-					
-					-- Name of mesh and material
-					local mat_name = mat_used.name
-					local meshName = obj.name
-					--messagebox("Mat Name: " + (mat_name as string))
-					
-					-- Check material is correct
-					checkMaterialName mat_name
-					if not appendifunique used_mats mat_name then (
-						throw ("El obj '" + obj.name + "' uses the same material '" + mat_name + "' with more than one material ids (one is mat_id " + (mat_idx as string ) + "). Please, combine both material id's in a single number.")
-					)
-					
-					
-					-- Save mesh resource
-					-- #(   #(faces_with_mat1) undef undef #(faces_with_mat4) )
-					local mat_infos = getMeshMaterialInfo obj
-					local filenameXML = "meshes/" + meshName + mesh_ext
-					export_mesh obj meshName mat_infos
-					
-					-- Añadimos mesh slot 
-					local mat_res_name = "materials/" + mat_name + ".material"
-					format "  <slot mesh=\"%\" material=\"%\" mesh_idx=\"%\"/>\n" filenameXML mat_res_name mesh_idx to:fsm
-					mesh_idx = mesh_idx + 1
-				)
-			)
+		if classof m == Multimaterial then (
+			report_error ("Multimaterial is not supported!")
+			return false
+		)
+		
+		-- Name of mesh and material
+		local mat_name = m.name
+		local meshName = getResourceName obj "mesh"
+		if meshName == undefined then (
+			report_error("Corrupt object! Has static mesh but not mesh!")
+		)
+		
+		-- Check material is correct
+		checkMaterialName mat_name
+		if is_ok then (
 			-- Save material(s) resource
 			saveMaterial m
-		) catch (
-			-- Si falla debemos de borrar los objetos temporales de todas formas!
-			for sm in subMeshes do (
-				if sm != undefined then (delete sm)
+			if is_ok then(
+				-- Save mesh resource
+				-- #(   #(faces_with_mat1) undef undef #(faces_with_mat4) )
+				local mat_infos = getMeshMaterialInfo obj
+				local filenameXML = "meshes/" + meshName + mesh_ext
+				try (
+					export_mesh obj meshName mat_infos
+				) catch (
+					report_error("Error exporting mesh!") -- TODO: class TMeshes message / is_ok
+				)
+				if is_ok then (
+					local fsm = createFile out_filename
+					format "<static_mesh>\n" to:fsm
+					-- Añadimos mesh slot 
+					local mat_res_name = "materials/" + folder + mat_name + ".material"
+					format "  <slot mesh=\"%\" material=\"%\"/>\n" filenameXML mat_res_name to:fsm
+					
+					format "</static_mesh>\n" to:fsm
+					close fsm
+				)
 			)
-			close fsm
-			throw()
 		)
-		for sm in subMeshes do (
-			if sm != undefined then (delete sm)
-		)
-		format "</static_mesh>\n" to:fsm
-		close fsm
 	),
 	
 -- SKEL - Static Mesh - 
@@ -361,8 +339,9 @@ struct TResources (
 		rStMesh = getResourceName obj "staticMesh"
 		if rStMesh != undefined do (
 			local static_mesh_name = "static_meshes\\" + rStMesh + ".static_mesh"
-			--format "  <render_static_mesh name=\"%\"/>\n" static_mesh_name to:fs
-			exportStaticMesh (project_path + static_mesh_name) #(obj)
+			local out = project_path + static_mesh_name
+			out = strReplace out "/" "\\"
+			exportStaticMesh out #(obj)
 			setUserProp obj "staticMesh" rStMesh
 			--messagebox ("Obtengo mesh de " + obj.name)
 			local rMesh = getResourceName obj "mesh"
@@ -385,9 +364,21 @@ struct TResources (
 * 		exportTransform max_tmx "transform" ""
 * 	),
 */
+	fn hasMeshProtected = (
+		local obj = exported_obj
+		if (getUserProp obj "mesh_protected") == "yes" then (return true)
+		if classof obj == Delegate then (return true)
+		if obj.isHidden then (return true)
+		if (getUserProp obj "typeHelper") != undefined then (return true)
+		if (getUserProp obj "typeObject") == "Trigger" then (return true)
+		
+		return false
+	),
 	
 	fn exportObject obj = (
-		if ( (not (classof obj == Delegate)) and  (not obj.isHidden) and (getUserProp obj "typeHelper") == undefined) and ((getUserProp obj "typeObject") != "Trigger") then (
+		exported_obj = obj
+		--if ( (not (classof obj == Delegate)) and  (not obj.isHidden) and (getUserProp obj "typeHelper") == undefined) and ((getUserProp obj "typeObject") != "Trigger") then (
+		if ( not hasMeshProtected() ) then (	
 			--exportCompName obj
 			local canExport = true
 			if classof obj != Editable_mesh and classof obj != Editable_Poly then (
@@ -398,20 +389,22 @@ struct TResources (
 				append _list_objs obj.name
 				exportCompStaticMesh obj
 				--if obj.parent != undefined then exportCompHierarchy fs obj
-			)	
-				
-			-- Export the children
-			for c in obj.children do (
-				exportObject c 
+			) else (					
+				-- Export the children (may be a group, layer, etc)
+				for c in obj.children do (
+					exportObject c 
+				)
 			)
 		)
 	),
 	
 	fn exportSelected = (
 		_list_objs = #()
+		folder += "/"
 		if $ == undefined then return "(nothing to export)\n"
 		local all_objs = $
 		for obj in all_objs do (
+			is_ok = true
 			exportObject obj
 		)
 		mode = "all"

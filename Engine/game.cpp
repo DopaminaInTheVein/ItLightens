@@ -20,6 +20,7 @@
 #include "particles\particles_manager.h"
 
 #include "app_modules/render/module_render_deferred.h"
+#include "app_modules/render/module_render_postprocess.h"
 #include "components/entity_parser.h"
 #include "handle/handle_manager.h"
 #include "utils/directory_watcher.h"
@@ -39,13 +40,14 @@ CDirectoyWatcher resources_dir_watcher;
 #include "app_modules/entities.h"
 CEntitiesModule * entities = nullptr;
 
-//DEBUG
+//Modules
 CDebug *	  Debug = nullptr;
 CUI ui;
 CGameController* GameController = nullptr;
 CPhysxManager *g_PhysxManager = nullptr;
 CGuiModule * Gui = nullptr;
 CRenderDeferredModule * render_deferred;
+CRenderPostProcessModule* render_fx;
 // --------------------------------------------
 
 bool CApp::start() {
@@ -66,6 +68,7 @@ bool CApp::start() {
 	logic_manager = new CLogicManagerModule;
 	sound_manager = new CSoundManagerModule;
 	lang_manager = new CLangManagerModule(lang_map["lang"]);
+	render_fx = new CRenderPostProcessModule;
 
 	// Will contain all modules created
 	all_modules.push_back(imgui);
@@ -80,6 +83,7 @@ bool CApp::start() {
 	all_modules.push_back(logic_manager);
 	all_modules.push_back(sound_manager);
 	all_modules.push_back(lang_manager);
+	all_modules.push_back(render_fx);
 
 	mod_update.push_back(lang_manager);
 	mod_update.push_back(logic_manager);
@@ -88,12 +92,14 @@ bool CApp::start() {
 	mod_update.push_back(g_particlesManager);
 	mod_update.push_back(GameController);
 	mod_update.push_back(imgui);
+	mod_update.push_back(render_fx);
 	mod_update.push_back(render_deferred);
 	mod_update.push_back(Gui);
 	mod_update.push_back(g_PhysxManager);
 	mod_update.push_back(io);
 	mod_update.push_back(Debug);
 
+	mod_renders.push_back(render_fx);
 	mod_renders.push_back(render_deferred);
 	mod_renders.push_back(entities);
 	mod_renders.push_back(Debug);
@@ -114,6 +120,7 @@ bool CApp::start() {
 	mod_init_order.push_back(sound_manager);
 	mod_init_order.push_back(lang_manager);
 	mod_init_order.push_back(entities);
+	mod_init_order.push_back(render_fx);
 
 	mod_wnd_proc.push_back(io);
 	mod_wnd_proc.push_back(imgui);
@@ -242,7 +249,7 @@ void CApp::loadedLevelNotify() {
 
 	logic_manager->throwEvent(game_event, std::string(params));
 	loading = false;
-	if (!GameController->IsUiControl())
+	if (!Gui->IsUiControl())
 		GameController->SetGameState(CGameController::RUNNING);
 }
 
@@ -321,6 +328,13 @@ void CApp::initNextLevel()
 		file.loading_control = true;
 		entities->loadXML(file);
 	}
+
+	// Hierachy messages
+	for (auto handle : IdEntities::getHierarchyHandles()) {
+		TMsgHierarchySolver msg;
+		handle.sendMsg(msg);
+	}
+	IdEntities::clearHierarchyHandles();
 
 	// Init entities
 	entities->initEntities();

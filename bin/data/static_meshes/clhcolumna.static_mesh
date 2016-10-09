@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/clhcolumna.mesh" material="materials/columna_hubclh.material"/>
+</static_mesh>

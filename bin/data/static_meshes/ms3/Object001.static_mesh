@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/ms3/Object001.mesh" material="materials/banner.material" mesh_idx="0"/>
+  <slot mesh="meshes/ms3/Object001.mesh" material="materials/ms3/banner.material"/>
 </static_mesh>

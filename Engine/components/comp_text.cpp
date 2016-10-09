@@ -10,19 +10,20 @@
 
 #include <math.h>
 
+#define FONT_JSON "./data/json/font.json"
+
 float TCompText::letterSpacing[256] = { 0.f };
 bool TCompText::init_configuration = false;
-
 void TCompText::initSpaceLetters()
 {
-	auto general = readIniAtrData("./data/font.json", "general");
-	auto space_values = readIniAtrData("./data/font.json", "space_right");
+	auto general = readIniAtrData(FONT_JSON, "general");
+	auto space_values = readIniAtrData(FONT_JSON, "space_right");
 	float size = general["size"];
-	float default_space = space_values["default"] / size;
+	float default_space = 1.f - space_values["default"] / size;
 	for (int i = 0; i < 256; i++) letterSpacing[i] = default_space;
 	for (auto entry : space_values) {
 		unsigned char letter_char = entry.first.at(0);
-		letterSpacing[letter_char] = entry.second / size;
+		letterSpacing[letter_char] = 1.f - entry.second / size;
 	}
 }
 
@@ -69,6 +70,9 @@ bool TCompText::load(MKeyValue& atts)
 
 void TCompText::update(float dt) {
 	if (ttl < 0.0f) {
+		for (CHandle h_letter : gui_letters) {
+			h_letter.destroy();
+		}
 		CHandle h = CHandle(this).getOwner();
 		h.destroy();
 	}

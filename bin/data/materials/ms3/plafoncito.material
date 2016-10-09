@@ -1,0 +1,5 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/difuso_plafoncito.dds"/>
+<texture slot="selfilum" name="textures/self_ilumination_plafoncito_prueba.dds"/>
+<texture slot="normalmap" name="textures/normal_plafoncito.dds"/>
+</material>

@@ -90,6 +90,8 @@ public:
 	void selectOption(int);
 	bool isPatrolling();
 	bool isComeBack();
+	void setGuiEnabled(bool);
+	void setDragValue(float);
 };
 
 class SLBHandleGroup
@@ -107,7 +109,7 @@ public:
 class SLBCamera
 {
 	CHandle camera_h;
-
+	void execCinematic(const char* name, float speed, bool is_start);
 public:
 
 	// camera functions
@@ -119,6 +121,8 @@ public:
 	void setRotationSensibility(float sensibility);
 	void setPositionOffset(float x_offset, float y_offset, float z_offset);
 	void runCinematic(const char* name, float speed = 0.f);
+	void startCinematic(const char* name, float speed = 0.f);
+	void skipCinematic();
 	void fadeIn(float speed = 0.f);
 	void fadeOut(float speed = 0.f);
 	void orbit(bool);
@@ -161,6 +165,7 @@ public:
 
 	// public functions
 	void execCommand(const char* exec_code, float exec_time);
+	void waitButton(const char* exec_code);
 	void completeTasklist(int i);
 	void print(const char* to_print);
 	void setupGame();
@@ -173,28 +178,35 @@ public:
 	void playSound(const char* sound_route, float volume, bool looping);
 	void play3dSound(const char* sound_route, float s_x, float s_y, float s_z, float max_volume, bool looping, int max_instances);
 	void playFixed3dSound(const char* sound_route, const char* sound_name, float s_x, float s_y, float s_z, float max_volume, bool looping);
+	void playMusic(const char* music_route, float volume);
+	void playVoice(const char* voice_route);
+	void playAmbient(const char* ambient_route);
+
 	void stopSound(const char* sound_route);
 	void stopFixedSound(const char* sound_name);
 	void stopAllSounds();
-	void playMusic(const char* music_route);
-	void playLoopingMusic(const char* music_route);
 	void stopMusic();
-	void playVoice(const char* voice_route);
-	void playAmbient(const char* ambient_route);
+
 	void setMusicVolume(float volume);
+	void setSFXVolume(float volume);
 
 	void playVideo(const char* video_route);
 	void playVideoAndDo(const char* video_route, const char* lua_code);
 	void playerRoom(int newRoom);
 	void playerTalks(const char* text);
-	void playerTalksWithColor(const char* text, const char* iconName, const char* iconText, const char* background, const char* textColor);
+	void showMessage(const char* text, const char* icon);
+	void hideMessage();
 	void putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag);
 	//void alterText(const char* id, float new_posx, float new_posy, float new_scale);
 	void removeText(const char* id);
-	void characterGlobe(float distance, float char_x, float char_y, float char_z);
+	void characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance);
+	void addAimCircle(const char* id, const char* prefab, float char_x, float char_y, float char_z, float ttl);
+	void removeAimCircle(const char* id);
 	void toggleIntroState();
 	void launchVictoryState();
-	void showLoadingScreen();
+	//void showLoadingScreen();
+	void forceSenseVision();
+	void unforceSenseVision();
 	void loadLevel(const char* level_name);
 	void saveLevel();
 	void clearSaveData();

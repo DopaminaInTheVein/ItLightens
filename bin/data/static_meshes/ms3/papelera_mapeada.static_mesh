@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/ms3/papelera_mapeada.mesh" material="materials/papelera.material" mesh_idx="0"/>
+  <slot mesh="meshes/ms3/papelera_mapeada.mesh" material="materials/ms3/papelera.material"/>
 </static_mesh>

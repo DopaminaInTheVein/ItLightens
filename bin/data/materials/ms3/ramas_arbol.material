@@ -1,0 +1,4 @@
+<material tech="transparent.tech">
+<texture slot="diffuse" name="textures/alb_ramas.dds"/>
+<texture slot="normalmap" name="textures/nrm_ramas.dds"/>
+</material>

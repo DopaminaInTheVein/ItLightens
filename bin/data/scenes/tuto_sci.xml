@@ -1,25 +1,4 @@
 <entities>
-<entity
-   permanent="yes"
-   reload="no">
-<tags
-   tags="camera_main"/>
-<camera_main
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<culling/>
-<render_glow/>
-<controller_3rd_person/>
-<FX_fade_screen/>
-<name
-   name="player_1_camController_1"/>
-<transform
-   pos="51.0147 1.54851 -1.58261"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
 <entity>
 <tags/>
 <name
@@ -113,7 +92,7 @@
 <name
    name="sillas"/>
 <transform
-   pos="49.7863 0.586214 -6.18538"
+   pos="49.7937 0.586215 -2.81125"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -349,7 +328,7 @@
 <name
    name="farolillos004_sound001"/>
 <transform
-   pos="62.5805 1.08533 -1.55083"
+   pos="62.5805 1.08533 -1.55084"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -377,7 +356,7 @@
 <name
    name="farolillos004_sound003"/>
 <transform
-   pos="75.9401 1.08534 -0.497145"
+   pos="75.9401 1.08534 -0.497152"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -391,7 +370,7 @@
 <name
    name="farolillos004_sound004"/>
 <transform
-   pos="75.9401 1.08533 -4.88324"
+   pos="75.9401 1.08533 -4.88325"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -405,7 +384,7 @@
 <name
    name="farolillos004_sound005"/>
 <transform
-   pos="75.9401 8.10499 -0.497139"
+   pos="75.9401 8.10499 -0.497147"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -433,7 +412,7 @@
 <name
    name="farolillos004_sound007"/>
 <transform
-   pos="75.9401 8.80086 -0.801058"
+   pos="75.9401 8.80086 -0.801066"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 

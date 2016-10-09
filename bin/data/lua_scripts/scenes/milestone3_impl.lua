@@ -17,8 +17,7 @@ player = Player()
 
 ---------------------------- LEVEL Init, Load, Save ---------------------------------------------------
 function auxiliarMusic()
-	--p:play_looping_music("event:/OnRoom1")
-	--p:set_music_volume(0.2)
+	p:play_music("event:/OnRoom1", 0.2)
 end
 
 function OnStart_ms3()
@@ -28,7 +27,8 @@ function OnStart_ms3()
   stateElevator = 1 -- 1= up , 0 = down
   cp_elevator = false
   cp_door_opened = false
-  p:exec_command("auxiliarMusic();",14)
+  p:play_music("event:/OnRoom1", 0.2)
+  --p:exec_command("auxiliarMusic();",14)
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
   cam:run_cinematic("CinematicIntro", 10)
@@ -52,8 +52,7 @@ function OnLoad_ms3()
   stateElevator = d:get_float("elevator_state")
   cp_elevator = d:get_bool("cp_elevator")
   cp_door_opened = d:get_bool("cp_door_opened")
-  --p:play_looping_music("event:/OnRoom1")
-  --p:set_music_volume(0.2)
+  p:play_music("event:/OnRoom1", 0.2)
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
   --cam:run_cinematic("CinematicIntro", 10)
@@ -132,6 +131,7 @@ function activateCargadorSci()
 		sci:get_player()
 		sci:go_and_look_as(hCargadorTarget, "rechargeCell();")
 		p:complete_tasklist(9)
+		p:play_sound("event:/OnChargePila", 0.5, false)
 	end
   else
 	p:player_talks(p:get_text("ms3","cargador_sci_3"))

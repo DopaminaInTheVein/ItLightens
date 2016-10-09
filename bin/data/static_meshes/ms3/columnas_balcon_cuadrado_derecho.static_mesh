@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/ms3/columnas_balcon_cuadrado_derecho.mesh" material="materials/coluimnas.material" mesh_idx="0"/>
+  <slot mesh="meshes/ms3/columnas_balcon_cuadrado_derecho.mesh" material="materials/ms3/coluimnas.material"/>
 </static_mesh>

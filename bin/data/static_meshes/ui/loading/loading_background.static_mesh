@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/loading/loading_background.mesh" material="materials/ui/loading/title_back_tech_ui.material"/>
+</static_mesh>

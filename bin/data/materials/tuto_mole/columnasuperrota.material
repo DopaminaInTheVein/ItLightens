@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/columnasuperotadifuso.dds"/>
+<texture slot="normalmap" name="textures/columnasuperotanormal.dds"/>
+</material>

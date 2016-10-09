@@ -25,6 +25,7 @@
 #define SET_ANIM_PLAYER_P(state) SET_ANIM_STATE_P(animController, state)
 
 map<string, statehandler> player_controller::statemap = {};
+float player_controller::SPEED_JUMP_PENALIZE = 0.2f;
 
 void player_controller::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
@@ -214,14 +215,20 @@ void player_controller::myUpdate() {
 		if (player_curr_speed >= player_max_speed - 0.1f)
 		{
 			SET_ANIM_PLAYER(AST_RUN);
+			sound_manager->playSound("event:/OnRaijinMoving", 0.5f, false);
 		}
 		else if (player_curr_speed > 0.f)
 		{
+			sound_manager->stopSound("event:/OnRaijinMoving");
 			SET_ANIM_PLAYER(AST_MOVE);
 		}
 		else {
+			sound_manager->stopSound("event:/OnRaijinMoving");
 			SET_ANIM_PLAYER(AST_IDLE);
 		}
+	}
+	else {
+		sound_manager->stopSound("event:/OnRaijinMoving");
 	}
 }
 
@@ -266,10 +273,9 @@ void player_controller::DoubleFalling() {
 }
 
 bool player_controller::canJump() {
-	bool can_jump = true;
-	//if (pol_orbit) can_jump = false;
-	if (polarityForces.size() > 0 && pol_state != NEUTRAL) can_jump = false;
-	return can_jump;
+	if (polarityForces.size() > 0 && pol_state != NEUTRAL) return false;
+	if (!controlEnabled || only_sense) return false;
+	return true;
 }
 
 void player_controller::Jump()
@@ -284,7 +290,8 @@ void player_controller::Jump()
 		VEC3 curSpeed = cc->GetLastSpeed();
 		jumpVector = VEC3(
 			-curSpeed.x * 0.1f,
-			clamp(jimpulse - curSpeed.Length()*0.2f, 0.5f * jimpulse, 0.9f * jimpulse),
+			clamp(jimpulse - sqrtf(curSpeed.Length())*SPEED_JUMP_PENALIZE, 0.f, jimpulse),//, //0.8f * jimpulse, jimpulse),
+			//jimpulse,
 			-curSpeed.z * 0.1f
 		);
 		//--------------------------------------
@@ -1095,6 +1102,9 @@ void player_controller::renderInMenu() {
 
 	ImGui::Separator();
 	ImGui::Text("Absorb fonts: %d", damageFonts[Damage::ABSORB]);
+	ImGui::Separator();
+	if (cc) IMGUI_SHOW_FLOAT(cc->GetLastSpeed().Length());
+	ImGui::DragFloat("Jump speed penalize", &SPEED_JUMP_PENALIZE, 0.01f, 0.f, 1.f);
 
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }

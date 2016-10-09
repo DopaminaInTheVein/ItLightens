@@ -109,6 +109,7 @@ float squaredDistY(const VEC3& init, const VEC3& dest) {
 }
 
 float simpleDist(const VEC3& init, const VEC3& dest) {
+	PROFILE_FUNCTION("simple dist");
 	return abs(init.x - dest.x) + abs(init.y - dest.y) + abs(init.z - dest.z);
 }
 bool inSquaredRangeXZ_Y(const VEC3& init, const VEC3& dest, const float& squared_xz, const float& y) {
@@ -247,6 +248,7 @@ Document readJSONAtrFile(const std::string route) {
 
 // Obtains all the atributes of the specified element of a JSON object
 std::map<std::string, float> readIniAtrData(const std::string route, std::string element) {
+	PROFILE_FUNCTION("readIniAtrData json");
 	// Get standard file
 	Document document;
 	try {

@@ -24,14 +24,14 @@ class TCompLoadingScreen : public TCompBase {
 	float sizeFontX = 0.0125f;
 	float sizeFontY = 0.030f;
 	float timeForLetter = 0.05f;
-	
-	public:
-	//Update info				
+
+public:
+	//Update info
 	void update(float elapsed);
 	void render() const;
 	bool load(MKeyValue& atts);
-	void printLetters() const;
-	void updateLetters(bool loaded) const;
+	//void printLetters() const;
+	//void updateLetters(bool loaded) const;
 	void renderInMenu();
 	void onCreate(const TMsgEntityCreated&);
 };

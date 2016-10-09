@@ -18,6 +18,9 @@ class CRenderDeferredModule : public IAppModule {
 		VISION_OBJECTS_WHITE
 	};
 
+	//final output
+	CRenderToTexture* rt_output;
+
 	//basic textures
 	CRenderToTexture* rt_albedos;
 	CRenderToTexture* rt_normals;
@@ -34,7 +37,7 @@ class CRenderDeferredModule : public IAppModule {
 
 	//shadows
 	CRenderToTexture* rt_ssao;
-	CRenderToTexture* rt_shadows;
+	CRenderToTexture* rt_shadows_gl;
 
 	//aux
 	CRenderToTexture* rt_data;
@@ -82,6 +85,7 @@ class CRenderDeferredModule : public IAppModule {
 	void addAmbientPass();
 	void generateShadowMaps();
 
+
 	void FinalRender();
 
 	void blurEffectLights(bool intermitent);
@@ -101,6 +105,16 @@ public:
 	const char* getName() const {
 		return "render_deferred";
 	}
+
+	void SetOutputDeferred();
+	CTexture* GetOutputTexture() const {
+		return rt_output;
+	}
+
+	CTexture* GetFinalTexture() const {
+		return rt_final;
+	}
+
 	float getXRes() { return xres; }
 	float getYRes() { return yres; }
 	float getAspectRatio();

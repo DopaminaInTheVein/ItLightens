@@ -74,13 +74,27 @@ end
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	p:load_entities("init")
+	ui_cam:fade_out(0)
 	p:exec_command("LoadLevel(\"level_0\")", 2)
-	--p:load_entities("title")
-	CallFunction("test_dbg")
+	--Sound
+	val = p:json_read(FILE_OPTIONS, "sound", "music")
+	p:set_music_volume(val)
+	val = p:json_read(FILE_OPTIONS, "sound", "sfx")
+	p:set_sfx_volume(val)
 end
 
 function OnGameEnd( param )
 	p:print( "OnGameEnd: "..param.."\n" )
+end
+
+function OnGuardChase( volume )
+	p:print( "OnGuardChase: "..volume.."\n" )
+	p:play_music("event:/OnChaseMusic", volume)
+end
+
+function OnGuardChaseEnd( volume )
+	p:print( "OnGuardChaseEnd: "..volume.."\n" )
+	p:play_music("event:/OnRoom1", volume)
 end
 
 function OnGuardAttack( reaction_time )
@@ -159,7 +173,8 @@ end
 
 function OnPushBox( param )
 	p:print( "OnPushBox: "..param.."\n" )
-  	p:play_sound("event:/OnPushPullBox", 1.0, false)
+	h:getHandleCaller()
+	p:play_3d_sound("event:/OnPushPullBox", h:get_x(), h:get_y(), h:get_z(), 1.0, true, 1)
 end
 
 function OnPushBoxIdle( param )
@@ -198,15 +213,20 @@ function OnBreakWall( param )
 end
 
 function OnDroneMoving( sound_name )
-	p:print( "OnRechargeDrone: "..sound_name.."\n" )
+	p:print( "OnDroneMoving: "..sound_name.."\n" )
 	h:getHandleCaller()	
 	p:play_fixed_3d_sound("event:/OnDroneMoving", sound_name, h:get_x(), h:get_y(), h:get_z(), 1.0, true)
 end
 
 function OnDroneStatic( sound_name )
-	p:print( "OnRechargeDrone: "..sound_name.."\n" )
+	p:print( "OnDroneStatic: "..sound_name.."\n" )
 	h:getHandleCaller()	
 	p:play_fixed_3d_sound("event:/OnDroneStatic", sound_name, h:get_x(), h:get_y(), h:get_z(), 1.0, true)
+end
+
+function OnUseWorkbench( param )
+	p:print( "OnUseWorkbench: "..param.."\n" )
+	p:play_sound("event:/OnLaboratory", 1.0, false)
 end
 
 function OnRechargeDrone( param )
@@ -228,7 +248,7 @@ function OnCreateBomb( level )
 end
 
 function OnNotRechargeDrone( param )
-	p:print( "OnRechargeDrone: "..param.."\n" )
+	p:print( "OnNotRechargeDrone: "..param.."\n" )
 	p:player_talks("I hope a scientific may get this repaired...")
 end
 
@@ -316,7 +336,7 @@ function OnDetected( distance )
 	p:play_3d_sound("event:/OnDetected", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 	name_guard = h:get_name()
 	CallFunction("OnDetected_"..name_guard)
-	p:character_globe(distance, h:get_x(), h:get_y(), h:get_z())
+	p:character_globe("ui/effects/bafarada", distance, h:get_x(), h:get_y(), h:get_z(), 2.0, -1.0)
 end
 
 function OnNextPatrol( guard_name )
@@ -367,7 +387,8 @@ end
 
 function OnExplode_throw_bomb()
 	p:print( "OnExplode_throw_bomb\n")
-	p:play_sound("event:/OnBombExplodes", 1.0, false)
+	h:getHandleCaller()
+	p:play_3d_sound("event:/OnBombExplodes", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 end
 
 
@@ -405,6 +426,11 @@ function OnPutPila( param )
 	p:print( "OnPutPila\n")
 	CallFunction("OnPutPila_"..param)
 	p:play_sound("event:/OnPutPila", 1.0, false)
+end
+
+function OnBoxMode( level )
+	p:print( "OnBoxMode\n")
+	CallFunction("OnBoxMode_"..level)
 end
 
 function OnRemovePila( param )
@@ -450,9 +476,11 @@ function OnLoadedLevel( logic_level, real_level )
 	p:exec_command("CallFunction(\"OnLoad_"..real_level.."\");", 1.1)
 end
 
+loading_handles = HandleGroup()
 function InitScene()
 	g_dead = false
 	cam:reset_camera()
+	p:hide_message()
 	p:exec_command("ui_cam:fade_in(1)", 1)
 	if not real_level == "hub" then
 		p:exec_command("p:setControlEnabled(1);", 1)
@@ -460,6 +488,8 @@ function InitScene()
 	if not g_is_menu then
 		p:load_entities("player_hud")
 	end
+	loading_handles:get_handles_by_tag("loading")
+	p:exec_command("loading_handles:destroy();", 1)
 end
 
 function OnLoadingLevel()
@@ -487,7 +517,7 @@ end
 
 -- Others
 -------------------------------------------
-function OnStepGuardBaldosa( step )
+function OnStepGuardBaldosa( step, x, y, z )
 	h:getHandleCaller()
 	sound_route = ""
 	
@@ -503,10 +533,11 @@ function OnStepGuardBaldosa( step )
 		sound_route = "event:/OnGuardStepLeft1"
 	end
 	
-	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+	p:play_3d_sound(sound_route, x, y, z, 1.0, false, 32)
+	p:character_globe("ui/effects/tap", "1.0", x, y, z, 0.5, 20.0)
 end
 
-function OnStepMoleBaldosa( step )
+function OnStepMoleBaldosa( step, x, y, z )
 	h:getHandleCaller()
 	sound_route = ""
 	
@@ -522,10 +553,10 @@ function OnStepMoleBaldosa( step )
 		sound_route = "event:/OnMoleStepLeft1"
 	end
 	
-	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+	p:play_3d_sound(sound_route, x, y, z, 1.0, false, 32)
 end
 
-function OnStepScientistBaldosa( step )
+function OnStepScientistBaldosa( step, x, y, z )
 	h:getHandleCaller()
 	sound_route = ""
 	
@@ -541,10 +572,10 @@ function OnStepScientistBaldosa( step )
 		sound_route = "event:/OnScientistStepBaldosaL1"
 	end
 	
-	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+	p:play_3d_sound(sound_route, x, y, z, 1.0, false, 32)
 end
 
-function OnStepGuardParquet( step )
+function OnStepGuardParquet( step, x, y, z )
 	h:getHandleCaller()
 	sound_route = ""
 	
@@ -560,10 +591,11 @@ function OnStepGuardParquet( step )
 		sound_route = "event:/OnGuardStepParquetL1"
 	end
 	
-	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+	p:play_3d_sound(sound_route, x, y, z, 1.0, false, 32)
+	p:character_globe("ui/effects/tap", "1.0", x, y, z, 0.5, 20.0)
 end
 
-function OnStepMoleParquet( step )
+function OnStepMoleParquet( step, x, y, z )
 	h:getHandleCaller()
 	sound_route = ""
 	
@@ -579,10 +611,10 @@ function OnStepMoleParquet( step )
 		sound_route = "event:/OnMoleStepParquetL1"
 	end
 	
-	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+	p:play_3d_sound(sound_route, x, y, z, 1.0, false, 32)
 end
 
-function OnStepScientistParquet( step )
+function OnStepScientistParquet( step, x, y, z )
 	h:getHandleCaller()
 	sound_route = ""
 	
@@ -598,7 +630,7 @@ function OnStepScientistParquet( step )
 		sound_route = "event:/OnScientistStepParquetL1"
 	end
 	
-	p:play_3d_sound(sound_route, h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+	p:play_3d_sound(sound_route, x, y, z, 1.0, false, 32)
 end
 
 function OnStepOutGuardBaldosa( step )
@@ -670,6 +702,11 @@ end
 function OnChoose( name, option )
 	p:print("OnChoose: "..name.." "..option)
 	CallFunctionParam("OnChoose_"..name, option)
+end
+
+function OnValueChanged( name, value )
+	p:print("OnChoose: "..name.." "..value)
+	CallFunctionParam("OnValueChanged_"..name, value)
 end
 
 function OnPause( )

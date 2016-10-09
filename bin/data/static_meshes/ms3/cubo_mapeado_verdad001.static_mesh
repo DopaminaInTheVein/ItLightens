@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/ms3/cubo_mapeado_verdad001.mesh" material="materials/cubo_de_fregar.material" mesh_idx="0"/>
+  <slot mesh="meshes/ms3/cubo_mapeado_verdad001.mesh" material="materials/ms3/cubo_de_fregar.material"/>
 </static_mesh>

@@ -110,8 +110,8 @@
 
   <entity>
     <name name="light_dir_shadows10" />
-    <transform pos="-9.6 -4.300 -1.10" yaw = "0" pitch = "-89.9"	/>
-    <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="30" fov="45" resolution="512"/>
+    <transform pos="-9.6 -10.300 -1.10" yaw = "0" pitch = "-89.9"	/>
+    <light_dir_shadows_dynamic color="1 1 1 1" znear="5.0" zfar="100" fov="45" resolution="512"/>
     <culling/>
     <room
      name="1"/>

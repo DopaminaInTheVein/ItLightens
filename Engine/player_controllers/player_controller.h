@@ -22,6 +22,7 @@ struct PolarityForce;
 struct TCompRenderStaticMesh;
 
 class player_controller : public CPlayerBase {
+	static float SPEED_JUMP_PENALIZE;
 	//enums declaration
 	//--------------------------------------------------------------------
 	enum eEvol {		//evolution states

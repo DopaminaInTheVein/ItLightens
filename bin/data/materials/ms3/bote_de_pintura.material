@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/bote_pintura_grande_difuso.dds"/>
+<texture slot="normalmap" name="textures/bote_pintura_grande_normal.dds"/>
+</material>

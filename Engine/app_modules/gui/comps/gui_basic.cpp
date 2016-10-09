@@ -5,11 +5,13 @@
 #include "components\comp_transform.h"
 #include "components\entity.h"
 #include "gui_cursor.h"
+#include "../gui.h"
+
+#define LETTER_BOX_SIZE (1.f / 16.f)
 
 using namespace std;
 
 map<string, GuiMatrix> TCompGui::gui_screens = map<string, GuiMatrix>();
-stack<CHandle> TCompGui::cursors = stack<CHandle>();
 
 void TCompGui::onCreate(const TMsgEntityCreated&)
 {
@@ -41,6 +43,20 @@ RectNormalized TCompGui::getTxCoords()
 void TCompGui::setTxCoords(RectNormalized coords)
 {
 	text_coords = coords;
+}
+void TCompGui::setTxLetter(unsigned char letter)
+{
+	int ascii_tex_pos = letter;
+	int ascii_tex_posx = ascii_tex_pos % 16;
+	int ascii_tex_posy = ascii_tex_pos / 16;
+
+	float texture_pos_x = ((float)ascii_tex_posx) * LETTER_BOX_SIZE;
+	float texture_pos_y = ((float)ascii_tex_posy) * LETTER_BOX_SIZE;
+	float sx = LETTER_BOX_SIZE;
+	float sy = LETTER_BOX_SIZE;
+
+	RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
+	setTxCoords(textCords);
 }
 
 // load Xml
@@ -90,6 +106,7 @@ void TCompGui::SetParent(CHandle h)
 
 void TCompGui::renderInMenu()
 {
+	ImGui::Checkbox("Enabled", &enabled);
 	IMGUI_SHOW_FLOAT(render_state);
 	IMGUI_SHOW_FLOAT(render_speed);
 	IMGUI_SHOW_FLOAT(render_target);
@@ -132,37 +149,14 @@ void TCompGui::clearScreen(string menu_name)
 	gui_screens.erase(menu_name);
 }
 
-void TCompGui::setCursorEnabled(bool enabled)
-{
-	if (cursors.size() > 0) {
-		CHandle hcursor = cursors.top();
-		if (hcursor.isValid()) {
-			GET_COMP(cursor, hcursor, TCompGuiCursor);
-			if (cursor) cursor->setEnabled(enabled);
-		}
-	}
-}
-
 CHandle TCompGui::getCursor()
 {
-	CHandle result;
-	while (!result.isValid() && !cursors.empty()) {
-		result = cursors.top();
-		if (!result.isValid()) cursors.pop();
+	CHandle res = Gui->getCursor();
+	if (res.isValid()) {
+		GET_COMP(gui, res, TCompGui);
+		if (menu_name != gui->GetMenuName()) res = CHandle();
 	}
-	if (result.isValid()) {
-		GET_COMP(gui, result, TCompGui);
-		if (menu_name != gui->GetMenuName()) result = CHandle();
-	}
-	else {
-		GameController->SetUiControl(false);
-	}
-	return result;
-}
-
-void TCompGui::pushCursor(CHandle h)
-{
-	cursors.push(h);
+	return res;
 }
 
 #include "components\comp_transform.h"
@@ -199,8 +193,8 @@ void TCompGui::update(float elapsed)
 	}
 	// +1 because default render state is 0
 	float value = 1 + offset*0.25f;
-	if (value != 0)
-		trans->setScale(VEC3(value, value, value));
+	if (value < 1.f) value = 1.f;
+	trans->setScale(VEC3(value, value, value));
 }
 
 void TCompGui::uploadCtes() {

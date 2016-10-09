@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/cubo_pintura.dds"/>
+<texture slot="normalmap" name="textures/normals_cubo_pintura.dds"/>
+</material>

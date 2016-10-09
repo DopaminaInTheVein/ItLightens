@@ -1,0 +1,5 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/difuso_banco_cientifico.dds"/>
+<texture slot="selfilum" name="textures/difuso_banco_cientifico_self_ilumination.dds"/>
+<texture slot="normalmap" name="textures/normals_banco_cientifico.dds"/>
+</material>

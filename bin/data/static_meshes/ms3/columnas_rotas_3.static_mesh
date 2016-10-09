@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ms3/columnas_rotas_3.mesh" material="materials/ms3/columna_version_rota.material"/>
+</static_mesh>

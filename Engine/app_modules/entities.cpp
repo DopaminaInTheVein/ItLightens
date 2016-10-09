@@ -67,6 +67,7 @@ DECL_OBJ_MANAGER("abs_aabb", TCompAbsAABB);
 DECL_OBJ_MANAGER("local_aabb", TCompLocalAABB);
 DECL_OBJ_MANAGER("culling", TCompCulling);
 DECL_OBJ_MANAGER("light_dir", TCompLightDir);
+DECL_OBJ_MANAGER("light_dir_shadows_dynamic", TCompLightDirShadowsDynamic);
 DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
@@ -130,6 +131,7 @@ DECL_OBJ_MANAGER("gui", TCompGui);
 DECL_OBJ_MANAGER("gui_cursor", TCompGuiCursor);
 DECL_OBJ_MANAGER("gui_button", TCompGuiButton);
 DECL_OBJ_MANAGER("gui_selector", TCompGuiSelector);
+DECL_OBJ_MANAGER("gui_drag", TCompGuiDrag);
 
 using namespace std;
 
@@ -151,12 +153,13 @@ bool CEntitiesModule::start() {
 
 	getHandleManager<TVictoryPoint>()->init(20);
 	getHandleManager<TTriggerLua>()->init(100);
-	//	getHandleManager<TCompHierarchy>()->init(nmax);
+	getHandleManager<TCompHierarchy>()->init(16);
 	getHandleManager<TCompAbsAABB>()->init(MAX_ENTITIES);
 	getHandleManager<TCompLocalAABB>()->init(MAX_ENTITIES);
 	getHandleManager<TCompCulling>()->init(40);
 	getHandleManager<TCompLightDir>()->init(8);
 	getHandleManager<TCompLightDirShadows>()->init(MAX_ENTITIES);
+	getHandleManager<TCompLightDirShadowsDynamic>()->init(20);
 	getHandleManager<player_controller>()->init(8);
 	getHandleManager<player_controller_mole>()->init(16);
 	getHandleManager<player_controller_cientifico>()->init(8);
@@ -252,6 +255,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompGuiCursor>()->init(64);
 	getHandleManager<TCompGuiButton>()->init(64);
 	getHandleManager<TCompGuiSelector>()->init(64);
+	getHandleManager<TCompGuiDrag>()->init(64);
 
 	//SUBSCRIBE(TCompLife, TMsgDamage, onDamage);
 	SUBSCRIBE(TCompSnoozer, TMsgPreload, onPreload);
@@ -278,7 +282,8 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompRenderStaticMesh, TMsgGetLocalAABB, onGetLocalAABB);
 	SUBSCRIBE(TCompCharacterController, TMsgGetLocalAABB, onGetLocalAABB);
-	//  SUBSCRIBE(TCompHierarchy, TMsgEntityGroupCreated, onGroupCreated);
+	SUBSCRIBE(TCompHierarchy, TMsgHierarchySolver, onGetParentById);
+	SUBSCRIBE(TCompHierarchy, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompBoneTracker, TMsgEntityGroupCreated, onGroupCreated);
 	SUBSCRIBE(TCompAbsAABB, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompLocalAABB, TMsgEntityCreated, onCreate);
@@ -426,6 +431,7 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompCameraMain, TMsgGetCullingViewProj, onGetViewProj);
 	SUBSCRIBE(TCompLightDirShadows, TMsgGetCullingViewProj, onGetViewProj);
+	SUBSCRIBE(TCompLightDirShadowsDynamic, TMsgGetCullingViewProj, onGetViewProj);
 	SUBSCRIBE(TCompCamera, TMsgGetCullingViewProj, onGetViewProj);
 
 	//Control
@@ -463,6 +469,25 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(TCompGuiSelector, TMsgGuiNotify, onGuiNotify);
 	SUBSCRIBE(TCompGuiSelector, TMsgLanguageChanged, onLanguageChanged);
 	SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
+
+	SUBSCRIBE(TCompGuiDrag, TMsgEntityCreated, onCreate);
+
+	auto hm = CHandleManager::getByName("entity");
+	CHandle new_hp = hm->createHandle();
+	CEntity* entity = new_hp;
+
+	auto hm1 = CHandleManager::getByName("name");
+	CHandle new_hn = hm1->createHandle();
+	MKeyValue atts1;
+	atts1.put("name", "playerTalk");
+	new_hn.load(atts1);
+	entity->add(new_hn);
+
+	auto hm3 = CHandleManager::getByName("helper_message");
+	CHandle new_hl = hm3->createHandle();
+	entity->add(new_hl);
+	entity->setPermanent(true);
+
 	return true;
 }
 
@@ -502,6 +527,8 @@ void CEntitiesModule::initEntities() {
 
 	//sound
 	getHandleManager<TCompSound>()->onAll(&TCompSound::init);
+
+	getHandleManager<TCompLightDirShadowsDynamic>()->onAll(&TCompLightDirShadowsDynamic::init);
 
 	//Added to clean this file
 	getHandleManager<LogicHelperArrow>()->onAll(&LogicHelperArrow::init);
@@ -584,6 +611,7 @@ void CEntitiesModule::update(float dt) {
 
 	getHandleManager<TCompLightDir>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
+	getHandleManager<TCompLightDirShadowsDynamic>()->updateAll(dt);
 	getHandleManager<TCompLocalAABB>()->onAll(&TCompLocalAABB::updateAbs);
 	//getHandleManager<TCompCulling>()->onAll(&TCompCulling::update);
 
@@ -604,28 +632,37 @@ void CEntitiesModule::update(float dt) {
 	}
 	else if (GameController->GetGameState() == CGameController::RUNNING) {
 		// May need here a switch to update wich player controller takes the action - possession rulez
-		if (!GameController->IsCinematic() && !GameController->IsCamManual()) {
-			getHandleManager<player_controller>()->updateAll(dt);
-			getHandleManager<player_controller_mole>()->updateAll(dt);
-			getHandleManager<player_controller_cientifico>()->updateAll(dt);
-			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
-			getHandleManager<TCompFadingMessage>()->updateAll(dt);
-			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
-			getHandleManager<LogicHelperArrow>()->updateAll(dt);
-			getHandleManager<TCompFadeScreen>()->updateAll(dt);
-			getHandleManager<Tasklist>()->updateAll(dt);
-		}
-		else if (GameController->IsCamManual()) {
-			getHandleManager<player_controller>()->updateAll(dt);
-			getHandleManager<player_controller_mole>()->updateAll(dt);
-			getHandleManager<player_controller_cientifico>()->updateAll(dt);
-			getHandleManager<TCompFadingMessage>()->updateAll(dt);
-			getHandleManager<TCompFadingGlobe>()->updateAll(dt);
-			getHandleManager<LogicHelperArrow>()->updateAll(dt);
-			getHandleManager<TCompFadeScreen>()->updateAll(dt);
-			getHandleManager<Tasklist>()->updateAll(dt);
-		}
+		//if (!GameController->IsCinematic() && !GameController->IsCamManual()) {
+		//	//getHandleManager<player_controller>()->updateAll(dt);
+		//	//getHandleManager<player_controller_mole>()->updateAll(dt);
+		//	//getHandleManager<player_controller_cientifico>()->updateAll(dt);
+		//	//getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+		//	//getHandleManager<LogicHelperArrow>()->updateAll(dt);
+		//	//getHandleManager<TCompFadeScreen>()->updateAll(dt);
+		//	//getHandleManager<Tasklist>()->updateAll(dt);
+		//}
+		//else if (GameController->IsCamManual()) {
+		//	//getHandleManager<player_controller>()->updateAll(dt);
+		//	//getHandleManager<player_controller_mole>()->updateAll(dt);
+		//	//getHandleManager<player_controller_cientifico>()->updateAll(dt);
+		//	//getHandleManager<TCompFadingMessage>()->updateAll(dt);
+		//	//getHandleManager<LogicHelperArrow>()->updateAll(dt);
+		//	//getHandleManager<TCompFadeScreen>()->updateAll(dt);
+		//	//getHandleManager<Tasklist>()->updateAll(dt);
+		//}
 
+		getHandleManager<player_controller>()->updateAll(dt);
+		getHandleManager<player_controller_mole>()->updateAll(dt);
+		getHandleManager<player_controller_cientifico>()->updateAll(dt);
+		if (!GameController->IsCinematic() && !GameController->IsCamManual()) {
+			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
+		}
+		getHandleManager<LogicHelperArrow>()->updateAll(dt);
+		getHandleManager<TCompFadeScreen>()->updateAll(dt);
+		getHandleManager<Tasklist>()->updateAll(dt);
+
+		getHandleManager<TCompFadingMessage>()->updateAll(dt);
+		getHandleManager<TCompFadingGlobe>()->updateAll(dt);
 		getHandleManager<TCompCamera>()->updateAll(dt);
 		getHandleManager<TCompCameraMain>()->updateAll(dt);
 		getHandleManager<TCompLightDir>()->updateAll(dt);
@@ -715,6 +752,7 @@ void CEntitiesModule::update(float dt) {
 	getHandleManager<TCompGuiButton>()->updateAll(dt);
 	getHandleManager<TCompGuiSelector>()->updateAll(dt);
 	getHandleManager<TCompText>()->updateAll(dt);
+	getHandleManager<TCompGuiDrag>()->updateAll(dt);
 }
 
 void CEntitiesModule::render() {

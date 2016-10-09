@@ -133,9 +133,6 @@ float4 PSBlurWithDepthVision(
 float4 PSBlurWithDepth(
   in float4 iPosition : SV_Position
   , in float2 iTex0 : TEXCOORD0
-  , in float4 iTex1 : TEXCOORD1
-  , in float4 iTex2 : TEXCOORD2
-  , in float4 iTex3 : TEXCOORD3
 ) : SV_Target
 {
 
@@ -156,30 +153,7 @@ float factor_depth = 4;
   
   
   float depth_focus = txDepths.Sample(samLinear, float2(0.5,0.6)).r;
-  //return float4(depth_focus.rrr,1);
-  
-  /*//test_center
-  if(iTex0.y <= 0.405f && iTex0.y >= 0.395f){
-	if(iTex0.x <= 0.505f && iTex0.x >= 0.495f)
-		return float4(0,0,1,1);
-  }
-  
-  //auto focus
-  float barrier_focus = 0.05;
-  //float4 cfinal;
-  float differences_depths = abs(base_depth - depth_focus);
-  //return float4(differences_depths.xxx,1);
-  
-  if( differences_depths > barrier_focus){
-  
-	//depth focus should be more soft than depth of field,
-	//so we divide factor_depth by 2
-	depth += 1;
-	//return float4(depth.xxx,1)*float4(0,1,0,1);
-  }else{
-	//return float4(depth.xxx, 1)*float4(1,0,0,1);
-  }*/
-  
+
   float factor = depth;
   float2 offset = float2(factor/xres, factor/yres);
   //factor = 1;
@@ -196,6 +170,40 @@ float factor_depth = 4;
   float4 cn2 = txDiffuse.Sample(samClampLinear, iTex0.xy + offset);
   float4 cn3 = txDiffuse.Sample(samClampLinear, iTex0.xy + offset);
 
+  float3 wPos = getWorldCoords(iPosition.xy, base_depth);
+  //return float4(wPos.yyy/10.0f,1);
+  
+  
+  
+ // float sinwt = sin(world_time*0.5f+length(iTex0))+1;
+  
+  float offset_h = 5;
+  //float h = (wPos.y-offset_h) - CameraWorldPos.y;//+base_depth*100;
+  float h = (wPos.y-offset_h) + 22;//+base_depth*100;
+  //h += sinwt;
+  
+  //float4 camUp = float4(CameraUp.xyz,1);
+  //return camUp;
+  
+  h = 2 - h;
+  
+  
+ /* if(h > 20.f/100.f){
+	h = 0;
+  }*/
+  
+  //return float4(CameraWorldPos.yyy,1);
+  
+  float4 fog = float4(1,1,1,1);
+  
+  cp3 += fog;
+  cp2 += fog;
+  cp1 += fog;
+  
+  cn3 += fog;
+  cn2 += fog;
+  cn1 += fog;
+  
   float4 cfinal =
     c0 * blur_w.x
     + (cp1 + cn1) * blur_w.y
@@ -205,9 +213,19 @@ float factor_depth = 4;
 	
 	//return float4(depth, depth, depth, 1);
 
-	return float4(1, 1, 1, 0.0f);
-	
-	return float4(cfinal.rgb,depth*factor_depth);
+	float limit = 0.7;
+	//return float4(1, 1, 1, 0.0f);
+	float max_range = 0.1;
+	float range_vision = base_depth;
+	if(range_vision > max_range){
+		range_vision = max_range;
+	}
+	float alpha = h*range_vision;
+	if(alpha > limit)
+		alpha = limit;
+		
+	return float4(0,0,0,0);
+	return float4(cfinal.rgb,alpha);
 
 }
 
@@ -348,6 +366,3 @@ float4 PSAntiAliasing(
 	return float4(cfinal.rgb,1);
 
 }
-
-
-

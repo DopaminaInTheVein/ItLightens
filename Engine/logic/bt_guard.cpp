@@ -27,6 +27,7 @@ map<string, btaction> bt_guard::actions = {};
 map<string, btcondition> bt_guard::conditions = {};
 map<string, btevent> bt_guard::events = {};
 btnode* bt_guard::root = nullptr;
+int bt_guard::guards_chasing = 0;
 
 TCompTransform * bt_guard::getTransform() {
 	PROFILE_FUNCTION("guard: get transform");
@@ -157,6 +158,7 @@ bool bt_guard::playerStunned() {
 	if (stunned == true) {
 		logic_manager->throwEvent(logic_manager->OnStunned, MY_NAME);
 		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
+		decreaseChaseCounter();
 		return true;
 	}
 	return false;
@@ -200,6 +202,7 @@ bool bt_guard::playerDetected() {
 		SBB::postGuardAlert(name, alert);
 
 		logic_manager->throwEvent(logic_manager->OnDetected, std::to_string(distance), CHandle(this).getOwner());
+
 		return true;
 	}
 	else {
@@ -212,8 +215,10 @@ bool bt_guard::playerOutOfReach() {
 	CEntity * ePlayer = getPlayer();
 	if (!ePlayer)
 		return false;
-	if (!playerVisible())
+	if (!playerVisible()) {
+		decreaseChaseCounter();
 		return true;
+	}
 
 	//Calc out of reach
 	bool res;
@@ -367,6 +372,7 @@ int bt_guard::actionReact() {
 	// stay in this state until the reaction time is over
 	if (reaction_time < 0.f) {
 		player_detected_start = false;
+		increaseChaseCounter();
 		return OK;
 	}
 	else {
@@ -392,6 +398,7 @@ int bt_guard::actionChase() {
 		playerLost = true;
 		player_last_seen_point = posPlayer;
 		SET_ANIM_GUARD(AST_IDLE);
+		decreaseChaseCounter();
 		return KO;
 	}
 	//player near?
@@ -402,6 +409,7 @@ int bt_guard::actionChase() {
 			playerLost = true;
 			player_last_seen_point = posPlayer;
 			SET_ANIM_GUARD(AST_IDLE);
+			decreaseChaseCounter();
 			return KO;
 		}
 		else {
@@ -497,6 +505,7 @@ int bt_guard::actionAbsorb() {
 			playerLost = true;
 			player_last_seen_point = posPlayer;
 			SET_ANIM_GUARD(AST_IDLE);
+			decreaseChaseCounter();
 			return KO;
 		}
 		else {
@@ -505,6 +514,7 @@ int bt_guard::actionAbsorb() {
 	}
 
 	logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
+	decreaseChaseCounter();
 	return KO;
 }
 
@@ -522,6 +532,7 @@ int bt_guard::actionShootWall() {
 	//If the player is visible, we stop shooting the wall
 	if (playerVisible() || boxMovingDetected()) {
 		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
+		decreaseChaseCounter();
 		return OK;
 	}
 	else {
@@ -533,6 +544,7 @@ int bt_guard::actionShootWall() {
 			player_last_seen_point = posPlayer;
 			logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 			____TIMER_REDEFINE_(timerShootingWall, 1);
+			decreaseChaseCounter();
 			return OK;
 		}
 		else {
@@ -1303,6 +1315,25 @@ bool bt_guard::isInFirstSeekPoint()
 		}
 	}
 	return res;
+}
+
+void bt_guard::increaseChaseCounter() {
+	//if im the first guard that is chasing, start the chase music
+	if (!chasing) {
+		chasing = true;
+		guards_chasing++;
+		if (guards_chasing == 1)
+			logic_manager->throwEvent(logic_manager->OnGuardChase, "0.2");
+	}
+}
+void bt_guard::decreaseChaseCounter() {
+	//if im the last guard that is chasing, stop the chase music
+	if (chasing) {
+		chasing = false;
+		guards_chasing--;
+		if (guards_chasing == 0)
+			logic_manager->throwEvent(logic_manager->OnGuardChaseEnd, "0.2");
+	}
 }
 
 void bt_guard::changeCommonState(std::string state)

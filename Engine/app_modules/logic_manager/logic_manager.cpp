@@ -43,9 +43,10 @@ void CLogicManagerModule::reloadFile(std::string filename) {
 void CLogicManagerModule::update(float dt) {
 	// update the timer of each command
 	for (std::deque<command>::iterator command_it = command_queue.begin(); command_it != command_queue.end(); ) {
-		if (!command_it->only_runtime || 
-			GameController->GetGameState() == CGameController::RUNNING || 
-			GameController->GetGameState() == CGameController::SPECIAL_ACTION) {
+		if (!command_it->only_runtime ||
+			GameController->GetGameState() == CGameController::RUNNING ||
+			GameController->GetGameState() == CGameController::SPECIAL_ACTION)
+		{
 			command_it->execution_time -= dt;
 		}
 		if (command_it->execution_time < 0.f) {
@@ -54,6 +55,19 @@ void CLogicManagerModule::update(float dt) {
 		}
 		else {
 			command_it++;
+		}
+	}
+
+	if (controller->IsBackPressed()) {
+		if (command_wait.code != "") {
+			if (!command_wait.only_runtime ||
+				GameController->GetGameState() == CGameController::RUNNING ||
+				GameController->GetGameState() == CGameController::SPECIAL_ACTION)
+			{
+				const char* copy_code = command_wait.code;
+				command_wait.code = "";
+				slb_script.doString(copy_code);
+			}
 		}
 	}
 
@@ -100,6 +114,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnPutPila(\"%s\");", params.c_str());
 		break;
 	}
+	case (OnBoxMode): {
+		sprintf(lua_code, "OnBoxMode(\"%s\");", params.c_str());
+		break;
+	}
 	case (OnRemovePila): {
 		sprintf(lua_code, "OnRemovePila(\"%s\");", params.c_str());
 		break;
@@ -137,11 +155,22 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnSetLight(%f);", volume);
 		break;
 	}
+
+	case (OnGuardChase): {
+		float volume = atof(params.c_str());
+		sprintf(lua_code, "OnGuardChase(%f);", volume);
+		break;
+	}
+	case (OnGuardChaseEnd): {
+		float volume = atof(params.c_str());
+		sprintf(lua_code, "OnGuardChaseEnd(%f);", volume);
+		break;
+	}
+
 	case (OnGuardAttack): {
 		sprintf(lua_code, "OnGuardAttack(%f);", 0.5f);
 		break;
 	}
-
 	case (OnGuardAttackEnd): {
 		sprintf(lua_code, "OnGuardAttackEnd(%f);", 0.5f);
 		break;
@@ -239,6 +268,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 	}
 	case (OnNotRechargeDrone): {
 		sprintf(lua_code, "OnNotRechargeDrone(%f);", 0.5);
+		break;
+	}
+	case (OnUseWorkbench): {
+		sprintf(lua_code, "OnUseWorkbench(%f);", 0.5);
 		break;
 	}
 	case (OnRepairDrone): {
@@ -399,14 +432,15 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadedLevel(%s);", params.c_str());
 		break;
 	}
-	case (OnLoadingLevel): {
-		sprintf(lua_code, "OnLoadingLevel(%s);", params.c_str());
-		break;
-	}
-	// Step events
+						  //case (OnLoadingLevel) : {
+						  //	sprintf(lua_code, "OnLoadingLevel(%s);", params.c_str());
+						  //	break;
+						  //}
+												  // Step events
 	case (OnStep): {
 		int step_number = 0;
-		CEntity* entity = handle;
+		CEntity* entity = caller_handle;
+		TCompTransform* transform = entity->get<TCompTransform>();
 
 		// get the step counter of the NPC
 		if (params.find("Guard") != std::string::npos) {
@@ -426,9 +460,15 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		TCompRoom* room = entity->get<TCompRoom>();
 		std::string event_name = params + "Baldosa";
 		if (room && room->name[0] == 2)
-				event_name = params + "Parquet";
+			event_name = params + "Parquet";
 
-		sprintf(lua_code, "OnStep%s(%i);", event_name.c_str(), step_number);
+		VEC3 position = transform->getPosition();
+		if (step_number == 0 || step_number == 2)
+			position = position + transform->getLeft()*0.2f;
+		else
+			position = position - transform->getLeft()*0.2f;
+
+		sprintf(lua_code, "OnStep%s(%i, %f, %f, %f);", event_name.c_str(), step_number, position.x, position.y, position.z);
 		break;
 	}
 	case (OnStepOut): {
@@ -458,7 +498,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnStepOut%s(%i);", event_name.c_str(), step_number);
 		break;
 	}
-	//GUI
+					  //GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;
@@ -483,6 +523,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnChoose(%s);", params.c_str());
 		break;
 	}
+	case (OnValueChanged): {
+		sprintf(lua_code, "OnValueChanged(%s);", params.c_str());
+		break;
+	}
 	case (OnPause): {
 		sprintf(lua_code, "OnPause();");
 		break;
@@ -499,6 +543,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 	catch (int e) {
 		dbg("Exception %d occurred!", e);
 	}
+	Gui->setActionAvailable(eAction::NONE);
 }
 
 void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
@@ -687,6 +732,14 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("select_option", &SLBHandle::selectOption)
 		.param("int: option id")
 		.comment("set an option as selected")
+		// Set Gui Enabled/disabled
+		.set("set_gui_enabled", &SLBHandle::setGuiEnabled)
+		.param("bool: enabled")
+		.comment("enable/disable gui component")
+		// Set Gui Enabled/disabled
+		.set("set_drag_value", &SLBHandle::setDragValue)
+		.param("float: value")
+		.comment("set new value to drag component")
 		;
 }
 
@@ -746,6 +799,13 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.comment("Run cinematic defined in the specified guided camera")
 		.param("string: guided camera name")
 		.param("speed: speed of camera movement (0 means default speed)")
+		// run cinematic
+		.set("start_cinematic", &SLBCamera::startCinematic)
+		.comment("Run cinematic from first point")
+		.param("string: guided camera name")
+		.param("int: cinematic point")
+		//Skip cinematic
+		.set("skip_cinematic", &SLBCamera::skipCinematic)
 		// Set Orbit Camera
 		.set("orbit", &SLBCamera::orbit)
 		.comment("Enable or disable auto orbit camera")
@@ -813,6 +873,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.comment("Executes the specified command after a given time")
 		.param("string: code to execute")
 		.param("float: time until execution")
+		// execute command function
+		.set("wait_button", &SLBPublicFunctions::waitButton)
+		.comment("Executes the specified command after press button")
+		.param("string: code to execute")
 		// basic print function
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
@@ -882,11 +946,8 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// play music function
 		.set("play_music", &SLBPublicFunctions::playMusic)
 		.comment("Executes the specified music")
-		.param("Route of the music")
-		// play looping music function
-		.set("play_looping_music", &SLBPublicFunctions::playLoopingMusic)
-		.comment("Executes the specified music in an endless loop")
-		.param("Route of the music")
+		.param("string: Route of the music")
+		.param("float: Volume of the music")
 		// stop music function
 		.set("stop_music", &SLBPublicFunctions::stopMusic)
 		.comment("Stops the game music")
@@ -900,6 +961,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// sets the music volume
 		.set("set_music_volume", &SLBPublicFunctions::setMusicVolume)
 		.comment("Changes the volume of the music to the specified value")
+		.param("float: volume value")
+		// sets the SFX volume
+		.set("set_sfx_volume", &SLBPublicFunctions::setSFXVolume)
+		.comment("Changes the volume of the sfx to the specified value")
 		.param("float: volume value")
 		// play video function
 		.set("play_video", &SLBPublicFunctions::playVideo)
@@ -918,14 +983,14 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("player_talks", &SLBPublicFunctions::playerTalks)
 		.comment("Shows the specified text for aq limited time")
 		.param("string: text to show")
-		// launch text span related to npc talks with colors
-		.set("player_talks_color", &SLBPublicFunctions::playerTalksWithColor)
-		.comment("Shows the specified text for aq limited time")
+		// clear fade message
+		.set("hide_message", &SLBPublicFunctions::hideMessage)
+		.comment("Hide the current message")
+		// launch text span related to npc talks
+		.set("show_message", &SLBPublicFunctions::showMessage)
+		.comment("Shows the specified customized text")
 		.param("string: text to show")
 		.param("string: icon to show")
-		.param("string: text to show if icon not loaded")
-		.param("string: HEX BACKGROUND COLOR -> #RRGGBBAA")
-		.param("string: HEX TEXT COLOR -> #RRGGBBAA")
 		// launch text span
 		.set("putText", &SLBPublicFunctions::putText)
 		.comment("Shows the specified text")
@@ -949,13 +1014,29 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("removeText", &SLBPublicFunctions::removeText)
 		.comment("Removes the specified text")
 		.param("string: text id")
-		// launch text span related to npc talks with colors
+		// launch text span related to npc talks
 		.set("character_globe", &SLBPublicFunctions::characterGlobe)
 		.comment("Shows the specified globe for a limited time")
+		.param("string: route of the prefab that will be displayed")
 		.param("float: distance to the player")
 		.param("float: x coord of the character")
 		.param("float: y coord of the character")
 		.param("float: z coord of the character")
+		.param("float: time to live in seconds")
+		// launch aim red circle
+		.set("aim_circle", &SLBPublicFunctions::addAimCircle)
+		.comment("Shows aim circle")
+		.param("string: id")
+		.param("string: prefab")
+		.param("float: x coord of the character")
+		.param("float: y coord of the character")
+		.param("float: z coord of the character")
+		.param("float: timetolive")
+		.param("float: distance limitation (<0 means unlimited)")
+		// Remove aim red circle
+		.set("no_aim_circle", &SLBPublicFunctions::removeAimCircle)
+		.comment("Removes the specified text")
+		.param("string: text id")
 		// launch intro state
 		.set("toggle_intro_state", &SLBPublicFunctions::toggleIntroState)
 		.comment("Toggles the intro game state")
@@ -963,8 +1044,8 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("launch_victory_state", &SLBPublicFunctions::launchVictoryState)
 		.comment("Launches the victory game state")
 		// show loading screen
-		.set("show_loading_screen", &SLBPublicFunctions::showLoadingScreen)
-		.comment("Shows the loading screen")
+		//.set("show_loading_screen", &SLBPublicFunctions::showLoadingScreen)
+		//.comment("Shows the loading screen")
 		// LoadLevel (and clear current)
 		.set("load_level", &SLBPublicFunctions::loadLevel)
 		.comment("Clear current scene and load next (param)")
@@ -1035,5 +1116,8 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("reload_language_file", &SLBPublicFunctions::reloadLanguageFile)
 		.comment("Reloads the language file")
 		.param("string: code of the language file that will be loaded")
-		;
+		.set("force_sense_vision", &SLBPublicFunctions::forceSenseVision)
+		.comment("force sense vision")
+		.set("unforce_sense_vision", &SLBPublicFunctions::unforceSenseVision)
+		.comment("force normal vision");
 }

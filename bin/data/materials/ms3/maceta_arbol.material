@@ -1,0 +1,5 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/maceta_tree_difuso.dds"/>
+<texture slot="specular" name="textures/maceta_tree_specular.dds"/>
+<texture slot="normalmap" name="textures/maceta_tree_normal.dds"/>
+</material>

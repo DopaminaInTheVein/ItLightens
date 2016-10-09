@@ -14,6 +14,8 @@ using namespace FMOD;
 class CSoundManagerModule : public IAppModule
 {
 	std::string sounds_folder = "data/sounds/banks/";
+	float SFX_VOLUME = 1.f;
+	float MAX_DISTANCE = 20.f;
 
 	FMOD_RESULT												result;
 	void													*extradriverdata = 0;
@@ -56,8 +58,7 @@ public:
 	bool playSound(std::string route , float volume, bool looping);
 	bool play3dSound(std::string route, VEC3 sound_pos, float max_volume, bool looping, int max_instances);
 	bool playFixed3dSound(std::string route, std::string sound_name, VEC3 sound_pos, float max_volume, bool looping);
-	bool playMusic(std::string);
-	bool playLoopingMusic(std::string);
+	bool playMusic(std::string route, float volume);
 	bool playVoice(std::string);
 	bool playAmbient(std::string);
 
@@ -66,11 +67,14 @@ public:
 	bool stopMusic();
 	bool stopAllSounds();
 
-	bool setMusicVolume(float);
+	bool setMusicVolume(float volume);
+	void setSFXVolume(float volume);
 	bool updateFixed3dSound(std::string name, VEC3 sound_pos, float max_volume);
 
 	Studio::EventInstance* getFixedSound(std::string name) { return fixed_instances[name]; }
 	FMOD_VECTOR VectorToFmod(const VEC3 vect);
+	float getMaxDistance() { return MAX_DISTANCE; }
+	void setMaxDistance(float max_distance) { MAX_DISTANCE = max_distance; }
 
 };
 

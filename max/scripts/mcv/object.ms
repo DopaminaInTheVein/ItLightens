@@ -46,7 +46,7 @@ struct OM (
 			-- Attributes
 			,#("id", "slept", "mesh", "static_mesh", "skeleton", "logic")
 			--Components
-			,#("name", "transform",  "render", "physx", "polarized", "tracker", "polarizedArea", "room")
+			,#("name", "transform",  "render", "physx", "polarized", "tracker", "polarizedArea", "room", "hierarchy")
 			--Helpers
 			,hPolarized + hColliders
 		)
@@ -370,6 +370,28 @@ struct OM (
 			,#()
 			--Components
 			,#("gui", "gui_selector_arrow")
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("GuiDrag"
+			-- Tags
+			,#("gui", "gui_drag")
+			-- Attributes
+			,#()
+			--Components
+			,#("gui", "gui_drag")
+			--Helpers
+			,#()
+		)
+		----------------------------------------------------------------------------------------------------------------------------------------------------
+		,#("LoadingScreen"
+			-- Tags
+			,#("gui", "loading_screen")
+			-- Attributes
+			,#()
+			--Components
+			,#("gui", "loading_screen")
 			--Helpers
 			,#()
 		)

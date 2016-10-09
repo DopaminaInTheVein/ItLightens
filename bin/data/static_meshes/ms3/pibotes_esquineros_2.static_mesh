@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/ms3/pibotes_esquineros_2.mesh" material="materials/pibotes_esquineros.material" mesh_idx="0"/>
+  <slot mesh="meshes/ms3/pibotes_esquineros_2.mesh" material="materials/ms3/pibotes_esquineros.material"/>
 </static_mesh>

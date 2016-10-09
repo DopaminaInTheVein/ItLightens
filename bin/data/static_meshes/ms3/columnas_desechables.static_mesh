@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ms3/columnas_desechables.mesh" material="materials/ms3/columna_rota_superior.material"/>
+</static_mesh>

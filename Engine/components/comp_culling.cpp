@@ -23,6 +23,7 @@ void TCompCulling::renderInMenu() {
 // completamente, el aabb no esta dentro del set de planos
 bool TCompCulling::VPlanes::isVisible(const AABB* aabb) const {
 	PROFILE_FUNCTION("TCompCulling: isVisible func");
+	if (empty()) return true;
 	auto it = begin();
 	while (it != end()) {
 		if (it->isCulled(aabb))
@@ -48,6 +49,7 @@ bool TCompCulling::CPlane::isCulled(const AABB* aabb) const {
 void TCompCulling::update() {
 	compBaseEntity = MY_OWNER;
 	if (!compBaseEntity) return;
+
 	//PROFILE_FUNCTION("TCompCulling: Update");
 	// Get access to the comp_camera in a sibling component
 	TCompRoom* room = compBaseEntity->get<TCompRoom>();
@@ -126,7 +128,7 @@ void TCompCulling::updateNext()
 		if (!camera_main.isValid()) camera_main = tags_manager.getFirstHavingTag("camera_main");
 		if (camera_main.isValid()) {
 			GET_COMP(cul_cam, camera_main, TCompCulling);
-			cul_cam->update();
+			if (cul_cam) cul_cam->update();
 		}
 	}
 	else {

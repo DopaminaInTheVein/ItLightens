@@ -8,9 +8,9 @@
 #include "SLB\SLB.hpp"
 
 struct command {
-	const char* code;
-	float execution_time;
-	bool only_runtime;
+	const char* code = "";
+	float execution_time = 0.f;
+	bool only_runtime = false;
 };
 
 class CLogicManagerModule : public IAppModule
@@ -19,6 +19,7 @@ class CLogicManagerModule : public IAppModule
 
 	std::deque<command> command_queue;
 	std::deque<command> command_queue_to_add;
+	command command_wait;
 
 	CHandle caller_handle;
 
@@ -43,6 +44,8 @@ public:
 		OntTimerStart,
 		OnSetLight,
 
+		OnGuardChase,
+		OnGuardChaseEnd,
 		OnGuardAttack,
 		OnGuardAttackEnd,
 		OnGuardRemoveBox,
@@ -69,6 +72,7 @@ public:
 		OnDroneStatic,
 		OnRechargeDrone,
 		OnNotRechargeDrone,
+		OnUseWorkbench,
 		OnRepairDrone,
 		OnCreateBomb,
 		OnUseCable,
@@ -103,13 +107,14 @@ public:
 		OnElevatorGoingUp,
 		OnElevatorGoingDown,
 
+		OnBoxMode,
 		OnPutPila,
 		OnRemovePila,
 
 		OnVictory,
 		OnDead,
 		OnRestartLevel,
-		OnLoadingLevel,
+		//OnLoadingLevel, (no se esta usando)
 		OnLoadedLevel,
 		OnSavedLevel,
 
@@ -125,6 +130,7 @@ public:
 		OnPause,
 		OnCreateGui,
 		OnChoose,
+		OnValueChanged,
 	};
 
 	CLogicManagerModule();
@@ -145,6 +151,10 @@ public:
 
 	void addCommand(command com) {
 		command_queue_to_add.push_back(com);
+	}
+
+	void setWait(command com) {
+		command_wait = com;
 	}
 
 	// module specific functions

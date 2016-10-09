@@ -13,6 +13,9 @@ class TCompGuidedCamera : public TCompBase {
 	float velocity_default;
 	bool default_dirs;
 	bool reversed;
+	bool stop_final;
+	bool skippable;
+	bool skipped_extern;
 
 	std::vector<VEC3> positions;
 	std::vector<VEC3> targets;
@@ -38,6 +41,8 @@ public:
 	void onGuidedCamera(const TMsgGuidedCamera&);
 	bool followGuide(TCompTransform*, TCompCameraMain*);
 	void start(float speed = 0.f);
+	void skip() { skipped_extern = true; }
+	void moveCinePoint(int point_index);
 };
 
 #endif

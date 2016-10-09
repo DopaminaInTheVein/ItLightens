@@ -15,6 +15,12 @@ FMOD_RESULT F_CALLBACK loopingSoundCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type
 bool music_playing = true;
 
 bool CSoundManagerModule::start() {
+
+	/*CApp &app = CApp::get();
+	std::string file_options_json = app.file_options_json;
+	std::map<std::string, float> fields = readIniAtrData(file_options_json, "sound");
+	assignValueToVar(MAX_DISTANCE, fields);*/
+
 	/*
 	Create a System object and initialize
 	*/
@@ -98,7 +104,6 @@ void CSoundManagerModule::stop() {
 }
 
 bool CSoundManagerModule::playSound(std::string route, float volume = 1.f, bool looping = false) {
-
 	if (volume < 0.f) { volume = 0.f; }
 	else if (volume > 1.f) { volume = 1.f; }
 
@@ -111,7 +116,7 @@ bool CSoundManagerModule::playSound(std::string route, float volume = 1.f, bool 
 		result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
 
 		if (result == FMOD_OK) {
-			result = sound_instance->setVolume(volume);
+			result = sound_instance->setVolume(volume*SFX_VOLUME);
 			if (result != FMOD_OK) return false;
 
 			if (looping) {
@@ -136,28 +141,18 @@ bool CSoundManagerModule::playSound(std::string route, float volume = 1.f, bool 
 }
 
 bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, float max_volume = 1.f, bool looping = false, int max_instances = 1) {
-
 	Studio::EventInstance* sound_instance = NULL;
 
 	int count;
 	sounds_descriptions[std::string(route)]->getInstanceCount(&count);
 
 	if (count < max_instances) {
-
 		result = sounds_descriptions[std::string(route)]->createInstance(&sound_instance);
 
 		if (result == FMOD_OK) {
-
 			// normalize the maximum volume
 			if (max_volume > 1.f) max_volume = 1.f;
 			else if (max_volume < 0.f) max_volume = 0.f;
-
-			// read max distance to hear a sound
-			float MAX_DISTANCE = 0.f;
-			CApp &app = CApp::get();
-			std::string file_ini = app.file_initAttr_json;
-			std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
-			assignValueToVar(MAX_DISTANCE, fields);
 
 			// the volume will depend on the actual distance
 			VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
@@ -195,7 +190,7 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, float m
 			if (result != FMOD_OK) return false;
 
 			// Play the sound
-			result = sound_instance->setVolume(volume);
+			result = sound_instance->setVolume(volume*SFX_VOLUME);
 			if (result != FMOD_OK) return false;
 
 			if (looping) {
@@ -218,31 +213,20 @@ bool CSoundManagerModule::play3dSound(std::string route, VEC3 sound_pos, float m
 			studio_system->setListenerAttributes(0, &attributes);
 			return true;
 		}
-
 	}
-	
+
 	return false;
 }
 
 bool CSoundManagerModule::playFixed3dSound(std::string route, std::string sound_name, VEC3 sound_pos, float max_volume, bool looping) {
-
 	// the sound is not created yet
 	if (fixed_instances[sound_name] == NULL) {
-
 		result = sounds_descriptions[std::string(route)]->createInstance(&fixed_instances[sound_name]);
 
 		if (result == FMOD_OK) {
-
 			// normalize the maximum volume
 			if (max_volume > 1.f) max_volume = 1.f;
 			else if (max_volume < 0.f) max_volume = 0.f;
-
-			// read max distance to hear a sound
-			float MAX_DISTANCE = 0.f;
-			CApp &app = CApp::get();
-			std::string file_ini = app.file_initAttr_json;
-			std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
-			assignValueToVar(MAX_DISTANCE, fields);
 
 			// the volume will depend on the actual distance
 			VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
@@ -280,7 +264,7 @@ bool CSoundManagerModule::playFixed3dSound(std::string route, std::string sound_
 			if (result != FMOD_OK) return false;
 
 			// Play the sound
-			result = fixed_instances[sound_name]->setVolume(volume);
+			result = fixed_instances[sound_name]->setVolume(volume*SFX_VOLUME);
 			if (result != FMOD_OK) return false;
 
 			if (looping) {
@@ -305,7 +289,6 @@ bool CSoundManagerModule::playFixed3dSound(std::string route, std::string sound_
 		}
 	}
 	return false;
-
 }
 
 bool CSoundManagerModule::stopSound(std::string route) {
@@ -333,16 +316,14 @@ bool CSoundManagerModule::stopSound(std::string route) {
 }
 
 bool CSoundManagerModule::stopFixedSound(std::string name) {
-
+	PROFILE_FUNCTION("stopFixedSound");
 	result = fixed_instances[name]->setPaused(true);
 	return result == FMOD_OK;
 }
 
 bool CSoundManagerModule::stopAllSounds() {
-
 	// we iterate over all the sound descriptors and stop and release each instance
 	for (std::map<std::string, Studio::EventDescription*>::iterator it = sounds_descriptions.begin(); it != sounds_descriptions.end(); ++it) {
-		
 		int count;
 		it->second->getInstanceCount(&count);
 
@@ -372,8 +353,8 @@ bool CSoundManagerModule::stopAllSounds() {
 }
 
 bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_pos, float max_volume) {
-	
 	// if the sound was paused, we resume it
+	PROFILE_FUNCTION("updateFixedSound");
 	bool paused;
 	result = fixed_instances[sound_name]->getPaused(&paused);
 	if (result != FMOD_OK) return false;
@@ -389,13 +370,6 @@ bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_
 	if (max_volume > 1.f) max_volume = 1.f;
 	else if (max_volume < 0.f) max_volume = 0.f;
 
-	// read max distance to hear a sound
-	float MAX_DISTANCE = 0.f;
-	CApp &app = CApp::get();
-	std::string file_ini = app.file_initAttr_json;
-	std::map<std::string, float> fields = readIniAtrData(file_ini, "sound");
-	assignValueToVar(MAX_DISTANCE, fields);
-
 	// update the volume
 	VEC3 camera_pos = shader_ctes_camera.CameraWorldPos;
 	float dist = simpleDist(camera_pos, sound_pos);
@@ -409,7 +383,7 @@ bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_
 		volume = 0.f;
 	}
 
-	result = fixed_instances[sound_name]->setVolume(volume);
+	result = fixed_instances[sound_name]->setVolume(volume*SFX_VOLUME);
 	if (result != FMOD_OK) return false;
 
 	// update the position
@@ -439,57 +413,48 @@ bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_
 	return true;
 }
 
-bool CSoundManagerModule::playMusic(std::string route) {
-
-	//if there was a music playing, we stop it
+bool CSoundManagerModule::playMusic(std::string route, float volume = 0.3f) {
+	//if there was a music playing, we pause it
 	if (music_instance) {
-		music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
-		music_instance->release();
-		music_instance = NULL;
+		result = music_instance->setPaused(true);
+		if (result != FMOD_OK) return false;
 	}
 
-	result = sounds_descriptions[std::string(route)]->createInstance(&music_instance);
-
-	if (result == FMOD_OK) {
-		music_instance->start();
-		return true;
+	//if the music instance didnt exist yet, we create it
+	if (!fixed_instances[route]) {
+		result = sounds_descriptions[std::string(route)]->createInstance(&fixed_instances[route]);
+		if (result != FMOD_OK) return false;
+		result = fixed_instances[route]->setCallback(loopingMusicCallback, FMOD_STUDIO_EVENT_CALLBACK_STARTED | FMOD_STUDIO_EVENT_CALLBACK_STOPPED);
+		if (result != FMOD_OK) return false;
+		//set the music to the requested track, and play it
+		music_instance = fixed_instances[route];
+		music_instance->setVolume(volume);
+		result = music_instance->start();
+		if (result != FMOD_OK) return false;
+	}
+	// if the music already existed, we set the music to the instance and unpause it
+	else {
+		//set the music to the requested track, and play it
+		music_instance = fixed_instances[route];
+		music_instance->setVolume(volume);
+		result = music_instance->setPaused(false);
+		if (result != FMOD_OK) return false;
 	}
 
-	return false;
-}
-
-bool CSoundManagerModule::playLoopingMusic(std::string route) {
-
-	//if there was a music playing, we stop it
-	if (music_instance) {
-		music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
-		music_instance->release();
-		music_instance = NULL;
-	}
-
-	result = sounds_descriptions[std::string(route)]->createInstance(&music_instance);
-
-	if (result == FMOD_OK) {
-		music_instance->setCallback(loopingMusicCallback, FMOD_STUDIO_EVENT_CALLBACK_STARTED | FMOD_STUDIO_EVENT_CALLBACK_STOPPED);
-		music_instance->start();
-		return true;
-	}
-
-	return false;
-
+	return true;
 }
 
 bool CSoundManagerModule::stopMusic() {
-
-	//if there was a music playing, we stop it
+	//if there was a music playing, we pause it
 	if (music_instance) {
-		music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
-		music_instance->release();
-		music_instance = NULL;
-		return true;
+		result = music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+		if (result != FMOD_OK) return false;
+		result = music_instance->release();
+		if (result != FMOD_OK) return false;
+		music_instance = nullptr;
 	}
 
-	return false;
+	return true;
 }
 
 bool CSoundManagerModule::playVoice(std::string route) {
@@ -519,7 +484,6 @@ bool CSoundManagerModule::playAmbient(std::string route) {
 }
 
 bool CSoundManagerModule::setMusicVolume(float volume) {
-
 	if (volume < 0.f) { volume = 0.f; }
 	if (volume > 1.f) { volume = 1.f; }
 
@@ -528,7 +492,13 @@ bool CSoundManagerModule::setMusicVolume(float volume) {
 		return true;
 
 	return false;
+}
 
+void CSoundManagerModule::setSFXVolume(float volume) {
+	if (volume < 0.f) { volume = 0.f; }
+	if (volume > 1.f) { volume = 1.f; }
+
+	SFX_VOLUME = volume;
 }
 
 FMOD_VECTOR CSoundManagerModule::VectorToFmod(const VEC3 vect) {
@@ -560,7 +530,6 @@ FMOD_RESULT F_CALLBACK loopingMusicCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type
 // Callback from Studio - Remember these callbacks will occur in the Studio update thread, NOT the game thread.
 FMOD_RESULT F_CALLBACK loopingSoundCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* event, void *parameters)
 {
-
 	FMOD::Studio::EventInstance* instance = (FMOD::Studio::EventInstance*)event;
 
 	if (type == FMOD_STUDIO_EVENT_CALLBACK_STOPPED)
@@ -571,6 +540,3 @@ FMOD_RESULT F_CALLBACK loopingSoundCallback(FMOD_STUDIO_EVENT_CALLBACK_TYPE type
 
 	return FMOD_OK;
 }
-
-
-

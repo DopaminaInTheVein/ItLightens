@@ -305,6 +305,11 @@ bool TCompPhysics::createTriMeshShape()
 	if (entity_h.isValid()) e = entity_h;
 	if (e) {
 		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
+		if (!comp_static_mesh) {
+			char err[1024];
+			sprintf(err, "Objeto [%s] sin malla, pero con física!", e->getName());
+			MessageBox(NULL, err, NULL, MB_OK);
+		}
 		auto name = e->getName();
 		dbg("[Physx]: Cooking static mesh on %s", name);
 		PxTriangleMesh *cookedMesh = g_PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0

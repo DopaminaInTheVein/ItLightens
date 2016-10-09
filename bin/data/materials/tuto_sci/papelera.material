@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/papelera_difuso_b.dds"/>
+<texture slot="normalmap" name="textures/papelera_nrm.dds"/>
+</material>

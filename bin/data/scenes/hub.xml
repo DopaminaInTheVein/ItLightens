@@ -16,21 +16,6 @@
 <entity>
 <tags/>
 <name
-   name="ceiling"/>
-<transform
-   pos="11.53 50.6611 -25.4918"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/ceiling.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="reja"/>
 <transform
    pos="11.53 50.6611 -25.4918"
@@ -550,42 +535,6 @@
 <entity>
 <tags/>
 <name
-   name="ceiling_tile"/>
-<transform
-   pos="11.53 62.5135 -25.4918"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/ceiling_tile.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
-</entity>
-<entity
-   permanent="yes"
-   reload="no">
-<tags
-   tags="camera_main"/>
-<camera_main
-   znear="0.1"
-   zfar="250.0"
-   fov="60.0"/>
-<culling/>
-<render_glow/>
-<controller_3rd_person/>
-<FX_fade_screen/>
-<name
-   name="camController_1"/>
-<transform
-   pos="24.61 53.5507 -25.007"
-   quat="0 0.707104 0 0.707104"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="sofa2"/>
 <transform
    pos="-1.84794 50.6621 -30.7404"
@@ -605,8 +554,8 @@
 <name
    name="end_hub"/>
 <transform
-   pos="-2.25084 53.5247 -25.6599"
-   quat="-0.480359 0.12571 0.109824 0.86104"
+   pos="-2.18931 53.361 -25.4419"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/hub/end_hub.static_mesh"/>
@@ -663,6 +612,22 @@
    scale="6.72523"/>
 <render_static_mesh
    name="static_meshes/hub/machine_table.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags
+   tags="sense_generator"/>
+<name
+   name="generator"/>
+<transform
+   pos="7.365 51.44 -30.6467"
+   quat="-0.064627 0.926492 -0.187081 0.320057"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/generator.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"/>

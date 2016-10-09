@@ -14,7 +14,7 @@
 <name
    name="btn_start"/>
 <transform
-   pos="5.00018 -96.268 8.99995"
+   pos="5.00018 -96.268 4.71109"
    quat="0 0 0 1.0"
    scale="1.04135"/>
 <render_static_mesh
@@ -23,45 +23,15 @@
 
 </entity>
 <entity>
-<tags
-   tags="gui gui_cursor"/>
-<gui
-   menu_name="title"
-   width="0.114758"
-   height="0.131401"/>
-<gui_cursor
-   menu_name="title"/>
+<tags/>
 <name
-   name="cursor"/>
+   name="background"/>
 <transform
-   pos="5.0 -95.0 9.01479"
+   pos="5.0 -95.0 4.61109"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/cursor.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags
-   tags="gui gui_button clickable"/>
-<gui
-   menu_name="title"
-   row="2"
-   col="0"
-   width="0.652746"
-   height="0.367172"/>
-<gui_button
-   width="0.652746"
-   height="0.367172"/>
-<name
-   name="btn_exit"/>
-<transform
-   pos="5.00018 -97.1685 8.99995"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/title/btn_exit.static_mesh"/>
+   name="static_meshes/ui/title/background.static_mesh"/>
 <abs_aabb/>
 
 </entity>
@@ -72,19 +42,62 @@
    menu_name="title"
    row="1"
    col="0"
-   width="0.652746"
-   height="0.367172"/>
+   width="0.477473"
+   height="0.470192"/>
 <gui_button
-   width="0.652746"
-   height="0.367172"/>
+   width="0.477473"
+   height="0.470192"/>
 <name
    name="btn_options"/>
 <transform
-   pos="5.00018 -96.7146 8.99995"
+   pos="5.00018 -96.7906 4.71109"
    quat="0 0 0 1.0"
-   scale="1.0"/>
+   scale="1.04135"/>
 <render_static_mesh
    name="static_meshes/ui/title/btn_options.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui gui_button clickable"/>
+<gui
+   menu_name="title"
+   row="2"
+   col="0"
+   width="0.477473"
+   height="0.470192"/>
+<gui_button
+   width="0.477473"
+   height="0.470192"/>
+<name
+   name="btn_exit"/>
+<transform
+   pos="5.00018 -97.3131 4.71109"
+   quat="0 0 0 1.0"
+   scale="1.04135"/>
+<render_static_mesh
+   name="static_meshes/ui/title/btn_exit.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="menu gui gui_cursor"/>
+<gui
+   menu_name="title"
+   width="0.2"
+   height="0.199997"/>
+<gui_cursor
+   menu_name="title"/>
+<name
+   name="cursor_title"/>
+<transform
+   pos="5.42145 -95.7802 4.77161"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui//cursor.static_mesh"/>
 <abs_aabb/>
 
 </entity>

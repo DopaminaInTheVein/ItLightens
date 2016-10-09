@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/options/opt_music.mesh" material="materials/ui/options/selector_tech_ui.material"/>
+</static_mesh>

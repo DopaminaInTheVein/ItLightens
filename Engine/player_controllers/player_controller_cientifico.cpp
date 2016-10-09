@@ -102,7 +102,7 @@ void player_controller_cientifico::Init() {
 	ChangeState("idle");
 	SET_ANIM_SCIENTIST(AST_IDLE);
 
-	____TIMER_REDEFINE_(t_throwing, 0.5f);
+	____TIMER_REDEFINE_(t_throwing, 0.35f);
 	____TIMER_REDEFINE_(t_nextBomb, 1.f);
 	if (objs_amoung[THROW_BOMB] > 0) {
 		obj = eObjSci::THROW_BOMB;
@@ -153,6 +153,7 @@ void player_controller_cientifico::WorkBenchActions() {
 			if (controller->ActionButtonBecomesPessed()) {
 				obj = THROW_BOMB;
 				//TODO: Destruir bomba actual
+				logic_manager->throwEvent(logic_manager->OnUseWorkbench, "");
 				ChangeState("createBomb");
 				stopMovement();
 			}
@@ -219,10 +220,7 @@ void player_controller_cientifico::Falling()
 		else
 			params = params + "Baldosa";
 
-		char buffer[64];
-		sprintf(buffer, "p:exec_command(\"OnJumpLand%s(%f);\", 1.0)", params.c_str(), 1.f);
-
-		logic_manager->throwUserEvent(std::string(buffer));
+		logic_manager->throwEvent(logic_manager->OnJumpLand, params);
 	}
 }
 
@@ -256,7 +254,9 @@ void player_controller_cientifico::UseBomb()
 {
 	PROFILE_FUNCTION("player cientifico: use bomb");
 	if (objs_amoung[obj] > 0) {
+#ifndef CALIBRATE_GAME
 		objs_amoung[obj]--;
+#endif
 		ChangeState("throwing");
 		bomb_handle.sendMsg(TMsgActivate()); //Notify throwing
 		stopMovement();
@@ -426,9 +426,9 @@ void player_controller_cientifico::onCanRepairDrone(const TMsgCanRechargeDrone &
 // JUMP
 
 bool player_controller_cientifico::canJump() {
-	bool ascending = cc->GetLastSpeed().y > 0.1f;
-	bool descending = cc->GetLastSpeed().y < -0.1f;
-	return !ascending && !descending;
+	if (!controlEnabled) return false;
+	if (cc->GetLastSpeed().y > 0.1f) return false;	//ascending
+	if (cc->GetLastSpeed().y < -0.1f) return false; //descending
 }
 
 //Anims

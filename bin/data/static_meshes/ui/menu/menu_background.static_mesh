@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/menu/menu_background.mesh" material="materials/ui/menu/menu_background_tech_ui.material"/>
+</static_mesh>

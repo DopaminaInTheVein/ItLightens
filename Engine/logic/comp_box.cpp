@@ -190,7 +190,7 @@ bool TCompBox::getGrabPoints(
 	size_up = sizes[up_index];
 	size_front = sizes[max_dot_index];
 
-	//SMALL BOX
+	//SMALL BOX (GRAB)
 	if (type_box == eTypeBox::SMALL) {
 		left = left_actor * (size_side / 2 + offset_separation);
 		right = right_actor * (size_side / 2 + offset_separation);
@@ -198,7 +198,7 @@ bool TCompBox::getGrabPoints(
 		normal_right = right_actor;
 		pos_grab = pos - front_dir * (size_front / 2.f + 0.4f);
 	}
-	//MEDIUM BOX
+	//MEDIUM BOX (PUSH)
 	else if (type_box == eTypeBox::MEDIUM) {
 		left = left_actor * (size_side / 4);
 		left -= up_actor * size_up / 2.f;
@@ -207,7 +207,7 @@ bool TCompBox::getGrabPoints(
 		right -= up_actor * size_up / 2.f;
 		right -= front_dir * size_front / 2.f;
 		normal_left = normal_right = -up_actor;
-		pos_grab = pos - front_dir * (size_front / 2.f + 1.f);
+		pos_grab = pos - front_dir * (size_front / 2.f + push_box_distance);
 	}
 
 	left += pos;
