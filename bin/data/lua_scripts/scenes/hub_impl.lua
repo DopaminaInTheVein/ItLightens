@@ -95,7 +95,7 @@ end
 -------------------------------
 
 function hub_sense_pressed()
-	if sense_first_pressed then
+	if sense_first_pressed and not mole_done and not sci_done then
 		sense_first_pressed = false
 		p:force_sense_vision()
 		p:setControlEnabled(0)

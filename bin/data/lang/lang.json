@@ -34,7 +34,7 @@
   "tuto_sci": {
     "help_possess": "This is SCIENTIST's dream.\nGet closer to him, then press POSSESS (LEFT SHIFT or Controller Y)\nto control it.",
     "help_wb": "This charcter is very clever, he can create bombs on workbenchs.\nPress ACTION (LEFT CLICK or Controller X) to create them on workbenchs.\nAlso seems that you discovered how to OVERLOAD yourself,\nso you can stun GUARDs with ACTION, but lots of life will be lost.",
-	"help_bomb": "Throw bombs by pressing NEGATIVE (E key or controller RB).\nThat bombs are useful to stun GUARDS for a short time\nGUARDS are the only characters that can see you and they want your death",
+	"help_bomb": "Throw bombs by pressing NEGATIVE (E key or controller RB).\nThat bombs are useful to stun GUARDS for a short time\nGUARDS are the only characters that can see you...\nAnd they want you death, be carefull!!",
 	"stunned_guard_remain": "You failed!\nIt could have been worse... Stun the remaining guard.",
 	"help_repair": "As this is a dream, the guards will remain stunt.\nNow get closer to the drone and press ACTION to repair it.",
 	"help_unpossess": "Press POSSESS again to abandon the Scientist.",

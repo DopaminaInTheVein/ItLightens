@@ -131,10 +131,26 @@ function tutosci_help_unpossess( )
 	p:player_talks(p:get_text("tuto_sci","help_unpossess"))
 end
 function tutosci_help_wb( )
+	p:setControlEnabled(0)
+	cam:run_cinematic("CineShowWorkbench", 0.5)
 	p:player_talks(p:get_text("tuto_sci","help_wb"))
+	p:aim_circle("circle_1","aim_circle",51.6847,1.5,-6.69464,-1.0)
+	p:exec_command("p:no_aim_circle(\"circle_1\")",13.0)
+	p:exec_command("cam:skip_cinematic()",13.5)
+	p:exec_command("p:setControlEnabled(1);",13.5)
 end
 function tutosci_help_bomb( )
+p:setControlEnabled(0)
+	cam:run_cinematic("CineShowGuards", 2.5)
 	p:player_talks(p:get_text("tuto_sci","help_bomb"))
+	p:aim_circle("circle_3","aim_circle",69.617,1.0,-4.667,-1.0)
+	p:aim_circle("circle_2","aim_circle",69.617,1.0,-1.226,-1.0)
+	
+	p:exec_command("p:no_aim_circle(\"circle_3\")",13.0)
+	p:exec_command("p:no_aim_circle(\"circle_2\")",13.0)
+	p:exec_command("cam:skip_cinematic()",13.5)
+	p:exec_command("p:setControlEnabled(1);",13.5)
+	
 end
 function tutosci_help_exit( )
 	p:player_talks(p:get_text("tuto_sci","help_exit"))
