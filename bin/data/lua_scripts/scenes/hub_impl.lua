@@ -98,6 +98,7 @@ function hub_sense_pressed()
 	if sense_first_pressed then
 		sense_first_pressed = false
 		p:force_sense_vision()
+		p:setControlEnabled(0)
 		cam:run_cinematic("CineEndTarget", 2.5)
 		
 		p:aim_circle("circle_1","aim_circle",7.37,51.3,-30.65,-1.0)
@@ -115,6 +116,7 @@ function hub_sense_pressed()
 		p:exec_command("cam:skip_cinematic()",16.5)
 		p:exec_command("p:player_talks(p:get_text(\"hub\",\"return_control\"))",16.5)
 		p:exec_command("p:unforce_sense_vision()",16.5)
+		p:exec_command("p:setControlEnabled(1);",16.5)
 	end	
 	sense_first_pressed = false
 end

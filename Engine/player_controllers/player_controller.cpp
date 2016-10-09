@@ -273,10 +273,9 @@ void player_controller::DoubleFalling() {
 }
 
 bool player_controller::canJump() {
-	bool can_jump = true;
-	//if (pol_orbit) can_jump = false;
-	if (polarityForces.size() > 0 && pol_state != NEUTRAL) can_jump = false;
-	return can_jump;
+	if (polarityForces.size() > 0 && pol_state != NEUTRAL) return false;
+	if (!controlEnabled || only_sense) return false;
+	return true;
 }
 
 void player_controller::Jump()

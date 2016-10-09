@@ -426,9 +426,9 @@ void player_controller_cientifico::onCanRepairDrone(const TMsgCanRechargeDrone &
 // JUMP
 
 bool player_controller_cientifico::canJump() {
-	bool ascending = cc->GetLastSpeed().y > 0.1f;
-	bool descending = cc->GetLastSpeed().y < -0.1f;
-	return !ascending && !descending;
+	if (!controlEnabled) return false;
+	if (cc->GetLastSpeed().y > 0.1f) return false;	//ascending
+	if (cc->GetLastSpeed().y < -0.1f) return false; //descending
 }
 
 //Anims

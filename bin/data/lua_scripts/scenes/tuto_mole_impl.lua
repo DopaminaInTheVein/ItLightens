@@ -162,6 +162,7 @@ end
 -- Intro mole
 ------------------------------------------------------------------------------------
 function IntroTutoMole( )
+	p:setControlEnabled(0)
 	cam:start_cinematic("CineIntro", 7)
 	p:exec_command("IntroTutoMole2();", 5)
 end
@@ -178,6 +179,7 @@ end
 function IntroTutoMole4( )
 	cam:skip_cinematic()
 	p:hide_message()
+	p:setControlEnabled(1)
 	p:exec_command("tutomole_help_possess();", 0.5)
 end
 ----------------------------------------------------------------------------------
@@ -188,6 +190,7 @@ function TutoMoleWallDestroyed()
 end
 ----------------------------------------------------------------------------------
 function TutoMoleSala()
+	p:setControlEnabled(0)
 	cam:run_cinematic("CineSala", 5)
 	p:exec_command("TutoMoleSala2();", 5)
 end
@@ -233,6 +236,7 @@ end
 function TutoMoleSala10()
 	cam:skip_cinematic()
 	p:hide_message()
+	p:setControlEnabled(1)
 	p:exec_command("tutomole_help_box();", 1)
 end
 ---------------------------------------------------------------------------------------

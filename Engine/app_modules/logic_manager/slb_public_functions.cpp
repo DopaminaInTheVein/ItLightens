@@ -527,28 +527,23 @@ void SLBCamera::setPositionOffset(float x_offset, float y_offset, float z_offset
 	camara3rd->setPositionOffset(offset);
 }
 
-void SLBCamera::runCinematic(const char* name, float speed) {
+void SLBCamera::execCinematic(const char* name, float speed, bool is_start) {
 	CHandle guidedCam = tags_manager.getHandleByTagAndName("guided_camera", name);
-	CEntity * guidedCamE = guidedCam;
-	if (guidedCamE) {
+	if (guidedCam.isValid()) {
 		TMsgGuidedCamera msg_guided_cam;
 		msg_guided_cam.guide = guidedCam;
 		msg_guided_cam.speed = speed;
-		msg_guided_cam.start = false;
-		guidedCamE->sendMsg(msg_guided_cam);
+		msg_guided_cam.start = is_start;
+		guidedCam.sendMsg(msg_guided_cam);
 	}
 }
 
+void SLBCamera::runCinematic(const char* name, float speed) {
+	execCinematic(name, speed, false);
+}
+
 void SLBCamera::startCinematic(const char* name, float speed) {
-	CHandle guidedCam = tags_manager.getHandleByTagAndName("guided_camera", name);
-	CEntity * guidedCamE = guidedCam;
-	if (guidedCamE) {
-		TMsgGuidedCamera msg_guided_cam;
-		msg_guided_cam.guide = guidedCam;
-		msg_guided_cam.speed = speed;
-		msg_guided_cam.start = true;
-		guidedCamE->sendMsg(msg_guided_cam);
-	}
+	execCinematic(name, speed, true);
 }
 
 void SLBCamera::skipCinematic() {

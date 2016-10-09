@@ -109,7 +109,7 @@ public:
 class SLBCamera
 {
 	CHandle camera_h;
-
+	void execCinematic(const char* name, float speed, bool is_start);
 public:
 
 	// camera functions
