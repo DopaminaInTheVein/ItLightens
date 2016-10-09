@@ -204,3 +204,6 @@ end
 function destroyOptions( )
 	DestroyAllByTag("options")
 end
+
+function opt_sense_pressed()
+end

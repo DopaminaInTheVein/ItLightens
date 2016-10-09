@@ -32,3 +32,6 @@ end
 function destroyMenu( )
 	DestroyAllByTag("menu")
 end
+
+function menu_sense_pressed()
+end
