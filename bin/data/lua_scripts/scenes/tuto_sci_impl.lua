@@ -37,7 +37,7 @@ function OnStart_tuto_sci( )
 	reach_done = false
 	gen_done = false
 	p:ai_start()
-	p:exec_command("tutosci_help_possess();", 2)
+	tutosci_help_possess();
 end
 
 -- function opendoortutosci( )

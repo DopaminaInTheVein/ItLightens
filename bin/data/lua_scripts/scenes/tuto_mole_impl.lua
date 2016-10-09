@@ -36,6 +36,7 @@ function OnStart_tuto_mole( )
 	box_contacted = false
 	box_moved_done = false
 	box_placed_done = false
+	unposs_done = false
 	portal_done = false
 	idWall_out = 100
 	idWall_in = 101
@@ -54,8 +55,11 @@ function OnPossess_tuto_mole( )
 end
 
 function OnUnpossess_tuto_mole( )
-	if box__placed_done then
+	p:print("Unposses mole")
+	if box_placed_done then
+		p:print("Unposses mole, box is placed")
 		if not unposs_done then
+			p:print("No unposs done")
 			unposs_done = true
 			tutomole_help_djump()
 		end
@@ -64,9 +68,8 @@ end
 
 function tutomole_wall_crossed( )
 	TutoMoleSala()
-	-- tutomole_help_box()
-	-- h:getHandleCaller()
-	-- h:destroy()
+	h:getHandleCaller()
+	h:destroy()
 end
 
 function OnBoxMode_tuto_mole( )
@@ -163,6 +166,7 @@ end
 -- Intro mole
 ------------------------------------------------------------------------------------
 function IntroTutoMole( )
+	p:setControlEnabled(0)
 	cam:start_cinematic("CineIntro", 7)
 	p:exec_command("IntroTutoMole2();", 5)
 end
@@ -179,6 +183,7 @@ end
 function IntroTutoMole4( )
 	cam:skip_cinematic()
 	p:hide_message()
+	p:setControlEnabled(1)
 	p:exec_command("tutomole_help_possess();", 0.5)
 end
 ----------------------------------------------------------------------------------
@@ -189,6 +194,7 @@ function TutoMoleWallDestroyed()
 end
 ----------------------------------------------------------------------------------
 function TutoMoleSala()
+	p:setControlEnabled(0)
 	cam:run_cinematic("CineSala", 5)
 	p:exec_command("TutoMoleSala2();", 5)
 end
@@ -234,6 +240,7 @@ end
 function TutoMoleSala10()
 	cam:skip_cinematic()
 	p:hide_message()
+	p:setControlEnabled(1)
 	p:exec_command("tutomole_help_box();", 1)
 end
 ---------------------------------------------------------------------------------------
@@ -261,6 +268,6 @@ function tutomole_help_box( )
 	p:show_message(p:get_text("tuto_mole", "help_box"), "raijin")
 end
 function tutomole_help_djump( )
-	p:player_talks(p:get_text("tuto_mole", "help_djump"))
+	p:show_message(p:get_text("tuto_mole", "help_djump"), "raijin")
 end
 --==============================================================

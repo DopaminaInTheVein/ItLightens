@@ -48,15 +48,15 @@
 	"help_djump": "Press SPACE to jump. Press it twice to perform a double jump."
   },
   "tuto_sci": {
-    "help_possess": "Get closer to the Scientist and press LEFT SHIFT to control his body.",
-    "help_unpossess": "Press LEFT SHIFT to abandon the Scientist.",
-	"help_wb": "Get closer to the work bench with the Scientist\nand press LEFT CLICK to create bombs.",
-	"help_bomb": "Throw bombs by pressing E to stun the guards.\nDo not get too close or they will detect you!",
-	"help_exit": "You have regained all your energy! Cross the door that just opened to end this tutorial.",
+    "help_possess": "This is SCIENTIST's dream.\nGet closer to him, then press POSSESS (LEFT SHIFT or Controller Y)\nto control it.",
+    "help_wb": "This charcter is very clever, he can create bombs on workbenchs.\nPress ACTION (LEFT CLICK or Controller X) to create some.\nAlso seems that you discovered how to OVERLOAD yourself,\nso you can stun GUARDs with ACTION, but lots of life will be lost.",
+	"help_bomb": "Throw bombs by pressing NEGATIVE (E key or controller RB).\nThat bombs are useful to stun GUARDS for a short time\nGUARDS are the only characters that can see you and they want your death",
 	"stunned_guard_remain": "You failed!\nIt could have been worse... Stun the remaining guard.",
-	"help_repair": "Well done! As this is a dream, the guards will remain stunt forever.\nNow get closer to the drone in front of you and press LEFT CLICK to repair it.",
-	"help_polarity": "Press Q and E to toggle my polarity.\n Use this skill to get attracted by the drone and then repulsed up.",
-	"help_generator": "Press LEFT CLICK near a generator to recover your energy."
+	"help_repair": "As this is a dream, the guards will remain stunt.\nNow get closer to the drone and press ACTION to repair it.",
+	"help_unpossess": "Press POSSESS again to abandon the Scientist.",
+	"help_polarity": "Press POSITIVE and NEGATIVE to toggle polarities.\nUse this skill to get attracted by the drone and then repulsed up.\nDirection + JUMP allows to situate on top of the drone for repulsion.\nTake notice that there are also boxes with polarity around the world...",
+	"help_generator": "Press ACTION near a generator to recover your energy.\nIn this room that will open the door.",
+	"help_exit": "You have regained all your energy!\nCross the door that just opened to end this tutorial."
   },
   "ms3": {
     "pila_1": "Where can I use this cell?",

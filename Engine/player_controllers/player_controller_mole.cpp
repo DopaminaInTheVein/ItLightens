@@ -885,9 +885,10 @@ void player_controller_mole::ChangeCommonState(std::string st)
 }
 
 bool player_controller_mole::canJump() {
-	bool ascending = cc->GetLastSpeed().y > 0.1f;
-	bool descending = cc->GetLastSpeed().y < -0.1f;
-	return !boxGrabbed.isValid() && !pilaGrabbed.isValid() && !ascending && !descending;
+	if (!controlEnabled) return false; // Control enabled
+	if (cc->GetLastSpeed().y > 0.1f) return false; //ascending
+	if (cc->GetLastSpeed().y > 0.1f) return false; // descending
+	return !boxGrabbed.isValid() && !pilaGrabbed.isValid(); // Not carrying objects
 }
 
 void player_controller_mole::Falling()

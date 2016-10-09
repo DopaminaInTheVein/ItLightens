@@ -26,15 +26,15 @@
 	"help_djump": "Pulsa ESPACIO para saltar. Puedes pulsar de nuevo para efectuar doble salto"
   },
   "tuto_sci": {
-    "help_possess": "Acercate al cientifico y pulsa SHIFT IZQUIERDO para poseer su cuerpo.",
-    "help_unpossess": "Pulsa SHIFT IZQUIERDO para abandonar el cuerpo del científico.",
-	"help_wb": "Acercate al banco de trabajo con el cientifico y pulsa CLIC IZQUIERDO para crear bombas.",
-	"help_bomb": "Lanza bombas con CLIC DERECHO para aturdir a los guardias.\n(No te acerques demasiado o te detectaran.)",
-	"help_exit": "Has recuperado toda tu energia. Cruza la puerta abierta para abandonar este tutorial.",
-	"stunned_guard_remain": "Podria ser peor... Aturde al guardia restante.",
-	"help_repair": "Bien hecho. Al ser un sueño se quedaran aturdidos para siempre.\nAhora acercate al dron de enfrente y pulsa CLIC IZQUIERDO para repararlo.",
-	"help_polarity": "Pulsa Q y E para alternar mi polaridad.\n Usa esta habilidad para atraerte hacia el dron y repelerte despues hacia arriba.",
-	"help_generator": "Pulsa CLIC IZQUIERDO cerca de un generador para recuperar energia"
+    "help_possess": "This is SCIENTIST's dream.\nGet closer to him, then press POSSESS (LEFT SHIFT or Controller Y)\nto control it.",
+    "help_wb": "This charcter is very clever, he can create bombs on workbenchs.\nPress ACTION (LEFT CLICK or Controller X) to create them on workbenchs.\nAlso seems that you discovered how to OVERLOAD yourself,\nso you can stun GUARDs with ACTION, but lots of life will be lost.",
+	"help_bomb": "Throw bombs by pressing NEGATIVE (E key or controller RB).\nThat bombs are useful to stun GUARDS for a short time\nGUARDS are the only characters that can see you and they want your death",
+	"stunned_guard_remain": "You failed!\nIt could have been worse... Stun the remaining guard.",
+	"help_repair": "As this is a dream, the guards will remain stunt.\nNow get closer to the drone and press ACTION to repair it.",
+	"help_unpossess": "Press POSSESS again to abandon the Scientist.",
+	"help_polarity": "Press POSITIVE and NEGATIVE to toggle polarities.\nUse this skill to get attracted by the drone and then repulsed up.\nDirection + JUMP allows to situate on top of the drone for repulsion.\nTake notice that there are also boxes with polarity around the world...",
+	"help_generator": "Press ACTION near a generator to recover your energy.\nIn this room that will open the door.",
+	"help_exit": "You have regained all your energy! Cross the door that just opened to end this tutorial."
   },
   "ms3": {
     "pila_1": "Where can I use this cell?",

@@ -14,7 +14,3 @@ function OnEnter__ttutomole_end( )
 tutomole_end()
 end
 
-
-function tuto_mole_sense_pressed()
-
-end

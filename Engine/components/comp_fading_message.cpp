@@ -177,7 +177,7 @@ void TCompFadingMessage::printLetters() {
 		float letter_posx = 0.16f + (i - linechars_prev - fminf(line, 1.0f) - accumSpacing[line])*letterSpacer;
 		float letter_posy = 0.20f - line*letterSpacerHigh;
 
-		CHandle letter_h = gui_letters[50 * line + i - linechars_prev];
+		CHandle letter_h = gui_letters[75 * line + i - linechars_prev];
 		VEC3 new_pos_let = min_ortho + orthorect * VEC3(letter_posx, letter_posy, 0.35f + i*0.001f);
 		moveElement(letter_h, new_pos_let);
 		if (letter_h.isValid()) {
