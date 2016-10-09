@@ -22,8 +22,8 @@
     "difficulty": 0.0
   },
   "sound": {
-    "sfx": 0.0,
-    "music": 0.0,
-	"MAX_DISTANCE" : 1
+    "sfx": 1.0,
+    "music": 1.0,
+	"MAX_DISTANCE" : 20
   }
 }

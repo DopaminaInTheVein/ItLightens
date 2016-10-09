@@ -32,6 +32,7 @@ function OnStart_ms3()
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
   cam:run_cinematic("CinematicIntro", 10)
+  p:ai_start()
 end
 
 function OnSave_ms3()
@@ -53,6 +54,7 @@ function OnLoad_ms3()
   cp_elevator = d:get_bool("cp_elevator")
   cp_door_opened = d:get_bool("cp_door_opened")
   p:play_music("event:/OnRoom1", 0.2)
+  p:ai_start()
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
   --cam:run_cinematic("CinematicIntro", 10)

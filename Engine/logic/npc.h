@@ -28,6 +28,7 @@ protected:
 	float stuck_time = 0.f;
 	bool stuck = false;
 	bool reoriented = false;
+	bool path_found = false;
 	int direction = 0;
 	VEC3 unstuck_target;
 	VEC3 last_position;

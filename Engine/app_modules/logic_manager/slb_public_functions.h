@@ -197,6 +197,9 @@ public:
 	void showMessage(const char* text, const char* icon);
 	void hideMessage();
 	void putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag);
+	//AI control
+	void AIStart();
+	void AIStop();
 	//void alterText(const char* id, float new_posx, float new_posy, float new_scale);
 	void removeText(const char* id);
 	void characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance);

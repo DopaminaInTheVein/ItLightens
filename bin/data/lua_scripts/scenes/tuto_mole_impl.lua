@@ -39,8 +39,9 @@ function OnStart_tuto_mole( )
 	portal_done = false
 	idWall_out = 100
 	idWall_in = 101
-	
+	p:ai_start()
 	IntroTutoMole()
+
 end
 
 function OnPossess_tuto_mole( )

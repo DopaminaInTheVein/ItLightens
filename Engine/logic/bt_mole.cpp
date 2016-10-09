@@ -156,6 +156,8 @@ int bt_mole::actionLookForWpt() {
 	if (!SBB::readBool("navmesh")) {
 		return STAY;
 	}
+	stuck = false;
+	stuck_time = 0.f;
 	SET_ANIM_MOLE_BT(AST_IDLE);
 	if (fixedWpts.size() <= 0) return OK;
 	VEC3 front = transform->getFront();
@@ -190,6 +192,8 @@ int bt_mole::actionFollowPathToWpt() {
 		return OK;
 	}
 	else {
+		stuck = false;
+		stuck_time = 0.f;
 		SET_ANIM_MOLE_BT(AST_TURN);
 		return STAY;
 	}

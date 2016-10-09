@@ -1043,6 +1043,12 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// launch victory state
 		.set("launch_victory_state", &SLBPublicFunctions::launchVictoryState)
 		.comment("Launches the victory game state")
+		// AI Start
+		.set("ai_start", &SLBPublicFunctions::AIStart)
+		.comment("Starts the AI update")
+		// AI Stop
+		.set("ai_stop", &SLBPublicFunctions::AIStop)
+		.comment("Stops the AI update")
 		// show loading screen
 		//.set("show_loading_screen", &SLBPublicFunctions::showLoadingScreen)
 		//.comment("Shows the loading screen")

@@ -24,6 +24,7 @@ class CGameController : public IAppModule {
 	bool	free_camera = false;
 	bool	cinematic = false;
 	bool	manual_control = false;
+	bool	ai_update = false;
 
 	bool	cheat_godmode = false;
 
@@ -98,6 +99,9 @@ public:
 	void setHandleController(CHandle);
 
 	bool isSenseVisionEnabled();
+
+	bool getAiUpdate() { return ai_update; }
+	void setAiUpdate(bool update) { ai_update = update; }
 
 	CHandle getHandleGameController() const;
 

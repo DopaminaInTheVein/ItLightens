@@ -36,7 +36,7 @@ bool npc::getPath(const VEC3& startPoint, const VEC3& endPoint) {
 	}
 	query.updatePosIni(startPointValue);
 	query.updatePosEnd(endPointValue);
-	Debug->DrawLine(startPointValue, endPointValue);
+	//Debug->DrawLine(startPointValue, endPointValue);
 	query.findPath(query.p1, query.p2);
 	const float * path = query.getVertexSmoothPath();
 	pathWpts.clear();
@@ -51,7 +51,7 @@ bool npc::getPath(const VEC3& startPoint, const VEC3& endPoint) {
 		return false;
 
 	for (int i = 0; i < (pathWpts.size() - 1); i++) {
-		Debug->DrawLine(pathWpts[i], pathWpts[i + 1], VEC3(1, 0, 1));
+		//Debug->DrawLine(pathWpts[i], pathWpts[i + 1], VEC3(1, 0, 1));
 	}
 
 	currPathWpt = 0;
@@ -137,6 +137,7 @@ void npc::updateStuck()
 		stuck_time += getDeltaTime();
 		if (stuck_time > MAX_STUCK_TIME && !stuck) {
 			stuck = true;
+			path_found = false;
 			action_when_stuck = current;
 			setCurrent(NULL);
 		}
@@ -300,7 +301,7 @@ void npc::goTo(const VEC3& dest) {
 	if (needsSteering(npcPos, getTransform(), SPEED_WALK, getParent())) {
 		goForward(SPEED_WALK);
 	}
-	else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
+	else if (!getTransform()->isHalfConeVision(target, deg2rad(10.0f))) {
 		turnTo(target);
 	}
 	else {

@@ -388,7 +388,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="-31.1777 -15.8855 -0.614541"
+   pos="-32.8199 -27.1284 -4.65144"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -537,8 +537,8 @@
 <tags
    tags="AI AI_mole AI_poss"/>
 <bt_mole
-   wpts_size="5"
-   wpt0_pos="32.9416 -23.859 -8.19215"
+   wpts_size="6"
+   wpt0_pos="30.958 -23.859 -8.19215"
    wpt0_wait="2"
    wpt1_pos="32.9416 -23.859 12.2672"
    wpt1_wait="2"
@@ -547,7 +547,9 @@
    wpt3_pos="31.3085 -23.859 7.67587"
    wpt3_wait="2"
    wpt4_pos="33.2816 -23.859 0.208357"
-   wpt4_wait="2"/>
+   wpt4_wait="2"
+   wpt5_pos="34.056 -23.859 -11.908"
+   wpt5_wait="2"/>
 <player_mole/>
 <skc_mole/>
 <name
@@ -1426,10 +1428,10 @@
    kpt1_pos="2.40446 -23.8712 2.58889"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="26.1755 -23.8712 -4.6136"
+   kpt2_pos="12.4548 -23.8712 -14.1722"
    kpt2_wait="2"
    kpt3_type="seek"
-   kpt3_pos="10.8511 -23.8712 -13.6583"
+   kpt3_pos="25.5835 -23.8712 -4.79769"
    kpt3_wait="2"
    jurisdiction="-4.9095 -25.4091 0.406024"
    jurRadius="50.0"
@@ -1462,26 +1464,35 @@
 <tags
    tags="AI AI_guard"/>
 <bt_guard
-   kpt_size="3"
+   kpt_size="6"
    kpt0_type="seek"
-   kpt0_pos="5.8479 -23.8712 22.4545"
+   kpt0_pos="4.383 -23.8712 -17.1724"
    kpt0_wait="2"
    kpt1_type="seek"
-   kpt1_pos="6.83898 -23.8712 -21.0227"
+   kpt1_pos="12.8711 -23.8712 -0.822401"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="2.70562 -23.8712 1.62904"
+   kpt2_pos="2.43603 -23.8712 2.84988"
    kpt2_wait="2"
-   jurisdiction="-4.9095 -25.4091 0.406024"
+   kpt3_type="seek"
+   kpt3_pos="14.6132 -23.8712 15.9773"
+   kpt3_wait="2"
+   kpt4_type="seek"
+   kpt4_pos="1.2781 -23.8712 17.5793"
+   kpt4_wait="2"
+   kpt5_type="seek"
+   kpt5_pos="-2.94104 -23.8712 -2.24404"
+   kpt5_wait="2"
+   jurisdiction="-6.37441 -25.4091 -5.79567"
    jurRadius="50.0"
-   formation_point="-4.26029 -24.0251 1.96243"
-   formation_dir="-3.61846 -23.9678 2.13469"/>
+   formation_point="-5.72519 -24.0251 -4.23926"
+   formation_dir="-5.08337 -23.9678 -4.067"/>
 <skc_guard/>
 <skeleton_lookat/>
 <name
    name="guard_003"/>
 <transform
-   pos="-1.58059 -23.9 3.84785"
+   pos="-3.0455 -23.9 -2.35384"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -1579,7 +1590,7 @@
 <tags
    tags="AI AI_guard"/>
 <bt_guard
-   kpt_size="6"
+   kpt_size="7"
    kpt0_type="look"
    kpt0_pos="-100.586 -1.27954 -5.80638"
    kpt0_wait="2"
@@ -1598,6 +1609,9 @@
    kpt5_type="look"
    kpt5_pos="-72.2655 -1.27954 -17.2999"
    kpt5_wait="2"
+   kpt6_type="seek"
+   kpt6_pos="-92.719 -1.28589 -12.3816"
+   kpt6_wait="2"
    jurisdiction="-93.7738 -2.74989 -8.70853"
    jurRadius="20.0"
    formation_point="-99.4642 -1.32482 -12.4904"
@@ -1637,7 +1651,7 @@
    kpt1_pos="-67.1231 -1.28589 11.4189"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="-62.9841 -1.28589 -8.10853"
+   kpt2_pos="-63.9595 -1.28589 -8.51007"
    kpt2_wait="2"
    kpt3_type="look"
    kpt3_pos="-57.9167 -1.27954 -7.76042"

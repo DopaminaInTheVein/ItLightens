@@ -66,6 +66,7 @@ function LoadLevel( logic_level )
 	end
 	ui_cam:fade_out(0.5)
 	p:setControlEnabled(0)
+	p:ai_stop()
 	--p:load_entities("loading")
 	--p:exec_command("p:load_entites(\"loading\")", 0.1)
 	p:exec_command("p:load_entities(\"loading\");", 0.5)
@@ -77,6 +78,7 @@ g_current_level = logic_level
 	p:print("Load Level")
 	ui_cam:fade_out(1)
 	p:setControlEnabled(0)
+	p:ai_stop()
 	p:exec_command("SaveLevel()", 1)
 	p:exec_command("p:load_level(\""..logic_level.."\")", 1.2)
 end

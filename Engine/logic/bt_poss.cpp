@@ -29,6 +29,9 @@ void bt_poss::onSetPossessed(const TMsgAISetPossessed& msg) {
 	else {
 		stunning = true;
 		possessed = false;
+		stuck = false;
+		stuck_time = 0.f;
+		setCurrent(NULL);
 	}
 	TMsgSetTag msgTag;
 	msgTag.add = msg.possessed;

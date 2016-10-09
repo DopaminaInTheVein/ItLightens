@@ -675,7 +675,7 @@ void CEntitiesModule::update(float dt) {
 			getHandleManager<TCompSkeletonLookAt>()->updateAll(dt);
 		}
 
-		if (SBB::readBool("navmesh") && ia_wait > 1.0f) {
+		if (SBB::readBool("navmesh") && GameController->getAiUpdate()) {
 			getHandleManager<bt_mole>()->updateAll(dt);
 			getHandleManager<bt_scientist>()->updateAll(dt);
 			getHandleManager<ai_cam>()->updateAll(dt);

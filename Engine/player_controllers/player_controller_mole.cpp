@@ -341,6 +341,14 @@ void player_controller_mole::UpdateUnpossess() {
 		pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
 		pilaGrabbed = CHandle();
 	}
+	if (boxPushed.isValid()) {
+		LeaveBox();
+		GET_COMP(box_p, boxPushed, TCompPhysics);
+		box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
+		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
+		boxGrabbed = CHandle();
+		boxPushed = CHandle();
+	}
 	inputEnabled = true;
 	pushing_box = false;
 	SET_ANIM_MOLE(AST_STUNNED);
