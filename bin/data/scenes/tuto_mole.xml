@@ -402,6 +402,8 @@
 <render_static_mesh
    name="static_meshes/tuto_mole/_end_portal.static_mesh"/>
 <abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 
