@@ -121,6 +121,7 @@ public:
 		//Others
 		OnStep,
 		OnStepOut,
+		OnSenseVision,
 
 		//GUI
 		OnButtonPressed,

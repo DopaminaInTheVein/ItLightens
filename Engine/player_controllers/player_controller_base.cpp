@@ -93,6 +93,9 @@ void CPlayerBase::onSetOnlySense(const TMsgSetOnlySense& msg) {
 void CPlayerBase::setControllable(bool control)
 {
 	controlEnabled = control;
+	stopMovement();
+	ChangeState("idle");
+	ChangeCommonState("idle");
 	if (!control) sense_vision->unregisterHandle(myHandle);
 }
 
@@ -382,7 +385,7 @@ void CPlayerBase::Idle()
 	if (!checkDead()) {
 		UpdateDirection();
 		UpdateJumpState();
-		if (UpdateMovDirection() && (state == "moving" || state == "idle" )) {
+		if (UpdateMovDirection() && (state == "moving" || state == "idle")) {
 			ChangeCommonState("moving");
 			ChangeState("moving");
 		}

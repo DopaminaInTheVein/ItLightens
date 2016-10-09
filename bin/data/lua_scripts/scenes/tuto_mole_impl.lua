@@ -36,6 +36,7 @@ function OnStart_tuto_mole( )
 	box_contacted = false
 	box_moved_done = false
 	box_placed_done = false
+	unposs_done = false
 	portal_done = false
 	idWall_out = 100
 	idWall_in = 101
@@ -53,8 +54,11 @@ function OnPossess_tuto_mole( )
 end
 
 function OnUnpossess_tuto_mole( )
-	if box__placed_done then
+	p:print("Unposses mole")
+	if box_placed_done then
+		p:print("Unposses mole, box is placed")
 		if not unposs_done then
+			p:print("No unposs done")
 			unposs_done = true
 			tutomole_help_djump()
 		end
@@ -63,9 +67,8 @@ end
 
 function tutomole_wall_crossed( )
 	TutoMoleSala()
-	-- tutomole_help_box()
-	-- h:getHandleCaller()
-	-- h:destroy()
+	h:getHandleCaller()
+	h:destroy()
 end
 
 function OnBoxMode_tuto_mole( )
@@ -264,6 +267,6 @@ function tutomole_help_box( )
 	p:show_message(p:get_text("tuto_mole", "help_box"), "raijin")
 end
 function tutomole_help_djump( )
-	p:player_talks(p:get_text("tuto_mole", "help_djump"))
+	p:show_message(p:get_text("tuto_mole", "help_djump"), "raijin")
 end
 --==============================================================
