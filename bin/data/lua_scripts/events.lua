@@ -256,6 +256,11 @@ function OnUseCable( param )
 	p:print( "OnUseCable: "..param.."\n" )
 end
 
+function OnSenseVision( level )
+	p:print( "OnSenseVision: "..level.."\n" )
+	CallFunction(level.."_sense_pressed")
+end
+
 function OnUseGenerator( param )
 	p:print( "OnUseGenerator: "..param.."\n" )
 	CallFunction("OnUseGenerator_"..param)

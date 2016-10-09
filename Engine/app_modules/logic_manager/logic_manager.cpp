@@ -498,6 +498,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnStepOut%s(%i);", event_name.c_str(), step_number);
 		break;
 	}
+	case (OnSenseVision): {
+		sprintf(lua_code, "OnSenseVision(\"%s\");", params.c_str());
+		break;
+	}
 					  //GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());

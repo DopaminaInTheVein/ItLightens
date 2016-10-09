@@ -176,10 +176,10 @@ void CRenderDeferredModule::update(float dt) {
 
 	//m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
 	m_isSpecialVisionActive = GameController->isSenseVisionEnabled();
-	if (controller->SenseButtonBecomesPressed()) {
-		std::string level = CApp::get().getCurrentRealLevel() + "_sense_pressed()";
-		logic_manager->throwUserEvent(level, "");
-	}
+	//if (controller->SenseButtonBecomesPressed()) {
+	//	std::string level = CApp::get().getCurrentRealLevel() + "_sense_pressed()";
+	//	logic_manager->throwUserEvent(level, "");
+	//}
 }
 
 // ------------------------------------------------------
