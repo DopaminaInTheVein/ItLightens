@@ -39,7 +39,13 @@
 	"dead_on_dream": "¡Oops! It was a dream fortunately...\nI'll do my best next time"
   },
   "tuto_mole": {
-    "look_wall": "This wall seems weak. I wonder if there is something behind...",
+    "mole_dream": "¡Qué claustrofobia! ¡Necesito salir de aquí!",
+	"need_higher": "Necesito algo para llegar tan alto...",
+	"box_hint": "¿Qué tal esta caja?",
+    "pull_push": "Pulsa W para empujar y S para estirar",
+	"show_portal": "¡Mira! ¡Ésta debe ser la salida del sueño!",
+	"wall_destroyed": "¡Muy bien! Ahora busquemos la salida.",
+	"look_wall": "This wall seems weak. I wonder if there is something behind...",
     "help_possess": "Get closer to the Mass and press LEFT SHIFT to control his body.",
     "help_unpossess": "Press LEFT SHIFT to abandon the Mass.",
 	"help_place_box": "Carry the box to the broken column (you can use SENSE).",

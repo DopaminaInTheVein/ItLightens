@@ -40,7 +40,19 @@ function OnStart_tuto_mole( )
 	portal_done = false
 	idWall_out = 100
 	idWall_in = 101
-	
+	TXT_LOOK_WALL = "look_wall"
+	TXT_HELP_POSS = "help_possess"
+	TXT_HELP_UNPOSS = "help_unpossess"
+	TXT_PLACE_BOX = "help_place_box"
+	TXT_HELP_WALL = "help_wall"
+	TXT_HELP_BOX = "help_box"
+	TXT_HELP_DJUMP = "help_djump"
+	TXT_BOX_HINT = "box_hint"
+	TXT_MOLE_DREAM = "mole_dream"
+	TXT_NEED_HIGHER = "need_higher"
+	TXT_PULL_PUSH = "pull_push"
+	TXT_SHOW_PORTAL = "show_portal"
+	TXT_WALL_DETROYED = "wall_destroyed"
 	IntroTutoMole()
 end
 
@@ -98,7 +110,7 @@ end
 function tutomole_lookWall( )
   p:print("Look Wall\n")
   triggerWall_1:getHandleCaller()
-  p:player_talks(p:get_text("tuto_mole", "look_wall"))
+  p:player_talks(p:get_text("tuto_mole", TXT_LOOK_WALL))
   p:exec_command( "triggerWall_1:setActionable(1);", 2 )
 end
 
@@ -171,7 +183,7 @@ function IntroTutoMole( )
 end
 
 function IntroTutoMole2( )
-	p:show_message("Mensaje mole sueño", "mole")--p:get_text("hub","target_seen"))
+	ShowMessage("tuto_mole", TXT_MOLE_DREAM, "mole")
 	p:exec_command("IntroTutoMole3();", 1)
 end
 
@@ -188,7 +200,7 @@ end
 ----------------------------------------------------------------------------------
 -- Wall destroyed
 function TutoMoleWallDestroyed()
-	p:show_message("¡Muy bien! Ahora busquemos la salida de este sueño", "raijin")
+	ShowMessage("tuto_mole", TXT_WALL_DETROYED, "raijin")
 	p:exec_command("p:hide_message()", 4)
 end
 ----------------------------------------------------------------------------------
@@ -199,7 +211,7 @@ function TutoMoleSala()
 end
 
 function TutoMoleSala2()
-	p:show_message("¡Mira! Ese portal debe ser la salida.", "raijin")
+	ShowMessage("tuto_mole", TXT_SHOW_PORTAL, "raijin")
 	p:exec_command("TutoMoleSala3();", 0.5)
 end
 
@@ -213,7 +225,7 @@ function TutoMoleSala4()
 end
 
 function TutoMoleSala5()
-	p:show_message("Necesitaré algo para llegar tan alto", "raijin")
+	ShowMessage("tuto_mole", TXT_NEED_HIGHER, "raijin")
 	p:exec_command("TutoMoleSala6();", 0.5)
 end
 
@@ -228,7 +240,7 @@ function TutoMoleSala7()
 end
 
 function TutoMoleSala8()
-	p:show_message("Qué tal con esta caja?", "raijin")
+	ShowMessage("tuto_mole", TXT_BOX_HINT, "raijin")
 	p:exec_command("TutoMoleSala9();", 0.5)
 end
 
@@ -246,27 +258,27 @@ end
 function TutoMoleUseBox()
 	if not box_contacted then
 		box_contacted = true
-		p:show_message("W pa empujar, S pa estirar", "raijin")
+		ShowMessage("tuto_mole", TXT_PULL_PUSH, "raijin")
 	end
 end
 
 function tutomole_help_possess( )
-	p:show_message("Ayuda posesión", "raijin")
+	ShowMessage("tuto_mole", TXT_HELP_POSS, "raijin")
 end
 
 function tutomole_help_unpossess( )
-	p:player_talks(p:get_text("tuto_mole", "help_unpossess"))
+	p:player_talks(p:get_text("tuto_mole", TXT_HELP_UNPOSS))
 end
 function tutomole_help_place_box( )
-	p:player_talks(p:get_text("tuto_mole", "help_place_box"))
+	p:player_talks(p:get_text("tuto_mole", TXT_PLACE_BOX))
 end
 function tutomole_help_wall( )
-	p:show_message(p:get_text("tuto_mole", "help_wall"), "raijin")
+	ShowMessage("tuto_mole", TXT_HELP_WALL, "raijin")
 end
 function tutomole_help_box( )
-	p:show_message(p:get_text("tuto_mole", "help_box"), "raijin")
+	ShowMessage("tuto_mole", TXT_HELP_BOX, "raijin")
 end
 function tutomole_help_djump( )
-	p:show_message(p:get_text("tuto_mole", "help_djump"), "raijin")
+	ShowMessage("tuto_mole", TXT_HELP_DJUMP, "raijin")
 end
 --==============================================================
