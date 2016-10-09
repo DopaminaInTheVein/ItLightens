@@ -178,28 +178,26 @@ void CRenderPostProcessModule::ActivateFXAtEnd(TCompBasicFX* handle, int priorit
 	*/
 }
 
-void CRenderPostProcessModule::RemoveActiveFX(std::string name, int priority)
+void CRenderPostProcessModule::RemoveActiveFX(std::string name)
 {
 	TCompBasicFX* handle = m_list_fx[name];
-	RemoveActiveFX(handle, priority);
+	RemoveActiveFX(handle);
 }
 
-void CRenderPostProcessModule::RemoveActiveFX(TCompBasicFX* handle, int priority)
+void CRenderPostProcessModule::RemoveActiveFX(TCompBasicFX* handle)
 {
-	int idx = 0;
-	for (auto fx_key : m_activated_ui_layer) {
-		if (fx_key.fx == handle) {
-			m_activated_ui_layer.erase(m_activated_ui_layer.begin() + idx);
+	for (auto fx_key = m_activated_ui_layer.begin(); fx_key != m_activated_ui_layer.end();) {
+		if (fx_key->fx == handle) {
+			fx_key = m_activated_ui_layer.erase(fx_key);
 		}
-		idx++;
+		else fx_key++;
 	}
 
-	idx = 0;
-	for (auto fx_key : m_activated_end) {
-		if (fx_key.fx == handle) {
-			m_activated_ui_layer.erase(m_activated_end.begin() + idx);
+	for (auto fx_key = m_activated_end.begin(); fx_key != m_activated_end.end();) {
+		if (fx_key->fx == handle) {
+			fx_key = m_activated_end.erase(fx_key);
 		}
-		idx++;
+		else fx_key++;
 	}
 }
 

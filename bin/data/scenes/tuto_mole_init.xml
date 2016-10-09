@@ -205,14 +205,14 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="0.889994 2.955 3.84509"/>
+   size="0.299994 2.955 21.6094"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="_tCrossWall"/>
 <transform
-   pos="1032.57 65.787 -26.0653"
+   pos="1032.22 65.787 -26.0653"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -230,7 +230,7 @@
 <name
    name="_ttutomole_end"/>
 <transform
-   pos="1029.15 73.1718 -24.9682"
+   pos="1029.22 73.1718 -24.9682"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -403,6 +403,44 @@
    name="CineBox"/>
 <transform
    pos="1018.34 66.4762 -7.72171"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="8.30953 8.63955 4.84482"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_tColumn"/>
+<transform
+   pos="1029.49 73.3337 -25.151"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="1023.28 67.1161 -24.857"
+   lpt1="1028.98 73.3392 -24.9672"/>
+<name
+   name="CineNearPortal"/>
+<transform
+   pos="1011.94 66.4762 -7.72171"
    quat="0 0 0 1.0"
    scale="0.703206"/>
 

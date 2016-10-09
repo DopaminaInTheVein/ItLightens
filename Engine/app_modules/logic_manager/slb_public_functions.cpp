@@ -583,23 +583,21 @@ void SLBCamera::orbit(bool new_orbit) {
 void SLBCamera::resetCamera() {
 	// restore the normal 3rd person camera
 	if (!checkCamera()) return;
+
 	// turn manual control off
 	GET_COMP(cam_m, camera_h, TCompCameraMain);
-	cam_m->setManualControl(false);
-	GameController->SetManualCameraState(false);
-	// restore normal controls
-	TMsgSetControllable msg;
-	msg.control = true;
-	camera_h.sendMsg(msg);
-	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
-	if (cam_control) cam_control->StopOrbit();
+	cam_m->reset();
+}
 
-	CHandle player = CPlayerBase::handle_player;
-	if (player.isValid()) {
-		GET_COMP(player_tmx, player, TCompTransform);
-		if (player_tmx) {
-			GET_COMP(cam_tmx, camera_h, TCompTransform);
-			if (cam_tmx) cam_tmx->setPosition(player_tmx->getPosition());
+void SLBCamera::fx(const char* name, int enabled) {
+	if (enabled > 0) {
+		if (!render_fx->isActive(name)) {
+			render_fx->ActivateFXBeforeUI(name);
+		}
+	}
+	else {
+		if (render_fx->isActive(name)) {
+			render_fx->RemoveActiveFX(name);
 		}
 	}
 }
@@ -634,6 +632,19 @@ void SLBUiCamera::fadeOut(float speed) {
 	}
 	fx->SetMaxTime(speed);
 	fx->FadeOut();
+}
+
+void SLBUiCamera::fx(const char* name, bool enabled) {
+	if (enabled) {
+		if (!render_fx->isActive(name)) {
+			render_fx->ActivateFXAtEnd(name);
+		}
+	}
+	else {
+		if (render_fx->isActive(name)) {
+			render_fx->RemoveActiveFX(name);
+		}
+	}
 }
 
 // Data

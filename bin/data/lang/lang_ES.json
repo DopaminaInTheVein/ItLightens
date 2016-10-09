@@ -51,7 +51,8 @@
 	"help_place_box": "Lleva la caja hasta la columna rota (puedes utilizar SENTIR).",
 	"help_wall": "Acércate al muro de enfrente con la Mole y pulsa CLIC IZQUIERDO para destruirlo.",
 	"help_box": "Acércate a la caja y pulsa CLIC IZQUIERDO para empujar o tirar de ella.",
-	"help_djump": "Pulsa ESPACIO para saltar. Púlsalo dos veces para efectuar un doble salto."
+	"help_djump": "Pulsa ESPACIO para saltar. Púlsalo dos veces para efectuar un doble salto.",
+	"fall_column": "¡Uy! ¡Qué torpeza!"
   },
   "tuto_sci": {
     "help_possess": "Acércate al Científico y pulsa SHIFT IZQUIERDO para controlar su cuerpo.",

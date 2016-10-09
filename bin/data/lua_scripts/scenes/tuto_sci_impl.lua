@@ -36,6 +36,7 @@ function OnStart_tuto_sci( )
 	unposs_done = false
 	reach_done = false
 	gen_done = false
+	cam:fx(FX_DREAM_BORDER, 1)
 	tutosci_help_possess();
 end
 
