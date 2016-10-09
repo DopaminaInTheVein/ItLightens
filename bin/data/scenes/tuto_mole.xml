@@ -225,21 +225,6 @@
 <entity>
 <tags/>
 <name
-   name="_end_portal"/>
-<transform
-   pos="1028.95 73.4292 -24.9939"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<tmx_animator
-   roll_speed="180"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/_end_portal.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="hierro001"/>
 <transform
    pos="1023.42 74.4206 -25.078"
@@ -390,14 +375,33 @@
 <name
    name="columna_rota001"/>
 <transform
-   pos="1026.11 66.4762 -25.2976"
-   quat="0 0 0 1.0"
-   scale="0.703206"/>
+   pos="1026.11 64.1897 -25.2976"
+   quat="0 0.300706 0 0.953717"
+   scale="1.0"/>
 <render_static_mesh
    name="static_meshes/tuto_mole/columna_rota001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   type_shape="box"
+   size="1.2024 7.716 1.54006"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="_end_portal"/>
+<transform
+   pos="1028.95 73.4292 -24.9939"
+   quat="0 0.707107 0 0.707107"
+   scale="1.0"/>
+<tmx_animator
+   roll_speed="180"/>
+<render_static_mesh
+   name="static_meshes/tuto_mole/_end_portal.static_mesh"/>
+<abs_aabb/>
 
 </entity>
 
