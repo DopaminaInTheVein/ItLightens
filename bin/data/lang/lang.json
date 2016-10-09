@@ -17,7 +17,13 @@
 	"dead_on_dream": "¡Uy! Suerte que era un sueño...\nTendré que esforzarme más."
   },
   "tuto_mole": {
-    "look_wall": "This wall seems weak, I wonder if there is something behind...",
+	"mole_dream": "¡Qué claustrofobia! ¡Necesito salir de aquí!",
+	"need_higher": "Necesito algo para llegar tan alto...",
+	"box_hint": "¿Qué tal esta caja?",
+    "pull_push": "Pulsa W para empujar y S para estirar",
+	"show_portal": "¡Mira! ¡Ésta debe ser la salida del sueño!",
+	"wall_destroyed": "¡Muy bien! Ahora busquemos la salida.",
+	"look_wall": "This wall seems weak, I wonder if there is something behind...",
     "help_possess": "Acercate a la mole y pulsa SHIFT IZQUIERDO para poseer su cuerpo.",
     "help_unpossess": "Pulsa SHIFT IZQUIERDO para abandonar el cuerpo de la mole.",
 	"help_place_box": "Lleva la caja hasta la columna rota (puedes utilizar SENTIR)",
