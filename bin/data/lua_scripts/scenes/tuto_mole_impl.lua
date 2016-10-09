@@ -53,7 +53,9 @@ function OnStart_tuto_mole( )
 	TXT_PULL_PUSH = "pull_push"
 	TXT_SHOW_PORTAL = "show_portal"
 	TXT_WALL_DETROYED = "wall_destroyed"
+	TXT_FALL_COLUMN = "fall_column"
 	IntroTutoMole()
+	cam:fx(FX_DREAM_BORDER, 1) -- defined on fx.lua
 end
 
 function OnPossess_tuto_mole( )
@@ -159,6 +161,16 @@ function tutomole_destroyWallEffect()
   --Tasklist
   p:complete_tasklist(TASK_TUTOM_WALL)
 end
+
+function tutomole_reach_column( )
+	p:hide_message()
+	cam:run_cinematic("CineNearPortal", 1)
+end
+
+function tutomole_out_column( )
+	p:player_talks(p:get_text("tuto_mole", TXT_FALL_COLUMN))
+	cam:skip_cinematic()
+end
 --------------------------------------
 --------------
 
@@ -206,8 +218,8 @@ end
 ----------------------------------------------------------------------------------
 function TutoMoleSala()
 	p:setControlEnabled(0)
-	cam:run_cinematic("CineSala", 5)
-	p:exec_command("TutoMoleSala2();", 5)
+	cam:run_cinematic("CineSala", 8)
+	p:exec_command("TutoMoleSala2();", 2)
 end
 
 function TutoMoleSala2()
@@ -220,8 +232,8 @@ function TutoMoleSala3()
 end
 
 function TutoMoleSala4()
-	cam:run_cinematic("CinePortalWay", 5)
-	p:exec_command("TutoMoleSala5();", 2)
+	cam:run_cinematic("CinePortalWay", 7.5)
+	p:exec_command("TutoMoleSala5();", 1)
 end
 
 function TutoMoleSala5()
@@ -235,8 +247,8 @@ end
 
 function TutoMoleSala7()
 	p:hide_message()
-	cam:run_cinematic("CineBox", 5)
-	p:exec_command("TutoMoleSala8();", 2)
+	cam:run_cinematic("CineBox", 7.5)
+	p:exec_command("TutoMoleSala8();", 1)
 end
 
 function TutoMoleSala8()

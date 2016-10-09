@@ -51,7 +51,8 @@
 	"help_place_box": "Carry the box to the broken column (you can use SENSE).",
 	"help_wall": "Get closer to the wall in front of you with the Mass\nand press LEFT CLICK to destroy it.",
 	"help_box": "Get closer to the box and press LEFT CLICK to push or pull it.",
-	"help_djump": "Press SPACE to jump. Press it twice to perform a double jump."
+	"help_djump": "Press SPACE to jump. Press it twice to perform a double jump.",
+	"fall_column": "¡Uy! ¡Qué torpeza!"
   },
   "tuto_sci": {
     "help_possess": "This is SCIENTIST's dream.\nGet closer to him, then press POSSESS (LEFT SHIFT or Controller Y)\nto control it.",

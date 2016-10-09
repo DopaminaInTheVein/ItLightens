@@ -51,7 +51,8 @@
 	"help_place_box": "Leva a caixa ata a columna rota (podes utilizar SENTIR).",
 	"help_wall": "Achégate ao muro de diante coa Mole e pulsa CLIC ESQUERDO para destruílo.",
 	"help_box": "Achégate á caixa e pulsa CLIC ESQUERDO para empurrala ou tirar dela.",
-	"help_djump": "Pulsa ESPAZO para saltar. Púlsao dúas veces para efectuar un dobre salto."
+	"help_djump": "Pulsa ESPAZO para saltar. Púlsao dúas veces para efectuar un dobre salto.",
+	"fall_column": "¡Uy! ¡Qué torpeza!"
   },
   "tuto_sci": {
     "help_possess": "Achégate ao Científico e pulsa SHIFT ESQUERDO para controlar o seu corpo.",

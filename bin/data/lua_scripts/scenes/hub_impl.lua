@@ -50,6 +50,7 @@ end
 idMoleSlept = 5
 idSciSlept = 6
 function OnLoad_hub()
+	cam:fx(FX_DREAM_BORDER, 0)
 	if dead_on_dream then
 		p:player_talks(p:get_text("hub",TXT_DEAD_ON_DREAM))
 	else

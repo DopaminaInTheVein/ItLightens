@@ -194,24 +194,7 @@ void TCompCameraMain::endGuidedCamera()
 	CHandle cameraFinished = guidedCamera;
 
 	//... Terminamos el modo cinematica
-	guidedCamera = CHandle();
-	GameController->SetCinematic(false);
-
-	// Set the player in the 3rdPersonController
-	CHandle t = tags_manager.getFirstHavingTag("player");
-	TMsgGetWhoAmI msg_who;
-	t.sendMsgWithReply(msg_who);
-	//CEntity * target_e = t;
-	if (t.isValid()) {
-		TMsgSetTarget msg;
-		msg.target = t;
-		msg.who = msg_who.who;
-		compBaseEntity->sendMsg(msg);		//set camera
-
-		TMsgSetCamera msg_camera;
-		msg_camera.camera = CHandle(this).getOwner();
-		t.sendMsg(msg_camera);	//set target camera
-	}
+	StopCinematic();
 
 	smoothCurrent = 1.f; //Return to player smoothly
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicEnd, string(((CEntity*)(cameraFinished))->getName()), cameraFinished);
@@ -541,4 +524,48 @@ collision_data* TCompCameraMain::checkColision(const VEC3 & pos, const float dis
 	}
 
 	return nullptr;
+}
+
+void TCompCameraMain::StopCinematic()
+{
+	guidedCamera = CHandle();
+	GameController->SetCinematic(false);
+
+	// Set the player in the 3rdPersonController
+	CHandle t = tags_manager.getFirstHavingTag("player");
+	TMsgGetWhoAmI msg_who;
+	t.sendMsgWithReply(msg_who);
+	//CEntity * target_e = t;
+	if (t.isValid()) {
+		TMsgSetTarget msg;
+		msg.target = t;
+		msg.who = msg_who.who;
+		compBaseEntity->sendMsg(msg);		//set camera
+
+		TMsgSetCamera msg_camera;
+		msg_camera.camera = CHandle(this).getOwner();
+		t.sendMsg(msg_camera);	//set target camera
+	}
+}
+
+void TCompCameraMain::reset()
+{
+	StopCinematic();
+	setManualControl(false);
+	GameController->SetManualCameraState(false);
+	// restore normal controls
+	TMsgSetControllable msg;
+	msg.control = true;
+	MY_OWNER.sendMsg(msg);
+	GET_MY(cam_control, TCompController3rdPerson);
+	if (cam_control) cam_control->StopOrbit();
+
+	CHandle player = CPlayerBase::handle_player;
+	if (player.isValid()) {
+		GET_COMP(player_tmx, player, TCompTransform);
+		if (player_tmx) {
+			GET_MY(cam_tmx, TCompTransform);
+			if (cam_tmx) cam_tmx->setPosition(player_tmx->getPosition());
+		}
+	}
 }

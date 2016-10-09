@@ -49,6 +49,8 @@ public:
 	void onGuidedCamera(const TMsgGuidedCamera&);
 	void onCreate(const TMsgEntityCreated&);
 	void skipCinematic();
+	void reset();
+	void StopCinematic();
 };
 
 #endif
