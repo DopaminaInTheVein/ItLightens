@@ -76,9 +76,9 @@ void TCompTransform::renderInMenu() {
 	if (yaw_changed || pitch_changed || roll_changed)
 		setAngles(yaw, pitch, roll);
 
-	float scale = getScale().x;
-	if (ImGui::DragFloat("Scale", &scale, -0.1f, 0.1f)) {
-		setScale(VEC3(scale, scale, scale));
+	VEC3 scale_input = getScale();
+	if (ImGui::DragFloat3("Scale", &scale_input.x, -0.1f, 0.1f)) {
+		setScale(scale_input);
 	}
 
 	//Show front and left
@@ -89,6 +89,5 @@ void TCompTransform::renderInMenu() {
 }
 
 void TCompTransform::setPosition(VEC3 new_pos) {
-	
 	CTransform::setPosition(new_pos);
 }

@@ -14,16 +14,19 @@
 
 float TCompText::letterSpacing[256] = { 0.f };
 bool TCompText::init_configuration = false;
-void TCompText::initSpaceLetters()
+void TCompText::initTextConfig()
 {
-	auto general = readIniAtrData(FONT_JSON, "general");
-	auto space_values = readIniAtrData(FONT_JSON, "space_right");
-	float size = general["size"];
-	float default_space = 1.f - space_values["default"] / size;
-	for (int i = 0; i < 256; i++) letterSpacing[i] = default_space;
-	for (auto entry : space_values) {
-		unsigned char letter_char = entry.first.at(0);
-		letterSpacing[letter_char] = 1.f - entry.second / size;
+	if (!init_configuration) {
+		init_configuration = true;
+		auto general = readIniAtrData(FONT_JSON, "general");
+		auto space_values = readIniAtrData(FONT_JSON, "space_right");
+		float size = general["size"];
+		float default_space = 1.f - space_values["default"] / size;
+		for (int i = 0; i < 256; i++) letterSpacing[i] = default_space;
+		for (auto entry : space_values) {
+			unsigned char letter_char = entry.first.at(0);
+			letterSpacing[letter_char] = 1.f - entry.second / size;
+		}
 	}
 }
 
@@ -61,10 +64,8 @@ bool TCompText::load(MKeyValue& atts)
 	for (int i = 0; i < accumSpacing.size(); ++i) {
 		accumSpacing[i] = 0.0f;
 	}
-	if (!init_configuration) {
-		init_configuration = true;
-		initSpaceLetters();
-	}
+	initTextConfig();
+
 	return true;
 }
 
@@ -157,30 +158,6 @@ void TCompText::SetLetterLag(float letter_lag)
 {
 	colorChangeSpeedLag = letter_lag;
 }
-
-//void TCompText::setAttr(float new_x, float new_y, float new_scale) {
-//	int letteri = 0;
-//	accumSpacing.resize(lineText.size());
-//	for (int i = 0; i < accumSpacing.size(); ++i) {
-//		accumSpacing[i] = 0.0f;
-//	}
-//	for (int j = 0; j < lineText.size(); ++j) {
-//		for (int i = 0; i < lineText[j].size(); ++i) {
-//			unsigned char letter = lineText[j][i];
-//			int ascii_tex_pos = letter;
-//			CEntity * e_letter = gui_letters[letteri];
-//			TCompGui * letter_gui = e_letter->get<TCompGui>();
-//			TCompTransform * letter_trans = e_letter->get<TCompTransform>();
-//			VEC3 pos_letter = letter_trans->getPosition();
-//			pos_letter.x = new_x + i * letterBoxSize*new_scale - accumSpacing[j] * new_scale;
-//			pos_letter.y = new_y - j * letterBoxSize*new_scale*2.5f;
-//			letter_trans->setPosition(pos_letter);
-//			letter_trans->setScaleBase(VEC3(new_scale, new_scale, new_scale));
-//			letteri++;
-//			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
-//		}
-//	}
-//}
 
 void TCompText::printLetters() {
 	int gState = GameController->GetGameState();

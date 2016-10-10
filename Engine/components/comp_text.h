@@ -30,7 +30,13 @@ class TCompText : public TCompBase {
 	std::vector<float> accumSpacing;
 
 public:
-	static void initSpaceLetters();
+	static void initTextConfig();
+	static float getSpaceRight(unsigned char c) {
+		if (c <= 256) {
+			return letterSpacing[c];
+		}
+		assert(fatal("getSpaceRight: Unsigned char out of range!\n"));
+	}
 	//Update info
 	void update(float elapsed);
 	void printLetters();

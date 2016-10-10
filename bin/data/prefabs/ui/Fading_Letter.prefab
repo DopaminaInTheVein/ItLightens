@@ -12,7 +12,7 @@
    quat="0.707107 0 0 0.707107"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/letter.static_mesh"/>
+   name="static_meshes/ui/letter_corner.static_mesh"/>
 <abs_aabb/>
 
 </entity>

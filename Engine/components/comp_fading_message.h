@@ -10,9 +10,6 @@ class TCompFadingMessage : public TCompBase {
 	CHandle gui_mol;
 	CHandle gui_rai;
 
-	static float letterSpacing[256];
-	static bool init_configuration;
-
 	//int id;
 	bool permanent;
 	float percentLineHeight = 0.02f;
@@ -40,7 +37,6 @@ class TCompFadingMessage : public TCompBase {
 	VEC3 orthorect;
 	void moveElement(CHandle h, const VEC3 pos);
 public:
-	static void initSpaceLetters();
 	//Update info
 	void update(float elapsed);
 	void printLetters();

@@ -22,6 +22,29 @@ struct RectNormalized {
 		res.sy = sy * sub.sy;
 		return res;
 	}
+	const RectNormalized operator/=(float v) {
+		x /= v;
+		y /= v;
+		sx /= v;
+		sy /= v;
+		return *this;
+	}
+	const RectNormalized& operator/(float v) {
+		RectNormalized res;
+		res.x = x / v;
+		res.y = y / v;
+		res.sx = sx / v;
+		res.sy = sy / v;
+		return res;
+	}
+	const RectNormalized& operator*(float v) {
+		RectNormalized res;
+		res.x = x * v;
+		res.y = y * v;
+		res.sx = sx * v;
+		res.sy = sy * v;
+		return res;
+	}
 };
 
 struct Rect {

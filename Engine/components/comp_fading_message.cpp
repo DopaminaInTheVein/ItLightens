@@ -56,26 +56,11 @@ void TCompFadingMessage::hideAll() {
 	enabled = false;
 }
 
-float TCompFadingMessage::letterSpacing[256] = { 0.f };
-bool TCompFadingMessage::init_configuration = false;
-void TCompFadingMessage::initSpaceLetters()
-{
-	auto general = readIniAtrData(FONT_JSON, "general");
-	auto space_values = readIniAtrData(FONT_JSON, "space_right");
-	float size = general["size"];
-	float default_space = 1.f - space_values["default"] / size;
-	for (int i = 0; i < 256; i++) letterSpacing[i] = default_space;
-	for (auto entry : space_values) {
-		unsigned char letter_char = entry.first.at(0);
-		letterSpacing[letter_char] = 1.f - entry.second / size;
-	}
-}
-
 bool TCompFadingMessage::load(MKeyValue& atts)
 {
 	if (!initialized) {
 		Init();
-		initSpaceLetters();
+		TCompText::initTextConfig();
 	}
 	else if (enabled) {
 		hideAll();
@@ -175,7 +160,7 @@ void TCompFadingMessage::printLetters() {
 		}
 
 		float letter_posx = 0.16f + (i - linechars_prev - fminf(line, 1.0f) - accumSpacing[line])*letterSpacer;
-		float letter_posy = 0.20f - line*letterSpacerHigh;
+		float letter_posy = 0.16f - line*letterSpacerHigh;
 
 		CHandle letter_h = gui_letters[75 * line + i - linechars_prev];
 		VEC3 new_pos_let = min_ortho + orthorect * VEC3(letter_posx, letter_posy, 0.35f + i*0.001f);
@@ -185,7 +170,7 @@ void TCompFadingMessage::printLetters() {
 			if (letter_gui) {
 				unsigned char letter = text[i];
 				letter_gui->setTxLetter(text[i]);
-				accumSpacing[line] += letterSpacing[letter];
+				accumSpacing[line] += TCompText::getSpaceRight(letter);
 			}
 		}
 	}
