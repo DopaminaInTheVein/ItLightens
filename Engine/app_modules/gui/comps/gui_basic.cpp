@@ -43,6 +43,7 @@ RectNormalized TCompGui::getTxCoords()
 void TCompGui::setTxCoords(RectNormalized coords)
 {
 	text_coords = coords;
+	text_coords_16 = text_coords * 16.f;
 }
 void TCompGui::setTxLetter(unsigned char letter)
 {
@@ -118,8 +119,19 @@ void TCompGui::renderInMenu()
 	IMGUI_SHOW_FLOAT(public_coords.sx);
 	IMGUI_SHOW_FLOAT(public_coords.sy);
 	ImGui::Separator();
-	ImGui::Text("Text coords (x, sizeX, y, sizeY):");
-	ImGui::DragFloat4("", (float*)(&text_coords), 0.01f, 0.f, 1.f);
+	ImGui::Text("Text coords (x, y, sizeX, sizeY):");
+	static bool  text_coord_changed = false;
+	if (ImGui::DragFloat4("Normalized", (float*)(&text_coords), 0.01f, 0.f, 1.f)) {
+		if (!text_coord_changed) text_coords_16 = text_coords * 16.f;
+	}
+	ImGui::Text("Text coords * 16 (x, sizeX, y, sizeY):");
+	if (ImGui::DragFloat4("Not normalized", (float*)(&text_coords_16), 1.f, 0.f, 16.f)) {
+		text_coords = text_coords_16 / 16.f;
+		text_coord_changed = true;
+	}
+	else {
+		text_coord_changed = false;
+	}
 }
 
 CHandle TCompGui::getMatrixHandle(std::string menu_name, int row, int col)

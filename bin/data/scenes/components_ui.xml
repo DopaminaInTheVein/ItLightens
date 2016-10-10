@@ -1,0 +1,205 @@
+<entities>
+<entity>
+<tags
+   tags="gui gui_button clickable"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<gui_button
+   width="1.0"
+   height="1.0"/>
+<name
+   name="left_arrow"/>
+<transform
+   pos="2.15966 -92.0702 9.83492"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/components/left_arrow.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui gui_button clickable"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<gui_button
+   width="1.0"
+   height="1.0"/>
+<name
+   name="right_arrow"/>
+<transform
+   pos="0.738764 -92.0702 9.83492"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/components/right_arrow.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<name
+   name="letter"/>
+<transform
+   pos="2.02696 -91.068 9.53419"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/letter.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<name
+   name="letter_corner"/>
+<transform
+   pos="0.268625 -91.5404 9.53419"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/letter_corner.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<name
+   name="tap"/>
+<transform
+   pos="0.738764 -93.2253 0.500004"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/effects/tap.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<name
+   name="zap"/>
+<transform
+   pos="2.14401 -93.2253 0.500004"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/effects/zap.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<name
+   name="bafarada"/>
+<transform
+   pos="3.35333 -93.2253 0.500004"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/effects/bafarada.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<name
+   name="aim_circle"/>
+<transform
+   pos="4.51206 -93.2253 0.500004"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/components/aim_circle.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui gui_button clickable"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<gui_button
+   width="1.0"
+   height="1.0"/>
+<name
+   name="drag_item"/>
+<transform
+   pos="3.37547 -92.0702 9.83492"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/components/drag_item.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="limits"/>
+<transform
+   pos="5.00018 -94.9602 4.93054"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/menu/limits.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="gui"/>
+<gui
+   menu_name="components_ui"
+   width="1.0"
+   height="1.0"/>
+<name
+   name="icon_bomb"/>
+<transform
+   pos="0.71475 -94.4744 9.53419"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/icons/icon_bomb.static_mesh"/>
+<abs_aabb/>
+
+</entity>
+
+</entities>

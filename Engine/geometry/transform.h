@@ -22,7 +22,7 @@ public:
 			PROFILE_FUNCTION("recalc");
 			MAT44* mat = const_cast<MAT44*>(&mat44);
 			*mat = MAT44();
-			if (scale.x == 1.f && scale.y == 1.f || scale.z == 1.f) {
+			if (scale == VEC3(1.f, 1.f, 1.f)) {
 				*mat = MAT44::Identity;
 			}
 			else {
