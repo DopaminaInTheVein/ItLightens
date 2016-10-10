@@ -4811,7 +4811,7 @@
 <name
    name="suelo_nivel_1"/>
 <transform
-   pos="-2.49144 -24.02 -0.113522"
+   pos="-2.49144 -24.02 -0.097165"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh

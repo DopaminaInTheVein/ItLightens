@@ -95,7 +95,6 @@ public:
 	}
 
 	void onSetTarget(const TMsgSetTarget& msg) {
-		target = msg.target;
 		switch (msg.who) {
 		case PLAYER:
 			distance_to_target = THIRD_PERSON_CONTROLLER_PLAYER_DIST;
@@ -109,6 +108,11 @@ public:
 			distance_to_target = THIRD_PERSON_CONTROLLER_SCIENTIST_DIST;
 			position_diff = VEC3(0.f, THIRD_PERSON_CONTROLLER_SCIENTIST_POS_OFFSET_Y, 0.f);
 			break;
+		}
+		target = msg.target;
+		if (target.isValid()) {
+			GET_COMP(tmx_target, target, TCompTransform);
+			if (tmx_target) yaw = tmx_target->getYaw();
 		}
 	}
 

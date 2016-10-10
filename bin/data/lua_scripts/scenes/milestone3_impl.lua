@@ -579,3 +579,33 @@ function wireParticlesUp( )
   --wirePart_1_h:set_pos(posParticleBefore)
   wirePart_1_h:follow_tracker(triggerWire_1, 15)
 end
+
+---------------- Andamio ----------------------------------------
+function ms3_outTablon()
+	p:exec_command("cam:skip_cinematic();", 0.2)
+end
+
+function ms3_onTablon1()
+	p:exec_command("cam:run_cinematic(\"CineTablon1\", 2)", 0.2)
+end
+
+function ms3_onTablon2()
+	cam:run_cinematic("CineTablon2", 5)
+end
+
+function ms3_onTablon3()
+	cam:run_cinematic("CineTablon3", 5)
+end
+
+function ms3_onTablon4()
+	cam:run_cinematic("CineTablon4", 5)
+end
+
+function ms3_onTablon5()
+	cam:run_cinematic("CineTablon5", 5)
+end
+
+function ms3_onTablon6()
+	--Mejor sin
+	--cam:run_cinematic("CineTablon6", 5)
+end
