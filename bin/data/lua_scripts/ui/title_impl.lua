@@ -40,3 +40,6 @@ function waitAndDoTitleSmaller()
 	p:alterText("title_text",0.2,0.6,0.9)
 	p:exec_command("waitAndDoTitleBigger()",1.5)
 end
+
+function title_sense_pressed()
+end

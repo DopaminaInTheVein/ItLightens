@@ -320,5 +320,57 @@
    scale="1.0"/>
 
 </entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="0.4"
+   default_dirs="0"
+   points_size="3"
+   skippable="no"
+   stop_final="yes"
+   wpt1="48.3744 0.569 -2.66042"
+   wpt2="50.5407 2.17801 -0.319584"
+   wpt3="51.8844 1.94034 -2.65872"
+   lpt1="50.6727 0.568992 -7.05565"
+   lpt2="50.673 0.569 -7.056"
+   lpt3="50.673 0.569 -7.056"/>
+<name
+   name="CineShowWorkbench"/>
+<transform
+   pos="35.6838 66.6056 -25.4918"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="0.4"
+   default_dirs="0"
+   points_size="5"
+   skippable="no"
+   stop_final="yes"
+   wpt1="50.7159 0.569 -2.71586"
+   wpt2="64.3482 2.17801 -2.83887"
+   wpt3="65.8859 0.569 -4.34853"
+   wpt4="64.3482 2.17801 -0.319584"
+   wpt5="64.5634 4.52481 -2.65872"
+   lpt1="55.4475 0.683006 -3.04263"
+   lpt2="70.6492 0.628326 -2.85045"
+   lpt3="70.6174 0.683006 -4.67529"
+   lpt4="70.6492 0.628326 -1.26605"
+   lpt5="70.6492 3.53921 -2.82397"/>
+<name
+   name="CineShowGuards"/>
+<transform
+   pos="35.6838 66.6056 -25.4918"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
 
 </entities>

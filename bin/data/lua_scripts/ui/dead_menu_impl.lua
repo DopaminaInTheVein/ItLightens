@@ -19,3 +19,6 @@ function destroyMenuDead( )
 	menu_handles:get_handles_by_tag("menu")
 	menu_handles:destroy()
 end
+
+function dead_sense_pressed()
+end
