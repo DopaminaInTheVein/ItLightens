@@ -593,6 +593,9 @@
     <ClCompile Include="app_modules\gui\gui_munition.cpp">
       <Filter>app_modules\gui</Filter>
     </ClCompile>
+    <ClCompile Include="app_modules\gui\gui_utils.cpp">
+      <Filter>app_modules\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">

@@ -836,19 +836,21 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 void SLBPublicFunctions::playerTalks(const char* text) {
 	// DO Something with text...
 	dbg(text);
-	getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
+	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
+	getHandleManager<TCompFadingMessage>()->each([text_fixed](TCompFadingMessage * mess) {
 		MKeyValue atts3;
-		atts3["text"] = text;
+		atts3["text"] = text_fixed.c_str();
 		mess->load(atts3);
 	}
 	);
 }
 
 void SLBPublicFunctions::showMessage(const char* text, const char* icon) {
-	getHandleManager<TCompFadingMessage>()->each([text, icon](TCompFadingMessage * mess) {
+	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
+	getHandleManager<TCompFadingMessage>()->each([text_fixed, icon](TCompFadingMessage * mess) {
 		MKeyValue atts3;
 		atts3["permanent"] = "true";
-		atts3["text"] = text;
+		atts3["text"] = text_fixed;
 		atts3["icon"] = icon;
 		mess->load(atts3);
 	}

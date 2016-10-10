@@ -122,7 +122,7 @@ void CImGuiModule::update(float dt) {
 	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 	if (ImGui::TreeNode("Gui create elements")) {
-		static VEC3 pos_new_ui = VEC3 (0.5f, 0.5f, 0.9f);
+		static VEC3 pos_new_ui = VEC3(0.5f, 0.5f, 0.9f);
 		static char gui_prebab_name[64] = "Fading_Letter";
 		static char gui_prebab_entity_name[64] = "TEST";
 
@@ -135,6 +135,18 @@ void CImGuiModule::update(float dt) {
 			name->setName(gui_prebab_entity_name);
 		}
 
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("TestMessages")) {
+		if (ImGui::Button("Create Message")) {
+		std:string text = "ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ";
+			getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
+				MKeyValue atts3;
+				atts3["text"] = text.c_str();
+				mess->load(atts3);
+			}
+			);
+		}
 		ImGui::TreePop();
 	}
 

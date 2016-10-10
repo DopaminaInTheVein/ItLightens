@@ -19,7 +19,8 @@ private:
 	CGuiMunition * munition;
 	static std::stack<CHandle> cursors;
 	bool ui_control = false;
-
+	float letter_sizes[256];
+	void initTextConfig();
 public:
 
 	CGuiModule() {}
@@ -37,6 +38,7 @@ public:
 	CHandle addGuiElement(std::string prefab, VEC3 pos = VEC3(0.5f, 0.5f, 0.5f), std::string tag = "", float scale = 1.0f);
 	void moveGuiElement(CHandle h, VEC3 pos, float scale = 1.0f);
 	VEC3 getScreenPos(VEC3 pos);
+	VEC3 getWorldPos(VEC3 pos);
 	VEC3 getUiSize();
 	void updateGuiElementPositionByTag(std::string tag, VEC3 new_position);
 	void removeGuiElementByTag(std::string tag);
@@ -48,6 +50,14 @@ public:
 
 	//Text Actions
 	void setActionAvailable(eAction action);
+
+	//Font
+	float getCharSize(unsigned char c) {
+		if (c <= 256) {
+			return letter_sizes[c];
+		}
+		assert(fatal("getSpaceRight: Unsigned char out of range!\n"));
+	}
 };
 
 //extern:

@@ -7,6 +7,12 @@
 
 #define FONT_JSON "./data/json/font.json"
 
+#define NUM_LINES 4
+#define NUM_CHARS_LINE 42
+#define TOTAL_CHAR (NUM_LINES * NUM_CHARS_LINE)
+
+#define INIT_POS VEC3(0.16f, 0.16f, 0.35f)
+
 void TCompFadingMessage::moveElement(CHandle h, const VEC3 pos)
 {
 	if (h.isValid()) {
@@ -35,6 +41,8 @@ void TCompFadingMessage::Init() {
 	min_ortho = ui_cam->getMinOrtho();
 	max_ortho = ui_cam->getMaxOrtho();
 	orthorect = max_ortho - min_ortho;
+	cur_line = 0;
+	cur_char_line = 0;
 }
 
 void TCompFadingMessage::hideAll() {
@@ -60,7 +68,6 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 {
 	if (!initialized) {
 		Init();
-		TCompText::initTextConfig();
 	}
 	else if (enabled) {
 		hideAll();
@@ -69,27 +76,14 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	VEC3 new_pos1 = min_ortho + orthorect * VEC3(0.12f, 0.09f, 0.35f);
 	//new_pos1.z = 0.35f;
 
-	text = atts.getString("text", "defaultText");
+	auto text_input = atts.getString("text", "defaultText");
+	text = Font::getVChar(text_input);
 	permanent = atts.getBool("permanent", false);
 	std::string who = atts.getString("icon", "default");
-	ttl = timeForLetter * text.length() + 4.0f;
+	ttl = timeForLetter * text.size() + 4.0f;
 	numchars = 0;
 	shown_chars = 0;
-	lineText.resize(0);
-	//id = std::rand();
-	std::string endline = "\n";
-	int ini = 0;
-	//int line
-	size_t pos = text.find(endline, 0);
-	while (pos != text.npos)
-	{
-		lineText.push_back(text.substr(ini, pos - ini));
-		ini = pos + 1;
-		pos = text.find(endline, ini);
-	}
-	lineText.push_back(text.substr(ini, pos - ini));
-
-	accumSpacing = std::vector<float>(lineText.size(), 0.0f);
+	accumSpacing = std::vector<float>(NUM_LINES, 0.0f);
 
 	VEC3 new_pos2 = min_ortho + orthorect * VEC3(0.5f, 0.02f, 0.3f);
 	//new_pos2.z = 0.3f;
@@ -114,6 +108,8 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	shown_chars = 0;
 	numchars = 0;
 	accumTime = 0.0f;
+
+	cur_line = cur_char_line = 0;
 	return true;
 }
 
@@ -124,7 +120,7 @@ void TCompFadingMessage::update(float dt) {
 
 	accumTime += dt;
 	while (accumTime > timeForLetter) {
-		if (numchars < text.length()) {
+		if (numchars < text.size()) {
 			++numchars;
 		}
 		accumTime -= timeForLetter;
@@ -145,33 +141,29 @@ void TCompFadingMessage::printLetters() {
 	bool b = false;
 	int gState = GameController->GetGameState();
 	if (gState != CGameController::RUNNING) return;
-
+	VEC3 init_pos = Gui->getWorldPos(INIT_POS);
 	for (int i = shown_chars; i < numchars; ++i) {
-		if ((i < text.length() - 1 && text[i] == '\\' && text[i + 1] == 'n') || (i > 1 && text[i - 1] == '\\' && text[i] == 'n')) {
-			continue;
-		}
-		int line = 0;
-		int linechars = lineText[line].length();
-		int linechars_prev = 0;
-		while (linechars < i) {
-			++line;
-			linechars_prev = linechars;
-			linechars += lineText[line].length() + 1;
+		if (text[i].IsNewLine() || cur_char_line >= NUM_CHARS_LINE) {
+			cur_line++;
+			cur_char_line = 0;
+			if (text[i].IsNewLine()) continue;
 		}
 
-		float letter_posx = 0.16f + (i - linechars_prev - fminf(line, 1.0f) - accumSpacing[line])*letterSpacer;
-		float letter_posy = 0.16f - line*letterSpacerHigh;
+		VEC3 offset_pos;
+		offset_pos.x = (cur_char_line - accumSpacing[cur_line])*scale;
+		offset_pos.y = -cur_line*letterSpacerHigh;
+		offset_pos.z = i*0.001f;
+		VEC3 new_pos_let = init_pos + offset_pos;
 
-		CHandle letter_h = gui_letters[75 * line + i - linechars_prev];
-		VEC3 new_pos_let = min_ortho + orthorect * VEC3(letter_posx, letter_posy, 0.35f + i*0.001f);
+		CHandle letter_h = gui_letters[NUM_CHARS_LINE * cur_line + cur_char_line];
 		moveElement(letter_h, new_pos_let);
 		if (letter_h.isValid()) {
 			GET_COMP(letter_gui, letter_h, TCompGui);
 			if (letter_gui) {
-				unsigned char letter = text[i];
-				letter_gui->setTxLetter(text[i]);
-				accumSpacing[line] += TCompText::getSpaceRight(letter);
+				letter_gui->setTxCoords(text[i].GetTxtCoords());
+				accumSpacing[cur_line] += text[i].GetSize();
 			}
 		}
+		cur_char_line++;
 	}
 }

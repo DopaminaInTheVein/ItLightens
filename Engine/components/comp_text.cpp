@@ -10,26 +10,6 @@
 
 #include <math.h>
 
-#define FONT_JSON "./data/json/font.json"
-
-float TCompText::letterSpacing[256] = { 0.f };
-bool TCompText::init_configuration = false;
-void TCompText::initTextConfig()
-{
-	if (!init_configuration) {
-		init_configuration = true;
-		auto general = readIniAtrData(FONT_JSON, "general");
-		auto space_values = readIniAtrData(FONT_JSON, "space_right");
-		float size = general["size"];
-		float default_space = 1.f - space_values["default"] / size;
-		for (int i = 0; i < 256; i++) letterSpacing[i] = default_space;
-		for (auto entry : space_values) {
-			unsigned char letter_char = entry.first.at(0);
-			letterSpacing[letter_char] = 1.f - entry.second / size;
-		}
-	}
-}
-
 void TCompText::forceTTLZero() {
 	ttl = -0.1f;
 }
@@ -64,7 +44,6 @@ bool TCompText::load(MKeyValue& atts)
 	for (int i = 0; i < accumSpacing.size(); ++i) {
 		accumSpacing[i] = 0.0f;
 	}
-	initTextConfig();
 
 	return true;
 }
@@ -189,7 +168,7 @@ void TCompText::printLetters() {
 			RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
 			letter_gui->setTxCoords(textCords);
 			letteri++;
-			accumSpacing[j] += letterSpacing[ascii_tex_pos];
+			accumSpacing[j] += Gui->getCharSize(ascii_tex_pos);
 			letter_gui->SetColor(color);
 			if (colorChangeSpeed > 0.0f) {
 				letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);

@@ -13,38 +13,10 @@ struct RectNormalized {
 	}
 	RectNormalized() : x(0), y(0), sx(1.f), sy(1.f) {}
 
-	RectNormalized subRect(RectNormalized sub)
-	{
-		RectNormalized res;
-		res.x = x + sub.x;
-		res.y = y + sub.y;
-		res.sx = sx * sub.sx;
-		res.sy = sy * sub.sy;
-		return res;
-	}
-	const RectNormalized operator/=(float v) {
-		x /= v;
-		y /= v;
-		sx /= v;
-		sy /= v;
-		return *this;
-	}
-	const RectNormalized& operator/(float v) {
-		RectNormalized res;
-		res.x = x / v;
-		res.y = y / v;
-		res.sx = sx / v;
-		res.sy = sy / v;
-		return res;
-	}
-	const RectNormalized& operator*(float v) {
-		RectNormalized res;
-		res.x = x * v;
-		res.y = y * v;
-		res.sx = sx * v;
-		res.sy = sy * v;
-		return res;
-	}
+	RectNormalized subRect(RectNormalized sub);
+	const RectNormalized operator/=(float v);
+	const RectNormalized& operator/(float v);
+	const RectNormalized& operator*(float v);
 };
 
 struct Rect {
@@ -53,14 +25,7 @@ struct Rect {
 	Rect(int _x, int _y, int _sx, int _sy) :
 		x(_x), y(_y), sx(_sx), sy(_sy) {}
 	Rect() : x(0), y(0), sx(100), sy(100) {}
-	Rect(RectNormalized r) {
-		float res_x = CApp::get().getXRes();
-		float res_y = CApp::get().getYRes();
-		x = r.x * res_x;
-		y = r.y * res_y;
-		sx = r.sx * res_x;
-		sy = r.sy * res_y;
-	}
+	Rect(RectNormalized r);
 };
 
 struct Pixel {
@@ -69,5 +34,30 @@ struct Pixel {
 	Pixel() : x(0), y(0) {}
 	Pixel(int _x, int _y) : x(_x), y(_y) {}
 };
+
+namespace Font {
+	struct TCharacter {
+	private:
+		RectNormalized text_coords;
+		float size; //horizontal size grid
+		bool new_line;
+	public:
+#ifndef NDEBUG
+		char c;
+		std::string special_character;
+#endif
+		TCharacter() : text_coords(RectNormalized()), size(0.f), new_line(false) {}
+		TCharacter(unsigned char c);
+		TCharacter(std::string special_char);
+		static TCharacter NewLine();
+		RectNormalized GetTxtCoords() { return text_coords; }
+		float GetSize() { return size; }
+		bool IsNewLine() { return new_line; }
+	};
+
+	typedef std::vector<TCharacter> VCharacter;
+	RectNormalized getTxtCoords(unsigned char c);
+	VCharacter getVChar(std::string text);
+}
 
 #endif

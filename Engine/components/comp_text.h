@@ -4,9 +4,6 @@
 #include "comp_base.h"
 
 class TCompText : public TCompBase {
-	static float letterSpacing[256];
-	static bool init_configuration;
-
 	VHandles gui_letters;
 	std::string id = "";
 	float scale = 0.0f;
@@ -30,13 +27,6 @@ class TCompText : public TCompBase {
 	std::vector<float> accumSpacing;
 
 public:
-	static void initTextConfig();
-	static float getSpaceRight(unsigned char c) {
-		if (c <= 256) {
-			return letterSpacing[c];
-		}
-		assert(fatal("getSpaceRight: Unsigned char out of range!\n"));
-	}
 	//Update info
 	void update(float elapsed);
 	void printLetters();

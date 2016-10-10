@@ -7,8 +7,6 @@
 #include "gui_cursor.h"
 #include "../gui.h"
 
-#define LETTER_BOX_SIZE (1.f / 16.f)
-
 using namespace std;
 
 map<string, GuiMatrix> TCompGui::gui_screens = map<string, GuiMatrix>();
@@ -47,17 +45,7 @@ void TCompGui::setTxCoords(RectNormalized coords)
 }
 void TCompGui::setTxLetter(unsigned char letter)
 {
-	int ascii_tex_pos = letter;
-	int ascii_tex_posx = ascii_tex_pos % 16;
-	int ascii_tex_posy = ascii_tex_pos / 16;
-
-	float texture_pos_x = ((float)ascii_tex_posx) * LETTER_BOX_SIZE;
-	float texture_pos_y = ((float)ascii_tex_posy) * LETTER_BOX_SIZE;
-	float sx = LETTER_BOX_SIZE;
-	float sy = LETTER_BOX_SIZE;
-
-	RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
-	setTxCoords(textCords);
+	setTxCoords(Font::getTxtCoords(letter));
 }
 
 // load Xml
