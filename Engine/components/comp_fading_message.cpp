@@ -73,7 +73,6 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 
 bool TCompFadingMessage::reload(const ReloadInfo& atts)
 {
-
 	if (!initialized) {
 		Init();
 	}
@@ -120,7 +119,6 @@ bool TCompFadingMessage::reload(const ReloadInfo& atts)
 	cur_line = cur_char_line = 0;
 	return true;
 }
-
 
 void TCompFadingMessage::update(float dt) {
 	if (!enabled) return;
@@ -175,10 +173,11 @@ void TCompFadingMessage::printLetters() {
 			if (letter_gui) {
 				letter_gui->setTxCoords(text[i].GetTxtCoords());
 				float size_letter = text[i].GetSize();
-				if (size_letter > 1.f) {
-					GET_COMP(letter_tmx, letter_h, TCompTransform);
-					letter_tmx->setScale(VEC3(ceil(size_letter), 1.f,1.f));
-				}
+				GET_COMP(letter_tmx, letter_h, TCompTransform);
+				letter_tmx->setScale(VEC3(ceil(size_letter), 1.f, 1.f));
+				//Color
+				VEC4 color = text[i].GetColor();
+				letter_gui->SetColor(color);
 				accumSpacing += size_letter;
 			}
 		}

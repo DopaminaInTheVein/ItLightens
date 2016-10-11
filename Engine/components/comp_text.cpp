@@ -132,10 +132,8 @@ void TCompText::printLetters() {
 				lgui->setTxCoords(tchar.GetTxtCoords());
 				cur_pos.x += tchar.GetSize() * scale_x;
 				cur_pos.z += 0.001f;
-				if (tchar.GetSize() > 1.f) {
-					GET_COMP(ltmx, letter_h, TCompTransform);
-					ltmx->setScale(VEC3(ceilf(tchar.GetSize()), 1.f, 1.f));
-				}
+				GET_COMP(ltmx, letter_h, TCompTransform);
+				ltmx->setScale(VEC3(ceilf(tchar.GetSize()), 1.f, 1.f));
 
 				//Color
 				lgui->SetColor(color);

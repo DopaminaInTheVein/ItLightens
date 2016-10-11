@@ -42,6 +42,7 @@ namespace Font {
 		float size; //horizontal size grid
 		char c;
 		std::string special_character;
+		VEC4 color = obtainColorNormFromString("#FFFFFFFF");
 	public:
 		TCharacter() : text_coords(RectNormalized()), size(0.f) {}
 		TCharacter(unsigned char c);
@@ -50,8 +51,11 @@ namespace Font {
 		static TCharacter NewLine();
 		RectNormalized GetTxtCoords() { return text_coords; }
 		float GetSize() { return size; }
+		VEC4 GetColor() { return isSpecial() ? obtainColorNormFromString("#FFFFFFFF") : color; }
 		bool IsNewLine() { return c == '\n'; }
 		bool IsSpace() { return c == ' '; }
+		void SetColor(std::string new_color) { color = obtainColorNormFromString(new_color); }
+		bool isSpecial() { return c == '*'; }
 	};
 
 	typedef std::vector<TCharacter> VCharacter;

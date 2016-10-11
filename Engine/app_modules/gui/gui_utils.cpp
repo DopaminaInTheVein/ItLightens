@@ -92,15 +92,19 @@ Font::TCharacter::TCharacter(std::string name, int row, int col, float size)
 #define ThisChar current_char
 #define ResultChar res
 #define IndexChar index_char
+#define ColorChar color
+#define AuxChar aux_char
 #define RemainsChar() (IndexChar < InputChar.length())
 #define IsChar(c) (ThisChar == c)
 #define NextChar() if (IndexChar >= InputChar.length()) {break;} else ThisChar = InputChar[IndexChar++]
-#define WriteChar(c) ResultChar.push_back(c);
+#define WriteChar(c) AuxChar = c; AuxChar.SetColor(ColorChar); ResultChar.push_back(AuxChar)
 VCharacter Font::getVChar(std::string InputChar)
 {
+	char ColorChar[10] = "#FFFFFFFF";
 	VCharacter ResultChar = VCharacter();
 	int IndexChar = 0;
 	char ThisChar = 0;
+	TCharacter AuxChar;
 	while (RemainsChar()) {
 		NextChar();
 		// Next line
@@ -116,12 +120,22 @@ VCharacter Font::getVChar(std::string InputChar)
 				assert(fatal("Error parsing Vcharacter (/?)\n"));
 			}
 		}
+		//
+		else if (IsChar('#')) {
+			sprintf(ColorChar, "#FFFFFFFF");
+			int i = 1;
+			NextChar();
+			while (i < 10 && !IsChar('#')) {
+				ColorChar[i++] = ThisChar;
+				NextChar();
+			}
+		}
 
 		//Special char
 		else if IsChar('*') {
-			NextChar();
 			char special_char[128];
 			int i_special = 0;
+			NextChar();
 			while (!IsChar('*')) {
 				special_char[i_special++] = ThisChar;
 				NextChar();

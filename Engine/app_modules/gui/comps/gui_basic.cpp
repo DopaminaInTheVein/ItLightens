@@ -120,6 +120,8 @@ void TCompGui::renderInMenu()
 	else {
 		text_coord_changed = false;
 	}
+	ImGui::Separator();
+	ImGui::DragFloat4("Color", &color.x, 0.001f, 0.f, 1.f);
 }
 
 CHandle TCompGui::getMatrixHandle(std::string menu_name, int row, int col)

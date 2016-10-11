@@ -25,10 +25,10 @@
 	"inverted": "Inverted"
   },
   "hub": {
-    "start_hub": "Wellcome to the tutorials.\nLet's learn some things about the game.",
-	"sense":"Let's SENSE (right click or gamepad B)!!!\nFor demonstration it will keep for a short time.",
-    "target_seen_green": "This GREEEN signal is your next step.",
-    "target_seen_yellow": "The YELLOW one is the final point of the level.",
+    "start_hub": "Welcome to the tutorials.\nLet's learn some things about the game.",
+	"sense":"Let's SENSE (*RIGHT_CLICK*)!!!\nFor demonstration it will keep for a short time.",
+    "target_seen_green": "This #00FF00#GREEN## signal is your next step.",
+    "target_seen_yellow": "The #FFFF00#YELLOW## one is the final point of the level.",
 	"target_seen_white": "WHITE are generators, where you can restore all your life.",
 	"return_control":"It's your turn now.\nMove with WASD + Mouse or with controller joysticks.\nTry going next to the big strong boy MOLE\nThen press ACTION button and enter his dream",
 	"mole_tuto_complete":"Congratulations for completing the MOLE tutorial",
