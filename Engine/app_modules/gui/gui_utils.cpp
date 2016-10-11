@@ -88,68 +88,94 @@ Font::TCharacter::TCharacter(std::string name, int row, int col, float size)
 	c = '*';
 }
 
-#define InputChar input_char
-#define ThisChar current_char
-#define ResultChar res
-#define IndexChar index_char
-#define ColorChar color
-#define AuxChar aux_char
-#define RemainsChar() (IndexChar < InputChar.length())
-#define IsChar(c) (ThisChar == c)
-#define NextChar() if (IndexChar >= InputChar.length()) {break;} else ThisChar = InputChar[IndexChar++]
-#define WriteChar(c) AuxChar = c; AuxChar.SetColor(ColorChar); ResultChar.push_back(AuxChar)
-VCharacter Font::getVChar(std::string InputChar)
-{
-	char ColorChar[10] = "#FFFFFFFF";
-	VCharacter ResultChar = VCharacter();
-	int IndexChar = 0;
-	char ThisChar = 0;
-	TCharacter AuxChar;
-	while (RemainsChar()) {
-		NextChar();
-		// Next line
-		if (IsChar('\n')) {
-			WriteChar(TCharacter::NewLine());
-		}
-		if (IsChar('\\')) {
+class Parser {
+private:
+	//Input
+	std::string input;
+
+	//Output
+	VCharacter result;
+
+	//Intern
+	int index = 0;
+	char color[10] = "#FFFFFFFF";
+	char value = 0;
+	bool RemainChars() {
+		return index < input.length();
+	}
+	bool NextChar() {
+		if (index >= input.length()) return false;
+		value = input[index++];
+	}
+	bool IsChar(char c) {
+		return c == value;
+	}
+
+	void WriteChar(TCharacter tchar)
+	{
+		tchar.SetColor(color);
+		result.push_back(tchar);
+	}
+public:
+	Parser(std::string s) {
+		input = s;
+		parse();
+	}
+
+	VCharacter getVChars() { return result; }
+
+	void parse()
+	{
+		while (RemainChars()) {
 			NextChar();
-			if (IsChar('n')) {
+			// Next line
+			if (IsChar('\n')) {
 				WriteChar(TCharacter::NewLine());
 			}
+			if (IsChar('\\')) {
+				NextChar();
+				if (IsChar('n')) {
+					WriteChar(TCharacter::NewLine());
+				}
+				else {
+					assert(fatal("Error parsing Vcharacter (/?)\n"));
+				}
+			}
+			else if (IsChar('#')) {
+				sprintf(color, "#FFFFFFFF");
+				int i = 1;
+				NextChar();
+				while (i < 10 && !IsChar('#')) {
+					color[i++] = value;
+					NextChar();
+				}
+			}
+
+			//Special char
+			else if (IsChar('*')) {
+				char special_char[128];
+				int i_special = 0;
+				NextChar();
+				while (!IsChar('*')) {
+					special_char[i_special++] = value;
+					NextChar();
+				}
+				special_char[i_special] = 0;
+				WriteChar(TCharacter(special_char));
+			}
+
+			//Regular char
 			else {
-				assert(fatal("Error parsing Vcharacter (/?)\n"));
+				WriteChar(TCharacter(value));
 			}
-		}
-		//
-		else if (IsChar('#')) {
-			sprintf(ColorChar, "#FFFFFFFF");
-			int i = 1;
-			NextChar();
-			while (i < 10 && !IsChar('#')) {
-				ColorChar[i++] = ThisChar;
-				NextChar();
-			}
-		}
-
-		//Special char
-		else if IsChar('*') {
-			char special_char[128];
-			int i_special = 0;
-			NextChar();
-			while (!IsChar('*')) {
-				special_char[i_special++] = ThisChar;
-				NextChar();
-			}
-			special_char[i_special] = 0;
-			WriteChar(TCharacter(special_char));
-		}
-
-		//Regular char
-		else {
-			WriteChar(TCharacter(ThisChar));
 		}
 	}
-	return ResultChar;
+};
+
+VCharacter Font::getVChar(std::string text)
+{
+	Parser parser(text);
+	return parser.getVChars();
 }
 
 class Formatter {
