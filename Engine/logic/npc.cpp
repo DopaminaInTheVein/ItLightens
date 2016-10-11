@@ -203,9 +203,9 @@ bool npc::turnTo(VEC3 dest, bool wide) {
 	//dbg("Estoy girando! (%d)\n", (++test_giro) % 100);
 
 	PROFILE_FUNCTION("npc: turn to");
-	int angle = 5;
+	float angle = 5.f;
 	if (wide)
-		angle = 30;
+		angle = 30.f;
 	float angle_epsilon = deg2rad(angle);
 
 	VEC3 myPos = getTransform()->getPosition();
@@ -237,7 +237,8 @@ bool npc::turnYaw(float delta_yaw, float angle_epsilon)
 	getTransform()->setAngles(yaw, pitch);
 
 	//Ha acabado el giro?
-	bool done = abs(delta_yaw) < angle_epsilon;
+	bool done = abs(delta_yaw) < angle_epsilon + 0.05;
+	return done;
 }
 
 bool npc::turnToYaw(float target_yaw)
@@ -259,7 +260,8 @@ int npc::actionUnstuckMove() {
 	PROFILE_FUNCTION("npc: actionunstuckmove");
 	// move to get unstuck
 	VEC3 myPos = getTransform()->getPosition();
-	if (simpleDistXZ(myPos, unstuck_target) > DIST_REACH_PNT) {
+	float dist = simpleDistXZ(myPos, unstuck_target);
+	if (dist > DIST_REACH_PNT) {
 		getPath(myPos, unstuck_target);
 		changeCommonState(AST_MOVE);
 		//SET_ANIM_GUARD(AST_MOVE);
@@ -298,10 +300,11 @@ void npc::goTo(const VEC3& dest) {
 		target = pathWpts[currPathWpt];
 	}
 
+	target.y = npcPos.y;
 	if (needsSteering(npcPos, getTransform(), SPEED_WALK, getParent())) {
 		goForward(SPEED_WALK);
 	}
-	else if (!getTransform()->isHalfConeVision(target, deg2rad(10.0f))) {
+    else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
 		turnTo(target);
 	}
 	else {

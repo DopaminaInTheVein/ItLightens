@@ -38,6 +38,9 @@ class bt_mole : public bt_poss, public TCompBase {
 	int towptleave;
 	float timerStunt, _timerStunt;
 
+	float timeWaiting;
+	float TIME_WAIT_MOLE;
+
 	bool carryingBox = false;
 
 	vector<VEC3> fixedWpts;
@@ -102,9 +105,9 @@ public:
 	int actionFollowNextBoxLeavepointWpt();
 	int actionUngrabBox();
 	*/
-	int actionLookForWpt();
-	int actionFollowPathToWpt();
-	int actionEndPathToWpt();
+	int actionSeekWpt();
+	int actionNextWpt();
+	int actionWaitWpt();
 
 	//functions that allow access to the static maps
 	map<string, btnode *>* getTree() override {

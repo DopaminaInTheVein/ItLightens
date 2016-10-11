@@ -55,7 +55,8 @@
 		"distMaxToBox" : 10.0,
 		"rechTime" : 1.0,
 		"MAX_STUCK_TIME" : 2.0,
-		"UNSTUCK_DISTANCE" : 5.0
+		"UNSTUCK_DISTANCE" : 5.0,
+		"TIME_WAIT_MOLE" : 3.0
 	},	
 	"bt_speedy" : { 
 		"speed" : 4.0,

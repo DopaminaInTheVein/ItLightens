@@ -728,7 +728,8 @@ int bt_guard::actionNextWpt() {
 		return KO;
 	}
 	//If we are already there, we continue
-	if (simpleDistXZ(myPos, dest) < DIST_REACH_PNT)
+	float dist = simpleDistXZ(myPos, dest);
+	if (dist < DIST_REACH_PNT)
 		return OK;
 	//Look to waypoint
 	if (turnTo(dest)) {
@@ -740,7 +741,7 @@ int bt_guard::actionNextWpt() {
 }
 
 int bt_guard::actionWaitWpt() {
-	//PROFILE_FUNCTION("guard: actionwaitwpt");
+	PROFILE_FUNCTION("guard: actionwaitwpt");
 	if (!myParent.isValid()) return false;
 	SET_ANIM_GUARD(AST_IDLE);
 	stuck = false;

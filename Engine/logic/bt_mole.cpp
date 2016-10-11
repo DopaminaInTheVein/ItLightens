@@ -30,6 +30,7 @@ void bt_mole::readIniFileAttr() {
 			//rotation_speed = deg2rad(rotation_speed);
 			assignValueToVar(distMaxToBox, fields);
 			assignValueToVar(rechTime, fields);
+			assignValueToVar(TIME_WAIT_MOLE, fields);
 		}
 	}
 }
@@ -70,10 +71,11 @@ void bt_mole::Init()
 		addChild("movebox", "grabbox", ACTION, NULL, (btaction)&bt_mole::actionGrabBox);
 		addChild("movebox", "carryboxfollowwpt", ACTION, NULL, (btaction)&bt_mole::actionFollowNextBoxLeavepointWpt);
 		addChild("movebox", "ungrabbox", ACTION, NULL, (btaction)&bt_mole::actionUngrabBox);*/
+		// patrol states
 		addChild("mole", "patrol", SEQUENCE, NULL, NULL);
-		addChild("patrol", "lookForWpt", ACTION, NULL, (btaction)&bt_mole::actionLookForWpt);
-		addChild("patrol", "followPathToWpt", ACTION, NULL, (btaction)&bt_mole::actionFollowPathToWpt);
-		addChild("patrol", "reachedPoint", ACTION, NULL, (btaction)&bt_mole::actionEndPathToWpt);
+		addChild("patrol", "nextWpt", ACTION, NULL, (btaction)&bt_mole::actionNextWpt);
+		addChild("patrol", "seekwpt", ACTION, NULL, (btaction)&bt_mole::actionSeekWpt);
+		addChild("patrol", "waitwpt", ACTION, NULL, (btaction)&bt_mole::actionWaitWpt);
 	}
 
 	towptbox = -1;
@@ -83,6 +85,8 @@ void bt_mole::Init()
 	CEntity * myParentE = myParent;
 	TCompTransform * myParentT = myParentE->get<TCompTransform>();
 	rechargePoint = myParentT->getPosition();
+
+	timeWaiting = 0;
 
 	____TIMER_REDEFINE_(timerStunt, 15);
 	if (animController) {
@@ -152,297 +156,65 @@ bool bt_mole::save(std::ofstream& os, MKeyValue& atts)
 // conditions
 
 // actions
-int bt_mole::actionLookForWpt() {
-	if (!SBB::readBool("navmesh")) {
+int bt_mole::actionNextWpt() {
+	PROFILE_FUNCTION("mole: actionnextwpt");
+	if (!myParent.isValid()) return false;
+	if (fixedWpts.size() == 0) return false;
+	SET_ANIM_MOLE_BT(AST_TURN);
+	VEC3 myPos = getTransform()->getPosition();
+	VEC3 dest = fixedWpts[curwpt];
+	//If we are already there, we continue
+	if (simpleDistXZ(myPos, dest) < DIST_REACH_PNT)
+		return OK;
+	//Look to waypoint
+	if (turnTo(dest)) {
+		return OK;
+	}
+	else {
 		return STAY;
 	}
-	stuck = false;
-	stuck_time = 0.f;
-	SET_ANIM_MOLE_BT(AST_IDLE);
-	if (fixedWpts.size() <= 0) return OK;
-	VEC3 front = transform->getFront();
-	VEC3 target = fixedWpts[curwpt];
-	if (pointsToRechargePoint == currToRechargePoint) {
-		target = rechargePoint;
+}
+
+int bt_mole::actionSeekWpt() {
+	PROFILE_FUNCTION("mole: actionseekwpt");
+	if (!myParent.isValid()) return 0;
+	VEC3 myPos = getTransform()->getPosition();
+	VEC3 dest = fixedWpts[curwpt];
+	//reach waypoint?
+	if (simpleDistXZ(myPos, dest) < DIST_REACH_PNT) {
+		curwpt = (curwpt + 1) % fixedWpts.size();
+		path_found = false;
+		return OK;
 	}
-	VEC3 initial = transform->getPosition();
-	getPath(initial, target);
+	else {
+		if (!path_found) {
+			path_found = getPath(myPos, dest);
+		}
+		SET_ANIM_MOLE_BT(AST_MOVE);
+		goTo(dest);
+		return STAY;
+	}
+
+	path_found = false;
 	return OK;
 }
 
-int bt_mole::actionFollowPathToWpt() {
-	if (!SBB::readBool("navmesh")) {
-		setCurrent(NULL);
-		return OK;
-	}
-	if (fixedWpts.size() <= 0) return OK;
-
-	VEC3 target = fixedWpts[curwpt];
-	VEC3 my_pos = getTransform()->getPosition();
-	float distance_to_point = simpleDistXZ(my_pos, target);
-
-	if (turnTo(target)) {
-		// if we didn't reach the point
-		if (distance_to_point > DIST_REACH_PNT) {
-			getPath(my_pos, target);
-			SET_ANIM_MOLE_BT(AST_MOVE);
-			goTo(target);
-			return STAY;
-		}
-		return OK;
-	}
-	else {
-		stuck = false;
-		stuck_time = 0.f;
-		SET_ANIM_MOLE_BT(AST_TURN);
-		return STAY;
-	}
-	//if (pointsToRechargePoint == currToRechargePoint) {
-	//	target = rechargePoint;
-	//}
-	//while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
-	//	++currPathWpt;
-	//}
-	//if (currPathWpt < totalPathWpt) {
-	//	target = pathWpts[currPathWpt];
-	//}
-	//VEC3 npcPos = transform->getPosition();
-	//VEC3 npcFront = transform->getFront();
-	//if (needsSteering(npcPos + npcFront, transform, SPEED_ROT, myParent)) {
-	//	SET_ANIM_MOLE_BT(AST_MOVE);
-	//	moveFront(SPEED_WALK);
-	//	return STAY;
-	//}
-	//else if (!transform->isHalfConeVision(target, deg2rad(5.0f))) {
-	//	SET_ANIM_MOLE_BT(AST_IDLE);
-	//	aimToTarget(target);
-	//	return STAY;
-	//}
-	//else {
-	//	float distToWPT = squaredDistXZ(target, transform->getPosition());
-	//	if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
-	//		SET_ANIM_MOLE_BT(AST_MOVE);
-	//		moveFront(SPEED_WALK);
-	//		return STAY;
-	//	}
-	//	else {
-	//		return OK;
-	//	}
-	//}
-}
-
-int bt_mole::actionEndPathToWpt() {
+int bt_mole::actionWaitWpt() {
+	PROFILE_FUNCTION("mole: actionwaitwpt");
+	if (!myParent.isValid()) return false;
+	SET_ANIM_MOLE_BT(AST_IDLE);
 	stuck = false;
 	stuck_time = 0.f;
-	static float recharging = 0.0f;
-	recharging += getDeltaTime();
-	SET_ANIM_MOLE_BT(AST_IDLE);
-	if (pointsToRechargePoint == currToRechargePoint && rechTime > recharging) {
-		return STAY;
-	}
-	else if (1.0f > recharging) {
-		return STAY;
-	}
-	recharging = 0.0f;
-	setCurrent(NULL);
-	int lastcurwpt = curwpt;
-	if (fixedWpts.size() > 0) {
-		while (lastcurwpt == curwpt) {
-			curwpt = rand() % fixedWpts.size();
-		}
-	}
-	currToRechargePoint++;
-	if (pointsToRechargePoint < currToRechargePoint) {
-		currToRechargePoint = 1;
-	}
-	return OK;
-}
-/*
-bool bt_mole::checkBoxes() {
-  bool found = false;
-  float minDistanceToBox = distMaxToBox;
-
-  if (SBB::readHandlesVector("wptsBoxes").size() > 0) {
-	string key_final = "";
-	float higher = -999.9f;
-	VEC3 initial = transform->getPosition(), destiny;
-
-	for (int i = 0; i < SBB::readHandlesVector("wptsBoxes").size(); i++) {
-	  CEntity * entTransform = this->getEntityPointer(i);
-	  if (!entTransform) continue;
-	  TCompTransform * transformBox = entTransform->get<TCompTransform>();
-	  TCompName * nameBox = entTransform->get<TCompName>();
-	  VEC3 wpt = transformBox->getPosition();
-	  float disttowpt = simpleDistXZ(wpt, transform->getPosition());
-	  string key = nameBox->name;
-	  if (!SBB::readBool(key) && !isBoxAtLeavePoint(wpt) && (disttowpt < minDistanceToBox + 2 && wpt.y > higher)) {
-		towptbox = i;
-		higher = wpt.y;
-		minDistanceToBox = disttowpt;
-		key_final = key;
-		found = true;
-		destiny = wpt;
-	  }
-	}
-
-	if (found) {
-	  SBB::postBool(key_final, true);
-	  SBB::postMole(key_final, this);
-
-	  getPath(initial, destiny);
-	  //ChangePose(pose_run_route);
-	  SET_ANIM_MOLE_BT(AST_RUN);
-	  return true;
-	}
-  }
-  return false;
-}
-
-int bt_mole::actionFollowBoxWpt()
-{
-  if (towptbox > -1) {
-	CEntity * entTransform = this->getEntityPointer(towptbox);
-	TCompTransform * transformBox = entTransform->get<TCompTransform>();
-	VEC3 boxpos = transformBox->getPosition();
-	while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
-	  ++currPathWpt;
-	}
-	if (currPathWpt < totalPathWpt) {
-	  boxpos = pathWpts[currPathWpt];
-	}
-	VEC3 npcPos = transform->getPosition();
-	VEC3 npcFront = transform->getFront();
-	if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent, entTransform)) {
-	  moveFront(speed);
-	  return STAY;
-	}
-	else {
-	  float distToWPT = squaredDistXZ(boxpos, transform->getPosition());
-	  if (!transform->isHalfConeVision(boxpos, deg2rad(5.0f))) {
-		aimToTarget(boxpos);
-		return STAY;
-	  }
-	  else if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 6.0f) {
-		moveFront(speed);
-		return STAY;
-	  }
-	  else {
-		//ChangePose(pose_box_route);
-		logic_manager->throwEvent(logic_manager->OnPickupBox, "");
+	if (timeWaiting > TIME_WAIT_MOLE) {
+		timeWaiting = 0;
 		return OK;
-	  }
-	}
-  }
-  return KO;
-}
-
-int bt_mole::actionGrabBox() {
-  if (towptbox > -1) {
-	SetMyEntity();
-	if (!myEntity) return -1;
-	myBox = SBB::readHandlesVector("wptsBoxes")[towptbox];
-	CEntity* box = myBox;
-	TCompTransform* box_t = box->get<TCompTransform>();
-	TCompPhysics* box_p = box->get<TCompPhysics>();
-	VEC3 posbox = transform->getPosition();
-	posbox.y += 4;
-	box_p->setKinematic(true);
-	box_p->setPosition(posbox, box_t->getRotation());
-	carryingBox = true;
-	if (myBox.isValid()) {
-	  CEntity *e_mole = myEntity;
-	  TCompTransform *t_mole = e_mole->get<TCompTransform>();
-	  CEntity *e_box = myBox;
-	  TCompBox *box = e_box->get<TCompBox>();
-	  VEC3 destiny = box->GetLeavePoint();
-	  VEC3 initial = t_mole->getPosition();
-	  getPath(initial, destiny);
-	  return OK;
-	}
-  }
-  return KO;
-}
-
-int bt_mole::actionFollowNextBoxLeavepointWpt() {
-  CEntity *e_box = myBox;
-  TCompBox *cbox = e_box->get<TCompBox>();
-  VEC3 leavepos = cbox->GetLeavePoint();
-  CEntity * box = this->getEntityPointer(towptbox);
-  TCompTransform * transformBox = box->get<TCompTransform>();
-  while (totalPathWpt > 0 && currPathWpt < totalPathWpt && fabsf(squaredDistXZ(pathWpts[currPathWpt], transform->getPosition())) < 0.5f) {
-	++currPathWpt;
-  }
-  if (currPathWpt < totalPathWpt) {
-	leavepos = pathWpts[currPathWpt];
-  }
-
-  VEC3 npcPos = transform->getPosition();
-  VEC3 npcFront = transform->getFront();
-  if (needsSteering(npcPos + npcFront, transform, rotation_speed, myParent)) {
-	moveFront(speed);
-	return STAY;
-  }
-  else {
-	float distToWPT = squaredDistXZ(leavepos, transform->getPosition());
-	if (!transform->isHalfConeVision(leavepos, deg2rad(5.0f))) {
-	  aimToTarget(leavepos);
-	  return STAY;
-	}
-	else if (fabsf(distToWPT) > 0.5f && currPathWpt < totalPathWpt || fabsf(distToWPT) > 1.0f) {
-	  moveFront(speed);
-	  TCompPhysics *enBoxP = box->get<TCompPhysics>();
-	  VEC3 posbox = transform->getPosition();
-	  posbox.y += 4;
-	  enBoxP->setPosition(posbox, transformBox->getRotation());
-	  return STAY;
 	}
 	else {
-	  logic_manager->throwEvent(logic_manager->OnLeaveBox, "");
-	  return OK;
+		timeWaiting += getDeltaTime();
+		return STAY;
 	}
-  }
 }
 
-int bt_mole::actionUngrabBox() {
-  CEntity * enBox = SBB::readHandlesVector("wptsBoxes")[towptbox];
-  CEntity *e_box = myBox;
-  TCompBox *cbox = e_box->get<TCompBox>();
-  VEC3 leavepos = cbox->GetLeavePoint();
-  TCompTransform * enBoxT = enBox->get<TCompTransform>();
-  TCompName * nameBox = enBox->get<TCompName>();
-  VEC3 posLeave = cbox->GetLeavePoint();
-  posLeave.y += 2;
-  TCompPhysics *enBoxP = enBox->get<TCompPhysics>();
-  enBoxP->setKinematic(false);
-  enBoxP->setPosition(posLeave, enBoxT->getRotation());
-
-  SBB::postBool(nameBox->name, false);
-  carryingBox = false;
-  SET_ANIM_MOLE_BT(AST_IDLE); //Leave box!
-
-  TMsgLeaveBox msg;
-  myBox.sendMsg(msg);
-
-  return OK;
-}
-*/
-/*
-bool bt_mole::isBoxAtLeavePoint(VEC3 posBox) {
-	if (SBB::readHandlesVector("wptsBoxLeavePoint").size() > 0) {
-		for (int i = 0; i < SBB::readHandlesVector("wptsBoxLeavePoint").size(); i++) {
-			CEntity * wptbleave = SBB::readHandlesVector("wptsBoxLeavePoint")[i];
-			if (!wptbleave) continue;
-			TCompTransform * wptbleavetransform = wptbleave->get<TCompTransform>();
-			VEC3 wpt = wptbleavetransform->getPosition();
-			float disttowpt = squaredDist(wpt, posBox);
-			if (disttowpt < 4.0f) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-*/
 bool bt_mole::aimToTarget(VEC3 target) {
 	float delta_yaw = transform->getDeltaYawToAimTo(target);
 
