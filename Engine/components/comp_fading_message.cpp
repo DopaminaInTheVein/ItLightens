@@ -67,6 +67,13 @@ void TCompFadingMessage::hideAll() {
 
 bool TCompFadingMessage::load(MKeyValue& atts)
 {
+	reload(ReloadInfo());
+	return true;
+}
+
+bool TCompFadingMessage::reload(const ReloadInfo& atts)
+{
+
 	if (!initialized) {
 		Init();
 	}
@@ -77,11 +84,10 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	VEC3 new_pos1 = min_ortho + orthorect * VEC3(0.12f, 0.09f, 0.35f);
 	//new_pos1.z = 0.35f;
 
-	auto text_input = atts.getString("text", "defaultText");
-	text = Font::getVChar(text_input);
+	text = Font::getVChar(atts.text);
 	text = Font::formatVChar(text, LINE_TEXT_SIZE);
-	permanent = atts.getBool("permanent", false);
-	std::string who = atts.getString("icon", "default");
+	permanent = atts.permanent;
+	std::string who = atts.icon;
 	ttl = timeForLetter * text.size() + 4.0f;
 	numchars = 0;
 	shown_chars = 0;
@@ -114,6 +120,7 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	cur_line = cur_char_line = 0;
 	return true;
 }
+
 
 void TCompFadingMessage::update(float dt) {
 	if (!enabled) return;

@@ -40,11 +40,18 @@ class TCompFadingMessage : public TCompBase {
 	VEC3 orthorect;
 	void moveElement(CHandle h, const VEC3 pos);
 public:
+	struct ReloadInfo {
+		std::string text = "";
+		bool permanent = false;
+		std::string icon = "default";
+	};
+
 	//Update info
 	void update(float elapsed);
 	void printLetters();
 	void Init();
 	bool load(MKeyValue& atts);
+	bool reload(const ReloadInfo& atts);
 	void hideAll();
 	void kill() { ttl = -1.f; }
 };

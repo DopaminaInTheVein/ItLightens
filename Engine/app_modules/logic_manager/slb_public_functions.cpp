@@ -838,9 +838,9 @@ void SLBPublicFunctions::playerTalks(const char* text) {
 	dbg(text);
 	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
 	getHandleManager<TCompFadingMessage>()->each([text_fixed](TCompFadingMessage * mess) {
-		MKeyValue atts3;
-		atts3["text"] = text_fixed.c_str();
-		mess->load(atts3);
+		TCompFadingMessage::ReloadInfo atts;
+		atts.text = text_fixed;
+		mess->reload(atts);
 	}
 	);
 }
@@ -848,11 +848,11 @@ void SLBPublicFunctions::playerTalks(const char* text) {
 void SLBPublicFunctions::showMessage(const char* text, const char* icon) {
 	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
 	getHandleManager<TCompFadingMessage>()->each([text_fixed, icon](TCompFadingMessage * mess) {
-		MKeyValue atts3;
-		atts3["permanent"] = "true";
-		atts3["text"] = text_fixed;
-		atts3["icon"] = icon;
-		mess->load(atts3);
+		TCompFadingMessage::ReloadInfo atts;
+		atts.permanent = true;
+		atts.text = text_fixed;
+		atts.icon = icon;
+		mess->reload(atts);
 	}
 	);
 }
