@@ -63,6 +63,7 @@ bool CGuiModule::start()
 {
 	txtAction = new CGuiActionText(0.7f, 0.05f);
 	munition = new CGuiMunition();
+	initTextConfig();
 	dbg("GUI module started\n");
 
 	return true;

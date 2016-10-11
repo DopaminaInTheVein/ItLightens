@@ -139,7 +139,7 @@ void CImGuiModule::update(float dt) {
 	}
 	if (ImGui::TreeNode("TestMessages")) {
 		if (ImGui::Button("Create Message")) {
-		std:string text = "ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ABCDEFGHI ";
+		std:string text = "1 2 3 4 5 6 1 2 3 4 5 6 1 2 3 44 5 6 1 2 3 4 5 6 1 2 3 4 5 6 1 2 3 4 5 6  1 2 3 4 5 6  1 2 3 4 5 6  1 2 3 4 5 6  1 2 3 4 5 6 1 2 3 4 5 6 123456 123456 123456 123456 123456 123456 123456 123456 123456 123456";
 			getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
 				MKeyValue atts3;
 				atts3["text"] = text.c_str();

@@ -65,25 +65,18 @@ Font::TCharacter::TCharacter(unsigned char c)
 {
 	text_coords = getTxtCoords(c);
 	size = Gui->getCharSize(c);
-	new_line = false;
-#ifndef NDEBUG
 	this->c = c;
-#endif
 }
 TCharacter Font::TCharacter::NewLine()
 {
 	TCharacter res = TCharacter();
-	res.new_line = true;
-#ifndef NDEBUG
+	res.c = '\n';
 	res.special_character = "\n";
-#endif
 	return res;
 }
 Font::TCharacter::TCharacter(std::string special_char)
 {
-#ifndef NDEBUG
 	special_character = special_char;
-#endif
 	dbg("Aqui deberia ir el special char\n");
 }
 
@@ -135,4 +128,82 @@ VCharacter Font::getVChar(std::string InputChar)
 		}
 	}
 	return ResultChar;
+}
+
+class Formatter {
+private:
+	//Input
+	VCharacter input;
+	float max_row_size;
+
+	//Intern
+	VCharacter buffer;
+	VCharacter output;
+	int writed_buffer = 0;
+	int writed_result = 0;
+	float cur_line_size = 0;
+	float buffer_line_size = 0;
+	bool skipped_line = false;
+
+	void append_result(TCharacter tchar) {
+		output[writed_result++] = tchar;
+		if (tchar.IsNewLine()) {
+			cur_line_size = 0;
+		}
+		else cur_line_size += tchar.GetSize();
+	}
+
+	void buffer_to_result() {
+		if (writed_buffer == 0) return; // Just in case
+
+		//Check enough space in this line, otherwise move to next line
+		if (cur_line_size + buffer_line_size > max_row_size) {
+			append_result(TCharacter::NewLine());
+			cur_line_size = 0;
+			skipped_line = true;
+		}
+
+		int next = 0;
+		//If beginning line, ignore spaces
+		if (cur_line_size == 0) {
+			while (next < writed_buffer && (buffer[next].IsSpace() || buffer[next].IsNewLine())) next++;
+		}
+		while (next < writed_buffer) {
+			if (skipped_line && buffer[next].IsNewLine()) skipped_line = false;
+			else append_result(buffer[next++]);
+		}
+		writed_buffer = buffer_line_size = 0;
+	}
+
+	void append_buffer(TCharacter tchar) {
+		buffer[writed_buffer++] = tchar;
+		buffer_line_size += tchar.GetSize();
+	}
+
+public:
+	Formatter(VCharacter i, float rs) : input(i), max_row_size(rs) {}
+	VCharacter format() {
+		output = VCharacter(input.size() * 2);
+		buffer = VCharacter(input.size() * 2);
+		for (auto tchar : input) {
+			if (tchar.IsSpace() || tchar.IsNewLine()) {
+				buffer_to_result();
+			}
+			if (skipped_line && tchar.IsNewLine()) { //If we skip a line cause run out of space, dont write next endline
+				skipped_line = false;
+			}
+			else {
+				append_buffer(tchar);
+			}
+		}
+		buffer_to_result();
+		output.resize(writed_result);
+		return output;
+	}
+};
+
+VCharacter Font::formatVChar(VCharacter vchar, float row_size)
+{
+	Formatter formatter = Formatter(vchar, row_size);
+	return formatter.format();
 }

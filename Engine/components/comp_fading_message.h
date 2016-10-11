@@ -31,7 +31,7 @@ class TCompFadingMessage : public TCompBase {
 	float  ttl;
 	float sizeFontX = 0.0125f;
 	float sizeFontY = 0.030f;
-	std::vector<float> accumSpacing;
+	float accumSpacing;
 	bool enabled = false;
 	bool initialized = false;
 	float accumTime = 0.0f;

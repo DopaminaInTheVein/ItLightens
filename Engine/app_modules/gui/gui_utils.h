@@ -40,24 +40,24 @@ namespace Font {
 	private:
 		RectNormalized text_coords;
 		float size; //horizontal size grid
-		bool new_line;
-	public:
-#ifndef NDEBUG
+		bool space;
 		char c;
 		std::string special_character;
-#endif
-		TCharacter() : text_coords(RectNormalized()), size(0.f), new_line(false) {}
+	public:
+		TCharacter() : text_coords(RectNormalized()), size(0.f) {}
 		TCharacter(unsigned char c);
 		TCharacter(std::string special_char);
 		static TCharacter NewLine();
 		RectNormalized GetTxtCoords() { return text_coords; }
 		float GetSize() { return size; }
-		bool IsNewLine() { return new_line; }
+		bool IsNewLine() { return c == '\n'; }
+		bool IsSpace() { return c == ' '; }
 	};
 
 	typedef std::vector<TCharacter> VCharacter;
 	RectNormalized getTxtCoords(unsigned char c);
 	VCharacter getVChar(std::string text);
+	VCharacter formatVChar(VCharacter vchar, float row_size);
 }
 
 #endif
