@@ -63,6 +63,10 @@ public:
 		assert(fatal("getSpaceRight: Unsigned char out of range!\n"));
 	}
 	Font::TCharacter getSpecialChar(std::string name) {
+		std::string name_pad = name + "_pad";
+		if (io->joystick.IsConnected() && special_characters.find(name_pad) != special_characters.end()) {
+			return special_characters[name_pad];
+		}
 		return special_characters[name];
 	}
 };

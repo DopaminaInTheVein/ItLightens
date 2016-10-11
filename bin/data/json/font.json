@@ -99,6 +99,12 @@
     },
 	"RIGHT_CLICK": {
 		"row":3,
+		"col":0,
+		"size":4,
+		"space_right":16
+	},
+	"RIGHT_CLICK_pad": {
+		"row":3,
 		"col":4,
 		"size":4,
 		"space_right":16
