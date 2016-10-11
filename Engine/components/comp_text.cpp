@@ -2,7 +2,6 @@
 #include "comp_text.h"
 //#include "comp_tags.h"
 #include "entity.h"
-#include "app_modules/gui/gui_utils.h"
 #include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/imgui/module_imgui.h"
 #include "render/render.h"
@@ -18,7 +17,8 @@ bool TCompText::load(MKeyValue& atts)
 {
 	id = atts.getString("id", "");
 	assert(id != "");
-	text = atts.getString("text", "defaultText");
+	auto text_input = atts.getString("text", "defaultText");
+	text = Font::getVChar(text_input);
 	letter_posx_ini = atts.getFloat("pos_x", 0.0f);
 	letter_posy_ini = atts.getFloat("pos_y", 0.0f);
 	scale = atts.getFloat("scale", 1.0f);
@@ -26,25 +26,8 @@ bool TCompText::load(MKeyValue& atts)
 	colorTarget = obtainColorNormFromString(atts.getString("colorTarget", "#FFFFFFFF"));
 	colorChangeSpeed = atts.getFloat("colorSpeed", 0.0f);
 	colorChangeSpeedLag = atts.getFloat("colorSpeedLag", 0.0f);
-	lineText.resize(0);
 	printed = false;
 	ttl = 1.0f;
-	std::string endline = "\n";
-	int ini = -1;
-	size_t pos = text.find(endline, 0);
-	while (pos != text.npos)
-	{
-		lineText.push_back(text.substr(ini + 1, pos));
-		ini = pos;
-		pos = text.find(endline, pos + 1);
-	}
-	lineText.push_back(text.substr(ini + 1, pos));
-
-	accumSpacing.resize(lineText.size());
-	for (int i = 0; i < accumSpacing.size(); ++i) {
-		accumSpacing[i] = 0.0f;
-	}
-
 	return true;
 }
 
@@ -89,23 +72,7 @@ void TCompText::setup(std::string set_id, std::string set_text, float set_posx, 
 
 void TCompText::SetText(std::string new_text)
 {
-	text = new_text;
-	lineText.resize(0);
-	std::string endline = "\n";
-	int ini = -1;
-	size_t pos = text.find(endline, 0);
-	while (pos != text.npos)
-	{
-		lineText.push_back(text.substr(ini + 1, pos));
-		ini = pos;
-		pos = text.find(endline, pos + 1);
-	}
-	lineText.push_back(text.substr(ini + 1, pos));
-
-	accumSpacing.resize(lineText.size());
-	for (int i = 0; i < accumSpacing.size(); ++i) {
-		accumSpacing[i] = 0.0f;
-	}
+	text = Font::getVChar(new_text);
 	printed = false;
 }
 void TCompText::SetPosWorld(VEC3 pos)
@@ -145,36 +112,38 @@ void TCompText::printLetters() {
 	VEC3 ui_scale = VEC3(1.f, 1.f, 1.f) / Gui->getUiSize();
 	float scale_x = scale *ui_scale.x;
 	float scale_y = scale * line_separation * ui_scale.y;
-	for (int j = 0; j < lineText.size(); ++j) {
-		for (int i = 0; i < lineText[j].size(); ++i) {
-			unsigned char letter = lineText[j][i];
-			int ascii_tex_pos = letter;
-			int ascii_tex_posx = ascii_tex_pos % 16;
-			int ascii_tex_posy = ascii_tex_pos / 16;
 
-			float texture_pos_x = ((float)ascii_tex_posx) * letterBoxSize;
-			float texture_pos_y = ((float)ascii_tex_posy) * letterBoxSize;
-			float sx = letterBoxSize;
-			float sy = letterBoxSize;
+	int cur_line = 0;
+	VEC3 init_pos = VEC3(letter_posx_ini, letter_posy_ini, letter_posz_ini);
+	VEC3 cur_pos = init_pos;
+	for (auto tchar : text) {
+		if (tchar.IsNewLine()) {
+			cur_pos.x = init_pos.x;
+			cur_pos.y -= scale_y;
+			continue;
+		}
 
-			float letter_posx = letter_posx_ini + (i - accumSpacing[j]) * scale_x;
-			float letter_posy = letter_posy_ini - j * scale_y;
+		CHandle letter_h = Gui->addGuiElement("ui/letter", cur_pos, ("Text_Message_Letter_" + id), scale);
+		if (letter_h.isValid()) {
+			GET_COMP(lgui, letter_h, TCompGui);
+			if (lgui) {
+				gui_letters.push_back(letter_h);
+				lgui->SetParent(MY_OWNER);
+				lgui->setTxCoords(tchar.GetTxtCoords());
+				cur_pos.x += tchar.GetSize() * scale_x;
+				cur_pos.z += 0.001f;
+				if (tchar.GetSize() > 1.f) {
+					GET_COMP(ltmx, letter_h, TCompTransform);
+					ltmx->setScale(VEC3(ceilf(tchar.GetSize()), 1.f, 1.f));
+				}
 
-			CHandle letter_h = Gui->addGuiElement("ui/letter", VEC3(letter_posx, letter_posy, letter_posz_ini + letteri*0.001), ("Text_Message_Letter_" + id), scale);
-			CEntity * letter_e = letter_h;
-			TCompGui * letter_gui = letter_e->get<TCompGui>();
-			assert(letter_gui);
-			letter_gui->SetParent(MY_OWNER);
-			RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
-			letter_gui->setTxCoords(textCords);
-			letteri++;
-			accumSpacing[j] += Gui->getCharSize(ascii_tex_pos);
-			letter_gui->SetColor(color);
-			if (colorChangeSpeed > 0.0f) {
-				letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
+				//Color
+				lgui->SetColor(color);
+				if (colorChangeSpeed > 0.0f) {
+					lgui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
+				}
+				accumLag += colorChangeSpeedLag;
 			}
-			gui_letters.push_back(letter_h);
-			accumLag += colorChangeSpeedLag;
 		}
 	}
 	printed = true;

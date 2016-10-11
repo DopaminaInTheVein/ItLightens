@@ -2,6 +2,7 @@
 #define INC_COMPONENT_TEXT_H_
 
 #include "comp_base.h"
+#include "app_modules/gui/gui_utils.h"
 
 class TCompText : public TCompBase {
 	VHandles gui_letters;
@@ -20,11 +21,13 @@ class TCompText : public TCompBase {
 	float line_separation = 1.1f;
 	bool loop = false;
 
-	std::string text;
-	std::vector<std::string> lineText;
+	//std::string text;
+	//std::vector<std::string> lineText;
+	//std::vector<Font::VCharacter> lineText;
+	Font::VCharacter text;
+
 	float  ttl;
 	bool printed = false;
-	std::vector<float> accumSpacing;
 
 public:
 	//Update info
