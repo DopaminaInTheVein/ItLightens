@@ -19,8 +19,12 @@ private:
 	CGuiMunition * munition;
 	static std::stack<CHandle> cursors;
 	bool ui_control = false;
+
+	//Font
 	float letter_sizes[256];
+	std::map<std::string, Font::TCharacter> special_characters;
 	void initTextConfig();
+
 public:
 
 	CGuiModule() {}
@@ -57,6 +61,9 @@ public:
 			return letter_sizes[c];
 		}
 		assert(fatal("getSpaceRight: Unsigned char out of range!\n"));
+	}
+	Font::TCharacter getSpecialChar(std::string name) {
+		return special_characters[name];
 	}
 };
 

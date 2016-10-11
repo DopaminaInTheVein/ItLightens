@@ -138,8 +138,10 @@ void CImGuiModule::update(float dt) {
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("TestMessages")) {
+		static char test_msg_txt[128] = "*RIGHT_CLICK*";
+		ImGui::InputText("Test Message", test_msg_txt, 128);
 		if (ImGui::Button("Create Message")) {
-		std:string text = "1 2 3 4 5 6 1 2 3 4 5 6 1 2 3 44 5 6 1 2 3 4 5 6 1 2 3 4 5 6 1 2 3 4 5 6  1 2 3 4 5 6  1 2 3 4 5 6  1 2 3 4 5 6  1 2 3 4 5 6 1 2 3 4 5 6 123456 123456 123456 123456 123456 123456 123456 123456 123456 123456";
+			std::string text = test_msg_txt;
 			getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
 				MKeyValue atts3;
 				atts3["text"] = text.c_str();
@@ -170,7 +172,7 @@ void CImGuiModule::update(float dt) {
 			ImGui::TreePop();
 		}
 		ImGui::TreePop();
-	}
+}
 #endif
 	//Profiling
 	//---------------------------------------

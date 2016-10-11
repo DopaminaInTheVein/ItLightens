@@ -40,13 +40,13 @@ namespace Font {
 	private:
 		RectNormalized text_coords;
 		float size; //horizontal size grid
-		bool space;
 		char c;
 		std::string special_character;
 	public:
 		TCharacter() : text_coords(RectNormalized()), size(0.f) {}
 		TCharacter(unsigned char c);
 		TCharacter(std::string special_char);
+		TCharacter(std::string name, int row, int col, float size);
 		static TCharacter NewLine();
 		RectNormalized GetTxtCoords() { return text_coords; }
 		float GetSize() { return size; }

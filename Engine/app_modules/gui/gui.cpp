@@ -180,6 +180,7 @@ void CGuiModule::updateGuiElementPositionByTag(std::string tag, VEC3 new_positio
 }
 
 #define FONT_JSON "./data/json/font.json"
+using namespace Font;
 //Font
 void CGuiModule::initTextConfig()
 {
@@ -189,7 +190,21 @@ void CGuiModule::initTextConfig()
 	float default_space = 1.f - space_values["default"] / size;
 	for (int i = 0; i < 256; i++) letter_sizes[i] = default_space;
 	for (auto entry : space_values) {
-		unsigned char letter_char = entry.first.at(0);
-		letter_sizes[letter_char] = 1.f - entry.second / size;
+		if (entry.first.length() == 1) {
+			unsigned char letter_char = entry.first.at(0);
+			letter_sizes[letter_char] = 1.f - entry.second / size;
+		}
+	}
+	auto all_maps = readAllAtrMaps(FONT_JSON);
+	for (auto entry : all_maps) {
+		auto name = entry.first;
+		if (name != "general" && name != "space_right") {
+			int row = (int)entry.second["row"];
+			int col = (int)entry.second["col"];
+			int size_grid = (int)entry.second["size"];
+			float rspace = entry.second["space_right"];
+			float size_exact = size_grid - rspace / size;
+			special_characters[name] = TCharacter(name, row, col, size_exact);
+		}
 	}
 }

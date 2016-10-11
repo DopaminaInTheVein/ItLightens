@@ -96,5 +96,11 @@
 		"_9":30,
 		"_ ":25,
 		"default": 0
-    }
+    },
+	"RIGHT_CLICK": {
+		"row":3,
+		"col":4,
+		"size":4,
+		"space_right":16
+	}
 }

@@ -10,6 +10,7 @@
 #include "windows\app.h"
 
 #ifndef NDEBUG
+using namespace std;
 
 void dbg(const char* format, ...) {
 	va_list argptr;
@@ -295,6 +296,23 @@ std::map<std::string, float> readIniAtrData(const std::string route, std::string
 		}
 	}
 	return atributes;
+}
+
+// Obtains all the atributes of the specified element of a JSON object
+map< string, map<string, float> > readAllAtrMaps(const std::string route) {
+	PROFILE_FUNCTION("readAllAtrMaps");
+	map< string, map<string, float> > res;
+	// Get standard file
+	Document document;
+	try {
+		document = readJSONAtrFile(route);
+	}
+	catch (int e) { assert(fatal("Error reading JSON: %d", route.c_str())); }
+	for (auto it = document.MemberBegin(); it != document.MemberEnd(); it++) {
+		auto name = it->name.GetString();
+		res[name] = readIniAtrData(route, name);
+	}
+	return res;
 }
 
 // Obtains all the atributes of the specified element of a JSON object

@@ -76,8 +76,16 @@ TCharacter Font::TCharacter::NewLine()
 }
 Font::TCharacter::TCharacter(std::string special_char)
 {
-	special_character = special_char;
-	dbg("Aqui deberia ir el special char\n");
+	*this = Gui->getSpecialChar(special_char);
+}
+
+Font::TCharacter::TCharacter(std::string name, int row, int col, float size)
+{
+	special_character = name;
+	text_coords = Font::getTxtCoords(row * 16 + col);
+	text_coords.sx *= ceil(size);
+	this->size = size;
+	c = '*';
 }
 
 #define InputChar input_char

@@ -167,7 +167,12 @@ void TCompFadingMessage::printLetters() {
 			GET_COMP(letter_gui, letter_h, TCompGui);
 			if (letter_gui) {
 				letter_gui->setTxCoords(text[i].GetTxtCoords());
-				accumSpacing += text[i].GetSize();
+				float size_letter = text[i].GetSize();
+				if (size_letter > 1.f) {
+					GET_COMP(letter_tmx, letter_h, TCompTransform);
+					letter_tmx->setScale(VEC3(ceil(size_letter), 1.f,1.f));
+				}
+				accumSpacing += size_letter;
 			}
 		}
 		cur_char_line++;
