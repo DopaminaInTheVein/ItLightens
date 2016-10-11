@@ -2,6 +2,7 @@
 #define INC_COMPONENT_FADING_MESSAGE_H_
 
 #include "comp_base.h"
+#include "app_modules/gui/gui_utils.h"
 
 class TCompFadingMessage : public TCompBase {
 	VHandles gui_letters;
@@ -10,13 +11,12 @@ class TCompFadingMessage : public TCompBase {
 	CHandle gui_mol;
 	CHandle gui_rai;
 
-	static float letterSpacing[256];
-	static bool init_configuration;
-
 	//int id;
 	bool permanent;
 	float percentLineHeight = 0.02f;
 	float timeForLetter = 0.05f;
+	int cur_line;
+	int cur_char_line;
 	float marginForImage;
 	int numchars;
 	int shown_chars;
@@ -24,14 +24,14 @@ class TCompFadingMessage : public TCompBase {
 	float scale = 0.2f;
 	float letterBoxSize = 1.0f / 16.0f;
 	float letterSpacer = 0.3f / 16.0f;
-	float letterSpacerHigh = 2.5f * 0.3f / 16.0f;
+	float letterSpacerHigh = scale * 1.25f;
 
-	std::string text;
-	std::vector<std::string> lineText;
+	//std::string text;
+	Font::VCharacter text;
 	float  ttl;
 	float sizeFontX = 0.0125f;
 	float sizeFontY = 0.030f;
-	std::vector<float> accumSpacing;
+	float accumSpacing;
 	bool enabled = false;
 	bool initialized = false;
 	float accumTime = 0.0f;
@@ -40,7 +40,6 @@ class TCompFadingMessage : public TCompBase {
 	VEC3 orthorect;
 	void moveElement(CHandle h, const VEC3 pos);
 public:
-	static void initSpaceLetters();
 	//Update info
 	void update(float elapsed);
 	void printLetters();

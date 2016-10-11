@@ -122,11 +122,33 @@ void CImGuiModule::update(float dt) {
 	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 	if (ImGui::TreeNode("Gui create elements")) {
-		static VEC3 pos_new_ui;
+		static VEC3 pos_new_ui = VEC3(0.5f, 0.5f, 0.9f);
 		static char gui_prebab_name[64] = "Fading_Letter";
+		static char gui_prebab_entity_name[64] = "TEST";
+
 		ImGui::DragFloat3("Pos", &pos_new_ui.x, 0.1f, -1.f, 2.f);
 		ImGui::InputText("Prefab name", gui_prebab_name, 64);
-		if (ImGui::Button("Create")) Gui->addGuiElement(std::string("ui/") + std::string(gui_prebab_name), pos_new_ui);
+		ImGui::InputText("Entity name", gui_prebab_entity_name, 64);
+		if (ImGui::Button("Create")) {
+			CHandle gui_elem = Gui->addGuiElement(std::string("ui/") + std::string(gui_prebab_name), pos_new_ui);
+			GET_COMP(name, gui_elem, TCompName);
+			name->setName(gui_prebab_entity_name);
+		}
+
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("TestMessages")) {
+		static char test_msg_txt[128] = "*RIGHT_CLICK*";
+		ImGui::InputText("Test Message", test_msg_txt, 128);
+		if (ImGui::Button("Create Message")) {
+			std::string text = test_msg_txt;
+			getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
+				MKeyValue atts3;
+				atts3["text"] = text.c_str();
+				mess->load(atts3);
+			}
+			);
+		}
 		ImGui::TreePop();
 	}
 
@@ -150,7 +172,7 @@ void CImGuiModule::update(float dt) {
 			ImGui::TreePop();
 		}
 		ImGui::TreePop();
-	}
+}
 #endif
 	//Profiling
 	//---------------------------------------
