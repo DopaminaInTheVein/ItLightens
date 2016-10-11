@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#include "app_modules/logic_manager/logic_manager.h"
+
 bool TCompSenseVision::load(MKeyValue& atts)
 {
 	handles = set<CHandle>();
@@ -42,6 +44,9 @@ bool TCompSenseVision::isSenseVisionEnabled()
 //Sets
 void TCompSenseVision::registerHandle(CHandle h)
 {
+	if (!isSenseVisionEnabled()) {
+		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnSenseVision, CApp::get().getCurrentRealLevel(), h);
+	}
 	handles.insert(h);
 }
 

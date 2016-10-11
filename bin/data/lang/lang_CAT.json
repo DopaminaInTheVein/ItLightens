@@ -39,13 +39,20 @@
 	"dead_on_dream": "Ui! Sort que era un somni...\nHauré d'esforçar-me més."
   },
   "tuto_mole": {
-    "look_wall": "Aquesta pared sembla dèbil. Em pregunto si hi haura alguna cosa darrera...",
+    "mole_dream": "¡Qué claustrofobia! ¡Necesito salir de aquí!",
+	"need_higher": "Necesito algo para llegar tan alto...",
+	"box_hint": "¿Qué tal esta caja?",
+    "pull_push": "Pulsa W para empujar y S para estirar",
+	"show_portal": "¡Mira! ¡Ésta debe ser la salida del sueño!",
+	"wall_destroyed": "¡Muy bien! Ahora busquemos la salida.",
+	"look_wall": "Aquesta pared sembla dèbil. Em pregunto si hi haura alguna cosa darrera...",
     "help_possess": "Apropa't a la Mola i prem SHIFT ESQUERRE per controlar el seu cos.",
     "help_unpossess": "Prem SHIFT ESQUERRE per abandonar el cos de la Mola.",
 	"help_place_box": "Porta la caixa fins a la columna trencada (pots utilitzar SENTIR).",
 	"help_wall": "Apropa't al mur de davant amb la Mola i prem CLIC ESQUERRE per destruir-lo.",
 	"help_box": "Apropa't a la caixa i prem CLIC ESQUERRE per empenyer-la o estirar-la.",
-	"help_djump": "Prem ESPAI per saltar. Prem-ho dues vegades per efectuar un doble salt."
+	"help_djump": "Prem ESPAI per saltar. Prem-ho dues vegades per efectuar un doble salt.",
+	"fall_column": "¡Uy! ¡Qué torpeza!"
   },
   "tuto_sci": {
     "help_possess": "Apropa't al Científic i prem SHIFT ESQUERRE per controlar el seu cos.",

@@ -39,13 +39,20 @@
 	"dead_on_dream": "¡Uy! Suerte que era un sueño...\nTendré que esforzarme más."
   },
   "tuto_mole": {
-    "look_wall": "Esta pared parece débil. Me pregunto si habrá algo detrás...",
+    "mole_dream": "¡Qué claustrofobia! ¡Necesito salir de aquí!",
+	"need_higher": "Necesito algo para llegar tan alto...",
+	"box_hint": "¿Qué tal esta caja?",
+    "pull_push": "Pulsa W para empujar y S para estirar",
+	"show_portal": "¡Mira! ¡Ésta debe ser la salida del sueño!",
+	"wall_destroyed": "¡Muy bien! Ahora busquemos la salida.",
+	"look_wall": "Esta pared parece débil. Me pregunto si habrá algo detrás...",
     "help_possess": "Acércate a la Mole y pulsa SHIFT IZQUIERDO para controlar su cuerpo.",
     "help_unpossess": "Pulsa SHIFT IZQUIERDO para abandonar el cuerpo de la Mole.",
 	"help_place_box": "Lleva la caja hasta la columna rota (puedes utilizar SENTIR).",
 	"help_wall": "Acércate al muro de enfrente con la Mole y pulsa CLIC IZQUIERDO para destruirlo.",
 	"help_box": "Acércate a la caja y pulsa CLIC IZQUIERDO para empujar o tirar de ella.",
-	"help_djump": "Pulsa ESPACIO para saltar. Púlsalo dos veces para efectuar un doble salto."
+	"help_djump": "Pulsa ESPACIO para saltar. Púlsalo dos veces para efectuar un doble salto.",
+	"fall_column": "¡Uy! ¡Qué torpeza!"
   },
   "tuto_sci": {
     "help_possess": "Acércate al Científico y pulsa SHIFT IZQUIERDO para controlar su cuerpo.",

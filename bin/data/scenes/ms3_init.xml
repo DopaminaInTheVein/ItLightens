@@ -1688,5 +1688,245 @@
    name="2"/>
 
 </entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.63823 0.2586 3.99284"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon1"/>
+<transform
+   pos="-2.58481 -18.8921 -18.7102"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.8005 0.7486 4.15632"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon002"/>
+<transform
+   pos="-6.30417 -16.6547 -18.2734"
+   quat="0 0.173648 0 0.984808"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.46271 0.2586 3.74443"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon003"/>
+<transform
+   pos="-2.23728 -14.9636 -18.7102"
+   quat="0 -0.34202 0 0.939693"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.46271 0.2586 3.74443"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon004"/>
+<transform
+   pos="-6.3729 -12.8281 -18.2988"
+   quat="0 0.130526 0 0.991445"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.46271 0.2586 3.74443"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon005"/>
+<transform
+   pos="-4.34012 -10.7567 -18.6091"
+   quat="0 -0.0436194 0 0.999048"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.46271 0.7986 3.74443"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon006"/>
+<transform
+   pos="-2.07279 -8.34488 -18.6091"
+   quat="0 0.422618 0 0.906308"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="0.0969548 -18.9482 -18.9551"
+   lpt1="-6.46518 -16.4432 -18.2734"/>
+<name
+   name="CineTablon1"/>
+<transform
+   pos="-2.58481 -20.3482 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-8.77077 -16.6452 -17.587"
+   lpt1="-2.23728 -14.5072 -19.8532"/>
+<name
+   name="CineTablon2"/>
+<transform
+   pos="-8.61765 -18.0453 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="1.36599 -14.5072 -18.7102"
+   lpt1="-6.3729 -12.3717 -18.2988"/>
+<name
+   name="CineTablon3"/>
+<transform
+   pos="-8.61765 -18.0453 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-8.64099 -12.8981 -17.7905"
+   lpt1="-4.34012 -11.0318 -18.6665"/>
+<name
+   name="CineTablon4"/>
+<transform
+   pos="-8.61765 -18.0453 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-7.08201 -4.01793 -17.6389"
+   lpt1="-3.15616 -10.2888 -18.3613"/>
+<name
+   name="CineTablon5"/>
+<transform
+   pos="-8.61765 -18.0453 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-4.66282 -7.09837 -16.5245"
+   lpt1="4.44516 -8.15843 -21.374"/>
+<name
+   name="CineTablon6"/>
+<transform
+   pos="-8.61765 -18.0453 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
 
 </entities>

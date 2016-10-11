@@ -498,7 +498,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnStepOut%s(%i);", event_name.c_str(), step_number);
 		break;
 	}
-					  //GUI
+	case (OnSenseVision): {
+		sprintf(lua_code, "OnSenseVision(\"%s\");", params.c_str());
+		break;
+	}
+						  //GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;
@@ -799,7 +803,7 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.comment("Run cinematic defined in the specified guided camera")
 		.param("string: guided camera name")
 		.param("speed: speed of camera movement (0 means default speed)")
-		// run cinematic
+		// start cinematic
 		.set("start_cinematic", &SLBCamera::startCinematic)
 		.comment("Run cinematic from first point")
 		.param("string: guided camera name")
@@ -812,7 +816,13 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		// Reset the camera
 		.set("reset_camera", &SLBCamera::resetCamera)
 		.comment("Resets the camera to its default state")
+		// FX
+		.set("fx", &SLBCamera::fx)
+		.comment("Enable or disable an fx shader")
+		.param("string: name FX")
+		.param("int: 0 disabled, 1 enabled")
 		;
+	;
 }
 
 // Ui Camera LUA functions
@@ -831,6 +841,11 @@ void CLogicManagerModule::bindUiCamera(SLB::Manager& m) {
 		.set("fade_out", &SLBUiCamera::fadeOut)
 		.comment("Start fade out")
 		.param("float: time fade, if time <= 0 set default")
+		// FX
+		.set("fx", &SLBUiCamera::fx)
+		.comment("Enable or disable an fx shader")
+		.param("string: name FX")
+		.param("int: 0 disabled, 1 enabled")
 		;
 }
 

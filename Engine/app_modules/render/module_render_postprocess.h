@@ -47,9 +47,9 @@ public:
 	void ActivateFXAtEnd(std::string name, int priority = 0);
 	void ActivateFXAtEnd(TCompBasicFX* handle, int priority = 0);
 
-	void RemoveActiveFX(std::string name, int priority);
+	void RemoveActiveFX(std::string name);
 
-	void RemoveActiveFX(TCompBasicFX * handle, int priority);
+	void RemoveActiveFX(TCompBasicFX * handle);
 
 	void ActivateFXBeforeUI(std::string name, int priority = 0);
 	void ActivateFXBeforeUI(TCompBasicFX* handle, int priority = 0);

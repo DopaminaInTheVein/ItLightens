@@ -74,7 +74,7 @@ function LoadLevel( logic_level )
 	p:exec_command("p:load_level(\""..logic_level.."\")", 1)
 end
 function LoadLevelSaving( logic_level )
-g_current_level = logic_level
+	g_current_level = logic_level
 	p:print("Load Level")
 	ui_cam:fade_out(1)
 	p:setControlEnabled(0)
@@ -87,4 +87,8 @@ function DestroyAllByTag(tag)
 	handles = HandleGroup()
 	handles:get_handles_by_tag(tag)
 	handles:destroy()
+end
+
+function ShowMessage(level, txt_id, pj)
+	p:show_message(p:get_text(level, txt_id), pj)
 end

@@ -127,6 +127,7 @@ public:
 	void fadeOut(float speed = 0.f);
 	void orbit(bool);
 	void resetCamera();
+	void fx(const char * name, int enabled);
 };
 
 // camera control in LUA
@@ -141,6 +142,7 @@ public:
 	bool checkCamera();
 	void fadeIn(float speed = 0.f);
 	void fadeOut(float speed = 0.f);
+	void fx(const char * name, bool enabled);
 };
 
 // public functions
