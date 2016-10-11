@@ -611,6 +611,9 @@ void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
 		.comment("returns the Y coordinate")
 		.set("get_z", &SLBPlayer::getPlayerZ)
 		.comment("returns the Z coordinate")
+		// Unpossess
+		.set("unpossess", &SLBPlayer::unPossess)
+		.comment("leave possession")
 		;
 }
 

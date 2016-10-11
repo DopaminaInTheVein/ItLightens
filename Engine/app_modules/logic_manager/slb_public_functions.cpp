@@ -108,6 +108,12 @@ float SLBPlayer::getPlayerZ() {
 	return entity_controller->GetPosition().z;
 }
 
+void SLBPlayer::unPossess() {
+	getPlayer();
+	if (player_handle.isValid())
+		player_handle.sendMsg(TMsgUnpossesDamage());
+}
+
 void SLBPlayer::addEnergy(int energy_to_add) {
 	getRaijin();
 	CEntity* entity = player_handle;

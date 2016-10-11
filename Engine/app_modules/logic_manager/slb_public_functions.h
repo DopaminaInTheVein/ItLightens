@@ -40,6 +40,7 @@ public:
 	float getPlayerZ();
 	void addEnergy(int energy_to_add);
 	void refillEnergy();
+	void unPossess();
 };
 
 // generic handle control in LUA

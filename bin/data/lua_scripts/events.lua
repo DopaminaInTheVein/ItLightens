@@ -514,9 +514,10 @@ function OnDead(level)
 	g_dead = true
 	special_death = CallFunction("OnDead_"..level)
 	if not special_death then
+		pl:unpossess()
 		cam:orbit(true)
 		p:exec_command("p:load_entities(\"dead_menu\");", 2.0)
-		p:exec_command("cam:orbit(fase)", 3.0)
+		p:exec_command("cam:orbit(false)", 3.0)
 	end
 end
 
