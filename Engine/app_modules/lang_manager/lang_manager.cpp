@@ -12,7 +12,7 @@ CLangManagerModule::CLangManagerModule(std::string language) {
 	lang_file = lang_folder + "lang_" + language + ".json";
 }
 
-bool CLangManagerModule::start() {	
+bool CLangManagerModule::start() {
 	readLanguageMap();
 	return true;
 }
@@ -31,8 +31,8 @@ void CLangManagerModule::stop() {
 }
 
 void CLangManagerModule::readLanguageMap() {
-
-	std::map<std::string, std::string> scenes = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
+	auto scenes = CApp::get().GetNameScenes();
+	//std::map<std::string, std::string> scenes = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
 
 	typedef std::map<std::string, std::string>::iterator it_type;
 
@@ -48,4 +48,3 @@ void CLangManagerModule::readLanguageMap() {
 std::string CLangManagerModule::getText(std::string scene, std::string event) {
 	return language_map[scene][event];
 }
-

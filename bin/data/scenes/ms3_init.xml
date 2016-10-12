@@ -595,27 +595,6 @@
 
 </entity>
 <entity
-   id="303"
-   reload="yes">
-<tags
-   tags="pila_container interactive"/>
-<pila_container/>
-<name
-   name="cargador_bateria"/>
-<transform
-   pos="-90.8368 -0.419937 14.4301"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-<room
-   name="2"/>
-
-</entity>
-<entity
    reload="yes">
 <tags/>
 <rigidbody
@@ -1686,6 +1665,25 @@
    height="1.8"/>
 <room
    name="2"/>
+
+</entity>
+<entity
+   id="303"
+   reload="yes">
+<tags
+   tags="pila_container interactive"/>
+<pila_container/>
+<name
+   name="cargador_bateria"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 <entity
