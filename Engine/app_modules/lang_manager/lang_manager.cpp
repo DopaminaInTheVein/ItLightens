@@ -2,6 +2,7 @@
 #include "lang_manager.h"
 #include "app_modules\io\io.h"
 #include "utils\utils.h"
+#include "components/entity.h"
 
 extern CLangManagerModule* lang_manager = nullptr;
 
@@ -13,12 +14,30 @@ CLangManagerModule::CLangManagerModule(std::string language) {
 }
 
 bool CLangManagerModule::start() {
+	auto file = CApp::get().get().file_options_json;
+	auto language = readIniAtrDataStr(file, "language");
+	game_language = language["lang"];
+
 	readLanguageMap();
 	return true;
 }
 
-void CLangManagerModule::reloadLanguageFile(std::string language) {
-	lang_file = lang_folder + "lang_" + language + ".json";
+std::string CLangManagerModule::GetLanguage() const
+{
+	return game_language;
+}
+void CLangManagerModule::SetLanguage(std::string lang)
+{
+	if (lang == game_language) return;
+	game_language = lang;
+	lang_manager->reloadLanguageFile();
+	getHandleManager<CEntity>()->each([](CEntity * e) {
+		e->sendMsg(TMsgLanguageChanged());
+	});
+}
+
+void CLangManagerModule::reloadLanguageFile() {
+	lang_file = lang_folder + "lang_" + game_language + ".json";
 	readLanguageMap();
 }
 
@@ -45,6 +64,16 @@ void CLangManagerModule::readLanguageMap() {
 	language_map["actions"] = readIniAtrDataStr(lang_file, "actions");
 }
 
-std::string CLangManagerModule::getText(std::string scene, std::string event) {
-	return language_map[scene][event];
+std::string CLangManagerModule::getText(std::string scene, std::string entry) {
+	auto scene_events = language_map[scene];
+	if (io && io->IsGamePadMode()) {
+		std::string entry_pad = entry + "_pad";
+		if (setContains(scene_events, entry_pad)) {
+			return scene_events[entry_pad];
+		}
+	}
+	if (setContains(scene_events, entry)) {
+		return scene_events[entry];
+	}
+	else return "";
 }

@@ -9,6 +9,7 @@
 
 class CLangManagerModule : public IAppModule
 {
+	std::string game_language = "EN";
 	std::string lang_folder = "./data/lang/";
 	std::string lang_file;
 
@@ -26,10 +27,12 @@ public:
 		return "lang_manager";
 	}
 
-	void readLanguageMap();
-	void reloadLanguageFile(std::string language);
-	std::string getText(std::string scene, std::string event);
+	std::string GetLanguage() const;
+	void SetLanguage(std::string);
 
+	void readLanguageMap();
+	void reloadLanguageFile();
+	std::string getText(std::string scene, std::string event);
 };
 
 extern CLangManagerModule* lang_manager;

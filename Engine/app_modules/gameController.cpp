@@ -11,9 +11,6 @@
 #include "components/entity_tags.h"
 bool CGameController::start()
 {
-	auto file = CApp::get().get().file_options_json;
-	auto language = readIniAtrDataStr(file, "language");
-	game_language = language["lang"];
 	return true;
 }
 
@@ -33,20 +30,6 @@ void CGameController::UpdateDifficulty()
 	Damage::init();
 	getHandleManager<CEntity>()->each([](CEntity * e) {
 		e->sendMsg(TMsgDifficultyChanged());
-	});
-}
-
-std::string CGameController::GetLanguage() const
-{
-	return game_language;
-}
-void CGameController::SetLanguage(std::string lang)
-{
-	if (lang == game_language) return;
-	game_language = lang;
-	lang_manager->reloadLanguageFile(game_language);
-	getHandleManager<CEntity>()->each([](CEntity * e) {
-		e->sendMsg(TMsgLanguageChanged());
 	});
 }
 

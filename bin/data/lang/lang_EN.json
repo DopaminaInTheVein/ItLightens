@@ -26,7 +26,8 @@
   },
   "hub": {
     "start_hub": "Welcome to the tutorials.\nLet's learn some things about the game.",
-	"sense":"Let's SENSE (*RIGHT_CLICK*)!!!\nFor demonstration it will keep for a short time.",
+	"sense":"Let's SENSE (*RMOUSE*)!!!\nFor demonstration it will keep for a short time.",
+	"sense_pad":"Let's SENSE (*BPAD*)!!!\nFor demonstration it will keep for a short time.",
     "target_seen_green": "This #00FF00#GREEN## signal is your next step.",
     "target_seen_yellow": "The #FFFF00#YELLOW## one is the final point of the level.",
 	"target_seen_white": "WHITE are generators, where you can restore all your life.",

@@ -710,7 +710,7 @@ void SLBPublicFunctions::setupGame() {
 }
 
 void SLBPublicFunctions::setLanguage(const char* lang) {
-	GameController->SetLanguage(std::string(lang));
+	lang_manager->SetLanguage(std::string(lang));
 }
 
 void SLBPublicFunctions::completeTasklist(int i) {
@@ -1052,10 +1052,6 @@ const char* SLBPublicFunctions::getText(const char* scene, const char* event) {
 	res[res_str.size()] = '\0';
 
 	return res;
-}
-
-void SLBPublicFunctions::reloadLanguageFile(const char* language) {
-	lang_manager->reloadLanguageFile(language);
 }
 
 void SLBPublicFunctions::forceSenseVision() {

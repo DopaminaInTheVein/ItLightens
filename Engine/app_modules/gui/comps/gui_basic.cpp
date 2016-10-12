@@ -7,6 +7,8 @@
 #include "gui_cursor.h"
 #include "../gui.h"
 
+#include "app_modules/lang_manager/lang_manager.h"
+
 using namespace std;
 
 map<string, GuiMatrix> TCompGui::gui_screens = map<string, GuiMatrix>();
@@ -32,7 +34,7 @@ void TCompGui::setRenderState(float rs_state)
 RectNormalized TCompGui::getTxCoords()
 {
 	if (!language) return text_coords;
-	std::string lang_code = GameController->GetLanguage();
+	std::string lang_code = lang_manager->GetLanguage();
 	RectNormalized sub_rect(0.f, 0.f, 0.5f, 0.5f);
 	if (lang_code == "EN" || lang_code == "GA") sub_rect.y = .5f;
 	if (lang_code == "CAT" || lang_code == "GA") sub_rect.x = .5f;

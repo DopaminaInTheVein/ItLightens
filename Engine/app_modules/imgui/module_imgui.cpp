@@ -16,6 +16,7 @@
 #include "particles\particles_manager.h"
 
 #include "app_modules\render\module_render_postprocess.h"
+#include "app_modules\lang_manager\lang_manager.h"
 
 //editors
 #include "Editors\editor_lights.h"
@@ -81,13 +82,13 @@ void CImGuiModule::update(float dt) {
 	}
 	//---------------------------------------
 	//Language
-	IMGUI_SHOW_STRING(GameController->GetLanguage());
+	IMGUI_SHOW_STRING(lang_manager->GetLanguage());
 
 	//Difficulty
 	IMGUI_SHOW_INT(GameController->GetDifficulty());
 
 	//Last Input
-	IMGUI_SHOW_BOOL(io->IsGamePadMode());
+	ImGui::Checkbox("Gamepad Mode", io->IsGamePadModePointer());
 
 	//Buttons game
 	//---------------------------------------
@@ -196,7 +197,7 @@ void CImGuiModule::update(float dt) {
 			IMGUI_DRAG_FLOAT(CThrowBomb::radius_st, 0.01f, 0.1f, 10.f);
 			ImGui::DragFloat3("offset start throw", &CThrowBomb::offset_init_throw.x, 0.01f, -1.f, 1.f);
 			ImGui::TreePop();
-}
+		}
 		ImGui::TreePop();
 	}
 #endif
@@ -414,7 +415,7 @@ void CImGuiModule::update(float dt) {
 	ui.update();			//update ui
 	//Debug->update();		//update log
 	m_pLights_editor->RenderInMenu();
-}
+		}
 
 void CImGuiModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);

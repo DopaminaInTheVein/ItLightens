@@ -11,7 +11,6 @@
 
 class CIOModule : public IAppModule {
 	bool gamepad_mode = false;
-	void renderInMenu();
 public:
 	void release_all();
 	bool start() override;
@@ -23,7 +22,10 @@ public:
 		return "io";
 	}
 	bool IsGamePadMode() { return gamepad_mode; }
-	void SetGamePadMode(bool b) { gamepad_mode = b; }
+	void SetGamePadMode(bool b);
+#ifndef FINAL_BUILD
+	bool * IsGamePadModePointer() { return &gamepad_mode; }
+#endif
 
 	TKeyBoard keys;
 	TMouse    mouse;

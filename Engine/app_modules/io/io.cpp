@@ -1,11 +1,13 @@
 #include "mcv_platform.h"
 #include "io.h"
 #include "imgui/imgui.h"
+#include "app_modules/lang_manager/lang_manager.h"
 #include "windows/app.h"
 #include <windowsx.h>
 
 extern CIOModule* io = nullptr;
 static int i = 0;
+
 bool isKeyPressed(int key_code) {
 	return (::GetAsyncKeyState(key_code) & 0x8000) != 0;
 }
@@ -70,4 +72,12 @@ bool CIOModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		break;
 	}
 	return false;
+}
+
+void CIOModule::SetGamePadMode(bool b) {
+	if (b != gamepad_mode) {
+		gamepad_mode = b;
+		//TODO Message change input
+		//if (lang_manager) lang_manager->reloadLanguageFile();
+	}
 }

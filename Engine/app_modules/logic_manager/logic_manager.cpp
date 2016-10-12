@@ -914,6 +914,11 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("set_language", &SLBPublicFunctions::setLanguage)
 		.param("string: language id")
 		.comment("Set language")
+		// Get text (localization)
+		.set("get_text", &SLBPublicFunctions::getText)
+		.comment("Get the text for the specified scene and event")
+		.param("string: scene of the text")
+		.param("string: event of the text")
 		// Enable and disable controls (player and camera)
 		.set("setControlEnabled", &SLBPublicFunctions::setControlEnabled)
 		.comment("Enable or disable controls\n")
@@ -1129,15 +1134,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// Exit Game
 		.set("exit_game", &SLBPublicFunctions::exit)
 		.comment("Exit game")
-		// Get text (localization)
-		.set("get_text", &SLBPublicFunctions::getText)
-		.comment("Get the text for the specified scene and event")
-		.param("string: scene of the text")
-		.param("string: event of the text")
-		// Reload localization file
-		.set("reload_language_file", &SLBPublicFunctions::reloadLanguageFile)
-		.comment("Reloads the language file")
-		.param("string: code of the language file that will be loaded")
+		//Sense vision
 		.set("force_sense_vision", &SLBPublicFunctions::forceSenseVision)
 		.comment("force sense vision")
 		.set("unforce_sense_vision", &SLBPublicFunctions::unforceSenseVision)
