@@ -86,6 +86,9 @@ void CImGuiModule::update(float dt) {
 	//Difficulty
 	IMGUI_SHOW_INT(GameController->GetDifficulty());
 
+	//Last Input
+	IMGUI_SHOW_BOOL(io->IsGamePadMode());
+
 	//Buttons game
 	//---------------------------------------
 	if (GameController->GetGameState() == CGameController::RUNNING) {
@@ -193,7 +196,7 @@ void CImGuiModule::update(float dt) {
 			IMGUI_DRAG_FLOAT(CThrowBomb::radius_st, 0.01f, 0.1f, 10.f);
 			ImGui::DragFloat3("offset start throw", &CThrowBomb::offset_init_throw.x, 0.01f, -1.f, 1.f);
 			ImGui::TreePop();
-		}
+}
 		ImGui::TreePop();
 	}
 #endif

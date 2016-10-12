@@ -10,6 +10,7 @@
 #define MY_SHIFT 0xA0
 
 class CIOModule : public IAppModule {
+	bool gamepad_mode = false;
 	void renderInMenu();
 public:
 	void release_all();
@@ -21,6 +22,8 @@ public:
 	const char* getName() const {
 		return "io";
 	}
+	bool IsGamePadMode() { return gamepad_mode; }
+	void SetGamePadMode(bool b) { gamepad_mode = b; }
 
 	TKeyBoard keys;
 	TMouse    mouse;
