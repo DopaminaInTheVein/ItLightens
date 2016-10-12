@@ -478,16 +478,18 @@ void PSLightDirShadows(
 
  //att_factor = 1;
  float inv_shadows = att_factor;
- //o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
+ o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
   
   float4 final_color = light_mask * att_factor;
+
+  //inv_shadows = 1-att_factor;
   inv_shadows = 1-att_factor*NLWarped;
   inv_shadows *= light_mask;
   //inv_shadows /= 1.5;
   
   
   //we reduce the shadow intesity, as the hatching will add more shadows effect
-  if(inv_shadows > 0.7f)
+  if(inv_shadows > 0.5f)
 	inv_shadows = 0.5;
 	
  if(inv_shadows < 0)
