@@ -114,29 +114,35 @@ void CImGuiModule::update(float dt) {
 			GameController->SetGameState(CGameController::RUNNING);
 	}
 
-	if (ImGui::Button("SAVE GAME")) CApp::get().saveLevel();
-	if (ImGui::Button("LOAD GAME")) CApp::get().restartLevelNotify();
-
-	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
-	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
-	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
-
 	//Select Level
-	//---------------------------------------
-	if (ImGui::TreeNode("Select Level")) {
+	{
+		ImGui::PushItemWidth(80);
 		static int level_selected = 1;
-		if (ImGui::InputInt("level", &level_selected)) {
+		if (ImGui::InputInt("", &level_selected)) {
 			if (level_selected > 4) level_selected = 0;
 			if (level_selected < 0) level_selected = 4;
 		}
+		ImGui::SameLine();
+		auto name_scenes = CApp::get().GetNameScenes();
+		char logic_level[] = "level_X";
+		logic_level[6] = '0' + (unsigned char)(level_selected);
+		ImGui::SameLine();
+		ImGui::Text("%s", name_scenes[logic_level].c_str());
 		ImGui::SameLine();
 		if (ImGui::Button("Load Level")) {
 			char lua_code[256];
 			sprintf(lua_code, "p:stop_music(); p:setup_game(); LoadLevel(\"level_%d\")", level_selected);
 			logic_manager->throwUserEvent(lua_code);
 		}
-		ImGui::TreePop();
+		ImGui::PopItemWidth();
 	}
+
+	if (ImGui::Button("SAVE GAME")) CApp::get().saveLevel();
+	if (ImGui::Button("LOAD GAME")) CApp::get().restartLevelNotify();
+
+	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
+	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
+	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui = VEC3(0.5f, 0.5f, 0.9f);
