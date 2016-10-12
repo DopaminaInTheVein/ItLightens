@@ -204,7 +204,7 @@ void CGuiModule::initTextConfig()
 			int size_grid = (int)entry.second["size"];
 			float rspace = entry.second["space_right"];
 			float size_exact = size_grid - rspace / size;
-			special_characters[name] = TCharacter(name, row, col, size_exact);
+			special_characters[name] = TCharacter(name, row - 1, col - 1, size_exact); // -1 because more use friendly (1-16, instead 0-15)
 		}
 	}
 }

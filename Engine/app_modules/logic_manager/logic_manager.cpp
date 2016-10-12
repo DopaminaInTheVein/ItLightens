@@ -58,23 +58,27 @@ void CLogicManagerModule::update(float dt) {
 		}
 	}
 
-	if (controller->IsBackPressed()) {
+	for (auto c : command_queue_to_add) {
+		command_queue.push_back(c);
+	}
+	command_queue_to_add.clear();
+
+	if (exec_wait) {
+		const char* copy_code = command_wait.code;
+		exec_wait = false;
+		command_wait.code = "";
+		slb_script.doString(copy_code);
+	}
+	else if (controller->IsBackPressed()) {
 		if (command_wait.code != "") {
 			if (!command_wait.only_runtime ||
 				GameController->GetGameState() == CGameController::RUNNING ||
 				GameController->GetGameState() == CGameController::SPECIAL_ACTION)
 			{
-				const char* copy_code = command_wait.code;
-				command_wait.code = "";
-				slb_script.doString(copy_code);
+				exec_wait = true;
 			}
 		}
 	}
-
-	for (auto c : command_queue_to_add) {
-		command_queue.push_back(c);
-	}
-	command_queue_to_add.clear();
 }
 
 void CLogicManagerModule::resetTimers() {

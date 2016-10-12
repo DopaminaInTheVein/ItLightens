@@ -97,16 +97,131 @@
 		"_ ":25,
 		"default": 0
     },
-	"RIGHT_CLICK": {
-		"row":3,
-		"col":0,
-		"size":4,
-		"space_right":16
-	},
-	"RIGHT_CLICK_pad": {
-		"row":3,
-		"col":4,
-		"size":4,
-		"space_right":16
+	"MOUSE": {
+		"row":10,
+		"col":10,
+		"size":1,
+		"space_right":0
 	}
+	,"LMOUSE": {
+		"row":10,
+		"col":11,
+		"size":1,
+		"space_right":0
+	}
+	,"RMOUSE": {
+		"row":10,
+		"col":12,
+		"size":1,
+		"space_right":0
+	}
+	,"LB": {
+		"row":11,
+		"col":2,
+		"size":1,
+		"space_right":0
+	}
+	,"RB": {
+		"row":11,
+		"col":3,
+		"size":1,
+		"space_right":0
+	}
+	,"SHIFT": {
+		"row":11,
+		"col":5,
+		"size":2,
+		"space_right":8
+	}
+	,"BACK": {
+		"row":11,
+		"col":7,
+		"size":1,
+		"space_right":0
+	}
+	,"START": {
+		"row":11,
+		"col":8,
+		"size":1,
+		"space_right":0
+	}
+	,"ENTER": {
+		"row":11,
+		"col":9,
+		"size":1,
+		"space_right":0
+	}
+	,"LSTICK": {
+		"row":11,
+		"col":10,
+		"size":1,
+		"space_right":0
+	}
+	,"RSTICK": {
+		"row":11,
+		"col":11,
+		"size":1,
+		"space_right":0
+	}
+	,"SPACE": {
+		"row":12,
+		"col":5,
+		"size":2,
+		"space_right":0
+	}
+	,"ESC": {
+		"row":13,
+		"col":3,
+		"size":1,
+		"space_right":0
+	}
+	,"WKEY": {
+		"row":13,
+		"col":5,
+		"size":1,
+		"space_right":0
+	}
+	,"AKEY": {
+		"row":13,
+		"col":6,
+		"size":1,
+		"space_right":0
+	}
+	,"SKEY": {
+		"row":13,
+		"col":7,
+		"size":1,
+		"space_right":0
+	}
+	,"DKEY": {
+		"row":13,
+		"col":8,
+		"size":1,
+		"space_right":0
+	}
+	,"APAD": {
+		"row":15,
+		"col":3,
+		"size":1,
+		"space_right":0
+	}
+	,"BPAD": {
+		"row":15,
+		"col":4,
+		"size":1,
+		"space_right":0
+	}
+	,"XPAD": {
+		"row":15,
+		"col":5,
+		"size":1,
+		"space_right":0
+	}
+	,"YPAD": {
+		"row":15,
+		"col":6,
+		"size":1,
+		"space_right":0
+	}
+	
 }
