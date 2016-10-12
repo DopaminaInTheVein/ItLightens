@@ -20,6 +20,7 @@ class CLogicManagerModule : public IAppModule
 	std::deque<command> command_queue;
 	std::deque<command> command_queue_to_add;
 	command command_wait;
+	bool exec_wait = false;;
 
 	CHandle caller_handle;
 
@@ -156,6 +157,7 @@ public:
 
 	void setWait(command com) {
 		command_wait = com;
+		exec_wait = false;
 	}
 
 	// module specific functions

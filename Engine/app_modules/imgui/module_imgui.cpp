@@ -100,7 +100,6 @@ void CImGuiModule::update(float dt) {
 
 		ImGui::PopStyleColor();
 	}
-
 	else if (GameController->GetGameState() == CGameController::STOPPED) {
 		IMGUI_SHOW_INT(CGameController::STOPPED);
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
@@ -121,6 +120,24 @@ void CImGuiModule::update(float dt) {
 	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
 	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
+
+	//Select Level
+	//---------------------------------------
+	if (ImGui::TreeNode("Select Level")) {
+		static int level_selected = 1;
+		if (ImGui::InputInt("level", &level_selected)) {
+			if (level_selected > 4) level_selected = 0;
+			if (level_selected < 0) level_selected = 4;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Load Level")) {
+			char lua_code[256];
+			sprintf(lua_code, "p:stop_music(); p:setup_game(); LoadLevel(\"level_%d\")", level_selected);
+			logic_manager->throwUserEvent(lua_code);
+		}
+		ImGui::TreePop();
+	}
+
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui = VEC3(0.5f, 0.5f, 0.9f);
 		static char gui_prebab_name[64] = "Fading_Letter";
@@ -138,14 +155,14 @@ void CImGuiModule::update(float dt) {
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("TestMessages")) {
-		static char test_msg_txt[128] = "*RIGHT_CLICK*";
-		ImGui::InputText("Test Message", test_msg_txt, 128);
+		static char test_msg_txt[256] = "*MOUSE* *LMOUSE* *RMOUSE*\n*LB* *RB* *BACK* *START* *LSTICK* *RSTICK* *APAD* *BPAD* *XPAD* *YPAD*\n*SHIFT* *ENTER* *SPACE* *ESC* *WKEY* *AKEY* *SKEY* *DKEY*";
+		ImGui::InputTextMultiline("Test Message", test_msg_txt, 256);
 		if (ImGui::Button("Create Message")) {
 			std::string text = test_msg_txt;
 			getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
-				MKeyValue atts3;
-				atts3["text"] = text.c_str();
-				mess->load(atts3);
+				TCompFadingMessage::ReloadInfo atts;
+				atts.text = text;
+				mess->reload(atts);
 			}
 			);
 		}
@@ -172,7 +189,7 @@ void CImGuiModule::update(float dt) {
 			ImGui::TreePop();
 		}
 		ImGui::TreePop();
-}
+	}
 #endif
 	//Profiling
 	//---------------------------------------
