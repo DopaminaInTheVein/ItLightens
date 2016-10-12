@@ -31,6 +31,7 @@ class CGuiActionText {
 	float sizeFont;
 	eAction action;
 	std::string last_text = "";
+	std::string getActionText(std::string action);
 public:
 	CGuiActionText(float x, float y);
 

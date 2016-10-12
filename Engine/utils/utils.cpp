@@ -321,7 +321,7 @@ std::map<std::string, std::string> readIniAtrDataStr(const std::string route, st
 	std::map<std::string, std::string> atributes;
 
 	for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
-		atributes[it->name.GetString()] = it->value.GetString();
+		atributes[it->name.GetString()] = TextEncode::Utf8ToLatin1String(it->value.GetString());
 	}
 
 	return atributes;

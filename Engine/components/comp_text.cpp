@@ -4,8 +4,9 @@
 #include "entity.h"
 #include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/imgui/module_imgui.h"
+#include "app_modules/lang_manager/lang_manager.h"
 #include "render/render.h"
-#include "render\draw_utils.h"
+#include "render/draw_utils.h"
 
 #include <math.h>
 
@@ -72,7 +73,8 @@ void TCompText::setup(std::string set_id, std::string set_text, float set_posx, 
 
 void TCompText::SetText(std::string new_text)
 {
-	text = Font::getVChar(new_text);
+	original_text = new_text;
+	text = Font::getVChar(lang_manager->getText(new_text));
 	printed = false;
 }
 void TCompText::SetPosWorld(VEC3 pos)

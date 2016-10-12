@@ -390,7 +390,7 @@ int SLBHandle::addOption(const char* name) {
 	if (real_handle.isValid()) {
 		GET_COMP(gui_selector, real_handle, TCompGuiSelector);
 		auto name_fixed = TextEncode::Utf8ToLatin1String(name);
-		if (gui_selector) res = gui_selector->AddOption(string(name_fixed));
+		if (gui_selector) res = gui_selector->AddOption(name_fixed);
 	}
 	return res;
 }
@@ -1045,7 +1045,7 @@ void SLBPublicFunctions::resumeGame() {
 	GameController->SetGameState(CGameController::RUNNING);
 }
 const char* SLBPublicFunctions::getText(const char* scene, const char* event) {
-	std::string res_str = lang_manager->getText(scene, event);
+	std::string res_str = lang_manager->getText(event, scene);
 
 	char * res = new char[res_str.size() + 1];
 	std::copy(res_str.begin(), res_str.end(), res);

@@ -21,9 +21,7 @@ class TCompText : public TCompBase {
 	float line_separation = 1.1f;
 	bool loop = false;
 
-	//std::string text;
-	//std::vector<std::string> lineText;
-	//std::vector<Font::VCharacter> lineText;
+	std::string original_text;
 	Font::VCharacter text;
 
 	float  ttl;

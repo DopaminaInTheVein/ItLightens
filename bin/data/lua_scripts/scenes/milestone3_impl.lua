@@ -83,15 +83,15 @@ function OnAction___pila( )
   pila:getHandleCaller()
   
   if pila:is_charged() then
-	p:player_talks(p:get_text("ms3","pila_1"))
+	p:player_talks("::pila_1")
   else
-    p:player_talks(p:get_text("ms3","pila_2"))
+    p:player_talks("::pila_2")
   end
   p:exec_command("pila:setActionable(1);", 4.5)
 end
 
 function OnActionSci___pila( )
-  p:player_talks(p:get_text("ms3","sci_pila"))
+  p:player_talks("::sci_pila")
 end
 
 -- Cargador --
@@ -105,13 +105,13 @@ function activateCargadorPlayer()
 
   if hCargador:has_pila() then
     if hCargador:has_pila_charged() then
-		p:player_talks(p:get_text("ms3","cargador_player_1"))
+		p:player_talks("::cargador_player_1")
 	else
-		p:player_talks(p:get_text("ms3","cargador_player_2"))
+		p:player_talks("::cargador_player_2")
 		
 	end
   else
-	p:player_talks(p:get_text("ms3","cargador_player_3"))
+	p:player_talks("::cargador_player_3")
   end
   
   triggerCargador:getHandleCaller()
@@ -123,10 +123,10 @@ function activateCargadorSci()
   hCargador:get_handle_by_id(idCargador)
   if hCargador:has_pila() then
     if hCargador:has_pila_charged() then
-		p:player_talks(p:get_text("ms3","cargador_sci_1"))
+		p:player_talks("::cargador_sci_1")
 	else
 		hCargadorTarget:get_handle_by_name_tag("cargador_bateria_pAction", "target")
-		p:player_talks(p:get_text("ms3","cargador_sci_2"))
+		p:player_talks("::cargador_sci_2")
 	    sci = Handle()
 		sci:get_player()
 		sci:go_and_look_as(hCargadorTarget, "rechargeCell();")
@@ -134,7 +134,7 @@ function activateCargadorSci()
 		p:play_sound("event:/OnChargePila", 0.5, false)
 	end
   else
-	p:player_talks(p:get_text("ms3","cargador_sci_3"))
+	p:player_talks("::cargador_sci_3")
   end
 
   triggerCargador:getHandleCaller()
@@ -142,7 +142,7 @@ function activateCargadorSci()
 end
 
 function rechargeCell()
-  p:player_talks(p:get_text("ms3","recharge_cell"))
+  p:player_talks("::recharge_cell")
   hCargador:set_charged(1)
 end
 
@@ -159,12 +159,12 @@ function activateEnchufePlayer()
 
 	if hEnchufe:has_pila() then
 		if hEnchufe:has_pila_charged() then
-			p:player_talks(p:get_text("ms3","enchufe_player_1"))
+			p:player_talks("::enchufe_player_1")
 		else
-			p:player_talks(p:get_text("ms3","enchufe_player_2"))
+			p:player_talks("::enchufe_player_2")
 		end
 	else
-		p:player_talks(p:get_text("ms3","enchufe_player_3"))
+		p:player_talks("::enchufe_player_3")
 	end
 	  
 	triggerEnchufe:getHandleCaller()
@@ -177,12 +177,12 @@ function activateEnchufeSci()
 
   if hEnchufe:has_pila() then
     if hEnchufe:has_pila_charged() then
-		p:player_talks(p:get_text("ms3","enchufe_sci_1"))
+		p:player_talks("::enchufe_sci_1")
 	else
-		p:player_talks(p:get_text("ms3","enchufe_sci_2"))
+		p:player_talks("::enchufe_sci_2")
 	end
   else
-	p:player_talks(p:get_text("ms3","enchufe_sci_3"))
+	p:player_talks("::enchufe_sci_3")
   end
   
   triggerEnchufe:getHandleCaller()
@@ -403,7 +403,7 @@ end
 
 function activateElevatorPlayer( )
   triggerElevator:getHandleCaller()
-  p:player_talks(p:get_text("ms3","elevator_player"))
+  p:player_talks("::elevator_player")
   p:exec_command( "triggerElevator:setActionable(1);", 2 )
 end
 --------------------------------------------------
@@ -458,7 +458,7 @@ actionWallTarget = Handle()
 function lookWall( )
   p:print("Look Wall\n")
   triggerWall_1:getHandleCaller()
-  p:player_talks(p:get_text("ms3","look_wall"))
+  p:player_talks("::look_wall")
   p:exec_command( "triggerWall_1:setActionable(1);", 2 )
 end
 

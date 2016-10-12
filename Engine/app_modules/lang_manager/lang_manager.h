@@ -32,7 +32,7 @@ public:
 
 	void readLanguageMap();
 	void reloadLanguageFile();
-	std::string getText(std::string scene, std::string event);
+	std::string getText(std::string entry, std::string scene = "");
 };
 
 extern CLangManagerModule* lang_manager;

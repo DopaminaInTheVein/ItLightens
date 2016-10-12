@@ -27,6 +27,7 @@ class TCompFadingMessage : public TCompBase {
 	float letterSpacerHigh = scale * 1.25f;
 
 	//std::string text;
+	std::string key_text; //Needed for update text
 	Font::VCharacter text;
 	float  ttl;
 	float sizeFontX = 0.0125f;

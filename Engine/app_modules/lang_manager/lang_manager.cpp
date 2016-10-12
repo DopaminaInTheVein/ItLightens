@@ -64,7 +64,11 @@ void CLangManagerModule::readLanguageMap() {
 	language_map["actions"] = readIniAtrDataStr(lang_file, "actions");
 }
 
-std::string CLangManagerModule::getText(std::string scene, std::string entry) {
+std::string CLangManagerModule::getText(std::string entry, std::string scene) {
+	if (entry.length() < 2 || entry[0] != ':' || entry[1] != ':') return entry;
+	else entry = entry.substr(2);
+
+	if (scene == "") scene = CApp::get().getCurrentRealLevel();
 	auto scene_events = language_map[scene];
 	if (io && io->IsGamePadMode()) {
 		std::string entry_pad = entry + "_pad";
