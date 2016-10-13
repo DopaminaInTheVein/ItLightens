@@ -14,6 +14,17 @@ bool TCompSkeletonLookAt::load(MKeyValue &atts) {
 	return true;
 }
 
+/*
+#define GETH_COMP(handle, type) (handle.isValid() ? ((CEntity*)handle)->get<type>() : CHandle())
+#define GET_COMP(var, handle, type) type * var = (type*) GETH_COMP(handle, type)//handle.isValid() ? ((CEntity*)handle)->get<type>() : (type*)nullptr
+//#define GETH_MY(type) ((CHandle(this).isValid() && CHandle(this).getOwner().isValid()) ? ((CEntity*)(CHandle(this).getOwner()))->get<type>() : CHandle())
+#define GETH_MY(type) ( CHandle(this).isValid() ? GETH_COMP(CHandle(this).getOwner()) : CHandle() )
+#define GET_MY(var, type) type * var = (type*) (((CEntity*)(CHandle(this).getOwner()))->get<type>())
+#define GET_ECOMP(var, entity_ptr, type) type * var = entity_ptr ? entity_ptr->get<type>() : CHandle()
+#define GET_NAME(handle) (handle.isValid() && GETH_COMP(handle, CEntity).isValid() ? ((CEntity*)handle)->getName() : "invalid_handle")
+#define MY_NAME (((CEntity*)(CHandle(this).getOwner()))->getName())
+#define MY_OWNER CHandle(this).getOwner()
+*/
 bool TCompSkeletonLookAt::getUpdateInfo()
 {
 	my_transform = GETH_MY(TCompTransform);

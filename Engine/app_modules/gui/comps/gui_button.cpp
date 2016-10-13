@@ -170,6 +170,9 @@ void TCompGuiButton::execute()
 		msg.notifier = MY_OWNER;
 		listener.handle.sendMsg(msg);
 	}
+	if (MY_OWNER.isValid()) {
+		dbg("name: %s\n", GET_NAME(MY_OWNER));
+	}
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnClicked, MY_NAME, MY_OWNER);
 }
 

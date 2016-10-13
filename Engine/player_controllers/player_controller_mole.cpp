@@ -849,12 +849,6 @@ void player_controller_mole::InitControlState() {
 	ChangeState("idle");
 }
 
-void player_controller_mole::update_msgs()
-{
-	ui.addTextInstructions("Left Shift            -> Exit possession State");
-	ui.addTextInstructions("Click Left Mouse      -> Grab/Throw near Box or Break Wall");
-}
-
 void player_controller_mole::ChangeCommonState(std::string st)
 {
 	if (!pushing_box) {

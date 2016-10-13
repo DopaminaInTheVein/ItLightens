@@ -2,20 +2,24 @@
 #include "player_controller_cientifico.h"
 
 #include <windows.h>
-#include "handle\object_manager.h"
-#include "components\comp_transform.h"
-#include "components\entity.h"
-#include "components\entity_tags.h"
-#include "prefabs\magnetic_bomb.h"
-#include "prefabs\static_bomb.h"
-#include "components\comp_name.h"
-#include "ui\ui_interface.h"
-#include "components\comp_msgs.h"
-#include "render\static_mesh.h"
-#include "components\comp_render_static_mesh.h"
+#include "handle/object_manager.h"
+#include "components/comp_transform.h"
+#include "components/entity.h"
+#include "components/entity_tags.h"
+#include "prefabs/magnetic_bomb.h"
+#include "prefabs/static_bomb.h"
+#include "components/comp_name.h"
+#include "components/comp_msgs.h"
+#include "render/static_mesh.h"
+#include "components/comp_render_static_mesh.h"
 #include "components/comp_charactercontroller.h"
+#include "components/comp_room.h"
+#include "components/entity_parser.h"
+#include "prefabs/throw_bomb.h"
+
 #include "components/comp_tasklist.h"
 #include "app_modules/gui/gui.h"
+#include "app_modules/logic_manager/logic_manager.h"
 
 //if (animController) animController->setState(AST_IDLE, [prio])
 #define SET_ANIM_SCIENTIST(state) SET_ANIM_STATE(animController, state)

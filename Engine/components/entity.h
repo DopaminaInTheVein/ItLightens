@@ -28,10 +28,17 @@ public:
 	}
 
 	template< typename TObj >
+	CHandle get_insecure() const {
+		auto hm = getHandleManager<TObj>();
+		return comps[hm->getType()];
+	}
+#ifndef SECURE_HANDLES
+	template< typename TObj >
 	CHandle get() const {
 		auto hm = getHandleManager<TObj>();
 		return comps[hm->getType()];
 	}
+#endif
 
 	void renderInMenu();
 

@@ -8,7 +8,7 @@ const char* CEntity::getName() const {
 	TCompName* c = get<TCompName>();
 	if (c)
 		return c->name;
-	return "unnamed";
+	return HANDLE_UNNAMED;
 }
 
 void CEntity::setName(const char* new_name) {

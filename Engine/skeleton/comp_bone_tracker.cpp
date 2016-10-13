@@ -21,28 +21,20 @@ bool TCompBoneTracker::load(MKeyValue& atts) {
 
 void TCompBoneTracker::onGroupCreated(const TMsgEntityGroupCreated& msg) {
 	h_entity = findByName(*msg.handles, entity_name);
-	CEntity* e = h_entity;
-	if (!e)
-		return;
-	TCompSkeleton* skel = e->get<TCompSkeleton>();
-	if (!skel)
-		return;
+	if (!h_entity.isValid()) return;
+	GET_COMP(skel, h_entity, TCompSkeleton);
+	if (!skel) return;
 	bone_id = skel->model->getSkeleton()->getCoreSkeleton()->getCoreBoneId(bone_name);
 }
 
 void TCompBoneTracker::onAttach(const TMsgAttach& msg) {
-	//if (!isZero(msg.offset)) {
-	//	onAttachWithOffset(msg); // Parche rapido!
-	//	return;
-	//}
 	h_entity = msg.handle;
-	CEntity* e = h_entity;
-	if (!e)
-		return;
+	if (!h_entity.isValid()) return;
+
+	GET_COMP(skel, h_entity, TCompSkeleton);
+	if (!skel) return;
+
 	strcpy(bone_name, msg.bone_name.c_str());
-	TCompSkeleton* skel = e->get<TCompSkeleton>();
-	if (!skel)
-		return;
 	bone_id = skel->getKeyBoneId(bone_name);
 	local_tmx_saved = msg.save_local_tmx;
 
@@ -101,13 +93,11 @@ void TCompBoneTracker::onAttach(const TMsgAttach& msg) {
 
 void TCompBoneTracker::onAttachWithOffset(const TMsgAttach& msg) {
 	h_entity = msg.handle;
-	CEntity* e = h_entity;
-	if (!e)
-		return;
+	if (!h_entity.isValid()) return;
+	GET_COMP(skel, h_entity, TCompSkeleton);
+	if (!skel) return;
+
 	strcpy(bone_name, msg.bone_name.c_str());
-	TCompSkeleton* skel = e->get<TCompSkeleton>();
-	if (!skel)
-		return;
 	bone_id = skel->getKeyBoneId(bone_name);
 	local_tmx_saved = msg.save_local_tmx;
 	auto bone = skel->model->getSkeleton()->getBone(bone_id);
@@ -163,20 +153,18 @@ void TCompBoneTracker::renderInMenu() {
 }
 
 void TCompBoneTracker::update(float dt) {
-	CEntity* e = h_entity;
-	if (!e)
-		return;
-	TCompSkeleton* skel = e->get<TCompSkeleton>();
-	if (!skel || bone_id == -1)
-		return;
+	if (!h_entity.isValid()) return;
+
+	GET_COMP(skel, h_entity, TCompSkeleton);
+	if (!skel || bone_id == -1) return;
+
 	auto bone = skel->model->getSkeleton()->getBone(bone_id);
 	auto rot = Cal2Engine(bone->getRotationAbsolute());
 	auto trans = Cal2Engine(bone->getTranslationAbsolute());
 
-	CEntity* my_e = CHandle(this).getOwner();
-	if (!my_e) return;
-	TCompTransform* tmx = my_e->get<TCompTransform>();
-	assert(tmx);
+	GET_MY(tmx, TCompTransform);
+	//assert(tmx);
+	if (!tmx) return;
 
 	//if (local_tmx_saved) {
 	MAT44 bone_world = MAT44::CreateFromQuaternion(rot);
@@ -193,12 +181,4 @@ void TCompBoneTracker::update(float dt) {
 	if (physics) {
 		physics->setPosition(trans, rot);
 	}
-	//PxRigidDynamic *rd;
-	//if (rd = physics->getActor()->isRigidDynamic()) {
-	//	rd->setGlobalPose(PhysxConversion::ToPxTransform(trans, rot));
-	//}
-
-	////If I follow a bone and other bone is following me IK needs an extra update!
-	//GET_COMP(comp_ik, h_entity, TCompSkeletonIK);
-	//if (comp_ik) comp_ik->update(dt);
 }

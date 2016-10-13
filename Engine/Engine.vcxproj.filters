@@ -758,9 +758,6 @@
     <ClInclude Include="prefabs\magnetic_bomb.h">
       <Filter>prefabs</Filter>
     </ClInclude>
-    <ClInclude Include="ui\ui_interface.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="player_controllers\player_controller_cientifico.h">
       <Filter>player controllers</Filter>
     </ClInclude>
@@ -1551,6 +1548,9 @@
     <ClInclude Include="app_modules\gui\gui_munition.h">
       <Filter>app_modules\gui</Filter>
     </ClInclude>
+    <ClInclude Include="ui\ui_interface.h">
+      <Filter>ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1600,9 +1600,6 @@
     </Filter>
     <Filter Include="prefabs">
       <UniqueIdentifier>{a908d031-f6a7-4027-840a-0933d76ea3ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{d0d8f167-b256-424f-8d29-b8b8ca895ce6}</UniqueIdentifier>
     </Filter>
     <Filter Include="player controllers">
       <UniqueIdentifier>{015f2a57-fefa-4062-9950-b4b729347030}</UniqueIdentifier>
@@ -1735,6 +1732,9 @@
     </Filter>
     <Filter Include="app_modules\lang_manager">
       <UniqueIdentifier>{0948db12-24b9-4337-a8be-138dc4bdee78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{2917f34c-ffc3-42e4-89ef-6a7fc4026c36}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
