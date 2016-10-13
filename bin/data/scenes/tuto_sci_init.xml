@@ -25,7 +25,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="no"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -60,7 +61,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="no"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -87,7 +89,8 @@
 <skeleton
    model="skeletons/player/player.skeleton"/>
 <render_static_mesh
-   name="skeletons/player/player.static_mesh"/>
+   name="skeletons/player/player.static_mesh"
+   static="no"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -124,9 +127,10 @@
    pos="51.6847 2.81285 -6.69464"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/mesa_cientifico_up_mapeado.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/mesa_cientifico_up_mapeado.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -147,7 +151,8 @@
 <skeleton
    model="skeletons/scientist/scientist.skeleton"/>
 <render_static_mesh
-   name="skeletons/scientist/scientist.static_mesh"/>
+   name="skeletons/scientist/scientist.static_mesh"
+   static="no"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -192,9 +197,10 @@
    pos="70.6917 3.82912 -2.78086"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/obj/drone.static_mesh"
+   static="no"/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
@@ -217,8 +223,8 @@
 <name
    name="gen_tuto_sci"/>
 <transform
-   pos="75.3317 7.89981 -0.590159"
-   quat="0 0.642788 0 0.766044"
+   pos="75.3317 7.89981 -0.590158"
+   quat="0 -0.422618 0 0.906308"
    scale="1.0"/>
 
 </entity>
@@ -258,9 +264,10 @@
    pos="75.9743 8.61366 -2.82908"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/door_tuto_end.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/door_tuto_end.static_mesh"
+   static="no"/>
 <rigidbody
    type_collision="dynamic"
    type_shape="convex"

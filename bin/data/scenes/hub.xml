@@ -8,9 +8,25 @@
 <name
    name="Omni005"/>
 <transform
-   pos="9.27955 56.6631 -17.3862"
+   pos="9.27955 56.6631 -17.7151"
    quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="ceiling"/>
+<transform
+   pos="11.53 50.6611 -25.4918"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/ceiling.static_mesh"
+   static="yes"/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 <entity>
@@ -21,9 +37,10 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/reja.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/reja.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -36,9 +53,10 @@
    pos="9.54042 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/cenefa_1.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/cenefa_1.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -51,9 +69,10 @@
    pos="9.54042 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/cenefa_2.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/cenefa_2.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -66,9 +85,10 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/arc_door.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/arc_door.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -81,9 +101,10 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/window_wall.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/window_wall.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -96,9 +117,10 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/columna_2.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/columna_2.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -111,9 +133,10 @@
    pos="30.2741 50.6749 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/door.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/door.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -126,9 +149,10 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/columna.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/columna.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -141,9 +165,10 @@
    pos="25.0846 50.6621 -20.1743"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/control_panel.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/control_panel.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -156,9 +181,10 @@
    pos="-1.94649 50.6621 -20.0874"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/sofa1.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/sofa1.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -171,9 +197,10 @@
    pos="15.8054 55.225 -31.1158"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/wall_lamp.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/wall_lamp.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -187,7 +214,7 @@
 <name
    name="wall_lamp_sound21"/>
 <transform
-   pos="13.7262 55.293 -33.4789"
+   pos="13.7262 55.293 -33.2689"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -229,7 +256,7 @@
 <name
    name="wall_lamp_sound03"/>
 <transform
-   pos="9.6048 55.293 -33.4789"
+   pos="9.6048 55.293 -33.2689"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -341,7 +368,7 @@
 <name
    name="wall_lamp_sound11"/>
 <transform
-   pos="9.34076 55.293 -17.5048"
+   pos="9.34076 55.293 -17.6548"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -355,7 +382,7 @@
 <name
    name="wall_lamp_sound12"/>
 <transform
-   pos="13.6194 55.293 -17.5048"
+   pos="13.6194 55.293 -17.6548"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -480,9 +507,10 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/arc_door.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/arc_door.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -492,12 +520,13 @@
 <name
    name="wall1"/>
 <transform
-   pos="11.53 50.6611 -17.241"
+   pos="11.53 50.6611 -17.0373"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/wall1.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/wall1.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -510,9 +539,10 @@
    pos="30.3041 54.7952 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/wall2.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/wall2.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -525,9 +555,26 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/wall_3.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/wall_3.static_mesh"
+   static="yes"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="ceiling_tile"/>
+<transform
+   pos="11.53 62.5135 -25.4918"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/ceiling_tile.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -540,9 +587,10 @@
    pos="-1.84794 50.6621 -30.7404"
    quat="0 -0.799557 0 0.60059"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/sofa2.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/sofa2.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -557,9 +605,10 @@
    pos="-2.18931 53.361 -25.4419"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/end_hub.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/end_hub.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -595,9 +644,10 @@
    pos="9.5408 50.6611 -25.4919"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/floor.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/floor.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -609,10 +659,11 @@
 <transform
    pos="-2.27247 50.6611 -25.4918"
    quat="0 0 0 1.0"
-   scale="6.72523"/>
-<render_static_mesh
-   name="static_meshes/hub/machine_table.static_mesh"/>
+   scale="1.0"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/hub/machine_table.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 
@@ -623,12 +674,13 @@
 <name
    name="generator"/>
 <transform
-   pos="7.365 51.44 -30.6467"
-   quat="-0.064627 0.926492 -0.187081 0.320057"
+   pos="7.23866 51.44 -30.8202"
+   quat="-0.0336897 0 0 0.999401"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/generator.static_mesh"/>
 <abs_aabb/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/generator.static_mesh"
+   static="yes"/>
 <rigidbody
    type_collision="static"/>
 

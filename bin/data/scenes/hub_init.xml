@@ -17,7 +17,8 @@
 <skeleton
    model="skeletons/player/player.skeleton"/>
 <render_static_mesh
-   name="skeletons/player/player.static_mesh"/>
+   name="skeletons/player/player.static_mesh"
+   static="no"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -82,7 +83,8 @@
    model="skeletons/mole/mole.skeleton"
    anim="sleep"/>
 <render_static_mesh
-   name="skeletons/mole/mole.static_mesh"/>
+   name="skeletons/mole/mole.static_mesh"
+   static="no"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -102,7 +104,8 @@
    model="skeletons/scientist/scientist.skeleton"
    anim="sleep"/>
 <render_static_mesh
-   name="skeletons/scientist/scientist.static_mesh"/>
+   name="skeletons/scientist/scientist.static_mesh"
+   static="no"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -171,8 +174,8 @@
 <name
    name="gen_hub"/>
 <transform
-   pos="7.365 51.44 -30.6467"
-   quat="0.0707461 0.915463 -0.184854 -0.35036"
+   pos="7.23866 51.44 -30.8202"
+   quat="-0.0219023 0.638564 -0.0263097 0.768807"
    scale="1.0"/>
 
 </entity>

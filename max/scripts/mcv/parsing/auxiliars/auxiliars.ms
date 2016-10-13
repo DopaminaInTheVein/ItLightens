@@ -77,6 +77,15 @@ fn isSpline obj = (
 	) catch ( return false)
 )
 
+-- Is Static object
+fn isStatic obj = (
+	local static = (getUserProp obj "static")
+	if static != undefined then (
+		return (static == "yes")
+	)
+	return ((getUserProp obj "typeObject") == undefined)
+)
+
 --Parse generic attribute
 fn parsePropAttribute xml prop attr= (
 	local prop = getUserProp _parsingObject prop
