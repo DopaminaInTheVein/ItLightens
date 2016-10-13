@@ -449,7 +449,7 @@
    name="2"/>
 
 </entity>
-<entity
+<!--<entity
    reload="yes">
 <tags
    tags="AI AI_mole AI_poss"/>
@@ -475,7 +475,7 @@
 <room
    name="2"/>
 
-</entity>
+</entity>-->
 <entity
    reload="yes">
 <tags
@@ -532,7 +532,7 @@
    name="1"/>
 
 </entity>
-<entity
+<!--<entity
    reload="yes">
 <tags
    tags="AI AI_mole AI_poss"/>
@@ -571,7 +571,7 @@
 <room
    name="1"/>
 
-</entity>
+</entity>-->
 <entity
    reload="yes">
 <tags/>
@@ -755,7 +755,7 @@
    name="2"/>
 
 </entity>
-<entity
+<!--<entity
    reload="yes">
 <tags
    tags="AI AI_cientifico AI_poss"/>
@@ -781,7 +781,7 @@
 <room
    name="2"/>
 
-</entity>
+</entity>-->
 <entity
    reload="yes">
 <tags
@@ -1415,7 +1415,7 @@
    name="1"/>
 
 </entity>
-<entity
+<!--<entity
    reload="yes">
 <tags
    tags="AI AI_guard"/>
@@ -1637,8 +1637,8 @@
 <room
    name="2"/>
 
-</entity>
-<entity
+</entity>-->
+<!--<entity
    reload="yes">
 <tags
    tags="AI AI_guard"/>
@@ -1687,7 +1687,7 @@
 <room
    name="2"/>
 
-</entity>
+</entity>-->
 <entity
    reload="yes">
 <tags/>

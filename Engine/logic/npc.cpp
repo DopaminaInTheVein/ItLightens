@@ -36,7 +36,7 @@ bool npc::getPath(const VEC3& startPoint, const VEC3& endPoint) {
 	}
 	query.updatePosIni(startPointValue);
 	query.updatePosEnd(endPointValue);
-	//Debug->DrawLine(startPointValue, endPointValue);
+	Debug->DrawLine(startPointValue, endPointValue, 3.f);
 	query.findPath(query.p1, query.p2);
 	const float * path = query.getVertexSmoothPath();
 	pathWpts.clear();
@@ -51,7 +51,7 @@ bool npc::getPath(const VEC3& startPoint, const VEC3& endPoint) {
 		return false;
 
 	for (int i = 0; i < (pathWpts.size() - 1); i++) {
-		//Debug->DrawLine(pathWpts[i], pathWpts[i + 1], VEC3(1, 0, 1));
+		Debug->DrawLine(pathWpts[i], pathWpts[i + 1], VEC3(1, 0, 1), 3.f);
 	}
 
 	currPathWpt = 0;
