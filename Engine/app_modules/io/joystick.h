@@ -63,15 +63,15 @@ public:
 	const int right_stick_y_sensibility = 150;
 
 	// Main buttons
-	CDigitalButton button_A;
-	CDigitalButton button_B;
-	CDigitalButton button_X;
-	CDigitalButton button_Y;
-	CDigitalButton button_R;
-	CDigitalButton button_L;
+	CPadButton button_A;
+	CPadButton button_B;
+	CPadButton button_X;
+	CPadButton button_Y;
+	CPadButton button_R;
+	CPadButton button_L;
 	// Option butons
-	CDigitalButton button_START;
-	CDigitalButton button_BACK;
+	CPadButton button_START;
+	CPadButton button_BACK;
 
 	TJoystick();
 	TJoystick(int playerNumber);

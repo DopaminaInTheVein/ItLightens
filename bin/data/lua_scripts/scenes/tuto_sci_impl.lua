@@ -41,11 +41,6 @@ function OnStart_tuto_sci( )
 	tutosci_help_possess();
 end
 
--- function opendoortutosci( )
-	-- p:print( "opendoortutosci\n")
-	-- loadlevel("level_1") -- defined in functions.lua
--- end
-
 function OnUseGenerator_gen_tuto_sci( )
 	if not gen_done then
 		gen_done = true
@@ -127,15 +122,15 @@ end
 -- Auxiliars
 --==============================================================
 function tutosci_help_possess( )
-	p:player_talks(p:get_text("tuto_sci","help_possess"))
+	p:player_talks("::help_possess")
 end
 function tutosci_help_unpossess( )
-	p:player_talks(p:get_text("tuto_sci","help_unpossess"))
+	p:player_talks("::help_unpossess")
 end
 function tutosci_help_wb( )
 	p:setControlEnabled(0)
 	cam:run_cinematic("CineShowWorkbench", 0.5)
-	p:player_talks(p:get_text("tuto_sci","help_wb"))
+	p:player_talks("::help_wb")
 	p:aim_circle("circle_1","aim_circle",51.6847,1.5,-6.69464,-1.0)
 	p:exec_command("p:no_aim_circle(\"circle_1\")",13.0)
 	p:exec_command("cam:skip_cinematic()",13.5)
@@ -144,7 +139,7 @@ end
 function tutosci_help_bomb( )
 p:setControlEnabled(0)
 	cam:run_cinematic("CineShowGuards", 2.5)
-	p:player_talks(p:get_text("tuto_sci","help_bomb"))
+	p:player_talks("::help_bomb")
 	p:aim_circle("circle_3","aim_circle",69.617,1.0,-4.667,-1.0)
 	p:aim_circle("circle_2","aim_circle",69.617,1.0,-1.226,-1.0)
 	
@@ -155,23 +150,23 @@ p:setControlEnabled(0)
 	
 end
 function tutosci_help_exit( )
-	p:player_talks(p:get_text("tuto_sci","help_exit"))
+	p:player_talks("::help_exit")
 end
 function tutosci_stunned_guard_remain()
-	p:player_talks(p:get_text("tuto_sci","stunned_guard_remain"))
+	p:player_talks("::stunned_guard_remain")
 end
 function tutosci_stunned_guards( )
 	tutosci_help_repair()
 	p:complete_tasklist(TASK_TUTOS_STUN)
 end
 function tutosci_help_repair( )
-	p:player_talks(p:get_text("tuto_sci","help_repair"))
+	p:player_talks("::help_repair")
 end
 function tutosci_help_polarity( )
-	p:player_talks(p:get_text("tuto_sci","help_polarity"))
+	p:player_talks("::help_polarity")
 end
 function tutosci_help_generator( )
-	p:player_talks(p:get_text("tuto_sci","help_generator"))
+	p:player_talks("::help_generator")
 end
 
 -- Door

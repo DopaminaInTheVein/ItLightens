@@ -128,9 +128,6 @@ class player_controller : public CPlayerBase {
 
 	//void ChangePose(CHandle new_pos_h);
 
-	void createEvolveLight();
-	void createDevolveLight();
-
 	void rechargeEnergy();
 	void gainLife(float amoung);
 
@@ -178,9 +175,6 @@ public:
 	void DoubleJump();
 	void Falling();
 	void DoubleFalling();
-
-	void update_msgs() override;
-	//void UpdateAnimation() { animController.update(); }
 
 	//input Messages
 	void onLeaveFromPossession(const TMsgPossessionLeave&);

@@ -45,6 +45,7 @@ void CResourcesManager::onFileChanged(const std::string& filename) {
 	}
 	else if (ext == ".json") {
 		if (GameController) GameController->UpdateDifficulty();
+		CApp::get().ReloadNameScenes();
 	}
 	// Other files
 	else {

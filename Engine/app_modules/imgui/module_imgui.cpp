@@ -3,8 +3,11 @@
 #include "windows/app.h"
 #include "resources/resources_manager.h"
 #include "app_modules/entities.h"
+#include "app_modules/logic_manager/logic_manager.h"
+#include "app_modules/gui/gui.h"
 #include "handle/handle_manager.h"
 #include "components/entity_tags.h"
+#include "components/components.h"
 // ImGui LIB headers
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui.h"
@@ -16,6 +19,7 @@
 #include "particles\particles_manager.h"
 
 #include "app_modules\render\module_render_postprocess.h"
+#include "app_modules\lang_manager\lang_manager.h"
 
 //editors
 #include "Editors\editor_lights.h"
@@ -56,12 +60,6 @@ void CImGuiModule::update(float dt) {
 
 	m_pLights_editor->update(dt);
 
-	//TEST BORRAR
-	//ImGui::DragFloat("Ui Left", &(CCamera::cui_left), 1.f, -10.f, CCamera::cui_right - 0.05f);
-	//ImGui::DragFloat("Ui Right", &CCamera::cui_right, 1.f, CCamera::cui_left + 0.05f);
-	//ImGui::DragFloat("Ui Bottom", &CCamera::cui_bottom, 1.f, -10.f, CCamera::cui_top - 0.05f);
-	//ImGui::DragFloat("Ui Top", &CCamera::cui_top, 1.f, CCamera::cui_bottom + 0.05f);
-
 	//Engine Apps
 	//---------------------------------------
 	if (ImGui::BeginMenuBar())
@@ -81,10 +79,13 @@ void CImGuiModule::update(float dt) {
 	}
 	//---------------------------------------
 	//Language
-	IMGUI_SHOW_STRING(GameController->GetLanguage());
+	IMGUI_SHOW_STRING(lang_manager->GetLanguage());
 
 	//Difficulty
 	IMGUI_SHOW_INT(GameController->GetDifficulty());
+
+	//Last Input
+	ImGui::Checkbox("Gamepad Mode", io->IsGamePadModePointer());
 
 	//Buttons game
 	//---------------------------------------
@@ -100,7 +101,6 @@ void CImGuiModule::update(float dt) {
 
 		ImGui::PopStyleColor();
 	}
-
 	else if (GameController->GetGameState() == CGameController::STOPPED) {
 		IMGUI_SHOW_INT(CGameController::STOPPED);
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
@@ -115,12 +115,36 @@ void CImGuiModule::update(float dt) {
 			GameController->SetGameState(CGameController::RUNNING);
 	}
 
+	//Select Level
+	{
+		ImGui::PushItemWidth(80);
+		static int level_selected = 1;
+		if (ImGui::InputInt("", &level_selected)) {
+			if (level_selected > 4) level_selected = 0;
+			if (level_selected < 0) level_selected = 4;
+		}
+		ImGui::SameLine();
+		auto name_scenes = CApp::get().GetNameScenes();
+		char logic_level[] = "level_X";
+		logic_level[6] = '0' + (unsigned char)(level_selected);
+		ImGui::SameLine();
+		ImGui::Text("%s", name_scenes[logic_level].c_str());
+		ImGui::SameLine();
+		if (ImGui::Button("Load Level")) {
+			char lua_code[256];
+			sprintf(lua_code, "p:stop_music(); p:setup_game(); LoadLevel(\"level_%d\")", level_selected);
+			logic_manager->throwUserEvent(lua_code);
+		}
+		ImGui::PopItemWidth();
+	}
+
 	if (ImGui::Button("SAVE GAME")) CApp::get().saveLevel();
 	if (ImGui::Button("LOAD GAME")) CApp::get().restartLevelNotify();
 
 	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
 	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
+
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui = VEC3(0.5f, 0.5f, 0.9f);
 		static char gui_prebab_name[64] = "Fading_Letter";
@@ -138,14 +162,14 @@ void CImGuiModule::update(float dt) {
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("TestMessages")) {
-		static char test_msg_txt[128] = "*RIGHT_CLICK*";
-		ImGui::InputText("Test Message", test_msg_txt, 128);
+		static char test_msg_txt[256] = "*MOUSE* *LMOUSE* *RMOUSE*\n*LB* *RB* *BACK* *START* *LSTICK* *RSTICK* *APAD* *BPAD* *XPAD* *YPAD*\n*SHIFT* *ENTER* *SPACE* *ESC* *WKEY* *AKEY* *SKEY* *DKEY*";
+		ImGui::InputTextMultiline("Test Message", test_msg_txt, 256);
 		if (ImGui::Button("Create Message")) {
 			std::string text = test_msg_txt;
 			getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
-				MKeyValue atts3;
-				atts3["text"] = text.c_str();
-				mess->load(atts3);
+				TCompFadingMessage::ReloadInfo atts;
+				atts.text = text;
+				mess->reload(atts);
 			}
 			);
 		}
@@ -172,7 +196,7 @@ void CImGuiModule::update(float dt) {
 			ImGui::TreePop();
 		}
 		ImGui::TreePop();
-}
+	}
 #endif
 	//Profiling
 	//---------------------------------------
@@ -385,10 +409,9 @@ void CImGuiModule::update(float dt) {
 	//bool open = true;
 	//ShowExampleAppConsole(&open);		//test console commands
 
-	ui.update();			//update ui
 	//Debug->update();		//update log
 	m_pLights_editor->RenderInMenu();
-}
+		}
 
 void CImGuiModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);

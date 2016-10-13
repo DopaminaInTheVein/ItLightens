@@ -100,25 +100,18 @@ struct CRenderManager::sortByTechDistance
 			return (prio1 < prio2);
 		}
 
-
 		//sort by distance
-		CEntity * e_k1 = k1.owner.getOwner();
-		CEntity * e_k2 = k2.owner.getOwner();
-		CEntity * e_cam = camera;
-		TCompCameraMain * cam = nullptr;
-		if (e_cam) {
-			cam = e_cam->get<TCompCameraMain>();
-		}
-
-		if (!cam || !e_k1 || !e_k2)
+		CHandle h_k1 = k1.owner.getOwner();
+		CHandle h_k2 = k2.owner.getOwner();
+		//CEntity * e_cam = camera;
+		GET_COMP(cam, camera, TCompCameraMain);
+		if (!cam || !h_k1.isValid() || !h_k2.isValid())
 			return 0;
 
 		VEC3 cam_pos = cam->getPosition();
 
-		TCompTransform * t_k1 = e_k1->get<TCompTransform>();
-		TCompTransform * t_k2 = e_k2->get<TCompTransform>();
-
-
+		GET_COMP(t_k1, h_k1, TCompTransform);
+		GET_COMP(t_k2, h_k1, TCompTransform);
 		if (!t_k1 || !t_k2)
 			return 0;
 
@@ -141,18 +134,18 @@ bool CRenderManager::sortByMesh(
 
 void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 	CHandle ow = owner.getOwner();
-	CEntity* e = ow;
-	assert(e);
-	CHandle h_transform = e->get<TCompTransform>();
-	CHandle h_aabb = e->get<TCompAbsAABB>();
-	TCompRoom * comproom = e->get<TCompRoom>();
+	//assert(ow.isValid());
+	if (!ow.isValid()) return;
+
+	CHandle h_transform = GETH_COMP(ow, TCompTransform);//e->get<TCompTransform>();
+	CHandle h_aabb = GETH_COMP(ow, TCompAbsAABB);//e->get<TCompAbsAABB>();
+	GET_COMP(comproom, ow, TCompRoom);
 	std::vector<int> oroom;
 	oroom.push_back(-1);
 	if (comproom) {
 		oroom = comproom->name;
 	}
 	std::vector<TKey> * render_list[ROOMS_SIZE];
-
 
 	bool playercandidate = ow.hasTag("player") || ow.hasTag("AI_poss");
 	for (auto s : mesh->slots) {
@@ -308,7 +301,6 @@ void checkTestZ(std::vector<std::string>& last_v, std::vector<std::string>& new_
 #include "components\comp_name.h"
 
 void CRenderManager::renderDynamic(CHandle h_camera, CRenderTechnique::eCategory category, int room) {
-
 	//sort objects by the actual distance
 	std::sort(dynamic_keys[room].begin(), dynamic_keys[room].end(), sortByTechDistance(h_camera));
 
@@ -338,7 +330,7 @@ void CRenderManager::renderList(CHandle h_camera, CRenderTechnique::eCategory ca
 		render_list.begin()
 		, render_list.end()
 		, category
-		);
+	);
 	auto d0 = std::distance(render_list.begin(), r.first);
 	auto d1 = std::distance(render_list.begin(), r.second);
 	TKey* it = &render_list[0] + d0;
@@ -496,7 +488,7 @@ void CRenderManager::renderAll(CHandle h_camera, CRenderTechnique::eCategory cat
 		PROFILE_FUNCTION("SOLID_OBJS");
 	}
 	else if (category == CRenderTechnique::TRANSPARENT_OBJS) {
-		dynamic_render = true;	
+		dynamic_render = true;
 		name = "TRANSPARENT_OBJS";
 		PROFILE_FUNCTION("TRANSPARENT_OBJS");
 	}

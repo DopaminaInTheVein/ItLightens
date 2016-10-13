@@ -124,6 +124,7 @@
     <ClCompile Include="app_modules\gui\gui_munition.cpp" />
     <ClCompile Include="app_modules\gui\gui_utils.cpp" />
     <ClCompile Include="app_modules\imgui\module_imgui.cpp" />
+    <ClCompile Include="app_modules\io\digital_button.cpp" />
     <ClCompile Include="app_modules\io\input_wrapper.cpp" />
     <ClCompile Include="app_modules\io\io.cpp" />
     <ClCompile Include="app_modules\io\joystick.cpp" />

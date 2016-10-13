@@ -16,6 +16,8 @@
 
 #include <math.h>
 
+using namespace std;
+
 bool TCompLoadingScreen::load(MKeyValue& atts)
 {
 	resolution_x = CApp::get().getXRes();

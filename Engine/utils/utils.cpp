@@ -77,9 +77,7 @@ float random(float vmin, float vmax) {
 bool isInRoom(CHandle h) {
 	int pjSala = SBB::readSala();
 	if (pjSala == -1) return true;
-	CEntity * e = h;
-	if (!e) return true;
-	TCompRoom * room = e->get<TCompRoom>();
+	GET_COMP(room, h, TCompRoom);
 	if (!room) return true;
 	if (std::find(room->name.begin(), room->name.end(), -1) != room->name.end())  return true;
 	return std::find(room->name.begin(), room->name.end(), pjSala) != room->name.end();
@@ -321,7 +319,7 @@ std::map<std::string, std::string> readIniAtrDataStr(const std::string route, st
 	std::map<std::string, std::string> atributes;
 
 	for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
-		atributes[it->name.GetString()] = it->value.GetString();
+		atributes[it->name.GetString()] = TextEncode::Utf8ToLatin1String(it->value.GetString());
 	}
 
 	return atributes;

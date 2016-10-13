@@ -2,6 +2,7 @@
 #include "app_modules/imgui/module_imgui.h"
 #include "comp_fading_globe.h"
 #include "entity.h"
+#include "app_modules/gui/gui.h"
 #include "app_modules/gui/gui_utils.h"
 #include "imgui/imgui_internal.h"
 #include "resources/resources_manager.h"
@@ -19,6 +20,8 @@
 extern CShaderCte< TCteObject > shader_ctes_object;
 extern CShaderCte< TCteCamera > shader_ctes_camera;
 int TCompFadingGlobe::globes = 0;
+
+using namespace std;
 
 bool TCompFadingGlobe::load(MKeyValue& atts)
 {

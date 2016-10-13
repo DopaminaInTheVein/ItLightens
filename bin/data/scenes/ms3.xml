@@ -3012,19 +3012,6 @@
 
 </entity>
 <entity>
-<tags
-   tags="target"/>
-<name
-   name="cargador_bateria_pAction"/>
-<transform
-   pos="-91.6796 -0.419937 14.2709"
-   quat="0 0.959077 0 0.283145"
-   scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
 <tags/>
 <name
    name="tWireDown_WireParticlesUp"/>
@@ -5158,18 +5145,16 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="target"/>
 <name
-   name="cargador_bateria003"/>
+   name="cargador_bateria_pAction"/>
 <transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
+   pos="-91.6796 -0.419937 14.2709"
+   quat="0 0.959077 0 0.283145"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cargador_bateria003.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
+<room
+   name="2"/>
 
 </entity>
 <entity>

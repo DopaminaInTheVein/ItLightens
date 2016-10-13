@@ -3,9 +3,14 @@
 
 // -- Global settings -- //
 //#define FINAL_BUILD
-#ifndef FINAL_BUILD
+#ifndef FINAL_BUILD //Defines para version NO final
+
 #define TEST_VALUES // Read initialization_test.json
 //#define CALIBRATE_GAME
+//#define SECURE_HANDLES
+#else //defines obligatorios version final
+#define SECURE_HANDLES
+
 #endif
 // -- Final Global settings -- //
 

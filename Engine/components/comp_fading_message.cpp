@@ -1,9 +1,15 @@
 #include "mcv_platform.h"
-#include "comp_fading_message.h"
 #include "entity.h"
+
+#include "comp_fading_message.h"
+#include "comp_transform.h"
+#include "comp_camera.h"
+#include "player_controllers/player_controller_base.h"
 #include "app_modules/gui/gui_utils.h"
+#include "app_modules/gui/gui.h"
 #include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/imgui/module_imgui.h"
+#include "app_modules/lang_manager/lang_manager.h"
 
 #define FONT_JSON "./data/json/font.json"
 
@@ -67,21 +73,25 @@ void TCompFadingMessage::hideAll() {
 
 bool TCompFadingMessage::load(MKeyValue& atts)
 {
+	reload(ReloadInfo());
+	return true;
+}
+
+bool TCompFadingMessage::reload(const ReloadInfo& atts)
+{
 	if (!initialized) {
 		Init();
 	}
 	else if (enabled) {
 		hideAll();
 	}
-
+	this->atts = atts;
 	VEC3 new_pos1 = min_ortho + orthorect * VEC3(0.12f, 0.09f, 0.35f);
-	//new_pos1.z = 0.35f;
 
-	auto text_input = atts.getString("text", "defaultText");
-	text = Font::getVChar(text_input);
+	text = Font::getVChar(lang_manager->getText(atts.text));
 	text = Font::formatVChar(text, LINE_TEXT_SIZE);
-	permanent = atts.getBool("permanent", false);
-	std::string who = atts.getString("icon", "default");
+	permanent = atts.permanent;
+	std::string who = atts.icon;
 	ttl = timeForLetter * text.size() + 4.0f;
 	numchars = 0;
 	shown_chars = 0;
@@ -168,13 +178,25 @@ void TCompFadingMessage::printLetters() {
 			if (letter_gui) {
 				letter_gui->setTxCoords(text[i].GetTxtCoords());
 				float size_letter = text[i].GetSize();
-				if (size_letter > 1.f) {
-					GET_COMP(letter_tmx, letter_h, TCompTransform);
-					letter_tmx->setScale(VEC3(ceil(size_letter), 1.f,1.f));
-				}
+				GET_COMP(letter_tmx, letter_h, TCompTransform);
+				letter_tmx->setScale(VEC3(ceil(size_letter), 1.f, 1.f));
+				//Color
+				VEC4 color = text[i].GetColor();
+				letter_gui->SetColor(color);
 				accumSpacing += size_letter;
 			}
 		}
 		cur_char_line++;
 	}
+}
+
+void TCompFadingMessage::onLanguageChanged(const TMsgLanguageChanged &msg)
+{
+	reload(atts);
+}
+
+void TCompFadingMessage::onControlsChanged(const TMsgControlsChanged &msg)
+{
+	if (lang_manager->isControllerMessage(atts.text))
+		reload(atts);
 }

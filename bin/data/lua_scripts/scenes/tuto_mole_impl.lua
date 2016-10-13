@@ -41,20 +41,20 @@ function OnStart_tuto_mole( )
 	idWall_out = 100
 	idWall_in = 101
 	p:ai_start()
-	TXT_LOOK_WALL = "look_wall"
-	TXT_HELP_POSS = "help_possess"
-	TXT_HELP_UNPOSS = "help_unpossess"
-	TXT_PLACE_BOX = "help_place_box"
-	TXT_HELP_WALL = "help_wall"
-	TXT_HELP_BOX = "help_box"
-	TXT_HELP_DJUMP = "help_djump"
-	TXT_BOX_HINT = "box_hint"
-	TXT_MOLE_DREAM = "mole_dream"
-	TXT_NEED_HIGHER = "need_higher"
-	TXT_PULL_PUSH = "pull_push"
-	TXT_SHOW_PORTAL = "show_portal"
-	TXT_WALL_DETROYED = "wall_destroyed"
-	TXT_FALL_COLUMN = "fall_column"
+	TXT_LOOK_WALL = "::look_wall"
+	TXT_HELP_POSS = "::help_possess"
+	TXT_HELP_UNPOSS = "::help_unpossess"
+	TXT_PLACE_BOX = "::help_place_box"
+	TXT_HELP_WALL = "::help_wall"
+	TXT_HELP_BOX = "::help_box"
+	TXT_HELP_DJUMP = "::help_djump"
+	TXT_BOX_HINT = "::box_hint"
+	TXT_MOLE_DREAM = "::mole_dream"
+	TXT_NEED_HIGHER = "::need_higher"
+	TXT_PULL_PUSH = "::pull_push"
+	TXT_SHOW_PORTAL = "::show_portal"
+	TXT_WALL_DETROYED = "::wall_destroyed"
+	TXT_FALL_COLUMN = "::fall_column"
 	IntroTutoMole()
 	cam:fx(FX_DREAM_BORDER, 1) -- defined on fx.lua
 end
@@ -113,7 +113,7 @@ end
 function tutomole_lookWall( )
   p:print("Look Wall\n")
   triggerWall_1:getHandleCaller()
-  p:player_talks(p:get_text("tuto_mole", TXT_LOOK_WALL))
+  p:player_talks(TXT_LOOK_WALL)
   p:exec_command( "triggerWall_1:setActionable(1);", 2 )
 end
 
@@ -169,7 +169,7 @@ function tutomole_reach_column( )
 end
 
 function tutomole_out_column( )
-	p:player_talks(p:get_text("tuto_mole", TXT_FALL_COLUMN))
+	p:player_talks(TXT_FALL_COLUMN)
 	cam:skip_cinematic()
 end
 --------------------------------------
@@ -271,27 +271,27 @@ end
 function TutoMoleUseBox()
 	if not box_contacted then
 		box_contacted = true
-		ShowMessage("tuto_mole", TXT_PULL_PUSH, "raijin")
+		p:show_message(TXT_PULL_PUSH, "raijin")
 	end
 end
 
 function tutomole_help_possess( )
-	ShowMessage("tuto_mole", TXT_HELP_POSS, "raijin")
+	p:show_message(TXT_HELP_POSS, "raijin")
 end
 
 function tutomole_help_unpossess( )
-	p:player_talks(p:get_text("tuto_mole", TXT_HELP_UNPOSS))
+	p:player_talks(TXT_HELP_UNPOSS)
 end
 function tutomole_help_place_box( )
-	p:player_talks(p:get_text("tuto_mole", TXT_PLACE_BOX))
+	p:player_talks(TXT_PLACE_BOX)
 end
 function tutomole_help_wall( )
-	ShowMessage("tuto_mole", TXT_HELP_WALL, "raijin")
+	p:show_message(TXT_HELP_WALL, "raijin")
 end
 function tutomole_help_box( )
-	ShowMessage("tuto_mole", TXT_HELP_BOX, "raijin")
+	p:show_message(TXT_HELP_BOX, "raijin")
 end
 function tutomole_help_djump( )
-	ShowMessage("tuto_mole", TXT_HELP_DJUMP, "raijin")
+	p:show_message(TXT_HELP_DJUMP, "raijin")
 end
 --==============================================================

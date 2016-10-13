@@ -113,4 +113,8 @@ void mod(int& value, int module);
 //STD operations
 #define removeFromVector(v, elem) v.erase(std::remove(v.begin(), v.end(), elem), v.end())
 #define setContains(container, elem) container.find(elem) != container.end()
+
+//Handles, messages, ...
+#define BROADCAST_MSG(Msg) getHandleManager<CEntity>()->each([](CEntity * e) {e->sendMsg(Msg());});
+
 #endif

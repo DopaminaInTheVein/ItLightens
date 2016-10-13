@@ -7,6 +7,8 @@
 #include "gui_cursor.h"
 #include "../gui.h"
 
+#include "app_modules/lang_manager/lang_manager.h"
+
 using namespace std;
 
 map<string, GuiMatrix> TCompGui::gui_screens = map<string, GuiMatrix>();
@@ -16,6 +18,7 @@ void TCompGui::onCreate(const TMsgEntityCreated&)
 	if (menu_name != "" && row >= 0 && col >= 0) {
 		addGuiElement(menu_name, col, row, MY_OWNER);
 	}
+	RenderManager.ModifyUI();
 }
 
 void TCompGui::setRenderTarget(float rs_target, float speed = FLT_MAX)
@@ -32,7 +35,7 @@ void TCompGui::setRenderState(float rs_state)
 RectNormalized TCompGui::getTxCoords()
 {
 	if (!language) return text_coords;
-	std::string lang_code = GameController->GetLanguage();
+	std::string lang_code = lang_manager->GetLanguage();
 	RectNormalized sub_rect(0.f, 0.f, 0.5f, 0.5f);
 	if (lang_code == "EN" || lang_code == "GA") sub_rect.y = .5f;
 	if (lang_code == "CAT" || lang_code == "GA") sub_rect.x = .5f;
@@ -62,6 +65,7 @@ bool TCompGui::load(MKeyValue& atts)
 	height = atts.getFloat("height", 0.f);
 	color = VEC4(1, 1, 1, 1);
 	language = atts.getBool("lang", false);
+
 	return true;
 }
 
@@ -120,6 +124,8 @@ void TCompGui::renderInMenu()
 	else {
 		text_coord_changed = false;
 	}
+	ImGui::Separator();
+	ImGui::DragFloat4("Color", &color.x, 0.001f, 0.f, 1.f);
 }
 
 CHandle TCompGui::getMatrixHandle(std::string menu_name, int row, int col)
@@ -245,4 +251,9 @@ void TCompGui::updateColorLag(float elapsed)
 			color = origin_color + (target_color - origin_color)*proportion;
 		}
 	}
+}
+
+TCompGui::~TCompGui()
+{
+	RenderManager.ModifyUI();
 }

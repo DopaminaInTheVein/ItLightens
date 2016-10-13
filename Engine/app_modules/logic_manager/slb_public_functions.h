@@ -40,6 +40,7 @@ public:
 	float getPlayerZ();
 	void addEnergy(int energy_to_add);
 	void refillEnergy();
+	void unPossess();
 };
 
 // generic handle control in LUA
@@ -226,7 +227,6 @@ public:
 	void setCursorEnabled(bool);
 	void exit();
 	const char* getText(const char* scene, const char* event);
-	void reloadLanguageFile(const char* language);
 
 	void test(const char* to_print);
 };

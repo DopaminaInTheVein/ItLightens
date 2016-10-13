@@ -13,7 +13,6 @@ enum DIFFICULTIES {
 
 class CGameController : public IAppModule {
 	DIFFICULTIES game_difficulty = DIFFICULTIES::NORMAL;
-	std::string game_language = "EN";
 	int		game_state = 0;
 	float	loading_state = 0.f;
 	bool	loading = false;
@@ -72,7 +71,6 @@ public:
 	void SetManualCameraState(bool state) { manual_control = state; }
 
 	void UpdateGeneralInputs();
-
 	bool forcedUpdate() { return true; }
 	void update(float dt);
 

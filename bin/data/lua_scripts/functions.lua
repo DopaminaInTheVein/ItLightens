@@ -88,7 +88,3 @@ function DestroyAllByTag(tag)
 	handles:get_handles_by_tag(tag)
 	handles:destroy()
 end
-
-function ShowMessage(level, txt_id, pj)
-	p:show_message(p:get_text(level, txt_id), pj)
-end

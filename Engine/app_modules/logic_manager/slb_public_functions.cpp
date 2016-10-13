@@ -109,6 +109,12 @@ float SLBPlayer::getPlayerZ() {
 	return entity_controller->GetPosition().z;
 }
 
+void SLBPlayer::unPossess() {
+	getPlayer();
+	if (player_handle.isValid())
+		player_handle.sendMsg(TMsgUnpossesDamage());
+}
+
 void SLBPlayer::addEnergy(int energy_to_add) {
 	getRaijin();
 	CEntity* entity = player_handle;
@@ -385,7 +391,7 @@ int SLBHandle::addOption(const char* name) {
 	if (real_handle.isValid()) {
 		GET_COMP(gui_selector, real_handle, TCompGuiSelector);
 		auto name_fixed = TextEncode::Utf8ToLatin1String(name);
-		if (gui_selector) res = gui_selector->AddOption(string(name_fixed));
+		if (gui_selector) res = gui_selector->AddOption(name_fixed);
 	}
 	return res;
 }
@@ -705,7 +711,7 @@ void SLBPublicFunctions::setupGame() {
 }
 
 void SLBPublicFunctions::setLanguage(const char* lang) {
-	GameController->SetLanguage(std::string(lang));
+	lang_manager->SetLanguage(std::string(lang));
 }
 
 void SLBPublicFunctions::completeTasklist(int i) {
@@ -839,9 +845,9 @@ void SLBPublicFunctions::playerTalks(const char* text) {
 	dbg(text);
 	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
 	getHandleManager<TCompFadingMessage>()->each([text_fixed](TCompFadingMessage * mess) {
-		MKeyValue atts3;
-		atts3["text"] = text_fixed.c_str();
-		mess->load(atts3);
+		TCompFadingMessage::ReloadInfo atts;
+		atts.text = text_fixed;
+		mess->reload(atts);
 	}
 	);
 }
@@ -849,11 +855,11 @@ void SLBPublicFunctions::playerTalks(const char* text) {
 void SLBPublicFunctions::showMessage(const char* text, const char* icon) {
 	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
 	getHandleManager<TCompFadingMessage>()->each([text_fixed, icon](TCompFadingMessage * mess) {
-		MKeyValue atts3;
-		atts3["permanent"] = "true";
-		atts3["text"] = text_fixed;
-		atts3["icon"] = icon;
-		mess->load(atts3);
+		TCompFadingMessage::ReloadInfo atts;
+		atts.permanent = true;
+		atts.text = text_fixed;
+		atts.icon = icon;
+		mess->reload(atts);
 	}
 	);
 }
@@ -1049,17 +1055,13 @@ void SLBPublicFunctions::resumeGame() {
 	GameController->SetGameState(CGameController::RUNNING);
 }
 const char* SLBPublicFunctions::getText(const char* scene, const char* event) {
-	std::string res_str = lang_manager->getText(scene, event);
+	std::string res_str = lang_manager->getText(event, scene);
 
 	char * res = new char[res_str.size() + 1];
 	std::copy(res_str.begin(), res_str.end(), res);
 	res[res_str.size()] = '\0';
 
 	return res;
-}
-
-void SLBPublicFunctions::reloadLanguageFile(const char* language) {
-	lang_manager->reloadLanguageFile(language);
 }
 
 void SLBPublicFunctions::forceSenseVision() {

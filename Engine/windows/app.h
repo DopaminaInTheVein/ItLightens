@@ -50,6 +50,9 @@ public:
 	void exitGame();
 	void SetLoadingState(float loading);
 
+	std::map<std::string, std::string> GetNameScenes();
+	void ReloadNameScenes();
+
 	VModules& getModulesToWndProc() {
 		return mod_wnd_proc;
 	}

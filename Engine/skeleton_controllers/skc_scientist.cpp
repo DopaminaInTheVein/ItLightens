@@ -13,19 +13,13 @@ bool SkelControllerScientist::getUpdateInfo()
 }
 
 void SkelControllerScientist::SetCharacterController() {
-	if (owner.isValid()) {
-		CEntity* eMe = owner;
-		cc = eMe->get<TCompCharacterController>();
-		assert(cc || fatal("Player doesnt have character controller"));
-	}
+	cc = GETH_COMP(owner, TCompCharacterController);
+	assert(cc || fatal("Player doesnt have character controller"));
 }
 
 void SkelControllerScientist::SetPlayerController() {
-	if (owner.isValid()) {
-		CEntity* eMe = owner;
-		pc = eMe->get<player_controller_cientifico>();
-		assert(pc || fatal("Player doesnt have player controller"));
-	}
+	pc = GETH_COMP(owner, player_controller_cientifico);
+	assert(pc || fatal("Player doesnt have player controller"));
 }
 
 void SkelControllerScientist::myUpdate()

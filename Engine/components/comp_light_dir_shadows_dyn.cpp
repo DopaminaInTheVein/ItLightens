@@ -17,11 +17,13 @@ void TCompLightDirShadowsDynamic::init() {
 void TCompLightDirShadowsDynamic::update(float dt) {
 	PROFILE_FUNCTION("shadows: update");
 	CHandle owner = CHandle(this).getOwner();
-	CEntity* e_player = tags_manager.getFirstHavingTag("player");
-	TCompTransform* t_player = e_player->get<TCompTransform>();
-	VEC3 target = t_player->getPosition();
-	if(last_position_target != target)
-		this->lookAt(getPosition(), target);
+	CHandle player = CPlayerBase::handle_player;
+	GET_COMP(t_player, player, TCompTransform);
+	if (t_player) {
+		VEC3 target = t_player->getPosition();
+		if(last_position_target != target)
+			this->lookAt(getPosition(), target);
+	}
 	//updateFromEntityTransform(owner);
 }
 

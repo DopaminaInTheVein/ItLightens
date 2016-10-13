@@ -129,8 +129,6 @@ public:
 	//string pose_box_route;
 	//string pose_wall_route;
 
-	void update_msgs() override;
-
 	void UpdateInputActions();
 	void UpdateMovingWithOther();
 	void UpdateUnpossess();

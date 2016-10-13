@@ -140,6 +140,7 @@ void TJoystick::stick::update(int dx, int dy, float dt)
 	}
 	if (becomes_pressed) time = 0.f;
 	dir = new_dir;
+	if (dir != 5) io->SetGamePadMode(true);
 }
 void TJoystick::release()
 {
