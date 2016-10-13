@@ -30,13 +30,7 @@ function OnStart_hub( )
 	sense_first_pressed = true
 
 	
-	------------ test ---------------------
-	--cam:run_cinematic("CineEndTarget", 5)
-	--p:exec_command("yellow_help();", 3)
-	---------------------------------------
-	
-	------------------- codigo comentado para testear, descomentar  y tocar como toque --------------------
-	-- p:setOnlySense(1)
+	p:setOnlySense(1)
 	-- p:aim_circle("circle_1","aim_circle",-1.94,51.64,-20.08,-1.0)
 	-- p:force_sense_vision()
 	-- p:player_talks(p:get_text("hub","start_hub"))
@@ -95,7 +89,9 @@ end
 -------------------------------
 
 function hub_sense_pressed()
+
 	if sense_first_pressed and not mole_done and not sci_done then
+		p:setOnlySense(0)
 		sense_first_pressed = false
 		p:force_sense_vision()
 		p:setControlEnabled(0)
