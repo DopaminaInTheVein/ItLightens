@@ -1,7 +1,12 @@
 #include "mcv_platform.h"
-#include "comp_fading_message.h"
 #include "entity.h"
+
+#include "comp_fading_message.h"
+#include "comp_transform.h"
+#include "comp_camera.h"
+#include "player_controllers/player_controller_base.h"
 #include "app_modules/gui/gui_utils.h"
+#include "app_modules/gui/gui.h"
 #include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/imgui/module_imgui.h"
 #include "app_modules/lang_manager/lang_manager.h"

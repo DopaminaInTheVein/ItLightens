@@ -6,7 +6,6 @@
 #include "utils/utils.h"
 #include "logic/sbb.h"
 #include "app_modules/logic_manager/logic_manager.h"
-#include "ui/ui_interface.h"
 
 //Render shoot
 #include "render/fx/GuardShots.h"
@@ -467,7 +466,6 @@ int bt_guard::actionAbsorb() {
 	float dist = squaredDistXZ(posPlayer, myPos);
 
 #ifndef NDEBUG
-	ui.addTextInstructions("\nPress 'M' to interrupt gaurd shoot when he dont see you!!! (artificial)\n");
 	if (controller->interruptGuardShotButtonPressed()) {
 		artificialInterrupt();
 	}

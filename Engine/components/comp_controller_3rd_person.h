@@ -80,10 +80,9 @@ public:
 
 	void onCreate(const TMsgEntityCreated& msg) {
 		CApp& app = CApp::get();
-		CEntity* e_owner = CHandle(this).getOwner();
 
 		//init aspect/ratio from screen
-		TCompCameraMain *camera = e_owner->get<TCompCameraMain>();
+		GET_MY(camera, TCompCameraMain);
 		float ar = (float)app.getXRes() / (float)app.getYRes();
 		camera->setAspectRatio(ar);
 
@@ -156,27 +155,30 @@ public:
 
 	//default behaviour
 	void personThirdController(float dt) {
-		CEntity* e_target = target;
-		if (!e_target)
-			return;
+		if (!target.isValid()) return;
 
 		if (orbit_mode) updateOrbit();
 		else if (input_enabled) updateInput();
 
-		TCompTransform* target_tmx = e_target->get<TCompTransform>();
+		GET_COMP(target_tmx, target, TCompTransform);
 		assert(target_tmx);
+
 		auto target_loc = target_tmx->getPosition();
 		VEC3 delta = getVectorFromYawPitch(yaw, pitch);
 		auto origin = target_loc - delta * distance_to_target;
-		CEntity* e_owner = CHandle(this).getOwner();
-		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
 
-		TCompController3rdPerson * obtarged = e_owner->get<TCompController3rdPerson>();
+		GET_MY(my_tmx, TCompTransform);
+		if (!my_tmx) return;
+
+		GET_MY(obtarged, TCompController3rdPerson);
+		if (!obtarged) return;
 		CHandle targetowner = obtarged->target;
-		CEntity* targeted = targetowner;
-		//TCompLife * targetlife = targeted->get<TCompLife>();
-		TCompTransform * targettrans = targeted->get<TCompTransform>();
-		TCompCharacterController *cc = targeted->get<TCompCharacterController>();
+
+		GET_COMP(targettrans, targetowner, TCompTransform);
+		if (!targettrans) return;
+
+		GET_COMP(cc, targetowner, TCompCharacterController);
+		if (!cc) return;
 
 		offset = position_diff - VEC3(targettrans->getLeft()*cc->GetRadius());
 		my_tmx->lookAt(origin, target_loc);
@@ -188,8 +190,7 @@ public:
 
 	void unlockedCameraController() {
 #ifndef FINAL_BUILD
-		CEntity* e_owner = CHandle(this).getOwner();
-		TCompTransform* my_tmx = e_owner->get<TCompTransform>();
+		GET_MY(my_tmx, TCompTransform);
 		VEC3 origin = my_tmx->getPosition();
 		float dt = getDeltaTime(true);
 		if (!ImGui::GetIO().WantTextInput)

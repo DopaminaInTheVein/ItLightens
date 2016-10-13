@@ -22,6 +22,8 @@
 #include "app_modules/render/module_render_deferred.h"
 #include "app_modules/render/module_render_postprocess.h"
 #include "components/entity_parser.h"
+#include "components/components.h"
+
 #include "handle/handle_manager.h"
 #include "utils/directory_watcher.h"
 
@@ -42,7 +44,6 @@ CEntitiesModule * entities = nullptr;
 
 //Modules
 CDebug *	  Debug = nullptr;
-CUI ui;
 CGameController* GameController = nullptr;
 CPhysxManager *g_PhysxManager = nullptr;
 CGuiModule * Gui = nullptr;

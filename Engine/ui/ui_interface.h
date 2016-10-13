@@ -124,6 +124,4 @@ public:
 		msgs.push_back(message.c_str());
 	}
 };
-
-extern CUI ui;
 #endif

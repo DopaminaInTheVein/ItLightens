@@ -77,9 +77,7 @@ float random(float vmin, float vmax) {
 bool isInRoom(CHandle h) {
 	int pjSala = SBB::readSala();
 	if (pjSala == -1) return true;
-	CEntity * e = h;
-	if (!e) return true;
-	TCompRoom * room = e->get<TCompRoom>();
+	GET_COMP(room, h, TCompRoom);
 	if (!room) return true;
 	if (std::find(room->name.begin(), room->name.end(), -1) != room->name.end())  return true;
 	return std::find(room->name.begin(), room->name.end(), pjSala) != room->name.end();

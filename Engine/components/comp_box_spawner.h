@@ -15,10 +15,10 @@ struct TCompBoxSpawner : public TCompBase {
 	float	m_timerMaxSpawn;
 
 	bool load(MKeyValue& atts) {
-		m_pointSpawn = VEC3(0,0,0);
+		m_pointSpawn = VEC3(0, 0, 0);
 		m_pointSpawn = atts.getPoint("spawn");
-		
-		m_maxBoxAlive = atts.getInt("max_box",3);
+
+		m_maxBoxAlive = atts.getInt("max_box", 3);
 		m_currBoxAlive = 0;
 
 		m_timerMaxSpawn = atts.getFloat("step", 5.0f);
@@ -30,14 +30,12 @@ struct TCompBoxSpawner : public TCompBase {
 	void update(float dt) {
 		m_timerSpawn += dt;
 		if (m_timerSpawn >= m_timerMaxSpawn) {
-
-			CEntity* e = spawnPrefab("box");
-			if (e) {
+			CHandle box = spawnPrefab("box");
+			if (box.isValid()) {
 				VEC3 posBox = m_pointSpawn;
-				TCompPhysics* t = e->get<TCompPhysics>();
-				t->setPosition(posBox,CQuaternion(0,0,0,1));
+				GET_COMP(t, box, TCompPhysics);
+				if (t) t->setPosition(posBox, CQuaternion(0, 0, 0, 1));
 			}
-
 			m_timerSpawn = 0.0f;
 		}
 	}
@@ -46,6 +44,5 @@ struct TCompBoxSpawner : public TCompBase {
 		m_maxBoxAlive++;
 	}
 };
-
 
 #endif

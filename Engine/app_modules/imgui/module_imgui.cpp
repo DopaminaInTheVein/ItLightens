@@ -3,8 +3,11 @@
 #include "windows/app.h"
 #include "resources/resources_manager.h"
 #include "app_modules/entities.h"
+#include "app_modules/logic_manager/logic_manager.h"
+#include "app_modules/gui/gui.h"
 #include "handle/handle_manager.h"
 #include "components/entity_tags.h"
+#include "components/components.h"
 // ImGui LIB headers
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui.h"
@@ -56,12 +59,6 @@ void CImGuiModule::update(float dt) {
 	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 
 	m_pLights_editor->update(dt);
-
-	//TEST BORRAR
-	//ImGui::DragFloat("Ui Left", &(CCamera::cui_left), 1.f, -10.f, CCamera::cui_right - 0.05f);
-	//ImGui::DragFloat("Ui Right", &CCamera::cui_right, 1.f, CCamera::cui_left + 0.05f);
-	//ImGui::DragFloat("Ui Bottom", &CCamera::cui_bottom, 1.f, -10.f, CCamera::cui_top - 0.05f);
-	//ImGui::DragFloat("Ui Top", &CCamera::cui_top, 1.f, CCamera::cui_bottom + 0.05f);
 
 	//Engine Apps
 	//---------------------------------------
@@ -412,7 +409,6 @@ void CImGuiModule::update(float dt) {
 	//bool open = true;
 	//ShowExampleAppConsole(&open);		//test console commands
 
-	ui.update();			//update ui
 	//Debug->update();		//update log
 	m_pLights_editor->RenderInMenu();
 		}

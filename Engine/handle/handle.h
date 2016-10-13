@@ -130,13 +130,14 @@ void CHandle::sendMsgWithReply(TMsg& msg) {
 		e->sendMsgWithReply(msg);
 }
 
-#define GETH_COMP(handle, type) ((CEntity*)handle)->get<type>()
-#define GET_COMP(var, handle, type) type * var = handle.isValid() ? ((CEntity*)handle)->get<type>() : (type*)nullptr
-#define GETH_MY(type) ((CEntity*)(CHandle(this).getOwner()))->get<type>()
-#define GET_MY(var, type) type * var = ((CEntity*)(CHandle(this).getOwner()))->get<type>()
-#define GET_ECOMP(var, entity_ptr, type) type * var = entity_ptr ? entity_ptr->get<type>() : CHandle()
-#define GET_NAME(handle) ((CEntity*)handle)->getName()
-#define MY_NAME ((CEntity*)(CHandle(this).getOwner()))->getName()
-#define MY_OWNER CHandle(this).getOwner()
+#define HANDLE_UNNAMED	"unnamed"
+#define MY_OWNER (CHandle(this).isValid() ? CHandle(this).getOwner() : CHandle())
+#define GET_NAME(handle) ((CEntity*)(handle) ? ((CEntity*)handle)->getName() : HANDLE_UNNAMED)
+#define MY_NAME (MY_OWNER.isValid() ? GET_NAME(MY_OWNER) : HANDLE_UNNAMED)
+#define GETH_COMP(handle, type) (handle.isValid() ? ((CEntity*)handle)->get_insecure<type>() : CHandle())
+#define GET_COMP(var, handle, type) type * var = (type*) GETH_COMP(handle, type)
+#define GETH_MY(type) ( MY_OWNER.isValid() ? GETH_COMP(MY_OWNER, type) : CHandle() )
+#define GET_MY(var, type) type * var = (type*) GETH_MY(type)
+#define GET_ECOMP(var, entity_ptr, type) type * var = entity_ptr ? entity_ptr->get_insecure<type>() : CHandle()
 
 #endif
