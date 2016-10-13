@@ -40,6 +40,7 @@ public:
 	float getPlayerZ();
 	void addEnergy(int energy_to_add);
 	void refillEnergy();
+	void unPossess();
 };
 
 // generic handle control in LUA
@@ -127,6 +128,7 @@ public:
 	void fadeOut(float speed = 0.f);
 	void orbit(bool);
 	void resetCamera();
+	void fx(const char * name, int enabled);
 };
 
 // camera control in LUA
@@ -141,6 +143,7 @@ public:
 	bool checkCamera();
 	void fadeIn(float speed = 0.f);
 	void fadeOut(float speed = 0.f);
+	void fx(const char * name, bool enabled);
 };
 
 // public functions
@@ -221,7 +224,6 @@ public:
 	void setCursorEnabled(bool);
 	void exit();
 	const char* getText(const char* scene, const char* event);
-	void reloadLanguageFile(const char* language);
 
 	void test(const char* to_print);
 };

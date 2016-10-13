@@ -388,7 +388,7 @@
 <name
    name="__player_1"/>
 <transform
-   pos="-31.1777 -15.8855 -0.614541"
+   pos="-32.8199 -27.1284 -4.65144"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -537,8 +537,8 @@
 <tags
    tags="AI AI_mole AI_poss"/>
 <bt_mole
-   wpts_size="5"
-   wpt0_pos="32.9416 -23.859 -8.19215"
+   wpts_size="6"
+   wpt0_pos="30.958 -23.859 -8.19215"
    wpt0_wait="2"
    wpt1_pos="32.9416 -23.859 12.2672"
    wpt1_wait="2"
@@ -547,7 +547,9 @@
    wpt3_pos="31.3085 -23.859 7.67587"
    wpt3_wait="2"
    wpt4_pos="33.2816 -23.859 0.208357"
-   wpt4_wait="2"/>
+   wpt4_wait="2"
+   wpt5_pos="34.056 -23.859 -11.908"
+   wpt5_wait="2"/>
 <player_mole/>
 <skc_mole/>
 <name
@@ -588,27 +590,6 @@
    pos="-85.8371 -0.524505 -7.80409"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity
-   id="303"
-   reload="yes">
-<tags
-   tags="pila_container interactive"/>
-<pila_container/>
-<name
-   name="cargador_bateria"/>
-<transform
-   pos="-90.8368 -0.419937 14.4301"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"/>
 <room
    name="2"/>
 
@@ -1426,10 +1407,10 @@
    kpt1_pos="2.40446 -23.8712 2.58889"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="26.1755 -23.8712 -4.6136"
+   kpt2_pos="12.4548 -23.8712 -14.1722"
    kpt2_wait="2"
    kpt3_type="seek"
-   kpt3_pos="10.8511 -23.8712 -13.6583"
+   kpt3_pos="25.5835 -23.8712 -4.79769"
    kpt3_wait="2"
    jurisdiction="-4.9095 -25.4091 0.406024"
    jurRadius="50.0"
@@ -1462,26 +1443,35 @@
 <tags
    tags="AI AI_guard"/>
 <bt_guard
-   kpt_size="3"
+   kpt_size="6"
    kpt0_type="seek"
-   kpt0_pos="5.8479 -23.8712 22.4545"
+   kpt0_pos="4.383 -23.8712 -17.1724"
    kpt0_wait="2"
    kpt1_type="seek"
-   kpt1_pos="6.83898 -23.8712 -21.0227"
+   kpt1_pos="12.8711 -23.8712 -0.822401"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="2.70562 -23.8712 1.62904"
+   kpt2_pos="2.43603 -23.8712 2.84988"
    kpt2_wait="2"
-   jurisdiction="-4.9095 -25.4091 0.406024"
+   kpt3_type="seek"
+   kpt3_pos="14.6132 -23.8712 15.9773"
+   kpt3_wait="2"
+   kpt4_type="seek"
+   kpt4_pos="1.2781 -23.8712 17.5793"
+   kpt4_wait="2"
+   kpt5_type="seek"
+   kpt5_pos="-2.94104 -23.8712 -2.24404"
+   kpt5_wait="2"
+   jurisdiction="-6.37441 -25.4091 -5.79567"
    jurRadius="50.0"
-   formation_point="-4.26029 -24.0251 1.96243"
-   formation_dir="-3.61846 -23.9678 2.13469"/>
+   formation_point="-5.72519 -24.0251 -4.23926"
+   formation_dir="-5.08337 -23.9678 -4.067"/>
 <skc_guard/>
 <skeleton_lookat/>
 <name
    name="guard_003"/>
 <transform
-   pos="-1.58059 -23.9 3.84785"
+   pos="-3.0455 -23.9 -2.35384"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <skeleton
@@ -1579,7 +1569,7 @@
 <tags
    tags="AI AI_guard"/>
 <bt_guard
-   kpt_size="6"
+   kpt_size="7"
    kpt0_type="look"
    kpt0_pos="-100.586 -1.27954 -5.80638"
    kpt0_wait="2"
@@ -1598,6 +1588,9 @@
    kpt5_type="look"
    kpt5_pos="-72.2655 -1.27954 -17.2999"
    kpt5_wait="2"
+   kpt6_type="seek"
+   kpt6_pos="-92.719 -1.28589 -12.3816"
+   kpt6_wait="2"
    jurisdiction="-93.7738 -2.74989 -8.70853"
    jurRadius="20.0"
    formation_point="-99.4642 -1.32482 -12.4904"
@@ -1637,7 +1630,7 @@
    kpt1_pos="-67.1231 -1.28589 11.4189"
    kpt1_wait="2"
    kpt2_type="seek"
-   kpt2_pos="-62.9841 -1.28589 -8.10853"
+   kpt2_pos="-63.9595 -1.28589 -8.51007"
    kpt2_wait="2"
    kpt3_type="look"
    kpt3_pos="-57.9167 -1.27954 -7.76042"
@@ -1672,6 +1665,265 @@
    height="1.8"/>
 <room
    name="2"/>
+
+</entity>
+<entity
+   id="303"
+   reload="yes">
+<tags
+   tags="pila_container interactive"/>
+<pila_container/>
+<name
+   name="cargador_bateria"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.63823 0.2586 3.99284"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon1"/>
+<transform
+   pos="-2.58481 -18.8921 -18.7102"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.8005 0.7486 4.15632"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon002"/>
+<transform
+   pos="-6.30417 -16.6547 -18.2734"
+   quat="0 0.173648 0 0.984808"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.46271 0.2586 3.74443"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon003"/>
+<transform
+   pos="-2.23728 -14.9636 -18.7102"
+   quat="0 -0.34202 0 0.939693"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.46271 0.2586 3.74443"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon004"/>
+<transform
+   pos="-6.3729 -12.8281 -18.2988"
+   quat="0 0.130526 0 0.991445"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.46271 0.2586 3.74443"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon005"/>
+<transform
+   pos="-4.34012 -10.7567 -18.6091"
+   quat="0 -0.0436194 0 0.999048"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.46271 0.7986 3.74443"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="__ttablon006"/>
+<transform
+   pos="-2.07279 -8.34488 -18.6091"
+   quat="0 0.422618 0 0.906308"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="0.0969548 -18.9482 -18.9551"
+   lpt1="-6.46518 -16.4432 -18.2734"/>
+<name
+   name="CineTablon1"/>
+<transform
+   pos="-2.58481 -20.3482 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-8.77077 -16.6452 -17.587"
+   lpt1="-2.23728 -14.5072 -19.8532"/>
+<name
+   name="CineTablon2"/>
+<transform
+   pos="-8.61765 -18.0453 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="1.36599 -14.5072 -18.7102"
+   lpt1="-6.3729 -12.3717 -18.2988"/>
+<name
+   name="CineTablon3"/>
+<transform
+   pos="-8.61765 -18.0453 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-8.64099 -12.8981 -17.7905"
+   lpt1="-4.34012 -11.0318 -18.6665"/>
+<name
+   name="CineTablon4"/>
+<transform
+   pos="-8.61765 -18.0453 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-7.08201 -4.01793 -17.6389"
+   lpt1="-3.15616 -10.2888 -18.3613"/>
+<name
+   name="CineTablon5"/>
+<transform
+   pos="-8.61765 -18.0453 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-4.66282 -7.09837 -16.5245"
+   lpt1="4.44516 -8.15843 -21.374"/>
+<name
+   name="CineTablon6"/>
+<transform
+   pos="-8.61765 -18.0453 -31.3595"
+   quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
 
 </entity>
 

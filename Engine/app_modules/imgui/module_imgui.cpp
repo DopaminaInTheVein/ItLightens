@@ -16,6 +16,7 @@
 #include "particles\particles_manager.h"
 
 #include "app_modules\render\module_render_postprocess.h"
+#include "app_modules\lang_manager\lang_manager.h"
 
 //editors
 #include "Editors\editor_lights.h"
@@ -81,10 +82,13 @@ void CImGuiModule::update(float dt) {
 	}
 	//---------------------------------------
 	//Language
-	IMGUI_SHOW_STRING(GameController->GetLanguage());
+	IMGUI_SHOW_STRING(lang_manager->GetLanguage());
 
 	//Difficulty
 	IMGUI_SHOW_INT(GameController->GetDifficulty());
+
+	//Last Input
+	ImGui::Checkbox("Gamepad Mode", io->IsGamePadModePointer());
 
 	//Buttons game
 	//---------------------------------------
@@ -100,7 +104,6 @@ void CImGuiModule::update(float dt) {
 
 		ImGui::PopStyleColor();
 	}
-
 	else if (GameController->GetGameState() == CGameController::STOPPED) {
 		IMGUI_SHOW_INT(CGameController::STOPPED);
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 1, 0, 1));
@@ -115,18 +118,64 @@ void CImGuiModule::update(float dt) {
 			GameController->SetGameState(CGameController::RUNNING);
 	}
 
+	//Select Level
+	{
+		ImGui::PushItemWidth(80);
+		static int level_selected = 1;
+		if (ImGui::InputInt("", &level_selected)) {
+			if (level_selected > 4) level_selected = 0;
+			if (level_selected < 0) level_selected = 4;
+		}
+		ImGui::SameLine();
+		auto name_scenes = CApp::get().GetNameScenes();
+		char logic_level[] = "level_X";
+		logic_level[6] = '0' + (unsigned char)(level_selected);
+		ImGui::SameLine();
+		ImGui::Text("%s", name_scenes[logic_level].c_str());
+		ImGui::SameLine();
+		if (ImGui::Button("Load Level")) {
+			char lua_code[256];
+			sprintf(lua_code, "p:stop_music(); p:setup_game(); LoadLevel(\"level_%d\")", level_selected);
+			logic_manager->throwUserEvent(lua_code);
+		}
+		ImGui::PopItemWidth();
+	}
+
 	if (ImGui::Button("SAVE GAME")) CApp::get().saveLevel();
 	if (ImGui::Button("LOAD GAME")) CApp::get().restartLevelNotify();
 
 	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
 	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
+
 	if (ImGui::TreeNode("Gui create elements")) {
-		static VEC3 pos_new_ui;
+		static VEC3 pos_new_ui = VEC3(0.5f, 0.5f, 0.9f);
 		static char gui_prebab_name[64] = "Fading_Letter";
+		static char gui_prebab_entity_name[64] = "TEST";
+
 		ImGui::DragFloat3("Pos", &pos_new_ui.x, 0.1f, -1.f, 2.f);
 		ImGui::InputText("Prefab name", gui_prebab_name, 64);
-		if (ImGui::Button("Create")) Gui->addGuiElement(std::string("ui/") + std::string(gui_prebab_name), pos_new_ui);
+		ImGui::InputText("Entity name", gui_prebab_entity_name, 64);
+		if (ImGui::Button("Create")) {
+			CHandle gui_elem = Gui->addGuiElement(std::string("ui/") + std::string(gui_prebab_name), pos_new_ui);
+			GET_COMP(name, gui_elem, TCompName);
+			name->setName(gui_prebab_entity_name);
+		}
+
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("TestMessages")) {
+		static char test_msg_txt[256] = "*MOUSE* *LMOUSE* *RMOUSE*\n*LB* *RB* *BACK* *START* *LSTICK* *RSTICK* *APAD* *BPAD* *XPAD* *YPAD*\n*SHIFT* *ENTER* *SPACE* *ESC* *WKEY* *AKEY* *SKEY* *DKEY*";
+		ImGui::InputTextMultiline("Test Message", test_msg_txt, 256);
+		if (ImGui::Button("Create Message")) {
+			std::string text = test_msg_txt;
+			getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
+				TCompFadingMessage::ReloadInfo atts;
+				atts.text = text;
+				mess->reload(atts);
+			}
+			);
+		}
 		ImGui::TreePop();
 	}
 
@@ -366,7 +415,7 @@ void CImGuiModule::update(float dt) {
 	ui.update();			//update ui
 	//Debug->update();		//update log
 	m_pLights_editor->RenderInMenu();
-}
+		}
 
 void CImGuiModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);

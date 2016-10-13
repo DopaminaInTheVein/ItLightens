@@ -467,10 +467,14 @@ bool CEntitiesModule::start() {
 
 	SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiSelector, TMsgGuiNotify, onGuiNotify);
-	SUBSCRIBE(TCompGuiSelector, TMsgLanguageChanged, onLanguageChanged);
+	//SUBSCRIBE(TCompGuiSelector, TMsgLanguageChanged, onLanguageChanged);
 	SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
 
 	SUBSCRIBE(TCompGuiDrag, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompText, TMsgLanguageChanged, onLanguageChanged);
+	SUBSCRIBE(TCompFadingMessage, TMsgLanguageChanged, onLanguageChanged);
+	SUBSCRIBE(TCompText, TMsgControlsChanged, onControlsChanged);
+	SUBSCRIBE(TCompFadingMessage, TMsgControlsChanged, onControlsChanged);
 
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();

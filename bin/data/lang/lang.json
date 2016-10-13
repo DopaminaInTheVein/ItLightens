@@ -4,7 +4,7 @@
   },
   "hub": {
     "start_hub": "Wellcome to the tutorials.\nLet's learn some things about the game.",
-	"sense":"Let's SENSE (right click or gamepad B)!!!\nFor demonstration it will keep for a short time.",
+	"sense":"Let's SENSE (*RIGHT_CLICK*)!!!\nFor demonstration it will keep for a short time.",
     "target_seen_green": "This GREEEN signal is your next step.",
     "target_seen_yellow": "The YELLOW one is the final point of the level.",
 	"target_seen_white": "WHITE are generators, where you can restore all your life.",
@@ -29,7 +29,8 @@
 	"help_place_box": "Lleva la caja hasta la columna rota (puedes utilizar SENTIR)",
 	"help_wall": "Acercate al muro de enfrente con la mole y pulsa CLIC IZQUIERDO para destruirlo",
 	"help_box": "Acercate a na caja y pulsa CLIC IZQUIERDO para empujar o tirar",
-	"help_djump": "Pulsa ESPACIO para saltar. Puedes pulsar de nuevo para efectuar doble salto"
+	"help_djump": "Pulsa ESPACIO para saltar. Puedes pulsar de nuevo para efectuar doble salto",
+	"fall_column": "¡Uy! ¡Qué torpeza!"
   },
   "tuto_sci": {
     "help_possess": "This is SCIENTIST's dream.\nGet closer to him, then press POSSESS (LEFT SHIFT or Controller Y)\nto control it.",

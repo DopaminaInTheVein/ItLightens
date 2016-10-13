@@ -10,24 +10,28 @@
 #define MY_SHIFT 0xA0
 
 class CIOModule : public IAppModule {
-  void renderInMenu();
-  void release_all();
+	bool gamepad_mode = false;
 public:
-  bool start() override;
-  void stop() override;
-  void update(float dt) override;
-  void render() override;
-  bool forcedUpdate() { return true; }
-  const char* getName() const {
-    return "io";
-  }
+	void release_all();
+	bool start() override;
+	void stop() override;
+	void update(float dt) override;
+	void render() override;
+	bool forcedUpdate() { return true; }
+	const char* getName() const {
+		return "io";
+	}
+	bool IsGamePadMode() { return gamepad_mode; }
+	void SetGamePadMode(bool b);
+#ifndef FINAL_BUILD
+	bool * IsGamePadModePointer() { return &gamepad_mode; }
+#endif
 
-  TKeyBoard keys;
-  TMouse    mouse;
-  TJoystick joystick;
+	TKeyBoard keys;
+	TMouse    mouse;
+	TJoystick joystick;
 
-  bool onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) override;
-
+	bool onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 };
 
 extern CIOModule* io;

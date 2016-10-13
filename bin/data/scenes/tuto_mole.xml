@@ -394,7 +394,7 @@
 <name
    name="_end_portal"/>
 <transform
-   pos="1028.95 73.4292 -24.9939"
+   pos="1029.16 72.989 -24.9939"
    quat="0 0.707107 0 0.707107"
    scale="1.0"/>
 <tmx_animator

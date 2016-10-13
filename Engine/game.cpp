@@ -48,12 +48,14 @@ CPhysxManager *g_PhysxManager = nullptr;
 CGuiModule * Gui = nullptr;
 CRenderDeferredModule * render_deferred;
 CRenderPostProcessModule* render_fx;
+
+map<std::string, std::string> name_scenes;
+map<std::string, std::string> lang_map;
 // --------------------------------------------
 
 bool CApp::start() {
-	map<std::string, std::string> fields = readIniAtrDataStr(file_options_json, "scenes");
-	//next_level = fields["first_scene"];
-	map<std::string, std::string> lang_map = readIniAtrDataStr(CApp::get().file_options_json, "language");
+	ReloadNameScenes();
+	lang_map = readIniAtrDataStr(CApp::get().file_options_json, "language");
 
 	// imgui must be the first to update and the last to render
 	auto imgui = new CImGuiModule;
@@ -216,8 +218,7 @@ std::string CApp::getCurrentLogicLevel() {
 }
 
 std::string CApp::getRealLevel(std::string logic_level) {
-	map<std::string, std::string> fields = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
-	return fields[logic_level];
+	return name_scenes[logic_level];
 }
 
 void CApp::restartLevelNotify() {
@@ -399,4 +400,13 @@ int CApp::getYRes(bool ask_window) {
 		return yres;
 	else
 		return yres_max;
+}
+
+std::map<std::string, std::string> CApp::GetNameScenes()
+{
+	return name_scenes;
+}
+void CApp::ReloadNameScenes()
+{
+	name_scenes = readIniAtrDataStr(file_options_json, "scenes");
 }

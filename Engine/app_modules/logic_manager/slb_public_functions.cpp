@@ -108,6 +108,12 @@ float SLBPlayer::getPlayerZ() {
 	return entity_controller->GetPosition().z;
 }
 
+void SLBPlayer::unPossess() {
+	getPlayer();
+	if (player_handle.isValid())
+		player_handle.sendMsg(TMsgUnpossesDamage());
+}
+
 void SLBPlayer::addEnergy(int energy_to_add) {
 	getRaijin();
 	CEntity* entity = player_handle;
@@ -384,7 +390,7 @@ int SLBHandle::addOption(const char* name) {
 	if (real_handle.isValid()) {
 		GET_COMP(gui_selector, real_handle, TCompGuiSelector);
 		auto name_fixed = TextEncode::Utf8ToLatin1String(name);
-		if (gui_selector) res = gui_selector->AddOption(string(name_fixed));
+		if (gui_selector) res = gui_selector->AddOption(name_fixed);
 	}
 	return res;
 }
@@ -583,23 +589,21 @@ void SLBCamera::orbit(bool new_orbit) {
 void SLBCamera::resetCamera() {
 	// restore the normal 3rd person camera
 	if (!checkCamera()) return;
+
 	// turn manual control off
 	GET_COMP(cam_m, camera_h, TCompCameraMain);
-	cam_m->setManualControl(false);
-	GameController->SetManualCameraState(false);
-	// restore normal controls
-	TMsgSetControllable msg;
-	msg.control = true;
-	camera_h.sendMsg(msg);
-	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
-	if (cam_control) cam_control->StopOrbit();
+	cam_m->reset();
+}
 
-	CHandle player = CPlayerBase::handle_player;
-	if (player.isValid()) {
-		GET_COMP(player_tmx, player, TCompTransform);
-		if (player_tmx) {
-			GET_COMP(cam_tmx, camera_h, TCompTransform);
-			if (cam_tmx) cam_tmx->setPosition(player_tmx->getPosition());
+void SLBCamera::fx(const char* name, int enabled) {
+	if (enabled > 0) {
+		if (!render_fx->isActive(name)) {
+			render_fx->ActivateFXBeforeUI(name);
+		}
+	}
+	else {
+		if (render_fx->isActive(name)) {
+			render_fx->RemoveActiveFX(name);
 		}
 	}
 }
@@ -634,6 +638,19 @@ void SLBUiCamera::fadeOut(float speed) {
 	}
 	fx->SetMaxTime(speed);
 	fx->FadeOut();
+}
+
+void SLBUiCamera::fx(const char* name, bool enabled) {
+	if (enabled) {
+		if (!render_fx->isActive(name)) {
+			render_fx->ActivateFXAtEnd(name);
+		}
+	}
+	else {
+		if (render_fx->isActive(name)) {
+			render_fx->RemoveActiveFX(name);
+		}
+	}
 }
 
 // Data
@@ -693,7 +710,7 @@ void SLBPublicFunctions::setupGame() {
 }
 
 void SLBPublicFunctions::setLanguage(const char* lang) {
-	GameController->SetLanguage(std::string(lang));
+	lang_manager->SetLanguage(std::string(lang));
 }
 
 void SLBPublicFunctions::completeTasklist(int i) {
@@ -825,21 +842,23 @@ void SLBPublicFunctions::playerRoom(int newRoom) {
 void SLBPublicFunctions::playerTalks(const char* text) {
 	// DO Something with text...
 	dbg(text);
-	getHandleManager<TCompFadingMessage>()->each([text](TCompFadingMessage * mess) {
-		MKeyValue atts3;
-		atts3["text"] = text;
-		mess->load(atts3);
+	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
+	getHandleManager<TCompFadingMessage>()->each([text_fixed](TCompFadingMessage * mess) {
+		TCompFadingMessage::ReloadInfo atts;
+		atts.text = text_fixed;
+		mess->reload(atts);
 	}
 	);
 }
 
 void SLBPublicFunctions::showMessage(const char* text, const char* icon) {
-	getHandleManager<TCompFadingMessage>()->each([text, icon](TCompFadingMessage * mess) {
-		MKeyValue atts3;
-		atts3["permanent"] = "true";
-		atts3["text"] = text;
-		atts3["icon"] = icon;
-		mess->load(atts3);
+	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
+	getHandleManager<TCompFadingMessage>()->each([text_fixed, icon](TCompFadingMessage * mess) {
+		TCompFadingMessage::ReloadInfo atts;
+		atts.permanent = true;
+		atts.text = text_fixed;
+		atts.icon = icon;
+		mess->reload(atts);
 	}
 	);
 }
@@ -1026,17 +1045,13 @@ void SLBPublicFunctions::resumeGame() {
 	GameController->SetGameState(CGameController::RUNNING);
 }
 const char* SLBPublicFunctions::getText(const char* scene, const char* event) {
-	std::string res_str = lang_manager->getText(scene, event);
+	std::string res_str = lang_manager->getText(event, scene);
 
 	char * res = new char[res_str.size() + 1];
 	std::copy(res_str.begin(), res_str.end(), res);
 	res[res_str.size()] = '\0';
 
 	return res;
-}
-
-void SLBPublicFunctions::reloadLanguageFile(const char* language) {
-	lang_manager->reloadLanguageFile(language);
 }
 
 void SLBPublicFunctions::forceSenseVision() {

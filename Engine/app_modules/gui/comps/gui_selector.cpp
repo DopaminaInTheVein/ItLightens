@@ -11,6 +11,7 @@
 
 #include "app_modules/io/io.h"
 #include "app_modules/logic_manager/logic_manager.h"
+#include "app_modules/lang_manager/lang_manager.h"
 
 #include <math.h>
 
@@ -185,7 +186,7 @@ int TCompGuiSelector::AddOption(string option)
 	float w = myGui->GetWidth();
 	float h = myGui->GetHeight();
 	postxt += VEC3(-w / 2.f + h*1.25f, -h / 2.f, .0001f);
-	txt->SetText(option);
+	txt->SetText(lang_manager->getText(option, "title"));
 	txt->SetSize(myGui->GetHeight());
 	txt->SetPosWorld(postxt);
 	options.push_back(h_option);
@@ -215,13 +216,13 @@ void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnChoose, string(param), MY_OWNER);
 }
 
-void TCompGuiSelector::onLanguageChanged(const TMsgLanguageChanged& msg)
-{
-	for (auto opt : options) opt.destroy();
-	options.clear();
-	cur_option = 0;
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
-}
+//void TCompGuiSelector::onLanguageChanged(const TMsgLanguageChanged& msg)
+//{
+//	for (auto opt : options) opt.destroy();
+//	options.clear();
+//	cur_option = 0;
+//	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
+//}
 
 void TCompGuiSelector::SelectOption(int id)
 {

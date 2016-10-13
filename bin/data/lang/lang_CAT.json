@@ -51,7 +51,8 @@
 	"help_place_box": "Porta la caixa fins a la columna trencada (pots utilitzar SENTIR).",
 	"help_wall": "Apropa't al mur de davant amb la Mola i prem CLIC ESQUERRE per destruir-lo.",
 	"help_box": "Apropa't a la caixa i prem CLIC ESQUERRE per empenyer-la o estirar-la.",
-	"help_djump": "Prem ESPAI per saltar. Prem-ho dues vegades per efectuar un doble salt."
+	"help_djump": "Prem ESPAI per saltar. Prem-ho dues vegades per efectuar un doble salt.",
+	"fall_column": "¡Uy! ¡Qué torpeza!"
   },
   "tuto_sci": {
     "help_possess": "Apropa't al Científic i prem SHIFT ESQUERRE per controlar el seu cos.",

@@ -58,23 +58,27 @@ void CLogicManagerModule::update(float dt) {
 		}
 	}
 
-	if (controller->IsBackPressed()) {
+	for (auto c : command_queue_to_add) {
+		command_queue.push_back(c);
+	}
+	command_queue_to_add.clear();
+
+	if (exec_wait) {
+		const char* copy_code = command_wait.code;
+		exec_wait = false;
+		command_wait.code = "";
+		slb_script.doString(copy_code);
+	}
+	else if (controller->IsBackPressed()) {
 		if (command_wait.code != "") {
 			if (!command_wait.only_runtime ||
 				GameController->GetGameState() == CGameController::RUNNING ||
 				GameController->GetGameState() == CGameController::SPECIAL_ACTION)
 			{
-				const char* copy_code = command_wait.code;
-				command_wait.code = "";
-				slb_script.doString(copy_code);
+				exec_wait = true;
 			}
 		}
 	}
-
-	for (auto c : command_queue_to_add) {
-		command_queue.push_back(c);
-	}
-	command_queue_to_add.clear();
 }
 
 void CLogicManagerModule::resetTimers() {
@@ -502,7 +506,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnSenseVision(\"%s\");", params.c_str());
 		break;
 	}
-					  //GUI
+						  //GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;
@@ -611,6 +615,9 @@ void CLogicManagerModule::bindPlayer(SLB::Manager& m) {
 		.comment("returns the Y coordinate")
 		.set("get_z", &SLBPlayer::getPlayerZ)
 		.comment("returns the Z coordinate")
+		// Unpossess
+		.set("unpossess", &SLBPlayer::unPossess)
+		.comment("leave possession")
 		;
 }
 
@@ -803,7 +810,7 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.comment("Run cinematic defined in the specified guided camera")
 		.param("string: guided camera name")
 		.param("speed: speed of camera movement (0 means default speed)")
-		// run cinematic
+		// start cinematic
 		.set("start_cinematic", &SLBCamera::startCinematic)
 		.comment("Run cinematic from first point")
 		.param("string: guided camera name")
@@ -816,7 +823,13 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		// Reset the camera
 		.set("reset_camera", &SLBCamera::resetCamera)
 		.comment("Resets the camera to its default state")
+		// FX
+		.set("fx", &SLBCamera::fx)
+		.comment("Enable or disable an fx shader")
+		.param("string: name FX")
+		.param("int: 0 disabled, 1 enabled")
 		;
+	;
 }
 
 // Ui Camera LUA functions
@@ -835,6 +848,11 @@ void CLogicManagerModule::bindUiCamera(SLB::Manager& m) {
 		.set("fade_out", &SLBUiCamera::fadeOut)
 		.comment("Start fade out")
 		.param("float: time fade, if time <= 0 set default")
+		// FX
+		.set("fx", &SLBUiCamera::fx)
+		.comment("Enable or disable an fx shader")
+		.param("string: name FX")
+		.param("int: 0 disabled, 1 enabled")
 		;
 }
 
@@ -896,6 +914,11 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("set_language", &SLBPublicFunctions::setLanguage)
 		.param("string: language id")
 		.comment("Set language")
+		// Get text (localization)
+		.set("get_text", &SLBPublicFunctions::getText)
+		.comment("Get the text for the specified scene and event")
+		.param("string: scene of the text")
+		.param("string: event of the text")
 		// Enable and disable controls (player and camera)
 		.set("setControlEnabled", &SLBPublicFunctions::setControlEnabled)
 		.comment("Enable or disable controls\n")
@@ -1111,15 +1134,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// Exit Game
 		.set("exit_game", &SLBPublicFunctions::exit)
 		.comment("Exit game")
-		// Get text (localization)
-		.set("get_text", &SLBPublicFunctions::getText)
-		.comment("Get the text for the specified scene and event")
-		.param("string: scene of the text")
-		.param("string: event of the text")
-		// Reload localization file
-		.set("reload_language_file", &SLBPublicFunctions::reloadLanguageFile)
-		.comment("Reloads the language file")
-		.param("string: code of the language file that will be loaded")
+		//Sense vision
 		.set("force_sense_vision", &SLBPublicFunctions::forceSenseVision)
 		.comment("force sense vision")
 		.set("unforce_sense_vision", &SLBPublicFunctions::unforceSenseVision)

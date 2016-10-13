@@ -61,6 +61,7 @@ class TCompGui : public TCompBase {
 
 	// Text coords limits
 	RectNormalized text_coords;
+	RectNormalized text_coords_16;
 	int num_words_per_line;
 
 	//Aux
@@ -125,6 +126,7 @@ public:
 	void setTxCoords(RectNormalized);
 	void setTxLetter(unsigned char);
 	void renderInMenu();
+	~TCompGui();
 };
 
 #endif

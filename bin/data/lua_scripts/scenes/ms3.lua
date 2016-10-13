@@ -58,6 +58,51 @@ function OnEnter_tSave02( )
 SaveLevel()
 end
 
-function ms3_sense_pressed()
-
+function OnEnter___ttablon1( )
+ms3_onTablon1()
 end
+
+function OnLeave___ttablon1( )
+ms3_outTablon()
+end
+
+function OnEnter___ttablon002( )
+ms3_onTablon2()
+end
+
+function OnLeave___ttablon002( )
+ms3_outTablon()
+end
+
+function OnEnter___ttablon003( )
+ms3_onTablon3()
+end
+
+function OnLeave___ttablon003( )
+ms3_outTablon()
+end
+
+function OnEnter___ttablon004( )
+ms3_onTablon4()
+end
+
+function OnLeave___ttablon004( )
+ms3_outTablon()
+end
+
+function OnEnter___ttablon005( )
+ms3_onTablon5()
+end
+
+function OnLeave___ttablon005( )
+ms3_outTablon()
+end
+
+function OnEnter___ttablon006( )
+ms3_onTablon6()
+end
+
+function OnLeave___ttablon006( )
+ms3_outTablon()
+end
+

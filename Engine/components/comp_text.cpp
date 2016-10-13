@@ -2,30 +2,13 @@
 #include "comp_text.h"
 //#include "comp_tags.h"
 #include "entity.h"
-#include "app_modules/gui/gui_utils.h"
 #include "app_modules/gui/comps/gui_basic.h"
 #include "app_modules/imgui/module_imgui.h"
+#include "app_modules/lang_manager/lang_manager.h"
 #include "render/render.h"
-#include "render\draw_utils.h"
+#include "render/draw_utils.h"
 
 #include <math.h>
-
-#define FONT_JSON "./data/json/font.json"
-
-float TCompText::letterSpacing[256] = { 0.f };
-bool TCompText::init_configuration = false;
-void TCompText::initSpaceLetters()
-{
-	auto general = readIniAtrData(FONT_JSON, "general");
-	auto space_values = readIniAtrData(FONT_JSON, "space_right");
-	float size = general["size"];
-	float default_space = 1.f - space_values["default"] / size;
-	for (int i = 0; i < 256; i++) letterSpacing[i] = default_space;
-	for (auto entry : space_values) {
-		unsigned char letter_char = entry.first.at(0);
-		letterSpacing[letter_char] = 1.f - entry.second / size;
-	}
-}
 
 void TCompText::forceTTLZero() {
 	ttl = -0.1f;
@@ -35,7 +18,8 @@ bool TCompText::load(MKeyValue& atts)
 {
 	id = atts.getString("id", "");
 	assert(id != "");
-	text = atts.getString("text", "defaultText");
+	auto text_input = atts.getString("text", "defaultText");
+	text = Font::getVChar(text_input);
 	letter_posx_ini = atts.getFloat("pos_x", 0.0f);
 	letter_posy_ini = atts.getFloat("pos_y", 0.0f);
 	scale = atts.getFloat("scale", 1.0f);
@@ -43,28 +27,8 @@ bool TCompText::load(MKeyValue& atts)
 	colorTarget = obtainColorNormFromString(atts.getString("colorTarget", "#FFFFFFFF"));
 	colorChangeSpeed = atts.getFloat("colorSpeed", 0.0f);
 	colorChangeSpeedLag = atts.getFloat("colorSpeedLag", 0.0f);
-	lineText.resize(0);
 	printed = false;
 	ttl = 1.0f;
-	std::string endline = "\n";
-	int ini = -1;
-	size_t pos = text.find(endline, 0);
-	while (pos != text.npos)
-	{
-		lineText.push_back(text.substr(ini + 1, pos));
-		ini = pos;
-		pos = text.find(endline, pos + 1);
-	}
-	lineText.push_back(text.substr(ini + 1, pos));
-
-	accumSpacing.resize(lineText.size());
-	for (int i = 0; i < accumSpacing.size(); ++i) {
-		accumSpacing[i] = 0.0f;
-	}
-	if (!init_configuration) {
-		init_configuration = true;
-		initSpaceLetters();
-	}
 	return true;
 }
 
@@ -86,9 +50,11 @@ void TCompText::update(float dt) {
 		if (colorChangeSpeed > 0.0f) {
 			float accumLag = 0.0f;
 			for (CHandle h_letter : gui_letters) {
-				GET_COMP(letter_gui, h_letter, TCompGui);
-				letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
-				accumLag += colorChangeSpeedLag;
+				if (h_letter.isValid()) {
+					GET_COMP(letter_gui, h_letter, TCompGui);
+					letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
+					accumLag += colorChangeSpeedLag;
+				}
 			}
 		}
 	}
@@ -109,23 +75,8 @@ void TCompText::setup(std::string set_id, std::string set_text, float set_posx, 
 
 void TCompText::SetText(std::string new_text)
 {
-	text = new_text;
-	lineText.resize(0);
-	std::string endline = "\n";
-	int ini = -1;
-	size_t pos = text.find(endline, 0);
-	while (pos != text.npos)
-	{
-		lineText.push_back(text.substr(ini + 1, pos));
-		ini = pos;
-		pos = text.find(endline, pos + 1);
-	}
-	lineText.push_back(text.substr(ini + 1, pos));
-
-	accumSpacing.resize(lineText.size());
-	for (int i = 0; i < accumSpacing.size(); ++i) {
-		accumSpacing[i] = 0.0f;
-	}
+	original_text = new_text;
+	text = Font::getVChar(lang_manager->getText(new_text));
 	printed = false;
 }
 void TCompText::SetPosWorld(VEC3 pos)
@@ -158,30 +109,6 @@ void TCompText::SetLetterLag(float letter_lag)
 	colorChangeSpeedLag = letter_lag;
 }
 
-//void TCompText::setAttr(float new_x, float new_y, float new_scale) {
-//	int letteri = 0;
-//	accumSpacing.resize(lineText.size());
-//	for (int i = 0; i < accumSpacing.size(); ++i) {
-//		accumSpacing[i] = 0.0f;
-//	}
-//	for (int j = 0; j < lineText.size(); ++j) {
-//		for (int i = 0; i < lineText[j].size(); ++i) {
-//			unsigned char letter = lineText[j][i];
-//			int ascii_tex_pos = letter;
-//			CEntity * e_letter = gui_letters[letteri];
-//			TCompGui * letter_gui = e_letter->get<TCompGui>();
-//			TCompTransform * letter_trans = e_letter->get<TCompTransform>();
-//			VEC3 pos_letter = letter_trans->getPosition();
-//			pos_letter.x = new_x + i * letterBoxSize*new_scale - accumSpacing[j] * new_scale;
-//			pos_letter.y = new_y - j * letterBoxSize*new_scale*2.5f;
-//			letter_trans->setPosition(pos_letter);
-//			letter_trans->setScaleBase(VEC3(new_scale, new_scale, new_scale));
-//			letteri++;
-//			accumSpacing[j] += SBB::readLetterSpacingVector()[ascii_tex_pos];
-//		}
-//	}
-//}
-
 void TCompText::printLetters() {
 	int gState = GameController->GetGameState();
 	int letteri = 0;
@@ -189,36 +116,36 @@ void TCompText::printLetters() {
 	VEC3 ui_scale = VEC3(1.f, 1.f, 1.f) / Gui->getUiSize();
 	float scale_x = scale *ui_scale.x;
 	float scale_y = scale * line_separation * ui_scale.y;
-	for (int j = 0; j < lineText.size(); ++j) {
-		for (int i = 0; i < lineText[j].size(); ++i) {
-			unsigned char letter = lineText[j][i];
-			int ascii_tex_pos = letter;
-			int ascii_tex_posx = ascii_tex_pos % 16;
-			int ascii_tex_posy = ascii_tex_pos / 16;
 
-			float texture_pos_x = ((float)ascii_tex_posx) * letterBoxSize;
-			float texture_pos_y = ((float)ascii_tex_posy) * letterBoxSize;
-			float sx = letterBoxSize;
-			float sy = letterBoxSize;
+	int cur_line = 0;
+	VEC3 init_pos = VEC3(letter_posx_ini, letter_posy_ini, letter_posz_ini);
+	VEC3 cur_pos = init_pos;
+	for (auto tchar : text) {
+		if (tchar.IsNewLine()) {
+			cur_pos.x = init_pos.x;
+			cur_pos.y -= scale_y;
+			continue;
+		}
 
-			float letter_posx = letter_posx_ini + (i - accumSpacing[j]) * scale_x;
-			float letter_posy = letter_posy_ini - j * scale_y;
+		CHandle letter_h = Gui->addGuiElement("ui/letter", cur_pos, ("Text_Message_Letter_" + id), scale);
+		if (letter_h.isValid()) {
+			GET_COMP(lgui, letter_h, TCompGui);
+			if (lgui) {
+				gui_letters.push_back(letter_h);
+				lgui->SetParent(MY_OWNER);
+				lgui->setTxCoords(tchar.GetTxtCoords());
+				cur_pos.x += tchar.GetSize() * scale_x;
+				cur_pos.z += 0.001f;
+				GET_COMP(ltmx, letter_h, TCompTransform);
+				ltmx->setScale(VEC3(ceilf(tchar.GetSize()), 1.f, 1.f));
 
-			CHandle letter_h = Gui->addGuiElement("ui/letter", VEC3(letter_posx, letter_posy, letter_posz_ini + letteri*0.001), ("Text_Message_Letter_" + id), scale);
-			CEntity * letter_e = letter_h;
-			TCompGui * letter_gui = letter_e->get<TCompGui>();
-			assert(letter_gui);
-			letter_gui->SetParent(MY_OWNER);
-			RectNormalized textCords(texture_pos_x, texture_pos_y, sx, sy);
-			letter_gui->setTxCoords(textCords);
-			letteri++;
-			accumSpacing[j] += letterSpacing[ascii_tex_pos];
-			letter_gui->SetColor(color);
-			if (colorChangeSpeed > 0.0f) {
-				letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
+				//Color
+				lgui->SetColor(color);
+				if (colorChangeSpeed > 0.0f) {
+					lgui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
+				}
+				accumLag += colorChangeSpeedLag;
 			}
-			gui_letters.push_back(letter_h);
-			accumLag += colorChangeSpeedLag;
 		}
 	}
 	printed = true;
@@ -239,4 +166,14 @@ void TCompText::SetZ(float z)
 		tmx->setZ(z + offset);
 		offset += 0.001f;
 	}
+}
+
+void TCompText::onLanguageChanged(const TMsgLanguageChanged &msg)
+{
+	SetText(original_text);
+}
+
+void TCompText::onControlsChanged(const TMsgControlsChanged &msg)
+{
+	SetText(original_text);
 }

@@ -33,46 +33,46 @@ void CGuiActionText::render() {
 		text = "";// lang_manager->getText("actions", "none");
 		break;
 	case eAction::OVERCHARGE:
-		text = lang_manager->getText("actions", "overcharge");
+		text = getActionText("overcharge");
 		break;
 	case eAction::POSSESS:
-		text = lang_manager->getText("actions", "possess");
+		text = getActionText("possess");
 		break;
 	case eAction::RECHARGE:
-		text = lang_manager->getText("actions", "recharge");
+		text = getActionText("recharge");
 		break;
 	case eAction::RECHARGE_DRONE:
-		text = lang_manager->getText("actions", "recharge_drone");
+		text = getActionText("recharge_drone");
 		break;
 	case eAction::REPAIR_DRONE:
-		text = lang_manager->getText("actions", "repair_drone");
+		text = getActionText("repair_drone");
 		break;
 	case eAction::ACTIVATE:
-		text = lang_manager->getText("actions", "activate");
+		text = getActionText("activate");
 		break;
 	case eAction::PUT:
-		text = lang_manager->getText("actions", "put");
+		text = getActionText("put");
 		break;
 	case eAction::EXAMINATE:
-		text = lang_manager->getText("actions", "examinate");
+		text = getActionText("examinate");
 		break;
 	case eAction::DESTROY:
-		text = lang_manager->getText("actions", "destroy");
+		text = getActionText("destroy");
 		break;
 	case eAction::CREATE_MAGNETIC_BOMB:
-		text = lang_manager->getText("actions", "create_magnetic_bomb");
+		text = getActionText("create_magnetic_bomb");
 		break;
 	case eAction::CREATING:
-		text = lang_manager->getText("actions", "creating");
+		text = getActionText("creating");
 		break;
 	case eAction::TRAVEL_WIRE:
-		text = lang_manager->getText("actions", "travel_wire");
+		text = getActionText("travel_wire");
 		break;
 	case eAction::DREAM:
-		text = lang_manager->getText("actions", "dream");
+		text = getActionText("dream");
 		break;
 	case eAction::LEAVE:
-		text = lang_manager->getText("actions", "leave");
+		text = getActionText("leave");
 		break;
 	}
 	if (text != "" && text != last_text) {
@@ -87,4 +87,9 @@ void CGuiActionText::render() {
 		);
 	}
 	last_text = text;
+}
+
+std::string CGuiActionText::getActionText(std::string action)
+{
+	return lang_manager->getText(action, "actions");
 }

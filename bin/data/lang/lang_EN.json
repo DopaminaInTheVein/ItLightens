@@ -17,7 +17,7 @@
 	"leave" : "ACTION: Leave"
   },
   "title": {
-	"test": "àèìòù_áéíóú_ÀÈÌÒÙ_ÁÉÍÓÚ_üÜ_ç\n¡¿!?_:_'_\"_%$_l·l=(<>,.:;-)",
+	"test": "Pulsa *WASD*, porque *WASD* mola",
 	"easy": "Easy",
 	"medium": "Medium",
 	"hard": "Hard",
@@ -25,10 +25,11 @@
 	"inverted": "Inverted"
   },
   "hub": {
-    "start_hub": "Wellcome to the tutorials.\nLet's learn some things about the game.",
-	"sense":"Let's SENSE (right click or gamepad B)!!!\nFor demonstration it will keep for a short time.",
-    "target_seen_green": "This GREEEN signal is your next step.",
-    "target_seen_yellow": "The YELLOW one is the final point of the level.",
+    "start_hub": "Welcome to the tutorials.\nLet's learn some things about the game.",
+	"sense":"Let's SENSE (*RMOUSE*)!!!\nFor demonstration it will keep for a short time.",
+	"sense_pad":"Let's SENSE (*BPAD*)!!!\nFor demonstration it will keep for a short time.",
+    "target_seen_green": "This #00FF00#GREEN## signal is your next step.",
+    "target_seen_yellow": "The #FFFF00#YELLOW## one is the final point of the level.",
 	"target_seen_white": "WHITE are generators, where you can restore all your life.",
 	"return_control":"It's your turn now.\nMove with WASD + Mouse or with controller joysticks.\nTry going next to the big strong boy MOLE\nThen press ACTION button and enter his dream",
 	"mole_tuto_complete":"Congratulations for completing the MOLE tutorial",
@@ -51,7 +52,8 @@
 	"help_place_box": "Carry the box to the broken column (you can use SENSE).",
 	"help_wall": "Get closer to the wall in front of you with the Mass\nand press LEFT CLICK to destroy it.",
 	"help_box": "Get closer to the box and press LEFT CLICK to push or pull it.",
-	"help_djump": "Press SPACE to jump. Press it twice to perform a double jump."
+	"help_djump": "Press SPACE to jump. Press it twice to perform a double jump.",
+	"fall_column": "¡Uy! ¡Qué torpeza!"
   },
   "tuto_sci": {
     "help_possess": "This is SCIENTIST's dream.\nGet closer to him, then press POSSESS (LEFT SHIFT or Controller Y)\nto control it.",
