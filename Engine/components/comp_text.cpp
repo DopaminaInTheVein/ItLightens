@@ -50,9 +50,11 @@ void TCompText::update(float dt) {
 		if (colorChangeSpeed > 0.0f) {
 			float accumLag = 0.0f;
 			for (CHandle h_letter : gui_letters) {
-				GET_COMP(letter_gui, h_letter, TCompGui);
-				letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
-				accumLag += colorChangeSpeedLag;
+				if (h_letter.isValid()) {
+					GET_COMP(letter_gui, h_letter, TCompGui);
+					letter_gui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
+					accumLag += colorChangeSpeedLag;
+				}
 			}
 		}
 	}
@@ -164,4 +166,14 @@ void TCompText::SetZ(float z)
 		tmx->setZ(z + offset);
 		offset += 0.001f;
 	}
+}
+
+void TCompText::onLanguageChanged(const TMsgLanguageChanged &msg)
+{
+	SetText(original_text);
+}
+
+void TCompText::onControlsChanged(const TMsgControlsChanged &msg)
+{
+	SetText(original_text);
 }

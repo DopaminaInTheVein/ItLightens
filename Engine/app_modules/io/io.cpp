@@ -2,6 +2,8 @@
 #include "io.h"
 #include "imgui/imgui.h"
 #include "app_modules/lang_manager/lang_manager.h"
+#include "components/entity.h"
+
 #include "windows/app.h"
 #include <windowsx.h>
 
@@ -77,7 +79,6 @@ bool CIOModule::onSysMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 void CIOModule::SetGamePadMode(bool b) {
 	if (b != gamepad_mode) {
 		gamepad_mode = b;
-		//TODO Message change input
-		//if (lang_manager) lang_manager->reloadLanguageFile();
+		BROADCAST_MSG(TMsgControlsChanged);
 	}
 }

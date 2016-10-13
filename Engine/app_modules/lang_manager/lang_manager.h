@@ -14,7 +14,7 @@ class CLangManagerModule : public IAppModule
 	std::string lang_file;
 
 	std::map<std::string, std::map<std::string, std::string>> language_map;
-
+	bool HasEntryFormat(std::string entry);
 public:
 
 	CLangManagerModule();
@@ -33,6 +33,7 @@ public:
 	void readLanguageMap();
 	void reloadLanguageFile();
 	std::string getText(std::string entry, std::string scene = "");
+	bool isControllerMessage(std::string entry, std::string scene = "");
 };
 
 extern CLangManagerModule* lang_manager;

@@ -61,7 +61,7 @@ public:
 	//Messages
 	void onCreate(const TMsgEntityCreated&);
 	void onGuiNotify(const TMsgGuiNotify&);
-	void onLanguageChanged(const TMsgLanguageChanged&);
+	//void onLanguageChanged(const TMsgLanguageChanged&);
 
 	//Public actions
 	int AddOption(std::string);

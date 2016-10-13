@@ -80,10 +80,9 @@ bool TCompFadingMessage::reload(const ReloadInfo& atts)
 	else if (enabled) {
 		hideAll();
 	}
-
+	this->atts = atts;
 	VEC3 new_pos1 = min_ortho + orthorect * VEC3(0.12f, 0.09f, 0.35f);
 
-	std::string original_text = atts.text;
 	text = Font::getVChar(lang_manager->getText(atts.text));
 	text = Font::formatVChar(text, LINE_TEXT_SIZE);
 	permanent = atts.permanent;
@@ -184,4 +183,15 @@ void TCompFadingMessage::printLetters() {
 		}
 		cur_char_line++;
 	}
+}
+
+void TCompFadingMessage::onLanguageChanged(const TMsgLanguageChanged &msg)
+{
+	reload(atts);
+}
+
+void TCompFadingMessage::onControlsChanged(const TMsgControlsChanged &msg)
+{
+	if (lang_manager->isControllerMessage(atts.text))
+		reload(atts);
 }

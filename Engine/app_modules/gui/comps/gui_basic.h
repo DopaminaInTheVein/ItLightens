@@ -126,6 +126,7 @@ public:
 	void setTxCoords(RectNormalized);
 	void setTxLetter(unsigned char);
 	void renderInMenu();
+	~TCompGui();
 };
 
 #endif

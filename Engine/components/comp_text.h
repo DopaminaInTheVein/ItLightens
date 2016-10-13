@@ -47,6 +47,10 @@ public:
 	//void setAttr(float new_x, float new_y, float new_scale);
 	void Move(VEC3 pos);
 	void SetZ(float z);
+
+	//Change Language and Controls
+	void onLanguageChanged(const TMsgLanguageChanged&);
+	void onControlsChanged(const TMsgControlsChanged&);
 };
 
 #endif

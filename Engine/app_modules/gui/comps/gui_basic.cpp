@@ -18,6 +18,7 @@ void TCompGui::onCreate(const TMsgEntityCreated&)
 	if (menu_name != "" && row >= 0 && col >= 0) {
 		addGuiElement(menu_name, col, row, MY_OWNER);
 	}
+	RenderManager.ModifyUI();
 }
 
 void TCompGui::setRenderTarget(float rs_target, float speed = FLT_MAX)
@@ -64,6 +65,7 @@ bool TCompGui::load(MKeyValue& atts)
 	height = atts.getFloat("height", 0.f);
 	color = VEC4(1, 1, 1, 1);
 	language = atts.getBool("lang", false);
+
 	return true;
 }
 
@@ -249,4 +251,9 @@ void TCompGui::updateColorLag(float elapsed)
 			color = origin_color + (target_color - origin_color)*proportion;
 		}
 	}
+}
+
+TCompGui::~TCompGui()
+{
+	RenderManager.ModifyUI();
 }

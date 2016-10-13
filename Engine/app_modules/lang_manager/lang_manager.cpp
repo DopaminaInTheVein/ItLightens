@@ -4,6 +4,10 @@
 #include "utils\utils.h"
 #include "components/entity.h"
 
+#define PAD_SUFIX "_pad"
+#define PAD_VERSION(entry) (entry + PAD_SUFIX)
+#define ENTRY_NAME(entry) entry.substr(2)
+
 extern CLangManagerModule* lang_manager = nullptr;
 
 CLangManagerModule::CLangManagerModule() {
@@ -31,9 +35,7 @@ void CLangManagerModule::SetLanguage(std::string lang)
 	if (lang == game_language) return;
 	game_language = lang;
 	lang_manager->reloadLanguageFile();
-	getHandleManager<CEntity>()->each([](CEntity * e) {
-		e->sendMsg(TMsgLanguageChanged());
-	});
+	BROADCAST_MSG(TMsgLanguageChanged);
 }
 
 void CLangManagerModule::reloadLanguageFile() {
@@ -65,19 +67,31 @@ void CLangManagerModule::readLanguageMap() {
 }
 
 std::string CLangManagerModule::getText(std::string entry, std::string scene) {
-	if (entry.length() < 2 || entry[0] != ':' || entry[1] != ':') return entry;
-	else entry = entry.substr(2);
+	if (!HasEntryFormat(entry)) return entry;
 
 	if (scene == "") scene = CApp::get().getCurrentRealLevel();
 	auto scene_events = language_map[scene];
-	if (io && io->IsGamePadMode()) {
-		std::string entry_pad = entry + "_pad";
-		if (setContains(scene_events, entry_pad)) {
-			return scene_events[entry_pad];
-		}
+
+	if (io && io->IsGamePadMode() && isControllerMessage(entry, scene)) {
+		entry = PAD_VERSION(entry);
 	}
+
+	entry = entry.substr(2);
 	if (setContains(scene_events, entry)) {
 		return scene_events[entry];
 	}
 	else return "";
+}
+
+bool CLangManagerModule::isControllerMessage(std::string entry, std::string scene) {
+	if (entry.length() < 2 || entry[0] != ':' || entry[1] != ':') return false;
+
+	if (scene == "") scene = CApp::get().getCurrentRealLevel();
+	auto scene_events = language_map[scene];
+	return setContains(scene_events, PAD_VERSION(ENTRY_NAME(entry)));
+}
+
+bool CLangManagerModule::HasEntryFormat(std::string entry)
+{
+	return entry.length() > 1 && entry[0] == ':' && entry[1] == ':';
 }
