@@ -192,7 +192,7 @@ void CGuiModule::initTextConfig()
 	for (auto entry : space_values) {
 		if (entry.first.length() == 1) {
 			unsigned char letter_char = entry.first.at(0);
-			letter_sizes[letter_char] = 1.f - entry.second / size;
+			letter_sizes[letter_char] = entry.second / size;
 		}
 	}
 	auto all_maps = readAllAtrMaps(FONT_JSON);
@@ -203,8 +203,9 @@ void CGuiModule::initTextConfig()
 			int col = (int)entry.second["col"];
 			int size_grid = (int)entry.second["size"];
 			float rspace = entry.second["space_right"];
-			float size_exact = size_grid - rspace / size;
+			float size_exact = 1 - size_grid + rspace / size;
 			special_characters[name] = TCharacter(name, row - 1, col - 1, size_exact); // -1 because more use friendly (1-16, instead 0-15)
 		}
 	}
+	initedText = true;
 }
