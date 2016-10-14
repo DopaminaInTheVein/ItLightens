@@ -9,6 +9,10 @@
 
 #include "components/entity.h"
 #include "components/entity_tags.h"
+#include "app_modules\render\module_render_deferred.h"
+
+extern CRenderDeferredModule * render_deferred;
+
 bool CGameController::start()
 {
 	return true;
@@ -187,4 +191,9 @@ TCompSenseVision * CGameController::getSenseVisionComp()
 		if (sv) return sv;
 	}
 	return nullptr;
+}
+
+void CGameController::OnLoadedLevel()
+{
+	render_deferred->generateStaticShadowMaps();
 }
