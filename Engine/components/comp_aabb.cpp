@@ -83,9 +83,7 @@ void TCompLocalAABB::onCreate(const TMsgEntityCreated&) {
 void TCompLocalAABB::render() const {
 #ifndef NDEBUG
 	if (GameController->GetCullingRender()) {
-		CEntity *e = CHandle(this).getOwner();
-		if (!e) return;
-		const TCompTransform *in_tmx = e->get< TCompTransform >();
+		GET_MY(in_tmx, TCompTransform);
 		if (!in_tmx) return;
 		drawWiredAABB(*this, in_tmx->asMatrix(), VEC4(1, 1, 0, 1));
 	}

@@ -76,7 +76,7 @@ void TCompCamera::updateFromEntityTransform(CEntity* e_owner) {
 }
 
 void TCompCamera::update(float dt) {
-	if (!isOrtho()) updateFromEntityTransform(compBaseEntity);
+	if (!isOrtho()) updateFromEntityTransform(MY_OWNER);
 	else {
 		GET_MY(tmx, TCompTransform);
 		if (tmx) this->lookAt(tmx->getPosition(), tmx->getPosition() + tmx->getFront());

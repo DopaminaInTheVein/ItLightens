@@ -42,8 +42,8 @@ public:
 	bool load(MKeyValue& atts);
 	bool getUpdateInfo() override;
 	void update(float dt);
-	collision_data* checkColision(const VEC3& pos, const float distanceToTarget);
-	collision_data* getPosIfColisionClipping(const VEC3& pos);
+	bool checkColision(const VEC3& pos, const float distanceToTarget, collision_data& result);
+	bool getPosIfColisionClipping(const VEC3& pos, collision_data& result);
 	bool getManualControl() { return manual_control; }
 	void setManualControl(bool control) { manual_control = control; }
 	void onGuidedCamera(const TMsgGuidedCamera&);

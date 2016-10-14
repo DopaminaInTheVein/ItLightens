@@ -28,30 +28,24 @@ map<string, btevent> bt_guard::events = {};
 btnode* bt_guard::root = nullptr;
 int bt_guard::guards_chasing = 0;
 
-TCompTransform * bt_guard::getTransform() {
-	PROFILE_FUNCTION("guard: get transform");
-	CEntity * e = myParent;
-	if (!e) return nullptr;
-	TCompTransform * t = e->get<TCompTransform>();
-	return t;
-}
-
-TCompCharacterController* bt_guard::getCC() {
-	PROFILE_FUNCTION("guard: get cc");
-	CEntity * e = myParent;
-	if (!e) return nullptr;
-	TCompCharacterController * cc = e->get<TCompCharacterController>();
-	return cc;
-}
-
-CEntity* bt_guard::getPlayer() {
-	PROFILE_FUNCTION("guard: get player");
+bool bt_guard::getUpdateInfo()
+{
+	if (!MY_OWNER.isValid()) return false;
+	if (!isInRoom(MY_OWNER)) return false;
+	animController = GETH_MY(SkelControllerGuard);
+	if (!animController) return false;
+	my_tmx = GETH_MY(TCompTransform);
+	if (!my_tmx) return false;
+	my_cc = GETH_MY(TCompCharacterController);
+	if (!my_cc) return false;
 	thePlayer = CPlayerBase::handle_player;
-	CEntity* player = thePlayer;
-	if (!player) {
-		dbg("GUARD CAUTION: PLAYER NOT FOUND!\n");
-	}
-	return player;
+	if (!thePlayer.isValid()) return false;
+	player_tmx = GETH_COMP(thePlayer, TCompTransform);
+	if (!player_tmx) return false;
+	player_cc = GETH_COMP(thePlayer, TCompCharacterController);
+	if (!player_cc) return false;
+
+	return true;
 }
 
 void bt_guard::readIniFileAttr() {
@@ -165,11 +159,8 @@ bool bt_guard::playerStunned() {
 
 bool bt_guard::playerNear() {
 	PROFILE_FUNCTION("guard: player near");
-	CEntity* ePlayer = getPlayer();
-	if (!ePlayer) return false;
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 posPlayer = player_tmx->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 
 	float distance = squaredDistXZ(myPos, posPlayer);
 	if (distance < MIN_SQ_DIST_TO_PLAYER) {
@@ -184,9 +175,8 @@ bool bt_guard::playerDetected() {
 	PROFILE_FUNCTION("guard: player detected");
 	// if the player is visible
 	if (playerVisible() || boxMovingDetected()) {
-		TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-		VEC3 posPlayer = tPlayer->getPosition();
-		VEC3 myPos = getTransform()->getPosition();
+		VEC3 posPlayer = player_tmx->getPosition();
+		VEC3 myPos = my_tmx->getPosition();
 		float distance = squaredDistXZ(myPos, posPlayer);
 
 		// we send a new alert with our position and the player position
@@ -211,9 +201,6 @@ bool bt_guard::playerDetected() {
 
 bool bt_guard::playerOutOfReach() {
 	PROFILE_FUNCTION("guard: player out of reach");
-	CEntity * ePlayer = getPlayer();
-	if (!ePlayer)
-		return false;
 	if (!playerVisible()) {
 		decreaseChaseCounter();
 		return true;
@@ -221,9 +208,8 @@ bool bt_guard::playerOutOfReach() {
 
 	//Calc out of reach
 	bool res;
-	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 posPlayer = player_tmx->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 	res = (distance > DIST_SQ_SHOT_AREA_ENTER);
 
@@ -238,12 +224,9 @@ bool bt_guard::playerOutOfReach() {
 bool bt_guard::guardAlerted() {
 	PROFILE_FUNCTION("guard: guardalert");
 
-	VEC3 myPos = getTransform()->getPosition();
-	CEntity* ePlayer = getPlayer();
-	if (!ePlayer) return false;
+	VEC3 myPos = my_tmx->getPosition();
 
-	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
+	VEC3 posPlayer = player_tmx->getPosition();
 
 	// If he player is out of jurisdiction, we forget about him
 	if (outJurisdiction(posPlayer)) {
@@ -253,8 +236,7 @@ bool bt_guard::guardAlerted() {
 	// if playerLost is active (our own alert), we need to search for him
 	if (playerLost) {
 		// Get the position of the player where we will search
-		TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
-		VEC3 posPlayer = tPlayer->getPosition();
+		VEC3 posPlayer = player_tmx->getPosition();
 		player_last_seen_point = posPlayer;
 		// We send a new alert with our position and the player position to the rest of the guards
 		guard_alert alert;
@@ -334,14 +316,10 @@ void bt_guard::updateLookAt()
 
 void bt_guard::lookAtPlayer()
 {
-	CEntity * ePlayer = getPlayer();
-	if (ePlayer) {
-		GET_MY(look_at, TCompSkeletonLookAt);
-		TCompCharacterController * ccPlayer = ePlayer->get<TCompCharacterController>();
-		if (look_at && ccPlayer) {
-			looking_player = true;
-			look_at->setTarget(ccPlayer->GetPosition());
-		}
+	GET_MY(look_at, TCompSkeletonLookAt);
+	if (look_at) {
+		looking_player = true;
+		look_at->setTarget(player_cc->GetPosition());
 	}
 }
 
@@ -384,13 +362,8 @@ int bt_guard::actionReact() {
 
 int bt_guard::actionChase() {
 	PROFILE_FUNCTION("guard: chase");
-	CEntity * ePlayer = getPlayer();
-	if (!ePlayer) return STAY;
-	if (!myParent.isValid()) return STAY;
-
-	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 posPlayer = player_tmx->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 	//player lost?
 	if (distance > DIST_SQ_PLAYER_LOST) {
@@ -443,9 +416,6 @@ int bt_guard::actionPrepareToAbsorb() {
 
 int bt_guard::actionAbsorb() {
 	PROFILE_FUNCTION("guard: absorb");
-	if (!myParent.isValid()) return false;
-	CEntity * ePlayer = getPlayer();
-	if (!ePlayer) return STAY;
 	stuck_time = 0.f;
 
 	// if player too near, move backwards
@@ -460,9 +430,8 @@ int bt_guard::actionAbsorb() {
 	}
 
 	shooting_backwards = false;
-	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 posPlayer = player_tmx->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 	float dist = squaredDistXZ(posPlayer, myPos);
 
 #ifndef NDEBUG
@@ -489,14 +458,13 @@ int bt_guard::actionAbsorb() {
 		// throw interrupt hit event
 		logic_manager->throwEvent(logic_manager->OnInterruptHit, "");
 		// stop damaging the player
-		CEntity* ePlayer = getPlayer();
 		sendMsgDmg = !sendMsgDmg;
 		TMsgDamageSpecific dmg;
 		CEntity* entity = myHandle.getOwner();
 		dmg.source = entity->getName();
 		dmg.type = Damage::ABSORB;
 		dmg.actived = false;
-		ePlayer->sendMsg(dmg);
+		thePlayer.sendMsg(dmg);
 		// if the player went out of reach, we don't shoot the wall
 		if (dist > DIST_SQ_PLAYER_DETECTION) {
 			logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
@@ -519,12 +487,7 @@ int bt_guard::actionAbsorb() {
 int bt_guard::actionShootWall() {
 	PROFILE_FUNCTION("guard: shootwall");
 	if (!myParent.isValid()) return false;
-	CEntity* ePlayer = getPlayer();
-	if (!ePlayer) return STAY;
-
-	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
-
+	VEC3 posPlayer = player_tmx->getPosition();
 	turnTo(posPlayer);
 
 	//If the player is visible, we stop shooting the wall
@@ -557,12 +520,10 @@ int bt_guard::actionShootWall() {
 int bt_guard::actionSearch() {
 	PROFILE_FUNCTION("guard: search");
 	if (!myParent.isValid()) return STAY;
-	CEntity * ePlayer = getPlayer();
-	if (!ePlayer) return STAY;
 
 	lookAtFront();
 	looking_around_time -= getDeltaTime();
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 
 	// player/box visible or search time ended
 	if (playerVisible() || boxMovingDetected() || looking_around_time < 0.f) {
@@ -577,9 +538,7 @@ int bt_guard::actionSearch() {
 		goTo(player_last_seen_point);
 		if (distance < DIST_REACH_PNT) {
 			playerLost = false;
-
-			TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-			VEC3 playerPos = tPlayer->getPosition();
+			VEC3 playerPos = player_tmx->getPosition();
 
 			VEC3 dir = playerPos - myPos;
 			dir.Normalize();
@@ -607,7 +566,7 @@ int bt_guard::actionMoveAround() {
 		return KO;
 	}
 
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 	float distance_to_point = simpleDistXZ(myPos, search_player_point);
 
 	// if the player is too far, we just look around
@@ -638,12 +597,12 @@ int bt_guard::actionLookAround() {
 	else if (deltaYawLookingArround < 2 * M_PI) {
 		SET_ANIM_GUARD(AST_TURN);
 		float yaw, pitch;
-		getTransform()->getAngles(&yaw, &pitch);
+		my_tmx->getAngles(&yaw, &pitch);
 
 		float deltaYaw = SPEED_ROT * getDeltaTime();
 		deltaYawLookingArround += deltaYaw;
 		yaw += deltaYaw;
-		getTransform()->setAngles(yaw, pitch);
+		my_tmx->setAngles(yaw, pitch);
 		looking_around_time -= getDeltaTime();
 		stuck_time = 0.f;
 		return STAY;
@@ -658,7 +617,7 @@ int bt_guard::actionLookAround() {
 int bt_guard::actionSeekWpt() {
 	PROFILE_FUNCTION("guard: actionseekwpt");
 	if (!myParent.isValid()) return 0;
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;
 	patrolling = true;
 	//Player Visible?
@@ -700,7 +659,7 @@ int bt_guard::actionNextWpt() {
 	lookAtFront();
 	if (keyPoints.size() == 0) return false;
 	SET_ANIM_GUARD(AST_TURN);
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
@@ -748,7 +707,7 @@ int bt_guard::actionGoToFormation() {
 	PROFILE_FUNCTION("guard: gotoformation");
 	if (!myParent.isValid()) return false;
 
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 
 	float distance_to_point = simpleDistXZ(myPos, formation_point);
 
@@ -797,6 +756,7 @@ int bt_guard::actionWaitInFormation() {
 **************/
 void bt_guard::noise(const TMsgNoise& msg) {
 	PROFILE_FUNCTION("guard: noise");
+	if (!getUpdateInfoBase(MY_OWNER)) return;
 	if (outJurisdiction(msg.source)) return;
 	if (playerVisible() || boxMovingDetected()) return;
 	if (stunned) return;
@@ -810,7 +770,8 @@ void bt_guard::noise(const TMsgNoise& msg) {
 
 void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	PROFILE_FUNCTION("guard: onstaticbomb");
-	VEC3 myPos = getTransform()->getPosition();
+	if (!getUpdateInfoBase(MY_OWNER)) return;
+	VEC3 myPos = my_tmx->getPosition();
 	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
@@ -823,6 +784,7 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 
 void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 	PROFILE_FUNCTION("guard: onovercharge");
+	if (!getUpdateInfoBase(MY_OWNER)) return;
 	CEntity * entity = myHandle.getOwner();
 	string guard_name = entity->getName();
 
@@ -839,24 +801,21 @@ void bt_guard::onOverCharged(const TMsgOverCharge& msg) {
 
 void bt_guard::checkStopDamage() {
 	if (sendMsgDmg) {
-		CEntity * ePlayer = getPlayer();
-		if (ePlayer) {
-			//End Damage Message
-			sendMsgDmg = shooting = false;
+		//End Damage Message
+		sendMsgDmg = shooting = false;
 
-			TMsgDamageSpecific dmg;
-			dmg.source = compBaseEntity->getName();
-			dmg.type = Damage::ABSORB;
-			dmg.actived = false;
+		TMsgDamageSpecific dmg;
+		dmg.source = MY_NAME;
+		dmg.type = Damage::ABSORB;
+		dmg.actived = false;
 
-			ePlayer->sendMsg(dmg);
-		}
+		thePlayer.sendMsg(dmg);
 	}
 }
 
 void bt_guard::onBoxHit(const TMsgBoxHit& msg) {
 	PROFILE_FUNCTION("guard: onboxhit");
-	CEntity * entity = myHandle.getOwner();
+	if (!getUpdateInfoBase(MY_OWNER)) return;
 
 	logic_manager->throwEvent(logic_manager->OnGuardBoxHit, "");
 	stunned = true;
@@ -867,15 +826,14 @@ void bt_guard::onBoxHit(const TMsgBoxHit& msg) {
 	//If was shooting...
 	if (shooting) {
 		TMsgDamageSpecific dmg;
-		dmg.source = entity->getName();
+		dmg.source = MY_NAME;
 		dmg.type = Damage::ABSORB;
 		dmg.actived = false;
-		CEntity * ePlayer = getPlayer();
-		if (ePlayer) ePlayer->sendMsg(dmg);
-		else fatal("Cannot send end damage message to player!");
-		//End Damage Message
-		sendMsgDmg = shooting = false;
+		thePlayer.sendMsg(dmg);
 	}
+	else fatal("Cannot send end damage message to player!");
+	//End Damage Message
+	sendMsgDmg = shooting = false;
 }
 
 /**************
@@ -884,28 +842,18 @@ void bt_guard::onBoxHit(const TMsgBoxHit& msg) {
 
  // -- Go To -- //
 bool bt_guard::canHear(VEC3 position, float intensity) {
-	return (realDist(getTransform()->getPosition(), position) < DIST_SQ_SOUND_DETECTION);
+	return (realDist(my_tmx->getPosition(), position) < DIST_SQ_SOUND_DETECTION);
 }
 
 bool bt_guard::turnToPlayer()
 {
-	CEntity* ePlayer = getPlayer();
-	if (ePlayer) {
-		GET_COMP(tPlayer, CHandle(ePlayer), TCompTransform);
-		return turnTo(tPlayer->getPosition());
-	}
-	return true;
+	return turnTo(player_tmx->getPosition());
 }
 
 // -- Player Visible? -- //
 bool bt_guard::playerVisible(bool check_raycast) {
-	if (!myParent.isValid()) return false;
-	CEntity * ePlayer = getPlayer();
-	if (!ePlayer) return false;
-
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 posPlayer = player_tmx->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 	float dist_sq = squaredDistXZ(myPos, posPlayer);
 
 	if (SBB::readBool("possMode") && dist_sq > 25.f) {
@@ -923,7 +871,7 @@ bool bt_guard::playerVisible(bool check_raycast) {
 		float distancia_vertical = squaredDistY(posPlayer, myPos);
 
 		if (distancia_vertical < dist_sq * 0.5f) { //Pitch < 30
-			if (getTransform()->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
+			if (my_tmx->isHalfConeVision(posPlayer, CONE_VISION)) { //Cono vision
 				if (dist_sq < DIST_SQ_PLAYER_DETECTION) { //Distancia
 					if (inJurisdiction(posPlayer)) { //Jurisdiccion
 						float distRay;
@@ -969,8 +917,7 @@ bool bt_guard::boxMovingDetected() {
 	if (ret) { //No bloquea vision
 		CHandle h = PhysxConversion::GetEntityHandle(*hit.getAnyHit(0).actor);
 		if (h.hasTag("box")) { //box?
-			CEntity* box = h;
-			TCompPolarized* pol_component = box->get<TCompPolarized>();
+			GET_COMP(pol_component, h, TCompPolarized);
 			if (pol_component && pol_component->moving) {
 				return true;
 			}
@@ -980,23 +927,18 @@ bool bt_guard::boxMovingDetected() {
 }
 
 bool bt_guard::rayCastToPlayer(int types, float& distRay, PxRaycastBuffer& hit) {
-	CEntity* ePlayer = getPlayer();
-	if (!ePlayer) return false;
-	TCompTransform* tPlayer = getPlayer()->get<TCompTransform>();
-	return rayCastToTransform(types, distRay, hit, tPlayer);
+	return rayCastToTransform(types, distRay, hit, player_tmx);
 }
 
 bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hit, TCompTransform* transform) {
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 	VEC3 origin = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
 	VEC3 direction = transform->getPosition() - myPos;
 	direction.Normalize();
 	float dist = DIST_RAYSHOT;
 	//rcQuery.types = types;
-	CEntity *e = myParent;
-	TCompCharacterController *cc = e->get<TCompCharacterController>();
-	Debug->DrawLine(origin + direction*(cc->GetRadius() + 0.075f), getTransform()->getFront(), 10.0f);
-	bool ret = g_PhysxManager->raycast(origin + direction*(cc->GetRadius() + 0.075f), direction, dist, hit);
+	Debug->DrawLine(origin + direction*(my_cc->GetRadius() + 0.075f), my_tmx->getFront(), 10.0f);
+	bool ret = g_PhysxManager->raycast(origin + direction*(my_cc->GetRadius() + 0.075f), direction, dist, hit);
 
 	if (ret)
 		distRay = hit.getAnyHit(0).distance;
@@ -1005,16 +947,14 @@ bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hi
 }
 
 bool bt_guard::rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit) {
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 	VEC3 origin = myPos + VEC3(0, PLAYER_CENTER_Y, 0);
-	VEC3 direction = getTransform()->getFront();
+	VEC3 direction = my_tmx->getFront();
 	direction.Normalize();
 	float dist = DIST_RAYSHOT;
 	//rcQuery.types = types;
-	CEntity *e = myParent;
-	TCompCharacterController *cc = e->get<TCompCharacterController>();
-	Debug->DrawLine(origin + direction*(cc->GetRadius() + 0.1f), getTransform()->getFront(), 10.0f);
-	bool ret = g_PhysxManager->raycast(origin + direction*(cc->GetRadius() + 0.1f), direction, dist, hit);
+	Debug->DrawLine(origin + direction*(my_cc->GetRadius() + 0.1f), my_tmx->getFront(), 10.0f);
+	bool ret = g_PhysxManager->raycast(origin + direction*(my_cc->GetRadius() + 0.1f), direction, dist, hit);
 
 	if (ret)
 		distRay = hit.getAnyHit(0).distance;
@@ -1025,13 +965,10 @@ bool bt_guard::rayCastToFront(int types, float& distRay, PxRaycastBuffer& hit) {
 void bt_guard::shootToPlayer() {
 	//If cant shoot returns
 	if (noShoot) return;
-	CEntity* ePlayer = getPlayer();
-	if (!ePlayer) return;
 
 	//Values
-	TCompTransform* tPlayer = ePlayer->get<TCompTransform>();
-	VEC3 posPlayer = tPlayer->getPosition();
-	VEC3 myPos = getTransform()->getPosition();
+	VEC3 posPlayer = player_tmx->getPosition();
+	VEC3 myPos = my_tmx->getPosition();
 	float distance = squaredDistXZ(myPos, posPlayer);
 
 	bool damage = false;
@@ -1068,12 +1005,11 @@ void bt_guard::shootToPlayer() {
 			dmg.source = entity->getName();
 			dmg.type = Damage::ABSORB;
 			dmg.actived = damage;
-			ePlayer->sendMsg(dmg);
+			thePlayer.sendMsg(dmg);
 		}
 	}
 	else {
-		TMsgUnpossesDamage msgUnpossess;
-		ePlayer->sendMsg(msgUnpossess);
+		thePlayer.sendMsg(TMsgUnpossesDamage());
 	}
 
 	//Render Debug
@@ -1097,17 +1033,12 @@ void bt_guard::shootToPlayer() {
 
 void bt_guard::drawShot(VEC3 dest) {
 	PROFILE_FUNCTION("guard bt: draw shot");
-	CEntity * ePlayer = getPlayer();
-	if (!ePlayer) return;
 	// Centro del personaje
-	TCompCharacterController * cc = ePlayer->get<TCompCharacterController>();
-	TCompTransform *t = ePlayer->get<TCompTransform>();
-	assert(cc || fatal("Player doesn't have character controller!"));
-	VEC3 posPlayer = cc->GetPosition();
+	VEC3 posPlayer = my_cc->GetPosition();
 
 	// Origin and rayshot
 	//VEC4 originShot4;
-	//VEC4::Transform(SHOT_OFFSET, getTransform()->asMatrix(), originShot4);
+	//VEC4::Transform(SHOT_OFFSET, my_tmx->asMatrix(), originShot4);
 	//VEC3 originShot = VEC3(originShot4.x, originShot4.y, originShot4.z);
 	GET_MY(skel, TCompSkeleton);
 	VEC3 hand = skel->getBonePos(KEYBONE_RHAND);
@@ -1121,10 +1052,11 @@ void bt_guard::drawShot(VEC3 dest) {
 }
 
 void bt_guard::removeBox(CHandle box_handle) {
-	CEntity* box = box_handle;
-	TCompPhysics* box_physx = box->get<TCompPhysics>();
-	int lateral_force = rand() % 2500;
-	box_physx->AddForce(VEC3(lateral_force, rand() % 100, 2500 - lateral_force));
+	GET_COMP(box_physx, box_handle, TCompPhysics);
+	if (box_physx) {
+		int lateral_force = rand() % 2500;
+		box_physx->AddForce(VEC3(lateral_force, rand() % 100, 2500 - lateral_force));
+	}
 }
 
 // -- Jurisdiction -- //
@@ -1289,8 +1221,8 @@ void bt_guard::goToPoint(VEC3 dest) {
 
 	// if we didn't reach the point
 	// Will it really work? It will work like teleport....
-	while (simpleDistXZ(getTransform()->getPosition(), dest) > DIST_REACH_PNT) {
-		getPath(getTransform()->getPosition(), dest);
+	while (simpleDistXZ(my_tmx->getPosition(), dest) > DIST_REACH_PNT) {
+		getPath(my_tmx->getPosition(), dest);
 		goTo(dest);
 	}
 
