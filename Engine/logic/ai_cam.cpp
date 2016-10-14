@@ -8,7 +8,7 @@
 #include "components\comp_light_dir_shadows.h"
 #include "components\entity.h"
 #include "components\entity_tags.h"
-
+#include "player_controllers/player_controller_base.h"
 map<string, statehandler> ai_cam::statemap = {};
 
 map<int, string> ai_cam::out = {};
@@ -38,8 +38,8 @@ void ai_cam::Init() {
 	SetMyEntity();
 	idle_wait = 0.0f;
 
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	TCompLightDirShadows *lshd = myEntity->get<TCompLightDirShadows>();
+	GET_MY(me_transform, TCompTransform);
+	GET_MY(lshd, TCompLightDirShadows);
 	PxRaycastBuffer hit;
 
 	bool ret = g_PhysxManager->raycast(me_transform->getPosition(), VEC3(0.0f, -1.0f, 0.0f), 20.0f, hit);
@@ -98,11 +98,10 @@ void ai_cam::Idle() {
 }
 bool ai_cam::playerInRange() {
 	PROFILE_FUNCTION("ai_cam: player in range");
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	GET_MY(me_transform, TCompTransform);
 	// player detection
-	CHandle hPlayer = tags_manager.getFirstHavingTag("raijin");
-	CEntity * eplayer = hPlayer;
-	TCompTransform * tplayer = eplayer->get<TCompTransform>();
+	CHandle hPlayer = CPlayerBase::handle_player;
+	GET_COMP(tplayer, hPlayer, TCompTransform);
 	VEC3 myposinitial = me_transform->getPosition();
 	myposinitial.y -= distToFloor;
 	if (!me_transform->isHalfConeVision(tplayer->getPosition(), deg2rad(15.0f)) || squaredDist(tplayer->getPosition(), myposinitial) > 100) {
@@ -117,8 +116,7 @@ bool ai_cam::playerInRange() {
 	VEC3 direction = origin - destiny;
 	float height = origin.y - destiny.y;
 
-	TCompCharacterController * cplayer = eplayer->get<TCompCharacterController>();
-
+	GET_COMP(cplayer, hPlayer, TCompCharacterController);
 	float playerHeight = cplayer->GetHeight();
 
 	VEC3 minplayerPos = tplayer->getPosition();
@@ -217,7 +215,7 @@ bool ai_cam::playerInRange() {
 void ai_cam::RotatingLeft() {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	if (!myEntity) return;
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	GET_MY(me_transform, TCompTransform);
 	VEC3 front = me_transform->getFront();
 	front.y = 0.0f;
 	front.Normalize();
@@ -247,7 +245,7 @@ void ai_cam::RotatingLeft() {
 void ai_cam::RotatingRight() {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	if (!myEntity) return;
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	GET_MY(me_transform, TCompTransform);
 	VEC3 front = me_transform->getFront();
 	front.y = 0.0f;
 	front.Normalize();
@@ -277,10 +275,9 @@ void ai_cam::AimPlayer()
 {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	if (!myEntity) return;
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
-	CHandle hPlayer = tags_manager.getFirstHavingTag("raijin");
-	CEntity * eplayer = hPlayer;
-	TCompTransform * tplayer = eplayer->get<TCompTransform>();
+	GET_MY(me_transform, TCompTransform);
+	CHandle hPlayer = CPlayerBase::handle_player;
+	GET_COMP(tplayer, hPlayer, TCompTransform);
 
 	float yaw, pitch;
 	me_transform->getAngles(&yaw, &pitch);

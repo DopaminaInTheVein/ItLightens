@@ -132,7 +132,16 @@ bool CRenderManager::sortByMesh(
 	return k1.mesh < k2.mesh;
 }
 
+#include "components\comp_render_static_mesh.h"
 void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
+
+
+	bool isDynamic = true;
+	if (owner.isValid()) {
+		TCompRenderStaticMesh* rsm = owner;
+		isDynamic = rsm->isDynamic();
+	}
+
 	CHandle ow = owner.getOwner();
 	//assert(ow.isValid());
 	if (!ow.isValid()) return;
@@ -158,6 +167,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 		k.aabb = h_aabb;
 		k.room = oroom;
 		k.isPlayer = playercandidate;
+		
 
 		if (k.material->tech->getCategory() != CRenderTechnique::DETAIL_OBJS && k.material->tech->getCategory() != CRenderTechnique::TRANSPARENT_OBJS) {
 			for (int idx = 0; idx < ROOMS_SIZE; idx++) {
@@ -199,6 +209,8 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 			k.room = oroom;
 			k.aabb = h_aabb;
 			k.isPlayer = playercandidate;
+			k.isDynamic = isDynamic;
+
 			if (!s.material->tech->usesBones()) {
 				for (auto room : oroom) {
 					if (room >= ROOMS_SIZE) continue;
@@ -563,6 +575,109 @@ void CRenderManager::renderUICulling(int room) {
 	renderedCulling.clear();
 }
 
+
+
+void CRenderManager::renderStaticShadowCasters(CHandle h_light, int room) {
+	CTraceScoped scope("Shadow Casters");
+	PROFILE_FUNCTION("SHADOW CASTERS OBJ");
+
+	if (!in_order_shadows) {
+		// sort the keys based on....
+		for (int idx = 0; idx < ROOMS_SIZE; idx++) {
+			std::sort(all_shadow_keys[idx].begin(), all_shadow_keys[idx].end(), &sortByMesh);
+		}
+		in_order_shadows = true;
+		++ntimes_sorted;
+	}
+
+	TShadowKey* it = &all_shadow_keys[room][0];
+	TShadowKey* end_it = &all_shadow_keys[room][all_shadow_keys[room].size() - 1];
+
+	static TShadowKey null_key;
+	memset(&null_key, 0x00, sizeof(TShadowKey));
+	const TShadowKey* prev_it = &null_key;
+
+	// Check if we have culling information from the camera source
+	CEntity* e_camera = h_light;
+	TCompRoom* cam_room = e_camera->get<TCompRoom>();
+
+	auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
+
+	if (i == cam_room->name.end()) {
+		return;
+	}
+
+	TCompCulling::TCullingBits* culling_bits = nullptr;
+	TCompCulling* culling = nullptr;
+
+	if (e_camera)
+		culling = e_camera->get<TCompCulling>();
+	if (culling)
+		culling_bits = &culling->bits;
+
+	// To get the index of each aabb
+	auto hm_aabbs = getHandleManager<TCompAbsAABB>();
+	const TCompAbsAABB* base_aabbs = hm_aabbs->getFirstObject();
+	int nkeys_rendered = 0;
+
+	bool valid = false;
+	while (true) {
+		PROFILE_FUNCTION("SHADOW CASTERS OBJ: while");
+
+		if (it->isDynamic) {
+			++it;
+			continue;
+		}
+
+		valid = true;
+
+		const TCompTransform* c_tmx = it->transform;
+
+		//assert(c_tmx);
+		if (c_tmx) {
+			PROFILE_FUNCTION("SHADOW CASTERS OBJ: render and activate");
+
+			if (culling_bits) {
+				TCompAbsAABB* aabb = it->aabb;
+				if (aabb) {
+					PROFILE_FUNCTION("SHADOW CASTERS OBJ: culling");
+					intptr_t idx = aabb - base_aabbs;
+					if (!culling_bits->test(idx)) {
+						valid = false;
+					}
+					nkeys_rendered++;
+				}
+			}
+			if (valid) {
+				activateWorldMatrix(c_tmx->asMatrix());
+				// If the shadows_keys were sorted by mesh
+				// I could skip the activation and just call it
+				// when the mesh changed, and only call the render
+				if (it->mesh != prev_it->mesh) {
+					it->mesh->activate();
+				}
+				else {
+					int i = 0;
+				}
+				it->mesh->render();
+				prev_it = it;
+			}
+		}
+		else {
+			//Puede no tener transform, ignoralo y ya esta
+			//fatal("render__manager: tranfrom from shadowcaster null");
+		}
+
+		if (it != end_it) {
+			++it;
+		}
+		else {
+			renderedCulling.push_back(nkeys_rendered);
+			return;
+		}
+	}
+}
+
 // ------------------------------------------
 void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	CTraceScoped scope("Shadow Casters");
@@ -588,9 +703,9 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	CEntity* e_camera = h_light;
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
 
-	auto i = find(cam_room->all_rooms.begin(), cam_room->all_rooms.end(), room);
+	auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
-	if (i == cam_room->all_rooms.end()) {
+	if (i == cam_room->name.end()) {
 		return;
 	}
 
@@ -610,6 +725,11 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	bool valid = false;
 	while (true) {
 		PROFILE_FUNCTION("SHADOW CASTERS OBJ: while");
+
+		if (!it->isDynamic) {
+			++it;
+			continue;
+		}
 
 		valid = true;
 
@@ -688,9 +808,9 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
 
-	auto i = find(cam_room->all_rooms.begin(), cam_room->all_rooms.end(), room);
+	auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
-	if (i == cam_room->all_rooms.end()) {
+	if (i == cam_room->name.end()) {
 		return;
 	}
 

@@ -22,11 +22,15 @@ bool TCompRenderStaticMesh::load(MKeyValue& atts) {
 #endif
 	static_mesh = Resources.get(res_name.c_str())->as<CStaticMesh>();
 	assert(static_mesh);
+
+	dynamic = !atts.getBool("static", true);
+
 	return true;
 }
 bool TCompRenderStaticMesh::save(std::ofstream& os, MKeyValue& atts)
 {
 	atts.put("name", res_name);
+	atts.put("static", !dynamic);
 	return true;
 }
 

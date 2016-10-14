@@ -29,6 +29,22 @@ public:
   void activateRT();
   void activateViewport();
 
+  ID3D11DepthStencilView* getZ() {
+	  return depth_stencil_view;
+  }
+
+  ID3D11RenderTargetView* getRT() {
+	  return render_target_view;
+  }
+
+  void setZ(ID3D11DepthStencilView* new_depth_stencil_view, ID3D11RenderTargetView* new_render_target_view) {
+	  clearZ();
+
+	  *depth_stencil_view = *new_depth_stencil_view;
+	  //*render_target_view = *new_render_target_view;
+	 // depth_stencil_view->
+  }
+
   void clear(VEC4 clear_color);
   void clearZ();
 

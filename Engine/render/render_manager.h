@@ -22,6 +22,7 @@ public:
 		CHandle                 transform;
 		CHandle                 aabb;
 		std::vector<int>        room;
+		
 		bool                    isPlayer;
 	};
 
@@ -30,6 +31,8 @@ public:
 		CHandle                 owner;
 		CHandle                 transform;
 		CHandle                 aabb;
+		bool					isDynamic;
+
 		std::vector<int>		room;
 		bool                    isPlayer;
 	};
@@ -73,6 +76,7 @@ public:
 	bool renderSkeleton(TKey * it);
 	bool renderUI(TKey * it);
 	void renderShadowCasters(CHandle h_light, int room);
+	void renderStaticShadowCasters(CHandle h_light, int room);
 	void renderShadowCastersSkin(CHandle h_light, int room);
 
 	void ModifyUI() {

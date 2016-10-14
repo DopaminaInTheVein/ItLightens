@@ -75,6 +75,7 @@ class CRenderDeferredModule : public IAppModule {
 	void renderGBuffer();
 	void activateRenderCamera3D();
 	void renderAccLight();
+	void generateStaticShadowMaps();	//to generate static shadow maps
 	void RenderPolarizedPP(int pol, const VEC4& color);
 	void ApplySSAO();
 	void MarkInteractives(const VEC4 & color, std::string, int slot);

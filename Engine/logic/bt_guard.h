@@ -71,9 +71,14 @@ class bt_guard : public npc, public TCompBase
 	CHandle myHandle;
 	CHandle myParent;
 	CHandle thePlayer;
-	TCompTransform * getTransform() override;
-	TCompCharacterController* getCC();
-	CEntity* getPlayer();
+	TCompTransform * my_tmx;
+	TCompTransform * player_tmx;
+	TCompCharacterController* my_cc;
+	TCompCharacterController* player_cc;
+
+	//TCompTransform * getTransform() override;
+	//TCompCharacterController* getCC();
+	//CEntity* getPlayer();
 
 	//Cambio Malla
 	//TCompRenderStaticMesh* mesh;
@@ -178,8 +183,6 @@ class bt_guard : public npc, public TCompBase
 	// tree root
 	static btnode* root;
 
-	CHandle getParent() override { return CHandle(this).getOwner(); }
-
 	int step_counter = 0;
 	bool chasing = false;
 	static int guards_chasing;
@@ -259,18 +262,11 @@ public:
 	//TODO: remove, testing gameplay
 	void artificialInterrupt();
 
-	bool getUpdateInfo() {
-		animController = GETH_MY(SkelControllerGuard);
-		//dbg("Time looking for: %f\n", looking_around_time);
-		return true;
-	}
-
+	bool getUpdateInfo() override;
 	void update(float dt) {
-		if (!isInRoom(myParent))return;
-		TCompTransform * t = compBaseEntity->get<TCompTransform>();
-		Debug->DrawLine(t->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
-		Debug->DrawLine(t->getPosition(), t->getPosition() + t->getFront(), VEC3(1, 1, 0));
-		Debug->DrawLine(t->getPosition(), t->getPosition() + t->getLeft(), VEC3(1, 1, 0));
+		Debug->DrawLine(my_tmx->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
+		Debug->DrawLine(my_tmx->getPosition(), my_tmx->getPosition() + my_tmx->getFront(), VEC3(1, 1, 0));
+		Debug->DrawLine(my_tmx->getPosition(), my_tmx->getPosition() + my_tmx->getLeft(), VEC3(1, 1, 0));
 		if (curkpt >= 0) Debug->DrawLine(getTransform()->getPosition(), keyPoints[curkpt].pos + VEC3_UP, VEC3(1.f, 1.f, 1.f));
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
@@ -305,6 +301,10 @@ public:
 	float timerStunt, _timerStunt;
 
 	void onDifficultyChanged(const TMsgDifficultyChanged&);
+
+	TCompTransform * getTransform() { return my_tmx; };
+	CHandle getParent() override { return MY_OWNER; };
+	TCompCharacterController * getCC() { return my_cc; }
 
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)
 };

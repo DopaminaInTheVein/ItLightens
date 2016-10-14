@@ -50,7 +50,7 @@ void workbench_controller::Init() {
 	out[BUSY] = "BUSY";
 
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	GET_MY(me_transform, TCompTransform);
 	VEC3 curr_pos = me_transform->getPosition();
 
 	SBB::postInt(full_name, INACTIVE);		//init my state on the board
@@ -107,7 +107,7 @@ void workbench_controller::SetMyEntity() {
 void workbench_controller::SendMessageEmpty() {
 	SetMyEntity(); //needed in case address Entity moved by handle_manager
 	if (!myEntity) return;
-	TCompTransform *me_transform = myEntity->get<TCompTransform>();
+	GET_MY(me_transform, TCompTransform);
 	VEC3 curr_pos = me_transform->getPosition();
 
 	msg_empty.pos = curr_pos;

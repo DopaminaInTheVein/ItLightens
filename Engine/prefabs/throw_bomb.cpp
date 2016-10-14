@@ -21,9 +21,9 @@ float CThrowBomb::radius_st = 2.f;
 VEC3 CThrowBomb::offset_init_throw = VEC3(0.2f, 0.1f, 0.2f);
 
 bool CThrowBomb::getUpdateInfo() {
-	transform = compBaseEntity->get<TCompTransform>();
+	transform = GETH_MY(TCompTransform);
 	if (!transform) return false;
-	physics = compBaseEntity->get<TCompPhysics>();
+	physics = GETH_MY(TCompPhysics);
 	if (!physics) return false;
 	rd = physics->getActor()->isRigidDynamic();
 	if (!rd) return false;

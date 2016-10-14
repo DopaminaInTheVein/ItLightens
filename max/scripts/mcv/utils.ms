@@ -334,3 +334,27 @@ fn transferUi orig dest = (
 	setUserPropBuffer dest props
 	dest.name = orig.name
 )
+
+-- Selections
+fn selectSpecial = (
+	clearSelection()
+	for obj in $* do (
+		if (getUserProp obj "typeObject" != undefined) then (
+				selectMore obj
+		)
+	)	
+)
+
+fn selectDynamic = (
+	clearSelection()
+	for obj in $* do (
+		if (getUserProp obj "staticMesh") == undefined then (
+			if (getUserProp obj "skeleton") == undefined then (
+				continue
+			)
+		)
+		if not (isStatic obj) then (
+			selectMore obj
+		)
+	)	
+)

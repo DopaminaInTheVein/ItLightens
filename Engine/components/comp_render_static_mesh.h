@@ -9,6 +9,7 @@ class CStaticMesh;
 struct TCompRenderStaticMesh : public TCompBase {
 	static CHandle last_loaded_static_mesh;
 	bool onlyDebug = false;
+	bool dynamic = false;
 	const CStaticMesh* static_mesh;
 	std::string res_name;
 	~TCompRenderStaticMesh();
@@ -18,6 +19,7 @@ struct TCompRenderStaticMesh : public TCompBase {
 	void unregisterFromRender();
 	void registerToRender();
 	void onGetLocalAABB(const TMsgGetLocalAABB& msg);
+	bool isDynamic() { return dynamic; }
 };
 
 #endif
