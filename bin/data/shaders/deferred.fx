@@ -369,7 +369,14 @@ void PSLightDir(
 float tapAt(float2 homo_coords, float depth) {
   float amount = txShadowMap.SampleCmpLevelZero(samPCFShadows
     , homo_coords, depth);
-  return amount;
+	
+	float amount_static = txShadowMapStatic.SampleCmpLevelZero(samPCFShadows
+	, homo_coords, depth);
+	
+	if(amount < amount_static)
+		return amount; 
+	else
+		return amount_static;
 }
 
 // -------------------------
@@ -484,7 +491,7 @@ void PSLightDirShadows(
 
   //inv_shadows = 1-att_factor;
   inv_shadows = 1-att_factor*NLWarped;
-  inv_shadows *= light_mask;
+  inv_shadows *= (light_mask*light_mask);
   //inv_shadows /= 1.5;
   
   

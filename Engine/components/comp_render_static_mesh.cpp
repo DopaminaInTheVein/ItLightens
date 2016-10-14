@@ -24,6 +24,7 @@ bool TCompRenderStaticMesh::load(MKeyValue& atts) {
 	assert(static_mesh);
 
 	dynamic = !atts.getBool("static", true);
+
 	return true;
 }
 bool TCompRenderStaticMesh::save(std::ofstream& os, MKeyValue& atts)

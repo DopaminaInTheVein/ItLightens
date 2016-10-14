@@ -402,6 +402,7 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
 	});
 
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWMAP);
+	CTexture::deactivate(TEXTURE_SLOT_SHADOWMAP_STATICS);
 }
 
 void CRenderDeferredModule::addAmbientPass() {
@@ -566,6 +567,23 @@ void CRenderDeferredModule::renderAccLight() {
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);*/
+}
+
+// ----------------------------------------------
+void CRenderDeferredModule::generateStaticShadowMaps() {
+	PROFILE_FUNCTION("generateShadowMaps");
+	CTraceScoped scope("generateShadowMaps");
+
+	// Llamar al metodo generateShadowMap para todas los components de tipo dir_shadows
+	//getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::generateShadowMap);
+
+	getHandleManager<TCompLightDirShadows>()->each([](TCompLightDirShadows* c) {
+		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
+		// la world para la mesh y las constantes en el pixel shader
+		PROFILE_FUNCTION("check gen shadow");
+
+		c->generateStaticShadowMap();
+	});
 }
 
 // ----------------------------------------------

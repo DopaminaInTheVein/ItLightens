@@ -17,6 +17,12 @@ bool TCompLightDirShadows::load(MKeyValue& atts) {
 	setObjName(rt_shadows, "rt_shadows");
 	assert(is_ok);
 
+	rt_shadows_base = new CRenderToTexture();
+	// I don't need a color buffer, just the ZBuffer
+	is_ok = rt_shadows_base->createRT("ShadowMapBase", Render.getXRes(), Render.getYRes(), DXGI_FORMAT_UNKNOWN, DXGI_FORMAT_R32_TYPELESS);
+	setObjName(rt_shadows, "rt_shadows_base");
+	assert(is_ok);
+
 	enabled = atts.getBool("enabled", true);
 
 	return is_ok;
@@ -37,7 +43,39 @@ void TCompLightDirShadows::activate() {
 	CHandle owner = CHandle(this).getOwner();
 	activateWorldMatrix(getViewProjection().Invert());
 	rt_shadows->getZTexture()->activate(TEXTURE_SLOT_SHADOWMAP);
+	rt_shadows_base->getZTexture()->activate(TEXTURE_SLOT_SHADOWMAP_STATICS);
 	uploadShaderCtes(owner);
+}
+
+void TCompLightDirShadows::generateStaticShadowMap() {
+	if (!enabled)
+		return;
+	assert(rt_shadows_base);
+	PROFILE_FUNCTION("shadows: generateShadowMapTest");
+	// Vamos a empezar a pintar en el shadow map
+	rt_shadows_base->clearZ();
+	//rt_shadows->setZ(rt_shadows_base->getZ(), rt_shadows_base->getRT());
+	//
+	rt_shadows_base->activateRT();
+	activateRS(RSCFG_SHADOWS);
+
+	// Desde MI punto de vista, el pt de vista de la luz direccional
+	// que genera sombras
+	activateCamera(this);
+
+	// activar la tech de shadow map generation
+	Resources.get("shadow_gen.tech")->as<CRenderTechnique>()->activate();
+
+	// Pintar los shadow casters
+	RenderManager.renderStaticShadowCasters(CHandle(this).getOwner(), SBB::readSala());
+
+	// activar la tech de shadow map generation
+	//Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();
+
+	// Pintar los shadow casters
+	//RenderManager.renderShadowCastersSkin(CHandle(this).getOwner(), SBB::readSala());
+
+	activateRS(RSCFG_DEFAULT);
 }
 
 void TCompLightDirShadows::generateShadowMap() {
@@ -45,9 +83,13 @@ void TCompLightDirShadows::generateShadowMap() {
 		return;
 	assert(rt_shadows);
 
+	PROFILE_FUNCTION("shadows: generateShadowMap");
+
 	// Vamos a empezar a pintar en el shadow map
-	rt_shadows->activateRT();
 	rt_shadows->clearZ();
+	//rt_shadows->setZ(rt_shadows_base->getZ(), rt_shadows_base->getRT());
+	//
+	rt_shadows->activateRT();
 	activateRS(RSCFG_SHADOWS);
 
 	// Desde MI punto de vista, el pt de vista de la luz direccional
