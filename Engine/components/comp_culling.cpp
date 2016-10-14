@@ -47,12 +47,11 @@ bool TCompCulling::CPlane::isCulled(const AABB* aabb) const {
 }
 
 void TCompCulling::update() {
-	compBaseEntity = MY_OWNER;
-	if (!compBaseEntity) return;
-
 	//PROFILE_FUNCTION("TCompCulling: Update");
 	// Get access to the comp_camera in a sibling component
-	TCompRoom* room = compBaseEntity->get<TCompRoom>();
+	compBaseEntity = MY_OWNER;
+	if (!compBaseEntity) return;
+	GET_MY(room, TCompRoom);
 	if (room) {
 		std::vector<int> rooms = room->name;
 		if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
@@ -64,8 +63,7 @@ void TCompCulling::update() {
 				CEntity* ep = CPlayerBase::handle_player;
 				if (ep) {
 					TCompTransform* t = ep->get<TCompTransform>();
-					TCompTransform* tl = compBaseEntity->get<TCompTransform>();
-
+					GET_MY(tl, TCompTransform);
 					if (t->getPosition().y > 10) {
 						if (tl->getPosition().y < 12)
 							return;
@@ -80,7 +78,7 @@ void TCompCulling::update() {
 	}
 
 	MAT44 view_proj;
-	compBaseEntity->sendMsg(TMsgGetCullingViewProj{ &view_proj });
+	MY_OWNER.sendMsg(TMsgGetCullingViewProj{ &view_proj });
 
 	// Construir el set de planos usando la view_proj
 	planes.fromViewProjection(view_proj);

@@ -195,13 +195,9 @@ void magnet_door::notifyNewState()
 }
 
 bool magnet_door::getUpdateInfo() {
-	//My Info
-	myEntity = compBaseEntity;
-
-	CEntity* eMe = myEntity;
-	transform = eMe->get<TCompTransform>();
+	transform = GETH_MY(TCompTransform);
 	if (!transform) return false;
-	physics = eMe->get<TCompPhysics>();
+	physics = GETH_MY(TCompPhysics);
 	if (!physics) return false;
 
 	//Player Info

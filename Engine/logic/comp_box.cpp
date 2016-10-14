@@ -9,11 +9,9 @@
 VHandles TCompBox::all_boxes;
 
 void TCompBox::init() {
-	mParent = CHandle(this).getOwner();
-	if (!mParent.isValid()) return;
 	if (carePosition) {
-		CEntity *e = mParent;
-		TCompTransform *t = e->get<TCompTransform>();
+		GET_MY(t, TCompTransform);
+		if (!t) return;
 		originPoint = t->getPosition();
 	}
 	all_boxes.push_back(mParent);
@@ -23,7 +21,8 @@ void TCompBox::update(float elapsed) {
 	if (carePosition && !added) {
 		if (!mParent.isValid()) return;
 		CEntity *e = mParent;
-		TCompTransform *t = e->get<TCompTransform>();
+		GET_MY(t, TCompTransform);
+		if (!t) return;
 		float d = simpleDist(t->getPosition(), originPoint);
 		if (d > dist_separation) {
 			ImTooFar();
@@ -33,22 +32,19 @@ void TCompBox::update(float elapsed) {
 }
 
 void TCompBox::stuntNpcs() {
-	CEntity * eMe = CHandle(this).getOwner();
-	assert(eMe);
-	TCompPhysics * pc = eMe->get<TCompPhysics>();
-	assert(pc);
+	GET_MY(pc, TCompPhysics);
+	if (!pc)return;
 	auto rd = pc->getActor()->isRigidDynamic();
 	if (!rd) return;
 	VEC3 speed = PhysxConversion::PxVec3ToVec3(rd->isRigidDynamic()->getLinearVelocity());
 	if (speed.LengthSquared() > 10.f) {
-		TCompTransform * tMe = eMe->get<TCompTransform>();
-		assert(tMe);
+		GET_MY(tMe, TCompTransform);
+		if (!tMe) return;
 		VHandles npcs = tags_manager.getHandlesByTag(getID("AI"));
 		for (CHandle npc : npcs) {
 			if (npc.isValid()) {
-				CEntity * eNpc = npc;
-				TCompTransform * tNpc = eNpc->get<TCompTransform>();
-				assert(tNpc);
+				GET_COMP(tNpc, npc, TCompTransform);
+				if (!tNpc) return;
 				float dist = simpleDistXZ(tMe->getPosition(), tNpc->getPosition());
 				if (dist < 1.5f) {
 					//Check direction
@@ -61,7 +57,7 @@ void TCompBox::stuntNpcs() {
 					}
 					if (testDirection) {
 						TMsgBoxHit	msg;
-						eNpc->sendMsg(msg);
+						npc.sendMsg(msg);
 					}
 				}
 			}
@@ -109,12 +105,10 @@ void TCompBox::onUnLeaveBox(const TMsgLeaveBox& msg) {
 	hs = SBB::readHandlesVector("wptsBoxes");
 	hs.erase(std::remove(hs.begin(), hs.end(), mParent), hs.end());
 	SBB::postHandlesVector("wptsBoxes", hs);
-	CEntity *e = mParent;
-	if (!e) return;
-	TCompPhysics *p = e->get<TCompPhysics>();
-	TCompTransform *t = e->get<TCompTransform>();
-	originPoint = t->getPosition();
-	p->setKinematic(false);
+	GET_MY(p, TCompPhysics);
+	GET_MY(t, TCompTransform);
+	if (t) originPoint = t->getPosition();
+	if (p) p->setKinematic(false);
 }
 
 TCompBox::~TCompBox() {

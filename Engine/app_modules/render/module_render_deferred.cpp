@@ -278,8 +278,7 @@ void CRenderDeferredModule::addPointLights() {
 	// Activar la mesh unit_sphere
 	getHandleManager<TCompLightPoint>()->each([mesh](TCompLightPoint* c) {
 		PROFILE_FUNCTION("upload point light");
-		GET_ECOMP(room, c->compBaseEntity, TCompRoom);
-		//TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
+		GET_COMP(room, CHandle(c).getOwner(), TCompRoom);
 		if (room) {
 			std::vector<int> rooms = room->name;
 			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
@@ -291,8 +290,8 @@ void CRenderDeferredModule::addPointLights() {
 					CEntity* ep = CPlayerBase::handle_player;
 					if (ep) {
 						TCompTransform* t = ep->get<TCompTransform>();
-						GET_ECOMP(tl, c->compBaseEntity, TCompTransform);
-						//TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
+						//GET_COMP(tl, CHandle(c).getOwner(), TCompTransform);
+						TCompTransform* tl = nullptr;// c->compBaseEntity->get<TCompTransform>();
 						if (t && tl) {
 							if (t->getPosition().y > 10) {
 								if (tl->getPosition().y < 12)
@@ -332,8 +331,7 @@ void CRenderDeferredModule::addDirectionalLights() {
 		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
 		// la world para la mesh y las constantes en el pixel shader
 		PROFILE_FUNCTION("upload light dir");
-		GET_ECOMP(room, c->compBaseEntity, TCompRoom);
-		//TCompRoom* room = c->compBaseEntity->get<TCompRoom>();
+		GET_COMP(room, CHandle(c).getOwner(), TCompRoom);
 		if (room) {
 			std::vector<int> rooms = room->name;
 			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
@@ -342,11 +340,10 @@ void CRenderDeferredModule::addDirectionalLights() {
 			else {
 				//fast fix for room3
 				if (SBB::readSala() == 2) {
-					CEntity* ep = tags_manager.getFirstHavingTag("player");
-					if (ep) {
-						TCompTransform* t = ep->get<TCompTransform>();
-						GET_ECOMP(tl, c->compBaseEntity, TCompTransform);
-						//TCompTransform* tl = c->compBaseEntity->get<TCompTransform>();
+					CHandle hp = CPlayerBase::handle_player;
+					if (hp.isValid()) {
+						GET_COMP(t, hp, TCompTransform);
+						GET_COMP(tl, CHandle(c).getOwner(), TCompTransform);
 						if (t && tl) {
 							if (t->getPosition().y > 10) {
 								if (tl->getPosition().y < 12)
@@ -630,14 +627,14 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 
 		getHandleManager<TCompPolarized>()->each([pol](TCompPolarized* c) {
 			if (c->getForce().polarity == pol) {	//render polarity designed only
-				CEntity *e = CHandle(c).getOwner();
-				TCompRenderStaticMesh *rsm = e->get<TCompRenderStaticMesh>();
-				TCompTransform *c_tmx = e->get<TCompTransform>();
+				CHandle h = CHandle(c).getOwner();
+				GET_COMP(rsm, h, TCompRenderStaticMesh);
+				GET_COMP(c_tmx, h, TCompTransform);
 
-				activateWorldMatrix(c_tmx->asMatrix());
+				if (c_tmx) activateWorldMatrix(c_tmx->asMatrix());
 
 				//rsm->static_mesh->slots[0].material->activateTextures();
-				rsm->static_mesh->slots[0].mesh->activateAndRender();
+				if (rsm) rsm->static_mesh->slots[0].mesh->activateAndRender();
 
 				//rsm->static_mesh->slots[0].material->deactivateTextures();
 			}
