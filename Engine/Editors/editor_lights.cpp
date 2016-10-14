@@ -153,7 +153,7 @@ bool CEditorLights::AddLightToEngine(TypeLight type, bool* rooms)
 		CHandle new_h = hm->createHandle();
 		TCompRoom* room_comp = new_h;
 		for (int r : rooms_selected) {
-			room_comp->name.push_back(r);
+			room_comp->addRoom(r);
 		}
 		((CEntity*)(h.getOwner()))->add(new_h);
 	}

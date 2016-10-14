@@ -279,32 +279,7 @@ void CRenderDeferredModule::addPointLights() {
 	getHandleManager<TCompLightPoint>()->each([mesh](TCompLightPoint* c) {
 		PROFILE_FUNCTION("upload point light");
 		GET_COMP(room, CHandle(c).getOwner(), TCompRoom);
-		if (room) {
-			std::vector<int> rooms = room->name;
-			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
-				return;			//light on diferent room
-			}
-			else {
-				//fast fix for room3
-				if (SBB::readSala() == 2) {
-					CHandle hp = CPlayerBase::handle_player;
-					if (hp.isValid()) {
-						GET_COMP(t, hp, TCompTransform);
-						GET_COMP(tl, CHandle(c).getOwner(), TCompTransform);
-						if (t && tl) {
-							if (t->getPosition().y > 10) {
-								if (tl->getPosition().y < 12)
-									return;
-							}
-							else {
-								if (tl->getPosition().y > 12)
-									return;
-							}
-						}
-					}
-				}
-			}
-		}
+		if (room && !room->sameRoomPlayer()) return;
 		// Subir todo lo que necesite la luz para pintarse en el acc light buffer
 		// la world para la mesh y las constantes en el pixel shader
 		c->activate();
@@ -331,32 +306,7 @@ void CRenderDeferredModule::addDirectionalLights() {
 		// la world para la mesh y las constantes en el pixel shader
 		PROFILE_FUNCTION("upload light dir");
 		GET_COMP(room, CHandle(c).getOwner(), TCompRoom);
-		if (room) {
-			std::vector<int> rooms = room->name;
-			if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
-				return;			//light on diferent room
-			}
-			else {
-				//fast fix for room3
-				if (SBB::readSala() == 2) {
-					CHandle hp = CPlayerBase::handle_player;
-					if (hp.isValid()) {
-						GET_COMP(t, hp, TCompTransform);
-						GET_COMP(tl, CHandle(c).getOwner(), TCompTransform);
-						if (t && tl) {
-							if (t->getPosition().y > 10) {
-								if (tl->getPosition().y < 12)
-									return;
-							}
-							else {
-								if (tl->getPosition().y > 12)
-									return;
-							}
-						}
-					}
-				}
-			}
-		}
+		if (room && !room->sameRoomPlayer()) return;
 
 		c->activate();
 		// Pintar la mesh que hemos activado hace un momento

@@ -76,11 +76,8 @@ float random(float vmin, float vmax) {
 
 bool isInRoom(CHandle h) {
 	int pjSala = SBB::readSala();
-	if (pjSala == -1) return true;
 	GET_COMP(room, h, TCompRoom);
-	if (!room) return true;
-	if (std::find(room->name.begin(), room->name.end(), -1) != room->name.end())  return true;
-	return std::find(room->name.begin(), room->name.end(), pjSala) != room->name.end();
+	return ROOM_IS_IN(room, pjSala);
 }
 
 float squared(float i) {

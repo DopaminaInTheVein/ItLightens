@@ -12,15 +12,15 @@
 
 bool TCompRoomSwitch::load(MKeyValue & atts)
 {
-	room_back.push_back(atts.getInt("back_room", -1));
-	room_front.push_back(atts.getInt("front_room", -1));
+	room_back = TRoom(atts.getInt("back_room", -1));
+	room_front = TRoom(atts.getInt("front_room", -1));
 	return true;
 }
 
 bool TCompRoomSwitch::save(std::ofstream& ofs, MKeyValue& atts)
 {
-	atts.put("back_room", room_back[0]);
-	atts.put("front_room", room_front[0]);
+	atts.put("back_room", room_back.print());
+	atts.put("front_room", room_front.print());
 	return true;
 }
 
@@ -41,14 +41,12 @@ void TCompRoomSwitch::onTriggerExit(const TMsgTriggerOut & msg)
 	CEntity * me_e = me_h;
 	TCompTransform * t = me_e->get<TCompTransform>();
 	if (t->isInFront(pt->getPosition())) {
-		if (room->setName(room_front)) {
-			SBB::postSala(room_front[0]);
-		}
+		room->setRoom(room_front);
+		SBB::postSala(room_front.getSingleRoom());
 	}
 	else {
-		if (room->setName(room_back)) {
-			SBB::postSala(room_back[0]);
-		}
+		room->setRoom(room_back);
+		SBB::postSala(room_back.getSingleRoom());
 	}
 	CEntity * tasklist_e = tags_manager.getFirstHavingTag(getID("tasklist"));
 	if (tasklist_e) {

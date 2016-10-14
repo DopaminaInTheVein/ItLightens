@@ -3,10 +3,11 @@
 
 #include "comp_trigger.h"
 #include "comp_msgs.h"
+#include "comp_room.h"
 
 struct TCompRoomSwitch : public TTrigger {
-	std::vector<int> room_back;
-	std::vector<int> room_front;
+	TRoom room_back;
+	TRoom room_front;
 
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& ofs, MKeyValue& atts);

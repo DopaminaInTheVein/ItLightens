@@ -52,9 +52,7 @@ void Tasklist::init() {
 	CEntity * e = h;
 	TCompRoom * room = e->get<TCompRoom>();
 
-	std::vector<int> rooms(1);
-	rooms[0] = 99999999;
-	room->setName(rooms);
+	room->setRoom(TRoom(ROOM_LIMBO));
 
 	TCompTransform * t = e->get<TCompTransform>();
 	t->setPosition(pointsPlaces[0]);
@@ -118,16 +116,16 @@ void Tasklist::update(float dt) {
 	CEntity * e2 = end;
 	TCompRoom * room2 = e2->get<TCompRoom>();
 
-	std::vector<int> rooms(1);
+	int new_sala;
 	CHandle player = tags_manager.getFirstHavingTag(getID("player"));
 	if (GameController->isSenseVisionEnabled()) {
-		rooms[0] = pointsRooms[SBB::readInt("current_tasklist")];
+		new_sala = pointsRooms[SBB::readInt("current_tasklist")];
 	}
 	else {
-		rooms[0] = 99999999;
+		new_sala = ROOM_LIMBO;
 	}
-	room->setName(rooms);
-	room2->setName(rooms);
+	room->setRoom(TRoom(new_sala));
+	room2->setRoom(TRoom(new_sala));
 }
 
 bool Tasklist::save(std::ofstream& ofs, MKeyValue& atts) {

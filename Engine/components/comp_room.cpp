@@ -3,19 +3,25 @@
 #include "logic/sbb.h"
 
 #include "player_controllers/player_controller_base.h"
-std::set<int> TCompRoom::all_rooms = std::set<int>();
+
+#include "entity.h"
+
+using namespace std;
+set<int> TCompRoom::all_rooms = set<int>();
 
 bool TCompRoom::load(MKeyValue& atts) {
-	std::string to_parse = atts.getString("name", "-1");
-	std::stringstream ss(to_parse);
-	std::string number;
-	strcpy(rooms_raw, to_parse.c_str());
-	while (std::getline(ss, number, '/')) {
-		int value = std::stoi(number);
-		if (std::find(name.begin(), name.end(), value) == name.end()) {
-			name.push_back(value);
-			all_rooms.insert(value);
+	string to_parse = atts.getString("name", "-1");
+	stringstream ss(to_parse);
+	string number;
+	//strcpy(rooms_raw, to_parse.c_str());
+	while (getline(ss, number, '/')) {
+		int value = stoi(number);
+		if (value == ROOM_ALL) {
+			room = TRoom();
+			break;
 		}
+		room.addRoom(value);
+		all_rooms.insert(value);
 	}
 	return true;
 }
@@ -23,29 +29,115 @@ bool TCompRoom::load(MKeyValue& atts) {
 void TCompRoom::init()
 {
 	if (CHandle(this).getOwner().hasTag("player")) {
-		SBB::postSala(name[0]);
+		SBB::postSala(room.getSingleRoom());
 	}
 }
 
-bool TCompRoom::save(std::ofstream& os, MKeyValue& atts) {
-	std::stringstream ss;
-	for (int n : name) {
-		if (ss.str() != "") ss << "/";
-		ss << n;
-	}
-	atts.put("name", ss.str());
-	return true;
-}
-
-bool TCompRoom::setName(std::vector<int> newName) {
-	name = newName;
+bool TCompRoom::save(ofstream& os, MKeyValue& atts) {
+	atts.put("name", room.print());
 	return true;
 }
 
 void TCompRoom::renderInMenu() {
-	std::string all_rooms = std::to_string(name[0]);
-	for (int i = 1; i < name.size(); i++) {
-		all_rooms += " " + std::to_string(name[i]);
+	ImGui::Text(room.print().c_str());
+}
+
+//bool TCompRoom::sameRoom(const TRoom& r)
+//{
+//	return room.sameRoom(r);
+//}
+//bool TCompRoom::sameRoom(const CHandle& h)
+//{
+//	TCompRoom* other_room = h;
+//	if (!other_room) other_room = GETH_COMP(h, TCompRoom);
+//	return other_room->sameRoom(room);
+//}
+
+bool TCompRoom::sameRoomPlayer()
+{
+	int sala_player = SBB::readSala();
+	bool res = room.sameRoom(sala_player);
+	if (res && sala_player == 2) {
+		//fast fix for room3
+		CHandle hp = CPlayerBase::handle_player;
+		if (hp.isValid()) {
+			GET_COMP(t, hp, TCompTransform);
+			GET_MY(tl, TCompTransform);
+			if (t && tl) {
+				if (t->getPosition().y > 10) {
+					if (tl->getPosition().y < 12)
+						res = false;
+				}
+				else {
+					if (tl->getPosition().y > 12)
+						res = false;
+				}
+			}
+		}
 	}
-	ImGui::Text(all_rooms.c_str());
+	return res;
+}
+
+//TRoom functions
+TRoom::TRoom(int room)
+{
+	addRoom(room);
+}
+
+void TRoom::addRoom(int r)
+{
+	if (r >= 0 && r < ROOM_MAX_SIZE)
+		list[r] = true;
+	else special_room = r;
+}
+
+set<int> TRoom::getList()
+{
+	std::set<int> res;
+	for (int i = 0; i < ROOM_MAX_SIZE; i++) {
+		res.insert(i);
+	}
+	if (special_room != ROOM_ALL) res.insert(special_room);
+	return res;
+}
+
+int TRoom::getSingleRoom()
+{
+	int res = ROOM_ALL;
+	int found = 0;
+	for (int i = 0; i < ROOM_MAX_SIZE; i++) {
+		if (list[i]) {
+			res = i;
+			found++;
+		}
+	}
+	assert(found <= 1);
+	if (res == ROOM_ALL) return special_room;
+	return res;
+}
+
+string TRoom::print()
+{
+	if (empty()) {
+		return "-1";
+	}
+	else {
+		stringstream ss;
+		bool first = true;
+		for (int i = 0; i < ROOMS_SIZE; i++) {
+			if (list[i]) {
+				if (!first) ss << "/";
+				ss << i;
+				first = false;
+			}
+		}
+		return ss.str();
+	}
+}
+
+bool TRoom::sameRoom(int room)
+{
+	if (room == ROOM_ALL || empty()) return true;
+	if (room >= ROOMS_SIZE) return special_room == room;
+	return list[room];
 }
