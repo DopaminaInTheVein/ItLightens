@@ -75,7 +75,6 @@ class CRenderDeferredModule : public IAppModule {
 	void renderGBuffer();
 	void activateRenderCamera3D();
 	void renderAccLight();
-	void generateStaticShadowMaps();	//to generate static shadow maps
 	void RenderPolarizedPP(int pol, const VEC4& color);
 	void ApplySSAO();
 	void MarkInteractives(const VEC4 & color, std::string, int slot);
@@ -96,6 +95,7 @@ public:
 	void stop() override;
 	void update(float dt);
 	void render() override;
+	void generateStaticShadowMaps();	//to generate static shadow maps
 	void renderEspVisionMode();
 	void renderEspVisionModeFor(std::string tag, VEC4 color_mask, int stencil_mask, bool use_skeleton = false);
 	void renderDetails(CRenderTechnique::eCategory type);

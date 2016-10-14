@@ -625,8 +625,13 @@ void CRenderManager::renderStaticShadowCasters(CHandle h_light, int room) {
 		PROFILE_FUNCTION("SHADOW CASTERS OBJ: while");
 
 		if (it->isDynamic) {
-			++it;
-			continue;
+			if (it != end_it) {
+				++it;
+				continue;
+			}
+			else {
+				return;
+			}
 		}
 
 		valid = true;
@@ -727,8 +732,13 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 		PROFILE_FUNCTION("SHADOW CASTERS OBJ: while");
 
 		if (!it->isDynamic) {
-			++it;
-			continue;
+			if (it != end_it) {
+				++it;
+				continue;
+			}
+			else {
+				return;
+			}
 		}
 
 		valid = true;
