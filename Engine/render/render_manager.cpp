@@ -601,9 +601,9 @@ void CRenderManager::renderStaticShadowCasters(CHandle h_light, int room) {
 	CEntity* e_camera = h_light;
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
 
-	auto i = find(cam_room->all_rooms.begin(), cam_room->all_rooms.end(), room);
+	auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
-	if (i == cam_room->all_rooms.end()) {
+	if (i == cam_room->name.end()) {
 		return;
 	}
 
@@ -703,9 +703,9 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	CEntity* e_camera = h_light;
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
 
-	auto i = find(cam_room->all_rooms.begin(), cam_room->all_rooms.end(), room);
+	auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
-	if (i == cam_room->all_rooms.end()) {
+	if (i == cam_room->name.end()) {
 		return;
 	}
 
@@ -808,9 +808,9 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
 
-	auto i = find(cam_room->all_rooms.begin(), cam_room->all_rooms.end(), room);
+	auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
-	if (i == cam_room->all_rooms.end()) {
+	if (i == cam_room->name.end()) {
 		return;
 	}
 
