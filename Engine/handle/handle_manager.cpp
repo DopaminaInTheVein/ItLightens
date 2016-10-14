@@ -2,10 +2,21 @@
 #include "handle_manager.h"
 
 #include "utils/XMLParser.h"
+#include "utils/utils.h"
 
 uint32_t CHandleManager::next_type_of_handle_manager = 1;
 CHandleManager* CHandleManager::all_managers[CHandle::max_types];
 std::map<std::string, CHandleManager*> CHandleManager::all_manager_by_name;
+
+bool CHandleManager::isValid(CHandle h) const {
+	assert(h.getType() == type);
+	if (h.getExternalIndex() >= num_objs_capacity) {
+		dbg("External index bigger than capacity! (%s)", name);
+		assert(false);
+	}
+	auto ed = external_to_internal + h.getExternalIndex();
+	return ed->current_age == h.getAge();
+}
 
 void CHandleManager::destroyAllPendingObjects() {
 	PROFILE_FUNCTION("destryoPendingObj");

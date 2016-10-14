@@ -22,8 +22,9 @@ public:
 		CHandle                 transform;
 		CHandle                 aabb;
 		std::vector<int>        room;
-		
+
 		bool                    isPlayer;
+		std::string print();
 	};
 
 	struct TShadowKey {
@@ -35,6 +36,7 @@ public:
 
 		std::vector<int>		room;
 		bool                    isPlayer;
+		std::string print();
 	};
 
 	//sorter struct

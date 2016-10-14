@@ -94,7 +94,7 @@ public:
 	void setHandleController(CHandle);
 
 	bool isSenseVisionEnabled();
-
+	void OnLoadedLevel(bool new_level, bool load_game);
 	CHandle getHandleGameController() const;
 
 	TCompSenseVision * getSenseVisionComp();

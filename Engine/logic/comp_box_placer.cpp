@@ -41,12 +41,16 @@ bool TCompBoxPlacer::checkBox()
 {
 	bool res = false;
 	GET_MY(tmx, TCompTransform);
-	VEC3 myPos = tmx->getPosition();
-	for (auto h : TCompBox::all_boxes) {
-		GET_COMP(tbox, h, TCompTransform);
-		res = inSquaredRangeXZ_Y(myPos, tbox->getPosition(), radius, 3.f);
-		Debug->DrawLine(myPos, tbox->getPosition());
-		if (res) break;
+	if (tmx) {
+		VEC3 myPos = tmx->getPosition();
+		for (auto h : TCompBox::all_boxes) {
+			GET_COMP(tbox, h, TCompTransform);
+			if (tbox) {
+				res = inSquaredRangeXZ_Y(myPos, tbox->getPosition(), radius, 3.f);
+				Debug->DrawLine(myPos, tbox->getPosition());
+				if (res) break;
+			}
+		}
+		return res;
 	}
-	return res;
 }

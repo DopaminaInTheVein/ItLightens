@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ms3/rejas_despacho_izquierda.mesh" material="materials/ms3/cristalera_despacho.material"/>
+</static_mesh>
