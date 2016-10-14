@@ -134,8 +134,6 @@ bool CRenderManager::sortByMesh(
 
 #include "components\comp_render_static_mesh.h"
 void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
-
-
 	bool isDynamic = true;
 	if (owner.isValid()) {
 		TCompRenderStaticMesh* rsm = owner;
@@ -167,7 +165,6 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 		k.aabb = h_aabb;
 		k.room = oroom;
 		k.isPlayer = playercandidate;
-		
 
 		if (k.material->tech->getCategory() != CRenderTechnique::DETAIL_OBJS && k.material->tech->getCategory() != CRenderTechnique::TRANSPARENT_OBJS) {
 			for (int idx = 0; idx < ROOMS_SIZE; idx++) {
@@ -575,8 +572,6 @@ void CRenderManager::renderUICulling(int room) {
 	renderedCulling.clear();
 }
 
-
-
 void CRenderManager::renderStaticShadowCasters(CHandle h_light, int room) {
 	CTraceScoped scope("Shadow Casters");
 	PROFILE_FUNCTION("SHADOW CASTERS OBJ");
@@ -886,4 +881,30 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 			return;
 		}
 	}
+}
+
+std::string CRenderManager::TKey::print() {
+#ifndef FINAL_BUILD
+	char text[1024];
+	sprintf(text, "Mesh:%s\nMaterial:%s\nPolarity:%d, HOwner:%s, Room:%s, isPlayer:%d"
+		, mesh ? mesh->getName() : "unknown"
+		, material ? material->getName() : "unknown"
+		, polarity
+		, GET_NAME(owner.getOwner())
+		, room.size() > 0 ? room[0] : -1
+	);
+	return text;
+#endif
+}
+
+std::string CRenderManager::TShadowKey::print() {
+#ifndef FINAL_BUILD
+	char text[1024];
+	sprintf(text, "Mesh:%s\n, HOwner:%s\n, Room:%d\n"
+		, mesh ? mesh->getName() : "unknown"
+		, GET_NAME(owner.getOwner())
+		, room.size() > 0 ? room[0] : -1
+	);
+	return text;
+#endif
 }

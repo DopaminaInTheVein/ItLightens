@@ -14,13 +14,11 @@ void TCompBox::init() {
 		if (!t) return;
 		originPoint = t->getPosition();
 	}
-	all_boxes.push_back(mParent);
+	all_boxes.push_back(MY_OWNER);
 }
 
 void TCompBox::update(float elapsed) {
 	if (carePosition && !added) {
-		if (!mParent.isValid()) return;
-		CEntity *e = mParent;
 		GET_MY(t, TCompTransform);
 		if (!t) return;
 		float d = simpleDist(t->getPosition(), originPoint);
@@ -68,7 +66,7 @@ void TCompBox::stuntNpcs() {
 void TCompBox::ImTooFar() {
 	VHandles hs;
 	hs = SBB::readHandlesVector("wptsBoxes");
-	hs.push_back(mParent);
+	hs.push_back(MY_OWNER);
 	SBB::postHandlesVector("wptsBoxes", hs);
 	added = !added;
 }
@@ -103,7 +101,7 @@ void TCompBox::onUnLeaveBox(const TMsgLeaveBox& msg) {
 	added = !added;
 	VHandles hs;
 	hs = SBB::readHandlesVector("wptsBoxes");
-	hs.erase(std::remove(hs.begin(), hs.end(), mParent), hs.end());
+	hs.erase(std::remove(hs.begin(), hs.end(), MY_OWNER), hs.end());
 	SBB::postHandlesVector("wptsBoxes", hs);
 	GET_MY(p, TCompPhysics);
 	GET_MY(t, TCompTransform);
@@ -112,7 +110,7 @@ void TCompBox::onUnLeaveBox(const TMsgLeaveBox& msg) {
 }
 
 TCompBox::~TCompBox() {
-	removeFromVector(all_boxes, CHandle(this).getOwner());
+	removeFromVector(all_boxes, MY_OWNER);
 }
 
 bool TCompBox::getGrabPoints(

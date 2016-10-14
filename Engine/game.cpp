@@ -240,19 +240,12 @@ void CApp::clearSaveData() {
 	has_check_point.clear();
 }
 
-void CApp::loadedLevelNotify() {
+void CApp::loadedLevelNotify(bool new_level) {
 	current_level = next_level;
 	next_level = "";
-	char params[128];
-	sprintf(params, "\"%s\", \"%s\"", getCurrentLogicLevel().c_str(), getCurrentRealLevel().c_str());
-	auto game_event = setContains(has_check_point, getCurrentLogicLevel())
-		? CLogicManagerModule::EVENT::OnLoadedLevel
-		: CLogicManagerModule::EVENT::OnLevelStart;
-
-	logic_manager->throwEvent(game_event, std::string(params));
 	loading = false;
-	if (!Gui->IsUiControl())
-		GameController->SetGameState(CGameController::RUNNING);
+	bool load_game = setContains(has_check_point, getCurrentLogicLevel());
+	GameController->OnLoadedLevel(new_level, load_game);
 }
 
 void CApp::exitGame() {
@@ -342,12 +335,8 @@ void CApp::initNextLevel()
 	entities->initEntities();
 	//SetLoadingState(80);
 
-	// Navmesh
-	if (!reload) CNavmeshManager::initNavmesh(level_name);
-	GameController->SetLoadingState(100.f);
-
 	// Game state and notify
-	loadedLevelNotify();
+	loadedLevelNotify(!reload);
 }
 
 void CApp::showLoadingScreen()

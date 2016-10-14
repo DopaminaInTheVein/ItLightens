@@ -287,11 +287,10 @@ void CRenderDeferredModule::addPointLights() {
 			else {
 				//fast fix for room3
 				if (SBB::readSala() == 2) {
-					CEntity* ep = CPlayerBase::handle_player;
-					if (ep) {
-						TCompTransform* t = ep->get<TCompTransform>();
-						//GET_COMP(tl, CHandle(c).getOwner(), TCompTransform);
-						TCompTransform* tl = nullptr;// c->compBaseEntity->get<TCompTransform>();
+					CHandle hp = CPlayerBase::handle_player;
+					if (hp.isValid()) {
+						GET_COMP(t, hp, TCompTransform);
+						GET_COMP(tl, CHandle(c).getOwner(), TCompTransform);
 						if (t && tl) {
 							if (t->getPosition().y > 10) {
 								if (tl->getPosition().y < 12)
@@ -648,13 +647,8 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 				CHandle h = CHandle(c).getOwner();
 				GET_COMP(rsm, h, TCompRenderStaticMesh);
 				GET_COMP(c_tmx, h, TCompTransform);
-
 				if (c_tmx) activateWorldMatrix(c_tmx->asMatrix());
-
-				//rsm->static_mesh->slots[0].material->activateTextures();
 				if (rsm) rsm->static_mesh->slots[0].mesh->activateAndRender();
-
-				//rsm->static_mesh->slots[0].material->deactivateTextures();
 			}
 		});
 	}
@@ -684,7 +678,6 @@ void CRenderDeferredModule::RenderPolarizedPP(int pol, const VEC4& color) {
 		auto tech = Resources.get("edgeDetection.tech")->as<CRenderTechnique>();
 
 		drawFullScreen(rt_black, tech);
-		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
 		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 	}
 }
@@ -718,8 +711,7 @@ void CRenderDeferredModule::ApplySSAO() {
 	SetOutputDeferred();
 	//blur shadows
 	CTexture *blurred_ssao = rt_ssao;
-	CEntity* e_camera = h_camera;
-	TCompRenderGlow* glow = e_camera->get< TCompRenderGlow >();
+	GET_COMP(glow, h_camera, TCompRenderGlow);
 	//glow->
 	if (glow)
 		blurred_ssao = glow->apply(blurred_ssao);

@@ -13,7 +13,6 @@ class IAppModule;
 class CApp {
 public:
 	typedef std::vector<IAppModule*> VModules;
-	//bool has_check_point = false;
 	std::set<std::string> has_check_point;
 	// Remove copy ctor
 	CApp(const CApp&) = delete;
@@ -39,7 +38,7 @@ public:
 	void stop();
 	void changeScene(std::string level);
 	void loadEntities(std::string file_name);
-	void loadedLevelNotify();
+	void loadedLevelNotify(bool new_level);
 	//void restart();
 	void restartLevelNotify();
 	void saveLevel();
