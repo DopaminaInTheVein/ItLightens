@@ -157,11 +157,13 @@ bool CInputWrapper::ActionButtonBecomesPessed() {
 }
 bool CInputWrapper::ActionGuiButtonBecomesPressed() {
 	return io->mouse.left.becomesPressed() || io->joystick.button_X.becomesPressed()
-		|| io->keys[VK_RETURN].becomesPressed() || io->keys[VK_SPACE].becomesPressed();
+		|| io->keys[VK_RETURN].becomesPressed() || io->keys[VK_SPACE].becomesPressed()
+		|| io->joystick.button_A.becomesPressed() || io->joystick.button_START.becomesPressed();
 }
 bool CInputWrapper::ActionGuiButtonBecomesReleased() {
 	return io->mouse.left.becomesReleased() || io->joystick.button_X.becomesReleased()
-		|| io->keys[VK_RETURN].becomesReleased() || io->keys[VK_SPACE].becomesReleased();
+		|| io->keys[VK_RETURN].becomesReleased() || io->keys[VK_SPACE].becomesReleased()
+		|| io->joystick.button_A.becomesReleased() || io->joystick.button_START.becomesReleased();
 }
 bool CInputWrapper::IsGuiItemDragged() {
 	return io->mouse.left.isPressed();
