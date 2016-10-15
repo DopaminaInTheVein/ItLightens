@@ -95,7 +95,8 @@ set<int> TRoom::getList()
 {
 	std::set<int> res;
 	for (int i = 0; i < ROOM_MAX_SIZE; i++) {
-		res.insert(i);
+		if(list[i])
+			res.insert(i);
 	}
 	if (special_room != ROOM_ALL) res.insert(special_room);
 	return res;

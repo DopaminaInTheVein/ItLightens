@@ -354,9 +354,9 @@ void CRenderManager::renderList(CHandle h_camera, CRenderTechnique::eCategory ca
 	while (it != end_it) {
 		PROFILE_FUNCTION("Render Manager each");
 		// Do the culling
-		GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
-		if (tentroom) it->room = tentroom->getRoom();
-		if (it->owner.getOwner() == CPlayerBase::handle_player || it->room.sameRoom(pj_room)) {
+		//GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
+		//if (tentroom) it->room = tentroom->getRoom();
+		//if (it->owner.getOwner() == CPlayerBase::handle_player || it->room.sameRoom(pj_room)) {
 			if (culling_bits) {
 				PROFILE_FUNCTION("Culling");
 				TCompAbsAABB* aabb = it->aabb;
@@ -464,7 +464,7 @@ void CRenderManager::renderList(CHandle h_camera, CRenderTechnique::eCategory ca
 				prev_it = it;
 				++nkeys_rendered;
 			}
-		}
+		//}
 
 		++it;
 	}
@@ -681,6 +681,10 @@ void CRenderManager::renderStaticShadowCasters(CHandle h_light, int room) {
 void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	CTraceScoped scope("Shadow Casters");
 	PROFILE_FUNCTION("SHADOW CASTERS OBJ");
+
+	if (all_shadow_keys[room].empty()) {
+		return;
+	}
 
 	if (!in_order_shadows) {
 		// sort the keys based on....
