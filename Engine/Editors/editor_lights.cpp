@@ -19,10 +19,98 @@
 
 static int id_name = 0;	//id used to create new unique lights
 
-//CEditorLights::CEditorLights()
-//{
-//	//rooms_engine = rooms_temp = std::vector<bool>(ROOMS_SIZE, false);
-//}
+void CEditorLights::RenderInMenu()
+{
+	ImGui::SetNextWindowSize(ImVec2(512, 512), ImGuiSetCond_FirstUseEver);
+	if (m_activated_editor) {
+		RenderGeneral();
+		RenderNewLight();
+		RenderAllLights();
+		RenderMultiEdit();
+		ImGui::End();
+	}
+}
+
+void CEditorLights::RenderGeneral()
+{
+	ImGui::Begin("LightsEditor", &m_activated_editor);
+
+	if (ImGui::Checkbox("show axis", &m_show_axis)) {
+		SetRenderDebug(m_show_axis, m_Lights, m_Types);
+		SetRenderDebug(m_show_axis, m_LightsTemp, m_TypesTemp);
+	}
+
+	if (ImGui::SmallButton("Save Lights")) {
+		SaveLights();
+	}
+
+	//To load a specific file
+	if (ImGui::SmallButton("Load lights file")) {
+		//TODO
+	}
+}
+void CEditorLights::RenderNewLight()
+{
+	static bool rooms_selected[ROOMS_SIZE] = { 0 };
+	if (ImGui::CollapsingHeader("New Light")) {
+		for (int room : TCompRoom::all_rooms) {
+			char text_check[64];
+			sprintf(text_check, "Room %d", room);
+			ImGui::Checkbox(text_check, &rooms_selected[room]);
+		}
+		if (ImGui::Button("Add new point light")) {
+			AddLightToEngine(TypeLight::POINT, rooms_selected);
+		}
+
+		if (ImGui::Button("Add new dir light")) {
+			AddLightToEngine(TypeLight::DIR, rooms_selected);
+		}
+
+		if (ImGui::Button("Add new dir shadows light")) {
+			AddLightToEngine(TypeLight::DIR_SHADOWS, rooms_selected);
+		}
+	}
+}
+void CEditorLights::RenderAllLights()
+{
+	if (ImGui::CollapsingHeader("All Lights")) {
+		if (ImGui::SmallButton("Reload Lights")) {
+			LoadLights();
+		}
+		//permanent lights
+		if (ImGui::TreeNode("Engine Lights")) {
+			RenderLightList(m_Lights, m_Types, false, engine_list);
+			ImGui::TreePop();
+		}
+
+		//temporal lights
+		if (ImGui::TreeNode("Temporal Lights")) {
+			RenderLightList(m_LightsTemp, m_TypesTemp, true, temp_list);
+			ImGui::TreePop();
+		}
+	}
+}
+void CEditorLights::RenderMultiEdit()
+{
+	if (ImGui::CollapsingHeader("MultiEdit")) {
+		if (multi_editing == IDLE) {
+			if (ImGui::Button("Edit Selected")) {
+				multi_editing = EDITING;
+				for (auto lhandle : m_Lights) StartEditLight(lhandle);
+				for (auto lhandle : m_LightsTemp) StartEditLight(lhandle);
+			}
+		}
+		else if (multi_editing == EDITING) {
+			ImGui::Text("Editing");
+			if (ImGui::Button("Apply")) {
+				multi_editing = IDLE;
+			}
+			if (ImGui::Button("Cancel")) {
+				multi_editing = IDLE;
+			}
+		}
+	}
+}
 
 void CEditorLights::update(float dt) {
 	if (controller->isEditorLightsButtonPressed()) {
@@ -258,65 +346,6 @@ void CEditorLights::renderLightComp(TLight* lcomp) {
 	}
 }
 
-void CEditorLights::RenderInMenu()
-{
-	static bool rooms_selected[10] = { 0 };
-	ImGui::SetNextWindowSize(ImVec2(512, 512), ImGuiSetCond_FirstUseEver);
-	if (m_activated_editor) {
-		ImGui::Begin("LightsEditor", &m_activated_editor);
-
-		if (ImGui::Checkbox("show axis", &m_show_axis)) {
-			SetRenderDebug(m_show_axis, m_Lights, m_Types);
-			SetRenderDebug(m_show_axis, m_LightsTemp, m_TypesTemp);
-		}
-
-		if (ImGui::SmallButton("Save Lights")) {
-			SaveLights();
-		}
-
-		if (ImGui::SmallButton("Reload Lights")) {
-			LoadLights();
-		}
-
-		//To load a specific file
-		if (ImGui::SmallButton("Load lights file")) {
-			//TODO
-		}
-		ImGui::Separator();
-
-		for (int room : TCompRoom::all_rooms) {
-			char text_check[64];
-			sprintf(text_check, "Room %d", room);
-			ImGui::Checkbox(text_check, &rooms_selected[room]);
-		}
-		if (ImGui::Button("Add new point light")) {
-			AddLightToEngine(TypeLight::POINT, rooms_selected);
-		}
-
-		if (ImGui::Button("Add new dir light")) {
-			AddLightToEngine(TypeLight::DIR, rooms_selected);
-		}
-
-		if (ImGui::Button("Add new dir shadows light")) {
-			AddLightToEngine(TypeLight::DIR_SHADOWS, rooms_selected);
-		}
-
-		//permanent lights
-		if (ImGui::TreeNode("Engine Lights")) {
-			RenderLightList(m_Lights, m_Types, false, engine_list);
-			ImGui::TreePop();
-		}
-
-		//temporal lights
-		if (ImGui::TreeNode("Temporal Lights")) {
-			RenderLightList(m_LightsTemp, m_TypesTemp, true, temp_list);
-			ImGui::TreePop();
-		}
-
-		ImGui::End();
-	}
-}
-
 void CEditorLights::RenderLightList(VHandles& lights, VTypeLights& types, bool temporal, LightList& list)
 {
 	int m_Lights = 0; // Check
@@ -328,7 +357,7 @@ void CEditorLights::RenderLightList(VHandles& lights, VTypeLights& types, bool t
 	for (int room : TCompRoom::all_rooms) {
 		assert(room < ROOMS_SIZE && room < 100);
 		sprintf(room_title, "Room %d", room);
-		if (ImGui::TreeNodeCheck(room_title, list.rcheck + room, r_changed[room])) {
+		if (ImGui::TreeNodeCheck(room_title, list.rcheck + room, r_changed[room], multi_editing == IDLE)) {
 			//Every Light
 			for (int idx = 0; idx < lights.size(); ++idx) {
 				if (!lights[idx].isValid()) return;
@@ -363,13 +392,18 @@ void CEditorLights::RenderLight(CHandle& h_light, TypeLight& type, bool temporal
 	GET_COMP(light, h_owner, TLight);
 	GET_COMP(trans, h_owner, TCompTransform);
 	if (light) {
-		if (ImGui::TreeNode(GET_NAME(h_owner))) {
+		bool changed_selection = false;
+		if (ImGui::TreeNodeCheck(GET_NAME(h_owner), &light->selected, changed_selection, multi_editing == IDLE)) {
+			//if (ImGui::TreeNode(GET_NAME(h_owner))) {
 			if (name) name->renderInMenu();
 			if (trans)trans->renderInMenu();
 			renderLightComp(light);
 			if (temporal)
 				RenderTemporalLight(h_light, type, light->enabled);
 			ImGui::TreePop();
+		}
+		if (changed_selection) {
+			//TODO??
 		}
 	}
 }
@@ -380,4 +414,17 @@ void CEditorLights::RenderTemporalLight(CHandle& light, TypeLight& type, bool& e
 	if (ImGui::SmallButton("Add as permanent")) {
 		AddLightToSave(light, type);
 	}
+}
+
+void CEditorLights::StartEditLight(CHandle hlight)
+{
+	if (!hlight.isValid()) return;
+	CHandle lowner = hlight.getOwner();
+	if (!lowner.isValid()) return;
+	GET_COMP(lp, lowner, TCompLightPoint);
+	GET_COMP(ldir, lowner, TCompLightDir);
+	GET_COMP(lshadow, lowner, TCompLightDirShadows);
+	if (lp && lp->selected) lp->start_editing();
+	if (ldir && ldir->selected) lp->start_editing();
+	if (lshadow && lshadow->selected) lp->start_editing();
 }

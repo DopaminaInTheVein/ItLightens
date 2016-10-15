@@ -54,6 +54,7 @@ void TCompLightPoint::uploadShaderCtes() {
 }
 
 void TCompLightPoint::activate() {
+	if (!enabled) return;
 	CEntity* e = CHandle(this).getOwner();
 	assert(e);
 	TCompTransform* trans = e->get<TCompTransform>();
@@ -69,4 +70,10 @@ void TCompLightPoint::activate() {
 	activateWorldMatrix(world);
 
 	uploadShaderCtes();
+}
+
+//Editor
+void TCompLightPoint::start_editing() {
+	original = new TCompLightPoint;
+	*original = *this;
 }

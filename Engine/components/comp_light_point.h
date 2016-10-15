@@ -13,6 +13,7 @@ struct TCompLightPoint : public TCompBase {
 	float  ttl;
 
 	bool		enabled = true;
+	bool		selected = false;
 	bool		debug_render = false;
 
 	VEC4 color;
@@ -22,6 +23,10 @@ struct TCompLightPoint : public TCompBase {
 	void renderInMenu();
 	void uploadShaderCtes();
 	void activate();
+
+	//Editor
+	TCompLightPoint* original;
+	void start_editing();
 };
 
 #endif

@@ -19,16 +19,21 @@ public:
 		DIR,
 		DIR_SHADOWS,
 	};
+
+	enum MultiEditState {
+		IDLE,
+		EDITING,
+	};
 	typedef std::vector<TypeLight> VTypeLights;
 
 	struct LightList {
 		bool rcheck[ROOMS_SIZE];
-		//std::vector<bool> rooms_checks;
 	};
 
 private:
 	bool m_activated_editor;
 	bool m_show_axis = false;
+	bool multi_editing = false;
 	std::string m_base_path;
 	VHandles m_Lights;
 	VTypeLights m_Types;
@@ -66,6 +71,11 @@ public:
 	bool GetShowAxis() const { return m_show_axis; }
 
 	void RenderInMenu();
+	void RenderGeneral();
+	void RenderNewLight();
+	void RenderAllLights();
+	void RenderMultiEdit();
+
 	void RenderLightList(VHandles& lights, VTypeLights& types, bool temporal, LightList& list);
 
 	void RenderLight(CHandle& hlight, TypeLight& type, bool temporal);
@@ -73,6 +83,7 @@ public:
 	void RenderLight(CHandle& hlight, TypeLight& type, bool temporal);
 
 	void RenderTemporalLight(CHandle& light, TypeLight& type, bool& enabled);
+	void StartEditLight(CHandle hlight);
 };
 
 #endif

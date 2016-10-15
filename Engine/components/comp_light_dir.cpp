@@ -67,6 +67,14 @@ void TCompLightDir::update(float dt) {
 }
 
 void TCompLightDir::activate() {
+	if (!enabled) return;
 	activateWorldMatrix(getViewProjection().Invert());
 	uploadShaderCtes(CHandle(this).getOwner());
+}
+
+//Editor
+void TCompLightDir::start_editing() {
+	original = new TCompLightDir;
+	*original = *this;
+	dbg("Test");
 }

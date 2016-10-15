@@ -11,6 +11,7 @@ struct TCompLightDir : public TCompCamera {
 	const CTexture*	light_mask;
 	VEC4				color;
 	bool				enabled = true;
+	bool				selected = false;
 	bool				debug_render = false;
 
 	bool				load(MKeyValue& atts);
@@ -20,6 +21,10 @@ struct TCompLightDir : public TCompCamera {
 	void				uploadShaderCtes(CEntity* e);
 	void				activate();
 	void				update(float dt);
+
+	//Editor
+	TCompLightDir* original;
+	void start_editing();
 };
 
 #endif
