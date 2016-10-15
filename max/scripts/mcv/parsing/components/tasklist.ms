@@ -6,9 +6,10 @@ fn _parse_tasklist = (
 		
 		local xml1 = XML_PARSING.addChild "render_static_mesh"
 		xml1.addAttr "name" "static_meshes/test/baliza.static_mesh"		
+		xml1.addAttr "to_render" "no"
 		local xml2 = XML_PARSING.addChild "room"
 		xml2.addAttr "name" "-1"		
-
+		
 		
 		local xml = XML_PARSING.addChild "tasklist"
 

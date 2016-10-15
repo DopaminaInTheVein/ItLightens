@@ -44,15 +44,15 @@ public:
 
 	bool save(std::ofstream& os, MKeyValue& atts);
 
-	void setRoom(TRoom new_room) { room = new_room; }
-	TRoom getRoom() { return room; }
-	int getSingleRoom() { return room.getSingleRoom(); }
+	void setRoom(TRoom new_room);
+	TRoom getRoom();
+	int getSingleRoom();
 	//bool sameRoom(const TRoom& r);
 	//bool sameRoom(const CHandle& h);
-	bool sameRoom(int r) { return room.sameRoom(r); }
+	bool sameRoom(int r);
 	bool sameRoomPlayer();
 	void renderInMenu();
-	void addRoom(int r) { room.addRoom(r); }
+	void addRoom(int r);
 };
 
 #define ROOM_IS_IN TCompRoom::SameRoom

@@ -10,6 +10,7 @@ struct TCompRenderStaticMesh : public TCompBase {
 	static CHandle last_loaded_static_mesh;
 	bool onlyDebug = false;
 	bool dynamic = false;
+	bool to_render = true;
 	const CStaticMesh* static_mesh;
 	std::string res_name;
 	~TCompRenderStaticMesh();

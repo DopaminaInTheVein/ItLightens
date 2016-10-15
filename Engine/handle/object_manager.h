@@ -140,6 +140,13 @@ public:
 		obj->renderInMenu();
 	}
 	// -------------------------
+	bool* getDebug(CHandle h) override {
+		auto obj = getAddrFromHandle(h);
+		if (!obj)
+			return nullptr;
+		obj->getDebug();
+	}
+	// -------------------------
 	void onAll(void (TObj::*member_fn)() const) const {
 		auto o = objs;
 		for (size_t i = 0; i < num_objs_used; ++i, ++o)

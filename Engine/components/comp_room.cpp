@@ -39,7 +39,29 @@ bool TCompRoom::save(ofstream& os, MKeyValue& atts) {
 }
 
 void TCompRoom::renderInMenu() {
-	ImGui::Text(room.print().c_str());
+	stringstream ss;
+	bool first = true;
+	for (auto r : room.getList()) {
+		if (!first) ss << "/";
+		ss << r;
+		first = false;
+	}
+	std::string txt = ss.str();
+	ImGui::Text(txt.c_str());
+}
+
+void TCompRoom::setRoom(TRoom new_room) { room = new_room; }
+TRoom TCompRoom::getRoom() {
+	return room;
+}
+int TCompRoom::getSingleRoom() {
+	return room.getSingleRoom();
+}
+bool TCompRoom::sameRoom(int r) {
+	return room.sameRoom(r);
+}
+void TCompRoom::addRoom(int r) {
+	room.addRoom(r);
 }
 
 //bool TCompRoom::sameRoom(const TRoom& r)
@@ -88,32 +110,43 @@ void TRoom::addRoom(int r)
 {
 	if (r >= 0 && r < ROOM_MAX_SIZE)
 		list[r] = true;
-	else special_room = r;
+	else {
+		*this = TRoom();
+		special_room = r;
+	}
 }
 
 set<int> TRoom::getList()
 {
 	std::set<int> res;
-	for (int i = 0; i < ROOM_MAX_SIZE; i++) {
-		if(list[i])
-			res.insert(i);
+	if (special_room != ROOM_ALL) {
+		res.insert(special_room);
 	}
-	if (special_room != ROOM_ALL) res.insert(special_room);
+	else {
+		for (int i = 0; i < ROOM_MAX_SIZE; i++) {
+			if (list[i])
+				res.insert(i);
+		}
+	}
 	return res;
 }
 
 int TRoom::getSingleRoom()
 {
-	int res = ROOM_ALL;
-	int found = 0;
-	for (int i = 0; i < ROOM_MAX_SIZE; i++) {
-		if (list[i]) {
-			res = i;
-			found++;
+	int res = special_room;
+	if (res == ROOM_ALL) {
+		int found = 0;
+		for (int i = 0; i < ROOM_MAX_SIZE; i++) {
+			if (list[i]) {
+				res = i;
+				found++;
+			}
 		}
+		assert(found <= 1);
 	}
-	assert(found <= 1);
-	if (res == ROOM_ALL) return special_room;
+	else {
+		dbg("return special room\n");
+	}
 	return res;
 }
 
@@ -139,6 +172,8 @@ string TRoom::print()
 bool TRoom::sameRoom(int room)
 {
 	if (room == ROOM_ALL || empty()) return true;
-	if (room >= ROOMS_SIZE) return special_room == room;
+	if (room >= ROOMS_SIZE) {
+		return special_room == room;
+	}
 	return list[room];
 }

@@ -264,6 +264,8 @@ public:
 
 	bool getUpdateInfo() override;
 	void update(float dt) {
+		if (DEBUG_CODE)	dbg("Test debugging: %f,%f,%f\n", VEC3_VALUES(my_tmx->getPosition()));
+
 		Debug->DrawLine(my_tmx->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
 		Debug->DrawLine(my_tmx->getPosition(), my_tmx->getPosition() + my_tmx->getFront(), VEC3(1, 1, 0));
 		Debug->DrawLine(my_tmx->getPosition(), my_tmx->getPosition() + my_tmx->getLeft(), VEC3(1, 1, 0));

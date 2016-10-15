@@ -21,9 +21,13 @@
 #ifdef NDEBUG
 
 #define dbg(...)
-
+#define		DEBUG_CODE if (false)
+#define		DEBUG_COMP(comp) DEBUG_CODE
 #else
 void		dbg(const char* fmt, ...);
+#define		DEBUG_CODE (TCompBase::debugging)
+#define		DEBUG_COMP(comp) (comp && comp->debugging)
+#define		DEBUG_HCOMP(h) (h.isValid() && h.getDebug() && *h.getDebug())
 #endif
 
 #define PI 3.14159265359

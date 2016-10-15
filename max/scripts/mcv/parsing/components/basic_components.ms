@@ -201,6 +201,7 @@ fn _parse_render = (
 		local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
 		xmlStMesh.addAttr "name" ("skeletons/" + skel + "/" + skel + staticMesh_ext)
 		xmlStMesh.addAttr "static" "no"
+		parsePropAttribute xmlStMesh "to_render" "to_render"
 		XML_PARSING.addChild "skeleton_ik"
 		XML_PARSING.addChild "abs_aabb"
 		XML_PARSING.addChild "local_aabb"
@@ -218,7 +219,8 @@ fn _parse_render = (
 			xmlStMesh.addAttr "name" ("static_meshes/" + stMesh + staticMesh_ext)
 			local static = "no"
 			if (isStatic _parsingObject) then (static = "yes")
-			xmlStMesh.addAttr "static" static			
+			xmlStMesh.addAttr "static" static
+			parsePropAttribute xmlStMesh "to_render" "to_render"
 		)
 	)
 )
