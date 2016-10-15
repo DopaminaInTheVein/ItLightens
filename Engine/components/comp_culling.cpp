@@ -52,30 +52,7 @@ void TCompCulling::update() {
 	compBaseEntity = MY_OWNER;
 	if (!compBaseEntity) return;
 	GET_MY(room, TCompRoom);
-	if (room) {
-		std::vector<int> rooms = room->name;
-		if (std::find(rooms.begin(), rooms.end(), SBB::readSala()) == rooms.end()) {
-			return;			//light on diferent room
-		}
-		else {
-			//fast fix for room3
-			if (SBB::readSala() == 2) {
-				CEntity* ep = CPlayerBase::handle_player;
-				if (ep) {
-					TCompTransform* t = ep->get<TCompTransform>();
-					GET_MY(tl, TCompTransform);
-					if (t->getPosition().y > 10) {
-						if (tl->getPosition().y < 12)
-							return;
-					}
-					else {
-						if (tl->getPosition().y > 12)
-							return;
-					}
-				}
-			}
-		}
-	}
+	if (room && !room->sameRoomPlayer()) return;
 
 	MAT44 view_proj;
 	MY_OWNER.sendMsg(TMsgGetCullingViewProj{ &view_proj });

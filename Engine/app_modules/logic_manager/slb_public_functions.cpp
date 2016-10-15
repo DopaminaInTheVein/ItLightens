@@ -829,15 +829,10 @@ void SLBPublicFunctions::playVideoAndDo(const char* video_route, const char* lua
 }
 
 void SLBPublicFunctions::playerRoom(int newRoom) {
-	std::vector<int> new_room_vec;
-	new_room_vec.push_back(newRoom);
-
-	CHandle p = CPlayerBase::handle_player;
-	CEntity * pe = p;
-	TCompRoom * room = pe->get<TCompRoom>();
-	if (room->setName(new_room_vec)) {
-		SBB::postSala(newRoom);
-	}
+	GET_COMP(room, CPlayerBase::handle_player, TCompRoom);
+	if (!room) return;
+	room->setRoom(TRoom(newRoom));
+	SBB::postSala(newRoom);
 }
 
 void SLBPublicFunctions::playerTalks(const char* text) {

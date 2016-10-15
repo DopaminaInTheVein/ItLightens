@@ -9,6 +9,11 @@ bool CHandle::isValid() const {
 	auto hm = CHandleManager::getByType(type);
 	return hm && hm->isValid(*this);
 }
+const char* CHandle::getTypeName() const {
+	auto hm = CHandleManager::getByType(type);
+	if (hm && hm->isValid(*this)) return hm->getName();
+	else return HANDLE_UNNAMED;
+}
 
 void CHandle::destroy() {
 	if (!isValid()) return;

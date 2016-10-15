@@ -78,6 +78,7 @@ public:
 		// the type 'type' and has name 'getName()'
 		type = next_type_of_handle_manager;
 		next_type_of_handle_manager++;
+		assert(next_type_of_handle_manager < CHandle::max_types);
 		all_managers[type] = this;
 		// Registrarme por nombre
 		all_manager_by_name[getName()] = this;
@@ -105,12 +106,7 @@ public:
 	}
 
 	// ---------------------------------------
-	bool isValid(CHandle h) const {
-		assert(h.getType() == type);
-		assert(h.getExternalIndex() < num_objs_capacity);
-		auto ed = external_to_internal + h.getExternalIndex();
-		return ed->current_age == h.getAge();
-	}
+	bool isValid(CHandle h) const;
 
 	const char* getName() const { return name; }
 	uint32_t getType() const { return type; }

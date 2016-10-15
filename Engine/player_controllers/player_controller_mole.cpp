@@ -899,7 +899,7 @@ void player_controller_mole::Falling()
 		// landing sound
 		TCompRoom* room = myEntity->get<TCompRoom>();
 		std::string params = "Mole";
-		if (room && room->name[0] == 2)
+		if (room && room->getSingleRoom() == 2)
 			params = params + "Parquet";
 		else
 			params = params + "Baldosa";

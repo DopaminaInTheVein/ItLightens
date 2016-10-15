@@ -20,12 +20,14 @@ private:
 	static std::stack<CHandle> cursors;
 	bool ui_control = false;
 
+	bool initedText = false;
+
+public:
 	//Font
 	float letter_sizes[256];
 	std::map<std::string, Font::TCharacter> special_characters;
 	void initTextConfig();
-
-public:
+	bool isStartedText() { return initedText; }
 
 	CGuiModule() {}
 	bool start() override;

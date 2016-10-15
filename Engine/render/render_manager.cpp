@@ -134,8 +134,6 @@ bool CRenderManager::sortByMesh(
 
 #include "components\comp_render_static_mesh.h"
 void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
-
-
 	bool isDynamic = true;
 	if (owner.isValid()) {
 		TCompRenderStaticMesh* rsm = owner;
@@ -148,12 +146,9 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 
 	CHandle h_transform = GETH_COMP(ow, TCompTransform);//e->get<TCompTransform>();
 	CHandle h_aabb = GETH_COMP(ow, TCompAbsAABB);//e->get<TCompAbsAABB>();
+	TRoom oroom;
 	GET_COMP(comproom, ow, TCompRoom);
-	std::vector<int> oroom;
-	oroom.push_back(-1);
-	if (comproom) {
-		oroom = comproom->name;
-	}
+	if (comproom) oroom = comproom->getRoom();
 	std::vector<TKey> * render_list[ROOMS_SIZE];
 
 	bool playercandidate = ow.hasTag("player") || ow.hasTag("AI_poss");
@@ -167,7 +162,6 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 		k.aabb = h_aabb;
 		k.room = oroom;
 		k.isPlayer = playercandidate;
-		
 
 		if (k.material->tech->getCategory() != CRenderTechnique::DETAIL_OBJS && k.material->tech->getCategory() != CRenderTechnique::TRANSPARENT_OBJS) {
 			for (int idx = 0; idx < ROOMS_SIZE; idx++) {
@@ -179,14 +173,15 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 				render_list[idx] = &dynamic_keys[idx];
 			}
 		}
-		for (auto room : oroom) {
-			if (room >= ROOMS_SIZE) continue;
-			if (room >= 0 && !playercandidate)
-				render_list[room]->push_back(k);
-			else {
-				for (int idx = 0; idx < ROOMS_SIZE; idx++) {
-					render_list[idx]->push_back(k);
-				}
+		if (oroom.empty() || playercandidate) {
+			for (int idx = 0; idx < ROOMS_SIZE; idx++) {
+				render_list[idx]->push_back(k);
+			}
+		}
+		else {
+			for (auto room : oroom.getList()) {
+				if (room >= 0 && room < ROOMS_SIZE)
+					render_list[room]->push_back(k);
 			}
 		}
 		num_renders++;
@@ -212,7 +207,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 			k.isDynamic = isDynamic;
 
 			if (!s.material->tech->usesBones()) {
-				for (auto room : oroom) {
+				for (auto room : oroom.getList()) {
 					if (room >= ROOMS_SIZE) continue;
 					if (room >= 0 && !playercandidate)
 						all_shadow_keys[room].push_back(k);
@@ -225,7 +220,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 				in_order_shadows = false;
 			}
 			else {
-				for (auto room : oroom) {
+				for (auto room : oroom.getList()) {
 					if (room >= ROOMS_SIZE) continue;
 					if (room >= 0 && !playercandidate)
 						all_shadow_skinning_keys[room].push_back(k);
@@ -359,9 +354,9 @@ void CRenderManager::renderList(CHandle h_camera, CRenderTechnique::eCategory ca
 	while (it != end_it) {
 		PROFILE_FUNCTION("Render Manager each");
 		// Do the culling
-		GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
-		if (tentroom) it->room = tentroom->name;
-		if (it->owner.getOwner() == CPlayerBase::handle_player || pj_room == -1 || it->room[0] == -1 || std::find(it->room.begin(), it->room.end(), pj_room) != it->room.end()) {
+		//GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
+		//if (tentroom) it->room = tentroom->getRoom();
+		//if (it->owner.getOwner() == CPlayerBase::handle_player || it->room.sameRoom(pj_room)) {
 			if (culling_bits) {
 				PROFILE_FUNCTION("Culling");
 				TCompAbsAABB* aabb = it->aabb;
@@ -469,7 +464,7 @@ void CRenderManager::renderList(CHandle h_camera, CRenderTechnique::eCategory ca
 				prev_it = it;
 				++nkeys_rendered;
 			}
-		}
+		//}
 
 		++it;
 	}
@@ -575,8 +570,6 @@ void CRenderManager::renderUICulling(int room) {
 	renderedCulling.clear();
 }
 
-
-
 void CRenderManager::renderStaticShadowCasters(CHandle h_light, int room) {
 	CTraceScoped scope("Shadow Casters");
 	PROFILE_FUNCTION("SHADOW CASTERS OBJ");
@@ -601,11 +594,12 @@ void CRenderManager::renderStaticShadowCasters(CHandle h_light, int room) {
 	CEntity* e_camera = h_light;
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
 
-	auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
+	if (ROOM_IS_IN(cam_room, room)) return;
+	//auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
-	if (i == cam_room->name.end()) {
-		return;
-	}
+	//if (i == cam_room->name.end()) {
+	//	return;
+	//}
 
 	TCompCulling::TCullingBits* culling_bits = nullptr;
 	TCompCulling* culling = nullptr;
@@ -688,6 +682,10 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	CTraceScoped scope("Shadow Casters");
 	PROFILE_FUNCTION("SHADOW CASTERS OBJ");
 
+	if (all_shadow_keys[room].empty()) {
+		return;
+	}
+
 	if (!in_order_shadows) {
 		// sort the keys based on....
 		for (int idx = 0; idx < ROOMS_SIZE; idx++) {
@@ -708,11 +706,12 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	CEntity* e_camera = h_light;
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
 
-	auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
+	if (ROOM_IS_IN(cam_room, room)) return;
+	//auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
-	if (i == cam_room->name.end()) {
-		return;
-	}
+	//if (i == cam_room->name.end()) {
+	//	return;
+	//}
 
 	TCompCulling::TCullingBits* culling_bits = nullptr;
 	TCompCulling* culling = nullptr;
@@ -817,12 +816,12 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 	// Check if we have culling information from the camera source
 
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
+	if (ROOM_IS_IN(cam_room, room)) return;
+	//auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
-	auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
-
-	if (i == cam_room->name.end()) {
-		return;
-	}
+	//if (i == cam_room->name.end()) {
+	//	return;
+	//}
 
 	TCompCulling::TCullingBits* culling_bits = nullptr;
 	TCompCulling* culling = nullptr;
@@ -886,4 +885,31 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 			return;
 		}
 	}
+}
+
+std::string CRenderManager::TKey::print() {
+#ifndef FINAL_BUILD
+	char text[1024];
+	sprintf(text, "Mesh:%s\nMaterial:%s\nPolarity:%d, HOwner:%s, Room:%s, isPlayer:%d"
+		, mesh ? mesh->getName() : "unknown"
+		, material ? material->getName() : "unknown"
+		, polarity
+		, GET_NAME(owner.getOwner())
+		, room.print()
+		, isPlayer
+	);
+	return text;
+#endif
+}
+
+std::string CRenderManager::TShadowKey::print() {
+#ifndef FINAL_BUILD
+	char text[1024];
+	sprintf(text, "Mesh:%s\n, HOwner:%s\n, Room:%d\n"
+		, mesh ? mesh->getName() : "unknown"
+		, GET_NAME(owner.getOwner())
+		, room.print()
+	);
+	return text;
+#endif
 }

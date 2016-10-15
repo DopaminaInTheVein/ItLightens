@@ -9,6 +9,11 @@
 
 #include "components/entity.h"
 #include "components/entity_tags.h"
+#include "app_modules/render/module_render_deferred.h"
+#include "app_modules/navmesh/navmesh_manager.h"
+
+extern CRenderDeferredModule * render_deferred;
+
 bool CGameController::start()
 {
 	return true;
@@ -187,4 +192,24 @@ TCompSenseVision * CGameController::getSenseVisionComp()
 		if (sv) return sv;
 	}
 	return nullptr;
+}
+
+void CGameController::OnLoadedLevel(bool new_level, bool load_game)
+{
+	//Maybe levels and checkpoints should be in GameController as well
+	// Navmesh
+	if (new_level) {
+		CNavmeshManager::initNavmesh(CApp::get().getCurrentRealLevel());
+		render_deferred->generateStaticShadowMaps();
+	}
+
+	char params[128];
+	sprintf(params, "\"%s\", \"%s\"", CApp::get().getCurrentLogicLevel().c_str(), CApp::get().getCurrentRealLevel().c_str());
+	auto game_event = load_game ? CLogicManagerModule::EVENT::OnLoadedLevel : CLogicManagerModule::EVENT::OnLevelStart;
+
+	logic_manager->throwEvent(game_event, std::string(params));
+	if (!Gui->IsUiControl())
+		GameController->SetGameState(CGameController::RUNNING);
+
+	GameController->SetLoadingState(100.f);
 }

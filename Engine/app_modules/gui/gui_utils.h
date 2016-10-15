@@ -56,6 +56,7 @@ namespace Font {
 		bool IsSpace() { return c == ' '; }
 		void SetColor(std::string new_color) { color = obtainColorNormFromString(new_color); }
 		bool isSpecial() { return c == '*'; }
+		int getCharInt() { unsigned char cc = c; return cc; }
 	};
 
 	typedef std::vector<TCharacter> VCharacter;

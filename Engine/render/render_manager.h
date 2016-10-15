@@ -2,6 +2,7 @@
 #define INC_RENDER_MANAGER_H_
 
 #include "handle/handle.h"
+#include "components/comp_room.h"
 
 #define ROOMS_SIZE 3
 
@@ -21,9 +22,10 @@ public:
 		CHandle                 owner;
 		CHandle                 transform;
 		CHandle                 aabb;
-		std::vector<int>        room;
-		
+		TRoom			        room;
+
 		bool                    isPlayer;
+		std::string print();
 	};
 
 	struct TShadowKey {
@@ -33,8 +35,9 @@ public:
 		CHandle                 aabb;
 		bool					isDynamic;
 
-		std::vector<int>		room;
+		TRoom					room;
 		bool                    isPlayer;
+		std::string print();
 	};
 
 	//sorter struct

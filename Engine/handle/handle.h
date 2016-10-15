@@ -48,6 +48,7 @@ public:
 	uint32_t getType()          const { return type; }
 	uint32_t getExternalIndex() const { return external_index; }
 	uint32_t getAge()           const { return age; }
+	const char* getTypeName() const;
 
 	bool isValid() const;
 
@@ -132,7 +133,7 @@ void CHandle::sendMsgWithReply(TMsg& msg) {
 
 #define HANDLE_UNNAMED	"unnamed"
 #define MY_OWNER (CHandle(this).isValid() ? CHandle(this).getOwner() : CHandle())
-#define GET_NAME(handle) ((CEntity*)(handle) ? ((CEntity*)handle)->getName() : HANDLE_UNNAMED)
+#define GET_NAME(handle) (handle.isValid() && (CEntity*)(handle) ? ((CEntity*)handle)->getName() : HANDLE_UNNAMED)
 #define MY_NAME (MY_OWNER.isValid() ? GET_NAME(MY_OWNER) : HANDLE_UNNAMED)
 #define GETH_COMP(handle, type) (handle.isValid() ? ((CEntity*)handle)->get_insecure<type>() : CHandle())
 #define GET_COMP(var, handle, type) type * var = (type*) GETH_COMP(handle, type)

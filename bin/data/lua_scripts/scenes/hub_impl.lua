@@ -86,7 +86,7 @@ end
 -------------------------------
 
 function hub_sense_pressed()
-
+	--p:player_talks("::sense")
 	if sense_first_pressed and not mole_done and not sci_done then
 		p:setOnlySense(0)
 		sense_first_pressed = false

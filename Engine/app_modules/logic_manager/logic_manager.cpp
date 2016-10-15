@@ -463,7 +463,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		// get the room of the NPC
 		TCompRoom* room = entity->get<TCompRoom>();
 		std::string event_name = params + "Baldosa";
-		if (room && room->name[0] == 2)
+		if (room && room->getSingleRoom() == 2)
 			event_name = params + "Parquet";
 
 		VEC3 position = transform->getPosition();
@@ -496,7 +496,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		// get the room of the NPC
 		TCompRoom* room = entity->get<TCompRoom>();
 		std::string event_name = params + "Baldosa";
-		if (room && room->name[0] == 2)
+		if (room && room->getSingleRoom() == 2)
 			event_name = params + "Parquet";
 
 		sprintf(lua_code, "OnStepOut%s(%i);", event_name.c_str(), step_number);

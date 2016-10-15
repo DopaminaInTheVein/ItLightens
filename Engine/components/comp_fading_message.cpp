@@ -50,6 +50,9 @@ void TCompFadingMessage::Init() {
 	orthorect = max_ortho - min_ortho;
 	cur_line = 0;
 	cur_char_line = 0;
+	if (!Gui->isStartedText()) {
+		Gui->initTextConfig();
+	}
 }
 
 void TCompFadingMessage::hideAll() {
@@ -150,6 +153,8 @@ void TCompFadingMessage::update(float dt) {
 }
 
 void TCompFadingMessage::printLetters() {
+	//Gui->initTextConfig();
+
 	bool b = false;
 	int gState = GameController->GetGameState();
 	if (gState != CGameController::RUNNING) return;
@@ -177,13 +182,19 @@ void TCompFadingMessage::printLetters() {
 			GET_COMP(letter_gui, letter_h, TCompGui);
 			if (letter_gui) {
 				letter_gui->setTxCoords(text[i].GetTxtCoords());
-				float size_letter = text[i].GetSize();
+				float size_letter = 1.0f;// text[i].GetSize();
 				GET_COMP(letter_tmx, letter_h, TCompTransform);
 				letter_tmx->setScale(VEC3(ceil(size_letter), 1.f, 1.f));
 				//Color
 				VEC4 color = text[i].GetColor();
 				letter_gui->SetColor(color);
 				accumSpacing += size_letter;
+				if (text[i].isSpecial()) {
+					accumSpacing -= text[i].GetSize();
+				}
+				else {
+					accumSpacing -= Gui->letter_sizes[text[i].getCharInt()];
+				}
 			}
 		}
 		cur_char_line++;

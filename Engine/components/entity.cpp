@@ -74,6 +74,7 @@ void CEntity::renderInMenu() {
 				// Open a tree node with the name of the component
 				if (ImGui::TreeNode(CHandleManager::getByType(i)->getName())) {
 					h.renderInMenu();
+					if (ImGui::Button("Destroy Comp.")) h.destroy();
 					ImGui::TreePop();
 				}
 			}

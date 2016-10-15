@@ -97,6 +97,7 @@ public:
 	void setHandleController(CHandle);
 
 	bool isSenseVisionEnabled();
+	void OnLoadedLevel(bool new_level, bool load_game);
 
 	bool getAiUpdate() { return ai_update; }
 	void setAiUpdate(bool update) { ai_update = update; }

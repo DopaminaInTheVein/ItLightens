@@ -196,7 +196,7 @@ function IntroTutoMole( )
 end
 
 function IntroTutoMole2( )
-	ShowMessage("tuto_mole", TXT_MOLE_DREAM, "mole")
+	p:show_message(TXT_MOLE_DREAM, "mole")
 	p:exec_command("IntroTutoMole3();", 1)
 end
 
@@ -213,7 +213,7 @@ end
 ----------------------------------------------------------------------------------
 -- Wall destroyed
 function TutoMoleWallDestroyed()
-	ShowMessage("tuto_mole", TXT_WALL_DETROYED, "raijin")
+	p:show_message(TXT_WALL_DETROYED, "raijin")
 	p:exec_command("p:hide_message()", 4)
 end
 ----------------------------------------------------------------------------------
@@ -224,7 +224,7 @@ function TutoMoleSala()
 end
 
 function TutoMoleSala2()
-	ShowMessage("tuto_mole", TXT_SHOW_PORTAL, "raijin")
+	p:show_message(TXT_SHOW_PORTAL, "raijin")
 	p:exec_command("TutoMoleSala3();", 0.5)
 end
 
@@ -238,7 +238,7 @@ function TutoMoleSala4()
 end
 
 function TutoMoleSala5()
-	ShowMessage("tuto_mole", TXT_NEED_HIGHER, "raijin")
+	p:show_message(TXT_NEED_HIGHER, "raijin")
 	p:exec_command("TutoMoleSala6();", 0.5)
 end
 
@@ -253,7 +253,7 @@ function TutoMoleSala7()
 end
 
 function TutoMoleSala8()
-	ShowMessage("tuto_mole", TXT_BOX_HINT, "raijin")
+	p:show_message(TXT_BOX_HINT, "raijin")
 	p:exec_command("TutoMoleSala9();", 0.5)
 end
 
