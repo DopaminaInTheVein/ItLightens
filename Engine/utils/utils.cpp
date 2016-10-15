@@ -77,7 +77,7 @@ float random(float vmin, float vmax) {
 bool isInRoom(CHandle h) {
 	int pjSala = SBB::readSala();
 	GET_COMP(room, h, TCompRoom);
-	DEBUG_COMP(room) {
+	if (DEBUG_COMP(room)) {
 		dbg("");
 	}
 	return ROOM_IS_IN(room, pjSala);
