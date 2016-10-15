@@ -20,17 +20,18 @@ public:
 		DIR,
 		DIR_SHADOWS,
 	};
+	typedef std::vector<TypeLight> VTypeLights;
 
 private:
 	bool m_activated_editor;
 	bool m_show_axis = false;
 	std::string m_base_path;
-	std::vector<CHandle> m_Lights;
-	std::vector<TypeLight> m_Types;
+	VHandles m_Lights;
+	VTypeLights m_Types;
 
 	//Temporal lights not fixed
-	std::vector<CHandle> m_LigthsTemp;
-	std::vector<TypeLight> m_TypesTemp;
+	VHandles m_LightsTemp;
+	VTypeLights m_TypesTemp;
 
 
 public:
@@ -62,6 +63,8 @@ public:
 	bool GetShowAxis() const { return m_show_axis; }
 
 	void RenderInMenu();
+	void RenderLightList(VHandles& lights, VTypeLights& types, bool temporal);
+	void RenderTemporalLight(CHandle& light, TypeLight& type, bool& enabled);
 
 	
 };
