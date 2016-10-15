@@ -196,16 +196,16 @@ end
 
 function IntroTutoMole2( )
 	p:show_message(TXT_MOLE_DREAM, "mole")
-	p:exec_command("IntroTutoMole3();", 1)
+	p:exec_command("IntroTutoMole4();", 5)
 end
 
 function IntroTutoMole3( )
-	p:wait_button("IntroTutoMole4();")
+	--p:wait_button("IntroTutoMole4();")
 end
 
 function IntroTutoMole4( )
 	cam:skip_cinematic()
-	p:hide_message()
+	--p:hide_message()
 	p:setControlEnabled(1)
 	p:exec_command("tutomole_help_possess();", 0.5)
 end
@@ -224,11 +224,11 @@ end
 
 function TutoMoleSala2()
 	p:show_message(TXT_SHOW_PORTAL, "raijin")
-	p:exec_command("TutoMoleSala3();", 0.5)
+	p:exec_command("TutoMoleSala4();", 5.5)
 end
 
 function TutoMoleSala3()
-	p:wait_button("TutoMoleSala4();")
+	--p:wait_button("TutoMoleSala4();")
 end
 
 function TutoMoleSala4()
@@ -238,11 +238,11 @@ end
 
 function TutoMoleSala5()
 	p:show_message(TXT_NEED_HIGHER, "raijin")
-	p:exec_command("TutoMoleSala6();", 0.5)
+	p:exec_command("TutoMoleSala7();", 3.5)
 end
 
 function TutoMoleSala6()
-	p:wait_button("TutoMoleSala7();")
+	--p:wait_button("TutoMoleSala7();")
 end
 
 function TutoMoleSala7()
@@ -253,11 +253,11 @@ end
 
 function TutoMoleSala8()
 	p:show_message(TXT_BOX_HINT, "raijin")
-	p:exec_command("TutoMoleSala9();", 0.5)
+	p:exec_command("TutoMoleSala10();", 3.5)
 end
 
 function TutoMoleSala9()
-	p:wait_button("TutoMoleSala10();")
+	--p:wait_button("TutoMoleSala10();")
 end
 
 function TutoMoleSala10()
