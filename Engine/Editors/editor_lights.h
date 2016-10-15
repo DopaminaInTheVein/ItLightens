@@ -13,13 +13,18 @@ class TCompLightDirShadows;
 
 class CEditorLights {
 public:
-
+	//CEditorLights();
 	enum TypeLight {
 		POINT = 1,
 		DIR,
 		DIR_SHADOWS,
 	};
 	typedef std::vector<TypeLight> VTypeLights;
+
+	struct LightList {
+		bool rcheck[ROOMS_SIZE];
+		//std::vector<bool> rooms_checks;
+	};
 
 private:
 	bool m_activated_editor;
@@ -31,7 +36,8 @@ private:
 	//Temporal lights not fixed
 	VHandles m_LightsTemp;
 	VTypeLights m_TypesTemp;
-
+	LightList engine_list;
+	LightList temp_list;
 public:
 
 	bool* GetLightsEditorState() { return &m_activated_editor; }
@@ -56,16 +62,15 @@ public:
 
 	template <typename TLight>
 	void renderLightComp(TLight * pl);
-	//void renderLightDir(TCompLightDir * pl);
-	//void renderLightDirShadows(TCompLightDirShadows * pl);
 
 	bool GetShowAxis() const { return m_show_axis; }
 
 	void RenderInMenu();
-	void RenderLightList(VHandles& lights, VTypeLights& types, bool temporal);
+	void RenderLightList(VHandles& lights, VTypeLights& types, bool temporal, LightList& list);
 
+	void RenderLight(CHandle& hlight, TypeLight& type, bool temporal);
 	template <typename TLight>
-	void RenderLight(CHandle& hlight, TypeLight type, bool temporal);
+	void RenderLight(CHandle& hlight, TypeLight& type, bool temporal);
 
 	void RenderTemporalLight(CHandle& light, TypeLight& type, bool& enabled);
 };

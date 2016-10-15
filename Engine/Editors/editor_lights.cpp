@@ -19,6 +19,11 @@
 
 static int id_name = 0;	//id used to create new unique lights
 
+//CEditorLights::CEditorLights()
+//{
+//	//rooms_engine = rooms_temp = std::vector<bool>(ROOMS_SIZE, false);
+//}
+
 void CEditorLights::update(float dt) {
 	if (controller->isEditorLightsButtonPressed()) {
 		m_activated_editor = !m_activated_editor;
@@ -253,33 +258,6 @@ void CEditorLights::renderLightComp(TLight* lcomp) {
 	}
 }
 
-//void CEditorLights::renderLightDir(TCompLightDir* pl) {
-//	pl->renderInMenu();
-//	bool hidden = !pl->enabled;
-//	if (ImGui::Checkbox("hide", &hidden)) {
-//		pl->enabled = !hidden;
-//	}
-//	if (ImGui::SmallButton("Destroy")) {
-//		CHandle light_handle = CHandle(pl);
-//		RemoveLight(light_handle, m_Lights, m_Types);
-//		RemoveLight(light_handle, m_LightsTemp, m_TypesTemp);
-//		light_handle.destroy();
-//	}
-//}
-//void CEditorLights::renderLightDirShadows(TCompLightDirShadows* pl) {
-//	pl->renderInMenu();
-//	bool hidden = !pl->enabled;
-//	if (ImGui::Checkbox("hide", &hidden)) {
-//		pl->enabled = !hidden;
-//	}
-//	if (ImGui::SmallButton("Destroy")) {
-//		CHandle light_handle = CHandle(pl);
-//		RemoveLight(light_handle, m_Lights, m_Types);
-//		RemoveLight(light_handle, m_LightsTemp, m_TypesTemp);
-//		light_handle.destroy();
-//	}
-//}
-
 void CEditorLights::RenderInMenu()
 {
 	static bool rooms_selected[10] = { 0 };
@@ -325,13 +303,13 @@ void CEditorLights::RenderInMenu()
 
 		//permanent lights
 		if (ImGui::TreeNode("Engine Lights")) {
-			RenderLightList(m_Lights, m_Types, false);
+			RenderLightList(m_Lights, m_Types, false, engine_list);
 			ImGui::TreePop();
 		}
 
 		//temporal lights
 		if (ImGui::TreeNode("Temporal Lights")) {
-			RenderLightList(m_LightsTemp, m_TypesTemp, true);
+			RenderLightList(m_LightsTemp, m_TypesTemp, true, temp_list);
 			ImGui::TreePop();
 		}
 
@@ -339,83 +317,48 @@ void CEditorLights::RenderInMenu()
 	}
 }
 
-void CEditorLights::RenderLightList(VHandles& lights, VTypeLights& types, bool temporal)
+void CEditorLights::RenderLightList(VHandles& lights, VTypeLights& types, bool temporal, LightList& list)
 {
 	int m_Lights = 0; // Check
 	int m_Types = 0;
-	//lights map loop
-	for (int idx = 0; idx < lights.size(); ++idx)
-	{
-		if (types[idx] == TypeLight::POINT) {
-			RenderLight<TCompLightPoint>(lights[idx], types[idx], temporal);
-			//GET_COMP(name, h_owner, TCompName);
-			//GET_COMP(light, h_owner, TCompLightPoint);
-			//GET_COMP(trans, h_owner, TCompTransform);
-			//if (light) {
-			//	if (ImGui::TreeNode(GET_NAME(h_owner))) {
-			//		if (name) name->renderInMenu();
-			//		if (trans )trans->renderInMenu();
-			//		renderLightPoint(light);
-			//		if (temporal)
-			//			RenderTemporalLight(lights[idx], types[idx], light->enabled);
-			//		ImGui::TreePop();
-			//	}
-			//}
+
+	// Every room
+	char room_title[] = "Room 00";
+	bool r_changed[ROOMS_SIZE] = { false };
+	for (int room : TCompRoom::all_rooms) {
+		assert(room < ROOMS_SIZE && room < 100);
+		sprintf(room_title, "Room %d", room);
+		if (ImGui::TreeNodeCheck(room_title, list.rcheck + room, r_changed[room])) {
+			//Every Light
+			for (int idx = 0; idx < lights.size(); ++idx) {
+				if (!lights[idx].isValid()) return;
+				if (TCompRoom::SameRoom(lights[idx].getOwner(), room)) {
+					RenderLight(lights[idx], types[idx], temporal);
+				}
+			}
+			ImGui::TreePop();
 		}
-		else if (types[idx] == TypeLight::DIR) {
-			RenderLight<TCompLightDir>(lights[idx], types[idx], temporal);
-			//TCompTransform* trans = e_owner->get<TCompTransform>();
-			//TCompName* name = e_owner->get<TCompName>();
+	}
 
-			//TCompLightDir* light_dir = lights[idx];
-
-			//if (light_dir) {
-			//	if (ImGui::TreeNode(name->name)) {
-			//		name->renderInMenu();
-			//		trans->renderInMenu();
-			//		renderLightDir(light_dir);
-			//		if (temporal)
-			//			RenderTemporalLight(lights[idx], types[idx], light_dir->enabled);
-			//		ImGui::TreePop();
-			//	}
-			//}
-		}
-		else if (types[idx] == TypeLight::DIR_SHADOWS) {
-			RenderLight<TCompLightDirShadows>(lights[idx], types[idx], temporal);
-
-			//TCompName* name = e_owner->get<TCompName>();
-
-			//TCompTransform* trans = e_owner->get<TCompTransform>();
-			//TCompLightDirShadows* light_dir_shadows = lights[idx];
-
-			//if (light_dir_shadows) {
-			//	if (ImGui::TreeNode(name->name)) {
-			//		name->renderInMenu();
-			//		trans->renderInMenu();
-			//		renderLightDirShadows(light_dir_shadows);
-			//		if (temporal)
-			//			RenderTemporalLight(lights[idx], types[idx], light_dir_shadows->enabled);
-			//		ImGui::TreePop();
-			//	}
-			//}
-		}
-		else {
-			//nothing
+	for (int i = 0; i < ROOMS_SIZE; i++) {
+		if (r_changed[i]) {
+			dbg("Ha cambiado room %d a %d\n", i, list.rcheck[i]);
 		}
 	}
 }
 
-template <typename TLight>
-void CEditorLights::RenderLight(CHandle& h_light, TypeLight type, bool temporal)
+void CEditorLights::RenderLight(CHandle& h_light, TypeLight& type, bool temporal)
 {
-	//Light Valid?
-	if (!h_light.isValid()) return;
+	//Specific Light
+	if (type == TypeLight::POINT) RenderLight<TCompLightPoint>(h_light, type, temporal);
+	else if (type == TypeLight::DIR)	RenderLight<TCompLightDir>(h_light, type, temporal);
+	else if (type == TypeLight::DIR_SHADOWS) RenderLight<TCompLightDirShadows>(h_light, type, temporal);
+}
 
-	//Owner valid?
+template <typename TLight>
+void CEditorLights::RenderLight(CHandle& h_light, TypeLight& type, bool temporal)
+{
 	CHandle h_owner = h_light.getOwner();
-	if (!h_owner.isValid()) return;
-
-	//Render Light
 	GET_COMP(name, h_owner, TCompName);
 	GET_COMP(light, h_owner, TLight);
 	GET_COMP(trans, h_owner, TCompTransform);
