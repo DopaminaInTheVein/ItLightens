@@ -12,7 +12,6 @@ class TCompLightDir;
 class TCompLightDirShadows;
 
 class CEditorLights {
-
 public:
 
 	enum TypeLight {
@@ -32,7 +31,6 @@ private:
 	//Temporal lights not fixed
 	VHandles m_LightsTemp;
 	VTypeLights m_TypesTemp;
-
 
 public:
 
@@ -56,17 +54,20 @@ public:
 
 	void SetRenderDebug(bool value, std::vector<CHandle> v_lights, std::vector<TypeLight> v_types);
 
-	void renderLightPoint(TCompLightPoint * pl);
-	void renderLightDir(TCompLightDir * pl);
-	void renderLightDirShadows(TCompLightDirShadows * pl);
+	template <typename TLight>
+	void renderLightComp(TLight * pl);
+	//void renderLightDir(TCompLightDir * pl);
+	//void renderLightDirShadows(TCompLightDirShadows * pl);
 
 	bool GetShowAxis() const { return m_show_axis; }
 
 	void RenderInMenu();
 	void RenderLightList(VHandles& lights, VTypeLights& types, bool temporal);
-	void RenderTemporalLight(CHandle& light, TypeLight& type, bool& enabled);
 
-	
+	template <typename TLight>
+	void RenderLight(CHandle& hlight, TypeLight type, bool temporal);
+
+	void RenderTemporalLight(CHandle& light, TypeLight& type, bool& enabled);
 };
 
 #endif

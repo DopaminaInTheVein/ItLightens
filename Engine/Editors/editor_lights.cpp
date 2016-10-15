@@ -238,46 +238,47 @@ void CEditorLights::SetRenderDebug(bool value, std::vector<CHandle> v_lights, st
 	}
 }
 
-void CEditorLights::renderLightPoint(TCompLightPoint* pl) {
-	pl->renderInMenu();
-	bool hidden = !pl->enabled;
+template <typename TLight>
+void CEditorLights::renderLightComp(TLight* lcomp) {
+	lcomp->renderInMenu();
+	bool hidden = !lcomp->enabled;
 	if (ImGui::Checkbox("hide", &hidden)) {
-		pl->enabled = !hidden;
+		lcomp->enabled = !hidden;
 	}
 	if (ImGui::SmallButton("Destroy")) {
-		CHandle light_handle = CHandle(pl);
+		CHandle light_handle = CHandle(lcomp);
 		RemoveLight(light_handle, m_Lights, m_Types);
 		RemoveLight(light_handle, m_LightsTemp, m_TypesTemp);
 		light_handle.destroy();
 	}
 }
 
-void CEditorLights::renderLightDir(TCompLightDir* pl) {
-	pl->renderInMenu();
-	bool hidden = !pl->enabled;
-	if (ImGui::Checkbox("hide", &hidden)) {
-		pl->enabled = !hidden;
-	}
-	if (ImGui::SmallButton("Destroy")) {
-		CHandle light_handle = CHandle(pl);
-		RemoveLight(light_handle, m_Lights, m_Types);
-		RemoveLight(light_handle, m_LightsTemp, m_TypesTemp);
-		light_handle.destroy();
-	}
-}
-void CEditorLights::renderLightDirShadows(TCompLightDirShadows* pl) {
-	pl->renderInMenu();
-	bool hidden = !pl->enabled;
-	if (ImGui::Checkbox("hide", &hidden)) {
-		pl->enabled = !hidden;
-	}
-	if (ImGui::SmallButton("Destroy")) {
-		CHandle light_handle = CHandle(pl);
-		RemoveLight(light_handle, m_Lights, m_Types);
-		RemoveLight(light_handle, m_LightsTemp, m_TypesTemp);
-		light_handle.destroy();
-	}
-}
+//void CEditorLights::renderLightDir(TCompLightDir* pl) {
+//	pl->renderInMenu();
+//	bool hidden = !pl->enabled;
+//	if (ImGui::Checkbox("hide", &hidden)) {
+//		pl->enabled = !hidden;
+//	}
+//	if (ImGui::SmallButton("Destroy")) {
+//		CHandle light_handle = CHandle(pl);
+//		RemoveLight(light_handle, m_Lights, m_Types);
+//		RemoveLight(light_handle, m_LightsTemp, m_TypesTemp);
+//		light_handle.destroy();
+//	}
+//}
+//void CEditorLights::renderLightDirShadows(TCompLightDirShadows* pl) {
+//	pl->renderInMenu();
+//	bool hidden = !pl->enabled;
+//	if (ImGui::Checkbox("hide", &hidden)) {
+//		pl->enabled = !hidden;
+//	}
+//	if (ImGui::SmallButton("Destroy")) {
+//		CHandle light_handle = CHandle(pl);
+//		RemoveLight(light_handle, m_Lights, m_Types);
+//		RemoveLight(light_handle, m_LightsTemp, m_TypesTemp);
+//		light_handle.destroy();
+//	}
+//}
 
 void CEditorLights::RenderInMenu()
 {
@@ -304,7 +305,7 @@ void CEditorLights::RenderInMenu()
 			//TODO
 		}
 		ImGui::Separator();
-		
+
 		for (int room : TCompRoom::all_rooms) {
 			char text_check[64];
 			sprintf(text_check, "Room %d", room);
@@ -346,69 +347,86 @@ void CEditorLights::RenderLightList(VHandles& lights, VTypeLights& types, bool t
 	for (int idx = 0; idx < lights.size(); ++idx)
 	{
 		if (types[idx] == TypeLight::POINT) {
-			CHandle h_owner = lights[idx].getOwner();
-			CEntity* e_owner = h_owner;
-			if (!e_owner) continue;	//handle not valid
-
-			TCompName* name = e_owner->get<TCompName>();
-			TCompLightPoint* light_point = lights[idx];
-			TCompTransform* trans = e_owner->get<TCompTransform>();
-
-			if (light_point) {
-				if (ImGui::TreeNode(name->name)) {
-					name->renderInMenu();
-					trans->renderInMenu();
-					renderLightPoint(light_point);
-					if (temporal)
-						RenderTemporalLight(lights[idx], types[idx], light_point->enabled);
-					ImGui::TreePop();
-				}
-			}
+			RenderLight<TCompLightPoint>(lights[idx], types[idx], temporal);
+			//GET_COMP(name, h_owner, TCompName);
+			//GET_COMP(light, h_owner, TCompLightPoint);
+			//GET_COMP(trans, h_owner, TCompTransform);
+			//if (light) {
+			//	if (ImGui::TreeNode(GET_NAME(h_owner))) {
+			//		if (name) name->renderInMenu();
+			//		if (trans )trans->renderInMenu();
+			//		renderLightPoint(light);
+			//		if (temporal)
+			//			RenderTemporalLight(lights[idx], types[idx], light->enabled);
+			//		ImGui::TreePop();
+			//	}
+			//}
 		}
 		else if (types[idx] == TypeLight::DIR) {
-			CHandle h_owner = lights[idx].getOwner();
-			CEntity* e_owner = h_owner;
-			if (!e_owner) continue;	//handle not valid
+			RenderLight<TCompLightDir>(lights[idx], types[idx], temporal);
+			//TCompTransform* trans = e_owner->get<TCompTransform>();
+			//TCompName* name = e_owner->get<TCompName>();
 
-			TCompTransform* trans = e_owner->get<TCompTransform>();
-			TCompName* name = e_owner->get<TCompName>();
+			//TCompLightDir* light_dir = lights[idx];
 
-			TCompLightDir* light_dir = lights[idx];
-
-			if (light_dir) {
-				if (ImGui::TreeNode(name->name)) {
-					name->renderInMenu();
-					trans->renderInMenu();
-					renderLightDir(light_dir);
-					if (temporal)
-						RenderTemporalLight(lights[idx], types[idx], light_dir->enabled);
-					ImGui::TreePop();
-				}
-			}
+			//if (light_dir) {
+			//	if (ImGui::TreeNode(name->name)) {
+			//		name->renderInMenu();
+			//		trans->renderInMenu();
+			//		renderLightDir(light_dir);
+			//		if (temporal)
+			//			RenderTemporalLight(lights[idx], types[idx], light_dir->enabled);
+			//		ImGui::TreePop();
+			//	}
+			//}
 		}
 		else if (types[idx] == TypeLight::DIR_SHADOWS) {
-			CHandle h_owner = lights[idx].getOwner();
-			CEntity* e_owner = h_owner;
-			if (!e_owner) continue;	//handle not valid
+			RenderLight<TCompLightDirShadows>(lights[idx], types[idx], temporal);
 
-			TCompName* name = e_owner->get<TCompName>();
+			//TCompName* name = e_owner->get<TCompName>();
 
-			TCompTransform* trans = e_owner->get<TCompTransform>();
-			TCompLightDirShadows* light_dir_shadows = lights[idx];
+			//TCompTransform* trans = e_owner->get<TCompTransform>();
+			//TCompLightDirShadows* light_dir_shadows = lights[idx];
 
-			if (light_dir_shadows) {
-				if (ImGui::TreeNode(name->name)) {
-					name->renderInMenu();
-					trans->renderInMenu();
-					renderLightDirShadows(light_dir_shadows);
-					if (temporal)
-						RenderTemporalLight(lights[idx], types[idx], light_dir_shadows->enabled);
-					ImGui::TreePop();
-				}
-			}
+			//if (light_dir_shadows) {
+			//	if (ImGui::TreeNode(name->name)) {
+			//		name->renderInMenu();
+			//		trans->renderInMenu();
+			//		renderLightDirShadows(light_dir_shadows);
+			//		if (temporal)
+			//			RenderTemporalLight(lights[idx], types[idx], light_dir_shadows->enabled);
+			//		ImGui::TreePop();
+			//	}
+			//}
 		}
 		else {
 			//nothing
+		}
+	}
+}
+
+template <typename TLight>
+void CEditorLights::RenderLight(CHandle& h_light, TypeLight type, bool temporal)
+{
+	//Light Valid?
+	if (!h_light.isValid()) return;
+
+	//Owner valid?
+	CHandle h_owner = h_light.getOwner();
+	if (!h_owner.isValid()) return;
+
+	//Render Light
+	GET_COMP(name, h_owner, TCompName);
+	GET_COMP(light, h_owner, TLight);
+	GET_COMP(trans, h_owner, TCompTransform);
+	if (light) {
+		if (ImGui::TreeNode(GET_NAME(h_owner))) {
+			if (name) name->renderInMenu();
+			if (trans)trans->renderInMenu();
+			renderLightComp(light);
+			if (temporal)
+				RenderTemporalLight(h_light, type, light->enabled);
+			ImGui::TreePop();
 		}
 	}
 }
