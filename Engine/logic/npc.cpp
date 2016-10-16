@@ -14,7 +14,6 @@ void npc::readNpcIni(std::map<std::string, float>& fields)
 	assignValueToVar(SPEED_ROT, fields);
 	SPEED_ROT = deg2rad(SPEED_ROT);
 	assignValueToVar(MAX_STUCK_TIME, fields);
-	assignValueToVar(TIME_WHILE_STUCK, fields);
 	assignValueToVar(UNSTUCK_DISTANCE, fields);
 	assignValueToVar(PREV_UNSTUCK_DISTANCE, fields);
 }

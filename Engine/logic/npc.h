@@ -26,7 +26,6 @@ protected:
 
 	// stuck management
 	float MAX_STUCK_TIME;
-	float TIME_WHILE_STUCK;
 	float UNSTUCK_DISTANCE;
 	float stuck_time = 0.f;
 	bool stuck = false;

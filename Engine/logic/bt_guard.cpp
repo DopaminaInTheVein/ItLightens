@@ -663,6 +663,7 @@ int bt_guard::actionSeekWpt() {
 			return OK;
 		}
 		else {
+			stuck_time = 0.f;
 			return STAY;
 		}
 	}
