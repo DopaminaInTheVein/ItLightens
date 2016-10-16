@@ -11,6 +11,7 @@ struct TCompLightDirShadows : public TCompLightDir {
 	CRenderToTexture* rt_shadows = nullptr;
 	CRenderToTexture* rt_shadows_base = nullptr;
 	bool              enabled = true;
+	bool			  selected = false;
 	int res;
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);
@@ -21,6 +22,12 @@ struct TCompLightDirShadows : public TCompLightDir {
 	void destroy();
 
 	void setNewFov(float fov);
+
+	//Editor
+	TCompLightDirShadows* original = nullptr;
+	void start_editing();
+	void cancel_editing();
+	~TCompLightDirShadows();
 };
 
 #endif

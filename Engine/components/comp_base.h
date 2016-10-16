@@ -8,6 +8,9 @@ class CEntity;
 
 struct TCompBase {
 	CEntity * compBaseEntity;
+#ifndef NDEBUG
+	bool debugging = false;
+#endif
 	void render() {}
 	void init() {}
 	virtual bool getUpdateInfoBase(CHandle parent);
@@ -29,6 +32,9 @@ struct TCompBase {
 	void renderInMenu() {}
 
 	static void reloadAttr() {};
+#ifndef NDEBUG
+	bool* getDebug() { return &debugging; }
+#endif
 };
 
 #endif

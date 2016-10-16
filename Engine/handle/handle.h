@@ -89,6 +89,7 @@ public:
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);
 	void renderInMenu();
+	bool* getDebug();
 
 	// --------------------------------------
 	template< class TMsg >

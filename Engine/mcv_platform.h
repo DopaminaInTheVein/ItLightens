@@ -6,6 +6,7 @@
 #ifndef FINAL_BUILD //Defines para version NO final
 
 #define TEST_VALUES // Read initialization_test.json
+#define IMGUI_INCLUDE_IMGUI_USER_H
 //#define CALIBRATE_GAME
 //#define SECURE_HANDLES
 #else //defines obligatorios version final

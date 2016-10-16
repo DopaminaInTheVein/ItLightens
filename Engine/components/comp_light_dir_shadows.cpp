@@ -40,6 +40,7 @@ void TCompLightDirShadows::update(float dt) {
 
 void TCompLightDirShadows::activate() {
 	PROFILE_FUNCTION("shadows: activate");
+	if (!enabled) return;
 	CHandle owner = CHandle(this).getOwner();
 	activateWorldMatrix(getViewProjection().Invert());
 	rt_shadows->getZTexture()->activate(TEXTURE_SLOT_SHADOWMAP);
@@ -110,12 +111,29 @@ void TCompLightDirShadows::generateShadowMap() {
 
 	activateRS(RSCFG_DEFAULT);
 }
-
-void TCompLightDirShadows::destroy() {
-	//if(rt_shadows)rt_shadows->destroy();
+void TCompLightDirShadows::destroy()
+{
 }
 
 void TCompLightDirShadows::setNewFov(float fov_in_rads) {
 	float fov_in_degs = rad2deg(fov_in_rads);
 	setProjection(fov_in_rads, getZNear(), getZFar());
+}
+
+void TCompLightDirShadows::start_editing() {
+	if (original) delete original;
+	original = new TCompLightDirShadows;
+	*original = *this;
+	original->original = false;
+}
+void TCompLightDirShadows::cancel_editing() {
+	if (!original) return;
+	TCompLightDirShadows * light_to_delete = original;
+	*this = *original;
+	if (light_to_delete) delete light_to_delete;
+	if (original) delete original;
+}
+
+TCompLightDirShadows::~TCompLightDirShadows() {
+	if (original) delete original;
 }

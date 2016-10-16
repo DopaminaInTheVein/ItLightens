@@ -68,6 +68,8 @@ private:
 	//std::vector<std::string> last_test_z_render;
 
 	int  ntimes_sorted = 0;
+	template<typename TObj>
+	void AddKeyToRenderList(std::vector<TObj>* rlist, TObj& key);
 public:
 
 	void registerToRender(const CStaticMesh* mesh, CHandle handle);

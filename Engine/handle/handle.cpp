@@ -41,6 +41,12 @@ void CHandle::renderInMenu() {
 		hm->renderInMenu(*this);
 }
 
+bool* CHandle::getDebug() {
+	auto hm = CHandleManager::getByType(type);
+	if (hm)
+		return hm->getDebug(*this);
+}
+
 // ------------------------------------
 void CHandle::setOwner(CHandle new_owner) {
 	auto hm = CHandleManager::getByType(type);

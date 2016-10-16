@@ -15,15 +15,11 @@ void TCompRenderStaticMesh::onCreate(const TMsgEntityCreated&) {
 
 bool TCompRenderStaticMesh::load(MKeyValue& atts) {
 	res_name = atts["name"];
-#ifndef NDEBUG
-	if (res_name == "static_meshes/ms3/cable.static_mesh") {
-		dbg("Cargando malla buscada...\n");
-	}
-#endif
 	static_mesh = Resources.get(res_name.c_str())->as<CStaticMesh>();
 	assert(static_mesh);
 
 	dynamic = !atts.getBool("static", true);
+	to_render = atts.getBool("to_render", true);
 
 	return true;
 }
@@ -31,6 +27,7 @@ bool TCompRenderStaticMesh::save(std::ofstream& os, MKeyValue& atts)
 {
 	atts.put("name", res_name);
 	atts.put("static", !dynamic);
+	if (!to_render) atts.put("to_render", to_render);
 	return true;
 }
 
@@ -39,7 +36,8 @@ TCompRenderStaticMesh::~TCompRenderStaticMesh() {
 }
 
 void TCompRenderStaticMesh::registerToRender() {
-	RenderManager.registerToRender(static_mesh, CHandle(this));
+	if (to_render)
+		RenderManager.registerToRender(static_mesh, CHandle(this));
 }
 
 void TCompRenderStaticMesh::unregisterFromRender() {

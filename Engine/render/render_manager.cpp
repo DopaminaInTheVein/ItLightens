@@ -173,17 +173,7 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 				render_list[idx] = &dynamic_keys[idx];
 			}
 		}
-		if (oroom.empty() || playercandidate) {
-			for (int idx = 0; idx < ROOMS_SIZE; idx++) {
-				render_list[idx]->push_back(k);
-			}
-		}
-		else {
-			for (auto room : oroom.getList()) {
-				if (room >= 0 && room < ROOMS_SIZE)
-					render_list[room]->push_back(k);
-			}
-		}
+		AddKeyToRenderList<TKey>(render_list[0], k);
 		num_renders++;
 		in_order = false;
 	}
@@ -207,29 +197,33 @@ void CRenderManager::registerToRender(const CStaticMesh* mesh, CHandle owner) {
 			k.isDynamic = isDynamic;
 
 			if (!s.material->tech->usesBones()) {
-				for (auto room : oroom.getList()) {
-					if (room >= ROOMS_SIZE) continue;
-					if (room >= 0 && !playercandidate)
-						all_shadow_keys[room].push_back(k);
-					else {
-						for (int idx = 0; idx < ROOMS_SIZE; idx++) {
-							all_shadow_keys[idx].push_back(k);
-						}
-					}
-				}
+				AddKeyToRenderList<TShadowKey>(&all_shadow_keys[0], k);
+				//
+				//for (auto room : oroom.getList()) {
+				//	if (room >= ROOMS_SIZE) continue;
+				//	if (room >= 0 && !playercandidate)
+				//		all_shadow_keys[room].push_back(k);
+				//	else {
+				//		for (int idx = 0; idx < ROOMS_SIZE; idx++) {
+				//			all_shadow_keys[idx].push_back(k);
+				//		}
+				//	}
+				//}
+				//
 				in_order_shadows = false;
 			}
 			else {
-				for (auto room : oroom.getList()) {
-					if (room >= ROOMS_SIZE) continue;
-					if (room >= 0 && !playercandidate)
-						all_shadow_skinning_keys[room].push_back(k);
-					else {
-						for (int idx = 0; idx < ROOMS_SIZE; idx++) {
-							all_shadow_skinning_keys[idx].push_back(k);
-						}
-					}
-				}
+				AddKeyToRenderList<TShadowKey>(&all_shadow_skinning_keys[0], k);
+				//for (auto room : oroom.getList()) {
+				//	if (room >= ROOMS_SIZE) continue;
+				//	if (room >= 0 && !playercandidate)
+				//		all_shadow_skinning_keys[room].push_back(k);
+				//	else {
+				//		for (int idx = 0; idx < ROOMS_SIZE; idx++) {
+				//			all_shadow_skinning_keys[idx].push_back(k);
+				//		}
+				//	}
+				//}
 				in_order_shadows_skin = false;
 			}
 		}
@@ -357,113 +351,113 @@ void CRenderManager::renderList(CHandle h_camera, CRenderTechnique::eCategory ca
 		//GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
 		//if (tentroom) it->room = tentroom->getRoom();
 		//if (it->owner.getOwner() == CPlayerBase::handle_player || it->room.sameRoom(pj_room)) {
-			if (culling_bits) {
-				PROFILE_FUNCTION("Culling");
-				TCompAbsAABB* aabb = it->aabb;
-				if (aabb) {
-					intptr_t idx = aabb - base_aabbs;
-					if (!culling_bits->test(idx)) {
-						++it;
-						continue;
-					}
+		if (culling_bits) {
+			PROFILE_FUNCTION("Culling");
+			TCompAbsAABB* aabb = it->aabb;
+			if (aabb) {
+				intptr_t idx = aabb - base_aabbs;
+				if (!culling_bits->test(idx)) {
+					++it;
+					continue;
 				}
 			}
+		}
 
-			if (it->isPlayer) {
-				PROFILE_FUNCTION("Polarity player");
-				CEntity* e_p = it->owner.getOwner();
-				if (e_p) {
-					player_controller* pc = e_p->get<player_controller>();
-					if (pc) {
-						it->polarity = pc->GetPolarityInt();
-					}
-					else
-						it->polarity = 0;
+		if (it->isPlayer) {
+			PROFILE_FUNCTION("Polarity player");
+			CEntity* e_p = it->owner.getOwner();
+			if (e_p) {
+				player_controller* pc = e_p->get<player_controller>();
+				if (pc) {
+					it->polarity = pc->GetPolarityInt();
 				}
-				else {
+				else
 					it->polarity = 0;
-				}
 			}
 			else {
-				PROFILE_FUNCTION("Polarity other");
-				CEntity* e_o = it->owner.getOwner();
-				if (e_o) {
-					TCompPolarized* op = e_o->get<TCompPolarized>();
-					if (op) {
-						it->polarity = op->force.polarity;
-					}
-					else
-						it->polarity = 0;
-				}
-				else {
-					it->polarity = 0;
-				}
+				it->polarity = 0;
 			}
-
-			if (it->material != prev_it->material) {
-				PROFILE_FUNCTION("Change material");
-				if (!prev_it->material || it->material->tech != prev_it->material->tech) {
-					it->material->tech->activate();
-					curr_tech_used_bones = it->material->tech->usesBones();
+		}
+		else {
+			PROFILE_FUNCTION("Polarity other");
+			CEntity* e_o = it->owner.getOwner();
+			if (e_o) {
+				TCompPolarized* op = e_o->get<TCompPolarized>();
+				if (op) {
+					it->polarity = op->force.polarity;
 				}
+				else
+					it->polarity = 0;
+			}
+			else {
+				it->polarity = 0;
+			}
+		}
+
+		if (it->material != prev_it->material) {
+			PROFILE_FUNCTION("Change material");
+			if (!prev_it->material || it->material->tech != prev_it->material->tech) {
+				it->material->tech->activate();
+				curr_tech_used_bones = it->material->tech->usesBones();
+			}
+			it->material->activateTextures(it->polarity);
+		}
+		else {
+			PROFILE_FUNCTION("Same material");
+			if (it->polarity != prev_it->polarity) {
 				it->material->activateTextures(it->polarity);
 			}
-			else {
-				PROFILE_FUNCTION("Same material");
-				if (it->polarity != prev_it->polarity) {
-					it->material->activateTextures(it->polarity);
-				}
-			}
-			if (it->mesh != prev_it->mesh) {
-				PROFILE_FUNCTION("Mesh activate");
-				it->mesh->activate();
-			}
-			if (it->owner != prev_it->owner) {
-				// subir la world de it
-				const TCompTransform* c_tmx = it->transform;
-				assert(c_tmx);
+		}
+		if (it->mesh != prev_it->mesh) {
+			PROFILE_FUNCTION("Mesh activate");
+			it->mesh->activate();
+		}
+		if (it->owner != prev_it->owner) {
+			// subir la world de it
+			const TCompTransform* c_tmx = it->transform;
+			assert(c_tmx);
 
-				// For static objects, we could skip this step
-				// if each static object had it's own shader_ctes_object
-				activateWorldMatrix(c_tmx->asMatrix());
-			}
+			// For static objects, we could skip this step
+			// if each static object had it's own shader_ctes_object
+			activateWorldMatrix(c_tmx->asMatrix());
+		}
 
-			//render skeleton object
-			if (curr_tech_used_bones) {
-				PROFILE_FUNCTION("Bones");
-				if (renderSkeleton(it)) {
-					//valid skeleton
-					it->mesh->renderGroup(it->submesh_idx);
-					prev_it = it;
-					++nkeys_rendered;
-				}
-			}
-
-			//render UI object
-			else if (it->material->tech->getCategory() == CRenderTechnique::UI_OBJS) {
-				PROFILE_FUNCTION("Ui object");
-				if (renderUI(it)) {
-					//Valid UI
-					it->mesh->renderGroup(it->submesh_idx);
-					prev_it = it;
-					++nkeys_rendered;
-
-					//CEntity* e_owner = it->owner.getOwner();
-					//TCompName* e_name = e_owner->get<TCompName>();
-					//{
-					//	PROFILE_FUNCTION("Test_z push_back");
-					//	test_z_render.push_back(e_name->name);
-					//	dbg("test z_render size: %d\n", test_z_render.size());
-					//}
-				}
-			}
-			else {
-				PROFILE_FUNCTION("Desfault seleton");
-				//default skeleton
+		//render skeleton object
+		if (curr_tech_used_bones) {
+			PROFILE_FUNCTION("Bones");
+			if (renderSkeleton(it)) {
+				//valid skeleton
 				it->mesh->renderGroup(it->submesh_idx);
 				prev_it = it;
 				++nkeys_rendered;
 			}
+		}
+
+		//render UI object
+		else if (it->material->tech->getCategory() == CRenderTechnique::UI_OBJS) {
+			PROFILE_FUNCTION("Ui object");
+			if (renderUI(it)) {
+				//Valid UI
+				it->mesh->renderGroup(it->submesh_idx);
+				prev_it = it;
+				++nkeys_rendered;
+
+				//CEntity* e_owner = it->owner.getOwner();
+				//TCompName* e_name = e_owner->get<TCompName>();
+				//{
+				//	PROFILE_FUNCTION("Test_z push_back");
+				//	test_z_render.push_back(e_name->name);
+				//	dbg("test z_render size: %d\n", test_z_render.size());
+				//}
+			}
+		}
+		else {
+			PROFILE_FUNCTION("Desfault seleton");
+			//default skeleton
+			it->mesh->renderGroup(it->submesh_idx);
+			prev_it = it;
+			++nkeys_rendered;
+		}
 		//}
 
 		++it;
@@ -900,6 +894,24 @@ std::string CRenderManager::TKey::print() {
 	);
 	return text;
 #endif
+}
+
+template<typename TObj>
+void CRenderManager::AddKeyToRenderList(std::vector<TObj>* rlist, TObj& key)
+{
+	TRoom *oroom = &(key.room);
+	bool playercandidate = key.isPlayer;
+	if (oroom->empty() || playercandidate) {
+		for (int idx = 0; idx < ROOMS_SIZE; idx++) {
+			rlist[idx].push_back(key);
+		}
+	}
+	else {
+		for (auto room : oroom->getList()) {
+			if (room >= 0 && room < ROOMS_SIZE)
+				rlist[room].push_back(key);
+		}
+	}
 }
 
 std::string CRenderManager::TShadowKey::print() {

@@ -91,6 +91,7 @@ void Tasklist::init() {
 	CHandle new_r = hm5->createHandle();
 	MKeyValue atts5;
 	atts5.put("name", rsm->res_name);
+	atts5.put("to_render", false);
 	new_r.load(atts5);
 	entity->add(new_r);
 

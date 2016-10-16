@@ -137,7 +137,7 @@ function tutosci_help_wb( )
 	p:exec_command("p:setControlEnabled(1);",13.5)
 end
 function tutosci_help_bomb( )
-p:setControlEnabled(0)
+    p:setControlEnabled(0)
 	cam:run_cinematic("CineShowGuards", 2.5)
 	p:player_talks("::help_bomb")
 	p:aim_circle("circle_3","aim_circle",69.617,1.0,-4.667,-1.0)

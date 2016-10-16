@@ -3,6 +3,7 @@
 
 #include "utils/XMLParser.h"
 #include "comp_base.h"
+//#include "entity.h"
 #include <sstream>
 #include <set>
 
@@ -31,11 +32,10 @@ public:
 
 struct TCompRoom : public TCompBase {
 	static std::set<int> all_rooms;
-	static inline bool SameRoom(TCompRoom* r, int r_id) {
-		return (!r || r->sameRoom(r_id));
-	}
 	TRoom room;
 public:
+	static bool SameRoom(CHandle h, int r_id);
+	static inline bool SameRoom(TCompRoom* r, int r_id) { return (!r || r->sameRoom(r_id)); }
 	//char rooms_raw[32];
 
 	void init();
@@ -44,15 +44,15 @@ public:
 
 	bool save(std::ofstream& os, MKeyValue& atts);
 
-	void setRoom(TRoom new_room) { room = new_room; }
-	TRoom getRoom() { return room; }
-	int getSingleRoom() { return room.getSingleRoom(); }
+	void setRoom(TRoom new_room);
+	TRoom getRoom();
+	int getSingleRoom();
 	//bool sameRoom(const TRoom& r);
 	//bool sameRoom(const CHandle& h);
-	bool sameRoom(int r) { return room.sameRoom(r); }
+	bool sameRoom(int r);
 	bool sameRoomPlayer();
 	void renderInMenu();
-	void addRoom(int r) { room.addRoom(r); }
+	void addRoom(int r);
 };
 
 #define ROOM_IS_IN TCompRoom::SameRoom

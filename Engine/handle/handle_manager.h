@@ -128,6 +128,10 @@ public:
 	virtual void updateAll(float dt) { }
 	virtual void fixedUpdateAll(float dt) {}
 	virtual void initAll() {}
+#ifndef NDEBUG
+	virtual bool* getDebug(CHandle h) { return h.getDebug(); }
+#endif
+
 	virtual bool load(CHandle h, MKeyValue& atts) { return true; }
 	virtual bool save(CHandle h, std::ofstream& os, MKeyValue& atts) { return false; }
 	virtual void renderInMenu(CHandle h) { }

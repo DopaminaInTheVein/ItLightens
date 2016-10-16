@@ -34,10 +34,6 @@ void TCompLightDir::render() const {
 void TCompLightDir::renderInMenu() {
 	TCompCamera::renderInMenu();
 	ImGui::ColorEdit4("Color", &color.x, true);
-
-	bool test;
-	ImGui::Checkbox("SAVE LIGHT", &test);
-	ImGui::Checkbox("HIDE LIGHT", &test);
 }
 
 void TCompLightDir::uploadShaderCtes(CEntity* e) {
@@ -67,6 +63,28 @@ void TCompLightDir::update(float dt) {
 }
 
 void TCompLightDir::activate() {
+	if (!enabled) return;
 	activateWorldMatrix(getViewProjection().Invert());
 	uploadShaderCtes(CHandle(this).getOwner());
+}
+
+//Editor
+void TCompLightDir::start_editing() {
+	if (original) delete original;
+	original = new TCompLightDir;
+	*original = *this;
+	original->original = false;
+	dbg("Test");
+}
+void TCompLightDir::cancel_editing() {
+	if (!original) return;
+	TCompLightDir * light_to_delete = original;
+	*this = *original;
+	if (light_to_delete) delete light_to_delete;
+	if (original) delete original;
+}
+
+TCompLightDir::~TCompLightDir()
+{
+	if (original) delete original;
 }
