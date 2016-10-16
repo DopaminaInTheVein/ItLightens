@@ -19,6 +19,8 @@ struct TCompCamera : public CCamera, public TCompBase {
 	void onGetViewProj(const TMsgGetCullingViewProj& msg);
 	VEC3  getMinOrtho() const;
 	VEC3  getMaxOrtho() const;
+	float* getNearPointer() { return getZNearPointer(); }
+	float* getFarPointer() { return getZFarPointer(); }
 };
 
 #endif
